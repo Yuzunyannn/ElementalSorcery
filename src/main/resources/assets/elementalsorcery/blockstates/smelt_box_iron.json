@@ -1,0 +1,25 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "orientable",
+        "textures": {
+            "top": "minecraft:blocks/iron_block",
+            "side": "minecraft:blocks/iron_block"
+        }
+    },
+    "variants": {
+        "inventory": [{
+             "textures": { "front": "elementalsorcery:blocks/iron_smelt_box" }
+        }],
+        "burning": {
+            "true": { "textures": { "front": "elementalsorcery:blocks/iron_smelt_box_burning" } },
+            "false": { "textures": { "front": "elementalsorcery:blocks/iron_smelt_box" } }
+        },
+        "facing": {
+            "east": { "y": 90, "uvlock": true },
+            "north": {},
+            "south": { "y": 180, "uvlock": true },
+            "west": { "y": 270, "uvlock": true }
+        }
+    }
+}

@@ -1,0 +1,8 @@
+{
+    "parent": "block/stairs",
+    "textures": {
+        "bottom": "elementalsorcery:blocks/estone_block_bottom",
+        "top": "elementalsorcery:blocks/estone_block_top",
+        "side": "elementalsorcery:blocks/estone_block_side"
+    }
+}

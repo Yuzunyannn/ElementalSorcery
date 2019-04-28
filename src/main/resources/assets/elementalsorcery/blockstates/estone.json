@@ -1,0 +1,15 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "elementalsorcery:estone_normal"
+    },
+    "variants": {
+        "variant": {
+            "default": { "model": "elementalsorcery:estone_normal"},
+            "chiseled": { "model": "elementalsorcery:estone_chiseled" },
+			"lines_y": { "model": "elementalsorcery:estone_lines" },
+			"lines_z": { "model": "elementalsorcery:estone_lines" , "x": 90},
+			"lines_x": { "model": "elementalsorcery:estone_lines" , "x": 90,"y": 90}
+        }
+    }
+}

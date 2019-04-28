@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "elementalsorcery:blocks/estone_block_lines_top",
+        "side": "elementalsorcery:blocks/estone_block_lines"
+    }
+}

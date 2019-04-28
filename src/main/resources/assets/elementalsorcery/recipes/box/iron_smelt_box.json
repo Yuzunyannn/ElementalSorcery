@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "es_smelt_box",
+  "pattern": [
+    "XXX",
+	"# #",
+	"XXX"
+  ],
+  "key": {
+    "#": {
+	  "type":"forge:ore_dict",
+      "ore": "blockIron"
+    },
+	"X": {
+	  "type":"forge:ore_dict",
+      "ore": "ingotIron"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:smelt_box_iron",
+    "count": 1
+  }
+}

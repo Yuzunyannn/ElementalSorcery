@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+	"#X#",
+	" # "
+  ],
+  "key": {
+    "#": {
+      "item": "elementalsorcery:magical_piece"
+    },
+	"X": {
+      "item": "minecraft:ender_eye"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:magical_ender_eye",
+    "count": 1
+  }
+}

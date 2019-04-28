@@ -1,0 +1,12 @@
+{
+    "parent": "block/cube",
+    "textures": {
+        "particle": "elementalsorcery:blocks/element_workbench_front",
+        "down": "blocks/planks_big_oak",
+        "up": "elementalsorcery:blocks/element_workbench_top",
+        "north": "elementalsorcery:blocks/element_workbench_front",
+        "east": "elementalsorcery:blocks/element_workbench_side",
+        "south": "elementalsorcery:blocks/element_workbench_side",
+        "west": "elementalsorcery:blocks/element_workbench_front"
+    }
+}

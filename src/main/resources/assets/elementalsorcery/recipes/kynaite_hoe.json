@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "kynaite_tool",
+  "pattern": [
+    "## ",
+	" X ",
+	" X "
+  ],
+  "key": {
+    "#": {
+      "item": "elementalsorcery:kynaite"
+    },
+	"X": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:kynaite_hoe",
+    "count": 1
+  }
+}

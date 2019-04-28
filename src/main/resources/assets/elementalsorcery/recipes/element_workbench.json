@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "es_box",
+  "pattern": [
+    "###",
+	"A#A",
+	"###"
+  ],
+  "key": {
+	"#": {
+      "item": "minecraft:planks",
+	  "data": 5
+    },
+	"A": {
+      "item": "elementalsorcery:magic_crystal"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:element_workbench",
+    "count": 1
+  }
+}

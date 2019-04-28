@@ -1,0 +1,16 @@
+[
+{
+  "modid": "elementalsorcery",
+  "name": "Elemental Sorcery",
+  "description": "Elemental Sorcery.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["yuzunyannn"],
+  "credits": "yuzunyannn(all)",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

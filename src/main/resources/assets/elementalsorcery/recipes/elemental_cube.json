@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "# #",
+	" X ",
+	"# #"
+  ],
+  "key": {
+    "#": {
+      "item": "elementalsorcery:element_crystal"
+    },
+	"X": {
+      "item": "minecraft:diamond"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:elemental_cube",
+    "count": 1
+  }
+}

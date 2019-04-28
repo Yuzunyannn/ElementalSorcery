@@ -1,0 +1,16 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "elementalsorcery:half_slab_estone"
+    },
+    "variants": {
+        "inventory": [{
+            "model": "elementalsorcery:half_slab_estone"
+        }],
+        "half": {
+            "top": { "model": "elementalsorcery:upper_slab_estone" },
+            "bottom": { "model": "elementalsorcery:half_slab_estone" },
+			 "full": { "model": "elementalsorcery:estone_normal" }
+        }
+    }
+}

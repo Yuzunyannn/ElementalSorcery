@@ -1,0 +1,24 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "es_hearth",
+  "pattern": [
+    "###",
+	"# #",
+	"#X#"
+  ],
+  "key": {
+    "#": {
+	  "type":"forge:ore_dict",
+      "ore": "kynaite"
+    },
+	"X": {
+	  "type":"forge:ore_dict",
+      "ore": "blockKynaite"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:hearth",
+    "count": 1,
+	"data":2
+  }
+}

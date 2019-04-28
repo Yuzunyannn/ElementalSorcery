@@ -1,0 +1,23 @@
+{
+  "type": "forge:ore_shaped",
+  "group": "es_smelt_box",
+  "pattern": [
+    "XXX",
+	"# #",
+	"XXX"
+  ],
+  "key": {
+    "#": {
+	  "type":"forge:ore_dict",
+      "ore": "blockKynaite"
+    },
+	"X": {
+	  "type":"forge:ore_dict",
+      "ore": "kynaite"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:smelt_box_kynaite",
+    "count": 1
+  }
+}

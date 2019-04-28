@@ -1,0 +1,399 @@
+package yuzunyan.elementalsorcery.init;
+
+import java.util.concurrent.Callable;
+
+import net.minecraft.block.Block;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.client.renderer.ItemMeshDefinition;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.renderer.block.statemap.IStateMapper;
+import net.minecraft.client.renderer.block.statemap.StateMap;
+import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemMultiTexture;
+import net.minecraft.item.ItemMultiTexture.Mapper;
+import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.CapabilityManager;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
+import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyan.elementalsorcery.ElementalSorcery;
+import yuzunyan.elementalsorcery.api.ESRegister;
+import yuzunyan.elementalsorcery.api.ability.IElementInventory;
+import yuzunyan.elementalsorcery.api.element.Element;
+import yuzunyan.elementalsorcery.block.BlockElementalCube;
+import yuzunyan.elementalsorcery.block.BlockHearth;
+import yuzunyan.elementalsorcery.block.BlocksEStone;
+import yuzunyan.elementalsorcery.building.BuildingLib;
+import yuzunyan.elementalsorcery.capability.ElementInventory;
+import yuzunyan.elementalsorcery.capability.Spellbook;
+import yuzunyan.elementalsorcery.container.ESGuiHandler;
+import yuzunyan.elementalsorcery.element.ElementMap;
+import yuzunyan.elementalsorcery.event.ESTestAndDebug;
+import yuzunyan.elementalsorcery.event.EventClient;
+import yuzunyan.elementalsorcery.event.EventServer;
+import yuzunyan.elementalsorcery.init.registries.ESCraftingRegistries;
+import yuzunyan.elementalsorcery.init.registries.EntityRegistries;
+import yuzunyan.elementalsorcery.init.registries.OreDictionaryRegistries;
+import yuzunyan.elementalsorcery.init.registries.TileItemRenderRegistries;
+import yuzunyan.elementalsorcery.network.ESNetwork;
+import yuzunyan.elementalsorcery.parchment.Pages;
+import yuzunyan.elementalsorcery.render.ESCustomModelLoader;
+import yuzunyan.elementalsorcery.render.ESTileEntityItemStackRenderer;
+import yuzunyan.elementalsorcery.render.IRenderItem;
+import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
+import yuzunyan.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
+import yuzunyan.elementalsorcery.render.tile.RenderTileElementCraftingTable;
+import yuzunyan.elementalsorcery.render.tile.RenderTileElementalCube;
+import yuzunyan.elementalsorcery.render.tile.RenderTileMagicDesk;
+import yuzunyan.elementalsorcery.render.tile.RenderTileMagicPlatform;
+import yuzunyan.elementalsorcery.tile.TileAbsorbBox;
+import yuzunyan.elementalsorcery.tile.TileDeconstructAltarTable;
+import yuzunyan.elementalsorcery.tile.TileDeconstructBox;
+import yuzunyan.elementalsorcery.tile.TileElementCraftingTable;
+import yuzunyan.elementalsorcery.tile.TileElementalCube;
+import yuzunyan.elementalsorcery.tile.TileHearth;
+import yuzunyan.elementalsorcery.tile.TileInfusionBox;
+import yuzunyan.elementalsorcery.tile.TileMagicDesk;
+import yuzunyan.elementalsorcery.tile.TileMagicPlatform;
+import yuzunyan.elementalsorcery.tile.TileSmeltBox;
+import yuzunyan.elementalsorcery.worldgen.WorldGeneratorES;
+
+public class ESInit {
+
+	public final static void init(FMLPreInitializationEvent event) {
+		// 初始化创建所有实例
+		ESInitInstance.instance();
+		// 注册物品
+		registerAllItems();
+		// 注册方块
+		registerAllBlocks();
+		// 注册tileentity
+		registerAllTiles();
+		// 注册元素
+		registerAllElements();
+		// 注册能力
+		registerAllCapability();
+		// 矿物词典注册
+		OreDictionaryRegistries.registerAll();
+		// 注册所有配方
+		ESCraftingRegistries.registerAll();
+		// 注册元素映射
+		ElementMap.registerAll();
+		// 注册实体
+		EntityRegistries.registerAll();
+		// 注册GUI句柄
+		NetworkRegistry.INSTANCE.registerGuiHandler(ElementalSorcery.instance, new ESGuiHandler());
+		// 注册世界生成
+		MinecraftForge.ORE_GEN_BUS.register(new WorldGeneratorES());
+		// 注册网络
+		ESNetwork.registerAll();
+		// 注册默认所有建筑
+		BuildingLib.registerAll();
+		// 初始化错误页面
+		Pages.initPre();
+		// 注册事件
+		MinecraftForge.EVENT_BUS.register(new EventServer());
+		// 测试类
+		new ESTestAndDebug();
+	}
+
+	@SideOnly(Side.CLIENT)
+	public final static void initClient(FMLPreInitializationEvent event) {
+		// 设置自定义模型加载
+		ModelLoaderRegistry.registerLoader(new ESCustomModelLoader());
+		// 注册所有渲染
+		registerAllRender();
+		// 注册实体渲染
+		EntityRegistries.registerAllRender();
+		// 客户端事件
+		MinecraftForge.EVENT_BUS.register(new EventClient());
+	}
+
+	@SideOnly(Side.CLIENT)
+	public final static void postInitClinet(FMLPostInitializationEvent event) {
+		// 更换指针
+		TileEntityItemStackRenderer.instance = new ESTileEntityItemStackRenderer(TileEntityItemStackRenderer.instance);
+		// 初始化所有说明界面，不需要在服务器初始化
+		Pages.init();
+	}
+	// 注册
+
+	static void registerAllItems() {
+
+		register(ESInitInstance.ITEMS.SPELLBOOK);
+		register(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE);
+		register(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT);
+		register(ESInitInstance.ITEMS.SPELLBOOK_LAUNCH);
+		register(ESInitInstance.ITEMS.SPELLBOOK_ELEMENT);
+
+		register(ESInitInstance.ITEMS.KYNAITE);
+		register(ESInitInstance.ITEMS.MAGICAL_PIECE);
+		register(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE);
+		register(ESInitInstance.ITEMS.KYNAITE_PICKAXE);
+		register(ESInitInstance.ITEMS.KYNAITE_AXE);
+		register(ESInitInstance.ITEMS.KYNAITE_SPADE);
+		register(ESInitInstance.ITEMS.KYNAITE_HOE);
+		register(ESInitInstance.ITEMS.KYNAITE_SWORD);
+		register(ESInitInstance.ITEMS.ARCHITECTURE_CRYSTAL);
+		register(ESInitInstance.ITEMS.ELEMENT_CRYSTAL);
+		register(ESInitInstance.ITEMS.MAGIC_CRYSTAL);
+		register(ESInitInstance.ITEMS.PARCHMENT);
+		register(ESInitInstance.ITEMS.MAGIC_PAPER);
+		register(ESInitInstance.ITEMS.SPELL_PAPER);
+		register(ESInitInstance.ITEMS.SPELL_CRYSTAL);
+		register(ESInitInstance.ITEMS.SPELLBOOK_COVER);
+		register(ESInitInstance.ITEMS.SCROLL);
+
+	}
+
+	static void registerAllBlocks() {
+		register(ESInitInstance.BLOCKS.HEARTH);
+		register(ESInitInstance.BLOCKS.SMELT_BOX);
+		register(ESInitInstance.BLOCKS.SMELT_BOX_IRON);
+		register(ESInitInstance.BLOCKS.SMELT_BOX_KYNAITE);
+		register(ESInitInstance.BLOCKS.KYNAITE_ORE);
+		register(ESInitInstance.BLOCKS.KYNAITE_BLOCK);
+		register(ESInitInstance.BLOCKS.ELEMENTAL_CUBE,
+				((BlockElementalCube) ESInitInstance.BLOCKS.ELEMENTAL_CUBE).getItemBlock());
+		register(ESInitInstance.BLOCKS.ESTONE);
+		register(ESInitInstance.BLOCKS.ESTONE_SLAB,
+				((BlocksEStone.EStoneSlab) ESInitInstance.BLOCKS.ESTONE_SLAB).getItemBlock());
+		register(ESInitInstance.BLOCKS.ESTONE_STAIRS);
+		register(ESInitInstance.BLOCKS.MAGIC_PLATFORM);
+		register(ESInitInstance.BLOCKS.ABSORB_BOX);
+		register(ESInitInstance.BLOCKS.INVALID_ENCHANTMENT_TABLE);
+		register(ESInitInstance.BLOCKS.ELEMENT_WORKBENCH);
+		register(ESInitInstance.BLOCKS.DECONSTRUCT_BOX);
+		register(ESInitInstance.BLOCKS.INFUSION_BOX);
+		register(ESInitInstance.BLOCKS.MAGIC_DESK);
+		register(ESInitInstance.BLOCKS.ELEMENT_CRAFTING_TABLE);
+		register(ESInitInstance.BLOCKS.DECONSTRUCT_ALTAR_TABLE);
+	}
+
+	static void registerAllTiles() {
+		register(TileElementalCube.class, "ElementalCrystal");
+		register(TileHearth.class, "Hearth");
+		register(TileSmeltBox.class, "SmeltBox");
+		register(TileMagicPlatform.class, "MagicPlatform");
+		register(TileAbsorbBox.class, "AbsorbBox");
+		register(TileDeconstructBox.class, "DeconstructBox");
+		register(TileInfusionBox.class, "InfusionBox");
+		register(TileMagicDesk.class, "MagicDesk");
+		register(TileElementCraftingTable.class, "ElementCraftingTable");
+		register(TileDeconstructAltarTable.class, "DeconstructAltarTable");
+	}
+
+	static void registerAllElements() {
+		register(ESInitInstance.ELEMENTS.VOID);
+		register(ESInitInstance.ELEMENTS.ENDER);
+		register(ESInitInstance.ELEMENTS.FIRE);
+		register(ESInitInstance.ELEMENTS.WATER);
+		register(ESInitInstance.ELEMENTS.AIR);
+		register(ESInitInstance.ELEMENTS.EARTH);
+		register(ESInitInstance.ELEMENTS.METAL);
+		register(ESInitInstance.ELEMENTS.WOOD);
+		register(ESInitInstance.ELEMENTS.KNOWLEDGE);
+	}
+
+	static void registerAllCapability() {
+		register(IElementInventory.class, new ElementInventory.Storage(), ElementInventory.class);
+		register(Spellbook.class, new Spellbook.Storage(), Spellbook.class);
+	}
+
+	@SideOnly(Side.CLIENT)
+	static void registerAllRender() {
+		TileEntitySpecialRenderer render_instance;
+		render_instance = new RenderTileElementalCube();
+		registerRender(ItemBlock.getItemFromBlock(ESInitInstance.BLOCKS.ELEMENTAL_CUBE), (IRenderItem) render_instance);
+		registerRender(TileElementalCube.class, render_instance);
+		registerStateMapper(ESInitInstance.BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
+		registerRender(ESInitInstance.BLOCKS.HEARTH, 0, "cobblestone_hearth");
+		registerRender(ESInitInstance.BLOCKS.HEARTH, 1, "iron_hearth");
+		registerRender(ESInitInstance.BLOCKS.HEARTH, 2, "kynaite_hearth");
+		registerRender(ESInitInstance.BLOCKS.SMELT_BOX);
+		registerRender(ESInitInstance.BLOCKS.SMELT_BOX_IRON);
+		registerRender(ESInitInstance.BLOCKS.SMELT_BOX_KYNAITE);
+		registerRender(ESInitInstance.BLOCKS.KYNAITE_ORE);
+		registerRender(ESInitInstance.BLOCKS.KYNAITE_BLOCK);
+		registerRender(ESInitInstance.ITEMS.KYNAITE);
+		registerRender(ESInitInstance.ITEMS.MAGICAL_PIECE);
+		registerRender(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE);
+		registerRender(ESInitInstance.ITEMS.KYNAITE_PICKAXE);
+		registerRender(ESInitInstance.ITEMS.KYNAITE_AXE);
+		registerRender(ESInitInstance.ITEMS.KYNAITE_SPADE);
+		registerRender(ESInitInstance.ITEMS.KYNAITE_HOE);
+		registerRender(ESInitInstance.ITEMS.KYNAITE_SWORD);
+		RenderItemSpellbook.instance = new RenderItemSpellbook();
+		registerRender(ESInitInstance.BLOCKS.ESTONE, 0, "estone_default");
+		registerRender(ESInitInstance.BLOCKS.ESTONE, 1, "estone_chiseled");
+		registerRender(ESInitInstance.BLOCKS.ESTONE, 2, "estone_lines");
+		registerRender(ESInitInstance.BLOCKS.ESTONE_SLAB);
+		registerRender(ESInitInstance.BLOCKS.ESTONE_STAIRS);
+		registerRender(ESInitInstance.ITEMS.ARCHITECTURE_CRYSTAL);
+		registerRender(ESInitInstance.BLOCKS.MAGIC_PLATFORM);
+		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
+		registerRender(ESInitInstance.BLOCKS.ABSORB_BOX);
+		registerRender(ESInitInstance.ITEMS.ELEMENT_CRYSTAL);
+		registerRender(ESInitInstance.ITEMS.MAGIC_CRYSTAL);
+		registerRender(ESInitInstance.ITEMS.PARCHMENT);
+		registerRender(ESInitInstance.BLOCKS.INVALID_ENCHANTMENT_TABLE);
+		registerRender(ESInitInstance.BLOCKS.ELEMENT_WORKBENCH);
+		registerRender(ESInitInstance.BLOCKS.DECONSTRUCT_BOX);
+		registerRender(ESInitInstance.BLOCKS.INFUSION_BOX);
+		registerRender(ESInitInstance.ITEMS.MAGIC_PAPER);
+		registerRender(ESInitInstance.ITEMS.SPELL_PAPER);
+		registerRender(ESInitInstance.ITEMS.SPELL_CRYSTAL);
+		registerRender(ESInitInstance.ITEMS.SPELLBOOK_COVER, 0, "spellbook_cover");
+		registerRender(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, "spellbook_back_cover");
+		registerRender(ESInitInstance.ITEMS.SCROLL);
+		render_instance = new RenderTileMagicDesk();
+		registerRender(ItemBlock.getItemFromBlock(ESInitInstance.BLOCKS.MAGIC_DESK), (IRenderItem) render_instance);
+		registerRender(TileMagicDesk.class, render_instance);
+		render_instance = new RenderTileElementCraftingTable();
+		registerRender(ItemBlock.getItemFromBlock(ESInitInstance.BLOCKS.ELEMENT_CRAFTING_TABLE),
+				(IRenderItem) render_instance);
+		registerRender(TileElementCraftingTable.class, render_instance);
+		render_instance = new RenderTileDeconstructAltarTable();
+		registerRender(ItemBlock.getItemFromBlock(ESInitInstance.BLOCKS.DECONSTRUCT_ALTAR_TABLE),
+				(IRenderItem) render_instance);
+		registerRender(TileDeconstructAltarTable.class, render_instance);
+
+		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
+		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);
+		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, RenderItemSpellbook.instance);
+		registerRender(ESInitInstance.ITEMS.SPELLBOOK_LAUNCH, RenderItemSpellbook.instance);
+		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ELEMENT, RenderItemSpellbook.instance);
+	}
+
+	// 分离的注册函数
+
+	private static <T, U extends Capability.IStorage<T>, V extends T> void register(Class<T> _interface, U storage,
+			Class<V> icalss) {
+		CapabilityManager.INSTANCE.register(_interface, storage, new Callable<V>() {
+			@Override
+			public V call() throws Exception {
+				return icalss.newInstance();
+			}
+		});
+	}
+
+	private static void register(Element element) {
+		ESRegister.ELEMENT.register(element);
+	}
+
+	private static void register(Item item) {
+		ForgeRegistries.ITEMS.register(item);
+	}
+
+	private static void register(Block block) {
+		if (block instanceof Mapper)
+			register(block, (Mapper) block);
+		else
+			register(block, new ItemBlock(block));
+	}
+
+	private static void register(Block block, Mapper mapper) {
+		register(block, new ItemMultiTexture(block, block, mapper));
+	}
+
+	private static void register(Block block, ItemBlock itemBlock) {
+		ForgeRegistries.BLOCKS.register(block);
+		ForgeRegistries.ITEMS.register(itemBlock.setRegistryName(block.getRegistryName()));
+	}
+
+	private static void register(Class<? extends TileEntity> tileEntityClass, String id) {
+		GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation(ElementalSorcery.MODID, id));
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void registerRender(Item item) {
+		registerRender(item, 0);
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void registerRender(Item item, int meta) {
+		ModelResourceLocation model = new ModelResourceLocation(item.getRegistryName(), "inventory");
+		ModelLoader.setCustomModelResourceLocation(item, meta, model);
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void registerRender(Item item, int meta, String id) {
+		ResourceLocation location = new ResourceLocation(item.getRegistryName().getResourceDomain(), id);
+		ModelResourceLocation model = new ModelResourceLocation(location, "inventory");
+		ModelLoader.setCustomModelResourceLocation(item, meta, model);
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void registerRender(Item item, ItemMeshDefinition meshDefinition) {
+		ModelLoader.setCustomMeshDefinition(item, meshDefinition);
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void registerRenderNoMeta(Item item) {
+		registerRender(item, new ItemMeshDefinition() {
+			@Override
+			public ModelResourceLocation getModelLocation(ItemStack stack) {
+				return new ModelResourceLocation(item.getRegistryName(), "inventory");
+			}
+		});
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void registerRender(Item item, IRenderItem item_render) {
+		TileItemRenderRegistries.register(item, item_render);
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static <T extends TileEntity> void registerRender(Class<T> tile, TileEntitySpecialRenderer<T> renderer) {
+		ClientRegistry.bindTileEntitySpecialRenderer(tile, renderer);
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void registerRender(Block block, ItemMeshDefinition meshDefinition) {
+		registerRender(Item.getItemFromBlock(block), meshDefinition);
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void registerRender(Block block) {
+		registerRender(block, 0);
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void registerRender(Block block, int meta) {
+		registerRender(block, meta, block.getRegistryName().getResourcePath());
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void registerRender(Block block, int meta, String id) {
+		ModelResourceLocation model = new ModelResourceLocation(ElementalSorcery.MODID + ":" + id, "inventory");
+		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, model);
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static <T extends Enum<T> & IStringSerializable> void registerStateMapper(Block block,
+			PropertyEnum<T> _enum, String suffix) {
+		registerStateMapper(block, new StateMap.Builder().withName(_enum).withSuffix("_" + suffix).build());
+
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void registerStateMapper(Block block, IStateMapper mapper) {
+		ModelLoader.setCustomStateMapper(block, mapper);
+	}
+
+}

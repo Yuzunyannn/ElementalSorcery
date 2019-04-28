@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+	"XAX",
+	"###"
+  ],
+  "key": {
+  	"X": {
+      "item": "minecraft:gold_ingot"
+    },
+	"#": {
+      "item": "minecraft:planks",
+	  "data": 5
+    },
+	"A": {
+      "item": "elementalsorcery:magic_crystal"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:magic_platform",
+    "count": 1
+  }
+}

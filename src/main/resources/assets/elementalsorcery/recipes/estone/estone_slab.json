@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "estone",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "elementalsorcery:estone",
+	  "data": 0
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:estone_slab",
+    "count": 6
+  }
+}

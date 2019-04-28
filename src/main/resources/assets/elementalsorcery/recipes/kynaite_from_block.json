@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "kynaite",
+  "pattern": [
+    "#"
+  ],
+  "key": {
+    "#": {
+      "item": "elementalsorcery:kynaite_block"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:kynaite",
+    "count": 9
+  }
+}

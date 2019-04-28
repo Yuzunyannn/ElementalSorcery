@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "estone",
+  "pattern": [
+    "###",
+	"#X#",
+	"###"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:quartz_block",
+	  "data": 0
+    },
+	"X": {
+      "item": "elementalsorcery:magic_crystal"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:estone",
+    "count": 8,
+	"data": 0
+  }
+}
