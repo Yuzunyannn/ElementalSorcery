@@ -18,6 +18,7 @@ import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.util.ElementHelper;
 import yuzunyan.elementalsorcery.block.BlockElementalCube;
 import yuzunyan.elementalsorcery.capability.ElementInventory;
+import yuzunyan.elementalsorcery.event.EventClient;
 import yuzunyan.elementalsorcery.item.ItemSpellbook;
 import yuzunyan.elementalsorcery.render.particle.ParticleElement;
 import yuzunyan.elementalsorcery.util.obj.Vertex;
@@ -56,16 +57,31 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable {
 	// 获取一次元素动画
 	@SideOnly(Side.CLIENT)
 	public static void giveParticleElementTo(World world, int color, BlockPos from, BlockPos pto, float possibility) {
+		if (EventClient.tick % 5 != 0)
+			return;
+		if (Math.random() > possibility)
+			return;
 		TileEntity tile = world.getTileEntity(from);
 		if (tile instanceof TileElementalCube)
 			((TileElementalCube) tile).wake();
-		if (Math.random() < possibility) {
-			ParticleElement effect = new ParticleElement(world,
+		else {
+			tile = world.getTileEntity(pto);
+			if (tile instanceof TileElementalCube)
+				((TileElementalCube) tile).wake();
+		}
+		ParticleElement effect;
+		if (pto.getY() > from.getY())
+			effect = new ParticleElement(world,
 					new Vec3d(from.getX() + Math.random(), from.getY() + Math.random(), from.getZ() + Math.random()),
 					new Vec3d(pto.getX() + 0.5, pto.getY() + 0.5, pto.getZ() + 0.5));
-			effect.setColor(color);
-			Minecraft.getMinecraft().effectRenderer.addEffect(effect);
-		}
+		else
+			effect = new ParticleElement(world,
+					new Vec3d(from.getX() + 0.25 + Math.random() * 0.5, from.getY() + 0.25 + Math.random() * 0.5,
+							from.getZ() + 0.25 + Math.random() * 0.5),
+					new Vec3d(pto.getX() + 0.5, pto.getY() + 1.0, pto.getZ() + 0.5));
+		effect.setColor(color);
+		Minecraft.getMinecraft().effectRenderer.addEffect(effect);
+
 	}
 
 	// 保存句柄

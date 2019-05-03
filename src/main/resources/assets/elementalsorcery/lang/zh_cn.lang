@@ -92,6 +92,9 @@ info.spbe.has1=数量：%d
 info.spbe.has2=能量：%d
 info.spbe.has3=消耗：%d
 info.spbe.has4=释放时间：%.1fs
+info.launchbook.shift=shift+右键切换咒文
+info.launchbook.craft=合成启动咒文
+info.launchbook.dec=析构启动咒文
 
 page.crafting.need=需要元素参与合成：
 page.crafting.show=%s 需要 %d 强度下限 %d 

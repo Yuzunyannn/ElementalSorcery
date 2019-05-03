@@ -53,6 +53,11 @@ public class ElementStack implements net.minecraftforge.common.capabilities.ICap
 		return itemstack;
 	}
 
+	@Override
+	protected ElementStack clone() {
+		return this.copy();
+	}
+
 	/** 获取元素 */
 	public Element getElement() {
 		return element;
@@ -97,7 +102,8 @@ public class ElementStack implements net.minecraftforge.common.capabilities.ICap
 
 	/** 分割 */
 	public ElementStack splitStack(int size) {
-		if(this.isEmpty())return ElementStack.EMPTY;
+		if (this.isEmpty())
+			return ElementStack.EMPTY;
 		ElementStack estack = this.copy();
 		this.shrink(size);
 		estack.setCount(size);

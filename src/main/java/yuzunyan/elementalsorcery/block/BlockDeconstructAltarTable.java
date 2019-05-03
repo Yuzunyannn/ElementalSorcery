@@ -38,7 +38,7 @@ public class BlockDeconstructAltarTable extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		return BlockHelper.onBlockActivatedWithIGetItemStack(worldIn, pos, state, playerIn, hand);
+		return BlockHelper.onBlockActivatedWithIGetItemStack(worldIn, pos, state, playerIn, hand,false);
 	}
 
 	@Override

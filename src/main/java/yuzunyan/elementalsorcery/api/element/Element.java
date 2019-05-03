@@ -63,12 +63,13 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 	/** 默认能量级 */
 	static public int DP_TOOLS = 5;
 	static public int DP_BOX = 20;
+	static public int DP_ALTAR = 100;
 
 	/**
 	 * 物品被析构成元素时候，获取真正可以得到的元素
 	 * 
 	 * @param stack
-	 *            被析构的物品，方块的话也会变成对应的物品栈传入
+	 *            被析构的物品，方块的话也会变成对应的物品栈传入（注意：传入的stack是有数量的，但是该函数在处理时，应认为数量只有一个）
 	 * @param estack
 	 *            析构时核查的元素
 	 * @param power
@@ -79,13 +80,18 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 		if (power <= Element.DP_TOOLS) {
 			if (estack.getCount() > 25)
 				estack.setCount(25);
-			estack.rise(-0.75f);
+			estack.rise(-0.8f);
 			estack.weaken(0.25f);
 		} else if (power <= Element.DP_BOX) {
 			if (estack.getCount() > 100)
 				estack.setCount(100);
-			estack.rise(-0.65f);
+			estack.rise(-0.7f);
 			estack.weaken(0.35f);
+		} else if (power <= Element.DP_ALTAR) {
+			if (estack.getCount() > 200)
+				estack.setCount(200);
+			estack.rise(-0.6f);
+			estack.weaken(0.45f);
 		}
 		return estack;
 	}

@@ -174,7 +174,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 			if (!estack.isEmpty()) {
 				if (world.isRemote)
 					TileElementalCube.giveParticleElementTo(world, estack.getColor(), structure.getSpecialBlockPos(i),
-							this.pos.up(), 0.2f);
+							this.pos.up(), 0.5f);
 				inv_other.extractElement(estack, false);
 				inv.insertElement(estack, false);
 			}

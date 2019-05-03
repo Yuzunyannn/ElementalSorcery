@@ -1,11 +1,20 @@
 package yuzunyan.elementalsorcery.item;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -27,8 +36,40 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 		info.texture = RenderItemSpellbook.instance.TEXTURE_SPELLBOOK_LAUNCH;
 	}
 
+	@Override
 	public int getCast(Spellbook book) {
-		return 10;
+		return 30;
+	}
+
+	@Override
+	public void swap(World world, EntityLivingBase entity, ItemStack stack, Spellbook book) {
+		this.switchBookType(stack);
+		if (world.isRemote && entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entity;
+			player.sendMessage(new TextComponentTranslation(this.getUnlocalizedTypeName(stack)));
+		}
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+		tooltip.add(TextFormatting.GOLD + I18n.format("info.launchbook.shift"));
+		tooltip.add(TextFormatting.DARK_AQUA + I18n.format(this.getUnlocalizedTypeName(stack)));
+	}
+
+	private String getUnlocalizedTypeName(ItemStack stack) {
+		ICraftingLaunch.CraftingType type = this.getBookType(stack);
+		String str = "";
+		switch (type) {
+		case ELEMENT_CRAFTING:
+			str = "info.launchbook.craft";
+			break;
+		case ELEMENT_DECONSTRUCT:
+			str = "info.launchbook.dec";
+			break;
+		}
+		return str;
 	}
 
 	@Override
@@ -50,18 +91,17 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 			if (!world.isRemote) {
 				if (this.setAndWait(tile, book, power)) {
 					book.finishSpelling(world, entity);
-					ICraftingLaunch.CraftingType type = ICraftingLaunch.CraftingType.ELEMENT_CRAFTING;
+					ICraftingLaunch.CraftingType type = this.getBookType(stack);
 					ICraftingLaunch crafting = (ICraftingLaunch) tile;
 					if (crafting.isWorking())
 						return;
 					if (crafting.checkType(type)) {
+						EntityPlayer player = null;
+						if (entity instanceof EntityPlayer)
+							player = (EntityPlayer) entity;
 						// 开始Crafting！
-						if (crafting.craftingBegin(type)) {
-							if (tile instanceof TileStaticMultiBlock) {
-								if (entity instanceof EntityPlayer)
-									((TileStaticMultiBlock) tile).setPlayer((EntityPlayer) entity);
-							}
-							EntityCrafting ecrafting = new EntityCrafting(world, pos, type);
+						if (crafting.craftingBegin(type, player)) {
+							EntityCrafting ecrafting = new EntityCrafting(world, pos, type, player);
 							world.spawnEntity(ecrafting);
 						}
 					} else {
@@ -82,12 +122,38 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 		}
 	}
 
+	private ICraftingLaunch.CraftingType getBookType(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) {
+			stack.setTagCompound(new NBTTagCompound());
+			nbt = stack.getTagCompound();
+		}
+		return ICraftingLaunch.CraftingType.values()[nbt.getInteger("bookType")];
+	}
+
+	private void switchBookType(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) {
+			stack.setTagCompound(new NBTTagCompound());
+			nbt = stack.getTagCompound();
+		}
+		ICraftingLaunch.CraftingType type = ICraftingLaunch.CraftingType.values()[nbt.getInteger("bookType")];
+		switch (type) {
+		case ELEMENT_CRAFTING:
+			nbt.setInteger("bookType", ICraftingLaunch.CraftingType.ELEMENT_DECONSTRUCT.ordinal());
+			break;
+		case ELEMENT_DECONSTRUCT:
+			nbt.setInteger("bookType", ICraftingLaunch.CraftingType.ELEMENT_CRAFTING.ordinal());
+			break;
+		}
+	}
+
 	private boolean setAndWait(TileEntity tile, Spellbook book, int power) {
 		if (book.cast_time < 0) {
 			book.cast_time = power;
 		}
 		boolean ok = true;
-		if (power - book.cast_time > 30) {
+		if (power - book.cast_time > this.getCast(book)) {
 			if (tile instanceof TileStaticMultiBlock) {
 				ok = ((TileStaticMultiBlock) tile).isIntact();
 			}

@@ -2,11 +2,13 @@ package yuzunyan.elementalsorcery.entity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleFirework;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -35,21 +37,23 @@ public class EntityCrafting extends Entity {
 	private List<ItemStack> item_list = null;
 	private BlockPos pos;
 	private ICraftingLaunch.CraftingType type;
+	private EntityPlayer player;
 
 	@SideOnly(Side.CLIENT)
 	private ICraftingLaunchAnime craftingAnime = null;
 
 	public EntityCrafting(World worldIn) {
-		this(worldIn, null, null);
+		this(worldIn, null, null, null);
 	}
 
-	public EntityCrafting(World worldIn, BlockPos pos, ICraftingLaunch.CraftingType type) {
+	public EntityCrafting(World worldIn, BlockPos pos, ICraftingLaunch.CraftingType type, EntityPlayer player) {
 		super(worldIn);
 		this.width = 0.25f;
 		this.height = 0.25f;
 		this.motionX = 0;
 		this.motionY = 0;
 		this.motionZ = 0;
+		this.player = player;
 		if (!world.isRemote) {
 			if (pos == null)
 				return;
@@ -118,6 +122,8 @@ public class EntityCrafting extends Entity {
 					TileEntity tile = world.getTileEntity(this.pos);
 					if (tile instanceof ICraftingLaunch) {
 						this.crafting = (ICraftingLaunch) tile;
+						this.crafting.craftingRecovery(type, this.player);
+						this.crafting.commitItems();
 						this.craftingAnime = this.crafting.getAnime();
 						if (this.craftingAnime == null)
 							this.craftingAnime = RenderEntityCrafting.getDefultAnime();
@@ -130,7 +136,7 @@ public class EntityCrafting extends Entity {
 				TileEntity tile = world.getTileEntity(this.pos);
 				if (tile instanceof ICraftingLaunch) {
 					this.crafting = (ICraftingLaunch) tile;
-					this.crafting.craftingRecovery(type);
+					this.crafting.craftingRecovery(type, this.player);
 					return;
 				}
 			}
@@ -180,6 +186,10 @@ public class EntityCrafting extends Entity {
 	private void drop() {
 		if (this.item_list == null)
 			return;
+		if(this.type == ICraftingLaunch.CraftingType.ELEMENT_DECONSTRUCT){
+			item_list.clear();
+			return;
+		}
 		for (ItemStack stack : item_list) {
 			if (stack.isEmpty())
 				continue;
@@ -230,8 +240,13 @@ public class EntityCrafting extends Entity {
 		return item_list;
 	}
 
+	//private UUID uuidPlayer = null;
+
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
+		// if (compound.hasUniqueId("cPlayer")) {
+		// uuidPlayer = compound.getUniqueId("cPlayer");
+		// }
 		this.recoveryDataFromNBT(compound.getCompoundTag("ecrafting"));
 		dataManager.set(NBT, this.getDataNBT());
 		dataManager.setDirty(NBT);
@@ -239,6 +254,10 @@ public class EntityCrafting extends Entity {
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
+		// if (this.player != null) {
+		// compound.setUniqueId("cPlayer", this.player.getUniqueID());
+		// System.out.println("uuid已经设置！！！！！！！！！！！");
+		// }
 		compound.setTag("ecrafting", this.getDataNBT());
 	}
 

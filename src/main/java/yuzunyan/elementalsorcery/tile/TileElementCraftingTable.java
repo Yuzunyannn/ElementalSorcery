@@ -7,6 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import yuzunyan.elementalsorcery.ElementalSorcery;
 import yuzunyan.elementalsorcery.api.crafting.IRecipe;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.util.ElementHelper;
@@ -51,37 +52,36 @@ public class TileElementCraftingTable extends TileStaticMultiBlockWithInventory 
 	protected boolean working = false;
 
 	@Override
-	public void setPlayer(EntityPlayer player) {
-		this.player = player;
-	}
-
-	@Override
-	public boolean craftingBegin(CraftingType type) {
+	public boolean craftingBegin(CraftingType type, EntityPlayer player) {
 		if (this.isEmpty())
+			return false;
+		if (!this.isIntact())
 			return false;
 		this.onCraftMatrixChanged();
 		if (this.getOutput().isEmpty())
 			return false;
-		this.craftingRecovery(type);
+		this.craftingRecovery(type, player);
 		this.markDirty();
 		return working;
 	}
 
 	@Override
-	public void craftingRecovery(CraftingType type) {
+	public void craftingRecovery(CraftingType type, EntityPlayer player) {
+		this.player = player;
 		this.working = true;
 		if (working_inventory == null)
 			working_inventory = new ItemStackHandlerInventory(this.getSizeInventory());
+		else {
+			IRecipe irecipe = RecipeManagement.instance.findMatchingRecipe(working_inventory, world);
+			if (irecipe != null)
+				result = irecipe.getCraftingResult(working_inventory).copy();
+		}
 		if (working_result == null)
 			working_result = new ItemStackHandlerInventory(4);
 		working_irecipe = null;
 		try_tick = 100;
 		startTime = 80;
 		endTime = 80;
-		if (world.isRemote)
-			this.commitItems();
-		else
-			this.updateToClient();
 	}
 
 	@Override
@@ -154,6 +154,13 @@ public class TileElementCraftingTable extends TileStaticMultiBlockWithInventory 
 		ItemStack out = result.copy();
 		if (this.player != null)
 			out.onCrafting(world, this.player, out.getCount());
+		else {
+			try {
+				out.getItem().onCreated(out, this.world, null);
+			} catch (NullPointerException e) {
+				ElementalSorcery.logger.warn("合祭坛合成时，onCreated出现空指针异常，这是一个非常不期望的结果", e);
+			}
+		}
 		if (this.addResult(out)) {
 			this.markDirty();
 		} else
@@ -226,7 +233,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlockWithInventory 
 		return type == CraftingType.ELEMENT_CRAFTING;
 	}
 
-	// 产出结果
+	// 产出结果，该引用的对象不应该被修改，该变量同时起到标定作用
 	private ItemStack result = ItemStack.EMPTY;
 
 	public ItemStack getOutput() {
@@ -267,15 +274,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlockWithInventory 
 			working_einv = new ElementInventory();
 			working_einv.deserializeNBT(compound.getCompoundTag("work_einv"));
 		}
-		if (compound.hasKey("cplayer")) {
-			this.player = world.getPlayerEntityByUUID(compound.getUniqueId("cplayer"));
-		}
 		super.readFromNBT(compound);
-		if (this.isSending()) {
-			boolean working = compound.getBoolean("is_working");
-			if (working)
-				this.craftingRecovery(CraftingType.ELEMENT_CRAFTING);
-		}
 	}
 
 	@Override
@@ -286,12 +285,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlockWithInventory 
 			compound.setTag("work_res", working_result.serializeNBT());
 		if (working_einv != null)
 			compound.setTag("work_einv", working_einv.serializeNBT());
-		compound = super.writeToNBT(compound);
-		if (this.isSending())
-			compound.setBoolean("is_working", this.isWorking());
-		else if (this.player != null)
-			compound.setUniqueId("cplayer", this.player.getUniqueID());
-		return compound;
+		return super.writeToNBT(compound);
 	}
 
 }

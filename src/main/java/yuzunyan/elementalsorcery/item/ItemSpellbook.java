@@ -134,20 +134,20 @@ public class ItemSpellbook extends Item {
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		ItemStack stack = playerIn.getHeldItem(handIn);
 		if (!stack.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null))
-			return new ActionResult<ItemStack>(EnumActionResult.FAIL, playerIn.getHeldItem(handIn));
+			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		Spellbook spellbook = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 		// 蹲着
 		if (playerIn.isSneaking()) {
 			this.swap(worldIn, playerIn, stack, spellbook);
-			return new ActionResult<ItemStack>(EnumActionResult.PASS, playerIn.getHeldItem(handIn));
+			return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 		}
 		// 开始释放！
 		if (!this.spellBegin(worldIn, playerIn, stack, spellbook))
-			return new ActionResult<ItemStack>(EnumActionResult.FAIL, playerIn.getHeldItem(handIn));
+			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		// 开始释放
 		spellbook.beginSpelling(worldIn, playerIn, handIn);
 
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}
 
 	// 结束使用魔法书

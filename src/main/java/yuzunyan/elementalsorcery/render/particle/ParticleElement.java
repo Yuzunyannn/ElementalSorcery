@@ -15,7 +15,8 @@ public class ParticleElement extends ParticleSimpleAnimated {
 	static public final double at_high_speed = 0.05;
 
 	private boolean main = false;
-	private boolean upping = true;
+	private boolean straight = true;
+	private boolean upward = true;
 	private final ParticleManager effectRenderer = Minecraft.getMinecraft().effectRenderer;
 
 	private Vec3d ori;
@@ -23,6 +24,7 @@ public class ParticleElement extends ParticleSimpleAnimated {
 	private double r;
 	private double theta = 0;
 	private double dtheta = 0;
+	private double bottom;
 
 	public ParticleElement(World world, Vec3d from, Vec3d to) {
 		super(world, from.x, from.y, from.z, 160, 8, -0.004F);
@@ -32,19 +34,23 @@ public class ParticleElement extends ParticleSimpleAnimated {
 		this.motionX = 0;
 		this.motionZ = 0;
 		this.motionY = 0;
+		this.particleAge = 0;
+		this.setParticleTextureIndex(160);
+		// 计算圆弧
+		tar = to.subtract(from);
+		tar = new Vec3d(tar.x, 0, tar.z);
+		r = tar.lengthVector() / 2;
 		if (from.y > to.y) {
-			this.main = false;
+			bottom = to.y;
+			ori = new Vec3d(from.x, from.y, from.z);
+			this.motionY = 0.0;
+			upward = false;
+			straight = false;
 		} else {
-			this.setParticleTextureIndex(160);
+			bottom = from.y;
+			ori = new Vec3d(from.x, to.y, from.z);
 			double high = to.y - from.y;
 			this.motionY = Math.sqrt(at_high_speed * at_high_speed - 2 * g * high);
-
-			tar = to.subtract(from);
-			tar = new Vec3d(tar.x, 0, tar.z);
-			r = tar.lengthVector() / 2;
-
-			ori = new Vec3d(from.x, to.y, from.z);
-			this.particleAge = 0;
 		}
 	}
 
@@ -93,11 +99,16 @@ public class ParticleElement extends ParticleSimpleAnimated {
 		this.posY += this.motionY;
 		this.posZ += this.motionZ;
 
-		if (this.upping) {
+		if (this.straight) {
 			this.motionY += g;
-			if (this.motionY <= at_high_speed) {
-				this.upping = false;
-				this.dtheta = at_high_speed / r;
+			if (this.upward) {
+				if (this.motionY <= at_high_speed) {
+					this.straight = false;
+					this.dtheta = at_high_speed / r;
+				}
+			} else {
+				if (this.posY < bottom)
+					this.setExpired();
 			}
 		} else {
 			this.theta += this.dtheta;
@@ -107,8 +118,14 @@ public class ParticleElement extends ParticleSimpleAnimated {
 			Vec3d pos = this.ori.add(this.tar.scale(factor));
 			this.posX = pos.x;
 			this.posZ = pos.z;
-			if (this.theta >= Math.PI) {
-				this.setExpired();
+			if (this.upward) {
+				if (this.theta >= Math.PI)
+					this.setExpired();
+			} else {
+				if (this.theta >= Math.PI) {
+					this.straight = true;
+					this.motionY = -this.dtheta * r;
+				}
 			}
 		}
 

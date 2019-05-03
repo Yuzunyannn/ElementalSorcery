@@ -5,14 +5,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import net.minecraftforge.items.ItemHandlerHelper;
 import yuzunyan.elementalsorcery.api.ability.IGetItemStack;
-import yuzunyan.elementalsorcery.tile.TileMagicPlatform;
 
 public class BlockHelper {
 	/** 掉落 */
@@ -28,7 +27,7 @@ public class BlockHelper {
 
 	/** 方块激活的时候，设置继承IGetItemStack的物品栈 */
 	public static boolean onBlockActivatedWithIGetItemStack(World worldIn, BlockPos pos, IBlockState state,
-			EntityPlayer playerIn, EnumHand hand) {
+			EntityPlayer playerIn, EnumHand hand, boolean justOne) {
 		if (playerIn.isSneaking()) {
 			IGetItemStack tile = (IGetItemStack) worldIn.getTileEntity(pos);
 			ItemStack stack = tile.getStack();
@@ -44,13 +43,29 @@ public class BlockHelper {
 			if (stack.isEmpty())
 				return false;
 			IGetItemStack tile = (IGetItemStack) worldIn.getTileEntity(pos);
-			if (!tile.getStack().isEmpty())
-				return false;
-			if (!worldIn.isRemote) {
-				ItemStack inStack = stack.copy();
-				inStack.setCount(1);
-				stack.shrink(1);
-				tile.setStack(inStack);
+			if (tile.getStack().isEmpty()) {
+				if (!worldIn.isRemote) {
+					ItemStack inStack = ItemStack.EMPTY;
+					inStack = stack.copy();
+					inStack.setCount(1);
+					stack.shrink(1);
+					tile.setStack(inStack);
+				}
+			} else {
+				if (justOne)
+					return false;
+				ItemStack inStack = tile.getStack();
+				if (!ItemHandlerHelper.canItemStacksStack(inStack, stack))
+					return false;
+				int count = inStack.getCount();
+				count++;
+				if (count > inStack.getMaxStackSize())
+					return false;
+				if (!worldIn.isRemote) {
+					inStack.setCount(count);
+					stack.shrink(1); 
+					tile.setStack(inStack);
+				}
 			}
 			return true;
 		}

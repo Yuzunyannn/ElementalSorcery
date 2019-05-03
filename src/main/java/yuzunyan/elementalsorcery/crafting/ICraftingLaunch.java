@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import ibxm.Player;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -15,23 +17,25 @@ public interface ICraftingLaunch {
 	boolean isWorking();
 
 	/**
-	 * 制作开始
+	 * 制作开始[服务器]
 	 * 
 	 * @param type
 	 *            这次进行的类型
+	 * @param player
+	 *            进行操作的玩家，可以为null
 	 * @return ture表示正式开始，false表示条件不足无法开始
 	 */
-	boolean craftingBegin(CraftingType type);
+	boolean craftingBegin(CraftingType type, @Nullable EntityPlayer player);
 
 	/**
-	 * 制作恢复 从村当中恢复调用
+	 * 制作恢复 从村当中恢复调用[服务器][客户端]
 	 */
-	void craftingRecovery(CraftingType type);
+	void craftingRecovery(CraftingType type, @Nullable EntityPlayer player);
 
-	/** 制作更新 */
+	/** 制作更新[服务器] */
 	void craftingUpdate();
 
-	/** 客户端的更新 */
+	/** 客户端的更新[客户端] */
 	default void craftingUpdateClient() {
 
 	}
@@ -51,7 +55,7 @@ public interface ICraftingLaunch {
 	 */
 	int craftingEnd(List<ItemStack> list);
 
-	/** 提交物品 */
+	/** 提交物品 [服务器][客户端] */
 	@Nullable
 	List<ItemStack> commitItems();
 
