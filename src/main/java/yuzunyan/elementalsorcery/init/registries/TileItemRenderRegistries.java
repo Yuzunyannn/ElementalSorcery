@@ -5,25 +5,28 @@ import java.util.Map;
 
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.model.ICustomModelLoader;
+import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoader;
+import yuzunyan.elementalsorcery.render.ESTileEntityItemStackRenderer;
 import yuzunyan.elementalsorcery.render.IRenderItem;
+import yuzunyan.elementalsorcery.render.ItemRendererModel;
 
-public class TileItemRenderRegistries {
+public class TileItemRenderRegistries implements ICustomModelLoader {
 
-	private static Map<ResourceLocation, IRenderItem> items = new HashMap<>();
+	public static TileItemRenderRegistries instance;
 
-	public static boolean accepts(ResourceLocation modelLocation) {
-		return items.containsKey(modelLocation);
-	}
+	private Map<ResourceLocation, IRenderItem> items = new HashMap<>();
 
 	private static ResourceLocation getItemKey(ResourceLocation rsname) {
 		return new ResourceLocation(rsname.getResourceDomain(), "models/item/" + rsname.getResourcePath());
 	}
 
-	public static void register(Item item, IRenderItem render) {
+	public void register(Item item, IRenderItem render) {
 		ResourceLocation rsname = item.getRegistryName();
 		if (items.containsKey(rsname))
 			return;
@@ -31,6 +34,7 @@ public class TileItemRenderRegistries {
 			return;
 		ResourceLocation key = getItemKey(rsname);
 		items.put(key, render);
+		item.setTileEntityItemStackRenderer(new ESTileEntityItemStackRenderer(render));
 		ModelLoader.setCustomMeshDefinition(item, new ItemMeshDefinition() {
 			@Override
 			public ModelResourceLocation getModelLocation(ItemStack stack) {
@@ -39,22 +43,25 @@ public class TileItemRenderRegistries {
 		});
 	}
 
-	public static boolean renderItIfPossible(ItemStack stack, float partialTicks) {
-		if (stack.isEmpty())
-			return false;
-		ResourceLocation key = getItemKey(stack.getItem().getRegistryName());
-		if (!accepts(key))
-			return false;
-		items.get(key).render(stack, partialTicks);
-		return true;
+	@Override
+	public boolean accepts(ResourceLocation modelLocation) {
+		return items.containsKey(modelLocation);
 	}
 
-	public static boolean canRenderIt(ItemStack stack, float partialTicks) {
-		if (stack.isEmpty())
-			return false;
-		ResourceLocation key = getItemKey(stack.getItem().getRegistryName());
-		if (!accepts(key))
-			return false;
-		return true;
+	@Override
+	public void onResourceManagerReload(IResourceManager resourceManager) {
+		// 资源刷新时刷新内部数据
 	}
+
+	@Override
+	public IModel loadModel(ResourceLocation modelLocation) throws Exception {
+		// 加载模型
+		return new ItemRendererModel();
+	}
+
+	@Override
+	public String toString() {
+		return "ESCustomModelLoader";
+	}
+
 }

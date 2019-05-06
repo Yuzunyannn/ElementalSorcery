@@ -22,6 +22,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyan.elementalsorcery.ElementalSorcery;
+import yuzunyan.elementalsorcery.api.ability.IAltarWake;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.util.ElementHelper;
@@ -167,11 +168,15 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 		need.weaken(0);
 		for (int i = 0; i < 4; i++) {
 			TileEntity cube = structure.getSpecialTileEntity(i);
+			IAltarWake altarWake = TileStaticMultiBlock.getAlterWake(cube);
+			if (altarWake == null)
+				continue;
 			IElementInventory inv_other = ElementHelper.getElementInventory(cube);
 			if (inv_other == null)
 				continue;
 			ElementStack estack = TileElementalCube.getAndTestElementTransBetweenInventory(need.copy(), inv, inv_other);
 			if (!estack.isEmpty()) {
+				altarWake.wake(IAltarWake.SEND);
 				if (world.isRemote)
 					TileElementalCube.giveParticleElementTo(world, estack.getColor(), structure.getSpecialBlockPos(i),
 							this.pos.up(), 0.5f);

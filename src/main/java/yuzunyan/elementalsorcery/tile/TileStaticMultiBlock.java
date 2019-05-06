@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import yuzunyan.elementalsorcery.api.ability.IAltarWake;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.util.ElementHelper;
@@ -40,15 +41,26 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 		return this.ok;
 	}
 
+	public static IAltarWake getAlterWake(TileEntity tile) {
+		if (tile instanceof IAltarWake)
+			return (IAltarWake) tile;
+		return null;
+	}
+
 	/** 根据条件，获取一个元素 */
 	protected ElementStack getElementFromSpPlace(ElementStack need, BlockPos animePos) {
 		for (int i = 0; i < structure.getSpecialBlockCount(); i++) {
+			// 获取唤醒
+			IAltarWake altarWake = getAlterWake(structure.getSpecialTileEntity(i));
+			if (altarWake == null)
+				continue;
 			// 获取仓库
 			IElementInventory einv = ElementHelper.getElementInventory(structure.getSpecialTileEntity(i));
 			if (einv == null)
 				continue;
 			ElementStack extract = einv.extractElement(need, true);
 			if (extract.arePowerfulAndMoreThan(need)) {
+				altarWake.wake(IAltarWake.SEND);
 				einv.extractElement(need, false);
 				if (world.isRemote) {
 					TileElementalCube.giveParticleElementTo(world, extract.getColor(), structure.getSpecialBlockPos(i),
@@ -68,12 +80,18 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 	/** 根据给入，存储一个元素 */
 	protected boolean putElementToSpPlace(ElementStack estack, BlockPos animePos) {
 		for (int i = 0; i < structure.getSpecialBlockCount(); i++) {
+			// 获取唤醒
+			IAltarWake altarWake = getAlterWake(structure.getSpecialTileEntity(i));
+			if (altarWake == null)
+				continue;
 			// 获取仓库
 			IElementInventory einv = ElementHelper.getElementInventory(structure.getSpecialTileEntity(i));
 			if (einv == null)
 				continue;
 			int color = estack.getColor();
-			if (einv.insertElement(estack, false)) {
+			if (einv.insertElement(estack, true)) {
+				altarWake.wake(IAltarWake.OBTAIN);
+				einv.insertElement(estack, false);
 				if (world.isRemote) {
 					TileElementalCube.giveParticleElementTo(world, color, animePos, structure.getSpecialBlockPos(i),
 							0.3f);

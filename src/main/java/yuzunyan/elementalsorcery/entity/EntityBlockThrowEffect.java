@@ -1,5 +1,6 @@
 package yuzunyan.elementalsorcery.entity;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -7,22 +8,23 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class EntityBlockThrowEffect extends Entity {
+public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalSpawnData {
 
-	public static final DataParameter<ItemStack> STACK = EntityDataManager.createKey(EntityBlockThrowEffect.class,
-			DataSerializers.ITEM_STACK);
-	public static final DataParameter<BlockPos> TO = EntityDataManager.createKey(EntityBlockThrowEffect.class,
-			DataSerializers.BLOCK_POS);
+	// public static final DataParameter<ItemStack> STACK =
+	// EntityDataManager.createKey(EntityBlockThrowEffect.class,
+	// DataSerializers.ITEM_STACK);
+	// public static final DataParameter<BlockPos> TO =
+	// EntityDataManager.createKey(EntityBlockThrowEffect.class,
+	// DataSerializers.BLOCK_POS);
 
 	public ItemStack stack = ItemStack.EMPTY;
 	public BlockPos to = BlockPos.ORIGIN;
@@ -70,6 +72,23 @@ public class EntityBlockThrowEffect extends Entity {
 
 	}
 
+	@Override
+	public void writeSpawnData(ByteBuf buffer) {
+		ByteBufUtils.writeItemStack(buffer, stack);
+		buffer.writeInt(to.getX());
+		buffer.writeInt(to.getY());
+		buffer.writeInt(to.getZ());
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf additionalData) {
+		stack = ByteBufUtils.readItemStack(additionalData);
+		int x = additionalData.readInt();
+		int y = additionalData.readInt();
+		int z = additionalData.readInt();
+		to = new BlockPos(x, y, z);
+	}
+
 	public EntityBlockThrowEffect setBreakBlock() {
 		this.is_break = true;
 		return this;
@@ -77,20 +96,20 @@ public class EntityBlockThrowEffect extends Entity {
 
 	@Override
 	protected void entityInit() {
-		dataManager.register(STACK, stack);
-		dataManager.register(TO, to);
+		// dataManager.register(STACK, stack);
+		// dataManager.register(TO, to);
 	}
 
 	public void setItem(ItemStack stack) {
 		this.stack = stack;
-		this.getDataManager().set(STACK, stack);
-		this.getDataManager().setDirty(STACK);
+		// this.getDataManager().set(STACK, stack);
+		// this.getDataManager().setDirty(STACK);
 	}
 
 	public void setPos(BlockPos to) {
 		this.to = to;
-		this.getDataManager().set(TO, to);
-		this.getDataManager().setDirty(TO);
+		// this.getDataManager().set(TO, to);
+		// this.getDataManager().setDirty(TO);
 	}
 
 	static public double G = 1.25;
@@ -128,12 +147,12 @@ public class EntityBlockThrowEffect extends Entity {
 		this.motionY *= 0.9;
 		this.motionZ *= 0.9;
 
-		if (world.isRemote) {
-			if (stack.isEmpty())
-				stack = dataManager.get(STACK);
-			if (to == BlockPos.ORIGIN)
-				to = dataManager.get(TO);
-		}
+		// if (world.isRemote) {
+		// if (stack.isEmpty())
+		// stack = dataManager.get(STACK);
+		// if (to == BlockPos.ORIGIN)
+		// to = dataManager.get(TO);
+		// }
 
 		if (stack.isEmpty() || to == BlockPos.ORIGIN) {
 			this.setDead();

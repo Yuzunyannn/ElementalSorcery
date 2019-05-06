@@ -14,6 +14,6 @@ public interface IRenderItem {
 	static boolean isGUI(ItemStack stack) {
 		IBakedModel ibakedmodel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(stack);
 		return ibakedmodel == null ? false
-				: ((ESCustomModelLoader.ItemRendererModel.ItemRendererBakedModel) ibakedmodel).camera_type == ItemCameraTransforms.TransformType.GUI;
+				: ((ItemRendererModel.ItemRendererBakedModel) ibakedmodel).camera_type == ItemCameraTransforms.TransformType.GUI;
 	}
 }

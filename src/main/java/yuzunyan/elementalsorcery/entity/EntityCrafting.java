@@ -2,8 +2,8 @@ package yuzunyan.elementalsorcery.entity;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleFirework;
@@ -19,6 +19,8 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.ElementalSorcery;
@@ -26,10 +28,11 @@ import yuzunyan.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyan.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyan.elementalsorcery.render.entity.RenderEntityCrafting;
 
-public class EntityCrafting extends Entity {
+public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData {
 
-	public static final DataParameter<NBTTagCompound> NBT = EntityDataManager.createKey(EntityCrafting.class,
-			DataSerializers.COMPOUND_TAG);
+	// public static final DataParameter<NBTTagCompound> NBT =
+	// EntityDataManager.createKey(EntityCrafting.class,
+	// DataSerializers.COMPOUND_TAG);
 	public static final DataParameter<Integer> FINISH_TICK = EntityDataManager.createKey(EntityCrafting.class,
 			DataSerializers.VARINT);
 
@@ -62,14 +65,14 @@ public class EntityCrafting extends Entity {
 			this.crafting = (ICraftingLaunch) world.getTileEntity(this.pos);
 			this.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 			this.item_list = this.crafting.commitItems();
-			dataManager.set(NBT, this.getDataNBT());
-			dataManager.setDirty(NBT);
+			// dataManager.set(NBT, this.getDataNBT());
+			// dataManager.setDirty(NBT);
 		}
 	}
 
 	@Override
 	protected void entityInit() {
-		dataManager.register(NBT, new NBTTagCompound());
+		// dataManager.register(NBT, new NBTTagCompound());
 		dataManager.register(FINISH_TICK, Integer.valueOf(-1));
 	}
 
@@ -109,36 +112,50 @@ public class EntityCrafting extends Entity {
 		this.type = ICraftingLaunch.CraftingType.values()[nbt.getInteger("type")];
 	}
 
+	@Override
+	public void writeSpawnData(ByteBuf buffer) {
+		ByteBufUtils.writeTag(buffer, this.getDataNBT());
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf additionalData) {
+		if (!this.world.isRemote)
+			return;
+		NBTTagCompound nbt = ByteBufUtils.readTag(additionalData);
+		this.clientRecovery(nbt);
+	}
+
+	private boolean clientRecovery(NBTTagCompound nbt) {
+		if (nbt.hasKey("pos")) {
+			this.recoveryDataFromNBT(nbt);
+			TileEntity tile = world.getTileEntity(this.pos);
+			if (tile instanceof ICraftingLaunch) {
+				this.crafting = (ICraftingLaunch) tile;
+				this.crafting.craftingRecovery(type, this.player);
+				this.crafting.commitItems();
+				this.craftingAnime = this.crafting.getAnime();
+				if (this.craftingAnime == null)
+					this.craftingAnime = RenderEntityCrafting.getDefultAnime();
+				return true;
+			}
+		}
+		ElementalSorcery.logger.warn("EntityCrafting的客户端没有收到正确的位置");
+		return false;
+	}
+
 	private int finish_tick = -1;
 
 	@Override
 	public void onUpdate() {
 		if (crafting == null) {
-			// 恢复状态
-			if (world.isRemote) {
-				NBTTagCompound nbt = dataManager.get(NBT);
-				if (nbt.hasKey("pos")) {
-					this.recoveryDataFromNBT(nbt);
-					TileEntity tile = world.getTileEntity(this.pos);
-					if (tile instanceof ICraftingLaunch) {
-						this.crafting = (ICraftingLaunch) tile;
-						this.crafting.craftingRecovery(type, this.player);
-						this.crafting.commitItems();
-						this.craftingAnime = this.crafting.getAnime();
-						if (this.craftingAnime == null)
-							this.craftingAnime = RenderEntityCrafting.getDefultAnime();
-						return;
-					}
-				}
-				ElementalSorcery.logger.warn("EntityCrafting的客户端没有收到正确的位置");
-			} else if (this.pos != null) {
-				// 这段正常情况下，在服务器启动时候才会调用
+			if (!world.isRemote && this.pos != null) {
+				// 恢复状态
 				TileEntity tile = world.getTileEntity(this.pos);
 				if (tile instanceof ICraftingLaunch) {
 					this.crafting = (ICraftingLaunch) tile;
 					this.crafting.craftingRecovery(type, this.player);
-					return;
 				}
+				return;
 			}
 			this.setDead();
 			return;
@@ -186,7 +203,7 @@ public class EntityCrafting extends Entity {
 	private void drop() {
 		if (this.item_list == null)
 			return;
-		if(this.type == ICraftingLaunch.CraftingType.ELEMENT_DECONSTRUCT){
+		if (this.type == ICraftingLaunch.CraftingType.ELEMENT_DECONSTRUCT) {
 			item_list.clear();
 			return;
 		}
@@ -240,24 +257,15 @@ public class EntityCrafting extends Entity {
 		return item_list;
 	}
 
-	//private UUID uuidPlayer = null;
-
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
-		// if (compound.hasUniqueId("cPlayer")) {
-		// uuidPlayer = compound.getUniqueId("cPlayer");
-		// }
 		this.recoveryDataFromNBT(compound.getCompoundTag("ecrafting"));
-		dataManager.set(NBT, this.getDataNBT());
-		dataManager.setDirty(NBT);
+		// dataManager.set(NBT, this.getDataNBT());
+		// dataManager.setDirty(NBT);
 	}
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
-		// if (this.player != null) {
-		// compound.setUniqueId("cPlayer", this.player.getUniqueID());
-		// System.out.println("uuid已经设置！！！！！！！！！！！");
-		// }
 		compound.setTag("ecrafting", this.getDataNBT());
 	}
 

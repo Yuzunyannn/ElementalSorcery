@@ -2,6 +2,7 @@ package yuzunyan.elementalsorcery.render.tile;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
@@ -19,6 +20,12 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 	private TextureBinder TEXTURE = new TextureBinder("textures/blocks/elemental_cube.png");
 	private TextureBinder TEXTURE_OVER = new TextureBinder("textures/blocks/elemental_cube_cover.png");
 	private Model MODEL = new Model();
+	final public TileEntityItemStackRenderer itemRender = new TileEntityItemStackRenderer() {
+		@Override
+		public void renderByItem(ItemStack stack, float partialTicks) {
+			RenderTileElementalCube.this.render(stack, partialTicks);
+		};
+	};
 
 	public RenderTileElementalCube() {
 		init();

@@ -3,7 +3,6 @@ package yuzunyan.elementalsorcery.tile;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
@@ -13,6 +12,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyan.elementalsorcery.api.ability.IAltarWake;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.util.ElementHelper;
@@ -23,7 +23,7 @@ import yuzunyan.elementalsorcery.item.ItemSpellbook;
 import yuzunyan.elementalsorcery.render.particle.ParticleElement;
 import yuzunyan.elementalsorcery.util.obj.Vertex;
 
-public class TileElementalCube extends TileEntityNetwork implements ITickable {
+public class TileElementalCube extends TileEntityNetwork implements ITickable, IAltarWake {
 
 	// 根据仓库和所需，获取一个元素
 	public static ElementStack getAndTestElementTransBetweenInventory(ElementStack need, IElementInventory inv,
@@ -61,14 +61,6 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable {
 			return;
 		if (Math.random() > possibility)
 			return;
-		TileEntity tile = world.getTileEntity(from);
-		if (tile instanceof TileElementalCube)
-			((TileElementalCube) tile).wake();
-		else {
-			tile = world.getTileEntity(pto);
-			if (tile instanceof TileElementalCube)
-				((TileElementalCube) tile).wake();
-		}
 		ParticleElement effect;
 		if (pto.getY() > from.getY())
 			effect = new ParticleElement(world,
@@ -127,8 +119,12 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable {
 	}
 
 	// 唤醒
-	public void wake() {
+	@Override
+	public boolean wake(int type) {
+		if (!this.world.isRemote)
+			return true;
 		this.wake = 80;
+		return true;
 	}
 
 	// 设置仓库

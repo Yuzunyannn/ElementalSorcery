@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
-import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
@@ -52,8 +51,6 @@ import yuzunyan.elementalsorcery.init.registries.OreDictionaryRegistries;
 import yuzunyan.elementalsorcery.init.registries.TileItemRenderRegistries;
 import yuzunyan.elementalsorcery.network.ESNetwork;
 import yuzunyan.elementalsorcery.parchment.Pages;
-import yuzunyan.elementalsorcery.render.ESCustomModelLoader;
-import yuzunyan.elementalsorcery.render.ESTileEntityItemStackRenderer;
 import yuzunyan.elementalsorcery.render.IRenderItem;
 import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyan.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
@@ -115,7 +112,8 @@ public class ESInit {
 	@SideOnly(Side.CLIENT)
 	public final static void initClient(FMLPreInitializationEvent event) {
 		// 设置自定义模型加载
-		ModelLoaderRegistry.registerLoader(new ESCustomModelLoader());
+		TileItemRenderRegistries.instance = new TileItemRenderRegistries();
+		ModelLoaderRegistry.registerLoader(TileItemRenderRegistries.instance);
 		// 注册所有渲染
 		registerAllRender();
 		// 注册实体渲染
@@ -126,8 +124,6 @@ public class ESInit {
 
 	@SideOnly(Side.CLIENT)
 	public final static void postInitClinet(FMLPostInitializationEvent event) {
-		// 更换指针
-		TileEntityItemStackRenderer.instance = new ESTileEntityItemStackRenderer(TileEntityItemStackRenderer.instance);
 		// 初始化所有说明界面，不需要在服务器初始化
 		Pages.init();
 	}
@@ -238,7 +234,6 @@ public class ESInit {
 		registerRender(ESInitInstance.ITEMS.KYNAITE_SPADE);
 		registerRender(ESInitInstance.ITEMS.KYNAITE_HOE);
 		registerRender(ESInitInstance.ITEMS.KYNAITE_SWORD);
-		RenderItemSpellbook.instance = new RenderItemSpellbook();
 		registerRender(ESInitInstance.BLOCKS.ESTONE, 0, "estone_default");
 		registerRender(ESInitInstance.BLOCKS.ESTONE, 1, "estone_chiseled");
 		registerRender(ESInitInstance.BLOCKS.ESTONE, 2, "estone_lines");
@@ -273,6 +268,7 @@ public class ESInit {
 				(IRenderItem) render_instance);
 		registerRender(TileDeconstructAltarTable.class, render_instance);
 
+		RenderItemSpellbook.instance = new RenderItemSpellbook();
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, RenderItemSpellbook.instance);
@@ -355,7 +351,7 @@ public class ESInit {
 
 	@SideOnly(Side.CLIENT)
 	private static void registerRender(Item item, IRenderItem item_render) {
-		TileItemRenderRegistries.register(item, item_render);
+		TileItemRenderRegistries.instance.register(item, item_render);
 	}
 
 	@SideOnly(Side.CLIENT)
