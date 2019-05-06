@@ -1,6 +1,5 @@
 package yuzunyan.elementalsorcery.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.netty.buffer.ByteBuf;
@@ -10,9 +9,7 @@ import net.minecraft.client.particle.ParticleFirework;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -24,6 +21,7 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.ElementalSorcery;
+import yuzunyan.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyan.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyan.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyan.elementalsorcery.render.entity.RenderEntityCrafting;
@@ -37,7 +35,8 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			DataSerializers.VARINT);
 
 	private ICraftingLaunch crafting = null;
-	private List<ItemStack> item_list = null;
+	private ICraftingCommit commit = null;
+	private NBTTagCompound commitNBT = null;
 	private BlockPos pos;
 	private ICraftingLaunch.CraftingType type;
 	private EntityPlayer player;
@@ -64,7 +63,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			this.pos = pos;
 			this.crafting = (ICraftingLaunch) world.getTileEntity(this.pos);
 			this.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-			this.item_list = this.crafting.commitItems();
+			this.commit = this.crafting.commitItems();
 			// dataManager.set(NBT, this.getDataNBT());
 			// dataManager.setDirty(NBT);
 		}
@@ -80,15 +79,10 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		NBTTagCompound nbt = new NBTTagCompound();
 		int[] pos = new int[] { this.pos.getX(), this.pos.getY(), this.pos.getZ() };
 		nbt.setIntArray("pos", pos);
-		if (item_list != null) {
-			NBTTagList list = new NBTTagList();
-			for (ItemStack stack : item_list) {
-				if (!stack.isEmpty())
-					list.appendTag(stack.serializeNBT());
-			}
-			nbt.setTag("item_list", list);
-		}
 		nbt.setInteger("type", type.ordinal());
+		if (this.commit != null) {
+			nbt.setTag("cnbt", this.commit.serializeNBT());
+		}
 		return nbt;
 
 	}
@@ -100,14 +94,9 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		int[] pos = nbt.getIntArray("pos");
 		this.pos = new BlockPos(pos[0], pos[1], pos[2]);
 		this.setPosition(this.pos.getX() + 0.5, this.pos.getY(), this.pos.getZ() + 0.5);
-		// 恢复物品
-		if (nbt.hasKey("item_list")) {
-			NBTTagList list = (NBTTagList) nbt.getTag("item_list");
-			item_list = new ArrayList<ItemStack>();
-			for (NBTBase base : list) {
-				item_list.add(new ItemStack((NBTTagCompound) base));
-			}
-		}
+		// 恢复NBT
+		if (nbt.hasKey("cnbt"))
+			this.commitNBT = nbt.getCompoundTag("cnbt");
 		// 恢复类型
 		this.type = ICraftingLaunch.CraftingType.values()[nbt.getInteger("type")];
 	}
@@ -131,8 +120,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			TileEntity tile = world.getTileEntity(this.pos);
 			if (tile instanceof ICraftingLaunch) {
 				this.crafting = (ICraftingLaunch) tile;
-				this.crafting.craftingRecovery(type, this.player);
-				this.crafting.commitItems();
+				this.commit = this.crafting.recovery(type, this.player, this.commitNBT);
 				this.craftingAnime = this.crafting.getAnime();
 				if (this.craftingAnime == null)
 					this.craftingAnime = RenderEntityCrafting.getDefultAnime();
@@ -153,7 +141,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 				TileEntity tile = world.getTileEntity(this.pos);
 				if (tile instanceof ICraftingLaunch) {
 					this.crafting = (ICraftingLaunch) tile;
-					this.crafting.craftingRecovery(type, this.player);
+					this.commit = this.crafting.recovery(type, this.player, this.commitNBT);
 				}
 				return;
 			}
@@ -163,7 +151,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 
 		if (world.isRemote) {
 			this.updateClient();
-			this.crafting.craftingUpdateClient();
+			this.crafting.craftingUpdateClient(this.commit);
 		} else {
 			TileEntity tile = world.getTileEntity(this.pos);
 			// 方块被打掉了
@@ -183,7 +171,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			} else {
 				// 结束运行判定
 				if (!this.crafting.canContinue()) {
-					int flags = this.crafting.craftingEnd(item_list);
+					int flags = this.crafting.craftingEnd(this.commit);
 					if (flags == ICraftingLaunch.FAIL) {
 						this.drop();
 						this.setDead();
@@ -194,29 +182,28 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 					}
 					return;
 				}
-				crafting.craftingUpdate();
+				crafting.craftingUpdate(this.commit);
 			}
 		}
 		this.firstUpdate = false;
 	}
 
 	private void drop() {
-		if (this.item_list == null)
+		if (this.commit == null)
 			return;
 		if (this.type == ICraftingLaunch.CraftingType.ELEMENT_DECONSTRUCT) {
-			item_list.clear();
 			return;
 		}
-		for (ItemStack stack : item_list) {
+		List<ItemStack> itemList = this.commit.getItems();
+		for (ItemStack stack : itemList) {
 			if (stack.isEmpty())
 				continue;
 			Block.spawnAsEntity(world, this.getPosition().up(), stack);
 		}
-		item_list.clear();
 	}
 
 	private void updateClient() {
-		if (item_list == null)
+		if (this.commit == null)
 			return;
 		if (this.finish_tick < 0) {
 			this.finish_tick = dataManager.get(FINISH_TICK);
@@ -254,7 +241,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	public List<ItemStack> getItemList() {
-		return item_list;
+		return this.commit != null ? this.commit.getItems() : null;
 	}
 
 	@Override

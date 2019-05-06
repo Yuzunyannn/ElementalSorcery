@@ -19,7 +19,7 @@ public class RenderTileElementCraftingTable extends TileEntitySpecialRenderer<Ti
 			int destroyStage, float alpha) {
 
 		GlStateManager.pushMatrix();
-		GlStateManager.disableLighting();
+		//GlStateManager.disableLighting();
 		GlStateManager.enableCull();
 		GlStateManager.translate(x + 0.5, y, z + 0.5);
 		TEXTURE.bind();

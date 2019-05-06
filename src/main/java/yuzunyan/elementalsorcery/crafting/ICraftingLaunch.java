@@ -1,12 +1,9 @@
 package yuzunyan.elementalsorcery.crafting;
 
-import java.util.List;
-
 import javax.annotation.Nullable;
 
-import ibxm.Player;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.render.entity.AnimeRenderCrafting;
@@ -28,15 +25,17 @@ public interface ICraftingLaunch {
 	boolean craftingBegin(CraftingType type, @Nullable EntityPlayer player);
 
 	/**
-	 * 制作恢复 从村当中恢复调用[服务器][客户端]
+	 * 制作恢复 恢复调用[服务器][客户端]（服务器存档恢复时调用，客户端创建的时候一定会调用，因为是从服务器传来的消息）
+	 * @param nbt 之前提交内容的nbt
+	 * @return 恢复的提交内容
 	 */
-	void craftingRecovery(CraftingType type, @Nullable EntityPlayer player);
+	ICraftingCommit recovery(CraftingType type, @Nullable EntityPlayer player, NBTTagCompound nbt);
 
 	/** 制作更新[服务器] */
-	void craftingUpdate();
+	void craftingUpdate(ICraftingCommit commit);
 
 	/** 客户端的更新[客户端] */
-	default void craftingUpdateClient() {
+	default void craftingUpdateClient(ICraftingCommit commit) {
 
 	}
 
@@ -53,11 +52,13 @@ public interface ICraftingLaunch {
 	 *            提交的物品
 	 * @return flags -1失败0成功
 	 */
-	int craftingEnd(List<ItemStack> list);
+	int craftingEnd(ICraftingCommit commit);
 
-	/** 提交物品 [服务器][客户端] */
+	/**
+	 * 提交物品 [服务器]
+	 */
 	@Nullable
-	List<ItemStack> commitItems();
+	ICraftingCommit commitItems();
 
 	/** 检查类型是否可以完成 */
 	boolean checkType(CraftingType type);

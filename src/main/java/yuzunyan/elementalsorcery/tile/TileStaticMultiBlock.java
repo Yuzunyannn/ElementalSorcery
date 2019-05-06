@@ -48,7 +48,7 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 	}
 
 	/** 根据条件，获取一个元素 */
-	protected ElementStack getElementFromSpPlace(ElementStack need, BlockPos animePos) {
+	public ElementStack getElementFromSpPlace(ElementStack need, BlockPos animePos) {
 		for (int i = 0; i < structure.getSpecialBlockCount(); i++) {
 			// 获取唤醒
 			IAltarWake altarWake = getAlterWake(structure.getSpecialTileEntity(i));
@@ -78,7 +78,7 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 	}
 
 	/** 根据给入，存储一个元素 */
-	protected boolean putElementToSpPlace(ElementStack estack, BlockPos animePos) {
+	public boolean putElementToSpPlace(ElementStack estack, BlockPos animePos) {
 		for (int i = 0; i < structure.getSpecialBlockCount(); i++) {
 			// 获取唤醒
 			IAltarWake altarWake = getAlterWake(structure.getSpecialTileEntity(i));

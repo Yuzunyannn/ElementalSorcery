@@ -61,7 +61,7 @@ public class BlockElementalCube extends BlockContainer {
 	public BlockElementalCube() {
 		super(Material.GLASS);
 		this.setUnlocalizedName("elementalCube");
-		this.setLightLevel(1.0F);
+		this.setLightLevel(0.75F);
 	}
 
 	@Override

@@ -31,6 +31,10 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 	public ElementInventory(int slots) {
 		setSlots(slots);
 	}
+	
+	public ElementInventory(NBTTagCompound nbt) {
+		this.deserializeNBT(nbt);
+	}
 
 	@Override
 	public void setSlots(int slots) {
