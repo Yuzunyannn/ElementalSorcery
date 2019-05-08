@@ -8,9 +8,12 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyan.elementalsorcery.entity.EntityCrafting;
 
+@SideOnly(Side.CLIENT)
 public class AnimeRenderDeconstruct implements ICraftingLaunchAnime {
 
 	// 高度

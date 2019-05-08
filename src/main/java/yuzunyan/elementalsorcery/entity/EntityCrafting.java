@@ -114,6 +114,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		this.clientRecovery(nbt);
 	}
 
+	@SideOnly(Side.CLIENT)
 	private boolean clientRecovery(NBTTagCompound nbt) {
 		if (nbt.hasKey("pos")) {
 			this.recoveryDataFromNBT(nbt);
@@ -226,7 +227,8 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			}
 		}
 	}
-
+	
+	@SideOnly(Side.CLIENT)
 	public void defaultEndEffect() {
 		Overlay effect = new Overlay(this.world, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5);
 		effect.setRBGColorF(1.0f, 1.0f, 1.0f);
@@ -234,6 +236,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	// 临时的例子效果
+	@SideOnly(Side.CLIENT)
 	public static class Overlay extends ParticleFirework.Overlay {
 		protected Overlay(World p_i46466_1_, double p_i46466_2_, double p_i46466_4_, double p_i46466_6_) {
 			super(p_i46466_1_, p_i46466_2_, p_i46466_4_, p_i46466_6_);

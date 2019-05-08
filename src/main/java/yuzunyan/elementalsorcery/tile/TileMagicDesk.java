@@ -21,6 +21,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.ElementalSorcery;
 import yuzunyan.elementalsorcery.api.ability.IAltarWake;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
@@ -31,7 +33,7 @@ import yuzunyan.elementalsorcery.building.MultiBlock;
 import yuzunyan.elementalsorcery.capability.Spellbook;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
 import yuzunyan.elementalsorcery.item.ItemSpellbook;
-import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
+import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 
 public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 
@@ -96,7 +98,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 
 	public void readNBTToUpdate(NBTTagCompound nbt) {
 		this.crafting_success = nbt.getBoolean("CS");
-		if (this.crafting_success) {
+		if (this.crafting_success && this.world.isRemote) {
 			this.finishCraftingClient(this.book);
 			this.crafting_success = false;
 		}
@@ -223,11 +225,12 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 		this.crafting_success = false;
 	}
 
+	@SideOnly(Side.CLIENT)
 	public void finishCraftingClient(ItemStack output) {
 		if (book.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null)) {
 			// 重置书的位置
 			Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
-			RenderItemSpellbook.RenderInfo info = spellbook.render_info;
+			SpellbookRenderInfo info = spellbook.render_info;
 			EntityPlayer entityplayer = this.world.getClosestPlayer((double) ((float) this.pos.getX() + 0.5F),
 					(double) ((float) this.pos.getY() + 0.5F), (double) ((float) this.pos.getZ() + 0.5F), 3.5D, false);
 			if (this.ok && entityplayer != null) {
@@ -245,8 +248,9 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 			Minecraft.getMinecraft().effectRenderer.addEffect(effect);
 		}
 	}
-
+	
 	// 临时的例子效果
+	@SideOnly(Side.CLIENT)
 	public static class Overlay extends ParticleFirework.Overlay {
 		protected Overlay(World p_i46466_1_, double p_i46466_2_, double p_i46466_4_, double p_i46466_6_) {
 			super(p_i46466_1_, p_i46466_2_, p_i46466_4_, p_i46466_6_);
@@ -266,7 +270,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 	// 特效的更新
 	public void updateClientBookRedner() {
 		Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
-		RenderItemSpellbook.RenderInfo info = spellbook.render_info;
+		SpellbookRenderInfo info = spellbook.render_info;
 		info.tickCount++;
 		info.bookSpreadPrev = info.bookSpread;
 		info.pageFlipPrev = info.pageFlip;

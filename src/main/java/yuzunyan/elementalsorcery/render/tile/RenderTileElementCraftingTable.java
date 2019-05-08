@@ -3,11 +3,13 @@ package yuzunyan.elementalsorcery.render.tile;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.render.IRenderItem;
 import yuzunyan.elementalsorcery.render.model.ModelElementCraftingTable;
 import yuzunyan.elementalsorcery.tile.TileElementCraftingTable;
 import yuzunyan.elementalsorcery.util.render.TextureBinder;
-
+@SideOnly(Side.CLIENT)
 public class RenderTileElementCraftingTable extends TileEntitySpecialRenderer<TileElementCraftingTable>
 		implements IRenderItem {
 

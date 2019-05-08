@@ -8,12 +8,14 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.item.ItemSpellbook;
 import yuzunyan.elementalsorcery.render.IRenderItem;
 import yuzunyan.elementalsorcery.render.model.ModelDeconstructAltarTable;
 import yuzunyan.elementalsorcery.tile.TileDeconstructAltarTable;
 import yuzunyan.elementalsorcery.util.render.TextureBinder;
-
+@SideOnly(Side.CLIENT)
 public class RenderTileDeconstructAltarTable extends TileEntitySpecialRenderer<TileDeconstructAltarTable>
 		implements IRenderItem {
 

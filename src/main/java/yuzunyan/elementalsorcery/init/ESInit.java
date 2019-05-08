@@ -53,6 +53,7 @@ import yuzunyan.elementalsorcery.network.ESNetwork;
 import yuzunyan.elementalsorcery.parchment.Pages;
 import yuzunyan.elementalsorcery.render.IRenderItem;
 import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
+import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyan.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyan.elementalsorcery.render.tile.RenderTileElementalCube;
@@ -130,7 +131,6 @@ public class ESInit {
 	// 注册
 
 	static void registerAllItems() {
-
 		register(ESInitInstance.ITEMS.SPELLBOOK);
 		register(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE);
 		register(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT);
@@ -213,6 +213,7 @@ public class ESInit {
 
 	@SideOnly(Side.CLIENT)
 	static void registerAllRender() {
+		SpellbookRenderInfo.renderInstance = RenderItemSpellbook.instance;
 		TileEntitySpecialRenderer render_instance;
 		render_instance = new RenderTileElementalCube();
 		registerRender(ItemBlock.getItemFromBlock(ESInitInstance.BLOCKS.ELEMENTAL_CUBE), (IRenderItem) render_instance);
@@ -268,7 +269,6 @@ public class ESInit {
 				(IRenderItem) render_instance);
 		registerRender(TileDeconstructAltarTable.class, render_instance);
 
-		RenderItemSpellbook.instance = new RenderItemSpellbook();
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, RenderItemSpellbook.instance);

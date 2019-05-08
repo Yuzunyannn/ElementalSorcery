@@ -3,14 +3,17 @@ package yuzunyan.elementalsorcery.render.item;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.capability.Spellbook;
 import yuzunyan.elementalsorcery.render.IRenderItem;
 import yuzunyan.elementalsorcery.render.model.ModelSpellbook;
 import yuzunyan.elementalsorcery.util.render.TextureBinder;
 
+@SideOnly(Side.CLIENT)
 public class RenderItemSpellbook implements IRenderItem {
 
-	static public RenderItemSpellbook instance = null;
+	static public RenderItemSpellbook instance = new RenderItemSpellbook();
 
 	public final TextureBinder TEXTURE_ENCHANTING_BOOK = new TextureBinder("minecraft",
 			"textures/entity/enchanting_table_book.png");
@@ -27,7 +30,7 @@ public class RenderItemSpellbook implements IRenderItem {
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		RenderInfo info = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null).render_info;
+		SpellbookRenderInfo info = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null).render_info;
 		GlStateManager.pushMatrix();
 		GlStateManager.enableCull();
 		if (IRenderItem.isGUI(stack)) {
@@ -74,17 +77,5 @@ public class RenderItemSpellbook implements IRenderItem {
 			this.modelBook.render(null, dtick, flip_right, flip_left, spread, 0.0F, 1.0F);
 		}
 		GlStateManager.popMatrix();
-	}
-
-	static public class RenderInfo {
-		public byte scaleLevel = 1;
-		public TextureBinder texture = instance == null ? null : instance.TEXTURE_SPELLBOOK;
-		public int tickCount = 0;
-		public float bookRotation = 0;
-		public float bookRotationPrev = 0;
-		public float pageFlipPrev = 0;
-		public float pageFlip = 0;
-		public float bookSpreadPrev = 0;
-		public float bookSpread = 0;
 	}
 }

@@ -21,6 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.capability.Spellbook;
 import yuzunyan.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyan.elementalsorcery.entity.EntityCrafting;
+import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyan.elementalsorcery.tile.TileStaticMultiBlock;
 import yuzunyan.elementalsorcery.util.WorldHelper;
@@ -32,7 +33,7 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	protected void initRenderInfo(RenderItemSpellbook.RenderInfo info) {
+	protected void initRenderInfo(SpellbookRenderInfo info) {
 		info.texture = RenderItemSpellbook.instance.TEXTURE_SPELLBOOK_LAUNCH;
 	}
 

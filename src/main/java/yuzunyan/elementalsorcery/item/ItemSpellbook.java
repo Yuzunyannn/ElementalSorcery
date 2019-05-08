@@ -28,7 +28,7 @@ import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.util.ElementHelper;
 import yuzunyan.elementalsorcery.capability.Spellbook;
-import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
+import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.render.particle.ParticleSpellbook;
 import yuzunyan.elementalsorcery.render.particle.ParticleSpellbookSelect;
 import yuzunyan.elementalsorcery.render.particle.ParticleSpellbookTo;
@@ -54,8 +54,7 @@ public class ItemSpellbook extends Item {
 	/**
 	 * 持续释放
 	 * 
-	 * @param power
-	 *            积攒的时间
+	 * @param power 积攒的时间
 	 */
 	public void spelling(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
 	}
@@ -63,8 +62,7 @@ public class ItemSpellbook extends Item {
 	/**
 	 * 结束释放
 	 * 
-	 * @param power
-	 *            积攒的时间，大于0表示释放成功
+	 * @param power 积攒的时间，大于0表示释放成功
 	 * @return 是否同步，一般使用false，客户端也处理，特殊情况只能由服务器处理的信息，需要true
 	 */
 	public boolean spellEnd(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
@@ -91,7 +89,7 @@ public class ItemSpellbook extends Item {
 
 	/** 获取材质初始化info */
 	@SideOnly(Side.CLIENT)
-	protected void initRenderInfo(RenderItemSpellbook.RenderInfo info) {
+	protected void initRenderInfo(SpellbookRenderInfo info) {
 	}
 
 	// 信息
@@ -114,7 +112,7 @@ public class ItemSpellbook extends Item {
 	public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack,
 			@Nullable NBTTagCompound nbt) {
 		ICapabilitySerializable<NBTTagCompound> cap = new Spellbook.Provider(this.getInventory());
-		if (RenderItemSpellbook.instance != null) {
+		if (SpellbookRenderInfo.renderInstance != null) {
 			Spellbook book = cap.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 			this.initRenderInfo(book.render_info);
 		}
@@ -189,14 +187,16 @@ public class ItemSpellbook extends Item {
 	}
 
 	// 渲染信息处理，开始打开书
+	@SideOnly(Side.CLIENT)
 	static public void renderStart(Spellbook book) {
 		book.spelling = true;
 		book.render_info.tickCount = 0;
 	}
 
 	// 渲染信息处理，改变书
+	@SideOnly(Side.CLIENT)
 	static public void renderChange(Spellbook book, float d) {
-		RenderItemSpellbook.RenderInfo info = book.render_info;
+		SpellbookRenderInfo info = book.render_info;
 		info.tickCount++;
 		info.bookSpreadPrev = info.bookSpread;
 		info.pageFlipPrev = info.pageFlip;
@@ -211,16 +211,19 @@ public class ItemSpellbook extends Item {
 	}
 
 	// 渲染完成（阶段性）
+	@SideOnly(Side.CLIENT)
 	static public void renderFinish(Spellbook book) {
 		book.spelling = false;
 	}
 
 	// 渲染信息处理，打开过程
+	@SideOnly(Side.CLIENT)
 	static public void renderOpen(Spellbook book) {
 		renderChange(book, 0.05F);
 	}
 
 	// 渲染信息处理，关闭过程
+	@SideOnly(Side.CLIENT)
 	static public boolean renderClose(Spellbook book) {
 		renderChange(book, -0.05F);
 		if (book.render_info.bookSpread <= 0)
@@ -229,6 +232,7 @@ public class ItemSpellbook extends Item {
 	}
 
 	// 渲染信息处理，结束
+	@SideOnly(Side.CLIENT)
 	static public void renderEnd(Spellbook book) {
 		book.render_info.tickCount = 0;
 		book.render_info.bookRotation = book.render_info.bookRotationPrev = 0;
@@ -236,6 +240,7 @@ public class ItemSpellbook extends Item {
 	}
 
 	// 显示离子效果
+	@SideOnly(Side.CLIENT)
 	protected void giveMeParticleAboutSpelling(World world, EntityLivingBase entity, ItemStack stack, Spellbook book,
 			int power) {
 		boolean is_your = entity == Minecraft.getMinecraft().player;
@@ -250,6 +255,7 @@ public class ItemSpellbook extends Item {
 	}
 
 	// 显示输送的离子效果
+	@SideOnly(Side.CLIENT)
 	protected void giveMeParticleGoToPos(World world, EntityLivingBase entity, Spellbook book, BlockPos pos,
 			int power) {
 		if (power % 2 == 0) {
@@ -272,6 +278,7 @@ public class ItemSpellbook extends Item {
 	}
 
 	// 显示离子效果
+	@SideOnly(Side.CLIENT)
 	protected void giveMeParticleAboutSelect(World world, Spellbook book, BlockPos pos, int power) {
 		if (power % 5 == 0) {
 			ParticleSpellbookSelect effect = new ParticleSpellbookSelect(world, pos);
@@ -281,6 +288,7 @@ public class ItemSpellbook extends Item {
 	}
 
 	// 显示离子效果
+	@SideOnly(Side.CLIENT)
 	protected void giveMeParticleAboutSelect(World world, Spellbook book, Entity entity, int power) {
 		if (power % 5 == 0) {
 			ParticleSpellbookSelect effect = new ParticleSpellbookSelect(world, entity);
@@ -292,7 +300,7 @@ public class ItemSpellbook extends Item {
 	protected int giveMeAColor(IElementInventory inventory) {
 		int color = 0xffffffff;
 		if (inventory != null) {
-			ElementStack estack = inventory.getStackInSlot(rand.nextInt(inventory.getSlots()));
+			ElementStack estack = this.giveMeRandomElement(inventory);
 			if (!estack.isEmpty())
 				color = estack.getColor();
 		}

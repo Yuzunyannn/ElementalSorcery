@@ -18,6 +18,7 @@ import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.element.IElementSpell;
 import yuzunyan.elementalsorcery.capability.ElementInventory;
 import yuzunyan.elementalsorcery.capability.Spellbook;
+import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyan.elementalsorcery.util.WorldHelper;
 
@@ -83,7 +84,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	protected void initRenderInfo(RenderItemSpellbook.RenderInfo info) {
+	protected void initRenderInfo(SpellbookRenderInfo info) {
 		info.texture = RenderItemSpellbook.instance.TEXTURE_SPELLBOOK_ELEMENT_01;
 	}
 

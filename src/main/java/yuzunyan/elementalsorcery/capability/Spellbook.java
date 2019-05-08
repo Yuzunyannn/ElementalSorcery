@@ -19,7 +19,7 @@ import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.network.ESNetwork;
 import yuzunyan.elementalsorcery.network.MessageSpellbook;
 import yuzunyan.elementalsorcery.network.MessageSyncItemStack;
-import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
+import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 
 public class Spellbook {
 
@@ -38,8 +38,7 @@ public class Spellbook {
 	/**
 	 * 结束释放
 	 * 
-	 * @param sync
-	 *            是否进行对客户端的同步，客户端该参数无效
+	 * @param sync 是否进行对客户端的同步，客户端该参数无效
 	 */
 	public void endSpelling(World world, EntityLivingBase player, ItemStack stack, boolean sync) {
 		this.spelling = false;
@@ -86,7 +85,12 @@ public class Spellbook {
 	private IElementInventory inventory = null;
 
 	/** 渲染信息 */
-	public RenderItemSpellbook.RenderInfo render_info = new RenderItemSpellbook.RenderInfo();
+	public SpellbookRenderInfo render_info = null;
+	{
+		if (SpellbookRenderInfo.renderInstance != null) {
+			render_info = new SpellbookRenderInfo();
+		}
+	}
 
 	/** 获取仓库 */
 	@Nullable

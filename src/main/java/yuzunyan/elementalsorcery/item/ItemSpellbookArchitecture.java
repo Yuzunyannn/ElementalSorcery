@@ -14,6 +14,7 @@ import yuzunyan.elementalsorcery.building.Building;
 import yuzunyan.elementalsorcery.capability.ElementInventory;
 import yuzunyan.elementalsorcery.capability.Spellbook;
 import yuzunyan.elementalsorcery.entity.EntityBlockThrowEffect;
+import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyan.elementalsorcery.util.item.ItemArchitectureHelper;
 
@@ -100,7 +101,7 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	protected void initRenderInfo(RenderItemSpellbook.RenderInfo info) {
+	protected void initRenderInfo(SpellbookRenderInfo info) {
 		info.texture = RenderItemSpellbook.instance.TEXTURE_SPELLBOOK_ARC;
 	}
 

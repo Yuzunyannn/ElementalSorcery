@@ -6,6 +6,8 @@ import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.capability.ElementInventory;
@@ -14,7 +16,7 @@ import yuzunyan.elementalsorcery.tile.TileElementalCube;
 import yuzunyan.elementalsorcery.util.obj.Model;
 import yuzunyan.elementalsorcery.util.obj.Vertex;
 import yuzunyan.elementalsorcery.util.render.TextureBinder;
-
+@SideOnly(Side.CLIENT)
 public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileElementalCube> implements IRenderItem {
 
 	private TextureBinder TEXTURE = new TextureBinder("textures/blocks/elemental_cube.png");

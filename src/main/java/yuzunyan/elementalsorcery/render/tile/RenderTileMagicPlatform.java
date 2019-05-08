@@ -6,9 +6,11 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.event.EventClient;
 import yuzunyan.elementalsorcery.tile.TileMagicPlatform;
-
+@SideOnly(Side.CLIENT)
 public class RenderTileMagicPlatform extends TileEntitySpecialRenderer<TileMagicPlatform> {
 
 	@Override

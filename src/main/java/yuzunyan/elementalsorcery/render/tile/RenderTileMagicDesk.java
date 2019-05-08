@@ -5,13 +5,15 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.capability.Spellbook;
 import yuzunyan.elementalsorcery.render.IRenderItem;
-import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
+import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.render.model.ModelMagicDesk;
 import yuzunyan.elementalsorcery.tile.TileMagicDesk;
 import yuzunyan.elementalsorcery.util.render.TextureBinder;
-
+@SideOnly(Side.CLIENT)
 public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk> implements IRenderItem {
 
 	private final ModelMagicDesk MODEL = new ModelMagicDesk();
@@ -43,7 +45,7 @@ public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk
 		Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 		if (spellbook == null)
 			return;
-		RenderItemSpellbook.RenderInfo info = spellbook.render_info;
+		SpellbookRenderInfo info = spellbook.render_info;
 		float n_rate = (1 - info.bookSpread);
 		GlStateManager.translate(0, 0.45 * info.bookSpread + 0.375 * n_rate, 0.35 * n_rate);
 		GlStateManager.rotate(n_rate * 90, -1, 0, 0);

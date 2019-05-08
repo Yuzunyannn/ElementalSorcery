@@ -10,9 +10,12 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyan.elementalsorcery.entity.EntityCrafting;
 
+@SideOnly(Side.CLIENT)
 public class RenderEntityCrafting extends Render<EntityCrafting> {
 
 	public static ICraftingLaunchAnime getDefultAnime() {

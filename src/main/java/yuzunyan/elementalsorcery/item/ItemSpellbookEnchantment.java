@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.capability.Spellbook;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
+import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
 
 public class ItemSpellbookEnchantment extends ItemSpellbook {
@@ -30,7 +31,7 @@ public class ItemSpellbookEnchantment extends ItemSpellbook {
 
 	@SideOnly(Side.CLIENT)
 	@Override
-	protected void initRenderInfo(RenderItemSpellbook.RenderInfo info) {
+	protected void initRenderInfo(SpellbookRenderInfo info) {
 		info.texture = RenderItemSpellbook.instance.TEXTURE_ENCHANTING_BOOK;
 	}
 
