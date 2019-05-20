@@ -18,6 +18,7 @@ import yuzunyan.elementalsorcery.block.BlockKynaite;
 import yuzunyan.elementalsorcery.block.BlockMagicDesk;
 import yuzunyan.elementalsorcery.block.BlockMagicPlatform;
 import yuzunyan.elementalsorcery.block.BlockSmeltBox;
+import yuzunyan.elementalsorcery.block.BlockStela;
 import yuzunyan.elementalsorcery.block.BlocksEStone;
 import yuzunyan.elementalsorcery.crafting.RecipeManagement;
 import yuzunyan.elementalsorcery.element.ElementAir;
@@ -102,6 +103,7 @@ public class ESInitInstance {
 		BLOCKS.MAGIC_DESK = new BlockMagicDesk().setRegistryName("magic_desk");
 		BLOCKS.ELEMENT_CRAFTING_TABLE = new BlockElementCraftingTable().setRegistryName("element_crafting_table");
 		BLOCKS.DECONSTRUCT_ALTAR_TABLE = new BlockDeconstructAltarTable().setRegistryName("deconstruct_altar_table");
+		BLOCKS.STELA = new BlockStela().setRegistryName("stela");
 
 		BLOCKS.ELEMENTAL_CUBE.setCreativeTab(tab);
 		BLOCKS.HEARTH.setCreativeTab(tab);
@@ -119,7 +121,7 @@ public class ESInitInstance {
 		BLOCKS.MAGIC_DESK.setCreativeTab(tab);
 		BLOCKS.ELEMENT_CRAFTING_TABLE.setCreativeTab(tab);
 		BLOCKS.DECONSTRUCT_ALTAR_TABLE.setCreativeTab(tab);
-
+		BLOCKS.STELA.setCreativeTab(tab);
 	}
 
 	private static final void instanceItems() {

@@ -49,7 +49,7 @@ tile.infusionBox.name=注魔箱
 tile.magicDesk.name=魔力方桌
 tile.elementCraftingTable.name=元素合成台
 tile.deconstructAltarTable.name=元素析构台
-
+tile.stela.name=祈求碑
 
 element.void.name=虚空
 element.ender.name=末影

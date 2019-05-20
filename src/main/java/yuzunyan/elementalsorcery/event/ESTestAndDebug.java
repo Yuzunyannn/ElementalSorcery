@@ -1,14 +1,9 @@
 package yuzunyan.elementalsorcery.event;
 
-import java.lang.reflect.Field;
-
-import net.minecraft.block.BlockStairs;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
-import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
@@ -28,21 +23,22 @@ public class ESTestAndDebug {
 	public void click(PlayerInteractEvent event) {
 		if (event.getWorld().isRemote)
 			return;
+		//
+		// if (event.getEntityPlayer().isSneaking()) {
+		// pos = event.getPos();
+		// } else {
+		// BlockPos newpos = event.getPos().subtract(pos);
+		// System.out.println(newpos);
+		// }
 
-		if (event.getEntityPlayer().isSneaking()) {
-			pos = event.getPos();
-		} else {
-			BlockPos newpos = event.getPos().subtract(pos);
-			System.out.println(newpos); 
-		}
-
-		IBlockState state = event.getWorld().getBlockState(event.getPos());
-		if (state.getBlock() instanceof BlockStairs) {
-			state = state.getBlock().getActualState(state, event.getWorld(), event.getPos());
-			System.out.println("Face:" + state.getValue(BlockStairs.FACING));
-			System.out.println("Half:" + state.getValue(BlockStairs.HALF));
-			System.out.println("Shape:" + state.getValue(BlockStairs.SHAPE));
-		}
+		// IBlockState state = event.getWorld().getBlockState(event.getPos());
+		// if (state.getBlock() instanceof BlockStairs) {
+		// state = state.getBlock().getActualState(state, event.getWorld(),
+		// event.getPos());
+		// System.out.println("Face:" + state.getValue(BlockStairs.FACING));
+		// System.out.println("Half:" + state.getValue(BlockStairs.HALF));
+		// System.out.println("Shape:" + state.getValue(BlockStairs.SHAPE));
+		// }
 
 //		try {
 //			System.out.println(Blocks.QUARTZ_STAIRS.getClass().getName());

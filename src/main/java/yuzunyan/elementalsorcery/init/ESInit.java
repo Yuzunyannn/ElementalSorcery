@@ -59,6 +59,7 @@ import yuzunyan.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyan.elementalsorcery.render.tile.RenderTileElementalCube;
 import yuzunyan.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyan.elementalsorcery.render.tile.RenderTileMagicPlatform;
+import yuzunyan.elementalsorcery.render.tile.RenderTileStela;
 import yuzunyan.elementalsorcery.tile.TileAbsorbBox;
 import yuzunyan.elementalsorcery.tile.TileDeconstructAltarTable;
 import yuzunyan.elementalsorcery.tile.TileDeconstructBox;
@@ -69,6 +70,7 @@ import yuzunyan.elementalsorcery.tile.TileInfusionBox;
 import yuzunyan.elementalsorcery.tile.TileMagicDesk;
 import yuzunyan.elementalsorcery.tile.TileMagicPlatform;
 import yuzunyan.elementalsorcery.tile.TileSmeltBox;
+import yuzunyan.elementalsorcery.tile.TileStela;
 import yuzunyan.elementalsorcery.worldgen.WorldGeneratorES;
 
 public class ESInit {
@@ -179,6 +181,7 @@ public class ESInit {
 		register(ESInitInstance.BLOCKS.MAGIC_DESK);
 		register(ESInitInstance.BLOCKS.ELEMENT_CRAFTING_TABLE);
 		register(ESInitInstance.BLOCKS.DECONSTRUCT_ALTAR_TABLE);
+		register(ESInitInstance.BLOCKS.STELA);
 	}
 
 	static void registerAllTiles() {
@@ -192,6 +195,7 @@ public class ESInit {
 		register(TileMagicDesk.class, "MagicDesk");
 		register(TileElementCraftingTable.class, "ElementCraftingTable");
 		register(TileDeconstructAltarTable.class, "DeconstructAltarTable");
+		register(TileStela.class, "Stela");
 	}
 
 	static void registerAllElements() {
@@ -214,10 +218,6 @@ public class ESInit {
 	@SideOnly(Side.CLIENT)
 	static void registerAllRender() {
 		SpellbookRenderInfo.renderInstance = RenderItemSpellbook.instance;
-		TileEntitySpecialRenderer render_instance;
-		render_instance = new RenderTileElementalCube();
-		registerRender(ItemBlock.getItemFromBlock(ESInitInstance.BLOCKS.ELEMENTAL_CUBE), (IRenderItem) render_instance);
-		registerRender(TileElementalCube.class, render_instance);
 		registerStateMapper(ESInitInstance.BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(ESInitInstance.BLOCKS.HEARTH, 0, "cobblestone_hearth");
 		registerRender(ESInitInstance.BLOCKS.HEARTH, 1, "iron_hearth");
@@ -257,18 +257,15 @@ public class ESInit {
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_COVER, 0, "spellbook_cover");
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, "spellbook_back_cover");
 		registerRender(ESInitInstance.ITEMS.SCROLL);
-		render_instance = new RenderTileMagicDesk();
-		registerRender(ItemBlock.getItemFromBlock(ESInitInstance.BLOCKS.MAGIC_DESK), (IRenderItem) render_instance);
-		registerRender(TileMagicDesk.class, render_instance);
-		render_instance = new RenderTileElementCraftingTable();
-		registerRender(ItemBlock.getItemFromBlock(ESInitInstance.BLOCKS.ELEMENT_CRAFTING_TABLE),
-				(IRenderItem) render_instance);
-		registerRender(TileElementCraftingTable.class, render_instance);
-		render_instance = new RenderTileDeconstructAltarTable();
-		registerRender(ItemBlock.getItemFromBlock(ESInitInstance.BLOCKS.DECONSTRUCT_ALTAR_TABLE),
-				(IRenderItem) render_instance);
-		registerRender(TileDeconstructAltarTable.class, render_instance);
-
+		
+		registerRender(new RenderTileElementalCube(), ESInitInstance.BLOCKS.ELEMENTAL_CUBE, TileElementalCube.class);
+		registerRender(new RenderTileMagicDesk(), ESInitInstance.BLOCKS.MAGIC_DESK, TileMagicDesk.class);
+		registerRender(new RenderTileElementCraftingTable(), ESInitInstance.BLOCKS.ELEMENT_CRAFTING_TABLE,
+				TileElementCraftingTable.class);
+		registerRender(new RenderTileDeconstructAltarTable(), ESInitInstance.BLOCKS.DECONSTRUCT_ALTAR_TABLE,
+				TileDeconstructAltarTable.class);
+		registerRender(new RenderTileStela(), ESInitInstance.BLOCKS.STELA, TileStela.class);
+		
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, RenderItemSpellbook.instance);
@@ -390,6 +387,13 @@ public class ESInit {
 	@SideOnly(Side.CLIENT)
 	private static void registerStateMapper(Block block, IStateMapper mapper) {
 		ModelLoader.setCustomStateMapper(block, mapper);
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static <T extends TileEntity, R extends TileEntitySpecialRenderer<T> & IRenderItem> void registerRender(
+			R render_instance, Block block, Class<T> tile) {
+		registerRender(tile, render_instance);
+		registerRender(ItemBlock.getItemFromBlock(block), render_instance);
 	}
 
 }

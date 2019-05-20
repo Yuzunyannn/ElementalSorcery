@@ -59,6 +59,7 @@ public class ESObjects {
 		public Block MAGIC_DESK;
 		public Block ELEMENT_CRAFTING_TABLE;
 		public Block DECONSTRUCT_ALTAR_TABLE;
+		public Block STELA;
 	}
 
 	static public class Elements {
