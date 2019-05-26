@@ -54,6 +54,14 @@ public class Page {
 		return Page.getPage(nbt.getInteger("id"));
 	}
 
+	// 获取页面ID
+	static public int getPageId(ItemStack stack) {
+		NBTTagCompound nbt = stack.getSubCompound("page");
+		if (nbt == null)
+			return 0;
+		return nbt.getInteger("id");
+	}
+
 	// 获取错误页面
 	static public Page getErrorPage() {
 		return pages.get(Pages.ERROR);

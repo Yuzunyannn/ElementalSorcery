@@ -2,6 +2,7 @@ package yuzunyan.elementalsorcery.block;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
@@ -19,6 +20,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import yuzunyan.elementalsorcery.tile.TileStela;
 
 public class BlockStela extends BlockContainer {
@@ -131,38 +134,43 @@ public class BlockStela extends BlockContainer {
 		return false;
 	}
 
+	public static AxisAlignedBB getGoodsPlace(EnumFacing face) {
+		AxisAlignedBB AABB;
+		switch (face) {
+		case NORTH:
+			AABB = AABB_S_NS.offset(0.0, 0.0, 8.0 / 16.0);
+			break;
+		case SOUTH:
+			AABB = AABB_S_NS.offset(9.0 / 16.0, 0.0, 0.0);
+			break;
+		case EAST:
+			AABB = AABB_S_EW;
+			break;
+		case WEST:
+			AABB = AABB_S_EW.offset(8.0 / 16.0, 0.0, 9.0 / 16.0);
+			break;
+		default:
+			AABB = null;
+			break;
+		}
+		return AABB;
+	}
+
 	// 放物品，处理
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (facing == EnumFacing.UP) {
 			EnumFacing face = this.getFace(worldIn, pos);
-			AxisAlignedBB AABB;
-			switch (face) {
-			case NORTH:
-				AABB = AABB_S_NS.offset(0.0, 0.0, 8.0 / 16.0);
-				break;
-			case SOUTH:
-				AABB = AABB_S_NS.offset(9.0 / 16.0, 0.0, 0.0);
-				break;
-			case EAST:
-				AABB = AABB_S_EW;
-				break;
-			case WEST:
-				AABB = AABB_S_EW.offset(8.0 / 16.0, 0.0, 9.0 / 16.0);
-				break;
-			default:
-				AABB = null;
-				break;
-			}
+			AxisAlignedBB AABB = BlockStela.getGoodsPlace(face);
 			if (AABB != null) {
 				TileEntity tile = worldIn.getTileEntity(pos);
 				if (tile instanceof TileStela) {
 					TileStela ts = (TileStela) tile;
 					if (hitX >= AABB.minX && hitX <= AABB.maxX && hitZ >= AABB.minZ && hitZ <= AABB.maxZ)
-						return this.onPutGoods(ts, playerIn, hand);
+						return this.onPutGoods(worldIn, ts, playerIn, hand);
 					else
-						return this.onPutPaper(ts, playerIn, hand);
+						return this.onPutPaper(worldIn, ts, playerIn, hand);
 				}
 			}
 		} else {
@@ -171,12 +179,42 @@ public class BlockStela extends BlockContainer {
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 	}
 
-	private boolean onPutGoods(TileStela ts, EntityPlayer playerIn, EnumHand hand) {
-		return false;
+	private boolean onPutGoods(World world, TileStela ts, EntityPlayer playerIn, EnumHand hand) {
+		ItemStack stack = playerIn.getHeldItem(hand);
+		ItemStackHandler handler = (ItemStackHandler) ts.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
+				ts.getFace().getOpposite());
+		return this.onPut(world, ts, playerIn, hand, handler);
 	}
 
-	private boolean onPutPaper(TileStela ts, EntityPlayer playerIn, EnumHand hand) {
-		return false;
+	private boolean onPutPaper(World world, TileStela ts, EntityPlayer playerIn, EnumHand hand) {
+		ItemStack stack = playerIn.getHeldItem(hand);
+		ItemStackHandler handler = (ItemStackHandler) ts.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
+				ts.getFace());
+		return this.onPut(world, ts, playerIn, hand, handler);
+	}
+
+	private boolean onPut(World world, TileStela ts, EntityPlayer playerIn, EnumHand hand, ItemStackHandler handler) {
+		ItemStack stack = playerIn.getHeldItem(hand);
+		if (playerIn.isSneaking()) {
+			ItemStack origin = handler.getStackInSlot(0);
+			if (origin.isEmpty())
+				return false;
+			handler.setStackInSlot(0, ItemStack.EMPTY);
+			ts.updateToClient();
+			Block.spawnAsEntity(world, ts.getPos(), origin);
+			return true;
+		} else {
+			if (stack.isEmpty())
+				return false;
+			ItemStack remain = handler.insertItem(0, stack, false);
+			if (ItemStack.areItemStacksEqual(remain, stack))
+				return false;
+			if (world.isRemote)
+				return true;
+			ts.updateToClient();
+			playerIn.setHeldItem(hand, remain);
+			return true;
+		}
 	}
 
 	@Override

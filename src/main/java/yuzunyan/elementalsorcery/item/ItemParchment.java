@@ -44,6 +44,9 @@ public class ItemParchment extends Item {
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		if (handIn != EnumHand.MAIN_HAND)
 			return super.onItemRightClick(worldIn, playerIn, handIn);
+		ItemStack stack = playerIn.getHeldItem(handIn);
+		if (Page.getPageId(stack) == 0)
+			return super.onItemRightClick(worldIn, playerIn, handIn);
 		if (worldIn.isRemote) {
 			BlockPos pos = playerIn.getPosition();
 			playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_PARCHMENT, worldIn, pos.getX(), pos.getY(),

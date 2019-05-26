@@ -1,9 +1,12 @@
 package yuzunyan.elementalsorcery.render.tile;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.items.CapabilityItemHandler;
 import yuzunyan.elementalsorcery.render.IRenderItem;
 import yuzunyan.elementalsorcery.render.model.ModelStela;
 import yuzunyan.elementalsorcery.tile.TileStela;
@@ -21,7 +24,41 @@ public class RenderTileStela extends TileEntitySpecialRenderer<TileStela> implem
 		// GlStateManager.enableCull();
 		GlStateManager.translate(x + 0.5, y, z + 0.5);
 		GlStateManager.scale(0.0625, 0.0625, 0.0625);
-		EnumFacing face = tile.getFace();
+		this.raoteWithFace(tile.getFace());
+		TEXTURE.bind();
+		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
+		GlStateManager.popMatrix();
+
+		ItemStack stack = tile
+				.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, tile.getFace().getOpposite())
+				.getStackInSlot(0);
+		if (!stack.isEmpty()) {
+			GlStateManager.pushMatrix();
+			GlStateManager.translate(x + 0.5, y + 0.125, z + 0.5);
+			this.raoteWithFace(tile.getFace());
+			GlStateManager.translate(0.25, 0, 0.275);
+			yuzunyan.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
+			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
+			GlStateManager.popMatrix();
+		}
+
+		stack = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, tile.getFace()).getStackInSlot(0);
+		if (!stack.isEmpty()) {
+			this.renderOncePaper(tile, x + 0.5, y - 0.135, z + 0.5, stack, 0);
+		}
+	}
+
+	private void renderOncePaper(TileStela tile, double x, double y, double z, ItemStack stack, double detal) {
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(x, y, z);
+		this.raoteWithFace(tile.getFace());
+		GlStateManager.translate(-0.175 + detal, 0, -0.225 + detal);
+		yuzunyan.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
+		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
+		GlStateManager.popMatrix();
+	}
+
+	private void raoteWithFace(EnumFacing face) {
 		switch (face) {
 		case NORTH:
 			GlStateManager.rotate(-90, 0, 1, 0);
@@ -37,9 +74,6 @@ public class RenderTileStela extends TileEntitySpecialRenderer<TileStela> implem
 		default:
 			break;
 		}
-		TEXTURE.bind();
-		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		GlStateManager.popMatrix();
 	}
 
 	@Override

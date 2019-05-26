@@ -25,7 +25,8 @@ public class RenderHelper {
 			Block block = Block.getBlockFromItem(stack.getItem());
 			if (block == Blocks.AIR
 					|| (!block.isFullCube(block.getDefaultState()) && !(block instanceof ITileEntityProvider))) {
-				GlStateManager.translate(0, 0.4, -0.125);
+				GlStateManager.translate(-0.125, 0.4, 0.0);
+				GlStateManager.rotate(90, 0, 1, 0);
 				GlStateManager.rotate(90, 1, 0, 0);
 			} else {
 				if (TileEntityItemStackRenderer.instance != stack.getItem().getTileEntityItemStackRenderer()) {
