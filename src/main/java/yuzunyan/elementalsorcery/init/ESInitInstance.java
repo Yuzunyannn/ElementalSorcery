@@ -34,6 +34,7 @@ import yuzunyan.elementalsorcery.init.registries.ElementRegister;
 import yuzunyan.elementalsorcery.item.ItemArchitectureCrystal;
 import yuzunyan.elementalsorcery.item.ItemElementCrystal;
 import yuzunyan.elementalsorcery.item.ItemKynaiteTools;
+import yuzunyan.elementalsorcery.item.ItemManual;
 import yuzunyan.elementalsorcery.item.ItemParchment;
 import yuzunyan.elementalsorcery.item.ItemScroll;
 import yuzunyan.elementalsorcery.item.ItemSome;
@@ -142,6 +143,7 @@ public class ESInitInstance {
 		ITEMS.SPELL_CRYSTAL = ItemSome.newSpellCrystal().setRegistryName("spell_crystal");
 		ITEMS.SPELLBOOK_COVER = new ItemSpellbookCover().setRegistryName("spellbook_cover");
 		ITEMS.SCROLL = new ItemScroll().setRegistryName("scroll");
+		ITEMS.MANUAL = new ItemManual().setRegistryName("manual");
 
 		ITEMS.KYNAITE.setCreativeTab(tab);
 		ITEMS.MAGICAL_PIECE.setCreativeTab(tab);
@@ -160,6 +162,7 @@ public class ESInitInstance {
 		ITEMS.SPELL_CRYSTAL.setCreativeTab(tab);
 		ITEMS.SPELLBOOK_COVER.setCreativeTab(tab);
 		ITEMS.SCROLL.setCreativeTab(tab);
+		ITEMS.MANUAL.setCreativeTab(tab);
 
 		ITEMS.SPELLBOOK = new ItemSpellbook().setRegistryName("spellbook");
 		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture().setRegistryName("spellbook_architecture");

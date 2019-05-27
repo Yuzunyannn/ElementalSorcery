@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import yuzunyan.elementalsorcery.building.Building;
 import yuzunyan.elementalsorcery.building.BuildingLib;
 import yuzunyan.elementalsorcery.item.ItemParchment;
-import yuzunyan.elementalsorcery.parchment.Page;
+import yuzunyan.elementalsorcery.parchment.Pages;
 import yuzunyan.elementalsorcery.util.WorldHelper;
 import yuzunyan.elementalsorcery.util.item.ItemArchitectureHelper;
 
@@ -53,12 +53,12 @@ public class CommandES extends CommandBase {
 			} catch (NumberFormatException e) {
 				throw new CommandException("commands.es.page.usage");
 			}
-			if (!Page.isVaild(id))
+			if (!Pages.isVaild(id))
 				throw new CommandException("commands.es.page.fail");
 			Entity entity = sender.getCommandSenderEntity();
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
-				player.dropItem(ItemParchment.getParchment(id), false);
+				player.inventory.addItemStackToInventory(ItemParchment.getParchment(id));
 			}
 		} else
 			throw new CommandException("commands.es.usage");

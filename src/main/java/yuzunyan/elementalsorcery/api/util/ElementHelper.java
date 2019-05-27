@@ -2,8 +2,11 @@ package yuzunyan.elementalsorcery.api.util;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -11,6 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.api.ESCapability;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
+import yuzunyan.elementalsorcery.capability.ElementInventory;
 
 public class ElementHelper {
 
@@ -52,7 +56,7 @@ public class ElementHelper {
 		}
 	}
 
-	// 从tileentity获取元素仓库
+	/** 从tileentity获取元素仓库 */
 	public static IElementInventory getElementInventory(TileEntity tile) {
 		if (tile == null)
 			return null;
@@ -62,4 +66,46 @@ public class ElementHelper {
 			return (IElementInventory) tile;
 		return null;
 	}
+
+	/** 获取一个物品里可插入和取出的元素仓库 */
+	@Nullable
+	static public IElementInventory getElementInventoryOrdinary(ItemStack stack) {
+		if (stack.isEmpty())
+			return null;
+		if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null))
+			return null;
+		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+		if (!ElementHelper.canExtract(inventory))
+			return null;
+		if (!ElementHelper.canInsert(inventory))
+			return null;
+		return inventory;
+	}
+
+	/** 获取一个物品里可取出的元素仓库 */
+	@Nullable
+	static public IElementInventory getElementInventoryCanExtract(ItemStack stack) {
+		if (stack.isEmpty())
+			return null;
+		if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null))
+			return null;
+		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+		if (!ElementHelper.canExtract(inventory))
+			return null;
+		return inventory;
+	}
+
+	/** 获取一个物品里可插入的元素仓库 */
+	@Nullable
+	static public IElementInventory getElementInventoryCanInsert(ItemStack stack) {
+		if (stack.isEmpty())
+			return null;
+		if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null))
+			return null;
+		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+		if (!ElementHelper.canInsert(inventory))
+			return null;
+		return inventory;
+	}
+
 }

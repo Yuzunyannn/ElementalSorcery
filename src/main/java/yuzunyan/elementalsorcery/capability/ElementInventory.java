@@ -124,47 +124,6 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 		return tmp;
 	}
 
-	// 获取一个物品里可插入和取出的元素仓库
-	@Nullable
-	static public IElementInventory getOrdinaryElementInventory(ItemStack stack) {
-		if (stack.isEmpty())
-			return null;
-		if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null))
-			return null;
-		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		if (!ElementHelper.canExtract(inventory))
-			return null;
-		if (!ElementHelper.canInsert(inventory))
-			return null;
-		return inventory;
-	}
-
-	// 获取一个物品里可取出的元素仓库
-	@Nullable
-	static public IElementInventory getElementInventoryCanExtract(ItemStack stack) {
-		if (stack.isEmpty())
-			return null;
-		if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null))
-			return null;
-		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		if (!ElementHelper.canExtract(inventory))
-			return null;
-		return inventory;
-	}
-
-	// 获取一个物品里可插入的元素仓库
-	@Nullable
-	static public IElementInventory getElementInventoryCanInsert(ItemStack stack) {
-		if (stack.isEmpty())
-			return null;
-		if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null))
-			return null;
-		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		if (!ElementHelper.canInsert(inventory))
-			return null;
-		return inventory;
-	}
-
 	@Override
 	public NBTTagCompound serializeNBT() {
 		return (NBTTagCompound) Provider.storage.writeNBT(ELEMENTINVENTORY_CAPABILITY, this, null);

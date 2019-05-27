@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "* *",
+	"###",
+	"* *"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:paper"
+    },
+	"*": {
+      "item": "minecraft:leather"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:parchment",
+    "count": 3
+  }
+}

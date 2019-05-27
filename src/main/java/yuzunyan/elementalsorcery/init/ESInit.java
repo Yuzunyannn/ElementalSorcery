@@ -104,12 +104,17 @@ public class ESInit {
 		ESNetwork.registerAll();
 		// 注册默认所有建筑
 		BuildingLib.registerAll();
-		// 初始化错误页面
-		Pages.initPre();
 		// 注册事件
 		MinecraftForge.EVENT_BUS.register(new EventServer());
 		// 测试类
 		new ESTestAndDebug();
+		//page错误页面
+		Pages.initError();
+	}
+
+	public final static void postInit(FMLPostInitializationEvent event) {
+		// 初始化所有说明界面
+		Pages.init(event.getSide());
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -127,9 +132,9 @@ public class ESInit {
 
 	@SideOnly(Side.CLIENT)
 	public final static void postInitClinet(FMLPostInitializationEvent event) {
-		// 初始化所有说明界面，不需要在服务器初始化
-		Pages.init();
+
 	}
+
 	// 注册
 
 	static void registerAllItems() {
@@ -156,6 +161,7 @@ public class ESInit {
 		register(ESInitInstance.ITEMS.SPELL_CRYSTAL);
 		register(ESInitInstance.ITEMS.SPELLBOOK_COVER);
 		register(ESInitInstance.ITEMS.SCROLL);
+		register(ESInitInstance.ITEMS.MANUAL);
 
 	}
 
@@ -257,7 +263,8 @@ public class ESInit {
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_COVER, 0, "spellbook_cover");
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, "spellbook_back_cover");
 		registerRender(ESInitInstance.ITEMS.SCROLL);
-		
+		registerRender(ESInitInstance.ITEMS.MANUAL);
+
 		registerRender(new RenderTileElementalCube(), ESInitInstance.BLOCKS.ELEMENTAL_CUBE, TileElementalCube.class);
 		registerRender(new RenderTileMagicDesk(), ESInitInstance.BLOCKS.MAGIC_DESK, TileMagicDesk.class);
 		registerRender(new RenderTileElementCraftingTable(), ESInitInstance.BLOCKS.ELEMENT_CRAFTING_TABLE,
@@ -265,7 +272,7 @@ public class ESInit {
 		registerRender(new RenderTileDeconstructAltarTable(), ESInitInstance.BLOCKS.DECONSTRUCT_ALTAR_TABLE,
 				TileDeconstructAltarTable.class);
 		registerRender(new RenderTileStela(), ESInitInstance.BLOCKS.STELA, TileStela.class);
-		
+
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, RenderItemSpellbook.instance);

@@ -1,12 +1,14 @@
 package yuzunyan.elementalsorcery.block;
 
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -20,9 +22,13 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyan.elementalsorcery.render.particle.ParticleElementP;
 import yuzunyan.elementalsorcery.tile.TileStela;
+import yuzunyan.elementalsorcery.util.block.BlockHelper;
 
 public class BlockStela extends BlockContainer {
 
@@ -30,6 +36,7 @@ public class BlockStela extends BlockContainer {
 		super(Material.ROCK);
 		this.setUnlocalizedName("stela");
 		this.setHarvestLevel("pickaxe", 1);
+		this.setTickRandomly(true);
 		this.setHardness(7.5F);
 	}
 
@@ -193,6 +200,7 @@ public class BlockStela extends BlockContainer {
 		return this.onPut(world, ts, playerIn, hand, handler);
 	}
 
+	// 放置物品
 	private boolean onPut(World world, TileStela ts, EntityPlayer playerIn, EnumHand hand, ItemStackHandler handler) {
 		ItemStack stack = playerIn.getHeldItem(hand);
 		if (playerIn.isSneaking()) {
@@ -230,7 +238,25 @@ public class BlockStela extends BlockContainer {
 
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		TileEntity tile = worldIn.getTileEntity(pos);
+		if (tile instanceof TileStela) {
+			TileStela ts = (TileStela) tile;
+			BlockHelper.drop(
+					ts.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, ts.getFace().getOpposite()),
+					worldIn, pos);
+			BlockHelper.drop(ts.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, ts.getFace()), worldIn,
+					pos);
+		}
 		super.breakBlock(worldIn, pos, state);
+	}
+
+	// 掉落一次
+	private void drop(World world, BlockPos pos, ItemStackHandler handler) {
+		ItemStack origin = handler.getStackInSlot(0);
+		if (origin.isEmpty())
+			return;
+		handler.setStackInSlot(0, ItemStack.EMPTY);
+		Block.spawnAsEntity(world, pos, origin);
 	}
 
 	@Override
@@ -243,5 +269,30 @@ public class BlockStela extends BlockContainer {
 	@Override
 	public boolean isPassable(IBlockAccess worldIn, BlockPos pos) {
 		return true;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+		TileEntity tile = worldIn.getTileEntity(pos);
+		boolean spawnPass = true;
+		if (tile instanceof TileStela) {
+			TileStela ts = (TileStela) tile;
+			spawnPass = !ts.isRunning();
+		}
+		if (spawnPass)
+			return;
+		Vec3d position = new Vec3d(pos);
+		position = position.addVector(rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
+		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleElementP(worldIn, position));
+	}
+
+	@Override
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		TileEntity tile = worldIn.getTileEntity(pos);
+		if (tile instanceof TileStela) {
+			TileStela ts = (TileStela) tile;
+			ts.doOnce();
+		}
 	}
 }

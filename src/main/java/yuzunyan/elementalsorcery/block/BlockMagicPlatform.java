@@ -59,7 +59,7 @@ public class BlockMagicPlatform extends BlockContainer {
 
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		BlockHelper.breakBlockWithIGetItemStack(worldIn, pos, state);
+		BlockHelper.dropWithIGetItemStack(worldIn, pos, state);
 		super.breakBlock(worldIn, pos, state);
 	}
 }

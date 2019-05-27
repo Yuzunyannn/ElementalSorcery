@@ -1,86 +1,24 @@
 package yuzunyan.elementalsorcery.parchment;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
-import yuzunyan.elementalsorcery.ElementalSorcery;
 import yuzunyan.elementalsorcery.building.Building;
 import yuzunyan.elementalsorcery.util.TextHelper;
 
 public class Page {
 
-	// 页面非文字状态
+	// 页面非文字状态，布局
 	public static enum PageSate {
 		EXCLUSIVE, SMALL, BIG, EMPTY
 	}
 
-	// 所有注册的页面
-	static protected ArrayList<Page> pages = new ArrayList<Page>();
-
-	static public int addPage(Page page) {
-		pages.add(page);
-		page.id = pages.size() - 1;
-		return page.id;
-	}
-
-	// 获取页数量，该函数客户端和服务端返回不一样
-	static public int getCount() {
-		return pages.size();
-	}
-
-	// 获取真实最大页数
-	static public int getMax() {
-		return Pages.REAL_PAGE_COUNT;
-	}
-
-	// 获取页面，客户端使用，服务端永远是0页
-	static public Page getPage(int index) {
-		if (index < 0 || index >= pages.size()) {
-			ElementalSorcery.logger.warn("getPage异常的页数进入:" + index);
-			return Page.getErrorPage();
-		}
-		return pages.get(index);
-	}
-
-	// 获取页面，客户端使用，服务端永远是0页
-	static public Page getPage(ItemStack stack) {
-		NBTTagCompound nbt = stack.getSubCompound("page");
-		if (nbt == null)
-			return Page.getErrorPage();
-		return Page.getPage(nbt.getInteger("id"));
-	}
-
-	// 获取页面ID
-	static public int getPageId(ItemStack stack) {
-		NBTTagCompound nbt = stack.getSubCompound("page");
-		if (nbt == null)
-			return 0;
-		return nbt.getInteger("id");
-	}
-
-	// 获取错误页面
-	static public Page getErrorPage() {
-		return pages.get(Pages.ERROR);
-	}
-
-	// 是有有效id
-	static public boolean isVaild(int id) {
-		return id >= 0 && id < Page.getMax();
-	}
-
-	// 设置
-	static public ItemStack setPageAt(ItemStack stack, int id) {
-		NBTTagCompound nbt = stack.getOrCreateSubCompound("page");
-		nbt.setInteger("id", id);
-		return stack;
-	}
-
-	int id = -1;
-	int back = -1;
+	/** 当前page的id，添加的时候会被赋予 */
+	int id = -10;
+	/** 记录返回上一个页面使用的内容 */
+	private int back = -1;
 
 	public int getId() {
 		return this.id;
@@ -88,6 +26,11 @@ public class Page {
 
 	/** 当打开 */
 	public void open() {
+
+	}
+
+	/** 当关闭 */
+	public void close() {
 
 	}
 
@@ -109,6 +52,11 @@ public class Page {
 	/** 获取物品上的信息 */
 	public String getItemInfo() {
 		return this.getTitle();
+	}
+
+	/** 获取页面展示的图标 */
+	public ItemStack getIcon() {
+		return this.getOutput();
 	}
 
 	/** 添加正文内容 */
@@ -171,6 +119,11 @@ public class Page {
 
 	/** 获取建筑 */
 	public Building getBuilding() {
+		return null;
+	}
+
+	/** 获取目录列表，此项仅作为book使用 */
+	public int[] getCatalog() {
 		return null;
 	}
 

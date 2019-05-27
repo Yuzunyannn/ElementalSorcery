@@ -72,7 +72,7 @@ public class BlockHelper {
 	}
 
 	/** 方块破碎的时候，掉落继承IGetItemStack的物品 */
-	public static void breakBlockWithIGetItemStack(World worldIn, BlockPos pos, IBlockState state) {
+	public static void dropWithIGetItemStack(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity tileentity = worldIn.getTileEntity(pos);
 		if (tileentity instanceof IGetItemStack && !worldIn.isRemote) {
 			IGetItemStack tile = (IGetItemStack) tileentity;

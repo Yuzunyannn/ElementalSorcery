@@ -18,7 +18,7 @@ import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.ability.IGetBurnPower;
 import yuzunyan.elementalsorcery.api.element.Element;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
-import yuzunyan.elementalsorcery.capability.ElementInventory;
+import yuzunyan.elementalsorcery.api.util.ElementHelper;
 import yuzunyan.elementalsorcery.element.ElementMap;
 import yuzunyan.elementalsorcery.util.IField;
 
@@ -35,7 +35,7 @@ public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IFi
 		@Override
 		@Nonnull
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			IElementInventory einv = ElementInventory.getElementInventoryCanInsert(stack);
+			IElementInventory einv = ElementHelper.getElementInventoryCanInsert(stack);
 			if (einv == null)
 				return stack;
 			return super.insertItem(slot, stack, simulate);
@@ -57,7 +57,7 @@ public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IFi
 			return false;
 		}
 		ItemStack stack_ele = inv_eleitem.getStackInSlot(0);
-		IElementInventory einv = ElementInventory.getElementInventoryCanInsert(stack_ele);
+		IElementInventory einv = ElementHelper.getElementInventoryCanInsert(stack_ele);
 		if (einv == null) {
 			power = 0;
 			return false;

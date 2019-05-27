@@ -1,5 +1,7 @@
 package yuzunyan.elementalsorcery.parchment;
 
+import java.util.List;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -12,6 +14,7 @@ public class PageTransform extends Page {
 	protected ItemStack origin = ItemStack.EMPTY;
 	protected ItemStack ouput = ItemStack.EMPTY;
 	protected ItemStack extra = ItemStack.EMPTY;
+	protected List<ItemStack> list = null;;
 	protected int guiId;
 
 	public PageTransform(ItemStack origin, ItemStack output, int guiId) {
@@ -27,12 +30,23 @@ public class PageTransform extends Page {
 		this.guiId = guiId;
 	}
 
+	public PageTransform(ItemStack origin, ItemStack output, List<ItemStack> list, int guiId) {
+		this.origin = origin;
+		this.ouput = output;
+		this.list = list;
+		this.guiId = guiId;
+	}
+
 	public PageTransform(Item origin, Item output, int guiId) {
 		this(new ItemStack(origin), new ItemStack(output), guiId);
 	}
 
 	public PageTransform(Item origin, Item output, Item extra, int guiId) {
 		this(new ItemStack(origin), new ItemStack(output), new ItemStack(extra), guiId);
+	}
+
+	public PageTransform(Item origin, Item output, List<ItemStack> list, int guiId) {
+		this(new ItemStack(origin), new ItemStack(output), list, guiId);
 	}
 
 	public int getTransformGui() {
@@ -54,4 +68,8 @@ public class PageTransform extends Page {
 		return extra;
 	}
 
+	@Override
+	public List<ItemStack> getItemList() {
+		return this.list;
+	}
 }

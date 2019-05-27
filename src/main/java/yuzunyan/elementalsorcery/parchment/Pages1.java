@@ -2,141 +2,35 @@ package yuzunyan.elementalsorcery.parchment;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.NonNullList;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
-import yuzunyan.elementalsorcery.building.Building;
 import yuzunyan.elementalsorcery.building.Buildings;
 import yuzunyan.elementalsorcery.capability.ElementInventory;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
 import yuzunyan.elementalsorcery.item.ItemKynaiteTools;
+import yuzunyan.elementalsorcery.parchment.Pages.PageSimpleInfo;
 import yuzunyan.elementalsorcery.tile.TileMagicDesk;
-import yuzunyan.elementalsorcery.util.TextHelper;
 
 public class Pages1 {
 
-	static class WithPages extends Page {
-		protected int page = 0;
-		protected int max_page = 0;
-
-		@Override
-		public void open() {
-			page = 0;
-		}
-
-		@Override
-		public int prePage() {
-			if (page <= 0)
-				return -1;
-			else
-				return this.getId();
-		}
-
-		@Override
-		public int nextPage() {
-			if (page >= this.max_page)
-				return -1;
-			else
-				return this.getId();
-		}
-
-		@Override
-		public void nextPageUpdate() {
-			page++;
-		}
-
-		@Override
-		public void prePageUpdate() {
-			page--;
-		}
-	}
-
-	static class CraftingWithPages extends PageCrafting {
-		protected int page = 0;
-		protected int max_page = 0;
-
-		public CraftingWithPages(ItemStack... stacks) {
-			super(stacks);
-		}
-
-		public CraftingWithPages(Block block) {
-			super(block);
-		}
-
-		public CraftingWithPages(Item item) {
-			super(item);
-		}
-
-		@Override
-		public void open() {
-			page = 0;
-		}
-
-		@Override
-		public int prePage() {
-			if (page <= 0)
-				return -1;
-			else
-				return this.getId();
-		}
-
-		@Override
-		public int nextPage() {
-			if (page >= this.max_page)
-				return -1;
-			else
-				return this.getId();
-		}
-
-		@Override
-		public void nextPageUpdate() {
-			page++;
-		}
-
-		@Override
-		public void prePageUpdate() {
-			page--;
-		}
-	}
-
 	// 关于灶台的合成
-	static class AboutHearth extends PageCrafting {
+	static class AboutHearth extends PageCraftingSimple {
 		public AboutHearth() {
-			super(new ItemStack(ESInitInstance.BLOCKS.HEARTH, 1, 0), new ItemStack(ESInitInstance.BLOCKS.HEARTH, 1, 1),
+			super("hearth", new ItemStack(ESInitInstance.BLOCKS.HEARTH, 1, 0),
+					new ItemStack(ESInitInstance.BLOCKS.HEARTH, 1, 1),
 					new ItemStack(ESInitInstance.BLOCKS.HEARTH, 1, 2));
-		}
-
-		@Override
-		public String getTitle() {
-			return "page.hearth";
-		}
-
-		@Override
-		public String getContext() {
-			return "page.hearth.ct";
 		}
 	}
 
 	// 关于加热箱
-	static class AboutSmeltBox extends PageCrafting {
+	static class AboutSmeltBox extends PageCraftingSimple {
 		public AboutSmeltBox() {
-			super(new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX), new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX_IRON),
+			super("smeltbox", new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX),
+					new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX_IRON),
 					new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX_KYNAITE));
-		}
-
-		@Override
-		public String getTitle() {
-			return "page.smeltbox";
-		}
-
-		@Override
-		public String getContext() {
-			return "page.smeltbox.ct";
 		}
 	}
 
@@ -176,142 +70,53 @@ public class Pages1 {
 	}
 
 	// 关于魔导书
-	static class AboutSpellbook extends CraftingWithPages {
+	static class AboutSpellbook extends PageMul {
 
 		public AboutSpellbook() {
-			super(ESInitInstance.ITEMS.SPELLBOOK);
-			this.max_page = 2;
+			super(new PageSimpleInfo("spellbook", "first"),
+					new PageCraftingSimple("spellbook", ESInitInstance.ITEMS.SPELLBOOK),
+					new PageSimpleInfo("spellbook", "more"));
 		}
 
 		@Override
-		public NonNullList<Ingredient> getCrafting() {
-			if (page == 1)
-				return super.getCrafting();
-			else
-				return null;
-		}
-
-		@Override
-		public String getTitle() {
-			return "page.spellbook";
-		}
-
-		@Override
-		public void addContexts(List<String> contexts) {
-			if (page == 1)
-				super.addContexts(contexts);
-			else if (page == 0) {
-				TextHelper.addInfoCheckLine(contexts, "page.spellbook.ct.first");
-			} else {
-				TextHelper.addInfoCheckLine(contexts, "page.spellbook.ct.more");
-			}
-		}
-
-		@Override
-		public String getContext() {
-			return "page.spellbook.ct";
+		public ItemStack getIcon() {
+			return new ItemStack(ESInitInstance.ITEMS.SPELLBOOK);
 		}
 	}
 
 	// 关于魔法书桌
-	static class AboutMagicDesk extends CraftingWithPages {
+	static class AboutMagicDesk extends PageMul {
 
 		public AboutMagicDesk() {
-			super(ESInitInstance.BLOCKS.MAGIC_DESK);
-			this.max_page = 3;
-		}
-
-		@Override
-		public NonNullList<Ingredient> getCrafting() {
-			if (page == 0)
-				return super.getCrafting();
-			else
-				return null;
-		}
-
-		@Override
-		public void addContexts(List<String> contexts) {
-			if (page == 0)
-				super.addContexts(contexts);
-			else if (page == 2) {
-				TextHelper.addInfoCheckLine(contexts, "page.magicDesk.ct.crafting");
-			} else {
-				TextHelper.addInfoCheckLine(contexts, "page.magicDesk.ct.charge");
-			}
-		}
-
-		@Override
-		public String getContext() {
-			return "page.magicDesk.ct";
-		}
-
-		@Override
-		public String getTitle() {
-			return "page.magicDesk";
-		}
-
-		public Building getBuilding() {
-			if (page == 1)
-				return Buildings.SPELLBOOK_ALTAR;
-			return null;
+			super(new PageCraftingSimple("magicDesk", ESInitInstance.BLOCKS.MAGIC_DESK),
+					new PageBuilding("magicDesk", Buildings.SPELLBOOK_ALTAR),
+					new PageSimpleInfo("magicDesk", "crafting"), new PageSimpleInfo("magicDesk", "charge"));
 		}
 	}
 
-	static class AboutSP extends WithPages {
+	// 关于知识碑
+	static class AboutStela extends PageMul {
+		public AboutStela() {
+			super(new PageCraftingSimple("parchment", ESInitInstance.ITEMS.PARCHMENT), new PageSimple("stela"));
+		}
 
-		protected ItemStack book;
-		protected ItemStack newBook;
-		protected List<ItemStack> list;
-		protected String name;
+		@Override
+		public String getItemInfo() {
+			return "page.stela";
+		}
+
+		@Override
+		public ItemStack getIcon() {
+			return pages[0].getIcon();
+		}
+	}
+
+	static class AboutSP extends PageMul {
 
 		public AboutSP(String name, Item book, Item newBook, List<ItemStack> list) {
-			this.book = new ItemStack(book);
-			this.newBook = new ItemStack(newBook);
-			this.list = list;
-			this.max_page = 1;
-			this.name = name;
+			super(new PageTransformSimple(name, book, newBook, list, PageTransform.SPELLALTAR),
+					new PageSimpleInfo(name, "info"));
 		}
-
-		@Override
-		public void addContexts(List<String> contexts) {
-			if (page == 0)
-				super.addContexts(contexts);
-			else if (page == 1) {
-				TextHelper.addInfoCheckLine(contexts, "page." + name + ".ct.info");
-			}
-		}
-
-		@Override
-		public String getContext() {
-			return "page." + name + ".ct";
-		}
-
-		@Override
-		public String getTitle() {
-			return "page." + name;
-		}
-
-		public int getTransformGui() {
-			return PageTransform.SPELLALTAR;
-		}
-
-		@Override
-		public ItemStack getOrigin() {
-			if (this.page == 0)
-				return book;
-			return ItemStack.EMPTY;
-		}
-
-		@Override
-		public ItemStack getOutput() {
-			return newBook;
-		}
-
-		@Override
-		public List<ItemStack> getItemList() {
-			return list;
-		}
-
 	}
 
 	// 关于起始之魔导书

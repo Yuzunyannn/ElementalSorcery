@@ -20,11 +20,14 @@ import yuzunyan.elementalsorcery.ElementalSorcery;
 import yuzunyan.elementalsorcery.container.ESGuiHandler;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
 import yuzunyan.elementalsorcery.parchment.Page;
+import yuzunyan.elementalsorcery.parchment.Pages;
 
 public class ItemParchment extends Item {
 
 	public static ItemStack getParchment(int id) {
-		return Page.setPageAt(new ItemStack(ESInitInstance.ITEMS.PARCHMENT), id);
+		if (id == 0)
+			return new ItemStack(ESInitInstance.ITEMS.PARCHMENT);
+		return Pages.setPageAt(new ItemStack(ESInitInstance.ITEMS.PARCHMENT), id);
 	}
 
 	public ItemParchment() {
@@ -34,7 +37,7 @@ public class ItemParchment extends Item {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		Page page = Page.getPage(stack);
+		Page page = Pages.getPage(stack);
 		if (page.getId() == 0)
 			return;
 		tooltip.add("§e" + I18n.format(page.getItemInfo()));
@@ -45,7 +48,7 @@ public class ItemParchment extends Item {
 		if (handIn != EnumHand.MAIN_HAND)
 			return super.onItemRightClick(worldIn, playerIn, handIn);
 		ItemStack stack = playerIn.getHeldItem(handIn);
-		if (Page.getPageId(stack) == 0)
+		if (Pages.getPageId(stack) == 0)
 			return super.onItemRightClick(worldIn, playerIn, handIn);
 		if (worldIn.isRemote) {
 			BlockPos pos = playerIn.getPosition();

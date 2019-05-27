@@ -17,7 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
-import yuzunyan.elementalsorcery.capability.ElementInventory;
+import yuzunyan.elementalsorcery.api.util.ElementHelper;
 import yuzunyan.elementalsorcery.crafting.RecipeManagement;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
 
@@ -47,7 +47,7 @@ public class ContainerElementWorkbench extends Container {
 						boolean last_have = irecipe != null;
 						// 减少元素，减少物品
 						ItemStack stack_ = craftElement.getStackInSlot(0);
-						IElementInventory inventory = ElementInventory.getElementInventoryCanExtract(stack_);
+						IElementInventory inventory = ElementHelper.getElementInventoryCanExtract(stack_);
 						List<ElementStack> elist = irecipe.getNeedElements();
 						for (ElementStack estack : elist)
 							inventory.extractElement(estack, false);
@@ -120,7 +120,7 @@ public class ContainerElementWorkbench extends Container {
 		List<ElementStack> elist = irecipe.getNeedElements();
 		if (elist != null && !elist.isEmpty()) {
 			ItemStack stack = this.craftElement.getStackInSlot(0);
-			IElementInventory inventory = ElementInventory.getElementInventoryCanExtract(stack);
+			IElementInventory inventory = ElementHelper.getElementInventoryCanExtract(stack);
 			if (inventory == null)
 				return ItemStack.EMPTY;
 			for (ElementStack estack : elist) {

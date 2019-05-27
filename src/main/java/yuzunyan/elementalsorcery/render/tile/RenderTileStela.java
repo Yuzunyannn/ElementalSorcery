@@ -45,6 +45,18 @@ public class RenderTileStela extends TileEntitySpecialRenderer<TileStela> implem
 		stack = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, tile.getFace()).getStackInSlot(0);
 		if (!stack.isEmpty()) {
 			this.renderOncePaper(tile, x + 0.5, y - 0.135, z + 0.5, stack, 0);
+			if (stack.getCount() >= 4) {
+				this.renderOncePaper(tile, x + 0.5, y - 0.135 + 0.032, z + 0.5, stack, 0.04);
+				if (stack.getCount() >= 8) {
+					this.renderOncePaper(tile, x + 0.5, y - 0.135 + 0.032 * 2, z + 0.5, stack, -0.04);
+					if (stack.getCount() >= 16) {
+						this.renderOncePaper(tile, x + 0.5, y - 0.135 + 0.032 * 3, z + 0.5, stack, 0.02);
+						if (stack.getCount() >= 32) {
+							this.renderOncePaper(tile, x + 0.5, y - 0.135 + 0.032 * 4, z + 0.5, stack, -0.025);
+						}
+					}
+				}
+			}
 		}
 	}
 

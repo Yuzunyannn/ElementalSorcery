@@ -1,5 +1,7 @@
 package yuzunyan.elementalsorcery.parchment;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,6 +17,11 @@ public class PageTransformSimple extends PageTransform {
 
 	public PageTransformSimple(String name, Item origin, Item output, int guiId) {
 		super(origin, output, guiId);
+		this.name = name;
+	}
+
+	public PageTransformSimple(String name, Item origin, Item output, List<ItemStack> list, int guiId) {
+		super(origin, output, list, guiId);
 		this.name = name;
 	}
 

@@ -18,6 +18,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -43,6 +44,11 @@ public class GuiParchment extends GuiContainer {
 	public final static int CRAFTING = 1;
 	public final static int TRANSFORM = 2;
 	public final static int BUILDING = 3;
+	public final static int CATALOG = 4;
+
+	public final static int CATALOG_LOCAL_X = 20;
+	public final static int CATALOG_LOCAL_Y = 20;
+	public final static int CATALOG_LOCAL_INTERVAL = 25;
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/parchment.png");
@@ -93,6 +99,9 @@ public class GuiParchment extends GuiContainer {
 			int cX = offsetX + (int) (this.xSize * 0.55f);
 			int cY = offsetY + (int) (this.ySize * 0.6f);
 			this.drawBuilding(cX, cY, this.container.page.getBuilding());
+		} // 画目录
+		else if (this.show == CATALOG) {
+			this.drawCatalog(offsetX + CATALOG_LOCAL_X, offsetY + CATALOG_LOCAL_Y, this.container.page.getCatalog());
 		}
 	}
 
@@ -145,6 +154,11 @@ public class GuiParchment extends GuiContainer {
 					yoff = this.drawSplitString(s, use_xSize / 10, yoff, width, 4210752);
 				}
 			}
+		} else {
+			// 特殊情况，画目录
+			if (this.show == CATALOG) {
+				this.drawCatalogString(CATALOG_LOCAL_X, CATALOG_LOCAL_Y, this.container.page.getCatalog());
+			}
 		}
 	}
 
@@ -179,7 +193,10 @@ public class GuiParchment extends GuiContainer {
 		// 检测各种状态
 		this.page_state = container.page.getState();
 		NonNullList<Ingredient> ingList = container.page.getCrafting();
-		if (this.page_state != Page.PageSate.EMPTY) {
+		int[] cat = container.page.getCatalog();
+		if (cat != null) {
+			this.show = CATALOG;
+		} else if (this.page_state != Page.PageSate.EMPTY) {
 			if (this.container.page.getBuilding() != null)
 				this.show = BUILDING;
 			else {
@@ -242,6 +259,17 @@ public class GuiParchment extends GuiContainer {
 				next_item.visible = true;
 				next_item.x = cX - 9 + 5 + 18 * 4;
 				next_item.y = cY + 37 + 4;
+			}
+		} else if (this.show == CATALOG) {
+			// 重新初始化按钮位置
+			int cX = offsetX + CATALOG_LOCAL_X + 1;
+			int cY = offsetY + CATALOG_LOCAL_Y + 1;
+			for (int i = 0; i < item_buts.length; i++)
+				item_buts[i].visible = false;
+			for (int i = 0; i < cat.length; i++) {
+				item_buts[i].visible = true;
+				item_buts[i].x = cX;
+				item_buts[i].y = cY + i * CATALOG_LOCAL_INTERVAL;
 			}
 		} else {
 			for (int i = 0; i < item_buts.length; i++)
@@ -611,6 +639,46 @@ public class GuiParchment extends GuiContainer {
 		}
 		this.itemRender.renderItemAndEffectIntoGUI(this.mc.player, stack, x, y);
 		this.itemRender.renderItemOverlayIntoGUI(this.fontRenderer, stack, x, y, s);
+	}
+
+	// 画目录
+	private void drawCatalog(int cx, int cy, int[] ids) {
+		if (ids == null)
+			return;
+		for (int i = 0; i < ids.length; i++) {
+			int x = cx;
+			int y = cy + i * CATALOG_LOCAL_INTERVAL;
+			this.drawTexturedModalRect(x, y, 41, 166, 18, 18);
+		}
+		startDrawItem();
+		for (int i = 0; i < ids.length; i++) {
+			int x = cx;
+			int y = cy + i * CATALOG_LOCAL_INTERVAL + 4;
+			Page page = Pages.getPage(ids[i]);
+			ItemStack stack = page.getIcon();
+			if (stack.isEmpty())
+				stack = new ItemStack(Blocks.BARRIER);
+			drawOnceItem(stack, x + 1, y - 3);
+		}
+		endDrawItem();
+	}
+
+	// 画目录文字
+	private void drawCatalogString(int cx, int cy, int[] ids) {
+		if (ids == null || ids.length == 0) {
+			this.fontRenderer.drawString(I18n.format("page.catalog.none"), cx, cy, 4210752);
+			return;
+		}
+		for (int i = 0; i < ids.length; i++) {
+			int x = cx + 20;
+			int y = cy + i * CATALOG_LOCAL_INTERVAL + 4;
+			Page page = Pages.getPage(ids[i]);
+			String str = I18n.format(page.getTitle());
+			int width = this.fontRenderer.getStringWidth(str);
+			str += " - - - - - - - - - - - - - - - - - - - - - - - - -".substring(0, (180 - width) / 4);
+			this.fontRenderer.drawString(str, x, y, 4210752);
+			this.fontRenderer.drawString(page.getId() + "", x + 185, y, 4210752);
+		}
 	}
 
 	// 测试更改数据

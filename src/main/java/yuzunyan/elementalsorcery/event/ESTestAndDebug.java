@@ -1,5 +1,7 @@
 package yuzunyan.elementalsorcery.event;
 
+import net.minecraft.block.BlockFlower;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -23,7 +25,7 @@ public class ESTestAndDebug {
 	public void click(PlayerInteractEvent event) {
 		if (event.getWorld().isRemote)
 			return;
-		//
+
 		// if (event.getEntityPlayer().isSneaking()) {
 		// pos = event.getPos();
 		// } else {
@@ -31,7 +33,10 @@ public class ESTestAndDebug {
 		// System.out.println(newpos);
 		// }
 
-		// IBlockState state = event.getWorld().getBlockState(event.getPos());
+//		IBlockState state = event.getWorld().getBlockState(event.getPos());
+//		if (state.getBlock() instanceof BlockFlower) {
+//			System.out.println(state);
+//		}
 		// if (state.getBlock() instanceof BlockStairs) {
 		// state = state.getBlock().getActualState(state, event.getWorld(),
 		// event.getPos());
@@ -40,21 +45,22 @@ public class ESTestAndDebug {
 		// System.out.println("Shape:" + state.getValue(BlockStairs.SHAPE));
 		// }
 
-//		try {
-//			System.out.println(Blocks.QUARTZ_STAIRS.getClass().getName());
-//			Field field = Blocks.QUARTZ_STAIRS.getClass().getDeclaredField("modelState");
-//			field.setAccessible(true);
-//			IBlockState s = (IBlockState) field.get(Blocks.QUARTZ_STAIRS);
-//			System.out.println(s);
-//		} catch (NoSuchFieldException e) {
-//			e.printStackTrace();
-//		} catch (SecurityException e) {
-//			e.printStackTrace();
-//		} catch (IllegalArgumentException e) {
-//			e.printStackTrace();
-//		} catch (IllegalAccessException e) {
-//			e.printStackTrace();
-//		}
+		// try {
+		// System.out.println(Blocks.QUARTZ_STAIRS.getClass().getName());
+		// Field field =
+		// Blocks.QUARTZ_STAIRS.getClass().getDeclaredField("modelState");
+		// field.setAccessible(true);
+		// IBlockState s = (IBlockState) field.get(Blocks.QUARTZ_STAIRS);
+		// System.out.println(s);
+		// } catch (NoSuchFieldException e) {
+		// e.printStackTrace();
+		// } catch (SecurityException e) {
+		// e.printStackTrace();
+		// } catch (IllegalArgumentException e) {
+		// e.printStackTrace();
+		// } catch (IllegalAccessException e) {
+		// e.printStackTrace();
+		// }
 
 		//
 		// IBlockState state = event.getWorld().getBlockState(event.getPos());

@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
 import yuzunyan.elementalsorcery.parchment.Page;
+import yuzunyan.elementalsorcery.parchment.Pages;
 
 public class ContainerParchment extends Container {
 
@@ -20,7 +21,7 @@ public class ContainerParchment extends Container {
 		this.player = player;
 		ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
 		try {
-			this.page = Page.getPage(stack);
+			this.page = Pages.getPage(stack);
 		} catch (ArrayIndexOutOfBoundsException ex) {
 			throw new RuntimeException("这个界面请不要再服务器打开！");
 		}
@@ -41,7 +42,8 @@ public class ContainerParchment extends Container {
 		if (last_id <= 0) {
 			last_id = this.page.back();
 		}
-		this.page = Page.getPage(id);
+		this.page.close();
+		this.page = Pages.getPage(id);
 		if (!isBack) {
 			this.page.back(last_id);
 			this.page.open();
@@ -55,9 +57,16 @@ public class ContainerParchment extends Container {
 		if (last_id <= 0) {
 			last_id = this.page.back();
 		}
+		this.page.close();
 		this.page = page;
 		this.page.back(last_id);
 		this.page.open();
+	}
+
+	@Override
+	public void onContainerClosed(EntityPlayer playerIn) {
+		this.page.close();
+		super.onContainerClosed(playerIn);
 	}
 
 }
