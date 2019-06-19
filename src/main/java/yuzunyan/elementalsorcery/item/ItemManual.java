@@ -1,6 +1,8 @@
 package yuzunyan.elementalsorcery.item;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -18,6 +20,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import yuzunyan.elementalsorcery.ElementalSorcery;
 import yuzunyan.elementalsorcery.container.ESGuiHandler;
+import yuzunyan.elementalsorcery.init.ESInitInstance;
 import yuzunyan.elementalsorcery.parchment.Pages;
 
 public class ItemManual extends Item {
@@ -32,7 +35,9 @@ public class ItemManual extends Item {
 		if (handIn != EnumHand.MAIN_HAND)
 			return super.onItemRightClick(worldIn, playerIn, handIn);
 		if (playerIn.isSneaking()) {
-			return super.onItemRightClick(worldIn, playerIn, handIn);
+			ItemStack stack = playerIn.getHeldItem(handIn);
+			this.store(playerIn, stack);
+			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 		}
 		// 没有shift
 		ItemStack stack = playerIn.getHeldItem(handIn);
@@ -75,6 +80,26 @@ public class ItemManual extends Item {
 		NBTTagCompound nbt = stack.getOrCreateSubCompound("manual");
 		nbt.setIntArray("ids", ids);
 		return stack;
+	}
+
+	// 存入
+	private void store(EntityPlayer player, ItemStack stack) {
+		int[] ids = ItemManual.getIds(stack);
+		List<Integer> idsList = Arrays.stream(ids).boxed().collect(Collectors.toList());
+		for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
+			ItemStack itemstack = player.inventory.getStackInSlot(i);
+			if (itemstack.getItem() != ESInitInstance.ITEMS.PARCHMENT)
+				continue;
+			int id = Pages.getPageId(itemstack);
+			if (id != 0) {
+				if (!idsList.contains(id)) {
+					idsList.add(id);
+				}
+			}
+			player.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
+		}
+		ids = idsList.stream().mapToInt(Integer::valueOf).toArray();
+		ItemManual.setIds(stack, ids);
 	}
 
 }

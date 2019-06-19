@@ -21,7 +21,6 @@ public class RenderTileStela extends TileEntitySpecialRenderer<TileStela> implem
 	public void render(TileStela tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 		GlStateManager.pushMatrix();
-		// GlStateManager.enableCull();
 		GlStateManager.translate(x + 0.5, y, z + 0.5);
 		GlStateManager.scale(0.0625, 0.0625, 0.0625);
 		this.raoteWithFace(tile.getFace());

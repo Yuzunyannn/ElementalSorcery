@@ -14,18 +14,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.capability.Spellbook;
 import yuzunyan.elementalsorcery.item.ItemSpellbook;
 
+@SideOnly(Side.CLIENT)
 public class EventClient {
 
-	static public Random rand = new Random();
+	static public final Random rand = new Random();
 
-	static private List<SpellbookOpenMsg> spellbook_open_msgs = new LinkedList<SpellbookOpenMsg>();
+	static private final List<SpellbookOpenMsg> spellbook_open_msgs = new LinkedList<SpellbookOpenMsg>();
+	static private final List<ITickClient> tick_list = new LinkedList<ITickClient>();
 
 	static private class SpellbookOpenMsg {
 		public EntityLivingBase entity;
 		public ItemStack stack;
 	}
 
-	@SideOnly(Side.CLIENT)
 	static public void addSpellbookOpen(EntityLivingBase entity, ItemStack stack) {
 		if (!stack.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null))
 			return;
@@ -37,6 +38,12 @@ public class EventClient {
 		msg.stack = stack;
 		spellbook_open_msgs.add(msg);
 		ItemSpellbook.renderStart(book);
+	}
+
+	static public void addTickTask(ITickClient task) {
+		if (task == null)
+			return;
+		tick_list.add(task);
 	}
 
 	// 全局旋转，单位角度
@@ -54,9 +61,9 @@ public class EventClient {
 		// tick增加
 		tick++;
 		// 处理书打开队列
-		Iterator<SpellbookOpenMsg> it = spellbook_open_msgs.iterator();
-		while (it.hasNext()) {
-			SpellbookOpenMsg x = it.next();
+		Iterator<SpellbookOpenMsg> iterBook = spellbook_open_msgs.iterator();
+		while (iterBook.hasNext()) {
+			SpellbookOpenMsg x = iterBook.next();
 			Spellbook book = x.stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 			if (x.entity.isHandActive()) {
 				ItemSpellbook.renderOpen(book);
@@ -64,9 +71,17 @@ public class EventClient {
 			} else {
 				if (ItemSpellbook.renderClose(book)) {
 					ItemSpellbook.renderEnd(book);
-					it.remove();
+					iterBook.remove();
 				}
 			}
+		}
+		// 处理tick队列
+		Iterator<ITickClient> iter = tick_list.iterator();
+		while (iter.hasNext()) {
+			ITickClient task = iter.next();
+			int flags = task.onTick();
+			if (flags == ITickClient.END)
+				iter.remove();
 		}
 		// 全局旋转
 		global_rotate += DGLOBAL_ROTATE;

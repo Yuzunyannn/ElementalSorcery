@@ -14,8 +14,8 @@ import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.util.ElementHelper;
 import yuzunyan.elementalsorcery.capability.ElementInventory;
 import yuzunyan.elementalsorcery.tile.TileStaticMultiBlock;
+import yuzunyan.elementalsorcery.util.NBTHelper;
 import yuzunyan.elementalsorcery.util.item.ItemStackHandlerInventory;
-import yuzunyan.elementalsorcery.util.item.NBTHelper;
 
 public class CraftingCrafting implements ICraftingCommit {
 

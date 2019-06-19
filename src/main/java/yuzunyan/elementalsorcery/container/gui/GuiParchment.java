@@ -15,9 +15,12 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.Item;
@@ -29,6 +32,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import yuzunyan.elementalsorcery.ElementalSorcery;
 import yuzunyan.elementalsorcery.building.Building;
 import yuzunyan.elementalsorcery.container.ContainerParchment;
@@ -77,6 +81,8 @@ public class GuiParchment extends GuiContainer {
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
+
+		container.page.drawBackground(this, offsetX, offsetY);
 
 		// 画合成表
 		if (this.show == CRAFTING) {
@@ -730,4 +736,18 @@ public class GuiParchment extends GuiContainer {
 		GlStateManager.popMatrix();
 	}
 
+	/** 画物品 */
+	public void renderItem(ItemStack stack, int x, int y) {
+		IBakedModel bakedmodel = this.itemRender.getItemModelWithOverrides(stack, (World) null,
+				(EntityLivingBase) null);
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(x, y, 100.0F + this.zLevel);
+		GlStateManager.translate(8.0F, 8.0F, 0.0F);
+		GlStateManager.scale(1.0F, -1.0F, 1.0F);
+		GlStateManager.scale(16.0F, 16.0F, 16.0F);
+		GlStateManager.color(1.0F, 1.0F, 1.0F, 0F);
+		GlStateManager.enableAlpha();
+		this.itemRender.renderItem(stack, bakedmodel);
+		GlStateManager.popMatrix();
+	}
 }

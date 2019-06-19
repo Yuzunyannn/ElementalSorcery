@@ -97,7 +97,9 @@ public class Pages1 {
 	// 关于知识碑
 	static class AboutStela extends PageMul {
 		public AboutStela() {
-			super(new PageCraftingSimple("parchment", ESInitInstance.ITEMS.PARCHMENT), new PageSimple("stela"));
+			super(new PageSimple("how2ply"), new PageCraftingSimple("parchment", ESInitInstance.ITEMS.PARCHMENT),
+					new PageSimple("stela", new ItemStack(ESInitInstance.BLOCKS.STELA),
+							new ItemStack(ESInitInstance.BLOCKS.STELA)));
 		}
 
 		@Override
@@ -107,7 +109,7 @@ public class Pages1 {
 
 		@Override
 		public ItemStack getIcon() {
-			return pages[0].getIcon();
+			return pages[2].getIcon();
 		}
 	}
 

@@ -17,6 +17,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import yuzunyan.elementalsorcery.building.Building;
 import yuzunyan.elementalsorcery.building.BuildingLib;
+import yuzunyan.elementalsorcery.init.ESInitInstance;
 import yuzunyan.elementalsorcery.item.ItemParchment;
 import yuzunyan.elementalsorcery.parchment.Pages;
 import yuzunyan.elementalsorcery.util.WorldHelper;
@@ -58,7 +59,10 @@ public class CommandES extends CommandBase {
 			Entity entity = sender.getCommandSenderEntity();
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
-				player.inventory.addItemStackToInventory(ItemParchment.getParchment(id));
+				if (id == Pages.BOOK)
+					player.inventory.addItemStackToInventory(new ItemStack(ESInitInstance.ITEMS.MANUAL));
+				else
+					player.inventory.addItemStackToInventory(ItemParchment.getParchment(id));
 			}
 		} else
 			throw new CommandException("commands.es.usage");

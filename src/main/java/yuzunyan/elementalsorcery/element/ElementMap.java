@@ -208,6 +208,7 @@ public class ElementMap implements IElementMap {
 		instance.add(Blocks.END_STONE, newES(E.ENDER, 1, 20));
 		instance.add(Items.ENDER_PEARL, newES(E.ENDER, 75, 1000));
 		instance.add(Items.ENDER_EYE, newES(E.ENDER, 75, 1000), newES(E.FIRE, 20, 450));
+		instance.add(Items.BOOK, newES(E.KNOWLEDGE, 10, 20));
 		instance.add(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, newES(E.KNOWLEDGE, 100, 200));
 	}
 

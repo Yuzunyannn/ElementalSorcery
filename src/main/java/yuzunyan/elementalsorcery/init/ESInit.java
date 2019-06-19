@@ -47,6 +47,7 @@ import yuzunyan.elementalsorcery.event.EventClient;
 import yuzunyan.elementalsorcery.event.EventServer;
 import yuzunyan.elementalsorcery.init.registries.ESCraftingRegistries;
 import yuzunyan.elementalsorcery.init.registries.EntityRegistries;
+import yuzunyan.elementalsorcery.init.registries.VillegeRegistries;
 import yuzunyan.elementalsorcery.init.registries.OreDictionaryRegistries;
 import yuzunyan.elementalsorcery.init.registries.TileItemRenderRegistries;
 import yuzunyan.elementalsorcery.network.ESNetwork;
@@ -57,6 +58,7 @@ import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyan.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyan.elementalsorcery.render.tile.RenderTileElementalCube;
+import yuzunyan.elementalsorcery.render.tile.RenderTileLantern;
 import yuzunyan.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyan.elementalsorcery.render.tile.RenderTileMagicPlatform;
 import yuzunyan.elementalsorcery.render.tile.RenderTileStela;
@@ -67,6 +69,7 @@ import yuzunyan.elementalsorcery.tile.TileElementCraftingTable;
 import yuzunyan.elementalsorcery.tile.TileElementalCube;
 import yuzunyan.elementalsorcery.tile.TileHearth;
 import yuzunyan.elementalsorcery.tile.TileInfusionBox;
+import yuzunyan.elementalsorcery.tile.TileLantern;
 import yuzunyan.elementalsorcery.tile.TileMagicDesk;
 import yuzunyan.elementalsorcery.tile.TileMagicPlatform;
 import yuzunyan.elementalsorcery.tile.TileSmeltBox;
@@ -96,6 +99,8 @@ public class ESInit {
 		ElementMap.registerAll();
 		// 注册实体
 		EntityRegistries.registerAll();
+		//测试村民
+		VillegeRegistries.registerAll();
 		// 注册GUI句柄
 		NetworkRegistry.INSTANCE.registerGuiHandler(ElementalSorcery.instance, new ESGuiHandler());
 		// 注册世界生成
@@ -108,7 +113,7 @@ public class ESInit {
 		MinecraftForge.EVENT_BUS.register(new EventServer());
 		// 测试类
 		new ESTestAndDebug();
-		//page错误页面
+		// page错误页面
 		Pages.initError();
 	}
 
@@ -188,6 +193,7 @@ public class ESInit {
 		register(ESInitInstance.BLOCKS.ELEMENT_CRAFTING_TABLE);
 		register(ESInitInstance.BLOCKS.DECONSTRUCT_ALTAR_TABLE);
 		register(ESInitInstance.BLOCKS.STELA);
+		register(ESInitInstance.BLOCKS.LANTERN);
 	}
 
 	static void registerAllTiles() {
@@ -202,6 +208,7 @@ public class ESInit {
 		register(TileElementCraftingTable.class, "ElementCraftingTable");
 		register(TileDeconstructAltarTable.class, "DeconstructAltarTable");
 		register(TileStela.class, "Stela");
+		register(TileLantern.class, "Lantern");
 	}
 
 	static void registerAllElements() {
@@ -272,6 +279,7 @@ public class ESInit {
 		registerRender(new RenderTileDeconstructAltarTable(), ESInitInstance.BLOCKS.DECONSTRUCT_ALTAR_TABLE,
 				TileDeconstructAltarTable.class);
 		registerRender(new RenderTileStela(), ESInitInstance.BLOCKS.STELA, TileStela.class);
+		registerRender(new RenderTileLantern(), ESInitInstance.BLOCKS.LANTERN, TileLantern.class);
 
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);

@@ -11,7 +11,7 @@ import yuzunyan.elementalsorcery.api.element.Element;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.element.ElementMap;
 import yuzunyan.elementalsorcery.tile.TileStaticMultiBlock;
-import yuzunyan.elementalsorcery.util.item.NBTHelper;
+import yuzunyan.elementalsorcery.util.NBTHelper;
 
 public class CraftingDeconstruct implements ICraftingCommit {
 

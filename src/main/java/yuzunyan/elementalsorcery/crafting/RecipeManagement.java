@@ -70,6 +70,10 @@ public class RecipeManagement implements ESRegister.IRecipeManagement {
 		instance.addRecipe(new ItemStack(ESInitInstance.BLOCKS.MAGIC_DESK, 1), "M#M", " # ", " # ", "#",
 				Items.ENDER_EYE, "#", new ItemStack(Blocks.PLANKS, 1, 5), "M", ESInitInstance.ITEMS.MAGIC_CRYSTAL,
 				new ElementStack(ESInitInstance.ELEMENTS.KNOWLEDGE, 30, 50));
+		// 元素手册
+		instance.addRecipe(new ItemStack(ESInitInstance.ITEMS.MANUAL, 1), "PPP", "*#*", "P",
+				ESInitInstance.ITEMS.PARCHMENT, "#", Items.LEATHER, "*", Items.GOLD_INGOT,
+				new ElementStack(ESInitInstance.ELEMENTS.KNOWLEDGE, 20, 10));
 	}
 
 }

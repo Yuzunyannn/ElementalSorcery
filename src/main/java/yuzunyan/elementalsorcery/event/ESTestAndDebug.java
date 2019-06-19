@@ -1,7 +1,5 @@
 package yuzunyan.elementalsorcery.event;
 
-import net.minecraft.block.BlockFlower;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -23,20 +21,35 @@ public class ESTestAndDebug {
 
 	@SubscribeEvent
 	public void click(PlayerInteractEvent event) {
+//		if (event.getEntityPlayer().isSneaking()) {
+//			pos = event.getPos();
+//		} else {
+//			BlockPos newpos = event.getPos().subtract(pos);
+//			System.out.println(newpos);
+//			// if (event.getWorld().isRemote) {
+//			// EntityBat bat = new EntityBat(event.getWorld());
+//			// bat.setPosition(event.getEntityPlayer().posX + 0.5,
+//			// event.getEntityPlayer().posY +0.5,
+//			// event.getEntityPlayer().posZ + 0.5);
+//			// PathFinder finder = new PathFinder(new FlyingNodeProcessor());
+//			// Path path = finder.findPath(event.getWorld(), bat, pos, 32);
+//			// if (path != null) {
+//			// for (int i = 0; i < path.getCurrentPathLength(); i++) {
+//			// PathPoint p = path.getPathPointFromIndex(i);
+//			// event.getWorld().setBlockState(new BlockPos(p.x, p.y, p.z),
+//			// Blocks.FIRE.getDefaultState());
+//			// }
+//			// }
+//			// }
+//		}
+
 		if (event.getWorld().isRemote)
 			return;
 
-		// if (event.getEntityPlayer().isSneaking()) {
-		// pos = event.getPos();
-		// } else {
-		// BlockPos newpos = event.getPos().subtract(pos);
-		// System.out.println(newpos);
+		// IBlockState state = event.getWorld().getBlockState(event.getPos());
+		// if (state.getBlock() instanceof BlockFlower) {
+		// System.out.println(state);
 		// }
-
-//		IBlockState state = event.getWorld().getBlockState(event.getPos());
-//		if (state.getBlock() instanceof BlockFlower) {
-//			System.out.println(state);
-//		}
 		// if (state.getBlock() instanceof BlockStairs) {
 		// state = state.getBlock().getActualState(state, event.getWorld(),
 		// event.getPos());

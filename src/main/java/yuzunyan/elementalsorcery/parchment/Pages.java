@@ -76,11 +76,13 @@ public class Pages {
 	static public int ABOUT_ENCHANTINGBOOK;
 	static public int ABOUT_SPELL_CRY;
 	static public int ABOUT_EWORKBENCH;
+	static public int ABOUT_MANUAL;
 	static public int ABOUT_DEC_BOX;
 	static public int ABOUT_MAGIC_PAPER;
 	static public int ABOUT_SPELL_PAPER;
 	static public int ABOUT_BOOKCOVER;
 	static public int ABOUT_SPELLBOOK;
+	static public int ABOUT_ELEMENT_CUBE;
 	static public int ABOUT_MAGICDESK;
 	static public int ABOUT_SPLAUNCH;
 	static public int ABOUT_SPELEMENT;
@@ -125,6 +127,7 @@ public class Pages {
 		ABOUT_SPELL_CRY = addPage(new PageTransformSimple("spellCry", ESInitInstance.ITEMS.MAGIC_CRYSTAL,
 				ESInitInstance.ITEMS.SPELL_CRYSTAL, PageTransform.INFUSION));
 		ABOUT_EWORKBENCH = addPage(new PageCraftingSimple("EWorkbench", ESInitInstance.BLOCKS.ELEMENT_WORKBENCH));
+		ABOUT_MANUAL = addPage(new PageCraftingSimple("manual", ESInitInstance.ITEMS.MANUAL));
 		ABOUT_DEC_BOX = addPage(new PageCraftingSimple("decBox", ESInitInstance.BLOCKS.DECONSTRUCT_BOX));
 		ABOUT_MAGIC_PAPER = addPage(new PageCraftingSimple("magicPaper", ESInitInstance.ITEMS.MAGIC_PAPER));
 		ABOUT_SPELL_PAPER = addPage(new PageCraftingSimple("spellPaper", ESInitInstance.ITEMS.SPELL_PAPER));
@@ -132,6 +135,7 @@ public class Pages {
 				new PageCraftingSimple("bookCover", new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 0),
 						new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 1)));
 		ABOUT_SPELLBOOK = addPage(new AboutSpellbook());
+		ABOUT_ELEMENT_CUBE = addPage(new PageCraftingSimple("elementCube", ESInitInstance.BLOCKS.ELEMENTAL_CUBE));
 		ABOUT_MAGICDESK = addPage(new AboutMagicDesk());
 		ABOUT_SPLAUNCH = addPage(new AboutSPLaunch());
 		ABOUT_SPELEMENT = addPage(new AboutSPElement());

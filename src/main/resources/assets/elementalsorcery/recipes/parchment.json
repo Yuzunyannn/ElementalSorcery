@@ -1,20 +1,27 @@
 {
-  "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "* *",
-	"###",
-	"* *"
-  ],
-  "key": {
-    "#": {
-      "item": "minecraft:paper"
-    },
-	"*": {
-      "item": "minecraft:leather"
-    }
-  },
-  "result": {
-    "item": "elementalsorcery:parchment",
-    "count": 3
-  }
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"# #",
+		"*@*",
+		"&&&"
+	],
+	"key": {
+		"#": {
+			"item": "minecraft:paper"
+		},
+		"*": {
+			"item": "minecraft:leather"
+		},
+		"@": {
+			"item": "minecraft:water_bucket"
+		},
+		"&": {
+			"item": "minecraft:stone",
+			"data": 5
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:parchment",
+		"count": 3
+	}
 }

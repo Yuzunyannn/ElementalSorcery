@@ -2,6 +2,7 @@ package yuzunyan.elementalsorcery.parchment;
 
 import java.util.List;
 
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
@@ -156,6 +157,18 @@ public class Page {
 
 	/** 如果返回的id和自身一样，则调用 */
 	public void prePageUpdate() {
+
+	}
+
+	/**
+	 * 画自定义背景
+	 * 
+	 * @param offsetX
+	 *            x开始点
+	 * @param offsetY
+	 *            y开始点
+	 */
+	public void drawBackground(GuiContainer gui, int offsetX, int offsetY) {
 
 	}
 

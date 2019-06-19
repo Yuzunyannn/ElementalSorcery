@@ -61,6 +61,7 @@ public class ESObjects {
 		public Block ELEMENT_CRAFTING_TABLE;
 		public Block DECONSTRUCT_ALTAR_TABLE;
 		public Block STELA;
+		public Block LANTERN;
 	}
 
 	static public class Elements {

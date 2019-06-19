@@ -2,6 +2,7 @@ package yuzunyan.elementalsorcery.parchment;
 
 import java.util.List;
 
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
@@ -105,6 +106,11 @@ public class PageMul extends Page {
 	@Override
 	public void onUpdate() {
 		atPage.onUpdate();
+	}
+
+	@Override
+	public void drawBackground(GuiContainer gui, int offsetX, int offsetY) {
+		atPage.drawBackground(gui, offsetX, offsetY);
 	}
 
 	@Override

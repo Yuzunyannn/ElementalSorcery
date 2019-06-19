@@ -1,4 +1,4 @@
-package yuzunyan.elementalsorcery.util.item;
+package yuzunyan.elementalsorcery.util;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 
@@ -45,6 +46,16 @@ public class NBTHelper {
 			elementStackList.add(new ElementStack((NBTTagCompound) n));
 		}
 		return elementStackList;
+	}
+
+	public static void setBlockPos(NBTTagCompound nbt, String key, BlockPos pos) {
+		nbt.setInteger(key + "x", pos.getX());
+		nbt.setInteger(key + "y", pos.getY());
+		nbt.setInteger(key + "z", pos.getZ());
+	}
+
+	public static BlockPos getBlockPos(NBTTagCompound nbt, String key) {
+		return new BlockPos(nbt.getInteger(key + "x"), nbt.getInteger(key + "y"), nbt.getInteger(key + "z"));
 	}
 
 }

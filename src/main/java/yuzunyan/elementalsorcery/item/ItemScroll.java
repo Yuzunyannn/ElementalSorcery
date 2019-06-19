@@ -60,7 +60,7 @@ public class ItemScroll extends Item {
 
 	/** 获取卷轴 */
 	static public ItemStack getScroll(int... ids) {
-		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.PARCHMENT);
+		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.SCROLL);
 		return ItemScroll.setIds(stack, ids);
 	}
 }
