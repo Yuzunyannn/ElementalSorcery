@@ -16,10 +16,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.element.IElementSpell;
+import yuzunyan.elementalsorcery.api.element.IElementSpell.SpellPackage;
 import yuzunyan.elementalsorcery.capability.ElementInventory;
 import yuzunyan.elementalsorcery.capability.Spellbook;
-import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
+import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.util.WorldHelper;
 
 public class ItemSpellbookElement extends ItemSpellbook {
@@ -50,7 +51,6 @@ public class ItemSpellbookElement extends ItemSpellbook {
 				tooltip.add("§4" + str);
 			else
 				tooltip.add("§6" + str);
-			tooltip.add("§6" + str);
 			// 添加能量消息，如果不够，显示成红色
 			if (estack.usePower()) {
 				str = I18n.format("info.spbe.has2", estack.getPower());
@@ -60,10 +60,19 @@ public class ItemSpellbookElement extends ItemSpellbook {
 					tooltip.add("§6" + str);
 			}
 			// 消耗
-			str = I18n.format("info.spbe.has3", es.cost(estack, this.level));
-			tooltip.add("§6" + str);
+			int cost = es.cost(estack, this.level);
+			if (cost > 0) {
+				str = I18n.format("info.spbe.has3", es.cost(estack, this.level));
+				tooltip.add("§6" + str);
+			}
+			// 持续的平均消耗
+			if ((book.flags & IElementSpell.SPELLING) != 0) {
+				float ac = es.costSpellingAverage(this.level);
+				str = I18n.format("info.spbe.has4", (int) (ac * 20));
+				tooltip.add("§6" + str);
+			}
 			// 前摇时间
-			str = I18n.format("info.spbe.has4", es.cast(estack, this.level) / 20.0f);
+			str = I18n.format("info.spbe.has5", es.cast(estack, this.level) / 20.0f);
 			tooltip.add("§6" + str);
 			// 效果
 			str = I18n.format("info.spbe.effect");
@@ -117,31 +126,27 @@ public class ItemSpellbookElement extends ItemSpellbook {
 			return false;
 		// 准备开始
 		int flags = es.spellBegin(world, entity, estack, pack);
-		if ((flags & 1) == 0)
+		if (flags == IElementSpell.FAIL)
 			return false;
 		if (pack.power < 0)
 			return false;
 		book.cast_time = es.cast(estack, this.level);
 		book.flags = flags;
 		book.obj = getPack(world, entity, book, es, 0);
+		estack.shrink(es.cost(estack, this.level));
 		return true;
 	}
 
 	@Override
 	public void spelling(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
+		if (power < this.getCast(book))
+			return;
 		if (world.isRemote) {
 			this.giveMeParticleAboutSpelling(world, entity, stack, book, power);
-			// 别人释放的时候，仅仅是效果，不会调用spellBegin，自然为null
-			if (book.obj == null)
+			// 别人释放的时候，仅仅是效果
+			if (book.who != null)
 				return;
-			if (power < this.getCast(book))
-				return;
-			if (power % 10 == 0) {
-				ElementStack estack = book.getInventory().getStackInSlot(0);
-				IElementSpell es = (IElementSpell) estack.getElement();
-				book.obj = getPack(world, entity, book, es, power);
-			}
-			IElementSpell.SpellPackage pack = (IElementSpell.SpellPackage) book.obj;
+			IElementSpell.SpellPackage pack = (SpellPackage) book.obj;
 			if ((book.flags & IElementSpell.NEED_ENTITY) != 0) {
 				if (pack.entity != null)
 					this.giveMeParticleAboutSelect(world, book, pack.entity, power);
@@ -150,29 +155,56 @@ public class ItemSpellbookElement extends ItemSpellbook {
 				if (pack.pos != null)
 					this.giveMeParticleAboutSelect(world, book, pack.pos, power);
 			}
-		} else if (power < this.getCast(book))
-			return;
+		}
 		if ((book.flags & IElementSpell.SPELLING) != 0) {
 			IElementInventory inventory = book.getInventory();
 			ElementStack estack = inventory.getStackInSlot(0);
 			IElementSpell es = (IElementSpell) estack.getElement();
-			IElementSpell.SpellPackage pack = getPack(world, entity, book, es, power);
+			IElementSpell.SpellPackage pack = (SpellPackage) book.obj;
+			int cost = es.costSpelling(estack, pack.power, this.level);
+			if (cost < 0) {
+				pack = getPack(world, entity, book, es, pack.power);
+				pack.normal = false;
+			} else {
+				if (cost <= estack.getCount()) {
+					pack = getPack(world, entity, book, es, pack.power + 1);
+					pack.normal = true;
+					estack.shrink(cost);
+				} else {
+					pack = getPack(world, entity, book, es, pack.power);
+					pack.normal = false;
+				}
+			}
+			book.obj = pack;
 			es.spelling(world, entity, estack, pack);
+		} else {
+			if (power % 10 == 0) {
+				IElementInventory inventory = book.getInventory();
+				ElementStack estack = inventory.getStackInSlot(0);
+				IElementSpell es = (IElementSpell) estack.getElement();
+				book.obj = getPack(world, entity, book, es, power);
+			}
 		}
 	}
 
 	@Override
 	public boolean spellEnd(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
+		if (book.obj == null)
+			return false;
 		IElementInventory inventory = book.getInventory();
 		ElementStack estack = inventory.getStackInSlot(0);
 		IElementSpell es = (IElementSpell) estack.getElement();
 		IElementSpell.SpellPackage pack = getPack(world, entity, book, es, power);
-		if (power < this.getCast(book))
-			pack.power = -1;
-		es.spellEnd(world, entity, estack, pack);
-		if (pack.power > 0) {
-			estack.shrink(es.cost(estack, this.level));
+		pack.normal = true;
+		if ((book.flags & IElementSpell.SPELLING) != 0) {
+			pack.power = ((IElementSpell.SpellPackage) book.obj).power;
+		} else {
+			pack.power = power - this.getCast(book);
 		}
+		if (power < this.getCast(book)) {
+			pack.power = -1;
+		}
+		es.spellEnd(world, entity, estack, pack);
 		book.obj = null;
 		return false;
 	}

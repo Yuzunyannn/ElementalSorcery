@@ -1,11 +1,19 @@
 package yuzunyan.elementalsorcery.init.registries;
 
+import java.util.Random;
+
+import net.minecraft.entity.IMerchant;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.passive.EntityVillager.PriceInfo;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.village.MerchantRecipe;
+import net.minecraft.village.MerchantRecipeList;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
+import yuzunyan.elementalsorcery.item.ItemParchment;
+import yuzunyan.elementalsorcery.parchment.Pages;
 
 public class VillegeRegistries {
 
@@ -14,11 +22,44 @@ public class VillegeRegistries {
 				"elementalsorcery:antique_dealer", "elementalsorcery:textures/entity/villager/es_studier.png",
 				"elementalsorcery:textures/entity/zombie_villager/es_studier.png");
 		ForgeRegistries.VILLAGER_PROFESSIONS.register(pro);
+
 		VillagerRegistry.VillagerCareer paperman = new VillagerRegistry.VillagerCareer(pro, "paperman");
-		paperman.addTrade(1, new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.PARCHMENT),
-				new PriceInfo(4, 8)));
-		paperman.addTrade(1, new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.SCROLL),
-				new PriceInfo(12, 16)));
+		paperman.addTrade(1,
+				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.PARCHMENT),
+						new PriceInfo(8, 12)),
+				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.SCROLL),
+						new PriceInfo(24, 32)));
+
+		VillagerRegistry.VillagerCareer eslearner = new VillagerRegistry.VillagerCareer(pro, "eslearner");
+		eslearner.addTrade(1, new ESLearnerTrade());
+
+		VillagerRegistry.VillagerCareer magicallearner = new VillagerRegistry.VillagerCareer(pro, "magicallearner");
+		magicallearner.addTrade(1,
+				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.MAGICAL_PIECE),
+						new PriceInfo(16, 32)),
+				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.MAGICAL_PIECE, 4),
+						new PriceInfo(64, 64)));
+	}
+
+	public static class ESLearnerTrade implements EntityVillager.ITradeList {
+
+		@Override
+		public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
+			final int n = 3;
+			int div = Pages.getCount() / n;
+			int at = 0;
+			for (int i = 0; i < n - 1; i++) {
+				int id = random.nextInt(div) + 1 + at;
+				at += div;
+				recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 5), ItemParchment.getParchment(id)));
+			}
+			int id = random.nextInt(div + (Pages.getCount() % n)) + at;
+			recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 5), ItemParchment.getParchment(id)));
+			if (random.nextFloat() < 0.5)
+				recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 16),
+						new ItemStack(ESInitInstance.BLOCKS.STELA)));
+		}
+
 	}
 
 }

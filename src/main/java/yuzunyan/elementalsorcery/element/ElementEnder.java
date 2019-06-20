@@ -69,14 +69,6 @@ public class ElementEnder extends Element implements IElementSpell {
 						entityplayermp, posX, posY, posZ, 5.0F);
 				// 事件成功
 				if (!net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) {
-					// 末影珍珠居然有一定几率刷出末影螨？算了，把几率该大点//^_^
-					if (rand.nextFloat() < 0.1F && world.getGameRules().getBoolean("doMobSpawning")) {
-						EntityEndermite entityendermite = new EntityEndermite(world);
-						entityendermite.setSpawnedByPlayer(true);
-						entityendermite.setLocationAndAngles(entitylivingbase.posX, entitylivingbase.posY,
-								entitylivingbase.posZ, entitylivingbase.rotationYaw, entitylivingbase.rotationPitch);
-						world.spawnEntity(entityendermite);
-					}
 					// 下坐骑
 					if (entitylivingbase.isRiding()) {
 						entitylivingbase.dismountRidingEntity();

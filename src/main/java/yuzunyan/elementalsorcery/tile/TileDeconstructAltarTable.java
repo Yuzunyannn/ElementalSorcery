@@ -1,12 +1,8 @@
 package yuzunyan.elementalsorcery.tile;
 
-import java.util.LinkedList;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.BlockPos;
 import yuzunyan.elementalsorcery.api.ability.IGetItemStack;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
@@ -77,6 +73,8 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 		if (!this.isIntact())
 			return false;
 		this.recheckDeconstructResult();
+		if (out_estacks == null)
+			return false;
 		this.working = true;
 		startTime = 40;
 		return out_estacks != null;

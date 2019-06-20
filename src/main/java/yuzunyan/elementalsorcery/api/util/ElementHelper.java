@@ -108,4 +108,19 @@ public class ElementHelper {
 		return inventory;
 	}
 
+	/** 获取一组元素的默认复杂度 */
+	static public int getComplexFromElements(ItemStack stack, ElementStack[] estacks) {
+		if (estacks == null || estacks.length == 0)
+			return 0;
+		int sum = estacks.length;
+		for (int i = 0; i < estacks.length - 1; i++) {
+			ElementStack es1 = estacks[i];
+			for (int j = i + 1; j < estacks.length; j++) {
+				ElementStack es2 = estacks[j];
+				sum += es1.getElement().complexWith(stack, es1, es2);
+			}
+		}
+		return sum;
+	}
+
 }

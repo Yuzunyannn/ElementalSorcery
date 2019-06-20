@@ -68,7 +68,8 @@ public class ItemKynaiteTools {
 					estack = new ElementStack(ESInitInstance.ELEMENTS.WATER, 1, 3);
 				} else {
 					estack = estacks[0].copy();
-					estack = estack.getElementWhenDeconstruct(state, Element.DP_TOOLS);
+					estack = estack.getElementWhenDeconstruct(state, ElementMap.instance.complex(state.getBlock()),
+							Element.DP_TOOLS);
 				}
 				IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 				inventory.insertElement(estack, false);

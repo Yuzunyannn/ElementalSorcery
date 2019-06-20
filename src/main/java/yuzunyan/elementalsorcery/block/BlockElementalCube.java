@@ -175,7 +175,7 @@ public class BlockElementalCube extends BlockContainer {
 		for (Element e : list) {
 			ItemStack stack = new ItemStack(this);
 			IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-			inventory.setStackInSlot(0, new ElementStack(e, 1000, 100));
+			inventory.setStackInSlot(0, new ElementStack(e, 1000, 1000));
 			items.add(stack);
 		}
 	}

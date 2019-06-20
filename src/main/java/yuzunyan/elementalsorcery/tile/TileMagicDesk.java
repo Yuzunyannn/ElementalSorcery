@@ -166,8 +166,10 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 		if (inv == null)
 			return;
 		ElementStack need = ItemSpellbook.giveMeRandomElement(inv).copy();
-		need.setCount(1);
-		need.weaken(0);
+		if (!need.isEmpty()) {
+			need.setCount(1);
+			need.weaken(0);
+		}
 		for (int i = 0; i < 4; i++) {
 			TileEntity cube = structure.getSpecialTileEntity(i);
 			IAltarWake altarWake = TileStaticMultiBlock.getAlterWake(cube);
@@ -248,7 +250,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 			Minecraft.getMinecraft().effectRenderer.addEffect(effect);
 		}
 	}
-	
+
 	// 临时的例子效果
 	@SideOnly(Side.CLIENT)
 	public static class Overlay extends ParticleFirework.Overlay {

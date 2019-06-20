@@ -85,7 +85,8 @@ public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IFi
 			// 寻找一个能插入的
 			boolean can_insert = false;
 			for (ElementStack estack : estacks) {
-				estack = estack.copy().getElementWhenDeconstruct(stack, Element.DP_BOX);
+				estack = estack.copy().getElementWhenDeconstruct(stack, ElementMap.instance.complex(stack),
+						Element.DP_BOX);
 				can_insert = einv.insertElement(estack, simulate) || can_insert;
 			}
 			return can_insert;
@@ -93,7 +94,7 @@ public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IFi
 			// 最终结果，随机插入一个，能不能是有的，看运气喽
 			int index = rand.nextInt(estacks.length);
 			ElementStack estack = estacks[index];
-			estack = estack.copy().getElementWhenDeconstruct(stack, Element.DP_BOX);
+			estack = estack.copy().getElementWhenDeconstruct(stack, ElementMap.instance.complex(stack), Element.DP_BOX);
 			einv.insertElement(estack, simulate);
 			// 掉落剩余物品
 			ItemStack remain = ElementMap.instance.remain(stack);

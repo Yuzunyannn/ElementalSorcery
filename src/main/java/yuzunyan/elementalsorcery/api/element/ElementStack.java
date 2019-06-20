@@ -200,13 +200,13 @@ public class ElementStack implements net.minecraftforge.common.capabilities.ICap
 	/**
 	 * 物品被析构成元素的时候回调
 	 */
-	public ElementStack getElementWhenDeconstruct(ItemStack stack, int power) {
-		return this.element.getElementWhenDeconstruct(stack, this, power);
+	public ElementStack getElementWhenDeconstruct(ItemStack stack, int complex, int lvPower) {
+		return this.element.getElementWhenDeconstruct(stack, this, complex, lvPower);
 	}
 
-	public ElementStack getElementWhenDeconstruct(IBlockState state, int power) {
+	public ElementStack getElementWhenDeconstruct(IBlockState state, int complex, int lvPower) {
 		return this.element.getElementWhenDeconstruct(
-				new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)), this, power);
+				new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)), this, complex, lvPower);
 	}
 
 	/** 获取元素名称 */

@@ -5,12 +5,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyan.elementalsorcery.ElementalSorcery;
 import yuzunyan.elementalsorcery.capability.Spellbook;
 import yuzunyan.elementalsorcery.item.ItemSpellbook;
 
@@ -34,10 +37,21 @@ public class EventClient {
 			return;
 		Spellbook book = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 		SpellbookOpenMsg msg = new SpellbookOpenMsg();
+		if (Minecraft.getMinecraft().player != entity) {
+			book.who = entity;
+		}
 		msg.entity = entity;
 		msg.stack = stack;
 		spellbook_open_msgs.add(msg);
 		ItemSpellbook.renderStart(book);
+		// 如果是当前客户端的其他玩家
+		if (book.who != null) {
+			Item item = stack.getItem();
+			if (item instanceof ItemSpellbook) {
+				((ItemSpellbook) item).spellBegin(entity.getEntityWorld(), entity, stack, book);
+			} else
+				ElementalSorcery.logger.warn("客户端传入的spellbook的打开消息的物品有误！传入物品：" + item);
+		}
 	}
 
 	static public void addTickTask(ITickClient task) {
@@ -71,6 +85,10 @@ public class EventClient {
 			} else {
 				if (ItemSpellbook.renderClose(book)) {
 					ItemSpellbook.renderEnd(book);
+					if (book.who != null) {
+						x.stack.getItem().onPlayerStoppedUsing(x.stack, x.entity.getEntityWorld(), x.entity,
+								x.entity.getItemInUseCount());
+					}
 					iterBook.remove();
 				}
 			}

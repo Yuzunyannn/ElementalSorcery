@@ -27,7 +27,7 @@ public class CraftingDeconstruct implements ICraftingCommit {
 		rest_estacks = new LinkedList<ElementStack>();
 		for (ElementStack estack : out_estacks) {
 			for (int i = 0; i < stack.getCount(); i++)
-				rest_estacks.add(estack.copy().getElementWhenDeconstruct(stack, Element.DP_ALTAR));
+				rest_estacks.add(estack.copy().getElementWhenDeconstruct(stack, ElementMap.instance.complex(stack),Element.DP_ALTAR));
 		}
 	}
 

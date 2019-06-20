@@ -166,11 +166,11 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 			if (stackNew.getItem() == ESInitInstance.ITEMS.KYNAITE) {
 				switch (material()) {
 				case IRON:
-					if (Math.random() < 0.075f)
+					if (Math.random() < 0.1f)
 						return new ItemStack(ESInitInstance.ITEMS.MAGICAL_PIECE);
 					break;
 				case KYNAITE:
-					if (Math.random() < 0.25f)
+					if (Math.random() < 0.5f)
 						return new ItemStack(ESInitInstance.ITEMS.MAGICAL_PIECE);
 					break;
 				default:

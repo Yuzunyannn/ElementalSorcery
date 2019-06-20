@@ -1,13 +1,17 @@
 package yuzunyan.elementalsorcery.util.render;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.ITileEntityProvider;
+import net.minecraft.block.BlockFlower;
+import net.minecraft.block.BlockLadder;
+import net.minecraft.block.BlockPane;
+import net.minecraft.block.BlockVine;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBed;
 import net.minecraft.item.ItemStack;
+import yuzunyan.elementalsorcery.event.EventClient;
 import yuzunyan.elementalsorcery.item.ItemSpellbook;
 
 public class RenderHelper {
@@ -23,8 +27,14 @@ public class RenderHelper {
 			GlStateManager.translate(0, 0.44, 0.125);
 		} else {
 			Block block = Block.getBlockFromItem(stack.getItem());
-			if (block == Blocks.AIR
-					|| (!block.isFullCube(block.getDefaultState()) && !(block instanceof ITileEntityProvider))) {
+			boolean canlay = block == Blocks.AIR;
+			// canlay = canlay || (!block.isFullCube(block.getDefaultState()) &&
+			// !(block instanceof ITileEntityProvider));
+			canlay = canlay || block instanceof BlockPane;
+			canlay = canlay || block instanceof BlockLadder;
+			canlay = canlay || block instanceof net.minecraftforge.common.IPlantable;
+			canlay = canlay || block instanceof net.minecraftforge.common.IShearable;
+			if (canlay) {
 				GlStateManager.translate(-0.125, 0.4, 0.0);
 				GlStateManager.rotate(90, 0, 1, 0);
 				GlStateManager.rotate(90, 1, 0, 0);

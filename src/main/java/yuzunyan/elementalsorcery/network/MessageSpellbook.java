@@ -73,7 +73,6 @@ public class MessageSpellbook implements IMessage {
 						if (!stack.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null))
 							return;
 						ItemSpellbook.renderFinish(stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null));
-
 					} else {
 						EnumHand hand;
 						if (flags == 1)

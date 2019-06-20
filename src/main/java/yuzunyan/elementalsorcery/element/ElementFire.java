@@ -41,7 +41,7 @@ public class ElementFire extends Element implements IElementSpell {
 		if (pack.pos != null) {
 			BlockPos pos = pack.pos.up();
 			if (world.isAirBlock(pos))
-				world.setBlockState(pos, Blocks.FIRE.getDefaultState());
+				world.setBlockState(pos, Blocks.FIRE.getDefaultState(), 11);
 		}
 	}
 

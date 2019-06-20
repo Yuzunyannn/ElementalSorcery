@@ -15,6 +15,8 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.network.ESNetwork;
 import yuzunyan.elementalsorcery.network.MessageSpellbook;
@@ -38,7 +40,8 @@ public class Spellbook {
 	/**
 	 * 结束释放
 	 * 
-	 * @param sync 是否进行对客户端的同步，客户端该参数无效
+	 * @param sync
+	 *            是否进行对客户端的同步，客户端该参数无效
 	 */
 	public void endSpelling(World world, EntityLivingBase player, ItemStack stack, boolean sync) {
 		this.spelling = false;
@@ -76,6 +79,10 @@ public class Spellbook {
 		}
 	}
 
+	// 表明是否当前client玩家使用的
+	@SideOnly(Side.CLIENT)
+	public EntityLivingBase who = null;
+	
 	/** 不同的书自使用 */
 	public Object obj = null;
 	public int cast_time = 0;
