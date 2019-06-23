@@ -36,6 +36,7 @@ public class ESObjects {
 		public Item SPELLBOOK_COVER;
 		public Item SCROLL;
 		public Item MANUAL;
+		public Item MAGIC_RULER;
 	}
 
 	static public class Blocks {

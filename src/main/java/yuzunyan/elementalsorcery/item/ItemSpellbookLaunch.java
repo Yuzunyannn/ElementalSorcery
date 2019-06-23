@@ -75,7 +75,7 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 
 	@Override
 	public boolean spellBegin(World world, EntityLivingBase entity, ItemStack stack, Spellbook book) {
-		book.cast_time = -1;
+		book.castTime = -1;
 		return true;
 	}
 
@@ -83,7 +83,7 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 	public void spelling(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
 		RayTraceResult result = WorldHelper.getLookAtBlock(world, entity, 16);
 		if (result == null) {
-			book.cast_time = -1;
+			book.castTime = -1;
 			return;
 		}
 		BlockPos pos = result.getBlockPos();
@@ -107,13 +107,13 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 						}
 					} else {
 						// 错误的类型
-						book.cast_time = -1;
+						book.castTime = -1;
 						world.createExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1.0f, false);
 					}
 				}
 			}
 		} else {
-			book.cast_time = -1;
+			book.castTime = -1;
 			return;
 		}
 		if (world.isRemote) {
@@ -150,11 +150,11 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 	}
 
 	private boolean setAndWait(TileEntity tile, Spellbook book, int power) {
-		if (book.cast_time < 0) {
-			book.cast_time = power;
+		if (book.castTime < 0) {
+			book.castTime = power;
 		}
 		boolean ok = true;
-		if (power - book.cast_time > this.getCast(book)) {
+		if (power - book.castTime > this.getCast(book)) {
 			if (tile instanceof TileStaticMultiBlock) {
 				ok = ((TileStaticMultiBlock) tile).isIntact();
 			}

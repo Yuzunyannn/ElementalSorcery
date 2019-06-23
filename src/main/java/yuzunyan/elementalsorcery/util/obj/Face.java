@@ -8,7 +8,7 @@ public class Face {
 
 	public void setTexVetices(Vertex t1, Vertex t2, Vertex t3) throws IllegalArgumentException {
 		if (tex_vertices == null || tex_vertices.length != 3) {
-			throw new IllegalArgumentException("Õâ¸öÃæ²»ÊÇ¸öÈı½ÇÃæ");
+			throw new IllegalArgumentException("è¿™ä¸ªé¢ä¸æ˜¯ä¸ªä¸‰è§’é¢");
 		}
 		tex_vertices[0] = t1;
 		tex_vertices[1] = t2;
@@ -17,7 +17,7 @@ public class Face {
 
 	public void setTexVetices(Vertex t1, Vertex t2, Vertex t3, Vertex t4) throws IllegalArgumentException {
 		if (tex_vertices == null || tex_vertices.length != 4) {
-			throw new IllegalArgumentException("Õâ¸öÃæ²»ÊÇ¸ö¾ØĞÎÃæ");
+			throw new IllegalArgumentException("è¿™ä¸ªé¢ä¸æ˜¯ä¸ªçŸ©å½¢é¢");
 		}
 		tex_vertices[0] = t1;
 		tex_vertices[1] = t2;

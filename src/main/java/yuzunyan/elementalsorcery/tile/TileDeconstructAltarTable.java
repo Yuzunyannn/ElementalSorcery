@@ -115,12 +115,12 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 	public int craftingEnd(ICraftingCommit commit) {
 		out_estacks = null;
 		working = false;
+		CraftingDeconstruct cd = ((CraftingDeconstruct) commit);
+		ItemStack stack = commit.getItems().get(0);
+		commit.getItems().clear();
 		if (!this.isIntact()) {
 			return ICraftingLaunch.FAIL;
 		}
-		CraftingDeconstruct cd = ((CraftingDeconstruct) commit);
-		stack = commit.getItems().get(0);
-		commit.getItems().clear();
 		stack = ElementMap.instance.remain(stack);
 		if (!stack.isEmpty())
 			commit.getItems().add(stack);

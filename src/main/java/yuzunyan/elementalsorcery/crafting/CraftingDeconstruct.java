@@ -27,7 +27,8 @@ public class CraftingDeconstruct implements ICraftingCommit {
 		rest_estacks = new LinkedList<ElementStack>();
 		for (ElementStack estack : out_estacks) {
 			for (int i = 0; i < stack.getCount(); i++)
-				rest_estacks.add(estack.copy().getElementWhenDeconstruct(stack, ElementMap.instance.complex(stack),Element.DP_ALTAR));
+				rest_estacks.add(estack.copy().getElementWhenDeconstruct(stack, ElementMap.instance.complex(stack),
+						Element.DP_ALTAR));
 		}
 	}
 
@@ -68,11 +69,11 @@ public class CraftingDeconstruct implements ICraftingCommit {
 		ElementStack estack = rest_estacks.getFirst();
 		ElementStack put = estack.splitStack(1);
 		if (tileMul.putElementToSpPlace(put, tileMul.getPos().up())) {
-			if (estack.isEmpty())
-				rest_estacks.removeFirst();
 		} else {
 
 		}
+		if (estack.isEmpty())
+			rest_estacks.removeFirst();
 		if (rest_estacks.isEmpty()) {
 			rest_estacks = null;
 			return false;

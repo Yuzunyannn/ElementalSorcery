@@ -47,9 +47,9 @@ import yuzunyan.elementalsorcery.event.EventClient;
 import yuzunyan.elementalsorcery.event.EventServer;
 import yuzunyan.elementalsorcery.init.registries.ESCraftingRegistries;
 import yuzunyan.elementalsorcery.init.registries.EntityRegistries;
-import yuzunyan.elementalsorcery.init.registries.VillegeRegistries;
 import yuzunyan.elementalsorcery.init.registries.OreDictionaryRegistries;
 import yuzunyan.elementalsorcery.init.registries.TileItemRenderRegistries;
+import yuzunyan.elementalsorcery.init.registries.VillegeRegistries;
 import yuzunyan.elementalsorcery.network.ESNetwork;
 import yuzunyan.elementalsorcery.parchment.Pages;
 import yuzunyan.elementalsorcery.render.IRenderItem;
@@ -99,7 +99,7 @@ public class ESInit {
 		ElementMap.registerAll();
 		// 注册实体
 		EntityRegistries.registerAll();
-		//测试村民
+		// 测试村民
 		VillegeRegistries.registerAll();
 		// 注册GUI句柄
 		NetworkRegistry.INSTANCE.registerGuiHandler(ElementalSorcery.instance, new ESGuiHandler());
@@ -132,7 +132,7 @@ public class ESInit {
 		// 注册实体渲染
 		EntityRegistries.registerAllRender();
 		// 客户端事件
-		MinecraftForge.EVENT_BUS.register(new EventClient());
+		MinecraftForge.EVENT_BUS.register(EventClient.class);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -167,7 +167,7 @@ public class ESInit {
 		register(ESInitInstance.ITEMS.SPELLBOOK_COVER);
 		register(ESInitInstance.ITEMS.SCROLL);
 		register(ESInitInstance.ITEMS.MANUAL);
-
+		register(ESInitInstance.ITEMS.MAGIC_RULER);
 	}
 
 	static void registerAllBlocks() {
@@ -271,6 +271,7 @@ public class ESInit {
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, "spellbook_back_cover");
 		registerRender(ESInitInstance.ITEMS.SCROLL);
 		registerRender(ESInitInstance.ITEMS.MANUAL);
+		registerRender(ESInitInstance.ITEMS.MAGIC_RULER);
 
 		registerRender(new RenderTileElementalCube(), ESInitInstance.BLOCKS.ELEMENTAL_CUBE, TileElementalCube.class);
 		registerRender(new RenderTileMagicDesk(), ESInitInstance.BLOCKS.MAGIC_DESK, TileMagicDesk.class);

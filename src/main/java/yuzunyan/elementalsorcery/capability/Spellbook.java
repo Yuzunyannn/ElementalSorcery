@@ -80,12 +80,11 @@ public class Spellbook {
 	}
 
 	// 表明是否当前client玩家使用的
-	@SideOnly(Side.CLIENT)
 	public EntityLivingBase who = null;
 	
 	/** 不同的书自使用 */
 	public Object obj = null;
-	public int cast_time = 0;
+	public int castTime = 0;
 	public int flags;
 
 	/** 记录的仓库 */

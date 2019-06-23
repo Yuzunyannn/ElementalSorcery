@@ -192,9 +192,6 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 	private void drop() {
 		if (this.commit == null)
 			return;
-		if (this.type == ICraftingLaunch.CraftingType.ELEMENT_DECONSTRUCT) {
-			return;
-		}
 		List<ItemStack> itemList = this.commit.getItems();
 		for (ItemStack stack : itemList) {
 			if (stack.isEmpty())

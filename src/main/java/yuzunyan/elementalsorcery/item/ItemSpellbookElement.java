@@ -104,7 +104,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 
 	@Override
 	public int getCast(Spellbook book) {
-		return book.cast_time;
+		return book.castTime;
 	}
 
 	@Override
@@ -130,7 +130,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 			return false;
 		if (pack.power < 0)
 			return false;
-		book.cast_time = es.cast(estack, this.level);
+		book.castTime = es.cast(estack, this.level);
 		book.flags = flags;
 		book.obj = getPack(world, entity, book, es, 0);
 		estack.shrink(es.cost(estack, this.level));

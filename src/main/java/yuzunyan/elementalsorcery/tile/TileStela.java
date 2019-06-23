@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -132,13 +133,15 @@ public class TileStela extends TileEntityNetwork {
 	public void produce(ItemStack stack) {
 		BlockPos pos = this.pos.offset(this.face.getOpposite());
 		TileEntity tile = this.world.getTileEntity(pos);
-		IItemHandler heandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, this.face);
-		if (heandler != null) {
-			// 插入
-			for (int i = 0; i < heandler.getSlots(); i++) {
-				stack = heandler.insertItem(i, stack, false);
-				if (stack.isEmpty()) {
-					return;
+		if (tile != null) {
+			IItemHandler heandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, this.face);
+			if (heandler != null) {
+				// 插入
+				for (int i = 0; i < heandler.getSlots(); i++) {
+					stack = heandler.insertItem(i, stack, false);
+					if (stack.isEmpty()) {
+						return;
+					}
 				}
 			}
 		}
@@ -199,6 +202,8 @@ public class TileStela extends TileEntityNetwork {
 			} else if (item == ESInitInstance.ITEMS.MAGICAL_PIECE) {
 				return RandomHelper.randomSelect(Pages.ABOUT_MAGICAL_ENDEREYE, Pages.ABOUT_MAGICAL_PIECE,
 						Pages.ABOUT_INFUSION);
+			} else if (item == Items.ENDER_EYE) {
+				return RandomHelper.randomSelect(Pages.ABOUT_MAGICAL_ENDEREYE);
 			} else if (item == ESInitInstance.ITEMS.MAGIC_CRYSTAL) {
 				return RandomHelper.randomSelect(Pages.ABOUT_MAGIC_CRY, Pages.ABOUT_INFUSION, Pages.ABOUT_MAGIC_ESTONE);
 			} else if (item == ESInitInstance.ITEMS.SPELL_CRYSTAL) {
@@ -214,8 +219,7 @@ public class TileStela extends TileEntityNetwork {
 			} else if (item == ESInitInstance.ITEMS.SPELLBOOK_COVER) {
 				return RandomHelper.randomSelect(Pages.ABOUT_BOOKCOVER, Pages.ABOUT_SPELLBOOK);
 			} else if (item == ESInitInstance.ITEMS.SPELLBOOK) {
-				return RandomHelper.randomSelect(Pages.ABOUT_SPELLBOOK, Pages.ABOUT_BOOKCOVER,
-						Pages.ABOUT_MAGICAL_PIECE);
+				return RandomHelper.randomSelect(Pages.ABOUT_SPELLBOOK, Pages.ABOUT_BOOKCOVER, Pages.ABOUT_SPELEMENT);
 			} else if (item == ESInitInstance.ITEMS.PARCHMENT) {
 				if (stack.getCount() >= 8) {
 					return new int[] { Pages.ABOUT_MANUAL };

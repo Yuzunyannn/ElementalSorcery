@@ -46,7 +46,7 @@ public interface ICraftingLaunch {
 	public static final int SUCCESS = 0;
 
 	/**
-	 * 制作结束，修改物品状态
+	 * 制作结束，修改物品状态[服务器]
 	 * 
 	 * @param list
 	 *            提交的物品
