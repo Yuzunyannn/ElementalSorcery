@@ -110,7 +110,7 @@ public class ESInit {
 		// 注册默认所有建筑
 		BuildingLib.registerAll();
 		// 注册事件
-		MinecraftForge.EVENT_BUS.register(new EventServer());
+		MinecraftForge.EVENT_BUS.register(EventServer.class);
 		// 测试类
 		new ESTestAndDebug();
 		// page错误页面

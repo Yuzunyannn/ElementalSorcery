@@ -72,6 +72,7 @@ public interface ICraftingLaunch {
 		return 20;
 	}
 
+	/**重写的话，请一定要加上@SideOnly*/
 	@SideOnly(Side.CLIENT)
 	default ICraftingLaunchAnime getAnime() {
 		return new AnimeRenderCrafting();

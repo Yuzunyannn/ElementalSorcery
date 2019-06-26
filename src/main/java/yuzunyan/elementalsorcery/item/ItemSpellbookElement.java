@@ -98,7 +98,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 	}
 
 	@Override
-	protected IElementInventory getInventory() {
+	protected IElementInventory getInventory(ItemStack stack) {
 		return new ElementInventory(1);
 	}
 
@@ -178,7 +178,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 			book.obj = pack;
 			es.spelling(world, entity, estack, pack);
 		} else {
-			if (power % 10 == 0) {
+			if (power % 10 == 0 && world.isRemote) {
 				IElementInventory inventory = book.getInventory();
 				ElementStack estack = inventory.getStackInSlot(0);
 				IElementSpell es = (IElementSpell) estack.getElement();

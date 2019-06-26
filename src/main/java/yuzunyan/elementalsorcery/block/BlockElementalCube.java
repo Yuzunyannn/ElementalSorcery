@@ -35,7 +35,7 @@ import yuzunyan.elementalsorcery.tile.TileElementalCube;
 
 public class BlockElementalCube extends BlockContainer {
 
-	//获取带有能力的物品
+	// 获取带有能力的物品
 	public ItemBlock getItemBlock() {
 		ItemBlock item = new ItemBlock(this) {
 			@Override
@@ -43,8 +43,7 @@ public class BlockElementalCube extends BlockContainer {
 			public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack,
 					@Nullable NBTTagCompound nbt) {
 				ICapabilitySerializable<NBTTagCompound> cap = new ElementInventory.Provider();
-				if (nbt != null)
-					cap.deserializeNBT(nbt);
+				cap.deserializeNBT(nbt);
 				return cap;
 			}
 		};
@@ -52,7 +51,7 @@ public class BlockElementalCube extends BlockContainer {
 		return item;
 	}
 
-	//方块一半的边长
+	// 方块一半的边长
 	public static final double BLOCK_HALF_SIZE = 0.70710678118 * 0.5;
 	protected static final AxisAlignedBB AXIS_BOX = new AxisAlignedBB(0.5F - BLOCK_HALF_SIZE, 0.0F,
 			0.5F - BLOCK_HALF_SIZE, 0.5F + BLOCK_HALF_SIZE, 1.0D + (0.5F - BLOCK_HALF_SIZE) * 0.5,

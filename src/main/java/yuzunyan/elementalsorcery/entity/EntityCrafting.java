@@ -40,8 +40,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 	private BlockPos pos;
 	private ICraftingLaunch.CraftingType type;
 	private EntityPlayer player;
-
-	@SideOnly(Side.CLIENT)
+	/** 客户端动画 */
 	private ICraftingLaunchAnime craftingAnime = null;
 
 	public EntityCrafting(World worldIn) {
@@ -224,7 +223,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			}
 		}
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public void defaultEndEffect() {
 		Overlay effect = new Overlay(this.world, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5);

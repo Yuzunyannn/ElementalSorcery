@@ -131,7 +131,8 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	public void setElementInventory(IElementInventory inventory) {
 		this.inventory = inventory;
 		ElementStack estack = inventory.getStackInSlot(0);
-		changeColor();
+		if (world.isRemote)
+			changeColor();
 	}
 
 	// 转移仓库

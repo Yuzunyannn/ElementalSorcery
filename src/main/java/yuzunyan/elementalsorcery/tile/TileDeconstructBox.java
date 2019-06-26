@@ -62,14 +62,14 @@ public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IFi
 			power = 0;
 			return false;
 		}
-		if (this.insertTo(stack, einv, true) == false) {
+		if (this.insertTo(stack, stack_ele, einv, true) == false) {
 			power = 0;
 			return false;
 		}
 		this.power += amount * level;
 		int max_power = this.getField(TileDeconstructBox.FIELD_TOTAL_POWER);
 		if (this.power >= max_power) {
-			this.insertTo(stack, einv, false);
+			this.insertTo(stack, stack_ele, einv, false);
 			stack.shrink(1);
 			this.power = 0;
 			this.markDirty();
@@ -77,7 +77,7 @@ public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IFi
 		return true;
 	}
 
-	private boolean insertTo(ItemStack stack, IElementInventory einv, boolean simulate) {
+	private boolean insertTo(ItemStack stack, ItemStack stack_inv, IElementInventory einv, boolean simulate) {
 		ElementStack[] estacks = ElementMap.instance.toElement(stack);
 		if (estacks == null)
 			return false;

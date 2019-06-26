@@ -85,6 +85,11 @@ public class ElementStack implements net.minecraftforge.common.capabilities.ICap
 			stackSize = 0;
 	}
 
+	/** 设置元素能量 */
+	public void setPower(int power) {
+		this.power = power;
+	}
+
 	/** 增长数量 */
 	public void rise(float rate) {
 		grow((int) (getCount() * rate));
@@ -122,7 +127,7 @@ public class ElementStack implements net.minecraftforge.common.capabilities.ICap
 		// 加权平均的能量
 		int total = estack.getCount() + this.getCount();
 		total = total == 0 ? 1 : total;
-		this.power = (estack.getPower() * estack.getCount() + this.getPower() * this.getCount()) / total;
+		this.setPower((estack.getPower() * estack.getCount() + this.getPower() * this.getCount()) / total);
 	}
 
 	/** 增长或成为一个 estack */
@@ -140,7 +145,7 @@ public class ElementStack implements net.minecraftforge.common.capabilities.ICap
 	/** 削弱 */
 	public void weaken(float rate) {
 		if (this.usePower()) {
-			this.power = (int) (this.power * rate);
+			this.setPower((int) (this.power * rate));
 		}
 	}
 
@@ -158,8 +163,7 @@ public class ElementStack implements net.minecraftforge.common.capabilities.ICap
 
 	/** 设置为空 */
 	public void setEmpty() {
-		this.element = EMPTY.element;
-		this.stackSize = 0;
+		this.become(EMPTY);
 	}
 
 	/** 是否为空 */
@@ -197,6 +201,11 @@ public class ElementStack implements net.minecraftforge.common.capabilities.ICap
 		return this.getCount() >= estack.getCount() && this.arePowerfulThan(estack);
 	}
 
+	@Override
+	public String toString() {
+		return this.stackSize + "x" + this.getElement().getUnlocalizedName(this) + ":" + this.power;
+	}
+
 	/**
 	 * 物品被析构成元素的时候回调
 	 */
@@ -218,14 +227,7 @@ public class ElementStack implements net.minecraftforge.common.capabilities.ICap
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		// 写入元素类型
-		ResourceLocation resourcelocation = Element.getNameFromElement(this.element);
-		nbt.setString("id", resourcelocation == null ? EMPTY.getElement().getRegistryName().toString()
-				: resourcelocation.toString());
-		// 写入元素的数量
-		nbt.setInteger("size", stackSize);
-		// 写入元素的能量
-		nbt.setInteger("power", power);
+		this.writeToNBT(nbt);
 		return nbt;
 	}
 
@@ -240,6 +242,18 @@ public class ElementStack implements net.minecraftforge.common.capabilities.ICap
 		stackSize = nbt.getInteger("size");
 		// 读取元素能量
 		power = nbt.getInteger("power");
+	}
+
+	/** 序列化 */
+	public void writeToNBT(NBTTagCompound nbt) {
+		// 写入元素类型
+		ResourceLocation resourcelocation = Element.getNameFromElement(this.element);
+		nbt.setString("id", resourcelocation == null ? EMPTY.getElement().getRegistryName().toString()
+				: resourcelocation.toString());
+		// 写入元素的数量
+		nbt.setInteger("size", stackSize);
+		// 写入元素的能量
+		nbt.setInteger("power", power);
 	}
 
 	/** 能力 暂时未用 */

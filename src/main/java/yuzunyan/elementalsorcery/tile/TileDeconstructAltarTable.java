@@ -4,6 +4,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.api.ability.IGetItemStack;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.building.Buildings;
@@ -140,6 +142,7 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public ICraftingLaunchAnime getAnime() {
 		return new AnimeRenderDeconstruct();
 	}

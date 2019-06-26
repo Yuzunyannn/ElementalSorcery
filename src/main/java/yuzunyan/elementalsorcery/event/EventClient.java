@@ -25,9 +25,9 @@ public class EventClient {
 
 	static public final Random rand = new Random();
 
-	static private final List<ITickClient> tickList = new LinkedList<ITickClient>();
+	static private final List<ITickTask> tickList = new LinkedList<ITickTask>();
 
-	static private class SpellbookOpenMsg implements ITickClient {
+	static private class SpellbookOpenMsg implements ITickTask {
 		public EntityLivingBase entity;
 		public ItemStack stack;
 
@@ -44,10 +44,10 @@ public class EventClient {
 						this.stack.getItem().onPlayerStoppedUsing(this.stack, this.entity.getEntityWorld(), this.entity,
 								this.entity.getItemInUseCount());
 					}
-					return ITickClient.END;
+					return ITickTask.END;
 				}
 			}
-			return ITickClient.SUCCESS;
+			return ITickTask.SUCCESS;
 		}
 	}
 
@@ -76,7 +76,7 @@ public class EventClient {
 	}
 
 	/** 添加一个客户端的tick任务 */
-	static public void addTickTask(ITickClient task) {
+	static public void addTickTask(ITickTask task) {
 		if (task == null)
 			return;
 		tickList.add(task);
@@ -97,11 +97,11 @@ public class EventClient {
 		// tick增加
 		tick++;
 		// 处理tick队列
-		Iterator<ITickClient> iter = tickList.iterator();
+		Iterator<ITickTask> iter = tickList.iterator();
 		while (iter.hasNext()) {
-			ITickClient task = iter.next();
+			ITickTask task = iter.next();
 			int flags = task.onTick();
-			if (flags == ITickClient.END)
+			if (flags == ITickTask.END)
 				iter.remove();
 		}
 		// 全局旋转

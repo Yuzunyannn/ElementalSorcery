@@ -14,8 +14,8 @@ import yuzunyan.elementalsorcery.building.Building;
 import yuzunyan.elementalsorcery.capability.ElementInventory;
 import yuzunyan.elementalsorcery.capability.Spellbook;
 import yuzunyan.elementalsorcery.entity.EntityBlockThrowEffect;
-import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
+import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.util.item.ItemArchitectureHelper;
 
 public class ItemSpellbookArchitecture extends ItemSpellbook {
@@ -95,7 +95,7 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 	}
 
 	@Override
-	protected IElementInventory getInventory() {
+	protected IElementInventory getInventory(ItemStack stack) {
 		return new ElementInventory(2);
 	}
 

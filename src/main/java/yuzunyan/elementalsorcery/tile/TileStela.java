@@ -190,6 +190,8 @@ public class TileStela extends TileEntityNetwork {
 					return RandomHelper.randomSelect(Pages.ABOUT_ELEMENT_CRY, Pages.ABOUT_SPELL_CRY);
 				return RandomHelper.randomSelect(Pages.ABOUT_INFUSION, Pages.ABOUT_MAGICAL_PIECE,
 						Pages.ABOUT_MAGIC_CRY);
+			} else if (block == ESInitInstance.BLOCKS.ABSORB_BOX) {
+				return RandomHelper.randomSelect(Pages.ABOUT_ABSORB_BOX, Pages.ABOUT_MAGIC_PL);
 			} else if (block == Blocks.ENCHANTING_TABLE) {
 				return RandomHelper.randomSelect(Pages.ABOUT_ENCHANTINGBOOK, Pages.ABOUT_KYNATIE_TOOLS);
 			}

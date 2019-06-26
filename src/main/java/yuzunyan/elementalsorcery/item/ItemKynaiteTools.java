@@ -27,6 +27,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.EnumHelper;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.Element;
@@ -79,13 +80,12 @@ public class ItemKynaiteTools {
 
 	// 工具具有储存元素的能力
 	public static interface toolsCapability {
-		default ICapabilityProvider getCapabilityProvider(@Nullable NBTTagCompound nbt) {
+		default ICapabilityProvider getCapabilityProvider(ItemStack stack, @Nullable NBTTagCompound nbt) {
 			if (canProvide() == false && nbt == null)
 				return null;
-			ElementInventory.Provider provider = new ElementInventory.Provider(new ElementInventoryOnlyInsert(4));
-			if (nbt != null)
-				provider.deserializeNBT(nbt);
-			return provider;
+			ICapabilitySerializable<NBTTagCompound> cap = new ElementInventory.Provider(new ElementInventoryOnlyInsert(4));
+			cap.deserializeNBT(nbt);
+			return cap;
 		}
 
 		void provideOnce();
@@ -108,7 +108,7 @@ public class ItemKynaiteTools {
 
 		@Override
 		public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-			return getCapabilityProvider(nbt);
+			return getCapabilityProvider(stack, nbt);
 		}
 
 		@Override
@@ -149,7 +149,7 @@ public class ItemKynaiteTools {
 
 		@Override
 		public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-			return getCapabilityProvider(nbt);
+			return getCapabilityProvider(stack, nbt);
 		}
 
 		@Override
@@ -189,7 +189,7 @@ public class ItemKynaiteTools {
 
 		@Override
 		public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-			return getCapabilityProvider(nbt);
+			return getCapabilityProvider(stack, nbt);
 		}
 
 		@Override
@@ -229,7 +229,7 @@ public class ItemKynaiteTools {
 
 		@Override
 		public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-			return getCapabilityProvider(nbt);
+			return getCapabilityProvider(stack, nbt);
 		}
 
 		private boolean provide = false;
@@ -297,7 +297,7 @@ public class ItemKynaiteTools {
 
 		@Override
 		public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-			return getCapabilityProvider(nbt);
+			return getCapabilityProvider(stack, nbt);
 		}
 
 		@Override

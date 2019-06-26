@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.event.EventClient;
-import yuzunyan.elementalsorcery.event.ITickClient;
+import yuzunyan.elementalsorcery.event.ITickTask;
 import yuzunyan.elementalsorcery.util.NBTHelper;
 
 public class TileLantern extends TileEntityNetwork {
@@ -186,7 +186,7 @@ public class TileLantern extends TileEntityNetwork {
 
 	/** 火焰展示特效 */
 	@SideOnly(Side.CLIENT)
-	public static class TransmitFire implements ITickClient {
+	public static class TransmitFire implements ITickTask {
 		private Path path = null;
 		private final Vec3d target;
 		private int life;
@@ -286,8 +286,8 @@ public class TileLantern extends TileEntityNetwork {
 			this.update();
 			this.life--;
 			if (this.life <= 0)
-				return ITickClient.END;
-			return ITickClient.SUCCESS;
+				return ITickTask.END;
+			return ITickTask.SUCCESS;
 		}
 	}
 

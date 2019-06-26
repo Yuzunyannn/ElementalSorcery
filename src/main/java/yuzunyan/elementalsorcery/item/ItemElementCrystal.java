@@ -25,9 +25,8 @@ public class ItemElementCrystal extends Item {
 	public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack,
 			@Nullable NBTTagCompound nbt) {
 		ICapabilitySerializable<NBTTagCompound> cap = new ElementInventory.Provider();
-		if (nbt != null)
-			cap.deserializeNBT(nbt);
-		return cap;
+		cap.deserializeNBT(nbt);
+		return cap; 
 	}
 
 	@Override

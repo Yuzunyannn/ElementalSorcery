@@ -170,6 +170,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 			need.setCount(1);
 			need.weaken(0);
 		}
+		boolean succuess = false;
 		for (int i = 0; i < 4; i++) {
 			TileEntity cube = structure.getSpecialTileEntity(i);
 			IAltarWake altarWake = TileStaticMultiBlock.getAlterWake(cube);
@@ -186,6 +187,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 							this.pos.up(), 0.5f);
 				inv_other.extractElement(estack, false);
 				inv.insertElement(estack, false);
+				succuess = true; 
 			}
 		}
 	}

@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = ElementalSorcery.MODID, name = ElementalSorcery.NAME, version = ElementalSorcery.VERSION)
 public class ElementalSorcery {
@@ -24,6 +25,7 @@ public class ElementalSorcery {
 	public static final String VERSION = "0.1.0";
 
 	public static Logger logger;
+	public static Side side;
 
 	@Instance(ElementalSorcery.MODID)
 	public static ElementalSorcery instance;
@@ -34,6 +36,7 @@ public class ElementalSorcery {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
+		side = event.getSide();
 		proxy.preInit(event);
 	}
 

@@ -24,9 +24,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyan.elementalsorcery.ElementalSorcery;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.util.ElementHelper;
+import yuzunyan.elementalsorcery.capability.ElementInventory;
 import yuzunyan.elementalsorcery.capability.Spellbook;
 import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.render.particle.ParticleSpellbook;
@@ -83,7 +85,7 @@ public class ItemSpellbook extends Item {
 	}
 
 	/** 获取仓库 */
-	protected IElementInventory getInventory() {
+	protected IElementInventory getInventory(ItemStack stack) {
 		return null;
 	}
 
@@ -111,13 +113,12 @@ public class ItemSpellbook extends Item {
 	@Nullable
 	public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack,
 			@Nullable NBTTagCompound nbt) {
-		ICapabilitySerializable<NBTTagCompound> cap = new Spellbook.Provider(this.getInventory());
+		ICapabilitySerializable<NBTTagCompound> cap = new Spellbook.Provider(this.getInventory(stack));
+		Spellbook book = cap.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 		if (SpellbookRenderInfo.renderInstance != null) {
-			Spellbook book = cap.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 			this.initRenderInfo(book.render_info);
 		}
-		if (nbt != null)
-			cap.deserializeNBT(nbt);
+		cap.deserializeNBT(nbt);
 		return cap;
 	}
 

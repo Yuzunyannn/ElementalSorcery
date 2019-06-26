@@ -15,6 +15,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
@@ -104,12 +106,7 @@ public class TileAbsorbBox extends TileEntityNetwork implements IGetBurnPower {
 				if (world.isRemote) {
 					// 生成粒子效果
 					if (estack.getCount() % 3 == 1) {
-						ParticleElement effect = new ParticleElement(this.world,
-								new Vec3d(pos.getX() + Math.random(), pos.getY() + Math.random(),
-										pos.getZ() + Math.random()),
-								new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5));
-						effect.setColor(estack.getColor());
-						Minecraft.getMinecraft().effectRenderer.addEffect(effect);
+						this.giveMePaticle(estack);
 					}
 				} else {
 					// 如果没有剩余元素了，就更新下
@@ -125,6 +122,15 @@ public class TileAbsorbBox extends TileEntityNetwork implements IGetBurnPower {
 		}
 		this.markDirty();
 		return true;
+	}
+
+	@SideOnly(Side.CLIENT)
+	private void giveMePaticle(ElementStack estack) {
+		ParticleElement effect = new ParticleElement(this.world,
+				new Vec3d(pos.getX() + Math.random(), pos.getY() + Math.random(), pos.getZ() + Math.random()),
+				new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5));
+		effect.setColor(estack.getColor());
+		Minecraft.getMinecraft().effectRenderer.addEffect(effect);
 	}
 
 	private List<BlockPos> posList = new LinkedList<BlockPos>();

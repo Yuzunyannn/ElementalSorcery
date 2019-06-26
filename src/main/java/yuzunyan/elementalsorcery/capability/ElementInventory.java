@@ -1,7 +1,6 @@
 package yuzunyan.elementalsorcery.capability;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -15,7 +14,6 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
-import yuzunyan.elementalsorcery.api.util.ElementHelper;
 
 public class ElementInventory implements IElementInventory, INBTSerializable<NBTTagCompound> {
 
@@ -31,8 +29,9 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 	public ElementInventory(int slots) {
 		setSlots(slots);
 	}
-	
+
 	public ElementInventory(NBTTagCompound nbt) {
+		estacks = new ElementStack[1];
 		this.deserializeNBT(nbt);
 	}
 
@@ -125,6 +124,25 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 	}
 
 	@Override
+	public void loadState(ItemStack stack) {
+		NBTTagCompound nbt = stack.getSubCompound("ele_inv");
+		if (nbt != null) {
+			this.deserializeNBT(nbt);
+		}
+	}
+
+	@Override
+	public void saveState(ItemStack stack) {
+		NBTTagCompound dataNBT = this.serializeNBT();
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) {
+			stack.setTagCompound(new NBTTagCompound());
+			nbt = stack.getTagCompound();
+		}
+		nbt.setTag("ele_inv", dataNBT);
+	}
+
+	@Override
 	public NBTTagCompound serializeNBT() {
 		return (NBTTagCompound) Provider.storage.writeNBT(ELEMENTINVENTORY_CAPABILITY, this, null);
 	}
@@ -140,10 +158,11 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 		@Override
 		public NBTBase writeNBT(Capability<IElementInventory> capability, IElementInventory instance, EnumFacing side) {
 			NBTTagCompound nbt = new NBTTagCompound();
-			ElementInventory inventory = (ElementInventory) instance;
 			NBTTagList list = new NBTTagList();
-			for (int i = 0; i < inventory.estacks.length; i++)
-				list.appendTag(inventory.estacks[i].serializeNBT());
+			for (int i = 0; i < instance.getSlots(); i++)
+				list.appendTag(instance.getStackInSlot(i).serializeNBT());
+			if (list.tagCount() == 0)
+				return null;
 			nbt.setTag("list", list);
 			return nbt;
 		}
@@ -151,14 +170,17 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 		@Override
 		public void readNBT(Capability<IElementInventory> capability, IElementInventory instance, EnumFacing side,
 				NBTBase tag) {
+			if (tag == null)
+				return;
 			NBTTagCompound nbt = (NBTTagCompound) tag;
-			ElementInventory inventory = (ElementInventory) instance;
 			if (!nbt.hasKey("list"))
 				return;
 			NBTTagList list = (NBTTagList) nbt.getTag("list");
-			inventory.estacks = new ElementStack[list.tagCount()];
-			for (int i = 0; i < inventory.estacks.length; i++)
-				inventory.estacks[i] = new ElementStack(list.getCompoundTagAt(i));
+			if (list.tagCount() == 0)
+				return;
+			instance.setSlots(list.tagCount());
+			for (int i = 0; i < instance.getSlots(); i++)
+				instance.setStackInSlot(i, new ElementStack(list.getCompoundTagAt(i)));
 		}
 
 	}
@@ -167,7 +189,7 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 	public static class Provider implements ICapabilitySerializable<NBTTagCompound> {
 
 		private IElementInventory inventory;
-		protected static IStorage<IElementInventory> storage = ELEMENTINVENTORY_CAPABILITY.getStorage();
+		public final static IStorage<IElementInventory> storage = ELEMENTINVENTORY_CAPABILITY.getStorage();
 
 		public Provider() {
 			this(null);
