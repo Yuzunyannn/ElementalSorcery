@@ -1,6 +1,7 @@
 package yuzunyan.elementalsorcery.block;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Nullable;
 
@@ -12,6 +13,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -22,13 +24,13 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.Element;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.util.ElementHelper;
+import yuzunyan.elementalsorcery.capability.CapabilityProvider;
 import yuzunyan.elementalsorcery.capability.ElementInventory;
 import yuzunyan.elementalsorcery.init.registries.ElementRegister;
 import yuzunyan.elementalsorcery.tile.TileElementalCube;
@@ -42,9 +44,7 @@ public class BlockElementalCube extends BlockContainer {
 			@Nullable
 			public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack,
 					@Nullable NBTTagCompound nbt) {
-				ICapabilitySerializable<NBTTagCompound> cap = new ElementInventory.Provider();
-				cap.deserializeNBT(nbt);
-				return cap;
+				return new CapabilityProvider.ElementInventoryUseProvider(stack);
 			}
 		};
 		item.setMaxStackSize(1);
@@ -142,6 +142,7 @@ public class BlockElementalCube extends BlockContainer {
 
 		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 		inventory.getStackInSlot(0).grow(-1);
+		inventory.saveState(stack);
 	}
 
 	// 当被放置
@@ -157,7 +158,7 @@ public class BlockElementalCube extends BlockContainer {
 				stack = stack.copy();
 			}
 		}
-		tile_ec.setElementInventory(stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null));
+		tile_ec.setElementInventory(ElementHelper.getElementInventory(stack));
 	}
 
 	// 周围改变
@@ -175,6 +176,7 @@ public class BlockElementalCube extends BlockContainer {
 			ItemStack stack = new ItemStack(this);
 			IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 			inventory.setStackInSlot(0, new ElementStack(e, 1000, 1000));
+			inventory.saveState(stack);
 			items.add(stack);
 		}
 	}

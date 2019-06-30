@@ -47,10 +47,11 @@ public class ContainerElementWorkbench extends Container {
 						boolean last_have = irecipe != null;
 						// 减少元素，减少物品
 						ItemStack stack_ = craftElement.getStackInSlot(0);
-						IElementInventory inventory = ElementHelper.getElementInventoryCanExtract(stack_);
+						IElementInventory inventory = ElementHelper.getElementInventory(stack_);
 						List<ElementStack> elist = irecipe.getNeedElements();
 						for (ElementStack estack : elist)
 							inventory.extractElement(estack, false);
+						inventory.saveState(stack_);
 						irecipe.shrink(craftMatrix);
 						craftElement.setInventorySlotContents(0, stack_);
 						if (!world.isRemote && last_have) {
@@ -120,8 +121,8 @@ public class ContainerElementWorkbench extends Container {
 		List<ElementStack> elist = irecipe.getNeedElements();
 		if (elist != null && !elist.isEmpty()) {
 			ItemStack stack = this.craftElement.getStackInSlot(0);
-			IElementInventory inventory = ElementHelper.getElementInventoryCanExtract(stack);
-			if (inventory == null)
+			IElementInventory inventory = ElementHelper.getElementInventory(stack);
+			if (!ElementHelper.canExtract(inventory))
 				return ItemStack.EMPTY;
 			for (ElementStack estack : elist) {
 				ElementStack get_stack = inventory.extractElement(estack, true);

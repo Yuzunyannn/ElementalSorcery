@@ -86,6 +86,7 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 
 		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 		if (inventory != null) {
+			inventory.loadState(stack);
 			ElementStack estack = inventory.getStackInSlot(0);
 			if (!estack.isEmpty()) {
 				Vertex color = new Vertex().toColor(estack.getColor());
@@ -95,7 +96,6 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 			}
 
 		}
-
 		RenderHelper.enableStandardItemLighting();
 		GlStateManager.popMatrix();
 

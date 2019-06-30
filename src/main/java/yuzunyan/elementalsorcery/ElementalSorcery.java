@@ -26,6 +26,8 @@ public class ElementalSorcery {
 
 	public static Logger logger;
 	public static Side side;
+	public static ESConfig config;
+	public static ESData data;
 
 	@Instance(ElementalSorcery.MODID)
 	public static ElementalSorcery instance;
@@ -37,6 +39,8 @@ public class ElementalSorcery {
 	public void preInit(FMLPreInitializationEvent event) {
 		logger = event.getModLog();
 		side = event.getSide();
+		config = new ESConfig(event);
+		data = new ESData(event);
 		proxy.preInit(event);
 	}
 

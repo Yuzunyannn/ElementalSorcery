@@ -1,16 +1,22 @@
 package yuzunyan.elementalsorcery.event;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import yuzunyan.elementalsorcery.building.Building;
+import yuzunyan.elementalsorcery.building.BuildingLib;
+import yuzunyan.elementalsorcery.item.ItemMagicRuler;
+import yuzunyan.elementalsorcery.util.item.ItemArchitectureHelper;
 
 public class ESTestAndDebug {
 
@@ -35,8 +41,8 @@ public class ESTestAndDebug {
 		if (event.getWorld().isRemote)
 			return;
 
-		//IBlockState state = event.getWorld().getBlockState(event.getPos());
-		//System.out.println(state.getBlock().getClass());
+		// IBlockState state = event.getWorld().getBlockState(event.getPos());
+		// System.out.println(state.getBlock().getClass());
 		// if (state.getBlock() instanceof BlockFlower) {
 		// System.out.println(state);
 		// }
@@ -94,15 +100,15 @@ public class ESTestAndDebug {
 			if (args.length == 0) {
 
 			} else if (args.length == 2) {
-				try {
-					float n = Float.parseFloat(args[1]);
-					sender.sendMessage(new TextComponentString(Float.toString(n)));
-					switch (args[0].charAt(0)) {
-					case 's':
-						// ItemSpellbook.s = n;
-						break;
-					}
-				} catch (Exception ex) {
+				Entity entity = sender.getCommandSenderEntity();
+				if (entity instanceof EntityPlayer) {
+					ItemStack ruler = ((EntityPlayer) entity).getHeldItem(EnumHand.OFF_HAND);
+					ItemStack ar = ((EntityPlayer) entity).getHeldItem(EnumHand.MAIN_HAND);
+					Building building = Building.createBuilding(sender.getEntityWorld(),
+							ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
+					BuildingLib.addBuildingToLib(building);
+					ItemArchitectureHelper.initArcInfoToItem(ar, building.getKeyName());
+					System.out.println("Yes!");
 
 				}
 			} else

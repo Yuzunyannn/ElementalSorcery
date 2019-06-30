@@ -24,7 +24,7 @@ public class ItemArchitectureHelper {
 	static public void initArcInfoToItem(ItemStack stack, String id) {
 		NBTTagCompound nbt = stack.getOrCreateSubCompound("building");
 		nbt.setIntArray("pos", new int[] { 0, 0, 0 });
-		nbt.setString("name", id);
+		nbt.setString("key", id);
 	}
 
 	static public ArcInfo getArcInfoFromItem(ItemStack stack) {
@@ -35,7 +35,7 @@ public class ItemArchitectureHelper {
 		int[] axis = nbt.getIntArray("pos");
 		if (axis == null || axis.length < 3)
 			return info;
-		String name = nbt.getString("name");
+		String name = nbt.getString("key");
 		if (name == null)
 			return info;
 		info.name = name;
@@ -51,8 +51,8 @@ public class ItemArchitectureHelper {
 		int[] axis = nbt.getIntArray("pos");
 		if (axis == null || axis.length < 3)
 			return false;
-		String name = nbt.getString("name");
-		if (name == null)
+		String id = nbt.getString("key");
+		if (id == null)
 			return false;
 		return true;
 	}

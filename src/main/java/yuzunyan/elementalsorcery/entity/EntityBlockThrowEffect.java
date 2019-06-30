@@ -19,13 +19,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalSpawnData {
 
-	// public static final DataParameter<ItemStack> STACK =
-	// EntityDataManager.createKey(EntityBlockThrowEffect.class,
-	// DataSerializers.ITEM_STACK);
-	// public static final DataParameter<BlockPos> TO =
-	// EntityDataManager.createKey(EntityBlockThrowEffect.class,
-	// DataSerializers.BLOCK_POS);
-
 	public ItemStack stack = ItemStack.EMPTY;
 	public BlockPos to = BlockPos.ORIGIN;
 	public IBlockState state = null;
@@ -42,8 +35,8 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 			EntityPlayer player) {
 		super(worldIn);
 		if (!world.isRemote) {
-			this.setItem(stack);
-			this.setPos(to);
+			this.stack = stack;
+			this.to = to;
 		}
 		this.player = player;
 		this.state = state;
@@ -73,6 +66,11 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 	}
 
 	@Override
+	protected void entityInit() {
+
+	}
+
+	@Override
 	public void writeSpawnData(ByteBuf buffer) {
 		ByteBufUtils.writeItemStack(buffer, stack);
 		buffer.writeInt(to.getX());
@@ -92,24 +90,6 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 	public EntityBlockThrowEffect setBreakBlock() {
 		this.is_break = true;
 		return this;
-	}
-
-	@Override
-	protected void entityInit() {
-		// dataManager.register(STACK, stack);
-		// dataManager.register(TO, to);
-	}
-
-	public void setItem(ItemStack stack) {
-		this.stack = stack;
-		// this.getDataManager().set(STACK, stack);
-		// this.getDataManager().setDirty(STACK);
-	}
-
-	public void setPos(BlockPos to) {
-		this.to = to;
-		// this.getDataManager().set(TO, to);
-		// this.getDataManager().setDirty(TO);
 	}
 
 	static public double G = 1.25;
@@ -147,13 +127,6 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 		this.motionY *= 0.9;
 		this.motionZ *= 0.9;
 
-		// if (world.isRemote) {
-		// if (stack.isEmpty())
-		// stack = dataManager.get(STACK);
-		// if (to == BlockPos.ORIGIN)
-		// to = dataManager.get(TO);
-		// }
-
 		if (stack.isEmpty() || to == BlockPos.ORIGIN) {
 			this.setDead();
 		}
@@ -174,10 +147,6 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 
 			}
 		}
-
-		// this.lastTickPosX = this.posX;
-		// this.lastTickPosY = this.posY;
-		// this.lastTickPosZ = this.posZ;
 		this.firstUpdate = false;
 	}
 

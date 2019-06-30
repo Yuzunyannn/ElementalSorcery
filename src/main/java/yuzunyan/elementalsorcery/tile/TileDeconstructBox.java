@@ -35,8 +35,8 @@ public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IFi
 		@Override
 		@Nonnull
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			IElementInventory einv = ElementHelper.getElementInventoryCanInsert(stack);
-			if (einv == null)
+			IElementInventory einv = ElementHelper.getElementInventory(stack);
+			if (!ElementHelper.canInsert(einv))
 				return stack;
 			return super.insertItem(slot, stack, simulate);
 		}
@@ -57,8 +57,8 @@ public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IFi
 			return false;
 		}
 		ItemStack stack_ele = inv_eleitem.getStackInSlot(0);
-		IElementInventory einv = ElementHelper.getElementInventoryCanInsert(stack_ele);
-		if (einv == null) {
+		IElementInventory einv = ElementHelper.getElementInventory(stack_ele);
+		if (!ElementHelper.canInsert(einv)) {
 			power = 0;
 			return false;
 		}
@@ -72,6 +72,7 @@ public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IFi
 			this.insertTo(stack, stack_ele, einv, false);
 			stack.shrink(1);
 			this.power = 0;
+			einv.saveState(stack_ele);
 			this.markDirty();
 		}
 		return true;

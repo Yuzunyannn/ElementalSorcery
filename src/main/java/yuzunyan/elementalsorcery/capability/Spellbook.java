@@ -26,6 +26,12 @@ public class Spellbook {
 	@CapabilityInject(Spellbook.class)
 	public static Capability<Spellbook> SPELLBOOK_CAPABILITY;
 
+	/** 初始化释放 */
+	public void initSpelling(World world, ItemStack stack, EntityLivingBase player, EnumHand hand) {
+		if (this.inventory != null)
+			this.inventory.loadState(stack);
+	}
+
 	/** 开始释放 */
 	public void beginSpelling(World world, EntityLivingBase player, EnumHand hand) {
 		this.spelling = true;
@@ -38,10 +44,13 @@ public class Spellbook {
 	/**
 	 * 结束释放
 	 * 
-	 * @param sync 是否进行对客户端的同步，客户端该参数无效
+	 * @param sync
+	 *            是否进行对客户端的同步，客户端该参数无效
 	 */
 	public void endSpelling(World world, EntityLivingBase player, ItemStack stack, boolean sync) {
 		this.spelling = false;
+		if (this.inventory != null)
+			this.inventory.saveState(stack);
 		if (sync && !world.isRemote)
 			sendMessageEnd(world, player, stack);
 	}
@@ -79,13 +88,17 @@ public class Spellbook {
 	// 表明是否当前client玩家使用的
 	public EntityLivingBase who = null;
 
+	public boolean isMyself() {
+		return who == null;
+	}
+
 	/** 不同的书自使用 */
 	public Object obj = null;
 	public int castTime = 0;
 	public int flags;
 
 	/** 记录的仓库 */
-	private IElementInventory inventory = null;
+	IElementInventory inventory = null;
 
 	/** 渲染信息 */
 	public SpellbookRenderInfo render_info = null;

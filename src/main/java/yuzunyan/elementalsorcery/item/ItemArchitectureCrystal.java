@@ -48,8 +48,8 @@ public class ItemArchitectureCrystal extends Item {
 			tooltip.add("You don't get this builing info from server!");
 			return;
 		}
-		List<Building.BlockTypeInfo> list = info.building.getBlockTypeInfos();
-		for (Building.BlockTypeInfo tinfo : list) {
+		List<Building.BlockItemTypeInfo> list = info.building.getBlockTypeInfos();
+		for (Building.BlockItemTypeInfo tinfo : list) {
 			tooltip.add(I18n.format("info.arcCrystal.count", I18n.format(tinfo.getUnlocalizedName() + ".name"),
 					tinfo.getCount()));
 		}

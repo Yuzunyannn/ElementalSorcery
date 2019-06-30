@@ -31,7 +31,7 @@ public class ElementWood extends Element implements IElementSpell {
 	public void spelling(World world, EntityLivingBase entity, ElementStack estack, SpellPackage pack) {
 		if (estack.isEmpty())
 			return;
-		if (pack.power % 30 == 0) {
+		if (pack.power % 15 == 0) {
 			if (!world.isRemote) {
 				for (int i = 0; i < 2; i++) {
 					BlockPos target = entity.getPosition().up();

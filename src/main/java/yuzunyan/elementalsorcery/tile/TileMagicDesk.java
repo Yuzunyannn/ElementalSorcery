@@ -165,6 +165,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 		IElementInventory inv = spellbook.getInventory();
 		if (inv == null)
 			return;
+		inv.loadState(book);
 		ElementStack need = ItemSpellbook.giveMeRandomElement(inv).copy();
 		if (!need.isEmpty()) {
 			need.setCount(1);
@@ -187,9 +188,11 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 							this.pos.up(), 0.5f);
 				inv_other.extractElement(estack, false);
 				inv.insertElement(estack, false);
-				succuess = true; 
+				succuess = true;
 			}
 		}
+		if (succuess)
+			inv.saveState(book);
 	}
 
 	// 吸收物品

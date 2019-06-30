@@ -110,6 +110,10 @@ info.spbe.has5=释放时间：%.1fs
 info.launchbook.shift=shift+右键切换咒文
 info.launchbook.craft=合成启动咒文
 info.launchbook.dec=析构启动咒文
+info.ruler.pos=坐标%d：(%d,%d,%d)
+info.ruler.color=当前颜色：%s
+info.ruler.none=当前无记录，右键和shift右键分别记录两个方块位置
+info.ruler.fail=两点的距离过远，无法设定
 
 page.crafting.need=需要元素参与合成：
 page.crafting.show=%s 需要 %d 强度下限 %d 

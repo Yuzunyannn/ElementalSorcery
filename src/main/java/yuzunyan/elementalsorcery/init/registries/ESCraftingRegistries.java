@@ -1,7 +1,9 @@
 package yuzunyan.elementalsorcery.init.registries;
 
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import yuzunyan.elementalsorcery.crafting.RecipeColorRuler;
 import yuzunyan.elementalsorcery.crafting.RecipeManagement;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
 
@@ -11,6 +13,8 @@ public class ESCraftingRegistries {
 		RecipeManagement.RegisterAll();
 		// 注册所有烧炼
 		registerAllSmelting();
+		// 注册合成表
+		ForgeRegistries.RECIPES.register(new RecipeColorRuler().setRegistryName("magicRuler"));
 	}
 
 	private static void registerAllSmelting() {

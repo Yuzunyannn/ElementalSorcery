@@ -33,6 +33,8 @@ public class EventClient {
 
 		@Override
 		public int onTick() {
+			if (EventClient.tick % 2 == 0)
+				return ITickTask.SUCCESS;
 			Spellbook book = this.stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 			if (this.entity.isHandActive()) {
 				ItemSpellbook.renderOpen(book);

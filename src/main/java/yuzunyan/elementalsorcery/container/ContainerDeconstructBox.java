@@ -81,18 +81,6 @@ public class ContainerDeconstructBox extends Container {
 	// 发消息
 	@Override
 	public void detectAndSendChanges() {
-		// 将能力同步过去
-		ItemStack itemstack = ((Slot) this.inventorySlots.get(36)).getStack();
-		ItemStack itemstack1 = this.inventoryItemStacks.get(36);
-		if (!ItemStack.areItemStacksEqual(itemstack1, itemstack)) {
-			boolean clientStackChanged = !itemstack1.areCapsCompatible(itemstack);
-			itemstack1 = itemstack.isEmpty() ? ItemStack.EMPTY : itemstack.copy();
-			this.inventoryItemStacks.set(36, itemstack1);
-			if (clientStackChanged)
-				for (int j = 0; j < this.listeners.size(); ++j) {
-					((IContainerListener) this.listeners.get(j)).sendSlotContents(this, 36, itemstack1);
-				}
-		}
 		// 全局同步
 		super.detectAndSendChanges();
 		// 燃烧

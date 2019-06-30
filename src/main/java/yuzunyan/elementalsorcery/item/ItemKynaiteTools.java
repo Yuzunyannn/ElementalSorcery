@@ -33,6 +33,7 @@ import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.Element;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.util.ElementHelper;
+import yuzunyan.elementalsorcery.capability.CapabilityProvider;
 import yuzunyan.elementalsorcery.capability.ElementInventory;
 import yuzunyan.elementalsorcery.element.ElementMap;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
@@ -48,7 +49,10 @@ public class ItemKynaiteTools {
 			return;
 		tooltip.add("§d" + I18n.format("info.kynaiteTools.el"));
 		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
+		if (inventory.hasState(stack)) {
+			inventory.loadState(stack);
+			ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
+		}
 	}
 
 	/// 当破坏方块
@@ -81,10 +85,11 @@ public class ItemKynaiteTools {
 	// 工具具有储存元素的能力
 	public static interface toolsCapability {
 		default ICapabilityProvider getCapabilityProvider(ItemStack stack, @Nullable NBTTagCompound nbt) {
-			if (canProvide() == false && nbt == null)
-				return null;
-			ICapabilitySerializable<NBTTagCompound> cap = new ElementInventory.Provider(new ElementInventoryOnlyInsert(4));
-			cap.deserializeNBT(nbt);
+			ElementInventory inv = new ElementInventoryOnlyInsert(4);
+			ICapabilitySerializable<NBTTagCompound> cap = new CapabilityProvider.ElementInventoryUseProviderCheck(stack,
+					inv);
+			if (canProvide() == true)
+				inv.saveState(stack);
 			return cap;
 		}
 
@@ -254,7 +259,7 @@ public class ItemKynaiteTools {
 			if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null))
 				return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 			// 取出来看看末影元素够不够
-			IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+			IElementInventory inventory = ElementHelper.getElementInventory(stack);
 			ElementStack estack = new ElementStack(ESInitInstance.ELEMENTS.ENDER, 10, 5);
 			ElementStack find = ElementStack.EMPTY;
 			for (int i = 0; i < inventory.getSlots(); i++) {
@@ -273,6 +278,7 @@ public class ItemKynaiteTools {
 				Block.spawnAsEntity(worldIn, pos, new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, 1));
 				if (!player.isCreative())
 					stack.damageItem(10, player);
+				inventory.saveState(stack);
 				return EnumActionResult.SUCCESS;
 			} else if (state.getBlock() == Blocks.END_PORTAL_FRAME && state.getValue(BlockEndPortalFrame.EYE)) {
 				// 拆末影之眼
@@ -281,6 +287,7 @@ public class ItemKynaiteTools {
 				Block.spawnAsEntity(worldIn, pos, new ItemStack(Items.ENDER_EYE, 1));
 				if (!player.isCreative())
 					stack.damageItem(10, player);
+				inventory.saveState(stack);
 				return EnumActionResult.SUCCESS;
 			}
 			return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);

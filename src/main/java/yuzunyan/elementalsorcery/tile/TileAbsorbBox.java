@@ -37,8 +37,8 @@ public class TileAbsorbBox extends TileEntityNetwork implements IGetBurnPower {
 		@Override
 		@Nonnull
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			IElementInventory einv = ElementHelper.getElementInventoryOrdinary(stack);
-			if (einv == null)
+			IElementInventory einv = ElementHelper.getElementInventory(stack);
+			if (!ElementHelper.canInsert(einv))
 				return stack;
 			return super.insertItem(slot, stack, simulate);
 		}
@@ -56,8 +56,8 @@ public class TileAbsorbBox extends TileEntityNetwork implements IGetBurnPower {
 			power = 0;
 			return false;
 		}
-		IElementInventory einv = ElementHelper.getElementInventoryOrdinary(stack);
-		if (einv == null)
+		IElementInventory einv = ElementHelper.getElementInventory(stack);
+		if (!ElementHelper.canInsert(einv))
 			return false;
 		if (posList.isEmpty()) {
 			// 每秒计算一次，提升效率
@@ -103,10 +103,12 @@ public class TileAbsorbBox extends TileEntityNetwork implements IGetBurnPower {
 			// 如果吸收成功
 			if (success) {
 				estack.shrink(1);
+				stack_einv.saveState(abs);
+				einv.saveState(stack);
 				if (world.isRemote) {
 					// 生成粒子效果
 					if (estack.getCount() % 3 == 1) {
-						this.giveMePaticle(estack);
+						this.giveMePaticle(estack, pos);
 					}
 				} else {
 					// 如果没有剩余元素了，就更新下
@@ -125,7 +127,7 @@ public class TileAbsorbBox extends TileEntityNetwork implements IGetBurnPower {
 	}
 
 	@SideOnly(Side.CLIENT)
-	private void giveMePaticle(ElementStack estack) {
+	private void giveMePaticle(ElementStack estack, BlockPos pos) {
 		ParticleElement effect = new ParticleElement(this.world,
 				new Vec3d(pos.getX() + Math.random(), pos.getY() + Math.random(), pos.getZ() + Math.random()),
 				new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5));
@@ -156,7 +158,7 @@ public class TileAbsorbBox extends TileEntityNetwork implements IGetBurnPower {
 				return false;
 			if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null))
 				return false;
-			IElementInventory einv = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+			IElementInventory einv = ElementHelper.getElementInventory(stack);
 			ElementStack estack = getFirstNotEmpty(einv, ElementStack.EMPTY);
 			return !estack.isEmpty();
 		}

@@ -50,8 +50,9 @@ public class RecipeManagement implements ESRegister.IRecipeManagement {
 		// 魔法书桌自动机合成
 		TileMagicDesk.init();
 		// 咒术纸
-		instance.addRecipe(new ItemStack(ESInitInstance.ITEMS.SPELL_PAPER, 1),
-				new ElementStack(ESInitInstance.ELEMENTS.KNOWLEDGE, 5, 25), " * ", "*#*", " * ", "#",
+		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.SPELL_PAPER, 1);
+		ESInitInstance.ITEMS.SPELL_PAPER.onCreated(stack, null, null);
+		instance.addRecipe(stack, new ElementStack(ESInitInstance.ELEMENTS.KNOWLEDGE, 5, 25), " * ", "*#*", " * ", "#",
 				ESInitInstance.ITEMS.MAGIC_PAPER, "*", ESInitInstance.ITEMS.SPELL_CRYSTAL);
 		// spellbook
 		instance.addRecipe(new ItemStack(ESInitInstance.ITEMS.SPELLBOOK, 1),

@@ -37,6 +37,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		Spellbook book = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 		IElementInventory inventory = book.getInventory();
+		inventory.loadState(stack);
 		ElementStack estack = inventory.getStackInSlot(0);
 		if (estack.isEmpty())
 			return;
@@ -144,7 +145,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 		if (world.isRemote) {
 			this.giveMeParticleAboutSpelling(world, entity, stack, book, power);
 			// 别人释放的时候，仅仅是效果
-			if (book.who != null)
+			if (!book.isMyself())
 				return;
 			IElementSpell.SpellPackage pack = (SpellPackage) book.obj;
 			if ((book.flags & IElementSpell.NEED_ENTITY) != 0) {

@@ -19,11 +19,15 @@ import yuzunyan.elementalsorcery.capability.ElementInventory;
 public class ElementHelper {
 
 	public static boolean canInsert(IElementInventory inventory) {
+		if (inventory == null)
+			return false;
 		// 规定认为，插入EMPTY必然会成功，否则表示这个仓库不能插入
 		return inventory.insertElement(ElementStack.EMPTY, true);
 	}
 
 	public static boolean canExtract(IElementInventory inventory) {
+		if (inventory == null)
+			return false;
 		// 规定认为，去取的ElementStack，必然和传入的ElementStack的地址不一样，否则认为不能取出
 		return inventory.extractElement(ElementStack.EMPTY, true) != ElementStack.EMPTY;
 	}
@@ -39,8 +43,8 @@ public class ElementHelper {
 
 	// 添加元素的信息
 	@SideOnly(Side.CLIENT)
-	public static void addElementInformation(IElementInventory inventory, World worldIn, List<String> tooltip,
-			ITooltipFlag flagIn) {
+	public static void addElementInformation(IElementInventory inventory, World worldIn,
+			List<String> tooltip, ITooltipFlag flagIn) {
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ElementStack estack = inventory.getStackInSlot(i);
 			if (estack.isEmpty())
@@ -69,42 +73,13 @@ public class ElementHelper {
 
 	/** 获取一个物品里可插入和取出的元素仓库 */
 	@Nullable
-	static public IElementInventory getElementInventoryOrdinary(ItemStack stack) {
+	static public IElementInventory getElementInventory(ItemStack stack) {
 		if (stack.isEmpty())
 			return null;
 		if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null))
 			return null;
 		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		if (!ElementHelper.canExtract(inventory))
-			return null;
-		if (!ElementHelper.canInsert(inventory))
-			return null;
-		return inventory;
-	}
-
-	/** 获取一个物品里可取出的元素仓库 */
-	@Nullable
-	static public IElementInventory getElementInventoryCanExtract(ItemStack stack) {
-		if (stack.isEmpty())
-			return null;
-		if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null))
-			return null;
-		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		if (!ElementHelper.canExtract(inventory))
-			return null;
-		return inventory;
-	}
-
-	/** 获取一个物品里可插入的元素仓库 */
-	@Nullable
-	static public IElementInventory getElementInventoryCanInsert(ItemStack stack) {
-		if (stack.isEmpty())
-			return null;
-		if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null))
-			return null;
-		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		if (!ElementHelper.canInsert(inventory))
-			return null;
+		inventory.loadState(stack);
 		return inventory;
 	}
 

@@ -7,9 +7,11 @@ import java.util.List;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import yuzunyan.elementalsorcery.building.BuildingLib;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
 import yuzunyan.elementalsorcery.item.ItemScroll;
 import yuzunyan.elementalsorcery.parchment.Pages;
@@ -45,6 +47,11 @@ public class EventServer {
 			if (flags == ITickTask.END)
 				iter.remove();
 		}
+	}
+
+	@SubscribeEvent
+	public static void gameSave(WorldEvent.Save e) {
+		BuildingLib.instance.deal();
 	}
 
 }

@@ -24,11 +24,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyan.elementalsorcery.ElementalSorcery;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.util.ElementHelper;
-import yuzunyan.elementalsorcery.capability.ElementInventory;
+import yuzunyan.elementalsorcery.capability.CapabilityProvider;
 import yuzunyan.elementalsorcery.capability.Spellbook;
 import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyan.elementalsorcery.render.particle.ParticleSpellbook;
@@ -56,7 +55,8 @@ public class ItemSpellbook extends Item {
 	/**
 	 * 持续释放
 	 * 
-	 * @param power 积攒的时间
+	 * @param power
+	 *            积攒的时间
 	 */
 	public void spelling(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
 	}
@@ -64,8 +64,9 @@ public class ItemSpellbook extends Item {
 	/**
 	 * 结束释放
 	 * 
-	 * @param power 积攒的时间，大于0表示释放成功
-	 * @return 是否同步，一般使用false，客户端也处理，特殊情况只能由服务器处理的信息，需要true
+	 * @param power
+	 *            积攒的时间，大于0表示释放成功
+	 * @return 是否同步，true表示需要同步，一般不需要
 	 */
 	public boolean spellEnd(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
 		return false;
@@ -105,6 +106,7 @@ public class ItemSpellbook extends Item {
 		IElementInventory inventory = book.getInventory();
 		if (inventory == null)
 			return;
+		inventory.loadState(stack);
 		ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
 	}
 
@@ -113,12 +115,12 @@ public class ItemSpellbook extends Item {
 	@Nullable
 	public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack,
 			@Nullable NBTTagCompound nbt) {
-		ICapabilitySerializable<NBTTagCompound> cap = new Spellbook.Provider(this.getInventory(stack));
-		Spellbook book = cap.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
+		ICapabilitySerializable<NBTTagCompound> cap = new CapabilityProvider.SpellbookUseProvider(stack,
+				this.getInventory(stack));
 		if (SpellbookRenderInfo.renderInstance != null) {
+			Spellbook book = cap.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 			this.initRenderInfo(book.render_info);
 		}
-		cap.deserializeNBT(nbt);
 		return cap;
 	}
 
@@ -141,6 +143,7 @@ public class ItemSpellbook extends Item {
 			return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 		}
 		// 开始释放！
+		spellbook.initSpelling(worldIn, stack, playerIn, handIn);
 		if (!this.spellBegin(worldIn, playerIn, stack, spellbook))
 			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		// 开始释放
