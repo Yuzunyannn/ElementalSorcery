@@ -15,13 +15,14 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import yuzunyan.elementalsorcery.building.ArcInfo;
 import yuzunyan.elementalsorcery.building.Building;
 import yuzunyan.elementalsorcery.building.BuildingLib;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
 import yuzunyan.elementalsorcery.item.ItemParchment;
 import yuzunyan.elementalsorcery.parchment.Pages;
 import yuzunyan.elementalsorcery.util.WorldHelper;
-import yuzunyan.elementalsorcery.util.item.ItemArchitectureHelper;
 
 public class CommandES extends CommandBase {
 
@@ -90,8 +91,8 @@ public class CommandES extends CommandBase {
 		BlockPos pos = null;
 		if (value.toLowerCase().equals("it")) {
 			ItemStack stack = entity.getHeldItemMainhand();
-			ItemArchitectureHelper.ArcInfo info = ItemArchitectureHelper.getArcInfoFromItem(stack);
-			if (info.isEmpty())
+			ArcInfo info = new ArcInfo(stack, world.isRemote ? Side.CLIENT : Side.SERVER);
+			if (!info.isValid())
 				throw new CommandException("commands.es.build.it.usage");
 			building = info.building;
 			pos = info.pos;

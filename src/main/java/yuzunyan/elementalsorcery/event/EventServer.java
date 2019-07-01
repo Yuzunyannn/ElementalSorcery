@@ -51,7 +51,7 @@ public class EventServer {
 
 	@SubscribeEvent
 	public static void gameSave(WorldEvent.Save e) {
-		BuildingLib.instance.deal();
+		BuildingLib.instance.dealSave();
 	}
 
 }

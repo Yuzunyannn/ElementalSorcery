@@ -13,10 +13,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import yuzunyan.elementalsorcery.building.ArcInfo;
 import yuzunyan.elementalsorcery.building.Building;
 import yuzunyan.elementalsorcery.building.BuildingLib;
 import yuzunyan.elementalsorcery.item.ItemMagicRuler;
-import yuzunyan.elementalsorcery.util.item.ItemArchitectureHelper;
 
 public class ESTestAndDebug {
 
@@ -106,8 +106,9 @@ public class ESTestAndDebug {
 					ItemStack ar = ((EntityPlayer) entity).getHeldItem(EnumHand.MAIN_HAND);
 					Building building = Building.createBuilding(sender.getEntityWorld(),
 							ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
-					BuildingLib.addBuildingToLib(building);
-					ItemArchitectureHelper.initArcInfoToItem(ar, building.getKeyName());
+					building.setAuthor(sender.getName());
+					BuildingLib.instance.addBuilding(building);
+					ArcInfo.initArcInfoToItem(ar, building.getKeyName());
 					System.out.println("Yes!");
 
 				}

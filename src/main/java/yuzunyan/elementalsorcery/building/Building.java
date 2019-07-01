@@ -153,7 +153,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 	}
 
 	/** 建筑名称 */
-	private String name;
+	private String name = "";
 
 	public String getName() {
 		return name;
@@ -164,7 +164,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 	}
 
 	/** 作者 */
-	private String author;
+	private String author = "";
 
 	public Building setAuthor(String author) {
 		this.author = author;

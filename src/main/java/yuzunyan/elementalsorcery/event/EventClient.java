@@ -59,6 +59,10 @@ public class EventClient {
 		if (!(stack.getItem() instanceof ItemSpellbook))
 			return;
 		Spellbook book = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
+		if (book == null) {
+			ElementalSorcery.logger.warn("客户端传入的物品不包含Spellbook但检测到了null！" + stack.toString());
+			return;
+		}
 		SpellbookOpenMsg msg = new SpellbookOpenMsg();
 		if (Minecraft.getMinecraft().player != entity) {
 			book.who = entity;

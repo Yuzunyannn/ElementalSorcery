@@ -95,6 +95,7 @@ info.scroll.none=该卷轴内仅有%d张空白的羊皮纸，右键打开
 info.scroll.has=该卷轴包含有%d张羊皮纸，右键打开
 info.manual.info=shift+右键存入包中所有羊皮卷（重复的会被清除）
 info.arcCrystal.choice=shift+右键，选择对应的方块上方
+info.arcCrystal.miss=建筑结构丢失
 info.arcCrystal.name=建筑名称：%s
 info.arcCrystal.axis=选定坐标：(%d,%d,%d)
 info.arcCrystal.count=%s需要：%d

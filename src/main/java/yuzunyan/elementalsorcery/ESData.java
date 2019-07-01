@@ -10,7 +10,7 @@ public class ESData {
 
 	public ESData(FMLPreInitializationEvent event) {
 		file = event.getSourceFile().getParentFile().getParentFile();
-		file = new File(file.getPath() + "/ElementalSo rcery/");
+		file = new File(file.getPath() + "/ElementalSorcery/");
 		file.mkdirs();
 	}
 

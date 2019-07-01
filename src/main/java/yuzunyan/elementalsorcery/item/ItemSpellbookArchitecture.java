@@ -10,13 +10,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.api.ability.IElementInventory;
+import yuzunyan.elementalsorcery.building.ArcInfo;
 import yuzunyan.elementalsorcery.building.Building;
 import yuzunyan.elementalsorcery.capability.ElementInventory;
 import yuzunyan.elementalsorcery.capability.Spellbook;
 import yuzunyan.elementalsorcery.entity.EntityBlockThrowEffect;
 import yuzunyan.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyan.elementalsorcery.render.item.SpellbookRenderInfo;
-import yuzunyan.elementalsorcery.util.item.ItemArchitectureHelper;
 
 public class ItemSpellbookArchitecture extends ItemSpellbook {
 	public ItemSpellbookArchitecture() {
@@ -30,13 +30,14 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 		ItemStack arc = findArchitectureCrystal((EntityPlayer) entity);
 		if (arc.isEmpty())
 			return false;
-		ItemArchitectureHelper.ArcInfo info = ItemArchitectureHelper.getArcInfoFromItem(arc);
+		ArcInfo info = new ArcInfo(arc, world.isRemote ? Side.CLIENT : Side.SERVER);
+		if (info.isMiss())
+			return false;
 		if (entity.getDistanceSq(info.pos) >= 32 * 32)
 			return false;
 		if (world.isRemote)
 			return true;
 		book.obj = info.building.getBuildingBlocks().setPosOff(info.pos);
-
 		return true;
 	}
 
@@ -124,7 +125,7 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 	}
 
 	private boolean isArchitectureCrystal(ItemStack stack) {
-		if (ItemArchitectureHelper.isArc(stack))
+		if (ArcInfo.isArc(stack))
 			return true;
 		return false;
 	}

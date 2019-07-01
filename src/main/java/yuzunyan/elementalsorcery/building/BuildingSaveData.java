@@ -23,6 +23,7 @@ public class BuildingSaveData extends WorldSavedData {
 		file = ElementalSorcery.data.getESFile("building/tmp", this.mapName);
 		time = System.currentTimeMillis();
 		building.setKeyName(this.mapName);
+		this.building = building;
 		this.markDirty();
 	}
 

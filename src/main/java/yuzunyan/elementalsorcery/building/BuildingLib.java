@@ -7,44 +7,67 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.ElementalSorcery;
 
 public class BuildingLib {
 
 	public static BuildingLib instance = new BuildingLib();
 
-	private Map<String, Building> map = new HashMap<String, Building>();
+	private Map<String, Building> mapClient = new HashMap<String, Building>();
 	private Map<String, BuildingSaveData> mapSave = new HashMap<String, BuildingSaveData>();
+	private Map<String, Building> mapLib = new HashMap<String, Building>();
 
-	public Collection<Building> getBuildings() {
-		return map.values();
+	public Collection<Building> getBuildingsFromLib() {
+		return mapLib.values();
 	}
 
-	void addBuilding(String name, Building building) {
-		if (map.containsKey(name))
-			throw new IllegalArgumentException("The name has already exist!");
-		building.setKeyName(name);
-		map.put(name, building);
+	/** 添加建筑到lib */
+	void addBuildingLib(String key, Building building) {
+		if (mapLib.containsKey(key))
+			throw new IllegalArgumentException("The key has already exist!");
+		building.setKeyName(key);
+		mapLib.put(key, building);
 	}
 
-	void addBuilding(String name, Building building, BuildingSaveData data) {
-		if (map.containsKey(name))
-			throw new IllegalArgumentException("The name has already exist!");
-		building.setKeyName(name);
-		map.put(name, building);
-		mapSave.put(name, data);
+	/** 添加建筑到建筑存储 */
+	void addBuilding(BuildingSaveData data) {
+		String key = data.building.getKeyName();
+		if (mapSave.containsKey(key)) {
+			ElementalSorcery.logger.warn("The key has already exist!");
+			return;
+		}
+		mapSave.put(key, data);
 	}
 
-	public Building getBuilding(String name) {
-		if (map.containsKey(name))
-			return map.get(name);
+	/** 添加建筑到建筑存储 */
+	public String addBuilding(Building building) {
+		BuildingSaveData data = new BuildingSaveData(building);
+		this.addBuilding(data);
+		return data.building.getKeyName();
+	}
+
+	/** 获取建筑 */
+	public Building getBuilding(String key) {
+		if (mapSave.containsKey(key))
+			return mapSave.get(key).building;
+		if (mapLib.containsKey(key))
+			return mapLib.get(key);
 		return null;
 	}
 
-	public Set<String> getBuildingsName() {
-		return map.keySet();
+	@SideOnly(Side.CLIENT)
+	public Building giveBuilding(String key) {
+		Building building = this.getBuilding(key);
+		if (building != null)
+			return building;
+		if (mapClient.containsKey(key)) {
+			return mapClient.get(key);
+		}
+		mapClient.put(key, new Building());
+		return mapClient.get(key);
 	}
 
 	// 创建默认名字
@@ -55,26 +78,21 @@ public class BuildingLib {
 
 	public static void registerAll() {
 		Buildings.init();
-		instance.addBuilding(LARGE_ALTAR, Buildings.LARGE_ALTAR);
-		instance.addBuilding(SPELLBOOK_ALTAR, Buildings.SPELLBOOK_ALTAR);
-		instance.addBuilding(ELEMENT_CRAFTING_ALTAR, Buildings.ELEMENT_CRAFTING_ALTAR);
-		instance.addBuilding(DECONSTRUCT_ALTAR, Buildings.DECONSTRUCT_ALTAR);
+		instance.addBuildingLib(LARGE_ALTAR, Buildings.LARGE_ALTAR);
+		instance.addBuildingLib(SPELLBOOK_ALTAR, Buildings.SPELLBOOK_ALTAR);
+		instance.addBuildingLib(ELEMENT_CRAFTING_ALTAR, Buildings.ELEMENT_CRAFTING_ALTAR);
+		instance.addBuildingLib(DECONSTRUCT_ALTAR, Buildings.DECONSTRUCT_ALTAR);
 		BuildingLib.loadBuilding();
 	}
 
-	public static String addBuildingToLib(Building building) {
-		BuildingSaveData data = new BuildingSaveData(building);
-		BuildingLib.addData(data);
-		return data.building.getKeyName();
-	}
-
+	/** 初始化加载 */
 	private static void loadBuilding() {
 		File file = ElementalSorcery.data.getESFile("building/tmp", "");
 		File[] files = file.listFiles();
 		for (File f : files) {
 			try {
 				BuildingSaveData data = new BuildingSaveData(f);
-				addData(data);
+				BuildingLib.instance.addBuilding(data);
 			} catch (IOException e) {
 				ElementalSorcery.logger.warn("无效的建筑文件：" + f + "--处理：尝试删除！");
 				f.delete();
@@ -82,30 +100,20 @@ public class BuildingLib {
 		}
 	}
 
-	private static void addData(BuildingSaveData data) {
-		String key = data.building.getKeyName();
-		try {
-			BuildingLib.instance.addBuilding(key, data.building, data);
-		} catch (IllegalArgumentException e) {
-			ElementalSorcery.logger.warn("已经存在id为(" + key + ")的building");
-		}
-	}
-
 	long lastCheckTime;
 
 	/** 处理文件信息 */
-	public void deal() {
+	public void dealSave() {
 		lastCheckTime = System.currentTimeMillis();
 		LinkedList<String> removeList = new LinkedList<String>();
 		for (Entry<String, BuildingSaveData> entry : mapSave.entrySet()) {
 			BuildingSaveData data = entry.getValue();
 			boolean out = data.deal(lastCheckTime);
-			if (out) {
+			if (out == false) {
 				removeList.add(entry.getKey());
 			}
 		}
 		for (String remove : removeList) {
-			this.map.remove(remove);
 			this.mapSave.remove(remove);
 		}
 	}

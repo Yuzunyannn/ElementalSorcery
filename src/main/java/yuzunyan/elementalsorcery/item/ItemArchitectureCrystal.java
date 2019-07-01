@@ -19,13 +19,14 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyan.elementalsorcery.building.ArcInfo;
 import yuzunyan.elementalsorcery.building.Building;
 import yuzunyan.elementalsorcery.building.BuildingLib;
-import yuzunyan.elementalsorcery.util.item.ItemArchitectureHelper;
-import yuzunyan.elementalsorcery.util.item.ItemArchitectureHelper.ArcInfo;
+import yuzunyan.elementalsorcery.util.NBTHelper;
 
 public class ItemArchitectureCrystal extends Item {
 
@@ -36,12 +37,15 @@ public class ItemArchitectureCrystal extends Item {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		ArcInfo info = ItemArchitectureHelper.getArcInfoFromItem(stack);
-		if (info.isEmpty())
+		ArcInfo info = new ArcInfo(stack, Side.CLIENT);
+		if (!info.isValid())
 			return;
-
+		if (info.isMiss()) {
+			tooltip.add(TextFormatting.YELLOW + I18n.format("info.arcCrystal.miss"));
+			return;
+		}
 		tooltip.add("§e" + I18n.format("info.arcCrystal.choice"));
-		tooltip.add(I18n.format("info.arcCrystal.name", info.name));
+		tooltip.add(I18n.format("info.arcCrystal.name", info.keyName));
 		tooltip.add(I18n.format("info.arcCrystal.axis", info.pos.getX(), info.pos.getY(), info.pos.getZ()));
 
 		if (info.building == null) {
@@ -70,7 +74,7 @@ public class ItemArchitectureCrystal extends Item {
 			return EnumActionResult.PASS;
 		}
 		pos = pos.up();
-		nbt.setIntArray("pos", new int[] { pos.getX(), pos.getY(), pos.getZ() });
+		NBTHelper.setBlockPos(nbt, "pos", pos);
 		if (worldIn.isRemote) {
 			player.sendMessage(
 					new TextComponentString(I18n.format("info.posSet.success", pos.getX(), pos.getY(), pos.getZ())));
@@ -86,10 +90,10 @@ public class ItemArchitectureCrystal extends Item {
 		items.add(new ItemStack(this, 1, 0));
 		ItemStack stack;
 
-		Collection<Building> bs = BuildingLib.instance.getBuildings();
+		Collection<Building> bs = BuildingLib.instance.getBuildingsFromLib();
 		for (Building building : bs) {
 			stack = new ItemStack(this, 1, 0);
-			ItemArchitectureHelper.initArcInfoToItem(stack, building.getKeyName());
+			ArcInfo.initArcInfoToItem(stack, building.getKeyName());
 			items.add(stack);
 		}
 	}
