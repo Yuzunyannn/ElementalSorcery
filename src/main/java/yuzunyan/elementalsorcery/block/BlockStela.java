@@ -237,6 +237,18 @@ public class BlockStela extends BlockContainer {
 	}
 
 	@Override
+	public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
+		TileEntity tile = world.getTileEntity(pos);
+		if (tile instanceof TileStela) {
+			TileStela ts = (TileStela) tile;
+			EnumFacing facing = ts.getFace();
+			ts.setFace(facing.rotateY());
+			return true;
+		}
+		return false;
+	}
+
+	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity tile = worldIn.getTileEntity(pos);
 		if (tile instanceof TileStela) {

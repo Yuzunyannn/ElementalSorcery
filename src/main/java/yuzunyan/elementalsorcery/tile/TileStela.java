@@ -1,5 +1,8 @@
 package yuzunyan.elementalsorcery.tile;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.state.IBlockState;
@@ -10,13 +13,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
-import yuzunyan.elementalsorcery.block.BlockSmeltBox;
 import yuzunyan.elementalsorcery.element.ElementMap;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
 import yuzunyan.elementalsorcery.item.ItemKynaiteTools;
@@ -148,12 +151,17 @@ public class TileStela extends TileEntityNetwork {
 		Block.spawnAsEntity(this.world, this.pos, stack);
 	}
 
+	public static Map<ResourceLocation, int[]> itemToIds = new HashMap<ResourceLocation, int[]>();
+
 	/** 从物品中获得page的id */
 	static public int[] pageAwareFromItem(ItemStack stack) {
 		int[] ids = null;
 		ids = TileStela.pageAware0(stack);
 		if (ids != null)
 			return ids;
+		ResourceLocation rname = stack.getItem().getRegistryName();
+		if (itemToIds.containsKey(rname))
+			return RandomHelper.randomSelect(itemToIds.get(rname));
 		ids = TileStela.pageAware1(stack);
 		if (ids != null)
 			return ids;
@@ -161,6 +169,55 @@ public class TileStela extends TileEntityNetwork {
 		if (ids != null)
 			return ids;
 		return new int[0];
+	}
+
+	/** 初始化 */
+	static public void init() {
+		// 蓝晶石矿
+		addToMap(ESInitInstance.BLOCKS.KYNAITE_ORE, Pages.ABOUT_KYNAITE);
+		// 蓝晶石方块
+		addToMap(ESInitInstance.BLOCKS.KYNAITE_BLOCK, Pages.ABOUT_KYNAITE);
+		// 烧炼箱
+		addToMap(ESInitInstance.BLOCKS.SMELT_BOX, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH);
+		addToMap(ESInitInstance.BLOCKS.SMELT_BOX_IRON, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH,
+				Pages.ABOUT_MAGICAL_PIECE);
+		addToMap(ESInitInstance.BLOCKS.SMELT_BOX_KYNAITE, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH,
+				Pages.ABOUT_MAGICAL_PIECE);
+		// 蓝晶石
+		addToMap(ESInitInstance.ITEMS.KYNAITE, Pages.ABOUT_KYNAITE, Pages.ABOUT_KYNATIE_TOOLS, Pages.ABOUT_INFUSION);
+		// 魔力碎片
+		addToMap(ESInitInstance.ITEMS.MAGICAL_PIECE, Pages.ABOUT_MAGICAL_ENDEREYE, Pages.ABOUT_MAGICAL_PIECE,
+				Pages.ABOUT_INFUSION);
+		// 吸收箱
+		addToMap(ESInitInstance.BLOCKS.ABSORB_BOX, Pages.ABOUT_ABSORB_BOX, Pages.ABOUT_MAGIC_PL);
+		// 附魔台
+		addToMap(Blocks.ENCHANTING_TABLE, Pages.ABOUT_ENCHANTINGBOOK, Pages.ABOUT_KYNATIE_TOOLS);
+		// 末影之眼
+		addToMap(Items.ENDER_EYE, Pages.ABOUT_MAGICAL_ENDEREYE);
+		// 魔力水晶
+		addToMap(ESInitInstance.ITEMS.MAGIC_CRYSTAL, Pages.ABOUT_MAGIC_CRY, Pages.ABOUT_INFUSION,
+				Pages.ABOUT_MAGIC_ESTONE);
+		// 咒术水晶
+		addToMap(ESInitInstance.ITEMS.SPELL_CRYSTAL, Pages.ABOUT_SPELL_CRY, Pages.ABOUT_INFUSION,
+				Pages.ABOUT_MAGIC_PAPER);
+		// 元素水晶
+		addToMap(ESInitInstance.ITEMS.ELEMENT_CRYSTAL, Pages.ABOUT_ELEMENT_CRY, Pages.ABOUT_INFUSION,
+				Pages.ABOUT_DEC_BOX, Pages.ABOUT_EWORKBENCH, Pages.ABOUT_ELEMENT_CUBE);
+		// 魔力纸
+		addToMap(ESInitInstance.ITEMS.MAGIC_PAPER, Pages.ABOUT_MAGIC_PAPER, Pages.ABOUT_SPELL_PAPER);
+		addToMap(ESInitInstance.ITEMS.SPELL_PAPER, Pages.ABOUT_MAGIC_PAPER, Pages.ABOUT_SPELL_PAPER,
+				Pages.ABOUT_BOOKCOVER);
+		// 魔法书
+		addToMap(ESInitInstance.ITEMS.SPELLBOOK_COVER, Pages.ABOUT_BOOKCOVER, Pages.ABOUT_SPELLBOOK);
+		addToMap(ESInitInstance.ITEMS.SPELLBOOK, Pages.ABOUT_SPELLBOOK, Pages.ABOUT_BOOKCOVER, Pages.ABOUT_SPELEMENT);
+	}
+
+	private static void addToMap(Block block, int... ids) {
+		itemToIds.put(block.getRegistryName(), ids);
+	}
+
+	private static void addToMap(Item item, int... ids) {
+		itemToIds.put(item.getRegistryName(), ids);
 	}
 
 	// 如果是有stack的羊皮卷，则有很小的概率给出下一张
@@ -181,47 +238,16 @@ public class TileStela extends TileEntityNetwork {
 		Item item = stack.getItem();
 		Block block = Block.getBlockFromItem(item);
 		if (block != Blocks.AIR) {
-			if (block == ESInitInstance.BLOCKS.KYNAITE_ORE || block == ESInitInstance.BLOCKS.KYNAITE_BLOCK) {
-				return new int[] { Pages.ABOUT_KYNAITE };
-			} else if (block instanceof BlockSmeltBox) {
-				return RandomHelper.randomSelect(Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH, Pages.ABOUT_MAGICAL_PIECE);
-			} else if (block == ESInitInstance.BLOCKS.INFUSION_BOX) {
+			if (block == ESInitInstance.BLOCKS.INFUSION_BOX) {
 				if (Math.random() < 0.2)
 					return RandomHelper.randomSelect(Pages.ABOUT_ELEMENT_CRY, Pages.ABOUT_SPELL_CRY);
 				return RandomHelper.randomSelect(Pages.ABOUT_INFUSION, Pages.ABOUT_MAGICAL_PIECE,
 						Pages.ABOUT_MAGIC_CRY);
-			} else if (block == ESInitInstance.BLOCKS.ABSORB_BOX) {
-				return RandomHelper.randomSelect(Pages.ABOUT_ABSORB_BOX, Pages.ABOUT_MAGIC_PL);
-			} else if (block == Blocks.ENCHANTING_TABLE) {
-				return RandomHelper.randomSelect(Pages.ABOUT_ENCHANTINGBOOK, Pages.ABOUT_KYNATIE_TOOLS);
 			}
 		} else {
-			if (item == ESInitInstance.ITEMS.KYNAITE) {
-				return RandomHelper.randomSelect(Pages.ABOUT_KYNAITE, Pages.ABOUT_KYNATIE_TOOLS, Pages.ABOUT_INFUSION);
-			} else if (item instanceof ItemKynaiteTools.toolsCapability) {
+			if (item instanceof ItemKynaiteTools.toolsCapability) {
 				return RandomHelper.randomSelect(Pages.ABOUT_KYNATIE_TOOLS, Pages.ABOUT_ELEMENT,
 						Pages.ABOUT_ABSORB_BOX);
-			} else if (item == ESInitInstance.ITEMS.MAGICAL_PIECE) {
-				return RandomHelper.randomSelect(Pages.ABOUT_MAGICAL_ENDEREYE, Pages.ABOUT_MAGICAL_PIECE,
-						Pages.ABOUT_INFUSION);
-			} else if (item == Items.ENDER_EYE) {
-				return RandomHelper.randomSelect(Pages.ABOUT_MAGICAL_ENDEREYE);
-			} else if (item == ESInitInstance.ITEMS.MAGIC_CRYSTAL) {
-				return RandomHelper.randomSelect(Pages.ABOUT_MAGIC_CRY, Pages.ABOUT_INFUSION, Pages.ABOUT_MAGIC_ESTONE);
-			} else if (item == ESInitInstance.ITEMS.SPELL_CRYSTAL) {
-				return RandomHelper.randomSelect(Pages.ABOUT_SPELL_CRY, Pages.ABOUT_INFUSION, Pages.ABOUT_MAGIC_PAPER);
-			} else if (item == ESInitInstance.ITEMS.ELEMENT_CRYSTAL) {
-				return RandomHelper.randomSelect(Pages.ABOUT_ELEMENT_CRY, Pages.ABOUT_INFUSION, Pages.ABOUT_DEC_BOX,
-						Pages.ABOUT_EWORKBENCH, Pages.ABOUT_ELEMENT_CUBE);
-			} else if (item == ESInitInstance.ITEMS.MAGIC_PAPER) {
-				return RandomHelper.randomSelect(Pages.ABOUT_MAGIC_PAPER, Pages.ABOUT_SPELL_PAPER);
-			} else if (item == ESInitInstance.ITEMS.SPELL_PAPER) {
-				return RandomHelper.randomSelect(Pages.ABOUT_MAGIC_PAPER, Pages.ABOUT_SPELL_PAPER,
-						Pages.ABOUT_BOOKCOVER);
-			} else if (item == ESInitInstance.ITEMS.SPELLBOOK_COVER) {
-				return RandomHelper.randomSelect(Pages.ABOUT_BOOKCOVER, Pages.ABOUT_SPELLBOOK);
-			} else if (item == ESInitInstance.ITEMS.SPELLBOOK) {
-				return RandomHelper.randomSelect(Pages.ABOUT_SPELLBOOK, Pages.ABOUT_BOOKCOVER, Pages.ABOUT_SPELEMENT);
 			} else if (item == ESInitInstance.ITEMS.PARCHMENT) {
 				if (stack.getCount() >= 8) {
 					return new int[] { Pages.ABOUT_MANUAL };

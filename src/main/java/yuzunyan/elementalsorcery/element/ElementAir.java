@@ -6,15 +6,13 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
-import yuzunyan.elementalsorcery.api.element.Element;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.element.IElementSpell;
 
-public class ElementAir extends Element implements IElementSpell {
+public class ElementAir extends ElementInner {
 
 	public ElementAir() {
-		super(rgb(242, 243, 243));
-		this.setUnlocalizedName("air");
+		super(rgb(242, 243, 243), "air");
 	}
 
 	@Override

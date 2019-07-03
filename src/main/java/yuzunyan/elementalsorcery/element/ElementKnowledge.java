@@ -1,10 +1,6 @@
 
 package yuzunyan.elementalsorcery.element;
 
-import java.util.List;
-
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -16,15 +12,13 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
-import yuzunyan.elementalsorcery.api.element.Element;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.element.IElementSpell;
 
-public class ElementKnowledge extends Element implements IElementSpell {
+public class ElementKnowledge extends ElementInner {
 
 	public ElementKnowledge() {
-		super(rgb(192, 192, 192));
-		this.setUnlocalizedName("knowledge");
+		super(0x9b9b9b, "knowledge");
 	}
 
 	@Override
@@ -61,11 +55,6 @@ public class ElementKnowledge extends Element implements IElementSpell {
 	@Override
 	public int lowestPower(ElementStack estack, int level) {
 		return 10;
-	}
-
-	@Override
-	public void addInfo(ElementStack estack, World worldIn, List<String> tooltip, ITooltipFlag flagIn, int level) {
-		tooltip.add(I18n.format("info.element.spell.knowledge"));
 	}
 
 	private static class InteractionObject implements IInteractionObject {

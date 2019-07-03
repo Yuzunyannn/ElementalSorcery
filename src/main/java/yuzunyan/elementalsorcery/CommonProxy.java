@@ -11,15 +11,15 @@ import yuzunyan.elementalsorcery.init.ESInit;
 public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) {
-		ESInit.init(event);
+		ESInit.preInit(event);
 	}
 
 	public void init(FMLInitializationEvent event) {
-
+		ESInit.init(event);
 	}
 
 	public void postInit(FMLPostInitializationEvent event) {
-		ESInit.postInit(event);
+
 	}
 
 	public void serverStarting(FMLServerStartingEvent event) {

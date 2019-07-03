@@ -139,6 +139,14 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		}
 
 	}
+	
+	public Building(){
+		
+	}
+	
+	public Building(NBTTagCompound nbt){
+		this.deserializeNBT(nbt);
+	}
 
 	/** 注册用名字 */
 	private String keyName;

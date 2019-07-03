@@ -1,7 +1,13 @@
 package yuzunyan.elementalsorcery.building;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import org.apache.commons.compress.utils.IOUtils;
 
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,13 +20,17 @@ public class BuildingSaveData extends WorldSavedData {
 	Building building;
 	long time;
 
+	public static void debugSetKeyName(Building building) {
+		building.setKeyName(BuildingSaveData.randomKeyName(building.getAuthor()));
+	}
+
 	public static String randomKeyName(String user) {
 		return user + System.currentTimeMillis();
 	}
 
 	BuildingSaveData(Building building) {
 		super(BuildingSaveData.randomKeyName(building.getAuthor()));
-		file = ElementalSorcery.data.getESFile("building/tmp", this.mapName);
+		file = ElementalSorcery.data.getFile("building/tmp", this.mapName);
 		time = System.currentTimeMillis();
 		building.setKeyName(this.mapName);
 		this.building = building;
@@ -29,7 +39,14 @@ public class BuildingSaveData extends WorldSavedData {
 
 	BuildingSaveData(File file) throws IOException {
 		super(file.getName());
-		NBTTagCompound nbt = CompressedStreamTools.read(file);
+		InputStream istream = null;
+		NBTTagCompound nbt = null;
+		try {
+			istream = new FileInputStream(file);
+			nbt = CompressedStreamTools.readCompressed(istream);
+		} finally {
+			IOUtils.closeQuietly(istream);
+		}
 		this.file = file;
 		this.deserializeNBT(nbt);
 	}
@@ -53,8 +70,10 @@ public class BuildingSaveData extends WorldSavedData {
 		return nbt;
 	}
 
-	public void use() {
-		this.time = System.currentTimeMillis();
+	public void use(long time) {
+		if (this.time == time)
+			return;
+		this.time = time;
 		this.markDirty();
 	}
 
@@ -67,11 +86,15 @@ public class BuildingSaveData extends WorldSavedData {
 			if (!this.isDirty())
 				return true;
 			this.setDirty(false);
+			OutputStream output = null;
 			try {
-				CompressedStreamTools.write(this.serializeNBT(), file);
+				output = new FileOutputStream(this.file);
+				CompressedStreamTools.writeCompressed(this.serializeNBT(), output);
 			} catch (IOException e) {
 				ElementalSorcery.logger.warn("建筑记录保存失败！" + file.getName());
 				return false;
+			} finally {
+				IOUtils.closeQuietly(output);
 			}
 			return true;
 		} else {

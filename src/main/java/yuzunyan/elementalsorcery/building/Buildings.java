@@ -1,10 +1,13 @@
 package yuzunyan.elementalsorcery.building;
 
+import java.io.IOException;
+
 import net.minecraft.block.BlockQuartz;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import yuzunyan.elementalsorcery.ElementalSorcery;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
 
 public class Buildings {
@@ -14,11 +17,17 @@ public class Buildings {
 	static public Building ELEMENT_CRAFTING_ALTAR;
 	static public Building DECONSTRUCT_ALTAR;
 
-	static public void init() {
-		LARGE_ALTAR = Buildings.getLargeAltar();
-		SPELLBOOK_ALTAR = Buildings.getSpellbookAltar();
-		ELEMENT_CRAFTING_ALTAR = Buildings.getElementCraftingAltar();
-		DECONSTRUCT_ALTAR = Buildings.getDeconstructAltar();
+	static public void init() throws IOException {
+		LARGE_ALTAR = new BuildingInherent(
+				ElementalSorcery.data.getNBTForResourceWithException("structures/large_altar"), "largeAltar");
+		SPELLBOOK_ALTAR = new BuildingInherent(
+				ElementalSorcery.data.getNBTForResourceWithException("structures/spellbook_altar"), "spellbookAltar");
+		ELEMENT_CRAFTING_ALTAR = new BuildingInherent(
+				ElementalSorcery.data.getNBTForResourceWithException("structures/element_crafting_altar"),
+				"elementCraftingAltar");
+		DECONSTRUCT_ALTAR = new BuildingInherent(
+				ElementalSorcery.data.getNBTForResourceWithException("structures/deconstruct_altar"),
+				"deconstructAltar");
 	}
 
 	private static void horizontalS(IBlockState state, Building building, int d, int y) {

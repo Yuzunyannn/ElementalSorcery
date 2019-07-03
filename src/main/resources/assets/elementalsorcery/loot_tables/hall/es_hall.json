@@ -1,0 +1,25 @@
+{
+	"pools": [
+		{
+			"name": "es_hall",
+			"rolls": {
+				"min": 1,
+				"max": 2
+			},
+			"entries": [
+				{
+					"type": "loot_table",
+					"name": "elementalsorcery:hall/ingot_some",
+					"weight": 45,
+					"quality": -1
+				},
+				{
+					"type": "loot_table",
+					"name": "elementalsorcery:hall/es_course_some",
+					"weight": 65,
+					"quality": 1
+				}
+			]
+		}
+	]
+}

@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityEndermite;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
@@ -17,15 +16,13 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyan.elementalsorcery.api.element.Element;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.element.IElementSpell;
 
-public class ElementEnder extends Element implements IElementSpell {
+public class ElementEnder extends ElementInner {
 
 	public ElementEnder() {
-		super(rgb(204, 0, 250));
-		this.setUnlocalizedName("ender");
+		super(0xcc00fa, "ender");
 	}
 
 	@Override
@@ -103,12 +100,5 @@ public class ElementEnder extends Element implements IElementSpell {
 	@Override
 	public int lowestPower(ElementStack estack, int level) {
 		return 100;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInfo(ElementStack estack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn,
-			int level) {
-		tooltip.add(I18n.format("info.element.spell.ender"));
 	}
 }

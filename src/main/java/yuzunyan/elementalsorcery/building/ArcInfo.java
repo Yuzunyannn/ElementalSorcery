@@ -20,8 +20,10 @@ public class ArcInfo {
 		if (!ArcInfo.isArc(stack))
 			return;
 		NBTTagCompound nbt = stack.getSubCompound("building");
-		this.pos = NBTHelper.getBlockPos(nbt, "pos");
 		this.flags = nbt.getInteger("flags");
+		if (this.flags == MISS)
+			return;
+		this.pos = NBTHelper.getBlockPos(nbt, "pos");
 		this.keyName = nbt.getString("key");
 		if (this.keyName.isEmpty())
 			return;
@@ -32,7 +34,9 @@ public class ArcInfo {
 			if (this.building == null) {
 				nbt.setInteger("flags", MISS);
 				this.flags = MISS;
+				return;
 			}
+			BuildingLib.instance.use(this.keyName);
 		}
 	}
 

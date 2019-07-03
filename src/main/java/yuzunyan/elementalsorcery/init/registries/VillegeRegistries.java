@@ -9,30 +9,39 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.village.MerchantRecipe;
 import net.minecraft.village.MerchantRecipeList;
+import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import yuzunyan.elementalsorcery.api.ESObjects.Village;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
 import yuzunyan.elementalsorcery.item.ItemParchment;
 import yuzunyan.elementalsorcery.parchment.Pages;
+import yuzunyan.elementalsorcery.worldgen.VillageESHall;
 
 public class VillegeRegistries {
 
 	public static void registerAll() {
-		VillagerRegistry.VillagerProfession pro = new VillagerRegistry.VillagerProfession(
-				"elementalsorcery:antique_dealer", "elementalsorcery:textures/entity/villager/es_studier.png",
-				"elementalsorcery:textures/entity/zombie_villager/es_studier.png");
-		ForgeRegistries.VILLAGER_PROFESSIONS.register(pro);
+		// 新的职业
+		ForgeRegistries.VILLAGER_PROFESSIONS.register(ESInitInstance.VILLAGE.ES_VILLEGER);
+		initPro(ESInitInstance.VILLAGE.ES_VILLEGER);
+		// 新的村庄建筑
+		MapGenStructureIO.registerStructureComponent(VillageESHall.class, "VESuvs");
+		VillagerRegistry.instance().registerVillageCreationHandler(new VillageESHall.VillageCreationHandler());
+	
+	}
 
+	private static final void initPro(VillagerRegistry.VillagerProfession pro) {
+		// 卖纸商
 		VillagerRegistry.VillagerCareer paperman = new VillagerRegistry.VillagerCareer(pro, "paperman");
 		paperman.addTrade(1,
 				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.PARCHMENT),
 						new PriceInfo(8, 12)),
 				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.SCROLL),
 						new PriceInfo(24, 32)));
-
+		// 元素知识提供者
 		VillagerRegistry.VillagerCareer eslearner = new VillagerRegistry.VillagerCareer(pro, "eslearner");
 		eslearner.addTrade(1, new ESLearnerTrade());
-
+		// 元素魔法商
 		VillagerRegistry.VillagerCareer magicallearner = new VillagerRegistry.VillagerCareer(pro, "magicallearner");
 		magicallearner.addTrade(1,
 				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.MAGICAL_PIECE),

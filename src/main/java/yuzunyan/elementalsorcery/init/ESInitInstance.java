@@ -1,5 +1,6 @@
 package yuzunyan.elementalsorcery.init;
 
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyan.elementalsorcery.ESCreativeTabs;
 import yuzunyan.elementalsorcery.api.ESObjects;
 import yuzunyan.elementalsorcery.api.ESRegister;
@@ -52,6 +53,7 @@ public class ESInitInstance {
 	public static ESObjects.Items ITEMS = new ESObjects.Items();
 	public static ESObjects.Blocks BLOCKS = new ESObjects.Blocks();
 	public static ESObjects.Elements ELEMENTS = new ESObjects.Elements();
+	public static ESObjects.Village VILLAGE = new ESObjects.Village();
 	public static ESCreativeTabs tab;
 
 	public static final void instance() {
@@ -63,6 +65,7 @@ public class ESInitInstance {
 		ESObjects.ITEMS = ITEMS;
 		ESObjects.BLOCKS = BLOCKS;
 		ESObjects.ELEMENTS = ELEMENTS;
+		ESObjects.VILLAGE = VILLAGE;
 		// 创造物品栏
 		ESCreativeTabs.TAB = new ESCreativeTabs();
 		ESObjects.CREATIVE_TABS = tab;
@@ -74,6 +77,7 @@ public class ESInitInstance {
 		instanceBlocks();
 		instanceItems();
 		instanceElements();
+		instanceVillage();
 	}
 
 	private static final void instanceBlocks() {
@@ -192,5 +196,11 @@ public class ESInitInstance {
 		ELEMENTS.WOOD = new ElementWood().setRegistryName("wood");
 		ELEMENTS.METAL = new ElementMetal().setRegistryName("metal");
 		ELEMENTS.KNOWLEDGE = new ElementKnowledge().setRegistryName("knowledge");
+	}
+
+	private static final void instanceVillage() {
+		ESInitInstance.VILLAGE.ES_VILLEGER = new VillagerRegistry.VillagerProfession("elementalsorcery:antique_dealer",
+				"elementalsorcery:textures/entity/villager/es_studier.png",
+				"elementalsorcery:textures/entity/zombie_villager/es_studier.png");
 	}
 }

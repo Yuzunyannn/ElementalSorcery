@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.crash.CrashReport;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyan.elementalsorcery.ElementalSorcery;
@@ -19,6 +21,7 @@ public class BuildingLib {
 	private Map<String, Building> mapClient = new HashMap<String, Building>();
 	private Map<String, BuildingSaveData> mapSave = new HashMap<String, BuildingSaveData>();
 	private Map<String, Building> mapLib = new HashMap<String, Building>();
+	long lastCheckTime = System.currentTimeMillis();
 
 	public Collection<Building> getBuildingsFromLib() {
 		return mapLib.values();
@@ -70,6 +73,14 @@ public class BuildingLib {
 		return mapClient.get(key);
 	}
 
+	/** 使用某个建筑，让建筑的时间更新 */
+	void use(String key) {
+		if (mapSave.containsKey(key)) {
+			BuildingSaveData data = mapSave.get(key);
+			data.use(this.lastCheckTime);
+		}
+	}
+
 	// 创建默认名字
 	public static final String SPELLBOOK_ALTAR = "spellbook_altar";
 	public static final String LARGE_ALTAR = "large_altar";
@@ -77,17 +88,23 @@ public class BuildingLib {
 	public static final String DECONSTRUCT_ALTAR = "deconstruct_altar";
 
 	public static void registerAll() {
-		Buildings.init();
-		instance.addBuildingLib(LARGE_ALTAR, Buildings.LARGE_ALTAR);
-		instance.addBuildingLib(SPELLBOOK_ALTAR, Buildings.SPELLBOOK_ALTAR);
-		instance.addBuildingLib(ELEMENT_CRAFTING_ALTAR, Buildings.ELEMENT_CRAFTING_ALTAR);
-		instance.addBuildingLib(DECONSTRUCT_ALTAR, Buildings.DECONSTRUCT_ALTAR);
-		BuildingLib.loadBuilding();
+		try {
+			Buildings.init();
+			instance.addBuildingLib(LARGE_ALTAR, Buildings.LARGE_ALTAR);
+			instance.addBuildingLib(SPELLBOOK_ALTAR, Buildings.SPELLBOOK_ALTAR);
+			instance.addBuildingLib(ELEMENT_CRAFTING_ALTAR, Buildings.ELEMENT_CRAFTING_ALTAR);
+			instance.addBuildingLib(DECONSTRUCT_ALTAR, Buildings.DECONSTRUCT_ALTAR);
+			BuildingLib.loadBuilding();
+		} catch (IOException e) {
+			CrashReport report = CrashReport.makeCrashReport(e, "ElementSorcer读取不到包内资源数据！");
+			Minecraft.getMinecraft().crashed(report);
+			Minecraft.getMinecraft().displayCrashReport(report);
+		}
 	}
 
 	/** 初始化加载 */
 	private static void loadBuilding() {
-		File file = ElementalSorcery.data.getESFile("building/tmp", "");
+		File file = ElementalSorcery.data.getFile("building/tmp", "");
 		File[] files = file.listFiles();
 		for (File f : files) {
 			try {
@@ -99,8 +116,6 @@ public class BuildingLib {
 			}
 		}
 	}
-
-	long lastCheckTime;
 
 	/** 处理文件信息 */
 	public void dealSave() {

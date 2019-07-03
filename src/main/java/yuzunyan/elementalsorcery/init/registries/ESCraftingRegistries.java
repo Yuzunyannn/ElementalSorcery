@@ -6,6 +6,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import yuzunyan.elementalsorcery.crafting.RecipeColorRuler;
 import yuzunyan.elementalsorcery.crafting.RecipeManagement;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
+import yuzunyan.elementalsorcery.tile.TileStela;
 
 public class ESCraftingRegistries {
 	public static final void registerAll() {

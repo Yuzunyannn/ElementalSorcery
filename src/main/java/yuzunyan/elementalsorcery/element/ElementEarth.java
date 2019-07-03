@@ -1,29 +1,19 @@
 package yuzunyan.elementalsorcery.element;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyan.elementalsorcery.api.element.Element;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.element.IElementSpell;
 import yuzunyan.elementalsorcery.init.ESInitInstance;
 
-public class ElementEarth extends Element implements IElementSpell {
+public class ElementEarth extends ElementInner {
 
 	public ElementEarth() {
-		super(rgb(120, 84, 57));
-		this.setUnlocalizedName("earth");
+		super(0x785439, "earth");
 	}
 
 	@Override
@@ -73,12 +63,5 @@ public class ElementEarth extends Element implements IElementSpell {
 	@Override
 	public int lowestPower(ElementStack estack, int level) {
 		return 50;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInfo(ElementStack estack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn,
-			int level) {
-		tooltip.add(I18n.format("info.element.spell.earth"));
 	}
 }

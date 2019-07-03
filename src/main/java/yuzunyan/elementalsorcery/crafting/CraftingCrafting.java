@@ -3,6 +3,7 @@ package yuzunyan.elementalsorcery.crafting;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -58,7 +59,7 @@ public class CraftingCrafting implements ICraftingCommit {
 	}
 
 	// 更新一次
-	public boolean update(TileStaticMultiBlock tileMul, EntityPlayer player) {
+	public boolean update(TileStaticMultiBlock tileMul, EntityLivingBase player) {
 		// 寻找合成表
 		if (working_irecipe == null) {
 			working_irecipe = RecipeManagement.instance.findMatchingRecipe(working_inventory, tileMul.getWorld());
@@ -111,8 +112,8 @@ public class CraftingCrafting implements ICraftingCommit {
 		if (tileMul.getWorld().isRemote)
 			return true;
 		ItemStack out = result.copy();
-		if (player != null)
-			out.onCrafting(tileMul.getWorld(), player, out.getCount());
+		if (player instanceof EntityPlayer)
+			out.onCrafting(tileMul.getWorld(), (EntityPlayer) player, out.getCount());
 		else {
 			try {
 				out.getItem().onCreated(out, tileMul.getWorld(), null);

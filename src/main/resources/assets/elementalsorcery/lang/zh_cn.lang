@@ -84,6 +84,11 @@ commands.es.build.fail.usage=不存在的建筑
 commands.es.page.usage=/es page <页面的id(大于0的整数)>
 commands.es.page.fail=不存在的的id号
 
+arc.largeAltar.name=大型祭坛
+arc.spellbookAltar.name=魔法书祭坛
+arc.elementCraftingAltar.name=元素合成小祭坛
+arc.deconstructAltar.name=元素析构小祭坛
+
 info.none=无
 info.unknow=未知
 info.posSet.success=成功选择了位置：(%d,%d,%d)
@@ -96,7 +101,9 @@ info.scroll.has=该卷轴包含有%d张羊皮纸，右键打开
 info.manual.info=shift+右键存入包中所有羊皮卷（重复的会被清除）
 info.arcCrystal.choice=shift+右键，选择对应的方块上方
 info.arcCrystal.miss=建筑结构丢失
+info.arcCrystal.wait=建筑结构构建中...
 info.arcCrystal.name=建筑名称：%s
+info.arcCrystal.author=建筑作者：%s
 info.arcCrystal.axis=选定坐标：(%d,%d,%d)
 info.arcCrystal.count=%s需要：%d
 info.arcCrystal.blank=这里面什么都没有记录，无法进行设置位置

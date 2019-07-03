@@ -1,10 +1,14 @@
 package yuzunyan.elementalsorcery.tile;
 
+import java.util.List;
+
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import yuzunyan.elementalsorcery.api.crafting.IRecipe;
+import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.building.Buildings;
 import yuzunyan.elementalsorcery.building.MultiBlock;
 import yuzunyan.elementalsorcery.crafting.CraftingCrafting;
@@ -27,7 +31,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlockWithInventory 
 	}
 
 	// 玩家
-	EntityPlayer player = null;
+	EntityLivingBase player = null;
 	// 开始前等待时间
 	int startTime = 0;
 	// 结束前等待时间
@@ -53,7 +57,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlockWithInventory 
 	}
 
 	@Override
-	public ICraftingCommit recovery(CraftingType type, EntityPlayer player, NBTTagCompound nbt) {
+	public ICraftingCommit recovery(CraftingType type, EntityLivingBase player, NBTTagCompound nbt) {
 		this.player = player;
 		working = true;
 		startTime = 80;
@@ -132,9 +136,15 @@ public class TileElementCraftingTable extends TileStaticMultiBlockWithInventory 
 
 	// 产出结果，该引用的对象不应该被修改，该变量同时起到标定作用
 	private ItemStack result = ItemStack.EMPTY;
+	// 所需元素，该引用对象不应被修改
+	private List<ElementStack> needEstacks = null;
 
 	public ItemStack getOutput() {
 		return result;
+	}
+
+	public List<ElementStack> getNeedElements() {
+		return needEstacks;
 	}
 
 	public void onCraftMatrixChanged() {
@@ -144,6 +154,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlockWithInventory 
 			return;
 		}
 		result = irecipe.getCraftingResult(this).copy();
+		needEstacks = irecipe.getNeedElements();
 	}
 
 	@Override

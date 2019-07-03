@@ -38,20 +38,23 @@ public class ItemArchitectureCrystal extends Item {
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		ArcInfo info = new ArcInfo(stack, Side.CLIENT);
-		if (!info.isValid())
-			return;
 		if (info.isMiss()) {
 			tooltip.add(TextFormatting.YELLOW + I18n.format("info.arcCrystal.miss"));
 			return;
 		}
-		tooltip.add("§e" + I18n.format("info.arcCrystal.choice"));
-		tooltip.add(I18n.format("info.arcCrystal.name", info.keyName));
-		tooltip.add(I18n.format("info.arcCrystal.axis", info.pos.getX(), info.pos.getY(), info.pos.getZ()));
-
-		if (info.building == null) {
-			tooltip.add("You don't get this builing info from server!");
+		if (!info.isValid()) {
 			return;
 		}
+		tooltip.add("§e" + I18n.format("info.arcCrystal.choice"));
+		tooltip.add(I18n.format("info.arcCrystal.axis", info.pos.getX(), info.pos.getY(), info.pos.getZ()));
+		if (info.building.getBlockTypeInfos().isEmpty()) {
+			tooltip.add(TextFormatting.YELLOW + I18n.format("info.arcCrystal.wait"));
+			return;
+		}
+		String author = info.building.getAuthor();
+		if (!author.isEmpty())
+			tooltip.add(I18n.format("info.arcCrystal.author", author));
+		tooltip.add(I18n.format("info.arcCrystal.name", info.building.getName()));
 		List<Building.BlockItemTypeInfo> list = info.building.getBlockTypeInfos();
 		for (Building.BlockItemTypeInfo tinfo : list) {
 			tooltip.add(I18n.format("info.arcCrystal.count", I18n.format(tinfo.getUnlocalizedName() + ".name"),

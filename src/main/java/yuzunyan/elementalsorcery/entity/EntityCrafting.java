@@ -7,7 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleFirework;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -28,9 +28,6 @@ import yuzunyan.elementalsorcery.render.entity.RenderEntityCrafting;
 
 public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData {
 
-	// public static final DataParameter<NBTTagCompound> NBT =
-	// EntityDataManager.createKey(EntityCrafting.class,
-	// DataSerializers.COMPOUND_TAG);
 	public static final DataParameter<Integer> FINISH_TICK = EntityDataManager.createKey(EntityCrafting.class,
 			DataSerializers.VARINT);
 
@@ -39,7 +36,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 	private NBTTagCompound commitNBT = null;
 	private BlockPos pos;
 	private ICraftingLaunch.CraftingType type;
-	private EntityPlayer player;
+	private EntityLivingBase player;
 	/** 客户端动画 */
 	private ICraftingLaunchAnime craftingAnime = null;
 
@@ -47,7 +44,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		this(worldIn, null, null, null);
 	}
 
-	public EntityCrafting(World worldIn, BlockPos pos, ICraftingLaunch.CraftingType type, EntityPlayer player) {
+	public EntityCrafting(World worldIn, BlockPos pos, ICraftingLaunch.CraftingType type, EntityLivingBase player) {
 		super(worldIn);
 		this.width = 0.25f;
 		this.height = 0.25f;
@@ -63,22 +60,21 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			this.crafting = (ICraftingLaunch) world.getTileEntity(this.pos);
 			this.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 			this.commit = this.crafting.commitItems();
-			// dataManager.set(NBT, this.getDataNBT());
-			// dataManager.setDirty(NBT);
 		}
 	}
 
 	@Override
 	protected void entityInit() {
-		// dataManager.register(NBT, new NBTTagCompound());
 		dataManager.register(FINISH_TICK, Integer.valueOf(-1));
 	}
 
+	/** 存入数据 */
 	private NBTTagCompound getDataNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
 		int[] pos = new int[] { this.pos.getX(), this.pos.getY(), this.pos.getZ() };
 		nbt.setIntArray("pos", pos);
 		nbt.setInteger("type", type.ordinal());
+		nbt.setInteger("enid", this.player.getEntityId());
 		if (this.commit != null) {
 			nbt.setTag("cnbt", this.commit.serializeNBT());
 		}
@@ -86,6 +82,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 
 	}
 
+	/** 恢复数据 */
 	private void recoveryDataFromNBT(NBTTagCompound nbt) {
 		if (nbt == null)
 			return;
@@ -98,6 +95,8 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			this.commitNBT = nbt.getCompoundTag("cnbt");
 		// 恢复类型
 		this.type = ICraftingLaunch.CraftingType.values()[nbt.getInteger("type")];
+		// 恢复玩家
+		this.world.getEntityByID(nbt.getInteger("enid"));
 	}
 
 	@Override
@@ -246,8 +245,6 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
 		this.recoveryDataFromNBT(compound.getCompoundTag("ecrafting"));
-		// dataManager.set(NBT, this.getDataNBT());
-		// dataManager.setDirty(NBT);
 	}
 
 	@Override

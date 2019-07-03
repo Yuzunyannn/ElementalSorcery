@@ -1,5 +1,6 @@
 package yuzunyan.elementalsorcery.tile;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -83,7 +84,7 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 	}
 
 	@Override
-	public ICraftingCommit recovery(CraftingType type, EntityPlayer player, NBTTagCompound nbt) {
+	public ICraftingCommit recovery(CraftingType type, EntityLivingBase player, NBTTagCompound nbt) {
 		this.working = true;
 		startTime = 40;
 		stack = ItemStack.EMPTY;

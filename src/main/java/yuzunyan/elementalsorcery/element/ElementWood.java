@@ -11,15 +11,13 @@ import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyan.elementalsorcery.api.element.Element;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.element.IElementSpell;
 
-public class ElementWood extends Element implements IElementSpell {
+public class ElementWood extends ElementInner {
 
 	public ElementWood() {
-		super(0x32CD32);
-		this.setUnlocalizedName("wood");
+		super(0x32CD32,"wood");
 	}
 
 	@Override
@@ -77,11 +75,6 @@ public class ElementWood extends Element implements IElementSpell {
 	@Override
 	public int lowestPower(ElementStack estack, int level) {
 		return 35;
-	}
-
-	@Override
-	public void addInfo(ElementStack estack, World worldIn, List<String> tooltip, ITooltipFlag flagIn, int level) {
-		tooltip.add(I18n.format("info.element.spell.wood"));
 	}
 
 }

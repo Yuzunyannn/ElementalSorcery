@@ -1,27 +1,17 @@
 package yuzunyan.elementalsorcery.element;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyan.elementalsorcery.api.element.Element;
 import yuzunyan.elementalsorcery.api.element.ElementStack;
 import yuzunyan.elementalsorcery.api.element.IElementSpell;
 
-public class ElementMetal extends Element implements IElementSpell {
+public class ElementMetal extends ElementInner {
 
 	public ElementMetal() {
-		super(rgb(242, 208, 49));
-		this.setUnlocalizedName("metal");
+		super(0xf2d031, "metal");
 	}
 
 	@Override
@@ -68,13 +58,6 @@ public class ElementMetal extends Element implements IElementSpell {
 	@Override
 	public int lowestPower(ElementStack estack, int level) {
 		return 225;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addInfo(ElementStack estack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn,
-			int level) {
-		tooltip.add(I18n.format("info.element.spell.metal"));
 	}
 
 	public boolean canChangeLv1(IBlockState state) {

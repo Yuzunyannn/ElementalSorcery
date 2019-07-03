@@ -55,11 +55,12 @@ public class RecipeManagement implements ESRegister.IRecipeManagement {
 		instance.addRecipe(stack, new ElementStack(ESInitInstance.ELEMENTS.KNOWLEDGE, 5, 25), " * ", "*#*", " * ", "#",
 				ESInitInstance.ITEMS.MAGIC_PAPER, "*", ESInitInstance.ITEMS.SPELL_CRYSTAL);
 		// spellbook
-		instance.addRecipe(new ItemStack(ESInitInstance.ITEMS.SPELLBOOK, 1),
-				new ElementStack(ESInitInstance.ELEMENTS.KNOWLEDGE, 20, 50), " F ", " # ", " B ", "#",
+		instance.addRecipe(new ItemStack(ESInitInstance.ITEMS.SPELLBOOK, 1), " F ", " # ", " B ", "#",
 				new ItemStack(ESInitInstance.ITEMS.SPELL_PAPER, 3), "F",
 				new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 0), "B",
-				new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 1));
+				new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 1),
+				new ElementStack(ESInitInstance.ELEMENTS.KNOWLEDGE, 20, 50),
+				new ElementStack(ESInitInstance.ELEMENTS.ENDER, 20, 25));
 		// spellbook_cover
 		instance.addRecipe(new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 0), "NSN", "M#M", "NSN", "#",
 				Items.ENDER_EYE, "S", ESInitInstance.ITEMS.SPELL_CRYSTAL, "M", ESInitInstance.ITEMS.MAGIC_CRYSTAL, "N",

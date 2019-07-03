@@ -3,8 +3,12 @@ package yuzunyan.elementalsorcery.api.element;
 import java.util.Random;
 
 import net.minecraft.block.material.MapColor;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyan.elementalsorcery.ElementalSorcery;
 import yuzunyan.elementalsorcery.api.ESRegister;
 
 public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<Element> {
@@ -38,7 +42,7 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 	}
 
 	/** 非本地化名称 */
-	private String unlocalizedName;
+	protected String unlocalizedName;
 
 	/**
 	 * 设置元素的"非本地化名称"(UnlocalizedName), 前缀为"element."
@@ -126,6 +130,37 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 	/** 根据注册名获取元素 */
 	public static Element getElementFromName(ResourceLocation name) {
 		return ESRegister.ELEMENT.getValue(name);
+	}
+
+	/** 默认的资源 */
+	public final static ResourceLocation VIOD_RESOURCELOCATION = new ResourceLocation(ElementalSorcery.MODID,
+			"textures/elements/void.png");
+
+	/** 获取资源 */
+	@SideOnly(Side.CLIENT)
+	public ResourceLocation getIconResourceLocation() {
+		return VIOD_RESOURCELOCATION;
+	}
+
+	/** 在GUI绘画元素 */
+	@SideOnly(Side.CLIENT)
+	public void drawElemntIconInGUI(ElementStack estack, int x, int y, Minecraft mc) {
+		ResourceLocation res = this.getIconResourceLocation();
+		mc.getTextureManager().bindTexture(res);
+		mc.currentScreen.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
+		int count = estack.getCount();
+		if (count > 1) {
+			String s = Integer.toString(count);
+			mc.fontRenderer.drawString(s, x + +19 - 2 - mc.fontRenderer.getStringWidth(s), y + 9, 16777215, true);
+		}
+		if (estack.usePower()) {
+			int power = estack.getPower();
+			if (power > 1) {
+				String s = Integer.toString(power);
+				mc.fontRenderer.drawString(s, x + +19 - 2 - mc.fontRenderer.getStringWidth(s), y - 3, 0xfff993, true);
+			}
+		}
+
 	}
 
 }

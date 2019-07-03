@@ -25,12 +25,12 @@ import yuzunyan.elementalsorcery.item.ItemMagicRuler;
 @SideOnly(Side.CLIENT)
 public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 
-	private static List<ItemStack> inner = new LinkedList<>();
+	private static List<EnumHand> inner = new LinkedList<>();
 
 	/** 展示物品显示区域 */
 	static public boolean showItem(EntityPlayer player, EnumHand hand) {
 		ItemStack ruler = player.getHeldItem(hand);
-		if (inner.contains(ruler)) {
+		if (inner.contains(hand)) {
 			return true;
 		}
 		BlockPos pos = ItemMagicRuler.getRulerPos(ruler, true);
@@ -39,8 +39,7 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 		pos = ItemMagicRuler.getRulerPos(ruler, false);
 		if (pos == null)
 			return false;
-		EnumDyeColor dyeColor = ItemMagicRuler.getColor(ruler);
-		RenderRulerSelectRegion render = new RenderRulerSelectRegion(player, hand, dyeColor.getColorValue());
+		RenderRulerSelectRegion render = new RenderRulerSelectRegion(player, hand);
 		EventClient.addTickTask(render);
 		EventClient.addRenderTask(render);
 		return true;
@@ -52,6 +51,8 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 	private boolean isEnd = false;
 	private BlockPos pos1;
 	private BlockPos pos2;
+	// 需要结束
+	private int wantEnd = 0;
 	// 动态变化的角度
 	private float theta = 0.0f;
 	// 渐变时间
@@ -64,7 +65,7 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 
 	private float r, g, b;
 
-	protected RenderRulerSelectRegion(EntityPlayer player, EnumHand hand, int color) {
+	protected RenderRulerSelectRegion(EntityPlayer player, EnumHand hand) {
 		this.player = player;
 		this.hand = hand;
 		this.stack = this.player.getHeldItem(hand);
@@ -72,10 +73,16 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 		this.pos2 = ItemMagicRuler.getRulerPos(stack, false);
 		if (this.pos1 == null || this.pos2 == null)
 			this.end();
+		EnumDyeColor dyeColor = ItemMagicRuler.getColor(this.stack);
+		this.setColor(dyeColor.getColorValue());
+		inner.add(hand);
+		System.out.println("No");
+	}
+
+	public void setColor(int color) {
 		this.r = (0xff & (color >> 16)) / 255.0f;
 		this.g = (0xff & (color >> 8)) / 255.0f;
 		this.b = (0xff & (color >> 0)) / 255.0f;
-		inner.add(this.stack);
 	}
 
 	@Override
@@ -83,6 +90,14 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 		this.theta += DTHETA;
 		ItemStack stack = this.player.getHeldItem(hand);
 		if (stack != this.stack) {
+			this.checkSame();
+			this.wantEnd = this.wantEnd | 0x01;
+		} else {
+			this.wantEnd = this.wantEnd & 0xFE;
+		}
+		if (EventClient.tick % 10 == 0)
+			this.checkPos();
+		if (this.wantEnd != 0) {
 			if (fadeTime > 0) {
 				inFade = true;
 				fadeTime -= FADE_RATE;
@@ -98,19 +113,48 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 					fadeTime = 1.0f;
 			}
 		}
-		if (EventClient.tick % 10 == 0) {
-			this.pos1 = ItemMagicRuler.getRulerPos(this.stack, true);
-			this.pos2 = ItemMagicRuler.getRulerPos(this.stack, false);
-			if (this.pos1 == null || this.pos2 == null)
-				this.end();
-		}
-
 		return isEnd ? ITickTask.END : ITickTask.SUCCESS;
+	}
+
+	private void checkPos() {
+		BlockPos pos1 = ItemMagicRuler.getRulerPos(this.stack, true);
+		BlockPos pos2 = ItemMagicRuler.getRulerPos(this.stack, false);
+		if (pos1 == null || pos2 == null) {
+			this.wantEnd = this.wantEnd | 0x02;
+		} else {
+			this.pos1 = pos1;
+			this.pos2 = pos2;
+			this.wantEnd = this.wantEnd & 0xFD;
+		}
+	}
+
+	private boolean endWithNotSame() {
+		return (this.wantEnd & 0x03) != 0;
+	}
+
+	private void checkSame() {
+		if (this.endWithNotSame())
+			return;
+		ItemStack stack = this.player.getHeldItem(hand);
+		if (stack.getItem() == this.stack.getItem()) {
+			EnumDyeColor dyeColor = ItemMagicRuler.getColor(this.stack);
+			this.setColor(dyeColor.getColorValue());
+			BlockPos pos1 = ItemMagicRuler.getRulerPos(stack, true);
+			BlockPos pos2 = ItemMagicRuler.getRulerPos(stack, false);
+			if (this.pos1.equals(pos1) || this.pos2.equals(pos2)) {
+				this.stack = stack;
+				this.checkPos();
+			} else {
+				this.wantEnd = this.wantEnd | 0x03;
+				inner.remove(this.hand);
+			}
+		}
 	}
 
 	private void end() {
 		isEnd = true;
-		inner.remove(this.stack);
+		if (!this.endWithNotSame())
+			inner.remove(this.hand);
 	}
 
 	final Tessellator tessellator = Tessellator.getInstance();

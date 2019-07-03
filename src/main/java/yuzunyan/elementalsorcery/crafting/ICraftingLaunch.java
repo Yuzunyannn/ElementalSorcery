@@ -2,6 +2,7 @@ package yuzunyan.elementalsorcery.crafting;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
@@ -26,10 +27,12 @@ public interface ICraftingLaunch {
 
 	/**
 	 * 制作恢复 恢复调用[服务器][客户端]（服务器存档恢复时调用，客户端创建的时候一定会调用，因为是从服务器传来的消息）
-	 * @param nbt 之前提交内容的nbt
+	 * 
+	 * @param nbt
+	 *            之前提交内容的nbt
 	 * @return 恢复的提交内容
 	 */
-	ICraftingCommit recovery(CraftingType type, @Nullable EntityPlayer player, NBTTagCompound nbt);
+	ICraftingCommit recovery(CraftingType type, @Nullable EntityLivingBase player, NBTTagCompound nbt);
 
 	/** 制作更新[服务器] */
 	void craftingUpdate(ICraftingCommit commit);
@@ -72,7 +75,7 @@ public interface ICraftingLaunch {
 		return 20;
 	}
 
-	/**重写的话，请一定要加上@SideOnly*/
+	/** 重写的话，请一定要加上@SideOnly */
 	@SideOnly(Side.CLIENT)
 	default ICraftingLaunchAnime getAnime() {
 		return new AnimeRenderCrafting();

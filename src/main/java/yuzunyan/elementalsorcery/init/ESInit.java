@@ -17,12 +17,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -78,7 +80,7 @@ import yuzunyan.elementalsorcery.worldgen.WorldGeneratorES;
 
 public class ESInit {
 
-	public final static void init(FMLPreInitializationEvent event) {
+	public final static void preInit(FMLPreInitializationEvent event) {
 		// 初始化创建所有实例
 		ESInitInstance.instance();
 		// 注册物品
@@ -93,33 +95,37 @@ public class ESInit {
 		registerAllCapability();
 		// 矿物词典注册
 		OreDictionaryRegistries.registerAll();
-		// 注册所有配方
-		ESCraftingRegistries.registerAll();
 		// 注册元素映射
 		ElementMap.registerAll();
 		// 注册实体
 		EntityRegistries.registerAll();
-		// 测试村民
+		// 注册默认所有建筑
+		BuildingLib.registerAll();
+		// 测试村庄相关
 		VillegeRegistries.registerAll();
+		// 注册战利品
+		registerAllLoot();
 		// 注册GUI句柄
 		NetworkRegistry.INSTANCE.registerGuiHandler(ElementalSorcery.instance, new ESGuiHandler());
 		// 注册世界生成
 		MinecraftForge.ORE_GEN_BUS.register(new WorldGeneratorES());
 		// 注册网络
 		ESNetwork.registerAll();
-		// 注册默认所有建筑
-		BuildingLib.registerAll();
 		// 注册事件
 		MinecraftForge.EVENT_BUS.register(EventServer.class);
-		// 测试类
-		new ESTestAndDebug();
 		// page错误页面
 		Pages.initError();
+		// 测试类
+		new ESTestAndDebug();
 	}
 
-	public final static void postInit(FMLPostInitializationEvent event) {
+	public final static void init(FMLInitializationEvent event) {
+		// 注册所有配方
+		ESCraftingRegistries.registerAll();
 		// 初始化所有说明界面
 		Pages.init(event.getSide());
+		// 注册所有知识映射
+		TileStela.init();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -141,6 +147,10 @@ public class ESInit {
 	}
 
 	// 注册
+
+	static void registerAllLoot() {
+		LootTableList.register(new ResourceLocation(ElementalSorcery.MODID, "hall/es_hall")); 
+	}
 
 	static void registerAllItems() {
 		register(ESInitInstance.ITEMS.SPELLBOOK);

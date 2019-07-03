@@ -3,6 +3,7 @@ package yuzunyan.elementalsorcery.api;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyan.elementalsorcery.api.element.Element;
 
 public class ESObjects {
@@ -10,6 +11,7 @@ public class ESObjects {
 	public static Items ITEMS;;
 	public static Blocks BLOCKS;
 	public static Elements ELEMENTS;
+	public static Village VILLAGE;
 	public static CreativeTabs CREATIVE_TABS;
 
 	static public class Items {
@@ -75,5 +77,9 @@ public class ESObjects {
 		public Element METAL;
 		public Element WOOD;
 		public Element KNOWLEDGE;
+	}
+
+	static public class Village {
+		public VillagerRegistry.VillagerProfession ES_VILLEGER;
 	}
 }

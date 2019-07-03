@@ -10,19 +10,13 @@ public class RandomHelper {
 	static public int[] randomSelect(int... ints) {
 		if (ints.length == 0)
 			return null;
-		int n = RandomHelper.rand.nextInt(ints.length) + 1;
-		int[] lucky = new int[n];
-		final double rate = n / ints.length;
-		n = Math.min(n, ints.length - n);
-		int at = 0;
-		for (int i = 0; i < n; i++) {
-			if (Math.random() < rate) {
-				lucky[at++] = ints[i];
-			}
-		}
-		int rest = lucky.length - at;
-		for (int i = 0; i < rest; i++) {
-			lucky[at++] = ints[i + n];
+		ints = ints.clone();
+		int[] lucky = new int[rand.nextInt(ints.length) + 1];
+		int remain = ints.length;
+		for (int i = 0; i < lucky.length; i++) {
+			int rindex = rand.nextInt(remain--);
+			lucky[i] = ints[rindex];
+			ints[rindex] = ints[remain];
 		}
 		return lucky;
 	}
