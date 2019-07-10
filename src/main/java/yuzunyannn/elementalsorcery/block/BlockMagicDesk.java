@@ -4,9 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -14,9 +12,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.tile.TileMagicDesk;
+import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class BlockMagicDesk extends BlockContainer {
 
@@ -43,48 +40,12 @@ public class BlockMagicDesk extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (playerIn.isSneaking()) {
-			TileMagicDesk tile = (TileMagicDesk) worldIn.getTileEntity(pos);
-			ItemStack stack = tile.getBook();
-			if (stack.isEmpty())
-				return false;
-			if (!worldIn.isRemote) {
-				tile.setBook(ItemStack.EMPTY);
-				tile.updateToClient();
-				Block.spawnAsEntity(worldIn, pos, stack);
-			}
-			return true;
-
-		} else {
-			ItemStack stack = playerIn.getHeldItem(hand);
-			if (stack.isEmpty())
-				return false;
-			if (!(stack.getItem() instanceof ItemSpellbook)
-					|| stack.getItem() == ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT)
-				return false;
-			TileMagicDesk tile = (TileMagicDesk) worldIn.getTileEntity(pos);
-			if (!tile.getBook().isEmpty())
-				return false;
-			if (!worldIn.isRemote) {
-				ItemStack inStack = stack.copy();
-				inStack.setCount(1);
-				stack.shrink(1);
-				tile.setBook(inStack);
-				tile.updateToClient();
-			}
-			return true;
-		}
+		return BlockHelper.onBlockActivatedWithIGetItemStack(worldIn, pos, state, playerIn, hand, true);
 	}
 
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		TileEntity tileentity = worldIn.getTileEntity(pos);
-		if (tileentity instanceof TileMagicDesk && !worldIn.isRemote) {
-			TileMagicDesk tile = (TileMagicDesk) tileentity;
-			ItemStack stack = tile.getBook();
-			if (!stack.isEmpty())
-				Block.spawnAsEntity(worldIn, pos.up(), stack);
-		}
+		BlockHelper.dropWithIGetItemStack(worldIn, pos, state);
 		super.breakBlock(worldIn, pos, state);
 	}
 

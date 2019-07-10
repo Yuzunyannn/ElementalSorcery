@@ -37,7 +37,7 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 			return false;
 		if (world.isRemote)
 			return true;
-		book.obj = info.building.getBuildingBlocks().setPosOff(info.pos);
+		book.obj = info.building.getBuildingBlocks().setPosOff(info.pos).setFace(info.facing);
 		return true;
 	}
 

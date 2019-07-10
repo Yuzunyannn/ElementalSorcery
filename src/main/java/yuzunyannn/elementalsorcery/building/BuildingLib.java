@@ -86,6 +86,7 @@ public class BuildingLib {
 	public static final String LARGE_ALTAR = "large_altar";
 	public static final String ELEMENT_CRAFTING_ALTAR = "element_crafting_altar";
 	public static final String DECONSTRUCT_ALTAR = "deconstruct_altar";
+	public static final String BUILDING_ALTAR = "building_altar";
 
 	public static void registerAll() {
 		try {
@@ -94,6 +95,7 @@ public class BuildingLib {
 			instance.addBuildingLib(SPELLBOOK_ALTAR, Buildings.SPELLBOOK_ALTAR);
 			instance.addBuildingLib(ELEMENT_CRAFTING_ALTAR, Buildings.ELEMENT_CRAFTING_ALTAR);
 			instance.addBuildingLib(DECONSTRUCT_ALTAR, Buildings.DECONSTRUCT_ALTAR);
+			instance.addBuildingLib(BUILDING_ALTAR, Buildings.BUILING_ALTAR);
 			BuildingLib.loadBuilding();
 		} catch (IOException e) {
 			CrashReport report = CrashReport.makeCrashReport(e, "ElementSorcer读取不到包内资源数据！");

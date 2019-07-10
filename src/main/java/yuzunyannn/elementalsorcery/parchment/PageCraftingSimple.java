@@ -32,5 +32,4 @@ public class PageCraftingSimple extends PageCrafting {
 	public String getContext() {
 		return "page." + name + ".ct";
 	}
-
 }

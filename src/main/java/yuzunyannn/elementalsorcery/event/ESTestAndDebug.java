@@ -91,9 +91,11 @@ public class ESTestAndDebug {
 					System.out.println("开始存储");
 					Entity entity = sender.getCommandSenderEntity();
 					ItemStack ruler = ((EntityPlayer) entity).getHeldItem(EnumHand.OFF_HAND);
-					if (!ArcInfo.isArc(ruler))
+					if (ItemMagicRuler.getRulerPos(ruler, true) == null
+							|| ItemMagicRuler.getRulerPos(ruler, false) == null)
 						ruler = ((EntityPlayer) entity).getHeldItem(EnumHand.MAIN_HAND);
-					if (!ArcInfo.isArc(ruler))
+					if (ItemMagicRuler.getRulerPos(ruler, true) == null
+							|| ItemMagicRuler.getRulerPos(ruler, false) == null)
 						throw new WrongUsageException("保存建筑失败，请将魔力标尺放在手上");
 					Building building = Building.createBuilding(sender.getEntityWorld(),
 							ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));

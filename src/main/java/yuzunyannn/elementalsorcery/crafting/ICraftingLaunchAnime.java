@@ -4,7 +4,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 
 @SideOnly(Side.CLIENT)
 public interface ICraftingLaunchAnime {
@@ -16,14 +15,14 @@ public interface ICraftingLaunchAnime {
 	 *            -1表示正常运行，暂未结束，正数表明结束剩余的时间
 	 */
 	@SideOnly(Side.CLIENT)
-	void update(EntityCrafting entity, int endTick);
+	void update(ICraftingCommit commit, World world, int endTick);
 
 	/** 进行自定义渲染 */
 	@SideOnly(Side.CLIENT)
-	void deRender(EntityCrafting entity, double x, double y, double z, float entityYaw, float partialTicks);
+	void doRender(ICraftingCommit commit, double x, double y, double z, float roate, float partialTicks);
 
 	/** 结束时候特效 */
 	@SideOnly(Side.CLIENT)
-	void endEffect(EntityCrafting entity, World world, BlockPos pos);
+	void endEffect(ICraftingCommit commit, World world, BlockPos pos, int flag);
 
 }

@@ -117,7 +117,9 @@ public class Pages {
 				new PageCraftingSimple("magical_endereye", ESInitInstance.ITEMS.MAGICAL_ENDER_EYE));
 		ABOUT_KYNATIE_TOOLS = addPage(new AboutKynatieTools());
 		ABOUT_ABSORB_BOX = addPage(new PageCraftingSimple("absorbBox", ESInitInstance.BLOCKS.ABSORB_BOX));
-		ABOUT_MAGIC_PL = addPage(new PageCraftingSimple("magicPl", ESInitInstance.BLOCKS.MAGIC_PLATFORM));
+		ABOUT_MAGIC_PL = addPage(
+				new PageCraftingSimple("magicPl", new ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 0),
+						new ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 1)));
 		ABOUT_MAGIC_CRY = addPage(new PageTransformSimple("magicCry", ESInitInstance.ITEMS.KYNAITE,
 				ESInitInstance.ITEMS.MAGIC_CRYSTAL, PageTransform.INFUSION));
 		ABOUT_MAGIC_ESTONE = addPage(new AboutEStone());

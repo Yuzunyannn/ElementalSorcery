@@ -41,7 +41,8 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound.setTag("stack", stack.serializeNBT());
+		if (!stack.isEmpty())
+			compound.setTag("stack", stack.serializeNBT());
 		return super.writeToNBT(compound);
 	}
 
@@ -144,7 +145,7 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public ICraftingLaunchAnime getAnime() {
+	public ICraftingLaunchAnime getAnime(ICraftingCommit commit) {
 		return new AnimeRenderDeconstruct();
 	}
 

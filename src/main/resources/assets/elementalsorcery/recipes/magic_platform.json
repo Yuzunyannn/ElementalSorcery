@@ -18,6 +18,7 @@
   },
   "result": {
     "item": "elementalsorcery:magic_platform",
-    "count": 1
+    "count": 1,
+	"data":0
   }
 }

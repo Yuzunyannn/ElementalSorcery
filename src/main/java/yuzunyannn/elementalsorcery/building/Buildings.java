@@ -16,6 +16,7 @@ public class Buildings {
 	static public Building SPELLBOOK_ALTAR;
 	static public Building ELEMENT_CRAFTING_ALTAR;
 	static public Building DECONSTRUCT_ALTAR;
+	static public Building BUILING_ALTAR;
 
 	static public void init() throws IOException {
 		LARGE_ALTAR = new BuildingInherent(
@@ -28,6 +29,8 @@ public class Buildings {
 		DECONSTRUCT_ALTAR = new BuildingInherent(
 				ElementalSorcery.data.getNBTForResourceWithException("structures/deconstruct_altar"),
 				"deconstructAltar");
+		BUILING_ALTAR = new BuildingInherent(
+				ElementalSorcery.data.getNBTForResourceWithException("structures/builing_altar"), "builingAltar");
 	}
 
 	private static void horizontalS(IBlockState state, Building building, int d, int y) {

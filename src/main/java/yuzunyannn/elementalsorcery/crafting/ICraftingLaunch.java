@@ -7,7 +7,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.render.entity.AnimeRenderCrafting;
 
 public interface ICraftingLaunch {
 
@@ -24,6 +23,12 @@ public interface ICraftingLaunch {
 	 * @return ture表示正式开始，false表示条件不足无法开始
 	 */
 	boolean craftingBegin(CraftingType type, @Nullable EntityPlayer player);
+
+	/**
+	 * 提交物品 [服务器]
+	 */
+	@Nullable
+	ICraftingCommit commitItems();
 
 	/**
 	 * 制作恢复 恢复调用[服务器][客户端]（服务器存档恢复时调用，客户端创建的时候一定会调用，因为是从服务器传来的消息）
@@ -57,17 +62,11 @@ public interface ICraftingLaunch {
 	 */
 	int craftingEnd(ICraftingCommit commit);
 
-	/**
-	 * 提交物品 [服务器]
-	 */
-	@Nullable
-	ICraftingCommit commitItems();
-
 	/** 检查类型是否可以完成 */
 	boolean checkType(CraftingType type);
 
 	public static enum CraftingType {
-		ELEMENT_CRAFTING, ELEMENT_DECONSTRUCT
+		ELEMENT_CRAFTING, ELEMENT_DECONSTRUCT, BUILING_RECORD
 	}
 
 	/** 获取完成后，结束时间 */
@@ -77,7 +76,7 @@ public interface ICraftingLaunch {
 
 	/** 重写的话，请一定要加上@SideOnly */
 	@SideOnly(Side.CLIENT)
-	default ICraftingLaunchAnime getAnime() {
-		return new AnimeRenderCrafting();
-	}
+	default ICraftingLaunchAnime getAnime(ICraftingCommit commit) {
+		return null;
+	};
 }

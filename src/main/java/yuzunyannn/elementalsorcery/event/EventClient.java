@@ -13,6 +13,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -91,15 +92,19 @@ public class EventClient {
 	// 全局旋转，单位角度
 	public static float global_rotate = 0.0f;
 	// 旋转角度增量
-	public static final float DGLOBAL_ROTATE = 2.25f * 0.7f;
+	public static final float DGLOBAL_ROTATE = 2.25f * 0.25f;
 	// 全局client的tick
 	public static int tick = 0;
 	// 全局随机的，隔一段时间随机的一个整数
 	public static int rand_int = rand.nextInt();
+	// 客户端的mc指针
+	public static final Minecraft mc = Minecraft.getMinecraft();
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	static public void onTick(TickEvent.ClientTickEvent event) {
+		if (mc.isGamePaused())
+			return;
 		// tick增加
 		tick++;
 		// 处理tick队列
@@ -112,8 +117,8 @@ public class EventClient {
 		}
 		// 全局旋转
 		global_rotate += DGLOBAL_ROTATE;
-		if (global_rotate >= 360 * 10) {
-			global_rotate -= 360 * 10;
+		if (global_rotate >= 360 * 1000) {
+			global_rotate -= 360 * 1000;
 		}
 		// 全局随机整数
 		if (tick % 80 == 0) {
@@ -122,6 +127,11 @@ public class EventClient {
 		}
 		// 其他处理
 
+	}
+
+	/** 获取渲染旋转角度 */
+	static public float getGlobalRotateInRender(float partialTicks) {
+		return global_rotate + DGLOBAL_ROTATE * partialTicks;
 	}
 
 	static private final List<IRenderClient> renderList = new LinkedList<IRenderClient>();
@@ -154,32 +164,9 @@ public class EventClient {
 		GlStateManager.popMatrix();
 	}
 
-	// double partialTicks = e.getPartialTicks();
-	// EntityPlayer entityplayer = Minecraft.getMinecraft().player;
-	// Tessellator tessellator = Tessellator.getInstance();
-	// BufferBuilder bufferbuilder = tessellator.getBuffer();
-	// double d3 = 0.0D - d1;
-	// double d4 = 256.0D - d1;
-	// GlStateManager.disableTexture2D();
-	// //GlStateManager.disableBlend();
-	// GlStateManager.glLineWidth(1.0F);
-	// GlStateManager.translate(-d0, -d1, -d2);
-	// GlStateManager.pushMatrix();
-	// GlStateManager.translate(d0 + 1, d1, d2 + 1);
-	// bufferbuilder.begin(GL11.GL_LINE_STRIP,
-	// DefaultVertexFormats.POSITION_COLOR);
-	// bufferbuilder.pos(0, 0, 0).color(1.0F, 0.0F, 0.0F, 1.0F).endVertex();
-	// bufferbuilder.pos(0, 0, 0).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-	// bufferbuilder.pos(0, 1, 0).color(0.0F, 0.0F, 1.0F, 1.0F).endVertex();
-	// bufferbuilder.pos(0, 1, 0).color(0.0F, 1.0F, 0.0F, 0.5F).endVertex();
-	//
-	// bufferbuilder.pos(0, 0, 1).color(1.0F, 0.0F, 0.0F, 0.0F).endVertex();
-	// bufferbuilder.pos(0, 0, 1).color(0.0F, 1.0F, 0.0F, 1.0F).endVertex();
-	// bufferbuilder.pos(0, 1, 1).color(0.0F, 0.0F, 1.0F, 1.0F).endVertex();
-	// bufferbuilder.pos(0, 1, 1).color(0.0F, 1.0F, 0.0F, 0.5F).endVertex();
-	// tessellator.draw();
-	// GlStateManager.popMatrix();
-	// //GlStateManager.enableBlend();
-	// GlStateManager.enableTexture2D();
+	@SubscribeEvent
+	static public void playerExit(PlayerEvent.PlayerLoggedOutEvent e) {
+		renderList.clear();
+	}
 
 }

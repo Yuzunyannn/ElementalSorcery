@@ -7,6 +7,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
@@ -14,7 +16,9 @@ import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.crafting.CraftingCrafting;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
+import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
+import yuzunyannn.elementalsorcery.render.entity.AnimeRenderCrafting;
 
 public class TileElementCraftingTable extends TileStaticMultiBlockWithInventory implements ICraftingLaunch {
 
@@ -165,6 +169,12 @@ public class TileElementCraftingTable extends TileStaticMultiBlockWithInventory 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		return super.writeToNBT(compound);
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public ICraftingLaunchAnime getAnime(ICraftingCommit commit) {
+		return new AnimeRenderCrafting();
 	}
 
 }

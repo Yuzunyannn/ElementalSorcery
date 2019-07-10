@@ -64,13 +64,15 @@ public class ItemMagicRuler extends Item {
 	private boolean checkFailToSelect(EntityPlayer player, World worldIn, BlockPos pos1, BlockPos pos2) {
 		if (pos1 == null || pos2 == null)
 			return false;
-		if (pos1.distanceSq(pos2) > 64 * 64) {
+		if (pos1.distanceSq(pos2) > MAX_DIS_SQ) {
 			if (worldIn.isRemote)
 				player.sendMessage(new TextComponentTranslation("info.ruler.fail"));
 			return true;
 		}
 		return false;
 	}
+
+	public static final int MAX_DIS_SQ = 64 * 64;
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {

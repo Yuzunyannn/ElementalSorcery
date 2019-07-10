@@ -7,6 +7,7 @@ import yuzunyannn.elementalsorcery.api.ESRegister;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.block.BlockAbsorbBox;
+import yuzunyannn.elementalsorcery.block.BlockBuildingAltar;
 import yuzunyannn.elementalsorcery.block.BlockDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.block.BlockDeconstructBox;
 import yuzunyannn.elementalsorcery.block.BlockElementCraftingTable;
@@ -112,6 +113,7 @@ public class ESInitInstance {
 		BLOCKS.DECONSTRUCT_ALTAR_TABLE = new BlockDeconstructAltarTable().setRegistryName("deconstruct_altar_table");
 		BLOCKS.STELA = new BlockStela().setRegistryName("stela");
 		BLOCKS.LANTERN = new BlockLantern().setRegistryName("lantern");
+		BLOCKS.BUILDING_ALTAR = new BlockBuildingAltar().setRegistryName("building_altar");
 
 		BLOCKS.ELEMENTAL_CUBE.setCreativeTab(tab);
 		BLOCKS.HEARTH.setCreativeTab(tab);
@@ -131,6 +133,7 @@ public class ESInitInstance {
 		BLOCKS.DECONSTRUCT_ALTAR_TABLE.setCreativeTab(tab);
 		BLOCKS.STELA.setCreativeTab(tab);
 		BLOCKS.LANTERN.setCreativeTab(tab);
+		BLOCKS.BUILDING_ALTAR.setCreativeTab(tab);
 	}
 
 	private static final void instanceItems() {

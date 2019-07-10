@@ -74,7 +74,8 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		int[] pos = new int[] { this.pos.getX(), this.pos.getY(), this.pos.getZ() };
 		nbt.setIntArray("pos", pos);
 		nbt.setInteger("type", type.ordinal());
-		nbt.setInteger("enid", this.player.getEntityId());
+		if (this.player != null)
+			nbt.setInteger("enid", this.player.getEntityId());
 		if (this.commit != null) {
 			nbt.setTag("cnbt", this.commit.serializeNBT());
 		}
@@ -96,7 +97,11 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		// 恢复类型
 		this.type = ICraftingLaunch.CraftingType.values()[nbt.getInteger("type")];
 		// 恢复玩家
-		this.world.getEntityByID(nbt.getInteger("enid"));
+		Entity entity = this.world.getEntityByID(nbt.getInteger("enid"));
+		if (entity instanceof EntityLivingBase)
+			this.player = (EntityLivingBase) entity;
+		else
+			this.player = null;
 	}
 
 	@Override
@@ -120,7 +125,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			if (tile instanceof ICraftingLaunch) {
 				this.crafting = (ICraftingLaunch) tile;
 				this.commit = this.crafting.recovery(type, this.player, this.commitNBT);
-				this.craftingAnime = this.crafting.getAnime();
+				this.craftingAnime = this.crafting.getAnime(this.commit);
 				if (this.craftingAnime == null)
 					this.craftingAnime = RenderEntityCrafting.getDefultAnime();
 				return true;
@@ -191,6 +196,8 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		if (this.commit == null)
 			return;
 		List<ItemStack> itemList = this.commit.getItems();
+		if (itemList == null)
+			return;
 		for (ItemStack stack : itemList) {
 			if (stack.isEmpty())
 				continue;
@@ -208,7 +215,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 				this.finish_tick--;
 			}
 		}
-		this.craftingAnime.update(this, finish_tick);
+		this.craftingAnime.update(this.commit, this.world,finish_tick);
 	}
 
 	@Override
@@ -216,16 +223,20 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		super.setDead();
 		if (world.isRemote) {
 			// 客户端的完成特效
-			if (this.finish_tick >= 0) {
-				if (this.craftingAnime != null)
-					this.craftingAnime.endEffect(this, this.world, this.pos);
-			}
+			if (this.craftingAnime != null)
+				this.craftingAnime.endEffect(this.commit, this.world, this.pos,
+						this.finish_tick >= 0 ? ICraftingLaunch.SUCCESS : ICraftingLaunch.FAIL);
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void defaultEndEffect() {
-		Overlay effect = new Overlay(this.world, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5);
+	public ICraftingCommit getCommit() {
+		return this.commit;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static void defaultEndEffect(World world, BlockPos pos) {
+		Overlay effect = new Overlay(world, pos.getX() + 0.5, pos.getY() + 1.5, pos.getZ() + 0.5);
 		effect.setRBGColorF(1.0f, 1.0f, 1.0f);
 		Minecraft.getMinecraft().effectRenderer.addEffect(effect);
 	}
@@ -236,10 +247,6 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		protected Overlay(World p_i46466_1_, double p_i46466_2_, double p_i46466_4_, double p_i46466_6_) {
 			super(p_i46466_1_, p_i46466_2_, p_i46466_4_, p_i46466_6_);
 		}
-	}
-
-	public List<ItemStack> getItemList() {
-		return this.commit != null ? this.commit.getItems() : null;
 	}
 
 	@Override

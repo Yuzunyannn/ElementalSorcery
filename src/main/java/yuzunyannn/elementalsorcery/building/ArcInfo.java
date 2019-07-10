@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.building;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
@@ -14,6 +15,7 @@ public class ArcInfo {
 	public BlockPos pos = null;
 	public String keyName = null;
 	public Building building = null;
+	public EnumFacing facing = EnumFacing.NORTH;
 	public int flags = SUCCESS;
 
 	public ArcInfo(ItemStack stack, Side side) {
@@ -37,6 +39,9 @@ public class ArcInfo {
 				return;
 			}
 			BuildingLib.instance.use(this.keyName);
+		}
+		if (nbt.hasKey("face")) {
+			this.facing = EnumFacing.values()[nbt.getByte("face")];
 		}
 	}
 

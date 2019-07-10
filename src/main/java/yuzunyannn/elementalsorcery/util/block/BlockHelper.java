@@ -43,6 +43,8 @@ public class BlockHelper {
 			if (stack.isEmpty())
 				return false;
 			IGetItemStack tile = (IGetItemStack) worldIn.getTileEntity(pos);
+			if (!tile.canSetStack(stack))
+				return false;
 			if (tile.getStack().isEmpty()) {
 				if (!worldIn.isRemote) {
 					ItemStack inStack = ItemStack.EMPTY;
@@ -63,7 +65,7 @@ public class BlockHelper {
 					return false;
 				if (!worldIn.isRemote) {
 					inStack.setCount(count);
-					stack.shrink(1); 
+					stack.shrink(1);
 					tile.setStack(inStack);
 				}
 			}

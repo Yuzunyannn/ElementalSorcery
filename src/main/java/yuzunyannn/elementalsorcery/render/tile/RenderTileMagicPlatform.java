@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.tile.TileMagicPlatform;
+
 @SideOnly(Side.CLIENT)
 public class RenderTileMagicPlatform extends TileEntitySpecialRenderer<TileMagicPlatform> {
 
@@ -20,7 +21,7 @@ public class RenderTileMagicPlatform extends TileEntitySpecialRenderer<TileMagic
 		if (stack.isEmpty())
 			return;
 		GlStateManager.pushMatrix();
-		float ang = tile.roate_begin + EventClient.global_rotate + EventClient.DGLOBAL_ROTATE * partialTicks;
+		float ang = tile.roate_begin + EventClient.getGlobalRotateInRender(partialTicks) * 1.75f;
 		GlStateManager.translate((float) x + 0.5F,
 				(float) y + 7.0F / 16.0F + (MathHelper.sin(ang * 0.01745329f) + 1) * 0.125, (float) z + 0.5F);
 		GlStateManager.rotate(ang, 0, 1, 0);

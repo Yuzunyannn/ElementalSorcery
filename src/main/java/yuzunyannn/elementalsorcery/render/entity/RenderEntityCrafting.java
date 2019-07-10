@@ -1,17 +1,11 @@
 package yuzunyannn.elementalsorcery.render.entity;
 
-import java.util.List;
-
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.crafting.CraftingLaunchAnimeNone;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 
@@ -19,7 +13,7 @@ import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 public class RenderEntityCrafting extends Render<EntityCrafting> {
 
 	public static ICraftingLaunchAnime getDefultAnime() {
-		return new AnimeRenderCrafting();
+		return new CraftingLaunchAnimeNone();
 	}
 
 	public RenderEntityCrafting(RenderManager renderManager) {
@@ -36,6 +30,6 @@ public class RenderEntityCrafting extends Render<EntityCrafting> {
 		ICraftingLaunchAnime anime = entity.getCraftingLaunchAnime();
 		if (anime == null)
 			return;
-		anime.deRender(entity, x, y, z, entityYaw, partialTicks);
+		anime.doRender(entity.getCommit(), x, y, z, entityYaw, partialTicks);
 	}
 }

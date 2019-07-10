@@ -12,7 +12,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 
 public class NBTHelper {
-	
+
 	public static <T extends INBTSerializable<NBTTagCompound>> void setNBTSerializableList(NBTTagCompound nbt,
 			String key, List<T> NBTSerializableList) {
 		NBTTagList list = new NBTTagList();
@@ -49,6 +49,8 @@ public class NBTHelper {
 	}
 
 	public static void setBlockPos(NBTTagCompound nbt, String key, BlockPos pos) {
+		if (pos == null)
+			return; 
 		nbt.setInteger(key + "x", pos.getX());
 		nbt.setInteger(key + "y", pos.getY());
 		nbt.setInteger(key + "z", pos.getZ());

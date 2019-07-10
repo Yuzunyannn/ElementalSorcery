@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -15,26 +16,38 @@ public class MultiBlock {
 
 	// 检测坐标
 	private BlockPos pos;
+	// 偏移坐标
+	private BlockPos posOff;
+
+	// 记录使用的真实坐标
+	private BlockPos realPos;
+	// 建筑的朝向
+	private EnumFacing facing = EnumFacing.NORTH;
 
 	// 记录的世界
 	private World world;
 
 	public MultiBlock(Building altar, TileEntity tile, BlockPos posOff) {
 		this.altar = altar;
-		this.pos = tile.getPos().add(posOff);
+		this.pos = tile.getPos();
+		this.posOff = posOff;
 		this.world = tile.getWorld();
+		this.realPos = this.pos.add(this.posOff);
 	}
 
 	public MultiBlock(Building altar, World world, BlockPos pos) {
 		this.altar = altar;
 		this.pos = pos;
+		this.posOff = BlockPos.ORIGIN;
 		this.world = world;
+		this.realPos = this.pos.add(this.posOff);
 	}
 
-	public boolean check() {
-		Building.BuildingBlocks iter = this.altar.getBuildingBlocks();
+	public boolean check(EnumFacing face) {
+		Building.BuildingBlocks iter = this.altar.getBuildingBlocks().setFace(face);
+		iter.setPosOff(Building.BuildingBlocks.facePos(this.posOff, face).add(this.pos));
 		while (iter.next()) {
-			BlockPos pos = this.pos.add(iter.getPos());
+			BlockPos pos = iter.getPos();
 			IBlockState should = iter.getState();
 			IBlockState real = world.getBlockState(pos);
 			if (should.equals(real))
@@ -49,7 +62,19 @@ public class MultiBlock {
 			}
 			return false;
 		}
+		this.realPos = Building.BuildingBlocks.facePos(this.posOff, face).add(this.pos);
+		this.facing = face;
 		return true;
+	}
+
+	/** 获取当前祭坛方向 */
+	public EnumFacing face() {
+		return this.facing;
+	}
+
+	/** 设置祭坛方向 */
+	public void face(EnumFacing facing) {
+		this.facing = facing;
 	}
 
 	// 特殊方块位置
@@ -57,13 +82,17 @@ public class MultiBlock {
 
 	// 添加一个新的方块检测处
 	public int addSpecialBlock(BlockPos posOff) {
-		specialBlocks.add(pos.add(posOff));
+		specialBlocks.add(posOff);
 		return specialBlocks.size() - 1;
 	}
 
 	// 获取位置
 	public BlockPos getSpecialBlockPos(int index) {
-		return specialBlocks.get(index);
+		if (facing == EnumFacing.NORTH)
+			return realPos.add(specialBlocks.get(index));
+		BlockPos pos = specialBlocks.get(index);
+		pos = realPos.add(Building.BuildingBlocks.facePos(pos, facing));
+		return pos;
 	}
 
 	// 获取个数
@@ -73,17 +102,17 @@ public class MultiBlock {
 
 	// 根据索引获取检测的特殊方块
 	public IBlockState getSpecialBlockState(int index) {
-		return world.getBlockState(specialBlocks.get(index));
+		return world.getBlockState(this.getSpecialBlockPos(index));
 	}
 
 	// 根据索引获取检测的特殊方块Tile
 	public TileEntity getSpecialTileEntity(int index) {
-		return world.getTileEntity(specialBlocks.get(index));
+		return world.getTileEntity(this.getSpecialBlockPos(index));
 	}
 
 	// 根据索引获取检测的特殊方块Tile
 	public <T extends TileEntity> T getSpecialTileEntity(int index, Class<T> cls) {
-		TileEntity tile = world.getTileEntity(specialBlocks.get(index));
+		TileEntity tile = world.getTileEntity(this.getSpecialBlockPos(index));
 		if (tile.getClass().isAssignableFrom(cls))
 			return (T) tile;
 		return null;

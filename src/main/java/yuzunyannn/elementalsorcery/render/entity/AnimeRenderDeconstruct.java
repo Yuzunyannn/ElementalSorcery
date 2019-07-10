@@ -10,6 +10,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
+import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 
@@ -24,8 +26,8 @@ public class AnimeRenderDeconstruct implements ICraftingLaunchAnime {
 	public float preRoate = 0;
 
 	@Override
-	public void deRender(EntityCrafting entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		List<ItemStack> list = entity.getItemList();
+	public void doRender(ICraftingCommit commit, double x, double y, double z, float entityYaw, float partialTicks) {
+		List<ItemStack> list = commit.getItems();
 		if (list == null || list.isEmpty())
 			return;
 		ItemStack stack = list.get(0);
@@ -42,12 +44,13 @@ public class AnimeRenderDeconstruct implements ICraftingLaunchAnime {
 	}
 
 	@Override
-	public void endEffect(EntityCrafting entity, World world, BlockPos pos) {
-		entity.defaultEndEffect();
+	public void endEffect(ICraftingCommit commit, World world, BlockPos pos, int flags) {
+		if (flags == ICraftingLaunch.SUCCESS)
+			EntityCrafting.defaultEndEffect(world, pos);
 	}
 
 	@Override
-	public void update(EntityCrafting entity, int endTick) {
+	public void update(ICraftingCommit commit, World world, int endTick) {
 		this.preHigh = this.high;
 		this.preRoate = this.roate;
 		if (endTick >= 0) {

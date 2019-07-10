@@ -32,8 +32,7 @@ public class Pages1 {
 					new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX_IRON),
 					new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX_KYNAITE));
 		}
-	}
-
+	}	
 	// 关于加热箱
 	static class AboutKynatieTools extends PageCraftingSimple {
 		public AboutKynatieTools() {
@@ -44,7 +43,7 @@ public class Pages1 {
 					new ItemStack(ESInitInstance.ITEMS.KYNAITE_SWORD));
 		}
 	}
-
+	
 	// 关于魔力石英
 	static class AboutEStone extends PageCraftingSimple {
 

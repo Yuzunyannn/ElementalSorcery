@@ -18,7 +18,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -139,12 +141,12 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		}
 
 	}
-	
-	public Building(){
-		
+
+	public Building() {
+
 	}
-	
-	public Building(NBTTagCompound nbt){
+
+	public Building(NBTTagCompound nbt) {
 		this.deserializeNBT(nbt);
 	}
 
@@ -316,6 +318,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		private Map.Entry<BlockPos, Integer> entry = null;
 		private final Building building;
 		private BlockPos off = BlockPos.ORIGIN;
+		private EnumFacing facing = EnumFacing.NORTH;
 
 		public BuildingBlocks(Building building) {
 			this.building = building;
@@ -333,12 +336,52 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			return false;
 		}
 
+		static public BlockPos facePos(BlockPos pos, EnumFacing facing) {
+			switch (facing) {
+			case SOUTH:
+				pos = new BlockPos(-pos.getX(), pos.getY(), -pos.getZ());
+				break;
+			case EAST:
+				pos = new BlockPos(-pos.getZ(), pos.getY(), pos.getX());
+				break;
+			case WEST:
+				pos = new BlockPos(pos.getZ(), pos.getY(), -pos.getX());
+				break;
+			default:
+				break;
+			}
+			return pos;
+		}
+
 		public BlockPos getPos() {
-			return entry == null ? null : entry.getKey().add(off);
+			if (entry == null)
+				return null;
+			BlockPos pos = entry.getKey();
+			return facePos(pos, this.facing).add(off);
+		}
+
+		static public IBlockState faceSate(IBlockState state, EnumFacing facing) {
+			switch (facing) {
+			case SOUTH:
+				state = state.withRotation(Rotation.CLOCKWISE_180);
+				break;
+			case EAST:
+				state = state.withRotation(Rotation.CLOCKWISE_90);
+				break;
+			case WEST:
+				state = state.withRotation(Rotation.COUNTERCLOCKWISE_90);
+				break;
+			default:
+				break;
+			}
+			return state;
 		}
 
 		public IBlockState getState() {
-			return entry == null ? null : building.infoList.get(entry.getValue()).getState();
+			if (entry == null)
+				return null;
+			IBlockState state = building.infoList.get(entry.getValue()).getState();
+			return this.faceSate(state, this.facing);
 		}
 
 		public ItemStack getItemStack() {
@@ -348,6 +391,11 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 
 		public BuildingBlocks setPosOff(BlockPos pos) {
 			off = pos;
+			return this;
+		}
+
+		public BuildingBlocks setFace(EnumFacing facing) {
+			this.facing = facing;
 			return this;
 		}
 	}
@@ -369,29 +417,41 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 				building.add(world.getBlockState(pos), pos.subtract(center));
 			}
 			// 移动pos
-			if (pos.getX() == pos2.getX()) {
-				if (pos.getZ() == pos2.getZ()) {
-					if (pos.getY() == pos2.getY()) {
-						break;
-					} else {
-						if (pos.getY() < pos2.getY())
-							pos = new BlockPos(pos1.getX(), pos.getY() + 1, pos1.getZ());
-						else
-							pos = new BlockPos(pos1.getX(), pos.getY() - 1, pos1.getZ());
-					}
-				} else {
-					if (pos.getZ() < pos2.getZ())
-						pos = new BlockPos(pos1.getX(), pos.getY(), pos.getZ() + 1);
-					else
-						pos = new BlockPos(pos1.getX(), pos.getY(), pos.getZ() - 1);
-				}
-			} else {
-				if (pos.getX() < pos2.getX())
-					pos = pos.add(1, 0, 0);
-				else
-					pos = pos.add(-1, 0, 0);
-			}
+			pos = movePosOnce(pos, pos1, pos2);
+			if (pos == null)
+				break;
 		}
 		return building;
+	}
+
+	/**
+	 * 移动一次pos在pos1和pos2之间
+	 * 
+	 * @return null表示移动结束！
+	 */
+	public static BlockPos movePosOnce(BlockPos pos, BlockPos pos1, BlockPos pos2) {
+		if (pos.getX() == pos2.getX()) {
+			if (pos.getZ() == pos2.getZ()) {
+				if (pos.getY() == pos2.getY()) {
+					return null;
+				} else {
+					if (pos.getY() < pos2.getY())
+						pos = new BlockPos(pos1.getX(), pos.getY() + 1, pos1.getZ());
+					else
+						pos = new BlockPos(pos1.getX(), pos.getY() - 1, pos1.getZ());
+				}
+			} else {
+				if (pos.getZ() < pos2.getZ())
+					pos = new BlockPos(pos1.getX(), pos.getY(), pos.getZ() + 1);
+				else
+					pos = new BlockPos(pos1.getX(), pos.getY(), pos.getZ() - 1);
+			}
+		} else {
+			if (pos.getX() < pos2.getX())
+				pos = pos.add(1, 0, 0);
+			else
+				pos = pos.add(-1, 0, 0);
+		}
+		return pos;
 	}
 }

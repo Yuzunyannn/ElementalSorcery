@@ -11,6 +11,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
+import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 
@@ -30,8 +32,8 @@ public class AnimeRenderCrafting implements ICraftingLaunchAnime {
 	public float preRange = 0.75f;
 
 	@Override
-	public void deRender(EntityCrafting entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		List<ItemStack> list = entity.getItemList();
+	public void doRender(ICraftingCommit commit, double x, double y, double z, float entityYaw, float partialTicks) {
+		List<ItemStack> list = commit.getItems();
 		if (list == null)
 			return;
 		float range = this.preRange + (this.range - this.preRange) * partialTicks;
@@ -67,12 +69,13 @@ public class AnimeRenderCrafting implements ICraftingLaunchAnime {
 	}
 
 	@Override
-	public void endEffect(EntityCrafting entity, World world, BlockPos pos) {
-		entity.defaultEndEffect();
+	public void endEffect(ICraftingCommit commit, World world, BlockPos pos, int flags) {
+		if (flags == ICraftingLaunch.SUCCESS)
+			EntityCrafting.defaultEndEffect(world, pos);
 	}
 
 	@Override
-	public void update(EntityCrafting entity, int endTick) {
+	public void update(ICraftingCommit commit, World world, int endTick) {
 		if (endTick >= 0) {
 			this.preRange = this.range;
 			this.range = endTick / 20.0f * 0.75f;
@@ -82,7 +85,7 @@ public class AnimeRenderCrafting implements ICraftingLaunchAnime {
 		// 旋转
 		this.roate += 1.25f;
 		// 物品出来绘图
-		if (this.now_at < entity.getItemList().size()) {
+		if (this.now_at < commit.getItems().size()) {
 			this.r += 0.05;
 			if (this.r >= 1.0) {
 				this.now_at++;

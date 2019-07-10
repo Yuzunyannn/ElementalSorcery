@@ -199,29 +199,7 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 		GlStateManager.enableBlend();
 		GlStateManager.glLineWidth(5);
 		bufferbuilder.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION_COLOR);
-
-		bufferbuilder.pos(0, 0, 0).color(r, g, b, fadeTime).endVertex();
-		bufferbuilder.pos(lx, 0, 0).color(r, g, b, fadeTime).endVertex();
-		bufferbuilder.pos(lx, 0, lz).color(r, g, b, fadeTime).endVertex();
-		bufferbuilder.pos(0, 0, lz).color(r, g, b, fadeTime).endVertex();
-		bufferbuilder.pos(0, 0, 0).color(r, g, b, fadeTime).endVertex();
-
-		bufferbuilder.pos(0, ly, 0).color(r, g, b, fadeTime).endVertex();
-
-		bufferbuilder.pos(lx, ly, 0).color(r, g, b, fadeTime).endVertex();
-		bufferbuilder.pos(lx, 0, 0).color(r, g, b, fadeTime).endVertex();
-		bufferbuilder.pos(lx, ly, 0).color(r, g, b, fadeTime).endVertex();
-
-		bufferbuilder.pos(lx, ly, lz).color(r, g, b, fadeTime).endVertex();
-		bufferbuilder.pos(lx, 0, lz).color(r, g, b, fadeTime).endVertex();
-		bufferbuilder.pos(lx, ly, lz).color(r, g, b, fadeTime).endVertex();
-
-		bufferbuilder.pos(0, ly, lz).color(r, g, b, fadeTime).endVertex();
-		bufferbuilder.pos(0, 0, lz).color(r, g, b, fadeTime).endVertex();
-		bufferbuilder.pos(0, ly, lz).color(r, g, b, fadeTime).endVertex();
-
-		bufferbuilder.pos(0, ly, 0).color(r, g, b, fadeTime).endVertex();
-
+		vertexCubeLine(bufferbuilder, null, lx, ly, lz, r, g, b, fadeTime);
 		tessellator.draw();
 
 		GlStateManager.disableCull();
@@ -326,5 +304,39 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 		GlStateManager.enableTexture2D();
 		GlStateManager.popMatrix();
 		return IRenderClient.SUCCESS;
+	}
+
+	static public void vertexCubeLine(BufferBuilder bufferbuilder, BlockPos pos, float lx, float ly, float lz, float r,
+			float g, float b, float fadeTime) {
+		int xoff = 0;
+		int yoff = 0;
+		int zoff = 0;
+		if (pos != null) {
+			xoff = pos.getX();
+			yoff = pos.getY();
+			zoff = pos.getZ();
+		}
+
+		bufferbuilder.pos(xoff, yoff, zoff).color(r, g, b, fadeTime).endVertex();
+		bufferbuilder.pos(xoff + lx, yoff, zoff).color(r, g, b, fadeTime).endVertex();
+		bufferbuilder.pos(xoff + lx, yoff, zoff + lz).color(r, g, b, fadeTime).endVertex();
+		bufferbuilder.pos(xoff, yoff, zoff + lz).color(r, g, b, fadeTime).endVertex();
+		bufferbuilder.pos(xoff, yoff, zoff).color(r, g, b, fadeTime).endVertex();
+
+		bufferbuilder.pos(xoff, yoff + ly, zoff).color(r, g, b, fadeTime).endVertex();
+
+		bufferbuilder.pos(xoff + lx, yoff + ly, zoff).color(r, g, b, fadeTime).endVertex();
+		bufferbuilder.pos(xoff + lx, yoff, zoff).color(r, g, b, fadeTime).endVertex();
+		bufferbuilder.pos(xoff + lx, yoff + ly, zoff).color(r, g, b, fadeTime).endVertex();
+
+		bufferbuilder.pos(xoff + lx, yoff + ly, zoff + lz).color(r, g, b, fadeTime).endVertex();
+		bufferbuilder.pos(xoff + lx, yoff, zoff + lz).color(r, g, b, fadeTime).endVertex();
+		bufferbuilder.pos(xoff + lx, yoff + ly, zoff + lz).color(r, g, b, fadeTime).endVertex();
+
+		bufferbuilder.pos(xoff, yoff + ly, zoff + lz).color(r, g, b, fadeTime).endVertex();
+		bufferbuilder.pos(xoff, yoff, zoff + lz).color(r, g, b, fadeTime).endVertex();
+		bufferbuilder.pos(xoff, yoff + ly, zoff + lz).color(r, g, b, fadeTime).endVertex();
+
+		bufferbuilder.pos(xoff, yoff + ly, zoff).color(r, g, b, fadeTime).endVertex();
 	}
 }

@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -45,8 +46,9 @@ public class ItemArchitectureCrystal extends Item {
 		if (!info.isValid()) {
 			return;
 		}
-		tooltip.add("§e" + I18n.format("info.arcCrystal.choice"));
+		tooltip.add(TextFormatting.GOLD + I18n.format("info.arcCrystal.choice"));
 		tooltip.add(I18n.format("info.arcCrystal.axis", info.pos.getX(), info.pos.getY(), info.pos.getZ()));
+		tooltip.add(I18n.format("info.arcCrystal.face", info.facing.getName()));
 		if (info.building.getBlockTypeInfos().isEmpty()) {
 			tooltip.add(TextFormatting.YELLOW + I18n.format("info.arcCrystal.wait"));
 			return;
@@ -78,6 +80,7 @@ public class ItemArchitectureCrystal extends Item {
 		}
 		pos = pos.up();
 		NBTHelper.setBlockPos(nbt, "pos", pos);
+		nbt.setByte("face", (byte) player.getHorizontalFacing().ordinal());
 		if (worldIn.isRemote) {
 			player.sendMessage(
 					new TextComponentString(I18n.format("info.posSet.success", pos.getX(), pos.getY(), pos.getZ())));

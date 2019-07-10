@@ -57,6 +57,7 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileBuildingAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementalCube;
@@ -65,6 +66,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStela;
 import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
+import yuzunyannn.elementalsorcery.tile.TileBuildingAltar;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.TileElementCraftingTable;
@@ -149,7 +151,7 @@ public class ESInit {
 	// 注册
 
 	static void registerAllLoot() {
-		LootTableList.register(new ResourceLocation(ElementalSorcery.MODID, "hall/es_hall")); 
+		LootTableList.register(new ResourceLocation(ElementalSorcery.MODID, "hall/es_hall"));
 	}
 
 	static void registerAllItems() {
@@ -204,6 +206,7 @@ public class ESInit {
 		register(ESInitInstance.BLOCKS.DECONSTRUCT_ALTAR_TABLE);
 		register(ESInitInstance.BLOCKS.STELA);
 		register(ESInitInstance.BLOCKS.LANTERN);
+		register(ESInitInstance.BLOCKS.BUILDING_ALTAR);
 	}
 
 	static void registerAllTiles() {
@@ -219,6 +222,7 @@ public class ESInit {
 		register(TileDeconstructAltarTable.class, "DeconstructAltarTable");
 		register(TileStela.class, "Stela");
 		register(TileLantern.class, "Lantern");
+		register(TileBuildingAltar.class, "BuildingAltar");
 	}
 
 	static void registerAllElements() {
@@ -264,7 +268,8 @@ public class ESInit {
 		registerRender(ESInitInstance.BLOCKS.ESTONE_SLAB);
 		registerRender(ESInitInstance.BLOCKS.ESTONE_STAIRS);
 		registerRender(ESInitInstance.ITEMS.ARCHITECTURE_CRYSTAL);
-		registerRender(ESInitInstance.BLOCKS.MAGIC_PLATFORM);
+		registerRender(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 0, "magic_platform");
+		registerRender(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, "magic_platform_estone");
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(ESInitInstance.BLOCKS.ABSORB_BOX);
 		registerRender(ESInitInstance.ITEMS.ELEMENT_CRYSTAL);
@@ -291,6 +296,7 @@ public class ESInit {
 				TileDeconstructAltarTable.class);
 		registerRender(new RenderTileStela(), ESInitInstance.BLOCKS.STELA, TileStela.class);
 		registerRender(new RenderTileLantern(), ESInitInstance.BLOCKS.LANTERN, TileLantern.class);
+		registerRender(new RenderTileBuildingAltar(), ESInitInstance.BLOCKS.BUILDING_ALTAR, TileBuildingAltar.class);
 
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);

@@ -15,6 +15,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -26,6 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ability.IAltarWake;
 import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
+import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.building.Buildings;
@@ -35,7 +37,7 @@ import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 
-public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
+public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IGetItemStack {
 
 	// 记录的物品
 	private ItemStack book = ItemStack.EMPTY;
@@ -59,6 +61,22 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 		} else if (!world.isRemote) {
 			ElementalSorcery.logger.warn("魔法书桌上不应该放入除spellbook以外的物品");
 		}
+	}
+
+	@Override
+	public void setStack(ItemStack stack) {
+		this.setBook(stack);
+		this.updateToClient();
+	}
+
+	@Override
+	public ItemStack getStack() {
+		return this.getBook();
+	}
+
+	@Override
+	public boolean canSetStack(ItemStack stack) {
+		return stack.getItem() instanceof ItemSpellbook;
 	}
 
 	@Override
@@ -115,7 +133,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable {
 			return;
 		tick++;
 		if (tick % 40 == 0)
-			ok = structure.check();
+			ok = structure.check(EnumFacing.NORTH);
 		if (world.isRemote)
 			this.updateClientBookRedner();
 		if (ok == false)

@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.tile;
 import java.util.Random;
 
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import yuzunyannn.elementalsorcery.api.ability.IAltarWake;
 import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
@@ -26,7 +27,13 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 	public void onLoad() {
 		super.onLoad();
 		this.initMultiBlock();
-		ok = structure.check();
+		ok = structure.check(EnumFacing.NORTH);
+		if (ok == false)
+			ok = structure.check(EnumFacing.SOUTH);
+		if (ok == false)
+			ok = structure.check(EnumFacing.EAST);
+		if (ok == false)
+			ok = structure.check(EnumFacing.WEST);
 	}
 
 	// 初始化多方块
@@ -36,7 +43,18 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 	public boolean isIntact() {
 		check_tick++;
 		if (check_tick % 40 == 0) {
-			ok = structure.check();
+			if (!ok) {
+				structure.face(structure.face().rotateY());
+			}
+			ok = structure.check(structure.face());
+			// 优先使用north方向
+			if (ok && structure.face() != EnumFacing.NORTH) {
+				ok = structure.check(EnumFacing.NORTH);
+				if (ok) {
+					structure.face(EnumFacing.NORTH);
+				} else
+					ok = true;
+			}
 		}
 		return this.ok;
 	}

@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"XAX",
+		"###"
+	],
+	"key": {
+		"X": {
+			"item": "minecraft:gold_ingot"
+		},
+		"#": {
+			"item": "elementalsorcery:estone",
+			"data": 0
+		},
+		"A": {
+			"item": "elementalsorcery:magical_piece"
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:magic_platform",
+		"count": 1,
+		"data": 1
+	}
+}

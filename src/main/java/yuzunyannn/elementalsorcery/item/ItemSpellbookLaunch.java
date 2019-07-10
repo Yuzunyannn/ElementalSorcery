@@ -59,6 +59,7 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 		tooltip.add(TextFormatting.DARK_AQUA + I18n.format(this.getUnlocalizedTypeName(stack)));
 	}
 
+	@SideOnly(Side.CLIENT)
 	private String getUnlocalizedTypeName(ItemStack stack) {
 		ICraftingLaunch.CraftingType type = this.getBookType(stack);
 		String str = "";
@@ -68,6 +69,9 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 			break;
 		case ELEMENT_DECONSTRUCT:
 			str = "info.launchbook.dec";
+			break;
+		case BUILING_RECORD:
+			str = "info.launchbook.build";
 			break;
 		}
 		return str;
@@ -144,7 +148,12 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 			nbt.setInteger("bookType", ICraftingLaunch.CraftingType.ELEMENT_DECONSTRUCT.ordinal());
 			break;
 		case ELEMENT_DECONSTRUCT:
+			nbt.setInteger("bookType", ICraftingLaunch.CraftingType.BUILING_RECORD.ordinal());
+			break;
+		case BUILING_RECORD:
 			nbt.setInteger("bookType", ICraftingLaunch.CraftingType.ELEMENT_CRAFTING.ordinal());
+			break;
+		default:
 			break;
 		}
 	}
