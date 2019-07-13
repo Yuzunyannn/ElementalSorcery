@@ -10,9 +10,12 @@ import java.util.Map.Entry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.network.ESNetwork;
+import yuzunyannn.elementalsorcery.network.MessageGetBuilingInfo;
 
 public class BuildingLib {
 
@@ -44,7 +47,7 @@ public class BuildingLib {
 		}
 		mapSave.put(key, data);
 	}
-
+ 
 	/** 添加建筑到建筑存储 */
 	public String addBuilding(Building building) {
 		BuildingSaveData data = new BuildingSaveData(building);
@@ -71,6 +74,18 @@ public class BuildingLib {
 		}
 		mapClient.put(key, new Building());
 		return mapClient.get(key);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void synBuilding(String key, NBTTagCompound nbt) {
+		Building building = this.giveBuilding(key);
+		building.deserializeNBT(nbt);
+		building.setKeyName(key);
+	}
+
+	@SideOnly(Side.CLIENT)
+	static public void wantBuildingDatasFormServer(String key) {
+		ESNetwork.instance.sendToServer(new MessageGetBuilingInfo(key));
 	}
 
 	/** 使用某个建筑，让建筑的时间更新 */

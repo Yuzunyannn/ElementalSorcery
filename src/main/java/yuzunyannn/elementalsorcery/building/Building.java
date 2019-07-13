@@ -185,6 +185,9 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		return this.author;
 	}
 
+	/** 上次修改时间 */
+	long mtime = System.currentTimeMillis();
+
 	/** 记录方块类型的线性表 */
 	private List<BlockInfo> infoList = new ArrayList<BlockInfo>();
 	/** 记录位置到方块类型索引的哈希表，索引的int为infoList的下标 */
@@ -194,6 +197,10 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 	/** 建筑的方块 */
 	private int maxX = 0, minX = 0, maxY = 0, minY = 0, maxZ = 0, minZ = 0;
 
+	public void mkdir() {
+		this.mtime = System.currentTimeMillis();
+	}
+
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
@@ -201,6 +208,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		nbt.setString("key", this.keyName);
 		nbt.setString("name", this.name);
 		nbt.setString("author", this.author);
+		//nbt.setLong("mtime", this.mtime);
 		// 记录位置和索引
 		NBTTagList listMap = new NBTTagList();
 		for (Entry<BlockPos, Integer> entry : blockMap.entrySet()) {
@@ -226,6 +234,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		this.keyName = nbt.getString("key");
 		this.name = nbt.getString("name");
 		this.author = nbt.getString("author");
+		//this.mtime = nbt.getLong("mtime");
 		// 恢复方块位置和索引
 		NBTTagList listMap = nbt.getTagList("blockMap", 10);
 		for (NBTBase base : listMap) {

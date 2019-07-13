@@ -29,15 +29,21 @@ public class ArcInfo {
 		this.keyName = nbt.getString("key");
 		if (this.keyName.isEmpty())
 			return;
-		if (side.isClient())
+		if (side.isClient()) {
 			this.building = BuildingLib.instance.giveBuilding(this.keyName);
-		else {
+			long mtime = nbt.getLong("mtime");
+			if (this.building.mtime != mtime) {
+				BuildingLib.wantBuildingDatasFormServer(this.keyName);
+				this.building.mtime = mtime;
+			}
+		} else {
 			this.building = BuildingLib.instance.getBuilding(this.keyName);
 			if (this.building == null) {
 				nbt.setInteger("flags", MISS);
 				this.flags = MISS;
 				return;
 			}
+			nbt.setLong("mtime", this.building.mtime);
 			BuildingLib.instance.use(this.keyName);
 		}
 		if (nbt.hasKey("face")) {
@@ -58,6 +64,11 @@ public class ArcInfo {
 		nbt.setInteger("flags", SUCCESS);
 		nbt.setString("key", key);
 		NBTHelper.setBlockPos(nbt, "pos", BlockPos.ORIGIN);
+		Building building = BuildingLib.instance.getBuilding(key);
+		if (building != null)
+			nbt.setLong("mtime", building.mtime);
+		else
+			nbt.setLong("mtime", 0);
 	}
 
 	static public boolean isArc(ItemStack stack) {

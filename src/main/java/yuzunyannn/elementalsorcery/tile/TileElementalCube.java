@@ -1,7 +1,6 @@
 package yuzunyannn.elementalsorcery.tile;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -20,7 +19,7 @@ import yuzunyannn.elementalsorcery.block.BlockElementalCube;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
-import yuzunyannn.elementalsorcery.render.particle.ParticleElement;
+import yuzunyannn.elementalsorcery.render.particle.EffectElementFly;
 import yuzunyannn.elementalsorcery.util.obj.Vertex;
 
 public class TileElementalCube extends TileEntityNetwork implements ITickable, IAltarWake {
@@ -57,22 +56,34 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	// 获取一次元素动画
 	@SideOnly(Side.CLIENT)
 	public static void giveParticleElementTo(World world, int color, BlockPos from, BlockPos pto, float possibility) {
-		if (EventClient.tick % 5 != 0)
+		if (EventClient.tick % 3 != 0)
 			return;
 		if (Math.random() > possibility)
 			return;
-		ParticleElement effect;
+//		ParticleElementFly effect;
+//		if (pto.getY() > from.getY())
+//			effect = new ParticleElementFly(world,
+//					new Vec3d(from.getX() + Math.random(), from.getY() + Math.random(), from.getZ() + Math.random()),
+//					new Vec3d(pto.getX() + 0.5, pto.getY() + 0.5, pto.getZ() + 0.5));
+//		else
+//			effect = new ParticleElementFly(world,
+//					new Vec3d(from.getX() + 0.25 + Math.random() * 0.5, from.getY() + 0.25 + Math.random() * 0.5,
+//							from.getZ() + 0.25 + Math.random() * 0.5),
+//					new Vec3d(pto.getX() + 0.5, pto.getY() + 1.0, pto.getZ() + 0.5));
+//		effect.setColor(color);
+//		Minecraft.getMinecraft().effectRenderer.addEffect(effect);
+		EffectElementFly effect;
 		if (pto.getY() > from.getY())
-			effect = new ParticleElement(world,
+			effect = new EffectElementFly(world,
 					new Vec3d(from.getX() + Math.random(), from.getY() + Math.random(), from.getZ() + Math.random()),
 					new Vec3d(pto.getX() + 0.5, pto.getY() + 0.5, pto.getZ() + 0.5));
 		else
-			effect = new ParticleElement(world,
+			effect = new EffectElementFly(world,
 					new Vec3d(from.getX() + 0.25 + Math.random() * 0.5, from.getY() + 0.25 + Math.random() * 0.5,
 							from.getZ() + 0.25 + Math.random() * 0.5),
 					new Vec3d(pto.getX() + 0.5, pto.getY() + 1.0, pto.getZ() + 0.5));
 		effect.setColor(color);
-		Minecraft.getMinecraft().effectRenderer.addEffect(effect);
+		yuzunyannn.elementalsorcery.render.particle.Effect.addEffect(effect);
 
 	}
 

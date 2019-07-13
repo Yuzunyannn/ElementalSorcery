@@ -67,6 +67,8 @@ public class CraftingBuildingRecord implements ICraftingCommit {
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
+		if (nbt == null)
+			return;
 		if (NBTHelper.hasBlockPos(nbt, "pos1"))
 			this.pos1 = NBTHelper.getBlockPos(nbt, "pos1");
 		if (NBTHelper.hasBlockPos(nbt, "pos2"))

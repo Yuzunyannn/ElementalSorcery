@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,11 +16,13 @@ import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
+import yuzunyannn.elementalsorcery.render.particle.Effect;
 
 @SideOnly(Side.CLIENT)
 public class EventClient {
@@ -34,8 +37,6 @@ public class EventClient {
 
 		@Override
 		public int onTick() {
-			if (EventClient.tick % 2 == 0)
-				return ITickTask.SUCCESS;
 			Spellbook book = this.stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 			if (this.entity.isHandActive()) {
 				ItemSpellbook.renderOpen(book);
@@ -92,7 +93,7 @@ public class EventClient {
 	// 全局旋转，单位角度
 	public static float global_rotate = 0.0f;
 	// 旋转角度增量
-	public static final float DGLOBAL_ROTATE = 2.25f * 0.25f;
+	public static final float DGLOBAL_ROTATE = 2.25f * 0.5f;
 	// 全局client的tick
 	public static int tick = 0;
 	// 全局随机的，隔一段时间随机的一个整数
@@ -104,6 +105,8 @@ public class EventClient {
 	@SideOnly(Side.CLIENT)
 	static public void onTick(TickEvent.ClientTickEvent event) {
 		if (mc.isGamePaused())
+			return;
+		if (event.phase != Phase.END)
 			return;
 		// tick增加
 		tick++;
@@ -125,6 +128,8 @@ public class EventClient {
 			rand_int = rand.nextInt();
 			rand_int = Math.abs(rand_int);
 		}
+		// 更新所有ES粒子效果
+		Effect.updateAllEffects();
 		// 其他处理
 
 	}
@@ -161,6 +166,7 @@ public class EventClient {
 			if (flags == IRenderClient.END)
 				iter.remove();
 		}
+		Effect.renderAllEffects(e.getPartialTicks());
 		GlStateManager.popMatrix();
 	}
 

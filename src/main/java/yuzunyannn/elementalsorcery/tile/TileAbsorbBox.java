@@ -25,7 +25,7 @@ import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.render.particle.ParticleElement;
+import yuzunyannn.elementalsorcery.render.particle.ParticleElementFly;
 
 public class TileAbsorbBox extends TileEntityNetwork implements IGetBurnPower {
 
@@ -107,9 +107,7 @@ public class TileAbsorbBox extends TileEntityNetwork implements IGetBurnPower {
 				einv.saveState(stack);
 				if (world.isRemote) {
 					// 生成粒子效果
-					if (estack.getCount() % 3 == 1) {
-						this.giveMePaticle(estack, pos);
-					}
+					TileElementalCube.giveParticleElementTo(world, estack.getColor(), pos, this.pos, 0.75f);
 				} else {
 					// 如果没有剩余元素了，就更新下
 					if (estack.isEmpty()) {
@@ -124,15 +122,6 @@ public class TileAbsorbBox extends TileEntityNetwork implements IGetBurnPower {
 		}
 		this.markDirty();
 		return true;
-	}
-
-	@SideOnly(Side.CLIENT)
-	private void giveMePaticle(ElementStack estack, BlockPos pos) {
-		ParticleElement effect = new ParticleElement(this.world,
-				new Vec3d(pos.getX() + Math.random(), pos.getY() + Math.random(), pos.getZ() + Math.random()),
-				new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5));
-		effect.setColor(estack.getColor());
-		Minecraft.getMinecraft().effectRenderer.addEffect(effect);
 	}
 
 	private List<BlockPos> posList = new LinkedList<BlockPos>();

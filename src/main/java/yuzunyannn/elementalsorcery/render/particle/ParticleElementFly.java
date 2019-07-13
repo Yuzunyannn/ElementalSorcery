@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
-public class ParticleElement extends ParticleSimpleAnimated {
+public class ParticleElementFly extends ParticleSimpleAnimated {
 
 	static public final float g = -0.025f;
 	static public final double at_high_speed = 0.05;
@@ -28,7 +28,7 @@ public class ParticleElement extends ParticleSimpleAnimated {
 	private double dtheta = 0;
 	private double bottom;
 
-	public ParticleElement(World world, Vec3d from, Vec3d to) {
+	public ParticleElementFly(World world, Vec3d from, Vec3d to) {
 		super(world, from.x, from.y, from.z, 160, 8, -0.004F);
 		this.main = true;
 		this.particleScale *= 0.75F;
@@ -56,7 +56,7 @@ public class ParticleElement extends ParticleSimpleAnimated {
 		}
 	}
 
-	private ParticleElement(ParticleElement particle) {
+	private ParticleElementFly(ParticleElementFly particle) {
 		super(particle.world, particle.posX, particle.posY, particle.posZ, 160, 8, -0.004F);
 		this.motionX = 0;
 		this.motionY = 0;
@@ -78,7 +78,7 @@ public class ParticleElement extends ParticleSimpleAnimated {
 		boolean spawn = main ? (this.particleAge % 2 == 0)
 				: (this.particleAge < this.particleMaxAge / 2 && (this.particleAge + this.particleMaxAge) % 2 == 0);
 		if (spawn) {
-			ParticleElement particlefirework$spark = new ParticleElement(this);
+			ParticleElementFly particlefirework$spark = new ParticleElementFly(this);
 			particlefirework$spark.setAlphaF(0.99F);
 			particlefirework$spark.setRBGColorF(this.particleRed, this.particleGreen, this.particleBlue);
 			particlefirework$spark.particleAge = particlefirework$spark.particleMaxAge / 2;

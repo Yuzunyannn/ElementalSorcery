@@ -11,6 +11,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
@@ -129,8 +130,10 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		this.canContinue = true;
 		this.deadTime = 0;
 		ItemStack stack = this.getRuler();
+		if (ElementalSorcery.side.isServer())
+			return new CraftingBuildingRecord(nbt).setTile(this);
 		EnumDyeColor c = ItemMagicRuler.getColor(stack);
-		return new CraftingBuildingRecord(nbt).setColor(c.getColorValue()).setTile(this);
+		return new CraftingBuildingRecord(nbt).setTile(this).setColor(c.getColorValue());
 	}
 
 	public static final ElementStack ENEED1 = new ElementStack(ESInitInstance.ELEMENTS.EARTH, 1, 25);
@@ -161,6 +164,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		this.craftingUpdate(commit);
 	}
 
+	@SideOnly(Side.CLIENT)
 	@Override
 	public ICraftingLaunchAnime getAnime(ICraftingCommit commit) {
 		return new AnimeRenderBuildingRecord(this.stack, (CraftingBuildingRecord) commit);
@@ -184,6 +188,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		if (success) {
 			Building building = cnr.getBuilding();
 			building.setName(building.getAuthor() + "的建筑");
+			building.mkdir();
 			String key = BuildingLib.instance.addBuilding(building);
 			ArcInfo.initArcInfoToItem(this.stack, key);
 		} else

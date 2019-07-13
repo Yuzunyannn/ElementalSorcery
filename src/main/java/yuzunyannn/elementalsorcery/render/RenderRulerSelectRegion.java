@@ -60,8 +60,8 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 	// 是否处于渐变退场状态
 	private boolean inFade = false;
 
-	private final static float FADE_RATE = 0.02f;
-	private final static float DTHETA = 0.025f;
+	private final static float FADE_RATE = 0.03f;
+	private final static float DTHETA = 0.04f;
 
 	private float r, g, b;
 

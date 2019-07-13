@@ -47,14 +47,20 @@ public class ESTestAndDebug {
 
 	@SubscribeEvent
 	public void click(PlayerInteractEvent event) {
-		if (event.getWorld().isRemote)
+		if (event.getWorld().isRemote) {
+			BlockPos pos = event.getPos();
+//			Effect.addEffect(new EffectElement(event.getWorld(), pos.getX() + Math.random(), pos.getY() + 2,
+//					pos.getZ() + Math.random()));
 			return;
+		}
+		System.out.println("Server ArcInfo");
 		BlockPos pos = event.getPos();
 		IBlockState state = event.getWorld().getBlockState(pos);
 		System.out.println(state);
 		if (event.getEntityPlayer().isSneaking()) {
 			ESTestAndDebug.pos = event.getPos().up();
 		}
+
 	}
 
 	public static class DebugCmd extends CommandBase {
