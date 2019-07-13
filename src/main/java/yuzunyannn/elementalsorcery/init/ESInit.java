@@ -43,7 +43,7 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
-import yuzunyannn.elementalsorcery.element.ElementMap;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.event.ESTestAndDebug;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
@@ -66,18 +66,19 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStela;
 import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
-import yuzunyannn.elementalsorcery.tile.TileBuildingAltar;
-import yuzunyannn.elementalsorcery.tile.TileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
-import yuzunyannn.elementalsorcery.tile.TileElementCraftingTable;
 import yuzunyannn.elementalsorcery.tile.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
 import yuzunyannn.elementalsorcery.tile.TileInfusionBox;
 import yuzunyannn.elementalsorcery.tile.TileLantern;
-import yuzunyannn.elementalsorcery.tile.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.TileMagicPlatform;
 import yuzunyannn.elementalsorcery.tile.TileSmeltBox;
 import yuzunyannn.elementalsorcery.tile.TileStela;
+import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
+import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
+import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 
 public class ESInit {
@@ -180,6 +181,7 @@ public class ESInit {
 		register(ESInitInstance.ITEMS.SCROLL);
 		register(ESInitInstance.ITEMS.MANUAL);
 		register(ESInitInstance.ITEMS.MAGIC_RULER);
+		register(ESInitInstance.ITEMS.ITEM_CRYSTAL);
 	}
 
 	static void registerAllBlocks() {
@@ -207,6 +209,7 @@ public class ESInit {
 		register(ESInitInstance.BLOCKS.STELA);
 		register(ESInitInstance.BLOCKS.LANTERN);
 		register(ESInitInstance.BLOCKS.BUILDING_ALTAR);
+		register(ESInitInstance.BLOCKS.ANALYSIS_ALTAR);
 	}
 
 	static void registerAllTiles() {
@@ -223,6 +226,7 @@ public class ESInit {
 		register(TileStela.class, "Stela");
 		register(TileLantern.class, "Lantern");
 		register(TileBuildingAltar.class, "BuildingAltar");
+		register(TileAnalysisAltar.class, "AnalysisAltar");
 	}
 
 	static void registerAllElements() {
@@ -287,6 +291,7 @@ public class ESInit {
 		registerRender(ESInitInstance.ITEMS.SCROLL);
 		registerRender(ESInitInstance.ITEMS.MANUAL);
 		registerRender(ESInitInstance.ITEMS.MAGIC_RULER);
+		registerRender(ESInitInstance.ITEMS.ITEM_CRYSTAL);
 
 		registerRender(new RenderTileElementalCube(), ESInitInstance.BLOCKS.ELEMENTAL_CUBE, TileElementalCube.class);
 		registerRender(new RenderTileMagicDesk(), ESInitInstance.BLOCKS.MAGIC_DESK, TileMagicDesk.class);

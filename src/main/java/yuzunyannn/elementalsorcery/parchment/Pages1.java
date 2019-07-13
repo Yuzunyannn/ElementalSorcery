@@ -12,7 +12,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemKynaiteTools;
 import yuzunyannn.elementalsorcery.parchment.Pages.PageSimpleInfo;
-import yuzunyannn.elementalsorcery.tile.TileMagicDesk;
+import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 
 public class Pages1 {
 

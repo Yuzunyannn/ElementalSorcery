@@ -35,13 +35,16 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementMap;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryOnlyInsert;
 
 public class ItemKynaiteTools {
 
 	public static final ToolMaterial KYNAITE = EnumHelper.addToolMaterial("Kynaite", 2, 750, 6.0F, 2.5F, 10);
+	static {
+		KYNAITE.setRepairItem(new ItemStack(ESInitInstance.ITEMS.KYNAITE));
+	}
 
 	// 添加物品信息
 	private static void addToolsInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {

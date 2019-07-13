@@ -9,14 +9,14 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
+import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
 
-public class ContainerAbsorbBox extends Container {
+public class ContainerAnalysisAltar extends Container {
 
-	TileAbsorbBox tileEntity;
+	public final TileAnalysisAltar tileEntity;
 
-	public ContainerAbsorbBox(EntityPlayer player, TileEntity tileEntity) {
-		tileEntity = (TileAbsorbBox) tileEntity;
+	public ContainerAnalysisAltar(EntityPlayer player, TileEntity tileEntity) {
+		this.tileEntity = (TileAnalysisAltar) tileEntity;
 		// 玩家物品栏
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
@@ -28,12 +28,12 @@ public class ContainerAbsorbBox extends Container {
 			this.addSlotToContainer(new Slot(player.inventory, i, 8 + i * 18, 142));
 
 		}
-
 		IItemHandler items = tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
-		this.addSlotToContainer(new SlotItemHandler(items, 0, 80, 34));
-
+		this.addSlotToContainer(new SlotItemHandler(items, 0, 136, 40));
 	}
 
+	
+	
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		return playerIn.getDistanceSq(this.tileEntity.getPos()) <= 64;

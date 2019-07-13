@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.tile;
+package yuzunyannn.elementalsorcery.tile.altar;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +15,7 @@ import yuzunyannn.elementalsorcery.crafting.CraftingDeconstruct;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
-import yuzunyannn.elementalsorcery.element.ElementMap;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderDeconstruct;
 
 public class TileDeconstructAltarTable extends TileStaticMultiBlock implements IGetItemStack, ICraftingLaunch {

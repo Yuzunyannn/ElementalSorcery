@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.tile;
+package yuzunyannn.elementalsorcery.tile.altar;
 
 import java.util.List;
 

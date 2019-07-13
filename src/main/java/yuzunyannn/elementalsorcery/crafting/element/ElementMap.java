@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.element;
+package yuzunyannn.elementalsorcery.crafting.element;
 
 import java.util.ArrayList;
 import java.util.HashMap;

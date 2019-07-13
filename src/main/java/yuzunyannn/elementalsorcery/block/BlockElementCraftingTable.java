@@ -13,8 +13,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
-import yuzunyannn.elementalsorcery.tile.TileElementCraftingTable;
-import yuzunyannn.elementalsorcery.tile.TileStaticMultiBlockWithInventory;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlockWithInventory;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class BlockElementCraftingTable extends BlockContainer {

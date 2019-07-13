@@ -11,7 +11,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.tile.TileBuildingAltar;
+import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class BlockBuildingAltar extends BlockContainer {

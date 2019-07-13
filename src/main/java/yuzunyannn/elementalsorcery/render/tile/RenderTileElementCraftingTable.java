@@ -7,7 +7,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelElementCraftingTable;
-import yuzunyannn.elementalsorcery.tile.TileElementCraftingTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 @SideOnly(Side.CLIENT)
 public class RenderTileElementCraftingTable extends TileEntitySpecialRenderer<TileElementCraftingTable>

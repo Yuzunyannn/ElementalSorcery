@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.tile;
+package yuzunyannn.elementalsorcery.tile.altar;
 
 import java.util.Random;
 
@@ -10,6 +10,8 @@ import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
+import yuzunyannn.elementalsorcery.tile.TileElementalCube;
+import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
 
 public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 
@@ -20,7 +22,7 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 	// 多方块结构
 	protected MultiBlock structure;
 	// 检查时间
-	protected int check_tick = 0;
+	protected int checkTime = 0;
 
 	// 加载
 	@Override
@@ -41,8 +43,8 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 
 	// 是否完整
 	public boolean isIntact() {
-		check_tick++;
-		if (check_tick % 40 == 0) {
+		checkTime++;
+		if (checkTime % 40 == 0) {
 			if (!ok) {
 				structure.face(structure.face().rotateY());
 			}

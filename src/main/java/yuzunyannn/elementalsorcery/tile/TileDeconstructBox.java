@@ -19,7 +19,7 @@ import yuzunyannn.elementalsorcery.api.ability.IGetBurnPower;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.ElementHelper;
-import yuzunyannn.elementalsorcery.element.ElementMap;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.util.IField;
 
 public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IField {

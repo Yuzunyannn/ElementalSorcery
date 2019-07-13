@@ -7,6 +7,7 @@ import yuzunyannn.elementalsorcery.api.ESRegister;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.block.BlockAbsorbBox;
+import yuzunyannn.elementalsorcery.block.BlockAnalysisAltar;
 import yuzunyannn.elementalsorcery.block.BlockBuildingAltar;
 import yuzunyannn.elementalsorcery.block.BlockDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.block.BlockDeconstructBox;
@@ -24,18 +25,19 @@ import yuzunyannn.elementalsorcery.block.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.BlockStela;
 import yuzunyannn.elementalsorcery.block.BlocksEStone;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementAir;
 import yuzunyannn.elementalsorcery.element.ElementEarth;
 import yuzunyannn.elementalsorcery.element.ElementEnder;
 import yuzunyannn.elementalsorcery.element.ElementFire;
 import yuzunyannn.elementalsorcery.element.ElementKnowledge;
-import yuzunyannn.elementalsorcery.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementMetal;
 import yuzunyannn.elementalsorcery.element.ElementWater;
 import yuzunyannn.elementalsorcery.element.ElementWood;
 import yuzunyannn.elementalsorcery.init.registries.ElementRegister;
 import yuzunyannn.elementalsorcery.item.ItemArchitectureCrystal;
 import yuzunyannn.elementalsorcery.item.ItemElementCrystal;
+import yuzunyannn.elementalsorcery.item.ItemItemCrystal;
 import yuzunyannn.elementalsorcery.item.ItemKynaiteTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemManual;
@@ -114,6 +116,7 @@ public class ESInitInstance {
 		BLOCKS.STELA = new BlockStela().setRegistryName("stela");
 		BLOCKS.LANTERN = new BlockLantern().setRegistryName("lantern");
 		BLOCKS.BUILDING_ALTAR = new BlockBuildingAltar().setRegistryName("building_altar");
+		BLOCKS.ANALYSIS_ALTAR = new BlockAnalysisAltar().setRegistryName("analysis_altar");
 
 		BLOCKS.ELEMENTAL_CUBE.setCreativeTab(tab);
 		BLOCKS.HEARTH.setCreativeTab(tab);
@@ -134,6 +137,7 @@ public class ESInitInstance {
 		BLOCKS.STELA.setCreativeTab(tab);
 		BLOCKS.LANTERN.setCreativeTab(tab);
 		BLOCKS.BUILDING_ALTAR.setCreativeTab(tab);
+		BLOCKS.ANALYSIS_ALTAR.setCreativeTab(tab);
 	}
 
 	private static final void instanceItems() {
@@ -156,6 +160,7 @@ public class ESInitInstance {
 		ITEMS.SCROLL = new ItemScroll().setRegistryName("scroll");
 		ITEMS.MANUAL = new ItemManual().setRegistryName("manual");
 		ITEMS.MAGIC_RULER = new ItemMagicRuler().setRegistryName("magic_ruler");
+		ITEMS.ITEM_CRYSTAL = new ItemItemCrystal().setRegistryName("item_crystal");
 
 		ITEMS.KYNAITE.setCreativeTab(tab);
 		ITEMS.MAGICAL_PIECE.setCreativeTab(tab);
@@ -176,6 +181,7 @@ public class ESInitInstance {
 		ITEMS.SCROLL.setCreativeTab(tab);
 		ITEMS.MANUAL.setCreativeTab(tab);
 		ITEMS.MAGIC_RULER.setCreativeTab(tab);
+		ITEMS.ITEM_CRYSTAL.setCreativeTab(tab);
 
 		ITEMS.SPELLBOOK = new ItemSpellbook().setRegistryName("spellbook");
 		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture().setRegistryName("spellbook_architecture");

@@ -12,7 +12,7 @@ import yuzunyannn.elementalsorcery.api.ESRegister;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.tile.TileMagicDesk;
+import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 
 public class RecipeManagement implements ESRegister.IRecipeManagement {
 

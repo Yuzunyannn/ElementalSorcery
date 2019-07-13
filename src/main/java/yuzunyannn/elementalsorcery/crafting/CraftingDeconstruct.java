@@ -9,8 +9,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.element.ElementMap;
-import yuzunyannn.elementalsorcery.tile.TileStaticMultiBlock;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 public class CraftingDeconstruct implements ICraftingCommit {

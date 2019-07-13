@@ -5,6 +5,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import yuzunyannn.elementalsorcery.container.gui.GuiAbsorbBox;
+import yuzunyannn.elementalsorcery.container.gui.GuiAnalysisAltar;
 import yuzunyannn.elementalsorcery.container.gui.GuiDeconstructBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementCraftingTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
@@ -23,6 +24,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_INFUSION_BOX = 6;
 	public static final int GUI_PARCHMENT = 7;
 	public static final int GUI_ELEMENT_CRAFTING_TABLE = 8;
+	public static final int GUI_ANALYSIS_ALTAR = 9;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -43,6 +45,8 @@ public class ESGuiHandler implements IGuiHandler {
 			return new ContainerParchment(player);
 		case GUI_ELEMENT_CRAFTING_TABLE:
 			return new ContainerElementCraftingTable(player, world.getTileEntity(new BlockPos(x, y, z)));
+		case GUI_ANALYSIS_ALTAR:
+			return new ContainerAnalysisAltar(player, world.getTileEntity(new BlockPos(x, y, z)));
 		default:
 			return null;
 		}
@@ -74,6 +78,9 @@ public class ESGuiHandler implements IGuiHandler {
 		case GUI_ELEMENT_CRAFTING_TABLE:
 			return new GuiElementCraftingTable(
 					new ContainerElementCraftingTable(player, world.getTileEntity(new BlockPos(x, y, z))),
+					player.inventory);
+		case GUI_ANALYSIS_ALTAR:
+			return new GuiAnalysisAltar(new ContainerAnalysisAltar(player, world.getTileEntity(new BlockPos(x, y, z))),
 					player.inventory);
 		default:
 			return null;

@@ -27,6 +27,7 @@ item.spellbookCover.back.name=魔导书封底
 item.scroll.name=羊皮卷轴
 item.manual.name=元素手册
 item.magicRuler.name=魔力标尺
+item.itemCrystal.name=结构水晶
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -55,6 +56,7 @@ tile.deconstructAltarTable.name=元素析构台
 tile.stela.name=知识映射碑
 tile.lantern.name=引路灯
 tile.buildingAltar.name=建筑解析台
+tile.analysisAltar.name=结构解析台
 
 element.void.name=虚空
 element.ender.name=末影
@@ -91,6 +93,7 @@ arc.spellbookAltar.name=魔法书祭坛
 arc.elementCraftingAltar.name=元素合成小祭坛
 arc.deconstructAltar.name=元素析构小祭坛
 arc.builingAltar.name=建筑解析祭坛
+arc.analysisAltar.name=结构解析祭坛
 
 info.none=无
 info.unknow=未知
@@ -127,6 +130,15 @@ info.ruler.pos=坐标%d：(%d,%d,%d)
 info.ruler.color=当前颜色：%s
 info.ruler.none=当前无记录，右键和shift右键分别记录两个方块位置
 info.ruler.fail=两点的距离过远，无法设定
+info.itemCrystal.data=结构数据：%s
+info.itemCrystal.complex=复杂度：%d
+info.itemCrystal.z=组成元素：
+info.itemCrystal.e=%s:%d->%d
+info.analysisAltar.none=无需解析的物品
+info.analysisAltar.itema=正在解析：
+info.analysisAltar.itemfail=解析失败
+info.analysisAltar.item=解析物品：
+info.analysisAltar.complex=结构复杂度：%d
 
 page.crafting.need=需要元素参与合成：
 page.crafting.show=%s 需要 %d 强度下限 %d 

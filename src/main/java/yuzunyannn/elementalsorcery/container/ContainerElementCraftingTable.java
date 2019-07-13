@@ -8,7 +8,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
-import yuzunyannn.elementalsorcery.tile.TileElementCraftingTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
 
 public class ContainerElementCraftingTable extends Container {
 

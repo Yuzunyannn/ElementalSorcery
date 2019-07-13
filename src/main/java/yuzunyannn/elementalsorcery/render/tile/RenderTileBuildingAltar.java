@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelBuildingAltar;
-import yuzunyannn.elementalsorcery.tile.TileBuildingAltar;
+import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class RenderTileBuildingAltar extends TileEntitySpecialRenderer<TileBuildingAltar> implements IRenderItem {

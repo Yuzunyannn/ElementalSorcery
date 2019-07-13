@@ -10,6 +10,7 @@ import java.util.Random;
 
 import org.apache.commons.compress.utils.IOUtils;
 
+import net.minecraft.block.BlockSlab;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -53,6 +54,7 @@ public class ESTestAndDebug {
 //					pos.getZ() + Math.random()));
 			return;
 		}
+		
 		System.out.println("Server ArcInfo");
 		BlockPos pos = event.getPos();
 		IBlockState state = event.getWorld().getBlockState(pos);

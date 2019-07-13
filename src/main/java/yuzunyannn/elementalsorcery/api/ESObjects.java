@@ -39,6 +39,7 @@ public class ESObjects {
 		public Item SCROLL;
 		public Item MANUAL;
 		public Item MAGIC_RULER;
+		public Item ITEM_CRYSTAL;
 	}
 
 	static public class Blocks {
@@ -66,6 +67,7 @@ public class ESObjects {
 		public Block STELA;
 		public Block LANTERN;
 		public Block BUILDING_ALTAR;
+		public Block ANALYSIS_ALTAR;
 	}
 
 	static public class Elements {
