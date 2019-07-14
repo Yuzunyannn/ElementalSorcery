@@ -14,6 +14,7 @@ import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 public class ItemItemCrystal extends Item {
 	public ItemItemCrystal() {
 		this.setUnlocalizedName("itemCrystal");
+		this.setMaxStackSize(1);
 	}
 
 	@Override

@@ -2,10 +2,13 @@ package yuzunyannn.elementalsorcery.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
@@ -32,8 +35,6 @@ public class ContainerAnalysisAltar extends Container {
 		this.addSlotToContainer(new SlotItemHandler(items, 0, 136, 40));
 	}
 
-	
-	
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
 		return playerIn.getDistanceSq(this.tileEntity.getPos()) <= 64;
@@ -71,4 +72,24 @@ public class ContainerAnalysisAltar extends Container {
 		return old_stack;
 	}
 
+	int lastPower;
+
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		int power = tileEntity.getPowerTime();
+		if (power != lastPower) {
+			lastPower = power;
+			for (int j = 0; j < this.listeners.size(); ++j) {
+				((IContainerListener) this.listeners.get(j)).sendWindowProperty(this, 0, tileEntity.getPowerTime());
+			}
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void updateProgressBar(int id, int data) {
+		super.updateProgressBar(id, data);
+		tileEntity.setPowerTime(data);
+	}
 }

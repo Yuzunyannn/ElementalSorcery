@@ -4,6 +4,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.IToElement;
+import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 
 public interface IItemStructure extends IToElement, IItemCapbiltitySyn {
 
@@ -24,4 +25,8 @@ public interface IItemStructure extends IToElement, IItemCapbiltitySyn {
 	int complex(int index);
 
 	ItemStack getStructureItem(int index);
+
+	public static interface IItemStructureSet {
+		public ItemStructure set(ItemStack stack, int complex, ElementStack... estacks);
+	}
 }

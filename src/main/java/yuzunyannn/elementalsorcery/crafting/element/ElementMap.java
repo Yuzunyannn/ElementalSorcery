@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 
 import net.minecraft.block.Block;
-import net.minecraft.crash.CrashReport;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -246,6 +245,8 @@ public class ElementMap implements IElementMap {
 
 		@Override
 		public int complex(ItemStack stack) {
+			if (stack.getItem() == Items.WATER_BUCKET || stack.getItem() == Items.LAVA_BUCKET)
+				return 5;
 			return 0;
 		}
 
@@ -265,31 +266,34 @@ public class ElementMap implements IElementMap {
 		ESObjects.Elements E = ESInitInstance.ELEMENTS;
 		DefaultBucketToElement.water = new ElementStack[] { newES(E.WATER, 25, 100) };
 		DefaultBucketToElement.fire = new ElementStack[] { newES(E.FIRE, 100, 500) };
-		
+
 		instance.add(Blocks.STONE, newES(E.EARTH, 1, 12));
 		instance.add(Blocks.COBBLESTONE, newES(E.EARTH, 1, 10));
 		instance.add(Blocks.GRASS, newES(E.EARTH, 1, 10));
 		instance.add(Blocks.DIRT, newES(E.EARTH, 1, 10));
 		instance.add(Blocks.SAND, newES(E.EARTH, 2, 5));
-		
+
 		instance.add(Blocks.WOODEN_SLAB, newES(E.WOOD, 1, 10));
 		instance.add(Blocks.PLANKS, newES(E.WOOD, 1, 10));
 		instance.add(Blocks.LOG, newES(E.WOOD, 4, 12));
 		instance.add(Blocks.LOG2, newES(E.WOOD, 4, 12));
-		
+
 		instance.add(Blocks.COAL_ORE, newES(E.EARTH, 20, 25), newES(E.METAL, 15, 100));
 		instance.add(Blocks.IRON_ORE, newES(E.EARTH, 17, 25), newES(E.METAL, 21, 220));
 		instance.add(Items.IRON_INGOT, newES(E.METAL, 8, 200));
 		instance.add(Items.BUCKET, newES(E.METAL, 24, 200));
 		instance.add(Blocks.GOLD_ORE, newES(E.EARTH, 15, 25), newES(E.METAL, 22, 250));
 		instance.add(Items.GOLD_INGOT, newES(E.METAL, 9, 220));
-		
+
 		instance.add(Blocks.END_STONE, newES(E.ENDER, 1, 20));
-		instance.add(Items.ENDER_PEARL, newES(E.ENDER, 75, 1000));
-		instance.add(Items.ENDER_EYE, newES(E.ENDER, 75, 1000), newES(E.FIRE, 20, 450));
-		
+		instance.add(Items.ENDER_PEARL, newES(E.ENDER, 75, 750));
+		instance.add(Items.ENDER_EYE, newES(E.ENDER, 75, 750), newES(E.FIRE, 20, 450));
+
 		instance.add(Items.BOOK, newES(E.KNOWLEDGE, 10, 20));
 		instance.add(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, newES(E.KNOWLEDGE, 100, 200));
+
+		instance.add(ESInitInstance.ITEMS.MAGICAL_PIECE, newES(E.FIRE, 20, 25), newES(E.WATER, 20, 25),
+				newES(E.AIR, 20, 25), newES(E.EARTH, 20, 25));
 	}
 
 }

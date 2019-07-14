@@ -6,6 +6,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
@@ -14,6 +17,7 @@ import net.minecraft.util.text.TextFormatting;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.container.ContainerAnalysisAltar;
+import yuzunyannn.elementalsorcery.event.EventClient;
 
 public class GuiAnalysisAltar extends GuiNormal {
 
@@ -34,6 +38,8 @@ public class GuiAnalysisAltar extends GuiNormal {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+		if (!container.tileEntity.isOk())
+			return; 
 		ItemStack stack = container.tileEntity.getDAStack();
 		if (stack.isEmpty()) {
 			this.drawStringWithWidth(I18n.format("info.analysisAltar.none"), 52, 26, 60);
@@ -71,12 +77,17 @@ public class GuiAnalysisAltar extends GuiNormal {
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
+		// 画记录进度
+		float powerTime = container.tileEntity.getPowerTime();
+		float totalPowerTime = container.tileEntity.getTotalPowerTime();
+		int texWidth = 1 + (int) Math.ceil(22.0 * powerTime / totalPowerTime);
+		this.drawTexturedModalRect(offsetX + 113, offsetY + 43, 176, 0, texWidth, 10);
+
 		ItemStack stack = container.tileEntity.getDAStack();
 		if (stack.isEmpty())
 			return;
-		this.startDrawItem();
-		this.drawOnceItem(stack, offsetX + 24, offsetY + 41);
-		this.endDrawItem();
+		RenderHelper.enableGUIStandardItemLighting();
+		this.drawRoateItem(stack, offsetX + 24, offsetY + 47, partialTicks);
 		// 开始画元素图标
 		ElementStack[] estacks = container.tileEntity.getDAEstacks();
 		if (estacks == null || estacks.length == 0)
@@ -93,6 +104,41 @@ public class GuiAnalysisAltar extends GuiNormal {
 				estack.getElement().drawElemntIconInGUI(estack, offsetX + 56 + i * 17, offsetY + 58, mc);
 			}
 		}
+		this.mc.getTextureManager().bindTexture(TEXTURE);
+		GlStateManager.color(1.0f, 1.0f, 1.0f);
+	}
+
+	private void drawRoateItem(ItemStack stack, int x, int y, float partialTicks) {
+		this.itemRender.zLevel += 50.0F;
+		GlStateManager.pushMatrix();
+		this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		this.mc.getTextureManager().getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
+		IBakedModel bakedmodel = this.itemRender.getItemModelWithOverrides(stack, null, this.mc.player);
+		GlStateManager.enableRescaleNormal();
+		GlStateManager.enableAlpha();
+		GlStateManager.alphaFunc(516, 0.1F);
+		GlStateManager.enableBlend();
+		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+		GlStateManager.translate(x, y, 100.0F + this.zLevel);
+		GlStateManager.translate(8.0F, 8.0F, 0.0F);
+		GlStateManager.scale(1.0F, -1.0F, 1.0F);
+		GlStateManager.scale(32.0F, 32.0F, 32.0F);
+		if (bakedmodel.isGui3d())
+			GlStateManager.enableLighting();
+		else
+			GlStateManager.disableLighting();
+		GlStateManager.disableCull();
+		bakedmodel = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(bakedmodel,
+				ItemCameraTransforms.TransformType.GROUND, false);
+		GlStateManager.rotate(30, 1, 0, 0);
+		GlStateManager.rotate(EventClient.getGlobalRotateInRender(partialTicks), 0, 1, 0);
+		this.itemRender.renderItem(stack, bakedmodel);
+		GlStateManager.enableCull();
+		GlStateManager.disableAlpha();
+		GlStateManager.disableRescaleNormal();
+		GlStateManager.disableLighting();
+		GlStateManager.popMatrix();
+		this.itemRender.zLevel -= 50.0F;
 	}
 
 	int at = 0;
@@ -108,8 +154,9 @@ public class GuiAnalysisAltar extends GuiNormal {
 			preBut.visible = nextBut.visible = false;
 			at = 0;
 		} else {
-			nextBut.visible = true;
 			max = estacks.length - 3;
+			if (at != max)
+				nextBut.visible = true;
 		}
 	}
 
@@ -150,6 +197,7 @@ public class GuiAnalysisAltar extends GuiNormal {
 				}
 			}
 		};
+		this.addButton(preBut);
 		nextBut = new GuiButton(1, offsetX + 107, offsetY + 63, 3, 6, null) {
 			@Override
 			public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
@@ -163,6 +211,15 @@ public class GuiAnalysisAltar extends GuiNormal {
 				}
 			}
 		};
+		this.addButton(nextBut);
+		if (at == max)
+			nextBut.visible = false;
+		else
+			nextBut.visible = true;
+		if (at == 0)
+			preBut.visible = false;
+		else
+			preBut.visible = true;
 	}
 
 }

@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.api.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -43,8 +44,8 @@ public class ElementHelper {
 
 	// 添加元素的信息
 	@SideOnly(Side.CLIENT)
-	public static void addElementInformation(IElementInventory inventory, World worldIn,
-			List<String> tooltip, ITooltipFlag flagIn) {
+	public static void addElementInformation(IElementInventory inventory, World worldIn, List<String> tooltip,
+			ITooltipFlag flagIn) {
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ElementStack estack = inventory.getStackInSlot(i);
 			if (estack.isEmpty())
@@ -98,4 +99,22 @@ public class ElementHelper {
 		return sum;
 	}
 
+	/** 合并 */
+	static public ElementStack[] merge(ElementStack[] estacks1, ElementStack[] estacks2) {
+		ArrayList<ElementStack> list = new ArrayList<ElementStack>();
+		for (ElementStack e1 : estacks1)
+			list.add(e1);
+		for (ElementStack e2 : estacks2) {
+			for (ElementStack e1 : estacks1) {
+				if (e1.areSameType(e2)) {
+					e1.grow(e2);
+					e2 = ElementStack.EMPTY;
+					break;
+				}
+			}
+			if (!e2.isEmpty())
+				list.add(e2);
+		}
+		return (ElementStack[]) list.toArray(new ElementStack[list.size()]);
+	}
 }

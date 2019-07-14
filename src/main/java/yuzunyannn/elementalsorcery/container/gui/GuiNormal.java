@@ -38,7 +38,7 @@ public abstract class GuiNormal extends GuiContainer {
 
 	// 开始画物品
 	protected void startDrawItem() {
-		RenderHelper.disableStandardItemLighting();
+		RenderHelper.enableGUIStandardItemLighting();
 		this.zLevel = 200.0F;
 		this.itemRender.zLevel = 200.0F;
 	}
@@ -47,7 +47,6 @@ public abstract class GuiNormal extends GuiContainer {
 	protected void endDrawItem() {
 		this.zLevel = 0.0F;
 		this.itemRender.zLevel = 0F;
-		RenderHelper.enableStandardItemLighting();
 	}
 
 	// 画一次物品

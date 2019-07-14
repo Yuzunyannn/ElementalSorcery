@@ -48,10 +48,10 @@ public class RenderTileDeconstructAltarTable extends TileEntitySpecialRenderer<T
 		GlStateManager.pushMatrix();
 		GlStateManager.enableCull();
 		if (IRenderItem.isGUI(stack)) {
-			GlStateManager.translate(0.5, 0.2, 0.5);
-			GlStateManager.scale(0.045, 0.045, 0.045);
 			GlStateManager.rotate(45, 0, 1, 0);
 			GlStateManager.rotate(30, 1, 0, 1);
+			GlStateManager.translate(0.35, 0.2, 0.35);
+			GlStateManager.scale(0.045, 0.045, 0.045);
 		} else {
 			GlStateManager.translate(0.5, 0.4, 0.5);
 			GlStateManager.scale(0.025, 0.025, 0.025);

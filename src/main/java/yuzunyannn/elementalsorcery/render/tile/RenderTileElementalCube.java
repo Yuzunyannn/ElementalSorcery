@@ -78,8 +78,8 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 			GlStateManager.rotate(45.0F, 1, 1, 1);
 			GlStateManager.scale(0.5F, 0.5F, 0.5F);
 		} else {
+			GlStateManager.translate(0.0F, 0.025F, 0.0F);
 			GlStateManager.scale(0.25F, 0.25F, 0.25F);
-			GlStateManager.translate(0.0F, 0.1F, 0.0F);
 		}
 		TEXTURE.bind();
 		MODEL.render();

@@ -9,14 +9,19 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
+import yuzunyannn.elementalsorcery.api.ability.IItemStructure;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable {
 
@@ -85,28 +90,89 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		return daComplex;
 	}
 
+	public boolean isOk() {
+		return this.ok;
+	}
+
+	int powerTime;
+
 	@Override
 	public void update() {
-		if (!this.isIntact())
+		if (!this.isIntact()) {
+			daStack = ItemStack.EMPTY;
+			this.stateClear();
 			return;
-		checkTime++;
+		}
 		if (checkTime % 10 == 0) {
-			this.daStack = this.getStackToAnalysis();
-			if (this.daStack.isEmpty()) {
-				this.daEstacks = null;
+			// 检查物品
+			ItemStack stack = this.getStackToAnalysis();
+			if (stack != this.daStack) {
+				this.daStack = stack;
+				if (this.daStack.isEmpty())
+					this.stateClear();
 			}
 		}
 		if (this.daStack.isEmpty())
 			return;
-		if (checkTime % 40 == 0) {
+		if (this.daEstacks == null && checkTime % 40 == 0) {
+			// 解析元素
 			this.daEstacks = ElementMap.instance.toElement(this.daStack);
 			if (this.daEstacks == null) {
+				this.stateClear();
 				this.daEstacks = EMPTY_ESTACKS;
-				this.daComplex = 0;
 			} else {
 				this.daComplex = ElementMap.instance.complex(this.daStack);
+				ItemStack remain = this.daStack;
+				int rest = 1;
+				do {
+					remain = ElementMap.instance.remain(remain);
+					if (remain.isEmpty())
+						break;
+					if (rest <= 0) {
+						// 到达限制无法继续解析
+						this.stateClear();
+						this.daEstacks = EMPTY_ESTACKS;
+						break;
+					}
+					ElementStack[] remainStacks = ElementMap.instance.toElement(remain);
+					if (remainStacks != null) {
+						this.daEstacks = ElementHelper.merge(this.daEstacks, remainStacks);
+						this.daComplex = this.daComplex + ElementMap.instance.complex(remain);
+					}
+					rest--;
+				} while (true);
 			}
 		}
+		if (this.world.isRemote)
+			return;
+		// 结构数据写入水晶
+		ItemStack stack = inventory.getStackInSlot(0);
+		if (stack.isEmpty()) {
+			this.powerTime = 0;
+			return;
+		}
+		if (this.daEstacks == null || this.daEstacks.length == 0) {
+			this.powerTime = 0;
+			return;
+		}
+		IItemStructure structure = ItemStructure.getItemStructureWithoutNew(stack);
+		if (ItemHelper.areItemsEqual(structure.getStructureItem(0), this.daStack))
+			return;
+		this.powerTime++;
+		if (this.powerTime >= this.getTotalPowerTime()) {
+			this.powerTime = 0;
+			if (structure instanceof IItemStructure.IItemStructureSet) {
+				((IItemStructure.IItemStructureSet) structure).set(this.daStack, this.daComplex, this.daEstacks);
+				structure.saveState(stack);
+				this.markDirty();
+			}
+		}
+	}
+
+	private void stateClear() {
+		this.daEstacks = null;
+		this.daComplex = 0;
+		this.powerTime = 0;
 	}
 
 	private ItemStack getStackToAnalysis() {
@@ -116,6 +182,19 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 			return ((IGetItemStack) tile).getStack();
 		}
 		return ItemStack.EMPTY;
+	}
+
+	public int getPowerTime() {
+		return this.powerTime;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void setPowerTime(int i) {
+		this.powerTime = i;
+	}
+
+	public int getTotalPowerTime() {
+		return 20 * 30;
 	}
 
 }

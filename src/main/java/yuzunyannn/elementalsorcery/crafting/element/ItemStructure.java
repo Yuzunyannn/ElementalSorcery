@@ -9,10 +9,18 @@ import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
-public class ItemStructure implements IItemStructure {
+public class ItemStructure implements IItemStructure, IItemStructure.IItemStructureSet {
 
 	static public IItemStructure getItemStructure(ItemStack stack) {
 		return new ItemStructure(stack);
+	}
+
+	static public final ItemStructure itemStructure = new ItemStructure();
+
+	static public IItemStructure getItemStructureWithoutNew(ItemStack stack) {
+		itemStructure.stack = ItemStack.EMPTY;
+		itemStructure.loadState(stack);
+		return itemStructure;
 	}
 
 	static public boolean canStorageItemStructure(ItemStack stack) {
@@ -35,9 +43,13 @@ public class ItemStructure implements IItemStructure {
 		return stack.isEmpty() || estacks == null;
 	}
 
-	public ItemStructure set(ItemStack stack, ElementStack... estacks) {
+	@Override
+	public ItemStructure set(ItemStack stack, int complex, ElementStack... estacks) {
 		this.stack = stack;
 		this.estacks = estacks;
+		this.complex = complex;
+		if (this.complex <= 0)
+			this.complex = ElementHelper.getComplexFromElements(this.stack, this.estacks);
 		return this;
 	}
 
