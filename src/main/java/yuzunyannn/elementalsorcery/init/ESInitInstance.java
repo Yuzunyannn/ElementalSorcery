@@ -23,6 +23,7 @@ import yuzunyannn.elementalsorcery.block.BlockMagicDesk;
 import yuzunyannn.elementalsorcery.block.BlockMagicPlatform;
 import yuzunyannn.elementalsorcery.block.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.BlockStela;
+import yuzunyannn.elementalsorcery.block.BlockSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.block.BlocksEStone;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
@@ -117,6 +118,7 @@ public class ESInitInstance {
 		BLOCKS.LANTERN = new BlockLantern().setRegistryName("lantern");
 		BLOCKS.BUILDING_ALTAR = new BlockBuildingAltar().setRegistryName("building_altar");
 		BLOCKS.ANALYSIS_ALTAR = new BlockAnalysisAltar().setRegistryName("analysis_altar");
+		BLOCKS.SUPREME_CRAFTING_TABLE = new BlockSupremeCraftingTable().setRegistryName("supreme_crafting_table");
 
 		BLOCKS.ELEMENTAL_CUBE.setCreativeTab(tab);
 		BLOCKS.HEARTH.setCreativeTab(tab);
@@ -138,6 +140,7 @@ public class ESInitInstance {
 		BLOCKS.LANTERN.setCreativeTab(tab);
 		BLOCKS.BUILDING_ALTAR.setCreativeTab(tab);
 		BLOCKS.ANALYSIS_ALTAR.setCreativeTab(tab);
+		BLOCKS.SUPREME_CRAFTING_TABLE.setCreativeTab(tab);
 	}
 
 	private static final void instanceItems() {

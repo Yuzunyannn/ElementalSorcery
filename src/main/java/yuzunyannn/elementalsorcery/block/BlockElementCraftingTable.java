@@ -14,7 +14,6 @@ import net.minecraftforge.items.IItemHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
-import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlockWithInventory;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class BlockElementCraftingTable extends BlockContainer {
@@ -54,7 +53,7 @@ public class BlockElementCraftingTable extends BlockContainer {
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity tileentity = worldIn.getTileEntity(pos);
-		if (tileentity instanceof TileStaticMultiBlockWithInventory && !worldIn.isRemote) {
+		if (tileentity instanceof TileElementCraftingTable && !worldIn.isRemote) {
 			IItemHandler item_handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			BlockHelper.drop(item_handler, worldIn, pos);
 		}

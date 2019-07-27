@@ -46,7 +46,6 @@ public class RenderTileDeconstructAltarTable extends TileEntitySpecialRenderer<T
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 		GlStateManager.pushMatrix();
-		GlStateManager.enableCull();
 		if (IRenderItem.isGUI(stack)) {
 			GlStateManager.rotate(45, 0, 1, 0);
 			GlStateManager.rotate(30, 1, 0, 1);

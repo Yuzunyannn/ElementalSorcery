@@ -57,6 +57,7 @@ tile.stela.name=知识映射碑
 tile.lantern.name=引路灯
 tile.buildingAltar.name=建筑解析台
 tile.analysisAltar.name=结构解析台
+tile.supremeCraftingTable.name=顶级方桌
 
 element.void.name=虚空
 element.ender.name=末影

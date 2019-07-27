@@ -68,6 +68,7 @@ public class ESObjects {
 		public Block LANTERN;
 		public Block BUILDING_ALTAR;
 		public Block ANALYSIS_ALTAR;
+		public Block SUPREME_CRAFTING_TABLE;
 	}
 
 	static public class Elements {

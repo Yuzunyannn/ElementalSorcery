@@ -90,7 +90,6 @@ public class RenderTileStela extends TileEntitySpecialRenderer<TileStela> implem
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 		GlStateManager.pushMatrix();
-		GlStateManager.enableCull();
 		if (IRenderItem.isGUI(stack)) {
 			GlStateManager.translate(0.525, 0.225, 0.5);
 			GlStateManager.scale(0.0375, 0.0375, 0.0375);

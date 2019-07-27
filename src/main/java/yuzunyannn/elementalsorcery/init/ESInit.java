@@ -57,6 +57,8 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
+import yuzunyannn.elementalsorcery.render.tile.RednerTileSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileAnalysisAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileBuildingAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
@@ -79,6 +81,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
+import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 
 public class ESInit {
@@ -210,6 +213,7 @@ public class ESInit {
 		register(ESInitInstance.BLOCKS.LANTERN);
 		register(ESInitInstance.BLOCKS.BUILDING_ALTAR);
 		register(ESInitInstance.BLOCKS.ANALYSIS_ALTAR);
+		register(ESInitInstance.BLOCKS.SUPREME_CRAFTING_TABLE);
 	}
 
 	static void registerAllTiles() {
@@ -227,6 +231,7 @@ public class ESInit {
 		register(TileLantern.class, "Lantern");
 		register(TileBuildingAltar.class, "BuildingAltar");
 		register(TileAnalysisAltar.class, "AnalysisAltar");
+		register(TileSupremeCraftingTable.class, "SupremeCraftingTable");
 	}
 
 	static void registerAllElements() {
@@ -302,6 +307,9 @@ public class ESInit {
 		registerRender(new RenderTileStela(), ESInitInstance.BLOCKS.STELA, TileStela.class);
 		registerRender(new RenderTileLantern(), ESInitInstance.BLOCKS.LANTERN, TileLantern.class);
 		registerRender(new RenderTileBuildingAltar(), ESInitInstance.BLOCKS.BUILDING_ALTAR, TileBuildingAltar.class);
+		registerRender(new RenderTileAnalysisAltar(), ESInitInstance.BLOCKS.ANALYSIS_ALTAR, TileAnalysisAltar.class);
+		registerRender(new RednerTileSupremeCraftingTable(), ESInitInstance.BLOCKS.SUPREME_CRAFTING_TABLE,
+				TileSupremeCraftingTable.class);
 
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);

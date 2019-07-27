@@ -6,9 +6,13 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
@@ -19,11 +23,38 @@ import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderCrafting;
+import yuzunyannn.elementalsorcery.util.item.IItemStackHandlerInventory;
 
-public class TileElementCraftingTable extends TileStaticMultiBlockWithInventory implements ICraftingLaunch {
+public class TileElementCraftingTable extends TileStaticMultiBlock
+		implements ICraftingLaunch, IItemStackHandlerInventory {
+
+	protected ItemStackHandler inventory = null;
 
 	public TileElementCraftingTable() {
-		super(9);
+		inventory = new ItemStackHandler(9);
+	}
+
+	@Override
+	public ItemStackHandler getItemStackHandler() {
+		return inventory;
+	}
+
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
+			if (facing == null)
+				return true;
+		}
+		return super.hasCapability(capability, facing);
+	}
+
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
+			if (facing == null)
+				return (T) inventory;
+		}
+		return super.getCapability(capability, facing);
 	}
 
 	public void initMultiBlock() {
@@ -161,20 +192,23 @@ public class TileElementCraftingTable extends TileStaticMultiBlockWithInventory 
 		needEstacks = irecipe.getNeedElements();
 	}
 
+	@SideOnly(Side.CLIENT)
+	@Override
+	public ICraftingLaunchAnime getAnime(ICraftingCommit commit) {
+		return new AnimeRenderCrafting();
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
+		if (compound.hasKey("inventory"))
+			inventory.deserializeNBT(compound.getCompoundTag("inventory"));
 		super.readFromNBT(compound);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		compound.setTag("inventory", inventory.serializeNBT());
 		return super.writeToNBT(compound);
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public ICraftingLaunchAnime getAnime(ICraftingCommit commit) {
-		return new AnimeRenderCrafting();
 	}
 
 }

@@ -55,7 +55,6 @@ public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 		GlStateManager.pushMatrix();
-		GlStateManager.enableCull();
 		if (IRenderItem.isGUI(stack)) {
 			GlStateManager.translate(0.5, 0.65, 0.5);
 			GlStateManager.scale(0.05, 0.05, 0.05);

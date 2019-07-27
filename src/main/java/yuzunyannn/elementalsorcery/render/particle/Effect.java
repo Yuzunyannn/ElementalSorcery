@@ -4,6 +4,7 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Random;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -61,10 +62,11 @@ public abstract class Effect {
 
 	static public void updateAllEffects() {
 		Iterator<Effect> iter = effects.iterator();
+		World world = Minecraft.getMinecraft().world;
 		while (iter.hasNext()) {
 			Effect effect = iter.next();
 			effect.onUpdate();
-			if (effect.lifeTime <= 0) {
+			if (effect.lifeTime <= 0 || world != effect.world) {
 				iter.remove();
 			}
 		}

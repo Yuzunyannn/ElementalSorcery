@@ -20,7 +20,6 @@ public class RenderTileBuildingAltar extends TileEntitySpecialRenderer<TileBuild
 	public void render(TileBuildingAltar tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 		GlStateManager.pushMatrix();
-		GlStateManager.enableLighting();
 		GlStateManager.translate(x + 0.5, y, z + 0.5);
 		GlStateManager.scale(0.0625, 0.0625, 0.0625);
 		TEXTURE.bind();
@@ -42,7 +41,6 @@ public class RenderTileBuildingAltar extends TileEntitySpecialRenderer<TileBuild
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 		GlStateManager.pushMatrix();
-		GlStateManager.enableCull();
 		if (IRenderItem.isGUI(stack)) {
 			GlStateManager.translate(0.5, 0.225, 0.5);
 			GlStateManager.scale(0.035, 0.035, 0.035);
