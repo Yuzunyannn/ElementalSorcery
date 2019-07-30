@@ -17,7 +17,7 @@ public class CraftingBuildingRecord implements ICraftingCommit {
 	private BlockPos pos2 = null;
 	private BlockPos pos = null;
 	private boolean success = false;
-	private Building building = new Building();
+	private String author = "";
 	BlockPos center;
 	// 客户端颜色
 	public float r, g, b;
@@ -28,8 +28,8 @@ public class CraftingBuildingRecord implements ICraftingCommit {
 		this.pos1 = pos1;
 		this.pos2 = pos2;
 		this.pos = pos1;
+		this.author = author;
 		this.setCenter();
-		building.setAuthor(author);
 	}
 
 	public CraftingBuildingRecord(NBTTagCompound nbt) {
@@ -61,7 +61,7 @@ public class CraftingBuildingRecord implements ICraftingCommit {
 		NBTHelper.setBlockPos(nbt, "pos1", pos1);
 		NBTHelper.setBlockPos(nbt, "pos2", pos2);
 		NBTHelper.setBlockPos(nbt, "pos", pos);
-		nbt.setString("author", building.getAuthor());
+		nbt.setString("author", author);
 		return nbt;
 	}
 
@@ -75,7 +75,7 @@ public class CraftingBuildingRecord implements ICraftingCommit {
 			this.pos2 = NBTHelper.getBlockPos(nbt, "pos2");
 		if (NBTHelper.hasBlockPos(nbt, "pos"))
 			this.pos = NBTHelper.getBlockPos(nbt, "pos");
-		building.setAuthor(nbt.getString("author"));
+		author = nbt.getString("author");
 		this.setCenter();
 	}
 
@@ -92,8 +92,8 @@ public class CraftingBuildingRecord implements ICraftingCommit {
 		return this.success;
 	}
 
-	public Building getBuilding() {
-		return this.building;
+	public Building createBuilding(World world) {
+		return Building.createBuilding(world, pos1, pos2);
 	}
 
 	public boolean onUpdate(World world) {
@@ -109,7 +109,6 @@ public class CraftingBuildingRecord implements ICraftingCommit {
 		if (!world.isAirBlock(pos)) {
 			if (center == null)
 				this.setCenter();
-			building.add(world.getBlockState(pos), pos.subtract(center));
 		}
 		return true;
 	}

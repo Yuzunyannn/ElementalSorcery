@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -33,6 +34,9 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 		if (inner.contains(hand)) {
 			return true;
 		}
+		Integer dimensionId = ItemMagicRuler.getDimensionId(ruler);
+		if (dimensionId == null || dimensionId != player.dimension)
+			return false;
 		BlockPos pos = ItemMagicRuler.getRulerPos(ruler, true);
 		if (pos == null)
 			return false;
@@ -87,6 +91,9 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 	@Override
 	public int onTick() {
 		this.theta += DTHETA;
+		if (this.player.getEntityWorld() != Minecraft.getMinecraft().world) {
+			this.end();
+		}
 		ItemStack stack = this.player.getHeldItem(hand);
 		if (stack != this.stack) {
 			this.checkSame();

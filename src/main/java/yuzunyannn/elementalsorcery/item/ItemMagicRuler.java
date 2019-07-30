@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -37,6 +38,11 @@ public class ItemMagicRuler extends Item {
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack stack = player.getHeldItem(hand);
+		Integer dimensionId = ItemMagicRuler.getDimensionId(stack);
+		if (dimensionId == null || dimensionId != player.dimension) {
+			ItemMagicRuler.setDimensionId(stack, player.dimension);
+			ItemMagicRuler.clearRulerPos(stack);
+		}
 		if (!player.isSneaking()) {
 			BlockPos pos2 = ItemMagicRuler.getRulerPos(stack, false);
 			if (this.checkFailToSelect(player, worldIn, pos, pos2))
@@ -94,7 +100,15 @@ public class ItemMagicRuler extends Item {
 		EnumDyeColor dyeColor = ItemMagicRuler.getColor(stack);
 		tooltip.add(I18n.format("info.ruler.color", ColorHelper.toTextFormatting(dyeColor)
 				+ I18n.format("item.fireworksCharge." + dyeColor.getUnlocalizedName())));
-
+		Integer dimensionId = ItemMagicRuler.getDimensionId(stack);
+		if (dimensionId == null) {
+			tooltip.add(TextFormatting.YELLOW + I18n.format("info.ruler.none"));
+			return;
+		} else if (Minecraft.getMinecraft().player.dimension != dimensionId) {
+			tooltip.add(TextFormatting.YELLOW + I18n.format("info.wrong.dimension"));
+			tooltip.add(TextFormatting.YELLOW + I18n.format("info.ruler.none"));
+			return;
+		}
 		BlockPos pos1 = ItemMagicRuler.getRulerPos(stack, true);
 		BlockPos pos2 = ItemMagicRuler.getRulerPos(stack, false);
 		if (pos1 == null || pos2 == null) {
@@ -104,6 +118,27 @@ public class ItemMagicRuler extends Item {
 		tooltip.add(TextFormatting.YELLOW + I18n.format("info.ruler.pos", 1, pos1.getX(), pos1.getY(), pos1.getZ()));
 		tooltip.add(TextFormatting.YELLOW + I18n.format("info.ruler.pos", 2, pos2.getX(), pos2.getY(), pos2.getZ()));
 
+	}
+
+	/** 获取标尺世界 */
+	public static Integer getDimensionId(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null)
+			return null;
+		if (nbt.hasKey("world"))
+			return nbt.getInteger("world");
+		else
+			return null;
+	}
+
+	/** 设置标尺世界 */
+	public static void setDimensionId(ItemStack stack, int world) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) {
+			nbt = new NBTTagCompound();
+			stack.setTagCompound(nbt);
+		}
+		nbt.setInteger("world", world);
 	}
 
 	/** 设置标尺的位置 */

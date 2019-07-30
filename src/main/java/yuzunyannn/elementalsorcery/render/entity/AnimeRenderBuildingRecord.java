@@ -29,6 +29,7 @@ import yuzunyannn.elementalsorcery.render.model.ModelBuildingAltar;
 
 public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderClient {
 
+	private World world;
 	private ItemStack stack;
 	private float theta = 0.0f;
 	private boolean finish = false;
@@ -38,7 +39,8 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 	Vec3d tile3DPos;
 	LinkedList<BlockEffect> effects = new LinkedList<>();
 
-	public AnimeRenderBuildingRecord(ItemStack stack, CraftingBuildingRecord commit) {
+	public AnimeRenderBuildingRecord(World world, ItemStack stack, CraftingBuildingRecord commit) {
+		this.world = world;
 		this.stack = stack;
 		this.cnr = commit;
 		tilePos = cnr.tile.getPos();
@@ -114,6 +116,8 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 
 	@Override
 	public int onRender(float partialTicks) {
+		if (this.world != Minecraft.getMinecraft().world)
+			return IRenderClient.END;
 		if (this.finish)
 			return IRenderClient.END;
 

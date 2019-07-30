@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.tile.altar;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -22,6 +24,7 @@ import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
+import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch.CraftingType;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderCrafting;
 import yuzunyannn.elementalsorcery.util.item.IItemStackHandlerInventory;
 
@@ -75,7 +78,9 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 	protected boolean working = false;
 
 	@Override
-	public boolean craftingBegin(CraftingType type, EntityPlayer player) {
+	public boolean canCrafting(CraftingType type, @Nullable EntityLivingBase player) {
+		if (type != CraftingType.ELEMENT_CRAFTING)
+			return false;
 		if (this.isEmpty())
 			return false;
 		if (!this.isIntact())
@@ -83,12 +88,19 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 		this.onCraftMatrixChanged();
 		if (this.getOutput().isEmpty())
 			return false;
+		return true;
+	}
+
+	@Override
+	public ICraftingCommit craftingBegin(CraftingType type, EntityLivingBase player) {
 		this.player = player;
 		working = true;
 		startTime = 80;
 		endTime = 80;
 		this.markDirty();
-		return working;
+		CraftingCrafting cc = new CraftingCrafting(this);
+		this.clear();
+		return cc;
 	}
 
 	@Override
@@ -146,14 +158,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 	}
 
 	@Override
-	public ICraftingCommit commitItems() {
-		CraftingCrafting cc = new CraftingCrafting(this);
-		this.clear();
-		return cc;
-	}
-
-	@Override
-	public boolean canContinue() {
+	public boolean canContinue(ICraftingCommit commit) {
 		if (result.isEmpty()) {
 			if (endTime >= 0) {
 				endTime--;
@@ -162,11 +167,6 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 				return false;
 		}
 		return this.isIntact();
-	}
-
-	@Override
-	public boolean checkType(CraftingType type) {
-		return type == CraftingType.ELEMENT_CRAFTING;
 	}
 
 	// 产出结果，该引用的对象不应该被修改，该变量同时起到标定作用

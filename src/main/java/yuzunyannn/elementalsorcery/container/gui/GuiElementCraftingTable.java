@@ -48,19 +48,17 @@ public class GuiElementCraftingTable extends GuiNormal {
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
-		if (!container.is_big) {
+		this.drawTexturedModalRect(offsetX + 106, offsetY + 111, 230, 60, 18, 18);
+		if (!container.isBig) {
 			this.drawTexturedModalRect(offsetX + 52, offsetY + 21, 3, 21, 36, 36);
 			this.drawTexturedModalRect(offsetX + 142, offsetY + 21, 3, 5, 36, 36);
 			this.drawTexturedModalRect(offsetX + 52, offsetY + 111, 3, 21, 36, 36);
 			this.drawTexturedModalRect(offsetX + 142, offsetY + 111, 3, 5, 36, 36);
 		}
-		ItemStack stack = container.tile_entity.getOutput();
+		ItemStack stack = container.tileEntity.getOutput();
 		if (stack.isEmpty())
 			return;
-		this.startDrawItem();
-		this.drawOnceItem(stack, offsetX + 107, offsetY + 120);
-		this.endDrawItem();
-		List<ElementStack> list = container.tile_entity.getNeedElements();
+		List<ElementStack> list = container.tileEntity.getNeedElements();
 		if (list == null)
 			return;
 		RenderHelper.disableStandardItemLighting();

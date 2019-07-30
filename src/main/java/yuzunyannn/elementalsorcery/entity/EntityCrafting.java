@@ -59,7 +59,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			this.pos = pos;
 			this.crafting = (ICraftingLaunch) world.getTileEntity(this.pos);
 			this.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-			this.commit = this.crafting.commitItems();
+			this.commit = this.crafting.craftingBegin(type, player);
 		}
 	}
 
@@ -174,13 +174,13 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 				this.finish_tick--;
 			} else {
 				// 结束运行判定
-				if (!this.crafting.canContinue()) {
+				if (!this.crafting.canContinue(this.commit)) {
 					int flags = this.crafting.craftingEnd(this.commit);
 					if (flags == ICraftingLaunch.FAIL) {
 						this.drop();
 						this.setDead();
 					} else {
-						this.finish_tick = this.crafting.getEndingTime();
+						this.finish_tick = this.crafting.getEndingTime(this.commit);
 						dataManager.set(FINISH_TICK, finish_tick);
 						dataManager.setDirty(FINISH_TICK);
 					}
@@ -215,7 +215,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 				this.finish_tick--;
 			}
 		}
-		this.craftingAnime.update(this.commit, this.world,finish_tick);
+		this.craftingAnime.update(this.commit, this.world, finish_tick);
 	}
 
 	@Override

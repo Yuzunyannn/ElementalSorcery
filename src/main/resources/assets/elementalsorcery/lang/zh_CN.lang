@@ -98,6 +98,7 @@ arc.analysisAltar.name=结构解析祭坛
 
 info.none=无
 info.unknow=未知
+info.wrong.dimension=已有数据不属于该纬度！
 info.posSet.success=成功选择了位置：(%d,%d,%d)
 info.magicalPiece.itcando=这个魔力碎片貌似可以合成某些东西，emmmm...
 info.elementalCrystal.has=%s 拥有%d，能量为%d

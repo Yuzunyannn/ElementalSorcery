@@ -1,7 +1,8 @@
 package yuzunyannn.elementalsorcery.tile.altar;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -40,6 +41,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		structure.addSpecialBlock(new BlockPos(-2, 1, 2));
 	}
 
+	/** 获取标尺 */
 	private ItemStack getRuler() {
 		BlockPos pos = this.pos.add(Building.BuildingBlocks.facePos(RULER_POS, structure.face()));
 		TileEntity tile = this.world.getTileEntity(pos);
@@ -50,7 +52,13 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		return ItemStack.EMPTY;
 	}
 
-	private boolean dealRuler(ItemStack stack) {
+	/** 检测标尺 */
+	private boolean dealRuler(EntityLivingBase entity, ItemStack stack) {
+		Integer dimensionId = ItemMagicRuler.getDimensionId(stack);
+		if (dimensionId == null)
+			return false;
+		if (entity == null || entity.dimension != dimensionId)
+			return false;
 		this.pos1 = ItemMagicRuler.getRulerPos(stack, true);
 		this.pos2 = ItemMagicRuler.getRulerPos(stack, false);
 		return pos1 != null && pos2 != null;
@@ -85,7 +93,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 	// 继续
 	private boolean canContinue = true;
 	// 记录当前玩家
-	private EntityPlayer player = null;
+	private EntityLivingBase player = null;
 	// 死亡时间，如果长时间不提供元素
 	private int deadTime;
 
@@ -100,11 +108,13 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 	}
 
 	@Override
-	public boolean craftingBegin(CraftingType type, EntityPlayer player) {
+	public boolean canCrafting(CraftingType type, @Nullable EntityLivingBase player) {
+		if (type != CraftingType.BUILING_RECORD)
+			return false;
 		if (!this.checkStack())
 			return false;
 		ItemStack stack = this.getRuler();
-		if (!this.dealRuler(stack))
+		if (!this.dealRuler(player, stack))
 			return false;
 		BlockPos center = new BlockPos((this.pos1.getX() + this.pos2.getX()) / 2,
 				(this.pos1.getY() + this.pos2.getY()) / 2, (this.pos1.getZ() + this.pos2.getZ()) / 2);
@@ -112,15 +122,15 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 			return false;
 		if (!checkToward(center))
 			return false;
-		this.working = true;
-		this.canContinue = true;
-		this.player = player;
-		this.deadTime = 0;
 		return true;
 	}
 
 	@Override
-	public ICraftingCommit commitItems() {
+	public ICraftingCommit craftingBegin(CraftingType type, EntityLivingBase player) {
+		this.working = true;
+		this.canContinue = true;
+		this.player = player;
+		this.deadTime = 0;
 		return new CraftingBuildingRecord(pos1, pos2, player.getName());
 	}
 
@@ -167,16 +177,16 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 	@SideOnly(Side.CLIENT)
 	@Override
 	public ICraftingLaunchAnime getAnime(ICraftingCommit commit) {
-		return new AnimeRenderBuildingRecord(this.stack, (CraftingBuildingRecord) commit);
+		return new AnimeRenderBuildingRecord(this.world, this.stack, (CraftingBuildingRecord) commit);
 	}
 
 	@Override
-	public int getEndingTime() {
+	public int getEndingTime(ICraftingCommit commit) {
 		return 80;
 	}
 
 	@Override
-	public boolean canContinue() {
+	public boolean canContinue(ICraftingCommit commit) {
 		return this.canContinue;
 	}
 
@@ -186,7 +196,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		working = false;
 		boolean success = cnr.isSuccess();
 		if (success) {
-			Building building = cnr.getBuilding();
+			Building building = cnr.createBuilding(world);
 			building.setName(building.getAuthor() + "的建筑");
 			building.mkdir();
 			String key = BuildingLib.instance.addBuilding(building);
@@ -199,11 +209,6 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 	public void badEnd() {
 		this.world.createExplosion(null, this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5, 2.0f,
 				true);
-	}
-
-	@Override
-	public boolean checkType(CraftingType type) {
-		return type == CraftingType.BUILING_RECORD;
 	}
 
 	private ItemStack stack = ItemStack.EMPTY;

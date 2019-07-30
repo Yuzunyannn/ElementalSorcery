@@ -100,17 +100,15 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 					ICraftingLaunch crafting = (ICraftingLaunch) tile;
 					if (crafting.isWorking())
 						return;
-					if (crafting.checkType(type)) {
-						EntityPlayer player = null;
-						if (entity instanceof EntityPlayer)
-							player = (EntityPlayer) entity;
+					EntityPlayer player = null;
+					if (entity instanceof EntityPlayer)
+						player = (EntityPlayer) entity;
+					if (crafting.canCrafting(type, player)) {
 						// 开始Crafting！
-						if (crafting.craftingBegin(type, player)) {
-							EntityCrafting ecrafting = new EntityCrafting(world, pos, type, player);
-							world.spawnEntity(ecrafting);
-						}
+						EntityCrafting ecrafting = new EntityCrafting(world, pos, type, player);
+						world.spawnEntity(ecrafting);
 					} else {
-						// 错误的类型
+						// 不可crafting
 						book.castTime = -1;
 						world.createExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1.0f, false);
 					}

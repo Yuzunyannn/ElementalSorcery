@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.util;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -15,6 +16,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.WorldInfo;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 
 public class WorldHelper {
 
@@ -23,7 +27,18 @@ public class WorldHelper {
 				|| (Minecraft.getMinecraft().world != null && Minecraft.getMinecraft().world.isRemote);
 	}
 
-	// 获取生物正在看的方块
+	/** 根据世界获取对应的纬度id，可能会出现null的返回，表明获取失败！ */
+	static public Integer getDimensionId(World world) {
+		try {
+			Field field = ReflectionHelper.findField(WorldInfo.class, "dimension", "field_76105_j", "p");
+			return (Integer) field.get(world.getWorldInfo());
+		} catch (Exception e) {
+			ElementalSorcery.logger.error("获取世界纬度信息时候出现异常：", e);
+		}
+		return null;
+	}
+
+	/** 获取生物正在看的方块 */
 	@Nullable
 	static public RayTraceResult getLookAtBlock(World world, EntityLivingBase entity, float distance) {
 		Vec3d vstart = entity.getPositionEyes(1.0F);
@@ -34,7 +49,7 @@ public class WorldHelper {
 		return reulst;
 	}
 
-	// 获取生物正在看的实体
+	/** 获取生物正在看的实体 */
 	@Nullable
 	static public <T extends Entity> T getLookAtEntity(World world, EntityLivingBase entity,
 			Class<? extends T> classEntity, float distance) {
@@ -89,7 +104,6 @@ public class WorldHelper {
 		return hitEntity;
 	}
 
-
 	static public void newLightning(World world, BlockPos pos) {
 		newLightning(world, pos, false);
 	}
@@ -98,7 +112,7 @@ public class WorldHelper {
 		world.spawnEntity(new EntityLightningBolt(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, effectOnly));
 	}
 
-	// 时间类
+	/** ES时间类 */
 	public static class WorldTime {
 		public int time;
 

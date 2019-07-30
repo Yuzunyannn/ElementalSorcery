@@ -3,7 +3,6 @@ package yuzunyannn.elementalsorcery.crafting;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -14,6 +13,16 @@ public interface ICraftingLaunch {
 	boolean isWorking();
 
 	/**
+	 * 是否可以创造[服务器]
+	 * 
+	 * @param type
+	 *            类型
+	 * @param player
+	 *            进行操作的玩家，可以为null
+	 */
+	boolean canCrafting(CraftingType type, @Nullable EntityLivingBase player);
+
+	/**
 	 * 制作开始[服务器]
 	 * 
 	 * @param type
@@ -22,13 +31,7 @@ public interface ICraftingLaunch {
 	 *            进行操作的玩家，可以为null
 	 * @return ture表示正式开始，false表示条件不足无法开始
 	 */
-	boolean craftingBegin(CraftingType type, @Nullable EntityPlayer player);
-
-	/**
-	 * 提交物品 [服务器]
-	 */
-	@Nullable
-	ICraftingCommit commitItems();
+	ICraftingCommit craftingBegin(CraftingType type, @Nullable EntityLivingBase player);
 
 	/**
 	 * 制作恢复 恢复调用[服务器][客户端]（服务器存档恢复时调用，客户端创建的时候一定会调用，因为是从服务器传来的消息）
@@ -48,7 +51,7 @@ public interface ICraftingLaunch {
 	}
 
 	/** 是否要继续 */
-	boolean canContinue();
+	boolean canContinue(ICraftingCommit commit);
 
 	public static final int FAIL = -1;
 	public static final int SUCCESS = 0;
@@ -62,15 +65,12 @@ public interface ICraftingLaunch {
 	 */
 	int craftingEnd(ICraftingCommit commit);
 
-	/** 检查类型是否可以完成 */
-	boolean checkType(CraftingType type);
-
 	public static enum CraftingType {
 		ELEMENT_CRAFTING, ELEMENT_DECONSTRUCT, BUILING_RECORD
 	}
 
 	/** 获取完成后，结束时间 */
-	default int getEndingTime() {
+	default int getEndingTime(ICraftingCommit commit) {
 		return 20;
 	}
 
