@@ -27,7 +27,10 @@ public class WorldHelper {
 				|| (Minecraft.getMinecraft().world != null && Minecraft.getMinecraft().world.isRemote);
 	}
 
-	/** 根据世界获取对应的纬度id，可能会出现null的返回，表明获取失败！ */
+	/**
+	 * 根据世界获取对应的纬度id，可能会出现null的返回，表明获取失败！ 注：该函数获取到的结果不符合预期
+	 */
+	@Deprecated
 	static public Integer getDimensionId(World world) {
 		try {
 			Field field = ReflectionHelper.findField(WorldInfo.class, "dimension", "field_76105_j", "p");
@@ -127,8 +130,8 @@ public class WorldHelper {
 		}
 
 		public static enum Period {
-			DAWN(0, 1800), MORNING(1800, 6900), AFTERNOON(6900, 12000), DUSK(12000, 13800), NIGHT(13800,
-					24000), MIDNIGHT(17700, 20100), DAY(1800, 12000);
+			DAWN(0, 1800), MORNING(1800, 6900), AFTERNOON(6900, 12000), DUSK(12000, 13800), NIGHT(13800, 24000),
+			MIDNIGHT(17700, 20100), DAY(1800, 12000);
 			public int start, end;
 
 			Period(int start, int end) {

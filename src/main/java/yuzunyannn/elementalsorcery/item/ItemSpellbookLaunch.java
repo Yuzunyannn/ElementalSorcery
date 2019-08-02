@@ -61,16 +61,16 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 
 	@SideOnly(Side.CLIENT)
 	private String getUnlocalizedTypeName(ItemStack stack) {
-		ICraftingLaunch.CraftingType type = this.getBookType(stack);
+		String type = this.getBookType(stack);
 		String str = "";
 		switch (type) {
-		case ELEMENT_CRAFTING:
+		case ICraftingLaunch.TYPE_ELEMENT_CRAFTING:
 			str = "info.launchbook.craft";
 			break;
-		case ELEMENT_DECONSTRUCT:
+		case ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT:
 			str = "info.launchbook.dec";
 			break;
-		case BUILING_RECORD:
+		case ICraftingLaunch.TYPE_BUILING_RECORD:
 			str = "info.launchbook.build";
 			break;
 		}
@@ -96,7 +96,7 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 			if (!world.isRemote) {
 				if (this.setAndWait(tile, book, power)) {
 					book.finishSpelling(world, entity);
-					ICraftingLaunch.CraftingType type = this.getBookType(stack);
+					String type = this.getBookType(stack);
 					ICraftingLaunch crafting = (ICraftingLaunch) tile;
 					if (crafting.isWorking())
 						return;
@@ -125,13 +125,14 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 		}
 	}
 
-	private ICraftingLaunch.CraftingType getBookType(ItemStack stack) {
+	private String getBookType(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) {
 			stack.setTagCompound(new NBTTagCompound());
 			nbt = stack.getTagCompound();
+			nbt.setString("bookType", ICraftingLaunch.TYPE_ELEMENT_CRAFTING);
 		}
-		return ICraftingLaunch.CraftingType.values()[nbt.getInteger("bookType")];
+		return nbt.getString("bookType");
 	}
 
 	private void switchBookType(ItemStack stack) {
@@ -140,18 +141,19 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 			stack.setTagCompound(new NBTTagCompound());
 			nbt = stack.getTagCompound();
 		}
-		ICraftingLaunch.CraftingType type = ICraftingLaunch.CraftingType.values()[nbt.getInteger("bookType")];
+		String type = nbt.getString("bookType");
 		switch (type) {
-		case ELEMENT_CRAFTING:
-			nbt.setInteger("bookType", ICraftingLaunch.CraftingType.ELEMENT_DECONSTRUCT.ordinal());
+		case ICraftingLaunch.TYPE_ELEMENT_CRAFTING:
+			nbt.setString("bookType", ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT);
 			break;
-		case ELEMENT_DECONSTRUCT:
-			nbt.setInteger("bookType", ICraftingLaunch.CraftingType.BUILING_RECORD.ordinal());
+		case ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT:
+			nbt.setString("bookType", ICraftingLaunch.TYPE_BUILING_RECORD);
 			break;
-		case BUILING_RECORD:
-			nbt.setInteger("bookType", ICraftingLaunch.CraftingType.ELEMENT_CRAFTING.ordinal());
+		case ICraftingLaunch.TYPE_BUILING_RECORD:
+			nbt.setString("bookType", ICraftingLaunch.TYPE_ELEMENT_CRAFTING);
 			break;
 		default:
+			nbt.setString("bookType", ICraftingLaunch.TYPE_ELEMENT_CRAFTING);
 			break;
 		}
 	}

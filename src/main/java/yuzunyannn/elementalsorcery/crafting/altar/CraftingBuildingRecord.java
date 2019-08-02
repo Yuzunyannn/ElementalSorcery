@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.crafting;
+package yuzunyannn.elementalsorcery.crafting.altar;
 
 import java.util.List;
 
@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.building.Building;
+import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
 import yuzunyannn.elementalsorcery.util.NBTHelper;

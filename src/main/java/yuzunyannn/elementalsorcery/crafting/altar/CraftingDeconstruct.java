@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.crafting;
+package yuzunyannn.elementalsorcery.crafting.altar;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -13,21 +13,23 @@ import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
-public class CraftingDeconstruct implements ICraftingCommit {
+public class CraftingDeconstruct implements ICraftingAltar {
 
 	private List<ItemStack> itemList = new ArrayList<ItemStack>();
 	// 操作结果链表，该变量同时起到标定作用
-	private LinkedList<ElementStack> rest_estacks = null;
+	private LinkedList<ElementStack> restEStacks = null;
+	// 是否ok
+	private boolean isOk = true;
 
 	public CraftingDeconstruct(ItemStack stack) {
 		itemList.add(stack);
 		ElementStack[] out_estacks = ElementMap.instance.toElement(stack);
 		if (out_estacks == null)
 			return;
-		rest_estacks = new LinkedList<ElementStack>();
+		restEStacks = new LinkedList<ElementStack>();
 		for (ElementStack estack : out_estacks) {
 			for (int i = 0; i < stack.getCount(); i++)
-				rest_estacks.add(estack.copy().getElementWhenDeconstruct(stack, ElementMap.instance.complex(stack),
+				restEStacks.add(estack.copy().getElementWhenDeconstruct(stack, ElementMap.instance.complex(stack),
 						Element.DP_ALTAR));
 		}
 	}
@@ -43,8 +45,8 @@ public class CraftingDeconstruct implements ICraftingCommit {
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		if (rest_estacks != null)
-			NBTHelper.setElementist(nbt, "rest_estacks", rest_estacks);
+		if (restEStacks != null)
+			NBTHelper.setElementist(nbt, "rest_estacks", restEStacks);
 		NBTHelper.setItemList(nbt, "itemList", itemList);
 		return nbt;
 	}
@@ -52,7 +54,7 @@ public class CraftingDeconstruct implements ICraftingCommit {
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
 		if (nbt.hasKey("rest_estacks"))
-			rest_estacks = NBTHelper.getElementList(nbt, "rest_estacks");
+			restEStacks = NBTHelper.getElementList(nbt, "rest_estacks");
 		if (nbt.hasKey("itemList"))
 			itemList = NBTHelper.getItemList(nbt, "itemList");
 	}
@@ -63,21 +65,41 @@ public class CraftingDeconstruct implements ICraftingCommit {
 	}
 
 	// 更新一次
-	public boolean update(TileStaticMultiBlock tileMul) {
-		if (rest_estacks == null || rest_estacks.isEmpty())
-			return false;
-		ElementStack estack = rest_estacks.getFirst();
+	@Override
+	public void update(TileStaticMultiBlock tileMul) {
+		if (restEStacks == null || restEStacks.isEmpty()) {
+			this.isOk = false;
+			return;
+		}
+		ElementStack estack = restEStacks.getFirst();
 		ElementStack put = estack.splitStack(1);
 		if (tileMul.putElementToSpPlace(put, tileMul.getPos().up())) {
 		} else {
 
 		}
 		if (estack.isEmpty())
-			rest_estacks.removeFirst();
-		if (rest_estacks.isEmpty()) {
-			rest_estacks = null;
-			return false;
+			restEStacks.removeFirst();
+		if (restEStacks.isEmpty()) {
+			restEStacks = null;
+			this.isOk = false;
+			return;
 		}
+	}
+
+	@Override
+	public boolean canContinue(TileStaticMultiBlock tileMul) {
+		return this.isOk;
+	}
+
+	@Override
+	public boolean end(TileStaticMultiBlock tileMul) {
+		ItemStack stack = itemList.get(0);
+		itemList.clear();
+		if (!tileMul.isIntact())
+			return false;
+		stack = ElementMap.instance.remain(stack);
+		if (!stack.isEmpty())
+			itemList.add(stack);
 		return true;
 	}
 }

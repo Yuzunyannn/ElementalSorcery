@@ -1,7 +1,9 @@
 package yuzunyannn.elementalsorcery.util.item;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
@@ -113,6 +115,14 @@ public interface IItemStackHandlerInventory extends IInventory {
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			inventory.setStackInSlot(i, ItemStack.EMPTY);
 		}
+	}
+
+	default public InventoryCrafting toInventoryCrafting(Container eventHandlerIn) {
+		return new InventoryCraftingUseInventory(eventHandlerIn, this, this.getInventoryCraftingSize());
+	}
+
+	default public int getInventoryCraftingSize() {
+		return 3;
 	}
 
 }

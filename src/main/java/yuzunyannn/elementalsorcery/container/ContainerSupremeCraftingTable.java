@@ -1,0 +1,153 @@
+package yuzunyannn.elementalsorcery.container;
+
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.inventory.IContainerListener;
+import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.InventoryCraftResult;
+import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.inventory.SlotCrafting;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.network.play.server.SPacketSetSlot;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
+import net.minecraftforge.items.SlotItemHandler;
+import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
+import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
+
+public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCraftingTable> {
+	static final public byte MODE_NONE = 0;
+	static final public byte MODE_NATIVE_CRAFTING = 1;
+	static final public byte MODE_ELEMENT_CRAFTING = 2;
+	static final public byte MODE_PLATFORM_NONE = 10;
+	public byte showMode = 0;
+
+	public InventoryCraftResult result = new InventoryCraftResult();
+	private boolean nativeCrafting = false;
+	public InventoryCrafting craftMatrix;
+
+	public ContainerSupremeCraftingTable(EntityPlayer player, TileEntity tileEntity) {
+		super(player, (TileSupremeCraftingTable) tileEntity, 36, 160);
+		IItemHandler items = this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		for (int i = 0; i < items.getSlots(); i++) {
+			int x = ContainerParchment.craftingRelative[i * 2];
+			int y = ContainerParchment.craftingRelative[i * 2 + 1];
+			this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
+				@Override
+				public void onSlotChanged() {
+					ContainerSupremeCraftingTable.this
+							.onCraftMatrixChanged(ContainerSupremeCraftingTable.this.tileEntity);
+					super.onSlotChanged();
+				}
+			});
+		}
+		craftMatrix = this.tileEntity.toInventoryCrafting(this);
+		this.addSlotToContainer(new SlotCrafting(player, craftMatrix, result, 0, 107, 130) {
+
+			@Override
+			public boolean canTakeStack(EntityPlayer playerIn) {
+				return nativeCrafting;
+			}
+
+		});
+		this.onCraftMatrixChanged(this.tileEntity);
+	}
+
+	@Override
+	public void onCraftMatrixChanged(IInventory inventoryIn) {
+		World world = this.player.getEntityWorld();
+		if (world.isRemote)
+			return;
+		nativeCrafting = false;
+		showMode = MODE_NONE;
+		ItemStack platfromItem = this.tileEntity.getPlatformItem();
+		if (!platfromItem.isEmpty()) {
+			showMode = MODE_PLATFORM_NONE;
+			this.result.setInventorySlotContents(0, platfromItem);
+		} else {
+			// 先寻找es合成表
+			String type = this.tileEntity.onCraftMatrixChanged();
+			switch (type) {
+			case ICraftingLaunch.TYPE_ELEMENT_CRAFTING:
+				ItemStack output = this.tileEntity.getOutput();
+				this.result.setInventorySlotContents(0, output);
+				showMode = MODE_ELEMENT_CRAFTING;
+				return;
+			}
+			// 寻找mc原版合成表
+			this.slotChangedCraftingGrid(world, this.player, this.craftMatrix, this.result);
+			if (!this.result.isEmpty()) {
+				nativeCrafting = true;
+				showMode = MODE_NATIVE_CRAFTING;
+			}
+
+		}
+
+	}
+
+	@Override
+	protected void slotChangedCraftingGrid(World world, EntityPlayer player, InventoryCrafting craftMatrix,
+			InventoryCraftResult craftResult) {
+		EntityPlayerMP entityplayermp = (EntityPlayerMP) player;
+		ItemStack itemstack = ItemStack.EMPTY;
+		IRecipe irecipe = CraftingManager.findMatchingRecipe(craftMatrix, world);
+
+		if (irecipe != null && (irecipe.isDynamic() || !world.getGameRules().getBoolean("doLimitedCrafting")
+				|| entityplayermp.getRecipeBook().isUnlocked(irecipe))) {
+			craftResult.setRecipeUsed(irecipe);
+			itemstack = irecipe.getCraftingResult(craftMatrix);
+		}
+		craftResult.setInventorySlotContents(0, itemstack);
+	}
+
+	private byte lastShowMode = 0;
+
+	@Override
+	public void detectAndSendChanges() {
+		this.detectAndSendChangesResult();
+		super.detectAndSendChanges();
+		if (lastShowMode == showMode)
+			return;
+		lastShowMode = showMode;
+		for (int j = 0; j < this.listeners.size(); ++j) {
+			((IContainerListener) this.listeners.get(j)).sendWindowProperty(this, 0, this.showMode);
+		}
+	}
+
+	// 发送产出结果的数据
+	public void detectAndSendChangesResult() {
+		int resultId = 52;
+		ItemStack itemstack = this.inventorySlots.get(resultId).getStack();
+		ItemStack itemstack1 = this.inventoryItemStacks.get(resultId);
+		if (!ItemStack.areItemStacksEqual(itemstack1, itemstack)) {
+			itemstack1 = itemstack.isEmpty() ? ItemStack.EMPTY : itemstack.copy();
+			this.inventoryItemStacks.set(resultId, itemstack1);
+			for (int j = 0; j < this.listeners.size(); ++j) {
+				IContainerListener listener = listeners.get(j);
+				if (listener instanceof EntityPlayerMP)
+					((EntityPlayerMP) listener).connection
+							.sendPacket(new SPacketSetSlot(this.windowId, resultId, itemstack));
+			}
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void updateProgressBar(int id, int data) {
+		switch (id) {
+		case 0:
+			this.showMode = (byte) data;
+			break;
+
+		default:
+			break;
+		}
+	}
+
+}

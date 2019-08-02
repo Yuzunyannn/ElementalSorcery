@@ -20,10 +20,10 @@ import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
-import yuzunyannn.elementalsorcery.crafting.CraftingBuildingRecord;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
+import yuzunyannn.elementalsorcery.crafting.altar.CraftingBuildingRecord;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderBuildingRecord;
@@ -108,8 +108,8 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 	}
 
 	@Override
-	public boolean canCrafting(CraftingType type, @Nullable EntityLivingBase player) {
-		if (type != CraftingType.BUILING_RECORD)
+	public boolean canCrafting(String type, @Nullable EntityLivingBase player) {
+		if (!ICraftingLaunch.TYPE_BUILING_RECORD.equals(type))
 			return false;
 		if (!this.checkStack())
 			return false;
@@ -126,7 +126,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 	}
 
 	@Override
-	public ICraftingCommit craftingBegin(CraftingType type, EntityLivingBase player) {
+	public ICraftingCommit craftingBegin(String type, EntityLivingBase player) {
 		this.working = true;
 		this.canContinue = true;
 		this.player = player;
@@ -135,7 +135,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 	}
 
 	@Override
-	public ICraftingCommit recovery(CraftingType type, EntityLivingBase player, NBTTagCompound nbt) {
+	public ICraftingCommit recovery(String type, EntityLivingBase player, NBTTagCompound nbt) {
 		this.working = true;
 		this.canContinue = true;
 		this.deadTime = 0;

@@ -12,12 +12,13 @@ import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
-import yuzunyannn.elementalsorcery.crafting.CraftingDeconstruct;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
+import yuzunyannn.elementalsorcery.crafting.altar.CraftingDeconstruct;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderDeconstruct;
+import yuzunyannn.elementalsorcery.util.TickOut;
 
 public class TileDeconstructAltarTable extends TileStaticMultiBlock implements IGetItemStack, ICraftingLaunch {
 
@@ -66,7 +67,7 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 	// 正在进行
 	protected boolean working = false;
 	// 开始前等待时间
-	int startTime = 0;
+	TickOut startTime = null;
 
 	@Override
 	public boolean isWorking() {
@@ -74,8 +75,8 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 	}
 
 	@Override
-	public boolean canCrafting(CraftingType type, @Nullable EntityLivingBase player) {
-		if (type != CraftingType.ELEMENT_DECONSTRUCT)
+	public boolean canCrafting(String type, @Nullable EntityLivingBase player) {
+		if (!ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT.equals(type))
 			return false;
 		if (!this.isIntact())
 			return false;
@@ -86,33 +87,28 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 	}
 
 	@Override
-	public ICraftingCommit craftingBegin(CraftingType type, EntityLivingBase player) {
+	public ICraftingCommit craftingBegin(String type, EntityLivingBase player) {
 		this.working = true;
-		startTime = 40;
+		startTime = new TickOut(40);
 		ItemStack outStack = stack;
 		stack = ItemStack.EMPTY;
 		return new CraftingDeconstruct(outStack);
 	}
 
 	@Override
-	public ICraftingCommit recovery(CraftingType type, EntityLivingBase player, NBTTagCompound nbt) {
+	public ICraftingCommit recovery(String type, EntityLivingBase player, NBTTagCompound nbt) {
 		this.working = true;
-		startTime = 40;
+		startTime = new TickOut(40);
 		stack = ItemStack.EMPTY;
 		CraftingDeconstruct cd = new CraftingDeconstruct(nbt);
-		this.outEstacks = new ElementStack[0];
 		return cd;
 	}
 
 	@Override
 	public void craftingUpdate(ICraftingCommit commit) {
-		if (startTime >= 0) {
-			startTime--;
+		if (startTime.tick())
 			return;
-		}
-		boolean ok = ((CraftingDeconstruct) commit).update(this);
-		if (ok == false)
-			outEstacks = null;
+		((CraftingDeconstruct) commit).update(this);
 	}
 
 	@Override
@@ -122,22 +118,16 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 
 	@Override
 	public boolean canContinue(ICraftingCommit commit) {
-		return this.isIntact() && outEstacks != null;
+		return this.isIntact() && ((CraftingDeconstruct) commit).canContinue(this);
 	}
 
 	@Override
 	public int craftingEnd(ICraftingCommit commit) {
 		outEstacks = null;
 		working = false;
-		CraftingDeconstruct cd = ((CraftingDeconstruct) commit);
-		ItemStack stack = commit.getItems().get(0);
-		commit.getItems().clear();
-		if (!this.isIntact()) {
+		if (!((CraftingDeconstruct) commit).end(this)) {
 			return ICraftingLaunch.FAIL;
 		}
-		stack = ElementMap.instance.remain(stack);
-		if (!stack.isEmpty())
-			commit.getItems().add(stack);
 		return ICraftingLaunch.SUCCESS;
 	}
 

@@ -226,8 +226,8 @@ public class GuiParchment extends GuiContainer {
 					item_buts[i].visible = false;
 				else
 					item_buts[i].visible = true;
-				int x = ContainerParchment.crafting_relative[i * 2];
-				int y = ContainerParchment.crafting_relative[i * 2 + 1];
+				int x = ContainerParchment.craftingRelative[i * 2];
+				int y = ContainerParchment.craftingRelative[i * 2 + 1];
 				item_buts[i].x = x + cX;
 				item_buts[i].y = y + cY;
 			}
@@ -592,8 +592,8 @@ public class GuiParchment extends GuiContainer {
 		cY++;
 		this.startDrawItem();
 		for (int i = 0; i < ingList.size(); i++) {
-			int x = ContainerParchment.crafting_relative[i * 2];
-			int y = ContainerParchment.crafting_relative[i * 2 + 1];
+			int x = ContainerParchment.craftingRelative[i * 2];
+			int y = ContainerParchment.craftingRelative[i * 2 + 1];
 			ItemStack[] stacks = ingList.get(i).getMatchingStacks();
 			if (stacks.length == 0)
 				continue;

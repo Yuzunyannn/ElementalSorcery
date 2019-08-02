@@ -5,7 +5,6 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -19,23 +18,19 @@ import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
-import yuzunyannn.elementalsorcery.crafting.CraftingCrafting;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
-import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch.CraftingType;
+import yuzunyannn.elementalsorcery.crafting.altar.CraftingCrafting;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderCrafting;
+import yuzunyannn.elementalsorcery.util.TickOut;
 import yuzunyannn.elementalsorcery.util.item.IItemStackHandlerInventory;
 
 public class TileElementCraftingTable extends TileStaticMultiBlock
 		implements ICraftingLaunch, IItemStackHandlerInventory {
 
-	protected ItemStackHandler inventory = null;
-
-	public TileElementCraftingTable() {
-		inventory = new ItemStackHandler(9);
-	}
+	protected ItemStackHandler inventory = new ItemStackHandler(9);
 
 	@Override
 	public ItemStackHandler getItemStackHandler() {
@@ -68,18 +63,14 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 		structure.addSpecialBlock(new BlockPos(-3, 1, 0));
 	}
 
-	// 玩家
-	EntityLivingBase player = null;
 	// 开始前等待时间
-	int startTime = 0;
-	// 结束前等待时间
-	int endTime = 0;
+	TickOut startTime = null;
 	// 正在进行
 	protected boolean working = false;
 
 	@Override
-	public boolean canCrafting(CraftingType type, @Nullable EntityLivingBase player) {
-		if (type != CraftingType.ELEMENT_CRAFTING)
+	public boolean canCrafting(String type, @Nullable EntityLivingBase player) {
+		if (!ICraftingLaunch.TYPE_ELEMENT_CRAFTING.equals(type))
 			return false;
 		if (this.isEmpty())
 			return false;
@@ -92,11 +83,9 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 	}
 
 	@Override
-	public ICraftingCommit craftingBegin(CraftingType type, EntityLivingBase player) {
-		this.player = player;
+	public ICraftingCommit craftingBegin(String type, EntityLivingBase player) {
 		working = true;
-		startTime = 80;
-		endTime = 80;
+		startTime = new TickOut(80);
 		this.markDirty();
 		CraftingCrafting cc = new CraftingCrafting(this);
 		this.clear();
@@ -104,11 +93,9 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 	}
 
 	@Override
-	public ICraftingCommit recovery(CraftingType type, EntityLivingBase player, NBTTagCompound nbt) {
-		this.player = player;
+	public ICraftingCommit recovery(String type, EntityLivingBase player, NBTTagCompound nbt) {
 		working = true;
-		startTime = 80;
-		endTime = 80;
+		startTime = new TickOut(80);
 		this.markDirty();
 		this.clear();
 		CraftingCrafting cc = new CraftingCrafting(nbt);
@@ -123,18 +110,11 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 
 	@Override
 	public void craftingUpdate(ICraftingCommit commit) {
-		if (result.isEmpty())
+		if (startTime.tick())
 			return;
-		if (startTime >= 0) {
-			startTime--;
-			return;
-		}
 		if (Math.random() < 0.25)
 			return;
-		boolean ok = ((CraftingCrafting) commit).update(this, this.player);
-		if (ok == false) {
-			result = ItemStack.EMPTY;
-		}
+		((CraftingCrafting) commit).update(this);
 	}
 
 	@Override
@@ -145,28 +125,17 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 	@Override
 	public int craftingEnd(ICraftingCommit commit) {
 		working = false;
-		CraftingCrafting cc = ((CraftingCrafting) commit);
+		result = ItemStack.EMPTY;
 		// 如果祭坛不完整，或者没有生成任何物品
-		if (!this.isIntact() || !cc.haveResult()) {
-			player = null;
+		if (!((CraftingCrafting) commit).end(this))
 			return ICraftingLaunch.FAIL;
-		}
-		cc.end();
-		player = null;
 		this.markDirty();
 		return ICraftingLaunch.SUCCESS;
 	}
 
 	@Override
 	public boolean canContinue(ICraftingCommit commit) {
-		if (result.isEmpty()) {
-			if (endTime >= 0) {
-				endTime--;
-				return this.isIntact();
-			} else
-				return false;
-		}
-		return this.isIntact();
+		return this.isIntact() && ((CraftingCrafting) commit).canContinue(this);
 	}
 
 	// 产出结果，该引用的对象不应该被修改，该变量同时起到标定作用

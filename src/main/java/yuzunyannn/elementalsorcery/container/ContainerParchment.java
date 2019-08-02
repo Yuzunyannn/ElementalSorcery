@@ -10,8 +10,8 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 
 public class ContainerParchment extends Container {
 
-	public final static int[] crafting_relative = new int[] { 0, 0, 18, 0, 36, 0, 0, 18, 18, 18, 36, 18, 0, 36, 18, 36,
-			36, 36, -36, -36, -18, -36, 54, -36, 72, -36, -36, -18, -18, -18, 54, -18, 75, -18, -36, 54, -18, 54, 54,
+	public final static int[] craftingRelative = new int[] { 0, 0, 18, 0, 36, 0, 0, 18, 18, 18, 36, 18, 0, 36, 18, 36,
+			36, 36, -36, -36, -18, -36, 54, -36, 72, -36, -36, -18, -18, -18, 54, -18, 72, -18, -36, 54, -18, 54, 54,
 			54, 72, 54, -36, 72, -18, 72, 54, 72, 72, 72 };
 
 	EntityPlayer player;

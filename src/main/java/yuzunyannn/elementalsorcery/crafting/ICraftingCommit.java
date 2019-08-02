@@ -4,8 +4,11 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 
 public interface ICraftingCommit extends INBTSerializable<NBTTagCompound> {
@@ -14,5 +17,10 @@ public interface ICraftingCommit extends INBTSerializable<NBTTagCompound> {
 	 */
 	@Nullable
 	List<ItemStack> getItems();
+
+	/** 给予相关信息 */
+	default public void setWorldInfo(World world, BlockPos pos, @Nullable EntityLivingBase player) {
+
+	}
 
 }

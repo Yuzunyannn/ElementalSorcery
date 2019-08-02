@@ -35,7 +35,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 	private ICraftingCommit commit = null;
 	private NBTTagCompound commitNBT = null;
 	private BlockPos pos;
-	private ICraftingLaunch.CraftingType type;
+	private String type;
 	private EntityLivingBase player;
 	/** 客户端动画 */
 	private ICraftingLaunchAnime craftingAnime = null;
@@ -44,7 +44,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		this(worldIn, null, null, null);
 	}
 
-	public EntityCrafting(World worldIn, BlockPos pos, ICraftingLaunch.CraftingType type, EntityLivingBase player) {
+	public EntityCrafting(World worldIn, BlockPos pos, String type, EntityLivingBase player) {
 		super(worldIn);
 		this.width = 0.25f;
 		this.height = 0.25f;
@@ -60,6 +60,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			this.crafting = (ICraftingLaunch) world.getTileEntity(this.pos);
 			this.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 			this.commit = this.crafting.craftingBegin(type, player);
+			this.commit.setWorldInfo(this.world, this.pos, this.player);
 		}
 	}
 
@@ -73,7 +74,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		NBTTagCompound nbt = new NBTTagCompound();
 		int[] pos = new int[] { this.pos.getX(), this.pos.getY(), this.pos.getZ() };
 		nbt.setIntArray("pos", pos);
-		nbt.setInteger("type", type.ordinal());
+		nbt.setString("type", type);
 		if (this.player != null)
 			nbt.setInteger("enid", this.player.getEntityId());
 		if (this.commit != null) {
@@ -95,7 +96,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		if (nbt.hasKey("cnbt"))
 			this.commitNBT = nbt.getCompoundTag("cnbt");
 		// 恢复类型
-		this.type = ICraftingLaunch.CraftingType.values()[nbt.getInteger("type")];
+		this.type = nbt.getString("type");
 		// 恢复玩家
 		Entity entity = this.world.getEntityByID(nbt.getInteger("enid"));
 		if (entity instanceof EntityLivingBase)
@@ -125,6 +126,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			if (tile instanceof ICraftingLaunch) {
 				this.crafting = (ICraftingLaunch) tile;
 				this.commit = this.crafting.recovery(type, this.player, this.commitNBT);
+				this.commit.setWorldInfo(this.world, this.pos, this.player);
 				this.craftingAnime = this.crafting.getAnime(this.commit);
 				if (this.craftingAnime == null)
 					this.craftingAnime = RenderEntityCrafting.getDefultAnime();
@@ -146,6 +148,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 				if (tile instanceof ICraftingLaunch) {
 					this.crafting = (ICraftingLaunch) tile;
 					this.commit = this.crafting.recovery(type, this.player, this.commitNBT);
+					this.commit.setWorldInfo(this.world, this.pos, this.player);
 				}
 				return;
 			}

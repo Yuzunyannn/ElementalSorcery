@@ -13,6 +13,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiHearth;
 import yuzunyannn.elementalsorcery.container.gui.GuiInfusionBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
 import yuzunyannn.elementalsorcery.container.gui.GuiSmeltBox;
+import yuzunyannn.elementalsorcery.container.gui.GuiSupremeCraftingTable;
 
 public class ESGuiHandler implements IGuiHandler {
 
@@ -25,6 +26,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_PARCHMENT = 7;
 	public static final int GUI_ELEMENT_CRAFTING_TABLE = 8;
 	public static final int GUI_ANALYSIS_ALTAR = 9;
+	public static final int GUI_SUPREME_CRAFTING_TABLE = 10;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -47,6 +49,8 @@ public class ESGuiHandler implements IGuiHandler {
 			return new ContainerElementCraftingTable(player, world.getTileEntity(new BlockPos(x, y, z)));
 		case GUI_ANALYSIS_ALTAR:
 			return new ContainerAnalysisAltar(player, world.getTileEntity(new BlockPos(x, y, z)));
+		case GUI_SUPREME_CRAFTING_TABLE:
+			return new ContainerSupremeCraftingTable(player, world.getTileEntity(new BlockPos(x, y, z)));
 		default:
 			return null;
 		}
@@ -81,6 +85,10 @@ public class ESGuiHandler implements IGuiHandler {
 					player.inventory);
 		case GUI_ANALYSIS_ALTAR:
 			return new GuiAnalysisAltar(new ContainerAnalysisAltar(player, world.getTileEntity(new BlockPos(x, y, z))),
+					player.inventory);
+		case GUI_SUPREME_CRAFTING_TABLE:
+			return new GuiSupremeCraftingTable(
+					new ContainerSupremeCraftingTable(player, world.getTileEntity(new BlockPos(x, y, z))),
 					player.inventory);
 		default:
 			return null;

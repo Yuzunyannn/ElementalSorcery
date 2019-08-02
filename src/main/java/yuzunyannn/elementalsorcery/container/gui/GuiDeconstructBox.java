@@ -32,8 +32,8 @@ public class GuiDeconstructBox extends GuiNormal {
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
 
-		int total_power = container.tile_entity.getField(TileDeconstructBox.FIELD_TOTAL_POWER);
-		int power = container.tile_entity.getField(TileDeconstructBox.FIELD_POWER);
+		int total_power = container.tileEntity.getField(TileDeconstructBox.FIELD_TOTAL_POWER);
+		int power = container.tileEntity.getField(TileDeconstructBox.FIELD_POWER);
 		int tex_width = (int) Math.ceil(29.0 * power / total_power);
 		this.drawTexturedModalRect(offsetX + 75, offsetY + 40, 176, 0, tex_width, 9);
 	}
