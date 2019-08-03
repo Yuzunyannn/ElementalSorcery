@@ -6,10 +6,17 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ability.IItemStructure;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.render.entity.AnimeRenderDeconstruct;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
@@ -22,12 +29,20 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	private boolean isOk = true;
 
 	public CraftingDeconstruct(ItemStack stack) {
+		this(stack, null);
+	}
+
+	public CraftingDeconstruct(ItemStack stack, IItemStructure structure) {
 		itemList.add(stack);
-		ElementStack[] out_estacks = ElementMap.instance.toElement(stack);
-		if (out_estacks == null)
+		ElementStack[] outEstacks;
+		if (structure == null)
+			outEstacks = ElementMap.instance.toElement(stack);
+		else
+			outEstacks = structure.toElement(stack);
+		if (outEstacks == null)
 			return;
 		restEStacks = new LinkedList<ElementStack>();
-		for (ElementStack estack : out_estacks) {
+		for (ElementStack estack : outEstacks) {
 			for (int i = 0; i < stack.getCount(); i++)
 				restEStacks.add(estack.copy().getElementWhenDeconstruct(stack, ElementMap.instance.complex(stack),
 						Element.DP_ALTAR));
@@ -64,6 +79,11 @@ public class CraftingDeconstruct implements ICraftingAltar {
 		return itemList;
 	}
 
+	@Override
+	public void CraftingDisappear(World world, BlockPos pos) {
+		this.itemList.clear();
+	}
+
 	// 更新一次
 	@Override
 	public void update(TileStaticMultiBlock tileMul) {
@@ -88,7 +108,7 @@ public class CraftingDeconstruct implements ICraftingAltar {
 
 	@Override
 	public boolean canContinue(TileStaticMultiBlock tileMul) {
-		return this.isOk;
+		return tileMul.isIntact() && this.isOk;
 	}
 
 	@Override
@@ -101,5 +121,11 @@ public class CraftingDeconstruct implements ICraftingAltar {
 		if (!stack.isEmpty())
 			itemList.add(stack);
 		return true;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public ICraftingLaunchAnime getAnime() {
+		return new AnimeRenderDeconstruct();
 	}
 }

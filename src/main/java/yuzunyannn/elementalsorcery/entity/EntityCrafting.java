@@ -137,7 +137,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		return false;
 	}
 
-	private int finish_tick = -1;
+	private int finishTick = -1;
 
 	@Override
 	public void onUpdate() {
@@ -163,18 +163,19 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			TileEntity tile = world.getTileEntity(this.pos);
 			// 方块被打掉了
 			if (this.crafting != tile) {
+				this.commit.CraftingDisappear(this.world, this.pos);
 				this.drop();
 				this.setDead();
 				return;
 			}
 			// 完成时间判定
-			if (this.finish_tick >= 0) {
-				if (this.finish_tick == 0) {
+			if (this.finishTick >= 0) {
+				if (this.finishTick == 0) {
 					this.drop();
 					this.setDead();
 					return;
 				}
-				this.finish_tick--;
+				this.finishTick--;
 			} else {
 				// 结束运行判定
 				if (!this.crafting.canContinue(this.commit)) {
@@ -183,8 +184,8 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 						this.drop();
 						this.setDead();
 					} else {
-						this.finish_tick = this.crafting.getEndingTime(this.commit);
-						dataManager.set(FINISH_TICK, finish_tick);
+						this.finishTick = this.crafting.getEndingTime(this.commit);
+						dataManager.set(FINISH_TICK, finishTick);
 						dataManager.setDirty(FINISH_TICK);
 					}
 					return;
@@ -211,14 +212,14 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 	private void updateClient() {
 		if (this.commit == null)
 			return;
-		if (this.finish_tick < 0) {
-			this.finish_tick = dataManager.get(FINISH_TICK);
+		if (this.finishTick < 0) {
+			this.finishTick = dataManager.get(FINISH_TICK);
 		} else {
-			if (finish_tick > 0) {
-				this.finish_tick--;
+			if (finishTick > 0) {
+				this.finishTick--;
 			}
 		}
-		this.craftingAnime.update(this.commit, this.world, finish_tick);
+		this.craftingAnime.update(this.commit, this.world, finishTick);
 	}
 
 	@Override
@@ -228,7 +229,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			// 客户端的完成特效
 			if (this.craftingAnime != null)
 				this.craftingAnime.endEffect(this.commit, this.world, this.pos,
-						this.finish_tick >= 0 ? ICraftingLaunch.SUCCESS : ICraftingLaunch.FAIL);
+						this.finishTick >= 0 ? ICraftingLaunch.SUCCESS : ICraftingLaunch.FAIL);
 		}
 	}
 

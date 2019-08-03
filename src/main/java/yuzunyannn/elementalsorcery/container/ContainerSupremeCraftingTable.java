@@ -26,8 +26,9 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 	static final public byte MODE_NATIVE_CRAFTING = 1;
 	static final public byte MODE_ELEMENT_CRAFTING = 2;
 	static final public byte MODE_PLATFORM_NONE = 10;
+	static final public byte MODE_DECONSTRUCT = 11;
 	public byte showMode = 0;
-
+	int resultSlotId;
 	public InventoryCraftResult result = new InventoryCraftResult();
 	private boolean nativeCrafting = false;
 	public InventoryCrafting craftMatrix;
@@ -38,57 +39,86 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 		for (int i = 0; i < items.getSlots(); i++) {
 			int x = ContainerParchment.craftingRelative[i * 2];
 			int y = ContainerParchment.craftingRelative[i * 2 + 1];
-			this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
-				@Override
-				public void onSlotChanged() {
-					ContainerSupremeCraftingTable.this
-							.onCraftMatrixChanged(ContainerSupremeCraftingTable.this.tileEntity);
-					super.onSlotChanged();
-				}
-			});
+			if (i == 3 || i == 5)
+				this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
+					@Override
+					public void onSlotChanged() {
+						ContainerSupremeCraftingTable.this
+								.onCraftMatrixChanged(ContainerSupremeCraftingTable.this.tileEntity);
+						super.onSlotChanged();
+					}
+
+					@Override
+					@SideOnly(Side.CLIENT)
+					public boolean isEnabled() {
+						return showMode != MODE_DECONSTRUCT;
+					}
+				});
+			else
+				this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
+					@Override
+					public void onSlotChanged() {
+						ContainerSupremeCraftingTable.this
+								.onCraftMatrixChanged(ContainerSupremeCraftingTable.this.tileEntity);
+						super.onSlotChanged();
+					}
+				});
 		}
 		craftMatrix = this.tileEntity.toInventoryCrafting(this);
-		this.addSlotToContainer(new SlotCrafting(player, craftMatrix, result, 0, 107, 130) {
+		this.resultSlotId = this.addSlotToContainer(new SlotCrafting(player, craftMatrix, result, 0, 107, 130) {
 
 			@Override
 			public boolean canTakeStack(EntityPlayer playerIn) {
 				return nativeCrafting;
 			}
 
-		});
+		}).slotNumber;
 		this.onCraftMatrixChanged(this.tileEntity);
+	}
+
+	@Override
+	public boolean canInteractWith(EntityPlayer playerIn) {
+		return super.canInteractWith(playerIn) && tileEntity.isIntact();
 	}
 
 	@Override
 	public void onCraftMatrixChanged(IInventory inventoryIn) {
 		World world = this.player.getEntityWorld();
-		if (world.isRemote)
-			return;
 		nativeCrafting = false;
 		showMode = MODE_NONE;
-		ItemStack platfromItem = this.tileEntity.getPlatformItem();
-		if (!platfromItem.isEmpty()) {
-			showMode = MODE_PLATFORM_NONE;
+		// 先寻找es合成表
+		String type = this.tileEntity.onCraftMatrixChanged();
+		if (type == null)
+			type = "";
+		ItemStack platfromItem;
+		switch (type) {
+		case ICraftingLaunch.TYPE_ELEMENT_CRAFTING:
+			ItemStack output = this.tileEntity.getOutput();
+			this.result.setInventorySlotContents(0, output);
+			showMode = MODE_ELEMENT_CRAFTING;
+			return;
+		case ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT:
+			platfromItem = this.tileEntity.getPlatformItem();
 			this.result.setInventorySlotContents(0, platfromItem);
-		} else {
-			// 先寻找es合成表
-			String type = this.tileEntity.onCraftMatrixChanged();
-			switch (type) {
-			case ICraftingLaunch.TYPE_ELEMENT_CRAFTING:
-				ItemStack output = this.tileEntity.getOutput();
-				this.result.setInventorySlotContents(0, output);
-				showMode = MODE_ELEMENT_CRAFTING;
-				return;
+			showMode = MODE_DECONSTRUCT;
+			return;
+		default:
+			platfromItem = this.tileEntity.getPlatformItem();
+			if (!platfromItem.isEmpty()) {
+				showMode = MODE_PLATFORM_NONE;
+				this.result.setInventorySlotContents(0, platfromItem);
+			} else {
+				if (world.isRemote)
+					return;
+				// 寻找mc原版合成表
+				this.slotChangedCraftingGrid(world, this.player, this.craftMatrix, this.result);
+				if (!this.result.isEmpty()) {
+					nativeCrafting = true;
+					showMode = MODE_NATIVE_CRAFTING;
+				}
 			}
-			// 寻找mc原版合成表
-			this.slotChangedCraftingGrid(world, this.player, this.craftMatrix, this.result);
-			if (!this.result.isEmpty()) {
-				nativeCrafting = true;
-				showMode = MODE_NATIVE_CRAFTING;
-			}
-
+			break;
 		}
-
 	}
 
 	@Override
@@ -122,17 +152,16 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 
 	// 发送产出结果的数据
 	public void detectAndSendChangesResult() {
-		int resultId = 52;
-		ItemStack itemstack = this.inventorySlots.get(resultId).getStack();
-		ItemStack itemstack1 = this.inventoryItemStacks.get(resultId);
+		ItemStack itemstack = this.inventorySlots.get(resultSlotId).getStack();
+		ItemStack itemstack1 = this.inventoryItemStacks.get(resultSlotId);
 		if (!ItemStack.areItemStacksEqual(itemstack1, itemstack)) {
 			itemstack1 = itemstack.isEmpty() ? ItemStack.EMPTY : itemstack.copy();
-			this.inventoryItemStacks.set(resultId, itemstack1);
+			this.inventoryItemStacks.set(resultSlotId, itemstack1);
 			for (int j = 0; j < this.listeners.size(); ++j) {
 				IContainerListener listener = listeners.get(j);
 				if (listener instanceof EntityPlayerMP)
 					((EntityPlayerMP) listener).connection
-							.sendPacket(new SPacketSetSlot(this.windowId, resultId, itemstack));
+							.sendPacket(new SPacketSetSlot(this.windowId, resultSlotId, itemstack));
 			}
 		}
 	}

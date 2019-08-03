@@ -10,12 +10,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
+import yuzunyannn.elementalsorcery.render.entity.AnimeRenderCrafting;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
@@ -32,11 +36,13 @@ public class CraftingCrafting implements ICraftingAltar {
 	// 进行时的合成表
 	private IRecipe working_irecipe = null;
 	// 尝试tick
-	private int tryTick = 100;
+	private int tryTick = 50;
 	// 玩家
 	private EntityLivingBase player = null;
 	// 是否ok
 	private boolean isOk = true;
+	// 周期性刷新
+	private int tick = 0;
 
 	public CraftingCrafting(IInventory inv) {
 		workingInventory = new ItemStackHandlerInventory(inv.getSizeInventory());
@@ -71,13 +77,16 @@ public class CraftingCrafting implements ICraftingAltar {
 
 	@Override
 	public boolean canContinue(TileStaticMultiBlock tileMul) {
-		return this.isOk;
+		return tileMul.isIntact() && this.isOk;
 	}
 
 	// 更新一次
 	@Override
 	public void update(TileStaticMultiBlock tileMul) {
 		if (!this.isOk)
+			return;
+		this.tick++;
+		if (this.tick % 4 != 0)
 			return;
 		// 寻找合成表
 		if (working_irecipe == null) {
@@ -162,6 +171,12 @@ public class CraftingCrafting implements ICraftingAltar {
 		}
 		workingResult.insertItem(workingResult.getSlots() - 1, stack, false);
 		return false;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public ICraftingLaunchAnime getAnime() {
+		return new AnimeRenderCrafting();
 	}
 
 	@Override

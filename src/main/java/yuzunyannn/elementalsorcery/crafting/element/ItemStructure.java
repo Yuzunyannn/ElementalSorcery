@@ -9,7 +9,7 @@ import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
-public class ItemStructure implements IItemStructure, IItemStructure.IItemStructureSet {
+public class ItemStructure implements IItemStructure {
 
 	static public IItemStructure getItemStructure(ItemStack stack) {
 		return new ItemStructure(stack);
@@ -18,7 +18,6 @@ public class ItemStructure implements IItemStructure, IItemStructure.IItemStruct
 	static public final ItemStructure itemStructure = new ItemStructure();
 
 	static public IItemStructure getItemStructureWithoutNew(ItemStack stack) {
-		itemStructure.stack = ItemStack.EMPTY;
 		itemStructure.loadState(stack);
 		return itemStructure;
 	}
@@ -44,13 +43,12 @@ public class ItemStructure implements IItemStructure, IItemStructure.IItemStruct
 	}
 
 	@Override
-	public ItemStructure set(ItemStack stack, int complex, ElementStack... estacks) {
+	public void set(ItemStack stack, int complex, ElementStack... estacks) {
 		this.stack = stack;
 		this.estacks = estacks;
 		this.complex = complex;
 		if (this.complex <= 0)
 			this.complex = ElementHelper.getComplexFromElements(this.stack, this.estacks);
-		return this;
 	}
 
 	@Override
@@ -68,8 +66,11 @@ public class ItemStructure implements IItemStructure, IItemStructure.IItemStruct
 	@Override
 	public void loadState(ItemStack stack) {
 		NBTTagCompound nbt = stack.getSubCompound("istru");
-		if (nbt == null)
+		if (nbt == null) {
+			this.stack = ItemStack.EMPTY;
+			this.estacks = null;
 			return;
+		}
 		this.stack = new ItemStack(nbt.getCompoundTag("item"));
 		if (this.stack.isEmpty()) {
 			estacks = null;

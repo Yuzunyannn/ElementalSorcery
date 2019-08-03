@@ -135,6 +135,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 		if (!this.world.isRemote)
 			return true;
 		this.wake = 80;
+		this.markDirty();
 		return true;
 	}
 

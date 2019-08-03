@@ -17,7 +17,6 @@ import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingDeconstruct;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.render.entity.AnimeRenderDeconstruct;
 import yuzunyannn.elementalsorcery.util.TickOut;
 
 public class TileDeconstructAltarTable extends TileStaticMultiBlock implements IGetItemStack, ICraftingLaunch {
@@ -118,7 +117,7 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 
 	@Override
 	public boolean canContinue(ICraftingCommit commit) {
-		return this.isIntact() && ((CraftingDeconstruct) commit).canContinue(this);
+		return ((CraftingDeconstruct) commit).canContinue(this);
 	}
 
 	@Override
@@ -134,7 +133,7 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ICraftingLaunchAnime getAnime(ICraftingCommit commit) {
-		return new AnimeRenderDeconstruct();
+		return ((CraftingDeconstruct) commit).getAnime();
 	}
 
 	private void recheckDeconstructResult() {

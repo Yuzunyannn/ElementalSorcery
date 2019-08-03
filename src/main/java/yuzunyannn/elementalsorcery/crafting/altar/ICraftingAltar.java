@@ -1,6 +1,9 @@
 package yuzunyannn.elementalsorcery.crafting.altar;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
+import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
 
 public interface ICraftingAltar extends ICraftingCommit {
@@ -15,5 +18,8 @@ public interface ICraftingAltar extends ICraftingCommit {
 	 * @return 返回是否成功,true成功
 	 */
 	public boolean end(TileStaticMultiBlock tileMul);
+
+	@SideOnly(Side.CLIENT)
+	public ICraftingLaunchAnime getAnime();
 
 }

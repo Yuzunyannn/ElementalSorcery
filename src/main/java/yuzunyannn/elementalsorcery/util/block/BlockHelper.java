@@ -15,12 +15,12 @@ import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
 
 public class BlockHelper {
 	/** 掉落 */
-	public static void drop(IItemHandler item_handler, World worldIn, BlockPos pos) {
-		for (int i = item_handler.getSlots() - 1; i >= 0; i--) {
-			if (!item_handler.getStackInSlot(i).isEmpty()) {
-				Block.spawnAsEntity(worldIn, pos, item_handler.getStackInSlot(i));
-				if (item_handler instanceof IItemHandlerModifiable)
-					((IItemHandlerModifiable) item_handler).setStackInSlot(i, ItemStack.EMPTY);
+	public static void drop(IItemHandler itemHandler, World worldIn, BlockPos pos) {
+		for (int i = itemHandler.getSlots() - 1; i >= 0; i--) {
+			if (!itemHandler.getStackInSlot(i).isEmpty()) {
+				Block.spawnAsEntity(worldIn, pos, itemHandler.getStackInSlot(i));
+				if (itemHandler instanceof IItemHandlerModifiable)
+					((IItemHandlerModifiable) itemHandler).setStackInSlot(i, ItemStack.EMPTY);
 			}
 		}
 	}

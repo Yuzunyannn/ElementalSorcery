@@ -42,6 +42,7 @@ public class GuiSupremeCraftingTable extends GuiNormal {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		GlStateManager.color(1.0F, 1.0F, 1.0F);
+		GlStateManager.disableCull();
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
@@ -56,6 +57,12 @@ public class GuiSupremeCraftingTable extends GuiNormal {
 			this.drawTexturedModalRect(offsetX + 106, offsetY + 111, 230, 60, 18, 18);
 			break;
 		case ContainerSupremeCraftingTable.MODE_PLATFORM_NONE:
+			this.drawTexturedModalRect(offsetX + 104, offsetY + 147, 230, 0, 23, 6);
+			return;
+		case ContainerSupremeCraftingTable.MODE_DECONSTRUCT:
+			this.drawTexturedModalRectMirrorHeight(offsetX + 106, offsetY + 111, 230, 42, 18, 18);
+			this.drawTexturedModalRect(offsetX + 88, offsetY + 75, 230, 6, 18, 18);
+			this.drawTexturedModalRectMirrorWidth(offsetX + 124, offsetY + 75, 230, 6, 18, 18);
 			this.drawTexturedModalRect(offsetX + 104, offsetY + 147, 230, 0, 23, 6);
 			break;
 		}

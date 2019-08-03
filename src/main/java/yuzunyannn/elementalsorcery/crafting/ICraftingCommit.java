@@ -23,4 +23,9 @@ public interface ICraftingCommit extends INBTSerializable<NBTTagCompound> {
 
 	}
 
+	/** 祭坛被破坏时调用 */
+	default public void CraftingDisappear(World world, BlockPos pos) {
+
+	}
+
 }

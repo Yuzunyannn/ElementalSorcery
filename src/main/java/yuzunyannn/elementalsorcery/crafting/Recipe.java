@@ -20,10 +20,10 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 public class Recipe implements IRecipe {
 
 	// 信息
-	private int first_on_empty = -1;
+	private int firstNotEmpty = -1;
 	private ItemStack output;
-	private List<ElementStack> element_list = new ArrayList<ElementStack>();
-	private List<ItemStack> match_list = new ArrayList<ItemStack>();
+	private List<ElementStack> elementList = new ArrayList<ElementStack>();
+	private List<ItemStack> matchList = new ArrayList<ItemStack>();
 
 	public Recipe(ItemStack output) {
 		this.output = output;
@@ -51,7 +51,7 @@ public class Recipe implements IRecipe {
 				else
 					map.put(mark, (ItemStack) obj);
 			} else if (obj instanceof ElementStack) {
-				element_list.add((ElementStack) obj);
+				elementList.add((ElementStack) obj);
 			} else
 				throw new IllegalArgumentException("Illegal args!");
 		}
@@ -106,8 +106,8 @@ public class Recipe implements IRecipe {
 
 	Recipe(ItemStack output, List<ElementStack> elist, List<ItemStack> mlist) {
 		this.output = output;
-		this.element_list = elist;
-		this.match_list = mlist;
+		this.elementList = elist;
+		this.matchList = mlist;
 
 	}
 
@@ -117,25 +117,25 @@ public class Recipe implements IRecipe {
 			return;
 		if (index >= 25 || index < 0)
 			throw new IllegalArgumentException("index must be less than 25 and greater or equal to 0!");
-		if (!match_list.isEmpty()) {
-			if (match_list.size() - 1 >= index)
+		if (!matchList.isEmpty()) {
+			if (matchList.size() - 1 >= index)
 				throw new IllegalArgumentException("index must be increase progressively!");
 		}
-		if (first_on_empty == -1)
-			first_on_empty = index;
-		while (match_list.size() != index)
-			match_list.add(ItemStack.EMPTY);
-		match_list.add(stack);
+		if (firstNotEmpty == -1)
+			firstNotEmpty = index;
+		while (matchList.size() != index)
+			matchList.add(ItemStack.EMPTY);
+		matchList.add(stack);
 	}
 
 	// 设置所需的元素
 	public void setElementStack(ElementStack[] need) {
-		element_list = Arrays.asList(need);
+		elementList = Arrays.asList(need);
 	}
 
 	// 设置所需的元素
 	public void setElementStack(List<ElementStack> need) {
-		element_list = need;
+		elementList = need;
 	}
 
 	@Override
@@ -146,12 +146,12 @@ public class Recipe implements IRecipe {
 			if (!inv.getStackInSlot(inv_fne).isEmpty())
 				break;
 		// 开始比对
-		for (int i = this.first_on_empty; i < match_list.size(); i++) {
-			int j = i - this.first_on_empty + inv_fne;
+		for (int i = this.firstNotEmpty; i < matchList.size(); i++) {
+			int j = i - this.firstNotEmpty + inv_fne;
 			if (inv.getSizeInventory() <= j)
 				return false;
 			ItemStack stack = inv.getStackInSlot(j);
-			ItemStack origin = match_list.get(i);
+			ItemStack origin = matchList.get(i);
 			if (stack.isEmpty() && origin.isEmpty())
 				continue;
 			if (!origin.isItemEqual(stack))
@@ -162,7 +162,7 @@ public class Recipe implements IRecipe {
 				return false;
 		}
 		// 末尾查询
-		for (int i = match_list.size() - this.first_on_empty + inv_fne; i < inv.getSizeInventory(); i++) {
+		for (int i = matchList.size() - this.firstNotEmpty + inv_fne; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (!stack.isEmpty())
 				return false;
@@ -178,11 +178,11 @@ public class Recipe implements IRecipe {
 			if (!inv.getStackInSlot(inv_fne).isEmpty())
 				break;
 		// 开始减少
-		for (int i = this.first_on_empty; i < match_list.size(); i++) {
-			ItemStack origin = match_list.get(i);
+		for (int i = this.firstNotEmpty; i < matchList.size(); i++) {
+			ItemStack origin = matchList.get(i);
 			if (origin.isEmpty())
 				continue;
-			int j = i - this.first_on_empty + inv_fne;
+			int j = i - this.firstNotEmpty + inv_fne;
 			ItemStack stack = inv.getStackInSlot(j);
 			stack.grow(-origin.getCount());
 			inv.setInventorySlotContents(j, stack);
@@ -196,13 +196,13 @@ public class Recipe implements IRecipe {
 
 	@Override
 	public List<ElementStack> getNeedElements() {
-		return element_list;
+		return elementList;
 	}
 
 	@Override
 	public NonNullList<Ingredient> getIngredients() {
 		NonNullList<Ingredient> iList = NonNullList.<Ingredient>create();
-		for (ItemStack stack : match_list) {
+		for (ItemStack stack : matchList) {
 			if (stack.isEmpty())
 				iList.add(Ingredient.EMPTY);
 			else {

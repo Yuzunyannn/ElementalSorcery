@@ -23,7 +23,6 @@ import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingCrafting;
-import yuzunyannn.elementalsorcery.render.entity.AnimeRenderCrafting;
 import yuzunyannn.elementalsorcery.util.TickOut;
 import yuzunyannn.elementalsorcery.util.item.IItemStackHandlerInventory;
 
@@ -86,9 +85,9 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 	public ICraftingCommit craftingBegin(String type, EntityLivingBase player) {
 		working = true;
 		startTime = new TickOut(80);
-		this.markDirty();
 		CraftingCrafting cc = new CraftingCrafting(this);
 		this.clear();
+		this.markDirty();
 		return cc;
 	}
 
@@ -112,8 +111,6 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 	public void craftingUpdate(ICraftingCommit commit) {
 		if (startTime.tick())
 			return;
-		if (Math.random() < 0.25)
-			return;
 		((CraftingCrafting) commit).update(this);
 	}
 
@@ -135,7 +132,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 
 	@Override
 	public boolean canContinue(ICraftingCommit commit) {
-		return this.isIntact() && ((CraftingCrafting) commit).canContinue(this);
+		return ((CraftingCrafting) commit).canContinue(this);
 	}
 
 	// 产出结果，该引用的对象不应该被修改，该变量同时起到标定作用
@@ -164,7 +161,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 	@SideOnly(Side.CLIENT)
 	@Override
 	public ICraftingLaunchAnime getAnime(ICraftingCommit commit) {
-		return new AnimeRenderCrafting();
+		return ((CraftingCrafting) commit).getAnime();
 	}
 
 	@Override

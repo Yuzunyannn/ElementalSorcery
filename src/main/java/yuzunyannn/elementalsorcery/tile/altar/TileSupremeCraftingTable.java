@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.tile.altar;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
@@ -17,14 +18,24 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
+import yuzunyannn.elementalsorcery.api.ability.IItemStructure;
+import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
+import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
+import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
+import yuzunyannn.elementalsorcery.crafting.altar.CraftingCrafting;
+import yuzunyannn.elementalsorcery.crafting.altar.CraftingDeconstruct;
+import yuzunyannn.elementalsorcery.crafting.altar.ICraftingAltar;
+import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.model.ModelSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.util.TickOut;
 import yuzunyannn.elementalsorcery.util.item.IItemStackHandlerInventory;
 
 public class TileSupremeCraftingTable extends TileStaticMultiBlock
@@ -89,10 +100,10 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 		checkTime++;
 		if (checkTime % 40 == 0)
 			this.checkIntact();
-		if (!this.ok)
-			return;
 		if (this.world.isRemote)
 			this.clientRender();
+		if (!this.ok)
+			return;
 	}
 
 	@Override
@@ -102,64 +113,154 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 
 	@Override
 	public boolean isWorking() {
-		// TODO Auto-generated method stub
-		return false;
+		return isWorking;
 	}
+
+	// 是否工作
+	boolean isWorking = false;
+	// 当前类型
+	String nowType;
+	// 开始前等待时间
+	TickOut startTime = null;
 
 	@Override
 	public boolean canCrafting(String type, EntityLivingBase player) {
 		if (!this.isIntact())
 			return false;
-		switch (type) {
-		case ICraftingLaunch.TYPE_ELEMENT_CRAFTING:
-		case ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT:
-			break;
-		default:
+		nowType = this.onCraftMatrixChanged();
+		if (nowType == null)
 			return false;
-		}
-		return false;
+		if (!nowType.equals(type))
+			return false;
+		return true;
 	}
 
 	@Override
 	public ICraftingCommit craftingBegin(String type, EntityLivingBase player) {
-		// TODO Auto-generated method stub
-		return null;
+		isWorking = true;
+		nowType = type;
+		startTime = new TickOut(60);
+		ICraftingAltar craftingAltar;
+		switch (type) {
+		case ICraftingLaunch.TYPE_ELEMENT_CRAFTING:
+			craftingAltar = new CraftingCrafting(this);
+			break;
+		case ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT:
+			craftingAltar = new CraftingDeconstruct(this.getCenterItem(),
+					ItemStructure.getItemStructure(this.getPlatformItem()));
+			break;
+		default:
+			craftingAltar = null;
+			ElementalSorcery.logger.warn("在SupremeCraftingTable开始合成时，出现了不存在的类型！" + type);
+			break;
+		}
+		this.clear();
+		this.markDirty();
+		return craftingAltar;
 	}
 
 	@Override
 	public ICraftingCommit recovery(String type, EntityLivingBase player, NBTTagCompound nbt) {
-		// TODO Auto-generated method stub
+		isWorking = true;
+		nowType = type;
+		startTime = new TickOut(60);
+		this.clear();
+		switch (type) {
+		case ICraftingLaunch.TYPE_ELEMENT_CRAFTING:
+			return new CraftingCrafting(nbt);
+		case ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT:
+			return new CraftingDeconstruct(nbt);
+		default:
+			ElementalSorcery.logger.warn("在SupremeCraftingTable恢复合成时，出现了不存在的类型！");
+			break;
+		}
 		return null;
 	}
 
 	@Override
 	public void craftingUpdate(ICraftingCommit commit) {
-		// TODO Auto-generated method stub
+		if (startTime.tick())
+			return;
+		((ICraftingAltar) commit).update(this);
+	}
 
+	@Override
+	public void craftingUpdateClient(ICraftingCommit commit) {
+		this.craftingUpdate(commit);
 	}
 
 	@Override
 	public boolean canContinue(ICraftingCommit commit) {
-		// TODO Auto-generated method stub
-		return false;
+		return ((ICraftingAltar) commit).canContinue(this);
 	}
 
 	@Override
 	public int craftingEnd(ICraftingCommit commit) {
-		// TODO Auto-generated method stub
-		return 0;
+		isWorking = false;
+		if (!((ICraftingAltar) commit).end(this))
+			return ICraftingLaunch.FAIL;
+		this.markDirty();
+		return ICraftingLaunch.SUCCESS;
 	}
 
+	@Override
+	public ICraftingLaunchAnime getAnime(ICraftingCommit commit) {
+		return ((ICraftingAltar) commit).getAnime();
+	}
+
+	private ItemStack output = ItemStack.EMPTY;
+	private List<ElementStack> outEStacks = null;
+
 	public String onCraftMatrixChanged() {
+		// 检测是否平台上有物品
+		ItemStack platformItem = this.getPlatformItem();
+		if (platformItem.isEmpty()) {
+			// 检测是否合成
+			IRecipe irecipe = RecipeManagement.instance.findMatchingRecipe(this, world);
+			if (irecipe != null) {
+				output = irecipe.getCraftingResult(this).copy();
+				outEStacks = irecipe.getNeedElements();
+				return ICraftingLaunch.TYPE_ELEMENT_CRAFTING;
+			}
+		} else {
+			if (this.checkJustCenter()) {
+				IItemStructure structure = ItemStructure.getItemStructureWithoutNew(platformItem);
+				ItemStack centerStack = this.getCenterItem();
+				ElementStack[] estacks = structure.toElement(centerStack);
+				outEStacks = new LinkedList<>();
+				if (estacks != null) {
+					for (ElementStack estack : estacks)
+						outEStacks.add(estack);
+					return ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT;
+				}
+			}
+
+		}
 		return null;
+	}
+
+	private boolean checkJustCenter() {
+		for (int i = 0; i < 4; i++) {
+			if (!this.getStackInSlot(i).isEmpty())
+				return false;
+		}
+		for (int i = 5; i < this.getSizeInventory(); i++) {
+			if (!this.getStackInSlot(i).isEmpty())
+				return false;
+		}
+		return true;
+	}
+
+	private final ItemStack getCenterItem() {
+		return this.getStackInSlot(4);
 	}
 
 	public ItemStack getOutput() {
-		return ItemStack.EMPTY;
+		return output;
 	}
 
 	public List<ElementStack> getNeedElements() {
-		return null;
+		return outEStacks;
 	}
 
 	public ItemStack getPlatformItem() {
@@ -191,8 +292,8 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 		this.prevLegR = this.legR;
 
 		EntityPlayer entityplayer = this.world.getClosestPlayer((double) ((float) this.pos.getX() + 0.5F),
-				(double) ((float) this.pos.getY() + 0.5F), (double) ((float) this.pos.getZ() + 0.5F), 3.5D, false);
-		if (entityplayer != null) {
+				(double) ((float) this.pos.getY() + 0.5F), (double) ((float) this.pos.getZ() + 0.5F), 4.0D, false);
+		if ((entityplayer != null && this.ok) || this.isWorking) {
 			if (legR < LEG_MAX)
 				legR += LEG_RATE;
 			roate += ROATE_RATE;

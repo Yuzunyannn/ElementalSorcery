@@ -5,11 +5,13 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 
 public class ContainerNormal<T extends TileEntity> extends Container {
 
 	final public T tileEntity;
 	final public EntityPlayer player;
+	final public BlockPos pos;
 	protected int moreSlots = 0;
 
 	public ContainerNormal(EntityPlayer player, T tileEntity) {
@@ -19,6 +21,7 @@ public class ContainerNormal<T extends TileEntity> extends Container {
 	public ContainerNormal(EntityPlayer player, T tileEntity, int xoff, int yoff) {
 		this.tileEntity = tileEntity;
 		this.player = player;
+		this.pos = this.tileEntity.getPos();
 		// 玩家物品栏
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
@@ -65,7 +68,8 @@ public class ContainerNormal<T extends TileEntity> extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
-		return playerIn.getDistanceSq(this.tileEntity.getPos()) <= 64;
+		return playerIn.getDistanceSq(this.tileEntity.getPos()) <= 64
+				&& player.world.getTileEntity(this.pos) == this.tileEntity;
 	}
 
 }
