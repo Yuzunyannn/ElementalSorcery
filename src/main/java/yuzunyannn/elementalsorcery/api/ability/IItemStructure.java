@@ -17,14 +17,10 @@ public interface IItemStructure extends IToElement, IItemCapbiltitySyn {
 		return this.complex(new ItemStack(item));
 	}
 
+	/** 获取存放物品结构数目，通常只有1 */
 	int getItemCount();
-
-	ElementStack[] toElement(int index);
-
-	int complex(int index);
 
 	ItemStack getStructureItem(int index);
 
-	public void set(ItemStack stack, int complex, ElementStack... estacks);
-
+	public void set(int index, ItemStack stack, int complex, ElementStack... estacks);
 }

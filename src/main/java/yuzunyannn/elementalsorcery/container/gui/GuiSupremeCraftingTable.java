@@ -28,7 +28,7 @@ public class GuiSupremeCraftingTable extends GuiNormal {
 
 	@Override
 	public String getUnlocalizedTitle() {
-		return "tile.elementCraftingTable.name";
+		return "tile.supremeCraftingTable.name";
 	}
 
 	@Override
@@ -42,7 +42,6 @@ public class GuiSupremeCraftingTable extends GuiNormal {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		GlStateManager.color(1.0F, 1.0F, 1.0F);
-		GlStateManager.disableCull();
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);

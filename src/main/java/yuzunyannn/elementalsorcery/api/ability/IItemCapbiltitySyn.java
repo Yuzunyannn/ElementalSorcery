@@ -2,7 +2,7 @@ package yuzunyannn.elementalsorcery.api.ability;
 
 import net.minecraft.item.ItemStack;
 
-/** 更新状态[由于物品的cap不会自动同步！！！不会自动同步！！] （当然，这个接口不仅仅作用在mc的能力系统上） */
+/** 从物品更新状态[由于物品的cap不会自动同步！！！不会自动同步！！] （当然，这个接口不仅仅作用在mc的能力系统上） */
 public interface IItemCapbiltitySyn {
 
 	/**

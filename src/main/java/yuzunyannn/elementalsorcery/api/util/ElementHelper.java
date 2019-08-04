@@ -117,4 +117,12 @@ public class ElementHelper {
 		}
 		return (ElementStack[]) list.toArray(new ElementStack[list.size()]);
 	}
+
+	/** 复制 */
+	static public ElementStack[] copy(ElementStack[] estacks) {
+		ElementStack[] newEStacks = new ElementStack[estacks.length];
+		for (int i = 0; i < estacks.length; i++)
+			newEStacks[i] = estacks[i].copy();
+		return newEStacks;
+	}
 }

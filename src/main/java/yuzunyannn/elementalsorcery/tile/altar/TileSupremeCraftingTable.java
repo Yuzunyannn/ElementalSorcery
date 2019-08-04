@@ -224,7 +224,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 			}
 		} else {
 			if (this.checkJustCenter()) {
-				IItemStructure structure = ItemStructure.getItemStructureWithoutNew(platformItem);
+				IItemStructure structure = ItemStructure.getItemStructure(platformItem);
 				ItemStack centerStack = this.getCenterItem();
 				ElementStack[] estacks = structure.toElement(centerStack);
 				outEStacks = new LinkedList<>();

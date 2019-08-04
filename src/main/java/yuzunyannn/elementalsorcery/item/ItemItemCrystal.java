@@ -22,11 +22,12 @@ public class ItemItemCrystal extends Item {
 		IItemStructure istru = ItemStructure.getItemStructure(stack);
 		if (istru.getItemCount() == 0)
 			return;
-		String name = I18n.format(istru.getStructureItem(0).getUnlocalizedName() + ".name");
+		ItemStack showStack = istru.getStructureItem(0);
+		String name = I18n.format(showStack.getUnlocalizedName() + ".name");
 		tooltip.add(I18n.format("info.itemCrystal.data", name));
-		tooltip.add(I18n.format("info.itemCrystal.complex", istru.complex(0)));
+		tooltip.add(I18n.format("info.itemCrystal.complex", istru.complex(showStack)));
 		tooltip.add(I18n.format("info.itemCrystal.z"));
-		ElementStack[] estacks = istru.toElement(0);
+		ElementStack[] estacks = istru.toElement(showStack);
 		for (ElementStack esatck : estacks) {
 			name = I18n.format(esatck.getElementUnlocalizedName());
 			tooltip.add(I18n.format("info.itemCrystal.e", name, esatck.getCount(), esatck.getPower()));

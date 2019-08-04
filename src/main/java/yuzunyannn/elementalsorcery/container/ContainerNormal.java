@@ -18,10 +18,23 @@ public class ContainerNormal<T extends TileEntity> extends Container {
 		this(player, tileEntity, 8, 84);
 	}
 
+	public ContainerNormal(EntityPlayer player, T tileEntity, boolean addPlayerInventory){
+		this(player, tileEntity, addPlayerInventory, 8, 84);
+	}
+	
 	public ContainerNormal(EntityPlayer player, T tileEntity, int xoff, int yoff) {
+		this(player, tileEntity, true, xoff, yoff);
+	}
+
+	public ContainerNormal(EntityPlayer player, T tileEntity, boolean addPlayerInventory, int xoff, int yoff) {
 		this.tileEntity = tileEntity;
 		this.player = player;
 		this.pos = this.tileEntity.getPos();
+		if (addPlayerInventory)
+			this.addPlayerSlot(xoff, yoff);
+	}
+
+	protected void addPlayerSlot(int xoff, int yoff) {
 		// 玩家物品栏
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {

@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.container;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -12,6 +13,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
 import yuzunyannn.elementalsorcery.container.gui.GuiHearth;
 import yuzunyannn.elementalsorcery.container.gui.GuiInfusionBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
+import yuzunyannn.elementalsorcery.container.gui.GuiSimple;
 import yuzunyannn.elementalsorcery.container.gui.GuiSmeltBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiSupremeCraftingTable;
 
@@ -27,6 +29,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_ELEMENT_CRAFTING_TABLE = 8;
 	public static final int GUI_ANALYSIS_ALTAR = 9;
 	public static final int GUI_SUPREME_CRAFTING_TABLE = 10;
+	public static final int GUI_INVENTORY_WORKBENCH = 11;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -51,6 +54,8 @@ public class ESGuiHandler implements IGuiHandler {
 			return new ContainerAnalysisAltar(player, world.getTileEntity(new BlockPos(x, y, z)));
 		case GUI_SUPREME_CRAFTING_TABLE:
 			return new ContainerSupremeCraftingTable(player, world.getTileEntity(new BlockPos(x, y, z)));
+		case GUI_INVENTORY_WORKBENCH:
+			return new ContainerWorkbenchWithInventory(player, world.getTileEntity(new BlockPos(x, y, z)));
 		default:
 			return null;
 		}
@@ -90,9 +95,16 @@ public class ESGuiHandler implements IGuiHandler {
 			return new GuiSupremeCraftingTable(
 					new ContainerSupremeCraftingTable(player, world.getTileEntity(new BlockPos(x, y, z))),
 					player.inventory);
+		case GUI_INVENTORY_WORKBENCH:
+			return new GuiSimple(
+					new ContainerWorkbenchWithInventory(player, world.getTileEntity(new BlockPos(x, y, z))),
+					player.inventory, "tile.supremeCraftingTable.name", TEXTURE_CRAFTING_TABLE);
 		default:
 			return null;
 		}
 	}
+
+	public static final ResourceLocation TEXTURE_CRAFTING_TABLE = new ResourceLocation("minecraft",
+			"textures/gui/container/crafting_table.png");
 
 }

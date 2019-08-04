@@ -155,13 +155,13 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 			this.powerTime = 0;
 			return;
 		}
-		IItemStructure structure = ItemStructure.getItemStructureWithoutNew(stack);
+		IItemStructure structure = ItemStructure.getItemStructure(stack);
 		if (ItemHelper.areItemsEqual(structure.getStructureItem(0), this.daStack))
 			return;
 		this.powerTime++;
 		if (this.powerTime >= this.getTotalPowerTime()) {
 			this.powerTime = 0;
-			structure.set(this.daStack, this.daComplex, this.daEstacks);
+			structure.set(0, this.daStack, this.daComplex, this.daEstacks);
 			structure.saveState(stack);
 			this.markDirty();
 		}

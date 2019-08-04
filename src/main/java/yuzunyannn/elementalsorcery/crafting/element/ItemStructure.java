@@ -15,13 +15,6 @@ public class ItemStructure implements IItemStructure {
 		return new ItemStructure(stack);
 	}
 
-	static public final ItemStructure itemStructure = new ItemStructure();
-
-	static public IItemStructure getItemStructureWithoutNew(ItemStack stack) {
-		itemStructure.loadState(stack);
-		return itemStructure;
-	}
-
 	static public boolean canStorageItemStructure(ItemStack stack) {
 		return stack.getItem() == ESInitInstance.ITEMS.ITEM_CRYSTAL || stack.getSubCompound("istru") != null;
 	}
@@ -43,7 +36,7 @@ public class ItemStructure implements IItemStructure {
 	}
 
 	@Override
-	public void set(ItemStack stack, int complex, ElementStack... estacks) {
+	public void set(int index, ItemStack stack, int complex, ElementStack... estacks) {
 		this.stack = stack;
 		this.estacks = estacks;
 		this.complex = complex;
@@ -121,15 +114,5 @@ public class ItemStructure implements IItemStructure {
 	@Override
 	public ItemStack getStructureItem(int index) {
 		return stack;
-	}
-
-	@Override
-	public ElementStack[] toElement(int index) {
-		return estacks;
-	}
-
-	@Override
-	public int complex(int index) {
-		return this.complex;
 	}
 }

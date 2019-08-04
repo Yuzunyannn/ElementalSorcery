@@ -1,7 +1,6 @@
 package yuzunyannn.elementalsorcery.block;
 
 import net.minecraft.block.BlockContainer;
-import net.minecraft.block.BlockWorkbench;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -68,6 +67,8 @@ public class BlockSupremeCraftingTable extends BlockContainer {
 				return true;
 			}
 		}
+		playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_INVENTORY_WORKBENCH, worldIn, pos.getX(),
+				pos.getY(), pos.getZ());
 		return true;
 	}
 
