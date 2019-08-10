@@ -5,7 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 
-public class PageSmelting extends Page {
+public class PageSmelting extends PageTransform {
 
 	private ItemStack smelting = ItemStack.EMPTY;
 	private ItemStack ouput = ItemStack.EMPTY;
@@ -44,5 +44,10 @@ public class PageSmelting extends Page {
 	@Override
 	public ItemStack getExtra() {
 		return extra;
+	}
+
+	@Override
+	protected int getType() {
+		return 0;
 	}
 }

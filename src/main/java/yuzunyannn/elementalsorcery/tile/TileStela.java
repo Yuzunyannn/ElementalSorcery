@@ -43,28 +43,28 @@ public class TileStela extends TileEntityNetwork {
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		face = EnumFacing.values()[compound.getByte("face")];
-		this.inv_item.deserializeNBT(compound.getCompoundTag("inv_item"));
-		this.inv_paper.deserializeNBT(compound.getCompoundTag("inv_paper"));
+		this.invItem.deserializeNBT(compound.getCompoundTag("inv_item"));
+		this.invPaper.deserializeNBT(compound.getCompoundTag("inv_paper"));
 		super.readFromNBT(compound);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setByte("face", (byte) face.ordinal());
-		compound.setTag("inv_item", this.inv_item.serializeNBT());
-		compound.setTag("inv_paper", this.inv_paper.serializeNBT());
+		compound.setTag("inv_item", this.invItem.serializeNBT());
+		compound.setTag("inv_paper", this.invPaper.serializeNBT());
 		return super.writeToNBT(compound);
 	}
 
-	protected ItemStackHandler inv_item = new ItemStackHandler(1);
-	protected ItemStackHandler inv_paper = new ItemStackHandler(1) {
+	protected ItemStackHandler invItem = new ItemStackHandler(1);
+	protected ItemStackHandler invPaper = new ItemStackHandler(1) {
 		@Override
 		public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
 			// 如果物品不是羊皮纸
 			if (stack.getItem() != ESInitInstance.ITEMS.PARCHMENT)
 				return stack;
 			// 有内容的东西不能放入
-			if (Pages.getPageId(stack) != 0)
+			if (Pages.isVaild(stack))
 				return stack;
 			return super.insertItem(slot, stack, simulate);
 		}
@@ -84,18 +84,18 @@ public class TileStela extends TileEntityNetwork {
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
 			if (facing == face.getOpposite())
-				return (T) inv_item;
-			return (T) inv_paper;
+				return (T) invItem;
+			return (T) invPaper;
 		}
 		return super.getCapability(capability, facing);
 	}
 
 	// 是否正在工作
 	public boolean isRunning() {
-		ItemStack paper = inv_paper.extractItem(0, 1, true);
+		ItemStack paper = invPaper.extractItem(0, 1, true);
 		if (paper.isEmpty())
 			return false;
-		ItemStack item = inv_item.extractItem(0, 1, true);
+		ItemStack item = invItem.extractItem(0, 1, true);
 		if (item.isEmpty())
 			return false;
 		return canRunning();
@@ -115,18 +115,18 @@ public class TileStela extends TileEntityNetwork {
 	public void doOnce() {
 		if (!this.isRunning())
 			return;
-		ItemStack item = inv_item.extractItem(0, 64, true);
-		int[] idArray = TileStela.pageAwareFromItem(item);
+		ItemStack item = invItem.extractItem(0, 64, true);
+		String[] idArray = TileStela.pageAwareFromItem(item);
 		if (idArray.length == 0) {
 			return;
 		}
-		ItemStack paper = inv_paper.extractItem(0, idArray.length, false);
+		ItemStack paper = invPaper.extractItem(0, idArray.length, false);
 		if (idArray.length == 1) {
 			this.produce(ItemParchment.getParchment(idArray[0]));
 			return;
 		}
 		int size = Math.min(paper.getCount(), idArray.length);
-		int[] ids = new int[size];
+		String[] ids = new String[size];
 		for (int i = 0; i < size; i++)
 			ids[i] = idArray[i];
 		this.produce(ItemScroll.getScroll(ids));
@@ -151,14 +151,11 @@ public class TileStela extends TileEntityNetwork {
 		Block.spawnAsEntity(this.world, this.pos, stack);
 	}
 
-	public static Map<ResourceLocation, int[]> itemToIds = new HashMap<ResourceLocation, int[]>();
+	public static Map<ResourceLocation, String[]> itemToIds = new HashMap<ResourceLocation, String[]>();
 
 	/** 从物品中获得page的id */
-	static public int[] pageAwareFromItem(ItemStack stack) {
-		int[] ids = null;
-		ids = TileStela.pageAware0(stack);
-		if (ids != null)
-			return ids;
+	static public String[] pageAwareFromItem(ItemStack stack) {
+		String[] ids = null;
 		ResourceLocation rname = stack.getItem().getRegistryName();
 		if (itemToIds.containsKey(rname))
 			return RandomHelper.randomSelect(itemToIds.get(rname));
@@ -168,7 +165,7 @@ public class TileStela extends TileEntityNetwork {
 		ids = TileStela.pageAware2(stack);
 		if (ids != null)
 			return ids;
-		return new int[0];
+		return new String[0];
 	}
 
 	/** 初始化 */
@@ -189,11 +186,13 @@ public class TileStela extends TileEntityNetwork {
 		addToMap(ESInitInstance.ITEMS.MAGICAL_PIECE, Pages.ABOUT_MAGICAL_ENDEREYE, Pages.ABOUT_MAGICAL_PIECE,
 				Pages.ABOUT_INFUSION);
 		// 吸收箱
-		addToMap(ESInitInstance.BLOCKS.ABSORB_BOX, Pages.ABOUT_ABSORB_BOX, Pages.ABOUT_MAGIC_PL);
+		addToMap(ESInitInstance.BLOCKS.ABSORB_BOX, Pages.ABOUT_ABSORB_BOX, Pages.ABOUT_MAGIC_PLATFORM);
 		// 附魔台
 		addToMap(Blocks.ENCHANTING_TABLE, Pages.ABOUT_ENCHANTINGBOOK, Pages.ABOUT_KYNATIE_TOOLS);
 		// 末影之眼
 		addToMap(Items.ENDER_EYE, Pages.ABOUT_MAGICAL_ENDEREYE);
+		//带有魔力的末影之眼
+		addToMap(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE, Pages.ABOUT_MAGICAL_ENDEREYE);
 		// 魔力水晶
 		addToMap(ESInitInstance.ITEMS.MAGIC_CRYSTAL, Pages.ABOUT_MAGIC_CRY, Pages.ABOUT_INFUSION,
 				Pages.ABOUT_MAGIC_ESTONE);
@@ -212,29 +211,16 @@ public class TileStela extends TileEntityNetwork {
 		addToMap(ESInitInstance.ITEMS.SPELLBOOK, Pages.ABOUT_SPELLBOOK, Pages.ABOUT_BOOKCOVER, Pages.ABOUT_SPELEMENT);
 	}
 
-	private static void addToMap(Block block, int... ids) {
+	private static void addToMap(Block block, String... ids) {
 		itemToIds.put(block.getRegistryName(), ids);
 	}
 
-	private static void addToMap(Item item, int... ids) {
+	private static void addToMap(Item item, String... ids) {
 		itemToIds.put(item.getRegistryName(), ids);
 	}
 
-	// 如果是有stack的羊皮卷，则有很小的概率给出下一张
-	static private int[] pageAware0(ItemStack stack) {
-		if (stack.getItem() == ESInitInstance.ITEMS.PARCHMENT) {
-			int id = Pages.getPageId(stack);
-			if (id > 0 && Math.random() < 0.05) {
-				if (id >= Pages.getCount())
-					return null;
-				return new int[] { id };
-			}
-		}
-		return null;
-	}
-
 	// 如果stack是某种物品，则产生相关的id
-	static private int[] pageAware1(ItemStack stack) {
+	static private String[] pageAware1(ItemStack stack) {
 		Item item = stack.getItem();
 		Block block = Block.getBlockFromItem(item);
 		if (block != Blocks.AIR) {
@@ -250,7 +236,7 @@ public class TileStela extends TileEntityNetwork {
 						Pages.ABOUT_ABSORB_BOX);
 			} else if (item == ESInitInstance.ITEMS.PARCHMENT) {
 				if (stack.getCount() >= 8) {
-					return new int[] { Pages.ABOUT_MANUAL };
+					return new String[] { Pages.ABOUT_MANUAL };
 				}
 			}
 		}
@@ -258,7 +244,7 @@ public class TileStela extends TileEntityNetwork {
 	}
 
 	// 如果id具有某种元素，则产生相关的id
-	static private int[] pageAware2(ItemStack stack) {
+	static private String[] pageAware2(ItemStack stack) {
 		ElementStack[] stacks = ElementMap.instance.toElement(stack);
 		if (stacks != null && stacks.length > 0) {
 			ElementStack estack = stacks[0];
@@ -267,9 +253,9 @@ public class TileStela extends TileEntityNetwork {
 				// 能量大于10
 				if (estack.getPower() >= 10) {
 					if (Math.random() < 0.75f) {
-						return new int[] { Pages.ABOUT_HEARTH, Pages.ABOUT_SMELT_BOX };
+						return new String[] { Pages.ABOUT_HEARTH, Pages.ABOUT_SMELT_BOX };
 					} else {
-						return new int[] { Pages.ABOUT_HEARTH };
+						return new String[] { Pages.ABOUT_HEARTH };
 					}
 				}
 			}

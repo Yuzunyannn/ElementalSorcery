@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.init;
 
+import java.lang.reflect.Field;
+
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.ESCreativeTabs;
 import yuzunyannn.elementalsorcery.api.ESObjects;
@@ -60,7 +62,7 @@ public class ESInitInstance {
 	public static ESObjects.Village VILLAGE = new ESObjects.Village();
 	public static ESCreativeTabs tab;
 
-	public static final void instance() {
+	public static final void instance() throws ReflectiveOperationException {
 		// ES注册
 		ESRegister.ELEMENT = ElementRegister.instance;
 		ESRegister.ELEMENT_MAP = ElementMap.instance;
@@ -76,12 +78,18 @@ public class ESInitInstance {
 		tab = ESCreativeTabs.TAB;
 		// 初始化虚空元素
 		ELEMENTS.VOID = new Element(Element.rgb(0, 0, 0)).setRegistryName("void").setUnlocalizedName("void");
-		ElementStack.EMPTY = new ElementStack(ELEMENTS.VOID, 0);
+		initVoidElement();
 		// 实例化方块和物品等
 		instanceBlocks();
 		instanceItems();
 		instanceElements();
 		instanceVillage();
+	}
+
+	private static void initVoidElement() throws ReflectiveOperationException {
+		Field field = ElementStack.class.getDeclaredField("element");
+		field.setAccessible(true);
+		field.set(ElementStack.EMPTY, ELEMENTS.VOID);
 	}
 
 	private static final void instanceBlocks() {

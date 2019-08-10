@@ -10,7 +10,6 @@ import java.util.Random;
 
 import org.apache.commons.compress.utils.IOUtils;
 
-import net.minecraft.block.BlockSlab;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -21,6 +20,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -36,6 +36,7 @@ import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
+import yuzunyannn.elementalsorcery.tile.TileStela;
 import yuzunyannn.elementalsorcery.worldgen.VillageESHall.VillageCreationHandler;
 
 public class ESTestAndDebug {
@@ -48,13 +49,15 @@ public class ESTestAndDebug {
 
 	@SubscribeEvent
 	public void click(PlayerInteractEvent event) {
-		if (event.getWorld().isRemote) {
+		if (!event.getWorld().isRemote) {
 			BlockPos pos = event.getPos();
-//			Effect.addEffect(new EffectElement(event.getWorld(), pos.getX() + Math.random(), pos.getY() + 2,
-//					pos.getZ() + Math.random()));
+			TileEntity tile = event.getWorld().getTileEntity(pos);
+			if (tile instanceof TileStela) {
+				((TileStela) tile).doOnce();
+			}
 			return;
 		}
-		
+
 		System.out.println("Server ArcInfo");
 		BlockPos pos = event.getPos();
 		IBlockState state = event.getWorld().getBlockState(pos);
@@ -88,7 +91,7 @@ public class ESTestAndDebug {
 					if (entity instanceof EntityPlayer) {
 						ItemStack ruler = ((EntityPlayer) entity).getHeldItem(EnumHand.OFF_HAND);
 						ItemStack ar = ((EntityPlayer) entity).getHeldItem(EnumHand.MAIN_HAND);
-						Building building = Building.createBuilding(sender.getEntityWorld(),
+						Building building = Building.createBuilding(sender.getEntityWorld(), EnumFacing.NORTH,
 								ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
 						building.setAuthor(sender.getName());
 						BuildingLib.instance.addBuilding(building);
@@ -105,7 +108,7 @@ public class ESTestAndDebug {
 					if (ItemMagicRuler.getRulerPos(ruler, true) == null
 							|| ItemMagicRuler.getRulerPos(ruler, false) == null)
 						throw new WrongUsageException("保存建筑失败，请将魔力标尺放在手上");
-					Building building = Building.createBuilding(sender.getEntityWorld(),
+					Building building = Building.createBuilding(sender.getEntityWorld(), EnumFacing.NORTH,
 							ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
 					building.setAuthor(sender.getName());
 					BuildingSaveData.debugSetKeyName(building);

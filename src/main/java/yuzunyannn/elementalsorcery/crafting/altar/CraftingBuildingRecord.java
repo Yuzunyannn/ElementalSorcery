@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.building.Building;
@@ -93,8 +94,8 @@ public class CraftingBuildingRecord implements ICraftingCommit {
 		return this.success;
 	}
 
-	public Building createBuilding(World world) {
-		return Building.createBuilding(world, pos1, pos2);
+	public Building createBuilding(World world, EnumFacing face) {
+		return Building.createBuilding(world, face, pos1, pos2);
 	}
 
 	public boolean onUpdate(World world) {
@@ -102,11 +103,13 @@ public class CraftingBuildingRecord implements ICraftingCommit {
 			return false;
 		if (this.pos1.distanceSq(this.pos2) > ItemMagicRuler.MAX_DIS_SQ)
 			return false;
-		this.pos = Building.movePosOnce(pos, pos1, pos2);
-		if (this.pos == null) {
-			this.success = true;
-			return false;
-		}
+		do {
+			this.pos = Building.movePosOnce(pos, pos1, pos2);
+			if (this.pos == null) {
+				this.success = true;
+				return false;
+			}
+		} while (world.isAirBlock(this.pos));
 		if (!world.isAirBlock(pos)) {
 			if (center == null)
 				this.setCenter();

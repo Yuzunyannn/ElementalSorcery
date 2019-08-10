@@ -44,7 +44,7 @@ public class CraftingDeconstruct implements ICraftingAltar {
 		restEStacks = new LinkedList<ElementStack>();
 		for (ElementStack estack : outEstacks) {
 			for (int i = 0; i < stack.getCount(); i++)
-				restEStacks.add(estack.copy().getElementWhenDeconstruct(stack, ElementMap.instance.complex(stack),
+				restEStacks.add(estack.copy().becomeElementWhenDeconstruct(stack, ElementMap.instance.complex(stack),
 						Element.DP_ALTAR));
 		}
 	}

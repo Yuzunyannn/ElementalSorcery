@@ -208,7 +208,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		nbt.setString("key", this.keyName);
 		nbt.setString("name", this.name);
 		nbt.setString("author", this.author);
-		//nbt.setLong("mtime", this.mtime);
+		// nbt.setLong("mtime", this.mtime);
 		// 记录位置和索引
 		NBTTagList listMap = new NBTTagList();
 		for (Entry<BlockPos, Integer> entry : blockMap.entrySet()) {
@@ -234,7 +234,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		this.keyName = nbt.getString("key");
 		this.name = nbt.getString("name");
 		this.author = nbt.getString("author");
-		//this.mtime = nbt.getLong("mtime");
+		// this.mtime = nbt.getLong("mtime");
 		// 恢复方块位置和索引
 		NBTTagList listMap = nbt.getTagList("blockMap", 10);
 		for (NBTBase base : listMap) {
@@ -242,6 +242,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			BlockPos pos = NBTHelper.getBlockPos(posInfo, "pos");
 			int index = posInfo.getInteger("index");
 			blockMap.put(pos, index);
+			this.update(pos);
 		}
 		// 恢复被索引的方块类型
 		NBTTagList listInfo = nbt.getTagList("infoList", 10);
@@ -415,15 +416,19 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 	}
 
 	/** 通过两点，获取building */
-	public static Building createBuilding(World world, BlockPos pos1, BlockPos pos2) {
+	public static Building createBuilding(World world, EnumFacing facing, BlockPos pos1, BlockPos pos2) {
 		Building building = new Building();
 		BlockPos pos = pos1;
 		BlockPos center = new BlockPos((pos1.getX() + pos2.getX()) / 2, Math.min(pos1.getY(), pos2.getY()),
 				(pos1.getZ() + pos2.getZ()) / 2);
+		// 处理方向
+		if (facing == EnumFacing.WEST || facing == EnumFacing.EAST)
+			facing = facing.getOpposite();
 		// 记录方块
 		while (true) {
 			if (!world.isAirBlock(pos)) {
-				building.add(world.getBlockState(pos), pos.subtract(center));
+				building.add(BuildingBlocks.faceSate(world.getBlockState(pos), facing),
+						BuildingBlocks.facePos(pos.subtract(center), facing));
 			}
 			// 移动pos
 			pos = movePosOnce(pos, pos1, pos2);

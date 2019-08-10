@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -24,10 +23,10 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 
 public class ItemParchment extends Item {
 
-	public static ItemStack getParchment(int id) {
-		if (id == 0)
+	public static ItemStack getParchment(String id) {
+		if (id == null || id.isEmpty())
 			return new ItemStack(ESInitInstance.ITEMS.PARCHMENT);
-		return Pages.setPageAt(new ItemStack(ESInitInstance.ITEMS.PARCHMENT), id);
+		return Pages.setPage(id, new ItemStack(ESInitInstance.ITEMS.PARCHMENT));
 	}
 
 	public ItemParchment() {
@@ -37,10 +36,10 @@ public class ItemParchment extends Item {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		Page page = Pages.getPage(stack);
-		if (page.getId() == 0)
-			return;
-		tooltip.add("§e" + I18n.format(page.getItemInfo()));
+		if (Pages.isVaild(stack)) {
+			Page page = Pages.getPage(stack);
+			page.addItemInformation(stack, worldIn, tooltip, flagIn);
+		}
 	}
 
 	@Override
@@ -48,7 +47,7 @@ public class ItemParchment extends Item {
 		if (handIn != EnumHand.MAIN_HAND)
 			return super.onItemRightClick(worldIn, playerIn, handIn);
 		ItemStack stack = playerIn.getHeldItem(handIn);
-		if (Pages.getPageId(stack) == 0)
+		if (!Pages.isVaild(stack))
 			return super.onItemRightClick(worldIn, playerIn, handIn);
 		if (worldIn.isRemote) {
 			BlockPos pos = playerIn.getPosition();

@@ -5,7 +5,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class PageSmeltingSimple extends PageSmelting {
-
 	private final String name;
 
 	public PageSmeltingSimple(String name, ItemStack stack) {
@@ -32,5 +31,4 @@ public class PageSmeltingSimple extends PageSmelting {
 	public String getContext() {
 		return "page." + name + ".ct";
 	}
-
 }

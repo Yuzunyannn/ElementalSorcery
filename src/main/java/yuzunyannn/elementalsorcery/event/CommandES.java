@@ -48,22 +48,16 @@ public class CommandES extends CommandBase {
 		} else if (args[0].equals("page")) {
 			if (args.length == 1)
 				throw new CommandException("commands.es.page.usage");
-			String id_str = args[1];
-			int id = 0;
-			try {
-				id = Integer.parseInt(id_str);
-			} catch (NumberFormatException e) {
-				throw new CommandException("commands.es.page.usage");
-			}
-			if (!Pages.isVaild(id))
+			String idStr = args[1];
+			if (!Pages.isVaild(idStr))
 				throw new CommandException("commands.es.page.fail");
 			Entity entity = sender.getCommandSenderEntity();
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
-				if (id == Pages.BOOK)
+				if (Pages.BOOK.equals(idStr))
 					player.inventory.addItemStackToInventory(new ItemStack(ESInitInstance.ITEMS.MANUAL));
 				else
-					player.inventory.addItemStackToInventory(ItemParchment.getParchment(id));
+					player.inventory.addItemStackToInventory(ItemParchment.getParchment(idStr));
 			}
 		} else
 			throw new CommandException("commands.es.usage");

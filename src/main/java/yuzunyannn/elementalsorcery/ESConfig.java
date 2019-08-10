@@ -9,6 +9,7 @@ public class ESConfig {
 	private static Configuration config;
 
 	public final int BUILDING_MAX_REMAIN_DAYS;
+	public final int MANUAL_MAX_PAGES = 20;
 
 	public ESConfig(FMLPreInitializationEvent event) {
 		config = new Configuration(event.getSuggestedConfigurationFile());

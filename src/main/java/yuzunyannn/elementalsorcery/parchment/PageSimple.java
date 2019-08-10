@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.parchment;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.IBakedModel;
@@ -11,11 +10,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class PageSimple extends Page {
-
-	private final String name;
-	private final ItemStack icon;
-	private final ItemStack blockground;
+public class PageSimple extends PageEasy {
+	protected final String name;
+	protected final ItemStack icon;
+	protected final ItemStack blockground;
 
 	public PageSimple(String name) {
 		this.name = name;
@@ -59,14 +57,14 @@ public class PageSimple extends Page {
 	}
 
 	@Override
-	public void drawBackground(GuiContainer gui, int offsetX, int offsetY) {
+	public void drawBackground(int xoff, int yoff, IPageManager pageManager) {
 		if (this.blockground.isEmpty())
 			return;
 		RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
 		IBakedModel bakedmodel = itemRender.getItemModelWithOverrides(blockground, (World) null,
 				(EntityLivingBase) null);
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(offsetX + 175, offsetY + 110, 100.0F);
+		GlStateManager.translate(xoff + 175, yoff + 110, 100.0F);
 		GlStateManager.translate(8.0F, 8.0F, 0.0F);
 		GlStateManager.scale(1.0F, -1.0F, 1.0F);
 		GlStateManager.scale(16.0F, 16.0F, 16.0F);

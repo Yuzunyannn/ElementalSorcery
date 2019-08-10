@@ -1,26 +1,26 @@
 package yuzunyannn.elementalsorcery.item;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.parchment.Page;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 
 public class ItemManual extends Item {
@@ -41,10 +41,10 @@ public class ItemManual extends Item {
 		}
 		// 没有shift
 		ItemStack stack = playerIn.getHeldItem(handIn);
-		if (Pages.getPageId(stack) != Pages.BOOK)
-			Pages.setPageAt(stack, Pages.BOOK);
+		if (!Pages.getPage(stack).getId().equals(Pages.BOOK))
+			Pages.setPage(Pages.BOOK, stack);
 		if (worldIn.isRemote) {
-			Pages.getBookPage().setPageIds(ItemManual.getIds(stack));
+			Pages.getBookPage().setIds(ItemManual.getIds(stack));
 			BlockPos pos = playerIn.getPosition();
 			playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_PARCHMENT, worldIn, pos.getX(), pos.getY(),
 					pos.getZ());
@@ -55,51 +55,53 @@ public class ItemManual extends Item {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.YELLOW + I18n.format("info.manual.info"));
-	}
-
-	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		if (!this.isInCreativeTab(tab))
-			return;
-		int[] ids = new int[Pages.getMax() - 2];
-		for (int i = 0; i < ids.length; i++) {
-			ids[i] = i + 2;
-		}
-		items.add(ItemManual.setIds(new ItemStack(this), ids));
-		ItemStack stack;
+		NBTTagList nbtList = ItemManual.getIds(stack);
+		tooltip.add(TextFormatting.GRAY
+				+ I18n.format("info.manual.count", nbtList.tagCount(), ElementalSorcery.config.MANUAL_MAX_PAGES));
 	}
 
 	// 获取ids列表
-	public static int[] getIds(ItemStack stack) {
+	public static NBTTagList getIds(ItemStack stack) {
 		NBTTagCompound nbt = stack.getOrCreateSubCompound("manual");
-		return nbt.getIntArray("ids");
+		return nbt.getTagList("ids", 8);
 	}
 
 	// 设置ids列表
-	public static ItemStack setIds(ItemStack stack, int... ids) {
+	public static ItemStack setIds(ItemStack stack, NBTTagList ids) {
 		NBTTagCompound nbt = stack.getOrCreateSubCompound("manual");
-		nbt.setIntArray("ids", ids);
+		nbt.setTag("ids", ids);
 		return stack;
 	}
 
 	// 存入
 	private void store(EntityPlayer player, ItemStack stack) {
-		int[] ids = ItemManual.getIds(stack);
-		List<Integer> idsList = Arrays.stream(ids).boxed().collect(Collectors.toList());
+		NBTTagList idsList = ItemManual.getIds(stack);
 		for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
 			ItemStack itemstack = player.inventory.getStackInSlot(i);
 			if (itemstack.getItem() != ESInitInstance.ITEMS.PARCHMENT)
 				continue;
-			int id = Pages.getPageId(itemstack);
-			if (id != 0) {
-				if (!idsList.contains(id)) {
-					idsList.add(id);
+			Page page = Pages.getPage(itemstack);
+			if (Pages.ERROR.equals(page.getId()))
+				continue;
+			boolean has = false;
+			for (NBTBase base : idsList) {
+				NBTTagString nbtstr = (NBTTagString) base;
+				String str = nbtstr.getString();
+				if (str.equals(page.getId())) {
+					has = true;
+					break;
 				}
 			}
-			player.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
+			if (has) {
+				player.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
+			} else {
+				if (idsList.tagCount() < ElementalSorcery.config.MANUAL_MAX_PAGES) {
+					idsList.appendTag(new NBTTagString(page.getId()));
+					player.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
+				}
+			}
 		}
-		ids = idsList.stream().mapToInt(Integer::valueOf).toArray();
-		ItemManual.setIds(stack, ids);
+		ItemManual.setIds(stack, idsList);
 	}
 
 }

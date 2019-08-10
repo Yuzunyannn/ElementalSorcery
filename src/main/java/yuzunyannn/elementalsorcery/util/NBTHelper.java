@@ -7,11 +7,28 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 
 public class NBTHelper {
+
+	public static List<String> getStringListForNBTTagList(NBTTagList nbtList) {
+		List<String> list = new LinkedList<>();
+		for (NBTBase base : nbtList) {
+			NBTTagString str = (NBTTagString) base;
+			list.add(str.getString());
+		}
+		return list;
+	}
+
+	public static NBTTagList stringToNBTTagList(String... strs) {
+		NBTTagList list = new NBTTagList();
+		for (String str : strs)
+			list.appendTag(new NBTTagString(str));
+		return list;
+	}
 
 	public static <T extends INBTSerializable<NBTTagCompound>> void setNBTSerializableList(NBTTagCompound nbt,
 			String key, List<T> NBTSerializableList) {
@@ -50,7 +67,7 @@ public class NBTHelper {
 
 	public static void setBlockPos(NBTTagCompound nbt, String key, BlockPos pos) {
 		if (pos == null)
-			return; 
+			return;
 		nbt.setInteger(key + "x", pos.getX());
 		nbt.setInteger(key + "y", pos.getY());
 		nbt.setInteger(key + "z", pos.getZ());

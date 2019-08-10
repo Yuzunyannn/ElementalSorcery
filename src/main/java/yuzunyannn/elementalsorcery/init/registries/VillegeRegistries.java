@@ -12,7 +12,6 @@ import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
-import yuzunyannn.elementalsorcery.api.ESObjects.Village;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Pages;
@@ -27,7 +26,7 @@ public class VillegeRegistries {
 		// 新的村庄建筑
 		MapGenStructureIO.registerStructureComponent(VillageESHall.class, "VESuvs");
 		VillagerRegistry.instance().registerVillageCreationHandler(new VillageESHall.VillageCreationHandler());
-	
+
 	}
 
 	private static final void initPro(VillagerRegistry.VillagerProfession pro) {
@@ -60,10 +59,12 @@ public class VillegeRegistries {
 			for (int i = 0; i < n - 1; i++) {
 				int id = random.nextInt(div) + 1 + at;
 				at += div;
-				recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 5), ItemParchment.getParchment(id)));
+				recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 5),
+						ItemParchment.getParchment(Pages.getPage(id).getId())));
 			}
 			int id = random.nextInt(div + (Pages.getCount() % n)) + at;
-			recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 5), ItemParchment.getParchment(id)));
+			recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 5),
+					ItemParchment.getParchment(Pages.getPage(id).getId())));
 			if (random.nextFloat() < 0.5)
 				recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 16),
 						new ItemStack(ESInitInstance.BLOCKS.STELA)));

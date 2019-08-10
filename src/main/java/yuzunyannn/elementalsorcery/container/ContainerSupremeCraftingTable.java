@@ -22,6 +22,10 @@ import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
 
 public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCraftingTable> {
+	public final static int[] craftingRelative = new int[] { 0, 0, 18, 0, 36, 0, 0, 18, 18, 18, 36, 18, 0, 36, 18, 36,
+			36, 36, -36, -36, -18, -36, 54, -36, 72, -36, -36, -18, -18, -18, 54, -18, 72, -18, -36, 54, -18, 54, 54,
+			54, 72, 54, -36, 72, -18, 72, 54, 72, 72, 72 };
+
 	static final public byte MODE_NONE = 0;
 	static final public byte MODE_NATIVE_CRAFTING = 1;
 	static final public byte MODE_ELEMENT_CRAFTING = 2;
@@ -37,8 +41,8 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 		super(player, (TileSupremeCraftingTable) tileEntity, 36, 160);
 		IItemHandler items = this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		for (int i = 0; i < items.getSlots(); i++) {
-			int x = ContainerParchment.craftingRelative[i * 2];
-			int y = ContainerParchment.craftingRelative[i * 2 + 1];
+			int x = ContainerSupremeCraftingTable.craftingRelative[i * 2];
+			int y = ContainerSupremeCraftingTable.craftingRelative[i * 2 + 1];
 			if (i == 3 || i == 5)
 				this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
 					@Override

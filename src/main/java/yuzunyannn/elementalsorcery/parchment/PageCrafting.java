@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -13,16 +14,18 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.container.ContainerSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
+import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 
-public class PageCrafting extends Page {
-
+public class PageCrafting extends PageEasy {
 	private final List<NonNullList<Ingredient>> ITEM_LIST = new ArrayList<NonNullList<Ingredient>>();
 	private final List<ItemStack> ITEM_OUT = new ArrayList<ItemStack>();
 	private final List<List<ElementStack>> ELEMENT_NEED = new ArrayList<List<ElementStack>>();
-	private int now_index = 0;
+	private int nowIndex = 0;
 	private int tick = 0;
+	private int size = 9;
 
 	public PageCrafting(ItemStack... stacks) {
 		for (ItemStack stack : stacks) {
@@ -55,10 +58,11 @@ public class PageCrafting extends Page {
 		// 获取数组
 		NonNullList<Ingredient> ingLIst = irecipe.getIngredients();
 		ITEM_LIST.add(ingLIst);
-		ITEM_OUT.add(stack);
+		ITEM_OUT.add(irecipe.getRecipeOutput());
 		ELEMENT_NEED.add(null);
 	}
 
+	// 添加es合成表
 	private boolean addESRecipe(ItemStack stack) {
 		yuzunyannn.elementalsorcery.api.crafting.IRecipe irecipe = null;
 		List<yuzunyannn.elementalsorcery.api.crafting.IRecipe> lsit = RecipeManagement.instance.getRecipes();
@@ -74,7 +78,7 @@ public class PageCrafting extends Page {
 		NonNullList<Ingredient> ingLIst = irecipe.getIngredients();
 		List<ElementStack> eList = irecipe.getNeedElements();
 		ITEM_LIST.add(ingLIst);
-		ITEM_OUT.add(stack);
+		ITEM_OUT.add(irecipe.getRecipeOutput());
 		ELEMENT_NEED.add(eList);
 		return true;
 	}
@@ -84,30 +88,80 @@ public class PageCrafting extends Page {
 		return !ITEM_LIST.isEmpty();
 	}
 
-	@Override
 	public NonNullList<Ingredient> getCrafting() {
-		return ITEM_LIST.get(now_index);
+		return ITEM_LIST.get(nowIndex);
 	}
 
-	@Override
 	public ItemStack getOutput() {
-		return ITEM_OUT.get(now_index);
+		return ITEM_OUT.get(nowIndex);
 	}
 
 	@Override
-	public void onUpdate() {
-		tick++;
-		if (tick > 20 * 3) {
-			tick = 0;
-			now_index++;
-			now_index = now_index % ITEM_LIST.size();
+	public ItemStack getIcon() {
+		return this.getOutput();
+	}
+
+	protected int getCX() {
+		return 147;
+	}
+
+	protected int getCY() {
+		return 44;
+	}
+
+	@Override
+	public void init(IPageManager pageManager) {
+		if (ITEM_LIST.isEmpty())
+			return;
+		size = this.getCrafting().size() > 9 ? 25 : 9;
+		int cX = this.getCX();
+		int cY = this.getCY();
+		for (int i = 0; i < size; i++) {
+			int x = ContainerSupremeCraftingTable.craftingRelative[i * 2] + cX + 1;
+			int y = ContainerSupremeCraftingTable.craftingRelative[i * 2 + 1] + cY + 1;
+			pageManager.addSlot(x, y, ItemStack.EMPTY);
 		}
+		pageManager.addSlot(cX + 18 + 1, cY + 64 + 1, ItemStack.EMPTY);
+		this.reflushStack(pageManager);
+	}
+
+	@Override
+	public void update(IPageManager pageManager) {
+		tick++;
+		if (tick > 20 * 2) {
+			tick = 0;
+			nowIndex++;
+			nowIndex = nowIndex % ITEM_LIST.size();
+			this.reflushStack(pageManager);
+		}
+	}
+
+	// 更换物品栈
+	private void reflushStack(IPageManager pageManager) {
+		if (ITEM_LIST.isEmpty())
+			return;
+		NonNullList<Ingredient> list = this.getCrafting();
+		for (int i = 0; i < list.size(); i++) {
+			ItemStack[] stacks = list.get(i).getMatchingStacks();
+			if (stacks.length == 0) {
+				pageManager.setSlot(i, ItemStack.EMPTY);
+				continue;
+			}
+			ItemStack stack = stacks[EventClient.rand_int % stacks.length];
+			pageManager.setSlot(i, stack);
+		}
+		pageManager.setSlot(size, this.getOutput());
+	}
+
+	@Override
+	public int getWidthSize(IPageManager pageManager) {
+		return (int) (super.getWidthSize(pageManager) * 0.575f);
 	}
 
 	@Override
 	public void addContexts(List<String> contexts) {
 		super.addContexts(contexts);
-		List<ElementStack> eList = ELEMENT_NEED.get(now_index);
+		List<ElementStack> eList = ELEMENT_NEED.get(nowIndex);
 		if (eList == null)
 			return;
 		TextHelper.addInfo(contexts, "page.crafting.need");
@@ -119,5 +173,21 @@ public class PageCrafting extends Page {
 				TextHelper.addInfo(contexts, "page.crafting.npshow", TextFormatting.GOLD,
 						I18n.format(stack.getElementUnlocalizedName()), stack.getCount());
 		}
+	}
+
+	@Override
+	public void drawBackground(int xoff, int yoff, IPageManager pageManager) {
+		int cX = xoff + this.getCX();
+		int cY = yoff + this.getCY();
+		GuiContainer gui = pageManager.getGui();
+		if (size > 9) {
+			gui.drawTexturedModalRect(cX, cY, 41, 166, 54, 54);
+			gui.drawTexturedModalRect(cX - 36, cY - 36, 41, 166, 36, 36);
+			gui.drawTexturedModalRect(cX + 54, cY - 36, 41, 166, 36, 36);
+			gui.drawTexturedModalRect(cX - 36, cY + 54, 41, 166, 36, 36);
+			gui.drawTexturedModalRect(cX + 54, cY + 54, 41, 166, 36, 36);
+		} else
+			gui.drawTexturedModalRect(cX, cY, 41, 166, 54, 54);
+		gui.drawTexturedModalRect(cX + 18, cY + 64, 41, 166, 18, 18);
 	}
 }

@@ -8,8 +8,6 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.crash.CrashReport;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -104,21 +102,15 @@ public class BuildingLib {
 	public static final String BUILDING_ALTAR = "building_altar";
 	public static final String ANALYSIS_ALTAR = "analysis_altar";
 
-	public static void registerAll() {
-		try {
-			Buildings.init();
-			instance.addBuildingLib(LARGE_ALTAR, Buildings.LARGE_ALTAR);
-			instance.addBuildingLib(SPELLBOOK_ALTAR, Buildings.SPELLBOOK_ALTAR);
-			instance.addBuildingLib(ELEMENT_CRAFTING_ALTAR, Buildings.ELEMENT_CRAFTING_ALTAR);
-			instance.addBuildingLib(DECONSTRUCT_ALTAR, Buildings.DECONSTRUCT_ALTAR);
-			instance.addBuildingLib(BUILDING_ALTAR, Buildings.BUILING_ALTAR);
-			instance.addBuildingLib(ANALYSIS_ALTAR, Buildings.ANALYSIS_ALTAR);
-			BuildingLib.loadBuilding();
-		} catch (IOException e) {
-			CrashReport report = CrashReport.makeCrashReport(e, "ElementSorcer读取不到包内资源数据！");
-			Minecraft.getMinecraft().crashed(report);
-			Minecraft.getMinecraft().displayCrashReport(report);
-		}
+	public static void registerAll() throws IOException {
+		Buildings.init();
+		instance.addBuildingLib(LARGE_ALTAR, Buildings.LARGE_ALTAR);
+		instance.addBuildingLib(SPELLBOOK_ALTAR, Buildings.SPELLBOOK_ALTAR);
+		instance.addBuildingLib(ELEMENT_CRAFTING_ALTAR, Buildings.ELEMENT_CRAFTING_ALTAR);
+		instance.addBuildingLib(DECONSTRUCT_ALTAR, Buildings.DECONSTRUCT_ALTAR);
+		instance.addBuildingLib(BUILDING_ALTAR, Buildings.BUILING_ALTAR);
+		instance.addBuildingLib(ANALYSIS_ALTAR, Buildings.ANALYSIS_ALTAR);
+		BuildingLib.loadBuilding();
 	}
 
 	/** 初始化加载 */

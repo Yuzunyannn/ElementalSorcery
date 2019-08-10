@@ -38,6 +38,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryOnlyInsert;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemKynaiteTools {
 
@@ -76,8 +77,8 @@ public class ItemKynaiteTools {
 					estack = new ElementStack(ESInitInstance.ELEMENTS.WATER, 1, 3);
 				} else {
 					estack = estacks[0].copy();
-					estack = estack.getElementWhenDeconstruct(state, ElementMap.instance.complex(state.getBlock()),
-							Element.DP_TOOLS);
+					estack = estack.becomeElementWhenDeconstruct(ItemHelper.toItemStack(state),
+							ElementMap.instance.complex(state.getBlock()), Element.DP_TOOLS);
 				}
 				IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 				inventory.insertElement(estack, false);

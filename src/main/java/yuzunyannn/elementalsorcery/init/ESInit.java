@@ -4,11 +4,13 @@ import java.util.concurrent.Callable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.ItemMeshDefinition;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.IStateMapper;
 import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMultiTexture;
@@ -87,42 +89,46 @@ import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 public class ESInit {
 
 	public final static void preInit(FMLPreInitializationEvent event) {
-		// 初始化创建所有实例
-		ESInitInstance.instance();
-		// 注册物品
-		registerAllItems();
-		// 注册方块
-		registerAllBlocks();
-		// 注册tileentity
-		registerAllTiles();
-		// 注册元素
-		registerAllElements();
-		// 注册能力
-		registerAllCapability();
-		// 矿物词典注册
-		OreDictionaryRegistries.registerAll();
-		// 注册元素映射
-		ElementMap.registerAll();
-		// 注册实体
-		EntityRegistries.registerAll();
-		// 注册默认所有建筑
-		BuildingLib.registerAll();
-		// 测试村庄相关
-		VillegeRegistries.registerAll();
-		// 注册战利品
-		registerAllLoot();
-		// 注册GUI句柄
-		NetworkRegistry.INSTANCE.registerGuiHandler(ElementalSorcery.instance, new ESGuiHandler());
-		// 注册世界生成
-		MinecraftForge.ORE_GEN_BUS.register(new WorldGeneratorES());
-		// 注册网络
-		ESNetwork.registerAll();
-		// 注册事件
-		MinecraftForge.EVENT_BUS.register(EventServer.class);
-		// page错误页面
-		Pages.initError();
-		// 测试类
-		new ESTestAndDebug();
+		try {
+			// 初始化创建所有实例
+			ESInitInstance.instance();
+			// 注册物品
+			registerAllItems();
+			// 注册方块
+			registerAllBlocks();
+			// 注册tileentity
+			registerAllTiles();
+			// 注册元素
+			registerAllElements();
+			// 注册能力
+			registerAllCapability();
+			// 矿物词典注册
+			OreDictionaryRegistries.registerAll();
+			// 注册元素映射
+			ElementMap.registerAll();
+			// 注册实体
+			EntityRegistries.registerAll();
+			// 注册默认所有建筑
+			BuildingLib.registerAll();
+			// 测试村庄相关
+			VillegeRegistries.registerAll();
+			// 注册战利品
+			registerAllLoot();
+			// 注册GUI句柄
+			NetworkRegistry.INSTANCE.registerGuiHandler(ElementalSorcery.instance, new ESGuiHandler());
+			// 注册世界生成
+			MinecraftForge.ORE_GEN_BUS.register(new WorldGeneratorES());
+			// 注册网络
+			ESNetwork.registerAll();
+			// 注册事件
+			MinecraftForge.EVENT_BUS.register(EventServer.class);
+			// 测试类
+			new ESTestAndDebug();
+		} catch (Exception e) {
+			CrashReport report = CrashReport.makeCrashReport(e, "Elementalsorcery初始化异常！");
+			Minecraft.getMinecraft().crashed(report);
+			Minecraft.getMinecraft().displayCrashReport(report);
+		}
 	}
 
 	public final static void init(FMLInitializationEvent event) {

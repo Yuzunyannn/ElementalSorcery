@@ -117,7 +117,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		if (!this.dealRuler(player, stack))
 			return false;
 		BlockPos center = new BlockPos((this.pos1.getX() + this.pos2.getX()) / 2,
-				(this.pos1.getY() + this.pos2.getY()) / 2, (this.pos1.getZ() + this.pos2.getZ()) / 2);
+				Math.min(this.pos1.getY(), this.pos2.getY()), (this.pos1.getZ() + this.pos2.getZ()) / 2);
 		if (center.distanceSq(this.pos) > ItemMagicRuler.MAX_DIS_SQ)
 			return false;
 		if (!checkToward(center))
@@ -196,7 +196,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		working = false;
 		boolean success = cnr.isSuccess();
 		if (success) {
-			Building building = cnr.createBuilding(world);
+			Building building = cnr.createBuilding(world, this.structure.face().getOpposite());
 			building.setName(building.getAuthor() + "的建筑");
 			building.mkdir();
 			String key = BuildingLib.instance.addBuilding(building);

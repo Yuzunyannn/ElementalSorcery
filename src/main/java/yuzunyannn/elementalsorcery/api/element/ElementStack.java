@@ -1,16 +1,21 @@
 package yuzunyannn.elementalsorcery.api.element;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.CapabilityDispatcher;
+import net.minecraftforge.common.util.INBTSerializable;
 
-public class ElementStack implements net.minecraftforge.common.capabilities.ICapabilitySerializable<NBTTagCompound> {
+public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
-	public static ElementStack EMPTY;
+	public final static ElementStack EMPTY = new ElementStack() {
+		@Override
+		public void become(ElementStack estack) {
+		}
+
+		@Override
+		public void deserializeNBT(NBTTagCompound nbt) {
+		}
+	};
 
 	/** 元素数量 */
 	private int stackSize;
@@ -51,11 +56,6 @@ public class ElementStack implements net.minecraftforge.common.capabilities.ICap
 		ElementStack itemstack = new ElementStack();
 		itemstack.become(this);
 		return itemstack;
-	}
-
-	@Override
-	protected ElementStack clone() {
-		return this.copy();
 	}
 
 	/** 获取元素 */
@@ -209,13 +209,8 @@ public class ElementStack implements net.minecraftforge.common.capabilities.ICap
 	/**
 	 * 物品被析构成元素的时候回调
 	 */
-	public ElementStack getElementWhenDeconstruct(ItemStack stack, int complex, int lvPower) {
+	public ElementStack becomeElementWhenDeconstruct(ItemStack stack, int complex, int lvPower) {
 		return this.element.getElementWhenDeconstruct(stack, this, complex, lvPower);
-	}
-
-	public ElementStack getElementWhenDeconstruct(IBlockState state, int complex, int lvPower) {
-		return this.element.getElementWhenDeconstruct(
-				new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state)), this, complex, lvPower);
 	}
 
 	/** 获取元素名称 */
@@ -254,19 +249,6 @@ public class ElementStack implements net.minecraftforge.common.capabilities.ICap
 		nbt.setInteger("size", stackSize);
 		// 写入元素的能量
 		nbt.setInteger("power", power);
-	}
-
-	/** 能力 暂时未用 */
-	private CapabilityDispatcher capabilities = null;
-
-	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		return capabilities == null ? false : capabilities.hasCapability(capability, facing);
-	}
-
-	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		return capabilities == null ? null : capabilities.getCapability(capability, facing);
 	}
 
 }
