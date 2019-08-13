@@ -21,12 +21,12 @@ public class ItemSome {
 		return new Item().setUnlocalizedName(unloaclizedName);
 	}
 
-	// 蓝晶石
+	/** 蓝晶石 */
 	static public Item newKynaite() {
 		return newItem("kynaite");
 	}
 
-	// 魔力碎片
+	/** 魔力碎片 */
 	static public Item newMagicalPiece() {
 		return new Item() {
 			@SideOnly(Side.CLIENT)
@@ -37,27 +37,32 @@ public class ItemSome {
 		}.setUnlocalizedName("magicalPiece");
 	}
 
-	// 带有魔力魔的末影之眼
+	/** 魔石 */
+	static public Item newMagicStone() {
+		return newItem("magicStone");
+	}
+
+	/** 带有魔力魔的末影之眼 */
 	static public Item newMagicalEnderEye() {
 		return new ItemMagicalEnderEye();
 	}
 
-	// 魔力水晶
+	/** 魔力水晶 */
 	static public Item newMagicalCrystal() {
 		return newItem("magicalCrystal");
 	}
 
-	// 咒术水晶
+	/** 咒术水晶 */
 	static public Item newSpellCrystal() {
 		return newItem("spellCrystal");
 	}
 
-	// 魔法纸张
+	/** 魔法纸张 */
 	static public Item newMagicPaper() {
 		return newItem("magicPaper");
 	}
 
-	// 咒术纸张
+	/** 咒术纸张 */
 	static public Item newSpellPaper() {
 		return new Item() {
 			@Override

@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
@@ -164,6 +165,11 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	/** 设置为空 */
 	public void setEmpty() {
 		this.become(EMPTY);
+	}
+
+	/** 是否为魔力元素 */
+	public boolean isMagic() {
+		return this.element == ESObjects.ELEMENTS.MAGIC;
 	}
 
 	/** 是否为空 */

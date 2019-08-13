@@ -1,0 +1,19 @@
+{
+	"variants": {
+		"variant=stone": {
+			"model": "elementalsorcery:astone"
+		},
+		"variant=fragmented": {
+			"model": "elementalsorcery:astone_fragmented"
+		},
+		"variant=smooth": {
+			"model": "elementalsorcery:astone_smooth"
+		},
+		"variant=vein": {
+			"model": "elementalsorcery:astone_vein"
+		},
+        "variant=circle": {
+            "model": "elementalsorcery:astone_circle"
+        }
+	}
+}

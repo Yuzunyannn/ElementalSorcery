@@ -120,34 +120,33 @@ public class ElementMap implements IElementMap {
 		this.add(block, ElementHelper.getComplexFromElements(new ItemStack(block), estacks), estacks);
 	}
 
+	private void check(ElementStack... estacks) {
+		if (estacks == null)
+			throw new IllegalArgumentException("estacks为null");
+		for (ElementStack estack : estacks) {
+			if (estack == null)
+				throw new IllegalArgumentException("estacks中存在null项目");
+			if (estack.isEmpty())
+				throw new IllegalArgumentException("estacks中存在empty项目");
+			if (estack.isMagic())
+				throw new IllegalArgumentException("estacks中存在magic项目");
+		}
+	}
+
 	@Override
 	public void add(ItemStack stack, int complex, ElementStack... estacks) {
 		if (stack.isEmpty())
 			return;
-		if (estacks == null)
-			return;
-		for (ElementStack estack : estacks) {
-			if (estack == null)
-				return;
-			if (estack.isEmpty())
-				return;
-		}
-		toElementMap.stack_to_element_map.add(new DefaultToElement.ElementInfo(stack, estacks, complex));
+		this.check(estacks);
+		toElementMap.stackToElementMap.add(new DefaultToElement.ElementInfo(stack, estacks, complex));
 	}
 
 	@Override
 	public void add(Item item, int complex, ElementStack... estacks) {
 		if (item == null)
 			return;
-		if (estacks == null)
-			return;
-		for (ElementStack estack : estacks) {
-			if (estack == null)
-				return;
-			if (estack.isEmpty())
-				return;
-		}
-		toElementMap.item_to_element_map.put(item, new DefaultToElement.ElementInfo(ItemStack.EMPTY, estacks, complex));
+		this.check(estacks);
+		toElementMap.itemToElementMap.put(item, new DefaultToElement.ElementInfo(ItemStack.EMPTY, estacks, complex));
 	}
 
 	@Override
@@ -160,12 +159,12 @@ public class ElementMap implements IElementMap {
 	// 默认的实例化
 	private static class DefaultToElement implements IToElement {
 
-		public List<ElementInfo> stack_to_element_map = new ArrayList<ElementInfo>();
-		public Map<Item, ElementInfo> item_to_element_map = new HashMap<Item, ElementInfo>();
+		public List<ElementInfo> stackToElementMap = new ArrayList<ElementInfo>();
+		public Map<Item, ElementInfo> itemToElementMap = new HashMap<Item, ElementInfo>();
 
 		@Override
 		public ElementStack[] toElement(ItemStack stack) {
-			for (ElementInfo info : this.stack_to_element_map) {
+			for (ElementInfo info : this.stackToElementMap) {
 				if (this.compareItemStacks(stack, info.stack)) {
 					return info.estacks;
 				}
@@ -174,14 +173,14 @@ public class ElementMap implements IElementMap {
 		}
 
 		public ElementStack[] toElement(Item item) {
-			if (item_to_element_map.containsKey(item))
-				return item_to_element_map.get(item).estacks;
+			if (itemToElementMap.containsKey(item))
+				return itemToElementMap.get(item).estacks;
 			return null;
 		}
 
 		@Override
 		public int complex(ItemStack stack) {
-			for (ElementInfo info : this.stack_to_element_map) {
+			for (ElementInfo info : this.stackToElementMap) {
 				if (this.compareItemStacks(stack, info.stack)) {
 					return info.complex;
 				}
@@ -191,8 +190,8 @@ public class ElementMap implements IElementMap {
 
 		@Override
 		public int complex(Item item) {
-			if (item_to_element_map.containsKey(item))
-				return item_to_element_map.get(item).complex;
+			if (itemToElementMap.containsKey(item))
+				return itemToElementMap.get(item).complex;
 			return 0;
 		}
 

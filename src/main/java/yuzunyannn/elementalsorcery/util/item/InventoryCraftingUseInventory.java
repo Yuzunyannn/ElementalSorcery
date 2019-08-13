@@ -7,6 +7,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 
+/** 将Inventory变成InventoryCrafting的外壳 */
 public class InventoryCraftingUseInventory extends InventoryCrafting {
 
 	final IInventory inventory;

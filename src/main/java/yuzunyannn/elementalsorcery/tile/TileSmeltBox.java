@@ -33,32 +33,32 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 	}
 
 	// 下一次更新的能量
-	protected int next_power = 0;
+	protected int nextPower = 0;
 	// 是否允许插入
 
 	// 左边两个炼制位置
-	protected ItemStackHandler inventory_smelt = new ItemStackHandler(2);
+	protected ItemStackHandler inventorySmelt = new ItemStackHandler(2);
 	// 右边三个完成位置
-	protected ItemStackLimitHandler inventory_result = new ItemStackLimitHandler(3) {
+	protected ItemStackLimitHandler inventoryResult = new ItemStackLimitHandler(3) {
 		@Override
 		public boolean canInsert(int slot, @Nonnull ItemStack stack) {
 			return false;
 		}
 	};
 	// 特殊位置
-	protected ItemStackHandler inventory_extra = new ItemStackHandler(1);
+	protected ItemStackHandler inventoryExtra = new ItemStackHandler(1);
 
 	// 可以被加工
-	private boolean can_in_smelt = false;
+	private boolean canInSmelt = false;
 
 	// 燃烧时间
-	protected int burn_time = 0;
+	protected int burnTime = 0;
 
 	// 上次是否提供过燃烧能量
-	private boolean has_next_power = false;
+	private boolean hasNextPower = false;
 
-	// 是否拥有带有魔法的末影之眼，没有-1
-	protected int has_magical_ender_eye = -1;
+	// 拥有带魔法的末影之眼个数，没有-1
+	protected int hasMagicalEnderEye = -1;
 
 	// 获取材质
 	private BlockHearth.EnumMaterial material() {
@@ -75,30 +75,30 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		this.inventory_smelt.deserializeNBT(compound.getCompoundTag("InventorySmelt"));
-		this.inventory_result.deserializeNBT(compound.getCompoundTag("InventoryResult"));
-		this.inventory_extra.deserializeNBT(compound.getCompoundTag("InventoryExtra"));
-		this.burn_time = compound.getInteger("BurnTime");
+		this.inventorySmelt.deserializeNBT(compound.getCompoundTag("InventorySmelt"));
+		this.inventoryResult.deserializeNBT(compound.getCompoundTag("InventoryResult"));
+		this.inventoryExtra.deserializeNBT(compound.getCompoundTag("InventoryExtra"));
+		this.burnTime = compound.getInteger("BurnTime");
 	}
 
 	// 保存
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound.setTag("InventorySmelt", this.inventory_smelt.serializeNBT());
-		compound.setTag("InventoryResult", this.inventory_result.serializeNBT());
-		compound.setTag("InventoryExtra", this.inventory_extra.serializeNBT());
-		compound.setInteger("BurnTime", this.burn_time);
+		compound.setTag("InventorySmelt", this.inventorySmelt.serializeNBT());
+		compound.setTag("InventoryResult", this.inventoryResult.serializeNBT());
+		compound.setTag("InventoryExtra", this.inventoryExtra.serializeNBT());
+		compound.setInteger("BurnTime", this.burnTime);
 		return super.writeToNBT(compound);
 	}
 
 	// 受到能量
 	@Override
 	public boolean receiveBurnPower(int amount, int level) {
-		next_power = amount * level;
-		if (has_magical_ender_eye != -1) {
-			next_power = (int) (next_power * (1.0F + has_magical_ender_eye / 4.0F));
+		nextPower = amount * level;
+		if (hasMagicalEnderEye != -1) {
+			nextPower = (int) (nextPower * (1.0F + hasMagicalEnderEye / 4.0F));
 		}
-		return can_in_smelt;
+		return canInSmelt;
 	}
 
 	/**
@@ -110,7 +110,7 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 
 	/** 获取额外物品的ItemStackHandler */
 	public ItemStackHandler getExtraItemStackHandler() {
-		return inventory_extra;
+		return inventoryExtra;
 	}
 
 	/**
@@ -143,14 +143,14 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 			}
 		}
 		// 检查一般的熔炼表
-		ItemStack new_stack = FurnaceRecipes.instance().getSmeltingResult(stack);
-		if (new_stack.isEmpty())
+		ItemStack newStack = FurnaceRecipes.instance().getSmeltingResult(stack);
+		if (newStack.isEmpty())
 			return ItemStack.EMPTY;
-		return new_stack.copy();
+		return newStack.copy();
 	}
 
 	/**
-	 * 获得物品烧炼后应该成为的物品 因为该炉子什么都可以放置
+	 * 获得物品烧炼后应的幸运产出物品物品 因为该炉子什么都可以放置
 	 * 
 	 * @param stackOld
 	 *            原始物品
@@ -232,8 +232,8 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 			else
 				wface = EnumFacing.DOWN;
 			if (facing == EnumFacing.DOWN || facing == wface)
-				return (T) inventory_result;
-			return (T) inventory_smelt;
+				return (T) inventoryResult;
+			return (T) inventorySmelt;
 		}
 		return super.getCapability(capability, facing);
 	}
@@ -248,12 +248,12 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 	// 是否可以熔炼
 	public boolean canSmelt() {
 		boolean can_smelt = false;
-		for (int i = 0; i < inventory_smelt.getSlots(); i++) {
-			ItemStack item_stack = inventory_smelt.extractItem(i, 1, true);
-			item_stack = getSmeltResult(item_stack, inventory_extra.getStackInSlot(0));
+		for (int i = 0; i < inventorySmelt.getSlots(); i++) {
+			ItemStack item_stack = inventorySmelt.extractItem(i, 1, true);
+			item_stack = getSmeltResult(item_stack, inventoryExtra.getStackInSlot(0));
 			if (item_stack.isEmpty())
 				continue;
-			item_stack = inventory_result.insertItemForce(i, item_stack, true);
+			item_stack = inventoryResult.insertItemForce(i, item_stack, true);
 			if (!item_stack.isEmpty())
 				continue;
 			can_smelt = true;
@@ -275,28 +275,28 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 			return;
 		}
 		// 切换燃烧状态
-		if (next_power > 0) {
-			if (has_next_power == false) {
-				has_next_power = true;
-				brunIt(has_next_power);
+		if (nextPower > 0) {
+			if (hasNextPower == false) {
+				hasNextPower = true;
+				brunIt(hasNextPower);
 			}
-		} else if (has_next_power == true) {
-			has_next_power = false;
-			brunIt(has_next_power);
+		} else if (hasNextPower == true) {
+			hasNextPower = false;
+			brunIt(hasNextPower);
 		}
 		// 判断是否可以继续烧炼
-		can_in_smelt = this.canSmelt();
+		canInSmelt = this.canSmelt();
 		// 燃烧
-		int this_power = next_power;
-		next_power = 0;
-		if (can_in_smelt) {
-			if (this_power > 0) {
-				burn_time += this_power;
-				if (burn_time >= this.getCookTime()) {
-					burn_time = 0;
-					ItemStack extra = inventory_extra.getStackInSlot(0);
-					for (int i = 0; i < inventory_smelt.getSlots(); i++) {
-						ItemStack item_stack = inventory_smelt.extractItem(i, 1, true);
+		int thisPower = nextPower;
+		nextPower = 0;
+		if (canInSmelt) {
+			if (thisPower > 0) {
+				burnTime += thisPower;
+				if (burnTime >= this.getCookTime()) {
+					burnTime = 0;
+					ItemStack extra = inventoryExtra.getStackInSlot(0);
+					for (int i = 0; i < inventorySmelt.getSlots(); i++) {
+						ItemStack item_stack = inventorySmelt.extractItem(i, 1, true);
 						// 根据额外物品，获取烧炼结果
 						ItemStack new_stack = getSmeltResult(item_stack, extra);
 						if (new_stack.isEmpty())
@@ -304,25 +304,25 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 						// 检测有没有额外的物品
 						ItemStack add_stack = getAdditionalItem(item_stack, new_stack, extra);
 						// 处理物品栏
-						inventory_smelt.extractItem(i, 1, false);
-						inventory_result.insertItemForce(i, new_stack, false);
-						inventory_result.insertItemForce(2, add_stack, false);
+						inventorySmelt.extractItem(i, 1, false);
+						inventoryResult.insertItemForce(i, new_stack, false);
+						inventoryResult.insertItemForce(2, add_stack, false);
 					}
 					// 这里就完成一轮烧炼喽
 					finishOnceSmelt(extra);
 					this.markDirty();
 				}
 			} else {
-				if (burn_time > 0)
-					burn_time--;
+				if (burnTime > 0)
+					burnTime--;
 			}
 		} else {
-			burn_time = 0;
+			burnTime = 0;
 		}
 		// 检查是否有带有魔力的末影之眼
-		ItemStack extra = inventory_extra.getStackInSlot(0);
+		ItemStack extra = inventoryExtra.getStackInSlot(0);
 		if (!extra.isEmpty() && extra.getItem() == ESInitInstance.ITEMS.MAGICAL_ENDER_EYE)
-			has_magical_ender_eye = extra.getCount();
+			hasMagicalEnderEye = extra.getCount();
 	}
 
 	public static final int FIELD_BURN_TIME = 0;
@@ -331,7 +331,7 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 	public int getField(int id) {
 		switch (id) {
 		case FIELD_BURN_TIME:
-			return burn_time;
+			return burnTime;
 		}
 		return -1;
 	}
@@ -340,7 +340,7 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 	public void setField(int id, int value) {
 		switch (id) {
 		case FIELD_BURN_TIME:
-			burn_time = value;
+			burnTime = value;
 			break;
 		}
 	}

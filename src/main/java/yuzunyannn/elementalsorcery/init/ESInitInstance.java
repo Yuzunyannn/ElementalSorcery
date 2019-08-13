@@ -2,31 +2,36 @@ package yuzunyannn.elementalsorcery.init;
 
 import java.lang.reflect.Field;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.ESCreativeTabs;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.ESRegister;
 import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementMagic;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.block.BlockAbsorbBox;
-import yuzunyannn.elementalsorcery.block.BlockAnalysisAltar;
-import yuzunyannn.elementalsorcery.block.BlockBuildingAltar;
-import yuzunyannn.elementalsorcery.block.BlockDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.block.BlockDeconstructBox;
-import yuzunyannn.elementalsorcery.block.BlockElementCraftingTable;
 import yuzunyannn.elementalsorcery.block.BlockElementWorkbench;
-import yuzunyannn.elementalsorcery.block.BlockElementalCube;
 import yuzunyannn.elementalsorcery.block.BlockHearth;
 import yuzunyannn.elementalsorcery.block.BlockInfusionBox;
 import yuzunyannn.elementalsorcery.block.BlockInvalidEnchantmentTable;
 import yuzunyannn.elementalsorcery.block.BlockKynaite;
 import yuzunyannn.elementalsorcery.block.BlockLantern;
-import yuzunyannn.elementalsorcery.block.BlockMagicDesk;
 import yuzunyannn.elementalsorcery.block.BlockMagicPlatform;
+import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.block.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.BlockStela;
-import yuzunyannn.elementalsorcery.block.BlockSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.block.BlocksAStone;
 import yuzunyannn.elementalsorcery.block.BlocksEStone;
+import yuzunyannn.elementalsorcery.block.altar.BlockAnalysisAltar;
+import yuzunyannn.elementalsorcery.block.altar.BlockBuildingAltar;
+import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructAltarTable;
+import yuzunyannn.elementalsorcery.block.altar.BlockElementCraftingTable;
+import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
+import yuzunyannn.elementalsorcery.block.altar.BlockMagicDesk;
+import yuzunyannn.elementalsorcery.block.altar.BlockSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementAir;
@@ -78,6 +83,8 @@ public class ESInitInstance {
 		tab = ESCreativeTabs.TAB;
 		// 初始化虚空元素
 		ELEMENTS.VOID = new Element(Element.rgb(0, 0, 0)).setRegistryName("void").setUnlocalizedName("void");
+		// 初始化魔力元素
+		ELEMENTS.MAGIC = new ElementMagic().setRegistryName("magic").setUnlocalizedName("magic");
 		initVoidElement();
 		// 实例化方块和物品等
 		instanceBlocks();
@@ -92,15 +99,12 @@ public class ESInitInstance {
 		field.set(ElementStack.EMPTY, ELEMENTS.VOID);
 	}
 
-	private static final void instanceBlocks() {
+	private static final void instanceBlocks() throws ReflectiveOperationException {
 
 		BLOCKS.ESTONE = new BlocksEStone.EStone().setRegistryName("estone");
 		BLOCKS.ESTONE_SLAB = new BlocksEStone.EStoneSlab().setRegistryName("estone_slab");
 		BLOCKS.ESTONE_STAIRS = new BlocksEStone.EStoneStairs().setRegistryName("estone_stairs");
-
-		BLOCKS.ESTONE.setCreativeTab(tab);
-		BLOCKS.ESTONE_SLAB.setCreativeTab(tab);
-		BLOCKS.ESTONE_STAIRS.setCreativeTab(tab);
+		BLOCKS.ASTONE = new BlocksAStone().setRegistryName("astone");
 
 		BLOCKS.ELEMENTAL_CUBE = new BlockElementalCube().setRegistryName("elemental_cube");
 		BLOCKS.HEARTH = new BlockHearth().setRegistryName("hearth");
@@ -127,34 +131,25 @@ public class ESInitInstance {
 		BLOCKS.BUILDING_ALTAR = new BlockBuildingAltar().setRegistryName("building_altar");
 		BLOCKS.ANALYSIS_ALTAR = new BlockAnalysisAltar().setRegistryName("analysis_altar");
 		BLOCKS.SUPREME_CRAFTING_TABLE = new BlockSupremeCraftingTable().setRegistryName("supreme_crafting_table");
+		BLOCKS.MAGIC_TORCH = new BlockMagicTorch().setRegistryName("magic_torch");
 
-		BLOCKS.ELEMENTAL_CUBE.setCreativeTab(tab);
-		BLOCKS.HEARTH.setCreativeTab(tab);
-		BLOCKS.SMELT_BOX.setCreativeTab(tab);
-		BLOCKS.SMELT_BOX_IRON.setCreativeTab(tab);
-		BLOCKS.SMELT_BOX_KYNAITE.setCreativeTab(tab);
-		BLOCKS.KYNAITE_BLOCK.setCreativeTab(tab);
-		BLOCKS.KYNAITE_ORE.setCreativeTab(tab);
-		BLOCKS.MAGIC_PLATFORM.setCreativeTab(tab);
-		BLOCKS.ABSORB_BOX.setCreativeTab(tab);
-		BLOCKS.INVALID_ENCHANTMENT_TABLE.setCreativeTab(tab);
-		BLOCKS.ELEMENT_WORKBENCH.setCreativeTab(tab);
-		BLOCKS.DECONSTRUCT_BOX.setCreativeTab(tab);
-		BLOCKS.INFUSION_BOX.setCreativeTab(tab);
-		BLOCKS.MAGIC_DESK.setCreativeTab(tab);
-		BLOCKS.ELEMENT_CRAFTING_TABLE.setCreativeTab(tab);
-		BLOCKS.DECONSTRUCT_ALTAR_TABLE.setCreativeTab(tab);
-		BLOCKS.STELA.setCreativeTab(tab);
-		BLOCKS.LANTERN.setCreativeTab(tab);
-		BLOCKS.BUILDING_ALTAR.setCreativeTab(tab);
-		BLOCKS.ANALYSIS_ALTAR.setCreativeTab(tab);
-		BLOCKS.SUPREME_CRAFTING_TABLE.setCreativeTab(tab);
+		// 初始化所有tab
+		Class<?> cls = BLOCKS.getClass();
+		Field[] fields = cls.getDeclaredFields();
+		for (Field field : fields) {
+			((Block) field.get(BLOCKS)).setCreativeTab(tab);
+		}
 	}
 
-	private static final void instanceItems() {
+	private static final void instanceItems() throws ReflectiveOperationException {
 		ITEMS.KYNAITE = ItemSome.newKynaite().setRegistryName("kynaite");
 		ITEMS.MAGICAL_PIECE = ItemSome.newMagicalPiece().setRegistryName("magical_piece");
 		ITEMS.MAGICAL_ENDER_EYE = ItemSome.newMagicalEnderEye().setRegistryName("magical_ender_eye");
+		ITEMS.MAGIC_CRYSTAL = ItemSome.newMagicalCrystal().setRegistryName("magic_crystal");
+		ITEMS.MAGIC_PAPER = ItemSome.newMagicPaper().setRegistryName("magic_paper");
+		ITEMS.SPELL_PAPER = ItemSome.newSpellPaper().setRegistryName("spell_paper");
+		ITEMS.SPELL_CRYSTAL = ItemSome.newSpellCrystal().setRegistryName("spell_crystal");
+		ITEMS.MAGIC_STONE = ItemSome.newMagicStone().setRegistryName("magic_stone");
 		ITEMS.KYNAITE_PICKAXE = new ItemKynaiteTools.ItemKynaitePickaxe().setRegistryName("kynaite_pickaxe");
 		ITEMS.KYNAITE_AXE = new ItemKynaiteTools.ItemKynaiteAxe().setRegistryName("kynaite_axe");
 		ITEMS.KYNAITE_SPADE = new ItemKynaiteTools.ItemKynaiteSpade().setRegistryName("kynaite_spade");
@@ -162,37 +157,12 @@ public class ESInitInstance {
 		ITEMS.KYNAITE_SWORD = new ItemKynaiteTools.ItemKynaiteSword().setRegistryName("kynaite_sword");
 		ITEMS.ARCHITECTURE_CRYSTAL = new ItemArchitectureCrystal().setRegistryName("architecture_crystal");
 		ITEMS.ELEMENT_CRYSTAL = new ItemElementCrystal().setRegistryName("element_crystal");
-		ITEMS.MAGIC_CRYSTAL = ItemSome.newMagicalCrystal().setRegistryName("magic_crystal");
 		ITEMS.PARCHMENT = new ItemParchment().setRegistryName("parchment");
-		ITEMS.MAGIC_PAPER = ItemSome.newMagicPaper().setRegistryName("magic_paper");
-		ITEMS.SPELL_PAPER = ItemSome.newSpellPaper().setRegistryName("spell_paper");
-		ITEMS.SPELL_CRYSTAL = ItemSome.newSpellCrystal().setRegistryName("spell_crystal");
 		ITEMS.SPELLBOOK_COVER = new ItemSpellbookCover().setRegistryName("spellbook_cover");
 		ITEMS.SCROLL = new ItemScroll().setRegistryName("scroll");
 		ITEMS.MANUAL = new ItemManual().setRegistryName("manual");
 		ITEMS.MAGIC_RULER = new ItemMagicRuler().setRegistryName("magic_ruler");
 		ITEMS.ITEM_CRYSTAL = new ItemItemCrystal().setRegistryName("item_crystal");
-
-		ITEMS.KYNAITE.setCreativeTab(tab);
-		ITEMS.MAGICAL_PIECE.setCreativeTab(tab);
-		ITEMS.MAGICAL_ENDER_EYE.setCreativeTab(tab);
-		ITEMS.KYNAITE_PICKAXE.setCreativeTab(tab);
-		ITEMS.KYNAITE_AXE.setCreativeTab(tab);
-		ITEMS.KYNAITE_SPADE.setCreativeTab(tab);
-		ITEMS.KYNAITE_HOE.setCreativeTab(tab);
-		ITEMS.KYNAITE_SWORD.setCreativeTab(tab);
-		ITEMS.ARCHITECTURE_CRYSTAL.setCreativeTab(tab);
-		ITEMS.ELEMENT_CRYSTAL.setCreativeTab(tab);
-		ITEMS.MAGIC_CRYSTAL.setCreativeTab(tab);
-		ITEMS.PARCHMENT.setCreativeTab(tab);
-		ITEMS.MAGIC_PAPER.setCreativeTab(tab);
-		ITEMS.SPELL_PAPER.setCreativeTab(tab);
-		ITEMS.SPELL_CRYSTAL.setCreativeTab(tab);
-		ITEMS.SPELLBOOK_COVER.setCreativeTab(tab);
-		ITEMS.SCROLL.setCreativeTab(tab);
-		ITEMS.MANUAL.setCreativeTab(tab);
-		ITEMS.MAGIC_RULER.setCreativeTab(tab);
-		ITEMS.ITEM_CRYSTAL.setCreativeTab(tab);
 
 		ITEMS.SPELLBOOK = new ItemSpellbook().setRegistryName("spellbook");
 		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture().setRegistryName("spellbook_architecture");
@@ -200,11 +170,12 @@ public class ESInitInstance {
 		ITEMS.SPELLBOOK_LAUNCH = new ItemSpellbookLaunch().setRegistryName("spellbook_launch");
 		ITEMS.SPELLBOOK_ELEMENT = new ItemSpellbookElement().setRegistryName("spellbook_element");
 
-		ITEMS.SPELLBOOK.setCreativeTab(tab);
-		ITEMS.SPELLBOOK_ARCHITECTURE.setCreativeTab(tab);
-		ITEMS.SPELLBOOK_ENCHANTMENT.setCreativeTab(tab);
-		ITEMS.SPELLBOOK_LAUNCH.setCreativeTab(tab);
-		ITEMS.SPELLBOOK_ELEMENT.setCreativeTab(tab);
+		// 初始化所有tab
+		Class<?> cls = ITEMS.getClass();
+		Field[] fields = cls.getDeclaredFields();
+		for (Field field : fields) {
+			((Item) field.get(ITEMS)).setCreativeTab(tab);
+		}
 	}
 
 	private static final void instanceElements() {

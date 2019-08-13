@@ -5,9 +5,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
@@ -25,7 +27,7 @@ public class BlockHelper {
 		}
 	}
 
-	/** 方块激活的时候，设置继承IGetItemStack的物品栈 */
+	/** 方块激活的时候，处理继承IGetItemStack的物品栈 */
 	public static boolean onBlockActivatedWithIGetItemStack(World worldIn, BlockPos pos, IBlockState state,
 			EntityPlayer playerIn, EnumHand hand, boolean justOne) {
 		if (playerIn.isSneaking()) {
@@ -82,6 +84,23 @@ public class BlockHelper {
 			if (!stack.isEmpty())
 				Block.spawnAsEntity(worldIn, pos, stack);
 		}
+	}
+
+	/** 向指定方块插入物品 */
+	static public ItemStack insertInto(World world, BlockPos pos, EnumFacing face, ItemStack stack) {
+		TileEntity tile = world.getTileEntity(pos);
+		if (tile == null)
+			return stack;
+		IItemHandler heandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face);
+		if (heandler == null)
+			return stack;
+		for (int i = 0; i < heandler.getSlots(); i++) {
+			stack = heandler.insertItem(i, stack, false);
+			if (stack.isEmpty()) {
+				return stack;
+			}
+		}
+		return stack;
 	}
 
 }

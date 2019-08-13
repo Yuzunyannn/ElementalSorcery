@@ -7,6 +7,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
 
+/** 继承接口的类，重写一个getItemStackHandler就可以将其作为IInventory使用 */
 public interface IItemStackHandlerInventory extends IInventory {
 
 	public ItemStackHandler getItemStackHandler();

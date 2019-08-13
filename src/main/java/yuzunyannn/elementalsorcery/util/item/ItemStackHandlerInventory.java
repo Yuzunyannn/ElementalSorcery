@@ -7,13 +7,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.items.ItemStackHandler;
 
+/** ItemStackHandler和IInventory的结合，双倍的快乐 */
 public class ItemStackHandlerInventory extends ItemStackHandler implements IInventory {
 
 	public ItemStackHandlerInventory() {
 		super();
 	}
-	
-	public ItemStackHandlerInventory(NBTTagCompound nbt){
+
+	public ItemStackHandlerInventory(NBTTagCompound nbt) {
 		super();
 		this.deserializeNBT(nbt);
 	}

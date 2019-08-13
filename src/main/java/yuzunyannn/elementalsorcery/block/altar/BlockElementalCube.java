@@ -1,7 +1,6 @@
-package yuzunyannn.elementalsorcery.block;
+package yuzunyannn.elementalsorcery.block.altar;
 
 import java.util.List;
-import java.util.Random;
 
 import javax.annotation.Nullable;
 
@@ -13,7 +12,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -174,8 +172,11 @@ public class BlockElementalCube extends BlockContainer {
 		List<Element> list = ElementRegister.instance.getValues();
 		for (Element e : list) {
 			ItemStack stack = new ItemStack(this);
+			ElementStack estack = new ElementStack(e, 1000, 1000);
+			if (estack.isMagic())
+				continue;
 			IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-			inventory.setStackInSlot(0, new ElementStack(e, 1000, 1000));
+			inventory.setStackInSlot(0, estack);
 			inventory.saveState(stack);
 			items.add(stack);
 		}

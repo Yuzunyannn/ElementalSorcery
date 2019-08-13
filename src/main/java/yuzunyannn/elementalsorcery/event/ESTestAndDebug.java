@@ -31,10 +31,12 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
+import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.tile.TileStela;
 import yuzunyannn.elementalsorcery.worldgen.VillageESHall.VillageCreationHandler;
@@ -54,6 +56,10 @@ public class ESTestAndDebug {
 			TileEntity tile = event.getWorld().getTileEntity(pos);
 			if (tile instanceof TileStela) {
 				((TileStela) tile).doOnce();
+			}
+			if (event.getWorld().getBlockState(pos).getBlock() == ESInitInstance.BLOCKS.MAGIC_TORCH) {
+				event.getWorld().setBlockState(pos,
+						event.getWorld().getBlockState(pos).withProperty(BlockMagicTorch.LIT, true));
 			}
 			return;
 		}

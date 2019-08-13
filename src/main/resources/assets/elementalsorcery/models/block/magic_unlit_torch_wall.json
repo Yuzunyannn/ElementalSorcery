@@ -1,0 +1,6 @@
+{
+    "parent": "block/torch_wall",
+    "textures": {
+        "torch": "elementalsorcery:blocks/magic_torch_off"
+    }
+}

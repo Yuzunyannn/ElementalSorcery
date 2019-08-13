@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.block;
+package yuzunyannn.elementalsorcery.block.altar;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;

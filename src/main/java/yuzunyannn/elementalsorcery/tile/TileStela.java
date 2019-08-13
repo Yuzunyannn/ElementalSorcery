@@ -12,12 +12,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityFlowerPot;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
@@ -27,6 +27,7 @@ import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class TileStela extends TileEntityNetwork {
 
@@ -101,19 +102,30 @@ public class TileStela extends TileEntityNetwork {
 		return canRunning();
 	}
 
+	private boolean check(BlockPos pos) {
+		IBlockState state = this.world.getBlockState(pos);
+		if (state.getBlock() instanceof BlockFlower)
+			return true;
+		TileEntity tile = this.world.getTileEntity(pos);
+		if (tile instanceof TileEntityFlowerPot) {
+			Block flower = Block.getBlockFromItem(((TileEntityFlowerPot) tile).getFlowerPotItem());
+			if (flower instanceof BlockFlower)
+				return true;
+		}
+		return false;
+	}
+
 	// 检测周围的运行条件
 	public boolean canRunning() {
 		EnumFacing face = this.face.rotateY();
-		IBlockState state = this.world.getBlockState(pos.offset(face));
-		boolean haveFlower = state.getBlock() instanceof BlockFlower;
-		state = this.world.getBlockState(pos.offset(face.getOpposite()));
-		haveFlower &= state.getBlock() instanceof BlockFlower;
-		return haveFlower;
+		return check(pos.offset(face)) && check(pos.offset(face.getOpposite()));
 	}
 
 	// 工作一次
 	public void doOnce() {
 		if (!this.isRunning())
+			return;
+		if (this.world.isRemote)
 			return;
 		ItemStack item = invItem.extractItem(0, 64, true);
 		String[] idArray = TileStela.pageAwareFromItem(item);
@@ -123,6 +135,7 @@ public class TileStela extends TileEntityNetwork {
 		ItemStack paper = invPaper.extractItem(0, idArray.length, false);
 		if (idArray.length == 1) {
 			this.produce(ItemParchment.getParchment(idArray[0]));
+			this.updateToClient();
 			return;
 		}
 		int size = Math.min(paper.getCount(), idArray.length);
@@ -130,25 +143,18 @@ public class TileStela extends TileEntityNetwork {
 		for (int i = 0; i < size; i++)
 			ids[i] = idArray[i];
 		this.produce(ItemScroll.getScroll(ids));
+		this.updateToClient();
 	}
 
 	// 产生物品
 	public void produce(ItemStack stack) {
-		BlockPos pos = this.pos.offset(this.face.getOpposite());
-		TileEntity tile = this.world.getTileEntity(pos);
-		if (tile != null) {
-			IItemHandler heandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, this.face);
-			if (heandler != null) {
-				// 插入
-				for (int i = 0; i < heandler.getSlots(); i++) {
-					stack = heandler.insertItem(i, stack, false);
-					if (stack.isEmpty()) {
-						return;
-					}
-				}
-			}
+		stack = BlockHelper.insertInto(world, this.pos.offset(this.face.getOpposite()), face, stack);
+		if (!stack.isEmpty()) {
+			stack = BlockHelper.insertInto(world, this.pos.offset(EnumFacing.DOWN), EnumFacing.UP, stack);
+			if (stack.isEmpty())
+				return;
+			Block.spawnAsEntity(this.world, this.pos, stack);
 		}
-		Block.spawnAsEntity(this.world, this.pos, stack);
 	}
 
 	public static Map<ResourceLocation, String[]> itemToIds = new HashMap<ResourceLocation, String[]>();
@@ -191,7 +197,7 @@ public class TileStela extends TileEntityNetwork {
 		addToMap(Blocks.ENCHANTING_TABLE, Pages.ABOUT_ENCHANTINGBOOK, Pages.ABOUT_KYNATIE_TOOLS);
 		// 末影之眼
 		addToMap(Items.ENDER_EYE, Pages.ABOUT_MAGICAL_ENDEREYE);
-		//带有魔力的末影之眼
+		// 带有魔力的末影之眼
 		addToMap(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE, Pages.ABOUT_MAGICAL_ENDEREYE);
 		// 魔力水晶
 		addToMap(ESInitInstance.ITEMS.MAGIC_CRYSTAL, Pages.ABOUT_MAGIC_CRY, Pages.ABOUT_INFUSION,

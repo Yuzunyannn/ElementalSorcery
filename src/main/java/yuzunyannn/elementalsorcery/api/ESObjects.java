@@ -40,6 +40,7 @@ public class ESObjects {
 		public Item MANUAL;
 		public Item MAGIC_RULER;
 		public Item ITEM_CRYSTAL;
+		public Item MAGIC_STONE;
 	}
 
 	static public class Blocks {
@@ -47,6 +48,7 @@ public class ESObjects {
 		public Block ESTONE;
 		public Block ESTONE_SLAB;
 		public Block ESTONE_STAIRS;
+		public Block ASTONE;
 
 		public Block ELEMENTAL_CUBE;
 		public Block HEARTH;
@@ -69,10 +71,13 @@ public class ESObjects {
 		public Block BUILDING_ALTAR;
 		public Block ANALYSIS_ALTAR;
 		public Block SUPREME_CRAFTING_TABLE;
+		public Block MAGIC_TORCH;
 	}
 
 	static public class Elements {
 		public Element VOID;
+		public Element MAGIC;
+
 		public Element ENDER;
 		public Element FIRE;
 		public Element WATER;

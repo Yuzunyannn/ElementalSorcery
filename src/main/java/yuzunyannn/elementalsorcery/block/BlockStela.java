@@ -88,6 +88,15 @@ public class BlockStela extends BlockContainer {
 		return face;
 	}
 
+	// 设置面向
+	private void setFace(World worldIn, BlockPos pos, EnumFacing face) {
+		TileEntity tile = worldIn.getTileEntity(pos);
+		if (tile instanceof TileStela) {
+			TileStela ts = (TileStela) tile;
+			ts.setFace(face);
+		}
+	}
+
 	@Override
 	public RayTraceResult collisionRayTrace(IBlockState blockState, World worldIn, BlockPos pos, Vec3d start,
 			Vec3d end) {

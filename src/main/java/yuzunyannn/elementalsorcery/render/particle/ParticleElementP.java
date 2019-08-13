@@ -3,7 +3,9 @@ package yuzunyannn.elementalsorcery.render.particle;
 import net.minecraft.client.particle.ParticleExplosion;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+@SideOnly(Side.CLIENT)
 public class ParticleElementP extends ParticleExplosion {
 
 	public ParticleElementP(World worldIn, Vec3d position) {

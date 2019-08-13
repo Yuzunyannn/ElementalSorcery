@@ -34,18 +34,22 @@ import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 public class Building implements INBTSerializable<NBTTagCompound> {
 
-	// 方块信息
+	/** 方块信息 */
 	public class BlockInfo implements INBTSerializable<NBTTagCompound> {
+		/** 方块的state */
 		IBlockState state;
+		/** 方块 */
 		Block block;
+		/** 方块的meta */
 		int meta;
+		/** 对应物品类型的索引 */
 		int typeIndex;
 
-		public BlockInfo(IBlockState state, int tp_index) {
+		public BlockInfo(IBlockState state, int tpIndex) {
 			this.state = state;
 			this.block = state.getBlock() == null ? Blocks.AIR : state.getBlock();
 			this.meta = state.getBlock().getMetaFromState(state);
-			this.typeIndex = tp_index;
+			this.typeIndex = tpIndex;
 		}
 
 		private BlockInfo(NBTTagCompound nbt) {
@@ -92,12 +96,13 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		}
 	}
 
-	// 方块类型的信息
+	/** 方块类型的信息 */
 	public static class BlockItemTypeInfo {
 		private final ItemStack bolockStack;
 		int count = 0;
 
 		public BlockItemTypeInfo(IBlockState state) {
+			// 临时处理水
 			if (state.getMaterial().isLiquid()) {
 				ItemStack bucket = new ItemStack(Items.BUCKET);
 				if (state.getBlock() instanceof BlockStaticLiquid) {
@@ -116,6 +121,8 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 					}
 				}
 				this.bolockStack = bucket;
+			} else if (state.getBlock() == Blocks.FLOWER_POT) {
+				bolockStack = new ItemStack(Items.FLOWER_POT, 1);
 			} else {
 				int meta = state.getBlock().damageDropped(state);
 				bolockStack = new ItemStack(Item.getItemFromBlock(state.getBlock()), 1, meta);
@@ -346,6 +353,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			return false;
 		}
 
+		/** 根据方向修正pos */
 		static public BlockPos facePos(BlockPos pos, EnumFacing facing) {
 			switch (facing) {
 			case SOUTH:
@@ -370,6 +378,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			return facePos(pos, this.facing).add(off);
 		}
 
+		/** 根据方向修正state */
 		static public IBlockState faceSate(IBlockState state, EnumFacing facing) {
 			switch (facing) {
 			case SOUTH:

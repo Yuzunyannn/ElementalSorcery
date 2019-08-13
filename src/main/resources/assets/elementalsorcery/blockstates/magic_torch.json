@@ -1,0 +1,14 @@
+{
+    "variants": {
+        "facing=up,lit=true":  { "model": "elementalsorcery:magic_lit_torch" },
+        "facing=east,lit=true":  { "model": "elementalsorcery:magic_lit_torch_wall" },
+        "facing=south,lit=true":  { "model": "elementalsorcery:magic_lit_torch_wall", "y": 90 },
+        "facing=west,lit=true":  { "model": "elementalsorcery:magic_lit_torch_wall", "y": 180 },
+        "facing=north,lit=true":  { "model": "elementalsorcery:magic_lit_torch_wall", "y": 270 },
+		"facing=up,lit=false":  { "model": "elementalsorcery:magic_unlit_torch" },
+        "facing=east,lit=false":  { "model": "elementalsorcery:magic_unlit_torch_wall" },
+        "facing=south,lit=false":  { "model": "elementalsorcery:magic_unlit_torch_wall", "y": 90 },
+        "facing=west,lit=false":  { "model": "elementalsorcery:magic_unlit_torch_wall", "y": 180 },
+        "facing=north,lit=false":  { "model": "elementalsorcery:magic_unlit_torch_wall", "y": 270 }
+    }
+}
