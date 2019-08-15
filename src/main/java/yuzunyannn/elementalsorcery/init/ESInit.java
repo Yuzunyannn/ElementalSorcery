@@ -69,6 +69,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileLantern;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStela;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileStoneMill;
 import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.TileElementalCube;
@@ -78,6 +79,7 @@ import yuzunyannn.elementalsorcery.tile.TileLantern;
 import yuzunyannn.elementalsorcery.tile.TileMagicPlatform;
 import yuzunyannn.elementalsorcery.tile.TileSmeltBox;
 import yuzunyannn.elementalsorcery.tile.TileStela;
+import yuzunyannn.elementalsorcery.tile.TileStoneMill;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTable;
@@ -223,6 +225,9 @@ public class ESInit {
 		register(ESInitInstance.BLOCKS.SUPREME_CRAFTING_TABLE);
 		register(ESInitInstance.BLOCKS.MAGIC_TORCH);
 		register(ESInitInstance.BLOCKS.ASTONE);
+		register(ESInitInstance.BLOCKS.STAR_STONE);
+		register(ESInitInstance.BLOCKS.STAR_SAND);
+		register(ESInitInstance.BLOCKS.STONE_MILL);
 	}
 
 	static void registerAllTiles() {
@@ -241,6 +246,7 @@ public class ESInit {
 		register(TileBuildingAltar.class, "BuildingAltar");
 		register(TileAnalysisAltar.class, "AnalysisAltar");
 		register(TileSupremeCraftingTable.class, "SupremeCraftingTable");
+		register(TileStoneMill.class, "StoneMill");
 	}
 
 	static void registerAllElements() {
@@ -316,7 +322,9 @@ public class ESInit {
 		registerRender(ESInitInstance.BLOCKS.ASTONE, 2, "astone_smooth");
 		registerRender(ESInitInstance.BLOCKS.ASTONE, 3, "astone_vein");
 		registerRender(ESInitInstance.BLOCKS.ASTONE, 4, "astone_circle");
-		
+		registerRender(ESInitInstance.BLOCKS.STAR_STONE);
+		registerRender(ESInitInstance.BLOCKS.STAR_SAND);
+
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(new RenderTileElementalCube(), ESInitInstance.BLOCKS.ELEMENTAL_CUBE, TileElementalCube.class);
 		registerRender(new RenderTileMagicDesk(), ESInitInstance.BLOCKS.MAGIC_DESK, TileMagicDesk.class);
@@ -330,6 +338,7 @@ public class ESInit {
 		registerRender(new RenderTileAnalysisAltar(), ESInitInstance.BLOCKS.ANALYSIS_ALTAR, TileAnalysisAltar.class);
 		registerRender(new RednerTileSupremeCraftingTable(), ESInitInstance.BLOCKS.SUPREME_CRAFTING_TABLE,
 				TileSupremeCraftingTable.class);
+		registerRender(new RenderTileStoneMill(), ESInitInstance.BLOCKS.STONE_MILL, TileStoneMill.class);
 
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);

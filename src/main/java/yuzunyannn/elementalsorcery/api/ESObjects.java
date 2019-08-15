@@ -49,6 +49,8 @@ public class ESObjects {
 		public Block ESTONE_SLAB;
 		public Block ESTONE_STAIRS;
 		public Block ASTONE;
+		public Block STAR_STONE;
+		public Block STAR_SAND;
 
 		public Block ELEMENTAL_CUBE;
 		public Block HEARTH;
@@ -72,6 +74,7 @@ public class ESObjects {
 		public Block ANALYSIS_ALTAR;
 		public Block SUPREME_CRAFTING_TABLE;
 		public Block MAGIC_TORCH;
+		public Block STONE_MILL;
 	}
 
 	static public class Elements {

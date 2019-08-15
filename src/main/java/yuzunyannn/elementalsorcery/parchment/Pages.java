@@ -127,6 +127,9 @@ public class Pages {
 	static public final String ABOUT_SMELT_BOX = "smeltBox";
 	static public final String ABOUT_KYNAITE = "kynaite";
 	static public final String ABOUT_MAGICAL_PIECE = "mgPiece";
+	static public final String ABOUT_STAR_STONE = "starStone";
+	static public final String ABOUT_STONE_MILL = "sMill";
+
 	static public final String ABOUT_INFUSION = "infusion";
 	static public final String ABOUT_MAGICAL_ENDEREYE = "mgEeyes";
 	static public final String ABOUT_KYNATIE_TOOLS = "kyTools";
@@ -145,7 +148,7 @@ public class Pages {
 	static public final String ABOUT_BOOKCOVER = "bookCover";
 	static public final String ABOUT_SPELLBOOK = "spBook";
 	static public final String ABOUT_ELEMENT_CUBE = "eleCube";
-	static public final String ABOUT_MAGICDESK = "magicDesk";
+	static public final String ABOUT_MAGICDESK = "mgDesk";
 	static public final String ABOUT_SPLAUNCH = "spbLaunch";
 	static public final String ABOUT_SPELEMENT = "spbEle";
 
@@ -161,6 +164,10 @@ public class Pages {
 		regPage(ABOUT_SMELT_BOX, aboutSmeltBox());
 		regPage(ABOUT_KYNAITE, new PageSmeltingSimple("kynaite", ESInitInstance.BLOCKS.KYNAITE_ORE));
 		regPage(ABOUT_MAGICAL_PIECE, new PageSimple("mgical_piece", ESInitInstance.ITEMS.MAGICAL_PIECE));
+		regPage(ABOUT_STONE_MILL, new PageCraftingSimple("stoneMill", ESInitInstance.BLOCKS.STONE_MILL));
+		regPage(ABOUT_STAR_STONE, new PageSimple("starSand", new ItemStack(ESInitInstance.BLOCKS.STAR_SAND),
+				new ItemStack(ESInitInstance.BLOCKS.STAR_SAND)));
+
 		regPage(ABOUT_INFUSION, new PageCraftingSimple("infusion", ESInitInstance.BLOCKS.INFUSION_BOX));
 		regPage(ABOUT_MAGICAL_ENDEREYE,
 				new PageCraftingSimple("magical_endereye", ESInitInstance.ITEMS.MAGICAL_ENDER_EYE));
@@ -196,6 +203,7 @@ public class Pages {
 	}
 
 	static private void initItemToId() {
+		addItemId(ESInitInstance.BLOCKS.STONE_MILL, ABOUT_STONE_MILL);
 		addItemId(ESInitInstance.BLOCKS.KYNAITE_ORE, ABOUT_KYNAITE);
 		addItemId(ESInitInstance.ITEMS.KYNAITE, ABOUT_KYNAITE);
 		addItemId(ESInitInstance.ITEMS.MAGICAL_PIECE, ABOUT_MAGICAL_PIECE);
@@ -221,7 +229,7 @@ public class Pages {
 		if (side.isClient())
 			addPage(id, page);
 		else
-			addPage(id, null);
+			addPage(id, new Page());
 		return id;
 	}
 

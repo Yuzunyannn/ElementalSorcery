@@ -53,21 +53,22 @@ public class ESTestAndDebug {
 	public void click(PlayerInteractEvent event) {
 		if (!event.getWorld().isRemote) {
 			BlockPos pos = event.getPos();
-			TileEntity tile = event.getWorld().getTileEntity(pos);
-			if (tile instanceof TileStela) {
-				((TileStela) tile).doOnce();
-			}
-			if (event.getWorld().getBlockState(pos).getBlock() == ESInitInstance.BLOCKS.MAGIC_TORCH) {
-				event.getWorld().setBlockState(pos,
-						event.getWorld().getBlockState(pos).withProperty(BlockMagicTorch.LIT, true));
-			}
+			IBlockState state = event.getWorld().getBlockState(pos);
+//			TileEntity tile = event.getWorld().getTileEntity(pos);
+//			if (tile instanceof TileStela) {
+//				((TileStela) tile).doOnce();
+//			}
+//			if (event.getWorld().getBlockState(pos).getBlock() == ESInitInstance.BLOCKS.MAGIC_TORCH) {
+//				event.getWorld().setBlockState(pos,
+//						event.getWorld().getBlockState(pos).withProperty(BlockMagicTorch.LIT, true));
+//			}
 			return;
 		}
 
-		System.out.println("Server ArcInfo");
+//		System.out.println("Server ArcInfo");
 		BlockPos pos = event.getPos();
 		IBlockState state = event.getWorld().getBlockState(pos);
-		System.out.println(state);
+//		System.out.println(state);
 		if (event.getEntityPlayer().isSneaking()) {
 			ESTestAndDebug.pos = event.getPos().up();
 		}

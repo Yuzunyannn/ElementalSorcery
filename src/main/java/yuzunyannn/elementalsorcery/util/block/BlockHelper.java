@@ -18,6 +18,8 @@ import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
 public class BlockHelper {
 	/** 掉落 */
 	public static void drop(IItemHandler itemHandler, World worldIn, BlockPos pos) {
+		if (itemHandler == null)
+			return;
 		for (int i = itemHandler.getSlots() - 1; i >= 0; i--) {
 			if (!itemHandler.getStackInSlot(i).isEmpty()) {
 				Block.spawnAsEntity(worldIn, pos, itemHandler.getStackInSlot(i));

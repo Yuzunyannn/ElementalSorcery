@@ -16,6 +16,8 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
@@ -286,7 +288,8 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 	static final float ROATE_RATE = 1.0f;
 	static final float LEG_RATE = 0.4f;
 	static final float LEG_MAX = 16f;
-
+	
+	@SideOnly(Side.CLIENT)
 	private void clientRender() {
 		this.prevRoate = this.roate;
 		this.prevLegR = this.legR;
@@ -318,6 +321,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
 	private void clientParticle() {
 		if (EventClient.tick % 10 != 0)
 			return;

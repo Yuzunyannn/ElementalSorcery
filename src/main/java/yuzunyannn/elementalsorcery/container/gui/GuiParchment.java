@@ -374,12 +374,12 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 		// 开始
 		GlStateManager.disableCull();
 		bufferbuilder.begin(7, DefaultVertexFormats.BLOCK);
-		while (iter.next()) {
+		while (iter.next()) { 
 			BlockPos blockpos = iter.getPos();
 			IBlockState iblockstate = iter.getState();
 			render.renderModel(Minecraft.getMinecraft().world, blockrendererdispatcher.getModelForState(iblockstate),
 					iblockstate, blockpos, bufferbuilder, true, MathHelper.getPositionRandom(blockpos));
-		}
+		} 
 		tessellator.draw();
 		RenderHelper.enableStandardItemLighting();
 		GlStateManager.popMatrix();

@@ -38,6 +38,7 @@ public class BlockStela extends BlockContainer {
 		this.setHarvestLevel("pickaxe", 1);
 		this.setTickRandomly(true);
 		this.setHardness(7.5F);
+		this.setLightOpacity(255);
 	}
 
 	protected static final AxisAlignedBB AABB_BOTTOM = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 4.0 / 16.0, 1.0D);

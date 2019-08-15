@@ -22,7 +22,10 @@ import yuzunyannn.elementalsorcery.block.BlockLantern;
 import yuzunyannn.elementalsorcery.block.BlockMagicPlatform;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.block.BlockSmeltBox;
+import yuzunyannn.elementalsorcery.block.BlockStarSand;
+import yuzunyannn.elementalsorcery.block.BlockStarStone;
 import yuzunyannn.elementalsorcery.block.BlockStela;
+import yuzunyannn.elementalsorcery.block.BlockStoneMill;
 import yuzunyannn.elementalsorcery.block.BlocksAStone;
 import yuzunyannn.elementalsorcery.block.BlocksEStone;
 import yuzunyannn.elementalsorcery.block.altar.BlockAnalysisAltar;
@@ -132,7 +135,9 @@ public class ESInitInstance {
 		BLOCKS.ANALYSIS_ALTAR = new BlockAnalysisAltar().setRegistryName("analysis_altar");
 		BLOCKS.SUPREME_CRAFTING_TABLE = new BlockSupremeCraftingTable().setRegistryName("supreme_crafting_table");
 		BLOCKS.MAGIC_TORCH = new BlockMagicTorch().setRegistryName("magic_torch");
-
+		BLOCKS.STAR_STONE = new BlockStarStone().setRegistryName("star_stone");
+		BLOCKS.STAR_SAND = new BlockStarSand().setRegistryName("star_sand");
+		BLOCKS.STONE_MILL = new BlockStoneMill().setRegistryName("stone_mill");
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();

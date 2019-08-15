@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.util;
 
+import java.lang.reflect.Constructor;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -30,13 +31,36 @@ public class NBTHelper {
 		return list;
 	}
 
-	public static <T extends INBTSerializable<NBTTagCompound>> void setNBTSerializableList(NBTTagCompound nbt,
+	public static <B extends NBTBase, T extends INBTSerializable<B>> void setNBTSerializableList(NBTTagCompound nbt,
 			String key, List<T> NBTSerializableList) {
 		NBTTagList list = new NBTTagList();
-		for (INBTSerializable<NBTTagCompound> serializable : NBTSerializableList) {
+		for (INBTSerializable<B> serializable : NBTSerializableList) {
 			list.appendTag(serializable.serializeNBT());
 		}
 		nbt.setTag(key, list);
+	}
+
+	public static <B extends NBTBase, T extends INBTSerializable<B>> List<T> getNBTSerializableList(NBTTagCompound nbt,
+			String key, Class<T> cls, Class<B> nbtCls) {
+		List<T> NBTSerializableList = new LinkedList<>();
+		NBTTagList list = (NBTTagList) nbt.getTag(key);
+		if (list.tagCount() == 0)
+			return NBTSerializableList;
+		try {
+			Constructor constructor = cls.getConstructor(nbtCls);
+			for (NBTBase n : list)
+				NBTSerializableList.add((T) constructor.newInstance((B) n));
+		} catch (Exception a) {
+			try {
+				for (NBTBase n : list) {
+					T t = cls.newInstance();
+					t.deserializeNBT((B) n);
+					NBTSerializableList.add(t);
+				}
+			} catch (Exception e) {
+			}
+		}
+		return NBTSerializableList;
 	}
 
 	public static void setItemList(NBTTagCompound nbt, String key, List<ItemStack> itemList) {

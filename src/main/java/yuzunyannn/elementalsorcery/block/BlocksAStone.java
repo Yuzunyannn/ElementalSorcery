@@ -18,7 +18,8 @@ public class BlocksAStone extends Block implements Mapper {
 
 	public BlocksAStone() {
 		super(Material.ROCK);
-		this.setUnlocalizedName("astone");
+		this.setUnlocalizedName("astone");	
+		this.setHarvestLevel("pickaxe", 1);
 		this.setHardness(5.5f);
 		this.setDefaultState(this.getDefaultState().withProperty(VARIANT, EnumType.STONE));
 	}

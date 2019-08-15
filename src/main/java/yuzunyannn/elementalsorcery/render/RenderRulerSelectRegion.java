@@ -138,6 +138,7 @@ public class RenderRulerSelectRegion implements IRenderClient, ITickTask {
 		return (this.wantEnd & 0x04) != 0;
 	}
 
+	// 检测相同的物品
 	private void checkSame() {
 		if (this.endWithNotSame())
 			return;

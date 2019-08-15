@@ -6,6 +6,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
 
 public class PageTransform extends PageEasy {
@@ -55,6 +57,7 @@ public class PageTransform extends PageEasy {
 	int listAt = 0;
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void init(IPageManager pageManager) {
 		int cX = this.getCX() + 1;
 		int cY = this.getCY() + 1;
@@ -125,6 +128,7 @@ public class PageTransform extends PageEasy {
 	}
 
 	/** 物品翻页按钮 */
+	@SideOnly(Side.CLIENT)
 	static protected class ChangeButton extends GuiButton {
 		final int textureOffsetX;
 

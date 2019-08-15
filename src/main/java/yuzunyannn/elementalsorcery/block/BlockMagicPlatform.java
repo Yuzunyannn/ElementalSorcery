@@ -32,7 +32,8 @@ public class BlockMagicPlatform extends BlockContainer implements Mapper {
 		super(Material.ROCK);
 		this.setHarvestLevel("pickaxe", 1);
 		this.setUnlocalizedName("magicPlatform");
-		this.setHardness(5.5f);
+		this.setHardness(3.5f);
+		this.setLightOpacity(255);
 	}
 
 	@Override

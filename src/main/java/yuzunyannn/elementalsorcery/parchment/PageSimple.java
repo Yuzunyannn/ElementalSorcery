@@ -5,6 +5,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
 import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -63,13 +66,19 @@ public class PageSimple extends PageEasy {
 		RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
 		IBakedModel bakedmodel = itemRender.getItemModelWithOverrides(blockground, (World) null,
 				(EntityLivingBase) null);
+		TextureManager textureManager =  Minecraft.getMinecraft().getTextureManager();
 		GlStateManager.pushMatrix();
+		textureManager.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		textureManager.getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
 		GlStateManager.translate(xoff + 175, yoff + 110, 100.0F);
 		GlStateManager.translate(8.0F, 8.0F, 0.0F);
 		GlStateManager.scale(1.0F, -1.0F, 1.0F);
 		GlStateManager.scale(16.0F, 16.0F, 16.0F);
 		GlStateManager.scale(5f, 5f, 5f);
+		bakedmodel = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(bakedmodel, ItemCameraTransforms.TransformType.GUI, false);
 		itemRender.renderItem(this.blockground, bakedmodel);
+        textureManager.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        textureManager.getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
 		GlStateManager.popMatrix();
 	}
 }

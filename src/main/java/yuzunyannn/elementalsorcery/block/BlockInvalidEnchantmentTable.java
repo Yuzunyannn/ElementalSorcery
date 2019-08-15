@@ -16,6 +16,7 @@ public class BlockInvalidEnchantmentTable extends Block {
 		this.setUnlocalizedName("invalidEnchantmentTable");
 		setHarvestLevel("pickaxe", 1);
 		setHardness(5.0f);
+		this.setLightOpacity(255);
 	}
 
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {

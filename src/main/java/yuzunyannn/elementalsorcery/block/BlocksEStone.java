@@ -100,6 +100,7 @@ public class BlocksEStone {
 			this.setDefaultState(this.blockState.getBaseState().withProperty(HALF, EnumBlockHalf.BOTTOM));
 			this.setHarvestLevel("pickaxe", 1);
 			this.setHardness(7.5F);
+			this.setLightOpacity(255);
 		}
 
 		@Override

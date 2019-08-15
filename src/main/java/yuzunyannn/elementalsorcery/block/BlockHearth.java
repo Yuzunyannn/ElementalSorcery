@@ -46,6 +46,7 @@ public class BlockHearth extends BlockContainer implements Mapper {
 		this.setUnlocalizedName("hearth");
 		this.setHardness(3.5F);
 		this.setHarvestLevel("pickaxe", 1);
+		this.setLightOpacity(255);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(BURNING, false).withProperty(MATERIAL,
 				EnumMaterial.COBBLESTONE));
 	}

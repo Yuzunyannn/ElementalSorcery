@@ -28,7 +28,7 @@ public class BlockLantern extends BlockContainer {
 	public BlockLantern() {
 		super(Material.ROCK);
 		this.setUnlocalizedName("lantern");
-		this.setHardness(5.0F);
+		this.setHardness(3.5F);
 		this.setHarvestLevel("pickaxe", 1);
 		this.setLightLevel(1.0f);
 	}

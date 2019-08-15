@@ -259,9 +259,7 @@ public class TileStela extends TileEntityNetwork {
 				// 能量大于10
 				if (estack.getPower() >= 10) {
 					if (Math.random() < 0.75f) {
-						return new String[] { Pages.ABOUT_HEARTH, Pages.ABOUT_SMELT_BOX };
-					} else {
-						return new String[] { Pages.ABOUT_HEARTH };
+						return new String[] { Pages.ABOUT_HEARTH, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_STONE_MILL };
 					}
 				}
 			}
