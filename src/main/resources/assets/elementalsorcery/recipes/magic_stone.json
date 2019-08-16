@@ -1,0 +1,23 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"X#X",
+		"#S#",
+		"X#X"
+	],
+	"key": {
+		"#": {
+			"type": "forge:ore_dict",
+			"ore": "kynaite"
+		},
+		"X": {
+			"item": "elementalsorcery:magical_piece"
+		},
+		"S": {
+			"item": "elementalsorcery:star_sand"
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:magic_stone"
+	}
+}

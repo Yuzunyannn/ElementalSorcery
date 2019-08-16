@@ -31,7 +31,7 @@ import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.init.registries.ElementRegister;
-import yuzunyannn.elementalsorcery.tile.TileElementalCube;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 
 public class BlockElementalCube extends BlockContainer {
 

@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.block.altar;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -11,31 +10,19 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.block.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
-public class BlockBuildingAltar extends BlockContainer {
+public class BlockBuildingAltar extends BlockContainerNormal {
 
 	public BlockBuildingAltar() {
-		super(Material.ROCK);
-		this.setUnlocalizedName("buildingAltar");
-		this.setHardness(6.5F);
-		this.setHarvestLevel("pickaxe", 1);
+		super(Material.ROCK, "buildingAltar", 6.5F);
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileBuildingAltar();
-	}
-
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
 	}
 
 	@Override

@@ -315,6 +315,8 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 		dusty = compound.getInteger("dusty");
 		if (compound.hasKey("milling"))
 			millingItem = new ItemStack((NBTTagCompound) compound.getTag("milling"));
+		if (this.isSending())
+			return;
 		super.readFromNBT(compound);
 	}
 
@@ -323,6 +325,8 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 		NBTHelper.setNBTSerializableList(compound, "inv", millList);
 		compound.setInteger("dusty", dusty);
 		compound.setTag("milling", millingItem.serializeNBT());
+		if (this.isSending())
+			return compound;
 		return super.writeToNBT(compound);
 	}
 

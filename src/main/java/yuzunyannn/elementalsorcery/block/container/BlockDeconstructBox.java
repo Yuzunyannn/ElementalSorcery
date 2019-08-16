@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.block;
+package yuzunyannn.elementalsorcery.block.container;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -14,21 +14,22 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
-import yuzunyannn.elementalsorcery.tile.TileInfusionBox;
+import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
+import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
-public class BlockInfusionBox extends BlockContainer {
+public class BlockDeconstructBox extends BlockContainer {
 
-	public BlockInfusionBox() {
+	public BlockDeconstructBox() {
 		super(Material.ROCK);
-		this.setUnlocalizedName("infusionBox");
+		this.setUnlocalizedName("deconstructBox");
 		this.setHardness(5.5F);
 		this.setHarvestLevel("pickaxe", 1);
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileInfusionBox();
+		return new TileDeconstructBox();
 	}
 
 	@Override
@@ -40,11 +41,11 @@ public class BlockInfusionBox extends BlockContainer {
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity tileentity = worldIn.getTileEntity(pos);
-		if (tileentity instanceof TileInfusionBox && !worldIn.isRemote) {
+		if (tileentity instanceof TileDeconstructBox && !worldIn.isRemote) {
 			IItemHandler item_handler;
-			item_handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.UP);
+			item_handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 			BlockHelper.drop(item_handler, worldIn, pos);
-			item_handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.NORTH);
+			item_handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, EnumFacing.DOWN);
 			BlockHelper.drop(item_handler, worldIn, pos);
 		}
 		super.breakBlock(worldIn, pos, state);
@@ -58,8 +59,9 @@ public class BlockInfusionBox extends BlockContainer {
 			return false;
 		if (worldIn.isRemote)
 			return true;
-		playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_INFUSION_BOX, worldIn, pos.getX(), pos.getY(),
+		playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_DECONSTRUCT_BOX, worldIn, pos.getX(), pos.getY(),
 				pos.getZ());
 		return true;
 	}
+
 }

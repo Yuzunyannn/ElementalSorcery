@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.block.altar;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -12,34 +11,23 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.block.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.IItemStackHandlerInventory;
 
-public class BlockSupremeCraftingTable extends BlockContainer {
+public class BlockSupremeCraftingTable extends BlockContainerNormal {
 
 	public BlockSupremeCraftingTable() {
-		super(Material.ROCK);
-		this.setUnlocalizedName("supremeCraftingTable");
-		this.setHardness(7.5F);
+		super(Material.ROCK, "supremeCraftingTable", 7.5F);
 		this.setHarvestLevel("pickaxe", 2);
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileSupremeCraftingTable();
-	}
-
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
 	}
 
 	@Override

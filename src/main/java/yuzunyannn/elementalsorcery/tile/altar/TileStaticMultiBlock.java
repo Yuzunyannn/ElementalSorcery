@@ -10,7 +10,6 @@ import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
-import yuzunyannn.elementalsorcery.tile.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
 
 public abstract class TileStaticMultiBlock extends TileEntityNetwork {

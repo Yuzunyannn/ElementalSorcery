@@ -38,9 +38,9 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESRegister;
 import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
 import yuzunyannn.elementalsorcery.api.element.Element;
-import yuzunyannn.elementalsorcery.block.BlockHearth;
 import yuzunyannn.elementalsorcery.block.BlocksEStone;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
+import yuzunyannn.elementalsorcery.block.container.BlockHearth;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
@@ -68,15 +68,16 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileElementalCube;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileLantern;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStela;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStoneMill;
 import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
-import yuzunyannn.elementalsorcery.tile.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
 import yuzunyannn.elementalsorcery.tile.TileInfusionBox;
 import yuzunyannn.elementalsorcery.tile.TileLantern;
 import yuzunyannn.elementalsorcery.tile.TileMagicPlatform;
+import yuzunyannn.elementalsorcery.tile.TileMeltCauldron;
 import yuzunyannn.elementalsorcery.tile.TileSmeltBox;
 import yuzunyannn.elementalsorcery.tile.TileStela;
 import yuzunyannn.elementalsorcery.tile.TileStoneMill;
@@ -84,6 +85,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
@@ -228,6 +230,7 @@ public class ESInit {
 		register(ESInitInstance.BLOCKS.STAR_STONE);
 		register(ESInitInstance.BLOCKS.STAR_SAND);
 		register(ESInitInstance.BLOCKS.STONE_MILL);
+		register(ESInitInstance.BLOCKS.MELT_CAULDRON);
 	}
 
 	static void registerAllTiles() {
@@ -247,6 +250,7 @@ public class ESInit {
 		register(TileAnalysisAltar.class, "AnalysisAltar");
 		register(TileSupremeCraftingTable.class, "SupremeCraftingTable");
 		register(TileStoneMill.class, "StoneMill");
+		register(TileMeltCauldron.class, "MeltCauldron");
 	}
 
 	static void registerAllElements() {
@@ -339,6 +343,7 @@ public class ESInit {
 		registerRender(new RednerTileSupremeCraftingTable(), ESInitInstance.BLOCKS.SUPREME_CRAFTING_TABLE,
 				TileSupremeCraftingTable.class);
 		registerRender(new RenderTileStoneMill(), ESInitInstance.BLOCKS.STONE_MILL, TileStoneMill.class);
+		registerRender(new RenderTileMeltCauldron(), ESInitInstance.BLOCKS.MELT_CAULDRON, TileMeltCauldron.class);
 
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);

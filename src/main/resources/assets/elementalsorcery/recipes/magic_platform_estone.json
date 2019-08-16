@@ -1,12 +1,13 @@
 {
-	"type": "minecraft:crafting_shaped",
+	"type": "forge:ore_shaped",
 	"pattern": [
 		"XAX",
 		"###"
 	],
 	"key": {
 		"X": {
-			"item": "minecraft:gold_ingot"
+			"type": "forge:ore_dict",
+			"ore": "ingotGold"
 		},
 		"#": {
 			"item": "elementalsorcery:estone",

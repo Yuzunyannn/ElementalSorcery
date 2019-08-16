@@ -26,6 +26,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.render.particle.ParticleElementFly;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 
 public class TileAbsorbBox extends TileEntityNetwork implements IGetBurnPower {
 

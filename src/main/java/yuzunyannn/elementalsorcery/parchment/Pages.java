@@ -127,8 +127,11 @@ public class Pages {
 	static public final String ABOUT_SMELT_BOX = "smeltBox";
 	static public final String ABOUT_KYNAITE = "kynaite";
 	static public final String ABOUT_MAGICAL_PIECE = "mgPiece";
-	static public final String ABOUT_STAR_STONE = "starStone";
+	static public final String ABOUT_STAR_SAND = "starStone";
 	static public final String ABOUT_STONE_MILL = "sMill";
+	static public final String ABOUT_MAGIC_STONE = "mgStone";
+	static public final String ABOUT_MELT_CAULDRON = "meltCal";
+	static public final String ABOUT_ASTONE = "atone";
 
 	static public final String ABOUT_INFUSION = "infusion";
 	static public final String ABOUT_MAGICAL_ENDEREYE = "mgEeyes";
@@ -163,10 +166,13 @@ public class Pages {
 		regPage(ABOUT_HEARTH, aboutHearth());
 		regPage(ABOUT_SMELT_BOX, aboutSmeltBox());
 		regPage(ABOUT_KYNAITE, new PageSmeltingSimple("kynaite", ESInitInstance.BLOCKS.KYNAITE_ORE));
-		regPage(ABOUT_MAGICAL_PIECE, new PageSimple("mgical_piece", ESInitInstance.ITEMS.MAGICAL_PIECE));
-		regPage(ABOUT_STONE_MILL, new PageCraftingSimple("stoneMill", ESInitInstance.BLOCKS.STONE_MILL));
-		regPage(ABOUT_STAR_STONE, new PageSimple("starSand", new ItemStack(ESInitInstance.BLOCKS.STAR_SAND),
+		regPage(ABOUT_MAGICAL_PIECE, new PageSimple("mgicalPiece", ESInitInstance.ITEMS.MAGICAL_PIECE));
+		regPage(ABOUT_STAR_SAND, new PageSimple("starSand", new ItemStack(ESInitInstance.BLOCKS.STAR_SAND),
 				new ItemStack(ESInitInstance.BLOCKS.STAR_SAND)));
+		regPage(ABOUT_STONE_MILL, new PageCraftingSimple("stoneMill", ESInitInstance.BLOCKS.STONE_MILL));
+		regPage(ABOUT_MAGIC_STONE, new PageCraftingSimple("magicStone", ESInitInstance.ITEMS.MAGIC_STONE));
+		regPage(ABOUT_MELT_CAULDRON, new PageCraftingSimple("meltCauldron", ESInitInstance.BLOCKS.MELT_CAULDRON));
+		regPage(ABOUT_ASTONE, aboutAStone());
 
 		regPage(ABOUT_INFUSION, new PageCraftingSimple("infusion", ESInitInstance.BLOCKS.INFUSION_BOX));
 		regPage(ABOUT_MAGICAL_ENDEREYE,
@@ -203,6 +209,8 @@ public class Pages {
 	}
 
 	static private void initItemToId() {
+		addItemId(ESInitInstance.BLOCKS.MELT_CAULDRON, ABOUT_MELT_CAULDRON);
+		addItemId(ESInitInstance.ITEMS.MAGIC_STONE, ABOUT_MAGIC_STONE);
 		addItemId(ESInitInstance.BLOCKS.STONE_MILL, ABOUT_STONE_MILL);
 		addItemId(ESInitInstance.BLOCKS.KYNAITE_ORE, ABOUT_KYNAITE);
 		addItemId(ESInitInstance.ITEMS.KYNAITE, ABOUT_KYNAITE);
@@ -272,6 +280,15 @@ public class Pages {
 		return new PageCraftingSimple("smeltbox", new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX),
 				new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX_IRON),
 				new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX_KYNAITE));
+	}
+
+	static private Page aboutAStone() {
+		return new PageMultS(0,
+				new PageSimpleInfo("astone", "fir", new ItemStack(ESInitInstance.BLOCKS.ASTONE),
+						new ItemStack(ESInitInstance.BLOCKS.ASTONE)),
+				new PageSimpleInfo("astone", "sec", new ItemStack(ESInitInstance.BLOCKS.ASTONE),
+						new ItemStack(ESInitInstance.BLOCKS.MELT_CAULDRON)),
+				new PageSimpleInfo("astone", "thi"));
 	}
 
 	static private Page aboutKynatieTools() {

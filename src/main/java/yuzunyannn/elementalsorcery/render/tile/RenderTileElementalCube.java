@@ -12,7 +12,7 @@ import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
-import yuzunyannn.elementalsorcery.tile.TileElementalCube;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.util.obj.Model;
 import yuzunyannn.elementalsorcery.util.obj.Vertex;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;

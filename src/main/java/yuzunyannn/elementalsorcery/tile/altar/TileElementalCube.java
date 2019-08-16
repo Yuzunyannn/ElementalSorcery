@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.tile;
+package yuzunyannn.elementalsorcery.tile.altar;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -20,6 +20,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.particle.EffectElementFly;
+import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
 import yuzunyannn.elementalsorcery.util.obj.Vertex;
 
 public class TileElementalCube extends TileEntityNetwork implements ITickable, IAltarWake {

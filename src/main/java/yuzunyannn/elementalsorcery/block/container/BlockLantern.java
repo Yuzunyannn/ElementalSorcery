@@ -1,8 +1,7 @@
-package yuzunyannn.elementalsorcery.block;
+package yuzunyannn.elementalsorcery.block.container;
 
 import java.util.Random;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -20,32 +19,20 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.block.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.tile.TileLantern;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
-public class BlockLantern extends BlockContainer {
+public class BlockLantern extends BlockContainerNormal {
 
 	public BlockLantern() {
-		super(Material.ROCK);
-		this.setUnlocalizedName("lantern");
-		this.setHardness(3.5F);
-		this.setHarvestLevel("pickaxe", 1);
+		super(Material.ROCK, "lantern", 3.5F);
 		this.setLightLevel(1.0f);
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileLantern();
-	}
-
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
 	}
 
 	@SideOnly(Side.CLIENT)

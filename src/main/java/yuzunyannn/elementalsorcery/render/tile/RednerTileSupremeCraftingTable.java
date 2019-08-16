@@ -3,20 +3,25 @@ package yuzunyannn.elementalsorcery.render.tile;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
-
+@SideOnly(Side.CLIENT)
 public class RednerTileSupremeCraftingTable extends TileEntitySpecialRenderer<TileSupremeCraftingTable>
 		implements IRenderItem {
 
-	private TextureBinder TEXTURE = new TextureBinder("textures/blocks/supreme_crafting_table.png");
+	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/supreme_crafting_table.png");
 	private final ModelSupremeCraftingTable MODEL = new ModelSupremeCraftingTable();
 
 	@Override
 	public void render(TileSupremeCraftingTable tile, double x, double y, double z, float partialTicks,
 			int destroyStage, float alpha) {
+		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES))
+			TEXTURE.bind();
 		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -25,10 +30,10 @@ public class RednerTileSupremeCraftingTable extends TileEntitySpecialRenderer<Ti
 		GlStateManager.scale(0.03125, 0.03125, 0.03125);
 		float roate = tile.prevRoate + (tile.roate - tile.prevRoate) * partialTicks;
 		float legR = tile.prevLegR + (tile.legR - tile.prevLegR) * partialTicks;
-		TEXTURE.bind();
 		MODEL.render(null,legR, 45 + roate, roate, 0, 0, 1.0f);
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
+		RenderHelper.bindDestoryTextureEnd(destroyStage);
 	}
 
 	@Override

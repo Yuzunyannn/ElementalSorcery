@@ -25,6 +25,7 @@ public class RenderTileMagicPlatform extends TileEntitySpecialRenderer<TileMagic
 		GlStateManager.translate((float) x + 0.5F,
 				(float) y + 7.0F / 16.0F + (MathHelper.sin(ang * 0.01745329f) + 1) * 0.125, (float) z + 0.5F);
 		GlStateManager.rotate(ang, 0, 1, 0);
+		GlStateManager.disableLighting();
 		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
 		GlStateManager.popMatrix();
 	}

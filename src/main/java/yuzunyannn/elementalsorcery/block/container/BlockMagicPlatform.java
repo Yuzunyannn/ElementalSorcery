@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.block;
+package yuzunyannn.elementalsorcery.block.container;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -19,7 +19,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.block.BlockHearth.EnumMaterial;
+import yuzunyannn.elementalsorcery.block.container.BlockHearth.EnumMaterial;
 import yuzunyannn.elementalsorcery.tile.TileMagicPlatform;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
@@ -33,7 +33,6 @@ public class BlockMagicPlatform extends BlockContainer implements Mapper {
 		this.setHarvestLevel("pickaxe", 1);
 		this.setUnlocalizedName("magicPlatform");
 		this.setHardness(3.5f);
-		this.setLightOpacity(255);
 	}
 
 	@Override

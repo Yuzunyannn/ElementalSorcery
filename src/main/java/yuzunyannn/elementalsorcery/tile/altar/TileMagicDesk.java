@@ -36,7 +36,6 @@ import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
-import yuzunyannn.elementalsorcery.tile.TileElementalCube;
 
 public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IGetItemStack {
 

@@ -66,7 +66,7 @@ public class ItemRendererModel implements IModel {
 
 		@Override
 		public Pair<? extends IBakedModel, javax.vecmath.Matrix4f> handlePerspective(
-				ItemCameraTransforms.TransformType cameraTransformType) {
+				ItemCameraTransforms.TransformType cameraTransformType) {			
 			camera_type = cameraTransformType;
 			return net.minecraftforge.client.ForgeHooksClient.handlePerspective(this, cameraTransformType);
 		}

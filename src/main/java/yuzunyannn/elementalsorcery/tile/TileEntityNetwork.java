@@ -15,6 +15,7 @@ public class TileEntityNetwork extends TileEntity {
 
 	private boolean isNetwork = false;
 
+	/** 判断 是否是同步更新 */
 	public boolean isSending() {
 		return isNetwork;
 	}
@@ -27,9 +28,7 @@ public class TileEntityNetwork extends TileEntity {
 
 	@Override
 	public NBTTagCompound getUpdateTag() {
-		isNetwork = true;
 		NBTTagCompound nbt = this.writeToNBT(new NBTTagCompound());
-		isNetwork = false;
 		return nbt;
 	}
 
@@ -49,8 +48,9 @@ public class TileEntityNetwork extends TileEntity {
 	public void updateToClient() {
 		if (world.isRemote)
 			return;
-		for (EntityPlayer player : world.playerEntities) {
+		isNetwork = true;
+		for (EntityPlayer player : world.playerEntities)
 			((EntityPlayerMP) player).connection.sendPacket(this.getUpdatePacket());
-		}
+		isNetwork = false;
 	}
 }

@@ -13,16 +13,16 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.ability.IGetBurnPower;
-import yuzunyannn.elementalsorcery.block.BlockHearth;
+import yuzunyannn.elementalsorcery.block.container.BlockHearth;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.IField;
 
 public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 
 	// 剩余燃烧时间
-	protected int burn_time = 0;
+	protected int burnTime = 0;
 	// 这次开始的时间
-	protected int total_burn_time = 1;
+	protected int totalBurnTime = 1;
 	// 是否发光
 	protected boolean is_burn = false;
 
@@ -69,16 +69,16 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
 		this.inventory.deserializeNBT(compound.getCompoundTag("Inventory"));
-		this.burn_time = compound.getInteger("BurnTime");
-		this.total_burn_time = compound.getInteger("TotalBurnTime");
+		this.burnTime = compound.getInteger("BurnTime");
+		this.totalBurnTime = compound.getInteger("TotalBurnTime");
 	}
 
 	// 保存
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setTag("Inventory", this.inventory.serializeNBT());
-		compound.setInteger("BurnTime", this.burn_time);
-		compound.setInteger("TotalBurnTime", this.total_burn_time);
+		compound.setInteger("BurnTime", this.burnTime);
+		compound.setInteger("TotalBurnTime", this.totalBurnTime);
 		return super.writeToNBT(compound);
 	}
 
@@ -132,11 +132,11 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 		// 获取楼上的TileEntity
 		TileEntity tile = world.getTileEntity(pos.up());
 		// 如果燃烧还有剩余时间
-		if (burn_time > 0) {
-			burn_time--;
+		if (burnTime > 0) {
+			burnTime--;
 			// 给予楼上方块燃烧能量
 			giveBurnPower(tile, 1, this.getBurnLevel());
-			if (burn_time == 0 && !world.isRemote) {
+			if (burnTime == 0 && !world.isRemote) {
 				this.markDirty();
 				brunIt(false);
 			} else
@@ -156,10 +156,10 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 		if (item_stack.isEmpty())
 			return;
 		// 重置燃烧时间
-		burn_time = TileEntityFurnace.getItemBurnTime(item_stack);
-		if (burn_time <= 0)
-			burn_time = 1;
-		total_burn_time = burn_time;
+		burnTime = TileEntityFurnace.getItemBurnTime(item_stack);
+		if (burnTime <= 0)
+			burnTime = 1;
+		totalBurnTime = burnTime;
 		if (world.isRemote)
 			return;
 		// 消耗掉这个物品
@@ -175,9 +175,9 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 	public int getField(int id) {
 		switch (id) {
 		case FIELD_TOTAL_BURN_TIME:
-			return total_burn_time;
+			return totalBurnTime;
 		case FIELD_BURN_TIME:
-			return burn_time;
+			return burnTime;
 		}
 		return -1;
 	}
@@ -186,10 +186,10 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 	public void setField(int id, int value) {
 		switch (id) {
 		case FIELD_TOTAL_BURN_TIME:
-			total_burn_time = value;
+			totalBurnTime = value;
 			break;
 		case FIELD_BURN_TIME:
-			burn_time = value;
+			burnTime = value;
 			break;
 		}
 	}

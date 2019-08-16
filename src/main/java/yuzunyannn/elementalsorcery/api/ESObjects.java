@@ -75,6 +75,7 @@ public class ESObjects {
 		public Block SUPREME_CRAFTING_TABLE;
 		public Block MAGIC_TORCH;
 		public Block STONE_MILL;
+		public Block MELT_CAULDRON;
 	}
 
 	static public class Elements {

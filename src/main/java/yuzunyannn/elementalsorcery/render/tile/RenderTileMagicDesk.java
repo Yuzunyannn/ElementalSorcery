@@ -12,24 +12,29 @@ import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyannn.elementalsorcery.render.model.ModelMagicDesk;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
+import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
+
 @SideOnly(Side.CLIENT)
 public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk> implements IRenderItem {
 
 	private final ModelMagicDesk MODEL = new ModelMagicDesk();
-	public final TextureBinder TEXTURE = new TextureBinder("textures/blocks/magic_desk.png");
+	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/magic_desk.png");
 
 	@Override
 	public void render(TileMagicDesk tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
+		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES))
+			TEXTURE.bind();
 		GlStateManager.pushMatrix();
 		GlStateManager.disableLighting();
+		GlStateManager.disableBlend();
 		GlStateManager.enableCull();
 		GlStateManager.translate(x + 0.5, y + 1.2, z + 0.5);
-		TEXTURE.bind();
 		GlStateManager.scale(0.1, 0.1, 0.1);
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
 		GlStateManager.popMatrix();
+		RenderHelper.bindDestoryTextureEnd(destroyStage);
 
 		ItemStack book = tile.getBook();
 		if (!book.isEmpty()) {
@@ -54,20 +59,6 @@ public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		GlStateManager.pushMatrix();
-		if (IRenderItem.isGUI(stack)) {
-			GlStateManager.translate(0.5, 0.65, 0.5);
-			GlStateManager.scale(0.05, 0.05, 0.05);
-			GlStateManager.rotate(45, 0, 1, 0);
-			GlStateManager.rotate(30, 1, 0, 1);
-			// GlStateManager.rotate(EventClient.global_rotate +
-			// EventClient.DGLOBAL_ROTATE * partialTicks, 0, 1, 0);
-		} else {
-			GlStateManager.translate(0.5, 0.7, 0.5);
-			GlStateManager.scale(0.025, 0.025, 0.025);
-		}
-		TEXTURE.bind();
-		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		GlStateManager.popMatrix();
+		RenderHelper.render(stack, TEXTURE, MODEL, false, 0.05, 0.025, 0.46, 0.3);
 	}
 }

@@ -11,7 +11,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 
 public class TextureBinder {
 
-	private int tex_id = -1;
+	private int texId = -1;
 
 	public TextureBinder(String path) {
 		this(ElementalSorcery.MODID, path);
@@ -29,7 +29,7 @@ public class TextureBinder {
 		try {
 			ITextureObject resource = new SimpleTexture(path);
 			resource.loadTexture(Minecraft.getMinecraft().getResourceManager());
-			tex_id = resource.getGlTextureId();
+			texId = resource.getGlTextureId();
 		} catch (IOException e) {
 			e.printStackTrace();
 			return;
@@ -37,9 +37,9 @@ public class TextureBinder {
 	}
 
 	public void bind() {
-		if (tex_id == -1)
+		if (texId == -1)
 			return;
-		GlStateManager.bindTexture(tex_id);
+		GlStateManager.bindTexture(texId);
 	}
 
 }

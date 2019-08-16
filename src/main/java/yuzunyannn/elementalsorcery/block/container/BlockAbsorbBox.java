@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.block;
+package yuzunyannn.elementalsorcery.block.container;
 
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;

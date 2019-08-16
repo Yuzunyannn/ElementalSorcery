@@ -1,7 +1,7 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"# #",
+		"XX#",
 		"# #",
 		"###"
 	],
@@ -9,6 +9,9 @@
 		"#": {
 			"item": "minecraft:stone",
 			"data": 0
+		},
+		"X": {
+			"item": "minecraft:stick"
 		}
 	},
 	"result": {

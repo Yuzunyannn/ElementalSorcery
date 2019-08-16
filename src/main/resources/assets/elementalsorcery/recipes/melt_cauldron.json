@@ -1,0 +1,20 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"   ",
+		"# #",
+		"X#X"
+	],
+	"key": {
+		"#": {
+			"type": "forge:ore_dict",
+			"ore": "ingotIron"
+		},
+		"X": {
+			"item": "elementalsorcery:magical_piece"
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:melt_cauldron"
+	}
+}

@@ -1,10 +1,9 @@
-package yuzunyannn.elementalsorcery.block;
+package yuzunyannn.elementalsorcery.block.container;
 
 import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -26,19 +25,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.block.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.render.particle.ParticleElementP;
 import yuzunyannn.elementalsorcery.tile.TileStela;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
-public class BlockStela extends BlockContainer {
+public class BlockStela extends BlockContainerNormal {
 
 	public BlockStela() {
-		super(Material.ROCK);
-		this.setUnlocalizedName("stela");
-		this.setHarvestLevel("pickaxe", 1);
+		super(Material.ROCK, "stela", 7.5f);
 		this.setTickRandomly(true);
-		this.setHardness(7.5F);
-		this.setLightOpacity(255);
 	}
 
 	protected static final AxisAlignedBB AABB_BOTTOM = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 4.0 / 16.0, 1.0D);
@@ -139,16 +135,6 @@ public class BlockStela extends BlockContainer {
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileStela();
-	}
-
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
 	}
 
 	public static AxisAlignedBB getGoodsPlace(EnumFacing face) {

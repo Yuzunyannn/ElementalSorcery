@@ -6,27 +6,33 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelStela;
 import yuzunyannn.elementalsorcery.tile.TileStela;
+import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
+@SideOnly(Side.CLIENT)
 public class RenderTileStela extends TileEntitySpecialRenderer<TileStela> implements IRenderItem {
 
-	private TextureBinder TEXTURE = new TextureBinder("textures/blocks/stela.png");
+	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/stela.png");
 	private final ModelStela MODEL = new ModelStela();
 
 	@Override
 	public void render(TileStela tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
+		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES))
+			TEXTURE.bind();
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y, z + 0.5);
 		GlStateManager.scale(0.0625, 0.0625, 0.0625);
 		this.raoteWithFace(tile.getFace());
-		TEXTURE.bind();
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
 		GlStateManager.popMatrix();
+		RenderHelper.bindDestoryTextureEnd(destroyStage);
 
 		ItemStack stack = tile
 				.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, tile.getFace().getOpposite())
@@ -89,19 +95,7 @@ public class RenderTileStela extends TileEntitySpecialRenderer<TileStela> implem
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		GlStateManager.pushMatrix();
-		if (IRenderItem.isGUI(stack)) {
-			GlStateManager.translate(0.525, 0.225, 0.5);
-			GlStateManager.scale(0.0375, 0.0375, 0.0375);
-			GlStateManager.rotate(45, 0, 1, 0);
-			GlStateManager.rotate(30, 1, 0, 1);
-		} else {
-			GlStateManager.translate(0.5, 0.4, 0.5);
-			GlStateManager.scale(0.025, 0.025, 0.025);
-		}
-		TEXTURE.bind();
-		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		GlStateManager.popMatrix();
+		RenderHelper.render(stack, TEXTURE, MODEL, false);
 	}
 
 }

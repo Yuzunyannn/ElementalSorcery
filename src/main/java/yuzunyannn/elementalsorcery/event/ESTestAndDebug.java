@@ -30,6 +30,7 @@ import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
@@ -54,6 +55,7 @@ public class ESTestAndDebug {
 		if (!event.getWorld().isRemote) {
 			BlockPos pos = event.getPos();
 			IBlockState state = event.getWorld().getBlockState(pos);
+			//System.out.println(state.getBlockHardness(event.getWorld(), pos));
 //			TileEntity tile = event.getWorld().getTileEntity(pos);
 //			if (tile instanceof TileStela) {
 //				((TileStela) tile).doOnce();
