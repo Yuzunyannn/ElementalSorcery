@@ -225,6 +225,7 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 						}
 						if (this.dusty > 1000)
 							this.dusty = 1000;
+						this.markDirty();
 					}
 				}
 			} else {

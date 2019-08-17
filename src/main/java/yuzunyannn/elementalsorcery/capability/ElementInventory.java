@@ -165,11 +165,15 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 		public NBTBase writeNBT(Capability<IElementInventory> capability, IElementInventory instance, EnumFacing side) {
 			NBTTagCompound nbt = new NBTTagCompound();
 			NBTTagList list = new NBTTagList();
-			for (int i = 0; i < instance.getSlots(); i++)
-				list.appendTag(instance.getStackInSlot(i).serializeNBT());
-			if (list.tagCount() == 0)
-				return null;
+			for (int i = 0; i < instance.getSlots(); i++) {
+				if (instance.getStackInSlot(i).isEmpty())
+					continue;
+				NBTTagCompound data = instance.getStackInSlot(i).serializeNBT();
+				data.setInteger("Slot", i);
+				list.appendTag(data);
+			}
 			nbt.setTag("list", list);
+			nbt.setInteger("Size", instance.getSlots());
 			return nbt;
 		}
 
@@ -179,14 +183,13 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 			if (tag == null)
 				return;
 			NBTTagCompound nbt = (NBTTagCompound) tag;
-			if (!nbt.hasKey("list"))
-				return;
-			NBTTagList list = (NBTTagList) nbt.getTag("list");
-			if (list.tagCount() == 0)
-				return;
-			instance.setSlots(list.tagCount());
-			for (int i = 0; i < instance.getSlots(); i++)
-				instance.setStackInSlot(i, new ElementStack(list.getCompoundTagAt(i)));
+			int size = nbt.getInteger("Size");
+			instance.setSlots(size);
+			NBTTagList list = nbt.getTagList("list", 10);
+			for (NBTBase base : list) {
+				NBTTagCompound data = (NBTTagCompound) base;
+				instance.setStackInSlot(data.getInteger("Slot"), new ElementStack(data));
+			}
 		}
 
 	}

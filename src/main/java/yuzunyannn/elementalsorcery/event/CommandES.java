@@ -22,7 +22,7 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Pages;
-import yuzunyannn.elementalsorcery.util.WorldHelper;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class CommandES extends CommandBase {
 

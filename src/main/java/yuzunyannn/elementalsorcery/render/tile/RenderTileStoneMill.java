@@ -40,7 +40,7 @@ public class RenderTileStoneMill extends TileEntitySpecialRenderer<TileStoneMill
 		float lift = tile.prevLiftTick + (tile.liftTick - tile.prevLiftTick) * partialTicks;
 		float rotate = tile.prevRotate + (tile.rotate - tile.prevRotate) * partialTicks;
 		float playerRoate = tile.prevPlayerRoate + (tile.playerRoate - tile.prevPlayerRoate) * partialTicks;
-		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
+		MODEL.render(null, 1, 0, 0, 0, 0, 1.0f);
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(playerRoate * lift / 3.1415926f * 180f, 0, 1, 0);
 		MODEL.renderHammer(lift, rotate, dusty / 1000.0f, 1.0f);

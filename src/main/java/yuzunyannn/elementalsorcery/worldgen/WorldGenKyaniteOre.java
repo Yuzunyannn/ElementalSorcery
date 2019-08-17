@@ -13,10 +13,10 @@ import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 
-public class WorldGenKynaiteOre extends WorldGenMinable {
+public class WorldGenKyaniteOre extends WorldGenMinable {
 
-	public WorldGenKynaiteOre() {
-		super(ESInitInstance.BLOCKS.KYNAITE_ORE.getDefaultState(), 16);
+	public WorldGenKyaniteOre() {
+		super(ESInitInstance.BLOCKS.KYANITE_ORE.getDefaultState(), 16);
 	}
 
 	@Override

@@ -5,7 +5,7 @@ import yuzunyannn.elementalsorcery.init.ESInitInstance;
 
 public class OreDictionaryRegistries {
 	public static final void registerAll() {
-		OreDictionary.registerOre("kynaite", ESInitInstance.ITEMS.KYNAITE);
-		OreDictionary.registerOre("blockKynaite", ESInitInstance.BLOCKS.KYNAITE_BLOCK);
+		OreDictionary.registerOre("kyanite", ESInitInstance.ITEMS.KYANITE);
+		OreDictionary.registerOre("blockKyanite", ESInitInstance.BLOCKS.KYANITE_BLOCK);
 	}
 }

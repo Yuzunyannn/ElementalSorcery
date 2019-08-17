@@ -3,17 +3,17 @@
     "defaults": {
         "model": "orientable",
         "textures": {
-            "top": "elementalsorcery:blocks/kynaite_block",
-            "side": "elementalsorcery:blocks/kynaite_smelt_box_side"
+            "top": "elementalsorcery:blocks/kyanite_block",
+            "side": "elementalsorcery:blocks/kyanite_smelt_box_side"
         }
     },
     "variants": {
         "inventory": [{
-             "textures": { "front": "elementalsorcery:blocks/kynaite_smelt_box" }
+             "textures": { "front": "elementalsorcery:blocks/kyanite_smelt_box" }
         }],
         "burning": {
-            "true": { "textures": { "front": "elementalsorcery:blocks/kynaite_smelt_box_burning" } },
-            "false": { "textures": { "front": "elementalsorcery:blocks/kynaite_smelt_box" } }
+            "true": { "textures": { "front": "elementalsorcery:blocks/kyanite_smelt_box_burning" } },
+            "false": { "textures": { "front": "elementalsorcery:blocks/kyanite_smelt_box" } }
         },
         "facing": {
             "east": { "y": 90, "uvlock": true },

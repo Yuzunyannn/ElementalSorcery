@@ -13,7 +13,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementMagic;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.block.BlockElementWorkbench;
 import yuzunyannn.elementalsorcery.block.BlockInvalidEnchantmentTable;
-import yuzunyannn.elementalsorcery.block.BlockKynaite;
+import yuzunyannn.elementalsorcery.block.BlockKyanite;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.block.BlockStarSand;
 import yuzunyannn.elementalsorcery.block.BlockStarStone;
@@ -50,7 +50,7 @@ import yuzunyannn.elementalsorcery.init.registries.ElementRegister;
 import yuzunyannn.elementalsorcery.item.ItemArchitectureCrystal;
 import yuzunyannn.elementalsorcery.item.ItemElementCrystal;
 import yuzunyannn.elementalsorcery.item.ItemItemCrystal;
-import yuzunyannn.elementalsorcery.item.ItemKynaiteTools;
+import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemManual;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
@@ -116,10 +116,10 @@ public class ESInitInstance {
 				.setRegistryName("smelt_box");
 		BLOCKS.SMELT_BOX_IRON = BlockSmeltBox.newBlockSmeltBox(BlockHearth.EnumMaterial.IRON)
 				.setRegistryName("smelt_box_iron");
-		BLOCKS.SMELT_BOX_KYNAITE = BlockSmeltBox.newBlockSmeltBox(BlockHearth.EnumMaterial.KYNAITE)
-				.setRegistryName("smelt_box_kynaite");
-		BLOCKS.KYNAITE_BLOCK = new BlockKynaite().setRegistryName("kynaite_block");
-		BLOCKS.KYNAITE_ORE = new BlockKynaite.BlockKynaiteOre().setRegistryName("kynaite_ore");
+		BLOCKS.SMELT_BOX_KYANITE = BlockSmeltBox.newBlockSmeltBox(BlockHearth.EnumMaterial.KYANITE)
+				.setRegistryName("smelt_box_kyanite");
+		BLOCKS.KYANITE_BLOCK = new BlockKyanite().setRegistryName("kyanite_block");
+		BLOCKS.KYANITE_ORE = new BlockKyanite.BlockKyaniteOre().setRegistryName("kyanite_ore");
 		BLOCKS.MAGIC_PLATFORM = new BlockMagicPlatform().setRegistryName("magic_platform");
 		BLOCKS.ABSORB_BOX = new BlockAbsorbBox().setRegistryName("absorb_box");
 		BLOCKS.INVALID_ENCHANTMENT_TABLE = new BlockInvalidEnchantmentTable()
@@ -149,7 +149,7 @@ public class ESInitInstance {
 	}
 
 	private static final void instanceItems() throws ReflectiveOperationException {
-		ITEMS.KYNAITE = ItemSome.newKynaite().setRegistryName("kynaite");
+		ITEMS.KYANITE = ItemSome.newKyanite().setRegistryName("kyanite");
 		ITEMS.MAGICAL_PIECE = ItemSome.newMagicalPiece().setRegistryName("magical_piece");
 		ITEMS.MAGICAL_ENDER_EYE = ItemSome.newMagicalEnderEye().setRegistryName("magical_ender_eye");
 		ITEMS.MAGIC_CRYSTAL = ItemSome.newMagicalCrystal().setRegistryName("magic_crystal");
@@ -157,11 +157,11 @@ public class ESInitInstance {
 		ITEMS.SPELL_PAPER = ItemSome.newSpellPaper().setRegistryName("spell_paper");
 		ITEMS.SPELL_CRYSTAL = ItemSome.newSpellCrystal().setRegistryName("spell_crystal");
 		ITEMS.MAGIC_STONE = ItemSome.newMagicStone().setRegistryName("magic_stone");
-		ITEMS.KYNAITE_PICKAXE = new ItemKynaiteTools.ItemKynaitePickaxe().setRegistryName("kynaite_pickaxe");
-		ITEMS.KYNAITE_AXE = new ItemKynaiteTools.ItemKynaiteAxe().setRegistryName("kynaite_axe");
-		ITEMS.KYNAITE_SPADE = new ItemKynaiteTools.ItemKynaiteSpade().setRegistryName("kynaite_spade");
-		ITEMS.KYNAITE_HOE = new ItemKynaiteTools.ItemKynaiteHoe().setRegistryName("kynaite_hoe");
-		ITEMS.KYNAITE_SWORD = new ItemKynaiteTools.ItemKynaiteSword().setRegistryName("kynaite_sword");
+		ITEMS.KYANITE_PICKAXE = new ItemKyaniteTools.ItemKyanitePickaxe().setRegistryName("kyanite_pickaxe");
+		ITEMS.KYANITE_AXE = new ItemKyaniteTools.ItemKyaniteAxe().setRegistryName("kyanite_axe");
+		ITEMS.KYANITE_SPADE = new ItemKyaniteTools.ItemKyaniteSpade().setRegistryName("kyanite_spade");
+		ITEMS.KYANITE_HOE = new ItemKyaniteTools.ItemKyaniteHoe().setRegistryName("kyanite_hoe");
+		ITEMS.KYANITE_SWORD = new ItemKyaniteTools.ItemKyaniteSword().setRegistryName("kyanite_sword");
 		ITEMS.ARCHITECTURE_CRYSTAL = new ItemArchitectureCrystal().setRegistryName("architecture_crystal");
 		ITEMS.ELEMENT_CRYSTAL = new ItemElementCrystal().setRegistryName("element_crystal");
 		ITEMS.PARCHMENT = new ItemParchment().setRegistryName("parchment");

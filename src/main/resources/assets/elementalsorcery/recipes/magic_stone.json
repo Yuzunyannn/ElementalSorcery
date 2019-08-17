@@ -8,7 +8,7 @@
 	"key": {
 		"#": {
 			"type": "forge:ore_dict",
-			"ore": "kynaite"
+			"ore": "kyanite"
 		},
 		"X": {
 			"item": "elementalsorcery:magical_piece"

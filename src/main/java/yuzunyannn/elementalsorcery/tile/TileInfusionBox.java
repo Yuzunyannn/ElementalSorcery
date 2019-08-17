@@ -19,7 +19,8 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.ability.IGetBurnPower;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.util.WorldHelper;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
+import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
 public class TileInfusionBox extends TileEntity implements IGetBurnPower {
 
@@ -79,7 +80,7 @@ public class TileInfusionBox extends TileEntity implements IGetBurnPower {
 	public void infusionOnce() {
 		if (world.provider.getDimensionType() != DimensionType.OVERWORLD)
 			return;
-		WorldHelper.WorldTime time = new WorldHelper.WorldTime(world);
+		WorldTime time = new WorldTime(world);
 		Biome biome = world.getBiome(pos);
 		if (this.do1(time, biome))
 			return;
@@ -88,10 +89,10 @@ public class TileInfusionBox extends TileEntity implements IGetBurnPower {
 		this.doLast(time, biome);
 	}
 
-	private boolean do1(WorldHelper.WorldTime time, Biome biome) {
+	private boolean do1(WorldTime time, Biome biome) {
 		if (biome != Biomes.PLAINS)
 			return false;
-		if (time.at(WorldHelper.WorldTime.Period.DAWN) || time.at(WorldHelper.WorldTime.Period.DUSK)) {
+		if (time.at(WorldTime.Period.DAWN) || time.at(WorldTime.Period.DUSK)) {
 			this.infusionBecome(10, ESInitInstance.ITEMS.MAGIC_CRYSTAL,
 					new ItemStack(ESInitInstance.ITEMS.ELEMENT_CRYSTAL));
 			return true;
@@ -99,8 +100,8 @@ public class TileInfusionBox extends TileEntity implements IGetBurnPower {
 		return false;
 	}
 
-	private boolean do2(WorldHelper.WorldTime time, Biome biome) {
-		if (time.at(WorldHelper.WorldTime.Period.MIDNIGHT)) {
+	private boolean do2(WorldTime time, Biome biome) {
+		if (time.at(WorldTime.Period.MIDNIGHT)) {
 			int count = 0;
 			for (int y = -1; y <= 1; y++) {
 				for (int x = -2; x <= 2; x++) {
@@ -126,10 +127,10 @@ public class TileInfusionBox extends TileEntity implements IGetBurnPower {
 		return false;
 	}
 
-	private void doLast(WorldHelper.WorldTime time, Biome biome) {
-		if (time.at(WorldHelper.WorldTime.Period.DAY)) {
+	private void doLast(WorldTime time, Biome biome) {
+		if (time.at(WorldTime.Period.DAY)) {
 			if (biome.getRainfall() <= 0.5f && !world.isRaining())
-				this.infusionBecome(3, ESInitInstance.ITEMS.KYNAITE, new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL));
+				this.infusionBecome(3, ESInitInstance.ITEMS.KYANITE, new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL));
 		}
 	}
 

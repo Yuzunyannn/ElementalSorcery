@@ -22,8 +22,8 @@ public class ItemSome {
 	}
 
 	/** 蓝晶石 */
-	static public Item newKynaite() {
-		return newItem("kynaite");
+	static public Item newKyanite() {
+		return newItem("kyanite");
 	}
 
 	/** 魔力碎片 */

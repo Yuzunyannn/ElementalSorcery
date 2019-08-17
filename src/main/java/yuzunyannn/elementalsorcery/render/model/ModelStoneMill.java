@@ -61,9 +61,10 @@ public class ModelStoneMill extends ModelBase {
 		l2.render(scale);
 		l3.render(scale);
 		l4.render(scale);
-
+		if (f == 0)
+			this.renderHammer(0, 0, 0, scale);
 	}
-	
+
 	public void renderHammer(float lift, float hit, float hight, float scale) {
 		float hitAt = MathHelper.sin(hit);
 		float x = ((-0.75f - 0.3f * hitAt * (1.0f - hight)) * lift + -0.215f * (1.0f - lift));

@@ -24,7 +24,7 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 	// 这次开始的时间
 	protected int totalBurnTime = 1;
 	// 是否发光
-	protected boolean is_burn = false;
+	protected boolean isBurn = false;
 
 	// 这个仓库必须是可以燃烧的东西
 	protected ItemStackHandler inventory = new ItemStackHandler(4) {
@@ -114,7 +114,7 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 		case IRON:
 			level = 2;
 			break;
-		case KYNAITE:
+		case KYANITE:
 			level = 3;
 			break;
 		default:

@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
-import yuzunyannn.elementalsorcery.util.WorldHelper;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemSpellbookElement extends ItemSpellbook {
 	final int level;

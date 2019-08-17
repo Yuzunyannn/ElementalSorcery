@@ -232,9 +232,9 @@ public class VillageESHall extends Village {
 		else if (rate < 0.3)
 			mainHand = new ItemStack(ESInitInstance.ITEMS.PARCHMENT, 8);
 		else if (rate < 0.5)
-			mainHand = new ItemStack(ESInitInstance.BLOCKS.KYNAITE_BLOCK, 2);
+			mainHand = new ItemStack(ESInitInstance.BLOCKS.KYANITE_BLOCK, 2);
 		else
-			mainHand = new ItemStack(ESInitInstance.ITEMS.KYNAITE_SWORD);
+			mainHand = new ItemStack(ESInitInstance.ITEMS.KYANITE_SWORD);
 		armorStand.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, mainHand);
 	}
 

@@ -45,7 +45,7 @@ public class BlockSmeltBox extends BlockContainer {
 		case IRON:
 			box.setHardness(5.0F);
 			break;
-		case KYNAITE:
+		case KYANITE:
 			box.setHardness(10.0F);
 			break;
 		default:

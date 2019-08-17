@@ -9,11 +9,11 @@
   "key": {
     "#": {
 	  "type":"forge:ore_dict",
-      "ore": "kynaite"
+      "ore": "kyanite"
     },
 	"X": {
 	  "type":"forge:ore_dict",
-      "ore": "blockKynaite"
+      "ore": "blockKyanite"
     }
   },
   "result": {

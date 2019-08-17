@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.item.ItemKynaiteTools;
+import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 
 public class Pages {
@@ -97,7 +97,7 @@ public class Pages {
 
 	/** 检测item需转跳的对应的page */
 	static public Page itemToPage(Item item) {
-		if (item instanceof ItemKynaiteTools.toolsCapability)
+		if (item instanceof ItemKyaniteTools.toolsCapability)
 			return getPage(Pages.ABOUT_KYNATIE_TOOLS);
 		else {
 			for (Entry<Item, String> entry : Pages.itemToId) {
@@ -125,7 +125,7 @@ public class Pages {
 	static public final String ABOUT_STELA = "stela";
 	static public final String ABOUT_HEARTH = "hearth";
 	static public final String ABOUT_SMELT_BOX = "smeltBox";
-	static public final String ABOUT_KYNAITE = "kynaite";
+	static public final String ABOUT_KYANITE = "kyanite";
 	static public final String ABOUT_MAGICAL_PIECE = "mgPiece";
 	static public final String ABOUT_STAR_SAND = "starStone";
 	static public final String ABOUT_STONE_MILL = "sMill";
@@ -165,7 +165,7 @@ public class Pages {
 		regPage(ABOUT_STELA, aboutStela());
 		regPage(ABOUT_HEARTH, aboutHearth());
 		regPage(ABOUT_SMELT_BOX, aboutSmeltBox());
-		regPage(ABOUT_KYNAITE, new PageSmeltingSimple("kynaite", ESInitInstance.BLOCKS.KYNAITE_ORE));
+		regPage(ABOUT_KYANITE, new PageSmeltingSimple("kyanite", ESInitInstance.BLOCKS.KYANITE_ORE));
 		regPage(ABOUT_MAGICAL_PIECE, new PageSimple("mgicalPiece", ESInitInstance.ITEMS.MAGICAL_PIECE));
 		regPage(ABOUT_STAR_SAND, new PageSimple("starSand", new ItemStack(ESInitInstance.BLOCKS.STAR_SAND),
 				new ItemStack(ESInitInstance.BLOCKS.STAR_SAND)));
@@ -182,7 +182,7 @@ public class Pages {
 		regPage(ABOUT_MAGIC_PLATFORM,
 				new PageCraftingSimple("magicPl", new ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 0),
 						new ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 1)));
-		regPage(ABOUT_MAGIC_CRY, new PageTransformSimple("magicCry", ESInitInstance.ITEMS.KYNAITE,
+		regPage(ABOUT_MAGIC_CRY, new PageTransformSimple("magicCry", ESInitInstance.ITEMS.KYANITE,
 				ESInitInstance.ITEMS.MAGIC_CRYSTAL, PageTransform.INFUSION));
 		regPage(ABOUT_MAGIC_ESTONE, aboutEStone());
 		regPage(ABOUT_ELEMENT_CRY, new PageTransformSimple("elementCry", ESInitInstance.ITEMS.MAGIC_CRYSTAL,
@@ -212,8 +212,8 @@ public class Pages {
 		addItemId(ESInitInstance.BLOCKS.MELT_CAULDRON, ABOUT_MELT_CAULDRON);
 		addItemId(ESInitInstance.ITEMS.MAGIC_STONE, ABOUT_MAGIC_STONE);
 		addItemId(ESInitInstance.BLOCKS.STONE_MILL, ABOUT_STONE_MILL);
-		addItemId(ESInitInstance.BLOCKS.KYNAITE_ORE, ABOUT_KYNAITE);
-		addItemId(ESInitInstance.ITEMS.KYNAITE, ABOUT_KYNAITE);
+		addItemId(ESInitInstance.BLOCKS.KYANITE_ORE, ABOUT_KYANITE);
+		addItemId(ESInitInstance.ITEMS.KYANITE, ABOUT_KYANITE);
 		addItemId(ESInitInstance.ITEMS.MAGICAL_PIECE, ABOUT_MAGICAL_PIECE);
 		addItemId(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE, ABOUT_MAGICAL_ENDEREYE);
 		addItemId(ESInitInstance.ITEMS.MAGIC_CRYSTAL, ABOUT_MAGIC_CRY);
@@ -279,7 +279,7 @@ public class Pages {
 	static private Page aboutSmeltBox() {
 		return new PageCraftingSimple("smeltbox", new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX),
 				new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX_IRON),
-				new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX_KYNAITE));
+				new ItemStack(ESInitInstance.BLOCKS.SMELT_BOX_KYANITE));
 	}
 
 	static private Page aboutAStone() {
@@ -292,9 +292,9 @@ public class Pages {
 	}
 
 	static private Page aboutKynatieTools() {
-		return new PageCraftingSimple("kynatieTools", new ItemStack(ESInitInstance.ITEMS.KYNAITE_AXE),
-				new ItemStack(ESInitInstance.ITEMS.KYNAITE_HOE), new ItemStack(ESInitInstance.ITEMS.KYNAITE_PICKAXE),
-				new ItemStack(ESInitInstance.ITEMS.KYNAITE_SPADE), new ItemStack(ESInitInstance.ITEMS.KYNAITE_SWORD));
+		return new PageCraftingSimple("kynatieTools", new ItemStack(ESInitInstance.ITEMS.KYANITE_AXE),
+				new ItemStack(ESInitInstance.ITEMS.KYANITE_HOE), new ItemStack(ESInitInstance.ITEMS.KYANITE_PICKAXE),
+				new ItemStack(ESInitInstance.ITEMS.KYANITE_SPADE), new ItemStack(ESInitInstance.ITEMS.KYANITE_SWORD));
 	}
 
 	static private Page aboutEStone() {
@@ -304,8 +304,8 @@ public class Pages {
 	}
 
 	static private Page aboutEnchantingBook() {
-		((ItemKynaiteTools.toolsCapability) ESInitInstance.ITEMS.KYNAITE_HOE).provideOnce();
-		ItemStack extra = new ItemStack(ESInitInstance.ITEMS.KYNAITE_HOE);
+		((ItemKyaniteTools.toolsCapability) ESInitInstance.ITEMS.KYANITE_HOE).provideOnce();
+		ItemStack extra = new ItemStack(ESInitInstance.ITEMS.KYANITE_HOE);
 		IElementInventory inv = extra.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 		inv.insertElement(new ElementStack(ESInitInstance.ELEMENTS.ENDER, 10, 5), false);
 		return new PageTransformSimple("enchantingBook", new ItemStack(Blocks.ENCHANTING_TABLE),

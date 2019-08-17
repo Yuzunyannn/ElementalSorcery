@@ -65,7 +65,7 @@
 				},
 				{
 					"type": "item",
-					"name": "elementalsorcery:kynaite",
+					"name": "elementalsorcery:kyanite",
 					"functions": [
 						{
 							"function": "set_count",

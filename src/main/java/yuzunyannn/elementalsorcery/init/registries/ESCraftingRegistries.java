@@ -19,6 +19,6 @@ public class ESCraftingRegistries {
 	}
 
 	private static void registerAllSmelting() {
-		GameRegistry.addSmelting(ESInitInstance.BLOCKS.KYNAITE_ORE, new ItemStack(ESInitInstance.ITEMS.KYNAITE), 0.5f);
+		GameRegistry.addSmelting(ESInitInstance.BLOCKS.KYANITE_ORE, new ItemStack(ESInitInstance.ITEMS.KYANITE), 0.5f);
 	}
 }

@@ -9,15 +9,15 @@
   "key": {
     "#": {
 	  "type":"forge:ore_dict",
-      "ore": "blockKynaite"
+      "ore": "blockKyanite"
     },
 	"X": {
 	  "type":"forge:ore_dict",
-      "ore": "kynaite"
+      "ore": "kyanite"
     }
   },
   "result": {
-    "item": "elementalsorcery:smelt_box_kynaite",
+    "item": "elementalsorcery:smelt_box_kyanite",
     "count": 1
   }
 }

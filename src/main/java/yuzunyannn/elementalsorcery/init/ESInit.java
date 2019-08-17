@@ -175,14 +175,14 @@ public class ESInit {
 		register(ESInitInstance.ITEMS.SPELLBOOK_LAUNCH);
 		register(ESInitInstance.ITEMS.SPELLBOOK_ELEMENT);
 
-		register(ESInitInstance.ITEMS.KYNAITE);
+		register(ESInitInstance.ITEMS.KYANITE);
 		register(ESInitInstance.ITEMS.MAGICAL_PIECE);
 		register(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE);
-		register(ESInitInstance.ITEMS.KYNAITE_PICKAXE);
-		register(ESInitInstance.ITEMS.KYNAITE_AXE);
-		register(ESInitInstance.ITEMS.KYNAITE_SPADE);
-		register(ESInitInstance.ITEMS.KYNAITE_HOE);
-		register(ESInitInstance.ITEMS.KYNAITE_SWORD);
+		register(ESInitInstance.ITEMS.KYANITE_PICKAXE);
+		register(ESInitInstance.ITEMS.KYANITE_AXE);
+		register(ESInitInstance.ITEMS.KYANITE_SPADE);
+		register(ESInitInstance.ITEMS.KYANITE_HOE);
+		register(ESInitInstance.ITEMS.KYANITE_SWORD);
 		register(ESInitInstance.ITEMS.ARCHITECTURE_CRYSTAL);
 		register(ESInitInstance.ITEMS.ELEMENT_CRYSTAL);
 		register(ESInitInstance.ITEMS.MAGIC_CRYSTAL);
@@ -202,9 +202,9 @@ public class ESInit {
 		register(ESInitInstance.BLOCKS.HEARTH);
 		register(ESInitInstance.BLOCKS.SMELT_BOX);
 		register(ESInitInstance.BLOCKS.SMELT_BOX_IRON);
-		register(ESInitInstance.BLOCKS.SMELT_BOX_KYNAITE);
-		register(ESInitInstance.BLOCKS.KYNAITE_ORE);
-		register(ESInitInstance.BLOCKS.KYNAITE_BLOCK);
+		register(ESInitInstance.BLOCKS.SMELT_BOX_KYANITE);
+		register(ESInitInstance.BLOCKS.KYANITE_ORE);
+		register(ESInitInstance.BLOCKS.KYANITE_BLOCK);
 		register(ESInitInstance.BLOCKS.ELEMENTAL_CUBE,
 				((BlockElementalCube) ESInitInstance.BLOCKS.ELEMENTAL_CUBE).getItemBlock());
 		register(ESInitInstance.BLOCKS.ESTONE);
@@ -276,14 +276,14 @@ public class ESInit {
 		// 初始化句柄
 		SpellbookRenderInfo.renderInstance = RenderItemSpellbook.instance;
 
-		registerRender(ESInitInstance.ITEMS.KYNAITE);
+		registerRender(ESInitInstance.ITEMS.KYANITE);
 		registerRender(ESInitInstance.ITEMS.MAGICAL_PIECE);
 		registerRender(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE);
-		registerRender(ESInitInstance.ITEMS.KYNAITE_PICKAXE);
-		registerRender(ESInitInstance.ITEMS.KYNAITE_AXE);
-		registerRender(ESInitInstance.ITEMS.KYNAITE_SPADE);
-		registerRender(ESInitInstance.ITEMS.KYNAITE_HOE);
-		registerRender(ESInitInstance.ITEMS.KYNAITE_SWORD);
+		registerRender(ESInitInstance.ITEMS.KYANITE_PICKAXE);
+		registerRender(ESInitInstance.ITEMS.KYANITE_AXE);
+		registerRender(ESInitInstance.ITEMS.KYANITE_SPADE);
+		registerRender(ESInitInstance.ITEMS.KYANITE_HOE);
+		registerRender(ESInitInstance.ITEMS.KYANITE_SWORD);
 		registerRender(ESInitInstance.ITEMS.ARCHITECTURE_CRYSTAL);
 		registerRender(ESInitInstance.ITEMS.ELEMENT_CRYSTAL);
 		registerRender(ESInitInstance.ITEMS.MAGIC_CRYSTAL);
@@ -302,12 +302,12 @@ public class ESInit {
 		registerStateMapper(ESInitInstance.BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(ESInitInstance.BLOCKS.HEARTH, 0, "cobblestone_hearth");
 		registerRender(ESInitInstance.BLOCKS.HEARTH, 1, "iron_hearth");
-		registerRender(ESInitInstance.BLOCKS.HEARTH, 2, "kynaite_hearth");
+		registerRender(ESInitInstance.BLOCKS.HEARTH, 2, "kyanite_hearth");
 		registerRender(ESInitInstance.BLOCKS.SMELT_BOX);
 		registerRender(ESInitInstance.BLOCKS.SMELT_BOX_IRON);
-		registerRender(ESInitInstance.BLOCKS.SMELT_BOX_KYNAITE);
-		registerRender(ESInitInstance.BLOCKS.KYNAITE_ORE);
-		registerRender(ESInitInstance.BLOCKS.KYNAITE_BLOCK);
+		registerRender(ESInitInstance.BLOCKS.SMELT_BOX_KYANITE);
+		registerRender(ESInitInstance.BLOCKS.KYANITE_ORE);
+		registerRender(ESInitInstance.BLOCKS.KYANITE_BLOCK);
 		registerRender(ESInitInstance.BLOCKS.ESTONE, 0, "estone_default");
 		registerRender(ESInitInstance.BLOCKS.ESTONE, 1, "estone_chiseled");
 		registerRender(ESInitInstance.BLOCKS.ESTONE, 2, "estone_lines");

@@ -1,6 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "elementalsorcery:blocks/kynaite_block"
+        "all": "elementalsorcery:blocks/kyanite_ore"
     }
 }

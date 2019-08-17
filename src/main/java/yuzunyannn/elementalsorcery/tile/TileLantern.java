@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.tile;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -284,6 +285,8 @@ public class TileLantern extends TileEntityNetwork {
 		@Override
 		public int onTick() {
 			this.update();
+			if (this.world != Minecraft.getMinecraft().world)
+				return ITickTask.END;
 			this.life--;
 			if (this.life <= 0)
 				return ITickTask.END;

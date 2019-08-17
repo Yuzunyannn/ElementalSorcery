@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "elementalsorcery:items/kynaite"
+        "layer0": "elementalsorcery:items/kyanite"
     }
 }

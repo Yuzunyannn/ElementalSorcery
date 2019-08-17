@@ -40,18 +40,18 @@ import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryOnlyInsert;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
-public class ItemKynaiteTools {
+public class ItemKyaniteTools {
 
-	public static final ToolMaterial KYNAITE = EnumHelper.addToolMaterial("Kynaite", 2, 750, 6.0F, 2.5F, 10);
+	public static final ToolMaterial KYANITE = EnumHelper.addToolMaterial("Kyanite", 2, 750, 6.0F, 2.5F, 10);
 	static {
-		KYNAITE.setRepairItem(new ItemStack(ESInitInstance.ITEMS.KYNAITE));
+		KYANITE.setRepairItem(new ItemStack(ESInitInstance.ITEMS.KYANITE));
 	}
 
 	// 添加物品信息
 	private static void addToolsInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null))
 			return;
-		tooltip.add("§d" + I18n.format("info.kynaiteTools.el"));
+		tooltip.add("§d" + I18n.format("info.kyaniteTools.el"));
 		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 		if (inventory.hasState(stack)) {
 			inventory.loadState(stack);
@@ -103,16 +103,16 @@ public class ItemKynaiteTools {
 	}
 
 	// 镐子
-	public static class ItemKynaitePickaxe extends ItemPickaxe implements toolsCapability {
-		public ItemKynaitePickaxe() {
-			super(KYNAITE);
-			this.setUnlocalizedName("kynaitePickaxe");
+	public static class ItemKyanitePickaxe extends ItemPickaxe implements toolsCapability {
+		public ItemKyanitePickaxe() {
+			super(KYANITE);
+			this.setUnlocalizedName("kyanitePickaxe");
 		}
 
 		@Override
 		public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
 				ITooltipFlag flagIn) {
-			ItemKynaiteTools.addToolsInformation(stack, worldIn, tooltip, flagIn);
+			ItemKyaniteTools.addToolsInformation(stack, worldIn, tooltip, flagIn);
 		}
 
 		@Override
@@ -123,7 +123,7 @@ public class ItemKynaiteTools {
 		@Override
 		public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos,
 				EntityLivingBase entityLiving) {
-			ItemKynaiteTools.dealBlockDestroyed(stack, worldIn, state, entityLiving);
+			ItemKyaniteTools.dealBlockDestroyed(stack, worldIn, state, entityLiving);
 			return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
 		}
 
@@ -144,16 +144,16 @@ public class ItemKynaiteTools {
 	}
 
 	// 斧头
-	public static class ItemKynaiteAxe extends ItemAxe implements toolsCapability {
-		public ItemKynaiteAxe() {
-			super(KYNAITE, KYNAITE.getAttackDamage() * 3, -3.1F);
-			this.setUnlocalizedName("kynaiteAxe");
+	public static class ItemKyaniteAxe extends ItemAxe implements toolsCapability {
+		public ItemKyaniteAxe() {
+			super(KYANITE, KYANITE.getAttackDamage() * 3, -3.1F);
+			this.setUnlocalizedName("kyaniteAxe");
 		}
 
 		@Override
 		public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
 				ITooltipFlag flagIn) {
-			ItemKynaiteTools.addToolsInformation(stack, worldIn, tooltip, flagIn);
+			ItemKyaniteTools.addToolsInformation(stack, worldIn, tooltip, flagIn);
 		}
 
 		@Override
@@ -164,7 +164,7 @@ public class ItemKynaiteTools {
 		@Override
 		public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos,
 				EntityLivingBase entityLiving) {
-			ItemKynaiteTools.dealBlockDestroyed(stack, worldIn, state, entityLiving);
+			ItemKyaniteTools.dealBlockDestroyed(stack, worldIn, state, entityLiving);
 			return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
 		}
 
@@ -184,16 +184,16 @@ public class ItemKynaiteTools {
 	}
 
 	// 铁锨
-	public static class ItemKynaiteSpade extends ItemSpade implements toolsCapability {
-		public ItemKynaiteSpade() {
-			super(KYNAITE);
-			this.setUnlocalizedName("kynaiteSpade");
+	public static class ItemKyaniteSpade extends ItemSpade implements toolsCapability {
+		public ItemKyaniteSpade() {
+			super(KYANITE);
+			this.setUnlocalizedName("kyaniteSpade");
 		}
 
 		@Override
 		public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
 				ITooltipFlag flagIn) {
-			ItemKynaiteTools.addToolsInformation(stack, worldIn, tooltip, flagIn);
+			ItemKyaniteTools.addToolsInformation(stack, worldIn, tooltip, flagIn);
 		}
 
 		@Override
@@ -204,7 +204,7 @@ public class ItemKynaiteTools {
 		@Override
 		public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos,
 				EntityLivingBase entityLiving) {
-			ItemKynaiteTools.dealBlockDestroyed(stack, worldIn, state, entityLiving);
+			ItemKyaniteTools.dealBlockDestroyed(stack, worldIn, state, entityLiving);
 			return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
 		}
 
@@ -224,16 +224,16 @@ public class ItemKynaiteTools {
 	}
 
 	// 锄头
-	public static class ItemKynaiteHoe extends ItemHoe implements toolsCapability {
-		public ItemKynaiteHoe() {
-			super(KYNAITE);
-			this.setUnlocalizedName("kynaiteHoe");
+	public static class ItemKyaniteHoe extends ItemHoe implements toolsCapability {
+		public ItemKyaniteHoe() {
+			super(KYANITE);
+			this.setUnlocalizedName("kyaniteHoe");
 		}
 
 		@Override
 		public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
 				ITooltipFlag flagIn) {
-			ItemKynaiteTools.addToolsInformation(stack, worldIn, tooltip, flagIn);
+			ItemKyaniteTools.addToolsInformation(stack, worldIn, tooltip, flagIn);
 		}
 
 		@Override
@@ -300,10 +300,10 @@ public class ItemKynaiteTools {
 	}
 
 	// 剑
-	public static class ItemKynaiteSword extends ItemSword implements toolsCapability {
-		public ItemKynaiteSword() {
-			super(KYNAITE);
-			this.setUnlocalizedName("kynaiteSword");
+	public static class ItemKyaniteSword extends ItemSword implements toolsCapability {
+		public ItemKyaniteSword() {
+			super(KYANITE);
+			this.setUnlocalizedName("kyaniteSword");
 		}
 
 		@Override
@@ -314,7 +314,7 @@ public class ItemKynaiteTools {
 		@Override
 		public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
 				ITooltipFlag flagIn) {
-			ItemKynaiteTools.addToolsInformation(stack, worldIn, tooltip, flagIn);
+			ItemKyaniteTools.addToolsInformation(stack, worldIn, tooltip, flagIn);
 		}
 
 		private boolean provide = false;

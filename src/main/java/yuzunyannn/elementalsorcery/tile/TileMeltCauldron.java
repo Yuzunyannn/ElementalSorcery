@@ -26,7 +26,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IGetBurnPower
 	/** 石量 */
 	protected int stoneCount;
 	/** 蓝晶石量 */
-	protected int kynaiteCount;
+	protected int kyaniteCount;
 	/** 不稳定量，计数红石等，可以提升蓝晶石判定个数 */
 	protected int instableCount;
 	/** 产出物 */
@@ -70,8 +70,8 @@ public class TileMeltCauldron extends TileEntityNetwork implements IGetBurnPower
 				this.markDirty();
 			} else {
 				// 是否为蓝晶石
-				if (OreDictionary.containsMatch(false, OreDictionary.getOres("kynaite"), stack)) {
-					this.addKynaite(stack.getCount());
+				if (OreDictionary.containsMatch(false, OreDictionary.getOres("kyanite"), stack)) {
+					this.addKyanite(stack.getCount());
 					item.setDead();
 				} else
 					item.setFire(5);
@@ -103,11 +103,11 @@ public class TileMeltCauldron extends TileEntityNetwork implements IGetBurnPower
 		this.markDirty();
 	}
 
-	public void addKynaite(int count) {
+	public void addKyanite(int count) {
 		for (int i = 0; i < count; i++) {
-			this.kynaiteCount++;
+			this.kyaniteCount++;
 			if (this.getVolume() > 1000) {
-				this.kynaiteCount--;
+				this.kyaniteCount--;
 				break;
 			}
 		}
@@ -161,15 +161,15 @@ public class TileMeltCauldron extends TileEntityNetwork implements IGetBurnPower
 	/** 生成结果 */
 	public void doResult() {
 		// 判断是否有蓝晶石和石头
-		if (this.stoneCount == 0 && this.kynaiteCount == 0) {
-			if (this.kynaiteCount > 0)
-				this.kynaiteCount--;
+		if (this.stoneCount == 0 && this.kyaniteCount == 0) {
+			if (this.kyaniteCount > 0)
+				this.kyaniteCount--;
 			return;
 		} else if (this.stoneCount == 0) {
-			this.result = new ItemStack(ESInitInstance.BLOCKS.KYNAITE_BLOCK);
-			this.resultCount = this.kynaiteCount / 9;
+			this.result = new ItemStack(ESInitInstance.BLOCKS.KYANITE_BLOCK);
+			this.resultCount = this.kyaniteCount / 9;
 			return;
-		} else if (this.kynaiteCount == 0) {
+		} else if (this.kyaniteCount == 0) {
 			this.result = new ItemStack(Blocks.STONE);
 			this.resultCount = this.stoneCount;
 			return;
@@ -178,18 +178,18 @@ public class TileMeltCauldron extends TileEntityNetwork implements IGetBurnPower
 		int maxStoneCount = this.magicCount * 16;
 		// 如果石头超过了魔石个数
 		if (this.stoneCount > maxStoneCount) {
-			this.result = new ItemStack(ESInitInstance.BLOCKS.KYNAITE_ORE);
-			this.resultCount = this.kynaiteCount / 2;
+			this.result = new ItemStack(ESInitInstance.BLOCKS.KYANITE_ORE);
+			this.resultCount = this.kyaniteCount / 2;
 			if (this.resultCount > this.stoneCount)
 				this.resultCount = this.stoneCount;
 			return;
 		}
 		// 根据不稳定的数字，增加蓝晶石个数
 		if (this.instableCount > 0)
-			this.kynaiteCount = (int) (this.kynaiteCount
-					+ this.kynaiteCount * this.world.rand.nextInt(this.instableCount) * 0.1f);
+			this.kyaniteCount = (int) (this.kyaniteCount
+					+ this.kyaniteCount * this.world.rand.nextInt(this.instableCount) * 0.1f);
 		// 看蓝晶石是否位于0.5到1.5个石头之间的位置
-		if (this.kynaiteCount >= this.stoneCount / 2 && this.kynaiteCount <= (int) (this.stoneCount * 1.5f)) {
+		if (this.kyaniteCount >= this.stoneCount / 2 && this.kyaniteCount <= (int) (this.stoneCount * 1.5f)) {
 			this.result = new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 0);
 			this.resultCount = this.stoneCount;
 		} else {
@@ -206,12 +206,12 @@ public class TileMeltCauldron extends TileEntityNetwork implements IGetBurnPower
 			return;
 		}
 		Block block = Block.getBlockFromItem(this.result.getItem());
-		if (block == ESInitInstance.BLOCKS.KYNAITE_BLOCK) {
-			this.resultTex = Textures.KYNAITE_BLOCK;
+		if (block == ESInitInstance.BLOCKS.KYANITE_BLOCK) {
+			this.resultTex = Textures.KYANITE_BLOCK;
 		} else if (block == Blocks.STONE) {
 			this.resultTex = Textures.STONE;
-		} else if (block == ESInitInstance.BLOCKS.KYNAITE_ORE) {
-			this.resultTex = Textures.KYNAITE_ORE;
+		} else if (block == ESInitInstance.BLOCKS.KYANITE_ORE) {
+			this.resultTex = Textures.KYANITE_ORE;
 		} else if (block == ESInitInstance.BLOCKS.ASTONE) {
 			if (this.result.getMetadata() == 0)
 				this.resultTex = Textures.ASTONE;
@@ -232,7 +232,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IGetBurnPower
 		temperature = compound.getFloat("T");
 		magicCount = compound.getInteger("magic");
 		stoneCount = compound.getInteger("stone");
-		kynaiteCount = compound.getInteger("kynaite");
+		kyaniteCount = compound.getInteger("kyanite");
 		if (this.isSending())
 			return;
 		if (!compound.hasKey("id"))
@@ -250,7 +250,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IGetBurnPower
 		compound.setFloat("T", temperature);
 		compound.setInteger("magic", magicCount);
 		compound.setInteger("stone", stoneCount);
-		compound.setInteger("kynaite", kynaiteCount);
+		compound.setInteger("kyanite", kyaniteCount);
 		if (this.isSending())
 			return compound;
 		compound.setInteger("instable", instableCount);
@@ -292,7 +292,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IGetBurnPower
 	}
 
 	public int getVolume() {
-		return magicCount * 16 + stoneCount * 4 + kynaiteCount * 20;
+		return magicCount * 16 + stoneCount * 4 + kyaniteCount * 20;
 	}
 
 	public float getTemperature() {

@@ -22,7 +22,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.item.ItemKynaiteTools;
+import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.parchment.Pages;
@@ -177,17 +177,17 @@ public class TileStela extends TileEntityNetwork {
 	/** 初始化 */
 	static public void init() {
 		// 蓝晶石矿
-		addToMap(ESInitInstance.BLOCKS.KYNAITE_ORE, Pages.ABOUT_KYNAITE);
+		addToMap(ESInitInstance.BLOCKS.KYANITE_ORE, Pages.ABOUT_KYANITE);
 		// 蓝晶石方块
-		addToMap(ESInitInstance.BLOCKS.KYNAITE_BLOCK, Pages.ABOUT_KYNAITE);
+		addToMap(ESInitInstance.BLOCKS.KYANITE_BLOCK, Pages.ABOUT_KYANITE);
 		// 烧炼箱
 		addToMap(ESInitInstance.BLOCKS.SMELT_BOX, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH);
 		addToMap(ESInitInstance.BLOCKS.SMELT_BOX_IRON, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH,
 				Pages.ABOUT_MAGICAL_PIECE);
-		addToMap(ESInitInstance.BLOCKS.SMELT_BOX_KYNAITE, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH,
-				Pages.ABOUT_MAGICAL_PIECE, Pages.ABOUT_KYNAITE);
+		addToMap(ESInitInstance.BLOCKS.SMELT_BOX_KYANITE, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH,
+				Pages.ABOUT_MAGICAL_PIECE, Pages.ABOUT_KYANITE);
 		// 蓝晶石
-		addToMap(ESInitInstance.ITEMS.KYNAITE, Pages.ABOUT_KYNAITE, Pages.ABOUT_KYNATIE_TOOLS);
+		addToMap(ESInitInstance.ITEMS.KYANITE, Pages.ABOUT_KYANITE, Pages.ABOUT_KYNATIE_TOOLS);
 		// 魔力碎片
 		addToMap(ESInitInstance.ITEMS.MAGICAL_PIECE, Pages.ABOUT_MAGICAL_ENDEREYE, Pages.ABOUT_MAGICAL_PIECE);
 		// 末影之眼
@@ -246,7 +246,7 @@ public class TileStela extends TileEntityNetwork {
 						Pages.ABOUT_MAGIC_CRY);
 			}
 		} else {
-			if (item instanceof ItemKynaiteTools.toolsCapability) {
+			if (item instanceof ItemKyaniteTools.toolsCapability) {
 				return RandomHelper.randomSelect(Pages.ABOUT_KYNATIE_TOOLS, Pages.ABOUT_ELEMENT,
 						Pages.ABOUT_ABSORB_BOX);
 			} else if (item == ESInitInstance.ITEMS.PARCHMENT) {

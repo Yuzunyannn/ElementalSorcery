@@ -25,10 +25,10 @@ public class Textures {
 	static final public TextureBinder DESTROY_STAGE_0 = new TextureBinder("minecraft",
 			"textures/blocks/destroy_stage_0.png");
 
-	static final public ResourceLocation KYNAITE_BLOCK = new ResourceLocation(ElementalSorcery.MODID,
-			"textures/blocks/kynaite_block.png");
-	static final public ResourceLocation KYNAITE_ORE = new ResourceLocation(ElementalSorcery.MODID,
-			"textures/blocks/kynaite_ore.png");
+	static final public ResourceLocation KYANITE_BLOCK = new ResourceLocation(ElementalSorcery.MODID,
+			"textures/blocks/kyanite_block.png");
+	static final public ResourceLocation KYANITE_ORE = new ResourceLocation(ElementalSorcery.MODID,
+			"textures/blocks/kyanite_ore.png");
 	static final public ResourceLocation ASTONE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/blocks/astone.png");
 	static final public ResourceLocation ASTONE_FRAGMENTED = new ResourceLocation(ElementalSorcery.MODID,

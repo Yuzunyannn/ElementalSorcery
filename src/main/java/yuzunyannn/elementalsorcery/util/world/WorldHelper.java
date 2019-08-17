@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.util;
+package yuzunyannn.elementalsorcery.util.world;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -114,31 +114,5 @@ public class WorldHelper {
 	static public void newLightning(World world, BlockPos pos, boolean effectOnly) {
 		world.spawnEntity(new EntityLightningBolt(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, effectOnly));
 	}
-
-	/** ES时间类 */
-	public static class WorldTime {
-		public int time;
-
-		public WorldTime(World world) {
-			this.time = (int) ((world.getWorldTime() + 1800) % 24000);
-		}
-
-		public boolean at(Period period) {
-			if (period.start <= time && period.end > time)
-				return true;
-			return false;
-		}
-
-		public static enum Period {
-			DAWN(0, 1800), MORNING(1800, 6900), AFTERNOON(6900, 12000), DUSK(12000, 13800), NIGHT(13800, 24000),
-			MIDNIGHT(17700, 20100), DAY(1800, 12000);
-			public int start, end;
-
-			Period(int start, int end) {
-				this.start = start;
-				this.end = end;
-			}
-		};
-	};
 
 }

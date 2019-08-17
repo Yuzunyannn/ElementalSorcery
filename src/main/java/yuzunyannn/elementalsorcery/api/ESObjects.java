@@ -15,14 +15,14 @@ public class ESObjects {
 	public static CreativeTabs CREATIVE_TABS;
 
 	static public class Items {
-		public Item KYNAITE;
+		public Item KYANITE;
 		public Item MAGICAL_PIECE;
 		public Item MAGICAL_ENDER_EYE;
-		public Item KYNAITE_PICKAXE;
-		public Item KYNAITE_AXE;
-		public Item KYNAITE_SPADE;
-		public Item KYNAITE_HOE;
-		public Item KYNAITE_SWORD;
+		public Item KYANITE_PICKAXE;
+		public Item KYANITE_AXE;
+		public Item KYANITE_SPADE;
+		public Item KYANITE_HOE;
+		public Item KYANITE_SWORD;
 		public Item SPELLBOOK;
 		public Item SPELLBOOK_ARCHITECTURE;
 		public Item SPELLBOOK_ENCHANTMENT;
@@ -56,9 +56,9 @@ public class ESObjects {
 		public Block HEARTH;
 		public Block SMELT_BOX;
 		public Block SMELT_BOX_IRON;
-		public Block SMELT_BOX_KYNAITE;
-		public Block KYNAITE_ORE;
-		public Block KYNAITE_BLOCK;
+		public Block SMELT_BOX_KYANITE;
+		public Block KYANITE_ORE;
+		public Block KYANITE_BLOCK;
 		public Block MAGIC_PLATFORM;
 		public Block ABSORB_BOX;
 		public Block INVALID_ENCHANTMENT_TABLE;

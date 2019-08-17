@@ -98,7 +98,7 @@ public class BlockHearth extends BlockContainer implements Mapper {
 			return 3.5F;
 		case IRON:
 			return 5.0F;
-		case KYNAITE:
+		case KYANITE:
 			return 10.0F;
 		default:
 			break;
@@ -154,7 +154,7 @@ public class BlockHearth extends BlockContainer implements Mapper {
 	}
 
 	public static enum EnumMaterial implements IStringSerializable {
-		COBBLESTONE("cobblestone"), IRON("iron"), KYNAITE("kynaite");
+		COBBLESTONE("cobblestone"), IRON("iron"), KYANITE("kyanite");
 
 		private String name;
 

@@ -22,7 +22,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockHearth;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.item.ItemKynaiteTools;
+import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.util.IField;
 import yuzunyannn.elementalsorcery.util.item.ItemStackLimitHandler;
 
@@ -134,10 +134,10 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 					return new ItemStack(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE, 1);
 				}
 				// 如果有3个以上的魔法末影之眼，可以将蓝晶石工具变成可以吸收元素的工具
-				if (power >= 3 && stack.getItem() instanceof ItemKynaiteTools.toolsCapability
+				if (power >= 3 && stack.getItem() instanceof ItemKyaniteTools.toolsCapability
 						&& stack.getItemDamage() == 0
 						&& !stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null)) {
-					((ItemKynaiteTools.toolsCapability) stack.getItem()).provideOnce();
+					((ItemKyaniteTools.toolsCapability) stack.getItem()).provideOnce();
 					return new ItemStack(stack.getItem(), 1);
 				}
 			}
@@ -163,13 +163,13 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 			@Nonnull ItemStack extra) {
 		// 额外物品是末影之眼
 		if (extra.getItem() == Items.ENDER_EYE || extra.getItem() == ESInitInstance.ITEMS.MAGICAL_ENDER_EYE) {
-			if (stackNew.getItem() == ESInitInstance.ITEMS.KYNAITE) {
+			if (stackNew.getItem() == ESInitInstance.ITEMS.KYANITE) {
 				switch (material()) {
 				case IRON:
 					if (Math.random() < 0.1f)
 						return new ItemStack(ESInitInstance.ITEMS.MAGICAL_PIECE);
 					break;
-				case KYNAITE:
+				case KYANITE:
 					if (Math.random() < 0.5f)
 						return new ItemStack(ESInitInstance.ITEMS.MAGICAL_PIECE);
 					break;
@@ -181,7 +181,7 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 
 		}
 		// 有一定概率会出小颗粒， 蓝晶石箱子一定会出
-		if (Math.random() < 0.25f || material() == BlockHearth.EnumMaterial.KYNAITE) {
+		if (Math.random() < 0.25f || material() == BlockHearth.EnumMaterial.KYANITE) {
 			if (stackNew.getItem() == Items.IRON_INGOT) {
 				return new ItemStack(Items.IRON_NUGGET, 1);
 			} else if (stackNew.getItem() == Items.GOLD_INGOT) {

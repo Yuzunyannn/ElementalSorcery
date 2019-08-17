@@ -26,7 +26,7 @@ public class WorldGeneratorES {
 	}
  
 	public void genKynateOre(OreGenEvent.Post event) {
-		WorldGenerator generator = new WorldGenKynaiteOre();
+		WorldGenerator generator = new WorldGenKyaniteOre();
 		if (TerrainGen.generateOre(event.getWorld(), event.getRand(), generator, event.getPos(),
 				OreGenEvent.GenerateMinable.EventType.CUSTOM))
 			generator.generate(event.getWorld(), event.getRand(), event.getPos());
