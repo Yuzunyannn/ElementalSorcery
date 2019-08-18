@@ -148,7 +148,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 			craftingAltar = new CraftingCrafting(this);
 			break;
 		case ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT:
-			craftingAltar = new CraftingDeconstruct(this.getCenterItem(),
+			craftingAltar = new CraftingDeconstruct(this.world, this.getCenterItem(),
 					ItemStructure.getItemStructure(this.getPlatformItem()));
 			break;
 		default:
@@ -288,7 +288,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 	static final float ROATE_RATE = 1.0f;
 	static final float LEG_RATE = 0.4f;
 	static final float LEG_MAX = 16f;
-	
+
 	@SideOnly(Side.CLIENT)
 	private void clientRender() {
 		this.prevRoate = this.roate;

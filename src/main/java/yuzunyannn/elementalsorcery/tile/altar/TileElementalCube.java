@@ -61,18 +61,20 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 			return;
 		if (Math.random() > possibility)
 			return;
-//		ParticleElementFly effect;
-//		if (pto.getY() > from.getY())
-//			effect = new ParticleElementFly(world,
-//					new Vec3d(from.getX() + Math.random(), from.getY() + Math.random(), from.getZ() + Math.random()),
-//					new Vec3d(pto.getX() + 0.5, pto.getY() + 0.5, pto.getZ() + 0.5));
-//		else
-//			effect = new ParticleElementFly(world,
-//					new Vec3d(from.getX() + 0.25 + Math.random() * 0.5, from.getY() + 0.25 + Math.random() * 0.5,
-//							from.getZ() + 0.25 + Math.random() * 0.5),
-//					new Vec3d(pto.getX() + 0.5, pto.getY() + 1.0, pto.getZ() + 0.5));
-//		effect.setColor(color);
-//		Minecraft.getMinecraft().effectRenderer.addEffect(effect);
+		// ParticleElementFly effect;
+		// if (pto.getY() > from.getY())
+		// effect = new ParticleElementFly(world,
+		// new Vec3d(from.getX() + Math.random(), from.getY() + Math.random(),
+		// from.getZ() + Math.random()),
+		// new Vec3d(pto.getX() + 0.5, pto.getY() + 0.5, pto.getZ() + 0.5));
+		// else
+		// effect = new ParticleElementFly(world,
+		// new Vec3d(from.getX() + 0.25 + Math.random() * 0.5, from.getY() +
+		// 0.25 + Math.random() * 0.5,
+		// from.getZ() + 0.25 + Math.random() * 0.5),
+		// new Vec3d(pto.getX() + 0.5, pto.getY() + 1.0, pto.getZ() + 0.5));
+		// effect.setColor(color);
+		// Minecraft.getMinecraft().effectRenderer.addEffect(effect);
 		EffectElementFly effect;
 		if (pto.getY() > from.getY())
 			effect = new EffectElementFly(world,
@@ -180,20 +182,24 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	// 站起来的状态剩余tick
 	public int wake = 0;
 	// 站立来的比率0-1
-	public float wake_up = 0.0f;
+	public float wakeUp = 0.0f;
 	public float rotate = (float) (Math.random() * Math.PI * 2);
-	public Vertex color = new Vertex(ORIGIN_COLOR);
+	public Vertex color = ORIGIN_COLOR;
 	public float color_rate = 0.0f;
 	public float detla_cr = 0.01f;
 
 	@SideOnly(Side.CLIENT)
 	public void tick() {
 		if (wake > 0) {
+			if (color == ORIGIN_COLOR) {
+				color = new Vertex(ORIGIN_COLOR);
+				changeColor();
+			}
 			// 站起来的比率
-			if (wake_up >= 1.0f)
-				wake_up = 1.0f;
+			if (wakeUp >= 1.0f)
+				wakeUp = 1.0f;
 			else
-				wake_up += WAKE_UP_RARE;
+				wakeUp += WAKE_UP_RARE;
 			// 旋转
 			rotate += SOTATE_PRE_TICK;
 			if (rotate >= Math.PI * 2)
@@ -207,12 +213,12 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 			}
 			wake--;
 		} else {
-			if (wake_up <= 0.0f)
-				wake_up = 0.0f;
+			if (wakeUp <= 0.0f)
+				wakeUp = 0.0f;
 			else
-				wake_up -= WAKE_UP_RARE;
+				wakeUp -= WAKE_UP_RARE;
 		}
-		color_rate *= wake_up;
+		color_rate *= wakeUp;
 	}
 
 	// 切换颜色

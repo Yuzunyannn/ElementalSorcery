@@ -131,7 +131,7 @@ public class Pages {
 	static public final String ABOUT_STONE_MILL = "sMill";
 	static public final String ABOUT_MAGIC_STONE = "mgStone";
 	static public final String ABOUT_MELT_CAULDRON = "meltCal";
-	static public final String ABOUT_ASTONE = "atone";
+	static public final String ABOUT_ASTONE = "astone";
 
 	static public final String ABOUT_INFUSION = "infusion";
 	static public final String ABOUT_MAGICAL_ENDEREYE = "mgEeyes";
@@ -209,6 +209,7 @@ public class Pages {
 	}
 
 	static private void initItemToId() {
+		addItemId(ESInitInstance.BLOCKS.ASTONE, ABOUT_ASTONE);
 		addItemId(ESInitInstance.BLOCKS.MELT_CAULDRON, ABOUT_MELT_CAULDRON);
 		addItemId(ESInitInstance.ITEMS.MAGIC_STONE, ABOUT_MAGIC_STONE);
 		addItemId(ESInitInstance.BLOCKS.STONE_MILL, ABOUT_STONE_MILL);
@@ -288,7 +289,12 @@ public class Pages {
 						new ItemStack(ESInitInstance.BLOCKS.ASTONE)),
 				new PageSimpleInfo("astone", "sec", new ItemStack(ESInitInstance.BLOCKS.ASTONE),
 						new ItemStack(ESInitInstance.BLOCKS.MELT_CAULDRON)),
-				new PageSimpleInfo("astone", "thi"));
+				new PageSimpleInfo("astone", "thi"),
+				new PageCraftingSimple("astoneCrafting", new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 2),
+						new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 3),
+						new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 4),
+						new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 5),
+						new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 6)));
 	}
 
 	static private Page aboutKynatieTools() {

@@ -27,14 +27,10 @@ public class RenderTileMeltCauldron extends TileEntitySpecialRenderer<TileMeltCa
 	public void render(TileMeltCauldron tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha0) {
 
-		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES))
-			TEXTURE.bind();
-		GlStateManager.pushMatrix();
-		GlStateManager.disableLighting();
-		GlStateManager.translate(x + 0.5, y, z + 0.5);
-		GlStateManager.scale(0.0625, 0.0625, 0.0625);
+		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha0);
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		GlStateManager.popMatrix();
+		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);
 
 		int volume = tile.getVolume();

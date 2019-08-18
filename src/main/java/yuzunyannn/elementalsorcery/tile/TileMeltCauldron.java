@@ -12,11 +12,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
-import yuzunyannn.elementalsorcery.api.ability.IGetBurnPower;
+import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.render.Textures;
 
-public class TileMeltCauldron extends TileEntityNetwork implements IGetBurnPower, ITickable {
+public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPower, ITickable {
 
 	/** 温度 */
 	protected float temperature;
@@ -259,7 +259,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IGetBurnPower
 
 	// A∞=(a*q)/(1-q) 0<q<1
 	@Override
-	public boolean receiveBurnPower(int amount, int level) {
+	public boolean acceptBurnPower(int amount, int level) {
 		if (magicCount > 0) {
 			if (temperature > START_TEMPERATURE) {
 				temperature += amount * level;

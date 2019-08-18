@@ -23,13 +23,10 @@ public class RenderTileBuildingAltar extends TileEntitySpecialRenderer<TileBuild
 	@Override
 	public void render(TileBuildingAltar tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
-		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES))
-			TEXTURE.bind();
-		GlStateManager.pushMatrix();
-		GlStateManager.translate(x + 0.5, y, z + 0.5);
-		GlStateManager.scale(0.0625, 0.0625, 0.0625);
+		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
 		MODEL.render(null, EventClient.getGlobalRotateInRender(partialTicks), 0, 0, 0, 0, 1.0f);
-		GlStateManager.popMatrix();
+		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);
 
 		if (tile.isWorking())

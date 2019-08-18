@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.api.element;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 
@@ -10,11 +11,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
 	public final static ElementStack EMPTY = new ElementStack() {
 		@Override
-		public void become(ElementStack estack) {
-		}
-
-		@Override
-		public void deserializeNBT(NBTTagCompound nbt) {
+		protected void setElement(Element element) {
 		}
 	};
 
@@ -47,8 +44,12 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		this.deserializeNBT(compound);
 	}
 
+	protected void setElement(Element element) {
+		this.element = element;
+	}
+
 	public void become(ElementStack estack) {
-		this.element = estack.element;
+		this.setElement(element);
 		this.stackSize = estack.stackSize;
 		this.power = estack.power;
 	}
@@ -207,21 +208,28 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		return this.getCount() >= estack.getCount() && this.arePowerfulThan(estack);
 	}
 
+	/** 获取元素名称 */
+	public String getElementUnlocalizedName() {
+		return this.getElement().getUnlocalizedName(this) + ".name";
+	}
+
 	@Override
 	public String toString() {
 		return this.stackSize + "x" + this.getElement().getUnlocalizedName(this) + ":" + this.power;
 	}
 
-	/**
-	 * 物品被析构成元素的时候回调
-	 */
-	public ElementStack becomeElementWhenDeconstruct(ItemStack stack, int complex, int lvPower) {
-		return this.element.getElementWhenDeconstruct(stack, this, complex, lvPower);
+	/** 物品被析构成元素的时候回调 */
+	public ElementStack becomeElementWhenDeconstruct(World world, ItemStack stack, int complex, int lvPower) {
+		return this.element.changetoElementWhenDeconstruct(world, stack, this, complex, lvPower);
 	}
 
-	/** 获取元素名称 */
-	public String getElementUnlocalizedName() {
-		return this.getElement().getUnlocalizedName(this) + ".name";
+	/** 转化成元素时候回调 */
+	public ElementStack becomeMagic(World world) {
+		if (this.isMagic())
+			return this;
+		ElementStack magic = this.element.changetoMagic(world, this);
+		magic.setElement(ESObjects.ELEMENTS.MAGIC);
+		return magic;
 	}
 
 	/** 序列化 */
@@ -237,8 +245,9 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	public void deserializeNBT(NBTTagCompound nbt) {
 		// 读取元素类型
 		ResourceLocation name = new ResourceLocation(nbt.getString("id"));
-		element = Element.getElementFromName(name);
-		element = element == null ? EMPTY.element : element;
+		this.setElement(Element.getElementFromName(name));
+		if (element == null)
+			this.setElement(EMPTY.element);
 		// 读取元素数量
 		stackSize = nbt.getInteger("size");
 		// 读取元素能量

@@ -14,15 +14,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
-import yuzunyannn.elementalsorcery.api.ability.IGetBurnPower;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.util.IField;
 
-public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IField {
+public class TileDeconstructBox extends TileEntity implements IAcceptBurnPower, IField {
 
 	static final Random rand = new Random();
 
@@ -48,7 +48,7 @@ public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IFi
 	};
 
 	@Override
-	public boolean receiveBurnPower(int amount, int level) {
+	public boolean acceptBurnPower(int amount, int level) {
 		if (world.isRemote)
 			return false;
 		ItemStack stack = inv_item.getStackInSlot(0);
@@ -86,7 +86,7 @@ public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IFi
 			// 寻找一个能插入的
 			boolean can_insert = false;
 			for (ElementStack estack : estacks) {
-				estack = estack.copy().becomeElementWhenDeconstruct(stack, ElementMap.instance.complex(stack),
+				estack = estack.copy().becomeElementWhenDeconstruct(world, stack, ElementMap.instance.complex(stack),
 						Element.DP_BOX);
 				can_insert = einv.insertElement(estack, simulate) || can_insert;
 			}
@@ -95,7 +95,8 @@ public class TileDeconstructBox extends TileEntity implements IGetBurnPower, IFi
 			// 最终结果，随机插入一个，能不能是有的，看运气喽
 			int index = rand.nextInt(estacks.length);
 			ElementStack estack = estacks[index];
-			estack = estack.copy().becomeElementWhenDeconstruct(stack, ElementMap.instance.complex(stack), Element.DP_BOX);
+			estack = estack.copy().becomeElementWhenDeconstruct(world, stack, ElementMap.instance.complex(stack),
+					Element.DP_BOX);
 			einv.insertElement(estack, simulate);
 			// 掉落剩余物品
 			ItemStack remain = ElementMap.instance.remain(stack);

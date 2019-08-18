@@ -36,6 +36,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockMeltCauldron;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.container.BlockStela;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
+import yuzunyannn.elementalsorcery.block.md.BlockMDMagicGen;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementAir;
@@ -140,6 +141,7 @@ public class ESInitInstance {
 		BLOCKS.STAR_SAND = new BlockStarSand().setRegistryName("star_sand");
 		BLOCKS.STONE_MILL = new BlockStoneMill().setRegistryName("stone_mill");
 		BLOCKS.MELT_CAULDRON = new BlockMeltCauldron().setRegistryName("melt_cauldron");
+		BLOCKS.MD_MAGIC_GEN = new BlockMDMagicGen().setRegistryName("md_magic_gen");
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -153,6 +155,7 @@ public class ESInitInstance {
 		ITEMS.MAGICAL_PIECE = ItemSome.newMagicalPiece().setRegistryName("magical_piece");
 		ITEMS.MAGICAL_ENDER_EYE = ItemSome.newMagicalEnderEye().setRegistryName("magical_ender_eye");
 		ITEMS.MAGIC_CRYSTAL = ItemSome.newMagicalCrystal().setRegistryName("magic_crystal");
+		ITEMS.TINY_KNIFE = ItemSome.newTinyKnife().setRegistryName("tiny_knife");
 		ITEMS.MAGIC_PAPER = ItemSome.newMagicPaper().setRegistryName("magic_paper");
 		ITEMS.SPELL_PAPER = ItemSome.newSpellPaper().setRegistryName("spell_paper");
 		ITEMS.SPELL_CRYSTAL = ItemSome.newSpellCrystal().setRegistryName("spell_crystal");

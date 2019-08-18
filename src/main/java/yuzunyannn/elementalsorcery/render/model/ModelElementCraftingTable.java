@@ -26,7 +26,6 @@ public class ModelElementCraftingTable extends ModelBase {
 	}
 
 	public void render(Entity entityIn, float dtick, float n1, float n2, float n3, float n4, float scale) {
-		// this.setRotationAngles(dtick, n1, n2, n3, n4, scale, entityIn);
 		this.table.render(scale);
 		this.leg.render(scale);
 		this.bottom.render(scale);

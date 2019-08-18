@@ -23,6 +23,7 @@ public class ESObjects {
 		public Item KYANITE_SPADE;
 		public Item KYANITE_HOE;
 		public Item KYANITE_SWORD;
+		public Item TINY_KNIFE;
 		public Item SPELLBOOK;
 		public Item SPELLBOOK_ARCHITECTURE;
 		public Item SPELLBOOK_ENCHANTMENT;
@@ -76,6 +77,7 @@ public class ESObjects {
 		public Block MAGIC_TORCH;
 		public Block STONE_MILL;
 		public Block MELT_CAULDRON;
+		public Block MD_MAGIC_GEN;
 	}
 
 	static public class Elements {

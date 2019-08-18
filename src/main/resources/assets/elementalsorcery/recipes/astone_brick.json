@@ -1,0 +1,23 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "astone",
+	"pattern": [
+		"###",
+		"XXX",
+		"#X#"
+	],
+	"key": {
+		"#": {
+			"item": "elementalsorcery:astone",
+			"data": 2
+		},
+		"X": {
+			"item": "elementalsorcery:tiny_knife"
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:astone",
+		"count": 5,
+		"data": 5
+	}
+}

@@ -21,14 +21,10 @@ public class RenderTileElementCraftingTable extends TileEntitySpecialRenderer<Ti
 	@Override
 	public void render(TileElementCraftingTable tile, double x, double y, double z, float partialTicks,
 			int destroyStage, float alpha) {
-		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES))
-			TEXTURE.bind();
-		GlStateManager.pushMatrix();
-		GlStateManager.disableLighting();
-		GlStateManager.translate(x + 0.5, y, z + 0.5);
-		GlStateManager.scale(0.1, 0.1, 0.1);
+		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.1, alpha);
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		GlStateManager.popMatrix();
+		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);
 	}
 

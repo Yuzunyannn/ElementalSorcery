@@ -30,31 +30,25 @@ public class RenderTileStoneMill extends TileEntitySpecialRenderer<TileStoneMill
 			float alpha) {
 
 		int dusty = tile.getDusty();
-
-		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES))
-			TEXTURE.bind();
-		GlStateManager.pushMatrix();
-		GlStateManager.disableLighting();
-		GlStateManager.translate(x + 0.5, y, z + 0.5);
-		GlStateManager.scale(0.0625, 0.0625, 0.0625);
 		float lift = tile.prevLiftTick + (tile.liftTick - tile.prevLiftTick) * partialTicks;
 		float rotate = tile.prevRotate + (tile.rotate - tile.prevRotate) * partialTicks;
 		float playerRoate = tile.prevPlayerRoate + (tile.playerRoate - tile.prevPlayerRoate) * partialTicks;
+
+		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
 		MODEL.render(null, 1, 0, 0, 0, 0, 1.0f);
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(playerRoate * lift / 3.1415926f * 180f, 0, 1, 0);
 		MODEL.renderHammer(lift, rotate, dusty / 1000.0f, 1.0f);
 		GlStateManager.popMatrix();
-
-		GlStateManager.popMatrix();
+		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);
 
-		GlStateManager.enableLighting();
 		List<Milling> list = tile.getMillList();
 		float dustyYoff = dusty / 1000.0f * 0.68f + 0.1875f;
 		for (Milling m : list) {
-			GlStateManager.pushMatrix();
 			float ydown = m.degree / (float) tile.getDustyCount(m.stack) * tile.getHight(m.stack);
+			GlStateManager.pushMatrix();
 			GlStateManager.translate(x + m.xoff, y + dustyYoff - ydown - 0.125f, z + m.zoff);
 			GlStateManager.rotate(m.roate, 0, 1, 0);
 			yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(m.stack);

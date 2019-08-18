@@ -24,16 +24,10 @@ public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk
 	@Override
 	public void render(TileMagicDesk tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
-		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES))
-			TEXTURE.bind();
-		GlStateManager.pushMatrix();
-		GlStateManager.disableLighting();
-		GlStateManager.disableBlend();
-		GlStateManager.enableCull();
-		GlStateManager.translate(x + 0.5, y + 1.2, z + 0.5);
-		GlStateManager.scale(0.1, 0.1, 0.1);
+		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderHelper.startRender(x + 0.5, y + 1.2, z + 0.5, 0.1, alpha);
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		GlStateManager.popMatrix();
+		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);
 
 		ItemStack book = tile.getBook();
@@ -52,7 +46,7 @@ public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk
 			return;
 		SpellbookRenderInfo info = spellbook.render_info;
 		float n_rate = (1 - info.bookSpread);
-		GlStateManager.translate(0, 0.45 * info.bookSpread + 0.375 * n_rate, 0.35 * n_rate);
+		GlStateManager.translate(0, 0.45 * info.bookSpread + 0.35 * n_rate, 0.35 * n_rate);
 		GlStateManager.rotate(n_rate * 90, -1, 0, 0);
 		Minecraft.getMinecraft().getRenderItem().renderItem(book, ItemCameraTransforms.TransformType.GROUND);
 	}

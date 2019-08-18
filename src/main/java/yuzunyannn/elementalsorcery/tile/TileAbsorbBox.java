@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
-import yuzunyannn.elementalsorcery.api.ability.IGetBurnPower;
+import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.ElementHelper;
@@ -28,7 +28,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.render.particle.ParticleElementFly;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 
-public class TileAbsorbBox extends TileEntityNetwork implements IGetBurnPower {
+public class TileAbsorbBox extends TileEntityNetwork implements IAcceptBurnPower {
 
 	// 积攒的能量
 	private int power = 0;
@@ -51,7 +51,7 @@ public class TileAbsorbBox extends TileEntityNetwork implements IGetBurnPower {
 	};
 
 	@Override
-	public boolean receiveBurnPower(int amount, int level) {
+	public boolean acceptBurnPower(int amount, int level) {
 		ItemStack stack = inventory.getStackInSlot(0);
 		if (stack.isEmpty()) {
 			power = 0;

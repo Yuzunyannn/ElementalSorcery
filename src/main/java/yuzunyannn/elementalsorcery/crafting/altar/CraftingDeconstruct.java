@@ -28,11 +28,11 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	// 是否ok
 	private boolean isOk = true;
 
-	public CraftingDeconstruct(ItemStack stack) {
-		this(stack, null);
+	public CraftingDeconstruct(World world, ItemStack stack) {
+		this(world, stack, null);
 	}
 
-	public CraftingDeconstruct(ItemStack stack, IItemStructure structure) {
+	public CraftingDeconstruct(World world, ItemStack stack, IItemStructure structure) {
 		itemList.add(stack);
 		ElementStack[] outEstacks;
 		if (structure == null)
@@ -44,8 +44,8 @@ public class CraftingDeconstruct implements ICraftingAltar {
 		restEStacks = new LinkedList<ElementStack>();
 		for (ElementStack estack : outEstacks) {
 			for (int i = 0; i < stack.getCount(); i++)
-				restEStacks.add(estack.copy().becomeElementWhenDeconstruct(stack, ElementMap.instance.complex(stack),
-						Element.DP_ALTAR));
+				restEStacks.add(estack.copy().becomeElementWhenDeconstruct(world, stack,
+						ElementMap.instance.complex(stack), Element.DP_ALTAR));
 		}
 	}
 

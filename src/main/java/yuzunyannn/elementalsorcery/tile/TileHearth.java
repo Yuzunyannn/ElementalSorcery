@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.api.ability.IGetBurnPower;
+import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.block.container.BlockHearth;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.IField;
@@ -83,16 +83,16 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 	}
 
 	public static boolean giveBurnPower(TileEntity tile, int amount, int level) {
-		IGetBurnPower receiver = null;
-		if (tile instanceof IGetBurnPower)
-			receiver = (IGetBurnPower) tile;
+		IAcceptBurnPower receiver = null;
+		if (tile instanceof IAcceptBurnPower)
+			receiver = (IAcceptBurnPower) tile;
 		if (receiver == null)
 			return false;
 		if (level <= 0) {
 			amount = 0;
 			level = 0;
 		}
-		return receiver.receiveBurnPower(amount, level);
+		return receiver.acceptBurnPower(amount, level);
 	}
 
 	private void brunIt(boolean burn) {

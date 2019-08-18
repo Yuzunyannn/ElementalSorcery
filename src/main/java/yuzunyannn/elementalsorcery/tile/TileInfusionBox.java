@@ -17,12 +17,12 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.api.ability.IGetBurnPower;
+import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
-public class TileInfusionBox extends TileEntity implements IGetBurnPower {
+public class TileInfusionBox extends TileEntity implements IAcceptBurnPower {
 
 	// 积攒能量
 	private int power = 0;
@@ -49,7 +49,7 @@ public class TileInfusionBox extends TileEntity implements IGetBurnPower {
 	};
 
 	@Override
-	public boolean receiveBurnPower(int amount, int level) {
+	public boolean acceptBurnPower(int amount, int level) {
 		ItemStack stack = piece_in.getStackInSlot(0);
 		if (stack.isEmpty()) {
 			power = 0;

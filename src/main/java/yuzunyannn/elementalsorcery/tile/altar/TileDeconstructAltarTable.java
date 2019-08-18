@@ -91,7 +91,7 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 		startTime = new TickOut(40);
 		ItemStack outStack = stack;
 		stack = ItemStack.EMPTY;
-		return new CraftingDeconstruct(outStack);
+		return new CraftingDeconstruct(world, outStack);
 	}
 
 	@Override

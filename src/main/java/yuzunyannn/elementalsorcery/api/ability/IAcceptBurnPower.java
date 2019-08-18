@@ -1,8 +1,8 @@
 package yuzunyannn.elementalsorcery.api.ability;
 
-public interface IGetBurnPower {
+public interface IAcceptBurnPower {
 	/**
-	 * 获取燃烧能量
+	 * 接受燃烧能量
 	 * 
 	 * @param amount
 	 *            能量大小
@@ -10,5 +10,5 @@ public interface IGetBurnPower {
 	 *            能量等级，可能传入0，表示测试是否需要接受能量
 	 * @return True 表示需要能量，并成功接受
 	 */
-	boolean receiveBurnPower(int amount, int level);
+	boolean acceptBurnPower(int amount, int level);
 }

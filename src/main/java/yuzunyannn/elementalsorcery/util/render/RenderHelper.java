@@ -29,23 +29,61 @@ public class RenderHelper {
 		GlStateManager.pushMatrix();
 		TEXTURE.bind();
 		if (IRenderItem.isGUI(stack)) {
-			if (needLighting) {
-				GlStateManager.pushAttrib();
-				net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting();
-			}
+			if (needLighting)
+				GlStateManager.enableLighting();
 			GlStateManager.rotate(45, 0, 1, 0);
 			GlStateManager.rotate(30, 1, 0, 1);
 			GlStateManager.translate(0.35, 0.26 + yoff, 0.35);
 			GlStateManager.scale(scale, scale, scale);
 			MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-			if (needLighting)
-				GlStateManager.popAttrib();
 		} else {
 			GlStateManager.translate(0.5, 0.4 + yoffGround, 0.5);
 			GlStateManager.scale(scaleGround, scaleGround, scaleGround);
 			MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
 		}
 		GlStateManager.popMatrix();
+	}
+
+	static public void startRender(double x, double y, double z, double scale, float alpha) {
+		GlStateManager.pushMatrix();
+		GlStateManager.enableRescaleNormal();
+		GlStateManager.color(1.0F, 1.0F, 1.0F, alpha);
+		GlStateManager.translate(x, y, z);
+		GlStateManager.scale(scale, scale, scale);
+	}
+
+	static public void endRender() {
+		GlStateManager.popMatrix();
+	}
+
+	static public void bindDestoryTexture(TextureBinder TEXTURE, int destroyStage,
+			TileEntityRendererDispatcher rendererDispatcher, ResourceLocation[] DESTROY_STAGES) {
+		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES))
+			TEXTURE.bind();
+	}
+
+	static public boolean bindDestoryTexture(int destroyStage, TileEntityRendererDispatcher rendererDispatcher,
+			ResourceLocation[] DESTROY_STAGES) {
+		if (destroyStage >= 0) {
+			TextureManager texturemanager = rendererDispatcher.renderEngine;
+			if (texturemanager != null)
+				texturemanager.bindTexture(DESTROY_STAGES[destroyStage]);
+			GlStateManager.matrixMode(5890);
+			GlStateManager.pushMatrix();
+			GlStateManager.scale(4.0F, 4.0F, 1.0F);
+			GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
+			GlStateManager.matrixMode(5888);
+			return false;
+		}
+		return true;
+	}
+
+	static public void bindDestoryTextureEnd(int destroyStage) {
+		if (destroyStage >= 0) {
+			GlStateManager.matrixMode(5890);
+			GlStateManager.popMatrix();
+			GlStateManager.matrixMode(5888);
+		}
 	}
 
 	/** 根据相对坐标，修复物品平放在平台上 */
@@ -76,30 +114,6 @@ public class RenderHelper {
 				} else
 					GlStateManager.translate(0, 0.3, 0);
 			}
-		}
-	}
-
-	static public boolean bindDestoryTexture(int destroyStage, TileEntityRendererDispatcher rendererDispatcher,
-			ResourceLocation[] DESTROY_STAGES) {
-		if (destroyStage >= 0) {
-			TextureManager texturemanager = rendererDispatcher.renderEngine;
-			if (texturemanager != null)
-				texturemanager.bindTexture(DESTROY_STAGES[destroyStage]);
-			GlStateManager.matrixMode(5890);
-			GlStateManager.pushMatrix();
-			GlStateManager.scale(4.0F, 4.0F, 1.0F);
-			GlStateManager.translate(0.0625F, 0.0625F, 0.0625F);
-			GlStateManager.matrixMode(5888);
-			return false;
-		}
-		return true;
-	}
-
-	static public void bindDestoryTextureEnd(int destroyStage) {
-		if (destroyStage >= 0) {
-			GlStateManager.matrixMode(5890);
-			GlStateManager.popMatrix();
-			GlStateManager.matrixMode(5888);
 		}
 	}
 

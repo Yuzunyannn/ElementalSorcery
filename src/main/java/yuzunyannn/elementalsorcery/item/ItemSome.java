@@ -47,6 +47,11 @@ public class ItemSome {
 		return new ItemMagicalEnderEye();
 	}
 
+	/** 精巧刻刀 */
+	static public Item newTinyKnife() {
+		return newItem("tinyKnife");
+	}
+
 	/** 魔力水晶 */
 	static public Item newMagicalCrystal() {
 		return newItem("magicalCrystal");

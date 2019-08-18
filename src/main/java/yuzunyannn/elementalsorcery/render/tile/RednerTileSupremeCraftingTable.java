@@ -10,6 +10,7 @@ import yuzunyannn.elementalsorcery.render.model.ModelSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
+
 @SideOnly(Side.CLIENT)
 public class RednerTileSupremeCraftingTable extends TileEntitySpecialRenderer<TileSupremeCraftingTable>
 		implements IRenderItem {
@@ -20,36 +21,20 @@ public class RednerTileSupremeCraftingTable extends TileEntitySpecialRenderer<Ti
 	@Override
 	public void render(TileSupremeCraftingTable tile, double x, double y, double z, float partialTicks,
 			int destroyStage, float alpha) {
-		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES))
-			TEXTURE.bind();
-		GlStateManager.pushMatrix();
+		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.03125, alpha);
 		GlStateManager.enableBlend();
-		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-		GlStateManager.disableLighting();
-		GlStateManager.translate(x + 0.5, y, z + 0.5);
-		GlStateManager.scale(0.03125, 0.03125, 0.03125);
+		//GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		float roate = tile.prevRoate + (tile.roate - tile.prevRoate) * partialTicks;
 		float legR = tile.prevLegR + (tile.legR - tile.prevLegR) * partialTicks;
-		MODEL.render(null,legR, 45 + roate, roate, 0, 0, 1.0f);
+		MODEL.render(null, legR, roate, roate, 0, 0, 1.0f);
 		GlStateManager.disableBlend();
-		GlStateManager.popMatrix();
+		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);
 	}
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		GlStateManager.pushMatrix();
-		if (IRenderItem.isGUI(stack)) {
-			GlStateManager.translate(0.5, 0.225, 0.5);
-			GlStateManager.scale(0.0175, 0.0175, 0.0175);
-			GlStateManager.rotate(45, 0, 1, 0);
-			GlStateManager.rotate(30, 1, 0, 1);
-		} else {
-			GlStateManager.translate(0.5, 0.4, 0.5);
-			GlStateManager.scale(0.0125, 0.0125, 0.0125);
-		}
-		TEXTURE.bind();
-		MODEL.render(null, 0f, 45f, 0, 0, 0, 1.0f);
-		GlStateManager.popMatrix();
+		RenderHelper.render(stack, TEXTURE, MODEL, false, 0.0175, 0.0125, 0, 0);
 	}
 }

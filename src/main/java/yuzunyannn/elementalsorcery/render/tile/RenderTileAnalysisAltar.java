@@ -21,15 +21,12 @@ public class RenderTileAnalysisAltar extends TileEntitySpecialRenderer<TileAnaly
 	@Override
 	public void render(TileAnalysisAltar tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
-		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES))
-			TEXTURE.bind();
-		GlStateManager.pushMatrix();
+		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
 		GlStateManager.enableBlend();
-		GlStateManager.translate(x + 0.5, y, z + 0.5);
-		GlStateManager.scale(0.0625, 0.0625, 0.0625);
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
 		GlStateManager.disableBlend();
-		GlStateManager.popMatrix();
+		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);
 	}
 

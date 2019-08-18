@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.api.ability.IGetBurnPower;
+import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.block.container.BlockHearth;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
@@ -26,7 +26,7 @@ import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.util.IField;
 import yuzunyannn.elementalsorcery.util.item.ItemStackLimitHandler;
 
-public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable, IField {
+public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITickable, IField {
 
 	public TileSmeltBox() {
 
@@ -93,7 +93,7 @@ public class TileSmeltBox extends TileEntity implements IGetBurnPower, ITickable
 
 	// 受到能量
 	@Override
-	public boolean receiveBurnPower(int amount, int level) {
+	public boolean acceptBurnPower(int amount, int level) {
 		nextPower = amount * level;
 		if (hasMagicalEnderEye != -1) {
 			nextPower = (int) (nextPower * (1.0F + hasMagicalEnderEye / 4.0F));

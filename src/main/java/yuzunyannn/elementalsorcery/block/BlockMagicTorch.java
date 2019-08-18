@@ -41,7 +41,7 @@ public class BlockMagicTorch extends BlockTorch {
 	public IBlockState getStateFromMeta(int meta) {
 		IBlockState state = super.getStateFromMeta(meta & 7);
 		if ((meta & 8) != 0)
-			state.withProperty(LIT, true);
+			state = state.withProperty(LIT, true);
 		return state;
 	}
 

@@ -10,6 +10,7 @@ import yuzunyannn.elementalsorcery.render.model.ModelLantern;
 import yuzunyannn.elementalsorcery.tile.TileLantern;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
+
 @SideOnly(Side.CLIENT)
 public class RenderTileLantern extends TileEntitySpecialRenderer<TileLantern> implements IRenderItem {
 
@@ -19,14 +20,12 @@ public class RenderTileLantern extends TileEntitySpecialRenderer<TileLantern> im
 	@Override
 	public void render(TileLantern tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
-		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES))
-			TEXTURE.bind();
-		GlStateManager.pushMatrix();
-		GlStateManager.disableLighting();
-		GlStateManager.translate(x + 0.5, y +  0.0625, z + 0.5);
-		GlStateManager.scale(0.0625, 0.0625, 0.0625);
+		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderHelper.startRender(x + 0.5, y + 0.0625, z + 0.5, 0.0625, alpha);
+		GlStateManager.enableBlend();
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		GlStateManager.popMatrix();
+		GlStateManager.disableBlend();
+		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);
 	}
 

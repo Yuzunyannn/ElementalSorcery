@@ -77,7 +77,7 @@ public class ItemKyaniteTools {
 					estack = new ElementStack(ESInitInstance.ELEMENTS.WATER, 1, 3);
 				} else {
 					estack = estacks[0].copy();
-					estack = estack.becomeElementWhenDeconstruct(ItemHelper.toItemStack(state),
+					estack = estack.becomeElementWhenDeconstruct(worldIn, ItemHelper.toItemStack(state),
 							ElementMap.instance.complex(state.getBlock()), Element.DP_TOOLS);
 				}
 				IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);

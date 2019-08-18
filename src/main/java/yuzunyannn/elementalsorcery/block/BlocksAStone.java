@@ -18,7 +18,7 @@ public class BlocksAStone extends Block implements Mapper {
 
 	public BlocksAStone() {
 		super(Material.ROCK);
-		this.setUnlocalizedName("astone");	
+		this.setUnlocalizedName("astone");
 		this.setHarvestLevel("pickaxe", 1);
 		this.setHardness(12.5F);
 		this.setDefaultState(this.getDefaultState().withProperty(VARIANT, EnumType.STONE));
@@ -54,9 +54,10 @@ public class BlocksAStone extends Block implements Mapper {
 	}
 
 	public static enum EnumType implements IStringSerializable {
-		STONE("stone"), FRAGMENTED("fragmented"), SMOOTH("smooth"), VEIN("vein"),CIRCLE("circle");
+		STONE("stone"), FRAGMENTED("fragmented"), SMOOTH("smooth"), VEIN("vein"), CIRCLE("circle"), BRICK(
+				"brick"), TRANS("trans");
 
-		final String name;
+		final String name; 
 
 		EnumType(String name) {
 			this.name = name;

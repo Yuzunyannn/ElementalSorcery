@@ -6,6 +6,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
@@ -64,6 +65,19 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 		return color;
 	}
 
+	/**
+	 * 当该元素转化成魔力的时候，获得魔力值
+	 * 
+	 * @param estack
+	 *            转化魔力时的元素栈，请直接修改这个元素栈
+	 * @return 返回值的元素会自动转变为magic，只需修改数量和能量即可
+	 */
+	public ElementStack changetoMagic(World world, ElementStack estack) {
+		estack.setCount((int) (estack.getCount() * 2.5f));
+		estack.weaken(0.5f);
+		return estack;
+	}
+
 	/** 默认能量级 */
 	static public int DP_TOOLS = 5;
 	static public int DP_BOX = 20;
@@ -75,14 +89,15 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 	 * @param stack
 	 *            被析构的物品，方块的话也会变成对应的物品栈传入（注意：传入的stack是有数量的，但是该函数在处理时，应认为数量只有一个）
 	 * @param estack
-	 *            析构时核查的元素
+	 *            析构时核查的元素，请直接修改这个元素栈
 	 * @param lvPower
 	 *            进行析构祭坛（工具）的能量
 	 * @param complex
 	 *            析构物品的复杂度
 	 * @return 返回真正得到的元素数量和能量
 	 */
-	public ElementStack getElementWhenDeconstruct(ItemStack stack, ElementStack estack, int complex, int lvPower) {
+	public ElementStack changetoElementWhenDeconstruct(World world, ItemStack stack, ElementStack estack, int complex,
+			int lvPower) {
 		if (lvPower <= Element.DP_TOOLS) {
 			if (estack.getCount() > 25)
 				estack.setCount(25);

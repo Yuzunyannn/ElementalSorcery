@@ -45,7 +45,11 @@ public class TileEntityNetwork extends TileEntity {
 	@Override
 	public NBTTagCompound getUpdateTag() {
 		NBTTagCompound nbt = this.writeToNBT(new NBTTagCompound());
-		lastSendNBT = TileEntityNetwork.detectWhenSendingToRemoveRedundancy(nbt, lastSendNBT);
+		// 判断是否为调用updateToClient函数发送的，如果不是，必须返回全部
+		if (this.isSending())
+			lastSendNBT = TileEntityNetwork.detectWhenSendingToRemoveRedundancy(nbt, lastSendNBT);
+		else
+			lastSendNBT = nbt;
 		return nbt;
 	}
 
@@ -147,9 +151,6 @@ public class TileEntityNetwork extends TileEntity {
 	static public NBTTagCompound detectWhenRecvToRecoveryRedundancy(NBTTagCompound nbt, NBTTagCompound lastNBT) {
 		if (lastNBT == null)
 			return nbt.copy();
-		if (nbt.hasKey("AllNew")) {
-			return nbt.copy();
-		}
 		// 先删除不需要的标签
 		if (nbt.hasKey("Del", 9)) {
 			NBTTagList list = nbt.getTagList("Del", 8);
