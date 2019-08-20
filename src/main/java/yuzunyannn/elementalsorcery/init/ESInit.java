@@ -59,6 +59,7 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileMDMagicGen;
 import yuzunyannn.elementalsorcery.render.tile.RednerTileSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileAnalysisAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileBuildingAltar;
@@ -71,7 +72,6 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStela;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStoneMill;
-import yuzunyannn.elementalsorcery.render.tile.md.RednerTileMDMagicGenerator;
 import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
@@ -352,7 +352,7 @@ public class ESInit {
 				TileSupremeCraftingTable.class);
 		registerRender(new RenderTileStoneMill(), ESInitInstance.BLOCKS.STONE_MILL, TileStoneMill.class);
 		registerRender(new RenderTileMeltCauldron(), ESInitInstance.BLOCKS.MELT_CAULDRON, TileMeltCauldron.class);
-		registerRender(new RednerTileMDMagicGenerator(), ESInitInstance.BLOCKS.MD_MAGIC_GEN,
+		registerRender(new RenderTileMDMagicGen(), ESInitInstance.BLOCKS.MD_MAGIC_GEN,
 				TileMDMagicGen.class);
 
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

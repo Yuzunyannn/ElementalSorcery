@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.entity.EntityBlockThrowEffect;
 import yuzunyannn.elementalsorcery.entity.EntityCrafting;
+import yuzunyannn.elementalsorcery.entity.EntityParticleEffect;
 import yuzunyannn.elementalsorcery.render.entity.EntityRenderFactory;
 import yuzunyannn.elementalsorcery.render.entity.RenderBlockThrowEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
@@ -18,9 +19,9 @@ public class EntityRegistries {
 	private static int nextID = 0;
 
 	public static void registerAll() {
+		register("particle_effect", EntityParticleEffect.class, "ParticleEffect", 128, 4, false);
 		register("block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);
 		register("entity_crafting", EntityCrafting.class, "EntityCrafting", 128, 1, false);
-
 	}
 
 	private static void register(String registryName, Class<? extends Entity> entityClass, String name,

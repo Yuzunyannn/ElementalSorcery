@@ -39,57 +39,86 @@ public abstract class GuiNormal extends GuiContainer {
 				4210752);
 	}
 
-	// 开始画物品
-	protected void startDrawItem() {
-		RenderHelper.enableGUIStandardItemLighting();
-		this.zLevel = 200.0F;
-		this.itemRender.zLevel = 200.0F;
-	}
-
-	// 结束画物品
-	protected void endDrawItem() {
-		this.zLevel = 0.0F;
-		this.itemRender.zLevel = 0F;
-	}
-
 	// 画一次物品
-	protected void drawOnceItem(ItemStack stack, int x, int y) {
+	public void drawItem(ItemStack stack, int x, int y) {
+		RenderHelper.enableGUIStandardItemLighting();
+		this.zLevel = 100.0F;
+		this.itemRender.zLevel = 100.0F;
 		String s = null;
 		if (stack.getCount() > 1) {
 			s = TextFormatting.WHITE.toString() + stack.getCount();
 		}
 		this.itemRender.renderItemAndEffectIntoGUI(this.mc.player, stack, x, y);
 		this.itemRender.renderItemOverlayIntoGUI(this.fontRenderer, stack, x, y, s);
+		this.zLevel = 0F;
+		this.itemRender.zLevel = 0F;
 	}
-	
-	//画一个可以镜像width的图标
-    public void drawTexturedModalRectMirrorWidth(int x, int y, int textureX, int textureY, int width, int height)
-    {
-        float f = 0.00390625F;
-        float f1 = 0.00390625F;
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
-        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-        bufferbuilder.pos((double)(x + 0), (double)(y + height), (double)this.zLevel).tex((double)((float)(textureX + width) * 0.00390625F), (double)((float)(textureY + height) * 0.00390625F)).endVertex();
-        bufferbuilder.pos((double)(x + width), (double)(y + height), (double)this.zLevel).tex((double)((float)(textureX + 0) * 0.00390625F), (double)((float)(textureY + height) * 0.00390625F)).endVertex();
-        bufferbuilder.pos((double)(x + width), (double)(y + 0), (double)this.zLevel).tex((double)((float)(textureX + 0) * 0.00390625F), (double)((float)(textureY + 0) * 0.00390625F)).endVertex();
-        bufferbuilder.pos((double)(x + 0), (double)(y + 0), (double)this.zLevel).tex((double)((float)(textureX + width) * 0.00390625F), (double)((float)(textureY + 0) * 0.00390625F)).endVertex();
-        tessellator.draw();
-    }
-	//画一个可以镜像height的图标
-    public void drawTexturedModalRectMirrorHeight(int x, int y, int textureX, int textureY, int width, int height)
-    {
-        float f = 0.00390625F;
-        float f1 = 0.00390625F;
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
-        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-        bufferbuilder.pos((double)(x + 0), (double)(y + height), (double)this.zLevel).tex((double)((float)(textureX + 0) * 0.00390625F), (double)((float)(textureY + 0) * 0.00390625F)).endVertex();
-        bufferbuilder.pos((double)(x + width), (double)(y + height), (double)this.zLevel).tex((double)((float)(textureX + width) * 0.00390625F), (double)((float)(textureY + 0) * 0.00390625F)).endVertex();
-        bufferbuilder.pos((double)(x + width), (double)(y + 0), (double)this.zLevel).tex((double)((float)(textureX + width) * 0.00390625F), (double)((float)(textureY + height) * 0.00390625F)).endVertex();
-        bufferbuilder.pos((double)(x + 0), (double)(y + 0), (double)this.zLevel).tex((double)((float)(textureX + 0) * 0.00390625F), (double)((float)(textureY + height) * 0.00390625F)).endVertex();
-        tessellator.draw();
-    }
 
+	// 画一个物品文字的背景
+	protected void drawToolTipBackground(int x, int y, int width, int height) {
+		final int left = x;
+		final int top = y;
+		int right = x + width;
+		int bottom = y + height;
+		this.drawGradientRect(left - 3, top - 4, right + 3, top - 3, -267386864, -267386864);
+		this.drawGradientRect(left - 3, bottom + 3, right + 3, bottom + 4, -267386864, -267386864);
+		this.drawGradientRect(left - 3, top - 3, right + 3, bottom + 3, -267386864, -267386864);
+		this.drawGradientRect(left - 4, top - 3, left - 3, bottom + 3, -267386864, -267386864);
+		this.drawGradientRect(right + 3, top - 3, right + 4, bottom + 3, -267386864, -267386864);
+		this.drawGradientRect(left - 3, top - 3 + 1, left - 3 + 1, bottom + 3 - 1, 1347420415, 1344798847);
+		this.drawGradientRect(right + 2, top - 3 + 1, right + 3, bottom + 3 - 1, 1347420415, 1344798847);
+		this.drawGradientRect(left - 3, top - 3, right + 3, top - 3 + 1, 1347420415, 1347420415);
+		this.drawGradientRect(left - 3, bottom + 2, right + 3, bottom + 3, 1344798847, 1344798847);
+	}
+
+	// 画一个可以镜像width的图标
+	public void drawTexturedModalRectMirrorWidth(int x, int y, int textureX, int textureY, int width, int height) {
+		float f = 0.00390625F;
+		float f1 = 0.00390625F;
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+		bufferbuilder.pos((double) (x + 0), (double) (y + height), (double) this.zLevel)
+				.tex((double) ((float) (textureX + width) * 0.00390625F),
+						(double) ((float) (textureY + height) * 0.00390625F))
+				.endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + height), (double) this.zLevel)
+				.tex((double) ((float) (textureX + 0) * 0.00390625F),
+						(double) ((float) (textureY + height) * 0.00390625F))
+				.endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + 0), (double) this.zLevel)
+				.tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F))
+				.endVertex();
+		bufferbuilder.pos((double) (x + 0), (double) (y + 0), (double) this.zLevel)
+				.tex((double) ((float) (textureX + width) * 0.00390625F),
+						(double) ((float) (textureY + 0) * 0.00390625F))
+				.endVertex();
+		tessellator.draw();
+	}
+
+	// 画一个可以镜像height的图标
+	public void drawTexturedModalRectMirrorHeight(int x, int y, int textureX, int textureY, int width, int height) {
+		float f = 0.00390625F;
+		float f1 = 0.00390625F;
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+		bufferbuilder.pos((double) (x + 0), (double) (y + height), (double) this.zLevel)
+				.tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F))
+				.endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + height), (double) this.zLevel)
+				.tex((double) ((float) (textureX + width) * 0.00390625F),
+						(double) ((float) (textureY + 0) * 0.00390625F))
+				.endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + 0), (double) this.zLevel)
+				.tex((double) ((float) (textureX + width) * 0.00390625F),
+						(double) ((float) (textureY + height) * 0.00390625F))
+				.endVertex();
+		bufferbuilder.pos((double) (x + 0), (double) (y + 0), (double) this.zLevel)
+				.tex((double) ((float) (textureX + 0) * 0.00390625F),
+						(double) ((float) (textureY + height) * 0.00390625F))
+				.endVertex();
+		tessellator.draw();
+	}
 
 }

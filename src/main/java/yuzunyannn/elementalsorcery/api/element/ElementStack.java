@@ -49,7 +49,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	}
 
 	public void become(ElementStack estack) {
-		this.setElement(element);
+		this.setElement(estack.element);
 		this.stackSize = estack.stackSize;
 		this.power = estack.power;
 	}

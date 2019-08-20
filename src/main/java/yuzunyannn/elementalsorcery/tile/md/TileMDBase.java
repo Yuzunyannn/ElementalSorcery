@@ -1,26 +1,39 @@
 package yuzunyannn.elementalsorcery.tile.md;
 
+import java.util.List;
+
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ability.IAcceptMagic;
 import yuzunyannn.elementalsorcery.api.ability.IAcceptMagicPesky;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
+import yuzunyannn.elementalsorcery.entity.EntityParticleEffect;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.util.IField;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
-public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky {
+public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky, IField {
 
 	/** 给予魔力的目标 */
 	protected TargetInfo[] targets = new TargetInfo[6];
 	/** 魔力仓库使用 */
-	protected ElementStack magic = ElementStack.EMPTY;
+	protected ElementStack magic = new ElementStack(ESInitInstance.ELEMENTS.MAGIC, 0);
 
 	@Override
 	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
@@ -53,6 +66,11 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		if (!magic.isEmpty())
 			nbt.setTag("magic", magic.serializeNBT());
 		return super.writeToNBT(nbt);
+	}
+
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		return super.hasCapability(capability, facing) || this.getCapability(capability, facing) != null;
 	}
 
 	/** 记录目标的数据 */
@@ -116,6 +134,8 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		public ElementStack accpetMagic(ElementStack magic, BlockPos from, EnumFacing facing) {
 			if (this.accepter instanceof IAcceptMagicPesky) {
 				IAcceptMagicPesky accepter = (IAcceptMagicPesky) this.accepter;
+				if (!accepter.canRecvMagic(facing))
+					return magic;
 				if (magic.getPower() < accepter.requireMinMagicPower())
 					return magic;
 				if (magic.getCount() < accepter.requireMinMagicCount())
@@ -147,26 +167,10 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		return null;
 	}
 
-	public boolean isTorch(EnumFacing facing) {
-		IBlockState state = this.world.getBlockState(pos.offset(facing));
-		return state.getBlock() == ESInitInstance.BLOCKS.MAGIC_TORCH
-				&& state.getValue(BlockMagicTorch.FACING) == facing;
-	}
-
-	public void torch(EnumFacing facing, boolean open) {
-		if (!this.isTorch(facing))
-			return;
-		BlockPos pos = this.pos.offset(facing);
-		IBlockState state = this.world.getBlockState(pos);
-		if (state.getValue(BlockMagicTorch.LIT) == open)
-			return;
-		this.world.setBlockState(pos, state.withProperty(BlockMagicTorch.LIT, open));
-	}
-
 	/** 当这个tile被放下，开始寻找四周的accpter */
 	public void coming() {
-		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-			if (this.isTorch(facing))
+		for (EnumFacing facing : EnumFacing.VALUES) {
+			if (this.canSend(facing))
 				this.find(facing, true);
 			else {
 				// 没有火把的情况下，由于是第一出来，也会强行说hi
@@ -182,7 +186,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	/** 当这个tile离开 ,应该在自身已经移除世界后调用 */
 	public void leaving(BlockPos pos) {
-		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+		for (EnumFacing facing : EnumFacing.VALUES) {
 			TargetInfo info = this.findTarget(pos, facing, this.getDistance());
 			if (info != null) {
 				TileMDBase tile = info.to(TileMDBase.class);
@@ -192,28 +196,76 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		}
 	}
 
+	/** 当被被破坏 */
+	public void onBreak() {
+		if (!this.world.isRemote) {
+			if (this.getCurrentCapacity() == 0)
+				return;
+			float rate = this.getCurrentCapacity() / 8000.0f;
+			if (rate > 1.0f)
+				rate = 1.0f;
+			int lev = (int) (7 * rate) + 1;
+			lev = 8;
+			NBTTagList list = new NBTTagList();
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setByte("Type", (byte) 0);
+			nbt.setIntArray("Colors", new int[] { 0x5c1771 });
+			nbt.setIntArray("FadeColors", new int[] { 0xf7deff });
+			nbt.setInteger("Size", MathHelper.ceil(lev / 2.0f));
+			nbt.setFloat("Speed", 0.075f * lev);
+			list.appendTag(nbt);
+			nbt = new NBTTagCompound();
+			nbt.setByte("Type", (byte) 1);
+			nbt.setIntArray("Colors", new int[] { 0x5c1771 });
+			nbt.setIntArray("FadeColors", new int[] { 0xf7deff });
+			nbt.setInteger("Size", lev);
+			nbt.setFloat("Speed", 0.2f * lev);
+			list.appendTag(nbt);
+			nbt = new NBTTagCompound();
+			nbt.setTag("Explosions", list);
+			EntityParticleEffect.spawnParticleEffect(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, nbt);
+			this.dealDamage(lev);
+		}
+	}
+
+	public void dealDamage(int level) {
+		Vec3d at = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+		AxisAlignedBB AABB = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1,
+				pos.getZ() + 1);
+		double range = level;
+		for (EntityLivingBase entitylivingbase : this.world.getEntitiesWithinAABB(EntityLivingBase.class,
+				AABB.grow(range))) {
+			float dmgRate = (float) (2.0 - entitylivingbase.getPositionVector().distanceTo(at) / (range + 1.0));
+			entitylivingbase.attackEntityFrom(DamageSource.MAGIC, dmgRate * dmgRate * level * 0.75f);
+		}
+	}
+
 	/** 当指定方向的方块改变了 */
 	public void change(EnumFacing facing) {
-		if (facing.getHorizontalIndex() < 0)
-			return;
 		this.find(facing, true);
 	}
 
 	/** 寻找并连接到 */
 	public void find(EnumFacing facing, boolean sayHi) {
 		int index = facing.getIndex();
-		// 没有火把的时候
-		if (!this.isTorch(facing)) {
+		// 不能发送的时候
+		if (!this.canSend(facing)) {
 			targets[index] = null;
+			this.torch(facing, false);
 			this.markDirty();
 			return;
 		}
 		// 寻找目标
 		targets[index] = this.findTarget(this.pos, facing, this.getDistance());
-		if (targets[index] != null && sayHi) {
+		if (targets[index] != null) {
 			TileMDBase tile = targets[index].to(TileMDBase.class);
-			if (tile != null)
-				tile.hi(this.pos, facing.getOpposite());
+			if (tile != null) {
+				// 如果对面不能接受
+				if (!tile.canRecvMagic(facing.getOpposite()))
+					targets[index] = null;
+				else if (sayHi)
+					tile.hi(this.pos, facing.getOpposite());
+			}
 		}
 		if (targets[index] == null)
 			this.torch(facing, false);
@@ -229,6 +281,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 			if (tile != null)
 				tile.oh(this.pos, facing.getOpposite());
 		}
+
 	}
 
 	/** 打招呼后，对面tile也选定了自己 */
@@ -236,7 +289,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	}
 
-	/** 其他方块不再向自己传输时候 */
+	/** 其他方块不再离开时候，向四周的方跨说再见 */
 	public void bye(BlockPos from, EnumFacing facing) {
 		this.find(facing, true);
 		int index = facing.getIndex();
@@ -247,29 +300,46 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	/** 检查所有位置状态 */
 	public void checkAll() {
 		for (int i = 0; i < targets.length; i++) {
+			EnumFacing facing = EnumFacing.getFront(i);
+			if (targets[i] == null)
+				this.find(facing, true);
+			else if (!targets[i].check())
+				this.find(facing, true);
+		}
+	}
+
+	/** 关闭所有火把 */
+	protected void allTorchOff() {
+		for (int i = 0; i < targets.length; i++) {
 			if (targets[i] == null)
 				continue;
-			if (!targets[i].check()) {
-				this.find(EnumFacing.getFront(i), true);
-			}
+			this.torch(EnumFacing.getFront(i), false);
 		}
 	}
 
 	/** 进行一次传输 */
 	protected void transferOnce() {
-		if (this.getCurrentCapacity() < this.getOverflow())
+		if (this.getCurrentCapacity() < this.getOverflow()) {
+			this.allTorchOff();
 			return;
-		int sendCount = this.getMaxSendCountOnce();
-		sendCount = Math.min(sendCount, this.magic.getCount());
-		ElementStack sendMagic = this.magic.splitStack(sendCount);
-		if (sendCount <= 0)
-			return;
+		}
 		// 总共能量
 		int sumLevel = 0;
 		for (int i = 0; i < targets.length; i++) {
 			if (targets[i] == null)
 				continue;
 			sumLevel += targets[i].lev;
+		}
+		if (sumLevel == 0) {
+			return;
+		}
+		// 发送量
+		int sendCount = this.getMaxSendOnce();
+		sendCount = Math.min(sendCount, this.magic.getCount());
+		ElementStack sendMagic = this.magic.splitStack(sendCount);
+		if (sendCount <= 0) {
+			this.allTorchOff();
+			return;
 		}
 		// 发送
 		for (int i = 0; i < targets.length; i++) {
@@ -286,8 +356,18 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 			count = count == 0 ? 1 : count;
 			ElementStack send = sendMagic.splitStack(count);
 			ElementStack remain = targets[i].accpetMagic(send, this.pos, facing.getOpposite());
+			sendMagic.grow(remain);
 		}
+		this.magic.grow(sendMagic);
 		this.markDirty();
+	}
+
+	@Override
+	public ElementStack accpetMagic(ElementStack magic, BlockPos from, EnumFacing facing) {
+		int rest = this.getMaxCapacity() - this.getCurrentCapacity();
+		rest = Math.min(magic.getCount(), rest);
+		this.magic.grow(magic.splitStack(rest));
+		return magic;
 	}
 
 	/** 进行一次传输 */
@@ -295,7 +375,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	protected void transferClientEffect() {
 		for (int i = 0; i < targets.length; i++) {
 			EnumFacing facing = EnumFacing.getFront(i);
-			if (this.isTorch(facing)) {
+			if (this.hasTorch(facing) && this.canSend(facing)) {
 				if (this.world.getBlockState(pos.offset(facing)).getValue(BlockMagicTorch.LIT)) {
 					// 客户端和服务器并没有同步这些数据，想要展示效果需要重新找
 					if (targets[i] == null)
@@ -317,28 +397,75 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	}
 
+	/** 记录的tick */
+	protected int tick;
+
+	/** 获取每次发送的量 */
+	protected int getMaxSendOnce() {
+		return this.getMaxSendPreSecond() / 4;
+	}
+
+	/** 自动发送 */
+	protected void autoTransfer() {
+		tick++;
+		if (tick % 5 != 0)
+			return;
+		if (tick % 20 == 0)
+			this.checkAll();
+		if (this.world.isRemote) {
+			this.transferClientEffect();
+		} else {
+			this.transferOnce();
+		}
+	}
+
+	/** 判断制定方向是否有torch */
+	public boolean hasTorch(EnumFacing facing) {
+		IBlockState state = this.world.getBlockState(pos.offset(facing));
+		return state.getBlock() == ESInitInstance.BLOCKS.MAGIC_TORCH
+				&& state.getValue(BlockMagicTorch.FACING) == facing;
+	}
+
+	/** 设置火把开关 */
+	public void torch(EnumFacing facing, boolean open) {
+		if (!this.hasTorch(facing))
+			return;
+		BlockPos pos = this.pos.offset(facing);
+		IBlockState state = this.world.getBlockState(pos);
+		if (state.getValue(BlockMagicTorch.LIT) == open)
+			return;
+		this.world.setBlockState(pos, state.withProperty(BlockMagicTorch.LIT, open));
+	}
+
+	/** 判断是否可以接受 */
+	@Override
+	public boolean canRecvMagic(EnumFacing facing) {
+		return facing.getHorizontalIndex() >= 0;
+	}
+
+	/** 判断方向是否可以发送 */
+	protected boolean canSend(EnumFacing facing) {
+		return facing.getHorizontalIndex() >= 0 && this.hasTorch(facing);
+	}
+
 	/** 获取距离 */
 	protected int getDistance() {
 		return 16;
 	}
 
-	/** 获取每次送的最大数量 */
-	protected abstract int getMaxSendCountOnce();
+	/** 获取每秒的最大数量，需要在update中使用 autoTransfer函数 */
+	protected abstract int getMaxSendPreSecond();
 
 	/** 获取达到多少值就可以向外发送了，超过了就会发送 */
 	protected abstract int getOverflow();
 
 	@Override
-	public ElementStack accpetMagic(ElementStack magic, BlockPos from, EnumFacing facing) {
-		int rest = this.getMaxCapacity() - this.getCurrentCapacity();
-		rest = Math.min(magic.getCount(), rest);
-		this.magic.grow(magic.splitStack(rest));
-		return magic;
-	}
-
-	@Override
 	public int getCurrentCapacity() {
 		return magic.getCount();
+	}
+
+	protected void setCurrentCapacity(int count) {
+		this.magic.setCount(count);
 	}
 
 	@Override
@@ -354,5 +481,34 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	@Override
 	public int requireLevel() {
 		return 0;
+	}
+
+	@Override
+	public int getField(int id) {
+		return 0;
+	}
+
+	@Override
+	public void setField(int id, int value) {
+	}
+
+	@Override
+	public int getFieldCount() {
+		return 0;
+	}
+
+	/** 容器更新检测使用 */
+	private int[] fieldDatas = new int[this.getFieldCount()];
+
+	/** 容器自动发送fild数据 */
+	public void detectAndSendChanges(Container container, List<IContainerListener> listeners) {
+		for (int i = 0; i < this.getFieldCount(); i++) {
+			if (this.getField(i) != fieldDatas[i]) {
+				fieldDatas[i] = this.getField(i);
+				for (int j = 0; j < listeners.size(); ++j) {
+					listeners.get(j).sendWindowProperty(container, i, this.getField(i));
+				}
+			}
+		}
 	}
 }

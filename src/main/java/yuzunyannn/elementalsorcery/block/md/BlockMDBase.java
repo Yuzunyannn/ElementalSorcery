@@ -4,12 +4,14 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.block.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 
@@ -35,12 +37,13 @@ public abstract class BlockMDBase extends BlockContainerNormal {
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity tile = worldIn.getTileEntity(pos);
+		if (tile instanceof TileMDBase)
+			((TileMDBase) tile).onBreak();
 		super.breakBlock(worldIn, pos, state);
 		if (worldIn.isRemote)
 			return;
-		if (tile instanceof TileMDBase) {
+		if (tile instanceof TileMDBase)
 			((TileMDBase) tile).leaving(pos);
-		}
 	}
 
 	@Override
@@ -53,4 +56,17 @@ public abstract class BlockMDBase extends BlockContainerNormal {
 			((TileMDBase) tile).change(EnumFacing.getFacingFromVector(pos.getX(), pos.getY(), pos.getZ()));
 		}
 	}
+
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (hitY < 0.45)
+			return false;
+		if (worldIn.isRemote)
+			return true;
+		playerIn.openGui(ElementalSorcery.instance, this.guiId(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+		return true;
+	}
+
+	protected abstract int guiId();
 }

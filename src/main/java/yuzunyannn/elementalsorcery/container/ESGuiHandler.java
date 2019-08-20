@@ -12,6 +12,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiElementCraftingTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
 import yuzunyannn.elementalsorcery.container.gui.GuiHearth;
 import yuzunyannn.elementalsorcery.container.gui.GuiInfusionBox;
+import yuzunyannn.elementalsorcery.container.gui.GuiMDMagicGen;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
 import yuzunyannn.elementalsorcery.container.gui.GuiSimple;
 import yuzunyannn.elementalsorcery.container.gui.GuiSmeltBox;
@@ -30,6 +31,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_ANALYSIS_ALTAR = 9;
 	public static final int GUI_SUPREME_CRAFTING_TABLE = 10;
 	public static final int GUI_INVENTORY_WORKBENCH = 11;
+	public static final int GUI_MD_MAGIC_GEN = 12;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -56,6 +58,8 @@ public class ESGuiHandler implements IGuiHandler {
 			return new ContainerSupremeCraftingTable(player, world.getTileEntity(new BlockPos(x, y, z)));
 		case GUI_INVENTORY_WORKBENCH:
 			return new ContainerWorkbenchWithInventory(player, world.getTileEntity(new BlockPos(x, y, z)));
+		case GUI_MD_MAGIC_GEN:
+			return new ContainerMDMagicGen(player, world.getTileEntity(new BlockPos(x, y, z)));
 		default:
 			return null;
 		}
@@ -99,6 +103,9 @@ public class ESGuiHandler implements IGuiHandler {
 			return new GuiSimple(
 					new ContainerWorkbenchWithInventory(player, world.getTileEntity(new BlockPos(x, y, z))),
 					player.inventory, "tile.supremeCraftingTable.name", TEXTURE_CRAFTING_TABLE);
+		case GUI_MD_MAGIC_GEN:
+			return new GuiMDMagicGen(new ContainerMDMagicGen(player, world.getTileEntity(new BlockPos(x, y, z))),
+					player.inventory);
 		default:
 			return null;
 		}
