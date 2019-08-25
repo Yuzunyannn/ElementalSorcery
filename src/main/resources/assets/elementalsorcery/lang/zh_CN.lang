@@ -72,7 +72,9 @@ tile.starStone.name=星石
 tile.starSand.name=星沙
 tile.stoneMill.name=捣粉臼
 tile.meltCauldron.name=熔岩锅
-tile.magicGen.name=热力魔分箱
+tile.MDMagicGen.name=热力魔分箱
+tile.MDHearth.name=魔动灶台
+tile.MDRubbleRepair.name=魔动碎石修复箱
 
 element.void.name=虚空
 element.magic.name=魔力

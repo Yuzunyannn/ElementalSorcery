@@ -19,15 +19,13 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.container.ContainerAnalysisAltar;
 import yuzunyannn.elementalsorcery.event.EventClient;
 
-public class GuiAnalysisAltar extends GuiNormal {
+public class GuiAnalysisAltar extends GuiNormal<ContainerAnalysisAltar> {
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/container/analysis_altar.png");
-	private final ContainerAnalysisAltar container;
 
 	public GuiAnalysisAltar(ContainerAnalysisAltar inventorySlotsIn, InventoryPlayer playerInv) {
 		super(inventorySlotsIn, playerInv);
-		this.container = inventorySlotsIn;
 	}
 
 	@Override
@@ -39,7 +37,7 @@ public class GuiAnalysisAltar extends GuiNormal {
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		if (!container.tileEntity.isOk())
-			return; 
+			return;
 		ItemStack stack = container.tileEntity.getDAStack();
 		if (stack.isEmpty()) {
 			this.drawStringWithWidth(I18n.format("info.analysisAltar.none"), 52, 26, 60);

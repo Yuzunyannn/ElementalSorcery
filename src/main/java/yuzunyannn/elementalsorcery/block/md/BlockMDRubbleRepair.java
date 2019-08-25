@@ -3,21 +3,22 @@ package yuzunyannn.elementalsorcery.block.md;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
-import yuzunyannn.elementalsorcery.tile.md.TileMDMagicGen;
+import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 
-public class BlockMDMagicGen extends BlockMDBase {
+public class BlockMDRubbleRepair extends BlockMDBase {
 
-	public BlockMDMagicGen() {
-		super("MDMagicGen");
+	public BlockMDRubbleRepair() {
+		super("MDRubbleRepair");
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileMDMagicGen();
+		return new TileMDRubbleRepair();
 	}
 
 	@Override
 	protected int guiId() {
-		return ESGuiHandler.GUI_MD_MAGIC_GEN;
+		return ESGuiHandler.GUI_MD_RUBBLE_REPAIR;
 	}
+
 }

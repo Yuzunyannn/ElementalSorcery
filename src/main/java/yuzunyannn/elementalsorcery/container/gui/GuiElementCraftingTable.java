@@ -13,9 +13,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.container.ContainerElementCraftingTable;
 import yuzunyannn.elementalsorcery.event.EventClient;
 
-public class GuiElementCraftingTable extends GuiNormal {
-
-	final ContainerElementCraftingTable container;
+public class GuiElementCraftingTable extends GuiNormal<ContainerElementCraftingTable> {
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/container/element_crafting_table.png");
@@ -24,7 +22,6 @@ public class GuiElementCraftingTable extends GuiNormal {
 		super(inventorySlotsIn, playerInv);
 		this.xSize = 230;
 		this.ySize = 242;
-		this.container = inventorySlotsIn;
 	}
 
 	@Override

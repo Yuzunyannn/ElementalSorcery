@@ -59,7 +59,6 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
-import yuzunyannn.elementalsorcery.render.tile.RenderTileMDMagicGen;
 import yuzunyannn.elementalsorcery.render.tile.RednerTileSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileAnalysisAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileBuildingAltar;
@@ -67,6 +66,9 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementalCube;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileLantern;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileMDHearth;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileMDMagicGen;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
@@ -89,7 +91,9 @@ import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.tile.md.TileMDHearth;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicGen;
+import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 
 public class ESInit {
@@ -235,6 +239,8 @@ public class ESInit {
 		register(ESInitInstance.BLOCKS.STONE_MILL);
 		register(ESInitInstance.BLOCKS.MELT_CAULDRON);
 		register(ESInitInstance.BLOCKS.MD_MAGIC_GEN);
+		register(ESInitInstance.BLOCKS.MD_HEARTH);
+		register(ESInitInstance.BLOCKS.MD_RUBBLE_REPAIR);
 	}
 
 	static void registerAllTiles() {
@@ -255,7 +261,9 @@ public class ESInit {
 		register(TileSupremeCraftingTable.class, "SupremeCraftingTable");
 		register(TileStoneMill.class, "StoneMill");
 		register(TileMeltCauldron.class, "MeltCauldron");
-		register(TileMDMagicGen.class, "MDMagicGenerator");
+		register(TileMDMagicGen.class, "MDMagicGen");
+		register(TileMDHearth.class, "MDHearth");
+		register(TileMDRubbleRepair.class, "MDRubbleRepair");
 	}
 
 	static void registerAllElements() {
@@ -352,8 +360,10 @@ public class ESInit {
 				TileSupremeCraftingTable.class);
 		registerRender(new RenderTileStoneMill(), ESInitInstance.BLOCKS.STONE_MILL, TileStoneMill.class);
 		registerRender(new RenderTileMeltCauldron(), ESInitInstance.BLOCKS.MELT_CAULDRON, TileMeltCauldron.class);
-		registerRender(new RenderTileMDMagicGen(), ESInitInstance.BLOCKS.MD_MAGIC_GEN,
-				TileMDMagicGen.class);
+		registerRender(new RenderTileMDMagicGen(), ESInitInstance.BLOCKS.MD_MAGIC_GEN, TileMDMagicGen.class);
+		registerRender(new RenderTileMDHearth(), ESInitInstance.BLOCKS.MD_HEARTH, TileMDHearth.class);
+		registerRender(new RenderTileMDRubbleRepair(), ESInitInstance.BLOCKS.MD_RUBBLE_REPAIR,
+				TileMDRubbleRepair.class);
 
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);

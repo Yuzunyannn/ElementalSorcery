@@ -4,29 +4,17 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurnPower {
 
-	/** 仓库 */
-	protected ItemStackHandler inventory = new ItemStackHandler(1) {
-		@Override
-		@Nonnull
-		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (stack.getItem() != ESInitInstance.ITEMS.MAGIC_STONE)
-				return stack;
-			return super.insertItem(slot, stack, simulate);
-		}
-	};
 	/** 温度 */
 	protected float temperature;
 
@@ -37,10 +25,22 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 	@SideOnly(Side.CLIENT)
 	public ItemStack renderItem = new ItemStack(ESInitInstance.ITEMS.MAGIC_STONE);
 
+	/** 初始化仓库 */
+	@Override
+	protected ItemStackHandler initItemStackHandler() {
+		return new ItemStackHandler(1) {
+			@Override
+			@Nonnull
+			public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+				if (stack.getItem() != ESInitInstance.ITEMS.MAGIC_STONE)
+					return stack;
+				return super.insertItem(slot, stack, simulate);
+			}
+		};
+	}
+
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		if (!this.getMagicStone().isEmpty())
-			nbt.setTag("mgStone", this.getMagicStone().serializeNBT());
 		nbt.setFloat("T", temperature);
 		nbt.setFloat("rate", meltRate);
 		return super.writeToNBT(nbt);
@@ -48,19 +48,9 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		if (nbt.hasKey("mgStone"))
-			this.setMagicStone(new ItemStack(nbt.getCompoundTag("mgStone")));
 		this.temperature = nbt.getFloat("T");
 		this.meltRate = nbt.getFloat("rate");
 		super.readFromNBT(nbt);
-	}
-
-	@Override
-	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			return (T) inventory;
-		}
-		return super.getCapability(capability, facing);
 	}
 
 	@Override
@@ -93,7 +83,7 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 	}
 
 	public boolean isFire() {
-		return false;
+		return temperature > 20;
 	}
 
 	@Override
@@ -169,7 +159,7 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 				dRate = prevMeltRate;
 			}
 			// 增长
-			this.magic.grow((int) (dRate * 100));
+			this.magic.grow(new ElementStack(ESInitInstance.ELEMENTS.MAGIC, (int) (dRate * 100), 25));
 			if (this.getCurrentCapacity() >= this.getMaxCapacity()) {
 				this.magic.setCount(this.getMaxCapacity());
 			}

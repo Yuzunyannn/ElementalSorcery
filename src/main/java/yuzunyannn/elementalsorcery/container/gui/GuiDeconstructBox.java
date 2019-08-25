@@ -7,16 +7,13 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ContainerDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
 
-public class GuiDeconstructBox extends GuiNormal {
+public class GuiDeconstructBox extends GuiNormal<ContainerDeconstructBox> {
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/container/deconstruct_box.png");
 
-	private final ContainerDeconstructBox container;
-
 	public GuiDeconstructBox(ContainerDeconstructBox inventorySlotsIn, InventoryPlayer playerInv) {
 		super(inventorySlotsIn, playerInv);
-		container = inventorySlotsIn;
 	}
 
 	@Override

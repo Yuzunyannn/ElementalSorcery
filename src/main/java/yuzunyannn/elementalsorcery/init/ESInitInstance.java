@@ -36,7 +36,9 @@ import yuzunyannn.elementalsorcery.block.container.BlockMeltCauldron;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.container.BlockStela;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
+import yuzunyannn.elementalsorcery.block.md.BlockMDHearth;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagicGen;
+import yuzunyannn.elementalsorcery.block.md.BlockMDRubbleRepair;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementAir;
@@ -142,6 +144,8 @@ public class ESInitInstance {
 		BLOCKS.STONE_MILL = new BlockStoneMill().setRegistryName("stone_mill");
 		BLOCKS.MELT_CAULDRON = new BlockMeltCauldron().setRegistryName("melt_cauldron");
 		BLOCKS.MD_MAGIC_GEN = new BlockMDMagicGen().setRegistryName("md_magic_gen");
+		BLOCKS.MD_HEARTH = new BlockMDHearth().setRegistryName("md_hearth");
+		BLOCKS.MD_RUBBLE_REPAIR = new BlockMDRubbleRepair().setRegistryName("md_rubble_repair");
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();

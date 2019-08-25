@@ -32,20 +32,9 @@ public class ModelMDMagicGen extends ModelBase {
 	public void render(Entity entity, float on, float f1, float f2, float f3, float f4, float scale) {
 		box.render(scale);
 		if (on == 0)
-			renderOnce(otoff, scale);
+			ModelMDBase.render90(otoff, scale);
 		else
-			renderOnce(oton, scale);
-	}
-
-	private void renderOnce(ModelRenderer ot, float scale) {
-		ot.rotateAngleY = 0;
-		ot.render(scale);
-		ot.rotateAngleY = 1.5707963f;
-		ot.render(scale);
-		ot.rotateAngleY = 3.1415926f;
-		ot.render(scale);
-		ot.rotateAngleY = 4.7123889f;
-		ot.render(scale);
+			ModelMDBase.render90(oton, scale);
 	}
 
 }

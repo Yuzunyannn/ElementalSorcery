@@ -42,6 +42,7 @@ public class TileEntityNetwork extends TileEntity {
 	/** 最后一次接受的nbt */
 	private NBTTagCompound lastRecvNBT = null;
 
+	// 该函数还会被普通的调用，表明首次更新，首次调用是mc来管理
 	@Override
 	public NBTTagCompound getUpdateTag() {
 		NBTTagCompound nbt = this.writeToNBT(new NBTTagCompound());
@@ -69,8 +70,11 @@ public class TileEntityNetwork extends TileEntity {
 		if (world.isRemote)
 			return;
 		isNetwork = true;
-		for (EntityPlayer player : world.playerEntities)
+		for (EntityPlayer player : world.playerEntities) {
+			if (player.getPosition().distanceSq(this.pos) > 512 * 512)
+				continue;
 			((EntityPlayerMP) player).connection.sendPacket(this.getUpdatePacket());
+		}
 		isNetwork = false;
 	}
 

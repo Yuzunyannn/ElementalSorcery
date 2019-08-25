@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"burning=false": {
+			"model": "elementalsorcery:astone"
+		},
+		"burning=true": {
+			"model": "elementalsorcery:astone"
+		}
+	}
+}

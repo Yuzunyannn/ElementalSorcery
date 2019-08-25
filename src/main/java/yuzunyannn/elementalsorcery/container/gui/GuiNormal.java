@@ -11,13 +11,15 @@ import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 
-public abstract class GuiNormal extends GuiContainer {
+public abstract class GuiNormal<T extends Container> extends GuiContainer {
 
 	protected final InventoryPlayer playerInventory;
+	protected final T container;
 
-	public GuiNormal(Container inventorySlotsIn, InventoryPlayer playerInv) {
+	public GuiNormal(T inventorySlotsIn, InventoryPlayer playerInv) {
 		super(inventorySlotsIn);
 		this.playerInventory = playerInv;
+		this.container = inventorySlotsIn;
 	}
 
 	public abstract String getUnlocalizedTitle();
@@ -70,6 +72,20 @@ public abstract class GuiNormal extends GuiContainer {
 		this.drawGradientRect(left - 3, top - 3, right + 3, top - 3 + 1, 1347420415, 1347420415);
 		this.drawGradientRect(left - 3, bottom + 2, right + 3, bottom + 3, 1344798847, 1344798847);
 	}
+	
+    public void drawTexturedModalRect(float x, float y, int u, int v, int width, int height,float textureWidth, float textureHeight)
+    {
+        float f = 1.0F / textureWidth;
+        float f1 = 1.0F / textureHeight;
+        Tessellator tessellator = Tessellator.getInstance();
+        BufferBuilder bufferbuilder = tessellator.getBuffer();
+        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+        bufferbuilder.pos((double)x, (double)(y + height), 0.0D).tex((double)(u * f), (double)((v + (float)height) * f1)).endVertex();
+        bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((u + (float)width) * f), (double)((v + (float)height) * f1)).endVertex();
+        bufferbuilder.pos((double)(x + width), (double)y, 0.0D).tex((double)((u + (float)width) * f), (double)(v * f1)).endVertex();
+        bufferbuilder.pos((double)x, (double)y, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
+        tessellator.draw();
+    }
 
 	// 画一个可以镜像width的图标
 	public void drawTexturedModalRectMirrorWidth(int x, int y, int textureX, int textureY, int width, int height) {

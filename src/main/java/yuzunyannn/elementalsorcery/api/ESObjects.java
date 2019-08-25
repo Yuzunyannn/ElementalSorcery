@@ -78,6 +78,8 @@ public class ESObjects {
 		public Block STONE_MILL;
 		public Block MELT_CAULDRON;
 		public Block MD_MAGIC_GEN;
+		public Block MD_HEARTH;
+		public Block MD_RUBBLE_REPAIR;
 	}
 
 	static public class Elements {

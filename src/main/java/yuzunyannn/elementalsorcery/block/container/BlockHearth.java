@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.block.container;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyBool;
@@ -22,6 +21,7 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -29,8 +29,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
-import yuzunyannn.elementalsorcery.ESCreativeTabs;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
@@ -40,6 +38,7 @@ public class BlockHearth extends BlockContainer implements Mapper {
 
 	public static final PropertyBool BURNING = PropertyBool.create("burning");
 	public static final PropertyEnum<EnumMaterial> MATERIAL = PropertyEnum.create("material", EnumMaterial.class);
+	public static final AxisAlignedBB BLOCK_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.75D, 1.0D);
 
 	public BlockHearth() {
 		super(Material.ROCK);
@@ -49,6 +48,11 @@ public class BlockHearth extends BlockContainer implements Mapper {
 		this.setLightOpacity(255);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(BURNING, false).withProperty(MATERIAL,
 				EnumMaterial.COBBLESTONE));
+	}
+
+	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return BLOCK_AABB;
 	}
 
 	@Override
@@ -191,18 +195,20 @@ public class BlockHearth extends BlockContainer implements Mapper {
 
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-		boolean isBurning = stateIn.getValue(BURNING);
-		if (isBurning) {
-			double x = (double) pos.getX() + 0.25D + rand.nextDouble() * 0.5D;
-			double y = (double) pos.getY() + 0.75D + rand.nextDouble() * 0.25D;
-			double z = (double) pos.getZ() + 0.25D + rand.nextDouble() * 0.5D;
+		if (stateIn.getValue(BURNING))
+			BlockHearth.displayTick(worldIn, pos, rand);
+	}
 
-			if (rand.nextDouble() < 0.1D) {
-				worldIn.playSound((double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D,
-						SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
-			}
-			worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x, y, z, 0.0D, 0.0D, 0.0D);
-			worldIn.spawnParticle(EnumParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D);
+	public static void displayTick(World worldIn, BlockPos pos, Random rand) {
+		double x = (double) pos.getX() + 0.25D + rand.nextDouble() * 0.5D;
+		double y = (double) pos.getY() + 0.75D + rand.nextDouble() * 0.25D;
+		double z = (double) pos.getZ() + 0.25D + rand.nextDouble() * 0.5D;
+
+		if (rand.nextDouble() < 0.1D) {
+			worldIn.playSound((double) pos.getX() + 0.5D, (double) pos.getY(), (double) pos.getZ() + 0.5D,
+					SoundEvents.BLOCK_FURNACE_FIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0F, false);
 		}
+		worldIn.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, x, y, z, 0.0D, 0.0D, 0.0D);
+		worldIn.spawnParticle(EnumParticleTypes.FLAME, x, y, z, 0.0D, 0.0D, 0.0D);
 	}
 }

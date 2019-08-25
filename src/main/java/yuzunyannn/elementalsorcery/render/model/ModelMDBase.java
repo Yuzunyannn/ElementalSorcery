@@ -76,4 +76,15 @@ public class ModelMDBase extends ModelBase {
 		wd.render(scale);
 	}
 
+	static public void render90(ModelRenderer model, float scale) {
+		model.rotateAngleY = 0;
+		model.render(scale);
+		model.rotateAngleY = 1.5707963f;
+		model.render(scale);
+		model.rotateAngleY = 3.1415926f;
+		model.render(scale);
+		model.rotateAngleY = 4.7123889f;
+		model.render(scale);
+	}
+
 }

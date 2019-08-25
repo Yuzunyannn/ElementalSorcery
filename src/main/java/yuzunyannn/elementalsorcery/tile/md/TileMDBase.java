@@ -4,10 +4,13 @@ import java.util.List;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
@@ -19,6 +22,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.ability.IAcceptMagic;
 import yuzunyannn.elementalsorcery.api.ability.IAcceptMagicPesky;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
@@ -34,6 +39,13 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	protected TargetInfo[] targets = new TargetInfo[6];
 	/** 魔力仓库使用 */
 	protected ElementStack magic = new ElementStack(ESInitInstance.ELEMENTS.MAGIC, 0);
+	/** 需求的仓库 */
+	protected ItemStackHandler inventory = this.initItemStackHandler();
+
+	/** 初始化仓库，不需要返回null */
+	protected ItemStackHandler initItemStackHandler() {
+		return null;
+	};
 
 	@Override
 	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
@@ -52,6 +64,8 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		}
 		if (nbt.hasKey("magic"))
 			magic = new ElementStack(nbt.getCompoundTag("magic"));
+		if (nbt.hasKey("Inv") && this.inventory != null)
+			this.inventory.deserializeNBT(nbt.getCompoundTag("Inv"));
 	}
 
 	@Override
@@ -65,7 +79,17 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		}
 		if (!magic.isEmpty())
 			nbt.setTag("magic", magic.serializeNBT());
+		if (inventory != null)
+			nbt.setTag("Inv", this.inventory.serializeNBT());
 		return super.writeToNBT(nbt);
+	}
+
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
+			return (T) inventory;
+		}
+		return super.getCapability(capability, facing);
 	}
 
 	@Override
@@ -196,6 +220,9 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		}
 	}
 
+	static final public int[] PARTICLE_COLOR = new int[] { 0x5c1771 };
+	static final public int[] PARTICLE_COLOR_FADE = new int[] { 0xf7deff };
+
 	/** 当被被破坏 */
 	public void onBreak() {
 		if (!this.world.isRemote) {
@@ -205,12 +232,11 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 			if (rate > 1.0f)
 				rate = 1.0f;
 			int lev = (int) (7 * rate) + 1;
-			lev = 8;
 			NBTTagList list = new NBTTagList();
 			NBTTagCompound nbt = new NBTTagCompound();
 			nbt.setByte("Type", (byte) 0);
-			nbt.setIntArray("Colors", new int[] { 0x5c1771 });
-			nbt.setIntArray("FadeColors", new int[] { 0xf7deff });
+			nbt.setIntArray("Colors", PARTICLE_COLOR);
+			nbt.setIntArray("FadeColors", PARTICLE_COLOR_FADE);
 			nbt.setInteger("Size", MathHelper.ceil(lev / 2.0f));
 			nbt.setFloat("Speed", 0.075f * lev);
 			list.appendTag(nbt);
@@ -232,11 +258,12 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		Vec3d at = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
 		AxisAlignedBB AABB = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1,
 				pos.getZ() + 1);
+		int baseDmg = this.magic.getPower() + level;
 		double range = level;
 		for (EntityLivingBase entitylivingbase : this.world.getEntitiesWithinAABB(EntityLivingBase.class,
 				AABB.grow(range))) {
 			float dmgRate = (float) (2.0 - entitylivingbase.getPositionVector().distanceTo(at) / (range + 1.0));
-			entitylivingbase.attackEntityFrom(DamageSource.MAGIC, dmgRate * dmgRate * level * 0.75f);
+			entitylivingbase.attackEntityFrom(DamageSource.MAGIC, dmgRate * dmgRate * baseDmg * 0.75f);
 		}
 	}
 
@@ -454,10 +481,19 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	}
 
 	/** 获取每秒的最大数量，需要在update中使用 autoTransfer函数 */
-	protected abstract int getMaxSendPreSecond();
+	protected int getMaxSendPreSecond() {
+		return 100;
+	}
 
 	/** 获取达到多少值就可以向外发送了，超过了就会发送 */
-	protected abstract int getOverflow();
+	protected int getOverflow() {
+		return 800;
+	}
+
+	@Override
+	public int getMaxCapacity() {
+		return 1000;
+	}
 
 	@Override
 	public int getCurrentCapacity() {
@@ -485,16 +521,17 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	@Override
 	public int getField(int id) {
-		return 0;
+		return this.getCurrentCapacity();
 	}
 
 	@Override
 	public void setField(int id, int value) {
+		this.setCurrentCapacity(value);
 	}
 
 	@Override
 	public int getFieldCount() {
-		return 0;
+		return 1;
 	}
 
 	/** 容器更新检测使用 */
@@ -511,4 +548,62 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 			}
 		}
 	}
+
+	/** 检测所有并返回nbt */
+	protected NBTTagCompound detectAndGetUpdateNBT() {
+		NBTTagCompound nbt = new NBTTagCompound();
+		for (int i = 0; i < this.getFieldCount(); i++)
+			this.detectAndWriteToNBT(nbt, i);
+		return nbt.hasNoTags() ? null : nbt;
+	}
+
+	/** 检测设置nbt */
+	protected boolean detectAndWriteToNBT(NBTTagCompound nbt, int fieldIndex) {
+		if (this.getField(fieldIndex) != fieldDatas[fieldIndex]) {
+			fieldDatas[fieldIndex] = this.getField(fieldIndex);
+			this.updateDataWriteToNBT(nbt, fieldIndex);
+			return true;
+		}
+		return false;
+	}
+
+	/** 设置nbt数据 */
+	protected NBTTagCompound updateDataWriteToNBT(NBTTagCompound nbt, int fieldIndex) {
+		nbt.setInteger(Integer.toString(fieldIndex), fieldDatas[fieldIndex]);
+		return nbt;
+	}
+
+	/** 将数据更新到client端 */
+	public void updateToClient(NBTTagCompound nbt) {
+		if (world.isRemote)
+			return;
+		SPacketUpdateTileEntity packet = this.getSendUpdatePacket(nbt);
+		for (EntityPlayer player : world.playerEntities) {
+			if (player.getPosition().distanceSq(this.pos) > 512 * 512)
+				continue;
+			((EntityPlayerMP) player).connection.sendPacket(packet);
+		}
+	}
+
+	/** 获取发送包 */
+	public SPacketUpdateTileEntity getSendUpdatePacket(NBTTagCompound nbt) {
+		return new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), nbt);
+	}
+
+	@Override
+	public void onDataPacket(net.minecraft.network.NetworkManager net,
+			net.minecraft.network.play.server.SPacketUpdateTileEntity pkt) {
+		NBTTagCompound tag = pkt.getNbtCompound();
+		for (int i = 0; i < this.getFieldCount(); i++) {
+			String key = Integer.toString(i);
+			if (tag.hasKey(key))
+				this.setField(i, tag.getInteger(key));
+		}
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return this.writeToNBT(new NBTTagCompound());
+	}
+
 }

@@ -97,8 +97,8 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 
 	private void brunIt(boolean burn) {
 		IBlockState state = world.getBlockState(pos);
-		// if (state.getBlock() != ESInitInstance.BLOCKS.HEARTH)return;
-		world.setBlockState(pos, state.withProperty(BlockHearth.BURNING, burn));
+		if (burn != state.getValue(BlockHearth.BURNING))
+			world.setBlockState(pos, state.withProperty(BlockHearth.BURNING, burn));
 	}
 
 	public static int getBurnLevel(World worldIn, BlockPos pos) {

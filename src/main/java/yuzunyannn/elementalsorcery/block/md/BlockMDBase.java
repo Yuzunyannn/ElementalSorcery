@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.block.BlockContainerNormal;
+import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 
 /** 所有魔动的基础方块 */
@@ -60,11 +61,19 @@ public abstract class BlockMDBase extends BlockContainerNormal {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (hitY < 0.45)
+		if (hitY < 0.45
+				&& Block.getBlockFromItem(playerIn.getHeldItem(hand).getItem()) == ESInitInstance.BLOCKS.MAGIC_TORCH)
+			return false;
+		if (!this.canOpenGUI(worldIn, facing, hitX, hitY, hitZ, playerIn.getHeldItem(hand)))
 			return false;
 		if (worldIn.isRemote)
 			return true;
 		playerIn.openGui(ElementalSorcery.instance, this.guiId(), worldIn, pos.getX(), pos.getY(), pos.getZ());
+		return true;
+	}
+
+	protected boolean canOpenGUI(World worldIn, EnumFacing facing, float hitX, float hitY, float hitZ,
+			ItemStack stack) {
 		return true;
 	}
 
