@@ -12,6 +12,7 @@ import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 public class ItemStructure implements IItemStructure {
 
 	static public IItemStructure getItemStructure(ItemStack stack) {
+		//这里应当加入获取ItemStructure[事件]
 		return new ItemStructure(stack);
 	}
 

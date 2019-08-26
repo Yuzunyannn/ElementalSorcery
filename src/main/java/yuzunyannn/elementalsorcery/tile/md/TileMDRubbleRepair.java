@@ -68,15 +68,16 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 	public int getField(int id) {
 		switch (id) {
 		case 0:
-			return this.getCurrentCapacity();
 		case 1:
+			return super.getField(id);
+		case 2:
 			if (this.getStack() == lastStack)
 				return lastId;
 			lastStack = this.getStack();
 			return lastId = Block.getIdFromBlock(Block.getBlockFromItem(lastStack.getItem()));
-		case 2:
-			return complete;
 		case 3:
+			return complete;
+		case 4:
 			// 通过客户端的动画结果
 			return complete > 0 ? 1 : 0;
 		default:
@@ -88,15 +89,16 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 	public void setField(int id, int value) {
 		switch (id) {
 		case 0:
-			this.setCurrentCapacity(value);
-			break;
 		case 1:
-			this.setStack(Block.getBlockById(value));
+			super.setField(id, value);
 			break;
 		case 2:
-			this.complete = value;
+			this.setStack(Block.getBlockById(value));
 			break;
 		case 3:
+			this.complete = value;
+			break;
+		case 4:
 			if (this.complete == 0) {
 				if (value == 1)
 					this.complete = 1;
@@ -111,7 +113,7 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 
 	@Override
 	public int getFieldCount() {
-		return 4;
+		return 5;
 	}
 
 	NBTTagCompound sndTemp = new NBTTagCompound();
@@ -119,6 +121,11 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 	protected void detectAndSendItemType() {
 		if (this.detectAndWriteToNBT(sndTemp, 1) || this.detectAndWriteToNBT(sndTemp, 3))
 			this.updateToClient(sndTemp);
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		return this.writeToNBT(new NBTTagCompound());
 	}
 
 	/** 获取默认的修复结果 */

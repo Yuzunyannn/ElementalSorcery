@@ -239,7 +239,7 @@ public class TileStela extends TileEntityNetwork {
 		Item item = stack.getItem();
 		Block block = Block.getBlockFromItem(item);
 		if (block != Blocks.AIR) {
-			if (block == ESInitInstance.BLOCKS.INFUSION_BOX) {
+			if (block == ESInitInstance.BLOCKS.MD_INFUSION) {
 				if (Math.random() < 0.2)
 					return RandomHelper.randomSelect(Pages.ABOUT_ELEMENT_CRY, Pages.ABOUT_SPELL_CRY);
 				return RandomHelper.randomSelect(Pages.ABOUT_INFUSION, Pages.ABOUT_MAGICAL_PIECE,

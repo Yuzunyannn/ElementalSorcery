@@ -174,7 +174,8 @@ public class Pages {
 		regPage(ABOUT_MELT_CAULDRON, new PageCraftingSimple("meltCauldron", ESInitInstance.BLOCKS.MELT_CAULDRON));
 		regPage(ABOUT_ASTONE, aboutAStone());
 
-		regPage(ABOUT_INFUSION, new PageCraftingSimple("infusion", ESInitInstance.BLOCKS.INFUSION_BOX));
+		//regPage(ABOUT_INFUSION, new PageCraftingSimple("infusion", ESInitInstance.BLOCKS.MD_INFUSION));
+		
 		regPage(ABOUT_MAGICAL_ENDEREYE,
 				new PageCraftingSimple("magical_endereye", ESInitInstance.ITEMS.MAGICAL_ENDER_EYE));
 		regPage(ABOUT_KYNATIE_TOOLS, aboutKynatieTools());

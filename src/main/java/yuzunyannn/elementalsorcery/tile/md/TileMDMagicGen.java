@@ -11,7 +11,6 @@ import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurnPower {
 
@@ -53,12 +52,6 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 		super.readFromNBT(nbt);
 	}
 
-	@Override
-	public void onBreak() {
-		super.onBreak();
-		BlockHelper.drop(inventory, world, pos);
-	}
-
 	protected ItemStack getMagicStone() {
 		return this.inventory.getStackInSlot(0);
 	}
@@ -69,7 +62,7 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 
 	@Override
 	public int getMaxCapacity() {
-		return 5000;
+		return 2000;
 	}
 
 	@Override
@@ -88,17 +81,18 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 
 	@Override
 	public int getFieldCount() {
-		return 3;
+		return 4;
 	}
 
 	@Override
 	public int getField(int id) {
 		switch (id) {
 		case 0:
-			return this.getCurrentCapacity();
 		case 1:
-			return Float.floatToIntBits(meltRate);
+			return super.getField(id);
 		case 2:
+			return Float.floatToIntBits(meltRate);
+		case 3:
 			return (int) this.temperature;
 		default:
 			return 0;
@@ -110,12 +104,13 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 	public void setField(int id, int value) {
 		switch (id) {
 		case 0:
-			this.setCurrentCapacity(value);
-			break;
 		case 1:
-			this.meltRate = Float.intBitsToFloat(value);
+			super.setField(id, value);
 			break;
 		case 2:
+			this.meltRate = Float.intBitsToFloat(value);
+			break;
+		case 3:
 			this.temperature = value;
 			break;
 		default:
@@ -159,7 +154,10 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 				dRate = prevMeltRate;
 			}
 			// 增长
-			this.magic.grow(new ElementStack(ESInitInstance.ELEMENTS.MAGIC, (int) (dRate * 100), 25));
+			if (this.magic.isEmpty())
+				this.magic = new ElementStack(ESInitInstance.ELEMENTS.MAGIC, (int) (dRate * 100), 25);
+			else
+				this.magic.grow(new ElementStack(ESInitInstance.ELEMENTS.MAGIC, (int) (dRate * 100), 25));
 			if (this.getCurrentCapacity() >= this.getMaxCapacity()) {
 				this.magic.setCount(this.getMaxCapacity());
 			}

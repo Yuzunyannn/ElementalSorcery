@@ -1,5 +1,8 @@
 package yuzunyannn.elementalsorcery.container.gui;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -14,7 +17,9 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 			"textures/gui/container/magic_volume.png");
 	public static final ResourceLocation TEXTURE1 = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/container/md1.png");
-	
+	public static final ResourceLocation TEXTURE2 = new ResourceLocation(ElementalSorcery.MODID,
+			"textures/gui/container/md2.png");
+
 	public GuiMDBase(T inventorySlotsIn, InventoryPlayer playerInv) {
 		super(inventorySlotsIn, playerInv);
 	}
@@ -40,16 +45,44 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 		return true;
 	}
 
-	protected void drawInfo(int x, int y, int color, String... strs) {
+	protected void drawInfo(int x, int y, int color, List<String> strs) {
 		int maxWidth = 0;
 		for (String str : strs) {
 			int width = this.fontRenderer.getStringWidth(str);
 			if (width > maxWidth)
 				maxWidth = width;
 		}
-		this.drawToolTipBackground(x, y, maxWidth, this.fontRenderer.FONT_HEIGHT * strs.length);
-		for (int i = 0; i < strs.length; i++)
-			this.fontRenderer.drawString(strs[i], x, y + this.fontRenderer.FONT_HEIGHT * i, color);
+		this.drawToolTipBackground(x, y, maxWidth, this.fontRenderer.FONT_HEIGHT * strs.size());
+		for (int i = 0; i < strs.size(); i++)
+			this.fontRenderer.drawString(strs.get(i), x, y + this.fontRenderer.FONT_HEIGHT * i, color);
+	}
+
+	List<String> infosTmp = new ArrayList<String>();
+
+	@Override
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
+		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
+		if (this.showMagicInfo(mouseX - offsetX, mouseY - offsetY)) {
+			if (mouseX < offsetX + 79 || mouseX > offsetX + 96 || mouseY < offsetY + 60) {
+				int x = mouseX - offsetX;
+				int y = mouseY - offsetY;
+				infosTmp.clear();
+				this.getShowMagicInfos(infosTmp);
+				this.drawInfo(x, y, 0xffffff, infosTmp);
+			}
+		}
+	}
+
+	/** 添加信息 */
+	protected void getShowMagicInfos(List<String> infos) {
+		infos.add(this.container.tileEntity.getCurrentCapacity() + "/" + this.container.tileEntity.getMaxCapacity());
+		infos.add(this.container.tileEntity.getCurrentPower() + "P");
+	}
+
+	/** 是否展示魔力数据 */
+	protected boolean showMagicInfo(int mouseX, int mouseY) {
+		return this.isMouseIn(mouseX, mouseY, 15, 19, 144, 50);
 	}
 
 }

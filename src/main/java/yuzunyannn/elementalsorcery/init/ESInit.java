@@ -67,8 +67,10 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementalCube;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileLantern;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMDHearth;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileMDInfusion;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMDMagicGen;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMDRubbleRepair;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileMDTransfer;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
@@ -77,7 +79,6 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileStoneMill;
 import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
-import yuzunyannn.elementalsorcery.tile.TileInfusionBox;
 import yuzunyannn.elementalsorcery.tile.TileLantern;
 import yuzunyannn.elementalsorcery.tile.TileMagicPlatform;
 import yuzunyannn.elementalsorcery.tile.TileMeltCauldron;
@@ -92,8 +93,10 @@ import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.tile.md.TileMDHearth;
+import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicGen;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
+import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 
 public class ESInit {
@@ -223,7 +226,6 @@ public class ESInit {
 		register(ESInitInstance.BLOCKS.INVALID_ENCHANTMENT_TABLE);
 		register(ESInitInstance.BLOCKS.ELEMENT_WORKBENCH);
 		register(ESInitInstance.BLOCKS.DECONSTRUCT_BOX);
-		register(ESInitInstance.BLOCKS.INFUSION_BOX);
 		register(ESInitInstance.BLOCKS.MAGIC_DESK);
 		register(ESInitInstance.BLOCKS.ELEMENT_CRAFTING_TABLE);
 		register(ESInitInstance.BLOCKS.DECONSTRUCT_ALTAR_TABLE);
@@ -241,6 +243,8 @@ public class ESInit {
 		register(ESInitInstance.BLOCKS.MD_MAGIC_GEN);
 		register(ESInitInstance.BLOCKS.MD_HEARTH);
 		register(ESInitInstance.BLOCKS.MD_RUBBLE_REPAIR);
+		register(ESInitInstance.BLOCKS.MD_INFUSION);
+		register(ESInitInstance.BLOCKS.MD_TRANSFER);
 	}
 
 	static void registerAllTiles() {
@@ -250,7 +254,6 @@ public class ESInit {
 		register(TileMagicPlatform.class, "MagicPlatform");
 		register(TileAbsorbBox.class, "AbsorbBox");
 		register(TileDeconstructBox.class, "DeconstructBox");
-		register(TileInfusionBox.class, "InfusionBox");
 		register(TileMagicDesk.class, "MagicDesk");
 		register(TileElementCraftingTable.class, "ElementCraftingTable");
 		register(TileDeconstructAltarTable.class, "DeconstructAltarTable");
@@ -264,6 +267,8 @@ public class ESInit {
 		register(TileMDMagicGen.class, "MDMagicGen");
 		register(TileMDHearth.class, "MDHearth");
 		register(TileMDRubbleRepair.class, "MDRubbleRepair");
+		register(TileMDInfusion.class, "MDfusion");
+		register(TileMDTransfer.class, "MDTransfer");
 	}
 
 	static void registerAllElements() {
@@ -333,7 +338,6 @@ public class ESInit {
 		registerRender(ESInitInstance.BLOCKS.INVALID_ENCHANTMENT_TABLE);
 		registerRender(ESInitInstance.BLOCKS.ELEMENT_WORKBENCH);
 		registerRender(ESInitInstance.BLOCKS.DECONSTRUCT_BOX);
-		registerRender(ESInitInstance.BLOCKS.INFUSION_BOX);
 		registerRender(ESInitInstance.BLOCKS.MAGIC_TORCH);
 		registerRender(ESInitInstance.BLOCKS.ASTONE, 0, "astone");
 		registerRender(ESInitInstance.BLOCKS.ASTONE, 1, "astone_fragmented");
@@ -364,6 +368,8 @@ public class ESInit {
 		registerRender(new RenderTileMDHearth(), ESInitInstance.BLOCKS.MD_HEARTH, TileMDHearth.class);
 		registerRender(new RenderTileMDRubbleRepair(), ESInitInstance.BLOCKS.MD_RUBBLE_REPAIR,
 				TileMDRubbleRepair.class);
+		registerRender(new RenderTileMDInfusion(), ESInitInstance.BLOCKS.MD_INFUSION, TileMDInfusion.class);
+		registerRender(new RenderTileMDTransfer(), ESInitInstance.BLOCKS.MD_TRANSFER, TileMDTransfer.class);
 
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);

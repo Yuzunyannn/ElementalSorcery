@@ -51,7 +51,6 @@ tile.absorbBox.name=元素吸收箱
 tile.invalidEnchantmentTable.name=失去魔力的附魔台
 tile.elementWorkbench.name=元素工作台
 tile.deconstructBox.name=元素析构箱
-tile.infusionBox.name=注魔箱
 tile.magicDesk.name=魔力方桌
 tile.elementCraftingTable.name=元素合成台
 tile.deconstructAltarTable.name=元素析构台
@@ -75,6 +74,8 @@ tile.meltCauldron.name=熔岩锅
 tile.MDMagicGen.name=热力魔分箱
 tile.MDHearth.name=魔动灶台
 tile.MDRubbleRepair.name=魔动碎石修复箱
+tile.MDInfusion.name=注魔箱
+tile.MDTransfer.name=魔力转移箱
 
 element.void.name=虚空
 element.magic.name=魔力
@@ -107,6 +108,7 @@ commands.es.build.fail.usage=不存在的建筑
 commands.es.page.usage=/es page <页面的id名称>
 commands.es.page.fail=不存在的的id名
 
+arc.infusion.name=注魔祭坛
 arc.largeAltar.name=大型祭坛
 arc.spellbookAltar.name=魔法书祭坛
 arc.elementCraftingAltar.name=元素合成小祭坛

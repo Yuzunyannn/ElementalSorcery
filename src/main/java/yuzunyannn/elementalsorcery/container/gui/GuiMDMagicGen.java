@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.container.gui;
 
+import java.util.List;
+
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import yuzunyannn.elementalsorcery.container.ContainerMDMagicGen;
@@ -22,7 +24,10 @@ public class GuiMDMagicGen extends GuiMDBase<ContainerMDMagicGen> {
 		GlStateManager.disableDepth();
 		this.drawTexturedModalRect(offsetX + 15, offsetY + 19, 0, 166, 144, 50);
 		this.drawT(offsetX, offsetY);
-		this.drawMagicVolume(offsetX + 15, offsetY + 19, partialTicks);
+		float rate = this.container.tileEntity.getCurrentCapacity()
+				/ (float) this.container.tileEntity.getMaxCapacity();
+		super.drawMagicVolume(offsetX + 15, offsetY + 19, 144, 50, rate, partialTicks);
+		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE1);
 		this.drawMagicStoneMelt(offsetX, offsetY, partialTicks);
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
 		this.drawTexturedModalRect(offsetX + 79, offsetY + 60, 7, 83, 18, 18);
@@ -42,13 +47,6 @@ public class GuiMDMagicGen extends GuiMDBase<ContainerMDMagicGen> {
 		GlStateManager.enableAlpha();
 	}
 
-	protected void drawMagicVolume(int offsetX, int offsetY, float partialTicks) {
-		float rate = this.container.tileEntity.getCurrentCapacity()
-				/ (float) this.container.tileEntity.getMaxCapacity();
-		super.drawMagicVolume(offsetX, offsetY, 144, 50, rate, partialTicks);
-		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE1);
-	}
-
 	protected float moveX;
 
 	protected void drawMagicStoneMelt(int offsetX, int offsetY, float partialTicks) {
@@ -64,17 +62,13 @@ public class GuiMDMagicGen extends GuiMDBase<ContainerMDMagicGen> {
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
-		if (this.isMouseIn(mouseX, mouseY, offsetX + 15, offsetY + 19, 144, 50)) {
-			if (mouseX < offsetX + 79 || mouseX > offsetX + 96 || mouseY < offsetY + 60) {
-				String str = this.container.tileEntity.getCurrentCapacity() + "/"
-						+ this.container.tileEntity.getMaxCapacity();
-				int x = mouseX - offsetX;
-				int y = mouseY - offsetY;
-				this.drawInfo(x, y, 0xffffff, str, this.container.tileEntity.getTemperature() + "℃");
-			}
-		}
+	protected void getShowMagicInfos(List<String> infos) {
+		super.getShowMagicInfos(infos);
+		infos.add((int) this.container.tileEntity.getTemperature() + "℃");
+	}
+
+	@Override
+	protected boolean showMagicInfo(int mouseX, int mouseY) {
+		return this.isMouseIn(mouseX, mouseY, 15, 19, 144, 50);
 	}
 }

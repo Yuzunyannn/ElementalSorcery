@@ -37,12 +37,13 @@ public class TileMDHearth extends TileMDBase implements ITickable {
 		if (burnTime > 0) {
 			burnTime--;
 			need = TileHearth.giveBurnPower(tile, 1, 4);
-		}
-		if (burnTime == 0 && need) {
-			this.gainPower(tile, false);
-			this.markDirty();
-			if (burnTime == 0)
-				brunIt(false);
+			if (burnTime == 0) {
+				if (need)
+					this.gainPower(tile, false);
+				this.markDirty();
+				if (burnTime == 0)
+					brunIt(false);
+			}
 		}
 	}
 

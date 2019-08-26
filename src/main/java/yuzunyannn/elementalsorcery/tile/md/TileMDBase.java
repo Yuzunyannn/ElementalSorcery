@@ -30,15 +30,17 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.entity.EntityParticleEffect;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.render.particle.FirwrokShap;
 import yuzunyannn.elementalsorcery.util.IField;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky, IField {
 
 	/** 给予魔力的目标 */
 	protected TargetInfo[] targets = new TargetInfo[6];
 	/** 魔力仓库使用 */
-	protected ElementStack magic = new ElementStack(ESInitInstance.ELEMENTS.MAGIC, 0);
+	protected ElementStack magic = new ElementStack(ESInitInstance.ELEMENTS.MAGIC, 0, 25);
 	/** 需求的仓库 */
 	protected ItemStackHandler inventory = this.initItemStackHandler();
 
@@ -70,6 +72,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		// 这步记录仅仅是为了没有ITickable的tile记录的，但是貌似所有MD都tickable，貌似没有太大必要
 		for (int i = 0; i < targets.length; i++) {
 			if (targets[i] == null)
 				continue;
@@ -103,6 +106,8 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		final public BlockPos pos;
 		public IAcceptMagic accepter;
 		public int lev;
+		/** 动态等级变化 */
+		public int dyLev;
 
 		public TargetInfo(BlockPos pos) {
 			this.pos = pos;
@@ -127,10 +132,12 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 				this.lev = 1;
 		}
 
+		public int getLevel() {
+			return lev + dyLev;
+		}
+
 		public <T> T to(Class<T> cls) {
-			if (cls.isAssignableFrom(accepter.getClass()))
-				return (T) accepter;
-			return null;
+			return accepter != null && cls.isAssignableFrom(accepter.getClass()) ? (T) accepter : null;
 		}
 
 		public boolean check() {
@@ -165,6 +172,8 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 				if (magic.getCount() < accepter.requireMinMagicCount())
 					return magic;
 				int rest = accepter.getMaxCapacity() - accepter.getCurrentCapacity();
+				if (rest < 0)
+					return magic;
 				rest = Math.min(magic.getCount(), rest);
 				ElementStack remain = accepter.accpetMagic(magic.splitStack(rest), from, facing);
 				magic.grow(remain);
@@ -220,23 +229,25 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		}
 	}
 
-	static final public int[] PARTICLE_COLOR = new int[] { 0x5c1771 };
-	static final public int[] PARTICLE_COLOR_FADE = new int[] { 0xf7deff };
+	static final public int[] PARTICLE_COLOR = new int[] { 0x7d17e3 };
+	static final public int[] PARTICLE_COLOR_FADE = new int[] { 0x9322b5 };
 
 	/** 当被被破坏 */
 	public void onBreak() {
 		if (!this.world.isRemote) {
+			if (this.inventory != null)
+				BlockHelper.drop(inventory, world, pos);
 			if (this.getCurrentCapacity() == 0)
 				return;
-			float rate = this.getCurrentCapacity() / 8000.0f;
+			float rate = this.getCurrentCapacity() / 5000.0f;
 			if (rate > 1.0f)
 				rate = 1.0f;
 			int lev = (int) (7 * rate) + 1;
 			NBTTagList list = new NBTTagList();
 			NBTTagCompound nbt = new NBTTagCompound();
 			nbt.setByte("Type", (byte) 0);
-			nbt.setIntArray("Colors", PARTICLE_COLOR);
-			nbt.setIntArray("FadeColors", PARTICLE_COLOR_FADE);
+			nbt.setIntArray("Colors", TileMDBase.PARTICLE_COLOR);
+			nbt.setIntArray("FadeColors", TileMDBase.PARTICLE_COLOR_FADE);
 			nbt.setInteger("Size", MathHelper.ceil(lev / 2.0f));
 			nbt.setFloat("Speed", 0.075f * lev);
 			list.appendTag(nbt);
@@ -326,13 +337,8 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	/** 检查所有位置状态 */
 	public void checkAll() {
-		for (int i = 0; i < targets.length; i++) {
-			EnumFacing facing = EnumFacing.getFront(i);
-			if (targets[i] == null)
-				this.find(facing, true);
-			else if (!targets[i].check())
-				this.find(facing, true);
-		}
+		for (int i = 0; i < targets.length; i++)
+			this.find(EnumFacing.getFront(i), true);
 	}
 
 	/** 关闭所有火把 */
@@ -344,18 +350,25 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		}
 	}
 
+	/** 调整动态的优先级 */
+	protected void fixedDyLev() {
+
+	}
+
 	/** 进行一次传输 */
 	protected void transferOnce() {
 		if (this.getCurrentCapacity() < this.getOverflow()) {
 			this.allTorchOff();
 			return;
 		}
+		// 调整动态lev
+		this.fixedDyLev();
 		// 总共能量
 		int sumLevel = 0;
 		for (int i = 0; i < targets.length; i++) {
 			if (targets[i] == null)
 				continue;
-			sumLevel += targets[i].lev;
+			sumLevel += targets[i].getLevel();
 		}
 		if (sumLevel == 0) {
 			return;
@@ -376,13 +389,15 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 			if (sendMagic.isEmpty()) {
 				this.torch(facing, false);
 				continue;
-			} else {
-				this.torch(facing, true);
 			}
-			int count = targets[i].lev * sendCount / sumLevel;
+			int count = targets[i].getLevel() * sendCount / sumLevel;
 			count = count == 0 ? 1 : count;
 			ElementStack send = sendMagic.splitStack(count);
 			ElementStack remain = targets[i].accpetMagic(send, this.pos, facing.getOpposite());
+			if (remain.isEmpty() || remain.getCount() != count)
+				this.torch(facing, true);
+			else
+				this.torch(facing, false);
 			sendMagic.grow(remain);
 		}
 		this.magic.grow(sendMagic);
@@ -392,36 +407,47 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	@Override
 	public ElementStack accpetMagic(ElementStack magic, BlockPos from, EnumFacing facing) {
 		int rest = this.getMaxCapacity() - this.getCurrentCapacity();
+		if (rest < 0)
+			return magic;
 		rest = Math.min(magic.getCount(), rest);
-		this.magic.grow(magic.splitStack(rest));
+		if (this.magic.isEmpty())
+			this.magic = magic.splitStack(rest);
+		else
+			this.magic.grow(magic.splitStack(rest));
 		return magic;
 	}
 
 	/** 进行一次传输 */
 	@SideOnly(Side.CLIENT)
 	protected void transferClientEffect() {
+		if (tick % 2 != 0)
+			return;
 		for (int i = 0; i < targets.length; i++) {
 			EnumFacing facing = EnumFacing.getFront(i);
 			if (this.hasTorch(facing) && this.canSend(facing)) {
 				if (this.world.getBlockState(pos.offset(facing)).getValue(BlockMagicTorch.LIT)) {
-					// 客户端和服务器并没有同步这些数据，想要展示效果需要重新找
+					// 客户端和服务器并没有同步这些数据，想要展示效果需要重新找，当然是用autoTransfer会自动查找，这部分可能是多余的
 					if (targets[i] == null)
 						this.find(facing, false);
-					else if (!targets[i].check()) {
+					else if (!targets[i].check())
 						this.find(facing, false);
-						// 这种情况应该不存在
-						if (targets[i] == null)
-							continue;
-						this.effectTo(targets[i].pos);
-					}
+					// 这种情况应该不存在
+					if (targets[i] == null)
+						continue;
+					this.effectTo(facing, targets[i].pos);
 				}
 			}
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
-	protected void effectTo(BlockPos to) {
-
+	protected void effectTo(EnumFacing facing, BlockPos to) {
+		BlockPos pos = this.pos.offset(facing);
+		if (pos.equals(to))
+			return;
+		FirwrokShap.createSparkUniformlySpeed(world, pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5,
+				to.getX() + 0.5, to.getY() + 0.5, to.getZ() + 0.5, 0.2f, TileMDBase.PARTICLE_COLOR,
+				TileMDBase.PARTICLE_COLOR_FADE, false, false);
 	}
 
 	/** 记录的tick */
@@ -437,8 +463,10 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		tick++;
 		if (tick % 5 != 0)
 			return;
-		if (tick % 20 == 0)
+		// 2秒进行全部遍历一次
+		if (tick % 40 == 0) {
 			this.checkAll();
+		}
 		if (this.world.isRemote) {
 			this.transferClientEffect();
 		} else {
@@ -467,7 +495,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	/** 判断是否可以接受 */
 	@Override
 	public boolean canRecvMagic(EnumFacing facing) {
-		return facing.getHorizontalIndex() >= 0;
+		return facing != EnumFacing.UP;
 	}
 
 	/** 判断方向是否可以发送 */
@@ -487,17 +515,21 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	/** 获取达到多少值就可以向外发送了，超过了就会发送 */
 	protected int getOverflow() {
-		return 800;
+		return 400;
 	}
 
 	@Override
 	public int getMaxCapacity() {
-		return 1000;
+		return 500;
 	}
 
 	@Override
 	public int getCurrentCapacity() {
 		return magic.getCount();
+	}
+
+	public int getCurrentPower() {
+		return magic.isEmpty() ? 0 : magic.getPower();
 	}
 
 	protected void setCurrentCapacity(int count) {
@@ -521,17 +553,31 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	@Override
 	public int getField(int id) {
-		return this.getCurrentCapacity();
+		switch (id) {
+		case 0:
+			return this.magic.getCount();
+		case 1:
+			return this.magic.getPower();
+		default:
+			return 0;
+		}
 	}
 
 	@Override
 	public void setField(int id, int value) {
-		this.setCurrentCapacity(value);
+		switch (id) {
+		case 0:
+			this.magic.setCount(value);
+			return;
+		case 1:
+			this.magic.setPower(value);
+			return;
+		}
 	}
 
 	@Override
 	public int getFieldCount() {
-		return 1;
+		return 2;
 	}
 
 	/** 容器更新检测使用 */
@@ -600,10 +646,4 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 				this.setField(i, tag.getInteger(key));
 		}
 	}
-
-	@Override
-	public NBTTagCompound getUpdateTag() {
-		return this.writeToNBT(new NBTTagCompound());
-	}
-
 }

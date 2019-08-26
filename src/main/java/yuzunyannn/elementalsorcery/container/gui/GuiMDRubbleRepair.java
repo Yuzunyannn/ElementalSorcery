@@ -16,17 +16,17 @@ public class GuiMDRubbleRepair extends GuiMDBase<ContainerMDRubbleRepair> {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE1);
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
-
+		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE1);
 		this.drawTexturedModalRect(offsetX + 15, offsetY + 59, 0, 166, 144, 10);
 		float rate = this.container.tileEntity.getCurrentCapacity()
 				/ (float) this.container.tileEntity.getMaxCapacity();
 		super.drawMagicVolume(offsetX + 15, offsetY + 59, 144, 10, rate, partialTicks);
 		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE1);
-
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
-		this.drawTexturedModalRect(offsetX + 14, offsetY + 18, 0, 216, 146, 40);
+		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE2);
+		this.drawTexturedModalRect(offsetX + 14, offsetY + 18, 14, 18, 146, 40);
+		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE1);
 		this.drawTexturedModalRect(offsetX + 14, offsetY + 18 + 40, 14, 18, 146, 1);
 
 		drawMagicSign(offsetX + 6, offsetY + 42, 25, 15);
@@ -56,18 +56,8 @@ public class GuiMDRubbleRepair extends GuiMDBase<ContainerMDRubbleRepair> {
 	}
 
 	@Override
-	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
-		if (this.isMouseIn(mouseX, mouseY, offsetX + 15, offsetY + 59, 144, 10)) {
-			if (mouseX < offsetX + 79 || mouseX > offsetX + 96 || mouseY < offsetY + 60) {
-				String str = this.container.tileEntity.getCurrentCapacity() + "/"
-						+ this.container.tileEntity.getMaxCapacity();
-				int x = mouseX - offsetX;
-				int y = mouseY - offsetY;
-				this.drawInfo(x, y, 0xffffff, str);
-			}
-		}
+	protected boolean showMagicInfo(int mouseX, int mouseY) {
+		return this.isMouseIn(mouseX, mouseY, 15, 59, 144, 10);
 	}
 
 }

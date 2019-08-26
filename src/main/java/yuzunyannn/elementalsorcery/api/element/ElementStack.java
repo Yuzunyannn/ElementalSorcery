@@ -9,11 +9,43 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
-	public final static ElementStack EMPTY = new ElementStack() {
+	public final static ElementStack EMPTY = new Unchangeable();
+
+	/** 修改无效的物品栈 */
+	public static class Unchangeable extends ElementStack {
+
+		private Unchangeable() {
+			super();
+		}
+
+		public Unchangeable(Element element) {
+			super(element, 1);
+		}
+
+		public Unchangeable(Element element, int size) {
+			super(element, size, 0);
+		}
+
+		public Unchangeable(Element element, int size, int power) {
+			super(element, size, power);
+		}
+
 		@Override
 		protected void setElement(Element element) {
 		}
-	};
+
+		@Override
+		public void become(ElementStack estack) {
+		}
+
+		@Override
+		public void setCount(int size) {
+		}
+
+		@Override
+		public void setPower(int power) {
+		}
+	}
 
 	/** 元素数量 */
 	private int stackSize;
@@ -249,9 +281,9 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		if (element == null)
 			this.setElement(EMPTY.element);
 		// 读取元素数量
-		stackSize = nbt.getInteger("size");
+		this.setCount(nbt.getInteger("size"));
 		// 读取元素能量
-		power = nbt.getInteger("power");
+		this.setPower(nbt.getInteger("power"));
 	}
 
 	/** 序列化 */

@@ -11,7 +11,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 
 public class Buildings {
-
+	static public Building INFUSION;
 	static public Building LARGE_ALTAR;
 	static public Building SPELLBOOK_ALTAR;
 	static public Building ELEMENT_CRAFTING_ALTAR;
@@ -20,6 +20,8 @@ public class Buildings {
 	static public Building ANALYSIS_ALTAR;
 
 	static public void init() throws IOException {
+		INFUSION = new BuildingInherent(
+				ElementalSorcery.data.getNBTForResourceWithException("structures/infusion"), "infusion");
 		LARGE_ALTAR = new BuildingInherent(
 				ElementalSorcery.data.getNBTForResourceWithException("structures/large_altar"), "largeAltar");
 		SPELLBOOK_ALTAR = new BuildingInherent(

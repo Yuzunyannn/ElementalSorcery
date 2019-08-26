@@ -22,9 +22,7 @@ public class RenderTileLantern extends TileEntitySpecialRenderer<TileLantern> im
 			float alpha) {
 		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
 		RenderHelper.startRender(x + 0.5, y + 0.0625, z + 0.5, 0.0625, alpha);
-		GlStateManager.enableBlend();
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		GlStateManager.disableBlend();
 		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);
 	}

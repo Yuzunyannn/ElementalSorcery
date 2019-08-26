@@ -29,7 +29,6 @@ import yuzunyannn.elementalsorcery.block.altar.BlockSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.block.container.BlockAbsorbBox;
 import yuzunyannn.elementalsorcery.block.container.BlockDeconstructBox;
 import yuzunyannn.elementalsorcery.block.container.BlockHearth;
-import yuzunyannn.elementalsorcery.block.container.BlockInfusionBox;
 import yuzunyannn.elementalsorcery.block.container.BlockLantern;
 import yuzunyannn.elementalsorcery.block.container.BlockMagicPlatform;
 import yuzunyannn.elementalsorcery.block.container.BlockMeltCauldron;
@@ -37,8 +36,10 @@ import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.container.BlockStela;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
 import yuzunyannn.elementalsorcery.block.md.BlockMDHearth;
+import yuzunyannn.elementalsorcery.block.md.BlockMDInfusion;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagicGen;
 import yuzunyannn.elementalsorcery.block.md.BlockMDRubbleRepair;
+import yuzunyannn.elementalsorcery.block.md.BlockMDTransfer;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementAir;
@@ -129,7 +130,6 @@ public class ESInitInstance {
 				.setRegistryName("invalid_enchantment_table");
 		BLOCKS.ELEMENT_WORKBENCH = new BlockElementWorkbench().setRegistryName("element_workbench");
 		BLOCKS.DECONSTRUCT_BOX = new BlockDeconstructBox().setRegistryName("deconstruct_box");
-		BLOCKS.INFUSION_BOX = new BlockInfusionBox().setRegistryName("infusion_box");
 		BLOCKS.MAGIC_DESK = new BlockMagicDesk().setRegistryName("magic_desk");
 		BLOCKS.ELEMENT_CRAFTING_TABLE = new BlockElementCraftingTable().setRegistryName("element_crafting_table");
 		BLOCKS.DECONSTRUCT_ALTAR_TABLE = new BlockDeconstructAltarTable().setRegistryName("deconstruct_altar_table");
@@ -146,6 +146,8 @@ public class ESInitInstance {
 		BLOCKS.MD_MAGIC_GEN = new BlockMDMagicGen().setRegistryName("md_magic_gen");
 		BLOCKS.MD_HEARTH = new BlockMDHearth().setRegistryName("md_hearth");
 		BLOCKS.MD_RUBBLE_REPAIR = new BlockMDRubbleRepair().setRegistryName("md_rubble_repair");
+		BLOCKS.MD_INFUSION = new BlockMDInfusion().setRegistryName("md_infusion");
+		BLOCKS.MD_TRANSFER = new BlockMDTransfer().setRegistryName("md_transfer");
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();

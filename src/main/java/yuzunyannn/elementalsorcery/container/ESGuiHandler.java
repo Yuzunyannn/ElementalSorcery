@@ -11,8 +11,8 @@ import yuzunyannn.elementalsorcery.container.gui.GuiDeconstructBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementCraftingTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
 import yuzunyannn.elementalsorcery.container.gui.GuiHearth;
-import yuzunyannn.elementalsorcery.container.gui.GuiInfusionBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDHearth;
+import yuzunyannn.elementalsorcery.container.gui.GuiMDInfusion;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDMagicGen;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDRubbleRepair;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
@@ -28,15 +28,16 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_ABSORB_BOX = 3;
 	public static final int GUI_ELEMENT_WORKBENCH = 4;
 	public static final int GUI_DECONSTRUCT_BOX = 5;
-	public static final int GUI_INFUSION_BOX = 6;
-	public static final int GUI_PARCHMENT = 7;
-	public static final int GUI_ELEMENT_CRAFTING_TABLE = 8;
-	public static final int GUI_ANALYSIS_ALTAR = 9;
-	public static final int GUI_SUPREME_CRAFTING_TABLE = 10;
-	public static final int GUI_INVENTORY_WORKBENCH = 11;
+	public static final int GUI_PARCHMENT = 6;
+	public static final int GUI_ELEMENT_CRAFTING_TABLE = 7;
+	public static final int GUI_ANALYSIS_ALTAR = 8;
+	public static final int GUI_SUPREME_CRAFTING_TABLE = 9;
+	public static final int GUI_INVENTORY_WORKBENCH = 10;
+
 	public static final int GUI_MD_MAGIC_GEN = 21;
 	public static final int GUI_MD_HEARTH = 22;
 	public static final int GUI_MD_RUBBLE_REPAIR = 23;
+	public static final int GUI_MD_INFUSION = 24;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -51,8 +52,6 @@ public class ESGuiHandler implements IGuiHandler {
 			return new ContainerElementWorkbench(player.inventory, world, new BlockPos(x, y, z));
 		case GUI_DECONSTRUCT_BOX:
 			return new ContainerDeconstructBox(player, world.getTileEntity(new BlockPos(x, y, z)));
-		case GUI_INFUSION_BOX:
-			return new ContainerInfusionBox(player, world.getTileEntity(new BlockPos(x, y, z)));
 		case GUI_PARCHMENT:
 			return new ContainerParchment(player);
 		case GUI_ELEMENT_CRAFTING_TABLE:
@@ -69,6 +68,8 @@ public class ESGuiHandler implements IGuiHandler {
 			return new ContainerMDBase(player, (TileMDBase) world.getTileEntity(new BlockPos(x, y, z)));
 		case GUI_MD_RUBBLE_REPAIR:
 			return new ContainerMDRubbleRepair(player, (TileMDBase) world.getTileEntity(new BlockPos(x, y, z)));
+		case GUI_MD_INFUSION:
+			return new ContainerMDInfusion(player, world.getTileEntity(new BlockPos(x, y, z)));
 		default:
 			return null;
 		}
@@ -92,9 +93,6 @@ public class ESGuiHandler implements IGuiHandler {
 		case GUI_DECONSTRUCT_BOX:
 			return new GuiDeconstructBox(
 					new ContainerDeconstructBox(player, world.getTileEntity(new BlockPos(x, y, z))), player.inventory);
-		case GUI_INFUSION_BOX:
-			return new GuiInfusionBox(new ContainerInfusionBox(player, world.getTileEntity(new BlockPos(x, y, z))),
-					player.inventory);
 		case GUI_PARCHMENT:
 			return new GuiParchment(new ContainerParchment(player));
 		case GUI_ELEMENT_CRAFTING_TABLE:
@@ -121,6 +119,9 @@ public class ESGuiHandler implements IGuiHandler {
 		case GUI_MD_RUBBLE_REPAIR:
 			return new GuiMDRubbleRepair(
 					new ContainerMDRubbleRepair(player, world.getTileEntity(new BlockPos(x, y, z))), player.inventory);
+		case GUI_MD_INFUSION:
+			return new GuiMDInfusion(new ContainerMDInfusion(player, world.getTileEntity(new BlockPos(x, y, z))),
+					player.inventory);
 		default:
 			return null;
 		}

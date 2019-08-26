@@ -24,7 +24,7 @@ public class RednerTileSupremeCraftingTable extends TileEntitySpecialRenderer<Ti
 		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
 		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.03125, alpha);
 		GlStateManager.enableBlend();
-		//GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		float roate = tile.prevRoate + (tile.roate - tile.prevRoate) * partialTicks;
 		float legR = tile.prevLegR + (tile.legR - tile.prevLegR) * partialTicks;
 		MODEL.render(null, legR, roate, roate, 0, 0, 1.0f);

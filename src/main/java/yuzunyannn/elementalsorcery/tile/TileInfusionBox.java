@@ -19,9 +19,9 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
+@Deprecated
 public class TileInfusionBox extends TileEntity implements IAcceptBurnPower {
 
 	// 积攒能量

@@ -65,7 +65,6 @@ public class ESObjects {
 		public Block INVALID_ENCHANTMENT_TABLE;
 		public Block ELEMENT_WORKBENCH;
 		public Block DECONSTRUCT_BOX;
-		public Block INFUSION_BOX;
 		public Block MAGIC_DESK;
 		public Block ELEMENT_CRAFTING_TABLE;
 		public Block DECONSTRUCT_ALTAR_TABLE;
@@ -80,6 +79,8 @@ public class ESObjects {
 		public Block MD_MAGIC_GEN;
 		public Block MD_HEARTH;
 		public Block MD_RUBBLE_REPAIR;
+		public Block MD_INFUSION;
+		public Block MD_TRANSFER;
 	}
 
 	static public class Elements {

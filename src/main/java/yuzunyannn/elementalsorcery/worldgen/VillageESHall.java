@@ -3,7 +3,6 @@ package yuzunyannn.elementalsorcery.worldgen;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockStairs;
@@ -228,7 +227,7 @@ public class VillageESHall extends Village {
 		else if (rate < 0.075)
 			mainHand = new ItemStack(ESInitInstance.ITEMS.ELEMENT_CRYSTAL);
 		else if (rate < 0.125)
-			mainHand = new ItemStack(ESInitInstance.BLOCKS.INFUSION_BOX);
+			mainHand = new ItemStack(ESInitInstance.BLOCKS.MD_INFUSION);
 		else if (rate < 0.3)
 			mainHand = new ItemStack(ESInitInstance.ITEMS.PARCHMENT, 8);
 		else if (rate < 0.5)
