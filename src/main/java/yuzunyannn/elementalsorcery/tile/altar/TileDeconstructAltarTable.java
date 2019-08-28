@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
+import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -91,7 +92,7 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 		startTime = new TickOut(40);
 		ItemStack outStack = stack;
 		stack = ItemStack.EMPTY;
-		return new CraftingDeconstruct(world, outStack);
+		return new CraftingDeconstruct(world, outStack, Element.DP_ALTAR, null);
 	}
 
 	@Override

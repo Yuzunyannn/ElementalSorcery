@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "md",
+	"pattern": [
+		"X X",
+		"XAX",
+		" # "
+	],
+	"key": {
+		"#": {
+			"item": "elementalsorcery:astone",
+			"data": 6
+		},
+		"X": {
+			"item": "elementalsorcery:astone",
+			"data": 2
+		},
+		"A": {
+			"item": "minecraft:coal",
+			"data": 0
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:md_magic_gen"
+	}
+}

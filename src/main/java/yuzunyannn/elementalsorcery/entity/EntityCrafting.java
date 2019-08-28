@@ -20,11 +20,11 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
+import yuzunyannn.elementalsorcery.util.ExceptionHelper;
 
 public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData {
 
@@ -60,8 +60,17 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			this.crafting = (ICraftingLaunch) world.getTileEntity(this.pos);
 			this.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 			this.commit = this.crafting.craftingBegin(type, player);
-			this.commit.setWorldInfo(this.world, this.pos, this.player);
+			if (this.commit == null)
+				this.nullCommitException();
+			else
+				this.commit.setWorldInfo(this.world, this.pos, this.player);
 		}
+	}
+
+	// 令人痛恨的情况
+	private void nullCommitException() {
+		this.setDead();
+		ExceptionHelper.warn(world, "EntityCrafting的commit为null，发生于:" + this.pos + "合成类型：" + this.type);
 	}
 
 	@Override
@@ -77,11 +86,9 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		nbt.setString("type", type);
 		if (this.player != null)
 			nbt.setInteger("enid", this.player.getEntityId());
-		if (this.commit != null) {
+		if (this.commit != null)
 			nbt.setTag("cnbt", this.commit.serializeNBT());
-		}
 		return nbt;
-
 	}
 
 	/** 恢复数据 */
@@ -105,8 +112,25 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			this.player = null;
 	}
 
+	private void recovery() {
+		if (this.pos == null)
+			return;
+		// 恢复状态
+		TileEntity tile = world.getTileEntity(this.pos);
+		if (tile instanceof ICraftingLaunch) {
+			this.crafting = (ICraftingLaunch) tile;
+			this.commit = this.crafting.recovery(type, this.player, this.commitNBT);
+			if (this.commit == null)
+				this.nullCommitException();
+			else
+				this.commit.setWorldInfo(this.world, this.pos, this.player);
+		}
+	}
+
 	@Override
 	public void writeSpawnData(ByteBuf buffer) {
+		if (this.crafting == null)
+			this.recovery();
 		ByteBufUtils.writeTag(buffer, this.getDataNBT());
 	}
 
@@ -126,6 +150,10 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			if (tile instanceof ICraftingLaunch) {
 				this.crafting = (ICraftingLaunch) tile;
 				this.commit = this.crafting.recovery(type, this.player, this.commitNBT);
+				if (this.commit == null) {
+					this.nullCommitException();
+					return false;
+				}
 				this.commit.setWorldInfo(this.world, this.pos, this.player);
 				this.craftingAnime = this.crafting.getAnime(this.commit);
 				if (this.craftingAnime == null)
@@ -133,7 +161,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 				return true;
 			}
 		}
-		ElementalSorcery.logger.warn("EntityCrafting的客户端没有收到正确的位置");
+		ExceptionHelper.warn(world, "EntityCrafting的客户端没有收到正确的位置");
 		return false;
 	}
 
@@ -141,21 +169,23 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 
 	@Override
 	public void onUpdate() {
+		try {
+			this.updateOnce();
+		} catch (Exception e) {
+			String report = "";
+			report += "crafting:" + this.crafting + "\n";
+			report += "commit:" + this.crafting + "\n";
+			report += "pos:" + this.pos + "\n";
+			ExceptionHelper.warn(world, "EntityCrafting在运行的时候出现异常！报告如下：", report);
+			this.setDead();
+		}
+	}
+
+	public void updateOnce() {
 		if (crafting == null) {
-			if (!world.isRemote && this.pos != null) {
-				// 恢复状态
-				TileEntity tile = world.getTileEntity(this.pos);
-				if (tile instanceof ICraftingLaunch) {
-					this.crafting = (ICraftingLaunch) tile;
-					this.commit = this.crafting.recovery(type, this.player, this.commitNBT);
-					this.commit.setWorldInfo(this.world, this.pos, this.player);
-				}
-				return;
-			}
 			this.setDead();
 			return;
 		}
-
 		if (world.isRemote) {
 			this.updateClient();
 			this.crafting.craftingUpdateClient(this.commit);

@@ -291,7 +291,7 @@ public class ElementMap implements IElementMap {
 		instance.add(Items.BOOK, newES(E.KNOWLEDGE, 10, 20));
 		instance.add(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, newES(E.KNOWLEDGE, 100, 200));
 
-		instance.add(ESInitInstance.ITEMS.MAGICAL_PIECE, newES(E.FIRE, 20, 25), newES(E.WATER, 20, 25),
+		instance.add(ESInitInstance.ITEMS.MAGIC_PIECE, newES(E.FIRE, 20, 25), newES(E.WATER, 20, 25),
 				newES(E.AIR, 20, 25), newES(E.EARTH, 20, 25));
 	}
 

@@ -30,16 +30,13 @@ import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
-import yuzunyannn.elementalsorcery.tile.TileStela;
+import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.worldgen.VillageESHall.VillageCreationHandler;
 
 public class ESTestAndDebug {
@@ -55,22 +52,28 @@ public class ESTestAndDebug {
 		if (!event.getWorld().isRemote) {
 			BlockPos pos = event.getPos();
 			IBlockState state = event.getWorld().getBlockState(pos);
-			//System.out.println(state.getBlockHardness(event.getWorld(), pos));
-//			TileEntity tile = event.getWorld().getTileEntity(pos);
-//			if (tile instanceof TileStela) {
-//				((TileStela) tile).doOnce();
-//			}
-//			if (event.getWorld().getBlockState(pos).getBlock() == ESInitInstance.BLOCKS.MAGIC_TORCH) {
-//				event.getWorld().setBlockState(pos,
-//						event.getWorld().getBlockState(pos).withProperty(BlockMagicTorch.LIT, true));
-//			}
+			// System.out.println(state.getBlockHardness(event.getWorld(),
+			// pos));
+			//TileEntity tile = event.getWorld().getTileEntity(pos);
+			//if (tile instanceof TileMDBase) {
+				//((TileMDBase) tile).setField(0, 10000);
+			//}
+			// if (tile instanceof TileStela) {
+			// ((TileStela) tile).doOnce();
+			// }
+			// if (event.getWorld().getBlockState(pos).getBlock() ==
+			// ESInitInstance.BLOCKS.MAGIC_TORCH) {
+			// event.getWorld().setBlockState(pos,
+			// event.getWorld().getBlockState(pos).withProperty(BlockMagicTorch.LIT,
+			// true));
+			// }
 			return;
 		}
 
-//		System.out.println("Server ArcInfo");
+		// System.out.println("Server ArcInfo");
 		BlockPos pos = event.getPos();
 		IBlockState state = event.getWorld().getBlockState(pos);
-//		System.out.println(state);
+		// System.out.println(state);
 		if (event.getEntityPlayer().isSneaking()) {
 			ESTestAndDebug.pos = event.getPos().up();
 		}

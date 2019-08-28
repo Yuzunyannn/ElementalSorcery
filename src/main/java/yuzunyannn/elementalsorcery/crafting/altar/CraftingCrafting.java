@@ -86,7 +86,7 @@ public class CraftingCrafting implements ICraftingAltar {
 		if (!this.isOk)
 			return;
 		this.tick++;
-		if (this.tick % 4 != 0)
+		if (this.tick % 3 != 0)
 			return;
 		// 寻找合成表
 		if (working_irecipe == null) {

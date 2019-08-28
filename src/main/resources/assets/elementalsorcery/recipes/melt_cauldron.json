@@ -11,7 +11,7 @@
 			"ore": "ingotIron"
 		},
 		"X": {
-			"item": "elementalsorcery:magical_piece"
+			"item": "elementalsorcery:magic_piece"
 		}
 	},
 	"result": {

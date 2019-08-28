@@ -20,7 +20,12 @@ public interface IItemStructure extends IToElement, IItemCapbiltitySyn {
 	/** 获取存放物品结构数目，通常只有1 */
 	int getItemCount();
 
-	/** 获取使用，但实际转化的时候直接调用 toElement，获取仅仅作为一个参考 */
+	/**
+	 * 获取使用，但实际转化的时候直接调用 toElement，获取仅仅作为一个参考
+	 * 
+	 * @param index
+	 *            记录的第几个物品，其中0号物品作为主物品，作为逆向合成使用的物品
+	 */
 	ItemStack getStructureItem(int index);
 
 	/** 设置使用 */

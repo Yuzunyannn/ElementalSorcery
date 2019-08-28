@@ -31,15 +31,18 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 	static final public byte MODE_ELEMENT_CRAFTING = 2;
 	static final public byte MODE_PLATFORM_NONE = 10;
 	static final public byte MODE_DECONSTRUCT = 11;
+	static final public byte MODE_CONSTRUCT = 12;
 	public byte showMode = 0;
 	int resultSlotId;
 	public InventoryCraftResult result = new InventoryCraftResult();
+	/*** mc原始合成 */
 	private boolean nativeCrafting = false;
 	public InventoryCrafting craftMatrix;
 
 	public ContainerSupremeCraftingTable(EntityPlayer player, TileEntity tileEntity) {
 		super(player, (TileSupremeCraftingTable) tileEntity, 36, 160);
 		IItemHandler items = this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		//添加slot
 		for (int i = 0; i < items.getSlots(); i++) {
 			int x = ContainerSupremeCraftingTable.craftingRelative[i * 2];
 			int y = ContainerSupremeCraftingTable.craftingRelative[i * 2 + 1];
@@ -68,6 +71,7 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 					}
 				});
 		}
+		//添加result的slot
 		craftMatrix = this.tileEntity.toInventoryCrafting(this);
 		this.resultSlotId = this.addSlotToContainer(new SlotCrafting(player, craftMatrix, result, 0, 107, 130) {
 
@@ -105,6 +109,11 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 			platfromItem = this.tileEntity.getPlatformItem();
 			this.result.setInventorySlotContents(0, platfromItem);
 			showMode = MODE_DECONSTRUCT;
+			return;
+		case ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT:
+			platfromItem = this.tileEntity.getPlatformItem();
+			this.result.setInventorySlotContents(0, platfromItem);
+			showMode = MODE_CONSTRUCT;
 			return;
 		default:
 			platfromItem = this.tileEntity.getPlatformItem();

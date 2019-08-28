@@ -29,7 +29,7 @@ public class ItemMagicalEnderEye extends ItemEnderEye {
 			int n = (int) (Math.random() * ((float) (stack.getMaxDamage() - stack.getItemDamage()))
 					/ stack.getMaxDamage() * 4 + 1);
 			worldIn.createExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1.5F, false);
-			Block.spawnAsEntity(worldIn, pos.up(), new ItemStack(ESInitInstance.ITEMS.MAGICAL_PIECE, n));
+			Block.spawnAsEntity(worldIn, pos.up(), new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE, n));
 		}
 		return result;
 	}
@@ -42,7 +42,7 @@ public class ItemMagicalEnderEye extends ItemEnderEye {
 					/ stack.getMaxDamage() * 4 + 1);
 			worldIn.createExplosion(null, playerIn.posX, playerIn.posY + 1.5, playerIn.posZ, 1.5F, false);
 			Block.spawnAsEntity(worldIn, playerIn.getPosition().up(),
-					new ItemStack(ESInitInstance.ITEMS.MAGICAL_PIECE, n));
+					new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE, n));
 		}
 		return result;
 	}

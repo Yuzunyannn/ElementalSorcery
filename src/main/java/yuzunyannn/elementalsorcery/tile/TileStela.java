@@ -183,29 +183,36 @@ public class TileStela extends TileEntityNetwork {
 		// 烧炼箱
 		addToMap(ESInitInstance.BLOCKS.SMELT_BOX, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH);
 		addToMap(ESInitInstance.BLOCKS.SMELT_BOX_IRON, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH,
-				Pages.ABOUT_MAGICAL_PIECE);
+				Pages.ABOUT_MAGIC_PIECE);
 		addToMap(ESInitInstance.BLOCKS.SMELT_BOX_KYANITE, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH,
-				Pages.ABOUT_MAGICAL_PIECE, Pages.ABOUT_KYANITE);
+				Pages.ABOUT_MAGIC_PIECE, Pages.ABOUT_KYANITE);
 		// 蓝晶石
 		addToMap(ESInitInstance.ITEMS.KYANITE, Pages.ABOUT_KYANITE, Pages.ABOUT_KYNATIE_TOOLS);
 		// 魔力碎片
-		addToMap(ESInitInstance.ITEMS.MAGICAL_PIECE, Pages.ABOUT_MAGICAL_ENDEREYE, Pages.ABOUT_MAGICAL_PIECE);
+		addToMap(ESInitInstance.ITEMS.MAGIC_PIECE, Pages.ABOUT_MAGICAL_ENDEREYE, Pages.ABOUT_MAGIC_PIECE);
 		// 末影之眼
 		addToMap(Items.ENDER_EYE, Pages.ABOUT_MAGICAL_ENDEREYE);
 		// 带有魔力的末影之眼
-		addToMap(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE, Pages.ABOUT_MAGICAL_ENDEREYE, Pages.ABOUT_MAGICAL_PIECE);
+		addToMap(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE, Pages.ABOUT_MAGICAL_ENDEREYE, Pages.ABOUT_MAGIC_PIECE);
 		// 星石星沙
 		addToMap(ESInitInstance.BLOCKS.STAR_STONE, Pages.ABOUT_STAR_SAND, Pages.ABOUT_STONE_MILL);
 		addToMap(ESInitInstance.BLOCKS.STAR_SAND, Pages.ABOUT_STAR_SAND, Pages.ABOUT_STONE_MILL,
 				Pages.ABOUT_MAGIC_STONE, Pages.ABOUT_MELT_CAULDRON);
 		// 魔石
 		addToMap(ESInitInstance.ITEMS.MAGIC_STONE, Pages.ABOUT_MAGIC_STONE, Pages.ABOUT_STAR_SAND,
-				Pages.ABOUT_MAGICAL_PIECE, Pages.ABOUT_ASTONE);
+				Pages.ABOUT_MAGIC_PIECE, Pages.ABOUT_ASTONE);
 		// 熔岩炉
 		addToMap(ESInitInstance.BLOCKS.MELT_CAULDRON, Pages.ABOUT_MELT_CAULDRON, Pages.ABOUT_ASTONE);
-
+		// 通魔石
+		addToMap(ESInitInstance.BLOCKS.ASTONE, Pages.ABOUT_MELT_CAULDRON, Pages.ABOUT_ASTONE, Pages.ABOUT_MD);
+		// 魔石火把
+		addToMap(ESInitInstance.BLOCKS.MAGIC_TORCH, Pages.ABOUT_MD, Pages.ABOUT_MAGIC_STONE);
+		// 魔分箱
+		addToMap(ESInitInstance.BLOCKS.MD_MAGIC_GEN, Pages.ABOUT_ASTONE, Pages.ABOUT_MD, Pages.ABOUT_INFUSION);
 		// 吸收箱
 		addToMap(ESInitInstance.BLOCKS.ABSORB_BOX, Pages.ABOUT_ABSORB_BOX, Pages.ABOUT_MAGIC_PLATFORM);
+		// 魔力平台
+		addToMap(ESInitInstance.BLOCKS.MAGIC_PLATFORM, Pages.ABOUT_MAGIC_PLATFORM);
 		// 附魔台
 		addToMap(Blocks.ENCHANTING_TABLE, Pages.ABOUT_ENCHANTINGBOOK, Pages.ABOUT_KYNATIE_TOOLS);
 		// 魔力水晶
@@ -242,8 +249,7 @@ public class TileStela extends TileEntityNetwork {
 			if (block == ESInitInstance.BLOCKS.MD_INFUSION) {
 				if (Math.random() < 0.2)
 					return RandomHelper.randomSelect(Pages.ABOUT_ELEMENT_CRY, Pages.ABOUT_SPELL_CRY);
-				return RandomHelper.randomSelect(Pages.ABOUT_INFUSION, Pages.ABOUT_MAGICAL_PIECE,
-						Pages.ABOUT_MAGIC_CRY);
+				return RandomHelper.randomSelect(Pages.ABOUT_INFUSION, Pages.ABOUT_MAGIC_PIECE, Pages.ABOUT_MAGIC_CRY);
 			}
 		} else {
 			if (item instanceof ItemKyaniteTools.toolsCapability) {

@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.tile.altar;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
@@ -20,10 +20,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.ability.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
+import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -31,12 +31,15 @@ import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
+import yuzunyannn.elementalsorcery.crafting.altar.CraftingConstruct;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingCrafting;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingDeconstruct;
 import yuzunyannn.elementalsorcery.crafting.altar.ICraftingAltar;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.render.model.ModelSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.util.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.TickOut;
 import yuzunyannn.elementalsorcery.util.item.IItemStackHandlerInventory;
 
@@ -148,12 +151,16 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 			craftingAltar = new CraftingCrafting(this);
 			break;
 		case ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT:
-			craftingAltar = new CraftingDeconstruct(this.world, this.getCenterItem(),
+			craftingAltar = new CraftingDeconstruct(this.world, this.getCenterItem(), Element.DP_ALTAR_SURPREME,
+					ItemStructure.getItemStructure(this.getPlatformItem()));
+			break;
+		case ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT:
+			craftingAltar = new CraftingConstruct(this, this.getOrderCrtstalGroupCount(),
 					ItemStructure.getItemStructure(this.getPlatformItem()));
 			break;
 		default:
 			craftingAltar = null;
-			ElementalSorcery.logger.warn("在SupremeCraftingTable开始合成时，出现了不存在的类型！" + type);
+			ExceptionHelper.warn(world, "在SupremeCraftingTable开始合成时，出现了不存在的类型！" + type);
 			break;
 		}
 		this.clear();
@@ -172,8 +179,10 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 			return new CraftingCrafting(nbt);
 		case ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT:
 			return new CraftingDeconstruct(nbt);
+		case ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT:
+			return new CraftingConstruct(nbt);
 		default:
-			ElementalSorcery.logger.warn("在SupremeCraftingTable恢复合成时，出现了不存在的类型！");
+			ExceptionHelper.warn(world, "在SupremeCraftingTable恢复合成时，出现了不存在的类型：" + type);
 			break;
 		}
 		return null;
@@ -183,7 +192,11 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 	public void craftingUpdate(ICraftingCommit commit) {
 		if (startTime.tick())
 			return;
-		((ICraftingAltar) commit).update(this);
+		try {
+			((ICraftingAltar) commit).update(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -199,10 +212,15 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 	@Override
 	public int craftingEnd(ICraftingCommit commit) {
 		isWorking = false;
+		this.markDirty();
 		if (!((ICraftingAltar) commit).end(this))
 			return ICraftingLaunch.FAIL;
-		this.markDirty();
 		return ICraftingLaunch.SUCCESS;
+	}
+
+	@Override
+	public int getEndingTime(ICraftingCommit commit) {
+		return ((ICraftingAltar) commit).getEndTime(this);
 	}
 
 	@Override
@@ -225,31 +243,90 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 				return ICraftingLaunch.TYPE_ELEMENT_CRAFTING;
 			}
 		} else {
+			// 是否为析构
 			if (this.checkJustCenter()) {
-				IItemStructure structure = ItemStructure.getItemStructure(platformItem);
 				ItemStack centerStack = this.getCenterItem();
-				ElementStack[] estacks = structure.toElement(centerStack);
-				outEStacks = new LinkedList<>();
-				if (estacks != null) {
-					for (ElementStack estack : estacks)
+				if (!centerStack.isEmpty()) {
+					IItemStructure structure = ItemStructure.getItemStructure(platformItem);
+					ElementStack[] estacks = structure.toElement(centerStack);
+					if (estacks != null) {
+						int count = centerStack.getCount();
+						outEStacks = new ArrayList<ElementStack>(estacks.length);
+						for (ElementStack estack : estacks) {
+							estack = estack.copy();
+							estack.setCount(count * estack.getCount());
+							outEStacks.add(estack);
+						}
+						return ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT;
+					}
+				}
+			} // 是否和构成
+			else if (this.checkJustCorner()) {
+				int count = this.getOrderCrtstalGroupCount();
+				if (count > 0) {
+					IItemStructure structure = ItemStructure.getItemStructure(platformItem);
+					ElementStack[] estacks = structure.toElement(structure.getStructureItem(0));
+					outEStacks = new ArrayList<ElementStack>(estacks.length);
+					for (ElementStack estack : estacks) {
+						estack = estack.copy();
+						estack.setCount(count * estack.getCount());
 						outEStacks.add(estack);
-					return ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT;
+					}
+					return ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT;
 				}
 			}
-
 		}
 		return null;
 	}
 
+	private int getOrderCrtstalGroupCount() {
+		int min = 64;
+		ItemStack stack = this.getStackInSlot(0);
+		if (stack.getItem() == ESInitInstance.ITEMS.ORDER_CRYSTAL) {
+			min = Math.min(min, stack.getCount());
+		} else
+			return 0;
+		stack = this.getStackInSlot(2);
+		if (stack.getItem() == ESInitInstance.ITEMS.ORDER_CRYSTAL) {
+			min = Math.min(min, stack.getCount());
+		} else
+			return 0;
+		stack = this.getStackInSlot(6);
+		if (stack.getItem() == ESInitInstance.ITEMS.ORDER_CRYSTAL) {
+			min = Math.min(min, stack.getCount());
+		} else
+			return 0;
+		stack = this.getStackInSlot(8);
+		if (stack.getItem() == ESInitInstance.ITEMS.ORDER_CRYSTAL) {
+			min = Math.min(min, stack.getCount());
+		} else
+			return 0;
+		return min;
+	}
+
+	// 检测是否只有3*3中四角有东西
+	private boolean checkJustCorner() {
+		if (!this.getStackInSlot(1).isEmpty())
+			return false;
+		for (int i = 3; i < 6; i++)
+			if (!this.getStackInSlot(i).isEmpty())
+				return false;
+		if (!this.getStackInSlot(7).isEmpty())
+			return false;
+		for (int i = 9; i < this.getSizeInventory(); i++)
+			if (!this.getStackInSlot(i).isEmpty())
+				return false;
+		return true;
+	}
+
+	// 检测是否只用中心有东西
 	private boolean checkJustCenter() {
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < 4; i++)
 			if (!this.getStackInSlot(i).isEmpty())
 				return false;
-		}
-		for (int i = 5; i < this.getSizeInventory(); i++) {
+		for (int i = 5; i < this.getSizeInventory(); i++)
 			if (!this.getStackInSlot(i).isEmpty())
 				return false;
-		}
 		return true;
 	}
 

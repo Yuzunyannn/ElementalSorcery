@@ -126,13 +126,13 @@ public class Pages {
 	static public final String ABOUT_HEARTH = "hearth";
 	static public final String ABOUT_SMELT_BOX = "smeltBox";
 	static public final String ABOUT_KYANITE = "kyanite";
-	static public final String ABOUT_MAGICAL_PIECE = "mgPiece";
+	static public final String ABOUT_MAGIC_PIECE = "mgPiece";
 	static public final String ABOUT_STAR_SAND = "starStone";
 	static public final String ABOUT_STONE_MILL = "sMill";
 	static public final String ABOUT_MAGIC_STONE = "mgStone";
 	static public final String ABOUT_MELT_CAULDRON = "meltCal";
 	static public final String ABOUT_ASTONE = "astone";
-
+	static public final String ABOUT_MD = "md";
 	static public final String ABOUT_INFUSION = "infusion";
 	static public final String ABOUT_MAGICAL_ENDEREYE = "mgEeyes";
 	static public final String ABOUT_KYNATIE_TOOLS = "kyTools";
@@ -159,6 +159,7 @@ public class Pages {
 	// enc=enchanting,cry=crystal,mg=magic,ele=element,sp=spell,spb=spellbook
 	static public void init(Side side) {
 		Pages.side = side;
+
 		regPage(ERROR, new PageError());
 		regPage(BOOK, new PageBook());
 		regPage(ABOUT_ELEMENT, new PageSimple("element", ESInitInstance.ITEMS.SPELLBOOK));
@@ -166,18 +167,18 @@ public class Pages {
 		regPage(ABOUT_HEARTH, aboutHearth());
 		regPage(ABOUT_SMELT_BOX, aboutSmeltBox());
 		regPage(ABOUT_KYANITE, new PageSmeltingSimple("kyanite", ESInitInstance.BLOCKS.KYANITE_ORE));
-		regPage(ABOUT_MAGICAL_PIECE, new PageSimple("mgicalPiece", ESInitInstance.ITEMS.MAGICAL_PIECE));
+		regPage(ABOUT_MAGIC_PIECE, new PageSimple("mgicalPiece", ESInitInstance.ITEMS.MAGIC_PIECE));
 		regPage(ABOUT_STAR_SAND, new PageSimple("starSand", new ItemStack(ESInitInstance.BLOCKS.STAR_SAND),
 				new ItemStack(ESInitInstance.BLOCKS.STAR_SAND)));
 		regPage(ABOUT_STONE_MILL, new PageCraftingSimple("stoneMill", ESInitInstance.BLOCKS.STONE_MILL));
 		regPage(ABOUT_MAGIC_STONE, new PageCraftingSimple("magicStone", ESInitInstance.ITEMS.MAGIC_STONE));
 		regPage(ABOUT_MELT_CAULDRON, new PageCraftingSimple("meltCauldron", ESInitInstance.BLOCKS.MELT_CAULDRON));
 		regPage(ABOUT_ASTONE, aboutAStone());
-
-		//regPage(ABOUT_INFUSION, new PageCraftingSimple("infusion", ESInitInstance.BLOCKS.MD_INFUSION));
-		
+		regPage(ABOUT_MD, aboutMD());
+		regPage(ABOUT_INFUSION, new PageCraftingSimple("infusion", ESInitInstance.BLOCKS.MD_INFUSION));
 		regPage(ABOUT_MAGICAL_ENDEREYE,
 				new PageCraftingSimple("magical_endereye", ESInitInstance.ITEMS.MAGICAL_ENDER_EYE));
+		
 		regPage(ABOUT_KYNATIE_TOOLS, aboutKynatieTools());
 		regPage(ABOUT_ABSORB_BOX, new PageCraftingSimple("absorbBox", ESInitInstance.BLOCKS.ABSORB_BOX));
 		regPage(ABOUT_MAGIC_PLATFORM,
@@ -210,13 +211,17 @@ public class Pages {
 	}
 
 	static private void initItemToId() {
+		addItemId(ESInitInstance.BLOCKS.MD_INFUSION, ABOUT_INFUSION);
+		addItemId(ESInitInstance.BLOCKS.MD_TRANSFER, ABOUT_MD);
+		addItemId(ESInitInstance.BLOCKS.MD_MAGIC_GEN, ABOUT_MD);
+		addItemId(ESInitInstance.BLOCKS.MAGIC_TORCH, ABOUT_MD);
 		addItemId(ESInitInstance.BLOCKS.ASTONE, ABOUT_ASTONE);
 		addItemId(ESInitInstance.BLOCKS.MELT_CAULDRON, ABOUT_MELT_CAULDRON);
 		addItemId(ESInitInstance.ITEMS.MAGIC_STONE, ABOUT_MAGIC_STONE);
 		addItemId(ESInitInstance.BLOCKS.STONE_MILL, ABOUT_STONE_MILL);
 		addItemId(ESInitInstance.BLOCKS.KYANITE_ORE, ABOUT_KYANITE);
 		addItemId(ESInitInstance.ITEMS.KYANITE, ABOUT_KYANITE);
-		addItemId(ESInitInstance.ITEMS.MAGICAL_PIECE, ABOUT_MAGICAL_PIECE);
+		addItemId(ESInitInstance.ITEMS.MAGIC_PIECE, ABOUT_MAGIC_PIECE);
 		addItemId(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE, ABOUT_MAGICAL_ENDEREYE);
 		addItemId(ESInitInstance.ITEMS.MAGIC_CRYSTAL, ABOUT_MAGIC_CRY);
 		addItemId(ESInitInstance.ITEMS.SPELL_CRYSTAL, ABOUT_SPELL_CRY);
@@ -296,6 +301,13 @@ public class Pages {
 						new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 4),
 						new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 5),
 						new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 6)));
+	}
+
+	static private Page aboutMD() {
+		return new PageMultS(0, new PageSimple("md", new ItemStack(ESInitInstance.BLOCKS.ASTONE)),
+				new PageCraftingSimple("magicTorch", ESInitInstance.BLOCKS.MAGIC_TORCH),
+				new PageCraftingSimple("magicGen", ESInitInstance.BLOCKS.MD_MAGIC_GEN),
+				new PageCraftingSimple("magicTransfer", ESInitInstance.BLOCKS.MD_TRANSFER));
 	}
 
 	static private Page aboutKynatieTools() {

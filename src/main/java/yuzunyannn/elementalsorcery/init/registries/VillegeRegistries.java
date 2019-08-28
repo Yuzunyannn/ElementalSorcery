@@ -43,9 +43,9 @@ public class VillegeRegistries {
 		// 元素魔法商
 		VillagerRegistry.VillagerCareer magicallearner = new VillagerRegistry.VillagerCareer(pro, "magicallearner");
 		magicallearner.addTrade(1,
-				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.MAGICAL_PIECE),
+				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE),
 						new PriceInfo(16, 32)),
-				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.MAGICAL_PIECE, 4),
+				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE, 4),
 						new PriceInfo(64, 64)));
 	}
 

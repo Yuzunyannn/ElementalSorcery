@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.material.MapColor;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -82,6 +83,7 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 	static public int DP_TOOLS = 5;
 	static public int DP_BOX = 20;
 	static public int DP_ALTAR = 100;
+	static public int DP_ALTAR_SURPREME = 500;
 
 	/**
 	 * 物品被析构成元素时候，获取真正可以得到的元素
@@ -119,6 +121,8 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 				estack.setCount(200);
 			estack.rise(-0.6f);
 			estack.weaken(0.45f);
+		} else if (lvPower <= Element.DP_ALTAR_SURPREME) {
+			estack.rise(-0.01f);
 		}
 		return estack;
 	}
@@ -162,6 +166,7 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 	public void drawElemntIconInGUI(ElementStack estack, int x, int y, Minecraft mc) {
 		ResourceLocation res = this.getIconResourceLocation();
 		mc.getTextureManager().bindTexture(res);
+		GlStateManager.color(1, 1, 1);
 		mc.currentScreen.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
 		int count = estack.getCount();
 		if (count > 1) {

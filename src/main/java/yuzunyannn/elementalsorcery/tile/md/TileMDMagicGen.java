@@ -158,9 +158,8 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 				this.magic = new ElementStack(ESInitInstance.ELEMENTS.MAGIC, (int) (dRate * 100), 25);
 			else
 				this.magic.grow(new ElementStack(ESInitInstance.ELEMENTS.MAGIC, (int) (dRate * 100), 25));
-			if (this.getCurrentCapacity() >= this.getMaxCapacity()) {
+			if (this.getCurrentCapacity() >= this.getMaxCapacity())
 				this.magic.setCount(this.getMaxCapacity());
-			}
 		} else {
 			// 如果没有熔炼，就拿走一个魔石，进行熔炼
 			ItemStack stack = this.getMagicStone();

@@ -34,7 +34,7 @@ public class TileInfusionBox extends TileEntity implements IAcceptBurnPower {
 		@Override
 		@Nonnull
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (stack.getItem() != ESInitInstance.ITEMS.MAGICAL_PIECE)
+			if (stack.getItem() != ESInitInstance.ITEMS.MAGIC_PIECE)
 				return stack;
 			return super.insertItem(slot, stack, simulate);
 		}

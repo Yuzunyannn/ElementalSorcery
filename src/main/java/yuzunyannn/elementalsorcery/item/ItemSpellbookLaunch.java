@@ -73,6 +73,9 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 		case ICraftingLaunch.TYPE_BUILING_RECORD:
 			str = "info.launchbook.build";
 			break;
+		case ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT:
+			str = "info.launchbook.cons";
+			break;
 		}
 		return str;
 	}
@@ -150,6 +153,9 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 			nbt.setString("bookType", ICraftingLaunch.TYPE_BUILING_RECORD);
 			break;
 		case ICraftingLaunch.TYPE_BUILING_RECORD:
+			nbt.setString("bookType", ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT);
+			break;
+		case ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT:
 			nbt.setString("bookType", ICraftingLaunch.TYPE_ELEMENT_CRAFTING);
 			break;
 		default:

@@ -12,6 +12,7 @@ public interface ICraftingLaunch {
 	static public String TYPE_ELEMENT_CRAFTING = "element_crafting";
 	static public String TYPE_ELEMENT_DECONSTRUCT = "element_deconstruct";
 	static public String TYPE_BUILING_RECORD = "builing_record";
+	static public String TYPE_ELEMENT_CONSTRUCT = "element_construct";
 	
 	/** 是否正在工作 */
 	boolean isWorking();

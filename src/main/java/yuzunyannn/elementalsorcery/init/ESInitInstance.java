@@ -38,6 +38,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
 import yuzunyannn.elementalsorcery.block.md.BlockMDHearth;
 import yuzunyannn.elementalsorcery.block.md.BlockMDInfusion;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagicGen;
+import yuzunyannn.elementalsorcery.block.md.BlockMDMagicSolidify;
 import yuzunyannn.elementalsorcery.block.md.BlockMDRubbleRepair;
 import yuzunyannn.elementalsorcery.block.md.BlockMDTransfer;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
@@ -57,6 +58,7 @@ import yuzunyannn.elementalsorcery.item.ItemItemCrystal;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemManual;
+import yuzunyannn.elementalsorcery.item.ItemOrderCrystal;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.item.ItemSome;
@@ -148,6 +150,7 @@ public class ESInitInstance {
 		BLOCKS.MD_RUBBLE_REPAIR = new BlockMDRubbleRepair().setRegistryName("md_rubble_repair");
 		BLOCKS.MD_INFUSION = new BlockMDInfusion().setRegistryName("md_infusion");
 		BLOCKS.MD_TRANSFER = new BlockMDTransfer().setRegistryName("md_transfer");
+		BLOCKS.MD_MAGIC_SOLIDIFY = new BlockMDMagicSolidify().setRegistryName("md_magic_solidify");
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -158,7 +161,7 @@ public class ESInitInstance {
 
 	private static final void instanceItems() throws ReflectiveOperationException {
 		ITEMS.KYANITE = ItemSome.newKyanite().setRegistryName("kyanite");
-		ITEMS.MAGICAL_PIECE = ItemSome.newMagicalPiece().setRegistryName("magical_piece");
+		ITEMS.MAGIC_PIECE = ItemSome.newMagicalPiece().setRegistryName("magic_piece");
 		ITEMS.MAGICAL_ENDER_EYE = ItemSome.newMagicalEnderEye().setRegistryName("magical_ender_eye");
 		ITEMS.MAGIC_CRYSTAL = ItemSome.newMagicalCrystal().setRegistryName("magic_crystal");
 		ITEMS.TINY_KNIFE = ItemSome.newTinyKnife().setRegistryName("tiny_knife");
@@ -179,7 +182,8 @@ public class ESInitInstance {
 		ITEMS.MANUAL = new ItemManual().setRegistryName("manual");
 		ITEMS.MAGIC_RULER = new ItemMagicRuler().setRegistryName("magic_ruler");
 		ITEMS.ITEM_CRYSTAL = new ItemItemCrystal().setRegistryName("item_crystal");
-
+		ITEMS.ORDER_CRYSTAL = new ItemOrderCrystal().setRegistryName("order_crystal");
+		
 		ITEMS.SPELLBOOK = new ItemSpellbook().setRegistryName("spellbook");
 		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture().setRegistryName("spellbook_architecture");
 		ITEMS.SPELLBOOK_ENCHANTMENT = new ItemSpellbookEnchantment().setRegistryName("spellbook_enchantment");

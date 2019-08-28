@@ -1,0 +1,31 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "md",
+	"pattern": [
+		"CBC",
+		"XAX",
+		"X#X"
+	],
+	"key": {
+		"#": {
+			"item": "elementalsorcery:astone",
+			"data": 6
+		},
+		"X": {
+			"item": "elementalsorcery:magic_stone"
+		},
+		"A": {
+			"item": "minecraft:blaze_powder"
+		},
+		"B": {
+			"item": "elementalsorcery:star_sand"
+		},
+		"C": {
+			"item": "elementalsorcery:astone",
+            "data": 3
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:md_infusion"
+	}
+}

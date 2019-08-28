@@ -191,10 +191,8 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	@SideOnly(Side.CLIENT)
 	public void tick() {
 		if (wake > 0) {
-			if (color == ORIGIN_COLOR) {
-				color = new Vertex(ORIGIN_COLOR);
+			if (color == ORIGIN_COLOR) 
 				changeColor();
-			}
 			// 站起来的比率
 			if (wakeUp >= 1.0f)
 				wakeUp = 1.0f;
@@ -224,6 +222,8 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	// 切换颜色
 	@SideOnly(Side.CLIENT)
 	private void changeColor() {
+		if (color == ORIGIN_COLOR)
+			color = new Vertex(ORIGIN_COLOR);
 		ElementStack estack = ItemSpellbook.giveMeRandomElement(inventory);
 		int ecolor = color.toColor();
 		if (!estack.isEmpty())

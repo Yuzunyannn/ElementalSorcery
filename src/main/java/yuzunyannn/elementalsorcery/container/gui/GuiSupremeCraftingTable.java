@@ -61,6 +61,10 @@ public class GuiSupremeCraftingTable extends GuiNormal<ContainerSupremeCraftingT
 			this.drawTexturedModalRectMirrorWidth(offsetX + 124, offsetY + 75, 230, 6, 18, 18);
 			this.drawTexturedModalRect(offsetX + 104, offsetY + 147, 230, 0, 23, 6);
 			break;
+		case ContainerSupremeCraftingTable.MODE_CONSTRUCT:
+			this.drawTexturedModalRect(offsetX + 106, offsetY + 111, 230, 78, 18, 18);
+			this.drawTexturedModalRect(offsetX + 104, offsetY + 147, 230, 0, 23, 6);
+			break;
 		}
 		List<ElementStack> list = container.tileEntity.getNeedElements();
 		if (list == null)

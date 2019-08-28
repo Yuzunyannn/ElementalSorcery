@@ -12,7 +12,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ability.IItemStructure;
-import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
@@ -28,11 +27,7 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	// 是否ok
 	private boolean isOk = true;
 
-	public CraftingDeconstruct(World world, ItemStack stack) {
-		this(world, stack, null);
-	}
-
-	public CraftingDeconstruct(World world, ItemStack stack, IItemStructure structure) {
+	public CraftingDeconstruct(World world, ItemStack stack, int lvPower, IItemStructure structure) {
 		itemList.add(stack);
 		ElementStack[] outEstacks;
 		if (structure == null)
@@ -45,7 +40,7 @@ public class CraftingDeconstruct implements ICraftingAltar {
 		for (ElementStack estack : outEstacks) {
 			for (int i = 0; i < stack.getCount(); i++)
 				restEStacks.add(estack.copy().becomeElementWhenDeconstruct(world, stack,
-						ElementMap.instance.complex(stack), Element.DP_ALTAR));
+						ElementMap.instance.complex(stack), lvPower));
 		}
 	}
 

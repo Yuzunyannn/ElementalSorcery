@@ -93,7 +93,7 @@
 				},
 				{
 					"type": "item",
-					"name": "elementalsorcery:magical_piece",
+					"name": "elementalsorcery:magic_piece",
 					"functions": [
 						{
 							"function": "set_count",

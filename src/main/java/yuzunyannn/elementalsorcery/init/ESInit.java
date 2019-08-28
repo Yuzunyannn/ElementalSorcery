@@ -69,6 +69,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileLantern;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMDHearth;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMDInfusion;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMDMagicGen;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileMDMagicSolidify;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMDTransfer;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
@@ -95,6 +96,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.tile.md.TileMDHearth;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicGen;
+import yuzunyannn.elementalsorcery.tile.md.TileMDMagicSolidify;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
@@ -185,7 +187,7 @@ public class ESInit {
 		register(ESInitInstance.ITEMS.SPELLBOOK_ELEMENT);
 
 		register(ESInitInstance.ITEMS.KYANITE);
-		register(ESInitInstance.ITEMS.MAGICAL_PIECE);
+		register(ESInitInstance.ITEMS.MAGIC_PIECE);
 		register(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE);
 		register(ESInitInstance.ITEMS.KYANITE_PICKAXE);
 		register(ESInitInstance.ITEMS.KYANITE_AXE);
@@ -206,6 +208,7 @@ public class ESInit {
 		register(ESInitInstance.ITEMS.MAGIC_RULER);
 		register(ESInitInstance.ITEMS.ITEM_CRYSTAL);
 		register(ESInitInstance.ITEMS.MAGIC_STONE);
+		register(ESInitInstance.ITEMS.ORDER_CRYSTAL);
 	}
 
 	static void registerAllBlocks() {
@@ -245,10 +248,11 @@ public class ESInit {
 		register(ESInitInstance.BLOCKS.MD_RUBBLE_REPAIR);
 		register(ESInitInstance.BLOCKS.MD_INFUSION);
 		register(ESInitInstance.BLOCKS.MD_TRANSFER);
+		register(ESInitInstance.BLOCKS.MD_MAGIC_SOLIDIFY);
 	}
 
 	static void registerAllTiles() {
-		register(TileElementalCube.class, "ElementalCrystal");
+		register(TileElementalCube.class, "ElementalCube");
 		register(TileHearth.class, "Hearth");
 		register(TileSmeltBox.class, "SmeltBox");
 		register(TileMagicPlatform.class, "MagicPlatform");
@@ -269,6 +273,7 @@ public class ESInit {
 		register(TileMDRubbleRepair.class, "MDRubbleRepair");
 		register(TileMDInfusion.class, "MDfusion");
 		register(TileMDTransfer.class, "MDTransfer");
+		register(TileMDMagicSolidify.class, "MDMagicSolidify");
 	}
 
 	static void registerAllElements() {
@@ -295,7 +300,7 @@ public class ESInit {
 		SpellbookRenderInfo.renderInstance = RenderItemSpellbook.instance;
 
 		registerRender(ESInitInstance.ITEMS.KYANITE);
-		registerRender(ESInitInstance.ITEMS.MAGICAL_PIECE);
+		registerRender(ESInitInstance.ITEMS.MAGIC_PIECE);
 		registerRender(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE);
 		registerRender(ESInitInstance.ITEMS.KYANITE_PICKAXE);
 		registerRender(ESInitInstance.ITEMS.KYANITE_AXE);
@@ -317,6 +322,7 @@ public class ESInit {
 		registerRender(ESInitInstance.ITEMS.ITEM_CRYSTAL);
 		registerRender(ESInitInstance.ITEMS.MAGIC_STONE);
 		registerRender(ESInitInstance.ITEMS.TINY_KNIFE);
+		registerRender(ESInitInstance.ITEMS.ORDER_CRYSTAL);
 
 		registerStateMapper(ESInitInstance.BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(ESInitInstance.BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -370,6 +376,8 @@ public class ESInit {
 				TileMDRubbleRepair.class);
 		registerRender(new RenderTileMDInfusion(), ESInitInstance.BLOCKS.MD_INFUSION, TileMDInfusion.class);
 		registerRender(new RenderTileMDTransfer(), ESInitInstance.BLOCKS.MD_TRANSFER, TileMDTransfer.class);
+		registerRender(new RenderTileMDMagicSolidify(), ESInitInstance.BLOCKS.MD_MAGIC_SOLIDIFY,
+				TileMDMagicSolidify.class);
 
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);

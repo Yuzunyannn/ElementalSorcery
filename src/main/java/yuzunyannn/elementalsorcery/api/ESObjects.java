@@ -16,7 +16,7 @@ public class ESObjects {
 
 	static public class Items {
 		public Item KYANITE;
-		public Item MAGICAL_PIECE;
+		public Item MAGIC_PIECE;
 		public Item MAGICAL_ENDER_EYE;
 		public Item KYANITE_PICKAXE;
 		public Item KYANITE_AXE;
@@ -42,6 +42,7 @@ public class ESObjects {
 		public Item MAGIC_RULER;
 		public Item ITEM_CRYSTAL;
 		public Item MAGIC_STONE;
+		public Item ORDER_CRYSTAL;
 	}
 
 	static public class Blocks {
@@ -81,6 +82,7 @@ public class ESObjects {
 		public Block MD_RUBBLE_REPAIR;
 		public Block MD_INFUSION;
 		public Block MD_TRANSFER;
+		public Block MD_MAGIC_SOLIDIFY;
 	}
 
 	static public class Elements {
