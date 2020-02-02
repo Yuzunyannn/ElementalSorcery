@@ -31,14 +31,16 @@ public class WorldGenStarStone extends WorldGenerator {
 		IBlockState starSandState = ESInitInstance.BLOCKS.STAR_SAND.getDefaultState();
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 		for (int i = 0; i < tryTime; i++) {
+			// 从天而降，寻找沙块
 			pos.setPos(postion.getX() + rand.nextInt(16), 125 + rand.nextInt(50), postion.getZ() + rand.nextInt(16));
 			while (pos.getY() > 25 && worldIn.isAirBlock(pos))
 				pos.setY(pos.getY() - 1);
 			IBlockState state = worldIn.getBlockState(pos);
-			if (state.getBlock() == Blocks.SAND)
+			if (state.getBlock() == Blocks.SAND) {
 				worldIn.setBlockState(pos.up(), starStoneState, 2);
-			if (rand.nextFloat() < 0.025f)
-				worldIn.setBlockState(pos, starSandState, 2);
+				if (rand.nextFloat() < 0.025f)
+					worldIn.setBlockState(pos, starSandState, 2);
+			}
 		}
 		return true;
 	}

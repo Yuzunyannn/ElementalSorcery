@@ -54,38 +54,33 @@ public class Pages {
 
 	/** 获取page */
 	public static Page getPage(String id) {
-		if (pages.containsKey(id))
-			return pages.get(id);
+		if (pages.containsKey(id)) return pages.get(id);
 		return getErrorPage();
 	}
 
 	/** 通过index获取page */
 	public static Page getPage(int index) {
-		if (index < 0 || index >= pageList.size())
-			return getErrorPage();
+		if (index < 0 || index >= pageList.size()) return getErrorPage();
 		return pageList.get(index);
 	}
 
 	/** 是否有效 */
 	public static boolean isVaild(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null)
-			return false;
+		if (nbt == null) return false;
 		return isVaild(nbt.getString("pId"));
 	}
 
 	/** 获取page */
 	public static Page getPage(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null)
-			return getErrorPage();
+		if (nbt == null) return getErrorPage();
 		return getPage(nbt.getString("pId"));
 	}
 
 	/** 设置page */
 	public static ItemStack setPage(String id, ItemStack stack) {
-		if (id == null)
-			id = "error";
+		if (id == null) id = "error";
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) {
 			nbt = new NBTTagCompound();
@@ -101,8 +96,7 @@ public class Pages {
 			return getPage(Pages.ABOUT_KYNATIE_TOOLS);
 		else {
 			for (Entry<Item, String> entry : Pages.itemToId) {
-				if (entry.getKey() == item)
-					return getPage(entry.getValue());
+				if (entry.getKey() == item) return getPage(entry.getValue());
 			}
 		}
 		return null;
@@ -176,14 +170,14 @@ public class Pages {
 		regPage(ABOUT_ASTONE, aboutAStone());
 		regPage(ABOUT_MD, aboutMD());
 		regPage(ABOUT_INFUSION, new PageCraftingSimple("infusion", ESInitInstance.BLOCKS.MD_INFUSION));
-		regPage(ABOUT_MAGICAL_ENDEREYE,
-				new PageCraftingSimple("magical_endereye", ESInitInstance.ITEMS.MAGICAL_ENDER_EYE));
-		
+		regPage(ABOUT_MAGICAL_ENDEREYE, new PageCraftingSimple("magical_endereye",
+				ESInitInstance.ITEMS.MAGICAL_ENDER_EYE));
+
 		regPage(ABOUT_KYNATIE_TOOLS, aboutKynatieTools());
 		regPage(ABOUT_ABSORB_BOX, new PageCraftingSimple("absorbBox", ESInitInstance.BLOCKS.ABSORB_BOX));
-		regPage(ABOUT_MAGIC_PLATFORM,
-				new PageCraftingSimple("magicPl", new ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 0),
-						new ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 1)));
+		regPage(ABOUT_MAGIC_PLATFORM, new PageCraftingSimple("magicPl",
+				new ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 0),
+				new ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 1)));
 		regPage(ABOUT_MAGIC_CRY, new PageTransformSimple("magicCry", ESInitInstance.ITEMS.KYANITE,
 				ESInitInstance.ITEMS.MAGIC_CRYSTAL, PageTransform.INFUSION));
 		regPage(ABOUT_MAGIC_ESTONE, aboutEStone());
@@ -197,16 +191,14 @@ public class Pages {
 		regPage(ABOUT_DEC_BOX, new PageCraftingSimple("decBox", ESInitInstance.BLOCKS.DECONSTRUCT_BOX));
 		regPage(ABOUT_MAGIC_PAPER, new PageCraftingSimple("magicPaper", ESInitInstance.ITEMS.MAGIC_PAPER));
 		regPage(ABOUT_SPELL_PAPER, new PageCraftingSimple("spellPaper", ESInitInstance.ITEMS.SPELL_PAPER));
-		regPage(ABOUT_BOOKCOVER,
-				new PageCraftingSimple("bookCover", new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 0),
-						new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 1)));
+		regPage(ABOUT_BOOKCOVER, new PageCraftingSimple("bookCover",
+				new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 0),
+				new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 1)));
 		regPage(ABOUT_SPELLBOOK, aboutSpellbook());
 		regPage(ABOUT_ELEMENT_CUBE, new PageCraftingSimple("elementCube", ESInitInstance.BLOCKS.ELEMENTAL_CUBE));
 		regPage(ABOUT_MAGICDESK, aboutMagicDesk());
-		regPage(ABOUT_SPLAUNCH, aboutSP("spLaunch", ESInitInstance.ITEMS.SPELLBOOK,
-				ESInitInstance.ITEMS.SPELLBOOK_LAUNCH, TileMagicDesk.AUTO_LAUNCH_BOOK));
-		regPage(ABOUT_SPELEMENT, aboutSP("spElement", ESInitInstance.ITEMS.SPELLBOOK,
-				ESInitInstance.ITEMS.SPELLBOOK_ELEMENT, TileMagicDesk.AUTO_ELEMENT_BOOK));
+		regPage(ABOUT_SPLAUNCH, aboutSP("spLaunch", ESInitInstance.ITEMS.SPELLBOOK, ESInitInstance.ITEMS.SPELLBOOK_LAUNCH, TileMagicDesk.AUTO_LAUNCH_BOOK));
+		regPage(ABOUT_SPELEMENT, aboutSP("spElement", ESInitInstance.ITEMS.SPELLBOOK, ESInitInstance.ITEMS.SPELLBOOK_ELEMENT, TileMagicDesk.AUTO_ELEMENT_BOOK));
 		initItemToId();
 	}
 

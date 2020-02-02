@@ -37,8 +37,7 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		String s = I18n.format(this.getUnlocalizedTitle());
 		this.fontRenderer.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 4210752);
-		this.fontRenderer.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2,
-				4210752);
+		this.fontRenderer.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
 	}
 
 	// 画一次物品
@@ -72,20 +71,20 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 		this.drawGradientRect(left - 3, top - 3, right + 3, top - 3 + 1, 1347420415, 1347420415);
 		this.drawGradientRect(left - 3, bottom + 2, right + 3, bottom + 3, 1344798847, 1344798847);
 	}
-	
-    public void drawTexturedModalRect(float x, float y, int u, int v, int width, int height,float textureWidth, float textureHeight)
-    {
-        float f = 1.0F / textureWidth;
-        float f1 = 1.0F / textureHeight;
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder bufferbuilder = tessellator.getBuffer();
-        bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-        bufferbuilder.pos((double)x, (double)(y + height), 0.0D).tex((double)(u * f), (double)((v + (float)height) * f1)).endVertex();
-        bufferbuilder.pos((double)(x + width), (double)(y + height), 0.0D).tex((double)((u + (float)width) * f), (double)((v + (float)height) * f1)).endVertex();
-        bufferbuilder.pos((double)(x + width), (double)y, 0.0D).tex((double)((u + (float)width) * f), (double)(v * f1)).endVertex();
-        bufferbuilder.pos((double)x, (double)y, 0.0D).tex((double)(u * f), (double)(v * f1)).endVertex();
-        tessellator.draw();
-    }
+
+	public void drawTexturedModalRect(float x, float y, int u, int v, int width, int height, float textureWidth,
+			float textureHeight) {
+		float f = 1.0F / textureWidth;
+		float f1 = 1.0F / textureHeight;
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+		bufferbuilder.pos((double) x, (double) (y + height), 0.0D).tex((double) (u * f), (double) ((v + (float) height) * f1)).endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + height), 0.0D).tex((double) ((u + (float) width) * f), (double) ((v + (float) height) * f1)).endVertex();
+		bufferbuilder.pos((double) (x + width), (double) y, 0.0D).tex((double) ((u + (float) width) * f), (double) (v * f1)).endVertex();
+		bufferbuilder.pos((double) x, (double) y, 0.0D).tex((double) (u * f), (double) (v * f1)).endVertex();
+		tessellator.draw();
+	}
 
 	// 画一个可以镜像width的图标
 	public void drawTexturedModalRectMirrorWidth(int x, int y, int textureX, int textureY, int width, int height) {
@@ -94,21 +93,10 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-		bufferbuilder.pos((double) (x + 0), (double) (y + height), (double) this.zLevel)
-				.tex((double) ((float) (textureX + width) * 0.00390625F),
-						(double) ((float) (textureY + height) * 0.00390625F))
-				.endVertex();
-		bufferbuilder.pos((double) (x + width), (double) (y + height), (double) this.zLevel)
-				.tex((double) ((float) (textureX + 0) * 0.00390625F),
-						(double) ((float) (textureY + height) * 0.00390625F))
-				.endVertex();
-		bufferbuilder.pos((double) (x + width), (double) (y + 0), (double) this.zLevel)
-				.tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F))
-				.endVertex();
-		bufferbuilder.pos((double) (x + 0), (double) (y + 0), (double) this.zLevel)
-				.tex((double) ((float) (textureX + width) * 0.00390625F),
-						(double) ((float) (textureY + 0) * 0.00390625F))
-				.endVertex();
+		bufferbuilder.pos((double) (x + 0), (double) (y + height), (double) this.zLevel).tex((double) ((float) (textureX + width) * 0.00390625F), (double) ((float) (textureY + height) * 0.00390625F)).endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + height), (double) this.zLevel).tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + height) * 0.00390625F)).endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + 0), (double) this.zLevel).tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F)).endVertex();
+		bufferbuilder.pos((double) (x + 0), (double) (y + 0), (double) this.zLevel).tex((double) ((float) (textureX + width) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F)).endVertex();
 		tessellator.draw();
 	}
 
@@ -119,21 +107,10 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-		bufferbuilder.pos((double) (x + 0), (double) (y + height), (double) this.zLevel)
-				.tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F))
-				.endVertex();
-		bufferbuilder.pos((double) (x + width), (double) (y + height), (double) this.zLevel)
-				.tex((double) ((float) (textureX + width) * 0.00390625F),
-						(double) ((float) (textureY + 0) * 0.00390625F))
-				.endVertex();
-		bufferbuilder.pos((double) (x + width), (double) (y + 0), (double) this.zLevel)
-				.tex((double) ((float) (textureX + width) * 0.00390625F),
-						(double) ((float) (textureY + height) * 0.00390625F))
-				.endVertex();
-		bufferbuilder.pos((double) (x + 0), (double) (y + 0), (double) this.zLevel)
-				.tex((double) ((float) (textureX + 0) * 0.00390625F),
-						(double) ((float) (textureY + height) * 0.00390625F))
-				.endVertex();
+		bufferbuilder.pos((double) (x + 0), (double) (y + height), (double) this.zLevel).tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F)).endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + height), (double) this.zLevel).tex((double) ((float) (textureX + width) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F)).endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + 0), (double) this.zLevel).tex((double) ((float) (textureX + width) * 0.00390625F), (double) ((float) (textureY + height) * 0.00390625F)).endVertex();
+		bufferbuilder.pos((double) (x + 0), (double) (y + 0), (double) this.zLevel).tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + height) * 0.00390625F)).endVertex();
 		tessellator.draw();
 	}
 

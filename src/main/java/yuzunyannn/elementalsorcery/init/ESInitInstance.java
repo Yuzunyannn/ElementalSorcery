@@ -12,6 +12,11 @@ import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementMagic;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.block.BlockElementWorkbench;
+import yuzunyannn.elementalsorcery.block.BlockElfFruit;
+import yuzunyannn.elementalsorcery.block.BlockElfLeaf;
+import yuzunyannn.elementalsorcery.block.BlockElfLog;
+import yuzunyannn.elementalsorcery.block.BlockElfPlank;
+import yuzunyannn.elementalsorcery.block.BlockElfSapling;
 import yuzunyannn.elementalsorcery.block.BlockInvalidEnchantmentTable;
 import yuzunyannn.elementalsorcery.block.BlockKyanite;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
@@ -111,90 +116,95 @@ public class ESInitInstance {
 
 	private static final void instanceBlocks() throws ReflectiveOperationException {
 
-		BLOCKS.ESTONE = new BlocksEStone.EStone().setRegistryName("estone");
-		BLOCKS.ESTONE_SLAB = new BlocksEStone.EStoneSlab().setRegistryName("estone_slab");
-		BLOCKS.ESTONE_STAIRS = new BlocksEStone.EStoneStairs().setRegistryName("estone_stairs");
-		BLOCKS.ASTONE = new BlocksAStone().setRegistryName("astone");
+		BLOCKS.ESTONE = new BlocksEStone.EStone();
+		BLOCKS.ESTONE_SLAB = new BlocksEStone.EStoneSlab();
+		BLOCKS.ESTONE_STAIRS = new BlocksEStone.EStoneStairs();
+		BLOCKS.ASTONE = new BlocksAStone();
 
-		BLOCKS.ELEMENTAL_CUBE = new BlockElementalCube().setRegistryName("elemental_cube");
-		BLOCKS.HEARTH = new BlockHearth().setRegistryName("hearth");
-		BLOCKS.SMELT_BOX = BlockSmeltBox.newBlockSmeltBox(BlockHearth.EnumMaterial.COBBLESTONE)
-				.setRegistryName("smelt_box");
-		BLOCKS.SMELT_BOX_IRON = BlockSmeltBox.newBlockSmeltBox(BlockHearth.EnumMaterial.IRON)
-				.setRegistryName("smelt_box_iron");
-		BLOCKS.SMELT_BOX_KYANITE = BlockSmeltBox.newBlockSmeltBox(BlockHearth.EnumMaterial.KYANITE)
-				.setRegistryName("smelt_box_kyanite");
-		BLOCKS.KYANITE_BLOCK = new BlockKyanite().setRegistryName("kyanite_block");
-		BLOCKS.KYANITE_ORE = new BlockKyanite.BlockKyaniteOre().setRegistryName("kyanite_ore");
-		BLOCKS.MAGIC_PLATFORM = new BlockMagicPlatform().setRegistryName("magic_platform");
-		BLOCKS.ABSORB_BOX = new BlockAbsorbBox().setRegistryName("absorb_box");
-		BLOCKS.INVALID_ENCHANTMENT_TABLE = new BlockInvalidEnchantmentTable()
-				.setRegistryName("invalid_enchantment_table");
-		BLOCKS.ELEMENT_WORKBENCH = new BlockElementWorkbench().setRegistryName("element_workbench");
-		BLOCKS.DECONSTRUCT_BOX = new BlockDeconstructBox().setRegistryName("deconstruct_box");
-		BLOCKS.MAGIC_DESK = new BlockMagicDesk().setRegistryName("magic_desk");
-		BLOCKS.ELEMENT_CRAFTING_TABLE = new BlockElementCraftingTable().setRegistryName("element_crafting_table");
-		BLOCKS.DECONSTRUCT_ALTAR_TABLE = new BlockDeconstructAltarTable().setRegistryName("deconstruct_altar_table");
-		BLOCKS.STELA = new BlockStela().setRegistryName("stela");
-		BLOCKS.LANTERN = new BlockLantern().setRegistryName("lantern");
-		BLOCKS.BUILDING_ALTAR = new BlockBuildingAltar().setRegistryName("building_altar");
-		BLOCKS.ANALYSIS_ALTAR = new BlockAnalysisAltar().setRegistryName("analysis_altar");
-		BLOCKS.SUPREME_CRAFTING_TABLE = new BlockSupremeCraftingTable().setRegistryName("supreme_crafting_table");
-		BLOCKS.MAGIC_TORCH = new BlockMagicTorch().setRegistryName("magic_torch");
-		BLOCKS.STAR_STONE = new BlockStarStone().setRegistryName("star_stone");
-		BLOCKS.STAR_SAND = new BlockStarSand().setRegistryName("star_sand");
-		BLOCKS.STONE_MILL = new BlockStoneMill().setRegistryName("stone_mill");
-		BLOCKS.MELT_CAULDRON = new BlockMeltCauldron().setRegistryName("melt_cauldron");
-		BLOCKS.MD_MAGIC_GEN = new BlockMDMagicGen().setRegistryName("md_magic_gen");
-		BLOCKS.MD_HEARTH = new BlockMDHearth().setRegistryName("md_hearth");
-		BLOCKS.MD_RUBBLE_REPAIR = new BlockMDRubbleRepair().setRegistryName("md_rubble_repair");
-		BLOCKS.MD_INFUSION = new BlockMDInfusion().setRegistryName("md_infusion");
-		BLOCKS.MD_TRANSFER = new BlockMDTransfer().setRegistryName("md_transfer");
-		BLOCKS.MD_MAGIC_SOLIDIFY = new BlockMDMagicSolidify().setRegistryName("md_magic_solidify");
+		BLOCKS.ELEMENTAL_CUBE = new BlockElementalCube();
+		BLOCKS.HEARTH = new BlockHearth();
+		BLOCKS.SMELT_BOX = new BlockSmeltBox(BlockHearth.EnumMaterial.COBBLESTONE);
+		BLOCKS.SMELT_BOX_IRON = new BlockSmeltBox(BlockHearth.EnumMaterial.IRON);
+		BLOCKS.SMELT_BOX_KYANITE = new BlockSmeltBox(BlockHearth.EnumMaterial.KYANITE);
+		BLOCKS.KYANITE_BLOCK = new BlockKyanite();
+		BLOCKS.KYANITE_ORE = new BlockKyanite.BlockKyaniteOre();
+		BLOCKS.MAGIC_PLATFORM = new BlockMagicPlatform();
+		BLOCKS.ABSORB_BOX = new BlockAbsorbBox();
+		BLOCKS.INVALID_ENCHANTMENT_TABLE = new BlockInvalidEnchantmentTable();
+		BLOCKS.ELEMENT_WORKBENCH = new BlockElementWorkbench();
+		BLOCKS.DECONSTRUCT_BOX = new BlockDeconstructBox();
+		BLOCKS.MAGIC_DESK = new BlockMagicDesk();
+		BLOCKS.ELEMENT_CRAFTING_TABLE = new BlockElementCraftingTable();
+		BLOCKS.DECONSTRUCT_ALTAR_TABLE = new BlockDeconstructAltarTable();
+		BLOCKS.STELA = new BlockStela();
+		BLOCKS.LANTERN = new BlockLantern();
+		BLOCKS.BUILDING_ALTAR = new BlockBuildingAltar();
+		BLOCKS.ANALYSIS_ALTAR = new BlockAnalysisAltar();
+		BLOCKS.SUPREME_CRAFTING_TABLE = new BlockSupremeCraftingTable();
+		BLOCKS.MAGIC_TORCH = new BlockMagicTorch();
+		BLOCKS.STAR_STONE = new BlockStarStone();
+		BLOCKS.STAR_SAND = new BlockStarSand();
+		BLOCKS.STONE_MILL = new BlockStoneMill();
+		BLOCKS.MELT_CAULDRON = new BlockMeltCauldron();
+		BLOCKS.ELF_LOG = new BlockElfLog();
+		BLOCKS.ELF_LEAF = new BlockElfLeaf();
+		BLOCKS.ELF_PLANK = new BlockElfPlank();
+		BLOCKS.ELF_SAPLING = new BlockElfSapling();
+		BLOCKS.ELF_FRUIT = new BlockElfFruit();
+		BLOCKS.MD_MAGIC_GEN = new BlockMDMagicGen();
+		BLOCKS.MD_HEARTH = new BlockMDHearth();
+		BLOCKS.MD_RUBBLE_REPAIR = new BlockMDRubbleRepair();
+		BLOCKS.MD_INFUSION = new BlockMDInfusion();
+		BLOCKS.MD_TRANSFER = new BlockMDTransfer();
+		BLOCKS.MD_MAGIC_SOLIDIFY = new BlockMDMagicSolidify();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
-			((Block) field.get(BLOCKS)).setCreativeTab(tab);
+			Block block = ((Block) field.get(BLOCKS));
+			block.setCreativeTab(tab);
+			block.setRegistryName(field.getName().toLowerCase());
 		}
 	}
 
 	private static final void instanceItems() throws ReflectiveOperationException {
-		ITEMS.KYANITE = ItemSome.newKyanite().setRegistryName("kyanite");
-		ITEMS.MAGIC_PIECE = ItemSome.newMagicalPiece().setRegistryName("magic_piece");
-		ITEMS.MAGICAL_ENDER_EYE = ItemSome.newMagicalEnderEye().setRegistryName("magical_ender_eye");
-		ITEMS.MAGIC_CRYSTAL = ItemSome.newMagicalCrystal().setRegistryName("magic_crystal");
-		ITEMS.TINY_KNIFE = ItemSome.newTinyKnife().setRegistryName("tiny_knife");
-		ITEMS.MAGIC_PAPER = ItemSome.newMagicPaper().setRegistryName("magic_paper");
-		ITEMS.SPELL_PAPER = ItemSome.newSpellPaper().setRegistryName("spell_paper");
-		ITEMS.SPELL_CRYSTAL = ItemSome.newSpellCrystal().setRegistryName("spell_crystal");
-		ITEMS.MAGIC_STONE = ItemSome.newMagicStone().setRegistryName("magic_stone");
-		ITEMS.KYANITE_PICKAXE = new ItemKyaniteTools.ItemKyanitePickaxe().setRegistryName("kyanite_pickaxe");
-		ITEMS.KYANITE_AXE = new ItemKyaniteTools.ItemKyaniteAxe().setRegistryName("kyanite_axe");
-		ITEMS.KYANITE_SPADE = new ItemKyaniteTools.ItemKyaniteSpade().setRegistryName("kyanite_spade");
-		ITEMS.KYANITE_HOE = new ItemKyaniteTools.ItemKyaniteHoe().setRegistryName("kyanite_hoe");
-		ITEMS.KYANITE_SWORD = new ItemKyaniteTools.ItemKyaniteSword().setRegistryName("kyanite_sword");
-		ITEMS.ARCHITECTURE_CRYSTAL = new ItemArchitectureCrystal().setRegistryName("architecture_crystal");
-		ITEMS.ELEMENT_CRYSTAL = new ItemElementCrystal().setRegistryName("element_crystal");
-		ITEMS.PARCHMENT = new ItemParchment().setRegistryName("parchment");
-		ITEMS.SPELLBOOK_COVER = new ItemSpellbookCover().setRegistryName("spellbook_cover");
-		ITEMS.SCROLL = new ItemScroll().setRegistryName("scroll");
-		ITEMS.MANUAL = new ItemManual().setRegistryName("manual");
-		ITEMS.MAGIC_RULER = new ItemMagicRuler().setRegistryName("magic_ruler");
-		ITEMS.ITEM_CRYSTAL = new ItemItemCrystal().setRegistryName("item_crystal");
-		ITEMS.ORDER_CRYSTAL = new ItemOrderCrystal().setRegistryName("order_crystal");
-		
-		ITEMS.SPELLBOOK = new ItemSpellbook().setRegistryName("spellbook");
-		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture().setRegistryName("spellbook_architecture");
-		ITEMS.SPELLBOOK_ENCHANTMENT = new ItemSpellbookEnchantment().setRegistryName("spellbook_enchantment");
-		ITEMS.SPELLBOOK_LAUNCH = new ItemSpellbookLaunch().setRegistryName("spellbook_launch");
-		ITEMS.SPELLBOOK_ELEMENT = new ItemSpellbookElement().setRegistryName("spellbook_element");
+		ITEMS.KYANITE = ItemSome.newKyanite();
+		ITEMS.MAGIC_PIECE = ItemSome.newMagicalPiece();
+		ITEMS.MAGICAL_ENDER_EYE = ItemSome.newMagicalEnderEye();
+		ITEMS.MAGIC_CRYSTAL = ItemSome.newMagicalCrystal();
+		ITEMS.TINY_KNIFE = ItemSome.newTinyKnife();
+		ITEMS.MAGIC_PAPER = ItemSome.newMagicPaper();
+		ITEMS.SPELL_PAPER = ItemSome.newSpellPaper();
+		ITEMS.SPELL_CRYSTAL = ItemSome.newSpellCrystal();
+		ITEMS.MAGIC_STONE = ItemSome.newMagicStone();
+		ITEMS.KYANITE_PICKAXE = new ItemKyaniteTools.ItemKyanitePickaxe();
+		ITEMS.KYANITE_AXE = new ItemKyaniteTools.ItemKyaniteAxe();
+		ITEMS.KYANITE_SPADE = new ItemKyaniteTools.ItemKyaniteSpade();
+		ITEMS.KYANITE_HOE = new ItemKyaniteTools.ItemKyaniteHoe();
+		ITEMS.KYANITE_SWORD = new ItemKyaniteTools.ItemKyaniteSword();
+		ITEMS.ARCHITECTURE_CRYSTAL = new ItemArchitectureCrystal();
+		ITEMS.ELEMENT_CRYSTAL = new ItemElementCrystal();
+		ITEMS.PARCHMENT = new ItemParchment();
+		ITEMS.SPELLBOOK_COVER = new ItemSpellbookCover();
+		ITEMS.SCROLL = new ItemScroll();
+		ITEMS.MANUAL = new ItemManual();
+		ITEMS.MAGIC_RULER = new ItemMagicRuler();
+		ITEMS.ITEM_CRYSTAL = new ItemItemCrystal();
+		ITEMS.ORDER_CRYSTAL = new ItemOrderCrystal();
+
+		ITEMS.SPELLBOOK = new ItemSpellbook();
+		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture();
+		ITEMS.SPELLBOOK_ENCHANTMENT = new ItemSpellbookEnchantment();
+		ITEMS.SPELLBOOK_LAUNCH = new ItemSpellbookLaunch();
+		ITEMS.SPELLBOOK_ELEMENT = new ItemSpellbookElement();
 
 		// 初始化所有tab
 		Class<?> cls = ITEMS.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
-			((Item) field.get(ITEMS)).setCreativeTab(tab);
+			Item item = ((Item) field.get(ITEMS));
+			item.setCreativeTab(tab);
+			item.setRegistryName(field.getName().toLowerCase());
 		}
 	}
 
@@ -210,8 +220,6 @@ public class ESInitInstance {
 	}
 
 	private static final void instanceVillage() {
-		ESInitInstance.VILLAGE.ES_VILLEGER = new VillagerRegistry.VillagerProfession("elementalsorcery:antique_dealer",
-				"elementalsorcery:textures/entity/villager/es_studier.png",
-				"elementalsorcery:textures/entity/zombie_villager/es_studier.png");
+		ESInitInstance.VILLAGE.ES_VILLEGER = new VillagerRegistry.VillagerProfession("elementalsorcery:antique_dealer", "elementalsorcery:textures/entity/villager/es_studier.png", "elementalsorcery:textures/entity/zombie_villager/es_studier.png");
 	}
 }

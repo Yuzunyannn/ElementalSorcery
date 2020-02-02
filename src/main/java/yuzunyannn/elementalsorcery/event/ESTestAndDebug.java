@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.compress.utils.IOUtils;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -17,17 +19,20 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
@@ -36,7 +41,6 @@ import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
-import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.worldgen.VillageESHall.VillageCreationHandler;
 
 public class ESTestAndDebug {
@@ -54,10 +58,10 @@ public class ESTestAndDebug {
 			IBlockState state = event.getWorld().getBlockState(pos);
 			// System.out.println(state.getBlockHardness(event.getWorld(),
 			// pos));
-			//TileEntity tile = event.getWorld().getTileEntity(pos);
-			//if (tile instanceof TileMDBase) {
-				//((TileMDBase) tile).setField(0, 10000);
-			//}
+			// TileEntity tile = event.getWorld().getTileEntity(pos);
+			// if (tile instanceof TileMDBase) {
+			// ((TileMDBase) tile).setField(0, 10000);
+			// }
 			// if (tile instanceof TileStela) {
 			// ((TileStela) tile).doOnce();
 			// }
@@ -76,6 +80,27 @@ public class ESTestAndDebug {
 		// System.out.println(state);
 		if (event.getEntityPlayer().isSneaking()) {
 			ESTestAndDebug.pos = event.getPos().up();
+		}
+
+	}
+
+	@SubscribeEvent
+	public void drawDebugTools(ItemTooltipEvent event) {
+		ItemStack stack = event.getItemStack();
+		Block block = Block.getBlockFromItem(stack.getItem());
+		EntityPlayer entity = event.getEntityPlayer();
+		if (entity == null) return;
+		World world = event.getEntityPlayer().getEntityWorld();
+		if (!world.isRemote) return;
+		BlockPos pos = event.getEntityPlayer().getPosition();
+		List<String> list = event.getToolTip();
+		list.add(TextFormatting.AQUA + stack.getItem().getRegistryName().toString());
+		if (block != Blocks.AIR) {
+			IBlockState state = block.getStateFromMeta(stack.getMetadata());
+			list.add(TextFormatting.AQUA + "type:block");
+			list.add(TextFormatting.AQUA + "hardness:" + block.getBlockHardness(state, world, pos));
+		} else {
+			list.add(TextFormatting.AQUA + "type:item");
 		}
 
 	}
@@ -103,8 +128,7 @@ public class ESTestAndDebug {
 					if (entity instanceof EntityPlayer) {
 						ItemStack ruler = ((EntityPlayer) entity).getHeldItem(EnumHand.OFF_HAND);
 						ItemStack ar = ((EntityPlayer) entity).getHeldItem(EnumHand.MAIN_HAND);
-						Building building = Building.createBuilding(sender.getEntityWorld(), EnumFacing.NORTH,
-								ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
+						Building building = Building.createBuilding(sender.getEntityWorld(), EnumFacing.NORTH, ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
 						building.setAuthor(sender.getName());
 						BuildingLib.instance.addBuilding(building);
 						ArcInfo.initArcInfoToItem(ar, building.getKeyName());
@@ -120,12 +144,10 @@ public class ESTestAndDebug {
 					if (ItemMagicRuler.getRulerPos(ruler, true) == null
 							|| ItemMagicRuler.getRulerPos(ruler, false) == null)
 						throw new WrongUsageException("保存建筑失败，请将魔力标尺放在手上");
-					Building building = Building.createBuilding(sender.getEntityWorld(), EnumFacing.NORTH,
-							ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
+					Building building = Building.createBuilding(sender.getEntityWorld(), EnumFacing.NORTH, ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
 					building.setAuthor(sender.getName());
 					BuildingSaveData.debugSetKeyName(building);
-					File file = ElementalSorcery.data.getFile("building/debug",
-							BuildingSaveData.randomKeyName(entity.getName()));
+					File file = ElementalSorcery.data.getFile("building/debug", BuildingSaveData.randomKeyName(entity.getName()));
 					OutputStream output = null;
 					try {
 						output = new FileOutputStream(file);
@@ -140,9 +162,7 @@ public class ESTestAndDebug {
 				} else if (args[0].equals("doit")) {
 					BlockPos pos = ESTestAndDebug.pos;
 					VillageCreationHandler h = new VillageCreationHandler();
-					StructureVillagePieces.Village v = h.buildComponent(null, null,
-							new LinkedList<StructureComponent>(), new Random(), pos.getX(), pos.getY(), pos.getZ(),
-							EnumFacing.NORTH, 0);
+					StructureVillagePieces.Village v = h.buildComponent(null, null, new LinkedList<StructureComponent>(), new Random(), pos.getX(), pos.getY(), pos.getZ(), EnumFacing.NORTH, 0);
 					try {
 						Field field = StructureVillagePieces.Village.class.getDeclaredField("averageGroundLvl");
 						field.setAccessible(true);

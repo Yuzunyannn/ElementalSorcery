@@ -12,7 +12,7 @@ import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 public class ItemStructure implements IItemStructure {
 
 	static public IItemStructure getItemStructure(ItemStack stack) {
-		//这里应当加入获取ItemStructure[事件]
+		// 这里应当加入获取ItemStructure[事件]
 		return new ItemStructure(stack);
 	}
 
@@ -41,19 +41,15 @@ public class ItemStructure implements IItemStructure {
 		this.stack = stack;
 		this.estacks = estacks;
 		this.complex = complex;
-		if (this.complex <= 0)
-			this.complex = ElementHelper.getComplexFromElements(this.stack, this.estacks);
+		if (this.complex <= 0) this.complex = ElementHelper.getComplexFromElements(this.stack, this.estacks);
 	}
 
 	@Override
 	public boolean hasState(ItemStack stack) {
 		NBTTagCompound nbt = stack.getSubCompound("istru");
-		if (nbt == null)
-			return false;
-		if (!nbt.hasKey("els", 9))
-			return false;
-		if (!nbt.hasKey("item", 10))
-			return false;
+		if (nbt == null) return false;
+		if (!nbt.hasKey("els", 9)) return false;
+		if (!nbt.hasKey("item", 10)) return false;
 		return true;
 	}
 
@@ -75,15 +71,13 @@ public class ItemStructure implements IItemStructure {
 		for (int i = 0; i < estacks.length; i++)
 			estacks[i] = new ElementStack(list.getCompoundTagAt(i));
 		this.complex = nbt.getInteger("complex");
-		if (this.complex <= 0)
-			this.complex = ElementHelper.getComplexFromElements(this.stack, this.estacks);
+		if (this.complex <= 0) this.complex = ElementHelper.getComplexFromElements(this.stack, this.estacks);
 	}
 
 	@Override
 	public void saveState(ItemStack stack) {
 		NBTTagCompound nbt = stack.getOrCreateSubCompound("istru");
-		if (this.stack.isEmpty())
-			return;
+		if (this.stack.isEmpty()) return;
 		nbt.setTag("item", this.stack.serializeNBT());
 		NBTTagList list = new NBTTagList();
 		for (ElementStack estack : estacks) {
@@ -95,15 +89,13 @@ public class ItemStructure implements IItemStructure {
 
 	@Override
 	public ElementStack[] toElement(ItemStack stack) {
-		if (ItemHelper.areItemsEqual(this.stack, stack))
-			return estacks;
+		if (ItemHelper.areItemsEqual(this.stack, stack)) return estacks;
 		return null;
 	}
 
 	@Override
 	public int complex(ItemStack stack) {
-		if (ItemHelper.areItemsEqual(this.stack, stack))
-			return complex;
+		if (ItemHelper.areItemsEqual(this.stack, stack)) return complex;
 		return 0;
 	}
 

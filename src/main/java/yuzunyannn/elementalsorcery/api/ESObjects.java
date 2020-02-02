@@ -77,6 +77,11 @@ public class ESObjects {
 		public Block MAGIC_TORCH;
 		public Block STONE_MILL;
 		public Block MELT_CAULDRON;
+		public Block ELF_LOG;
+		public Block ELF_LEAF;
+		public Block ELF_PLANK;
+		public Block ELF_SAPLING;
+		public Block ELF_FRUIT;
 		public Block MD_MAGIC_GEN;
 		public Block MD_HEARTH;
 		public Block MD_RUBBLE_REPAIR;

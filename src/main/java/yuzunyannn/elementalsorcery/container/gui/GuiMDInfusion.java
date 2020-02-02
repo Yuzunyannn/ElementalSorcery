@@ -45,8 +45,7 @@ public class GuiMDInfusion extends GuiMDBase<ContainerMDInfusion> {
 		for (int i = 0; i < 5; i++) {
 			rate = this.container.tileEntity.getInfusionPower(i)
 					/ (float) this.container.tileEntity.getInfusionPowerMax(i);
-			if (rate == 0)
-				continue;
+			if (rate == 0) continue;
 			int height = MathHelper.ceil(this.progressHeight(i) * rate);
 			this.drawTexturedModalRect(offsetX + 41 + i * 22, offsetY + 30, 181, 55, 5, height);
 		}

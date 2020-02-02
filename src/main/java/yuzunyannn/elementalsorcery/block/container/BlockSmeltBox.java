@@ -8,7 +8,6 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -26,7 +25,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import yuzunyannn.elementalsorcery.ESCreativeTabs;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
@@ -37,34 +35,25 @@ public class BlockSmeltBox extends BlockContainer {
 
 	public final BlockHearth.EnumMaterial material;
 
-	public static BlockSmeltBox newBlockSmeltBox(BlockHearth.EnumMaterial material) {
-		BlockSmeltBox box = new BlockSmeltBox(material);
-		switch (material) {
-		case COBBLESTONE:
-			break;
-		case IRON:
-			box.setHardness(5.0F);
-			break;
-		case KYANITE:
-			box.setHardness(10.0F);
-			break;
-		default:
-			break;
-
-		}
-		box.setUnlocalizedName("smeltBox." + material.getName());
-		return box;
-	}
-
 	public static final PropertyBool BURNING = PropertyBool.create("burning");
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
 	public BlockSmeltBox(BlockHearth.EnumMaterial material) {
 		super(Material.ROCK);
 		this.material = material;
-		this.setUnlocalizedName("smeltBox");
+		this.setUnlocalizedName("smeltBox." + material.getName());
 		this.setHarvestLevel("pickaxe", 1);
-		this.setHardness(3.5F);
+		switch (material) {
+		case IRON:
+			this.setHardness(5.0F);
+			break;
+		case KYANITE:
+			this.setHardness(10.0F);
+			break;
+		default:
+			this.setHardness(3.5F);
+			break;
+		}
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(BURNING,
 				Boolean.FALSE));
 	}

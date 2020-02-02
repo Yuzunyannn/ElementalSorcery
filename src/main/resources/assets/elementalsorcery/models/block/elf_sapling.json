@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "elementalsorcery:blocks/elf_sapling"
+    }
+}

@@ -35,8 +35,7 @@ public class ElementMap implements IElementMap {
 	public ElementStack[] toElement(ItemStack stack) {
 		for (IToElement to : toList) {
 			ElementStack[] stacks = to.toElement(stack);
-			if (stacks != null)
-				return stacks;
+			if (stacks != null) return stacks;
 		}
 		return null;
 	}
@@ -45,8 +44,7 @@ public class ElementMap implements IElementMap {
 	public ElementStack[] toElement(Item item) {
 		for (IToElement to : toList) {
 			ElementStack[] stacks = to.toElement(item);
-			if (stacks != null)
-				return stacks;
+			if (stacks != null) return stacks;
 		}
 		return null;
 	}
@@ -60,9 +58,7 @@ public class ElementMap implements IElementMap {
 	public ItemStack remain(ItemStack stack) {
 		for (IToElement to : toList) {
 			ElementStack[] stacks = to.toElement(stack);
-			if (stacks != null) {
-				return to.remain(stack);
-			}
+			if (stacks != null) return to.remain(stack);
 		}
 		return ItemStack.EMPTY;
 	}
@@ -71,9 +67,7 @@ public class ElementMap implements IElementMap {
 	public int complex(ItemStack stack) {
 		for (IToElement to : toList) {
 			int complex = to.complex(stack);
-			if (complex > 0) {
-				return complex;
-			}
+			if (complex > 0) return complex;
 		}
 		return 0;
 	}
@@ -82,9 +76,7 @@ public class ElementMap implements IElementMap {
 	public int complex(Item item) {
 		for (IToElement to : toList) {
 			int complex = to.complex(item);
-			if (complex > 0) {
-				return complex;
-			}
+			if (complex > 0) return complex;
 		}
 		return 0;
 	}
@@ -98,10 +90,8 @@ public class ElementMap implements IElementMap {
 
 	@Override
 	public void add(IToElement toElement) {
-		if (toElement == null)
-			return;
-		if (toList.contains(toElement))
-			return;
+		if (toElement == null) return;
+		if (toList.contains(toElement)) return;
 		toList.add(toElement);
 	}
 
@@ -121,30 +111,24 @@ public class ElementMap implements IElementMap {
 	}
 
 	private void check(ElementStack... estacks) {
-		if (estacks == null)
-			throw new IllegalArgumentException("estacks为null");
+		if (estacks == null) throw new IllegalArgumentException("estacks为null");
 		for (ElementStack estack : estacks) {
-			if (estack == null)
-				throw new IllegalArgumentException("estacks中存在null项目");
-			if (estack.isEmpty())
-				throw new IllegalArgumentException("estacks中存在empty项目");
-			if (estack.isMagic())
-				throw new IllegalArgumentException("estacks中存在magic项目");
+			if (estack == null) throw new IllegalArgumentException("estacks中存在null项目");
+			if (estack.isEmpty()) throw new IllegalArgumentException("estacks中存在empty项目");
+			if (estack.isMagic()) throw new IllegalArgumentException("estacks中存在magic项目");
 		}
 	}
 
 	@Override
 	public void add(ItemStack stack, int complex, ElementStack... estacks) {
-		if (stack.isEmpty())
-			return;
+		if (stack.isEmpty()) return;
 		this.check(estacks);
 		toElementMap.stackToElementMap.add(new DefaultToElement.ElementInfo(stack, estacks, complex));
 	}
 
 	@Override
 	public void add(Item item, int complex, ElementStack... estacks) {
-		if (item == null)
-			return;
+		if (item == null) return;
 		this.check(estacks);
 		toElementMap.itemToElementMap.put(item, new DefaultToElement.ElementInfo(ItemStack.EMPTY, estacks, complex));
 	}
@@ -165,33 +149,27 @@ public class ElementMap implements IElementMap {
 		@Override
 		public ElementStack[] toElement(ItemStack stack) {
 			for (ElementInfo info : this.stackToElementMap) {
-				if (this.compareItemStacks(stack, info.stack)) {
-					return info.estacks;
-				}
+				if (this.compareItemStacks(stack, info.stack)) { return info.estacks; }
 			}
 			return this.toElement(stack.getItem());
 		}
 
 		public ElementStack[] toElement(Item item) {
-			if (itemToElementMap.containsKey(item))
-				return itemToElementMap.get(item).estacks;
+			if (itemToElementMap.containsKey(item)) return itemToElementMap.get(item).estacks;
 			return null;
 		}
 
 		@Override
 		public int complex(ItemStack stack) {
 			for (ElementInfo info : this.stackToElementMap) {
-				if (this.compareItemStacks(stack, info.stack)) {
-					return info.complex;
-				}
+				if (this.compareItemStacks(stack, info.stack)) { return info.complex; }
 			}
 			return this.complex(stack.getItem());
 		}
 
 		@Override
 		public int complex(Item item) {
-			if (itemToElementMap.containsKey(item))
-				return itemToElementMap.get(item).complex;
+			if (itemToElementMap.containsKey(item)) return itemToElementMap.get(item).complex;
 			return 0;
 		}
 
@@ -223,9 +201,7 @@ public class ElementMap implements IElementMap {
 		public ElementStack[] toElement(ItemStack stack) {
 			if (stack.getItem() == Items.WATER_BUCKET) {
 				return water;
-			} else if (stack.getItem() == Items.LAVA_BUCKET) {
-				return fire;
-			}
+			} else if (stack.getItem() == Items.LAVA_BUCKET) { return fire; }
 			return null;
 		}
 
@@ -236,16 +212,14 @@ public class ElementMap implements IElementMap {
 
 		@Override
 		public ItemStack remain(ItemStack stack) {
-			if (stack.getItem() == Items.WATER_BUCKET || stack.getItem() == Items.LAVA_BUCKET) {
-				return new ItemStack(Items.BUCKET);
-			}
+			if (stack.getItem() == Items.WATER_BUCKET
+					|| stack.getItem() == Items.LAVA_BUCKET) { return new ItemStack(Items.BUCKET); }
 			return ItemStack.EMPTY;
 		}
 
 		@Override
 		public int complex(ItemStack stack) {
-			if (stack.getItem() == Items.WATER_BUCKET || stack.getItem() == Items.LAVA_BUCKET)
-				return 5;
+			if (stack.getItem() == Items.WATER_BUCKET || stack.getItem() == Items.LAVA_BUCKET) return 5;
 			return 0;
 		}
 

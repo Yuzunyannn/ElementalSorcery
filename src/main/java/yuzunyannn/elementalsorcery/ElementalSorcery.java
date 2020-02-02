@@ -3,6 +3,8 @@ package yuzunyannn.elementalsorcery;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.entity.EntityLivingBase;

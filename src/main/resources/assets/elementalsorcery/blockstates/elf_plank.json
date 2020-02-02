@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"variant=normal": {
+			"model": "elementalsorcery:elf_plank"
+		},
+		"variant=dark": {
+			"model": "elementalsorcery:elf_plank_dark"
+		}
+	}
+}

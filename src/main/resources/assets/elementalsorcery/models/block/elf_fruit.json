@@ -1,0 +1,32 @@
+{
+    "textures": {
+        "particle": "elementalsorcery:blocks/elf_fruit_side",
+        "fruit_side": "elementalsorcery:blocks/elf_fruit_side",
+		"fruit_top": "elementalsorcery:blocks/elf_fruit_top",
+		"fruit_handle": "elementalsorcery:blocks/elf_fruit_handle"
+    },
+    "elements": [
+		{   "from": [ 6, 12, 6 ],
+            "to": [ 10, 16, 10 ],
+            "faces": {
+				"down":  { "uv": [ 5, 0, 10, 5 ], "texture": "#fruit_handle" },
+                "up":    { "uv": [ 5, 0, 10, 5 ], "texture": "#fruit_handle" },
+                "north": { "uv": [ 0, 0, 5, 13 ], "texture": "#fruit_handle" },
+                "south": { "uv": [ 0, 0, 5, 13 ], "texture": "#fruit_handle" },
+                "west":  { "uv": [ 0, 0, 5, 13 ], "texture": "#fruit_handle" },
+                "east":  { "uv": [ 0, 0, 5, 13 ], "texture": "#fruit_handle" }
+            }
+        },
+        {   "from": [ 3, 0, 3 ],
+            "to": [ 13, 12, 13 ],
+            "faces": {
+                "down":  { "uv": [ 0, 0,  14, 14 ], "texture": "#fruit_top" , "tintindex": 0 },
+                "up":    { "uv": [ 0, 0,  14, 14 ], "texture": "#fruit_top" , "tintindex": 0 },
+                "north": { "uv": [ 0, 0, 16, 16 ], "texture": "#fruit_side" , "tintindex": 0 },
+                "south": { "uv": [ 0, 0, 16, 16 ], "texture": "#fruit_side" , "tintindex": 0 },
+                "west":  { "uv": [ 0, 0, 16, 16 ], "texture": "#fruit_side" , "tintindex": 0 },
+                "east":  { "uv": [ 0, 0, 16, 16 ], "texture": "#fruit_side" , "tintindex": 0 }
+            }
+        }
+    ]
+}
