@@ -1,8 +1,8 @@
-package yuzunyannn.elementalsorcery.render.tile;
+package yuzunyannn.elementalsorcery.render.tile.md;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.render.model.ModelMDMagicSolidify;
+import yuzunyannn.elementalsorcery.render.model.md.ModelMDMagicSolidify;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicSolidify;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;

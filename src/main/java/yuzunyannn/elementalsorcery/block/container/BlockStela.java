@@ -98,32 +98,27 @@ public class BlockStela extends BlockContainerNormal {
 	public RayTraceResult collisionRayTrace(IBlockState blockState, World worldIn, BlockPos pos, Vec3d start,
 			Vec3d end) {
 		RayTraceResult result = this.rayTrace(pos, start, end, AABB_BOTTOM);
-		if (result != null)
-			return result;
+		if (result != null) return result;
 		EnumFacing face = this.getFace(worldIn, pos);
 		switch (face) {
 		case NORTH:
 			result = this.rayTrace(pos, start, end, AABB_NS.offset(7.0 / 16.0, 0, 10.0 / 16.0));
-			if (result != null)
-				return result;
+			if (result != null) return result;
 			result = this.rayTrace(pos, start, end, AABB_S_NS.offset(0.0, 0.0, 8.0 / 16.0));
 			break;
 		case SOUTH:
 			result = this.rayTrace(pos, start, end, AABB_NS);
-			if (result != null)
-				return result;
+			if (result != null) return result;
 			result = this.rayTrace(pos, start, end, AABB_S_NS.offset(9.0 / 16.0, 0.0, 0.0));
 			break;
 		case EAST:
 			result = this.rayTrace(pos, start, end, AABB_EW.offset(0.0, 0, 7.0 / 16.0));
-			if (result != null)
-				return result;
+			if (result != null) return result;
 			result = this.rayTrace(pos, start, end, AABB_S_EW);
 			break;
 		case WEST:
 			result = this.rayTrace(pos, start, end, AABB_EW.offset(10.0 / 16.0, 0, 0.0));
-			if (result != null)
-				return result;
+			if (result != null) return result;
 			result = this.rayTrace(pos, start, end, AABB_S_EW.offset(8.0 / 16.0, 0.0, 9.0 / 16.0));
 			break;
 		default:
@@ -172,8 +167,7 @@ public class BlockStela extends BlockContainerNormal {
 					TileStela ts = (TileStela) tile;
 					if (hitX >= AABB.minX && hitX <= AABB.maxX && hitZ >= AABB.minZ && hitZ <= AABB.maxZ)
 						return this.onPutGoods(worldIn, ts, playerIn, hand);
-					else
-						return this.onPutPaper(worldIn, ts, playerIn, hand);
+					else return this.onPutPaper(worldIn, ts, playerIn, hand);
 				}
 			}
 		} else {
@@ -201,20 +195,16 @@ public class BlockStela extends BlockContainerNormal {
 		ItemStack stack = playerIn.getHeldItem(hand);
 		if (playerIn.isSneaking()) {
 			ItemStack origin = handler.getStackInSlot(0);
-			if (origin.isEmpty())
-				return false;
+			if (origin.isEmpty()) return false;
 			handler.setStackInSlot(0, ItemStack.EMPTY);
 			ts.updateToClient();
 			Block.spawnAsEntity(world, ts.getPos(), origin);
 			return true;
 		} else {
-			if (stack.isEmpty())
-				return false;
+			if (stack.isEmpty()) return false;
 			ItemStack remain = handler.insertItem(0, stack, false);
-			if (ItemStack.areItemStacksEqual(remain, stack))
-				return false;
-			if (world.isRemote)
-				return true;
+			if (ItemStack.areItemStacksEqual(remain, stack)) return false;
+			if (world.isRemote) return true;
 			ts.updateToClient();
 			playerIn.setHeldItem(hand, remain);
 			return true;
@@ -261,16 +251,14 @@ public class BlockStela extends BlockContainerNormal {
 	// 掉落一次
 	private void drop(World world, BlockPos pos, ItemStackHandler handler) {
 		ItemStack origin = handler.getStackInSlot(0);
-		if (origin.isEmpty())
-			return;
+		if (origin.isEmpty()) return;
 		handler.setStackInSlot(0, ItemStack.EMPTY);
 		Block.spawnAsEntity(world, pos, origin);
 	}
 
 	@Override
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
-		if (face == EnumFacing.DOWN)
-			return BlockFaceShape.SOLID;
+		if (face == EnumFacing.DOWN) return BlockFaceShape.SOLID;
 		return BlockFaceShape.UNDEFINED;
 	}
 
@@ -288,8 +276,7 @@ public class BlockStela extends BlockContainerNormal {
 			TileStela ts = (TileStela) tile;
 			spawnPass = !ts.isRunning();
 		}
-		if (spawnPass)
-			return;
+		if (spawnPass) return;
 		Vec3d position = new Vec3d(pos);
 		position = position.addVector(rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
 		Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleElementP(worldIn, position));

@@ -100,7 +100,7 @@ public class BlockMagicPlatform extends BlockContainer implements Mapper {
 	}
 
 	public static enum EnumMaterial implements IStringSerializable {
-		WOOD("wood"), ESTONE("estone");
+		ASTONE("astone"), ESTONE("estone");
 
 		private String name;
 

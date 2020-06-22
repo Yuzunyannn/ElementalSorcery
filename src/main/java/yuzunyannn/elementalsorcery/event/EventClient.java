@@ -150,7 +150,7 @@ public class EventClient {
 
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
-	static public void rednerWord(RenderWorldLastEvent e) {
+	static public void renderWord(RenderWorldLastEvent e) {
 		GlStateManager.pushMatrix();
 		float partialTicks = e.getPartialTicks();
 		// 将坐标归位

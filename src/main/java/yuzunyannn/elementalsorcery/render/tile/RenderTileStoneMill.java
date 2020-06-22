@@ -59,7 +59,6 @@ public class RenderTileStoneMill extends TileEntitySpecialRenderer<TileStoneMill
 		if (dusty > 0) {
 			this.bindTexture(tile.getDustyTexture());
 			GlStateManager.pushMatrix();
-
 			GlStateManager.translate(x, y + dustyYoff, z);
 			GlStateManager.disableLighting();
 			this.drawDusty();

@@ -43,6 +43,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.ESRegister;
 import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
 import yuzunyannn.elementalsorcery.api.element.Element;
@@ -74,17 +75,19 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementalCube;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileLantern;
-import yuzunyannn.elementalsorcery.render.tile.RenderTileMDHearth;
-import yuzunyannn.elementalsorcery.render.tile.RenderTileMDInfusion;
-import yuzunyannn.elementalsorcery.render.tile.RenderTileMDMagicGen;
-import yuzunyannn.elementalsorcery.render.tile.RenderTileMDMagicSolidify;
-import yuzunyannn.elementalsorcery.render.tile.RenderTileMDRubbleRepair;
-import yuzunyannn.elementalsorcery.render.tile.RenderTileMDTransfer;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStela;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStoneMill;
+import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDAbsorbBox;
+import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDHearth;
+import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDInfusion;
+import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagicGen;
+import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagicSolidify;
+import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagiclization;
+import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDRubbleRepair;
+import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDTransfer;
 import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
@@ -101,10 +104,12 @@ import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.tile.md.TileMDAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.md.TileMDHearth;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicGen;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicSolidify;
+import yuzunyannn.elementalsorcery.tile.md.TileMDMagiclization;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
@@ -148,7 +153,7 @@ public class ESInit {
 			MinecraftForge.EVENT_BUS.register(EventServer.class);
 			// 测试类
 			new ESTestAndDebug();
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			CrashReport report = CrashReport.makeCrashReport(e, "Elementalsorcery初始化异常！");
 			Minecraft.getMinecraft().crashed(report);
 			Minecraft.getMinecraft().displayCrashReport(report);
@@ -236,6 +241,8 @@ public class ESInit {
 		register(TileMDInfusion.class, "MDfusion");
 		register(TileMDTransfer.class, "MDTransfer");
 		register(TileMDMagicSolidify.class, "MDMagicSolidify");
+		register(TileMDAbsorbBox.class, "MDAbsorbBox");
+		register(TileMDMagiclization.class, "MDMagiclization");
 	}
 
 	static void registerAllElements() {
@@ -258,104 +265,114 @@ public class ESInit {
 
 	@SideOnly(Side.CLIENT)
 	static void registerAllRender() {
+		final ESObjects.Blocks BLOCKS = ESInitInstance.BLOCKS;
+		final ESObjects.Items ITEMS = ESInitInstance.ITEMS;
 		// 初始化句柄
 		SpellbookRenderInfo.renderInstance = RenderItemSpellbook.instance;
 
-		registerRender(ESInitInstance.ITEMS.KYANITE);
-		registerRender(ESInitInstance.ITEMS.MAGIC_PIECE);
-		registerRender(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE);
-		registerRender(ESInitInstance.ITEMS.KYANITE_PICKAXE);
-		registerRender(ESInitInstance.ITEMS.KYANITE_AXE);
-		registerRender(ESInitInstance.ITEMS.KYANITE_SPADE);
-		registerRender(ESInitInstance.ITEMS.KYANITE_HOE);
-		registerRender(ESInitInstance.ITEMS.KYANITE_SWORD);
-		registerRender(ESInitInstance.ITEMS.ARCHITECTURE_CRYSTAL);
-		registerRender(ESInitInstance.ITEMS.ELEMENT_CRYSTAL);
-		registerRender(ESInitInstance.ITEMS.MAGIC_CRYSTAL);
-		registerRender(ESInitInstance.ITEMS.PARCHMENT);
-		registerRender(ESInitInstance.ITEMS.MAGIC_PAPER);
-		registerRender(ESInitInstance.ITEMS.SPELL_PAPER);
-		registerRender(ESInitInstance.ITEMS.SPELL_CRYSTAL);
-		registerRender(ESInitInstance.ITEMS.SPELLBOOK_COVER, 0, "spellbook_cover");
-		registerRender(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, "spellbook_back_cover");
-		registerRender(ESInitInstance.ITEMS.SCROLL);
-		registerRender(ESInitInstance.ITEMS.MANUAL);
-		registerRender(ESInitInstance.ITEMS.MAGIC_RULER);
-		registerRender(ESInitInstance.ITEMS.ITEM_CRYSTAL);
-		registerRender(ESInitInstance.ITEMS.MAGIC_STONE);
-		registerRender(ESInitInstance.ITEMS.TINY_KNIFE);
-		registerRender(ESInitInstance.ITEMS.ORDER_CRYSTAL);
+		registerRender(ITEMS.KYANITE);
+		registerRender(ITEMS.MAGIC_PIECE);
+		registerRender(ITEMS.MAGICAL_ENDER_EYE);
+		registerRender(ITEMS.KYANITE_PICKAXE);
+		registerRender(ITEMS.KYANITE_AXE);
+		registerRender(ITEMS.KYANITE_SPADE);
+		registerRender(ITEMS.KYANITE_HOE);
+		registerRender(ITEMS.KYANITE_SWORD);
+		registerRender(ITEMS.ARCHITECTURE_CRYSTAL);
+		registerRender(ITEMS.ELEMENT_CRYSTAL);
+		registerRender(ITEMS.MAGIC_CRYSTAL);
+		registerRender(ITEMS.PARCHMENT);
+		registerRender(ITEMS.MAGIC_PAPER);
+		registerRender(ITEMS.SPELL_PAPER);
+		registerRender(ITEMS.SPELL_CRYSTAL);
+		registerRender(ITEMS.SPELLBOOK_COVER, 0, "spellbook_cover");
+		registerRender(ITEMS.SPELLBOOK_COVER, 1, "spellbook_back_cover");
+		registerRender(ITEMS.SCROLL);
+		registerRender(ITEMS.MANUAL);
+		registerRender(ITEMS.MAGIC_RULER);
+		registerRender(ITEMS.ITEM_CRYSTAL);
+		registerRender(ITEMS.MAGIC_STONE);
+		registerRender(ITEMS.TINY_KNIFE);
+		registerRender(ITEMS.ORDER_CRYSTAL);
 
-		registerStateMapper(ESInitInstance.BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
-		registerRender(ESInitInstance.BLOCKS.HEARTH, 0, "cobblestone_hearth");
-		registerRender(ESInitInstance.BLOCKS.HEARTH, 1, "iron_hearth");
-		registerRender(ESInitInstance.BLOCKS.HEARTH, 2, "kyanite_hearth");
-		registerRender(ESInitInstance.BLOCKS.SMELT_BOX);
-		registerRender(ESInitInstance.BLOCKS.SMELT_BOX_IRON);
-		registerRender(ESInitInstance.BLOCKS.SMELT_BOX_KYANITE);
-		registerRender(ESInitInstance.BLOCKS.KYANITE_ORE);
-		registerRender(ESInitInstance.BLOCKS.KYANITE_BLOCK);
-		registerRender(ESInitInstance.BLOCKS.ESTONE, 0, "estone_default");
-		registerRender(ESInitInstance.BLOCKS.ESTONE, 1, "estone_chiseled");
-		registerRender(ESInitInstance.BLOCKS.ESTONE, 2, "estone_lines");
-		registerRender(ESInitInstance.BLOCKS.ESTONE_SLAB);
-		registerRender(ESInitInstance.BLOCKS.ESTONE_STAIRS);
-		registerRender(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 0, "magic_platform");
-		registerRender(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, "magic_platform_estone");
-		registerRender(ESInitInstance.BLOCKS.ABSORB_BOX);
-		registerRender(ESInitInstance.BLOCKS.INVALID_ENCHANTMENT_TABLE);
-		registerRender(ESInitInstance.BLOCKS.ELEMENT_WORKBENCH);
-		registerRender(ESInitInstance.BLOCKS.DECONSTRUCT_BOX);
-		registerRender(ESInitInstance.BLOCKS.MAGIC_TORCH);
-		registerRender(ESInitInstance.BLOCKS.ASTONE, 0, "astone");
-		registerRender(ESInitInstance.BLOCKS.ASTONE, 1, "astone_fragmented");
-		registerRender(ESInitInstance.BLOCKS.ASTONE, 2, "astone_smooth");
-		registerRender(ESInitInstance.BLOCKS.ASTONE, 3, "astone_vein");
-		registerRender(ESInitInstance.BLOCKS.ASTONE, 4, "astone_circle");
-		registerRender(ESInitInstance.BLOCKS.ASTONE, 5, "astone_brick");
-		registerRender(ESInitInstance.BLOCKS.ASTONE, 6, "astone_trans");
-		registerRender(ESInitInstance.BLOCKS.STAR_STONE);
-		registerRender(ESInitInstance.BLOCKS.STAR_SAND);
-		registerRender(ESInitInstance.BLOCKS.ELF_LOG);
-		registerRender(ESInitInstance.BLOCKS.ELF_LEAF);
-		registerStateMapper(ESInitInstance.BLOCKS.ELF_LEAF, new StateMap.Builder().ignore(BlockElfLeaf.CHECK_DECAY, BlockElfLeaf.DECAYABLE).build());
-		registerRender(ESInitInstance.BLOCKS.ELF_SAPLING);
-		registerStateMapper(ESInitInstance.BLOCKS.ELF_FRUIT, new StateMap.Builder().ignore(BlockElfFruit.STAGE).build());
-		registerRender(ESInitInstance.BLOCKS.ELF_FRUIT, 0);
-		registerRender(ESInitInstance.BLOCKS.ELF_FRUIT, BlockElfFruit.MAX_STATE);
-		registerRender(ESInitInstance.BLOCKS.ELF_PLANK, 0);
-		registerRender(ESInitInstance.BLOCKS.ELF_PLANK, 1, "elf_plank_dark");
+		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
+		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
+		registerRender(BLOCKS.HEARTH, 1, "iron_hearth");
+		registerRender(BLOCKS.HEARTH, 2, "kyanite_hearth");
+		registerRender(BLOCKS.SMELT_BOX);
+		registerRender(BLOCKS.SMELT_BOX_IRON);
+		registerRender(BLOCKS.SMELT_BOX_KYANITE);
+		registerRender(BLOCKS.KYANITE_ORE);
+		registerRender(BLOCKS.KYANITE_BLOCK);
+		registerRender(BLOCKS.ESTONE, 0, "estone_default");
+		registerRender(BLOCKS.ESTONE, 1, "estone_chiseled");
+		registerRender(BLOCKS.ESTONE, 2, "estone_lines");
+		registerRender(BLOCKS.ESTONE_SLAB);
+		registerRender(BLOCKS.ESTONE_STAIRS);
+		registerRender(BLOCKS.MAGIC_PLATFORM, 0, "magic_platform");
+		registerRender(BLOCKS.MAGIC_PLATFORM, 1, "magic_platform_estone");
+		registerRender(BLOCKS.ABSORB_BOX);
+		registerRender(BLOCKS.INVALID_ENCHANTMENT_TABLE);
+		registerRender(BLOCKS.ELEMENT_WORKBENCH);
+		registerRender(BLOCKS.DECONSTRUCT_BOX);
+		registerRender(BLOCKS.MAGIC_TORCH);
+		registerRender(BLOCKS.ASTONE, 0, "astone");
+		registerRender(BLOCKS.ASTONE, 1, "astone_fragmented");
+		registerRender(BLOCKS.ASTONE, 2, "astone_smooth");
+		registerRender(BLOCKS.ASTONE, 3, "astone_vein");
+		registerRender(BLOCKS.ASTONE, 4, "astone_circle");
+		registerRender(BLOCKS.ASTONE, 5, "astone_brick");
+		registerRender(BLOCKS.ASTONE, 6, "astone_trans");
+		registerRender(BLOCKS.STAR_STONE);
+		registerRender(BLOCKS.STAR_SAND);
+		registerRender(BLOCKS.ELF_LOG);
+		registerRender(BLOCKS.ELF_LEAF);
+		registerStateMapper(BLOCKS.ELF_LEAF,
+				new StateMap.Builder().ignore(BlockElfLeaf.CHECK_DECAY, BlockElfLeaf.DECAYABLE).build());
+		registerRender(BLOCKS.ELF_SAPLING);
+		registerStateMapper(BLOCKS.ELF_FRUIT, new StateMap.Builder().ignore(BlockElfFruit.STAGE).build());
+		registerRender(BLOCKS.ELF_FRUIT, 0);
+		registerRender(BLOCKS.ELF_FRUIT, BlockElfFruit.MAX_STATE);
+		registerRender(BLOCKS.ELF_PLANK, 0);
+		registerRender(BLOCKS.ELF_PLANK, 1, "elf_plank_dark");
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
-		registerRender(new RenderTileElementalCube(), ESInitInstance.BLOCKS.ELEMENTAL_CUBE, TileElementalCube.class);
-		registerRender(new RenderTileMagicDesk(), ESInitInstance.BLOCKS.MAGIC_DESK, TileMagicDesk.class);
-		registerRender(new RenderTileElementCraftingTable(), ESInitInstance.BLOCKS.ELEMENT_CRAFTING_TABLE, TileElementCraftingTable.class);
-		registerRender(new RenderTileDeconstructAltarTable(), ESInitInstance.BLOCKS.DECONSTRUCT_ALTAR_TABLE, TileDeconstructAltarTable.class);
-		registerRender(new RenderTileStela(), ESInitInstance.BLOCKS.STELA, TileStela.class);
-		registerRender(new RenderTileLantern(), ESInitInstance.BLOCKS.LANTERN, TileLantern.class);
-		registerRender(new RenderTileBuildingAltar(), ESInitInstance.BLOCKS.BUILDING_ALTAR, TileBuildingAltar.class);
-		registerRender(new RenderTileAnalysisAltar(), ESInitInstance.BLOCKS.ANALYSIS_ALTAR, TileAnalysisAltar.class);
-		registerRender(new RednerTileSupremeCraftingTable(), ESInitInstance.BLOCKS.SUPREME_CRAFTING_TABLE, TileSupremeCraftingTable.class);
-		registerRender(new RenderTileStoneMill(), ESInitInstance.BLOCKS.STONE_MILL, TileStoneMill.class);
-		registerRender(new RenderTileMeltCauldron(), ESInitInstance.BLOCKS.MELT_CAULDRON, TileMeltCauldron.class);
-		registerRender(new RenderTileMDMagicGen(), ESInitInstance.BLOCKS.MD_MAGIC_GEN, TileMDMagicGen.class);
-		registerRender(new RenderTileMDHearth(), ESInitInstance.BLOCKS.MD_HEARTH, TileMDHearth.class);
-		registerRender(new RenderTileMDRubbleRepair(), ESInitInstance.BLOCKS.MD_RUBBLE_REPAIR, TileMDRubbleRepair.class);
-		registerRender(new RenderTileMDInfusion(), ESInitInstance.BLOCKS.MD_INFUSION, TileMDInfusion.class);
-		registerRender(new RenderTileMDTransfer(), ESInitInstance.BLOCKS.MD_TRANSFER, TileMDTransfer.class);
-		registerRender(new RenderTileMDMagicSolidify(), ESInitInstance.BLOCKS.MD_MAGIC_SOLIDIFY, TileMDMagicSolidify.class);
+		registerRender(BLOCKS.ELEMENTAL_CUBE, TileElementalCube.class, new RenderTileElementalCube());
+		registerRender(BLOCKS.MAGIC_DESK, TileMagicDesk.class, new RenderTileMagicDesk());
+		registerRender(BLOCKS.ELEMENT_CRAFTING_TABLE, TileElementCraftingTable.class,
+				new RenderTileElementCraftingTable());
+		registerRender(BLOCKS.DECONSTRUCT_ALTAR_TABLE, TileDeconstructAltarTable.class,
+				new RenderTileDeconstructAltarTable());
+		registerRender(BLOCKS.STELA, TileStela.class, new RenderTileStela());
+		registerRender(BLOCKS.LANTERN, TileLantern.class, new RenderTileLantern());
+		registerRender(BLOCKS.BUILDING_ALTAR, TileBuildingAltar.class, new RenderTileBuildingAltar());
+		registerRender(BLOCKS.ANALYSIS_ALTAR, TileAnalysisAltar.class, new RenderTileAnalysisAltar());
+		registerRender(BLOCKS.SUPREME_CRAFTING_TABLE, TileSupremeCraftingTable.class,
+				new RednerTileSupremeCraftingTable());
+		registerRender(BLOCKS.STONE_MILL, TileStoneMill.class, new RenderTileStoneMill());
+		registerRender(BLOCKS.MELT_CAULDRON, TileMeltCauldron.class, new RenderTileMeltCauldron());
+		registerRender(BLOCKS.MD_MAGIC_GEN, TileMDMagicGen.class, new RenderTileMDMagicGen());
+		registerRender(BLOCKS.MD_HEARTH, TileMDHearth.class, new RenderTileMDHearth());
+		registerRender(BLOCKS.MD_RUBBLE_REPAIR, TileMDRubbleRepair.class, new RenderTileMDRubbleRepair());
+		registerRender(BLOCKS.MD_INFUSION, TileMDInfusion.class, new RenderTileMDInfusion());
+		registerRender(BLOCKS.MD_TRANSFER, TileMDTransfer.class, new RenderTileMDTransfer());
+		registerRender(BLOCKS.MD_MAGIC_SOLIDIFY, TileMDMagicSolidify.class, new RenderTileMDMagicSolidify());
+		registerRender(BLOCKS.MD_ABSORB_BOX, TileMDAbsorbBox.class, new RenderTileMDAbsorbBox());
+		registerRender(BLOCKS.MD_MAGICLIZATION, TileMDMagiclization.class, new RenderTileMDMagiclization());
 
-		registerRender(ESInitInstance.ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
-		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);
-		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, RenderItemSpellbook.instance);
-		registerRender(ESInitInstance.ITEMS.SPELLBOOK_LAUNCH, RenderItemSpellbook.instance);
-		registerRender(ESInitInstance.ITEMS.SPELLBOOK_ELEMENT, RenderItemSpellbook.instance);
+		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
+		registerRender(ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);
+		registerRender(ITEMS.SPELLBOOK_ENCHANTMENT, RenderItemSpellbook.instance);
+		registerRender(ITEMS.SPELLBOOK_LAUNCH, RenderItemSpellbook.instance);
+		registerRender(ITEMS.SPELLBOOK_ELEMENT, RenderItemSpellbook.instance);
 	}
 
 	@SideOnly(Side.CLIENT)
 	static void registerAllRenderPost() {
-		registerRenderColor(ESInitInstance.BLOCKS.ELF_LEAF, ((BlockElfLeaf) ESInitInstance.BLOCKS.ELF_LEAF).getBlockColor());
-		registerRenderColor(ESInitInstance.BLOCKS.ELF_FRUIT, ((BlockElfFruit) ESInitInstance.BLOCKS.ELF_FRUIT).getBlockColor());
+		registerRenderColor(ESInitInstance.BLOCKS.ELF_LEAF,
+				((BlockElfLeaf) ESInitInstance.BLOCKS.ELF_LEAF).getBlockColor());
+		registerRenderColor(ESInitInstance.BLOCKS.ELF_FRUIT,
+				((BlockElfFruit) ESInitInstance.BLOCKS.ELF_FRUIT).getBlockColor());
 	}
 
 	// 分离的注册函数
@@ -379,10 +396,8 @@ public class ESInit {
 	}
 
 	private static void register(Block block) {
-		if (block instanceof Mapper)
-			register(block, (Mapper) block);
-		else
-			register(block, new ItemBlock(block));
+		if (block instanceof Mapper) register(block, (Mapper) block);
+		else register(block, new ItemBlock(block));
 	}
 
 	private static void register(Block block, Mapper mapper) {
@@ -451,7 +466,8 @@ public class ESInit {
 		registerRender(block, blockColor);
 		registerRender(block, new IItemColor() {
 			public int colorMultiplier(ItemStack stack, int tintIndex) {
-				IBlockState iblockstate = ((ItemBlock) stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
+				IBlockState iblockstate = ((ItemBlock) stack.getItem()).getBlock()
+						.getStateFromMeta(stack.getMetadata());
 				return blockColor.colorMultiplier(iblockstate, (IBlockAccess) null, (BlockPos) null, tintIndex);
 			}
 		});
@@ -497,7 +513,7 @@ public class ESInit {
 
 	@SideOnly(Side.CLIENT)
 	private static <T extends TileEntity, R extends TileEntitySpecialRenderer<T> & IRenderItem> void registerRender(
-			R render_instance, Block block, Class<T> tile) {
+			Block block, Class<T> tile, R render_instance) {
 		registerRender(tile, render_instance);
 		registerRender(ItemBlock.getItemFromBlock(block), render_instance);
 	}

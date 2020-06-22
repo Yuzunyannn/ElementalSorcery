@@ -17,6 +17,7 @@ import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
+@Deprecated
 public class BlockAbsorbBox extends BlockContainer {
 
 	public BlockAbsorbBox() {

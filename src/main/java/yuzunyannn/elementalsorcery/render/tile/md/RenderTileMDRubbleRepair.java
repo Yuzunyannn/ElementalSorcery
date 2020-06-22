@@ -1,10 +1,10 @@
-package yuzunyannn.elementalsorcery.render.tile;
+package yuzunyannn.elementalsorcery.render.tile.md;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.render.model.ModelMDRubbleRepair;
+import yuzunyannn.elementalsorcery.render.model.md.ModelMDRubbleRepair;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;

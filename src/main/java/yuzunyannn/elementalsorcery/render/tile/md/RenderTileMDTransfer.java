@@ -1,17 +1,19 @@
-package yuzunyannn.elementalsorcery.render.tile;
+package yuzunyannn.elementalsorcery.render.tile.md;
 
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.render.model.ModelMDInfusion;
-import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
+import yuzunyannn.elementalsorcery.render.model.md.ModelMDTransfer;
+import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
-public class RenderTileMDInfusion extends RenderTileMDBase<TileMDInfusion> {
-	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/md_infusion.png");
-	protected final ModelMDInfusion MODEL = new ModelMDInfusion();
+public class RenderTileMDTransfer extends RenderTileMDBase<TileMDTransfer> {
+
+	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/md_transfer.png");
+	protected final ModelMDTransfer MODEL = new ModelMDTransfer();
 
 	@Override
-	public void render(TileMDInfusion tile, double x, double y, double z, float partialTicks, int destroyStage,
+	public void render(TileMDTransfer tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
 		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
@@ -26,4 +28,5 @@ public class RenderTileMDInfusion extends RenderTileMDBase<TileMDInfusion> {
 		super.render(stack, partialTicks);
 		RenderHelper.render(stack, TEXTURE, MODEL, false);
 	}
+
 }

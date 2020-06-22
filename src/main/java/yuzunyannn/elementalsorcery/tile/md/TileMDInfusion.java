@@ -45,8 +45,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		this.infusionPower = nbt.getIntArray("powers");
-		if (this.infusionPower.length < 5)
-			this.infusionPower = new int[5];
+		if (this.infusionPower.length < 5) this.infusionPower = new int[5];
 		super.readFromNBT(nbt);
 	}
 
@@ -128,10 +127,8 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 	@Override
 	public void update() {
 		this.autoTransfer();
-		if (world.isRemote)
-			return;
-		if (tick % 30 == 0)
-			ok = structure.check(EnumFacing.NORTH);
+		if (world.isRemote) return;
+		if (tick % 30 == 0) ok = structure.check(EnumFacing.NORTH);
 		if (!ok) {
 			this.allPowerDrop();
 			return;
@@ -149,8 +146,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 				continue;
 			}
 			this.infusionPower[i]++;
-			if (this.infusionPower[i] % 4 == 0)
-				this.magic.shrink(1);
+			if (this.infusionPower[i] % 4 == 0) this.magic.shrink(1);
 			if (this.infusionPower[i] >= this.getInfusionPowerMax(i)) {
 				this.infusionPower[i] = 0;
 				this.inventory.setStackInSlot(i, result.copy());
@@ -165,23 +161,19 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 	}
 
 	private final void powerDrop(int index) {
-		if (this.infusionPower[index] > 0)
-			this.infusionPower[index]--;
+		if (this.infusionPower[index] > 0) this.infusionPower[index]--;
 	}
 
 	/**
 	 * 某个物品注魔成
 	 * 
-	 * @param stack
-	 *            原始物品
-	 * @param offerMagic
-	 *            提供的魔力值
+	 * @param stack      原始物品
+	 * @param offerMagic 提供的魔力值
 	 * @return 注魔后的物品
 	 * 
 	 */
 	static public ItemStack infusionInto(ItemStack stack, ElementStack offerMagic, World world, BlockPos pos) {
-		if (stack.isEmpty())
-			return ItemStack.EMPTY;
+		if (stack.isEmpty()) return ItemStack.EMPTY;
 		Biome biome = world.getBiome(pos);
 		WorldTime time = new WorldTime(world);
 		if (biome == Biomes.PLAINS) {
@@ -198,8 +190,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 					for (int x = -2; x <= 2; x++) {
 						for (int z = -2; z <= 2; z++) {
 							BlockPos movePos = pos.add(x, y, z);
-							if (world.getBlockState(movePos).getBlock() == Blocks.BOOKSHELF)
-								count++;
+							if (world.getBlockState(movePos).getBlock() == Blocks.BOOKSHELF) count++;
 							if (count >= 14) {
 								y = 3;
 								x = 3;
@@ -209,8 +200,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 						}
 					}
 				}
-				if (count >= 14)
-					return new ItemStack(ESInitInstance.ITEMS.SPELL_CRYSTAL);
+				if (count >= 14) return new ItemStack(ESInitInstance.ITEMS.SPELL_CRYSTAL);
 			}
 		}
 		if (time.at(WorldTime.Period.DAY)) {
@@ -220,7 +210,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 				}
 			}
 		}
-		//这里应当加入注魔[事件]
+		// 这里应当加入注魔[事件]
 		return ItemStack.EMPTY;
 	}
 }

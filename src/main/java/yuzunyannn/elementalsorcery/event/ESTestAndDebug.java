@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.event;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
@@ -11,8 +12,14 @@ import java.util.Random;
 
 import org.apache.commons.compress.utils.IOUtils;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IResource;
+import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -25,6 +32,7 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -94,7 +102,9 @@ public class ESTestAndDebug {
 		if (!world.isRemote) return;
 		BlockPos pos = event.getEntityPlayer().getPosition();
 		List<String> list = event.getToolTip();
+		list.add(TextFormatting.AQUA + "以下是debug信息：");
 		list.add(TextFormatting.AQUA + stack.getItem().getRegistryName().toString());
+		// list.add(TextFormatting.AQUA + ":" + Minecraft.getMinecraft().gameSettings);
 		if (block != Blocks.AIR) {
 			IBlockState state = block.getStateFromMeta(stack.getMetadata());
 			list.add(TextFormatting.AQUA + "type:block");
@@ -102,6 +112,7 @@ public class ESTestAndDebug {
 		} else {
 			list.add(TextFormatting.AQUA + "type:item");
 		}
+
 
 	}
 
@@ -128,7 +139,8 @@ public class ESTestAndDebug {
 					if (entity instanceof EntityPlayer) {
 						ItemStack ruler = ((EntityPlayer) entity).getHeldItem(EnumHand.OFF_HAND);
 						ItemStack ar = ((EntityPlayer) entity).getHeldItem(EnumHand.MAIN_HAND);
-						Building building = Building.createBuilding(sender.getEntityWorld(), EnumFacing.NORTH, ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
+						Building building = Building.createBuilding(sender.getEntityWorld(), EnumFacing.NORTH,
+								ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
 						building.setAuthor(sender.getName());
 						BuildingLib.instance.addBuilding(building);
 						ArcInfo.initArcInfoToItem(ar, building.getKeyName());
@@ -144,10 +156,12 @@ public class ESTestAndDebug {
 					if (ItemMagicRuler.getRulerPos(ruler, true) == null
 							|| ItemMagicRuler.getRulerPos(ruler, false) == null)
 						throw new WrongUsageException("保存建筑失败，请将魔力标尺放在手上");
-					Building building = Building.createBuilding(sender.getEntityWorld(), EnumFacing.NORTH, ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
+					Building building = Building.createBuilding(sender.getEntityWorld(), EnumFacing.NORTH,
+							ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
 					building.setAuthor(sender.getName());
 					BuildingSaveData.debugSetKeyName(building);
-					File file = ElementalSorcery.data.getFile("building/debug", BuildingSaveData.randomKeyName(entity.getName()));
+					File file = ElementalSorcery.data.getFile("building/debug",
+							BuildingSaveData.randomKeyName(entity.getName()));
 					OutputStream output = null;
 					try {
 						output = new FileOutputStream(file);
@@ -162,7 +176,9 @@ public class ESTestAndDebug {
 				} else if (args[0].equals("doit")) {
 					BlockPos pos = ESTestAndDebug.pos;
 					VillageCreationHandler h = new VillageCreationHandler();
-					StructureVillagePieces.Village v = h.buildComponent(null, null, new LinkedList<StructureComponent>(), new Random(), pos.getX(), pos.getY(), pos.getZ(), EnumFacing.NORTH, 0);
+					StructureVillagePieces.Village v = h.buildComponent(null, null,
+							new LinkedList<StructureComponent>(), new Random(), pos.getX(), pos.getY(), pos.getZ(),
+							EnumFacing.NORTH, 0);
 					try {
 						Field field = StructureVillagePieces.Village.class.getDeclaredField("averageGroundLvl");
 						field.setAccessible(true);
@@ -171,10 +187,8 @@ public class ESTestAndDebug {
 						e.printStackTrace();
 					}
 					v.addComponentParts(sender.getEntityWorld(), new Random(), v.getBoundingBox());
-				} else
-					throw new WrongUsageException("ES dubg 指令无效，随便使用可能会导致崩溃");
-			} else
-				throw new WrongUsageException("ES dubg 指令无效，随便使用可能会导致崩溃");
+				} else throw new WrongUsageException("ES dubg 指令无效，随便使用可能会导致崩溃");
+			} else throw new WrongUsageException("ES dubg 指令无效，随便使用可能会导致崩溃");
 		}
 	}
 }

@@ -70,38 +70,31 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 	@Override
 	public boolean insertElement(ElementStack estack, boolean simulate) {
 		for (int i = 0; i < this.getSlots(); i++) {
-			if (insertElement(i, estack, simulate))
-				return true;
+			if (insertElement(i, estack, simulate)) return true;
 		}
 		return false;
 	}
 
 	@Override
 	public ElementStack extractElement(ElementStack estack, boolean simulate) {
-		if (estack.isEmpty())
-			return ElementStack.EMPTY.copy();
+		if (estack.isEmpty()) return ElementStack.EMPTY.copy();
 		ElementStack ret = ElementStack.EMPTY.copy();
 		ElementStack tmp = estack.copy();
 		for (int i = 0; i < this.getSlots(); i++) {
 			ElementStack _new = extractElement(i, tmp, simulate);
 			ret.growOrBecome(_new);
-			if (ret.arePowerfulAndMoreThan(estack))
-				return ret;
-			else
-				tmp.grow(-_new.getCount());
+			if (ret.arePowerfulAndMoreThan(estack)) return ret;
+			else tmp.grow(-_new.getCount());
 		}
 		return ret;
 	}
 
 	@Override
 	public boolean insertElement(int slot, ElementStack estack, boolean simulate) {
-		if (estack.isEmpty())
-			return true;
+		if (estack.isEmpty()) return true;
 		ElementStack eorigin = getStackInSlot(slot);
-		if (!eorigin.isEmpty() && !eorigin.areSameType(estack))
-			return false;
-		if (simulate)
-			return true;
+		if (!eorigin.isEmpty() && !eorigin.areSameType(estack)) return false;
+		if (simulate) return true;
 		eorigin.growOrBecome(estack);
 		estack.setEmpty();
 		return true;
@@ -109,11 +102,9 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 
 	@Override
 	public ElementStack extractElement(int slot, @Nonnull ElementStack estack, boolean simulate) {
-		if (estack.isEmpty())
-			return ElementStack.EMPTY.copy();
+		if (estack.isEmpty()) return ElementStack.EMPTY.copy();
 		ElementStack eorigin = getStackInSlot(slot);
-		if (!eorigin.arePowerfulThan(estack))
-			return ElementStack.EMPTY.copy();
+		if (!eorigin.arePowerfulThan(estack)) return ElementStack.EMPTY.copy();
 		int size = eorigin.getCount() >= estack.getCount() ? estack.getCount() : eorigin.getCount();
 		ElementStack tmp = eorigin.copy();
 		tmp.setCount(size);
@@ -166,8 +157,7 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 			NBTTagCompound nbt = new NBTTagCompound();
 			NBTTagList list = new NBTTagList();
 			for (int i = 0; i < instance.getSlots(); i++) {
-				if (instance.getStackInSlot(i).isEmpty())
-					continue;
+				if (instance.getStackInSlot(i).isEmpty()) continue;
 				NBTTagCompound data = instance.getStackInSlot(i).serializeNBT();
 				data.setInteger("Slot", i);
 				list.appendTag(data);
@@ -180,8 +170,7 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 		@Override
 		public void readNBT(Capability<IElementInventory> capability, IElementInventory instance, EnumFacing side,
 				NBTBase tag) {
-			if (tag == null)
-				return;
+			if (tag == null) return;
 			NBTTagCompound nbt = (NBTTagCompound) tag;
 			int size = nbt.getInteger("Size");
 			instance.setSlots(size);
@@ -215,8 +204,7 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-			if (ELEMENTINVENTORY_CAPABILITY.equals(capability))
-				return (T) inventory;
+			if (ELEMENTINVENTORY_CAPABILITY.equals(capability)) return (T) inventory;
 			return null;
 		}
 

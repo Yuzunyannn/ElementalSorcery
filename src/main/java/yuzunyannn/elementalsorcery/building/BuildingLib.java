@@ -102,6 +102,7 @@ public class BuildingLib {
 	public static final String BUILDING_ALTAR = "building_altar";
 	public static final String ANALYSIS_ALTAR = "analysis_altar";
 	public static final String INFUSION = "infusion";
+	public static final String ABSORB_BOX = "absorb_box";
 
 	public static void registerAll() throws IOException {
 		Buildings.init();
@@ -112,6 +113,7 @@ public class BuildingLib {
 		instance.addBuildingLib(BUILDING_ALTAR, Buildings.BUILING_ALTAR);
 		instance.addBuildingLib(ANALYSIS_ALTAR, Buildings.ANALYSIS_ALTAR);
 		instance.addBuildingLib(INFUSION, Buildings.INFUSION);
+		instance.addBuildingLib(ABSORB_BOX, Buildings.ABSORB_BOX);
 		BuildingLib.loadBuilding();
 	}
 

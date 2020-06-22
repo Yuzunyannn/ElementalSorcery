@@ -35,8 +35,7 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 			@Override
 			@Nonnull
 			public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-				if (TileMDRubbleRepair.getDefaultRepairResult(stack).isEmpty())
-					return stack;
+				if (TileMDRubbleRepair.getDefaultRepairResult(stack).isEmpty()) return stack;
 				return super.insertItem(slot, stack, simulate);
 			}
 		};
@@ -50,7 +49,7 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 	/** 设置物品 */
 	public void setStack(Block block) {
 		int count = this.getStack().getCount();
-		this.inventory.setStackInSlot(0, new ItemStack(block, count == 0 ? 1 : count));
+		this.inventory.setStackInSlot(0, new ItemStack(block, count == 0 ? 1 : count, isStart ? 1 : 0));
 	}
 
 	public int getComplete() {
@@ -63,6 +62,7 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 
 	int lastId;
 	ItemStack lastStack = ItemStack.EMPTY;
+	boolean isStart = false;
 
 	@Override
 	public int getField(int id) {
@@ -71,15 +71,9 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 		case 1:
 			return super.getField(id);
 		case 2:
-			if (this.getStack() == lastStack)
-				return lastId;
-			lastStack = this.getStack();
-			return lastId = Block.getIdFromBlock(Block.getBlockFromItem(lastStack.getItem()));
+			return isStart ? 1 : 0;
 		case 3:
 			return complete;
-		case 4:
-			// 通过客户端的动画结果
-			return complete > 0 ? 1 : 0;
 		default:
 			return 0;
 		}
@@ -93,19 +87,12 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 			super.setField(id, value);
 			break;
 		case 2:
-			this.setStack(Block.getBlockById(value));
+			isStart = value == 0 ? false : true;
+			this.setStack(ESInitInstance.BLOCKS.ASTONE);
 			break;
 		case 3:
 			this.complete = value;
 			break;
-		case 4:
-			if (this.complete == 0) {
-				if (value == 1)
-					this.complete = 1;
-			} else {
-				if (value == 0)
-					this.complete = 0;
-			}
 		default:
 			break;
 		}
@@ -119,8 +106,7 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 	NBTTagCompound sndTemp = new NBTTagCompound();
 
 	protected void detectAndSendItemType() {
-		if (this.detectAndWriteToNBT(sndTemp, 1) || this.detectAndWriteToNBT(sndTemp, 3))
-			this.updateToClient(sndTemp);
+		if (this.detectAndWriteToNBT(sndTemp, 2)) this.updateToClient(sndTemp);
 	}
 
 	@Override
@@ -130,33 +116,26 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 
 	/** 获取默认的修复结果 */
 	public static ItemStack getDefaultRepairResult(ItemStack stack) {
-		if (stack.isEmpty())
-			return ItemStack.EMPTY;
+		if (stack.isEmpty()) return ItemStack.EMPTY;
 		Block block = Block.getBlockFromItem(stack.getItem());
-		if (block == Blocks.AIR)
-			return ItemStack.EMPTY;
-		else if (block == Blocks.COBBLESTONE)
-			return new ItemStack(Blocks.STONE);
+		if (block == Blocks.AIR) return ItemStack.EMPTY;
+		else if (block == Blocks.COBBLESTONE) return new ItemStack(Blocks.STONE);
 		else if (block == ESInitInstance.BLOCKS.ASTONE
 				&& stack.getMetadata() == BlocksAStone.EnumType.FRAGMENTED.ordinal())
 			return new ItemStack(ESInitInstance.BLOCKS.ASTONE);
-		else if (block == Blocks.STONEBRICK && stack.getMetadata() == 2)
-			return new ItemStack(Blocks.STONEBRICK);
+		else if (block == Blocks.STONEBRICK && stack.getMetadata() == 2) return new ItemStack(Blocks.STONEBRICK);
 		return ItemStack.EMPTY;
 	}
 
 	/** 获取修复花费 */
 	public static int getDefaultRepairCost(ItemStack stack) {
 		Block block = Block.getBlockFromItem(stack.getItem());
-		if (block == Blocks.AIR)
-			return 0;
-		else if (block == Blocks.COBBLESTONE)
-			return 1;
+		if (block == Blocks.AIR) return 0;
+		else if (block == Blocks.COBBLESTONE) return 1;
 		else if (block == ESInitInstance.BLOCKS.ASTONE
 				&& stack.getMetadata() == BlocksAStone.EnumType.FRAGMENTED.ordinal())
 			return 25;
-		else if (block == Blocks.STONEBRICK && stack.getMetadata() == 2)
-			return 1;
+		else if (block == Blocks.STONEBRICK && stack.getMetadata() == 2) return 1;
 		return 0;
 	}
 
@@ -164,7 +143,7 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 	public void update() {
 		this.autoTransfer();
 		if (this.world.isRemote) {
-			if (this.complete > 0 && Math.random() < 0.2f) {
+			if (this.isStart && Math.random() < 0.2f) {
 				float x = this.pos.getX() + 0.2f + (float) Math.random() * 0.6f;
 				float y = this.pos.getY() + 0.1f;
 				float z = this.pos.getZ() + 0.2f + (float) Math.random() * 0.6f;
@@ -178,14 +157,17 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 		ItemStack result = TileMDRubbleRepair.getDefaultRepairResult(stack);
 		if (result.isEmpty()) {
 			this.complete = 0;
+			this.isStart = false;
 			return;
 		}
 		int cost = TileMDRubbleRepair.getDefaultRepairCost(stack);
 		int need = cost * stack.getCount();
 		if (need > this.getCurrentCapacity()) {
 			this.complete = 0;
+			this.isStart = false;
 			return;
 		}
+		this.isStart = true;
 		this.complete++;
 		if (this.complete >= this.getTotalComplete()) {
 			this.complete = 0;

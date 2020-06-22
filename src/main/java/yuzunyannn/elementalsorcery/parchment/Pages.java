@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
@@ -29,6 +30,10 @@ public class Pages {
 	static final Map<String, Page> pages = new HashMap<>();
 	/** 数组形式记录所有page */
 	static final List<Page> pageList = new ArrayList<>();
+
+	public static Set<String> getPageIds() {
+		return pages.keySet();
+	}
 
 	/** 获取page个数 */
 	public static int getCount() {
@@ -92,8 +97,7 @@ public class Pages {
 
 	/** 检测item需转跳的对应的page */
 	static public Page itemToPage(Item item) {
-		if (item instanceof ItemKyaniteTools.toolsCapability)
-			return getPage(Pages.ABOUT_KYNATIE_TOOLS);
+		if (item instanceof ItemKyaniteTools.toolsCapability) return getPage(Pages.ABOUT_KYNATIE_TOOLS);
 		else {
 			for (Entry<Item, String> entry : Pages.itemToId) {
 				if (entry.getKey() == item) return getPage(entry.getValue());
@@ -170,14 +174,14 @@ public class Pages {
 		regPage(ABOUT_ASTONE, aboutAStone());
 		regPage(ABOUT_MD, aboutMD());
 		regPage(ABOUT_INFUSION, new PageCraftingSimple("infusion", ESInitInstance.BLOCKS.MD_INFUSION));
-		regPage(ABOUT_MAGICAL_ENDEREYE, new PageCraftingSimple("magical_endereye",
-				ESInitInstance.ITEMS.MAGICAL_ENDER_EYE));
+		regPage(ABOUT_MAGICAL_ENDEREYE,
+				new PageCraftingSimple("magical_endereye", ESInitInstance.ITEMS.MAGICAL_ENDER_EYE));
 
 		regPage(ABOUT_KYNATIE_TOOLS, aboutKynatieTools());
 		regPage(ABOUT_ABSORB_BOX, new PageCraftingSimple("absorbBox", ESInitInstance.BLOCKS.ABSORB_BOX));
-		regPage(ABOUT_MAGIC_PLATFORM, new PageCraftingSimple("magicPl",
-				new ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 0),
-				new ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 1)));
+		regPage(ABOUT_MAGIC_PLATFORM,
+				new PageCraftingSimple("magicPl", new ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 0),
+						new ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 1)));
 		regPage(ABOUT_MAGIC_CRY, new PageTransformSimple("magicCry", ESInitInstance.ITEMS.KYANITE,
 				ESInitInstance.ITEMS.MAGIC_CRYSTAL, PageTransform.INFUSION));
 		regPage(ABOUT_MAGIC_ESTONE, aboutEStone());
@@ -191,14 +195,16 @@ public class Pages {
 		regPage(ABOUT_DEC_BOX, new PageCraftingSimple("decBox", ESInitInstance.BLOCKS.DECONSTRUCT_BOX));
 		regPage(ABOUT_MAGIC_PAPER, new PageCraftingSimple("magicPaper", ESInitInstance.ITEMS.MAGIC_PAPER));
 		regPage(ABOUT_SPELL_PAPER, new PageCraftingSimple("spellPaper", ESInitInstance.ITEMS.SPELL_PAPER));
-		regPage(ABOUT_BOOKCOVER, new PageCraftingSimple("bookCover",
-				new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 0),
-				new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 1)));
+		regPage(ABOUT_BOOKCOVER,
+				new PageCraftingSimple("bookCover", new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 0),
+						new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 1)));
 		regPage(ABOUT_SPELLBOOK, aboutSpellbook());
 		regPage(ABOUT_ELEMENT_CUBE, new PageCraftingSimple("elementCube", ESInitInstance.BLOCKS.ELEMENTAL_CUBE));
 		regPage(ABOUT_MAGICDESK, aboutMagicDesk());
-		regPage(ABOUT_SPLAUNCH, aboutSP("spLaunch", ESInitInstance.ITEMS.SPELLBOOK, ESInitInstance.ITEMS.SPELLBOOK_LAUNCH, TileMagicDesk.AUTO_LAUNCH_BOOK));
-		regPage(ABOUT_SPELEMENT, aboutSP("spElement", ESInitInstance.ITEMS.SPELLBOOK, ESInitInstance.ITEMS.SPELLBOOK_ELEMENT, TileMagicDesk.AUTO_ELEMENT_BOOK));
+		regPage(ABOUT_SPLAUNCH, aboutSP("spLaunch", ESInitInstance.ITEMS.SPELLBOOK,
+				ESInitInstance.ITEMS.SPELLBOOK_LAUNCH, TileMagicDesk.AUTO_LAUNCH_BOOK));
+		regPage(ABOUT_SPELEMENT, aboutSP("spElement", ESInitInstance.ITEMS.SPELLBOOK,
+				ESInitInstance.ITEMS.SPELLBOOK_ELEMENT, TileMagicDesk.AUTO_ELEMENT_BOOK));
 		initItemToId();
 	}
 
@@ -233,10 +239,8 @@ public class Pages {
 	}
 
 	static private String regPage(String id, Page page) {
-		if (side.isClient())
-			addPage(id, page);
-		else
-			addPage(id, new Page());
+		if (side.isClient()) addPage(id, page);
+		else addPage(id, new Page());
 		return id;
 	}
 
@@ -315,10 +319,11 @@ public class Pages {
 	}
 
 	static private Page aboutEnchantingBook() {
-		((ItemKyaniteTools.toolsCapability) ESInitInstance.ITEMS.KYANITE_HOE).provideOnce();
 		ItemStack extra = new ItemStack(ESInitInstance.ITEMS.KYANITE_HOE);
-		IElementInventory inv = extra.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+		((ItemKyaniteTools.toolsCapability) extra.getItem()).provide(extra);
+		IElementInventory inv = new ElementInventory();
 		inv.insertElement(new ElementStack(ESInitInstance.ELEMENTS.ENDER, 10, 5), false);
+		inv.saveState(extra);
 		return new PageTransformSimple("enchantingBook", new ItemStack(Blocks.ENCHANTING_TABLE),
 				new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT), extra, null, PageTransform.SEPARATE);
 	}

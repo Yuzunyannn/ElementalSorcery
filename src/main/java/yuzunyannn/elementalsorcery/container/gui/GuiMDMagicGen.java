@@ -35,8 +35,7 @@ public class GuiMDMagicGen extends GuiMDBase<ContainerMDMagicGen> {
 
 	protected void drawT(int offsetX, int offsetY) {
 		float T = Math.min(this.container.tileEntity.getTemperature(), 500);
-		if (T < 1.0f)
-			return;
+		if (T < 1.0f) return;
 		GlStateManager.disableAlpha();
 		GlStateManager.enableBlend();
 		GlStateManager.color(1.0f, 0f, 0f, T / 600.0f);
@@ -51,10 +50,8 @@ public class GuiMDMagicGen extends GuiMDBase<ContainerMDMagicGen> {
 
 	protected void drawMagicStoneMelt(int offsetX, int offsetY, float partialTicks) {
 		float rate = this.container.tileEntity.getMeltRate();
-		if (rate == 0)
-			return;
-		else if (rate == 1)
-			moveX = (float) (Math.random() * 138 + 3);
+		if (rate == 0) return;
+		else if (rate == 1) moveX = (float) (Math.random() * 138 + 3);
 		int x = (int) (offsetX + 15 + moveX);
 		int y = (int) (offsetY + 19 + 50 - 1 - rate * 13);
 		this.drawItem(this.container.tileEntity.renderItem, x, y);
@@ -67,8 +64,7 @@ public class GuiMDMagicGen extends GuiMDBase<ContainerMDMagicGen> {
 		infos.add((int) this.container.tileEntity.getTemperature() + "℃");
 	}
 
-	@Override
 	protected boolean showMagicInfo(int mouseX, int mouseY) {
-		return this.isMouseIn(mouseX, mouseY, 15, 19, 144, 50);
+		return this.isMouseIn(mouseX, mouseY, 15, 19, 144, 50) && !this.isMouseIn(mouseX, mouseY, 79, 60, 18, 18);
 	}
 }

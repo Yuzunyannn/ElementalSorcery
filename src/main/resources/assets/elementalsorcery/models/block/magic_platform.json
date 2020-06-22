@@ -1,7 +1,7 @@
 {   "parent": "block/block",
     "textures": {
-        "particle": "elementalsorcery:blocks/magic_platform_bottom",
-        "bottom": "elementalsorcery:blocks/magic_platform_bottom",
+        "particle": "elementalsorcery:blocks/astone_circle_vein",
+        "bottom": "elementalsorcery:blocks/astone_circle_vein",
         "top": "elementalsorcery:blocks/magic_platform_top",
         "side": "elementalsorcery:blocks/magic_platform_side"
     },

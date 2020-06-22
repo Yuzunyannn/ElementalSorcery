@@ -17,47 +17,34 @@ public class GuiMDRubbleRepair extends GuiMDBase<ContainerMDRubbleRepair> {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
-		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE1);
-		this.drawTexturedModalRect(offsetX + 15, offsetY + 59, 0, 166, 144, 10);
+		this.drawDefault(offsetX, offsetY, 59, 10, partialTicks);
+
 		float rate = this.container.tileEntity.getCurrentCapacity()
 				/ (float) this.container.tileEntity.getMaxCapacity();
-		super.drawMagicVolume(offsetX + 15, offsetY + 59, 144, 10, rate, partialTicks);
-		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE1);
-		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
-		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE2);
-		this.drawTexturedModalRect(offsetX + 14, offsetY + 18, 14, 18, 146, 40);
-		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE1);
-		this.drawTexturedModalRect(offsetX + 14, offsetY + 18 + 40, 14, 18, 146, 1);
-
-		drawMagicSign(offsetX + 6, offsetY + 42, 25, 15);
-		drawMagicSign(offsetX + 6, offsetY + 27, 25, 15);
+		drawMagicSign(this, offsetX + 6, offsetY + 42, 25, 15);
+		drawMagicSign(this, offsetX + 6, offsetY + 27, 25, 15);
 
 		float srate = this.container.tileEntity.getComplete() / (float) this.container.tileEntity.getTotalComplete();
 		rate = srate * 2;
 		if (rate > 0) {
 			rate = rate > 1 ? 1 : rate;
 			int heightDec = (int) ((1 - rate) * 15);
-			drawMagicSign(offsetX + 6, offsetY + 42 + heightDec, 40 + heightDec, 15 - heightDec);
+			drawMagicSign(this, offsetX + 6, offsetY + 42 + heightDec, 40 + heightDec, 15 - heightDec);
 			rate = (srate - 0.5f) * 2;
 			if (rate > 0) {
 				rate = rate > 1 ? 1 : rate;
 				heightDec = (int) ((1 - rate) * 15);
-				drawMagicSign(offsetX + 6, offsetY + 27 + heightDec, 40 + heightDec, 15 - heightDec);
+				drawMagicSign(this, offsetX + 6, offsetY + 27 + heightDec, 40 + heightDec, 15 - heightDec);
 			}
 		}
 		this.drawTexturedModalRect(offsetX + 79, offsetY + 30, 7, 83, 18, 18);
 	}
 
-	private void drawMagicSign(int xoff, int yoff, int texY, int texH) {
-		this.drawTexturedModalRect(xoff, yoff, 176, texY, 43, texH);
-		this.drawTexturedModalRect(xoff + 40, yoff, 176, texY, 43, texH);
-		this.drawTexturedModalRect(xoff + 80, yoff, 176, texY, 43, texH);
-		this.drawTexturedModalRect(xoff + 120, yoff, 176, texY, 43, texH);
-	}
-
-	@Override
-	protected boolean showMagicInfo(int mouseX, int mouseY) {
-		return this.isMouseIn(mouseX, mouseY, 15, 59, 144, 10);
+	public static void drawMagicSign(GuiNormal<?> gui, int xoff, int yoff, int texY, int texH) {
+		gui.drawTexturedModalRect(xoff, yoff, 176, texY, 43, texH);
+		gui.drawTexturedModalRect(xoff + 40, yoff, 176, texY, 43, texH);
+		gui.drawTexturedModalRect(xoff + 80, yoff, 176, texY, 43, texH);
+		gui.drawTexturedModalRect(xoff + 120, yoff, 176, texY, 43, texH);
 	}
 
 }

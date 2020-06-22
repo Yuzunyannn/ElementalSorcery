@@ -138,8 +138,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 					this.accepter = (IAcceptMagic) tile;
 					this.init();
 					return true;
-				} else
-					return false;
+				} else return false;
 			}
 			TileEntity tile = world.getTileEntity(pos);
 			if (tile == this.accepter) return true;
@@ -164,8 +163,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 				ElementStack remain = accepter.accpetMagic(magic.splitStack(rest), from, facing);
 				magic.grow(remain);
 				return magic;
-			} else
-				return this.accepter.accpetMagic(magic, from, facing);
+			} else return this.accepter.accpetMagic(magic, from, facing);
 		}
 	}
 
@@ -186,8 +184,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	/** 当这个tile被放下，开始寻找四周的accpter */
 	public void coming() {
 		for (EnumFacing facing : EnumFacing.VALUES) {
-			if (this.canSend(facing))
-				this.find(facing, true);
+			if (this.canSend(facing)) this.find(facing, true);
 			else {
 				// 没有火把的情况下，由于是第一出来，也会强行说hi
 				TargetInfo info = this.findTarget(this.pos, facing, this.getDistance());
@@ -246,11 +243,12 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	/** 处理伤害 */
 	public void dealDamage(int level) {
 		Vec3d at = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-		AxisAlignedBB AABB = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY()
-				+ 1, pos.getZ() + 1);
+		AxisAlignedBB AABB = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1,
+				pos.getZ() + 1);
 		int baseDmg = this.magic.getPower() + level;
 		double range = level;
-		for (EntityLivingBase entitylivingbase : this.world.getEntitiesWithinAABB(EntityLivingBase.class, AABB.grow(range))) {
+		for (EntityLivingBase entitylivingbase : this.world.getEntitiesWithinAABB(EntityLivingBase.class,
+				AABB.grow(range))) {
 			float dmgRate = (float) (2.0 - entitylivingbase.getPositionVector().distanceTo(at) / (range + 1.0));
 			entitylivingbase.attackEntityFrom(DamageSource.MAGIC, dmgRate * dmgRate * baseDmg * 0.75f);
 		}
@@ -277,8 +275,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 			TileMDBase tile = targets[index].to(TileMDBase.class);
 			if (tile != null) {
 				// 如果对面不能接受
-				if (!tile.canRecvMagic(facing.getOpposite()))
-					targets[index] = null;
+				if (!tile.canRecvMagic(facing.getOpposite())) targets[index] = null;
 				else if (sayHi) tile.hi(this.pos, facing.getOpposite());
 			}
 		}
@@ -363,10 +360,8 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 			count = count == 0 ? 1 : count;
 			ElementStack send = sendMagic.splitStack(count);
 			ElementStack remain = targets[i].accpetMagic(send, this.pos, facing.getOpposite());
-			if (remain.isEmpty() || remain.getCount() != count)
-				this.torch(facing, true);
-			else
-				this.torch(facing, false);
+			if (remain.isEmpty() || remain.getCount() != count) this.torch(facing, true);
+			else this.torch(facing, false);
 			sendMagic.grow(remain);
 		}
 		this.magic.grow(sendMagic);
@@ -378,10 +373,8 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		int rest = this.getMaxCapacity() - this.getCurrentCapacity();
 		if (rest < 0) return magic;
 		rest = Math.min(magic.getCount(), rest);
-		if (this.magic.isEmpty())
-			this.magic = magic.splitStack(rest);
-		else
-			this.magic.grow(magic.splitStack(rest));
+		if (this.magic.isEmpty()) this.magic = magic.splitStack(rest);
+		else this.magic.grow(magic.splitStack(rest));
 		return magic;
 	}
 
@@ -394,8 +387,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 			if (this.hasTorch(facing) && this.canSend(facing)) {
 				if (this.world.getBlockState(pos.offset(facing)).getValue(BlockMagicTorch.LIT)) {
 					// 客户端和服务器并没有同步这些数据，想要展示效果需要重新找，当然是用autoTransfer会自动查找，这部分可能是多余的
-					if (targets[i] == null)
-						this.find(facing, false);
+					if (targets[i] == null) this.find(facing, false);
 					else if (!targets[i].check()) this.find(facing, false);
 					// 这种情况应该不存在
 					if (targets[i] == null) continue;
@@ -409,9 +401,9 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	protected void effectTo(EnumFacing facing, BlockPos to) {
 		BlockPos pos = this.pos.offset(facing);
 		if (pos.equals(to)) return;
-		FirwrokShap.createSparkUniformlySpeed(world, pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5, to.getX()
-				+ 0.5, to.getY() + 0.5, to.getZ()
-						+ 0.5, 0.2f, TileMDBase.PARTICLE_COLOR, TileMDBase.PARTICLE_COLOR_FADE, false, false);
+		FirwrokShap.createSparkUniformlySpeed(world, pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5,
+				to.getX() + 0.5, to.getY() + 0.5, to.getZ() + 0.5, 0.2f, TileMDBase.PARTICLE_COLOR,
+				TileMDBase.PARTICLE_COLOR_FADE, false, false);
 	}
 
 	/** 记录的tick */
@@ -495,6 +487,10 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	protected void setCurrentCapacity(int count) {
 		this.magic.setCount(count);
+	}
+
+	protected void magicShrink(int size) {
+		this.magic.shrink(size);
 	}
 
 	@Override

@@ -22,6 +22,7 @@ import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.util.IField;
 
+@Deprecated
 public class TileDeconstructBox extends TileEntity implements IAcceptBurnPower, IField {
 
 	static final Random rand = new Random();
@@ -36,8 +37,7 @@ public class TileDeconstructBox extends TileEntity implements IAcceptBurnPower, 
 		@Nonnull
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
 			IElementInventory einv = ElementHelper.getElementInventory(stack);
-			if (!ElementHelper.canInsert(einv))
-				return stack;
+			if (!ElementHelper.canInsert(einv)) return stack;
 			return super.insertItem(slot, stack, simulate);
 		}
 
@@ -49,8 +49,7 @@ public class TileDeconstructBox extends TileEntity implements IAcceptBurnPower, 
 
 	@Override
 	public boolean acceptBurnPower(int amount, int level) {
-		if (world.isRemote)
-			return false;
+		if (world.isRemote) return false;
 		ItemStack stack = inv_item.getStackInSlot(0);
 		if (stack.isEmpty()) {
 			power = 0;
@@ -80,8 +79,7 @@ public class TileDeconstructBox extends TileEntity implements IAcceptBurnPower, 
 
 	private boolean insertTo(ItemStack stack, ItemStack stack_inv, IElementInventory einv, boolean simulate) {
 		ElementStack[] estacks = ElementMap.instance.toElement(stack);
-		if (estacks == null)
-			return false;
+		if (estacks == null) return false;
 		if (simulate) {
 			// 寻找一个能插入的
 			boolean can_insert = false;
@@ -128,9 +126,7 @@ public class TileDeconstructBox extends TileEntity implements IAcceptBurnPower, 
 	// 拥有能力
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			return true;
-		}
+		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) { return true; }
 		return super.hasCapability(capability, facing);
 	}
 
@@ -138,8 +134,7 @@ public class TileDeconstructBox extends TileEntity implements IAcceptBurnPower, 
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			if (facing == EnumFacing.DOWN)
-				return (T) inv_eleitem;
+			if (facing == EnumFacing.DOWN) return (T) inv_eleitem;
 			return (T) inv_item;
 		}
 		return super.getCapability(capability, facing);

@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.event;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
@@ -38,29 +39,23 @@ public class CommandES extends CommandBase {
 
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-		if (args.length < 1)
-			throw new CommandException("commands.es.usage");
+		if (args.length < 1) throw new CommandException("commands.es.usage");
 		if (args[0].equals("build")) {
-			if (args.length == 1)
-				throw new CommandException("commands.es.build.usage");
+			if (args.length == 1) throw new CommandException("commands.es.build.usage");
 			Entity entity = sender.getCommandSenderEntity();
 			this.cmdBuild(args[1], (EntityLivingBase) entity, server.getEntityWorld());
 		} else if (args[0].equals("page")) {
-			if (args.length == 1)
-				throw new CommandException("commands.es.page.usage");
+			if (args.length == 1) throw new CommandException("commands.es.page.usage");
 			String idStr = args[1];
-			if (!Pages.isVaild(idStr))
-				throw new CommandException("commands.es.page.fail");
+			if (!Pages.isVaild(idStr)) throw new CommandException("commands.es.page.fail");
 			Entity entity = sender.getCommandSenderEntity();
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
 				if (Pages.BOOK.equals(idStr))
 					player.inventory.addItemStackToInventory(new ItemStack(ESInitInstance.ITEMS.MANUAL));
-				else
-					player.inventory.addItemStackToInventory(ItemParchment.getParchment(idStr));
+				else player.inventory.addItemStackToInventory(ItemParchment.getParchment(idStr));
 			}
-		} else
-			throw new CommandException("commands.es.usage");
+		} else throw new CommandException("commands.es.usage");
 	}
 
 	// 自动补全
@@ -71,11 +66,17 @@ public class CommandES extends CommandBase {
 			String[] names = { "build", "page" };
 			return CommandBase.getListOfStringsMatchingLastWord(args, names);
 		} else if (args.length == 2) {
-			if (args[1].equals("build")) {
+			if (args[0].equals("build")) {
 				// Set<String> names = BuildingLib.instance.getBuildingsName();
 				// return CommandBase.getListOfStringsMatchingLastWord(args,
 				// names);
+			} else if (args[0].equals("page")) {
+				Set<String> set = Pages.getPageIds();
+				String[] names = new String[set.size()];
+				set.toArray(names);
+				return CommandBase.getListOfStringsMatchingLastWord(args, names);
 			}
+
 		}
 		return null;
 	}
@@ -86,18 +87,15 @@ public class CommandES extends CommandBase {
 		if (value.toLowerCase().equals("it")) {
 			ItemStack stack = entity.getHeldItemMainhand();
 			ArcInfo info = new ArcInfo(stack, world.isRemote ? Side.CLIENT : Side.SERVER);
-			if (!info.isValid())
-				throw new CommandException("commands.es.build.it.usage");
+			if (!info.isValid()) throw new CommandException("commands.es.build.it.usage");
 			building = info.building;
 			pos = info.pos;
 		} else {
 			building = BuildingLib.instance.getBuilding(value);
 			RayTraceResult result = WorldHelper.getLookAtBlock(world, entity, 128);
-			if (result != null)
-				pos = result.getBlockPos();
+			if (result != null) pos = result.getBlockPos();
 		}
-		if (building == null || pos == null)
-			throw new CommandException("commands.es.build.fail.usage");
+		if (building == null || pos == null) throw new CommandException("commands.es.build.fail.usage");
 		Building.BuildingBlocks iter = building.getBuildingBlocks();
 		while (iter.next()) {
 			world.setBlockState(iter.getPos().add(pos), iter.getState());

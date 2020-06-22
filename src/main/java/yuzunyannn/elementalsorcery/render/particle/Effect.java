@@ -57,6 +57,11 @@ public abstract class Effect {
 	static private ArrayDeque<Effect> effects = new ArrayDeque<Effect>();
 
 	static public void addEffect(Effect effect) {
+		//0渲染全部
+		if (Minecraft.getMinecraft().gameSettings.particleSetting != 0) {
+			//其他的视形况
+			return;
+		}
 		effects.add(effect);
 	}
 

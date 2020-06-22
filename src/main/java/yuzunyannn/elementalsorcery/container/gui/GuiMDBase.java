@@ -38,10 +38,8 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 	}
 
 	protected boolean isMouseIn(int mouseX, int mouseY, int x, int y, int width, int height) {
-		if (mouseX < x || mouseX >= x + width)
-			return false;
-		if (mouseY < y || mouseY >= y + height)
-			return false;
+		if (mouseX < x || mouseX >= x + width) return false;
+		if (mouseY < y || mouseY >= y + height) return false;
 		return true;
 	}
 
@@ -49,8 +47,7 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 		int maxWidth = 0;
 		for (String str : strs) {
 			int width = this.fontRenderer.getStringWidth(str);
-			if (width > maxWidth)
-				maxWidth = width;
+			if (width > maxWidth) maxWidth = width;
 		}
 		this.drawToolTipBackground(x, y, maxWidth, this.fontRenderer.FONT_HEIGHT * strs.size());
 		for (int i = 0; i < strs.size(); i++)
@@ -64,13 +61,11 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		if (this.showMagicInfo(mouseX - offsetX, mouseY - offsetY)) {
-			if (mouseX < offsetX + 79 || mouseX > offsetX + 96 || mouseY < offsetY + 60) {
-				int x = mouseX - offsetX;
-				int y = mouseY - offsetY;
-				infosTmp.clear();
-				this.getShowMagicInfos(infosTmp);
-				this.drawInfo(x, y, 0xffffff, infosTmp);
-			}
+			int x = mouseX - offsetX + 8;
+			int y = mouseY - offsetY;
+			infosTmp.clear();
+			this.getShowMagicInfos(infosTmp);
+			this.drawInfo(x, y, 0xffffff, infosTmp);
 		}
 	}
 
@@ -82,7 +77,23 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 
 	/** 是否展示魔力数据 */
 	protected boolean showMagicInfo(int mouseX, int mouseY) {
-		return this.isMouseIn(mouseX, mouseY, 15, 19, 144, 50);
+		return this.isMouseIn(mouseX, mouseY, 15, 59, 144, 10);
+	}
+
+	/** 基础绘画 */
+	protected void drawDefault(int offsetX, int offsetY, int volumeY, int volumeHeight, float partialTicks) {
+		volumeY = 19 + 50 - volumeHeight;
+		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE1);
+		this.drawTexturedModalRect(offsetX + 15, offsetY + volumeY, 0, 166, 144, volumeHeight);
+		float rate = this.container.tileEntity.getCurrentCapacity()
+				/ (float) this.container.tileEntity.getMaxCapacity();
+		this.drawMagicVolume(offsetX + 15, offsetY + volumeY, 144, volumeHeight, rate, partialTicks);
+		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE1);
+		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
+		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE2);
+		this.drawTexturedModalRect(offsetX + 14, offsetY + 18, 14, 18, 146, 50 - volumeHeight);
+		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE1);
+		this.drawTexturedModalRect(offsetX + 14, offsetY + 18 + 50 - volumeHeight, 14, 18, 146, 1);
 	}
 
 }

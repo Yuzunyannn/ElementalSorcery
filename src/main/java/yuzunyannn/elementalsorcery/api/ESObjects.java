@@ -62,10 +62,12 @@ public class ESObjects {
 		public Block KYANITE_ORE;
 		public Block KYANITE_BLOCK;
 		public Block MAGIC_PLATFORM;
+		@Deprecated
 		public Block ABSORB_BOX;
+		@Deprecated
+		public Block DECONSTRUCT_BOX;
 		public Block INVALID_ENCHANTMENT_TABLE;
 		public Block ELEMENT_WORKBENCH;
-		public Block DECONSTRUCT_BOX;
 		public Block MAGIC_DESK;
 		public Block ELEMENT_CRAFTING_TABLE;
 		public Block DECONSTRUCT_ALTAR_TABLE;
@@ -88,6 +90,9 @@ public class ESObjects {
 		public Block MD_INFUSION;
 		public Block MD_TRANSFER;
 		public Block MD_MAGIC_SOLIDIFY;
+		public Block MD_ABSORB_BOX;
+		public Block MD_MAGICLIZATION;
+
 	}
 
 	static public class Elements {

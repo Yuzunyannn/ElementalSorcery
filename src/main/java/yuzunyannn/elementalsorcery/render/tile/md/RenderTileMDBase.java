@@ -1,9 +1,9 @@
-package yuzunyannn.elementalsorcery.render.tile;
+package yuzunyannn.elementalsorcery.render.tile.md;
 
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
-import yuzunyannn.elementalsorcery.render.model.ModelMDBase;
+import yuzunyannn.elementalsorcery.render.model.md.ModelMDBase;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;

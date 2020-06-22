@@ -46,7 +46,7 @@ tile.estone.chiseled.name=錾制魔力石英块
 tile.estone.lines.name=竖纹魔力石英块
 tile.estoneStairs.name=魔力石英楼梯
 tile.estoneSlab.name=魔力石英台阶
-tile.magicPlatform.wood.name=木制魔力平台
+tile.magicPlatform.astone.name=魔力平台
 tile.magicPlatform.estone.name=石制魔力平台
 tile.absorbBox.name=元素吸收箱
 tile.invalidEnchantmentTable.name=失去魔力的附魔台
@@ -86,6 +86,8 @@ tile.MDRubbleRepair.name=魔动碎石修复箱
 tile.MDInfusion.name=注魔箱
 tile.MDTransfer.name=魔力转移箱
 tile.MDMagicSolidify.name=魔力固化箱
+tile.MDAbsorbBox.name=元素吸收箱
+tile.MDMagiclization.name=魔化箱
 
 element.void.name=虚空
 element.magic.name=魔力
@@ -119,6 +121,7 @@ commands.es.page.usage=/es page <页面的id名称>
 commands.es.page.fail=不存在的的id名
 
 arc.infusion.name=注魔祭坛
+arc.absorbBox.name=元素吸收祭坛
 arc.largeAltar.name=大型祭坛
 arc.spellbookAltar.name=魔法书祭坛
 arc.elementCraftingAltar.name=元素合成小祭坛

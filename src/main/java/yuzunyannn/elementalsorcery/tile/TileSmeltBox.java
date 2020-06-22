@@ -116,14 +116,11 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 	/**
 	 * 获得物品烧炼后应该成为的物品 因为该炉子什么都可以放置
 	 * 
-	 * @param stack
-	 *            原始物品
-	 * @param extra
-	 *            额外的物品
+	 * @param stack 原始物品
+	 * @param extra 额外的物品
 	 */
 	public @Nonnull ItemStack getSmeltResult(@Nonnull ItemStack stack, @Nonnull ItemStack extra) {
-		if (stack.isEmpty())
-			return ItemStack.EMPTY;
+		if (stack.isEmpty()) return ItemStack.EMPTY;
 		// 特殊
 		if (!extra.isEmpty()) {
 			// 如果额外物品是魔法末影之眼
@@ -137,27 +134,24 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 				if (power >= 3 && stack.getItem() instanceof ItemKyaniteTools.toolsCapability
 						&& stack.getItemDamage() == 0
 						&& !stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null)) {
-					((ItemKyaniteTools.toolsCapability) stack.getItem()).provideOnce();
-					return new ItemStack(stack.getItem(), 1);
+					stack = new ItemStack(stack.getItem(), 1);
+					((ItemKyaniteTools.toolsCapability) stack.getItem()).provide(stack);
+					return stack;
 				}
 			}
 		}
 		// 检查一般的熔炼表
 		ItemStack newStack = FurnaceRecipes.instance().getSmeltingResult(stack);
-		if (newStack.isEmpty())
-			return ItemStack.EMPTY;
+		if (newStack.isEmpty()) return ItemStack.EMPTY;
 		return newStack.copy();
 	}
 
 	/**
 	 * 获得物品烧炼后应的幸运产出物品物品 因为该炉子什么都可以放置
 	 * 
-	 * @param stackOld
-	 *            原始物品
-	 * @param stackNew
-	 *            烧制之后的物品
-	 * @param extra
-	 *            额外的物品
+	 * @param stackOld 原始物品
+	 * @param stackNew 烧制之后的物品
+	 * @param extra    额外的物品
 	 */
 	public @Nonnull ItemStack getAdditionalItem(@Nonnull ItemStack stackOld, @Nonnull ItemStack stackNew,
 			@Nonnull ItemStack extra) {
@@ -166,12 +160,10 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 			if (stackNew.getItem() == ESInitInstance.ITEMS.KYANITE) {
 				switch (material()) {
 				case IRON:
-					if (Math.random() < 0.1f)
-						return new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE);
+					if (Math.random() < 0.1f) return new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE);
 					break;
 				case KYANITE:
-					if (Math.random() < 0.5f)
-						return new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE);
+					if (Math.random() < 0.5f) return new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE);
 					break;
 				default:
 					break;
@@ -184,9 +176,7 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 		if (Math.random() < 0.25f || material() == BlockHearth.EnumMaterial.KYANITE) {
 			if (stackNew.getItem() == Items.IRON_INGOT) {
 				return new ItemStack(Items.IRON_NUGGET, 1);
-			} else if (stackNew.getItem() == Items.GOLD_INGOT) {
-				return new ItemStack(Items.GOLD_NUGGET, 1);
-			}
+			} else if (stackNew.getItem() == Items.GOLD_INGOT) { return new ItemStack(Items.GOLD_NUGGET, 1); }
 		}
 		return ItemStack.EMPTY;
 	}
@@ -195,8 +185,7 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 	 * 完成一轮烧炼，左边的物品变道右边是一轮，这时候可能就会消耗"额外物品"喽
 	 */
 	public void finishOnceSmelt(@Nonnull ItemStack extra) {
-		if (extra.isEmpty())
-			return;
+		if (extra.isEmpty()) return;
 		if (extra.getItem() == ESInitInstance.ITEMS.MAGICAL_ENDER_EYE) {
 			if (extra.attemptDamageItem(1, world.rand, null)) {
 				extra.shrink(1);
@@ -215,9 +204,7 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 	// 拥有能力
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			return true;
-		}
+		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) { return true; }
 		return super.hasCapability(capability, facing);
 	}
 
@@ -229,10 +216,8 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 			EnumFacing wface;
 			if (state.getBlock() == ESInitInstance.BLOCKS.SMELT_BOX)
 				wface = state.getValue(BlockSmeltBox.FACING).getOpposite();
-			else
-				wface = EnumFacing.DOWN;
-			if (facing == EnumFacing.DOWN || facing == wface)
-				return (T) inventoryResult;
+			else wface = EnumFacing.DOWN;
+			if (facing == EnumFacing.DOWN || facing == wface) return (T) inventoryResult;
 			return (T) inventorySmelt;
 		}
 		return super.getCapability(capability, facing);
@@ -251,11 +236,9 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 		for (int i = 0; i < inventorySmelt.getSlots(); i++) {
 			ItemStack item_stack = inventorySmelt.extractItem(i, 1, true);
 			item_stack = getSmeltResult(item_stack, inventoryExtra.getStackInSlot(0));
-			if (item_stack.isEmpty())
-				continue;
+			if (item_stack.isEmpty()) continue;
 			item_stack = inventoryResult.insertItemForce(i, item_stack, true);
-			if (!item_stack.isEmpty())
-				continue;
+			if (!item_stack.isEmpty()) continue;
 			can_smelt = true;
 			break;
 		}
@@ -299,8 +282,7 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 						ItemStack item_stack = inventorySmelt.extractItem(i, 1, true);
 						// 根据额外物品，获取烧炼结果
 						ItemStack new_stack = getSmeltResult(item_stack, extra);
-						if (new_stack.isEmpty())
-							continue;
+						if (new_stack.isEmpty()) continue;
 						// 检测有没有额外的物品
 						ItemStack add_stack = getAdditionalItem(item_stack, new_stack, extra);
 						// 处理物品栏
@@ -313,8 +295,7 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 					this.markDirty();
 				}
 			} else {
-				if (burnTime > 0)
-					burnTime--;
+				if (burnTime > 0) burnTime--;
 			}
 		} else {
 			burnTime = 0;

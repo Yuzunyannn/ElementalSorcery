@@ -21,11 +21,8 @@ public class RenderTileMagicPlatform extends TileEntitySpecialRenderer<TileMagic
 		if (stack.isEmpty())
 			return;
 		GlStateManager.pushMatrix();
-		float ang = tile.roate_begin + EventClient.getGlobalRotateInRender(partialTicks) * 1.75f;
-		GlStateManager.translate((float) x + 0.5F,
-				(float) y + 7.0F / 16.0F + (MathHelper.sin(ang * 0.01745329f) + 1) * 0.125, (float) z + 0.5F);
-		GlStateManager.rotate(ang, 0, 1, 0);
-		GlStateManager.disableLighting();
+		GlStateManager.translate(x + 0.5, y - 0.05, z + 0.5);
+		yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
 		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
 		GlStateManager.popMatrix();
 	}

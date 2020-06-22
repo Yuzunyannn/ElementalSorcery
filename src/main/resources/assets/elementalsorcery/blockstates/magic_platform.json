@@ -1,6 +1,6 @@
 {
     "variants": {
-        "material=wood": { "model": "elementalsorcery:magic_platform"},
+        "material=astone": { "model": "elementalsorcery:magic_platform"},
 		"material=estone": { "model": "elementalsorcery:magic_platform_estone"}
     }
 }

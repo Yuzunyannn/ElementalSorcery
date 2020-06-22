@@ -6,28 +6,24 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
 import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
+import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
 import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.render.particle.ParticleElementFly;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 
+@Deprecated
 public class TileAbsorbBox extends TileEntityNetwork implements IAcceptBurnPower {
 
 	// 积攒的能量
@@ -39,8 +35,7 @@ public class TileAbsorbBox extends TileEntityNetwork implements IAcceptBurnPower
 		@Nonnull
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
 			IElementInventory einv = ElementHelper.getElementInventory(stack);
-			if (!ElementHelper.canInsert(einv))
-				return stack;
+			if (!ElementHelper.canInsert(einv)) return stack;
 			return super.insertItem(slot, stack, simulate);
 		}
 
@@ -58,23 +53,17 @@ public class TileAbsorbBox extends TileEntityNetwork implements IAcceptBurnPower
 			return false;
 		}
 		IElementInventory einv = ElementHelper.getElementInventory(stack);
-		if (!ElementHelper.canInsert(einv))
-			return false;
+		if (!ElementHelper.canInsert(einv)) return false;
 		if (posList.isEmpty()) {
 			// 每秒计算一次，提升效率
 			power--;
-			if (power <= 0)
-				power = 20;
-			else
-				return false;
+			if (power <= 0) power = 20;
+			else return false;
 			this.refindAbsorbPosList();
-			if (posList.isEmpty()) {
-				return false;
-			}
+			if (posList.isEmpty()) { return false; }
 		}
 		power += amount * level;
-		if (power < this.getOnceTime())
-			return true;
+		if (power < this.getOnceTime()) return true;
 		power -= this.getOnceTime();
 		// 开始抽取
 		this.refindAbsorbPosList();
@@ -97,8 +86,7 @@ public class TileAbsorbBox extends TileEntityNetwork implements IAcceptBurnPower
 					to_stack = estack.copy();
 					to_stack.setCount(1);
 					success = einv.insertElement(to_stack, false);
-					if (success)
-						break;
+					if (success) break;
 				}
 			}
 			// 如果吸收成功
@@ -144,10 +132,8 @@ public class TileAbsorbBox extends TileEntityNetwork implements IAcceptBurnPower
 		TileEntity tile = world.getTileEntity(pos);
 		if (tile instanceof IGetItemStack) {
 			ItemStack stack = ((IGetItemStack) tile).getStack();
-			if (stack.isEmpty())
-				return false;
-			if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null))
-				return false;
+			if (stack.isEmpty()) return false;
+			if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null)) return false;
 			IElementInventory einv = ElementHelper.getElementInventory(stack);
 			ElementStack estack = getFirstNotEmpty(einv, ElementStack.EMPTY);
 			return !estack.isEmpty();
@@ -158,8 +144,7 @@ public class TileAbsorbBox extends TileEntityNetwork implements IAcceptBurnPower
 	private ElementStack getFirstNotEmpty(IElementInventory einv, ElementStack cmp) {
 		for (int i = 0; i < einv.getSlots(); i++) {
 			ElementStack estack = einv.getStackInSlot(i);
-			if (!estack.isEmpty() && (cmp.isEmpty() || estack.areSameType(cmp)))
-				return estack;
+			if (!estack.isEmpty() && (cmp.isEmpty() || estack.areSameType(cmp))) return estack;
 		}
 		return ElementStack.EMPTY;
 	}
@@ -187,18 +172,14 @@ public class TileAbsorbBox extends TileEntityNetwork implements IAcceptBurnPower
 	// 拥有能力
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			return true;
-		}
+		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) { return true; }
 		return super.hasCapability(capability, facing);
 	}
 
 	// 获取能力
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			return (T) inventory;
-		}
+		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) { return (T) inventory; }
 		return super.getCapability(capability, facing);
 	}
 

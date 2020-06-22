@@ -12,6 +12,7 @@ import yuzunyannn.elementalsorcery.init.ESInitInstance;
 
 public class Buildings {
 	static public Building INFUSION;
+	static public Building ABSORB_BOX;
 	static public Building LARGE_ALTAR;
 	static public Building SPELLBOOK_ALTAR;
 	static public Building ELEMENT_CRAFTING_ALTAR;
@@ -20,22 +21,25 @@ public class Buildings {
 	static public Building ANALYSIS_ALTAR;
 
 	static public void init() throws IOException {
-		INFUSION = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/infusion"), "infusion");
+		INFUSION = new BuildingInherent(ElementalSorcery.data.getNBTForResourceWithException("structures/infusion.nbt"),
+				"infusion");
+		ABSORB_BOX = new BuildingInherent(
+				ElementalSorcery.data.getNBTForResourceWithException("structures/absorb_box.nbt"), "absorbBox");
 		LARGE_ALTAR = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/large_altar"), "largeAltar");
+				ElementalSorcery.data.getNBTForResourceWithException("structures/large_altar.nbt"), "largeAltar");
 		SPELLBOOK_ALTAR = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/spellbook_altar"), "spellbookAltar");
+				ElementalSorcery.data.getNBTForResourceWithException("structures/spellbook_altar.nbt"),
+				"spellbookAltar");
 		ELEMENT_CRAFTING_ALTAR = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/element_crafting_altar"),
+				ElementalSorcery.data.getNBTForResourceWithException("structures/element_crafting_altar.nbt"),
 				"elementCraftingAltar");
 		DECONSTRUCT_ALTAR = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/deconstruct_altar"),
+				ElementalSorcery.data.getNBTForResourceWithException("structures/deconstruct_altar.nbt"),
 				"deconstructAltar");
 		BUILING_ALTAR = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/builing_altar"), "builingAltar");
+				ElementalSorcery.data.getNBTForResourceWithException("structures/builing_altar.nbt"), "builingAltar");
 		ANALYSIS_ALTAR = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/analysis_altar"), "analysisAltar");
+				ElementalSorcery.data.getNBTForResourceWithException("structures/analysis_altar.nbt"), "analysisAltar");
 	}
 
 	private static void horizontalS(IBlockState state, Building building, int d, int y) {
@@ -47,15 +51,13 @@ public class Buildings {
 
 	private static void horizontalSX(IBlockState state, Building building, int x, int y, int z) {
 		building.add(state, new BlockPos(x, y, z));
-		if (x == 0)
-			return;
+		if (x == 0) return;
 		building.add(state, new BlockPos(-x, y, z));
 	}
 
 	private static void horizontalSZ(IBlockState state, Building building, int x, int y, int z) {
 		building.add(state, new BlockPos(x, y, z));
-		if (z == 0)
-			return;
+		if (z == 0) return;
 		building.add(state, new BlockPos(x, y, -z));
 	}
 

@@ -31,8 +31,7 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 			@Override
 			@Nonnull
 			public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-				if (stack.getItem() != ESInitInstance.ITEMS.MAGIC_STONE)
-					return stack;
+				if (stack.getItem() != ESInitInstance.ITEMS.MAGIC_STONE) return stack;
 				return super.insertItem(slot, stack, simulate);
 			}
 		};
@@ -131,8 +130,7 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 		if (this.meltRate == 0 && (this.getMagicStone().isEmpty() || this.getCurrentCapacity() >= this.getMaxCapacity())
 				&& level == 0)
 			return false;
-		if (this.world.isRemote)
-			return true;
+		if (this.world.isRemote) return true;
 		temperature += amount * level;
 		return true;
 	}
@@ -140,11 +138,9 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 	@Override
 	public void update() {
 		this.autoTransfer();
-		if (this.world.isRemote)
-			return;
+		if (this.world.isRemote) return;
 		temperature *= 0.995f;
-		if (this.temperature < 400)
-			return;
+		if (this.temperature < 400) return;
 		if (this.meltRate > 0) {
 			float dRate = 0.01f;
 			float prevMeltRate = this.meltRate;
@@ -156,17 +152,13 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 			// 增长
 			if (this.magic.isEmpty())
 				this.magic = new ElementStack(ESInitInstance.ELEMENTS.MAGIC, (int) (dRate * 100), 25);
-			else
-				this.magic.grow(new ElementStack(ESInitInstance.ELEMENTS.MAGIC, (int) (dRate * 100), 25));
-			if (this.getCurrentCapacity() >= this.getMaxCapacity())
-				this.magic.setCount(this.getMaxCapacity());
+			else this.magic.grow(new ElementStack(ESInitInstance.ELEMENTS.MAGIC, (int) (dRate * 100), 25));
+			if (this.getCurrentCapacity() >= this.getMaxCapacity()) this.magic.setCount(this.getMaxCapacity());
 		} else {
 			// 如果没有熔炼，就拿走一个魔石，进行熔炼
 			ItemStack stack = this.getMagicStone();
-			if (stack.isEmpty())
-				return;
-			if (this.getCurrentCapacity() >= this.getMaxCapacity())
-				return;
+			if (stack.isEmpty()) return;
+			if (this.getCurrentCapacity() >= this.getMaxCapacity()) return;
 			stack.shrink(1);
 			this.meltRate = 1.0f;
 		}

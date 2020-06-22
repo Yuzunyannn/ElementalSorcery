@@ -14,10 +14,10 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
-import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
+@Deprecated
 public class BlockDeconstructBox extends BlockContainer {
 
 	public BlockDeconstructBox() {
@@ -55,10 +55,8 @@ public class BlockDeconstructBox extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (facing == EnumFacing.DOWN)
-			return false;
-		if (worldIn.isRemote)
-			return true;
+		if (facing == EnumFacing.DOWN) return false;
+		if (worldIn.isRemote) return true;
 		playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_DECONSTRUCT_BOX, worldIn, pos.getX(), pos.getY(),
 				pos.getZ());
 		return true;

@@ -69,13 +69,14 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 	/**
 	 * 当该元素转化成魔力的时候，获得魔力值
 	 * 
-	 * @param estack
-	 *            转化魔力时的元素栈，请直接修改这个元素栈
+	 * @param estack 转化魔力时的元素栈，请直接修改这个元素栈
 	 * @return 返回值的元素会自动转变为magic，只需修改数量和能量即可
 	 */
 	public ElementStack changetoMagic(World world, ElementStack estack) {
-		estack.setCount((int) (estack.getCount() * 2.5f));
 		estack.weaken(0.5f);
+		float n = estack.getPower();
+		n = (float) Math.pow(n, 0.6) / 8 + 1;
+		estack.setCount((int) (estack.getCount() * n));
 		return estack;
 	}
 
@@ -88,37 +89,26 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 	/**
 	 * 物品被析构成元素时候，获取真正可以得到的元素
 	 * 
-	 * @param stack
-	 *            被析构的物品，方块的话也会变成对应的物品栈传入（注意：传入的stack是有数量的，但是该函数在处理时，应认为数量只有一个）
-	 * @param estack
-	 *            析构时核查的元素，请直接修改这个元素栈
-	 * @param lvPower
-	 *            进行析构祭坛（工具）的能量
-	 * @param complex
-	 *            析构物品的复杂度
+	 * @param stack   被析构的物品，方块的话也会变成对应的物品栈传入（注意：传入的stack是有数量的，但是该函数在处理时，应认为数量只有一个）
+	 * @param estack  析构时核查的元素，请直接修改这个元素栈
+	 * @param lvPower 进行析构祭坛（工具）的能量
+	 * @param complex 析构物品的复杂度
 	 * @return 返回真正得到的元素数量和能量
 	 */
 	public ElementStack changetoElementWhenDeconstruct(World world, ItemStack stack, ElementStack estack, int complex,
 			int lvPower) {
 		if (lvPower <= Element.DP_TOOLS) {
-			if (estack.getCount() > 25)
-				estack.setCount(25);
-			if (complex > 10)
-				estack.rise(-0.9f);
-			else
-				estack.rise(-0.8f);
+			if (estack.getCount() > 25) estack.setCount(25);
+			if (complex > 10) estack.rise(-0.9f);
+			else estack.rise(-0.8f);
 			estack.weaken(0.25f);
 		} else if (lvPower <= Element.DP_BOX) {
-			if (estack.getCount() > 100)
-				estack.setCount(100);
-			if (complex > 10)
-				estack.rise(-0.85f);
-			else
-				estack.rise(-0.7f);
+			if (estack.getCount() > 100) estack.setCount(100);
+			if (complex > 10) estack.rise(-0.85f);
+			else estack.rise(-0.7f);
 			estack.weaken(0.35f);
 		} else if (lvPower <= Element.DP_ALTAR) {
-			if (estack.getCount() > 200)
-				estack.setCount(200);
+			if (estack.getCount() > 200) estack.setCount(200);
 			estack.rise(-0.6f);
 			estack.weaken(0.45f);
 		} else if (lvPower <= Element.DP_ALTAR_SURPREME) {
@@ -130,12 +120,9 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 	/**
 	 * 获取当前元素和另一个元素处于同一个物品时候的复杂度叠加值[求默认复杂度使用]
 	 * 
-	 * @param stack
-	 *            当前处理的物品
-	 * @param estack
-	 *            当前处理的元素
-	 * @param other
-	 *            当前处理的另一个元素
+	 * @param stack  当前处理的物品
+	 * @param estack 当前处理的元素
+	 * @param other  当前处理的另一个元素
 	 */
 	public int complexWith(ItemStack stack, ElementStack estack, ElementStack other) {
 		return 1;

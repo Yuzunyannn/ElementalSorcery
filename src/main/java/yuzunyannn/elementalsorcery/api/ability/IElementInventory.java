@@ -54,7 +54,6 @@ public interface IElementInventory extends IItemCapbiltitySyn {
 	 * @param simulate 如果为true，插入结果仅为模拟的结果
 	 * @return 是否成功插入
 	 **/
-	@Nonnull
 	boolean insertElement(@Nonnull ElementStack estack, boolean simulate);
 
 	/**
@@ -76,7 +75,6 @@ public interface IElementInventory extends IItemCapbiltitySyn {
 	 * @param simulate 如果为true，插入结果仅为模拟的结果
 	 * @return 是否成功插入
 	 **/
-	@Nonnull
 	boolean insertElement(int slot, @Nonnull ElementStack estack, boolean simulate);
 
 	/**

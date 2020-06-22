@@ -40,10 +40,12 @@ import yuzunyannn.elementalsorcery.block.container.BlockMeltCauldron;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.container.BlockStela;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
+import yuzunyannn.elementalsorcery.block.md.BlockMDAbsorbBox;
 import yuzunyannn.elementalsorcery.block.md.BlockMDHearth;
 import yuzunyannn.elementalsorcery.block.md.BlockMDInfusion;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagicGen;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagicSolidify;
+import yuzunyannn.elementalsorcery.block.md.BlockMDMagiclization;
 import yuzunyannn.elementalsorcery.block.md.BlockMDRubbleRepair;
 import yuzunyannn.elementalsorcery.block.md.BlockMDTransfer;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
@@ -157,6 +159,8 @@ public class ESInitInstance {
 		BLOCKS.MD_INFUSION = new BlockMDInfusion();
 		BLOCKS.MD_TRANSFER = new BlockMDTransfer();
 		BLOCKS.MD_MAGIC_SOLIDIFY = new BlockMDMagicSolidify();
+		BLOCKS.MD_ABSORB_BOX = new BlockMDAbsorbBox();
+		BLOCKS.MD_MAGICLIZATION = new BlockMDMagiclization();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -220,6 +224,8 @@ public class ESInitInstance {
 	}
 
 	private static final void instanceVillage() {
-		ESInitInstance.VILLAGE.ES_VILLEGER = new VillagerRegistry.VillagerProfession("elementalsorcery:antique_dealer", "elementalsorcery:textures/entity/villager/es_studier.png", "elementalsorcery:textures/entity/zombie_villager/es_studier.png");
+		ESInitInstance.VILLAGE.ES_VILLEGER = new VillagerRegistry.VillagerProfession("elementalsorcery:antique_dealer",
+				"elementalsorcery:textures/entity/villager/es_studier.png",
+				"elementalsorcery:textures/entity/zombie_villager/es_studier.png");
 	}
 }

@@ -12,10 +12,12 @@ import yuzunyannn.elementalsorcery.container.gui.GuiDeconstructBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementCraftingTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
 import yuzunyannn.elementalsorcery.container.gui.GuiHearth;
+import yuzunyannn.elementalsorcery.container.gui.GuiMDAbsorbBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDHearth;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDInfusion;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDMagicGen;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDMagicSolidify;
+import yuzunyannn.elementalsorcery.container.gui.GuiMDMagiclization;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDRubbleRepair;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
 import yuzunyannn.elementalsorcery.container.gui.GuiSimple;
@@ -41,6 +43,8 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_MD_RUBBLE_REPAIR = 23;
 	public static final int GUI_MD_INFUSION = 24;
 	public static final int GUI_MD_MAGIC_SOLIDIFY = 25;
+	public static final int GUI_MD_ABSORB_BOX = 26;
+	public static final int GUI_MD_MAGICLIZATION = 27;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -76,6 +80,10 @@ public class ESGuiHandler implements IGuiHandler {
 			return new ContainerMDInfusion(player, tileEntity);
 		case GUI_MD_MAGIC_SOLIDIFY:
 			return new ContainerMDMagicSolidify(player, tileEntity);
+		case GUI_MD_ABSORB_BOX:
+			return new ContainerMDAbsorbBox(player, tileEntity);
+		case GUI_MD_MAGICLIZATION:
+			return new ContainerMDMagiclization(player, tileEntity);
 		default:
 			return null;
 		}
@@ -117,6 +125,10 @@ public class ESGuiHandler implements IGuiHandler {
 			return new GuiMDInfusion(new ContainerMDInfusion(player, tileEntity), player.inventory);
 		case GUI_MD_MAGIC_SOLIDIFY:
 			return new GuiMDMagicSolidify(new ContainerMDMagicSolidify(player, tileEntity), player.inventory);
+		case GUI_MD_ABSORB_BOX:
+			return new GuiMDAbsorbBox(new ContainerMDAbsorbBox(player, tileEntity), player.inventory);
+		case GUI_MD_MAGICLIZATION:
+			return new GuiMDMagiclization(new ContainerMDMagiclization(player, tileEntity), player.inventory);
 		default:
 			return null;
 		}
