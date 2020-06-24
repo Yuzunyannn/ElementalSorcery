@@ -1,15 +1,17 @@
 package yuzunyannn.elementalsorcery;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
 import org.apache.logging.log4j.Logger;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -38,21 +40,32 @@ public class ElementalSorcery {
 	public static CommonProxy proxy;
 
 	@EventHandler
-	public void preInit(FMLPreInitializationEvent event) {
-		logger = event.getModLog();
-		side = event.getSide();
-		config = new ESConfig(event);
-		data = new ESData(event);
-		proxy.preInit(event);
+	public void preInit(FMLPreInitializationEvent event) throws Throwable {
+		try {
+			logger = event.getModLog();
+			side = event.getSide();
+			config = new ESConfig(event);
+			data = new ESData(event);
+			proxy.preInit(event);
+		} catch (Throwable e) {
+			CrashReport report = CrashReport.makeCrashReport(e, "Elementalsorcery初始化异常！");
+			if (event.getSide() == Side.CLIENT) {
+				Minecraft.getMinecraft().crashed(report);
+				Minecraft.getMinecraft().displayCrashReport(report);
+			} else {
+				event.getModLog().error("Elementalsorcery初始化异常！", e);
+				throw e;
+			}
+		}
 	}
 
 	@EventHandler
-	public void init(FMLInitializationEvent event) {
+	public void init(FMLInitializationEvent event) throws Throwable {
 		proxy.init(event);
 	}
 
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
+	public void postInit(FMLPostInitializationEvent event) throws Throwable{
 		proxy.postInit(event);
 	}
 
@@ -74,8 +87,7 @@ public class ElementalSorcery {
 	}
 
 	public static NBTTagCompound getPlayerData(String username) {
-		if (!userData.containsKey(username))
-			userData.put(username, new NBTTagCompound());
+		if (!userData.containsKey(username)) userData.put(username, new NBTTagCompound());
 		return userData.get(username);
 	}
 

@@ -68,8 +68,7 @@ public class CommandES extends CommandBase {
 		} else if (args.length == 2) {
 			if (args[0].equals("build")) {
 				// Set<String> names = BuildingLib.instance.getBuildingsName();
-				// return CommandBase.getListOfStringsMatchingLastWord(args,
-				// names);
+				return CommandBase.getListOfStringsMatchingLastWord(args, "it");
 			} else if (args[0].equals("page")) {
 				Set<String> set = Pages.getPageIds();
 				String[] names = new String[set.size()];

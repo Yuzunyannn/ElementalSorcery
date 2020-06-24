@@ -10,6 +10,7 @@ public class OreDictionaryRegistries {
 		ESObjects.Items ITEMS = ESInitInstance.ITEMS;
 		ESObjects.Blocks BLOCKS = ESInitInstance.BLOCKS;
 		OreDictionary.registerOre("kyanite", ITEMS.KYANITE);
+		OreDictionary.registerOre("oreKyanite", BLOCKS.KYANITE_ORE);
 		OreDictionary.registerOre("blockKyanite", BLOCKS.KYANITE_BLOCK);
 		OreDictionary.registerOre("plankWood", new ItemStack(BLOCKS.ELF_PLANK, 1, OreDictionary.WILDCARD_VALUE));
 		OreDictionary.registerOre("logWood", new ItemStack(BLOCKS.ELF_PLANK, 1, OreDictionary.WILDCARD_VALUE));

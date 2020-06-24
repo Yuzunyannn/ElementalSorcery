@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.container.gui;
 
 import java.util.List;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.resources.I18n;
@@ -67,19 +68,15 @@ public class GuiSupremeCraftingTable extends GuiNormal<ContainerSupremeCraftingT
 			break;
 		}
 		List<ElementStack> list = container.tileEntity.getNeedElements();
-		if (list == null)
-			return;
+		if (list == null) return;
 		RenderHelper.disableStandardItemLighting();
-		this.drawElements(offsetX, offsetY, list);
+		this.drawElements(mc, offsetX, offsetY, list, 8, (EventClient.tick / 40) % 8);
 	}
 
-	private int cycle = 0;
-
-	private void drawElements(int offsetX, int offsetY, List<ElementStack> list) {
-		if (list.size() > 8) {
+	public static void drawElements(Minecraft mc, int offsetX, int offsetY, List<ElementStack> list, int size,
+			int cycle) {
+		if (list.size() > size) {
 			int length = list.size();
-			if (EventClient.tick % 40 == 0)
-				cycle = (cycle + 1) % 8;
 			for (int i = 0; i < 8; i++) {
 				ElementStack estack = list.get((cycle + i) % length);
 				int x;

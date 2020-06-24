@@ -47,6 +47,7 @@ public class TileMDMagiclization extends TileMDBase implements ITickable {
 		this.magicShrink(need);
 		this.magic.grow(estack);
 		inventory.saveState(stack);
+		this.markDirty();
 	}
 
 	// 获取仓库里，第一个不是空的元素

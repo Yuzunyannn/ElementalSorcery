@@ -5,8 +5,11 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.DyeUtils;
+import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 
@@ -15,6 +18,18 @@ public class RecipeColorRuler extends net.minecraftforge.registries.IForgeRegist
 
 	final ItemStack output = new ItemStack(ESInitInstance.ITEMS.MAGIC_RULER);
 	final Item wantItem = ESInitInstance.ITEMS.MAGIC_RULER;
+	final NonNullList<Ingredient> ingredient = NonNullList.create();
+
+	public RecipeColorRuler() {
+		ingredient.add(Ingredient.fromItems(ESInitInstance.ITEMS.MAGIC_RULER));
+		NonNullList<ItemStack> list = OreDictionary.getOres("dye");
+		ingredient.add(Ingredient.fromStacks(list.toArray(new ItemStack[list.size()])));
+	}
+
+	@Override
+	public NonNullList<Ingredient> getIngredients() {
+		return ingredient;
+	}
 
 	@Override
 	public boolean matches(InventoryCrafting inv, World worldIn) {
@@ -22,18 +37,14 @@ public class RecipeColorRuler extends net.minecraftforge.registries.IForgeRegist
 		boolean hasColor = false;
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
-			if (stack.isEmpty())
-				continue;
+			if (stack.isEmpty()) continue;
 			if (stack.getItem() == wantItem) {
-				if (hasWant)
-					return false;
+				if (hasWant) return false;
 				hasWant = true;
 			} else if (DyeUtils.isDye(stack)) {
-				if (hasColor)
-					return false;
+				if (hasColor) return false;
 				hasColor = true;
-			} else
-				return false;
+			} else return false;
 
 		}
 		return hasWant && hasColor;
@@ -59,11 +70,8 @@ public class RecipeColorRuler extends net.minecraftforge.registries.IForgeRegist
 	private EnumDyeColor findColor(InventoryCrafting inv) {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
-			if (stack.isEmpty())
-				continue;
-			if (DyeUtils.isDye(stack)) {
-				return EnumDyeColor.byMetadata(DyeUtils.metaFromStack(stack).getAsInt());
-			}
+			if (stack.isEmpty()) continue;
+			if (DyeUtils.isDye(stack)) { return EnumDyeColor.byMetadata(DyeUtils.metaFromStack(stack).getAsInt()); }
 		}
 		return null;
 	}
@@ -71,11 +79,8 @@ public class RecipeColorRuler extends net.minecraftforge.registries.IForgeRegist
 	private ItemStack findWant(InventoryCrafting inv) {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
-			if (stack.isEmpty())
-				continue;
-			if (stack.getItem() == wantItem) {
-				return stack;
-			}
+			if (stack.isEmpty()) continue;
+			if (stack.getItem() == wantItem) { return stack; }
 		}
 		return ItemStack.EMPTY;
 	}

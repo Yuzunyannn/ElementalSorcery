@@ -3,8 +3,13 @@ package yuzunyannn.elementalsorcery.tile.md;
 import javax.annotation.Nonnull;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.ElementHelper;
+import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 
 public class TileMDMagicSolidify extends TileMDBase implements ITickable {
@@ -15,6 +20,8 @@ public class TileMDMagicSolidify extends TileMDBase implements ITickable {
 			@Override
 			@Nonnull
 			public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+				if (stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, EnumFacing.NORTH))
+					return super.insertItem(slot, stack, simulate);
 				return stack;
 			}
 		};
@@ -25,11 +32,26 @@ public class TileMDMagicSolidify extends TileMDBase implements ITickable {
 
 	@Override
 	public void update() {
-		//this.autoTransfer();
-		if (this.world.isRemote)
+		// this.autoTransfer();
+		if (this.world.isRemote) return;
+		if (tick % 10 != 0) return;
+		if (this.magic.isEmpty()) return;
+		ItemStack stack = inventory.getStackInSlot(0);
+		if (stack.isEmpty() || stack.getItem() == MAGIC_STONE.getItem() || stack.getItem() == MAGIC_PIECE.getItem()) {
+			this.solidify();
 			return;
-		if (this.magic.isEmpty())
-			return;
+		}
+		IElementInventory inventory = ElementHelper.getElementInventory(stack);
+		if (inventory == null) return;
+		if (ElementHelper.canInsert(inventory) == false) return;
+		ElementStack estack = this.magic.splitStack(Math.min(10, this.magic.getCount()));
+		if (inventory.insertElement(estack, false)) {
+			inventory.saveState(stack);
+			this.markDirty();
+		} else this.magic.grow(estack);
+	}
+
+	private void solidify() {
 		if (this.magic.getPower() >= 25) {
 			if (this.magic.getCount() >= 100) {
 				this.magic.shrink(100);

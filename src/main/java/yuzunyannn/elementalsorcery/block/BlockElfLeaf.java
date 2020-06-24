@@ -19,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ColorizerFoliage;
@@ -28,9 +29,11 @@ import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
 public class BlockElfLeaf extends BlockLeaves {
 
+	@SideOnly(Side.CLIENT)
 	public IBlockColor getBlockColor() {
 		return new IBlockColor() {
 			public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos,
@@ -45,8 +48,7 @@ public class BlockElfLeaf extends BlockLeaves {
 				do {
 					pos = pos.down();
 					Block block = worldIn.getBlockState(pos).getBlock();
-					if (block == BlockElfLeaf.this)
-						count++;
+					if (block == BlockElfLeaf.this) count++;
 					else {
 						miss--;
 						if (miss <= 0) break;
@@ -67,12 +69,36 @@ public class BlockElfLeaf extends BlockLeaves {
 		Blocks.FIRE.setFireInfo(this, 30, 60);
 		this.setUnlocalizedName("elfLeaf");
 		this.leavesFancy = true;
-		this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true)).withProperty(DECAYABLE, Boolean.valueOf(true)));
+		this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true))
+				.withProperty(DECAYABLE, Boolean.valueOf(true)));
 	}
 
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		super.updateTick(worldIn, pos, state, rand);
+		if (worldIn.isRemote) return;
+		if (!state.getValue(BlockLeaves.CHECK_DECAY)) {
+			if (Math.random() < 0.5) return;
+			WorldTime time = new WorldTime(worldIn);
+			if (!time.at(WorldTime.Period.MORNING)) return;
+			// 检测下方是否满足
+			BlockPos dPos = pos.down();
+			if (!worldIn.isAirBlock(dPos)) return;
+			for (EnumFacing facing : EnumFacing.HORIZONTALS) if (!worldIn.isAirBlock(dPos.offset(facing))) return;
+			for (int i = 0; i < 8; i++) {
+				if (!worldIn.isAirBlock(dPos)) return;
+				dPos = dPos.down();
+			}
+			// 检测上方是否有两个叶子
+			BlockPos uPos = pos.up();
+			for (int i = 0; i < 2; i++) {
+				if (worldIn.getBlockState(uPos) != state) return;
+				uPos = uPos.up();
+			}
+			// 生成
+			final IBlockState fruitState = ESInitInstance.BLOCKS.ELF_FRUIT.getDefaultState();
+			worldIn.setBlockState(pos.down(), fruitState);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -100,10 +126,8 @@ public class BlockElfLeaf extends BlockLeaves {
 	@Override
 	public void harvestBlock(World worldIn, EntityPlayer player, BlockPos pos, IBlockState state,
 			@Nullable TileEntity te, ItemStack stack) {
-		if (!worldIn.isRemote && stack.getItem() == Items.SHEARS)
-			player.addStat(StatList.getBlockStats(this));
-		else
-			super.harvestBlock(worldIn, player, pos, state, te, stack);
+		if (!worldIn.isRemote && stack.getItem() == Items.SHEARS) player.addStat(StatList.getBlockStats(this));
+		else super.harvestBlock(worldIn, player, pos, state, te, stack);
 	}
 
 	@Override
@@ -113,7 +137,8 @@ public class BlockElfLeaf extends BlockLeaves {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(DECAYABLE, Boolean.valueOf((meta & 4) == 0)).withProperty(CHECK_DECAY, Boolean.valueOf((meta & 8) > 0));
+		return this.getDefaultState().withProperty(DECAYABLE, Boolean.valueOf((meta & 4) == 0))
+				.withProperty(CHECK_DECAY, Boolean.valueOf((meta & 8) > 0));
 	}
 
 	@Override

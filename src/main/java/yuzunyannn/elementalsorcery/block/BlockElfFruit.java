@@ -22,6 +22,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
@@ -114,20 +116,19 @@ public class BlockElfFruit extends Block implements Mapper {
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,
 			int fortune) {
 		// 满成长后才会掉落
-		if (state.getValue(STAGE) >= MAX_STATE)
-			super.getDrops(drops, world, pos, state, fortune);
+		if (state.getValue(STAGE) >= MAX_STATE) super.getDrops(drops, world, pos, state, fortune);
 	}
 
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+		if (worldIn.isRemote) return;
 		int growState = state.getValue(STAGE);
 		if (growState < MAX_STATE) {
 			// 检测上面是否为树叶
-			if (worldIn.getBlockState(pos.up()).getBlock() != ESInitInstance.BLOCKS.ELF_LEAF)
-				return;
+			if (worldIn.getBlockState(pos.up()).getBlock() != ESInitInstance.BLOCKS.ELF_LEAF) return;
+			if (!worldIn.getBlockState(pos.up()).getValue(BlockElfLeaf.DECAYABLE)) return;
 			WorldTime time = new WorldTime(worldIn);
-			if (!time.at(WorldTime.Period.DAY))
-				return;
+			if (!time.at(WorldTime.Period.DAY)) return;
 			worldIn.setBlockState(pos, state.withProperty(STAGE, growState + 1));
 		} else {
 			this.falling(worldIn, pos, state, true);
@@ -139,8 +140,7 @@ public class BlockElfFruit extends Block implements Mapper {
 	}
 
 	protected void falling(World world, BlockPos pos, IBlockState state, boolean force) {
-		if (world.isRemote)
-			return;
+		if (world.isRemote) return;
 		if (world.isAirBlock(pos.down()) && (force || !world.isBlockFullCube(pos.up()))) {
 			Vec3d v3 = state.getOffset(world, pos);
 			EntityFallingBlock falling = new EntityFallingBlock(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
@@ -150,6 +150,7 @@ public class BlockElfFruit extends Block implements Mapper {
 	}
 
 	// 颜色变化
+	@SideOnly(Side.CLIENT)
 	public IBlockColor getBlockColor() {
 		return new IBlockColor() {
 			public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos,

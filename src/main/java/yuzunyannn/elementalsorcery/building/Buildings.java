@@ -5,14 +5,18 @@ import java.io.IOException;
 import net.minecraft.block.BlockQuartz;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 
 public class Buildings {
 	static public Building INFUSION;
 	static public Building ABSORB_BOX;
+	static public Building DECONSTRUCT_BOX;
 	static public Building LARGE_ALTAR;
 	static public Building SPELLBOOK_ALTAR;
 	static public Building ELEMENT_CRAFTING_ALTAR;
@@ -21,25 +25,29 @@ public class Buildings {
 	static public Building ANALYSIS_ALTAR;
 
 	static public void init() throws IOException {
-		INFUSION = new BuildingInherent(ElementalSorcery.data.getNBTForResourceWithException("structures/infusion.nbt"),
-				"infusion");
-		ABSORB_BOX = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/absorb_box.nbt"), "absorbBox");
-		LARGE_ALTAR = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/large_altar.nbt"), "largeAltar");
-		SPELLBOOK_ALTAR = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/spellbook_altar.nbt"),
-				"spellbookAltar");
-		ELEMENT_CRAFTING_ALTAR = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/element_crafting_altar.nbt"),
-				"elementCraftingAltar");
-		DECONSTRUCT_ALTAR = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/deconstruct_altar.nbt"),
-				"deconstructAltar");
-		BUILING_ALTAR = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/builing_altar.nbt"), "builingAltar");
-		ANALYSIS_ALTAR = new BuildingInherent(
-				ElementalSorcery.data.getNBTForResourceWithException("structures/analysis_altar.nbt"), "analysisAltar");
+		NBTTagCompound nbt = null;
+		ESData data = ElementalSorcery.data;
+
+		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/infusion.nbt"));
+		INFUSION = new BuildingInherent(nbt, "infusion");
+		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/absorb_box.nbt"));
+		ABSORB_BOX = new BuildingInherent(nbt, "absorbBox");
+		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/deconstruct_box.nbt"));
+		DECONSTRUCT_BOX = new BuildingInherent(nbt, "deconstructBox");
+
+		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/large_altar.nbt"));
+		LARGE_ALTAR = new BuildingInherent(nbt, "largeAltar");
+		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/spellbook_altar.nbt"));
+		SPELLBOOK_ALTAR = new BuildingInherent(nbt, "spellbookAltar");
+		nbt = data.getNBTFromResource(
+				new ResourceLocation(ElementalSorcery.MODID, "structures/element_crafting_altar.nbt"));
+		ELEMENT_CRAFTING_ALTAR = new BuildingInherent(nbt, "elementCraftingAltar");
+		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/deconstruct_altar.nbt"));
+		DECONSTRUCT_ALTAR = new BuildingInherent(nbt, "deconstructAltar");
+		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/builing_altar.nbt"));
+		BUILING_ALTAR = new BuildingInherent(nbt, "builingAltar");
+		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/analysis_altar.nbt"));
+		ANALYSIS_ALTAR = new BuildingInherent(nbt, "analysisAltar");
 	}
 
 	private static void horizontalS(IBlockState state, Building building, int d, int y) {
@@ -89,16 +97,14 @@ public class Buildings {
 		// 竖纹
 		state = ESInitInstance.BLOCKS.ESTONE.getDefaultState().withProperty(BlockQuartz.VARIANT,
 				BlockQuartz.EnumType.LINES_X);
-		for (int i = -1; i <= 1; i++)
-			horizontalSZ(state, altar, i, 0, 2);
+		for (int i = -1; i <= 1; i++) horizontalSZ(state, altar, i, 0, 2);
 		altar.add(state, new BlockPos(1, 0, 1));
 		altar.add(state, new BlockPos(0, 0, 1));
 		altar.add(state, new BlockPos(0, 0, -1));
 		altar.add(state, new BlockPos(-1, 0, -1));
 		state = ESInitInstance.BLOCKS.ESTONE.getDefaultState().withProperty(BlockQuartz.VARIANT,
 				BlockQuartz.EnumType.LINES_Z);
-		for (int i = -1; i <= 1; i++)
-			horizontalSX(state, altar, 2, 0, i);
+		for (int i = -1; i <= 1; i++) horizontalSX(state, altar, 2, 0, i);
 		altar.add(state, new BlockPos(-1, 0, 1));
 		altar.add(state, new BlockPos(-1, 0, 0));
 		altar.add(state, new BlockPos(1, 0, 0));
@@ -114,12 +120,9 @@ public class Buildings {
 
 		horizontalS(state, altar, 1, 0);
 		horizontalS(state, altar, 2, 0);
-		for (int i = 1; i <= 3; i++)
-			centralS(state, altar, i, 0, 1);
-		for (int i = 1; i <= 3; i++)
-			centralS(state, altar, i, 0, 2);
-		for (int i = 1; i <= 2; i++)
-			centralS(state, altar, i, 0, 3);
+		for (int i = 1; i <= 3; i++) centralS(state, altar, i, 0, 1);
+		for (int i = 1; i <= 3; i++) centralS(state, altar, i, 0, 2);
+		for (int i = 1; i <= 2; i++) centralS(state, altar, i, 0, 3);
 		altar.add(state, new BlockPos(0, 0, 0));
 		// 錾制
 		state = ESInitInstance.BLOCKS.ESTONE.getDefaultState().withProperty(BlockQuartz.VARIANT,
@@ -133,8 +136,7 @@ public class Buildings {
 		// 竖纹
 		state = ESInitInstance.BLOCKS.ESTONE.getDefaultState().withProperty(BlockQuartz.VARIANT,
 				BlockQuartz.EnumType.LINES_Y);
-		for (int i = 0; i <= 2; i++)
-			centralS(state, altar, 3, i, 3);
+		for (int i = 0; i <= 2; i++) centralS(state, altar, 3, i, 3);
 		return altar;
 	}
 
@@ -156,12 +158,10 @@ public class Buildings {
 		centralS(state, altar, 2, 1, 2);
 		state = ESInitInstance.BLOCKS.ESTONE.getDefaultState().withProperty(BlockQuartz.VARIANT,
 				BlockQuartz.EnumType.LINES_X);
-		for (int i = -1; i <= 1; i++)
-			horizontalSZ(state, altar, i, 0, 2);
+		for (int i = -1; i <= 1; i++) horizontalSZ(state, altar, i, 0, 2);
 		state = ESInitInstance.BLOCKS.ESTONE.getDefaultState().withProperty(BlockQuartz.VARIANT,
 				BlockQuartz.EnumType.LINES_Z);
-		for (int i = -1; i <= 1; i++)
-			horizontalSX(state, altar, 2, 0, i);
+		for (int i = -1; i <= 1; i++) horizontalSX(state, altar, 2, 0, i);
 		// 普通方块
 		state = ESInitInstance.BLOCKS.ESTONE.getDefaultState();
 		centralS(state, altar, 1, 0, 1);
@@ -188,8 +188,7 @@ public class Buildings {
 		// 台阶
 		state = ESInitInstance.BLOCKS.ESTONE_SLAB.getDefaultState();
 		centralS(state, altar, 1, 0, 1);
-		for (int i = 1; i <= 9; i++)
-			horizontalS(state, altar, i, 0);
+		for (int i = 1; i <= 9; i++) horizontalS(state, altar, i, 0);
 		centralS(state, altar, 1, 0, 2);
 		centralS(state, altar, 2, 0, 1);
 		// 楼梯
@@ -198,21 +197,17 @@ public class Buildings {
 
 		state = ESInitInstance.BLOCKS.ESTONE_STAIRS.getDefaultState().withProperty(BlockStairs.FACING,
 				EnumFacing.SOUTH);
-		for (int i = 5; i <= 9; i++)
-			horizontalSX(state, altar, i, 0, 1);
+		for (int i = 5; i <= 9; i++) horizontalSX(state, altar, i, 0, 1);
 
 		state = ESInitInstance.BLOCKS.ESTONE_STAIRS.getDefaultState().withProperty(BlockStairs.FACING,
 				EnumFacing.NORTH);
-		for (int i = 5; i <= 9; i++)
-			horizontalSX(state, altar, i, 0, -1);
+		for (int i = 5; i <= 9; i++) horizontalSX(state, altar, i, 0, -1);
 
 		state = ESInitInstance.BLOCKS.ESTONE_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.EAST);
-		for (int i = 5; i <= 9; i++)
-			horizontalSZ(state, altar, 1, 0, i);
+		for (int i = 5; i <= 9; i++) horizontalSZ(state, altar, 1, 0, i);
 
 		state = ESInitInstance.BLOCKS.ESTONE_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST);
-		for (int i = 5; i <= 9; i++)
-			horizontalSZ(state, altar, -1, 0, i);
+		for (int i = 5; i <= 9; i++) horizontalSZ(state, altar, -1, 0, i);
 
 		// 普通方块
 		state = ESInitInstance.BLOCKS.ESTONE.getDefaultState();
@@ -280,8 +275,7 @@ public class Buildings {
 		// 竖纹
 		state = ESInitInstance.BLOCKS.ESTONE.getDefaultState().withProperty(BlockQuartz.VARIANT,
 				BlockQuartz.EnumType.LINES_Y);
-		for (int i = 4; i <= 6; i++)
-			centralS(state, altar, 2, i, 2);
+		for (int i = 4; i <= 6; i++) centralS(state, altar, 2, i, 2);
 		state = ESInitInstance.BLOCKS.ESTONE.getDefaultState().withProperty(BlockQuartz.VARIANT,
 				BlockQuartz.EnumType.LINES_X);
 		centralS(state, altar, 3, 5, 5);
@@ -294,18 +288,14 @@ public class Buildings {
 	private static void addlt(IBlockState state, Building building, int si, int max, int y, int bj) {
 		state = ESInitInstance.BLOCKS.ESTONE_STAIRS.getDefaultState().withProperty(BlockStairs.FACING,
 				EnumFacing.NORTH);
-		for (int i = si; i <= max; i++)
-			horizontalSX(state, building, i, y, bj);
+		for (int i = si; i <= max; i++) horizontalSX(state, building, i, y, bj);
 		state = ESInitInstance.BLOCKS.ESTONE_STAIRS.getDefaultState().withProperty(BlockStairs.FACING,
 				EnumFacing.SOUTH);
-		for (int i = si; i <= max; i++)
-			horizontalSX(state, building, i, y, -bj);
+		for (int i = si; i <= max; i++) horizontalSX(state, building, i, y, -bj);
 		state = ESInitInstance.BLOCKS.ESTONE_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.EAST);
-		for (int i = si; i <= max; i++)
-			horizontalSZ(state, building, -bj, y, i);
+		for (int i = si; i <= max; i++) horizontalSZ(state, building, -bj, y, i);
 		state = ESInitInstance.BLOCKS.ESTONE_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.WEST);
-		for (int i = si; i <= max; i++)
-			horizontalSZ(state, building, bj, y, i);
+		for (int i = si; i <= max; i++) horizontalSZ(state, building, bj, y, i);
 	}
 
 	private static void addltzj(IBlockState state, Building building, int y, int a) {

@@ -3,46 +3,35 @@ package yuzunyannn.elementalsorcery.event;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 import org.apache.commons.compress.utils.IOUtils;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.IResource;
-import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraft.world.World;
 import net.minecraft.world.gen.structure.StructureComponent;
 import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
@@ -92,28 +81,24 @@ public class ESTestAndDebug {
 
 	}
 
+	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void drawDebugTools(ItemTooltipEvent event) {
-		ItemStack stack = event.getItemStack();
-		Block block = Block.getBlockFromItem(stack.getItem());
-		EntityPlayer entity = event.getEntityPlayer();
-		if (entity == null) return;
-		World world = event.getEntityPlayer().getEntityWorld();
-		if (!world.isRemote) return;
-		BlockPos pos = event.getEntityPlayer().getPosition();
-		List<String> list = event.getToolTip();
-		list.add(TextFormatting.AQUA + "以下是debug信息：");
-		list.add(TextFormatting.AQUA + stack.getItem().getRegistryName().toString());
-		// list.add(TextFormatting.AQUA + ":" + Minecraft.getMinecraft().gameSettings);
-		if (block != Blocks.AIR) {
-			IBlockState state = block.getStateFromMeta(stack.getMetadata());
-			list.add(TextFormatting.AQUA + "type:block");
-			list.add(TextFormatting.AQUA + "hardness:" + block.getBlockHardness(state, world, pos));
-		} else {
-			list.add(TextFormatting.AQUA + "type:item");
-		}
-
-
+		/*
+		 * ItemStack stack = event.getItemStack(); Block block =
+		 * Block.getBlockFromItem(stack.getItem()); EntityPlayer entity =
+		 * event.getEntityPlayer(); if (entity == null) return; World world =
+		 * event.getEntityPlayer().getEntityWorld(); if (!world.isRemote) return;
+		 * BlockPos pos = event.getEntityPlayer().getPosition(); List<String> list =
+		 * event.getToolTip(); list.add(TextFormatting.AQUA + "以下是debug信息：");
+		 * list.add(TextFormatting.AQUA + stack.getItem().getRegistryName().toString());
+		 * // list.add(TextFormatting.AQUA + ":" +
+		 * Minecraft.getMinecraft().gameSettings); if (block != Blocks.AIR) {
+		 * IBlockState state = block.getStateFromMeta(stack.getMetadata());
+		 * list.add(TextFormatting.AQUA + "type:block"); list.add(TextFormatting.AQUA +
+		 * "hardness:" + block.getBlockHardness(state, world, pos)); } else {
+		 * list.add(TextFormatting.AQUA + "type:item"); }
+		 */
 	}
 
 	public static class DebugCmd extends CommandBase {

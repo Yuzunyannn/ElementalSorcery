@@ -8,6 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -24,6 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ability.IAcceptMagic;
 import yuzunyannn.elementalsorcery.api.ability.IAcceptMagicPesky;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
@@ -65,7 +68,15 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 			}
 		}
 		if (nbt.hasKey("magic")) magic = new ElementStack(nbt.getCompoundTag("magic"));
-		if (nbt.hasKey("Inv") && this.inventory != null) this.inventory.deserializeNBT(nbt.getCompoundTag("Inv"));
+		if (nbt.hasKey("Inv") && this.inventory != null) {
+			int slot = this.inventory.getSlots();
+			this.inventory.deserializeNBT(nbt.getCompoundTag("Inv"));
+			// 扩容未保存上的情况
+			if (slot > this.inventory.getSlots()) {
+				ElementalSorcery.logger.warn(this.getClass() + "的inventory出现扩容现象！");
+				this.inventory = this.initItemStackHandler();
+			}
+		}
 	}
 
 	@Override
@@ -308,8 +319,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	/** 检查所有位置状态 */
 	public void checkAll() {
-		for (int i = 0; i < targets.length; i++)
-			this.find(EnumFacing.getFront(i), true);
+		for (int i = 0; i < targets.length; i++) this.find(EnumFacing.getFront(i), true);
 	}
 
 	/** 关闭所有火把 */
@@ -375,6 +385,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		rest = Math.min(magic.getCount(), rest);
 		if (this.magic.isEmpty()) this.magic = magic.splitStack(rest);
 		else this.magic.grow(magic.splitStack(rest));
+		this.markDirty();
 		return magic;
 	}
 
@@ -542,6 +553,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	/** 容器自动发送fild数据 */
 	public void detectAndSendChanges(Container container, List<IContainerListener> listeners) {
+		if (fieldDatas.length < this.getFieldCount()) fieldDatas = new int[this.getFieldCount()];
 		for (int i = 0; i < this.getFieldCount(); i++) {
 			if (this.getField(i) != fieldDatas[i]) {
 				fieldDatas[i] = this.getField(i);
@@ -555,8 +567,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	/** 检测所有并返回nbt */
 	protected NBTTagCompound detectAndGetUpdateNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		for (int i = 0; i < this.getFieldCount(); i++)
-			this.detectAndWriteToNBT(nbt, i);
+		for (int i = 0; i < this.getFieldCount(); i++) this.detectAndWriteToNBT(nbt, i);
 		return nbt.hasNoTags() ? null : nbt;
 	}
 
@@ -598,6 +609,17 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		for (int i = 0; i < this.getFieldCount(); i++) {
 			String key = Integer.toString(i);
 			if (tag.hasKey(key)) this.setField(i, tag.getInteger(key));
+		}
+		if (tag.hasKey("inv")) {
+			NBTTagList list = tag.getTagList("inv", 10);
+			for (NBTBase base : list) {
+				NBTTagCompound nbg = (NBTTagCompound) base;
+				int slot = nbg.getInteger("slot");
+				if (slot < 0 || slot >= inventory.getSlots()) continue;
+				ItemStack stack = new ItemStack(nbg.getCompoundTag("item"));
+				if (stack.isEmpty()) continue;
+				inventory.setStackInSlot(slot, stack);
+			}
 		}
 	}
 }

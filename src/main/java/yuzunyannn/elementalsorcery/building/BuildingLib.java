@@ -30,8 +30,7 @@ public class BuildingLib {
 
 	/** 添加建筑到lib */
 	void addBuildingLib(String key, Building building) {
-		if (mapLib.containsKey(key))
-			throw new IllegalArgumentException("The key has already exist!");
+		if (mapLib.containsKey(key)) throw new IllegalArgumentException("The key has already exist!");
 		building.setKeyName(key);
 		mapLib.put(key, building);
 	}
@@ -55,21 +54,16 @@ public class BuildingLib {
 
 	/** 获取建筑 */
 	public Building getBuilding(String key) {
-		if (mapSave.containsKey(key))
-			return mapSave.get(key).building;
-		if (mapLib.containsKey(key))
-			return mapLib.get(key);
+		if (mapSave.containsKey(key)) return mapSave.get(key).building;
+		if (mapLib.containsKey(key)) return mapLib.get(key);
 		return null;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public Building giveBuilding(String key) {
 		Building building = this.getBuilding(key);
-		if (building != null)
-			return building;
-		if (mapClient.containsKey(key)) {
-			return mapClient.get(key);
-		}
+		if (building != null) return building;
+		if (mapClient.containsKey(key)) { return mapClient.get(key); }
 		mapClient.put(key, new Building());
 		return mapClient.get(key);
 	}
@@ -103,6 +97,7 @@ public class BuildingLib {
 	public static final String ANALYSIS_ALTAR = "analysis_altar";
 	public static final String INFUSION = "infusion";
 	public static final String ABSORB_BOX = "absorb_box";
+	public static final String DECONSTRUCT_BOX = "deconstruct_box";
 
 	public static void registerAll() throws IOException {
 		Buildings.init();
@@ -114,6 +109,7 @@ public class BuildingLib {
 		instance.addBuildingLib(ANALYSIS_ALTAR, Buildings.ANALYSIS_ALTAR);
 		instance.addBuildingLib(INFUSION, Buildings.INFUSION);
 		instance.addBuildingLib(ABSORB_BOX, Buildings.ABSORB_BOX);
+		instance.addBuildingLib(DECONSTRUCT_BOX, Buildings.DECONSTRUCT_BOX);
 		BuildingLib.loadBuilding();
 	}
 

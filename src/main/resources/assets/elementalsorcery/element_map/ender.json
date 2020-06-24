@@ -1,0 +1,42 @@
+{
+    "maps": [
+        {
+            "item": "minecraft:ender_pearl",
+            "element": {
+                "id": "ender",
+                "size": 75,
+                "power": 650
+            }
+        },
+        {
+            "item": "minecraft:ender_eye",
+            "element": [
+                {
+                    "id": "ender",
+                    "size": 75,
+                    "power": 650
+                },
+                {
+                    "id": "fire",
+                    "size": 25,
+                    "power": 450
+                }
+            ]
+        },
+        {
+            "item": "minecraft:end_stone",
+            "element": [
+                {
+                    "id": "ender",
+                    "size": 1,
+                    "power": 20
+                },
+                {
+                    "id": "earth",
+                    "size": 2,
+                    "power": 10
+                }
+            ]
+        }
+    ]
+}

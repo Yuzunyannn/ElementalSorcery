@@ -77,6 +77,7 @@ public class TileMDAbsorbBox extends TileMDBase implements ITickable {
 						inventory.saveState(stack);
 						itemEinv.getStackInSlot(i).shrink(1);
 						itemEinv.saveState(itemStack);
+						this.markDirty();
 					}
 					break;
 				}

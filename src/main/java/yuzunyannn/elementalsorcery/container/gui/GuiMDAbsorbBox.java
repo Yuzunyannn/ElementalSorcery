@@ -18,7 +18,7 @@ public class GuiMDAbsorbBox extends GuiMDBase<ContainerMDAbsorbBox> {
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		this.drawDefault(offsetX, offsetY, 50, 10, partialTicks);
-		GuiMDRubbleRepair.drawMagicSign(this, offsetX + 6, offsetY + 31, 25, 15);
+		GuiMDRubbleRepair.drawMagicSign(offsetX + 6, offsetY + 31, 25, 15);
 		this.drawTexturedModalRect(offsetX + 79, offsetY + 30, 7, 83, 18, 18);
 	}
 

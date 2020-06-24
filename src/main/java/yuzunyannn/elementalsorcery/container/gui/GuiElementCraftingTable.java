@@ -53,43 +53,11 @@ public class GuiElementCraftingTable extends GuiNormal<ContainerElementCraftingT
 			this.drawTexturedModalRect(offsetX + 142, offsetY + 111, 3, 5, 36, 36);
 		}
 		ItemStack stack = container.tileEntity.getOutput();
-		if (stack.isEmpty())
-			return;
+		if (stack.isEmpty()) return;
 		List<ElementStack> list = container.tileEntity.getNeedElements();
-		if (list == null)
-			return;
+		if (list == null) return;
 		RenderHelper.disableStandardItemLighting();
-		if (list.size() > 8) {
-			int length = list.size();
-			if (EventClient.tick % 40 == 0)
-				cycle = (cycle + 1) % 8;
-			for (int i = 0; i < 8; i++) {
-				ElementStack estack = list.get((cycle + i) % length);
-				int x;
-				int y = offsetY + 75;
-				if (i < 3) {
-					x = offsetX + 16 + i * 18;
-				} else {
-					x = offsetX + 142 + (i - 3) * 18;
-				}
-				estack.getElement().drawElemntIconInGUI(estack, x + 1, y + 1, mc);
-			}
-		} else {
-			byte left = 0;
-			byte right = 0;
-			for (ElementStack estack : list) {
-				int x;
-				int y = offsetY + 75;
-				if (left < right) {
-					x = offsetX + 70 - 18 * left;
-					left++;
-				} else {
-					x = offsetX + 142 + 18 * right;
-					right++;
-				}
-				estack.getElement().drawElemntIconInGUI(estack, x + 1, y + 1, mc);
-			}
-		}
+		GuiSupremeCraftingTable.drawElements(mc, offsetX, offsetY, list, 8, (EventClient.tick / 40) % 8);
 
 	}
 

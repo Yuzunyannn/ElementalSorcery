@@ -1,0 +1,130 @@
+{
+    "maps": [
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "oreCoal"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 20,
+                    "power": 30
+                },
+                {
+                    "id": "wood",
+                    "size": 15,
+                    "power": 100
+                }
+            ]
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "oreIron"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 20,
+                    "power": 30
+                },
+                {
+                    "id": "metal",
+                    "size": 21,
+                    "power": 220
+                }
+            ]
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "ingotIron"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 8,
+                    "power": 200
+                }
+            ]
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "oreGold"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 20,
+                    "power": 30
+                },
+                {
+                    "id": "metal",
+                    "size": 22,
+                    "power": 250
+                }
+            ]
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "ingotGold"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 20,
+                    "power": 30
+                },
+                {
+                    "id": "metal",
+                    "size": 9,
+                    "power": 220
+                }
+            ]
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "oreKyanite"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 20,
+                    "power": 80
+                },
+                {
+                    "id": "metal",
+                    "size": 4,
+                    "power": 150
+                },
+                {
+                    "id": "magic",
+                    "size": 20,
+                    "power": 80
+                }
+            ]
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "kyanite"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 2,
+                    "power": 120
+                },
+                {
+                    "id": "magic",
+                    "size": 10,
+                    "power": 50
+                }
+            ]
+        }
+    ]
+}

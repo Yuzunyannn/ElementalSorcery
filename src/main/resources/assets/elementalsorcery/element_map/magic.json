@@ -1,0 +1,27 @@
+{
+    "maps": [
+        {
+            "item": "elementalsorcery:magic_stone",
+            "element": [
+                {
+                    "id": "magic",
+                    "size": 100,
+                    "power": 100
+                },
+                {
+                    "id": "earth",
+                    "size": 10,
+                    "power": 20
+                }
+            ]
+        },
+        {
+            "item": "elementalsorcery:magic_piece",
+            "element": {
+                "id": "magic",
+                "size": 25,
+                "power": 80
+            }
+        }
+    ]
+}

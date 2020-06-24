@@ -1,0 +1,25 @@
+{
+    "maps": [
+        {
+            "item": [
+                "minecraft:stone",
+                "minecraft:cobblestone",
+                "minecraft:grass",
+                "minecraft:dirt"
+            ],
+            "element": {
+                "id": "earth",
+                "size": 1,
+                "power": 10
+            }
+        },
+        {
+            "item": "minecraft:sand",
+            "element": {
+                "id": "earth",
+                "size": 2,
+                "power": 5
+            }
+        }
+    ]
+}

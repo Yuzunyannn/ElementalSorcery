@@ -1,0 +1,20 @@
+{
+    "maps": [
+        {
+            "item": "minecraft:book",
+            "element": {
+                "id": "knowledge",
+                "size": 10,
+                "power": 20
+            }
+        },
+        {
+            "item": "elementalsorcery:spellbook_enchantment",
+            "element": {
+                "id": "knowledge",
+                "size": 100,
+                "power": 200
+            }
+        }
+    ]
+}

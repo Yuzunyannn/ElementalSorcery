@@ -1,11 +1,15 @@
 package yuzunyannn.elementalsorcery.tile.md;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.block.BlocksAStone;
@@ -13,6 +17,51 @@ import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.render.particle.FirwrokShap;
 
 public class TileMDRubbleRepair extends TileMDBase implements ITickable {
+
+	/** 修复合成表 */
+	static public class Recipe {
+		ItemStack input = ItemStack.EMPTY;
+		ItemStack output = ItemStack.EMPTY;
+		int cost;
+
+		public ItemStack getInput() {
+			return input;
+		}
+
+		public ItemStack getOutput() {
+			return output;
+		}
+
+		public int getCost() {
+			return cost;
+		}
+	}
+
+	static final private List<Recipe> recipes = new ArrayList<>();
+
+	public static List<Recipe> getRecipes() {
+		return recipes;
+	}
+
+	static public void addRecipe(Block input, Block output, int cost) {
+		addRecipe(new ItemStack(input), new ItemStack(output), cost);
+	}
+
+	static public void addRecipe(ItemStack input, ItemStack output, int cost) {
+		if (input.isEmpty() || output.isEmpty()) return;
+		Recipe r = new Recipe();
+		r.input = input;
+		r.output = output;
+		r.cost = Math.max(1, cost);
+		recipes.add(r);
+	}
+
+	static public void init() {
+		addRecipe(Blocks.COBBLESTONE, Blocks.STONE, 1);
+		addRecipe(new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, BlocksAStone.EnumType.FRAGMENTED.ordinal()),
+				new ItemStack(ESInitInstance.BLOCKS.ASTONE), 10);
+		addRecipe(new ItemStack(Blocks.STONEBRICK, 1, 2), new ItemStack(Blocks.STONEBRICK), 1);
+	}
 
 	/** 完成度 */
 	protected int complete;
@@ -88,7 +137,6 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 			break;
 		case 2:
 			isStart = value == 0 ? false : true;
-			this.setStack(ESInitInstance.BLOCKS.ASTONE);
 			break;
 		case 3:
 			this.complete = value;
@@ -106,7 +154,20 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 	NBTTagCompound sndTemp = new NBTTagCompound();
 
 	protected void detectAndSendItemType() {
-		if (this.detectAndWriteToNBT(sndTemp, 2)) this.updateToClient(sndTemp);
+		ItemStack stack = inventory.getStackInSlot(0);
+		if (ItemStack.areItemsEqual(lastStack, stack)) {
+			if (this.detectAndWriteToNBT(sndTemp, 2)) this.updateToClient(sndTemp);
+		} else {
+			lastStack = stack;
+			NBTTagCompound nbt = new NBTTagCompound();
+			NBTTagList list = new NBTTagList();
+			NBTTagCompound temp = new NBTTagCompound();
+			temp.setInteger("slot", 0);
+			temp.setTag("item", lastStack.serializeNBT());
+			list.appendTag(temp);
+			nbt.setTag("inv", list);
+			 this.updateToClient(nbt);
+		}
 	}
 
 	@Override
@@ -117,25 +178,17 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 	/** 获取默认的修复结果 */
 	public static ItemStack getDefaultRepairResult(ItemStack stack) {
 		if (stack.isEmpty()) return ItemStack.EMPTY;
-		Block block = Block.getBlockFromItem(stack.getItem());
-		if (block == Blocks.AIR) return ItemStack.EMPTY;
-		else if (block == Blocks.COBBLESTONE) return new ItemStack(Blocks.STONE);
-		else if (block == ESInitInstance.BLOCKS.ASTONE
-				&& stack.getMetadata() == BlocksAStone.EnumType.FRAGMENTED.ordinal())
-			return new ItemStack(ESInitInstance.BLOCKS.ASTONE);
-		else if (block == Blocks.STONEBRICK && stack.getMetadata() == 2) return new ItemStack(Blocks.STONEBRICK);
+		for (Recipe r : recipes) {
+			if (ItemStack.areItemsEqual(stack, r.input)) return r.output;
+		}
 		return ItemStack.EMPTY;
 	}
 
-	/** 获取修复花费 */
+	/** 获取修复一个的花费 */
 	public static int getDefaultRepairCost(ItemStack stack) {
-		Block block = Block.getBlockFromItem(stack.getItem());
-		if (block == Blocks.AIR) return 0;
-		else if (block == Blocks.COBBLESTONE) return 1;
-		else if (block == ESInitInstance.BLOCKS.ASTONE
-				&& stack.getMetadata() == BlocksAStone.EnumType.FRAGMENTED.ordinal())
-			return 25;
-		else if (block == Blocks.STONEBRICK && stack.getMetadata() == 2) return 1;
+		for (Recipe r : recipes) {
+			if (ItemStack.areItemsEqual(stack, r.input)) return r.cost;
+		}
 		return 0;
 	}
 
@@ -152,7 +205,7 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 			}
 			return;
 		}
-		this.detectAndSendItemType();
+		if (tick % 5 == 0) this.detectAndSendItemType();
 		ItemStack stack = this.getStack();
 		ItemStack result = TileMDRubbleRepair.getDefaultRepairResult(stack);
 		if (result.isEmpty()) {

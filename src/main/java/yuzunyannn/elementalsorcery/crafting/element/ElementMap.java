@@ -1,16 +1,23 @@
 package yuzunyannn.elementalsorcery.crafting.element;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import yuzunyannn.elementalsorcery.ESData;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.ESRegister.IElementMap;
 import yuzunyannn.elementalsorcery.api.element.Element;
@@ -18,6 +25,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.IToElement;
 import yuzunyannn.elementalsorcery.api.util.ElementHelper;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.util.JsonHelper;
 
 public class ElementMap implements IElementMap {
 
@@ -115,7 +123,6 @@ public class ElementMap implements IElementMap {
 		for (ElementStack estack : estacks) {
 			if (estack == null) throw new IllegalArgumentException("estacks中存在null项目");
 			if (estack.isEmpty()) throw new IllegalArgumentException("estacks中存在empty项目");
-			if (estack.isMagic()) throw new IllegalArgumentException("estacks中存在magic项目");
 		}
 	}
 
@@ -203,6 +210,10 @@ public class ElementMap implements IElementMap {
 				return water;
 			} else if (stack.getItem() == Items.LAVA_BUCKET) { return fire; }
 			return null;
+			// IFluidHandlerItem fhi =
+			// stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY,
+			// null);
+			// if (fhi == null) return null;
 		}
 
 		@Override
@@ -212,8 +223,9 @@ public class ElementMap implements IElementMap {
 
 		@Override
 		public ItemStack remain(ItemStack stack) {
-			if (stack.getItem() == Items.WATER_BUCKET
-					|| stack.getItem() == Items.LAVA_BUCKET) { return new ItemStack(Items.BUCKET); }
+			if (stack.getItem() == Items.WATER_BUCKET || stack.getItem() == Items.LAVA_BUCKET) {
+				return new ItemStack(Items.BUCKET);
+			}
 			return ItemStack.EMPTY;
 		}
 
@@ -235,38 +247,40 @@ public class ElementMap implements IElementMap {
 		return new ElementStack(element, size, power);
 	}
 
-	static public void registerAll() {
-		ESObjects.Elements E = ESInitInstance.ELEMENTS;
+	static public void registerAll() throws IOException {
+		final ESObjects.Elements E = ESInitInstance.ELEMENTS;
+		final ESData data = ElementalSorcery.data;
+		final String MODID = ElementalSorcery.MODID;
+
+		// 自动扫描element_map文件夹读取数据
+		String[] mapJsonNames = data.getFilesFromResource(new ResourceLocation(MODID, "element_map"));
+		for (String path : mapJsonNames) {
+			JsonObject jobj = data.getJsonFromResource(new ResourceLocation(MODID, "element_map/" + path));
+			if (!JsonHelper.isArray(jobj, "maps")) continue;
+			JsonArray jarray = jobj.get("maps").getAsJsonArray();
+			// 读取所有映射
+			for (JsonElement je : jarray) {
+				if (!je.isJsonObject()) continue;
+				jobj = je.getAsJsonObject();
+				if (!jobj.has("element")) continue;
+				if (!jobj.has("item")) continue;
+				List<ElementStack> estacks = JsonHelper.readElements(jobj.get("element"));
+				List<JsonHelper.ItemRecord> items = JsonHelper.readItems(jobj.get("item"));
+				if (estacks.isEmpty()) continue;
+				if (items.isEmpty()) continue;
+				ElementStack[] es = estacks.toArray(new ElementStack[estacks.size()]);
+				for (JsonHelper.ItemRecord ir : items) {
+					if (ir.isJustItem()) instance.add(ir.getItem(), es);
+					else instance.add(ir.getStack(), es);
+					//ElementalSorcery.logger.info("注册:" + ir + "具有元素：" + estacks);
+				}
+			}
+		}
+
 		DefaultBucketToElement.water = new ElementStack[] { newES(E.WATER, 25, 100) };
 		DefaultBucketToElement.fire = new ElementStack[] { newES(E.FIRE, 100, 500) };
 
-		instance.add(Blocks.STONE, newES(E.EARTH, 1, 12));
-		instance.add(Blocks.COBBLESTONE, newES(E.EARTH, 1, 10));
-		instance.add(Blocks.GRASS, newES(E.EARTH, 1, 10));
-		instance.add(Blocks.DIRT, newES(E.EARTH, 1, 10));
-		instance.add(Blocks.SAND, newES(E.EARTH, 2, 5));
-
-		instance.add(Blocks.WOODEN_SLAB, newES(E.WOOD, 1, 10));
-		instance.add(Blocks.PLANKS, newES(E.WOOD, 1, 10));
-		instance.add(Blocks.LOG, newES(E.WOOD, 4, 12));
-		instance.add(Blocks.LOG2, newES(E.WOOD, 4, 12));
-
-		instance.add(Blocks.COAL_ORE, newES(E.EARTH, 20, 25), newES(E.METAL, 15, 100));
-		instance.add(Blocks.IRON_ORE, newES(E.EARTH, 17, 25), newES(E.METAL, 21, 220));
-		instance.add(Items.IRON_INGOT, newES(E.METAL, 8, 200));
 		instance.add(Items.BUCKET, newES(E.METAL, 24, 200));
-		instance.add(Blocks.GOLD_ORE, newES(E.EARTH, 15, 25), newES(E.METAL, 22, 250));
-		instance.add(Items.GOLD_INGOT, newES(E.METAL, 9, 220));
-
-		instance.add(Blocks.END_STONE, newES(E.ENDER, 1, 20));
-		instance.add(Items.ENDER_PEARL, newES(E.ENDER, 75, 750));
-		instance.add(Items.ENDER_EYE, newES(E.ENDER, 75, 750), newES(E.FIRE, 20, 450));
-
-		instance.add(Items.BOOK, newES(E.KNOWLEDGE, 10, 20));
-		instance.add(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, newES(E.KNOWLEDGE, 100, 200));
-
-		instance.add(ESInitInstance.ITEMS.MAGIC_PIECE, newES(E.FIRE, 20, 25), newES(E.WATER, 20, 25),
-				newES(E.AIR, 20, 25), newES(E.EARTH, 20, 25));
 	}
 
 }

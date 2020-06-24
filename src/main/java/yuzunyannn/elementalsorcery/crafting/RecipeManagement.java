@@ -13,35 +13,34 @@ import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
+import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 
 public class RecipeManagement implements ESRegister.IRecipeManagement {
 
 	static public RecipeManagement instance = new RecipeManagement();
 
-	private List<IRecipe> all_recpie = new ArrayList<IRecipe>();
+	private List<IRecipe> allRecipe = new ArrayList<IRecipe>();
 
 	@Override
 	public void addRecipe(IRecipe recipe) {
-		all_recpie.add(recipe);
+		allRecipe.add(recipe);
 	}
 
 	@Override
 	public void addRecipe(ItemStack output, Object... args) {
 		Recipe recipe = new Recipe(output, args);
-		all_recpie.add(recipe);
+		allRecipe.add(recipe);
 	}
 
 	@Override
 	public List<IRecipe> getRecipes() {
-		return all_recpie;
+		return allRecipe;
 	}
 
 	// 寻找合成表
 	public IRecipe findMatchingRecipe(IInventory craftMatrix, World worldIn) {
-		for (IRecipe irecipe : this.all_recpie) {
-			if (irecipe.matches(craftMatrix, worldIn)) {
-				return irecipe;
-			}
+		for (IRecipe irecipe : this.allRecipe) {
+			if (irecipe.matches(craftMatrix, worldIn)) { return irecipe; }
 		}
 		return null;
 	}
@@ -49,6 +48,8 @@ public class RecipeManagement implements ESRegister.IRecipeManagement {
 	public static void RegisterAll() {
 		// 魔法书桌自动机合成
 		TileMagicDesk.init();
+		// 碎石修复注册
+		TileMDRubbleRepair.init();
 		// 咒术纸
 		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.SPELL_PAPER, 1);
 		ESInitInstance.ITEMS.SPELL_PAPER.onCreated(stack, null, null);

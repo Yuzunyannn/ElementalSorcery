@@ -138,6 +138,10 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 		return ESRegister.ELEMENT.getValue(name);
 	}
 
+	public static Element getElementFromName(String name) {
+		return getElementFromName(new ResourceLocation(name));
+	}
+
 	/** 默认的资源 */
 	public final static ResourceLocation VIOD_RESOURCELOCATION = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/elements/void.png");

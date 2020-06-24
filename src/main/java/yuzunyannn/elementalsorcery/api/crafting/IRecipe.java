@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.api.crafting;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -19,7 +21,7 @@ public interface IRecipe {
 	/**
 	 * 获取该合成表输出结果，根据仓库
 	 */
-	default ItemStack getCraftingResult(IInventory inv) {
+	default ItemStack getCraftingResult(@Nullable IInventory inv) {
 		return this.getRecipeOutput();
 	}
 

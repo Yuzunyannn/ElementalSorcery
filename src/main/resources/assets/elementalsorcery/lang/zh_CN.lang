@@ -88,6 +88,7 @@ tile.MDTransfer.name=魔力转移箱
 tile.MDMagicSolidify.name=魔力固化箱
 tile.MDAbsorbBox.name=元素吸收箱
 tile.MDMagiclization.name=魔化箱
+tile.MDDeconstructBox.name=物质瓦解箱
 
 element.void.name=虚空
 element.magic.name=魔力
@@ -122,12 +123,14 @@ commands.es.page.fail=不存在的的id名
 
 arc.infusion.name=注魔祭坛
 arc.absorbBox.name=元素吸收祭坛
+arc.deconstructBox.name=物质瓦解通魔石祭坛
 arc.largeAltar.name=大型祭坛
 arc.spellbookAltar.name=魔法书祭坛
 arc.elementCraftingAltar.name=元素合成小祭坛
 arc.deconstructAltar.name=元素析构小祭坛
 arc.builingAltar.name=建筑解析祭坛
 arc.analysisAltar.name=结构解析祭坛
+
 
 info.none=无
 info.unknow=未知
@@ -176,6 +179,8 @@ info.analysisAltar.itema=正在解析：
 info.analysisAltar.itemfail=解析失败
 info.analysisAltar.item=解析物品：
 info.analysisAltar.complex=结构复杂度：%d
+
+info.elementCrafting=元素合成
 
 page.crafting.need=需要元素参与合成：
 page.crafting.show=%s 需要 %d 强度下限 %d 

@@ -92,7 +92,7 @@ public class ESObjects {
 		public Block MD_MAGIC_SOLIDIFY;
 		public Block MD_ABSORB_BOX;
 		public Block MD_MAGICLIZATION;
-
+		public Block MD_DECONSTRUCT_BOX;
 	}
 
 	static public class Elements {

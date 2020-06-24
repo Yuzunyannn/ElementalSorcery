@@ -16,7 +16,6 @@ import net.minecraft.client.renderer.block.statemap.StateMap;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
-import net.minecraft.crash.CrashReport;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMultiTexture;
@@ -81,6 +80,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStela;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStoneMill;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDAbsorbBox;
+import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDDeconstructBox;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDHearth;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDInfusion;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagicGen;
@@ -105,6 +105,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.tile.md.TileMDAbsorbBox;
+import yuzunyannn.elementalsorcery.tile.md.TileMDDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.md.TileMDHearth;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicGen;
@@ -116,51 +117,45 @@ import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 
 public class ESInit {
 
-	public final static void preInit(FMLPreInitializationEvent event) {
-		try {
-			// 初始化创建所有实例
-			ESInitInstance.instance();
-			// 注册物品
-			registerAllItems();
-			// 注册方块
-			registerAllBlocks();
-			// 注册tileentity
-			registerAllTiles();
-			// 注册元素
-			registerAllElements();
-			// 注册能力
-			registerAllCapability();
-			// 矿物词典注册
-			OreDictionaryRegistries.registerAll();
-			// 注册元素映射
-			ElementMap.registerAll();
-			// 注册实体
-			EntityRegistries.registerAll();
-			// 注册默认所有建筑
-			BuildingLib.registerAll();
-			// 测试村庄相关
-			VillegeRegistries.registerAll();
-			// 注册战利品
-			registerAllLoot();
-			// 注册GUI句柄
-			NetworkRegistry.INSTANCE.registerGuiHandler(ElementalSorcery.instance, new ESGuiHandler());
-			// 注册世界生成
-			MinecraftForge.ORE_GEN_BUS.register(new WorldGeneratorES.genOre());
-			MinecraftForge.EVENT_BUS.register(new WorldGeneratorES.genDecorate());
-			// 注册网络
-			ESNetwork.registerAll();
-			// 注册事件
-			MinecraftForge.EVENT_BUS.register(EventServer.class);
-			// 测试类
-			new ESTestAndDebug();
-		} catch (Throwable e) {
-			CrashReport report = CrashReport.makeCrashReport(e, "Elementalsorcery初始化异常！");
-			Minecraft.getMinecraft().crashed(report);
-			Minecraft.getMinecraft().displayCrashReport(report);
-		}
+	public final static void preInit(FMLPreInitializationEvent event) throws Throwable {
+		// 初始化创建所有实例
+		ESInitInstance.instance();
+		// 注册物品
+		registerAllItems();
+		// 注册方块
+		registerAllBlocks();
+		// 注册tileentity
+		registerAllTiles();
+		// 注册元素
+		registerAllElements();
+		// 注册能力
+		registerAllCapability();
+		// 矿物词典注册
+		OreDictionaryRegistries.registerAll();
+		// 注册实体
+		EntityRegistries.registerAll();
+		// 注册默认所有建筑
+		BuildingLib.registerAll();
+		// 测试村庄相关
+		VillegeRegistries.registerAll();
+		// 注册战利品
+		registerAllLoot();
+		// 注册GUI句柄
+		NetworkRegistry.INSTANCE.registerGuiHandler(ElementalSorcery.instance, new ESGuiHandler());
+		// 注册世界生成
+		MinecraftForge.ORE_GEN_BUS.register(new WorldGeneratorES.genOre());
+		MinecraftForge.EVENT_BUS.register(new WorldGeneratorES.genDecorate());
+		// 注册网络
+		ESNetwork.registerAll();
+		// 注册事件
+		MinecraftForge.EVENT_BUS.register(EventServer.class);
+		// 测试类
+		new ESTestAndDebug();
 	}
 
-	public final static void init(FMLInitializationEvent event) {
+	public final static void init(FMLInitializationEvent event) throws Throwable {
+		// 注册元素映射
+		ElementMap.registerAll();
 		// 注册所有配方
 		ESCraftingRegistries.registerAll();
 		// 初始化所有说明界面
@@ -243,6 +238,7 @@ public class ESInit {
 		register(TileMDMagicSolidify.class, "MDMagicSolidify");
 		register(TileMDAbsorbBox.class, "MDAbsorbBox");
 		register(TileMDMagiclization.class, "MDMagiclization");
+		register(TileMDDeconstructBox.class, "MDMagiclization");
 	}
 
 	static void registerAllElements() {
@@ -359,6 +355,7 @@ public class ESInit {
 		registerRender(BLOCKS.MD_MAGIC_SOLIDIFY, TileMDMagicSolidify.class, new RenderTileMDMagicSolidify());
 		registerRender(BLOCKS.MD_ABSORB_BOX, TileMDAbsorbBox.class, new RenderTileMDAbsorbBox());
 		registerRender(BLOCKS.MD_MAGICLIZATION, TileMDMagiclization.class, new RenderTileMDMagiclization());
+		registerRender(BLOCKS.MD_DECONSTRUCT_BOX, TileMDDeconstructBox.class, new RenderTileMDDeconstructBox());
 
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);

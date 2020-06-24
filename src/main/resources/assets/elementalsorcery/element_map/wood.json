@@ -1,0 +1,31 @@
+{
+    "maps": [
+        {
+            "item": "minecraft:planks",
+            "element": {
+                "id": "wood",
+                "size": 1,
+                "power": 10
+            }
+        },
+        {
+            "item": [
+                "minecraft:log",
+                "minecraft:log2"
+            ],
+            "element": {
+                "id": "wood",
+                "size": 4,
+                "power": 12
+            }
+        },
+        {
+            "item": "minecraft:wooden_slab",
+            "element": {
+                "id": "wood",
+                "size": 1,
+                "power": 5
+            }
+        }
+    ]
+}

@@ -41,6 +41,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.container.BlockStela;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
 import yuzunyannn.elementalsorcery.block.md.BlockMDAbsorbBox;
+import yuzunyannn.elementalsorcery.block.md.BlockMDDeconstructBox;
 import yuzunyannn.elementalsorcery.block.md.BlockMDHearth;
 import yuzunyannn.elementalsorcery.block.md.BlockMDInfusion;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagicGen;
@@ -161,6 +162,7 @@ public class ESInitInstance {
 		BLOCKS.MD_MAGIC_SOLIDIFY = new BlockMDMagicSolidify();
 		BLOCKS.MD_ABSORB_BOX = new BlockMDAbsorbBox();
 		BLOCKS.MD_MAGICLIZATION = new BlockMDMagiclization();
+		BLOCKS.MD_DECONSTRUCT_BOX = new BlockMDDeconstructBox();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();

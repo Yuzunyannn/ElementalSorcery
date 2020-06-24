@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.container;
 
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IContainerListener;
@@ -11,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.network.play.server.SPacketSetSlot;
+import net.minecraft.stats.RecipeBook;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -42,36 +44,34 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 	public ContainerSupremeCraftingTable(EntityPlayer player, TileEntity tileEntity) {
 		super(player, (TileSupremeCraftingTable) tileEntity, 36, 160);
 		IItemHandler items = this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
-		//添加slot
+		// 添加slot
 		for (int i = 0; i < items.getSlots(); i++) {
 			int x = ContainerSupremeCraftingTable.craftingRelative[i * 2];
 			int y = ContainerSupremeCraftingTable.craftingRelative[i * 2 + 1];
-			if (i == 3 || i == 5)
-				this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
-					@Override
-					public void onSlotChanged() {
-						ContainerSupremeCraftingTable.this
-								.onCraftMatrixChanged(ContainerSupremeCraftingTable.this.tileEntity);
-						super.onSlotChanged();
-					}
+			if (i == 3 || i == 5) this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
+				@Override
+				public void onSlotChanged() {
+					ContainerSupremeCraftingTable.this
+							.onCraftMatrixChanged(ContainerSupremeCraftingTable.this.tileEntity);
+					super.onSlotChanged();
+				}
 
-					@Override
-					@SideOnly(Side.CLIENT)
-					public boolean isEnabled() {
-						return showMode != MODE_DECONSTRUCT;
-					}
-				});
-			else
-				this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
-					@Override
-					public void onSlotChanged() {
-						ContainerSupremeCraftingTable.this
-								.onCraftMatrixChanged(ContainerSupremeCraftingTable.this.tileEntity);
-						super.onSlotChanged();
-					}
-				});
+				@Override
+				@SideOnly(Side.CLIENT)
+				public boolean isEnabled() {
+					return showMode != MODE_DECONSTRUCT;
+				}
+			});
+			else this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
+				@Override
+				public void onSlotChanged() {
+					ContainerSupremeCraftingTable.this
+							.onCraftMatrixChanged(ContainerSupremeCraftingTable.this.tileEntity);
+					super.onSlotChanged();
+				}
+			});
 		}
-		//添加result的slot
+		// 添加result的slot
 		craftMatrix = this.tileEntity.toInventoryCrafting(this);
 		this.resultSlotId = this.addSlotToContainer(new SlotCrafting(player, craftMatrix, result, 0, 107, 130) {
 
@@ -96,8 +96,7 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 		showMode = MODE_NONE;
 		// 先寻找es合成表
 		String type = this.tileEntity.onCraftMatrixChanged();
-		if (type == null)
-			type = "";
+		if (type == null) type = "";
 		ItemStack platfromItem;
 		switch (type) {
 		case ICraftingLaunch.TYPE_ELEMENT_CRAFTING:
@@ -121,8 +120,6 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 				showMode = MODE_PLATFORM_NONE;
 				this.result.setInventorySlotContents(0, platfromItem);
 			} else {
-				if (world.isRemote)
-					return;
 				// 寻找mc原版合成表
 				this.slotChangedCraftingGrid(world, this.player, this.craftMatrix, this.result);
 				if (!this.result.isEmpty()) {
@@ -137,12 +134,12 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 	@Override
 	protected void slotChangedCraftingGrid(World world, EntityPlayer player, InventoryCrafting craftMatrix,
 			InventoryCraftResult craftResult) {
-		EntityPlayerMP entityplayermp = (EntityPlayerMP) player;
 		ItemStack itemstack = ItemStack.EMPTY;
 		IRecipe irecipe = CraftingManager.findMatchingRecipe(craftMatrix, world);
 
-		if (irecipe != null && (irecipe.isDynamic() || !world.getGameRules().getBoolean("doLimitedCrafting")
-				|| entityplayermp.getRecipeBook().isUnlocked(irecipe))) {
+		RecipeBook book = world.isRemote ? ((EntityPlayerSP) player).getRecipeBook()
+				: ((EntityPlayerMP) player).getRecipeBook();
+		if (irecipe != null && (!world.getGameRules().getBoolean("doLimitedCrafting") || book.isUnlocked(irecipe))) {
 			craftResult.setRecipeUsed(irecipe);
 			itemstack = irecipe.getCraftingResult(craftMatrix);
 		}
@@ -155,8 +152,7 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 	public void detectAndSendChanges() {
 		this.detectAndSendChangesResult();
 		super.detectAndSendChanges();
-		if (lastShowMode == showMode)
-			return;
+		if (lastShowMode == showMode) return;
 		lastShowMode = showMode;
 		for (int j = 0; j < this.listeners.size(); ++j) {
 			((IContainerListener) this.listeners.get(j)).sendWindowProperty(this, 0, this.showMode);
@@ -172,9 +168,8 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 			this.inventoryItemStacks.set(resultSlotId, itemstack1);
 			for (int j = 0; j < this.listeners.size(); ++j) {
 				IContainerListener listener = listeners.get(j);
-				if (listener instanceof EntityPlayerMP)
-					((EntityPlayerMP) listener).connection
-							.sendPacket(new SPacketSetSlot(this.windowId, resultSlotId, itemstack));
+				if (listener instanceof EntityPlayerMP) ((EntityPlayerMP) listener).connection
+						.sendPacket(new SPacketSetSlot(this.windowId, resultSlotId, itemstack));
 			}
 		}
 	}
