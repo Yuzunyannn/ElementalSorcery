@@ -43,6 +43,7 @@ public class ESObjects {
 		public Item ITEM_CRYSTAL;
 		public Item MAGIC_STONE;
 		public Item ORDER_CRYSTAL;
+		public Item MD_BASE;
 	}
 
 	static public class Blocks {
@@ -71,7 +72,9 @@ public class ESObjects {
 		public Block MAGIC_DESK;
 		public Block ELEMENT_CRAFTING_TABLE;
 		public Block DECONSTRUCT_ALTAR_TABLE;
+		@Deprecated
 		public Block STELA;
+		public Block RITE_TABLE;
 		public Block LANTERN;
 		public Block BUILDING_ALTAR;
 		public Block ANALYSIS_ALTAR;

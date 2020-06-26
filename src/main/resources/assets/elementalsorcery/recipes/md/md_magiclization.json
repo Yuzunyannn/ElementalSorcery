@@ -1,0 +1,28 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "md",
+	"pattern": [
+		"A#A",
+		"AXA",
+		" B "
+	],
+	"key": {
+		"#": {
+			"item": "elementalsorcery:astone",
+			"data": 2
+		},
+		"B": {
+			"item": "elementalsorcery:md_base"
+		},
+		"X": {
+			"item": "elementalsorcery:magical_ender_eye"
+		},
+		"A": {
+			"item": "elementalsorcery:astone",
+            "data": 3
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:md_magiclization"
+	}
+}

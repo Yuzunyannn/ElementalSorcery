@@ -1,0 +1,22 @@
+{
+    "lev": 3,
+    "type": "mult",
+    "lock": 1,
+    "pages": [
+        {
+            "type": "normal",
+            "name": "spellbook",
+            "differ": "fir"
+        },
+        {
+            "type": "craft",
+            "name": "spellbook",
+            "item": "elementalsorcery:spellbook"
+        },
+        {
+            "type": "normal",
+            "name": "spellbook",
+            "differ": "sec"
+        }
+    ]
+}

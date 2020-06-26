@@ -20,9 +20,9 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 
 	/** 修复合成表 */
 	static public class Recipe {
-		ItemStack input = ItemStack.EMPTY;
-		ItemStack output = ItemStack.EMPTY;
-		int cost;
+		protected ItemStack input = ItemStack.EMPTY;
+		protected ItemStack output = ItemStack.EMPTY;
+		protected int cost;
 
 		public ItemStack getInput() {
 			return input;

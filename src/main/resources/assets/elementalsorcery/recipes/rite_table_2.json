@@ -1,0 +1,25 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "astone",
+	"pattern": [
+		"XXX",
+		"# #",
+		"# #"
+	],
+	"key": {
+		"#": {
+			"type": "forge:ore_dict",
+			"ore": "plankWood"
+		},
+		"X": {
+			"item": "elementalsorcery:astone",
+			"data": 2
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:rite_table",
+		"nbt": {
+			"level": 2
+		}
+	}
+}

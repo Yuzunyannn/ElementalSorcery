@@ -8,8 +8,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class Page {
 
@@ -24,7 +22,7 @@ public class Page {
 	/** 上一个指向的页面 */
 	public Page prevPage;
 
-	/** 物品上显示的信息 */
+	/** 显示在物品(羊皮卷)上的信息 */
 	public void addItemInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
 			ITooltipFlag flagIn) {
 

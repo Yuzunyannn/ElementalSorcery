@@ -25,7 +25,7 @@ public class TileMDAbsorbBox extends TileMDBase implements ITickable {
 			@Override
 			@Nonnull
 			public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-				if (stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, EnumFacing.NORTH))
+				if (TileMDAbsorbBox.this.getElementInventory(stack) != null)
 					return super.insertItem(slot, stack, simulate);
 				return stack;
 			}
@@ -45,7 +45,7 @@ public class TileMDAbsorbBox extends TileMDBase implements ITickable {
 	public void update() {
 		this.autoTransfer();
 		ItemStack stack = inventory.getStackInSlot(0);
-		IElementInventory inventory = ElementHelper.getElementInventory(stack);
+		IElementInventory inventory = this.getElementInventory(stack);
 		if (!ElementHelper.canInsert(inventory)) return;
 		if (inventory == null) return;
 		if (tick % 30 == 0) ok = structure.check(EnumFacing.NORTH);

@@ -46,8 +46,7 @@ public class ElementRegister implements IForgeRegistry<Element> {
 
 	@Override
 	public void registerAll(Element... values) {
-		for (int i = 0; i < values.length; i++)
-			register(values[i]);
+		for (int i = 0; i < values.length; i++) register(values[i]);
 	}
 
 	@Override
@@ -73,6 +72,10 @@ public class ElementRegister implements IForgeRegistry<Element> {
 	@Override
 	public Set<ResourceLocation> getKeys() {
 		return REGISTRY.getKeys();
+	}
+
+	public int getId(Element value) {
+		return REGISTRY.getIDForObject(value);
 	}
 
 	@Override

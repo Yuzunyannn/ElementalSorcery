@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@Deprecated
 @SideOnly(Side.CLIENT)
 public class ModelStela extends ModelBase {
 	ModelRenderer bottom;

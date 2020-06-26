@@ -30,6 +30,7 @@ import yuzunyannn.elementalsorcery.render.particle.ParticleElementP;
 import yuzunyannn.elementalsorcery.tile.TileStela;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
+@Deprecated
 public class BlockStela extends BlockContainerNormal {
 
 	public BlockStela() {

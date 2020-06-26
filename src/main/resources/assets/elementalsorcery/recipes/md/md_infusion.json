@@ -2,27 +2,31 @@
 	"type": "minecraft:crafting_shaped",
 	"group": "md",
 	"pattern": [
-		"CBC",
-		"XAX",
-		"X#X"
+		"CPC",
+		"XSX",
+		"#B#"
 	],
 	"key": {
 		"#": {
 			"item": "elementalsorcery:astone",
-			"data": 6
-		},
-		"X": {
-			"item": "elementalsorcery:magic_stone"
-		},
-		"A": {
-			"item": "minecraft:blaze_powder"
+			"data": 2
 		},
 		"B": {
+			"item": "elementalsorcery:md_base"
+		},
+		"P": {
+			"item": "minecraft:blaze_powder"
+		},
+		"S": {
 			"item": "elementalsorcery:star_sand"
 		},
 		"C": {
 			"item": "elementalsorcery:astone",
-            "data": 3
+			"data": 3
+		},
+		"X": {
+			"item": "elementalsorcery:astone",
+			"data": 5
 		}
 	},
 	"result": {

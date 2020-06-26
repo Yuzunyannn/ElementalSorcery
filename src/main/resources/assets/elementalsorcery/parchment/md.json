@@ -1,0 +1,27 @@
+{
+    "type": "mult",
+    "lock": 0,
+    "lev": 2,
+    "pages": [
+        {
+            "type": "normal",
+            "name": "md",
+            "icon": "elementalsorcery:astone"
+        },
+        {
+            "type": "craft",
+            "name": "magicTorch",
+            "item": "elementalsorcery:magic_torch"
+        },
+        {
+            "type": "craft",
+            "name": "magicGen",
+            "item": "elementalsorcery:md_magic_gen"
+        },
+        {
+            "type": "craft",
+            "name": "magicTransfer",
+            "item": "elementalsorcery:md_transfer"
+        }
+    ]
+}

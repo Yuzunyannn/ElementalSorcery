@@ -14,18 +14,21 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class PageSimple extends PageEasy {
-	protected final String name;
+	protected final String title;
+	protected final String value;
 	protected final ItemStack icon;
 	protected final ItemStack blockground;
 
 	public PageSimple(String name) {
-		this.name = name;
+		this.title = "page." + name;
+		this.value = title + ".ct";
 		this.icon = ItemStack.EMPTY;
 		this.blockground = ItemStack.EMPTY;
 	}
 
 	public PageSimple(String name, ItemStack icon) {
-		this.name = name;
+		this.title = "page." + name;
+		this.value = title + ".ct";
 		this.icon = icon;
 		this.blockground = ItemStack.EMPTY;
 	}
@@ -39,19 +42,27 @@ public class PageSimple extends PageEasy {
 	}
 
 	public PageSimple(String name, ItemStack icon, ItemStack background) {
-		this.name = name;
+		this.title = "page." + name;
+		this.value = title + ".ct";
+		this.icon = icon;
+		this.blockground = background;
+	}
+
+	public PageSimple(String title, String value, ItemStack icon, ItemStack background) {
+		this.title = title;
+		this.value = value;
 		this.icon = icon;
 		this.blockground = background;
 	}
 
 	@Override
 	public String getTitle() {
-		return "page." + name;
+		return title;
 	}
 
 	@Override
 	public String getContext() {
-		return "page." + name + ".ct";
+		return value;
 	}
 
 	@Override
@@ -61,8 +72,7 @@ public class PageSimple extends PageEasy {
 
 	@Override
 	public void drawBackground(int xoff, int yoff, IPageManager pageManager) {
-		if (this.blockground.isEmpty())
-			return;
+		if (this.blockground.isEmpty()) return;
 		RenderItem itemRender = Minecraft.getMinecraft().getRenderItem();
 		IBakedModel bakedmodel = itemRender.getItemModelWithOverrides(blockground, (World) null,
 				(EntityLivingBase) null);

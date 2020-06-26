@@ -30,9 +30,9 @@ public class GuiMDDeconstructBox extends GuiMDBase<ContainerMDDeconstructBox> {
 		TileMDDeconstructBox tile = this.container.tileEntity;
 		float rate = (float) tile.getProgress() / (float) tile.getMaxProgress();
 		int color = tile.getColor();
-		float b = (color & 0xff) / 255.0f;
-		float g = (color >> 8 & 0xff) / 255.0f;
-		float r = (color >> 16 & 0xff) / 255.0f;
+		float b = (color & 0x00ff) / 255.0f;
+		float g = (color >>> 8 & 0x00ff) / 255.0f;
+		float r = (color >>> 16 & 0x00ff) / 255.0f;
 		GlStateManager.color(r, g, b);
 		this.drawTexturedModalRect(offsetX + 74, offsetY + 34, 176, 82 + 9, MathHelper.ceil(29 * rate), 9);
 	}

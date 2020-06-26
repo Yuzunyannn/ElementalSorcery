@@ -1,0 +1,12 @@
+{
+    "lev": 1,
+    "type": "craft",
+    "name": "kynatieTools",
+    "item": [
+        "elementalsorcery:kyanite_axe",
+        "elementalsorcery:kyanite_hoe",
+        "elementalsorcery:kyanite_pickaxe",
+        "elementalsorcery:kyanite_spade",
+        "elementalsorcery:kyanite_sword"
+    ]
+}

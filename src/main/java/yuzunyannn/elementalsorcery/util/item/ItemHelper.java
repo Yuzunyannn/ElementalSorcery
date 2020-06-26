@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.util.item;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.items.ItemStackHandler;
 
 public class ItemHelper {
 
@@ -11,5 +12,14 @@ public class ItemHelper {
 
 	static public ItemStack toItemStack(IBlockState state) {
 		return new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state));
+	}
+
+	static public boolean isEmpty(ItemStackHandler inventory) {
+		for (int i = 0; i < inventory.getSlots(); i++) if (!inventory.getStackInSlot(i).isEmpty()) return false;
+		return true;
+	}
+
+	static public void clear(ItemStackHandler inventory) {
+		for (int i = 0; i < inventory.getSlots(); i++) inventory.setStackInSlot(i, ItemStack.EMPTY);
 	}
 }

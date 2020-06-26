@@ -1,7 +1,11 @@
 package yuzunyannn.elementalsorcery.tile.md;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -10,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -99,26 +104,26 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 		case 1:
 		case 3:
 		case 2:
-			return TileMDInfusion.getOfferMagic(index).getCount() * 4;
+			return TileMDInfusion.getMaxOfferMagic(index).getCount() * 2;
 		default:
 			return 1;
 		}
 	}
 
-	public final static ElementStack MAGIC20 = new ElementStack.Unchangeable(ESInitInstance.ELEMENTS.MAGIC, 20, 20);
-	public final static ElementStack MAGIC40 = new ElementStack.Unchangeable(ESInitInstance.ELEMENTS.MAGIC, 40, 20);
-	public final static ElementStack MAGIC60 = new ElementStack.Unchangeable(ESInitInstance.ELEMENTS.MAGIC, 60, 20);
+	public final static ElementStack MAGIC1 = new ElementStack.Unchangeable(ESInitInstance.ELEMENTS.MAGIC, 20, 25);
+	public final static ElementStack MAGIC2 = new ElementStack.Unchangeable(ESInitInstance.ELEMENTS.MAGIC, 40, 100);
+	public final static ElementStack MAGIC3 = new ElementStack.Unchangeable(ESInitInstance.ELEMENTS.MAGIC, 100, 200);
 
-	public static ElementStack getOfferMagic(int index) {
+	public static ElementStack getMaxOfferMagic(int index) {
 		switch (index) {
 		case 0:
 		case 4:
-			return MAGIC20;
+			return MAGIC1;
 		case 1:
 		case 3:
-			return MAGIC40;
+			return MAGIC2;
 		case 2:
-			return MAGIC60;
+			return MAGIC3;
 		default:
 			return ElementStack.EMPTY;
 		}
@@ -140,13 +145,17 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 				continue;
 			}
 			ItemStack stack = this.inventory.getStackInSlot(i);
-			ItemStack result = TileMDInfusion.infusionInto(stack, TileMDInfusion.getOfferMagic(i), world, pos);
+			ElementStack maxMagic = TileMDInfusion.getMaxOfferMagic(i).copy();
+			maxMagic.setPower(this.magic.getPower());
+			// 寻找注魔结果，并判断
+			ItemStack result = TileMDInfusion.infusionInto(stack, maxMagic, world, pos);
 			if (result.isEmpty()) {
 				this.powerDrop(i);
 				continue;
 			}
+			// 增加注魔进度
 			this.infusionPower[i]++;
-			if (this.infusionPower[i] % 4 == 0) this.magic.shrink(1);
+			if (this.infusionPower[i] % 2 == 0) this.magic.shrink(1);
 			if (this.infusionPower[i] >= this.getInfusionPowerMax(i)) {
 				this.infusionPower[i] = 0;
 				this.inventory.setStackInSlot(i, result.copy());
@@ -156,8 +165,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 	}
 
 	private void allPowerDrop() {
-		for (int i = 0; i < this.infusionPower.length; i++)
-			this.powerDrop(i);
+		for (int i = 0; i < this.infusionPower.length; i++) this.powerDrop(i);
 	}
 
 	private final void powerDrop(int index) {
@@ -165,52 +173,105 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 	}
 
 	/**
-	 * 某个物品注魔成
+	 * 寻找某个注魔结果
 	 * 
 	 * @param stack      原始物品
 	 * @param offerMagic 提供的魔力值
 	 * @return 注魔后的物品
 	 * 
 	 */
-	static public ItemStack infusionInto(ItemStack stack, ElementStack offerMagic, World world, BlockPos pos) {
-		if (stack.isEmpty()) return ItemStack.EMPTY;
-		Biome biome = world.getBiome(pos);
-		WorldTime time = new WorldTime(world);
-		if (biome == Biomes.PLAINS) {
-			if (time.at(WorldTime.Period.DAWN) || time.at(WorldTime.Period.DUSK)) {
-				if (stack.getItem() == ESInitInstance.ITEMS.MAGIC_CRYSTAL && offerMagic.getCount() > 40) {
-					return new ItemStack(ESInitInstance.ITEMS.ELEMENT_CRYSTAL);
-				}
-			}
+	public static ItemStack infusionInto(ItemStack stack, ElementStack offerMaxMagic, World world, BlockPos pos) {
+		for (Recipe r : recipes) {
+			if (!ItemStack.areItemsEqual(r.getInput(), stack)) continue;
+			ElementStack magic = r.getCost();
+			if (magic.getCount() > offerMaxMagic.getCount()) continue;
+			if (magic.getPower() > offerMaxMagic.getPower()) continue;
+			if (r.test != null && !r.test.test(world, pos)) continue;
+			return r.getOutput();
 		}
-		if (time.at(WorldTime.Period.MIDNIGHT)) {
-			if (stack.getItem() == ESInitInstance.ITEMS.MAGIC_CRYSTAL && offerMagic.getCount() > 20) {
-				int count = 0;
-				for (int y = -1; y <= 1; y++) {
-					for (int x = -2; x <= 2; x++) {
-						for (int z = -2; z <= 2; z++) {
-							BlockPos movePos = pos.add(x, y, z);
-							if (world.getBlockState(movePos).getBlock() == Blocks.BOOKSHELF) count++;
-							if (count >= 14) {
-								y = 3;
-								x = 3;
-								z = 3;
-								break;
-							}
+		return ItemStack.EMPTY;
+	}
+
+	static public class Recipe {
+
+		static public interface ITest {
+			boolean test(World world, BlockPos pos);
+		}
+
+		protected ItemStack input = ItemStack.EMPTY;
+		protected ItemStack output = ItemStack.EMPTY;
+		protected ElementStack cost;
+		protected ITest test = null;
+
+		public ItemStack getInput() {
+			return input;
+		}
+
+		public ItemStack getOutput() {
+			return output;
+		}
+
+		public ElementStack getCost() {
+			return cost;
+		}
+	}
+
+	static final private List<Recipe> recipes = new ArrayList<>();
+
+	public static List<Recipe> getRecipes() {
+		return recipes;
+	}
+
+	static public void addRecipe(ItemStack input, ItemStack output, ElementStack cost, Recipe.ITest test) {
+		if (input.isEmpty() || output.isEmpty() || cost == null || cost.isEmpty()) return;
+		if (!cost.isMagic()) return;
+		Recipe r = new Recipe();
+		r.input = input;
+		r.output = output;
+		r.cost = cost;
+		r.test = test;
+		recipes.add(r);
+	}
+
+	static public void addRecipe(Item input, Item output, int lowerLimitCount, int lowerLimitPower, Recipe.ITest test) {
+		addRecipe(new ItemStack(input), new ItemStack(output), ElementStack.magic(lowerLimitCount, lowerLimitPower),
+				test);
+	}
+
+	static public void init() {
+		final ESObjects.Items ITEMS = ESInitInstance.ITEMS;
+		addRecipe(ITEMS.MAGIC_CRYSTAL, ESInitInstance.ITEMS.ELEMENT_CRYSTAL, 100, 20, (world, pos) -> {
+			Biome biome = world.getBiome(pos);
+			WorldTime time = new WorldTime(world);
+			if (biome != Biomes.PLAINS) return false;
+			if (time.at(WorldTime.Period.DAWN) || time.at(WorldTime.Period.DUSK)) return true;
+			return false;
+		});
+		addRecipe(ESInitInstance.ITEMS.KYANITE, ESInitInstance.ITEMS.MAGIC_CRYSTAL, 20, 20, (world, pos) -> {
+			Biome biome = world.getBiome(pos);
+			WorldTime time = new WorldTime(world);
+			if (time.at(WorldTime.Period.DAY)) return biome.getRainfall() <= 0.5f && !world.isRaining();
+			return false;
+		});
+		addRecipe(ESInitInstance.ITEMS.MAGIC_CRYSTAL, ESInitInstance.ITEMS.SPELL_CRYSTAL, 40, 20, (world, pos) -> {
+			WorldTime time = new WorldTime(world);
+			if (!time.at(WorldTime.Period.MIDNIGHT)) return false;
+			int count = 0;
+			for (int y = -1; y <= 1; y++) {
+				for (int x = -2; x <= 2; x++) {
+					for (int z = -2; z <= 2; z++) {
+						BlockPos movePos = pos.add(x, y, z);
+						if (world.getBlockState(movePos).getBlock() == Blocks.BOOKSHELF) count++;
+						if (count >= 14) {
+							y = 3;
+							x = 3;
+							z = 3;
+							break;
 						}
 					}
 				}
-				if (count >= 14) return new ItemStack(ESInitInstance.ITEMS.SPELL_CRYSTAL);
 			}
-		}
-		if (time.at(WorldTime.Period.DAY)) {
-			if (biome.getRainfall() <= 0.5f && !world.isRaining()) {
-				if (stack.getItem() == ESInitInstance.ITEMS.KYANITE && offerMagic.getCount() >= 20) {
-					return new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL);
-				}
-			}
-		}
-		// 这里应当加入注魔[事件]
-		return ItemStack.EMPTY;
+			return count >= 14;
+		});
 	}
 }

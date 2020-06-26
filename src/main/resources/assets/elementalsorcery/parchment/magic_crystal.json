@@ -1,0 +1,9 @@
+{
+    "lev": 2,
+    "type": "infusion",
+    "name": "magicCrystal",
+    "item": [
+        "elementalsorcery:kyanite",
+        "elementalsorcery:magic_crystal"
+    ]
+}

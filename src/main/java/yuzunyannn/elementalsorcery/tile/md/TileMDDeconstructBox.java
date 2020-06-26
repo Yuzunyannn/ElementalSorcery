@@ -79,17 +79,17 @@ public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 		}
 	}
 
+	@Override
+	public int getFieldCount() {
+		return 4;
+	}
+
 	public int getProgress() {
 		return progress;
 	}
 
 	public int getMaxProgress() {
 		return 200;
-	}
-
-	@Override
-	public int getFieldCount() {
-		return 4;
 	}
 
 	@Override

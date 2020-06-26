@@ -37,6 +37,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockHearth;
 import yuzunyannn.elementalsorcery.block.container.BlockLantern;
 import yuzunyannn.elementalsorcery.block.container.BlockMagicPlatform;
 import yuzunyannn.elementalsorcery.block.container.BlockMeltCauldron;
+import yuzunyannn.elementalsorcery.block.container.BlockRiteTable;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.container.BlockStela;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
@@ -140,6 +141,7 @@ public class ESInitInstance {
 		BLOCKS.ELEMENT_CRAFTING_TABLE = new BlockElementCraftingTable();
 		BLOCKS.DECONSTRUCT_ALTAR_TABLE = new BlockDeconstructAltarTable();
 		BLOCKS.STELA = new BlockStela();
+		BLOCKS.RITE_TABLE = new BlockRiteTable();
 		BLOCKS.LANTERN = new BlockLantern();
 		BLOCKS.BUILDING_ALTAR = new BlockBuildingAltar();
 		BLOCKS.ANALYSIS_ALTAR = new BlockAnalysisAltar();
@@ -197,6 +199,7 @@ public class ESInitInstance {
 		ITEMS.MAGIC_RULER = new ItemMagicRuler();
 		ITEMS.ITEM_CRYSTAL = new ItemItemCrystal();
 		ITEMS.ORDER_CRYSTAL = new ItemOrderCrystal();
+		ITEMS.MD_BASE = ItemSome.newMDBase();
 
 		ITEMS.SPELLBOOK = new ItemSpellbook();
 		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture();

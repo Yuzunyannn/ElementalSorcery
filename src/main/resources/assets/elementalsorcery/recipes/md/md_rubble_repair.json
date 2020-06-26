@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "md",
+	"pattern": [
+		" # ",
+		"A A",
+		"#B#"
+	],
+	"key": {
+		"#": {
+			"item": "elementalsorcery:astone",
+			"data": 2
+		},
+		"B": {
+			"item": "elementalsorcery:md_base"
+		},
+		"A": {
+			"item": "minecraft:glass_pane"
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:md_rubble_repair"
+	}
+}

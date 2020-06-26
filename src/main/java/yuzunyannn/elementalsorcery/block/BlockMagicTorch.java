@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.block;
 import java.util.Random;
 
 import net.minecraft.block.BlockTorch;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
@@ -22,6 +23,7 @@ public class BlockMagicTorch extends BlockTorch {
 	public static final PropertyBool LIT = PropertyBool.create("lit");
 
 	public BlockMagicTorch() {
+		this.setSoundType(SoundType.WOOD);
 		this.setUnlocalizedName("magicTorch");
 		this.setDefaultState(this.getDefaultState().withProperty(LIT, false));
 	}
@@ -40,15 +42,13 @@ public class BlockMagicTorch extends BlockTorch {
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		IBlockState state = super.getStateFromMeta(meta & 7);
-		if ((meta & 8) != 0)
-			state = state.withProperty(LIT, true);
+		if ((meta & 8) != 0) state = state.withProperty(LIT, true);
 		return state;
 	}
 
 	@Override
 	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		if (state.getValue(LIT))
-			return 7;
+		if (state.getValue(LIT)) return 7;
 		return 0;
 	}
 

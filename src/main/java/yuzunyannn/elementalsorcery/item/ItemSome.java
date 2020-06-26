@@ -52,6 +52,11 @@ public class ItemSome {
 		return newItem("tinyKnife");
 	}
 
+	/** md底座 */
+	static public Item newMDBase() {
+		return newItem("MDBase");
+	}
+
 	/** 魔力水晶 */
 	static public Item newMagicalCrystal() {
 		return newItem("magicalCrystal");
@@ -77,8 +82,7 @@ public class ItemSome {
 
 			@Override
 			public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-				if (!this.isInCreativeTab(tab))
-					return;
+				if (!this.isInCreativeTab(tab)) return;
 				ItemStack stack = new ItemStack(this, 1, 0);
 				stack.addEnchantment(null, 1);
 				items.add(stack);

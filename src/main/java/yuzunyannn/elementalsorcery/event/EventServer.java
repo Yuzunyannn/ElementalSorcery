@@ -22,10 +22,10 @@ public class EventServer {
 	public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
 		EntityPlayer player = event.player;
 		NBTTagCompound data = player.getEntityData();
-		if (!data.hasKey("es_first_join")) {
-			data.setBoolean("es_first_join", true);
-			player.inventory.addItemStackToInventory(ItemScroll.getScroll(Pages.ABOUT_ELEMENT, Pages.ABOUT_STELA));
-			player.inventory.addItemStackToInventory(new ItemStack(ESInitInstance.BLOCKS.STELA));
+		if (!data.hasKey("esFirstJoin")) {
+			data.setBoolean("esFirstJoin", true);
+			player.inventory.addItemStackToInventory(ItemScroll.getScroll("rite"));
+			//player.inventory.addItemStackToInventory(new ItemStack(ESInitInstance.BLOCKS.STELA));
 		}
 	}
 

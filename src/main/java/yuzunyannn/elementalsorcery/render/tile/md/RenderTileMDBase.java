@@ -8,11 +8,10 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
-public abstract class RenderTileMDBase<T extends TileMDBase> extends TileEntitySpecialRenderer<T>
-		implements IRenderItem {
+public class RenderTileMDBase<T extends TileMDBase> extends TileEntitySpecialRenderer<T> implements IRenderItem {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/md_base.png");
-	protected final ModelMDBase MODEL_BASE = new ModelMDBase();
+	protected static final ModelMDBase MODEL_BASE = new ModelMDBase();
 
 	@Override
 	public void render(TileMDBase tile, double x, double y, double z, float partialTicks, int destroyStage,

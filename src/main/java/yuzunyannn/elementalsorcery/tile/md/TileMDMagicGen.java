@@ -11,6 +11,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurnPower {
 
@@ -22,7 +23,9 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 
 	/** 客户端负责绘画的物品 */
 	@SideOnly(Side.CLIENT)
-	public ItemStack renderItem = new ItemStack(ESInitInstance.ITEMS.MAGIC_STONE);
+	public ItemStack getRenderItem() {
+		return RenderObjects.MAGIC_STONE;
+	}
 
 	/** 初始化仓库 */
 	@Override

@@ -1,0 +1,27 @@
+{
+    "lev": 2,
+    "type": "mult",
+    "lock": 0,
+    "pages": [
+        {
+            "type": "craft",
+            "name": "infusion",
+            "item": "elementalsorcery:md_infusion"
+        },
+        {
+            "type": "buidling",
+            "title": "page.infusion.altar",
+            "building": "infusion",
+            "extra": [
+                {
+                    "pos": [
+                        0,
+                        2,
+                        0
+                    ],
+                    "item": "elementalsorcery:md_infusion"
+                }
+            ]
+        }
+    ]
+}

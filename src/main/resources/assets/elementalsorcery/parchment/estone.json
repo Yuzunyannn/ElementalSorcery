@@ -1,0 +1,21 @@
+{
+    "lev": 2,
+    "type": "craft",
+    "name": "estone",
+    "item": [
+        {
+            "item": "elementalsorcery:estone",
+            "data": 0
+        },
+        {
+            "item": "elementalsorcery:estone",
+            "data": 1
+        },
+        {
+            "item": "elementalsorcery:estone",
+            "data": 2
+        },
+        "elementalsorcery:estone_slab",
+        "elementalsorcery:estone_stairs"
+    ]
+}

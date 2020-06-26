@@ -24,7 +24,7 @@ public class WorldGenStarStone extends WorldGenerator {
 		else if (biome == Biomes.DESERT)
 			tryTime = 1;
 		else if (biome == Biomes.BEACH || biome == Biomes.PLAINS)
-			tryTime = 4 + rand.nextInt(4);
+			tryTime = 1 + rand.nextInt(4);
 		else
 			tryTime = 2;
 		IBlockState starStoneState = ESInitInstance.BLOCKS.STAR_STONE.getDefaultState();

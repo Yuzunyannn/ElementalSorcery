@@ -37,7 +37,7 @@ public class RWMDMagicSolidify implements MDRecipeWrapper {
 	@Override
 	public void layout(IRecipeLayout layout) {
 		IGuiItemStackGroup group = layout.getItemStacks();
-		group.init(0, false, 87 - 9, 21);
+		group.init(0, false, 87 - 9, 31);
 		if (this.recipe == FakeRecipe.MAGIC_STONE) group.set(0, TileMDMagicSolidify.MAGIC_STONE);
 		else group.set(0, TileMDMagicSolidify.MAGIC_PIECE);
 	}
@@ -49,7 +49,7 @@ public class RWMDMagicSolidify implements MDRecipeWrapper {
 		GuiMDBase.drawDefault(mc, rate, draw.getWidth(), draw.getHeight(), offsetX, offsetY, 59, 10,
 				mc.getRenderPartialTicks(), MDDraw.TEXTURE1, MDDraw.TEXTURE2);
 		int x = draw.getWidth() / 2;
-		offsetY = 21;
+		offsetY = 31;
 		RenderHelper.drawTexturedModalRect(offsetX + x - 9 - 11, offsetY - 7, 0, 216, 39, 34, 256, 256);
 		draw.drawSolt(offsetX + x - 9, offsetY);
 	}

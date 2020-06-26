@@ -32,8 +32,7 @@ public class RenderHelper {
 		GlStateManager.pushMatrix();
 		TEXTURE.bind();
 		if (IRenderItem.isGUI(stack)) {
-			if (needLighting)
-				GlStateManager.enableLighting();
+			if (needLighting) GlStateManager.enableLighting();
 			GlStateManager.rotate(45, 0, 1, 0);
 			GlStateManager.rotate(30, 1, 0, 1);
 			GlStateManager.translate(0.35, 0.26 + yoff, 0.35);
@@ -61,16 +60,14 @@ public class RenderHelper {
 
 	static public void bindDestoryTexture(TextureBinder TEXTURE, int destroyStage,
 			TileEntityRendererDispatcher rendererDispatcher, ResourceLocation[] DESTROY_STAGES) {
-		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES))
-			TEXTURE.bind();
+		if (RenderHelper.bindDestoryTexture(destroyStage, rendererDispatcher, DESTROY_STAGES)) TEXTURE.bind();
 	}
 
 	static public boolean bindDestoryTexture(int destroyStage, TileEntityRendererDispatcher rendererDispatcher,
 			ResourceLocation[] DESTROY_STAGES) {
 		if (destroyStage >= 0) {
 			TextureManager texturemanager = rendererDispatcher.renderEngine;
-			if (texturemanager != null)
-				texturemanager.bindTexture(DESTROY_STAGES[destroyStage]);
+			if (texturemanager != null) texturemanager.bindTexture(DESTROY_STAGES[destroyStage]);
 			GlStateManager.matrixMode(5890);
 			GlStateManager.pushMatrix();
 			GlStateManager.scale(4.0F, 4.0F, 1.0F);
@@ -114,12 +111,11 @@ public class RenderHelper {
 			} else {
 				if (TileEntityItemStackRenderer.instance != stack.getItem().getTileEntityItemStackRenderer()) {
 					GlStateManager.translate(0, 0.475, 0);
-				} else
-					GlStateManager.translate(0, 0.3, 0);
+				} else GlStateManager.translate(0, 0.3, 0);
 			}
 		}
 	}
-	
+
 	static public void drawTexturedModalRect(float x, float y, int u, int v, int width, int height, float textureWidth,
 			float textureHeight) {
 		float f = 1.0F / textureWidth;
@@ -127,9 +123,12 @@ public class RenderHelper {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-		bufferbuilder.pos((double) x, (double) (y + height), 0.0D).tex((double) (u * f), (double) ((v + (float) height) * f1)).endVertex();
-		bufferbuilder.pos((double) (x + width), (double) (y + height), 0.0D).tex((double) ((u + (float) width) * f), (double) ((v + (float) height) * f1)).endVertex();
-		bufferbuilder.pos((double) (x + width), (double) y, 0.0D).tex((double) ((u + (float) width) * f), (double) (v * f1)).endVertex();
+		bufferbuilder.pos((double) x, (double) (y + height), 0.0D)
+				.tex((double) (u * f), (double) ((v + (float) height) * f1)).endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + height), 0.0D)
+				.tex((double) ((u + (float) width) * f), (double) ((v + (float) height) * f1)).endVertex();
+		bufferbuilder.pos((double) (x + width), (double) y, 0.0D)
+				.tex((double) ((u + (float) width) * f), (double) (v * f1)).endVertex();
 		bufferbuilder.pos((double) x, (double) y, 0.0D).tex((double) (u * f), (double) (v * f1)).endVertex();
 		tessellator.draw();
 	}

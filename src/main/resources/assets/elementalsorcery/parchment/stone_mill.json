@@ -1,0 +1,6 @@
+{
+    "type": "craft",
+    "name": "stoneMill",
+    "item": "elementalsorcery:stone_mill",
+    "lev": 1
+}

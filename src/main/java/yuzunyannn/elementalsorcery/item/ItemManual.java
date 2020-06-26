@@ -32,8 +32,7 @@ public class ItemManual extends Item {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		if (handIn != EnumHand.MAIN_HAND)
-			return super.onItemRightClick(worldIn, playerIn, handIn);
+		if (handIn != EnumHand.MAIN_HAND) return super.onItemRightClick(worldIn, playerIn, handIn);
 		if (playerIn.isSneaking()) {
 			ItemStack stack = playerIn.getHeldItem(handIn);
 			this.store(playerIn, stack);
@@ -41,8 +40,7 @@ public class ItemManual extends Item {
 		}
 		// 没有shift
 		ItemStack stack = playerIn.getHeldItem(handIn);
-		if (!Pages.getPage(stack).getId().equals(Pages.BOOK))
-			Pages.setPage(Pages.BOOK, stack);
+		if (!Pages.getPage(stack).getId().equals(Pages.BOOK)) Pages.setPage(Pages.BOOK, stack);
 		if (worldIn.isRemote) {
 			Pages.getBookPage().setIds(ItemManual.getIds(stack));
 			BlockPos pos = playerIn.getPosition();
@@ -75,14 +73,13 @@ public class ItemManual extends Item {
 
 	// 存入
 	private void store(EntityPlayer player, ItemStack stack) {
+		if (!player.isServerWorld()) return;
 		NBTTagList idsList = ItemManual.getIds(stack);
 		for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
 			ItemStack itemstack = player.inventory.getStackInSlot(i);
-			if (itemstack.getItem() != ESInitInstance.ITEMS.PARCHMENT)
-				continue;
+			if (itemstack.getItem() != ESInitInstance.ITEMS.PARCHMENT) continue;
 			Page page = Pages.getPage(itemstack);
-			if (Pages.ERROR.equals(page.getId()))
-				continue;
+			if (Pages.ERROR.equals(page.getId())) continue;
 			boolean has = false;
 			for (NBTBase base : idsList) {
 				NBTTagString nbtstr = (NBTTagString) base;

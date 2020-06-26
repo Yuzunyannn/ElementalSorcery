@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
@@ -22,6 +23,7 @@ public class BlockElfSapling extends BlockBush implements IGrowable {
 			0.8999999761581421D, 0.800000011920929D, 0.8999999761581421D);
 
 	public BlockElfSapling() {
+		this.setSoundType(SoundType.PLANT);
 		this.setUnlocalizedName("elfSapling");
 		this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, Integer.valueOf(0)));
 	}
@@ -55,8 +57,7 @@ public class BlockElfSapling extends BlockBush implements IGrowable {
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		if (!worldIn.isRemote) {
 			super.updateTick(worldIn, pos, state, rand);
-			if (!worldIn.isAreaLoaded(pos, 1))
-				return;
+			if (!worldIn.isAreaLoaded(pos, 1)) return;
 			if (worldIn.getLightFromNeighbors(pos.up()) >= 9 && rand.nextInt(7) == 0) {
 				this.grow(worldIn, rand, pos, state);
 			}

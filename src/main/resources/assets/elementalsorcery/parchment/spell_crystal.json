@@ -1,0 +1,9 @@
+{
+    "lev": 3,
+    "type": "infusion",
+    "name": "spellCrystal",
+    "item": [
+        "elementalsorcery:magic_crystal",
+        "elementalsorcery:spell_crystal"
+    ]
+}

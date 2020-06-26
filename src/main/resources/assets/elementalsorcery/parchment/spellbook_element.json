@@ -1,0 +1,20 @@
+{
+    "lev": 3,
+    "type": "mult",
+    "lock": 0,
+    "pages": [
+        {
+            "type": "spellaltar",
+            "name": "spElement",
+            "item": [
+                "elementalsorcery:spellbook",
+                "elementalsorcery:spellbook_element"
+            ]
+        },
+        {
+            "type": "normal",
+            "name": "spElement",
+            "differ": "info"
+        }
+    ]
+}

@@ -1,0 +1,27 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "md",
+	"pattern": [
+		"X X",
+		"A#A",
+		" B "
+	],
+	"key": {
+		"#": {
+			"item": "elementalsorcery:magic_crystal"
+		},
+		"B": {
+			"item": "elementalsorcery:md_base"
+		},
+		"X": {
+			"item": "elementalsorcery:kyanite"
+		},
+		"A": {
+			"item": "elementalsorcery:astone",
+            "data": 3
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:md_deconstruct_box"
+	}
+}

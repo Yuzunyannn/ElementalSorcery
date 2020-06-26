@@ -9,10 +9,18 @@ public class RandomHelper {
 
 	// 随机选几个
 	static public <T> T[] randomSelect(T... ints) {
-		if (ints.length == 0)
-			return null;
+		return randomSelect(rand.nextInt(ints.length) + 1, ints);
+	}
+
+	// 随机选几个
+	static public <T> T[] randomSelect(int count, T... ints) {
+		if (ints.length == 0) return null;
 		ints = ints.clone();
-		T[] lucky = (T[]) Array.newInstance(ints[0].getClass(), rand.nextInt(ints.length) + 1);
+		count = Math.min(count, ints.length);
+		count = Math.max(0, count);
+		T[] lucky = (T[]) Array.newInstance(ints[0].getClass(), count);
+		if (count <= 0) return lucky;
+		else if (count >= ints.length) return ints;
 		int remain = ints.length;
 		for (int i = 0; i < lucky.length; i++) {
 			int rindex = rand.nextInt(remain--);

@@ -1,0 +1,25 @@
+{
+    "lev": 3,
+    "type": "separate",
+    "name": "enchantingBook",
+    "item": [
+        "minecraft:enchanting_table",
+        "elementalsorcery:spellbook_enchantment",
+        {
+            "id": "elementalsorcery:kyanite_hoe",
+            "nbt": {
+                "ele_inv": {
+                    "size": 1,
+                    "list": [
+                        {
+                            "slot": 0,
+                            "id": "elementalsorcery:ender",
+                            "size": 10,
+                            "power": 5
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

@@ -54,7 +54,7 @@ public class GuiMDMagicGen extends GuiMDBase<ContainerMDMagicGen> {
 		else if (rate == 1) moveX = (float) (Math.random() * 138 + 3);
 		int x = (int) (offsetX + 15 + moveX);
 		int y = (int) (offsetY + 19 + 50 - 1 - rate * 13);
-		this.drawItem(this.container.tileEntity.renderItem, x, y);
+		this.drawItem(this.container.tileEntity.getRenderItem(), x, y);
 		this.mc.getTextureManager().bindTexture(GuiMDBase.TEXTURE1);
 	}
 

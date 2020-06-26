@@ -1,0 +1,15 @@
+{
+    "lev": 2,
+    "type": "craft",
+    "name": "magicPl",
+    "item": [
+        {
+            "id": "elementalsorcery:magic_platform",
+            "data": 0
+        },
+        {
+            "id": "elementalsorcery:magic_platform",
+            "data": 1
+        }
+    ]
+}

@@ -15,6 +15,7 @@ import yuzunyannn.elementalsorcery.tile.TileStela;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
+@Deprecated
 @SideOnly(Side.CLIENT)
 public class RenderTileStela extends TileEntitySpecialRenderer<TileStela> implements IRenderItem {
 

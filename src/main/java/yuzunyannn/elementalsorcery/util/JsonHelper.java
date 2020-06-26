@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.lwjgl.util.vector.Vector3f;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -33,7 +35,7 @@ public class JsonHelper {
 			String key = entry.getKey();
 			JsonElement je = entry.getValue();
 			if (je.isJsonNull()) continue;
-			else if (je.isJsonObject()) nbt.setTag(key, jsonToNBT(json));
+			else if (je.isJsonObject()) nbt.setTag(key, jsonToNBT(je.getAsJsonObject()));
 			else if (je.isJsonArray()) nbt.setTag(key, jsonToNBT(je.getAsJsonArray()));
 			else if (je.isJsonPrimitive()) {
 				JsonPrimitive jp = je.getAsJsonPrimitive();
@@ -106,7 +108,7 @@ public class JsonHelper {
 
 		public ItemRecord(Item item) {
 			this.item = item;
-			this.stack = ItemStack.EMPTY;
+			this.stack = new ItemStack(item);
 		}
 
 		public boolean isJustItem() {
@@ -127,34 +129,44 @@ public class JsonHelper {
 		}
 	}
 
-	static public List<ItemRecord> readItems(JsonElement je) {
+	static public List<ItemStack> to(List<ItemRecord> list) {
+		List<ItemStack> items = new ArrayList<ItemStack>(list.size());
+		for (ItemRecord ir : list) {
+			if (ir.isJustItem()) items.add(new ItemStack(ir.getItem()));
+			else items.add(ir.getStack());
+		}
+		return items;
+	}
+
+	static public List<ItemRecord> readItems(JsonElement je) throws Exception {
 		List<ItemRecord> list = new ArrayList<>();
 		readItems(je, list);
 		return list;
 	}
 
 	/** 根据json元素，获取物品 */
-	static private void readItems(JsonElement je, List<ItemRecord> list) {
-		if (je.isJsonNull()) return;
+	static private void readItems(JsonElement je, List<ItemRecord> list) throws Exception {
+		if (je == null || je.isJsonNull()) return;
 		// 单个字符串id
 		if (je.isJsonPrimitive()) {
 			if (je.getAsJsonPrimitive().isString()) {
 				String id = je.getAsString();
 				Item item = Item.getByNameOrId(id);
-				if (item == null) {
-					ElementalSorcery.logger.warn("找不到对应的物品：" + id);
-					return;
-				}
+				if (item == null) throw new Exception("找不到对应的物品：" + id);
 				list.add(new ItemRecord(item));
 			}
 		}
 		// 带有类的
 		else if (je.isJsonObject()) {
 			JsonObject jobj = je.getAsJsonObject();
-			if (!isString(jobj, "id")) return;
-			if (jobj.size() == 1) readItems(jobj.get("id"), list);
+			String idKey = "id";
+			if (!isString(jobj, "id")) {
+				if (!isString(jobj, "item")) throw new Exception("找不到物品的id，位于：" + jobj);
+				idKey = "item";
+			}
+			if (jobj.size() == 1) readItems(jobj.get(idKey), list);
 			else {
-				String id = jobj.get("id").getAsString();
+				String id = jobj.get(idKey).getAsString();
 				// 矿物词典
 				if (isString(jobj, "type")) {
 					ResourceLocation rl = new ResourceLocation(jobj.get("type").getAsString());
@@ -170,14 +182,13 @@ public class JsonHelper {
 				}
 				// 没有矿物词典的情况
 				Item item = Item.getByNameOrId(id);
-				if (item == null) {
-					ElementalSorcery.logger.warn("找不到对应的物品：" + id);
-					return;
-				}
-				int meta = 1;
+				if (item == null) throw new Exception("找不到对应的物品：" + id);
+				int meta = 0;
 				if (isNumber(jobj, "damage")) meta = jobj.get("damage").getAsInt();
 				else if (isNumber(jobj, "data")) meta = jobj.get("data").getAsInt();
 				ItemStack stack = new ItemStack(item, 1, meta);
+				// nbt
+				if (isObject(jobj, "nbt")) stack.setTagCompound(jsonToNBT(jobj.get("nbt").getAsJsonObject()));
 				list.add(new ItemRecord(stack));
 			}
 		}
@@ -188,15 +199,15 @@ public class JsonHelper {
 		}
 	}
 
-	static public List<ElementStack> readElements(JsonElement je) {
+	static public List<ElementStack> readElements(JsonElement je) throws Exception {
 		List<ElementStack> list = new ArrayList<>();
 		readElements(je, list);
 		return list;
 	}
 
 	/** 根据json元素，获取物品 */
-	static private void readElements(JsonElement je, List<ElementStack> list) {
-		if (je.isJsonNull()) return;
+	static private void readElements(JsonElement je, List<ElementStack> list) throws Exception {
+		if (je == null || je.isJsonNull()) return;
 		// 带有类的
 		if (je.isJsonObject()) {
 			JsonObject jobj = je.getAsJsonObject();
@@ -204,10 +215,7 @@ public class JsonHelper {
 			String id = jobj.get("id").getAsString();
 			if (id.indexOf(':') == -1) id = ElementalSorcery.MODID + ":" + id;
 			Element element = Element.getElementFromName(id);
-			if (element == null) {
-				ElementalSorcery.logger.warn("找不到对应的元素：" + id);
-				return;
-			}
+			if (element == null) throw new Exception("找不到对应的元素：" + id);
 			int count = 1;
 			if (isNumber(jobj, "count")) count = jobj.get("count").getAsInt();
 			else if (isNumber(jobj, "size")) count = jobj.get("size").getAsInt();
@@ -220,6 +228,31 @@ public class JsonHelper {
 		else if (je.isJsonArray()) {
 			JsonArray jarray = je.getAsJsonArray();
 			for (JsonElement j : jarray) readElements(j, list);
+		}
+	}
+
+	/** 获取坐标 */
+	static public List<Vector3f> readBlockPos(JsonElement je) throws Exception {
+		List<Vector3f> list = new ArrayList<>();
+		readBlockPos(je, list);
+		return list;
+	}
+
+	/** 获取坐标 */
+	static private void readBlockPos(JsonElement je, List<Vector3f> list) throws Exception {
+		if (je == null || je.isJsonNull()) return;
+		if (je.isJsonArray()) {
+			JsonArray jarray = je.getAsJsonArray();
+			if (jarray.size() <= 0) return;
+			je = jarray.get(0);
+			if (je.isJsonArray()) for (JsonElement j : jarray) readBlockPos(j, list);
+			else if (je.isJsonPrimitive() && je.getAsJsonPrimitive().isNumber()) {
+				if (jarray.size() != 3) throw new Exception("方块坐标应当是大小为3的json数组");
+				float x = je.getAsFloat();
+				float y = jarray.get(1).getAsFloat();
+				float z = jarray.get(2).getAsFloat();
+				list.add(new Vector3f(x, y, z));
+			}
 		}
 	}
 

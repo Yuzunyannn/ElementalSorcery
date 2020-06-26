@@ -1,0 +1,27 @@
+{
+    "lev": 2,
+    "type": "mult",
+    "lock": 0,
+    "pages": [
+        {
+            "type": "craft",
+            "name": "decBox",
+            "item": "elementalsorcery:md_deconstruct_box"
+        },
+        {
+            "type": "buidling",
+            "title": "page.decBox.altar",
+            "building": "deconstruct_box",
+            "extra": [
+                {
+                    "pos": [
+                        0,
+                        1,
+                        0
+                    ],
+                    "item": "elementalsorcery:md_deconstruct_box"
+                }
+            ]
+        }
+    ]
+}

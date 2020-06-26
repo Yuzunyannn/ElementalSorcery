@@ -29,6 +29,7 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
+@Deprecated
 public class TileStela extends TileEntityNetwork {
 
 	private EnumFacing face = EnumFacing.NORTH;
@@ -62,11 +63,9 @@ public class TileStela extends TileEntityNetwork {
 		@Override
 		public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
 			// 如果物品不是羊皮纸
-			if (stack.getItem() != ESInitInstance.ITEMS.PARCHMENT)
-				return stack;
+			if (stack.getItem() != ESInitInstance.ITEMS.PARCHMENT) return stack;
 			// 有内容的东西不能放入
-			if (Pages.isVaild(stack))
-				return stack;
+			if (Pages.isVaild(stack)) return stack;
 			return super.insertItem(slot, stack, simulate);
 		}
 	};
@@ -74,9 +73,7 @@ public class TileStela extends TileEntityNetwork {
 	// 拥有能力
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			return true;
-		}
+		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) { return true; }
 		return super.hasCapability(capability, facing);
 	}
 
@@ -84,8 +81,7 @@ public class TileStela extends TileEntityNetwork {
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			if (facing == face.getOpposite())
-				return (T) invItem;
+			if (facing == face.getOpposite()) return (T) invItem;
 			return (T) invPaper;
 		}
 		return super.getCapability(capability, facing);
@@ -94,23 +90,19 @@ public class TileStela extends TileEntityNetwork {
 	// 是否正在工作
 	public boolean isRunning() {
 		ItemStack paper = invPaper.extractItem(0, 1, true);
-		if (paper.isEmpty())
-			return false;
+		if (paper.isEmpty()) return false;
 		ItemStack item = invItem.extractItem(0, 1, true);
-		if (item.isEmpty())
-			return false;
+		if (item.isEmpty()) return false;
 		return canRunning();
 	}
 
 	private boolean check(BlockPos pos) {
 		IBlockState state = this.world.getBlockState(pos);
-		if (state.getBlock() instanceof BlockFlower)
-			return true;
+		if (state.getBlock() instanceof BlockFlower) return true;
 		TileEntity tile = this.world.getTileEntity(pos);
 		if (tile instanceof TileEntityFlowerPot) {
 			Block flower = Block.getBlockFromItem(((TileEntityFlowerPot) tile).getFlowerPotItem());
-			if (flower instanceof BlockFlower)
-				return true;
+			if (flower instanceof BlockFlower) return true;
 		}
 		return false;
 	}
@@ -123,15 +115,11 @@ public class TileStela extends TileEntityNetwork {
 
 	// 工作一次
 	public void doOnce() {
-		if (!this.isRunning())
-			return;
-		if (this.world.isRemote)
-			return;
+		if (!this.isRunning()) return;
+		if (this.world.isRemote) return;
 		ItemStack item = invItem.extractItem(0, 64, true);
 		String[] idArray = TileStela.pageAwareFromItem(item);
-		if (idArray.length == 0) {
-			return;
-		}
+		if (idArray.length == 0) { return; }
 		ItemStack paper = invPaper.extractItem(0, idArray.length, false);
 		if (idArray.length == 1) {
 			this.produce(ItemParchment.getParchment(idArray[0]));
@@ -140,8 +128,7 @@ public class TileStela extends TileEntityNetwork {
 		}
 		int size = Math.min(paper.getCount(), idArray.length);
 		String[] ids = new String[size];
-		for (int i = 0; i < size; i++)
-			ids[i] = idArray[i];
+		for (int i = 0; i < size; i++) ids[i] = idArray[i];
 		this.produce(ItemScroll.getScroll(ids));
 		this.updateToClient();
 	}
@@ -151,8 +138,7 @@ public class TileStela extends TileEntityNetwork {
 		stack = BlockHelper.insertInto(world, this.pos.offset(this.face.getOpposite()), face, stack);
 		if (!stack.isEmpty()) {
 			stack = BlockHelper.insertInto(world, this.pos.offset(EnumFacing.DOWN), EnumFacing.UP, stack);
-			if (stack.isEmpty())
-				return;
+			if (stack.isEmpty()) return;
 			Block.spawnAsEntity(this.world, this.pos, stack);
 		}
 	}
@@ -163,14 +149,11 @@ public class TileStela extends TileEntityNetwork {
 	static public String[] pageAwareFromItem(ItemStack stack) {
 		String[] ids = null;
 		ResourceLocation rname = stack.getItem().getRegistryName();
-		if (itemToIds.containsKey(rname))
-			return RandomHelper.randomSelect(itemToIds.get(rname));
+		if (itemToIds.containsKey(rname)) return RandomHelper.randomSelect(itemToIds.get(rname));
 		ids = TileStela.pageAware1(stack);
-		if (ids != null)
-			return ids;
+		if (ids != null) return ids;
 		ids = TileStela.pageAware2(stack);
-		if (ids != null)
-			return ids;
+		if (ids != null) return ids;
 		return new String[0];
 	}
 
@@ -216,10 +199,10 @@ public class TileStela extends TileEntityNetwork {
 		// 附魔台
 		addToMap(Blocks.ENCHANTING_TABLE, Pages.ABOUT_ENCHANTINGBOOK, Pages.ABOUT_KYNATIE_TOOLS);
 		// 魔力水晶
-		addToMap(ESInitInstance.ITEMS.MAGIC_CRYSTAL, Pages.ABOUT_MAGIC_CRY, Pages.ABOUT_INFUSION,
+		addToMap(ESInitInstance.ITEMS.MAGIC_CRYSTAL, Pages.ABOUT_MAGIC_CRYSTAL, Pages.ABOUT_INFUSION,
 				Pages.ABOUT_MAGIC_ESTONE);
 		// 咒术水晶
-		addToMap(ESInitInstance.ITEMS.SPELL_CRYSTAL, Pages.ABOUT_SPELL_CRY, Pages.ABOUT_INFUSION,
+		addToMap(ESInitInstance.ITEMS.SPELL_CRYSTAL, Pages.ABOUT_SPELL_CRYSTAL, Pages.ABOUT_INFUSION,
 				Pages.ABOUT_MAGIC_PAPER);
 		// 元素水晶
 		addToMap(ESInitInstance.ITEMS.ELEMENT_CRYSTAL, Pages.ABOUT_ELEMENT_CRY, Pages.ABOUT_INFUSION,
@@ -248,17 +231,15 @@ public class TileStela extends TileEntityNetwork {
 		if (block != Blocks.AIR) {
 			if (block == ESInitInstance.BLOCKS.MD_INFUSION) {
 				if (Math.random() < 0.2)
-					return RandomHelper.randomSelect(Pages.ABOUT_ELEMENT_CRY, Pages.ABOUT_SPELL_CRY);
-				return RandomHelper.randomSelect(Pages.ABOUT_INFUSION, Pages.ABOUT_MAGIC_PIECE, Pages.ABOUT_MAGIC_CRY);
+					return RandomHelper.randomSelect(Pages.ABOUT_ELEMENT_CRY, Pages.ABOUT_SPELL_CRYSTAL);
+				return RandomHelper.randomSelect(Pages.ABOUT_INFUSION, Pages.ABOUT_MAGIC_PIECE, Pages.ABOUT_MAGIC_CRYSTAL);
 			}
 		} else {
 			if (item instanceof ItemKyaniteTools.toolsCapability) {
 				return RandomHelper.randomSelect(Pages.ABOUT_KYNATIE_TOOLS, Pages.ABOUT_ELEMENT,
 						Pages.ABOUT_ABSORB_BOX);
 			} else if (item == ESInitInstance.ITEMS.PARCHMENT) {
-				if (stack.getCount() >= 8) {
-					return new String[] { Pages.ABOUT_MANUAL };
-				}
+				if (stack.getCount() >= 8) { return new String[] { Pages.ABOUT_MANUAL }; }
 			}
 		}
 		return null;

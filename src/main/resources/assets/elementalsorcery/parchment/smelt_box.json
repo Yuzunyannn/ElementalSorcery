@@ -1,0 +1,9 @@
+{
+    "type": "craft",
+    "name": "smeltBox",
+    "item": [
+        "elementalsorcery:smelt_box",
+        "elementalsorcery:smelt_box_iron",
+        "elementalsorcery:smelt_box_kyanite"
+    ]
+}

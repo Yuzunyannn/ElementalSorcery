@@ -12,7 +12,7 @@ import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
-public class RednerTileSupremeCraftingTable extends TileEntitySpecialRenderer<TileSupremeCraftingTable>
+public class RenderTileSupremeCraftingTable extends TileEntitySpecialRenderer<TileSupremeCraftingTable>
 		implements IRenderItem {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/supreme_crafting_table.png");

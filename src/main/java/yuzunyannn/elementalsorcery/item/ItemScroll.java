@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.item;
 
 import java.util.List;
 
+import com.jcraft.jogg.Page;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,6 +19,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 public class ItemScroll extends Item {
@@ -30,13 +33,11 @@ public class ItemScroll extends Item {
 		NBTTagCompound nbt = stack.getOrCreateSubCompound("scroll");
 		NBTTagList ids = nbt.getTagList("parIds", 8);
 		if (ids.tagCount() == 0) {
-			for (int i = 0; i < 3; i++)
-				playerIn.inventory.addItemStackToInventory(ItemParchment.getParchment(null));
-		} else
-			for (NBTBase base : ids) {
-				NBTTagString bntStr = (NBTTagString) base;
-				playerIn.inventory.addItemStackToInventory(ItemParchment.getParchment(bntStr.getString()));
-			}
+			for (int i = 0; i < 3; i++) playerIn.inventory.addItemStackToInventory(ItemParchment.getParchment(null));
+		} else for (NBTBase base : ids) {
+			NBTTagString bntStr = (NBTTagString) base;
+			playerIn.inventory.addItemStackToInventory(ItemParchment.getParchment(bntStr.getString()));
+		}
 		ItemStack newStack = stack.copy();
 		newStack.shrink(1);
 		playerIn.setHeldItem(handIn, newStack);
@@ -48,8 +49,7 @@ public class ItemScroll extends Item {
 		NBTTagList ids = null;
 		NBTTagCompound nbt = stack.getSubCompound("scroll");
 		if (nbt != null) {
-			if (nbt.hasKey("parIds"))
-				ids = nbt.getTagList("parIds", 8);
+			if (nbt.hasKey("parIds")) ids = nbt.getTagList("parIds", 8);
 		}
 		if (ids == null) {
 			tooltip.add(TextFormatting.YELLOW + I18n.format("info.scroll.none", 3));

@@ -1,0 +1,15 @@
+{
+    "lev": 3,
+    "type": "craft",
+    "name": "bookCover",
+    "item": [
+        {
+            "id": "elementalsorcery:spellbook_cover",
+            "data": 0
+        },
+        {
+            "id": "elementalsorcery:spellbook_cover",
+            "data": 1
+        }
+    ]
+}

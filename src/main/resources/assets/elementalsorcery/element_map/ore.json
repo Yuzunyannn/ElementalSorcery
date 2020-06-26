@@ -7,14 +7,14 @@
             },
             "element": [
                 {
-                    "id": "earth",
-                    "size": 20,
-                    "power": 30
-                },
-                {
                     "id": "wood",
                     "size": 15,
                     "power": 100
+                },
+                {
+                    "id": "earth",
+                    "size": 20,
+                    "power": 30
                 }
             ]
         },
@@ -25,14 +25,14 @@
             },
             "element": [
                 {
-                    "id": "earth",
-                    "size": 20,
-                    "power": 30
-                },
-                {
                     "id": "metal",
                     "size": 21,
                     "power": 220
+                },
+                {
+                    "id": "earth",
+                    "size": 20,
+                    "power": 30
                 }
             ]
         },
@@ -56,14 +56,14 @@
             },
             "element": [
                 {
-                    "id": "earth",
-                    "size": 20,
-                    "power": 30
-                },
-                {
                     "id": "metal",
                     "size": 22,
                     "power": 250
+                },
+                {
+                    "id": "earth",
+                    "size": 20,
+                    "power": 30
                 }
             ]
         },
@@ -74,14 +74,14 @@
             },
             "element": [
                 {
-                    "id": "earth",
-                    "size": 20,
-                    "power": 30
-                },
-                {
                     "id": "metal",
                     "size": 9,
                     "power": 220
+                },
+                {
+                    "id": "earth",
+                    "size": 20,
+                    "power": 30
                 }
             ]
         },
@@ -92,17 +92,17 @@
             },
             "element": [
                 {
-                    "id": "earth",
-                    "size": 20,
-                    "power": 80
-                },
-                {
                     "id": "metal",
                     "size": 4,
                     "power": 150
                 },
                 {
                     "id": "magic",
+                    "size": 20,
+                    "power": 80
+                },
+                {
+                    "id": "earth",
                     "size": 20,
                     "power": 80
                 }

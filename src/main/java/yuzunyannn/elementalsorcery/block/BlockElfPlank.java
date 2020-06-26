@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -20,6 +21,7 @@ public class BlockElfPlank extends Block implements Mapper {
 
 	public BlockElfPlank() {
 		super(Material.WOOD);
+		this.setSoundType(SoundType.WOOD);
 		this.setUnlocalizedName("elfPlank");
 		this.setHardness(2.5f);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, BlockElfPlank.EnumType.NORMAL));

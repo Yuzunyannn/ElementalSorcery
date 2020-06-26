@@ -28,7 +28,7 @@ public class MDDraw implements IDrawable {
 
 	@Override
 	public int getHeight() {
-		return 95;
+		return 99;
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class MDDraw implements IDrawable {
 		mdRW.drawBackground(minecraft, this, xOffset, yOffset);
 		IGuiItemStackGroup group = layout.getItemStacks();
 		minecraft.getTextureManager().bindTexture(TEXTURE2);
-		RenderHelper.drawTexturedModalRect(xOffset, yOffset + 70, 0, 70, 175, 25, 256, 256);
+		RenderHelper.drawTexturedModalRect(xOffset, yOffset + 70, 0, 70, 175, 29, 256, 256);
 	}
 
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {

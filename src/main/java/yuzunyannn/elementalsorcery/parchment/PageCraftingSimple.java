@@ -6,30 +6,40 @@ import net.minecraft.item.ItemStack;
 
 public class PageCraftingSimple extends PageCrafting {
 
-	private final String name;
+	private final String title;
+	private final String value;
 
 	public PageCraftingSimple(String name, ItemStack... stacks) {
 		super(stacks);
-		this.name = name;
+		this.title = "page." + name;
+		this.value = title + ".ct";
 	}
 
 	public PageCraftingSimple(String name, Block block) {
 		super(block);
-		this.name = name;
+		this.title = "page." + name;
+		this.value = title + ".ct";
 	}
 
 	public PageCraftingSimple(String name, Item item) {
 		super(item);
-		this.name = name;
+		this.title = "page." + name;
+		this.value = title + ".ct";
+	}
+
+	public PageCraftingSimple(String title, String value, ItemStack... stacks) {
+		super(stacks);
+		this.title = title;
+		this.value = value;
 	}
 
 	@Override
 	public String getTitle() {
-		return "page." + name;
+		return title;
 	}
 
 	@Override
 	public String getContext() {
-		return "page." + name + ".ct";
+		return value;
 	}
 }

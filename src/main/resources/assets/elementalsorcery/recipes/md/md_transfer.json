@@ -2,20 +2,19 @@
 	"type": "minecraft:crafting_shaped",
 	"group": "md",
 	"pattern": [
-		"XBX",
+		"XAX",
 		"X X",
-		" # "
+		" B "
 	],
 	"key": {
-		"#": {
-			"item": "elementalsorcery:astone",
-			"data": 6
+		"B": {
+			"item": "elementalsorcery:md_base"
 		},
 		"X": {
 			"item": "elementalsorcery:astone",
 			"data": 5
 		},
-		"B": {
+		"A": {
 			"item": "elementalsorcery:astone",
 			"data": 4
 		}

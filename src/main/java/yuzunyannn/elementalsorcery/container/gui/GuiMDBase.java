@@ -26,7 +26,7 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 		super(inventorySlotsIn, playerInv);
 	}
 
-	protected static void drawMagicVolume(float xoff, float yoff, int width, int height, float rate,
+	public static void drawMagicVolume(float xoff, float yoff, int width, int height, float rate,
 			float partialTicks) {
 		RenderTileMeltCauldron.TEXTURE_FLUID.bind();
 		final int PEAK = 10 / 2;

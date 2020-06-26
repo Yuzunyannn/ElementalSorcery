@@ -1,10 +1,12 @@
 package yuzunyannn.elementalsorcery.parchment;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,9 +22,9 @@ import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public class PageCrafting extends PageEasy {
-	private final List<NonNullList<Ingredient>> ITEM_LIST = new ArrayList<NonNullList<Ingredient>>();
-	private final List<ItemStack> ITEM_OUT = new ArrayList<ItemStack>();
-	private final List<List<ElementStack>> ELEMENT_NEED = new ArrayList<List<ElementStack>>();
+	private final List<NonNullList<Ingredient>> itemList = new ArrayList<NonNullList<Ingredient>>();
+	private final List<ItemStack> itemOut = new ArrayList<ItemStack>();
+	private final List<List<ElementStack>> elementNeed = new ArrayList<List<ElementStack>>();
 	private int nowIndex = 0;
 	private int tick = 0;
 	private int size = 9;
@@ -43,23 +45,22 @@ public class PageCrafting extends PageEasy {
 
 	public void addNewRecipe(ItemStack stack) {
 		// 寻找元素合成表
-		if (this.addESRecipe(stack))
-			return;
+		if (this.addESRecipe(stack)) return;
 		// 根据stack寻找合成表
-		IRecipe irecipe = null;
+		List<IRecipe> allRecipe = new LinkedList();
 		for (IRecipe ire : CraftingManager.REGISTRY) {
 			if (ire.getRecipeOutput().isItemEqual(stack)) {
-				irecipe = ire;
-				break;
+				allRecipe.add(ire);
 			}
 		}
-		if (irecipe == null)
-			return;
+		if (allRecipe.isEmpty()) return;
 		// 获取数组
-		NonNullList<Ingredient> ingLIst = irecipe.getIngredients();
-		ITEM_LIST.add(ingLIst);
-		ITEM_OUT.add(irecipe.getRecipeOutput());
-		ELEMENT_NEED.add(null);
+		for (IRecipe irecipe : allRecipe) {
+			NonNullList<Ingredient> ingLIst = irecipe.getIngredients();
+			itemList.add(ingLIst);
+			itemOut.add(irecipe.getRecipeOutput());
+			elementNeed.add(null);
+		}
 	}
 
 	// 添加es合成表
@@ -72,28 +73,27 @@ public class PageCrafting extends PageEasy {
 				break;
 			}
 		}
-		if (irecipe == null)
-			return false;
+		if (irecipe == null) return false;
 		// 获取数组
 		NonNullList<Ingredient> ingLIst = irecipe.getIngredients();
 		List<ElementStack> eList = irecipe.getNeedElements();
-		ITEM_LIST.add(ingLIst);
-		ITEM_OUT.add(irecipe.getRecipeOutput());
-		ELEMENT_NEED.add(eList);
+		itemList.add(ingLIst);
+		itemOut.add(irecipe.getRecipeOutput());
+		elementNeed.add(eList);
 		return true;
 	}
 
 	// 测试是否拥有合成表，是否有效
 	public boolean test() {
-		return !ITEM_LIST.isEmpty();
+		return !itemList.isEmpty();
 	}
 
 	public NonNullList<Ingredient> getCrafting() {
-		return ITEM_LIST.get(nowIndex);
+		return itemList.get(nowIndex);
 	}
 
 	public ItemStack getOutput() {
-		return ITEM_OUT.get(nowIndex);
+		return itemOut.get(nowIndex);
 	}
 
 	@Override
@@ -111,8 +111,7 @@ public class PageCrafting extends PageEasy {
 
 	@Override
 	public void init(IPageManager pageManager) {
-		if (ITEM_LIST.isEmpty())
-			return;
+		if (itemList.isEmpty()) return;
 		size = this.getCrafting().size() > 9 ? 25 : 9;
 		int cX = this.getCX();
 		int cY = this.getCY();
@@ -131,15 +130,14 @@ public class PageCrafting extends PageEasy {
 		if (tick > 20 * 2) {
 			tick = 0;
 			nowIndex++;
-			nowIndex = nowIndex % ITEM_LIST.size();
+			nowIndex = nowIndex % itemList.size();
 			this.reflushStack(pageManager);
 		}
 	}
 
 	// 更换物品栈
 	private void reflushStack(IPageManager pageManager) {
-		if (ITEM_LIST.isEmpty())
-			return;
+		if (itemList.isEmpty()) return;
 		NonNullList<Ingredient> list = this.getCrafting();
 		for (int i = 0; i < list.size(); i++) {
 			ItemStack[] stacks = list.get(i).getMatchingStacks();
@@ -161,17 +159,14 @@ public class PageCrafting extends PageEasy {
 	@Override
 	public void addContexts(List<String> contexts) {
 		super.addContexts(contexts);
-		List<ElementStack> eList = ELEMENT_NEED.get(nowIndex);
-		if (eList == null)
-			return;
+		List<ElementStack> eList = elementNeed.get(nowIndex);
+		if (eList == null) return;
 		TextHelper.addInfo(contexts, "page.crafting.need");
 		for (ElementStack stack : eList) {
-			if (stack.usePower())
-				TextHelper.addInfo(contexts, "page.crafting.show", TextFormatting.GOLD,
-						I18n.format(stack.getElementUnlocalizedName()), stack.getCount(), stack.getPower());
-			else
-				TextHelper.addInfo(contexts, "page.crafting.npshow", TextFormatting.GOLD,
-						I18n.format(stack.getElementUnlocalizedName()), stack.getCount());
+			if (stack.usePower()) TextHelper.addInfo(contexts, "page.crafting.show", TextFormatting.GOLD,
+					I18n.format(stack.getElementUnlocalizedName()), stack.getCount(), stack.getPower());
+			else TextHelper.addInfo(contexts, "page.crafting.npshow", TextFormatting.GOLD,
+					I18n.format(stack.getElementUnlocalizedName()), stack.getCount());
 		}
 	}
 
@@ -186,8 +181,7 @@ public class PageCrafting extends PageEasy {
 			gui.drawTexturedModalRect(cX + 54, cY - 36, 41, 166, 36, 36);
 			gui.drawTexturedModalRect(cX - 36, cY + 54, 41, 166, 36, 36);
 			gui.drawTexturedModalRect(cX + 54, cY + 54, 41, 166, 36, 36);
-		} else
-			gui.drawTexturedModalRect(cX, cY, 41, 166, 54, 54);
+		} else gui.drawTexturedModalRect(cX, cY, 41, 166, 54, 54);
 		gui.drawTexturedModalRect(cX + 18, cY + 64, 41, 166, 18, 18);
 	}
 }

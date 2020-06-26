@@ -13,6 +13,7 @@ import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
+import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 
 public class RecipeManagement implements ESRegister.IRecipeManagement {
@@ -50,6 +51,8 @@ public class RecipeManagement implements ESRegister.IRecipeManagement {
 		TileMagicDesk.init();
 		// 碎石修复注册
 		TileMDRubbleRepair.init();
+		// 注魔机
+		TileMDInfusion.init();
 		// 咒术纸
 		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.SPELL_PAPER, 1);
 		ESInitInstance.ITEMS.SPELL_PAPER.onCreated(stack, null, null);

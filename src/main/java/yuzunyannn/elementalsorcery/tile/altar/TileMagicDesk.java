@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.tile.altar;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,6 +18,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -25,6 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.ability.IAltarWake;
 import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
 import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
@@ -42,7 +45,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 	// 记录的物品
 	private ItemStack book = ItemStack.EMPTY;
 	// 是否合成了一个新的物品
-	private boolean crafting_success = false;
+	private boolean craftingSuccess = false;
 
 	public ItemStack getBook() {
 		return book;
@@ -51,8 +54,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 	public void setBook(ItemStack book) {
 		this.book = book;
 		this.markDirty();
-		if (book.isEmpty())
-			return;
+		if (book.isEmpty()) return;
 		if (book.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null)) {
 			if (world.isRemote) {
 				Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
@@ -91,10 +93,8 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		super.readFromNBT(compound);
-		if (compound.hasKey("book"))
-			book = new ItemStack(compound.getCompoundTag("book"));
-		else
-			book = ItemStack.EMPTY;
+		if (compound.hasKey("book")) book = new ItemStack(compound.getCompoundTag("book"));
+		else book = ItemStack.EMPTY;
 		if (this.isSending()) {
 			this.readNBTToUpdate(compound);
 		}
@@ -110,15 +110,15 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 	}
 
 	public NBTTagCompound writeNBTToSend(NBTTagCompound nbt) {
-		nbt.setBoolean("CS", this.crafting_success);
+		nbt.setBoolean("CS", this.craftingSuccess);
 		return nbt;
 	}
 
 	public void readNBTToUpdate(NBTTagCompound nbt) {
-		this.crafting_success = nbt.getBoolean("CS");
-		if (this.crafting_success && this.world.isRemote) {
+		this.craftingSuccess = nbt.getBoolean("CS");
+		if (this.craftingSuccess && this.world.isRemote) {
 			this.finishCraftingClient(this.book);
-			this.crafting_success = false;
+			this.craftingSuccess = false;
 		}
 	}
 
@@ -127,22 +127,15 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 
 	@Override
 	public void update() {
-		if (book.isEmpty())
-			return;
-		if (!book.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null))
-			return;
+		if (book.isEmpty()) return;
+		if (!book.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null)) return;
 		tick++;
-		if (tick % 40 == 0)
-			ok = structure.check(EnumFacing.NORTH);
-		if (world.isRemote)
-			this.updateClientBookRedner();
-		if (ok == false)
-			return;
+		if (tick % 40 == 0) ok = structure.check(EnumFacing.NORTH);
+		if (world.isRemote) this.updateClientBookRender();
+		if (ok == false) return;
 		// 更新给书充能
-		if (tick % 2 == 0)
-			this.updateCharge();
-		if (tick % 10 != 0)
-			return;
+		if (tick % 2 == 0) this.updateCharge();
+		if (tick % 10 != 0) return;
 		final float range = 1.5f;
 		AxisAlignedBB aabb = new AxisAlignedBB(pos.getX() + 0.5 - range, pos.getY(), pos.getZ() + 0.5 - range,
 				pos.getX() + 0.5 + range, pos.getY() + 0.5, pos.getZ() + 0.5 + range);
@@ -164,8 +157,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 				}
 			}
 		}
-		if (world.isRemote)
-			return;
+		if (world.isRemote) return;
 		aabb = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 2, pos.getZ() + 1);
 		// 获取祭坛上面的物品，进行合成
 		list = world.getEntitiesWithinAABB(EntityItem.class, aabb);
@@ -181,8 +173,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 	public void updateCharge() {
 		Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 		IElementInventory inv = spellbook.getInventory();
-		if (inv == null)
-			return;
+		if (inv == null) return;
 		inv.loadState(book);
 		ElementStack need = ItemSpellbook.giveMeRandomElement(inv).copy();
 		if (!need.isEmpty()) {
@@ -193,30 +184,25 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		for (int i = 0; i < 4; i++) {
 			TileEntity cube = structure.getSpecialTileEntity(i);
 			IAltarWake altarWake = TileStaticMultiBlock.getAlterWake(cube);
-			if (altarWake == null)
-				continue;
+			if (altarWake == null) continue;
 			IElementInventory inv_other = ElementHelper.getElementInventory(cube);
-			if (inv_other == null)
-				continue;
+			if (inv_other == null) continue;
 			ElementStack estack = TileElementalCube.getAndTestElementTransBetweenInventory(need.copy(), inv, inv_other);
 			if (!estack.isEmpty()) {
 				altarWake.wake(IAltarWake.SEND);
-				if (world.isRemote)
-					TileElementalCube.giveParticleElementTo(world, estack.getColor(), structure.getSpecialBlockPos(i),
-							this.pos.up(), 0.5f);
+				if (world.isRemote) TileElementalCube.giveParticleElementTo(world, estack.getColor(),
+						structure.getSpecialBlockPos(i), this.pos.up(), 0.5f);
 				inv_other.extractElement(estack, false);
 				inv.insertElement(estack, false);
 				succuess = true;
 			}
 		}
-		if (succuess)
-			inv.saveState(book);
+		if (succuess) inv.saveState(book);
 	}
 
 	// 吸收物品
 	public void eat(ItemStack stack) {
-		if (automataList.isEmpty())
-			this.resetAllAutomata();
+		if (automataList.isEmpty()) this.resetAllAutomata();
 		// 成功物品
 		ItemStack finish = ItemStack.EMPTY;
 		// 开始遍历自所有自动机
@@ -245,9 +231,9 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 
 	public void finishCrafting(ItemStack output) {
 		this.setBook(output);
-		this.crafting_success = true;
+		this.craftingSuccess = true;
 		this.updateToClient();
-		this.crafting_success = false;
+		this.craftingSuccess = false;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -282,18 +268,9 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		}
 	}
 
-	private static List<ItemAutomata> automataList = new LinkedList<ItemAutomata>();
-
-	private void resetAllAutomata() {
-		automataList.clear();
-		if (this.book.getItem() == ESInitInstance.ITEMS.SPELLBOOK) {
-			automataList.add(new ItemAutomata(AUTO_LAUNCH_BOOK, ESInitInstance.ITEMS.SPELLBOOK_LAUNCH));
-			automataList.add(new ItemAutomata(AUTO_ELEMENT_BOOK, ESInitInstance.ITEMS.SPELLBOOK_ELEMENT));
-		}
-	}
-
 	// 特效的更新
-	public void updateClientBookRedner() {
+	@SideOnly(Side.CLIENT)
+	public void updateClientBookRender() {
 		Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 		SpellbookRenderInfo info = spellbook.render_info;
 		info.tickCount++;
@@ -312,32 +289,77 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 			tRot = 0;
 			if (info.bookSpread > 0) {
 				info.bookSpread -= 0.075f;
-			} else
-				info.bookSpread = 0;
+			} else info.bookSpread = 0;
 		}
 		float f2;
-		for (f2 = this.tRot - info.bookRotation; f2 >= (float) Math.PI; f2 -= ((float) Math.PI * 2F))
-			;
-		while (f2 < -(float) Math.PI)
-			f2 += ((float) Math.PI * 2F);
+		for (f2 = this.tRot - info.bookRotation; f2 >= (float) Math.PI; f2 -= ((float) Math.PI * 2F));
+		while (f2 < -(float) Math.PI) f2 += ((float) Math.PI * 2F);
 		info.bookRotation += f2 * 0.25F;
 		info.pageFlip += (1.0f - info.bookSpread) * 1.25;
 		info.pageFlip *= 0.85F;
 	}
 
-	// 各种合成表
-	public static List<ItemStack> AUTO_LAUNCH_BOOK;
-	public static List<ItemStack> AUTO_ELEMENT_BOOK;
+	/** 自动机匹配表 */
+	private final List<ItemAutomata> automataList = new LinkedList<ItemAutomata>();
 
+	private void resetAllAutomata() {
+		automataList.clear();
+		if (this.book.getItem() == ESInitInstance.ITEMS.SPELLBOOK) {
+			for (TileMagicDesk.Recipe r : getRecipes())
+				automataList.add(new ItemAutomata(r.getSequence(), r.getOutput()));
+		}
+	}
+
+	static public class Recipe {
+		ItemStack output;
+		ItemStack input;
+		NonNullList<ItemStack> sequence;
+
+		public ItemStack getOutput() {
+			return output;
+		}
+
+		public ItemStack getInput() {
+			return input;
+		}
+
+		public NonNullList<ItemStack> getSequence() {
+			return sequence;
+		}
+	}
+
+	static private final List<Recipe> recipes = new ArrayList<>();
+
+	public static List<Recipe> getRecipes() {
+		return recipes;
+	}
+
+	static public void addRecipe(ItemStack input, ItemStack output, ItemStack... stacks) {
+		if (stacks.length == 0) return;
+		if (input.isEmpty() || output.isEmpty()) return;
+		Recipe r = new Recipe();
+		r.input = input;
+		r.output = output;
+		r.sequence = NonNullList.from(ItemStack.EMPTY, stacks);
+		recipes.add(r);
+	}
+
+	static public List<ItemStack> findRecipe(ItemStack input) {
+		for (TileMagicDesk.Recipe r : getRecipes()) {
+			if (ItemStack.areItemsEqual(r.getInput(), input)) return r.sequence;
+		}
+		return Collections.emptyList();
+	}
+
+	// 各种合成表
 	public static void init() {
+		ESObjects.Items ITEMS = ESInitInstance.ITEMS;
 		// launch
-		AUTO_LAUNCH_BOOK = new ArrayList<ItemStack>();
-		AUTO_LAUNCH_BOOK.add(new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL, 3));
-		AUTO_LAUNCH_BOOK.add(new ItemStack(Blocks.OBSIDIAN, 2));
+		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_LAUNCH),
+				new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL, 3), new ItemStack(Blocks.OBSIDIAN, 2));
 		// element
-		AUTO_ELEMENT_BOOK = new ArrayList<ItemStack>();
-		AUTO_ELEMENT_BOOK.add(new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL, 10));
-		AUTO_ELEMENT_BOOK.add(new ItemStack(Items.DIAMOND, 2));
+		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ELEMENT),
+				new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL, 10), new ItemStack(Items.DIAMOND, 2));
 	}
 
 	// ItemStack的自动机
@@ -367,8 +389,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		public void reset() {
 			finish = false;
 			iter = list.iterator();
-			if (!iter.hasNext())
-				finish = true;
+			if (!iter.hasNext()) finish = true;
 		}
 
 		// 自动机要求必须完全一样
@@ -380,12 +401,10 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 			ItemStack come = stack.copy();
 			while (!come.isEmpty()) {
 				if (current.isEmpty()) {
-					if (!iter.hasNext())
-						return false;
+					if (!iter.hasNext()) return false;
 					current = iter.next().copy();
 				} else {
-					if (!ItemStack.areItemsEqual(current, come))
-						return false;
+					if (!ItemStack.areItemsEqual(current, come)) return false;
 					int size = Math.min(current.getCount(), come.getCount());
 					current.shrink(size);
 					come.shrink(size);

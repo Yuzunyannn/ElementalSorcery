@@ -2,18 +2,17 @@
 	"type": "minecraft:crafting_shaped",
 	"group": "md",
 	"pattern": [
-		"X X",
-		"XAX",
-		" # "
+		"###",
+		"#A#",
+		"#B#"
 	],
 	"key": {
 		"#": {
 			"item": "elementalsorcery:astone",
-			"data": 6
-		},
-		"X": {
-			"item": "elementalsorcery:astone",
 			"data": 2
+		},
+		"B": {
+			"item": "elementalsorcery:md_base"
 		},
 		"A": {
 			"item": "minecraft:coal",

@@ -54,8 +54,8 @@ public class BuildingLib {
 
 	/** 获取建筑 */
 	public Building getBuilding(String key) {
-		if (mapSave.containsKey(key)) return mapSave.get(key).building;
 		if (mapLib.containsKey(key)) return mapLib.get(key);
+		if (mapSave.containsKey(key)) return mapSave.get(key).building;
 		return null;
 	}
 

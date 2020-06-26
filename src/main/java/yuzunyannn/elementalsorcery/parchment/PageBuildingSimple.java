@@ -13,6 +13,6 @@ public class PageBuildingSimple extends PageBuilding {
 
 	@Override
 	public String getTitle() {
-		return "page." + title;
+		return title;
 	}
 }

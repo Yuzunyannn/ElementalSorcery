@@ -1,0 +1,6 @@
+{
+    "type": "craft",
+    "name": "meltCauldron",
+    "item": "elementalsorcery:melt_cauldron",
+    "lev": 1
+}

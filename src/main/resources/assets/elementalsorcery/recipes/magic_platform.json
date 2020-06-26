@@ -10,8 +10,8 @@
 			"ore": "ingotGold"
 		},
 		"#": {
-			"item": "minecraft:planks",
-			"data": 5
+			"item": "elementalsorcery:estone",
+			"data": 0
 		},
 		"A": {
 			"item": "elementalsorcery:magic_crystal"

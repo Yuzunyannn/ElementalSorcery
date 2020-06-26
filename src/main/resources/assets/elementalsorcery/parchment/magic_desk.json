@@ -1,0 +1,37 @@
+{
+    "lev": 3,
+    "type": "mult",
+    "lock": 0,
+    "pages": [
+        {
+            "type": "craft",
+            "name": "magicDesk",
+            "item": "elementalsorcery:magic_desk"
+        },
+        {
+            "type": "buidling",
+            "name": "magicDesk",
+            "building": "spellbook_altar",
+            "extra": [
+                {
+                    "pos": [
+                        0,
+                        1,
+                        0
+                    ],
+                    "item": "elementalsorcery:magic_desk"
+                }
+            ]
+        },
+        {
+            "type": "normal",
+            "name": "magicDesk",
+            "differ": "crafting"
+        },
+        {
+            "type": "normal",
+            "name": "magicDesk",
+            "differ": "charge"
+        }
+    ]
+}

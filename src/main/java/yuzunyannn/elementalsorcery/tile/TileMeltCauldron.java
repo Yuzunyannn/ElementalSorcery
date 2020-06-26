@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.util.render.Textures;
+import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPower, ITickable {
 
@@ -207,16 +207,16 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 		}
 		Block block = Block.getBlockFromItem(this.result.getItem());
 		if (block == ESInitInstance.BLOCKS.KYANITE_BLOCK) {
-			this.resultTex = Textures.KYANITE_BLOCK;
+			this.resultTex = RenderObjects.KYANITE_BLOCK;
 		} else if (block == Blocks.STONE) {
-			this.resultTex = Textures.STONE;
+			this.resultTex = RenderObjects.STONE;
 		} else if (block == ESInitInstance.BLOCKS.KYANITE_ORE) {
-			this.resultTex = Textures.KYANITE_ORE;
+			this.resultTex = RenderObjects.KYANITE_ORE;
 		} else if (block == ESInitInstance.BLOCKS.ASTONE) {
 			if (this.result.getMetadata() == 0)
-				this.resultTex = Textures.ASTONE;
+				this.resultTex = RenderObjects.ASTONE;
 			else
-				this.resultTex = Textures.ASTONE_FRAGMENTED;
+				this.resultTex = RenderObjects.ASTONE_FRAGMENTED;
 		} else {
 			this.resultTex = null;
 		}

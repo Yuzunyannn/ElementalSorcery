@@ -159,11 +159,11 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 			for (int i = 0; i < instance.getSlots(); i++) {
 				if (instance.getStackInSlot(i).isEmpty()) continue;
 				NBTTagCompound data = instance.getStackInSlot(i).serializeNBT();
-				data.setInteger("Slot", i);
+				data.setInteger("slot", i);
 				list.appendTag(data);
 			}
 			nbt.setTag("list", list);
-			nbt.setInteger("Size", instance.getSlots());
+			nbt.setInteger("size", instance.getSlots());
 			return nbt;
 		}
 
@@ -172,12 +172,12 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 				NBTBase tag) {
 			if (tag == null) return;
 			NBTTagCompound nbt = (NBTTagCompound) tag;
-			int size = nbt.getInteger("Size");
+			int size = nbt.getInteger("size");
 			instance.setSlots(size);
 			NBTTagList list = nbt.getTagList("list", 10);
 			for (NBTBase base : list) {
 				NBTTagCompound data = (NBTTagCompound) base;
-				instance.setStackInSlot(data.getInteger("Slot"), new ElementStack(data));
+				instance.setStackInSlot(data.getInteger("slot"), new ElementStack(data));
 			}
 		}
 

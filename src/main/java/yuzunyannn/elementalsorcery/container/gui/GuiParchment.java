@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -16,13 +17,16 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
+import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.client.model.ModelLoader;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.container.ContainerParchment;
@@ -76,13 +80,13 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+		GlStateManager.color(1, 1, 1);
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
 		this.page.drawBackground(offsetX, offsetY, this);
 		for (SlotButton slot : this.slotButtonList) {
-			if (!slot.stack.isEmpty())
-				drawItem(slot.stack, slot.x, slot.y);
+			if (!slot.stack.isEmpty()) drawItem(slot.stack, slot.x, slot.y);
 		}
 	}
 
@@ -93,13 +97,10 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		if (button instanceof SlotButton)
-			this.page.slotAction(button.id, this);
+		if (button instanceof SlotButton) this.page.slotAction(button.id, this);
 		else if (button instanceof PageButton) {
-			if (button.id == PREV_BUTTON_ID)
-				this.page.pageAction(false, this);
-			else
-				this.page.pageAction(true, this);
+			if (button.id == PREV_BUTTON_ID) this.page.pageAction(false, this);
+			else this.page.pageAction(true, this);
 		} else {
 			this.page.customButtonAction(button, this);
 		}
@@ -126,8 +127,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 	@Override
 	public void updateScreen() {
 		super.updateScreen();
-		if (this.toPage != null)
-			this.gotoPage(true);
+		if (this.toPage != null) this.gotoPage(true);
 		if (needInit) {
 			this.init();
 			needInit = false;
@@ -141,10 +141,8 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			return;
 		}
 		if (rPrevPage) {
-			if (this.page.getId() != null)
-				this.toPage.prevPage = this.page;
-			else
-				this.toPage.prevPage = this.page.prevPage;
+			if (this.page.getId() != null) this.toPage.prevPage = this.page;
+			else this.toPage.prevPage = this.page.prevPage;
 		}
 		this.page = this.toPage;
 		this.toPage = null;
@@ -180,13 +178,9 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 					this.drawGradientRect(this.x, this.y, this.x + this.width, this.y + this.height, -2130706433,
 							-2130706433);
 					GlStateManager.colorMask(true, true, true, true);
-					GlStateManager.enableDepth();
 
-					if (stack.isEmpty())
-						return;
+					if (stack.isEmpty()) return;
 					renderToolTip(stack, mouseX, mouseY);
-					GlStateManager.color(1.0f, 1.0f, 1.0f);
-					GlStateManager.disableLighting();
 				}
 			}
 		}
@@ -198,15 +192,15 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 
 		public PageButton(int buttonId, int x, int y, boolean next) {
 			super(buttonId, x, y, 18, 10, null);
-			if (next)
-				textureOffsetY = 166;
-			else
-				textureOffsetY = 176;
+			if (next) textureOffsetY = 166;
+			else textureOffsetY = 176;
 		}
 
 		@Override
 		public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 			if (this.visible) {
+				GlStateManager.disableLighting();
+				GlStateManager.color(1, 1, 1);
 				mc.getTextureManager().bindTexture(TEXTURE);
 				int x = mouseX - this.x, y = mouseY - this.y;
 				if (x >= 0 && y >= 0 && x < this.width && y < this.height) {
@@ -214,6 +208,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 				} else {
 					this.drawTexturedModalRect(this.x, this.y, 0, textureOffsetY, this.width, this.height);
 				}
+				GlStateManager.enableLighting();
 			}
 		}
 
@@ -239,10 +234,8 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 
 	@Override
 	public int getAxisOff(boolean isX) {
-		if (isX)
-			return (this.width - this.xSize) / 2;
-		else
-			return (this.height - this.ySize) / 2;
+		if (isX) return (this.width - this.xSize) / 2;
+		else return (this.height - this.ySize) / 2;
 	}
 
 	@Override
@@ -286,11 +279,9 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 				int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 				this.nextButton = new PageButton(NEXT_BUTTON_ID, offsetX + 221, offsetY + 146, true);
 				this.buttonList.add(this.nextButton);
-			} else
-				this.nextButton.visible = true;
+			} else this.nextButton.visible = true;
 		} else {
-			if (this.nextButton != null)
-				this.nextButton.visible = false;
+			if (this.nextButton != null) this.nextButton.visible = false;
 		}
 	}
 
@@ -301,11 +292,9 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 				int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 				this.prevButton = new PageButton(PREV_BUTTON_ID, offsetX + 17, offsetY + 146, false);
 				this.buttonList.add(this.prevButton);
-			} else
-				this.prevButton.visible = true;
+			} else this.prevButton.visible = true;
 		} else {
-			if (this.prevButton != null)
-				this.prevButton.visible = false;
+			if (this.prevButton != null) this.prevButton.visible = false;
 		}
 	}
 
@@ -321,8 +310,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 
 	@Override
 	public int drawString(String str, int x, int y, int width, int color) {
-		if (str == null)
-			return 0;
+		if (str == null) return 0;
 		for (String s : this.fontRenderer.listFormattedStringToWidth(str, width)) {
 			this.fontRenderer.drawString(s, x, y, color);
 			y += this.fontRenderer.FONT_HEIGHT;
@@ -357,10 +345,10 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 		// 移动到位置
 		GlStateManager.translate(x, y, 512);
 		// 绑定逻辑材质
-		this.mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		GlStateManager.rotate(roateY, 0, 1, 0);
+		mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.rotate(roateX, 1, 0, 0);
 		GlStateManager.rotate(roateZ, 0, 0, 1);
+		GlStateManager.rotate(roateY, 0, 1, 0);
 		scale *= 10;
 		GlStateManager.scale(scale, scale, scale);
 		GlStateManager.translate(-0.5, -0.5, -0.5);
@@ -374,12 +362,26 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 		// 开始
 		GlStateManager.disableCull();
 		bufferbuilder.begin(7, DefaultVertexFormats.BLOCK);
-		while (iter.next()) { 
+		while (iter.next()) {
 			BlockPos blockpos = iter.getPos();
 			IBlockState iblockstate = iter.getState();
-			render.renderModel(Minecraft.getMinecraft().world, blockrendererdispatcher.getModelForState(iblockstate),
-					iblockstate, blockpos, bufferbuilder, true, MathHelper.getPositionRandom(blockpos));
-		} 
+			if (iblockstate.getRenderType() == EnumBlockRenderType.INVISIBLE) {
+				if (iblockstate.getBlock() instanceof BlockContainer) {
+					try {
+						TileEntity tile = iblockstate.getBlock().createTileEntity(mc.world, iblockstate);
+						TileEntitySpecialRenderer<TileEntity> tileRender = TileEntityRendererDispatcher.instance
+								.getRenderer(tile);
+						if (tileRender == null) continue;
+						tileRender.render(tile, blockpos.getX(), blockpos.getY(), blockpos.getZ(),
+								mc.getRenderPartialTicks(), -1, 1);
+					} catch (Exception e) {}
+				}
+			} else {
+				render.renderModel(mc.world, blockrendererdispatcher.getModelForState(iblockstate), iblockstate,
+						blockpos, bufferbuilder, true, MathHelper.getPositionRandom(blockpos));
+			}
+
+		}
 		tessellator.draw();
 		RenderHelper.enableStandardItemLighting();
 		GlStateManager.popMatrix();

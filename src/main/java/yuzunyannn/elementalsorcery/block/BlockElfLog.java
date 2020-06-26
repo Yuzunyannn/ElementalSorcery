@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 
 public class BlockElfLog extends BlockLog {
+	
 	public BlockElfLog() {
 		Blocks.FIRE.setFireInfo(this, 5, 5);
 		this.setUnlocalizedName("elfLog");
@@ -24,13 +25,13 @@ public class BlockElfLog extends BlockLog {
 		switch (meta & 12) {
 		case 0:
 			iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.Y);
-		break;
+			break;
 		case 4:
 			iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.X);
-		break;
+			break;
 		case 8:
 			iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.Z);
-		break;
+			break;
 		default:
 			iblockstate = iblockstate.withProperty(LOG_AXIS, BlockLog.EnumAxis.NONE);
 		}
@@ -43,14 +44,14 @@ public class BlockElfLog extends BlockLog {
 		switch ((BlockLog.EnumAxis) state.getValue(LOG_AXIS)) {
 		case X:
 			i |= 4;
-		break;
+			break;
 		case Z:
 			i |= 8;
-		break;
+			break;
 		case NONE:
 			i |= 12;
 		default:
-		break;
+			break;
 		}
 		return i;
 	}

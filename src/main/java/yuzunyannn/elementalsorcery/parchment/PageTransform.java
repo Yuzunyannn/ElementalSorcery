@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -12,9 +13,10 @@ import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
 
 public class PageTransform extends PageEasy {
 
-	static int INFUSION = 1;
-	static int SEPARATE = 2;
-	static int SPELLALTAR = 3;
+	static final int SMELTING = 0;
+	static final int INFUSION = 1;
+	static final int SEPARATE = 2;
+	static final int SPELLALTAR = 3;
 
 	protected ItemStack getOrigin() {
 		return ItemStack.EMPTY;
@@ -66,22 +68,18 @@ public class PageTransform extends PageEasy {
 		if (this.getItemList() != null) {
 			int xoff = pageManager.getAxisOff(true);
 			int yoff = pageManager.getAxisOff(false);
-			for (int i = 0; i < 4; i++) {
-				pageManager.addSlot(cX - 9 + 5 + i * 18, cY + 37, ItemStack.EMPTY);
-			}
-			pageManager.addCustomButton(new ChangeButton(0, xoff + cX - 10, yoff + cY + 41, false));
+			pageManager.addCustomButton(new ChangeButton(0, xoff + cX - 10 - 1, yoff + cY + 41, false));
 			pageManager.addCustomButton(new ChangeButton(1, xoff + cX - 10 + 5 + 18 * 4, yoff + cY + 41, true));
+			for (int i = 0; i < 4; i++) pageManager.addSlot(cX - 9 + 5 + i * 18, cY + 37, ItemStack.EMPTY);
 			this.reflushListShow(pageManager);
 		}
-		if (!this.getExtra().isEmpty())
-			pageManager.addSlot(cX + 22, cY + 18, this.getExtra());
+		if (!this.getExtra().isEmpty()) pageManager.addSlot(cX + 22, cY + 18, this.getExtra());
 	}
 
 	@Override
 	public void customButtonAction(GuiButton button, IPageManager pageManager) {
 		List<ItemStack> list = this.getItemList();
-		if (list.isEmpty())
-			return;
+		if (list.isEmpty()) return;
 		if (button.id == 0) {
 			if (listAt > 0) {
 				listAt--;
@@ -134,15 +132,15 @@ public class PageTransform extends PageEasy {
 
 		public ChangeButton(int buttonId, int x, int y, boolean next) {
 			super(buttonId, x, y, 5, 9, null);
-			if (next)
-				textureOffsetX = 15;
-			else
-				textureOffsetX = 10;
+			if (next) textureOffsetX = 15;
+			else textureOffsetX = 10;
 		}
 
 		@Override
 		public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
 			if (this.visible) {
+				GlStateManager.disableLighting();
+				GlStateManager.color(1, 1, 1);
 				mc.getTextureManager().bindTexture(GuiParchment.TEXTURE);
 				int x = mouseX - this.x, y = mouseY - this.y;
 				if (x >= 0 && y >= 0 && x < this.width && y < this.height) {

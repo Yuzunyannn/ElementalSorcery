@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "md",
+	"pattern": [
+		"#A#",
+		"#B#"
+	],
+	"key": {
+		"#": {
+			"item": "elementalsorcery:astone",
+			"data": 2
+		},
+		"B": {
+			"item": "elementalsorcery:md_base"
+		},
+		"A": {
+			"item": "elementalsorcery:astone",
+			"data": 4
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:md_hearth"
+	}
+}

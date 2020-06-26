@@ -255,32 +255,40 @@ public class ElementMap implements IElementMap {
 		// 自动扫描element_map文件夹读取数据
 		String[] mapJsonNames = data.getFilesFromResource(new ResourceLocation(MODID, "element_map"));
 		for (String path : mapJsonNames) {
-			JsonObject jobj = data.getJsonFromResource(new ResourceLocation(MODID, "element_map/" + path));
-			if (!JsonHelper.isArray(jobj, "maps")) continue;
-			JsonArray jarray = jobj.get("maps").getAsJsonArray();
-			// 读取所有映射
-			for (JsonElement je : jarray) {
-				if (!je.isJsonObject()) continue;
-				jobj = je.getAsJsonObject();
-				if (!jobj.has("element")) continue;
-				if (!jobj.has("item")) continue;
-				List<ElementStack> estacks = JsonHelper.readElements(jobj.get("element"));
-				List<JsonHelper.ItemRecord> items = JsonHelper.readItems(jobj.get("item"));
-				if (estacks.isEmpty()) continue;
-				if (items.isEmpty()) continue;
-				ElementStack[] es = estacks.toArray(new ElementStack[estacks.size()]);
-				for (JsonHelper.ItemRecord ir : items) {
-					if (ir.isJustItem()) instance.add(ir.getItem(), es);
-					else instance.add(ir.getStack(), es);
-					//ElementalSorcery.logger.info("注册:" + ir + "具有元素：" + estacks);
+			try {
+				JsonObject jobj = data.getJsonFromResource(new ResourceLocation(MODID, "element_map/" + path));
+				if (!JsonHelper.isArray(jobj, "maps")) continue;
+				JsonArray jarray = jobj.get("maps").getAsJsonArray();
+				// 读取所有映射
+				for (JsonElement je : jarray) {
+
+					if (!je.isJsonObject()) continue;
+					jobj = je.getAsJsonObject();
+					if (!jobj.has("element")) continue;
+					if (!jobj.has("item")) continue;
+					List<ElementStack> estacks = JsonHelper.readElements(jobj.get("element"));
+					List<JsonHelper.ItemRecord> items = JsonHelper.readItems(jobj.get("item"));
+					if (estacks.isEmpty()) continue;
+					if (items.isEmpty()) continue;
+					ElementStack[] es = estacks.toArray(new ElementStack[estacks.size()]);
+					for (JsonHelper.ItemRecord ir : items) {
+						if (ir.isJustItem()) instance.add(ir.getItem(), es);
+						else instance.add(ir.getStack(), es);
+						// ElementalSorcery.logger.info("注册:" + ir + "具有元素：" + estacks);
+					}
+
 				}
+			} catch (Exception e) {
+				ElementalSorcery.logger.warn("读取json数据过程中出现异常：" + path, e);
 			}
 		}
 
 		DefaultBucketToElement.water = new ElementStack[] { newES(E.WATER, 25, 100) };
 		DefaultBucketToElement.fire = new ElementStack[] { newES(E.FIRE, 100, 500) };
 
-		instance.add(Items.BUCKET, newES(E.METAL, 24, 200));
+		instance.add(Items.BUCKET,
+
+				newES(E.METAL, 24, 200));
 	}
 
 }

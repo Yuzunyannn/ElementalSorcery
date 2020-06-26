@@ -1,0 +1,24 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"group": "md",
+	"pattern": [
+		" # ",
+		"A A",
+		" B "
+	],
+	"key": {
+		"#": {
+			"item": "minecraft:ender_eye"
+		},
+		"B": {
+			"item": "elementalsorcery:md_base"
+		},
+		"A": {
+			"item": "elementalsorcery:astone",
+            "data": 3
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:md_absorb_box"
+	}
+}
