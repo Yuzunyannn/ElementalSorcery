@@ -7,12 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.commons.compress.utils.IOUtils;
-
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.storage.WorldSavedData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.util.IOHelper;
 
 public class BuildingSaveData extends WorldSavedData {
 
@@ -45,7 +44,7 @@ public class BuildingSaveData extends WorldSavedData {
 			istream = new FileInputStream(file);
 			nbt = CompressedStreamTools.readCompressed(istream);
 		} finally {
-			IOUtils.closeQuietly(istream);
+			IOHelper.closeQuietly(istream);
 		}
 		this.file = file;
 		this.deserializeNBT(nbt);
@@ -71,8 +70,7 @@ public class BuildingSaveData extends WorldSavedData {
 	}
 
 	public void use(long time) {
-		if (this.time == time)
-			return;
+		if (this.time == time) return;
 		this.time = time;
 		this.markDirty();
 	}
@@ -83,8 +81,7 @@ public class BuildingSaveData extends WorldSavedData {
 		d = d / (1000 * 60 * 60 * 24);
 		if (ElementalSorcery.config.BUILDING_MAX_REMAIN_DAYS == 0
 				|| d < ElementalSorcery.config.BUILDING_MAX_REMAIN_DAYS) {
-			if (!this.isDirty())
-				return true;
+			if (!this.isDirty()) return true;
 			this.setDirty(false);
 			OutputStream output = null;
 			try {
@@ -94,7 +91,7 @@ public class BuildingSaveData extends WorldSavedData {
 				ElementalSorcery.logger.warn("建筑记录保存失败！" + file.getName());
 				return false;
 			} finally {
-				IOUtils.closeQuietly(output);
+				IOHelper.closeQuietly(output);
 			}
 			return true;
 		} else {

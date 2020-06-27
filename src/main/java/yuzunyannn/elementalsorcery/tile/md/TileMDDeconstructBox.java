@@ -40,7 +40,7 @@ public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 	/** 积累的进度 */
 	protected int progress;
 	/** 当前元素颜色 */
-	protected int color;
+	protected short r, b, g;
 
 	@Override
 	public void onLoad() {
@@ -48,8 +48,18 @@ public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public int getColor() {
-		return color;
+	public short getColorR() {
+		return r;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public short getColorG() {
+		return g;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public short getColorB() {
+		return b;
 	}
 
 	@Override
@@ -58,7 +68,11 @@ public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 		case 2:
 			return progress;
 		case 3:
-			return color;
+			return r;
+		case 4:
+			return g;
+		case 5:
+			return b;
 		default:
 			return super.getField(id);
 		}
@@ -71,7 +85,13 @@ public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 			progress = value;
 			break;
 		case 3:
-			color = value;
+			r = (short) value;
+			break;
+		case 4:
+			g = (short) value;
+			break;
+		case 5:
+			b = (short) value;
 			break;
 		default:
 			super.setField(id, value);
@@ -81,7 +101,7 @@ public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 
 	@Override
 	public int getFieldCount() {
-		return 4;
+		return 6;
 	}
 
 	public int getProgress() {
@@ -125,7 +145,12 @@ public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 		ElementStack inserted = this.findInsert(toEstacks, stack, inventory);
 		if (inserted.isEmpty()) return;
 		// 开始
-		this.color = inserted.getColor();
+		{
+			int color = inserted.getColor() & 0x00ffffff;
+			r = (short) (color >>> 16 & 0x00ff);
+			b = (short) (color & 0x00ff);
+			g = (short) (color >>> 8 & 0x00ff);
+		}
 		this.progress = originProgress;
 		this.progress++;
 		if (this.tick % 3 == 0) this.magic.shrink(1);

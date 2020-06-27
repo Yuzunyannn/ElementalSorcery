@@ -5,8 +5,8 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import yuzunyannn.elementalsorcery.crafting.RecipeColorRuler;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
+import yuzunyannn.elementalsorcery.crafting.RecipeRiteWrite;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.tile.TileStela;
 
 public class ESCraftingRegistries {
 	public static final void registerAll() {
@@ -16,6 +16,8 @@ public class ESCraftingRegistries {
 		registerAllSmelting();
 		// 注册合成表
 		ForgeRegistries.RECIPES.register(new RecipeColorRuler().setRegistryName("magicRuler"));
+		ForgeRegistries.RECIPES.register(new RecipeRiteWrite().setRegistryName("riteWrite"));
+
 	}
 
 	private static void registerAllSmelting() {

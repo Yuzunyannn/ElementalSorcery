@@ -9,8 +9,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-import org.apache.commons.compress.utils.IOUtils;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -44,6 +42,7 @@ import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
+import yuzunyannn.elementalsorcery.util.IOHelper;
 import yuzunyannn.elementalsorcery.worldgen.VillageESHall.VillageCreationHandler;
 
 public class ESTestAndDebug {
@@ -90,25 +89,24 @@ public class ESTestAndDebug {
 	@SideOnly(Side.CLIENT)
 	@SubscribeEvent
 	public void drawDebugTools(ItemTooltipEvent event) {
-//		ItemStack stack = event.getItemStack();
-//		Block block = Block.getBlockFromItem(stack.getItem());
-//		EntityPlayer entity = event.getEntityPlayer();
-//		if (entity == null) return;
-//		World world = event.getEntityPlayer().getEntityWorld();
-//		if (!world.isRemote) return;
-//		BlockPos pos = event.getEntityPlayer().getPosition();
-//		List<String> list = event.getToolTip();
-//		list.add(TextFormatting.AQUA + "以下是debug信息：");
-//		list.add(TextFormatting.AQUA + stack.getItem().getRegistryName().toString());
-//		list.add(TextFormatting.AQUA + ":" + Minecraft.getMinecraft().gameSettings);
-//		if (block != Blocks.AIR) {
-//			IBlockState state = block.getStateFromMeta(stack.getMetadata());
-//			list.add(TextFormatting.AQUA + "type:block");
-//			list.add(TextFormatting.AQUA + "hardness:" + block.getBlockHardness(state, world, pos));
-//			list.add(TextFormatting.AQUA + "soundType:" + block.getSoundType().getBreakSound().getRegistryName());
-//		} else {
-//			list.add(TextFormatting.AQUA + "type:item");
-//		}
+		ItemStack stack = event.getItemStack();
+		Block block = Block.getBlockFromItem(stack.getItem());
+		EntityPlayer entity = event.getEntityPlayer();
+		if (entity == null) return;
+		World world = event.getEntityPlayer().getEntityWorld();
+		if (!world.isRemote) return;
+		BlockPos pos = event.getEntityPlayer().getPosition();
+		List<String> list = event.getToolTip();
+		list.add(TextFormatting.AQUA + "以下是debug信息：");
+		list.add(TextFormatting.AQUA + stack.getItem().getRegistryName().toString());
+		list.add(TextFormatting.AQUA + ":" + Minecraft.getMinecraft().gameSettings);
+		if (block != Blocks.AIR) {
+			IBlockState state = block.getStateFromMeta(stack.getMetadata());
+			list.add(TextFormatting.AQUA + "type:block");
+			list.add(TextFormatting.AQUA + "hardness:" + block.getBlockHardness(state, world, pos));
+		} else {
+			list.add(TextFormatting.AQUA + "type:item");
+		}
 
 	}
 
@@ -166,7 +164,7 @@ public class ESTestAndDebug {
 					} catch (IOException e) {
 						e.printStackTrace();
 					} finally {
-						IOUtils.closeQuietly(output);
+						IOHelper.closeQuietly(output);
 					}
 
 				} else if (args[0].equals("doit")) {

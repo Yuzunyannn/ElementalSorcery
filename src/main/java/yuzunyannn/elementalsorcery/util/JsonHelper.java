@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.lwjgl.util.vector.Vector3f;
+import javax.vecmath.Vector3d;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -232,14 +232,14 @@ public class JsonHelper {
 	}
 
 	/** 获取坐标 */
-	static public List<Vector3f> readBlockPos(JsonElement je) throws Exception {
-		List<Vector3f> list = new ArrayList<>();
+	static public List<Vector3d> readBlockPos(JsonElement je) throws Exception {
+		List<Vector3d> list = new ArrayList<>();
 		readBlockPos(je, list);
 		return list;
 	}
 
 	/** 获取坐标 */
-	static private void readBlockPos(JsonElement je, List<Vector3f> list) throws Exception {
+	static private void readBlockPos(JsonElement je, List<Vector3d> list) throws Exception {
 		if (je == null || je.isJsonNull()) return;
 		if (je.isJsonArray()) {
 			JsonArray jarray = je.getAsJsonArray();
@@ -248,10 +248,10 @@ public class JsonHelper {
 			if (je.isJsonArray()) for (JsonElement j : jarray) readBlockPos(j, list);
 			else if (je.isJsonPrimitive() && je.getAsJsonPrimitive().isNumber()) {
 				if (jarray.size() != 3) throw new Exception("方块坐标应当是大小为3的json数组");
-				float x = je.getAsFloat();
-				float y = jarray.get(1).getAsFloat();
-				float z = jarray.get(2).getAsFloat();
-				list.add(new Vector3f(x, y, z));
+				double x = je.getAsDouble();
+				double y = jarray.get(1).getAsDouble();
+				double z = jarray.get(2).getAsDouble();
+				list.add(new Vector3d(x, y, z));
 			}
 		}
 	}

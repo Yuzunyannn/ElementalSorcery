@@ -263,6 +263,11 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 	}
 
 	@Override
+	public int getSlots() {
+		return this.slotButtonList.size();
+	}
+
+	@Override
 	public void setSlotState(int slot, boolean visible) {
 		this.slotButtonList.get(slot).visible = visible;
 	}

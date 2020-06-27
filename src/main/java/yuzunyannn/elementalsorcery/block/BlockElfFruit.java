@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
@@ -12,11 +13,26 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFallingBlock;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemMultiTexture.Mapper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.stats.StatList;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -24,10 +40,87 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
 public class BlockElfFruit extends Block implements Mapper {
+
+	public ItemBlock getItemBlock() {
+		// 可以吃的
+		return new ItemMultiTexture(this, this, this) {
+
+			@Override
+			public int getMaxItemUseDuration(ItemStack stack) {
+				return 32;
+			}
+
+			@Override
+			public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
+				if (entityLiving instanceof EntityPlayer) {
+					EntityPlayer entityplayer = (EntityPlayer) entityLiving;
+					entityplayer.getFoodStats().addStats(1, 0.6f);
+					worldIn.playSound((EntityPlayer) null, entityplayer.posX, entityplayer.posY, entityplayer.posZ,
+							SoundEvents.ENTITY_PLAYER_BURP, SoundCategory.PLAYERS, 0.5F,
+							worldIn.rand.nextFloat() * 0.1F + 0.9F);
+					this.onFoodEaten(stack, worldIn, entityplayer);
+					entityplayer.addStat(StatList.getObjectUseStats(this));
+					if (entityplayer instanceof EntityPlayerMP)
+						CriteriaTriggers.CONSUME_ITEM.trigger((EntityPlayerMP) entityplayer, stack);
+				}
+				stack.shrink(1);
+				return stack;
+			}
+
+			@Override
+			public EnumAction getItemUseAction(ItemStack stack) {
+				return EnumAction.EAT;
+			}
+
+			@Override
+			public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+				ItemStack stack = playerIn.getHeldItem(handIn);
+				// if (stack.getItemDamage() != MAX_STATE)
+				// return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+				playerIn.setActiveHand(handIn);
+				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+			}
+
+			protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
+				if (player.world.isRemote) return;
+				NBTTagCompound nbt = EventServer.getPlayerNBT(player);
+				if (!nbt.hasKey("elfFruit", 10)) nbt.setTag("elfFruit", new NBTTagCompound());
+				nbt = nbt.getCompoundTag("elfFruit");
+				int count = Math.max(nbt.getInteger("times"), 1);
+				long time = nbt.getLong("time");
+				long currTime = System.currentTimeMillis();
+				if (currTime - time > 10 * 1000) count = 1;
+				final int durationIn = 10 * 20;
+				switch (count) {
+				case 3:
+					player.addPotionEffect(new PotionEffect(MobEffects.SPEED, durationIn, 0));
+					break;
+				case 5:
+					player.addPotionEffect(new PotionEffect(MobEffects.SPEED, durationIn, 1));
+					player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, durationIn, 0));
+					break;
+				case 8:
+					player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, durationIn, 1));
+					player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, durationIn, 0));
+					break;
+				case 11:
+					player.addPotionEffect(new PotionEffect(MobEffects.WITHER, durationIn * 2, 1));
+					player.addPotionEffect(new PotionEffect(MobEffects.POISON, durationIn * 2, 1));
+					player.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, durationIn, 0));
+					break;
+				default:
+					break;
+				}
+				nbt.setInteger("times", count + 1);
+				nbt.setLong("time", currTime);
+			}
+		};
+	}
 
 	public static final AxisAlignedBB AABB = new AxisAlignedBB(0.1875, 0.0, 0.1875, 0.8125, 0.75, 0.8125);
 	public static final int MAX_STATE = 2;

@@ -27,6 +27,9 @@ public interface IPageManager {
 	/** 获取物品槽物品 */
 	public ItemStack getSlot(int slot);
 	
+	/**获取物品曹数量*/
+	public int getSlots();
+	
 	/**设置物品槽状态*/
 	public void setSlotState(int slot,boolean visible);
 

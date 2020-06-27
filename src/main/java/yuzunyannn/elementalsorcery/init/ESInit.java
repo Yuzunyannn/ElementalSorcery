@@ -296,6 +296,7 @@ public class ESInit {
 		registerRender(ITEMS.TINY_KNIFE);
 		registerRender(ITEMS.ORDER_CRYSTAL);
 		registerRender(ITEMS.MD_BASE, new RenderTileMDBase());
+		registerRender(ITEMS.RITE_MANUAL);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

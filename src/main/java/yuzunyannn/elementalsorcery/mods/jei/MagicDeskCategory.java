@@ -22,7 +22,7 @@ public class MagicDeskCategory implements IRecipeCategory<MagicDeskRecipeWrapper
 
 	public MagicDeskCategory() {
 		background = ESJEIPlugin.guiHelper.createDrawable(
-				new ResourceLocation(ElementalSorcery.MODID, "textures/gui/container/magic_desk_jei.png"), 18, 18, 122,
+				new ResourceLocation(ElementalSorcery.MODID, "textures/gui/magic_desk_jei.png"), 18, 18, 122,
 				106);
 	}
 

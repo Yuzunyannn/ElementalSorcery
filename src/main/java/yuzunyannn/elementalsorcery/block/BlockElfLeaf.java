@@ -78,7 +78,7 @@ public class BlockElfLeaf extends BlockLeaves {
 		super.updateTick(worldIn, pos, state, rand);
 		if (worldIn.isRemote) return;
 		if (!state.getValue(BlockLeaves.CHECK_DECAY)) {
-			if (Math.random() < 0.5) return;
+			if (Math.random() < 0.25) return;
 			WorldTime time = new WorldTime(worldIn);
 			if (!time.at(WorldTime.Period.MORNING)) return;
 			// 检测下方是否满足

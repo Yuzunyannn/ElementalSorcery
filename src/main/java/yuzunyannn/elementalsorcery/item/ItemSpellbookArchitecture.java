@@ -25,18 +25,13 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 
 	@Override
 	public boolean spellBegin(World world, EntityLivingBase entity, ItemStack stack, Spellbook book) {
-		if (!(entity instanceof EntityPlayer))
-			return false;
+		if (!(entity instanceof EntityPlayer)) return false;
 		ItemStack arc = findArchitectureCrystal((EntityPlayer) entity);
-		if (arc.isEmpty())
-			return false;
+		if (arc.isEmpty()) return false;
 		ArcInfo info = new ArcInfo(arc, world.isRemote ? Side.CLIENT : Side.SERVER);
-		if (info.isMiss())
-			return false;
-		if (entity.getDistanceSq(info.pos) >= 32 * 32)
-			return false;
-		if (world.isRemote)
-			return true;
+		if (info.isMiss()) return false;
+		if (entity.getDistanceSq(info.pos) >= 32 * 32) return false;
+		if (world.isRemote) return true;
 		book.obj = info.building.getBuildingBlocks().setPosOff(info.pos).setFace(info.facing);
 		return true;
 	}
@@ -47,11 +42,8 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 			this.giveMeParticleAboutSpelling(world, entity, stack, book, power);
 			return;
 		}
-		if (book.obj == null) {
-			return;
-		}
-		if (power < this.getCast(book))
-			return;
+		if (book.obj == null) { return; }
+		if (power < this.getCast(book)) return;
 		Building.BuildingBlocks blocks = ((Building.BuildingBlocks) book.obj);
 		while (book.obj != null) {
 			if (blocks.next()) {
@@ -61,18 +53,18 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 				ItemStack need = blocks.getItemStack();
 				// 如果这块不是符合要求的
 				if (!world.getBlockState(pos).equals(state)) {
-					// 如果不是创造模式
-					if (!((EntityPlayer) entity).isCreative()) {
-						ItemStack the = this.hasItem(((EntityPlayer) entity), need);
-						if (the.isEmpty()) {
-							continue;
+					if (entity instanceof EntityPlayer) {
+						// 如果不是创造模式
+						if (!((EntityPlayer) entity).isCreative()) {
+							ItemStack the = Building.BlockItemTypeInfo
+									.getItemStackCanUsed(((EntityPlayer) entity).inventory, need);
+							if (the.isEmpty()) continue;
+							need = the.splitStack(1);
 						}
-						the.shrink(1);
 					}
 					EntityBlockThrowEffect toBlock = new EntityBlockThrowEffect(world,
 							entity.getPositionVector().addVector(0, 1, 0), pos, need, state, ((EntityPlayer) entity));
-					if (((EntityPlayer) entity).isCreative())
-						toBlock.setBreakBlock();
+					if (((EntityPlayer) entity).isCreative()) toBlock.setBreakBlock();
 					// 产生实体，发射方块
 					world.spawnEntity(toBlock);
 					break;
@@ -116,28 +108,15 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 			for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
 				ItemStack itemstack = player.inventory.getStackInSlot(i);
 
-				if (this.isArchitectureCrystal(itemstack)) {
-					return itemstack;
-				}
+				if (this.isArchitectureCrystal(itemstack)) { return itemstack; }
 			}
 			return ItemStack.EMPTY;
 		}
 	}
 
 	private boolean isArchitectureCrystal(ItemStack stack) {
-		if (ArcInfo.isArc(stack))
-			return true;
+		if (ArcInfo.isArc(stack)) return true;
 		return false;
-	}
-
-	private ItemStack hasItem(EntityPlayer player, ItemStack stack) {
-		for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
-			ItemStack itemstack = player.inventory.getStackInSlot(i);
-			if (ItemStack.areItemsEqual(stack, itemstack) && ItemStack.areItemStackTagsEqual(stack, itemstack)) {
-				return itemstack;
-			}
-		}
-		return ItemStack.EMPTY;
 	}
 
 }

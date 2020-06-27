@@ -39,7 +39,7 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 	// 锤子旋转角度
 	public float rotate;
 	public float prevRotate;
-	static final float ROTATE_RATE = 0.1f;
+	static final float ROTATE_RATE = 0.4f;
 	// 研磨的内容的槽
 	protected IItemHandler inventory = new IItemHandler() {
 		@Override

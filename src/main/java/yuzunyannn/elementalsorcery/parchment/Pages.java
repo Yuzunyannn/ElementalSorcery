@@ -162,11 +162,11 @@ public class Pages {
 		ESData data = ElementalSorcery.data;
 		final String MODID = ElementalSorcery.MODID;
 		// 自动扫描parchment文件夹读取数据
-		String[] parchments = data.getFilesFromResource(new ResourceLocation(MODID, "parchment"));
+		String[] parchments = data.getFilesFromResource(new ResourceLocation(MODID, "parchments"));
 		for (String path : parchments) {
 			try {
 				if (!path.endsWith(".json")) continue;
-				JsonObject jobj = data.getJsonFromResource(new ResourceLocation(MODID, "parchment/" + path));
+				JsonObject jobj = data.getJsonFromResource(new ResourceLocation(MODID, "parchments/" + path));
 				JsonParser.Packet packet = JsonParser.read(jobj);
 				if (packet == null) continue;
 				String id = path.substring(0, path.lastIndexOf('.'));

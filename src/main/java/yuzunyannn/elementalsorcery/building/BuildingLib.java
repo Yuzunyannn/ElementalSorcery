@@ -9,11 +9,14 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageGetBuilingInfo;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public class BuildingLib {
 
@@ -89,27 +92,27 @@ public class BuildingLib {
 	}
 
 	// 创建默认名字
-	public static final String SPELLBOOK_ALTAR = "spellbook_altar";
-	public static final String LARGE_ALTAR = "large_altar";
-	public static final String ELEMENT_CRAFTING_ALTAR = "element_crafting_altar";
-	public static final String DECONSTRUCT_ALTAR = "deconstruct_altar";
-	public static final String BUILDING_ALTAR = "building_altar";
-	public static final String ANALYSIS_ALTAR = "analysis_altar";
-	public static final String INFUSION = "infusion";
-	public static final String ABSORB_BOX = "absorb_box";
-	public static final String DECONSTRUCT_BOX = "deconstruct_box";
+	/*
+	 * public static final String SPELLBOOK_ALTAR = "spellbook_altar"; public static
+	 * final String LARGE_ALTAR = "large_altar"; public static final String
+	 * ELEMENT_CRAFTING_ALTAR = "element_crafting_altar"; public static final String
+	 * DECONSTRUCT_ALTAR = "deconstruct_altar"; public static final String
+	 * BUILDING_ALTAR = "building_altar"; public static final String ANALYSIS_ALTAR
+	 * = "analysis_altar"; public static final String INFUSION = "infusion"; public
+	 * static final String ABSORB_BOX = "absorb_box"; public static final String
+	 * DECONSTRUCT_BOX = "deconstruct_box";
+	 */
 
 	public static void registerAll() throws IOException {
+		final ESData data = ElementalSorcery.data;
+		final String MODID = ElementalSorcery.MODID;
+		String[] mapJsonNames = data.getFilesFromResource(new ResourceLocation(MODID, "structures"));
+		for (String path : mapJsonNames) {
+			NBTTagCompound nbt = data.getNBTFromResource(new ResourceLocation(MODID, "structures/" + path));
+			if (path.lastIndexOf('.') != -1) path = path.substring(0, path.lastIndexOf('.'));
+			instance.addBuildingLib(path, new BuildingInherent(nbt, TextHelper.castToCamel(path)));
+		}
 		Buildings.init();
-		instance.addBuildingLib(LARGE_ALTAR, Buildings.LARGE_ALTAR);
-		instance.addBuildingLib(SPELLBOOK_ALTAR, Buildings.SPELLBOOK_ALTAR);
-		instance.addBuildingLib(ELEMENT_CRAFTING_ALTAR, Buildings.ELEMENT_CRAFTING_ALTAR);
-		instance.addBuildingLib(DECONSTRUCT_ALTAR, Buildings.DECONSTRUCT_ALTAR);
-		instance.addBuildingLib(BUILDING_ALTAR, Buildings.BUILING_ALTAR);
-		instance.addBuildingLib(ANALYSIS_ALTAR, Buildings.ANALYSIS_ALTAR);
-		instance.addBuildingLib(INFUSION, Buildings.INFUSION);
-		instance.addBuildingLib(ABSORB_BOX, Buildings.ABSORB_BOX);
-		instance.addBuildingLib(DECONSTRUCT_BOX, Buildings.DECONSTRUCT_BOX);
 		BuildingLib.loadBuilding();
 	}
 

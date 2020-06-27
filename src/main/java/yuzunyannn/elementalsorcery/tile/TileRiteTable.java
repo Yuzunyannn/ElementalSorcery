@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import javax.annotation.Nonnull;
 
@@ -31,9 +30,11 @@ import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.crafting.RecipeRiteWrite;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
+import yuzunyannn.elementalsorcery.tile.TileRiteTable.Recipe.Happiness;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -50,25 +51,24 @@ public class TileRiteTable extends TileEntityNetwork {
 	@Override
 	public void onLoad() {
 		super.onLoad();
-		rand = new Random(pos.getX() * pos.getY() * pos.getZ());
 	}
 
-	/** 随机种子 */
-	Random rand = new Random();
 	/** 仪式桌等级 */
 	protected int level;
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		this.inventory.deserializeNBT(compound.getCompoundTag("inv"));
-		if (!this.isSending()) level = compound.getInteger("level");
+		level = compound.getInteger("level");
+		if (this.isSending()) return;
 		super.readFromNBT(compound);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setTag("inv", this.inventory.serializeNBT());
-		if (!this.isSending()) compound.setInteger("level", level);
+		compound.setInteger("level", level);
+		if (this.isSending()) return compound;
 		return super.writeToNBT(compound);
 	}
 
@@ -79,13 +79,12 @@ public class TileRiteTable extends TileEntityNetwork {
 
 	public ItemStack insert(ItemStack stack) {
 		if (stack.isEmpty()) return stack;
-		for (int i = 0; i < inventory.getSlots(); i++) {
-			stack = inventory.insertItem(i, stack, false);
-			if (stack.isEmpty()) {
-				this.updateToClient();
-				this.markDirty();
-				return stack;
-			}
+		int n = stack.getCount();
+		for (int i = 0; i < inventory.getSlots(); i++) stack = inventory.insertItem(i, stack, false);
+		if (n != stack.getCount()) {
+			this.updateToClient();
+			this.markDirty();
+			return stack;
 		}
 		return stack;
 	}
@@ -105,12 +104,37 @@ public class TileRiteTable extends TileEntityNetwork {
 	public boolean rite(EntityLivingBase entity) {
 		// 检测周边环境
 		if (this.checkAround() == false) return false;
-		// 计算能量和期望
+		if (world.isRemote) return true;
+		// 寻求仪式判定
+		ItemStack seekRite = ItemStack.EMPTY;
+		TileRiteTable.Recipe recipe = null;
+		for (int i = 0; i < inventory.getSlots(); i++) {
+			ItemStack stack = inventory.getStackInSlot(i);
+			if (stack.isEmpty()) continue;
+			if (seekRite.isEmpty()) {
+				if (stack.getItem() == ESInitInstance.ITEMS.PARCHMENT) {
+					seekRite = stack;
+					ItemStack s = RecipeRiteWrite.getInnerStack(seekRite);
+					recipe = findRecipe(s);
+					if (recipe != null) break;
+				}
+			}
+		}
+		// 是寻求仪式
+		if (recipe != null) {
+			if (this.level < recipe.needLevel()) {
+				this.punish(entity);
+				Block.spawnAsEntity(world, pos.up(), seekRite);
+				return true;
+			}
+		} else seekRite = ItemStack.EMPTY;
+		// 获取总能量
 		List<String> pool = new LinkedList<String>();
 		int power = 0;
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ItemStack stack = inventory.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
+			if (recipe != null && stack == seekRite) continue;
 			int x = sacrifice.getPower(stack);
 			if (x == 0) continue;
 			int level = sacrifice.getLevel(stack);
@@ -124,8 +148,23 @@ public class TileRiteTable extends TileEntityNetwork {
 			pool.addAll(sacrifice.getHope(stack));// 期望物品加入蛋池
 		}
 		// 随机可能性
-		if (power < rand.nextInt(100)) {
+		if (power < RandomHelper.rand.nextInt(100)) {
 			this.punish(entity);
+			if (!seekRite.isEmpty()) Block.spawnAsEntity(world, pos.up(), seekRite);
+			return true;
+		}
+		// 是寻求仪式
+		if (recipe != null) {
+			ItemStack output = recipe.getOutput().copy();
+			output.setCount(recipe.getHappyCount(power, entity));
+			ItemHelper.clear(inventory);
+			Block.spawnAsEntity(world, pos.up(), output);
+			Block.spawnAsEntity(world, pos.up(), seekRite);
+			EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + 0.5f, pos.getY() + 1,
+					pos.getZ() + 0.5f, true);
+			world.addWeatherEffect(lightning);
+			this.updateToClient();
+			this.markDirty();
 			return true;
 		}
 		// 进行随机获取
@@ -143,8 +182,9 @@ public class TileRiteTable extends TileEntityNetwork {
 		Block.spawnAsEntity(world, pos.up(), scroll);
 		EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + 0.5f, pos.getY() + 1,
 				pos.getZ() + 0.5f, true);
-		world.spawnEntity(lightning);
+		world.addWeatherEffect(lightning);
 		ItemHelper.clear(inventory);
+		this.markDirty();
 		this.updateToClient();
 		return true;
 	}
@@ -153,14 +193,18 @@ public class TileRiteTable extends TileEntityNetwork {
 		if (!ItemHelper.isEmpty(inventory)) {
 			ItemHelper.clear(inventory);
 			this.updateToClient();
+			this.markDirty();
 		}
+		// 爆炸
 		world.createExplosion(null, entity.posX, entity.posY, entity.posZ, 0.15f * this.level * this.level + 0.2f,
 				false);
+		// 雷劈
 		if (this.level > 0) {
 			EntityLightningBolt lightning = new EntityLightningBolt(world, entity.posX, entity.posY, entity.posZ,
 					false);
-			world.spawnEntity(lightning);
+			world.addWeatherEffect(lightning);
 		}
+		// 岩浆
 		if (this.level > 2) {
 			IBlockState state = Blocks.LAVA.getDefaultState().withProperty(BlockLiquid.LEVEL, 15);
 			BlockPos pos = new BlockPos(entity.posX, entity.posY, entity.posZ);
@@ -225,7 +269,7 @@ public class TileRiteTable extends TileEntityNetwork {
 
 	public static final SacrificeHandle sacrifice = new SacrificeHandle();
 
-	static private class SacrificeHandle implements ISacrificeHandle {
+	static public class SacrificeHandle implements ISacrificeHandle {
 
 		private final List<ISacrificeHandle> sacrifices = new ArrayList<>();
 
@@ -237,7 +281,7 @@ public class TileRiteTable extends TileEntityNetwork {
 		public int getLevel(ItemStack stack) {
 			for (ISacrificeHandle sacrifice : sacrifices) {
 				int level = sacrifice.getLevel(stack);
-				if (level >= 0) return level;
+				if (level > 0) return level;
 			}
 			return 0;
 		}
@@ -270,7 +314,7 @@ public class TileRiteTable extends TileEntityNetwork {
 			ElementStack[] estacks = ElementMap.instance.toElement(stack);
 			if (estacks == null || estacks.length == 0) return 0;
 			ElementStack estack = estacks[0];
-			return estack.getPower() / 150;
+			return estack.getPower() / 225;
 		}
 
 		@Override
@@ -357,6 +401,7 @@ public class TileRiteTable extends TileEntityNetwork {
 	}
 
 	public static void init() {
+		initRecipe();
 		sacrifice.addSacrificeHandle(ItemSacrificeHandle.instance);
 		sacrifice.addSacrificeHandle(new ElementSacrificeHandle());
 
@@ -367,7 +412,7 @@ public class TileRiteTable extends TileEntityNetwork {
 		addSacrifice(Blocks.STONE, 8, 0);
 		addSacrifice(Blocks.LOG, 10, 0);
 		addSacrifice(Blocks.LOG2, 10, 0);
-		addSacrifice(Blocks.COAL_ORE, 15, 0);
+		addSacrifice(Items.COAL, 15, 0);
 		addSacrifice(Blocks.COAL_BLOCK, 25, 0);
 
 		addSacrifice("oreIron", 11, 1);
@@ -412,4 +457,74 @@ public class TileRiteTable extends TileEntityNetwork {
 		return level;
 	}
 
+	/** 仪式合成表 */
+	public static class Recipe {
+
+		public interface Happiness {
+			int getHappyCount(int power, EntityLivingBase entity);
+		}
+
+		ItemStack parchmentInput = ItemStack.EMPTY;
+		ItemStack output = ItemStack.EMPTY;
+		int needPower = 100;
+		int needLevel = 0;
+		Happiness happy = null;
+
+		public ItemStack parchmentInput() {
+			return parchmentInput;
+		}
+
+		public ItemStack getOutput() {
+			return output;
+		}
+
+		public int needPower() {
+			return needPower;
+		}
+
+		public int needLevel() {
+			return needLevel;
+		}
+
+		public int getHappyCount(int power, EntityLivingBase entity) {
+			return happy == null ? output.getCount() : happy.getHappyCount(power, entity);
+		}
+	}
+
+	private static final List<Recipe> recipes = new ArrayList<TileRiteTable.Recipe>();
+
+	public static TileRiteTable.Recipe findRecipe(ItemStack parchmentInput) {
+		if (parchmentInput.isEmpty()) return null;
+		for (TileRiteTable.Recipe r : TileRiteTable.getRecipes())
+			if (ItemHelper.areItemsEqual(parchmentInput, r.parchmentInput())) return r;
+		return null;
+	}
+
+	public static List<Recipe> getRecipes() {
+		return recipes;
+	}
+
+	public static void addRecipe(ItemStack parchmentInput, ItemStack output, int needPower, int needLevel,
+			Happiness happy) {
+		if (parchmentInput.isEmpty() || output.isEmpty()) return;
+		Recipe r = new Recipe();
+		r.needPower = needPower;
+		r.needLevel = pLevel(needLevel);
+		r.parchmentInput = parchmentInput;
+		r.output = output;
+		r.happy = happy;
+		recipes.add(r);
+	}
+
+	public static void addRecipe(ItemStack parchmentInput, ItemStack output, int needPower, int needLevel) {
+		addRecipe(parchmentInput, output, needPower, needLevel, null);
+	}
+
+	public static void initRecipe() {
+		addRecipe(new ItemStack(Blocks.TORCH), new ItemStack(ESInitInstance.BLOCKS.LANTERN), 50, 0, (power, entity) -> {
+			int x = power - 80;
+			if (x > 0) return Math.max(1, x / 12);
+			return 1;
+		});
+	}
 }

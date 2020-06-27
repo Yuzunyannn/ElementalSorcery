@@ -20,9 +20,10 @@ import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDCategory;
-import yuzunyannn.elementalsorcery.mods.jei.md.RWMDInfusion;
-import yuzunyannn.elementalsorcery.mods.jei.md.RWMDMagicSolidify;
-import yuzunyannn.elementalsorcery.mods.jei.md.RWMDRubbleRepair;
+import yuzunyannn.elementalsorcery.mods.jei.md.MDInfusionRW;
+import yuzunyannn.elementalsorcery.mods.jei.md.MDMagicSolidifyRW;
+import yuzunyannn.elementalsorcery.mods.jei.md.MDRubbleRepairRW;
+import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
@@ -43,11 +44,12 @@ public class ESJEIPlugin implements IModPlugin {
 		if (guiHelper == null) guiHelper = registry.getJeiHelpers().getGuiHelper();
 		// 注册合成类型
 		registry.addRecipeCategories(new DescribeCategory());
+		registry.addRecipeCategories(new RiteCategory());
 		registry.addRecipeCategories(new ElementCraftingCategory());
 		registry.addRecipeCategories(new MagicDeskCategory());
-		registry.addRecipeCategories(new MDCategory<RWMDRubbleRepair>(UID_MDRUBBLEREPAIR));
-		registry.addRecipeCategories(new MDCategory<RWMDMagicSolidify>(UID_MDMAGICSOLIDIFY));
-		registry.addRecipeCategories(new MDCategory<RWMDInfusion>(UID_MDINFUSION));
+		registry.addRecipeCategories(new MDCategory<MDRubbleRepairRW>(UID_MDRUBBLEREPAIR));
+		registry.addRecipeCategories(new MDCategory<MDMagicSolidifyRW>(UID_MDMAGICSOLIDIFY));
+		registry.addRecipeCategories(new MDCategory<MDInfusionRW>(UID_MDINFUSION));
 	}
 
 	@Override
@@ -59,14 +61,16 @@ public class ESJEIPlugin implements IModPlugin {
 		final ESObjects.Blocks BLOCKS = ESInitInstance.BLOCKS;
 		// 注册工厂
 		registry.handleRecipes(DescribeRecipeWrapper.Describe.class, DescribeRecipeWrapper::new, DescribeCategory.UID);
+		registry.handleRecipes(TileRiteTable.Recipe.class, RiteRecipeWrapper::new, RiteCategory.UID);
 		registry.handleRecipes(IRecipe.class, ElementCraftingRecipeWrapper::new, ElementCraftingCategory.UID);
 		registry.handleRecipes(TileMagicDesk.Recipe.class, MagicDeskRecipeWrapper::new, MagicDeskCategory.UID);
-		registry.handleRecipes(TileMDRubbleRepair.Recipe.class, RWMDRubbleRepair::new, UID_MDRUBBLEREPAIR);
-		registry.handleRecipes(RWMDMagicSolidify.FakeRecipe.class, RWMDMagicSolidify::new, UID_MDMAGICSOLIDIFY);
-		registry.handleRecipes(TileMDInfusion.Recipe.class, RWMDInfusion::new, UID_MDINFUSION);
+		registry.handleRecipes(TileMDRubbleRepair.Recipe.class, MDRubbleRepairRW::new, UID_MDRUBBLEREPAIR);
+		registry.handleRecipes(MDMagicSolidifyRW.FakeRecipe.class, MDMagicSolidifyRW::new, UID_MDMAGICSOLIDIFY);
+		registry.handleRecipes(TileMDInfusion.Recipe.class, MDInfusionRW::new, UID_MDINFUSION);
 		// 设置新增
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.ELEMENT_WORKBENCH), VanillaRecipeCategoryUid.CRAFTING);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.SUPREME_CRAFTING_TABLE), VanillaRecipeCategoryUid.CRAFTING);
+		registry.addRecipeCatalyst(new ItemStack(BLOCKS.RITE_TABLE), RiteCategory.UID);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.SUPREME_CRAFTING_TABLE), ElementCraftingCategory.UID);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.ELEMENT_CRAFTING_TABLE), ElementCraftingCategory.UID);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.ELEMENT_WORKBENCH), ElementCraftingCategory.UID);
@@ -76,9 +80,10 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_INFUSION), UID_MDINFUSION);
 		// 添加所合成表
 		registry.addRecipes(RecipeManagement.instance.getRecipes(), ElementCraftingCategory.UID);
+		registry.addRecipes(TileRiteTable.getRecipes(), RiteCategory.UID);
 		registry.addRecipes(TileMagicDesk.getRecipes(), MagicDeskCategory.UID);
 		registry.addRecipes(TileMDRubbleRepair.getRecipes(), UID_MDRUBBLEREPAIR);
-		registry.addRecipes(Arrays.asList(RWMDMagicSolidify.FakeRecipe.values()), UID_MDMAGICSOLIDIFY);
+		registry.addRecipes(Arrays.asList(MDMagicSolidifyRW.FakeRecipe.values()), UID_MDMAGICSOLIDIFY);
 		registry.addRecipes(TileMDInfusion.getRecipes(), UID_MDINFUSION);
 		// 描述类
 		registry.addRecipes(this.initDescribe(), DescribeCategory.UID);

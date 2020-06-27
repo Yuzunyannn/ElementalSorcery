@@ -21,6 +21,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiMDMagicSolidify;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDMagiclization;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDRubbleRepair;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
+import yuzunyannn.elementalsorcery.container.gui.GuiRiteManual;
 import yuzunyannn.elementalsorcery.container.gui.GuiSimple;
 import yuzunyannn.elementalsorcery.container.gui.GuiSmeltBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiSupremeCraftingTable;
@@ -38,6 +39,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_ANALYSIS_ALTAR = 8;
 	public static final int GUI_SUPREME_CRAFTING_TABLE = 9;
 	public static final int GUI_INVENTORY_WORKBENCH = 10;
+	public static final int GUI_RITE_MANUAL = 11;
 
 	public static final int GUI_MD_MAGIC_GEN = 21;
 	public static final int GUI_MD_HEARTH = 22;
@@ -72,6 +74,8 @@ public class ESGuiHandler implements IGuiHandler {
 			return new ContainerSupremeCraftingTable(player, tileEntity);
 		case GUI_INVENTORY_WORKBENCH:
 			return new ContainerWorkbenchWithInventory(player, tileEntity);
+		case GUI_RITE_MANUAL:
+			return new ContainerRiteManual(player.inventory, world, new BlockPos(x, y, z));
 		case GUI_MD_MAGIC_GEN:
 			return new ContainerMDMagicGen(player, tileEntity);
 		case GUI_MD_HEARTH:
@@ -119,6 +123,8 @@ public class ESGuiHandler implements IGuiHandler {
 		case GUI_INVENTORY_WORKBENCH:
 			return new GuiSimple(new ContainerWorkbenchWithInventory(player, tileEntity), player.inventory,
 					"tile.supremeCraftingTable.name", TEXTURE_CRAFTING_TABLE);
+		case GUI_RITE_MANUAL:
+			return new GuiRiteManual(new ContainerRiteManual(player.inventory, world, new BlockPos(x, y, z)));
 		case GUI_MD_MAGIC_GEN:
 			return new GuiMDMagicGen(new ContainerMDMagicGen(player, tileEntity), player.inventory);
 		case GUI_MD_HEARTH:

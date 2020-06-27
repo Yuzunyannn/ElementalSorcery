@@ -1,16 +1,10 @@
 package yuzunyannn.elementalsorcery.building;
 
-import java.io.IOException;
-
 import net.minecraft.block.BlockQuartz;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import yuzunyannn.elementalsorcery.ESData;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 
 public class Buildings {
@@ -23,31 +17,19 @@ public class Buildings {
 	static public Building DECONSTRUCT_ALTAR;
 	static public Building BUILING_ALTAR;
 	static public Building ANALYSIS_ALTAR;
-
-	static public void init() throws IOException {
-		NBTTagCompound nbt = null;
-		ESData data = ElementalSorcery.data;
-
-		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/infusion.nbt"));
-		INFUSION = new BuildingInherent(nbt, "infusion");
-		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/absorb_box.nbt"));
-		ABSORB_BOX = new BuildingInherent(nbt, "absorbBox");
-		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/deconstruct_box.nbt"));
-		DECONSTRUCT_BOX = new BuildingInherent(nbt, "deconstructBox");
-
-		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/large_altar.nbt"));
-		LARGE_ALTAR = new BuildingInherent(nbt, "largeAltar");
-		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/spellbook_altar.nbt"));
-		SPELLBOOK_ALTAR = new BuildingInherent(nbt, "spellbookAltar");
-		nbt = data.getNBTFromResource(
-				new ResourceLocation(ElementalSorcery.MODID, "structures/element_crafting_altar.nbt"));
-		ELEMENT_CRAFTING_ALTAR = new BuildingInherent(nbt, "elementCraftingAltar");
-		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/deconstruct_altar.nbt"));
-		DECONSTRUCT_ALTAR = new BuildingInherent(nbt, "deconstructAltar");
-		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/builing_altar.nbt"));
-		BUILING_ALTAR = new BuildingInherent(nbt, "builingAltar");
-		nbt = data.getNBTFromResource(new ResourceLocation(ElementalSorcery.MODID, "structures/analysis_altar.nbt"));
-		ANALYSIS_ALTAR = new BuildingInherent(nbt, "analysisAltar");
+	static public Building CRYSTAL_GARDEN;
+	
+	static public void init() {
+		INFUSION = BuildingLib.instance.getBuilding("infusion");
+		ABSORB_BOX = BuildingLib.instance.getBuilding("absorb_box");
+		DECONSTRUCT_BOX = BuildingLib.instance.getBuilding("deconstruct_box");
+		LARGE_ALTAR = BuildingLib.instance.getBuilding("large_altar");
+		SPELLBOOK_ALTAR = BuildingLib.instance.getBuilding("spellbook_altar");
+		ELEMENT_CRAFTING_ALTAR = BuildingLib.instance.getBuilding("element_crafting_altar");
+		DECONSTRUCT_ALTAR = BuildingLib.instance.getBuilding("deconstruct_altar");
+		BUILING_ALTAR = BuildingLib.instance.getBuilding("builing_altar");
+		ANALYSIS_ALTAR = BuildingLib.instance.getBuilding("analysis_altar");
+		CRYSTAL_GARDEN = BuildingLib.instance.getBuilding("crystal_garden");
 	}
 
 	private static void horizontalS(IBlockState state, Building building, int d, int y) {

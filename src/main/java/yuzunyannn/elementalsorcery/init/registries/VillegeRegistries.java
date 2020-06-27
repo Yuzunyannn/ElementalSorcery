@@ -45,7 +45,7 @@ public class VillegeRegistries {
 		magicallearner.addTrade(1,
 				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE),
 						new PriceInfo(16, 32)),
-				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE, 4),
+				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInitInstance.ITEMS.MAGIC_STONE),
 						new PriceInfo(64, 64)));
 	}
 
@@ -65,9 +65,8 @@ public class VillegeRegistries {
 			int id = random.nextInt(div + (Pages.getCount() % n)) + at;
 			recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 5),
 					ItemParchment.getParchment(Pages.getPage(id).getId())));
-			if (random.nextFloat() < 0.5)
-				recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 16),
-						new ItemStack(ESInitInstance.BLOCKS.STELA)));
+			if (random.nextFloat() < 0.5) recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 16),
+					new ItemStack(ESInitInstance.ITEMS.RITE_MANUAL)));
 		}
 
 	}

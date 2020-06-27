@@ -16,11 +16,11 @@ import yuzunyannn.elementalsorcery.container.gui.GuiMDBase;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
-public class RWMDInfusion implements MDRecipeWrapper {
+public class MDInfusionRW implements MDRecipeWrapper {
 	final TileMDInfusion.Recipe recipe;
 	final int cost;
 
-	public RWMDInfusion(TileMDInfusion.Recipe recipe) {
+	public MDInfusionRW(TileMDInfusion.Recipe recipe) {
 		this.recipe = recipe;
 		int cost = Integer.MAX_VALUE;
 		for (int i = 0; i < 5; i++) {

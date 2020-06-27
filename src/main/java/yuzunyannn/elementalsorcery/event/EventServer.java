@@ -5,27 +5,32 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
-import yuzunyannn.elementalsorcery.parchment.Pages;
 
 public class EventServer {
+
+	public static NBTTagCompound getPlayerNBT(EntityPlayer player) {
+		NBTTagCompound data = player.getEntityData();
+		if (data.hasKey("ESData", 10)) return data.getCompoundTag("ESData");
+		NBTTagCompound nbt = new NBTTagCompound();
+		data.setTag("ESData", nbt);
+		return nbt;
+	}
 
 	@SubscribeEvent
 	public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
 		EntityPlayer player = event.player;
-		NBTTagCompound data = player.getEntityData();
+		NBTTagCompound data = EventServer.getPlayerNBT(player);
 		if (!data.hasKey("esFirstJoin")) {
+			if (player.inventory == null) return;
 			data.setBoolean("esFirstJoin", true);
 			player.inventory.addItemStackToInventory(ItemScroll.getScroll("rite"));
-			//player.inventory.addItemStackToInventory(new ItemStack(ESInitInstance.BLOCKS.STELA));
 		}
 	}
 
@@ -33,8 +38,7 @@ public class EventServer {
 
 	/** 添加一个服务端的tick任务 */
 	static public void addTickTask(ITickTask task) {
-		if (task == null)
-			return;
+		if (task == null) return;
 		tickList.add(task);
 	}
 
@@ -44,8 +48,7 @@ public class EventServer {
 		while (iter.hasNext()) {
 			ITickTask task = iter.next();
 			int flags = task.onTick();
-			if (flags == ITickTask.END)
-				iter.remove();
+			if (flags == ITickTask.END) iter.remove();
 		}
 	}
 

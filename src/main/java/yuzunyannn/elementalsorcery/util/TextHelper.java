@@ -22,4 +22,16 @@ public class TextHelper {
 		}
 	}
 
+	static public String castToCamel(String str) {
+		String[] strs = str.split("_");
+		if (strs.length == 1) return strs[0].toLowerCase();
+		StringBuilder builder = new StringBuilder();
+		builder.append(strs[0].toLowerCase());
+		for (int i = 1; i < strs.length; i++) {
+			str = strs[i];
+			String t = str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+			builder.append(t);
+		}
+		return builder.toString();
+	}
 }

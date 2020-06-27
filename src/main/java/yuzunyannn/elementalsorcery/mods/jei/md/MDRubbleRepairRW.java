@@ -11,56 +11,52 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDBase;
-import yuzunyannn.elementalsorcery.tile.md.TileMDMagicSolidify;
+import yuzunyannn.elementalsorcery.container.gui.GuiMDRubbleRepair;
+import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
-public class RWMDMagicSolidify implements MDRecipeWrapper {
+public class MDRubbleRepairRW implements MDRecipeWrapper {
+	final TileMDRubbleRepair.Recipe recipe;
 
-	public static enum FakeRecipe {
-		MAGIC_STONE, MAGIC_PIECE
-	}
-
-	final FakeRecipe recipe;
-
-	public RWMDMagicSolidify(FakeRecipe recipe) {
+	public MDRubbleRepairRW(TileMDRubbleRepair.Recipe recipe) {
 		this.recipe = recipe;
 	}
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		if (this.recipe == FakeRecipe.MAGIC_STONE)
-			ingredients.setOutput(ItemStack.class, TileMDMagicSolidify.MAGIC_STONE);
-		else if (this.recipe == FakeRecipe.MAGIC_PIECE)
-			ingredients.setOutput(ItemStack.class, TileMDMagicSolidify.MAGIC_PIECE);
+		ingredients.setInput(ItemStack.class, this.recipe.getInput());
+		ingredients.setOutput(ItemStack.class, this.recipe.getOutput());
 	}
 
 	@Override
 	public void layout(IRecipeLayout layout) {
 		IGuiItemStackGroup group = layout.getItemStacks();
-		group.init(0, false, 87 - 9, 31);
-		if (this.recipe == FakeRecipe.MAGIC_STONE) group.set(0, TileMDMagicSolidify.MAGIC_STONE);
-		else group.set(0, TileMDMagicSolidify.MAGIC_PIECE);
+		group.init(0, true, 87 - 18 - 12, 21);
+		group.init(1, false, 87 + 12, 21);
+		group.set(0, recipe.getInput());
+		group.set(1, recipe.getOutput());
 	}
 
 	@Override
 	public void drawBackground(Minecraft mc, MDDraw draw, int offsetX, int offsetY) {
-		float rate = 20 / 500.0f;
-		if (recipe == FakeRecipe.MAGIC_STONE) rate = 100 / 500.0f;
+		float rate = recipe.getCost() / 500.0f;
 		GuiMDBase.drawDefault(mc, rate, draw.getWidth(), draw.getHeight(), offsetX, offsetY, 59, 10,
 				mc.getRenderPartialTicks(), MDDraw.TEXTURE1, MDDraw.TEXTURE2);
+		GuiMDRubbleRepair.drawMagicSign(offsetX + 6, offsetY + 30, 25, 15);
+		GuiMDRubbleRepair.drawMagicSign(offsetX + 6, offsetY + 15, 25, 15);
 		int x = draw.getWidth() / 2;
-		offsetY = 31;
-		RenderHelper.drawTexturedModalRect(offsetX + x - 9 - 11, offsetY - 7, 0, 216, 39, 34, 256, 256);
-		draw.drawSolt(offsetX + x - 9, offsetY);
+		offsetY = 21;
+		draw.drawSolt(offsetX + x - 18 - 12, offsetY);
+		draw.drawSolt(offsetX + x + 12, offsetY);
+		RenderHelper.drawTexturedModalRect(offsetX + x - 11, offsetY + 2, 25, 83, 22, 15, 256, 256);
 	}
 
 	@Override
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
 		if (GuiMDBase.isMouseIn(mouseX, mouseY, 15, 59, 144, 10)) {
 			List<String> list = new LinkedList<String>();
-			String name = I18n.format("element.magic.name");
-			if (this.recipe == FakeRecipe.MAGIC_STONE) list.add(I18n.format("page.crafting.show", name, 100, 25));
-			else list.add(I18n.format("info.arcCrystal.count", name, 20));
+			int cost = recipe.getCost();
+			list.add(I18n.format("info.arcCrystal.count", I18n.format("element.magic.name"), cost));
 			return list;
 		}
 		return Collections.emptyList();

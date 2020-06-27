@@ -37,26 +37,28 @@ public class TileEntityNetwork extends TileEntity {
 		isNetwork = false;
 	}
 
-	/** 最后一次发送的nbt */
-	private NBTTagCompound lastSendNBT = null;
-	/** 最后一次接受的nbt */
-	private NBTTagCompound lastRecvNBT = null;
+//	/** 最后一次发送的nbt */
+//	private NBTTagCompound lastSendNBT = null;
+//	/** 最后一次接受的nbt */
+//	private NBTTagCompound lastRecvNBT = null;
 
 	// 该函数还会被普通的调用，表明首次更新，首次调用是mc来管理
 	@Override
 	public NBTTagCompound getUpdateTag() {
-		NBTTagCompound nbt = this.writeToNBT(new NBTTagCompound());
-		// 判断是否为调用updateToClient函数发送的，如果不是，必须返回全部
-		if (this.isSending())
-			lastSendNBT = TileEntityNetwork.detectWhenSendingToRemoveRedundancy(nbt, lastSendNBT);
-		else
-			lastSendNBT = nbt;
-		return nbt;
+		return this.writeToNBT(new NBTTagCompound());
+//		NBTTagCompound nbt = this.writeToNBT(new NBTTagCompound());
+//		  
+//		// 判断是否为调用updateToClient函数发送的，如果不是，必须返回全部 if (this.isSending()) lastSendNBT =
+//		TileEntityNetwork.detectWhenSendingToRemoveRedundancy(nbt, lastSendNBT); else
+//		lastSendNBT = nbt;
+//		  
+//		return nbt;
 	}
 
 	@Override
 	public void handleUpdateTag(NBTTagCompound tag) {
-		lastRecvNBT = TileEntityNetwork.detectWhenRecvToRecoveryRedundancy(tag, lastRecvNBT);
+		// lastRecvNBT = TileEntityNetwork.detectWhenRecvToRecoveryRedundancy(tag,
+		// lastRecvNBT);
 		super.handleUpdateTag(tag);
 	}
 
@@ -67,20 +69,18 @@ public class TileEntityNetwork extends TileEntity {
 
 	/** 将数据更新到client端 */
 	public void updateToClient() {
-		if (world.isRemote)
-			return;
+		if (world.isRemote) return;
 		isNetwork = true;
 		for (EntityPlayer player : world.playerEntities) {
-			if (player.getPosition().distanceSq(this.pos) > 512 * 512)
-				continue;
+			if (player.getPosition().distanceSq(this.pos) > 512 * 512) continue;
 			((EntityPlayerMP) player).connection.sendPacket(this.getUpdatePacket());
 		}
 		isNetwork = false;
 	}
 
-	static public NBTTagCompound detectWhenSendingToRemoveRedundancy(NBTTagCompound nbt, NBTTagCompound lastNBT) {
-		if (lastNBT == null)
-			lastNBT = new NBTTagCompound();
+	@Deprecated
+	static private NBTTagCompound detectWhenSendingToRemoveRedundancy(NBTTagCompound nbt, NBTTagCompound lastNBT) {
+		if (lastNBT == null) lastNBT = new NBTTagCompound();
 		NBTTagCompound tmp = nbt.copy();
 		for (String key : lastNBT.getKeySet()) {
 			// 如果本次发送的nbt中没含有旧标签，那么需要删除
@@ -152,9 +152,9 @@ public class TileEntityNetwork extends TileEntity {
 		return tmp;
 	}
 
-	static public NBTTagCompound detectWhenRecvToRecoveryRedundancy(NBTTagCompound nbt, NBTTagCompound lastNBT) {
-		if (lastNBT == null)
-			return nbt.copy();
+	@Deprecated
+	static private NBTTagCompound detectWhenRecvToRecoveryRedundancy(NBTTagCompound nbt, NBTTagCompound lastNBT) {
+		if (lastNBT == null) return nbt.copy();
 		// 先删除不需要的标签
 		if (nbt.hasKey("Del", 9)) {
 			NBTTagList list = nbt.getTagList("Del", 8);
@@ -175,8 +175,7 @@ public class TileEntityNetwork extends TileEntity {
 			// 对于taglist有特殊检测，变动原有项目
 			if (tagLast.getId() == 9 && tag.getId() == 10) {
 				NBTTagCompound dealInfo = (NBTTagCompound) tag;
-				if (!dealInfo.hasKey("Change", 9))
-					continue;
+				if (!dealInfo.hasKey("Change", 9)) continue;
 				NBTTagList dealList = (NBTTagList) dealInfo.getTag("Change");
 				NBTTagList list = (NBTTagList) tagLast;
 				// 移除标签后，之后下标的变化量
@@ -186,10 +185,8 @@ public class TileEntityNetwork extends TileEntity {
 					NBTTagCompound deal = (NBTTagCompound) base;
 					int change = deal.getInteger("Change") - indexChange;
 					if (deal.hasKey("Value")) {
-						if (change >= list.tagCount())
-							list.appendTag(deal.getTag("Value"));
-						else
-							list.set(change, deal.getTag("Value"));
+						if (change >= list.tagCount()) list.appendTag(deal.getTag("Value"));
+						else list.set(change, deal.getTag("Value"));
 					} else {
 						list.removeTag(change);
 						indexChange++;

@@ -44,6 +44,7 @@ public class ESObjects {
 		public Item MAGIC_STONE;
 		public Item ORDER_CRYSTAL;
 		public Item MD_BASE;
+		public Item RITE_MANUAL;
 	}
 
 	static public class Blocks {

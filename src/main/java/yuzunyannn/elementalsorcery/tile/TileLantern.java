@@ -20,6 +20,8 @@ import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 public class TileLantern extends TileEntityNetwork {
 
+	public static final int MAX_DIS = 32;
+	
 	private BlockPos pre = null;
 	private BlockPos next = null;
 	private String playerName = null;
@@ -82,7 +84,7 @@ public class TileLantern extends TileEntityNetwork {
 		if (this.pre != null && this.next != null) {
 			TileLantern tilePre = (TileLantern) world.getTileEntity(pre);
 			TileLantern tileNext = (TileLantern) world.getTileEntity(next);
-			if (this.pre.distanceSq(this.next) > 16 * 16) {
+			if (this.pre.distanceSq(this.next) > MAX_DIS * MAX_DIS) {
 				tilePre.setNext(null);
 				tileNext.setPre(null);
 			} else {
@@ -108,7 +110,7 @@ public class TileLantern extends TileEntityNetwork {
 
 	/** 连接 */
 	public void link(TileLantern tile) {
-		this.link(tile, 7, 16 * 16);
+		this.link(tile, 7, MAX_DIS * MAX_DIS);
 	}
 
 	/** 查找并连接 */
@@ -125,7 +127,7 @@ public class TileLantern extends TileEntityNetwork {
 		if (tile.next != null) {
 			tileNext = (TileLantern) this.world.getTileEntity(tile.next);
 		}
-		if (dis > 16 * 16) {
+		if (dis > MAX_DIS * MAX_DIS) {
 			return this.link(tileNext, times, min);
 		}
 		if (dis > min) {
@@ -270,7 +272,7 @@ public class TileLantern extends TileEntityNetwork {
 			node.setCanSwim(true);
 			PathFinder finder = new PathFinder(node);
 			vest.setPosition(x, y, z);
-			path = finder.findPath(world, vest, new BlockPos(this.target.x, this.target.y, this.target.z), 16);
+			path = finder.findPath(world, vest, new BlockPos(this.target.x, this.target.y, this.target.z), MAX_DIS);
 		}
 
 		// 效果

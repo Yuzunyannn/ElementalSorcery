@@ -155,19 +155,20 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 	 */
 	public @Nonnull ItemStack getAdditionalItem(@Nonnull ItemStack stackOld, @Nonnull ItemStack stackNew,
 			@Nonnull ItemStack extra) {
-		// 额外物品是末影之眼
-		if (extra.getItem() == Items.ENDER_EYE || extra.getItem() == ESInitInstance.ITEMS.MAGICAL_ENDER_EYE) {
-			if (stackNew.getItem() == ESInitInstance.ITEMS.KYANITE) {
-				switch (material()) {
-				case IRON:
-					if (Math.random() < 0.1f) return new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE);
-					break;
-				case KYANITE:
-					if (Math.random() < 0.5f) return new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE);
-					break;
-				default:
-					break;
-				}
+		if (stackNew.getItem() == ESInitInstance.ITEMS.KYANITE) {
+			float add = 0.0f;
+			// 额外物品是末影之眼+概率
+			if (extra.getItem() == Items.ENDER_EYE) add = 0.25f;
+			if (extra.getItem() == ESInitInstance.ITEMS.MAGICAL_ENDER_EYE) add = 0.5f;
+			switch (material()) {
+			case IRON:
+				if (Math.random() < 0.10f + add) return new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE);
+				break;
+			case KYANITE:
+				if (Math.random() < 0.50f + add) return new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE);
+				break;
+			default:
+				break;
 			}
 		} else if (extra.getItem() == ESInitInstance.ITEMS.MAGICAL_ENDER_EYE) {
 

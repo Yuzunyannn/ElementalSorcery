@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.apache.commons.compress.utils.IOUtils;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -21,6 +19,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import yuzunyannn.elementalsorcery.util.IOHelper;
 
 public class ESData {
 
@@ -46,7 +45,7 @@ public class ESData {
 			istream = ESData.class.getResourceAsStream(rPath);
 			nbt = CompressedStreamTools.readCompressed(istream);
 		} finally {
-			IOUtils.closeQuietly(istream);
+			IOHelper.closeQuietly(istream);
 		}
 		return nbt;
 	}
@@ -60,7 +59,7 @@ public class ESData {
 			Gson gson = new Gson();
 			obj = gson.fromJson(new InputStreamReader(istream), JsonObject.class);
 		} finally {
-			IOUtils.closeQuietly(istream);
+			IOHelper.closeQuietly(istream);
 		}
 		return obj;
 	}
@@ -100,7 +99,7 @@ public class ESData {
 						}
 						return result.toArray(new String[result.size()]);
 					} finally {
-						IOUtils.closeQuietly(jar);
+						IOHelper.closeQuietly(jar);
 					}
 				}
 			}

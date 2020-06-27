@@ -12,6 +12,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
@@ -57,10 +59,8 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 		} else {
 			dyaw = (float) (180 * (Math.random() * 0.4 + 0.2) / 20);
 			dpitch = (float) (180 * (Math.random() * 0.4 + 0.2) / 20);
-			if (Math.random() < 0.5)
-				dyaw = -dyaw;
-			if (Math.random() < 0.5)
-				dpitch = -dpitch;
+			if (Math.random() < 0.5) dyaw = -dyaw;
+			if (Math.random() < 0.5) dpitch = -dpitch;
 		}
 
 	}
@@ -138,11 +138,9 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 					world.destroyBlock(to, true);
 					this.placedAt();
 				} else {
-					if (origin.getBlock().isAir(origin, world, to)) {
-						this.placedAt();
-					} else {
-						Block.spawnAsEntity(world, to, stack);
-					}
+					if (origin.getBlock().isAir(origin, world, to)) this.placedAt();
+					else Block.spawnAsEntity(world, to, stack);
+
 				}
 
 			}
@@ -151,10 +149,18 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 	}
 
 	private void placedAt() {
-		if (stack.getItem() instanceof ItemBlock && Block.getBlockFromItem(stack.getItem()) == state.getBlock()) {
-			((ItemBlock) stack.getItem()).placeBlockAt(stack, player, world, to, EnumFacing.DOWN, 0, 0, 0, state);
-		} else
-			world.setBlockState(to, state);
+		if (stack.getItem() instanceof ItemBlock) {
+			ItemBlock ib = (ItemBlock) stack.getItem();
+			ib.placeBlockAt(stack, player, world, to, EnumFacing.DOWN, 0, 0, 0,
+					ib.getBlock().getStateFromMeta(stack.getItemDamage()));
+			return;
+		}
+		if (stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null) != null) {
+			IFluidHandlerItem fhi = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+			fhi.drain(1000, true);
+			Block.spawnAsEntity(world, to, fhi.getContainer());
+		}
+		world.setBlockState(to, state);
 	}
 
 	@SideOnly(Side.CLIENT)

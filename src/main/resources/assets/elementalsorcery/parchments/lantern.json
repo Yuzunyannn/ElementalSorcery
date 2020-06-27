@@ -1,0 +1,8 @@
+{
+    "type": "rite",
+    "name": "lantern",
+    "item": [
+        "minecraft:torch",
+        "elementalsorcery:lantern"
+    ]
+}

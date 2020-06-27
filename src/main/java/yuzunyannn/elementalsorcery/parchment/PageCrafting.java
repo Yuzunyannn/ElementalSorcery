@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -49,16 +48,22 @@ public class PageCrafting extends PageEasy {
 		// 根据stack寻找合成表
 		List<IRecipe> allRecipe = new LinkedList();
 		for (IRecipe ire : CraftingManager.REGISTRY) {
-			if (ire.getRecipeOutput().isItemEqual(stack)) {
-				allRecipe.add(ire);
-			}
+			if (ire.getRecipeOutput().isItemEqual(stack)) allRecipe.add(ire);
 		}
 		if (allRecipe.isEmpty()) return;
 		// 获取数组
 		for (IRecipe irecipe : allRecipe) {
-			NonNullList<Ingredient> ingLIst = irecipe.getIngredients();
+			NonNullList<Ingredient> ingLIst;
+			ItemStack output;
+			if (irecipe instanceof IPageCraftDynamicIngredients) {
+				ingLIst = ((IPageCraftDynamicIngredients) irecipe).getIngredients(stack);
+				output = stack;
+			} else {
+				ingLIst = irecipe.getIngredients();
+				output = irecipe.getRecipeOutput();
+			}
 			itemList.add(ingLIst);
-			itemOut.add(irecipe.getRecipeOutput());
+			itemOut.add(output);
 			elementNeed.add(null);
 		}
 	}
@@ -127,7 +132,7 @@ public class PageCrafting extends PageEasy {
 	@Override
 	public void update(IPageManager pageManager) {
 		tick++;
-		if (tick > 20 * 2) {
+		if (tick > 20) {
 			tick = 0;
 			nowIndex++;
 			nowIndex = nowIndex % itemList.size();
@@ -148,6 +153,7 @@ public class PageCrafting extends PageEasy {
 			ItemStack stack = stacks[EventClient.rand_int % stacks.length];
 			pageManager.setSlot(i, stack);
 		}
+		for (int i = list.size(); i < pageManager.getSlots(); i++) pageManager.setSlot(i, ItemStack.EMPTY);
 		pageManager.setSlot(size, this.getOutput());
 	}
 

@@ -5,7 +5,7 @@ import static yuzunyannn.elementalsorcery.ElementalSorcery.logger;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.lwjgl.util.vector.Vector3f;
+import javax.vecmath.Vector3d;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
+import yuzunyannn.elementalsorcery.crafting.RecipeRiteWrite;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.util.JsonHelper;
@@ -61,6 +62,8 @@ public class JsonParser {
 			return readPageTransform(jobj, PageTransform.SEPARATE);
 		case "spellaltar":
 			return readPageTransform(jobj, PageTransform.SPELLALTAR);
+		case "rite":
+			return readPageTransform(jobj, PageTransform.RITE);
 		case "buidling":
 			return readPageBuilding(jobj);
 		default:
@@ -169,7 +172,12 @@ public class JsonParser {
 		case PageTransform.INFUSION:
 			if (list.size() < 2) throw new Exception("注魔item字段需要两个");
 			return new PageTransformSimple(page.getTitle(), page.getContext(), list.get(0), list.get(1),
-					ItemStack.EMPTY, null, PageTransform.INFUSION);
+					ItemStack.EMPTY, null, id);
+		case PageTransform.RITE:
+			if (list.size() < 2) throw new Exception("仪式item字段需要两个");
+			ItemStack p = new ItemStack(ESInitInstance.ITEMS.PARCHMENT);
+			RecipeRiteWrite.setInnerStack(p, list.get(0));
+			return new PageTransformSimple(page.getTitle(), page.getContext(), p, list.get(1), list.get(0), null, id);
 		case PageTransform.SEPARATE:
 			if (list.size() < 3) throw new Exception("分离item字段需要三个");
 			return new PageTransformSimple(page.getTitle(), page.getContext(), list.get(0), list.get(1), list.get(2),
@@ -202,7 +210,7 @@ public class JsonParser {
 		Building building = BuildingLib.instance.getBuilding(id);
 		if (building == null) throw new Exception("建筑不存在：" + id);
 		PageBuildingSimple bpage = new PageBuildingSimple(page.getTitle(), building);
-		// 额外添加
+		// 额外添加,数组型,pos字段为位置，item字段为方块类型
 		JsonArray extra = null;
 		if (JsonHelper.isArray(jobj, "extra")) extra = jobj.get("extra").getAsJsonArray();
 		else if (JsonHelper.isArray(jobj, "add")) extra = jobj.get("add").getAsJsonArray();
@@ -211,7 +219,7 @@ public class JsonParser {
 			for (JsonElement je : extra) {
 				if (je.isJsonObject()) {
 					jobj = je.getAsJsonObject();
-					List<Vector3f> v3fs = JsonHelper.readBlockPos(jobj.get("pos"));
+					List<Vector3d> v3fs = JsonHelper.readBlockPos(jobj.get("pos"));
 					if (v3fs.isEmpty()) continue;
 					List<ItemRecord> irList = JsonHelper.readItems(jobj.get("item"));
 					if (irList.isEmpty()) continue;
@@ -219,7 +227,7 @@ public class JsonParser {
 					Block block = Block.getBlockFromItem(stack.getItem());
 					if (block == null || block == Blocks.AIR) continue;
 					IBlockState state = block.getStateFromMeta(stack.getItemDamage());
-					for (Vector3f v3f : v3fs) bpage.addExtraBlock(new BlockPos(v3f.x, v3f.y, v3f.z), state);
+					for (Vector3d v3f : v3fs) bpage.addExtraBlock(new BlockPos(v3f.x, v3f.y, v3f.z), state);
 				}
 			}
 		}

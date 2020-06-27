@@ -13,6 +13,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -121,9 +122,11 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 					}
 				}
 				this.bolockStack = bucket;
-			} else if (state.getBlock() == Blocks.FLOWER_POT) {
-				bolockStack = new ItemStack(Items.FLOWER_POT, 1);
 			} else {
+				if (state.getBlock() == Blocks.FLOWER_POT) {
+					bolockStack = new ItemStack(Items.FLOWER_POT, 1);
+					return;
+				}
 				int meta = state.getBlock().damageDropped(state);
 				bolockStack = new ItemStack(Item.getItemFromBlock(state.getBlock()), 1, meta);
 			}
@@ -147,6 +150,18 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			return this.count;
 		}
 
+		public static ItemStack getItemStackCanUsed(IInventory inventory, ItemStack need) {
+			Block block = Block.getBlockFromItem(need.getItem());
+			for (int i = 0; i < inventory.getSizeInventory(); ++i) {
+				ItemStack stack = inventory.getStackInSlot(i);
+				if (block == Blocks.GRASS) {
+					Block blk = Block.getBlockFromItem(stack.getItem());
+					if (blk == Blocks.DIRT && stack.getItemDamage() == 0) return stack;
+				}
+				if (ItemStack.areItemsEqual(need, stack) && ItemStack.areItemStackTagsEqual(need, stack)) return stack;
+			}
+			return ItemStack.EMPTY;
+		}
 	}
 
 	public Building() {
@@ -261,8 +276,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		for (Entry<BlockPos, Integer> entry : blockMap.entrySet()) {
 			BlockInfo info = infoList.get(entry.getValue());
 			BlockItemTypeInfo tpInfo = new BlockItemTypeInfo(info.state);
-			if (!typeInfoList.contains(tpInfo))
-				typeInfoList.add(tpInfo);
+			if (!typeInfoList.contains(tpInfo)) typeInfoList.add(tpInfo);
 			int tpIndex = typeInfoList.indexOf(tpInfo);
 			info.typeIndex = tpIndex;
 			typeInfoList.get(tpIndex).count++;
@@ -277,25 +291,20 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 
 	// 为制定状态添加对应的相对位置！
 	public boolean add(IBlockState state, BlockPos pos) {
-		if (state.getMaterial() == Material.AIR)
-			return false;
-		if (blockMap.containsKey(pos))
-			throw new IllegalArgumentException("Your pos has already exist!" + pos);
+		if (state.getMaterial() == Material.AIR) return false;
+		if (blockMap.containsKey(pos)) throw new IllegalArgumentException("Your pos has already exist!" + pos);
 		// 排除流动的液体
 		if (state.getMaterial().isLiquid()) {
-			if (state.getBlock().getMetaFromState(state) != 0)
-				return false;
+			if (state.getBlock().getMetaFromState(state) != 0) return false;
 		}
 		// 类型信息
 		BlockItemTypeInfo tpInfo = new BlockItemTypeInfo(state);
-		if (!typeInfoList.contains(tpInfo))
-			typeInfoList.add(tpInfo);
+		if (!typeInfoList.contains(tpInfo)) typeInfoList.add(tpInfo);
 		int tpIndex = typeInfoList.indexOf(tpInfo);
 		typeInfoList.get(tpIndex).count++;
 		// 方块信息
 		BlockInfo info = new BlockInfo(state, tpIndex);
-		if (!infoList.contains(info))
-			infoList.add(info);
+		if (!infoList.contains(info)) infoList.add(info);
 		int index = infoList.indexOf(info);
 		// 放入方块
 		blockMap.put(pos, index);
@@ -305,18 +314,12 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 
 	// 重新计算最大边框
 	private void update(BlockPos pos) {
-		if (pos.getX() < minX)
-			minX = pos.getX();
-		else if (pos.getX() > maxX)
-			maxX = pos.getX();
-		if (pos.getY() < minY)
-			minY = pos.getY();
-		else if (pos.getY() > maxY)
-			maxY = pos.getY();
-		if (pos.getZ() < minZ)
-			minZ = pos.getZ();
-		else if (pos.getZ() > maxZ)
-			maxZ = pos.getZ();
+		if (pos.getX() < minX) minX = pos.getX();
+		else if (pos.getX() > maxX) maxX = pos.getX();
+		if (pos.getY() < minY) minY = pos.getY();
+		else if (pos.getY() > maxY) maxY = pos.getY();
+		if (pos.getZ() < minZ) minZ = pos.getZ();
+		else if (pos.getZ() > maxZ) maxZ = pos.getZ();
 	}
 
 	/** 获取边框 */
@@ -342,8 +345,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		}
 
 		public boolean next() {
-			if (iter == null)
-				iter = building.blockMap.entrySet().iterator();
+			if (iter == null) iter = building.blockMap.entrySet().iterator();
 			if (iter.hasNext()) {
 				entry = iter.next();
 				return true;
@@ -372,8 +374,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		}
 
 		public BlockPos getPos() {
-			if (entry == null)
-				return null;
+			if (entry == null) return null;
 			BlockPos pos = entry.getKey();
 			return facePos(pos, this.facing).add(off);
 		}
@@ -397,14 +398,13 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		}
 
 		public IBlockState getState() {
-			if (entry == null)
-				return null;
+			if (entry == null) return null;
 			IBlockState state = building.infoList.get(entry.getValue()).getState();
 			return this.faceSate(state, this.facing);
 		}
 
 		public ItemStack getItemStack() {
-			return entry == null ? null
+			return entry == null ? ItemStack.EMPTY
 					: building.typeInfoList.get(building.infoList.get(entry.getValue()).typeIndex).bolockStack.copy();
 		}
 
@@ -431,8 +431,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		BlockPos center = new BlockPos((pos1.getX() + pos2.getX()) / 2, Math.min(pos1.getY(), pos2.getY()),
 				(pos1.getZ() + pos2.getZ()) / 2);
 		// 处理方向
-		if (facing == EnumFacing.WEST || facing == EnumFacing.EAST)
-			facing = facing.getOpposite();
+		if (facing == EnumFacing.WEST || facing == EnumFacing.EAST) facing = facing.getOpposite();
 		// 记录方块
 		while (true) {
 			if (!world.isAirBlock(pos)) {
@@ -441,8 +440,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			}
 			// 移动pos
 			pos = movePosOnce(pos, pos1, pos2);
-			if (pos == null)
-				break;
+			if (pos == null) break;
 		}
 		return building;
 	}
@@ -458,22 +456,16 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 				if (pos.getY() == pos2.getY()) {
 					return null;
 				} else {
-					if (pos.getY() < pos2.getY())
-						pos = new BlockPos(pos1.getX(), pos.getY() + 1, pos1.getZ());
-					else
-						pos = new BlockPos(pos1.getX(), pos.getY() - 1, pos1.getZ());
+					if (pos.getY() < pos2.getY()) pos = new BlockPos(pos1.getX(), pos.getY() + 1, pos1.getZ());
+					else pos = new BlockPos(pos1.getX(), pos.getY() - 1, pos1.getZ());
 				}
 			} else {
-				if (pos.getZ() < pos2.getZ())
-					pos = new BlockPos(pos1.getX(), pos.getY(), pos.getZ() + 1);
-				else
-					pos = new BlockPos(pos1.getX(), pos.getY(), pos.getZ() - 1);
+				if (pos.getZ() < pos2.getZ()) pos = new BlockPos(pos1.getX(), pos.getY(), pos.getZ() + 1);
+				else pos = new BlockPos(pos1.getX(), pos.getY(), pos.getZ() - 1);
 			}
 		} else {
-			if (pos.getX() < pos2.getX())
-				pos = pos.add(1, 0, 0);
-			else
-				pos = pos.add(-1, 0, 0);
+			if (pos.getX() < pos2.getX()) pos = pos.add(1, 0, 0);
+			else pos = pos.add(-1, 0, 0);
 		}
 		return pos;
 	}

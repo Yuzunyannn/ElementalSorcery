@@ -17,6 +17,7 @@ public class PageTransform extends PageEasy {
 	static final int INFUSION = 1;
 	static final int SEPARATE = 2;
 	static final int SPELLALTAR = 3;
+	static final int RITE = 4;
 
 	protected ItemStack getOrigin() {
 		return ItemStack.EMPTY;
@@ -73,7 +74,11 @@ public class PageTransform extends PageEasy {
 			for (int i = 0; i < 4; i++) pageManager.addSlot(cX - 9 + 5 + i * 18, cY + 37, ItemStack.EMPTY);
 			this.reflushListShow(pageManager);
 		}
-		if (!this.getExtra().isEmpty()) pageManager.addSlot(cX + 22, cY + 18, this.getExtra());
+		if (!this.getExtra().isEmpty()) {
+			if (this.getType() == RITE) {
+				pageManager.addSlot(cX + 22 - 22, cY + 18 + 22, this.getExtra());
+			} else pageManager.addSlot(cX + 22, cY + 18, this.getExtra());
+		}
 	}
 
 	@Override
@@ -113,12 +118,17 @@ public class PageTransform extends PageEasy {
 			gui.drawTexturedModalRect(cX + 18, cY, 95 + 18, 166 + 54, 27, 18);
 		} else if (type == SPELLALTAR) {
 			gui.drawTexturedModalRect(cX + 18, cY, 95 + 18, 166 + 72, 27, 18);
+		} else if (type == RITE) {
+			gui.drawTexturedModalRect(cX + 18, cY, 95 + 18 + 27, 166 + 18, 27, 18);
 		} else {
 			gui.drawTexturedModalRect(cX, cY + 18, 95, 166 + 18, 18, 18);
 			gui.drawTexturedModalRect(cX + 18, cY, 95 + 18, 166 + 36, 27, 18);
 		}
 		if (!this.getExtra().isEmpty()) {
-			gui.drawTexturedModalRect(cX + 18 + 4, cY + 18, 95, 166, 18, 18);
+			if (type == RITE) {
+				gui.drawTexturedModalRect(cX + 18 + 4 - 22, cY + 18 + 22, 95, 166, 18, 18);
+				gui.drawTexturedModalRect(cX + 18 + 4 - 22, cY + 18, 41, 220, 18, 27);
+			} else gui.drawTexturedModalRect(cX + 18 + 4, cY + 18, 95, 166, 18, 18);
 		}
 		if (this.getItemList() != null) {
 			gui.drawTexturedModalRect(cX - 9 + 5, cY + 37, 41, 166, 72, 18);
