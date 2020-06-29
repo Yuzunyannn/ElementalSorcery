@@ -93,7 +93,7 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 		case 1:
 			return super.getField(id);
 		case 2:
-			return Float.floatToIntBits(meltRate);
+			return (int) (meltRate * 1000);
 		case 3:
 			return (int) this.temperature;
 		default:
@@ -110,7 +110,7 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 			super.setField(id, value);
 			break;
 		case 2:
-			this.meltRate = Float.intBitsToFloat(value);
+			this.meltRate = value / 1000.0f;
 			break;
 		case 3:
 			this.temperature = value;

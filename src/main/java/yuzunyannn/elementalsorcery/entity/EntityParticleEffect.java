@@ -1,23 +1,24 @@
 package yuzunyannn.elementalsorcery.entity;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.item.EntityFireworkRocket;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.render.particle.FirwrokShap;
 
-public class EntityParticleEffect extends Entity {
+public class EntityParticleEffect extends Entity implements IEntityAdditionalSpawnData {
 
 	static public void spawnParticleEffect(World worldIn, double x, double y, double z, NBTTagCompound nbt) {
 		EntityParticleEffect effect = new EntityParticleEffect(worldIn, x, y, z, nbt);
@@ -25,8 +26,7 @@ public class EntityParticleEffect extends Entity {
 		effect.setDead();
 	}
 
-	private static final DataParameter<ItemStack> PARTICLE_DATA = EntityDataManager
-			.<ItemStack>createKey(EntityFireworkRocket.class, DataSerializers.ITEM_STACK);
+	ItemStack stack = ItemStack.EMPTY;
 
 	public EntityParticleEffect(World worldIn) {
 		super(worldIn);
@@ -37,26 +37,31 @@ public class EntityParticleEffect extends Entity {
 		super(worldIn);
 		this.setSize(0.0f, 0.0f);
 		this.setPosition(x, y, z);
-		ItemStack stack = new ItemStack(Items.AIR);
+		stack = new ItemStack(Items.DIAMOND);
 		stack.setTagCompound(nbt);
-		this.dataManager.set(PARTICLE_DATA, stack);
-		this.dataManager.setDirty(PARTICLE_DATA);
 	}
 
 	@Override
 	public void setDead() {
-		this.world.setEntityState(this, (byte) 17);
 		super.setDead();
+		if (this.world.isRemote) {
+			NBTTagCompound nbt = stack.getTagCompound();
+			this.showParticle(nbt == null ? new NBTTagCompound() : nbt);
+		}
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void handleStatusUpdate(byte id) {
-		if (id == 17 && this.world.isRemote) {
-			ItemStack itemstack = this.dataManager.get(PARTICLE_DATA);
-			NBTTagCompound nbt = itemstack.getTagCompound();
-			this.showParticle(nbt == null ? new NBTTagCompound() : nbt);
-		}
+	public void writeSpawnData(ByteBuf buffer) {
+		ByteBufUtils.writeItemStack(buffer, stack);
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf additionalData) {
+		stack = ByteBufUtils.readItemStack(additionalData);
+	}
+
+	@Override
+	protected void entityInit() {
 	}
 
 	@Override
@@ -67,11 +72,6 @@ public class EntityParticleEffect extends Entity {
 	@Override
 	public boolean canBeAttackedWithItem() {
 		return false;
-	}
-
-	@Override
-	protected void entityInit() {
-		this.dataManager.register(PARTICLE_DATA, ItemStack.EMPTY);
 	}
 
 	@Override
@@ -95,10 +95,8 @@ public class EntityParticleEffect extends Entity {
 				boolean flicker = nbt.getBoolean("Flicker");
 				int[] colors = nbt.getIntArray("Colors");
 				int[] fadeColors = nbt.getIntArray("FadeColors");
-				if (colors.length == 0)
-					colors = new int[] { ItemDye.DYE_COLORS[0] };
-				if (fadeColors.length == 0)
-					fadeColors = new int[] { ItemDye.DYE_COLORS[0] };
+				if (colors.length == 0) colors = new int[] { ItemDye.DYE_COLORS[0] };
+				if (fadeColors.length == 0) fadeColors = new int[] { ItemDye.DYE_COLORS[0] };
 				switch (type) {
 				case 0:
 					FirwrokShap.createBall(this.world, new Vec3d(this.posX, this.posY, this.posZ), speed, size, colors,
@@ -114,4 +112,5 @@ public class EntityParticleEffect extends Entity {
 			}
 		}
 	}
+
 }

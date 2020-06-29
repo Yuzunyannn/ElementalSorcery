@@ -1,11 +1,5 @@
 package yuzunyannn.elementalsorcery.element;
 
-import java.util.List;
-
-import javax.annotation.Nullable;
-
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -14,8 +8,6 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.IElementSpell;
 
@@ -37,10 +29,8 @@ public class ElementEnder extends ElementInner {
 
 	@Override
 	public void spellEnd(World world, EntityLivingBase entitylivingbase, ElementStack estack, SpellPackage pack) {
-		if (pack.isFail())
-			return;
-		if (pack.pos == null)
-			return;
+		if (pack.isFail()) return;
+		if (pack.pos == null) return;
 		pack.pos = pack.pos.up();
 		float posX = pack.pos.getX() + 0.5f;
 		float posY = pack.pos.getY() + 0.5f;
@@ -50,8 +40,7 @@ public class ElementEnder extends ElementInner {
 			world.spawnParticle(EnumParticleTypes.PORTAL, posX, posY + rand.nextDouble() * 2.0D, posZ,
 					rand.nextGaussian(), 0.0D, rand.nextGaussian());
 		}
-		if (world.isRemote)
-			return;
+		if (world.isRemote) return;
 		if (!world.isAirBlock(pack.pos)) {
 			entitylivingbase.attackEntityFrom(DamageSource.FALL, 1.0f);
 			return;
@@ -77,8 +66,8 @@ public class ElementEnder extends ElementInner {
 					world.playSound((EntityPlayer) null, entitylivingbase.prevPosX, entitylivingbase.prevPosY,
 							entitylivingbase.prevPosZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE,
 							1.0F, 1.0F);
-					world.playSound((EntityPlayer) null, posX, posY, posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT,
-							SoundCategory.HOSTILE, 1.0F, 1.0F);
+					world.playSound((EntityPlayer) null, event.getTargetX(), event.getTargetY(), event.getTargetZ(),
+							SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1.0F, 1.0F);
 				}
 			}
 		} else if (entitylivingbase != null) {

@@ -31,13 +31,15 @@ public class WorldGeneratorES {
 
 		public void genKynateOre(OreGenEvent.Post event) {
 			WorldGenerator generator = new WorldGenKyaniteOre();
-			if (TerrainGen.generateOre(event.getWorld(), event.getRand(), generator, event.getPos(), OreGenEvent.GenerateMinable.EventType.CUSTOM))
+			if (TerrainGen.generateOre(event.getWorld(), event.getRand(), generator, event.getPos(),
+					OreGenEvent.GenerateMinable.EventType.CUSTOM))
 				generator.generate(event.getWorld(), event.getRand(), event.getPos());
 		}
 
 		public void genStarStone(OreGenEvent.Post event) {
 			WorldGenerator generator = new WorldGenStarStone();
-			if (TerrainGen.generateOre(event.getWorld(), event.getRand(), generator, event.getPos(), OreGenEvent.GenerateMinable.EventType.CUSTOM))
+			if (TerrainGen.generateOre(event.getWorld(), event.getRand(), generator, event.getPos(),
+					OreGenEvent.GenerateMinable.EventType.CUSTOM))
 				generator.generate(event.getWorld(), event.getRand(), event.getPos());
 		}
 	}
@@ -53,17 +55,14 @@ public class WorldGeneratorES {
 		}
 
 		public void genElfTree(World world, ChunkPos chunkPos, Random rand, Biome biome) {
-			if (net.minecraftforge.event.terraingen.TerrainGen.decorate(world, rand, chunkPos, DecorateBiomeEvent.Decorate.EventType.CUSTOM)) {
+			if (net.minecraftforge.event.terraingen.TerrainGen.decorate(world, rand, chunkPos,
+					DecorateBiomeEvent.Decorate.EventType.CUSTOM)) {
 				WorldGenerator generator;
 				if (biome == Biomes.PLAINS) {
 					if (rand.nextInt(5) != 0) return;
-				} else {
-					if (rand.nextInt(10) != 0) return;
-				}
-				if (rand.nextInt(20) == 0)
-					generator = new WorldGenElfTree(false, 3);
-				else
-					generator = WorldGenElfTree.getGenTreeFromBiome(false, biome);
+				} else if (rand.nextInt(10) != 0) return;
+				if (rand.nextInt(50) == 0) generator = new WorldGenElfTree(false, 3);
+				else generator = WorldGenElfTree.getGenTreeFromBiome(false, biome);
 				int x = rand.nextInt(16) + 8;
 				int z = rand.nextInt(16) + 8;
 				BlockPos blockpos = world.getHeight(chunkPos.getBlock(x, 0, z));

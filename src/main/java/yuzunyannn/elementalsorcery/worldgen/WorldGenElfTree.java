@@ -29,8 +29,7 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 	static public WorldGenElfTree getGenTreeFromBiome(boolean notify, Biome biome) {
 		if (biome == Biomes.JUNGLE) {
 			return new WorldGenElfTree(notify, 1);
-		} else
-			return new WorldGenElfTree(notify, 0);
+		} else return new WorldGenElfTree(notify, 0);
 	}
 
 	public WorldGenElfTree(boolean notify) {
@@ -54,7 +53,7 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 		switch (type) {
 		case 1:
 			genTree = new WorldGenMegaJungle(true, 8, 4, WOOD, LEAVE);
-			return genTree.generate(worldIn, rand, position) && this.genFruit(worldIn, rand, position.up(9), 6, rand.nextInt(4) + 1);
+			return genTree.generate(worldIn, rand, position);
 		case 2:
 			genTree = new WorldGenLargeElfTree(true, rand.nextInt(10) + 24);
 			return genTree.generate(worldIn, rand, position);
@@ -65,27 +64,8 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 		default:
 			int treeSize = rand.nextInt(6) + 4;
 			genTree = new WorldGenTrees(doBlockNotify, treeSize, WOOD, LEAVE, false);
-			return genTree.generate(worldIn, rand, position) && this.genFruit(worldIn, rand, position.up(treeSize), 4, rand.nextInt(3) + 0);
+			return genTree.generate(worldIn, rand, position);
 		}
-	}
-
-	/** 产生写果子 */
-	public boolean genFruit(World worldIn, Random rand, BlockPos position, int size, int count) {
-		IBlockState FRUIT_STATE = ESInitInstance.BLOCKS.ELF_FRUIT.getDefaultState();
-		for (int i = 0; i < count; i++) {
-			BlockPos pos = position.add(rand.nextInt(size) - size / 2, 1, rand.nextInt(size) - size / 2);
-			IBlockState state;
-			// 寻找叶子最下面
-			do {
-				pos = pos.down();
-				state = worldIn.getBlockState(pos);
-			} while (state.getBlock() == LEAVE.getBlock());
-			// 上面必须是叶子，当前位置必须空
-			if (worldIn.getBlockState(pos.up()).getBlock() == LEAVE.getBlock() && worldIn.isAirBlock(pos)) {
-				this.setBlockAndNotifyAdequately(worldIn, pos, FRUIT_STATE);
-			}
-		}
-		return true;
 	}
 
 	static public class WorldGenLargeElfTree extends WorldGenAbstractTree {
@@ -118,12 +98,16 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 			// 生成树干
 			for (int y = pos.getY(); y <= pos.getY() + height; y++) {
 				for (int x = pos.getX() - size; x <= pos.getX() + size; x++) {
-					this.setBlockAndNotifyAdequately(world, new BlockPos(x, y, pos.getZ() - size), WorldGenElfTree.WOOD);
-					this.setBlockAndNotifyAdequately(world, new BlockPos(x, y, pos.getZ() + size), WorldGenElfTree.WOOD);
+					this.setBlockAndNotifyAdequately(world, new BlockPos(x, y, pos.getZ() - size),
+							WorldGenElfTree.WOOD);
+					this.setBlockAndNotifyAdequately(world, new BlockPos(x, y, pos.getZ() + size),
+							WorldGenElfTree.WOOD);
 				}
 				for (int z = pos.getZ() - size + 1; z <= pos.getZ() + size - 1; z++) {
-					this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() - size, y, z), WorldGenElfTree.WOOD);
-					this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + size, y, z), WorldGenElfTree.WOOD);
+					this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() - size, y, z),
+							WorldGenElfTree.WOOD);
+					this.setBlockAndNotifyAdequately(world, new BlockPos(pos.getX() + size, y, z),
+							WorldGenElfTree.WOOD);
 				}
 			}
 			// 生成树叶
@@ -135,7 +119,8 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 			int heightOff = height / 4;
 			for (int i = 0; i < 10; i++) {
 				heightOff += rand.nextInt(height / 10 / 2 + 1) + 1;
-				this.genElfCabin(world, rand, pos, heightOff, EnumFacing.HORIZONTALS[rand.nextInt(EnumFacing.HORIZONTALS.length)]);
+				this.genElfCabin(world, rand, pos, heightOff,
+						EnumFacing.HORIZONTALS[rand.nextInt(EnumFacing.HORIZONTALS.length)]);
 			}
 			return true;
 		}
@@ -147,8 +132,11 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 
 		/** 刷小屋内部内容 */
 		protected void genCabinInner(World world, Random rand, BlockPos centerPos, EnumFacing facing) {
-
+			this.setBlockAndNotifyAdequately(world, centerPos,
+					ESInitInstance.BLOCKS.ELF_LOG_CABIN_CENTER.getDefaultState());
 		}
+
+		protected BlockPos lastCenterPos = null;
 
 		// 生成小屋
 		private boolean genElfCabin(World world, Random rand, BlockPos pos, int height, EnumFacing facing) {
@@ -169,7 +157,8 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 			// 墙
 			for (int y = 1; y < halfWidth * 2; y++) {
 				for (int x = 0; x < halfWidth * 2; x++) {
-					BlockPos blockPos = pos.add(Building.BuildingBlocks.facePos(new BlockPos(x, y, halfWidth + 1), facing));
+					BlockPos blockPos = pos
+							.add(Building.BuildingBlocks.facePos(new BlockPos(x, y, halfWidth + 1), facing));
 					this.setBlockAndNotifyAdequately(world, blockPos, WorldGenElfTree.WOOD);
 					blockPos = pos.add(Building.BuildingBlocks.facePos(new BlockPos(x, y, -halfWidth - 1), facing));
 					this.setBlockAndNotifyAdequately(world, blockPos, WorldGenElfTree.WOOD);
@@ -178,7 +167,8 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 			// 叶子树顶
 			for (int x = 1; x < halfWidth * 2; x++) {
 				for (int z = -halfWidth - 1; z <= halfWidth + 1; z++) {
-					BlockPos blockPos = pos.add(Building.BuildingBlocks.facePos(new BlockPos(x, halfWidth * 2, z), facing));
+					BlockPos blockPos = pos
+							.add(Building.BuildingBlocks.facePos(new BlockPos(x, halfWidth * 2, z), facing));
 					this.setBlockAndNotifyAdequately(world, blockPos, WorldGenElfTree.LEAVE);
 				}
 			}
@@ -187,8 +177,11 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 				this.setBlockAndNotifyAdequately(world, blockPos, WorldGenElfTree.LEAVE);
 			}
 			// 内部地板
-			IBlockState ladder = Blocks.LADDER.getDefaultState().withProperty(BlockLadder.FACING, facing.rotateY().getOpposite());
-			if (!world.isAirBlock(centerPos.down(2)) || !world.isAirBlock(centerPos.down(1))) {
+			IBlockState ladder = Blocks.LADDER.getDefaultState().withProperty(BlockLadder.FACING,
+					facing.rotateY().getOpposite());
+			BlockPos lastCenterPos = this.lastCenterPos;
+			this.lastCenterPos = centerPos;
+			if (lastCenterPos != null && centerPos.getY() - lastCenterPos.getY() < 3) {
 				BlockPos blockPos = pos.add(Building.BuildingBlocks.facePos(new BlockPos(-1, 0, 0), facing));
 				this.setBlockAndNotifyAdequately(world, blockPos, ladder);
 				if (world.isAirBlock(centerPos.down(1)))
@@ -213,11 +206,10 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 			BlockPos offset = Building.BuildingBlocks.facePos(new BlockPos(size, 0, 0), facing);
 			pos = pos.add(offset.getX(), height, offset.getZ());
 			for (int y = 0; y <= halfWidth * 2; y++)
-				for (int x = 1; x <= halfWidth * 2; x++)
-					for (int z = -halfWidth - 1; z <= halfWidth + 1; z++) {
-						BlockPos blockPos = pos.add(Building.BuildingBlocks.facePos(new BlockPos(x, y, z), facing));
-						if (!world.isAirBlock(blockPos)) return false;
-					}
+				for (int x = 1; x <= halfWidth * 2; x++) for (int z = -halfWidth - 1; z <= halfWidth + 1; z++) {
+					BlockPos blockPos = pos.add(Building.BuildingBlocks.facePos(new BlockPos(x, y, z), facing));
+					if (!world.isAirBlock(blockPos)) return false;
+				}
 			return true;
 		}
 
@@ -233,16 +225,16 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 				switch (facing % 4) {
 				case 0:
 					at = pos.add(rsize, height, size);
-				break;
+					break;
 				case 1:
 					at = pos.add(rsize, height, -size);
-				break;
+					break;
 				case 2:
 					at = pos.add(size, height, rsize);
-				break;
+					break;
 				case 3:
 					at = pos.add(-size, height, rsize);
-				break;
+					break;
 				default:
 					at = pos.add(rsize, height, size);
 				}
@@ -276,7 +268,8 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 					for (zoff = -zsize; zoff <= zsize; zoff++) {
 						BlockPos blockpos = at.add(xoff, yoff, zoff);
 						IBlockState state = world.getBlockState(blockpos);
-						if (state.getBlock().isAir(state, world, blockpos) || state.getBlock().isLeaves(state, world, blockpos)) {
+						if (state.getBlock().isAir(state, world, blockpos)
+								|| state.getBlock().isLeaves(state, world, blockpos)) {
 							this.setBlockAndNotifyAdequately(world, blockpos, WorldGenElfTree.LEAVE);
 						}
 					}
@@ -302,14 +295,14 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 						// 设置树叶或者木头
 						BlockPos blockpos = pos.add(xoff, height + yoff, zoff);
 						IBlockState state = world.getBlockState(blockpos);
-						if (state.getBlock().isAir(state, world, blockpos) || state.getBlock().isLeaves(state, world, blockpos)) {
+						if (state.getBlock().isAir(state, world, blockpos)
+								|| state.getBlock().isLeaves(state, world, blockpos)) {
 							if (to == WorldGenElfTree.WOOD) {
 								this.setBlockAndNotifyAdequately(world, blockpos, to);
 								blockpos = blockpos.offset(EnumFacing.DOWN);
 								if (world.isAirBlock(blockpos))
 									this.setBlockAndNotifyAdequately(world, blockpos, WorldGenElfTree.LEAVE);
-							} else
-								this.setBlockAndNotifyAdequately(world, blockpos, to);
+							} else this.setBlockAndNotifyAdequately(world, blockpos, to);
 						}
 					}
 				}
@@ -324,10 +317,26 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 			zoff = pos.getZ() > rootPos.getZ() ? 1 : -1;
 			for (int n = rootHeight; n >= 0; n--) {
 				for (int y = pos.getY(); y <= pos.getY() + n; y++) {
-					this.setBlockAndNotifyAdequately(world, new BlockPos(rootPos.getX(), y, rootPos.getZ()), WorldGenElfTree.WOOD);
-					for (int i = 1; i < rootHeight; i++) {
-						this.setBlockAndNotifyAdequately(world, new BlockPos(rootPos.getX() + xoff * i, y, rootPos.getZ()), WorldGenElfTree.WOOD);
-						this.setBlockAndNotifyAdequately(world, new BlockPos(rootPos.getX(), y, rootPos.getZ() + zoff * i), WorldGenElfTree.WOOD);
+					for (int i = 0; i < rootHeight; i++) {
+						// 向下张
+						if (y == pos.getY()) {
+							int down = 1;
+							BlockPos p;
+							do {
+								p = rootPos.down(down++);
+								this.setBlockAndNotifyAdequately(world,
+										new BlockPos(rootPos.getX() + xoff * i, p.getY(), rootPos.getZ()),
+										WorldGenElfTree.WOOD);
+								this.setBlockAndNotifyAdequately(world,
+										new BlockPos(rootPos.getX(), p.getY(), rootPos.getZ() + zoff * i),
+										WorldGenElfTree.WOOD);
+							} while (world.getBlockState(p).getBlock().isReplaceable(world, p));
+						}
+						// 根
+						this.setBlockAndNotifyAdequately(world,
+								new BlockPos(rootPos.getX() + xoff * i, y, rootPos.getZ()), WorldGenElfTree.WOOD);
+						this.setBlockAndNotifyAdequately(world,
+								new BlockPos(rootPos.getX(), y, rootPos.getZ() + zoff * i), WorldGenElfTree.WOOD);
 					}
 				}
 				rootPos = rootPos.add(-xoff, 0, -zoff);
@@ -342,7 +351,8 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 			for (int x = pos.getX() - size - rootWidth; x <= pos.getX() + size + rootWidth; x++) {
 				for (int z = pos.getZ() - size - rootWidth; z <= pos.getZ() + size + rootWidth; z++) {
 					IBlockState state = world.getBlockState(mPos.setPos(x, pos.getY(), z));
-					if (state.getBlock() instanceof BlockBush || state.getBlock() == Blocks.STONE || state.getBlock() == Blocks.GRASS || state.getBlock() == Blocks.DIRT) {
+					if (state.getBlock() instanceof BlockBush || state.getBlock() == Blocks.STONE
+							|| state.getBlock() == Blocks.GRASS || state.getBlock() == Blocks.DIRT) {
 						this.setBlockAndNotifyAdequately(world, mPos, Blocks.AIR.getDefaultState());
 					}
 				}
@@ -383,7 +393,8 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 		private boolean ensureDirtsUnderneath(BlockPos pos, World worldIn) {
 			BlockPos blockpos = pos.down();
 			IBlockState state = worldIn.getBlockState(blockpos);
-			boolean isSoil = state.getBlock().canSustainPlant(state, worldIn, blockpos, EnumFacing.UP, (IPlantable) Blocks.SAPLING);
+			boolean isSoil = state.getBlock().canSustainPlant(state, worldIn, blockpos, EnumFacing.UP,
+					(IPlantable) Blocks.SAPLING);
 			if (isSoil && pos.getY() >= 2) {
 				BlockPos.MutableBlockPos mPos = new BlockPos.MutableBlockPos();
 				for (int x = pos.getX() - size; x <= pos.getX() + size; x++) {

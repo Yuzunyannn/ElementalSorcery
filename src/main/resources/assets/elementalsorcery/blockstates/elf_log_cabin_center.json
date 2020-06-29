@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "axis=y":    { "model": "elementalsorcery:elf_log" },
+        "axis=z":     { "model": "elementalsorcery:elf_log", "x": 90 },
+        "axis=x":     { "model": "elementalsorcery:elf_log", "x": 90, "y": 90 },
+        "axis=none":   { "model": "elementalsorcery:elf_log" }
+    }
+}

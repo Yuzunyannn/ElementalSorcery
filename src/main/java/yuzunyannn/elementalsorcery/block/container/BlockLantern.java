@@ -109,7 +109,6 @@ public class BlockLantern extends BlockContainerNormal {
 			} else {
 				NBTTagCompound nbt = ElementalSorcery.getPlayerData(playerIn);
 				NBTHelper.setBlockPos(nbt, "lan_pre", pos);
-
 			}
 			return true;
 		}

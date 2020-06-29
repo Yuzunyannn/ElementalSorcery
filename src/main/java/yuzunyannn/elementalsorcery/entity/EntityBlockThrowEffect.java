@@ -2,6 +2,9 @@ package yuzunyannn.elementalsorcery.entity;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockQuartz;
+import net.minecraft.block.BlockSlab;
+import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,6 +21,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.block.BlocksEStone;
 
 public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalSpawnData {
 
@@ -26,7 +30,7 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 	public IBlockState state = null;
 	private float dyaw = 0;
 	private float dpitch = 0;
-	private boolean is_break = false;
+	private boolean isBreak = false;
 	private EntityPlayer player = null;
 
 	public EntityBlockThrowEffect(World worldIn) {
@@ -88,7 +92,7 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 	}
 
 	public EntityBlockThrowEffect setBreakBlock() {
-		this.is_break = true;
+		this.isBreak = true;
 		return this;
 	}
 
@@ -134,7 +138,7 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 			this.setDead();
 			if (!world.isRemote) {
 				IBlockState origin = world.getBlockState(to);
-				if (this.is_break) {
+				if (this.isBreak) {
 					world.destroyBlock(to, true);
 					this.placedAt();
 				} else {
@@ -151,8 +155,14 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 	private void placedAt() {
 		if (stack.getItem() instanceof ItemBlock) {
 			ItemBlock ib = (ItemBlock) stack.getItem();
-			ib.placeBlockAt(stack, player, world, to, EnumFacing.DOWN, 0, 0, 0,
-					ib.getBlock().getStateFromMeta(stack.getItemDamage()));
+			IBlockState toState = ib.getBlock().getStateFromMeta(stack.getItemDamage());
+			if (ib.getBlock() == state.getBlock()) {
+				if (toState.getBlock() instanceof BlockStairs) toState = state;
+				else if (toState.getBlock() instanceof BlockQuartz) toState = state;
+				else if (toState.getBlock() instanceof BlocksEStone.EStoneSlab) toState = state;
+				else if (toState.getBlock() instanceof BlockSlab) toState = state;
+			}
+			ib.placeBlockAt(stack, player, world, to, EnumFacing.DOWN, 0, 0, 0, toState);
 			return;
 		}
 		if (stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null) != null) {

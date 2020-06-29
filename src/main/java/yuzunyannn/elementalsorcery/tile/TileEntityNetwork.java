@@ -23,6 +23,18 @@ public class TileEntityNetwork extends TileEntity {
 		return isNetwork;
 	}
 
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		if (this.isSending()) return;
+		super.readFromNBT(compound);
+	}
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		if (this.isSending()) return compound;
+		return super.writeToNBT(compound);
+	}
+
 	@Nullable
 	@Override
 	public SPacketUpdateTileEntity getUpdatePacket() {

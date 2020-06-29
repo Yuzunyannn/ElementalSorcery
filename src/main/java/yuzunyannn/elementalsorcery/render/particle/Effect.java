@@ -30,7 +30,7 @@ public abstract class Effect {
 		this.prevPosX = this.posX = x;
 		this.prevPosY = this.posY = y;
 		this.prevPosZ = this.posZ = z;
-		this.lifeTime = 20 + rand.nextInt(30);
+		this.lifeTime = 20 + rand.nextInt(40);
 	}
 
 	public void onUpdate() {

@@ -1,0 +1,63 @@
+{
+    "maps": [
+        {
+            "item": [
+                "minecraft:stone",
+                "minecraft:cobblestone",
+                "minecraft:grass",
+                "minecraft:dirt"
+            ],
+            "element": {
+                "id": "earth",
+                "size": 1,
+                "power": 8
+            }
+        },
+        {
+            "item": "minecraft:wool",
+            "element": {
+                "id": "wood",
+                "size": 1,
+                "power": 15
+            }
+        },
+        {
+            "item": "minecraft:glass",
+            "element": {
+                "id": "earth",
+                "size": 5,
+                "power": 15
+            }
+        },
+        {
+            "item": "minecraft:glass_pane",
+            "element": {
+                "id": "earth",
+                "size": 1,
+                "power": 1
+            }
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "sand"
+            },
+            "element": {
+                "id": "earth",
+                "size": 2,
+                "power": 5
+            }
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "sandstone"
+            },
+            "element": {
+                "id": "earth",
+                "size": 4,
+                "power": 10
+            }
+        }
+    ]
+}

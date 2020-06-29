@@ -417,6 +417,10 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			this.facing = facing;
 			return this;
 		}
+		
+		public EnumFacing getFacing() {
+			return facing;
+		}
 	}
 
 	/** 获取遍历对象 */

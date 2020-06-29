@@ -20,6 +20,83 @@
         },
         {
             "item": {
+                "id": "minecraft:coal",
+                "data": 0
+            },
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 5,
+                    "power": 80
+                }
+            ]
+        },
+        {
+            "item": {
+                "id": "minecraft:coal",
+                "data": 1
+            },
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 5,
+                    "power": 10
+                }
+            ]
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "oreDiamond"
+            },
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 220,
+                    "power": 800
+                },
+                {
+                    "id": "fire",
+                    "size": 30,
+                    "power": 330
+                },
+                {
+                    "id": "water",
+                    "size": 30,
+                    "power": 330
+                },
+                {
+                    "id": "earth",
+                    "size": 20,
+                    "power": 30
+                }
+            ]
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "gemDiamond"
+            },
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 75,
+                    "power": 750
+                },
+                {
+                    "id": "fire",
+                    "size": 10,
+                    "power": 300
+                },
+                {
+                    "id": "water",
+                    "size": 10,
+                    "power": 300
+                }
+            ]
+        },
+        {
+            "item": {
                 "type": "ore_dict",
                 "id": "oreIron"
             },

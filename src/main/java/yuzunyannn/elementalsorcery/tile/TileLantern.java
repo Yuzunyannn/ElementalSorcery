@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.util.NBTHelper;
 public class TileLantern extends TileEntityNetwork {
 
 	public static final int MAX_DIS = 32;
-	
+
 	private BlockPos pre = null;
 	private BlockPos next = null;
 	private String playerName = null;
@@ -36,19 +36,15 @@ public class TileLantern extends TileEntityNetwork {
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		if (compound.hasKey("prex"))
-			pre = NBTHelper.getBlockPos(compound, "pre");
-		if (compound.hasKey("nextx"))
-			next = NBTHelper.getBlockPos(compound, "next");
+		if (compound.hasKey("prex")) pre = NBTHelper.getBlockPos(compound, "pre");
+		if (compound.hasKey("nextx")) next = NBTHelper.getBlockPos(compound, "next");
 		super.readFromNBT(compound);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		if (pre != null)
-			NBTHelper.setBlockPos(compound, "pre", pre);
-		if (next != null)
-			NBTHelper.setBlockPos(compound, "next", next);
+		if (pre != null) NBTHelper.setBlockPos(compound, "pre", pre);
+		if (next != null) NBTHelper.setBlockPos(compound, "next", next);
 		return super.writeToNBT(compound);
 	}
 
@@ -115,24 +111,17 @@ public class TileLantern extends TileEntityNetwork {
 
 	/** 查找并连接 */
 	public boolean link(TileLantern tile, int times, double min) {
-		if (this == tile)
-			return false;
-		if (tile == null)
-			return false;
-		if (times-- <= 0)
-			return false;
+		if (this == tile) return false;
+		if (tile == null) return false;
+		if (times-- <= 0) return false;
 		double dis = tile.pos.distanceSq(this.pos);
 		TileLantern tileNext = null;
 		tile.check();
 		if (tile.next != null) {
 			tileNext = (TileLantern) this.world.getTileEntity(tile.next);
 		}
-		if (dis > MAX_DIS * MAX_DIS) {
-			return this.link(tileNext, times, min);
-		}
-		if (dis > min) {
-			return this.link(tileNext, times, min);
-		}
+		if (dis > MAX_DIS * MAX_DIS) { return this.link(tileNext, times, min); }
+		if (dis > min) { return this.link(tileNext, times, min); }
 		if (this.link(tileNext, times, dis) == false) {
 			this.setNext(tile.pos);
 			tile.setPre(this.pos);
@@ -167,8 +156,7 @@ public class TileLantern extends TileEntityNetwork {
 			// 添加新的传送
 			EntityPlayer entityplayer = this.world.getClosestPlayer((double) ((float) this.pos.getX() + 0.5F),
 					(double) ((float) this.pos.getY() + 0.5F), (double) ((float) this.pos.getZ() + 0.5F), 5.0, false);
-			if (entityplayer == null)
-				return;
+			if (entityplayer == null) return;
 			this.transmit();
 		}
 	}
@@ -182,8 +170,7 @@ public class TileLantern extends TileEntityNetwork {
 	/** 传送，引路 */
 	@SideOnly(Side.CLIENT)
 	public void transmit() {
-		if (next == null)
-			return;
+		if (next == null) return;
 		EventClient.addTickTask(new TransmitFire(world, pos, next));
 	}
 
@@ -261,8 +248,7 @@ public class TileLantern extends TileEntityNetwork {
 			vx += ax;
 			vy += ay;
 			vz += az;
-			if (EventClient.tick % 3 == 0)
-				this.effect();
+			if (EventClient.tick % 3 == 0) this.effect();
 		}
 
 		// 寻找一条新的路
@@ -287,11 +273,9 @@ public class TileLantern extends TileEntityNetwork {
 		@Override
 		public int onTick() {
 			this.update();
-			if (this.world != Minecraft.getMinecraft().world)
-				return ITickTask.END;
+			if (this.world != Minecraft.getMinecraft().world) return ITickTask.END;
 			this.life--;
-			if (this.life <= 0)
-				return ITickTask.END;
+			if (this.life <= 0) return ITickTask.END;
 			return ITickTask.SUCCESS;
 		}
 	}

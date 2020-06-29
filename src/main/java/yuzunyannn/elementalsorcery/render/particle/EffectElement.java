@@ -31,7 +31,7 @@ public class EffectElement extends Effect {
 		super(worldIn, posXIn, posYIn, posZIn);
 		this.alpha = 1.0f;
 		this.dalpha = 1.0f / this.lifeTime;
-		this.scale = rand.nextFloat() * 0.25f + 0.1f;
+		this.scale = rand.nextFloat() * 0.2f + 0.1f;
 	}
 
 	public void setColor(float r, float g, float b) {

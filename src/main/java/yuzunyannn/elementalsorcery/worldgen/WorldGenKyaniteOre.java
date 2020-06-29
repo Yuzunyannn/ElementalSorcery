@@ -16,7 +16,7 @@ import yuzunyannn.elementalsorcery.init.ESInitInstance;
 public class WorldGenKyaniteOre extends WorldGenMinable {
 
 	public WorldGenKyaniteOre() {
-		super(ESInitInstance.BLOCKS.KYANITE_ORE.getDefaultState(), 16);
+		super(ESInitInstance.BLOCKS.KYANITE_ORE.getDefaultState(), 8);
 	}
 
 	@Override

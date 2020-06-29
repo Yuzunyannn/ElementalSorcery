@@ -44,12 +44,15 @@ public class ItemStackHandlerInventory extends ItemStackHandler implements IInve
 	}
 
 	@Override
+	public ItemStack getStackInSlot(int slot) {
+		return super.getStackInSlot(slot);
+	}
+
+	@Override
 	public boolean isEmpty() {
 		for (int i = 0; i < this.getSlots(); i++) {
 			ItemStack stack = this.getStackInSlot(i);
-			if (!stack.isEmpty()) {
-				return false;
-			}
+			if (!stack.isEmpty()) { return false; }
 		}
 		return true;
 	}
@@ -57,8 +60,7 @@ public class ItemStackHandlerInventory extends ItemStackHandler implements IInve
 	@Override
 	public ItemStack decrStackSize(int index, int count) {
 		ItemStack itemstack = this.getStackInSlot(index);
-		if (itemstack.isEmpty())
-			return itemstack;
+		if (itemstack.isEmpty()) return itemstack;
 		itemstack = itemstack.splitStack(count);
 		this.markDirty();
 		return itemstack;

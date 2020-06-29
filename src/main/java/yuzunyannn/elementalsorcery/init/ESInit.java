@@ -54,6 +54,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.entity.elf.ElfProfessionRegister;
 import yuzunyannn.elementalsorcery.event.ESTestAndDebug;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
@@ -137,6 +138,8 @@ public class ESInit {
 		OreDictionaryRegistries.registerAll();
 		// 注册实体
 		EntityRegistries.registerAll();
+		// 注册精灵职业
+		ElfProfessionRegister.registerAll();
 		// 注册默认所有建筑
 		BuildingLib.registerAll();
 		// 测试村庄相关
@@ -329,6 +332,7 @@ public class ESInit {
 		registerRender(BLOCKS.STAR_STONE);
 		registerRender(BLOCKS.STAR_SAND);
 		registerRender(BLOCKS.ELF_LOG);
+		registerRender(BLOCKS.ELF_LOG_CABIN_CENTER);
 		registerRender(BLOCKS.ELF_LEAF);
 		registerStateMapper(BLOCKS.ELF_LEAF,
 				new StateMap.Builder().ignore(BlockElfLeaf.CHECK_DECAY, BlockElfLeaf.DECAYABLE).build());

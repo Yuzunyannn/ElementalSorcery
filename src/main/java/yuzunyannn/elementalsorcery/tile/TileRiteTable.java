@@ -60,7 +60,6 @@ public class TileRiteTable extends TileEntityNetwork {
 	public void readFromNBT(NBTTagCompound compound) {
 		this.inventory.deserializeNBT(compound.getCompoundTag("inv"));
 		level = compound.getInteger("level");
-		if (this.isSending()) return;
 		super.readFromNBT(compound);
 	}
 
@@ -68,7 +67,6 @@ public class TileRiteTable extends TileEntityNetwork {
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setTag("inv", this.inventory.serializeNBT());
 		compound.setInteger("level", level);
-		if (this.isSending()) return compound;
 		return super.writeToNBT(compound);
 	}
 
@@ -147,8 +145,9 @@ public class TileRiteTable extends TileEntityNetwork {
 			}
 			pool.addAll(sacrifice.getHope(stack));// 期望物品加入蛋池
 		}
+		int rnum = recipe == null ? 100 : recipe.needPower();
 		// 随机可能性
-		if (power < RandomHelper.rand.nextInt(100)) {
+		if (power < RandomHelper.rand.nextInt(rnum)) {
 			this.punish(entity);
 			if (!seekRite.isEmpty()) Block.spawnAsEntity(world, pos.up(), seekRite);
 			return true;
@@ -322,7 +321,7 @@ public class TileRiteTable extends TileEntityNetwork {
 			ElementStack[] estacks = ElementMap.instance.toElement(stack);
 			if (estacks == null || estacks.length == 0) return 0;
 			ElementStack estack = estacks[0];
-			return MathHelper.log2(estack.getCount()) * 2;
+			return (int) (Math.max(MathHelper.log2(estack.getCount()), 0.5) * 2);
 		}
 
 		@Override
@@ -521,7 +520,7 @@ public class TileRiteTable extends TileEntityNetwork {
 	}
 
 	public static void initRecipe() {
-		addRecipe(new ItemStack(Blocks.TORCH), new ItemStack(ESInitInstance.BLOCKS.LANTERN), 50, 0, (power, entity) -> {
+		addRecipe(new ItemStack(Blocks.TORCH), new ItemStack(ESInitInstance.BLOCKS.LANTERN), 70, 0, (power, entity) -> {
 			int x = power - 80;
 			if (x > 0) return Math.max(1, x / 12);
 			return 1;
