@@ -5,8 +5,12 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 
 public class ElfProfessionWarrior extends ElfProfession {
 
@@ -26,6 +30,12 @@ public class ElfProfessionWarrior extends ElfProfession {
 				return -1;
 			}
 		}
-		return 0;
+		return super.attackedFrom(elf, source, amount);
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public ResourceLocation getTexture(EntityElfBase elf) {
+		return RenderEntityElf.TEXTURE_WARRIOR;
 	}
 }

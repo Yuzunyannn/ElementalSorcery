@@ -8,19 +8,19 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 
-public class CriterionTriggerFast extends CriterionTriggerAdapter<CriterionTriggerFast.Instance> {
+public class FastTrigger extends CriterionTriggerAdapter<FastTrigger.Instance> {
 
-	public CriterionTriggerFast(String id) {
+	public FastTrigger(String id) {
 		super(new ResourceLocation(ElementalSorcery.MODID, id));
 	}
 
 	@Override
-	public CriterionTriggerFast.Instance deserializeInstance(JsonObject json, JsonDeserializationContext context) {
-		return new CriterionTriggerFast.Instance(this.getId());
+	public FastTrigger.Instance deserializeInstance(JsonObject json, JsonDeserializationContext context) {
+		return new FastTrigger.Instance(this.getId());
 	}
 
 	@Override
-	boolean test(EntityPlayerMP player, CriterionTriggerFast.Instance criterion, Object... objs) {
+	boolean test(EntityPlayerMP player, FastTrigger.Instance criterion, Object... objs) {
 		return criterion.test(player);
 	}
 

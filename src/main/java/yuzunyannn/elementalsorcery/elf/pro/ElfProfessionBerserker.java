@@ -5,8 +5,12 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 
 public class ElfProfessionBerserker extends ElfProfession {
 
@@ -24,6 +28,12 @@ public class ElfProfessionBerserker extends ElfProfession {
 		elf.addPotionEffect(new PotionEffect(MobEffects.SPEED, 20 * 10, 3));
 		elf.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 20 * 10, 2));
 		elf.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 20 * 10));
-		return 0;
+		return super.attackedFrom(elf, source, amount);
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public ResourceLocation getTexture(EntityElfBase elf) {
+		return RenderEntityElf.TEXTURE_BERSERKER;
 	}
 }

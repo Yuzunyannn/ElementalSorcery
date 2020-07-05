@@ -1,0 +1,23 @@
+{
+    "parent": "elementalsorcery:elf/elf_tree",
+    "display": {
+        "icon": {
+            "item": "minecraft:red_flower",
+            "data": 0
+        },
+        "title": {
+            "translate": "es.adv.hurtByCrazy.title"
+        },
+        "description": {
+            "translate": "es.adv.hurtByCrazy.description"
+        }
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "elementalsorcery:elf_hurt_player",
+            "conditions": {
+                "profession": "elementalsorcery:crazy"
+            }
+        }
+    }
+}

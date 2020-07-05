@@ -22,12 +22,16 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 
 public class JsonHelper {
+
+	public static final String ERROR_CODE_OTHER_MOD = "[ModeNotLoad]";
+	public static final String ERROR_CODE_NOT_FIND = "[CannotFind]";
 
 	/** json转化到nbt */
 	static public NBTTagCompound jsonToNBT(JsonObject json) {
@@ -97,6 +101,10 @@ public class JsonHelper {
 		return false;
 	}
 
+	static public boolean isString(JsonElement je) {
+		return je.isJsonPrimitive() && je.getAsJsonPrimitive().isString();
+	}
+
 	/** 描述物品记录，是stack还是单单是物品 */
 	public static class ItemRecord {
 		private final ItemStack stack;
@@ -152,8 +160,7 @@ public class JsonHelper {
 		if (je.isJsonPrimitive()) {
 			if (je.getAsJsonPrimitive().isString()) {
 				String id = je.getAsString();
-				Item item = Item.getByNameOrId(id);
-				if (item == null) throw new JsonParseException("找不到对应的物品：" + id);
+				Item item = getItem(id);
 				list.add(new ItemRecord(item));
 			}
 		}
@@ -162,7 +169,7 @@ public class JsonHelper {
 			JsonObject jobj = je.getAsJsonObject();
 			String idKey = "id";
 			if (!isString(jobj, "id")) {
-				if (!isString(jobj, "item")) throw new JsonParseException("找不到物品的id，位于：" + jobj);
+				if (!isString(jobj, "item")) throw new JsonParseException("找不到物品的id字段，位于：" + jobj);
 				idKey = "item";
 			}
 			if (jobj.size() == 1) readItems(jobj.get(idKey), list);
@@ -182,8 +189,7 @@ public class JsonHelper {
 					}
 				}
 				// 没有矿物词典的情况
-				Item item = Item.getByNameOrId(id);
-				if (item == null) throw new JsonParseException("找不到对应的物品：" + id);
+				Item item = getItem(id);
 				int meta = 0;
 				if (isNumber(jobj, "damage")) meta = jobj.get("damage").getAsInt();
 				else if (isNumber(jobj, "data")) meta = jobj.get("data").getAsInt();
@@ -198,6 +204,17 @@ public class JsonHelper {
 			JsonArray jarray = je.getAsJsonArray();
 			for (JsonElement j : jarray) readItems(j, list);
 		}
+	}
+
+	static private Item getItem(String id) {
+		Item item = Item.getByNameOrId(id);
+		if (item == null) {
+			ResourceLocation lid = new ResourceLocation(id);
+			if (!Loader.isModLoaded(lid.getResourceDomain()))
+				throw new JsonParseException(ERROR_CODE_OTHER_MOD + lid.getResourceDomain() + "没有加载，因此找不到对应物品！");
+			throw new JsonParseException(ERROR_CODE_NOT_FIND + "找不到对应的物品：" + id);
+		}
+		return item;
 	}
 
 	static public List<ElementStack> readElements(JsonElement je) {

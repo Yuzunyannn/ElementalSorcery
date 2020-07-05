@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLadder;
+import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
@@ -134,6 +135,13 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 		protected void genCabinInner(World world, Random rand, BlockPos centerPos, EnumFacing facing) {
 			this.setBlockAndNotifyAdequately(world, centerPos,
 					ESInitInstance.BLOCKS.ELF_LOG_CABIN_CENTER.getDefaultState());
+			{
+				// 刷火把
+				IBlockState TORCH = Blocks.TORCH.getDefaultState();
+				BlockPos pos = centerPos.add(Building.BuildingBlocks.facePos(new BlockPos(-2, 2, 0), facing));
+				this.setBlockAndNotifyAdequately(world, pos, TORCH.withProperty(BlockTorch.FACING, facing.rotateY()));
+			}
+
 		}
 
 		protected BlockPos lastCenterPos = null;

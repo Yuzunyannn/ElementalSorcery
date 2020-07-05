@@ -19,7 +19,7 @@ public class RenderTileMDMagiclization extends RenderTileMDBase<TileMDMagiclizat
 		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
 		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
 		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
-		MODEL.render(null, EventClient.global_rotate / 10, 0, 0, 0, 0, 1.0f);
+		MODEL.render(null, EventClient.globalRotate / 10, 0, 0, 0, 0, 1.0f);
 		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);
 	}

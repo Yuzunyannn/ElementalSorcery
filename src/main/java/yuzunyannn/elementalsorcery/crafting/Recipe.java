@@ -141,13 +141,13 @@ public class Recipe implements IRecipe {
 	@Override
 	public boolean matches(IInventory inv, World worldIn) {
 		// 寻找inv的第一个非空位置
-		int inv_fne = 0;
-		for (; inv_fne < inv.getSizeInventory(); inv_fne++)
-			if (!inv.getStackInSlot(inv_fne).isEmpty())
+		int invFne = 0;
+		for (; invFne < inv.getSizeInventory(); invFne++)
+			if (!inv.getStackInSlot(invFne).isEmpty())
 				break;
 		// 开始比对
 		for (int i = this.firstNotEmpty; i < matchList.size(); i++) {
-			int j = i - this.firstNotEmpty + inv_fne;
+			int j = i - this.firstNotEmpty + invFne;
 			if (inv.getSizeInventory() <= j)
 				return false;
 			ItemStack stack = inv.getStackInSlot(j);
@@ -162,7 +162,7 @@ public class Recipe implements IRecipe {
 				return false;
 		}
 		// 末尾查询
-		for (int i = matchList.size() - this.firstNotEmpty + inv_fne; i < inv.getSizeInventory(); i++) {
+		for (int i = matchList.size() - this.firstNotEmpty + invFne; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (!stack.isEmpty())
 				return false;
@@ -173,16 +173,16 @@ public class Recipe implements IRecipe {
 	@Override
 	public void shrink(IInventory inv) {
 		// 寻找inv的第一个非空位置
-		int inv_fne = 0;
-		for (; inv_fne < inv.getSizeInventory(); inv_fne++)
-			if (!inv.getStackInSlot(inv_fne).isEmpty())
+		int invFne = 0;
+		for (; invFne < inv.getSizeInventory(); invFne++)
+			if (!inv.getStackInSlot(invFne).isEmpty())
 				break;
 		// 开始减少
 		for (int i = this.firstNotEmpty; i < matchList.size(); i++) {
 			ItemStack origin = matchList.get(i);
 			if (origin.isEmpty())
 				continue;
-			int j = i - this.firstNotEmpty + inv_fne;
+			int j = i - this.firstNotEmpty + invFne;
 			ItemStack stack = inv.getStackInSlot(j);
 			stack.grow(-origin.getCount());
 			inv.setInventorySlotContents(j, stack);

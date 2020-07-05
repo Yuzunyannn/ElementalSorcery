@@ -3,14 +3,18 @@ package yuzunyannn.elementalsorcery.elf.pro;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionEnd;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionGoTo;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
-import yuzunyannn.elementalsorcery.elf.talk.TalkScene;
-import yuzunyannn.elementalsorcery.elf.talk.TalkType;
+import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
+import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class ElfProfessionScholar extends ElfProfessionNone {
@@ -38,7 +42,7 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player) {
 		TalkChapter chapter = new TalkChapter();
-		TalkScene scene = new TalkScene();
+		TalkSceneSay scene = new TalkSceneSay();
 		chapter.addScene(scene);
 		String[] g = RandomHelper.randomSelect(3, GIVE);
 		for (String s : g) scene.addString("page." + s, Talker.OPPOSING);
@@ -48,20 +52,26 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 			return chapter;
 		}
 		// 有的话增加内容
-		scene = new TalkScene(TalkType.SELECT);
-		chapter.addScene(scene);
-		scene.addString("say.konw", new TalkActionGoTo("konw"));
-		scene.addString("say.unkonw", new TalkActionGoTo("unkonw"));
+		TalkSceneSelect sceneS = new TalkSceneSelect();
+		chapter.addScene(sceneS);
+		sceneS.addString("say.konw", new TalkActionGoTo("konw"));
+		sceneS.addString("say.unkonw", new TalkActionGoTo("unkonw"));
 
-		scene = new TalkScene().setLabel("konw");
+		scene = new TalkSceneSay().setLabel("konw");
 		chapter.addScene(scene);
 		scene.addString("say.ok", Talker.OPPOSING);
 		scene.addAction(new TalkActionEnd());
 
-		scene = new TalkScene().setLabel("unkonw");
+		scene = new TalkSceneSay().setLabel("unkonw");
 		chapter.addScene(scene);
 		scene.addString("say.pretendKnow", Talker.OPPOSING);
 
 		return chapter;
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public ResourceLocation getTexture(EntityElfBase elf) {
+		return RenderEntityElf.TEXTURE_SCHOLAR;
 	}
 }

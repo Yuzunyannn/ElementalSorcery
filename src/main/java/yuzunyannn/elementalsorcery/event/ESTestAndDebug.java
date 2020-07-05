@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
@@ -22,6 +23,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -37,11 +39,15 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
+import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
+import yuzunyannn.elementalsorcery.tile.TileStela;
+import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.util.IOHelper;
 import yuzunyannn.elementalsorcery.worldgen.VillageESHall.VillageCreationHandler;
 
@@ -56,23 +62,12 @@ public class ESTestAndDebug {
 	@SubscribeEvent
 	public void click(PlayerInteractEvent event) {
 		if (!event.getWorld().isRemote) {
-			BlockPos pos = event.getPos();
-			IBlockState state = event.getWorld().getBlockState(pos);
-			// System.out.println(state.getBlockHardness(event.getWorld(),
-			// pos));
-			// TileEntity tile = event.getWorld().getTileEntity(pos);
-			// if (tile instanceof TileMDBase) {
-			// ((TileMDBase) tile).setField(0, 10000);
-			// }
-			// if (tile instanceof TileStela) {
-			// ((TileStela) tile).doOnce();
-			// }
-			// if (event.getWorld().getBlockState(pos).getBlock() ==
-			// ESInitInstance.BLOCKS.MAGIC_TORCH) {
-			// event.getWorld().setBlockState(pos,
-			// event.getWorld().getBlockState(pos).withProperty(BlockMagicTorch.LIT,
-			// true));
-			// }
+//			BlockPos pos = event.getPos();
+//			IBlockState state = event.getWorld().getBlockState(pos);
+//			System.out.println(state.getBlockHardness(event.getWorld(), pos));
+//			if (event.getWorld().getBlockState(pos).getBlock() == Blocks.TORCH) {
+//				System.out.println(state.getValue(BlockTorch.FACING));
+//			}
 			return;
 		}
 

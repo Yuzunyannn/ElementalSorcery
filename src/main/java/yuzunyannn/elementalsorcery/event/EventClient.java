@@ -91,13 +91,13 @@ public class EventClient {
 	}
 
 	// 全局旋转，单位角度
-	public static float global_rotate = 0.0f;
+	public static float globalRotate = 0.0f;
 	// 旋转角度增量
 	public static final float DGLOBAL_ROTATE = 2.25f * 0.5f;
 	// 全局client的tick
 	public static int tick = 0;
 	// 全局随机的，隔一段时间随机的一个整数
-	public static int rand_int = rand.nextInt();
+	public static int randInt = rand.nextInt();
 	// 客户端的mc指针
 	public static final Minecraft mc = Minecraft.getMinecraft();
 
@@ -119,14 +119,14 @@ public class EventClient {
 				iter.remove();
 		}
 		// 全局旋转
-		global_rotate += DGLOBAL_ROTATE;
-		if (global_rotate >= 360 * 1000) {
-			global_rotate -= 360 * 1000;
+		globalRotate += DGLOBAL_ROTATE;
+		if (globalRotate >= 360 * 1000) {
+			globalRotate -= 360 * 1000;
 		}
 		// 全局随机整数
 		if (tick % 80 == 0) {
-			rand_int = rand.nextInt();
-			rand_int = Math.abs(rand_int);
+			randInt = rand.nextInt();
+			randInt = Math.abs(randInt);
 		}
 		// 更新所有ES粒子效果
 		Effect.updateAllEffects();
@@ -136,7 +136,7 @@ public class EventClient {
 
 	/** 获取渲染旋转角度 */
 	static public float getGlobalRotateInRender(float partialTicks) {
-		return global_rotate + DGLOBAL_ROTATE * partialTicks;
+		return globalRotate + DGLOBAL_ROTATE * partialTicks;
 	}
 
 	static private final List<IRenderClient> renderList = new LinkedList<IRenderClient>();

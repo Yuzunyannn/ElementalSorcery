@@ -7,9 +7,11 @@ import net.minecraft.block.BlockLog;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -26,10 +28,7 @@ public class BlockElfLog extends BlockLog {
 		this.setUnlocalizedName("elfLog");
 		this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
 		this.cabinCenter = cabinCenter;
-		if (cabinCenter) {
-			this.setTickRandomly(true);
-			this.setLightLevel(0.9375F);
-		}
+		if (cabinCenter) this.setTickRandomly(true);
 	}
 
 	// 精灵小屋核心，刷精灵的
@@ -93,6 +92,11 @@ public class BlockElfLog extends BlockLog {
 	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, new IProperty[] { LOG_AXIS });
+	}
+
+	@Override
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+		if (this.cabinCenter == false) super.getSubBlocks(itemIn, items);
 	}
 
 	@Override

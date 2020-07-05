@@ -55,6 +55,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.elf.AutoName;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProRegister;
 import yuzunyannn.elementalsorcery.event.ESTestAndDebug;
 import yuzunyannn.elementalsorcery.event.EventClient;
@@ -139,8 +140,9 @@ public class ESInit {
 		OreDictionaryRegistries.registerAll();
 		// 注册实体
 		EntityRegistries.registerAll();
-		// 注册精灵职业
+		// 注册精灵相关
 		ElfProRegister.registerAll();
+		AutoName.init();
 		// 注册默认所有建筑
 		BuildingLib.registerAll();
 		// 测试村庄相关

@@ -5,7 +5,6 @@ import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
@@ -26,7 +25,7 @@ public class KilledElfTrigger extends CriterionTriggerAdapter<KilledElfTrigger.I
 
 	@Override
 	boolean test(EntityPlayerMP player, KilledElfTrigger.Instance criterion, Object... objs) {
-		return criterion.test(player, (EntityElfBase) objs[0], (DamageSource) objs[1]);
+		return criterion.test(player, (EntityElfBase) objs[0]);
 	}
 
 	public static class Instance extends AbstractCriterionInstance {
@@ -37,7 +36,7 @@ public class KilledElfTrigger extends CriterionTriggerAdapter<KilledElfTrigger.I
 			this.pro = pro;
 		}
 
-		public boolean test(EntityPlayerMP player, EntityElfBase elf, DamageSource source) {
+		public boolean test(EntityPlayerMP player, EntityElfBase elf) {
 			if (pro == null) return false;
 			return pro.equals(elf.getProfession().getRegistryName().toString());
 		}

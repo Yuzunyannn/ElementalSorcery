@@ -31,6 +31,7 @@ public class ESData {
 		file.mkdirs();
 	}
 
+	/** 获取mod的存储路径下的某个目录下的文件 */
 	public File getFile(String filepath, String filename) {
 		File file = new File(this.file.getPath() + "/" + filepath);
 		file.mkdirs();
@@ -64,6 +65,7 @@ public class ESData {
 		return obj;
 	}
 
+	/** 获取某个文件夹下的全部路径，注意检测后缀，jar下可能获取到目录 */
 	static public String[] getFilesFromResource(ResourceLocation path) throws IOException {
 		List<ModContainer> mods = Loader.instance().getModList();
 		for (ModContainer mc : mods) {
@@ -73,7 +75,7 @@ public class ESData {
 					String rPath = "/assets/" + path.getResourceDomain() + "/" + path.getResourcePath();
 					file = new File(file.getAbsolutePath() + rPath);
 					List<String> list = new ArrayList<String>();
-					fileRec("", list, file);
+					getFileRecursion("", list, file);
 					return list.toArray(new String[list.size()]);
 				} else {
 					String rPath = "assets/" + path.getResourceDomain() + "/";
@@ -108,11 +110,17 @@ public class ESData {
 		return new String[0];
 	}
 
-	private static void fileRec(String lastPath, List<String> paths, File root) {
+	private static void getFileRecursion(String lastPath, List<String> paths, File root) {
 		File[] files = root.listFiles();
 		for (File file : files) {
-			if (file.isDirectory()) fileRec(lastPath + file.getName() + "/", paths, file);
+			if (file.isDirectory()) getFileRecursion(lastPath + file.getName() + "/", paths, file);
 			else paths.add(lastPath + file.getName());
 		}
+	}
+
+	public static List<String> getFileRecursion(File root) {
+		List<String> list = new ArrayList<String>();
+		getFileRecursion(root.getPath() + "/", list, root);
+		return list;
 	}
 }

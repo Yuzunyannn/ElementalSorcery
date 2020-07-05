@@ -41,7 +41,7 @@ public class RecipeManagement implements ESRegister.IRecipeManagement {
 	// 寻找合成表
 	public IRecipe findMatchingRecipe(IInventory craftMatrix, World worldIn) {
 		for (IRecipe irecipe : this.allRecipe) {
-			if (irecipe.matches(craftMatrix, worldIn)) { return irecipe; }
+			if (irecipe.matches(craftMatrix, worldIn)) return irecipe;
 		}
 		return null;
 	}

@@ -10,6 +10,7 @@ import java.util.Map;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
@@ -252,12 +253,12 @@ public class ElementMap implements IElementMap {
 		final ESData data = ElementalSorcery.data;
 		final String MODID = ElementalSorcery.MODID;
 
-		// 自动扫描element_map文件夹读取数据
-		String[] mapJsonNames = data.getFilesFromResource(new ResourceLocation(MODID, "element_map"));
+		// 自动扫描element_maps文件夹下所有json
+		String[] mapJsonNames = data.getFilesFromResource(new ResourceLocation(MODID, "element_maps"));
 		for (String path : mapJsonNames) {
 			try {
 				if (!path.endsWith(".json")) continue;
-				JsonObject jobj = data.getJsonFromResource(new ResourceLocation(MODID, "element_map/" + path));
+				JsonObject jobj = data.getJsonFromResource(new ResourceLocation(MODID, "element_maps/" + path));
 				if (!JsonHelper.isArray(jobj, "maps")) continue;
 				JsonArray jarray = jobj.get("maps").getAsJsonArray();
 				// 读取所有映射
@@ -266,20 +267,26 @@ public class ElementMap implements IElementMap {
 					jobj = je.getAsJsonObject();
 					if (!jobj.has("element")) continue;
 					if (!jobj.has("item")) continue;
-					List<ElementStack> estacks = JsonHelper.readElements(jobj.get("element"));
-					List<JsonHelper.ItemRecord> items = JsonHelper.readItems(jobj.get("item"));
-					if (estacks.isEmpty()) continue;
-					if (items.isEmpty()) continue;
-					ElementStack[] es = estacks.toArray(new ElementStack[estacks.size()]);
-					for (JsonHelper.ItemRecord ir : items) {
-						if (ir.isJustItem()) instance.add(ir.getItem(), es);
-						else instance.add(ir.getStack(), es);
-						// ElementalSorcery.logger.info("注册:" + ir + "具有元素：" + estacks);
+					// 这里进行try来防止一个没加载到导致全局没法加载
+					try {
+						List<ElementStack> estacks = JsonHelper.readElements(jobj.get("element"));
+						List<JsonHelper.ItemRecord> items = JsonHelper.readItems(jobj.get("item"));
+						if (estacks.isEmpty()) continue;
+						if (items.isEmpty()) continue;
+						ElementStack[] es = estacks.toArray(new ElementStack[estacks.size()]);
+						for (JsonHelper.ItemRecord ir : items) {
+							if (ir.isJustItem()) instance.add(ir.getItem(), es);
+							else instance.add(ir.getStack(), es);
+							// ElementalSorcery.logger.info("注册:" + ir + "具有元素：" + estacks);
+						}
+					} catch (JsonParseException e) {
+						if (e.getMessage().startsWith(JsonHelper.ERROR_CODE_OTHER_MOD))
+							ElementalSorcery.logger.warn(e.getMessage());
+						else ElementalSorcery.logger.warn("读取json元素映射过程中出现异常：" + path, e);
 					}
-
 				}
 			} catch (Exception e) {
-				ElementalSorcery.logger.warn("读取json数据过程中出现异常：" + path, e);
+				ElementalSorcery.logger.warn("读取json文件过程中出现异常：" + path, e);
 			}
 		}
 

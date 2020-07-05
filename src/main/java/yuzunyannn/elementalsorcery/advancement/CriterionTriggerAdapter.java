@@ -16,6 +16,7 @@ import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 
+/** 默认的成就条件触发适配，方便继承和完成 */
 public abstract class CriterionTriggerAdapter<T extends ICriterionInstance> implements ICriterionTrigger<T> {
 
 	protected final ResourceLocation id;
@@ -57,8 +58,10 @@ public abstract class CriterionTriggerAdapter<T extends ICriterionInstance> impl
 	@Override
 	abstract public T deserializeInstance(JsonObject json, JsonDeserializationContext context);
 
+	/** 对内容进行测试，该函数是在try环境中运行的，出现异常认为返回false */
 	abstract boolean test(EntityPlayerMP player, T criterion, Object... objs);
 
+	/** 触发这个成就的内容 */
 	public void trigger(EntityPlayerMP player, Object... objs) {
 		CriterionTriggerAdapter.Listeners listeners = this.listeners.get(player.getAdvancements());
 		if (listeners != null) listeners.trigger(player, objs);

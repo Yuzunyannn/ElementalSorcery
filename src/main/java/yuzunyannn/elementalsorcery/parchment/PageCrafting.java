@@ -150,7 +150,7 @@ public class PageCrafting extends PageEasy {
 				pageManager.setSlot(i, ItemStack.EMPTY);
 				continue;
 			}
-			ItemStack stack = stacks[EventClient.rand_int % stacks.length];
+			ItemStack stack = stacks[EventClient.randInt % stacks.length];
 			pageManager.setSlot(i, stack);
 		}
 		for (int i = list.size(); i < pageManager.getSlots(); i++) pageManager.setSlot(i, ItemStack.EMPTY);

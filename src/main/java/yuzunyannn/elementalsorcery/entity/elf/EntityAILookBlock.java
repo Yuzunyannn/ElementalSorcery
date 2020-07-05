@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityLookHelper;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 
@@ -15,8 +16,8 @@ public class EntityAILookBlock extends EntityAIBase {
 	}
 
 	final EntityCreature entity;
-	private float chance = 0.05f;
-	private int tryTimes = 4;
+	private float chance = 0.1f;
+	private int tryTimes = 6;
 	private int width = 2;
 	private int height = 4;
 	private int lookTime;
@@ -80,13 +81,15 @@ public class EntityAILookBlock extends EntityAIBase {
 
 	protected BlockPos findLookBlock() {
 		BlockPos origin = entity.getPosition();
+		int width = 2;
 		for (int t = 0; t < tryTimes; t++) {
-			int x = (int) (width - entity.getRNG().nextFloat() * width * 2);
-			int z = (int) (width - entity.getRNG().nextFloat() * width * 2);
+			int x = (int) (width * 0.5f - entity.getRNG().nextFloat() * width);
+			int z = (int) (width * 0.5f - entity.getRNG().nextFloat() * width);
 			int y = (int) (height - entity.getRNG().nextFloat() * height * 2);
 			BlockPos pos = origin.add(x, y, z);
 			IBlockState state = entity.world.getBlockState(pos);
 			if (this.watch.wath(entity.world, pos, state)) return pos;
+			width = Math.min(MathHelper.ceil(width * 1.5f), this.width * 2);
 		}
 		return null;
 	}

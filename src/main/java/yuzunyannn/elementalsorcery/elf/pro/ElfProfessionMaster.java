@@ -20,6 +20,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -28,11 +29,13 @@ import net.minecraft.world.GameType;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.entity.EntityParticleEffect;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.render.particle.EffectElement;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 
@@ -72,9 +75,11 @@ public class ElfProfessionMaster extends ElfProfession {
 			case 0:
 				Entity entity = new EntityLightningBolt(world, target.posX, target.posY, target.posZ, false);
 				world.addWeatherEffect(entity);
+				this.tryBlessing(elf, target.getPosition(), 4);
 				break;
 			case 1:
 				world.createExplosion(null, target.posX, target.posY, target.posZ, 2, false);
+				this.tryBlessing(elf, target.getPosition(), 3);
 				break;
 			case 2:
 				BlockPos pos = target.getPosition().up();
@@ -82,6 +87,7 @@ public class ElfProfessionMaster extends ElfProfession {
 					IBlockState state = Blocks.LAVA.getDefaultState().withProperty(BlockLiquid.LEVEL, 15);
 					world.setBlockState(pos, state);
 					world.neighborChanged(pos, state.getBlock(), pos);
+					this.tryBlessing(elf, target.getPosition(), 3);
 				}
 				break;
 			case 3:
@@ -97,8 +103,22 @@ public class ElfProfessionMaster extends ElfProfession {
 		return true;
 	}
 
+	private void tryBlessing(EntityElfBase elf, BlockPos pos, int size) {
+		AxisAlignedBB aabb = new AxisAlignedBB(pos.getX() - size, pos.getY() - size, pos.getZ() - size,
+				pos.getX() + size, pos.getY() + size, pos.getZ() + size);
+		List<EntityElfBase> list = elf.world.getEntitiesWithinAABB(EntityElfBase.class, aabb);
+		if (list.isEmpty()) return;
+		for (EntityElfBase e : list) {
+			e.extinguish();
+			e.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 20 * 5, 2));
+			e.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 20 * 5, 4));
+			e.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 20 * 20));
+		}
+	}
+
 	@Override
 	public int attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
+		super.attackedFrom(elf, source, amount);
 		// 远程攻击吸引
 		if (source instanceof EntityDamageSourceIndirect) {
 			if (source.getTrueSource() instanceof EntityLivingBase) {
@@ -130,22 +150,26 @@ public class ElfProfessionMaster extends ElfProfession {
 
 			// 荒废创造模式
 			if (!elf.world.isRemote) {
-				if (source.getTrueSource() instanceof EntityPlayerMP && elf.getRNG().nextInt(10) == 0) {
+				if (source.getTrueSource() instanceof EntityPlayerMP) {
 					EntityPlayerMP player = (EntityPlayerMP) source.getTrueSource();
-					player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_FIREWORK_LARGE_BLAST,
-							SoundCategory.VOICE, 1.0f, 0);
-					player.setGameType(GameType.SURVIVAL);
-					NBTTagList list = new NBTTagList();
-					NBTTagCompound nbt = new NBTTagCompound();
-					nbt.setByte("Type", (byte) 0);
-					nbt.setIntArray("Colors", TileMDBase.PARTICLE_COLOR);
-					nbt.setIntArray("FadeColors", TileMDBase.PARTICLE_COLOR_FADE);
-					nbt.setInteger("Size", 3);
-					nbt.setFloat("Speed", 0.375f);
-					list.appendTag(nbt);
-					nbt = new NBTTagCompound();
-					nbt.setTag("Explosions", list);
-					EntityParticleEffect.spawnParticleEffect(elf.world, player.posX, player.posY + 1, player.posZ, nbt);
+					if (player.isCreative() && elf.getRNG().nextInt(10) == 0) {
+						ESCriteriaTriggers.NO_CREATIVE.trigger(player);
+						player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_FIREWORK_LARGE_BLAST,
+								SoundCategory.VOICE, 1.0f, 0);
+						player.setGameType(GameType.SURVIVAL);
+						NBTTagList list = new NBTTagList();
+						NBTTagCompound nbt = new NBTTagCompound();
+						nbt.setByte("Type", (byte) 0);
+						nbt.setIntArray("Colors", TileMDBase.PARTICLE_COLOR);
+						nbt.setIntArray("FadeColors", TileMDBase.PARTICLE_COLOR_FADE);
+						nbt.setInteger("Size", 3);
+						nbt.setFloat("Speed", 0.375f);
+						list.appendTag(nbt);
+						nbt = new NBTTagCompound();
+						nbt.setTag("Explosions", list);
+						EntityParticleEffect.spawnParticleEffect(elf.world, player.posX, player.posY + 1, player.posZ,
+								nbt);
+					}
 				}
 			}
 		}
@@ -210,5 +234,11 @@ public class ElfProfessionMaster extends ElfProfession {
 				if (!elf.world.isAirBlock(elf.getPosition().down(2))) elf.motionY += 0.1;
 			}
 		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	@Override
+	public ResourceLocation getTexture(EntityElfBase elf) {
+		return RenderEntityElf.TEXTURE_MASTER;
 	}
 }

@@ -1,23 +1,29 @@
 package yuzunyannn.elementalsorcery.elf.pro;
 
+import java.util.List;
+import java.util.Random;
+
 import javax.annotation.Nullable;
 
-import net.minecraft.advancements.Advancement;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
-import net.minecraftforge.event.entity.player.AdvancementEvent;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 
 public class ElfProfession extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<ElfProfession> {
 
@@ -26,6 +32,7 @@ public class ElfProfession extends net.minecraftforge.registries.IForgeRegistryE
 	static public final ElfProfession WARRIOR = new ElfProfessionWarrior();
 	static public final ElfProfession BERSERKER = new ElfProfessionBerserker();
 	static public final ElfProfession SCHOLAR = new ElfProfessionScholar();
+	static public final ElfProfession CRAZY = new ElfProfessionCrazy();
 
 	public String getUnlocalizedProfessionName() {
 		return "pro." + this.getRegistryName().getResourcePath();
@@ -54,6 +61,11 @@ public class ElfProfession extends net.minecraftforge.registries.IForgeRegistryE
 		return stack.getItem() == Item.getItemFromBlock(ESInitInstance.BLOCKS.ELF_FRUIT);
 	}
 
+	/** 获取攻击的目标 */
+	public List<EntityLivingBase> getAttackTarget(EntityElfBase elf) {
+		return null;
+	}
+
 	/**
 	 * 获取攻击距离
 	 * 
@@ -74,6 +86,16 @@ public class ElfProfession extends net.minecraftforge.registries.IForgeRegistryE
 	 * @return 返回0表示默认处理，返回-1表示拒绝，返回1表示接受
 	 */
 	public int attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
+		Random rand = elf.getRNG();
+		// 群体效应,攻击一个精灵，周围所有精灵生气
+		if (rand.nextInt(4) == 0 && source.getTrueSource() instanceof EntityPlayer) {
+			final int size = 8;
+			AxisAlignedBB aabb = new AxisAlignedBB(elf.posX - size, elf.posY - size, elf.posZ - size, elf.posX + size,
+					elf.posY + size, elf.posZ + size);
+			List<EntityElf> list = elf.world.getEntitiesWithinAABB(EntityElf.class, aabb);
+			for (EntityElf e : list)
+				if (e.getRevengeTarget() == null) e.setRevengeTarget((EntityPlayer) source.getTrueSource());
+		}
 		return 0;
 	}
 
@@ -100,7 +122,12 @@ public class ElfProfession extends net.minecraftforge.registries.IForgeRegistryE
 	/** 客户端渲染 */
 	@SideOnly(Side.CLIENT)
 	public void render(EntityElfBase elf, double x, double y, double z, float entityYaw, float partialTicks) {
-		
+
+	}
+
+	@SideOnly(Side.CLIENT)
+	public ResourceLocation getTexture(EntityElfBase elf) {
+		return RenderEntityElf.TEXTURE;
 	}
 
 	protected void openTalkGui(EntityPlayer player, EntityElfBase elf) {

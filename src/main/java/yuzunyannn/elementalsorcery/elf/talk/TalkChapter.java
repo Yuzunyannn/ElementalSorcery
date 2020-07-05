@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.google.gson.JsonObject;
 
-import net.minecraft.advancements.AdvancementProgress;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -157,7 +156,7 @@ public class TalkChapter {
 	public TalkChapter deserializeNBTFromSend(NBTTagCompound nbt) {
 		NBTTagList list = nbt.getTagList("scenes", 10);
 		scenes.clear();
-		for (NBTBase base : list) scenes.add(new TalkScene().deserializeNBTFromSend((NBTTagCompound) base));
+		for (NBTBase base : list) scenes.add(new TalkSceneClient((NBTTagCompound) base));
 		return this;
 	}
 

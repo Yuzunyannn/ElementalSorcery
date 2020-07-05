@@ -1,0 +1,19 @@
+{
+    "parent": "elementalsorcery:elf/kill_elf",
+    "display": {
+        "icon": {
+            "item": "minecraft:wooden_pickaxe"
+        },
+        "title": {
+            "translate": "es.adv.noCreative.title"
+        },
+        "description": {
+            "translate": "es.adv.noCreative.description"
+        }
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "elementalsorcery:no_creative"
+        }
+    }
+}

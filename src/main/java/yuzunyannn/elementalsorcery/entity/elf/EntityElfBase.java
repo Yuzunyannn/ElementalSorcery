@@ -1,7 +1,5 @@
 package yuzunyannn.elementalsorcery.entity.elf;
 
-import java.util.List;
-
 import javax.annotation.Nonnull;
 
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -31,7 +29,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -60,8 +57,6 @@ public abstract class EntityElfBase extends EntityCreature {
 		this.experienceValue = 10;
 		this.setSize(0.6f, 1.9f);
 		this.setCanPickUpLoot(true);
-		if (world.isRemote) return;
-		if (this.rand.nextInt(5) == 0) this.setProfession(ElfProfession.SCHOLAR);
 	}
 
 	@Override
@@ -85,6 +80,7 @@ public abstract class EntityElfBase extends EntityCreature {
 		this.tasks.addTask(1, new EntityAILookTalker(this));
 		this.tasks.addTask(3, new EntityAIAttackElf(this));
 		this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false, new Class[0]));
+		this.targetTasks.addTask(3, new EntityAINearestAttackTarget(this));
 	}
 
 	@Override
@@ -143,7 +139,11 @@ public abstract class EntityElfBase extends EntityCreature {
 
 	@Override
 	public String getName() {
-		return I18n.translateToLocal(this.getProfession().getUnlocalizedProfessionName()) + ":" + super.getName();
+		return super.getName() + "(" + I18n.translateToLocal(this.getProfession().getUnlocalizedProfessionName()) + ")";
+	}
+
+	public String getElfName() {
+		return this.getCustomNameTag();
 	}
 
 	@Override
@@ -201,17 +201,6 @@ public abstract class EntityElfBase extends EntityCreature {
 	/** 受到攻击，精灵的反应 */
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		// 群体效应,攻击一个精灵，周围所有精灵生气
-		if (this.rand.nextInt(4) == 0 && source.getTrueSource() instanceof EntityPlayer) {
-			final int size = 8;
-			AxisAlignedBB aabb = new AxisAlignedBB(posX - size, posY - size, posZ - size, posX + size, posY + size,
-					posZ + size);
-			List<EntityElf> list = world.getEntitiesWithinAABB(EntityElf.class, aabb);
-			for (EntityElf elf : list) {
-				if (elf.getRevengeTarget() == null) elf.setRevengeTarget((EntityPlayer) source.getTrueSource());
-			}
-		}
-
 		int flag = this.getProfession().attackedFrom(this, source, amount);
 		if (flag == -1) return false;
 		else if (flag == 1) return true;
@@ -221,7 +210,10 @@ public abstract class EntityElfBase extends EntityCreature {
 	/** 攻击敌人 */
 	@Override
 	public boolean attackEntityAsMob(Entity entityIn) {
-		return this.getProfession().attackEntity(this, entityIn);
+		boolean flag = this.getProfession().attackEntity(this, entityIn);
+		if (flag && entityIn instanceof EntityPlayerMP)
+			ESCriteriaTriggers.ELF_HURT_PLAYER.trigger((EntityPlayerMP) entityIn, this);
+		return flag;
 	}
 
 	/** 传送到某处 */
