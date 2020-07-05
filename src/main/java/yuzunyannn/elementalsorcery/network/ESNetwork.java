@@ -13,11 +13,14 @@ public class ESNetwork {
 
 	public static void registerAll() {
 		registerMessage(MessageSpellbook.Handler.class, MessageSpellbook.class, Side.CLIENT);
-		
+
 		registerMessage(MessageSyncItemStack.Handler.class, MessageSyncItemStack.class, Side.CLIENT);
-		
+
 		registerMessage(MessageGetBuilingInfo.Handler.class, MessageGetBuilingInfo.class, Side.CLIENT);
 		registerMessage(MessageGetBuilingInfo.Handler.class, MessageGetBuilingInfo.class, Side.SERVER);
+
+		registerMessage(MessageTalkChapter.Handler.class, MessageTalkChapter.class, Side.CLIENT);
+		registerMessage(MessageTalkChapter.Handler.class, MessageTalkChapter.class, Side.SERVER);
 	}
 
 	public static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(

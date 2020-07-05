@@ -1,0 +1,28 @@
+{
+    "parent": "elementalsorcery:recipes/rite_table_0",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:smelt_box"
+        },
+        "title": {
+            "translate": "es.adv.smelt.title"
+        },
+        "description": {
+            "translate": "es.adv.smelt.description"
+        }
+    },
+    "criteria": {
+        "craft_heart": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "elementalsorcery:cobblestone_hearth"
+            }
+        },
+        "craft_smelte": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "elementalsorcery:cobblestone_smelt_box"
+            }
+        }
+    }
+}

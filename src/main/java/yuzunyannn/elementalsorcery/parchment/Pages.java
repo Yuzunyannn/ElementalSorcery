@@ -170,6 +170,7 @@ public class Pages {
 				JsonParser.Packet packet = JsonParser.read(jobj);
 				if (packet == null) continue;
 				String id = path.substring(0, path.lastIndexOf('.'));
+				if (id.lastIndexOf('/') != -1) id = id.substring(id.lastIndexOf('/') + 1);
 				regPage(id, packet.page);
 				TileRiteTable.addPage(id, packet.level);
 			} catch (Exception e) {

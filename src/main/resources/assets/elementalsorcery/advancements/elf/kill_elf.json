@@ -1,0 +1,24 @@
+{
+    "parent": "elementalsorcery:elf/elf_tree",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:kyanite_sword"
+        },
+        "title": {
+            "translate": "es.adv.elfKiller.title"
+        },
+        "description": {
+            "translate": "es.adv.elfKiller.description"
+        }
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "elementalsorcery:elf"
+                }
+            }
+        }
+    }
+}

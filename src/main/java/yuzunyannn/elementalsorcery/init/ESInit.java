@@ -42,6 +42,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.ESRegister;
 import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
@@ -54,7 +55,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.entity.elf.ElfProfessionRegister;
+import yuzunyannn.elementalsorcery.elf.pro.ElfProRegister;
 import yuzunyannn.elementalsorcery.event.ESTestAndDebug;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
@@ -139,13 +140,15 @@ public class ESInit {
 		// 注册实体
 		EntityRegistries.registerAll();
 		// 注册精灵职业
-		ElfProfessionRegister.registerAll();
+		ElfProRegister.registerAll();
 		// 注册默认所有建筑
 		BuildingLib.registerAll();
 		// 测试村庄相关
 		VillegeRegistries.registerAll();
 		// 注册战利品
 		registerAllLoot();
+		// 成就触发器
+		ESCriteriaTriggers.init();
 		// 注册GUI句柄
 		NetworkRegistry.INSTANCE.registerGuiHandler(ElementalSorcery.instance, new ESGuiHandler());
 		// 注册世界生成
@@ -300,6 +303,7 @@ public class ESInit {
 		registerRender(ITEMS.ORDER_CRYSTAL);
 		registerRender(ITEMS.MD_BASE, new RenderTileMDBase());
 		registerRender(ITEMS.RITE_MANUAL);
+		registerRender(ITEMS.RED_HANDSET);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

@@ -1,0 +1,28 @@
+{
+    "parent": "elementalsorcery:root",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:rite_table",
+            "nbt": "{level:0}"
+        },
+        "title": {
+            "translate": "es.adv.rite0.title"
+        },
+        "description": {
+            "translate": "es.adv.rite0.description"
+        }
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:rite_table",
+                        "nbt": "{level:0}"
+                    }
+                ]
+            }
+        }
+    }
+}

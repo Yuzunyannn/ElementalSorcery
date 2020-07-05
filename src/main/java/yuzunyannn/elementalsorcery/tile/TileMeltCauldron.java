@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.tile;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -12,6 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
@@ -41,8 +43,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 	/** 吃掉一个物品 */
 	public void eatItem(EntityItem item) {
 		if (!this.world.isRemote) {
-			if (temperature < START_TEMPERATURE)
-				return;
+			if (temperature < START_TEMPERATURE) return;
 			if (!this.result.isEmpty()) {
 				item.setFire(5);
 				return;
@@ -53,8 +54,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 				if (stack.getItem() == ESInitInstance.ITEMS.MAGIC_STONE) {
 					this.addMagicStone(stack.getCount());
 					item.setDead();
-				} else
-					item.setFire(5);
+				} else item.setFire(5);
 				return;
 			}
 			// 之后的东西
@@ -63,19 +63,19 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 				item.setDead();
 			} else if (Block.getBlockFromItem(stack.getItem()) == Blocks.STONE
 					|| Block.getBlockFromItem(stack.getItem()) == Blocks.COBBLESTONE) {
-				this.addStone(stack.getCount());
-				item.setDead();
-			} else if (stack.getItem() == Items.REDSTONE) {
-				instableCount++;
-				this.markDirty();
-			} else {
-				// 是否为蓝晶石
-				if (OreDictionary.containsMatch(false, OreDictionary.getOres("kyanite"), stack)) {
-					this.addKyanite(stack.getCount());
-					item.setDead();
-				} else
-					item.setFire(5);
-			}
+						this.addStone(stack.getCount());
+						item.setDead();
+					} else
+				if (stack.getItem() == Items.REDSTONE) {
+					instableCount++;
+					this.markDirty();
+				} else {
+					// 是否为蓝晶石
+					if (OreDictionary.containsMatch(false, OreDictionary.getOres("kyanite"), stack)) {
+						this.addKyanite(stack.getCount());
+						item.setDead();
+					} else item.setFire(5);
+				}
 		}
 	}
 
@@ -127,15 +127,14 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 
 	/** 当有生物进入 */
 	public void livingEnter(EntityLivingBase entity) {
-		if (temperature < 100)
-			return;
+		if (temperature < 100) return;
 		entity.setFire((int) (temperature / 100.0f));
+		if (entity instanceof EntityPlayerMP) ESCriteriaTriggers.MELT_FIRE.trigger((EntityPlayerMP) entity);
 	}
 
 	/** 处理掉落 */
 	public void drop() {
-		if (this.world.isRemote)
-			return;
+		if (this.world.isRemote) return;
 		if (this.getVolume() <= 0) {
 			Block.spawnAsEntity(world, pos, new ItemStack(ESInitInstance.BLOCKS.MELT_CAULDRON));
 			return;
@@ -162,8 +161,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 	public void doResult() {
 		// 判断是否有蓝晶石和石头
 		if (this.stoneCount == 0 && this.kyaniteCount == 0) {
-			if (this.kyaniteCount > 0)
-				this.kyaniteCount--;
+			if (this.kyaniteCount > 0) this.kyaniteCount--;
 			return;
 		} else if (this.stoneCount == 0) {
 			this.result = new ItemStack(ESInitInstance.BLOCKS.KYANITE_BLOCK);
@@ -180,14 +178,12 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 		if (this.stoneCount > maxStoneCount) {
 			this.result = new ItemStack(ESInitInstance.BLOCKS.KYANITE_ORE);
 			this.resultCount = this.kyaniteCount / 2;
-			if (this.resultCount > this.stoneCount)
-				this.resultCount = this.stoneCount;
+			if (this.resultCount > this.stoneCount) this.resultCount = this.stoneCount;
 			return;
 		}
 		// 根据不稳定的数字，增加蓝晶石个数
-		if (this.instableCount > 0)
-			this.kyaniteCount = (int) (this.kyaniteCount
-					+ this.kyaniteCount * this.world.rand.nextInt(this.instableCount) * 0.1f);
+		if (this.instableCount > 0) this.kyaniteCount = (int) (this.kyaniteCount
+				+ this.kyaniteCount * this.world.rand.nextInt(this.instableCount) * 0.1f);
 		// 看蓝晶石是否位于0.5到1.5个石头之间的位置
 		if (this.kyaniteCount >= this.stoneCount / 2 && this.kyaniteCount <= (int) (this.stoneCount * 1.5f)) {
 			this.result = new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 0);
@@ -213,10 +209,8 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 		} else if (block == ESInitInstance.BLOCKS.KYANITE_ORE) {
 			this.resultTex = RenderObjects.KYANITE_ORE;
 		} else if (block == ESInitInstance.BLOCKS.ASTONE) {
-			if (this.result.getMetadata() == 0)
-				this.resultTex = RenderObjects.ASTONE;
-			else
-				this.resultTex = RenderObjects.ASTONE_FRAGMENTED;
+			if (this.result.getMetadata() == 0) this.resultTex = RenderObjects.ASTONE;
+			else this.resultTex = RenderObjects.ASTONE_FRAGMENTED;
 		} else {
 			this.resultTex = null;
 		}
@@ -227,16 +221,13 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 		if (compound.hasKey("output", 10)) {
 			result = new ItemStack(compound.getCompoundTag("output"));
 			resultCount = compound.getInteger("outCount");
-		} else
-			result = ItemStack.EMPTY;
+		} else result = ItemStack.EMPTY;
 		temperature = compound.getFloat("T");
 		magicCount = compound.getInteger("magic");
 		stoneCount = compound.getInteger("stone");
 		kyaniteCount = compound.getInteger("kyanite");
-		if (this.isSending())
-			return;
-		if (!compound.hasKey("id"))
-			return;
+		if (this.isSending()) return;
+		if (!compound.hasKey("id")) return;
 		instableCount = compound.getInteger("instable");
 		super.readFromNBT(compound);
 	}
@@ -251,8 +242,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 		compound.setInteger("magic", magicCount);
 		compound.setInteger("stone", stoneCount);
 		compound.setInteger("kyanite", kyaniteCount);
-		if (this.isSending())
-			return compound;
+		if (this.isSending()) return compound;
 		compound.setInteger("instable", instableCount);
 		return super.writeToNBT(compound);
 	}
@@ -285,8 +275,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 			}
 		} else {
 			if (this.world.isRemote) {
-				if (resultTex == null && !this.result.isEmpty())
-					this.dealResultTexture();
+				if (resultTex == null && !this.result.isEmpty()) this.dealResultTexture();
 			}
 		}
 	}

@@ -30,6 +30,10 @@ public class PageMult extends Page {
 		}
 	}
 
+	public Page[] getPages() {
+		return pages;
+	}
+
 	@Override
 	public void open(IPageManager pageManager) {
 		pageAt = 0;

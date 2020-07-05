@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,7 +10,6 @@ import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -65,7 +63,7 @@ public class ElementalSorcery {
 	}
 
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) throws Throwable{
+	public void postInit(FMLPostInitializationEvent event) throws Throwable {
 		proxy.postInit(event);
 	}
 
@@ -79,16 +77,21 @@ public class ElementalSorcery {
 
 	/** 获取玩家动态数据 */
 	public static NBTTagCompound getPlayerData(EntityLivingBase player) {
-		if (player instanceof EntityPlayer) {
-			String username = ((EntityPlayer) player).getName();
-			return getPlayerData(username);
-		}
+		if (player instanceof EntityPlayer) return getPlayerData(player.getName());
 		return new NBTTagCompound();
+	}
+
+	public static void removePlayerData(EntityPlayer player) {
+		removePlayerData(player.getName());
 	}
 
 	public static NBTTagCompound getPlayerData(String username) {
 		if (!userData.containsKey(username)) userData.put(username, new NBTTagCompound());
 		return userData.get(username);
+	}
+
+	public static void removePlayerData(String username) {
+		userData.remove(username);
 	}
 
 }

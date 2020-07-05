@@ -108,6 +108,7 @@ public class BuildingLib {
 		final String MODID = ElementalSorcery.MODID;
 		String[] mapJsonNames = data.getFilesFromResource(new ResourceLocation(MODID, "structures"));
 		for (String path : mapJsonNames) {
+			if (!path.endsWith(".nbt")) continue;
 			NBTTagCompound nbt = data.getNBTFromResource(new ResourceLocation(MODID, "structures/" + path));
 			if (path.lastIndexOf('.') != -1) path = path.substring(0, path.lastIndexOf('.'));
 			instance.addBuildingLib(path, new BuildingInherent(nbt, TextHelper.castToCamel(path)));

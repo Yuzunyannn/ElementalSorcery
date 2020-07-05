@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.entity.elf;
+package yuzunyannn.elementalsorcery.elf.pro;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -7,9 +7,9 @@ import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.init.registries.ESImplRegister;
 
-public class ElfProfessionRegister extends ESImplRegister<ElfProfession> {
+public class ElfProRegister extends ESImplRegister<ElfProfession> {
 
-	public static final ElfProfessionRegister instance = new ElfProfessionRegister();
+	public static final ElfProRegister instance = new ElfProRegister();
 
 	@Override
 	public Class<ElfProfession> getRegistrySuperType() {

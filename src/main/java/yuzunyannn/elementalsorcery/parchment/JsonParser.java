@@ -10,6 +10,7 @@ import javax.vecmath.Vector3d;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -34,7 +35,7 @@ public class JsonParser {
 		int level;
 	}
 
-	public static Packet read(JsonObject jobj) throws Exception {
+	public static Packet read(JsonObject jobj) throws JsonParseException {
 		Page page = readPage(jobj);
 		if (page == null) return null;
 		Packet packet = new Packet();
@@ -44,7 +45,7 @@ public class JsonParser {
 		return packet;
 	}
 
-	private static Page readPage(JsonObject jobj) throws Exception {
+	private static Page readPage(JsonObject jobj) {
 		if (!JsonHelper.isString(jobj, "type")) return null;
 		String type = jobj.get("type").getAsString();
 		switch (type.toLowerCase()) {
@@ -72,7 +73,7 @@ public class JsonParser {
 	}
 
 	/** 获取一个多重页面 */
-	private static Page readPageMult(JsonObject jobj) throws Exception {
+	private static Page readPageMult(JsonObject jobj) {
 		if (!JsonHelper.isArray(jobj, "pages")) return null;
 		List<Page> pages = new LinkedList<>();
 		JsonArray jarray = jobj.get("pages").getAsJsonArray();
@@ -82,7 +83,7 @@ public class JsonParser {
 			if (p == null) continue;
 			pages.add(p);
 		}
-		if (pages.isEmpty()) throw new Exception("多页面找不到任何一个子页");
+		if (pages.isEmpty()) throw new JsonParseException("多页面找不到任何一个子页");
 		PageMult page = new PageMult(pages.toArray(new Page[pages.size()]));
 		if (JsonHelper.isNumber(jobj, "lock")) {
 			int at = jobj.get("lock").getAsInt();
@@ -94,7 +95,7 @@ public class JsonParser {
 	/**
 	 * 获取一个简单页面
 	 */
-	private static PageSimple readPageSimple(JsonObject jobj) throws Exception {
+	private static PageSimple readPageSimple(JsonObject jobj) {
 		ItemStack icon = defaultIcon;
 		// 寻找图标
 		if (JsonHelper.isString(jobj, "icon")) {
@@ -126,7 +127,7 @@ public class JsonParser {
 		}
 		if (JsonHelper.isString(jobj, "title")) title = jobj.get("title").getAsString();
 		if (JsonHelper.isString(jobj, "value")) value = jobj.get("value").getAsString();
-		if (title == null) throw new Exception("找不到标题");
+		if (title == null) throw new JsonParseException("找不到标题");
 		// 寻找背景
 		ItemStack background = ItemStack.EMPTY;
 		if (JsonHelper.isString(jobj, "background")) {
@@ -139,11 +140,11 @@ public class JsonParser {
 	}
 
 	/** 获取一个合成界面 */
-	private static Page readPageCraft(JsonObject jobj) throws Exception {
+	private static Page readPageCraft(JsonObject jobj) {
 		PageSimple page = readPageSimple(jobj);
 		if (page == null) return null;
 		List<ItemRecord> irList = JsonHelper.readItems(jobj.get("item"));
-		if (irList.isEmpty()) throw new Exception("找不到任何合成物,位于：" + jobj.get("item"));
+		if (irList.isEmpty()) throw new JsonParseException("找不到任何合成物,位于：" + jobj.get("item"));
 		List<ItemStack> list = JsonHelper.to(irList);
 		// 有图标的情况复写下
 		if (!page.getIcon().isEmpty()) {
@@ -160,30 +161,30 @@ public class JsonParser {
 	}
 
 	/** 获取一个转化界面 */
-	private static Page readPageTransform(JsonObject jobj, int id) throws Exception {
+	private static Page readPageTransform(JsonObject jobj, int id) {
 		PageSimple page = readPageSimple(jobj);
 		if (page == null) return null;
 		List<ItemRecord> irList = JsonHelper.readItems(jobj.get("item"));
-		if (irList.isEmpty()) throw new Exception("找不到任何要转化的物品,位于：" + jobj.get("item"));
+		if (irList.isEmpty()) throw new JsonParseException("找不到任何要转化的物品,位于：" + jobj.get("item"));
 		List<ItemStack> list = JsonHelper.to(irList);
 		switch (id) {
 		case PageTransform.SMELTING:
 			return new PageSmeltingSimple(page.getTitle(), page.getContext(), list.get(0));
 		case PageTransform.INFUSION:
-			if (list.size() < 2) throw new Exception("注魔item字段需要两个");
+			if (list.size() < 2) throw new JsonParseException("注魔item字段需要两个");
 			return new PageTransformSimple(page.getTitle(), page.getContext(), list.get(0), list.get(1),
 					ItemStack.EMPTY, null, id);
 		case PageTransform.RITE:
-			if (list.size() < 2) throw new Exception("仪式item字段需要两个");
+			if (list.size() < 2) throw new JsonParseException("仪式item字段需要两个");
 			ItemStack p = new ItemStack(ESInitInstance.ITEMS.PARCHMENT);
 			RecipeRiteWrite.setInnerStack(p, list.get(0));
 			return new PageTransformSimple(page.getTitle(), page.getContext(), p, list.get(1), list.get(0), null, id);
 		case PageTransform.SEPARATE:
-			if (list.size() < 3) throw new Exception("分离item字段需要三个");
+			if (list.size() < 3) throw new JsonParseException("分离item字段需要三个");
 			return new PageTransformSimple(page.getTitle(), page.getContext(), list.get(0), list.get(1), list.get(2),
 					null, PageTransform.SPELLALTAR);
 		case PageTransform.SPELLALTAR:
-			if (list.size() < 2) throw new Exception("书桌和合成item字段需要两个");
+			if (list.size() < 2) throw new JsonParseException("书桌和合成item字段需要两个");
 			List<ItemStack> s = null;
 			for (TileMagicDesk.Recipe r : TileMagicDesk.getRecipes()) {
 				if (ItemStack.areItemsEqual(r.getOutput(), list.get(1))) {
@@ -191,7 +192,7 @@ public class JsonParser {
 					break;
 				}
 			}
-			if (s == null) throw new Exception("找不到书桌的合成表！");
+			if (s == null) throw new JsonParseException("找不到书桌的合成表！");
 			return new PageTransformSimple(page.getTitle(), page.getContext(), list.get(0), list.get(1),
 					ItemStack.EMPTY, s, PageTransform.SPELLALTAR);
 		default:
@@ -202,13 +203,13 @@ public class JsonParser {
 	}
 
 	/** 获取一个建筑界面 */
-	private static Page readPageBuilding(JsonObject jobj) throws Exception {
+	private static Page readPageBuilding(JsonObject jobj) {
 		PageSimple page = readPageSimple(jobj);
 		if (page == null) return null;
-		if (!JsonHelper.isString(jobj, "building")) throw new Exception("找不到任何合建筑,位于：" + jobj);
+		if (!JsonHelper.isString(jobj, "building")) throw new JsonParseException("找不到任何合建筑,位于：" + jobj);
 		String id = jobj.get("building").getAsString();
 		Building building = BuildingLib.instance.getBuilding(id);
-		if (building == null) throw new Exception("建筑不存在：" + id);
+		if (building == null) throw new JsonParseException("建筑不存在：" + id);
 		PageBuildingSimple bpage = new PageBuildingSimple(page.getTitle(), building);
 		// 额外添加,数组型,pos字段为位置，item字段为方块类型
 		JsonArray extra = null;

@@ -1,0 +1,26 @@
+{
+    "parent": "elementalsorcery:recipes/rite_table_0",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:lantern"
+        },
+        "title": {
+            "translate": "es.adv.lantern.title"
+        },
+        "description": {
+            "translate": "es.adv.lantern.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:lantern"
+                    }
+                ]
+            }
+        }
+    }
+}

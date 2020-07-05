@@ -1,0 +1,36 @@
+{
+    "parent": "elementalsorcery:recipes/rite_table_1",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:melt_cauldron"
+        },
+        "title": {
+            "translate": "es.adv.meltCauldron.title"
+        },
+        "description": {
+            "translate": "es.adv.meltCauldron.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:melt_cauldron"
+                    }
+                ]
+            }
+        },
+        "craft_heart": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:hearth"
+                    }
+                ]
+            }
+        }
+    }
+}

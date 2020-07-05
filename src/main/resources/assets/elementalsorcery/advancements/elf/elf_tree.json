@@ -1,0 +1,26 @@
+{
+    "parent": "elementalsorcery:root",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:elf_log"
+        },
+        "title": {
+            "translate": "es.adv.elfTree.title"
+        },
+        "description": {
+            "translate": "es.adv.elfTree.description"
+        }
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:elf_log"
+                    }
+                ]
+            }
+        }
+    }
+}

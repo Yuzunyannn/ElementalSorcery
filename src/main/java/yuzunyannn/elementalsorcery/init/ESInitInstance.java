@@ -69,6 +69,7 @@ import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemManual;
 import yuzunyannn.elementalsorcery.item.ItemOrderCrystal;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
+import yuzunyannn.elementalsorcery.item.ItemRedHandset;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.item.ItemSome;
@@ -203,6 +204,7 @@ public class ESInitInstance {
 		ITEMS.ORDER_CRYSTAL = new ItemOrderCrystal();
 		ITEMS.MD_BASE = ItemSome.newMDBase();
 		ITEMS.RITE_MANUAL = new ItemRiteManual();
+		ITEMS.RED_HANDSET = new ItemRedHandset();
 
 		ITEMS.SPELLBOOK = new ItemSpellbook();
 		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture();

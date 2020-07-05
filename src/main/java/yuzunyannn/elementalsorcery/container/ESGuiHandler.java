@@ -11,6 +11,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiAnalysisAltar;
 import yuzunyannn.elementalsorcery.container.gui.GuiDeconstructBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementCraftingTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
+import yuzunyannn.elementalsorcery.container.gui.GuiElfTalk;
 import yuzunyannn.elementalsorcery.container.gui.GuiHearth;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDAbsorbBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDDeconstructBox;
@@ -49,6 +50,8 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_MD_ABSORB_BOX = 26;
 	public static final int GUI_MD_MAGICLIZATION = 27;
 	public static final int GUI_MD_DECONSTRUCTBOX = 28;
+
+	public static final int GUI_ELF_TALK = 40;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -92,6 +95,8 @@ public class ESGuiHandler implements IGuiHandler {
 			return new ContainerMDMagiclization(player, tileEntity);
 		case GUI_MD_DECONSTRUCTBOX:
 			return new ContainerMDDeconstructBox(player, tileEntity);
+		case GUI_ELF_TALK:
+			return new ContainerElfTalk(player);
 		default:
 			return null;
 		}
@@ -141,6 +146,8 @@ public class ESGuiHandler implements IGuiHandler {
 			return new GuiMDMagiclization(new ContainerMDMagiclization(player, tileEntity), player.inventory);
 		case GUI_MD_DECONSTRUCTBOX:
 			return new GuiMDDeconstructBox(new ContainerMDDeconstructBox(player, tileEntity), player.inventory);
+		case GUI_ELF_TALK:
+			return new GuiElfTalk(player);
 		default:
 			return null;
 		}

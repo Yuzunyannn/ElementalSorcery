@@ -1,0 +1,23 @@
+{
+    "parent": "elementalsorcery:elf/kill_elf",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:kyanite_sword"
+        },
+        "title": {
+            "translate": "es.adv.elfMasterKiller.title"
+        },
+        "description": {
+            "translate": "es.adv.elfMasterKiller.description"
+        },
+        "frame": "challenge"
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "elementalsorcery:player_killed_elf",
+            "conditions": {
+                "profession": "elementalsorcery:master"
+            }
+        }
+    }
+}

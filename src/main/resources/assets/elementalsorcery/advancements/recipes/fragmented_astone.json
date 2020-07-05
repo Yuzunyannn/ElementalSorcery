@@ -1,0 +1,28 @@
+{
+    "parent": "elementalsorcery:recipes/melt_cauldron",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:astone",
+            "data": 1
+        },
+        "title": {
+            "translate": "es.adv.fragmentedAstone.title"
+        },
+        "description": {
+            "translate": "es.adv.fragmentedAstone.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:astone",
+                        "data": 1
+                    }
+                ]
+            }
+        }
+    }
+}

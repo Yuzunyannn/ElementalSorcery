@@ -45,6 +45,7 @@ public class ESObjects {
 		public Item ORDER_CRYSTAL;
 		public Item MD_BASE;
 		public Item RITE_MANUAL;
+		public Item RED_HANDSET;
 	}
 
 	static public class Blocks {

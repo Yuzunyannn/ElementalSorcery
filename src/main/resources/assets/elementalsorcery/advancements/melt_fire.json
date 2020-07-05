@@ -1,0 +1,19 @@
+{
+    "parent": "elementalsorcery:recipes/melt_cauldron",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:melt_cauldron"
+        },
+        "title": {
+            "translate": "es.adv.meltFire.title"
+        },
+        "description": {
+            "translate": "es.adv.meltFire.description"
+        }
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "elementalsorcery:melt_fire"
+        }
+    }
+}

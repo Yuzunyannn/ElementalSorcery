@@ -33,6 +33,7 @@ item.tinyKnife.name=精巧刻刀
 item.orderCrystal.name=秩序水晶
 item.MDBase.name=魔动基座
 item.riteManual.name=祭品研究手册
+item.redHandset.name=红石遥控
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -118,6 +119,12 @@ entity.Villager.eslearner=元素知识学者
 entity.Villager.magicallearner=魔力学者
 entity.Elf.name=精灵
 
+pro.none=闲人
+pro.warrior=战士
+pro.berserker=狂战士
+pro.master=魔法大师
+pro.scholar=学者
+
 commands.es.usage=/es <操作> <参数>...
 commands.es.build.usage=/es build <it>或<建筑名称>
 commands.es.build.it.usage=/es build it 会自动将主手上的建筑水晶建造
@@ -192,6 +199,11 @@ lev.intermediate=中级
 lev.senior=高级
 lev.super=传说
 info.written=上面写着：%s
+
+say.konw=我明白了
+say.unkonw=我不明白
+say.ok=好的
+say.pretendKnow=就当你明白了
 
 page.crafting.need=需要元素参与合成：
 page.crafting.show=%s 需要 %d 强度下限 %d 
@@ -312,3 +324,38 @@ page.spLaunch.ct.info=起始之魔导书包含这各种咒文，可以启动各�
 page.spElement=元素之魔导书
 page.spElement.ct=临时的合成表
 page.spElement.ct.info=元素魔导书拥有特殊的咒文，可以将书中的元素以特殊的形态释放出来，实现特殊的效果。\n元素魔导书内可以存放一种元素，与咒文相适应的元素，便可以通过咒文的咏唱，产生影响世界的效果。/n元素魔导书可以在魔导书祭坛上补充元素，一旦拥有元素，就是用完之前，无法在更换其他元素。如果这本书中存储的元素无法释放....
+
+es.adv.root.title=元素魔法
+es.adv.root.description=打开手中的卷轴，开始元素魔法
+
+es.adv.kyanite.title=新的矿物
+es.adv.kyanite.description=在地下19层以下挖到一个蓝晶石矿吧
+
+es.adv.rite0.title=仪式桌
+es.adv.rite0.description=制作一个0级的仪式桌，开始你的「映射仪式」吧，从而来获取教程吧
+es.adv.lantern.title=回家的路
+es.adv.lantern.description=使用「寻求仪式」获得引路灯。
+es.adv.smelt.title=更好的炉灶
+es.adv.smelt.description=制作一个圆石烧炼箱和圆石灶台
+
+es.adv.elfTree.title=寻找精灵树
+es.adv.elfTree.description=找到一颗精灵树，获取精灵木吧
+es.adv.elfKiller.title=精灵杀手
+es.adv.elfKiller.description=杀死一只精灵。不过不推荐这么做...
+es.adv.killByElf.title=这不可能
+es.adv.killByElf.description=被精灵杀死
+es.adv.elfMasterKiller.title=举世无双
+es.adv.elfMasterKiller.description=杀死精灵魔法大师
+es.adv.eatElfFruit.title=好吃的精灵果
+es.adv.eatElfFruit.description=连续吃8个精灵果
+
+es.adv.rite1.title=升级仪式桌
+es.adv.rite1.description=制作一个1级的仪式桌，从而来获取更多教程吧
+es.adv.meltCauldron.title=做好炼制的万全准备
+es.adv.meltCauldron.description=制作一个熔岩锅和灶台来炼制通魔石。
+es.adv.meltFire.title=好烫啊
+es.adv.meltFire.description=跳进起火的熔岩锅
+es.adv.fragmentedAstone.title=炼制学徒
+es.adv.fragmentedAstone.description=炼制过程中产生碎裂的通魔石
+es.adv.astone.title=炼制专家
+es.adv.astone.description=成功获取通魔石

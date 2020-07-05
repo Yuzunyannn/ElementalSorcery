@@ -10,6 +10,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 
@@ -32,6 +33,12 @@ public class EventServer {
 			data.setBoolean("esFirstJoin", true);
 			player.inventory.addItemStackToInventory(ItemScroll.getScroll("rite"));
 		}
+	}
+
+	@SubscribeEvent
+	public static void onLogoff(PlayerEvent.PlayerLoggedOutEvent event) {
+		EntityPlayer player = event.player;
+		ElementalSorcery.removePlayerData(player);
 	}
 
 	static private final List<ITickTask> tickList = new LinkedList<ITickTask>();

@@ -9,6 +9,7 @@ import javax.vecmath.Vector3d;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 
 import net.minecraft.item.Item;
@@ -138,21 +139,21 @@ public class JsonHelper {
 		return items;
 	}
 
-	static public List<ItemRecord> readItems(JsonElement je) throws Exception {
+	static public List<ItemRecord> readItems(JsonElement je) {
 		List<ItemRecord> list = new ArrayList<>();
 		readItems(je, list);
 		return list;
 	}
 
 	/** 根据json元素，获取物品 */
-	static private void readItems(JsonElement je, List<ItemRecord> list) throws Exception {
+	static private void readItems(JsonElement je, List<ItemRecord> list) {
 		if (je == null || je.isJsonNull()) return;
 		// 单个字符串id
 		if (je.isJsonPrimitive()) {
 			if (je.getAsJsonPrimitive().isString()) {
 				String id = je.getAsString();
 				Item item = Item.getByNameOrId(id);
-				if (item == null) throw new Exception("找不到对应的物品：" + id);
+				if (item == null) throw new JsonParseException("找不到对应的物品：" + id);
 				list.add(new ItemRecord(item));
 			}
 		}
@@ -161,7 +162,7 @@ public class JsonHelper {
 			JsonObject jobj = je.getAsJsonObject();
 			String idKey = "id";
 			if (!isString(jobj, "id")) {
-				if (!isString(jobj, "item")) throw new Exception("找不到物品的id，位于：" + jobj);
+				if (!isString(jobj, "item")) throw new JsonParseException("找不到物品的id，位于：" + jobj);
 				idKey = "item";
 			}
 			if (jobj.size() == 1) readItems(jobj.get(idKey), list);
@@ -182,7 +183,7 @@ public class JsonHelper {
 				}
 				// 没有矿物词典的情况
 				Item item = Item.getByNameOrId(id);
-				if (item == null) throw new Exception("找不到对应的物品：" + id);
+				if (item == null) throw new JsonParseException("找不到对应的物品：" + id);
 				int meta = 0;
 				if (isNumber(jobj, "damage")) meta = jobj.get("damage").getAsInt();
 				else if (isNumber(jobj, "data")) meta = jobj.get("data").getAsInt();
@@ -199,14 +200,14 @@ public class JsonHelper {
 		}
 	}
 
-	static public List<ElementStack> readElements(JsonElement je) throws Exception {
+	static public List<ElementStack> readElements(JsonElement je) {
 		List<ElementStack> list = new ArrayList<>();
 		readElements(je, list);
 		return list;
 	}
 
 	/** 根据json元素，获取物品 */
-	static private void readElements(JsonElement je, List<ElementStack> list) throws Exception {
+	static private void readElements(JsonElement je, List<ElementStack> list) {
 		if (je == null || je.isJsonNull()) return;
 		// 带有类的
 		if (je.isJsonObject()) {
@@ -215,7 +216,7 @@ public class JsonHelper {
 			String id = jobj.get("id").getAsString();
 			if (id.indexOf(':') == -1) id = ElementalSorcery.MODID + ":" + id;
 			Element element = Element.getElementFromName(id);
-			if (element == null) throw new Exception("找不到对应的元素：" + id);
+			if (element == null) throw new JsonParseException("找不到对应的元素：" + id);
 			int count = 1;
 			if (isNumber(jobj, "count")) count = jobj.get("count").getAsInt();
 			else if (isNumber(jobj, "size")) count = jobj.get("size").getAsInt();
@@ -232,14 +233,14 @@ public class JsonHelper {
 	}
 
 	/** 获取坐标 */
-	static public List<Vector3d> readBlockPos(JsonElement je) throws Exception {
+	static public List<Vector3d> readBlockPos(JsonElement je) {
 		List<Vector3d> list = new ArrayList<>();
 		readBlockPos(je, list);
 		return list;
 	}
 
 	/** 获取坐标 */
-	static private void readBlockPos(JsonElement je, List<Vector3d> list) throws Exception {
+	static private void readBlockPos(JsonElement je, List<Vector3d> list) {
 		if (je == null || je.isJsonNull()) return;
 		if (je.isJsonArray()) {
 			JsonArray jarray = je.getAsJsonArray();
@@ -247,7 +248,7 @@ public class JsonHelper {
 			je = jarray.get(0);
 			if (je.isJsonArray()) for (JsonElement j : jarray) readBlockPos(j, list);
 			else if (je.isJsonPrimitive() && je.getAsJsonPrimitive().isNumber()) {
-				if (jarray.size() != 3) throw new Exception("方块坐标应当是大小为3的json数组");
+				if (jarray.size() != 3) throw new JsonParseException("方块坐标应当是大小为3的json数组");
 				double x = je.getAsDouble();
 				double y = jarray.get(1).getAsDouble();
 				double z = jarray.get(2).getAsDouble();

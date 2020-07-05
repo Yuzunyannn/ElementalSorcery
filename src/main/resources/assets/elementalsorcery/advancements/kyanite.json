@@ -1,0 +1,26 @@
+{
+    "parent": "elementalsorcery:root",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:kyanite_ore"
+        },
+        "title": {
+            "translate": "es.adv.kyanite.title"
+        },
+        "description": {
+            "translate": "es.adv.kyanite.description"
+        }
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:kyanite_ore"
+                    }
+                ]
+            }
+        }
+    }
+}

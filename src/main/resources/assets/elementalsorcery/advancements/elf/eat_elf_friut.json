@@ -1,0 +1,20 @@
+{
+    "parent": "elementalsorcery:elf/elf_tree",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:elf_fruit",
+            "data": 2
+        },
+        "title": {
+            "translate": "es.adv.eatElfFruit.title"
+        },
+        "description": {
+            "translate": "es.adv.eatElfFruit.description"
+        }
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "elementalsorcery:eat_elf_fruit"
+        }
+    }
+}

@@ -1,0 +1,28 @@
+{
+    "parent": "elementalsorcery:kyanite",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:rite_table",
+            "nbt": "{level:1}"
+        },
+        "title": {
+            "translate": "es.adv.rite1.title"
+        },
+        "description": {
+            "translate": "es.adv.rite1.description"
+        }
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:rite_table",
+                        "nbt": "{level:1}"
+                    }
+                ]
+            }
+        }
+    }
+}

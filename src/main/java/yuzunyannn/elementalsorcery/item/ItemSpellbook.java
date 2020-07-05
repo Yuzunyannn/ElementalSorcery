@@ -247,9 +247,9 @@ public class ItemSpellbook extends Item {
 	@SideOnly(Side.CLIENT)
 	protected void giveMeParticleAboutSpelling(World world, EntityLivingBase entity, ItemStack stack, Spellbook book,
 			int power) {
-		boolean is_your = entity == Minecraft.getMinecraft().player;
+		boolean isYou = entity == Minecraft.getMinecraft().player;
 		float want;
-		if (is_your && this.getCast(book) > 0)
+		if (isYou && this.getCast(book) > 0)
 			want = power < this.getCast(book) ? power / this.getCast(book) : 0.3f;
 		else
 			want = 0.3f;

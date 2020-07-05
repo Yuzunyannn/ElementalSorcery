@@ -256,12 +256,12 @@ public class ElementMap implements IElementMap {
 		String[] mapJsonNames = data.getFilesFromResource(new ResourceLocation(MODID, "element_map"));
 		for (String path : mapJsonNames) {
 			try {
+				if (!path.endsWith(".json")) continue;
 				JsonObject jobj = data.getJsonFromResource(new ResourceLocation(MODID, "element_map/" + path));
 				if (!JsonHelper.isArray(jobj, "maps")) continue;
 				JsonArray jarray = jobj.get("maps").getAsJsonArray();
 				// 读取所有映射
 				for (JsonElement je : jarray) {
-
 					if (!je.isJsonObject()) continue;
 					jobj = je.getAsJsonObject();
 					if (!jobj.has("element")) continue;

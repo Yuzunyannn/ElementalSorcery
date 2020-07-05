@@ -4,8 +4,6 @@ import java.util.List;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.block.BlockLiquid;
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -14,11 +12,9 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityFlyHelper;
 import net.minecraft.entity.ai.EntityMoveHelper;
-import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.MobEffects;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -29,7 +25,6 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigateFlying;
 import net.minecraft.pathfinding.PathNavigateGround;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -40,9 +35,13 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
+import yuzunyannn.elementalsorcery.elf.pro.ElfProRegister;
+import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 
 public abstract class EntityElfBase extends EntityCreature {
@@ -53,12 +52,16 @@ public abstract class EntityElfBase extends EntityCreature {
 	/** 职业数据更新 */
 	public static final DataParameter<Integer> PROFESSION_UPDATE = EntityDataManager.createKey(EntityElfBase.class,
 			DataSerializers.VARINT);
+	/** 说或者 */
+	public EntityLivingBase talker = null;
 
 	public EntityElfBase(World worldIn) {
 		super(worldIn);
 		this.experienceValue = 10;
 		this.setSize(0.6f, 1.9f);
 		this.setCanPickUpLoot(true);
+		if (world.isRemote) return;
+		if (this.rand.nextInt(5) == 0) this.setProfession(ElfProfession.SCHOLAR);
 	}
 
 	@Override
@@ -79,6 +82,7 @@ public abstract class EntityElfBase extends EntityCreature {
 	@Override
 	protected void initEntityAI() {
 		super.initEntityAI();
+		this.tasks.addTask(1, new EntityAILookTalker(this));
 		this.tasks.addTask(3, new EntityAIAttackElf(this));
 		this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false, new Class[0]));
 	}
@@ -94,7 +98,7 @@ public abstract class EntityElfBase extends EntityCreature {
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		super.readEntityFromNBT(compound);
 		String id = compound.getString("professionId");
-		this.setProfession(ElfProfessionRegister.instance.getValue(new ResourceLocation(id)));
+		this.setProfession(ElfProRegister.instance.getValue(new ResourceLocation(id)));
 	}
 
 	/** 获取临时数据NBT，不会被保存，不会同步 */
@@ -114,6 +118,14 @@ public abstract class EntityElfBase extends EntityCreature {
 
 	}
 
+	public void setTalker(EntityLivingBase talker) {
+		this.talker = talker;
+	}
+
+	public EntityLivingBase getTalker() {
+		return talker;
+	}
+
 	// 环境音
 	protected SoundEvent getAmbientSound() {
 		return SoundEvents.ENTITY_CAT_AMBIENT;
@@ -130,8 +142,16 @@ public abstract class EntityElfBase extends EntityCreature {
 	}
 
 	@Override
+	public String getName() {
+		return I18n.translateToLocal(this.getProfession().getUnlocalizedProfessionName()) + ":" + super.getName();
+	}
+
+	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
-		return super.applyPlayerInteraction(player, vec, hand);
+		if (hand != EnumHand.MAIN_HAND) return EnumActionResult.PASS;
+		if (this.getTalker() != null) return EnumActionResult.FAIL;
+		ElfProfession pro = this.getProfession();
+		return pro.interact(this, player) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 	}
 
 	/** 掉落一些物品 */
@@ -169,6 +189,15 @@ public abstract class EntityElfBase extends EntityCreature {
 
 	}
 
+	@Override
+	public void onDeath(DamageSource cause) {
+		super.onDeath(cause);
+		// 记录
+		if (cause.getTrueSource() instanceof EntityPlayerMP) {
+			ESCriteriaTriggers.PLAYER_KILLED_ELF.trigger((EntityPlayerMP) cause.getTrueSource(), this, cause);
+		}
+	}
+
 	/** 受到攻击，精灵的反应 */
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
@@ -196,7 +225,7 @@ public abstract class EntityElfBase extends EntityCreature {
 	}
 
 	/** 传送到某处 */
-	protected void teleportTo(Entity entity, BlockPos to) {
+	public void teleportTo(Entity entity, BlockPos to) {
 		if (to == null) return;
 		world.playSound(null, entity.posX, entity.posY, entity.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT,
 				SoundCategory.HOSTILE, 1.0F, 1.0F);
@@ -206,7 +235,7 @@ public abstract class EntityElfBase extends EntityCreature {
 	}
 
 	/** 寻找一个随机的位置进行传送 */
-	protected BlockPos getRandomTeleportPos(int tryTimes, int far, int size, BlockPos originPos) {
+	public BlockPos getRandomTeleportPos(int tryTimes, int far, int size, BlockPos originPos) {
 		for (int t = 0; t < tryTimes; t++) {
 			int x = size - rand.nextInt(size) * 2;
 			x = x < 0 ? (x - far) : (x + far);
@@ -220,57 +249,8 @@ public abstract class EntityElfBase extends EntityCreature {
 		return null;
 	}
 
-	/** 攻击敌人(魔法) */
-	protected boolean attackEntityAsMobMagic(Entity target) {
-		float dis = (float) target.getPositionVector().distanceTo(this.getPositionVector());
-		if (dis <= 5) {
-			BlockPos pos = this.getRandomTeleportPos(4, 6, 4, this.getPosition());
-			if (pos != null) this.teleportTo(target, pos);
-			else {
-				Vec3d v3d = target.getPositionVector().subtract(this.getPositionVector()).normalize();
-				target.motionX = v3d.x * 3.5;
-				target.motionZ = v3d.z * 3.5;
-			}
-		} else {
-			int what = this.rand.nextInt(5);
-			switch (what) {
-			case 0:
-				Entity entity = new EntityLightningBolt(world, target.posX, target.posY, target.posZ, false);
-				world.addWeatherEffect(entity);
-				break;
-			case 1:
-				world.createExplosion(null, target.posX, target.posY, target.posZ, 2, false);
-				break;
-			case 2:
-				BlockPos pos = target.getPosition().up();
-				if (world.getBlockState(pos).getBlock().isReplaceable(world, pos)) {
-					IBlockState state = Blocks.LAVA.getDefaultState().withProperty(BlockLiquid.LEVEL, 15);
-					world.setBlockState(pos, state);
-					world.neighborChanged(pos, state.getBlock(), pos);
-				}
-				break;
-			case 3:
-				this.extinguish();
-				this.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 20 * 10, 1));
-				this.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20 * 10, 2));
-				this.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 20 * 10, 3));
-				this.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 20 * 10));
-				break;
-			case 4:
-				if (target instanceof EntityLivingBase) {
-					EntityLivingBase base = (EntityLivingBase) target;
-					base.addPotionEffect(new PotionEffect(MobEffects.WITHER, 20 * 10, 1));
-					base.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 20 * 10, 1));
-				}
-				break;
-			}
-		}
-		if (target instanceof EntityLivingBase) ((EntityLivingBase) target).setRevengeTarget(this);
-		return true;
-	}
-
 	/** 攻击敌人(普通) */
-	protected boolean attackEntityAsMobDefault(Entity target) {
+	public boolean attackEntityAsMobDefault(Entity target) {
 		float dmg = (float) this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
 		int i = 0;
 		if (target instanceof EntityLivingBase) {
@@ -334,20 +314,21 @@ public abstract class EntityElfBase extends EntityCreature {
 
 	/** 获取设置精灵 职业 */
 	public void setProfession(ElfProfession profession) {
+		if (profession == null) profession = ElfProfession.NONE;
 		if (this.profession == profession) return;
-		this.profession = profession == null ? ElfProfession.NONE : profession;
-		this.profession.initElf(this);
+		ElfProfession origin = this.profession;
+		this.profession = profession;
+		this.profession.initElf(this, origin);
 		if (world.isRemote) return;
-		dataManager.set(PROFESSION_UPDATE, ElfProfessionRegister.instance.getId(this.profession));
+		dataManager.set(PROFESSION_UPDATE, ElfProRegister.instance.getId(this.profession));
 		dataManager.setDirty(PROFESSION_UPDATE);
-
 	}
 
 	@Override
 	public void notifyDataManagerChange(DataParameter<?> key) {
 		super.notifyDataManagerChange(key);
 		if (key.getId() == PROFESSION_UPDATE.getId() && world.isRemote) {
-			this.profession = ElfProfessionRegister.instance.getValue(dataManager.get(PROFESSION_UPDATE));
+			this.profession = ElfProRegister.instance.getValue(dataManager.get(PROFESSION_UPDATE));
 			if (this.profession == null) this.profession = ElfProfession.NONE;
 		}
 	}

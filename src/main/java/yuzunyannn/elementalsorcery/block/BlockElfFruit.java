@@ -40,6 +40,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.world.WorldTime;
@@ -105,6 +106,8 @@ public class BlockElfFruit extends Block implements Mapper {
 					player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, durationIn, 0));
 					break;
 				case 8:
+					if (player instanceof EntityPlayerMP)
+						ESCriteriaTriggers.EAT_ELF_FRUIT.trigger((EntityPlayerMP) player);
 					player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, durationIn, 1));
 					player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, durationIn, 0));
 					break;

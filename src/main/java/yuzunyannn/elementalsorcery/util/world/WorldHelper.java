@@ -43,13 +43,18 @@ public class WorldHelper {
 
 	/** 获取生物正在看的方块 */
 	@Nullable
-	static public RayTraceResult getLookAtBlock(World world, EntityLivingBase entity, float distance) {
+	static public RayTraceResult getLookAtBlock(World world, EntityLivingBase entity, float distance,
+			boolean stopOnLiquid, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
 		Vec3d vstart = entity.getPositionEyes(1.0F);
 		Vec3d vend = entity.getLookVec().scale(distance).add(vstart);
-		RayTraceResult reulst = world.rayTraceBlocks(vstart, vend);
-		if (reulst == null || reulst.typeOfHit != RayTraceResult.Type.BLOCK)
-			return null;
+		RayTraceResult reulst = world.rayTraceBlocks(vstart, vend, stopOnLiquid, ignoreBlockWithoutBoundingBox,
+				returnLastUncollidableBlock);
+		if (reulst == null || reulst.typeOfHit != RayTraceResult.Type.BLOCK) return null;
 		return reulst;
+	}
+
+	static public RayTraceResult getLookAtBlock(World world, EntityLivingBase entity, float distance) {
+		return getLookAtBlock(world, entity, distance, false, false, false);
 	}
 
 	/** 获取生物正在看的实体 */
@@ -73,17 +78,14 @@ public class WorldHelper {
 			vstart = vstart.add(tar);
 			// 如果到方块了，就停下来
 			IBlockState state = world.getBlockState(new BlockPos(vstart.x, vstart.y, vstart.z));
-			if (state.getMaterial().isOpaque())
-				break;
+			if (state.getMaterial().isOpaque()) break;
 			// 判断list
-			if (list.isEmpty())
-				continue;
+			if (list.isEmpty()) continue;
 			hitEntity = list.get(0);
 			if (hitEntity == entity) {
 				hitEntity = null;
 				list.remove(0);
-				if (list.isEmpty())
-					continue;
+				if (list.isEmpty()) continue;
 				break;
 			}
 			break;

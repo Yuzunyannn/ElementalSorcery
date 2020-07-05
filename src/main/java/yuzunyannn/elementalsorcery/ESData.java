@@ -72,7 +72,9 @@ public class ESData {
 				if (file.isDirectory()) {
 					String rPath = "/assets/" + path.getResourceDomain() + "/" + path.getResourcePath();
 					file = new File(file.getAbsolutePath() + rPath);
-					return file.list();
+					List<String> list = new ArrayList<String>();
+					fileRec("", list, file);
+					return list.toArray(new String[list.size()]);
 				} else {
 					String rPath = "assets/" + path.getResourceDomain() + "/";
 					String iPath = path.getResourcePath();
@@ -90,9 +92,8 @@ public class ESData {
 								if (name.isEmpty()) continue;
 								if (name.startsWith(iPath)) {
 									name = name.substring(iPath.length()).trim();
-									if (name.isEmpty()) continue;
-									if (name.equals("/")) continue;
 									if (name.indexOf('/') == 0) name = name.substring(1);
+									if (name.isEmpty()) continue;
 									result.add(name);
 								}
 							}
@@ -105,5 +106,13 @@ public class ESData {
 			}
 		}
 		return new String[0];
+	}
+
+	private static void fileRec(String lastPath, List<String> paths, File root) {
+		File[] files = root.listFiles();
+		for (File file : files) {
+			if (file.isDirectory()) fileRec(lastPath + file.getName() + "/", paths, file);
+			else paths.add(lastPath + file.getName());
+		}
 	}
 }
