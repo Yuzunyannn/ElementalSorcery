@@ -7,6 +7,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ContainerDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
 
+@Deprecated
 public class GuiDeconstructBox extends GuiNormal<ContainerDeconstructBox> {
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,

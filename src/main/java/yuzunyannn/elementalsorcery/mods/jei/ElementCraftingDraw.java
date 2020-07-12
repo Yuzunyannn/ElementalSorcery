@@ -5,8 +5,8 @@ import java.util.List;
 import mezz.jei.api.gui.IDrawable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.container.gui.GuiSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 
 public class ElementCraftingDraw implements IDrawable {

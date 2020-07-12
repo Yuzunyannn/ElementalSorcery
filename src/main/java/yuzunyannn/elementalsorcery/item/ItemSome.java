@@ -57,16 +57,6 @@ public class ItemSome {
 		return newItem("MDBase");
 	}
 
-	/** 魔力水晶 */
-	static public Item newMagicalCrystal() {
-		return newItem("magicalCrystal");
-	}
-
-	/** 咒术水晶 */
-	static public Item newSpellCrystal() {
-		return newItem("spellCrystal");
-	}
-
 	/** 魔法纸张 */
 	static public Item newMagicPaper() {
 		return newItem("magicPaper");

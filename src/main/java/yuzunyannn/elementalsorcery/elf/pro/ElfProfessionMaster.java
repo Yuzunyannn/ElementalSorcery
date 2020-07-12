@@ -15,7 +15,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
@@ -157,17 +156,9 @@ public class ElfProfessionMaster extends ElfProfession {
 						player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_FIREWORK_LARGE_BLAST,
 								SoundCategory.VOICE, 1.0f, 0);
 						player.setGameType(GameType.SURVIVAL);
-						NBTTagList list = new NBTTagList();
-						NBTTagCompound nbt = new NBTTagCompound();
-						nbt.setByte("Type", (byte) 0);
-						nbt.setIntArray("Colors", TileMDBase.PARTICLE_COLOR);
-						nbt.setIntArray("FadeColors", TileMDBase.PARTICLE_COLOR_FADE);
-						nbt.setInteger("Size", 3);
-						nbt.setFloat("Speed", 0.375f);
-						list.appendTag(nbt);
-						nbt = new NBTTagCompound();
-						nbt.setTag("Explosions", list);
-						EntityParticleEffect.spawnParticleEffect(elf.world, player.posX, player.posY + 1, player.posZ,
+						NBTTagCompound nbt = EntityParticleEffect.fastNBT(0, 3, 0.375f, TileMDBase.PARTICLE_COLOR,
+								TileMDBase.PARTICLE_COLOR_FADE);
+						EntityParticleEffect.spawnParticleEffect(elf.world, elf.getPositionVector().addVector(0, 1, 0),
 								nbt);
 					}
 				}

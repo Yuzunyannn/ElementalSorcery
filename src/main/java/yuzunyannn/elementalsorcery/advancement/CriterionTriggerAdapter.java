@@ -96,7 +96,8 @@ public abstract class CriterionTriggerAdapter<T extends ICriterionInstance> impl
 						if (list == null) list = Lists.<ICriterionTrigger.Listener<T>>newArrayList();
 						list.add(listener);
 					}
-				} catch (Exception e) {}
+				} catch (Exception e) {
+				}
 			}
 			if (list != null) {
 				for (ICriterionTrigger.Listener<T> listener1 : list) {

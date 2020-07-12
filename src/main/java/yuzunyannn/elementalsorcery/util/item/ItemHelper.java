@@ -22,4 +22,17 @@ public class ItemHelper {
 	static public void clear(ItemStackHandler inventory) {
 		for (int i = 0; i < inventory.getSlots(); i++) inventory.setStackInSlot(i, ItemStack.EMPTY);
 	}
+
+	/** 将from添加到to中，返回值表示是否有变化 */
+	static public boolean merge(ItemStack to, ItemStack from, int size) {
+		if (to.getCount() >= to.getMaxStackSize() || from.isEmpty() || to.isEmpty()) return false;
+		if (ItemHelper.areItemsEqual(to, from)) {
+			if (size < 0) size = from.getCount();
+			if (size + to.getCount() > to.getMaxStackSize()) size = to.getMaxStackSize() - to.getCount();
+			from.grow(-size);
+			to.setCount(to.getCount() + size);
+			return true;
+		}
+		return false;
+	}
 }

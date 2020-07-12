@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"magic=0": {
+			"model": "elementalsorcery:magic_pot"
+		},
+		"magic=1": {
+			"model": "elementalsorcery:magic_pot"
+		}
+	}
+}

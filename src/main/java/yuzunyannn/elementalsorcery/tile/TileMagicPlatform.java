@@ -4,7 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
+import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 
 public class TileMagicPlatform extends TileEntityNetwork implements IGetItemStack {
 	private ItemStack stack = ItemStack.EMPTY;

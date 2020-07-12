@@ -43,6 +43,16 @@ public class MultiBlock {
 		this.realPos = this.pos.add(this.posOff);
 	}
 
+	public MultiBlock moveTo(BlockPos pos) {
+		this.pos = pos;
+		return this;
+	}
+
+	public MultiBlock setPosOffset(BlockPos posOffset) {
+		this.posOff = posOffset;
+		return this;
+	}
+
 	public boolean check(EnumFacing face) {
 		Building.BuildingBlocks iter = this.altar.getBuildingBlocks().setFace(face);
 		iter.setPosOff(Building.BuildingBlocks.facePos(this.posOff, face).add(this.pos));
@@ -50,15 +60,12 @@ public class MultiBlock {
 			BlockPos pos = iter.getPos();
 			IBlockState should = iter.getState();
 			IBlockState real = world.getBlockState(pos);
-			if (should.equals(real))
-				continue;
+			if (should.equals(real)) continue;
 			else if (should.getBlock() instanceof BlockStairs) {
-				if (should.getBlock() != real.getBlock())
-					return false;
+				if (should.getBlock() != real.getBlock()) return false;
 				real = real.getBlock().getActualState(real, world, pos);
 				BlockStairs.EnumShape shape = real.getValue(BlockStairs.SHAPE);
-				if (shape == BlockStairs.EnumShape.OUTER_LEFT || shape == BlockStairs.EnumShape.OUTER_RIGHT)
-					continue;
+				if (shape == BlockStairs.EnumShape.OUTER_LEFT || shape == BlockStairs.EnumShape.OUTER_RIGHT) continue;
 			}
 			return false;
 		}
@@ -88,8 +95,7 @@ public class MultiBlock {
 
 	// 获取位置
 	public BlockPos getSpecialBlockPos(int index) {
-		if (facing == EnumFacing.NORTH)
-			return realPos.add(specialBlocks.get(index));
+		if (facing == EnumFacing.NORTH) return realPos.add(specialBlocks.get(index));
 		BlockPos pos = specialBlocks.get(index);
 		pos = realPos.add(Building.BuildingBlocks.facePos(pos, facing));
 		return pos;
@@ -113,8 +119,7 @@ public class MultiBlock {
 	// 根据索引获取检测的特殊方块Tile
 	public <T extends TileEntity> T getSpecialTileEntity(int index, Class<T> cls) {
 		TileEntity tile = world.getTileEntity(this.getSpecialBlockPos(index));
-		if (tile.getClass().isAssignableFrom(cls))
-			return (T) tile;
+		if (tile.getClass().isAssignableFrom(cls)) return (T) tile;
 		return null;
 	}
 

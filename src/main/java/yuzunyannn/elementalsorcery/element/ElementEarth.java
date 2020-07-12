@@ -6,7 +6,6 @@ import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.IElementSpell;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 

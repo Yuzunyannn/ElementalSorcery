@@ -12,8 +12,8 @@ import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.INBTSerializable;
-import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public class ElementInventory implements IElementInventory, INBTSerializable<NBTTagCompound> {
 
@@ -35,14 +35,23 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 		this.deserializeNBT(nbt);
 	}
 
+	public ElementInventory(ElementStack[] estacks) {
+		this.estacks = estacks;
+		if (this.estacks == null) this.estacks = new ElementStack[1];
+	}
+
+	public ElementStack[] getEStacksAndClear() {
+		ElementStack[] origin = estacks;
+		this.setSlots(origin.length);
+		return origin;
+	}
+
 	@Override
 	public void setSlots(int slots) {
 		slots = slots <= 0 ? 1 : slots;
 		slots = slots > 64 ? 64 : slots;
 		estacks = new ElementStack[slots];
-		for (int i = 0; i < estacks.length; i++) {
-			estacks[i] = ElementStack.EMPTY.copy();
-		}
+		for (int i = 0; i < estacks.length; i++) estacks[i] = ElementStack.EMPTY.copy();
 	}
 
 	@Override

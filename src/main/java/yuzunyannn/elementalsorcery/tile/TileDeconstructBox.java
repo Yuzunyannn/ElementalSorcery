@@ -14,13 +14,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.api.ability.IAcceptBurnPower;
-import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
-import yuzunyannn.elementalsorcery.api.element.Element;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.api.util.ElementHelper;
+import yuzunyannn.elementalsorcery.api.tile.IAcceptBurnPower;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.element.Element;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.IField;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 @Deprecated
 public class TileDeconstructBox extends TileEntity implements IAcceptBurnPower, IField {

@@ -1,9 +1,11 @@
 package yuzunyannn.elementalsorcery.container;
 
+import java.util.List;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
+import net.minecraft.inventory.IContainerListener;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
@@ -13,10 +15,9 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.ITickTask;
-import yuzunyannn.elementalsorcery.network.ESNetwork;
-import yuzunyannn.elementalsorcery.network.MessageTalkChapter;
+import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 
-public class ContainerElfTalk extends Container {
+public class ContainerElfTalk extends Container implements IContainerNetwork {
 	public EntityElfBase elf;
 	public final EntityPlayer player;
 	public final BlockPos pos;
@@ -64,7 +65,9 @@ public class ContainerElfTalk extends Container {
 		if (chapter == null) return;
 		iter = chapter.createIter();
 		if (player.world.isRemote) return;
-		ESNetwork.instance.sendTo(new MessageTalkChapter(chapter, elf, this), (EntityPlayerMP) player);
+		NBTTagCompound nbt = chapter.serializeNBTToSend();
+		if (elf != null) nbt.setInteger("elfId", elf.getEntityId());
+		this.sendToClient(nbt, player);
 	}
 
 	public int toOrPassIndex(int index, int selectAt) {
@@ -111,6 +114,24 @@ public class ContainerElfTalk extends Container {
 
 	@SideOnly(Side.CLIENT)
 	public void sendToServer(int nowIndex, int select) {
-		ESNetwork.instance.sendToServer(new MessageTalkChapter(nowIndex, select, this));
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setInteger("to", nowIndex);
+		nbt.setInteger("select", select);
+		this.sendToServer(nbt);
+	}
+
+	@Override
+	public void recvData(NBTTagCompound nbt, Side side) {
+		if (side == Side.CLIENT) {
+			if (nbt.hasKey("scenes")) setChapter(new TalkChapter().deserializeNBTFromSend(nbt));
+			if (nbt.hasKey("to")) toOrPassIndex(nbt.getInteger("to"), 0);
+		} else {
+			int ret = toOrPassIndex(nbt.getInteger("to"), nbt.getInteger("select"));
+			if (ret >= 0) {
+				nbt = new NBTTagCompound();
+				nbt.setInteger("to", ret);
+				this.sendToClient(nbt, player);
+			}
+		}
 	}
 }

@@ -6,7 +6,7 @@ import yuzunyannn.elementalsorcery.init.ESInitInstance;
 
 public class ESCreativeTabs extends CreativeTabs {
 
-	public static ESCreativeTabs TAB;
+	public static final ESCreativeTabs TAB = new ESCreativeTabs();
 
 	public ESCreativeTabs() {
 		super("ElementalSorcery");

@@ -7,10 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.ESCreativeTabs;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.ESRegister;
-import yuzunyannn.elementalsorcery.api.element.Element;
-import yuzunyannn.elementalsorcery.api.element.ElementMagic;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.block.BlockCrystalFlower;
 import yuzunyannn.elementalsorcery.block.BlockElementWorkbench;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
 import yuzunyannn.elementalsorcery.block.BlockElfLeaf;
@@ -19,6 +16,9 @@ import yuzunyannn.elementalsorcery.block.BlockElfPlank;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
 import yuzunyannn.elementalsorcery.block.BlockInvalidEnchantmentTable;
 import yuzunyannn.elementalsorcery.block.BlockKyanite;
+import yuzunyannn.elementalsorcery.block.BlockLifeDirt;
+import yuzunyannn.elementalsorcery.block.BlockLifeFlower;
+import yuzunyannn.elementalsorcery.block.BlockMagicPot;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.block.BlockStarSand;
 import yuzunyannn.elementalsorcery.block.BlockStarStone;
@@ -34,6 +34,7 @@ import yuzunyannn.elementalsorcery.block.altar.BlockSupremeCraftingTable;
 import yuzunyannn.elementalsorcery.block.container.BlockAbsorbBox;
 import yuzunyannn.elementalsorcery.block.container.BlockDeconstructBox;
 import yuzunyannn.elementalsorcery.block.container.BlockHearth;
+import yuzunyannn.elementalsorcery.block.container.BlockItemStructureCraftNormal;
 import yuzunyannn.elementalsorcery.block.container.BlockLantern;
 import yuzunyannn.elementalsorcery.block.container.BlockMagicPlatform;
 import yuzunyannn.elementalsorcery.block.container.BlockMeltCauldron;
@@ -50,24 +51,25 @@ import yuzunyannn.elementalsorcery.block.md.BlockMDMagicSolidify;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagiclization;
 import yuzunyannn.elementalsorcery.block.md.BlockMDRubbleRepair;
 import yuzunyannn.elementalsorcery.block.md.BlockMDTransfer;
-import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
-import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementAir;
 import yuzunyannn.elementalsorcery.element.ElementEarth;
 import yuzunyannn.elementalsorcery.element.ElementEnder;
 import yuzunyannn.elementalsorcery.element.ElementFire;
 import yuzunyannn.elementalsorcery.element.ElementKnowledge;
+import yuzunyannn.elementalsorcery.element.ElementMagic;
 import yuzunyannn.elementalsorcery.element.ElementMetal;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.ElementWater;
 import yuzunyannn.elementalsorcery.element.ElementWood;
-import yuzunyannn.elementalsorcery.init.registries.ElementRegister;
 import yuzunyannn.elementalsorcery.item.ItemArchitectureCrystal;
+import yuzunyannn.elementalsorcery.item.ItemCrystal;
 import yuzunyannn.elementalsorcery.item.ItemElementCrystal;
 import yuzunyannn.elementalsorcery.item.ItemItemCrystal;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
+import yuzunyannn.elementalsorcery.item.ItemMagicalCrystal;
 import yuzunyannn.elementalsorcery.item.ItemManual;
-import yuzunyannn.elementalsorcery.item.ItemOrderCrystal;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemRedHandset;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
@@ -82,26 +84,20 @@ import yuzunyannn.elementalsorcery.item.ItemSpellbookLaunch;
 
 public class ESInitInstance {
 
-	public static ESObjects.Items ITEMS = new ESObjects.Items();
-	public static ESObjects.Blocks BLOCKS = new ESObjects.Blocks();
-	public static ESObjects.Elements ELEMENTS = new ESObjects.Elements();
-	public static ESObjects.Village VILLAGE = new ESObjects.Village();
-	public static ESCreativeTabs tab;
+	public static final ESObjects.Items ITEMS = new ESObjects.Items();
+	public static final ESObjects.Blocks BLOCKS = new ESObjects.Blocks();
+	public static final ESObjects.Elements ELEMENTS = new ESObjects.Elements();
+	public static final ESObjects.Village VILLAGE = new ESObjects.Village();
+	public static final ESCreativeTabs tab = ESCreativeTabs.TAB;
 
 	public static final void instance() throws ReflectiveOperationException {
-		// ES注册
-		ESRegister.ELEMENT = ElementRegister.instance;
-		ESRegister.ELEMENT_MAP = ElementMap.instance;
-		ESRegister.RECIPE = RecipeManagement.instance;
 		// 实例句柄集
 		ESObjects.ITEMS = ITEMS;
 		ESObjects.BLOCKS = BLOCKS;
 		ESObjects.ELEMENTS = ELEMENTS;
 		ESObjects.VILLAGE = VILLAGE;
 		// 创造物品栏
-		ESCreativeTabs.TAB = new ESCreativeTabs();
 		ESObjects.CREATIVE_TABS = tab;
-		tab = ESCreativeTabs.TAB;
 		// 初始化虚空元素
 		ELEMENTS.VOID = new Element(Element.rgb(0, 0, 0)).setRegistryName("void").setUnlocalizedName("void");
 		// 初始化魔力元素
@@ -168,6 +164,11 @@ public class ESInitInstance {
 		BLOCKS.MD_ABSORB_BOX = new BlockMDAbsorbBox();
 		BLOCKS.MD_MAGICLIZATION = new BlockMDMagiclization();
 		BLOCKS.MD_DECONSTRUCT_BOX = new BlockMDDeconstructBox();
+		BLOCKS.LIFE_FLOWER = new BlockLifeFlower();
+		BLOCKS.MAGIC_POT = new BlockMagicPot();
+		BLOCKS.LIFE_DIRT = new BlockLifeDirt();
+		BLOCKS.CRYSTAL_FLOWER = new BlockCrystalFlower();
+		BLOCKS.IS_CRAFT_NORMAL = new BlockItemStructureCraftNormal();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -182,11 +183,11 @@ public class ESInitInstance {
 		ITEMS.KYANITE = ItemSome.newKyanite();
 		ITEMS.MAGIC_PIECE = ItemSome.newMagicalPiece();
 		ITEMS.MAGICAL_ENDER_EYE = ItemSome.newMagicalEnderEye();
-		ITEMS.MAGIC_CRYSTAL = ItemSome.newMagicalCrystal();
+		ITEMS.MAGIC_CRYSTAL = new ItemMagicalCrystal();
 		ITEMS.TINY_KNIFE = ItemSome.newTinyKnife();
 		ITEMS.MAGIC_PAPER = ItemSome.newMagicPaper();
 		ITEMS.SPELL_PAPER = ItemSome.newSpellPaper();
-		ITEMS.SPELL_CRYSTAL = ItemSome.newSpellCrystal();
+		ITEMS.SPELL_CRYSTAL = ItemCrystal.newSpellCrystal();
 		ITEMS.MAGIC_STONE = ItemSome.newMagicStone();
 		ITEMS.KYANITE_PICKAXE = new ItemKyaniteTools.ItemKyanitePickaxe();
 		ITEMS.KYANITE_AXE = new ItemKyaniteTools.ItemKyaniteAxe();
@@ -201,10 +202,11 @@ public class ESInitInstance {
 		ITEMS.MANUAL = new ItemManual();
 		ITEMS.MAGIC_RULER = new ItemMagicRuler();
 		ITEMS.ITEM_CRYSTAL = new ItemItemCrystal();
-		ITEMS.ORDER_CRYSTAL = new ItemOrderCrystal();
+		ITEMS.ORDER_CRYSTAL = ItemCrystal.newOrderCrystal();
 		ITEMS.MD_BASE = ItemSome.newMDBase();
 		ITEMS.RITE_MANUAL = new ItemRiteManual();
 		ITEMS.RED_HANDSET = new ItemRedHandset();
+		ITEMS.AZURE_CRYSTAL = ItemCrystal.newAzureCrystal();
 
 		ITEMS.SPELLBOOK = new ItemSpellbook();
 		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture();

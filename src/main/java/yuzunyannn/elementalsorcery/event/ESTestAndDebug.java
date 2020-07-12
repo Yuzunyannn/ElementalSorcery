@@ -23,7 +23,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
@@ -39,15 +38,12 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
-import yuzunyannn.elementalsorcery.tile.TileStela;
-import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.util.IOHelper;
 import yuzunyannn.elementalsorcery.worldgen.VillageESHall.VillageCreationHandler;
 
@@ -62,13 +58,9 @@ public class ESTestAndDebug {
 	@SubscribeEvent
 	public void click(PlayerInteractEvent event) {
 		if (!event.getWorld().isRemote) {
-//			BlockPos pos = event.getPos();
-//			IBlockState state = event.getWorld().getBlockState(pos);
-//			System.out.println(state.getBlockHardness(event.getWorld(), pos));
-//			if (event.getWorld().getBlockState(pos).getBlock() == Blocks.TORCH) {
-//				System.out.println(state.getValue(BlockTorch.FACING));
-//			}
-			return;
+			//BlockPos pos = event.getPos();
+			//IBlockState state = event.getWorld().getBlockState(pos);
+			//System.out.println(state.getLightOpacity());
 		}
 
 		// System.out.println("Server ArcInfo");
@@ -77,6 +69,9 @@ public class ESTestAndDebug {
 		// System.out.println(state);
 		if (event.getEntityPlayer().isSneaking()) {
 			ESTestAndDebug.pos = event.getPos().up();
+		}
+		if (state.getBlock() == ESInitInstance.BLOCKS.LIFE_FLOWER) {
+			event.getWorld().scheduleUpdate(pos, state.getBlock(), 1);
 		}
 
 	}
@@ -101,6 +96,7 @@ public class ESTestAndDebug {
 			list.add(TextFormatting.AQUA + "hardness:" + block.getBlockHardness(state, world, pos));
 		} else {
 			list.add(TextFormatting.AQUA + "type:item");
+			// list.add(TextFormatting.AQUA + stack.getItem().toString());
 		}
 
 	}

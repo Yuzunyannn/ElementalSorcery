@@ -15,7 +15,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import java.util.Arrays;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public class Recipe implements IRecipe {
 

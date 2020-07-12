@@ -4,11 +4,11 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
-import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.element.Element;
 
 public class ESObjects {
 
-	public static Items ITEMS;;
+	public static Items ITEMS;
 	public static Blocks BLOCKS;
 	public static Elements ELEMENTS;
 	public static Village VILLAGE;
@@ -46,6 +46,7 @@ public class ESObjects {
 		public Item MD_BASE;
 		public Item RITE_MANUAL;
 		public Item RED_HANDSET;
+		public Item AZURE_CRYSTAL;
 	}
 
 	static public class Blocks {
@@ -99,6 +100,11 @@ public class ESObjects {
 		public Block MD_ABSORB_BOX;
 		public Block MD_MAGICLIZATION;
 		public Block MD_DECONSTRUCT_BOX;
+		public Block LIFE_FLOWER;
+		public Block MAGIC_POT;
+		public Block LIFE_DIRT;
+		public Block CRYSTAL_FLOWER;
+		public Block IS_CRAFT_NORMAL;
 	}
 
 	static public class Elements {

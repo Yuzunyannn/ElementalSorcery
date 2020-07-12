@@ -24,15 +24,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.api.util.ElementHelper;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyannn.elementalsorcery.render.particle.ParticleSpellbook;
 import yuzunyannn.elementalsorcery.render.particle.ParticleSpellbookSelect;
 import yuzunyannn.elementalsorcery.render.particle.ParticleSpellbookTo;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ItemSpellbook extends Item {
 

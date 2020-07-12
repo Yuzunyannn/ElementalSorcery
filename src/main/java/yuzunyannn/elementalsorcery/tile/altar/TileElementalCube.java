@@ -11,16 +11,16 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.ability.IAltarWake;
-import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.api.util.ElementHelper;
+import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.particle.EffectElementFly;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.obj.Vertex;
 
 public class TileElementalCube extends TileEntityNetwork implements ITickable, IAltarWake {
@@ -33,22 +33,17 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 			for (int a = 0; a < inv_other.getSlots(); a++) {
 				ElementStack other_estack = inv_other.getStackInSlot(a).copy();
 				other_estack.setCount(1);
-				if (other_estack.isEmpty())
-					continue;
+				if (other_estack.isEmpty()) continue;
 				ElementStack extract = inv_other.extractElement(other_estack, true);
 				if (extract.arePowerfulAndMoreThan(other_estack)) {
-					if (inv.insertElement(extract, true)) {
-						return extract.copy();
-					}
+					if (inv.insertElement(extract, true)) { return extract.copy(); }
 				}
 			}
 		} else {
 			// 如果书其他空闲空间，查看是否拥有指定元素
 			ElementStack extract = inv_other.extractElement(need, true);
 			if (extract.arePowerfulAndMoreThan(need)) {
-				if (inv.insertElement(extract, true)) {
-					return extract.copy();
-				}
+				if (inv.insertElement(extract, true)) { return extract.copy(); }
 			}
 		}
 		return ElementStack.EMPTY;
@@ -57,34 +52,16 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	// 获取一次元素动画
 	@SideOnly(Side.CLIENT)
 	public static void giveParticleElementTo(World world, int color, BlockPos from, BlockPos pto, float possibility) {
-		if (EventClient.tick % 3 != 0)
-			return;
-		if (Math.random() > possibility)
-			return;
-		// ParticleElementFly effect;
-		// if (pto.getY() > from.getY())
-		// effect = new ParticleElementFly(world,
-		// new Vec3d(from.getX() + Math.random(), from.getY() + Math.random(),
-		// from.getZ() + Math.random()),
-		// new Vec3d(pto.getX() + 0.5, pto.getY() + 0.5, pto.getZ() + 0.5));
-		// else
-		// effect = new ParticleElementFly(world,
-		// new Vec3d(from.getX() + 0.25 + Math.random() * 0.5, from.getY() +
-		// 0.25 + Math.random() * 0.5,
-		// from.getZ() + 0.25 + Math.random() * 0.5),
-		// new Vec3d(pto.getX() + 0.5, pto.getY() + 1.0, pto.getZ() + 0.5));
-		// effect.setColor(color);
-		// Minecraft.getMinecraft().effectRenderer.addEffect(effect);
+		if (EventClient.tick % 3 != 0) return;
+		if (Math.random() > possibility) return;
 		EffectElementFly effect;
-		if (pto.getY() > from.getY())
-			effect = new EffectElementFly(world,
-					new Vec3d(from.getX() + Math.random(), from.getY() + Math.random(), from.getZ() + Math.random()),
-					new Vec3d(pto.getX() + 0.5, pto.getY() + 0.5, pto.getZ() + 0.5));
-		else
-			effect = new EffectElementFly(world,
-					new Vec3d(from.getX() + 0.25 + Math.random() * 0.5, from.getY() + 0.25 + Math.random() * 0.5,
-							from.getZ() + 0.25 + Math.random() * 0.5),
-					new Vec3d(pto.getX() + 0.5, pto.getY() + 1.0, pto.getZ() + 0.5));
+		if (pto.getY() > from.getY()) effect = new EffectElementFly(world,
+				new Vec3d(from.getX() + Math.random(), from.getY() + Math.random(), from.getZ() + Math.random()),
+				new Vec3d(pto.getX() + 0.5, pto.getY() + 0.5, pto.getZ() + 0.5));
+		else effect = new EffectElementFly(world,
+				new Vec3d(from.getX() + 0.25 + Math.random() * 0.5, from.getY() + 0.25 + Math.random() * 0.5,
+						from.getZ() + 0.25 + Math.random() * 0.5),
+				new Vec3d(pto.getX() + 0.5, pto.getY() + 1.0, pto.getZ() + 0.5));
 		effect.setColor(color);
 		yuzunyannn.elementalsorcery.render.particle.Effect.addEffect(effect);
 
@@ -98,18 +75,14 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	// 拥有能力
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability) {
-			return true;
-		}
+		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability) { return true; }
 		return super.hasCapability(capability, facing);
 	}
 
 	// 获取能力
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability) {
-			return (T) inventory;
-		}
+		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability) { return (T) inventory; }
 		return super.getCapability(capability, facing);
 	}
 
@@ -120,8 +93,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 		storage.readNBT(ElementInventory.ELEMENTINVENTORY_CAPABILITY, inventory, null,
 				compound.getCompoundTag("inventory"));
 		if (this.isSending()) {
-			if (ElementHelper.isEmpty(inventory))
-				this.wake = 0;
+			if (ElementHelper.isEmpty(inventory)) this.wake = 0;
 		}
 	}
 
@@ -135,8 +107,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	// 唤醒
 	@Override
 	public boolean wake(int type) {
-		if (!this.world.isRemote)
-			return true;
+		if (!this.world.isRemote) return true;
 		this.wake = 80;
 		this.markDirty();
 		return true;
@@ -146,8 +117,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	public void setElementInventory(IElementInventory inventory) {
 		this.inventory = inventory;
 		ElementStack estack = inventory.getStackInSlot(0);
-		if (world.isRemote)
-			changeColor();
+		if (world.isRemote) changeColor();
 	}
 
 	// 转移仓库
@@ -166,8 +136,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 
 	@Override
 	public void update() {
-		if (world.isRemote)
-			tick();
+		if (world.isRemote) tick();
 		else {
 
 		}
@@ -185,62 +154,54 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	public float wakeUp = 0.0f;
 	public float rotate = (float) (Math.random() * Math.PI * 2);
 	public Vertex color = ORIGIN_COLOR;
-	public float color_rate = 0.0f;
-	public float detla_cr = 0.01f;
+	public float colorRate = 0.0f;
+	public float detlaCr = 0.01f;
 
 	@SideOnly(Side.CLIENT)
 	public void tick() {
 		if (wake > 0) {
-			if (color == ORIGIN_COLOR) 
-				changeColor();
+			if (color == ORIGIN_COLOR) changeColor();
 			// 站起来的比率
-			if (wakeUp >= 1.0f)
-				wakeUp = 1.0f;
-			else
-				wakeUp += WAKE_UP_RARE;
+			if (wakeUp >= 1.0f) wakeUp = 1.0f;
+			else wakeUp += WAKE_UP_RARE;
 			// 旋转
 			rotate += SOTATE_PRE_TICK;
-			if (rotate >= Math.PI * 2)
-				rotate -= Math.PI * 2;
+			if (rotate >= Math.PI * 2) rotate -= Math.PI * 2;
 			// 颜色转变
-			color_rate += detla_cr;
-			if (color_rate >= 1.0f || color_rate <= 0.0f) {
-				detla_cr = -detla_cr;
-				if (color_rate <= 0.0f)
-					changeColor();
+			colorRate += detlaCr;
+			if (colorRate >= 1.0f || colorRate <= 0.0f) {
+				detlaCr = -detlaCr;
+				if (colorRate <= 0.0f) changeColor();
 			}
 			wake--;
 		} else {
-			if (wakeUp <= 0.0f)
-				wakeUp = 0.0f;
-			else
-				wakeUp -= WAKE_UP_RARE;
+			if (wakeUp <= 0.0f) wakeUp = 0.0f;
+			else wakeUp -= WAKE_UP_RARE;
 		}
-		color_rate *= wakeUp;
+		colorRate *= wakeUp;
 	}
 
 	// 切换颜色
 	@SideOnly(Side.CLIENT)
 	private void changeColor() {
-		if (color == ORIGIN_COLOR)
-			color = new Vertex(ORIGIN_COLOR);
+		if (color == ORIGIN_COLOR) color = new Vertex(ORIGIN_COLOR);
 		ElementStack estack = ItemSpellbook.giveMeRandomElement(inventory);
 		int ecolor = color.toColor();
-		if (!estack.isEmpty())
-			ecolor = estack.getElement().getColor(estack);
+		if (!estack.isEmpty()) ecolor = estack.getElement().getColor(estack);
 		color.toColor(ecolor);
 	}
 
 	@SideOnly(Side.CLIENT)
-	public float getHigh(float rotate, float wake_up) {
+	public float getHigh(float rotate, float wakeUp) {
 		float rate = (float) Math.cos(rotate);
 		rate = rate * rate;
 		float high = (float) ((rate + 1) * (0.70F - BlockElementalCube.BLOCK_HALF_SIZE)) + 0.3F;
-		return high * wake_up + (1 - wake_up) * 0.25f;
+		return high * wakeUp + (1 - wakeUp) * 0.25f;
 	}
 
-	public float getRoate(float rotate, float wake_up) {
-		return rotate * wake_up;
+	@SideOnly(Side.CLIENT)
+	public float getRoate(float rotate, float wakeUp) {
+		return rotate * wakeUp;
 	}
 
 }

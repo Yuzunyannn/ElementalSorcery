@@ -25,7 +25,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.block.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.render.particle.ParticleElementP;
 import yuzunyannn.elementalsorcery.tile.TileStela;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;

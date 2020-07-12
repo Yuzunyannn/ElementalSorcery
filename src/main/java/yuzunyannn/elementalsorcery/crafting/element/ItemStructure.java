@@ -3,10 +3,10 @@ package yuzunyannn.elementalsorcery.crafting.element;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import yuzunyannn.elementalsorcery.api.ability.IItemStructure;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.api.util.ElementHelper;
+import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemStructure implements IItemStructure {
@@ -45,6 +45,11 @@ public class ItemStructure implements IItemStructure {
 	}
 
 	@Override
+	public void add(ItemStack stack, int complex, ElementStack... estacks) {
+		this.set(0, stack, complex, estacks);
+	}
+
+	@Override
 	public boolean hasState(ItemStack stack) {
 		NBTTagCompound nbt = stack.getSubCompound("istru");
 		if (nbt == null) return false;
@@ -68,8 +73,7 @@ public class ItemStructure implements IItemStructure {
 		}
 		NBTTagList list = nbt.getTagList("els", 10);
 		estacks = new ElementStack[list.tagCount()];
-		for (int i = 0; i < estacks.length; i++)
-			estacks[i] = new ElementStack(list.getCompoundTagAt(i));
+		for (int i = 0; i < estacks.length; i++) estacks[i] = new ElementStack(list.getCompoundTagAt(i));
 		this.complex = nbt.getInteger("complex");
 		if (this.complex <= 0) this.complex = ElementHelper.getComplexFromElements(this.stack, this.estacks);
 	}
@@ -105,7 +109,17 @@ public class ItemStructure implements IItemStructure {
 	}
 
 	@Override
+	public int getItemMaxCount() {
+		return 1;
+	}
+
+	@Override
 	public ItemStack getStructureItem(int index) {
 		return stack;
+	}
+
+	@Override
+	public boolean hasItem(ItemStack stack) {
+		return ItemHelper.areItemsEqual(this.stack, stack);
 	}
 }

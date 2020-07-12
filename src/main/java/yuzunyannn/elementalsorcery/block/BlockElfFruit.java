@@ -35,7 +35,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -238,7 +237,6 @@ public class BlockElfFruit extends Block implements Mapper {
 	protected void falling(World world, BlockPos pos, IBlockState state, boolean force) {
 		if (world.isRemote) return;
 		if (world.isAirBlock(pos.down()) && (force || !world.isBlockFullCube(pos.up()))) {
-			Vec3d v3 = state.getOffset(world, pos);
 			EntityFallingBlock falling = new EntityFallingBlock(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
 					state);
 			world.spawnEntity(falling);

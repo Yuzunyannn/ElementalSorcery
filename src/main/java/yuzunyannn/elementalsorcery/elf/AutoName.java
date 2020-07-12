@@ -110,7 +110,7 @@ public class AutoName implements IJsonSerializable {
 			FileInputStream inputStream = null;
 			try {
 				inputStream = new FileInputStream(file);
-				JsonObject jobj = gson.fromJson(new InputStreamReader(inputStream), JsonObject.class);
+				JsonObject jobj = gson.fromJson(new InputStreamReader(inputStream, "utf-8"), JsonObject.class);
 				register(new AutoName(jobj));
 			} catch (Exception e) {
 				ElementalSorcery.logger.warn("读取自动名称出现异常！", e);
@@ -175,7 +175,8 @@ public class AutoName implements IJsonSerializable {
 		try {
 			out = new FileOutputStream(file);
 			out.write(autoName.getSerializableElement().toString().getBytes("utf-8"));
-		} catch (Exception e) {} finally {
+		} catch (Exception e) {
+		} finally {
 			IOHelper.closeQuietly(out);
 		}
 	}

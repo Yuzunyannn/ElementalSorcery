@@ -9,10 +9,8 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -29,7 +27,7 @@ import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
-public class ItemArchitectureCrystal extends Item {
+public class ItemArchitectureCrystal extends ItemCrystal {
 
 	public ItemArchitectureCrystal() {
 		this.setUnlocalizedName("architectureCrystal");
@@ -43,9 +41,7 @@ public class ItemArchitectureCrystal extends Item {
 			tooltip.add(TextFormatting.YELLOW + I18n.format("info.arcCrystal.miss"));
 			return;
 		}
-		if (!info.isValid()) {
-			return;
-		}
+		if (!info.isValid()) { return; }
 		tooltip.add(TextFormatting.GOLD + I18n.format("info.arcCrystal.choice"));
 		tooltip.add(I18n.format("info.arcCrystal.axis", info.pos.getX(), info.pos.getY(), info.pos.getZ()));
 		tooltip.add(I18n.format("info.arcCrystal.face", info.facing.getName()));
@@ -54,8 +50,7 @@ public class ItemArchitectureCrystal extends Item {
 			return;
 		}
 		String author = info.building.getAuthor();
-		if (!author.isEmpty())
-			tooltip.add(I18n.format("info.arcCrystal.author", author));
+		if (!author.isEmpty()) tooltip.add(I18n.format("info.arcCrystal.author", author));
 		tooltip.add(I18n.format("info.arcCrystal.name", info.building.getName()));
 		List<Building.BlockItemTypeInfo> list = info.building.getBlockTypeInfos();
 		for (Building.BlockItemTypeInfo tinfo : list) {
@@ -68,8 +63,7 @@ public class ItemArchitectureCrystal extends Item {
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (!player.isSneaking())
-			return EnumActionResult.PASS;
+		if (!player.isSneaking()) return EnumActionResult.PASS;
 		ItemStack stack = player.getHeldItem(hand);
 		NBTTagCompound nbt = stack.getSubCompound("building");
 		if (nbt == null) {
@@ -90,8 +84,7 @@ public class ItemArchitectureCrystal extends Item {
 
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		if (!this.isInCreativeTab(tab))
-			return;
+		if (!this.isInCreativeTab(tab)) return;
 
 		items.add(new ItemStack(this, 1, 0));
 		ItemStack stack;

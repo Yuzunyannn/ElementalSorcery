@@ -17,8 +17,9 @@ public class Buildings {
 	static public Building DECONSTRUCT_ALTAR;
 	static public Building BUILING_ALTAR;
 	static public Building ANALYSIS_ALTAR;
+	static public Building ANALYSIS_ALTAR_ADD;
 	static public Building CRYSTAL_GARDEN;
-	
+
 	static public void init() {
 		INFUSION = BuildingLib.instance.getBuilding("infusion");
 		ABSORB_BOX = BuildingLib.instance.getBuilding("absorb_box");
@@ -29,6 +30,7 @@ public class Buildings {
 		DECONSTRUCT_ALTAR = BuildingLib.instance.getBuilding("deconstruct_altar");
 		BUILING_ALTAR = BuildingLib.instance.getBuilding("builing_altar");
 		ANALYSIS_ALTAR = BuildingLib.instance.getBuilding("analysis_altar");
+		ANALYSIS_ALTAR_ADD = BuildingLib.instance.getBuilding("analysis_altar_add");
 		CRYSTAL_GARDEN = BuildingLib.instance.getBuilding("crystal_garden");
 	}
 

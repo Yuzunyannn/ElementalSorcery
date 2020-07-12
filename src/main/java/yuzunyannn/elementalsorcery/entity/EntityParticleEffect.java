@@ -14,16 +14,36 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.event.EventServer;
-import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.render.particle.FirwrokShap;
 
 public class EntityParticleEffect extends Entity implements IEntityAdditionalSpawnData {
+
+	static public NBTTagCompound fastNBT(int type, int size, float speed, int color, int colorFade) {
+		return fastNBT(type, size, speed, new int[] { color }, new int[] { colorFade });
+	}
+
+	static public NBTTagCompound fastNBT(int type, int size, float speed, int[] color, int[] colorFade) {
+		NBTTagList list = new NBTTagList();
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setByte("Type", (byte) type);
+		nbt.setIntArray("Colors", color);
+		nbt.setIntArray("FadeColors", colorFade);
+		nbt.setInteger("Size", size);
+		nbt.setFloat("Speed", speed);
+		list.appendTag(nbt);
+		nbt = new NBTTagCompound();
+		nbt.setTag("Explosions", list);
+		return nbt;
+	}
 
 	static public void spawnParticleEffect(World worldIn, double x, double y, double z, NBTTagCompound nbt) {
 		EntityParticleEffect effect = new EntityParticleEffect(worldIn, x, y, z, nbt);
 		effect.world.spawnEntity(effect);
 		effect.setDead();
+	}
+
+	static public void spawnParticleEffect(World worldIn, Vec3d v3d, NBTTagCompound nbt) {
+		spawnParticleEffect(worldIn, v3d.x, v3d.y, v3d.z, nbt);
 	}
 
 	ItemStack stack = ItemStack.EMPTY;

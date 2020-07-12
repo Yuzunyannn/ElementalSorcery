@@ -20,11 +20,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.api.ability.IGetItemStack;
-import yuzunyannn.elementalsorcery.api.ability.IItemStructure;
+import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
-import yuzunyannn.elementalsorcery.api.element.Element;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
@@ -36,6 +34,8 @@ import yuzunyannn.elementalsorcery.crafting.altar.CraftingCrafting;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingDeconstruct;
 import yuzunyannn.elementalsorcery.crafting.altar.ICraftingAltar;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
+import yuzunyannn.elementalsorcery.element.Element;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.render.model.ModelSupremeCraftingTable;
@@ -51,8 +51,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			if (facing == null)
-				return true;
+			if (facing == null) return true;
 		}
 		return super.hasCapability(capability, facing);
 	}
@@ -60,16 +59,14 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			if (facing == null)
-				return (T) inventory;
+			if (facing == null) return (T) inventory;
 		}
 		return super.getCapability(capability, facing);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		if (compound.hasKey("inventory"))
-			inventory.deserializeNBT(compound.getCompoundTag("inventory"));
+		if (compound.hasKey("inventory")) inventory.deserializeNBT(compound.getCompoundTag("inventory"));
 		super.readFromNBT(compound);
 	}
 
@@ -103,12 +100,9 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 	@Override
 	public void update() {
 		checkTime++;
-		if (checkTime % 40 == 0)
-			this.checkIntact();
-		if (this.world.isRemote)
-			this.clientRender();
-		if (!this.ok)
-			return;
+		if (checkTime % 40 == 0) this.checkIntact(structure);
+		if (this.world.isRemote) this.clientRender();
+		if (!this.ok) return;
 	}
 
 	@Override
@@ -130,13 +124,10 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 
 	@Override
 	public boolean canCrafting(String type, EntityLivingBase player) {
-		if (!this.isIntact())
-			return false;
+		if (!this.isIntact()) return false;
 		nowType = this.onCraftMatrixChanged();
-		if (nowType == null)
-			return false;
-		if (!nowType.equals(type))
-			return false;
+		if (nowType == null) return false;
+		if (!nowType.equals(type)) return false;
 		return true;
 	}
 
@@ -190,8 +181,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 
 	@Override
 	public void craftingUpdate(ICraftingCommit commit) {
-		if (startTime.tick())
-			return;
+		if (startTime.tick()) return;
 		try {
 			((ICraftingAltar) commit).update(this);
 		} catch (Exception e) {
@@ -213,8 +203,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 	public int craftingEnd(ICraftingCommit commit) {
 		isWorking = false;
 		this.markDirty();
-		if (!((ICraftingAltar) commit).end(this))
-			return ICraftingLaunch.FAIL;
+		if (!((ICraftingAltar) commit).end(this)) return ICraftingLaunch.FAIL;
 		return ICraftingLaunch.SUCCESS;
 	}
 
@@ -260,19 +249,23 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 						return ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT;
 					}
 				}
-			} // 是否和构成
+			} // 是否为构成
 			else if (this.checkJustCorner()) {
 				int count = this.getOrderCrtstalGroupCount();
 				if (count > 0) {
 					IItemStructure structure = ItemStructure.getItemStructure(platformItem);
-					ElementStack[] estacks = structure.toElement(structure.getStructureItem(0));
-					outEStacks = new ArrayList<ElementStack>(estacks.length);
-					for (ElementStack estack : estacks) {
-						estack = estack.copy();
-						estack.setCount(count * estack.getCount());
-						outEStacks.add(estack);
+					if (!structure.isEmpty()) {
+						ElementStack[] estacks = structure.toElement(structure.getStructureItem(0));
+						if (estacks != null) {
+							outEStacks = new ArrayList<ElementStack>(estacks.length);
+							for (ElementStack estack : estacks) {
+								estack = estack.copy();
+								estack.setCount(count * estack.getCount());
+								outEStacks.add(estack);
+							}
+							return ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT;
+						}
 					}
-					return ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT;
 				}
 			}
 		}
@@ -284,49 +277,35 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 		ItemStack stack = this.getStackInSlot(0);
 		if (stack.getItem() == ESInitInstance.ITEMS.ORDER_CRYSTAL) {
 			min = Math.min(min, stack.getCount());
-		} else
-			return 0;
+		} else return 0;
 		stack = this.getStackInSlot(2);
 		if (stack.getItem() == ESInitInstance.ITEMS.ORDER_CRYSTAL) {
 			min = Math.min(min, stack.getCount());
-		} else
-			return 0;
+		} else return 0;
 		stack = this.getStackInSlot(6);
 		if (stack.getItem() == ESInitInstance.ITEMS.ORDER_CRYSTAL) {
 			min = Math.min(min, stack.getCount());
-		} else
-			return 0;
+		} else return 0;
 		stack = this.getStackInSlot(8);
 		if (stack.getItem() == ESInitInstance.ITEMS.ORDER_CRYSTAL) {
 			min = Math.min(min, stack.getCount());
-		} else
-			return 0;
+		} else return 0;
 		return min;
 	}
 
 	// 检测是否只有3*3中四角有东西
 	private boolean checkJustCorner() {
-		if (!this.getStackInSlot(1).isEmpty())
-			return false;
-		for (int i = 3; i < 6; i++)
-			if (!this.getStackInSlot(i).isEmpty())
-				return false;
-		if (!this.getStackInSlot(7).isEmpty())
-			return false;
-		for (int i = 9; i < this.getSizeInventory(); i++)
-			if (!this.getStackInSlot(i).isEmpty())
-				return false;
+		if (!this.getStackInSlot(1).isEmpty()) return false;
+		for (int i = 3; i < 6; i++) if (!this.getStackInSlot(i).isEmpty()) return false;
+		if (!this.getStackInSlot(7).isEmpty()) return false;
+		for (int i = 9; i < this.getSizeInventory(); i++) if (!this.getStackInSlot(i).isEmpty()) return false;
 		return true;
 	}
 
 	// 检测是否只用中心有东西
 	private boolean checkJustCenter() {
-		for (int i = 0; i < 4; i++)
-			if (!this.getStackInSlot(i).isEmpty())
-				return false;
-		for (int i = 5; i < this.getSizeInventory(); i++)
-			if (!this.getStackInSlot(i).isEmpty())
-				return false;
+		for (int i = 0; i < 4; i++) if (!this.getStackInSlot(i).isEmpty()) return false;
+		for (int i = 5; i < this.getSizeInventory(); i++) if (!this.getStackInSlot(i).isEmpty()) return false;
 		return true;
 	}
 
@@ -344,17 +323,14 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 
 	public ItemStack getPlatformItem() {
 		IGetItemStack getItem = this.getPlatform();
-		if (getItem != null)
-			return getItem.getStack();
+		if (getItem != null) return getItem.getStack();
 		return ItemStack.EMPTY;
 	}
 
 	public IGetItemStack getPlatform() {
 		BlockPos pos = this.pos.down(3);
 		TileEntity tile = this.world.getTileEntity(pos);
-		if (tile instanceof IGetItemStack) {
-			return ((IGetItemStack) tile);
-		}
+		if (tile instanceof IGetItemStack) { return ((IGetItemStack) tile); }
 		return null;
 	}
 
@@ -374,8 +350,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 		EntityPlayer entityplayer = this.world.getClosestPlayer((double) ((float) this.pos.getX() + 0.5F),
 				(double) ((float) this.pos.getY() + 0.5F), (double) ((float) this.pos.getZ() + 0.5F), 4.0D, false);
 		if ((entityplayer != null && this.ok) || this.isWorking) {
-			if (legR < LEG_MAX)
-				legR += LEG_RATE;
+			if (legR < LEG_MAX) legR += LEG_RATE;
 			roate += ROATE_RATE;
 			this.clientParticle();
 		} else {
@@ -383,8 +358,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 				this.clientParticle();
 				roate += ROATE_RATE;
 				if (roate < 180) {
-					if (legR < LEG_MAX)
-						legR += LEG_RATE;
+					if (legR < LEG_MAX) legR += LEG_RATE;
 				} else {
 					if (roate % 360 > 360 - LEG_MAX / LEG_RATE * ROATE_RATE || legR < LEG_MAX) {
 						legR -= LEG_RATE;
@@ -400,8 +374,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 
 	@SideOnly(Side.CLIENT)
 	private void clientParticle() {
-		if (EventClient.tick % 10 != 0)
-			return;
+		if (EventClient.tick % 10 != 0) return;
 		float randRoate = EventClient.rand.nextFloat() * 2 * 3.1415926f;
 		float r = EventClient.rand.nextFloat() * 0.35f;
 		float x = this.pos.getX() + 0.5f + r * MathHelper.sin(randRoate);

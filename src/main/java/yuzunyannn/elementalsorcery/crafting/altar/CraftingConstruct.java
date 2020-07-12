@@ -8,9 +8,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.ability.IItemStructure;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderConstruct;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
@@ -22,16 +22,16 @@ public class CraftingConstruct implements ICraftingAltar {
 	protected boolean ok = false;
 
 	public CraftingConstruct(NBTTagCompound nbt) {
-		if (nbt == null)
-			return;
+		if (nbt == null) return;
 		this.deserializeNBT(nbt);
 	}
 
 	public CraftingConstruct(TileStaticMultiBlock tileMul, int cout, IItemStructure structure) {
-		if (cout <= 0)
-			return;
+		if (cout <= 0) return;
+		// 设置默认物品
 		itemList.add(structure.getStructureItem(0).copy());
 		itemList.get(0).setCount(cout);
+		// 获取处理所需元素
 		ElementStack[] estacks = structure.toElement(itemList.get(0));
 		if (estacks != null && estacks.length > 0) {
 			needEStacks = new LinkedList<ElementStack>();
@@ -52,20 +52,16 @@ public class CraftingConstruct implements ICraftingAltar {
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		if (needEStacks != null)
-			NBTHelper.setElementist(nbt, "estacks", needEStacks);
-		if (itemList.size() > 0)
-			nbt.setTag("target", itemList.get(0).serializeNBT());
+		if (needEStacks != null) NBTHelper.setElementist(nbt, "estacks", needEStacks);
+		if (itemList.size() > 0) nbt.setTag("target", itemList.get(0).serializeNBT());
 		nbt.setBoolean("ok", ok);
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
-		if (nbt.hasKey("estacks"))
-			needEStacks = NBTHelper.getElementList(nbt, "estacks");
-		if (needEStacks != null && needEStacks.isEmpty())
-			needEStacks = null;
+		if (nbt.hasKey("estacks")) needEStacks = NBTHelper.getElementList(nbt, "estacks");
+		if (needEStacks != null && needEStacks.isEmpty()) needEStacks = null;
 		this.ok = nbt.getBoolean("ok");
 		itemList.clear();
 		itemList.add(new ItemStack(nbt.getCompoundTag("target")));
@@ -73,8 +69,7 @@ public class CraftingConstruct implements ICraftingAltar {
 
 	@Override
 	public void update(TileStaticMultiBlock tileMul) {
-		if (needEStacks == null)
-			return;
+		if (needEStacks == null) return;
 		// 取元素
 		int index = tileMul.getWorld().rand.nextInt(needEStacks.size());
 		ElementStack need = needEStacks.get(index).splitStack(1);
@@ -100,8 +95,7 @@ public class CraftingConstruct implements ICraftingAltar {
 
 	@Override
 	public boolean end(TileStaticMultiBlock tileMul) {
-		if (ok == false)
-			itemList.clear();
+		if (ok == false) itemList.clear();
 		return ok;
 	}
 

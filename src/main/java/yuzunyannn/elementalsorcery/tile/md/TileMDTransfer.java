@@ -2,8 +2,8 @@ package yuzunyannn.elementalsorcery.tile.md;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import yuzunyannn.elementalsorcery.api.ability.IAcceptMagic;
-import yuzunyannn.elementalsorcery.api.ability.IAcceptMagicPesky;
+import yuzunyannn.elementalsorcery.api.tile.IAcceptMagic;
+import yuzunyannn.elementalsorcery.api.tile.IAcceptMagicPesky;
 
 public class TileMDTransfer extends TileMDBase implements ITickable {
 

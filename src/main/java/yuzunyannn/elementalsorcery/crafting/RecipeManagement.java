@@ -8,17 +8,17 @@ import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.ESRegister;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.register.IRecipeManagement;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 
-public class RecipeManagement implements ESRegister.IRecipeManagement {
+public class RecipeManagement implements IRecipeManagement {
 
-	static public RecipeManagement instance = new RecipeManagement();
+	static final public RecipeManagement instance = new RecipeManagement();
 
 	private List<IRecipe> allRecipe = new ArrayList<IRecipe>();
 

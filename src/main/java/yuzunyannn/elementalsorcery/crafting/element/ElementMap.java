@@ -20,24 +20,23 @@ import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.ESRegister.IElementMap;
-import yuzunyannn.elementalsorcery.api.element.Element;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.api.element.IToElement;
-import yuzunyannn.elementalsorcery.api.util.ElementHelper;
+import yuzunyannn.elementalsorcery.api.crafting.IToElement;
+import yuzunyannn.elementalsorcery.api.register.IElementMap;
+import yuzunyannn.elementalsorcery.element.Element;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.JsonHelper;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ElementMap implements IElementMap {
 
-	public static ElementMap instance = new ElementMap();
+	public final static ElementMap instance = new ElementMap();
 
-	private DefaultToElement toElementMap = new DefaultToElement();
-	private List<IToElement> toList = new LinkedList<IToElement>();
+	public final static DefaultToElement defaultToElementMap = new DefaultToElement();
+
+	private final List<IToElement> toList = new LinkedList<IToElement>();
 
 	public ElementMap() {
-		this.add(toElementMap);
-		this.add(new DefaultBucketToElement());
 	}
 
 	@Override
@@ -131,14 +130,15 @@ public class ElementMap implements IElementMap {
 	public void add(ItemStack stack, int complex, ElementStack... estacks) {
 		if (stack.isEmpty()) return;
 		this.check(estacks);
-		toElementMap.stackToElementMap.add(new DefaultToElement.ElementInfo(stack, estacks, complex));
+		defaultToElementMap.stackToElementMap.add(new DefaultToElement.ElementInfo(stack, estacks, complex));
 	}
 
 	@Override
 	public void add(Item item, int complex, ElementStack... estacks) {
 		if (item == null) return;
 		this.check(estacks);
-		toElementMap.itemToElementMap.put(item, new DefaultToElement.ElementInfo(ItemStack.EMPTY, estacks, complex));
+		defaultToElementMap.itemToElementMap.put(item,
+				new DefaultToElement.ElementInfo(ItemStack.EMPTY, estacks, complex));
 	}
 
 	@Override
@@ -249,6 +249,9 @@ public class ElementMap implements IElementMap {
 	}
 
 	static public void registerAll() throws IOException {
+		instance.add(defaultToElementMap);
+		instance.add(new DefaultBucketToElement());
+
 		final ESObjects.Elements E = ESInitInstance.ELEMENTS;
 		final ESData data = ElementalSorcery.data;
 		final String MODID = ElementalSorcery.MODID;
@@ -273,11 +276,18 @@ public class ElementMap implements IElementMap {
 						List<JsonHelper.ItemRecord> items = JsonHelper.readItems(jobj.get("item"));
 						if (estacks.isEmpty()) continue;
 						if (items.isEmpty()) continue;
+						// 复杂度
+						int complex = -1;
+						if (JsonHelper.isNumber(jobj, "complex")) complex = Math.max(-1, jobj.getAsInt());
 						ElementStack[] es = estacks.toArray(new ElementStack[estacks.size()]);
 						for (JsonHelper.ItemRecord ir : items) {
-							if (ir.isJustItem()) instance.add(ir.getItem(), es);
-							else instance.add(ir.getStack(), es);
-							// ElementalSorcery.logger.info("注册:" + ir + "具有元素：" + estacks);
+							if (complex > -1) {
+								if (ir.isJustItem()) instance.add(ir.getItem(), complex, es);
+								else instance.add(ir.getStack(), complex, es);
+							} else {
+								if (ir.isJustItem()) instance.add(ir.getItem(), es);
+								else instance.add(ir.getStack(), es);
+							}
 						}
 					} catch (JsonParseException e) {
 						if (e.getMessage().startsWith(JsonHelper.ERROR_CODE_OTHER_MOD))

@@ -10,6 +10,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
 
+@Deprecated
 public class ContainerDeconstructBox extends ContainerNormal<TileDeconstructBox> {
 
 	public ContainerDeconstructBox(EntityPlayer player, TileEntity tileEntity) {

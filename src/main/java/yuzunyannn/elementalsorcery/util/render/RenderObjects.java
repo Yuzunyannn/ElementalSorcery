@@ -12,6 +12,9 @@ public class RenderObjects {
 
 	static final public ItemStack MAGIC_STONE = new ItemStack(ESInitInstance.ITEMS.MAGIC_STONE);
 
+	static final public ResourceLocation CRAFTING_TABLE = new ResourceLocation("minecraft",
+			"textures/gui/container/crafting_table.png");
+	
 	static final public ResourceLocation KYANITE_BLOCK = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/blocks/kyanite_block.png");
 	static final public ResourceLocation KYANITE_ORE = new ResourceLocation(ElementalSorcery.MODID,

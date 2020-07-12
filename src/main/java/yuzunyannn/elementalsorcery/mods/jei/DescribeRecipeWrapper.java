@@ -9,7 +9,6 @@ import mezz.jei.api.recipe.IRecipeWrapper;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class DescribeRecipeWrapper implements IRecipeWrapper {
 
@@ -56,11 +55,12 @@ public class DescribeRecipeWrapper implements IRecipeWrapper {
 			return Arrays.asList(stacks);
 		}
 
-		public static List<ItemStack> asList(IForgeRegistryEntry.Impl<?>... items) {
+		public static List<ItemStack> asList(Object... items) {
 			List<ItemStack> list = new ArrayList<ItemStack>();
-			for (IForgeRegistryEntry.Impl<?> i : items) {
+			for (Object i : items) {
 				if (i instanceof Item) list.add(new ItemStack((Item) i));
 				else if (i instanceof Block) list.add(new ItemStack((Block) i));
+				else if (i instanceof ItemStack) list.add((ItemStack) i);
 			}
 			return list;
 		}

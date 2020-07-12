@@ -44,9 +44,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.ESRegister;
-import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
-import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
 import yuzunyannn.elementalsorcery.block.BlockElfLeaf;
 import yuzunyannn.elementalsorcery.block.container.BlockHearth;
@@ -55,16 +53,12 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.elf.AutoName;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProRegister;
 import yuzunyannn.elementalsorcery.event.ESTestAndDebug;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
-import yuzunyannn.elementalsorcery.init.registries.ESCraftingRegistries;
-import yuzunyannn.elementalsorcery.init.registries.EntityRegistries;
-import yuzunyannn.elementalsorcery.init.registries.OreDictionaryRegistries;
-import yuzunyannn.elementalsorcery.init.registries.TileItemRenderRegistries;
-import yuzunyannn.elementalsorcery.init.registries.VillegeRegistries;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
@@ -72,6 +66,7 @@ import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileAnalysisAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileBuildingAltar;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileCrystalFlower;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementalCube;
@@ -94,9 +89,12 @@ import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagiclization;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDTransfer;
 import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
+import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
+import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftNormal;
 import yuzunyannn.elementalsorcery.tile.TileLantern;
+import yuzunyannn.elementalsorcery.tile.TileLifeDirt;
 import yuzunyannn.elementalsorcery.tile.TileMagicPlatform;
 import yuzunyannn.elementalsorcery.tile.TileMeltCauldron;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
@@ -252,6 +250,9 @@ public class ESInit {
 		register(TileMDAbsorbBox.class, "MDAbsorbBox");
 		register(TileMDMagiclization.class, "MDMagiclization");
 		register(TileMDDeconstructBox.class, "MDDeconstructBox");
+		register(TileLifeDirt.class, "LifeDirt");
+		register(TileCrystalFlower.class, "CrystalFlower");
+		register(TileItemStructureCraftNormal.class, "ISCraftNormal");
 	}
 
 	static void registerAllElements() {
@@ -306,6 +307,7 @@ public class ESInit {
 		registerRender(ITEMS.MD_BASE, new RenderTileMDBase());
 		registerRender(ITEMS.RITE_MANUAL);
 		registerRender(ITEMS.RED_HANDSET);
+		registerRender(ITEMS.AZURE_CRYSTAL);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -348,8 +350,15 @@ public class ESInit {
 		registerRender(BLOCKS.ELF_FRUIT, BlockElfFruit.MAX_STATE);
 		registerRender(BLOCKS.ELF_PLANK, 0);
 		registerRender(BLOCKS.ELF_PLANK, 1, "elf_plank_dark");
+		registerRender(BLOCKS.LIFE_FLOWER);
+		registerRender(BLOCKS.MAGIC_POT);
+		registerRender(BLOCKS.LIFE_DIRT);
+		registerRender(BLOCKS.CRYSTAL_FLOWER);
+		registerRender(BLOCKS.IS_CRAFT_NORMAL);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
+		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());
+
 		registerRender(BLOCKS.ELEMENTAL_CUBE, TileElementalCube.class, new RenderTileElementalCube());
 		registerRender(BLOCKS.MAGIC_DESK, TileMagicDesk.class, new RenderTileMagicDesk());
 		registerRender(BLOCKS.ELEMENT_CRAFTING_TABLE, TileElementCraftingTable.class,
@@ -403,7 +412,7 @@ public class ESInit {
 	}
 
 	private static void register(Element element) {
-		ESRegister.ELEMENT.register(element);
+		ElementRegister.instance.register(element);
 	}
 
 	private static void register(Item item) {

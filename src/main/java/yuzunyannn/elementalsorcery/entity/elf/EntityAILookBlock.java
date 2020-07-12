@@ -83,9 +83,9 @@ public class EntityAILookBlock extends EntityAIBase {
 		BlockPos origin = entity.getPosition();
 		int width = 2;
 		for (int t = 0; t < tryTimes; t++) {
-			int x = (int) (width * 0.5f - entity.getRNG().nextFloat() * width);
-			int z = (int) (width * 0.5f - entity.getRNG().nextFloat() * width);
-			int y = (int) (height - entity.getRNG().nextFloat() * height * 2);
+			int x = Math.round((width * 0.5f - entity.getRNG().nextFloat() * width));
+			int z = Math.round((width * 0.5f - entity.getRNG().nextFloat() * width));
+			int y = Math.round((height - entity.getRNG().nextFloat() * height * 2));
 			BlockPos pos = origin.add(x, y, z);
 			IBlockState state = entity.world.getBlockState(pos);
 			if (this.watch.wath(entity.world, pos, state)) return pos;

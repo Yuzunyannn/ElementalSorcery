@@ -7,9 +7,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.util.obj.Model;
@@ -40,9 +40,9 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 		TEXTURE.bind();
 		MODEL.render();
 
-		GlStateManager.color(tile.color.x * tile.color_rate + (1.0F - tile.color_rate) * tile.ORIGIN_COLOR.x,
-				tile.color.y * tile.color_rate + (1.0F - tile.color_rate) * tile.ORIGIN_COLOR.y,
-				tile.color.z * tile.color_rate + (1.0F - tile.color_rate) * tile.ORIGIN_COLOR.z);
+		GlStateManager.color(tile.color.x * tile.colorRate + (1.0F - tile.colorRate) * tile.ORIGIN_COLOR.x,
+				tile.color.y * tile.colorRate + (1.0F - tile.colorRate) * tile.ORIGIN_COLOR.y,
+				tile.color.z * tile.colorRate + (1.0F - tile.colorRate) * tile.ORIGIN_COLOR.z);
 		TEXTURE_OVER.bind();
 		MODEL.render();
 		RenderHelper.endRender();

@@ -13,7 +13,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
-import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageSpellbook;
 import yuzunyannn.elementalsorcery.network.MessageSyncItemStack;

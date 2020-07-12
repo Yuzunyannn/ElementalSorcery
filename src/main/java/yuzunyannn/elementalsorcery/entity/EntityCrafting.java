@@ -53,17 +53,14 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		this.motionZ = 0;
 		this.player = player;
 		if (!world.isRemote) {
-			if (pos == null)
-				return;
+			if (pos == null) return;
 			this.type = type;
 			this.pos = pos;
 			this.crafting = (ICraftingLaunch) world.getTileEntity(this.pos);
 			this.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 			this.commit = this.crafting.craftingBegin(type, player);
-			if (this.commit == null)
-				this.nullCommitException();
-			else
-				this.commit.setWorldInfo(this.world, this.pos, this.player);
+			if (this.commit == null) this.nullCommitException();
+			else this.commit.setWorldInfo(this.world, this.pos, this.player);
 		}
 	}
 
@@ -84,60 +81,48 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		int[] pos = new int[] { this.pos.getX(), this.pos.getY(), this.pos.getZ() };
 		nbt.setIntArray("pos", pos);
 		nbt.setString("type", type);
-		if (this.player != null)
-			nbt.setInteger("enid", this.player.getEntityId());
-		if (this.commit != null)
-			nbt.setTag("cnbt", this.commit.serializeNBT());
+		if (this.player != null) nbt.setInteger("enid", this.player.getEntityId());
+		if (this.commit != null) nbt.setTag("cnbt", this.commit.serializeNBT());
 		return nbt;
 	}
 
 	/** 恢复数据 */
 	private void recoveryDataFromNBT(NBTTagCompound nbt) {
-		if (nbt == null)
-			return;
+		if (nbt == null) return;
 		// 回复位置
 		int[] pos = nbt.getIntArray("pos");
 		this.pos = new BlockPos(pos[0], pos[1], pos[2]);
 		this.setPosition(this.pos.getX() + 0.5, this.pos.getY(), this.pos.getZ() + 0.5);
 		// 恢复NBT
-		if (nbt.hasKey("cnbt"))
-			this.commitNBT = nbt.getCompoundTag("cnbt");
+		if (nbt.hasKey("cnbt")) this.commitNBT = nbt.getCompoundTag("cnbt");
 		// 恢复类型
 		this.type = nbt.getString("type");
 		// 恢复玩家
 		Entity entity = this.world.getEntityByID(nbt.getInteger("enid"));
-		if (entity instanceof EntityLivingBase)
-			this.player = (EntityLivingBase) entity;
-		else
-			this.player = null;
+		if (entity instanceof EntityLivingBase) this.player = (EntityLivingBase) entity;
+		else this.player = null;
 	}
 
 	private void recovery() {
-		if (this.pos == null)
-			return;
+		if (this.pos == null) return;
 		// 恢复状态
 		TileEntity tile = world.getTileEntity(this.pos);
 		if (tile instanceof ICraftingLaunch) {
 			this.crafting = (ICraftingLaunch) tile;
 			this.commit = this.crafting.recovery(type, this.player, this.commitNBT);
-			if (this.commit == null)
-				this.nullCommitException();
-			else
-				this.commit.setWorldInfo(this.world, this.pos, this.player);
+			if (this.commit == null) this.nullCommitException();
+			else this.commit.setWorldInfo(this.world, this.pos, this.player);
 		}
 	}
 
 	@Override
 	public void writeSpawnData(ByteBuf buffer) {
-		if (this.crafting == null)
-			this.recovery();
 		ByteBufUtils.writeTag(buffer, this.getDataNBT());
 	}
 
 	@Override
 	public void readSpawnData(ByteBuf additionalData) {
-		if (!this.world.isRemote)
-			return;
+		if (!this.world.isRemote) return;
 		NBTTagCompound nbt = ByteBufUtils.readTag(additionalData);
 		this.clientRecovery(nbt);
 	}
@@ -156,8 +141,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 				}
 				this.commit.setWorldInfo(this.world, this.pos, this.player);
 				this.craftingAnime = this.crafting.getAnime(this.commit);
-				if (this.craftingAnime == null)
-					this.craftingAnime = RenderEntityCrafting.getDefultAnime();
+				if (this.craftingAnime == null) this.craftingAnime = RenderEntityCrafting.getDefultAnime();
 				return true;
 			}
 		}
@@ -183,7 +167,8 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 
 	public void updateOnce() {
 		if (crafting == null) {
-			this.setDead();
+			if (!world.isRemote) this.recovery();
+			if (crafting == null) this.setDead();
 			return;
 		}
 		if (world.isRemote) {
@@ -227,21 +212,17 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	private void drop() {
-		if (this.commit == null)
-			return;
+		if (this.commit == null) return;
 		List<ItemStack> itemList = this.commit.getItems();
-		if (itemList == null)
-			return;
+		if (itemList == null) return;
 		for (ItemStack stack : itemList) {
-			if (stack.isEmpty())
-				continue;
+			if (stack.isEmpty()) continue;
 			Block.spawnAsEntity(world, this.getPosition().up(), stack);
 		}
 	}
 
 	private void updateClient() {
-		if (this.commit == null)
-			return;
+		if (this.commit == null) return;
 		if (this.finishTick < 0) {
 			this.finishTick = dataManager.get(FINISH_TICK);
 		} else {
@@ -257,9 +238,8 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 		super.setDead();
 		if (world.isRemote) {
 			// 客户端的完成特效
-			if (this.craftingAnime != null)
-				this.craftingAnime.endEffect(this.commit, this.world, this.pos,
-						this.finishTick >= 0 ? ICraftingLaunch.SUCCESS : ICraftingLaunch.FAIL);
+			if (this.craftingAnime != null) this.craftingAnime.endEffect(this.commit, this.world, this.pos,
+					this.finishTick >= 0 ? ICraftingLaunch.SUCCESS : ICraftingLaunch.FAIL);
 		}
 	}
 

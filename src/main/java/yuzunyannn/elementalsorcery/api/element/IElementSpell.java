@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public interface IElementSpell {
 

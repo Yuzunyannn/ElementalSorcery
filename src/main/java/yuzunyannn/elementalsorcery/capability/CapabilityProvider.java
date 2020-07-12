@@ -5,7 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import yuzunyannn.elementalsorcery.api.ability.IElementInventory;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 
 public class CapabilityProvider {
 

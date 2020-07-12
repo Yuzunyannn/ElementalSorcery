@@ -10,7 +10,10 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public abstract class GuiNormal<T extends Container> extends GuiContainer {
 
 	protected final InventoryPlayer playerInventory;
@@ -37,7 +40,8 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		String s = I18n.format(this.getUnlocalizedTitle());
 		this.fontRenderer.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 4210752);
-		this.fontRenderer.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2, 4210752);
+		this.fontRenderer.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2,
+				4210752);
 	}
 
 	// 画一次物品
@@ -79,9 +83,12 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-		bufferbuilder.pos((double) x, (double) (y + height), 0.0D).tex((double) (u * f), (double) ((v + (float) height) * f1)).endVertex();
-		bufferbuilder.pos((double) (x + width), (double) (y + height), 0.0D).tex((double) ((u + (float) width) * f), (double) ((v + (float) height) * f1)).endVertex();
-		bufferbuilder.pos((double) (x + width), (double) y, 0.0D).tex((double) ((u + (float) width) * f), (double) (v * f1)).endVertex();
+		bufferbuilder.pos((double) x, (double) (y + height), 0.0D)
+				.tex((double) (u * f), (double) ((v + (float) height) * f1)).endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + height), 0.0D)
+				.tex((double) ((u + (float) width) * f), (double) ((v + (float) height) * f1)).endVertex();
+		bufferbuilder.pos((double) (x + width), (double) y, 0.0D)
+				.tex((double) ((u + (float) width) * f), (double) (v * f1)).endVertex();
 		bufferbuilder.pos((double) x, (double) y, 0.0D).tex((double) (u * f), (double) (v * f1)).endVertex();
 		tessellator.draw();
 	}
@@ -93,10 +100,21 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-		bufferbuilder.pos((double) (x + 0), (double) (y + height), (double) this.zLevel).tex((double) ((float) (textureX + width) * 0.00390625F), (double) ((float) (textureY + height) * 0.00390625F)).endVertex();
-		bufferbuilder.pos((double) (x + width), (double) (y + height), (double) this.zLevel).tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + height) * 0.00390625F)).endVertex();
-		bufferbuilder.pos((double) (x + width), (double) (y + 0), (double) this.zLevel).tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F)).endVertex();
-		bufferbuilder.pos((double) (x + 0), (double) (y + 0), (double) this.zLevel).tex((double) ((float) (textureX + width) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F)).endVertex();
+		bufferbuilder.pos((double) (x + 0), (double) (y + height), (double) this.zLevel)
+				.tex((double) ((float) (textureX + width) * 0.00390625F),
+						(double) ((float) (textureY + height) * 0.00390625F))
+				.endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + height), (double) this.zLevel)
+				.tex((double) ((float) (textureX + 0) * 0.00390625F),
+						(double) ((float) (textureY + height) * 0.00390625F))
+				.endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + 0), (double) this.zLevel)
+				.tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F))
+				.endVertex();
+		bufferbuilder.pos((double) (x + 0), (double) (y + 0), (double) this.zLevel)
+				.tex((double) ((float) (textureX + width) * 0.00390625F),
+						(double) ((float) (textureY + 0) * 0.00390625F))
+				.endVertex();
 		tessellator.draw();
 	}
 
@@ -107,10 +125,21 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
-		bufferbuilder.pos((double) (x + 0), (double) (y + height), (double) this.zLevel).tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F)).endVertex();
-		bufferbuilder.pos((double) (x + width), (double) (y + height), (double) this.zLevel).tex((double) ((float) (textureX + width) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F)).endVertex();
-		bufferbuilder.pos((double) (x + width), (double) (y + 0), (double) this.zLevel).tex((double) ((float) (textureX + width) * 0.00390625F), (double) ((float) (textureY + height) * 0.00390625F)).endVertex();
-		bufferbuilder.pos((double) (x + 0), (double) (y + 0), (double) this.zLevel).tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + height) * 0.00390625F)).endVertex();
+		bufferbuilder.pos((double) (x + 0), (double) (y + height), (double) this.zLevel)
+				.tex((double) ((float) (textureX + 0) * 0.00390625F), (double) ((float) (textureY + 0) * 0.00390625F))
+				.endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + height), (double) this.zLevel)
+				.tex((double) ((float) (textureX + width) * 0.00390625F),
+						(double) ((float) (textureY + 0) * 0.00390625F))
+				.endVertex();
+		bufferbuilder.pos((double) (x + width), (double) (y + 0), (double) this.zLevel)
+				.tex((double) ((float) (textureX + width) * 0.00390625F),
+						(double) ((float) (textureY + height) * 0.00390625F))
+				.endVertex();
+		bufferbuilder.pos((double) (x + 0), (double) (y + 0), (double) this.zLevel)
+				.tex((double) ((float) (textureX + 0) * 0.00390625F),
+						(double) ((float) (textureY + height) * 0.00390625F))
+				.endVertex();
 		tessellator.draw();
 	}
 

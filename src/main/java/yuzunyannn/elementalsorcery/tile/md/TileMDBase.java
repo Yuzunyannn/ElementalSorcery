@@ -27,10 +27,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.api.ability.IAcceptMagic;
-import yuzunyannn.elementalsorcery.api.ability.IAcceptMagicPesky;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.tile.IAcceptMagic;
+import yuzunyannn.elementalsorcery.api.tile.IAcceptMagicPesky;
+import yuzunyannn.elementalsorcery.api.tile.IProvideMagic;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityParticleEffect;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.render.particle.FirwrokShap;
@@ -38,7 +39,7 @@ import yuzunyannn.elementalsorcery.util.IField;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
-public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky, IField {
+public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky, IProvideMagic, IField {
 
 	/** 给予魔力的目标 */
 	protected TargetInfo[] targets = new TargetInfo[6];
@@ -283,18 +284,22 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		// 寻找目标
 		targets[index] = this.findTarget(this.pos, facing, this.getDistance());
 		if (targets[index] != null) {
-			TileMDBase tile = targets[index].to(TileMDBase.class);
-			if (tile != null) {
-				// 如果对面不能接受
-				if (!tile.canRecvMagic(facing.getOpposite())) targets[index] = null;
-				else if (sayHi) tile.hi(this.pos, facing.getOpposite());
+			// 如果对面不能接受
+			IAcceptMagicPesky magicPesky = targets[index].to(IAcceptMagicPesky.class);
+			if (magicPesky != null && !magicPesky.canRecvMagic(facing.getOpposite())) targets[index] = null;
+			// 如果对面是发送者
+			if (sayHi) {
+				IProvideMagic magicProvide = targets[index].to(IProvideMagic.class);
+				magicProvide.hi(this.pos, facing.getOpposite());
 			}
 		}
 		if (targets[index] == null) this.torch(facing, false);
 		this.markDirty();
+
 	}
 
 	/** 其他tile找到自己的时候 */
+	@Override
 	public void hi(BlockPos from, EnumFacing facing) {
 		this.find(facing, false);
 		int index = facing.getIndex();
@@ -302,7 +307,6 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 			TileMDBase tile = targets[index].to(TileMDBase.class);
 			if (tile != null) tile.oh(this.pos, facing.getOpposite());
 		}
-
 	}
 
 	/** 打招呼后，对面tile也选定了自己 */

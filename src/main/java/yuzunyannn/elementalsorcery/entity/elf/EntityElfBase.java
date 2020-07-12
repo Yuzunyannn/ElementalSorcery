@@ -94,7 +94,7 @@ public abstract class EntityElfBase extends EntityCreature {
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		super.readEntityFromNBT(compound);
 		String id = compound.getString("professionId");
-		this.setProfession(ElfProRegister.instance.getValue(new ResourceLocation(id)));
+		this.setProfession(ElfProRegister.instance.getValue(new ResourceLocation(id)), false);
 	}
 
 	/** 获取临时数据NBT，不会被保存，不会同步 */
@@ -305,15 +305,18 @@ public abstract class EntityElfBase extends EntityCreature {
 	}
 
 	/** 获取设置精灵 职业 */
-	public void setProfession(ElfProfession profession) {
+	public void setProfession(ElfProfession profession, boolean needInit) {
 		if (profession == null) profession = ElfProfession.NONE;
 		if (this.profession == profession) return;
 		ElfProfession origin = this.profession;
 		this.profession = profession;
-		this.profession.initElf(this, origin);
 		if (world.isRemote) return;
+		if (needInit) this.profession.initElf(this, origin);
 		dataManager.set(PROFESSION_UPDATE, ElfProRegister.instance.getId(this.profession));
-		dataManager.setDirty(PROFESSION_UPDATE);
+	}
+
+	public void setProfession(ElfProfession profession) {
+		this.setProfession(profession, true);
 	}
 
 	@Override

@@ -5,7 +5,7 @@ import java.lang.reflect.Modifier;
 
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.init.registries.ESImplRegister;
+import yuzunyannn.elementalsorcery.init.ESImplRegister;
 
 public class ElfProRegister extends ESImplRegister<ElfProfession> {
 

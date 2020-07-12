@@ -13,6 +13,7 @@ import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.IStackHelper;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESObjects;
@@ -104,6 +105,10 @@ public class ESJEIPlugin implements IModPlugin {
 				new ItemStack(Blocks.ENCHANTING_TABLE),
 				DescribeRecipeWrapper.Describe.asList(ITEMS.SPELLBOOK_ENCHANTMENT, Blocks.ENCHANTING_TABLE),
 				DescribeRecipeWrapper.Describe.asList(BLOCKS.INVALID_ENCHANTMENT_TABLE)));
+		describes.add(new DescribeRecipeWrapper.Describe("page.azureCrystal", "page.azureCrystal.ct",
+				new ItemStack(ITEMS.AZURE_CRYSTAL),
+				DescribeRecipeWrapper.Describe.asList(ITEMS.MAGIC_CRYSTAL, new ItemStack(Items.DYE, 1, 4)),
+				DescribeRecipeWrapper.Describe.asList(ITEMS.AZURE_CRYSTAL)));
 		return describes;
 	}
 }
