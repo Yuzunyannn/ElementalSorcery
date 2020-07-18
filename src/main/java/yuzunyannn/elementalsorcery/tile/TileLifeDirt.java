@@ -13,6 +13,12 @@ public class TileLifeDirt extends TileEntity {
 		return new ItemStack(nbt);
 	}
 
+	public static boolean hasPlant(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) return false;
+		return nbt.hasKey("lifePlant", 10);
+	}
+
 	public static void setPlant(ItemStack stack, ItemStack plant) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) stack.setTagCompound(nbt = new NBTTagCompound());

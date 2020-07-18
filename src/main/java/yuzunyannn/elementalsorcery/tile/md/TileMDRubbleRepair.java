@@ -9,7 +9,6 @@ import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.block.BlocksAStone;
@@ -159,14 +158,7 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 			if (this.detectAndWriteToNBT(sndTemp, 2)) this.updateToClient(sndTemp);
 		} else {
 			lastStack = stack;
-			NBTTagCompound nbt = new NBTTagCompound();
-			NBTTagList list = new NBTTagList();
-			NBTTagCompound temp = new NBTTagCompound();
-			temp.setInteger("slot", 0);
-			temp.setTag("item", lastStack.serializeNBT());
-			list.appendTag(temp);
-			nbt.setTag("inv", list);
-			 this.updateToClient(nbt);
+			this.updateToClient(this.writeInventoryChangeToNBT(new NBTTagCompound(), 0, lastStack));
 		}
 	}
 

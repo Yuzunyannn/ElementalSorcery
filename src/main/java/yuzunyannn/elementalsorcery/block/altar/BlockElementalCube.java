@@ -148,8 +148,7 @@ public class BlockElementalCube extends BlockContainer {
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase player,
 			ItemStack stack) {
 		TileEntity tile = worldIn.getTileEntity(pos);
-		if (!(tile instanceof TileElementalCube))
-			return;
+		if (!(tile instanceof TileElementalCube)) return;
 		TileElementalCube tile_ec = (TileElementalCube) tile;
 		if (player instanceof EntityPlayer) {
 			if (((EntityPlayer) player).isCreative()) {
@@ -172,9 +171,8 @@ public class BlockElementalCube extends BlockContainer {
 		List<Element> list = ElementRegister.instance.getValues();
 		for (Element e : list) {
 			ItemStack stack = new ItemStack(this);
-			ElementStack estack = new ElementStack(e, 1000, 1000);
-			if (estack.isMagic())
-				continue;
+			ElementStack estack = new ElementStack(e, 10000, 1000);
+			if (estack.isMagic()) continue;
 			IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 			inventory.setStackInSlot(0, estack);
 			inventory.saveState(stack);

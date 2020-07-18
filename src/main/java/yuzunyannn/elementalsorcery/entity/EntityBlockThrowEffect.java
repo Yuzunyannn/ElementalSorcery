@@ -201,11 +201,7 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 	@SideOnly(Side.CLIENT)
 	public boolean isInRangeToRenderDist(double distance) {
 		double d0 = this.getEntityBoundingBox().getAverageEdgeLength() * 4.0D;
-
-		if (Double.isNaN(d0)) {
-			d0 = 4.0D;
-		}
-
+		if (Double.isNaN(d0)) d0 = 4.0D;
 		d0 = d0 * 64.0D;
 		return distance < d0 * d0;
 	}

@@ -49,6 +49,7 @@ import yuzunyannn.elementalsorcery.block.md.BlockMDInfusion;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagicGen;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagicSolidify;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagiclization;
+import yuzunyannn.elementalsorcery.block.md.BlockMDResonantIncubator;
 import yuzunyannn.elementalsorcery.block.md.BlockMDRubbleRepair;
 import yuzunyannn.elementalsorcery.block.md.BlockMDTransfer;
 import yuzunyannn.elementalsorcery.element.Element;
@@ -62,13 +63,8 @@ import yuzunyannn.elementalsorcery.element.ElementMetal;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.ElementWater;
 import yuzunyannn.elementalsorcery.element.ElementWood;
-import yuzunyannn.elementalsorcery.item.ItemArchitectureCrystal;
-import yuzunyannn.elementalsorcery.item.ItemCrystal;
-import yuzunyannn.elementalsorcery.item.ItemElementCrystal;
-import yuzunyannn.elementalsorcery.item.ItemItemCrystal;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
-import yuzunyannn.elementalsorcery.item.ItemMagicalCrystal;
 import yuzunyannn.elementalsorcery.item.ItemManual;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemRedHandset;
@@ -81,6 +77,12 @@ import yuzunyannn.elementalsorcery.item.ItemSpellbookCover;
 import yuzunyannn.elementalsorcery.item.ItemSpellbookElement;
 import yuzunyannn.elementalsorcery.item.ItemSpellbookEnchantment;
 import yuzunyannn.elementalsorcery.item.ItemSpellbookLaunch;
+import yuzunyannn.elementalsorcery.item.crystal.ItemArchitectureCrystal;
+import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
+import yuzunyannn.elementalsorcery.item.crystal.ItemElementCrystal;
+import yuzunyannn.elementalsorcery.item.crystal.ItemItemCrystal;
+import yuzunyannn.elementalsorcery.item.crystal.ItemMagicalCrystal;
+import yuzunyannn.elementalsorcery.item.crystal.ItemResonantCrystal;
 
 public class ESInitInstance {
 
@@ -108,6 +110,8 @@ public class ESInitInstance {
 		instanceItems();
 		instanceElements();
 		instanceVillage();
+		// 其他位置句柄获取
+		ItemCrystal.init();
 	}
 
 	private static void initVoidElement() throws ReflectiveOperationException {
@@ -164,6 +168,7 @@ public class ESInitInstance {
 		BLOCKS.MD_ABSORB_BOX = new BlockMDAbsorbBox();
 		BLOCKS.MD_MAGICLIZATION = new BlockMDMagiclization();
 		BLOCKS.MD_DECONSTRUCT_BOX = new BlockMDDeconstructBox();
+		BLOCKS.MD_RESONANT_INCUBATOR = new BlockMDResonantIncubator();
 		BLOCKS.LIFE_FLOWER = new BlockLifeFlower();
 		BLOCKS.MAGIC_POT = new BlockMagicPot();
 		BLOCKS.LIFE_DIRT = new BlockLifeDirt();
@@ -207,6 +212,8 @@ public class ESInitInstance {
 		ITEMS.RITE_MANUAL = new ItemRiteManual();
 		ITEMS.RED_HANDSET = new ItemRedHandset();
 		ITEMS.AZURE_CRYSTAL = ItemCrystal.newAzureCrystal();
+		ITEMS.RESONANT_CRYSTAL = new ItemResonantCrystal();
+		ITEMS.ELF_CRYSTAL = ItemCrystal.newElfCrystal();
 
 		ITEMS.SPELLBOOK = new ItemSpellbook();
 		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture();

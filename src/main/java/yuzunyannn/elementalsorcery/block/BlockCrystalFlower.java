@@ -25,6 +25,7 @@ import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
 
 public class BlockCrystalFlower extends BlockBush implements ITileEntityProvider, IGrowable {
 
+	public static final int MAX_STAGE = 4;
 	public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 4);
 
 	public BlockCrystalFlower() {
@@ -59,7 +60,7 @@ public class BlockCrystalFlower extends BlockBush implements ITileEntityProvider
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		// 最高级掉落物品
-		if (state.getValue(STAGE) == 4) {
+		if (state.getValue(STAGE) == MAX_STAGE) {
 			TileEntity tile = worldIn.getTileEntity(pos);
 			if (tile instanceof TileCrystalFlower) {
 				ItemStack plant = ((TileCrystalFlower) tile).getCrystal();
@@ -82,7 +83,7 @@ public class BlockCrystalFlower extends BlockBush implements ITileEntityProvider
 
 	@Override
 	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
-		return state.getValue(STAGE) < 4;
+		return state.getValue(STAGE) < MAX_STAGE;
 	}
 
 	@Override
@@ -93,9 +94,9 @@ public class BlockCrystalFlower extends BlockBush implements ITileEntityProvider
 	@Override
 	public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
 		int stage = state.getValue(STAGE);
-		if (stage < 4) {
+		if (stage < MAX_STAGE) {
 			TileEntity tile = worldIn.getTileEntity(pos);
-			if (tile instanceof TileCrystalFlower) ((TileCrystalFlower) tile).tryGrow(state);
+			if (tile instanceof TileCrystalFlower) ((TileCrystalFlower) tile).tryGrow(state, rand);
 			else worldIn.setBlockState(pos, state.withProperty(STAGE, stage + 1));
 		}
 	}

@@ -54,12 +54,12 @@ public abstract class Effect {
 		return this.prevPosZ + (this.posZ - this.prevPosZ) * partialTicks;
 	}
 
-	static private ArrayDeque<Effect> effects = new ArrayDeque<Effect>();
+	static final private ArrayDeque<Effect> effects = new ArrayDeque<Effect>();
 
 	static public void addEffect(Effect effect) {
-		//0渲染全部
+		// 0渲染全部
 		if (Minecraft.getMinecraft().gameSettings.particleSetting != 0) {
-			//其他的视形况
+			// 其他的视形况
 			return;
 		}
 		effects.add(effect);
@@ -70,10 +70,11 @@ public abstract class Effect {
 		World world = Minecraft.getMinecraft().world;
 		while (iter.hasNext()) {
 			Effect effect = iter.next();
-			effect.onUpdate();
 			if (effect.lifeTime <= 0 || world != effect.world) {
 				iter.remove();
+				continue;
 			}
+			effect.onUpdate();
 		}
 	}
 

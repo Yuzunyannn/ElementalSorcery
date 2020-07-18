@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.item;
+package yuzunyannn.elementalsorcery.item.crystal;
 
 import java.util.Collection;
 import java.util.List;
@@ -30,12 +30,13 @@ import yuzunyannn.elementalsorcery.util.NBTHelper;
 public class ItemArchitectureCrystal extends ItemCrystal {
 
 	public ItemArchitectureCrystal() {
-		this.setUnlocalizedName("architectureCrystal");
+		super("architectureCrystal", 32.6f, 0x2e7539);
 	}
 
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		super.addInformation(stack, worldIn, tooltip, flagIn);
 		ArcInfo info = new ArcInfo(stack, Side.CLIENT);
 		if (info.isMiss()) {
 			tooltip.add(TextFormatting.YELLOW + I18n.format("info.arcCrystal.miss"));

@@ -47,8 +47,10 @@ public class ESObjects {
 		public Item RITE_MANUAL;
 		public Item RED_HANDSET;
 		public Item AZURE_CRYSTAL;
+		public Item RESONANT_CRYSTAL;
+		public Item ELF_CRYSTAL;
 	}
-
+	
 	static public class Blocks {
 
 		public Block ESTONE;
@@ -100,6 +102,7 @@ public class ESObjects {
 		public Block MD_ABSORB_BOX;
 		public Block MD_MAGICLIZATION;
 		public Block MD_DECONSTRUCT_BOX;
+		public Block MD_RESONANT_INCUBATOR;
 		public Block LIFE_FLOWER;
 		public Block MAGIC_POT;
 		public Block LIFE_DIRT;

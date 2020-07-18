@@ -19,6 +19,7 @@ public class Buildings {
 	static public Building ANALYSIS_ALTAR;
 	static public Building ANALYSIS_ALTAR_ADD;
 	static public Building CRYSTAL_GARDEN;
+	static public Building RESONANT_INCUBATOR;
 
 	static public void init() {
 		INFUSION = BuildingLib.instance.getBuilding("infusion");
@@ -32,6 +33,7 @@ public class Buildings {
 		ANALYSIS_ALTAR = BuildingLib.instance.getBuilding("analysis_altar");
 		ANALYSIS_ALTAR_ADD = BuildingLib.instance.getBuilding("analysis_altar_add");
 		CRYSTAL_GARDEN = BuildingLib.instance.getBuilding("crystal_garden");
+		RESONANT_INCUBATOR = BuildingLib.instance.getBuilding("resonant_incubator");
 	}
 
 	private static void horizontalS(IBlockState state, Building building, int d, int y) {

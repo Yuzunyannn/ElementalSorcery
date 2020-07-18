@@ -35,12 +35,17 @@ public class BlockHelper {
 			EntityPlayer playerIn, EnumHand hand, boolean justOne) {
 		ItemStack stack = playerIn.getHeldItem(hand);
 		if (stack.isEmpty()) {
+			if (hand != EnumHand.MAIN_HAND) return false;
 			IGetItemStack tile = (IGetItemStack) worldIn.getTileEntity(pos);
 			stack = tile.getStack();
 			if (stack.isEmpty()) return false;
 			if (!worldIn.isRemote) {
 				tile.setStack(ItemStack.EMPTY);
-				if (!playerIn.inventory.addItemStackToInventory(stack)) Block.spawnAsEntity(worldIn, pos, stack);
+				boolean ok = false;
+				if (playerIn.inventory.getStackInSlot(playerIn.inventory.currentItem).isEmpty())
+					ok = playerIn.inventory.add(playerIn.inventory.currentItem, stack);
+				else ok = playerIn.inventory.addItemStackToInventory(stack);
+				if (!ok) Block.spawnAsEntity(worldIn, pos, stack);
 			}
 			return true;
 		}

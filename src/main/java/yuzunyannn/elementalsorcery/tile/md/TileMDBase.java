@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
@@ -222,14 +223,18 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	static final public int[] PARTICLE_COLOR = new int[] { 0x7d17e3 };
 	static final public int[] PARTICLE_COLOR_FADE = new int[] { 0x9322b5 };
 
+	protected int breakExplosionLevel() {
+		float rate = this.getCurrentCapacity() / 5000.0f;
+		if (rate > 1.0f) rate = 1.0f;
+		return (int) (7 * rate) + 1;
+	}
+
 	/** 当被被破坏 */
 	public void onBreak() {
 		if (!this.world.isRemote) {
 			if (this.inventory != null) BlockHelper.drop(inventory, world, pos);
 			if (this.getCurrentCapacity() == 0) return;
-			float rate = this.getCurrentCapacity() / 5000.0f;
-			if (rate > 1.0f) rate = 1.0f;
-			int lev = (int) (7 * rate) + 1;
+			int lev = this.breakExplosionLevel();
 			NBTTagList list = new NBTTagList();
 			NBTTagCompound nbt = new NBTTagCompound();
 			nbt.setByte("Type", (byte) 0);
@@ -587,7 +592,21 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	/** 设置nbt数据 */
 	protected NBTTagCompound updateDataWriteToNBT(NBTTagCompound nbt, int fieldIndex) {
+		if (nbt.hasKey("field", 10)) nbt = nbt.getCompoundTag("field");
+		else nbt.setTag("field", nbt = new NBTTagCompound());
 		nbt.setInteger(Integer.toString(fieldIndex), fieldDatas[fieldIndex]);
+		return nbt;
+	}
+
+	/** 将仓库变更写入nbt */
+	protected NBTTagCompound writeInventoryChangeToNBT(NBTTagCompound nbt, int slot, ItemStack stack) {
+		NBTTagList list;
+		if (nbt.hasKey("inv", 9)) list = nbt.getTagList("inv", 10);
+		else nbt.setTag("inv", list = new NBTTagList());
+		NBTTagCompound temp = new NBTTagCompound();
+		temp.setInteger("slot", slot);
+		temp.setTag("item", stack.serializeNBT());
+		list.appendTag(temp);
 		return nbt;
 	}
 
@@ -596,7 +615,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		if (world.isRemote) return;
 		SPacketUpdateTileEntity packet = this.getSendUpdatePacket(nbt);
 		for (EntityPlayer player : world.playerEntities) {
-			if (player.getPosition().distanceSq(this.pos) > 512 * 512) continue;
+			if (player.getPosition().distanceSq(this.pos) > 256 * 256) continue;
 			((EntityPlayerMP) player).connection.sendPacket(packet);
 		}
 	}
@@ -606,13 +625,20 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		return new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), nbt);
 	}
 
+	/** 客户端受到nbt最后会调用，处理自定义信息 */
+	public void customUpdate(NBTTagCompound nbt) {
+
+	}
+
 	@Override
-	public void onDataPacket(net.minecraft.network.NetworkManager net,
-			net.minecraft.network.play.server.SPacketUpdateTileEntity pkt) {
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		NBTTagCompound tag = pkt.getNbtCompound();
-		for (int i = 0; i < this.getFieldCount(); i++) {
-			String key = Integer.toString(i);
-			if (tag.hasKey(key)) this.setField(i, tag.getInteger(key));
+		if (tag.hasKey("field", 10)) {
+			NBTTagCompound nbt = tag.getCompoundTag("field");
+			for (int i = 0; i < this.getFieldCount(); i++) {
+				String key = Integer.toString(i);
+				if (nbt.hasKey(key)) this.setField(i, nbt.getInteger(key));
+			}
 		}
 		if (tag.hasKey("inv")) {
 			NBTTagList list = tag.getTagList("inv", 10);
@@ -625,5 +651,6 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 				inventory.setStackInSlot(slot, stack);
 			}
 		}
+		this.customUpdate(tag);
 	}
 }

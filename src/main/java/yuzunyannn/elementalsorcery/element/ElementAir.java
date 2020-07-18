@@ -6,12 +6,23 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.element.IElementSpell;
+import yuzunyannn.elementalsorcery.render.particle.Effect;
+import yuzunyannn.elementalsorcery.render.particle.EffectResonance;
 
 public class ElementAir extends ElementInner {
 
 	public ElementAir() {
 		super(rgb(242, 243, 243), "air");
+	}
+
+	@SideOnly(Side.CLIENT)
+	static public void effect(World world, EntityLivingBase entity) {
+		EffectResonance effect = new EffectResonance(world, entity.posX, entity.posY + 0.1, entity.posZ);
+		effect.setColor(0xffffff);
+		Effect.addEffect(effect);
 	}
 
 	@Override
@@ -21,6 +32,7 @@ public class ElementAir extends ElementInner {
 		entity.motionZ *= 0.25;
 		entity.fallDistance *= 0.05;
 		entity.isAirBorne = true;
+		if (world.isRemote) effect(world, entity);
 		return IElementSpell.SPELL_ONCE;
 	}
 

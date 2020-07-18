@@ -45,6 +45,8 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 			return false;
 		}
 	};
+	// 经验
+	protected float exp;
 	// 特殊位置
 	protected ItemStackHandler inventoryExtra = new ItemStackHandler(1);
 
@@ -79,6 +81,7 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 		this.inventoryResult.deserializeNBT(compound.getCompoundTag("InventoryResult"));
 		this.inventoryExtra.deserializeNBT(compound.getCompoundTag("InventoryExtra"));
 		this.burnTime = compound.getInteger("BurnTime");
+		this.exp = compound.getFloat("exp");
 	}
 
 	// 保存
@@ -88,6 +91,7 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 		compound.setTag("InventoryResult", this.inventoryResult.serializeNBT());
 		compound.setTag("InventoryExtra", this.inventoryExtra.serializeNBT());
 		compound.setInteger("BurnTime", this.burnTime);
+		compound.setFloat("exp", this.exp);
 		return super.writeToNBT(compound);
 	}
 
@@ -111,6 +115,12 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 	/** 获取额外物品的ItemStackHandler */
 	public ItemStackHandler getExtraItemStackHandler() {
 		return inventoryExtra;
+	}
+
+	public float getAndClearExp() {
+		float exp = this.exp;
+		this.exp = 0;
+		return exp;
 	}
 
 	/**
@@ -144,6 +154,17 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 		ItemStack newStack = FurnaceRecipes.instance().getSmeltingResult(stack);
 		if (newStack.isEmpty()) return ItemStack.EMPTY;
 		return newStack.copy();
+	}
+
+	/**
+	 * 获得物品烧炼后的经验
+	 * 
+	 * @param stack 原始物品
+	 * @param extra 额外的物品
+	 */
+	public float getSmeltExp(@Nonnull ItemStack stack, @Nonnull ItemStack extra) {
+		if (stack.isEmpty()) return 0;
+		return FurnaceRecipes.instance().getSmeltingExperience(stack);
 	}
 
 	/**
@@ -280,16 +301,17 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 					burnTime = 0;
 					ItemStack extra = inventoryExtra.getStackInSlot(0);
 					for (int i = 0; i < inventorySmelt.getSlots(); i++) {
-						ItemStack item_stack = inventorySmelt.extractItem(i, 1, true);
+						ItemStack itemStack = inventorySmelt.extractItem(i, 1, true);
 						// 根据额外物品，获取烧炼结果
-						ItemStack new_stack = getSmeltResult(item_stack, extra);
-						if (new_stack.isEmpty()) continue;
+						ItemStack newStack = getSmeltResult(itemStack, extra);
+						if (newStack.isEmpty()) continue;
 						// 检测有没有额外的物品
-						ItemStack add_stack = getAdditionalItem(item_stack, new_stack, extra);
+						ItemStack addStack = getAdditionalItem(itemStack, newStack, extra);
 						// 处理物品栏
 						inventorySmelt.extractItem(i, 1, false);
-						inventoryResult.insertItemForce(i, new_stack, false);
-						inventoryResult.insertItemForce(2, add_stack, false);
+						inventoryResult.insertItemForce(i, newStack, false);
+						inventoryResult.insertItemForce(2, addStack, false);
+						exp += getSmeltExp(newStack, extra);
 					}
 					// 这里就完成一轮烧炼喽
 					finishOnceSmelt(extra);

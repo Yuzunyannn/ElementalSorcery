@@ -3,7 +3,8 @@
 	"group": "astone",
 	"pattern": [
 		"# #",
-		"#X#"
+		"#X#",
+		"#Z#"
 	],
 	"key": {
 		"#": {
@@ -13,6 +14,9 @@
 		"X": {
 			"item": "elementalsorcery:astone",
 			"data": 6
+		},
+		"Z":{
+			"item": "elementalsorcery:elf_crystal"
 		}
 	},
 	"result": {

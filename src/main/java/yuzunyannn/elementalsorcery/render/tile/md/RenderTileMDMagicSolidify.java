@@ -10,7 +10,7 @@ import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 public class RenderTileMDMagicSolidify extends RenderTileMDBase<TileMDMagicSolidify> {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/md_magic_solidify.png");
-	protected final ModelMDMagicSolidify MODEL = new ModelMDMagicSolidify();
+	protected static final ModelMDMagicSolidify MODEL = new ModelMDMagicSolidify();
 
 	@Override
 	public void render(TileMDMagicSolidify tile, double x, double y, double z, float partialTicks, int destroyStage,

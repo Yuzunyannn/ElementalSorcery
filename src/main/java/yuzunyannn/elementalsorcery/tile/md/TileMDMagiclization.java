@@ -29,6 +29,11 @@ public class TileMDMagiclization extends TileMDBase implements ITickable {
 	}
 
 	@Override
+	protected int getOverflow() {
+		return 50;
+	}
+
+	@Override
 	public void update() {
 		this.autoTransfer();
 		if (this.world.isRemote) return;
@@ -42,7 +47,7 @@ public class TileMDMagiclization extends TileMDBase implements ITickable {
 		if (inventory == null) return;
 		ElementStack estack = getFirstNotEmpty(inventory);
 		if (estack.isEmpty()) return;
-		estack = estack.splitStack(Math.min(5, estack.getCount()));
+		estack = estack.splitStack(Math.min(8, estack.getCount()));
 		estack = estack.becomeMagic(world);
 		this.magicShrink(need);
 		this.magic.grow(estack);

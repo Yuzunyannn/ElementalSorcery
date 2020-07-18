@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
@@ -44,6 +43,8 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
+import yuzunyannn.elementalsorcery.render.particle.Effect;
+import yuzunyannn.elementalsorcery.render.particle.EffectResonance;
 import yuzunyannn.elementalsorcery.util.IOHelper;
 import yuzunyannn.elementalsorcery.worldgen.VillageESHall.VillageCreationHandler;
 
@@ -58,21 +59,18 @@ public class ESTestAndDebug {
 	@SubscribeEvent
 	public void click(PlayerInteractEvent event) {
 		if (!event.getWorld().isRemote) {
-			//BlockPos pos = event.getPos();
-			//IBlockState state = event.getWorld().getBlockState(pos);
-			//System.out.println(state.getLightOpacity());
-		}
+			// BlockPos pos = event.getPos();
+			// IBlockState state = event.getWorld().getBlockState(pos);
+			// System.out.println(state.getLightOpacity());
+		} 
 
 		// System.out.println("Server ArcInfo");
 		BlockPos pos = event.getPos();
 		IBlockState state = event.getWorld().getBlockState(pos);
 		// System.out.println(state);
-		if (event.getEntityPlayer().isSneaking()) {
-			ESTestAndDebug.pos = event.getPos().up();
-		}
-		if (state.getBlock() == ESInitInstance.BLOCKS.LIFE_FLOWER) {
-			event.getWorld().scheduleUpdate(pos, state.getBlock(), 1);
-		}
+		//if (event.getEntityPlayer().isSneaking()) {
+		//	ESTestAndDebug.pos = event.getPos().up();
+		//}
 
 	}
 

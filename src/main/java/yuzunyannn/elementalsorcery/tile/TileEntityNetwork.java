@@ -9,6 +9,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -42,8 +43,7 @@ public class TileEntityNetwork extends TileEntity {
 	}
 
 	@Override
-	public void onDataPacket(net.minecraft.network.NetworkManager net,
-			net.minecraft.network.play.server.SPacketUpdateTileEntity pkt) {
+	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		isNetwork = true;
 		this.handleUpdateTag(pkt.getNbtCompound());
 		isNetwork = false;
@@ -84,7 +84,7 @@ public class TileEntityNetwork extends TileEntity {
 		if (world.isRemote) return;
 		isNetwork = true;
 		for (EntityPlayer player : world.playerEntities) {
-			if (player.getPosition().distanceSq(this.pos) > 512 * 512) continue;
+			if (player.getPosition().distanceSq(this.pos) > 256 * 256) continue;
 			((EntityPlayerMP) player).connection.sendPacket(this.getUpdatePacket());
 		}
 		isNetwork = false;

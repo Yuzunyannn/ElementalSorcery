@@ -86,6 +86,7 @@ import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDInfusion;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagicGen;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagicSolidify;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagiclization;
+import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDResonantIncubator;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDTransfer;
 import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
@@ -115,6 +116,7 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicGen;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicSolidify;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagiclization;
+import yuzunyannn.elementalsorcery.tile.md.TileMDResonantIncubator;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
@@ -250,6 +252,7 @@ public class ESInit {
 		register(TileMDAbsorbBox.class, "MDAbsorbBox");
 		register(TileMDMagiclization.class, "MDMagiclization");
 		register(TileMDDeconstructBox.class, "MDDeconstructBox");
+		register(TileMDResonantIncubator.class, "MDResonantIncubator");
 		register(TileLifeDirt.class, "LifeDirt");
 		register(TileCrystalFlower.class, "CrystalFlower");
 		register(TileItemStructureCraftNormal.class, "ISCraftNormal");
@@ -308,6 +311,8 @@ public class ESInit {
 		registerRender(ITEMS.RITE_MANUAL);
 		registerRender(ITEMS.RED_HANDSET);
 		registerRender(ITEMS.AZURE_CRYSTAL);
+		registerRender(ITEMS.RESONANT_CRYSTAL);
+		registerRender(ITEMS.ELF_CRYSTAL);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -383,6 +388,8 @@ public class ESInit {
 		registerRender(BLOCKS.MD_ABSORB_BOX, TileMDAbsorbBox.class, new RenderTileMDAbsorbBox());
 		registerRender(BLOCKS.MD_MAGICLIZATION, TileMDMagiclization.class, new RenderTileMDMagiclization());
 		registerRender(BLOCKS.MD_DECONSTRUCT_BOX, TileMDDeconstructBox.class, new RenderTileMDDeconstructBox());
+		registerRender(BLOCKS.MD_RESONANT_INCUBATOR, TileMDResonantIncubator.class,
+				new RenderTileMDResonantIncubator());
 
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);

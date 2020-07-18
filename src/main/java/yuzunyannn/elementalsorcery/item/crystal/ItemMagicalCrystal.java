@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.item;
+package yuzunyannn.elementalsorcery.item.crystal;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 public class ItemMagicalCrystal extends ItemCrystal {
 
 	public ItemMagicalCrystal() {
-		super("magicalCrystal");
+		super("magicalCrystal", 16.5f, 0x7d7db3);
 	}
 
 	@Override

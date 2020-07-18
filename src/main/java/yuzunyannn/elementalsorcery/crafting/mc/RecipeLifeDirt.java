@@ -13,7 +13,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.item.ItemCrystal;
+import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
 import yuzunyannn.elementalsorcery.tile.TileLifeDirt;
 
 public class RecipeLifeDirt extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
@@ -26,7 +26,7 @@ public class RecipeLifeDirt extends net.minecraftforge.registries.IForgeRegistry
 		if (block instanceof BlockSapling) return false;
 		if (stack.getItem() == Items.REEDS || block == Blocks.CACTUS) return true;
 		if (block instanceof BlockBush) return true;
-		if (item instanceof ItemCrystal) return true;
+		//if (item instanceof ItemCrystal) return true;
 		return block instanceof IGrowable;
 	}
 

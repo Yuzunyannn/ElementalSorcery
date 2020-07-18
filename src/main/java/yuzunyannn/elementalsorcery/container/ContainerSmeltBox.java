@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.container;
 
+import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.ItemStack;
@@ -32,6 +33,18 @@ public class ContainerSmeltBox extends ContainerNormal<TileSmeltBox> {
 				@Override
 				public boolean isItemValid(ItemStack stack) {
 					return false;
+				}
+
+				@Override
+				public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
+					int i = (int) ContainerSmeltBox.this.tileEntity.getAndClearExp();
+					while (i > 0) {
+						int k = EntityXPOrb.getXPSplit(i);
+						i -= k;
+						thePlayer.world.spawnEntity(new EntityXPOrb(thePlayer.world, thePlayer.posX,
+								thePlayer.posY + 0.5D, thePlayer.posZ + 0.5D, k));
+					}
+					return super.onTake(thePlayer, stack);
 				}
 			});
 		}
