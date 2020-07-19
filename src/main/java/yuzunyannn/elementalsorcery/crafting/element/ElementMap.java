@@ -7,16 +7,14 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ModContainer;
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESObjects;
@@ -25,8 +23,11 @@ import yuzunyannn.elementalsorcery.api.register.IElementMap;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.util.JsonHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.json.ItemRecord;
+import yuzunyannn.elementalsorcery.util.json.Json;
+import yuzunyannn.elementalsorcery.util.json.JsonArray;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class ElementMap implements IElementMap {
 
@@ -256,56 +257,41 @@ public class ElementMap implements IElementMap {
 		final ESData data = ElementalSorcery.data;
 		final String MODID = ElementalSorcery.MODID;
 
-		// 自动扫描element_maps文件夹下所有json
-		String[] mapJsonNames = data.getFilesFromResource(new ResourceLocation(MODID, "element_maps"));
-		for (String path : mapJsonNames) {
-			try {
-				if (!path.endsWith(".json")) continue;
-				JsonObject jobj = data.getJsonFromResource(new ResourceLocation(MODID, "element_maps/" + path));
-				if (!JsonHelper.isArray(jobj, "maps")) continue;
-				JsonArray jarray = jobj.get("maps").getAsJsonArray();
-				// 读取所有映射
-				for (JsonElement je : jarray) {
-					if (!je.isJsonObject()) continue;
-					jobj = je.getAsJsonObject();
-					if (!jobj.has("element")) continue;
-					if (!jobj.has("item")) continue;
-					// 这里进行try来防止一个没加载到导致全局没法加载
-					try {
-						List<ElementStack> estacks = JsonHelper.readElements(jobj.get("element"));
-						List<JsonHelper.ItemRecord> items = JsonHelper.readItems(jobj.get("item"));
-						if (estacks.isEmpty()) continue;
-						if (items.isEmpty()) continue;
-						// 复杂度
-						int complex = -1;
-						if (JsonHelper.isNumber(jobj, "complex")) complex = Math.max(-1, jobj.getAsInt());
-						ElementStack[] es = estacks.toArray(new ElementStack[estacks.size()]);
-						for (JsonHelper.ItemRecord ir : items) {
-							if (complex > -1) {
-								if (ir.isJustItem()) instance.add(ir.getItem(), complex, es);
-								else instance.add(ir.getStack(), complex, es);
-							} else {
-								if (ir.isJustItem()) instance.add(ir.getItem(), es);
-								else instance.add(ir.getStack(), es);
-							}
-						}
-					} catch (JsonParseException e) {
-						if (e.getMessage().startsWith(JsonHelper.ERROR_CODE_OTHER_MOD))
-							ElementalSorcery.logger.warn(e.getMessage());
-						else ElementalSorcery.logger.warn("读取json元素映射过程中出现异常：" + path, e);
-					}
-				}
-			} catch (Exception e) {
-				ElementalSorcery.logger.warn("读取json文件过程中出现异常：" + path, e);
-			}
-		}
+		// 自动扫描并加载json
+		for (ModContainer mod : Loader.instance().getActiveModList()) loadElementMap(mod);
 
 		DefaultBucketToElement.water = new ElementStack[] { newES(E.WATER, 25, 100) };
 		DefaultBucketToElement.fire = new ElementStack[] { newES(E.FIRE, 100, 500) };
 
-		instance.add(Items.BUCKET,
+		instance.add(Items.BUCKET, newES(E.METAL, 24, 200));
+	}
 
-				newES(E.METAL, 24, 200));
+	public static void loadElementMap(ModContainer mod) {
+		Json.ergodicAssets(mod, "/element_maps", (file, json) -> {
+			JsonArray jarray = json.needArray("maps");
+			for (int i = 0; i < jarray.size(); i++) {
+				try {
+					JsonObject jobj = jarray.needObject(i);
+					List<ElementStack> estacks = jobj.needElements("element");
+					List<ItemRecord> items = jobj.needItems("item");
+					int complex = -1;
+					if (jobj.hasNumber("complex")) complex = jobj.getNumber("complex").intValue();
+					ElementStack[] es = estacks.toArray(new ElementStack[estacks.size()]);
+					for (ItemRecord ir : items) {
+						if (complex > -1) {
+							if (ir.isJustItem()) instance.add(ir.getItem(), complex, es);
+							else instance.add(ir.getStack(), complex, es);
+						} else {
+							if (ir.isJustItem()) instance.add(ir.getItem(), es);
+							else instance.add(ir.getStack(), es);
+						}
+					}
+				} catch (JsonParseException e) {
+					ElementalSorcery.logger.warn("解析json出现异常：" + file, e);
+				}
+			}
+			return true;
+		});
 	}
 
 }

@@ -32,6 +32,8 @@ public class ESObjects {
 		public Item ARCHITECTURE_CRYSTAL;
 		public Item ELEMENT_CRYSTAL;
 		public Item MAGIC_CRYSTAL;
+		public Item AZURE_CRYSTAL;
+		public Item RESONANT_CRYSTAL;
 		public Item PARCHMENT;
 		public Item MAGIC_PAPER;
 		public Item SPELL_PAPER;
@@ -46,8 +48,6 @@ public class ESObjects {
 		public Item MD_BASE;
 		public Item RITE_MANUAL;
 		public Item RED_HANDSET;
-		public Item AZURE_CRYSTAL;
-		public Item RESONANT_CRYSTAL;
 		public Item ELF_CRYSTAL;
 	}
 	

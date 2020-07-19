@@ -5,6 +5,7 @@ import java.util.List;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
@@ -70,8 +72,7 @@ public class CraftingCrafting implements ICraftingAltar {
 
 	public ItemStack getResult(World world) {
 		IRecipe irecipe = RecipeManagement.instance.findMatchingRecipe(workingInventory, world);
-		if (irecipe != null)
-			return irecipe.getCraftingResult(workingInventory).copy();
+		if (irecipe != null) return irecipe.getCraftingResult(workingInventory).copy();
 		return ItemStack.EMPTY;
 	}
 
@@ -83,11 +84,9 @@ public class CraftingCrafting implements ICraftingAltar {
 	// 更新一次
 	@Override
 	public void update(TileStaticMultiBlock tileMul) {
-		if (!this.isOk)
-			return;
+		if (!this.isOk) return;
 		this.tick++;
-		if (this.tick % 3 != 0)
-			return;
+		if (this.tick % 3 != 0) return;
 		// 寻找合成表
 		if (working_irecipe == null) {
 			working_irecipe = RecipeManagement.instance.findMatchingRecipe(workingInventory, tileMul.getWorld());
@@ -112,8 +111,7 @@ public class CraftingCrafting implements ICraftingAltar {
 				if (!ElementHelper.isEmpty(workingEInventory)) {
 					for (int i = 0; i < workingEInventory.getSlots(); i++) {
 						need = workingEInventory.getStackInSlot(i);
-						if (!need.isEmpty())
-							break;
+						if (!need.isEmpty()) break;
 					}
 				}
 			}
@@ -139,13 +137,12 @@ public class CraftingCrafting implements ICraftingAltar {
 			this.isOk = false;
 			return;
 		}
+		IRecipe irecipe = working_irecipe;
 		working_irecipe.shrink(workingInventory);
 		working_irecipe = null;
-		if (tileMul.getWorld().isRemote)
-			return;
+		if (tileMul.getWorld().isRemote) return;
 		ItemStack out = result.copy();
-		if (player instanceof EntityPlayer)
-			out.onCrafting(tileMul.getWorld(), (EntityPlayer) player, out.getCount());
+		if (player instanceof EntityPlayer) out.onCrafting(tileMul.getWorld(), (EntityPlayer) player, out.getCount());
 		else {
 			try {
 				out.getItem().onCreated(out, tileMul.getWorld(), null);
@@ -153,6 +150,8 @@ public class CraftingCrafting implements ICraftingAltar {
 				ElementalSorcery.logger.warn("合祭坛合成时，onCreated出现空指针异常，这是一个非常不期望的结果", e);
 			}
 		}
+		if (player instanceof EntityPlayerMP)
+			ESCriteriaTriggers.ELEMENT_CRAFT.trigger((EntityPlayerMP) player, irecipe);
 		if (this.addResult(out)) {
 			tileMul.markDirty();
 		} else {
@@ -166,8 +165,7 @@ public class CraftingCrafting implements ICraftingAltar {
 	private boolean addResult(ItemStack stack) {
 		for (int i = 0; i < workingResult.getSlots() - 1; i++) {
 			stack = workingResult.insertItem(i, stack, false);
-			if (stack.isEmpty())
-				return true;
+			if (stack.isEmpty()) return true;
 		}
 		workingResult.insertItem(workingResult.getSlots() - 1, stack, false);
 		return false;
@@ -181,22 +179,18 @@ public class CraftingCrafting implements ICraftingAltar {
 
 	@Override
 	public boolean end(TileStaticMultiBlock tileMul) {
-		if (workingResult.isEmpty())
-			return false;
-		if (!tileMul.isIntact())
-			return false;
+		if (workingResult.isEmpty()) return false;
+		if (!tileMul.isIntact()) return false;
 		itemList.clear();
 		// 重置剩余的物品
 		for (int i = 0; i < workingInventory.getSlots(); i++) {
 			ItemStack stack = workingInventory.getStackInSlot(i);
-			if (!stack.isEmpty())
-				itemList.add(stack);
+			if (!stack.isEmpty()) itemList.add(stack);
 		}
 		// 添加新产生的物品
 		for (int i = 0; i < workingResult.getSlots(); i++) {
 			ItemStack stack = workingResult.getStackInSlot(i);
-			if (!stack.isEmpty())
-				itemList.add(stack);
+			if (!stack.isEmpty()) itemList.add(stack);
 		}
 		return true;
 	}
@@ -204,28 +198,20 @@ public class CraftingCrafting implements ICraftingAltar {
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		if (workingInventory != null)
-			nbt.setTag("work_inv", workingInventory.serializeNBT());
-		if (workingResult != null)
-			nbt.setTag("work_res", workingResult.serializeNBT());
-		if (workingEInventory != null)
-			nbt.setTag("work_einv", workingEInventory.serializeNBT());
+		if (workingInventory != null) nbt.setTag("work_inv", workingInventory.serializeNBT());
+		if (workingResult != null) nbt.setTag("work_res", workingResult.serializeNBT());
+		if (workingEInventory != null) nbt.setTag("work_einv", workingEInventory.serializeNBT());
 		NBTHelper.setItemList(nbt, "itemList", itemList);
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
-		if (nbt.hasKey("work_inv"))
-			workingInventory = new ItemStackHandlerInventory(nbt.getCompoundTag("work_inv"));
-		else
-			workingInventory = new ItemStackHandlerInventory(9);
-		if (nbt.hasKey("work_res"))
-			workingResult = new ItemStackHandlerInventory(nbt.getCompoundTag("work_res"));
-		if (nbt.hasKey("work_einv"))
-			workingEInventory = new ElementInventory(nbt.getCompoundTag("work_einv"));
-		if (nbt.hasKey("itemList"))
-			itemList = NBTHelper.getItemList(nbt, "itemList");
+		if (nbt.hasKey("work_inv")) workingInventory = new ItemStackHandlerInventory(nbt.getCompoundTag("work_inv"));
+		else workingInventory = new ItemStackHandlerInventory(9);
+		if (nbt.hasKey("work_res")) workingResult = new ItemStackHandlerInventory(nbt.getCompoundTag("work_res"));
+		if (nbt.hasKey("work_einv")) workingEInventory = new ElementInventory(nbt.getCompoundTag("work_einv"));
+		if (nbt.hasKey("itemList")) itemList = NBTHelper.getItemList(nbt, "itemList");
 	}
 
 	@Override

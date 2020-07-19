@@ -1,0 +1,32 @@
+{
+	"pattern": [
+		" F ",
+		" # ",
+		" B "
+	],
+	"key": {
+		"#": {
+			"id": "elementalsorcery:spell_paper",
+			"count": 3
+		},
+		"F": {
+			"id": "elementalsorcery:spellbook_cover",
+			"data": 0
+		},
+		"B": {
+			"id": "elementalsorcery:spellbook_cover",
+			"data": 1
+		}
+	},
+	"element": [
+		{
+			"id": "knowledge",
+			"size": 20,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:spellbook",
+		"count": 1
+	}
+}

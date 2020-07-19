@@ -1,0 +1,61 @@
+{
+    "lev": 4,
+    "linked": [
+        "elementalsorcery:deconstruct_altar_table"
+    ],
+    "need": [
+        "md/azure_crystal",
+        "element/element_crafting_table"
+    ],
+    "type": "mult",
+    "lock": 0,
+    "pages": [
+        {
+            "type": "craft",
+            "name": "deconstructAltar",
+            "item": [
+                "elementalsorcery:deconstruct_altar_table"
+            ]
+        },
+        {
+            "type": "buidling",
+            "name": "deconstructAltar",
+            "building": "deconstruct_altar",
+            "extra": [
+                {
+                    "pos": [
+                        0,
+                        1,
+                        0
+                    ],
+                    "item": "elementalsorcery:element_crafting_table"
+                },
+                {
+                    "pos": [
+                        [
+                            2,
+                            1,
+                            2
+                        ],
+                        [
+                            -2,
+                            1,
+                            -2
+                        ],
+                        [
+                            -2,
+                            1,
+                            2
+                        ],
+                        [
+                            2,
+                            1,
+                            -2
+                        ]
+                    ],
+                    "item": "elementalsorcery:elemental_cube"
+                }
+            ]
+        }
+    ]
+}

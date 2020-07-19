@@ -312,6 +312,11 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		return true;
 	}
 
+	/** 是否存在方块 */
+	public boolean haveBlock(BlockPos pos) {
+		return blockMap.containsKey(pos);
+	}
+
 	// 重新计算最大边框
 	private void update(BlockPos pos) {
 		if (pos.getX() < minX) minX = pos.getX();
@@ -417,7 +422,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			this.facing = facing;
 			return this;
 		}
-		
+
 		public EnumFacing getFacing() {
 			return facing;
 		}

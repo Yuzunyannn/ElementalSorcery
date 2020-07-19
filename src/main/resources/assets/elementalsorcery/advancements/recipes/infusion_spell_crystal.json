@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/md_infusion",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:spell_crystal"
+        },
+        "title": {
+            "translate": "es.adv.infusionSpellCrystal.title"
+        },
+        "description": {
+            "translate": "es.adv.infusionSpellCrystal.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:infusion_take",
+            "conditions": {
+                "item": "elementalsorcery:spell_crystal"
+            }
+        }
+    }
+}

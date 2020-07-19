@@ -80,7 +80,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_MAGIC_SOLIDIFY), UID_MDMAGICSOLIDIFY);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_INFUSION), UID_MDINFUSION);
 		// 添加所合成表
-		registry.addRecipes(RecipeManagement.instance.getRecipes(), ElementCraftingCategory.UID);
+		registry.addRecipes(RecipeManagement.instance.getValues(), ElementCraftingCategory.UID);
 		registry.addRecipes(TileRiteTable.getRecipes(), RiteCategory.UID);
 		registry.addRecipes(TileMagicDesk.getRecipes(), MagicDeskCategory.UID);
 		registry.addRecipes(TileMDRubbleRepair.getRecipes(), UID_MDRUBBLEREPAIR);

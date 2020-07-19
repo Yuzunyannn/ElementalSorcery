@@ -1,0 +1,20 @@
+{
+    "parent": "elementalsorcery:recipes/infusion_spell_crystal",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:spellbook_enchantment"
+        },
+        "title": {
+            "translate": "es.adv.spellbookEnch.title"
+        },
+        "description": {
+            "translate": "es.adv.spellbookEnch.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:spellbook_ench",
+            "conditions": { }
+        }
+    }
+}

@@ -10,11 +10,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.RegistryNamespaced;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import yuzunyannn.elementalsorcery.elf.pro.ElfProRegister;
 
 public abstract class ESImplRegister<T extends IForgeRegistryEntry<T>> implements IForgeRegistry<T> {
-
-	public static final ElfProRegister instance = new ElfProRegister();
 
 	private final Registry REGISTRY = new Registry();
 

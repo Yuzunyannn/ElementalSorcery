@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.element;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.ESObjects;
@@ -175,7 +176,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	/** 削弱 */
 	public void weaken(float rate) {
 		if (this.usePower()) {
-			this.setPower((int) (this.power * rate));
+			this.setPower(MathHelper.ceil(this.power * rate));
 		}
 	}
 

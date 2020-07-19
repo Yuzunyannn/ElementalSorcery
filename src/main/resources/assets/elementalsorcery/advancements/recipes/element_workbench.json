@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/infusion_element_crystal",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:element_workbench"
+        },
+        "title": {
+            "translate": "es.adv.elementWorkbench.title"
+        },
+        "description": {
+            "translate": "es.adv.elementWorkbench.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:element_craft",
+            "conditions": {
+                "recipe": ""
+            }
+        }
+    }
+}

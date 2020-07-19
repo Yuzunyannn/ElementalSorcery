@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:crystal_garden",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:md_resonant_incubator"
+        },
+        "title": {
+            "translate": "es.adv.MDResonantIncubator.title"
+        },
+        "description": {
+            "translate": "es.adv.MDResonantIncubator.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:element_craft",
+            "conditions": {
+                "recipe": "elementalsorcery:md_resonant_incubator"
+            }
+        }
+    }
+}

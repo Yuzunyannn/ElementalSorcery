@@ -1,0 +1,11 @@
+{
+    "lev": 4,
+    "need": [
+        "element_adv/resonant_incubator"
+    ],
+    "linked": "elementalsorcery:architecture_crystal",
+    "type": "normal",
+    "name": "itemCrystal",
+    "item": "elementalsorcery:item_crystal",
+    "background": "inherit"
+}

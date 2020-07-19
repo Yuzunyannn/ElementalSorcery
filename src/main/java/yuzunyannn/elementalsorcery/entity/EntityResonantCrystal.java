@@ -42,6 +42,7 @@ public class EntityResonantCrystal extends EntityThrowable {
 
 	public EntityResonantCrystal(World worldIn, EntityLivingBase throwerIn) {
 		super(worldIn, throwerIn);
+		this.ignoreEntity = throwerIn;
 	}
 
 	public EntityResonantCrystal(World worldIn, double x, double y, double z) {
@@ -88,7 +89,7 @@ public class EntityResonantCrystal extends EntityThrowable {
 			if (tile == null) break sp;
 			if (tile instanceof TileMDResonantIncubator)
 				((TileMDResonantIncubator) tile).resonance(rand.nextFloat() * 100);
-			else if (tile instanceof IAcceptMagic) {
+			if (tile instanceof IAcceptMagic) {
 				((IAcceptMagic) tile).accpetMagic(ElementStack.magic(80, 50), this.getPosition(), result.sideHit);
 				effectState = 4;
 			} else if (tile.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, result.sideHit)) {

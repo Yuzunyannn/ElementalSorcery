@@ -1,11 +1,16 @@
-package yuzunyannn.elementalsorcery.util;
+package yuzunyannn.elementalsorcery.util.json;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
 
-import javax.vecmath.Vector3d;
-
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -22,13 +27,17 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Vec3d;
+import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 
-public class JsonHelper {
+@Deprecated
+public class JsonHelperOld {
 
 	public static final String ERROR_CODE_OTHER_MOD = "[ModeNotLoad]";
 	public static final String ERROR_CODE_NOT_FIND = "[CannotFind]";
@@ -103,39 +112,6 @@ public class JsonHelper {
 
 	static public boolean isString(JsonElement je) {
 		return je.isJsonPrimitive() && je.getAsJsonPrimitive().isString();
-	}
-
-	/** 描述物品记录，是stack还是单单是物品 */
-	public static class ItemRecord {
-		private final ItemStack stack;
-		private final Item item;
-
-		public ItemRecord(ItemStack stack) {
-			this.stack = stack;
-			this.item = null;
-		}
-
-		public ItemRecord(Item item) {
-			this.item = item;
-			this.stack = new ItemStack(item);
-		}
-
-		public boolean isJustItem() {
-			return item != null;
-		}
-
-		public ItemStack getStack() {
-			return stack;
-		}
-
-		public Item getItem() {
-			return item;
-		}
-
-		@Override
-		public String toString() {
-			return item == null ? stack.toString() : item.getUnlocalizedName();
-		}
 	}
 
 	static public List<ItemStack> to(List<ItemRecord> list) {
@@ -250,14 +226,14 @@ public class JsonHelper {
 	}
 
 	/** 获取坐标 */
-	static public List<Vector3d> readBlockPos(JsonElement je) {
-		List<Vector3d> list = new ArrayList<>();
+	static public List<Vec3d> readBlockPos(JsonElement je) {
+		List<Vec3d> list = new ArrayList<>();
 		readBlockPos(je, list);
 		return list;
 	}
 
 	/** 获取坐标 */
-	static private void readBlockPos(JsonElement je, List<Vector3d> list) {
+	static private void readBlockPos(JsonElement je, List<Vec3d> list) {
 		if (je == null || je.isJsonNull()) return;
 		if (je.isJsonArray()) {
 			JsonArray jarray = je.getAsJsonArray();
@@ -269,9 +245,38 @@ public class JsonHelper {
 				double x = je.getAsDouble();
 				double y = jarray.get(1).getAsDouble();
 				double z = jarray.get(2).getAsDouble();
-				list.add(new Vector3d(x, y, z));
+				list.add(new Vec3d(x, y, z));
 			}
 		}
+	}
+
+	/** 是否为json */
+	public static boolean isJson(Path file) {
+		return file.toString().endsWith(".json");
+	}
+
+	/** 加载json */
+	public static JsonObject load(Path file) throws IOException {
+		InputStream istream = null;
+		try (BufferedReader reader = Files.newBufferedReader(file)) {
+			Gson gson = new Gson();
+			return gson.fromJson(reader, JsonObject.class);
+		}
+	}
+
+	/** 遍历所有json内容 */
+	public static void ergodicAssets(ModContainer mod, String path, BiFunction<Path, JsonObject, Boolean> func) {
+		CraftingHelper.findFiles(mod, "assets/" + mod.getModId() + path, (root) -> true, (root, file) -> {
+			if (!JsonHelperOld.isJson(file)) return false;
+			try {
+				Loader.instance().setActiveModContainer(mod);
+				JsonObject jobj = load(file);
+				return func.apply(file, jobj);
+			} catch (IOException e) {
+				ElementalSorcery.logger.warn("读取json文件过程中出现IO异常：" + file, e);
+				return false;
+			}
+		}, true, true);
 	}
 
 }

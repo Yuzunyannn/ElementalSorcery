@@ -8,13 +8,13 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.ICriterionInstance;
 import net.minecraft.advancements.ICriterionTrigger;
 import net.minecraft.advancements.PlayerAdvancements;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 /** 默认的成就条件触发适配，方便继承和完成 */
 public abstract class CriterionTriggerAdapter<T extends ICriterionInstance> implements ICriterionTrigger<T> {
@@ -56,6 +56,10 @@ public abstract class CriterionTriggerAdapter<T extends ICriterionInstance> impl
 	}
 
 	@Override
+	public T deserializeInstance(com.google.gson.JsonObject json, JsonDeserializationContext context) {
+		return deserializeInstance(new JsonObject(json), context);
+	}
+
 	abstract public T deserializeInstance(JsonObject json, JsonDeserializationContext context);
 
 	/** 对内容进行测试，该函数是在try环境中运行的，出现异常认为返回false */
@@ -96,8 +100,7 @@ public abstract class CriterionTriggerAdapter<T extends ICriterionInstance> impl
 						if (list == null) list = Lists.<ICriterionTrigger.Listener<T>>newArrayList();
 						list.add(listener);
 					}
-				} catch (Exception e) {
-				}
+				} catch (Exception e) {}
 			}
 			if (list != null) {
 				for (ICriterionTrigger.Listener<T> listener1 : list) {

@@ -1,0 +1,25 @@
+{
+	"pattern": [
+		"NSN",
+		"M#M",
+		"NSN"
+	],
+	"key": {
+		"#": "minecraft:ender_eye",
+		"S": "elementalsorcery:spell_crystal",
+		"M": "elementalsorcery:magic_crystal",
+		"N": "minecraft:leather"
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 10,
+			"power": 25
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:spellbook_cover",
+		"count": 1,
+		"data": 0
+	}
+}

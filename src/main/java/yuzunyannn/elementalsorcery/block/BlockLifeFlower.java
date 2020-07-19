@@ -11,6 +11,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -26,6 +28,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.render.particle.Effect;
 import yuzunyannn.elementalsorcery.render.particle.EffectElement;
@@ -75,6 +78,13 @@ public class BlockLifeFlower extends Block {
 				world.setBlockToAir(pos);
 			}
 		}
+	}
+
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
+			ItemStack stack) {
+		if (this.hasPower(worldIn, pos))
+			if (placer instanceof EntityPlayerMP) ESCriteriaTriggers.GARDEN_BUILD.trigger((EntityPlayerMP) placer);
 	}
 
 	@Override

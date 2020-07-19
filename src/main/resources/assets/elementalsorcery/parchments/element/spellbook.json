@@ -1,5 +1,9 @@
 {
     "lev": 3,
+    "need": [
+        "element/spell_paper",
+        "element/spell_crystal"
+    ],
     "type": "mult",
     "lock": 1,
     "pages": [

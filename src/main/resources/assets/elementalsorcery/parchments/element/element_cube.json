@@ -1,5 +1,8 @@
 {
     "lev": 3,
+    "need": [
+        "element/element_crystal"
+    ],
     "type": "craft",
     "name": "elementCube",
     "item": "elementalsorcery:elemental_cube"

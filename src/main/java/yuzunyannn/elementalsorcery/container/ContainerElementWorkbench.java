@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.network.play.server.SPacketSetSlot;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -41,22 +42,20 @@ public class ContainerElementWorkbench extends Container {
 				new SlotCrafting(playerInventory.player, this.craftMatrix, this.craftResult, 0, 124, 35) {
 					@Override
 					public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
-						if (irecipe == null)
-							return super.onTake(thePlayer, stack);
+						if (irecipe == null) return super.onTake(thePlayer, stack);
 						this.onCrafting(stack);
 						boolean last_have = irecipe != null;
 						// 减少元素，减少物品
 						ItemStack stack_ = craftElement.getStackInSlot(0);
 						IElementInventory inventory = ElementHelper.getElementInventory(stack_);
 						List<ElementStack> elist = irecipe.getNeedElements();
-						for (ElementStack estack : elist)
-							inventory.extractElement(estack, false);
+						for (ElementStack estack : elist) inventory.extractElement(estack, false);
 						inventory.saveState(stack_);
 						irecipe.shrink(craftMatrix);
 						craftElement.setInventorySlotContents(0, stack_);
-						if (!world.isRemote && last_have) {
-							detectAndSendChanges();
-						}
+						if (!world.isRemote && last_have) detectAndSendChanges();
+						if (thePlayer instanceof EntityPlayerMP)
+							ESCriteriaTriggers.ELEMENT_CRAFT.trigger((EntityPlayerMP) thePlayer, irecipe);
 						return stack;
 					}
 				});
@@ -116,18 +115,15 @@ public class ContainerElementWorkbench extends Container {
 	private ItemStack doElementCrafting() {
 		ItemStack itemstack = ItemStack.EMPTY;
 		irecipe = RecipeManagement.instance.findMatchingRecipe(craftMatrix, this.world);
-		if (irecipe == null)
-			return ItemStack.EMPTY;
+		if (irecipe == null) return ItemStack.EMPTY;
 		List<ElementStack> elist = irecipe.getNeedElements();
 		if (elist != null && !elist.isEmpty()) {
 			ItemStack stack = this.craftElement.getStackInSlot(0);
 			IElementInventory inventory = ElementHelper.getElementInventory(stack);
-			if (!ElementHelper.canExtract(inventory))
-				return ItemStack.EMPTY;
+			if (!ElementHelper.canExtract(inventory)) return ItemStack.EMPTY;
 			for (ElementStack estack : elist) {
 				ElementStack get_stack = inventory.extractElement(estack, true);
-				if (!get_stack.arePowerfulAndMoreThan(estack))
-					return ItemStack.EMPTY;
+				if (!get_stack.arePowerfulAndMoreThan(estack)) return ItemStack.EMPTY;
 			}
 		}
 		itemstack = irecipe.getCraftingResult(this.craftMatrix).copy();
@@ -158,21 +154,13 @@ public class ContainerElementWorkbench extends Container {
 			if (index == 0) {
 				itemstack1.getItem().onCreated(itemstack1, this.world, playerIn);
 
-				if (!this.mergeItemStack(itemstack1, 10, 46, true)) {
-					return ItemStack.EMPTY;
-				}
+				if (!this.mergeItemStack(itemstack1, 10, 46, true)) { return ItemStack.EMPTY; }
 				slot.onSlotChange(itemstack1, itemstack);
 			} else if (index >= 10 && index < 37) {
-				if (!this.mergeItemStack(itemstack1, 37, 46, false)) {
-					return ItemStack.EMPTY;
-				}
+				if (!this.mergeItemStack(itemstack1, 37, 46, false)) { return ItemStack.EMPTY; }
 			} else if (index >= 37 && index < 46) {
-				if (!this.mergeItemStack(itemstack1, 10, 37, false)) {
-					return ItemStack.EMPTY;
-				}
-			} else if (!this.mergeItemStack(itemstack1, 10, 46, false)) {
-				return ItemStack.EMPTY;
-			}
+				if (!this.mergeItemStack(itemstack1, 10, 37, false)) { return ItemStack.EMPTY; }
+			} else if (!this.mergeItemStack(itemstack1, 10, 46, false)) { return ItemStack.EMPTY; }
 
 			if (itemstack1.isEmpty()) {
 				slot.putStack(ItemStack.EMPTY);
@@ -180,9 +168,7 @@ public class ContainerElementWorkbench extends Container {
 				slot.onSlotChanged();
 			}
 
-			if (itemstack1.getCount() == itemstack.getCount()) {
-				return ItemStack.EMPTY;
-			}
+			if (itemstack1.getCount() == itemstack.getCount()) { return ItemStack.EMPTY; }
 
 			ItemStack itemstack2 = slot.onTake(playerIn, itemstack1);
 

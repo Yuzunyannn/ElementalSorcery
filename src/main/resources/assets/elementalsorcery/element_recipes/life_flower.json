@@ -1,0 +1,43 @@
+{
+	"pattern": [
+		"RBY",
+		" # ",
+		" # "
+	],
+	"key": {
+		"#": "minecraft:wheat_seeds",
+		"R": {
+			"id": "minecraft:dye",
+			"data": 1
+		},
+		"B": {
+			"id": "minecraft:dye",
+			"data": 4
+		},
+		"Y": {
+			"id": "minecraft:dye",
+			"data": 11
+		}
+	},
+	"element": [
+		{
+			"id": "wood",
+			"size": 100,
+			"power": 250
+		},
+		{
+			"id": "water",
+			"size": 80,
+			"power": 50
+		},
+		{
+			"id": "fire",
+			"size": 20,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:life_flower",
+		"count": 1
+	}
+}

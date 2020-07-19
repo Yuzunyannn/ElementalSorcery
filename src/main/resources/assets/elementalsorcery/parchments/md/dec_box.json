@@ -1,5 +1,8 @@
 {
     "lev": 2,
+    "need": [
+        "md/azure_crystal"
+    ],
     "type": "mult",
     "lock": 0,
     "pages": [

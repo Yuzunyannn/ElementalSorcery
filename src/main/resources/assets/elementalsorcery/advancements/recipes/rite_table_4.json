@@ -1,0 +1,28 @@
+{
+    "parent": "elementalsorcery:recipes/element_crafting_table",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:rite_table",
+            "nbt": "{level:4}"
+        },
+        "title": {
+            "translate": "es.adv.rite4.title"
+        },
+        "description": {
+            "translate": "es.adv.rite4.description"
+        }
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:rite_table",
+                        "nbt": "{level:4}"
+                    }
+                ]
+            }
+        }
+    }
+}

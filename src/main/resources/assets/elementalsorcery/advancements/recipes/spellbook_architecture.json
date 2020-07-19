@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/spellbook",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:spellbook_architecture"
+        },
+        "title": {
+            "translate": "es.adv.spellbookArchitecture.title"
+        },
+        "description": {
+            "translate": "es.adv.spellbookArchitecture.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:magic_desk_craft",
+            "conditions": {
+                "output": "elementalsorcery:spellbook_architecture"
+            }
+        }
+    }
+}

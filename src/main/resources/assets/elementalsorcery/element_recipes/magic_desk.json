@@ -1,0 +1,25 @@
+{
+	"pattern": [
+		"MEM",
+		" E ",
+		" E "
+	],
+	"key": {
+		"E": {
+			"id": "elementalsorcery:elf_plank",
+			"data": 1
+		},
+		"M": "elementalsorcery:magic_crystal"
+	},
+	"element": [
+		{
+			"id": "knowledge",
+			"size": 30,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:magic_desk",
+		"count": 1
+	}
+}

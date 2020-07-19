@@ -1,0 +1,20 @@
+{
+    "parent": "elementalsorcery:recipes/element_crafting_table",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:life_flower"
+        },
+        "title": {
+            "translate": "es.adv.crystalGarden.title"
+        },
+        "description": {
+            "translate": "es.adv.crystalGarden.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:garden_build",
+            "conditions": {}
+        }
+    }
+}

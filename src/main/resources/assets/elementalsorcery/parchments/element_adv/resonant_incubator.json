@@ -1,0 +1,76 @@
+{
+    "lev": 4,
+    "need": [
+        "element/element_crafting_table",
+        "element_adv/crystal_garden"
+    ],
+    "type": "mult",
+    "lock": 0,
+    "pages": [
+        {
+            "type": "craft",
+            "name": "resonantIncubator",
+            "item": "elementalsorcery:md_resonant_incubator"
+        },
+        {
+            "type": "buidling",
+            "name": "resonantIncubator",
+            "building": "resonant_incubator",
+            "extra": [
+                {
+                    "pos": [
+                        0,
+                        2,
+                        0
+                    ],
+                    "item": "elementalsorcery:md_resonant_incubator"
+                },
+                {
+                    "pos": [
+                        [
+                            3,
+                            1,
+                            0
+                        ],
+                        [
+                            -3,
+                            1,
+                            0
+                        ],
+                        [
+                            0,
+                            1,
+                            3
+                        ],
+                        [
+                            0,
+                            1,
+                            -3
+                        ],
+                        [
+                            2,
+                            1,
+                            2
+                        ],
+                        [
+                            -2,
+                            1,
+                            -2
+                        ],
+                        [
+                            2,
+                            1,
+                            -2
+                        ],
+                        [
+                            -2,
+                            1,
+                            2
+                        ]
+                    ],
+                    "item": "elementalsorcery:magic_platform"
+                }
+            ]
+        }
+    ]
+}

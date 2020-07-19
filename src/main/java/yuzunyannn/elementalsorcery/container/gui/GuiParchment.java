@@ -80,19 +80,26 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		GlStateManager.color(1, 1, 1);
-		this.mc.getTextureManager().bindTexture(TEXTURE);
-		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
-		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
-		this.page.drawBackground(offsetX, offsetY, this);
-		for (SlotButton slot : this.slotButtonList) {
-			if (!slot.stack.isEmpty()) drawItem(slot.stack, slot.x, slot.y);
+		try {
+			GlStateManager.color(1, 1, 1);
+			this.mc.getTextureManager().bindTexture(TEXTURE);
+			int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
+			this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
+			this.page.drawBackground(offsetX, offsetY, this);
+			for (SlotButton slot : this.slotButtonList) if (!slot.stack.isEmpty()) drawItem(slot.stack, slot.x, slot.y);
+			// 文字
+			GlStateManager.pushMatrix();
+			GlStateManager.translate(offsetX, offsetY, 0);
+			this.page.drawValue(this);
+			GlStateManager.popMatrix();
+		} catch (Exception e) {
+			ElementalSorcery.logger.warn("羊皮卷gui:drawGuiContainerBackgroundLayer异常", e);
+			this.toPage = Pages.getErrorPage();
 		}
 	}
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		this.page.drawValue(this);
 	}
 
 	@Override
@@ -132,7 +139,12 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			this.init();
 			needInit = false;
 		}
-		this.page.update(this);
+		try {
+			this.page.update(this);
+		} catch (Exception e) {
+			ElementalSorcery.logger.warn("羊皮卷gui:update异常", e);
+			this.toPage = Pages.getErrorPage();
+		}
 	}
 
 	private void gotoPage(boolean rPrevPage) {
@@ -366,7 +378,6 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 		Building.BuildingBlocks iter = building.getBuildingBlocks();
 		// 开始
 		GlStateManager.disableCull();
-		bufferbuilder.begin(7, DefaultVertexFormats.BLOCK);
 		while (iter.next()) {
 			BlockPos blockpos = iter.getPos();
 			IBlockState iblockstate = iter.getState();
@@ -380,14 +391,16 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 						tileRender.render(tile, blockpos.getX(), blockpos.getY(), blockpos.getZ(),
 								mc.getRenderPartialTicks(), -1, 1);
 					} catch (Exception e) {}
+					// 再次绑定
+					mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 				}
 			} else {
+				bufferbuilder.begin(7, DefaultVertexFormats.BLOCK);
 				render.renderModel(mc.world, blockrendererdispatcher.getModelForState(iblockstate), iblockstate,
 						blockpos, bufferbuilder, true, MathHelper.getPositionRandom(blockpos));
+				tessellator.draw();
 			}
-
 		}
-		tessellator.draw();
 		RenderHelper.enableStandardItemLighting();
 		GlStateManager.popMatrix();
 	}

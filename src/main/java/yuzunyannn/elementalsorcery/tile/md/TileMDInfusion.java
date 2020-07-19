@@ -3,6 +3,8 @@ package yuzunyannn.elementalsorcery.tile.md;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
@@ -10,7 +12,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.items.ItemStackHandler;
@@ -273,5 +277,25 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 			}
 			return count >= 14;
 		});
+		addRecipe(ESInitInstance.ITEMS.ELF_CRYSTAL, ESInitInstance.ITEMS.ARCHITECTURE_CRYSTAL, 40, 20,
+				(world, pos) -> {
+					Biome biome = world.getBiome(pos);
+					if (biome != Biomes.DESERT && biome != Biomes.DESERT_HILLS && biome != Biomes.MUTATED_DESERT)
+						return false;
+					final int size = 4;
+					Vec3d v3d = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+					AxisAlignedBB aabb = new AxisAlignedBB(v3d.x - size, v3d.y - size, v3d.z - size, v3d.x + size,
+							v3d.y + size, v3d.z + size);
+					List<EntityItem> list = world.getEntitiesWithinAABB(EntityItem.class, aabb);
+					int count = 0;
+					for (EntityItem ei : list) {
+						ItemStack stack = ei.getItem();
+						Block block = Block.getBlockFromItem(stack.getItem());
+						if (block == null || block == Blocks.AIR) continue;
+						if (!block.getDefaultState().isFullBlock()) continue;
+						count += stack.getCount();
+					}
+					return count >= 320;
+				});
 	}
 }

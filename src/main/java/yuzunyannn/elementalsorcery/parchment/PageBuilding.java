@@ -26,6 +26,14 @@ public class PageBuilding extends PageEasy {
 		extra.add(block, pos);
 	}
 
+	public void addExtraBlockNotOverlap(BlockPos pos, IBlockState block) {
+		if (block == null || block == Blocks.AIR.getDefaultState()) return;
+		if (building.haveBlock(pos)) return;
+		if (extra == null) extra = new Building();
+		if (extra.haveBlock(pos)) return;
+		extra.add(block, pos);
+	}
+
 	@Override
 	public void drawValue(IPageManager pageManager) {
 		int width = this.getWidthSize(pageManager);
@@ -35,7 +43,7 @@ public class PageBuilding extends PageEasy {
 	@Override
 	public void drawBackground(int xoff, int yoff, IPageManager pageManager) {
 		int x = pageManager.getGui().getXSize() / 2;
-		int y = pageManager.getGui().getYSize() / 2 + 10;
+		int y = pageManager.getGui().getYSize() / 2 + 20;
 		AxisAlignedBB box = building.getBox();
 		double lx = box.maxX - box.minX;
 		double lz = box.maxZ - box.minZ;

@@ -1,0 +1,26 @@
+{
+	"pattern": [
+		"GPG",
+		" P ",
+		"EEE"
+	],
+	"key": {
+		"P": {
+			"id": "elementalsorcery:elf_plank",
+			"data": 1
+		},
+		"G": "minecraft:gold_ingot",
+		"E": "elementalsorcery:estone"
+	},
+	"element": [
+		{
+			"id": "wood",
+			"size": 30,
+			"power": 90
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:element_crafting_table",
+		"count": 1
+	}
+}

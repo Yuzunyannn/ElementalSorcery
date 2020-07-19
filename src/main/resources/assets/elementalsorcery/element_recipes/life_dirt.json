@@ -1,0 +1,23 @@
+{
+	"pattern": [
+		"M#M",
+		"#W#",
+		"M#M"
+	],
+	"key": {
+		"#": "minecraft:dirt",
+		"W": "minecraft:wheat_seeds",
+		"M": "elementalsorcery:magic_crystal"
+	},
+	"element": [
+		{
+			"id": "wood",
+			"size": 20,
+			"power": 300
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:life_dirt",
+		"count": 4
+	}
+}

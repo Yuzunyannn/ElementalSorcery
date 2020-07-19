@@ -39,7 +39,6 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 		GlStateManager.rotate(tile.getRoate((float) (rotate * 180.0f / Math.PI), wake), 1, 1, 1);
 		TEXTURE.bind();
 		MODEL.render();
-
 		GlStateManager.color(tile.color.x * tile.colorRate + (1.0F - tile.colorRate) * tile.ORIGIN_COLOR.x,
 				tile.color.y * tile.colorRate + (1.0F - tile.colorRate) * tile.ORIGIN_COLOR.y,
 				tile.color.z * tile.colorRate + (1.0F - tile.colorRate) * tile.ORIGIN_COLOR.z);

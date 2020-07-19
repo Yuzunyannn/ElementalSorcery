@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/spellbook_ench",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:magic_desk"
+        },
+        "title": {
+            "translate": "es.adv.magicDesk.title"
+        },
+        "description": {
+            "translate": "es.adv.magicDesk.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:element_craft",
+            "conditions": {
+                "recipe": "elementalsorcery:magic_desk"
+            }
+        }
+    }
+}

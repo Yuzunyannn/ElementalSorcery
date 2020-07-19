@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/astone",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:md_infusion"
+        },
+        "title": {
+            "translate": "es.adv.MDInfusion.title"
+        },
+        "description": {
+            "translate": "es.adv.MDInfusion.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "elementalsorcery:md/md_infusion"
+            }
+        }
+    }
+}

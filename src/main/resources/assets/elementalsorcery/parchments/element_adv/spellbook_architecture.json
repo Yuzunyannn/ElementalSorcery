@@ -1,0 +1,14 @@
+{
+    "lev": 4,
+    "need": [
+        "element/spellbook",
+        "element/magic_desk",
+        "element_adv/architecture_crystal"
+    ],
+    "type": "spellaltar",
+    "name": "spArchitecture",
+    "item": [
+        "elementalsorcery:spellbook",
+        "elementalsorcery:spellbook_architecture"
+    ]
+}

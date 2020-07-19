@@ -435,6 +435,13 @@ public class TileRiteTable extends TileEntityNetwork {
 
 		addSacrifice(ITEMS.MAGIC_CRYSTAL, 10, 3, "magic_crystal");
 		addSacrifice(ITEMS.ELEMENT_CRYSTAL, 25, 3, "element_crystal");
+		addSacrifice(ITEMS.AZURE_CRYSTAL, 15, 3, "azure_crystal");
+
+		addSacrifice(BLOCKS.LIFE_DIRT, 16, 4);
+		addSacrifice(ITEMS.ARCHITECTURE_CRYSTAL, 30, 4);
+		addSacrifice(ITEMS.ITEM_CRYSTAL, 30, 4);
+		addSacrifice(ITEMS.RESONANT_CRYSTAL, 15, 4);
+		addSacrifice(ITEMS.ORDER_CRYSTAL, 20, 4);
 	}
 
 	/** 所有的页面等级，从0开始 */

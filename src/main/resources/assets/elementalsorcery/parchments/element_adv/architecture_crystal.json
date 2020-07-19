@@ -1,0 +1,14 @@
+{
+    "lev": 4,
+    "need": [
+        "md/magic_crystal",
+        "md/infusion"
+    ],
+    "linked": "elementalsorcery:architecture_crystal",
+    "type": "infusion",
+    "name": "archCrystal",
+    "item": [
+        "elementalsorcery:magic_crystal",
+        "elementalsorcery:architecture_crystal"
+    ]
+}

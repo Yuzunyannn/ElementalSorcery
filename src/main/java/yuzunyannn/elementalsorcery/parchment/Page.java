@@ -1,13 +1,18 @@
 package yuzunyannn.elementalsorcery.parchment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
 
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class Page {
 
@@ -22,10 +27,31 @@ public class Page {
 	/** 上一个指向的页面 */
 	public Page prevPage;
 
+	/** 解锁该页面的需求 */
+	protected List<String> requires;
+
+	public void addRequire(String require) {
+		if (requires == null) requires = new ArrayList<String>();
+		requires.add(require);
+	}
+
 	/** 显示在物品(羊皮卷)上的信息 */
 	public void addItemInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
 			ITooltipFlag flagIn) {
+		tooltip.add("§e" + I18n.format(this.getName()));
+		if (this.requires != null) {
+			tooltip.add(TextFormatting.DARK_AQUA + I18n.format("info.page.need"));
+			for (String id : this.requires) {
+				Page page = Pages.getPage(id);
+				if (page == Pages.getErrorPage()) continue;
+				tooltip.add(TextFormatting.RED + I18n.format(page.getName()));
+			}
+		}
+	}
 
+	/** 获取羊皮卷的名称 */
+	public String getName() {
+		return this.getId();
 	}
 
 	/** 页面首次被打开 */

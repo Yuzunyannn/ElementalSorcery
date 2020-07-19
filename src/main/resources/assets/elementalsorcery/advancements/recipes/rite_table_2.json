@@ -1,0 +1,28 @@
+{
+    "parent": "elementalsorcery:recipes/astone",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:rite_table",
+            "nbt": "{level:2}"
+        },
+        "title": {
+            "translate": "es.adv.rite2.title"
+        },
+        "description": {
+            "translate": "es.adv.rite2.description"
+        }
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:rite_table",
+                        "nbt": "{level:2}"
+                    }
+                ]
+            }
+        }
+    }
+}

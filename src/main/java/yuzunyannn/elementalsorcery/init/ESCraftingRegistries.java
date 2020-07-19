@@ -7,6 +7,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeColorRuler;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeLifeDirt;
+import yuzunyannn.elementalsorcery.crafting.mc.RecipePageBuilding;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
 
 public class ESCraftingRegistries {
@@ -19,6 +20,8 @@ public class ESCraftingRegistries {
 		ForgeRegistries.RECIPES.register(new RecipeColorRuler().setRegistryName("magicRuler"));
 		ForgeRegistries.RECIPES.register(new RecipeRiteWrite().setRegistryName("riteWrite"));
 		ForgeRegistries.RECIPES.register(new RecipeLifeDirt().setRegistryName("lifeDirt"));
+		ForgeRegistries.RECIPES.register(new RecipePageBuilding().setRegistryName("pageBuilding"));
+
 	}
 
 	private static void registerAllSmelting() {

@@ -40,7 +40,7 @@ public class PageTransform extends PageEasy {
 	}
 
 	protected int getCX() {
-		return 152;
+		return 160;
 	}
 
 	protected int getCY() {

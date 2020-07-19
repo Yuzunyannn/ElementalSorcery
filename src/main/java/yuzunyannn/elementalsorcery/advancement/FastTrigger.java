@@ -1,12 +1,12 @@
 package yuzunyannn.elementalsorcery.advancement;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class FastTrigger extends CriterionTriggerAdapter<FastTrigger.Instance> {
 

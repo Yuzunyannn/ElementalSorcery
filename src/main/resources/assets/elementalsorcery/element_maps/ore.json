@@ -45,6 +45,7 @@
             ]
         },
         {
+            "notes": "钻石",
             "item": {
                 "type": "ore_dict",
                 "id": "oreDiamond"

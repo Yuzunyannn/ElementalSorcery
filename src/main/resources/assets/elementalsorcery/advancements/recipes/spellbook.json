@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/spellbook_ench",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:spellbook"
+        },
+        "title": {
+            "translate": "es.adv.spellbook.title"
+        },
+        "description": {
+            "translate": "es.adv.spellbook.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:element_craft",
+            "conditions": {
+                "recipe": "elementalsorcery:spellbook"
+            }
+        }
+    }
+}

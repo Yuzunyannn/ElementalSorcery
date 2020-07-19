@@ -1,0 +1,39 @@
+{
+	"pattern": [
+		"ZSZ",
+		"FPF",
+		"EEE"
+	],
+	"key": {
+		"P": {
+			"id": "elementalsorcery:elf_plank",
+			"data": 1
+		},
+		"S":{
+			"id": "elementalsorcery:estone",
+			"data": 1
+		},
+		"Z": "elementalsorcery:azure_crystal",
+		"E": "elementalsorcery:estone",
+		"F": {
+			"id": "elementalsorcery:estone",
+			"data": 2
+		}
+	},
+	"element": [
+		{
+			"id": "magic",
+			"size": 100,
+			"power": 25
+		},
+		{
+			"id": "ender",
+			"size": 30,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:deconstruct_altar_table",
+		"count": 1
+	}
+}

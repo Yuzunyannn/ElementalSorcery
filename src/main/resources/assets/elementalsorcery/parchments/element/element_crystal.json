@@ -1,5 +1,10 @@
 {
     "lev": 3,
+    "need": [
+        "md/magic_crystal",
+        "md/infusion"
+    ],
+    "linked":"elementalsorcery:element_crystal",
     "type": "infusion",
     "name": "elementCrystal",
     "item": [

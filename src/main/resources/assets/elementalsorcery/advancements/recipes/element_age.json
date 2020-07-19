@@ -1,0 +1,26 @@
+{
+    "parent": "elementalsorcery:recipes/infusion_element_crystal",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:elemental_cube"
+        },
+        "title": {
+            "translate": "es.adv.elementAge.title"
+        },
+        "description": {
+            "translate": "es.adv.elementAge.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:elemental_cube"
+                    }
+                ]
+            }
+        }
+    }
+}

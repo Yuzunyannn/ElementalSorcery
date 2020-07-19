@@ -1,0 +1,30 @@
+{
+	"pattern": [
+		" * ",
+		"*#*",
+		" * "
+	],
+	"key": {
+		"#": "elementalsorcery:magic_paper",
+		"*": "elementalsorcery:spell_crystal"
+	},
+	"element": [
+		{
+			"id": "knowledge",
+			"size": 5,
+			"power": 25
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:spell_paper",
+		"count": 1,
+		"nbt": {
+			"ench": [
+				{
+					"id": -1,
+					"lvl": 1
+				}
+			]
+		}
+	}
+}

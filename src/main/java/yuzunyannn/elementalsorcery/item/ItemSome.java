@@ -10,6 +10,8 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -74,7 +76,14 @@ public class ItemSome {
 			public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 				if (!this.isInCreativeTab(tab)) return;
 				ItemStack stack = new ItemStack(this, 1, 0);
-				stack.addEnchantment(null, 1);
+				NBTTagCompound nbt = new NBTTagCompound();
+				stack.setTagCompound(nbt);
+				NBTTagList list = new NBTTagList();
+				nbt.setTag("ench", list);
+				nbt = new NBTTagCompound();
+				list.appendTag(nbt);
+				nbt.setInteger("id", (short) -1);
+				nbt.setInteger("lvl", (short) 1);
 				items.add(stack);
 			}
 		}.setUnlocalizedName("spellPaper");

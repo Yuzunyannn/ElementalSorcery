@@ -46,7 +46,7 @@ public class BlockRiteTable extends BlockContainerNormal {
 			@Override
 			public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 				if (tab != ESCreativeTabs.TAB) return;
-				for (int i = 0; i < 4; i++) {
+				for (int i = 0; i <= TileRiteTable.MAX_LEVEL; i++) {
 					ItemStack stack = new ItemStack(this);
 					NBTTagCompound nbt = new NBTTagCompound();
 					nbt.setInteger("level", i);

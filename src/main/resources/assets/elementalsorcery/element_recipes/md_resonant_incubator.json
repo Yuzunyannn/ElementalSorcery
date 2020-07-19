@@ -1,0 +1,37 @@
+{
+	"pattern": [
+		"AAA",
+		"RGR",
+		"ABA"
+	],
+	"key": {
+		"A": {
+			"id": "elementalsorcery:astone",
+			"data": 2
+		},
+		"B": "elementalsorcery:md_base",
+		"R": "elementalsorcery:resonant_crystal",
+		"G": "minecraft:glass"
+	},
+	"element": [
+		{
+			"id": "wood",
+			"size": 300,
+			"power": 10
+		},
+		{
+			"id": "metal",
+			"size": 50,
+			"power": 50
+		},
+		{
+			"id": "earth",
+			"size": 150,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:md_resonant_incubator",
+		"count": 1
+	}
+}

@@ -1,0 +1,41 @@
+{
+	"pattern": [
+		"EPE",
+		"PEP",
+		"PIP"
+	],
+	"key": {
+		"P": {
+			"id": "minecraft:glass_pane",
+			"data": 0
+		},
+		"I": "elementalsorcery:item_crystal",
+		"E": "elementalsorcery:estone"
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 75,
+			"power": 50
+		},
+		{
+			"id": "water",
+			"size": 75,
+			"power": 50
+		},
+		{
+			"id": "earth",
+			"size": 75,
+			"power": 50
+		},
+		{
+			"id": "air",
+			"size": 75,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:analysis_altar",
+		"count": 1
+	}
+}

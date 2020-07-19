@@ -1,0 +1,26 @@
+{
+    "parent": "elementalsorcery:recipes/infusion_magic_crystal",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:azure_crystal"
+        },
+        "title": {
+            "translate": "es.adv.azureCrystal.title"
+        },
+        "description": {
+            "translate": "es.adv.azureCrystal.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:azure_crystal"
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -2,10 +2,9 @@ package yuzunyannn.elementalsorcery.parchment;
 
 import static yuzunyannn.elementalsorcery.ElementalSorcery.logger;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.vecmath.Vector3d;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -18,13 +17,14 @@ import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
-import yuzunyannn.elementalsorcery.util.JsonHelper;
-import yuzunyannn.elementalsorcery.util.JsonHelper.ItemRecord;
+import yuzunyannn.elementalsorcery.util.json.ItemRecord;
+import yuzunyannn.elementalsorcery.util.json.JsonHelperOld;
 
 public class JsonParser {
 
@@ -33,6 +33,8 @@ public class JsonParser {
 	public static class Packet {
 		Page page;
 		int level;
+		List<String> need;
+		List<String> linked;
 	}
 
 	public static Packet read(JsonObject jobj) throws JsonParseException {
@@ -40,13 +42,27 @@ public class JsonParser {
 		if (page == null) return null;
 		Packet packet = new Packet();
 		packet.page = page;
-		if (JsonHelper.isNumber(jobj, "level")) packet.level = jobj.get("level").getAsInt();
-		else if (JsonHelper.isNumber(jobj, "lev")) packet.level = jobj.get("lev").getAsInt();
+		yuzunyannn.elementalsorcery.util.json.JsonObject json = new yuzunyannn.elementalsorcery.util.json.JsonObject(
+				jobj);
+		try {
+			packet.level = json.needNumber("level", "lev").intValue();
+		} catch (JsonParseException e) {}
+		if (json.hasArray("need")) {
+			yuzunyannn.elementalsorcery.util.json.JsonArray array = json.getArray("need");
+			packet.need = array.asStringArray();
+		}
+		if (json.hasArray("linked")) {
+			yuzunyannn.elementalsorcery.util.json.JsonArray array = json.getArray("linked");
+			packet.linked = array.asStringArray();
+		} else if (json.hasString("linked")) {
+			packet.linked = new ArrayList<String>();
+			packet.linked.add(json.getString("linked"));
+		}
 		return packet;
 	}
 
 	private static Page readPage(JsonObject jobj) {
-		if (!JsonHelper.isString(jobj, "type")) return null;
+		if (!JsonHelperOld.isString(jobj, "type")) return null;
 		String type = jobj.get("type").getAsString();
 		switch (type.toLowerCase()) {
 		case "multpage":
@@ -74,7 +90,7 @@ public class JsonParser {
 
 	/** 获取一个多重页面 */
 	private static Page readPageMult(JsonObject jobj) {
-		if (!JsonHelper.isArray(jobj, "pages")) return null;
+		if (!JsonHelperOld.isArray(jobj, "pages")) return null;
 		List<Page> pages = new LinkedList<>();
 		JsonArray jarray = jobj.get("pages").getAsJsonArray();
 		for (JsonElement je : jarray) {
@@ -85,7 +101,7 @@ public class JsonParser {
 		}
 		if (pages.isEmpty()) throw new JsonParseException("多页面找不到任何一个子页");
 		PageMult page = new PageMult(pages.toArray(new Page[pages.size()]));
-		if (JsonHelper.isNumber(jobj, "lock")) {
+		if (JsonHelperOld.isNumber(jobj, "lock")) {
 			int at = jobj.get("lock").getAsInt();
 			page.lockShowAt(at);
 		}
@@ -98,43 +114,45 @@ public class JsonParser {
 	private static PageSimple readPageSimple(JsonObject jobj) {
 		ItemStack icon = defaultIcon;
 		// 寻找图标
-		if (JsonHelper.isString(jobj, "icon")) {
+		if (JsonHelperOld.isString(jobj, "icon")) {
 			String id = jobj.get("icon").getAsString();
 			Item item = Item.getByNameOrId(id);
-			if (item == null) {
-				if (jobj.has("item")) {
-					List<ItemRecord> irList = JsonHelper.readItems(jobj.get("item"));
-					if (!irList.isEmpty()) {
-						ItemRecord ir = irList.get(0);
-						if (ir.isJustItem()) item = ir.getItem();
-						else item = ir.getStack().getItem();
-					}
-				}
-				if (item == null) logger.warn("找不到图标：" + id);
-			}
 			icon = item == null ? defaultIcon : new ItemStack(item);
+		}
+		if (icon == defaultIcon) {
+			if (jobj.has("item")) {
+				List<ItemRecord> irList = JsonHelperOld.readItems(jobj.get("item"));
+				if (!irList.isEmpty()) {
+					ItemRecord ir = irList.get(0);
+					icon = ir.getStack();
+				}
+			}
 		}
 		// 寻找标题和正文
 		String title = null;
 		String value = null;
-		if (JsonHelper.isString(jobj, "name")) {
+		if (JsonHelperOld.isString(jobj, "name")) {
 			PageSimple tmp = null;
 			title = jobj.get("name").getAsString();
-			if (JsonHelper.isString(jobj, "differ")) tmp = new PageSimpleInfo(title, jobj.get("differ").getAsString());
+			if (JsonHelperOld.isString(jobj, "differ"))
+				tmp = new PageSimpleInfo(title, jobj.get("differ").getAsString());
 			else tmp = new PageSimple(title);
 			title = tmp.getTitle();
 			value = tmp.getContext();
 		}
-		if (JsonHelper.isString(jobj, "title")) title = jobj.get("title").getAsString();
-		if (JsonHelper.isString(jobj, "value")) value = jobj.get("value").getAsString();
+		if (JsonHelperOld.isString(jobj, "title")) title = jobj.get("title").getAsString();
+		if (JsonHelperOld.isString(jobj, "value")) value = jobj.get("value").getAsString();
 		if (title == null) throw new JsonParseException("找不到标题");
 		// 寻找背景
 		ItemStack background = ItemStack.EMPTY;
-		if (JsonHelper.isString(jobj, "background")) {
+		if (JsonHelperOld.isString(jobj, "background")) {
 			String id = jobj.get("background").getAsString();
-			Item item = Item.getByNameOrId(id);
-			if (item == null) logger.warn("找不到背景：" + id);
-			else background = new ItemStack(item);
+			if ("inherit".equals(id)) background = icon;
+			else {
+				Item item = Item.getByNameOrId(id);
+				if (item == null) logger.warn("找不到背景：" + id);
+				else background = new ItemStack(item);
+			}
 		}
 		return new PageSimple(title, value == null ? "null" : value, icon, background);
 	}
@@ -143,9 +161,9 @@ public class JsonParser {
 	private static Page readPageCraft(JsonObject jobj) {
 		PageSimple page = readPageSimple(jobj);
 		if (page == null) return null;
-		List<ItemRecord> irList = JsonHelper.readItems(jobj.get("item"));
+		List<ItemRecord> irList = JsonHelperOld.readItems(jobj.get("item"));
 		if (irList.isEmpty()) throw new JsonParseException("找不到任何合成物,位于：" + jobj.get("item"));
-		List<ItemStack> list = JsonHelper.to(irList);
+		List<ItemStack> list = JsonHelperOld.to(irList);
 		// 有图标的情况复写下
 		if (!page.getIcon().isEmpty()) {
 			final ItemStack icon = page.getIcon();
@@ -164,9 +182,9 @@ public class JsonParser {
 	private static Page readPageTransform(JsonObject jobj, int id) {
 		PageSimple page = readPageSimple(jobj);
 		if (page == null) return null;
-		List<ItemRecord> irList = JsonHelper.readItems(jobj.get("item"));
+		List<ItemRecord> irList = JsonHelperOld.readItems(jobj.get("item"));
 		if (irList.isEmpty()) throw new JsonParseException("找不到任何要转化的物品,位于：" + jobj.get("item"));
-		List<ItemStack> list = JsonHelper.to(irList);
+		List<ItemStack> list = JsonHelperOld.to(irList);
 		switch (id) {
 		case PageTransform.SMELTING:
 			return new PageSmeltingSimple(page.getTitle(), page.getContext(), list.get(0));
@@ -204,35 +222,59 @@ public class JsonParser {
 
 	/** 获取一个建筑界面 */
 	private static Page readPageBuilding(JsonObject jobj) {
-		PageSimple page = readPageSimple(jobj);
-		if (page == null) return null;
-		if (!JsonHelper.isString(jobj, "building")) throw new JsonParseException("找不到任何合建筑,位于：" + jobj);
-		String id = jobj.get("building").getAsString();
-		Building building = BuildingLib.instance.getBuilding(id);
-		if (building == null) throw new JsonParseException("建筑不存在：" + id);
-		PageBuildingSimple bpage = new PageBuildingSimple(page.getTitle(), building);
-		// 额外添加,数组型,pos字段为位置，item字段为方块类型
-		JsonArray extra = null;
-		if (JsonHelper.isArray(jobj, "extra")) extra = jobj.get("extra").getAsJsonArray();
-		else if (JsonHelper.isArray(jobj, "add")) extra = jobj.get("add").getAsJsonArray();
-		else if (JsonHelper.isArray(jobj, "attach")) extra = jobj.get("attach").getAsJsonArray();
-		if (extra != null) {
-			for (JsonElement je : extra) {
-				if (je.isJsonObject()) {
-					jobj = je.getAsJsonObject();
-					List<Vector3d> v3fs = JsonHelper.readBlockPos(jobj.get("pos"));
-					if (v3fs.isEmpty()) continue;
-					List<ItemRecord> irList = JsonHelper.readItems(jobj.get("item"));
-					if (irList.isEmpty()) continue;
-					ItemStack stack = irList.get(0).getStack();
-					Block block = Block.getBlockFromItem(stack.getItem());
-					if (block == null || block == Blocks.AIR) continue;
-					IBlockState state = block.getStateFromMeta(stack.getItemDamage());
-					for (Vector3d v3f : v3fs) bpage.addExtraBlock(new BlockPos(v3f.x, v3f.y, v3f.z), state);
+		try {
+			PageSimple page = readPageSimple(jobj);
+			if (page == null) return null;
+			if (!JsonHelperOld.isString(jobj, "building")) throw new JsonParseException("找不到任何合建筑,位于：" + jobj);
+			String id = jobj.get("building").getAsString();
+			Building building = BuildingLib.instance.getBuilding(id);
+			if (building == null) throw new JsonParseException("建筑不存在：" + id);
+			PageBuildingSimple bpage = new PageBuildingSimple(page.getTitle(), building);
+			// 额外添加,数组型,pos字段为位置，item字段为方块类型
+			JsonArray extra = null;
+			if (JsonHelperOld.isArray(jobj, "extra")) extra = jobj.get("extra").getAsJsonArray();
+			else if (JsonHelperOld.isArray(jobj, "add")) extra = jobj.get("add").getAsJsonArray();
+			else if (JsonHelperOld.isArray(jobj, "attach")) extra = jobj.get("attach").getAsJsonArray();
+			if (extra != null) {
+				for (JsonElement je : extra) {
+					if (je.isJsonObject()) {
+						jobj = je.getAsJsonObject();
+						List<ItemRecord> irList = JsonHelperOld.readItems(jobj.get("item"));
+						if (irList.isEmpty()) continue;
+						ItemStack stack = irList.get(0).getStack();
+						Block block = Block.getBlockFromItem(stack.getItem());
+						if (block == null || block == Blocks.AIR) continue;
+						IBlockState state = block.getStateFromMeta(stack.getItemDamage());
+						String type = "";
+						if (JsonHelperOld.isString(jobj, "type")) type = jobj.get("type").getAsString();
+						switch (type) {
+						case "full": {
+							BlockPos from = new BlockPos(JsonHelperOld.readBlockPos(jobj.get("from")).get(0));
+							BlockPos to = new BlockPos(JsonHelperOld.readBlockPos(jobj.get("to")).get(0));
+							for (int x = from.getX(); x <= to.getX(); x++) {
+								for (int y = from.getY(); y <= to.getY(); y++) {
+									for (int z = from.getZ(); z <= to.getZ(); z++) {
+										BlockPos pos = new BlockPos(x, y, z);
+										bpage.addExtraBlockNotOverlap(pos, state);
+									}
+								}
+							}
+						}
+							break;
+						default: {
+							List<Vec3d> v3fs = JsonHelperOld.readBlockPos(jobj.get("pos"));
+							if (v3fs.isEmpty()) continue;
+							for (Vec3d v3f : v3fs) bpage.addExtraBlock(new BlockPos(v3f.x, v3f.y, v3f.z), state);
+						}
+							break;
+						}
+					}
 				}
 			}
+			return bpage;
+		} catch (IllegalArgumentException e) {
+			throw new JsonParseException("建筑数据加载出现异常：" + jobj);
 		}
-		return bpage;
 	}
 
 }

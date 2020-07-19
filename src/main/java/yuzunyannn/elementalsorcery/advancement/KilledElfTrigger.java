@@ -1,14 +1,13 @@
 package yuzunyannn.elementalsorcery.advancement;
 
 import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
 
 import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.util.JsonHelper;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class KilledElfTrigger extends CriterionTriggerAdapter<KilledElfTrigger.Instance> {
 
@@ -18,8 +17,7 @@ public class KilledElfTrigger extends CriterionTriggerAdapter<KilledElfTrigger.I
 
 	@Override
 	public KilledElfTrigger.Instance deserializeInstance(JsonObject json, JsonDeserializationContext context) {
-		String pro = null;
-		if (JsonHelper.isString(json, "profession")) pro = json.get("profession").getAsString();
+		String pro = json.needString("profession");
 		return new KilledElfTrigger.Instance(this.getId(), pro);
 	}
 

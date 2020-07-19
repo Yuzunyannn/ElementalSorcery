@@ -8,8 +8,8 @@
   ],
   "key": {
     "#": {
-      "item": "minecraft:planks",
-      "data": 5
+      "item": "elementalsorcery:elf_plank",
+      "data": 1
     },
     "A": {
       "item": "elementalsorcery:magic_crystal"

@@ -10,6 +10,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleFirework;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -27,6 +28,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
@@ -234,6 +236,14 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		this.craftingSuccess = true;
 		this.updateToClient();
 		this.craftingSuccess = false;
+		if (!world.isRemote) {
+			// 成就
+			final int size = 6;
+			AxisAlignedBB aabb = new AxisAlignedBB(pos.getX() - size, pos.getY() - size, pos.getZ() - size,
+					pos.getX() + size, pos.getY() + size, pos.getZ() + size);
+			List<EntityPlayerMP> list = world.getEntitiesWithinAABB(EntityPlayerMP.class, aabb);
+			for (EntityPlayerMP player : list) ESCriteriaTriggers.MAGIC_DESK_CRAFT.trigger(player, output);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -356,10 +366,22 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		ESObjects.Items ITEMS = ESInitInstance.ITEMS;
 		// launch
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_LAUNCH),
-				new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL, 3), new ItemStack(Blocks.OBSIDIAN, 2));
+				new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL, 3),
+				new ItemStack(ESInitInstance.ITEMS.ELF_CRYSTAL, 10), new ItemStack(Blocks.CRAFTING_TABLE, 2),
+				new ItemStack(ESInitInstance.ITEMS.PARCHMENT, 16));
 		// element
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ELEMENT),
-				new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL, 10), new ItemStack(Items.DIAMOND, 2));
+				new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL, 10),
+				new ItemStack(ESInitInstance.ITEMS.ELF_CRYSTAL, 32), new ItemStack(Blocks.RED_FLOWER, 6),
+				new ItemStack(Items.GOLD_INGOT, 3), new ItemStack(Items.COAL, 7), new ItemStack(Blocks.OBSIDIAN, 2));
+		// building
+		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ARCHITECTURE),
+				new ItemStack(ESInitInstance.BLOCKS.ESTONE, 16),
+				new ItemStack(ESInitInstance.ITEMS.ARCHITECTURE_CRYSTAL, 1),
+				new ItemStack(ESInitInstance.BLOCKS.KYANITE_BLOCK, 2), new ItemStack(Blocks.STONE, 16),
+				new ItemStack(Blocks.IRON_BLOCK, 1), new ItemStack(Blocks.GOLD_BLOCK, 1),
+				new ItemStack(Blocks.REDSTONE_BLOCK, 1), new ItemStack(Blocks.OBSIDIAN, 1),
+				new ItemStack(Blocks.BRICK_BLOCK, 2));
 	}
 
 	// ItemStack的自动机

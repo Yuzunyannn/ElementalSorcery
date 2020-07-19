@@ -1,27 +1,25 @@
 package yuzunyannn.elementalsorcery.parchment;
 
 import java.io.IOException;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 
-import com.google.gson.JsonObject;
-
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.relauncher.Side;
-import yuzunyannn.elementalsorcery.ESData;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
+import yuzunyannn.elementalsorcery.util.json.Json;
 
 public class Pages {
 
@@ -82,6 +80,17 @@ public class Pages {
 		return getPage(nbt.getString("pId"));
 	}
 
+	/** 获取页面中的建筑 */
+	public static Building getBuildingInPage(ItemStack stack) {
+		Page page = getPage(stack);
+		if (page == getErrorPage()) return null;
+		if (page instanceof PageBuilding) return ((PageBuilding) page).building;
+		if (page instanceof PageMult) {
+			for (Page p : ((PageMult) page).pages) if (p instanceof PageBuilding) return ((PageBuilding) p).building;
+		}
+		return null;
+	}
+
 	/** 设置page */
 	public static ItemStack setPage(String id, ItemStack stack) {
 		if (id == null) id = "error";
@@ -98,9 +107,8 @@ public class Pages {
 	static public Page itemToPage(Item item) {
 		if (item instanceof ItemKyaniteTools.toolsCapability) return getPage(Pages.ABOUT_KYNATIE_TOOLS);
 		else {
-			for (Entry<Item, String> entry : Pages.itemToId) {
-				if (entry.getKey() == item) return getPage(entry.getValue());
-			}
+			String key = Pages.itemToId.get(item);
+			if (key != null) return getPage(key);
 		}
 		return null;
 	}
@@ -111,7 +119,7 @@ public class Pages {
 	}
 
 	/** item转跳查询表 */
-	static public List<Entry<Item, String>> itemToId = new ArrayList<Entry<Item, String>>();
+	static public final Map<Item, String> itemToId = new HashMap<Item, String>();
 	/** 端 */
 	static private Side side;
 	/** 基本页面 */
@@ -159,90 +167,28 @@ public class Pages {
 		regPage(ERROR, new PageError());
 		regPage(BOOK, new PageBook());
 
-		ESData data = ElementalSorcery.data;
-		final String MODID = ElementalSorcery.MODID;
-		// 自动扫描parchment文件夹读取数据
-		String[] parchments = data.getFilesFromResource(new ResourceLocation(MODID, "parchments"));
-		for (String path : parchments) {
-			try {
-				if (!path.endsWith(".json")) continue;
-				JsonObject jobj = data.getJsonFromResource(new ResourceLocation(MODID, "parchments/" + path));
-				JsonParser.Packet packet = JsonParser.read(jobj);
-				if (packet == null) continue;
-				String id = path.substring(0, path.lastIndexOf('.'));
-				if (id.lastIndexOf('/') != -1) id = id.substring(id.lastIndexOf('/') + 1);
-				regPage(id, packet.page);
-				TileRiteTable.addPage(id, packet.level);
-			} catch (Exception e) {
-				ElementalSorcery.logger.warn("解析教程json出现异常：" + path, e);
-			}
-		}
-
-		// regPage(ABOUT_ELEMENT, new PageSimple("element",
-		// ESInitInstance.ITEMS.SPELLBOOK));
+		// 自动扫描并加载json
+		for (ModContainer mod : Loader.instance().getActiveModList()) loadParchments(mod);
+		// 旧的
 		regPage(ABOUT_STELA, aboutStela());
-		// regPage(ABOUT_HEARTH, aboutHearth());
-		// regPage(ABOUT_SMELT_BOX, aboutSmeltBox());
-		// regPage(ABOUT_KYANITE, new PageSmeltingSimple("kyanite",
-		// ESInitInstance.BLOCKS.KYANITE_ORE));
-		// regPage(ABOUT_MAGIC_PIECE, new PageSimple("mgicalPiece",
-		// ESInitInstance.ITEMS.MAGIC_PIECE));
-		// regPage(ABOUT_STAR_SAND, new PageSimple("starSand", new
-		// ItemStack(ESInitInstance.BLOCKS.STAR_SAND),new
-		// ItemStack(ESInitInstance.BLOCKS.STAR_SAND)));
-		// regPage(ABOUT_STONE_MILL, new PageCraftingSimple("stoneMill",
-		// ESInitInstance.BLOCKS.STONE_MILL));
-		// regPage(ABOUT_MAGIC_STONE, new PageCraftingSimple("magicStone",
-		// ESInitInstance.ITEMS.MAGIC_STONE));
-		// regPage(ABOUT_MELT_CAULDRON, new PageCraftingSimple("meltCauldron",
-		// ESInitInstance.BLOCKS.MELT_CAULDRON));
-		// regPage(ABOUT_ASTONE, aboutAStone());
-		// regPage(ABOUT_MD, aboutMD());
-		// regPage(ABOUT_INFUSION, new PageCraftingSimple("infusion",
-		// ESInitInstance.BLOCKS.MD_INFUSION));
-		// regPage(ABOUT_MAGICAL_ENDEREYE,new PageCraftingSimple("magicalEndereye",
-		// ESInitInstance.ITEMS.MAGICAL_ENDER_EYE));
-		// regPage(ABOUT_KYNATIE_TOOLS, aboutKynatieTools());
-		// regPage(ABOUT_ABSORB_BOX, new PageCraftingSimple("absorbBox",
-		// ESInitInstance.BLOCKS.ABSORB_BOX));
-		// regPage(ABOUT_MAGIC_PLATFORM,
-		// new PageCraftingSimple("magicPl", new
-		// ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 0),
-		// new ItemStack(ESInitInstance.BLOCKS.MAGIC_PLATFORM, 1, 1)));
-		// regPage(ABOUT_MAGIC_CRYSTAL, new PageTransformSimple("magicCrystal",
-		// ESInitInstance.ITEMS.KYANITE,
-		// ESInitInstance.ITEMS.MAGIC_CRYSTAL, PageTransform.INFUSION));
-		// regPage(ABOUT_DEC_BOX, new PageCraftingSimple("decBox",
-		// ESInitInstance.BLOCKS.DECONSTRUCT_BOX));
-		// regPage(ABOUT_MAGIC_ESTONE, aboutEStone());
-		// regPage(ABOUT_ELEMENT_CRY, new PageTransformSimple("elementCry",
-		// ESInitInstance.ITEMS.MAGIC_CRYSTAL,
-		// ESInitInstance.ITEMS.ELEMENT_CRYSTAL, PageTransform.INFUSION));
-		// regPage(ABOUT_ENCHANTINGBOOK, aboutEnchantingBook());
-		// regPage(ABOUT_SPELL_CRYSTAL, new PageTransformSimple("spellCrystal",
-		// ESInitInstance.ITEMS.MAGIC_CRYSTAL,
-		// ESInitInstance.ITEMS.SPELL_CRYSTAL, PageTransform.INFUSION));
-		// regPage(ABOUT_EWORKBENCH, new PageCraftingSimple("EWorkbench",
-		// ESInitInstance.BLOCKS.ELEMENT_WORKBENCH));
-		// regPage(ABOUT_MANUAL, new PageCraftingSimple("manual",
-		// ESInitInstance.ITEMS.MANUAL));
-		// regPage(ABOUT_MAGIC_PAPER, new PageCraftingSimple("magicPaper",
-		// ESInitInstance.ITEMS.MAGIC_PAPER));
-		// regPage(ABOUT_SPELL_PAPER, new PageCraftingSimple("spellPaper",
-		// ESInitInstance.ITEMS.SPELL_PAPER));
-		// regPage(ABOUT_BOOKCOVER,
-		// new PageCraftingSimple("bookCover", new
-		// ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 0),
-		// new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_COVER, 1, 1)));
-		// regPage(ABOUT_SPELLBOOK, aboutSpellbook());
-		// regPage(ABOUT_ELEMENT_CUBE, new PageCraftingSimple("elementCube",
-		// ESInitInstance.BLOCKS.ELEMENTAL_CUBE));
-		// regPage(ABOUT_MAGIC_DESK, aboutMagicDesk());
-		// regPage(ABOUT_SPLAUNCH, aboutSP("spLaunch", ESInitInstance.ITEMS.SPELLBOOK,
-		// ESInitInstance.ITEMS.SPELLBOOK_LAUNCH, TileMagicDesk.AUTO_LAUNCH_BOOK));
-		// regPage(ABOUT_SPELEMENT, aboutSP("spElement", ESInitInstance.ITEMS.SPELLBOOK,
-		// ESInitInstance.ITEMS.SPELLBOOK_ELEMENT, TileMagicDesk.AUTO_ELEMENT_BOOK));
+		// 转跳
 		initItemToId();
+	}
+
+	static public void loadParchments(ModContainer mod) {
+		Json.ergodicAssets(mod, "/parchments", (file, jobj) -> {
+			JsonParser.Packet packet = JsonParser.read(jobj.getGoogleJson());
+			if (packet == null) return false;
+			String path = file.toString();
+			String id = Json.fileToId(file, null);
+			if (packet.need != null) for (String need : packet.need) packet.page.addRequire(Json.idFormat(need, null));
+			if (packet.linked != null)
+				for (String linked : packet.linked) addItemId(Item.getByNameOrId(Json.dealId(linked)), id);
+			regPage(id, packet.page);
+			if (packet.level < 0) return true;
+			TileRiteTable.addPage(id, packet.level);
+			return true;
+		});
 	}
 
 	static private void initItemToId() {
@@ -268,16 +214,30 @@ public class Pages {
 	}
 
 	static private void addItemId(Block block, String id) {
-		itemToId.add(new AbstractMap.SimpleEntry(Item.getItemFromBlock(block), id));
+		itemToId.put(Item.getItemFromBlock(block), id);
 	}
 
 	static private void addItemId(Item item, String id) {
-		itemToId.add(new AbstractMap.SimpleEntry(item, id));
+		if (item == null || item == Items.AIR) return;
+		itemToId.put(item, id);
 	}
 
 	static private String regPage(String id, Page page) {
-		if (side.isClient()) addPage(id, page);
-		else addPage(id, new Page());
+		if (side.isClient()) {
+			addPage(id, page);
+			return id;
+		}
+		Page recPage = new Page();
+		if (page instanceof PageMult) out: {
+			PageMult mult = (PageMult) page;
+			for (Page p : mult.pages) {
+				if (p instanceof PageBuilding) {
+					recPage = new PageBuilding(((PageBuilding) p).building);
+					break out;
+				}
+			}
+		}
+		addPage(id, recPage);
 		return id;
 	}
 
@@ -290,96 +250,10 @@ public class Pages {
 		}
 	}
 
-	/*
-	 * static private Page aboutHearth() { return new PageCraftingSimple("hearth",
-	 * new ItemStack(ESInitInstance.BLOCKS.HEARTH, 1, 0), new
-	 * ItemStack(ESInitInstance.BLOCKS.HEARTH, 1, 1), new
-	 * ItemStack(ESInitInstance.BLOCKS.HEARTH, 1, 2)); }
-	 */
 	static private Page aboutStela() {
 		return new PageMultS(2, new PageSimple("how2ply"),
 				new PageCraftingSimple("parchment", ESInitInstance.ITEMS.PARCHMENT), new PageSimple("stela",
 						new ItemStack(ESInitInstance.BLOCKS.STELA), new ItemStack(ESInitInstance.BLOCKS.STELA)));
-	}
-
-	/*
-	 * static private Page aboutSmeltBox() { return new
-	 * PageCraftingSimple("smeltBox", new
-	 * ItemStack(ESInitInstance.BLOCKS.SMELT_BOX), new
-	 * ItemStack(ESInitInstance.BLOCKS.SMELT_BOX_IRON), new
-	 * ItemStack(ESInitInstance.BLOCKS.SMELT_BOX_KYANITE)); }
-	 */
-
-	/*
-	 * static private Page aboutAStone() { return new PageMultS(0, new
-	 * PageSimpleInfo("astone", "fir", new ItemStack(ESInitInstance.BLOCKS.ASTONE),
-	 * new ItemStack(ESInitInstance.BLOCKS.ASTONE)), new PageSimpleInfo("astone",
-	 * "sec", new ItemStack(ESInitInstance.BLOCKS.ASTONE), new
-	 * ItemStack(ESInitInstance.BLOCKS.MELT_CAULDRON)), new PageSimpleInfo("astone",
-	 * "thi"), new PageCraftingSimple("astoneCrafting", new
-	 * ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 2), new
-	 * ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 3), new
-	 * ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 4), new
-	 * ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 5), new
-	 * ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 6))); }
-	 */
-
-	/*
-	 * static private Page aboutMD() { return new PageMultS(0, new PageSimple("md",
-	 * new ItemStack(ESInitInstance.BLOCKS.ASTONE)), new
-	 * PageCraftingSimple("magicTorch", ESInitInstance.BLOCKS.MAGIC_TORCH), new
-	 * PageCraftingSimple("magicGen", ESInitInstance.BLOCKS.MD_MAGIC_GEN), new
-	 * PageCraftingSimple("magicTransfer", ESInitInstance.BLOCKS.MD_TRANSFER)); }
-	 */
-
-	/*
-	 * static private Page aboutKynatieTools() { return new
-	 * PageCraftingSimple("kynatieTools", new
-	 * ItemStack(ESInitInstance.ITEMS.KYANITE_AXE), new
-	 * ItemStack(ESInitInstance.ITEMS.KYANITE_HOE), new
-	 * ItemStack(ESInitInstance.ITEMS.KYANITE_PICKAXE), new
-	 * ItemStack(ESInitInstance.ITEMS.KYANITE_SPADE), new
-	 * ItemStack(ESInitInstance.ITEMS.KYANITE_SWORD)); }
-	 */
-
-	/*
-	 * static private Page aboutEStone() { return new PageCraftingSimple("estone",
-	 * new ItemStack(ESInitInstance.BLOCKS.ESTONE, 1, 0), new
-	 * ItemStack(ESInitInstance.BLOCKS.ESTONE, 1, 1), new
-	 * ItemStack(ESInitInstance.BLOCKS.ESTONE, 1, 2), new
-	 * ItemStack(ESInitInstance.BLOCKS.ESTONE_SLAB), new
-	 * ItemStack(ESInitInstance.BLOCKS.ESTONE_STAIRS)); }
-	 */
-
-	/*
-	 * static private Page aboutEnchantingBook() { ItemStack extra = new
-	 * ItemStack(ESInitInstance.ITEMS.KYANITE_HOE);
-	 * ((ItemKyaniteTools.toolsCapability) extra.getItem()).provide(extra);
-	 * IElementInventory inv = new ElementInventory(); inv.insertElement(new
-	 * ElementStack(ESInitInstance.ELEMENTS.ENDER, 10, 5), false);
-	 * inv.saveState(extra); return new PageTransformSimple("enchantingBook", new
-	 * ItemStack(Blocks.ENCHANTING_TABLE), new
-	 * ItemStack(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT), extra, null,
-	 * PageTransform.SEPARATE); }
-	 */
-
-	/*
-	 * static private Page aboutSpellbook() { return new PageMultS(1, new
-	 * PageSimpleInfo("spellbook", "fir"), new PageCraftingSimple("spellbook",
-	 * ESInitInstance.ITEMS.SPELLBOOK), new PageSimpleInfo("spellbook", "sec")); }
-	 */
-
-	/*
-	 * static private Page aboutMagicDesk() { return new PageMultS(0, new
-	 * PageCraftingSimple("magicDesk", ESInitInstance.BLOCKS.MAGIC_DESK), new
-	 * PageBuildingSimple("magicDesk", Buildings.SPELLBOOK_ALTAR), new
-	 * PageSimpleInfo("magicDesk", "crafting"), new PageSimpleInfo("magicDesk",
-	 * "charge")); }
-	 */
-
-	static private Page aboutSP(String name, Item book, Item newBook, List<ItemStack> list) {
-		return new PageMultS(0, new PageTransformSimple(name, book, newBook, list, PageTransform.SPELLALTAR),
-				new PageSimpleInfo(name, "info"));
 	}
 
 }

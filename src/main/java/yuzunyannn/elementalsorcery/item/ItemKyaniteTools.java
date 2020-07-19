@@ -9,12 +9,15 @@ import net.minecraft.block.BlockEndPortalFrame;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemAxe;
+import net.minecraft.item.ItemGlassBottle;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
@@ -23,9 +26,11 @@ import net.minecraft.item.ItemSword;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
@@ -158,6 +163,18 @@ public class ItemKyaniteTools {
 		}
 
 		@Override
+		public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+			if (this.isInCreativeTab(tab)) {
+				items.add(new ItemStack(this));
+				ItemStack stack = new ItemStack(this);
+				IElementInventory inventory = new ElementInventory();
+				inventory.insertElement(new ElementStack(ESInitInstance.ELEMENTS.ENDER, 10000, 1000), false);
+				inventory.saveState(stack);
+				items.add(stack);
+			}
+		}
+
+		@Override
 		public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
 				ITooltipFlag flagIn) {
 			ItemKyaniteTools.addToolsInformation(stack, worldIn, tooltip, flagIn);
@@ -189,6 +206,8 @@ public class ItemKyaniteTools {
 				Block.spawnAsEntity(worldIn, pos, new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, 1));
 				if (!player.isCreative()) stack.damageItem(10, player);
 				inventory.saveState(stack);
+				if (player instanceof EntityPlayerMP)
+					ESCriteriaTriggers.SPELLBOOK_ENCH.trigger((EntityPlayerMP) player);
 				return EnumActionResult.SUCCESS;
 			} else if (state.getBlock() == Blocks.END_PORTAL_FRAME && state.getValue(BlockEndPortalFrame.EYE)) {
 				// 拆末影之眼

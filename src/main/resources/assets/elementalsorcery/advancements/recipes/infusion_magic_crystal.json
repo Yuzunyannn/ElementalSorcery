@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/md_infusion",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:magic_crystal"
+        },
+        "title": {
+            "translate": "es.adv.infusionMagicCrystal.title"
+        },
+        "description": {
+            "translate": "es.adv.infusionMagicCrystal.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:infusion_take",
+            "conditions": {
+                "item": "elementalsorcery:magic_crystal"
+            }
+        }
+    }
+}

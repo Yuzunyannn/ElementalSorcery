@@ -1,5 +1,9 @@
 {
     "lev": 3,
+    "need": [
+        "md/estone",
+        "element/spell_crystal"
+    ],
     "type": "mult",
     "lock": 0,
     "pages": [

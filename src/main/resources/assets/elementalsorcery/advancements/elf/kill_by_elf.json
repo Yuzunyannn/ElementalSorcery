@@ -2,7 +2,8 @@
     "parent": "elementalsorcery:elf/elf_tree",
     "display": {
         "icon": {
-            "item": "elementalsorcery:kyanite_sword"
+            "item": "minecraft:skull",
+            "data": 0
         },
         "title": {
             "translate": "es.adv.killByElf.title"

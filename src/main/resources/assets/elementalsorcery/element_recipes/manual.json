@@ -1,0 +1,23 @@
+{
+	"pattern": [
+		"PPP",
+		"*#*",
+		" P "
+	],
+	"key": {
+		"#": "minecraft:leather",
+		"*": "minecraft:gold_ingot",
+		"P": "minecraft:paper"
+	},
+	"element": [
+		{
+			"id": "knowledge",
+			"size": 30,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:manual",
+		"count": 1
+	}
+}

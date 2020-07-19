@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/element_workbench",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:element_crafting_table"
+        },
+        "title": {
+            "translate": "es.adv.elementCraftingAltar.title"
+        },
+        "description": {
+            "translate": "es.adv.elementCraftingAltar.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:element_craft",
+            "conditions": {
+                "recipe": "elementalsorcery:element_crafting_table"
+            }
+        }
+    }
+}

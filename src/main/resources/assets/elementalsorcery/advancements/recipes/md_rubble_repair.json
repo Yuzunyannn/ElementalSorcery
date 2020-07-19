@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/astone",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:md_rubble_repair"
+        },
+        "title": {
+            "translate": "es.adv.MDRubbleRepair.title"
+        },
+        "description": {
+            "translate": "es.adv.MDRubbleRepair.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "elementalsorcery:md/md_rubble_repair"
+            }
+        }
+    }
+}

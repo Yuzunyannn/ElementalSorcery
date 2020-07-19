@@ -1,6 +1,7 @@
 {
     "maps": [
         {
+            "notes": "各种基础石头",
             "item": [
                 "minecraft:stone",
                 "minecraft:cobblestone",
@@ -57,6 +58,24 @@
                 "id": "earth",
                 "size": 4,
                 "power": 10
+            }
+        },
+        {
+            "notes": "粘液球",
+            "item": "minecraft:slime_ball",
+            "element": {
+                "id": "air",
+                "size": 10,
+                "power": 100
+            }
+        },
+        {
+            "notes": "黑曜石",
+            "item": "minecraft:obsidian",
+            "element": {
+                "id": "earth",
+                "size": 30,
+                "power": 340
             }
         }
     ]

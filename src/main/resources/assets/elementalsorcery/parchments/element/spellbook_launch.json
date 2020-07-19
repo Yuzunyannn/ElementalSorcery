@@ -1,0 +1,13 @@
+{
+    "lev": 3,
+    "need": [
+        "element/spellbook",
+        "element/magic_desk"
+    ],
+    "type": "spellaltar",
+    "name": "spLaunch",
+    "item": [
+        "elementalsorcery:spellbook",
+        "elementalsorcery:spellbook_launch"
+    ]
+}

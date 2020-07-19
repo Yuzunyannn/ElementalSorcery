@@ -1,0 +1,28 @@
+{
+    "parent": "elementalsorcery:recipes/estone",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:rite_table",
+            "nbt": "{level:3}"
+        },
+        "title": {
+            "translate": "es.adv.rite3.title"
+        },
+        "description": {
+            "translate": "es.adv.rite3.description"
+        }
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:rite_table",
+                        "nbt": "{level:3}"
+                    }
+                ]
+            }
+        }
+    }
+}

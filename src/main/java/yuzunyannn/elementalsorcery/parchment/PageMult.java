@@ -1,11 +1,6 @@
 package yuzunyannn.elementalsorcery.parchment;
 
-import java.util.List;
-
 import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.ItemStack;
-import net.minecraft.world.World;
 
 public class PageMult extends Page {
 
@@ -102,9 +97,9 @@ public class PageMult extends Page {
 	}
 
 	@Override
-	public void addItemInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		if (itemShowAt != null) pages[itemShowAt].addItemInformation(stack, worldIn, tooltip, flagIn);
-		else this.getCurrPage().addItemInformation(stack, worldIn, tooltip, flagIn);
+	public String getName() {
+		if (itemShowAt != null) return pages[itemShowAt].getName();
+		else return this.getCurrPage().getName();
 	}
 
 	@Override

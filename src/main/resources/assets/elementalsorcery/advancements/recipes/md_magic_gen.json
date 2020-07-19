@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/astone",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:md_magic_gen"
+        },
+        "title": {
+            "translate": "es.adv.MDMagicGen.title"
+        },
+        "description": {
+            "translate": "es.adv.MDMagicGen.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "elementalsorcery:md/md_magic_gen"
+            }
+        }
+    }
+}

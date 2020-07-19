@@ -107,11 +107,12 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 			if (estack.getCount() > 100) estack.setCount(100);
 			if (complex > 10) estack.rise(-0.85f);
 			else estack.rise(-0.7f);
-			estack.weaken(0.35f);
+			if (complex > 20) estack.weaken(0.05f);
+			else estack.weaken(0.35f);
 		} else if (lvPower <= Element.DP_ALTAR) {
 			if (estack.getCount() > 200) estack.setCount(200);
-			estack.rise(-0.6f);
-			estack.weaken(0.45f);
+			estack.rise(-0.5f);
+			estack.weaken(0.5f);
 		} else if (lvPower <= Element.DP_ALTAR_SURPREME) {
 			estack.rise(-0.01f);
 		}

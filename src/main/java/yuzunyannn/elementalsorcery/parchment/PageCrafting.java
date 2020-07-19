@@ -71,7 +71,7 @@ public class PageCrafting extends PageEasy {
 	// 添加es合成表
 	private boolean addESRecipe(ItemStack stack) {
 		yuzunyannn.elementalsorcery.api.crafting.IRecipe irecipe = null;
-		List<yuzunyannn.elementalsorcery.api.crafting.IRecipe> lsit = RecipeManagement.instance.getRecipes();
+		List<yuzunyannn.elementalsorcery.api.crafting.IRecipe> lsit = RecipeManagement.instance.getValues();
 		for (yuzunyannn.elementalsorcery.api.crafting.IRecipe ire : lsit) {
 			if (ire.getRecipeOutput().isItemEqual(stack)) {
 				irecipe = ire;
@@ -107,7 +107,7 @@ public class PageCrafting extends PageEasy {
 	}
 
 	protected int getCX() {
-		return 147;
+		return 162;
 	}
 
 	protected int getCY() {
@@ -159,7 +159,7 @@ public class PageCrafting extends PageEasy {
 
 	@Override
 	public int getWidthSize(IPageManager pageManager) {
-		return (int) (super.getWidthSize(pageManager) * 0.575f);
+		return (int) (super.getWidthSize(pageManager) * 0.65f);
 	}
 
 	@Override

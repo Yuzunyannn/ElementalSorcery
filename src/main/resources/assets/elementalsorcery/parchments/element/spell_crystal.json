@@ -1,5 +1,9 @@
 {
     "lev": 3,
+    "need": [
+        "md/magic_crystal",
+        "md/infusion"
+    ],
     "type": "infusion",
     "name": "spellCrystal",
     "item": [

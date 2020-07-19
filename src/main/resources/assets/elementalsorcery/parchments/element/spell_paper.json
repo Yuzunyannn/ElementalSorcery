@@ -1,5 +1,9 @@
 {
     "lev": 3,
+    "need": [
+        "element/spell_crystal",
+        "element/magic_paper"
+    ],
     "type": "craft",
     "name": "spellPaper",
     "item": "elementalsorcery:spell_paper"

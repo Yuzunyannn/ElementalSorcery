@@ -1,6 +1,10 @@
 {
     "lev": 2,
+    "need": [
+        "md/magic_crystal"
+    ],
     "type": "normal",
     "name": "azureCrystal",
-    "icon": "elementalsorcery:azure_crystal"
+    "icon": "elementalsorcery:azure_crystal",
+    "background": "elementalsorcery:azure_crystal"
 }

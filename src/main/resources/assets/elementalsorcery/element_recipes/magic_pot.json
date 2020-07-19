@@ -1,0 +1,35 @@
+{
+	"pattern": [
+		"#D#",
+		"#D#",
+		"###"
+	],
+	"key": {
+		"#": "elementalsorcery:estone",
+		"D": {
+			"id": "minecraft:dirt",
+			"data": 0
+		}
+	},
+	"element": [
+		{
+			"id": "wood",
+			"size": 20,
+			"power": 200
+		},
+		{
+			"id": "water",
+			"size": 40,
+			"power": 25
+		},
+		{
+			"id": "magic",
+			"size": 40,
+			"power": 40
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:magic_pot",
+		"count": 1
+	}
+}

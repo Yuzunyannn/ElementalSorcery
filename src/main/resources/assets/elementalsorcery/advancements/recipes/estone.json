@@ -1,0 +1,23 @@
+{
+    "parent": "elementalsorcery:recipes/infusion_magic_crystal",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:estone",
+            "data": 0
+        },
+        "title": {
+            "translate": "es.adv.estone.title"
+        },
+        "description": {
+            "translate": "es.adv.estone.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "elementalsorcery:estone/estone"
+            }
+        }
+    }
+}

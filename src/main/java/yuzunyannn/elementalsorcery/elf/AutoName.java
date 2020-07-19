@@ -10,19 +10,16 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
-import net.minecraft.util.IJsonSerializable;
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.util.IOHelper;
-import yuzunyannn.elementalsorcery.util.JsonHelper;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.json.JsonArray;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 /** 自动名称，精灵使用 */
-public class AutoName implements IJsonSerializable {
+public class AutoName {
 
 	protected final ArrayList<ArrayList<String>> partList = new ArrayList<>();
 
@@ -47,33 +44,26 @@ public class AutoName implements IJsonSerializable {
 		this.fromJson(jobj);
 	}
 
-	@Override
-	public void fromJson(JsonElement json) {
-		if (!json.isJsonObject()) return;
-		JsonObject jobj = json.getAsJsonObject();
+	public void fromJson(JsonObject json) {
 		for (int i = 0; i < 5; i++) {
 			String key = "part" + i;
-			if (JsonHelper.isArray(jobj, key)) {
-				JsonArray jarray = jobj.get(key).getAsJsonArray();
+			if (json.hasArray(key)) {
+				JsonArray jarray = json.getArray(key);
 				List<String> part = this.newPart();
-				for (JsonElement je : jarray) {
-					if (JsonHelper.isString(je)) part.add(je.getAsString());
+				for (int j = 0; j < jarray.size(); j++) {
+					if (jarray.hasString(i)) part.add(jarray.getString(i));
 				}
-			} else if (JsonHelper.isString(jobj, key)) {
-				List<String> part = this.newPart();
-				part.add(jobj.get(key).getAsString());
 			}
 		}
 	}
 
-	@Override
-	public JsonElement getSerializableElement() {
+	public JsonObject getSerializableElement() {
 		JsonObject jobj = new JsonObject();
 		for (int i = 0; i < partList.size(); i++) {
 			List<String> list = partList.get(i);
 			JsonArray jarray = new JsonArray();
-			for (String str : list) jarray.add(str);
-			if (jarray.size() > 0) jobj.add("part" + i, jarray);
+			for (String str : list) jarray.append(str);
+			if (jarray.size() > 0) jobj.set("part" + i, jarray);
 		}
 		return jobj;
 	}
@@ -110,7 +100,7 @@ public class AutoName implements IJsonSerializable {
 			FileInputStream inputStream = null;
 			try {
 				inputStream = new FileInputStream(file);
-				JsonObject jobj = gson.fromJson(new InputStreamReader(inputStream, "utf-8"), JsonObject.class);
+				JsonObject jobj = new JsonObject(new InputStreamReader(inputStream, "utf-8"));
 				register(new AutoName(jobj));
 			} catch (Exception e) {
 				ElementalSorcery.logger.warn("读取自动名称出现异常！", e);
@@ -175,8 +165,7 @@ public class AutoName implements IJsonSerializable {
 		try {
 			out = new FileOutputStream(file);
 			out.write(autoName.getSerializableElement().toString().getBytes("utf-8"));
-		} catch (Exception e) {
-		} finally {
+		} catch (Exception e) {} finally {
 			IOHelper.closeQuietly(out);
 		}
 	}
