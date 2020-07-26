@@ -405,7 +405,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		public IBlockState getState() {
 			if (entry == null) return null;
 			IBlockState state = building.infoList.get(entry.getValue()).getState();
-			return this.faceSate(state, this.facing);
+			return faceSate(state, this.facing);
 		}
 
 		public ItemStack getItemStack() {
@@ -429,7 +429,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 	}
 
 	/** 获取遍历对象 */
-	public BuildingBlocks getBuildingBlocks() {
+	public BuildingBlocks getBuildingIterator() {
 		return new BuildingBlocks(this);
 	}
 

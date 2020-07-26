@@ -1,0 +1,22 @@
+{
+	"pattern": [
+		"E E",
+		" C ",
+		"E E"
+	],
+	"key": {
+		"C":"elementalsorcery:deconstruct_altar_table",
+		"E": "elementalsorcery:estone"
+	},
+	"element": [
+		{
+			"id": "ender",
+			"size": 600,
+			"power": 300
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:deconstruct_altar_table_adv",
+		"count": 1
+	}
+}

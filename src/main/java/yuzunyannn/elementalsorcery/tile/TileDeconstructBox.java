@@ -4,6 +4,7 @@ import java.util.Random;
 
 import javax.annotation.Nonnull;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -98,9 +99,7 @@ public class TileDeconstructBox extends TileEntity implements IAcceptBurnPower, 
 			einv.insertElement(estack, simulate);
 			// 掉落剩余物品
 			ItemStack remain = ElementMap.instance.remain(stack);
-			if (!remain.isEmpty()) {
-				blockType.spawnAsEntity(world, pos, remain);
-			}
+			if (!remain.isEmpty()) Block.spawnAsEntity(world, pos, remain);
 			return true;
 		}
 	}

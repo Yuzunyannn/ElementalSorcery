@@ -1,7 +1,6 @@
 package yuzunyannn.elementalsorcery.render.model;
 
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelChest;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
@@ -62,8 +61,7 @@ public class ModelStoneMill extends ModelBase {
 		l2.render(scale);
 		l3.render(scale);
 		l4.render(scale);
-		if (f == 0)
-			this.renderHammer(0, 0, 0, scale);
+		if (f == 0) this.renderHammer(0, 0, 0, scale);
 	}
 
 	public void renderHammer(float lift, float hit, float hight, float scale) {
@@ -74,8 +72,7 @@ public class ModelStoneMill extends ModelBase {
 		this.setHammerPosition(x * 16, y * 16, z * 16);
 		if (hitAt < 0) {
 			this.setHammerRoate(3.1415926f * (0.5f + 0.3f * (1.0f - hight) * hitAt));
-		} else
-			this.setHammerRoate(3.1415926f * (0.5f + 0.3f * hitAt));
+		} else this.setHammerRoate(3.1415926f * (0.5f + 0.3f * hitAt));
 		hhead.render(scale);
 		hhandle.render(scale);
 	}

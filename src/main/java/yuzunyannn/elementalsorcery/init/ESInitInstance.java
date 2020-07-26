@@ -27,10 +27,11 @@ import yuzunyannn.elementalsorcery.block.BlocksEStone;
 import yuzunyannn.elementalsorcery.block.altar.BlockAnalysisAltar;
 import yuzunyannn.elementalsorcery.block.altar.BlockBuildingAltar;
 import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructAltarTable;
+import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructAltarTableAdv;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementCraftingTable;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
 import yuzunyannn.elementalsorcery.block.altar.BlockMagicDesk;
-import yuzunyannn.elementalsorcery.block.altar.BlockSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.block.altar.BlockSupremeTable;
 import yuzunyannn.elementalsorcery.block.container.BlockAbsorbBox;
 import yuzunyannn.elementalsorcery.block.container.BlockDeconstructBox;
 import yuzunyannn.elementalsorcery.block.container.BlockHearth;
@@ -77,6 +78,7 @@ import yuzunyannn.elementalsorcery.item.ItemSpellbookCover;
 import yuzunyannn.elementalsorcery.item.ItemSpellbookElement;
 import yuzunyannn.elementalsorcery.item.ItemSpellbookEnchantment;
 import yuzunyannn.elementalsorcery.item.ItemSpellbookLaunch;
+import yuzunyannn.elementalsorcery.item.ItemSupremeTableComponent;
 import yuzunyannn.elementalsorcery.item.crystal.ItemArchitectureCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemElementCrystal;
@@ -125,6 +127,7 @@ public class ESInitInstance {
 		BLOCKS.ESTONE = new BlocksEStone.EStone();
 		BLOCKS.ESTONE_SLAB = new BlocksEStone.EStoneSlab();
 		BLOCKS.ESTONE_STAIRS = new BlocksEStone.EStoneStairs();
+		BLOCKS.ESTONE_PRISM = new BlocksEStone.EStonePrism();
 		BLOCKS.ASTONE = new BlocksAStone();
 
 		BLOCKS.ELEMENTAL_CUBE = new BlockElementalCube();
@@ -142,12 +145,13 @@ public class ESInitInstance {
 		BLOCKS.MAGIC_DESK = new BlockMagicDesk();
 		BLOCKS.ELEMENT_CRAFTING_TABLE = new BlockElementCraftingTable();
 		BLOCKS.DECONSTRUCT_ALTAR_TABLE = new BlockDeconstructAltarTable();
+		BLOCKS.DECONSTRUCT_ALTAR_TABLE_ADV = new BlockDeconstructAltarTableAdv();
 		BLOCKS.STELA = new BlockStela();
 		BLOCKS.RITE_TABLE = new BlockRiteTable();
 		BLOCKS.LANTERN = new BlockLantern();
 		BLOCKS.BUILDING_ALTAR = new BlockBuildingAltar();
 		BLOCKS.ANALYSIS_ALTAR = new BlockAnalysisAltar();
-		BLOCKS.SUPREME_CRAFTING_TABLE = new BlockSupremeCraftingTable();
+		BLOCKS.SUPREME_TABLE = new BlockSupremeTable();
 		BLOCKS.MAGIC_TORCH = new BlockMagicTorch();
 		BLOCKS.STAR_STONE = new BlockStarStone();
 		BLOCKS.STAR_SAND = new BlockStarSand();
@@ -214,6 +218,7 @@ public class ESInitInstance {
 		ITEMS.AZURE_CRYSTAL = ItemCrystal.newAzureCrystal();
 		ITEMS.RESONANT_CRYSTAL = new ItemResonantCrystal();
 		ITEMS.ELF_CRYSTAL = ItemCrystal.newElfCrystal();
+		ITEMS.SUPREME_TABLE_COMPONENT = new ItemSupremeTableComponent();
 
 		ITEMS.SPELLBOOK = new ItemSpellbook();
 		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture();

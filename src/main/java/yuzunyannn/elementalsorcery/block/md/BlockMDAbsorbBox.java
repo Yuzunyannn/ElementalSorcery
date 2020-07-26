@@ -2,8 +2,6 @@ package yuzunyannn.elementalsorcery.block.md;
 
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import scala.reflect.runtime.ReflectionUtils;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.tile.md.TileMDAbsorbBox;
 

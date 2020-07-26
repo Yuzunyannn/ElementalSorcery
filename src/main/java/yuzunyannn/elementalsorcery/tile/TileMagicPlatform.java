@@ -1,18 +1,16 @@
 package yuzunyannn.elementalsorcery.tile;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 
 public class TileMagicPlatform extends TileEntityNetwork implements IGetItemStack {
+
 	private ItemStack stack = ItemStack.EMPTY;
 
 	@Override
 	public void setStack(ItemStack stack) {
 		this.stack = stack;
-		roate_begin = (float) Math.random() * 360;
 		this.updateToClient();
 		this.markDirty();
 	}
@@ -24,10 +22,8 @@ public class TileMagicPlatform extends TileEntityNetwork implements IGetItemStac
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		if (compound.hasKey("stack"))
-			stack = new ItemStack(compound.getCompoundTag("stack"));
-		else
-			stack = ItemStack.EMPTY;
+		if (compound.hasKey("stack")) stack = new ItemStack(compound.getCompoundTag("stack"));
+		else stack = ItemStack.EMPTY;
 		super.readFromNBT(compound);
 	}
 
@@ -36,7 +32,5 @@ public class TileMagicPlatform extends TileEntityNetwork implements IGetItemStac
 		compound.setTag("stack", stack.serializeNBT());
 		return super.writeToNBT(compound);
 	}
-
-	public float roate_begin = (float) Math.random() * 360;
 
 }

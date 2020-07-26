@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.mods.jei;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import mezz.jei.api.gui.IDrawable;
@@ -9,7 +8,6 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
@@ -22,8 +20,7 @@ public class MagicDeskCategory implements IRecipeCategory<MagicDeskRecipeWrapper
 
 	public MagicDeskCategory() {
 		background = ESJEIPlugin.guiHelper.createDrawable(
-				new ResourceLocation(ElementalSorcery.MODID, "textures/gui/magic_desk_jei.png"), 18, 18, 122,
-				106);
+				new ResourceLocation(ElementalSorcery.MODID, "textures/gui/magic_desk_jei.png"), 18, 18, 122, 106);
 	}
 
 	@Override

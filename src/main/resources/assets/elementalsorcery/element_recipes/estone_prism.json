@@ -1,0 +1,33 @@
+{
+	"pattern": [
+		"GEG",
+		"EGE",
+		"GEG"
+	],
+	"key": {
+		"G": {
+			"type":"ore_dict",
+			"id": "blockGlass"
+		},
+		"E": {
+			"id": "elementalsorcery:estone",
+			"data": 1
+		}
+	},
+	"element": [
+		{
+			"id": "water",
+			"size": 150,
+			"power": 25
+		},
+		{
+			"id": "fire",
+			"size": 150,
+			"power": 25
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:estone_prism",
+		"count": 4
+	}
+}

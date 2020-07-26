@@ -38,12 +38,12 @@ import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.render.model.ModelSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.render.model.ModelSupremeTable;
 import yuzunyannn.elementalsorcery.util.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.TickOut;
 import yuzunyannn.elementalsorcery.util.item.IItemStackHandlerInventory;
 
-public class TileSupremeCraftingTable extends TileStaticMultiBlock
+public class TileSupremeTable extends TileStaticMultiBlock
 		implements ITickable, ICraftingLaunch, IItemStackHandlerInventory {
 
 	protected ItemStackHandler inventory = new ItemStackHandler(25);
@@ -85,7 +85,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 
 	@Override
 	public void initMultiBlock() {
-		structure = new MultiBlock(Buildings.LARGE_ALTAR, this, new BlockPos(0, -4, 0));
+		structure = new MultiBlock(Buildings.SUPREME_ALTAR, this, new BlockPos(0, -4, 0));
 		this.addSpecialBlock(structure, 6, 1, 2);
 		this.addSpecialBlock(structure, 8, 1, 2);
 		this.addSpecialBlock(structure, 2, 1, 6);
@@ -151,7 +151,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 			break;
 		default:
 			craftingAltar = null;
-			ExceptionHelper.warn(world, "在SupremeCraftingTable开始合成时，出现了不存在的类型！" + type);
+			ExceptionHelper.warn(world, "在SupremeTable开始合成时，出现了不存在的类型！" + type);
 			break;
 		}
 		this.clear();
@@ -173,7 +173,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 		case ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT:
 			return new CraftingConstruct(nbt);
 		default:
-			ExceptionHelper.warn(world, "在SupremeCraftingTable恢复合成时，出现了不存在的类型：" + type);
+			ExceptionHelper.warn(world, "在SupremeTable恢复合成时，出现了不存在的类型：" + type);
 			break;
 		}
 		return null;
@@ -380,7 +380,7 @@ public class TileSupremeCraftingTable extends TileStaticMultiBlock
 		float x = this.pos.getX() + 0.5f + r * MathHelper.sin(randRoate);
 		float z = this.pos.getZ() + 0.5f + r * MathHelper.cos(randRoate);
 
-		float y = this.pos.getY() + ModelSupremeCraftingTable.roateToHight(roate / 180.0f * 3.1514926f) * 0.03125f
+		float y = this.pos.getY() + ModelSupremeTable.roateToHight(roate / 180.0f * 3.1514926f) * 0.03125f
 				+ 0.5f;
 
 		Particle particle = new ParticleFirework.Spark(this.world, x, y, z, 0, 0, 0,

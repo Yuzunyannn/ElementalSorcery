@@ -1,0 +1,133 @@
+{
+    "lev": 4,
+    "need": [
+        "element/element_crafting_table",
+        "element_adv/deconstruct_altar_table_adv",
+        "element_adv/resonant_incubator",
+        "element_adv/analysis_altar"
+    ],
+    "type": "mult",
+    "lock": 0,
+    "pages": [
+        {
+            "type": "normal",
+            "name": "supremeAltar",
+            "item": "elementalsorcery:supreme_table"
+        },
+        {
+            "type": "craft",
+            "name": "supremeTable",
+            "item": [
+                {
+                    "item": "elementalsorcery:supreme_table_component",
+                    "data": 0
+                },
+                {
+                    "item": "elementalsorcery:supreme_table_component",
+                    "data": 1
+                },
+                "elementalsorcery:supreme_table"
+            ]
+        },
+        {
+            "type": "buidling",
+            "name": "supremeAltar",
+            "building": "supreme_altar",
+            "extra": [
+                {
+                    "pos": [
+                        0,
+                        4,
+                        0
+                    ],
+                    "item": "elementalsorcery:supreme_table"
+                },
+                {
+                    "pos": [
+                        [
+                            6,
+                            1,
+                            2
+                        ],
+                        [
+                            6,
+                            1,
+                            -2
+                        ],
+                        [
+                            8,
+                            1,
+                            2
+                        ],
+                        [
+                            8,
+                            1,
+                            -2
+                        ],
+                        [
+                            -6,
+                            1,
+                            2
+                        ],
+                        [
+                            -6,
+                            1,
+                            -2
+                        ],
+                        [
+                            -8,
+                            1,
+                            2
+                        ],
+                        [
+                            -8,
+                            1,
+                            -2
+                        ],
+                        [
+                            2,
+                            1,
+                            6
+                        ],
+                        [
+                            -2,
+                            1,
+                            6
+                        ],
+                        [
+                            2,
+                            1,
+                            -6
+                        ],
+                        [
+                            -2,
+                            1,
+                            -6
+                        ],
+                        [
+                            2,
+                            1,
+                            8
+                        ],
+                        [
+                            -2,
+                            1,
+                            8
+                        ],
+                        [
+                            2,
+                            1,
+                            -8
+                        ],
+                        [
+                            -2,
+                            1,
+                            -8
+                        ]
+                    ],
+                    "item": "elementalsorcery:elemental_cube"
+                }
+            ]
+        }
+    ]
+}

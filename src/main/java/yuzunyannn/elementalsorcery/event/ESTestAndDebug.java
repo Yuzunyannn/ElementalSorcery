@@ -36,18 +36,18 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import scala.xml.Elem;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
-import yuzunyannn.elementalsorcery.render.particle.Effect;
-import yuzunyannn.elementalsorcery.render.particle.EffectResonance;
 import yuzunyannn.elementalsorcery.util.IOHelper;
 import yuzunyannn.elementalsorcery.worldgen.VillageESHall.VillageCreationHandler;
 
+@SuppressWarnings("all")
 public class ESTestAndDebug {
 
 	public ESTestAndDebug() {
@@ -62,15 +62,15 @@ public class ESTestAndDebug {
 			// BlockPos pos = event.getPos();
 			// IBlockState state = event.getWorld().getBlockState(pos);
 			// System.out.println(state.getLightOpacity());
-		} 
+		}
 
 		// System.out.println("Server ArcInfo");
 		BlockPos pos = event.getPos();
 		IBlockState state = event.getWorld().getBlockState(pos);
 		// System.out.println(state);
-		//if (event.getEntityPlayer().isSneaking()) {
-		//	ESTestAndDebug.pos = event.getPos().up();
-		//}
+		// if (event.getEntityPlayer().isSneaking()) {
+		// ESTestAndDebug.pos = event.getPos().up();
+		// }
 
 	}
 
@@ -170,6 +170,8 @@ public class ESTestAndDebug {
 						e.printStackTrace();
 					}
 					v.addComponentParts(sender.getEntityWorld(), new Random(), v.getBoundingBox());
+				} else if ("reflush".equals(args[0])) {
+					ElementMap.reflush();
 				} else throw new WrongUsageException("ES dubg 指令无效，随便使用可能会导致崩溃");
 			} else throw new WrongUsageException("ES dubg 指令无效，随便使用可能会导致崩溃");
 		}

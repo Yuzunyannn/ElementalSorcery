@@ -108,7 +108,7 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 				einv.insertElement(estack, false);
 				if (world.isRemote) {
 					TileElementalCube.giveParticleElementTo(world, color, animePos, structure.getSpecialBlockPos(i),
-							0.5f);
+							0.25f);
 				}
 				return true;
 			}

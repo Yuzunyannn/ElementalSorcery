@@ -2,8 +2,6 @@ package yuzunyannn.elementalsorcery.item;
 
 import java.util.List;
 
-import com.jcraft.jogg.Page;
-
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +17,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 public class ItemScroll extends Item {

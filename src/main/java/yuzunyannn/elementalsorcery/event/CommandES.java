@@ -13,7 +13,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -96,7 +95,7 @@ public class CommandES extends CommandBase {
 			if (result != null) pos = result.getBlockPos();
 		}
 		if (building == null || pos == null) throw new CommandException("commands.es.build.fail.usage");
-		Building.BuildingBlocks iter = building.getBuildingBlocks();
+		Building.BuildingBlocks iter = building.getBuildingIterator();
 		while (iter.next()) {
 			world.setBlockState(iter.getPos().add(pos), iter.getState());
 		}

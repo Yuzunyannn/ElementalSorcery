@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.ISound;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
-import net.minecraftforge.client.event.sound.PlaySoundEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -23,6 +23,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.particle.Effect;
 
@@ -185,5 +187,26 @@ public class EventClient {
 		renderList.clear();
 	}
 
-
+	/** 全局信息显示 */
+	@SubscribeEvent
+	static public void drawDebugTools(ItemTooltipEvent event) {
+		if (!ElementalSorcery.config.SHOW_ELEMENT_TOOLTIP) return;
+		EntityPlayer player = event.getEntityPlayer();
+		if (player == null || !player.isCreative()) return;
+		ItemStack stack = event.getItemStack();
+		ElementStack[] estacks = ElementMap.instance.toElement(stack);
+		if (estacks == null) return;
+		List<String> tooltip = event.getToolTip();
+		tooltip.add(
+				TextFormatting.DARK_RED + I18n.format("info.itemCrystal.complex", ElementMap.instance.complex(stack)));
+		for (ElementStack estack : estacks) {
+			if (estack.isEmpty()) continue;
+			String str;
+			if (estack.usePower()) str = I18n.format("info.elementalCrystal.has",
+					I18n.format(estack.getElementUnlocalizedName()), estack.getCount(), estack.getPower());
+			else str = I18n.format("info.elementalCrystal.hasnp", I18n.format(estack.getElementUnlocalizedName()),
+					estack.getCount());
+			tooltip.add(TextFormatting.RED + str);
+		}
+	}
 }

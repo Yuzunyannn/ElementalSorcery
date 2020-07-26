@@ -55,9 +55,11 @@ public class RecipeManagement extends ESImplRegister<IRecipe> {
 			ArrayList<String> pattern = patternJson.asStringArray();
 
 			JsonObject obj = json.needObject("key");
-			Map<String, ItemStack> map = new HashMap<>();
-			for (String key : obj) map.put(key, obj.needItem(key).getStack());
-
+			Map<String, ItemStack[]> map = new HashMap<>();
+			for (String key : obj) {
+				List<ItemStack> stacks = Json.to(obj.needItems(key));
+				map.put(key, stacks.toArray(new ItemStack[stacks.size()]));
+			}
 			ItemStack output = json.needItem("result").getStack();
 
 			List<ElementStack> elements = json.needElements("element");

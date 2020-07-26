@@ -14,20 +14,20 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.block.container.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
-import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.IItemStackHandlerInventory;
 
-public class BlockSupremeCraftingTable extends BlockContainerNormal {
+public class BlockSupremeTable extends BlockContainerNormal {
 
-	public BlockSupremeCraftingTable() {
-		super(Material.ROCK, "supremeCraftingTable", 7.5F);
+	public BlockSupremeTable() {
+		super(Material.ROCK, "supremeTable", 7.5F);
 		this.setHarvestLevel("pickaxe", 2);
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileSupremeCraftingTable();
+		return new TileSupremeTable();
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class BlockSupremeCraftingTable extends BlockContainerNormal {
 		TileEntity tile = worldIn.getTileEntity(pos);
 		if (tile instanceof TileStaticMultiBlock) {
 			if (((TileStaticMultiBlock) tile).isIntact()) {
-				playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_SUPREME_CRAFTING_TABLE, worldIn,
+				playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_SUPREME_TABLE, worldIn,
 						pos.getX(), pos.getY(), pos.getZ());
 				return true;
 			}

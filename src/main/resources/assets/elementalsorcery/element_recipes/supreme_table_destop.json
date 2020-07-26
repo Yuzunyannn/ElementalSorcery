@@ -1,0 +1,42 @@
+{
+	"pattern": [
+		"EME",
+		"EPE",
+		"PPP"
+	],
+	"key": {
+		"P": {
+			"id": "elementalsorcery:elf_plank",
+			"data": 1
+		},
+		"E": "elementalsorcery:estone_prism",
+		"M": "elementalsorcery:magic_stone"
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 500,
+			"power": 50
+		},
+		{
+			"id": "water",
+			"size": 500,
+			"power": 50
+		},
+		{
+			"id": "earth",
+			"size": 500,
+			"power": 50
+		},
+		{
+			"id": "air",
+			"size": 500,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:supreme_table_component",
+		"data": 1,
+		"count": 1
+	}
+}

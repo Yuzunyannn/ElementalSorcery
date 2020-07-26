@@ -16,6 +16,8 @@ public class ItemStructure implements IItemStructure {
 		return new ItemStructure(stack);
 	}
 
+	
+	
 	static public boolean canStorageItemStructure(ItemStack stack) {
 		return stack.getItem() == ESInitInstance.ITEMS.ITEM_CRYSTAL || stack.getSubCompound("istru") != null;
 	}

@@ -16,7 +16,6 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.particle.EffectElementFly;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
@@ -52,7 +51,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	// 获取一次元素动画
 	@SideOnly(Side.CLIENT)
 	public static void giveParticleElementTo(World world, int color, BlockPos from, BlockPos pto, float possibility) {
-		if (EventClient.tick % 3 != 0) return;
+		// if (EventClient.tick % 2 != 0) return;
 		if (Math.random() > possibility) return;
 		EffectElementFly effect;
 		if (pto.getY() > from.getY()) effect = new EffectElementFly(world,
@@ -116,7 +115,6 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	// 设置仓库
 	public void setElementInventory(IElementInventory inventory) {
 		this.inventory = inventory;
-		ElementStack estack = inventory.getStackInSlot(0);
 		if (world.isRemote) changeColor();
 	}
 

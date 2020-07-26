@@ -1,7 +1,6 @@
 package yuzunyannn.elementalsorcery.container.gui;
 
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
@@ -12,12 +11,10 @@ public class GuiSmeltBox extends GuiNormal {
 	private static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/container/smelt_box.png");
 	protected ContainerSmeltBox inventory;
-	private final InventoryPlayer playerInventory;
 
 	public GuiSmeltBox(ContainerSmeltBox inventorySlotsIn, InventoryPlayer playerInv) {
 		super(inventorySlotsIn, playerInv);
 		inventory = inventorySlotsIn;
-		playerInventory = playerInv;
 	}
 
 	public String getUnlocalizedTitle() {

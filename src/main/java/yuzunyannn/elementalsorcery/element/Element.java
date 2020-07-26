@@ -82,10 +82,11 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 	}
 
 	/** 默认能量级 */
-	static public int DP_TOOLS = 5;
-	static public int DP_BOX = 20;
-	static public int DP_ALTAR = 100;
-	static public int DP_ALTAR_SURPREME = 500;
+	static public final int DP_TOOLS = 5;
+	static public final int DP_BOX = 20;
+	static public final int DP_ALTAR = 100;
+	static public final int DP_ALTAR_ADV = 300;
+	static public final int DP_ALTAR_SURPREME = 500;
 
 	/**
 	 * 物品被析构成元素时候，获取真正可以得到的元素
@@ -113,8 +114,12 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 			if (estack.getCount() > 200) estack.setCount(200);
 			estack.rise(-0.5f);
 			estack.weaken(0.5f);
+		} else if (lvPower <= Element.DP_ALTAR_ADV) {
+			if (estack.getCount() > 500) estack.setCount(500);
+			estack.rise(-0.15f);
+			estack.weaken(0.8f);
 		} else if (lvPower <= Element.DP_ALTAR_SURPREME) {
-			estack.rise(-0.01f);
+			estack.rise(-0.02f);
 		}
 		return estack;
 	}

@@ -48,8 +48,14 @@ public class PageBuilding extends PageEasy {
 		double lx = box.maxX - box.minX;
 		double lz = box.maxZ - box.minZ;
 		double distance = Math.max(lx, lz);
+		if (extra != null) {
+			box = extra.getBox();
+			lx = box.maxX - box.minX;
+			lz = box.maxZ - box.minZ;
+			distance = Math.max(distance, Math.max(lx, lz));
+		}
 		float scale = 1.5f;
-		scale = (float) (2.25f / MathHelper.sqrt(distance * 0.5));
+		scale = (float) (2.25f / MathHelper.sqrt(distance * 0.4));
 		pageManager.drawBuilding(building, xoff + x, yoff + y, rX, rY, rZ, scale);
 		if (extra != null) pageManager.drawBuilding(extra, xoff + x, yoff + y, rX, rY, rZ, scale);
 	}

@@ -13,7 +13,6 @@ public class CapabilityProvider {
 	public static class ElementInventoryUseProvider implements ICapabilitySerializable<NBTTagCompound> {
 
 		private IElementInventory inventory;
-		private final ItemStack stack;
 
 		public ElementInventoryUseProvider(ItemStack dyStack) {
 			this(dyStack, null);
@@ -21,11 +20,8 @@ public class CapabilityProvider {
 
 		public ElementInventoryUseProvider(ItemStack dyStack, IElementInventory inventory) {
 			this.inventory = inventory == null ? new ElementInventory() : inventory;
-			if (this.inventory.hasState(dyStack))
-				this.inventory.loadState(dyStack);
-			else
-				this.inventory.saveState(dyStack);
-			this.stack = dyStack;
+			if (this.inventory.hasState(dyStack)) this.inventory.loadState(dyStack);
+			else this.inventory.saveState(dyStack);
 		}
 
 		@Override
@@ -35,9 +31,7 @@ public class CapabilityProvider {
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-			if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability)) {
-				return (T) inventory;
-			}
+			if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability)) return (T) inventory;
 			return null;
 		}
 
@@ -65,8 +59,7 @@ public class CapabilityProvider {
 		public ElementInventoryUseProviderCheck(ItemStack dyStack, IElementInventory inventory) {
 			this.inventory = inventory == null ? new ElementInventory() : inventory;
 			this.stack = dyStack;
-			if (this.inventory.hasState(dyStack))
-				this.inventory.loadState(dyStack);
+			if (this.inventory.hasState(dyStack)) this.inventory.loadState(dyStack);
 		}
 
 		@Override
@@ -76,11 +69,8 @@ public class CapabilityProvider {
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-			if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability)) {
-				if (inventory.hasState(stack)) {
-					return (T) inventory;
-				}
-			}
+			if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability))
+				if (inventory.hasState(stack)) return (T) inventory;
 			return null;
 		}
 
@@ -107,10 +97,8 @@ public class CapabilityProvider {
 		public SpellbookUseProvider(ItemStack dyStack, IElementInventory inventory) {
 			instance.inventory = inventory;
 			if (instance.inventory != null) {
-				if (instance.inventory.hasState(dyStack))
-					instance.inventory.loadState(dyStack);
-				else
-					instance.inventory.saveState(dyStack);
+				if (instance.inventory.hasState(dyStack)) instance.inventory.loadState(dyStack);
+				else instance.inventory.saveState(dyStack);
 			}
 
 		}
@@ -122,9 +110,7 @@ public class CapabilityProvider {
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-			if (Spellbook.SPELLBOOK_CAPABILITY == capability) {
-				return (T) instance;
-			}
+			if (Spellbook.SPELLBOOK_CAPABILITY == capability) return (T) instance;
 			return null;
 		}
 

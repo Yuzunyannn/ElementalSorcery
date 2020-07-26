@@ -37,8 +37,6 @@ public class GuiElementCraftingTable extends GuiNormal<ContainerElementCraftingT
 				this.ySize - 96 + 2, 4210752);
 	}
 
-	private int cycle = 0;
-
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		GlStateManager.color(1.0F, 1.0F, 1.0F);
@@ -57,7 +55,7 @@ public class GuiElementCraftingTable extends GuiNormal<ContainerElementCraftingT
 		List<ElementStack> list = container.tileEntity.getNeedElements();
 		if (list == null) return;
 		RenderHelper.disableStandardItemLighting();
-		GuiSupremeCraftingTable.drawElements(mc, offsetX, offsetY, list, 8, (EventClient.tick / 40) % 8);
+		GuiSupremeTable.drawElements(mc, offsetX, offsetY, list, 8, (EventClient.tick / 40) % 8);
 
 	}
 

@@ -1,0 +1,26 @@
+{
+	"pattern": [
+		"PEP",
+		" P ",
+		"EIE"
+	],
+	"key": {
+		"P": {
+			"id": "elementalsorcery:elf_plank",
+			"data": 1
+		},
+		"I": "elementalsorcery:item_crystal",
+		"E": "elementalsorcery:estone"
+	},
+	"element": [
+		{
+			"id": "metal",
+			"size": 200,
+			"power": 120
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:is_craft_normal",
+		"count": 1
+	}
+}

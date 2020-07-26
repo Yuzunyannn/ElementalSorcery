@@ -9,16 +9,16 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.container.ContainerSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.container.ContainerSupremeTable;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 
-public class GuiSupremeCraftingTable extends GuiNormal<ContainerSupremeCraftingTable> {
+public class GuiSupremeTable extends GuiNormal<ContainerSupremeTable> {
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/container/element_crafting_table.png");
 
-	public GuiSupremeCraftingTable(ContainerSupremeCraftingTable inventorySlotsIn, InventoryPlayer playerInv) {
+	public GuiSupremeTable(ContainerSupremeTable inventorySlotsIn, InventoryPlayer playerInv) {
 		super(inventorySlotsIn, playerInv);
 		this.xSize = 230;
 		this.ySize = 242;
@@ -26,7 +26,7 @@ public class GuiSupremeCraftingTable extends GuiNormal<ContainerSupremeCraftingT
 
 	@Override
 	public String getUnlocalizedTitle() {
-		return "tile.supremeCraftingTable.name";
+		return "tile.supremeTable.name";
 	}
 
 	@Override
@@ -45,24 +45,24 @@ public class GuiSupremeCraftingTable extends GuiNormal<ContainerSupremeCraftingT
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
 		// 画其他合成
 		switch (this.container.showMode) {
-		case ContainerSupremeCraftingTable.MODE_NONE:
+		case ContainerSupremeTable.MODE_NONE:
 			return;
-		case ContainerSupremeCraftingTable.MODE_NATIVE_CRAFTING:
+		case ContainerSupremeTable.MODE_NATIVE_CRAFTING:
 			this.drawTexturedModalRect(offsetX + 106, offsetY + 111, 230, 24, 18, 18);
 			return;
-		case ContainerSupremeCraftingTable.MODE_ELEMENT_CRAFTING:
+		case ContainerSupremeTable.MODE_ELEMENT_CRAFTING:
 			this.drawTexturedModalRect(offsetX + 106, offsetY + 111, 230, 60, 18, 18);
 			break;
-		case ContainerSupremeCraftingTable.MODE_PLATFORM_NONE:
+		case ContainerSupremeTable.MODE_PLATFORM_NONE:
 			this.drawTexturedModalRect(offsetX + 104, offsetY + 147, 230, 0, 23, 6);
 			return;
-		case ContainerSupremeCraftingTable.MODE_DECONSTRUCT:
+		case ContainerSupremeTable.MODE_DECONSTRUCT:
 			this.drawTexturedModalRectMirrorHeight(offsetX + 106, offsetY + 111, 230, 42, 18, 18);
 			this.drawTexturedModalRect(offsetX + 88, offsetY + 75, 230, 6, 18, 18);
 			this.drawTexturedModalRectMirrorWidth(offsetX + 124, offsetY + 75, 230, 6, 18, 18);
 			this.drawTexturedModalRect(offsetX + 104, offsetY + 147, 230, 0, 23, 6);
 			break;
-		case ContainerSupremeCraftingTable.MODE_CONSTRUCT:
+		case ContainerSupremeTable.MODE_CONSTRUCT:
 			this.drawTexturedModalRect(offsetX + 106, offsetY + 111, 230, 78, 18, 18);
 			this.drawTexturedModalRect(offsetX + 104, offsetY + 147, 230, 0, 23, 6);
 			break;
@@ -70,7 +70,7 @@ public class GuiSupremeCraftingTable extends GuiNormal<ContainerSupremeCraftingT
 		List<ElementStack> list = container.tileEntity.getNeedElements();
 		if (list == null) return;
 		RenderHelper.disableStandardItemLighting();
-		this.drawElements(mc, offsetX, offsetY, list, 8, (EventClient.tick / 40) % 8);
+		drawElements(mc, offsetX, offsetY, list, 8, (EventClient.tick / 40) % 8);
 	}
 
 	public static void drawElements(Minecraft mc, int offsetX, int offsetY, List<ElementStack> list, int size,

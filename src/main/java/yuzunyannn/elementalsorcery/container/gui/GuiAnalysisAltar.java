@@ -36,8 +36,7 @@ public class GuiAnalysisAltar extends GuiNormal<ContainerAnalysisAltar> {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		super.drawGuiContainerForegroundLayer(mouseX, mouseY);
-		if (!container.tileEntity.isOk())
-			return;
+		if (!container.tileEntity.isOk()) return;
 		ItemStack stack = container.tileEntity.getDAStack();
 		if (stack.isEmpty()) {
 			this.drawStringWithWidth(I18n.format("info.analysisAltar.none"), 52, 26, 60);
@@ -82,14 +81,12 @@ public class GuiAnalysisAltar extends GuiNormal<ContainerAnalysisAltar> {
 		this.drawTexturedModalRect(offsetX + 113, offsetY + 43, 176, 0, texWidth, 10);
 
 		ItemStack stack = container.tileEntity.getDAStack();
-		if (stack.isEmpty())
-			return;
+		if (stack.isEmpty()) return;
 		RenderHelper.enableGUIStandardItemLighting();
 		this.drawRoateItem(stack, offsetX + 24, offsetY + 47, partialTicks);
 		// 开始画元素图标
 		ElementStack[] estacks = container.tileEntity.getDAEstacks();
-		if (estacks == null || estacks.length == 0)
-			return;
+		if (estacks == null || estacks.length == 0) return;
 		RenderHelper.disableStandardItemLighting();
 		if (estacks.length <= 3) {
 			for (int i = 0; i < estacks.length; i++) {
@@ -121,10 +118,8 @@ public class GuiAnalysisAltar extends GuiNormal<ContainerAnalysisAltar> {
 		GlStateManager.translate(8.0F, 8.0F, 0.0F);
 		GlStateManager.scale(1.0F, -1.0F, 1.0F);
 		GlStateManager.scale(32.0F, 32.0F, 32.0F);
-		if (bakedmodel.isGui3d())
-			GlStateManager.enableLighting();
-		else
-			GlStateManager.disableLighting();
+		if (bakedmodel.isGui3d()) GlStateManager.enableLighting();
+		else GlStateManager.disableLighting();
 		GlStateManager.disableCull();
 		bakedmodel = net.minecraftforge.client.ForgeHooksClient.handleCameraTransforms(bakedmodel,
 				ItemCameraTransforms.TransformType.GROUND, false);
@@ -153,28 +148,20 @@ public class GuiAnalysisAltar extends GuiNormal<ContainerAnalysisAltar> {
 			at = 0;
 		} else {
 			max = estacks.length - 3;
-			if (at != max)
-				nextBut.visible = true;
+			if (at != max) nextBut.visible = true;
 		}
 	}
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
 		if (button.id == 0) {
-			if (at > 0)
-				at--;
-			if (at == 0)
-				preBut.visible = false;
-			if (at < max)
-				nextBut.visible = true;
+			if (at > 0) at--;
+			if (at == 0) preBut.visible = false;
+			if (at < max) nextBut.visible = true;
 		} else {
-			ElementStack[] estacks = container.tileEntity.getDAEstacks();
-			if (at < max)
-				at++;
-			if (at == max)
-				nextBut.visible = false;
-			if (at > 0)
-				preBut.visible = true;
+			if (at < max) at++;
+			if (at == max) nextBut.visible = false;
+			if (at > 0) preBut.visible = true;
 		}
 	}
 
@@ -210,14 +197,10 @@ public class GuiAnalysisAltar extends GuiNormal<ContainerAnalysisAltar> {
 			}
 		};
 		this.addButton(nextBut);
-		if (at == max)
-			nextBut.visible = false;
-		else
-			nextBut.visible = true;
-		if (at == 0)
-			preBut.visible = false;
-		else
-			preBut.visible = true;
+		if (at == max) nextBut.visible = false;
+		else nextBut.visible = true;
+		if (at == 0) preBut.visible = false;
+		else preBut.visible = true;
 	}
 
 }

@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/deconstruct_altar_table",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:deconstruct_altar_table_adv"
+        },
+        "title": {
+            "translate": "es.adv.deconstructAltarAdv.title"
+        },
+        "description": {
+            "translate": "es.adv.deconstructAltarAdv.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:element_craft",
+            "conditions": {
+                "recipe": "elementalsorcery:deconstruct_altar_table_adv"
+            }
+        }
+    }
+}

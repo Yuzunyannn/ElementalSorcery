@@ -19,8 +19,8 @@ public class ContainerElementCraftingTable extends ContainerNormal<TileElementCr
 
 		IItemHandler items = this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		for (int i = 0; i < items.getSlots(); i++) {
-			int x = ContainerSupremeCraftingTable.craftingRelative[i * 2];
-			int y = ContainerSupremeCraftingTable.craftingRelative[i * 2 + 1];
+			int x = ContainerSupremeTable.craftingRelative[i * 2];
+			int y = ContainerSupremeTable.craftingRelative[i * 2 + 1];
 			this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
 				@Override
 				public void onSlotChanged() {

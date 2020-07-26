@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/element_crafting_table",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:supreme_table"
+        },
+        "title": {
+            "translate": "es.adv.supremeAltar.title"
+        },
+        "description": {
+            "translate": "es.adv.supremeAltar.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:element_craft",
+            "conditions": {
+                "recipe": "elementalsorcery:supreme_table"
+            }
+        }
+    }
+}

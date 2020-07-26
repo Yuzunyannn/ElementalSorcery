@@ -55,7 +55,7 @@ public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalS
 			double vy = Math.random() - 0.5f;
 			double vz = Math.random() - 0.5f;
 			Vec3d v = new Vec3d(vx, vy, vz);
-			Vec3d oto = new Vec3d(to.getX() + 0.5, to.getY() + 0.5, to.getZ() + 0.5);
+			// Vec3d oto = new Vec3d(to.getX() + 0.5, to.getY() + 0.5, to.getZ() + 0.5);
 			v = v.addVector(0, Math.random() * 0.4 + 0.2, 0).scale(0.75);
 			this.motionX = v.x;
 			this.motionY = v.y;

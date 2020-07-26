@@ -15,22 +15,22 @@
 	"element": [
 		{
 			"id": "fire",
-			"size": 75,
+			"size": 100,
 			"power": 50
 		},
 		{
 			"id": "water",
-			"size": 75,
+			"size": 100,
 			"power": 50
 		},
 		{
 			"id": "earth",
-			"size": 75,
+			"size": 100,
 			"power": 50
 		},
 		{
 			"id": "air",
-			"size": 75,
+			"size": 100,
 			"power": 50
 		}
 	],

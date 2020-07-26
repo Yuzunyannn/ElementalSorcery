@@ -17,6 +17,10 @@ public class BlockDeconstructAltarTable extends BlockContainerNormal {
 		super(Material.ROCK, "deconstructAltarTable", 5.5F);
 	}
 
+	protected BlockDeconstructAltarTable(Material materialIn, String unlocalizedName, float hardness) {
+		super(materialIn, unlocalizedName, hardness);
+	}
+
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
 		return new TileDeconstructAltarTable();

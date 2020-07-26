@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.util.world;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -16,29 +15,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.storage.WorldInfo;
-import net.minecraftforge.fml.relauncher.ReflectionHelper;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 
 public class WorldHelper {
 
 	static public boolean canChangeRender() {
 		return Minecraft.getMinecraft().isSingleplayer()
 				|| (Minecraft.getMinecraft().world != null && Minecraft.getMinecraft().world.isRemote);
-	}
-
-	/**
-	 * 根据世界获取对应的纬度id，可能会出现null的返回，表明获取失败！ 注：该函数获取到的结果不符合预期
-	 */
-	@Deprecated
-	static public Integer getDimensionId(World world) {
-		try {
-			Field field = ReflectionHelper.findField(WorldInfo.class, "dimension", "field_76105_j", "p");
-			return (Integer) field.get(world.getWorldInfo());
-		} catch (Exception e) {
-			ElementalSorcery.logger.error("获取世界纬度信息时候出现异常：", e);
-		}
-		return null;
 	}
 
 	/** 获取生物正在看的方块 */

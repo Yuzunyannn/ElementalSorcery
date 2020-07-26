@@ -375,13 +375,13 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
 		BlockModelRenderer render = blockrendererdispatcher.getBlockModelRenderer();
 		// 建筑遍历器
-		Building.BuildingBlocks iter = building.getBuildingBlocks();
+		Building.BuildingBlocks iter = building.getBuildingIterator();
 		// 开始
 		GlStateManager.disableCull();
 		while (iter.next()) {
 			BlockPos blockpos = iter.getPos();
 			IBlockState iblockstate = iter.getState();
-			if (iblockstate.getRenderType() == EnumBlockRenderType.INVISIBLE) {
+			if (iblockstate.getRenderType() != EnumBlockRenderType.MODEL) {
 				if (iblockstate.getBlock() instanceof BlockContainer) {
 					try {
 						TileEntity tile = iblockstate.getBlock().createTileEntity(mc.world, iblockstate);

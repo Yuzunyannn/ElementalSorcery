@@ -70,9 +70,9 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.handleRecipes(TileMDInfusion.Recipe.class, MDInfusionRW::new, UID_MDINFUSION);
 		// 设置新增
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.ELEMENT_WORKBENCH), VanillaRecipeCategoryUid.CRAFTING);
-		registry.addRecipeCatalyst(new ItemStack(BLOCKS.SUPREME_CRAFTING_TABLE), VanillaRecipeCategoryUid.CRAFTING);
+		registry.addRecipeCatalyst(new ItemStack(BLOCKS.SUPREME_TABLE), VanillaRecipeCategoryUid.CRAFTING);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.RITE_TABLE), RiteCategory.UID);
-		registry.addRecipeCatalyst(new ItemStack(BLOCKS.SUPREME_CRAFTING_TABLE), ElementCraftingCategory.UID);
+		registry.addRecipeCatalyst(new ItemStack(BLOCKS.SUPREME_TABLE), ElementCraftingCategory.UID);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.ELEMENT_CRAFTING_TABLE), ElementCraftingCategory.UID);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.ELEMENT_WORKBENCH), ElementCraftingCategory.UID);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MAGIC_DESK), MagicDeskCategory.UID);

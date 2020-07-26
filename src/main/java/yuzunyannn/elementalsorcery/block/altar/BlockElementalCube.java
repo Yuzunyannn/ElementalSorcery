@@ -110,7 +110,7 @@ public class BlockElementalCube extends BlockContainer {
 		yes = yes && worldIn.isAirBlock(pos.up());
 
 		IBlockState state = worldIn.getBlockState(pos.down());
-		yes = yes && state.getBlock().isFullCube(state) && state.getBlock().isOpaqueCube(state);
+		yes = yes && state.isFullCube() && state.isOpaqueCube();
 
 		return yes;
 	}

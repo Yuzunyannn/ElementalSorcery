@@ -32,7 +32,6 @@ import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -53,7 +52,6 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
-import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.elf.AutoName;
@@ -65,6 +63,7 @@ import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
+import yuzunyannn.elementalsorcery.render.item.RenderItemSupremeTable;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileAnalysisAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileBuildingAltar;
@@ -79,7 +78,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileRiteTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStela;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStoneMill;
-import yuzunyannn.elementalsorcery.render.tile.RenderTileSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileSupremeTable;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDAbsorbBox;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDBase;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDDeconstructBox;
@@ -107,10 +106,11 @@ import yuzunyannn.elementalsorcery.tile.TileStoneMill;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTableAdv;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
-import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
 import yuzunyannn.elementalsorcery.tile.md.TileMDAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.md.TileMDDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.md.TileMDHearth;
@@ -178,6 +178,11 @@ public class ESInit {
 		TileStela.init();
 	}
 
+	public final static void postInit(FMLPostInitializationEvent event) throws Throwable {
+		// 通过查找注册元素映射
+		ElementMap.findAndRegisterCraft();
+	}
+
 	@SideOnly(Side.CLIENT)
 	public final static void initClient(FMLPreInitializationEvent event) {
 		// 设置自定义模型加载
@@ -237,12 +242,13 @@ public class ESInit {
 		register(TileMagicDesk.class, "MagicDesk");
 		register(TileElementCraftingTable.class, "ElementCraftingTable");
 		register(TileDeconstructAltarTable.class, "DeconstructAltarTable");
+		register(TileDeconstructAltarTableAdv.class, "DeconstructAltarTableAdv");
 		register(TileStela.class, "Stela");
 		register(TileRiteTable.class, "riteTable");
 		register(TileLantern.class, "Lantern");
 		register(TileBuildingAltar.class, "BuildingAltar");
 		register(TileAnalysisAltar.class, "AnalysisAltar");
-		register(TileSupremeCraftingTable.class, "SupremeCraftingTable");
+		register(TileSupremeTable.class, "SupremeTable");
 		register(TileStoneMill.class, "StoneMill");
 		register(TileMeltCauldron.class, "MeltCauldron");
 		register(TileMDMagicGen.class, "MDMagicGen");
@@ -315,6 +321,7 @@ public class ESInit {
 		registerRender(ITEMS.AZURE_CRYSTAL);
 		registerRender(ITEMS.RESONANT_CRYSTAL);
 		registerRender(ITEMS.ELF_CRYSTAL);
+		registerRender(ITEMS.SUPREME_TABLE_COMPONENT, new RenderItemSupremeTable());
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -362,6 +369,7 @@ public class ESInit {
 		registerRender(BLOCKS.LIFE_DIRT);
 		registerRender(BLOCKS.CRYSTAL_FLOWER);
 		registerRender(BLOCKS.IS_CRAFT_NORMAL);
+		registerRender(BLOCKS.ESTONE_PRISM);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());
@@ -371,14 +379,15 @@ public class ESInit {
 		registerRender(BLOCKS.ELEMENT_CRAFTING_TABLE, TileElementCraftingTable.class,
 				new RenderTileElementCraftingTable());
 		registerRender(BLOCKS.DECONSTRUCT_ALTAR_TABLE, TileDeconstructAltarTable.class,
-				new RenderTileDeconstructAltarTable());
+				new RenderTileDeconstructAltarTable(false));
+		registerRender(BLOCKS.DECONSTRUCT_ALTAR_TABLE_ADV, TileDeconstructAltarTableAdv.class,
+				new RenderTileDeconstructAltarTable(true));
 		registerRender(BLOCKS.STELA, TileStela.class, new RenderTileStela());
 		registerRender(BLOCKS.RITE_TABLE, TileRiteTable.class, new RenderTileRiteTable());
 		registerRender(BLOCKS.LANTERN, TileLantern.class, new RenderTileLantern());
 		registerRender(BLOCKS.BUILDING_ALTAR, TileBuildingAltar.class, new RenderTileBuildingAltar());
 		registerRender(BLOCKS.ANALYSIS_ALTAR, TileAnalysisAltar.class, new RenderTileAnalysisAltar());
-		registerRender(BLOCKS.SUPREME_CRAFTING_TABLE, TileSupremeCraftingTable.class,
-				new RenderTileSupremeCraftingTable());
+		registerRender(BLOCKS.SUPREME_TABLE, TileSupremeTable.class, new RenderTileSupremeTable());
 		registerRender(BLOCKS.STONE_MILL, TileStoneMill.class, new RenderTileStoneMill());
 		registerRender(BLOCKS.MELT_CAULDRON, TileMeltCauldron.class, new RenderTileMeltCauldron());
 		registerRender(BLOCKS.MD_MAGIC_GEN, TileMDMagicGen.class, new RenderTileMDMagicGen());
@@ -485,7 +494,8 @@ public class ESInit {
 	}
 
 	@SideOnly(Side.CLIENT)
-	private static <T extends TileEntity> void registerRender(Class<T> tile, TileEntitySpecialRenderer<T> renderer) {
+	private static <T extends TileEntity> void registerRender(Class<T> tile,
+			TileEntitySpecialRenderer<? super T> renderer) {
 		ClientRegistry.bindTileEntitySpecialRenderer(tile, renderer);
 	}
 
@@ -545,7 +555,7 @@ public class ESInit {
 	}
 
 	@SideOnly(Side.CLIENT)
-	private static <T extends TileEntity, R extends TileEntitySpecialRenderer<T> & IRenderItem> void registerRender(
+	private static <T extends TileEntity, R extends TileEntitySpecialRenderer<? super T> & IRenderItem> void registerRender(
 			Block block, Class<T> tile, R render_instance) {
 		registerRender(tile, render_instance);
 		registerRender(ItemBlock.getItemFromBlock(block), render_instance);

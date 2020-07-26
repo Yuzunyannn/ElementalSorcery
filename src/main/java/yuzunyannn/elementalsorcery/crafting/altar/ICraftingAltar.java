@@ -20,7 +20,7 @@ public interface ICraftingAltar extends ICraftingCommit {
 	public boolean end(TileStaticMultiBlock tileMul);
 
 	/** 获取结束时间 */
-	default public int getEndTime(TileStaticMultiBlock tileSupremeCraftingTable) {
+	default public int getEndTime(TileStaticMultiBlock tileSupremeTable) {
 		return 20;
 	}
 

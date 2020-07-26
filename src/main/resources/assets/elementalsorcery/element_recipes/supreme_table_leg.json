@@ -1,0 +1,37 @@
+{
+	"pattern": [
+		"AXD",
+		"BPE",
+		"CXF"
+	],
+	"key": {
+		"P": {
+			"id": "elementalsorcery:elf_plank",
+			"data": 1
+		},
+		"X": "elementalsorcery:estone_prism",
+		"A":"elementalsorcery:resonant_crystal",
+		"B":"elementalsorcery:element_crystal",
+		"C":"elementalsorcery:item_crystal",
+		"D":"elementalsorcery:azure_crystal",
+		"E":"elementalsorcery:spell_crystal",
+		"F":"elementalsorcery:architecture_crystal"
+	},
+	"element": [
+		{
+			"id": "wood",
+			"size": 500,
+			"power": 200
+		},
+		{
+			"id": "metal",
+			"size": 250,
+			"power": 200
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:supreme_table_component",
+		"data": 0,
+		"count": 1
+	}
+}

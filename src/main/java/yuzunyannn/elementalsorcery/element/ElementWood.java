@@ -1,9 +1,5 @@
 package yuzunyannn.elementalsorcery.element;
 
-import java.util.List;
-
-import net.minecraft.client.resources.I18n;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -16,7 +12,7 @@ import yuzunyannn.elementalsorcery.api.element.IElementSpell;
 public class ElementWood extends ElementInner {
 
 	public ElementWood() {
-		super(0x32CD32,"wood");
+		super(0x32CD32, "wood");
 	}
 
 	@Override
@@ -26,8 +22,7 @@ public class ElementWood extends ElementInner {
 
 	@Override
 	public void spelling(World world, EntityLivingBase entity, ElementStack estack, SpellPackage pack) {
-		if (estack.isEmpty())
-			return;
+		if (estack.isEmpty()) return;
 		if (pack.power % 15 == 0) {
 			if (!world.isRemote) {
 				for (int i = 0; i < 2; i++) {
@@ -36,8 +31,7 @@ public class ElementWood extends ElementInner {
 							world.rand.nextInt(8) - 4);
 					if (entity instanceof EntityPlayer)
 						ItemDye.applyBonemeal(new ItemStack(Items.DYE), world, target, (EntityPlayer) entity, null);
-					else
-						ItemDye.applyBonemeal(new ItemStack(Items.DYE), world, target);
+					else ItemDye.applyBonemeal(new ItemStack(Items.DYE), world, target);
 				}
 			} else {
 				BlockPos target = entity.getPosition().up();

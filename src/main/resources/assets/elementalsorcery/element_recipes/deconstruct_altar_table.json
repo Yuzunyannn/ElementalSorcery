@@ -9,7 +9,7 @@
 			"id": "elementalsorcery:elf_plank",
 			"data": 1
 		},
-		"S":{
+		"S": {
 			"id": "elementalsorcery:estone",
 			"data": 1
 		},
@@ -24,6 +24,11 @@
 		{
 			"id": "magic",
 			"size": 100,
+			"power": 25
+		},
+		{
+			"id": "metal",
+			"size": 120,
 			"power": 25
 		},
 		{

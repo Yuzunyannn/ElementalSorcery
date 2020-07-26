@@ -50,10 +50,8 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 
 	@Override
 	public void update(ICraftingCommit commit, World world, int endTick) {
-		if (endTick >= 0)
-			theta = endTick;
-		else
-			theta += 1;
+		if (endTick >= 0) theta = endTick;
+		else theta += 1;
 		BlockPos pos = cnr.getCurrPos();
 		if (pos != null && !pos.equals(this.lastPos)) {
 			this.lastPos = pos;
@@ -61,10 +59,8 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 				IBlockState state = world.getBlockState(pos);
 				ItemStack stack = new ItemStack(state.getBlock(), 1, state.getBlock().damageDropped(state));
 				if (!effects.isEmpty()) {
-					if (!effects.getLast().stack.isItemEqual(stack))
-						effects.addLast(new BlockEffect(stack));
-				} else
-					effects.addLast(new BlockEffect(stack));
+					if (!effects.getLast().stack.isItemEqual(stack)) effects.addLast(new BlockEffect(stack));
+				} else effects.addLast(new BlockEffect(stack));
 			}
 		}
 		Iterator<BlockEffect> iter = effects.iterator();
@@ -72,8 +68,7 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 			BlockEffect e = iter.next();
 			e.endTime -= 0.05f;
 			e.onUpdate();
-			if (e.endTime <= 0)
-				iter.remove();
+			if (e.endTime <= 0) iter.remove();
 		}
 	}
 
@@ -116,10 +111,8 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 
 	@Override
 	public int onRender(float partialTicks) {
-		if (this.world != Minecraft.getMinecraft().world)
-			return IRenderClient.END;
-		if (this.finish)
-			return IRenderClient.END;
+		if (this.world != Minecraft.getMinecraft().world) return IRenderClient.END;
+		if (this.finish) return IRenderClient.END;
 
 		BlockPos pos = cnr.getCurrPos();
 		if (pos != null) {
@@ -128,9 +121,9 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 			GlStateManager.disableTexture2D();
 			GlStateManager.glLineWidth(5);
 			pos = pos.add(-tilePos.getX(), -tilePos.getY(), -tilePos.getZ());
-			float x = pos.getX();
-			float y = pos.getY();
-			float z = pos.getZ();
+			//float x = pos.getX();
+			//float y = pos.getY();
+			//float z = pos.getZ();
 			float r = cnr.r;
 			float g = cnr.g;
 			float b = cnr.b;
@@ -191,13 +184,10 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 		}
 
 		public int onRender(float partialTicks) {
-			if (this.endTime < 0)
-				return 0;
+			if (this.endTime < 0) return 0;
 			float scale;
-			if (this.endTime > 0.5)
-				scale = (1 - this.endTime) * 2;
-			else
-				scale = this.endTime * 2;
+			if (this.endTime > 0.5) scale = (1 - this.endTime) * 2;
+			else scale = this.endTime * 2;
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(x, y, z);
 			GlStateManager.scale(scale * 0.175, scale * 0.175, scale * 0.175);

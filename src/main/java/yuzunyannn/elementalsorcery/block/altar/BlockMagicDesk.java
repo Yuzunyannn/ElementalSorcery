@@ -20,7 +20,8 @@ public class BlockMagicDesk extends BlockContainerNormal {
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 1.6D, 1.0D);
 
 	public BlockMagicDesk() {
-		super(Material.WOOD,"magicDesk",5.0F);
+		super(Material.WOOD, "magicDesk", 5.0F);
+		this.fullBlock = false;
 	}
 
 	@Override

@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.List;
 
 import mezz.jei.api.gui.IDrawable;
-import mezz.jei.api.gui.IGuiItemStackGroup;
-import mezz.jei.api.gui.IRecipeLayout;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
@@ -35,19 +33,12 @@ public class MDDraw implements IDrawable {
 	public void draw(Minecraft minecraft, int xOffset, int yOffset) {
 		if (mdRW == null) return;
 		mdRW.drawBackground(minecraft, this, xOffset, yOffset);
-		IGuiItemStackGroup group = layout.getItemStacks();
 		minecraft.getTextureManager().bindTexture(TEXTURE2);
 		RenderHelper.drawTexturedModalRect(xOffset, yOffset + 70, 0, 70, 175, 29, 256, 256);
 	}
 
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
 		return Collections.emptyList();
-	}
-
-	private IRecipeLayout layout;
-
-	public void setRecipeLayout(IRecipeLayout layout) {
-		this.layout = layout;
 	}
 
 	private MDRecipeWrapper mdRW;

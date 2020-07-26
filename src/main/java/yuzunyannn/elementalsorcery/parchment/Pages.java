@@ -176,10 +176,9 @@ public class Pages {
 	}
 
 	static public void loadParchments(ModContainer mod) {
-		Json.ergodicAssets(mod, "/parchments", (file, jobj) -> {
-			JsonParser.Packet packet = JsonParser.read(jobj.getGoogleJson());
+		Json.ergodicAssets(mod, "/parchments", (file, json) -> {
+			JsonParser.Packet packet = JsonParser.read(json);
 			if (packet == null) return false;
-			String path = file.toString();
 			String id = Json.fileToId(file, null);
 			if (packet.need != null) for (String need : packet.need) packet.page.addRequire(Json.idFormat(need, null));
 			if (packet.linked != null)

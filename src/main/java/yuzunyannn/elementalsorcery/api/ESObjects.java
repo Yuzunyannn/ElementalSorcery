@@ -49,6 +49,7 @@ public class ESObjects {
 		public Item RITE_MANUAL;
 		public Item RED_HANDSET;
 		public Item ELF_CRYSTAL;
+		public Item SUPREME_TABLE_COMPONENT;
 	}
 	
 	static public class Blocks {
@@ -56,6 +57,7 @@ public class ESObjects {
 		public Block ESTONE;
 		public Block ESTONE_SLAB;
 		public Block ESTONE_STAIRS;
+		public Block ESTONE_PRISM;
 		public Block ASTONE;
 		public Block STAR_STONE;
 		public Block STAR_SAND;
@@ -77,13 +79,14 @@ public class ESObjects {
 		public Block MAGIC_DESK;
 		public Block ELEMENT_CRAFTING_TABLE;
 		public Block DECONSTRUCT_ALTAR_TABLE;
+		public Block DECONSTRUCT_ALTAR_TABLE_ADV;
 		@Deprecated
 		public Block STELA;
 		public Block RITE_TABLE;
 		public Block LANTERN;
 		public Block BUILDING_ALTAR;
 		public Block ANALYSIS_ALTAR;
-		public Block SUPREME_CRAFTING_TABLE;
+		public Block SUPREME_TABLE;
 		public Block MAGIC_TORCH;
 		public Block STONE_MILL;
 		public Block MELT_CAULDRON;

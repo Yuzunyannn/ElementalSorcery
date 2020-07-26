@@ -4,6 +4,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.text.TextFormatting;
 
 public class ColorHelper {
+	
 	static public int rgbToHSV(int R, int G, int B) {
 		int max = Math.max(R, Math.max(G, B));
 		int min = Math.min(R, Math.min(G, B));

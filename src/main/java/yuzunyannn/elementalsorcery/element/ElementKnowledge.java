@@ -32,10 +32,8 @@ public class ElementKnowledge extends ElementInner {
 
 	@Override
 	public void spellEnd(World world, EntityLivingBase entity, ElementStack estack, SpellPackage pack) {
-		if (pack.isFail())
-			return;
-		if (world.isRemote)
-			return;
+		if (pack.isFail()) return;
+		if (world.isRemote) return;
 		if (entity instanceof EntityPlayer) {
 			((EntityPlayer) entity).displayGui(new InteractionObject(world, entity.getPosition()));
 		}
@@ -65,23 +63,23 @@ public class ElementKnowledge extends ElementInner {
 			this.pos = pos;
 		}
 
+		@Override
 		public String getName() {
 			return "container.enchant";
 		}
 
+		@Override
 		public boolean hasCustomName() {
 			return false;
 		}
 
-		public void setCustomName(String customNameIn) {
-
-		}
-
+		@Override
 		public ITextComponent getDisplayName() {
 			return (ITextComponent) (this.hasCustomName() ? new TextComponentString(this.getName())
 					: new TextComponentTranslation(this.getName(), new Object[0]));
 		}
 
+		@Override
 		public Container createContainer(InventoryPlayer playerInventory, EntityPlayer playerIn) {
 			return new ContainerEnchantment(playerInventory, this.world, this.pos) {
 				@Override
@@ -91,6 +89,7 @@ public class ElementKnowledge extends ElementInner {
 			};
 		}
 
+		@Override
 		public String getGuiID() {
 			return "minecraft:enchanting_table";
 		}

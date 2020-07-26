@@ -266,7 +266,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 	public void update() {
 		temperature *= 0.995f;
 		if (this.result.isEmpty() && this.magicCount > 0 && !this.world.isRemote) {
-			if (this.temperature < this.START_TEMPERATURE) {
+			if (this.temperature < START_TEMPERATURE) {
 				this.doResult();
 				if (!this.result.isEmpty()) {
 					this.markDirty();

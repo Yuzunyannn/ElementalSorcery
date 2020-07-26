@@ -26,8 +26,7 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 		super(inventorySlotsIn, playerInv);
 	}
 
-	public static void drawMagicVolume(float xoff, float yoff, int width, int height, float rate,
-			float partialTicks) {
+	public static void drawMagicVolume(float xoff, float yoff, int width, int height, float rate, float partialTicks) {
 		RenderTileMeltCauldron.TEXTURE_FLUID.bind();
 		final int PEAK = 10 / 2;
 		final int HEIGHT = (PEAK * 2 + height);
@@ -80,7 +79,7 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 
 	/** 是否展示魔力数据 */
 	protected boolean showMagicInfo(int mouseX, int mouseY) {
-		return this.isMouseIn(mouseX, mouseY, 15, 59, 144, 10);
+		return isMouseIn(mouseX, mouseY, 15, 59, 144, 10);
 	}
 
 	/** 基础绘画 */

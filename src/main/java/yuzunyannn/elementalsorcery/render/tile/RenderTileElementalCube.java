@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.render.tile;
 
-import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
@@ -30,7 +29,7 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 	@Override
 	public void render(TileElementalCube tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
-		float rotate = tile.rotate + tile.SOTATE_PRE_TICK * partialTicks;
+		float rotate = tile.rotate + TileElementalCube.SOTATE_PRE_TICK * partialTicks;
 		float wake = tile.wake > 0 ? tile.wakeUp + TileElementalCube.WAKE_UP_RARE * partialTicks
 				: tile.wakeUp - TileElementalCube.WAKE_UP_RARE * partialTicks;
 		wake = MathHelper.clamp(wake, 0, 1);
@@ -39,9 +38,9 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 		GlStateManager.rotate(tile.getRoate((float) (rotate * 180.0f / Math.PI), wake), 1, 1, 1);
 		TEXTURE.bind();
 		MODEL.render();
-		GlStateManager.color(tile.color.x * tile.colorRate + (1.0F - tile.colorRate) * tile.ORIGIN_COLOR.x,
-				tile.color.y * tile.colorRate + (1.0F - tile.colorRate) * tile.ORIGIN_COLOR.y,
-				tile.color.z * tile.colorRate + (1.0F - tile.colorRate) * tile.ORIGIN_COLOR.z);
+		GlStateManager.color(tile.color.x * tile.colorRate + (1.0F - tile.colorRate) * TileElementalCube.ORIGIN_COLOR.x,
+				tile.color.y * tile.colorRate + (1.0F - tile.colorRate) * TileElementalCube.ORIGIN_COLOR.y,
+				tile.color.z * tile.colorRate + (1.0F - tile.colorRate) * TileElementalCube.ORIGIN_COLOR.z);
 		TEXTURE_OVER.bind();
 		MODEL.render();
 		RenderHelper.endRender();

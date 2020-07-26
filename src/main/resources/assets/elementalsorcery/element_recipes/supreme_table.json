@@ -1,0 +1,32 @@
+{
+	"pattern": [
+		" T ",
+		"L L",
+		"L L"
+	],
+	"key": {
+		"T": {
+			"id": "elementalsorcery:supreme_table_component",
+			"data": 1
+		},
+		"L": {
+			"id": "elementalsorcery:supreme_table_component",
+			"data": 0
+		}
+	},
+	"element": [
+		{
+			"id": "ender",
+			"size": 750,
+			"power": 200
+		},{
+			"id": "knowledge",
+			"size": 400,
+			"power": 150
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:supreme_table",
+		"count": 1
+	}
+}

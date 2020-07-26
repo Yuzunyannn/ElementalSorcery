@@ -5,7 +5,6 @@ import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
 import yuzunyannn.elementalsorcery.util.TextHelper;

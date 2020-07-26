@@ -81,7 +81,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 
 	public static final ElementStack[] EMPTY_ESTACKS = new ElementStack[0];
 
-	public class AnalysisPacket implements INBTSerializable<NBTTagCompound> {
+	public static class AnalysisPacket implements INBTSerializable<NBTTagCompound> {
 		public ElementStack[] daEstacks = null;
 		public ItemStack daStack = ItemStack.EMPTY;
 		public int daComplex = 0;
@@ -118,6 +118,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 
 	protected IItemStructureCraft structureCraft = null;
 	protected AnalysisPacket ans = null;
+	protected boolean cannotAnalysis = false;
 
 	public AnalysisPacket getAnalysisPacket() {
 		return ans;
@@ -133,12 +134,24 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		return ans == null ? ItemStack.EMPTY : ans.daStack;
 	}
 
+	// 分析的元素
 	public ElementStack[] getDAEstacks() {
 		return ans == null ? null : ans.daEstacks;
 	}
 
 	public int getDAComplex() {
 		return ans == null ? 0 : ans.daComplex;
+	}
+
+	public boolean cannotAnalysis() {
+		return cannotAnalysis;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void setCannotAnalysis() {
+		this.ans = new AnalysisPacket();
+		this.ans.daStack = this.getStackToAnalysis();
+		this.ans.daEstacks = new ElementStack[0];
 	}
 
 	public boolean isOk() {
@@ -163,31 +176,37 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 				ItemStack stack = structureCraft.getOutput();
 				if (!ItemHelper.areItemsEqual(stack, this.getDAStack())) {
 					this.stateClear();
-					if (stack.isEmpty()) return;
+					if (stack.isEmpty()) {
+						cannotAnalysis = false;
+						return;
+					}
 					// 试图直接解析
-					this.ans = this.analysisItem(stack, ElementMap.instance, true);
+					this.ans = analysisItem(stack, ElementMap.instance, true);
 					// 没法直接解析？进行递归搜索
 					if (this.ans == null) this.updateItemStructure(stack);
+					cannotAnalysis = this.ans == null;
 				}
 			} else {
 				// 检查物品是否存在，更换
 				ItemStack stack = this.getStackToAnalysis();
 				if (stack != this.getDAStack()) {
 					this.stateClear();
-					this.ans = this.analysisItem(stack, ElementMap.instance, true);
+					this.ans = analysisItem(stack, ElementMap.instance, true);
+					cannotAnalysis = this.ans == null;
 				}
 			}
 		}
 		this.writeToItem(ans);
 	}
 
+	/** 处理结构水晶的结果 */
 	private void updateItemStructure(ItemStack output) {
 		List<ItemStack> inputs = structureCraft.getInputs();
 		if (inputs != null && !inputs.isEmpty()) {
 			IToElement elementMap = this.getElementMapSample();
 			for (ItemStack input : inputs) {
 				if (input.isEmpty()) continue;
-				AnalysisPacket ans = this.analysisItem(input, elementMap, structureCraft.calcRemain(input));
+				AnalysisPacket ans = analysisItem(input, elementMap, structureCraft.calcRemain(input));
 				// 存在任何一个找不到的，直接清除
 				if (ans == null) {
 					this.stateClear();
@@ -242,7 +261,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		}
 	}
 
-	private AnalysisPacket analysisItem(ItemStack stack, IToElement elementMap, boolean needRemian) {
+	public static AnalysisPacket analysisItem(ItemStack stack, IToElement elementMap, boolean needRemian) {
 		AnalysisPacket ans = new AnalysisPacket();
 		ans.daStack = stack;
 		// 解析元素
@@ -255,11 +274,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		do {
 			remain = elementMap.remain(remain);
 			if (remain.isEmpty()) break;
-			if (rest <= 0) {
-				// 到达限制无法继续解析
-				this.stateClear();
-				break;
-			}
+			if (rest <= 0) return null;
 			ElementStack[] remainStacks = ElementHelper.copy(elementMap.toElement(remain));
 			if (remainStacks != null) {
 				ans.daEstacks = ElementHelper.merge(ans.daEstacks, remainStacks);

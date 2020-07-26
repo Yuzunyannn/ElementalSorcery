@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
+import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -27,20 +27,16 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	// 是否ok
 	private boolean isOk = true;
 
-	public CraftingDeconstruct(World world, ItemStack stack, int lvPower, IItemStructure structure) {
+	public CraftingDeconstruct(World world, ItemStack stack, int lvPower, IToElement toElement) {
 		itemList.add(stack);
 		ElementStack[] outEstacks;
-		if (structure == null)
-			outEstacks = ElementMap.instance.toElement(stack);
-		else
-			outEstacks = structure.toElement(stack);
-		if (outEstacks == null)
-			return;
+		if (toElement == null) outEstacks = ElementMap.instance.toElement(stack);
+		else outEstacks = toElement.toElement(stack);
+		if (outEstacks == null) return;
 		restEStacks = new LinkedList<ElementStack>();
 		for (ElementStack estack : outEstacks) {
-			for (int i = 0; i < stack.getCount(); i++)
-				restEStacks.add(estack.copy().becomeElementWhenDeconstruct(world, stack,
-						ElementMap.instance.complex(stack), lvPower));
+			for (int i = 0; i < stack.getCount(); i++) restEStacks.add(estack.copy().becomeElementWhenDeconstruct(world,
+					stack, ElementMap.instance.complex(stack), lvPower));
 		}
 	}
 
@@ -55,18 +51,15 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		if (restEStacks != null)
-			NBTHelper.setElementist(nbt, "rest_estacks", restEStacks);
+		if (restEStacks != null) NBTHelper.setElementist(nbt, "rest_estacks", restEStacks);
 		NBTHelper.setItemList(nbt, "itemList", itemList);
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
-		if (nbt.hasKey("rest_estacks"))
-			restEStacks = NBTHelper.getElementList(nbt, "rest_estacks");
-		if (nbt.hasKey("itemList"))
-			itemList = NBTHelper.getItemList(nbt, "itemList");
+		if (nbt.hasKey("rest_estacks")) restEStacks = NBTHelper.getElementList(nbt, "rest_estacks");
+		if (nbt.hasKey("itemList")) itemList = NBTHelper.getItemList(nbt, "itemList");
 	}
 
 	@Override
@@ -88,12 +81,10 @@ public class CraftingDeconstruct implements ICraftingAltar {
 		}
 		ElementStack estack = restEStacks.getFirst();
 		ElementStack put = estack.splitStack(1);
-		if (tileMul.putElementToSpPlace(put, tileMul.getPos().up())) {
-		} else {
+		if (tileMul.putElementToSpPlace(put, tileMul.getPos().up())) {} else {
 
 		}
-		if (estack.isEmpty())
-			restEStacks.removeFirst();
+		if (estack.isEmpty()) restEStacks.removeFirst();
 		if (restEStacks.isEmpty()) {
 			restEStacks = null;
 			this.isOk = false;
@@ -110,11 +101,9 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	public boolean end(TileStaticMultiBlock tileMul) {
 		ItemStack stack = itemList.get(0);
 		itemList.clear();
-		if (!tileMul.isIntact())
-			return false;
+		if (!tileMul.isIntact()) return false;
 		stack = ElementMap.instance.remain(stack);
-		if (!stack.isEmpty())
-			itemList.add(stack);
+		if (!stack.isEmpty()) itemList.add(stack);
 		return true;
 	}
 

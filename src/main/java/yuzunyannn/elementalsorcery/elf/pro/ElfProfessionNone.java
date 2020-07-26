@@ -30,9 +30,8 @@ public class ElfProfessionNone extends ElfProfession {
 		AxisAlignedBB aabb = new AxisAlignedBB(elf.posX - size, elf.posY - size, elf.posZ - size, elf.posX + size,
 				elf.posY + size, elf.posZ + size);
 		List<EntityElf> list = elf.world.getEntitiesWithinAABB(EntityElf.class, aabb);
-		for (EntityElf e : list) {
-			if (elf.getRevengeTarget() == null) elf.setRevengeTarget((EntityLivingBase) source.getTrueSource());
-		}
+		for (EntityElf e : list)
+			if (e.getRevengeTarget() == null) e.setRevengeTarget((EntityLivingBase) source.getTrueSource());
 		return 0;
 	}
 

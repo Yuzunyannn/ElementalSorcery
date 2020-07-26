@@ -14,7 +14,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
-import yuzunyannn.elementalsorcery.container.ContainerSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.container.ContainerSupremeTable;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
@@ -121,8 +121,8 @@ public class PageCrafting extends PageEasy {
 		int cX = this.getCX();
 		int cY = this.getCY();
 		for (int i = 0; i < size; i++) {
-			int x = ContainerSupremeCraftingTable.craftingRelative[i * 2] + cX + 1;
-			int y = ContainerSupremeCraftingTable.craftingRelative[i * 2 + 1] + cY + 1;
+			int x = ContainerSupremeTable.craftingRelative[i * 2] + cX + 1;
+			int y = ContainerSupremeTable.craftingRelative[i * 2 + 1] + cY + 1;
 			pageManager.addSlot(x, y, ItemStack.EMPTY);
 		}
 		pageManager.addSlot(cX + 18 + 1, cY + 64 + 1, ItemStack.EMPTY);

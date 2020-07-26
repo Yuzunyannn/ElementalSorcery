@@ -1,0 +1,79 @@
+{
+    "maps": [
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "oreRedstone"
+            },
+            "element": [
+                {
+                    "id": "fire",
+                    "size": 5,
+                    "power": 25
+                },
+                {
+                    "id": "metal",
+                    "size": 2,
+                    "power": 30
+                },
+                {
+                    "id": "earth",
+                    "size": 20,
+                    "power": 30
+                }
+            ]
+        },
+        {
+            "notes": "红石",
+            "item": "minecraft:redstone",
+            "element": [
+                {
+                    "id": "fire",
+                    "size": 5,
+                    "power": 24
+                },
+                {
+                    "id": "metal",
+                    "size": 2,
+                    "power": 26
+                }
+            ]
+        },
+        {
+            "item": "minecraft:redstone_torch",
+            "element": [
+                {
+                    "id": "fire",
+                    "size": 5,
+                    "power": 24
+                },
+                {
+                    "id": "metal",
+                    "size": 2,
+                    "power": 26
+                },
+                {
+                    "id": "wood",
+                    "size": 1,
+                    "power": 4
+                }
+            ]
+        },
+        {
+            "notes": "tnt",
+            "item": "minecraft:gunpowder",
+            "element": [
+                {
+                    "id": "fire",
+                    "size": 5,
+                    "power": 20
+                },
+                {
+                    "id": "earth",
+                    "size": 5,
+                    "power": 30
+                }
+            ]
+        }
+    ]
+}

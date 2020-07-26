@@ -51,7 +51,6 @@ public class MDCategory<T extends MDRecipeWrapper> implements IRecipeCategory<T>
 	public void setRecipe(IRecipeLayout recipeLayout, T recipeWrapper, IIngredients ingredients) {
 		recipeWrapper.layout(recipeLayout);
 		background.setMDCategory(recipeWrapper);
-		background.setRecipeLayout(recipeLayout);
 	}
 
 }

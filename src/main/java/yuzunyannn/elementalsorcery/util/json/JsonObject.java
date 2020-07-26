@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.util.json;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,6 +16,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.Vec3d;
 import scala.actors.threadpool.Arrays;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 
@@ -28,7 +28,6 @@ public class JsonObject extends Json implements Iterable<String> {
 	}
 
 	public JsonObject(Path file) throws IOException {
-		InputStream istream = null;
 		try (BufferedReader reader = Files.newBufferedReader(file)) {
 			Gson gson = new Gson();
 			json = gson.fromJson(reader, com.google.gson.JsonObject.class);
@@ -187,5 +186,9 @@ public class JsonObject extends Json implements Iterable<String> {
 		List<ElementStack> list = loadElements(json.get(key));
 		if (list.isEmpty()) throw exception(ParseExceptionCode.EMPTY, "元素数据为空");
 		return list.get(0);
+	}
+
+	public List<Vec3d> needPos(String key) {
+		return loadPos(json.get(key));
 	}
 }

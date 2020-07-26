@@ -26,8 +26,7 @@ public class NBTHelper {
 
 	public static NBTTagList stringToNBTTagList(String... strs) {
 		NBTTagList list = new NBTTagList();
-		for (String str : strs)
-			list.appendTag(new NBTTagString(str));
+		for (String str : strs) list.appendTag(new NBTTagString(str));
 		return list;
 	}
 
@@ -40,16 +39,15 @@ public class NBTHelper {
 		nbt.setTag(key, list);
 	}
 
+	@SuppressWarnings("unchecked")
 	public static <B extends NBTBase, T extends INBTSerializable<B>> List<T> getNBTSerializableList(NBTTagCompound nbt,
 			String key, Class<T> cls, Class<B> nbtCls) {
 		List<T> NBTSerializableList = new LinkedList<>();
 		NBTTagList list = (NBTTagList) nbt.getTag(key);
-		if (list.tagCount() == 0)
-			return NBTSerializableList;
+		if (list.tagCount() == 0) return NBTSerializableList;
 		try {
-			Constructor constructor = cls.getConstructor(nbtCls);
-			for (NBTBase n : list)
-				NBTSerializableList.add((T) constructor.newInstance((B) n));
+			Constructor<T> constructor = cls.getConstructor(nbtCls);
+			for (NBTBase n : list) NBTSerializableList.add(constructor.newInstance((B) n));
 		} catch (Exception a) {
 			try {
 				for (NBTBase n : list) {
@@ -57,8 +55,7 @@ public class NBTHelper {
 					t.deserializeNBT((B) n);
 					NBTSerializableList.add(t);
 				}
-			} catch (Exception e) {
-			}
+			} catch (Exception e) {}
 		}
 		return NBTSerializableList;
 	}
@@ -90,8 +87,7 @@ public class NBTHelper {
 	}
 
 	public static void setBlockPos(NBTTagCompound nbt, String key, BlockPos pos) {
-		if (pos == null)
-			return;
+		if (pos == null) return;
 		nbt.setInteger(key + "x", pos.getX());
 		nbt.setInteger(key + "y", pos.getY());
 		nbt.setInteger(key + "z", pos.getZ());

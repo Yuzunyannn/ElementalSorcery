@@ -18,8 +18,8 @@ public class CommonProxy {
 		ESInit.init(event);
 	}
 
-	public void postInit(FMLPostInitializationEvent event) {
-
+	public void postInit(FMLPostInitializationEvent event) throws Throwable {
+		ESInit.postInit(event);
 	}
 
 	public void serverStarting(FMLServerStartingEvent event) {

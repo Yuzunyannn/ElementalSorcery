@@ -17,7 +17,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item.ToolMaterial;
 import net.minecraft.item.ItemAxe;
-import net.minecraft.item.ItemGlassBottle;
 import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemPickaxe;
 import net.minecraft.item.ItemSpade;
@@ -60,7 +59,6 @@ public class ItemKyaniteTools {
 	private static void dealBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, EntityLivingBase entity) {
 		IElementInventory inventory = new ElementInventory();
 		if (inventory.hasState(stack) == false) return;
-		Block block = state.getBlock();
 		ElementStack[] estacks = ElementMap.instance.toElement(state.getBlock());
 		if (estacks != null) {
 			ElementStack estack;

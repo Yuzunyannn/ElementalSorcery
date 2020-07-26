@@ -55,8 +55,7 @@ public class ItemSpellbook extends Item {
 	/**
 	 * 持续释放
 	 * 
-	 * @param power
-	 *            积攒的时间
+	 * @param power 积攒的时间
 	 */
 	public void spelling(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
 	}
@@ -64,8 +63,7 @@ public class ItemSpellbook extends Item {
 	/**
 	 * 结束释放
 	 * 
-	 * @param power
-	 *            积攒的时间，大于0表示释放成功
+	 * @param power 积攒的时间，大于0表示释放成功
 	 * @return 是否同步，true表示需要同步，一般不需要
 	 */
 	public boolean spellEnd(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
@@ -101,11 +99,9 @@ public class ItemSpellbook extends Item {
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 		Spellbook book = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
-		if (book == null)
-			return;
+		if (book == null) return;
 		IElementInventory inventory = book.getInventory();
-		if (inventory == null)
-			return;
+		if (inventory == null) return;
 		inventory.loadState(stack);
 		ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
 	}
@@ -159,16 +155,14 @@ public class ItemSpellbook extends Item {
 		boolean sync = false;
 		if (entityLiving instanceof EntityPlayer)
 			sync = this.spellEnd(worldIn, entityLiving, stack, spellbook, this.getMaxItemUseDuration(stack) - timeLeft);
-		else
-			sync = this.spellEnd(worldIn, entityLiving, stack, spellbook, -1);
+		else sync = this.spellEnd(worldIn, entityLiving, stack, spellbook, -1);
 		spellbook.endSpelling(worldIn, entityLiving, stack, sync);
 	}
 
 	// 正在使用魔法书，服务端
 	@Override
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
-		if (player.world.isRemote)
-			return;
+		if (player.world.isRemote) return;
 		Spellbook spellbook = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 		if (spellbook.spelling) {
 			this.spelling(player.world, player, stack, spellbook, this.getMaxItemUseDuration(stack) - count);
@@ -230,8 +224,7 @@ public class ItemSpellbook extends Item {
 	@SideOnly(Side.CLIENT)
 	static public boolean renderClose(Spellbook book) {
 		renderChange(book, -0.05F);
-		if (book.render_info.bookSpread <= 0)
-			return true;
+		if (book.render_info.bookSpread <= 0) return true;
 		return false;
 	}
 
@@ -249,10 +242,8 @@ public class ItemSpellbook extends Item {
 			int power) {
 		boolean isYou = entity == Minecraft.getMinecraft().player;
 		float want;
-		if (isYou && this.getCast(book) > 0)
-			want = power < this.getCast(book) ? power / this.getCast(book) : 0.3f;
-		else
-			want = 0.3f;
+		if (isYou && this.getCast(book) > 0) want = power < this.getCast(book) ? power / this.getCast(book) : 0.3f;
+		else want = 0.3f;
 		if (Math.random() < want) {
 			showParticle(world, entity, giveMeAColor(book.getInventory()));
 		}
@@ -304,9 +295,8 @@ public class ItemSpellbook extends Item {
 	protected int giveMeAColor(IElementInventory inventory) {
 		int color = 0xffffffff;
 		if (inventory != null) {
-			ElementStack estack = this.giveMeRandomElement(inventory);
-			if (!estack.isEmpty())
-				color = estack.getColor();
+			ElementStack estack = giveMeRandomElement(inventory);
+			if (!estack.isEmpty()) color = estack.getColor();
 		}
 		return color;
 	}

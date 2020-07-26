@@ -1,7 +1,6 @@
 package yuzunyannn.elementalsorcery.render.model;
 
 import net.minecraft.client.model.ModelBase;
-import net.minecraft.client.model.ModelBed;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
@@ -9,7 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ModelSupremeCraftingTable extends ModelBase {
+public class ModelSupremeTable extends ModelBase {
 
 	ModelRenderer i;
 	ModelRenderer b;
@@ -34,7 +33,7 @@ public class ModelSupremeCraftingTable extends ModelBase {
 	ModelRenderer lm4;
 	ModelRenderer lb4;
 
-	public ModelSupremeCraftingTable() {
+	public ModelSupremeTable() {
 		textureWidth = 128;
 		textureHeight = 128;
 
@@ -145,6 +144,29 @@ public class ModelSupremeCraftingTable extends ModelBase {
 		lb4.setRotationPoint(10F, 0F, -10F);
 		lb4.setTextureSize(128, 128);
 		setRotation(lb4, 0F, 0F, 0F);
+	}
+
+	public void renderItemPart(boolean leg) {
+		final float scale = 1;
+		if (leg) {
+			this.setLegPosition(0, 0, 0, 0, lt1, lm1, lb1);
+			lt1.render(scale);
+			lm1.render(scale);
+			lb1.render(scale);
+		} else {
+			setPosition(0);
+			i.render(scale);
+			b.render(scale);
+			l1.render(scale);
+			l2.render(scale);
+			l3.render(scale);
+			l4.render(scale);
+		}
+
+	}
+
+	public void renderLeg(float scale) {
+
 	}
 
 	@Override

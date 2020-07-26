@@ -25,8 +25,7 @@ public class TileMDAbsorbBox extends TileMDBase implements ITickable {
 			@Override
 			@Nonnull
 			public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-				if (TileMDAbsorbBox.this.getElementInventory(stack) != null)
-					return super.insertItem(slot, stack, simulate);
+				if (TileMDAbsorbBox.getElementInventory(stack) != null) return super.insertItem(slot, stack, simulate);
 				return stack;
 			}
 		};
@@ -45,7 +44,7 @@ public class TileMDAbsorbBox extends TileMDBase implements ITickable {
 	public void update() {
 		this.autoTransfer();
 		ItemStack stack = inventory.getStackInSlot(0);
-		IElementInventory inventory = this.getElementInventory(stack);
+		IElementInventory inventory = getElementInventory(stack);
 		if (!ElementHelper.canInsert(inventory)) return;
 		if (inventory == null) return;
 		if (tick % 30 == 0) ok = structure.check(EnumFacing.NORTH);
@@ -58,7 +57,7 @@ public class TileMDAbsorbBox extends TileMDBase implements ITickable {
 		BlockPos curPos = this.pos.add(scanPos);
 		if (this.canAbsorb(curPos)) {
 			ItemStack itemStack = ((IGetItemStack) world.getTileEntity(curPos)).getStack();
-			IElementInventory itemEinv = this.getElementInventory(itemStack);
+			IElementInventory itemEinv = getElementInventory(itemStack);
 			// 寻找一个可以插入的
 			for (int i = 0; i < itemEinv.getSlots(); i++) {
 				ElementStack estack = itemEinv.getStackInSlot(i);

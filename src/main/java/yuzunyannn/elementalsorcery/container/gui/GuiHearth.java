@@ -12,12 +12,10 @@ public class GuiHearth extends GuiNormal {
 	private static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/container/hearth.png");
 	protected ContainerHearth inventory;
-	private final InventoryPlayer playerInventory;
 
 	public GuiHearth(ContainerHearth inventorySlotsIn, InventoryPlayer playerInv) {
 		super(inventorySlotsIn, playerInv);
 		inventory = inventorySlotsIn;
-		playerInventory = playerInv;
 	}
 
 	public String getUnlocalizedTitle() {

@@ -13,7 +13,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
-import yuzunyannn.elementalsorcery.container.ContainerSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.container.ContainerSupremeTable;
 
 public class ElementCraftingCategory implements IRecipeCategory<ElementCraftingRecipeWrapper> {
 
@@ -48,10 +48,10 @@ public class ElementCraftingCategory implements IRecipeCategory<ElementCraftingR
 		int yoff = -1 - 21;
 		NonNullList<Ingredient> list = recipe.getIngredients();
 		IGuiItemStackGroup group = recipeLayout.getItemStacks();
-		final int size = ContainerSupremeCraftingTable.craftingRelative.length / 2;
+		final int size = ContainerSupremeTable.craftingRelative.length / 2;
 		for (int i = 0; i < size; i++) {
-			int x = ContainerSupremeCraftingTable.craftingRelative[i * 2];
-			int y = ContainerSupremeCraftingTable.craftingRelative[i * 2 + 1];
+			int x = ContainerSupremeTable.craftingRelative[i * 2];
+			int y = ContainerSupremeTable.craftingRelative[i * 2 + 1];
 			group.init(i, true, xoff + x + 88, yoff + y + 57);
 			if (i < list.size()) {
 				ItemStack[] stack = list.get(i).getMatchingStacks();

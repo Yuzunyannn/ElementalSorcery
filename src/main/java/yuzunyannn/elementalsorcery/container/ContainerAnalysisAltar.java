@@ -24,6 +24,7 @@ public class ContainerAnalysisAltar extends ContainerNormal<TileAnalysisAltar> i
 
 	int lastPower = -1;
 	TileAnalysisAltar.AnalysisPacket lastAns;
+	boolean lastError;
 
 	@Override
 	public void addListener(IContainerListener listener) {
@@ -31,16 +32,19 @@ public class ContainerAnalysisAltar extends ContainerNormal<TileAnalysisAltar> i
 		TileAnalysisAltar.AnalysisPacket ans = tileEntity.getAnalysisPacket();
 		if (ans != null) this.sendToClient(ans.serializeNBT(), listener);
 		else {
-			NBTTagCompound nbt = new NBTTagCompound();
-			nbt.setBoolean("clear", true);
-			this.sendToClient(nbt, listener);
+			if (lastError) {} else {
+				NBTTagCompound nbt = new NBTTagCompound();
+				nbt.setBoolean("clear", true);
+				this.sendToClient(nbt, listener);
+			}
 		}
 	}
 
 	@Override
 	public void recvData(NBTTagCompound nbt, Side side) {
 		if (side != Side.CLIENT) return;
-		if (nbt.hasKey("clear")) tileEntity.setAnalysisPacket(null);
+		if (nbt.hasKey("error")) tileEntity.setCannotAnalysis();
+		else if (nbt.hasKey("clear")) tileEntity.setAnalysisPacket(null);
 		else tileEntity.setAnalysisPacket(nbt);
 	}
 
@@ -64,6 +68,15 @@ public class ContainerAnalysisAltar extends ContainerNormal<TileAnalysisAltar> i
 				nbt.setBoolean("clear", true);
 				this.sendToClient(nbt, listeners);
 			} else this.sendToClient(ans.serializeNBT(), listeners);
+		}
+
+		if (lastError != tileEntity.cannotAnalysis()) {
+			lastError = tileEntity.cannotAnalysis();
+			if (lastError) {
+				NBTTagCompound nbt = new NBTTagCompound();
+				nbt.setBoolean("error", true);
+				this.sendToClient(nbt, listeners);
+			}
 		}
 	}
 

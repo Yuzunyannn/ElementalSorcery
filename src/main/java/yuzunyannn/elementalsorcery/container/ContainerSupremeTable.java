@@ -21,9 +21,9 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
-import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
 
-public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCraftingTable> {
+public class ContainerSupremeTable extends ContainerNormal<TileSupremeTable> {
 	public final static int[] craftingRelative = new int[] { 0, 0, 18, 0, 36, 0, 0, 18, 18, 18, 36, 18, 0, 36, 18, 36,
 			36, 36, -36, -36, -18, -36, 54, -36, 72, -36, -36, -18, -18, -18, 54, -18, 72, -18, -36, 54, -18, 54, 54,
 			54, 72, 54, -36, 72, -18, 72, 54, 72, 72, 72 };
@@ -41,18 +41,18 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 	private boolean nativeCrafting = false;
 	public InventoryCrafting craftMatrix;
 
-	public ContainerSupremeCraftingTable(EntityPlayer player, TileEntity tileEntity) {
-		super(player, (TileSupremeCraftingTable) tileEntity, 36, 160);
+	public ContainerSupremeTable(EntityPlayer player, TileEntity tileEntity) {
+		super(player, (TileSupremeTable) tileEntity, 36, 160);
 		IItemHandler items = this.tileEntity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		// 添加slot
 		for (int i = 0; i < items.getSlots(); i++) {
-			int x = ContainerSupremeCraftingTable.craftingRelative[i * 2];
-			int y = ContainerSupremeCraftingTable.craftingRelative[i * 2 + 1];
+			int x = ContainerSupremeTable.craftingRelative[i * 2];
+			int y = ContainerSupremeTable.craftingRelative[i * 2 + 1];
 			if (i == 3 || i == 5) this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
 				@Override
 				public void onSlotChanged() {
-					ContainerSupremeCraftingTable.this
-							.onCraftMatrixChanged(ContainerSupremeCraftingTable.this.tileEntity);
+					ContainerSupremeTable.this
+							.onCraftMatrixChanged(ContainerSupremeTable.this.tileEntity);
 					super.onSlotChanged();
 				}
 
@@ -65,8 +65,8 @@ public class ContainerSupremeCraftingTable extends ContainerNormal<TileSupremeCr
 			else this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
 				@Override
 				public void onSlotChanged() {
-					ContainerSupremeCraftingTable.this
-							.onCraftMatrixChanged(ContainerSupremeCraftingTable.this.tileEntity);
+					ContainerSupremeTable.this
+							.onCraftMatrixChanged(ContainerSupremeTable.this.tileEntity);
 					super.onSlotChanged();
 				}
 			});

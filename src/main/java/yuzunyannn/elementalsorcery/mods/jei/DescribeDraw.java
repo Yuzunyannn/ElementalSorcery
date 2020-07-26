@@ -3,7 +3,6 @@ package yuzunyannn.elementalsorcery.mods.jei;
 import mezz.jei.api.gui.IDrawable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 
 public class DescribeDraw implements IDrawable {

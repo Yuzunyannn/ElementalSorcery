@@ -6,20 +6,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
-import yuzunyannn.elementalsorcery.render.model.ModelSupremeCraftingTable;
-import yuzunyannn.elementalsorcery.tile.altar.TileSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.render.model.ModelSupremeTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
-public class RenderTileSupremeCraftingTable extends TileEntitySpecialRenderer<TileSupremeCraftingTable>
+public class RenderTileSupremeTable extends TileEntitySpecialRenderer<TileSupremeTable>
 		implements IRenderItem {
 
-	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/supreme_crafting_table.png");
-	private final ModelSupremeCraftingTable MODEL = new ModelSupremeCraftingTable();
+	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/supreme_table.png");
+	public static final ModelSupremeTable MODEL = new ModelSupremeTable();
 
 	@Override
-	public void render(TileSupremeCraftingTable tile, double x, double y, double z, float partialTicks,
+	public void render(TileSupremeTable tile, double x, double y, double z, float partialTicks,
 			int destroyStage, float alpha) {
 		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
 		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.03125, alpha);

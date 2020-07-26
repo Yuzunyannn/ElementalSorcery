@@ -38,9 +38,9 @@ public class RenderTileMeltCauldron extends TileEntitySpecialRenderer<TileMeltCa
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(x, y + 0.125f + volume / 1000.0f * 0.68f, z);
 			float T = (int) tile.getTemperature();
-			if (T < tile.START_TEMPERATURE) {
+			if (T < TileMeltCauldron.START_TEMPERATURE) {
 				GlStateManager.enableBlend();
-				float alpha = T / tile.START_TEMPERATURE;
+				float alpha = T / TileMeltCauldron.START_TEMPERATURE;
 				// 画流体
 				GlStateManager.color(1.0f, 1.0f, 1.0f, alpha);
 				int at = EventClient.tick % 32;

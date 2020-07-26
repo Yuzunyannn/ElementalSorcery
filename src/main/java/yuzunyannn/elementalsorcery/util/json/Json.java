@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
@@ -69,7 +70,7 @@ public abstract class Json {
 					NonNullList<ItemStack> oreList = OreDictionary.getOres(id);
 					if (oreList.isEmpty()) ElementalSorcery.logger.warn("矿物词典：" + id + "中未包含任何内容");
 					for (ItemStack stack : oreList) {
-						if (stack.getHasSubtypes()) list.add(new ItemRecord(stack));
+						if (stack.getHasSubtypes()) list.add(new ItemRecord(stack.copy()));
 						else list.add(new ItemRecord(stack.getItem()));
 					}
 					return;
@@ -134,6 +135,31 @@ public abstract class Json {
 		}
 	}
 
+	/** 获取坐标 */
+	protected List<Vec3d> loadPos(JsonElement json) {
+		List<Vec3d> list = new ArrayList<>();
+		loadPos(json, list);
+		return list;
+	}
+
+	/** 获取坐标 */
+	private void loadPos(JsonElement je, List<Vec3d> list) {
+		if (je == null || je.isJsonNull()) return;
+		if (je.isJsonArray()) {
+			JsonArray jarray = je.getAsJsonArray();
+			if (jarray.size() <= 0) return;
+			je = jarray.get(0);
+			if (je.isJsonArray()) for (JsonElement j : jarray) loadPos(j, list);
+			else if (je.isJsonPrimitive() && je.getAsJsonPrimitive().isNumber()) {
+				if (jarray.size() != 3) throw exception(ParseExceptionCode.PATTERN_ERROR, "坐标", "方块坐标应当是大小为3的json数组");
+				double x = je.getAsDouble();
+				double y = jarray.get(1).getAsDouble();
+				double z = jarray.get(2).getAsDouble();
+				list.add(new Vec3d(x, y, z));
+			}
+		}
+	}
+
 	/** 遍历所有json内容 */
 	public static void ergodicAssets(ModContainer mod, String path, BiFunction<Path, JsonObject, Boolean> func) {
 		CraftingHelper.findFiles(mod, "assets/" + mod.getModId() + path, (root) -> true, (root, file) -> {
@@ -155,9 +181,7 @@ public abstract class Json {
 	}
 
 	static public enum ParseExceptionCode {
-		NOT_HAVE("NotHave", "找不到：%s"),
-		PATTERN_ERROR("PatternError", "%s的格式错误，原因：%s"),
-		EMPTY("Emtpy", "%s为空"),
+		NOT_HAVE("NotHave", "找不到：%s"), PATTERN_ERROR("PatternError", "%s的格式错误，原因：%s"), EMPTY("Emtpy", "%s为空"),
 		NOT_LOAD_MOD("NotLoadMod", "找不到：%s因为没有加载mod：%s");
 
 		final String code;
@@ -234,6 +258,15 @@ public abstract class Json {
 		i = id.lastIndexOf(".");
 		if (i != -1) id = id.substring(0, i);
 		return id;
+	}
+
+	static public List<ItemStack> to(List<ItemRecord> list) {
+		List<ItemStack> items = new ArrayList<ItemStack>(list.size());
+		for (ItemRecord ir : list) {
+			if (ir.isJustItem()) items.add(new ItemStack(ir.getItem()));
+			else items.add(ir.getStack());
+		}
+		return items;
 	}
 
 }

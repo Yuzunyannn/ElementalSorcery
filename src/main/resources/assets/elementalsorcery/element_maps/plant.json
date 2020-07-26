@@ -42,7 +42,8 @@
                 "minecraft:waterlily",
                 "minecraft:vine",
                 "minecraft:leaves",
-                "minecraft:leaves2"
+                "minecraft:leaves2",
+                "minecraft:mycelium"
             ],
             "element": [
                 {
@@ -111,6 +112,69 @@
                 "size": 5,
                 "power": 9
             }
+        },
+        {
+            "notes": "南瓜",
+            "item": "minecraft:pumpkin",
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 10,
+                    "power": 35
+                },
+                {
+                    "id": "water",
+                    "size": 10,
+                    "power": 15
+                },
+                {
+                    "id": "air",
+                    "size": 6,
+                    "power": 10
+                }
+            ]
+        },
+        {
+            "notes": "西瓜",
+            "item": "minecraft:melon",
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 1,
+                    "power": 30
+                },
+                {
+                    "id": "water",
+                    "size": 2,
+                    "power": 25
+                },
+                {
+                    "id": "air",
+                    "size": 1,
+                    "power": 10
+                }
+            ]
+        },
+        {
+            "notes": "甘蔗",
+            "item": "minecraft:reeds",
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 1,
+                    "power": 30
+                },
+                {
+                    "id": "water",
+                    "size": 2,
+                    "power": 20
+                },
+                {
+                    "id": "air",
+                    "size": 1,
+                    "power": 8
+                }
+            ]
         }
     ]
 }

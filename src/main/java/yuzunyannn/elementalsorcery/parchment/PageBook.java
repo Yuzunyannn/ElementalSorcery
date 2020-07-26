@@ -34,14 +34,10 @@ public class PageBook extends Page {
 	@Override
 	public void init(IPageManager pageManager) {
 		maxPage = (pageIds.size() - 1) / SIZE_PRE_PAGE + 1;
-		if (this.pageAt < maxPage - 1)
-			pageManager.setNextButton(true);
-		else
-			pageManager.setNextButton(false);
-		if (this.pageAt > 0)
-			pageManager.setPrevButton(true);
-		else
-			pageManager.setPrevButton(false);
+		if (this.pageAt < maxPage - 1) pageManager.setNextButton(true);
+		else pageManager.setNextButton(false);
+		if (this.pageAt > 0) pageManager.setPrevButton(true);
+		else pageManager.setPrevButton(false);
 		int xoff = CATALOG_LOCAL_X;
 		int yoff = CATALOG_LOCAL_Y;
 		for (int i = 0; i < SIZE_PRE_PAGE; i++) {
@@ -68,23 +64,17 @@ public class PageBook extends Page {
 
 	private void reflushShowPage(IPageManager pageManager) {
 
-		if (this.pageAt < maxPage - 1)
-			pageManager.setNextButton(true);
-		else
-			pageManager.setNextButton(false);
-		if (this.pageAt > 0)
-			pageManager.setPrevButton(true);
-		else
-			pageManager.setPrevButton(false);
+		if (this.pageAt < maxPage - 1) pageManager.setNextButton(true);
+		else pageManager.setNextButton(false);
+		if (this.pageAt > 0) pageManager.setPrevButton(true);
+		else pageManager.setPrevButton(false);
 
-		for (int i = 0; i < showPage.length; i++)
-			showPage[i] = null;
+		for (int i = 0; i < showPage.length; i++) showPage[i] = null;
 		int at = pageAt * SIZE_PRE_PAGE;
 		for (int i = at; i < at + SIZE_PRE_PAGE && i < pageIds.size(); i++) {
 			showPage[i - at] = Pages.getPage(pageIds.get(i));
 		}
-		for (int i = 0; i < showPage.length; i++)
-			pageManager.setSlotState(i, showPage[i] != null);
+		for (int i = 0; i < showPage.length; i++) pageManager.setSlotState(i, showPage[i] != null);
 
 	}
 
@@ -101,8 +91,7 @@ public class PageBook extends Page {
 		xoff += CATALOG_LOCAL_X;
 		yoff += CATALOG_LOCAL_Y;
 		for (Page page : showPage) {
-			if (page == null)
-				break;
+			if (page == null) break;
 			page.drawIcon(xoff, yoff, pageManager);
 			yoff += CATALOG_LOCAL_INTERVAL;
 		}
@@ -118,10 +107,8 @@ public class PageBook extends Page {
 		}
 		int xoff = CATALOG_LOCAL_X;
 		int yoff = CATALOG_LOCAL_Y;
-		GuiContainer gui = pageManager.getGui();
 		for (Page page : showPage) {
-			if (page == null)
-				break;
+			if (page == null) break;
 			page.drawString(xoff, yoff, pageManager);
 			yoff += CATALOG_LOCAL_INTERVAL;
 		}

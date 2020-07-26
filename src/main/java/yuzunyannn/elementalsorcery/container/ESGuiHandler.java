@@ -26,7 +26,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
 import yuzunyannn.elementalsorcery.container.gui.GuiRiteManual;
 import yuzunyannn.elementalsorcery.container.gui.GuiSimple;
 import yuzunyannn.elementalsorcery.container.gui.GuiSmeltBox;
-import yuzunyannn.elementalsorcery.container.gui.GuiSupremeCraftingTable;
+import yuzunyannn.elementalsorcery.container.gui.GuiSupremeTable;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 
 public class ESGuiHandler implements IGuiHandler {
@@ -39,7 +39,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_PARCHMENT = 6;
 	public static final int GUI_ELEMENT_CRAFTING_TABLE = 7;
 	public static final int GUI_ANALYSIS_ALTAR = 8;
-	public static final int GUI_SUPREME_CRAFTING_TABLE = 9;
+	public static final int GUI_SUPREME_TABLE = 9;
 	public static final int GUI_INVENTORY_WORKBENCH = 10;
 	public static final int GUI_RITE_MANUAL = 11;
 	public static final int GUI_ITEM_STRUCTURE_CRAFT = 12;
@@ -75,8 +75,8 @@ public class ESGuiHandler implements IGuiHandler {
 			return new ContainerElementCraftingTable(player, tileEntity);
 		case GUI_ANALYSIS_ALTAR:
 			return new ContainerAnalysisAltar(player, tileEntity);
-		case GUI_SUPREME_CRAFTING_TABLE:
-			return new ContainerSupremeCraftingTable(player, tileEntity);
+		case GUI_SUPREME_TABLE:
+			return new ContainerSupremeTable(player, tileEntity);
 		case GUI_INVENTORY_WORKBENCH:
 			return new ContainerWorkbenchWithInventory(player, tileEntity);
 		case GUI_RITE_MANUAL:
@@ -128,11 +128,11 @@ public class ESGuiHandler implements IGuiHandler {
 			return new GuiElementCraftingTable(new ContainerElementCraftingTable(player, tileEntity), player.inventory);
 		case GUI_ANALYSIS_ALTAR:
 			return new GuiAnalysisAltar(new ContainerAnalysisAltar(player, tileEntity), player.inventory);
-		case GUI_SUPREME_CRAFTING_TABLE:
-			return new GuiSupremeCraftingTable(new ContainerSupremeCraftingTable(player, tileEntity), player.inventory);
+		case GUI_SUPREME_TABLE:
+			return new GuiSupremeTable(new ContainerSupremeTable(player, tileEntity), player.inventory);
 		case GUI_INVENTORY_WORKBENCH:
 			return new GuiSimple(new ContainerWorkbenchWithInventory(player, tileEntity), player.inventory,
-					"tile.supremeCraftingTable.name", TEXTURE_CRAFTING_TABLE);
+					"tile.supremeTable.name", TEXTURE_CRAFTING_TABLE);
 		case GUI_RITE_MANUAL:
 			return new GuiRiteManual(new ContainerRiteManual(player.inventory, world, new BlockPos(x, y, z)));
 		case GUI_ITEM_STRUCTURE_CRAFT:

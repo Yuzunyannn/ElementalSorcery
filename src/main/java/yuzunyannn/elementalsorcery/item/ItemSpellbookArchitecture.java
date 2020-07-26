@@ -32,7 +32,7 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 		if (info.isMiss()) return false;
 		if (entity.getDistanceSq(info.pos) >= 32 * 32) return false;
 		if (world.isRemote) return true;
-		book.obj = info.building.getBuildingBlocks().setPosOff(info.pos).setFace(info.facing);
+		book.obj = info.building.getBuildingIterator().setPosOff(info.pos).setFace(info.facing);
 		return true;
 	}
 

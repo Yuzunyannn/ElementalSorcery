@@ -106,7 +106,7 @@ public class BuildingLib {
 	public static void registerAll() throws IOException {
 		final ESData data = ElementalSorcery.data;
 		final String MODID = ElementalSorcery.MODID;
-		String[] mapJsonNames = data.getFilesFromResource(new ResourceLocation(MODID, "structures"));
+		String[] mapJsonNames = ESData.getFilesFromResource(new ResourceLocation(MODID, "structures"));
 		for (String path : mapJsonNames) {
 			if (!path.endsWith(".nbt")) continue;
 			NBTTagCompound nbt = data.getNBTFromResource(new ResourceLocation(MODID, "structures/" + path));

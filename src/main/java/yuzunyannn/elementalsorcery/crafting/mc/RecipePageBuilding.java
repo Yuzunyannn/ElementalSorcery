@@ -9,7 +9,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.parchment.Page;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 
 public class RecipePageBuilding extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe>
@@ -58,7 +57,6 @@ public class RecipePageBuilding extends net.minecraftforge.registries.IForgeRegi
 		}
 		archCrystal = archCrystal.copy();
 		archCrystal.setCount(1);
-		Page page = Pages.getPage(parchment);
 		Building building = Pages.getBuildingInPage(parchment);
 		ArcInfo.initArcInfoToItem(archCrystal, building.getKeyName());
 		return archCrystal;

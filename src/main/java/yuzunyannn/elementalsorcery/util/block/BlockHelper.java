@@ -18,6 +18,13 @@ import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class BlockHelper {
+	/** 获取tile实体 */
+	public static <T> T getTileEntity(World world, BlockPos pos, Class<T> type) {
+		TileEntity tile = world.getTileEntity(pos);
+		if (tile != null && type.isAssignableFrom(tile.getClass())) return (T) tile;
+		return null;
+	}
+
 	/** 掉落 */
 	public static void drop(IItemHandler itemHandler, World worldIn, BlockPos pos) {
 		if (itemHandler == null) return;

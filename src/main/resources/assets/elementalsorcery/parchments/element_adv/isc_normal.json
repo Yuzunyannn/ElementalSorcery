@@ -1,0 +1,97 @@
+{
+    "lev": 4,
+    "need": [
+        "element_adv/analysis_altar"
+    ],
+    "type": "mult",
+    "lock": 0,
+    "pages": [
+        {
+            "type": "craft",
+            "name": "iscNormal",
+            "item": "elementalsorcery:is_craft_normal"
+        },
+        {
+            "type": "normal",
+            "name": "iscNormal",
+            "differ": "fir"
+        },
+        {
+            "type": "buidling",
+            "name": "analysisAltar",
+            "building": "analysis_altar",
+            "extra": [
+                {
+                    "pos": [
+                        0,
+                        4,
+                        0
+                    ],
+                    "item": "elementalsorcery:analysis_altar"
+                },
+                {
+                    "pos": [
+                        0,
+                        1,
+                        0
+                    ],
+                    "item": {
+                        "id": "elementalsorcery:is_craft_normal",
+                        "data": 1
+                    }
+                },
+                {
+                    "type": "building",
+                    "pos": [
+                        [
+                            5,
+                            0,
+                            0
+                        ],
+                        [
+                            -5,
+                            0,
+                            0
+                        ],
+                        [
+                            0,
+                            0,
+                            5
+                        ],
+                        [
+                            0,
+                            0,
+                            -5
+                        ]
+                    ],
+                    "building": "analysis_altar_add"
+                },
+                {
+                    "pos": [
+                        [
+                            5,
+                            4,
+                            0
+                        ],
+                        [
+                            -5,
+                            4,
+                            0
+                        ],
+                        [
+                            0,
+                            4,
+                            5
+                        ],
+                        [
+                            0,
+                            4,
+                            -5
+                        ]
+                    ],
+                    "item": "minecraft:chest"
+                }
+            ]
+        }
+    ]
+}

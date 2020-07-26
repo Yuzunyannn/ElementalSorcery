@@ -105,7 +105,7 @@ public class CraftingConstruct implements ICraftingAltar {
 	}
 
 	@Override
-	public int getEndTime(TileStaticMultiBlock tileSupremeCraftingTable) {
+	public int getEndTime(TileStaticMultiBlock tileSupremeTable) {
 		return 60;
 	}
 

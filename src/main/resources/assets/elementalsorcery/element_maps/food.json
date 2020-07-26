@@ -1,0 +1,54 @@
+{
+    "maps": [
+        {
+            "notes": "种子",
+            "item": [
+                "minecraft:wheat_seeds",
+                "minecraft:beetroot_seeds"
+            ],
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 2,
+                    "power": 10
+                },
+                {
+                    "id": "water",
+                    "size": 5,
+                    "power": 8
+                },
+                {
+                    "id": "air",
+                    "size": 1,
+                    "power": 8
+                }
+            ]
+        },
+        {
+            "notes": "小麦等",
+            "item": [
+                "minecraft:wheat",
+                "minecraft:beetroot",
+                "minecraft:carrot",
+                "minecraft:potato"
+            ],
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 5,
+                    "power": 20
+                },
+                {
+                    "id": "water",
+                    "size": 2,
+                    "power": 10
+                },
+                {
+                    "id": "air",
+                    "size": 1,
+                    "power": 10
+                }
+            ]
+        }
+    ]
+}

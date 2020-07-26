@@ -95,8 +95,6 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 
 	// 画一个可以镜像width的图标
 	public void drawTexturedModalRectMirrorWidth(int x, int y, int textureX, int textureY, int width, int height) {
-		float f = 0.00390625F;
-		float f1 = 0.00390625F;
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
@@ -120,8 +118,6 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 
 	// 画一个可以镜像height的图标
 	public void drawTexturedModalRectMirrorHeight(int x, int y, int textureX, int textureY, int width, int height) {
-		float f = 0.00390625F;
-		float f1 = 0.00390625F;
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);

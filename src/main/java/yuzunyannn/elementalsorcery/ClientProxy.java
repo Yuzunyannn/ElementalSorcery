@@ -13,7 +13,7 @@ public class ClientProxy extends CommonProxy {
 	}
 
 	@Override
-	public void postInit(FMLPostInitializationEvent event) {
+	public void postInit(FMLPostInitializationEvent event) throws Throwable {
 		super.postInit(event);
 		ESInit.postInitClinet(event);
 	}

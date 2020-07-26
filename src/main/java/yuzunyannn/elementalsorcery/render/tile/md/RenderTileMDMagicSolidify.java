@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.render.tile.md;
 
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.render.model.md.ModelMDMagicSolidify;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicSolidify;

@@ -1,7 +1,5 @@
 package yuzunyannn.elementalsorcery.render.item;
 
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class SpellbookRenderInfo {

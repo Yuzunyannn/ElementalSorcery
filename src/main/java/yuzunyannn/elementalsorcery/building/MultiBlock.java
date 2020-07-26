@@ -54,7 +54,7 @@ public class MultiBlock {
 	}
 
 	public boolean check(EnumFacing face) {
-		Building.BuildingBlocks iter = this.altar.getBuildingBlocks().setFace(face);
+		Building.BuildingBlocks iter = this.altar.getBuildingIterator().setFace(face);
 		iter.setPosOff(Building.BuildingBlocks.facePos(this.posOff, face).add(this.pos));
 		while (iter.next()) {
 			BlockPos pos = iter.getPos();

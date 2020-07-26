@@ -2,15 +2,9 @@ package yuzunyannn.elementalsorcery.worldgen;
 
 import java.util.Random;
 
-import com.google.common.base.Predicate;
-
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import net.minecraftforge.event.terraingen.OreGenEvent;
-import net.minecraftforge.event.terraingen.TerrainGen;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 
 public class WorldGenKyaniteOre extends WorldGenMinable {

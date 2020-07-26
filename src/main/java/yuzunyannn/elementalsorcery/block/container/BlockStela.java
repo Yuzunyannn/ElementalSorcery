@@ -85,15 +85,6 @@ public class BlockStela extends BlockContainerNormal {
 		return face;
 	}
 
-	// 设置面向
-	private void setFace(World worldIn, BlockPos pos, EnumFacing face) {
-		TileEntity tile = worldIn.getTileEntity(pos);
-		if (tile instanceof TileStela) {
-			TileStela ts = (TileStela) tile;
-			ts.setFace(face);
-		}
-	}
-
 	@Override
 	public RayTraceResult collisionRayTrace(IBlockState blockState, World worldIn, BlockPos pos, Vec3d start,
 			Vec3d end) {
@@ -177,14 +168,12 @@ public class BlockStela extends BlockContainerNormal {
 	}
 
 	private boolean onPutGoods(World world, TileStela ts, EntityPlayer playerIn, EnumHand hand) {
-		ItemStack stack = playerIn.getHeldItem(hand);
 		ItemStackHandler handler = (ItemStackHandler) ts.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
 				ts.getFace().getOpposite());
 		return this.onPut(world, ts, playerIn, hand, handler);
 	}
 
 	private boolean onPutPaper(World world, TileStela ts, EntityPlayer playerIn, EnumHand hand) {
-		ItemStack stack = playerIn.getHeldItem(hand);
 		ItemStackHandler handler = (ItemStackHandler) ts.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
 				ts.getFace());
 		return this.onPut(world, ts, playerIn, hand, handler);
@@ -246,14 +235,6 @@ public class BlockStela extends BlockContainerNormal {
 					pos);
 		}
 		super.breakBlock(worldIn, pos, state);
-	}
-
-	// 掉落一次
-	private void drop(World world, BlockPos pos, ItemStackHandler handler) {
-		ItemStack origin = handler.getStackInSlot(0);
-		if (origin.isEmpty()) return;
-		handler.setStackInSlot(0, ItemStack.EMPTY);
-		Block.spawnAsEntity(world, pos, origin);
 	}
 
 	@Override

@@ -55,47 +55,41 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 	/** 检测标尺 */
 	private boolean dealRuler(EntityLivingBase entity, ItemStack stack) {
 		Integer dimensionId = ItemMagicRuler.getDimensionId(stack);
-		if (dimensionId == null)
-			return false;
-		if (entity == null || entity.dimension != dimensionId)
-			return false;
+		if (dimensionId == null) return false;
+		if (entity == null || entity.dimension != dimensionId) return false;
 		this.pos1 = ItemMagicRuler.getRulerPos(stack, true);
 		this.pos2 = ItemMagicRuler.getRulerPos(stack, false);
 		return pos1 != null && pos2 != null;
 	}
 
 	private boolean checkStack() {
-		if (this.stack.isEmpty())
-			return false;
-		if (this.canSetStack(this.stack))
-			return true;
+		if (this.stack.isEmpty()) return false;
+		if (this.canSetStack(this.stack)) return true;
 		return false;
 	}
 
 	private boolean checkToward(BlockPos center) {
-		if (center.getY() > this.pos.getY())
-			return false;
+		if (center.getY() > this.pos.getY()) return false;
 		Vec3i vec = structure.face().getOpposite().getDirectionVec();
 		Vec3i tar = center.subtract(this.pos);
 		Vec3d v1 = new Vec3d(vec.getX(), vec.getY(), vec.getZ());
 		Vec3d v2 = new Vec3d(tar.getX(), tar.getY(), tar.getZ());
 		double cos = v1.dotProduct(v2) / (v1.lengthVector() * v2.lengthVector());
-		if (cos < 0.5253219)
-			return false;
+		if (cos < 0.5253219) return false;
 		return true;
 	}
 
 	// 临时记录
-	private BlockPos pos1 = null;
-	private BlockPos pos2 = null;
+	protected BlockPos pos1 = null;
+	protected BlockPos pos2 = null;
 	// 这里不仅作为表示
-	private boolean working = false;
+	protected boolean working = false;
 	// 继续
-	private boolean canContinue = true;
+	protected boolean canContinue = true;
 	// 记录当前玩家
-	private EntityLivingBase player = null;
+	protected EntityLivingBase player = null;
 	// 死亡时间，如果长时间不提供元素
-	private int deadTime;
+	protected int deadTime;
 
 	@SideOnly(Side.CLIENT)
 	public void endWork() {
@@ -109,19 +103,14 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 
 	@Override
 	public boolean canCrafting(String type, @Nullable EntityLivingBase player) {
-		if (!ICraftingLaunch.TYPE_BUILING_RECORD.equals(type))
-			return false;
-		if (!this.checkStack())
-			return false;
+		if (!ICraftingLaunch.TYPE_BUILING_RECORD.equals(type)) return false;
+		if (!this.checkStack()) return false;
 		ItemStack stack = this.getRuler();
-		if (!this.dealRuler(player, stack))
-			return false;
+		if (!this.dealRuler(player, stack)) return false;
 		BlockPos center = new BlockPos((this.pos1.getX() + this.pos2.getX()) / 2,
 				Math.min(this.pos1.getY(), this.pos2.getY()), (this.pos1.getZ() + this.pos2.getZ()) / 2);
-		if (center.distanceSq(this.pos) > ItemMagicRuler.MAX_DIS_SQ)
-			return false;
-		if (!checkToward(center))
-			return false;
+		if (center.distanceSq(this.pos) > ItemMagicRuler.MAX_DIS_SQ) return false;
+		if (!checkToward(center)) return false;
 		return true;
 	}
 
@@ -140,8 +129,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		this.canContinue = true;
 		this.deadTime = 0;
 		ItemStack stack = this.getRuler();
-		if (ElementalSorcery.side.isServer())
-			return new CraftingBuildingRecord(nbt).setTile(this);
+		if (ElementalSorcery.side.isServer()) return new CraftingBuildingRecord(nbt).setTile(this);
 		EnumDyeColor c = ItemMagicRuler.getColor(stack);
 		return new CraftingBuildingRecord(nbt).setTile(this).setColor(c.getColorValue());
 	}
@@ -201,8 +189,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 			building.mkdir();
 			String key = BuildingLib.instance.addBuilding(building);
 			ArcInfo.initArcInfoToItem(this.stack, key);
-		} else
-			this.badEnd();
+		} else this.badEnd();
 		return ICraftingLaunch.SUCCESS;
 	}
 
@@ -233,18 +220,15 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		if (compound.hasKey("stack"))
-			stack = new ItemStack(compound.getCompoundTag("stack"));
-		else
-			stack = ItemStack.EMPTY;
+		if (compound.hasKey("stack")) stack = new ItemStack(compound.getCompoundTag("stack"));
+		else stack = ItemStack.EMPTY;
 		super.readFromNBT(compound);
 
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		if (!stack.isEmpty())
-			compound.setTag("stack", stack.serializeNBT());
+		if (!stack.isEmpty()) compound.setTag("stack", stack.serializeNBT());
 		return super.writeToNBT(compound);
 	}
 

@@ -1,0 +1,131 @@
+{
+    "maps": [
+        {
+            "notes": "地狱岩和砖",
+            "item": [
+                "minecraft:netherrack",
+                "minecraft:netherbrick"
+            ],
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 1,
+                    "power": 30
+                },
+                {
+                    "id": "fire",
+                    "size": 1,
+                    "power": 2
+                }
+            ]
+        },
+        {
+            "notes": "石英",
+            "item": {
+                "type": "ore_dict",
+                "id": "oreQuartz"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 10,
+                    "power": 150
+                },
+                {
+                    "id": "fire",
+                    "size": 1,
+                    "power": 5
+                }
+            ]
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "gemQuartz"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 3,
+                    "power": 120
+                },
+                {
+                    "id": "fire",
+                    "size": 1,
+                    "power": 7
+                }
+            ]
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "blockQuartz"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 12,
+                    "power": 120
+                },
+                {
+                    "id": "fire",
+                    "size": 4,
+                    "power": 7
+                }
+            ]
+        },
+        {
+            "notes": "烈焰",
+            "item": "minecraft:blaze_rod",
+            "element": [
+                {
+                    "id": "fire",
+                    "size": 30,
+                    "power": 475
+                }
+            ]
+        },
+        {
+            "item": "minecraft:blaze_powder",
+            "element": [
+                {
+                    "id": "fire",
+                    "size": 15,
+                    "power": 450
+                }
+            ]
+        },
+        {
+            "notes": "地狱疣",
+            "item": "minecraft:nether_wart",
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 2,
+                    "power": 100
+                },
+                {
+                    "id": "fire",
+                    "size": 5,
+                    "power": 30
+                }
+            ]
+        },
+        {
+            "notes": "萤石",
+            "item": "minecraft:glowstone_dust",
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 10,
+                    "power": 4
+                },
+                {
+                    "id": "fire",
+                    "size": 2,
+                    "power": 50
+                }
+            ]
+        }
+    ]
+}

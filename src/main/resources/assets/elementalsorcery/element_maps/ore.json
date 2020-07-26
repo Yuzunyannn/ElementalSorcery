@@ -1,6 +1,61 @@
 {
     "maps": [
         {
+            "notes": "绿宝石",
+            "item": {
+                "type": "ore_dict",
+                "id": "oreEmerald"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 80,
+                    "power": 450
+                }
+            ]
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "gemEmerald"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 20,
+                    "power": 400
+                }
+            ]
+        },
+        {
+            "notes": "青金石",
+            "item": {
+                "type": "ore_dict",
+                "id": "oreLapis"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 40,
+                    "power": 150
+                }
+            ]
+        },
+        {
+            "item": {
+                "type": "ore_dict",
+                "id": "gemLapis"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 6,
+                    "power": 120
+                }
+            ]
+        },
+        {
+            "notes": "煤",
             "item": {
                 "type": "ore_dict",
                 "id": "oreCoal"
@@ -97,6 +152,7 @@
             ]
         },
         {
+            "notes": "铁",
             "item": {
                 "type": "ore_dict",
                 "id": "oreIron"
@@ -128,6 +184,7 @@
             ]
         },
         {
+            "notes": "金",
             "item": {
                 "type": "ore_dict",
                 "id": "oreGold"
@@ -155,15 +212,11 @@
                     "id": "metal",
                     "size": 9,
                     "power": 220
-                },
-                {
-                    "id": "earth",
-                    "size": 20,
-                    "power": 30
                 }
             ]
         },
         {
+            "notes": "蓝晶石",
             "item": {
                 "type": "ore_dict",
                 "id": "oreKyanite"

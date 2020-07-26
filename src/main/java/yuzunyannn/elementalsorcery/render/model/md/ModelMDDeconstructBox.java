@@ -4,12 +4,10 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
 
 public class ModelMDDeconstructBox extends ModelBase {
 	private final ModelRenderer z;
 	private final ModelRenderer c;
-
 
 	public ModelMDDeconstructBox() {
 		textureWidth = 64;
@@ -24,7 +22,7 @@ public class ModelMDDeconstructBox extends ModelBase {
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		c.render(f5);
-		
+
 		z.setRotationPoint(4, 3, 4);
 		z.render(f5);
 		z.setRotationPoint(-4, 3, 4);

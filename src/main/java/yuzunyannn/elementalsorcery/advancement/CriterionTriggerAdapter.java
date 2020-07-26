@@ -1,11 +1,11 @@
 package yuzunyannn.elementalsorcery.advancement;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonDeserializationContext;
 
@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.util.json.JsonObject;
 public abstract class CriterionTriggerAdapter<T extends ICriterionInstance> implements ICriterionTrigger<T> {
 
 	protected final ResourceLocation id;
-	protected final Map<PlayerAdvancements, CriterionTriggerAdapter.Listeners> listeners = Maps.<PlayerAdvancements, CriterionTriggerAdapter.Listeners>newHashMap();
+	protected final Map<PlayerAdvancements, Listeners> listeners = new HashMap<>();
 
 	public CriterionTriggerAdapter(ResourceLocation id) {
 		this.id = id;
@@ -33,9 +33,9 @@ public abstract class CriterionTriggerAdapter<T extends ICriterionInstance> impl
 
 	@Override
 	public void addListener(PlayerAdvancements playerAdvancementsIn, ICriterionTrigger.Listener<T> listener) {
-		CriterionTriggerAdapter.Listeners listeners = this.listeners.get(playerAdvancementsIn);
+		Listeners listeners = this.listeners.get(playerAdvancementsIn);
 		if (listeners == null) {
-			listeners = new CriterionTriggerAdapter.Listeners(playerAdvancementsIn);
+			listeners = new Listeners(playerAdvancementsIn);
 			this.listeners.put(playerAdvancementsIn, listeners);
 		}
 		listeners.add(listener);
@@ -43,7 +43,7 @@ public abstract class CriterionTriggerAdapter<T extends ICriterionInstance> impl
 
 	@Override
 	public void removeListener(PlayerAdvancements playerAdvancementsIn, ICriterionTrigger.Listener<T> listener) {
-		CriterionTriggerAdapter.Listeners listeners = this.listeners.get(playerAdvancementsIn);
+		Listeners listeners = this.listeners.get(playerAdvancementsIn);
 		if (listeners != null) {
 			listeners.remove(listener);
 			if (listeners.isEmpty()) this.listeners.remove(playerAdvancementsIn);
@@ -67,7 +67,7 @@ public abstract class CriterionTriggerAdapter<T extends ICriterionInstance> impl
 
 	/** 触发这个成就的内容 */
 	public void trigger(EntityPlayerMP player, Object... objs) {
-		CriterionTriggerAdapter.Listeners listeners = this.listeners.get(player.getAdvancements());
+		Listeners listeners = this.listeners.get(player.getAdvancements());
 		if (listeners != null) listeners.trigger(player, objs);
 	}
 

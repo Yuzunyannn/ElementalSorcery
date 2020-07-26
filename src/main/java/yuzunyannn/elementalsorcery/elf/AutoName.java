@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.google.gson.Gson;
-
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.util.IOHelper;
@@ -94,7 +92,6 @@ public class AutoName {
 	static public void init() {
 		File file = ElementalSorcery.data.getFile("elf/names", "");
 		List<String> paths = ESData.getFileRecursion(file);
-		Gson gson = new Gson();
 		for (String path : paths) {
 			file = new File(path);
 			FileInputStream inputStream = null;

@@ -8,6 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -33,18 +34,15 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		if (compound.hasKey("stack"))
-			stack = new ItemStack(compound.getCompoundTag("stack"));
-		else
-			stack = ItemStack.EMPTY;
+		if (compound.hasKey("stack")) stack = new ItemStack(compound.getCompoundTag("stack"));
+		else stack = ItemStack.EMPTY;
 		super.readFromNBT(compound);
 
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		if (!stack.isEmpty())
-			compound.setTag("stack", stack.serializeNBT());
+		if (!stack.isEmpty()) compound.setTag("stack", stack.serializeNBT());
 		return super.writeToNBT(compound);
 	}
 
@@ -62,6 +60,16 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 		return stack;
 	}
 
+	/** 获取祭坛分解等级 */
+	public int getAltarDecLevel() {
+		return Element.DP_ALTAR;
+	}
+
+	/** 获取特殊的分级句柄 */
+	public IToElement getToElement() {
+		return null;
+	}
+
 	// 产出的结果，该引用的对象不应该被修改，标定结束
 	ElementStack[] outEstacks = null;
 	// 正在进行
@@ -76,13 +84,10 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 
 	@Override
 	public boolean canCrafting(String type, @Nullable EntityLivingBase player) {
-		if (!ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT.equals(type))
-			return false;
-		if (!this.isIntact())
-			return false;
+		if (!ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT.equals(type)) return false;
+		if (!this.isIntact()) return false;
 		this.recheckDeconstructResult();
-		if (outEstacks == null)
-			return false;
+		if (outEstacks == null) return false;
 		return outEstacks != null;
 	}
 
@@ -92,7 +97,7 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 		startTime = new TickOut(40);
 		ItemStack outStack = stack;
 		stack = ItemStack.EMPTY;
-		return new CraftingDeconstruct(world, outStack, Element.DP_ALTAR, null);
+		return new CraftingDeconstruct(world, outStack, this.getAltarDecLevel(), this.getToElement());
 	}
 
 	@Override
@@ -106,8 +111,7 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 
 	@Override
 	public void craftingUpdate(ICraftingCommit commit) {
-		if (startTime.tick())
-			return;
+		if (startTime.tick()) return;
 		((CraftingDeconstruct) commit).update(this);
 	}
 
@@ -125,9 +129,7 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 	public int craftingEnd(ICraftingCommit commit) {
 		outEstacks = null;
 		working = false;
-		if (!((CraftingDeconstruct) commit).end(this)) {
-			return ICraftingLaunch.FAIL;
-		}
+		if (!((CraftingDeconstruct) commit).end(this)) return ICraftingLaunch.FAIL;
 		return ICraftingLaunch.SUCCESS;
 	}
 
@@ -142,6 +144,8 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 			outEstacks = null;
 			return;
 		}
-		outEstacks = ElementMap.instance.toElement(stack);
+		IToElement toElement = this.getToElement();
+		if (toElement == null) toElement = ElementMap.instance;
+		outEstacks = toElement.toElement(stack);
 	}
 }

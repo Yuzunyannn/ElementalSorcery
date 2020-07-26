@@ -4,6 +4,7 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.ICriterionTrigger;
 
 /** 成就触发注册 */
+@SuppressWarnings("rawtypes")
 public class ESCriteriaTriggers {
 
 	public static final CriterionTriggerAdapter PLAYER_KILLED_ELF = register(new KilledElfTrigger("player_killed_elf"));
@@ -16,7 +17,7 @@ public class ESCriteriaTriggers {
 	public static final CriterionTriggerAdapter SPELLBOOK_ENCH = register(new FastTrigger("spellbook_ench"));
 	public static final CriterionTriggerAdapter MAGIC_DESK_CRAFT = register(new FastTrigger("magic_desk_craft"));
 	public static final CriterionTriggerAdapter GARDEN_BUILD = register(new FastTrigger("garden_build"));
-	
+
 	public static void init() {
 
 	}
