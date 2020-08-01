@@ -2,6 +2,10 @@ package yuzunyannn.elementalsorcery.elf.talk;
 
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
+
 public class TalkActionGoTo implements ITalkAction {
 
 	String label;
@@ -10,8 +14,13 @@ public class TalkActionGoTo implements ITalkAction {
 		this.label = label;
 	}
 
+	public TalkActionGoTo(JsonObject json) {
+		this.label = json.needString("label", "to", "go");
+	}
+
 	@Override
-	public Object invoke(TalkChapter chapter, TalkChapter.Iter iter, TalkScene originScene, int talkAt) {
+	public Object invoke(EntityPlayer player, EntityElfBase elf, TalkChapter chapter, TalkChapter.Iter iter,
+			TalkScene originScene, int talkAt) {
 		if (this.label == null) return false;
 		List<TalkScene> scenes = chapter.getScenes();
 		for (int i = 0; i < scenes.size(); i++) {

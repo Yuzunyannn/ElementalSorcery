@@ -1,0 +1,43 @@
+{
+    "lev": 0,
+    "need": [
+        "elf/elf"
+    ],
+    "linked": [
+        "elementalsorcery:elf_fruit",
+        "elementalsorcery:elf_log",
+        "elementalsorcery:elf_plank",
+        "elementalsorcery:elf_crysatl"
+    ],
+    "type": "mult",
+    "lock": 0,
+    "pages": [
+        {
+            "type": "craft",
+            "name": "elfTree",
+            "item": [
+                {
+                    "id": "elementalsorcery:elf_plank",
+                    "data": 0
+                },
+                {
+                    "id": "elementalsorcery:elf_plank",
+                    "data": 1
+                }
+            ]
+        },
+        {
+            "type": "normal",
+            "name": "elfFruit",
+            "item": "elementalsorcery:elf_fruit"
+        },
+        {
+            "type": "smelting",
+            "name": "elfCrystal",
+            "item": {
+                "id": "elementalsorcery:elf_fruit",
+                "data": 2
+            }
+        }
+    ]
+}

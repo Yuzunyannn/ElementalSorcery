@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.elf.talk;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -19,7 +20,7 @@ public class TalkSceneClient extends TalkSceneSay {
 		NBTTagList list = nbt.getTagList("list", 10);
 		for (NBTBase base : list) {
 			NBTTagCompound p = (NBTTagCompound) base;
-			this.addString(p.getString("str"), Talker.values()[p.getByte("talker")]);
+			this.addString(I18n.format(p.getString("str")), Talker.values()[p.getByte("talker")]);
 		}
 	}
 

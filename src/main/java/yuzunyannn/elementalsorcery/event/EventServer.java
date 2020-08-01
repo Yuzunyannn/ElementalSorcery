@@ -49,6 +49,11 @@ public class EventServer {
 		tickList.add(task);
 	}
 
+	static public void addTickTask(ITickTask.ITickTaskOnce task) {
+		if (task == null) return;
+		tickList.add(task);
+	}
+
 	@SubscribeEvent
 	public static void serverTick(TickEvent.ServerTickEvent event) {
 		Iterator<ITickTask> iter = tickList.iterator();

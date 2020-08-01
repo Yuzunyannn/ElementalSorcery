@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " # ",
+    "# #",
+    " # "
+  ],
+  "key": {
+    "#": {
+      "item": "elementalsorcery:elf_crystal"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:elf_coin",
+    "count": 1
+  }
+}

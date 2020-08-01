@@ -20,6 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
+import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
@@ -47,6 +48,15 @@ public class ElfProfession extends net.minecraftforge.registries.IForgeRegistryE
 
 	}
 
+	/**
+	 * 直接被切换
+	 * 
+	 * @param next 要转到的职业
+	 */
+	public void transferElf(EntityElfBase elf, ElfProfession next) {
+
+	}
+
 	/** 是否可以自动装备上装备，不可以自动装备替换的话，会询问是否可以捡起来 */
 	public boolean canEquip(EntityElfBase elf, ItemStack stack, EntityEquipmentSlot slot) {
 		return true;
@@ -58,7 +68,8 @@ public class ElfProfession extends net.minecraftforge.registries.IForgeRegistryE
 	 * @return true表示要建起来，false表示不要建起来
 	 */
 	public boolean needPickup(EntityElfBase elf, ItemStack stack) {
-		return stack.getItem() == Item.getItemFromBlock(ESInitInstance.BLOCKS.ELF_FRUIT);
+		return stack.getItem() == Item.getItemFromBlock(ESInitInstance.BLOCKS.ELF_FRUIT)
+				|| stack.getItem() == ESInitInstance.ITEMS.ELF_COIN;
 	}
 
 	/** 获取攻击的目标 */
@@ -111,6 +122,12 @@ public class ElfProfession extends net.minecraftforge.registries.IForgeRegistryE
 	/** 获取精灵要说的内容，仅在打开talkgui时有效 */
 	@Nullable
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player) {
+		return null;
+	}
+
+	/** 获得精灵交易的内容，仅在而elftrade时有效 */
+	@Nullable
+	public Trade getTrade(EntityElfBase elf, EntityPlayer player) {
 		return null;
 	}
 

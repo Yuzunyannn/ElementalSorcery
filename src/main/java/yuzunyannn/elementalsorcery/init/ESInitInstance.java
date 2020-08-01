@@ -64,6 +64,7 @@ import yuzunyannn.elementalsorcery.element.ElementMetal;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.ElementWater;
 import yuzunyannn.elementalsorcery.element.ElementWood;
+import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemManual;
@@ -219,6 +220,8 @@ public class ESInitInstance {
 		ITEMS.RESONANT_CRYSTAL = new ItemResonantCrystal();
 		ITEMS.ELF_CRYSTAL = ItemCrystal.newElfCrystal();
 		ITEMS.SUPREME_TABLE_COMPONENT = new ItemSupremeTableComponent();
+		ITEMS.ELF_COIN = ItemSome.newElfCoin();
+		ITEMS.ELF_PURSE = new ItemElfPurse();
 
 		ITEMS.SPELLBOOK = new ItemSpellbook();
 		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture();

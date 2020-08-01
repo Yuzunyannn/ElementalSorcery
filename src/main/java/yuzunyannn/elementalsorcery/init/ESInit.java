@@ -322,6 +322,8 @@ public class ESInit {
 		registerRender(ITEMS.RESONANT_CRYSTAL);
 		registerRender(ITEMS.ELF_CRYSTAL);
 		registerRender(ITEMS.SUPREME_TABLE_COMPONENT, new RenderItemSupremeTable());
+		registerRender(ITEMS.ELF_COIN);
+		registerRender(ITEMS.ELF_PURSE);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

@@ -6,4 +6,15 @@ public interface ITickTask {
 	public static final int END = 0;
 
 	int onTick();
+
+	// 快捷操作
+	public interface ITickTaskOnce extends ITickTask {
+		@Override
+		default int onTick() {
+			onTickOnce();
+			return ITickTask.END;
+		}
+
+		void onTickOnce();
+	}
 }

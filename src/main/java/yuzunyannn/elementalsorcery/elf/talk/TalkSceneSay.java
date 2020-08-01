@@ -2,8 +2,6 @@ package yuzunyannn.elementalsorcery.elf.talk;
 
 import java.util.ArrayList;
 
-import net.minecraft.client.resources.I18n;
-
 public class TalkSceneSay extends TalkScene<TalkSceneSay> {
 
 	protected static class Packet {
@@ -11,7 +9,7 @@ public class TalkSceneSay extends TalkScene<TalkSceneSay> {
 		Talker talker = Talker.OPPOSING;
 
 		String getSaying() {
-			return I18n.format(unlocalizedOrlocalizedString);
+			return unlocalizedOrlocalizedString;
 		}
 	}
 

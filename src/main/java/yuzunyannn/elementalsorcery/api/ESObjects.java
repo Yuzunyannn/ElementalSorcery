@@ -50,6 +50,8 @@ public class ESObjects {
 		public Item RED_HANDSET;
 		public Item ELF_CRYSTAL;
 		public Item SUPREME_TABLE_COMPONENT;
+		public Item ELF_COIN;
+		public Item ELF_PURSE;
 	}
 	
 	static public class Blocks {

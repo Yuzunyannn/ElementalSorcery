@@ -532,5 +532,6 @@ public class TileRiteTable extends TileEntityNetwork {
 			if (x > 0) return Math.max(1, x / 12);
 			return 1;
 		});
+		addRecipe(new ItemStack(ESInitInstance.ITEMS.ELF_COIN), new ItemStack(ESInitInstance.ITEMS.ELF_PURSE), 120, 0);
 	}
 }

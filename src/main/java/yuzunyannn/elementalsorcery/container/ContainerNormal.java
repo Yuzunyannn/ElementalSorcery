@@ -18,10 +18,10 @@ public class ContainerNormal<T extends TileEntity> extends Container {
 		this(player, tileEntity, 8, 84);
 	}
 
-	public ContainerNormal(EntityPlayer player, T tileEntity, boolean addPlayerInventory){
+	public ContainerNormal(EntityPlayer player, T tileEntity, boolean addPlayerInventory) {
 		this(player, tileEntity, addPlayerInventory, 8, 84);
 	}
-	
+
 	public ContainerNormal(EntityPlayer player, T tileEntity, int xoff, int yoff) {
 		this(player, tileEntity, true, xoff, yoff);
 	}
@@ -30,11 +30,10 @@ public class ContainerNormal<T extends TileEntity> extends Container {
 		this.tileEntity = tileEntity;
 		this.player = player;
 		this.pos = this.tileEntity.getPos();
-		if (addPlayerInventory)
-			this.addPlayerSlot(xoff, yoff);
+		if (addPlayerInventory) this.addPlayerSlot(xoff, yoff);
 	}
 
-	protected void addPlayerSlot(int xoff, int yoff) {
+	void addPlayerSlot(int xoff, int yoff) {
 		// 玩家物品栏
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 9; ++j) {
@@ -51,32 +50,24 @@ public class ContainerNormal<T extends TileEntity> extends Container {
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
 		Slot slot = inventorySlots.get(index);
 
-		if (slot == null || !slot.getHasStack()) {
-			return ItemStack.EMPTY;
-		}
+		if (slot == null || !slot.getHasStack()) { return ItemStack.EMPTY; }
 
-		ItemStack new_stack = slot.getStack();
-		ItemStack old_stack = new_stack.copy();
+		ItemStack newStack = slot.getStack();
+		ItemStack oldStack = newStack.copy();
 
 		boolean isMerged = false;
 		final int max = 36 + moreSlots;
-		if (index < 27) {
-			isMerged = mergeItemStack(new_stack, 36, max, false) || mergeItemStack(new_stack, 27, 36, false);
-		} else if (index >= 27 && index < 36) {
-			isMerged = mergeItemStack(new_stack, 36, max, false) || mergeItemStack(new_stack, 0, 27, false);
-		} else {
-			isMerged = mergeItemStack(new_stack, 0, 36, false);
-		}
+		if (index < 27) isMerged = mergeItemStack(newStack, 36, max, false) || mergeItemStack(newStack, 27, 36, false);
+		else if (index >= 27 && index < 36)
+			isMerged = mergeItemStack(newStack, 36, max, false) || mergeItemStack(newStack, 0, 27, false);
+		else isMerged = mergeItemStack(newStack, 0, 36, false);
 
-		if (!isMerged) {
-			return ItemStack.EMPTY;
-		}
+		if (!isMerged) return ItemStack.EMPTY;
 
-		if (new_stack.isEmpty())
-			slot.putStack(ItemStack.EMPTY);
-		slot.onTake(playerIn, new_stack);
+		if (newStack.isEmpty()) slot.putStack(ItemStack.EMPTY);
+		slot.onTake(playerIn, newStack);
 
-		return old_stack;
+		return oldStack;
 	}
 
 	@Override

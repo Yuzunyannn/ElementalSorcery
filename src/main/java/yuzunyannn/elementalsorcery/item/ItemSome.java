@@ -23,6 +23,11 @@ public class ItemSome {
 		return new Item().setUnlocalizedName(unloaclizedName);
 	}
 
+	/** 精灵币 */
+	static public Item newElfCoin() {
+		return newItem("elfCoin");
+	}
+
 	/** 蓝晶石 */
 	static public Item newKyanite() {
 		return newItem("kyanite");

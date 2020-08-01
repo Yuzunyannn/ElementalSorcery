@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
@@ -10,9 +11,11 @@ import net.minecraft.crash.CrashReport;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
+import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -72,10 +75,17 @@ public class ElementalSorcery {
 		proxy.serverStarting(event);
 	}
 
+	public static ModContainer getModeContainer() {
+		List<ModContainer> mods = Loader.instance().getModList();
+		for (ModContainer mod : mods) 
+			if (mod.getModId().equals(MODID)) return mod;
+		return null;
+	}
+
 	/** 记录ES玩家动态数据 */
 	private static final Map<String, NBTTagCompound> userData = new HashMap<String, NBTTagCompound>();
 
-	/** 获取玩家动态数据 */
+	/** 获取玩家动态数据，不会储存 */
 	public static NBTTagCompound getPlayerData(EntityLivingBase player) {
 		if (player instanceof EntityPlayer) return getPlayerData(player.getName());
 		return new NBTTagCompound();

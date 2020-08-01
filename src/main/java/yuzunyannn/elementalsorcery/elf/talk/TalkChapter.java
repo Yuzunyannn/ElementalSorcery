@@ -4,11 +4,13 @@ import java.util.ArrayList;
 
 import com.google.gson.JsonObject;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 
 /** 对话的章节，包含多个对话场景 */
 public class TalkChapter {
@@ -112,12 +114,12 @@ public class TalkChapter {
 		/**
 		 * @return 返回一个新的，要切换的章节
 		 */
-		public TalkChapter dealAction(int talkAt) {
+		public TalkChapter dealAction(int talkAt, EntityPlayer player, EntityElfBase elf) {
 			if (scenes.isEmpty()) return null;
 			TalkScene scene = scenes.get(iter);
 			ITalkAction action = scene.getAction(scene.getType() == TalkType.SAY ? 0 : talkAt);
 			if (action == null) return null;
-			Object ret = action.invoke(TalkChapter.this, this, scene, talkAt);
+			Object ret = action.invoke(player, elf, TalkChapter.this, this, scene, talkAt);
 			if (ret instanceof TalkChapter) return (TalkChapter) ret;
 			return null;
 		}

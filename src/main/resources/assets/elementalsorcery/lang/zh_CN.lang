@@ -39,6 +39,9 @@ item.riteManual.name=祭品研究手册
 item.redHandset.name=红石遥控
 item.supremeTable.leg.name=魔力桌腿
 item.supremeTable.top.name=魔力桌板
+item.elfCoin.name=精灵钱币
+item.elfPurse.name=精灵钱袋
+
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -220,11 +223,23 @@ info.crystal.frequency=水晶频率：%.1f
 info.crystal.percept=感知的频率：%.1f
 info.resonantCrystal=这种水晶看着就想把它扔出去...
 info.page.need=查看这张羊皮卷前你应当先查看：
+info.elfPurse.coin=拥有%d元
 
-say.konw=我明白了
-say.unkonw=我不明白
-say.ok=好的
-say.pretendKnow=就当你明白了
+say.scholar.buy=别说了，我要买羊皮卷
+say.scholar.konw=我明白了
+say.scholar.unkonw=我不明白
+say.scholar.ok=好的
+say.scholar.pretendKnow=就当你明白了
+say.scholar.nice.goods=我这里除了记载知识的羊皮卷以外，还有一些好东西你可以买到
+
+page.elf=精灵
+page.elf.ct=精灵是从精灵世界过来的一种新的生物，她们通常生活在巨大的精灵树上。精灵属于中立生物，而且有着不同的职业。如果你攻击她们，她们将可能会转变到战斗职业来进行防卫。\n精灵中会产生疯子，她会到处乱攻击。\n此外精灵学者会告诉你一些你可能想知道的内容，同时她也会出售教程。\n[精灵部分教程只能从学者获取]
+page.elfTree=精灵树
+page.elfTree.ct=精灵树是一种具有魔法的树木，在自然界中生成，在其中会生成一种巨大的精灵树，精灵会在上面居住。\n砍下得到精灵木，这可能是你将来使用的重要材料。
+page.elfFruit=精灵果
+page.elfFruit.ct=精灵果是精灵树上生长的一种果子，只在白天生长，成熟变绿，并掉落。\n精灵果中蕴含着魔力，可以食用，连续使用的话可产生不同的效果。
+page.elfCrystal=精灵结晶
+page.elfCrystal.ct=精灵果可以进行烧制，其内部液体结晶而形成精灵结晶，具有良好的魔力亲和性，似乎可以存储魔力。\n哦！对了，它还可以做精灵币与精灵进行交易。
 
 page.crafting.need=需要元素参与合成：
 page.crafting.show=%s 需要 %d 强度下限 %d 

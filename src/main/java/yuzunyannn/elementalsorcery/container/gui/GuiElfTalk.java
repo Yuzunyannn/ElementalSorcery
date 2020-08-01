@@ -67,7 +67,7 @@ public class GuiElfTalk extends GuiContainer {
 			if (entity != null) {
 				int xoff = this.width / 2 - (isPlayer ? -125 : 125);
 				int yoff = offsetY + 25;
-				GuiInventory.drawEntityOnScreen(xoff, yoff, 80, isPlayer ? 100 : -100, -10, entity);
+				GuiInventory.drawEntityOnScreen(xoff, yoff, 75, isPlayer ? 100 : -100, -10, entity);
 			}
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(0, 0, 100);
@@ -117,12 +117,14 @@ public class GuiElfTalk extends GuiContainer {
 		}
 		TalkChapter.Iter iter = container.getChapterIter();
 		if (iter == null) return;
+		//是说话
 		if (iter.getType() == TalkType.SAY) {
 			next(iter, 0);
 			return;
 		}
 		Object saying = iter == null ? TalkChapter.NOTHING_TO_SAY : iter.getSaying();
 		if (saying instanceof String[]) {
+			//判断选择的按钮
 			String[] says = (String[]) saying;
 			int offsetX = (this.width - SELECT_WIDTH) / 2;
 			if (mouseX < offsetX) return;

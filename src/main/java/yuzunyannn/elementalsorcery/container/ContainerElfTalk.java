@@ -1,55 +1,32 @@
 package yuzunyannn.elementalsorcery.container;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
-import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 
-public class ContainerElfTalk extends Container implements IContainerNetwork {
-	public EntityElfBase elf;
-	public final EntityPlayer player;
-	public final BlockPos pos;
+public class ContainerElfTalk extends ContainerElf implements IContainerNetwork {
+
 	protected TalkChapter chapter;
 	protected TalkChapter.Iter iter;
-	protected boolean noEnd = true;
 
 	public ContainerElfTalk(EntityPlayer player) {
-		this.player = player;
-		NBTTagCompound nbt = ElementalSorcery.getPlayerData(player);
-		Entity elf = (EntityElfBase) player.world.getEntityByID(nbt.getInteger("elfId"));
-		if (elf instanceof EntityElfBase) this.elf = (EntityElfBase) elf;
-		else this.elf = null;
-		if (this.elf != null) {
-			this.elf.setTalker(player);
-			if (!player.world.isRemote) {
-				// 推后一帧
-				EventServer.addTickTask(() -> {
-					this.setChapter(this.elf.getProfession().getChapter(this.elf, player));
-					return ITickTask.END;
-				});
-			}
+		super(player);
+		if (this.elf == null) {
+			this.setEnd();
+			return;
 		}
-		this.pos = this.elf == null ? player.getPosition() : elf.getPosition();
-	}
+		if (!player.world.isRemote) {
+			// 推后一帧
+			EventServer.addTickTask(() -> {
+				this.setChapter(this.elf.getProfession().getChapter(this.elf, player));
+			});
+		}
 
-	@Override
-	public void onContainerClosed(EntityPlayer playerIn) {
-		super.onContainerClosed(playerIn);
-		if (this.elf != null) this.elf.setTalker(null);
-	}
-
-	@Override
-	public boolean canInteractWith(EntityPlayer playerIn) {
-		return noEnd && (elf == null ? playerIn.getDistanceSq(pos) <= 64 : playerIn.getDistanceSq(this.elf) <= 64);
 	}
 
 	public TalkChapter.Iter getChapterIter() {
@@ -82,13 +59,13 @@ public class ContainerElfTalk extends Container implements IContainerNetwork {
 			if (iter.isPointScene()) return iter.getIndex();
 			// 向后移动
 			else if (iter.hasNextScene()) {
-				iter.dealAction(-1);// 这里的deal应为不是point所以不应当出现转跳的情况
+				iter.dealAction(-1, player, elf);// 这里的deal应为不是point所以不应当出现转跳的情况
 				iter.nextScene();
 			} else return setEnd();
 		}
 		int lastIndex = iter.getIndex();
 		if (iter.isPointScene()) {
-			TalkChapter newChapter = iter.dealAction(selectAt);
+			TalkChapter newChapter = iter.dealAction(selectAt, player, elf);
 			// 新的章节就切换
 			if (newChapter != null && this.chapter != newChapter) {
 				this.setChapter(newChapter);
@@ -120,6 +97,7 @@ public class ContainerElfTalk extends Container implements IContainerNetwork {
 	@Override
 	public void recvData(NBTTagCompound nbt, Side side) {
 		if (side == Side.CLIENT) {
+			if (nbt.hasKey("elfId")) elf = (EntityElfBase) player.world.getEntityByID(nbt.getInteger("elfId"));
 			if (nbt.hasKey("scenes")) setChapter(new TalkChapter().deserializeNBTFromSend(nbt));
 			if (nbt.hasKey("to")) toOrPassIndex(nbt.getInteger("to"), 0);
 		} else {

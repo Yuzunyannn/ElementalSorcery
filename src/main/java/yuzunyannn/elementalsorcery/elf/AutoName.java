@@ -49,7 +49,7 @@ public class AutoName {
 				JsonArray jarray = json.getArray(key);
 				List<String> part = this.newPart();
 				for (int j = 0; j < jarray.size(); j++) {
-					if (jarray.hasString(i)) part.add(jarray.getString(i));
+					if (jarray.hasString(j)) part.add(jarray.getString(j));
 				}
 			}
 		}

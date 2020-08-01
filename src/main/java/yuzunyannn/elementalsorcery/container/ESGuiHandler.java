@@ -6,12 +6,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.gui.GuiAbsorbBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiAnalysisAltar;
 import yuzunyannn.elementalsorcery.container.gui.GuiDeconstructBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementCraftingTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfTalk;
+import yuzunyannn.elementalsorcery.container.gui.GuiElfTrade;
 import yuzunyannn.elementalsorcery.container.gui.GuiHearth;
 import yuzunyannn.elementalsorcery.container.gui.GuiItemStructureCraft;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDAbsorbBox;
@@ -54,109 +56,126 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_MD_DECONSTRUCTBOX = 28;
 
 	public static final int GUI_ELF_TALK = 40;
+	public static final int GUI_ELF_TRADE = 41;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
-		switch (ID) {
-		case GUI_HEARTH:
-			return new ContainerHearth(player, tileEntity);
-		case GUI_SMELT_BOX:
-			return new ContainerSmeltBox(player, tileEntity);
-		case GUI_ABSORB_BOX:
-			return new ContainerAbsorbBox(player, tileEntity);
-		case GUI_ELEMENT_WORKBENCH:
-			return new ContainerElementWorkbench(player.inventory, world, new BlockPos(x, y, z));
-		case GUI_DECONSTRUCT_BOX:
-			return new ContainerDeconstructBox(player, tileEntity);
-		case GUI_PARCHMENT:
-			return new ContainerParchment(player);
-		case GUI_ELEMENT_CRAFTING_TABLE:
-			return new ContainerElementCraftingTable(player, tileEntity);
-		case GUI_ANALYSIS_ALTAR:
-			return new ContainerAnalysisAltar(player, tileEntity);
-		case GUI_SUPREME_TABLE:
-			return new ContainerSupremeTable(player, tileEntity);
-		case GUI_INVENTORY_WORKBENCH:
-			return new ContainerWorkbenchWithInventory(player, tileEntity);
-		case GUI_RITE_MANUAL:
-			return new ContainerRiteManual(player.inventory, world, new BlockPos(x, y, z));
-		case GUI_ITEM_STRUCTURE_CRAFT:
-			return new ContainerItemStructureCraft(player, tileEntity);
+		try {
+			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+			switch (ID) {
+			case GUI_HEARTH:
+				return new ContainerHearth(player, tileEntity);
+			case GUI_SMELT_BOX:
+				return new ContainerSmeltBox(player, tileEntity);
+			case GUI_ABSORB_BOX:
+				return new ContainerAbsorbBox(player, tileEntity);
+			case GUI_ELEMENT_WORKBENCH:
+				return new ContainerElementWorkbench(player.inventory, world, new BlockPos(x, y, z));
+			case GUI_DECONSTRUCT_BOX:
+				return new ContainerDeconstructBox(player, tileEntity);
+			case GUI_PARCHMENT:
+				return new ContainerParchment(player);
+			case GUI_ELEMENT_CRAFTING_TABLE:
+				return new ContainerElementCraftingTable(player, tileEntity);
+			case GUI_ANALYSIS_ALTAR:
+				return new ContainerAnalysisAltar(player, tileEntity);
+			case GUI_SUPREME_TABLE:
+				return new ContainerSupremeTable(player, tileEntity);
+			case GUI_INVENTORY_WORKBENCH:
+				return new ContainerWorkbenchWithInventory(player, tileEntity);
+			case GUI_RITE_MANUAL:
+				return new ContainerRiteManual(player.inventory, world, new BlockPos(x, y, z));
+			case GUI_ITEM_STRUCTURE_CRAFT:
+				return new ContainerItemStructureCraft(player, tileEntity);
 
-		case GUI_MD_MAGIC_GEN:
-			return new ContainerMDMagicGen(player, tileEntity);
-		case GUI_MD_HEARTH:
-			return new ContainerMDBase(player, (TileMDBase) tileEntity);
-		case GUI_MD_RUBBLE_REPAIR:
-			return new ContainerMDRubbleRepair(player, tileEntity);
-		case GUI_MD_INFUSION:
-			return new ContainerMDInfusion(player, tileEntity);
-		case GUI_MD_MAGIC_SOLIDIFY:
-			return new ContainerMDMagicSolidify(player, tileEntity);
-		case GUI_MD_ABSORB_BOX:
-			return new ContainerMDAbsorbBox(player, tileEntity);
-		case GUI_MD_MAGICLIZATION:
-			return new ContainerMDMagiclization(player, tileEntity);
-		case GUI_MD_DECONSTRUCTBOX:
-			return new ContainerMDDeconstructBox(player, tileEntity);
-		case GUI_ELF_TALK:
-			return new ContainerElfTalk(player);
-		default:
+			case GUI_MD_MAGIC_GEN:
+				return new ContainerMDMagicGen(player, tileEntity);
+			case GUI_MD_HEARTH:
+				return new ContainerMDBase(player, (TileMDBase) tileEntity);
+			case GUI_MD_RUBBLE_REPAIR:
+				return new ContainerMDRubbleRepair(player, tileEntity);
+			case GUI_MD_INFUSION:
+				return new ContainerMDInfusion(player, tileEntity);
+			case GUI_MD_MAGIC_SOLIDIFY:
+				return new ContainerMDMagicSolidify(player, tileEntity);
+			case GUI_MD_ABSORB_BOX:
+				return new ContainerMDAbsorbBox(player, tileEntity);
+			case GUI_MD_MAGICLIZATION:
+				return new ContainerMDMagiclization(player, tileEntity);
+			case GUI_MD_DECONSTRUCTBOX:
+				return new ContainerMDDeconstructBox(player, tileEntity);
+			case GUI_ELF_TALK:
+				return new ContainerElfTalk(player);
+			case GUI_ELF_TRADE:
+				return new ContainerElfTrade(player);
+			default:
+				return null;
+			}
+		} catch (Exception e) {
+			ElementalSorcery.logger.warn("ui创建出现异常", e);
 			return null;
 		}
 	}
 
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
-		switch (ID) {
-		case GUI_HEARTH:
-			return new GuiHearth(new ContainerHearth(player, tileEntity), player.inventory);
-		case GUI_SMELT_BOX:
-			return new GuiSmeltBox(new ContainerSmeltBox(player, tileEntity), player.inventory);
-		case GUI_ABSORB_BOX:
-			return new GuiAbsorbBox(new ContainerAbsorbBox(player, tileEntity), player.inventory);
-		case GUI_ELEMENT_WORKBENCH:
-			return new GuiElementWorkbench(
-					new ContainerElementWorkbench(player.inventory, world, new BlockPos(x, y, z)), player.inventory);
-		case GUI_DECONSTRUCT_BOX:
-			return new GuiDeconstructBox(new ContainerDeconstructBox(player, tileEntity), player.inventory);
-		case GUI_PARCHMENT:
-			return new GuiParchment(new ContainerParchment(player));
-		case GUI_ELEMENT_CRAFTING_TABLE:
-			return new GuiElementCraftingTable(new ContainerElementCraftingTable(player, tileEntity), player.inventory);
-		case GUI_ANALYSIS_ALTAR:
-			return new GuiAnalysisAltar(new ContainerAnalysisAltar(player, tileEntity), player.inventory);
-		case GUI_SUPREME_TABLE:
-			return new GuiSupremeTable(new ContainerSupremeTable(player, tileEntity), player.inventory);
-		case GUI_INVENTORY_WORKBENCH:
-			return new GuiSimple(new ContainerWorkbenchWithInventory(player, tileEntity), player.inventory,
-					"tile.supremeTable.name", TEXTURE_CRAFTING_TABLE);
-		case GUI_RITE_MANUAL:
-			return new GuiRiteManual(new ContainerRiteManual(player.inventory, world, new BlockPos(x, y, z)));
-		case GUI_ITEM_STRUCTURE_CRAFT:
-			return new GuiItemStructureCraft(new ContainerItemStructureCraft(player, tileEntity));
+		try {
+			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+			switch (ID) {
+			case GUI_HEARTH:
+				return new GuiHearth(new ContainerHearth(player, tileEntity), player.inventory);
+			case GUI_SMELT_BOX:
+				return new GuiSmeltBox(new ContainerSmeltBox(player, tileEntity), player.inventory);
+			case GUI_ABSORB_BOX:
+				return new GuiAbsorbBox(new ContainerAbsorbBox(player, tileEntity), player.inventory);
+			case GUI_ELEMENT_WORKBENCH:
+				return new GuiElementWorkbench(
+						new ContainerElementWorkbench(player.inventory, world, new BlockPos(x, y, z)),
+						player.inventory);
+			case GUI_DECONSTRUCT_BOX:
+				return new GuiDeconstructBox(new ContainerDeconstructBox(player, tileEntity), player.inventory);
+			case GUI_PARCHMENT:
+				return new GuiParchment(new ContainerParchment(player));
+			case GUI_ELEMENT_CRAFTING_TABLE:
+				return new GuiElementCraftingTable(new ContainerElementCraftingTable(player, tileEntity),
+						player.inventory);
+			case GUI_ANALYSIS_ALTAR:
+				return new GuiAnalysisAltar(new ContainerAnalysisAltar(player, tileEntity), player.inventory);
+			case GUI_SUPREME_TABLE:
+				return new GuiSupremeTable(new ContainerSupremeTable(player, tileEntity), player.inventory);
+			case GUI_INVENTORY_WORKBENCH:
+				return new GuiSimple(new ContainerWorkbenchWithInventory(player, tileEntity), player.inventory,
+						"tile.supremeTable.name", TEXTURE_CRAFTING_TABLE);
+			case GUI_RITE_MANUAL:
+				return new GuiRiteManual(new ContainerRiteManual(player.inventory, world, new BlockPos(x, y, z)));
+			case GUI_ITEM_STRUCTURE_CRAFT:
+				return new GuiItemStructureCraft(new ContainerItemStructureCraft(player, tileEntity));
 
-		case GUI_MD_MAGIC_GEN:
-			return new GuiMDMagicGen(new ContainerMDMagicGen(player, tileEntity), player.inventory);
-		case GUI_MD_HEARTH:
-			return new GuiMDHearth(new ContainerMDBase(player, (TileMDBase) tileEntity), player.inventory);
-		case GUI_MD_RUBBLE_REPAIR:
-			return new GuiMDRubbleRepair(new ContainerMDRubbleRepair(player, tileEntity), player.inventory);
-		case GUI_MD_INFUSION:
-			return new GuiMDInfusion(new ContainerMDInfusion(player, tileEntity), player.inventory);
-		case GUI_MD_MAGIC_SOLIDIFY:
-			return new GuiMDMagicSolidify(new ContainerMDMagicSolidify(player, tileEntity), player.inventory);
-		case GUI_MD_ABSORB_BOX:
-			return new GuiMDAbsorbBox(new ContainerMDAbsorbBox(player, tileEntity), player.inventory);
-		case GUI_MD_MAGICLIZATION:
-			return new GuiMDMagiclization(new ContainerMDMagiclization(player, tileEntity), player.inventory);
-		case GUI_MD_DECONSTRUCTBOX:
-			return new GuiMDDeconstructBox(new ContainerMDDeconstructBox(player, tileEntity), player.inventory);
-		case GUI_ELF_TALK:
-			return new GuiElfTalk(player);
-		default:
+			case GUI_MD_MAGIC_GEN:
+				return new GuiMDMagicGen(new ContainerMDMagicGen(player, tileEntity), player.inventory);
+			case GUI_MD_HEARTH:
+				return new GuiMDHearth(new ContainerMDBase(player, (TileMDBase) tileEntity), player.inventory);
+			case GUI_MD_RUBBLE_REPAIR:
+				return new GuiMDRubbleRepair(new ContainerMDRubbleRepair(player, tileEntity), player.inventory);
+			case GUI_MD_INFUSION:
+				return new GuiMDInfusion(new ContainerMDInfusion(player, tileEntity), player.inventory);
+			case GUI_MD_MAGIC_SOLIDIFY:
+				return new GuiMDMagicSolidify(new ContainerMDMagicSolidify(player, tileEntity), player.inventory);
+			case GUI_MD_ABSORB_BOX:
+				return new GuiMDAbsorbBox(new ContainerMDAbsorbBox(player, tileEntity), player.inventory);
+			case GUI_MD_MAGICLIZATION:
+				return new GuiMDMagiclization(new ContainerMDMagiclization(player, tileEntity), player.inventory);
+			case GUI_MD_DECONSTRUCTBOX:
+				return new GuiMDDeconstructBox(new ContainerMDDeconstructBox(player, tileEntity), player.inventory);
+			case GUI_ELF_TALK:
+				return new GuiElfTalk(player);
+			case GUI_ELF_TRADE:
+				return new GuiElfTrade(player);
+			default:
+				return null;
+			}
+		} catch (Exception e) {
+			ElementalSorcery.logger.warn("ui创建出现异常", e);
 			return null;
 		}
 	}

@@ -160,11 +160,9 @@ public abstract class EntityElfBase extends EntityCreature {
 		if (this.rand.nextInt(100) < 50) return;
 		int i = this.rand.nextInt(3);
 		if (lootingModifier > 0) i += this.rand.nextInt(lootingModifier + 1);
-		for (int j = 0; j < i; ++j)
-			if (this.rand.nextInt(3) == 0) this.entityDropItem(new ItemStack(ESInitInstance.ITEMS.ELF_CRYSTAL), 0);
-			else this.entityDropItem(new ItemStack(ESInitInstance.BLOCKS.ELF_FRUIT, 1, BlockElfFruit.MAX_STATE), 0);
-		//[temp]临时测试的内容
-		this.entityDropItem(new ItemStack(ESInitInstance.ITEMS.RESONANT_CRYSTAL), 0);
+		for (int j = 0; j < i; ++j) if (this.rand.nextInt(3) == 0)
+			this.entityDropItem(new ItemStack(ESInitInstance.ITEMS.ELF_COIN, this.rand.nextInt(7) + 1), 0);
+		else this.entityDropItem(new ItemStack(ESInitInstance.BLOCKS.ELF_FRUIT, 1, BlockElfFruit.MAX_STATE), 0);
 	}
 
 	/** 捡起物品 */
@@ -314,7 +312,10 @@ public abstract class EntityElfBase extends EntityCreature {
 		ElfProfession origin = this.profession;
 		this.profession = profession;
 		if (world.isRemote) return;
-		if (needInit) this.profession.initElf(this, origin);
+		if (needInit) {
+			origin.transferElf(this, this.profession);
+			this.profession.initElf(this, origin);
+		}
 		dataManager.set(PROFESSION_UPDATE, ElfProRegister.instance.getId(this.profession));
 	}
 
