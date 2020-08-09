@@ -1,5 +1,8 @@
 {
     "lev": 2,
+    "need": [
+        "md/md"
+    ],
     "type": "craft",
     "name": "MDhearth",
     "item": "elementalsorcery:md_hearth"

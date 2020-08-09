@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -17,7 +18,6 @@ import com.google.gson.JsonPrimitive;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.Vec3d;
-import scala.actors.threadpool.Arrays;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public class JsonObject extends Json implements Iterable<String> {

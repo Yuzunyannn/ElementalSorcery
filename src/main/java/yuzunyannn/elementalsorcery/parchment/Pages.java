@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.building.Building;
+import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionScholar;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
@@ -162,11 +163,15 @@ public class Pages {
 
 	// 注册
 	static public void init(Side side) throws IOException {
+		pages.clear();
+		pageList.clear();
+		itemToId.clear();
+		// 其他教程相关
+		ElfProfessionScholar.init();
+		// 开始
 		Pages.side = side;
-
 		regPage(ERROR, new PageError());
 		regPage(BOOK, new PageBook());
-
 		// 自动扫描并加载json
 		for (ModContainer mod : Loader.instance().getActiveModList()) loadParchments(mod);
 		// 旧的
@@ -184,7 +189,10 @@ public class Pages {
 			if (packet.linked != null)
 				for (String linked : packet.linked) addItemId(Item.getByNameOrId(Json.dealId(linked)), id);
 			regPage(id, packet.page);
-			if (packet.level < 0) return true;
+			if (packet.level < 0) {
+				if (packet.level == -2) ElfProfessionScholar.addScholarPage(packet.page);
+				return true;
+			}
 			TileRiteTable.addPage(id, packet.level);
 			return true;
 		});
@@ -222,6 +230,7 @@ public class Pages {
 	}
 
 	static private String regPage(String id, Page page) {
+		page.id = id;
 		if (side.isClient()) {
 			addPage(id, page);
 			return id;

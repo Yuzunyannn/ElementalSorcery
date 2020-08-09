@@ -22,7 +22,8 @@ public class RenderTileRiteTable extends TileEntitySpecialRenderer<TileRiteTable
 	public static final TextureBinder[] TEXTURE = new TextureBinder[] {
 			new TextureBinder("textures/blocks/rite_table.png"), new TextureBinder("textures/blocks/rite_table1.png"),
 			new TextureBinder("textures/blocks/rite_table2.png"), new TextureBinder("textures/blocks/rite_table3.png"),
-			new TextureBinder("textures/blocks/rite_table4.png") };
+			new TextureBinder("textures/blocks/rite_table4.png"),
+			new TextureBinder("textures/blocks/rite_table5.png") };
 	private static final ModelRiteTable MODEL = new ModelRiteTable();
 
 	@Override

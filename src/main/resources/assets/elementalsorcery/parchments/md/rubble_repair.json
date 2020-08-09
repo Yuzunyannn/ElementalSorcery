@@ -1,5 +1,9 @@
 {
     "lev": 2,
+    "need": [
+        "md/md",
+        "more/astone"
+    ],
     "type": "craft",
     "name": "rubbleRepair",
     "item": "elementalsorcery:md_rubble_repair"

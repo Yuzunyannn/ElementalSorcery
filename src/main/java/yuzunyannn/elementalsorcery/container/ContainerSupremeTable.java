@@ -51,8 +51,7 @@ public class ContainerSupremeTable extends ContainerNormal<TileSupremeTable> {
 			if (i == 3 || i == 5) this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
 				@Override
 				public void onSlotChanged() {
-					ContainerSupremeTable.this
-							.onCraftMatrixChanged(ContainerSupremeTable.this.tileEntity);
+					ContainerSupremeTable.this.onCraftMatrixChanged(ContainerSupremeTable.this.tileEntity);
 					super.onSlotChanged();
 				}
 
@@ -65,8 +64,7 @@ public class ContainerSupremeTable extends ContainerNormal<TileSupremeTable> {
 			else this.addSlotToContainer(new SlotItemHandler(items, i, 89 + x, 58 + y) {
 				@Override
 				public void onSlotChanged() {
-					ContainerSupremeTable.this
-							.onCraftMatrixChanged(ContainerSupremeTable.this.tileEntity);
+					ContainerSupremeTable.this.onCraftMatrixChanged(ContainerSupremeTable.this.tileEntity);
 					super.onSlotChanged();
 				}
 			});
@@ -131,9 +129,14 @@ public class ContainerSupremeTable extends ContainerNormal<TileSupremeTable> {
 		}
 	}
 
+	// 原版配方混合
 	@Override
 	protected void slotChangedCraftingGrid(World world, EntityPlayer player, InventoryCrafting craftMatrix,
 			InventoryCraftResult craftResult) {
+		for (int i = 9; i < craftMatrix.getSizeInventory(); i++) if (!craftMatrix.getStackInSlot(i).isEmpty()) {
+			craftResult.setInventorySlotContents(0, ItemStack.EMPTY);
+			return;
+		}
 		ItemStack itemstack = ItemStack.EMPTY;
 		IRecipe irecipe = CraftingManager.findMatchingRecipe(craftMatrix, world);
 

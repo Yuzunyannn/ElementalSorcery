@@ -65,6 +65,7 @@ import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSupremeTable;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
+import yuzunyannn.elementalsorcery.render.particle.Effects;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileAnalysisAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileBuildingAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileCrystalFlower;
@@ -121,6 +122,7 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDMagiclization;
 import yuzunyannn.elementalsorcery.tile.md.TileMDResonantIncubator;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
+import yuzunyannn.elementalsorcery.util.render.WorldScene;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 
 public class ESInit {
@@ -192,8 +194,12 @@ public class ESInit {
 		registerAllRender();
 		// 注册实体渲染
 		EntityRegistries.registerAllRender();
+		// 所有需要网传的特效
+		Effects.registerAll();
 		// 客户端事件
 		MinecraftForge.EVENT_BUS.register(EventClient.class);
+		// 世界离屏渲染
+		if (ElementalSorcery.config.PORTAL_RENDER_LEVEL > 0) WorldScene.init();
 	}
 
 	@SideOnly(Side.CLIENT)

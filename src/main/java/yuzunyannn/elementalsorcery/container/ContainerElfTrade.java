@@ -6,6 +6,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeClient;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
@@ -176,6 +177,11 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 	@Override
 	public void recvData(NBTTagCompound nbt, Side side) {
 		if (side.isServer()) return;
+		recvData(nbt);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void recvData(NBTTagCompound nbt) {
 		if (nbt.hasKey("elfId")) elf = (EntityElfBase) player.world.getEntityByID(nbt.getInteger("elfId"));
 		if (nbt.hasKey("soldOut")) {
 			if (this.trade instanceof TradeClient) ((TradeClient) this.trade).setSoldOut(nbt.getInteger("soldOut"));

@@ -14,8 +14,13 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.render.particle.Effects;
 import yuzunyannn.elementalsorcery.render.particle.FirwrokShap;
 
+/**
+ * @deprecated 请使用{@link Effects}进行替代
+ */
+@Deprecated
 public class EntityParticleEffect extends Entity implements IEntityAdditionalSpawnData {
 
 	static public NBTTagCompound fastNBT(int type, int size, float speed, int color, int colorFade) {

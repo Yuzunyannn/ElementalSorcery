@@ -1,7 +1,10 @@
 {
+    "lev": 2,
+    "need": [
+        "more/astone"
+    ],
     "type": "mult",
     "lock": 0,
-    "lev": 2,
     "pages": [
         {
             "type": "normal",

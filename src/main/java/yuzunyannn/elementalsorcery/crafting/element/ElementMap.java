@@ -387,7 +387,7 @@ public class ElementMap implements IElementMap {
 									}
 								}
 							}
-							ans.daComplex = ans.daComplex / 2;
+							ans.daComplex = ans.daComplex * 2 / 3;
 							if (output.getHasSubtypes()) newMap.add(output, ans.daComplex, ans.daEstacks);
 							else newMap.add(output.getItem(), ans.daComplex, ans.daEstacks);
 						}

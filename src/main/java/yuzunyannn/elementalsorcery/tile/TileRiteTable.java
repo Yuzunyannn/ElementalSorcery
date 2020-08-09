@@ -406,6 +406,7 @@ public class TileRiteTable extends TileEntityNetwork {
 
 		ESObjects.Blocks BLOCKS = ESInitInstance.BLOCKS;
 		ESObjects.Items ITEMS = ESInitInstance.ITEMS;
+		addSacrifice(ITEMS.RESONANT_CRYSTAL, 100, 0, "resonant_crystal");
 		addSacrifice(Blocks.COBBLESTONE, -10, 0, "hearth", "smelt_box");
 		addSacrifice(Blocks.DIRT, -5, 0);
 		addSacrifice(Blocks.STONE, 8, 0);
@@ -440,12 +441,11 @@ public class TileRiteTable extends TileEntityNetwork {
 		addSacrifice(BLOCKS.LIFE_DIRT, 16, 4);
 		addSacrifice(ITEMS.ARCHITECTURE_CRYSTAL, 30, 4);
 		addSacrifice(ITEMS.ITEM_CRYSTAL, 30, 4);
-		addSacrifice(ITEMS.RESONANT_CRYSTAL, 15, 4);
 		addSacrifice(ITEMS.ORDER_CRYSTAL, 20, 4);
 	}
 
 	/** 所有的页面等级，从0开始 */
-	public static final int MAX_LEVEL = 4;
+	public static final int MAX_LEVEL = 5;
 	private static final List<String>[] levelPages = new List[MAX_LEVEL + 1];
 
 	/** 添加一个页面到指定等级上 */

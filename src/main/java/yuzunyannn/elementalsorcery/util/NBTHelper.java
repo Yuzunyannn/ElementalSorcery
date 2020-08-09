@@ -10,6 +10,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 
@@ -99,6 +100,21 @@ public class NBTHelper {
 
 	public static BlockPos getBlockPos(NBTTagCompound nbt, String key) {
 		return new BlockPos(nbt.getInteger(key + "x"), nbt.getInteger(key + "y"), nbt.getInteger(key + "z"));
+	}
+
+	public static void setPos(NBTTagCompound nbt, String key, Vec3d pos) {
+		if (pos == null) return;
+		nbt.setFloat(key + "x", (float) pos.x);
+		nbt.setFloat(key + "y", (float) pos.y);
+		nbt.setFloat(key + "z", (float) pos.z);
+	}
+
+	public static boolean hasPos(NBTTagCompound nbt, String key) {
+		return nbt.hasKey(key + "x");
+	}
+
+	public static Vec3d getPos(NBTTagCompound nbt, String key) {
+		return new Vec3d(nbt.getFloat(key + "x"), nbt.getFloat(key + "y"), nbt.getFloat(key + "z"));
 	}
 
 }

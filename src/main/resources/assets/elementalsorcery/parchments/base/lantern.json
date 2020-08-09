@@ -1,4 +1,7 @@
 {
+    "need": [
+        "base/rite_craft"
+    ],
     "type": "rite",
     "name": "lantern",
     "item": [

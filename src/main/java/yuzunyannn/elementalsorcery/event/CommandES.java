@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -15,11 +16,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Pages;
@@ -55,6 +59,20 @@ public class CommandES extends CommandBase {
 					player.inventory.addItemStackToInventory(new ItemStack(ESInitInstance.ITEMS.MANUAL));
 				else player.inventory.addItemStackToInventory(ItemParchment.getParchment(idStr));
 			}
+		} else if ("reflush".equals(args[0])) {
+			Side side = Side.CLIENT;
+			try {
+				Minecraft.getMinecraft();
+			} catch (Throwable e) {
+				side = Side.SERVER;
+			}
+			try {
+				ElementMap.reflush();
+				Pages.init(side);
+			} catch (Exception e) {
+				ElementalSorcery.logger.warn("刷新数据出现异常！", e);
+				sender.sendMessage(new TextComponentString("刷新数据出现异常！Refresh data exception!"));
+			}
 		} else throw new CommandException("commands.es.usage");
 	}
 
@@ -63,7 +81,7 @@ public class CommandES extends CommandBase {
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			@Nullable BlockPos targetPos) {
 		if (args.length == 1) {
-			String[] names = { "build", "page" };
+			String[] names = { "build", "page", "reflush" };
 			return CommandBase.getListOfStringsMatchingLastWord(args, names);
 		} else if (args.length == 2) {
 			if (args[0].equals("build")) {

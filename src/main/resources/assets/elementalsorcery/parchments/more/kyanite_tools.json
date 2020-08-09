@@ -1,5 +1,8 @@
 {
     "lev": 1,
+    "need": [
+        "base/kyanite"
+    ],
     "type": "craft",
     "name": "kynatieTools",
     "item": [

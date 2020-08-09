@@ -1,0 +1,8 @@
+{
+    "lev": -2,
+    "linked": "elementalsorcery:resonant_crystal",
+    "type": "normal",
+    "name": "resonantCrystal",
+    "item": "elementalsorcery:resonant_crystal",
+    "background": "inherit"
+}

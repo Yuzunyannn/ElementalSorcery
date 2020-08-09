@@ -1,6 +1,9 @@
 {
+    "need": [
+        "base/rite"
+    ],
     "type": "normal",
     "name": "riteManual",
     "item": "elementalsorcery:rite_manual",
-    "background":"elementalsorcery:rite_manual"
+    "background": "elementalsorcery:rite_manual"
 }

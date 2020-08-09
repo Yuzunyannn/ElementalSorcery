@@ -33,8 +33,8 @@ import yuzunyannn.elementalsorcery.api.tile.IAcceptMagicPesky;
 import yuzunyannn.elementalsorcery.api.tile.IProvideMagic;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.entity.EntityParticleEffect;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.render.particle.Effects;
 import yuzunyannn.elementalsorcery.render.particle.FirwrokShap;
 import yuzunyannn.elementalsorcery.util.IField;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
@@ -224,7 +224,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	static final public int[] PARTICLE_COLOR_FADE = new int[] { 0x9322b5 };
 
 	protected int breakExplosionLevel() {
-		float rate = this.getCurrentCapacity() / 5000.0f;
+		float rate = this.getCurrentCapacity() / 4000.0f;
 		if (rate > 1.0f) rate = 1.0f;
 		return (int) (7 * rate) + 1;
 	}
@@ -252,7 +252,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 			list.appendTag(nbt);
 			nbt = new NBTTagCompound();
 			nbt.setTag("Explosions", list);
-			EntityParticleEffect.spawnParticleEffect(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, nbt);
+			Effects.spawnEffect(world, Effects.FIREWROK, pos, nbt);
 			this.dealDamage(lev);
 		}
 	}

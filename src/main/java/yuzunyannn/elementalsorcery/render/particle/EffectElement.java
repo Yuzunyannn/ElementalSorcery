@@ -16,7 +16,7 @@ import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 @SideOnly(Side.CLIENT)
 public class EffectElement extends Effect {
 
-	public final static TextureBinder TEXTURE = new TextureBinder("textures/particle/element_flare.png");
+	public final static TextureBinder TEXTURE = new TextureBinder("textures/effect/element_flare.png");
 
 	protected float r, g, b;
 	protected float alpha, prevAlpha;

@@ -1,7 +1,14 @@
 {
+    "lev": 1,
+    "need": [
+        "more/stone_mill"
+    ],
+    "linked": [
+        "elementalsorcery:star_sand",
+        "elementalsorcery:star_stone"
+    ],
     "type": "normal",
     "name": "starSand",
     "icon": "elementalsorcery:star_sand",
-    "background": "elementalsorcery:star_sand",
-    "lev": 1
+    "background": "elementalsorcery:star_sand"
 }

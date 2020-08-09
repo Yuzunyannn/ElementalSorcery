@@ -1,6 +1,9 @@
 {
+    "lev": 1,
+    "need": [
+        "more/magic_piece"
+    ],
     "type": "craft",
     "name": "magicalEndereye",
-    "item": "elementalsorcery:magical_ender_eye",
-    "lev": 1
+    "item": "elementalsorcery:magical_ender_eye"
 }

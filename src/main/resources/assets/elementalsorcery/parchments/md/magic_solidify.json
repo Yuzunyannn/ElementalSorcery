@@ -1,5 +1,8 @@
 {
     "lev": 2,
+    "need": [
+        "md/md"
+    ],
     "type": "craft",
     "name": "magicSolidify",
     "item": "elementalsorcery:md_magic_solidify"

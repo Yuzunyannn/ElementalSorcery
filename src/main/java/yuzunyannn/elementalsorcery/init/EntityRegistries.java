@@ -12,12 +12,16 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.entity.EntityBlockThrowEffect;
 import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 import yuzunyannn.elementalsorcery.entity.EntityParticleEffect;
+import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.entity.EntityResonantCrystal;
+import yuzunyannn.elementalsorcery.entity.EntityVest;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.render.entity.EntityRenderFactory;
 import yuzunyannn.elementalsorcery.render.entity.RenderBlockThrowEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortal;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityVest;
 
 public class EntityRegistries {
 	private static int nextID = 0;
@@ -27,6 +31,9 @@ public class EntityRegistries {
 		register("particle_effect", EntityParticleEffect.class, "ParticleEffect", 128, 4, false);
 		register("block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);
 		register("entity_crafting", EntityCrafting.class, "EntityCrafting", 128, 1, false);
+		register("portal", EntityPortal.class, "EntityPortal", 64, 1, false);
+		register("vest", EntityVest.class, "EntityVest", 64, 1, false);
+
 		// 投掷
 		register("resonant_crystal", EntityResonantCrystal.class, "ResonantCrystal", 64, 10, true);
 		// 生物
@@ -49,8 +56,10 @@ public class EntityRegistries {
 	public static void registerAllRender() {
 		registerRender(EntityBlockThrowEffect.class, RenderBlockThrowEffect.class);
 		registerRender(EntityCrafting.class, RenderEntityCrafting.class);
+		registerRender(EntityPortal.class, RenderEntityPortal.class);
 		registerRender(EntityResonantCrystal.class, new EntityResonantCrystal.Factory());
 		registerRender(EntityElf.class, RenderEntityElf.class);
+		registerRender(EntityVest.class, RenderEntityVest.class);
 	}
 
 	@SideOnly(Side.CLIENT)

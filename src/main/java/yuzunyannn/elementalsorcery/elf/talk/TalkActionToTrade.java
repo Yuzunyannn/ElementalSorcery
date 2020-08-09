@@ -15,6 +15,7 @@ public class TalkActionToTrade implements ITalkAction {
 		Container open = player.openContainer;
 		if (open instanceof ContainerElf) {
 			((ContainerElf) open).changeUI(ESGuiHandler.GUI_ELF_TRADE);
+			iter.setEnd();
 			return true;
 		}
 		return false;

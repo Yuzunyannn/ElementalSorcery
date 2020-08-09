@@ -22,7 +22,7 @@ import yuzunyannn.elementalsorcery.block.BlockMagicPot;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.block.BlockStarSand;
 import yuzunyannn.elementalsorcery.block.BlockStarStone;
-import yuzunyannn.elementalsorcery.block.BlocksAStone;
+import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.block.BlocksEStone;
 import yuzunyannn.elementalsorcery.block.altar.BlockAnalysisAltar;
 import yuzunyannn.elementalsorcery.block.altar.BlockBuildingAltar;
@@ -129,7 +129,7 @@ public class ESInitInstance {
 		BLOCKS.ESTONE_SLAB = new BlocksEStone.EStoneSlab();
 		BLOCKS.ESTONE_STAIRS = new BlocksEStone.EStoneStairs();
 		BLOCKS.ESTONE_PRISM = new BlocksEStone.EStonePrism();
-		BLOCKS.ASTONE = new BlocksAStone();
+		BLOCKS.ASTONE = new BlockAStone();
 
 		BLOCKS.ELEMENTAL_CUBE = new BlockElementalCube();
 		BLOCKS.HEARTH = new BlockHearth();

@@ -30,12 +30,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
-import yuzunyannn.elementalsorcery.entity.EntityParticleEffect;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.render.particle.EffectElement;
+import yuzunyannn.elementalsorcery.render.particle.Effects;
+import yuzunyannn.elementalsorcery.render.particle.FireworkEffect;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 
 public class ElfProfessionMaster extends ElfProfession {
@@ -128,7 +129,7 @@ public class ElfProfessionMaster extends ElfProfession {
 			}
 		} else {
 			// 回复
-			if (elf.getRNG().nextInt(5) == 0) {
+			if (elf.getRNG().nextInt(4) == 0) {
 				elf.extinguish();
 				elf.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 20 * 10, 1));
 				elf.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20 * 10, 2));
@@ -151,14 +152,14 @@ public class ElfProfessionMaster extends ElfProfession {
 			if (!elf.world.isRemote) {
 				if (source.getTrueSource() instanceof EntityPlayerMP) {
 					EntityPlayerMP player = (EntityPlayerMP) source.getTrueSource();
-					if (player.isCreative() && elf.getRNG().nextInt(10) == 0) {
+					if (player.isCreative() && elf.getRNG().nextInt(4) == 0) {
 						ESCriteriaTriggers.NO_CREATIVE.trigger(player);
 						player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_FIREWORK_LARGE_BLAST,
 								SoundCategory.VOICE, 1.0f, 0);
 						player.setGameType(GameType.SURVIVAL);
-						NBTTagCompound nbt = EntityParticleEffect.fastNBT(0, 3, 0.375f, TileMDBase.PARTICLE_COLOR,
+						NBTTagCompound nbt = FireworkEffect.fastNBT(0, 3, 0.375f, TileMDBase.PARTICLE_COLOR,
 								TileMDBase.PARTICLE_COLOR_FADE);
-						EntityParticleEffect.spawnParticleEffect(elf.world, elf.getPositionVector().addVector(0, 1, 0),
+						Effects.spawnEffect(elf.world, Effects.FIREWROK, elf.getPositionVector().addVector(0, 1, 0),
 								nbt);
 					}
 				}

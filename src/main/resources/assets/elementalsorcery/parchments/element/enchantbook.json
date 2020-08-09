@@ -1,6 +1,9 @@
 {
     "lev": 3,
-    "need":["more/kyanite_tools"],
+    "need": [
+        "more/kyanite_tools"
+    ],
+    "linked": "elementalsorcery:spellbook_enchantment",
     "type": "separate",
     "name": "enchantingBook",
     "item": [

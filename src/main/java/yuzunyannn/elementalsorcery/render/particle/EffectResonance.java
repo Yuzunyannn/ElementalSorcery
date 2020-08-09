@@ -14,7 +14,7 @@ import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 @SideOnly(Side.CLIENT)
 public class EffectResonance extends Effect {
 
-	public final static TextureBinder TEXTURE = new TextureBinder("textures/particle/resonance.png");
+	public final static TextureBinder TEXTURE = new TextureBinder("textures/effect/resonance.png");
 
 	protected float r, g, b;
 	protected float alpha, prevAlpha;

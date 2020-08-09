@@ -19,6 +19,7 @@ import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class PageCrafting extends PageEasy {
 	private final List<NonNullList<Ingredient>> itemList = new ArrayList<NonNullList<Ingredient>>();
@@ -73,7 +74,7 @@ public class PageCrafting extends PageEasy {
 		yuzunyannn.elementalsorcery.api.crafting.IRecipe irecipe = null;
 		List<yuzunyannn.elementalsorcery.api.crafting.IRecipe> lsit = RecipeManagement.instance.getValues();
 		for (yuzunyannn.elementalsorcery.api.crafting.IRecipe ire : lsit) {
-			if (ire.getRecipeOutput().isItemEqual(stack)) {
+			if (ItemHelper.areItemsEqual(ire.getRecipeOutput(), stack)) {
 				irecipe = ire;
 				break;
 			}

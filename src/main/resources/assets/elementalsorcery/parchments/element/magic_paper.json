@@ -1,5 +1,6 @@
 {
     "lev": 3,
+    "linked": "elementalsorcery:magic_paper",
     "type": "craft",
     "name": "magicPaper",
     "item": "elementalsorcery:magic_paper"

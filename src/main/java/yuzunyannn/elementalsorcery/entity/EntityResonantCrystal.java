@@ -1,13 +1,20 @@
 package yuzunyannn.elementalsorcery.entity;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.EntitySheep;
 import net.minecraft.entity.projectile.EntityThrowable;
+import net.minecraft.init.MobEffects;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
@@ -17,10 +24,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptMagic;
+import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.render.particle.Effects;
+import yuzunyannn.elementalsorcery.render.particle.FireworkEffect;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.tile.md.TileMDResonantIncubator;
 
@@ -50,40 +61,102 @@ public class EntityResonantCrystal extends EntityThrowable {
 	}
 
 	@SideOnly(Side.CLIENT)
+	public void boom(Vec3d v3d, int[] color, int[] fadeColor) {
+		NBTTagCompound nbt = FireworkEffect.fastNBT(0, 2, 0.375f, color, fadeColor);
+		Effects.spawnEffect(world, Effects.FIREWROK, v3d, nbt);
+	}
+
+	@SideOnly(Side.CLIENT)
 	public void handleStatusUpdate(byte id) {
 		Vec3d v3d = this.getPositionVector();
 		if (!world.isAirBlock(this.getPosition())) {
 			v3d = v3d.addVector(0, 1, 0);
 			if (!world.isAirBlock(new BlockPos(v3d))) v3d = v3d.addVector(0, 1, 0);
 		}
-		if (id == 3) {
-			NBTTagCompound nbt = EntityParticleEffect.fastNBT(0, 2, 0.375f, new int[] { 0xde680a, 0x9a551d },
-					new int[] { 0xfdc078 });
-			EntityParticleEffect.spawnParticleEffect(world, v3d, nbt);
-		} else if (id == 4) {
-			NBTTagCompound nbt = EntityParticleEffect.fastNBT(0, 2, 0.375f,
-					new int[] { 0xde680a, TileMDBase.PARTICLE_COLOR[0] }, TileMDBase.PARTICLE_COLOR_FADE);
-			EntityParticleEffect.spawnParticleEffect(world, v3d, nbt);
-		} else if (id == 5) {
-			NBTTagCompound nbt = EntityParticleEffect.fastNBT(0, 2, 0.375f, new int[] { 0xde680a, 0x096b18 },
-					new int[] { 0x5ac37b });
-			EntityParticleEffect.spawnParticleEffect(world, v3d, nbt);
+		switch (id) {
+		case 3:
+			boom(v3d, new int[] { 0xde680a, 0x9a551d }, new int[] { 0xfdc078 });
+			break;
+		case 4:
+			// 紫色
+			boom(v3d, new int[] { 0xde680a, TileMDBase.PARTICLE_COLOR[0] }, TileMDBase.PARTICLE_COLOR_FADE);
+			break;
+		case 5:
+			// 绿色
+			boom(v3d, new int[] { 0xde680a, 0x096b18 }, new int[] { 0x5ac37b });
+			break;
+		case 6:
+			// 粉色
+			boom(v3d, new int[] { 0xde680a, 0xcd5cab }, new int[] { 0xfab4e5 });
+			break;
+		case 7:
+			// 红色
+			boom(v3d, new int[] { 0xde680a, 0xc90000 }, new int[] { 0xec8282 });
+			break;
+		case 8:
+			// 蓝色
+			boom(v3d, new int[] { 0xde680a, 0x0028f5 }, new int[] { 0x97a8fc });
+			break;
+		default:
+			break;
 		}
+
 	}
 
-	@Override
-	protected void onImpact(RayTraceResult result) {
-		int effectState = 3;
+	protected int onImpactDo(RayTraceResult result) {
 		if (result.entityHit != null) {
-			int i = 12;
-			result.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) i);
+			if (result.entityHit instanceof EntityLivingBase) {
+				EntityLivingBase entity = (EntityLivingBase) result.entityHit;
+				// 砸中living
+				if (entity instanceof IMob) {
+					int i = 12;
+					entity.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), (float) i);
+					return 7;
+				} else if (!world.isRemote) {
+					if (entity instanceof EntitySheep) {
+						final EnumDyeColor[] colors = EnumDyeColor.values();
+						((EntitySheep) entity).setFleeceColor(colors[rand.nextInt(colors.length)]);
+					}
+					entity.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 40, 3));
+					return 6;
+				}
+			} else {
+				result.entityHit.setFire(5);
+			}
 		} else sp: {
+//			// 物品搜查
+//			final float size = 1f;
+//			AxisAlignedBB aabb = new AxisAlignedBB(this.posX - size, this.posY - size, this.posZ - size,
+//					this.posX + size, this.posY + size, this.posZ + size);
+//			List<EntityItem> list = world.getEntitiesWithinAABB(EntityItem.class, aabb);
+//			for (EntityItem entityItem : list) {
+//				ItemStack stack = entityItem.getItem();
+//				if (stack.getItem() == ESInitInstance.ITEMS.MAGIC_CRYSTAL) {
+//					if (!world.isRemote) ItemMagicalCrystal.tryCraft(entityItem, false);
+//					return 8;
+//				}
+//			}
+
+			// 方块判定
 			BlockPos pos = result.getBlockPos();
 			if (pos == null) break sp;
 			IBlockState state = world.getBlockState(pos);
-			if (state.getBlock() == ESInitInstance.BLOCKS.LIFE_FLOWER) {
+			Block block = state.getBlock();
+			if (block == ESInitInstance.BLOCKS.LIFE_FLOWER) {
+				// 植物花
 				world.scheduleUpdate(pos, state.getBlock(), 0);
-				effectState = 5;
+				return 5;
+			} else if (block instanceof IGrowable) {
+				if (((IGrowable) block).canGrow(world, pos, state, world.isRemote)) {
+					((IGrowable) block).grow(world, rand, pos, state);
+					return 5;
+				}
+			} else if (block == ESInitInstance.BLOCKS.ASTONE) {
+				if (state == block.getDefaultState().withProperty(BlockAStone.VARIANT,
+						BlockAStone.EnumType.FRAGMENTED)) {
+					world.setBlockState(pos, state.withProperty(BlockAStone.VARIANT, BlockAStone.EnumType.STONE));
+					return 4;
+				}
 			}
 			TileEntity tile = world.getTileEntity(pos);
 			if (tile == null) break sp;
@@ -91,12 +164,23 @@ public class EntityResonantCrystal extends EntityThrowable {
 				((TileMDResonantIncubator) tile).resonance(rand.nextFloat() * 100);
 			if (tile instanceof IAcceptMagic) {
 				((IAcceptMagic) tile).accpetMagic(ElementStack.magic(80, 50), this.getPosition(), result.sideHit);
-				effectState = 4;
+				return 4;
 			} else if (tile.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, result.sideHit)) {
-				tile.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, result.sideHit)
-						.insertElement(ElementStack.magic(80, 50), false);
-				effectState = 4;
+				if (tile.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, result.sideHit)
+						.insertElement(ElementStack.magic(80, 50), false))
+					return 4;
 			}
+		}
+		return 3;
+	}
+
+	@Override
+	protected void onImpact(RayTraceResult result) {
+		int effectState = 3;
+		try {
+			effectState = onImpactDo(result);
+		} catch (Exception e) {
+			ElementalSorcery.logger.warn("共鸣水晶投掷异常！", e);
 		}
 		if (!this.world.isRemote) {
 			this.world.setEntityState(this, (byte) effectState);

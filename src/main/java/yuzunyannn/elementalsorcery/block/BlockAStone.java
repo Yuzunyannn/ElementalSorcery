@@ -12,11 +12,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 
-public class BlocksAStone extends Block implements Mapper {
+public class BlockAStone extends Block implements Mapper {
 
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 
-	public BlocksAStone() {
+	public BlockAStone() {
 		super(Material.ROCK);
 		this.setUnlocalizedName("astone");
 		this.setHarvestLevel("pickaxe", 1);

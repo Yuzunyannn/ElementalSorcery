@@ -36,11 +36,11 @@ public class PageMult extends Page {
 
 	@Override
 	public void init(IPageManager pageManager) {
-		this.getCurrPage().init(pageManager);
 		if (this.pageAt < this.pages.length - 1) pageManager.setNextButton(true);
 		else pageManager.setNextButton(false);
 		if (this.pageAt > 0) pageManager.setPrevButton(true);
 		else pageManager.setPrevButton(false);
+		this.getCurrPage().init(pageManager);
 
 	}
 

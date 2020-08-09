@@ -1,5 +1,18 @@
 {
     "lev": 3,
+    "need": [
+        "element/element_workbench"
+    ],
+    "linked": [
+        {
+            "id": "elementalsorcery:spellbook_cover",
+            "data": 0
+        },
+        {
+            "id": "elementalsorcery:spellbook_cover",
+            "data": 1
+        }
+    ],
     "type": "craft",
     "name": "bookCover",
     "item": [

@@ -1,0 +1,10 @@
+{
+    "lev": 5,
+    "need": [
+        "element_adv/supreme_table",
+        "element_sup/order_crystal"
+    ],
+    "type": "normal",
+    "name": "construct",
+    "item": "elementalsorcery:order_crystal"
+}

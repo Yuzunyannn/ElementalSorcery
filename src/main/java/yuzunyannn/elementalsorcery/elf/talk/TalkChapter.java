@@ -111,6 +111,10 @@ public class TalkChapter {
 			return iter >= scenes.size();
 		}
 
+		public void setEnd() {
+			iter = scenes.size();
+		}
+
 		/**
 		 * @return 返回一个新的，要切换的章节
 		 */

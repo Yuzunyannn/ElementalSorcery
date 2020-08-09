@@ -1,4 +1,7 @@
 {
+    "need": [
+        "base/rite"
+    ],
     "type": "normal",
     "name": "riteCraft",
     "item": "elementalsorcery:rite_table"

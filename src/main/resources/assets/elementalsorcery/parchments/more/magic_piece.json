@@ -1,6 +1,7 @@
 {
+    "lev": 1,
+    "linked": "elementalsorcery:magic_piece",
     "type": "normal",
     "name": "mgicalPiece",
-    "icon": "elementalsorcery:magic_piece",
-    "lev": 1
+    "icon": "elementalsorcery:magic_piece"
 }

@@ -1,7 +1,11 @@
 {
+    "lev": 1,
+    "need": [
+        "more/melt_cauldron"
+    ],
+    "linked": "elementalsorcery:astone",
     "type": "mult",
     "lock": 0,
-    "lev": 1,
     "pages": [
         {
             "type": "normal",

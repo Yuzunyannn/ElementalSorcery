@@ -14,7 +14,7 @@ public class RandomHelper {
 
 	// 随机选几个
 	static public <T> T[] randomSelect(int count, T... ints) {
-		if (ints.length == 0) return null;
+		if (ints.length == 0) return (T[]) Array.newInstance(Object.class, 0);
 		ints = ints.clone();
 		count = Math.min(count, ints.length);
 		count = Math.max(0, count);

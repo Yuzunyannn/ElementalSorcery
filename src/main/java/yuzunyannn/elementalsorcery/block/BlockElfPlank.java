@@ -60,7 +60,8 @@ public class BlockElfPlank extends Block implements Mapper {
 	}
 
 	static public enum EnumType implements IStringSerializable {
-		NORMAL("normal"), DARK("dark");
+		NORMAL("normal"),
+		DARK("dark");
 
 		final String name;
 
@@ -78,7 +79,7 @@ public class BlockElfPlank extends Block implements Mapper {
 		}
 
 		static public EnumType byMetadata(int meta) {
-			return EnumType.values()[meta];
+			return EnumType.values()[0x1 & meta];
 		}
 	}
 

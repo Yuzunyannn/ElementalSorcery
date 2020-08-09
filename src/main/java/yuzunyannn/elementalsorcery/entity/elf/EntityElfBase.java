@@ -32,7 +32,6 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
@@ -135,11 +134,6 @@ public abstract class EntityElfBase extends EntityCreature {
 	// 死亡音
 	protected SoundEvent getDeathSound() {
 		return SoundEvents.ENTITY_CAT_DEATH;
-	}
-
-	@Override
-	public String getName() {
-		return super.getName() + "(" + I18n.translateToLocal(this.getProfession().getUnlocalizedProfessionName()) + ")";
 	}
 
 	public String getElfName() {

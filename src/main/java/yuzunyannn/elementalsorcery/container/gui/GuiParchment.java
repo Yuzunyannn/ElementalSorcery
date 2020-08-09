@@ -215,12 +215,9 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 				GlStateManager.color(1, 1, 1);
 				mc.getTextureManager().bindTexture(TEXTURE);
 				int x = mouseX - this.x, y = mouseY - this.y;
-				if (x >= 0 && y >= 0 && x < this.width && y < this.height) {
+				if (x >= 0 && y >= 0 && x < this.width && y < this.height)
 					this.drawTexturedModalRect(this.x, this.y, 23, textureOffsetY, this.width, this.height);
-				} else {
-					this.drawTexturedModalRect(this.x, this.y, 0, textureOffsetY, this.width, this.height);
-				}
-				GlStateManager.enableLighting();
+				else this.drawTexturedModalRect(this.x, this.y, 0, textureOffsetY, this.width, this.height);
 			}
 		}
 

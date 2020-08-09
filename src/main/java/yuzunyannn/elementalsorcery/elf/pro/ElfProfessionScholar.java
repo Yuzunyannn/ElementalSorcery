@@ -1,5 +1,8 @@
 package yuzunyannn.elementalsorcery.elf.pro;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -21,11 +24,45 @@ import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
+import yuzunyannn.elementalsorcery.parchment.Page;
+import yuzunyannn.elementalsorcery.parchment.PageEasy;
+import yuzunyannn.elementalsorcery.parchment.PageMult;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class ElfProfessionScholar extends ElfProfessionNone {
+
+	protected static final ArrayList<String> pages = new ArrayList<String>();
+	protected static final ArrayList<String> tips = new ArrayList<String>();
+
+	/** page的lev为-2时候，进行回调 */
+	public static void addScholarPage(Page page) {
+		pages.add(page.getId());
+		addPageInfo(page);
+	}
+
+	private static void addPageInfo(Page page) {
+		if (page instanceof PageMult) {
+			PageMult mult = (PageMult) page;
+			for (Page p : mult.getPages()) addPageInfo(p);
+		} else if (page instanceof PageEasy) {
+			String value = ((PageEasy) page).getContext();
+			if (value == null || value.isEmpty() || tips.contains(value)) return;
+			tips.add(value);
+		}
+	}
+
+	/** 初始化 */
+	public static void init() {
+		pages.clear();
+		tips.clear();
+		tips.addAll(Arrays.asList(new String[] { "page.riteTable.ct.fir", "page.riteTable.ct.sec",
+				"page.sacrifice.ct.fir", "page.sacrifice.ct.sec", "page.rite.ct", "page.riteManual.ct",
+				"page.riteCraft.ct", "page.element.ct", "page.elfTree.ct" }));
+		tips.add("say.scholar.becare");
+		tips.add("say.scholar.master");
+	}
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
@@ -36,13 +73,19 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 		TradeCount trade = new TradeCount();
 		TradeList list = trade.getTradeList();
 		list.add(new ItemStack(ESInitInstance.ITEMS.PARCHMENT), 1, true);
-		for (int i = 0; i < 11; i++) {
+		Object[] needPages = RandomHelper.randomSelect(5, pages.toArray());
+		for (int i = 0; i < needPages.length; i++) {
+			String id = needPages[i].toString();
+			list.add(ItemParchment.getParchment(id), 8, false);
+		}
+		for (int i = 0; i < 11 - needPages.length; i++) {
 			String id = Pages.getPage(RandomHelper.rand.nextInt(Pages.getCount() - 2) + 2).getId();
 			list.add(ItemParchment.getParchment(id), 8, false);
 		}
+		// 一些其余东西
 		if (RandomHelper.rand.nextInt(3) == 0) {
 			list.add(new ItemStack(ESInitInstance.ITEMS.RESONANT_CRYSTAL), 80, false);
-			trade.setStock(list.size() - 1, RandomHelper.rand.nextInt(7) + 3);
+			trade.setStock(list.size() - 1, RandomHelper.rand.nextInt(12) + 4);
 		} else {
 			list.add(new ItemStack(ESInitInstance.BLOCKS.ELF_FRUIT, 1, 2), 1, false);
 			trade.setStock(list.size() - 1, 1000);
@@ -55,6 +98,7 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 			list.add(new ItemStack(Items.PAPER), 2, false);
 			trade.setStock(list.size() - 1, RandomHelper.rand.nextInt(16) + 8);
 		}
+		if (RandomHelper.rand.nextInt(4) == 0) list.add(new ItemStack(ESInitInstance.ITEMS.RITE_MANUAL), 120, false);
 
 		nbt.setTag(TradeCount.Bind.TAG, trade.serializeNBT());
 	}
@@ -76,16 +120,13 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 		return true;
 	}
 
-	static final String[] GIVE = new String[] { "riteTable.ct.fir", "riteTable.ct.sec", "sacrifice.ct.fir",
-			"sacrifice.ct.sec", "rite.ct", "riteManual.ct", "riteCraft.ct", "element.ct" };
-
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player) {
 		TalkChapter chapter = new TalkChapter();
 		TalkSceneSay scene = new TalkSceneSay();
 		chapter.addScene(scene);
-		String[] g = RandomHelper.randomSelect(3, GIVE);
-		for (String s : g) scene.addString("page." + s, Talker.OPPOSING);
+		String[] g = (String[]) RandomHelper.randomSelect(3, tips.toArray());
+		for (String s : g) scene.addString(s, Talker.OPPOSING);
 		// 没有返回
 		if (scene.isEmpty()) {
 			scene.addString("...", Talker.OPPOSING);

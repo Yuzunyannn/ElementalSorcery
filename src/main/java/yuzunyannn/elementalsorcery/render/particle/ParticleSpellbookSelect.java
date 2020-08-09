@@ -1,6 +1,8 @@
 package yuzunyannn.elementalsorcery.render.particle;
 
 import net.minecraft.client.particle.Particle;
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -8,6 +10,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
 @SideOnly(Side.CLIENT)
 public class ParticleSpellbookSelect extends Particle {
 
@@ -50,8 +53,7 @@ public class ParticleSpellbookSelect extends Particle {
 	}
 
 	public void onUpdate() {
-		if (this.particleAge++ >= this.particleMaxAge)
-			this.setExpired();
+		if (this.particleAge++ >= this.particleMaxAge) this.setExpired();
 		// 上一次的坐标
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
@@ -77,5 +79,13 @@ public class ParticleSpellbookSelect extends Particle {
 
 	public void setColor(Vec3d color) {
 		this.setRBGColorF((float) color.x, (float) color.y, (float) color.z);
+	}
+
+	@Override
+	public void renderParticle(BufferBuilder buffer, Entity entityIn, float partialTicks, float rotationX,
+			float rotationZ, float rotationYZ, float rotationXY, float rotationXZ) {
+		GlStateManager.depthFunc(519);
+		super.renderParticle(buffer, entityIn, partialTicks, rotationX, rotationZ, rotationYZ, rotationXY, rotationXZ);
+		GlStateManager.depthFunc(515);
 	}
 }

@@ -101,7 +101,7 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 			int lvPower) {
 		if (lvPower <= Element.DP_TOOLS) {
 			if (estack.getCount() > 25) estack.setCount(25);
-			if (complex > 10) estack.rise(-0.8f);
+			if (complex >= 10) estack.rise(-0.8f);
 			else estack.rise(-0.5f);
 			estack.weaken(0.2f);
 		} else if (lvPower <= Element.DP_BOX) {

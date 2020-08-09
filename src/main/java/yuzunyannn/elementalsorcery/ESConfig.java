@@ -8,12 +8,14 @@ public class ESConfig {
 
 	private static Configuration config;
 
-	/**建筑的保存最大天数*/
+	/** 建筑的保存最大天数 */
 	public final int BUILDING_MAX_REMAIN_DAYS;
-	/**手册的最大页面数*/
+	/** 手册的最大页面数 */
 	public final int MANUAL_MAX_PAGES = 20;
-	/**是否展示默认元素的tooltip*/
+	/** 是否展示默认元素的tooltip */
 	public final boolean SHOW_ELEMENT_TOOLTIP;
+	/** 传送门绘制等级 */
+	public final int PORTAL_RENDER_LEVEL;
 
 	public ESConfig(FMLPreInitializationEvent event) {
 		config = new Configuration(event.getSuggestedConfigurationFile());
@@ -34,6 +36,9 @@ public class ESConfig {
 		property = config.get(Configuration.CATEGORY_GENERAL, "enable_item_element_tooltip_show", false,
 				"[鼠标移动到物品上，显示其默认具有的元素][仅在创造模式生效]");
 		this.SHOW_ELEMENT_TOOLTIP = property.getBoolean();
+		// 传送门绘制
+		property = config.get(Configuration.CATEGORY_GENERAL, "portal_render_level", 1, "[传送门绘制是否使用特效渲染][1表示用][0表示不用]");
+		this.PORTAL_RENDER_LEVEL = property.getInt();
 
 		config.save();
 		ElementalSorcery.logger.info("config加载完成");

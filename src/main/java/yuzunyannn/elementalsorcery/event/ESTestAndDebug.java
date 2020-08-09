@@ -25,6 +25,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -36,13 +37,12 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import scala.xml.Elem;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
-import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.util.IOHelper;
 import yuzunyannn.elementalsorcery.worldgen.VillageESHall.VillageCreationHandler;
@@ -59,9 +59,8 @@ public class ESTestAndDebug {
 	@SubscribeEvent
 	public void click(PlayerInteractEvent event) {
 		if (!event.getWorld().isRemote) {
-			// BlockPos pos = event.getPos();
-			// IBlockState state = event.getWorld().getBlockState(pos);
-			// System.out.println(state.getLightOpacity());
+			if (pos.equals(event.getPos())) return;
+			pos = event.getPos();
 		}
 
 		// System.out.println("Server ArcInfo");
@@ -170,8 +169,10 @@ public class ESTestAndDebug {
 						e.printStackTrace();
 					}
 					v.addComponentParts(sender.getEntityWorld(), new Random(), v.getBoundingBox());
-				} else if ("reflush".equals(args[0])) {
-					ElementMap.reflush();
+				} else if ("doPo".equals(args[0])) {
+					BlockPos pos = ESTestAndDebug.pos.add(0, 1, 0);
+					EntityPortal.createPortal(sender.getEntityWorld(), new Vec3d(pos), sender.getEntityWorld(),
+							new Vec3d(pos.add(50, 0, 50)));
 				} else throw new WrongUsageException("ES dubg 指令无效，随便使用可能会导致崩溃");
 			} else throw new WrongUsageException("ES dubg 指令无效，随便使用可能会导致崩溃");
 		}

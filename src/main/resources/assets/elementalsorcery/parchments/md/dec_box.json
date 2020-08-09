@@ -1,7 +1,8 @@
 {
     "lev": 2,
     "need": [
-        "md/azure_crystal"
+        "md/azure_crystal",
+        "md/md"
     ],
     "type": "mult",
     "lock": 0,

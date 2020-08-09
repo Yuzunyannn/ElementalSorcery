@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -161,6 +162,8 @@ public class EventClient {
 		renderList.add(task);
 	}
 
+	private static int renderIterate = 0;
+
 	@SubscribeEvent
 	@SideOnly(Side.CLIENT)
 	static public void renderWord(RenderWorldLastEvent e) {
@@ -172,12 +175,19 @@ public class EventClient {
 		double ey = entityplayer.lastTickPosY + (entityplayer.posY - entityplayer.lastTickPosY) * (double) partialTicks;
 		double ez = entityplayer.lastTickPosZ + (entityplayer.posZ - entityplayer.lastTickPosZ) * (double) partialTicks;
 		GlStateManager.translate(-ex, -ey, -ez);
-		Iterator<IRenderClient> iter = renderList.iterator();
-		while (iter.hasNext()) {
-			IRenderClient task = iter.next();
-			int flags = task.onRender(partialTicks);
-			if (flags == IRenderClient.END) iter.remove();
+		renderIterate++;
+		try {
+			Iterator<IRenderClient> iter = renderList.iterator();
+			while (iter.hasNext()) {
+				IRenderClient task = iter.next();
+				int flags = task.onRender(partialTicks);
+				if (renderIterate > 1) continue;
+				if (flags == IRenderClient.END) iter.remove();
+			}
+		} catch (Exception exce) {
+			ElementalSorcery.logger.warn("post渲染异常！", exce);
 		}
+		renderIterate--;
 		Effect.renderAllEffects(e.getPartialTicks());
 		GlStateManager.popMatrix();
 	}
@@ -190,10 +200,18 @@ public class EventClient {
 	/** 全局信息显示 */
 	@SubscribeEvent
 	static public void drawDebugTools(ItemTooltipEvent event) {
+		ItemStack stack = event.getItemStack();
+		Item item = stack.getItem();
+		// 即将删除告示
+		if (item.getClass().getAnnotation(Deprecated.class) != null
+				|| Block.getBlockFromItem(item).getClass().getAnnotation(Deprecated.class) != null) {
+			event.getToolTip().add(TextFormatting.GOLD + "该道具即将被移除。");
+			event.getToolTip().add(TextFormatting.GOLD + "This item will be removed soon.");
+		}
+		// 显示元素
 		if (!ElementalSorcery.config.SHOW_ELEMENT_TOOLTIP) return;
 		EntityPlayer player = event.getEntityPlayer();
 		if (player == null || !player.isCreative()) return;
-		ItemStack stack = event.getItemStack();
 		ElementStack[] estacks = ElementMap.instance.toElement(stack);
 		if (estacks == null) return;
 		List<String> tooltip = event.getToolTip();

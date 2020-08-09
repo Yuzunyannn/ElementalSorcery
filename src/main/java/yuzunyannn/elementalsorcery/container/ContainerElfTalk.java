@@ -66,6 +66,7 @@ public class ContainerElfTalk extends ContainerElf implements IContainerNetwork 
 		int lastIndex = iter.getIndex();
 		if (iter.isPointScene()) {
 			TalkChapter newChapter = iter.dealAction(selectAt, player, elf);
+			if (iter.isEnd()) return setEnd();// 有事件可能直接结束
 			// 新的章节就切换
 			if (newChapter != null && this.chapter != newChapter) {
 				this.setChapter(newChapter);

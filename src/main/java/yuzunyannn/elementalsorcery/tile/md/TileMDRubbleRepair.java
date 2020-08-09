@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.block.BlocksAStone;
+import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.render.particle.FirwrokShap;
 
@@ -57,7 +57,7 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 
 	static public void init() {
 		addRecipe(Blocks.COBBLESTONE, Blocks.STONE, 1);
-		addRecipe(new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, BlocksAStone.EnumType.FRAGMENTED.ordinal()),
+		addRecipe(new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, BlockAStone.EnumType.FRAGMENTED.ordinal()),
 				new ItemStack(ESInitInstance.BLOCKS.ASTONE), 10);
 		addRecipe(new ItemStack(Blocks.STONEBRICK, 1, 2), new ItemStack(Blocks.STONEBRICK), 1);
 	}
