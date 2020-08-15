@@ -3,15 +3,11 @@ package yuzunyannn.elementalsorcery;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
@@ -27,7 +23,7 @@ public class ESData {
 
 	public ESData(FMLPreInitializationEvent event) {
 		file = event.getSourceFile().getParentFile().getParentFile();
-		file = new File(file.getPath() + "/Elemental Sorcery/");
+		file = new File(file.getPath() + "/ElementalSorcery/");
 		file.mkdirs();
 	}
 
@@ -49,20 +45,6 @@ public class ESData {
 			IOHelper.closeQuietly(istream);
 		}
 		return nbt;
-	}
-
-	static public JsonObject getJsonFromResource(ResourceLocation path) throws IOException {
-		String rPath = "/assets/" + path.getResourceDomain() + "/" + path.getResourcePath();
-		InputStream istream = null;
-		JsonObject obj = null;
-		try {
-			istream = ESData.class.getResourceAsStream(rPath);
-			Gson gson = new Gson();
-			obj = gson.fromJson(new InputStreamReader(istream), JsonObject.class);
-		} finally {
-			IOHelper.closeQuietly(istream);
-		}
-		return obj;
 	}
 
 	/** 获取某个文件夹下的全部路径，注意检测后缀，jar下可能获取到目录 */
@@ -110,17 +92,18 @@ public class ESData {
 		return new String[0];
 	}
 
-	private static void getFileRecursion(String lastPath, List<String> paths, File root) {
+	/** 获取一个目录下的所有文件 */
+	public static List<String> getFileRecursion(File root) {
+		List<String> list = new ArrayList<String>();
+		getFileRecursion(root.getPath() + "/", list, root);
+		return list;
+	}
+
+	static private void getFileRecursion(String lastPath, List<String> paths, File root) {
 		File[] files = root.listFiles();
 		for (File file : files) {
 			if (file.isDirectory()) getFileRecursion(lastPath + file.getName() + "/", paths, file);
 			else paths.add(lastPath + file.getName());
 		}
-	}
-
-	public static List<String> getFileRecursion(File root) {
-		List<String> list = new ArrayList<String>();
-		getFileRecursion(root.getPath() + "/", list, root);
-		return list;
 	}
 }

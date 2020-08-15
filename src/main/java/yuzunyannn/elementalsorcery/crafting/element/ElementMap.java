@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.crafting.element;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
@@ -168,6 +170,25 @@ public class ElementMap implements IElementMap {
 		public Map<Item, ElementInfo> itemToElementMap = new HashMap<Item, ElementInfo>();
 
 		public void add(ItemStack stack, int complex, ElementStack... estacks) {
+			boolean checkNBT = false;
+			// 如果存在"checkNBTTag"字段，则添加标签，这个标签只是标记用的，所以要删除
+			if (stack.hasTagCompound()) {
+				NBTTagCompound nbt = stack.getTagCompound();
+				if (nbt.hasKey("checkNBTTag")) {
+					checkNBT = true;
+					nbt.removeTag("checkNBTTag");
+				}
+			}
+			// 检查是否存在
+			for (int i = 0; i < stackToElementMap.size(); i++) {
+				ElementInfo info = stackToElementMap.get(i);
+				// 有相同的就替换
+				if (ItemStack.areItemsEqual(info.stack, stack)) {
+					if (checkNBT && !ItemStack.areItemStackTagsEqual(info.stack, stack)) continue;
+					stackToElementMap.set(i, new ElementInfo(stack, estacks, complex));
+					return;
+				}
+			}
 			stackToElementMap.add(new ElementInfo(stack, estacks, complex));
 		}
 
@@ -285,7 +306,22 @@ public class ElementMap implements IElementMap {
 		defaultToElementMap.itemToElementMap.clear();
 		defaultToElementMap.stackToElementMap.clear();
 		for (ModContainer mod : Loader.instance().getActiveModList()) loadElementMap(mod);
+		loadRegisterFromFile();
 		findAndRegisterCraft();
+	}
+
+	static public void loadRegisterFromFile() {
+		File folder = ElementalSorcery.data.getFile("element/mapping", "");
+		File[] files = folder.listFiles();
+		for (File file : files) {
+			if (!file.isFile()) continue;
+			try {
+				JsonObject json = new JsonObject(file);
+				loadElementMap(json, file.getPath());
+			} catch (IOException e) {
+				ElementalSorcery.logger.warn("自定义json数据读取失败:" + file);
+			}
+		}
 	}
 
 	static public void registerAll() throws IOException {
@@ -296,6 +332,8 @@ public class ElementMap implements IElementMap {
 
 		// 自动扫描并加载json
 		for (ModContainer mod : Loader.instance().getActiveModList()) loadElementMap(mod);
+		// 自动扫描玩家自定义目录
+		loadRegisterFromFile();
 
 		DefaultBucketToElement.water = new ElementStack[] { newES(E.WATER, 25, 100) };
 		DefaultBucketToElement.fire = new ElementStack[] { newES(E.FIRE, 100, 500) };
@@ -313,31 +351,36 @@ public class ElementMap implements IElementMap {
 
 	public static void loadElementMap(ModContainer mod) {
 		Json.ergodicAssets(mod, "/element_maps", (file, json) -> {
-			JsonArray jarray = json.needArray("maps");
-			for (int i = 0; i < jarray.size(); i++) {
-				try {
-					JsonObject jobj = jarray.needObject(i);
-					List<ElementStack> estacks = jobj.needElements("element");
-					List<ItemRecord> items = jobj.needItems("item");
-					int complex = -1;
-					if (jobj.hasNumber("complex")) complex = jobj.getNumber("complex").intValue();
-					ElementStack[] es = estacks.toArray(new ElementStack[estacks.size()]);
-					for (ItemRecord ir : items) {
-						ir = dealItemRecord(ir);
-						if (complex > -1) {
-							if (ir.isJustItem()) instance.add(ir.getItem(), complex, es);
-							else instance.add(ir.getStack(), complex, es);
-						} else {
-							if (ir.isJustItem()) instance.add(ir.getItem(), es);
-							else instance.add(ir.getStack(), es);
-						}
-					}
-				} catch (JsonParseException e) {
-					ElementalSorcery.logger.warn("解析json出现异常：" + file, e);
-				}
-			}
+			loadElementMap(json, file.toString());
 			return true;
 		});
+	}
+
+	// 对一个json进行处理
+	public static void loadElementMap(JsonObject json, String fileName) {
+		JsonArray jarray = json.needArray("maps");
+		for (int i = 0; i < jarray.size(); i++) {
+			try {
+				JsonObject jobj = jarray.needObject(i);
+				List<ElementStack> estacks = jobj.needElements("element");
+				List<ItemRecord> items = jobj.needItems("item");
+				int complex = -1;
+				if (jobj.hasNumber("complex")) complex = jobj.getNumber("complex").intValue();
+				ElementStack[] es = estacks.toArray(new ElementStack[estacks.size()]);
+				for (ItemRecord ir : items) {
+					ir = dealItemRecord(ir);
+					if (complex > -1) {
+						if (ir.isJustItem()) instance.add(ir.getItem(), complex, es);
+						else instance.add(ir.getStack(), complex, es);
+					} else {
+						if (ir.isJustItem()) instance.add(ir.getItem(), es);
+						else instance.add(ir.getStack(), es);
+					}
+				}
+			} catch (JsonParseException e) {
+				ElementalSorcery.logger.warn("解析json出现异常：" + fileName, e);
+			}
+		}
 	}
 
 	private static ItemRecord dealItemRecord(ItemRecord ir) {

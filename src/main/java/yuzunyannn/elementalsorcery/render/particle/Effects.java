@@ -77,7 +77,7 @@ public class Effects {
 	@SideOnly(Side.CLIENT)
 	public static void registerAll() {
 		EffectMap.map.clear();
-		EffectMap.register(FIREWROK, new FireworkEffect());
+		EffectMap.register(FIREWROK, new FireworkEffect.Factory());
 	}
 
 }

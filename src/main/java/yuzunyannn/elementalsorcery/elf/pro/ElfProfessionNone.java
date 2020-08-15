@@ -22,7 +22,7 @@ public class ElfProfessionNone extends ElfProfession {
 	public int attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
 		if (elf.world.isRemote) return 0;
 		if (source.getTrueSource() instanceof EntityLivingBase == false) return 0;
-		if (elf.getRNG().nextInt(100) < 6) elf.setProfession(ElfProfession.MASTER);
+		if (elf.getRNG().nextInt(100) < 4) elf.setProfession(ElfProfession.MASTER);
 		else if (elf.getRNG().nextInt(3) == 0) elf.setProfession(ElfProfession.BERSERKER);
 		else elf.setProfession(ElfProfession.WARRIOR);
 		// 吸怪

@@ -137,17 +137,19 @@ public class ElfProfessionMaster extends ElfProfession {
 				elf.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 20 * 10));
 			}
 
+			boolean teleportFlag = false;
 			if (source.getTrueSource() != null) {
 				// 人太多逃跑
 				AxisAlignedBB aabb = new AxisAlignedBB(elf.posX - 2, elf.posY - 2, elf.posZ - 2, elf.posX + 2,
 						elf.posY + 2, elf.posZ + 2);
 				List<EntityMob> list = elf.world.getEntitiesWithinAABB(EntityMob.class, aabb);
-				if (list.size() > 3) {
-					BlockPos pos = elf.getRandomTeleportPos(5, 4, 4, elf.getPosition());
-					elf.teleportTo(elf, pos);
-				}
+				teleportFlag |= list.size() > 3;
 			}
-
+			teleportFlag |= amount >= 10;
+			if (teleportFlag) {
+				BlockPos pos = elf.getRandomTeleportPos(5, 4, 4, elf.getPosition());
+				elf.teleportTo(elf, pos);
+			}
 			// 荒废创造模式
 			if (!elf.world.isRemote) {
 				if (source.getTrueSource() instanceof EntityPlayerMP) {

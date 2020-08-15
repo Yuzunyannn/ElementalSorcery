@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -100,6 +102,7 @@ public class CraftingConstruct implements ICraftingAltar {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public ICraftingLaunchAnime getAnime() {
 		return new AnimeRenderConstruct();
 	}

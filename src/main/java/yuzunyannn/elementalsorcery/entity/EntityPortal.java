@@ -4,6 +4,7 @@ import java.util.List;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -15,20 +16,27 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortalEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortalWorldSecene;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 
-	public static void createPortal(World fromWorld, Vec3d fromPos, World toWorld, Vec3d toPos) {
-		if (fromWorld.isRemote) return;
-		EntityPortal portal = new EntityPortal(fromWorld);
-		portal.setPosition(fromPos);
-		portal.setTo(toWorld, toPos);
-		fromWorld.spawnEntity(portal);
+	public static void createPortal(World world1, Vec3d pos1, World world2, Vec3d pos2) {
+		if (world1.isRemote) return;
+		EntityPortal portal1 = new EntityPortal(world1);
+		EntityPortal portal2 = new EntityPortal(world2);
+		portal1.setPosition(pos1);
+		portal2.setPosition(pos2);
+		portal1.setTo(world2, pos2);
+		portal2.setTo(world1, pos1);
+		world1.getChunkFromBlockCoords(new BlockPos(pos1));
+		world2.getChunkFromBlockCoords(new BlockPos(pos2));
+		world1.spawnEntity(portal1);
+		world2.spawnEntity(portal2);
 	}
 
-	public EntityVest vest;
+	public EntityPortal other;
 	// 要到的世界
 	World toWorld;
 	// 要到的原始数据
@@ -90,7 +98,6 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 
 	@SideOnly(Side.CLIENT)
 	public void recoveryClient() {
-		// Minecraft mc = Minecraft.getMinecraft();
 		if (toWorldId == world.provider.getDimension()) toWorld = world;
 	}
 
@@ -113,26 +120,15 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 				}
 			}
 		}
-		// 创建一个绘图用的马甲
-		if (vest == null) {
-			if (world.isRemote) {
-				if (toWorld != null) {
-					toWorld.getChunkFromBlockCoords(new BlockPos(toPos));
-					AxisAlignedBB aabb = new AxisAlignedBB(toPos.x - 0.5, toPos.y - 0.5, toPos.z - 0.5, toPos.x + 0.5,
-							toPos.y + 0.5, toPos.z + 0.5);
-					List<EntityVest> list = toWorld.getEntitiesWithinAABB(EntityVest.class, aabb);
-					if (!list.isEmpty()) this.vest = list.get(0);
-				}
-			} else {
-				vest = new EntityVest(toWorld, v -> {
-					return !isDead;
-				});
-				toWorld.getChunkFromBlockCoords(new BlockPos(toPos));
-				vest.setPosition(toPos.x, toPos.y, toPos.z);
-				toWorld.spawnEntity(vest);
-			}
-		}
 		if (world.isRemote) {
+			// 寻找另一半，找不到也没关系，顶多不画了
+			if (other == null && toWorld != null) {
+				toWorld.getChunkFromBlockCoords(new BlockPos(toPos));
+				AxisAlignedBB aabb = new AxisAlignedBB(toPos.x - 0.5, toPos.y - 0.5, toPos.z - 0.5, toPos.x + 0.5,
+						toPos.y + 0.5, toPos.z + 0.5);
+				List<EntityPortal> list = toWorld.getEntitiesWithinAABB(EntityPortal.class, aabb);
+				if (!list.isEmpty()) other = list.get(0);
+			}
 			this.onUpdateClient();
 			return;
 		}
@@ -144,13 +140,17 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 		for (Entity entity : list) {
 			if (entity == this) continue;
 			if (entity.timeUntilPortal > 0) continue;
-			double dis = this.getPositionVector().addVector(0, this.getEyeHeight(), 0)
+			double dis = this.getPositionVector().addVector(0, 2, 0)
 					.distanceTo(entity.getPositionVector().addVector(0, entity.getEyeHeight(), 0));
-			double h = entity.posY - this.posY + 0.1f;
-			if (dis < 1.5f && Math.abs(h) < 0.5f) {
+			// double h = entity.posY - this.posY + 0.05f;
+			if (dis < 2f && entity.posY >= this.posY && entity.posY + entity.height < this.posY + this.height - 0.2f) {
 				Vec3d tar = this.getPositionVector().subtract(entity.getPositionVector()).normalize().scale(1.75f);
 				entity.setPositionAndUpdate(toPos.x + tar.x, toPos.y + this.getEyeHeight() - entity.getEyeHeight(),
 						toPos.z + tar.z);
+				if (entity instanceof EntityItem) {
+					entity.motionX = tar.x * 0.8;
+					entity.motionZ = tar.z * 0.8;
+				}
 				entity.timeUntilPortal = 20;
 			}
 		}
@@ -158,9 +158,8 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 
 	@SideOnly(Side.CLIENT)
 	public void initClient() {
-		if (ElementalSorcery.config.PORTAL_RENDER_LEVEL == 0) drawInstance = new IPortalDraw() {
-		};
-		else drawInstance = new RenderEntityPortalWorldSecene();
+		if (ElementalSorcery.config.PORTAL_RENDER_TYPE == 2) drawInstance = new RenderEntityPortalWorldSecene();
+		else drawInstance = new RenderEntityPortalEffect(ElementalSorcery.config.PORTAL_RENDER_TYPE == 1);
 	}
 
 	/** 客户端更新 */
@@ -189,21 +188,13 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 	@SideOnly(Side.CLIENT)
 	public interface IPortalDraw {
 
-		default public boolean isDispose() {
-			return true;
-		}
+		public boolean isDispose();
 
-		default public void dispose() {
+		public void dispose();
 
-		}
+		public void render(EntityPortal entity);
 
-		default public void render(EntityPortal entity) {
-
-		}
-
-		default public void tick(EntityPortal entity) {
-
-		}
+		public void tick(EntityPortal entity);
 	}
 
 	@Override

@@ -141,16 +141,23 @@ public class GuiElfTalk extends GuiContainer {
 		}
 	}
 
+	int updateCDTick = 0;
+
 	protected void next(TalkChapter.Iter iter, int select) {
-		if (iter.isPoint()) container.sendToServer(iter.getIndex(), select);
-		else if (iter.hasNext()) iter.next();
-		// 结束消息
-		else container.sendToServer(iter.getIndex(), select);
+		if (iter.hasNext() && !iter.isPoint()) {
+			updateCDTick = 0;
+			iter.next();
+			return;
+		}
+		if (updateCDTick > 0) return;
+		container.sendToServer(iter.getIndex(), select);
+		updateCDTick = 15;
 	}
 
 	@Override
 	public void updateScreen() {
 		super.updateScreen();
+		if (updateCDTick > 0) updateCDTick--;
 		TalkChapter.Iter iter = container.getChapterIter();
 		if (iter != null && iter.getType() == TalkType.SAY) {
 			String str = (String) iter.getSaying();

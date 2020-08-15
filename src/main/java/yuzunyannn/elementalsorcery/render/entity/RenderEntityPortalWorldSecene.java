@@ -19,12 +19,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
-import yuzunyannn.elementalsorcery.entity.EntityVest;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.IRenderClient;
 import yuzunyannn.elementalsorcery.render.particle.EffectElement;
 import yuzunyannn.elementalsorcery.util.render.Framebuffer;
-import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.util.render.WorldScene;
 
@@ -59,13 +57,14 @@ public class RenderEntityPortalWorldSecene implements IRenderClient, EntityPorta
 
 	@Override
 	public void tick(EntityPortal entity) {
-		setPortal(entity, entity.vest);
+		setPortal(entity, entity.other);
 		checkAndResize();
 		EntityPlayerSP player = mc.player;
 		if (player.getDistanceSq(entity) >= 16 * 16) overDistance = true;
 		else overDistance = false;
 		if (!overDistance) toTick();
 		if (portalEntityOther != null) worldScene.setLooker(portalEntityOther);
+		else worldScene.setLooker(portalEntityThis);
 		maskTick();
 	}
 
@@ -82,12 +81,14 @@ public class RenderEntityPortalWorldSecene implements IRenderClient, EntityPorta
 	public int onRender(float partialTicks) {
 		if (this.isDispose() || overDistance) return end();
 		if (portalEntityOther == null) {
-			this.doRender(partialTicks);
-			return SUCCESS;
+			portalEntityThis.prevRotationYaw = portalEntityThis.rotationYaw;
+			portalEntityThis.rotationYaw = this.getRaw();
+			if (worldScene.doRenderSky()) this.doRender(partialTicks);
+		} else {
+			portalEntityOther.prevRotationYaw = portalEntityOther.rotationYaw;
+			portalEntityOther.rotationYaw = this.getRaw();
+			if (worldScene.doRenderWorld()) this.doRender(partialTicks);
 		}
-		portalEntityOther.prevRotationYaw = portalEntityOther.rotationYaw;
-		portalEntityOther.rotationYaw = this.getRaw();
-		if (worldScene.doRender()) this.doRender(partialTicks);
 		return SUCCESS;
 	}
 
@@ -118,7 +119,11 @@ public class RenderEntityPortalWorldSecene implements IRenderClient, EntityPorta
 		GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 		drawMask(partialTicks);
 		// 绘制主图
-		renderMain();
+		GlStateManager.colorMask(true, true, true, false);
+		GL11.glBlendFunc(GL11.GL_DST_COLOR, GL11.GL_ZERO);
+		worldScene.bind();
+		drawSceneAll();
+		GlStateManager.colorMask(true, true, true, true);
 
 		GlStateManager.disableBlend();
 		GlStateManager.enableDepth();
@@ -134,20 +139,6 @@ public class RenderEntityPortalWorldSecene implements IRenderClient, EntityPorta
 		GlStateManager.popMatrix();
 		GlStateManager.matrixMode(5888);
 
-	}
-
-	private void renderMain() {
-		if (portalEntityOther != null) {
-			GlStateManager.colorMask(true, true, true, false);
-			GL11.glBlendFunc(GL11.GL_DST_COLOR, GL11.GL_ZERO);
-			worldScene.bind();
-			drawSceneAll();
-			GlStateManager.colorMask(true, true, true, true);
-			return;
-		}
-		GL11.glBlendFunc(GL11.GL_DST_COLOR, GL11.GL_ZERO);
-		mc.getTextureManager().bindTexture(RenderObjects.KYANITE_ORE);
-		drawSceneAll();
 	}
 
 	private boolean isFadeIn = true;
@@ -331,9 +322,5 @@ public class RenderEntityPortalWorldSecene implements IRenderClient, EntityPorta
 		this.worldScene = null;
 		this.portal.dispose();
 		this.portal = null;
-		if (portalEntityOther instanceof EntityVest) {
-			portalEntityOther.setDead();
-			return;
-		}
 	}
 }

@@ -10,12 +10,13 @@ public class ESConfig {
 
 	/** 建筑的保存最大天数 */
 	public final int BUILDING_MAX_REMAIN_DAYS;
-	/** 手册的最大页面数 */
-	public final int MANUAL_MAX_PAGES = 20;
 	/** 是否展示默认元素的tooltip */
 	public final boolean SHOW_ELEMENT_TOOLTIP;
 	/** 传送门绘制等级 */
-	public final int PORTAL_RENDER_LEVEL;
+	public final int PORTAL_RENDER_TYPE;
+
+	/** 手册的最大页面数 */
+	public final int MANUAL_MAX_PAGES;
 
 	public ESConfig(FMLPreInitializationEvent event) {
 		config = new Configuration(event.getSuggestedConfigurationFile());
@@ -32,13 +33,17 @@ public class ESConfig {
 			BUILDING_MAX_REMAIN_DAYS = 7;
 		}
 		this.BUILDING_MAX_REMAIN_DAYS = BUILDING_MAX_REMAIN_DAYS;
-		// 是否开启默认物品元素显示
+		// 元素手册的最大页数
 		property = config.get(Configuration.CATEGORY_GENERAL, "enable_item_element_tooltip_show", false,
 				"[鼠标移动到物品上，显示其默认具有的元素][仅在创造模式生效]");
 		this.SHOW_ELEMENT_TOOLTIP = property.getBoolean();
+		// 是否开启默认物品元素显示
+		property = config.get(Configuration.CATEGORY_GENERAL, "manual_max_pages", 20, "[元素手册的最多页数]");
+		this.MANUAL_MAX_PAGES = Math.max(property.getInt(), 2);
 		// 传送门绘制
-		property = config.get(Configuration.CATEGORY_GENERAL, "portal_render_level", 1, "[传送门绘制是否使用特效渲染][1表示用][0表示不用]");
-		this.PORTAL_RENDER_LEVEL = property.getInt();
+		property = config.get(Configuration.CATEGORY_GENERAL, "portal_render_type", 1,
+				"[传送门绘制是使用的渲染类型][2为世界效果][1为粒子效果][0就一张图]");
+		this.PORTAL_RENDER_TYPE = property.getInt();
 
 		config.save();
 		ElementalSorcery.logger.info("config加载完成");

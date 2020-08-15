@@ -40,7 +40,7 @@ public class BlockElfLog extends BlockLog {
 		AxisAlignedBB aabb = new AxisAlignedBB(pos.getX() - size, pos.getY(), pos.getZ() - size, pos.getX() + size,
 				pos.getY() + 2, pos.getZ() + size);
 		List<EntityElf> list = worldIn.getEntitiesWithinAABB(EntityElf.class, aabb);
-		if (list.size() > 2) return;
+		if (list.size() > 3) return;
 		pos = new BlockPos(pos.getX() + rand.nextInt(2) - 1, pos.getY() + 1, pos.getZ() + rand.nextInt(2) - 1);
 		if (!worldIn.isAirBlock(pos)) return;
 		EntityElf elf = new EntityElf(worldIn);

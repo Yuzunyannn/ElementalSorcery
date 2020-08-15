@@ -1,7 +1,10 @@
 package yuzunyannn.elementalsorcery.util.json;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,6 +20,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 
@@ -29,6 +33,22 @@ public class JsonObject extends Json implements Iterable<String> {
 
 	public JsonObject(Path file) throws IOException {
 		try (BufferedReader reader = Files.newBufferedReader(file)) {
+			Gson gson = new Gson();
+			json = gson.fromJson(reader, com.google.gson.JsonObject.class);
+		}
+	}
+
+	public JsonObject(File file) throws IOException {
+		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+			Gson gson = new Gson();
+			json = gson.fromJson(reader, com.google.gson.JsonObject.class);
+		}
+	}
+
+	public JsonObject(ResourceLocation resPath) throws IOException {
+		String rPath = "/assets/" + resPath.getResourceDomain() + "/" + resPath.getResourcePath();
+		try (BufferedReader reader = new BufferedReader(
+				new InputStreamReader(JsonObject.class.getResourceAsStream(rPath)))) {
 			Gson gson = new Gson();
 			json = gson.fromJson(reader, com.google.gson.JsonObject.class);
 		}

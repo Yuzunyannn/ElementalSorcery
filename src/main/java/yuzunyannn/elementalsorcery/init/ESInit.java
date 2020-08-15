@@ -56,7 +56,6 @@ import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.elf.AutoName;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProRegister;
-import yuzunyannn.elementalsorcery.event.ESTestAndDebug;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
@@ -164,8 +163,6 @@ public class ESInit {
 		ESNetwork.registerAll();
 		// 注册事件
 		MinecraftForge.EVENT_BUS.register(EventServer.class);
-		// 测试类
-		new ESTestAndDebug();
 	}
 
 	public final static void init(FMLInitializationEvent event) throws Throwable {
@@ -199,7 +196,7 @@ public class ESInit {
 		// 客户端事件
 		MinecraftForge.EVENT_BUS.register(EventClient.class);
 		// 世界离屏渲染
-		if (ElementalSorcery.config.PORTAL_RENDER_LEVEL > 0) WorldScene.init();
+		if (ElementalSorcery.config.PORTAL_RENDER_TYPE == 2) WorldScene.init();
 	}
 
 	@SideOnly(Side.CLIENT)

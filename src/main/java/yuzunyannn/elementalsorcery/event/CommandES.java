@@ -1,11 +1,12 @@
 package yuzunyannn.elementalsorcery.event;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -16,14 +17,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
-import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Pages;
@@ -45,10 +43,12 @@ public class CommandES extends CommandBase {
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		if (args.length < 1) throw new CommandException("commands.es.usage");
 		if (args[0].equals("build")) {
+			// 建筑
 			if (args.length == 1) throw new CommandException("commands.es.build.usage");
 			Entity entity = sender.getCommandSenderEntity();
 			this.cmdBuild(args[1], (EntityLivingBase) entity, server.getEntityWorld());
 		} else if (args[0].equals("page")) {
+			// 页面
 			if (args.length == 1) throw new CommandException("commands.es.page.usage");
 			String idStr = args[1];
 			if (!Pages.isVaild(idStr)) throw new CommandException("commands.es.page.fail");
@@ -59,20 +59,10 @@ public class CommandES extends CommandBase {
 					player.inventory.addItemStackToInventory(new ItemStack(ESInitInstance.ITEMS.MANUAL));
 				else player.inventory.addItemStackToInventory(ItemParchment.getParchment(idStr));
 			}
-		} else if ("reflush".equals(args[0])) {
-			Side side = Side.CLIENT;
-			try {
-				Minecraft.getMinecraft();
-			} catch (Throwable e) {
-				side = Side.SERVER;
-			}
-			try {
-				ElementMap.reflush();
-				Pages.init(side);
-			} catch (Exception e) {
-				ElementalSorcery.logger.warn("刷新数据出现异常！", e);
-				sender.sendMessage(new TextComponentString("刷新数据出现异常！Refresh data exception!"));
-			}
+		} else if ("debug".equals(args[0])) {
+			// debug
+			if (args.length == 1) throw new CommandException("ES dubug 指令无效，随便使用debug指令可能会导致崩溃");
+			CommandESDebug.execute(server, sender, Arrays.copyOfRange(args, 1, args.length));
 		} else throw new CommandException("commands.es.usage");
 	}
 
@@ -81,23 +71,27 @@ public class CommandES extends CommandBase {
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			@Nullable BlockPos targetPos) {
 		if (args.length == 1) {
-			String[] names = { "build", "page", "reflush" };
+			String[] names = { "build", "page", "debug" };
 			return CommandBase.getListOfStringsMatchingLastWord(args, names);
 		} else if (args.length == 2) {
 			if (args[0].equals("build")) {
-				// Set<String> names = BuildingLib.instance.getBuildingsName();
-				return CommandBase.getListOfStringsMatchingLastWord(args, "it");
+				Collection<Building> bs = BuildingLib.instance.getBuildingsFromLib();
+				List<String> tips = CommandBase.getListOfStringsMatchingLastWord(args, bs);
+				tips.add("it");
+				return tips;
 			} else if (args[0].equals("page")) {
 				Set<String> set = Pages.getPageIds();
 				String[] names = new String[set.size()];
 				set.toArray(names);
 				return CommandBase.getListOfStringsMatchingLastWord(args, names);
+			} else if ("debug".equals(args[0])) {
+				return CommandBase.getListOfStringsMatchingLastWord(args, CommandESDebug.autoTips);
 			}
-
 		}
 		return null;
 	}
 
+	/** 建造建筑 */
 	private void cmdBuild(String value, EntityLivingBase entity, World world) throws CommandException {
 		Building building = null;
 		BlockPos pos = null;
