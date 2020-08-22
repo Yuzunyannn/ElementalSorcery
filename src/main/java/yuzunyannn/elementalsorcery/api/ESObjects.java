@@ -52,8 +52,10 @@ public class ESObjects {
 		public Item SUPREME_TABLE_COMPONENT;
 		public Item ELF_COIN;
 		public Item ELF_PURSE;
+		public Item NATURE_CRYSTAL;
+		public Item NATURE_DUST;
 	}
-	
+
 	static public class Blocks {
 
 		public Block ESTONE;
@@ -113,6 +115,7 @@ public class ESObjects {
 		public Block LIFE_DIRT;
 		public Block CRYSTAL_FLOWER;
 		public Block IS_CRAFT_NORMAL;
+		public Block PORTAL_ALTAR;
 	}
 
 	static public class Elements {

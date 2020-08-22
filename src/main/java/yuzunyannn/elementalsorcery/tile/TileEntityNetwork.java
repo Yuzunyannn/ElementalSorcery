@@ -46,28 +46,14 @@ public class TileEntityNetwork extends TileEntity {
 		isNetwork = false;
 	}
 
-//	/** 最后一次发送的nbt */
-//	private NBTTagCompound lastSendNBT = null;
-//	/** 最后一次接受的nbt */
-//	private NBTTagCompound lastRecvNBT = null;
-
 	// 该函数还会被普通的调用，表明首次更新，首次调用是mc来管理
 	@Override
 	public NBTTagCompound getUpdateTag() {
 		return this.writeToNBT(new NBTTagCompound());
-//		NBTTagCompound nbt = this.writeToNBT(new NBTTagCompound());
-//		  
-//		// 判断是否为调用updateToClient函数发送的，如果不是，必须返回全部 if (this.isSending()) lastSendNBT =
-//		TileEntityNetwork.detectWhenSendingToRemoveRedundancy(nbt, lastSendNBT); else
-//		lastSendNBT = nbt;
-//		  
-//		return nbt;
 	}
 
 	@Override
 	public void handleUpdateTag(NBTTagCompound tag) {
-		// lastRecvNBT = TileEntityNetwork.detectWhenRecvToRecoveryRedundancy(tag,
-		// lastRecvNBT);
 		super.handleUpdateTag(tag);
 	}
 

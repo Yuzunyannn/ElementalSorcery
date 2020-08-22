@@ -7,6 +7,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.ESCreativeTabs;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.block.BlockCrystalFlower;
 import yuzunyannn.elementalsorcery.block.BlockElementWorkbench;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
@@ -22,7 +23,6 @@ import yuzunyannn.elementalsorcery.block.BlockMagicPot;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.block.BlockStarSand;
 import yuzunyannn.elementalsorcery.block.BlockStarStone;
-import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.block.BlocksEStone;
 import yuzunyannn.elementalsorcery.block.altar.BlockAnalysisAltar;
 import yuzunyannn.elementalsorcery.block.altar.BlockBuildingAltar;
@@ -31,6 +31,7 @@ import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructAltarTableAdv;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementCraftingTable;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
 import yuzunyannn.elementalsorcery.block.altar.BlockMagicDesk;
+import yuzunyannn.elementalsorcery.block.altar.BlockPortalAltar;
 import yuzunyannn.elementalsorcery.block.altar.BlockSupremeTable;
 import yuzunyannn.elementalsorcery.block.container.BlockAbsorbBox;
 import yuzunyannn.elementalsorcery.block.container.BlockDeconstructBox;
@@ -68,6 +69,7 @@ import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemManual;
+import yuzunyannn.elementalsorcery.item.ItemNatureDust;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemRedHandset;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
@@ -85,6 +87,7 @@ import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemElementCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemItemCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemMagicalCrystal;
+import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemResonantCrystal;
 
 public class ESInitInstance {
@@ -179,6 +182,7 @@ public class ESInitInstance {
 		BLOCKS.LIFE_DIRT = new BlockLifeDirt();
 		BLOCKS.CRYSTAL_FLOWER = new BlockCrystalFlower();
 		BLOCKS.IS_CRAFT_NORMAL = new BlockItemStructureCraftNormal();
+		BLOCKS.PORTAL_ALTAR = new BlockPortalAltar();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -222,6 +226,8 @@ public class ESInitInstance {
 		ITEMS.SUPREME_TABLE_COMPONENT = new ItemSupremeTableComponent();
 		ITEMS.ELF_COIN = ItemSome.newElfCoin();
 		ITEMS.ELF_PURSE = new ItemElfPurse();
+		ITEMS.NATURE_CRYSTAL = new ItemNatureCrystal();
+		ITEMS.NATURE_DUST = new ItemNatureDust();
 
 		ITEMS.SPELLBOOK = new ItemSpellbook();
 		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture();

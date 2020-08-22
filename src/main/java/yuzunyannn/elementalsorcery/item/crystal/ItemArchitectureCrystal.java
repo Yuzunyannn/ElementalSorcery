@@ -44,7 +44,7 @@ public class ItemArchitectureCrystal extends ItemCrystal {
 		}
 		if (!info.isValid()) return;
 		tooltip.add(TextFormatting.GOLD + I18n.format("info.arcCrystal.choice"));
-		tooltip.add(I18n.format("info.arcCrystal.axis", info.pos.getX(), info.pos.getY(), info.pos.getZ()));
+		tooltip.add(I18n.format("info.select.axis", info.pos.getX(), info.pos.getY(), info.pos.getZ()));
 		tooltip.add(I18n.format("info.arcCrystal.face", info.facing.getName()));
 		if (info.building.getBlockTypeInfos().isEmpty()) {
 			tooltip.add(TextFormatting.YELLOW + I18n.format("info.arcCrystal.wait"));

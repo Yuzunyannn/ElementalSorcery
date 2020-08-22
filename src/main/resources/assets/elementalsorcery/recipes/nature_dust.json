@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "nature_dust",
+  "ingredients": [
+    {
+      "item": "elementalsorcery:nature_crystal"
+    }
+  ],
+  "result": {
+    "item": "elementalsorcery:nature_dust",
+    "count": 1,
+    "data": 0
+  }
+}

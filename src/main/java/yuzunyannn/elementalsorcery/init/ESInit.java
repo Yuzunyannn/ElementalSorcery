@@ -110,6 +110,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTableAdv;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
+import yuzunyannn.elementalsorcery.tile.altar.TilePortalAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
 import yuzunyannn.elementalsorcery.tile.md.TileMDAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.md.TileMDDeconstructBox;
@@ -267,6 +268,7 @@ public class ESInit {
 		register(TileLifeDirt.class, "LifeDirt");
 		register(TileCrystalFlower.class, "CrystalFlower");
 		register(TileItemStructureCraftNormal.class, "ISCraftNormal");
+		register(TilePortalAltar.class, "PortalAltar");
 	}
 
 	static void registerAllElements() {
@@ -327,6 +329,10 @@ public class ESInit {
 		registerRender(ITEMS.SUPREME_TABLE_COMPONENT, new RenderItemSupremeTable());
 		registerRender(ITEMS.ELF_COIN);
 		registerRender(ITEMS.ELF_PURSE);
+		registerRender(ITEMS.NATURE_CRYSTAL);
+		registerRender(ITEMS.NATURE_DUST, 0, "nature_dust");
+		registerRender(ITEMS.NATURE_DUST, 1, "explore_dust");
+		registerRender(ITEMS.NATURE_DUST, 2, "explore_adv_dust");
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -375,6 +381,7 @@ public class ESInit {
 		registerRender(BLOCKS.CRYSTAL_FLOWER);
 		registerRender(BLOCKS.IS_CRAFT_NORMAL);
 		registerRender(BLOCKS.ESTONE_PRISM);
+		registerRender(BLOCKS.PORTAL_ALTAR);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());

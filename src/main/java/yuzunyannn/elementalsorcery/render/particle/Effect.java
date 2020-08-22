@@ -6,6 +6,7 @@ import java.util.Random;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -15,13 +16,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public abstract class Effect {
 
 	protected World world;
-	protected double prevPosX;
-	protected double prevPosY;
-	protected double prevPosZ;
-	protected double posX;
-	protected double posY;
-	protected double posZ;
-	protected int lifeTime;
+	public double prevPosX;
+	public double prevPosY;
+	public double prevPosZ;
+	public double posX;
+	public double posY;
+	public double posZ;
+	public int lifeTime;
 
 	static public final Random rand = new Random();
 
@@ -38,6 +39,10 @@ public abstract class Effect {
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
+	}
+
+	public Vec3d getPositionVector() {
+		return new Vec3d(posX, posY, posZ);
 	}
 
 	abstract void doRender(float partialTicks);

@@ -22,6 +22,7 @@ public class RenderEntityPortal extends Render<EntityPortal> {
 
 	@Override
 	public void doRender(EntityPortal entity, double x, double y, double z, float entityYaw, float partialTicks) {
+		if (!entity.isOpen()) return;
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y + 1.8f, z);
 		entity.getDraw().render(entity);

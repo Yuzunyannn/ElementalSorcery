@@ -11,6 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.entity.EntityBlockThrowEffect;
 import yuzunyannn.elementalsorcery.entity.EntityCrafting;
+import yuzunyannn.elementalsorcery.entity.EntityExploreDust;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.entity.EntityResonantCrystal;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
@@ -18,6 +19,7 @@ import yuzunyannn.elementalsorcery.render.entity.EntityRenderFactory;
 import yuzunyannn.elementalsorcery.render.entity.RenderBlockThrowEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityExploreDust;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortal;
 
 public class EntityRegistries {
@@ -26,10 +28,11 @@ public class EntityRegistries {
 		// 生物
 		register(0, "elf", EntityElf.class, "Elf", 64, 3, true);
 		registerEgg("elf", 0x82bf71, 0x529b3d);
-		// 效果
+		// 效果处理
 		register(51, "block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);
 		register(52, "entity_crafting", EntityCrafting.class, "EntityCrafting", 128, 1, false);
 		register(53, "portal", EntityPortal.class, "EntityPortal", 64, 1, false);
+		register(54, "explore_dust", EntityExploreDust.class, "EntityPortal", 64, 1, false);
 		// 投掷
 		register(41, "resonant_crystal", EntityResonantCrystal.class, "ResonantCrystal", 64, 10, true);
 	}
@@ -52,6 +55,7 @@ public class EntityRegistries {
 		registerRender(EntityPortal.class, RenderEntityPortal.class);
 		registerRender(EntityResonantCrystal.class, new EntityResonantCrystal.Factory());
 		registerRender(EntityElf.class, RenderEntityElf.class);
+		registerRender(EntityExploreDust.class, RenderEntityExploreDust.class);
 	}
 
 	@SideOnly(Side.CLIENT)

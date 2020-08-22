@@ -28,7 +28,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -133,8 +132,8 @@ public class CommandESDebug {
 			// 测试传送门
 			case "portalTest": {
 				pos = pos.up();
-				EntityPortal.createPortal(sender.getEntityWorld(), new Vec3d(pos), sender.getEntityWorld(),
-						new Vec3d(pos.add(500, 0, 500)));
+				World world = server.getWorld(0);
+				EntityPortal.createPortal(sender.getEntityWorld(), pos, world, new BlockPos(754, 65, 766));
 			}
 				return;
 			// 展示一些信息

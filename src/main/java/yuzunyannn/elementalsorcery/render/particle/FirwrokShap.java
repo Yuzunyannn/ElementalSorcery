@@ -145,4 +145,20 @@ public class FirwrokShap {
 		}
 
 	}
+
+	/** 元素类型的环 */
+	static public void createECircle(World world, Vec3d position, double speed, int size, int[] colors) {
+		for (int i = -size; i <= size; ++i) {
+			for (int j = -size; j <= size; ++j) {
+				double d1 = (double) i + (EventClient.rand.nextDouble() - EventClient.rand.nextDouble()) * 0.5D;
+				double d2 = (double) j + (EventClient.rand.nextDouble() - EventClient.rand.nextDouble()) * 0.5D;
+				double d3 = (double) MathHelper.sqrt(d1 * d1 + d2 * d2) / speed
+						+ EventClient.rand.nextGaussian() * 0.05D;
+				EffectElementMove e = new EffectElementMove(world, position);
+				e.setColor(colors[EventClient.rand.nextInt(colors.length)]);
+				e.setVelocity(d1 / d3, 0.1, d2 / d3);
+				Effect.addEffect(e);
+			}
+		}
+	}
 }

@@ -19,13 +19,13 @@ public class EffectElement extends Effect {
 	public final static TextureBinder TEXTURE = new TextureBinder("textures/effect/element_flare.png");
 
 	protected float r, g, b;
-	protected float alpha, prevAlpha;
-	protected float dalpha;
-	protected float scale;
+	public float alpha, prevAlpha;
+	public float dalpha;
+	public float scale;
 
-	protected double motionX;
-	protected double motionY;
-	protected double motionZ;
+	public double motionX;
+	public double motionY;
+	public double motionZ;
 
 	public EffectElement(World worldIn, double posXIn, double posYIn, double posZIn) {
 		super(worldIn, posXIn, posYIn, posZIn);
@@ -59,6 +59,10 @@ public class EffectElement extends Effect {
 		double x = this.getRenderX(partialTicks);
 		double y = this.getRenderY(partialTicks);
 		double z = this.getRenderZ(partialTicks);
+		doRender(x, y, z, partialTicks);
+	}
+
+	protected void doRender(double x, double y, double z, float partialTicks) {
 		float a = this.prevAlpha + (this.alpha - this.prevAlpha) * partialTicks;
 		TEXTURE.bind();
 		float rX = ActiveRenderInfo.getRotationX();
