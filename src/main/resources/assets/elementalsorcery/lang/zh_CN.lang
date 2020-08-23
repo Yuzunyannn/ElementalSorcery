@@ -45,6 +45,7 @@ item.elfPurse.name=精灵钱袋
 item.natureDust.nature.name=自然粉尘
 item.natureDust.explore.name=求知粉尘
 item.natureDust.exploreAdv.name=探索粉尘
+item.grimoire.name=魔典
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -123,6 +124,8 @@ element.earth.name=土
 element.air.name=气
 element.metal.name=金
 element.knowledge.name=知识
+
+key.mantra.shitf=魔典咒文切换
 
 info.element.spell.fire=点燃指定的方块
 info.element.spell.ender=借助末影元素的力量，史蒂夫可以向末影人一样，传送至远方

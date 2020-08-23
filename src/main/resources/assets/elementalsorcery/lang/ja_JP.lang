@@ -44,7 +44,8 @@ item.elfCoin.name=精霊貨幣
 item.elfPurse.name=精霊巾着
 item.natureDust.nature.name=自然粉塵
 item.natureDust.explore.name=知識求め粉塵
-item.natureDust.exploreAdv.name=探索粉塵
+item.natureDust.exploreAdv.name=探索し粉塵
+item.grimoire.name=魔典
 
 tile.elementalCube.name=エレメント立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -123,6 +124,8 @@ element.earth.name=土
 element.air.name=気
 element.metal.name=金
 element.knowledge.name=知識
+
+key.mantra.shitf=魔典に呪文を切り替い
 
 info.element.spell.fire=指定されたブロックに火をつける
 info.element.spell.ender=エンダーエレメントの力を貸して、スティーブがエンダーマンみたい、遠くに転移する

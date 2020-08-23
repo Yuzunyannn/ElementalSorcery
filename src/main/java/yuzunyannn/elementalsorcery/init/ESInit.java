@@ -58,9 +58,12 @@ import yuzunyannn.elementalsorcery.elf.AutoName;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProRegister;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.event.KeyBoard;
+import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
+import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoire;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSupremeTable;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
@@ -184,7 +187,7 @@ public class ESInit {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public final static void initClient(FMLPreInitializationEvent event) {
+	public final static void preInitClient(FMLPreInitializationEvent event) {
 		// 设置自定义模型加载
 		TileItemRenderRegistries.instance = new TileItemRenderRegistries();
 		ModelLoaderRegistry.registerLoader(TileItemRenderRegistries.instance);
@@ -198,6 +201,12 @@ public class ESInit {
 		MinecraftForge.EVENT_BUS.register(EventClient.class);
 		// 世界离屏渲染
 		if (ElementalSorcery.config.PORTAL_RENDER_TYPE == 2) WorldScene.init();
+	}
+
+	@SideOnly(Side.CLIENT)
+	public final static void initClinet(FMLInitializationEvent event) {
+		// 注册按键绑定
+		KeyBoard.registerAll();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -287,6 +296,7 @@ public class ESInit {
 	static void registerAllCapability() {
 		register(IElementInventory.class, new ElementInventory.Storage(), ElementInventory.class);
 		register(Spellbook.class, new Spellbook.Storage(), Spellbook.class);
+		register(Grimoire.class, new Grimoire.Storage(), Grimoire.class);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -414,6 +424,7 @@ public class ESInit {
 		registerRender(BLOCKS.MD_RESONANT_INCUBATOR, TileMDResonantIncubator.class,
 				new RenderTileMDResonantIncubator());
 
+		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);
 		registerRender(ITEMS.SPELLBOOK_ENCHANTMENT, RenderItemSpellbook.instance);

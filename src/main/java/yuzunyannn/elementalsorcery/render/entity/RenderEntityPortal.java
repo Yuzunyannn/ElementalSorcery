@@ -27,5 +27,6 @@ public class RenderEntityPortal extends Render<EntityPortal> {
 		GlStateManager.translate(x, y + 1.8f, z);
 		entity.getDraw().render(entity);
 		GlStateManager.popMatrix();
+		GlStateManager.enableLighting();
 	}
 }

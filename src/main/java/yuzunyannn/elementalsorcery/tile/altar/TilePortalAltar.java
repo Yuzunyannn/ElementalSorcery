@@ -6,6 +6,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -84,7 +86,7 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 		ElementStack get = getElementFromSpPlace(NEED, pos.up(3));
 		if (get.isEmpty()) return;
 		EntityPortal.createPortal(EntityPortal.TYPE_CHECK_TILE, world, new Vec3d(pos.up(3)).addVector(0.5, 0, 0.5),
-				EntityPortal.TYPE_PERMANENT, toWorld, new Vec3d(to).addVector(0.5, 0.5, 0.5));
+				EntityPortal.TYPE_PERMANENT, toWorld, new Vec3d(to).addVector(0.5, 0, 0.5));
 		enderPower = 0;
 	}
 
@@ -129,6 +131,7 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void genParticleElementTo(boolean isGet, int color, BlockPos from, BlockPos to) {
 		Vec3d pos = new Vec3d(to).addVector(0.5f, 1.5f, 0.5f);
 		Vec3d at = new Vec3d(from).addVector(0.5f, 0.75f, 0.5f);

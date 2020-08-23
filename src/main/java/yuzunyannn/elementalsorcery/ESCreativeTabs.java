@@ -14,6 +14,6 @@ public class ESCreativeTabs extends CreativeTabs {
 
 	@Override
 	public ItemStack getTabIconItem() {
-		return new ItemStack(ESInitInstance.ITEMS.SPELLBOOK);
+		return new ItemStack(ESInitInstance.ITEMS.MANUAL);
 	}
 }

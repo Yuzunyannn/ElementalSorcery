@@ -16,6 +16,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBed;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import yuzunyannn.elementalsorcery.item.ItemGrimoire;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 
@@ -89,12 +90,16 @@ public class RenderHelper {
 	/** 根据相对坐标，修复物品平放在平台上 */
 	static public void layItemPositionFix(ItemStack stack) {
 		Item item = stack.getItem();
-		if (item instanceof ItemSpellbook) {
+		if (item instanceof ItemBed) {
+			GlStateManager.translate(0, 0.44, 0.125);
+		} else if (item instanceof ItemSpellbook) {
 			GlStateManager.translate(0, 0.35, 0.2);
 			GlStateManager.scale(0.8, 0.8, 0.8);
 			GlStateManager.rotate(-90, 1, 0, 0);
-		} else if (item instanceof ItemBed) {
-			GlStateManager.translate(0, 0.44, 0.125);
+		} else if (item instanceof ItemGrimoire) {
+			GlStateManager.translate(0.05, 0.45, 0);
+			GlStateManager.rotate(-90, 1, 0, 0);
+			GlStateManager.scale(0.8, 0.8, 0.8);
 		} else {
 			Block block = Block.getBlockFromItem(stack.getItem());
 			boolean canlay = block == Blocks.AIR;

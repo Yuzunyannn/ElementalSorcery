@@ -65,7 +65,7 @@ public class MultiBlock {
 				if (should.getBlock() != real.getBlock()) return false;
 				real = real.getBlock().getActualState(real, world, pos);
 				BlockStairs.EnumShape shape = real.getValue(BlockStairs.SHAPE);
-				if (shape == BlockStairs.EnumShape.OUTER_LEFT || shape == BlockStairs.EnumShape.OUTER_RIGHT) continue;
+				if (shape != BlockStairs.EnumShape.STRAIGHT) continue;
 			}
 			return false;
 		}

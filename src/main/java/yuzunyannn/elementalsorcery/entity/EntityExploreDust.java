@@ -94,7 +94,7 @@ public class EntityExploreDust extends Entity implements IEntityAdditionalSpawnD
 		}
 		if (!data.hasKey("biome")) {
 			Biome biome = world.getBiome(this.getPosition());
-			data.setString("biome", biome.getBiomeName());
+			data.setString("biome", biome.getRegistryName().getResourcePath());
 			return;
 		}
 		if (!data.hasKey("rainfall")) {

@@ -29,7 +29,7 @@ public class ItemRendererModel implements IModel {
 	}
 
 	public class ItemRendererBakedModel implements IBakedModel {
-		public ItemCameraTransforms.TransformType camera_type;
+		public ItemCameraTransforms.TransformType cameraType;
 
 		@Override
 		public List<BakedQuad> getQuads(IBlockState state, EnumFacing side, long rand) {
@@ -67,7 +67,7 @@ public class ItemRendererModel implements IModel {
 		@Override
 		public Pair<? extends IBakedModel, javax.vecmath.Matrix4f> handlePerspective(
 				ItemCameraTransforms.TransformType cameraTransformType) {			
-			camera_type = cameraTransformType;
+			cameraType = cameraTransformType;
 			return net.minecraftforge.client.ForgeHooksClient.handlePerspective(this, cameraTransformType);
 		}
 	}

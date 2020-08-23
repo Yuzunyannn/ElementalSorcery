@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.event.SpellbookOpenMsg;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 
 public class MessageSpellbook implements IMessage {
@@ -79,7 +79,7 @@ public class MessageSpellbook implements IMessage {
 							hand = EnumHand.MAIN_HAND;
 						else
 							hand = EnumHand.OFF_HAND;
-						EventClient.addSpellbookOpen(player, player.getHeldItem(hand));
+						SpellbookOpenMsg.addSpellbookOpen(player, player.getHeldItem(hand));
 					}
 				}
 			});

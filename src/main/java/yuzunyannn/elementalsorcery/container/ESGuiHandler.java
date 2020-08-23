@@ -24,6 +24,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiMDMagicGen;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDMagicSolidify;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDMagiclization;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDRubbleRepair;
+import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
 import yuzunyannn.elementalsorcery.container.gui.GuiRiteManual;
 import yuzunyannn.elementalsorcery.container.gui.GuiSimple;
@@ -57,6 +58,9 @@ public class ESGuiHandler implements IGuiHandler {
 
 	public static final int GUI_ELF_TALK = 40;
 	public static final int GUI_ELF_TRADE = 41;
+
+	// 切换只有客户端存在
+	public static final int GUI_MANTRA_SHITF = 60;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -171,6 +175,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiElfTalk(player);
 			case GUI_ELF_TRADE:
 				return new GuiElfTrade(player);
+			case GUI_MANTRA_SHITF:
+				return new GuiMantraShitf(player);
 			default:
 				return null;
 			}

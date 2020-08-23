@@ -4,12 +4,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.grimoire.Grimoire;
+import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderItemGrimoireInfo {
 
+	public static final RenderItemGrimoireInfo VEST = new RenderItemGrimoireInfo();
+
 	public static RenderItemGrimoireInfo getFromStack(ItemStack stack) {
-		return null;
+		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+		if (grimoire == null) return VEST;
+		return grimoire.getRenderInfo();
 	}
 
 	public int tickCount = 0;
@@ -33,11 +39,11 @@ public class RenderItemGrimoireInfo {
 	}
 
 	public void open() {
-		dBookSpread = 0.05f;
+		dBookSpread = 0.1f;
 	}
 
 	public void close() {
-		dBookSpread = -0.05f;
+		dBookSpread = -0.1f;
 	}
 
 	public void reset() {
@@ -47,7 +53,9 @@ public class RenderItemGrimoireInfo {
 		dBookSpread = 0;
 	}
 
-	public void bind() {
+	public static final TextureBinder TEXTURE = new TextureBinder("textures/items/book/grimoire.png");
 
+	public void bind() {
+		TEXTURE.bind();
 	}
 }

@@ -45,6 +45,7 @@ item.elfPurse.name=Elf Purse
 item.natureDust.nature.name=Nature Dust
 item.natureDust.explore.name=Seek Dust
 item.natureDust.exploreAdv.name=Explore Dust
+item.grimoire.name=Grimoire
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -123,6 +124,8 @@ element.earth.name=Earth
 element.air.name=Air
 element.metal.name=Metal
 element.knowledge.name=Knowledge
+
+key.mantra.shitf=Shift Mantra in Grimoire
 
 info.element.spell.fire=Ignite the specified block
 info.element.spell.ender=With the power of Enderman, Steve can be transmitted to the distance just like enderman

@@ -54,6 +54,7 @@ public class ESObjects {
 		public Item ELF_PURSE;
 		public Item NATURE_CRYSTAL;
 		public Item NATURE_DUST;
+		public Item GRIMOIRE;
 	}
 
 	static public class Blocks {

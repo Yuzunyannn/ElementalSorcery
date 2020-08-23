@@ -18,31 +18,33 @@ public class ModelGrimoire extends ModelBase {
 	public ModelRenderer flippingPageLeft;
 	public ModelRenderer bookSpine;
 
+	public final static int sacle = 2;
+
 	public ModelGrimoire() {
 		textureWidth = 64;
 		textureHeight = 64;
-		final int sacle = 2;
-		this.coverRight = new ModelRenderer(this).addBox(0, -5.0F, 0.0F, 6, 10, 0);
-		this.coverRight.setTextureOffset(0, 0);
-		this.coverLeft = new ModelRenderer(this).addBox(0, -5.0F, 0.0F, 6, 10, 0);
-		this.coverLeft.setTextureOffset(16 * sacle, 0);
 
-		this.coverRight.setRotationPoint(0.0F, 0.0F, -1.0F);
-		this.coverLeft.setRotationPoint(0.0F, 0.0F, 1.0F);
+		this.coverRight = new ModelRenderer(this).setTextureOffset(0, 0);
+		this.coverRight.addBox(0, -5 * sacle, -1 * sacle, 6 * sacle, 10 * sacle, 1 * sacle);
+		this.coverLeft = new ModelRenderer(this).setTextureOffset(14 * sacle, 0);
+		this.coverLeft.addBox(0, -5 * sacle, 0, 6 * sacle, 10 * sacle, 1 * sacle);
 
-		this.pagesRight = new ModelRenderer(this).addBox(0.01F, -4.0F, -1.0F + 0.01F, 5, 8, 1);
-		this.pagesRight.setTextureOffset(0, 10 * sacle);
-		this.pagesLeft = new ModelRenderer(this).addBox(0.01F, -4.0F, -0.01F, 5, 8, 1);
-		this.pagesLeft.setTextureOffset(12 * sacle, 10 * sacle);
+		this.coverRight.setRotationPoint(0.0F, 0.0F, -1.0F * sacle);
+		this.coverLeft.setRotationPoint(0.0F, 0.0F, 1.0F * sacle);
 
-		this.flippingPageRight = new ModelRenderer(this).addBox(0.01F, -4.0F, 0.0F, 5, 8, 0);
-		this.flippingPageRight.setTextureOffset(0 * sacle, 19 * sacle);
+		this.pagesRight = new ModelRenderer(this).setTextureOffset(0, 11 * sacle);
+		this.pagesRight.addBox(0.01f, -4 * sacle, -1 * sacle, 5 * sacle, 8 * sacle, 1 * sacle);
+		this.pagesLeft = new ModelRenderer(this).setTextureOffset(14 * sacle, 11 * sacle);
+		this.pagesLeft.addBox(0.01f, -4 * sacle, 0, 5 * sacle, 8 * sacle, 1 * sacle);
 
-		this.flippingPageLeft = new ModelRenderer(this).addBox(0.01F, -4.0F, 0.0F, 5, 8, 0);
-		this.flippingPageLeft.setTextureOffset(0 * sacle, 19 * sacle);
+		this.flippingPageRight = new ModelRenderer(this).setTextureOffset(4 * sacle, 20 * sacle);
+		this.flippingPageRight.addBox(0.01F, -4 * sacle, 0, 5 * sacle, 8 * sacle, 0);
 
-		this.bookSpine = new ModelRenderer(this).addBox(0, -5, -1, 0, 10, 2);
-		this.bookSpine.setTextureOffset(12 * sacle, 0);
+		this.flippingPageLeft = new ModelRenderer(this).setTextureOffset(14 * sacle, 20 * sacle);
+		this.flippingPageLeft.addBox(0.01F, -4 * sacle, 0, 5 * sacle, 8 * sacle, 0);
+
+		this.bookSpine = new ModelRenderer(this).setTextureOffset(0, 20 * sacle);
+		this.bookSpine.addBox(0, -5 * sacle, -1 * sacle, 0, 10 * sacle, 2 * sacle);
 
 	}
 
@@ -66,8 +68,8 @@ public class ModelGrimoire extends ModelBase {
 		this.coverLeft.rotateAngleY = -f;
 		this.pagesRight.rotateAngleY = f;
 		this.pagesLeft.rotateAngleY = -f;
-		this.pagesRight.rotationPointX = MathHelper.sin(f);
-		this.pagesLeft.rotationPointX = MathHelper.sin(f);
+		this.pagesRight.rotationPointX = MathHelper.sin(f) * sacle;
+		this.pagesLeft.rotationPointX = MathHelper.sin(f) * sacle;
 		this.flippingPageRight.rotateAngleY = f - f * 2.0F * limbSwingAmount;
 		this.flippingPageLeft.rotateAngleY = f - f * 2.0F * ageInTicks;
 		this.flippingPageRight.rotationPointX = MathHelper.sin(f);
