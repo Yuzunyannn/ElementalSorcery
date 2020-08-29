@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.particle;
+package yuzunyannn.elementalsorcery.render.effect;
 
 import net.minecraft.client.particle.Particle;
 import net.minecraft.entity.Entity;

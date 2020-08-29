@@ -22,6 +22,14 @@ import yuzunyannn.elementalsorcery.render.IRenderItem;
 
 public class RenderHelper {
 
+	static public double getPartialTicks(double n, double prevN, float partialTicks) {
+		return prevN + (n - prevN) * partialTicks;
+	}
+
+	static public float getPartialTicks(float n, float prevN, float partialTicks) {
+		return prevN + (n - prevN) * partialTicks;
+	}
+
 	/** 渲染物品IItemRender */
 	static public void render(ItemStack stack, TextureBinder TEXTURE, ModelBase MODEL, boolean needLighting) {
 		RenderHelper.render(stack, TEXTURE, MODEL, needLighting, 0.038, 0.0175, 0, 0);
@@ -136,5 +144,25 @@ public class RenderHelper {
 				.tex((double) ((u + (float) width) * f), (double) (v * f1)).endVertex();
 		bufferbuilder.pos((double) x, (double) y, 0.0D).tex((double) (u * f), (double) (v * f1)).endVertex();
 		tessellator.draw();
+	}
+
+	public static void drawTexturedRectInCenter(float x, float y, float width, float height, float u, float v,
+			float texWidth, float texHeight, float textureWidth, float textureHeight) {
+		float f = 1.0F / textureWidth;
+		float f1 = 1.0F / textureHeight;
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		float hw = width / 2;
+		float hh = height / 2;
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+		bufferbuilder.pos(x - hw, y + hh, 0.0D).tex(u * f, (v + texHeight) * f1).endVertex();
+		bufferbuilder.pos(x + hw, y + hh, 0.0D).tex((u + texWidth) * f, (v + texHeight) * f1).endVertex();
+		bufferbuilder.pos(x + hw, y - hh, 0.0D).tex((u + texWidth) * f, v * f1).endVertex();
+		bufferbuilder.pos(x - hw, y - hh, 0.0D).tex(u * f, v * f1).endVertex();
+		tessellator.draw();
+	}
+
+	public static void drawTexturedRectInCenter(float x, float y, float width, float height) {
+		drawTexturedRectInCenter(0, 0, width, height, 0, 0, 1, 1, 1, 1);
 	}
 }

@@ -28,10 +28,10 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.render.effect.ParticleSpellbook;
+import yuzunyannn.elementalsorcery.render.effect.ParticleSpellbookSelect;
+import yuzunyannn.elementalsorcery.render.effect.ParticleSpellbookTo;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
-import yuzunyannn.elementalsorcery.render.particle.ParticleSpellbook;
-import yuzunyannn.elementalsorcery.render.particle.ParticleSpellbookSelect;
-import yuzunyannn.elementalsorcery.render.particle.ParticleSpellbookTo;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ItemSpellbook extends Item {

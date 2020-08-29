@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.render.particle.Effect;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
 
 @SideOnly(Side.CLIENT)
 public class EventClient {

@@ -19,6 +19,10 @@ public class ESNetwork {
 
 		registerMessage(MessageEffect.Handler.class, MessageEffect.class, Side.CLIENT);
 
+		registerMessage(MessageEntitySync.Handler.class, MessageEntitySync.class, Side.CLIENT);
+
+		registerMessage(MessageMantraShift.Handler.class, MessageMantraShift.class, Side.SERVER);
+
 		registerMessage(MessageGetBuilingInfo.Handler.class, MessageGetBuilingInfo.class, Side.CLIENT);
 		registerMessage(MessageGetBuilingInfo.Handler.class, MessageGetBuilingInfo.class, Side.SERVER);
 

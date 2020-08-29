@@ -15,8 +15,8 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
-import yuzunyannn.elementalsorcery.render.particle.Effect;
-import yuzunyannn.elementalsorcery.render.particle.EffectElementScrew;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.EffectElementScrew;
 import yuzunyannn.elementalsorcery.util.MultiRets;
 
 public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemStack {
@@ -81,7 +81,6 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 		BlockPos to = rets.get(0, BlockPos.class);
 		Integer toWorldId = rets.get(1, Integer.class);
 		World toWorld = world.getMinecraftServer().getWorld(toWorldId);
-		if (toWorld == null) return;
 		if (!canOpenPortal(to, toWorld)) return;
 		ElementStack get = getElementFromSpPlace(NEED, pos.up(3));
 		if (get.isEmpty()) return;
@@ -90,10 +89,28 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 		enderPower = 0;
 	}
 
+	private boolean checkBlock(BlockPos pos, World world) {
+		for (int x = -2; x <= 2; x++) {
+			for (int y = 0; y <= 4; y++) {
+				for (int z = -2; z <= 2; z++) {
+					BlockPos checkPos = pos.add(x, y, z);
+					if (!world.isAirBlock(checkPos)) return false;
+				}
+			}
+		}
+		return true;
+	}
+
 	public boolean canOpenPortal(BlockPos to, World toWorld) {
+		if (toWorld == null || to == null) return false;
 		if (this.pos.distanceSq(to) < 16 * 16) return false;
 		EntityPortal portal = EntityPortal.findOther(world, new Vec3d(pos.up(3)), 0.5f);
 		if (portal != null) return false;
+		portal = EntityPortal.findOther(toWorld, new Vec3d(to), 1);
+		if (portal != null) return false;
+		// 检测周围是否有方块
+		if (!checkBlock(to, toWorld)) return false;
+		if (!checkBlock(pos.up(3), world)) return false;
 		return true;
 	}
 
@@ -142,6 +159,7 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 		Effect.addEffect(e);
 	}
 
+	/** 记录索引，抽取元素的时候从当前索引进行遍历 */
 	int nowIndex = 0;
 
 	@Override

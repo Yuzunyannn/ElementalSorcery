@@ -72,7 +72,7 @@ public class ModelGrimoire extends ModelBase {
 		this.pagesLeft.rotationPointX = MathHelper.sin(f) * sacle;
 		this.flippingPageRight.rotateAngleY = f - f * 2.0F * limbSwingAmount;
 		this.flippingPageLeft.rotateAngleY = f - f * 2.0F * ageInTicks;
-		this.flippingPageRight.rotationPointX = MathHelper.sin(f);
-		this.flippingPageLeft.rotationPointX = MathHelper.sin(f);
+		this.flippingPageRight.rotationPointX = MathHelper.sin(f) * sacle;
+		this.flippingPageLeft.rotationPointX = MathHelper.sin(f) * sacle;
 	}
 }

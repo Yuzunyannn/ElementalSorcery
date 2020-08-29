@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.particle;
+package yuzunyannn.elementalsorcery.render.effect;
 
 import org.lwjgl.opengl.GL11;
 
@@ -55,7 +55,7 @@ public class EffectElement extends Effect {
 	}
 
 	@Override
-	void doRender(float partialTicks) {
+	protected void doRender(float partialTicks) {
 		double x = this.getRenderX(partialTicks);
 		double y = this.getRenderY(partialTicks);
 		double z = this.getRenderZ(partialTicks);

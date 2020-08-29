@@ -16,8 +16,6 @@ public class ItemStructure implements IItemStructure {
 		return new ItemStructure(stack);
 	}
 
-	
-	
 	static public boolean canStorageItemStructure(ItemStack stack) {
 		return stack.getItem() == ESInitInstance.ITEMS.ITEM_CRYSTAL || stack.getSubCompound("istru") != null;
 	}
@@ -61,8 +59,8 @@ public class ItemStructure implements IItemStructure {
 	}
 
 	@Override
-	public void loadState(ItemStack stack) {
-		NBTTagCompound nbt = stack.getSubCompound("istru");
+	public void loadState(NBTTagCompound nbt) {
+		nbt = nbt.getCompoundTag("istru");
 		if (nbt == null) {
 			this.stack = ItemStack.EMPTY;
 			this.estacks = null;
@@ -81,14 +79,16 @@ public class ItemStructure implements IItemStructure {
 	}
 
 	@Override
-	public void saveState(ItemStack stack) {
-		NBTTagCompound nbt = stack.getOrCreateSubCompound("istru");
+	public void saveState(NBTTagCompound nbt) {
 		if (this.stack.isEmpty()) return;
+		if (!nbt.hasKey("istru", 10)) {
+			NBTTagCompound _new = new NBTTagCompound();
+			nbt.setTag("istru", _new);
+			nbt = _new;
+		}
 		nbt.setTag("item", this.stack.serializeNBT());
 		NBTTagList list = new NBTTagList();
-		for (ElementStack estack : estacks) {
-			list.appendTag(estack.serializeNBT());
-		}
+		for (ElementStack estack : estacks) list.appendTag(estack.serializeNBT());
 		nbt.setTag("els", list);
 		nbt.setInteger("complex", this.complex);
 	}

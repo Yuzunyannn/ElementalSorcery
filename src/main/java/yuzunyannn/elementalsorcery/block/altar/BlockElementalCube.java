@@ -172,7 +172,6 @@ public class BlockElementalCube extends BlockContainer {
 		for (Element e : list) {
 			ItemStack stack = new ItemStack(this);
 			ElementStack estack = new ElementStack(e, 10000, 1000);
-			if (estack.isMagic()) continue;
 			IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 			inventory.setStackInSlot(0, estack);
 			inventory.saveState(stack);

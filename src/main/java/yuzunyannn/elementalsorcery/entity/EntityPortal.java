@@ -20,11 +20,11 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.EffectElementScrew;
+import yuzunyannn.elementalsorcery.render.effect.FirwrokShap;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortalEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortalWorldSecene;
-import yuzunyannn.elementalsorcery.render.particle.Effect;
-import yuzunyannn.elementalsorcery.render.particle.EffectElementScrew;
-import yuzunyannn.elementalsorcery.render.particle.FirwrokShap;
 import yuzunyannn.elementalsorcery.tile.altar.TilePortalAltar;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 

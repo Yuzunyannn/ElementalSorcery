@@ -117,9 +117,7 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 		int size = eorigin.getCount() >= estack.getCount() ? estack.getCount() : eorigin.getCount();
 		ElementStack tmp = eorigin.copy();
 		tmp.setCount(size);
-		if (!simulate) {
-			eorigin.grow(-size);
-		}
+		if (!simulate) eorigin.grow(-size);
 		return tmp;
 	}
 
@@ -130,21 +128,14 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 	}
 
 	@Override
-	public void loadState(ItemStack stack) {
-		NBTTagCompound nbt = stack.getSubCompound("ele_inv");
-		if (nbt != null) {
-			this.deserializeNBT(nbt);
-		}
+	public void loadState(NBTTagCompound nbt) {
+		nbt = nbt.getCompoundTag("ele_inv");
+		if (nbt != null) this.deserializeNBT(nbt);
 	}
 
 	@Override
-	public void saveState(ItemStack stack) {
+	public void saveState(NBTTagCompound nbt) {
 		NBTTagCompound dataNBT = this.serializeNBT();
-		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null) {
-			stack.setTagCompound(new NBTTagCompound());
-			nbt = stack.getTagCompound();
-		}
 		nbt.setTag("ele_inv", dataNBT);
 	}
 

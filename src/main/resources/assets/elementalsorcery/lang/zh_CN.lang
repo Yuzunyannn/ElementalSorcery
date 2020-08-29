@@ -46,6 +46,9 @@ item.natureDust.nature.name=自然粉尘
 item.natureDust.explore.name=求知粉尘
 item.natureDust.exploreAdv.name=探索粉尘
 item.grimoire.name=魔典
+item.ancientPaper.normal.name=古卷
+item.ancientPaper.new.name=空白书写纸
+item.ancientPaper.newWritten.name=书写纸
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -124,6 +127,11 @@ element.earth.name=土
 element.air.name=气
 element.metal.name=金
 element.knowledge.name=知识
+
+mantra.enderTeleport.name=魔影移动
+mantra.enderTeleport.describe=瞬移再也不是末影人的特权了。嗯？为啥不能在雨天使用...
+mantra.float.name=漂浮
+mantra.float.describe=我飞起来了
 
 key.mantra.shitf=魔典咒文切换
 
@@ -235,6 +243,11 @@ info.crystal.percept=感知的频率：%.1f
 info.resonantCrystal=这种水晶看着就想把它扔出去...
 info.page.need=查看这张羊皮卷前你应当先查看：
 info.elfPurse.coin=拥有%d元
+info.grimoire.element=魔典内蕴含的元素：
+info.grimoire.record=魔典中记载着%d个咒文
+info.grimoire.nothing=魔典中什么也没有写
+info.grimoire.current=当前咒文：%s
+info.grimoire.error=当前咒文已失效
 
 say.scholar.buy=别说了，我要买羊皮卷
 say.scholar.konw=我明白了

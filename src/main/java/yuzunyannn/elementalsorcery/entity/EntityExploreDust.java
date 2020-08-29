@@ -18,9 +18,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.render.particle.Effect;
-import yuzunyannn.elementalsorcery.render.particle.EffectElementMove;
-import yuzunyannn.elementalsorcery.render.particle.FirwrokShap;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
+import yuzunyannn.elementalsorcery.render.effect.FirwrokShap;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 public class EntityExploreDust extends Entity implements IEntityAdditionalSpawnData {

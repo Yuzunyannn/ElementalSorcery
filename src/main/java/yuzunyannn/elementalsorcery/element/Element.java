@@ -11,10 +11,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.register.ESRegister;
+import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
-public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<Element> {
+public class Element extends IForgeRegistryEntry.Impl<Element> {
 
 	protected Random rand = new Random();
 
@@ -178,7 +180,14 @@ public class Element extends net.minecraftforge.registries.IForgeRegistryEntry.I
 				mc.fontRenderer.drawString(s, x + +19 - 2 - mc.fontRenderer.getStringWidth(s), y - 3, 0xfff993, true);
 			}
 		}
+	}
 
+	/** 绘画元素 ，在任何地方 */
+	@SideOnly(Side.CLIENT)
+	public void drawElemntIcon(ElementStack estack, float alpha) {
+		ResourceLocation res = this.getIconResourceLocation();
+		Minecraft.getMinecraft().getTextureManager().bindTexture(res);
+		RenderHelper.drawTexturedRectInCenter(0, 0, 16, 16);
 	}
 
 }

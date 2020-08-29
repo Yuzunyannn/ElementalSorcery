@@ -65,6 +65,7 @@ import yuzunyannn.elementalsorcery.element.ElementMetal;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.ElementWater;
 import yuzunyannn.elementalsorcery.element.ElementWood;
+import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemGrimoire;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
@@ -229,6 +230,7 @@ public class ESInitInstance {
 		ITEMS.ELF_PURSE = new ItemElfPurse();
 		ITEMS.NATURE_CRYSTAL = new ItemNatureCrystal();
 		ITEMS.NATURE_DUST = new ItemNatureDust();
+		ITEMS.ANCIENT_PAPER = new ItemAncientPaper();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();

@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.api.crafting;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 
 /** 从物品更新状态[由于物品的cap不会自动同步！！！不会自动同步！！] （当然，这个接口不仅仅作用在mc的能力系统上） */
 public interface IItemCapbiltitySyn {
@@ -15,8 +16,24 @@ public interface IItemCapbiltitySyn {
 	/**
 	 * 从stack中读取数据
 	 */
-	void loadState(ItemStack stack);
+	default void loadState(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt != null) this.loadState(nbt);
+	}
 
 	/** 将数据写入stack */
-	void saveState(ItemStack stack);
+	default void saveState(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) {
+			stack.setTagCompound(new NBTTagCompound());
+			nbt = stack.getTagCompound();
+		}
+		this.saveState(nbt);
+	}
+
+	/** 将数据从nbt中读取 */
+	void loadState(NBTTagCompound nbt);
+
+	/** 将数据写入nbt */
+	void saveState(NBTTagCompound nbt);
 }

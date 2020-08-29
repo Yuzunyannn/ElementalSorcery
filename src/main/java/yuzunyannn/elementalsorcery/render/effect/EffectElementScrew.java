@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.particle;
+package yuzunyannn.elementalsorcery.render.effect;
 
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -66,7 +66,7 @@ public class EffectElementScrew extends EffectElement {
 	}
 
 	@Override
-	void doRender(float partialTicks) {
+	protected void doRender(float partialTicks) {
 		float rotate = this.prevRotate + (this.rotate - this.prevRotate) * partialTicks;
 		double r = this.prevR + (this.r - this.prevR) * partialTicks;
 		double x = to.x + r * MathHelper.cos(rotate) * a.x + r * MathHelper.sin(rotate) * b.x;

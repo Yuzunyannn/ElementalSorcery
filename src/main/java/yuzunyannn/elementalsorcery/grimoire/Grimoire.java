@@ -40,11 +40,11 @@ public class Grimoire {
 	}
 
 	public void load(ItemStack stack) {
-
+		if (inventory != null) inventory.loadState(stack);
 	}
 
 	public void save(ItemStack stack) {
-
+		if (inventory != null) inventory.saveState(stack);
 	}
 
 	// 保存能力

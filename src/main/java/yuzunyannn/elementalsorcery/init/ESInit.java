@@ -53,7 +53,6 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.elf.AutoName;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProRegister;
 import yuzunyannn.elementalsorcery.event.EventClient;
@@ -63,11 +62,11 @@ import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
+import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoire;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSupremeTable;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
-import yuzunyannn.elementalsorcery.render.particle.Effects;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileAnalysisAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileBuildingAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileCrystalFlower;
@@ -140,7 +139,7 @@ public class ESInit {
 		// 注册tileentity
 		registerAllTiles();
 		// 注册元素
-		registerAllElements();
+		ElementRegister.registerAll();
 		// 注册能力
 		registerAllCapability();
 		// 矿物词典注册
@@ -152,6 +151,8 @@ public class ESInit {
 		AutoName.init();
 		// 注册默认所有建筑
 		BuildingLib.registerAll();
+		// 注册咒文
+		MantraRegister.registerAll();
 		// 测试村庄相关
 		VillegeRegistries.registerAll();
 		// 注册战利品
@@ -280,19 +281,6 @@ public class ESInit {
 		register(TilePortalAltar.class, "PortalAltar");
 	}
 
-	static void registerAllElements() {
-		register(ESInitInstance.ELEMENTS.VOID);
-		register(ESInitInstance.ELEMENTS.MAGIC);
-		register(ESInitInstance.ELEMENTS.ENDER);
-		register(ESInitInstance.ELEMENTS.FIRE);
-		register(ESInitInstance.ELEMENTS.WATER);
-		register(ESInitInstance.ELEMENTS.AIR);
-		register(ESInitInstance.ELEMENTS.EARTH);
-		register(ESInitInstance.ELEMENTS.METAL);
-		register(ESInitInstance.ELEMENTS.WOOD);
-		register(ESInitInstance.ELEMENTS.KNOWLEDGE);
-	}
-
 	static void registerAllCapability() {
 		register(IElementInventory.class, new ElementInventory.Storage(), ElementInventory.class);
 		register(Spellbook.class, new Spellbook.Storage(), Spellbook.class);
@@ -343,6 +331,9 @@ public class ESInit {
 		registerRender(ITEMS.NATURE_DUST, 0, "nature_dust");
 		registerRender(ITEMS.NATURE_DUST, 1, "explore_dust");
 		registerRender(ITEMS.NATURE_DUST, 2, "explore_adv_dust");
+		registerRender(ITEMS.ANCIENT_PAPER, 0, "ancient_paper");
+		registerRender(ITEMS.ANCIENT_PAPER, 1, "ancient_paper_new");
+		registerRender(ITEMS.ANCIENT_PAPER, 2, "ancient_paper_new_written");
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -450,10 +441,6 @@ public class ESInit {
 				return icalss.newInstance();
 			}
 		});
-	}
-
-	private static void register(Element element) {
-		ElementRegister.instance.register(element);
 	}
 
 	private static void register(Item item) {

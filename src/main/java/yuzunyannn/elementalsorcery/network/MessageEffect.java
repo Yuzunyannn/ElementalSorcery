@@ -12,9 +12,10 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.render.particle.Effects;
+import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
+/** 服务器向客户端同步特效数据 */
 public class MessageEffect implements IMessage {
 
 	public NBTTagCompound nbt;

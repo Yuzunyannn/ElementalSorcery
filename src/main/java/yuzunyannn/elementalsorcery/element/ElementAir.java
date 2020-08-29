@@ -9,8 +9,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.element.IElementSpell;
-import yuzunyannn.elementalsorcery.render.particle.Effect;
-import yuzunyannn.elementalsorcery.render.particle.EffectResonance;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.EffectResonance;
 
 public class ElementAir extends ElementInner {
 

@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.particle;
+package yuzunyannn.elementalsorcery.render.effect;
 
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;

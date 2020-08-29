@@ -25,8 +25,8 @@ import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
-import yuzunyannn.elementalsorcery.render.particle.Effect;
-import yuzunyannn.elementalsorcery.render.particle.EffectResonance;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.EffectResonance;
 import yuzunyannn.elementalsorcery.tile.TileLifeDirt;
 
 public class TileMDResonantIncubator extends TileMDBase implements ITickable, IGetItemStack {

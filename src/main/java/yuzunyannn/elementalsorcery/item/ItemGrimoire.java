@@ -1,26 +1,76 @@
 package yuzunyannn.elementalsorcery.item;
 
-import net.minecraft.entity.EntityLivingBase;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
+import yuzunyannn.elementalsorcery.grimoire.Mantra;
+import yuzunyannn.elementalsorcery.util.MultiRets;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ItemGrimoire extends Item {
 
 	public ItemGrimoire() {
 		this.setUnlocalizedName("grimoire");
 		this.setMaxStackSize(1);
+	}
+
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		if (this.isInCreativeTab(tab)) {
+			// 测试
+			ItemStack s = new ItemStack(this);
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setInteger("at", 0);
+			NBTTagList list = new NBTTagList();
+
+			Function<String, Void> addOnce = name -> {
+				NBTTagCompound m = new NBTTagCompound();
+				m.setString("id", new ResourceLocation(ElementalSorcery.MODID, name).toString());
+				list.appendTag(m);
+				return null;
+			};
+			addOnce.apply("TEST");
+			addOnce.apply("ender_teleport");
+			addOnce.apply("float");
+
+			nbt.setTag("mantra", list);
+			s.setTagCompound(nbt);
+
+			Grimoire grimoire = s.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+			grimoire.getInventory().insertElement(new ElementStack(ESObjects.ELEMENTS.ENDER, 10000, 100), false);
+			grimoire.getInventory().insertElement(new ElementStack(ESObjects.ELEMENTS.AIR, 10000, 100), false);
+			grimoire.save(s);
+
+			items.add(s);
+		}
 	}
 
 	public IElementInventory initElementInventory(ItemStack stack) {
@@ -43,6 +93,35 @@ public class ItemGrimoire extends Item {
 	}
 
 	@Override
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt != null) {
+			NBTTagList mantras = nbt.getTagList("mantra", 10);
+			int n = mantras.tagCount();
+			if (n == 0) tooltip.add(TextFormatting.GOLD + I18n.format("info.grimoire.nothing"));
+			else {
+				tooltip.add(TextFormatting.GOLD + I18n.format("info.grimoire.record", n));
+				Mantra m = Mantra.getFromNBT(getOriginNBT(stack));
+				if (m == null) tooltip.add(TextFormatting.AQUA + I18n.format("info.grimoire.error"));
+				else {
+					String name = I18n.format(m.getUnlocalizedName() + ".name");
+					tooltip.add(TextFormatting.AQUA + I18n.format("info.grimoire.current", name));
+					String describe = m.getUnlocalizedName() + ".describe";
+					if (I18n.hasKey(describe)) tooltip.add(I18n.format(describe));
+				}
+			}
+		} else tooltip.add(TextFormatting.GOLD + I18n.format("info.grimoire.nothing"));
+		// 元素信息
+		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+		if (grimoire == null) return;
+		grimoire.load(stack);
+		IElementInventory inventory = grimoire.getInventory();
+		if (inventory == null) return;
+		tooltip.add(TextFormatting.YELLOW + I18n.format("info.grimoire.element"));
+		ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
+	}
+
+	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		ItemStack stack = playerIn.getHeldItem(handIn);
 		// 没有能力的，可能是别的内容
@@ -53,14 +132,52 @@ public class ItemGrimoire extends Item {
 		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
 		// 开始释放！
 		grimoire.load(stack);
-		EntityGrimoire.start(worldIn, playerIn);
+		// 获取咒文
+		NBTTagCompound originData = getOriginNBT(stack);
+		Mantra mantra = Mantra.getFromNBT(originData);
+		if (mantra == null) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+		if (!mantra.canStart(playerIn)) return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+		// 开始
+		EntityGrimoire.start(worldIn, playerIn, mantra, originData);
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}
 
-	@Override
-	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
-		if (entityLiving.world.isRemote) return;
-		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
-		grimoire.save(stack);
+	/** 根据stack获取当前使用的咒文数据 */
+	@Nullable
+	public static NBTTagCompound getOriginNBT(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) return null;
+		NBTTagList mantras = nbt.getTagList("mantra", 10);
+		int at = nbt.getShort("at");
+		return mantras.getCompoundTagAt(at);
 	}
+
+	public static void shiftMantra(ItemStack stack, short to) {
+		if (stack.isEmpty()) return;
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) return;
+		NBTTagList list = nbt.getTagList("mantra", 10);
+		if (list.hasNoTags()) return;
+		if (to < 0 || to >= list.tagCount()) return;
+		nbt.setShort("at", to);
+	}
+
+	@Nonnull
+	public static MultiRets getAllMantra(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) return MultiRets.ret();
+		NBTTagList mantras = nbt.getTagList("mantra", 10);
+		ArrayList<Mantra> list = new ArrayList<>(mantras.tagCount());
+		ArrayList<NBTTagCompound> dataList = new ArrayList<>(mantras.tagCount());
+		for (int i = 0; i < mantras.tagCount(); i++) {
+			NBTTagCompound data = mantras.getCompoundTagAt(i);
+			Mantra m = Mantra.getFromNBT(data);
+			if (m != null) {
+				list.add(m);
+				dataList.add(data);
+			}
+		}
+		return MultiRets.ret(list, dataList, nbt.getShort("at"));
+	}
+
 }

@@ -9,6 +9,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -51,7 +52,7 @@ public class ElementHelper {
 					I18n.format(estack.getElementUnlocalizedName()), estack.getCount(), estack.getPower());
 			else str = I18n.format("info.elementalCrystal.hasnp", I18n.format(estack.getElementUnlocalizedName()),
 					estack.getCount());
-			tooltip.add("§c" + str);
+			tooltip.add(TextFormatting.RED + str);
 		}
 	}
 

@@ -46,6 +46,9 @@ item.natureDust.nature.name=自然粉塵
 item.natureDust.explore.name=知識求め粉塵
 item.natureDust.exploreAdv.name=探索し粉塵
 item.grimoire.name=魔典
+item.ancientPaper.normal.name=古巻
+item.ancientPaper.new.name=空白の呪文の紙
+item.ancientPaper.newWritten.name=呪文の紙
 
 tile.elementalCube.name=エレメント立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -125,6 +128,11 @@ element.air.name=気
 element.metal.name=金
 element.knowledge.name=知識
 
+mantra.enderTeleport.name=エンダー移動
+mantra.enderTeleport.describe=テレポートはエンダーマンの特権ではなくなった。けれど、なぜ雨の日で使えないですか？
+mantra.float.name=浮遊
+mantra.float.describe=私は浮遊している
+
 key.mantra.shitf=魔典に呪文を切り替い
 
 info.element.spell.fire=指定されたブロックに火をつける
@@ -135,6 +143,11 @@ info.element.spell.knowledge=知识エレメント可以随时随地的让ステ
 info.element.spell.air=瞬间改变周围的空气流动，让スティーブ急速减速
 info.element.spell.metal=点石成金，エレメント与矿石之类的方块发生共鸣，改变它们的構造，从而产生新的矿石
 info.element.spell.earth=让方块，坠落吧
+info.grimoire.element=魔典に含まれている元素：
+info.grimoire.record=魔典には%dの呪文が記載されています
+info.grimoire.nothing=魔典には何も書かれていません
+info.grimoire.current=現在の呪文：%s
+info.grimoire.error=現在の呪文は失効した。
 
 entity.Villager.paperman=古纸收集者
 entity.Villager.eslearner=エレメント知识学者

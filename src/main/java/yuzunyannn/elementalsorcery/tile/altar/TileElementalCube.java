@@ -17,7 +17,7 @@ import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
-import yuzunyannn.elementalsorcery.render.particle.EffectElementFly;
+import yuzunyannn.elementalsorcery.render.effect.EffectElementFly;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.obj.Vertex;
@@ -62,7 +62,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 						from.getZ() + 0.25 + Math.random() * 0.5),
 				new Vec3d(pto.getX() + 0.5, pto.getY() + 1.0, pto.getZ() + 0.5));
 		effect.setColor(color);
-		yuzunyannn.elementalsorcery.render.particle.Effect.addEffect(effect);
+		yuzunyannn.elementalsorcery.render.effect.Effect.addEffect(effect);
 
 	}
 

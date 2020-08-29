@@ -46,6 +46,9 @@ item.natureDust.nature.name=Nature Dust
 item.natureDust.explore.name=Seek Dust
 item.natureDust.exploreAdv.name=Explore Dust
 item.grimoire.name=Grimoire
+item.ancientPaper.normal.name=Ancient Paper
+item.ancientPaper.new.name=Blank Writing Paper
+item.ancientPaper.newWritten.name=Writing Paper
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -125,6 +128,11 @@ element.air.name=Air
 element.metal.name=Metal
 element.knowledge.name=Knowledge
 
+mantra.enderTeleport.name=Ender Move
+mantra.enderTeleport.describe=Teleport is no longer the privilege of Enderman. Well, why can't be used in rainy days?
+mantra.float.name=Float
+mantra.float.describe=I can float.
+
 key.mantra.shitf=Shift Mantra in Grimoire
 
 info.element.spell.fire=Ignite the specified block
@@ -135,6 +143,11 @@ info.element.spell.knowledge=知识元素可以随时随地的让史蒂夫进行
 info.element.spell.air=瞬间改变周围的空气流动，让史蒂夫急速减速
 info.element.spell.metal=点石成金，元素与矿石之类的方块发生共鸣，改变它们的结构，从而产生新的矿石
 info.element.spell.earth=让方块，坠落吧
+info.grimoire.element=Element in Grimoire:
+info.grimoire.record=There are %d mantra recorded in this grimoire.
+info.grimoire.nothing=There's nothing in grimoire.
+info.grimoire.current=Current mantra: %s
+info.grimoire.error=Current mantra is invalid.
 
 entity.Villager.paperman=PaperMan
 entity.Villager.eslearner=ElementLearner

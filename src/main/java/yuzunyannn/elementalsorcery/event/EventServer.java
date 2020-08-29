@@ -49,9 +49,30 @@ public class EventServer {
 		tickList.add(task);
 	}
 
+	static public void addTickTask(ITickTask task, int tickout) {
+		if (task == null) return;
+		if (tickout <= 0) tickList.add(task);
+		else tickList.add(new ITickTask() {
+			int tick = 0;
+
+			@Override
+			public int onTick() {
+				if (tick < tickout) {
+					tick++;
+					return ITickTask.SUCCESS;
+				}
+				return task.onTick();
+			}
+		});
+	}
+
 	static public void addTickTask(ITickTask.ITickTaskOnce task) {
 		if (task == null) return;
 		tickList.add(task);
+	}
+
+	static public void addTickTask(ITickTask.ITickTaskOnce task, int tickout) {
+		addTickTask((ITickTask) task, tickout);
 	}
 
 	@SubscribeEvent

@@ -13,7 +13,7 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.render.particle.FirwrokShap;
+import yuzunyannn.elementalsorcery.render.effect.FirwrokShap;
 
 public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 

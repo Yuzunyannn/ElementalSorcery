@@ -33,10 +33,10 @@ import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
+import yuzunyannn.elementalsorcery.render.effect.EffectElement;
+import yuzunyannn.elementalsorcery.render.effect.Effects;
+import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
-import yuzunyannn.elementalsorcery.render.particle.EffectElement;
-import yuzunyannn.elementalsorcery.render.particle.Effects;
-import yuzunyannn.elementalsorcery.render.particle.FireworkEffect;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 
 public class ElfProfessionMaster extends ElfProfession {
