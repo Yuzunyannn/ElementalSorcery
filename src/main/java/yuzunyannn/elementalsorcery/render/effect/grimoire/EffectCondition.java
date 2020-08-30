@@ -7,7 +7,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.grimoire.mantra.MantraDataEffect;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 
 @SideOnly(Side.CLIENT)
@@ -36,6 +35,10 @@ public abstract class EffectCondition extends Effect {
 		this.condition = condition;
 	}
 
+	public Function<Void, Boolean> getCondition() {
+		return condition;
+	}
+	
 	public boolean isEnd() {
 		return condition == null ? true : (condition.apply(null) ? false : true);
 	}
@@ -47,7 +50,7 @@ public abstract class EffectCondition extends Effect {
 
 	public static class ConditionEntityAction implements Function<Void, Boolean> {
 		public final EntityLivingBase entity;
-		protected boolean isFinish = false;
+		public boolean isFinish = false;
 
 		public ConditionEntityAction(EntityLivingBase entity) {
 			this.entity = entity;
@@ -57,23 +60,6 @@ public abstract class EffectCondition extends Effect {
 		public Boolean apply(Void t) {
 			if (isFinish) return false;
 			return !(isFinish = !entity.isHandActive());
-		}
-	}
-
-	public static class ConditionEntityActionAndCanContinue extends ConditionEntityAction {
-
-		public final MantraDataEffect data;
-
-		public ConditionEntityActionAndCanContinue(EntityLivingBase entity, MantraDataEffect data) {
-			super(entity);
-			this.data = data;
-		}
-
-		@Override
-		public Boolean apply(Void t) {
-			if (isFinish) return false;
-			isFinish = !data.isMarkContinue();
-			return super.apply(t);
 		}
 	}
 

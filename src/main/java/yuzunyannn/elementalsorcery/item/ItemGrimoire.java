@@ -57,7 +57,7 @@ public class ItemGrimoire extends Item {
 				list.appendTag(m);
 				return null;
 			};
-			addOnce.apply("TEST");
+			addOnce.apply("sprint");
 			addOnce.apply("ender_teleport");
 			addOnce.apply("float");
 

@@ -5,6 +5,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.grimoire.Mantra;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloat;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSprint;
 
 public class MantraRegister extends ESImplRegister<Mantra> {
 
@@ -20,8 +21,8 @@ public class MantraRegister extends ESImplRegister<Mantra> {
 	}
 
 	public static void registerAll() {
-		reg(new Mantra(), "TEST");
 		reg(new MantraEnderTeleport(), "ender_teleport");
 		reg(new MantraFloat(), "float");
+		reg(new MantraSprint(), "sprint");
 	}
 }

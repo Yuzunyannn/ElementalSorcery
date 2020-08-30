@@ -15,6 +15,7 @@ public class Buildings {
 	static public Building CRYSTAL_GARDEN;
 	static public Building RESONANT_INCUBATOR;
 	static public Building PORTAL_ALTAR;
+	static public Building TRANSCRIBE_ALTAR;
 	
 	static public void init() {
 		INFUSION = BuildingLib.instance.getBuilding("infusion");
@@ -31,6 +32,7 @@ public class Buildings {
 		CRYSTAL_GARDEN = BuildingLib.instance.getBuilding("crystal_garden");
 		RESONANT_INCUBATOR = BuildingLib.instance.getBuilding("resonant_incubator");
 		PORTAL_ALTAR = BuildingLib.instance.getBuilding("portal_altar");
+		TRANSCRIBE_ALTAR = BuildingLib.instance.getBuilding("transcribe_altar");
 	}
 
 //	private static void horizontalS(IBlockState state, Building building, int d, int y) {

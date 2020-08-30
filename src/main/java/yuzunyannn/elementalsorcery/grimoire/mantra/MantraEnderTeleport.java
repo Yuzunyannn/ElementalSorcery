@@ -2,11 +2,9 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
@@ -17,67 +15,28 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
-import yuzunyannn.elementalsorcery.grimoire.Mantra;
+import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectCondition;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectElementMagicCircle;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectPlayerAt;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
-public class MantraEnderTeleport extends Mantra {
+public class MantraEnderTeleport extends MantraCommon {
 
 	public MantraEnderTeleport() {
 		this.setUnlocalizedName("enderTeleport");
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public IMantraData getData(NBTTagCompound origin, World world, ICaster caster) {
-		return new MantraDataEffect(caster);
-	}
-
-	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
-		MantraDataEffect dataEffect = (MantraDataEffect) data;
+		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		ElementStack need = new ElementStack(ESInitInstance.ELEMENTS.ENDER, 15, 50);
 		ElementStack get = caster.iWantSomeElement(need, false);
 		dataEffect.markContinue(!get.isEmpty());
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void onSpelling(World world, IMantraData data, ICaster caster) {
-		if (!world.isRemote) return;
-		if (caster.iWantKnowCastTick() > 5) {
-			MantraDataEffect dataEffect = (MantraDataEffect) data;
-			if (!dataEffect.isMarkContinue()) return;
-			// 一些特效
-			if (!dataEffect.hasMarkEffect(0)) {
-				Entity entity = caster.iWantCaster();
-				if (entity instanceof EntityLivingBase) {
-					EntityLivingBase eb = (EntityLivingBase) entity;
-					EffectCondition effect = new EffectElementMagicCircle(world, eb, ESInitInstance.ELEMENTS.ENDER);
-					effect.setCondition(new EffectCondition.ConditionEntityActionAndCanContinue(eb, dataEffect));
-					dataEffect.addEffect(effect, 0);
-				}
-
-			}
-			if (caster.iWantCaster() == Minecraft.getMinecraft().player) {
-				if (!dataEffect.hasMarkEffect(1)) {
-					Entity entity = caster.iWantCaster();
-					if (entity instanceof EntityLivingBase) {
-						EntityLivingBase eb = (EntityLivingBase) entity;
-						EffectPlayerAt effect = new EffectPlayerAt(world, caster);
-						effect.setCondition(new EffectCondition.ConditionEntityActionAndCanContinue(eb, dataEffect));
-						dataEffect.addEffect(effect, 1);
-					}
-				}
-			}
-		}
 	}
 
 	@Override
@@ -130,6 +89,22 @@ public class MantraEnderTeleport extends Mantra {
 			entity.setPositionAndUpdate(posX, posY, posZ);
 			entity.fallDistance = 0.0F;
 		}
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean onSpellingEffect(World world, IMantraData data, ICaster caster) {
+		if (super.onSpellingEffect(world, data, caster)) return true;
+		MantraDataCommon dataEffect = (MantraDataCommon) data;
+		if (caster.iWantCaster() == Minecraft.getMinecraft().player)
+			if (!dataEffect.hasMarkEffect(1)) dataEffect.addEffect(new EffectPlayerAt(world, caster), 1);
+		return false;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public Element getMagicCircle() {
+		return ESInitInstance.ELEMENTS.ENDER;
 	}
 
 	@Override

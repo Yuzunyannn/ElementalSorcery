@@ -3,12 +3,15 @@ package yuzunyannn.elementalsorcery.building;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCarpet;
 import net.minecraft.block.BlockStaticLiquid;
+import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -340,6 +343,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 	/** 遍历用类 */
 	public static class BuildingBlocks {
 		private Iterator<Map.Entry<BlockPos, Integer>> iter = null;
+		private List<Map.Entry<BlockPos, Integer>> atfer = null;
 		private Map.Entry<BlockPos, Integer> entry = null;
 		private final Building building;
 		private BlockPos off = BlockPos.ORIGIN;
@@ -350,13 +354,36 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		}
 
 		public boolean next() {
-			if (iter == null) iter = building.blockMap.entrySet().iterator();
-			if (iter.hasNext()) {
+			if (iter == null) {
+				iter = building.blockMap.entrySet().iterator();
+				atfer = new LinkedList<>();
+			}
+			// 是否拥有下一个
+			while (iter.hasNext()) {
 				entry = iter.next();
+				if (atfer != null && needToLater()) {
+					atfer.add(entry);
+					continue;
+				}
+				return true;
+			}
+			// 处理after
+			if (atfer != null && !atfer.isEmpty()) {
+				iter = atfer.iterator();
+				iter.next();
+				atfer = null;
 				return true;
 			}
 			iter = null;
 			entry = null;
+			atfer = null;
+			return false;
+		}
+
+		protected boolean needToLater() {
+			IBlockState state = this.getState();
+			Block block = state.getBlock();
+			if (block instanceof BlockCarpet || block instanceof BlockTorch) return true;
 			return false;
 		}
 

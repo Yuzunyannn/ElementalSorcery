@@ -10,6 +10,7 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
 import net.minecraftforge.event.terraingen.OreGenEvent;
+import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -69,5 +70,14 @@ public class WorldGeneratorES {
 				generator.generate(world, rand, blockpos);
 			}
 		}
+	}
+
+	// 生成填充
+	static public class genPopulate {
+		@SubscribeEvent
+		public void onPopulateGen(PopulateChunkEvent.Post event) {
+			
+		}
+
 	}
 }

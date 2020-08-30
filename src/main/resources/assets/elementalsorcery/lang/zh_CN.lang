@@ -132,6 +132,8 @@ mantra.enderTeleport.name=魔影移动
 mantra.enderTeleport.describe=瞬移再也不是末影人的特权了。嗯？为啥不能在雨天使用...
 mantra.float.name=漂浮
 mantra.float.describe=我飞起来了
+mantra.sprint.name=前冲
+mantra.sprint.describe=更便捷的移动
 
 key.mantra.shitf=魔典咒文切换
 
@@ -177,6 +179,7 @@ arc.analysisAltarAdd.name=结构解析祭坛附属石柱
 arc.crystalGarden.name=水晶花园
 arc.resonantIncubator.name=共鸣培养祭坛
 arc.portalAltar.name=折光祭坛
+arc.transcribeAltar.name=撰录祭坛
 
 info.none=无
 info.unknow=未知
@@ -248,6 +251,8 @@ info.grimoire.record=魔典中记载着%d个咒文
 info.grimoire.nothing=魔典中什么也没有写
 info.grimoire.current=当前咒文：%s
 info.grimoire.error=当前咒文已失效
+info.ancientPaper.mantra=这个咒文似乎被称作%s
+info.ancientPaper.record=这张古卷上可阅读的部分似乎只有%d%%~%d%%
 
 say.scholar.buy=别说了，我要买羊皮卷
 say.scholar.konw=我明白了
@@ -350,6 +355,8 @@ page.magicPl=魔力平台
 page.magicPl.ct=魔力平台上可以放上一个物品。\n因为，魔力平台可以被某些方块感知到，这些方块就可以获取到平台上的物品进行操作了。
 page.magicCrystal=魔力水晶
 page.magicCrystal.ct=通过给带有魔力的蓝晶石再次注魔，从而得到的水晶，可以合成各种魔力物品。\n注魔条件：少雨地区的白天
+page.natureCrystal=自然水晶
+page.natureCrystal.ct=通过给甘蔗注魔，可以得到自然水晶。自然水晶可以与自然发生共鸣，从而获取到某个地点周围的相关信息。\n注魔条件：任何时间地点
 page.estone=魔力石英
 page.estone.ct=通过魔力水晶和石英制作成的，带有魔力的石英块，是建造魔力建筑的必备材料。\n[使用该物品可以做3级仪了]
 page.azureCrystal=湛蓝水晶

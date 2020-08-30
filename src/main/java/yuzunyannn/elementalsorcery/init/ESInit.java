@@ -164,6 +164,7 @@ public class ESInit {
 		// 注册世界生成
 		MinecraftForge.ORE_GEN_BUS.register(new WorldGeneratorES.genOre());
 		MinecraftForge.EVENT_BUS.register(new WorldGeneratorES.genDecorate());
+		MinecraftForge.EVENT_BUS.register(new WorldGeneratorES.genPopulate());
 		// 注册网络
 		ESNetwork.registerAll();
 		// 注册事件
