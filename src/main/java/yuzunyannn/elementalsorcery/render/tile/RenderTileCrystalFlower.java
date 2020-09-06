@@ -15,6 +15,7 @@ public class RenderTileCrystalFlower extends TileEntitySpecialRenderer<TileCryst
 	@Override
 	public void render(TileCrystalFlower tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
+		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
 		if (!tile.needDraw()) return;
 		ItemStack stack = tile.getCrystal();
 		if (stack.isEmpty()) return;

@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.item;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,19 +19,17 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.crafting.IItemCapbiltitySyn;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.Mantra;
-import yuzunyannn.elementalsorcery.util.MultiRets;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ItemGrimoire extends Item {
@@ -48,21 +45,21 @@ public class ItemGrimoire extends Item {
 			// 测试
 			ItemStack s = new ItemStack(this);
 			NBTTagCompound nbt = new NBTTagCompound();
-			nbt.setInteger("at", 0);
-			NBTTagList list = new NBTTagList();
-
-			Function<String, Void> addOnce = name -> {
-				NBTTagCompound m = new NBTTagCompound();
-				m.setString("id", new ResourceLocation(ElementalSorcery.MODID, name).toString());
-				list.appendTag(m);
-				return null;
-			};
-			addOnce.apply("sprint");
-			addOnce.apply("ender_teleport");
-			addOnce.apply("float");
-
-			nbt.setTag("mantra", list);
 			s.setTagCompound(nbt);
+//			nbt.setInteger("at", 0);
+//			NBTTagList list = new NBTTagList();
+//
+//			Function<String, Void> addOnce = name -> {
+//				NBTTagCompound m = new NBTTagCompound();
+//				m.setString("id", new ResourceLocation(ElementalSorcery.MODID, name).toString());
+//				list.appendTag(m);
+//				return null;
+//			};
+//			addOnce.apply("sprint");
+//			addOnce.apply("ender_teleport");
+//			addOnce.apply("float");
+//
+//			nbt.setTag("mantra", list);
 
 			Grimoire grimoire = s.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
 			grimoire.getInventory().insertElement(new ElementStack(ESObjects.ELEMENTS.ENDER, 10000, 100), false);
@@ -96,6 +93,8 @@ public class ItemGrimoire extends Item {
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt != null) {
+			int cap = nbt.getShort("capacity");
+			if (cap < 20) tooltip.add(I18n.format("info.grimoire.blank", 20 - cap));
 			NBTTagList mantras = nbt.getTagList("mantra", 10);
 			int n = mantras.tagCount();
 			if (n == 0) tooltip.add(TextFormatting.GOLD + I18n.format("info.grimoire.nothing"));
@@ -162,22 +161,112 @@ public class ItemGrimoire extends Item {
 		nbt.setShort("at", to);
 	}
 
-	@Nonnull
-	public static MultiRets getAllMantra(ItemStack stack) {
-		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null) return MultiRets.ret();
-		NBTTagList mantras = nbt.getTagList("mantra", 10);
-		ArrayList<Mantra> list = new ArrayList<>(mantras.tagCount());
-		ArrayList<NBTTagCompound> dataList = new ArrayList<>(mantras.tagCount());
-		for (int i = 0; i < mantras.tagCount(); i++) {
-			NBTTagCompound data = mantras.getCompoundTagAt(i);
-			Mantra m = Mantra.getFromNBT(data);
-			if (m != null) {
-				list.add(m);
-				dataList.add(data);
+	/** 多数咒文据处理 */
+	static public class MantrasData implements IItemCapbiltitySyn {
+
+		public static class Info {
+			Mantra mantra;
+			NBTTagCompound data;
+
+			public Info(Mantra mantra, NBTTagCompound data) {
+				this.mantra = mantra;
+				this.data = data;
+			}
+
+			public Mantra getMantra() {
+				return mantra;
+			}
+
+			public NBTTagCompound getData() {
+				return data;
 			}
 		}
-		return MultiRets.ret(list, dataList, nbt.getShort("at"));
+
+		protected ArrayList<Info> mantraList;
+		protected short at = 0;
+		protected short capacity = 0;
+
+		public MantrasData(NBTTagCompound nbt) {
+			this.loadState(nbt);
+		}
+
+		public boolean isEmpty() {
+			return mantraList.isEmpty();
+		}
+
+		public int size() {
+			return mantraList.size();
+		}
+
+		public void add(Mantra m, NBTTagCompound nbt) {
+			if (m == null) return;
+			nbt = nbt == null ? new NBTTagCompound() : nbt;
+			Info info = new Info(m, nbt);
+			mantraList.add(info);
+		}
+
+		public Info getInfo(int i) {
+			return mantraList.get(i);
+		}
+
+		public short getSelected() {
+			return at;
+		}
+
+		public void growCapacity(int n) {
+			capacity += n;
+		}
+
+		public int getCapacity() {
+			return capacity;
+		}
+
+		public int getCapacityTotally() {
+			return 20;
+		}
+
+		@Override
+		public boolean hasState(ItemStack stack) {
+			NBTTagCompound nbt = stack.getTagCompound();
+			return nbt == null ? false : nbt.hasKey("mantra", 9);
+		}
+
+		@Override
+		public void loadState(NBTTagCompound nbt) {
+			NBTTagList mantras = nbt.getTagList("mantra", 10);
+			mantraList = new ArrayList<>(mantras.tagCount());
+			for (int i = 0; i < mantras.tagCount(); i++) {
+				NBTTagCompound data = mantras.getCompoundTagAt(i);
+				Mantra m = Mantra.getFromNBT(data);
+				this.add(m, data);
+			}
+			capacity = nbt.getShort("capacity");
+			at = nbt.getShort("at");
+		}
+
+		@Override
+		public void saveState(NBTTagCompound nbt) {
+			NBTTagList mantras = new NBTTagList();
+			for (Info info : mantraList) {
+				info.data.setString("id", info.mantra.getRegistryName().toString());
+				mantras.appendTag(info.data);
+			}
+			nbt.setTag("mantra", mantras);
+			nbt.setShort("capacity", capacity);
+			nbt.setShort("at", at);
+		}
+	}
+
+	@Nonnull
+	public static MantrasData getAllMantra(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) return null;
+		return new MantrasData(nbt);
+	}
+
+	@Nonnull
+	public static void setAllMantra(ItemStack stack, MantrasData data) {
+		data.saveState(stack);
 	}
 
 }

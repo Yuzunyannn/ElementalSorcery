@@ -19,6 +19,7 @@ public class RenderTileLantern extends TileEntitySpecialRenderer<TileLantern> im
 	@Override
 	public void render(TileLantern tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
+		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
 		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
 		RenderHelper.startRender(x + 0.5, y + 0.0625, z + 0.5, 0.0625, alpha);
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);

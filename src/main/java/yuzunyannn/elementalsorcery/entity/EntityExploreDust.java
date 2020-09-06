@@ -16,6 +16,7 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
+import yuzunyannn.elementalsorcery.block.BlockElfSapling;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -101,6 +102,11 @@ public class EntityExploreDust extends Entity implements IEntityAdditionalSpawnD
 			Biome biome = world.getBiome(this.getPosition());
 			data.setFloat("rainfall", biome.getRainfall());
 			return;
+		}
+		if (!data.hasKey("elfTree")) {
+			boolean can = world.provider.getDimension() == 0;
+			can = can && BlockElfSapling.chunkCanGrow(world, this.getPosition());
+			data.setBoolean("elfTree", can);
 		}
 		if (level > 1) {
 			// 周邊的建築

@@ -93,11 +93,15 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 		return this;
 	}
 
-
 	@Nullable
 	static public Mantra getFromNBT(NBTTagCompound nbt) {
 		if (nbt == null) return null;
 		return MantraRegister.instance.getValue(new ResourceLocation(nbt.getString("id")));
+	}
+
+	/** 检测是否为自定义魔法的咒文 */
+	static public boolean isCustomMantra(Mantra m) {
+		return false;
 	}
 
 	/** 渲染前的颜色设置 */

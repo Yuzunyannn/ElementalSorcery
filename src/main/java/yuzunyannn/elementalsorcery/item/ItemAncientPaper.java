@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.grimoire.Mantra;
 import yuzunyannn.elementalsorcery.init.MantraRegister;
+import yuzunyannn.elementalsorcery.util.MultiRets;
 
 public class ItemAncientPaper extends Item {
 
@@ -49,9 +50,7 @@ public class ItemAncientPaper extends Item {
 	}
 
 	static public enum EnumType implements IStringSerializable {
-		NORMAL("normal"),
-		NEW("new"),
-		NEW_WRITTEN("newWritten");
+		NORMAL("normal"), NEW("new"), NEW_WRITTEN("newWritten");
 
 		final String name;
 
@@ -79,6 +78,27 @@ public class ItemAncientPaper extends Item {
 		nbt.setByte("start", (byte) MathHelper.clamp(start, 0, 100));
 		nbt.setByte("end", (byte) MathHelper.clamp(end, 0, 100));
 		stack.setTagCompound(nbt);
+	}
+
+	public static MultiRets getMantraData(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) return MultiRets.ret();
+		Mantra m = Mantra.getFromNBT(nbt);
+		if (m == null) MultiRets.ret();
+		if (nbt.hasKey("data")) {
+			// 这里是特殊数据
+			return MultiRets.ret();
+		}
+		int start = nbt.getByte("start");
+		int end = nbt.getByte("end");
+		return MultiRets.ret(m, nbt, start, end);
+	}
+
+	public static boolean hasMantraData(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) return false;
+		Mantra m = Mantra.getFromNBT(nbt);
+		return m != null;
 	}
 
 	@Override

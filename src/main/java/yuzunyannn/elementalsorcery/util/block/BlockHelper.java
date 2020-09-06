@@ -37,6 +37,14 @@ public class BlockHelper {
 		}
 	}
 
+	/** 掉落，只进行EnumFace中null的获取 */
+	public static void drop(World worldIn, BlockPos pos) {
+		TileEntity tile = worldIn.getTileEntity(pos);
+		if (tile == null) return;
+		IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+		BlockHelper.drop(itemHandler, worldIn, pos);
+	}
+
 	/** 方块激活的时候，处理继承IGetItemStack的物品栈 */
 	public static boolean onBlockActivatedWithIGetItemStack(World worldIn, BlockPos pos, IBlockState state,
 			EntityPlayer playerIn, EnumHand hand, boolean justOne) {

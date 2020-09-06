@@ -7,6 +7,14 @@ public class RandomHelper {
 
 	static final public Random rand = new Random();
 
+	static public int randomRange(int min, int max) {
+		return (int) (min + (max - min) * rand.nextFloat());
+	}
+
+	static public float randomRange(float min, float max) {
+		return min + (max - min) * rand.nextFloat();
+	}
+
 	// 随机选几个
 	static public <T> T[] randomSelect(T... ints) {
 		return randomSelect(rand.nextInt(ints.length) + 1, ints);

@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.entity.elf;
 
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
-import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -23,13 +22,20 @@ public class EntityElf extends EntityElfBase {
 		if (world.isRemote) return;
 		if (this.rand.nextInt(4) == 0) this.setProfession(ElfProfession.SCHOLAR);
 		else if (this.rand.nextInt(5) == 0) this.setProfession(ElfProfession.CRAZY);
+		else if (this.rand.nextInt(4) == 0) this.setProfession(ElfProfession.MERCHANT);
+		this.setCustomNameTag(AutoName.getRandomName());
+	}
+
+	public EntityElf(World worldIn, ElfProfession profession) {
+		super(worldIn);
+		if (world.isRemote) return;
+		this.setProfession(profession);
 		this.setCustomNameTag(AutoName.getRandomName());
 	}
 
 	@Override
 	protected void initEntityAI() {
 		super.initEntityAI();
-		this.tasks.addTask(0, new EntityAISwimming(this));
 		this.tasks.addTask(4, new EntityAIMoveToLookBlock(this));
 		this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1));
 		this.tasks.addTask(7, new EntityAILookBlock(this).setMaxDistance(4).setChance(0.5f));

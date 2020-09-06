@@ -14,6 +14,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.worldgen.GenElfEdifice;
 import yuzunyannn.elementalsorcery.worldgen.WorldGenElfTree;
 
 public class BlockElfSapling extends BlockBush implements IGrowable {
@@ -81,6 +82,28 @@ public class BlockElfSapling extends BlockBush implements IGrowable {
 		if (!tree.generate(worldIn, rand, pos)) {
 			worldIn.setBlockState(pos, state);
 		}
+	}
+
+	public static boolean chunkCanGrow(World world, BlockPos pos) {
+		int x = pos.getX() >> 4;
+		int z = pos.getZ() >> 4;
+		long seed = world.getSeed();
+		String m = x + Integer.toString((int) seed);
+		int n = 0;
+		for (int i = 0; i < m.length(); i++) {
+			n = Math.abs(n * z) + m.charAt(i);
+		}
+		return n % 8 == 0;
+	}
+
+	public void superGrow(World world, Random rand, BlockPos pos, IBlockState state) {
+		if (world.isRemote) return;
+		if (!chunkCanGrow(world, pos)) return;
+		GenElfEdifice g = new GenElfEdifice(true);
+		if (!g.checkCanGen(world, pos.down())) return;
+		g.genMainTreeEdifice(world, pos.down(), rand);
+		g.clearAround(world, pos);
+		g.buildToTick(world);
 	}
 
 }

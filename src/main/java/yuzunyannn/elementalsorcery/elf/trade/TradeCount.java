@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.elf.trade;
 import java.util.ArrayList;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
 import yuzunyannn.elementalsorcery.elf.trade.TradeList.TradeInfo;
@@ -51,8 +52,18 @@ public class TradeCount extends Trade {
 		return tradeListCount.get(index);
 	}
 
+	/** 设置库存 */
 	public void setStock(int index, int count) {
 		tradeListCount.set(index, count);
+	}
+
+	public void addCommodity(ItemStack commodity, int cost, int count, boolean isReclaim) {
+		tradeList.add(commodity, cost, isReclaim);
+		setStock(tradeListCount.size() - 1, count);
+	}
+
+	public void addCommodity(ItemStack commodity, int cost, int count) {
+		addCommodity(commodity, cost, count, false);
 	}
 
 	@Override

@@ -29,6 +29,7 @@ public class RenderTileRiteTable extends TileEntitySpecialRenderer<TileRiteTable
 	@Override
 	public void render(TileRiteTable tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
+		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
 		int lev = tile.getLevel();
 		lev = TileRiteTable.pLevel(lev);
 		if (lev >= TEXTURE.length) lev = TEXTURE.length - 1;

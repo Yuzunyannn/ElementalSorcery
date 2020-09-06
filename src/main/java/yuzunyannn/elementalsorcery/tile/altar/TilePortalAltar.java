@@ -17,7 +17,7 @@ import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementScrew;
-import yuzunyannn.elementalsorcery.util.MultiRets;
+import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemStack {
 
@@ -76,10 +76,10 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 		if (world.isRemote) return;
 		if (stack.isEmpty()) return;
 		if (!this.checkIntact(structure)) return;
-		MultiRets rets = ItemNatureCrystal.getData(stack, false);
-		if (rets.isEmpty()) return;
-		BlockPos to = rets.get(0, BlockPos.class);
-		Integer toWorldId = rets.get(1, Integer.class);
+		NBTTagCompound nbt = ItemNatureCrystal.getData(stack, false);
+		if (nbt == null) return;
+		BlockPos to = NBTHelper.getBlockPos(nbt, "pos");
+		int toWorldId = nbt.getInteger("world");
 		World toWorld = world.getMinecraftServer().getWorld(toWorldId);
 		if (!canOpenPortal(to, toWorld)) return;
 		ElementStack get = getElementFromSpPlace(NEED, pos.up(3));

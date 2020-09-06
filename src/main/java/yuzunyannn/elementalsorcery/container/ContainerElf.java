@@ -20,7 +20,9 @@ public abstract class ContainerElf extends Container {
 	public ContainerElf(EntityPlayer player) {
 		this.player = player;
 		NBTTagCompound nbt = ElementalSorcery.getPlayerData(player);
-		Entity elf = (EntityElfBase) player.world.getEntityByID(nbt.getInteger("elfId"));
+		Entity elf = null;
+		if (player.world.isRemote) elf = null;
+		else elf = (EntityElfBase) player.world.getEntityByID(nbt.getInteger("elfId"));
 		nbt.removeTag("elfId");
 		if (elf instanceof EntityElfBase) this.elf = (EntityElfBase) elf;
 		this.pos = this.elf == null ? player.getPosition() : elf.getPosition();
@@ -35,7 +37,10 @@ public abstract class ContainerElf extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
-		return noEnd && (elf == null ? playerIn.getDistanceSq(pos) <= 64 : playerIn.getDistanceSq(this.elf) <= 64);
+		boolean flag;
+		if (elf == null) flag = playerIn.getDistanceSq(pos) <= 64;
+		else flag = playerIn.getDistanceSq(this.elf) <= 64 && !elf.isDead;
+		return noEnd && flag;
 	}
 
 	/** 更换ui */

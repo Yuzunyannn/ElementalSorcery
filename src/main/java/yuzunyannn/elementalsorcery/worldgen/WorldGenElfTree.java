@@ -69,6 +69,7 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 		}
 	}
 
+	@Deprecated
 	static public class WorldGenLargeElfTree extends WorldGenAbstractTree {
 		// 树干期望高度
 		final int height;
@@ -259,11 +260,8 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 			for (int i = 0; i < size; i++) {
 				int yup = rand.nextInt(3 - size % 3) == 0 ? 1 : 0;
 				boolean pup = rand.nextInt(5) == 0;
-				if (px) {
-					at = at.add(xoff, yup, pup ? zoff : 0);
-				} else {
-					at = at.add(pup ? xoff : 0, yup, zoff);
-				}
+				if (px) at = at.add(xoff, yup, pup ? zoff : 0);
+				else at = at.add(pup ? xoff : 0, yup, zoff);
 				if (this.isReplaceable(world, at)) {
 					this.setBlockAndNotifyAdequately(world, at, WorldGenElfTree.WOOD);
 				}

@@ -3,8 +3,10 @@ package yuzunyannn.elementalsorcery.elf.pro;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -34,6 +36,7 @@ public class ElfProfession extends net.minecraftforge.registries.IForgeRegistryE
 	static public final ElfProfession BERSERKER = new ElfProfessionBerserker();
 	static public final ElfProfession SCHOLAR = new ElfProfessionScholar();
 	static public final ElfProfession CRAZY = new ElfProfessionCrazy();
+	static public final ElfProfession MERCHANT = new ElfProfessionMerchant();
 
 	public String getUnlocalizedProfessionName() {
 		return "pro." + this.getRegistryName().getResourcePath();
@@ -136,15 +139,24 @@ public class ElfProfession extends net.minecraftforge.registries.IForgeRegistryE
 
 	}
 
-	/** 客户端渲染 */
+	/** 客户端自定义渲染 */
 	@SideOnly(Side.CLIENT)
 	public void render(EntityElfBase elf, double x, double y, double z, float entityYaw, float partialTicks) {
 
 	}
 
+	/** 客户端渲染的材质 */
 	@SideOnly(Side.CLIENT)
+	@Nonnull
 	public ResourceLocation getTexture(EntityElfBase elf) {
 		return RenderEntityElf.TEXTURE;
+	}
+
+	/** 客户端渲染的模型 */
+	@SideOnly(Side.CLIENT)
+	@Nonnull
+	public ModelBase getModel(EntityElfBase elf) {
+		return RenderEntityElf.MODEL;
 	}
 
 	protected void openTalkGui(EntityPlayer player, EntityElfBase elf) {

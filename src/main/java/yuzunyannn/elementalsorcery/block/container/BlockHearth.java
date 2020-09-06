@@ -27,8 +27,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
@@ -62,22 +60,15 @@ public class BlockHearth extends BlockContainer implements Mapper {
 
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		TileEntity tileentity = worldIn.getTileEntity(pos);
-		if (tileentity instanceof TileHearth && !worldIn.isRemote) {
-			IItemHandler item_handler = tileentity.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
-					EnumFacing.NORTH);
-			BlockHelper.drop(item_handler, worldIn, pos);
-		}
+		if (!worldIn.isRemote) BlockHelper.drop(worldIn, pos);
 		super.breakBlock(worldIn, pos, state);
 	}
 
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (worldIn.isRemote)
-			return true;
-		if (facing == EnumFacing.UP || facing == EnumFacing.DOWN)
-			return false;
+		if (worldIn.isRemote) return true;
+		if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) return false;
 		playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_HEARTH, worldIn, pos.getX(), pos.getY(),
 				pos.getZ());
 		return true;
@@ -87,9 +78,7 @@ public class BlockHearth extends BlockContainer implements Mapper {
 	// 光亮程度
 	@Override
 	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		if (state.getValue(BURNING)) {
-			return 12;
-		}
+		if (state.getValue(BURNING)) { return 12; }
 		return 0;
 	}
 
@@ -195,8 +184,7 @@ public class BlockHearth extends BlockContainer implements Mapper {
 
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-		if (stateIn.getValue(BURNING))
-			BlockHearth.displayTick(worldIn, pos, rand);
+		if (stateIn.getValue(BURNING)) BlockHearth.displayTick(worldIn, pos, rand);
 	}
 
 	public static void displayTick(World worldIn, BlockPos pos, Random rand) {

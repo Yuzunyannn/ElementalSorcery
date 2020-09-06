@@ -30,6 +30,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiRiteManual;
 import yuzunyannn.elementalsorcery.container.gui.GuiSimple;
 import yuzunyannn.elementalsorcery.container.gui.GuiSmeltBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiSupremeTable;
+import yuzunyannn.elementalsorcery.container.gui.GuiTranscribeInjection;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 
 public class ESGuiHandler implements IGuiHandler {
@@ -46,6 +47,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_INVENTORY_WORKBENCH = 10;
 	public static final int GUI_RITE_MANUAL = 11;
 	public static final int GUI_ITEM_STRUCTURE_CRAFT = 12;
+	public static final int GUI_TRANSCRIBE_INJECTION = 13;
 
 	public static final int GUI_MD_MAGIC_GEN = 21;
 	public static final int GUI_MD_HEARTH = 22;
@@ -91,6 +93,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new ContainerRiteManual(player.inventory, world, new BlockPos(x, y, z));
 			case GUI_ITEM_STRUCTURE_CRAFT:
 				return new ContainerItemStructureCraft(player, tileEntity);
+			case GUI_TRANSCRIBE_INJECTION:
+				return new ContainerTranscribeInjection(player, tileEntity);
 
 			case GUI_MD_MAGIC_GEN:
 				return new ContainerMDMagicGen(player, tileEntity);
@@ -154,6 +158,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiRiteManual(new ContainerRiteManual(player.inventory, world, new BlockPos(x, y, z)));
 			case GUI_ITEM_STRUCTURE_CRAFT:
 				return new GuiItemStructureCraft(new ContainerItemStructureCraft(player, tileEntity));
+			case GUI_TRANSCRIBE_INJECTION:
+				return new GuiTranscribeInjection(new ContainerTranscribeInjection(player, tileEntity));
 
 			case GUI_MD_MAGIC_GEN:
 				return new GuiMDMagicGen(new ContainerMDMagicGen(player, tileEntity), player.inventory);

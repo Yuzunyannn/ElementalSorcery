@@ -27,6 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptMagic;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
+import yuzunyannn.elementalsorcery.block.BlockElfSapling;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
@@ -145,6 +146,9 @@ public class EntityResonantCrystal extends EntityThrowable {
 			if (block == ESInitInstance.BLOCKS.LIFE_FLOWER) {
 				// 植物花
 				world.scheduleUpdate(pos, state.getBlock(), 0);
+				return 5;
+			} else if (block instanceof BlockElfSapling) {
+				((BlockElfSapling) block).superGrow(world, rand, pos, state);
 				return 5;
 			} else if (block instanceof IGrowable) {
 				if (((IGrowable) block).canGrow(world, pos, state, world.isRemote)) {

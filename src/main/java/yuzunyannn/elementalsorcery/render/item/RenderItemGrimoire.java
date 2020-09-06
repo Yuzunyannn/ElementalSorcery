@@ -42,11 +42,27 @@ public class RenderItemGrimoire implements IRenderItem {
 		} else {
 			float sacle = 0.0625F / ModelGrimoire.sacle;
 			info.bind();
+			// 地面上
 			if (IRenderItem.isTransform(stack, TransformType.GROUND)) {
 				GlStateManager.translate(0.25, 0.5, 0.5);
 				GlStateManager.scale(sacle, sacle, sacle);
 				MODEL_GRIMOIRE.render(null, 0, 0, 0, 0, 0.0F, 1.0F);
-			} else {
+			}
+			// 修正，主要是在物品台子上
+			else if (IRenderItem.isTransform(stack, TransformType.FIXED)) {
+				float dtick = (float) info.tickCount + partialTicks;
+				float spread = info.bookSpreadPrev + (info.bookSpread - info.bookSpreadPrev) * partialTicks;
+				float flip = info.pageFlipPrev + (info.pageFlip - info.pageFlipPrev) * partialTicks;
+				float flipRight = flip + 0.25F;
+				float flipLeft = flip + 0.75F;
+				flipRight = MathHelper.clamp((flipRight - MathHelper.fastFloor(flipRight)) * 1.6F - 0.3F, 0, 1);
+				flipLeft = MathHelper.clamp((flipLeft - MathHelper.fastFloor(flipLeft)) * 1.6F - 0.3F, 0, 1);
+				GlStateManager.translate(0.5, 0.5, 0.5);
+				GlStateManager.scale(sacle, sacle, sacle);
+				MODEL_GRIMOIRE.render(null, dtick, flipRight, flipLeft, spread, 0.0F, 1.0F);
+			}
+			// 其他，主要是在手上
+			else {
 				float dtick = (float) info.tickCount + partialTicks;
 				// 计算展开
 				float spread = info.bookSpreadPrev + (info.bookSpread - info.bookSpreadPrev) * partialTicks;

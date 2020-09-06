@@ -78,9 +78,11 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileRiteTable;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileShowItem;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStela;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStoneMill;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileSupremeTable;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileTranscribeTable;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDAbsorbBox;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDBase;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDDeconstructBox;
@@ -114,6 +116,8 @@ import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.altar.TilePortalAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeInjection;
+import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeTable;
 import yuzunyannn.elementalsorcery.tile.md.TileMDAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.md.TileMDDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.md.TileMDHearth;
@@ -162,9 +166,9 @@ public class ESInit {
 		// 注册GUI句柄
 		NetworkRegistry.INSTANCE.registerGuiHandler(ElementalSorcery.instance, new ESGuiHandler());
 		// 注册世界生成
-		MinecraftForge.ORE_GEN_BUS.register(new WorldGeneratorES.genOre());
-		MinecraftForge.EVENT_BUS.register(new WorldGeneratorES.genDecorate());
-		MinecraftForge.EVENT_BUS.register(new WorldGeneratorES.genPopulate());
+		MinecraftForge.ORE_GEN_BUS.register(new WorldGeneratorES.GenOre());
+		MinecraftForge.EVENT_BUS.register(new WorldGeneratorES.GenDecorate());
+		//MinecraftForge.TERRAIN_GEN_BUS.register(new WorldGeneratorES.GenTerrain());
 		// 注册网络
 		ESNetwork.registerAll();
 		// 注册事件
@@ -280,6 +284,8 @@ public class ESInit {
 		register(TileCrystalFlower.class, "CrystalFlower");
 		register(TileItemStructureCraftNormal.class, "ISCraftNormal");
 		register(TilePortalAltar.class, "PortalAltar");
+		register(TileTranscribeTable.class, "TranscribeTable");
+		register(TileTranscribeInjection.class, "TranscribeInjection");
 	}
 
 	static void registerAllCapability() {
@@ -384,9 +390,13 @@ public class ESInit {
 		registerRender(BLOCKS.IS_CRAFT_NORMAL);
 		registerRender(BLOCKS.ESTONE_PRISM);
 		registerRender(BLOCKS.PORTAL_ALTAR);
+		registerRender(BLOCKS.TRANSCRIBE_TABLE);
+		registerRender(BLOCKS.TRANSCRIBE_INJECTION);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());
+		registerRender(TilePortalAltar.class, new RenderTileShowItem<TilePortalAltar>(0.65));
+		registerRender(TileTranscribeTable.class, new RenderTileTranscribeTable());
 
 		registerRender(BLOCKS.ELEMENTAL_CUBE, TileElementalCube.class, new RenderTileElementalCube());
 		registerRender(BLOCKS.MAGIC_DESK, TileMagicDesk.class, new RenderTileMagicDesk());

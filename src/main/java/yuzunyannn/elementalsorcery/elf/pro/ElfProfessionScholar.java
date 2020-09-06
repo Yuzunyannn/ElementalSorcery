@@ -70,6 +70,8 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
 		// 初始化交易信息
 		NBTTagCompound nbt = elf.getEntityData();
+		// 如果存在标签，则表示是回复时初始化的，直接走人
+		if (nbt.hasKey(TradeCount.Bind.TAG)) return;
 		TradeCount trade = new TradeCount();
 		TradeList list = trade.getTradeList();
 		list.add(new ItemStack(ESInitInstance.ITEMS.PARCHMENT), 1, true);

@@ -21,6 +21,7 @@ import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class BlockElfLog extends BlockLog {
 
+	@Deprecated
 	final boolean cabinCenter;
 
 	public BlockElfLog(boolean cabinCenter) {
@@ -28,13 +29,23 @@ public class BlockElfLog extends BlockLog {
 		this.setUnlocalizedName("elfLog");
 		this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
 		this.cabinCenter = cabinCenter;
-		if (cabinCenter) this.setTickRandomly(true);
+		this.setTickRandomly(true);
 	}
 
 	// 精灵小屋核心，刷精灵的
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		if (worldIn.isRemote) return;
+		for (int x = -1; x <= 1; x++) for (int y = -1; y <= 1; y++) for (int z = -1; z <= 1; z++) {
+			BlockPos at = pos.add(x, y, z);
+			if (worldIn.getBlockState(at).getBlock() == Blocks.FIRE) worldIn.setBlockToAir(at);
+		}
+		if (!this.cabinCenter) return;
+		genElf(worldIn, pos, state, rand);
+	}
+
+	@Deprecated
+	protected void genElf(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		if (this.checkCabin(worldIn, pos) == false) return;
 		final int size = 8;
 		AxisAlignedBB aabb = new AxisAlignedBB(pos.getX() - size, pos.getY(), pos.getZ() - size, pos.getX() + size,
@@ -49,6 +60,7 @@ public class BlockElfLog extends BlockLog {
 		worldIn.spawnEntity(elf);
 	}
 
+	@Deprecated
 	protected boolean checkCabin(World world, BlockPos centerPos) {
 		// 地板
 		int size = 3;

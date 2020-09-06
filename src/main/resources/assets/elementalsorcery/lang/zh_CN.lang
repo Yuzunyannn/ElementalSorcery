@@ -116,6 +116,8 @@ tile.lifeDirt.name=生息土壤
 tile.crystalFlower.name=水晶花
 tile.ISCraftNormal.name=合成结构记录台
 tile.portalAltar.name=折光祭坛
+tile.transcribeTable.name=撰录方桌
+tile.transcribeInjection.name=咒文撰录祭坛
 
 element.void.name=虚空
 element.magic.name=魔力
@@ -128,7 +130,7 @@ element.air.name=气
 element.metal.name=金
 element.knowledge.name=知识
 
-mantra.enderTeleport.name=魔影移动
+mantra.enderTeleport.name=末影移动
 mantra.enderTeleport.describe=瞬移再也不是末影人的特权了。嗯？为啥不能在雨天使用...
 mantra.float.name=漂浮
 mantra.float.describe=我飞起来了
@@ -157,6 +159,7 @@ pro.berserker=狂战士
 pro.master=魔法大师
 pro.scholar=学者
 pro.crazy=疯子
+pro.merchant=商人
 
 commands.es.usage=/es <操作> <参数>...
 commands.es.build.usage=/es build <it>或<建筑名称>
@@ -204,6 +207,7 @@ info.arcCrystal.count=%s需要：%d
 info.arcCrystal.blank=这里面什么都没有记录，无法进行设置位置
 info.dimension.id=维度：%d
 info.rainfall=降水：%.2f
+info.can.grow.elf.edifice=这里具有充足的精灵力
 info.mineral.deposits=矿藏：%s
 info.around.have=周边存在着%s
 info.spbe.none=该元素没有任何效果
@@ -251,6 +255,7 @@ info.grimoire.record=魔典中记载着%d个咒文
 info.grimoire.nothing=魔典中什么也没有写
 info.grimoire.current=当前咒文：%s
 info.grimoire.error=当前咒文已失效
+info.grimoire.blank=书中还有%d页空白
 info.ancientPaper.mantra=这个咒文似乎被称作%s
 info.ancientPaper.record=这张古卷上可阅读的部分似乎只有%d%%~%d%%
 
@@ -262,6 +267,7 @@ say.scholar.pretendKnow=就当你明白了
 say.scholar.nice.goods=我这里除了记载知识的羊皮卷以外，还有一些好东西你可以买到
 say.scholar.becare=你要小心疯子，她们什么都打
 say.scholar.master=精灵魔法大师非常的强大，几乎无人是她的对手，我也想成为那样强大的法师。
+say.merchant.good.goods=快来看看吧，我这里全是好东西
 
 page.elf=精灵
 page.elf.ct=精灵是从精灵世界过来的一种新的生物，她们通常生活在巨大的精灵树上。精灵属于中立生物，而且有着不同的职业。如果你攻击她们，她们将可能会转变到战斗职业来进行防卫。\n精灵中会产生疯子，她会到处乱攻击。\n此外精灵学者会告诉你一些你可能想知道的内容，同时她也会出售教程。\n[精灵部分教程只能从学者获取]

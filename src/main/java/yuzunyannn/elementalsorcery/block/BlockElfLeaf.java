@@ -84,8 +84,14 @@ public class BlockElfLeaf extends BlockLeaves {
 			// 检测下方是否满足
 			BlockPos dPos = pos.down();
 			if (!worldIn.isAirBlock(dPos)) return;
-			for (EnumFacing facing : EnumFacing.HORIZONTALS) if (!worldIn.isAirBlock(dPos.offset(facing))) return;
-			for (int i = 0; i < 8; i++) {
+			int count = 0;
+			for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+				if (!worldIn.isAirBlock(dPos.offset(facing))) {
+					count++;
+					if (count > 1) return;
+				}
+			}
+			for (int i = 0; i < 5; i++) {
 				if (!worldIn.isAirBlock(dPos)) return;
 				dPos = dPos.down();
 			}

@@ -12,7 +12,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.util.MultiRets;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 public class ItemNatureCrystal extends ItemCrystal {
@@ -23,40 +22,34 @@ public class ItemNatureCrystal extends ItemCrystal {
 	}
 
 	/** 获取数据 */
-	static public MultiRets getData(ItemStack natureCrystal, boolean all) {
-		if (natureCrystal.isEmpty()) return MultiRets.ret();
-		NBTTagCompound nbt = natureCrystal.getSubCompound("natureData");
-		if (nbt == null || !NBTHelper.hasPos(nbt, "pos")) return MultiRets.ret();
-		BlockPos pos = NBTHelper.getBlockPos(nbt, "pos");
-		int dim = nbt.getInteger("world");
-		if (!all) return MultiRets.ret(pos, dim);
-		String biome = nbt.getString("biome");
-		float rainfall = nbt.getFloat("rainfall");
-		if (!nbt.hasKey("ore")) return MultiRets.ret(pos, dim, biome, rainfall);
-		String archi = nbt.getString("archi");
-		NBTTagCompound ore = nbt.getCompoundTag("ore");
-		return MultiRets.ret(pos, dim, biome, rainfall, archi, ore);
+	static public NBTTagCompound getData(ItemStack natureCrystal, boolean all) {
+		if (natureCrystal.isEmpty()) return null;
+		return natureCrystal.getSubCompound("natureData");
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-		MultiRets rets = getData(stack, true);
-		if (rets.isEmpty()) return;
+		NBTTagCompound nbt = stack.getSubCompound("natureData");
+		if (nbt == null || !NBTHelper.hasPos(nbt, "pos")) return;
 
-		BlockPos pos = rets.get(0, BlockPos.class);
-		Integer wrold = rets.get(1, Integer.class);
-		String biome = rets.get(2, String.class);
+		BlockPos pos = NBTHelper.getBlockPos(nbt, "pos");
+		int wrold = nbt.getInteger("world");
+		String biome = nbt.getString("biome");
+		float rainfall = nbt.getFloat("rainfall");
+		boolean elfTree = nbt.getBoolean("elfTree");
 		tooltip.add(TextFormatting.GREEN + I18n.format("info.select.axis", pos.getX(), pos.getY(), pos.getZ()));
 		tooltip.add(TextFormatting.GREEN + I18n.format("info.dimension.id", wrold) + " :: " + biome);
-		tooltip.add(TextFormatting.GREEN + I18n.format("info.rainfall", rets.get(3, Float.class)));
+		tooltip.add(TextFormatting.GREEN + I18n.format("info.rainfall", rainfall));
+		if (elfTree) tooltip.add(TextFormatting.GREEN + I18n.format("info.can.grow.elf.edifice"));
 
-		String archi = rets.get(4, String.class);
+		if (!nbt.hasKey("ore")) return;
+		String archi = nbt.getString("archi");
 		if (archi == null) return;
 		if (!archi.isEmpty()) tooltip.add(TextFormatting.GREEN + I18n.format("info.around.have", archi));
-		
-		NBTTagCompound ore = rets.get(5, NBTTagCompound.class);
+
+		NBTTagCompound ore = nbt.getCompoundTag("ore");
 		if (ore == null || ore.hasNoTags()) return;
 		StringBuilder builder = new StringBuilder();
 		for (String id : ore.getKeySet()) {

@@ -44,12 +44,13 @@ import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
+import yuzunyannn.elementalsorcery.worldgen.GenElfEdifice;
 import yuzunyannn.elementalsorcery.worldgen.VillageESHall.VillageCreationHandler;
 
 public class CommandESDebug {
 
 	public static final String[] autoTips = new String[] { "reflush", "saveBuilding", "recordBuilding", "buildTest",
-			"portalTest", "showInfo" };
+			"portalTest", "showInfo", "buildTestAgain" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -127,6 +128,13 @@ public class CommandESDebug {
 					ElementalSorcery.logger.warn("debug指令错误", e);
 				}
 				v.addComponentParts(sender.getEntityWorld(), new Random(), v.getBoundingBox());
+			}
+				return;
+			case "buildTestAgain": {
+				GenElfEdifice g = new GenElfEdifice(true);
+				g.genMainTreeEdifice(entity.world, pos, entity.world.rand);
+				g.buildToTick(entity.world);
+				// new WorldGenElfTree(true, 3).generate(entity.world, entity.world.rand, pos);
 			}
 				return;
 			// 测试传送门

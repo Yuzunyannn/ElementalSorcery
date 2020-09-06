@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.container.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -24,7 +23,6 @@ import yuzunyannn.elementalsorcery.grimoire.Mantra;
 import yuzunyannn.elementalsorcery.item.ItemGrimoire;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageMantraShift;
-import yuzunyannn.elementalsorcery.util.MultiRets;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
@@ -43,14 +41,13 @@ public class GuiMantraShitf extends GuiScreen {
 
 	public GuiMantraShitf(EntityPlayer player) {
 		ItemStack stack = player.getHeldItemMainhand();
-		MultiRets rets = ItemGrimoire.getAllMantra(stack);
-		List<Mantra> list = rets.get(0, List.class);
-		if (list == null) return;
-		List<NBTTagCompound> dataList = rets.get(1, List.class);
-		for (int i = 0; i < list.size(); i++) addMantra(list.get(i), dataList.get(i));
-		Number at = rets.get(2, Number.class);
-		originAt = at == null ? -1 : at.intValue();
-		select(at == null ? 0 : at.intValue());
+		ItemGrimoire.MantrasData data = ItemGrimoire.getAllMantra(stack);
+		if (data == null || data.isEmpty()) return;
+		for (int i = 0; i < data.size(); i++) {
+			ItemGrimoire.MantrasData.Info info = data.getInfo(i);
+			addMantra(info.getMantra(), info.getData());
+		}
+		select(data.getSelected());
 	}
 
 	/** 原始选择 */
@@ -301,7 +298,7 @@ public class GuiMantraShitf extends GuiScreen {
 		// 画文字
 		Mantra m = getSelectedMantra();
 		if (m != null) {
-			
+
 		}
 
 		GlStateManager.disableBlend();

@@ -2,7 +2,11 @@ package yuzunyannn.elementalsorcery.init;
 
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.EnumCreatureType;
+import net.minecraft.init.Biomes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -16,6 +20,7 @@ import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.entity.EntityResonantCrystal;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravellingMerchant;
 import yuzunyannn.elementalsorcery.render.entity.EntityRenderFactory;
 import yuzunyannn.elementalsorcery.render.entity.RenderBlockThrowEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
@@ -30,6 +35,9 @@ public class EntityRegistries {
 		// 生物
 		register(0, "elf", EntityElf.class, "Elf", 64, 3, true);
 		registerEgg("elf", 0x82bf71, 0x529b3d);
+		register(1, "elfMerchant", EntityElfTravellingMerchant.class, "Elf", 64, 3, true);
+		registerEntitySpawn(EntityElfTravellingMerchant.class, 4, 1, 2, EnumCreatureType.CREATURE, Biomes.PLAINS,
+				Biomes.DESERT, Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.EXTREME_HILLS, Biomes.SWAMPLAND);
 		// 效果处理
 		register(51, "block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);
 		register(52, "entity_crafting", EntityCrafting.class, "EntityCrafting", 128, 1, false);
@@ -49,6 +57,11 @@ public class EntityRegistries {
 	private static void registerEgg(String registryName, int eggPrimary, int eggSecondary) {
 		EntityRegistry.registerEgg(new ResourceLocation(ElementalSorcery.MODID, registryName), eggPrimary,
 				eggSecondary);
+	}
+
+	private static void registerEntitySpawn(Class<? extends EntityLiving> entityClass, int spawnWeight, int min,
+			int max, EnumCreatureType typeOfCreature, Biome... biomes) {
+		EntityRegistry.addSpawn(entityClass, spawnWeight, min, max, typeOfCreature, biomes);
 	}
 
 	@SideOnly(Side.CLIENT)

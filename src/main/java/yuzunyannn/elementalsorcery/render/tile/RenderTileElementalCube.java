@@ -29,6 +29,7 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 	@Override
 	public void render(TileElementalCube tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
+		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
 		float rotate = tile.rotate + TileElementalCube.SOTATE_PRE_TICK * partialTicks;
 		float wake = tile.wake > 0 ? tile.wakeUp + TileElementalCube.WAKE_UP_RARE * partialTicks
 				: tile.wakeUp - TileElementalCube.WAKE_UP_RARE * partialTicks;

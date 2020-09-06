@@ -7,6 +7,7 @@ import net.minecraftforge.items.ItemStackHandler;
 public class ItemHelper {
 
 	static public boolean areItemsEqual(ItemStack stackA, ItemStack stackB) {
+		if (stackA.isEmpty()) return stackB.isEmpty();
 		return ItemStack.areItemsEqual(stackA, stackB) && ItemStack.areItemStackTagsEqual(stackA, stackB);
 	}
 

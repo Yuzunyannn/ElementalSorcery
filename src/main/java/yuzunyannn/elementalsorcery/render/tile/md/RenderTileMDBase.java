@@ -14,8 +14,8 @@ public class RenderTileMDBase<T extends TileMDBase> extends TileEntitySpecialRen
 	protected static final ModelMDBase MODEL_BASE = new ModelMDBase();
 
 	@Override
-	public void render(TileMDBase tile, double x, double y, double z, float partialTicks, int destroyStage,
-			float alpha) {
+	public void render(T tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
+		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
 		RenderHelper.bindDestoryTexture(this.getBaseTexture(), destroyStage, rendererDispatcher, DESTROY_STAGES);
 		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
 		MODEL_BASE.render(null, 0, 0, 0, 0, 0, 1.0f);

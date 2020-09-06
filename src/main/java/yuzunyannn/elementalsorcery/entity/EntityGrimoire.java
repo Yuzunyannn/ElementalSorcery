@@ -315,10 +315,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 			RayTraceResult rt = WorldHelper.getLookAtBlock(world, user, 128);
 			if (rt == null) return null;
 			BlockPos pos = new BlockPos(rt.hitVec);
-			if (canStand(pos)) {
-				if (!canStand(pos.down())) return pos;
-				pos = pos.offset(rt.sideHit, -1);
-			}
+			if (canStand(pos)) pos = pos.offset(rt.sideHit, -1);
 			if (canStand(pos.up()) && canStand(pos.up(2))) return pos.up();
 			pos = pos.offset(rt.sideHit, 1);
 			if (canStand(pos) && canStand(pos.up())) return pos;

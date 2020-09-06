@@ -24,10 +24,7 @@ public interface IItemCapbiltitySyn {
 	/** 将数据写入stack */
 	default void saveState(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null) {
-			stack.setTagCompound(new NBTTagCompound());
-			nbt = stack.getTagCompound();
-		}
+		if (nbt == null) stack.setTagCompound(nbt = new NBTTagCompound());
 		this.saveState(nbt);
 	}
 

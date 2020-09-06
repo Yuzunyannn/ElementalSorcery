@@ -28,7 +28,7 @@ public class RenderTileStoneMill extends TileEntitySpecialRenderer<TileStoneMill
 	@Override
 	public void render(TileStoneMill tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
-
+		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
 		int dusty = tile.getDusty();
 		float lift = tile.prevLiftTick + (tile.liftTick - tile.prevLiftTick) * partialTicks;
 		float rotate = tile.prevRotate + (tile.rotate - tile.prevRotate) * partialTicks;

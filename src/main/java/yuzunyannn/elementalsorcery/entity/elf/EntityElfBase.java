@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityFlyHelper;
 import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.entity.item.EntityItem;
@@ -76,6 +77,9 @@ public abstract class EntityElfBase extends EntityCreature {
 	@Override
 	protected void initEntityAI() {
 		super.initEntityAI();
+
+		this.tasks.addTask(0, new EntityAISwimming(this));
+
 		this.tasks.addTask(1, new EntityAILookTalker(this));
 		this.tasks.addTask(3, new EntityAIAttackElf(this));
 		this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false, new Class[0]));
@@ -93,7 +97,7 @@ public abstract class EntityElfBase extends EntityCreature {
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		super.readEntityFromNBT(compound);
 		String id = compound.getString("professionId");
-		this.setProfession(ElfProRegister.instance.getValue(new ResourceLocation(id)), false);
+		this.setProfession(ElfProRegister.instance.getValue(new ResourceLocation(id)));
 	}
 
 	/** 获取临时数据NBT，不会被保存，不会同步 */
@@ -300,21 +304,15 @@ public abstract class EntityElfBase extends EntityCreature {
 	}
 
 	/** 获取设置精灵 职业 */
-	public void setProfession(ElfProfession profession, boolean needInit) {
+	public void setProfession(ElfProfession profession) {
 		if (profession == null) profession = ElfProfession.NONE;
 		if (this.profession == profession) return;
 		ElfProfession origin = this.profession;
 		this.profession = profession;
 		if (world.isRemote) return;
-		if (needInit) {
-			origin.transferElf(this, this.profession);
-			this.profession.initElf(this, origin);
-		}
+		if (origin != null) origin.transferElf(this, this.profession);
+		this.profession.initElf(this, origin);
 		dataManager.set(PROFESSION_UPDATE, ElfProRegister.instance.getId(this.profession));
-	}
-
-	public void setProfession(ElfProfession profession) {
-		this.setProfession(profession, true);
 	}
 
 	@Override

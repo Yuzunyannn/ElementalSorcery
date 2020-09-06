@@ -14,20 +14,23 @@ import yuzunyannn.elementalsorcery.render.model.ModelElf;
 public class RenderEntityElf extends RenderLiving<EntityElf> {
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
-			"textures/entity/elf.png");
+			"textures/entity/elf/normal.png");
 	public static final ResourceLocation TEXTURE_MASTER = new ResourceLocation(ElementalSorcery.MODID,
-			"textures/entity/elf_master.png");
+			"textures/entity/elf/master.png");
 	public static final ResourceLocation TEXTURE_SCHOLAR = new ResourceLocation(ElementalSorcery.MODID,
-			"textures/entity/elf_scholar.png");
+			"textures/entity/elf/scholar.png");
 	public static final ResourceLocation TEXTURE_BERSERKER = new ResourceLocation(ElementalSorcery.MODID,
-			"textures/entity/elf_berserker.png");
+			"textures/entity/elf/berserker.png");
 	public static final ResourceLocation TEXTURE_WARRIOR = new ResourceLocation(ElementalSorcery.MODID,
-			"textures/entity/elf_warrior.png");
+			"textures/entity/elf/warrior.png");
 	public static final ResourceLocation TEXTURE_CRAZY = new ResourceLocation(ElementalSorcery.MODID,
-			"textures/entity/elf_crazy.png");
+			"textures/entity/elf/crazy.png");
+	public static final ResourceLocation TEXTURE_MERCHANT = new ResourceLocation(ElementalSorcery.MODID,
+			"textures/entity/elf/merchant.png");
+	public static final ModelElf MODEL = new ModelElf();
 
 	public RenderEntityElf(RenderManager rendermanagerIn) {
-		super(rendermanagerIn, new ModelElf(), 0.5f);
+		super(rendermanagerIn, MODEL, 0.5f);
 		this.addLayer(new LayerHeldItem(this));
 	}
 
@@ -38,6 +41,7 @@ public class RenderEntityElf extends RenderLiving<EntityElf> {
 
 	@Override
 	public void doRender(EntityElf entity, double x, double y, double z, float entityYaw, float partialTicks) {
+		mainModel = entity.getProfession().getModel(entity);
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 		entity.getProfession().render(entity, x, y, z, entityYaw, partialTicks);
 	}
