@@ -15,8 +15,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.grimoire.Mantra;
-import yuzunyannn.elementalsorcery.init.MantraRegister;
+import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.util.MultiRets;
 
 public class ItemAncientPaper extends Item {
@@ -30,7 +29,7 @@ public class ItemAncientPaper extends Item {
 		if (!this.isInCreativeTab(tab)) return;
 		for (EnumType type : EnumType.values()) {
 			if (type == EnumType.NORMAL) {
-				for (Mantra m : MantraRegister.instance) {
+				for (Mantra m : Mantra.REGISTRY) {
 					ItemStack stack = new ItemStack(this, 1, type.getMetadata());
 					setMantraData(stack, m, 0, 100);
 					items.add(stack);

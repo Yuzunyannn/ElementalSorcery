@@ -29,7 +29,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
-import yuzunyannn.elementalsorcery.grimoire.Mantra;
+import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ItemGrimoire extends Item {

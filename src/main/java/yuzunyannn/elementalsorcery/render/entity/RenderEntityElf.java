@@ -27,6 +27,11 @@ public class RenderEntityElf extends RenderLiving<EntityElf> {
 			"textures/entity/elf/crazy.png");
 	public static final ResourceLocation TEXTURE_MERCHANT = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/entity/elf/merchant.png");
+	public static final ResourceLocation TEXTURE_BUILDER = new ResourceLocation(ElementalSorcery.MODID,
+			"textures/entity/elf/builder.png");
+	public static final ResourceLocation TEXTURE_TEST = new ResourceLocation(ElementalSorcery.MODID,
+			"textures/entity/elf/what.png");
+
 	public static final ModelElf MODEL = new ModelElf();
 
 	public RenderEntityElf(RenderManager rendermanagerIn) {

@@ -14,7 +14,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.worldgen.GenElfEdifice;
+import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.worldgen.WorldGenElfTree;
 
 public class BlockElfSapling extends BlockBush implements IGrowable {
@@ -90,9 +90,7 @@ public class BlockElfSapling extends BlockBush implements IGrowable {
 		long seed = world.getSeed();
 		String m = x + Integer.toString((int) seed);
 		int n = 0;
-		for (int i = 0; i < m.length(); i++) {
-			n = Math.abs(n * z) + m.charAt(i);
-		}
+		for (int i = 0; i < m.length(); i++) n = Math.abs(n * z) + m.charAt(i);
 		return n % 8 == 0;
 	}
 

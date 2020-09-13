@@ -1,12 +1,16 @@
 package yuzunyannn.elementalsorcery.event;
 
+import java.util.LinkedList;
+
 import org.lwjgl.input.Keyboard;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.client.settings.KeyConflictContext;
 import net.minecraftforge.client.settings.KeyModifier;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -17,6 +21,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
+import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 
 @SideOnly(Side.CLIENT)
 public class KeyBoard {
@@ -25,7 +31,7 @@ public class KeyBoard {
 		ClientRegistry.registerKeyBinding(KEY_MANTRA_SHITF);
 	}
 
-	public static final KeyBinding KEY_MANTRA_SHITF = new KeyBinding("key.mantra.shitf", KeyConflictContext.IN_GAME,
+	public static final KeyBinding KEY_MANTRA_SHITF = new KeyBinding("key.es.func", KeyConflictContext.IN_GAME,
 			KeyModifier.NONE, Keyboard.KEY_TAB, "itemGroup.ElementalSorcery");
 
 	public static void onKeyDown(InputEvent.KeyInputEvent e) {
@@ -36,9 +42,40 @@ public class KeyBoard {
 			if (player.isHandActive()) return;
 			ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
 			Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
-			if (grimoire == null) return;
+			if (grimoire == null) {
+				if (elfTreeElevator(player)) e.setResult(Event.Result.ALLOW);
+				return;
+			}
 			e.setResult(Event.Result.ALLOW);
 			player.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_MANTRA_SHITF, player.world, 0, 0, 0);
 		}
+	}
+
+	public static final LinkedList<BlockPos> elfTreeCoreCache = new LinkedList<>();
+
+	public static boolean elfTreeElevator(EntityPlayer player) {
+		BlockPos pos = player.getPosition().down();
+		if (player.world.getBlockState(pos) != ESInitInstance.BLOCKS.ELF_LOG.getDefaultState()) return false;
+
+		if (elfTreeCoreCache.size() > 10) elfTreeCoreCache.removeFirst();
+		for (BlockPos p : elfTreeCoreCache) {
+			if (TileElfTreeCore.inRangeElevator(p, player)) {
+				TileElfTreeCore.openElevatorUI(p, player);
+				return true;
+			}
+		}
+		for (int y = 0; y < 100; y++) {
+			for (int x = -2; x <= 2; x++) {
+				for (int z = -2; z <= 2; z++) {
+					IBlockState state = player.world.getBlockState(pos.add(x, y, z));
+					if (state.getBlock() == ESInitInstance.BLOCKS.ELF_TREE_CORE) {
+						elfTreeCoreCache.add(pos.add(x, y, z));
+						TileElfTreeCore.openElevatorUI(pos.add(x, y, z), player);
+						return true;
+					}
+				}
+			}
+		}
+		return false;
 	}
 }

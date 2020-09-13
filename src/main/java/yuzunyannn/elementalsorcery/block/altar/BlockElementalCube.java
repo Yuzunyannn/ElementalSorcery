@@ -29,7 +29,6 @@ import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ElementRegister;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
@@ -168,7 +167,7 @@ public class BlockElementalCube extends BlockContainer {
 
 	@Override
 	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-		List<Element> list = ElementRegister.instance.getValues();
+		List<Element> list = Element.REGISTRY.getValues();
 		for (Element e : list) {
 			ItemStack stack = new ItemStack(this);
 			ElementStack estack = new ElementStack(e, 10000, 1000);

@@ -66,12 +66,11 @@ public class EventServer {
 		});
 	}
 
-	static public void addTickTask(ITickTask.ITickTaskOnce task) {
-		if (task == null) return;
-		tickList.add(task);
+	static public void addTask(ITickTask.ITickTaskOnce task) {
+		addTickTask((ITickTask) task);
 	}
 
-	static public void addTickTask(ITickTask.ITickTaskOnce task, int tickout) {
+	static public void addTask(ITickTask.ITickTaskOnce task, int tickout) {
 		addTickTask((ITickTask) task, tickout);
 	}
 

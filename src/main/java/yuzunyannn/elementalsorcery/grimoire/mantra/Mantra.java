@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.grimoire;
+package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -12,11 +12,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
-import yuzunyannn.elementalsorcery.init.MantraRegister;
+import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.grimoire.IMantraData;
+import yuzunyannn.elementalsorcery.init.ESImplRegister;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
+
+	public static final ESImplRegister<Mantra> REGISTRY = new ESImplRegister(Mantra.class);
 
 	private String unlocalizedName;
 
@@ -96,7 +100,7 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	@Nullable
 	static public Mantra getFromNBT(NBTTagCompound nbt) {
 		if (nbt == null) return null;
-		return MantraRegister.instance.getValue(new ResourceLocation(nbt.getString("id")));
+		return Mantra.REGISTRY.getValue(new ResourceLocation(nbt.getString("id")));
 	}
 
 	/** 检测是否为自定义魔法的咒文 */

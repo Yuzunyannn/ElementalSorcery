@@ -25,9 +25,8 @@ public class RecipeManagement extends ESImplRegister<IRecipe> {
 
 	static final public RecipeManagement instance = new RecipeManagement();
 
-	@Override
-	public Class<IRecipe> getRegistrySuperType() {
-		return IRecipe.class;
+	public RecipeManagement() {
+		super(IRecipe.class);
 	}
 
 	// 寻找合成表

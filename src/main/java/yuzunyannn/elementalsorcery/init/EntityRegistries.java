@@ -36,7 +36,7 @@ public class EntityRegistries {
 		register(0, "elf", EntityElf.class, "Elf", 64, 3, true);
 		registerEgg("elf", 0x82bf71, 0x529b3d);
 		register(1, "elfMerchant", EntityElfTravellingMerchant.class, "Elf", 64, 3, true);
-		registerEntitySpawn(EntityElfTravellingMerchant.class, 4, 1, 2, EnumCreatureType.CREATURE, Biomes.PLAINS,
+		registerEntitySpawn(EntityElfTravellingMerchant.class, 3, 1, 2, EnumCreatureType.CREATURE, Biomes.PLAINS,
 				Biomes.DESERT, Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.EXTREME_HILLS, Biomes.SWAMPLAND);
 		// 效果处理
 		register(51, "block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);

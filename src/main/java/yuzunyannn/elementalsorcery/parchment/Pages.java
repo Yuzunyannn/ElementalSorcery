@@ -15,6 +15,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.relauncher.Side;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionScholar;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;

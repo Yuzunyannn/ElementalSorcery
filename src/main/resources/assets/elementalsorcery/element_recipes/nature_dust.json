@@ -1,0 +1,24 @@
+{
+	"pattern": [
+		"M#M",
+		"#W#",
+		"M#M"
+	],
+	"key": {
+		"#": "elementalsorcery:nature_dust",
+		"W": "minecraft:wheat_seeds",
+		"M": "elementalsorcery:star_sand"
+	},
+	"element": [
+		{
+			"id": "earth",
+			"size": 40,
+			"power": 200
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:nature_dust",
+		"count": 2,
+		"data":1
+	}
+}

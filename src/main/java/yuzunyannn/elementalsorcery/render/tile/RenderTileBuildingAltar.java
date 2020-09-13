@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 public class RenderTileBuildingAltar extends TileEntitySpecialRenderer<TileBuildingAltar> implements IRenderItem {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/building_altar.png");
-	private final ModelBuildingAltar MODEL = new ModelBuildingAltar();
+	public static final ModelBuildingAltar MODEL = new ModelBuildingAltar();
 
 	@Override
 	public void render(TileBuildingAltar tile, double x, double y, double z, float partialTicks, int destroyStage,

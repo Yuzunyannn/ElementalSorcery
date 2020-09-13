@@ -22,7 +22,7 @@ public class ContainerElfTalk extends ContainerElf implements IContainerNetwork 
 		}
 		if (!player.world.isRemote) {
 			// 推后一帧
-			EventServer.addTickTask(() -> {
+			EventServer.addTask(() -> {
 				this.setChapter(this.elf.getProfession().getChapter(this.elf, player));
 			});
 		}

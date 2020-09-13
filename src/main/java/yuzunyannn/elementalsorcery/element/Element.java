@@ -14,9 +14,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.register.ESRegister;
+import yuzunyannn.elementalsorcery.init.ESImplRegister;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class Element extends IForgeRegistryEntry.Impl<Element> {
+
+	public static final ESImplRegister<Element> REGISTRY = new ESImplRegister(Element.class);
 
 	protected Random rand = new Random();
 

@@ -11,5 +11,13 @@ public interface ITalkAction {
 			int talkAt);
 
 	/** 是否为转折点 */
-	boolean isPoint();
+	default boolean isPoint() {
+		return true;
+	}
+
+	public static boolean toBoolean(Object obj) {
+		if (obj == null) return false;
+		if (obj instanceof Boolean) return (boolean) obj;
+		return true;
+	}
 }

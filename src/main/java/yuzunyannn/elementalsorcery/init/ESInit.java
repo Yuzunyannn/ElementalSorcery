@@ -54,7 +54,6 @@ import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.AutoName;
-import yuzunyannn.elementalsorcery.elf.pro.ElfProRegister;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.KeyBoard;
@@ -73,6 +72,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileCrystalFlower;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementalCube;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileElfTreeCore;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileLantern;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
@@ -97,6 +97,7 @@ import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDTransfer;
 import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
 import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
+import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftNormal;
 import yuzunyannn.elementalsorcery.tile.TileLantern;
@@ -151,12 +152,14 @@ public class ESInit {
 		// 注册实体
 		EntityRegistries.registerAll();
 		// 注册精灵相关
-		ElfProRegister.registerAll();
+		ElfProfessionRegister.registerAll();
 		AutoName.init();
 		// 注册默认所有建筑
 		BuildingLib.registerAll();
 		// 注册咒文
 		MantraRegister.registerAll();
+		// 注册精灵大厦楼层
+		ElfEdificeRegister.registerAll();
 		// 测试村庄相关
 		VillegeRegistries.registerAll();
 		// 注册战利品
@@ -168,7 +171,7 @@ public class ESInit {
 		// 注册世界生成
 		MinecraftForge.ORE_GEN_BUS.register(new WorldGeneratorES.GenOre());
 		MinecraftForge.EVENT_BUS.register(new WorldGeneratorES.GenDecorate());
-		//MinecraftForge.TERRAIN_GEN_BUS.register(new WorldGeneratorES.GenTerrain());
+		// MinecraftForge.TERRAIN_GEN_BUS.register(new WorldGeneratorES.GenTerrain());
 		// 注册网络
 		ESNetwork.registerAll();
 		// 注册事件
@@ -286,6 +289,7 @@ public class ESInit {
 		register(TilePortalAltar.class, "PortalAltar");
 		register(TileTranscribeTable.class, "TranscribeTable");
 		register(TileTranscribeInjection.class, "TranscribeInjection");
+		register(TileElfTreeCore.class, "ElfTreeCore");
 	}
 
 	static void registerAllCapability() {
@@ -425,6 +429,7 @@ public class ESInit {
 		registerRender(BLOCKS.MD_DECONSTRUCT_BOX, TileMDDeconstructBox.class, new RenderTileMDDeconstructBox());
 		registerRender(BLOCKS.MD_RESONANT_INCUBATOR, TileMDResonantIncubator.class,
 				new RenderTileMDResonantIncubator());
+		registerRender(BLOCKS.ELF_TREE_CORE, TileElfTreeCore.class, new RenderTileElfTreeCore());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

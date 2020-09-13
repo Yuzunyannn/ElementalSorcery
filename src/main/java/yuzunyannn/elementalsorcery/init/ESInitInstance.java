@@ -37,6 +37,7 @@ import yuzunyannn.elementalsorcery.block.altar.BlockTranscribeInjection;
 import yuzunyannn.elementalsorcery.block.altar.BlockTranscribeTable;
 import yuzunyannn.elementalsorcery.block.container.BlockAbsorbBox;
 import yuzunyannn.elementalsorcery.block.container.BlockDeconstructBox;
+import yuzunyannn.elementalsorcery.block.container.BlockElfTreeCore;
 import yuzunyannn.elementalsorcery.block.container.BlockHearth;
 import yuzunyannn.elementalsorcery.block.container.BlockItemStructureCraftNormal;
 import yuzunyannn.elementalsorcery.block.container.BlockLantern;
@@ -189,6 +190,7 @@ public class ESInitInstance {
 		BLOCKS.PORTAL_ALTAR = new BlockPortalAltar();
 		BLOCKS.TRANSCRIBE_TABLE = new BlockTranscribeTable();
 		BLOCKS.TRANSCRIBE_INJECTION = new BlockTranscribeInjection();
+		BLOCKS.ELF_TREE_CORE = new BlockElfTreeCore();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();

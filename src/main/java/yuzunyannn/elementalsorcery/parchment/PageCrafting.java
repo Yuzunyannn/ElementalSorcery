@@ -108,10 +108,12 @@ public class PageCrafting extends PageEasy {
 	}
 
 	protected int getCX() {
+		if (size > 9) return 155;
 		return 162;
 	}
 
 	protected int getCY() {
+		if (size > 9) return 50;
 		return 44;
 	}
 
@@ -160,6 +162,7 @@ public class PageCrafting extends PageEasy {
 
 	@Override
 	public int getWidthSize(IPageManager pageManager) {
+		if (size > 9) return (int) (super.getWidthSize(pageManager) * 0.54f);
 		return (int) (super.getWidthSize(pageManager) * 0.65f);
 	}
 

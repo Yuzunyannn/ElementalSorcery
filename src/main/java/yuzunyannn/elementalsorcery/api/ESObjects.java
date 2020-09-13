@@ -121,6 +121,7 @@ public class ESObjects {
 		public Block PORTAL_ALTAR;
 		public Block TRANSCRIBE_TABLE;
 		public Block TRANSCRIBE_INJECTION;
+		public Block ELF_TREE_CORE;
 	}
 
 	static public class Elements {

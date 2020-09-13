@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.worldgen;
+package yuzunyannn.elementalsorcery.elf.edifice;
 
 import java.util.AbstractMap;
 import java.util.Iterator;
@@ -11,13 +11,18 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
+import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class GenElfEdifice {
 
@@ -32,6 +37,7 @@ public class GenElfEdifice {
 
 	public final boolean dispersed;
 	protected List<Map.Entry<BlockPos, IBlockState>> dispersedMap;
+	protected NBTTagCompound buildCoreData = new NBTTagCompound();
 	public int treeSize = EDIFICE_SIZE;
 	public IBlockState elfLog = ESObjects.BLOCKS.ELF_LOG.getDefaultState();
 	IBlockState elfLeaf = ESInitInstance.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false)
@@ -53,18 +59,37 @@ public class GenElfEdifice {
 		if (world.isRemote) return;
 		Iterator<Map.Entry<BlockPos, IBlockState>> iter = dispersedMap.iterator();
 		dispersedMap = new LinkedList<>();
+		NBTTagCompound coreData = buildCoreData;
+		buildCoreData = new NBTTagCompound();
+		;
 		EventServer.addTickTask(() -> {
 			int i = 0;
 			long time = System.currentTimeMillis();
 			// 延迟最多不能超过10毫秒和每次最多100个方块，保证稳定
 			while (System.currentTimeMillis() - time < 5 && i < 100) {
-				if (!iter.hasNext()) return ITickTask.END;
+				if (!iter.hasNext()) {
+					dealTreeCore(world, coreData);
+					return ITickTask.END;
+				}
 				Map.Entry<BlockPos, IBlockState> entry = iter.next();
 				world.setBlockState(entry.getKey(), entry.getValue(), 2 | 16);
 				i++;
 			}
 			return ITickTask.SUCCESS;
 		});
+	}
+
+	public void dealTreeCore(World world, NBTTagCompound data) {
+		BlockPos pos = NBTHelper.getBlockPos(data, "pos");
+		int high = data.getInteger("high");
+		pos = pos.add(0, high - 1, 0);
+		world.setBlockState(pos, ESInitInstance.BLOCKS.ELF_TREE_CORE.getDefaultState());
+		TileElfTreeCore core = BlockHelper.getTileEntity(world, pos, TileElfTreeCore.class);
+		if (core == null) {
+			ElementalSorcery.logger.warn("生成树核心的时候找不到核心的tile，位于" + pos);
+			return;
+		}
+		core.initTreeData(data.getInteger("size"), high);
 	}
 
 	public boolean checkCanGen(World world, BlockPos pos) {
@@ -96,8 +121,8 @@ public class GenElfEdifice {
 			for (int i = -size + 1; i < size; i++) {
 				int n = GenElfEdifice.getFakeCircleLen(treeSize, i, 2);
 				for (int a = 0; a < n; a++) {
-					world.setBlockToAir(pos.add(i, 0, a));
-					world.setBlockToAir(pos.add(i, 0, -a));
+					world.setBlockToAir(pos.add(i, y, a));
+					world.setBlockToAir(pos.add(i, y, -a));
 				}
 			}
 		}
@@ -122,19 +147,25 @@ public class GenElfEdifice {
 		for (int y = 0; y < hight; y++) {
 			for (int i = -treeSize + 1; i < treeSize; i++) {
 				int n = GenElfEdifice.getFakeCircleLen(treeSize, i, 2);
-				setBlockState(world, pos.add(i, y, n), elfLog);
-				setBlockState(world, pos.add(i, y, -n), elfLog);
-				setBlockState(world, pos.add(n, y, i), elfLog);
-				setBlockState(world, pos.add(-n, y, i), elfLog);
 				int h = hight / 6;
 				if (y > h && y < hight - h && rand.nextInt(10) == 0) {
 					BlockPos at = randPos(pos, rand, i, n).add(0, y, 0);
 					treeBranch(world, rand, pos, at, rand.nextInt(3) + 2);
 				}
+				setBlockState(world, pos.add(i, y, n), elfLog);
+				setBlockState(world, pos.add(i, y, -n), elfLog);
+				setBlockState(world, pos.add(n, y, i), elfLog);
+				setBlockState(world, pos.add(-n, y, i), elfLog);
 			}
 		}
 		// 树叶
 		treeCrown(world, pos, hight, rand);
+		// 精灵石数据记录
+		buildCoreData = new NBTTagCompound();
+		NBTHelper.setBlockPos(buildCoreData, "pos", pos);
+		buildCoreData.setInteger("high", hight);
+		buildCoreData.setInteger("size", this.treeSize);
+		if (!dispersed) dealTreeCore(world, buildCoreData);
 	}
 
 	private BlockPos randPos(BlockPos pos, Random rand, int i, int n) {

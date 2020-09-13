@@ -1,0 +1,46 @@
+{
+	"pattern": [
+		"MGM",
+		"M M",
+		"P#P",
+		" MM ",
+		" LL ",
+		"W##W",
+		"####"
+	],
+	"key": {
+		"P": "elementalsorcery:magic_stone",
+		"#": {
+			"item": "elementalsorcery:estone",
+			"data": 1
+		},
+		"L": {
+			"item": "elementalsorcery:estone",
+			"data": 2
+		},
+		"M": "elementalsorcery:estone_prism",
+		"G": {
+			"type": "ore_dict",
+			"id": "blockGlass"
+		},
+		"W": {
+			"item": "elementalsorcery:elf_plank",
+			"data": 1
+		}
+	},
+	"element": [
+		{
+			"id": "ender",
+			"size": 800,
+			"power": 500
+		},
+		{
+			"id": "air",
+			"size": 80,
+			"power": 150
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:portal_altar"
+	}
+}

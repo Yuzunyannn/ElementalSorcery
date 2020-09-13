@@ -11,7 +11,7 @@ import net.minecraft.util.registry.RegistryNamespaced;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
-public abstract class ESImplRegister<T extends IForgeRegistryEntry<T>> implements IForgeRegistry<T> {
+public class ESImplRegister<T extends IForgeRegistryEntry<T>> implements IForgeRegistry<T> {
 
 	private final Registry REGISTRY = new Registry();
 
@@ -26,6 +26,16 @@ public abstract class ESImplRegister<T extends IForgeRegistryEntry<T>> implement
 	}
 
 	private int nId = 0;
+	private Class<T> superType;
+
+	public ESImplRegister(Class<T> cls) {
+		this.superType = cls;
+	}
+
+	@Override
+	public Class<T> getRegistrySuperType() {
+		return superType;
+	}
 
 	@Override
 	public void register(T value) {

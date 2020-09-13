@@ -1,0 +1,40 @@
+{
+	"pattern": [
+		"M#M",
+		"#W#",
+		"M#M",
+		"G  G",
+		"G##G",
+		"G##G",
+		"G  G"
+	],
+	"key": {
+		"#": "elementalsorcery:nature_dust",
+		"W": {
+			"item": "elementalsorcery:nature_dust",
+			"data": 1
+		},
+		"M": "elementalsorcery:star_sand",
+		"G": {
+			"type":"ore_dict",
+			"id":"ingotGold"
+		}
+	},
+	"element": [
+		{
+			"id": "earth",
+			"size": 100,
+			"power": 300
+		},
+		{
+			"id": "metal",
+			"size": 50,
+			"power": 300
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:nature_dust",
+		"count": 2,
+		"data": 2
+	}
+}

@@ -47,7 +47,7 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 			}
 		}
 		if (elf == null || player.world.isRemote) return;
-		EventServer.addTickTask(() -> {
+		EventServer.addTask(() -> {
 			setTrade(elf.getProfession().getTrade(elf, player));
 		});
 	}

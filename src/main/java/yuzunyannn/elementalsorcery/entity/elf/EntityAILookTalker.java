@@ -16,9 +16,12 @@ public class EntityAILookTalker extends EntityAIWatchClosest {
 		if (this.elf.getTalker() != null) {
 			this.closestEntity = this.elf.getTalker();
 			return true;
-		} else {
-			return false;
-		}
+		} else return false;
+	}
+
+	@Override
+	public boolean shouldContinueExecuting() {
+		return this.elf.getTalker() != null;
 	}
 
 }

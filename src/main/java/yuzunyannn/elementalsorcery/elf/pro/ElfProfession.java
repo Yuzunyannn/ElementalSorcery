@@ -19,16 +19,20 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
+import yuzunyannn.elementalsorcery.init.ESImplRegister;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 
-public class ElfProfession extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<ElfProfession> {
+public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
+
+	public static final ESImplRegister<ElfProfession> REGISTRY = new ESImplRegister(ElfProfession.class);
 
 	static public final ElfProfession NONE = new ElfProfessionNone();
 	static public final ElfProfession MASTER = new ElfProfessionMaster();
@@ -37,6 +41,7 @@ public class ElfProfession extends net.minecraftforge.registries.IForgeRegistryE
 	static public final ElfProfession SCHOLAR = new ElfProfessionScholar();
 	static public final ElfProfession CRAZY = new ElfProfessionCrazy();
 	static public final ElfProfession MERCHANT = new ElfProfessionMerchant();
+	static public final ElfProfession BUILDER = new ElfProfessionBuilder();
 
 	public String getUnlocalizedProfessionName() {
 		return "pro." + this.getRegistryName().getResourcePath();

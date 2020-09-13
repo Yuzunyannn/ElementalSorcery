@@ -117,7 +117,10 @@ public class GuiElfTalk extends GuiContainer {
 			return;
 		}
 		TalkChapter.Iter iter = container.getChapterIter();
-		if (iter == null) return;
+		if (iter == null) {
+			next(0, 0);
+			return;
+		}
 		// 是说话
 		if (iter.getType() == TalkType.SAY) {
 			next(iter, 0);
@@ -149,8 +152,12 @@ public class GuiElfTalk extends GuiContainer {
 			iter.next();
 			return;
 		}
+		next(iter.getIndex(), select);
+	}
+
+	protected void next(int nextID, int select) {
 		if (updateCDTick > 0) return;
-		container.sendToServer(iter.getIndex(), select);
+		container.sendToServer(nextID, select);
 		updateCDTick = 15;
 	}
 

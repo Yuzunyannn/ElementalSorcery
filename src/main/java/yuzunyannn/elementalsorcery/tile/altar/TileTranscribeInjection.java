@@ -18,9 +18,8 @@ import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.Mantra;
+import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.init.MantraRegister;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemGrimoire;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -205,13 +204,13 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		if (this.isSending()) {
-			if (nbt.hasKey("mId")) mantraHandle = MantraRegister.instance.getValue(nbt.getInteger("mId"));
+			if (nbt.hasKey("mId")) mantraHandle = Mantra.REGISTRY.getValue(nbt.getInteger("mId"));
 			else mantraHandle = null;
 			return;
 		}
 		// 还原状态
 		if (nbt.hasKey("mantra", 8)) {
-			mantraHandle = MantraRegister.instance.getValue(new ResourceLocation(nbt.getString("mantra")));
+			mantraHandle = Mantra.REGISTRY.getValue(new ResourceLocation(nbt.getString("mantra")));
 			transcribeProgress = nbt.getInteger("progress");
 		}
 		finish = nbt.getBoolean("fin");
@@ -222,7 +221,7 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		if (this.isSending()) {
-			if (mantraHandle != null) nbt.setInteger("mId", MantraRegister.instance.getId(mantraHandle));
+			if (mantraHandle != null) nbt.setInteger("mId", Mantra.REGISTRY.getId(mantraHandle));
 			return nbt;
 		}
 		// 记录状态

@@ -135,6 +135,10 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			}
 		}
 
+		public ItemStack getItemStack() {
+			return bolockStack;
+		}
+
 		@Override
 		public boolean equals(Object other) {
 			if (other instanceof BlockItemTypeInfo) {
@@ -343,7 +347,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 	/** 遍历用类 */
 	public static class BuildingBlocks {
 		private Iterator<Map.Entry<BlockPos, Integer>> iter = null;
-		private List<Map.Entry<BlockPos, Integer>> atfer = null;
+		private List<Map.Entry<BlockPos, Integer>> after = null;
 		private Map.Entry<BlockPos, Integer> entry = null;
 		private final Building building;
 		private BlockPos off = BlockPos.ORIGIN;
@@ -356,32 +360,36 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		public boolean next() {
 			if (iter == null) {
 				iter = building.blockMap.entrySet().iterator();
-				atfer = new LinkedList<>();
+				after = new LinkedList<>();
 			}
 			// 是否拥有下一个
 			while (iter.hasNext()) {
 				entry = iter.next();
-				if (atfer != null && needToLater()) {
-					atfer.add(entry);
+				if (after != null && needToLater()) {
+					after.add(entry);
 					continue;
 				}
 				return true;
 			}
 			// 处理after
-			if (atfer != null && !atfer.isEmpty()) {
-				iter = atfer.iterator();
+			if (after != null && !after.isEmpty()) {
+				iter = after.iterator();
 				iter.next();
-				atfer = null;
+				after = null;
 				return true;
 			}
 			iter = null;
 			entry = null;
-			atfer = null;
+			after = null;
 			return false;
 		}
 
 		protected boolean needToLater() {
 			IBlockState state = this.getState();
+			return needToLater(state);
+		}
+
+		public static boolean needToLater(IBlockState state) {
 			Block block = state.getBlock();
 			if (block instanceof BlockCarpet || block instanceof BlockTorch) return true;
 			return false;

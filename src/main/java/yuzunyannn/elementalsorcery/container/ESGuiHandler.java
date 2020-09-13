@@ -14,6 +14,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiElementCraftingTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfTalk;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfTrade;
+import yuzunyannn.elementalsorcery.container.gui.GuiElfTreeElevator;
 import yuzunyannn.elementalsorcery.container.gui.GuiHearth;
 import yuzunyannn.elementalsorcery.container.gui.GuiItemStructureCraft;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDAbsorbBox;
@@ -63,6 +64,7 @@ public class ESGuiHandler implements IGuiHandler {
 
 	// 切换只有客户端存在
 	public static final int GUI_MANTRA_SHITF = 60;
+	public static final int GUI_ELF_TREE_ELEVATOR = 61;
 
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -183,6 +185,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiElfTrade(player);
 			case GUI_MANTRA_SHITF:
 				return new GuiMantraShitf(player);
+			case GUI_ELF_TREE_ELEVATOR:
+				return new GuiElfTreeElevator(player, new BlockPos(x, y, z));
 			default:
 				return null;
 			}

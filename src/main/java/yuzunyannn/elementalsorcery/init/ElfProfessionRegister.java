@@ -1,20 +1,13 @@
-package yuzunyannn.elementalsorcery.elf.pro;
+package yuzunyannn.elementalsorcery.init;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.init.ESImplRegister;
+import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 
-public class ElfProRegister extends ESImplRegister<ElfProfession> {
-
-	public static final ElfProRegister instance = new ElfProRegister();
-
-	@Override
-	public Class<ElfProfession> getRegistrySuperType() {
-		return ElfProfession.class;
-	}
+public class ElfProfessionRegister {
 
 	public static void registerAll() throws IllegalArgumentException, IllegalAccessException {
 		Field[] fields = ElfProfession.class.getFields();
@@ -23,7 +16,7 @@ public class ElfProRegister extends ESImplRegister<ElfProfession> {
 			if (!ElfProfession.class.isAssignableFrom(field.getType())) continue;
 			ElfProfession elfPro = (ElfProfession) field.get(ElfProfession.class);
 			elfPro.setRegistryName(new ResourceLocation(ElementalSorcery.MODID, field.getName().toLowerCase()));
-			instance.register(elfPro);
+			ElfProfession.REGISTRY.register(elfPro);
 		}
 	}
 }

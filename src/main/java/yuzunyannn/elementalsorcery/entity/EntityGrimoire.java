@@ -28,8 +28,7 @@ import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
-import yuzunyannn.elementalsorcery.grimoire.Mantra;
-import yuzunyannn.elementalsorcery.init.MantraRegister;
+import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageEntitySync;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
@@ -98,7 +97,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		userUUID = compound.getString("user");
 		tick = compound.getInteger("tick");
 		state = compound.getByte("state");
-		mantra = MantraRegister.instance.getValue(new ResourceLocation(compound.getString("mantra")));
+		mantra = Mantra.REGISTRY.getValue(new ResourceLocation(compound.getString("mantra")));
 		if (mantra == null) {
 			ElementalSorcery.logger.warn("EntityGrimoire恢复数据时出现了找不到mantra的异常！");
 			return;
@@ -256,7 +255,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		if (world.isRemote) return;
 		if (grimoireStack.isEmpty()) return;
 		// 延迟一下，等待合书动画
-		EventServer.addTickTask(() -> {
+		EventServer.addTask(() -> {
 			if (user != null) {
 				// 使用者有开始用了
 				if (user.getHeldItemMainhand().getCapability(Grimoire.GRIMOIRE_CAPABILITY, null) == grimoire) {

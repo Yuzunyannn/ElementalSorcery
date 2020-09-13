@@ -22,6 +22,7 @@ public class EntityAIMoveToLookBlock extends EntityAIBase {
 
 	@Override
 	public boolean shouldExecute() {
+		if (this.creature.getRNG().nextFloat() >= 0.025) return false;
 		watchPos = EntityAILookBlock.getLookPos(creature);
 		return watchPos != null && !creature.world.isAirBlock(watchPos);
 	}

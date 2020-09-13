@@ -137,7 +137,7 @@ mantra.float.describe=I can float.
 mantra.sprint.name=sprint
 mantra.sprint.describe=More convenient mobility
 
-key.mantra.shitf=Shift Mantra in Grimoire
+key.es.func=Function key
 
 info.element.spell.fire=Ignite the specified block
 info.element.spell.ender=With the power of Enderman, Steve can be transmitted to the distance just like enderman
@@ -162,9 +162,10 @@ pro.crazy=Crazy
 pro.merchant=merchant
 
 commands.es.usage=/es <operate> <parameters>...
+commands.es.buildFloor.usage=/es buildFloor <floor name>
 commands.es.build.usage=/es build <it> or <builing name>
 commands.es.build.it.usage=/es build it will build the architecture in mainhand's Architectural Crystal.
-commands.es.build.fail.usage=Architecture are not exist
+commands.es.build.fail=Build failure
 commands.es.page.usage=/es page <page's id>
 commands.es.page.fail=Page's id are not exist
 
@@ -268,6 +269,14 @@ say.scholar.nice.goods=In addition to the parchment for recording knowledge, the
 say.scholar.becare=You have to be careful of The Crazy. They fight everything.
 say.scholar.master=The Magic Master is very powerful, almost no one is her opponent, I also want to be such a powerful mage.
 say.merchant.good.goods=Come and have a look. I have a lot of good things here.
+say.builder.working=I'm working.
+say.builder.hope=I hope we can live here...
+say.builder.help=Can I help you?
+say.builder.need=I need some money, about 500 yuan.
+say.builder.ok=I want to sponsor them.
+say.builder.no=Let's forget it.
+say.very.thank=Thank you very much.
+say.nomoney=You don't seem to have enough money.
 
 page.elf=精灵
 page.elf.ct=精灵是从精灵世界过来的一种新的生物，她们通常生活在巨大的精灵树上。精灵属于中立生物，而且有着不同的职业。如果你攻击她们，她们将可能会转变到战斗职业来进行防卫。\n精灵中会产生疯子，她会到处乱攻击。\n此外精灵学者会告诉你一些你可能想知道的内容，同时她也会出售教程。\n[精灵部分教程只能从学者获取]
@@ -280,10 +289,10 @@ page.elfCrystal.ct=精灵果可以进行烧制，其内部液体结晶而形成�
 page.resonantCrystal=共鸣水晶
 page.resonantCrystal.ct=通过精灵工艺制作的水晶，被广泛引用到各种需要共鸣的设备中。\n该水晶可以投掷出去，砸到不同的设备上时，似乎会有不同的反应。
 
-page.crafting.need=需要元素参与合成: 
-page.crafting.show=%s 需要 %d 强度下限 %d 
-page.crafting.npshow=%s 需要 %d
-page.error=错误页面
+page.crafting.need=Elements are required to craft: 
+page.crafting.show=%s requires %d lower limit %d 
+page.crafting.npshow=%s requires %d
+page.error=Error Page
 page.error.ct=您所需的页面已经丢失！\n404？500~正常情况下，您不应该看到该页面！\n看到此页面的时候，请将log文件和错误信息发送给作者~如果是您自行修改nbt的结果，就不必了
 page.catalog=目录
 page.catalog.none=书中啥都没有
@@ -378,6 +387,8 @@ page.spellCrystal=咒术水晶
 page.spellCrystal.ct=携带咒术的水晶，制作魔导书必备的材料。\n咒术水晶可以通过魔力水晶再次注魔得到，需要在午夜时分，吸收咒文才可能注魔成功。\n注魔条件: 午夜，周围有超过14个书架
 page.EWorkbench=元素合成台
 page.EWorkbench.ct=元素合成台可以像普通合成台一样使用，同时也可以放入元素水晶，让物品和元素共同合成。\n深色橡木是与魔力契合性最好的木材，因此元素合成台只能选择使用深色橡木。
+page.natureDust=Seek Dust
+page.natureDust.ct=Seek Dust made from Nature Dust can resonate with nature, so as to get all kinds of information around. Put Seek Dust on the ground and pick Nature Dust after resonating.\nSeek Dust can also detect elf power.
 page.manual=元素手册
 page.manual.ct=大量的羊皮卷没有地方装？制作一个元素手册吧，可以将身上多余的羊皮卷装入手册中，更好的储存与查阅。(手册后面的数字是页面的标号哦)
 page.magicPaper=魔力纸张
@@ -433,6 +444,11 @@ page.orderCrystal=秩序水晶
 page.orderCrystal.ct=秩序水晶具有元素引导性，可以引导元素组成物质。\n利用它似乎可以将元素构成到物质。
 page.construct=物质构造
 page.construct.ct=物质可以瓦解为为元素，同时元素也可以构造成物品，这就需要元素神坛了。/n在神坛下方放上需要构造物品的结构水晶，方桌中心9格的四个角上，分别放上秩序水晶，然后通吟唱构造咒文，元素便可反向构造成对应的物质。
+page.natureDustAdv=Explore Dust
+page.natureDustAdv.ct=The information obtained through Seek Dust is limited. Through more elements, Explore Dust produced can have strong resonance with the surrounding and detect resources contained in the underground.
+page.portalAltar=Refract Altar
+page.portalAltar.ct=Through the injection of a large number of Ender Elements, Refract Altar has the power to distort the space which can transfer Steve from one position to another.
+page.portalAltar.ct.more=Put the element cube with Ender Element on the stone pillars of the altar. Put Natural Crystal with dimension position information into Refract Altar. It will consume Ender Element to open portal.\nMore elements are consumed when the gate is opened, and a relatively small number of elements are consumed after the gate is opened.\nNo sundries are allowed near the opening position of the portal, otherwise the portal may not be opened.
 
 es.adv.root.title=Elemental Sorcery
 es.adv.root.description=Open the scroll in your hand and start Elemental Sorcery!

@@ -1,0 +1,16 @@
+{
+    "lev": 3,
+    "need": [
+        "md/nature_crystal"
+    ],
+    "linked": {
+        "item": "elementalsorcery:nature_dust",
+        "data": 1
+    },
+    "type": "craft",
+    "name": "natureDust",
+    "item": {
+        "item": "elementalsorcery:nature_dust",
+        "data": 1
+    }
+}

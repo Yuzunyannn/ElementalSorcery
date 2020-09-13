@@ -15,6 +15,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -22,6 +23,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
+import yuzunyannn.elementalsorcery.elf.edifice.BuilderWithInfo;
+import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
+import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
+import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Pages;
@@ -47,6 +52,10 @@ public class CommandES extends CommandBase {
 			if (args.length == 1) throw new CommandException("commands.es.build.usage");
 			Entity entity = sender.getCommandSenderEntity();
 			this.cmdBuild(args[1], (EntityLivingBase) entity, server.getEntityWorld());
+		} else if (args[0].equals("buildFloor")) {
+			if (args.length == 1) throw new CommandException("commands.es.buildFloor.usage");
+			Entity entity = sender.getCommandSenderEntity();
+			this.cmdBuildFloor(args[1], (EntityLivingBase) entity, server.getEntityWorld());
 		} else if (args[0].equals("page")) {
 			// 页面
 			if (args.length == 1) throw new CommandException("commands.es.page.usage");
@@ -71,7 +80,7 @@ public class CommandES extends CommandBase {
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			@Nullable BlockPos targetPos) {
 		if (args.length == 1) {
-			String[] names = { "build", "page", "debug" };
+			String[] names = { "build", "page", "debug", "buildFloor" };
 			return CommandBase.getListOfStringsMatchingLastWord(args, names);
 		} else if (args.length == 2) {
 			if (args[0].equals("build")) {
@@ -79,6 +88,9 @@ public class CommandES extends CommandBase {
 				List<String> tips = CommandBase.getListOfStringsMatchingLastWord(args, bs);
 				tips.add("it");
 				return tips;
+			} else if (args[0].equals("buildFloor")) {
+				Collection<ResourceLocation> bs = ElfEdificeFloor.REGISTRY.getKeys();
+				return CommandBase.getListOfStringsMatchingLastWord(args, bs);
 			} else if (args[0].equals("page")) {
 				Set<String> set = Pages.getPageIds();
 				String[] names = new String[set.size()];
@@ -106,10 +118,25 @@ public class CommandES extends CommandBase {
 			RayTraceResult result = WorldHelper.getLookAtBlock(world, entity, 128);
 			if (result != null) pos = result.getBlockPos();
 		}
-		if (building == null || pos == null) throw new CommandException("commands.es.build.fail.usage");
+		if (building == null || pos == null) throw new CommandException("commands.es.build.fail");
 		Building.BuildingBlocks iter = building.getBuildingIterator();
 		while (iter.next()) {
 			world.setBlockState(iter.getPos().add(pos), iter.getState());
 		}
+	}
+
+	private void cmdBuildFloor(String value, EntityLivingBase entity, World world) throws CommandException {
+		BlockPos pos = null;
+		ElfEdificeFloor floor = ElfEdificeFloor.REGISTRY.getValue(new ResourceLocation(value));
+		RayTraceResult result = WorldHelper.getLookAtBlock(world, entity, 128);
+		if (result != null) pos = result.getBlockPos();
+		if (floor == null || pos == null) throw new CommandException("commands.es.build.fail");
+		// 模拟建造
+		FloorInfo info = new FloorInfo(floor, pos.up());
+		BuilderWithInfo builder = new BuilderWithInfo(entity.world, info, GenElfEdifice.EDIFICE_SIZE, 60, pos.up(60));
+		info.setFloorData(info.getType().getBuildData(builder, entity.getRNG()));
+		info.getType().build(builder);
+		builder.buildAll();
+		info.getType().surprise(builder, entity.getRNG());
 	}
 }

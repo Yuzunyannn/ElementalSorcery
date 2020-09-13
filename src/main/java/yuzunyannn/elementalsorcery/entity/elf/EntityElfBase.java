@@ -1,7 +1,9 @@
 package yuzunyannn.elementalsorcery.entity.elf;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
@@ -37,9 +39,11 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
-import yuzunyannn.elementalsorcery.elf.pro.ElfProRegister;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
+import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public abstract class EntityElfBase extends EntityCreature {
 
@@ -51,6 +55,8 @@ public abstract class EntityElfBase extends EntityCreature {
 			DataSerializers.VARINT);
 	/** 说或者 */
 	public EntityLivingBase talker = null;
+	/** 精灵时钟，非持久化 */
+	public int tick;
 
 	public EntityElfBase(World worldIn) {
 		super(worldIn);
@@ -97,12 +103,17 @@ public abstract class EntityElfBase extends EntityCreature {
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		super.readEntityFromNBT(compound);
 		String id = compound.getString("professionId");
-		this.setProfession(ElfProRegister.instance.getValue(new ResourceLocation(id)));
+		this.setProfession(ElfProfession.REGISTRY.getValue(new ResourceLocation(id)));
 	}
 
 	/** 获取临时数据NBT，不会被保存，不会同步 */
 	public NBTTagCompound getTempNBT() {
 		if (tempNBT == null) tempNBT = new NBTTagCompound();
+		return tempNBT;
+	}
+
+	public NBTTagCompound clearTempNBT() {
+		tempNBT = new NBTTagCompound();
 		return tempNBT;
 	}
 
@@ -123,6 +134,24 @@ public abstract class EntityElfBase extends EntityCreature {
 
 	public EntityLivingBase getTalker() {
 		return talker;
+	}
+
+	/** 设置所属的精灵大厦核心 */
+	public void setEdificeCore(BlockPos pos) {
+		NBTTagCompound nbt = this.getEntityData();
+		NBTHelper.setBlockPos(nbt, "edifice", pos);
+	}
+
+	/**
+	 * 获取所属的精灵大厦核心
+	 * 
+	 * @return 获取不到的情况下，可能不属属于任何，或者属于的核心被拆毁
+	 */
+	@Nullable
+	public TileElfTreeCore getEdificeCore() {
+		NBTTagCompound nbt = this.getEntityData();
+		BlockPos at = NBTHelper.getBlockPos(nbt, "edifice");
+		return BlockHelper.getTileEntity(world, at, TileElfTreeCore.class);
 	}
 
 	// 环境音
@@ -294,6 +323,7 @@ public abstract class EntityElfBase extends EntityCreature {
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		this.updateArmSwingProgress();
+		tick++;
 		this.getProfession().tick(this);
 	}
 
@@ -312,19 +342,21 @@ public abstract class EntityElfBase extends EntityCreature {
 		if (world.isRemote) return;
 		if (origin != null) origin.transferElf(this, this.profession);
 		this.profession.initElf(this, origin);
-		dataManager.set(PROFESSION_UPDATE, ElfProRegister.instance.getId(this.profession));
+		dataManager.set(PROFESSION_UPDATE, ElfProfession.REGISTRY.getId(this.profession));
 	}
 
 	@Override
 	public void notifyDataManagerChange(DataParameter<?> key) {
 		super.notifyDataManagerChange(key);
 		if (key.getId() == PROFESSION_UPDATE.getId() && world.isRemote) {
-			this.profession = ElfProRegister.instance.getValue(dataManager.get(PROFESSION_UPDATE));
+			this.profession = ElfProfession.REGISTRY.getValue(dataManager.get(PROFESSION_UPDATE));
 			if (this.profession == null) this.profession = ElfProfession.NONE;
 		}
 	}
 
 	abstract protected ItemStack pickupItem(ItemStack stack);
 
-	abstract protected void tryHarvestBlock(BlockPos pos);
+	abstract public void tryHarvestBlock(BlockPos pos);
+
+	abstract public boolean tryPlaceBlock(BlockPos pos, IBlockState block);
 }

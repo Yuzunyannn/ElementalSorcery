@@ -4,9 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.util.LinkedList;
-import java.util.Random;
 import java.util.function.Function;
 
 import net.minecraft.block.Block;
@@ -31,8 +28,6 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraft.world.gen.structure.StructureComponent;
-import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
@@ -40,12 +35,15 @@ import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.elf.edifice.BuilderWithInfo;
+import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
+import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
+import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
-import yuzunyannn.elementalsorcery.worldgen.GenElfEdifice;
-import yuzunyannn.elementalsorcery.worldgen.VillageESHall.VillageCreationHandler;
 
 public class CommandESDebug {
 
@@ -117,17 +115,24 @@ public class CommandESDebug {
 			switch (args[0]) {
 			// 测试建筑
 			case "buildTest": {
-				VillageCreationHandler h = new VillageCreationHandler();
-				StructureVillagePieces.Village v = h.buildComponent(null, null, new LinkedList<StructureComponent>(),
-						new Random(), pos.getX(), pos.getY(), pos.getZ(), EnumFacing.NORTH, 0);
-				try {
-					Field field = StructureVillagePieces.Village.class.getDeclaredField("averageGroundLvl");
-					field.setAccessible(true);
-					field.setInt(v, pos.getY());
-				} catch (Exception e) {
-					ElementalSorcery.logger.warn("debug指令错误", e);
-				}
-				v.addComponentParts(sender.getEntityWorld(), new Random(), v.getBoundingBox());
+				ElfEdificeFloor type = ElfEdificeFloor.REGISTRY.getValue(0);
+				FloorInfo info = new FloorInfo(type, pos.up());
+				BuilderWithInfo builder = new BuilderWithInfo(entity.world, info, GenElfEdifice.EDIFICE_SIZE, 60,
+						BlockPos.ORIGIN);
+				info.setFloorData(info.getType().getBuildData(builder, RandomHelper.rand));
+				info.getType().build(builder);
+				builder.buildAll();
+				/*
+				 * VillageCreationHandler h = new VillageCreationHandler();
+				 * StructureVillagePieces.Village v = h.buildComponent(null, null, new
+				 * LinkedList<StructureComponent>(), new Random(), pos.getX(), pos.getY(),
+				 * pos.getZ(), EnumFacing.NORTH, 0); try { Field field =
+				 * StructureVillagePieces.Village.class.getDeclaredField("averageGroundLvl") ;
+				 * field.setAccessible(true); field.setInt(v, pos.getY()); } catch (Exception e)
+				 * { ElementalSorcery.logger.warn("debug指令错误", e); }
+				 * v.addComponentParts(sender.getEntityWorld(), new Random(),
+				 * v.getBoundingBox());
+				 */
 			}
 				return;
 			case "buildTestAgain": {
@@ -169,6 +174,7 @@ public class CommandESDebug {
 				show.apply(stack.getItem().getRegistryName().toString());
 				if (block != Blocks.AIR) {
 					show.apply("hardness:" + block.getBlockHardness(state, world, pos));
+					show.apply("blockstate:" + state);
 				} else {
 
 				}

@@ -2,29 +2,22 @@ package yuzunyannn.elementalsorcery.init;
 
 import yuzunyannn.elementalsorcery.element.Element;
 
-public class ElementRegister extends ESImplRegister<Element> {
+public class ElementRegister {
 
-	public static final ElementRegister instance = new ElementRegister();
-
-	@Override
-	public Class<Element> getRegistrySuperType() {
-		return Element.class;
-	}
-
-	private static void registerElement(Element element) {
-		ElementRegister.instance.register(element);
+	private static void register(Element element) {
+		Element.REGISTRY.register(element);
 	}
 
 	static public void registerAll() {
-		registerElement(ESInitInstance.ELEMENTS.VOID);
-		registerElement(ESInitInstance.ELEMENTS.MAGIC);
-		registerElement(ESInitInstance.ELEMENTS.ENDER);
-		registerElement(ESInitInstance.ELEMENTS.FIRE);
-		registerElement(ESInitInstance.ELEMENTS.WATER);
-		registerElement(ESInitInstance.ELEMENTS.AIR);
-		registerElement(ESInitInstance.ELEMENTS.EARTH);
-		registerElement(ESInitInstance.ELEMENTS.METAL);
-		registerElement(ESInitInstance.ELEMENTS.WOOD);
-		registerElement(ESInitInstance.ELEMENTS.KNOWLEDGE);
+		register(ESInitInstance.ELEMENTS.VOID);
+		register(ESInitInstance.ELEMENTS.MAGIC);
+		register(ESInitInstance.ELEMENTS.ENDER);
+		register(ESInitInstance.ELEMENTS.FIRE);
+		register(ESInitInstance.ELEMENTS.WATER);
+		register(ESInitInstance.ELEMENTS.AIR);
+		register(ESInitInstance.ELEMENTS.EARTH);
+		register(ESInitInstance.ELEMENTS.METAL);
+		register(ESInitInstance.ELEMENTS.WOOD);
+		register(ESInitInstance.ELEMENTS.KNOWLEDGE);
 	}
 }
