@@ -10,7 +10,7 @@ import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 
 public class GuiRiteManual extends GuiContainer {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/rite_manual.png");
 	final ContainerRiteManual container;
 

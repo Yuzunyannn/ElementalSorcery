@@ -86,7 +86,7 @@ public class GuiElfTalk extends GuiContainer {
 				GuiInventory.drawEntityOnScreen(xoff, yoff, 30, xoff - mouseX, yoff - mouseY, container.player);
 			}
 			mc.getTextureManager().bindTexture(TEXTURE);
-			String[] says = (String[]) iter.getSaying();
+			String[] says = (String[]) iter.getSaying(container.player, container.elf);
 			offsetX = (this.width - SELECT_WIDTH) / 2;
 			for (int i = 0; i < says.length; i++) {
 				int yoff = selectY(i, says.length);
@@ -126,7 +126,7 @@ public class GuiElfTalk extends GuiContainer {
 			next(iter, 0);
 			return;
 		}
-		Object saying = iter == null ? TalkChapter.NOTHING_TO_SAY : iter.getSaying();
+		Object saying = iter == null ? TalkChapter.NOTHING_TO_SAY : iter.getSaying(container.player, container.elf);
 		if (saying instanceof String[]) {
 			// 判断选择的按钮
 			String[] says = (String[]) saying;
@@ -167,7 +167,7 @@ public class GuiElfTalk extends GuiContainer {
 		if (updateCDTick > 0) updateCDTick--;
 		TalkChapter.Iter iter = container.getChapterIter();
 		if (iter != null && iter.getType() == TalkType.SAY) {
-			String str = (String) iter.getSaying();
+			String str = (String) iter.getSaying(container.player, container.elf);
 			if (str.equals(drawValue)) {
 				if (!currDrawValue.equals(drawValue)) {
 					currDrawValue = drawValue.substring(0, currDrawValue.length() + 1);

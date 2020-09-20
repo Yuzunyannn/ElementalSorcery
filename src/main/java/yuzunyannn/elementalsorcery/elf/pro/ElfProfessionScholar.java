@@ -148,7 +148,7 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 
 		scene = new TalkSceneSay().setLabel("konw");
 		chapter.addScene(scene);
-		scene.addString("say.scholar.ok", Talker.OPPOSING);
+		scene.addString("say.ok", Talker.OPPOSING);
 		scene.addAction(new TalkActionEnd());
 
 		scene = new TalkSceneSay().setLabel("unkonw");

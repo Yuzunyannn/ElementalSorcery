@@ -39,11 +39,24 @@ public class TalkChapter {
 			sceneIter = iter = 0;
 		}
 
-		public Object getSaying() {
+		/** 特殊函数处理 */
+		@SideOnly(Side.CLIENT)
+		private String specialString(String str, EntityPlayer player, EntityElfBase elf) {
+			if (str.charAt(0) != '?') return str;
+			String id = str.substring(1);
+			ITalkSpecial ts = ITalkSpecial.REGISTRY.get(id);
+			if (ts == null) return str;
+			return ts.deal(player, elf, TalkChapter.this, this, str);
+		}
+
+		public Object getSaying(EntityPlayer player, EntityElfBase elf) {
 			if (scenes.isEmpty()) return NOTHING_TO_SAY;
 			TalkScene scene = scenes.get(iter);
 			if (scene.isEmpty()) return NOTHING_TO_SAY;
-			if (scene.getType() == TalkType.SAY) return scene.getSayings(sceneIter);
+			if (scene.getType() == TalkType.SAY) {
+				if (player.world.isRemote) return specialString(scene.getSayings(sceneIter), player, elf);
+				return scene.getSayings(sceneIter);
+			}
 			return scene.getAllSaying();
 		}
 

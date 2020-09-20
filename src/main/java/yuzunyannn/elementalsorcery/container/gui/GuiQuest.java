@@ -1,0 +1,111 @@
+package yuzunyannn.elementalsorcery.container.gui;
+
+import java.util.List;
+
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.container.ContainerQuest;
+import yuzunyannn.elementalsorcery.elf.ElfTime;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.QuestDescribe;
+import yuzunyannn.elementalsorcery.elf.quest.QuestReward;
+import yuzunyannn.elementalsorcery.elf.quest.QuestStatus;
+import yuzunyannn.elementalsorcery.elf.quest.QuestType;
+
+@SideOnly(Side.CLIENT)
+public class GuiQuest extends GuiContainer {
+
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+			"textures/gui/elf/quest.png");
+
+	protected final ContainerQuest container;
+	protected boolean dynamic;
+
+	public GuiQuest(EntityPlayer player) {
+		super(new ContainerQuest(player));
+		container = (ContainerQuest) inventorySlots;
+		this.xSize = 207;
+		this.ySize = 219;
+		Quest quest = container.getQuest();
+		if (quest == null) return;
+		dynamic = quest.getStatus() == QuestStatus.UNDERWAY;
+		dynamic = dynamic && quest.isAdventurer(container.player);
+	}
+
+	@Override
+	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
+		this.drawDefaultBackground();
+		super.drawScreen(mouseX, mouseY, partialTicks);
+		this.renderHoveredToolTip(mouseX, mouseY);
+	}
+
+	@Override
+	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+		int color = 0x4b2811;
+		Quest quest = container.getQuest();
+		if (quest == null) return;
+		QuestType type = quest.getType();
+		QuestDescribe describe = type.getDescribe();
+		QuestStatus status = quest.getStatus();
+		String title = I18n.format(describe.getTitle());
+		this.fontRenderer.drawString(TextFormatting.BOLD + title,
+				this.xSize / 2 - this.fontRenderer.getStringWidth(title) / 2, 6, color);
+		boolean overdue = quest.isOverdue(container.player.world.getWorldTime());
+		// 具体描述
+		String des = describe.getMainDescribe(quest, container.player, dynamic && !overdue);
+		int yoff = 17;
+		for (String s : this.fontRenderer.listFormattedStringToWidth(des, this.xSize - 20)) {
+			this.fontRenderer.drawString(s, 10, yoff, color);
+			yoff += this.fontRenderer.FONT_HEIGHT;
+		}
+		// 接受条件
+		this.fontRenderer.drawString(TextFormatting.BOLD + I18n.format("quest.pre.condition"), 5, 81, color);
+		yoff = 92;
+		if (quest.getEndTime() > 0) {
+			String endTime = new ElfTime(quest.getEndTime()).getDate();
+			if (overdue && status != QuestStatus.FINISH) this.fontRenderer
+					.drawString(TextFormatting.DARK_RED + I18n.format("quest.end", endTime), 10, yoff, color);
+			else this.fontRenderer.drawString(I18n.format("quest.end", endTime), 10, yoff, color);
+			yoff += this.fontRenderer.FONT_HEIGHT;
+		}
+		if (yoff == 92) this.fontRenderer.drawString(I18n.format("info.none"), 10, yoff, color);
+		// 奖励
+		String reward = I18n.format("quest.reward");
+		this.fontRenderer.drawString(TextFormatting.BOLD + reward, 5, 137, color);
+		yoff = 148;
+		List<QuestReward> rewards = type.getRewards();
+		for (QuestReward rew : rewards) {
+			this.fontRenderer.drawString(rew.getDescribe(quest, container.player), 10, yoff, color);
+			yoff += this.fontRenderer.FONT_HEIGHT;
+		}
+		// 请求的人
+		// 完成标记
+		if (status == QuestStatus.FINISH) {
+			mc.getTextureManager().bindTexture(TEXTURE);
+			GlStateManager.color(1, 1, 1);
+			GlStateManager.pushMatrix();
+			float x = this.xSize / 2 - 55;
+			float y = this.ySize / 2 - 50;
+			GlStateManager.translate(x, y, 0);
+			GlStateManager.rotate(20, 0, 0, 1);
+			GlStateManager.scale(3, 3, 3);
+			drawTexturedModalRect(0, 0, 208, 0, 48, 20);
+			GlStateManager.popMatrix();
+		}
+	}
+
+	@Override
+	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
+		mc.getTextureManager().bindTexture(TEXTURE);
+		drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
+	}
+
+}

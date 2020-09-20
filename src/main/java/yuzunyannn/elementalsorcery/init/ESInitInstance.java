@@ -70,12 +70,14 @@ import yuzunyannn.elementalsorcery.element.ElementWater;
 import yuzunyannn.elementalsorcery.element.ElementWood;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
+import yuzunyannn.elementalsorcery.item.ItemElfWatch;
 import yuzunyannn.elementalsorcery.item.ItemGrimoire;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemManual;
 import yuzunyannn.elementalsorcery.item.ItemNatureDust;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
+import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.item.ItemRedHandset;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
@@ -237,6 +239,8 @@ public class ESInitInstance {
 		ITEMS.NATURE_CRYSTAL = new ItemNatureCrystal();
 		ITEMS.NATURE_DUST = new ItemNatureDust();
 		ITEMS.ANCIENT_PAPER = new ItemAncientPaper();
+		ITEMS.QUEST = new ItemQuest();
+		ITEMS.ELF_WATCH = new ItemElfWatch();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();

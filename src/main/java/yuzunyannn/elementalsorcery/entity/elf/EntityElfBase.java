@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.entity.elf;
 
+import java.util.Iterator;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -9,8 +11,10 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityFlyHelper;
 import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.entity.item.EntityItem;
@@ -90,6 +94,18 @@ public abstract class EntityElfBase extends EntityCreature {
 		this.tasks.addTask(3, new EntityAIAttackElf(this));
 		this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false, new Class[0]));
 		this.targetTasks.addTask(3, new EntityAINearestAttackTarget(this));
+	}
+
+	public void removeTask(Class<? extends EntityAIBase> cls) {
+		Iterator<EntityAITasks.EntityAITaskEntry> iterator = this.tasks.taskEntries.iterator();
+		while (iterator.hasNext()) {
+			EntityAITasks.EntityAITaskEntry entityaitasks$entityaitaskentry = iterator.next();
+			EntityAIBase entityaibase = entityaitasks$entityaitaskentry.action;
+			if (entityaibase.getClass().equals(cls)) {
+				this.tasks.removeTask(entityaibase);
+				return;
+			}
+		}
 	}
 
 	@Override

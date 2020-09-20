@@ -42,6 +42,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	static public final ElfProfession CRAZY = new ElfProfessionCrazy();
 	static public final ElfProfession MERCHANT = new ElfProfessionMerchant();
 	static public final ElfProfession BUILDER = new ElfProfessionBuilder();
+	static public final ElfProfession RECEPTIONIST = new ElfProfessionReceptionist();
 
 	public String getUnlocalizedProfessionName() {
 		return "pro." + this.getRegistryName().getResourcePath();

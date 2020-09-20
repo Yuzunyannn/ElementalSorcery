@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.event;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -85,8 +86,10 @@ public class CommandES extends CommandBase {
 		} else if (args.length == 2) {
 			if (args[0].equals("build")) {
 				Collection<Building> bs = BuildingLib.instance.getBuildingsFromLib();
-				List<String> tips = CommandBase.getListOfStringsMatchingLastWord(args, bs);
-				tips.add("it");
+				List<String> arrayList = new ArrayList<>(bs.size() + 1);
+				for (Building b : bs) arrayList.add(b.getKeyName());
+				arrayList.add("it");
+				List<String> tips = CommandBase.getListOfStringsMatchingLastWord(args, arrayList);
 				return tips;
 			} else if (args[0].equals("buildFloor")) {
 				Collection<ResourceLocation> bs = ElfEdificeFloor.REGISTRY.getKeys();

@@ -49,11 +49,13 @@ import yuzunyannn.elementalsorcery.block.BlockElfFruit;
 import yuzunyannn.elementalsorcery.block.BlockElfLeaf;
 import yuzunyannn.elementalsorcery.block.container.BlockHearth;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
+import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.AutoName;
+import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.KeyBoard;
@@ -160,6 +162,8 @@ public class ESInit {
 		MantraRegister.registerAll();
 		// 注册精灵大厦楼层
 		ElfEdificeRegister.registerAll();
+		//任务相关注册
+		QuestRegister.registerAll();
 		// 测试村庄相关
 		VillegeRegistries.registerAll();
 		// 注册战利品
@@ -296,6 +300,7 @@ public class ESInit {
 		register(IElementInventory.class, new ElementInventory.Storage(), ElementInventory.class);
 		register(Spellbook.class, new Spellbook.Storage(), Spellbook.class);
 		register(Grimoire.class, new Grimoire.Storage(), Grimoire.class);
+		register(IAdventurer.class, new Adventurer.Storage(), Adventurer.class);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -345,6 +350,8 @@ public class ESInit {
 		registerRender(ITEMS.ANCIENT_PAPER, 0, "ancient_paper");
 		registerRender(ITEMS.ANCIENT_PAPER, 1, "ancient_paper_new");
 		registerRender(ITEMS.ANCIENT_PAPER, 2, "ancient_paper_new_written");
+		registerRender(ITEMS.QUEST);
+		registerRender(ITEMS.ELF_WATCH);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

@@ -4,19 +4,24 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
+import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 
 public class EventServer {
 
-	public static NBTTagCompound getPlayerNBT(EntityPlayer player) {
+	public static NBTTagCompound getPlayerNBT(EntityLivingBase player) {
 		NBTTagCompound data = player.getEntityData();
 		if (data.hasKey("ESData", 10)) return data.getCompoundTag("ESData");
 		NBTTagCompound nbt = new NBTTagCompound();
@@ -39,6 +44,13 @@ public class EventServer {
 	public static void onLogoff(PlayerEvent.PlayerLoggedOutEvent event) {
 		EntityPlayer player = event.player;
 		ElementalSorcery.removePlayerData(player);
+	}
+
+	@SubscribeEvent
+	public static void asAdventurer(AttachCapabilitiesEvent<Entity> event) {
+		if (event.getObject() instanceof EntityPlayer) {
+			event.addCapability(new ResourceLocation(ElementalSorcery.MODID, "adventurer"), new Adventurer.Provider());
+		}
 	}
 
 	static private final List<ITickTask> tickList = new LinkedList<ITickTask>();

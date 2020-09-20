@@ -72,10 +72,6 @@ public class PageEasy extends Page {
 	public void drawIcon(int xoff, int yoff, IPageManager pageManager) {
 		ItemStack stack = this.getIcon();
 		if (stack.isEmpty()) return;
-		GuiContainer gui = pageManager.getGui();
-		gui.mc.getTextureManager().bindTexture(GuiParchment.TEXTURE_EXTRA);
-		gui.drawTexturedModalRect(xoff, yoff, 77, 0, 97, 18);
-		gui.drawTexturedModalRect(xoff + gui.getXSize() / 2 - 5, yoff + 8, 77, 19, 94, 4);
 		pageManager.drawItem(stack, xoff + 1, yoff + 1);
 	}
 

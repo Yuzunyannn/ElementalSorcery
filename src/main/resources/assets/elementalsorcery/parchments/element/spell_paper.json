@@ -6,5 +6,15 @@
     ],
     "type": "craft",
     "name": "spellPaper",
-    "item": "elementalsorcery:spell_paper"
+    "item": {
+        "id":"elementalsorcery:spell_paper",
+        "nbt": {
+			"ench": [
+				{
+					"id": -1,
+					"lvl": 1
+				}
+			]
+		}
+    }
 }

@@ -14,6 +14,8 @@ public class ESConfig {
 	public final boolean SHOW_ELEMENT_TOOLTIP;
 	/** 传送门绘制等级 */
 	public final int PORTAL_RENDER_TYPE;
+	/**每个玩家任务的最大上限*/
+	public final int QUEST_LIMIT = 5;
 
 	/** 手册的最大页面数 */
 	public final int MANUAL_MAX_PAGES;

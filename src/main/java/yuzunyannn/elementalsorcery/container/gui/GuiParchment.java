@@ -93,7 +93,8 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			this.page.drawValue(this);
 			GlStateManager.popMatrix();
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("羊皮卷gui:drawGuiContainerBackgroundLayer异常", e);
+			String id = this.page == null ? "null" : this.page.getId();
+			ElementalSorcery.logger.warn("羊皮卷(" + id + ")gui:drawGuiContainerBackgroundLayer异常", e);
 			this.toPage = Pages.getErrorPage();
 		}
 	}
@@ -142,7 +143,8 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 		try {
 			this.page.update(this);
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("羊皮卷gui:update异常", e);
+			String id = this.page == null ? "null" : this.page.getId();
+			ElementalSorcery.logger.warn("羊皮卷(" + id + ")gui:update异常", e);
 			this.toPage = Pages.getErrorPage();
 		}
 	}

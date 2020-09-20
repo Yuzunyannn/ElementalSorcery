@@ -27,6 +27,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiMDMagiclization;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDRubbleRepair;
 import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
+import yuzunyannn.elementalsorcery.container.gui.GuiQuest;
 import yuzunyannn.elementalsorcery.container.gui.GuiRiteManual;
 import yuzunyannn.elementalsorcery.container.gui.GuiSimple;
 import yuzunyannn.elementalsorcery.container.gui.GuiSmeltBox;
@@ -61,6 +62,7 @@ public class ESGuiHandler implements IGuiHandler {
 
 	public static final int GUI_ELF_TALK = 40;
 	public static final int GUI_ELF_TRADE = 41;
+	public static final int GUI_QUEST = 45;
 
 	// 切换只有客户端存在
 	public static final int GUI_MANTRA_SHITF = 60;
@@ -118,6 +120,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new ContainerElfTalk(player);
 			case GUI_ELF_TRADE:
 				return new ContainerElfTrade(player);
+			case GUI_QUEST:
+				return new ContainerQuest(player);
 			default:
 				return null;
 			}
@@ -183,6 +187,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiElfTalk(player);
 			case GUI_ELF_TRADE:
 				return new GuiElfTrade(player);
+			case GUI_QUEST:
+				return new GuiQuest(player);
 			case GUI_MANTRA_SHITF:
 				return new GuiMantraShitf(player);
 			case GUI_ELF_TREE_ELEVATOR:

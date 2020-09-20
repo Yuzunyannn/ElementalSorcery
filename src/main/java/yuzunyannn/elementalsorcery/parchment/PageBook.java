@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
@@ -24,6 +25,10 @@ public class PageBook extends Page {
 
 	public void setIds(NBTTagList list) {
 		pageIds = NBTHelper.getStringListForNBTTagList(list);
+	}
+
+	public void setIds(List<String> list) {
+		pageIds = list;
 	}
 
 	@Override
@@ -92,6 +97,11 @@ public class PageBook extends Page {
 		yoff += CATALOG_LOCAL_Y;
 		for (Page page : showPage) {
 			if (page == null) break;
+			gui.mc.getTextureManager().bindTexture(GuiParchment.TEXTURE_EXTRA);
+			GlStateManager.color(1, 1, 1);
+			GlStateManager.disableLighting();
+			gui.drawTexturedModalRect(xoff, yoff, 77, 0, 97, 18);
+			gui.drawTexturedModalRect(xoff + gui.getXSize() / 2 - 5, yoff + 8, 77, 19, 94, 4);
 			page.drawIcon(xoff, yoff, pageManager);
 			yoff += CATALOG_LOCAL_INTERVAL;
 		}

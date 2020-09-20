@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.entity;
 
 import java.util.List;
+import java.util.UUID;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
@@ -52,7 +53,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	public EntityGrimoire(World worldIn, EntityLivingBase user, Mantra mantra, NBTTagCompound originData) {
 		super(worldIn);
 		this.user = user;
-		this.userUUID = user.getUniqueID().toString();
+		this.userUUID = user.getUniqueID();
 		this.mantra = mantra;
 		this.originData = originData == null ? new NBTTagCompound() : originData;
 		this.initMantraData();
@@ -77,7 +78,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	protected int tick;
 	/** 使用者，如果服务器关闭后尽可能会被还原，但是STATE_AFTER_SPELLING中可能存在为null的时候 */
 	protected EntityLivingBase user;
-	protected String userUUID;
+	protected UUID userUUID;
 	/** 咒文 */
 	protected Mantra mantra;
 	protected IMantraData mantraData;
@@ -94,7 +95,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
-		userUUID = compound.getString("user");
+		userUUID = compound.getUniqueId("user");
 		tick = compound.getInteger("tick");
 		state = compound.getByte("state");
 		mantra = Mantra.REGISTRY.getValue(new ResourceLocation(compound.getString("mantra")));
@@ -108,7 +109,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
-		compound.setString("user", userUUID);
+		compound.setUniqueId("user", userUUID);
 		compound.setInteger("tick", tick);
 		compound.setByte("state", state);
 		compound.setString("mantra", mantra.getRegistryName().toString());
@@ -136,7 +137,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	/** 需要精准还原，所以使用uuid */
 	protected void restoreUser() {
 		List<EntityLivingBase> list = world.getEntities(EntityLivingBase.class, (e) -> {
-			return e.getUniqueID().toString().equals(userUUID);
+			return e.getUniqueID().equals(userUUID);
 		});
 		if (list.isEmpty()) return;
 		user = list.get(0);

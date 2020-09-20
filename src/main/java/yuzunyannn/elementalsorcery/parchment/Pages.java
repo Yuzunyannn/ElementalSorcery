@@ -15,7 +15,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.relauncher.Side;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionScholar;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
@@ -32,6 +31,12 @@ public class Pages {
 
 	public static Set<String> getPageIds() {
 		return pages.keySet();
+	}
+
+	public static List<String> getPageNormalIds() {
+		List<String> arr = new ArrayList<String>(pageList.size());
+		for (int i = 2; i < pageList.size(); i++) arr.add(pageList.get(i).getId());
+		return arr;
 	}
 
 	/** 获取page个数 */

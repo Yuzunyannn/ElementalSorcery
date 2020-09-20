@@ -94,6 +94,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		// if (tick % 300 == 0) trySpawnElfAround();
 		trySpawnElfAround();
 		if (tick % 1200 == 0) checkBuildTaskState();
+		if (tick % 600 == 0) tryBuildingSpawn();
 	}
 
 	public int getTreeSize() {
@@ -126,6 +127,19 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 	}
 
 	// ----------------------------精灵建筑任务部分----------------------------
+
+	public void tryBuildingSpawn() {
+		int size = floors.size();
+		int off = rand.nextInt(size);
+		int n = rand.nextInt(size + 1);
+		for (int i = 0; i < n; i++) {
+			int index = (i + off) % size;
+			FloorInfo floor = floors.get(index);
+			if (floor.isEmpty()) continue;
+			BuilderWithInfo builder = new BuilderWithInfo(world, floor, this.size, high, pos);
+			floor.getType().spawn(builder);
+		}
+	}
 
 	public void checkBuildTaskState() {
 		for (int i = 0; i < floors.size(); i++) {
@@ -195,6 +209,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		if (floor.isEmpty()) return;
 		BuilderWithInfo builder = new BuilderWithInfo(world, floor, size, high, pos);
 		floor.getType().surprise(builder, rand);
+		floor.getType().spawn(builder);
 		this.updateToClient();
 		this.markDirty();
 	}
@@ -230,7 +245,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		AxisAlignedBB aabb = new AxisAlignedBB(pos.getX() - searchRange, pos.getY() - searchRange,
 				pos.getZ() - searchRange, pos.getX() + searchRange, pos.getY() + searchRange, pos.getZ() + searchRange);
 		List<EntityElfBase> elfs = world.getEntitiesWithinAABB(EntityElfBase.class, aabb);
-		if (elfs.size() > 2) return;
+		if (!elfs.isEmpty()) return;
 		// 刷一只精灵
 		EntityElf elf;
 		switch (rand.nextInt(5)) {

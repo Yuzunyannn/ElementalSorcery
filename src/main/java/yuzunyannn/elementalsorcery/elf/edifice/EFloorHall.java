@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.elf.edifice;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.BlockChest;
@@ -13,9 +14,13 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
@@ -233,6 +238,28 @@ public class EFloorHall extends ElfEdificeFloor {
 		if (chest != null) {
 			ResourceLocation loot = new ResourceLocation(ElementalSorcery.MODID, "hall/es_hall");
 			chest.setLootTable(loot, rand.nextLong());
+		}
+	}
+
+	@Override
+	public void spawn(IBuilder builder) {
+		World world = builder.getWorld();
+		BlockPos pos = builder.getFloorBasicPos();
+		int treeSize = builder.getEdificeSize();
+		BuilderHelper helper = new BuilderHelper(builder);
+		EnumFacing toward = helper.toward();
+		int offset = GenElfEdifice.getFakeCircleLen(treeSize, treeSize, 2) + 1;
+		for (int i = -4; i <= 4; i += 4) {
+			BlockPos at = pos.offset(toward.getOpposite(), offset).offset(toward.rotateY(), i);
+			float x = at.getX() + 0.5f;
+			float y = at.getY() + 0.5f;
+			float z = at.getZ() + 0.5f;
+			AxisAlignedBB aabb = new AxisAlignedBB(x - 1, y - 1, z - 1, x + 1, y + 1, z + 1);
+			List<EntityElfBase> elfs = world.getEntitiesWithinAABB(EntityElfBase.class, aabb);
+			if (!elfs.isEmpty()) continue;
+			EntityElf elf = new EntityElf(world, ElfProfession.RECEPTIONIST);
+			elf.setPosition(x, y - 0.5, z);
+			world.spawnEntity(elf);
 		}
 	}
 }

@@ -4,7 +4,6 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.advancements.ICriterionTrigger;
 
 /** 成就触发注册 */
-@SuppressWarnings("rawtypes")
 public class ESCriteriaTriggers {
 
 	public static final CriterionTriggerAdapter PLAYER_KILLED_ELF = register(new KilledElfTrigger("player_killed_elf"));

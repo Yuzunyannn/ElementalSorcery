@@ -191,6 +191,11 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		return keyName;
 	}
 
+	@Override
+	public String toString() {
+		return "buidling:" + keyName;
+	}
+
 	/** 建筑名称 */
 	private String name = "";
 
@@ -374,7 +379,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			// 处理after
 			if (after != null && !after.isEmpty()) {
 				iter = after.iterator();
-				iter.next();
+				entry = iter.next();
 				after = null;
 				return true;
 			}

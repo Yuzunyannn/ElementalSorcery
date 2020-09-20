@@ -56,6 +56,8 @@ public class ESObjects {
 		public Item NATURE_DUST;
 		public Item GRIMOIRE;
 		public Item ANCIENT_PAPER;
+		public Item QUEST;
+		public Item ELF_WATCH;
 	}
 
 	static public class Blocks {

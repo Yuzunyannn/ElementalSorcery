@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.entity.EntityResonantCrystal;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
-import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravellingMerchant;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
 import yuzunyannn.elementalsorcery.render.entity.EntityRenderFactory;
 import yuzunyannn.elementalsorcery.render.entity.RenderBlockThrowEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
@@ -35,9 +35,9 @@ public class EntityRegistries {
 		// 生物
 		register(0, "elf", EntityElf.class, "Elf", 64, 3, true);
 		registerEgg("elf", 0x82bf71, 0x529b3d);
-		register(1, "elfMerchant", EntityElfTravellingMerchant.class, "Elf", 64, 3, true);
-		registerEntitySpawn(EntityElfTravellingMerchant.class, 3, 1, 2, EnumCreatureType.CREATURE, Biomes.PLAINS,
-				Biomes.DESERT, Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.EXTREME_HILLS, Biomes.SWAMPLAND);
+		register(1, "elfTraveler", EntityElfTravelling.class, "Elf", 64, 3, true);
+		registerEntitySpawn(EntityElfTravelling.class, 5, 1, 2, EnumCreatureType.CREATURE, Biomes.PLAINS, Biomes.DESERT,
+				Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.EXTREME_HILLS, Biomes.SWAMPLAND);
 		// 效果处理
 		register(51, "block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);
 		register(52, "entity_crafting", EntityCrafting.class, "EntityCrafting", 128, 1, false);
