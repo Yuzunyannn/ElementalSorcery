@@ -162,7 +162,7 @@ public class ESInit {
 		MantraRegister.registerAll();
 		// 注册精灵大厦楼层
 		ElfEdificeRegister.registerAll();
-		//任务相关注册
+		// 任务相关注册
 		QuestRegister.registerAll();
 		// 测试村庄相关
 		VillegeRegistries.registerAll();
@@ -384,7 +384,6 @@ public class ESInit {
 		registerRender(BLOCKS.STAR_STONE);
 		registerRender(BLOCKS.STAR_SAND);
 		registerRender(BLOCKS.ELF_LOG);
-		registerRender(BLOCKS.ELF_LOG_CABIN_CENTER);
 		registerRender(BLOCKS.ELF_LEAF);
 		registerStateMapper(BLOCKS.ELF_LEAF,
 				new StateMap.Builder().ignore(BlockElfLeaf.CHECK_DECAY, BlockElfLeaf.DECAYABLE).build());

@@ -10,6 +10,18 @@ public class ElfEdificeFloor extends IForgeRegistryEntry.Impl<ElfEdificeFloor> {
 
 	public static final ESImplRegister<ElfEdificeFloor> REGISTRY = new ESImplRegister(ElfEdificeFloor.class);
 
+	protected String unlocalizedName;
+
+	public ElfEdificeFloor setUnlocalizedName(String unlocalizedName) {
+		this.unlocalizedName = unlocalizedName;
+		return this;
+	}
+
+	/** 权重的最低值，超过这个值的建筑才可能被建造 */
+	public int getWeight() {
+		return 50;
+	}
+
 	/**
 	 * 首次生成的时候，可以生成的随机数据，之后的build全部按照该数据进行生成
 	 * 
@@ -49,6 +61,10 @@ public class ElfEdificeFloor extends IForgeRegistryEntry.Impl<ElfEdificeFloor> {
 	/** 在本楼层生成实体或一些其他东西 */
 	public void spawn(IBuilder builder) {
 
+	}
+
+	public String getUnlocalizedName() {
+		return unlocalizedName;
 	}
 
 }

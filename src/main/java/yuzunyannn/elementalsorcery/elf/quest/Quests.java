@@ -1,11 +1,14 @@
 package yuzunyannn.elementalsorcery.elf.quest;
 
 import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
+import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.util.item.ItemRec;
 
@@ -40,7 +43,7 @@ public class Quests {
 	/*** 完成某个任务 */
 	public static boolean finishQuest(EntityLivingBase player, Quest quest, ItemStack questStack) {
 		if (quest.getStatus() != QuestStatus.UNDERWAY) return false;
-		if (quest.getType().check(quest, player) != null) return false;
+		//if (quest.getType().check(quest, player) != null) return false;
 		quest.unsign(player);
 		quest.getType().reward(quest, player);
 		quest.getType().finish(quest, player);
@@ -52,16 +55,29 @@ public class Quests {
 
 	public static final Random rand = new Random();
 
-	public static QuestType createNeedItems(int coin, ItemRec... itemstack) {
+	public static Quest createRepair(int coin, List<ItemRec> itemstack) {
 		QuestType type = new QuestType();
 		type.addCondition(QuestCondition.REGISTRY.newInstance(QuestConditionNeedItem.class).needItem(itemstack));
 		QuestDescribe describe = type.getDescribe();
 		describe.setTitle("quest.request.collect");
 		describe.addDescribe("quest.broken.house");
-		describe.addDescribe("quest.need.c1");
-		describe.addDescribe("quest.end.polite.1");
+		describe.addDescribe("quest.end.polite." + (rand.nextInt(2) + 1));
 		type.addReward(QuestReward.REGISTRY.newInstance(QuestRewardCoin.class).coin(coin));
-		return type;
+		return new Quest(type);
+	}
+
+	public static Quest createBuildTask(BlockPos corePos, ElfEdificeFloor floorType, int weight,
+			List<ItemRec> itemstack) {
+		QuestType type = new QuestType();
+		type.addCondition(QuestCondition.REGISTRY.newInstance(QuestConditionNeedItem.class).needItem(itemstack));
+		QuestDescribe describe = type.getDescribe();
+		describe.setType("elfInvest");
+		describe.setTitle("quest.elf.invest");
+		describe.addDescribe("quest.elf.invest.want", "floor." + floorType.getUnlocalizedName() + ".name");
+		describe.addDescribe("quest.end.polite.2");
+		QuestRewardElfTreeInvest reward = QuestReward.REGISTRY.newInstance(QuestRewardElfTreeInvest.class);
+		type.addReward(reward.floor(floorType, corePos, weight));
+		return new Quest(type);
 	}
 
 }

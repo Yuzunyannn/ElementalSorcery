@@ -6,35 +6,39 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.item.ItemElfPurse;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class QuestRewardCoin extends QuestReward {
+public class QuestRewardExp extends QuestReward {
 
-	protected int coin = 0;
+	public static QuestRewardExp create(int exp) {
+		return REGISTRY.newInstance(QuestRewardExp.class).exp(exp);
+	}
 
-	public QuestRewardCoin coin(int coin) {
-		this.coin = coin;
+	protected int exp = 0;
+
+	public QuestRewardExp exp(int coin) {
+		this.exp = coin;
 		return this;
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
-		nbt.setInteger("coin", coin);
+		nbt.setInteger("exp", exp);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		coin = nbt.getInteger("coin");
+		exp = nbt.getInteger("exp");
 	}
 
 	@Override
 	public void reward(Quest quest, EntityPlayer player) {
-		ItemElfPurse.insert(player.inventory, coin, false);
+		WorldHelper.createExpBall(player, exp);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public String getDescribe(Quest task, EntityLivingBase player) {
-		return I18n.format("quest.reward.coin", coin);
+		return I18n.format("quest.reward.exp", exp);
 	}
 }

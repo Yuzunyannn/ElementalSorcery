@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.container;
 
-import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.ItemStack;
@@ -12,6 +11,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import yuzunyannn.elementalsorcery.tile.TileSmeltBox;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ContainerSmeltBox extends ContainerNormal<TileSmeltBox> {
 	public TileSmeltBox getTileEntity() {
@@ -38,12 +38,7 @@ public class ContainerSmeltBox extends ContainerNormal<TileSmeltBox> {
 				@Override
 				public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
 					int i = (int) ContainerSmeltBox.this.tileEntity.getAndClearExp();
-					while (i > 0) {
-						int k = EntityXPOrb.getXPSplit(i);
-						i -= k;
-						thePlayer.world.spawnEntity(new EntityXPOrb(thePlayer.world, thePlayer.posX,
-								thePlayer.posY + 0.5D, thePlayer.posZ + 0.5D, k));
-					}
+					WorldHelper.createExpBall(thePlayer, i);
 					return super.onTake(thePlayer, stack);
 				}
 			});

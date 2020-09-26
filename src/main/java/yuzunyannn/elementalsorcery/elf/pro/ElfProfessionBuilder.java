@@ -3,10 +3,12 @@ package yuzunyannn.elementalsorcery.elf.pro;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
@@ -16,6 +18,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.block.BlockElfLog;
 import yuzunyannn.elementalsorcery.elf.edifice.BuildProgress;
 import yuzunyannn.elementalsorcery.elf.talk.ITalkAction;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionCoin;
@@ -45,6 +48,14 @@ public class ElfProfessionBuilder extends ElfProfessionNone {
 	}
 
 	@Override
+	public boolean needPickup(EntityElfBase elf, ItemStack stack) {
+		Item item = stack.getItem();
+		Block block = Block.getBlockFromItem(item);
+		return item == Item.getItemFromBlock(ESInitInstance.BLOCKS.ELF_FRUIT) || item == ESInitInstance.ITEMS.ELF_COIN
+				|| block instanceof BlockElfLog;
+	}
+
+	@Override
 	public boolean canEquip(EntityElfBase elf, ItemStack stack, EntityEquipmentSlot slot) {
 		return false;
 	}
@@ -57,6 +68,13 @@ public class ElfProfessionBuilder extends ElfProfessionNone {
 
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player) {
+		// 没有核心
+		if (elf.getEdificeCore() == null) {
+			TalkChapter chapter = new TalkChapter();
+			chapter.addScene(new TalkSceneSay("say.edifice.broken"));
+			return chapter;
+		}
+		// 其他情况
 		NBTTagCompound data = elf.getEntityData();
 		int flags = data.getInteger("flags");
 		if (flags == 0) return null;

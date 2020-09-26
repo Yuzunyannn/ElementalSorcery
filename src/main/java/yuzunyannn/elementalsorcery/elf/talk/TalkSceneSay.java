@@ -16,6 +16,14 @@ public class TalkSceneSay extends TalkScene<TalkSceneSay> {
 	protected ArrayList<Packet> list = new ArrayList<Packet>();
 	protected ITalkAction action = null;
 
+	public TalkSceneSay() {
+
+	}
+
+	public TalkSceneSay(String something) {
+		addString(something, Talker.OPPOSING);
+	}
+
 	@Override
 	public TalkType getType() {
 		return TalkType.SAY;

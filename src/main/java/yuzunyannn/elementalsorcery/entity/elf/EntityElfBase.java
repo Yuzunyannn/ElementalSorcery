@@ -172,17 +172,18 @@ public abstract class EntityElfBase extends EntityCreature {
 
 	// 环境音
 	protected SoundEvent getAmbientSound() {
-		return SoundEvents.ENTITY_CAT_AMBIENT;
+		// return SoundEvents.ENTITY_CAT_AMBIENT;
+		return null;
 	}
 
 	// 受伤音
 	protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-		return SoundEvents.ENTITY_CAT_HURT;
+		return SoundEvents.ENTITY_PLAYER_HURT;
 	}
 
 	// 死亡音
 	protected SoundEvent getDeathSound() {
-		return SoundEvents.ENTITY_CAT_DEATH;
+		return SoundEvents.ENTITY_PLAYER_DEATH;
 	}
 
 	public String getElfName() {

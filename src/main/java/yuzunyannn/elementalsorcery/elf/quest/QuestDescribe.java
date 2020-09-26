@@ -3,6 +3,8 @@ package yuzunyannn.elementalsorcery.elf.quest;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTBase;
@@ -18,7 +20,6 @@ import yuzunyannn.elementalsorcery.util.TextHelper;
 public class QuestDescribe implements INBTSerializable<NBTTagCompound> {
 
 	public static class Getter {
-
 		protected String str;
 		protected Object[] objs;
 
@@ -37,7 +38,10 @@ public class QuestDescribe implements INBTSerializable<NBTTagCompound> {
 
 		@SideOnly(Side.CLIENT)
 		public String get() {
-			return I18n.format(this.str, objs);
+			if (objs == null) return I18n.format(this.str);
+			Object[] strs = new Object[objs.length];
+			for (int i = 0; i < objs.length; i++) strs[i] = I18n.format(objs[i].toString());
+			return I18n.format(this.str, strs);
 		}
 
 		public void writeToNBT(NBTTagCompound nbt) {
@@ -60,6 +64,7 @@ public class QuestDescribe implements INBTSerializable<NBTTagCompound> {
 
 	}
 
+	protected String type = null;
 	protected String title = "";
 	protected List<Getter> strings = new ArrayList<>();
 
@@ -75,8 +80,16 @@ public class QuestDescribe implements INBTSerializable<NBTTagCompound> {
 		strings.add(new Getter(value, param));
 	}
 
+	public String getType() {
+		return type == null ? "none" : type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 	@SideOnly(Side.CLIENT)
-	public String getMainDescribe(Quest quest, EntityLivingBase player, boolean dynamic) {
+	public String getMainDescribe(Quest quest, @Nullable EntityLivingBase player, boolean dynamic) {
 		StringBuilder builder = new StringBuilder();
 		for (Getter getter : strings) builder.append(getter.get());
 		String describe = builder.toString();
@@ -98,6 +111,7 @@ public class QuestDescribe implements INBTSerializable<NBTTagCompound> {
 		}
 		tag.setTag("strs", list);
 		tag.setString("title", title);
+		if (type != null) tag.setString("type", type);
 		return tag;
 	}
 
@@ -112,6 +126,7 @@ public class QuestDescribe implements INBTSerializable<NBTTagCompound> {
 			strings.add(get);
 		}
 		title = tag.getString("title");
+		if (tag.hasKey("type", NBTTag.TAG_STRING)) type = tag.getString("type");
 	}
 
 }

@@ -64,6 +64,13 @@ public class ItemElfPurse extends Item {
 		}
 	}
 
+	static public ItemStack getPurse(int coin) {
+		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.ELF_PURSE);
+		stack.setTagCompound(new NBTTagCompound());
+		stack.getTagCompound().setInteger("coin", coin);
+		return stack;
+	}
+
 	/**
 	 * 提取硬币
 	 * 

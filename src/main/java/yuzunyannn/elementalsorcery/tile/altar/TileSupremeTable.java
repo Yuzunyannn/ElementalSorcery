@@ -20,6 +20,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
@@ -151,7 +152,9 @@ public class TileSupremeTable extends TileStaticMultiBlock
 			break;
 		default:
 			craftingAltar = null;
-			ExceptionHelper.warn(world, "在SupremeTable开始合成时，出现了不存在的类型！" + type);
+			String msg = "在SupremeTable开始合成时，出现了不存在的类型！" + type;
+			ElementalSorcery.logger.warn(msg);
+			ExceptionHelper.warnSend(world, msg);
 			break;
 		}
 		this.clear();
@@ -173,7 +176,9 @@ public class TileSupremeTable extends TileStaticMultiBlock
 		case ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT:
 			return new CraftingConstruct(nbt);
 		default:
-			ExceptionHelper.warn(world, "在SupremeTable恢复合成时，出现了不存在的类型：" + type);
+			String msg = "在SupremeTable恢复合成时，出现了不存在的类型：" + type;
+			ElementalSorcery.logger.warn(msg);
+			ExceptionHelper.warnSend(world, msg);
 			break;
 		}
 		return null;
@@ -380,8 +385,7 @@ public class TileSupremeTable extends TileStaticMultiBlock
 		float x = this.pos.getX() + 0.5f + r * MathHelper.sin(randRoate);
 		float z = this.pos.getZ() + 0.5f + r * MathHelper.cos(randRoate);
 
-		float y = this.pos.getY() + ModelSupremeTable.roateToHight(roate / 180.0f * 3.1514926f) * 0.03125f
-				+ 0.5f;
+		float y = this.pos.getY() + ModelSupremeTable.roateToHight(roate / 180.0f * 3.1514926f) * 0.03125f + 0.5f;
 
 		Particle particle = new ParticleFirework.Spark(this.world, x, y, z, 0, 0, 0,
 				Minecraft.getMinecraft().effectRenderer);

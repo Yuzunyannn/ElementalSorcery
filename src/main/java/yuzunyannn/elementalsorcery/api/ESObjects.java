@@ -99,8 +99,6 @@ public class ESObjects {
 		public Block STONE_MILL;
 		public Block MELT_CAULDRON;
 		public Block ELF_LOG;
-		@Deprecated
-		public Block ELF_LOG_CABIN_CENTER;
 		public Block ELF_LEAF;
 		public Block ELF_PLANK;
 		public Block ELF_SAPLING;

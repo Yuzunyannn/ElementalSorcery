@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.elf.quest;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -23,7 +25,7 @@ public class QuestReward extends ESImpClassRegister.EasyImp<QuestReward> impleme
 
 	/** 获取奖励的描述 */
 	@SideOnly(Side.CLIENT)
-	public String getDescribe(Quest task, EntityLivingBase player) {
+	public String getDescribe(Quest task, @Nullable EntityLivingBase player) {
 		return "";
 	}
 

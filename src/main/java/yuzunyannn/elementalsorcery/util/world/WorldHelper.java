@@ -9,6 +9,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -97,6 +99,18 @@ public class WorldHelper {
 
 	static public void newLightning(World world, BlockPos pos, boolean effectOnly) {
 		world.spawnEntity(new EntityLightningBolt(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, effectOnly));
+	}
+
+	static public void createExpBall(World world, Vec3d pos, int exp) {
+		while (exp > 0) {
+			int k = EntityXPOrb.getXPSplit(exp);
+			exp -= k;
+			world.spawnEntity(new EntityXPOrb(world, pos.x, pos.y + 0.5D, pos.z, k));
+		}
+	}
+
+	static public void createExpBall(EntityPlayer player, int exp) {
+		createExpBall(player.world, player.getPositionVector(), exp);
 	}
 
 }

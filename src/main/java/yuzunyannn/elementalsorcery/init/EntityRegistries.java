@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.entity.EntityBlockThrowEffect;
+import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 import yuzunyannn.elementalsorcery.entity.EntityExploreDust;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
@@ -23,6 +24,7 @@ import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
 import yuzunyannn.elementalsorcery.render.entity.EntityRenderFactory;
 import yuzunyannn.elementalsorcery.render.entity.RenderBlockThrowEffect;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntitiyBulletin;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityExploreDust;
@@ -37,7 +39,8 @@ public class EntityRegistries {
 		registerEgg("elf", 0x82bf71, 0x529b3d);
 		register(1, "elfTraveler", EntityElfTravelling.class, "Elf", 64, 3, true);
 		registerEntitySpawn(EntityElfTravelling.class, 5, 1, 2, EnumCreatureType.CREATURE, Biomes.PLAINS, Biomes.DESERT,
-				Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.EXTREME_HILLS, Biomes.SWAMPLAND);
+				Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.EXTREME_HILLS, Biomes.SWAMPLAND, Biomes.HELL);
+		registerEntitySpawn(EntityElfTravelling.class, 10, 2, 3, EnumCreatureType.CREATURE, Biomes.PLAINS);
 		// 效果处理
 		register(51, "block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);
 		register(52, "entity_crafting", EntityCrafting.class, "EntityCrafting", 128, 1, false);
@@ -46,6 +49,8 @@ public class EntityRegistries {
 		register(55, "entity_grimoire", EntityGrimoire.class, "EntityGrimoire", 64, 1, false);
 		// 投掷
 		register(41, "resonant_crystal", EntityResonantCrystal.class, "ResonantCrystal", 64, 10, true);
+		// 实体方块
+		register(20, "bulletin", EntityBulletin.class, "Bulletin", 64, 1, false);
 	}
 
 	private static void register(int id, String registryName, Class<? extends Entity> entityClass, String name,
@@ -73,6 +78,7 @@ public class EntityRegistries {
 		registerRender(EntityElf.class, RenderEntityElf.class);
 		registerRender(EntityExploreDust.class, RenderEntityExploreDust.class);
 		registerRender(EntityGrimoire.class, RenderEntityGrimoire.class);
+		registerRender(EntityBulletin.class, RenderEntitiyBulletin.class);
 	}
 
 	@SideOnly(Side.CLIENT)

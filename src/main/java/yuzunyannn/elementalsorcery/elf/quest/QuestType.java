@@ -19,7 +19,7 @@ public class QuestType implements INBTSerializable<NBTTagCompound> {
 
 	protected Assignor assignor = new Assignor();
 	protected QuestDescribe describe = new QuestDescribe();
-	protected ArrayList<QuestCondition> preConditions = new ArrayList<QuestCondition>();
+	protected ArrayList<QuestCondition> preconditions = new ArrayList<QuestCondition>();
 	protected ArrayList<QuestCondition> conditions = new ArrayList<QuestCondition>();
 	protected ArrayList<QuestReward> rewards = new ArrayList<QuestReward>();
 
@@ -29,6 +29,11 @@ public class QuestType implements INBTSerializable<NBTTagCompound> {
 
 	public QuestType(NBTTagCompound nbt) {
 		this.deserializeNBT(nbt);
+	}
+
+	public void addPrecondition(QuestCondition condition) {
+		condition.asPrecondition(true);
+		preconditions.add(condition);
 	}
 
 	public void addCondition(QuestCondition condition) {
@@ -65,7 +70,7 @@ public class QuestType implements INBTSerializable<NBTTagCompound> {
 	 * @return 返回不满足的条件，如果返回null表示全部满足
 	 */
 	public QuestCondition checkPre(Quest quest, EntityLivingBase player) {
-		for (QuestCondition con : this.preConditions) if (!con.onCheck(quest, player)) return con;
+		for (QuestCondition con : this.preconditions) if (!con.onCheck(quest, player)) return con;
 		return null;
 	}
 
@@ -87,8 +92,8 @@ public class QuestType implements INBTSerializable<NBTTagCompound> {
 		NBTTagCompound nbt = new NBTTagCompound();
 		// 条件序列化
 		NBTTagList preCondition = new NBTTagList();
-		nbt.setTag("preCon", preCondition);
-		for (QuestCondition con : this.preConditions) preCondition.appendTag(con.serializeNBT());
+		nbt.setTag("precon", preCondition);
+		for (QuestCondition con : this.preconditions) preCondition.appendTag(con.serializeNBT());
 		NBTTagList condition = new NBTTagList();
 		nbt.setTag("con", condition);
 		for (QuestCondition con : this.conditions) condition.appendTag(con.serializeNBT());
@@ -103,15 +108,16 @@ public class QuestType implements INBTSerializable<NBTTagCompound> {
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
 		// 条件反序列
-		NBTTagList preCondition = nbt.getTagList("preCon", NBTTag.TAG_COMPOUND);
-		this.preConditions.clear();
+		NBTTagList preCondition = nbt.getTagList("precon", NBTTag.TAG_COMPOUND);
+		this.preconditions.clear();
 		for (NBTBase base : preCondition) {
 			NBTTagCompound tag = (NBTTagCompound) base;
 			ResourceLocation id = new ResourceLocation(tag.getString("id"));
 			QuestCondition con = QuestCondition.REGISTRY.newInstance(id);
 			if (con == null) continue;
 			con.deserializeNBT(tag);
-			this.preConditions.add(con);
+			con.asPrecondition(true);
+			this.preconditions.add(con);
 		}
 		NBTTagList condition = nbt.getTagList("con", NBTTag.TAG_COMPOUND);
 		this.conditions.clear();

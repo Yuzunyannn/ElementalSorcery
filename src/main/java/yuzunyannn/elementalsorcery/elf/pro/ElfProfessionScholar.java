@@ -1,7 +1,6 @@
 package yuzunyannn.elementalsorcery.elf.pro;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -57,11 +56,10 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 	public static void init() {
 		pages.clear();
 		tips.clear();
-		tips.addAll(Arrays.asList(new String[] { "page.riteTable.ct.fir", "page.riteTable.ct.sec",
-				"page.sacrifice.ct.fir", "page.sacrifice.ct.sec", "page.rite.ct", "page.riteManual.ct",
-				"page.riteCraft.ct", "page.element.ct", "page.elfTree.ct" }));
 		tips.add("say.scholar.becare");
 		tips.add("say.scholar.master");
+		tips.add("say.scholar.more.floor");
+		tips.add("say.scholar.watch");
 	}
 
 	@Override
@@ -127,7 +125,7 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 		TalkChapter chapter = new TalkChapter();
 		TalkSceneSay scene = new TalkSceneSay();
 		chapter.addScene(scene);
-		String[] g = (String[]) RandomHelper.randomSelect(3, tips.toArray());
+		String[] g = (String[]) RandomHelper.randomSelect(2, tips.toArray());
 		for (String s : g) scene.addString(s, Talker.OPPOSING);
 		// 没有返回
 		if (scene.isEmpty()) {

@@ -7,6 +7,8 @@ import yuzunyannn.elementalsorcery.elf.quest.QuestConditionNeedItem;
 import yuzunyannn.elementalsorcery.elf.quest.QuestConditionPlayerLevel;
 import yuzunyannn.elementalsorcery.elf.quest.QuestReward;
 import yuzunyannn.elementalsorcery.elf.quest.QuestRewardCoin;
+import yuzunyannn.elementalsorcery.elf.quest.QuestRewardElfTreeInvest;
+import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
 
 public class QuestRegister {
 
@@ -23,5 +25,7 @@ public class QuestRegister {
 		register("NeedItem", QuestConditionNeedItem.class);
 
 		registerReward("Coin", QuestRewardCoin.class);
+		registerReward("Exp", QuestRewardExp.class);
+		registerReward("TreeInvest", QuestRewardElfTreeInvest.class);
 	}
 }

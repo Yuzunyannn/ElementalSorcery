@@ -4,16 +4,13 @@ import java.util.List;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -23,25 +20,13 @@ import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.QuestDescribe;
 import yuzunyannn.elementalsorcery.elf.quest.QuestStatus;
 import yuzunyannn.elementalsorcery.elf.quest.QuestType;
-import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.util.item.ItemRec;
 
 public class ItemQuest extends Item {
 
 	public ItemQuest() {
 		this.setUnlocalizedName("quest");
 		this.setMaxStackSize(1);
-	}
-
-	@Override
-	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		if (this.isInCreativeTab(tab)) {
-			items.add(new ItemStack(this));
-			QuestType type = Quests.createNeedItems(200, new ItemRec(Blocks.PLANKS, 100),
-					new ItemRec(Blocks.IRON_BLOCK));
-			items.add(ItemQuest.createQuest(type, 2500));
-		}
 	}
 
 	@Override
@@ -67,10 +52,8 @@ public class ItemQuest extends Item {
 			tooltip.add(TextFormatting.YELLOW + I18n.format("info.complete"));
 	}
 
-	public static ItemStack createQuest(QuestType type, long endTime) {
+	public static ItemStack createQuest(Quest quest) {
 		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.QUEST);
-		Quest quest = new Quest(type);
-		quest.setEndTime(endTime);
 		stack.setTagCompound(quest.serializeNBT());
 		return stack;
 	}

@@ -104,6 +104,20 @@
 						}
 					],
 					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "elementalsorcery:elf_coin",
+					"functions": [
+						{
+							"function": "set_count",
+							"count": {
+								"min": 8,
+								"max": 32
+							}
+						}
+					],
+					"weight": 25
 				}
 			]
 		}

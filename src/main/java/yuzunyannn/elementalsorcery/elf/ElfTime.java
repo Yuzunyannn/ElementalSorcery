@@ -18,34 +18,34 @@ public class ElfTime {
 		this(world.getWorldTime());
 	}
 
-	/** 获取秒，即为tick，20秒一分钟 */
+	/** 获取秒，即为tick，50秒一分钟 */
 	public int getSecond() {
-		return (int) ((time / 20) % 20);
+		return (int) ((time / 20) % 50);
 	}
 
-	/** 获取分钟，真实时间的秒，十分钟为一小时，一天两小时 */
+	/** 获取分钟，50秒一分钟，半天12小时 */
 	public int getMinute() {
-		return (int) ((time / 400) % 10);
+		return (int) ((time / 1000) % 12);
 	}
 
 	/** 获取小时，一天两小时 */
 	public int getHour() {
-		return (int) ((time / 4000) % 2);
+		return (int) ((time / 12000) % 2);
 	}
 
 	/** 获取日，十天为一个月 */
 	public int getDay() {
-		return (int) ((time / 8000) % 10);
+		return (int) ((time / 24000) % 12);
 	}
 
 	/** 获取月，一年认为有四个月 */
 	public int getMonth() {
-		return (int) ((time / 80000) % 4);
+		return (int) ((time / 288000) % 4);
 	}
 
 	/** 获取年 */
 	public int getYear() {
-		return (int) (time / 320000);
+		return (int) (time / 1152000);
 	}
 
 	public long getTime() {

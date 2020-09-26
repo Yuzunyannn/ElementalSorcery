@@ -35,20 +35,17 @@ import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.elf.edifice.BuilderWithInfo;
-import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
-import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
+import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.parchment.Pages;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class CommandESDebug {
 
 	public static final String[] autoTips = new String[] { "reflush", "saveBuilding", "recordBuilding", "buildTest",
-			"portalTest", "showInfo", "buildTestAgain" };
+			"portalTest", "showInfo", "bulletinTest" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -115,13 +112,10 @@ public class CommandESDebug {
 			switch (args[0]) {
 			// 测试建筑
 			case "buildTest": {
-				ElfEdificeFloor type = ElfEdificeFloor.REGISTRY.getValue(0);
-				FloorInfo info = new FloorInfo(type, pos.up());
-				BuilderWithInfo builder = new BuilderWithInfo(entity.world, info, GenElfEdifice.EDIFICE_SIZE, 60,
-						BlockPos.ORIGIN);
-				info.setFloorData(info.getType().getBuildData(builder, RandomHelper.rand));
-				info.getType().build(builder);
-				builder.buildAll();
+				GenElfEdifice g = new GenElfEdifice(true);
+				g.genMainTreeEdifice(entity.world, pos, entity.world.rand);
+				g.buildToTick(entity.world);
+				// new WorldGenElfTree(true, 3).generate(entity.world, entity.world.rand, pos);
 				/*
 				 * VillageCreationHandler h = new VillageCreationHandler();
 				 * StructureVillagePieces.Village v = h.buildComponent(null, null, new
@@ -135,11 +129,11 @@ public class CommandESDebug {
 				 */
 			}
 				return;
-			case "buildTestAgain": {
-				GenElfEdifice g = new GenElfEdifice(true);
-				g.genMainTreeEdifice(entity.world, pos, entity.world.rand);
-				g.buildToTick(entity.world);
-				// new WorldGenElfTree(true, 3).generate(entity.world, entity.world.rand, pos);
+			case "bulletinTest": {
+				EntityBulletin e = new EntityBulletin(entity.world);
+				EnumFacing h = entity.getHorizontalFacing().getOpposite();
+				e.setPosition(pos.offset(h, 1), h);
+				entity.world.spawnEntity(e);
 			}
 				return;
 			// 测试传送门

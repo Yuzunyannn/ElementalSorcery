@@ -1,18 +1,26 @@
 package yuzunyannn.elementalsorcery.tile;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -20,6 +28,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.building.Building.BlockItemTypeInfo;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.edifice.BuildProgress;
 import yuzunyannn.elementalsorcery.elf.edifice.BuilderWithInfo;
@@ -27,13 +36,20 @@ import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo.Status;
+import yuzunyannn.elementalsorcery.elf.edifice.IBuilder;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
+import yuzunyannn.elementalsorcery.elf.quest.Quests;
+import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.util.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemRec;
 
 public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 
@@ -45,6 +61,8 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 	int size = 8;
 	/** 大厦每层数据 */
 	List<FloorInfo> floors = new ArrayList<>();
+	/** 建筑计划 */
+	NBTTagCompound invest = new NBTTagCompound();
 
 	/** 初始化数据 */
 	public void initTreeData(int size, int high) {
@@ -60,6 +78,8 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		NBTTagList list = new NBTTagList();
 		for (FloorInfo info : floors) list.appendTag(info.serializeNBT());
 		nbt.setTag("floor", list);
+		if (this.isSending()) return nbt;
+		if (!invest.hasNoTags()) nbt.setTag("invest", invest);
 		return super.writeToNBT(nbt);
 	}
 
@@ -70,6 +90,8 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		NBTTagList list = nbt.getTagList("floor", NBTTag.TAG_COMPOUND);
 		floors.clear();
 		for (NBTBase base : list) floors.add(new FloorInfo((NBTTagCompound) base));
+		if (this.isSending()) return;
+		invest = nbt.getCompoundTag("invest");
 		super.readFromNBT(nbt);
 	}
 
@@ -86,13 +108,13 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 			EventServer.addTask(() -> {
 				world.setBlockToAir(pos);
 			});
+			ExceptionHelper.warnSend(world, "精灵大厦核心出现异常！");
 		}
 	}
 
 	public void tick() {
 		// 进行一次精灵生成（大厦脚下）
-		// if (tick % 300 == 0) trySpawnElfAround();
-		trySpawnElfAround();
+		if (tick % 200 == 0) trySpawnElfAround();
 		if (tick % 1200 == 0) checkBuildTaskState();
 		if (tick % 600 == 0) tryBuildingSpawn();
 	}
@@ -128,7 +150,20 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 
 	// ----------------------------精灵建筑任务部分----------------------------
 
+	protected BuilderWithInfo getBuilder(FloorInfo floor) {
+		return new BuilderWithInfo(world, floor, this.size, high, pos);
+	}
+
+	/** 对某种层进行投资，就有可能建造 */
+	public void floorInvest(ElfEdificeFloor floorType, int weight) {
+		if (floorType == null) return;
+		String name = floorType.getRegistryName().toString();
+		int origin = invest.getInteger(name);
+		invest.setInteger(name, origin + weight);
+	}
+
 	public void tryBuildingSpawn() {
+		if (floors.isEmpty()) return;
 		int size = floors.size();
 		int off = rand.nextInt(size);
 		int n = rand.nextInt(size + 1);
@@ -136,9 +171,38 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 			int index = (i + off) % size;
 			FloorInfo floor = floors.get(index);
 			if (floor.isEmpty()) continue;
-			BuilderWithInfo builder = new BuilderWithInfo(world, floor, this.size, high, pos);
+			if (floor.getStatus() != Status.COMPLETE) continue;
+			BuilderWithInfo builder = this.getBuilder(floor);
 			floor.getType().spawn(builder);
 		}
+		// 根据权重规划建筑
+		RandomHelper.WeightRandom<ElfEdificeFloor> needBuild = new RandomHelper.WeightRandom<>();
+		for (String key : invest.getKeySet()) {
+			ElfEdificeFloor floor = ElfEdificeFloor.REGISTRY.getValue(new ResourceLocation(key));
+			if (floor == null) {
+				invest.removeTag(key);
+				continue;
+			}
+			int weight = floor.getWeight();
+			int now = invest.getInteger(key);
+			if (weight <= now) needBuild.add(floor, now);
+		}
+		if (!needBuild.isEmpty()) {
+			ElfEdificeFloor floor = needBuild.get(rand);
+			String key = floor.getRegistryName().toString();
+			invest.removeTag(key);
+			// 新建築
+			scheduleFloor(floor);
+			// 当建满时，清空所有的投资
+			if (noSpaceToBuildFloor()) invest = new NBTTagCompound();
+		}
+		// 尝试生成任务
+		this.tryCareQust();
+	}
+
+	public boolean noSpaceToBuildFloor() {
+		int floorHigh = getFloorHigh(floors.size() - 1);
+		return floorHigh >= high - 2;
 	}
 
 	public void checkBuildTaskState() {
@@ -170,7 +234,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 			if (floor.getStatus() == Status.COMPLETE) continue;
 			if (floor.getStatus() == Status.PLANNING) {
 				if (justCheck) return i;
-				BuilderWithInfo builder = new BuilderWithInfo(world, floor, size, high, pos);
+				BuilderWithInfo builder = this.getBuilder(floor);
 				BuildProgress progress = new BuildProgress(floor.getType(), builder);
 				floor.startProgress(progress);
 				return i;
@@ -178,7 +242,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 			if (floor.getStatus() == Status.CONSTRUCTING) {
 				BuildProgress progress = floor.getProgress();
 				if (progress == null) {
-					BuilderWithInfo builder = new BuilderWithInfo(world, floor, size, high, pos);
+					BuilderWithInfo builder = this.getBuilder(floor);
 					progress = new BuildProgress(floor.getType(), builder);
 					floor.startProgress(progress);
 				}
@@ -207,7 +271,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		FloorInfo floor = floors.get(floorn);
 		floor.setStatus(Status.COMPLETE);
 		if (floor.isEmpty()) return;
-		BuilderWithInfo builder = new BuilderWithInfo(world, floor, size, high, pos);
+		BuilderWithInfo builder = this.getBuilder(floor);
 		floor.getType().surprise(builder, rand);
 		floor.getType().spawn(builder);
 		this.updateToClient();
@@ -225,7 +289,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		if (floor == null) return false;
 		int floorHigh = getFloorHigh(floors.size() - 1);
 		FloorInfo info = new FloorInfo(floor, getTreeBasicPos().up(floorHigh + 1));
-		BuilderWithInfo builder = new BuilderWithInfo(world, info, size, high, pos);
+		BuilderWithInfo builder = this.getBuilder(info);
 		info.setFloorData(info.getType().getBuildData(builder, RandomHelper.rand));
 		info.setHigh((short) info.getType().getFloorHeight(builder));
 		if (floorHigh + info.getHigh() >= high - 1) return false;
@@ -308,6 +372,94 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		entity.setPositionAndUpdate(pos.x, pos.y, pos.z);
 		world.playSound(null, pos.x, pos.y, pos.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1.0F,
 				1.0F);
+	}
+
+	// ----------------------------精灵大厦任务部分----------------------------
+
+	/** 获取任务板，可能获取不到 */
+	@Nullable
+	public EntityBulletin getBulletin() {
+		if (floors.isEmpty()) return null;
+		FloorInfo info = floors.get(0);
+		ElfEdificeFloor floor = info.getType();
+		if (floor instanceof EFloorHall) {
+			EFloorHall hall = (EFloorHall) floor;
+			return hall.findBulletin(this.getBuilder(info));
+		}
+		return null;
+	}
+
+	protected void tryFixBulletin() {
+		if (floors.isEmpty()) return;
+		FloorInfo info = floors.get(0);
+		ElfEdificeFloor floor = info.getType();
+		if (floor instanceof EFloorHall) {
+			EFloorHall hall = (EFloorHall) floor;
+			hall.createBulltin(this.getBuilder(info));
+		}
+	}
+
+	// 尝试产生一些建造任务
+	protected void tryCareQust() {
+		EntityBulletin bulletin = this.getBulletin();
+		if (bulletin == null) {
+			this.tryFixBulletin();
+			return;
+		}
+		// 删除过期的任务，每次只删除一个
+		Iterator<EntityBulletin.QuestInfo> iter = bulletin.getQuests().iterator();
+		long now = world.getWorldTime();
+		int i = 0;
+		while (iter.hasNext()) {
+			EntityBulletin.QuestInfo info = iter.next();
+			if (info.getQuest().isOverdue(now)) {
+				bulletin.removeQuest(i);
+				break;
+			}
+			i++;
+		}
+		if (rand.nextInt(2) != 0) return;
+		if (noSpaceToBuildFloor()) return;
+		if (bulletin.getQuestCount() > 16) return;
+		// 随机获取下本层需要的方块
+		Map<ItemRec, Integer> needMap = new HashMap<>();
+		List<ElfEdificeFloor> floors = ElfEdificeFloor.REGISTRY.getValues();
+		ElfEdificeFloor floor = floors.get(rand.nextInt(floors.size()));
+		if (floor instanceof EFloorHall) return;
+		FloorInfo info = new FloorInfo(floor, BlockPos.ORIGIN);
+		IBuilder builder = this.getBuilder(info);
+		info.setFloorData(floor.getBuildData(builder, rand));
+		floor.build(builder);
+		Map<BlockPos, IBlockState> map = builder.asBlockMap();
+		int count = 0;
+		int rCount = 0;
+		for (Entry<BlockPos, IBlockState> entry : map.entrySet()) {
+			count++;
+			BlockItemTypeInfo itemInfo = new BlockItemTypeInfo(entry.getValue());
+			ItemStack stack = itemInfo.getItemStack();
+			if (stack.isEmpty()) continue;
+			if (rand.nextInt(5) != 0) continue;
+			ItemRec rec = new ItemRec(stack);
+			Integer n = needMap.get(rec);
+			n = n == null ? 0 : n;
+			needMap.put(rec, n + 1);
+			rCount++;
+		}
+		List<ItemRec> needs = new ArrayList<ItemRec>();
+		for (Entry<ItemRec, Integer> entry : needMap.entrySet()) {
+			ItemRec rec = entry.getKey();
+			rec.getItemStack().setCount(entry.getValue());
+			needs.add(rec);
+		}
+		needs.add(new ItemRec(Items.WATER_BUCKET, 1));
+		if (rand.nextBoolean()) needs.add(new ItemRec(Items.BEEF, rand.nextInt(5) + 1));
+		if (rand.nextBoolean()) needs.add(new ItemRec(Items.CAKE, rand.nextInt(5) + 1));
+		int weight = rand.nextInt(10) + (int) (rCount / (float) count * floor.getWeight()) + 1;
+		// 创建任务
+		Quest quest = Quests.createBuildTask(pos, floor, weight, needs);
+		quest.getType().addReward(QuestRewardExp.create(100 + rand.nextInt(200)));
+		quest.setEndTime(world.getWorldTime() + 24000 + rand.nextInt(24000 * 3));
+		bulletin.addQuest(quest);
 	}
 
 }

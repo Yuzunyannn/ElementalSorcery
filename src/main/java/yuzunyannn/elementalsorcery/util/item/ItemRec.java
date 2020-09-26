@@ -64,4 +64,16 @@ public class ItemRec implements INBTSerializable<NBTTagCompound> {
 		stack.setCount(count);
 	}
 
+	@Override
+	public int hashCode() {
+		return stack.getItem().hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (obj instanceof ItemRec) return ((ItemRec) obj).getItemStack().isItemEqual(this.getItemStack());
+		return false;
+	}
+
 }

@@ -1,6 +1,10 @@
 package yuzunyannn.elementalsorcery.util;
 
 import java.lang.reflect.Array;
+import java.util.AbstractMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map.Entry;
 import java.util.Random;
 
 public class RandomHelper {
@@ -36,5 +40,35 @@ public class RandomHelper {
 			ints[rindex] = ints[remain];
 		}
 		return lucky;
+	}
+
+	static public class WeightRandom<T> {
+
+		protected List<Entry<T, Integer>> list = new LinkedList<>();
+
+		public void add(T obj, int weight) {
+			list.add(new AbstractMap.SimpleEntry(obj, weight));
+		}
+
+		public T get(Random rand) {
+			if (this.isEmpty()) return null;
+			int we = 0;
+			for (Entry<T, Integer> entry : list) we += entry.getValue();
+			int at = rand.nextInt(we);
+			we = 0;
+			for (Entry<T, Integer> entry : list) {
+				we += entry.getValue();
+				if (at < we) return entry.getKey();
+			}
+			return list.get(list.size() - 1).getKey();
+		}
+
+		public T get() {
+			return this.get(rand);
+		}
+
+		public boolean isEmpty() {
+			return list.isEmpty();
+		}
 	}
 }

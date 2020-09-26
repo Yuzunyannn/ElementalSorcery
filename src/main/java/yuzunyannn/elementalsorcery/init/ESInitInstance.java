@@ -168,8 +168,7 @@ public class ESInitInstance {
 		BLOCKS.STAR_SAND = new BlockStarSand();
 		BLOCKS.STONE_MILL = new BlockStoneMill();
 		BLOCKS.MELT_CAULDRON = new BlockMeltCauldron();
-		BLOCKS.ELF_LOG = new BlockElfLog(false);
-		BLOCKS.ELF_LOG_CABIN_CENTER = new BlockElfLog(true);
+		BLOCKS.ELF_LOG = new BlockElfLog();
 		BLOCKS.ELF_LEAF = new BlockElfLeaf();
 		BLOCKS.ELF_PLANK = new BlockElfPlank();
 		BLOCKS.ELF_SAPLING = new BlockElfSapling();

@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class ElementalSorcery {
 	public static final String MODID = "elementalsorcery";
 	public static final String NAME = "Elemental Sorcery";
-	public static final String VERSION = "0.3.0";
+	public static final String VERSION = "0.4.0";
 
 	public static Logger logger;
 	public static Side side;
@@ -77,8 +77,7 @@ public class ElementalSorcery {
 
 	public static ModContainer getModeContainer() {
 		List<ModContainer> mods = Loader.instance().getModList();
-		for (ModContainer mod : mods) 
-			if (mod.getModId().equals(MODID)) return mod;
+		for (ModContainer mod : mods) if (mod.getModId().equals(MODID)) return mod;
 		return null;
 	}
 

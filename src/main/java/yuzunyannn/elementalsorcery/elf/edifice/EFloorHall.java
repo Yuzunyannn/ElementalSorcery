@@ -4,9 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.BlockChest;
-import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockStairs;
-import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.EnumDyeColor;
@@ -19,9 +17,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
+import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class EFloorHall extends ElfEdificeFloor {
@@ -38,21 +36,6 @@ public class EFloorHall extends ElfEdificeFloor {
 		return new BuilderHelper(builder).toward(rand).getNBT();
 	}
 
-	public static void genLamp(BuilderHelper helper, BlockPos at) {
-		IBuilder builder = helper.builder;
-
-		IBlockState TRAP_DOOR = Blocks.TRAPDOOR.getDefaultState();
-		IBlockState GLOWSTONE = Blocks.GLOWSTONE.getDefaultState();
-
-		TRAP_DOOR = TRAP_DOOR.withProperty(BlockTrapDoor.OPEN, true);
-		builder.setBlockState(at, helper.blockFence());
-		builder.setBlockState(at = at.down(), GLOWSTONE);
-		for (EnumFacing h : EnumFacing.HORIZONTALS) {
-			TRAP_DOOR = TRAP_DOOR.withProperty(BlockTrapDoor.FACING, h);
-			builder.setBlockState(at.offset(h), TRAP_DOOR);
-		}
-	}
-
 	@Override
 	public void build(IBuilder builder) {
 		BlockPos pos = builder.getFloorBasicPos();
@@ -60,14 +43,7 @@ public class EFloorHall extends ElfEdificeFloor {
 		BuilderHelper helper = new BuilderHelper(builder);
 		int size = GenElfEdifice.getFakeCircleLen(treeSize, 0, 2);
 		// 地毯
-		IBlockState CARPET = helper.blockCarpet(EnumDyeColor.WHITE);
-		for (int i = -size + 1; i < size; i++) {
-			int n = GenElfEdifice.getFakeCircleLen(treeSize, i, 2);
-			for (int a = 0; a < n; a++) {
-				builder.setBlockState(pos.add(i, 0, a), CARPET);
-				builder.setBlockState(pos.add(i, 0, -a), CARPET);
-			}
-		}
+		helper.genCarpet(EnumDyeColor.WHITE);
 		// 门
 		EnumFacing toward = helper.toward();
 		EnumFacing towardOpposite = toward.getOpposite();
@@ -81,7 +57,7 @@ public class EFloorHall extends ElfEdificeFloor {
 		IBlockState GLOWSTONE = Blocks.GLOWSTONE.getDefaultState();
 		size = treeSize;
 		int offset = GenElfEdifice.getFakeCircleLen(treeSize, treeSize, 2);
-		CARPET = helper.blockCarpet(EnumDyeColor.RED);
+		IBlockState CARPET = helper.blockCarpet(EnumDyeColor.RED);
 		for (int i = -1; i <= 1; i++) {
 			int n = GenElfEdifice.getFakeCircleLen(treeSize, i, 2);
 			for (int a = 0; a <= n; a++) {
@@ -171,25 +147,39 @@ public class EFloorHall extends ElfEdificeFloor {
 			}
 			len--;
 		}
+		// 告示板
+		IBlockState REDSTONE_BLOCK = Blocks.REDSTONE_BLOCK.getDefaultState();
+		IBlockState REDSTONE_LAMP = Blocks.REDSTONE_LAMP.getDefaultState();
+		ln = treeSize + 1;
+		size = GenElfEdifice.getFakeCircleLen(treeSize, ln, 2) - 1;
+		for (int i = -size; i <= size; i++) {
+			for (int y = 7; y < 10; y++) {
+				BlockPos at = pos.offset(toward, ln).up(y);
+				int test = Math.abs(i);
+				if (test >= 3 && test % 3 == 0) {
+					if (y == 8) builder.setBlockState(at.offset(towardRY, i), REDSTONE_BLOCK);
+					else builder.setBlockState(at.offset(towardRY, i), REDSTONE_LAMP);
+				} else {
+					builder.setBlockState(at.offset(towardRY, i), WOOD);
+				}
+			}
+		}
 		// 装饰品
 		size = treeSize * 3 / 4;
 		// 吊灯
 		{
-			genLamp(helper, pos.offset(toward, size).up(5));
-			genLamp(helper, pos.offset(towardOpposite, 0).up(9));
-			genLamp(helper, pos.offset(towardOpposite, 2).offset(towardRY, treeSize / 2).up(9));
-			genLamp(helper, pos.offset(towardOpposite, 2).offset(towardRY, -treeSize / 2).up(9));
+			helper.genLamp(pos.offset(toward, size).up(5), 1);
+			helper.genLamp(pos.offset(towardOpposite, 0).up(9), 1);
+			helper.genLamp(pos.offset(towardOpposite, 2).offset(towardRY, treeSize / 2).up(9), 1);
+			helper.genLamp(pos.offset(towardOpposite, 2).offset(towardRY, -treeSize / 2).up(9), 1);
 		}
 		// 旁侧灯
-		IBlockState LEAF = ESInitInstance.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
 		offset = GenElfEdifice.getFakeCircleLen(treeSize, 0, 2) - 1;
 		{
 			BlockPos at = pos.offset(towardRY, offset);
-			builder.setBlockState(at, GLOWSTONE);
-			for (EnumFacing h : EnumFacing.VALUES) builder.trySetBlockState(at.offset(h, 1), LEAF);
+			helper.genLeafLamp(at);
 			at = pos.offset(towardRY, -offset);
-			builder.setBlockState(at, GLOWSTONE);
-			for (EnumFacing h : EnumFacing.VALUES) builder.trySetBlockState(at.offset(h, 1), LEAF);
+			helper.genLeafLamp(at);
 		}
 		// 一队桌子和椅子
 		{
@@ -239,10 +229,29 @@ public class EFloorHall extends ElfEdificeFloor {
 			ResourceLocation loot = new ResourceLocation(ElementalSorcery.MODID, "hall/es_hall");
 			chest.setLootTable(loot, rand.nextLong());
 		}
+		this.createBulltin(builder);
+	}
+
+	public static List<EntityElfBase> getFloorElf(IBuilder builder, ElfProfession pro) {
+		BlockPos pos = builder.getFloorBasicPos();
+		World world = builder.getWorld();
+		ElfEdificeFloor floor = builder.getFloorType();
+		int size = GenElfEdifice.getFakeCircleLen(builder.getEdificeSize(), 0, 2);
+		double x = pos.getX() + 0.5;
+		double y = pos.getY();
+		double z = pos.getZ() + 0.5;
+		AxisAlignedBB aabb = new AxisAlignedBB(x - size, y, x - size, x + size, y + floor.getFloorHeight(builder),
+				z + size);
+		return world.getEntitiesWithinAABB(EntityElfBase.class, aabb, (elf) -> {
+			if (pro == null) return true;
+			return elf.getProfession() == pro;
+		});
 	}
 
 	@Override
 	public void spawn(IBuilder builder) {
+		List<EntityElfBase> elfs = EFloorHall.getFloorElf(builder, ElfProfession.RECEPTIONIST);
+		if (elfs.size() >= 3) return;
 		World world = builder.getWorld();
 		BlockPos pos = builder.getFloorBasicPos();
 		int treeSize = builder.getEdificeSize();
@@ -255,11 +264,36 @@ public class EFloorHall extends ElfEdificeFloor {
 			float y = at.getY() + 0.5f;
 			float z = at.getZ() + 0.5f;
 			AxisAlignedBB aabb = new AxisAlignedBB(x - 1, y - 1, z - 1, x + 1, y + 1, z + 1);
-			List<EntityElfBase> elfs = world.getEntitiesWithinAABB(EntityElfBase.class, aabb);
+			elfs = world.getEntitiesWithinAABB(EntityElfBase.class, aabb);
 			if (!elfs.isEmpty()) continue;
 			EntityElf elf = new EntityElf(world, ElfProfession.RECEPTIONIST);
 			elf.setPosition(x, y - 0.5, z);
-			world.spawnEntity(elf);
+			builder.spawn(elf);
 		}
+	}
+
+	public void createBulltin(IBuilder builder) {
+		BlockPos pos = builder.getFloorBasicPos();
+		int treeSize = builder.getEdificeSize();
+		BuilderHelper helper = new BuilderHelper(builder);
+		EnumFacing toward = helper.toward();
+		World world = builder.getWorld();
+		BlockPos at = pos.offset(toward, treeSize).up(8);
+		EntityBulletin bulltin = new EntityBulletin(world);
+		bulltin.setPosition(at, toward.getOpposite());
+		if (bulltin.onValidSurface()) world.spawnEntity(bulltin);
+	}
+
+	public EntityBulletin findBulletin(IBuilder builder) {
+		BlockPos pos = builder.getFloorBasicPos();
+		int treeSize = builder.getEdificeSize();
+		BuilderHelper helper = new BuilderHelper(builder);
+		EnumFacing toward = helper.toward();
+		World world = builder.getWorld();
+		BlockPos at = pos.offset(toward, treeSize).up(8);
+		AxisAlignedBB aabb = new AxisAlignedBB(at);
+		List<EntityBulletin> list = world.getEntitiesWithinAABB(EntityBulletin.class, aabb);
+		if (list.isEmpty()) return null;
+		return list.get(0);
 	}
 }

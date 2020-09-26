@@ -98,7 +98,7 @@ public class GenElfEdifice {
 			return false;
 		if (world.provider.getHeight() - pos.getY() < 100) return false;
 		int down = 0, up = 0;
-		int size = (int) (treeSize * 1.2f);
+		int size = treeSize;
 		for (int x = -size; x <= size; x++) {
 			for (int z = -size; z <= size; z++) {
 				BlockPos at = pos.add(x, 0, z);

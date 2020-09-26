@@ -49,7 +49,6 @@ public class EntityElf extends EntityElfBase {
 		this.tasks.addTask(10, new EntityAIWatchClosest(this, EntityPlayer.class, 6.0F));
 		this.tasks.addTask(10, new EntityAILookIdle(this));
 
-		
 		// this.setFlyMode(true);
 	}
 
@@ -74,7 +73,7 @@ public class EntityElf extends EntityElfBase {
 		if (world.getBlockState(pos).getBlock().isReplaceable(world, pos)) {
 			this.swingArm(EnumHand.MAIN_HAND);
 			this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemHelper.toItemStack(block));
-			world.setBlockState(pos, block);
+			world.setBlockState(pos, block, 2);
 			return true;
 		}
 		return false;

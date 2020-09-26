@@ -38,6 +38,11 @@
                 "id": "elementalsorcery:elf_fruit",
                 "data": 2
             }
+        },
+        {
+            "type": "normal",
+            "name": "elfMerchant",
+            "background": "elementalsorcery:elf_coin"
         }
     ]
 }

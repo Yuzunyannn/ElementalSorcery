@@ -16,7 +16,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
-import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,7 +29,6 @@ import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageEntitySync;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -276,9 +274,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	@Override
 	public void sendToClient(NBTTagCompound nbt) {
 		if (world.isRemote) return;
-		MessageEntitySync message = new MessageEntitySync(this, nbt);
-		TargetPoint point = new TargetPoint(world.provider.getDimension(), posX, posY, posZ, 64);
-		ESNetwork.instance.sendToAllAround(message, point);
+		MessageEntitySync.sendToClient(this, nbt);
 	}
 
 	@Override

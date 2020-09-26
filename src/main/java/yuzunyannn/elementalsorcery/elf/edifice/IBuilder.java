@@ -14,8 +14,10 @@ import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 /** 描述的建造者 */
 public interface IBuilder {
 
+	public ElfEdificeFloor getFloorType();
+
 	public BlockPos getEdificeCore();
-	
+
 	public int getEdificeSize();
 
 	public int getEdificeHigh();
@@ -23,7 +25,6 @@ public interface IBuilder {
 	public BlockPos getFloorBasicPos();
 
 	public int getFloorHigh();
-
 
 	public NBTTagCompound getFloorData();
 
@@ -38,7 +39,7 @@ public interface IBuilder {
 	public void spawn(Entity entity);
 
 	/** 将缓存的方块转化为building */
-	public Map<BlockPos,IBlockState> asBlockMap();
+	public Map<BlockPos, IBlockState> asBlockMap();
 
 	/** 获取需要建造的方块个数 */
 	public int getBlockCount();
@@ -61,7 +62,7 @@ public interface IBuilder {
 
 	default public void spawn(EntityElfBase entity) {
 		entity.setEdificeCore(this.getEdificeCore());
-		spawn(entity);
+		this.spawn((Entity) entity);
 	}
 
 }

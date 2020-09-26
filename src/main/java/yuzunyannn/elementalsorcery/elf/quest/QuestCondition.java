@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.elf.quest;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,6 +14,12 @@ public class QuestCondition extends ESImpClassRegister.EasyImp<QuestCondition>
 		implements INBTSerializable<NBTTagCompound> {
 
 	public static final ESImpClassRegister<QuestCondition> REGISTRY = new ESImpClassRegister();
+
+	protected boolean asPrecondition = false;
+
+	public void asPrecondition(boolean pre) {
+		this.asPrecondition = pre;
+	}
 
 	/** 检查条件是否满足 */
 	public boolean onCheck(Quest quest, EntityLivingBase player) {
@@ -35,7 +43,7 @@ public class QuestCondition extends ESImpClassRegister.EasyImp<QuestCondition>
 	 * @param dynamic 是否要动态的显示数据，提示任务进度
 	 */
 	@SideOnly(Side.CLIENT)
-	public String getDescribe(Quest task, EntityLivingBase player, boolean dynamic) {
+	public String getDescribe(Quest task, @Nullable EntityLivingBase player, boolean dynamic) {
 		return "";
 	}
 

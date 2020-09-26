@@ -68,6 +68,11 @@ public class BuilderWithInfo implements IBuilder {
 	}
 
 	@Override
+	public ElfEdificeFloor getFloorType() {
+		return info.getType();
+	}
+
+	@Override
 	public NBTTagCompound getFloorData() {
 		return info.floorData;
 	}
@@ -84,7 +89,7 @@ public class BuilderWithInfo implements IBuilder {
 
 	public void buildAll() {
 		for (Entry<BlockPos, IBlockState> entry : blockCache.entrySet())
-			world.setBlockState(entry.getKey(), entry.getValue());
+			world.setBlockState(entry.getKey(), entry.getValue(), 2);
 	}
 
 	@Override
