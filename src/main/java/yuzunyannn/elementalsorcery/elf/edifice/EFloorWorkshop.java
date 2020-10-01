@@ -28,8 +28,13 @@ import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 public class EFloorWorkshop extends ElfEdificeFloor {
 
 	@Override
-	public int getWeight() {
+	public int getInvestWeight() {
 		return 20;
+	}
+
+	@Override
+	public int getMaxCountInTree(TileElfTreeCore core) {
+		return 2;
 	}
 
 	@Override

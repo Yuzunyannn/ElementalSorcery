@@ -162,6 +162,7 @@ pro.master=魔法のマスター
 pro.scholar=学者
 pro.crazy=狂人
 pro.merchant=商人
+pro.ironsmith=かじさん
 
 commands.es.usage=/es <操作> <パラメータ>...
 commands.es.buildFloor.usage=/es buildFloor <階の名前>
@@ -310,10 +311,12 @@ say.take.quest.confirm=この「%s」という依頼を受け取りますか？�
 say.take.quest.finish=依頼を登録しました。この依頼を開始してもいいです。また、この依頼書をなくしないでください、これはあなたの依頼の証明です。
 say.reputation.decline=あなたが受けた依頼には期限を超えたものがあります。これらの依頼はすでにキャンセルされました。その結果で、あなたの信用が低下するかもしれません。
 say.quest.finish=この依頼を達成したことをおめでとうございます。これはあなたへのご褒美です。
+say.ironsmith.info=製錬したい鉱物をあちらの箱の中に入れてください。製錬した後でストーブの両側の箱の中で取ってください。\n無料ではないです。一つの鉱石は2元です。一緒に箱に入れてください。
 
 floor.hall.name=広間
 floor.livingRoom.name=部屋
 floor.workshop.name=作業場
+floor.refinery.name=精錬所
 
 quest.end=終了時間：%s
 quest.pre.condition=事前条件

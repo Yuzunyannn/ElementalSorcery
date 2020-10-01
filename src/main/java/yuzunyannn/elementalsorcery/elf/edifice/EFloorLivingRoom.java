@@ -35,7 +35,7 @@ import yuzunyannn.elementalsorcery.util.item.ItemRec;
 public class EFloorLivingRoom extends ElfEdificeFloor {
 
 	@Override
-	public int getWeight() {
+	public int getInvestWeight() {
 		return 15;
 	}
 
@@ -141,13 +141,23 @@ public class EFloorLivingRoom extends ElfEdificeFloor {
 		List<EntityElfBase> elfs = EFloorHall.getFloorElf(builder, null);
 		if (elfs.size() < max) {
 			EntityElf elf;
-			if (pro == null) elf = new EntityElf(world);
-			else elf = new EntityElf(world, pro);
 			x = world.rand.nextInt(treeSize * 2) - treeSize + x;
 			z = world.rand.nextInt(treeSize * 2) - treeSize + z;
+			if (!canSpawnElf(world, new BlockPos(x, y, z))) return;
+			if (pro == null) elf = new EntityElf(world);
+			else elf = new EntityElf(world, pro);
 			elf.setPosition(x, y, z);
 			builder.spawn(elf);
 		}
+	}
+
+	/** 是否可以刷精灵 */
+	public static boolean canSpawnElf(World world, BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
+		if (state.isFullBlock()) return false;
+		state = world.getBlockState(pos.up());
+		if (state.isFullBlock()) return false;
+		return true;
 	}
 
 	@Override

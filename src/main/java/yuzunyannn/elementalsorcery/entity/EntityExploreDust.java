@@ -23,6 +23,7 @@ import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.FirwrokShap;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class EntityExploreDust extends Entity implements IEntityAdditionalSpawnData {
 
@@ -173,20 +174,7 @@ public class EntityExploreDust extends Entity implements IEntityAdditionalSpawnD
 		int[] ore = OreDictionary.getOreIDs(oreStack);
 		if (ore == null || ore.length == 0) return ItemStack.EMPTY;
 		String name = OreDictionary.getOreName(ore[0]);
-		switch (name) {
-		case "oreGold":
-		case "oreIron":
-		case "oreDiamond":
-		case "oreLapis":
-		case "oreRedstone":
-		case "oreEmerald":
-		case "oreQuartz":
-		case "oreCoal":
-		case "oreKyanite":
-			break;
-		default:
-			return ItemStack.EMPTY;
-		}
+		if (!BlockHelper.isOre(name)) return ItemStack.EMPTY;
 		return OreDictionary.getOres(name).get(0);
 	}
 

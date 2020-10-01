@@ -36,7 +36,7 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
-import yuzunyannn.elementalsorcery.entity.EntityBulletin;
+import yuzunyannn.elementalsorcery.entity.EntityMagicMelting;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.parchment.Pages;
@@ -45,7 +45,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class CommandESDebug {
 
 	public static final String[] autoTips = new String[] { "reflush", "saveBuilding", "recordBuilding", "buildTest",
-			"portalTest", "showInfo", "bulletinTest" };
+			"portalTest", "showInfo", "smeltingTest" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -129,10 +129,8 @@ public class CommandESDebug {
 				 */
 			}
 				return;
-			case "bulletinTest": {
-				EntityBulletin e = new EntityBulletin(entity.world);
-				EnumFacing h = entity.getHorizontalFacing().getOpposite();
-				e.setPosition(pos.offset(h, 1), h);
+			case "smeltingTest": {
+				EntityMagicMelting e = new EntityMagicMelting(entity.world, pos.up(), new ItemStack(Blocks.DIAMOND_ORE));
 				entity.world.spawnEntity(e);
 			}
 				return;

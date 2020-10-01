@@ -54,10 +54,16 @@ public interface IBuilder {
 		return getBlockState(pos) == Blocks.AIR.getDefaultState();
 	}
 
-	default void trySetBlockState(BlockPos pos, IBlockState state) {
+	default boolean trySetBlockState(BlockPos pos, IBlockState state) {
 		IBlockState origin = getBlockState(pos);
-		if (origin.getBlock().isReplaceable(getWorld(), pos)) setBlockState(pos, state);
-		else if (origin.getBlock() instanceof BlockCarpet) setBlockState(pos, state);
+		if (origin.getBlock().isReplaceable(getWorld(), pos)) {
+			setBlockState(pos, state);
+			return true;
+		} else if (origin.getBlock() instanceof BlockCarpet) {
+			setBlockState(pos, state);
+			return true;
+		}
+		return false;
 	}
 
 	default public void spawn(EntityElfBase entity) {

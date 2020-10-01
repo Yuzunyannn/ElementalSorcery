@@ -162,6 +162,7 @@ pro.master=Magic Master
 pro.scholar=Scholar
 pro.crazy=Crazy
 pro.merchant=Merchant
+pro.ironsmith=Ironsmith
 
 commands.es.usage=/es <operate> <parameters>...
 commands.es.buildFloor.usage=/es buildFloor <floor name>
@@ -310,10 +311,12 @@ say.take.quest.confirm=Are you sure you want to claim the 「%s」 Quest? Please
 say.take.quest.finish=I have signed you. You can start this Quest! In addition, please don't lose this Quest which is the certificate of your quest.
 say.reputation.decline=There are overdue Quest in the Quest you have accepted. These Quest have been logged out for you. Your reputation may be reduced due to your late submission.
 say.quest.finish=Congratulations on completing this Quest! This is a reward for you.
+say.ironsmith.info=Put the ore into the boxes over there. I'll help you smelt them. When work done, remember to take them from the boxes on both sides of the stove. \N I don't work for nothing, a ore costs 2 yuan, remember to put it in the box together.
 
 floor.hall.name=Hall
 floor.livingRoom.name=Living Room
 floor.workshop.name=Workshop
+floor.refinery.name=Refinery
 
 quest.end=End Time：%s
 quest.pre.condition=Preconditions

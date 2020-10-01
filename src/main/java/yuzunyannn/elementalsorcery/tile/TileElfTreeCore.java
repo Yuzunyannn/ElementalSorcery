@@ -1,21 +1,15 @@
 package yuzunyannn.elementalsorcery.tile;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -28,7 +22,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.building.Building.BlockItemTypeInfo;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.edifice.BuildProgress;
 import yuzunyannn.elementalsorcery.elf.edifice.BuilderWithInfo;
@@ -36,11 +29,8 @@ import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo.Status;
-import yuzunyannn.elementalsorcery.elf.edifice.IBuilder;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
-import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
@@ -49,7 +39,6 @@ import yuzunyannn.elementalsorcery.util.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
-import yuzunyannn.elementalsorcery.util.item.ItemRec;
 
 public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 
@@ -147,10 +136,14 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 	public FloorInfo getFloor(int index) {
 		return floors.get(index);
 	}
+	
+	public List<FloorInfo> getFloors() {
+		return floors;
+	}
 
 	// ----------------------------精灵建筑任务部分----------------------------
 
-	protected BuilderWithInfo getBuilder(FloorInfo floor) {
+	public BuilderWithInfo getBuilder(FloorInfo floor) {
 		return new BuilderWithInfo(world, floor, this.size, high, pos);
 	}
 
@@ -183,7 +176,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 				invest.removeTag(key);
 				continue;
 			}
-			int weight = floor.getWeight();
+			int weight = floor.getInvestWeight();
 			int now = invest.getInteger(key);
 			if (weight <= now) needBuild.add(floor, now);
 		}
@@ -422,43 +415,11 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		if (noSpaceToBuildFloor()) return;
 		if (bulletin.getQuestCount() > 16) return;
 		// 随机获取下本层需要的方块
-		Map<ItemRec, Integer> needMap = new HashMap<>();
 		List<ElfEdificeFloor> floors = ElfEdificeFloor.REGISTRY.getValues();
 		ElfEdificeFloor floor = floors.get(rand.nextInt(floors.size()));
-		if (floor instanceof EFloorHall) return;
-		FloorInfo info = new FloorInfo(floor, BlockPos.ORIGIN);
-		IBuilder builder = this.getBuilder(info);
-		info.setFloorData(floor.getBuildData(builder, rand));
-		floor.build(builder);
-		Map<BlockPos, IBlockState> map = builder.asBlockMap();
-		int count = 0;
-		int rCount = 0;
-		for (Entry<BlockPos, IBlockState> entry : map.entrySet()) {
-			count++;
-			BlockItemTypeInfo itemInfo = new BlockItemTypeInfo(entry.getValue());
-			ItemStack stack = itemInfo.getItemStack();
-			if (stack.isEmpty()) continue;
-			if (rand.nextInt(5) != 0) continue;
-			ItemRec rec = new ItemRec(stack);
-			Integer n = needMap.get(rec);
-			n = n == null ? 0 : n;
-			needMap.put(rec, n + 1);
-			rCount++;
-		}
-		List<ItemRec> needs = new ArrayList<ItemRec>();
-		for (Entry<ItemRec, Integer> entry : needMap.entrySet()) {
-			ItemRec rec = entry.getKey();
-			rec.getItemStack().setCount(entry.getValue());
-			needs.add(rec);
-		}
-		needs.add(new ItemRec(Items.WATER_BUCKET, 1));
-		if (rand.nextBoolean()) needs.add(new ItemRec(Items.BEEF, rand.nextInt(5) + 1));
-		if (rand.nextBoolean()) needs.add(new ItemRec(Items.CAKE, rand.nextInt(5) + 1));
-		int weight = rand.nextInt(10) + (int) (rCount / (float) count * floor.getWeight()) + 1;
-		// 创建任务
-		Quest quest = Quests.createBuildTask(pos, floor, weight, needs);
-		quest.getType().addReward(QuestRewardExp.create(100 + rand.nextInt(200)));
-		quest.setEndTime(world.getWorldTime() + 24000 + rand.nextInt(24000 * 3));
+		if (!floor.canInvest(this)) return;
+		Quest quest = floor.getInvestQuest(this, rand);
+		if (quest.getEndTime() <= 0) quest.setEndTime(world.getWorldTime() + 24000 + rand.nextInt(24000 * 3));
 		bulletin.addQuest(quest);
 	}
 

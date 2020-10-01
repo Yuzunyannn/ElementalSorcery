@@ -5,12 +5,12 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.items.ItemStackHandler;
+import net.minecraftforge.items.IItemHandlerModifiable;
 
 /** 继承接口的类，重写一个getItemStackHandler就可以将其作为IInventory使用 */
 public interface IItemStackHandlerInventory extends IInventory {
 
-	public ItemStackHandler getItemStackHandler();
+	public IItemHandlerModifiable getItemStackHandler();
 
 	@Override
 	default public String getName() {
@@ -29,12 +29,10 @@ public interface IItemStackHandlerInventory extends IInventory {
 
 	@Override
 	default public boolean isEmpty() {
-		ItemStackHandler inventory = this.getItemStackHandler();
+		IItemHandlerModifiable inventory = this.getItemStackHandler();
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ItemStack stack = inventory.getStackInSlot(i);
-			if (!stack.isEmpty()) {
-				return false;
-			}
+			if (!stack.isEmpty()) { return false; }
 		}
 		return true;
 	}
@@ -47,8 +45,7 @@ public interface IItemStackHandlerInventory extends IInventory {
 	@Override
 	default public ItemStack decrStackSize(int index, int count) {
 		ItemStack itemstack = this.getItemStackHandler().getStackInSlot(index);
-		if (itemstack.isEmpty())
-			return itemstack;
+		if (itemstack.isEmpty()) return itemstack;
 		itemstack = itemstack.splitStack(count);
 		this.markDirty();
 		return itemstack;
@@ -56,7 +53,7 @@ public interface IItemStackHandlerInventory extends IInventory {
 
 	@Override
 	default public ItemStack removeStackFromSlot(int index) {
-		ItemStackHandler inventory = this.getItemStackHandler();
+		IItemHandlerModifiable inventory = this.getItemStackHandler();
 		ItemStack itemstack = inventory.getStackInSlot(index);
 		if (itemstack.isEmpty()) {
 			return ItemStack.EMPTY;
@@ -112,7 +109,7 @@ public interface IItemStackHandlerInventory extends IInventory {
 
 	@Override
 	default public void clear() {
-		ItemStackHandler inventory = this.getItemStackHandler();
+		IItemHandlerModifiable inventory = this.getItemStackHandler();
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			inventory.setStackInSlot(i, ItemStack.EMPTY);
 		}

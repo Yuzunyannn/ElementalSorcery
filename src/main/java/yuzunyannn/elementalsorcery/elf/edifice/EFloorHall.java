@@ -20,11 +20,18 @@ import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
+import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class EFloorHall extends ElfEdificeFloor {
 
 	static public final EFloorHall instance = new EFloorHall();
+
+	/** 大厅是第一个层，不能被投资 */
+	@Override
+	public boolean canInvest(TileElfTreeCore core) {
+		return false;
+	}
 
 	@Override
 	public int getFloorHeight(IBuilder builder) {
@@ -240,7 +247,7 @@ public class EFloorHall extends ElfEdificeFloor {
 		double x = pos.getX() + 0.5;
 		double y = pos.getY();
 		double z = pos.getZ() + 0.5;
-		AxisAlignedBB aabb = new AxisAlignedBB(x - size, y, x - size, x + size, y + floor.getFloorHeight(builder),
+		AxisAlignedBB aabb = new AxisAlignedBB(x - size, y, z - size, x + size, y + floor.getFloorHeight(builder),
 				z + size);
 		return world.getEntitiesWithinAABB(EntityElfBase.class, aabb, (elf) -> {
 			if (pro == null) return true;

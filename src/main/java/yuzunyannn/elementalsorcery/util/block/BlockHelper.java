@@ -14,6 +14,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
+import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
@@ -105,10 +106,14 @@ public class BlockHelper {
 		TileEntity tile = world.getTileEntity(pos);
 		if (tile == null) return stack;
 		IItemHandler heandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face);
+		return insertInto(heandler, stack);
+	}
+
+	static public ItemStack insertInto(IItemHandler heandler, ItemStack stack) {
 		if (heandler == null) return stack;
 		for (int i = 0; i < heandler.getSlots(); i++) {
 			stack = heandler.insertItem(i, stack, false);
-			if (stack.isEmpty()) { return stack; }
+			if (stack.isEmpty()) return stack;
 		}
 		return stack;
 	}
@@ -133,6 +138,36 @@ public class BlockHelper {
 			w = Math.min(MathHelper.ceil(w * 1.5f), width * 2);
 		}
 		return null;
+	}
+
+	/** 该名称是否为矿物 */
+	static public boolean isOre(String oreName) {
+		switch (oreName) {
+		case "oreGold":
+		case "oreIron":
+		case "oreDiamond":
+		case "oreLapis":
+		case "oreRedstone":
+		case "oreEmerald":
+		case "oreQuartz":
+		case "oreCoal":
+		case "oreKyanite":
+		case "oreCopper":
+		case "oreTin":
+		case "oreLead":
+		case "oreZinc":
+			return true;
+		default:
+			return false;
+		}
+	}
+
+	static public boolean isOre(ItemStack oreStack) {
+		if (oreStack.isEmpty()) return false;
+		int[] ore = OreDictionary.getOreIDs(oreStack);
+		if (ore == null || ore.length == 0) return false;
+		String name = OreDictionary.getOreName(ore[0]);
+		return BlockHelper.isOre(name);
 	}
 
 }

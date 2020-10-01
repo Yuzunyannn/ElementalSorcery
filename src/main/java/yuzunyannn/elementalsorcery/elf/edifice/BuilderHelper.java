@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.BlockCarpet;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockStairs;
+import net.minecraft.block.BlockStone;
 import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -21,9 +22,12 @@ public class BuilderHelper {
 	public NBTTagCompound data;
 	final public IBuilder builder;
 
+	protected int randNum;
+
 	public BuilderHelper(IBuilder builder) {
 		data = builder.getFloorData();
 		this.builder = builder;
+		randNum = data.getInteger("rand");
 	}
 
 	public NBTTagCompound getNBT() {
@@ -42,6 +46,21 @@ public class BuilderHelper {
 	public BuilderHelper toward(Random rand) {
 		data.setByte("toward", (byte) EnumFacing.HORIZONTALS[rand.nextInt(EnumFacing.HORIZONTALS.length)].getIndex());
 		return this;
+	}
+
+	public BuilderHelper startRand(Random rand) {
+		data.setInteger("rand", rand.nextInt());
+		return this;
+	}
+
+	/** 假随机，有复原性 */
+	public int randNextInt() {
+		randNum = (137 * randNum + 11);
+		return Math.abs(randNum);
+	}
+
+	public int randNextInt(int bound) {
+		return this.randNextInt() % bound;
 	}
 
 	public TileElfTreeCore treeCore() {
@@ -67,6 +86,19 @@ public class BuilderHelper {
 	public IBlockState blockCarpet(EnumDyeColor color) {
 		IBlockState CARPET = Blocks.CARPET.getDefaultState();
 		return CARPET.withProperty(BlockCarpet.COLOR, color);
+	}
+
+	public IBlockState blockStone(int type) {
+		IBlockState STONE = Blocks.STONE.getDefaultState();
+		switch (type) {
+		case 10:
+			STONE = STONE.withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE);
+			break;
+		default:
+			STONE = STONE.withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE_SMOOTH);
+			break;
+		}
+		return STONE;
 	}
 
 	// 地毯

@@ -18,6 +18,7 @@ import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 import yuzunyannn.elementalsorcery.entity.EntityExploreDust;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
+import yuzunyannn.elementalsorcery.entity.EntityMagicMelting;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.entity.EntityResonantCrystal;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
@@ -29,6 +30,7 @@ import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityExploreDust;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityGrimoire;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityMagicMelting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortal;
 
 public class EntityRegistries {
@@ -47,6 +49,7 @@ public class EntityRegistries {
 		register(53, "portal", EntityPortal.class, "EntityPortal", 64, 1, false);
 		register(54, "explore_dust", EntityExploreDust.class, "EntityPortal", 64, 1, false);
 		register(55, "entity_grimoire", EntityGrimoire.class, "EntityGrimoire", 64, 1, false);
+		register(56, "magic_melting", EntityMagicMelting.class, "EntityMagicMelting", 64, 1, false);
 		// 投掷
 		register(41, "resonant_crystal", EntityResonantCrystal.class, "ResonantCrystal", 64, 10, true);
 		// 实体方块
@@ -79,6 +82,7 @@ public class EntityRegistries {
 		registerRender(EntityExploreDust.class, RenderEntityExploreDust.class);
 		registerRender(EntityGrimoire.class, RenderEntityGrimoire.class);
 		registerRender(EntityBulletin.class, RenderEntitiyBulletin.class);
+		registerRender(EntityMagicMelting.class, RenderEntityMagicMelting.class);
 	}
 
 	@SideOnly(Side.CLIENT)

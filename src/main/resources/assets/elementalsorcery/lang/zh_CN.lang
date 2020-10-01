@@ -162,6 +162,7 @@ pro.master=魔法大师
 pro.scholar=学者
 pro.crazy=疯子
 pro.merchant=商人
+pro.ironsmith=铁匠
 
 commands.es.usage=/es <操作> <参数>...
 commands.es.buildFloor.usage=/es buildFloor <层的名称>
@@ -310,10 +311,12 @@ say.take.quest.confirm=确定要领取「%s」这个委托吗？请确认好，�
 say.take.quest.finish=我已经给您登记了，你可以开始这个委托了！此外请不要弄丢这张委托书，这个是你委托的凭证。
 say.reputation.decline=您接受的委托中存在超出期限的委托，已经为您注销了这些委托。由于您未按时提交，您的信誉可能会有所降低。
 say.quest.finish=恭喜你完成了这个委托！这是给你的奖励。
+say.ironsmith.info=你把需要烧炼的矿物放到那边的箱子堆里，我会帮你烧炼，烧好了记得到炉子两边的箱子里去拿。\n我可不是白烧的，一个矿2元，记得一起放到箱子里。
 
 floor.hall.name=大厅
 floor.livingRoom.name=住房
 floor.workshop.name=工作间
+floor.refinery.name=精炼厂
 
 quest.end=结束时间：%s
 quest.pre.condition=接受条件

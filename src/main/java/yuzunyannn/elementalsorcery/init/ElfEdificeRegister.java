@@ -4,6 +4,7 @@ import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorLivingRoom;
+import yuzunyannn.elementalsorcery.elf.edifice.EFloorRefinery;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorWorkshop;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.util.TextHelper;
@@ -20,5 +21,6 @@ public class ElfEdificeRegister {
 		register("hall", EFloorHall.instance);
 		register("living_room", new EFloorLivingRoom());
 		register("workshop", new EFloorWorkshop());
+		register("refinery", new EFloorRefinery());
 	}
 }
