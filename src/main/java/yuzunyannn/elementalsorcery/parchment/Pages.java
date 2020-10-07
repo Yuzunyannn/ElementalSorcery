@@ -195,11 +195,11 @@ public class Pages {
 			if (packet.linked != null)
 				for (String linked : packet.linked) addItemId(Item.getByNameOrId(Json.dealId(linked)), id);
 			regPage(id, packet.page);
-			if (packet.level < 0) {
-				if (packet.level == -2) ElfProfessionScholar.addScholarPage(packet.page);
+			if (packet.page.level < 0) {
+				if (packet.page.level == -2) ElfProfessionScholar.addScholarPage(packet.page);
 				return true;
 			}
-			TileRiteTable.addPage(id, packet.level);
+			TileRiteTable.addPage(id, packet.page.level);
 			return true;
 		});
 	}

@@ -7,9 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.container.gui.GuiAbsorbBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiAnalysisAltar;
-import yuzunyannn.elementalsorcery.container.gui.GuiDeconstructBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementCraftingTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfTalk;
@@ -39,9 +37,9 @@ public class ESGuiHandler implements IGuiHandler {
 
 	public static final int GUI_HEARTH = 1;
 	public static final int GUI_SMELT_BOX = 2;
-	public static final int GUI_ABSORB_BOX = 3;
+	public static final int GUI_NONE1 = 3;
 	public static final int GUI_ELEMENT_WORKBENCH = 4;
-	public static final int GUI_DECONSTRUCT_BOX = 5;
+	public static final int GUI_NONE2 = 5;
 	public static final int GUI_PARCHMENT = 6;
 	public static final int GUI_ELEMENT_CRAFTING_TABLE = 7;
 	public static final int GUI_ANALYSIS_ALTAR = 8;
@@ -77,12 +75,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new ContainerHearth(player, tileEntity);
 			case GUI_SMELT_BOX:
 				return new ContainerSmeltBox(player, tileEntity);
-			case GUI_ABSORB_BOX:
-				return new ContainerAbsorbBox(player, tileEntity);
 			case GUI_ELEMENT_WORKBENCH:
 				return new ContainerElementWorkbench(player.inventory, world, new BlockPos(x, y, z));
-			case GUI_DECONSTRUCT_BOX:
-				return new ContainerDeconstructBox(player, tileEntity);
 			case GUI_PARCHMENT:
 				return new ContainerParchment(player);
 			case GUI_ELEMENT_CRAFTING_TABLE:
@@ -140,14 +134,10 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiHearth(new ContainerHearth(player, tileEntity), player.inventory);
 			case GUI_SMELT_BOX:
 				return new GuiSmeltBox(new ContainerSmeltBox(player, tileEntity), player.inventory);
-			case GUI_ABSORB_BOX:
-				return new GuiAbsorbBox(new ContainerAbsorbBox(player, tileEntity), player.inventory);
 			case GUI_ELEMENT_WORKBENCH:
 				return new GuiElementWorkbench(
 						new ContainerElementWorkbench(player.inventory, world, new BlockPos(x, y, z)),
 						player.inventory);
-			case GUI_DECONSTRUCT_BOX:
-				return new GuiDeconstructBox(new ContainerDeconstructBox(player, tileEntity), player.inventory);
 			case GUI_PARCHMENT:
 				return new GuiParchment(new ContainerParchment(player));
 			case GUI_ELEMENT_CRAFTING_TABLE:

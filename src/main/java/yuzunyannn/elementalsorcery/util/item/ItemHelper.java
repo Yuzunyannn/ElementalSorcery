@@ -1,11 +1,25 @@
 package yuzunyannn.elementalsorcery.util.item;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class ItemHelper {
+
+	static public EntityItem dropItem(World world, BlockPos pos, ItemStack stack) {
+		double d0 = (double) (world.rand.nextFloat() * 0.5F) + 0.25D;
+		double d1 = (double) (world.rand.nextFloat() * 0.5F) + 0.25D;
+		double d2 = (double) (world.rand.nextFloat() * 0.5F) + 0.25D;
+		EntityItem entityitem = new EntityItem(world, (double) pos.getX() + d0, (double) pos.getY() + d1,
+				(double) pos.getZ() + d2, stack);
+		entityitem.setDefaultPickupDelay();
+		world.spawnEntity(entityitem);
+		return entityitem;
+	}
 
 	static public boolean areItemsEqual(ItemStack stackA, ItemStack stackB) {
 		if (stackA.isEmpty()) return stackB.isEmpty();

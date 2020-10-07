@@ -1,6 +1,6 @@
 {
     "parent": "item/handheld",
     "textures": {
-        "layer0": "elementalsorcery:items/kyanite_axe"
+        "layer0": "elementalsorcery:items/tools/kyanite_axe"
     }
 }

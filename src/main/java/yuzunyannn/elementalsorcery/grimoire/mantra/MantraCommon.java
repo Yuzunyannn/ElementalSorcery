@@ -17,13 +17,16 @@ public class MantraCommon extends Mantra {
 
 	@Override
 	public IMantraData getData(NBTTagCompound origin, World world, ICaster caster) {
-		return new MantraDataCommon(caster);
+		return new MantraDataCommon();
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void onSpelling(World world, IMantraData data, ICaster caster) {
-		if (world.isRemote) onSpellingEffect(world, data, caster);
+		if (world.isRemote) {
+			MantraDataCommon dataEffect = (MantraDataCommon) data;
+			if (dataEffect.isMarkContinue()) onSpellingEffect(world, data, caster);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -33,7 +36,7 @@ public class MantraCommon extends Mantra {
 		EntityLivingBase eb = (EntityLivingBase) entity;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (!dataEffect.hasMarkEffect(0))
-			dataEffect.addEffect(new EffectElementMagicCircle(world, eb, this.getMagicCircle()), 0);
+			dataEffect.addEffect(caster, new EffectElementMagicCircle(world, eb, this.getMagicCircle()), 0);
 		return false;
 	}
 

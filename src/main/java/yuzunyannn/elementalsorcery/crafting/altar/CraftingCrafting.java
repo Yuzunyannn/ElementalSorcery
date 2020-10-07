@@ -36,7 +36,7 @@ public class CraftingCrafting implements ICraftingAltar {
 	// 进行时的剩余需要元素
 	private ElementInventory workingEInventory = null;
 	// 进行时的合成表
-	private IRecipe working_irecipe = null;
+	private IRecipe workingIrecipe = null;
 	// 尝试tick
 	private int tryTick = 50;
 	// 玩家
@@ -88,13 +88,13 @@ public class CraftingCrafting implements ICraftingAltar {
 		this.tick++;
 		if (this.tick % 3 != 0) return;
 		// 寻找合成表
-		if (working_irecipe == null) {
-			working_irecipe = RecipeManagement.instance.findMatchingRecipe(workingInventory, tileMul.getWorld());
-			if (working_irecipe == null) {
+		if (workingIrecipe == null) {
+			workingIrecipe = RecipeManagement.instance.findMatchingRecipe(workingInventory, tileMul.getWorld());
+			if (workingIrecipe == null) {
 				this.isOk = false;
 				return;
 			}
-			List<ElementStack> needs = working_irecipe.getNeedElements();
+			List<ElementStack> needs = workingIrecipe.getNeedElements();
 			if (needs != null && !needs.isEmpty()) {
 				workingEInventory = new ElementInventory(needs.size());
 				for (int i = 0; i < needs.size(); i++) {
@@ -132,14 +132,14 @@ public class CraftingCrafting implements ICraftingAltar {
 			}
 		}
 		// 产出结果
-		ItemStack result = working_irecipe.getCraftingResult(workingInventory);
+		ItemStack result = workingIrecipe.getCraftingResult(workingInventory);
 		if (result.isEmpty()) {
 			this.isOk = false;
 			return;
 		}
-		IRecipe irecipe = working_irecipe;
-		working_irecipe.shrink(workingInventory);
-		working_irecipe = null;
+		IRecipe irecipe = workingIrecipe;
+		workingIrecipe.shrink(workingInventory);
+		workingIrecipe = null;
 		if (tileMul.getWorld().isRemote) return;
 		ItemStack out = result.copy();
 		if (player instanceof EntityPlayer) out.onCrafting(tileMul.getWorld(), (EntityPlayer) player, out.getCount());
@@ -152,9 +152,8 @@ public class CraftingCrafting implements ICraftingAltar {
 		}
 		if (player instanceof EntityPlayerMP)
 			ESCriteriaTriggers.ELEMENT_CRAFT.trigger((EntityPlayerMP) player, irecipe);
-		if (this.addResult(out)) {
-			tileMul.markDirty();
-		} else {
+		if (this.addResult(out)) tileMul.markDirty();
+		else {
 			this.isOk = false;
 			return;
 		}
@@ -175,6 +174,10 @@ public class CraftingCrafting implements ICraftingAltar {
 	@SideOnly(Side.CLIENT)
 	public ICraftingLaunchAnime getAnime() {
 		return new AnimeRenderCrafting();
+	}
+
+	public ItemStackHandlerInventory getWorkingInventory() {
+		return workingInventory;
 	}
 
 	@Override

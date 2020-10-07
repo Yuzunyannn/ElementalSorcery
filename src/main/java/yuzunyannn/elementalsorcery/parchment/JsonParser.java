@@ -32,7 +32,6 @@ public class JsonParser {
 
 	public static class Packet {
 		Page page;
-		int level;
 		List<String> need;
 		List<String> linked;
 	}
@@ -43,7 +42,7 @@ public class JsonParser {
 		Packet packet = new Packet();
 		packet.page = page;
 		try {
-			packet.level = json.needNumber("level", "lev").intValue();
+			packet.page.level = json.needNumber("level", "lev").intValue();
 		} catch (JsonParseException e) {}
 		if (json.hasArray("need")) {
 			JsonArray array = json.getArray("need");

@@ -48,6 +48,11 @@ public class ItemSome {
 	static public Item newMagicStone() {
 		return newItem("magicStone");
 	}
+	
+	/** 魔石 */
+	static public Item newMagicGold() {
+		return newItem("magicGold");
+	}
 
 	/** 带有魔力魔的末影之眼 */
 	static public Item newMagicalEnderEye() {

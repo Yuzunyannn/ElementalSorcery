@@ -1,0 +1,29 @@
+{
+    "lev": 2,
+    "need": [
+        "md/infusion"
+    ],
+    "type": "mult",
+    "lock": 0,
+    "pages": [
+        {
+            "type": "infusion",
+            "name": "magicGold",
+            "item": [
+                "minecraft:iron_ingot",
+                "elementalsorcery:magic_gold"
+            ]
+        },
+        {
+            "type": "craft",
+            "name": "magicGoldTools",
+            "item": [
+                "elementalsorcery:magic_gold_axe",
+                "elementalsorcery:magic_gold_hoe",
+                "elementalsorcery:magic_gold_pickaxe",
+                "elementalsorcery:magic_gold_spade",
+                "elementalsorcery:magic_gold_sword"
+            ]
+        }
+    ]
+}

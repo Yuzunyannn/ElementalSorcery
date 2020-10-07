@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.util.element;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -112,5 +113,17 @@ public class ElementHelper {
 		ElementStack[] newEStacks = new ElementStack[estacks.length];
 		for (int i = 0; i < estacks.length; i++) newEStacks[i] = estacks[i].copy();
 		return newEStacks;
+	}
+
+	/** 转颜色 */
+	static public int[] toColor(Collection<ElementStack> estacks) {
+		if (estacks == null) return null;
+		int[] colors = new int[estacks.size()];
+		int i = 0;
+		for (ElementStack estack : estacks) {
+			colors[i] = estack.getElement().getColor(estack);
+			i++;
+		}
+		return colors;
 	}
 }

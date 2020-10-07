@@ -12,7 +12,7 @@
         {
             "id": "elementalsorcery:kyanite_hoe",
             "nbt": {
-                "ele_inv": {
+                "eInv": {
                     "size": 1,
                     "list": [
                         {

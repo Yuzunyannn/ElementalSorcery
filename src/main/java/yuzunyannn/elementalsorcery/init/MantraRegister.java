@@ -4,6 +4,7 @@ import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireBall;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloat;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSprint;
 
@@ -17,5 +18,6 @@ public class MantraRegister {
 		reg(new MantraEnderTeleport(), "ender_teleport");
 		reg(new MantraFloat(), "float");
 		reg(new MantraSprint(), "sprint");
+		reg(new MantraFireBall(), "fire_ball");
 	}
 }

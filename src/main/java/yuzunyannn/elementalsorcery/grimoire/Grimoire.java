@@ -10,13 +10,15 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.crafting.IItemCapbiltitySyn;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
 
 /** 该能力仅仅是跟随物品，作为上下文数据使用 */
-public class Grimoire {
+public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagCompound> {
 
 	@CapabilityInject(Grimoire.class)
 	public static Capability<Grimoire> GRIMOIRE_CAPABILITY;
@@ -39,12 +41,32 @@ public class Grimoire {
 		return inventory;
 	}
 
-	public void load(ItemStack stack) {
-		if (inventory != null) inventory.loadState(stack);
+	@Override
+	public boolean hasState(ItemStack stack) {
+		if (inventory != null) return inventory.hasState(stack);
+		return false;
 	}
 
-	public void save(ItemStack stack) {
-		if (inventory != null) inventory.saveState(stack);
+	@Override
+	public void loadState(NBTTagCompound nbt) {
+		if (inventory != null) inventory.loadState(nbt);
+	}
+
+	@Override
+	public void saveState(NBTTagCompound nbt) {
+		if (inventory != null) inventory.saveState(nbt);
+	}
+
+	@Override
+	public NBTTagCompound serializeNBT() {
+		NBTTagCompound nbt = new NBTTagCompound();
+		this.saveState(nbt);
+		return nbt;
+	}
+
+	@Override
+	public void deserializeNBT(NBTTagCompound nbt) {
+		this.loadState(nbt);
 	}
 
 	// 保存能力

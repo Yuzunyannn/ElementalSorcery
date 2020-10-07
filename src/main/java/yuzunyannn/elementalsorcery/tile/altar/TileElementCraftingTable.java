@@ -39,8 +39,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			if (facing == null)
-				return true;
+			if (facing == null) return true;
 		}
 		return super.hasCapability(capability, facing);
 	}
@@ -48,8 +47,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			if (facing == null)
-				return (T) inventory;
+			if (facing == null) return (T) inventory;
 		}
 		return super.getCapability(capability, facing);
 	}
@@ -69,15 +67,11 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 
 	@Override
 	public boolean canCrafting(String type, @Nullable EntityLivingBase player) {
-		if (!ICraftingLaunch.TYPE_ELEMENT_CRAFTING.equals(type))
-			return false;
-		if (this.isEmpty())
-			return false;
-		if (!this.isIntact())
-			return false;
+		if (!ICraftingLaunch.TYPE_ELEMENT_CRAFTING.equals(type)) return false;
+		if (this.isEmpty()) return false;
+		if (!this.isIntact()) return false;
 		this.onCraftMatrixChanged();
-		if (this.getOutput().isEmpty())
-			return false;
+		if (this.getOutput().isEmpty()) return false;
 		return true;
 	}
 
@@ -109,8 +103,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 
 	@Override
 	public void craftingUpdate(ICraftingCommit commit) {
-		if (startTime.tick())
-			return;
+		if (startTime.tick()) return;
 		((CraftingCrafting) commit).update(this);
 	}
 
@@ -124,8 +117,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 		working = false;
 		result = ItemStack.EMPTY;
 		// 如果祭坛不完整，或者没有生成任何物品
-		if (!((CraftingCrafting) commit).end(this))
-			return ICraftingLaunch.FAIL;
+		if (!((CraftingCrafting) commit).end(this)) return ICraftingLaunch.FAIL;
 		this.markDirty();
 		return ICraftingLaunch.SUCCESS;
 	}
@@ -166,8 +158,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		if (compound.hasKey("inventory"))
-			inventory.deserializeNBT(compound.getCompoundTag("inventory"));
+		if (compound.hasKey("inventory")) inventory.deserializeNBT(compound.getCompoundTag("inventory"));
 		super.readFromNBT(compound);
 	}
 

@@ -77,9 +77,8 @@ public class CraftingConstruct implements ICraftingAltar {
 		ElementStack need = needEStacks.get(index).splitStack(1);
 		ElementStack get = tileMul.getElementFromSpPlace(need, tileMul.getPos().up());
 		// 测试元素是否合格
-		if (get.isEmpty()) {
-			needEStacks.get(index).grow(need);
-		} else {
+		if (get.isEmpty()) needEStacks.get(index).grow(need);
+		else {
 			if (needEStacks.get(index).isEmpty()) {
 				needEStacks.remove(index);
 			}

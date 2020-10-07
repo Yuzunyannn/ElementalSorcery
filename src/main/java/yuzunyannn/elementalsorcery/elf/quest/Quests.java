@@ -43,7 +43,7 @@ public class Quests {
 	/*** 完成某个任务 */
 	public static boolean finishQuest(EntityLivingBase player, Quest quest, ItemStack questStack) {
 		if (quest.getStatus() != QuestStatus.UNDERWAY) return false;
-		//if (quest.getType().check(quest, player) != null) return false;
+		if (quest.getType().check(quest, player) != null) return false;
 		quest.unsign(player);
 		quest.getType().reward(quest, player);
 		quest.getType().finish(quest, player);

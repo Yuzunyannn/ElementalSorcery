@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
-import yuzunyannn.elementalsorcery.render.effect.FirwrokShap;
+import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
@@ -202,8 +202,8 @@ public class EntityExploreDust extends Entity implements IEntityAdditionalSpawnD
 	public void onDead() {
 		if (world.isRemote) {
 			Vec3d pos = this.getPositionVector().addVector(0, this.height / 2, 0);
-			FirwrokShap.createECircle(world, pos, 0.25, 3, DEAFULT_COLOR);
-			FirwrokShap.createECircle(world, pos, 0.5, 4, DEAFULT_COLOR);
+			FirewrokShap.createECircle(world, pos, 0.25, 3, DEAFULT_COLOR);
+			FirewrokShap.createECircle(world, pos, 0.5, 4, DEAFULT_COLOR);
 			return;
 		}
 		NBTTagCompound nbt = new NBTTagCompound();

@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.entity;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -14,6 +15,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -22,7 +24,7 @@ import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
-public class EntityMagicMelting extends Entity {
+public class EntityMagicMelting extends Entity implements IEntityAdditionalSpawnData {
 
 	protected static final DataParameter<ItemStack> ITEM = EntityDataManager
 			.<ItemStack>createKey(EntityMagicMelting.class, DataSerializers.ITEM_STACK);
@@ -50,6 +52,16 @@ public class EntityMagicMelting extends Entity {
 
 	public void setItem(ItemStack ore) {
 		dataManager.set(ITEM, ore);
+	}
+
+	@Override
+	public void writeSpawnData(ByteBuf buffer) {
+		buffer.writeInt(progress);
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf additionalData) {
+		progress = additionalData.readInt();
 	}
 
 	@Override

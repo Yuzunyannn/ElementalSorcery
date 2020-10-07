@@ -29,6 +29,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fluids.BlockFluidBase;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -397,6 +398,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		public static boolean needToLater(IBlockState state) {
 			Block block = state.getBlock();
 			if (block instanceof BlockCarpet || block instanceof BlockTorch) return true;
+			if (block instanceof BlockFluidBase) return true;
 			return false;
 		}
 

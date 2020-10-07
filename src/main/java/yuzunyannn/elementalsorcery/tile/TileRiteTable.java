@@ -15,8 +15,11 @@ import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -26,6 +29,10 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.ESObjects;
@@ -50,7 +57,7 @@ public class TileRiteTable extends TileEntityNetwork {
 
 	@Override
 	public void onLoad() {
-		super.onLoad();
+
 	}
 
 	/** 仪式桌等级 */
@@ -59,7 +66,7 @@ public class TileRiteTable extends TileEntityNetwork {
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		this.inventory.deserializeNBT(compound.getCompoundTag("inv"));
-		level = compound.getInteger("level");
+		this.setLevel(compound.getInteger("level"));
 		super.readFromNBT(compound);
 	}
 
@@ -248,6 +255,23 @@ public class TileRiteTable extends TileEntityNetwork {
 
 	public void setLevel(int level) {
 		this.level = level;
+		try {
+			List<String> ids = levelPages[TileRiteTable.pLevel(this.level)];
+			idsCount = ids.size();
+		} catch (Exception e) {}
+	}
+
+	protected int idsCount = 0;
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public ITextComponent getDisplayName() {
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		ItemStack stackMain = player.getHeldItemMainhand();
+		ItemStack stackOff = player.getHeldItemOffhand();
+		if (stackMain.getItem() == Items.WOODEN_SWORD || stackOff.getItem() == Items.WOODEN_SWORD)
+			return new TextComponentString(I18n.format("info.level.total.page.count", level, idsCount));
+		return null;
 	}
 
 	static public interface ISacrificeHandle {

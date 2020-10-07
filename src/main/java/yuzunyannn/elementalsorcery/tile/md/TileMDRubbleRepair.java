@@ -7,15 +7,23 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
-import yuzunyannn.elementalsorcery.render.effect.FirwrokShap;
+import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
+import yuzunyannn.elementalsorcery.util.GameHelper;
 
 public class TileMDRubbleRepair extends TileMDBase implements ITickable {
+
+	public static interface IExtendRepair {
+		ItemStack getRepairOutput(ItemStack input);
+
+		int getRepairCost(ItemStack input);
+	}
 
 	/** 修复合成表 */
 	static public class Recipe {
@@ -60,6 +68,24 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 		addRecipe(new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, BlockAStone.EnumType.FRAGMENTED.ordinal()),
 				new ItemStack(ESInitInstance.BLOCKS.ASTONE), 10);
 		addRecipe(new ItemStack(Blocks.STONEBRICK, 1, 2), new ItemStack(Blocks.STONEBRICK), 1);
+		// 展示用
+		GameHelper.clientRun(() -> {
+			ItemStack input = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_AXE, 1, 1);
+			ItemStack output = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_AXE, 1, 0);
+			addRecipe(input, output, 10);
+			input = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_PICKAXE, 1, 1);
+			output = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_PICKAXE, 1, 0);
+			addRecipe(input, output, 10);
+			input = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_HOE, 1, 1);
+			output = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_HOE, 1, 0);
+			addRecipe(input, output, 10);
+			input = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_SPADE, 1, 1);
+			output = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_SPADE, 1, 0);
+			addRecipe(input, output, 10);
+			input = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_SWORD, 1, 1);
+			output = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_SWORD, 1, 0);
+			addRecipe(input, output, 10);
+		});
 	}
 
 	/** 完成度 */
@@ -170,6 +196,12 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 	/** 获取默认的修复结果 */
 	public static ItemStack getDefaultRepairResult(ItemStack stack) {
 		if (stack.isEmpty()) return ItemStack.EMPTY;
+		// 扩展修复
+		Item item = stack.getItem();
+		Block block = Block.getBlockFromItem(item);
+		if (item instanceof IExtendRepair) return ((IExtendRepair) item).getRepairOutput(stack);
+		else if (block instanceof IExtendRepair) return ((IExtendRepair) block).getRepairOutput(stack);
+		// 合成表修复
 		for (Recipe r : recipes) {
 			if (ItemStack.areItemsEqual(stack, r.input)) return r.output;
 		}
@@ -178,6 +210,12 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 
 	/** 获取修复一个的花费 */
 	public static int getDefaultRepairCost(ItemStack stack) {
+		// 扩展修复
+		Item item = stack.getItem();
+		Block block = Block.getBlockFromItem(item);
+		if (item instanceof IExtendRepair) return ((IExtendRepair) item).getRepairCost(stack);
+		else if (block instanceof IExtendRepair) return ((IExtendRepair) block).getRepairCost(stack);
+		// 合成表修复
 		for (Recipe r : recipes) {
 			if (ItemStack.areItemsEqual(stack, r.input)) return r.cost;
 		}
@@ -192,7 +230,7 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 				float x = this.pos.getX() + 0.2f + (float) Math.random() * 0.6f;
 				float y = this.pos.getY() + 0.1f;
 				float z = this.pos.getZ() + 0.2f + (float) Math.random() * 0.6f;
-				FirwrokShap.createSpark(world, x, y, z, 0, (float) Math.random() * 0.04f + 0.08f, 0, PARTICLE_COLOR,
+				FirewrokShap.createSpark(world, x, y, z, 0, (float) Math.random() * 0.04f + 0.08f, 0, PARTICLE_COLOR,
 						PARTICLE_COLOR_FADE, false, false);
 			}
 			return;

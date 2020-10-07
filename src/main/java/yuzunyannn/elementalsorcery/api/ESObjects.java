@@ -58,6 +58,12 @@ public class ESObjects {
 		public Item ANCIENT_PAPER;
 		public Item QUEST;
 		public Item ELF_WATCH;
+		public Item MAGIC_GOLD;
+		public Item MAGIC_GOLD_PICKAXE;
+		public Item MAGIC_GOLD_AXE;
+		public Item MAGIC_GOLD_SPADE;
+		public Item MAGIC_GOLD_HOE;
+		public Item MAGIC_GOLD_SWORD;
 	}
 
 	static public class Blocks {
@@ -78,10 +84,6 @@ public class ESObjects {
 		public Block KYANITE_ORE;
 		public Block KYANITE_BLOCK;
 		public Block MAGIC_PLATFORM;
-		@Deprecated
-		public Block ABSORB_BOX;
-		@Deprecated
-		public Block DECONSTRUCT_BOX;
 		public Block INVALID_ENCHANTMENT_TABLE;
 		public Block ELEMENT_WORKBENCH;
 		public Block MAGIC_DESK;

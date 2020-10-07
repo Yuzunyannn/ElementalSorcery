@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.crafting;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.EntityLivingBase;
@@ -13,7 +14,7 @@ public interface ICraftingLaunch {
 	static public String TYPE_ELEMENT_DECONSTRUCT = "element_deconstruct";
 	static public String TYPE_BUILING_RECORD = "builing_record";
 	static public String TYPE_ELEMENT_CONSTRUCT = "element_construct";
-	
+
 	/** 是否正在工作 */
 	boolean isWorking();
 
@@ -32,6 +33,7 @@ public interface ICraftingLaunch {
 	 * @param player 进行操作的玩家，可以为null
 	 * @return ture表示正式开始，false表示条件不足无法开始
 	 */
+	@Nonnull
 	ICraftingCommit craftingBegin(String type, @Nullable EntityLivingBase player);
 
 	/**
@@ -40,6 +42,7 @@ public interface ICraftingLaunch {
 	 * @param nbt 之前提交内容的nbt
 	 * @return 恢复的提交内容
 	 */
+	@Nonnull
 	ICraftingCommit recovery(String type, @Nullable EntityLivingBase player, NBTTagCompound nbt);
 
 	/** 制作更新[服务器] */

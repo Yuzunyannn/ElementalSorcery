@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.tile.altar;
 
+import java.util.Random;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -51,12 +53,12 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	// 获取一次元素动画
 	@SideOnly(Side.CLIENT)
 	public static void giveParticleElementTo(World world, int color, BlockPos from, BlockPos pto, float possibility) {
-		// if (EventClient.tick % 2 != 0) return;
-		if (Math.random() > possibility) return;
+		Random rand = world.rand;
+		if (rand.nextFloat() > possibility) return;
 		EffectElementFly effect;
 		if (pto.getY() > from.getY()) effect = new EffectElementFly(world,
 				new Vec3d(from.getX() + Math.random(), from.getY() + Math.random(), from.getZ() + Math.random()),
-				new Vec3d(pto.getX() + 0.5, pto.getY() + 0.5, pto.getZ() + 0.5));
+				new Vec3d(pto.getX() + rand.nextDouble(), pto.getY() + 0.5, pto.getZ() + rand.nextDouble()));
 		else effect = new EffectElementFly(world,
 				new Vec3d(from.getX() + 0.25 + Math.random() * 0.5, from.getY() + 0.25 + Math.random() * 0.5,
 						from.getZ() + 0.25 + Math.random() * 0.5),

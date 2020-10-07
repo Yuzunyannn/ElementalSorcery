@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.event.EventClient;
 
 @SideOnly(Side.CLIENT)
-public class FirwrokShap {
+public class FirewrokShap {
 
 	public static final ParticleManager manager = Minecraft.getMinecraft().effectRenderer;
 

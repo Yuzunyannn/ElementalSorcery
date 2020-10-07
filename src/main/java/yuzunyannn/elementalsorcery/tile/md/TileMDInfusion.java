@@ -246,9 +246,11 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 	static public void init() {
 		recipes.clear();
 		final ESObjects.Items ITEMS = ESInitInstance.ITEMS;
-		addRecipe(Items.REEDS, ITEMS.NATURE_CRYSTAL, 20, 20, (world, pos) -> {
+		Recipe.ITest awalysTrue = (world, pos) -> {
 			return true;
-		});
+		};
+		addRecipe(Items.REEDS, ITEMS.NATURE_CRYSTAL, 20, 20, awalysTrue);
+		addRecipe(Items.GOLD_INGOT, ITEMS.MAGIC_GOLD, 40, 20, awalysTrue);
 		addRecipe(ITEMS.MAGIC_CRYSTAL, ESInitInstance.ITEMS.ELEMENT_CRYSTAL, 100, 20, (world, pos) -> {
 			Biome biome = world.getBiome(pos);
 			WorldTime time = new WorldTime(world);

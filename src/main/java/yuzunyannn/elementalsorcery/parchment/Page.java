@@ -28,6 +28,9 @@ public class Page {
 	/** 解锁该页面的需求 */
 	protected List<String> requires;
 
+	/** 羊皮卷产出的仪式等级 */
+	public int level;
+
 	public void addRequire(String require) {
 		if (requires == null) requires = new ArrayList<String>();
 		requires.add(require);
@@ -37,6 +40,10 @@ public class Page {
 	public void addItemInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
 			ITooltipFlag flagIn) {
 		tooltip.add("§e" + I18n.format(this.getName()));
+		if (level >= 0) {
+			String level = I18n.format("info.level", this.level) + I18n.format("tile.riteTable.name");
+			tooltip.add(I18n.format("info.page.from", level));
+		}
 		if (this.requires != null) {
 			tooltip.add(TextFormatting.DARK_AQUA + I18n.format("info.page.need"));
 			for (String id : this.requires) {

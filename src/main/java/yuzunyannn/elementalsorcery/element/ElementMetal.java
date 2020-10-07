@@ -9,8 +9,10 @@ import yuzunyannn.elementalsorcery.api.element.IElementSpell;
 
 public class ElementMetal extends ElementInner {
 
+	public static final int COLOR = 0xf2d031;
+
 	public ElementMetal() {
-		super(0xf2d031, "metal");
+		super(COLOR, "metal");
 	}
 
 	@Override
@@ -20,17 +22,14 @@ public class ElementMetal extends ElementInner {
 
 	@Override
 	public void spellEnd(World world, EntityLivingBase entity, ElementStack estack, SpellPackage pack) {
-		if (pack.isFail())
-			return;
-		if (pack.pos == null)
-			return;
+		if (pack.isFail()) return;
+		if (pack.pos == null) return;
 		int count = pack.power + 5;
 		IBlockState state = world.getBlockState(pack.pos);
 		if (this.canChangeLv1(state)) {
 			if (world.isRemote) {
 
-			} else
-				this.changeLv1(world, pack.pos, count / 2, estack.getPower());
+			} else this.changeLv1(world, pack.pos, count / 2, estack.getPower());
 		}
 	}
 
@@ -60,18 +59,12 @@ public class ElementMetal extends ElementInner {
 	}
 
 	public boolean canChangeLv1(IBlockState state) {
-		if (state == Blocks.STONE.getDefaultState())
-			return true;
-		if (state.getBlock() == Blocks.IRON_ORE)
-			return true;
-		if (state.getBlock() == Blocks.GOLD_ORE)
-			return true;
-		if (state.getBlock() == Blocks.REDSTONE_ORE)
-			return true;
-		if (state.getBlock() == Blocks.DIAMOND_ORE)
-			return true;
-		if (state.getBlock() == Blocks.COAL_ORE)
-			return true;
+		if (state == Blocks.STONE.getDefaultState()) return true;
+		if (state.getBlock() == Blocks.IRON_ORE) return true;
+		if (state.getBlock() == Blocks.GOLD_ORE) return true;
+		if (state.getBlock() == Blocks.REDSTONE_ORE) return true;
+		if (state.getBlock() == Blocks.DIAMOND_ORE) return true;
+		if (state.getBlock() == Blocks.COAL_ORE) return true;
 		return false;
 	}
 

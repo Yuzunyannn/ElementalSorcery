@@ -13,12 +13,10 @@ import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectCondition;
 
 public class MantraDataCommon implements IMantraData {
 
-	public final ICaster caster;
 	public final Set<Short> effectSet = new HashSet<>();
 	public boolean markContinue;
 
-	public MantraDataCommon(ICaster caster) {
-		this.caster = caster;
+	public MantraDataCommon() {
 	}
 
 	public void markContinue(boolean yes) {
@@ -42,7 +40,7 @@ public class MantraDataCommon implements IMantraData {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void addEffect(EffectCondition effect, int markId) {
+	public void addEffect(ICaster caster, EffectCondition effect, int markId) {
 		markEffect(markId);
 		if (effect.getCondition() == null) {
 			Entity entity = caster.iWantCaster();
@@ -56,7 +54,7 @@ public class MantraDataCommon implements IMantraData {
 	public static class ConditionEffect extends EffectCondition.ConditionEntityAction {
 
 		public final MantraDataCommon data;
-		public final short unmark;
+		public final short unmark; // 标记
 
 		public ConditionEffect(EntityLivingBase entity, MantraDataCommon data, int unmark) {
 			super(entity);

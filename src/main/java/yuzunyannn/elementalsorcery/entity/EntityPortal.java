@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementScrew;
-import yuzunyannn.elementalsorcery.render.effect.FirwrokShap;
+import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortalEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortalWorldSecene;
 import yuzunyannn.elementalsorcery.tile.altar.TilePortalAltar;
@@ -311,7 +311,7 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 
 	@SideOnly(Side.CLIENT)
 	public void deadEffect() {
-		FirwrokShap.createECircle(world, this.getPositionVector().addVector(0, this.height / 2, 0), 0.5, 4,
+		FirewrokShap.createECircle(world, this.getPositionVector().addVector(0, this.height / 2, 0), 0.5, 4,
 				new int[] { 0x76298d, 0xa957c1 });
 	}
 

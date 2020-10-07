@@ -97,7 +97,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		if (super.onSpellingEffect(world, data, caster)) return true;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (caster.iWantCaster() == Minecraft.getMinecraft().player)
-			if (!dataEffect.hasMarkEffect(1)) dataEffect.addEffect(new EffectPlayerAt(world, caster), 1);
+			if (!dataEffect.hasMarkEffect(1)) dataEffect.addEffect(caster,new EffectPlayerAt(world, caster), 1);
 		return false;
 	}
 

@@ -1,8 +1,0 @@
-{
-    "parent": "elementalsorcery:block/cube_column",
-    "textures": {
-        "bottom": "elementalsorcery:blocks/kyanite_block",
-		"top": "blocks/gold_block",
-        "side": "elementalsorcery:blocks/absorb_box"
-    }
-}

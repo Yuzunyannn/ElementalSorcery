@@ -1,0 +1,6 @@
+{
+    "parent": "item/handheld",
+    "textures": {
+        "layer0": "elementalsorcery:items/tools/magic_gold_spade"
+    }
+}

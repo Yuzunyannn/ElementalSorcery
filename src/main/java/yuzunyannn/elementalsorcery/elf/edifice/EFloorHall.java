@@ -264,6 +264,7 @@ public class EFloorHall extends ElfEdificeFloor {
 		int treeSize = builder.getEdificeSize();
 		BuilderHelper helper = new BuilderHelper(builder);
 		EnumFacing toward = helper.toward();
+		// 接待员
 		int offset = GenElfEdifice.getFakeCircleLen(treeSize, treeSize, 2) + 1;
 		for (int i = -4; i <= 4; i += 4) {
 			BlockPos at = pos.offset(toward.getOpposite(), offset).offset(toward.rotateY(), i);
@@ -277,6 +278,10 @@ public class EFloorHall extends ElfEdificeFloor {
 			elf.setPosition(x, y - 0.5, z);
 			builder.spawn(elf);
 		}
+		// 其余单位
+		ElfProfession pro = null;
+		if (world.rand.nextInt(5) == 0) pro = ElfProfession.BUILDER;
+		EFloorLivingRoom.trySpawnElf(builder, pro, 6);
 	}
 
 	public void createBulltin(IBuilder builder) {

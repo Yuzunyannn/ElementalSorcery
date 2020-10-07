@@ -55,6 +55,8 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		this.mantra = mantra;
 		this.originData = originData == null ? new NBTTagCompound() : originData;
 		this.initMantraData();
+		// 最开始直接进行还原，初始发送信息使用
+		this.restoreGrimoire();
 	}
 
 	private void initMantraData() {
@@ -83,8 +85,11 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	/** 魔导书 */
 	public Grimoire grimoire;
 	public ItemStack grimoireStack = ItemStack.EMPTY;
+	public NBTTagCompound grimoireDataFromServer;
 	/** 原始数据 */
 	protected NBTTagCompound originData;
+
+	/** 客户端 */
 
 	@Override
 	protected void entityInit() {
@@ -122,6 +127,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		NBTTagCompound nbt = new NBTTagCompound();
 		this.writeEntityToNBT(nbt);
 		if (originData != null) nbt.setTag("oData", originData);
+		if (grimoire != null) nbt.setTag("gData", grimoire.serializeNBT());
 		ByteBufUtils.writeTag(buffer, nbt);
 	}
 
@@ -129,6 +135,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	public void readSpawnData(ByteBuf additionalData) {
 		NBTTagCompound nbt = ByteBufUtils.readTag(additionalData);
 		if (nbt.hasKey("oData", 10)) originData = nbt.getCompoundTag("oData");
+		if (nbt.hasKey("gData", 10)) grimoireDataFromServer = nbt.getCompoundTag("gData");
 		readEntityFromNBT(nbt);
 	}
 
@@ -142,12 +149,15 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	protected void restoreGrimoire() {
-		ItemStack hold = user.getHeldItem(EnumHand.MAIN_HAND);
 		// 释放法术后处理，魔法书已经不是必须的了
 		if (state == STATE_AFTER_SPELLING) grimoire = new Grimoire();
 		else {
+			ItemStack hold = user.getHeldItem(EnumHand.MAIN_HAND);
 			grimoireStack = hold;
 			grimoire = hold.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+			if (world.isRemote) {
+				if (grimoireDataFromServer != null && grimoire != null) grimoire.deserializeNBT(grimoireDataFromServer);
+			}
 		}
 	}
 
@@ -261,7 +271,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 					if (user.isHandActive()) return;
 				}
 			}
-			grimoire.save(grimoireStack);
+			grimoire.saveState(grimoireStack);
 		}, 10);
 	}
 

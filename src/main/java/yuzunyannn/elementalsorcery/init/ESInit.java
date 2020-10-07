@@ -96,9 +96,7 @@ import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagiclization;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDResonantIncubator;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDTransfer;
-import yuzunyannn.elementalsorcery.tile.TileAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
-import yuzunyannn.elementalsorcery.tile.TileDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftNormal;
@@ -263,8 +261,6 @@ public class ESInit {
 		register(TileHearth.class, "Hearth");
 		register(TileSmeltBox.class, "SmeltBox");
 		register(TileMagicPlatform.class, "MagicPlatform");
-		register(TileAbsorbBox.class, "AbsorbBox");
-		register(TileDeconstructBox.class, "DeconstructBox");
 		register(TileMagicDesk.class, "MagicDesk");
 		register(TileElementCraftingTable.class, "ElementCraftingTable");
 		register(TileDeconstructAltarTable.class, "DeconstructAltarTable");
@@ -352,6 +348,12 @@ public class ESInit {
 		registerRender(ITEMS.ANCIENT_PAPER, 2, "ancient_paper_new_written");
 		registerRender(ITEMS.QUEST);
 		registerRender(ITEMS.ELF_WATCH);
+		registerRender(ITEMS.MAGIC_GOLD);
+		registerRender(ITEMS.MAGIC_GOLD_PICKAXE);
+		registerRender(ITEMS.MAGIC_GOLD_AXE);
+		registerRender(ITEMS.MAGIC_GOLD_SPADE);
+		registerRender(ITEMS.MAGIC_GOLD_HOE);
+		registerRender(ITEMS.MAGIC_GOLD_SWORD);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -369,10 +371,8 @@ public class ESInit {
 		registerRender(BLOCKS.ESTONE_STAIRS);
 		registerRender(BLOCKS.MAGIC_PLATFORM, 0, "magic_platform");
 		registerRender(BLOCKS.MAGIC_PLATFORM, 1, "magic_platform_estone");
-		registerRender(BLOCKS.ABSORB_BOX);
 		registerRender(BLOCKS.INVALID_ENCHANTMENT_TABLE);
 		registerRender(BLOCKS.ELEMENT_WORKBENCH);
-		registerRender(BLOCKS.DECONSTRUCT_BOX);
 		registerRender(BLOCKS.MAGIC_TORCH);
 		registerRender(BLOCKS.ASTONE, 0, "astone");
 		registerRender(BLOCKS.ASTONE, 1, "astone_fragmented");

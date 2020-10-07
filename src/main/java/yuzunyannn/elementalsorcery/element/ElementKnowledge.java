@@ -16,8 +16,10 @@ import yuzunyannn.elementalsorcery.api.element.IElementSpell;
 
 public class ElementKnowledge extends ElementInner {
 
+	public static final int COLOR = 0x9b9b9b;
+
 	public ElementKnowledge() {
-		super(0x9b9b9b, "knowledge");
+		super(COLOR, "knowledge");
 	}
 
 	@Override

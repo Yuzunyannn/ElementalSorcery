@@ -193,7 +193,7 @@ public class TileStela extends TileEntityNetwork {
 		// 魔分箱
 		addToMap(ESInitInstance.BLOCKS.MD_MAGIC_GEN, Pages.ABOUT_ASTONE, Pages.ABOUT_MD, Pages.ABOUT_INFUSION);
 		// 吸收箱
-		addToMap(ESInitInstance.BLOCKS.ABSORB_BOX, Pages.ABOUT_ABSORB_BOX, Pages.ABOUT_MAGIC_PLATFORM);
+		//addToMap(ESInitInstance.BLOCKS.ABSORB_BOX, Pages.ABOUT_ABSORB_BOX, Pages.ABOUT_MAGIC_PLATFORM);
 		// 魔力平台
 		addToMap(ESInitInstance.BLOCKS.MAGIC_PLATFORM, Pages.ABOUT_MAGIC_PLATFORM);
 		// 附魔台

@@ -35,7 +35,7 @@ import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
-import yuzunyannn.elementalsorcery.render.effect.FirwrokShap;
+import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
 import yuzunyannn.elementalsorcery.util.IField;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
@@ -421,7 +421,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	protected void effectTo(EnumFacing facing, BlockPos to) {
 		BlockPos pos = this.pos.offset(facing);
 		if (pos.equals(to)) return;
-		FirwrokShap.createSparkUniformlySpeed(world, pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5,
+		FirewrokShap.createSparkUniformlySpeed(world, pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5,
 				to.getX() + 0.5, to.getY() + 0.5, to.getZ() + 0.5, 0.2f, TileMDBase.PARTICLE_COLOR,
 				TileMDBase.PARTICLE_COLOR_FADE, false, false);
 	}

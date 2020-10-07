@@ -46,25 +46,12 @@ public class ItemGrimoire extends Item {
 			ItemStack s = new ItemStack(this);
 			NBTTagCompound nbt = new NBTTagCompound();
 			s.setTagCompound(nbt);
-//			nbt.setInteger("at", 0);
-//			NBTTagList list = new NBTTagList();
-//
-//			Function<String, Void> addOnce = name -> {
-//				NBTTagCompound m = new NBTTagCompound();
-//				m.setString("id", new ResourceLocation(ElementalSorcery.MODID, name).toString());
-//				list.appendTag(m);
-//				return null;
-//			};
-//			addOnce.apply("sprint");
-//			addOnce.apply("ender_teleport");
-//			addOnce.apply("float");
-//
-//			nbt.setTag("mantra", list);
-
 			Grimoire grimoire = s.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
-			grimoire.getInventory().insertElement(new ElementStack(ESObjects.ELEMENTS.ENDER, 10000, 100), false);
-			grimoire.getInventory().insertElement(new ElementStack(ESObjects.ELEMENTS.AIR, 10000, 100), false);
-			grimoire.save(s);
+			grimoire.getInventory().insertElement(new ElementStack(ESObjects.ELEMENTS.ENDER, 10000, 500), false);
+			grimoire.getInventory().insertElement(new ElementStack(ESObjects.ELEMENTS.KNOWLEDGE, 10000, 500), false);
+			grimoire.getInventory().insertElement(new ElementStack(ESObjects.ELEMENTS.FIRE, 10000, 500), false);
+			grimoire.getInventory().insertElement(new ElementStack(ESObjects.ELEMENTS.METAL, 10000, 500), false);
+			grimoire.saveState(s);
 
 			items.add(s);
 		}
@@ -113,7 +100,7 @@ public class ItemGrimoire extends Item {
 		// 元素信息
 		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
 		if (grimoire == null) return;
-		grimoire.load(stack);
+		grimoire.loadState(stack);
 		IElementInventory inventory = grimoire.getInventory();
 		if (inventory == null) return;
 		tooltip.add(TextFormatting.YELLOW + I18n.format("info.grimoire.element"));
@@ -130,7 +117,7 @@ public class ItemGrimoire extends Item {
 		if (handIn != EnumHand.MAIN_HAND) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
 		// 开始释放！
-		grimoire.load(stack);
+		grimoire.loadState(stack);
 		// 获取咒文
 		NBTTagCompound originData = getOriginNBT(stack);
 		Mantra mantra = Mantra.getFromNBT(originData);

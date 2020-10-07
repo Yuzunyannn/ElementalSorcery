@@ -123,20 +123,20 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 
 	@Override
 	public boolean hasState(ItemStack stack) {
-		NBTTagCompound nbt = stack.getSubCompound("ele_inv");
+		NBTTagCompound nbt = stack.getSubCompound("eInv");
 		return nbt != null;
 	}
 
 	@Override
 	public void loadState(NBTTagCompound nbt) {
-		nbt = nbt.getCompoundTag("ele_inv");
+		nbt = nbt.getCompoundTag("eInv");
 		if (nbt != null) this.deserializeNBT(nbt);
 	}
 
 	@Override
 	public void saveState(NBTTagCompound nbt) {
 		NBTTagCompound dataNBT = this.serializeNBT();
-		nbt.setTag("ele_inv", dataNBT);
+		nbt.setTag("eInv", dataNBT);
 	}
 
 	@Override

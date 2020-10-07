@@ -53,10 +53,10 @@ public class FireworkEffect {
 					if (fadeColors.length == 0) fadeColors = new int[] { ItemDye.DYE_COLORS[0] };
 					switch (type) {
 					case 0:
-						FirwrokShap.createBall(world, pos, speed, size, colors, fadeColors, trail, flicker);
+						FirewrokShap.createBall(world, pos, speed, size, colors, fadeColors, trail, flicker);
 						break;
 					case 1:
-						FirwrokShap.createCircle(world, pos, speed, size, colors, fadeColors, trail, flicker);
+						FirewrokShap.createCircle(world, pos, speed, size, colors, fadeColors, trail, flicker);
 						break;
 					default:
 						break;
