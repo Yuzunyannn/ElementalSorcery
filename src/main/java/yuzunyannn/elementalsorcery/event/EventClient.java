@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -144,6 +145,12 @@ public class EventClient {
 		renderIterate--;
 		Effect.renderAllEffects(e.getPartialTicks());
 		GlStateManager.popMatrix();
+	}
+
+	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
+	static public void renderGUI(RenderGameOverlayEvent.Post e) {
+		Effect.renderAllGuiEffects(e.getPartialTicks());
 	}
 
 	@SubscribeEvent

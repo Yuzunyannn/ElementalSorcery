@@ -84,6 +84,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileShowItem;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStela;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStoneMill;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileSupremeTable;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileTranscribeInjection;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileTranscribeTable;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDAbsorbBox;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDBase;
@@ -436,6 +437,7 @@ public class ESInit {
 		registerRender(BLOCKS.MD_RESONANT_INCUBATOR, TileMDResonantIncubator.class,
 				new RenderTileMDResonantIncubator());
 		registerRender(BLOCKS.ELF_TREE_CORE, TileElfTreeCore.class, new RenderTileElfTreeCore());
+		registerRender(BLOCKS.TRANSCRIBE_INJECTION, TileTranscribeInjection.class, new RenderTileTranscribeInjection());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

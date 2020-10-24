@@ -144,6 +144,10 @@ mantra.sprint.name=突き進み
 mantra.sprint.describe=もっと便利な移動
 mantra.fireBall.name=ファイアショック
 mantra.fireBall.describe=丸焼け
+mantra.lush.name=青々と生い茂る
+mantra.lush.describe=周の物を成長させて
+mantra.blockCrash.name=土の衝突
+mantra.blockCrash.describe=地面が出現し，敵を突き飛ばした。
 
 key.es.func=機能キー
 

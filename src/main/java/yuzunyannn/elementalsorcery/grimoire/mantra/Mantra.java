@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -23,6 +24,7 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	public static final ESImplRegister<Mantra> REGISTRY = new ESImplRegister(Mantra.class);
 
 	private String unlocalizedName;
+	private byte rarity = 100;
 
 	/** 是否可以开始 */
 	public boolean canStart(EntityLivingBase user) {
@@ -86,6 +88,16 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	 */
 	public boolean mustUser() {
 		return false;
+	}
+
+	/** 获取咒文的稀有度，值越小，越稀有。小于0表示不存在 */
+	public int getRarity(@Nullable World world, @Nullable BlockPos pos) {
+		return rarity;
+	}
+
+	/** 值越小，越稀有 */
+	public void setRarity(int rarity) {
+		this.rarity = (byte) rarity;
 	}
 
 	public String getUnlocalizedName() {

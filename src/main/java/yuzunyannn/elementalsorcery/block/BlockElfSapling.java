@@ -94,11 +94,11 @@ public class BlockElfSapling extends BlockBush implements IGrowable {
 		return n % 8 == 0;
 	}
 
-	public void superGrow(World world, Random rand, BlockPos pos, IBlockState state) {
+	public void superGrow(World world, Random rand, BlockPos pos, IBlockState state, boolean force) {
 		if (world.isRemote) return;
-		if (!chunkCanGrow(world, pos)) return;
+		if (!force && !chunkCanGrow(world, pos)) return;
 		GenElfEdifice g = new GenElfEdifice(true);
-		if (!g.checkCanGen(world, pos.down())) return;
+		if (!force && !g.checkCanGen(world, pos.down())) return;
 		g.genMainTreeEdifice(world, pos.down(), rand);
 		g.clearAround(world, pos);
 		g.buildToTick(world);

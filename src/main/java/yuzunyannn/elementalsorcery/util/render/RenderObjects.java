@@ -25,7 +25,9 @@ public class RenderObjects {
 	static final public ResourceLocation MANTRA_FLOAT = ESRes("textures/mantras/float.png");
 	static final public ResourceLocation MANTRA_SPRINT = ESRes("textures/mantras/sprint.png");
 	static final public ResourceLocation MANTRA_FIRE_BALL = ESRes("textures/mantras/fire_ball.png");
-
+	static final public ResourceLocation MANTRA_LUSH = ESRes("textures/mantras/lush.png");
+	static final public ResourceLocation MANTRA_BLOCK_CRASH = ESRes("textures/mantras/block_crash.png");
+	
 	static public ResourceLocation ESRes(String path) {
 		return new ResourceLocation(ElementalSorcery.MODID, path);
 	}

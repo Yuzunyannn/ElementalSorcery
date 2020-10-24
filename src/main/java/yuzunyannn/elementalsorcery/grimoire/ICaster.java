@@ -33,6 +33,18 @@ public interface ICaster {
 	@Nullable
 	public BlockPos iWantFoothold();
 
+	/**
+	 * 申请获取目标方块，通常是看到的
+	 */
+	@Nullable
+	public BlockPos iWantBlockTarget();
+
+	/**
+	 * 申请获取目标实体
+	 */
+	@Nullable
+	public <T extends Entity> T iWantLivingTarget(Class<T> cls);
+
 	/** 获取施法者 ，施法者在某些情况下不一定是entitylivingbase */
 	public Entity iWantCaster();
 

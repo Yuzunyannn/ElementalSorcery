@@ -17,6 +17,7 @@ public class MantraFloat extends MantraCommon {
 
 	public MantraFloat() {
 		this.setUnlocalizedName("float");
+		this.setRarity(125);
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -31,6 +32,7 @@ import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.network.MessageEntitySync;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
+import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData, ICaster, MessageEntitySync.IRecvData {
@@ -331,6 +333,32 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 			if (canStand(pos.down())) return pos.down();
 		}
 		return null;
+	}
+
+	@Override
+	public BlockPos iWantBlockTarget() {
+		if (user != null) {
+			RayTraceResult rt = WorldHelper.getLookAtBlock(world, user, 128);
+			if (rt == null) return null;
+			return rt.getBlockPos();
+		} else {
+			BlockPos pos = this.getPosition();
+			return BlockHelper.tryFindAnySolid(world, pos, 6, 5, 5);
+		}
+	}
+
+	@Override
+	public <T extends Entity> T iWantLivingTarget(Class<T> cls) {
+		if (user != null) {
+			return WorldHelper.getLookAtEntity(world, user, cls, 64);
+		} else {
+			final int size = 2;
+			AxisAlignedBB aabb = new AxisAlignedBB(posX - size, posY - size, posZ - size, posX + size, posY + size,
+					posZ + size);
+			List<T> list = world.getEntitiesWithinAABB(cls, aabb);
+			if (list.isEmpty()) return null;
+			return list.get(rand.nextInt(list.size()));
+		}
 	}
 
 	@Override

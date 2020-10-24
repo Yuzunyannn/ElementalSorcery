@@ -3,9 +3,11 @@ package yuzunyannn.elementalsorcery.init;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraBlockCrash;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireBall;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloat;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLush;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSprint;
 
 public class MantraRegister {
@@ -19,5 +21,7 @@ public class MantraRegister {
 		reg(new MantraFloat(), "float");
 		reg(new MantraSprint(), "sprint");
 		reg(new MantraFireBall(), "fire_ball");
+		reg(new MantraLush(), "lush");
+		reg(new MantraBlockCrash(), "block_crash");
 	}
 }

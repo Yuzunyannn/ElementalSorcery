@@ -5,6 +5,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFire;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -54,6 +55,7 @@ public class MantraFireBall extends MantraCommon {
 
 	public MantraFireBall() {
 		this.setUnlocalizedName("fireBall");
+		this.setRarity(50);
 	}
 
 	@Override
@@ -104,6 +106,8 @@ public class MantraFireBall extends MantraCommon {
 			effect.setColor(color);
 			Effect.addEffect(effect);
 		}
+		// 进度条特效
+		if (tick > 20) data.setProgress((tick - 20) / 80.0f, this.getRenderColor(), world, caster);
 		// 中心球特效
 		if (tick % 5 == 0) return false;
 		if (data.power > 0) {
@@ -223,8 +227,9 @@ public class MantraFireBall extends MantraCommon {
 		IBlockState origin = world.getBlockState(pos);
 		float hardness = origin.getBlockHardness(world, pos);
 		if (hardness < 0) return null;
-		if (world.rand.nextInt(100) < hardness * 1.5f) return null;
 		Block block = origin.getBlock();
+		boolean isLiquid = block instanceof BlockLiquid;
+		if (!isLiquid && world.rand.nextInt(100) < hardness * 1.5f) return null;
 		if (block instanceof BlockFire) return null;
 		if (block == Blocks.FLOWING_LAVA || block == Blocks.LAVA) {
 			if (world.rand.nextInt(5) == 0) return Blocks.LAVA.getDefaultState();
@@ -232,8 +237,9 @@ public class MantraFireBall extends MantraCommon {
 		}
 		if (block == Blocks.OBSIDIAN) return null;
 		int s = Math.abs(add.getX() * add.getY() * add.getZ()) + 1;
-		if (world.rand.nextInt(s) != 0) {
-			if (block == Blocks.FLOWING_WATER || block == Blocks.WATER) return Blocks.OBSIDIAN.getDefaultState();
+		if (block == Blocks.FLOWING_WATER || block == Blocks.WATER) {
+			if (world.rand.nextInt(s) != 0) return Blocks.OBSIDIAN.getDefaultState();
+			return Blocks.AIR.getDefaultState();
 		}
 		ItemStack stack = ItemHelper.toItemStack(origin);
 		boolean noChange = data.knowledge.getCount() >= 20;

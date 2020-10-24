@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
-import yuzunyannn.elementalsorcery.item.ItemGrimoire;
+import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 
 public class MessageMantraShift implements IMessage {
 	public short to;
@@ -35,7 +35,7 @@ public class MessageMantraShift implements IMessage {
 			if (ctx.side != Side.SERVER) return null;
 			EntityPlayerMP player = ctx.getServerHandler().player;
 			ItemStack grimoire = player.getHeldItemMainhand();
-			ItemGrimoire.shiftMantra(grimoire, message.to);
+			Grimoire.shiftMantra(grimoire, message.to);
 			return null;
 		}
 	}

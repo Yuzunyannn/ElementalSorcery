@@ -19,8 +19,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.KeyBoard;
+import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.item.ItemGrimoire;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageMantraShift;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
@@ -41,13 +41,15 @@ public class GuiMantraShitf extends GuiScreen {
 
 	public GuiMantraShitf(EntityPlayer player) {
 		ItemStack stack = player.getHeldItemMainhand();
-		ItemGrimoire.MantrasData data = ItemGrimoire.getAllMantra(stack);
-		if (data == null || data.isEmpty()) return;
-		for (int i = 0; i < data.size(); i++) {
-			ItemGrimoire.MantrasData.Info info = data.getInfo(i);
+		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+		if (grimoire == null) return;
+		grimoire.loadState(stack);
+		if (grimoire.isEmpty()) return;
+		for (int i = 0; i < grimoire.size(); i++) {
+			Grimoire.Info info = grimoire.getInfo(i);
 			addMantra(info.getMantra(), info.getData());
 		}
-		select(data.getSelected());
+		select(grimoire.getSelected());
 	}
 
 	/** 原始选择 */
@@ -74,7 +76,7 @@ public class GuiMantraShitf extends GuiScreen {
 	public void setSize(float size) {
 		this.size = size;
 		int len = mantras.size();
-		if (len > 8) mantraSize = (float) (size * Math.pow(0.925, len - 8));
+		if (len > 8) mantraSize = (float) (size * Math.pow(0.925, len - 8)) * 0.25f;
 	}
 
 	public float size = 256;
@@ -273,6 +275,7 @@ public class GuiMantraShitf extends GuiScreen {
 		float roate = prevRingRotate + (ringRotate - prevRingRotate) * partialTicks;
 		float sacle = prevRingScale + (ringScale - prevRingScale) * partialTicks;
 		float size = this.size * sacle;
+
 		GlStateManager.translate(cX, cY, 0);
 		GlStateManager.rotate(roate, 0, 0, 1);
 		GlStateManager.color(128 / 255f, 114 / 255f, 169 / 255f);

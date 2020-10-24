@@ -4,6 +4,8 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.Random;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
@@ -15,6 +17,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 /** ES使用的自主particle */
 @SideOnly(Side.CLIENT)
 public abstract class Effect {
+
+	/** 继承该接口的效果认为是gui效果 **/
+	static public interface IGUIEffect {
+
+	}
 
 	protected World world;
 	public double prevPosX;
@@ -79,6 +86,7 @@ public abstract class Effect {
 	}
 
 	static final private ArrayDeque<Effect> effects = new ArrayDeque<Effect>();
+	static final private ArrayDeque<Effect> guiEffects = new ArrayDeque<Effect>();
 	static final private ArrayDeque<Effect> contextEffects = new ArrayDeque<Effect>();
 	static private boolean inUpdate = false;
 
@@ -89,10 +97,19 @@ public abstract class Effect {
 			return;
 		}
 		if (inUpdate) contextEffects.add(effect);
-		else effects.add(effect);
+		else {
+			if (effect instanceof IGUIEffect) guiEffects.add(effect);
+			else effects.add(effect);
+		}
 	}
 
 	static public void updateAllEffects() {
+		update(effects);
+		update(guiEffects);
+		while (!contextEffects.isEmpty()) addEffect(contextEffects.pop());
+	}
+
+	static private void update(ArrayDeque effects) {
 		Iterator<Effect> iter = effects.iterator();
 		World world = Minecraft.getMinecraft().world;
 		inUpdate = true;
@@ -104,7 +121,6 @@ public abstract class Effect {
 			}
 			effect.onUpdate();
 		}
-		while (!contextEffects.isEmpty()) effects.add(contextEffects.pop());
 		inUpdate = false;
 	}
 
@@ -122,5 +138,20 @@ public abstract class Effect {
 		GlStateManager.enableCull();
 		GlStateManager.disableBlend();
 		GlStateManager.enableAlpha();
+	}
+
+	static public void renderAllGuiEffects(float partialTicks) {
+		GlStateManager.pushMatrix();
+		GlStateManager.enableBlend();
+		GlStateManager.disableAlpha();
+		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
+		Iterator<Effect> iter = guiEffects.iterator();
+		while (iter.hasNext()) {
+			Effect effect = iter.next();
+			effect.doRender(partialTicks);
+		}
+		GlStateManager.enableAlpha();
+		GlStateManager.disableBlend();
+		GlStateManager.popMatrix();
 	}
 }

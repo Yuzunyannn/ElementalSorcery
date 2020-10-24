@@ -29,6 +29,7 @@ public class MantraEnderTeleport extends MantraCommon {
 
 	public MantraEnderTeleport() {
 		this.setUnlocalizedName("enderTeleport");
+		this.setRarity(25);
 	}
 
 	@Override

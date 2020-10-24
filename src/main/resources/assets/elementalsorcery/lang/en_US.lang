@@ -144,6 +144,10 @@ mantra.sprint.name=sprint
 mantra.sprint.describe=More convenient mobility
 mantra.fireBall.name=Flame impact
 mantra.fireBall.describe=Burn out!
+mantra.lush.name=Lush
+mantra.lush.describe=Grow Everythings Around
+mantra.blockCrash.name=Dirt Impact
+mantra.blockCrash.describe=There are a Dirt from the ground, and the enemy impact into the sky.
 
 key.es.func=Function key
 

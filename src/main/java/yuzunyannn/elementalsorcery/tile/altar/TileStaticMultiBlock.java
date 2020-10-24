@@ -71,10 +71,11 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 		for (int i = 0; i < size; i++) {
 			int index = (startIndex + i) % size;
 			// 获取唤醒
-			IAltarWake altarWake = getAlterWake(structure.getSpecialTileEntity(index));
+			TileEntity tile = structure.getSpecialTileEntity(index);
+			IAltarWake altarWake = getAlterWake(tile);
 			if (altarWake == null) continue;
 			// 获取仓库
-			IElementInventory einv = ElementHelper.getElementInventory(structure.getSpecialTileEntity(index));
+			IElementInventory einv = ElementHelper.getElementInventory(tile);
 			if (einv == null) continue;
 			ElementStack extract = einv.extractElement(need, true);
 			if (extract.arePowerfulAndMoreThan(need)) {
@@ -83,12 +84,7 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 					genParticleElementTo(true, extract.getColor(), structure.getSpecialBlockPos(index), animePos);
 				else {
 					einv.extractElement(need, false);
-					if (ElementHelper.isEmpty(einv)) {
-						TileEntity tile = structure.getSpecialTileEntity(index);
-						if (tile instanceof TileEntityNetwork) {
-							((TileEntityNetwork) tile).updateToClient();
-						}
-					}
+					if (ElementHelper.isEmpty(einv)) altarWake.onEmpty();
 				}
 				return extract;
 			}
@@ -100,10 +96,11 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 	public boolean putElementToSpPlace(ElementStack estack, BlockPos animePos) {
 		for (int i = 0; i < structure.getSpecialBlockCount(); i++) {
 			// 获取唤醒
-			IAltarWake altarWake = getAlterWake(structure.getSpecialTileEntity(i));
+			TileEntity tile = structure.getSpecialTileEntity(i);
+			IAltarWake altarWake = getAlterWake(tile);
 			if (altarWake == null) continue;
 			// 获取仓库
-			IElementInventory einv = ElementHelper.getElementInventory(structure.getSpecialTileEntity(i));
+			IElementInventory einv = ElementHelper.getElementInventory(tile);
 			if (einv == null) continue;
 			int color = estack.getColor();
 			if (einv.insertElement(estack, true)) {

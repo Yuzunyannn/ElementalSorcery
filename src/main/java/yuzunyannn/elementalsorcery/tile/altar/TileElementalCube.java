@@ -114,6 +114,11 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 		return true;
 	}
 
+	@Override
+	public void onEmpty() {
+		if (!world.isRemote) this.updateToClient();
+	}
+
 	// 设置仓库
 	public void setElementInventory(IElementInventory inventory) {
 		this.inventory = inventory;

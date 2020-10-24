@@ -144,6 +144,10 @@ mantra.sprint.name=前冲
 mantra.sprint.describe=更便捷的移动
 mantra.fireBall.name=火焰冲击
 mantra.fireBall.describe=燃烧吧
+mantra.lush.name=郁郁葱葱
+mantra.lush.describe=让周围的一切生长
+mantra.blockCrash.name=土块撞击
+mantra.blockCrash.describe=地上出现了个土块，将敌人撞飞天
 
 key.es.func=功能键
 

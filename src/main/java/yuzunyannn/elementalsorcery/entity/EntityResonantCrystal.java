@@ -148,7 +148,7 @@ public class EntityResonantCrystal extends EntityThrowable {
 				world.scheduleUpdate(pos, state.getBlock(), 0);
 				return 5;
 			} else if (block instanceof BlockElfSapling) {
-				((BlockElfSapling) block).superGrow(world, rand, pos, state);
+				((BlockElfSapling) block).superGrow(world, rand, pos, state, false);
 				return 5;
 			} else if (block instanceof IGrowable) {
 				if (((IGrowable) block).canGrow(world, pos, state, world.isRemote)) {

@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.util.block;
 
+import java.util.function.BiFunction;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -125,19 +127,32 @@ public class BlockHelper {
 	}
 
 	/** 尝试寻找某个方块 */
-	static public BlockPos tryFind(World world, IBlockState needState, BlockPos origin, int tryTimes, int width,
-			int height) {
+	static public BlockPos tryFind(World world, BiFunction<World, BlockPos, Boolean> testFun, BlockPos origin,
+			int tryTimes, int width, int height) {
 		int w = 2;
 		for (int t = 0; t < tryTimes; t++) {
 			int x = Math.round((w * 0.5f - RandomHelper.rand.nextFloat() * w));
 			int z = Math.round((w * 0.5f - RandomHelper.rand.nextFloat() * w));
 			int y = Math.round((height - RandomHelper.rand.nextFloat() * height * 2));
 			BlockPos pos = origin.add(x, y, z);
-			IBlockState state = world.getBlockState(pos);
-			if (state == needState) return pos;
+			if (testFun.apply(world, pos)) return pos;
 			w = Math.min(MathHelper.ceil(w * 1.5f), width * 2);
 		}
 		return null;
+	}
+
+	static public BlockPos tryFind(World world, IBlockState needState, BlockPos origin, int tryTimes, int width,
+			int height) {
+		return tryFind(world, (worldIn, pos) -> {
+			return worldIn.getBlockState(pos) == needState;
+		}, origin, tryTimes, width, height);
+	}
+
+	static public BlockPos tryFindAnySolid(World world, BlockPos origin, int tryTimes, int width, int height) {
+		return tryFind(world, (worldIn, pos) -> {
+			IBlockState state = worldIn.getBlockState(pos);
+			return state.isFullBlock();
+		}, origin, tryTimes, width, height);
 	}
 
 	/** 该名称是否为矿物 */

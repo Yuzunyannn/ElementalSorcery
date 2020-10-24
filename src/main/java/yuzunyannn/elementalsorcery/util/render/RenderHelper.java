@@ -129,8 +129,8 @@ public class RenderHelper {
 		}
 	}
 
-	static public void drawTexturedModalRect(float x, float y, int u, int v, int width, int height, float textureWidth,
-			float textureHeight) {
+	static public void drawTexturedModalRect(float x, float y, float u, float v, float width, float height,
+			float textureWidth, float textureHeight) {
 		float f = 1.0F / textureWidth;
 		float f1 = 1.0F / textureHeight;
 		Tessellator tessellator = Tessellator.getInstance();

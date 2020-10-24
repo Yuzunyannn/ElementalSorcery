@@ -11,10 +11,12 @@ public interface IAltarWake {
 	/**
 	 * 对祭坛指定位置上的TileEntity每进行一次元素交互时候，调用的函数，客户端可以开始动画
 	 * 
-	 * @param type
-	 *            唤醒的原型
+	 * @param type 唤醒的原型
 	 * @return 唤醒是否成功
 	 */
 	boolean wake(int type);
+
+	/** 当TileEntity的元素被拿光时候调用，可以进行C/S同步 */
+	void onEmpty();
 
 }
