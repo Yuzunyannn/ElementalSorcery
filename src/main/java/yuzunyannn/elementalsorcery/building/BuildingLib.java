@@ -139,9 +139,7 @@ public class BuildingLib {
 		for (Entry<String, BuildingSaveData> entry : mapSave.entrySet()) {
 			BuildingSaveData data = entry.getValue();
 			boolean out = data.deal(lastCheckTime);
-			if (out == false) {
-				removeList.add(entry.getKey());
-			}
+			if (out == false) removeList.add(entry.getKey());
 		}
 		for (String remove : removeList) {
 			this.mapSave.remove(remove);

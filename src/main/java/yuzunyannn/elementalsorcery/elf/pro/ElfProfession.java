@@ -44,7 +44,8 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	static public final ElfProfession BUILDER = new ElfProfessionBuilder();
 	static public final ElfProfession RECEPTIONIST = new ElfProfessionReceptionist();
 	static public final ElfProfession IRONSMITH = new ElfProfessionIronSmith();
-	
+	static public final ElfProfession POST_RECEPTIONIST = new ElfProfessionPostReceptionist();
+	static public final ElfProfessionPostman POSTMAN = new ElfProfessionPostman();
 
 	public String getUnlocalizedProfessionName() {
 		return "pro." + this.getRegistryName().getResourcePath();
@@ -130,15 +131,19 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 		return false;
 	}
 
-	/** 获取精灵要说的内容，仅在打开talkgui时有效 */
+	/**
+	 * 获取精灵要说的内容，仅在打开talkgui时有效
+	 * 
+	 * @param shiftData 从其他类型的地方，切换过来的数据，可能为null
+	 */
 	@Nullable
-	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player) {
+	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, @Nullable NBTTagCompound shiftData) {
 		return null;
 	}
 
 	/** 获得精灵交易的内容，仅在而elftrade时有效 */
 	@Nullable
-	public Trade getTrade(EntityElfBase elf, EntityPlayer player) {
+	public Trade getTrade(EntityElfBase elf, EntityPlayer player, @Nullable NBTTagCompound shiftData) {
 		return null;
 	}
 
@@ -171,6 +176,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 		if (player.world.isRemote) return;
 		NBTTagCompound nbt = ElementalSorcery.getPlayerData(player);
 		nbt.setInteger("elfId", elf.getEntityId());
+		nbt.removeTag("shiftData");
 		player.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_ELF_TALK, player.world, 0, 0, 0);
 	}
 

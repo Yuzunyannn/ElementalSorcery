@@ -67,7 +67,7 @@ public class ElfProfessionBuilder extends ElfProfessionNone {
 	}
 
 	@Override
-	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player) {
+	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		// 没有核心
 		if (elf.getEdificeCore() == null) {
 			TalkChapter chapter = new TalkChapter();
@@ -243,19 +243,24 @@ public class ElfProfessionBuilder extends ElfProfessionNone {
 		World world = elf.world;
 		// 开始工作
 		int id = cache.getInteger("do");
-		BuildProgress progress = core.getBuildTask(id);
-		if (progress == null || progress.isFinish()) {
-			if (progress != null && progress.isFinish()) core.notifyComplete(id);
-			clearWork(elf);
-			return;
+		boolean fastMode = false;
+		for (int i = 0; i < 100; i++) {
+			BuildProgress progress = core.getBuildTask(id);
+			if (progress == null || progress.isFinish()) {
+				if (progress != null && progress.isFinish()) core.notifyComplete(id);
+				clearWork(elf);
+				return;
+			}
+			Entry<BlockPos, IBlockState> entry = progress.next();
+			if (entry == null) return;
+			if (world.getBlockState(entry.getKey()) == entry.getValue()) {
+				elf.tick--;
+				return;
+			}
+			elf.tryHarvestBlock(entry.getKey());
+			elf.tryPlaceBlock(entry.getKey(), entry.getValue());
+			if (!fastMode) return;
 		}
-		Entry<BlockPos, IBlockState> entry = progress.next();
-		if (entry == null) return;
-		if (world.getBlockState(entry.getKey()) == entry.getValue()) {
-			elf.tick--;
-			return;
-		}
-		elf.tryHarvestBlock(entry.getKey());
-		elf.tryPlaceBlock(entry.getKey(), entry.getValue());
+
 	}
 }

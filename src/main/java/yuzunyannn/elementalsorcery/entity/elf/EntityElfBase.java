@@ -113,6 +113,8 @@ public abstract class EntityElfBase extends EntityCreature {
 		super.writeEntityToNBT(compound);
 		ResourceLocation name = this.getProfession().getRegistryName();
 		compound.setString("professionId", name.toString());
+		BlockPos homePos = this.getHomePosition();
+		if (homePos != null && !homePos.equals(BlockPos.ORIGIN)) NBTHelper.setBlockPos(compound, "homePos", homePos);
 	}
 
 	@Override
@@ -120,6 +122,8 @@ public abstract class EntityElfBase extends EntityCreature {
 		super.readEntityFromNBT(compound);
 		String id = compound.getString("professionId");
 		this.setProfession(ElfProfession.REGISTRY.getValue(new ResourceLocation(id)));
+		if (NBTHelper.hasBlockPos(compound, "homePos"))
+			this.setHomePosAndDistance(NBTHelper.getBlockPos(compound, "homePos"), 2);
 	}
 
 	/** 获取临时数据NBT，不会被保存，不会同步 */

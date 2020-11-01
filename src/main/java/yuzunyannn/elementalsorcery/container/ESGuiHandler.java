@@ -10,6 +10,8 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.gui.GuiAnalysisAltar;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementCraftingTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
+import yuzunyannn.elementalsorcery.container.gui.GuiElfApplyAddressPlate;
+import yuzunyannn.elementalsorcery.container.gui.GuiElfSendParcel;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfTalk;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfTrade;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfTreeElevator;
@@ -58,9 +60,11 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_MD_MAGICLIZATION = 27;
 	public static final int GUI_MD_DECONSTRUCTBOX = 28;
 
+	public static final int GUI_QUEST = 39;
 	public static final int GUI_ELF_TALK = 40;
 	public static final int GUI_ELF_TRADE = 41;
-	public static final int GUI_QUEST = 45;
+	public static final int GUI_ELF_SEND_PARCEL = 42;
+	public static final int GUI_ELF_APPLY_ADDRESS_PLATE = 43;
 
 	// 切换只有客户端存在
 	public static final int GUI_MANTRA_SHITF = 60;
@@ -110,12 +114,16 @@ public class ESGuiHandler implements IGuiHandler {
 				return new ContainerMDMagiclization(player, tileEntity);
 			case GUI_MD_DECONSTRUCTBOX:
 				return new ContainerMDDeconstructBox(player, tileEntity);
+			case GUI_QUEST:
+				return new ContainerQuest(player);
 			case GUI_ELF_TALK:
 				return new ContainerElfTalk(player);
 			case GUI_ELF_TRADE:
 				return new ContainerElfTrade(player);
-			case GUI_QUEST:
-				return new ContainerQuest(player);
+			case GUI_ELF_SEND_PARCEL:
+				return new ContainerElfSendParcel(player);
+			case GUI_ELF_APPLY_ADDRESS_PLATE:
+				return new ContainerElfApplyAddressPlate(player);
 			default:
 				return null;
 			}
@@ -173,12 +181,16 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiMDMagiclization(new ContainerMDMagiclization(player, tileEntity), player.inventory);
 			case GUI_MD_DECONSTRUCTBOX:
 				return new GuiMDDeconstructBox(new ContainerMDDeconstructBox(player, tileEntity), player.inventory);
+			case GUI_QUEST:
+				return new GuiQuest(player);
 			case GUI_ELF_TALK:
 				return new GuiElfTalk(player);
 			case GUI_ELF_TRADE:
 				return new GuiElfTrade(player);
-			case GUI_QUEST:
-				return new GuiQuest(player);
+			case GUI_ELF_SEND_PARCEL:
+				return new GuiElfSendParcel(player);
+			case GUI_ELF_APPLY_ADDRESS_PLATE:
+				return new GuiElfApplyAddressPlate(player);
 			case GUI_MANTRA_SHITF:
 				return new GuiMantraShitf(player);
 			case GUI_ELF_TREE_ELEVATOR:

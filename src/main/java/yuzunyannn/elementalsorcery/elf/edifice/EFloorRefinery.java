@@ -189,7 +189,6 @@ public class EFloorRefinery extends ElfEdificeFloor {
 
 	@Override
 	public void surprise(IBuilder builder, Random rand) {
-		this.spawn(builder);
 	}
 
 	@Override
@@ -205,11 +204,11 @@ public class EFloorRefinery extends ElfEdificeFloor {
 		double x = pos.getX() + 0.5;
 		double y = pos.getY();
 		double z = pos.getZ() + 0.5;
-		List<EntityElfBase> elfs = EFloorHall.getFloorElf(builder, null);
+		List<EntityElfBase> elfs = EFloorHall.getFloorElf(builder, ElfProfession.IRONSMITH);
 		if (elfs.size() < 2) {
 			x = world.rand.nextInt(treeSize * 2) - treeSize + x;
 			z = world.rand.nextInt(treeSize * 2) - treeSize + z;
-			if (EFloorLivingRoom.canSpawnElf(world, new BlockPos(x, y, z))) {
+			if (EFloorHall.canSpawnElf(world, new BlockPos(x, y, z))) {
 				EntityElf elf = new EntityElf(world, ElfProfession.IRONSMITH);
 				elf.setPosition(x, y, z);
 				builder.spawn(elf);

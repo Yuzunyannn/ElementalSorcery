@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
@@ -43,7 +44,9 @@ public class Quests {
 	/*** 完成某个任务 */
 	public static boolean finishQuest(EntityLivingBase player, Quest quest, ItemStack questStack) {
 		if (quest.getStatus() != QuestStatus.UNDERWAY) return false;
-		if (quest.getType().check(quest, player) != null) return false;
+		boolean noCheck = false;
+		if (player instanceof EntityPlayer) noCheck = ((EntityPlayer) player).isCreative();
+		if (!noCheck && quest.getType().check(quest, player) != null) return false;
 		quest.unsign(player);
 		quest.getType().reward(quest, player);
 		quest.getType().finish(quest, player);
@@ -61,11 +64,23 @@ public class Quests {
 		QuestDescribe describe = type.getDescribe();
 		describe.setTitle("quest.request.collect");
 		describe.addDescribe("quest.broken.house");
-		describe.addDescribe("quest.end.polite." + (rand.nextInt(2) + 1));
+		describe.addDescribe("quest.end.polite." + (rand.nextInt(3) + 1));
 		type.addReward(QuestReward.REGISTRY.newInstance(QuestRewardCoin.class).coin(coin));
 		return new Quest(type);
 	}
 
+	public static Quest createPostOfficeMaterials(int coin, List<ItemRec> itemstack) {
+		QuestType type = new QuestType();
+		type.addCondition(QuestCondition.REGISTRY.newInstance(QuestConditionNeedItem.class).needItem(itemstack));
+		QuestDescribe describe = type.getDescribe();
+		describe.setTitle("quest.request.collect");
+		describe.addDescribe("quest.post.office.want");
+		describe.addDescribe("quest.end.polite." + (rand.nextInt(2) + 2));
+		type.addReward(QuestReward.REGISTRY.newInstance(QuestRewardCoin.class).coin(coin));
+		return new Quest(type);
+	}
+
+	
 	public static Quest createBuildTask(BlockPos corePos, ElfEdificeFloor floorType, int weight,
 			List<ItemRec> itemstack) {
 		QuestType type = new QuestType();

@@ -68,9 +68,7 @@ public class NBTHelper {
 	public static LinkedList<ItemStack> getItemList(NBTTagCompound nbt, String key) {
 		LinkedList<ItemStack> itemList = new LinkedList<ItemStack>();
 		NBTTagList list = nbt.getTagList(key, 10);
-		for (NBTBase n : list) {
-			itemList.add(new ItemStack((NBTTagCompound) n));
-		}
+		for (NBTBase n : list) itemList.add(new ItemStack((NBTTagCompound) n));
 		return itemList;
 	}
 

@@ -57,7 +57,7 @@ public class ElfProfessionIronSmith extends ElfProfession {
 	}
 
 	@Override
-	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player) {
+	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TileElfTreeCore core = elf.getEdificeCore();
 		TalkChapter chapter = new TalkChapter();
 		if (core == null) {

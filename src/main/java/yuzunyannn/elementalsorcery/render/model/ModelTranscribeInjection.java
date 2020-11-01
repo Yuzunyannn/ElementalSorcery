@@ -185,7 +185,7 @@ public class ModelTranscribeInjection extends ModelBase {
 
 	}
 
-	private void setRotatOffset(ModelRenderer mr, float offset, boolean isOblique) {
+	public static void setRotatOffset(ModelRenderer mr, float offset, boolean isOblique) {
 		float rotate = mr.rotateAngleY;
 		if (isOblique) rotate -= 3.1415f / 4;
 		mr.offsetZ = offset * MathHelper.cos(rotate);

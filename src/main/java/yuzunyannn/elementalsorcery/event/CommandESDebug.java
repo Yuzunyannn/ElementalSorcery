@@ -9,6 +9,7 @@ import java.util.function.Function;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -23,12 +24,14 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
@@ -45,12 +48,20 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class CommandESDebug {
 
 	public static final String[] autoTips = new String[] { "reflush", "saveBuilding", "recordBuilding", "buildTest",
-			"portalTest", "showInfo", "smeltingTest" };
+			"portalTest", "showInfo", "smeltingTest", "reloadeTexture" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 
 		switch (args[0]) {
+		// 重新加载材质
+		case "reloadeTexture": {
+			String path = args[1];
+			if (path.indexOf(':') == -1) reloadTexture(new ResourceLocation(ElementalSorcery.MODID, path));
+			else reloadTexture(new ResourceLocation(path));
+			sender.sendMessage(new TextComponentString("这条是方便的测试指令，小心线程出问题呀"));
+		}
+			return;
 		// 刷新数据
 		case "reflush": {
 			Side side = Side.CLIENT;
@@ -130,7 +141,8 @@ public class CommandESDebug {
 			}
 				return;
 			case "smeltingTest": {
-				EntityMagicMelting e = new EntityMagicMelting(entity.world, pos.up(), new ItemStack(Blocks.DIAMOND_ORE));
+				EntityMagicMelting e = new EntityMagicMelting(entity.world, pos.up(),
+						new ItemStack(Blocks.DIAMOND_ORE));
 				entity.world.spawnEntity(e);
 			}
 				return;
@@ -178,6 +190,17 @@ public class CommandESDebug {
 			break;
 		}
 		throw new CommandException("ES dubug 指令无效，随便使用debug指令可能会导致崩溃");
+	}
+
+	@SideOnly(Side.CLIENT)
+	static public void reloadTexture(ResourceLocation path) {
+		EventClient.addTickTask(() -> {
+			Minecraft mc = Minecraft.getMinecraft();
+			TextureManager tm = mc.getTextureManager();
+			tm.deleteTexture(path);
+			tm.bindTexture(path);
+			return ITickTask.END;
+		});
 	}
 
 }

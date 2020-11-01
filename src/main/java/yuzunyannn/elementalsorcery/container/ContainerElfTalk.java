@@ -13,6 +13,7 @@ public class ContainerElfTalk extends ContainerElf implements IContainerNetwork 
 
 	protected TalkChapter chapter;
 	protected TalkChapter.Iter iter;
+	protected NBTTagCompound shiftData;
 
 	public ContainerElfTalk(EntityPlayer player) {
 		super(player);
@@ -23,10 +24,14 @@ public class ContainerElfTalk extends ContainerElf implements IContainerNetwork 
 		if (!player.world.isRemote) {
 			// 推后一帧
 			EventServer.addTask(() -> {
-				this.setChapter(this.elf.getProfession().getChapter(this.elf, player));
+				this.setChapter(this.elf.getProfession().getChapter(this.elf, player, shiftData));
 			});
 		}
+	}
 
+	@Override
+	public void onShift(NBTTagCompound shiftData) {
+		this.shiftData = shiftData;
 	}
 
 	public TalkChapter.Iter getChapterIter() {

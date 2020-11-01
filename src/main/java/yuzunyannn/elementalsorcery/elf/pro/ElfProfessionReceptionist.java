@@ -1,9 +1,9 @@
 package yuzunyannn.elementalsorcery.elf.pro;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
@@ -14,7 +14,6 @@ import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.QuestStatus;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.talk.ITalkAction;
-import yuzunyannn.elementalsorcery.elf.talk.ITalkSpecial;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionEnd;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionGoTo;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
@@ -23,24 +22,18 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkScene;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
-import yuzunyannn.elementalsorcery.entity.elf.EntityAIMoveToEntityItem;
-import yuzunyannn.elementalsorcery.entity.elf.EntityAIMoveToLookBlock;
-import yuzunyannn.elementalsorcery.entity.elf.EntityAIStrollAroundElfTree;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
-import yuzunyannn.elementalsorcery.util.GameHelper;
 
-public class ElfProfessionReceptionist extends ElfProfession {
+public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
+		super.initElf(elf, origin);
 		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInitInstance.ITEMS.QUEST));
-		elf.removeTask(EntityAIStrollAroundElfTree.class);
-		elf.removeTask(EntityAIMoveToLookBlock.class);
-		elf.removeTask(EntityAIMoveToEntityItem.class);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -56,7 +49,7 @@ public class ElfProfessionReceptionist extends ElfProfession {
 	}
 
 	@Override
-	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player) {
+	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TileElfTreeCore core = elf.getEdificeCore();
 		TalkChapter chapter = new TalkChapter();
 
@@ -118,7 +111,8 @@ public class ElfProfessionReceptionist extends ElfProfession {
 			// 可以接委托时，进行确认
 			TalkSceneSay confirmQuest = new TalkSceneSay();
 			chapter.addScene(confirmQuest);
-			confirmQuest.addString("?QuestConfirm", Talker.OPPOSING);
+			String title = quest.getType().getDescribe().getTitle();
+			confirmQuest.addString("#say.take.quest.confirm?" + title, Talker.OPPOSING);
 			TalkSceneSelect confirm = new TalkSceneSelect();
 			chapter.addScene(confirm);
 			confirm.addString("say.ok", new ConfirmQuest());
@@ -153,24 +147,6 @@ public class ElfProfessionReceptionist extends ElfProfession {
 		howGS.addString("say.very.thank", Talker.PLAYER);
 		howGS.addAction(new TalkActionEnd());
 		return chapter;
-	}
-
-	static {
-		GameHelper.clientRun(() -> {
-			ITalkSpecial.REGISTRY.put("QuestConfirm", new ConfirmQuestTalk());
-		});
-	}
-
-	/** 特殊处理的任务对话 */
-	@SideOnly(Side.CLIENT)
-	public static class ConfirmQuestTalk implements ITalkSpecial {
-		@Override
-		public String deal(EntityPlayer player, EntityElfBase elf, TalkChapter chapter, Iter iter, String originStr) {
-			ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
-			Quest quest = ItemQuest.getQuest(stack);
-			String title = I18n.format(quest.getType().getDescribe().getTitle());
-			return I18n.format("say.take.quest.confirm", title);
-		}
 	}
 
 	/** 确认接任务 */

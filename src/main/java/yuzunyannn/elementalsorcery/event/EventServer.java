@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
+import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 
 public class EventServer {
@@ -99,6 +100,7 @@ public class EventServer {
 	@SubscribeEvent
 	public static void gameSave(WorldEvent.Save e) {
 		BuildingLib.instance.dealSave();
+		ElfPostOffice.GC(e.getWorld());
 	}
 
 }

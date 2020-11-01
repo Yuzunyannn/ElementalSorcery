@@ -57,6 +57,10 @@ item.magicGoldAxe.name=魔金斧
 item.magicGoldSpade.name=魔金铲
 item.magicGoldHoe.name=魔金锄
 item.magicGoldSword.name=魔金剑
+item.parcel.name=包裹
+item.addressPlate.normal.name=地址牌
+item.addressPlate.vip.name=超级地址牌
+item.elfStar.name=精灵之星
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -124,6 +128,7 @@ tile.ISCraftNormal.name=合成结构记录台
 tile.portalAltar.name=折光祭坛
 tile.transcribeTable.name=撰录方桌
 tile.transcribeInjection.name=咒文撰录祭坛
+tile.elfBeacon.name=精灵信标
 
 element.void.name=虚空
 element.magic.name=魔力
@@ -173,6 +178,10 @@ pro.scholar=学者
 pro.crazy=疯子
 pro.merchant=商人
 pro.ironsmith=铁匠
+pro.builder=建筑工
+pro.receptionist=接待员
+pro.post_receptionist=邮局接待员
+pro.postman=邮递员
 
 commands.es.usage=/es <操作> <参数>...
 commands.es.buildFloor.usage=/es buildFloor <层的名称>
@@ -276,6 +285,9 @@ info.underway=正在进行
 info.complete=完成
 info.level.total.page.count=%d级仪式拥有%d种不同的羊皮卷
 info.page.from=这张羊皮纸来自于%s
+info.address=地址：%s
+info.signature=署名：%s
+info.from=来自%s
 
 elf.time.year=%d年
 elf.time.mon.0=春
@@ -324,11 +336,22 @@ say.take.quest.finish=我已经给您登记了，你可以开始这个委托了�
 say.reputation.decline=您接受的委托中存在超出期限的委托，已经为您注销了这些委托。由于您未按时提交，您的信誉可能会有所降低。
 say.quest.finish=恭喜你完成了这个委托！这是给你的奖励。
 say.ironsmith.info=你把需要烧炼的矿物放到那边的箱子堆里，我会帮你烧炼，烧好了记得到炉子两边的箱子里去拿。\n我可不是白烧的，一个矿2元，记得一起放到箱子里。
+say.send.parcel=寄送包裹
+say.apply.address.plate=申请地址牌
+say.submit=提交
+say.submit.empty=您还没有填写地址吧。
+say.submit.empty.item=寄送包裹的话，总要有点东西吧。
+say.send.mail.money=我算下，寄送这个包裹，您一共需要支付%s元。
+say.as.soon.to.sned=我们会尽快为您配送。
+say.apply.address.help=您可以花费%s元来申请一个地址牌，将地址牌放到精灵信标里，当有您的包裹时，我们会将包裹送到精灵信标附近的箱子里。
+say.apply.address.success=请收好您的地址牌。
+say.i.want=我想%s
 
 floor.hall.name=大厅
 floor.livingRoom.name=住房
 floor.workshop.name=工作间
 floor.refinery.name=精炼厂
+floor.postOffice.name=邮局
 
 quest.end=结束时间：%s
 quest.pre.condition=接受条件
@@ -339,10 +362,12 @@ quest.reward.elf.invest=精灵树「%s」层规划权重增加%d
 quest.unit=%s个
 quest.request.collect=请求收集
 quest.elf.invest=精灵树投资
-quest.broken.house=我的房子坏了，需要$0，来进行修理，
+quest.broken.house=我门的房子坏了，需要$0，来进行修理，
 quest.elf.invest.want=我觉得我们的大厦中缺少%s，请求集资，列表如下：$0，
+quest.post.office.want=包裹量太大了，邮局需要一些物资来提供更好的服务，本次需求的物资如下：$0
 quest.end.polite.1=如果可以帮我的话，我会给予一些报酬的。
 quest.end.polite.2=非常感谢你的帮助！
+quest.end.polite.3=有了你的帮助，我们会发展更好。
 
 page.elf=精灵
 page.elf.ct=精灵是从精灵世界过来的一种新的生物，她们通常生活在巨大的精灵树上。精灵属于中立生物，而且有着不同的职业。如果你攻击她们，她们将可能会转变到战斗职业来进行防卫。\n精灵中会产生疯子，她会到处乱攻击。\n此外精灵学者会告诉你一些你可能想知道的内容，同时她也会出售教程。\n[精灵部分教程只能从学者获取]

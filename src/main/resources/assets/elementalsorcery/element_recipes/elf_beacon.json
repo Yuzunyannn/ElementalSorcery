@@ -1,0 +1,32 @@
+{
+	"pattern": [
+		"MGM",
+		"ESE",
+		"EEE"
+	],
+	"key": {
+		"E": {
+			"id": "minecraft:stonebrick",
+			"data": 3
+		},
+		"G": "minecraft:glass",
+		"M": "elementalsorcery:magic_crystal",
+		"S": "elementalsorcery:elf_star"
+	},
+	"element": [
+		{
+			"id": "knowledge",
+			"size": 20,
+			"power": 75
+		},
+		{
+			"id": "ender",
+			"size": 30,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:elf_beacon",
+		"count": 1
+	}
+}

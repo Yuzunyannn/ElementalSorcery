@@ -26,8 +26,6 @@ import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
-import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
-import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemRec;
@@ -130,36 +128,6 @@ public class EFloorLivingRoom extends ElfEdificeFloor {
 		chest.setLootTable(loot, rand.nextLong());
 	}
 
-	/** 在某一层刷点精灵 */
-	public static void trySpawnElf(IBuilder builder, ElfProfession pro, int max) {
-		BlockPos pos = builder.getFloorBasicPos();
-		World world = builder.getWorld();
-		int treeSize = builder.getEdificeSize();
-		double x = pos.getX() + 0.5;
-		double y = pos.getY();
-		double z = pos.getZ() + 0.5;
-		List<EntityElfBase> elfs = EFloorHall.getFloorElf(builder, null);
-		if (elfs.size() < max) {
-			EntityElf elf;
-			x = world.rand.nextInt(treeSize * 2) - treeSize + x;
-			z = world.rand.nextInt(treeSize * 2) - treeSize + z;
-			if (!canSpawnElf(world, new BlockPos(x, y, z))) return;
-			if (pro == null) elf = new EntityElf(world);
-			else elf = new EntityElf(world, pro);
-			elf.setPosition(x, y, z);
-			builder.spawn(elf);
-		}
-	}
-
-	/** 是否可以刷精灵 */
-	public static boolean canSpawnElf(World world, BlockPos pos) {
-		IBlockState state = world.getBlockState(pos);
-		if (state.isFullBlock()) return false;
-		state = world.getBlockState(pos.up());
-		if (state.isFullBlock()) return false;
-		return true;
-	}
-
 	@Override
 	public void spawn(IBuilder builder) {
 		BuilderHelper helper = new BuilderHelper(builder);
@@ -169,10 +137,10 @@ public class EFloorLivingRoom extends ElfEdificeFloor {
 		// 刷个精灵
 		switch (world.rand.nextInt(5)) {
 		case 0:
-			trySpawnElf(builder, ElfProfession.BUILDER, 3);
+			EFloorHall.trySpawnElf(builder, ElfProfession.BUILDER, 3);
 			break;
 		default:
-			trySpawnElf(builder, null, 3);
+			EFloorHall.trySpawnElf(builder, null, 3);
 			break;
 		}
 		// 刷点任务

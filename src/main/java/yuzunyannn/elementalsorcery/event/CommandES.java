@@ -141,5 +141,6 @@ public class CommandES extends CommandBase {
 		info.getType().build(builder);
 		builder.buildAll();
 		info.getType().surprise(builder, entity.getRNG());
+		info.getType().spawn(builder);
 	}
 }

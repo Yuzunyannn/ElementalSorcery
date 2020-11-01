@@ -57,6 +57,10 @@ item.magicGoldAxe.name=Magical Gold Axe
 item.magicGoldSpade.name=Magical Gold Spade
 item.magicGoldHoe.name=Magical Gold Hoe
 item.magicGoldSword.name=Magical Gold Sword
+item.parcel.name=Parcel
+item.addressPlate.normal.name=Address Plate
+item.addressPlate.vip.name=VIP Address Plate
+item.elfStar.name=Elf Star
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -124,6 +128,7 @@ tile.ISCraftNormal.name=Crafting Structure Recorder
 tile.portalAltar.name=Refract Altar
 tile.transcribeTable.name=Transcribe Square Table
 tile.transcribeInjection.name=Mantra Transcribe Altar
+tile.elfBeacon.name=Elf Beacon
 
 element.void.name=void
 element.magic.name=Magic
@@ -173,6 +178,10 @@ pro.scholar=Scholar
 pro.crazy=Crazy
 pro.merchant=Merchant
 pro.ironsmith=Ironsmith
+pro.builder=Builder
+pro.receptionist=Receptionist
+pro.post_receptionist=Poster Office Receptionist
+pro.postman=Postman
 
 commands.es.usage=/es <operate> <parameters>...
 commands.es.buildFloor.usage=/es buildFloor <floor name>
@@ -276,6 +285,9 @@ info.underway=underway
 info.complete=complete
 info.level.total.page.count=% Level Rite have %d different kinds of parchment.
 info.page.from=This parchment is from %s
+info.address=Address：%s
+info.signature=Signature：%s
+info.from=From %s
 
 elf.time.year=%d Year 
 elf.time.mon.0=Spring 
@@ -324,11 +336,22 @@ say.take.quest.finish=I have signed you. You can start this Quest! In addition, 
 say.reputation.decline=There are overdue Quest in the Quest you have accepted. These Quest have been logged out for you. Your reputation may be reduced due to your late submission.
 say.quest.finish=Congratulations on completing this Quest! This is a reward for you.
 say.ironsmith.info=Put the ore into the boxes over there. I'll help you smelt them. When work done, remember to take them from the boxes on both sides of the stove. \N I don't work for nothing, a ore costs 2 yuan, remember to put it in the box together.
+say.send.parcel=Send a parcel
+say.apply.address.plate=Apply for address plate
+say.submit=Submit
+say.submit.empty=You haven't filled in the address yet.
+say.submit.empty.item=I think there must be something when send a parcel.
+say.send.mail.money=You will have to pay %s yuan to send this parcel.
+say.as.soon.to.sned=We will ship it to you as soon as possible.
+say.apply.address.help=You can spend %s yuan to apply for an Address Plate and put it in the Elf Beacon. When there is your parcel, we will send it to the chest near the Elf Beacon
+say.apply.address.success=Please keep your Address Plate.
+say.i.want=I want %s
 
 floor.hall.name=Hall
 floor.livingRoom.name=Living Room
 floor.workshop.name=Workshop
 floor.refinery.name=Refinery
+floor.postOffice.name=Post Office
 
 quest.end=End Time：%s
 quest.pre.condition=Preconditions
@@ -341,8 +364,10 @@ quest.request.collect=Request Collect
 quest.elf.invest=Elf Tree Invest
 quest.broken.house=My house is broken, $0 is needed to repair,  
 quest.elf.invest.want=I think we are short of %s in our Tree, so we need to raise funds, the list is as follows：$0,  
+quest.post.office.want=包裹量太大了，邮局需要一些物资来提供更好的服务，本次需求的物资如下：$0
 quest.end.polite.1=If you can help me, I will give you some reward.
 quest.end.polite.2=Very Think for your Help.
+quest.end.polite.3=With your help, we will develop better.
 
 page.elf=Elf
 page.elf.ct=Elf are a new kind of creature from the elves world. They usually live in the giant elf trees. Elves are neutral creatures and have different professions. If you attack them, they will probably switch to combat profession to defend.\nThere will be Crazy in the elves, and she will attack everything.\nIn addition, the Elf Scholar will tell you something you may want to know, and she will also sell tutorials.\n[It's a other way to get the tutorial for elf in this mod]

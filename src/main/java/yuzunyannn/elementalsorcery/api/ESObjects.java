@@ -64,6 +64,9 @@ public class ESObjects {
 		public Item MAGIC_GOLD_SPADE;
 		public Item MAGIC_GOLD_HOE;
 		public Item MAGIC_GOLD_SWORD;
+		public Item PARCEL;
+		public Item ADDRESS_PLATE;
+		public Item ELF_STAR;
 	}
 
 	static public class Blocks {
@@ -124,6 +127,7 @@ public class ESObjects {
 		public Block TRANSCRIBE_TABLE;
 		public Block TRANSCRIBE_INJECTION;
 		public Block ELF_TREE_CORE;
+		public Block ELF_BEACON;
 	}
 
 	static public class Elements {

@@ -57,6 +57,10 @@ item.magicGoldAxe.name=魔金の斧
 item.magicGoldSpade.name=魔金のシャベル
 item.magicGoldHoe.name=魔金のクワ
 item.magicGoldSword.name=魔金の剣
+item.parcel.name=小包
+item.addressPlate.normal.name=住所カード
+item.addressPlate.vip.name=超級住所カード
+item.elfStar.name=精霊の星
 
 tile.elementalCube.name=エレメント立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -124,6 +128,7 @@ tile.ISCraftNormal.name=合成構造記録台
 tile.portalAltar.name=折り光祭壇
 tile.transcribeTable.name=書き写し四角桌
 tile.transcribeInjection.name=呪文撰录祭壇
+tile.elfBeacon.name=精霊のビーコン
 
 element.void.name=虚空
 element.magic.name=魔力
@@ -173,6 +178,10 @@ pro.scholar=学者
 pro.crazy=狂人
 pro.merchant=商人
 pro.ironsmith=かじさん
+pro.builder=建築工
+pro.receptionist=接待係
+pro.post_receptionist=郵便局の受付
+pro.postman=郵便配達
 
 commands.es.usage=/es <操作> <パラメータ>...
 commands.es.buildFloor.usage=/es buildFloor <階の名前>
@@ -276,6 +285,9 @@ info.underway=進行中
 info.complete=完了
 info.level.total.page.count=%d級の儀式は%d種類の羊皮纸を持っています
 info.page.from=この羊皮紙は%sから来ました
+info.address=住所：%s
+info.signature=署名：%s
+info.from=%sから
 
 elf.time.year=%d年
 elf.time.mon.0=春
@@ -324,11 +336,22 @@ say.take.quest.finish=依頼を登録しました。この依頼を開始して�
 say.reputation.decline=あなたが受けた依頼には期限を超えたものがあります。これらの依頼はすでにキャンセルされました。その結果で、あなたの信用が低下するかもしれません。
 say.quest.finish=この依頼を達成したことをおめでとうございます。これはあなたへのご褒美です。
 say.ironsmith.info=製錬したい鉱物をあちらの箱の中に入れてください。製錬した後でストーブの両側の箱の中で取ってください。\n無料ではないです。一つの鉱石は2元です。一緒に箱に入れてください。
+say.send.parcel=小包を送る
+say.apply.address.plate=住所カードを申請する
+say.submit=送信
+say.submit.empty=住所はまだ書いてないですよね
+say.submit.empty.item=小包を送る時、なにでもいい、荷物が必要ですよね
+say.send.mail.money=この小包を送るには全部で%s元を支払う必要があります
+say.as.soon.to.sned=できるだけ早く配送します
+say.apply.address.help=%s元を使って住所カードを申請して、住所カードを精霊のビーコンに入れ、小包がある時、私達は精霊のビーコンの近くの箱に小包を送ります
+say.apply.address.success=住所カードを受け取ってください
+say.i.want=%sと欲しい
 
 floor.hall.name=広間
 floor.livingRoom.name=部屋
 floor.workshop.name=作業場
 floor.refinery.name=精錬所
+floor.postOffice.name=郵便局
 
 quest.end=終了時間：%s
 quest.pre.condition=事前条件
@@ -341,8 +364,10 @@ quest.request.collect=收集の依頼
 quest.elf.invest=精霊木投資
 quest.broken.house=私の家が壊れました、修理に$0が必要です、
 quest.elf.invest.want.1=私たちのビルには%sが足りないと思います、資金集めをお願いします、リストは以下の通りです。$0、
+quest.post.office.want=小包の量が大きすぎて、郵便局はより良いサービスを提供する物資が必要です。今回の需要の物資は以下の通り:$0、
 quest.end.polite.1=助けてくれるなら、何らかの報酬を与えます。
 quest.end.polite.2=助けてくれてありがとうございます。
+quest.end.polite.3=あなたの助けがあって、私たちはもっと発展します。
 
 page.elf=精霊
 page.elf.ct=精霊は精霊の世界から来た新しい生物で、彼たちはいつも巨大な精霊の木に住んでいます。精霊は中立的な生物であり、また異なる職業を持っている。彼たちを攻撃すれば、彼たちは戦闘職業に転じて防衛することができます。\n精霊の中で狂人がいる、彼はあちこちで攻撃します。\nまた、精霊学者があなたに教えてくれます・同時に教程も販売しています。\n[精霊部分教程は学者からしか入手できません。]

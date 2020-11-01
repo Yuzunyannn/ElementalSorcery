@@ -6,13 +6,9 @@ import javax.annotation.Nullable;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSimpleFoiled;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -21,6 +17,11 @@ public class ItemSome {
 
 	static private Item newItem(String unloaclizedName) {
 		return new Item().setUnlocalizedName(unloaclizedName);
+	}
+
+	/** 精灵之星 */
+	static public Item newElfStar() {
+		return new ItemSimpleFoiled().setUnlocalizedName("elfStar");
 	}
 
 	/** 精灵币 */
@@ -48,7 +49,7 @@ public class ItemSome {
 	static public Item newMagicStone() {
 		return newItem("magicStone");
 	}
-	
+
 	/** 魔石 */
 	static public Item newMagicGold() {
 		return newItem("magicGold");
@@ -76,26 +77,6 @@ public class ItemSome {
 
 	/** 咒术纸张 */
 	static public Item newSpellPaper() {
-		return new Item() {
-			@Override
-			public void onCreated(ItemStack stack, World worldIn, EntityPlayer playerIn) {
-				stack.addEnchantment(null, 1);
-			}
-
-			@Override
-			public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-				if (!this.isInCreativeTab(tab)) return;
-				ItemStack stack = new ItemStack(this, 1, 0);
-				NBTTagCompound nbt = new NBTTagCompound();
-				stack.setTagCompound(nbt);
-				NBTTagList list = new NBTTagList();
-				nbt.setTag("ench", list);
-				nbt = new NBTTagCompound();
-				list.appendTag(nbt);
-				nbt.setInteger("id", (short) -1);
-				nbt.setInteger("lvl", (short) 1);
-				items.add(stack);
-			}
-		}.setUnlocalizedName("spellPaper");
+		return new ItemSimpleFoiled().setUnlocalizedName("spellPaper");
 	}
 }

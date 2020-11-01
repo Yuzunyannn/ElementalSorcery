@@ -35,6 +35,7 @@ import yuzunyannn.elementalsorcery.block.altar.BlockPortalAltar;
 import yuzunyannn.elementalsorcery.block.altar.BlockSupremeTable;
 import yuzunyannn.elementalsorcery.block.altar.BlockTranscribeInjection;
 import yuzunyannn.elementalsorcery.block.altar.BlockTranscribeTable;
+import yuzunyannn.elementalsorcery.block.container.BlockElfBeacon;
 import yuzunyannn.elementalsorcery.block.container.BlockElfTreeCore;
 import yuzunyannn.elementalsorcery.block.container.BlockHearth;
 import yuzunyannn.elementalsorcery.block.container.BlockItemStructureCraftNormal;
@@ -66,6 +67,7 @@ import yuzunyannn.elementalsorcery.element.ElementMetal;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.ElementWater;
 import yuzunyannn.elementalsorcery.element.ElementWood;
+import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemElfWatch;
@@ -75,6 +77,7 @@ import yuzunyannn.elementalsorcery.item.ItemMagicGoldTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemManual;
 import yuzunyannn.elementalsorcery.item.ItemNatureDust;
+import yuzunyannn.elementalsorcery.item.ItemParcel;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.item.ItemRedHandset;
@@ -189,6 +192,7 @@ public class ESInitInstance {
 		BLOCKS.TRANSCRIBE_TABLE = new BlockTranscribeTable();
 		BLOCKS.TRANSCRIBE_INJECTION = new BlockTranscribeInjection();
 		BLOCKS.ELF_TREE_CORE = new BlockElfTreeCore();
+		BLOCKS.ELF_BEACON = new BlockElfBeacon();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -243,6 +247,9 @@ public class ESInitInstance {
 		ITEMS.MAGIC_GOLD_SPADE = new ItemMagicGoldTools.ItemMagicGoldSpade();
 		ITEMS.MAGIC_GOLD_HOE = new ItemMagicGoldTools.ItemMagicGoldHoe();
 		ITEMS.MAGIC_GOLD_SWORD = new ItemMagicGoldTools.ItemMagicGoldSword();
+		ITEMS.PARCEL = new ItemParcel();
+		ITEMS.ADDRESS_PLATE = new ItemAddressPlate();
+		ITEMS.ELF_STAR = ItemSome.newElfStar();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();

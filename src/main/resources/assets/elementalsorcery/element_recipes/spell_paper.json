@@ -17,14 +17,6 @@
 	],
 	"result": {
 		"item": "elementalsorcery:spell_paper",
-		"count": 1,
-		"nbt": {
-			"ench": [
-				{
-					"id": -1,
-					"lvl": 1
-				}
-			]
-		}
+		"count": 1
 	}
 }

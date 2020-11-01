@@ -14,8 +14,10 @@ public class ESConfig {
 	public final boolean SHOW_ELEMENT_TOOLTIP;
 	/** 传送门绘制等级 */
 	public final int PORTAL_RENDER_TYPE;
-	/**每个玩家任务的最大上限*/
+	/** 每个玩家任务的最大上限 */
 	public final int QUEST_LIMIT = 5;
+	/** 包裹的最长保留时间 */
+	public final float MAX_LIFE_TIME_OF_PARCEL;
 
 	/** 手册的最大页面数 */
 	public final int MANUAL_MAX_PAGES;
@@ -46,6 +48,10 @@ public class ESConfig {
 		property = config.get(Configuration.CATEGORY_GENERAL, "portal_render_type", 1,
 				"[传送门绘制是使用的渲染类型][2为世界效果][1为粒子效果][0就一张图]");
 		this.PORTAL_RENDER_TYPE = property.getInt();
+		// 包裹的最长保持时间
+		property = config.get(Configuration.CATEGORY_GENERAL, "max_life_time_of_parcel", 24 * 16,
+				"[邮局储存包裹的最长保持时间，超过时间就会被清除，单位小时，如果为-1表示用不清除]");
+		this.MAX_LIFE_TIME_OF_PARCEL = (float) property.getDouble();
 
 		config.save();
 		ElementalSorcery.logger.info("config加载完成");

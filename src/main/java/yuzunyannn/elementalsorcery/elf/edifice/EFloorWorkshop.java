@@ -185,7 +185,7 @@ public class EFloorWorkshop extends ElfEdificeFloor {
 		TileElfTreeCore core = helper.treeCore();
 		if (core == null) return;
 		World world = builder.getWorld();
-		EFloorLivingRoom.trySpawnElf(builder, ElfProfession.BUILDER, 2);
+		EFloorHall.trySpawnElf(builder, ElfProfession.BUILDER, 2);
 		// 刷点任务
 		EntityBulletin bulletin = core.getBulletin();
 		if (bulletin == null || bulletin.getQuestCount() > 16) return;

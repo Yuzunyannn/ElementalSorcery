@@ -27,20 +27,12 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 	public ContainerElfTrade(EntityPlayer player) {
 		super(player);
 		// 物品栏
-		int xoff = 8, yoff = 103;
-		for (int i = 0; i < 3; ++i) {
-			for (int j = 0; j < 9; ++j) {
-				this.addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, xoff + j * 18, yoff + i * 18));
-			}
-		}
-		for (int i = 0; i < 9; ++i) {
-			this.addSlotToContainer(new Slot(player.inventory, i, xoff + i * 18, yoff + 58));
-		}
+		this.addPlayerSlot(8, 103);
 		// 出售
 		this.addSlotToContainer(new SlotSell(sell, 0, 137, 36));
 		// 货架
-		xoff = 14;
-		yoff = 17;
+		int xoff = 14;
+		int yoff = 17;
 		for (int i = 0; i < 3; ++i) {
 			for (int j = 0; j < 6; ++j) {
 				this.addSlotToContainer(new SlotShelves(shelves, j + i * 6, xoff + j * 17, yoff + i * 21));
@@ -48,8 +40,15 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 		}
 		if (elf == null || player.world.isRemote) return;
 		EventServer.addTask(() -> {
-			setTrade(elf.getProfession().getTrade(elf, player));
+			setTrade(elf.getProfession().getTrade(elf, player, shiftData));
 		});
+	}
+
+	protected NBTTagCompound shiftData;
+
+	@Override
+	public void onShift(NBTTagCompound shiftData) {
+		this.shiftData = shiftData;
 	}
 
 	protected class SlotSell extends Slot {

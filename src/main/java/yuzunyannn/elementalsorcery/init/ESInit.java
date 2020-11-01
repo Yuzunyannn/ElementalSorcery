@@ -74,6 +74,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileCrystalFlower;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementalCube;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileElfBeacon;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElfTreeCore;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileLantern;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
@@ -98,6 +99,7 @@ import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDResonantIncubator;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDTransfer;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
+import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftNormal;
@@ -291,6 +293,7 @@ public class ESInit {
 		register(TileTranscribeTable.class, "TranscribeTable");
 		register(TileTranscribeInjection.class, "TranscribeInjection");
 		register(TileElfTreeCore.class, "ElfTreeCore");
+		register(TileElfBeacon.class, "ElfBeacon");
 	}
 
 	static void registerAllCapability() {
@@ -355,6 +358,11 @@ public class ESInit {
 		registerRender(ITEMS.MAGIC_GOLD_SPADE);
 		registerRender(ITEMS.MAGIC_GOLD_HOE);
 		registerRender(ITEMS.MAGIC_GOLD_SWORD);
+		registerRender(ITEMS.PARCEL, 0, "parcel_pack");
+		registerRender(ITEMS.PARCEL, 1, "parcel_open");
+		registerRender(ITEMS.ADDRESS_PLATE, 0, "address_plate");
+		registerRender(ITEMS.ADDRESS_PLATE, 1, "address_plate_vip");
+		registerRender(ITEMS.ELF_STAR);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -438,6 +446,7 @@ public class ESInit {
 				new RenderTileMDResonantIncubator());
 		registerRender(BLOCKS.ELF_TREE_CORE, TileElfTreeCore.class, new RenderTileElfTreeCore());
 		registerRender(BLOCKS.TRANSCRIBE_INJECTION, TileTranscribeInjection.class, new RenderTileTranscribeInjection());
+		registerRender(BLOCKS.ELF_BEACON, TileElfBeacon.class, new RenderTileElfBeacon());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.elf.pro;
 
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -12,9 +14,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.elf.talk.TalkActionToTrade;
+import yuzunyannn.elementalsorcery.elf.talk.TalkActionToGui;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
@@ -97,17 +100,17 @@ public class ElfProfessionMerchant extends ElfProfessionNone {
 	}
 
 	@Override
-	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player) {
+	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TalkChapter chapter = new TalkChapter();
 		TalkSceneSay scene = new TalkSceneSay();
 		chapter.addScene(scene);
 		scene.addString("say.merchant.good.goods", Talker.OPPOSING);
-		scene.addAction(new TalkActionToTrade());
+		scene.addAction(new TalkActionToGui(ESGuiHandler.GUI_ELF_TRADE));
 		return chapter;
 	}
 
 	@Override
-	public Trade getTrade(EntityElfBase elf, EntityPlayer player) {
+	public Trade getTrade(EntityElfBase elf, EntityPlayer player, @Nullable NBTTagCompound shiftData) {
 		return new TradeCount.Bind(elf);
 	}
 

@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.elf.pro;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -10,9 +12,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionEnd;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionGoTo;
-import yuzunyannn.elementalsorcery.elf.talk.TalkActionToTrade;
+import yuzunyannn.elementalsorcery.elf.talk.TalkActionToGui;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
@@ -121,7 +124,7 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 	}
 
 	@Override
-	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player) {
+	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TalkChapter chapter = new TalkChapter();
 		TalkSceneSay scene = new TalkSceneSay();
 		chapter.addScene(scene);
@@ -142,7 +145,7 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 		scene = new TalkSceneSay().setLabel("buy");
 		chapter.addScene(scene);
 		scene.addString("say.scholar.nice.goods", Talker.OPPOSING);
-		scene.addAction(new TalkActionToTrade());
+		scene.addAction(new TalkActionToGui(ESGuiHandler.GUI_ELF_TRADE));
 
 		scene = new TalkSceneSay().setLabel("konw");
 		chapter.addScene(scene);
@@ -157,7 +160,7 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 	}
 
 	@Override
-	public Trade getTrade(EntityElfBase elf, EntityPlayer player) {
+	public Trade getTrade(EntityElfBase elf, EntityPlayer player, @Nullable NBTTagCompound shiftData) {
 		return new TradeCount.Bind(elf);
 	}
 

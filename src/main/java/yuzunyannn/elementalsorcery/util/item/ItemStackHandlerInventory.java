@@ -137,4 +137,11 @@ public class ItemStackHandlerInventory extends ItemStackHandler implements IInve
 		return origin;
 	}
 
+	public NonNullList<ItemStack> getNonemptyListAndClear() {
+		NonNullList<ItemStack> list = NonNullList.create();
+		NonNullList<ItemStack> origin = this.getListAndClear();
+		for (ItemStack item : origin) if (!item.isEmpty()) list.add(item);
+		return list;
+	}
+
 }

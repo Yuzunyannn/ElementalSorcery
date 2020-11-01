@@ -17,8 +17,17 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 
 public class WorldHelper {
+
+	static public List<EntityElfBase> getElfWithAABB(World world, AxisAlignedBB aabb, ElfProfession profession) {
+		return world.getEntitiesWithinAABB(EntityElfBase.class, aabb, (entity) -> {
+			if (profession == null) return true;
+			return entity.getProfession() == profession;
+		});
+	}
 
 	static public boolean canChangeRender() {
 		return Minecraft.getMinecraft().isSingleplayer()

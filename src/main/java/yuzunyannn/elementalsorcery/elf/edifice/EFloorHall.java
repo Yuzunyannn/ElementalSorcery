@@ -22,6 +22,7 @@ import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class EFloorHall extends ElfEdificeFloor {
 
@@ -239,22 +240,6 @@ public class EFloorHall extends ElfEdificeFloor {
 		this.createBulltin(builder);
 	}
 
-	public static List<EntityElfBase> getFloorElf(IBuilder builder, ElfProfession pro) {
-		BlockPos pos = builder.getFloorBasicPos();
-		World world = builder.getWorld();
-		ElfEdificeFloor floor = builder.getFloorType();
-		int size = GenElfEdifice.getFakeCircleLen(builder.getEdificeSize(), 0, 2);
-		double x = pos.getX() + 0.5;
-		double y = pos.getY();
-		double z = pos.getZ() + 0.5;
-		AxisAlignedBB aabb = new AxisAlignedBB(x - size, y, z - size, x + size, y + floor.getFloorHeight(builder),
-				z + size);
-		return world.getEntitiesWithinAABB(EntityElfBase.class, aabb, (elf) -> {
-			if (pro == null) return true;
-			return elf.getProfession() == pro;
-		});
-	}
-
 	@Override
 	public void spawn(IBuilder builder) {
 		List<EntityElfBase> elfs = EFloorHall.getFloorElf(builder, ElfProfession.RECEPTIONIST);
@@ -268,20 +253,12 @@ public class EFloorHall extends ElfEdificeFloor {
 		int offset = GenElfEdifice.getFakeCircleLen(treeSize, treeSize, 2) + 1;
 		for (int i = -4; i <= 4; i += 4) {
 			BlockPos at = pos.offset(toward.getOpposite(), offset).offset(toward.rotateY(), i);
-			float x = at.getX() + 0.5f;
-			float y = at.getY() + 0.5f;
-			float z = at.getZ() + 0.5f;
-			AxisAlignedBB aabb = new AxisAlignedBB(x - 1, y - 1, z - 1, x + 1, y + 1, z + 1);
-			elfs = world.getEntitiesWithinAABB(EntityElfBase.class, aabb);
-			if (!elfs.isEmpty()) continue;
-			EntityElf elf = new EntityElf(world, ElfProfession.RECEPTIONIST);
-			elf.setPosition(x, y - 0.5, z);
-			builder.spawn(elf);
+			trySpawnElfAt(builder, ElfProfession.RECEPTIONIST, at);
 		}
 		// 其余单位
 		ElfProfession pro = null;
 		if (world.rand.nextInt(5) == 0) pro = ElfProfession.BUILDER;
-		EFloorLivingRoom.trySpawnElf(builder, pro, 6);
+		EFloorHall.trySpawnElf(builder, pro, 6);
 	}
 
 	public void createBulltin(IBuilder builder) {
@@ -307,5 +284,63 @@ public class EFloorHall extends ElfEdificeFloor {
 		List<EntityBulletin> list = world.getEntitiesWithinAABB(EntityBulletin.class, aabb);
 		if (list.isEmpty()) return null;
 		return list.get(0);
+	}
+
+	/** 是否可以刷精灵 */
+	public static boolean canSpawnElf(World world, BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
+		if (state.isFullBlock()) return false;
+		state = world.getBlockState(pos.up());
+		if (state.isFullBlock()) return false;
+		return true;
+	}
+
+	/** 在某一层刷点精灵 */
+	public static void trySpawnElf(IBuilder builder, ElfProfession pro, int max) {
+		BlockPos pos = builder.getFloorBasicPos();
+		World world = builder.getWorld();
+		int treeSize = builder.getEdificeSize();
+		double x = pos.getX() + 0.5;
+		double y = pos.getY();
+		double z = pos.getZ() + 0.5;
+		List<EntityElfBase> elfs = getFloorElf(builder, null);
+		if (elfs.size() < max) {
+			EntityElf elf;
+			x = world.rand.nextInt(treeSize * 2) - treeSize + x;
+			z = world.rand.nextInt(treeSize * 2) - treeSize + z;
+			if (!EFloorHall.canSpawnElf(world, new BlockPos(x, y, z))) return;
+			if (pro == null) elf = new EntityElf(world);
+			else elf = new EntityElf(world, pro);
+			elf.setPosition(x, y, z);
+			builder.spawn(elf);
+		}
+	}
+
+	/** 获取本层的所有精灵 */
+	public static List<EntityElfBase> getFloorElf(IBuilder builder, ElfProfession pro) {
+		BlockPos pos = builder.getFloorBasicPos();
+		World world = builder.getWorld();
+		ElfEdificeFloor floor = builder.getFloorType();
+		int size = GenElfEdifice.getFakeCircleLen(builder.getEdificeSize(), 0, 2);
+		double x = pos.getX() + 0.5;
+		double y = pos.getY();
+		double z = pos.getZ() + 0.5;
+		AxisAlignedBB aabb = new AxisAlignedBB(x - size, y, z - size, x + size, y + floor.getFloorHeight(builder),
+				z + size);
+		return WorldHelper.getElfWithAABB(world, aabb, pro);
+	}
+
+	public static void trySpawnElfAt(IBuilder builder, ElfProfession pro, BlockPos pos) {
+		World world = builder.getWorld();
+		float x = pos.getX() + 0.5f;
+		float y = pos.getY() + 0.5f;
+		float z = pos.getZ() + 0.5f;
+		AxisAlignedBB aabb = new AxisAlignedBB(x - 1, y - 1, z - 1, x + 1, y + 1, z + 1);
+		List<EntityElfBase> elfs = world.getEntitiesWithinAABB(EntityElfBase.class, aabb);
+		if (!elfs.isEmpty()) return;
+		EntityElf elf = new EntityElf(world, pro);
+		elf.setPosition(x, y - 0.5, z);
+		builder.spawn(elf);
+		elf.setHomePosAndDistance(elf.getPosition(), 0);
 	}
 }
