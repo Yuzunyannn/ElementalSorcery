@@ -11,7 +11,6 @@ import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeClient;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
@@ -70,8 +69,7 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 				if (ItemStack.areItemsEqual(c, stack)) {
 					int count = stack.getCount();
 					trade.reclaim(i, count);
-					int rest = ItemElfPurse.insert(player.inventory, count * trade.cost(i), false);
-					if (rest > 0) player.dropItem(ESInitInstance.ITEMS.ELF_COIN, rest);
+					ItemElfPurse.insert(player, count * trade.cost(i));
 					return;
 				}
 			}

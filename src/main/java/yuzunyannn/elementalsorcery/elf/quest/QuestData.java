@@ -33,4 +33,16 @@ public class QuestData implements INBTSerializable<NBTTagCompound> {
 		return data.hasNoTags();
 	}
 
+	public int getInteger(String key) {
+		return data.getInteger(key);
+	}
+
+	public void setInteger(String key, int value) {
+		data.setInteger(key, value);
+	}
+
+	public void growInteger(String key, int value) {
+		data.setInteger(key, data.getInteger(key) + value);
+	}
+
 }

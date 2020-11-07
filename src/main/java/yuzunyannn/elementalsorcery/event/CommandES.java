@@ -25,12 +25,15 @@ import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.elf.edifice.BuilderWithInfo;
+import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
+import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class CommandES extends CommandBase {
@@ -134,6 +137,14 @@ public class CommandES extends CommandBase {
 		RayTraceResult result = WorldHelper.getLookAtBlock(world, entity, 128);
 		if (result != null) pos = result.getBlockPos();
 		if (floor == null || pos == null) throw new CommandException("commands.es.build.fail");
+		TileElfTreeCore core = BlockHelper.getTileEntity(world, pos, TileElfTreeCore.class);
+		if (core != null) {
+			if (floor == EFloorHall.instance) throw new CommandException("commands.es.build.fail");
+			if (core.getFloorCount() == 0) core.scheduleFloor(EFloorHall.instance);
+			if (!core.scheduleFloor(floor)) throw new CommandException("commands.es.build.fail");
+			core.finishAllBuildTask();
+			return;
+		}
 		// 模拟建造
 		FloorInfo info = new FloorInfo(floor, pos.up());
 		BuilderWithInfo builder = new BuilderWithInfo(entity.world, info, GenElfEdifice.EDIFICE_SIZE, 60, pos.up(60));

@@ -1,0 +1,9 @@
+{
+    "lev": -2,
+    "need": [
+        "elf/elf_edifice"
+    ],
+    "type": "normal",
+    "name": "elfRefinery",
+    "item": "minecraft:furnace"
+}

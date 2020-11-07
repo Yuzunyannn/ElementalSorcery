@@ -23,7 +23,7 @@ public class TalkActionCoin implements ITalkAction {
 	public Object invoke(EntityPlayer player, EntityElfBase elf, TalkChapter chapter, TalkChapter.Iter iter,
 			TalkScene originScene, int talkAt) {
 		if (give) {
-			ItemElfPurse.insert(player.inventory, count, false);
+			ItemElfPurse.insert(player, count);
 			return true;
 		} else {
 			int rest = ItemElfPurse.extract(player.inventory, count, true);

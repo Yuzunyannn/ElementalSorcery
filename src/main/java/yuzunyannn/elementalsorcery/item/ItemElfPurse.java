@@ -16,6 +16,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemElfPurse extends Item {
 
@@ -141,5 +142,28 @@ public class ItemElfPurse extends Item {
 		}
 		return count;
 
+	}
+
+	/** 给予玩家硬币，与插入仓库不同，如果玩家仓库满了，会扔出去 */
+	static public void insert(EntityPlayer player, int count) {
+		IInventory inv = player.inventory;
+		ItemStack purse = ItemStack.EMPTY;
+		for (int i = 0; i < inv.getSizeInventory(); i++) {
+			ItemStack stack = inv.getStackInSlot(i);
+			if (stack.isEmpty()) continue;
+			if (stack.getItem() == ESInitInstance.ITEMS.ELF_PURSE) {
+				purse = stack;
+				break;
+			}
+		}
+		// 有钱袋的情况
+		if (!purse.isEmpty()) {
+			NBTTagCompound nbt = purse.getTagCompound();
+			if (nbt == null) purse.setTagCompound(nbt = new NBTTagCompound());
+			int coin = nbt.getInteger("coin");
+			nbt.setInteger("coin", coin + count);
+			return;
+		}
+		ItemHelper.addItemStackToPlayer(player, new ItemStack(ESInitInstance.ITEMS.ELF_COIN, count));
 	}
 }

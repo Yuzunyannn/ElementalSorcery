@@ -242,23 +242,24 @@ public class EFloorHall extends ElfEdificeFloor {
 
 	@Override
 	public void spawn(IBuilder builder) {
-		List<EntityElfBase> elfs = EFloorHall.getFloorElf(builder, ElfProfession.RECEPTIONIST);
-		if (elfs.size() >= 3) return;
 		World world = builder.getWorld();
 		BlockPos pos = builder.getFloorBasicPos();
 		int treeSize = builder.getEdificeSize();
 		BuilderHelper helper = new BuilderHelper(builder);
 		EnumFacing toward = helper.toward();
-		// 接待员
-		int offset = GenElfEdifice.getFakeCircleLen(treeSize, treeSize, 2) + 1;
-		for (int i = -4; i <= 4; i += 4) {
-			BlockPos at = pos.offset(toward.getOpposite(), offset).offset(toward.rotateY(), i);
-			trySpawnElfAt(builder, ElfProfession.RECEPTIONIST, at);
+		List<EntityElfBase> elfs = EFloorHall.getFloorElf(builder, ElfProfession.RECEPTIONIST);
+		if (elfs.size() < 3) {
+			// 接待员
+			int offset = GenElfEdifice.getFakeCircleLen(treeSize, treeSize, 2) + 1;
+			for (int i = -4; i <= 4; i += 4) {
+				BlockPos at = pos.offset(toward.getOpposite(), offset).offset(toward.rotateY(), i);
+				trySpawnElfAt(builder, ElfProfession.RECEPTIONIST, at);
+			}
 		}
 		// 其余单位
 		ElfProfession pro = null;
-		if (world.rand.nextInt(5) == 0) pro = ElfProfession.BUILDER;
-		EFloorHall.trySpawnElf(builder, pro, 6);
+		if (world.rand.nextInt(4) == 0) pro = ElfProfession.BUILDER;
+		EFloorHall.trySpawnElf(builder, pro, 8);
 	}
 
 	public void createBulltin(IBuilder builder) {

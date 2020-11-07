@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.util.item;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
@@ -9,6 +10,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 
 public class ItemHelper {
+
+	static public void addItemStackToPlayer(EntityPlayer player, ItemStack stack) {
+		if (stack.isEmpty()) return;
+		if (player.inventory.addItemStackToInventory(stack)) return;
+		player.dropItem(stack, false);
+	}
 
 	static public EntityItem dropItem(World world, BlockPos pos, ItemStack stack) {
 		double d0 = (double) (world.rand.nextFloat() * 0.5F) + 0.25D;

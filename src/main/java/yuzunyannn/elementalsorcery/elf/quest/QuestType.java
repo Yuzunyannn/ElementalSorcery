@@ -44,6 +44,10 @@ public class QuestType implements INBTSerializable<NBTTagCompound> {
 		rewards.add(reward);
 	}
 
+	public ArrayList<QuestCondition> getPreconditions() {
+		return preconditions;
+	}
+
 	public ArrayList<QuestCondition> getConditions() {
 		return conditions;
 	}

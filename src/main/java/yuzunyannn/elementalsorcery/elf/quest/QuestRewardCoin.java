@@ -29,7 +29,7 @@ public class QuestRewardCoin extends QuestReward {
 
 	@Override
 	public void reward(Quest quest, EntityPlayer player) {
-		ItemElfPurse.insert(player.inventory, coin, false);
+		ItemElfPurse.insert(player, coin);
 	}
 
 	@Override

@@ -18,6 +18,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemScroll extends Item {
 
@@ -30,10 +31,10 @@ public class ItemScroll extends Item {
 		NBTTagCompound nbt = stack.getOrCreateSubCompound("scroll");
 		NBTTagList ids = nbt.getTagList("parIds", 8);
 		if (ids.tagCount() == 0) {
-			for (int i = 0; i < 3; i++) playerIn.inventory.addItemStackToInventory(ItemParchment.getParchment(null));
+			for (int i = 0; i < 3; i++) ItemHelper.addItemStackToPlayer(playerIn, ItemParchment.getParchment(null));
 		} else for (NBTBase base : ids) {
 			NBTTagString bntStr = (NBTTagString) base;
-			playerIn.inventory.addItemStackToInventory(ItemParchment.getParchment(bntStr.getString()));
+			ItemHelper.addItemStackToPlayer(playerIn, ItemParchment.getParchment(bntStr.getString()));
 		}
 		ItemStack newStack = stack.copy();
 		newStack.shrink(1);

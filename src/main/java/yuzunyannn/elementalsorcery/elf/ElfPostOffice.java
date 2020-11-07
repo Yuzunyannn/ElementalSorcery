@@ -16,6 +16,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.elf.quest.QuestTriggerDataSendParcel;
+import yuzunyannn.elementalsorcery.elf.quest.QuestTriggers;
 import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
@@ -58,10 +60,32 @@ public class ElfPostOffice extends WorldSavedData {
 		return (ElfPostOffice) worldSave;
 	}
 
+	/** 增加地址牌的使用次数 */
+	public static void addAddressPlateServiceCount(ItemStack addressPlate, int count) {
+		NBTTagCompound nbt = addressPlate.getTagCompound();
+		if (nbt == null) return;
+		nbt.setInteger("service", nbt.getInteger("service") + count);
+	}
+
+	public static int getAddressPlateServiceCount(ItemStack addressPlate) {
+		NBTTagCompound nbt = addressPlate.getTagCompound();
+		if (nbt == null) return 0;
+		return nbt.getInteger("service");
+	}
+
+	public static boolean isAddressPlate(ItemStack stack) {
+		if (stack.getItem() != ESInitInstance.ITEMS.ADDRESS_PLATE) return false;
+		return !ElfPostOffice.getAddress(stack).isEmpty();
+	}
+
 	public static String getAddress(ItemStack addressPlate) {
 		NBTTagCompound nbt = addressPlate.getTagCompound();
 		if (nbt == null) return "";
 		return nbt.getString("address");
+	}
+
+	public static boolean isVIPAddressPlate(ItemStack addressPlate) {
+		return addressPlate.getItem() == ESInitInstance.ITEMS.ADDRESS_PLATE && addressPlate.getMetadata() == 1;
 	}
 
 	/** 快递包裹信息 */
@@ -85,6 +109,7 @@ public class ElfPostOffice extends WorldSavedData {
 		nbt.setLong("checkTime", System.currentTimeMillis());
 		list.addLast(nbt);
 		this.markDirty();
+		QuestTriggers.SEND_PARCEL.trigger(sender, new QuestTriggerDataSendParcel(sender, address, goods));
 	}
 
 	public void pushParcel(String address, ItemStack parcel) {
@@ -122,11 +147,24 @@ public class ElfPostOffice extends WorldSavedData {
 	/** 创建一个新的地址牌 */
 	public ItemStack createAddressPlate(EntityLivingBase owner, String address) {
 		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.ADDRESS_PLATE);
+		this.setAddressPlateNBT(stack, owner, address);
+		return stack;
+	}
+
+	/** 更新地址牌子到高级 */
+	public ItemStack changeAddressPlate(EntityLivingBase owner, ItemStack addressPlate) {
+		String address = ElfPostOffice.getAddress(addressPlate);
+		if (address.isEmpty()) return ItemStack.EMPTY;
+		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.ADDRESS_PLATE, 1, 1);
+		this.setAddressPlateNBT(stack, owner, address);
+		return stack;
+	}
+
+	public void setAddressPlateNBT(ItemStack addressPlate, EntityLivingBase owner, String address) {
 		NBTTagCompound nbt = new NBTTagCompound();
-		stack.setTagCompound(nbt);
+		addressPlate.setTagCompound(nbt);
 		nbt.setString("address", address);
 		nbt.setString("signature", owner.getName());
-		return stack;
 	}
 
 	public void readParcelFromNBT(NBTTagCompound nbt) {

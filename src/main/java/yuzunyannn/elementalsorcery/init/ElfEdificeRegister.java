@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.init;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
+import yuzunyannn.elementalsorcery.elf.edifice.EFloorLaboratory;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorLivingRoom;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorPostOffice;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorRefinery;
@@ -24,5 +25,6 @@ public class ElfEdificeRegister {
 		register("workshop", new EFloorWorkshop());
 		register("refinery", new EFloorRefinery());
 		register("post_office", new EFloorPostOffice());
+		register("laboratory", new EFloorLaboratory());
 	}
 }

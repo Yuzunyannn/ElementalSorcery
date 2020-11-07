@@ -14,8 +14,13 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
+import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
 
 public class ItemAddressPlate extends Item {
 
@@ -40,12 +45,44 @@ public class ItemAddressPlate extends Item {
 		String signature = nbt.getString("signature");
 		tooltip.add(TextFormatting.GREEN + I18n.format("info.address", address));
 		if (!signature.isEmpty()) tooltip.add(TextFormatting.GOLD + I18n.format("info.signature", signature));
+		if (stack.getMetadata() == 1) {
+			int times = ElfPostOffice.getAddressPlateServiceCount(stack);
+			tooltip.add(I18n.format("info.service.times", times));
+		}
 	}
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		ItemStack stack = playerIn.getHeldItem(handIn);
+		if (stack.getMetadata() == 1) {
+			int times = ElfPostOffice.getAddressPlateServiceCount(stack);
+			if (times <= 0 && !playerIn.isCreative()) return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+			if (worldIn.isRemote) return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+			// 没地址走人
+			String address = ElfPostOffice.getAddress(stack);
+			if (address.isEmpty()) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+			// 周围有精灵了,直接召唤他，不花费次数
+			EntityElfBase postmain = TileElfBeacon.getPostmanAround(worldIn, playerIn.getPosition());
+			if (postmain != null) {
+				sendParcelForMe(postmain, address, playerIn);
+				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+			}
+			// 没有尝试召唤
+			Vec3d pos = playerIn.getPositionVector();
+			pos = pos.add(playerIn.getLookVec().scale(3));
+			postmain = TileElfBeacon.tryCreatePostman(worldIn, new BlockPos(pos.x, playerIn.posY, pos.z));
+			if (postmain == null) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+			ElfPostOffice.addAddressPlateServiceCount(stack, -1);
+			sendParcelForMe(postmain, address, playerIn);
+			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+		}
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+	}
+
+	public static void sendParcelForMe(EntityElfBase elf, String address, EntityPlayer player) {
+		NBTTagCompound nbt = elf.getEntityData();
+		nbt.setInteger("receiver", player.getEntityId());
+		nbt.setString("address", address);
 	}
 
 	@Override
@@ -59,8 +96,7 @@ public class ItemAddressPlate extends Item {
 	}
 
 	static public enum EnumType implements IStringSerializable {
-		NORMAL("normal"),
-		VIP("vip");
+		NORMAL("normal"), VIP("vip");
 
 		final String name;
 

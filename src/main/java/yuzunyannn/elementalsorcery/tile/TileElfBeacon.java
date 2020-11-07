@@ -84,13 +84,13 @@ public class TileElfBeacon extends TileEntityNetwork implements IGetItemStack, I
 		BlockPos chestPos = tryFindChestAround(world, pos);
 		if (chestPos == null) return;
 		// 周围有精灵了，让她给我放
-		EntityElfBase postmain = this.getPostmanAround();
+		EntityElfBase postmain = getPostmanAround(world, pos);
 		if (postmain != null) {
 			sendParcelForMe(postmain, address, chestPos);
 			return;
 		}
 		// 没能创建精灵，走人
-		postmain = this.tryCreatePostman();
+		postmain = tryCreatePostman(world, pos);
 		if (postmain == null) return;
 		// 设置送快递
 		sendParcelForMe(postmain, address, chestPos);
@@ -104,11 +104,11 @@ public class TileElfBeacon extends TileEntityNetwork implements IGetItemStack, I
 	}
 
 	// 尝试创建一个精灵，再周围
-	protected EntityElfBase tryCreatePostman() {
+	public static EntityElfBase tryCreatePostman(World world, BlockPos origin) {
 		Random rand = world.rand;
 		BlockPos pos = null;
 		for (int tryTimes = 0; tryTimes < 4; tryTimes++) {
-			pos = this.pos.add(rand.nextInt(3), -3, rand.nextInt(3));
+			pos = origin.add(rand.nextInt(5) - 2, -3, rand.nextInt(5) - 2);
 			for (int i = 0; i < 12; i++) {
 				if (EFloorHall.canSpawnElf(world, pos)) break;
 				pos = pos.up();
@@ -121,7 +121,7 @@ public class TileElfBeacon extends TileEntityNetwork implements IGetItemStack, I
 		return elf;
 	}
 
-	protected EntityElfBase getPostmanAround() {
+	public static EntityElfBase getPostmanAround(World world, BlockPos pos) {
 		final int size = 4;
 		AxisAlignedBB aabb = new AxisAlignedBB(pos.add(-size, -size, -size), pos.add(size, size, size));
 		List<EntityElfBase> list = WorldHelper.getElfWithAABB(world, aabb, ElfProfession.POSTMAN);

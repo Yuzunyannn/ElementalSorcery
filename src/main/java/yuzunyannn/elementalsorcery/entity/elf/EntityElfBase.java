@@ -348,6 +348,12 @@ public abstract class EntityElfBase extends EntityCreature {
 		this.getProfession().tick(this);
 	}
 
+	@Override
+	public void setDead() {
+		if (!this.isDead) this.getProfession().onDead(this);
+		super.setDead();
+	}
+
 	/** 获取精灵职业 */
 	@Nonnull
 	public ElfProfession getProfession() {
@@ -360,9 +366,9 @@ public abstract class EntityElfBase extends EntityCreature {
 		if (this.profession == profession) return;
 		ElfProfession origin = this.profession;
 		this.profession = profession;
-		if (world.isRemote) return;
 		if (origin != null) origin.transferElf(this, this.profession);
 		this.profession.initElf(this, origin);
+		if (world.isRemote) return;
 		dataManager.set(PROFESSION_UPDATE, ElfProfession.REGISTRY.getId(this.profession));
 	}
 
@@ -370,8 +376,8 @@ public abstract class EntityElfBase extends EntityCreature {
 	public void notifyDataManagerChange(DataParameter<?> key) {
 		super.notifyDataManagerChange(key);
 		if (key.getId() == PROFESSION_UPDATE.getId() && world.isRemote) {
-			this.profession = ElfProfession.REGISTRY.getValue(dataManager.get(PROFESSION_UPDATE));
-			if (this.profession == null) this.profession = ElfProfession.NONE;
+			ElfProfession profession = ElfProfession.REGISTRY.getValue(dataManager.get(PROFESSION_UPDATE));
+			this.setProfession(profession);
 		}
 	}
 

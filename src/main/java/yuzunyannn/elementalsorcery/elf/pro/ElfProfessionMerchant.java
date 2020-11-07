@@ -33,6 +33,7 @@ public class ElfProfessionMerchant extends ElfProfessionNone {
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
 		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInitInstance.ITEMS.ELF_COIN));
+		if (elf.world.isRemote) return;
 		NBTTagCompound nbt = elf.getEntityData();
 		if (nbt.hasKey(TradeCount.Bind.TAG)) return;
 		this.randomGoods(elf);

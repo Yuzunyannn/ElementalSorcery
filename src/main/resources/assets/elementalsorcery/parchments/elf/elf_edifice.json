@@ -1,0 +1,9 @@
+{
+    "lev": 1,
+    "need": [
+        "elf/elf_power"
+    ],
+    "type": "normal",
+    "name": "elfEdifice",
+    "item": "elementalsorcery:elf_sapling"
+}

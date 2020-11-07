@@ -11,6 +11,7 @@ public class ElfProfessionNPCBase extends ElfProfession {
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
+		if (elf.world.isRemote) return;
 		elf.removeTask(EntityAIStrollAroundElfTree.class);
 		elf.removeTask(EntityAIMoveToLookBlock.class);
 		elf.removeTask(EntityAIMoveToEntityItem.class);

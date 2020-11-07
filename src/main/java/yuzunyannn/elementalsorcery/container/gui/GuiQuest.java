@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.container.gui;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -19,6 +20,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ContainerQuest;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.QuestCondition;
 import yuzunyannn.elementalsorcery.elf.quest.QuestDescribe;
 import yuzunyannn.elementalsorcery.elf.quest.QuestReward;
 import yuzunyannn.elementalsorcery.elf.quest.QuestStatus;
@@ -72,6 +74,7 @@ public class GuiQuest extends GuiContainer {
 		RenderHelper.drawTexturedModalRect(0, 0, 0, 0, width, height, 256, 256);
 		QuestType type = quest.getType();
 		QuestDescribe describe = type.getDescribe();
+		ArrayList<QuestCondition> preConditions = type.getPreconditions();
 		QuestStatus status = quest.getStatus();
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0, 0, 0.001);
@@ -96,6 +99,13 @@ public class GuiQuest extends GuiContainer {
 				fontRenderer.drawString(TextFormatting.DARK_RED + I18n.format("quest.end", endTime), 10, yoff, color);
 			else fontRenderer.drawString(I18n.format("quest.end", endTime), 10, yoff, color);
 			yoff += fontRenderer.FONT_HEIGHT;
+		}
+		for (QuestCondition con : preConditions) {
+			String value = con.getDescribe(quest, player, status == QuestStatus.NONE);
+			for (String s : fontRenderer.listFormattedStringToWidth(value, width - 20)) {
+				fontRenderer.drawString(s, 10, yoff, color);
+				yoff += fontRenderer.FONT_HEIGHT;
+			}
 		}
 		if (yoff == 92) fontRenderer.drawString(I18n.format("info.none"), 10, yoff, color);
 		// 奖励

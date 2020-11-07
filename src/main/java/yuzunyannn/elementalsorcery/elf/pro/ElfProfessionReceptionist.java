@@ -90,7 +90,7 @@ public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 			}
 			// 委托正在进行中
 			if (quest.getStatus() == QuestStatus.UNDERWAY && quest.isAdventurer(player)) {
-				if (Quests.finishQuest(player, quest, stack)) {
+ 				if (Quests.finishQuest(player, quest, stack)) {
 					chapter.addScene(new TalkSceneSay("say.quest.finish"));
 					return chapter;
 				} else {

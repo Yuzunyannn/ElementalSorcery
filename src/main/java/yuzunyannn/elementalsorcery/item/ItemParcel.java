@@ -17,6 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemParcel extends Item {
 
@@ -48,12 +49,16 @@ public class ItemParcel extends Item {
 		ItemStack stack = playerIn.getHeldItem(handIn);
 		int meta = stack.getMetadata();
 		if (meta == 0) {
+			int count = stack.getCount();
 			stack.setItemDamage(1);
 			NBTTagCompound nbt = stack.getTagCompound();
 			stack.setTagCompound(null);
 			if (nbt == null) return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 			LinkedList<ItemStack> list = NBTHelper.getItemList(nbt, "goods");
-			for (ItemStack item : list) playerIn.inventory.addItemStackToInventory(item);
+			for (ItemStack item : list) {
+				item.setCount(item.getCount() * count);
+				ItemHelper.addItemStackToPlayer(playerIn, item);
+			}
 		}
 		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 	}

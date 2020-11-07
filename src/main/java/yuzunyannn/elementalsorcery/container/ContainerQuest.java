@@ -34,6 +34,7 @@ public class ContainerQuest extends Container implements IContainerNetwork {
 			return;
 		}
 		if (player.world.isRemote) {
+			quest.getType().checkPre(quest, player);
 			quest.getType().check(quest, player);
 			return;
 		}

@@ -3,10 +3,12 @@ package yuzunyannn.elementalsorcery.tile;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -136,7 +138,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 	public FloorInfo getFloor(int index) {
 		return floors.get(index);
 	}
-	
+
 	public List<FloorInfo> getFloors() {
 		return floors;
 	}
@@ -210,6 +212,26 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		}
 	}
 
+	/** 完成所有任务，指令调用 */
+	public void finishAllBuildTask() {
+		if (floors.isEmpty()) return;
+		for (int i = 0; i < floors.size(); i++) {
+			FloorInfo floor = floors.get(i);
+			if (floor.isEmpty()) continue;
+			BuilderWithInfo builder = this.getBuilder(floor);
+			BuildProgress progress = new BuildProgress(floor.getType(), builder);
+			while (true) {
+				if (progress.isFinish()) {
+					this.notifyComplete(floor);
+					break;
+				}
+				Entry<BlockPos, IBlockState> entry = progress.next();
+				if (entry == null) continue;
+				world.setBlockState(entry.getKey(), entry.getValue(), 2);
+			}
+		}
+	}
+
 	/**
 	 * 申请一个任务，一旦申请成功，请不要重复调用，申请的数据不必要进行持久化，重新加载后，重新申请就可以
 	 * 
@@ -262,6 +284,10 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 	public void notifyComplete(int floorn) {
 		if (floorn < 0 || floorn >= floors.size()) return;
 		FloorInfo floor = floors.get(floorn);
+		this.notifyComplete(floor);
+	}
+
+	private void notifyComplete(FloorInfo floor) {
 		floor.setStatus(Status.COMPLETE);
 		if (floor.isEmpty()) return;
 		BuilderWithInfo builder = this.getBuilder(floor);

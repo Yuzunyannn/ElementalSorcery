@@ -69,6 +69,7 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
 		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInitInstance.ITEMS.MANUAL));
 		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
+		if (elf.world.isRemote) return;
 		// 初始化交易信息
 		NBTTagCompound nbt = elf.getEntityData();
 		// 如果存在标签，则表示是回复时初始化的，直接走人

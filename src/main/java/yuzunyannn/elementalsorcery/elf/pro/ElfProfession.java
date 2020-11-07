@@ -69,6 +69,11 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 
 	}
 
+	/** 当死亡，及实体被setDead */
+	public void onDead(EntityElfBase elf) {
+
+	}
+
 	/** 是否可以自动装备上装备，不可以自动装备替换的话，会询问是否可以捡起来 */
 	public boolean canEquip(EntityElfBase elf, ItemStack stack, EntityEquipmentSlot slot) {
 		return true;

@@ -56,7 +56,7 @@ public interface IBuilder {
 
 	default boolean trySetBlockState(BlockPos pos, IBlockState state) {
 		IBlockState origin = getBlockState(pos);
-		if (origin.getBlock().isReplaceable(getWorld(), pos)) {
+		if (origin.getBlock().getMaterial(origin).isReplaceable()) {
 			setBlockState(pos, state);
 			return true;
 		} else if (origin.getBlock() instanceof BlockCarpet) {

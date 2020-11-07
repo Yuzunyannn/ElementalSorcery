@@ -10,11 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
+import yuzunyannn.elementalsorcery.init.ESInitInstance;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.util.item.ItemRec;
 
 public class Quests {
-
 	/** 注销某个生物的全部过期任务 */
 	public static void unsignOverdueQuest(EntityLivingBase entity, boolean isReputationDecline) {
 		IAdventurer adventurer = entity.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
@@ -46,7 +46,13 @@ public class Quests {
 		if (quest.getStatus() != QuestStatus.UNDERWAY) return false;
 		boolean noCheck = false;
 		if (player instanceof EntityPlayer) noCheck = ((EntityPlayer) player).isCreative();
-		if (!noCheck && quest.getType().check(quest, player) != null) return false;
+		if (!noCheck) {
+			int i = quest.findSignQuest(player);
+			if (i == -1) return false;
+			IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+			if (adventurer == null) return false;
+			if (quest.getType().check(adventurer.getQuest(i), player) != null) return false;
+		}
 		quest.unsign(player);
 		quest.getType().reward(quest, player);
 		quest.getType().finish(quest, player);
@@ -80,7 +86,6 @@ public class Quests {
 		return new Quest(type);
 	}
 
-	
 	public static Quest createBuildTask(BlockPos corePos, ElfEdificeFloor floorType, int weight,
 			List<ItemRec> itemstack) {
 		QuestType type = new QuestType();
@@ -92,6 +97,18 @@ public class Quests {
 		describe.addDescribe("quest.end.polite.2");
 		QuestRewardElfTreeInvest reward = QuestReward.REGISTRY.newInstance(QuestRewardElfTreeInvest.class);
 		type.addReward(reward.floor(floorType, corePos, weight));
+		return new Quest(type);
+	}
+
+	public static Quest createPostFirestWelfare(EntityPlayer player) {
+		QuestType type = new QuestType();
+		type.addCondition(QuestCondition.REGISTRY.newInstance(QuestConditionSendAnyParcel.class).needCount(10));
+		QuestDescribe describe = type.getDescribe();
+		type.addPrecondition(QuestCondition.REGISTRY.newInstance(QuestConditionDelegate.class).delegate(player));
+		describe.setTitle("quest.newbie.task");
+		describe.addDescribe("quest.post.first.welfare", player.getName());
+		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.ELF_STAR);
+		type.addReward(QuestReward.REGISTRY.newInstance(QuestRewardItem.class).item(stack));
 		return new Quest(type);
 	}
 

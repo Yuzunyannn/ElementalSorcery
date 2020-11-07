@@ -40,14 +40,14 @@ public class QuestConditionNeedItem extends QuestCondition {
 		needs = NBTHelper.getNBTSerializableList(nbt, "need", ItemRec.class, NBTTagCompound.class);
 	}
 
-	protected List<ItemRec> checkRes = new ArrayList<>();
+	protected List<ItemRec> checkResult = new ArrayList<>();
 
 	@Override
 	public boolean check(Quest task, EntityPlayer player) {
 		boolean isRemove = player.world.isRemote;
 		boolean allOk = true;
 		// 客户端要记录还缺什么东西
-		if (isRemove) checkRes.clear();
+		if (isRemove) checkResult.clear();
 		InventoryPlayer inventory = player.inventory;
 		for (ItemRec need : needs) {
 			// 检查物品
@@ -64,7 +64,7 @@ public class QuestConditionNeedItem extends QuestCondition {
 				ItemRec rec = new ItemRec(needStack.copy());
 				count = Math.max(count, 0);
 				rec.getItemStack().setCount(needStack.getCount() - count);
-				checkRes.add(rec);
+				checkResult.add(rec);
 				if (count > 0) allOk = false;
 				continue;
 			}
@@ -103,8 +103,8 @@ public class QuestConditionNeedItem extends QuestCondition {
 			String c = Integer.toString(count);
 			if (dynamic) {
 				int have = 0;
-				if (i < checkRes.size()) {
-					ItemRec rec = checkRes.get(i);
+				if (i < checkResult.size()) {
+					ItemRec rec = checkResult.get(i);
 					have = rec.getItemStack().getCount();
 				}
 				if (have >= count) c = c + TextFormatting.GREEN + "(" + have + ")";
