@@ -13,8 +13,9 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
+import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class BuilderHelper {
@@ -41,6 +42,14 @@ public class BuilderHelper {
 	public BuilderHelper toward(EnumFacing face) {
 		data.setByte("toward", (byte) face.getIndex());
 		return this;
+	}
+
+	public BlockPos blockPos(String key) {
+		return NBTHelper.getBlockPos(data, key);
+	}
+
+	public void blockPos(String key, BlockPos pos) {
+		NBTHelper.setBlockPos(data, key, pos);
 	}
 
 	public BuilderHelper toward(Random rand) {
@@ -135,7 +144,7 @@ public class BuilderHelper {
 	// 树叶灯
 	public void genLeafLamp(BlockPos at) {
 		IBlockState GLOWSTONE = Blocks.GLOWSTONE.getDefaultState();
-		IBlockState LEAF = ESInitInstance.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
+		IBlockState LEAF = ESInit.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
 		builder.setBlockState(at, GLOWSTONE);
 		for (EnumFacing h : EnumFacing.VALUES) builder.trySetBlockState(at.offset(h, 1), LEAF);
 	}

@@ -7,7 +7,7 @@ import net.minecraft.entity.ai.EntityLookHelper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class EntityAILookBlock extends EntityAIBase {
 
@@ -23,7 +23,7 @@ public class EntityAILookBlock extends EntityAIBase {
 	private int lookTime;
 	private BlockPos lookPos;
 	private IWatch watch = (world, pos, state) -> {
-		return state.getBlock() == ESInitInstance.BLOCKS.ELF_FRUIT;
+		return state.getBlock() == ESInit.BLOCKS.ELF_FRUIT;
 	};
 
 	public EntityAILookBlock(EntityCreature entity) {

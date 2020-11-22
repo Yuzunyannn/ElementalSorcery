@@ -40,7 +40,7 @@ public class EFloorHall extends ElfEdificeFloor {
 	}
 
 	@Override
-	public NBTTagCompound getBuildData(IBuilder builder, Random rand) {
+	public NBTTagCompound createBuildData(IBuilder builder, Random rand) {
 		return new BuilderHelper(builder).toward(rand).getNBT();
 	}
 

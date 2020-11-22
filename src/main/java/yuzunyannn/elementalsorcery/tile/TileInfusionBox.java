@@ -18,7 +18,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptBurnPower;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
 @Deprecated
@@ -34,7 +34,7 @@ public class TileInfusionBox extends TileEntity implements IAcceptBurnPower {
 		@Override
 		@Nonnull
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (stack.getItem() != ESInitInstance.ITEMS.MAGIC_PIECE)
+			if (stack.getItem() != ESInit.ITEMS.MAGIC_PIECE)
 				return stack;
 			return super.insertItem(slot, stack, simulate);
 		}
@@ -93,8 +93,8 @@ public class TileInfusionBox extends TileEntity implements IAcceptBurnPower {
 		if (biome != Biomes.PLAINS)
 			return false;
 		if (time.at(WorldTime.Period.DAWN) || time.at(WorldTime.Period.DUSK)) {
-			this.infusionBecome(10, ESInitInstance.ITEMS.MAGIC_CRYSTAL,
-					new ItemStack(ESInitInstance.ITEMS.ELEMENT_CRYSTAL));
+			this.infusionBecome(10, ESInit.ITEMS.MAGIC_CRYSTAL,
+					new ItemStack(ESInit.ITEMS.ELEMENT_CRYSTAL));
 			return true;
 		}
 		return false;
@@ -119,8 +119,8 @@ public class TileInfusionBox extends TileEntity implements IAcceptBurnPower {
 				}
 			}
 			if (count >= 14) {
-				this.infusionBecome(7, ESInitInstance.ITEMS.MAGIC_CRYSTAL,
-						new ItemStack(ESInitInstance.ITEMS.SPELL_CRYSTAL));
+				this.infusionBecome(7, ESInit.ITEMS.MAGIC_CRYSTAL,
+						new ItemStack(ESInit.ITEMS.SPELL_CRYSTAL));
 				return true;
 			}
 		}
@@ -130,7 +130,7 @@ public class TileInfusionBox extends TileEntity implements IAcceptBurnPower {
 	private void doLast(WorldTime time, Biome biome) {
 		if (time.at(WorldTime.Period.DAY)) {
 			if (biome.getRainfall() <= 0.5f && !world.isRaining())
-				this.infusionBecome(3, ESInitInstance.ITEMS.KYANITE, new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL));
+				this.infusionBecome(3, ESInit.ITEMS.KYANITE, new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL));
 		}
 	}
 

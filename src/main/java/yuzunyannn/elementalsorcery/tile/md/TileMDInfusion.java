@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
 public class TileMDInfusion extends TileMDBase implements ITickable {
@@ -115,9 +115,9 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 		}
 	}
 
-	public final static ElementStack MAGIC1 = new ElementStack.Unchangeable(ESInitInstance.ELEMENTS.MAGIC, 20, 25);
-	public final static ElementStack MAGIC2 = new ElementStack.Unchangeable(ESInitInstance.ELEMENTS.MAGIC, 40, 100);
-	public final static ElementStack MAGIC3 = new ElementStack.Unchangeable(ESInitInstance.ELEMENTS.MAGIC, 100, 200);
+	public final static ElementStack MAGIC1 = new ElementStack.Unchangeable(ESInit.ELEMENTS.MAGIC, 20, 25);
+	public final static ElementStack MAGIC2 = new ElementStack.Unchangeable(ESInit.ELEMENTS.MAGIC, 40, 100);
+	public final static ElementStack MAGIC3 = new ElementStack.Unchangeable(ESInit.ELEMENTS.MAGIC, 100, 200);
 
 	public static ElementStack getMaxOfferMagic(int index) {
 		switch (index) {
@@ -245,26 +245,26 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 
 	static public void init() {
 		recipes.clear();
-		final ESObjects.Items ITEMS = ESInitInstance.ITEMS;
+		final ESObjects.Items ITEMS = ESInit.ITEMS;
 		Recipe.ITest awalysTrue = (world, pos) -> {
 			return true;
 		};
 		addRecipe(Items.REEDS, ITEMS.NATURE_CRYSTAL, 20, 20, awalysTrue);
 		addRecipe(Items.GOLD_INGOT, ITEMS.MAGIC_GOLD, 40, 20, awalysTrue);
-		addRecipe(ITEMS.MAGIC_CRYSTAL, ESInitInstance.ITEMS.ELEMENT_CRYSTAL, 100, 20, (world, pos) -> {
+		addRecipe(ITEMS.MAGIC_CRYSTAL, ESInit.ITEMS.ELEMENT_CRYSTAL, 100, 20, (world, pos) -> {
 			Biome biome = world.getBiome(pos);
 			WorldTime time = new WorldTime(world);
 			if (biome != Biomes.PLAINS) return false;
 			if (time.at(WorldTime.Period.DAWN) || time.at(WorldTime.Period.DUSK)) return true;
 			return false;
 		});
-		addRecipe(ESInitInstance.ITEMS.KYANITE, ESInitInstance.ITEMS.MAGIC_CRYSTAL, 20, 20, (world, pos) -> {
+		addRecipe(ESInit.ITEMS.KYANITE, ESInit.ITEMS.MAGIC_CRYSTAL, 20, 20, (world, pos) -> {
 			Biome biome = world.getBiome(pos);
 			WorldTime time = new WorldTime(world);
 			if (time.at(WorldTime.Period.DAY)) return biome.getRainfall() <= 0.5f && !world.isRaining();
 			return false;
 		});
-		addRecipe(ESInitInstance.ITEMS.MAGIC_CRYSTAL, ESInitInstance.ITEMS.SPELL_CRYSTAL, 40, 20, (world, pos) -> {
+		addRecipe(ESInit.ITEMS.MAGIC_CRYSTAL, ESInit.ITEMS.SPELL_CRYSTAL, 40, 20, (world, pos) -> {
 			WorldTime time = new WorldTime(world);
 			if (!time.at(WorldTime.Period.MIDNIGHT)) return false;
 			int count = 0;
@@ -284,7 +284,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 			}
 			return count >= 14;
 		});
-		addRecipe(ESInitInstance.ITEMS.ELF_CRYSTAL, ESInitInstance.ITEMS.ARCHITECTURE_CRYSTAL, 40, 20, (world, pos) -> {
+		addRecipe(ESInit.ITEMS.ELF_CRYSTAL, ESInit.ITEMS.ARCHITECTURE_CRYSTAL, 40, 20, (world, pos) -> {
 			Biome biome = world.getBiome(pos);
 			if (biome != Biomes.DESERT && biome != Biomes.DESERT_HILLS && biome != Biomes.MUTATED_DESERT) return false;
 			final int size = 4;

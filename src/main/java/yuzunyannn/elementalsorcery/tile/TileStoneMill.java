@@ -23,7 +23,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 public class TileStoneMill extends TileEntityNetwork implements ITickable {
@@ -45,7 +45,7 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 		@Override
 		@Nonnull
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (Block.getBlockFromItem(stack.getItem()) != ESInitInstance.BLOCKS.STAR_STONE)
+			if (Block.getBlockFromItem(stack.getItem()) != ESInit.BLOCKS.STAR_STONE)
 				return stack;
 			if (slot < 0 || slot >= this.getSlots())
 				return stack;
@@ -169,7 +169,7 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 
 	/** 获取产物 */
 	public ItemStack getResult(ItemStack stack) {
-		return new ItemStack(ESInitInstance.BLOCKS.STAR_SAND);
+		return new ItemStack(ESInit.BLOCKS.STAR_SAND);
 	}
 
 	/** 获取产物消耗的粉尘数 */

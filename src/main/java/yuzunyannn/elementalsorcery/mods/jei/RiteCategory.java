@@ -11,7 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 
 public class RiteCategory implements IRecipeCategory<RiteRecipeWrapper> {
@@ -53,11 +53,11 @@ public class RiteCategory implements IRecipeCategory<RiteRecipeWrapper> {
 		group.init(1, true, 4 + 18, 3);
 		group.set(1, new ItemStack(Items.DYE));
 		group.init(2, true, 4, 3 + 18);
-		group.set(2, new ItemStack(ESInitInstance.ITEMS.PARCHMENT));
+		group.set(2, new ItemStack(ESInit.ITEMS.PARCHMENT));
 		group.init(3, true, 4 + 18, 3 + 18);
 		group.set(3, r.parchmentInput());
 
-		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.PARCHMENT);
+		ItemStack stack = new ItemStack(ESInit.ITEMS.PARCHMENT);
 		RecipeRiteWrite.setInnerStack(stack, r.parchmentInput());
 		group.init(4, true, 4 + 18 + 18 + 42, 3 + 18);
 		group.set(4, stack);

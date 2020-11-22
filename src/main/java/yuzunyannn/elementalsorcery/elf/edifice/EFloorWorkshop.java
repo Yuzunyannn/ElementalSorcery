@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
@@ -43,7 +43,7 @@ public class EFloorWorkshop extends ElfEdificeFloor {
 	}
 
 	@Override
-	public NBTTagCompound getBuildData(IBuilder builder, Random rand) {
+	public NBTTagCompound createBuildData(IBuilder builder, Random rand) {
 		return new BuilderHelper(builder).toward(rand).getNBT();
 	}
 
@@ -117,8 +117,8 @@ public class EFloorWorkshop extends ElfEdificeFloor {
 			}
 		}
 		// 一排灶台
-		IBlockState HEARTH = ESInitInstance.BLOCKS.HEARTH.getDefaultState();
-		IBlockState SMELT_BOX = ESInitInstance.BLOCKS.SMELT_BOX.getDefaultState().withProperty(BlockSmeltBox.FACING,
+		IBlockState HEARTH = ESInit.BLOCKS.HEARTH.getDefaultState();
+		IBlockState SMELT_BOX = ESInit.BLOCKS.SMELT_BOX.getDefaultState().withProperty(BlockSmeltBox.FACING,
 				toward);
 		{
 			int size = GenElfEdifice.getFakeCircleLen(treeSize, treeSize + 1, 2) - 1;
@@ -151,10 +151,10 @@ public class EFloorWorkshop extends ElfEdificeFloor {
 				ItemStack stack = ItemStack.EMPTY;
 				switch (rand.nextInt(10)) {
 				case 0:
-					stack = new ItemStack(ESInitInstance.ITEMS.KYANITE_PICKAXE);
+					stack = new ItemStack(ESInit.ITEMS.KYANITE_PICKAXE);
 					break;
 				case 1:
-					stack = new ItemStack(ESInitInstance.ITEMS.MANUAL);
+					stack = new ItemStack(ESInit.ITEMS.MANUAL);
 					break;
 				case 2:
 				case 3:

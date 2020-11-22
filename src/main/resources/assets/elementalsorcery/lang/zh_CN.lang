@@ -61,6 +61,7 @@ item.parcel.name=包裹
 item.addressPlate.normal.name=地址牌
 item.addressPlate.vip.name=超级地址牌
 item.elfStar.name=精灵之星
+item.jumpGem.name=折光宝石
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -129,6 +130,7 @@ tile.portalAltar.name=折光祭坛
 tile.transcribeTable.name=撰录方桌
 tile.transcribeInjection.name=咒文撰录祭坛
 tile.elfBeacon.name=精灵信标
+tile.researcher.name=研究方桌
 
 element.void.name=虚空
 element.magic.name=魔力
@@ -180,8 +182,9 @@ pro.merchant=商人
 pro.ironsmith=铁匠
 pro.builder=建筑工
 pro.receptionist=接待员
-pro.post_receptionist=邮局接待员
+pro.postReceptionist=邮局接待员
 pro.postman=邮递员
+pro.researcher=研究员
 
 commands.es.usage=/es <操作> <参数>...
 commands.es.buildFloor.usage=/es buildFloor <层的名称>
@@ -354,6 +357,7 @@ say.add.service.help=您是高级地址牌用户，您可以花费%s元来增加
 say.add.service.success=以成功为您增加了10次服务次数
 say.your.pracel=%s：您的包裹到了
 say.post.first.welfare=您是第一次来使用我们的快递服务，我们特此为您准了一个新手委托，请您收下。
+say.how.research=你可以去那边的方桌上进行研究，花费研究点数在不同的题目上，没准可以研究出你想要的东西出来。
 
 floor.hall.name=大厅
 floor.livingRoom.name=住房

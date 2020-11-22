@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
@@ -29,7 +29,7 @@ import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 public class MantraLush extends MantraCommon {
 
 	protected static class Data extends MantraDataCommon {
-		ElementStack power = new ElementStack(ESInitInstance.ELEMENTS.WOOD, 0);
+		ElementStack power = new ElementStack(ESInit.ELEMENTS.WOOD, 0);
 
 		int size = 0;
 	}
@@ -41,7 +41,7 @@ public class MantraLush extends MantraCommon {
 
 	@Override
 	public Element getMagicCircle() {
-		return ESInitInstance.ELEMENTS.WOOD;
+		return ESInit.ELEMENTS.WOOD;
 	}
 
 	@Override
@@ -87,7 +87,7 @@ public class MantraLush extends MantraCommon {
 			return;
 		}
 		// 每tick两点消耗
-		ElementStack need = new ElementStack(ESInitInstance.ELEMENTS.WOOD, 1, 50);
+		ElementStack need = new ElementStack(ESInit.ELEMENTS.WOOD, 1, 50);
 		ElementStack estack = caster.iWantSomeElement(need, true);
 		if (estack.isEmpty()) return;
 		data.power.grow(estack);
@@ -180,11 +180,11 @@ public class MantraLush extends MantraCommon {
 		// 可生长的植物
 		if (state.isFullBlock()) return;
 		// 生命之花
-		if (block == ESInitInstance.BLOCKS.LIFE_FLOWER) {
+		if (block == ESInit.BLOCKS.LIFE_FLOWER) {
 			world.scheduleUpdate(pos, state.getBlock(), 0);
 			return;
 		}
-		if (block == ESInitInstance.BLOCKS.ELF_SAPLING && power > 600) {
+		if (block == ESInit.BLOCKS.ELF_SAPLING && power > 600) {
 			if (rand.nextFloat() < dP * 0.05) {
 				((BlockElfSapling) block).superGrow(world, rand, pos, state, true);
 				return;

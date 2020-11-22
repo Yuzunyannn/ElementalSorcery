@@ -2,13 +2,14 @@
 	"pattern": [
 		"MGM",
 		"M M",
-		"P#P",
+		"PJP",
 		" MM ",
 		" LL ",
 		"W##W",
 		"####"
 	],
 	"key": {
+		"J": "elementalsorcery:jump_gem",
 		"P": "elementalsorcery:magic_stone",
 		"#": {
 			"item": "elementalsorcery:estone",

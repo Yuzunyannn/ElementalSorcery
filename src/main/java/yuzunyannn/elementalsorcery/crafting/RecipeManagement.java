@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.elf.researcher.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.init.ESImplRegister;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
@@ -37,13 +38,15 @@ public class RecipeManagement extends ESImplRegister<IRecipe> {
 		return null;
 	}
 
-	public static void RegisterAll() {
+	public static void registerAll() {
 		// 魔法书桌自动机合成
 		TileMagicDesk.init();
 		// 碎石修复注册
 		TileMDRubbleRepair.init();
 		// 注魔机
 		TileMDInfusion.init();
+		// 研究
+		ResearchRecipeManagement.registerAll();
 		// 加载json
 		for (ModContainer mod : Loader.instance().getActiveModList()) loadRecipes(mod);
 	}

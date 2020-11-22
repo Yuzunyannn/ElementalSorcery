@@ -5,12 +5,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 
 @SideOnly(Side.CLIENT)
 public class RenderObjects {
 
-	static final public ItemStack MAGIC_STONE = new ItemStack(ESInitInstance.ITEMS.MAGIC_STONE);
+	static final public ItemStack MAGIC_STONE = new ItemStack(ESInit.ITEMS.MAGIC_STONE);
 
 	static final public ResourceLocation CRAFTING_TABLE = MCRes("textures/gui/container/crafting_table.png");
 	static final public ResourceLocation STONE = MCRes("textures/blocks/stone.png");

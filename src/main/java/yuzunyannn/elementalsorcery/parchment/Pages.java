@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionScholar;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.util.json.Json;
@@ -205,25 +205,25 @@ public class Pages {
 	}
 
 	static private void initItemToId() {
-		addItemId(ESInitInstance.BLOCKS.MD_INFUSION, ABOUT_INFUSION);
-		addItemId(ESInitInstance.BLOCKS.MD_TRANSFER, ABOUT_MD);
-		addItemId(ESInitInstance.BLOCKS.MD_MAGIC_GEN, ABOUT_MD);
-		addItemId(ESInitInstance.BLOCKS.MAGIC_TORCH, ABOUT_MD);
-		addItemId(ESInitInstance.BLOCKS.ASTONE, ABOUT_ASTONE);
-		addItemId(ESInitInstance.BLOCKS.MELT_CAULDRON, ABOUT_MELT_CAULDRON);
-		addItemId(ESInitInstance.ITEMS.MAGIC_STONE, ABOUT_MAGIC_STONE);
-		addItemId(ESInitInstance.BLOCKS.STONE_MILL, ABOUT_STONE_MILL);
-		addItemId(ESInitInstance.BLOCKS.KYANITE_ORE, ABOUT_KYANITE);
-		addItemId(ESInitInstance.ITEMS.KYANITE, ABOUT_KYANITE);
-		addItemId(ESInitInstance.ITEMS.MAGIC_PIECE, ABOUT_MAGIC_PIECE);
-		addItemId(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE, ABOUT_MAGICAL_ENDEREYE);
-		addItemId(ESInitInstance.ITEMS.MAGIC_CRYSTAL, ABOUT_MAGIC_CRYSTAL);
-		addItemId(ESInitInstance.ITEMS.SPELL_CRYSTAL, ABOUT_SPELL_CRYSTAL);
-		addItemId(ESInitInstance.ITEMS.ELEMENT_CRYSTAL, ABOUT_ELEMENT_CRY);
-		addItemId(ESInitInstance.ITEMS.SPELLBOOK_COVER, ABOUT_BOOKCOVER);
-		addItemId(ESInitInstance.ITEMS.SPELLBOOK, ABOUT_SPELLBOOK);
-		addItemId(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, ABOUT_ENCHANTINGBOOK);
-		addItemId(ESInitInstance.ITEMS.SPELL_PAPER, ABOUT_SPELL_PAPER);
+		addItemId(ESInit.BLOCKS.MD_INFUSION, ABOUT_INFUSION);
+		addItemId(ESInit.BLOCKS.MD_TRANSFER, ABOUT_MD);
+		addItemId(ESInit.BLOCKS.MD_MAGIC_GEN, ABOUT_MD);
+		addItemId(ESInit.BLOCKS.MAGIC_TORCH, ABOUT_MD);
+		addItemId(ESInit.BLOCKS.ASTONE, ABOUT_ASTONE);
+		addItemId(ESInit.BLOCKS.MELT_CAULDRON, ABOUT_MELT_CAULDRON);
+		addItemId(ESInit.ITEMS.MAGIC_STONE, ABOUT_MAGIC_STONE);
+		addItemId(ESInit.BLOCKS.STONE_MILL, ABOUT_STONE_MILL);
+		addItemId(ESInit.BLOCKS.KYANITE_ORE, ABOUT_KYANITE);
+		addItemId(ESInit.ITEMS.KYANITE, ABOUT_KYANITE);
+		addItemId(ESInit.ITEMS.MAGIC_PIECE, ABOUT_MAGIC_PIECE);
+		addItemId(ESInit.ITEMS.MAGICAL_ENDER_EYE, ABOUT_MAGICAL_ENDEREYE);
+		addItemId(ESInit.ITEMS.MAGIC_CRYSTAL, ABOUT_MAGIC_CRYSTAL);
+		addItemId(ESInit.ITEMS.SPELL_CRYSTAL, ABOUT_SPELL_CRYSTAL);
+		addItemId(ESInit.ITEMS.ELEMENT_CRYSTAL, ABOUT_ELEMENT_CRY);
+		addItemId(ESInit.ITEMS.SPELLBOOK_COVER, ABOUT_BOOKCOVER);
+		addItemId(ESInit.ITEMS.SPELLBOOK, ABOUT_SPELLBOOK);
+		addItemId(ESInit.ITEMS.SPELLBOOK_ENCHANTMENT, ABOUT_ENCHANTINGBOOK);
+		addItemId(ESInit.ITEMS.SPELL_PAPER, ABOUT_SPELL_PAPER);
 	}
 
 	static private void addItemId(Block block, String id) {
@@ -266,8 +266,8 @@ public class Pages {
 
 	static private Page aboutStela() {
 		return new PageMultS(2, new PageSimple("how2ply"),
-				new PageCraftingSimple("parchment", ESInitInstance.ITEMS.PARCHMENT), new PageSimple("stela",
-						new ItemStack(ESInitInstance.BLOCKS.STELA), new ItemStack(ESInitInstance.BLOCKS.STELA)));
+				new PageCraftingSimple("parchment", ESInit.ITEMS.PARCHMENT), new PageSimple("stela",
+						new ItemStack(ESInit.BLOCKS.STELA), new ItemStack(ESInit.BLOCKS.STELA)));
 	}
 
 }

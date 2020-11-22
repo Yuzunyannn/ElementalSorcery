@@ -13,7 +13,7 @@ import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
 public class ESCraftingRegistries {
 	public static final void registerAll() {
 		// 注册所有合成
-		RecipeManagement.RegisterAll();
+		RecipeManagement.registerAll();
 		// 注册所有烧炼
 		registerAllSmelting();
 		// 注册合成表
@@ -25,8 +25,8 @@ public class ESCraftingRegistries {
 	}
 
 	private static void registerAllSmelting() {
-		ESObjects.Items ITEMS = ESInitInstance.ITEMS;
-		ESObjects.Blocks BLOCKS = ESInitInstance.BLOCKS;
+		ESObjects.Items ITEMS = ESInit.ITEMS;
+		ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
 		GameRegistry.addSmelting(BLOCKS.KYANITE_ORE, new ItemStack(ITEMS.KYANITE), 0.5f);
 		GameRegistry.addSmelting(new ItemStack(BLOCKS.ELF_FRUIT, 1, 2), new ItemStack(ITEMS.ELF_CRYSTAL), 0.25f);
 	}

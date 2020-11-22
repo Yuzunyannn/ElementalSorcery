@@ -19,7 +19,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
@@ -34,7 +34,7 @@ public class MantraBlockCrash extends MantraCommon {
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		ElementStack need = new ElementStack(ESInitInstance.ELEMENTS.EARTH, 10, 25);
+		ElementStack need = new ElementStack(ESInit.ELEMENTS.EARTH, 10, 25);
 		ElementStack get = caster.iWantSomeElement(need, false);
 		dataEffect.markContinue(!get.isEmpty());
 	}
@@ -65,7 +65,7 @@ public class MantraBlockCrash extends MantraCommon {
 		}
 		if (state.getBlock() instanceof ITileEntityProvider) return;
 		if (!state.isFullBlock()) return;
-		ElementStack need = new ElementStack(ESInitInstance.ELEMENTS.EARTH, 10, 25);
+		ElementStack need = new ElementStack(ESInit.ELEMENTS.EARTH, 10, 25);
 		ElementStack stack = caster.iWantSomeElement(need, true);
 		if (stack.isEmpty()) return;
 		float speed = MathHelper.clamp(MathHelper.sqrt(stack.getPower() / 10) / 4, 1, 5);
@@ -97,7 +97,7 @@ public class MantraBlockCrash extends MantraCommon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Element getMagicCircle() {
-		return ESInitInstance.ELEMENTS.EARTH;
+		return ESInit.ELEMENTS.EARTH;
 	}
 
 	@Override

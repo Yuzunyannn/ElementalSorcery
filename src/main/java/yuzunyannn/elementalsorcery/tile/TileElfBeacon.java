@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -36,7 +36,7 @@ public class TileElfBeacon extends TileEntityNetwork implements IGetItemStack, I
 
 	@Override
 	public boolean canSetStack(ItemStack stack) {
-		return stack.getItem() == ESInitInstance.ITEMS.ADDRESS_PLATE;
+		return stack.getItem() == ESInit.ITEMS.ADDRESS_PLATE;
 	}
 
 	@Override

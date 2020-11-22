@@ -26,7 +26,7 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
@@ -41,7 +41,7 @@ public class ElfProfessionPostman extends ElfProfessionNone {
 			this.onClientElfEffect(elf);
 			return;
 		}
-		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInitInstance.ITEMS.PARCEL));
+		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.PARCEL));
 		elf.world.playSound((EntityPlayer) null, elf.posX, elf.posY, elf.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT,
 				SoundCategory.HOSTILE, 1.0F, 1.0F);
 	}

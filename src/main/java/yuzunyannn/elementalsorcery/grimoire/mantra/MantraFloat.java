@@ -10,7 +10,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class MantraFloat extends MantraCommon {
@@ -30,7 +30,7 @@ public class MantraFloat extends MantraCommon {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (caster.iWantKnowCastTick() % 5 == 0 || !dataEffect.isMarkContinue()) {
 			dataEffect.markContinue(false);
-			ElementStack need = new ElementStack(ESInitInstance.ELEMENTS.AIR, 1, 20);
+			ElementStack need = new ElementStack(ESInit.ELEMENTS.AIR, 1, 20);
 			ElementStack get = caster.iWantSomeElement(need, true);
 			if (get.isEmpty()) return;
 		}
@@ -44,7 +44,7 @@ public class MantraFloat extends MantraCommon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Element getMagicCircle() {
-		return ESInitInstance.ELEMENTS.AIR;
+		return ESInit.ELEMENTS.AIR;
 	}
 
 	@Override

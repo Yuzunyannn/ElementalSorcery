@@ -33,7 +33,7 @@ import yuzunyannn.elementalsorcery.api.tile.IAcceptMagicPesky;
 import yuzunyannn.elementalsorcery.api.tile.IProvideMagic;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
 import yuzunyannn.elementalsorcery.util.IField;
@@ -45,7 +45,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	/** 给予魔力的目标 */
 	protected TargetInfo[] targets = new TargetInfo[6];
 	/** 魔力仓库使用 */
-	protected ElementStack magic = new ElementStack(ESInitInstance.ELEMENTS.MAGIC, 0, 25);
+	protected ElementStack magic = new ElementStack(ESInit.ELEMENTS.MAGIC, 0, 25);
 	/** 需求的仓库 */
 	protected ItemStackHandler inventory = this.initItemStackHandler();
 
@@ -452,7 +452,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	/** 判断制定方向是否有torch */
 	public boolean hasTorch(EnumFacing facing) {
 		IBlockState state = this.world.getBlockState(pos.offset(facing));
-		return state.getBlock() == ESInitInstance.BLOCKS.MAGIC_TORCH
+		return state.getBlock() == ESInit.BLOCKS.MAGIC_TORCH
 				&& state.getValue(BlockMagicTorch.FACING) == facing;
 	}
 

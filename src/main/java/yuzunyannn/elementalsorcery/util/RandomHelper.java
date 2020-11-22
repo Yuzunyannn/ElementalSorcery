@@ -1,10 +1,8 @@
 package yuzunyannn.elementalsorcery.util;
 
 import java.lang.reflect.Array;
-import java.util.AbstractMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.Random;
 
 public class RandomHelper {
@@ -44,23 +42,37 @@ public class RandomHelper {
 
 	static public class WeightRandom<T> {
 
-		protected List<Entry<T, Integer>> list = new LinkedList<>();
+		private class Pair {
+			final T obj;
+			double weight;
 
-		public void add(T obj, int weight) {
-			list.add(new AbstractMap.SimpleEntry(obj, weight));
+			protected Pair(T obj, double weight) {
+				this.obj = obj;
+				this.weight = weight;
+			}
+		}
+
+		protected List<Pair> list = new LinkedList<>();
+
+		public void add(T obj, double weight) {
+			list.add(new Pair(obj, weight));
+		}
+
+		public void fixWeight(double weight) {
+			for (Pair pair : list) pair.weight += weight;
 		}
 
 		public T get(Random rand) {
 			if (this.isEmpty()) return null;
-			int we = 0;
-			for (Entry<T, Integer> entry : list) we += entry.getValue();
-			int at = rand.nextInt(we);
+			double we = 0;
+			for (Pair pair : list) we += pair.weight;
+			double at = rand.nextFloat() * we;
 			we = 0;
-			for (Entry<T, Integer> entry : list) {
-				we += entry.getValue();
-				if (at < we) return entry.getKey();
+			for (Pair pair : list) {
+				we += pair.weight;
+				if (at < we) return pair.obj;
 			}
-			return list.get(list.size() - 1).getKey();
+			return list.get(rand.nextInt(list.size())).obj;
 		}
 
 		public T get() {

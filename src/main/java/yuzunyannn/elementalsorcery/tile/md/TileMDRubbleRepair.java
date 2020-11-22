@@ -13,7 +13,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
 import yuzunyannn.elementalsorcery.util.GameHelper;
 
@@ -65,25 +65,25 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 
 	static public void init() {
 		addRecipe(Blocks.COBBLESTONE, Blocks.STONE, 1);
-		addRecipe(new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, BlockAStone.EnumType.FRAGMENTED.ordinal()),
-				new ItemStack(ESInitInstance.BLOCKS.ASTONE), 10);
+		addRecipe(new ItemStack(ESInit.BLOCKS.ASTONE, 1, BlockAStone.EnumType.FRAGMENTED.ordinal()),
+				new ItemStack(ESInit.BLOCKS.ASTONE), 10);
 		addRecipe(new ItemStack(Blocks.STONEBRICK, 1, 2), new ItemStack(Blocks.STONEBRICK), 1);
 		// 展示用
 		GameHelper.clientRun(() -> {
-			ItemStack input = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_AXE, 1, 1);
-			ItemStack output = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_AXE, 1, 0);
+			ItemStack input = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_AXE, 1, 1);
+			ItemStack output = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_AXE, 1, 0);
 			addRecipe(input, output, 10);
-			input = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_PICKAXE, 1, 1);
-			output = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_PICKAXE, 1, 0);
+			input = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_PICKAXE, 1, 1);
+			output = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_PICKAXE, 1, 0);
 			addRecipe(input, output, 10);
-			input = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_HOE, 1, 1);
-			output = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_HOE, 1, 0);
+			input = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_HOE, 1, 1);
+			output = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_HOE, 1, 0);
 			addRecipe(input, output, 10);
-			input = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_SPADE, 1, 1);
-			output = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_SPADE, 1, 0);
+			input = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_SPADE, 1, 1);
+			output = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_SPADE, 1, 0);
 			addRecipe(input, output, 10);
-			input = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_SWORD, 1, 1);
-			output = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_SWORD, 1, 0);
+			input = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_SWORD, 1, 1);
+			output = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_SWORD, 1, 0);
 			addRecipe(input, output, 10);
 		});
 	}

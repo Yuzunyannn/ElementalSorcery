@@ -42,7 +42,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.event.EventServer;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
 public class BlockElfFruit extends Block implements Mapper {
@@ -226,7 +226,7 @@ public class BlockElfFruit extends Block implements Mapper {
 		int growState = state.getValue(STAGE);
 		if (growState < MAX_STATE) {
 			// 检测上面是否为树叶
-			if (worldIn.getBlockState(pos.up()).getBlock() != ESInitInstance.BLOCKS.ELF_LEAF) return;
+			if (worldIn.getBlockState(pos.up()).getBlock() != ESInit.BLOCKS.ELF_LEAF) return;
 			if (!worldIn.getBlockState(pos.up()).getValue(BlockElfLeaf.DECAYABLE)) return;
 			WorldTime time = new WorldTime(worldIn);
 			if (!time.at(WorldTime.Period.DAY)) return;

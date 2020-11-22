@@ -27,7 +27,7 @@ import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESImplRegister;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 
 public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
@@ -45,10 +45,18 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	static public final ElfProfession RECEPTIONIST = new ElfProfessionReceptionist();
 	static public final ElfProfession IRONSMITH = new ElfProfessionIronSmith();
 	static public final ElfProfession POST_RECEPTIONIST = new ElfProfessionPostReceptionist();
-	static public final ElfProfessionPostman POSTMAN = new ElfProfessionPostman();
+	static public final ElfProfession POSTMAN = new ElfProfessionPostman();
+	static public final ElfProfession RESEARCHER = new ElfProfessionResearcher();
+
+	protected String unlocalizedName;
+
+	public ElfProfession setUnlocalizedName(String unlocalizedName) {
+		this.unlocalizedName = unlocalizedName;
+		return this;
+	}
 
 	public String getUnlocalizedProfessionName() {
-		return "pro." + this.getRegistryName().getResourcePath();
+		return "pro." + unlocalizedName + ".name";
 	}
 
 	/**
@@ -85,8 +93,8 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	 * @return true表示要建起来，false表示不要建起来
 	 */
 	public boolean needPickup(EntityElfBase elf, ItemStack stack) {
-		return stack.getItem() == Item.getItemFromBlock(ESInitInstance.BLOCKS.ELF_FRUIT)
-				|| stack.getItem() == ESInitInstance.ITEMS.ELF_COIN;
+		return stack.getItem() == Item.getItemFromBlock(ESInit.BLOCKS.ELF_FRUIT)
+				|| stack.getItem() == ESInit.ITEMS.ELF_COIN;
 	}
 
 	/** 获取攻击的目标 */

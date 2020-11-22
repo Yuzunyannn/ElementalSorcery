@@ -6,8 +6,8 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class OreDictionaryRegistries {
 	public static final void registerAll() {
-		ESObjects.Items ITEMS = ESInitInstance.ITEMS;
-		ESObjects.Blocks BLOCKS = ESInitInstance.BLOCKS;
+		ESObjects.Items ITEMS = ESInit.ITEMS;
+		ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
 		OreDictionary.registerOre("kyanite", ITEMS.KYANITE);
 		OreDictionary.registerOre("oreKyanite", BLOCKS.KYANITE_ORE);
 		OreDictionary.registerOre("blockKyanite", BLOCKS.KYANITE_BLOCK);

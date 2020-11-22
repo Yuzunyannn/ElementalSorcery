@@ -28,6 +28,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiMDRubbleRepair;
 import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
 import yuzunyannn.elementalsorcery.container.gui.GuiQuest;
+import yuzunyannn.elementalsorcery.container.gui.GuiResearcher;
 import yuzunyannn.elementalsorcery.container.gui.GuiRiteManual;
 import yuzunyannn.elementalsorcery.container.gui.GuiSimple;
 import yuzunyannn.elementalsorcery.container.gui.GuiSmeltBox;
@@ -50,6 +51,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_RITE_MANUAL = 11;
 	public static final int GUI_ITEM_STRUCTURE_CRAFT = 12;
 	public static final int GUI_TRANSCRIBE_INJECTION = 13;
+	public static final int GUI_RESEARCHER = 14;
 
 	public static final int GUI_MD_MAGIC_GEN = 21;
 	public static final int GUI_MD_HEARTH = 22;
@@ -73,14 +75,15 @@ public class ESGuiHandler implements IGuiHandler {
 	@Override
 	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		try {
-			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileEntity = world.getTileEntity(pos);
 			switch (ID) {
 			case GUI_HEARTH:
 				return new ContainerHearth(player, tileEntity);
 			case GUI_SMELT_BOX:
 				return new ContainerSmeltBox(player, tileEntity);
 			case GUI_ELEMENT_WORKBENCH:
-				return new ContainerElementWorkbench(player.inventory, world, new BlockPos(x, y, z));
+				return new ContainerElementWorkbench(player.inventory, world, pos);
 			case GUI_PARCHMENT:
 				return new ContainerParchment(player);
 			case GUI_ELEMENT_CRAFTING_TABLE:
@@ -92,11 +95,13 @@ public class ESGuiHandler implements IGuiHandler {
 			case GUI_INVENTORY_WORKBENCH:
 				return new ContainerWorkbenchWithInventory(player, tileEntity);
 			case GUI_RITE_MANUAL:
-				return new ContainerRiteManual(player.inventory, world, new BlockPos(x, y, z));
+				return new ContainerRiteManual(player.inventory, world, pos);
 			case GUI_ITEM_STRUCTURE_CRAFT:
 				return new ContainerItemStructureCraft(player, tileEntity);
 			case GUI_TRANSCRIBE_INJECTION:
 				return new ContainerTranscribeInjection(player, tileEntity);
+			case GUI_RESEARCHER:
+				return new ContainerResearcher(player, pos);
 
 			case GUI_MD_MAGIC_GEN:
 				return new ContainerMDMagicGen(player, tileEntity);
@@ -136,15 +141,15 @@ public class ESGuiHandler implements IGuiHandler {
 	@Override
 	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
 		try {
-			TileEntity tileEntity = world.getTileEntity(new BlockPos(x, y, z));
+			BlockPos pos = new BlockPos(x, y, z);
+			TileEntity tileEntity = world.getTileEntity(pos);
 			switch (ID) {
 			case GUI_HEARTH:
 				return new GuiHearth(new ContainerHearth(player, tileEntity), player.inventory);
 			case GUI_SMELT_BOX:
 				return new GuiSmeltBox(new ContainerSmeltBox(player, tileEntity), player.inventory);
 			case GUI_ELEMENT_WORKBENCH:
-				return new GuiElementWorkbench(
-						new ContainerElementWorkbench(player.inventory, world, new BlockPos(x, y, z)),
+				return new GuiElementWorkbench(new ContainerElementWorkbench(player.inventory, world, pos),
 						player.inventory);
 			case GUI_PARCHMENT:
 				return new GuiParchment(new ContainerParchment(player));
@@ -159,11 +164,13 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiSimple(new ContainerWorkbenchWithInventory(player, tileEntity), player.inventory,
 						"tile.supremeTable.name", TEXTURE_CRAFTING_TABLE);
 			case GUI_RITE_MANUAL:
-				return new GuiRiteManual(new ContainerRiteManual(player.inventory, world, new BlockPos(x, y, z)));
+				return new GuiRiteManual(new ContainerRiteManual(player.inventory, world, pos));
 			case GUI_ITEM_STRUCTURE_CRAFT:
 				return new GuiItemStructureCraft(new ContainerItemStructureCraft(player, tileEntity));
 			case GUI_TRANSCRIBE_INJECTION:
 				return new GuiTranscribeInjection(new ContainerTranscribeInjection(player, tileEntity));
+			case GUI_RESEARCHER:
+				return new GuiResearcher(player, pos);
 
 			case GUI_MD_MAGIC_GEN:
 				return new GuiMDMagicGen(new ContainerMDMagicGen(player, tileEntity), player.inventory);

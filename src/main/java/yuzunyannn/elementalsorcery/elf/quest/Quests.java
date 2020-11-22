@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.util.item.ItemRec;
 
@@ -107,7 +107,7 @@ public class Quests {
 		type.addPrecondition(QuestCondition.REGISTRY.newInstance(QuestConditionDelegate.class).delegate(player));
 		describe.setTitle("quest.newbie.task");
 		describe.addDescribe("quest.post.first.welfare", player.getName());
-		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.ELF_STAR);
+		ItemStack stack = new ItemStack(ESInit.ITEMS.ELF_STAR);
 		type.addReward(QuestReward.REGISTRY.newInstance(QuestRewardItem.class).item(stack));
 		return new Quest(type);
 	}

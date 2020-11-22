@@ -21,7 +21,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
@@ -63,7 +63,7 @@ public class TileStela extends TileEntityNetwork {
 		@Override
 		public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
 			// 如果物品不是羊皮纸
-			if (stack.getItem() != ESInitInstance.ITEMS.PARCHMENT) return stack;
+			if (stack.getItem() != ESInit.ITEMS.PARCHMENT) return stack;
 			// 有内容的东西不能放入
 			if (Pages.isVaild(stack)) return stack;
 			return super.insertItem(slot, stack, simulate);
@@ -160,60 +160,60 @@ public class TileStela extends TileEntityNetwork {
 	/** 初始化 */
 	static public void init() {
 		// 蓝晶石矿
-		addToMap(ESInitInstance.BLOCKS.KYANITE_ORE, Pages.ABOUT_KYANITE);
+		addToMap(ESInit.BLOCKS.KYANITE_ORE, Pages.ABOUT_KYANITE);
 		// 蓝晶石方块
-		addToMap(ESInitInstance.BLOCKS.KYANITE_BLOCK, Pages.ABOUT_KYANITE);
+		addToMap(ESInit.BLOCKS.KYANITE_BLOCK, Pages.ABOUT_KYANITE);
 		// 烧炼箱
-		addToMap(ESInitInstance.BLOCKS.SMELT_BOX, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH);
-		addToMap(ESInitInstance.BLOCKS.SMELT_BOX_IRON, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH,
+		addToMap(ESInit.BLOCKS.SMELT_BOX, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH);
+		addToMap(ESInit.BLOCKS.SMELT_BOX_IRON, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH,
 				Pages.ABOUT_MAGIC_PIECE);
-		addToMap(ESInitInstance.BLOCKS.SMELT_BOX_KYANITE, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH,
+		addToMap(ESInit.BLOCKS.SMELT_BOX_KYANITE, Pages.ABOUT_SMELT_BOX, Pages.ABOUT_HEARTH,
 				Pages.ABOUT_MAGIC_PIECE, Pages.ABOUT_KYANITE);
 		// 蓝晶石
-		addToMap(ESInitInstance.ITEMS.KYANITE, Pages.ABOUT_KYANITE, Pages.ABOUT_KYNATIE_TOOLS);
+		addToMap(ESInit.ITEMS.KYANITE, Pages.ABOUT_KYANITE, Pages.ABOUT_KYNATIE_TOOLS);
 		// 魔力碎片
-		addToMap(ESInitInstance.ITEMS.MAGIC_PIECE, Pages.ABOUT_MAGICAL_ENDEREYE, Pages.ABOUT_MAGIC_PIECE);
+		addToMap(ESInit.ITEMS.MAGIC_PIECE, Pages.ABOUT_MAGICAL_ENDEREYE, Pages.ABOUT_MAGIC_PIECE);
 		// 末影之眼
 		addToMap(Items.ENDER_EYE, Pages.ABOUT_MAGICAL_ENDEREYE);
 		// 带有魔力的末影之眼
-		addToMap(ESInitInstance.ITEMS.MAGICAL_ENDER_EYE, Pages.ABOUT_MAGICAL_ENDEREYE, Pages.ABOUT_MAGIC_PIECE);
+		addToMap(ESInit.ITEMS.MAGICAL_ENDER_EYE, Pages.ABOUT_MAGICAL_ENDEREYE, Pages.ABOUT_MAGIC_PIECE);
 		// 星石星沙
-		addToMap(ESInitInstance.BLOCKS.STAR_STONE, Pages.ABOUT_STAR_SAND, Pages.ABOUT_STONE_MILL);
-		addToMap(ESInitInstance.BLOCKS.STAR_SAND, Pages.ABOUT_STAR_SAND, Pages.ABOUT_STONE_MILL,
+		addToMap(ESInit.BLOCKS.STAR_STONE, Pages.ABOUT_STAR_SAND, Pages.ABOUT_STONE_MILL);
+		addToMap(ESInit.BLOCKS.STAR_SAND, Pages.ABOUT_STAR_SAND, Pages.ABOUT_STONE_MILL,
 				Pages.ABOUT_MAGIC_STONE, Pages.ABOUT_MELT_CAULDRON);
 		// 魔石
-		addToMap(ESInitInstance.ITEMS.MAGIC_STONE, Pages.ABOUT_MAGIC_STONE, Pages.ABOUT_STAR_SAND,
+		addToMap(ESInit.ITEMS.MAGIC_STONE, Pages.ABOUT_MAGIC_STONE, Pages.ABOUT_STAR_SAND,
 				Pages.ABOUT_MAGIC_PIECE, Pages.ABOUT_ASTONE);
 		// 熔岩炉
-		addToMap(ESInitInstance.BLOCKS.MELT_CAULDRON, Pages.ABOUT_MELT_CAULDRON, Pages.ABOUT_ASTONE);
+		addToMap(ESInit.BLOCKS.MELT_CAULDRON, Pages.ABOUT_MELT_CAULDRON, Pages.ABOUT_ASTONE);
 		// 通魔石
-		addToMap(ESInitInstance.BLOCKS.ASTONE, Pages.ABOUT_MELT_CAULDRON, Pages.ABOUT_ASTONE, Pages.ABOUT_MD);
+		addToMap(ESInit.BLOCKS.ASTONE, Pages.ABOUT_MELT_CAULDRON, Pages.ABOUT_ASTONE, Pages.ABOUT_MD);
 		// 魔石火把
-		addToMap(ESInitInstance.BLOCKS.MAGIC_TORCH, Pages.ABOUT_MD, Pages.ABOUT_MAGIC_STONE);
+		addToMap(ESInit.BLOCKS.MAGIC_TORCH, Pages.ABOUT_MD, Pages.ABOUT_MAGIC_STONE);
 		// 魔分箱
-		addToMap(ESInitInstance.BLOCKS.MD_MAGIC_GEN, Pages.ABOUT_ASTONE, Pages.ABOUT_MD, Pages.ABOUT_INFUSION);
+		addToMap(ESInit.BLOCKS.MD_MAGIC_GEN, Pages.ABOUT_ASTONE, Pages.ABOUT_MD, Pages.ABOUT_INFUSION);
 		// 吸收箱
 		//addToMap(ESInitInstance.BLOCKS.ABSORB_BOX, Pages.ABOUT_ABSORB_BOX, Pages.ABOUT_MAGIC_PLATFORM);
 		// 魔力平台
-		addToMap(ESInitInstance.BLOCKS.MAGIC_PLATFORM, Pages.ABOUT_MAGIC_PLATFORM);
+		addToMap(ESInit.BLOCKS.MAGIC_PLATFORM, Pages.ABOUT_MAGIC_PLATFORM);
 		// 附魔台
 		addToMap(Blocks.ENCHANTING_TABLE, Pages.ABOUT_ENCHANTINGBOOK, Pages.ABOUT_KYNATIE_TOOLS);
 		// 魔力水晶
-		addToMap(ESInitInstance.ITEMS.MAGIC_CRYSTAL, Pages.ABOUT_MAGIC_CRYSTAL, Pages.ABOUT_INFUSION,
+		addToMap(ESInit.ITEMS.MAGIC_CRYSTAL, Pages.ABOUT_MAGIC_CRYSTAL, Pages.ABOUT_INFUSION,
 				Pages.ABOUT_MAGIC_ESTONE);
 		// 咒术水晶
-		addToMap(ESInitInstance.ITEMS.SPELL_CRYSTAL, Pages.ABOUT_SPELL_CRYSTAL, Pages.ABOUT_INFUSION,
+		addToMap(ESInit.ITEMS.SPELL_CRYSTAL, Pages.ABOUT_SPELL_CRYSTAL, Pages.ABOUT_INFUSION,
 				Pages.ABOUT_MAGIC_PAPER);
 		// 元素水晶
-		addToMap(ESInitInstance.ITEMS.ELEMENT_CRYSTAL, Pages.ABOUT_ELEMENT_CRY, Pages.ABOUT_INFUSION,
+		addToMap(ESInit.ITEMS.ELEMENT_CRYSTAL, Pages.ABOUT_ELEMENT_CRY, Pages.ABOUT_INFUSION,
 				Pages.ABOUT_DEC_BOX, Pages.ABOUT_EWORKBENCH, Pages.ABOUT_ELEMENT_CUBE);
 		// 魔力纸
-		addToMap(ESInitInstance.ITEMS.MAGIC_PAPER, Pages.ABOUT_MAGIC_PAPER, Pages.ABOUT_SPELL_PAPER);
-		addToMap(ESInitInstance.ITEMS.SPELL_PAPER, Pages.ABOUT_MAGIC_PAPER, Pages.ABOUT_SPELL_PAPER,
+		addToMap(ESInit.ITEMS.MAGIC_PAPER, Pages.ABOUT_MAGIC_PAPER, Pages.ABOUT_SPELL_PAPER);
+		addToMap(ESInit.ITEMS.SPELL_PAPER, Pages.ABOUT_MAGIC_PAPER, Pages.ABOUT_SPELL_PAPER,
 				Pages.ABOUT_BOOKCOVER);
 		// 魔法书
-		addToMap(ESInitInstance.ITEMS.SPELLBOOK_COVER, Pages.ABOUT_BOOKCOVER, Pages.ABOUT_SPELLBOOK);
-		addToMap(ESInitInstance.ITEMS.SPELLBOOK, Pages.ABOUT_SPELLBOOK, Pages.ABOUT_BOOKCOVER, Pages.ABOUT_SPELEMENT);
+		addToMap(ESInit.ITEMS.SPELLBOOK_COVER, Pages.ABOUT_BOOKCOVER, Pages.ABOUT_SPELLBOOK);
+		addToMap(ESInit.ITEMS.SPELLBOOK, Pages.ABOUT_SPELLBOOK, Pages.ABOUT_BOOKCOVER, Pages.ABOUT_SPELEMENT);
 	}
 
 	private static void addToMap(Block block, String... ids) {
@@ -229,7 +229,7 @@ public class TileStela extends TileEntityNetwork {
 		Item item = stack.getItem();
 		Block block = Block.getBlockFromItem(item);
 		if (block != Blocks.AIR) {
-			if (block == ESInitInstance.BLOCKS.MD_INFUSION) {
+			if (block == ESInit.BLOCKS.MD_INFUSION) {
 				if (Math.random() < 0.2)
 					return RandomHelper.randomSelect(Pages.ABOUT_ELEMENT_CRY, Pages.ABOUT_SPELL_CRYSTAL);
 				return RandomHelper.randomSelect(Pages.ABOUT_INFUSION, Pages.ABOUT_MAGIC_PIECE, Pages.ABOUT_MAGIC_CRYSTAL);
@@ -238,7 +238,7 @@ public class TileStela extends TileEntityNetwork {
 			if (item instanceof ItemKyaniteTools.toolsCapability) {
 				return RandomHelper.randomSelect(Pages.ABOUT_KYNATIE_TOOLS, Pages.ABOUT_ELEMENT,
 						Pages.ABOUT_ABSORB_BOX);
-			} else if (item == ESInitInstance.ITEMS.PARCHMENT) {
+			} else if (item == ESInit.ITEMS.PARCHMENT) {
 				if (stack.getCount() >= 8) { return new String[] { Pages.ABOUT_MANUAL }; }
 			}
 		}
@@ -251,7 +251,7 @@ public class TileStela extends TileEntityNetwork {
 		if (stacks != null && stacks.length > 0) {
 			ElementStack estack = stacks[0];
 			// 如果有earth元素
-			if (estack.getElement() == ESInitInstance.ELEMENTS.EARTH) {
+			if (estack.getElement() == ESInit.ELEMENTS.EARTH) {
 				// 能量大于10
 				if (estack.getPower() >= 10) {
 					if (Math.random() < 0.75f) {

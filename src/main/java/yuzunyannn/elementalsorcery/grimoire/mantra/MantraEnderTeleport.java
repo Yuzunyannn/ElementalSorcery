@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectPlayerAt;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
@@ -35,7 +35,7 @@ public class MantraEnderTeleport extends MantraCommon {
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		ElementStack need = new ElementStack(ESInitInstance.ELEMENTS.ENDER, 15, 50);
+		ElementStack need = new ElementStack(ESInit.ELEMENTS.ENDER, 15, 50);
 		ElementStack get = caster.iWantSomeElement(need, false);
 		dataEffect.markContinue(!get.isEmpty());
 	}
@@ -45,7 +45,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		if (caster.iWantKnowCastTick() < 5) return;
 		BlockPos pos = caster.iWantFoothold();
 		if (pos == null) return;
-		ElementStack need = new ElementStack(ESInitInstance.ELEMENTS.ENDER, 15, 50);
+		ElementStack need = new ElementStack(ESInit.ELEMENTS.ENDER, 15, 50);
 		ElementStack stack = caster.iWantSomeElement(need, true);
 		if (stack.isEmpty()) return;
 		Entity entity = caster.iWantCaster();
@@ -105,7 +105,7 @@ public class MantraEnderTeleport extends MantraCommon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Element getMagicCircle() {
-		return ESInitInstance.ELEMENTS.ENDER;
+		return ESInit.ELEMENTS.ENDER;
 	}
 
 	@Override

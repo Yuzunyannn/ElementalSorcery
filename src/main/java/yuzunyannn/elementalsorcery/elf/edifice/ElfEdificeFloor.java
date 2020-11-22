@@ -53,7 +53,7 @@ public class ElfEdificeFloor extends IForgeRegistryEntry.Impl<ElfEdificeFloor> {
 		Map<ItemRec, Integer> needMap = new HashMap<>();
 		FloorInfo info = new FloorInfo(this, BlockPos.ORIGIN);
 		IBuilder builder = core.getBuilder(info);
-		info.setFloorData(this.getBuildData(builder, rand));
+		info.setFloorData(this.createBuildData(builder, rand));
 		this.build(builder);
 		Map<BlockPos, IBlockState> map = builder.asBlockMap();
 		int count = 0;
@@ -100,7 +100,7 @@ public class ElfEdificeFloor extends IForgeRegistryEntry.Impl<ElfEdificeFloor> {
 	 * 
 	 * @return 返回通过生成的数据，如果返回null，会自动为该层创建出一个nbt来
 	 */
-	public NBTTagCompound getBuildData(IBuilder builder, Random rand) {
+	public NBTTagCompound createBuildData(IBuilder builder, Random rand) {
 		return null;
 	}
 

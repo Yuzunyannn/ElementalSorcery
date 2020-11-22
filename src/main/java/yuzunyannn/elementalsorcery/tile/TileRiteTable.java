@@ -39,7 +39,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable.Recipe.Happiness;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
@@ -117,7 +117,7 @@ public class TileRiteTable extends TileEntityNetwork {
 			ItemStack stack = inventory.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
 			if (seekRite.isEmpty()) {
-				if (stack.getItem() == ESInitInstance.ITEMS.PARCHMENT) {
+				if (stack.getItem() == ESInit.ITEMS.PARCHMENT) {
 					seekRite = stack;
 					ItemStack s = RecipeRiteWrite.getInnerStack(seekRite);
 					recipe = findRecipe(s);
@@ -428,8 +428,8 @@ public class TileRiteTable extends TileEntityNetwork {
 		sacrifice.addSacrificeHandle(ItemSacrificeHandle.instance);
 		sacrifice.addSacrificeHandle(new ElementSacrificeHandle());
 
-		ESObjects.Blocks BLOCKS = ESInitInstance.BLOCKS;
-		ESObjects.Items ITEMS = ESInitInstance.ITEMS;
+		ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
+		ESObjects.Items ITEMS = ESInit.ITEMS;
 		addSacrifice(ITEMS.RESONANT_CRYSTAL, 100, 0, "resonant_crystal");
 		addSacrifice(Blocks.COBBLESTONE, -10, 0, "hearth", "smelt_box");
 		addSacrifice(Blocks.DIRT, -5, 0);
@@ -551,11 +551,11 @@ public class TileRiteTable extends TileEntityNetwork {
 	}
 
 	public static void initRecipe() {
-		addRecipe(new ItemStack(Blocks.TORCH), new ItemStack(ESInitInstance.BLOCKS.LANTERN), 70, 0, (power, entity) -> {
+		addRecipe(new ItemStack(Blocks.TORCH), new ItemStack(ESInit.BLOCKS.LANTERN), 70, 0, (power, entity) -> {
 			int x = power - 80;
 			if (x > 0) return Math.max(1, x / 12);
 			return 1;
 		});
-		addRecipe(new ItemStack(ESInitInstance.ITEMS.ELF_COIN), new ItemStack(ESInitInstance.ITEMS.ELF_PURSE), 120, 0);
+		addRecipe(new ItemStack(ESInit.ITEMS.ELF_COIN), new ItemStack(ESInit.ITEMS.ELF_PURSE), 120, 0);
 	}
 }

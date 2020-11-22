@@ -5,7 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -17,7 +17,7 @@ public class ItemStructure implements IItemStructure {
 	}
 
 	static public boolean canStorageItemStructure(ItemStack stack) {
-		return stack.getItem() == ESInitInstance.ITEMS.ITEM_CRYSTAL || stack.getSubCompound("istru") != null;
+		return stack.getItem() == ESInit.ITEMS.ITEM_CRYSTAL || stack.getSubCompound("istru") != null;
 	}
 
 	ItemStack stack = ItemStack.EMPTY;

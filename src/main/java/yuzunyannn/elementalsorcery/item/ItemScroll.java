@@ -16,7 +16,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -64,7 +64,7 @@ public class ItemScroll extends Item {
 
 	/** 获取卷轴 */
 	static public ItemStack getScroll(String... ids) {
-		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.SCROLL);
+		ItemStack stack = new ItemStack(ESInit.ITEMS.SCROLL);
 		return ItemScroll.setIds(stack, ids);
 	}
 }

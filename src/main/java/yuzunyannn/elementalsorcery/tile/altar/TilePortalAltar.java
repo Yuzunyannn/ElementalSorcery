@@ -13,7 +13,7 @@ import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementScrew;
@@ -44,7 +44,7 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 		return super.writeToNBT(compound);
 	}
 
-	public static final ElementStack NEED = new ElementStack(ESInitInstance.ELEMENTS.ENDER, 1, 100);
+	public static final ElementStack NEED = new ElementStack(ESInit.ELEMENTS.ENDER, 1, 100);
 	private ItemStack stack = ItemStack.EMPTY;
 	protected int enderPower = 0;
 
@@ -63,7 +63,7 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 
 	@Override
 	public boolean canSetStack(ItemStack stack) {
-		return stack.getItem() == ESInitInstance.ITEMS.NATURE_CRYSTAL;
+		return stack.getItem() == ESInit.ITEMS.NATURE_CRYSTAL;
 	}
 
 	@Override

@@ -35,6 +35,8 @@ public class RenderEntityElf extends RenderLiving<EntityElf> {
 			"textures/entity/elf/ironsmith.png");
 	public static final ResourceLocation TEXTURE_POSTMAN = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/entity/elf/postman.png"); 
+	public static final ResourceLocation TEXTURE_RESEARCHER = new ResourceLocation(ElementalSorcery.MODID,
+			"textures/entity/elf/researcher.png");
 	public static final ResourceLocation TEXTURE_TEST = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/entity/elf/what.png");
 

@@ -9,14 +9,14 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 
 public class ElfProfessionWarrior extends ElfProfession {
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
-		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInitInstance.ITEMS.KYANITE_SWORD));
+		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.KYANITE_SWORD));
 		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0.02f);
 		elf.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(Items.SHIELD));
 		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0.02f);

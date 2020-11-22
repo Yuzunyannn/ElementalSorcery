@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
@@ -36,7 +36,7 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
 		super.initElf(elf, origin);
-		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInitInstance.ITEMS.ADDRESS_PLATE));
+		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.ADDRESS_PLATE));
 	}
 
 	@SideOnly(Side.CLIENT)

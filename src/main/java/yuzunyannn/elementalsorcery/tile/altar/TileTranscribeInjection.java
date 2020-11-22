@@ -24,7 +24,7 @@ import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
@@ -212,13 +212,13 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 			ElementStack need = ElementStack.EMPTY;
 			switch (transcribeProgress % 4) {
 			case 1:
-				need = new ElementStack(ESInitInstance.ELEMENTS.FIRE, 1, 100);
+				need = new ElementStack(ESInit.ELEMENTS.FIRE, 1, 100);
 				break;
 			case 2:
-				need = new ElementStack(ESInitInstance.ELEMENTS.WATER, 1, 100);
+				need = new ElementStack(ESInit.ELEMENTS.WATER, 1, 100);
 				break;
 			default:
-				need = new ElementStack(ESInitInstance.ELEMENTS.KNOWLEDGE, 1, 100);
+				need = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 1, 100);
 				break;
 			}
 			transcribeProgress--;

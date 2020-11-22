@@ -38,7 +38,7 @@ import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.model.ModelSupremeTable;
 import yuzunyannn.elementalsorcery.util.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.TickOut;
@@ -280,19 +280,19 @@ public class TileSupremeTable extends TileStaticMultiBlock
 	private int getOrderCrtstalGroupCount() {
 		int min = 64;
 		ItemStack stack = this.getStackInSlot(0);
-		if (stack.getItem() == ESInitInstance.ITEMS.ORDER_CRYSTAL) {
+		if (stack.getItem() == ESInit.ITEMS.ORDER_CRYSTAL) {
 			min = Math.min(min, stack.getCount());
 		} else return 0;
 		stack = this.getStackInSlot(2);
-		if (stack.getItem() == ESInitInstance.ITEMS.ORDER_CRYSTAL) {
+		if (stack.getItem() == ESInit.ITEMS.ORDER_CRYSTAL) {
 			min = Math.min(min, stack.getCount());
 		} else return 0;
 		stack = this.getStackInSlot(6);
-		if (stack.getItem() == ESInitInstance.ITEMS.ORDER_CRYSTAL) {
+		if (stack.getItem() == ESInit.ITEMS.ORDER_CRYSTAL) {
 			min = Math.min(min, stack.getCount());
 		} else return 0;
 		stack = this.getStackInSlot(8);
-		if (stack.getItem() == ESInitInstance.ITEMS.ORDER_CRYSTAL) {
+		if (stack.getItem() == ESInit.ITEMS.ORDER_CRYSTAL) {
 			min = Math.min(min, stack.getCount());
 		} else return 0;
 		return min;

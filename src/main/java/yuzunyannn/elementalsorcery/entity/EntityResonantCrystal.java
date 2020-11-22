@@ -30,7 +30,7 @@ import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
@@ -42,7 +42,7 @@ public class EntityResonantCrystal extends EntityThrowable {
 
 		@Override
 		public Render<? super EntityResonantCrystal> createRenderFor(RenderManager manager) {
-			return new RenderSnowball<EntityResonantCrystal>(manager, ESInitInstance.ITEMS.RESONANT_CRYSTAL,
+			return new RenderSnowball<EntityResonantCrystal>(manager, ESInit.ITEMS.RESONANT_CRYSTAL,
 					Minecraft.getMinecraft().getRenderItem());
 		}
 
@@ -143,7 +143,7 @@ public class EntityResonantCrystal extends EntityThrowable {
 			if (pos == null) break sp;
 			IBlockState state = world.getBlockState(pos);
 			Block block = state.getBlock();
-			if (block == ESInitInstance.BLOCKS.LIFE_FLOWER) {
+			if (block == ESInit.BLOCKS.LIFE_FLOWER) {
 				// 植物花
 				world.scheduleUpdate(pos, state.getBlock(), 0);
 				return 5;
@@ -155,7 +155,7 @@ public class EntityResonantCrystal extends EntityThrowable {
 					((IGrowable) block).grow(world, rand, pos, state);
 					return 5;
 				}
-			} else if (block == ESInitInstance.BLOCKS.ASTONE) {
+			} else if (block == ESInit.BLOCKS.ASTONE) {
 				if (state == block.getDefaultState().withProperty(BlockAStone.VARIANT,
 						BlockAStone.EnumType.FRAGMENTED)) {
 					world.setBlockState(pos, state.withProperty(BlockAStone.VARIANT, BlockAStone.EnumType.STONE));

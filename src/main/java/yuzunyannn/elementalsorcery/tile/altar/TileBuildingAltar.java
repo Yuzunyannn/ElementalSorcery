@@ -24,7 +24,7 @@ import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingBuildingRecord;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderBuildingRecord;
 
@@ -134,7 +134,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		return new CraftingBuildingRecord(nbt).setTile(this).setColor(c.getColorValue());
 	}
 
-	public static final ElementStack ENEED1 = new ElementStack(ESInitInstance.ELEMENTS.EARTH, 1, 25);
+	public static final ElementStack ENEED1 = new ElementStack(ESInit.ELEMENTS.EARTH, 1, 25);
 
 	@Override
 	public void craftingUpdate(ICraftingCommit commit) {
@@ -214,7 +214,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 
 	@Override
 	public boolean canSetStack(ItemStack stack) {
-		return (stack.getItem() == ESInitInstance.ITEMS.ARCHITECTURE_CRYSTAL
+		return (stack.getItem() == ESInit.ITEMS.ARCHITECTURE_CRYSTAL
 				|| stack.getSubCompound("building") != null) && !ArcInfo.isArc(stack);
 	}
 

@@ -35,7 +35,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -43,7 +43,7 @@ public class ItemKyaniteTools {
 
 	public static final ToolMaterial KYANITE = EnumHelper.addToolMaterial("Kyanite", 2, 750, 6.0F, 2.5F, 10);
 	static {
-		KYANITE.setRepairItem(new ItemStack(ESInitInstance.ITEMS.KYANITE));
+		KYANITE.setRepairItem(new ItemStack(ESInit.ITEMS.KYANITE));
 	}
 
 	// 添加物品信息
@@ -65,11 +65,11 @@ public class ItemKyaniteTools {
 			if (Math.random() >= 0.333333) return;
 			// 如果着火挖方块，必然会获得火元素
 			if (entity.isBurning()) {
-				estack = new ElementStack(ESInitInstance.ELEMENTS.FIRE, 3, 3);
+				estack = new ElementStack(ESInit.ELEMENTS.FIRE, 3, 3);
 			}
 			// 如果在水里挖方块，可能会会的水元素
 			else if (entity.isInWater() && Math.random() > 0.33333f) {
-				estack = new ElementStack(ESInitInstance.ELEMENTS.WATER, 1, 3);
+				estack = new ElementStack(ESInit.ELEMENTS.WATER, 1, 3);
 			} else {
 				estack = estacks[0].copy();
 				estack = estack.becomeElementWhenDeconstruct(worldIn, ItemHelper.toItemStack(state),
@@ -166,7 +166,7 @@ public class ItemKyaniteTools {
 				items.add(new ItemStack(this));
 				ItemStack stack = new ItemStack(this);
 				IElementInventory inventory = new ElementInventory();
-				inventory.insertElement(new ElementStack(ESInitInstance.ELEMENTS.ENDER, 10000, 1000), false);
+				inventory.insertElement(new ElementStack(ESInit.ELEMENTS.ENDER, 10000, 1000), false);
 				inventory.saveState(stack);
 				items.add(stack);
 			}
@@ -187,7 +187,7 @@ public class ItemKyaniteTools {
 				return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 			// 取出来看看末影元素够不够
 			inventory.loadState(stack);
-			ElementStack estack = new ElementStack(ESInitInstance.ELEMENTS.ENDER, 10, 5);
+			ElementStack estack = new ElementStack(ESInit.ELEMENTS.ENDER, 10, 5);
 			ElementStack find = ElementStack.EMPTY;
 			for (int i = 0; i < inventory.getSlots(); i++) {
 				find = inventory.getStackInSlot(i);
@@ -200,8 +200,8 @@ public class ItemKyaniteTools {
 			if (state.getBlock() == Blocks.ENCHANTING_TABLE) {
 				// 拆书
 				find.shrink(estack.getCount());
-				worldIn.setBlockState(pos, ESInitInstance.BLOCKS.INVALID_ENCHANTMENT_TABLE.getDefaultState());
-				Block.spawnAsEntity(worldIn, pos, new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT, 1));
+				worldIn.setBlockState(pos, ESInit.BLOCKS.INVALID_ENCHANTMENT_TABLE.getDefaultState());
+				Block.spawnAsEntity(worldIn, pos, new ItemStack(ESInit.ITEMS.SPELLBOOK_ENCHANTMENT, 1));
 				if (!player.isCreative()) stack.damageItem(10, player);
 				inventory.saveState(stack);
 				if (player instanceof EntityPlayerMP)

@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurnPower {
@@ -34,7 +34,7 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 			@Override
 			@Nonnull
 			public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-				if (stack.getItem() != ESInitInstance.ITEMS.MAGIC_STONE) return stack;
+				if (stack.getItem() != ESInit.ITEMS.MAGIC_STONE) return stack;
 				return super.insertItem(slot, stack, simulate);
 			}
 		};
@@ -154,8 +154,8 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 			}
 			// 增长
 			if (this.magic.isEmpty())
-				this.magic = new ElementStack(ESInitInstance.ELEMENTS.MAGIC, (int) (dRate * 100), 25);
-			else this.magic.grow(new ElementStack(ESInitInstance.ELEMENTS.MAGIC, (int) (dRate * 100), 25));
+				this.magic = new ElementStack(ESInit.ELEMENTS.MAGIC, (int) (dRate * 100), 25);
+			else this.magic.grow(new ElementStack(ESInit.ELEMENTS.MAGIC, (int) (dRate * 100), 25));
 			if (this.getCurrentCapacity() >= this.getMaxCapacity()) this.magic.setCount(this.getMaxCapacity());
 		} else {
 			// 如果没有熔炼，就拿走一个魔石，进行熔炼

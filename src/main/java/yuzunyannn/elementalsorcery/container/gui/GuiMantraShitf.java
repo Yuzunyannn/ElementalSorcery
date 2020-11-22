@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -66,11 +65,6 @@ public class GuiMantraShitf extends GuiScreen {
 	@Override
 	public boolean doesGuiPauseGame() {
 		return false;
-	}
-
-	@Override
-	public void onResize(Minecraft mcIn, int w, int h) {
-		super.onResize(mcIn, w, h);
 	}
 
 	public void setSize(float size) {

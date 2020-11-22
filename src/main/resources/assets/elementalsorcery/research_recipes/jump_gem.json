@@ -1,0 +1,11 @@
+{
+	"topics": {
+		"Ender":100,
+		"Natural":20,
+		"Struct":10
+	},
+	"result": {
+		"item": "elementalsorcery:jump_gem",
+		"count": 1
+	}
+}

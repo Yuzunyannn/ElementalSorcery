@@ -5,12 +5,12 @@ import java.util.Random;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class WorldGenKyaniteOre extends WorldGenMinable {
 
 	public WorldGenKyaniteOre() {
-		super(ESInitInstance.BLOCKS.KYANITE_ORE.getDefaultState(), 8);
+		super(ESInit.BLOCKS.KYANITE_ORE.getDefaultState(), 8);
 	}
 
 	@Override

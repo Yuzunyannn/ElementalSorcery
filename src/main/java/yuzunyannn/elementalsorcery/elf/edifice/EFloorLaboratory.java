@@ -18,7 +18,8 @@ import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.block.BlockCrystalFlower;
 import yuzunyannn.elementalsorcery.block.BlocksEStone.EStone;
 import yuzunyannn.elementalsorcery.block.container.BlockMagicPlatform;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
@@ -26,9 +27,9 @@ import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 public class EFloorLaboratory extends ElfEdificeFloor {
 
 	@Override
-	public NBTTagCompound getBuildData(IBuilder builder, Random rand) {
-		BuilderHelper help = new BuilderHelper(builder).toward(rand);
-		return help.startRand(rand).getNBT();
+	public NBTTagCompound createBuildData(IBuilder builder, Random rand) {
+		BuilderHelper helper = new BuilderHelper(builder).toward(rand);
+		return helper.startRand(rand).getNBT();
 	}
 
 	@Override
@@ -56,10 +57,10 @@ public class EFloorLaboratory extends ElfEdificeFloor {
 		int high = this.getFloorHeight(builder);
 		// 地毯
 		helper.genCarpet(EnumDyeColor.CYAN);
-		IBlockState ESTONE_Y = ESInitInstance.BLOCKS.ESTONE.getDefaultState().withProperty(EStone.VARIANT,
+		IBlockState ESTONE_Y = ESInit.BLOCKS.ESTONE.getDefaultState().withProperty(EStone.VARIANT,
 				BlockQuartz.EnumType.LINES_Y);
 		IBlockState GLOWSTONE = Blocks.GLOWSTONE.getDefaultState();
-		IBlockState LEAF = ESInitInstance.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
+		IBlockState LEAF = ESInit.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
 		{
 			// 石英
 			int size = treeSize;
@@ -82,10 +83,12 @@ public class EFloorLaboratory extends ElfEdificeFloor {
 				builder.setBlockState(pos.add(n, y, i), LEAF);
 				builder.setBlockState(pos.add(-n, y, i), LEAF);
 			}
+			//一个灯
+			helper.genLeafLamp(pos.up(high - 1));
 		}
 		IBlockState ESTONE_CHISELED = ESTONE_Y.withProperty(EStone.VARIANT, BlockQuartz.EnumType.CHISELED);
-		IBlockState ESTONE_STARIS = ESInitInstance.BLOCKS.ESTONE_STAIRS.getDefaultState();
-		IBlockState MAGIC_PLATFORM = ESInitInstance.BLOCKS.MAGIC_PLATFORM.getDefaultState()
+		IBlockState ESTONE_STARIS = ESInit.BLOCKS.ESTONE_STAIRS.getDefaultState();
+		IBlockState MAGIC_PLATFORM = ESInit.BLOCKS.MAGIC_PLATFORM.getDefaultState()
 				.withProperty(BlockMagicPlatform.MATERIAL, BlockMagicPlatform.EnumMaterial.ESTONE);
 		// 一张桌子
 		{
@@ -116,19 +119,20 @@ public class EFloorLaboratory extends ElfEdificeFloor {
 		{
 			int offset = treeSize - 3;
 			BlockPos at = pos.offset(toward.getOpposite(), offset);
+			helper.blockPos("sTable", at.offset(toward));
 			for (int i = -2; i <= 2; i++) {
 				builder.setBlockState(at.offset(towardRY, i), ESTONE_CHISELED);
 				// 随机点好东西
 				IBlockState GOOD = null;
 				switch (helper.randNextInt(16)) {
 				case 0:
-					GOOD = ESInitInstance.BLOCKS.ELEMENT_CRAFTING_TABLE.getDefaultState();
+					GOOD = ESInit.BLOCKS.ELEMENT_CRAFTING_TABLE.getDefaultState();
 					break;
 				case 1:
-					GOOD = ESInitInstance.BLOCKS.DECONSTRUCT_ALTAR_TABLE.getDefaultState();
+					GOOD = ESInit.BLOCKS.DECONSTRUCT_ALTAR_TABLE.getDefaultState();
 					break;
 				case 2:
-					GOOD = ESInitInstance.BLOCKS.MAGIC_DESK.getDefaultState();
+					GOOD = ESInit.BLOCKS.MAGIC_DESK.getDefaultState();
 					break;
 				default:
 					break;
@@ -145,7 +149,7 @@ public class EFloorLaboratory extends ElfEdificeFloor {
 		// 花房
 		{
 			int offset = treeSize - 1;
-			IBlockState LIFE_DIRT = ESInitInstance.BLOCKS.LIFE_DIRT.getDefaultState();
+			IBlockState LIFE_DIRT = ESInit.BLOCKS.LIFE_DIRT.getDefaultState();
 			for (int i = -2; i <= 2; i++) {
 				for (int j = -2; j <= 2; j++) {
 					BlockPos at = pos.offset(towardRY, i + offset).offset(toward, j);
@@ -190,25 +194,25 @@ public class EFloorLaboratory extends ElfEdificeFloor {
 					ItemStack goodItem = ItemStack.EMPTY;
 					switch (rand.nextInt(10)) {
 					case 0:
-						goodItem = new ItemStack(ESInitInstance.ITEMS.SPELLBOOK);
+						goodItem = new ItemStack(ESInit.ITEMS.SPELLBOOK);
 						break;
 					case 1:
-						goodItem = new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_ENCHANTMENT);
+						goodItem = new ItemStack(ESInit.ITEMS.SPELLBOOK_ENCHANTMENT);
 						break;
 					case 2:
-						goodItem = new ItemStack(ESInitInstance.BLOCKS.ELEMENTAL_CUBE);
+						goodItem = new ItemStack(ESInit.BLOCKS.ELEMENTAL_CUBE);
 						break;
 					case 3:
-						goodItem = new ItemStack(ESInitInstance.ITEMS.ORDER_CRYSTAL);
+						goodItem = new ItemStack(ESInit.ITEMS.ORDER_CRYSTAL);
 						break;
 					case 4:
-						goodItem = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD_SWORD);
+						goodItem = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_SWORD);
 						break;
 					case 5:
-						goodItem = new ItemStack(ESInitInstance.BLOCKS.ESTONE_PRISM);
+						goodItem = new ItemStack(ESInit.BLOCKS.ESTONE_PRISM);
 						break;
 					default:
-						goodItem = new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL);
+						goodItem = new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL);
 						break;
 					}
 					getter.setStack(goodItem);
@@ -217,7 +221,7 @@ public class EFloorLaboratory extends ElfEdificeFloor {
 		}
 		// 随机的水晶花
 		{
-			IBlockState CRYSTAL_FLOWER = ESInitInstance.BLOCKS.CRYSTAL_FLOWER.getDefaultState();
+			IBlockState CRYSTAL_FLOWER = ESInit.BLOCKS.CRYSTAL_FLOWER.getDefaultState();
 			CRYSTAL_FLOWER = CRYSTAL_FLOWER.withProperty(BlockCrystalFlower.STAGE, BlockCrystalFlower.MAX_STAGE);
 			int offset = treeSize - 1;
 			for (int i = -1; i <= 1; i++) {
@@ -235,19 +239,19 @@ public class EFloorLaboratory extends ElfEdificeFloor {
 						goodItem = new ItemStack(Items.GOLD_INGOT, rand.nextInt(5) + 1);
 						break;
 					case 2:
-						goodItem = new ItemStack(ESInitInstance.ITEMS.ELEMENT_CRYSTAL);
+						goodItem = new ItemStack(ESInit.ITEMS.ELEMENT_CRYSTAL);
 						break;
 					case 3:
 						goodItem = new ItemStack(Items.REDSTONE, rand.nextInt(10) + 3);
 						break;
 					case 4:
-						goodItem = new ItemStack(ESInitInstance.ITEMS.MAGIC_GOLD, 3);
+						goodItem = new ItemStack(ESInit.ITEMS.MAGIC_GOLD, 3);
 						break;
 					case 5:
 						goodItem = new ItemStack(Items.CAKE);
 						break;
 					default:
-						goodItem = new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL);
+						goodItem = new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL);
 						break;
 					}
 					flower.setCrystal(goodItem);
@@ -261,5 +265,6 @@ public class EFloorLaboratory extends ElfEdificeFloor {
 		BuilderHelper helper = new BuilderHelper(builder);
 		TileElfTreeCore core = helper.treeCore();
 		if (core == null) return;
+		EFloorHall.trySpawnElf(builder, ElfProfession.RESEARCHER, 2);
 	}
 }

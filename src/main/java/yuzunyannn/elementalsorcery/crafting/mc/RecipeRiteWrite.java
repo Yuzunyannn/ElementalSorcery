@@ -8,7 +8,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.parchment.IPageCraftDynamicIngredients;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 
@@ -53,7 +53,7 @@ public class RecipeRiteWrite extends net.minecraftforge.registries.IForgeRegistr
 			} else if (stack.getItem() == Items.DYE && stack.getItemDamage() == 0) {
 				if (dyeIndex == -1) dyeIndex = i;
 				else return false;
-			} else if (stack.getItem() == ESInitInstance.ITEMS.PARCHMENT) {
+			} else if (stack.getItem() == ESInit.ITEMS.PARCHMENT) {
 				if (parchmentIndex == -1) parchmentIndex = i;
 				else return false;
 			} else {
@@ -77,7 +77,7 @@ public class RecipeRiteWrite extends net.minecraftforge.registries.IForgeRegistr
 			if (stack.isEmpty()) continue;
 			if (stack.getItem() == Items.FEATHER) continue;
 			else if (stack.getItem() == Items.DYE && stack.getItemDamage() == 0) continue;
-			else if (stack.getItem() == ESInitInstance.ITEMS.PARCHMENT) parchment = stack;
+			else if (stack.getItem() == ESInit.ITEMS.PARCHMENT) parchment = stack;
 			else newItem = stack;
 		}
 		parchment = parchment.copy();
@@ -94,7 +94,7 @@ public class RecipeRiteWrite extends net.minecraftforge.registries.IForgeRegistr
 			if (stack.isEmpty()) list.set(i, ItemStack.EMPTY);
 			else if (stack.getItem() == Items.FEATHER) list.set(i, ItemStack.EMPTY);
 			else if (stack.getItem() == Items.DYE && stack.getItemDamage() == 0) list.set(i, ItemStack.EMPTY);
-			else if (stack.getItem() == ESInitInstance.ITEMS.PARCHMENT) list.set(i, ItemStack.EMPTY);
+			else if (stack.getItem() == ESInit.ITEMS.PARCHMENT) list.set(i, ItemStack.EMPTY);
 			else {
 				ItemStack in = stack.copy();
 				in.setCount(1);
@@ -113,7 +113,7 @@ public class RecipeRiteWrite extends net.minecraftforge.registries.IForgeRegistr
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		return new ItemStack(ESInitInstance.ITEMS.PARCHMENT);
+		return new ItemStack(ESInit.ITEMS.PARCHMENT);
 	}
 
 	@Override
@@ -125,7 +125,7 @@ public class RecipeRiteWrite extends net.minecraftforge.registries.IForgeRegistr
 		NonNullList<Ingredient> list = NonNullList.create();
 		list.add(Ingredient.fromStacks(new ItemStack(Items.FEATHER)));
 		list.add(Ingredient.fromStacks(new ItemStack(Items.DYE)));
-		list.add(Ingredient.fromStacks(new ItemStack(ESInitInstance.ITEMS.PARCHMENT)));
+		list.add(Ingredient.fromStacks(new ItemStack(ESInit.ITEMS.PARCHMENT)));
 		list.add(Ingredient.fromStacks(r.parchmentInput()));
 		return list;
 	}

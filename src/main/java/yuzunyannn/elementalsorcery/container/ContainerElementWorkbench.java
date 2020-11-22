@@ -19,7 +19,7 @@ import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ContainerElementWorkbench extends Container {
@@ -90,12 +90,9 @@ public class ContainerElementWorkbench extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
-		if (this.world.getBlockState(this.pos).getBlock() != ESInitInstance.BLOCKS.ELEMENT_WORKBENCH) {
-			return false;
-		} else {
-			return playerIn.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D,
-					(double) this.pos.getZ() + 0.5D) <= 64.0D;
-		}
+		if (this.world.getBlockState(this.pos).getBlock() != ESInit.BLOCKS.ELEMENT_WORKBENCH) return false;
+		else return playerIn.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D,
+				(double) this.pos.getZ() + 0.5D) <= 64.0D;
 	}
 
 	public void onCraftMatrixChanged(IInventory inventoryIn) {

@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.block.BlockCrystalFlower;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
 
 /** 水晶花的tileentity除了记录数据与绘图外，还进行能量生长的判定 */
@@ -68,7 +68,7 @@ public class TileCrystalFlower extends TileEntityNetwork {
 
 	@SideOnly(Side.CLIENT)
 	public boolean needDraw() {
-		return this.world.getBlockState(pos) == ESInitInstance.BLOCKS.CRYSTAL_FLOWER.getDefaultState()
+		return this.world.getBlockState(pos) == ESInit.BLOCKS.CRYSTAL_FLOWER.getDefaultState()
 				.withProperty(BlockCrystalFlower.STAGE, 4);
 	}
 

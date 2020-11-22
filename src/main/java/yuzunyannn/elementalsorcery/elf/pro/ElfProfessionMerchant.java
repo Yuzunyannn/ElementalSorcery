@@ -24,7 +24,7 @@ import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
@@ -32,7 +32,7 @@ public class ElfProfessionMerchant extends ElfProfessionNone {
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
-		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInitInstance.ITEMS.ELF_COIN));
+		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.ELF_COIN));
 		if (elf.world.isRemote) return;
 		NBTTagCompound nbt = elf.getEntityData();
 		if (nbt.hasKey(TradeCount.Bind.TAG)) return;
@@ -41,8 +41,8 @@ public class ElfProfessionMerchant extends ElfProfessionNone {
 
 	/** 随机一些物品 */
 	public void randomGoods(EntityElfBase elf) {
-		ESObjects.Items ITEMS = ESInitInstance.ITEMS;
-		ESObjects.Blocks BLOCKS = ESInitInstance.BLOCKS;
+		ESObjects.Items ITEMS = ESInit.ITEMS;
+		ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
 		NBTTagCompound nbt = elf.getEntityData();
 		TradeCount trade = new TradeCount();
 		Random rand = elf.getRNG();

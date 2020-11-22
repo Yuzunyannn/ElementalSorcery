@@ -18,7 +18,7 @@ import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
@@ -28,7 +28,7 @@ import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class JsonParser {
 
-	public static final ItemStack defaultIcon = new ItemStack(ESInitInstance.ITEMS.SPELLBOOK);
+	public static final ItemStack defaultIcon = new ItemStack(ESInit.ITEMS.SPELLBOOK);
 
 	public static class Packet {
 		Page page;
@@ -174,7 +174,7 @@ public class JsonParser {
 					ItemStack.EMPTY, null, id);
 		case PageTransform.RITE:
 			if (list.size() < 2) throw new JsonParseException("仪式item字段需要两个");
-			ItemStack p = new ItemStack(ESInitInstance.ITEMS.PARCHMENT);
+			ItemStack p = new ItemStack(ESInit.ITEMS.PARCHMENT);
 			RecipeRiteWrite.setInnerStack(p, list.get(0));
 			return new PageTransformSimple(page.getTitle(), page.getContext(), p, list.get(1), list.get(0), null, id);
 		case PageTransform.SEPARATE:

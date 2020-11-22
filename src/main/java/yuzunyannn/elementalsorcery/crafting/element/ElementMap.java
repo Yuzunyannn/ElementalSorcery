@@ -30,7 +30,7 @@ import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.api.register.IElementMap;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar.AnalysisPacket;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -328,7 +328,7 @@ public class ElementMap implements IElementMap {
 		instance.add(defaultToElementMap);
 		instance.add(new DefaultBucketToElement());
 
-		final ESObjects.Elements E = ESInitInstance.ELEMENTS;
+		final ESObjects.Elements E = ESInit.ELEMENTS;
 
 		// 自动扫描并加载json
 		for (ModContainer mod : Loader.instance().getActiveModList()) loadElementMap(mod);

@@ -18,8 +18,10 @@ import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
+import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.elf.researcher.ResearchRecipeManagement;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDCategory;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDInfusionRW;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDMagicSolidifyRW;
@@ -48,6 +50,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipeCategories(new RiteCategory());
 		registry.addRecipeCategories(new ElementCraftingCategory());
 		registry.addRecipeCategories(new MagicDeskCategory());
+		registry.addRecipeCategories(new ResearchCategory());
 		registry.addRecipeCategories(new MDCategory<MDRubbleRepairRW>(UID_MDRUBBLEREPAIR));
 		registry.addRecipeCategories(new MDCategory<MDMagicSolidifyRW>(UID_MDMAGICSOLIDIFY));
 		registry.addRecipeCategories(new MDCategory<MDInfusionRW>(UID_MDINFUSION));
@@ -59,12 +62,13 @@ public class ESJEIPlugin implements IModPlugin {
 		jeiHelpers = registry.getJeiHelpers();
 		stackHelper = jeiHelpers.getStackHelper();
 		guiHelper = jeiHelpers.getGuiHelper();
-		final ESObjects.Blocks BLOCKS = ESInitInstance.BLOCKS;
+		final ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
 		// 注册工厂
 		registry.handleRecipes(DescribeRecipeWrapper.Describe.class, DescribeRecipeWrapper::new, DescribeCategory.UID);
 		registry.handleRecipes(TileRiteTable.Recipe.class, RiteRecipeWrapper::new, RiteCategory.UID);
 		registry.handleRecipes(IRecipe.class, ElementCraftingRecipeWrapper::new, ElementCraftingCategory.UID);
 		registry.handleRecipes(TileMagicDesk.Recipe.class, MagicDeskRecipeWrapper::new, MagicDeskCategory.UID);
+		registry.handleRecipes(IResearchRecipe.class, ResearchRecipeWrapper::new, ResearchCategory.UID);
 		registry.handleRecipes(TileMDRubbleRepair.Recipe.class, MDRubbleRepairRW::new, UID_MDRUBBLEREPAIR);
 		registry.handleRecipes(MDMagicSolidifyRW.FakeRecipe.class, MDMagicSolidifyRW::new, UID_MDMAGICSOLIDIFY);
 		registry.handleRecipes(TileMDInfusion.Recipe.class, MDInfusionRW::new, UID_MDINFUSION);
@@ -76,6 +80,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.ELEMENT_CRAFTING_TABLE), ElementCraftingCategory.UID);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.ELEMENT_WORKBENCH), ElementCraftingCategory.UID);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MAGIC_DESK), MagicDeskCategory.UID);
+		registry.addRecipeCatalyst(new ItemStack(BLOCKS.RESEARCHER), ResearchCategory.UID);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_RUBBLE_REPAIR), UID_MDRUBBLEREPAIR);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_MAGIC_SOLIDIFY), UID_MDMAGICSOLIDIFY);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_INFUSION), UID_MDINFUSION);
@@ -83,6 +88,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipes(RecipeManagement.instance.getValues(), ElementCraftingCategory.UID);
 		registry.addRecipes(TileRiteTable.getRecipes(), RiteCategory.UID);
 		registry.addRecipes(TileMagicDesk.getRecipes(), MagicDeskCategory.UID);
+		registry.addRecipes(ResearchRecipeManagement.instance.getRecipes(), ResearchCategory.UID);
 		registry.addRecipes(TileMDRubbleRepair.getRecipes(), UID_MDRUBBLEREPAIR);
 		registry.addRecipes(Arrays.asList(MDMagicSolidifyRW.FakeRecipe.values()), UID_MDMAGICSOLIDIFY);
 		registry.addRecipes(TileMDInfusion.getRecipes(), UID_MDINFUSION);
@@ -91,8 +97,8 @@ public class ESJEIPlugin implements IModPlugin {
 	}
 
 	private List<DescribeRecipeWrapper.Describe> initDescribe() {
-		final ESObjects.Blocks BLOCKS = ESInitInstance.BLOCKS;
-		final ESObjects.Items ITEMS = ESInitInstance.ITEMS;
+		final ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
+		final ESObjects.Items ITEMS = ESInit.ITEMS;
 		List<DescribeRecipeWrapper.Describe> describes = new ArrayList<>();
 		describes.add(new DescribeRecipeWrapper.Describe("page.starSand", "page.starSand.ct", BLOCKS.STAR_SAND,
 				BLOCKS.STAR_STONE, BLOCKS.STAR_SAND));

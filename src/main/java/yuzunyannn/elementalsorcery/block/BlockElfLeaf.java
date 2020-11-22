@@ -28,7 +28,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
 public class BlockElfLeaf extends BlockLeaves {
@@ -102,7 +102,7 @@ public class BlockElfLeaf extends BlockLeaves {
 				uPos = uPos.up();
 			}
 			// 生成
-			final IBlockState fruitState = ESInitInstance.BLOCKS.ELF_FRUIT.getDefaultState();
+			final IBlockState fruitState = ESInit.BLOCKS.ELF_FRUIT.getDefaultState();
 			worldIn.setBlockState(pos.down(), fruitState);
 		}
 	}
@@ -115,7 +115,7 @@ public class BlockElfLeaf extends BlockLeaves {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return Item.getItemFromBlock(ESInitInstance.BLOCKS.ELF_SAPLING);
+		return Item.getItemFromBlock(ESInit.BLOCKS.ELF_SAPLING);
 	}
 
 	@Override

@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.QuestDescribe;
 import yuzunyannn.elementalsorcery.elf.quest.QuestStatus;
 import yuzunyannn.elementalsorcery.elf.quest.QuestType;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class ItemQuest extends Item {
 
@@ -53,7 +53,7 @@ public class ItemQuest extends Item {
 	}
 
 	public static ItemStack createQuest(Quest quest) {
-		ItemStack stack = new ItemStack(ESInitInstance.ITEMS.QUEST);
+		ItemStack stack = new ItemStack(ESInit.ITEMS.QUEST);
 		stack.setTagCompound(quest.serializeNBT());
 		return stack;
 	}

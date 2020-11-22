@@ -29,7 +29,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElement;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
@@ -73,7 +73,7 @@ public class BlockLifeFlower extends Block {
 	@Override
 	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		if (pos.down().equals(fromPos)) {
-			if (world.getBlockState(fromPos).getBlock() != ESInitInstance.BLOCKS.MAGIC_POT) {
+			if (world.getBlockState(fromPos).getBlock() != ESInit.BLOCKS.MAGIC_POT) {
 				this.dropBlockAsItem(world, pos, state, 0);
 				world.setBlockToAir(pos);
 			}
@@ -89,7 +89,7 @@ public class BlockLifeFlower extends Block {
 
 	@Override
 	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-		return worldIn.getBlockState(pos.down()).getBlock() == ESInitInstance.BLOCKS.MAGIC_POT;
+		return worldIn.getBlockState(pos.down()).getBlock() == ESInit.BLOCKS.MAGIC_POT;
 	}
 
 	public boolean isOpaqueCube(IBlockState state) {
@@ -102,7 +102,7 @@ public class BlockLifeFlower extends Block {
 
 	private boolean hasPower(World worldIn, BlockPos pos) {
 		IBlockState state = worldIn.getBlockState(pos.down());
-		if (state.getBlock() != ESInitInstance.BLOCKS.MAGIC_POT) return false;
+		if (state.getBlock() != ESInit.BLOCKS.MAGIC_POT) return false;
 		return ((BlockMagicPot) state.getBlock()).hasPower(worldIn, state, pos.down());
 	}
 
@@ -124,7 +124,7 @@ public class BlockLifeFlower extends Block {
 		for (int x = -4; x <= 4; x++) {
 			for (int z = -4; z <= 4; z++) {
 				BlockPos pos = center.add(x, 0, z);
-				if (worldIn.getBlockState(pos).getBlock() != ESInitInstance.BLOCKS.LIFE_DIRT) continue;
+				if (worldIn.getBlockState(pos).getBlock() != ESInit.BLOCKS.LIFE_DIRT) continue;
 				grow(worldIn, pos);
 			}
 		}
@@ -151,7 +151,7 @@ public class BlockLifeFlower extends Block {
 		IGrowable growable = ((IGrowable) block);
 		if (growable.canGrow(world, pos, state, world.isRemote)) {
 			if (world.isRemote) return;
-			if (block == ESInitInstance.BLOCKS.CRYSTAL_FLOWER) {
+			if (block == ESInit.BLOCKS.CRYSTAL_FLOWER) {
 				TileEntity tile = world.getTileEntity(pos);
 				if (tile instanceof TileCrystalFlower) {
 					// 这里可以做一些操作=-=-=-=-=-=-=-=-=
@@ -195,7 +195,7 @@ public class BlockLifeFlower extends Block {
 		} else if (block instanceof BlockBush) {
 			world.setBlockState(pos.up(), block.getStateFromMeta(plant.getMetadata()));
 		} else {
-			world.setBlockState(pos.up(), ESInitInstance.BLOCKS.CRYSTAL_FLOWER.getDefaultState());
+			world.setBlockState(pos.up(), ESInit.BLOCKS.CRYSTAL_FLOWER.getDefaultState());
 			TileEntity t = world.getTileEntity(pos.up());
 			if (t instanceof TileCrystalFlower) ((TileCrystalFlower) t).setCrystal(tile.getPlant());
 		}

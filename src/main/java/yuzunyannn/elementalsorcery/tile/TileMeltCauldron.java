@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptBurnPower;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPower, ITickable {
@@ -51,14 +51,14 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 			ItemStack stack = item.getItem();
 			// 必须先放入魔石
 			if (magicCount == 0) {
-				if (stack.getItem() == ESInitInstance.ITEMS.MAGIC_STONE) {
+				if (stack.getItem() == ESInit.ITEMS.MAGIC_STONE) {
 					this.addMagicStone(stack.getCount());
 					item.setDead();
 				} else item.setFire(5);
 				return;
 			}
 			// 之后的东西
-			if (stack.getItem() == ESInitInstance.ITEMS.MAGIC_STONE) {
+			if (stack.getItem() == ESInit.ITEMS.MAGIC_STONE) {
 				this.addMagicStone(stack.getCount());
 				item.setDead();
 			} else if (Block.getBlockFromItem(stack.getItem()) == Blocks.STONE
@@ -136,7 +136,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 	public void drop() {
 		if (this.world.isRemote) return;
 		if (this.getVolume() <= 0) {
-			Block.spawnAsEntity(world, pos, new ItemStack(ESInitInstance.BLOCKS.MELT_CAULDRON));
+			Block.spawnAsEntity(world, pos, new ItemStack(ESInit.BLOCKS.MELT_CAULDRON));
 			return;
 		}
 		// 必须有结果和温度低于一定程度才可以掉落物品
@@ -164,7 +164,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 			if (this.kyaniteCount > 0) this.kyaniteCount--;
 			return;
 		} else if (this.stoneCount == 0) {
-			this.result = new ItemStack(ESInitInstance.BLOCKS.KYANITE_BLOCK);
+			this.result = new ItemStack(ESInit.BLOCKS.KYANITE_BLOCK);
 			this.resultCount = this.kyaniteCount / 9;
 			return;
 		} else if (this.kyaniteCount == 0) {
@@ -176,7 +176,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 		int maxStoneCount = this.magicCount * 16;
 		// 如果石头超过了魔石个数
 		if (this.stoneCount > maxStoneCount) {
-			this.result = new ItemStack(ESInitInstance.BLOCKS.KYANITE_ORE);
+			this.result = new ItemStack(ESInit.BLOCKS.KYANITE_ORE);
 			this.resultCount = this.kyaniteCount / 2;
 			if (this.resultCount > this.stoneCount) this.resultCount = this.stoneCount;
 			return;
@@ -186,10 +186,10 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 				+ this.kyaniteCount * this.world.rand.nextInt(this.instableCount) * 0.1f);
 		// 看蓝晶石是否位于0.5到1.5个石头之间的位置
 		if (this.kyaniteCount >= this.stoneCount / 2 && this.kyaniteCount <= (int) (this.stoneCount * 1.5f)) {
-			this.result = new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 0);
+			this.result = new ItemStack(ESInit.BLOCKS.ASTONE, 1, 0);
 			this.resultCount = this.stoneCount;
 		} else {
-			this.result = new ItemStack(ESInitInstance.BLOCKS.ASTONE, 1, 1);
+			this.result = new ItemStack(ESInit.BLOCKS.ASTONE, 1, 1);
 			this.resultCount = this.stoneCount;
 		}
 	}
@@ -202,13 +202,13 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 			return;
 		}
 		Block block = Block.getBlockFromItem(this.result.getItem());
-		if (block == ESInitInstance.BLOCKS.KYANITE_BLOCK) {
+		if (block == ESInit.BLOCKS.KYANITE_BLOCK) {
 			this.resultTex = RenderObjects.KYANITE_BLOCK;
 		} else if (block == Blocks.STONE) {
 			this.resultTex = RenderObjects.STONE;
-		} else if (block == ESInitInstance.BLOCKS.KYANITE_ORE) {
+		} else if (block == ESInit.BLOCKS.KYANITE_ORE) {
 			this.resultTex = RenderObjects.KYANITE_ORE;
-		} else if (block == ESInitInstance.BLOCKS.ASTONE) {
+		} else if (block == ESInit.BLOCKS.ASTONE) {
 			if (this.result.getMetadata() == 0) this.resultTex = RenderObjects.ASTONE;
 			else this.resultTex = RenderObjects.ASTONE_FRAGMENTED;
 		} else {

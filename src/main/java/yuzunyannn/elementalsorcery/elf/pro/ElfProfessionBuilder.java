@@ -31,7 +31,7 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
@@ -51,7 +51,7 @@ public class ElfProfessionBuilder extends ElfProfessionNone {
 	public boolean needPickup(EntityElfBase elf, ItemStack stack) {
 		Item item = stack.getItem();
 		Block block = Block.getBlockFromItem(item);
-		return item == Item.getItemFromBlock(ESInitInstance.BLOCKS.ELF_FRUIT) || item == ESInitInstance.ITEMS.ELF_COIN
+		return item == Item.getItemFromBlock(ESInit.BLOCKS.ELF_FRUIT) || item == ESInit.ITEMS.ELF_COIN
 				|| block instanceof BlockElfLog;
 	}
 
@@ -220,11 +220,11 @@ public class ElfProfessionBuilder extends ElfProfessionNone {
 					r = rand.nextInt(20);
 					if (r == 0) {
 						elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND,
-								new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_ELEMENT));
+								new ItemStack(ESInit.ITEMS.SPELLBOOK_ELEMENT));
 						elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
 					}
 					ItemStack hold = elf.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-					if (hold.getItem() == ESInitInstance.ITEMS.SPELLBOOK_ELEMENT) {
+					if (hold.getItem() == ESInit.ITEMS.SPELLBOOK_ELEMENT) {
 						r = rand.nextInt(50);
 						if (r == 0) {
 							pos = pos.add(rand.nextInt(4) - 2, 0, rand.nextInt(4) - 2);

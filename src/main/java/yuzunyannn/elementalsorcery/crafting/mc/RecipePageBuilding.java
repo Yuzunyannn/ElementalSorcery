@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 
 public class RecipePageBuilding extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe>
@@ -30,10 +30,10 @@ public class RecipePageBuilding extends net.minecraftforge.registries.IForgeRegi
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
-			if (stack.getItem() == ESInitInstance.ITEMS.PARCHMENT) {
+			if (stack.getItem() == ESInit.ITEMS.PARCHMENT) {
 				if (parchment == -1) parchment = i;
 				else return false;
-			} else if (stack.getItem() == ESInitInstance.ITEMS.ARCHITECTURE_CRYSTAL) {
+			} else if (stack.getItem() == ESInit.ITEMS.ARCHITECTURE_CRYSTAL) {
 				if (archCrystal == -1) archCrystal = i;
 				else return false;
 			} else return false;
@@ -52,8 +52,8 @@ public class RecipePageBuilding extends net.minecraftforge.registries.IForgeRegi
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
-			if (stack.getItem() == ESInitInstance.ITEMS.PARCHMENT) parchment = stack;
-			else if (stack.getItem() == ESInitInstance.ITEMS.ARCHITECTURE_CRYSTAL) archCrystal = stack;
+			if (stack.getItem() == ESInit.ITEMS.PARCHMENT) parchment = stack;
+			else if (stack.getItem() == ESInit.ITEMS.ARCHITECTURE_CRYSTAL) archCrystal = stack;
 		}
 		archCrystal = archCrystal.copy();
 		archCrystal.setCount(1);
@@ -68,7 +68,7 @@ public class RecipePageBuilding extends net.minecraftforge.registries.IForgeRegi
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty()) list.set(i, ItemStack.EMPTY);
-			else if (stack.getItem() == ESInitInstance.ITEMS.PARCHMENT) {
+			else if (stack.getItem() == ESInit.ITEMS.PARCHMENT) {
 				stack = stack.copy();
 				stack.setCount(1);
 				list.set(i, stack);
@@ -84,7 +84,7 @@ public class RecipePageBuilding extends net.minecraftforge.registries.IForgeRegi
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		return new ItemStack(ESInitInstance.ITEMS.PARCHMENT);
+		return new ItemStack(ESInit.ITEMS.PARCHMENT);
 	}
 
 }

@@ -18,7 +18,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
@@ -28,7 +28,7 @@ import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 public class EntityExploreDust extends Entity implements IEntityAdditionalSpawnData {
 
 	protected int level;
-	protected ItemStack stack = new ItemStack(ESInitInstance.ITEMS.NATURE_CRYSTAL);
+	protected ItemStack stack = new ItemStack(ESInit.ITEMS.NATURE_CRYSTAL);
 	/** 当前处理记录的数据 */
 	protected NBTTagCompound data = new NBTTagCompound();
 

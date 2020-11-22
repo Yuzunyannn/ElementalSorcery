@@ -143,6 +143,13 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		return floors;
 	}
 
+	public <T extends ElfEdificeFloor> FloorInfo getFloor(Class<T> floorType) {
+		for (FloorInfo floor : floors) {
+			if (!floor.isEmpty() && floor.getType().getClass() == floorType) return floor;
+		}
+		return null;
+	}
+
 	// ----------------------------精灵建筑任务部分----------------------------
 
 	public BuilderWithInfo getBuilder(FloorInfo floor) {
@@ -309,7 +316,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		int floorHigh = getFloorHigh(floors.size() - 1);
 		FloorInfo info = new FloorInfo(floor, getTreeBasicPos().up(floorHigh + 1));
 		BuilderWithInfo builder = this.getBuilder(info);
-		info.setFloorData(info.getType().getBuildData(builder, RandomHelper.rand));
+		info.setFloorData(info.getType().createBuildData(builder, RandomHelper.rand));
 		info.setHigh((short) info.getType().getFloorHeight(builder));
 		if (floorHigh + info.getHigh() >= high - 1) return false;
 		if (info.getHigh() < 2) return false;

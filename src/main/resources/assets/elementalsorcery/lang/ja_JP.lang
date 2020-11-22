@@ -61,6 +61,7 @@ item.parcel.name=小包
 item.addressPlate.normal.name=住所カード
 item.addressPlate.vip.name=超級住所カード
 item.elfStar.name=精霊の星
+item.jumpGem.name=折り光宝石
 
 tile.elementalCube.name=エレメント立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -129,6 +130,7 @@ tile.portalAltar.name=折り光祭壇
 tile.transcribeTable.name=書き写し四角桌
 tile.transcribeInjection.name=呪文撰录祭壇
 tile.elfBeacon.name=精霊のビーコン
+tile.researcher.name=研究四角桌
 
 element.void.name=虚空
 element.magic.name=魔力
@@ -180,8 +182,9 @@ pro.merchant=商人
 pro.ironsmith=かじさん
 pro.builder=建築工
 pro.receptionist=接待係
-pro.post_receptionist=郵便局の受付
+pro.postReceptionist=郵便局の受付
 pro.postman=郵便配達
+pro.researcher=研究員
 
 commands.es.usage=/es <操作> <パラメータ>...
 commands.es.buildFloor.usage=/es buildFloor <階の名前>
@@ -354,6 +357,7 @@ say.add.service.help=あなたは超級住所カードのユーザです。10回
 say.add.service.success=10回のサービスを追加しました。
 say.your.pracel=%s：あなたの小包が届きました
 say.post.first.welfare=初めての宅急便サービスです。そこで初心者の依頼を用意しました。受け取ってください。
+say.how.research=そちら四角桌に行って研究してもいいです。違ったテーマに研究点数を使って、あなたの欲しいものが手に入るかもしれない。
 
 floor.hall.name=広間
 floor.livingRoom.name=部屋

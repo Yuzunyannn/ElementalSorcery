@@ -14,7 +14,7 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.block.container.BlockHearth;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.IField;
 
 public class TileHearth extends TileEntityNetwork implements ITickable, IField {
@@ -103,7 +103,7 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 
 	public static int getBurnLevel(World worldIn, BlockPos pos) {
 		IBlockState state = worldIn.getBlockState(pos);
-		if (state.getBlock() != ESInitInstance.BLOCKS.HEARTH)
+		if (state.getBlock() != ESInit.BLOCKS.HEARTH)
 			return 0;
 		BlockHearth.EnumMaterial material = state.getValue(BlockHearth.MATERIAL);
 		int level = 0;

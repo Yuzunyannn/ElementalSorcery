@@ -24,7 +24,7 @@ import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
 import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Page;
 import yuzunyannn.elementalsorcery.parchment.PageEasy;
@@ -67,7 +67,7 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
-		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInitInstance.ITEMS.MANUAL));
+		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.MANUAL));
 		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
 		if (elf.world.isRemote) return;
 		// 初始化交易信息
@@ -76,7 +76,7 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 		if (nbt.hasKey(TradeCount.Bind.TAG)) return;
 		TradeCount trade = new TradeCount();
 		TradeList list = trade.getTradeList();
-		list.add(new ItemStack(ESInitInstance.ITEMS.PARCHMENT), 1, true);
+		list.add(new ItemStack(ESInit.ITEMS.PARCHMENT), 1, true);
 		Object[] needPages = RandomHelper.randomSelect(5, pages.toArray());
 		for (int i = 0; i < needPages.length; i++) {
 			String id = needPages[i].toString();
@@ -88,10 +88,10 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 		}
 		// 一些其余东西
 		if (RandomHelper.rand.nextInt(3) == 0) {
-			list.add(new ItemStack(ESInitInstance.ITEMS.RESONANT_CRYSTAL), 80, false);
+			list.add(new ItemStack(ESInit.ITEMS.RESONANT_CRYSTAL), 80, false);
 			trade.setStock(list.size() - 1, RandomHelper.rand.nextInt(12) + 4);
 		} else {
-			list.add(new ItemStack(ESInitInstance.BLOCKS.ELF_FRUIT, 1, 2), 1, false);
+			list.add(new ItemStack(ESInit.BLOCKS.ELF_FRUIT, 1, 2), 1, false);
 			trade.setStock(list.size() - 1, 1000);
 		}
 		if (RandomHelper.rand.nextInt(2) == 0) {
@@ -102,7 +102,7 @@ public class ElfProfessionScholar extends ElfProfessionNone {
 			list.add(new ItemStack(Items.PAPER), 2, false);
 			trade.setStock(list.size() - 1, RandomHelper.rand.nextInt(16) + 8);
 		}
-		if (RandomHelper.rand.nextInt(4) == 0) list.add(new ItemStack(ESInitInstance.ITEMS.RITE_MANUAL), 120, false);
+		if (RandomHelper.rand.nextInt(4) == 0) list.add(new ItemStack(ESInit.ITEMS.RITE_MANUAL), 120, false);
 
 		nbt.setTag(TradeCount.Bind.TAG, trade.serializeNBT());
 	}

@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.BlockCrystalFlower;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
 
 public class ItemCrystal extends Item {
@@ -32,7 +32,7 @@ public class ItemCrystal extends Item {
 		Class<ESObjects.Items> cls = ESObjects.Items.class;
 		Field[] fields = cls.getFields();
 		for (int i = 0; i < fields.length; i++) {
-			Item item = (Item) fields[i].get(ESInitInstance.ITEMS);
+			Item item = (Item) fields[i].get(ESInit.ITEMS);
 			if (item instanceof ItemCrystal) crysstals.add((ItemCrystal) item);
 		}
 	}

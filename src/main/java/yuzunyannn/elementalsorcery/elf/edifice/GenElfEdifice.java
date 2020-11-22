@@ -19,7 +19,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.ITickTask;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
@@ -40,7 +40,7 @@ public class GenElfEdifice {
 	protected NBTTagCompound buildCoreData = new NBTTagCompound();
 	public int treeSize = EDIFICE_SIZE;
 	public IBlockState elfLog = ESObjects.BLOCKS.ELF_LOG.getDefaultState();
-	IBlockState elfLeaf = ESInitInstance.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false)
+	IBlockState elfLeaf = ESInit.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false)
 			.withProperty(BlockLeaves.CHECK_DECAY, false);
 
 	public GenElfEdifice(boolean dispersed) {
@@ -83,7 +83,7 @@ public class GenElfEdifice {
 		BlockPos pos = NBTHelper.getBlockPos(data, "pos");
 		int high = data.getInteger("high");
 		pos = pos.add(0, high - 1, 0);
-		world.setBlockState(pos, ESInitInstance.BLOCKS.ELF_TREE_CORE.getDefaultState());
+		world.setBlockState(pos, ESInit.BLOCKS.ELF_TREE_CORE.getDefaultState());
 		TileElfTreeCore core = BlockHelper.getTileEntity(world, pos, TileElfTreeCore.class);
 		if (core == null) {
 			ElementalSorcery.logger.warn("生成树核心的时候找不到核心的tile，位于" + pos);

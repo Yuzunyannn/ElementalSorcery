@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.entity.elf;
 
+import java.lang.ref.WeakReference;
 import java.util.Iterator;
 
 import javax.annotation.Nonnull;
@@ -44,7 +45,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
@@ -162,6 +163,9 @@ public abstract class EntityElfBase extends EntityCreature {
 		NBTHelper.setBlockPos(nbt, "edifice", pos);
 	}
 
+	/** 获取core的缓存，再也不用担心获取tile慢了๑乛◡乛๑ */
+	WeakReference<TileElfTreeCore> coreCache = new WeakReference<>(null);
+
 	/**
 	 * 获取所属的精灵大厦核心
 	 * 
@@ -169,9 +173,14 @@ public abstract class EntityElfBase extends EntityCreature {
 	 */
 	@Nullable
 	public TileElfTreeCore getEdificeCore() {
+		TileElfTreeCore core = coreCache.get();
+		if (core != null && core.getWorld() == this.world) return core;
 		NBTTagCompound nbt = this.getEntityData();
 		BlockPos at = NBTHelper.getBlockPos(nbt, "edifice");
-		return BlockHelper.getTileEntity(world, at, TileElfTreeCore.class);
+		core = BlockHelper.getTileEntity(world, at, TileElfTreeCore.class);
+		if (core == null) return core;
+		coreCache = new WeakReference<>(core);
+		return core;
 	}
 
 	// 环境音
@@ -209,8 +218,8 @@ public abstract class EntityElfBase extends EntityCreature {
 		int i = this.rand.nextInt(3);
 		if (lootingModifier > 0) i += this.rand.nextInt(lootingModifier + 1);
 		for (int j = 0; j < i; ++j) if (this.rand.nextInt(3) == 0)
-			this.entityDropItem(new ItemStack(ESInitInstance.ITEMS.ELF_COIN, this.rand.nextInt(7) + 1), 0);
-		else this.entityDropItem(new ItemStack(ESInitInstance.BLOCKS.ELF_FRUIT, 1, BlockElfFruit.MAX_STATE), 0);
+			this.entityDropItem(new ItemStack(ESInit.ITEMS.ELF_COIN, this.rand.nextInt(7) + 1), 0);
+		else this.entityDropItem(new ItemStack(ESInit.BLOCKS.ELF_FRUIT, 1, BlockElfFruit.MAX_STATE), 0);
 	}
 
 	/** 捡起物品 */

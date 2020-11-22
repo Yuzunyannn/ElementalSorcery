@@ -9,7 +9,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class TileMDMagicSolidify extends TileMDBase implements ITickable {
@@ -27,8 +27,8 @@ public class TileMDMagicSolidify extends TileMDBase implements ITickable {
 		};
 	}
 
-	static final public ItemStack MAGIC_STONE = new ItemStack(ESInitInstance.ITEMS.MAGIC_STONE);
-	static final public ItemStack MAGIC_PIECE = new ItemStack(ESInitInstance.ITEMS.MAGIC_PIECE);
+	static final public ItemStack MAGIC_STONE = new ItemStack(ESInit.ITEMS.MAGIC_STONE);
+	static final public ItemStack MAGIC_PIECE = new ItemStack(ESInit.ITEMS.MAGIC_PIECE);
 
 	@Override
 	public void update() {

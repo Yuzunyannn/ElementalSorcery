@@ -29,7 +29,7 @@ import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
@@ -69,7 +69,7 @@ public class CommandES extends CommandBase {
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
 				if (Pages.BOOK.equals(idStr))
-					player.inventory.addItemStackToInventory(new ItemStack(ESInitInstance.ITEMS.MANUAL));
+					player.inventory.addItemStackToInventory(new ItemStack(ESInit.ITEMS.MANUAL));
 				else player.inventory.addItemStackToInventory(ItemParchment.getParchment(idStr));
 			}
 		} else if ("debug".equals(args[0])) {
@@ -148,7 +148,7 @@ public class CommandES extends CommandBase {
 		// 模拟建造
 		FloorInfo info = new FloorInfo(floor, pos.up());
 		BuilderWithInfo builder = new BuilderWithInfo(entity.world, info, GenElfEdifice.EDIFICE_SIZE, 60, pos.up(60));
-		info.setFloorData(info.getType().getBuildData(builder, entity.getRNG()));
+		info.setFloorData(info.getType().createBuildData(builder, entity.getRNG()));
 		info.getType().build(builder);
 		builder.buildAll();
 		info.getType().surprise(builder, entity.getRNG());

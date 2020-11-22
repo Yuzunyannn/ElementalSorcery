@@ -53,6 +53,10 @@ public class FloorInfo implements INBTSerializable<NBTTagCompound> {
 	public Status getStatus() {
 		return status;
 	}
+	
+	public NBTTagCompound getFloorData() {
+		return floorData;
+	}
 
 	public void setStatus(Status status) {
 		this.status = status;
@@ -61,6 +65,10 @@ public class FloorInfo implements INBTSerializable<NBTTagCompound> {
 
 	public ElfEdificeFloor getType() {
 		return type;
+	}
+
+	public BlockPos getBasicPos() {
+		return basicPos;
 	}
 
 	public void setHigh(short high) {

@@ -15,7 +15,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectResonance;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
@@ -29,7 +29,7 @@ public class MantraSprint extends MantraCommon {
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataCommon = (MantraDataCommon) data;
-		ElementStack need = new ElementStack(ESInitInstance.ELEMENTS.AIR, 5, 30);
+		ElementStack need = new ElementStack(ESInit.ELEMENTS.AIR, 5, 30);
 		ElementStack get = caster.iWantSomeElement(need, true);
 		if (get.isEmpty()) return;
 		dataCommon.markContinue(true);
@@ -67,7 +67,7 @@ public class MantraSprint extends MantraCommon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public Element getMagicCircle() {
-		return ESInitInstance.ELEMENTS.AIR;
+		return ESInit.ELEMENTS.AIR;
 	}
 
 	@Override

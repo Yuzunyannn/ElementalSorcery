@@ -61,6 +61,7 @@ item.parcel.name=Parcel
 item.addressPlate.normal.name=Address Plate
 item.addressPlate.vip.name=VIP Address Plate
 item.elfStar.name=Elf Star
+item.jumpGem.name=Refract Gem
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -129,6 +130,7 @@ tile.portalAltar.name=Refract Altar
 tile.transcribeTable.name=Transcribe Square Table
 tile.transcribeInjection.name=Mantra Transcribe Altar
 tile.elfBeacon.name=Elf Beacon
+tile.researcher.name=Research Square Table
 
 element.void.name=void
 element.magic.name=Magic
@@ -180,8 +182,9 @@ pro.merchant=Merchant
 pro.ironsmith=Ironsmith
 pro.builder=Builder
 pro.receptionist=Receptionist
-pro.post_receptionist=Poster Office Receptionist
+pro.postReceptionist=Poster Office Receptionist
 pro.postman=Postman
+pro.researcher=Researcher
 
 commands.es.usage=/es <operate> <parameters>...
 commands.es.buildFloor.usage=/es buildFloor <floor name>
@@ -354,6 +357,7 @@ say.add.service.help=You are an VIP Address Plate user. You can spend %s yuan to
 say.add.service.success=We have successfully added 10 service times for your VIP Address Plate.
 say.your.pracel=%s: Here is your package
 say.post.first.welfare=You are the first time to use our express service, we hereby allow you a novice Quest, please accept it.
+say.how.research=You can go to the square table over there and spend research points on different topics. Maybe you can find out what you want.
 
 floor.hall.name=Hall
 floor.livingRoom.name=Living Room

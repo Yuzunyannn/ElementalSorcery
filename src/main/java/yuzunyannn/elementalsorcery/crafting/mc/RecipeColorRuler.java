@@ -10,18 +10,18 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.DyeUtils;
 import net.minecraftforge.oredict.OreDictionary;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 
 public class RecipeColorRuler extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe>
 		implements IRecipe {
 
-	final ItemStack output = new ItemStack(ESInitInstance.ITEMS.MAGIC_RULER);
-	final Item wantItem = ESInitInstance.ITEMS.MAGIC_RULER;
+	final ItemStack output = new ItemStack(ESInit.ITEMS.MAGIC_RULER);
+	final Item wantItem = ESInit.ITEMS.MAGIC_RULER;
 	final NonNullList<Ingredient> ingredient = NonNullList.create();
 
 	public RecipeColorRuler() {
-		ingredient.add(Ingredient.fromItems(ESInitInstance.ITEMS.MAGIC_RULER));
+		ingredient.add(Ingredient.fromItems(ESInit.ITEMS.MAGIC_RULER));
 		NonNullList<ItemStack> list = OreDictionary.getOres("dye");
 		ingredient.add(Ingredient.fromStacks(list.toArray(new ItemStack[list.size()])));
 	}

@@ -33,7 +33,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
@@ -46,8 +46,8 @@ public class MantraFireBall extends MantraCommon {
 		protected float power = 0;
 		protected Vec3d pos;
 		protected Vec3d toward;
-		protected ElementStack metal = new ElementStack(ESInitInstance.ELEMENTS.METAL, 0);
-		protected ElementStack knowledge = new ElementStack(ESInitInstance.ELEMENTS.KNOWLEDGE, 0);
+		protected ElementStack metal = new ElementStack(ESInit.ELEMENTS.METAL, 0);
+		protected ElementStack knowledge = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 0);
 
 		protected int color = 0;
 		protected boolean powerUp = false;
@@ -60,7 +60,7 @@ public class MantraFireBall extends MantraCommon {
 
 	@Override
 	public Element getMagicCircle() {
-		return ESInitInstance.ELEMENTS.FIRE;
+		return ESInit.ELEMENTS.FIRE;
 	}
 
 	@Override
@@ -134,14 +134,14 @@ public class MantraFireBall extends MantraCommon {
 			return;
 		}
 		// 每tick两点消耗，积攒火球，火元素是必须的，否则没法积攒其他元素
-		ElementStack need = new ElementStack(ESInitInstance.ELEMENTS.FIRE, 2, 50);
+		ElementStack need = new ElementStack(ESInit.ELEMENTS.FIRE, 2, 50);
 		ElementStack stack = caster.iWantSomeElement(need, true);
 		if (stack.isEmpty()) return;
 		data.power += 0.4;
 		data.powerUp = true;
 		// 获取金
 		if (data.metal.getCount() < 40) out: {
-			need = new ElementStack(ESInitInstance.ELEMENTS.METAL, 1, 100);
+			need = new ElementStack(ESInit.ELEMENTS.METAL, 1, 100);
 			stack = caster.iWantSomeElement(need, true);
 			if (stack.isEmpty()) break out;
 			data.metal.grow(stack);
@@ -150,7 +150,7 @@ public class MantraFireBall extends MantraCommon {
 		}
 		// 获取知识
 		if (data.knowledge.getCount() < 20) out: {
-			need = new ElementStack(ESInitInstance.ELEMENTS.KNOWLEDGE, 1, 150);
+			need = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 1, 150);
 			stack = caster.iWantSomeElement(need, true);
 			if (stack.isEmpty()) break out;
 			data.knowledge.grow(stack);

@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class WorldGenStarStone extends WorldGenerator {
 
@@ -27,8 +27,8 @@ public class WorldGenStarStone extends WorldGenerator {
 			tryTime = 1 + rand.nextInt(4);
 		else
 			tryTime = 2;
-		IBlockState starStoneState = ESInitInstance.BLOCKS.STAR_STONE.getDefaultState();
-		IBlockState starSandState = ESInitInstance.BLOCKS.STAR_SAND.getDefaultState();
+		IBlockState starStoneState = ESInit.BLOCKS.STAR_STONE.getDefaultState();
+		IBlockState starSandState = ESInit.BLOCKS.STAR_SAND.getDefaultState();
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
 		for (int i = 0; i < tryTime; i++) {
 			// 从天而降，寻找沙块

@@ -67,6 +67,7 @@ public class ESObjects {
 		public Item PARCEL;
 		public Item ADDRESS_PLATE;
 		public Item ELF_STAR;
+		public Item JUMP_GEM;
 	}
 
 	static public class Blocks {
@@ -128,6 +129,7 @@ public class ESObjects {
 		public Block TRANSCRIBE_INJECTION;
 		public Block ELF_TREE_CORE;
 		public Block ELF_BEACON;
+		public Block RESEARCHER;
 	}
 
 	static public class Elements {

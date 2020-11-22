@@ -31,7 +31,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.effect.EffectElement;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
@@ -43,7 +43,7 @@ public class ElfProfessionMaster extends ElfProfession {
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
-		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInitInstance.ITEMS.SPELLBOOK_ELEMENT));
+		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.SPELLBOOK_ELEMENT));
 		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);// 不能掉书
 	}
 

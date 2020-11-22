@@ -10,14 +10,14 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenMegaJungle;
 import net.minecraft.world.gen.feature.WorldGenTrees;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class WorldGenElfTree extends WorldGenAbstractTree {
 
 	protected final boolean doBlockNotify;
 	protected int type;
-	public static final IBlockState WOOD = ESInitInstance.BLOCKS.ELF_LOG.getDefaultState();
-	public static final IBlockState LEAVE = ESInitInstance.BLOCKS.ELF_LEAF.getDefaultState();
+	public static final IBlockState WOOD = ESInit.BLOCKS.ELF_LOG.getDefaultState();
+	public static final IBlockState LEAVE = ESInit.BLOCKS.ELF_LEAF.getDefaultState();
 
 	/** 获取对应的树样子 */
 	static public WorldGenElfTree getGenTreeFromBiome(boolean notify, Biome biome) {

@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 
 @SideOnly(Side.CLIENT)
@@ -55,7 +55,7 @@ public class KeyBoard {
 
 	public static boolean elfTreeElevator(EntityPlayer player) {
 		BlockPos pos = player.getPosition().down();
-		if (player.world.getBlockState(pos) != ESInitInstance.BLOCKS.ELF_LOG.getDefaultState()) return false;
+		if (player.world.getBlockState(pos) != ESInit.BLOCKS.ELF_LOG.getDefaultState()) return false;
 
 		if (elfTreeCoreCache.size() > 10) elfTreeCoreCache.removeFirst();
 		for (BlockPos p : elfTreeCoreCache) {
@@ -68,7 +68,7 @@ public class KeyBoard {
 			for (int x = -2; x <= 2; x++) {
 				for (int z = -2; z <= 2; z++) {
 					IBlockState state = player.world.getBlockState(pos.add(x, y, z));
-					if (state.getBlock() == ESInitInstance.BLOCKS.ELF_TREE_CORE) {
+					if (state.getBlock() == ESInit.BLOCKS.ELF_TREE_CORE) {
 						elfTreeCoreCache.add(pos.add(x, y, z));
 						TileElfTreeCore.openElevatorUI(pos.add(x, y, z), player);
 						return true;

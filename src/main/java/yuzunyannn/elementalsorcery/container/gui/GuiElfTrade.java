@@ -11,7 +11,7 @@ import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 
 public class GuiElfTrade extends GuiContainer {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/elf/elf_trade.png");
 
 	public final ContainerElfTrade container;

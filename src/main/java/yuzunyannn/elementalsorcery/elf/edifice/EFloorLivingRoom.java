@@ -43,7 +43,7 @@ public class EFloorLivingRoom extends ElfEdificeFloor {
 	}
 
 	@Override
-	public NBTTagCompound getBuildData(IBuilder builder, Random rand) {
+	public NBTTagCompound createBuildData(IBuilder builder, Random rand) {
 		return new NBTTagCompound();
 	}
 

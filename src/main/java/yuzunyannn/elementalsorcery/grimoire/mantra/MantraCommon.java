@@ -10,7 +10,7 @@ import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectElementMagicCircle;
 
 public class MantraCommon extends Mantra {
@@ -42,7 +42,7 @@ public class MantraCommon extends Mantra {
 
 	@SideOnly(Side.CLIENT)
 	public Element getMagicCircle() {
-		return ESInitInstance.ELEMENTS.VOID;
+		return ESInit.ELEMENTS.VOID;
 	}
 
 }

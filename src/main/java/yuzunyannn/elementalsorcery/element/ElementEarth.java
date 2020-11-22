@@ -7,7 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.element.IElementSpell;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class ElementEarth extends ElementInner {
 
@@ -17,7 +17,7 @@ public class ElementEarth extends ElementInner {
 
 	@Override
 	public int complexWith(ItemStack stack, ElementStack estack, ElementStack other) {
-		if (other.getElement() == ESInitInstance.ELEMENTS.METAL)
+		if (other.getElement() == ESInit.ELEMENTS.METAL)
 			return 10;
 		return super.complexWith(stack, estack, other);
 	}

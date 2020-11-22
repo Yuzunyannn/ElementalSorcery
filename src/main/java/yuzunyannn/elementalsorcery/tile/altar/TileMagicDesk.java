@@ -37,7 +37,7 @@ import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -314,7 +314,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 
 	private void resetAllAutomata() {
 		automataList.clear();
-		if (this.book.getItem() == ESInitInstance.ITEMS.SPELLBOOK) {
+		if (this.book.getItem() == ESInit.ITEMS.SPELLBOOK) {
 			for (TileMagicDesk.Recipe r : getRecipes())
 				automataList.add(new ItemAutomata(r.getSequence(), r.getOutput()));
 		}
@@ -363,22 +363,22 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 
 	// 各种合成表
 	public static void init() {
-		ESObjects.Items ITEMS = ESInitInstance.ITEMS;
+		ESObjects.Items ITEMS = ESInit.ITEMS;
 		// launch
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_LAUNCH),
-				new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL, 3),
-				new ItemStack(ESInitInstance.ITEMS.ELF_CRYSTAL, 10), new ItemStack(Blocks.CRAFTING_TABLE, 2),
-				new ItemStack(ESInitInstance.ITEMS.PARCHMENT, 16));
+				new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 3),
+				new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 10), new ItemStack(Blocks.CRAFTING_TABLE, 2),
+				new ItemStack(ESInit.ITEMS.PARCHMENT, 16));
 		// element
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ELEMENT),
-				new ItemStack(ESInitInstance.ITEMS.MAGIC_CRYSTAL, 10),
-				new ItemStack(ESInitInstance.ITEMS.ELF_CRYSTAL, 32), new ItemStack(Blocks.RED_FLOWER, 6),
+				new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 10),
+				new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 32), new ItemStack(Blocks.RED_FLOWER, 6),
 				new ItemStack(Items.GOLD_INGOT, 3), new ItemStack(Items.COAL, 7), new ItemStack(Blocks.OBSIDIAN, 2));
 		// building
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ARCHITECTURE),
-				new ItemStack(ESInitInstance.BLOCKS.ESTONE, 16),
-				new ItemStack(ESInitInstance.ITEMS.ARCHITECTURE_CRYSTAL, 1),
-				new ItemStack(ESInitInstance.BLOCKS.KYANITE_BLOCK, 2), new ItemStack(Blocks.STONE, 16),
+				new ItemStack(ESInit.BLOCKS.ESTONE, 16),
+				new ItemStack(ESInit.ITEMS.ARCHITECTURE_CRYSTAL, 1),
+				new ItemStack(ESInit.BLOCKS.KYANITE_BLOCK, 2), new ItemStack(Blocks.STONE, 16),
 				new ItemStack(Blocks.IRON_BLOCK, 1), new ItemStack(Blocks.GOLD_BLOCK, 1),
 				new ItemStack(Blocks.REDSTONE_BLOCK, 1), new ItemStack(Blocks.OBSIDIAN, 1),
 				new ItemStack(Blocks.BRICK_BLOCK, 2));

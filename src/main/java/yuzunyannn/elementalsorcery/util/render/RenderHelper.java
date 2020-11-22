@@ -163,6 +163,6 @@ public class RenderHelper {
 	}
 
 	public static void drawTexturedRectInCenter(float x, float y, float width, float height) {
-		drawTexturedRectInCenter(0, 0, width, height, 0, 0, 1, 1, 1, 1);
+		drawTexturedRectInCenter(x, y, width, height, 0, 0, 1, 1, 1, 1);
 	}
 }

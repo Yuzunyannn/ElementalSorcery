@@ -19,14 +19,14 @@ import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInitInstance;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.item.ItemRec;
 
 public class EFloorPostOffice extends ElfEdificeFloor {
 
 	@Override
-	public NBTTagCompound getBuildData(IBuilder builder, Random rand) {
+	public NBTTagCompound createBuildData(IBuilder builder, Random rand) {
 		return new NBTTagCompound();
 	}
 
@@ -88,7 +88,7 @@ public class EFloorPostOffice extends ElfEdificeFloor {
 		}
 		// 后面一排树叶
 		{
-			IBlockState LEAF = ESInitInstance.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE,
+			IBlockState LEAF = ESInit.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE,
 					false);
 			IBlockState GLOWSTONE = Blocks.GLOWSTONE.getDefaultState();
 			int size = treeSize;
