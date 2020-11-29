@@ -22,14 +22,13 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.ParticleTranscribe;
-import yuzunyannn.elementalsorcery.util.MultiRets;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
@@ -39,8 +38,10 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 	protected ItemStackHandler inventory = new ItemStackHandler(6) {
 		@Override
 		public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-			if (ItemAncientPaper.hasMantraData(stack)) return super.insertItem(slot, stack, simulate);
-			return stack;
+			if (!AncientPaper.hasMantra(stack)) return stack;
+			AncientPaper ap = new AncientPaper(stack);
+			if (ap.isLocked()) return stack;
+			return super.insertItem(slot, stack, simulate);
 		}
 	};
 
@@ -171,15 +172,15 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ItemStack paper = inventory.getStackInSlot(i);
 			if (paper.isEmpty()) continue;
-			MultiRets rets = ItemAncientPaper.getMantraData(paper);
-			if (rets.isEmpty()) return false;
-			Mantra m = rets.get(0, Mantra.class);
+			AncientPaper ap = new AncientPaper(paper);
+			if (!ap.hasMantra()) return false;
+			Mantra m = ap.getMantra();
 			if (mantraType == null) mantraType = m;
 			else if (mantraType != m) return false;
 			// 有四个返回值的时普通的咒文
 			if (!Mantra.isCustomMantra(m)) {
-				Integer start = rets.getNumber(2, Integer.class);
-				Integer end = rets.getNumber(3, Integer.class);
+				Integer start = ap.getStart();
+				Integer end = ap.getEnd();
 				if (start == null || end == null) return false;
 				// 超出当前进度直接结束
 				if (start > progress) return false;

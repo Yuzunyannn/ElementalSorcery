@@ -43,6 +43,7 @@ public class MantraDataCommon implements IMantraData {
 
 	public EffectScreenProgress effectProgress;
 
+	@SideOnly(Side.CLIENT)
 	public void setProgress(float pro, int color, World world, ICaster caster) {
 		if (!this.hasMarkEffect(100)) {
 			effectProgress = new EffectScreenProgress(world);
@@ -50,7 +51,7 @@ public class MantraDataCommon implements IMantraData {
 			this.addEffect(caster, effectProgress, 100, false);
 		} else {
 			if (effectProgress == null) return;
-			effectProgress.setProgress(pro);	
+			effectProgress.setProgress(pro);
 		}
 	}
 
@@ -71,6 +72,7 @@ public class MantraDataCommon implements IMantraData {
 	}
 
 	/** 通用性的条件 */
+	@SideOnly(Side.CLIENT)
 	public static class ConditionEffect extends EffectCondition.ConditionEntityAction {
 
 		public final MantraDataCommon data;

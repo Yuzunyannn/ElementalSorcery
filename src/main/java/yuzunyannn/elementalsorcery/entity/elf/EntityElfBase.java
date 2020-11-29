@@ -250,10 +250,10 @@ public abstract class EntityElfBase extends EntityCreature {
 	@Override
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);
+		this.getProfession().onDead(this);
 		// 记录
-		if (cause.getTrueSource() instanceof EntityPlayerMP) {
+		if (cause.getTrueSource() instanceof EntityPlayerMP)
 			ESCriteriaTriggers.PLAYER_KILLED_ELF.trigger((EntityPlayerMP) cause.getTrueSource(), this, cause);
-		}
 	}
 
 	/** 受到攻击，精灵的反应 */
@@ -358,9 +358,8 @@ public abstract class EntityElfBase extends EntityCreature {
 	}
 
 	@Override
-	public void setDead() {
-		if (!this.isDead) this.getProfession().onDead(this);
-		super.setDead();
+	protected boolean canDespawn() {
+		return this.getProfession().canDespawn(this);
 	}
 
 	/** 获取精灵职业 */

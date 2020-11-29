@@ -1,10 +1,20 @@
 package yuzunyannn.elementalsorcery.util.json;
 
+import java.util.List;
+
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 
 /** 描述物品记录，是stack还是单单是物品 */
 public class ItemRecord {
+
+	public static Ingredient asIngredient(List<ItemRecord> itemRecords) {
+		ItemStack[] stacks = new ItemStack[itemRecords.size()];
+		for (int i = 0; i < stacks.length; i++) stacks[i] = itemRecords.get(i).getStack();
+		return Ingredient.fromStacks(stacks);
+	}
+
 	private final ItemStack stack;
 	private final Item item;
 

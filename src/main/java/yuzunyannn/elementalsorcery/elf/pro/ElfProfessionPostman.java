@@ -33,7 +33,7 @@ import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
-public class ElfProfessionPostman extends ElfProfessionNone {
+public class ElfProfessionPostman extends ElfProfessionUndetermined {
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {

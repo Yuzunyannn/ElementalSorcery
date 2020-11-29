@@ -20,6 +20,7 @@ import yuzunyannn.elementalsorcery.api.crafting.IItemCapbiltitySyn;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 
 /** 该能力仅仅是跟随物品，作为上下文数据使用 */
 public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagCompound> {
@@ -104,15 +105,14 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 	}
 
 	@Override
-	public boolean hasState(ItemStack stack) {
-		NBTTagCompound nbt = stack.getTagCompound();
-		return nbt == null ? false : nbt.hasKey("mantra", 9);
+	public boolean hasState(NBTTagCompound nbt) {
+		return nbt.hasKey("mantra", NBTTag.TAG_LIST);
 	}
 
 	@Override
 	public void loadState(NBTTagCompound nbt) {
 		if (inventory != null) inventory.loadState(nbt);
-		NBTTagList mantras = nbt.getTagList("mantra", 10);
+		NBTTagList mantras = nbt.getTagList("mantra", NBTTag.TAG_COMPOUND);
 		mantraList = new ArrayList<>(mantras.tagCount());
 		for (int i = 0; i < mantras.tagCount(); i++) {
 			NBTTagCompound data = mantras.getCompoundTagAt(i);

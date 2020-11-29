@@ -62,6 +62,7 @@ import yuzunyannn.elementalsorcery.block.BlockLifeFlower;
 import yuzunyannn.elementalsorcery.block.BlockMagicPot;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.block.BlockResearcher;
+import yuzunyannn.elementalsorcery.block.BlockSealStone;
 import yuzunyannn.elementalsorcery.block.BlockStarSand;
 import yuzunyannn.elementalsorcery.block.BlockStarStone;
 import yuzunyannn.elementalsorcery.block.BlocksEStone;
@@ -116,7 +117,8 @@ import yuzunyannn.elementalsorcery.element.ElementWater;
 import yuzunyannn.elementalsorcery.element.ElementWood;
 import yuzunyannn.elementalsorcery.elf.AutoName;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
-import yuzunyannn.elementalsorcery.elf.researcher.Topic;
+import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
+import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.KeyBoard;
@@ -322,6 +324,7 @@ public class ESInit {
 		BLOCKS.ELF_TREE_CORE = new BlockElfTreeCore();
 		BLOCKS.ELF_BEACON = new BlockElfBeacon();
 		BLOCKS.RESEARCHER = new BlockResearcher();
+		BLOCKS.SEAL_STONE = new BlockSealStone();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -441,6 +444,7 @@ public class ESInit {
 		BuildingLib.registerAll();
 		// 注册咒文
 		MantraRegister.registerAll();
+		KnowledgeType.registerAll();
 		// 注册精灵大厦楼层
 		ElfRegister.registerAllFloor();
 		// 任务相关注册
@@ -630,8 +634,9 @@ public class ESInit {
 		registerRender(ITEMS.NATURE_DUST, 1, "explore_dust");
 		registerRender(ITEMS.NATURE_DUST, 2, "explore_adv_dust");
 		registerRender(ITEMS.ANCIENT_PAPER, 0, "ancient_paper");
-		registerRender(ITEMS.ANCIENT_PAPER, 1, "ancient_paper_new");
-		registerRender(ITEMS.ANCIENT_PAPER, 2, "ancient_paper_new_written");
+		registerRender(ITEMS.ANCIENT_PAPER, 1, "ancient_paper_unscramble");
+		registerRender(ITEMS.ANCIENT_PAPER, 2, "ancient_paper_new");
+		registerRender(ITEMS.ANCIENT_PAPER, 3, "ancient_paper_new_written");
 		registerRender(ITEMS.QUEST);
 		registerRender(ITEMS.ELF_WATCH);
 		registerRender(ITEMS.MAGIC_GOLD);
@@ -695,6 +700,7 @@ public class ESInit {
 		registerRender(BLOCKS.TRANSCRIBE_TABLE);
 		registerRender(BLOCKS.TRANSCRIBE_INJECTION);
 		registerRender(BLOCKS.RESEARCHER);
+		registerRender(BLOCKS.SEAL_STONE);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());

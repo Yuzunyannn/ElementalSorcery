@@ -16,6 +16,7 @@ import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public abstract class ContainerElf extends Container {
 	public final BlockPos pos;
@@ -50,10 +51,7 @@ public abstract class ContainerElf extends Container {
 		if (playerData.hasKey("elfGuiItemBack", NBTTag.TAG_LIST)) {
 			LinkedList<ItemStack> items = NBTHelper.getItemList(playerData, "elfGuiItemBack");
 			playerData.removeTag("elfGuiItemBack");
-			for (ItemStack stack : items) {
-				if (stack.isEmpty()) continue;
-				player.inventory.addItemStackToInventory(stack);
-			}
+			for (ItemStack stack : items) ItemHelper.addItemStackToPlayer(player, stack);
 		}
 	}
 

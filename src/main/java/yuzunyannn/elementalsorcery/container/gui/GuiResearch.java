@@ -24,21 +24,21 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.container.ContainerResearcher;
-import yuzunyannn.elementalsorcery.elf.researcher.Topic;
+import yuzunyannn.elementalsorcery.container.ContainerResearch;
+import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.util.ColorHelper;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
-public class GuiResearcher extends GuiContainer {
+public class GuiResearch extends GuiContainer {
 
 	public static final ResourceLocation BUTTON = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/researcher/button.png");
 	public static final ResourceLocation TEXTURE_01 = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/researcher/researcher_01.png");
 
-	public final ContainerResearcher container;
+	public final ContainerResearch container;
 
 	public static Set<String> getDefaultTopics() {
 		Set<String> all = new TreeSet<String>();
@@ -50,9 +50,9 @@ public class GuiResearcher extends GuiContainer {
 		return all;
 	}
 
-	public GuiResearcher(EntityPlayer player, BlockPos pos) {
-		super(new ContainerResearcher(player, pos));
-		this.container = (ContainerResearcher) inventorySlots;
+	public GuiResearch(EntityPlayer player, BlockPos pos) {
+		super(new ContainerResearch(player, pos));
+		this.container = (ContainerResearch) inventorySlots;
 		ySize = xSize = 240;
 		Set<String> all = getDefaultTopics();
 		for (String key : container.reasearher.keySet()) {
@@ -264,6 +264,7 @@ public class GuiResearcher extends GuiContainer {
 		for (int i = 0; i < size; i++) {
 			TopicInfo info = topics.get(i);
 			info.update();
+			if (container.fromSrverUpdateFlag) info.getMaxPower();
 			float at = mapVertex.get(i);
 			mapPrevVertex.set(i, at);
 			float target = Math.min(1, info.power / allPower);

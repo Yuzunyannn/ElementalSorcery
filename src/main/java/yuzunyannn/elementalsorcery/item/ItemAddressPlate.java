@@ -96,7 +96,8 @@ public class ItemAddressPlate extends Item {
 	}
 
 	static public enum EnumType implements IStringSerializable {
-		NORMAL("normal"), VIP("vip");
+		NORMAL("normal"),
+		VIP("vip");
 
 		final String name;
 

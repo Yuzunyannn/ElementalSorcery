@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntitySheep;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.EnumDyeColor;
@@ -148,7 +149,9 @@ public class EntityResonantCrystal extends EntityThrowable {
 				world.scheduleUpdate(pos, state.getBlock(), 0);
 				return 5;
 			} else if (block instanceof BlockElfSapling) {
-				((BlockElfSapling) block).superGrow(world, rand, pos, state, false);
+				EntityPlayer player = null;
+				if (thrower instanceof EntityPlayer) player = (EntityPlayer) thrower;
+				((BlockElfSapling) block).superGrow(world, rand, pos, state, player, false);
 				return 5;
 			} else if (block instanceof IGrowable) {
 				if (((IGrowable) block).canGrow(world, pos, state, world.isRemote)) {

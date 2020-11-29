@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
-import yuzunyannn.elementalsorcery.container.gui.GuiResearcher;
+import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectTopic;
 
@@ -77,10 +77,10 @@ public class BlockResearcher extends Block {
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if (rand.nextInt(4) != 0) return;
 		Minecraft mc = Minecraft.getMinecraft();
-		GuiResearcher gui = null;
-		if (mc.currentScreen instanceof GuiResearcher) gui = (GuiResearcher) mc.currentScreen;
+		GuiResearch gui = null;
+		if (mc.currentScreen instanceof GuiResearch) gui = (GuiResearch) mc.currentScreen;
 		if (gui == null || !gui.container.pos.equals(pos)) return;
-		List<GuiResearcher.TopicInfo> infos = gui.getTopics();
+		List<GuiResearch.TopicInfo> infos = gui.getTopics();
 		String type = infos.get(rand.nextInt(infos.size())).topic.getTypeName();
 		double x, y, z;
 		x = pos.getX() + 0.2 + rand.nextFloat() * 0.8;

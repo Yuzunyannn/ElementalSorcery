@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -150,10 +151,10 @@ public class MantraLush extends MantraCommon {
 			magicEffectAt(world, pos, caster);
 			return;
 		}
-		this.magicToBlock(world, pos, state, power);
+		this.magicToBlock(world, pos, state, caster, power);
 	}
 
-	protected void magicToBlock(World world, BlockPos pos, IBlockState state, float power) {
+	protected void magicToBlock(World world, BlockPos pos, IBlockState state, ICaster caster, float power) {
 		Block block = state.getBlock();
 		Random rand = world.rand;
 		float dP = MathHelper.sqrt(power / 8.0f);
@@ -186,7 +187,9 @@ public class MantraLush extends MantraCommon {
 		}
 		if (block == ESInit.BLOCKS.ELF_SAPLING && power > 600) {
 			if (rand.nextFloat() < dP * 0.05) {
-				((BlockElfSapling) block).superGrow(world, rand, pos, state, true);
+				EntityPlayer player = null;
+				if (caster.iWantCaster() instanceof EntityPlayer) player = (EntityPlayer) caster.iWantCaster();
+				((BlockElfSapling) block).superGrow(world, rand, pos, state, player, true);
 				return;
 			}
 		}

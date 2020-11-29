@@ -10,6 +10,7 @@ import org.lwjgl.opengl.GL11;
 
 import mezz.jei.api.gui.IDrawable;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
@@ -17,8 +18,9 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
-import yuzunyannn.elementalsorcery.container.gui.GuiResearcher;
-import yuzunyannn.elementalsorcery.elf.researcher.Topic;
+import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
+import yuzunyannn.elementalsorcery.container.gui.GuiTranscribeInjection;
+import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.util.ColorHelper;
 
@@ -42,7 +44,7 @@ public class ResearchDraw implements IDrawable {
 	public void setRecipe(IResearchRecipe recipe) {
 		topics.clear();
 		allNeed = 0;
-		Set<String> all = GuiResearcher.getDefaultTopics();
+		Set<String> all = GuiResearch.getDefaultTopics();
 		List<Entry<String, Integer>> list = recipe.getRecipeInput();
 		float size = list.size();
 		for (Entry<String, Integer> entry : list) {
@@ -80,8 +82,10 @@ public class ResearchDraw implements IDrawable {
 
 	@Override
 	public void draw(Minecraft mc, int xOffset, int yOffset) {
+		mc.getTextureManager().bindTexture(GuiTranscribeInjection.TEXTURE);
+		Gui.drawModalRectWithCustomSizedTexture(xOffset, yOffset + 120, 7, 26, 162, 18, 256, 256);
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(81, 78, 0);
+		GlStateManager.translate(81, 68, 0);
 		GlStateManager.rotate(EventClient.getGlobalRotateInRender(mc.getRenderPartialTicks()) / 8, 0, 0, 1);
 		int size = topics.size();
 		float dR = 360f / size;
@@ -90,7 +94,7 @@ public class ResearchDraw implements IDrawable {
 			float roate = n * dR;
 			GlStateManager.rotate(roate, 0, 0, 1);
 			Entry<Topic, Integer> entry = topics.get(n);
-			GlStateManager.translate(0, -50, 0);
+			GlStateManager.translate(0, -42, 0);
 			entry.getKey().render(mc, topicSize, 1, 0);
 			GlStateManager.popMatrix();
 		}
@@ -103,11 +107,11 @@ public class ResearchDraw implements IDrawable {
 			Entry<Topic, Integer> entry2 = topics.get(n % size);
 			float roate = n * dR;
 			float r1 = Math.min(1, entry1.getValue() / allNeed);
-			float l1 = r1 * 18 + 15;
+			float l1 = r1 * 18 + 14;
 			float x1 = MathHelper.sin(roate - dR) * l1;
 			float y1 = -MathHelper.cos(roate - dR) * l1;
 			float r2 = Math.min(1, entry2.getValue() / allNeed);
-			float l2 = r2 * 18 + 15;
+			float l2 = r2 * 18 + 14;
 			float x2 = MathHelper.sin(roate) * l2;
 			float y2 = -MathHelper.cos(roate) * l2;
 			drawLine(x1, y1, x2, y2, mapR, mapG, mapB, 1);

@@ -19,16 +19,19 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
+import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.edifice.BuilderWithInfo;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
+import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Pages;
@@ -51,17 +54,23 @@ public class CommandES extends CommandBase {
 	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		if (args.length < 1) throw new CommandException("commands.es.usage");
-		if (args[0].equals("build")) {
-			// 建筑
+		switch (args[0]) {
+		case "build":// 建筑
+		{
 			if (args.length == 1) throw new CommandException("commands.es.build.usage");
 			Entity entity = sender.getCommandSenderEntity();
 			this.cmdBuild(args[1], (EntityLivingBase) entity, server.getEntityWorld());
-		} else if (args[0].equals("buildFloor")) {
+			return;
+		}
+		case "buildFloor": {
 			if (args.length == 1) throw new CommandException("commands.es.buildFloor.usage");
 			Entity entity = sender.getCommandSenderEntity();
 			this.cmdBuildFloor(args[1], (EntityLivingBase) entity, server.getEntityWorld());
-		} else if (args[0].equals("page")) {
-			// 页面
+			return;
+		}
+		case "page":
+		// 页面
+		{
 			if (args.length == 1) throw new CommandException("commands.es.page.usage");
 			String idStr = args[1];
 			if (!Pages.isVaild(idStr)) throw new CommandException("commands.es.page.fail");
@@ -72,11 +81,24 @@ public class CommandES extends CommandBase {
 					player.inventory.addItemStackToInventory(new ItemStack(ESInit.ITEMS.MANUAL));
 				else player.inventory.addItemStackToInventory(ItemParchment.getParchment(idStr));
 			}
-		} else if ("debug".equals(args[0])) {
-			// debug
+			return;
+		}
+		case "quest": {
+			if (args.length == 1) throw new CommandException("commands.es.quest.usage");
+			Entity entity = sender.getCommandSenderEntity();
+			this.cmdQuest(Arrays.copyOfRange(args, 1, args.length), server, (EntityLivingBase) entity);
+			return;
+		}
+		case "debug":
+		// debug
+		{
 			if (args.length == 1) throw new CommandException("ES dubug 指令无效，随便使用debug指令可能会导致崩溃");
 			CommandESDebug.execute(server, sender, Arrays.copyOfRange(args, 1, args.length));
-		} else throw new CommandException("commands.es.usage");
+			return;
+		}
+		default:
+			throw new CommandException("commands.es.usage");
+		}
 	}
 
 	// 自动补全
@@ -84,29 +106,58 @@ public class CommandES extends CommandBase {
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			@Nullable BlockPos targetPos) {
 		if (args.length == 1) {
-			String[] names = { "build", "page", "debug", "buildFloor" };
+			String[] names = { "build", "page", "debug", "buildFloor", "quest" };
 			return CommandBase.getListOfStringsMatchingLastWord(args, names);
-		} else if (args.length == 2) {
-			if (args[0].equals("build")) {
+		} else if (args.length >= 2) {
+			switch (args[0]) {
+			case "build": {
 				Collection<Building> bs = BuildingLib.instance.getBuildingsFromLib();
 				List<String> arrayList = new ArrayList<>(bs.size() + 1);
 				for (Building b : bs) arrayList.add(b.getKeyName());
 				arrayList.add("it");
 				List<String> tips = CommandBase.getListOfStringsMatchingLastWord(args, arrayList);
 				return tips;
-			} else if (args[0].equals("buildFloor")) {
+			}
+			case "buildFloor": {
 				Collection<ResourceLocation> bs = ElfEdificeFloor.REGISTRY.getKeys();
 				return CommandBase.getListOfStringsMatchingLastWord(args, bs);
-			} else if (args[0].equals("page")) {
+			}
+			case "page": {
 				Set<String> set = Pages.getPageIds();
 				String[] names = new String[set.size()];
 				set.toArray(names);
 				return CommandBase.getListOfStringsMatchingLastWord(args, names);
-			} else if ("debug".equals(args[0])) {
+			}
+			case "quest": {
+				if (args.length > 2) return CommandBase.getListOfStringsMatchingLastWord(args,
+						sender.getCommandSenderEntity().getName());
+				return CommandBase.getListOfStringsMatchingLastWord(args, "clear");
+			}
+			case "debug": {
 				return CommandBase.getListOfStringsMatchingLastWord(args, CommandESDebug.autoTips);
 			}
+			default:
+			}
 		}
-		return null;
+		return CommandBase.getListOfStringsMatchingLastWord(args);
+	}
+
+	private void cmdQuest(String[] args, MinecraftServer server, EntityLivingBase entity) throws CommandException {
+		switch (args[0]) {
+		case "clear": {
+			EntityLivingBase player = entity;
+			if (args.length > 1) {
+				player = server.getPlayerList().getPlayerByUsername(args[1]);
+				if (player == null) throw new CommandException("commands.generic.player.notFound", args[1]);
+			}
+			IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+			if (adventurer != null) adventurer.removeAllQuest();
+			entity.sendMessage(new TextComponentTranslation("commands.es.quest.clear", entity.getName()));
+			return;
+		}
+		default:
+			throw new CommandException("commands.es.quest.usage");
+		}
 	}
 
 	/** 建造建筑 */

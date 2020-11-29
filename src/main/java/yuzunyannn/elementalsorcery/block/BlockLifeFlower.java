@@ -83,8 +83,8 @@ public class BlockLifeFlower extends Block {
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
-		if (this.hasPower(worldIn, pos))
-			if (placer instanceof EntityPlayerMP) ESCriteriaTriggers.GARDEN_BUILD.trigger((EntityPlayerMP) placer);
+		if (this.hasPower(worldIn, pos)) if (placer instanceof EntityPlayerMP)
+			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) placer, "build:garden");
 	}
 
 	@Override

@@ -245,6 +245,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	protected void closeBook() {
 		if (user == null) return;
 		EventClient.addTickTask(() -> {
+			if (grimoire == null) return ITickTask.END;
 			RenderItemGrimoireInfo info = grimoire.getRenderInfo();
 			info.close();
 			boolean flag = info.update() || user.isHandActive() || user.isDead;

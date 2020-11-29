@@ -39,6 +39,7 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
+import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityMagicMelting;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
@@ -75,6 +76,8 @@ public class CommandESDebug {
 				sender.sendMessage(new TextComponentString("元素映射数据刷新成功!"));
 				Pages.init(side);
 				sender.sendMessage(new TextComponentString("教程羊皮卷数据刷新成功!"));
+				ResearchRecipeManagement.reload();
+				sender.sendMessage(new TextComponentString("研究合成表刷新成功!"));
 			} catch (Exception e) {
 				ElementalSorcery.logger.warn("刷新数据出现异常！", e);
 				sender.sendMessage(new TextComponentString("刷新数据出现异常！Refresh data exception!"));

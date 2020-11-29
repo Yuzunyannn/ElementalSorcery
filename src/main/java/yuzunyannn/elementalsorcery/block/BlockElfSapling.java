@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.block;
 
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -9,11 +11,14 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.worldgen.WorldGenElfTree;
 
@@ -94,7 +99,8 @@ public class BlockElfSapling extends BlockBush implements IGrowable {
 		return n % 8 == 0;
 	}
 
-	public void superGrow(World world, Random rand, BlockPos pos, IBlockState state, boolean force) {
+	public void superGrow(World world, Random rand, BlockPos pos, IBlockState state, @Nullable EntityPlayer player,
+			boolean force) {
 		if (world.isRemote) return;
 		if (!force && !chunkCanGrow(world, pos)) return;
 		GenElfEdifice g = new GenElfEdifice(true);
@@ -102,6 +108,8 @@ public class BlockElfSapling extends BlockBush implements IGrowable {
 		g.genMainTreeEdifice(world, pos.down(), rand);
 		g.clearAround(world, pos);
 		g.buildToTick(world);
+		if (player instanceof EntityPlayerMP)
+			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "build:edifice");
 	}
 
 }

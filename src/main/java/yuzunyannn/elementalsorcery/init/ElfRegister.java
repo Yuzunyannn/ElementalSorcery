@@ -13,7 +13,7 @@ import yuzunyannn.elementalsorcery.elf.edifice.EFloorRefinery;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorWorkshop;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class ElfRegister {
 

@@ -393,8 +393,8 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 	public void moveEntity(Entity entity, int floor) {
 		if (!inRangeElevator(pos, entity)) return;
 		int high = this.getFloorHigh(floor - 1);
-		BlockPos floorPos = this.getTreeBasicPos().add(0, high + 1, 0);
-		Vec3d pos = new Vec3d(entity.posX, floorPos.getY(), entity.posZ);
+		BlockPos floorPos = this.getTreeBasicPos().add(0, high + 0.25, 0);
+		Vec3d pos = new Vec3d(entity.posX, floorPos.getY() + 1, entity.posZ);
 		entity.setPositionAndUpdate(pos.x, pos.y, pos.z);
 		world.playSound(null, pos.x, pos.y, pos.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1.0F,
 				1.0F);

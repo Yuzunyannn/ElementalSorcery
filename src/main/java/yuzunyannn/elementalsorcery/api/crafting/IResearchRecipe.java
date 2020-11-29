@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.elf.researcher.Researcher;
+import yuzunyannn.elementalsorcery.elf.research.Researcher;
 
 public interface IResearchRecipe {
 
@@ -18,6 +20,9 @@ public interface IResearchRecipe {
 	 * 推荐返回负值，表示偏差
 	 */
 	float getMatchWeight(Researcher researcher, List<IResearchRecipe> qualified, World worldIn);
+
+	/** 获取所需的物品表，物品表内物品会被扣除 */
+	NonNullList<Ingredient> getIngredients();
 
 	/** 合成表结果 */
 	default ItemStack getRecipeOutput(Researcher researcher) {

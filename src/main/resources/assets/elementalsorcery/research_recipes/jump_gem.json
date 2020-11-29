@@ -1,9 +1,19 @@
 {
 	"topics": {
-		"Ender":100,
-		"Natural":20,
-		"Struct":10
+		"Ender": 30,
+		"Natural": 10,
+		"Struct": 5
 	},
+	"items": [
+		{
+			"item": "minecraft:ender_pearl",
+			"count": 2
+		},
+		{
+			"item": "elementalsorcery:magic_stone",
+			"count": 5
+		}
+	],
 	"result": {
 		"item": "elementalsorcery:jump_gem",
 		"count": 1

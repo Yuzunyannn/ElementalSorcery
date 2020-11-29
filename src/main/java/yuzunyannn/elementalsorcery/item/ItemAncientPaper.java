@@ -1,41 +1,58 @@
 package yuzunyannn.elementalsorcery.item;
 
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.Random;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
+import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
+import yuzunyannn.elementalsorcery.elf.research.Researcher;
+import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.util.MultiRets;
 
 public class ItemAncientPaper extends Item {
 
 	public ItemAncientPaper() {
 		this.setHasSubtypes(true);
+		this.setUnlocalizedName("ancientPaper");
 	}
 
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
 		if (!this.isInCreativeTab(tab)) return;
-		for (EnumType type : EnumType.values()) {
-			if (type == EnumType.NORMAL) {
-				for (Mantra m : Mantra.REGISTRY) {
-					ItemStack stack = new ItemStack(this, 1, type.getMetadata());
-					setMantraData(stack, m, 0, 100);
-					items.add(stack);
-				}
-			} else items.add(new ItemStack(this, 1, type.getMetadata()));
+
+		for (Mantra m : Mantra.REGISTRY) {
+			AncientPaper ap = new AncientPaper();
+			ItemStack stack = new ItemStack(this, 1, EnumType.NORMAL.getMetadata());
+			ap.setMantra(m).setStart(0).setEnd(100);
+			ap.saveState(stack);
+			items.add(stack);
 		}
+		items.add(new ItemStack(this, 1, EnumType.NEW.getMetadata()));
 	}
 
 	@Override
@@ -49,7 +66,10 @@ public class ItemAncientPaper extends Item {
 	}
 
 	static public enum EnumType implements IStringSerializable {
-		NORMAL("normal"), NEW("new"), NEW_WRITTEN("newWritten");
+		NORMAL("normal"),
+		UNSCRAMBLE("unscramble"),
+		NEW("new"),
+		NEW_WRITTEN("newWritten");
 
 		final String name;
 
@@ -71,50 +91,112 @@ public class ItemAncientPaper extends Item {
 		}
 	}
 
-	public static void setMantraData(ItemStack stack, Mantra mantra, int start, int end) {
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setString("id", mantra.getRegistryName().toString());
-		nbt.setByte("start", (byte) MathHelper.clamp(start, 0, 100));
-		nbt.setByte("end", (byte) MathHelper.clamp(end, 0, 100));
-		stack.setTagCompound(nbt);
-	}
-
-	public static MultiRets getMantraData(ItemStack stack) {
-		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null) return MultiRets.ret();
-		Mantra m = Mantra.getFromNBT(nbt);
-		if (m == null) MultiRets.ret();
-		if (nbt.hasKey("data")) {
-			// 这里是特殊数据
-			return MultiRets.ret();
+	/** 进行一次解读 */
+	protected void doUnscramble(AncientPaper ap, World world, EntityPlayer player, EnumHand handIn) {
+		if (world.isRemote) return;
+		NBTTagCompound playerData = EventServer.getPlayerNBT(player);
+		// 上次的时间
+		long nextTime = playerData.getLong("unsNext");
+		if (nextTime > world.getWorldTime() && !player.isCreative()) {
+			player.sendMessage(new TextComponentTranslation("info.want.not.unscramble")
+					.setStyle(new Style().setColor(TextFormatting.GRAY).setBold(true)));
+			return;
 		}
-		int start = nbt.getByte("start");
-		int end = nbt.getByte("end");
-		return MultiRets.ret(m, nbt, start, end);
+		Random rand = world.rand;
+		float energy = Math.max(playerData.getFloat("unsEnergy"), 1);
+		if (rand.nextFloat() < 0.5f / energy) playerData.setLong("unsNext", world.getWorldTime() + 12000);
+		playerData.setFloat("unsEnergy", Math.min(energy + 0.1f, 3));
+		float originProgress = ap.getProgress();
+		float grow = rand.nextFloat() * 0.09f + 0.01f;
+		ap.setProgress(originProgress + grow);
+		if (player instanceof EntityPlayerMP)
+			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "unscramble:once");
+		if (!ap.hasType()) return;
+		// 增加研究点数
+		KnowledgeType type = ap.getType();
+		List<Entry<String, Integer>> topics = type.getTopics();
+		if (topics == null) return;
+		Entry<String, Integer> topic = topics.get(rand.nextInt(topics.size()));
+		float rCount = topic.getValue() * grow * (ap.getEnd() - ap.getStart()) / 100.0f;
+		int count = MathHelper.floor(rCount);
+		float expect = (rCount) - MathHelper.floor(rCount);
+		count += rand.nextFloat() <= expect ? 1 : 0;
+		if (count > 0) {
+			Researcher researcher = new Researcher(player);
+			researcher.grow(topic.getKey(), count);
+			researcher.save(player);
+			sendTopicGrowMessage(player, topic.getKey());
+		}
 	}
 
-	public static boolean hasMantraData(ItemStack stack) {
-		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null) return false;
-		Mantra m = Mantra.getFromNBT(nbt);
-		return m != null;
+	public static void sendTopicGrowMessage(EntityPlayer player, String type) {
+		String tKey = "topic." + type + ".name";
+		ITextComponent typeName;
+		if (net.minecraft.util.text.translation.I18n.canTranslate(tKey))
+			typeName = new TextComponentTranslation("topic." + type + ".name");
+		else typeName = new TextComponentString(type);
+		player.sendMessage(new TextComponentTranslation("info.research.increase", typeName)
+				.setStyle(new Style().setColor(TextFormatting.YELLOW).setBold(true)));
+	}
+
+	/** 开始解读 @return true表示可以 */
+	protected boolean startUnscramble(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+		EnumHand hand = handIn == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
+		ItemStack feather = playerIn.getHeldItem(hand);
+		if (feather.getItem() != Items.FEATHER) return false;
+		feather.shrink(1);
+		return true;
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+		ItemStack stack = playerIn.getHeldItem(handIn);
+		int meta = stack.getMetadata();
+		if (meta == EnumType.NORMAL.getMetadata()) {
+			AncientPaper ap = new AncientPaper(stack);
+			if (!ap.isLocked()) return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+			if (!startUnscramble(worldIn, playerIn, handIn))
+				return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+			stack.setItemDamage(EnumType.UNSCRAMBLE.getMetadata());
+			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+		} else if (meta == EnumType.UNSCRAMBLE.getMetadata()) {
+			AncientPaper ap = new AncientPaper(stack);
+			doUnscramble(ap, worldIn, playerIn, handIn);
+			ap.saveState(stack);
+			if (ap.getProgress() >= 1) {
+				stack.setItemDamage(EnumType.NORMAL.getMetadata());
+				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+			}
+			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+		}
+		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null) return;
-		Mantra m = Mantra.getFromNBT(nbt);
-		if (m == null) return;
-		String name = I18n.format(m.getUnlocalizedName() + ".name");
-		tooltip.add(TextFormatting.DARK_PURPLE + I18n.format("info.ancientPaper.mantra", name));
-		if (nbt.hasKey("data")) return;
-		if (nbt.hasKey("start")) {
-			int start = nbt.getByte("start");
-			int end = nbt.getByte("end");
-			tooltip.add(TextFormatting.DARK_PURPLE + I18n.format("info.ancientPaper.record", start, end));
+		AncientPaper ap = new AncientPaper(stack);
+		if (ap.isLocked()) {
+			tooltip.add(TextFormatting.DARK_AQUA + I18n.format("info.ancientPaper.unknow"));
+			float rogress = ap.getProgress();
+			if (rogress > 0 || stack.getMetadata() == EnumType.UNSCRAMBLE.getMetadata())
+				tooltip.add(I18n.format("info.ancientPaper.progress", String.format("%.2f%%", rogress * 100)));
+			return;
 		}
+		if (ap.hasMantra()) {
+			Mantra m = ap.getMantra();
+			String name = I18n.format(m.getUnlocalizedName() + ".name");
+			tooltip.add(TextFormatting.YELLOW + I18n.format("info.ancientPaper.mantra", name));
+		} else if (ap.hasType()) {
+			KnowledgeType type = ap.getType();
+			String name = I18n.format(type.getUnlocalizedName() + ".name");
+			tooltip.add(TextFormatting.YELLOW + I18n.format("info.ancientPaper.normal", name));
+		} else return;
+		int start = ap.getStart();
+		int end = ap.getEnd();
+		if (end - start < 0) return;
+		if (end - start >= 100) return;
+		tooltip.add(TextFormatting.DARK_PURPLE + I18n.format("info.ancientPaper.record", start, end));
 	}
 
 }

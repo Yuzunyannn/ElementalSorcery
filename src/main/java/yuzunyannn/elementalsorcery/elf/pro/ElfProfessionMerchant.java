@@ -28,7 +28,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
-public class ElfProfessionMerchant extends ElfProfessionNone {
+public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {

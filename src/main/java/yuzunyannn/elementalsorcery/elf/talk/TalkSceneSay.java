@@ -24,6 +24,10 @@ public class TalkSceneSay extends TalkScene<TalkSceneSay> {
 		addString(something, Talker.OPPOSING);
 	}
 
+	public TalkSceneSay(String something, Talker talker) {
+		addString(something, talker);
+	}
+
 	@Override
 	public TalkType getType() {
 		return TalkType.SAY;

@@ -8,10 +8,13 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.effect.StructElement2D;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
+@SideOnly(Side.CLIENT)
 public class EffectScreenProgress extends EffectScreen {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/gui/mantra/component.png");

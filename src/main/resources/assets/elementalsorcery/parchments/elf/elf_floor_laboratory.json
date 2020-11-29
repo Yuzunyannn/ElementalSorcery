@@ -1,0 +1,11 @@
+{
+    "lev": -2,
+    "need": [
+        "elf/elf_edifice",
+        "more/ancient_paper"
+    ],
+    "type": "normal",
+    "name": "elfLaboratory",
+    "item": "elementalsorcery:researcher",
+    "background": "inherit"
+}

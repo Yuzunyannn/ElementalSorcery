@@ -31,4 +31,7 @@ public class ElfProfessionNPCBase extends ElfProfession {
 		}
 	}
 
+	public boolean canDespawn(EntityElfBase elf) {
+		return false;
+	}
 }

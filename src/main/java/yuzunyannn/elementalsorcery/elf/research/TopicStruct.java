@@ -1,10 +1,10 @@
-package yuzunyannn.elementalsorcery.elf.researcher;
+package yuzunyannn.elementalsorcery.elf.research;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.container.gui.GuiResearcher;
+import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
@@ -25,7 +25,7 @@ public class TopicStruct extends Topic {
 	}
 
 	public void render(Minecraft mc, float size, float alpha, float partialTicks) {
-		mc.getTextureManager().bindTexture(GuiResearcher.TEXTURE_01);
+		mc.getTextureManager().bindTexture(GuiResearch.TEXTURE_01);
 		GlStateManager.pushMatrix();
 		GlStateManager.scale(size / 64, size / 64, size / 32);
 

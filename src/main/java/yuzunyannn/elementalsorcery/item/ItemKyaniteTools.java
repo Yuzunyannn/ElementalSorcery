@@ -205,7 +205,7 @@ public class ItemKyaniteTools {
 				if (!player.isCreative()) stack.damageItem(10, player);
 				inventory.saveState(stack);
 				if (player instanceof EntityPlayerMP)
-					ESCriteriaTriggers.SPELLBOOK_ENCH.trigger((EntityPlayerMP) player);
+					ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "tear:enchantBook");
 				return EnumActionResult.SUCCESS;
 			} else if (state.getBlock() == Blocks.END_PORTAL_FRAME && state.getValue(BlockEndPortalFrame.EYE)) {
 				// 拆末影之眼

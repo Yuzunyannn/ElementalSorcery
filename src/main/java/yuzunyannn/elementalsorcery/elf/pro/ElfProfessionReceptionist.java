@@ -78,19 +78,9 @@ public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 			return chapter;
 		}
 		if (quest != null) {
-			// 委托满了，无法再接了
-			if (adventurer.getQuests() >= adventurer.getMaxQuests()) {
-				chapter.addScene(new TalkSceneSay("say.cannot.quest"));
-				return chapter;
-			}
-			// 委托过期了，无法再接了
-			if (quest.isOverdue(player.world.getWorldTime())) {
-				chapter.addScene(new TalkSceneSay("say.overdue.quest"));
-				return chapter;
-			}
 			// 委托正在进行中
 			if (quest.getStatus() == QuestStatus.UNDERWAY && quest.isAdventurer(player)) {
- 				if (Quests.finishQuest(player, quest, stack)) {
+				if (Quests.finishQuest(player, quest, stack)) {
 					chapter.addScene(new TalkSceneSay("say.quest.finish"));
 					return chapter;
 				} else {
@@ -98,9 +88,19 @@ public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 					return chapter;
 				}
 			}
+			// 委托过期了，无法再接了
+			if (quest.isOverdue(player.world.getWorldTime())) {
+				chapter.addScene(new TalkSceneSay("say.overdue.quest"));
+				return chapter;
+			}
 			// 委托已经进行，无法再接了
 			if (quest.getStatus() != QuestStatus.NONE) {
 				chapter.addScene(new TalkSceneSay("say.underway.quest"));
+				return chapter;
+			}
+			// 委托满了，无法再接了
+			if (adventurer.getQuests() >= adventurer.getMaxQuests()) {
+				chapter.addScene(new TalkSceneSay("say.cannot.quest"));
 				return chapter;
 			}
 			// 检查初期条件，不满足无法再接

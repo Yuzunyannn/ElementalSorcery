@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
-import yuzunyannn.elementalsorcery.elf.researcher.ResearchRecipeManagement;
+import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDCategory;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDInfusionRW;

@@ -242,7 +242,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 			AxisAlignedBB aabb = new AxisAlignedBB(pos.getX() - size, pos.getY() - size, pos.getZ() - size,
 					pos.getX() + size, pos.getY() + size, pos.getZ() + size);
 			List<EntityPlayerMP> list = world.getEntitiesWithinAABB(EntityPlayerMP.class, aabb);
-			for (EntityPlayerMP player : list) ESCriteriaTriggers.MAGIC_DESK_CRAFT.trigger(player, output);
+			for (EntityPlayerMP player : list) ESCriteriaTriggers.ES_ITEMSTACK.trigger(player, "spellbook", output);
 		}
 	}
 
@@ -366,18 +366,16 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		ESObjects.Items ITEMS = ESInit.ITEMS;
 		// launch
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_LAUNCH),
-				new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 3),
-				new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 10), new ItemStack(Blocks.CRAFTING_TABLE, 2),
-				new ItemStack(ESInit.ITEMS.PARCHMENT, 16));
+				new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 3), new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 10),
+				new ItemStack(Blocks.CRAFTING_TABLE, 2), new ItemStack(ESInit.ITEMS.PARCHMENT, 16));
 		// element
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ELEMENT),
-				new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 10),
-				new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 32), new ItemStack(Blocks.RED_FLOWER, 6),
-				new ItemStack(Items.GOLD_INGOT, 3), new ItemStack(Items.COAL, 7), new ItemStack(Blocks.OBSIDIAN, 2));
+				new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 10), new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 32),
+				new ItemStack(Blocks.RED_FLOWER, 6), new ItemStack(Items.GOLD_INGOT, 3), new ItemStack(Items.COAL, 7),
+				new ItemStack(Blocks.OBSIDIAN, 2));
 		// building
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ARCHITECTURE),
-				new ItemStack(ESInit.BLOCKS.ESTONE, 16),
-				new ItemStack(ESInit.ITEMS.ARCHITECTURE_CRYSTAL, 1),
+				new ItemStack(ESInit.BLOCKS.ESTONE, 16), new ItemStack(ESInit.ITEMS.ARCHITECTURE_CRYSTAL, 1),
 				new ItemStack(ESInit.BLOCKS.KYANITE_BLOCK, 2), new ItemStack(Blocks.STONE, 16),
 				new ItemStack(Blocks.IRON_BLOCK, 1), new ItemStack(Blocks.GOLD_BLOCK, 1),
 				new ItemStack(Blocks.REDSTONE_BLOCK, 1), new ItemStack(Blocks.OBSIDIAN, 1),

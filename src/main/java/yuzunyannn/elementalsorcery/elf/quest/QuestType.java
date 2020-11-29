@@ -22,6 +22,7 @@ public class QuestType implements INBTSerializable<NBTTagCompound> {
 	protected ArrayList<QuestCondition> preconditions = new ArrayList<QuestCondition>();
 	protected ArrayList<QuestCondition> conditions = new ArrayList<QuestCondition>();
 	protected ArrayList<QuestReward> rewards = new ArrayList<QuestReward>();
+	protected String name = "";
 
 	public QuestType() {
 
@@ -29,6 +30,14 @@ public class QuestType implements INBTSerializable<NBTTagCompound> {
 
 	public QuestType(NBTTagCompound nbt) {
 		this.deserializeNBT(nbt);
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name == null ? "" : name;
 	}
 
 	public void addPrecondition(QuestCondition condition) {
@@ -94,6 +103,8 @@ public class QuestType implements INBTSerializable<NBTTagCompound> {
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
+		// 类型名
+		nbt.setString("name", name);
 		// 条件序列化
 		NBTTagList preCondition = new NBTTagList();
 		nbt.setTag("precon", preCondition);
@@ -111,6 +122,7 @@ public class QuestType implements INBTSerializable<NBTTagCompound> {
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
+		name = nbt.getString("name");
 		// 条件反序列
 		NBTTagList preCondition = nbt.getTagList("precon", NBTTag.TAG_COMPOUND);
 		this.preconditions.clear();

@@ -27,7 +27,7 @@ import net.minecraftforge.fml.relauncher.Side;
 public class ElementalSorcery {
 	public static final String MODID = "elementalsorcery";
 	public static final String NAME = "Elemental Sorcery";
-	public static final String VERSION = "0.4.0";
+	public static final String VERSION = "0.5.0";
 
 	public static Logger logger;
 	public static Side side;

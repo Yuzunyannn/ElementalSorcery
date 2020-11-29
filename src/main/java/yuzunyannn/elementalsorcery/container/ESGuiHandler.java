@@ -28,7 +28,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiMDRubbleRepair;
 import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
 import yuzunyannn.elementalsorcery.container.gui.GuiQuest;
-import yuzunyannn.elementalsorcery.container.gui.GuiResearcher;
+import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
 import yuzunyannn.elementalsorcery.container.gui.GuiRiteManual;
 import yuzunyannn.elementalsorcery.container.gui.GuiSimple;
 import yuzunyannn.elementalsorcery.container.gui.GuiSmeltBox;
@@ -101,7 +101,7 @@ public class ESGuiHandler implements IGuiHandler {
 			case GUI_TRANSCRIBE_INJECTION:
 				return new ContainerTranscribeInjection(player, tileEntity);
 			case GUI_RESEARCHER:
-				return new ContainerResearcher(player, pos);
+				return new ContainerResearch(player, pos);
 
 			case GUI_MD_MAGIC_GEN:
 				return new ContainerMDMagicGen(player, tileEntity);
@@ -170,7 +170,7 @@ public class ESGuiHandler implements IGuiHandler {
 			case GUI_TRANSCRIBE_INJECTION:
 				return new GuiTranscribeInjection(new ContainerTranscribeInjection(player, tileEntity));
 			case GUI_RESEARCHER:
-				return new GuiResearcher(player, pos);
+				return new GuiResearch(player, pos);
 
 			case GUI_MD_MAGIC_GEN:
 				return new GuiMDMagicGen(new ContainerMDMagicGen(player, tileEntity), player.inventory);

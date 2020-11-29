@@ -1,0 +1,23 @@
+{
+    "parent": "elementalsorcery:elf/elf_edifice",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:quest",
+            "data": 0
+        },
+        "title": {
+            "translate": "es.adv.elfAdventurer.title"
+        },
+        "description": {
+            "translate": "es.adv.elfAdventurer.description"
+        }
+    },
+    "criteria": {
+        "quest": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "quest:.*"
+            }
+        }
+    }
+}

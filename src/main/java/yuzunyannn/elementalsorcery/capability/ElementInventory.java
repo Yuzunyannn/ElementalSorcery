@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.capability;
 
 import javax.annotation.Nonnull;
 
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -14,6 +13,7 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 
 public class ElementInventory implements IElementInventory, INBTSerializable<NBTTagCompound> {
 
@@ -122,9 +122,8 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 	}
 
 	@Override
-	public boolean hasState(ItemStack stack) {
-		NBTTagCompound nbt = stack.getSubCompound("eInv");
-		return nbt != null;
+	public boolean hasState(NBTTagCompound nbt) {
+		return nbt.hasKey("eInv", NBTTag.TAG_COMPOUND);
 	}
 
 	@Override

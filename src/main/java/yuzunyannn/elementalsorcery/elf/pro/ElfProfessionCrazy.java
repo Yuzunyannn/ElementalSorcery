@@ -51,4 +51,9 @@ public class ElfProfessionCrazy extends ElfProfession {
 	public ResourceLocation getTexture(EntityElfBase elf) {
 		return RenderEntityElf.TEXTURE_CRAZY;
 	}
+
+	@Override
+	public boolean canDespawn(EntityElfBase elf) {
+		return true;
+	}
 }

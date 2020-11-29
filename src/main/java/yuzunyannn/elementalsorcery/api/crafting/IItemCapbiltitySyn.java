@@ -11,7 +11,13 @@ public interface IItemCapbiltitySyn {
 	 * 
 	 * @return 是否加载成功，ture为成功
 	 */
-	boolean hasState(ItemStack stack);
+	default boolean hasState(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) return false;
+		return this.hasState(nbt);
+	}
+
+	boolean hasState(NBTTagCompound nbt);
 
 	/**
 	 * 从stack中读取数据

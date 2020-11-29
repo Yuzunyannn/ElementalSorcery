@@ -8,7 +8,7 @@ import yuzunyannn.elementalsorcery.container.ContainerTranscribeInjection;
 
 public class GuiTranscribeInjection extends GuiNormal {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/container/transcribe_injection.png");
 	protected ContainerTranscribeInjection inventory;
 

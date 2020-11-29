@@ -1,0 +1,11 @@
+{
+    "lev": 1,
+    "need": [
+        "base/seal_stone"
+    ],
+    "linked": "elementalsorcery:ancient_paper",
+    "type": "normal",
+    "name": "ancientPaper",
+    "icon": "elementalsorcery:ancient_paper",
+    "background": "inherit"
+}

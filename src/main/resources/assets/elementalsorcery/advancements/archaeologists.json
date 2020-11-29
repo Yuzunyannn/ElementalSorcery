@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:root",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:ancient_paper"
+        },
+        "title": {
+            "translate": "es.adv.archaeologists.title"
+        },
+        "description": {
+            "translate": "es.adv.archaeologists.description"
+        }
+    },
+    "criteria": {
+        "unscramble": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "unscramble:once"
+            }
+        }
+    }
+}

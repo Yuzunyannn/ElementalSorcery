@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "kyanite_tool",
+  "pattern": [
+    " R ",
+    "MMM",
+    "MJM"
+  ],
+  "key": {
+    "M": {
+      "item": "elementalsorcery:magic_crystal"
+    },
+    "J": {
+      "item": "elementalsorcery:jump_gem"
+    },
+    "R":{
+      "item": "minecraft:redstone"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:red_handset",
+    "count": 1
+  }
+}

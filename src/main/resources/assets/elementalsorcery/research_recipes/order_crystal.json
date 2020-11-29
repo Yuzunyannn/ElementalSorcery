@@ -1,0 +1,15 @@
+{
+	"topics": {
+		"Struct": 8
+	},
+	"items": [
+		{
+			"item": "elementalsorcery:azure_crystal",
+			"count": 2
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:order_crystal",
+		"count": 4
+	}
+}

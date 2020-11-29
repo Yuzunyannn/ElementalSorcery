@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.elf.researcher;
+package yuzunyannn.elementalsorcery.elf.research;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.ModContainer;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
+import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class ResearchRecipeManagement {
@@ -34,6 +35,11 @@ public class ResearchRecipeManagement {
 		recipes.add(recipe);
 	}
 
+	public static void reload() {
+		instance.recipes.clear();
+		registerAll();
+	}
+
 	public static void registerAll() {
 		for (ModContainer mod : Loader.instance().getActiveModList()) loadRecipes(mod);
 	}
@@ -41,9 +47,14 @@ public class ResearchRecipeManagement {
 	public static void loadRecipes(ModContainer mod) {
 		Json.ergodicAssets(mod, "/research_recipes", (file, json) -> {
 			JsonObject topics = json.needObject("topics");
+			JsonArray needs = json.needArray("items", "item");
 			ItemRecord output = json.needItem("result");
 			ResearchRecipe recipe = new ResearchRecipe(output.getStack());
 			for (String key : topics) recipe.add(key, topics.getNumber(key).intValue());
+			for (int i = 0; i < needs.size(); i++) {
+				List<ItemRecord> list = needs.needItems(i);
+				recipe.add(ItemRecord.asIngredient(list));
+			}
 			instance.register(recipe);
 			return true;
 		});

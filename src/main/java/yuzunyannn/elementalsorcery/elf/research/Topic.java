@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.elf.researcher;
+package yuzunyannn.elementalsorcery.elf.research;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;

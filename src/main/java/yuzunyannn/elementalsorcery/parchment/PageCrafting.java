@@ -18,8 +18,8 @@ import yuzunyannn.elementalsorcery.container.ContainerSupremeTable;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class PageCrafting extends PageEasy {
 	private final List<NonNullList<Ingredient>> itemList = new ArrayList<NonNullList<Ingredient>>();

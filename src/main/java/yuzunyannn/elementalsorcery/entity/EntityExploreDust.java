@@ -180,6 +180,7 @@ public class EntityExploreDust extends Entity implements IEntityAdditionalSpawnD
 
 	/** 檢測是否是特定的方塊，不走礦物詞典 */
 	public static boolean isSpecialBlock(IBlockState state) {
+		if (state.getBlock() == ESInit.BLOCKS.SEAL_STONE) return true;
 		return false;
 	}
 

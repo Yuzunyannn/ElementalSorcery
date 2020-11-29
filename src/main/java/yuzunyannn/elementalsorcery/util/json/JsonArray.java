@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.util.json;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
@@ -139,5 +140,9 @@ public class JsonArray extends Json {
 		ArrayList<String> list = new ArrayList<>();
 		for (int i = 0; i < json.size(); i++) if (hasString(i)) list.add(getString(i));
 		return list;
+	}
+
+	public List<ItemRecord> needItems(int i) {
+		return loadItems(json.get(i));
 	}
 }

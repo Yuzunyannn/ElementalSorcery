@@ -77,9 +77,14 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 
 	}
 
-	/** 当死亡，及实体被setDead */
+	/** 当死亡 */
 	public void onDead(EntityElfBase elf) {
 
+	}
+
+	/** 是否会自动删除 */
+	public boolean canDespawn(EntityElfBase elf) {
+		return false;
 	}
 
 	/** 是否可以自动装备上装备，不可以自动装备替换的话，会询问是否可以捡起来 */

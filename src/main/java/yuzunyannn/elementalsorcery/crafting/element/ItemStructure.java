@@ -50,9 +50,8 @@ public class ItemStructure implements IItemStructure {
 	}
 
 	@Override
-	public boolean hasState(ItemStack stack) {
-		NBTTagCompound nbt = stack.getSubCompound("istru");
-		if (nbt == null) return false;
+	public boolean hasState(NBTTagCompound nbt) {
+		nbt = nbt.getCompoundTag("istru");
 		if (!nbt.hasKey("els", 9)) return false;
 		if (!nbt.hasKey("item", 10)) return false;
 		return true;

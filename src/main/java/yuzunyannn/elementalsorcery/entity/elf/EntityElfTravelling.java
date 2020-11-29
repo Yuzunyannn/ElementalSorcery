@@ -9,4 +9,9 @@ public class EntityElfTravelling extends EntityElf {
 		super(worldIn, ElfProfession.MERCHANT);
 	}
 
+	@Override
+	protected boolean canDespawn() {
+		return true;
+	}
+
 }

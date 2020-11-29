@@ -1,0 +1,24 @@
+{
+	"topics": {
+		"Struct": 10,
+		"Natural": 20
+	},
+	"items": [
+		{
+			"item": "minecraft:emerald",
+			"count": 4
+		},
+		{
+			"item": "minecraft:glowstone",
+			"count": 1
+		},
+		{
+			"item": "minecraft:potion",
+			"count": 2
+		}
+	],
+	"result": {
+		"item": "minecraft:sea_lantern",
+		"count": 1
+	}
+}

@@ -11,6 +11,7 @@ import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 
 public class TileEntityNetwork extends TileEntity {
 
@@ -65,9 +66,12 @@ public class TileEntityNetwork extends TileEntity {
 	/** 将数据更新到client端 */
 	public void updateToClient() {
 		if (world.isRemote) return;
+		WorldServer world = (WorldServer) this.world;
+		int distance = world.getMinecraftServer().getPlayerList().getViewDistance();
+		distance = distance * 16;
 		isNetwork = true;
 		for (EntityPlayer player : world.playerEntities) {
-			if (player.getPosition().distanceSq(this.pos) > 256 * 256) continue;
+			if (player.getPosition().distanceSq(this.pos) > distance * distance) continue;
 			((EntityPlayerMP) player).connection.sendPacket(this.getUpdatePacket());
 		}
 		isNetwork = false;

@@ -1,0 +1,23 @@
+{
+    "parent": "elementalsorcery:elf/elf_tree",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:elf_sapling",
+            "data": 0
+        },
+        "title": {
+            "translate": "es.adv.elfEdifice.title"
+        },
+        "description": {
+            "translate": "es.adv.elfEdifice.description"
+        }
+    },
+    "criteria": {
+        "build": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "build:edifice"
+            }
+        }
+    }
+}

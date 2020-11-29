@@ -76,7 +76,7 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 
 		}
 		GlStateManager.popMatrix();
-
+		GlStateManager.enableLighting();
 	}
 
 	private Model MODEL = new Model();

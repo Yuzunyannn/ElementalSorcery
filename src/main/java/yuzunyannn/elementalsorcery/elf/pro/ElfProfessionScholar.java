@@ -33,7 +33,7 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
-public class ElfProfessionScholar extends ElfProfessionNone {
+public class ElfProfessionScholar extends ElfProfessionUndetermined {
 
 	protected static final ArrayList<String> pages = new ArrayList<String>();
 	protected static final ArrayList<String> tips = new ArrayList<String>();

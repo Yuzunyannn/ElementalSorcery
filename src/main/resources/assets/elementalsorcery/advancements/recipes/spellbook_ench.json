@@ -12,9 +12,11 @@
         }
     },
     "criteria": {
-        "craft": {
-            "trigger": "elementalsorcery:spellbook_ench",
-            "conditions": { }
+        "tear": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "tear:enchantBook"
+            }
         }
     }
 }

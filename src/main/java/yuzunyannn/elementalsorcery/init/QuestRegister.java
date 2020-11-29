@@ -12,6 +12,7 @@ import yuzunyannn.elementalsorcery.elf.quest.QuestRewardCoin;
 import yuzunyannn.elementalsorcery.elf.quest.QuestRewardElfTreeInvest;
 import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
 import yuzunyannn.elementalsorcery.elf.quest.QuestRewardItem;
+import yuzunyannn.elementalsorcery.elf.quest.QuestRewardTopic;
 
 public class QuestRegister {
 
@@ -33,5 +34,6 @@ public class QuestRegister {
 		registerReward("Coin", QuestRewardCoin.class);
 		registerReward("Exp", QuestRewardExp.class);
 		registerReward("TreeInvest", QuestRewardElfTreeInvest.class);
+		registerReward("Topic", QuestRewardTopic.class);
 	}
 }

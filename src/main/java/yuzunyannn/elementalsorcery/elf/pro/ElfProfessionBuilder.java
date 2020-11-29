@@ -36,7 +36,7 @@ import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
-public class ElfProfessionBuilder extends ElfProfessionNone {
+public class ElfProfessionBuilder extends ElfProfessionUndetermined {
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {

@@ -11,16 +11,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
-import yuzunyannn.elementalsorcery.elf.researcher.ResearchRecipeManagement;
-import yuzunyannn.elementalsorcery.elf.researcher.Researcher;
+import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
+import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
-public class ContainerResearcher extends Container implements IContainerNetwork {
+public class ContainerResearch extends Container implements IContainerNetwork {
 	/** 交互的玩家 */
 	public final EntityPlayer player;
 	/** 交互方块 */
@@ -32,7 +33,7 @@ public class ContainerResearcher extends Container implements IContainerNetwork 
 	/** 来自server的更新标记，客户端用 */
 	public boolean fromSrverUpdateFlag = false;
 
-	public ContainerResearcher(EntityPlayer player, BlockPos pos) {
+	public ContainerResearch(EntityPlayer player, BlockPos pos) {
 		this.player = player;
 		this.pos = pos;
 		this.reasearher = new Researcher(player);
@@ -87,9 +88,15 @@ public class ContainerResearcher extends Container implements IContainerNetwork 
 		double minWeight = 0;
 		RandomHelper.WeightRandom<IResearchRecipe> wr = new RandomHelper.WeightRandom();
 		for (IResearchRecipe recipe : recipes) {
+			if (!ItemHelper.unorderMatch(recipe.getIngredients(), player.inventory, false)) continue;
+			// 满足要求，添加
 			double weight = recipe.getMatchWeight(costReasearher, recipes, player.world);
 			if (weight < minWeight) minWeight = weight;
 			wr.add(recipe, weight);
+		}
+		if (wr.isEmpty()) {
+			this.onFailEnd();
+			return;
 		}
 		wr.fixWeight(-minWeight + 1);
 		IResearchRecipe recipe = wr.get();
@@ -99,6 +106,7 @@ public class ContainerResearcher extends Container implements IContainerNetwork 
 		if (!player.isCreative()) {
 			for (String key : costReasearher.keySet()) reasearher.shrink(key, costReasearher.get(key));
 			reasearher.save(player);
+			ItemHelper.unorderMatch(recipe.getIngredients(), player.inventory, true);
 		}
 		// 特效
 		NBTTagCompound nbt = FireworkEffect.fastNBT(0, 1, 0.05f, new int[] { 0x096b18 }, new int[] { 0x5ac37b });

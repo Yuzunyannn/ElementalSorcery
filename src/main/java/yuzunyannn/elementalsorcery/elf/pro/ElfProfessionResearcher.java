@@ -1,5 +1,8 @@
 package yuzunyannn.elementalsorcery.elf.pro;
 
+import java.util.List;
+import java.util.Map.Entry;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -8,16 +11,25 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorLaboratory;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
+import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
+import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
+import yuzunyannn.elementalsorcery.elf.research.Researcher;
+import yuzunyannn.elementalsorcery.elf.talk.TalkActionEnd;
+import yuzunyannn.elementalsorcery.elf.talk.TalkActionGoTo;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
+import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
+import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
@@ -41,6 +53,17 @@ public class ElfProfessionResearcher extends ElfProfession {
 		return true;
 	}
 
+	public void giveTopicPoint(EntityPlayer player, KnowledgeType type, float rate) {
+		rate = rate * (player.world.rand.nextFloat() * 0.5f + 1);
+		List<Entry<String, Integer>> entries = type.getTopics();
+		Researcher researcher = new Researcher(player);
+		for (Entry<String, Integer> entry : entries) {
+			researcher.grow(entry.getKey(), MathHelper.ceil(rate * entry.getValue()));
+			ItemAncientPaper.sendTopicGrowMessage(player, entry.getKey());
+		}
+		researcher.save(player);
+	}
+
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TileElfTreeCore core = elf.getEdificeCore();
@@ -48,6 +71,30 @@ public class ElfProfessionResearcher extends ElfProfession {
 		if (core == null) {
 			chapter.addScene(new TalkSceneSay("say.edifice.broken"));
 			return chapter;
+		}
+		ItemStack stack = player.getHeldItemMainhand();
+		if (stack.getItem() == ESInit.ITEMS.ANCIENT_PAPER) {
+			AncientPaper ap = new AncientPaper(stack);
+			if (ap.isLocked() && ap.getProgress() <= 0) {
+				chapter.addScene(new TalkSceneSay("say.want.paper"));
+				// 确认
+				TalkSceneSelect confirm = new TalkSceneSelect();
+				chapter.addScene(confirm);
+				confirm.addString("say.ok", new TalkActionGoTo("whenOK"));
+				confirm.addString("say.no", new TalkActionEnd());
+				// 对话
+				TalkSceneSay wok = new TalkSceneSay().setLabel("whenOK");
+				chapter.addScene(wok);
+				wok.addString("@#$@#%%^!@$!%%@$!@#!$%%!", Talker.OPPOSING);
+				wok.addString("say.scholar.konw", Talker.PLAYER);
+				wok.addAction((p, e, c, i, s, t) -> {
+					stack.shrink(1);
+					KnowledgeType type = ap.getType();
+					giveTopicPoint(player, type, (ap.getEnd() - ap.getStart()) / 100.0f);
+					return true;
+				});
+				return chapter;
+			}
 		}
 		chapter.addScene(new TalkSceneSay("say.how.research"));
 		return chapter;

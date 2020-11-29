@@ -6,8 +6,10 @@ import java.util.Random;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.init.ESInit;
@@ -59,6 +61,8 @@ public class Quests {
 		quest.unsign(player);
 		quest.setStatus(QuestStatus.FINISH);
 		if (ItemQuest.isQuest(questStack)) questStack.setTagCompound(quest.serializeNBT());
+		if (player instanceof EntityPlayerMP)
+			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "quest:" + quest.getType().getName());
 		return true;
 	}
 
@@ -66,17 +70,20 @@ public class Quests {
 
 	public static Quest createRepair(int coin, List<ItemRec> itemstack) {
 		QuestType type = new QuestType();
+		type.setName("collect");
 		type.addCondition(QuestCondition.REGISTRY.newInstance(QuestConditionNeedItem.class).needItem(itemstack));
 		QuestDescribe describe = type.getDescribe();
 		describe.setTitle("quest.request.collect");
 		describe.addDescribe("quest.broken.house");
 		describe.addDescribe("quest.end.polite." + (rand.nextInt(3) + 1));
 		type.addReward(QuestReward.REGISTRY.newInstance(QuestRewardCoin.class).coin(coin));
+		if (rand.nextInt(3) == 0) type.addReward(QuestRewardTopic.create("Engine", 1));
 		return new Quest(type);
 	}
 
 	public static Quest createPostOfficeMaterials(int coin, List<ItemRec> itemstack) {
 		QuestType type = new QuestType();
+		type.setName("collect");
 		type.addCondition(QuestCondition.REGISTRY.newInstance(QuestConditionNeedItem.class).needItem(itemstack));
 		QuestDescribe describe = type.getDescribe();
 		describe.setTitle("quest.request.collect");
@@ -89,6 +96,7 @@ public class Quests {
 	public static Quest createBuildTask(BlockPos corePos, ElfEdificeFloor floorType, int weight,
 			List<ItemRec> itemstack) {
 		QuestType type = new QuestType();
+		type.setName("invest");
 		type.addCondition(QuestCondition.REGISTRY.newInstance(QuestConditionNeedItem.class).needItem(itemstack));
 		QuestDescribe describe = type.getDescribe();
 		describe.setType("elfInvest");
@@ -102,6 +110,7 @@ public class Quests {
 
 	public static Quest createPostFirestWelfare(EntityPlayer player) {
 		QuestType type = new QuestType();
+		type.setName("newbie");
 		type.addCondition(QuestCondition.REGISTRY.newInstance(QuestConditionSendAnyParcel.class).needCount(10));
 		QuestDescribe describe = type.getDescribe();
 		type.addPrecondition(QuestCondition.REGISTRY.newInstance(QuestConditionDelegate.class).delegate(player));

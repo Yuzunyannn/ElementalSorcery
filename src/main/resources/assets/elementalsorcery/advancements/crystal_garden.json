@@ -12,9 +12,11 @@
         }
     },
     "criteria": {
-        "craft": {
-            "trigger": "elementalsorcery:garden_build",
-            "conditions": {}
+        "build": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "build:garden"
+            }
         }
     }
 }

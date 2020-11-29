@@ -39,7 +39,7 @@ public class EntityRegistries {
 		// 生物
 		register(0, "elf", EntityElf.class, "Elf", 64, 3, true);
 		registerEgg("elf", 0x82bf71, 0x529b3d);
-		register(1, "elfTraveler", EntityElfTravelling.class, "Elf", 64, 3, true);
+		register(1, "elfTraveler", EntityElfTravelling.class, "Elf2", 64, 3, true);
 		registerEntitySpawn(EntityElfTravelling.class, 5, 1, 2, EnumCreatureType.CREATURE, Biomes.PLAINS, Biomes.DESERT,
 				Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.EXTREME_HILLS, Biomes.SWAMPLAND, Biomes.HELL);
 		registerEntitySpawn(EntityElfTravelling.class, 10, 2, 3, EnumCreatureType.CREATURE, Biomes.PLAINS);

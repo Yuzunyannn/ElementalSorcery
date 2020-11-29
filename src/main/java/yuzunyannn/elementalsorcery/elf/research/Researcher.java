@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.elf.researcher;
+package yuzunyannn.elementalsorcery.elf.research;
 
 import java.util.Set;
 
@@ -29,6 +29,10 @@ public class Researcher implements INBTSerializable<NBTTagCompound> {
 
 	public void shrink(String key, int point) {
 		map.setInteger(key, Math.max(this.get(key) - point, 0));
+	}
+
+	public void grow(String key, int point) {
+		map.setInteger(key, this.get(key) + point);
 	}
 
 	public Set<String> keySet() {

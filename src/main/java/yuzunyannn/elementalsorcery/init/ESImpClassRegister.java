@@ -6,7 +6,7 @@ import com.google.common.collect.HashBiMap;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class ESImpClassRegister<T extends IForgeRegistryEntry<T>> {
 

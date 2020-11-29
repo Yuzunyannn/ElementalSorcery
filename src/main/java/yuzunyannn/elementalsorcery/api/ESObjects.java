@@ -130,6 +130,7 @@ public class ESObjects {
 		public Block ELF_TREE_CORE;
 		public Block ELF_BEACON;
 		public Block RESEARCHER;
+		public Block SEAL_STONE;
 	}
 
 	static public class Elements {

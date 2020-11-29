@@ -13,9 +13,10 @@
     },
     "criteria": {
         "craft": {
-            "trigger": "elementalsorcery:magic_desk_craft",
+            "trigger": "elementalsorcery:es_itemstack",
             "conditions": {
-                "output": "elementalsorcery:spellbook_launch"
+                "type": "spellbook",
+                "item": "elementalsorcery:spellbook_launch"
             }
         }
     }

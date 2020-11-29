@@ -55,7 +55,7 @@ public class RenderEntityElf extends RenderLiving<EntityElf> {
 	@Override
 	public void doRender(EntityElf entity, double x, double y, double z, float entityYaw, float partialTicks) {
 		mainModel = entity.getProfession().getModel(entity);
-		super.doRender(entity, x, y, z, entityYaw, partialTicks);
+		super.doRender(entity, x, y - 0.08, z, entityYaw, partialTicks);
 		entity.getProfession().render(entity, x, y, z, entityYaw, partialTicks);
 	}
 

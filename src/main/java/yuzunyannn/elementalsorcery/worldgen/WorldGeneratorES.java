@@ -32,6 +32,7 @@ public class WorldGeneratorES {
 				this.pos = event.getPos();
 				this.genKynateOre(event);
 				this.genStarStone(event);
+				this.genSealStone(event);
 			}
 		}
 
@@ -44,6 +45,13 @@ public class WorldGeneratorES {
 
 		public void genStarStone(OreGenEvent.Post event) {
 			WorldGenerator generator = new WorldGenStarStone();
+			if (TerrainGen.generateOre(event.getWorld(), event.getRand(), generator, event.getPos(),
+					OreGenEvent.GenerateMinable.EventType.CUSTOM))
+				generator.generate(event.getWorld(), event.getRand(), event.getPos());
+		}
+
+		public void genSealStone(OreGenEvent.Post event) {
+			WorldGenerator generator = new WorldGenSealStone();
 			if (TerrainGen.generateOre(event.getWorld(), event.getRand(), generator, event.getPos(),
 					OreGenEvent.GenerateMinable.EventType.CUSTOM))
 				generator.generate(event.getWorld(), event.getRand(), event.getPos());
