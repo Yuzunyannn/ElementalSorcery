@@ -1,39 +1,39 @@
 package yuzunyannn.elementalsorcery.render.effect.grimoire;
 
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.ColorHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
-public class EffectElementMagicCircle extends EffectCondition {
+public class EffectMagicCircle extends EffectCondition {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/magic_circles/element.png");
-	public ElementStack element;
-	public EntityLivingBase binder;
+	public Entity binder;
 
 	public float r = 0;
 	public float g = 0;
 	public float b = 0;
 
-	public EffectElementMagicCircle(World world, EntityLivingBase binder, Element element) {
+	public EffectMagicCircle(World world, Entity binder) {
 		super(world);
 		this.lifeTime = 1;
-		this.element = new ElementStack(element);
 		this.binder = binder;
-		int c = this.element.getElement().getColor(this.element);
-		r = ((c >> 16) & 0xff) / 255f;
-		g = ((c >> 8) & 0xff) / 255f;
-		b = ((c >> 0) & 0xff) / 255f;
 		this.setPosition(binder);
+	}
+
+	public void setColor(int color) {
+		Vec3d c = ColorHelper.color(color);
+		r = (float) c.x;
+		g = (float) c.y;
+		b = (float) c.z;
 	}
 
 	float rotate;
@@ -93,9 +93,12 @@ public class EffectElementMagicCircle extends EffectCondition {
 		GlStateManager.color(r, g, b, alpha);
 		TEXTURE.bind();
 		RenderHelper.drawTexturedRectInCenter(0, 0, 32, 32);
-		GlStateManager.color(1, 1, 1, alpha);
-		element.getElement().drawElemntIcon(this.element, alpha);
+		this.renderCenterIcon(partialTicks);
 		GlStateManager.popMatrix();
+	}
+
+	protected void renderCenterIcon(float partialTicks) {
+
 	}
 
 }

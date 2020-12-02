@@ -11,7 +11,8 @@ import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectElementMagicCircle;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleElement;
 
 public class MantraCommon extends Mantra {
 
@@ -35,9 +36,13 @@ public class MantraCommon extends Mantra {
 		if (!(entity instanceof EntityLivingBase)) return true;
 		EntityLivingBase eb = (EntityLivingBase) entity;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		if (!dataEffect.hasMarkEffect(0))
-			dataEffect.addEffect(caster, new EffectElementMagicCircle(world, eb, this.getMagicCircle()), 0);
+		if (!dataEffect.hasMarkEffect(0)) dataEffect.addEffect(caster, this.getEffectMagicCircle(world, eb), 0);
 		return false;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity) {
+		return new EffectMagicCircleElement(world, entity, this.getMagicCircle());
 	}
 
 	@SideOnly(Side.CLIENT)

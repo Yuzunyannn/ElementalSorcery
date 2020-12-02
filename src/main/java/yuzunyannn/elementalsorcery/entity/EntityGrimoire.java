@@ -1,6 +1,8 @@
 package yuzunyannn.elementalsorcery.entity;
 
+import java.util.AbstractMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import io.netty.buffer.ByteBuf;
@@ -10,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -188,7 +191,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		user.timeUntilPortal = 20;
 		this.timeUntilPortal = 20;
 		this.posX = user.posX;
-		this.posY = user.posY + user.height * 3 / 4;
+		this.posY = user.posY;
 		this.posZ = user.posZ;
 	}
 
@@ -204,6 +207,9 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 
 	@Override
 	public void onEntityUpdate() {
+		this.lastTickPosX = this.prevPosX = this.posX;
+		this.lastTickPosY = this.prevPosY = this.posY;
+		this.lastTickPosZ = this.prevPosZ = this.posZ;
 		// 还原一些内容
 		if (mantra == null || !this.restore()) {
 			this.setDead();
@@ -337,14 +343,15 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	@Override
-	public BlockPos iWantBlockTarget() {
+	public Entry<BlockPos, EnumFacing> iWantBlockTarget() {
 		if (user != null) {
 			RayTraceResult rt = WorldHelper.getLookAtBlock(world, user, 128);
 			if (rt == null) return null;
-			return rt.getBlockPos();
+			if (rt.getBlockPos() == null) return null;
+			return new AbstractMap.SimpleEntry(rt.getBlockPos(), rt.sideHit == null ? EnumFacing.UP : rt.sideHit);
 		} else {
 			BlockPos pos = this.getPosition();
-			return BlockHelper.tryFindAnySolid(world, pos, 6, 5, 5);
+			return new AbstractMap.SimpleEntry(BlockHelper.tryFindAnySolid(world, pos, 6, 5, 5), EnumFacing.UP);
 		}
 	}
 
@@ -371,4 +378,5 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	public Entity iWantDirectCaster() {
 		return this;
 	}
+
 }

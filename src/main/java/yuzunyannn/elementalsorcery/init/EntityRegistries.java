@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityBlockThrowEffect;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.EntityCrafting;
@@ -26,6 +27,7 @@ import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
 import yuzunyannn.elementalsorcery.render.entity.EntityRenderFactory;
 import yuzunyannn.elementalsorcery.render.entity.RenderBlockThrowEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntitiyBulletin;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityBlockMove;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityExploreDust;
@@ -44,7 +46,8 @@ public class EntityRegistries {
 				Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.EXTREME_HILLS, Biomes.SWAMPLAND, Biomes.HELL);
 		registerEntitySpawn(EntityElfTravelling.class, 10, 2, 3, EnumCreatureType.CREATURE, Biomes.PLAINS);
 		// 效果处理
-		register(51, "block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);
+		register(50, "block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);
+		register(51, "block_move", EntityBlockMove.class, "EntityBlockMove", 128, 1, false);
 		register(52, "entity_crafting", EntityCrafting.class, "EntityCrafting", 128, 1, false);
 		register(53, "portal", EntityPortal.class, "EntityPortal", 64, 1, false);
 		register(54, "explore_dust", EntityExploreDust.class, "EntityPortal", 64, 1, false);
@@ -83,6 +86,7 @@ public class EntityRegistries {
 		registerRender(EntityGrimoire.class, RenderEntityGrimoire.class);
 		registerRender(EntityBulletin.class, RenderEntitiyBulletin.class);
 		registerRender(EntityMagicMelting.class, RenderEntityMagicMelting.class);
+		registerRender(EntityBlockMove.class, RenderEntityBlockMove.class);
 	}
 
 	@SideOnly(Side.CLIENT)

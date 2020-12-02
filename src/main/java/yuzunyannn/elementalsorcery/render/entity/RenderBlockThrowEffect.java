@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.entity.EntityBlockThrowEffect;
 
+@Deprecated
 @SideOnly(Side.CLIENT)
 public class RenderBlockThrowEffect extends Render<EntityBlockThrowEffect> {
 
@@ -23,7 +24,8 @@ public class RenderBlockThrowEffect extends Render<EntityBlockThrowEffect> {
 	}
 
 	@Override
-	public void doRender(EntityBlockThrowEffect entity, double x, double y, double z, float entityYaw, float partialTicks) {
+	public void doRender(EntityBlockThrowEffect entity, double x, double y, double z, float entityYaw,
+			float partialTicks) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate((float) x, (float) y, (float) z);
 		GlStateManager.enableRescaleNormal();

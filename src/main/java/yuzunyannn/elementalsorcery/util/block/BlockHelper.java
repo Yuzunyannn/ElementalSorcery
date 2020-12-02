@@ -19,6 +19,7 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class BlockHelper {
 	/** 获取tile实体 */
@@ -183,6 +184,10 @@ public class BlockHelper {
 		if (ore == null || ore.length == 0) return false;
 		String name = OreDictionary.getOreName(ore[0]);
 		return BlockHelper.isOre(name);
+	}
+
+	static public boolean isOre(IBlockState oreState) {
+		return isOre(ItemHelper.toItemStack(oreState));
 	}
 
 }

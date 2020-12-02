@@ -1,11 +1,13 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import java.util.List;
+import java.util.Map.Entry;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -40,6 +42,7 @@ public class MantraBlockCrash extends MantraCommon {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public boolean onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		if (super.onSpellingEffect(world, data, caster)) return true;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
@@ -54,8 +57,9 @@ public class MantraBlockCrash extends MantraCommon {
 		EntityLivingBase living = caster.iWantLivingTarget(EntityLivingBase.class);
 		if (living != null) pos = living.getPosition();
 		if (pos == null) {
-			pos = caster.iWantBlockTarget();
-			if (pos == null) return;
+			Entry<BlockPos, EnumFacing> target = caster.iWantBlockTarget();
+			if (target == null) return;
+			pos = target.getKey();
 			if (world.isAirBlock(pos)) return;
 		}
 		IBlockState state = world.getBlockState(pos);

@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -60,8 +59,7 @@ public class MantraDataCommon implements IMantraData {
 		markEffect(markId);
 		if (effect.getCondition() == null) {
 			Entity entity = caster.iWantCaster();
-			if (entity instanceof EntityLivingBase)
-				effect.setCondition(new ConditionEffect((EntityLivingBase) entity, this, markId, checkContinue));
+			effect.setCondition(new ConditionEffect(entity, this, markId, checkContinue));
 		}
 		Effect.addEffect(effect);
 	}
@@ -79,7 +77,7 @@ public class MantraDataCommon implements IMantraData {
 		public final short unmark; // 标记
 		public final boolean checkContinue;
 
-		public ConditionEffect(EntityLivingBase entity, MantraDataCommon data, int unmark, boolean checkContinue) {
+		public ConditionEffect(Entity entity, MantraDataCommon data, int unmark, boolean checkContinue) {
 			super(entity);
 			this.data = data;
 			this.unmark = (short) unmark;
@@ -89,10 +87,19 @@ public class MantraDataCommon implements IMantraData {
 		@Override
 		public Boolean apply(Void t) {
 			if (isFinish) return false;
-			if (checkContinue) isFinish = !data.isMarkContinue() || !entity.isHandActive();
-			else isFinish = !entity.isHandActive();
-			if (isFinish) data.unmarkEffect(unmark);
-			return !isFinish;
+			if (checkContinue) {
+				isFinish = !data.isMarkContinue();
+				if (isFinish) {
+					data.unmarkEffect(unmark);
+					return false;
+				}
+			}
+			super.apply(t);
+			if (isFinish) {
+				data.unmarkEffect(unmark);
+				return false;
+			}
+			return true;
 		}
 	}
 

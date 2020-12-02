@@ -157,6 +157,8 @@ mantra.lush.name=Lush
 mantra.lush.describe=Grow Everythings Around
 mantra.blockCrash.name=Dirt Impact
 mantra.blockCrash.describe=There are a Dirt from the ground, and the enemy impact into the sky.
+mantra.autoMining.name=Unthinkable miner
+mantra.autoMining.describe=Ores fly from the ground
 
 key.es.func=Function key
 

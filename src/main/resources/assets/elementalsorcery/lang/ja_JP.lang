@@ -157,6 +157,8 @@ mantra.lush.name=青々と生い茂る
 mantra.lush.describe=周の物を成長させて
 mantra.blockCrash.name=土の衝突
 mantra.blockCrash.describe=地面が出現し，敵を突き飛ばした。
+mantra.autoMining.name=不思議な鉱夫
+mantra.autoMining.describe=地中で鉱を飛ぶ
 
 key.es.func=機能キー
 

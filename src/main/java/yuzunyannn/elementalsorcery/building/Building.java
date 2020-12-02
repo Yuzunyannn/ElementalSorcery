@@ -103,7 +103,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 
 	/** 方块类型的信息 */
 	public static class BlockItemTypeInfo {
-		private final ItemStack bolockStack;
+		private final ItemStack blockStack;
 		int count = 0;
 
 		public BlockItemTypeInfo(IBlockState state) {
@@ -125,33 +125,33 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 						handler.fill(fstack, true);
 					}
 				}
-				this.bolockStack = bucket;
+				this.blockStack = bucket;
 			} else {
 				if (state.getBlock() == Blocks.FLOWER_POT) {
-					bolockStack = new ItemStack(Items.FLOWER_POT, 1);
+					blockStack = new ItemStack(Items.FLOWER_POT, 1);
 					return;
 				}
 				int meta = state.getBlock().damageDropped(state);
-				bolockStack = new ItemStack(Item.getItemFromBlock(state.getBlock()), 1, meta);
+				blockStack = new ItemStack(Item.getItemFromBlock(state.getBlock()), 1, meta);
 			}
 		}
 
 		public ItemStack getItemStack() {
-			return bolockStack;
+			return blockStack;
 		}
 
 		@Override
 		public boolean equals(Object other) {
 			if (other instanceof BlockItemTypeInfo) {
 				BlockItemTypeInfo info = (BlockItemTypeInfo) other;
-				return info.bolockStack.getItem() == this.bolockStack.getItem()
-						&& info.bolockStack.getMetadata() == this.bolockStack.getMetadata();
+				return info.blockStack.getItem() == this.blockStack.getItem()
+						&& info.blockStack.getMetadata() == this.blockStack.getMetadata();
 			}
 			return false;
 		}
 
 		public String getUnlocalizedName() {
-			return bolockStack.getUnlocalizedName();
+			return blockStack.getUnlocalizedName();
 		}
 
 		public int getCount() {
@@ -452,7 +452,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 
 		public ItemStack getItemStack() {
 			return entry == null ? ItemStack.EMPTY
-					: building.typeInfoList.get(building.infoList.get(entry.getValue()).typeIndex).bolockStack.copy();
+					: building.typeInfoList.get(building.infoList.get(entry.getValue()).typeIndex).blockStack.copy();
 		}
 
 		public BuildingBlocks setPosOff(BlockPos pos) {

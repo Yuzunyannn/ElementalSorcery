@@ -6,6 +6,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -14,7 +16,7 @@ import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
-import yuzunyannn.elementalsorcery.entity.EntityBlockThrowEffect;
+import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 
@@ -62,9 +64,17 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 							need = the.splitStack(1);
 						}
 					}
-					EntityBlockThrowEffect toBlock = new EntityBlockThrowEffect(world,
-							entity.getPositionVector().addVector(0, 1, 0), pos, need, state, ((EntityPlayer) entity));
-					if (((EntityPlayer) entity).isCreative()) toBlock.setBreakBlock();
+					Vec3d from = entity.getPositionVector();
+					from = from.addVector(MathHelper.sin(rand.nextFloat() * 6.28f) * 5, rand.nextDouble() + 1,
+							MathHelper.sin(rand.nextFloat() * 6.28f) * 5);
+					EntityBlockMove toBlock = new EntityBlockMove(world, ((EntityPlayer) entity), from, pos, need,
+							state);
+					if (state.isOpaqueCube()) {
+						if (pos.getY() > from.y) toBlock.getTrace().setOrder(rand.nextBoolean() ? "yxz" : "yzx");
+						else toBlock.getTrace().setOrder(rand.nextBoolean() ? "xzy" : "zxy");
+					}
+					if (((EntityPlayer) entity).isCreative())
+						toBlock.setFlag(EntityBlockMove.FLAG_FORCE_DESTRUCT, true);
 					// 产生实体，发射方块
 					world.spawnEntity(toBlock);
 					break;

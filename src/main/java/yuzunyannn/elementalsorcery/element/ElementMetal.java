@@ -9,7 +9,7 @@ import yuzunyannn.elementalsorcery.api.element.IElementSpell;
 
 public class ElementMetal extends ElementInner {
 
-	public static final int COLOR = 0xf2d031;
+	public static final int COLOR = 0xFFD700;
 
 	public ElementMetal() {
 		super(COLOR, "metal");

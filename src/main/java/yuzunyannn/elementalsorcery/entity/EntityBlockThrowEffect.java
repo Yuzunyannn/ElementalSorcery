@@ -23,6 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.block.BlocksEStone;
 
+@Deprecated
 public class EntityBlockThrowEffect extends Entity implements IEntityAdditionalSpawnData {
 
 	public ItemStack stack = ItemStack.EMPTY;

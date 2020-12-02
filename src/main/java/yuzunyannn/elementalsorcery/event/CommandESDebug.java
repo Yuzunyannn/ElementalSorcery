@@ -40,6 +40,7 @@ import yuzunyannn.elementalsorcery.building.BuildingSaveData;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
+import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityMagicMelting;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
@@ -49,7 +50,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class CommandESDebug {
 
 	public static final String[] autoTips = new String[] { "reflush", "saveBuilding", "recordBuilding", "buildTest",
-			"portalTest", "showInfo", "smeltingTest", "reloadeTexture" };
+			"portalTest", "showInfo", "blockMoveTest", "smeltingTest", "reloadeTexture" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -147,6 +148,15 @@ public class CommandESDebug {
 				EntityMagicMelting e = new EntityMagicMelting(entity.world, pos.up(),
 						new ItemStack(Blocks.DIAMOND_ORE));
 				entity.world.spawnEntity(e);
+			}
+				return;
+			case "blockMoveTest": {
+				EntityBlockMove blockMove = new EntityBlockMove(entity.world, pos,
+						entity.getPositionVector().addVector(0, 1, 0));
+				blockMove.setColor(0xff0000);
+				blockMove.setFlag(EntityBlockMove.FLAG_FORCE_DROP, true);
+				entity.world.setBlockToAir(pos);
+				entity.world.spawnEntity(blockMove);
 			}
 				return;
 			// 测试传送门

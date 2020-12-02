@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.init;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraAutoMining;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraBlockCrash;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireBall;
@@ -23,5 +24,6 @@ public class MantraRegister {
 		reg(new MantraFireBall(), "fire_ball");
 		reg(new MantraLush(), "lush");
 		reg(new MantraBlockCrash(), "block_crash");
+		reg(new MantraAutoMining(), "auto_mining");
 	}
 }

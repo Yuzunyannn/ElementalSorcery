@@ -157,6 +157,8 @@ mantra.lush.name=郁郁葱葱
 mantra.lush.describe=让周围的一切生长
 mantra.blockCrash.name=土块撞击
 mantra.blockCrash.describe=地上出现了个土块，将敌人撞飞天
+mantra.autoMining.name=不思议的矿工
+mantra.autoMining.describe=矿从地中飞
 
 key.es.func=功能键
 

@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.render.effect.grimoire;
 
 import java.util.function.Function;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -38,7 +39,7 @@ public abstract class EffectCondition extends Effect {
 	public Function<Void, Boolean> getCondition() {
 		return condition;
 	}
-	
+
 	public boolean isEnd() {
 		return condition == null ? true : (condition.apply(null) ? false : true);
 	}
@@ -49,17 +50,19 @@ public abstract class EffectCondition extends Effect {
 	}
 
 	public static class ConditionEntityAction implements Function<Void, Boolean> {
-		public final EntityLivingBase entity;
+		public final Entity entity;
 		public boolean isFinish = false;
 
-		public ConditionEntityAction(EntityLivingBase entity) {
+		public ConditionEntityAction(Entity entity) {
 			this.entity = entity;
 		}
 
 		@Override
 		public Boolean apply(Void t) {
 			if (isFinish) return false;
-			return !(isFinish = !entity.isHandActive());
+			if (this.entity instanceof EntityLivingBase)
+				return !(isFinish = !((EntityLivingBase) entity).isHandActive());
+			else return !(isFinish = entity.isDead);
 		}
 	}
 

@@ -1,16 +1,20 @@
 package yuzunyannn.elementalsorcery.grimoire;
 
+import java.util.Map.Entry;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 
 public interface ICaster {
 
-	/** 调用者希望将一个数据发送到客户端 */
+	/** 调用者希望将一个数据发送到客户端，由{@link Mantra#recvData} 接受 */
 	public void sendToClient(NBTTagCompound nbt);
 
 	/**
@@ -35,9 +39,11 @@ public interface ICaster {
 
 	/**
 	 * 申请获取目标方块，通常是看到的
+	 * 
+	 * @return 一旦返回为非null，getKey()必不为空
 	 */
 	@Nullable
-	public BlockPos iWantBlockTarget();
+	public Entry<BlockPos, EnumFacing> iWantBlockTarget();
 
 	/**
 	 * 申请获取目标实体

@@ -18,6 +18,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public abstract class Effect {
 
+	public static final Minecraft mc = Minecraft.getMinecraft();
+
 	/** 继承该接口的效果认为是gui效果 **/
 	static public interface IGUIEffect {
 
@@ -109,6 +111,12 @@ public abstract class Effect {
 		while (!contextEffects.isEmpty()) addEffect(contextEffects.pop());
 	}
 
+	static public void clear() {
+		effects.clear();
+		guiEffects.clear();
+		contextEffects.clear();
+	}
+
 	static private void update(ArrayDeque effects) {
 		Iterator<Effect> iter = effects.iterator();
 		World world = Minecraft.getMinecraft().world;
@@ -154,4 +162,5 @@ public abstract class Effect {
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();
 	}
+
 }

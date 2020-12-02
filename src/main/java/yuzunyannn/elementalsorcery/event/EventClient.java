@@ -156,6 +156,7 @@ public class EventClient {
 	@SubscribeEvent
 	static public void playerExit(PlayerEvent.PlayerLoggedOutEvent e) {
 		renderList.clear();
+		Effect.clear();
 	}
 
 	/** 全局信息显示 */
