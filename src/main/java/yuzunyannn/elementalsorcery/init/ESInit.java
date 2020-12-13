@@ -86,7 +86,6 @@ import yuzunyannn.elementalsorcery.block.container.BlockMagicPlatform;
 import yuzunyannn.elementalsorcery.block.container.BlockMeltCauldron;
 import yuzunyannn.elementalsorcery.block.container.BlockRiteTable;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
-import yuzunyannn.elementalsorcery.block.container.BlockStela;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
 import yuzunyannn.elementalsorcery.block.md.BlockMDAbsorbBox;
 import yuzunyannn.elementalsorcery.block.md.BlockMDDeconstructBox;
@@ -140,6 +139,8 @@ import yuzunyannn.elementalsorcery.item.ItemRedHandset;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.item.ItemSome;
+import yuzunyannn.elementalsorcery.item.ItemSoulFragment;
+import yuzunyannn.elementalsorcery.item.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.item.ItemSpellbookArchitecture;
 import yuzunyannn.elementalsorcery.item.ItemSpellbookCover;
@@ -147,6 +148,7 @@ import yuzunyannn.elementalsorcery.item.ItemSpellbookElement;
 import yuzunyannn.elementalsorcery.item.ItemSpellbookEnchantment;
 import yuzunyannn.elementalsorcery.item.ItemSpellbookLaunch;
 import yuzunyannn.elementalsorcery.item.ItemSupremeTableComponent;
+import yuzunyannn.elementalsorcery.item.ItemUnscrambleNote;
 import yuzunyannn.elementalsorcery.item.crystal.ItemArchitectureCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemElementCrystal;
@@ -176,7 +178,6 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileRiteTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileShowItem;
-import yuzunyannn.elementalsorcery.render.tile.RenderTileStela;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStoneMill;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileSupremeTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileTranscribeInjection;
@@ -203,7 +204,6 @@ import yuzunyannn.elementalsorcery.tile.TileMagicPlatform;
 import yuzunyannn.elementalsorcery.tile.TileMeltCauldron;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.tile.TileSmeltBox;
-import yuzunyannn.elementalsorcery.tile.TileStela;
 import yuzunyannn.elementalsorcery.tile.TileStoneMill;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
@@ -287,7 +287,6 @@ public class ESInit {
 		BLOCKS.ELEMENT_CRAFTING_TABLE = new BlockElementCraftingTable();
 		BLOCKS.DECONSTRUCT_ALTAR_TABLE = new BlockDeconstructAltarTable();
 		BLOCKS.DECONSTRUCT_ALTAR_TABLE_ADV = new BlockDeconstructAltarTableAdv();
-		BLOCKS.STELA = new BlockStela();
 		BLOCKS.RITE_TABLE = new BlockRiteTable();
 		BLOCKS.LANTERN = new BlockLantern();
 		BLOCKS.BUILDING_ALTAR = new BlockBuildingAltar();
@@ -383,6 +382,9 @@ public class ESInit {
 		ITEMS.ADDRESS_PLATE = new ItemAddressPlate();
 		ITEMS.ELF_STAR = ItemSome.newElfStar();
 		ITEMS.JUMP_GEM = ItemSome.newJumpGem();
+		ITEMS.UNSCRAMBLE_NOTE = new ItemUnscrambleNote();
+		ITEMS.SOUL_FRAGMENT = new ItemSoulFragment();
+		ITEMS.SOUL_WOOD_SWORD = new ItemSoulWoodSword();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -449,6 +451,8 @@ public class ESInit {
 		ElfRegister.registerAllFloor();
 		// 任务相关注册
 		QuestRegister.registerAll();
+		// 附魔注册
+		EnchantmentRegister.registerAll();
 		// 测试村庄相关
 		VillegeRegistries.registerAll();
 		// 注册战利品
@@ -476,7 +480,6 @@ public class ESInit {
 		Pages.init(event.getSide());
 		// 注册所有知识
 		TileRiteTable.init();
-		TileStela.init();
 	}
 
 	public final static void postInit(FMLPostInitializationEvent event) throws Throwable {
@@ -554,7 +557,6 @@ public class ESInit {
 		register(TileElementCraftingTable.class, "ElementCraftingTable");
 		register(TileDeconstructAltarTable.class, "DeconstructAltarTable");
 		register(TileDeconstructAltarTableAdv.class, "DeconstructAltarTableAdv");
-		register(TileStela.class, "Stela");
 		register(TileRiteTable.class, "riteTable");
 		register(TileLantern.class, "Lantern");
 		register(TileBuildingAltar.class, "BuildingAltar");
@@ -651,6 +653,9 @@ public class ESInit {
 		registerRender(ITEMS.ADDRESS_PLATE, 1, "address_plate_vip");
 		registerRender(ITEMS.ELF_STAR);
 		registerRender(ITEMS.JUMP_GEM);
+		registerRender(ITEMS.UNSCRAMBLE_NOTE);
+		registerRender(ITEMS.SOUL_FRAGMENT);
+		registerRender(ITEMS.SOUL_WOOD_SWORD);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -715,7 +720,6 @@ public class ESInit {
 				new RenderTileDeconstructAltarTable(false));
 		registerRender(BLOCKS.DECONSTRUCT_ALTAR_TABLE_ADV, TileDeconstructAltarTableAdv.class,
 				new RenderTileDeconstructAltarTable(true));
-		registerRender(BLOCKS.STELA, TileStela.class, new RenderTileStela());
 		registerRender(BLOCKS.RITE_TABLE, TileRiteTable.class, new RenderTileRiteTable());
 		registerRender(BLOCKS.LANTERN, TileLantern.class, new RenderTileLantern());
 		registerRender(BLOCKS.BUILDING_ALTAR, TileBuildingAltar.class, new RenderTileBuildingAltar());

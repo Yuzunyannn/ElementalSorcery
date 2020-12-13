@@ -33,6 +33,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
+import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
@@ -86,10 +87,11 @@ public class MantraFireBall extends MantraCommon {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean onSpellingEffect(World world, IMantraData mData, ICaster caster) {
-		if (super.onSpellingEffect(world, mData, caster)) return true;
+	public void onSpellingEffect(World world, IMantraData mData, ICaster caster) {
+		super.onSpellingEffect(world, mData, caster);
+		if (!caster.hasEffectFlags(MantraEffectFlags.MAGIC_CIRCLE)) return;
 		int tick = caster.iWantKnowCastTick();
-		if (tick < 20) return false;
+		if (tick < 20) return;
 		Data data = (Data) mData;
 		Entity entity = caster.iWantCaster();
 		Random rand = world.rand;
@@ -106,10 +108,8 @@ public class MantraFireBall extends MantraCommon {
 			effect.setColor(color);
 			Effect.addEffect(effect);
 		}
-		// 进度条特效
-		if (tick > 20) data.setProgress((tick - 20) / 80.0f, this.getRenderColor(), world, caster);
 		// 中心球特效
-		if (tick % 5 == 0) return false;
+		if (tick % 5 == 0) return;
 		if (data.power > 0) {
 			float s = Math.min(32, data.power) / 32.0f;
 			EffectElementMove effect = new EffectElementMove(world, pos);
@@ -120,7 +120,13 @@ public class MantraFireBall extends MantraCommon {
 			effect.setVelocity(v.scale(-0.005));
 			Effect.addEffect(effect);
 		}
-		return false;
+	}
+
+	@Override
+	public float getProgressRate(World world, IMantraData data, ICaster caster) {
+		int tick = caster.iWantKnowCastTick();
+		if (tick < 20) return -1;
+		return (tick - 20) / 80.0f;
 	}
 
 	@Override

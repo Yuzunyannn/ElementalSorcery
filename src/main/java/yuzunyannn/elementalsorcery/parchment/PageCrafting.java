@@ -173,10 +173,13 @@ public class PageCrafting extends PageEasy {
 		if (eList == null) return;
 		TextHelper.addInfo(contexts, "page.crafting.need");
 		for (ElementStack stack : eList) {
-			if (stack.usePower()) TextHelper.addInfo(contexts, "page.crafting.show", TextFormatting.GOLD,
-					I18n.format(stack.getElementUnlocalizedName()), stack.getCount(), stack.getPower());
-			else TextHelper.addInfo(contexts, "page.crafting.npshow", TextFormatting.GOLD,
-					I18n.format(stack.getElementUnlocalizedName()), stack.getCount());
+			if (stack.usePower()) {
+				TextHelper.addInfo(contexts, "page.crafting.show", TextFormatting.GOLD,
+						I18n.format(stack.getElementUnlocalizedName()), stack.getCount(), stack.getPower());
+			} else {
+				TextHelper.addInfo(contexts, "page.crafting.npshow", TextFormatting.GOLD,
+						I18n.format(stack.getElementUnlocalizedName()), stack.getCount());
+			}
 		}
 	}
 

@@ -259,10 +259,11 @@ public abstract class EntityElfBase extends EntityCreature {
 	/** 受到攻击，精灵的反应 */
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		int flag = this.getProfession().attackedFrom(this, source, amount);
-		if (flag == -1) return false;
-		else if (flag == 1) return true;
-		return super.attackEntityFrom(source, amount);
+		Float flag = this.getProfession().attackedFrom(this, source, amount);
+		if (flag == null) return false;
+		else if (flag == -1) return true;
+		return super.attackEntityFrom(source, flag);
+
 	}
 
 	/** 攻击敌人 */

@@ -10,6 +10,7 @@ import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
+import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleElement;
@@ -31,13 +32,25 @@ public class MantraCommon extends Mantra {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public boolean onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		Entity entity = caster.iWantCaster();
-		if (!(entity instanceof EntityLivingBase)) return true;
-		EntityLivingBase eb = (EntityLivingBase) entity;
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		if (!dataEffect.hasMarkEffect(0)) dataEffect.addEffect(caster, this.getEffectMagicCircle(world, eb), 0);
-		return false;
+	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
+		if (caster.hasEffectFlags(MantraEffectFlags.MAGIC_CIRCLE)) out: {
+			Entity entity = caster.iWantCaster();
+			if (!(entity instanceof EntityLivingBase)) break out;
+			EntityLivingBase eb = (EntityLivingBase) entity;
+			MantraDataCommon dataEffect = (MantraDataCommon) data;
+			if (!dataEffect.hasMarkEffect(0)) dataEffect.addEffect(caster, this.getEffectMagicCircle(world, eb), 0);
+		}
+		if (caster.hasEffectFlags(MantraEffectFlags.PROGRESS)) out: {
+			float r = this.getProgressRate(world, data, caster);
+			if (r < 0) break out;
+			MantraDataCommon dataEffect = (MantraDataCommon) data;
+			dataEffect.setProgress(r, this.getRenderColor(), world, caster);
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	public float getProgressRate(World world, IMantraData data, ICaster caster) {
+		return -1;
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -63,15 +63,22 @@ public class TalkSceneSay extends TalkScene<TalkSceneSay> {
 		return action;
 	}
 
-	public void addString(String str, Talker talker) {
+	public TalkSceneSay addString(String str, Talker talker) {
 		Packet p = new Packet();
 		p.unlocalizedOrlocalizedString = str;
 		p.talker = talker;
 		this.list.add(p);
+		return this;
 	}
 
-	public void addAction(ITalkAction action) {
+	public TalkSceneSay addAction(ITalkAction action) {
 		this.action = action;
+		return this;
+	}
+
+	public TalkSceneSay setEnd() {
+		this.addAction(new TalkActionEnd());
+		return this;
 	}
 
 }

@@ -1,6 +1,7 @@
 {
     "type": "mult",
     "lock": 0,
+    "linked": "elementalsorcery:rite_table",
     "pages": [
         {
             "type": "normal",

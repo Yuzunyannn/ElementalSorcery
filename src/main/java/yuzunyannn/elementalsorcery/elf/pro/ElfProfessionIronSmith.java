@@ -70,6 +70,7 @@ public class ElfProfessionIronSmith extends ElfProfession {
 
 	@Override
 	public void tick(EntityElfBase elf) {
+		super.tick(elf);
 		if (elf.tick % 100 != 0) return;
 		World world = elf.world;
 		if (world.isRemote) return;

@@ -1,0 +1,16 @@
+{
+    "need": [
+        "base/rite_craft",
+        "more/ancient_paper"
+    ],
+    "linked": "elementalsorcery:unscramble_note",
+    "type": "rite",
+    "name": "unscrambleNote",
+    "item": [
+        {
+            "item": "elementalsorcery:ancient_paper",
+            "data": 1
+        },
+        "elementalsorcery:unscramble_note"
+    ]
+}

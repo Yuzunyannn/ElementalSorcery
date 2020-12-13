@@ -3,6 +3,8 @@ package yuzunyannn.elementalsorcery.elf.edifice;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
@@ -259,7 +261,7 @@ public class EFloorHall extends ElfEdificeFloor {
 		// 其余单位
 		ElfProfession pro = null;
 		if (world.rand.nextInt(4) == 0) pro = ElfProfession.BUILDER;
-		EFloorHall.trySpawnElf(builder, pro, 8);
+		EFloorHall.trySpawnElf(builder, pro, 6);
 	}
 
 	public void createBulltin(IBuilder builder) {
@@ -297,7 +299,8 @@ public class EFloorHall extends ElfEdificeFloor {
 	}
 
 	/** 在某一层刷点精灵 */
-	public static void trySpawnElf(IBuilder builder, ElfProfession pro, int max) {
+	@Nullable
+	public static EntityElf trySpawnElf(IBuilder builder, ElfProfession pro, int max) {
 		BlockPos pos = builder.getFloorBasicPos();
 		World world = builder.getWorld();
 		int treeSize = builder.getEdificeSize();
@@ -309,12 +312,14 @@ public class EFloorHall extends ElfEdificeFloor {
 			EntityElf elf;
 			x = world.rand.nextInt(treeSize * 2) - treeSize + x;
 			z = world.rand.nextInt(treeSize * 2) - treeSize + z;
-			if (!EFloorHall.canSpawnElf(world, new BlockPos(x, y, z))) return;
+			if (!EFloorHall.canSpawnElf(world, new BlockPos(x, y, z))) return null;
 			if (pro == null) elf = new EntityElf(world);
 			else elf = new EntityElf(world, pro);
 			elf.setPosition(x, y, z);
 			builder.spawn(elf);
+			return elf;
 		}
+		return null;
 	}
 
 	/** 获取本层的所有精灵 */

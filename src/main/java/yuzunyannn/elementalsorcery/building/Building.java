@@ -10,6 +10,7 @@ import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCarpet;
+import net.minecraft.block.BlockLadder;
 import net.minecraft.block.BlockStaticLiquid;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;
@@ -399,6 +400,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			Block block = state.getBlock();
 			if (block instanceof BlockCarpet || block instanceof BlockTorch) return true;
 			if (block instanceof BlockFluidBase) return true;
+			if (block instanceof BlockLadder) return true;
 			return false;
 		}
 

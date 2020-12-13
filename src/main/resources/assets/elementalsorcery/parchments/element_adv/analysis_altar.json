@@ -4,9 +4,7 @@
         "element/element_crafting_table",
         "element_adv/item_crystal"
     ],
-    "linked": [
-        "elementalsorcery:analysis_altar"
-    ],
+    "linked": "elementalsorcery:analysis_altar",
     "type": "mult",
     "lock": 0,
     "pages": [

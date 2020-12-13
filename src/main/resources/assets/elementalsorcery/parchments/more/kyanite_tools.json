@@ -3,6 +3,13 @@
     "need": [
         "base/kyanite"
     ],
+    "linked": [
+        "elementalsorcery:kyanite_axe",
+        "elementalsorcery:kyanite_hoe",
+        "elementalsorcery:kyanite_pickaxe",
+        "elementalsorcery:kyanite_spade",
+        "elementalsorcery:kyanite_sword"
+    ],
     "type": "craft",
     "name": "kynatieTools",
     "item": [

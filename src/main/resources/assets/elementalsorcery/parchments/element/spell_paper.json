@@ -4,6 +4,7 @@
         "element/spell_crystal",
         "element/magic_paper"
     ],
+    "linked": "elementalsorcery:spell_paper",
     "type": "craft",
     "name": "spellPaper",
     "item": "elementalsorcery:spell_paper"

@@ -117,15 +117,15 @@ public class ElfProfessionMaster extends ElfProfession {
 	}
 
 	@Override
-	public int attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
+	public Float attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
 		super.attackedFrom(elf, source, amount);
 		// 远程攻击吸引
 		if (source instanceof EntityDamageSourceIndirect) {
 			if (source.getTrueSource() instanceof EntityLivingBase) {
 				BlockPos pos = elf.getRandomTeleportPos(54, 2, 4, source.getTrueSource().getPosition());
-				if (pos == null) return 0;
+				if (pos == null) return null;
 				elf.teleportTo(elf, pos);
-				return 1;
+				return Math.max(amount * 0.5f, 5);
 			}
 		} else {
 			// 回复
@@ -154,7 +154,7 @@ public class ElfProfessionMaster extends ElfProfession {
 			if (!elf.world.isRemote) {
 				if (source.getTrueSource() instanceof EntityPlayerMP) {
 					EntityPlayerMP player = (EntityPlayerMP) source.getTrueSource();
-					if (player.isCreative() && elf.getRNG().nextInt(4) == 0) {
+					if (player.isCreative() && elf.getRNG().nextInt(3) == 0) {
 						ESCriteriaTriggers.NO_CREATIVE.trigger(player);
 						player.world.playSound(null, player.getPosition(), SoundEvents.ENTITY_FIREWORK_LARGE_BLAST,
 								SoundCategory.VOICE, 1.0f, 0);
@@ -167,7 +167,7 @@ public class ElfProfessionMaster extends ElfProfession {
 				}
 			}
 		}
-		return 0;
+		return Math.max(amount * 0.5f, 5);
 	}
 
 	@SideOnly(Side.CLIENT)

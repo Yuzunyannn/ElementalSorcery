@@ -194,7 +194,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 			String key = floor.getRegistryName().toString();
 			invest.removeTag(key);
 			// 新建築
-			scheduleFloor(floor);
+			if (floor.canInvest(this)) scheduleFloor(floor);
 			// 当建满时，清空所有的投资
 			if (noSpaceToBuildFloor()) invest = new NBTTagCompound();
 		}
@@ -225,6 +225,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		for (int i = 0; i < floors.size(); i++) {
 			FloorInfo floor = floors.get(i);
 			if (floor.isEmpty()) continue;
+			if (floor.getStatus() == Status.COMPLETE) continue;
 			BuilderWithInfo builder = this.getBuilder(floor);
 			BuildProgress progress = new BuildProgress(floor.getType(), builder);
 			while (true) {
@@ -446,14 +447,24 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		}
 		if (rand.nextInt(2) != 0) return;
 		if (noSpaceToBuildFloor()) return;
-		if (bulletin.getQuestCount() > 16) return;
+		if (bulletin.getQuestCount() > this.getMaxQuestCount()) return;
 		// 随机获取下本层需要的方块
-		List<ElfEdificeFloor> floors = ElfEdificeFloor.REGISTRY.getValues();
-		ElfEdificeFloor floor = floors.get(rand.nextInt(floors.size()));
-		if (!floor.canInvest(this)) return;
+		ElfEdificeFloor floor = null;
+		for (int t = 0; t < 4; t++) {
+			ElfEdificeFloor tFloor = ElfEdificeFloor.REGISTRY.getRandomObject(rand);
+			if (!tFloor.canInvest(this)) continue;
+			floor = tFloor;
+			break;
+		}
+		if (floor == null) return;
 		Quest quest = floor.getInvestQuest(this, rand);
 		if (quest.getEndTime() <= 0) quest.setEndTime(world.getWorldTime() + 24000 + rand.nextInt(24000 * 3));
 		bulletin.addQuest(quest);
+	}
+
+	/** 获取公告板上可以刷的最大的任务个数 */
+	public int getMaxQuestCount() {
+		return 16;
 	}
 
 }

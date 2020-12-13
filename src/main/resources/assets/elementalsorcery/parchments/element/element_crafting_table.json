@@ -1,12 +1,10 @@
 {
     "lev": 3,
-    "linked": [
-        "elementalsorcery:element_crafting_table"
-    ],
     "need": [
         "md/astone",
         "element/spellbook_launch"
     ],
+    "linked": "elementalsorcery:element_crafting_table",
     "type": "mult",
     "lock": 0,
     "pages": [

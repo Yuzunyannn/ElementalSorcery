@@ -1,12 +1,10 @@
 {
     "lev": 4,
-    "linked": [
-        "elementalsorcery:deconstruct_altar_table_adv"
-    ],
     "need": [
         "element_adv/deconstruct_altar_table",
         "element_adv/analysis_altar"
     ],
+    "linked": "elementalsorcery:deconstruct_altar_table_adv",
     "type": "mult",
     "lock": 0,
     "pages": [

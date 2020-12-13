@@ -95,15 +95,11 @@ public class MantraAutoMining extends MantraCommon {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean onSpellingEffect(World world, IMantraData mData, ICaster caster) {
-		if (super.onSpellingEffect(world, mData, caster)) return true;
+	public float getProgressRate(World world, IMantraData mData, ICaster caster) {
 		int tick = caster.iWantKnowCastTick();
-		if (tick < 20) return false;
+		if (tick < 20) return -1;
 		Data data = (Data) mData;
-		if (tick > 20)
-			data.setProgress(data.earth.getCount() / (float) MAX_SPELL_TICK, this.getRenderColor(), world, caster);
-		return false;
+		return data.earth.getCount() / (float) MAX_SPELL_TICK;
 	}
 
 	@Override

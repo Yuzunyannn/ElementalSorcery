@@ -6,6 +6,10 @@
         "element_adv/resonant_incubator",
         "element_adv/analysis_altar"
     ],
+    "linked": [
+        "elementalsorcery:supreme_table",
+        "elementalsorcery:supreme_table_component"
+    ],
     "type": "mult",
     "lock": 0,
     "pages": [

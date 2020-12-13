@@ -3,6 +3,7 @@
     "need": [
         "md/md"
     ],
+    "linked": "elementalsorcery:md_infusion",
     "type": "mult",
     "lock": 0,
     "pages": [

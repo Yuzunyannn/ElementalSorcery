@@ -70,10 +70,14 @@ public class ElfProfessionScholar extends ElfProfessionUndetermined {
 		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.MANUAL));
 		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
 		if (elf.world.isRemote) return;
-		// 初始化交易信息
-		NBTTagCompound nbt = elf.getEntityData();
 		// 如果存在标签，则表示是回复时初始化的，直接走人
+		NBTTagCompound nbt = elf.getEntityData();
 		if (nbt.hasKey(TradeCount.Bind.TAG)) return;
+		// 初始化交易信息
+		nbt.setTag(TradeCount.Bind.TAG, randomSale(elf).serializeNBT());
+	}
+
+	protected TradeCount randomSale(EntityElfBase elf) {
 		TradeCount trade = new TradeCount();
 		TradeList list = trade.getTradeList();
 		list.add(new ItemStack(ESInit.ITEMS.PARCHMENT), 1, true);
@@ -103,8 +107,7 @@ public class ElfProfessionScholar extends ElfProfessionUndetermined {
 			trade.setStock(list.size() - 1, RandomHelper.rand.nextInt(16) + 8);
 		}
 		if (RandomHelper.rand.nextInt(4) == 0) list.add(new ItemStack(ESInit.ITEMS.RITE_MANUAL), 120, false);
-
-		nbt.setTag(TradeCount.Bind.TAG, trade.serializeNBT());
+		return trade;
 	}
 
 	@Override

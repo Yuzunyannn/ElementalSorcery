@@ -1,5 +1,10 @@
 {
     "lev": 2,
+    "need": [
+        "more/astone",
+        "more/magic_crystal"
+    ],
+    "linked": "elementalsorcery:magic_platform",
     "type": "craft",
     "name": "magicPl",
     "item": [

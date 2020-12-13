@@ -28,6 +28,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.ESCreativeTabs;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
@@ -92,39 +93,43 @@ public class BlockRiteTable extends BlockContainerNormal {
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack stack = playerIn.getHeldItem(hand);
 		TileEntity tile = worldIn.getTileEntity(pos);
-		if (tile instanceof TileRiteTable) {
-			TileRiteTable trt = (TileRiteTable) tile;
-			// 全部拿出来
-			if (playerIn.isSneaking()) {
-				boolean hasChange = false;
-				ItemStackHandler inv = trt.getInventory();
-				for (int i = 0; i < inv.getSlots(); i++) {
-					stack = inv.getStackInSlot(i);
-					if (stack.isEmpty()) continue;
-					hasChange = true;
-					if (!playerIn.inventory.addItemStackToInventory(stack)) Block.spawnAsEntity(worldIn, pos, stack);
-				}
-				if (!hasChange) return false;
-				trt.updateToClient();
-				return true;
+		if (!(tile instanceof TileRiteTable)) return false;
+		TileRiteTable trt = (TileRiteTable) tile;
+		// 全部拿出来
+		if (playerIn.isSneaking()) {
+			boolean hasChange = false;
+			ItemStackHandler inv = trt.getInventory();
+			for (int i = 0; i < inv.getSlots(); i++) {
+				stack = inv.getStackInSlot(i);
+				if (stack.isEmpty()) continue;
+				hasChange = true;
+				if (!playerIn.inventory.addItemStackToInventory(stack)) Block.spawnAsEntity(worldIn, pos, stack);
 			}
-			// 取出
-			if (stack.isEmpty()) {
-				stack = trt.extract();
-				if (stack.isEmpty()) return false;
-				playerIn.setHeldItem(hand, stack);
-				return true;
-			}
-			if (stack.getItem() == Items.WOODEN_SWORD) {
-				if (stack.getItemDamage() > 0 && !playerIn.isCreative()) return false;
-				if (trt.rite(playerIn)) {
-					if (!playerIn.isCreative()) stack.setItemDamage(stack.getMaxDamage() / 2);
-					playerIn.setHeldItem(hand, stack);
-				} else return false;
-			} else playerIn.setHeldItem(hand, trt.insert(stack));
+			if (!hasChange) return false;
+			trt.updateToClient();
 			return true;
 		}
-		return false;
+		// 取出
+		if (stack.isEmpty()) {
+			stack = trt.extract();
+			if (stack.isEmpty()) return false;
+			playerIn.setHeldItem(hand, stack);
+			return true;
+		}
+		if (stack.getItem() == Items.WOODEN_SWORD) {
+			if (stack.getItemDamage() > 0 && !playerIn.isCreative()) return false;
+			if (trt.rite(playerIn, stack)) {
+				if (!playerIn.isCreative()) stack.setItemDamage(stack.getMaxDamage() / 2);
+				playerIn.setHeldItem(hand, stack);
+			} else return false;
+		} else if (stack.getItem() == ESInit.ITEMS.SOUL_WOOD_SWORD) {
+			if (trt.rite(playerIn, stack)) {
+				if (!playerIn.isCreative()) stack.damageItem(1, playerIn);
+				playerIn.setHeldItem(hand, stack);
+				return true;
+			} else return false;
+		} else playerIn.setHeldItem(hand, trt.insert(stack));
+		return true;
 	}
 
 	@Override

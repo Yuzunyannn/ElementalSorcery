@@ -1,5 +1,8 @@
 {
     "lev": 3,
+    "need": [
+        "md/magic_crystal"
+    ],
     "linked": "elementalsorcery:magic_paper",
     "type": "craft",
     "name": "magicPaper",

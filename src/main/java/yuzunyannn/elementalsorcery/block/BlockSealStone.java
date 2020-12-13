@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -30,7 +32,7 @@ public class BlockSealStone extends Block {
 		setResistance(10.0F);
 	}
 
-	public ItemStack getAncientPaper(World worldIn, EntityPlayer player, int fortune) {
+	public ItemStack getAncientPaper(World worldIn, @Nullable EntityPlayer player, int fortune) {
 		Random rand = worldIn.rand;
 		ItemStack stack = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, ItemAncientPaper.EnumType.NORMAL.getMetadata());
 
@@ -38,6 +40,7 @@ public class BlockSealStone extends Block {
 
 		boolean isMantra = false;
 		for (int i = 0; i < fortune + 1; i++) isMantra = isMantra || rand.nextFloat() <= 0.02f;
+		isMantra = isMantra && player != null;
 
 		float at = rand.nextFloat();
 		float length = rand.nextFloat() * 0.5f + 0.05f + Math.min(0.2f, fortune / 50.0f);
@@ -59,7 +62,6 @@ public class BlockSealStone extends Block {
 		if (isMantra) {
 			RandomHelper.WeightRandom<Mantra> wMantras = new RandomHelper.WeightRandom();
 			for (Entry<ResourceLocation, Mantra> entry : Mantra.REGISTRY.getEntries()) {
-				ResourceLocation id = entry.getKey();
 				Mantra mantra = entry.getValue();
 				float rarity = mantra.getRarity(worldIn, player.getPosition());
 				rarity = rarity + (100 - rarity) * Math.min(0.5f, fortune / 25.0f);// 所有都向100靠拢
@@ -77,9 +79,12 @@ public class BlockSealStone extends Block {
 	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
 		if (worldIn.isRemote) return;
 		EntityPlayer player = harvesters.get();
-		if (player == null) return;
+
 		Random rand = worldIn.rand;
 		int tryTime = rand.nextInt(fortune + 2) + 1;
+
+		if (player != null) {}
+
 		for (int i = 0; i < tryTime; i++) {
 			if (rand.nextFloat() > chance) continue;
 			chance = chance * 0.75f;

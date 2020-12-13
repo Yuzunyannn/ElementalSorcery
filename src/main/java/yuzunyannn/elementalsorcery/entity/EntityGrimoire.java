@@ -32,6 +32,7 @@ import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
+import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.network.MessageEntitySync;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
@@ -377,6 +378,12 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	@Override
 	public Entity iWantDirectCaster() {
 		return this;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean hasEffectFlags(MantraEffectFlags flag) {
+		return true;
 	}
 
 }

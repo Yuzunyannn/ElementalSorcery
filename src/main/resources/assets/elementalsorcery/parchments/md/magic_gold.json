@@ -3,6 +3,14 @@
     "need": [
         "md/infusion"
     ],
+    "linked": [
+        "elementalsorcery:magic_gold",
+        "elementalsorcery:magic_gold_axe",
+        "elementalsorcery:magic_gold_hoe",
+        "elementalsorcery:magic_gold_pickaxe",
+        "elementalsorcery:magic_gold_spade",
+        "elementalsorcery:magic_gold_sword"
+    ],
     "type": "mult",
     "lock": 0,
     "pages": [
@@ -10,7 +18,7 @@
             "type": "infusion",
             "name": "magicGold",
             "item": [
-                "minecraft:iron_ingot",
+                "minecraft:gold_ingot",
                 "elementalsorcery:magic_gold"
             ]
         },

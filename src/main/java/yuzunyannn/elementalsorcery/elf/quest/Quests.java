@@ -1,97 +1,21 @@
 package yuzunyannn.elementalsorcery.elf.quest;
 
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
-import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
-import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.util.item.ItemRec;
 
 public class Quests {
-	/** 注销某个生物的全部过期任务 */
-	public static void unsignOverdueQuest(EntityLivingBase entity, boolean isReputationDecline) {
-		IAdventurer adventurer = entity.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
-		if (adventurer == null) return;
-		Iterator<Quest> iter = adventurer.iterator();
-		long now = entity.world.getWorldTime();
-		while (iter.hasNext()) {
-			Quest q = iter.next();
-			if (q.isOverdue(now)) {
-				if (isReputationDecline) {
-					// 这里还需要进行其他数值的操作——+——+——+——+——+——+——
-				}
-				iter.remove();
-			}
-		}
-	}
-
-	/** 登记一个任务，给某个生物 */
-	public static boolean signQuest(EntityLivingBase player, ItemStack questStack) {
-		if (!ItemQuest.isQuest(questStack)) return false;
-		Quest quest = ItemQuest.getQuest(questStack);
-		if (!quest.sign(player)) return false;
-		questStack.setTagCompound(quest.serializeNBT());
-		return true;
-	}
-
-	/*** 完成某个任务 */
-	public static boolean finishQuest(EntityLivingBase player, Quest quest, ItemStack questStack) {
-		if (quest.getStatus() != QuestStatus.UNDERWAY) return false;
-		boolean noCheck = false;
-		if (player instanceof EntityPlayer) noCheck = ((EntityPlayer) player).isCreative();
-		if (!noCheck) {
-			int i = quest.findSignQuest(player);
-			if (i == -1) return false;
-			IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
-			if (adventurer == null) return false;
-			if (quest.getType().check(adventurer.getQuest(i), player) != null) return false;
-		}
-		quest.unsign(player);
-		quest.getType().reward(quest, player);
-		quest.getType().finish(quest, player);
-		quest.unsign(player);
-		quest.setStatus(QuestStatus.FINISH);
-		if (ItemQuest.isQuest(questStack)) questStack.setTagCompound(quest.serializeNBT());
-		if (player instanceof EntityPlayerMP)
-			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "quest:" + quest.getType().getName());
-		return true;
-	}
-
 	public static final Random rand = new Random();
-
-	public static Quest createRepair(int coin, List<ItemRec> itemstack) {
-		QuestType type = new QuestType();
-		type.setName("collect");
-		type.addCondition(QuestCondition.REGISTRY.newInstance(QuestConditionNeedItem.class).needItem(itemstack));
-		QuestDescribe describe = type.getDescribe();
-		describe.setTitle("quest.request.collect");
-		describe.addDescribe("quest.broken.house");
-		describe.addDescribe("quest.end.polite." + (rand.nextInt(3) + 1));
-		type.addReward(QuestReward.REGISTRY.newInstance(QuestRewardCoin.class).coin(coin));
-		if (rand.nextInt(3) == 0) type.addReward(QuestRewardTopic.create("Engine", 1));
-		return new Quest(type);
-	}
-
-	public static Quest createPostOfficeMaterials(int coin, List<ItemRec> itemstack) {
-		QuestType type = new QuestType();
-		type.setName("collect");
-		type.addCondition(QuestCondition.REGISTRY.newInstance(QuestConditionNeedItem.class).needItem(itemstack));
-		QuestDescribe describe = type.getDescribe();
-		describe.setTitle("quest.request.collect");
-		describe.addDescribe("quest.post.office.want");
-		describe.addDescribe("quest.end.polite." + (rand.nextInt(2) + 2));
-		type.addReward(QuestReward.REGISTRY.newInstance(QuestRewardCoin.class).coin(coin));
-		return new Quest(type);
-	}
 
 	public static Quest createBuildTask(BlockPos corePos, ElfEdificeFloor floorType, int weight,
 			List<ItemRec> itemstack) {
@@ -119,6 +43,40 @@ public class Quests {
 		ItemStack stack = new ItemStack(ESInit.ITEMS.ELF_STAR);
 		type.addReward(QuestReward.REGISTRY.newInstance(QuestRewardItem.class).item(stack));
 		return new Quest(type);
+	}
+
+	// =======收集物品类=========
+	public static Quest createCollectQuest(String value, int politeIndex, int coin, List<ItemRec> itemstack) {
+		QuestType type = new QuestType();
+		type.setName("collect");
+		type.addCondition(QuestCondition.REGISTRY.newInstance(QuestConditionNeedItem.class).needItem(itemstack));
+		QuestDescribe describe = type.getDescribe();
+		describe.setTitle("quest.request.collect");
+		describe.addDescribe(value);
+		describe.addDescribe("quest.end.polite." + politeIndex);
+		type.addReward(QuestReward.REGISTRY.newInstance(QuestRewardCoin.class).coin(coin));
+		return new Quest(type);
+	}
+
+	public static Quest createRepair(int coin, List<ItemRec> itemstack) {
+		Quest quest = createCollectQuest("quest.broken.house", rand.nextInt(3) + 1, coin, itemstack);
+		if (rand.nextInt(3) == 0) quest.getType().addReward(QuestRewardTopic.create("Engine", 1));
+		return quest;
+	}
+
+	public static Quest createPostOfficeMaterials(int coin, List<ItemRec> itemstack) {
+		return createCollectQuest("quest.post.office.want", rand.nextInt(2) + 2, coin, itemstack);
+	}
+
+	public static Quest createLibraryMaterials(int coin, List<ItemRec> itemstack) {
+		return createCollectQuest("quest.library.want", rand.nextInt(2) + 2, coin, itemstack);
+	}
+
+	public static Quest createEnchantedBook(int coin, Enchantment enchantment, int level) {
+		List<ItemRec> itemstack = new ArrayList<ItemRec>(1);
+		EnchantmentData eData = new EnchantmentData(enchantment, level);
+		itemstack.add(new ItemRec(ItemEnchantedBook.getEnchantedItemStack(eData)));
+		return createCollectQuest("quest.library.enchant", rand.nextInt(2) + 2, coin, itemstack);
 	}
 
 }

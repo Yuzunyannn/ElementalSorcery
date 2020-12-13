@@ -68,6 +68,9 @@ public class ESObjects {
 		public Item ADDRESS_PLATE;
 		public Item ELF_STAR;
 		public Item JUMP_GEM;
+		public Item UNSCRAMBLE_NOTE;
+		public Item SOUL_FRAGMENT;
+		public Item SOUL_WOOD_SWORD;
 	}
 
 	static public class Blocks {
@@ -94,8 +97,6 @@ public class ESObjects {
 		public Block ELEMENT_CRAFTING_TABLE;
 		public Block DECONSTRUCT_ALTAR_TABLE;
 		public Block DECONSTRUCT_ALTAR_TABLE_ADV;
-		@Deprecated
-		public Block STELA;
 		public Block RITE_TABLE;
 		public Block LANTERN;
 		public Block BUILDING_ALTAR;

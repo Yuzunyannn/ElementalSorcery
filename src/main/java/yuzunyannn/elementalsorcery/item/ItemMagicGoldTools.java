@@ -90,6 +90,7 @@ public class ItemMagicGoldTools {
 			switch (axis) {
 			case X:
 				for (int y = -size; y <= size; y++) for (int z = -size; z <= size; z++) {
+					if (y == 0 && z == 0) continue;
 					BlockPos at = pos.add(0, y, z);
 					if (worldIn.getBlockState(at) == state) {
 						worldIn.destroyBlock(at, true);
@@ -99,6 +100,7 @@ public class ItemMagicGoldTools {
 				break;
 			case Y:
 				for (int x = -size; x <= size; x++) for (int z = -size; z <= size; z++) {
+					if (x == 0 && z == 0) continue;
 					BlockPos at = pos.add(x, 0, z);
 					if (worldIn.getBlockState(at) == state) {
 						worldIn.destroyBlock(at, true);
@@ -108,6 +110,7 @@ public class ItemMagicGoldTools {
 				break;
 			case Z:
 				for (int x = -size; x <= size; x++) for (int y = -size; y <= size; y++) {
+					if (y == 0 && x == 0) continue;
 					BlockPos at = pos.add(x, y, 0);
 					if (worldIn.getBlockState(at) == state) {
 						worldIn.destroyBlock(at, true);

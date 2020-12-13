@@ -9,6 +9,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 
@@ -56,5 +58,9 @@ public interface ICaster {
 
 	/** 获取直接施法者 ，直接释放者通常是马甲实体 */
 	public Entity iWantDirectCaster();
+
+	/** 是否有特效标记，用于动画检测 */
+	@SideOnly(Side.CLIENT)
+	public boolean hasEffectFlags(MantraEffectFlags flag);
 
 }

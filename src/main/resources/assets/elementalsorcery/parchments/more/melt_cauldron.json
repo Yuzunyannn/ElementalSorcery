@@ -1,6 +1,7 @@
 {
     "type": "craft",
     "name": "meltCauldron",
+    "linked": "elementalsorcery:melt_cauldron",
     "item": "elementalsorcery:melt_cauldron",
     "lev": 1
 }

@@ -4,6 +4,7 @@
         "element/spellbook",
         "element/magic_desk"
     ],
+    "linked": "elementalsorcery:spellbook_launch",
     "type": "spellaltar",
     "name": "spLaunch",
     "item": [

@@ -3,6 +3,7 @@
     "need": [
         "element/element_crystal"
     ],
+    "linked": "elementalsorcery:elemental_cube",
     "type": "craft",
     "name": "elementCube",
     "item": "elementalsorcery:elemental_cube"

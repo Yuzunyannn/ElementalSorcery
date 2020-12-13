@@ -135,7 +135,7 @@ public class EFloorPostOffice extends ElfEdificeFloor {
 		// 刷点任务
 		World world = builder.getWorld();
 		EntityBulletin bulletin = core.getBulletin();
-		if (bulletin == null || bulletin.getQuestCount() > 16) return;
+		if (bulletin == null || bulletin.getQuestCount() > core.getMaxQuestCount()) return;
 		Random rand = world.rand;
 		List<ItemRec> need = new LinkedList<ItemRec>();
 		need.add(new ItemRec(Items.PAPER, rand.nextInt(128) + 32));

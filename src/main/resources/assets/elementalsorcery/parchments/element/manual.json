@@ -3,6 +3,7 @@
     "need": [
         "element/element_workbench"
     ],
+    "linked": "elementalsorcery:manual",
     "type": "craft",
     "name": "manual",
     "item": "elementalsorcery:manual"

@@ -1,6 +1,7 @@
 {
     "type": "craft",
     "name": "hearth",
+    "linked": "elementalsorcery:hearth",
     "item": [
         {
             "id": "elementalsorcery:hearth",

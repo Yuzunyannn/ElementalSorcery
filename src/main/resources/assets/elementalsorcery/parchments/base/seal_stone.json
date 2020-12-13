@@ -2,6 +2,7 @@
     "lev": 0,
     "type": "normal",
     "name": "sealStone",
+    "linked": "elementalsorcery:seal_stone",
     "icon": "elementalsorcery:seal_stone",
     "background": "inherit"
 }

@@ -13,7 +13,6 @@ import net.minecraft.util.math.BlockPos;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class ItemMagicalCrystal extends ItemCrystal {
@@ -25,7 +24,7 @@ public class ItemMagicalCrystal extends ItemCrystal {
 	@Override
 	public boolean onEntityItemUpdate(EntityItem entityItem) {
 		if (entityItem.world.isRemote) return false;
-		if (RandomHelper.rand.nextInt(40) == 0) tryCraft(entityItem, true);
+		if (entityItem.ticksExisted % 80 == 0) tryCraft(entityItem, true);
 		return false;
 	}
 

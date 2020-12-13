@@ -4,6 +4,7 @@
         "md/md",
         "more/astone"
     ],
+    "linked": "elementalsorcery:md_rubble_repair",
     "type": "craft",
     "name": "rubbleRepair",
     "item": "elementalsorcery:md_rubble_repair"

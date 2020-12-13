@@ -41,7 +41,9 @@ import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
+import yuzunyannn.elementalsorcery.summon.Summon;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable.Recipe.Happiness;
+import yuzunyannn.elementalsorcery.util.MultiRets;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -106,40 +108,51 @@ public class TileRiteTable extends TileEntityNetwork {
 		return ItemStack.EMPTY;
 	}
 
-	public boolean rite(EntityLivingBase entity) {
+	/** 仪式 */
+	public boolean rite(EntityLivingBase entity, ItemStack tool) {
 		// 检测周边环境
 		if (this.checkAround() == false) return false;
 		if (world.isRemote) return true;
-		// 寻求仪式判定
-		ItemStack seekRite = ItemStack.EMPTY;
+		// 不同仪式的判定
+		ItemStack specialItem = ItemStack.EMPTY;
+		MultiRets rets = null;
+
 		TileRiteTable.Recipe recipe = null;
-		for (int i = 0; i < inventory.getSlots(); i++) {
-			ItemStack stack = inventory.getStackInSlot(i);
-			if (stack.isEmpty()) continue;
-			if (seekRite.isEmpty()) {
-				if (stack.getItem() == ESInit.ITEMS.PARCHMENT) {
-					seekRite = stack;
-					ItemStack s = RecipeRiteWrite.getInnerStack(seekRite);
-					recipe = findRecipe(s);
-					if (recipe != null) break;
-				}
-			}
+		rets = this.findSeekRiteRecipe();
+		if (!rets.isEmpty()) {
+			specialItem = rets.get(0, ItemStack.class);
+			recipe = rets.get(1, TileRiteTable.Recipe.class);
 		}
+
+		Summon summon = null;
+		rets = this.findSummonRiteRecipe();
+		if (!rets.isEmpty()) {
+			specialItem = rets.get(0, ItemStack.class);
+			summon = rets.get(1, Summon.class);
+		}
+
 		// 是寻求仪式
 		if (recipe != null) {
 			if (this.level < recipe.needLevel()) {
 				this.punish(entity);
-				Block.spawnAsEntity(world, pos.up(), seekRite);
+				Block.spawnAsEntity(world, pos.up(), specialItem);
 				return true;
 			}
-		} else seekRite = ItemStack.EMPTY;
+		}
+		// 是召唤仪式
+		if (summon != null) {
+			this.punish(entity);
+			Block.spawnAsEntity(world, pos.up(), specialItem);
+			return true;
+		}
+
 		// 获取总能量
 		List<String> pool = new LinkedList<String>();
 		int power = 0;
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ItemStack stack = inventory.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
-			if (recipe != null && stack == seekRite) continue;
+			if (!specialItem.isEmpty() && stack == specialItem) continue;
 			int x = sacrifice.getPower(stack);
 			if (x == 0) continue;
 			int level = sacrifice.getLevel(stack);
@@ -156,7 +169,7 @@ public class TileRiteTable extends TileEntityNetwork {
 		// 随机可能性
 		if (power < RandomHelper.rand.nextInt(rnum)) {
 			this.punish(entity);
-			if (!seekRite.isEmpty()) Block.spawnAsEntity(world, pos.up(), seekRite);
+			if (!specialItem.isEmpty()) Block.spawnAsEntity(world, pos.up(), specialItem);
 			return true;
 		}
 		// 是寻求仪式
@@ -165,7 +178,7 @@ public class TileRiteTable extends TileEntityNetwork {
 			output.setCount(recipe.getHappyCount(power, entity));
 			ItemHelper.clear(inventory);
 			Block.spawnAsEntity(world, pos.up(), output);
-			Block.spawnAsEntity(world, pos.up(), seekRite);
+			Block.spawnAsEntity(world, pos.up(), specialItem);
 			EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + 0.5f, pos.getY() + 1,
 					pos.getZ() + 0.5f, true);
 			world.addWeatherEffect(lightning);
@@ -173,7 +186,8 @@ public class TileRiteTable extends TileEntityNetwork {
 			this.markDirty();
 			return true;
 		}
-		// 进行随机获取
+
+		// 默认仪式，进行随机获取
 		List<String> ids = levelPages[TileRiteTable.pLevel(this.level)];
 		if (ids != null) pool.addAll(ids);
 		int size = pool.size();
@@ -193,6 +207,29 @@ public class TileRiteTable extends TileEntityNetwork {
 		this.markDirty();
 		this.updateToClient();
 		return true;
+	}
+
+	/** 寻找是否为summon仪式 */
+	protected MultiRets findSummonRiteRecipe() {
+		return MultiRets.EMPTY;
+	}
+
+	/** 寻找是否为seek仪式 */
+	protected MultiRets findSeekRiteRecipe() {
+		ItemStack seekRite = ItemStack.EMPTY;
+		for (int i = 0; i < inventory.getSlots(); i++) {
+			ItemStack stack = inventory.getStackInSlot(i);
+			if (stack.isEmpty()) continue;
+			if (seekRite.isEmpty()) {
+				if (stack.getItem() == ESInit.ITEMS.PARCHMENT) {
+					seekRite = stack;
+					ItemStack s = RecipeRiteWrite.getInnerStack(seekRite);
+					TileRiteTable.Recipe recipe = findRecipe(s);
+					if (recipe != null) return MultiRets.ret(seekRite, recipe);
+				}
+			}
+		}
+		return MultiRets.EMPTY;
 	}
 
 	protected void punish(EntityLivingBase entity) {
@@ -438,6 +475,7 @@ public class TileRiteTable extends TileEntityNetwork {
 		addSacrifice(Blocks.LOG2, 10, 0);
 		addSacrifice(Items.COAL, 15, 0);
 		addSacrifice(Blocks.COAL_BLOCK, 25, 0);
+		addSacrifice(ITEMS.GRIMOIRE, Integer.MAX_VALUE, 0);
 
 		addSacrifice("oreIron", 11, 1);
 		addSacrifice(BLOCKS.KYANITE_BLOCK, 18, 1, "kyanite");
@@ -450,6 +488,7 @@ public class TileRiteTable extends TileEntityNetwork {
 		addSacrifice(BLOCKS.STAR_SAND, 15, 1, "star_sand");
 		addSacrifice(BLOCKS.STAR_STONE, 9, 1, "star_sand");
 
+		addSacrifice("oreGold", 12, 2);
 		addSacrifice(Items.DIAMOND, 95, 2);
 		addSacrifice(Items.DIAMOND_AXE, 130, 2);
 		addSacrifice(Items.DIAMOND_HOE, 130, 2);
@@ -457,6 +496,8 @@ public class TileRiteTable extends TileEntityNetwork {
 		addSacrifice(Items.DIAMOND_SHOVEL, 110, 2);
 		addSacrifice(Items.DIAMOND_SWORD, 120, 2);
 		addSacrifice(Blocks.DIAMOND_BLOCK, 500, 2);
+		addSacrifice(Items.EMERALD, 25, 2);
+		addSacrifice(Blocks.EMERALD_BLOCK, 200, 2);
 
 		addSacrifice(ITEMS.MAGIC_CRYSTAL, 10, 3, "magic_crystal");
 		addSacrifice(ITEMS.ELEMENT_CRYSTAL, 25, 3, "element_crystal");
@@ -491,6 +532,7 @@ public class TileRiteTable extends TileEntityNetwork {
 	public static class Recipe {
 
 		public interface Happiness {
+			/** 生产出来的个数 */
 			int getHappyCount(int power, EntityLivingBase entity);
 		}
 
@@ -526,7 +568,7 @@ public class TileRiteTable extends TileEntityNetwork {
 	public static TileRiteTable.Recipe findRecipe(ItemStack parchmentInput) {
 		if (parchmentInput.isEmpty()) return null;
 		for (TileRiteTable.Recipe r : TileRiteTable.getRecipes())
-			if (ItemHelper.areItemsEqual(parchmentInput, r.parchmentInput())) return r;
+			if (ItemStack.areItemsEqual(parchmentInput, r.parchmentInput())) return r;
 		return null;
 	}
 
@@ -557,5 +599,6 @@ public class TileRiteTable extends TileEntityNetwork {
 			return 1;
 		});
 		addRecipe(new ItemStack(ESInit.ITEMS.ELF_COIN), new ItemStack(ESInit.ITEMS.ELF_PURSE), 120, 0);
+		addRecipe(new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, 1), new ItemStack(ESInit.ITEMS.UNSCRAMBLE_NOTE), 150, 2);
 	}
 }

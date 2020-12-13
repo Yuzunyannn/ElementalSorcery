@@ -88,9 +88,7 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 		});
 		confirm.addString("say.no", new TalkActionEnd());
 		// 没钱
-		TalkSceneSay nomoney = new TalkSceneSay("say.nomoney").setLabel("nomoney");
-		chapter.addScene(nomoney);
-		nomoney.addAction(new TalkActionEnd());
+		chapter.addScene(new TalkSceneSay("say.nomoney").setLabel("nomoney").setEnd());
 		// 支付
 		chapter.addScene(new TalkSceneSay("say.as.soon.to.sned").setLabel("finish"));
 		return chapter;
@@ -200,17 +198,14 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TileElfTreeCore core = elf.getEdificeCore();
-		TalkChapter chapter = new TalkChapter();
-		if (core == null) {
-			chapter.addScene(new TalkSceneSay("say.edifice.broken"));
-			return chapter;
-		}
+		if (core == null) return new TalkChapter().addScene(new TalkSceneSay("say.edifice.broken"));
 		// 切换过来的时候
 		if (shiftData != null) {
 			boolean isApply = shiftData.getBoolean("apply");
 			if (isApply) return getChapterForApplyAddressPlate(elf, player, shiftData);
 			return getChapterForSendParcel(elf, player, shiftData);
 		}
+		TalkChapter chapter = new TalkChapter();
 		ItemStack heldItem = player.getHeldItem(EnumHand.MAIN_HAND);
 		// 询问帮助
 		chapter.addScene(new TalkSceneSay("say.can.help"));

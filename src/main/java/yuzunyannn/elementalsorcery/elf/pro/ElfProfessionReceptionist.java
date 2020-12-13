@@ -12,7 +12,6 @@ import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.QuestStatus;
-import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.talk.ITalkAction;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionEnd;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionGoTo;
@@ -73,14 +72,14 @@ public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 		}
 		// 有超时的任务，删除，并提示
 		if (hasOverdue) {
-			Quests.unsignOverdueQuest(player, true);
+			Quest.unsignOverdueQuest(player, true);
 			chapter.addScene(new TalkSceneSay("say.reputation.decline"));
 			return chapter;
 		}
 		if (quest != null) {
 			// 委托正在进行中
 			if (quest.getStatus() == QuestStatus.UNDERWAY && quest.isAdventurer(player)) {
-				if (Quests.finishQuest(player, quest, stack)) {
+				if (Quest.finishQuest(player, quest, stack)) {
 					chapter.addScene(new TalkSceneSay("say.quest.finish"));
 					return chapter;
 				} else {
@@ -155,7 +154,7 @@ public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 		public Object invoke(EntityPlayer player, EntityElfBase elf, TalkChapter chapter, Iter iter, TalkScene scene,
 				int talkAt) {
 			ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
-			if (Quests.signQuest(player, stack)) return TalkActionGoTo.goTo("takeQuestFin", chapter, scene, iter);
+			if (Quest.signQuest(player, stack)) return TalkActionGoTo.goTo("takeQuestFin", chapter, scene, iter);
 			return TalkActionGoTo.goTo("failTakeQuest", chapter, scene, iter);
 		}
 	}

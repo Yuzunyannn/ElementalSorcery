@@ -5,15 +5,21 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemEnchantedBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.item.ItemRec;
 
 public class QuestConditionNeedItem extends QuestCondition {
@@ -40,14 +46,51 @@ public class QuestConditionNeedItem extends QuestCondition {
 		needs = NBTHelper.getNBTSerializableList(nbt, "need", ItemRec.class, NBTTagCompound.class);
 	}
 
+	static public boolean compare(ItemStack a, ItemStack b) {
+		Item item = a.getItem();
+		if (item == Items.ENCHANTED_BOOK) out: {
+			if (!a.isItemEqual(b)) return false;
+			NBTTagList list = ItemEnchantedBook.getEnchantments(a);
+			if (list.hasNoTags()) break out;
+			NBTTagCompound data = list.getCompoundTagAt(0);
+			if (!data.hasKey("id", NBTTag.TAG_NUMBER)) break out;
+			int id = data.getShort("id");
+			int level = data.getShort("lvl");
+
+			list = ItemEnchantedBook.getEnchantments(b);
+			if (list.hasNoTags()) return false;
+			for (int i = 0; i < list.tagCount(); i++) {
+				data = list.getCompoundTagAt(i);
+				if (data.getShort("id") == id && data.getShort("lvl") >= level) return true;
+			}
+			return false;
+		}
+		return a.isItemEqual(b);
+	}
+
+	@SideOnly(Side.CLIENT)
+	static public String getStackShow(ItemStack a) {
+		Item item = a.getItem();
+		if (item == Items.ENCHANTED_BOOK) out: {
+			NBTTagList list = ItemEnchantedBook.getEnchantments(a);
+			if (list.hasNoTags()) break out;
+			NBTTagCompound data = list.getCompoundTagAt(0);
+			Enchantment enchantment = Enchantment.getEnchantmentByID(data.getShort("id"));
+			if (enchantment == null) break out;
+			return I18n.format(a.getUnlocalizedName() + ".name") + "(" + I18n.format(enchantment.getName())
+					+ I18n.format("enchantment.level." + data.getShort("lvl")) + ")";
+		}
+		return I18n.format(a.getUnlocalizedName() + ".name");
+	}
+
 	protected List<ItemRec> checkResult = new ArrayList<>();
 
 	@Override
 	public boolean check(Quest task, EntityPlayer player) {
-		boolean isRemove = player.world.isRemote;
+		boolean isRemote = player.world.isRemote;
 		boolean allOk = true;
 		// 客户端要记录还缺什么东西
-		if (isRemove) checkResult.clear();
+		if (isRemote) checkResult.clear();
 		InventoryPlayer inventory = player.inventory;
 		for (ItemRec need : needs) {
 			// 检查物品
@@ -56,11 +99,11 @@ public class QuestConditionNeedItem extends QuestCondition {
 			for (int i = 0; i < inventory.getSizeInventory(); i++) {
 				ItemStack origin = inventory.getStackInSlot(i);
 				if (origin.isEmpty()) continue;
-				if (!origin.isItemEqual(needStack)) continue;
+				if (!compare(needStack, origin)) continue;
 				count -= origin.getCount();
 				if (count <= 0) break;
 			}
-			if (isRemove) {
+			if (isRemote) {
 				ItemRec rec = new ItemRec(needStack.copy());
 				count = Math.max(count, 0);
 				rec.getItemStack().setCount(needStack.getCount() - count);
@@ -83,7 +126,7 @@ public class QuestConditionNeedItem extends QuestCondition {
 			for (int i = 0; i < inventory.getSizeInventory(); i++) {
 				ItemStack origin = inventory.getStackInSlot(i);
 				if (origin.isEmpty()) continue;
-				if (!origin.isItemEqual(needStack)) continue;
+				if (!compare(needStack, origin)) continue;
 				int drop = Math.min(count, origin.getCount());
 				origin.shrink(drop);
 				count -= drop;
@@ -112,7 +155,7 @@ public class QuestConditionNeedItem extends QuestCondition {
 				c += TextFormatting.RESET;
 			}
 			builder.append(I18n.format("quest.unit", c));
-			builder.append(I18n.format(needStack.getUnlocalizedName() + ".name"));
+			builder.append(getStackShow(needStack));
 			if (i < size - 1) builder.append("、");
 		}
 		return builder.toString();

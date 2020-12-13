@@ -188,7 +188,7 @@ public class EFloorWorkshop extends ElfEdificeFloor {
 		EFloorHall.trySpawnElf(builder, ElfProfession.BUILDER, 2);
 		// 刷点任务
 		EntityBulletin bulletin = core.getBulletin();
-		if (bulletin == null || bulletin.getQuestCount() > 16) return;
+		if (bulletin == null || bulletin.getQuestCount() > core.getMaxQuestCount()) return;
 		Random rand = world.rand;
 	}
 }

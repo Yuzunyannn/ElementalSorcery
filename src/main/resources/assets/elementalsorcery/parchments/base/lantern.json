@@ -2,6 +2,7 @@
     "need": [
         "base/rite_craft"
     ],
+    "linked": "elementalsorcery:lantern",
     "type": "rite",
     "name": "lantern",
     "item": [

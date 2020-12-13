@@ -3,6 +3,7 @@
     "need": [
         "md/md"
     ],
+    "linked": "elementalsorcery:md_magiclization",
     "type": "craft",
     "name": "magiclization",
     "item": "elementalsorcery:md_magiclization"

@@ -1,0 +1,10 @@
+{
+	"lev": 5,
+	"need": [
+		"element_adv/supreme_table"
+	],
+	"linked": "elementalsorcery:jump_gem",
+	"type": "research",
+	"name": "jumpGem",
+	"item": "elementalsorcery:jump_gem"
+}

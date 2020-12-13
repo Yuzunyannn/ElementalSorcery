@@ -34,7 +34,7 @@ public class ElfProfessionCrazy extends ElfProfession {
 	}
 
 	@Override
-	public int attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
+	public Float attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
 		if (elf.getRNG().nextInt(5) == 0 && source.getTrueSource() instanceof EntityLivingBase) {
 			final int size = 16;
 			AxisAlignedBB aabb = new AxisAlignedBB(elf.posX - size, elf.posY - size, elf.posZ - size, elf.posX + size,
@@ -43,7 +43,7 @@ public class ElfProfessionCrazy extends ElfProfession {
 			for (EntityElf e : list)
 				if (e.getRevengeTarget() == null) e.setRevengeTarget((EntityLivingBase) source.getTrueSource());
 		}
-		return 0;
+		return amount;
 	}
 
 	@SideOnly(Side.CLIENT)

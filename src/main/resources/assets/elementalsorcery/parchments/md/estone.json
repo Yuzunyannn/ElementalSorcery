@@ -2,6 +2,11 @@
     "lev": 2,
     "type": "craft",
     "name": "estone",
+    "linked": [
+        "elementalsorcery:estone",
+        "elementalsorcery:estone_slab",
+        "elementalsorcery:estone_stairs"
+    ],
     "item": [
         {
             "item": "elementalsorcery:estone",

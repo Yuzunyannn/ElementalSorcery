@@ -3,6 +3,12 @@
     "need": [
         "more/astone"
     ],
+    "linked": [
+        "elementalsorcery:astone",
+        "elementalsorcery:magic_torch",
+        "elementalsorcery:md_magic_gen",
+        "elementalsorcery:md_transfer"
+    ],
     "type": "mult",
     "lock": 0,
     "pages": [

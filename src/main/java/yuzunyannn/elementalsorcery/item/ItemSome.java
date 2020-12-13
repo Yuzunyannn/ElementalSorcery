@@ -19,11 +19,11 @@ public class ItemSome {
 		return new Item().setUnlocalizedName(unloaclizedName);
 	}
 
-	/** 折光宝石*/
+	/** 折光宝石 */
 	static public Item newJumpGem() {
 		return newItem("jumpGem");
 	}
-	
+
 	/** 精灵之星 */
 	static public Item newElfStar() {
 		return new ItemSimpleFoiled().setUnlocalizedName("elfStar");

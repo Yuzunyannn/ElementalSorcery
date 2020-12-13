@@ -43,11 +43,8 @@ public class MantraBlockCrash extends MantraCommon {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		if (super.onSpellingEffect(world, data, caster)) return true;
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		dataEffect.setProgress(Math.min(caster.iWantKnowCastTick() / 20.0f, 1), this.getRenderColor(), world, caster);
-		return false;
+	public float getProgressRate(World world, IMantraData data, ICaster caster) {
+		return Math.min(caster.iWantKnowCastTick() / 20.0f, 1);
 	}
 
 	@Override

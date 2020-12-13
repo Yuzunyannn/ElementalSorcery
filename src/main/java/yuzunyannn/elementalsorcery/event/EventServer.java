@@ -4,12 +4,17 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -18,6 +23,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
+import yuzunyannn.elementalsorcery.enchant.EnchantmentES;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 
 public class EventServer {
@@ -101,6 +107,28 @@ public class EventServer {
 	public static void gameSave(WorldEvent.Save e) {
 		BuildingLib.instance.dealSave();
 		ElfPostOffice.GC(e.getWorld());
+	}
+
+	//任何死亡
+	@SubscribeEvent
+	public static void onLivingDead(LivingDeathEvent event) {
+		onLivingDeadEnchantmentDeal(event);
+	}
+
+	private static void onLivingDeadEnchantmentDeal(LivingDeathEvent event) {
+		DamageSource source = event.getSource();
+		Entity s = source.getImmediateSource();
+		if (!(s instanceof EntityLivingBase)) return;
+		EntityLivingBase living = (EntityLivingBase) s;
+		ItemStack stack = living.getHeldItemMainhand();
+		NBTTagList nbttaglist = stack.getEnchantmentTagList();
+		for (int i = 0; i < nbttaglist.tagCount(); ++i) {
+			int id = nbttaglist.getCompoundTagAt(i).getShort("id");
+			int lvl = nbttaglist.getCompoundTagAt(i).getShort("lvl");
+			Enchantment enchantment = Enchantment.getEnchantmentByID(id);
+			if (enchantment instanceof EnchantmentES)
+				((EnchantmentES) enchantment).onLivingDead(event.getEntityLiving(), source, lvl);
+		}
 	}
 
 }

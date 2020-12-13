@@ -105,12 +105,18 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 
 	@Override
 	protected void actionPerformed(GuiButton button) throws IOException {
-		if (button instanceof SlotButton) this.page.slotAction(button.id, this);
-		else if (button instanceof PageButton) {
-			if (button.id == PREV_BUTTON_ID) this.page.pageAction(false, this);
-			else this.page.pageAction(true, this);
-		} else {
-			this.page.customButtonAction(button, this);
+		try {
+			if (button instanceof SlotButton) this.page.slotAction(button.id, this);
+			else if (button instanceof PageButton) {
+				if (button.id == PREV_BUTTON_ID) this.page.pageAction(false, this);
+				else this.page.pageAction(true, this);
+			} else {
+				this.page.customButtonAction(button, this);
+			}
+		} catch (Exception e) {
+			String id = this.page == null ? "null" : this.page.getId();
+			ElementalSorcery.logger.warn("羊皮卷(" + id + ")gui:actionPerformed异常", e);
+			this.toPage = Pages.getErrorPage();
 		}
 	}
 

@@ -3,6 +3,7 @@
     "need": [
         "more/magic_piece"
     ],
+    "linked": "elementalsorcery:magical_ender_eye",
     "type": "craft",
     "name": "magicalEndereye",
     "item": "elementalsorcery:magical_ender_eye"

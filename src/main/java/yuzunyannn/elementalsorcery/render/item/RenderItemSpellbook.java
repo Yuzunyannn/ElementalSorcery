@@ -41,7 +41,14 @@ public class RenderItemSpellbook implements IRenderItem {
 			info.texture.bind();
 			GlStateManager.scale(0.09F, 0.09F, 0.09F);
 			this.modelBook.render(null, 0, 0, 0, 0, 0.0F, 1.0F);
+		} else if (stack.getItemFrame() != null) {
+			GlStateManager.translate(0.75f, 0.55F, 0.5F);
+			GlStateManager.rotate(180, 0.0F, 1.0F, 0.0F);
+			info.texture.bind();
+			GlStateManager.scale(0.09F, 0.09F, 0.09F);
+			this.modelBook.render(null, 0, 0, 0, 0, 0.0F, 1.0F);
 		} else {
+
 			float dtick = (float) info.tickCount + partialTicks;
 			// 计算展开
 			float spread = info.bookSpreadPrev + (info.bookSpread - info.bookSpreadPrev) * partialTicks;
@@ -63,14 +70,10 @@ public class RenderItemSpellbook implements IRenderItem {
 			float flip_left = info.pageFlipPrev + (info.pageFlip - info.pageFlipPrev) * partialTicks + 0.75F;
 			flip_right = (flip_right - (float) MathHelper.fastFloor((double) flip_right)) * 1.6F - 0.3F;
 			flip_left = (flip_left - (float) MathHelper.fastFloor((double) flip_left)) * 1.6F - 0.3F;
-			if (flip_right < 0.0F)
-				flip_right = 0.0F;
-			if (flip_left < 0.0F)
-				flip_left = 0.0F;
-			if (flip_right > 1.0F)
-				flip_right = 1.0F;
-			if (flip_left > 1.0F)
-				flip_left = 1.0F;
+			if (flip_right < 0.0F) flip_right = 0.0F;
+			if (flip_left < 0.0F) flip_left = 0.0F;
+			if (flip_right > 1.0F) flip_right = 1.0F;
+			if (flip_left > 1.0F) flip_left = 1.0F;
 			// 渲染
 			GlStateManager.scale(0.0625F, 0.0625F, 0.0625F);
 			info.texture.bind();

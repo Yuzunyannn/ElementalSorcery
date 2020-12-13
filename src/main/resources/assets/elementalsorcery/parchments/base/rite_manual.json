@@ -2,6 +2,7 @@
     "need": [
         "base/rite"
     ],
+    "linked": "elementalsorcery:rite_manual",
     "type": "normal",
     "name": "riteManual",
     "item": "elementalsorcery:rite_manual",

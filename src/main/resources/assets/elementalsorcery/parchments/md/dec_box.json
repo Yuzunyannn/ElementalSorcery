@@ -4,6 +4,7 @@
         "md/azure_crystal",
         "md/md"
     ],
+    "linked": "elementalsorcery:md_deconstruct_box",
     "type": "mult",
     "lock": 0,
     "pages": [

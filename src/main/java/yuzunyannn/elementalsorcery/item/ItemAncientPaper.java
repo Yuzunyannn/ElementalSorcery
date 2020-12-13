@@ -103,11 +103,17 @@ public class ItemAncientPaper extends Item {
 			return;
 		}
 		Random rand = world.rand;
+		// 一些前置处理
+		EnumHand offHand = handIn == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
+		int noteEnergy = ItemUnscrambleNote.getNoteEnergy(player.getHeldItem(offHand), player);
 		float energy = Math.max(playerData.getFloat("unsEnergy"), 1);
-		if (rand.nextFloat() < 0.5f / energy) playerData.setLong("unsNext", world.getWorldTime() + 12000);
-		playerData.setFloat("unsEnergy", Math.min(energy + 0.1f, 3));
+		boolean setTired = rand.nextFloat() < 0.5f / energy;
+		if (setTired) playerData.setLong("unsNext", world.getWorldTime() + 12000);
+		playerData.setFloat("unsEnergy", Math.min(energy + 0.1f, 3)); // 增加研究力
+		ItemUnscrambleNote.growNoteEnergy(player.getHeldItem(offHand), player, rand.nextInt(3), false);
+		// 增加进度
 		float originProgress = ap.getProgress();
-		float grow = rand.nextFloat() * 0.09f + 0.01f;
+		float grow = rand.nextFloat() * 0.04f + 0.01f + rand.nextFloat() * noteEnergy / 1000;
 		ap.setProgress(originProgress + grow);
 		if (player instanceof EntityPlayerMP)
 			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "unscramble:once");

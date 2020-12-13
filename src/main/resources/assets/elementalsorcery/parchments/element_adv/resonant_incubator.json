@@ -4,6 +4,7 @@
         "element/element_crafting_table",
         "element_adv/crystal_garden"
     ],
+    "linked": "elementalsorcery:md_resonant_incubator",
     "type": "mult",
     "lock": 0,
     "pages": [

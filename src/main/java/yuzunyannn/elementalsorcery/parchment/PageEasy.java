@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
@@ -46,7 +47,7 @@ public class PageEasy extends Page {
 	public void slotAction(int slot, IPageManager pageManager) {
 		ItemStack stack = pageManager.getSlot(slot);
 		if (stack.isEmpty()) return;
-		Page page = Pages.itemToPage(stack.getItem());
+		Page page = Pages.itemToPage(stack);
 		if (page != null) {
 			pageManager.toPage(page);
 			return;
@@ -58,6 +59,7 @@ public class PageEasy extends Page {
 
 	@Override
 	public void drawValue(IPageManager pageManager) {
+		GlStateManager.disableLighting();
 		int width = this.getWidthSize(pageManager);
 		pageManager.drawTitle(I18n.format(this.getTitle()), 0, 6, width, 4210752);
 

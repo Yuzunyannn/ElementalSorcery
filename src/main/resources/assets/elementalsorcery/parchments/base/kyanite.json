@@ -1,5 +1,9 @@
 {
     "type": "smelting",
     "name": "kyanite",
+    "linked": [
+        "elementalsorcery:kyanite_ore",
+        "elementalsorcery:kyanite"
+    ],
     "item": "elementalsorcery:kyanite_ore"
 }

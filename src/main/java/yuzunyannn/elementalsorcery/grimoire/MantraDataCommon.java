@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.grimoire;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -44,6 +45,7 @@ public class MantraDataCommon implements IMantraData {
 
 	@SideOnly(Side.CLIENT)
 	public void setProgress(float pro, int color, World world, ICaster caster) {
+		if (caster.iWantCaster() != Minecraft.getMinecraft().player) return;
 		if (!this.hasMarkEffect(100)) {
 			effectProgress = new EffectScreenProgress(world);
 			effectProgress.setColor(color);

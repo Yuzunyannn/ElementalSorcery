@@ -149,8 +149,9 @@ public class TalkChapter {
 		return scenes.size();
 	}
 
-	public void addScene(TalkScene scene) {
+	public TalkChapter addScene(TalkScene scene) {
 		scenes.add(scene);
+		return this;
 	}
 
 	public NBTTagCompound serializeNBTToSend() {

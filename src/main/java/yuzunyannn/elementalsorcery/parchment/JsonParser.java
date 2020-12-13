@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.parchment;
 
 import static yuzunyannn.elementalsorcery.ElementalSorcery.logger;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class JsonParser {
 	public static class Packet {
 		Page page;
 		List<String> need;
-		List<String> linked;
+		List<ItemRecord> linked;
 	}
 
 	public static Packet read(JsonObject json) throws JsonParseException {
@@ -48,13 +47,7 @@ public class JsonParser {
 			JsonArray array = json.getArray("need");
 			packet.need = array.asStringArray();
 		}
-		if (json.hasArray("linked")) {
-			JsonArray array = json.getArray("linked");
-			packet.linked = array.asStringArray();
-		} else if (json.hasString("linked")) {
-			packet.linked = new ArrayList<String>();
-			packet.linked.add(json.getString("linked"));
-		}
+		packet.linked = json.needItems("linked");
 		return packet;
 	}
 
@@ -78,6 +71,8 @@ public class JsonParser {
 			return readPageTransform(json, PageTransform.SPELLALTAR);
 		case "rite":
 			return readPageTransform(json, PageTransform.RITE);
+		case "research":
+			return readPageTransform(json, PageTransform.RESEARCH);
 		case "buidling":
 			return readPageBuilding(json);
 		default:
@@ -193,6 +188,9 @@ public class JsonParser {
 			if (s == null) throw new JsonParseException("找不到书桌的合成表！");
 			return new PageTransformSimple(page.getTitle(), page.getContext(), list.get(0), list.get(1),
 					ItemStack.EMPTY, s, PageTransform.SPELLALTAR);
+		case PageTransform.RESEARCH:
+			if (list.size() < 1) throw new JsonParseException("研究合成item字段需要一个输出");
+			return new PageResearchSimple(page.getTitle(), page.getContext(), list.get(0));
 		default:
 			throw Json.exception(ParseExceptionCode.PATTERN_ERROR, "转化id", "未知的id");
 		}

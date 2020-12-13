@@ -11,9 +11,9 @@ import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 public abstract class ElfProfessionUndetermined extends ElfProfession {
 
 	@Override
-	public int attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
-		if (elf.world.isRemote) return 0;
-		if (source.getTrueSource() instanceof EntityLivingBase == false) return 0;
+	public Float attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
+		if (elf.world.isRemote) return amount;
+		if (source.getTrueSource() instanceof EntityLivingBase == false) return amount;
 		if (elf.getRNG().nextInt(100) < 4) elf.setProfession(ElfProfession.MASTER);
 		else if (elf.getRNG().nextInt(3) == 0) elf.setProfession(ElfProfession.BERSERKER);
 		else elf.setProfession(ElfProfession.WARRIOR);
@@ -24,7 +24,7 @@ public abstract class ElfProfessionUndetermined extends ElfProfession {
 		List<EntityElf> list = elf.world.getEntitiesWithinAABB(EntityElf.class, aabb);
 		for (EntityElf e : list)
 			if (e.getRevengeTarget() == null) e.setRevengeTarget((EntityLivingBase) source.getTrueSource());
-		return 0;
+		return amount;
 	}
 
 }

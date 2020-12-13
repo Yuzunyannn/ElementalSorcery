@@ -4,6 +4,7 @@
         "md/estone",
         "element/spell_crystal"
     ],
+    "linked": "elementalsorcery:magic_desk",
     "type": "mult",
     "lock": 0,
     "pages": [

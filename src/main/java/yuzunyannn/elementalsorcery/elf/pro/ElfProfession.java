@@ -47,6 +47,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	static public final ElfProfession POST_RECEPTIONIST = new ElfProfessionPostReceptionist();
 	static public final ElfProfession POSTMAN = new ElfProfessionPostman();
 	static public final ElfProfession RESEARCHER = new ElfProfessionResearcher();
+	static public final ElfProfession SCHOLAR_ADV = new ElfProfessionScholarAdv();
 
 	protected String unlocalizedName;
 
@@ -55,7 +56,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 		return this;
 	}
 
-	public String getUnlocalizedProfessionName() {
+	public String getUnlocalizedName() {
 		return "pro." + unlocalizedName + ".name";
 	}
 
@@ -124,9 +125,9 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	/**
 	 * 受到攻击
 	 * 
-	 * @return 返回0表示默认处理，返回-1表示拒绝，返回1表示接受
+	 * @return 返回null表示拒绝，整数表示伤害量，返回-1表示接受，但是不进行默认处理，返回>=0表示伤害
 	 */
-	public int attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
+	public Float attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
 		Random rand = elf.getRNG();
 		// 群体效应,攻击一个精灵，周围所有精灵生气
 		if (rand.nextInt(4) == 0 && source.getTrueSource() instanceof EntityPlayer) {
@@ -137,7 +138,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 			for (EntityElf e : list)
 				if (e.getRevengeTarget() == null) e.setRevengeTarget((EntityPlayer) source.getTrueSource());
 		}
-		return 0;
+		return amount;
 	}
 
 	/**
@@ -196,6 +197,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 		nbt.setInteger("elfId", elf.getEntityId());
 		nbt.removeTag("shiftData");
 		player.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_ELF_TALK, player.world, 0, 0, 0);
+		elf.getNavigator().clearPath();
 	}
 
 }

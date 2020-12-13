@@ -3,6 +3,7 @@
     "need": [
         "md/magic_crystal"
     ],
+    "linked": "elementalsorcery:azure_crystal",
     "type": "normal",
     "name": "azureCrystal",
     "icon": "elementalsorcery:azure_crystal",

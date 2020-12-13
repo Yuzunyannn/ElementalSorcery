@@ -21,7 +21,7 @@ public class TalkSceneClient extends TalkSceneSay {
 		for (NBTBase base : list) {
 			NBTTagCompound p = (NBTTagCompound) base;
 			String str = dealSpecialString(p.getString("str"));
-			this.addString(I18n.format(str), Talker.values()[p.getByte("talker")]);
+			this.addString(str, Talker.values()[p.getByte("talker")]);
 		}
 	}
 
@@ -35,7 +35,7 @@ public class TalkSceneClient extends TalkSceneSay {
 			for (int i = 0; i < pairs.length; i++) pairs[i] = I18n.format(pairs[i]);
 			return I18n.format(first, (Object[]) pairs);
 		}
-		return str;
+		return I18n.format(str);
 	}
 
 	@Override

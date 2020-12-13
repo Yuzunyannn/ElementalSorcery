@@ -26,6 +26,7 @@ import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
+import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemRec;
@@ -145,22 +146,29 @@ public class EFloorLivingRoom extends ElfEdificeFloor {
 		}
 		// 刷点任务
 		EntityBulletin bulletin = core.getBulletin();
-		if (bulletin == null || bulletin.getQuestCount() > 16) return;
+		if (bulletin == null || bulletin.getQuestCount() > core.getMaxQuestCount()) return;
 		Random rand = world.rand;
 		List<ItemRec> need = new LinkedList<ItemRec>();
 		need.add(new ItemRec(Blocks.PLANKS, rand.nextInt(64) + 16));
 		need.add(new ItemRec(Blocks.CARPET, rand.nextInt(64) + 16));
 		if (rand.nextBoolean()) need.add(new ItemRec(Items.FLOWER_POT, rand.nextInt(10) + 2));
 		if (rand.nextBoolean()) need.add(new ItemRec(Blocks.GLOWSTONE, rand.nextInt(7) + 1));
-		int coin = rand.nextInt(50);
-		for (ItemRec rec : need) {
-			int price = ElfProfessionMerchant.priceIt(rec.getItemStack());
-			if (price <= 0) price = 1;
-			coin += rand.nextInt(price) + 1;
-		}
+		int coin = tryPriceItems(rand, need, rand.nextInt(50));
 		Quest quest = Quests.createRepair(coin, need);
 		quest.getType().addReward(QuestRewardExp.create(rand.nextInt((int) (coin * 1.5)) + 10));
 		quest.setEndTime(world.getWorldTime() + 24000 + rand.nextInt(24000 * 2));
 		bulletin.addQuest(quest);
+	}
+
+	public static int tryPriceItems(Random rand, List<ItemRec> needs, int base) {
+		for (ItemRec rec : needs) {
+			int price = ElfProfessionMerchant.priceIt(rec.getItemStack());
+			if (price <= 0) {
+				if (rec.getItemStack().getItem() instanceof ItemSpellbook) price = 200;
+			}
+			price = Math.max(2, price);
+			base += rand.nextInt(price / 2) + price / 2;
+		}
+		return base;
 	}
 }

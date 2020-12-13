@@ -23,7 +23,7 @@ public class ElfProfessionBerserker extends ElfProfession {
 	}
 
 	@Override
-	public int attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
+	public Float attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
 		elf.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 20 * 10, 2));
 		elf.addPotionEffect(new PotionEffect(MobEffects.SPEED, 20 * 10, 3));
 		elf.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 20 * 10, 2));

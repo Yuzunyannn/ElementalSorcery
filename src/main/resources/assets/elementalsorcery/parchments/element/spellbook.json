@@ -4,6 +4,7 @@
         "element/spell_paper",
         "element/spell_crystal"
     ],
+    "linked": "elementalsorcery:spellbook",
     "type": "mult",
     "lock": 1,
     "pages": [

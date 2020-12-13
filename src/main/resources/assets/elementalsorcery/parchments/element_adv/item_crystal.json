@@ -3,7 +3,7 @@
     "need": [
         "element_adv/resonant_incubator"
     ],
-    "linked": "elementalsorcery:architecture_crystal",
+    "linked": "elementalsorcery:item_crystal",
     "type": "normal",
     "name": "itemCrystal",
     "item": "elementalsorcery:item_crystal",

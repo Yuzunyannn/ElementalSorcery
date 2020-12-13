@@ -1,8 +1,10 @@
 {
 	"lev": 5,
 	"need": [
-		"element_adv/supreme_table"
+		"element_adv/supreme_table",
+		"element_sup/jump_gem"
 	],
+	"linked": "elementalsorcery:portal_altar",
 	"type": "mult",
 	"lock": 0,
 	"pages": [

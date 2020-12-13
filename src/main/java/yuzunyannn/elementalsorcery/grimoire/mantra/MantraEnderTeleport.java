@@ -20,6 +20,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
+import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectPlayerAt;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
@@ -94,12 +95,11 @@ public class MantraEnderTeleport extends MantraCommon {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		if (super.onSpellingEffect(world, data, caster)) return true;
+	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
+		if (!caster.hasEffectFlags(MantraEffectFlags.PROGRESS)) return;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (caster.iWantCaster() == Minecraft.getMinecraft().player)
-			if (!dataEffect.hasMarkEffect(1)) dataEffect.addEffect(caster,new EffectPlayerAt(world, caster), 1);
-		return false;
+			if (!dataEffect.hasMarkEffect(1)) dataEffect.addEffect(caster, new EffectPlayerAt(world, caster), 1);
 	}
 
 	@Override

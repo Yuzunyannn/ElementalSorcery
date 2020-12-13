@@ -3,6 +3,7 @@
     "need": [
         "element_adv/analysis_altar"
     ],
+    "linked": "elementalsorcery:is_craft_normal",
     "type": "mult",
     "lock": 0,
     "pages": [

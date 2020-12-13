@@ -3,6 +3,7 @@
     "need": [
         "md/md"
     ],
+    "linked": "elementalsorcery:md_absorb_box",
     "type": "mult",
     "lock": 0,
     "pages": [

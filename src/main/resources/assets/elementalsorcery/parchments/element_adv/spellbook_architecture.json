@@ -5,6 +5,7 @@
         "element/magic_desk",
         "element_adv/architecture_crystal"
     ],
+    "linked": "elementalsorcery:spellbook_architecture",
     "type": "spellaltar",
     "name": "spArchitecture",
     "item": [

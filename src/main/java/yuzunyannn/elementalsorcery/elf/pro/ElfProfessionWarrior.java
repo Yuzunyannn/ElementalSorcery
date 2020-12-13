@@ -23,11 +23,11 @@ public class ElfProfessionWarrior extends ElfProfession {
 	}
 
 	@Override
-	public int attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
-		if (!source.isUnblockable()) {
+	public Float attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
+		if (!source.isUnblockable() && !source.isFireDamage()) {
 			if (elf.getRNG().nextInt(5) == 0) {
 				elf.playSound(SoundEvents.ITEM_SHIELD_BLOCK, 1.0F, 0.8F + elf.world.rand.nextFloat() * 0.4F);
-				return -1;
+				return null;
 			}
 		}
 		return super.attackedFrom(elf, source, amount);

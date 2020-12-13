@@ -4,6 +4,7 @@
         "element/spellbook",
         "element/magic_desk"
     ],
+    "linked": "elementalsorcery:spellbook_element",
     "type": "spellaltar",
     "name": "spElement",
     "item": [

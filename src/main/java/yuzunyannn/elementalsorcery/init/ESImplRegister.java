@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Set;
+
+import javax.annotation.Nullable;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.RegistryNamespaced;
@@ -98,5 +101,10 @@ public class ESImplRegister<T extends IForgeRegistryEntry<T>> implements IForgeR
 	@Override
 	public <U> U getSlaveMap(ResourceLocation slaveMapName, Class<U> type) {
 		return null;
+	}
+
+	@Nullable
+	public T getRandomObject(Random random) {
+		return REGISTRY.getRandomObject(random);
 	}
 }

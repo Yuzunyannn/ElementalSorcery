@@ -5,6 +5,7 @@ import yuzunyannn.elementalsorcery.entity.elf.EntityAIMoveToEntityItem;
 import yuzunyannn.elementalsorcery.entity.elf.EntityAIMoveToLookBlock;
 import yuzunyannn.elementalsorcery.entity.elf.EntityAIStrollAroundElfTree;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
+import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 
 /** 专指站着某个地点的npc */
 public class ElfProfessionNPCBase extends ElfProfession {
@@ -28,6 +29,8 @@ public class ElfProfessionNPCBase extends ElfProfession {
 				float z = pos.getZ() + 0.5f;
 				elf.getNavigator().tryMoveToXYZ(x, y, z, 1);
 			}
+			TileElfTreeCore core = elf.getEdificeCore();
+			if (core == null) elf.setDead();
 		}
 	}
 

@@ -1,12 +1,10 @@
 {
     "lev": 4,
-    "linked": [
-        "elementalsorcery:deconstruct_altar_table"
-    ],
     "need": [
         "md/azure_crystal",
         "element/element_crafting_table"
     ],
+    "linked": "elementalsorcery:deconstruct_altar_table",
     "type": "mult",
     "lock": 0,
     "pages": [

@@ -8,6 +8,7 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
@@ -18,6 +19,7 @@ public class RiteCategory implements IRecipeCategory<RiteRecipeWrapper> {
 
 	public static final String UID = ElementalSorcery.MODID + "." + "rite";
 	private final IDrawable background;
+	private final RiteIcon iconDraw = new RiteIcon();
 
 	public RiteCategory() {
 		background = ESJEIPlugin.guiHelper.createDrawable(
@@ -45,6 +47,11 @@ public class RiteCategory implements IRecipeCategory<RiteRecipeWrapper> {
 	}
 
 	@Override
+	public IDrawable getIcon() {
+		return iconDraw;
+	}
+
+	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, RiteRecipeWrapper recipeWrapper, IIngredients ingredients) {
 		IGuiItemStackGroup group = recipeLayout.getItemStacks();
 		TileRiteTable.Recipe r = recipeWrapper.getRecipe();
@@ -64,6 +71,12 @@ public class RiteCategory implements IRecipeCategory<RiteRecipeWrapper> {
 
 		group.init(5, true, 4 + 18 + 18 + 42 + 44, 3 + 18);
 		group.set(5, r.getOutput());
+
+		ItemStack icon = new ItemStack(iconDraw.defaultIconStack.getItem());
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setInteger("level", r.needLevel());
+		icon.setTagCompound(nbt);
+		iconDraw.setIconStack(icon);
 	}
 
 }

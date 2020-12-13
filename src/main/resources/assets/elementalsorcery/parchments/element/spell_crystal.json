@@ -4,6 +4,7 @@
         "md/magic_crystal",
         "md/infusion"
     ],
+    "linked": "elementalsorcery:spell_crystal",
     "type": "infusion",
     "name": "spellCrystal",
     "item": [
