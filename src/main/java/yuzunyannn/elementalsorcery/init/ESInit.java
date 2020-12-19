@@ -122,6 +122,7 @@ import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.KeyBoard;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
+import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
@@ -193,6 +194,7 @@ import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagiclization;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDResonantIncubator;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDTransfer;
+import yuzunyannn.elementalsorcery.summon.SummonRecipe;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
 import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
@@ -432,7 +434,7 @@ public class ESInit {
 		// 注册tileentity
 		registerAllTiles();
 		// 注册元素
-		ElementRegister.registerAll();
+		Element.registerAll();
 		// 注册能力
 		registerAllCapability();
 		// 矿物词典注册
@@ -445,8 +447,10 @@ public class ESInit {
 		// 注册默认所有建筑
 		BuildingLib.registerAll();
 		// 注册咒文
-		MantraRegister.registerAll();
+		Mantra.registerAll();
 		KnowledgeType.registerAll();
+		//召唤注册
+		SummonRecipe.registerAll();
 		// 注册精灵大厦楼层
 		ElfRegister.registerAllFloor();
 		// 任务相关注册

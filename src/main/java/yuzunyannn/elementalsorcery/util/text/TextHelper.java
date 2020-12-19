@@ -40,6 +40,16 @@ public class TextHelper {
 		return builder.toString();
 	}
 
+	public static String castToUnderline(String str) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+			if (Character.isUpperCase(c)) if (i > 0) sb.append('_');
+			sb.append(Character.toLowerCase(c));
+		}
+		return sb.toString();
+	}
+
 	static public ResourceLocation toESResourceLocation(String id) {
 		if (id.indexOf(':') == -1) return new ResourceLocation(ElementalSorcery.MODID, id);
 		return new ResourceLocation(id);

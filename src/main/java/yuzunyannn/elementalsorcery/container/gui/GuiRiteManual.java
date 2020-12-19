@@ -55,6 +55,7 @@ public class GuiRiteManual extends GuiContainer {
 				this.fontRenderer.drawString(str, offsetX + 175, offsetY + 20 + y, lev.getColor());
 			}
 		}
+		if (container.summonShow) this.fontRenderer.drawString("★", offsetX + 135, offsetY + 5, 0xda003e);
 	}
 
 	static enum Level {

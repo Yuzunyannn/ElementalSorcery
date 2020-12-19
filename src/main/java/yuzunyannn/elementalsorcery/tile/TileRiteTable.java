@@ -29,6 +29,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.relauncher.Side;
@@ -39,9 +40,13 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
-import yuzunyannn.elementalsorcery.summon.Summon;
+import yuzunyannn.elementalsorcery.item.ItemSoulWoodSword;
+import yuzunyannn.elementalsorcery.render.effect.Effects;
+import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
+import yuzunyannn.elementalsorcery.summon.SummonRecipe;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable.Recipe.Happiness;
 import yuzunyannn.elementalsorcery.util.MultiRets;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
@@ -124,11 +129,11 @@ public class TileRiteTable extends TileEntityNetwork {
 			recipe = rets.get(1, TileRiteTable.Recipe.class);
 		}
 
-		Summon summon = null;
+		SummonRecipe summonRecipe = null;
 		rets = this.findSummonRiteRecipe();
 		if (!rets.isEmpty()) {
 			specialItem = rets.get(0, ItemStack.class);
-			summon = rets.get(1, Summon.class);
+			summonRecipe = rets.get(1, SummonRecipe.class);
 		}
 
 		// 是寻求仪式
@@ -138,12 +143,15 @@ public class TileRiteTable extends TileEntityNetwork {
 				Block.spawnAsEntity(world, pos.up(), specialItem);
 				return true;
 			}
-		}
-		// 是召唤仪式
-		if (summon != null) {
-			this.punish(entity);
-			Block.spawnAsEntity(world, pos.up(), specialItem);
-			return true;
+		} // 是召唤仪式
+		else if (summonRecipe != null) {
+			int cost = summonRecipe.getSoulCost(specialItem, world, pos.up());
+			int soul = ItemSoulWoodSword.getSoul(tool);
+			// 点数不够，或者等级不够，回归普通仪式
+			if (soul < cost || this.level < 3) {
+				summonRecipe = null;
+				specialItem = ItemStack.EMPTY;
+			}
 		}
 
 		// 获取总能量
@@ -165,7 +173,9 @@ public class TileRiteTable extends TileEntityNetwork {
 			}
 			pool.addAll(sacrifice.getHope(stack));// 期望物品加入蛋池
 		}
-		int rnum = recipe == null ? 100 : recipe.needPower();
+		int rnum = 100;
+		if (recipe != null) rnum = recipe.needPower();
+		else if (summonRecipe != null) rnum = 100;
 		// 随机可能性
 		if (power < RandomHelper.rand.nextInt(rnum)) {
 			this.punish(entity);
@@ -186,7 +196,20 @@ public class TileRiteTable extends TileEntityNetwork {
 			this.markDirty();
 			return true;
 		}
-
+		// 召唤仪式
+		if (summonRecipe != null) out: {
+			int cost = summonRecipe.getSoulCost(specialItem, world, pos.up());
+			ItemSoulWoodSword.addSoul(tool, -cost);
+			MantraSummon.summon(world, pos.up(), entity, specialItem.copy(), summonRecipe);
+			ItemHelper.clear(inventory);
+			Block.spawnAsEntity(world, pos.up(), specialItem);
+			this.updateToClient();
+			this.markDirty();
+			NBTTagCompound nbt = FireworkEffect.fastNBT(0, 3, 0.1f, new int[] { 0x3ad2f2, 0x7ef5ff },
+					new int[] { 0xe0ffff });
+			Effects.spawnEffect(world, Effects.FIREWROK, new Vec3d(pos.up()).addVector(0.5, 0, 0.5), nbt);
+			return true;
+		}
 		// 默认仪式，进行随机获取
 		List<String> ids = levelPages[TileRiteTable.pLevel(this.level)];
 		if (ids != null) pool.addAll(ids);
@@ -211,22 +234,25 @@ public class TileRiteTable extends TileEntityNetwork {
 
 	/** 寻找是否为summon仪式 */
 	protected MultiRets findSummonRiteRecipe() {
+		for (int i = 0; i < inventory.getSlots(); i++) {
+			ItemStack stack = inventory.getStackInSlot(i);
+			if (stack.isEmpty()) continue;
+			SummonRecipe summonRecipe = SummonRecipe.findRecipeWithKeepsake(stack, world, pos.up());
+			if (summonRecipe == null) continue;
+			return MultiRets.ret(stack, summonRecipe);
+		}
 		return MultiRets.EMPTY;
 	}
 
 	/** 寻找是否为seek仪式 */
 	protected MultiRets findSeekRiteRecipe() {
-		ItemStack seekRite = ItemStack.EMPTY;
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ItemStack stack = inventory.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
-			if (seekRite.isEmpty()) {
-				if (stack.getItem() == ESInit.ITEMS.PARCHMENT) {
-					seekRite = stack;
-					ItemStack s = RecipeRiteWrite.getInnerStack(seekRite);
-					TileRiteTable.Recipe recipe = findRecipe(s);
-					if (recipe != null) return MultiRets.ret(seekRite, recipe);
-				}
+			if (stack.getItem() == ESInit.ITEMS.PARCHMENT) {
+				ItemStack s = RecipeRiteWrite.getInnerStack(stack);
+				TileRiteTable.Recipe recipe = findRecipe(s);
+				if (recipe != null) return MultiRets.ret(stack, recipe);
 			}
 		}
 		return MultiRets.EMPTY;

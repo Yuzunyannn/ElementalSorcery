@@ -8,20 +8,28 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.summon.SummonRecipe;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
 
 public class ContainerRiteManual extends Container {
 
 	public IInventory slot = new ItemStackHandlerInventory(1);
-	private final World world;
-	private final BlockPos pos;
-	private final EntityPlayer player;
+	public final World world;
+	public final BlockPos pos;
+	public final EntityPlayer player;
 
 	private int lPower = 0;
 	private int lLevel = 0;
 	public int power = 0;
 	public int level = 0;
+
+	private boolean lSummonShow = false;
+	public boolean summonShow = false;
+
+	private boolean needCheckSummon = false;
 
 	public ContainerRiteManual(InventoryPlayer playerInventory, World worldIn, BlockPos posIn) {
 		this.world = worldIn;
@@ -50,8 +58,10 @@ public class ContainerRiteManual extends Container {
 				ItemStack stack = this.inventory.getStackInSlot(0);
 				if (stack.isEmpty()) {
 					power = 0;
+					summonShow = false;
 					return;
 				}
+				if (needCheckSummon) summonShow = SummonRecipe.findRecipeWithKeepsake(stack, worldIn, posIn) != null;
 				int power = TileRiteTable.sacrifice.getPower(stack);
 				ContainerRiteManual.this.power = power;
 				if (power == 0) return;
@@ -59,6 +69,16 @@ public class ContainerRiteManual extends Container {
 			}
 		});
 
+		if (!world.isRemote) this.checkAdvancement();
+	}
+
+	public void checkAdvancement() {
+//		WorldServer worldServer = (WorldServer) world;
+//		AdvancementManager am = worldServer.getAdvancementManager();
+//		Advancement adv = am.getAdvancement(new ResourceLocation(ElementalSorcery.MODID, "elf/hurt_by_crazy"));
+//		EntityPlayerMP playerMP = (EntityPlayerMP) player;
+//		AdvancementProgress ap = playerMP.getAdvancements().getProgress(adv);
+		needCheckSummon = true;
 	}
 
 	@Override
@@ -66,22 +86,24 @@ public class ContainerRiteManual extends Container {
 		super.detectAndSendChanges();
 		if (lPower != power) {
 			lPower = power;
-			for (int j = 0; j < listeners.size(); ++j) {
-				listeners.get(j).sendWindowProperty(this, 0, power);
-			}
+			for (int j = 0; j < listeners.size(); ++j) listeners.get(j).sendWindowProperty(this, 0, power);
 		}
 		if (lLevel != level) {
 			lLevel = level;
-			for (int j = 0; j < listeners.size(); ++j) {
-				listeners.get(j).sendWindowProperty(this, 1, level);
-			}
+			for (int j = 0; j < listeners.size(); ++j) listeners.get(j).sendWindowProperty(this, 1, level);
+		}
+		if (lSummonShow != summonShow) {
+			lSummonShow = summonShow;
+			for (int j = 0; j < listeners.size(); ++j) listeners.get(j).sendWindowProperty(this, 2, summonShow ? 1 : 0);
 		}
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void updateProgressBar(int id, int data) {
 		if (id == 0) power = data;
-		else level = data;
+		else if (id == 1) level = data;
+		else if (id == 2) summonShow = data == 0 ? false : true;
 	}
 
 	@Override

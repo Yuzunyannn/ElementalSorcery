@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.init;
 
+import java.lang.reflect.Constructor;
+
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
@@ -10,7 +12,7 @@ import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class ESImpClassRegister<T extends IForgeRegistryEntry<T>> {
 
-	public static class EasyImp<T extends IForgeRegistryEntry<T>> implements IForgeRegistryEntry<T> {
+	public static class EasyImp<T extends EasyImp<T>> implements IForgeRegistryEntry<T> {
 
 		private ResourceLocation id;
 
@@ -38,7 +40,22 @@ public class ESImpClassRegister<T extends IForgeRegistryEntry<T>> {
 	public T newInstance(ResourceLocation id) {
 		try {
 			Class<? extends T> cls = REGISTRY.get(id);
+			if (cls == null) return null;
 			return cls.newInstance().setRegistryName(id);
+		} catch (Exception e) {
+			ElementalSorcery.logger.warn("实例化" + id + "时，出现异常！", e);
+			return null;
+		}
+	}
+
+	public T newInstance(ResourceLocation id, Object... objs) {
+		try {
+			Class<? extends T> cls = REGISTRY.get(id);
+			if (cls == null) return null;
+			Class<?>[] clss = new Class<?>[objs.length];
+			for (int i = 0; i < clss.length; i++) clss[i] = objs.getClass();
+			Constructor<T> constructor = (Constructor<T>) cls.getConstructor(clss);
+			return constructor.newInstance(objs).setRegistryName(id);
 		} catch (Exception e) {
 			ElementalSorcery.logger.warn("实例化" + id + "时，出现异常！", e);
 			return null;

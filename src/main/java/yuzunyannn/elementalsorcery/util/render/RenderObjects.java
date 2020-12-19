@@ -28,7 +28,9 @@ public class RenderObjects {
 	static final public ResourceLocation MANTRA_LUSH = ESRes("textures/mantras/lush.png");
 	static final public ResourceLocation MANTRA_BLOCK_CRASH = ESRes("textures/mantras/block_crash.png");
 	static final public ResourceLocation MANTRA_AUTO_MINING = ESRes("textures/mantras/auto_mining.png");
+	static final public ResourceLocation MANTRA_SUMMON = ESRes("textures/mantras/summon.png");
 	
+	static final public ResourceLocation MAGIC_CIRCLE_SUMMON = ESRes("textures/magic_circles/summon.png");
 	static final public ResourceLocation MAGIC_CIRCLE_PICKAXE = ESRes("textures/magic_circles/pickaxe.png");
 	
 	static public ResourceLocation ESRes(String path) {

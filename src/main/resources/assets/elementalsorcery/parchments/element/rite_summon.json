@@ -1,0 +1,20 @@
+{
+    "type": "mult",
+    "lock": 0,
+    "need": [
+        "base/rite"
+    ],
+    "pages": [
+        {
+            "type": "normal",
+            "name": "soulSummon",
+            "icon": "elementalsorcery:soul_wood_sword",
+            "background": "elementalsorcery:soul_fragment"
+        },
+        {
+            "type": "normal",
+            "name": "riteSummon",
+            "background": "elementalsorcery:soul_wood_sword"
+        }
+    ]
+}

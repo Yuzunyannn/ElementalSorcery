@@ -17,9 +17,26 @@ import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleEleme
 
 public class MantraCommon extends Mantra {
 
+	protected int color = 0;
+
+	public void setColor(int color) {
+		this.color = color;
+	}
+
 	@Override
 	public IMantraData getData(NBTTagCompound origin, World world, ICaster caster) {
 		return new MantraDataCommon();
+	}
+
+	@SideOnly(Side.CLIENT)
+	public int getRenderColor() {
+		return color;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public int getRenderColor(IMantraData mData) {
+		return this.getRenderColor();
 	}
 
 	@Override
@@ -38,13 +55,14 @@ public class MantraCommon extends Mantra {
 			if (!(entity instanceof EntityLivingBase)) break out;
 			EntityLivingBase eb = (EntityLivingBase) entity;
 			MantraDataCommon dataEffect = (MantraDataCommon) data;
-			if (!dataEffect.hasMarkEffect(0)) dataEffect.addEffect(caster, this.getEffectMagicCircle(world, eb), 0);
+			if (!dataEffect.hasMarkEffect(0))
+				dataEffect.addEffect(caster, this.getEffectMagicCircle(world, eb, data), 0);
 		}
 		if (caster.hasEffectFlags(MantraEffectFlags.PROGRESS)) out: {
 			float r = this.getProgressRate(world, data, caster);
 			if (r < 0) break out;
 			MantraDataCommon dataEffect = (MantraDataCommon) data;
-			dataEffect.setProgress(r, this.getRenderColor(), world, caster);
+			dataEffect.setProgress(r, this.getRenderColor(data), world, caster);
 		}
 	}
 
@@ -54,7 +72,7 @@ public class MantraCommon extends Mantra {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity) {
+	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity, IMantraData data) {
 		return new EffectMagicCircleElement(world, entity, this.getMagicCircle());
 	}
 

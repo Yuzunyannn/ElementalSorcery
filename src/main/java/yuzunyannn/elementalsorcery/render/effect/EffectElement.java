@@ -22,6 +22,7 @@ public class EffectElement extends Effect {
 	public float alpha, prevAlpha;
 	public float dalpha;
 	public float scale;
+	public boolean isGlow;
 
 	public double motionX;
 	public double motionY;
@@ -32,6 +33,10 @@ public class EffectElement extends Effect {
 		this.alpha = 1.0f;
 		this.dalpha = 1.0f / this.lifeTime;
 		this.scale = rand.nextFloat() * 0.2f + 0.1f;
+	}
+
+	public void setGlow(boolean isGlow) {
+		this.isGlow = isGlow;
 	}
 
 	public void setColor(float r, float g, float b) {
@@ -74,6 +79,7 @@ public class EffectElement extends Effect {
 		Vec3d v2 = new Vec3d(-rX + rYZ, rXZ, -rZ + rXY).scale(scale);
 		Vec3d v3 = new Vec3d(rX + rYZ, rXZ, rZ + rXY).scale(scale);
 		Vec3d v4 = new Vec3d(rX - rYZ, -rXZ, rZ - rXY).scale(scale);
+		if (isGlow) GlStateManager.depthFunc(519);
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		GlStateManager.color(r, g, b, a);
@@ -83,6 +89,7 @@ public class EffectElement extends Effect {
 		bufferbuilder.pos(x + v3.x, y + v3.y, z + v3.z).tex(1, 1).endVertex();
 		bufferbuilder.pos(x + v4.x, y + v4.y, z + v4.z).tex(1, 0).endVertex();
 		tessellator.draw();
+		if (isGlow) GlStateManager.depthFunc(515);
 	}
 
 }

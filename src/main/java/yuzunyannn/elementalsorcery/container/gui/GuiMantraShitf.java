@@ -165,7 +165,7 @@ public class GuiMantraShitf extends GuiScreen {
 		m.mantraData = mantraData == null ? new NBTTagCompound() : mantraData;
 
 		m.n = mantras.size();
-		int color = mantra.getRenderColor();
+		int color = mantra.getRenderColor(null);
 		m.r = ((color >> 16) & 0xff) / 255f;
 		m.g = ((color >> 8) & 0xff) / 255f;
 		m.b = ((color >> 0) & 0xff) / 255f;

@@ -64,6 +64,7 @@ public class BlockSealStone extends Block {
 			for (Entry<ResourceLocation, Mantra> entry : Mantra.REGISTRY.getEntries()) {
 				Mantra mantra = entry.getValue();
 				float rarity = mantra.getRarity(worldIn, player.getPosition());
+				if (rarity <= 0) continue;
 				rarity = rarity + (100 - rarity) * Math.min(0.5f, fortune / 25.0f);// 所有都向100靠拢
 				wMantras.add(entry.getValue(), rarity);
 			}

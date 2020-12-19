@@ -15,6 +15,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.register.ESRegister;
 import yuzunyannn.elementalsorcery.init.ESImplRegister;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class Element extends IForgeRegistryEntry.Impl<Element> {
@@ -191,6 +192,19 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 		ResourceLocation res = this.getIconResourceLocation();
 		Minecraft.getMinecraft().getTextureManager().bindTexture(res);
 		RenderHelper.drawTexturedRectInCenter(0, 0, 16, 16);
+	}
+
+	static public void registerAll() {
+		Element.REGISTRY.register(ESInit.ELEMENTS.VOID);
+		Element.REGISTRY.register(ESInit.ELEMENTS.MAGIC);
+		Element.REGISTRY.register(ESInit.ELEMENTS.ENDER);
+		Element.REGISTRY.register(ESInit.ELEMENTS.FIRE);
+		Element.REGISTRY.register(ESInit.ELEMENTS.WATER);
+		Element.REGISTRY.register(ESInit.ELEMENTS.AIR);
+		Element.REGISTRY.register(ESInit.ELEMENTS.EARTH);
+		Element.REGISTRY.register(ESInit.ELEMENTS.METAL);
+		Element.REGISTRY.register(ESInit.ELEMENTS.WOOD);
+		Element.REGISTRY.register(ESInit.ELEMENTS.KNOWLEDGE);
 	}
 
 }

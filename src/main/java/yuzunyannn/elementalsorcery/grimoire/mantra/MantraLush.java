@@ -31,23 +31,18 @@ public class MantraLush extends MantraCommon {
 
 	protected static class Data extends MantraDataCommon {
 		ElementStack power = new ElementStack(ESInit.ELEMENTS.WOOD, 0);
-
 		int size = 0;
 	}
 
 	public MantraLush() {
 		this.setUnlocalizedName("lush");
 		this.setRarity(75);
+		this.setColor(0x32CD32);
 	}
 
 	@Override
 	public Element getMagicCircle() {
 		return ESInit.ELEMENTS.WOOD;
-	}
-
-	@Override
-	public int getRenderColor() {
-		return 0x32CD32;
 	}
 
 	@Override

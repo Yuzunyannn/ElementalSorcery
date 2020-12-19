@@ -24,6 +24,7 @@ public class MantraSprint extends MantraCommon {
 
 	public MantraSprint() {
 		this.setUnlocalizedName("sprint");
+		this.setColor(0xabfffa);
 	}
 
 	@Override
@@ -74,12 +75,6 @@ public class MantraSprint extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public ResourceLocation getIconResource() {
 		return RenderObjects.MANTRA_SPRINT;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int getRenderColor() {
-		return 0xabfffa;
 	}
 
 }

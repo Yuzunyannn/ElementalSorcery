@@ -5,6 +5,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class OreDictionaryRegistries {
+
 	public static final void registerAll() {
 		ESObjects.Items ITEMS = ESInit.ITEMS;
 		ESObjects.Blocks BLOCKS = ESInit.BLOCKS;

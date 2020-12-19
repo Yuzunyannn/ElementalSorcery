@@ -31,6 +31,7 @@ public class MantraEnderTeleport extends MantraCommon {
 	public MantraEnderTeleport() {
 		this.setUnlocalizedName("enderTeleport");
 		this.setRarity(25);
+		this.setColor(0xc000eb);
 	}
 
 	@Override
@@ -96,7 +97,8 @@ public class MantraEnderTeleport extends MantraCommon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		if (!caster.hasEffectFlags(MantraEffectFlags.PROGRESS)) return;
+		super.onSpellingEffect(world, data, caster);
+		if (!caster.hasEffectFlags(MantraEffectFlags.INDICATOR)) return;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (caster.iWantCaster() == Minecraft.getMinecraft().player)
 			if (!dataEffect.hasMarkEffect(1)) dataEffect.addEffect(caster, new EffectPlayerAt(world, caster), 1);
@@ -112,12 +114,6 @@ public class MantraEnderTeleport extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public ResourceLocation getIconResource() {
 		return RenderObjects.MANTRA_TELEPORT;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int getRenderColor() {
-		return 0xc000eb;
 	}
 
 }

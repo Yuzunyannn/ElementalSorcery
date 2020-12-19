@@ -164,6 +164,8 @@ mantra.blockCrash.name=Dirt Impact
 mantra.blockCrash.describe=There are a Dirt from the ground, and the enemy impact into the sky.
 mantra.autoMining.name=Unthinkable miner
 mantra.autoMining.describe=Ores fly from the ground
+mantra.summon.name=Summon
+mantra.summon.describe=Summon Rite
 
 key.es.func=Function key
 
@@ -564,6 +566,10 @@ page.EWorkbench=元素合成台
 page.EWorkbench.ct=元素合成台可以像普通合成台一样使用，同时也可以放入元素水晶，让物品和元素共同合成。\n深色橡木是与魔力契合性最好的木材，因此元素合成台只能选择使用深色橡木。
 page.natureDust=Seek Dust
 page.natureDust.ct=Seek Dust made from Nature Dust can resonate with nature, so as to get all kinds of information around. Put Seek Dust on the ground and pick Nature Dust after resonating.\nSeek Dust can also detect elf power.
+page.soulSummon=灵魂召唤
+page.soulSummon.ct=「聚魂」附魔的武器，在打死生物后，会掉落灵魂碎片，掉落的灵魂碎片可以缠腰在木剑上形成「灵魂缠绕的木剑」，使用该木剑可以将将灵魂与信物共鸣，从而进行「召唤」仪式。
+page.riteSummon=召唤仪式
+page.riteSummon.ct=召唤仪式，可以将灵魂与信物共鸣，从而召唤出各种东西。该仪式和映像仪式基本一样，不同点：一是桌面上需要摆放信物；二是需要使用「灵魂缠绕的木剑」并且会消耗灵魂。\n如果灵魂不足或者没有信物的话召唤仪式就会变成普通的映像仪式。\n此外召唤仪式必须使用3级及以上的仪式桌才能进行。\n信物是什么？祭品研究手册上没准有一些标记。
 page.manual=元素手册
 page.manual.ct=大量的羊皮卷没有地方装？制作一个元素手册吧，可以将身上多余的羊皮卷装入手册中，更好的储存与查阅。(手册后面的数字是页面的标号哦)
 page.magicPaper=魔力纸张

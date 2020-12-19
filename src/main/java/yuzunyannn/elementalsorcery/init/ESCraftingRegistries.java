@@ -11,6 +11,7 @@ import yuzunyannn.elementalsorcery.crafting.mc.RecipePageBuilding;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
 
 public class ESCraftingRegistries {
+
 	public static final void registerAll() {
 		// 注册所有合成
 		RecipeManagement.registerAll();

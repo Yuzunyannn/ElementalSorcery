@@ -14,12 +14,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.util.json.Json.ParseExceptionCode;
 
-public class Recipe extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
+public class Recipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
 	// 信息
 	private int firstNotEmpty = -1;

@@ -31,6 +31,7 @@ public class MantraBlockCrash extends MantraCommon {
 	public MantraBlockCrash() {
 		this.setUnlocalizedName("blockCrash");
 		this.setRarity(110);
+		this.setColor(0x785439);
 	}
 
 	@Override
@@ -105,12 +106,6 @@ public class MantraBlockCrash extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public ResourceLocation getIconResource() {
 		return RenderObjects.MANTRA_BLOCK_CRASH;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int getRenderColor() {
-		return 0x785439;
 	}
 
 }

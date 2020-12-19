@@ -19,6 +19,9 @@ public interface ICaster {
 	/** 调用者希望将一个数据发送到客户端，由{@link Mantra#recvData} 接受 */
 	public void sendToClient(NBTTagCompound nbt);
 
+	/** 停止释放 */
+	public void stopCaster();
+
 	/**
 	 * 获取某些元素
 	 * 

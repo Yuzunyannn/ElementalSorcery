@@ -65,17 +65,12 @@ public class MantraAutoMining extends MantraCommon {
 	public MantraAutoMining() {
 		this.setUnlocalizedName("autoMining");
 		this.setRarity(2);
+		this.setColor(0xc8971e);
 	}
 
 	@Override
 	public Element getMagicCircle() {
 		return ESInit.ELEMENTS.METAL;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int getRenderColor() {
-		return 0xc8971e;
 	}
 
 	@Override
@@ -104,9 +99,9 @@ public class MantraAutoMining extends MantraCommon {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity) {
+	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity, IMantraData mData) {
 		EffectMagicCircle emc = new EffectMagicCircleIcon(world, entity, RenderObjects.MAGIC_CIRCLE_PICKAXE);
-		emc.setColor(this.getRenderColor());
+		emc.setColor(this.getRenderColor(mData));
 		return emc;
 	}
 

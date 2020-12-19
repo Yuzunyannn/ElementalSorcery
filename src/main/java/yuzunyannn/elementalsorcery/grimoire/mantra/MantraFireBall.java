@@ -57,16 +57,12 @@ public class MantraFireBall extends MantraCommon {
 	public MantraFireBall() {
 		this.setUnlocalizedName("fireBall");
 		this.setRarity(50);
+		this.setColor(0xff8f02);
 	}
 
 	@Override
 	public Element getMagicCircle() {
 		return ESInit.ELEMENTS.FIRE;
-	}
-
-	@Override
-	public int getRenderColor() {
-		return 0xff8f02;
 	}
 
 	@Override

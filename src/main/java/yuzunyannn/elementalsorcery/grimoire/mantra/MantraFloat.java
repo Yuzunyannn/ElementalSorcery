@@ -18,6 +18,7 @@ public class MantraFloat extends MantraCommon {
 	public MantraFloat() {
 		this.setUnlocalizedName("float");
 		this.setRarity(125);
+		this.setColor(0xacffff);
 	}
 
 	@Override
@@ -51,12 +52,6 @@ public class MantraFloat extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public ResourceLocation getIconResource() {
 		return RenderObjects.MANTRA_FLOAT;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public int getRenderColor() {
-		return 0xacffff;
 	}
 
 }

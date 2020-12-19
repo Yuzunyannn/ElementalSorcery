@@ -17,6 +17,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
@@ -54,20 +55,25 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		super(worldIn);
 	}
 
-	public EntityGrimoire(World worldIn, EntityLivingBase user, Mantra mantra, NBTTagCompound originData) {
+	public EntityGrimoire(World worldIn, EntityLivingBase user, Mantra mantra, NBTTagCompound metaData) {
+		this(worldIn, user, mantra, metaData, STATE_BEFORE_SPELLING);
+	}
+
+	// 这个构造方法是给予某些不通过魔法书进行处理的
+	public EntityGrimoire(World worldIn, EntityLivingBase user, Mantra mantra, NBTTagCompound metaData, byte state) {
 		super(worldIn);
 		this.user = user;
-		this.userUUID = user.getUniqueID();
+		if (user != null) this.userUUID = user.getUniqueID();
 		this.mantra = mantra;
-		this.originData = originData == null ? new NBTTagCompound() : originData;
+		this.metaData = metaData == null ? new NBTTagCompound() : metaData;
+		this.state = state;
 		this.initMantraData();
-		// 最开始直接进行还原，初始发送信息使用
-		this.restoreGrimoire();
+		this.restoreGrimoire();// 最开始直接进行还原，初始发送信息使用
 	}
 
 	private void initMantraData() {
 		if (mantra == null) return;
-		this.mantraData = mantra.getData(this.originData, world, this);
+		this.mantraData = mantra.getData(this.metaData, world, this);
 	}
 
 	@Override
@@ -76,9 +82,9 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		super.setDead();
 	}
 
-	public static final int STATE_BEFORE_SPELLING = 0;
-	public static final int STATE_SPELLING = 1;
-	public static final int STATE_AFTER_SPELLING = 2;
+	public static final byte STATE_BEFORE_SPELLING = 0;
+	public static final byte STATE_SPELLING = 1;
+	public static final byte STATE_AFTER_SPELLING = 2;
 
 	protected byte state = STATE_BEFORE_SPELLING;
 	protected int tick;
@@ -93,13 +99,17 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	public ItemStack grimoireStack = ItemStack.EMPTY;
 	public NBTTagCompound grimoireDataFromServer;
 	/** 原始数据 */
-	protected NBTTagCompound originData;
+	protected NBTTagCompound metaData;
 
 	/** 客户端 */
 
 	@Override
 	protected void entityInit() {
 		this.setSize(0.1f, 0.1f);
+	}
+
+	public IMantraData getMantraData() {
+		return mantraData;
 	}
 
 	@Override
@@ -132,7 +142,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	public void writeSpawnData(ByteBuf buffer) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		this.writeEntityToNBT(nbt);
-		if (originData != null) nbt.setTag("oData", originData);
+		if (metaData != null) nbt.setTag("oData", metaData);
 		if (grimoire != null) nbt.setTag("gData", grimoire.serializeNBT());
 		ByteBufUtils.writeTag(buffer, nbt);
 	}
@@ -140,7 +150,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	@Override
 	public void readSpawnData(ByteBuf additionalData) {
 		NBTTagCompound nbt = ByteBufUtils.readTag(additionalData);
-		if (nbt.hasKey("oData", 10)) originData = nbt.getCompoundTag("oData");
+		if (nbt.hasKey("oData", 10)) metaData = nbt.getCompoundTag("oData");
 		if (nbt.hasKey("gData", 10)) grimoireDataFromServer = nbt.getCompoundTag("gData");
 		readEntityFromNBT(nbt);
 	}
@@ -292,6 +302,11 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	@Override
+	public void stopCaster() {
+		this.setDead();
+	}
+
+	@Override
 	public void sendToClient(NBTTagCompound nbt) {
 		if (world.isRemote) return;
 		MessageEntitySync.sendToClient(this, nbt);
@@ -311,7 +326,41 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 			if (consume) return inv.extractElement(need, false);
 			return estack;
 		}
+		if (need.isMagic()) return this.tryChangeToMagic(inv, need, consume);
 		return ElementStack.EMPTY;
+	}
+
+	protected ElementStack tryChangeToMagic(IElementInventory inv, ElementStack need, boolean consume) {
+		int startIndex = rand.nextInt(inv.getSlots());
+		for (int i = 0; i < inv.getSlots(); i++) {
+			ElementStack es = inv.getStackInSlot((i + startIndex) % inv.getSlots());
+			if (es.isEmpty()) continue;
+			int count = findNeedCountForChangeToMagic(es.copy(), need);
+			if (count > 0) {
+				if (consume) es.shrink(count);
+				es = es.copy();
+				es.setCount(count);
+				return es.becomeMagic(world);
+			}
+		}
+		return ElementStack.EMPTY;
+	}
+
+	/** 寻找某个元素转化到给定魔法量所需要的数量 */
+	private int findNeedCountForChangeToMagic(ElementStack example, ElementStack need) {
+		// 尝试全部转化，如果不能满足直接返回
+		ElementStack origin = example.copy();
+		example = example.becomeMagic(world);
+		if (!example.arePowerfulAndMoreThan(need)) return -1;
+		// 认为转化是线性的，进行处理
+		float rate = example.getCount() / (float) origin.getCount();
+		int needCount = MathHelper.ceil(need.getCount() / rate);
+		if (needCount > origin.getCount()) return -1;
+		origin.setCount(needCount);
+		example = origin.becomeMagic(world);
+		if (example.arePowerfulAndMoreThan(need)) return needCount;
+		// 不符合线性模型，或者是递减线性模型，就不找了
+		return -1;
 	}
 
 	@Override

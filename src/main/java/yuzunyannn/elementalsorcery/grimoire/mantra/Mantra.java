@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
@@ -34,10 +35,10 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	/**
 	 * 获取mantra的动态数据 *
 	 * 
-	 * @param origin 记录的nbt原始数据，第一次初始化时传入时有真是数据，存档回复传入时为null，需要在IMantraData中记录
+	 * @param metaData 记录的nbt原始数据，第一次初始化时传入时有真是数据，存档回复传入时为null，需要在IMantraData中记录
 	 * 
 	 */
-	public IMantraData getData(NBTTagCompound origin, World world, ICaster caster) {
+	public IMantraData getData(NBTTagCompound metaData, World world, ICaster caster) {
 		return null;
 	}
 
@@ -120,9 +121,13 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 		return false;
 	}
 
-	/** 渲染前的颜色设置 */
+	/**
+	 * 渲染前的颜色设置
+	 * 
+	 * @param mData 动态时候会传入
+	 */
 	@SideOnly(Side.CLIENT)
-	public int getRenderColor() {
+	public int getRenderColor(@Nullable IMantraData mData) {
 		return 0xcac5e0;
 	}
 
@@ -142,6 +147,21 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	@Nonnull
 	public ResourceLocation getIconResource() {
 		return RenderObjects.MANTRA_VOID;
+	}
+
+	public static void registerAll() {
+		reg(new MantraEnderTeleport(), "ender_teleport");
+		reg(new MantraFloat(), "float");
+		reg(new MantraSprint(), "sprint");
+		reg(new MantraFireBall(), "fire_ball");
+		reg(new MantraLush(), "lush");
+		reg(new MantraBlockCrash(), "block_crash");
+		reg(new MantraAutoMining(), "auto_mining");
+		reg(MantraSummon.instance, "summon");
+	}
+
+	private static void reg(Mantra m, String name) {
+		Mantra.REGISTRY.register(m.setRegistryName(new ResourceLocation(ElementalSorcery.MODID, name)));
 	}
 
 }
