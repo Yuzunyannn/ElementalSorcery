@@ -151,21 +151,23 @@ element.metal.name=金
 element.knowledge.name=知识
 
 mantra.enderTeleport.name=末影移动
-mantra.enderTeleport.describe=瞬移再也不是末影人的特权了。嗯？为啥不能在雨天使用...
+mantra.enderTeleport.describe=末影元素与咒文结合，瞬移再也不是末影人的特权了。嗯？为啥不能在雨天使用...
 mantra.float.name=漂浮
-mantra.float.describe=我飞起来了
+mantra.float.describe=通过气元素，进行缓慢上升
 mantra.sprint.name=前冲
-mantra.sprint.describe=更便捷的移动
+mantra.sprint.describe=通过气元素，达到更便捷的移动
 mantra.fireBall.name=火焰冲击
-mantra.fireBall.describe=燃烧吧
+mantra.fireBall.describe=以火元素为核心，烧坏前方的方块。金元素的加入可以让矿物翻倍，知识元素的加入可以掠过无法烧制的方块。
 mantra.lush.name=郁郁葱葱
-mantra.lush.describe=让周围的一切生长
+mantra.lush.describe=使用木元素，让周围的一切生长
 mantra.blockCrash.name=土块撞击
-mantra.blockCrash.describe=地上出现了个土块，将敌人撞飞天
-mantra.autoMining.name=不思议的矿工
-mantra.autoMining.describe=矿从地中飞
+mantra.blockCrash.describe=土元素抬起地上的土块，将敌人撞飞天
+mantra.miningArea.name=不思议的矿工
+mantra.miningArea.describe=土元素和金元素与咒文的共鸣下，让矿物从地中飞出来
 mantra.summon.name=召唤
-mantra.summon.describe=召唤仪式
+mantra.summon.describe=在魔力的缠绕下，召唤仪式可以随时进行
+mantra.lightningArea.name=雷鸣区域
+mantra.lightningArea.describe=气元素与火元素交织，唤起一块区域，进入的生物会受到雷劈。
 
 key.es.func=功能键
 

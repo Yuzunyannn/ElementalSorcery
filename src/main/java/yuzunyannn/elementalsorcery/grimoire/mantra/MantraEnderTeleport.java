@@ -15,7 +15,6 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
@@ -102,12 +101,6 @@ public class MantraEnderTeleport extends MantraCommon {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (caster.iWantCaster() == Minecraft.getMinecraft().player)
 			if (!dataEffect.hasMarkEffect(1)) dataEffect.addEffect(caster, new EffectPlayerAt(world, caster), 1);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Element getMagicCircle() {
-		return ESInit.ELEMENTS.ENDER;
 	}
 
 	@Override

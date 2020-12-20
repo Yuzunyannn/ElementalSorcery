@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,6 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
@@ -98,10 +100,14 @@ public class SummonZombieCage extends SummonCommon {
 			break;
 		}
 		Random rand = world.rand;
+		IBlockState state = Blocks.COBBLESTONE.getDefaultState();
+		if (world.provider.getDimensionType() == DimensionType.NETHER) {
+			state = Blocks.NETHERRACK.getDefaultState();
+		}
 		for (int i = 1; i <= 2; i++) {
 			Vec3d from = new Vec3d(this.pos.up());
 			from = from.addVector(rand.nextDouble() - 0.5, rand.nextDouble() - 0.5, rand.nextDouble() - 0.5);
-			EntityBlockMove entity = new EntityBlockMove(world, from, pos.up(i), Blocks.COBBLESTONE.getDefaultState());
+			EntityBlockMove entity = new EntityBlockMove(world, from, pos.up(i), state);
 			entity.setFlag(EntityBlockMove.FLAG_FORCE_DESTRUCT, true);
 			entity.setFlag(EntityBlockMove.FLAG_INTO_CHEST, false);
 			entity.setFlag(EntityBlockMove.FLAG_DESTRUCT_DROP, true);

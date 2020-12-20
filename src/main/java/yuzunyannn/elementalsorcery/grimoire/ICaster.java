@@ -45,7 +45,7 @@ public interface ICaster {
 	/**
 	 * 申请获取目标方块，通常是看到的
 	 * 
-	 * @return 一旦返回为非null，getKey()必不为空
+	 * @return 一旦返回为非null，getKey()getValue()必不为空
 	 */
 	@Nullable
 	public Entry<BlockPos, EnumFacing> iWantBlockTarget();

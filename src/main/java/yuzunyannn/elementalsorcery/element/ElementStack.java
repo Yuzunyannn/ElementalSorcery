@@ -114,6 +114,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
 	/** 获取元素的量 */
 	public int getCount() {
+		if (this.isEmpty()) return 0;
 		return stackSize;
 	}
 

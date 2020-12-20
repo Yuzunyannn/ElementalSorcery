@@ -16,7 +16,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
-import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
@@ -38,11 +37,6 @@ public class MantraLush extends MantraCommon {
 		this.setUnlocalizedName("lush");
 		this.setRarity(75);
 		this.setColor(0x32CD32);
-	}
-
-	@Override
-	public Element getMagicCircle() {
-		return ESInit.ELEMENTS.WOOD;
 	}
 
 	@Override

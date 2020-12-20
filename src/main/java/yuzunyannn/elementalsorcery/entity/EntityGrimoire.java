@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -319,6 +320,11 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 
 	@Override
 	public ElementStack iWantSomeElement(ElementStack need, boolean consume) {
+		if (user instanceof EntityPlayer && ((EntityPlayer) user).isCreative()) {
+			need = need.copy();
+			need.setPower(1000);
+			return need;
+		}
 		IElementInventory inv = grimoire.getInventory();
 		if (inv == null) return ElementStack.EMPTY;
 		ElementStack estack = inv.extractElement(need, true);

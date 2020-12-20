@@ -41,6 +41,12 @@ public class ItemSpellbook extends Item {
 	public ItemSpellbook() {
 		this.setUnlocalizedName("spellbook");
 		this.setMaxStackSize(1);
+		this.setMaxDamage(50);
+	}
+
+	@Override
+	public boolean isShield(ItemStack stack, EntityLivingBase entity) {
+		return true;
 	}
 
 	/**

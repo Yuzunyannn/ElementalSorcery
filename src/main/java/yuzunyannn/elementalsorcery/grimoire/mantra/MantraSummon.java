@@ -25,8 +25,6 @@ import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleIcon;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectSummonRender;
 import yuzunyannn.elementalsorcery.summon.Summon;
 import yuzunyannn.elementalsorcery.summon.SummonRecipe;
@@ -220,14 +218,6 @@ public class MantraSummon extends MantraCommon {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (caster.iWantCaster() == Minecraft.getMinecraft().player) if (!dataEffect.hasMarkEffect(1))
 			dataEffect.addEffect(caster, new EffectLookAt(world, caster, this.getRenderColor(mData)), 1);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity, IMantraData mData) {
-		EffectMagicCircle emc = new EffectMagicCircleIcon(world, entity, RenderObjects.MANTRA_SUMMON);
-		emc.setColor(this.getRenderColor(mData));
-		return emc;
 	}
 
 	@Override

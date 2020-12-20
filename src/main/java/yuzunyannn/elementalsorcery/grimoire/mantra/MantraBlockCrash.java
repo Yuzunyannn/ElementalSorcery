@@ -16,7 +16,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
@@ -94,12 +93,6 @@ public class MantraBlockCrash extends MantraCommon {
 			effect.setVelocity(v.scale(0.2));
 			Effect.addEffect(effect);
 		}
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Element getMagicCircle() {
-		return ESInit.ELEMENTS.EARTH;
 	}
 
 	@Override

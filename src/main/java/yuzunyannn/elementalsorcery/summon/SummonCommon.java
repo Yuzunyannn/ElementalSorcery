@@ -27,7 +27,7 @@ public class SummonCommon extends Summon {
 	public SummonCommon(World world, BlockPos pos, int color) {
 		super(world, pos);
 		this.initData();
-		this.color = color;
+		if (this.color == 0) this.color = color;
 		if (world.isRemote) this.initRender();
 	}
 

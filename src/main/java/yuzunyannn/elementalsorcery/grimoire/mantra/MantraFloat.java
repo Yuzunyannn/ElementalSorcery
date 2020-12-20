@@ -5,7 +5,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
@@ -40,12 +39,6 @@ public class MantraFloat extends MantraCommon {
 		entity.motionY = 0.15;
 		entity.fallDistance = 0;
 		if (world.isRemote) onSpellingEffect(world, data, caster);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Element getMagicCircle() {
-		return ESInit.ELEMENTS.AIR;
 	}
 
 	@Override

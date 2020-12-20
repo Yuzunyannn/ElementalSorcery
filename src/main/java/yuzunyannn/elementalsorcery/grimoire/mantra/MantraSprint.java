@@ -10,7 +10,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
@@ -42,8 +41,8 @@ public class MantraSprint extends MantraCommon {
 		entity.motionX += look.x;
 		entity.motionY += look.y;
 		entity.motionZ += look.z;
-		world.playSound((EntityPlayer) null, entity.posX, entity.posY, entity.posZ,
-				SoundEvents.ENTITY_PLAYER_BIG_FALL, SoundCategory.PLAYERS, 1.0F, 1.0F);
+		world.playSound((EntityPlayer) null, entity.posX, entity.posY, entity.posZ, SoundEvents.ENTITY_PLAYER_BIG_FALL,
+				SoundCategory.PLAYERS, 1.0F, 1.0F);
 		onSpelling(world, dataCommon, caster);
 	}
 
@@ -63,12 +62,6 @@ public class MantraSprint extends MantraCommon {
 		EffectResonance effect = new EffectResonance(world, entity.posX, entity.posY + 1, entity.posZ);
 		effect.setColor(0xffffff);
 		Effect.addEffect(effect);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public Element getMagicCircle() {
-		return ESInit.ELEMENTS.AIR;
 	}
 
 	@Override

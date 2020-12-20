@@ -151,21 +151,23 @@ element.metal.name=Metal
 element.knowledge.name=Knowledge
 
 mantra.enderTeleport.name=Ender Move
-mantra.enderTeleport.describe=Teleport is no longer the privilege of Enderman. Well, why can't be used in rainy days?
+mantra.enderTeleport.describe=The Ender Element with Mantra, teleport is no longer the privilege of Enderman. Well, why can't be used in rainy days?
 mantra.float.name=Float
-mantra.float.describe=I can float.
-mantra.sprint.name=sprint
-mantra.sprint.describe=More convenient mobility
+mantra.float.describe=Through The Air Element, I can float slowly.
+mantra.sprint.name=Sprint
+mantra.sprint.describe=Through The Air Element, to achieve more convenient movement.
 mantra.fireBall.name=Flame impact
-mantra.fireBall.describe=Burn out!
+mantra.fireBall.describe=With The Fire Element as the core, burn the Block in front. The addition of The Metal can double amount of Ore, and the addition of The Knowledge Element can skip the unfired blocks.
 mantra.lush.name=Lush
-mantra.lush.describe=Grow Everythings Around
+mantra.lush.describe=Use The Wood Element to Grow Everythings Around.
 mantra.blockCrash.name=Dirt Impact
-mantra.blockCrash.describe=There are a Dirt from the ground, and the enemy impact into the sky.
-mantra.autoMining.name=Unthinkable miner
-mantra.autoMining.describe=Ores fly from the ground
-mantra.summon.name=Summon
-mantra.summon.describe=Summon Rite
+mantra.blockCrash.describe=With The Earth Element, there are a Dirt from the ground, and the enemy impact into the sky.
+mantra.miningArea.name=Unthinkable miner
+mantra.miningArea.describe=Earth and Mteal resonate with The Mantra, allowing Ores fly from the ground.
+mantra.summon.name=Summon Rite
+mantra.summon.describe=With magic, The Summon Rite can be carried out at any time
+mantra.lightningArea.name=Lightning Area
+mantra.lightningArea.describe=With The Air Element and The Fire Element, a Area whoever entered will be struck by lightning is emerge.
 
 key.es.func=Function key
 

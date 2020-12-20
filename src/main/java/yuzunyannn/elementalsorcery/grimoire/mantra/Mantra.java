@@ -156,7 +156,8 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 		reg(new MantraFireBall(), "fire_ball");
 		reg(new MantraLush(), "lush");
 		reg(new MantraBlockCrash(), "block_crash");
-		reg(new MantraAutoMining(), "auto_mining");
+		reg(new MantraMiningArea(), "mining_area");
+		reg(new MantraLightningArea(), "lightning_area");
 		reg(MantraSummon.instance, "summon");
 	}
 

@@ -46,10 +46,10 @@ public class MantraDataCommon implements IMantraData {
 	@SideOnly(Side.CLIENT)
 	public void setProgress(float pro, int color, World world, ICaster caster) {
 		if (caster.iWantCaster() != Minecraft.getMinecraft().player) return;
-		if (!this.hasMarkEffect(100)) {
+		if (!this.hasMarkEffect(10)) {
 			effectProgress = new EffectScreenProgress(world);
 			effectProgress.setColor(color);
-			this.addEffect(caster, effectProgress, 100, false);
+			this.addEffect(caster, effectProgress, 10, false);
 		} else {
 			if (effectProgress == null) return;
 			effectProgress.setProgress(pro);

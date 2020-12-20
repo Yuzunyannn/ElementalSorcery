@@ -26,7 +26,6 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementKnowledge;
 import yuzunyannn.elementalsorcery.element.ElementMetal;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -58,11 +57,6 @@ public class MantraFireBall extends MantraCommon {
 		this.setUnlocalizedName("fireBall");
 		this.setRarity(50);
 		this.setColor(0xff8f02);
-	}
-
-	@Override
-	public Element getMagicCircle() {
-		return ESInit.ELEMENTS.FIRE;
 	}
 
 	@Override

@@ -6,14 +6,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleElement;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleIcon;
 
 public class MantraCommon extends Mantra {
 
@@ -72,13 +70,10 @@ public class MantraCommon extends Mantra {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity, IMantraData data) {
-		return new EffectMagicCircleElement(world, entity, this.getMagicCircle());
-	}
-
-	@SideOnly(Side.CLIENT)
-	public Element getMagicCircle() {
-		return ESInit.ELEMENTS.VOID;
+	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity, IMantraData mData) {
+		EffectMagicCircle emc = new EffectMagicCircleIcon(world, entity, this.getIconResource());
+		emc.setColor(this.getRenderColor(mData));
+		return emc;
 	}
 
 }
