@@ -1,5 +1,10 @@
 {
-    "variants": {
-        "normal": { "model": "elementalsorcery:seal_stone" }
-    }
+	"variants": {
+		"variant=stone": {
+			"model": "elementalsorcery:seal_stone"
+		},
+		"variant=netherrack": {
+			"model": "elementalsorcery:seal_stone_netherrack"
+		}
+	}
 }

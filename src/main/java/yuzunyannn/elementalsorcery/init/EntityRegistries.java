@@ -1,11 +1,13 @@
 package yuzunyannn.elementalsorcery.init;
 
+import java.util.Map.Entry;
+
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.init.Biomes;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -24,6 +26,7 @@ import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.entity.EntityResonantCrystal;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
+import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
 import yuzunyannn.elementalsorcery.render.entity.EntityRenderFactory;
 import yuzunyannn.elementalsorcery.render.entity.RenderBlockThrowEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntitiyBulletin;
@@ -34,6 +37,7 @@ import yuzunyannn.elementalsorcery.render.entity.RenderEntityExploreDust;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityGrimoire;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityMagicMelting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortal;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityRelicZombie;
 
 public class EntityRegistries {
 
@@ -42,9 +46,17 @@ public class EntityRegistries {
 		register(0, "elf", EntityElf.class, "Elf", 64, 3, true);
 		registerEgg("elf", 0x82bf71, 0x529b3d);
 		register(1, "elfTraveler", EntityElfTravelling.class, "Elf2", 64, 3, true);
-		registerEntitySpawn(EntityElfTravelling.class, 5, 1, 2, EnumCreatureType.CREATURE, Biomes.PLAINS, Biomes.DESERT,
-				Biomes.FOREST, Biomes.BIRCH_FOREST, Biomes.EXTREME_HILLS, Biomes.SWAMPLAND, Biomes.HELL);
-		registerEntitySpawn(EntityElfTravelling.class, 10, 2, 3, EnumCreatureType.CREATURE, Biomes.PLAINS);
+		Entry<Biome, Integer>[] entries = ElementalSorcery.config.SPAWN.SPAWN_ELF.getAllBiomes();
+		for (Entry<Biome, Integer> entry : entries) {
+			int num = entry.getValue();
+			int add = 0;
+			if (num > 0) add = (int) MathHelper.sqrt(num) / 2;
+			Biome biome = entry.getKey();
+			registerEntitySpawn(EntityElfTravelling.class, 5 + num, 1, 2 + add, EnumCreatureType.CREATURE, biome);
+		}
+		register(2, "relicZombie", EntityRelicZombie.class, "RelicZombie", 64, 3, true);
+		registerEgg("relicZombie", 0x00a3a3, 0x529b3d);
+
 		// 效果处理
 		register(50, "block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);
 		register(51, "block_move", EntityBlockMove.class, "EntityBlockMove", 128, 1, false);
@@ -82,6 +94,7 @@ public class EntityRegistries {
 		registerRender(EntityPortal.class, RenderEntityPortal.class);
 		registerRender(EntityResonantCrystal.class, new EntityResonantCrystal.Factory());
 		registerRender(EntityElf.class, RenderEntityElf.class);
+		registerRender(EntityRelicZombie.class, RenderEntityRelicZombie.class);
 		registerRender(EntityExploreDust.class, RenderEntityExploreDust.class);
 		registerRender(EntityGrimoire.class, RenderEntityGrimoire.class);
 		registerRender(EntityBulletin.class, RenderEntitiyBulletin.class);

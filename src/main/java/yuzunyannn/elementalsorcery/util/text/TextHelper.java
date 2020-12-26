@@ -50,9 +50,13 @@ public class TextHelper {
 		return sb.toString();
 	}
 
-	static public ResourceLocation toESResourceLocation(String id) {
-		if (id.indexOf(':') == -1) return new ResourceLocation(ElementalSorcery.MODID, id);
+	static public ResourceLocation toResourceLocation(String id, String defaultDomain) {
+		if (id.indexOf(':') == -1) return new ResourceLocation(defaultDomain, id);
 		return new ResourceLocation(id);
+	}
+
+	static public ResourceLocation toESResourceLocation(String id) {
+		return toResourceLocation(id, ElementalSorcery.MODID);
 	}
 
 	public static String replaceStringWith$(String str, Function<Integer, String> getter) {

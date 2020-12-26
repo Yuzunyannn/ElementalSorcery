@@ -449,7 +449,7 @@ public class ESInit {
 		// 注册咒文
 		Mantra.registerAll();
 		KnowledgeType.registerAll();
-		//召唤注册
+		// 召唤注册
 		SummonRecipe.registerAll();
 		// 注册精灵大厦楼层
 		ElfRegister.registerAllFloor();
@@ -709,7 +709,8 @@ public class ESInit {
 		registerRender(BLOCKS.TRANSCRIBE_TABLE);
 		registerRender(BLOCKS.TRANSCRIBE_INJECTION);
 		registerRender(BLOCKS.RESEARCHER);
-		registerRender(BLOCKS.SEAL_STONE);
+		registerRender(BLOCKS.SEAL_STONE, 0, "seal_stone");
+		registerRender(BLOCKS.SEAL_STONE, 1, "seal_stone_netherrack");
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());

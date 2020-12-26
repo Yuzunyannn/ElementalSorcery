@@ -184,6 +184,7 @@ entity.Villager.paperman=PaperMan
 entity.Villager.eslearner=ElementLearner
 entity.Villager.magicallearner=MagicLearner
 entity.Elf.name=Elf
+entity.RelicZombie.name=Relic Zombie
 
 pro.none=Idle
 pro.warrior=Warrior

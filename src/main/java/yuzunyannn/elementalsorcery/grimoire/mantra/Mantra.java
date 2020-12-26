@@ -153,7 +153,7 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 		reg(new MantraEnderTeleport(), "ender_teleport");
 		reg(new MantraFloat(), "float");
 		reg(new MantraSprint(), "sprint");
-		reg(new MantraFireBall(), "fire_ball");
+		reg(MantraFireBall.instance, "fire_ball");
 		reg(new MantraLush(), "lush");
 		reg(new MantraBlockCrash(), "block_crash");
 		reg(new MantraMiningArea(), "mining_area");

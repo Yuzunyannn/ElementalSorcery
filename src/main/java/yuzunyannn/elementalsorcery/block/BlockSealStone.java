@@ -8,9 +8,16 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.properties.IProperty;
+import net.minecraft.block.properties.PropertyEnum;
+import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemMultiTexture.Mapper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IStringSerializable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -22,7 +29,9 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
-public class BlockSealStone extends Block {
+public class BlockSealStone extends Block implements Mapper {
+
+	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 
 	public BlockSealStone() {
 		super(Material.ROCK);
@@ -30,6 +39,56 @@ public class BlockSealStone extends Block {
 		setHarvestLevel("pickaxe", 1);
 		setHardness(1.5F);
 		setResistance(10.0F);
+	}
+
+	static public enum EnumType implements IStringSerializable {
+		STONE("stone"),
+		NETHERRACK("netherrack");
+
+		final String name;
+
+		EnumType(String name) {
+			this.name = name;
+		}
+
+		@Override
+		public String getName() {
+			return name;
+		}
+
+		public int getMetadata() {
+			return this.ordinal();
+		}
+
+		static public EnumType byMetadata(int meta) {
+			return EnumType.values()[0x1 & meta];
+		}
+	}
+
+	@Override
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+		for (BlockElfPlank.EnumType type : BlockElfPlank.EnumType.values())
+			items.add(new ItemStack(this, 1, type.getMetadata()));
+	}
+
+	@Override
+	public IBlockState getStateFromMeta(int meta) {
+		return this.getDefaultState().withProperty(VARIANT, EnumType.byMetadata(meta));
+	}
+
+	@Override
+	public int getMetaFromState(IBlockState state) {
+		return state.getValue(VARIANT).getMetadata();
+	}
+
+	@Override
+	protected BlockStateContainer createBlockState() {
+		return new BlockStateContainer(this, new IProperty[] { VARIANT });
+	}
+
+	@Override
+	public String apply(ItemStack var1) {
+		return "s";
 	}
 
 	public ItemStack getAncientPaper(World worldIn, @Nullable EntityPlayer player, int fortune) {

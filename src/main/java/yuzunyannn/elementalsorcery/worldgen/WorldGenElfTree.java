@@ -46,7 +46,7 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 		WorldGenAbstractTree genTree;
 		switch (type) {
 		case 1:
-			genTree = new WorldGenMegaJungle(true, 8, 4, WOOD, LEAVE);
+			genTree = new WorldGenMegaJungle(doBlockNotify, 8, 4, WOOD, LEAVE);
 			return genTree.generate(worldIn, rand, position);
 		default:
 			int treeSize = rand.nextInt(6) + 4;

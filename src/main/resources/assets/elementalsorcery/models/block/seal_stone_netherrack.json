@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "minecraft:blocks/netherrack",
+        "side": "elementalsorcery:blocks/seal_stone_netherrack"
+    }
+}

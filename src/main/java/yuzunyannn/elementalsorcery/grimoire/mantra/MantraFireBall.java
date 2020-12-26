@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementKnowledge;
 import yuzunyannn.elementalsorcery.element.ElementMetal;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
@@ -36,11 +37,27 @@ import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class MantraFireBall extends MantraCommon {
+
+	static public void fire(World world, EntityLivingBase spller, int power, boolean needKnowledge) {
+		EntityGrimoire grimoire = new EntityGrimoire(world, spller, instance, null,
+				EntityGrimoire.STATE_AFTER_SPELLING);
+		Data data = (Data) grimoire.getMantraData();
+		data.power = power;
+		data.pos = spller.getPositionVector().addVector(0, spller.getEyeHeight(), 0);
+		data.toward = spller.getLookVec();
+		data.pos = data.pos.add(data.toward.scale(2));
+		if (needKnowledge) data.knowledge = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 20, 150);
+		grimoire.setPosition(spller.posX, spller.posY, spller.posZ);
+		world.spawnEntity(grimoire);
+	}
+
+	public final static MantraFireBall instance = new MantraFireBall();
 
 	protected static class Data extends MantraDataCommon {
 		protected float power = 0;
@@ -51,6 +68,26 @@ public class MantraFireBall extends MantraCommon {
 
 		protected int color = 0;
 		protected boolean powerUp = false;
+
+		@Override
+		public NBTTagCompound serializeNBT() {
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setFloat("power", power);
+			NBTHelper.setPos(nbt, "pos", pos);
+			NBTHelper.setPos(nbt, "toward", toward);
+			if (!metal.isEmpty()) nbt.setTag("metal", metal.serializeNBT());
+			if (!knowledge.isEmpty()) nbt.setTag("know", knowledge.serializeNBT());
+			return nbt;
+		}
+
+		@Override
+		public void deserializeNBT(NBTTagCompound nbt) {
+			power = nbt.getFloat("power");
+			pos = NBTHelper.getPos(nbt, "pos");
+			toward = NBTHelper.getPos(nbt, "toward");
+			metal = new ElementStack(nbt.getCompoundTag("metal"));
+			knowledge = new ElementStack(nbt.getCompoundTag("know"));
+		}
 	}
 
 	public MantraFireBall() {
@@ -208,8 +245,7 @@ public class MantraFireBall extends MantraCommon {
 			});
 			for (EntityLivingBase living : entities) {
 				DamageSource ds = DamageSource.causeThornsDamage(entity).setMagicDamage();
-				living.attackEntityFrom(ds, data.power * data.power / 25);
-				living.setFire((int) (power * 2));
+				if (living.attackEntityFrom(ds, data.power * data.power / 25)) living.setFire((int) (power * 2));
 			}
 		}
 

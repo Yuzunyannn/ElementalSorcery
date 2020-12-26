@@ -135,7 +135,7 @@ tile.transcribeTable.name=撰录方桌
 tile.transcribeInjection.name=咒文撰录祭坛
 tile.elfBeacon.name=精灵信标
 tile.researcher.name=研究方桌
-tile.sealStone.name=封藏石
+tile.sealStone.s.name=封藏石
 
 enchantment.gatherSouls=聚魂
 
@@ -184,6 +184,7 @@ entity.Villager.paperman=古纸收集者
 entity.Villager.eslearner=元素知识学者
 entity.Villager.magicallearner=魔力学者
 entity.Elf.name=精灵
+entity.RelicZombie.name=遗迹僵尸
 
 pro.none=闲人
 pro.warrior=战士

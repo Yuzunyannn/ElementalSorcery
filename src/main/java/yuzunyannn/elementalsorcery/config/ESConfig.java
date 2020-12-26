@@ -1,8 +1,13 @@
-package yuzunyannn.elementalsorcery;
+package yuzunyannn.elementalsorcery.config;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class ESConfig {
 
@@ -18,6 +23,8 @@ public class ESConfig {
 	public final int QUEST_LIMIT = 5;
 	/** 包裹的最长保留时间 */
 	public final float MAX_LIFE_TIME_OF_PARCEL;
+	/** 生成相关配置 */
+	public final ESConfigGenAndSpawn SPAWN;
 
 	/** 手册的最大页面数 */
 	public final int MANUAL_MAX_PAGES;
@@ -52,6 +59,8 @@ public class ESConfig {
 		property = config.get(Configuration.CATEGORY_GENERAL, "max_life_time_of_parcel", 24 * 16,
 				"[邮局储存包裹的最长保持时间，超过时间就会被清除，单位小时，如果为-1表示用不清除]");
 		this.MAX_LIFE_TIME_OF_PARCEL = (float) property.getDouble();
+		// 生成
+		SPAWN = new ESConfigGenAndSpawn(config);
 
 		config.save();
 		ElementalSorcery.logger.info("config加载完成");
