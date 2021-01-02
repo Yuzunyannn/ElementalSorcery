@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -40,21 +39,11 @@ public class GuiResearch extends GuiContainer {
 
 	public final ContainerResearch container;
 
-	public static Set<String> getDefaultTopics() {
-		Set<String> all = new TreeSet<String>();
-		all.add("Mantra");
-		all.add("Engine");
-		all.add("Natural");
-		all.add("Ender");
-		all.add("Struct");
-		return all;
-	}
-
 	public GuiResearch(EntityPlayer player, BlockPos pos) {
 		super(new ContainerResearch(player, pos));
 		this.container = (ContainerResearch) inventorySlots;
 		ySize = xSize = 240;
-		Set<String> all = getDefaultTopics();
+		Set<String> all = ContainerResearch.getDefaultTopics();
 		for (String key : container.reasearher.keySet()) {
 			this.addTopics(key);
 			all.remove(key);

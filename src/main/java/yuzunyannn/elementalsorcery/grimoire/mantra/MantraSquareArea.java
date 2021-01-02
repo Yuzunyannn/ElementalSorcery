@@ -115,7 +115,6 @@ public abstract class MantraSquareArea extends MantraCommon {
 	public void onSpelling(World world, IMantraData mData, ICaster caster) {
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return;
-		this.onAccumulate(world, (SquareData) mData, caster);
 		super.onSpelling(world, mData, caster);
 	}
 
@@ -162,7 +161,7 @@ public abstract class MantraSquareArea extends MantraCommon {
 		if (!data.markContinue) return;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (caster.iWantCaster() == Minecraft.getMinecraft().player) if (!dataEffect.hasMarkEffect(1))
-			dataEffect.addEffect(caster, new EffectLookAt(world, caster, this.getRenderColor(mData)), 1);
+			dataEffect.addEffect(caster, new EffectLookAt(world, caster, this.getColor(mData)), 1);
 	}
 
 	@Override
@@ -178,7 +177,7 @@ public abstract class MantraSquareArea extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity, IMantraData mData) {
 		EffectMagicCircle emc = new EffectMagicCircleIcon(world, entity, this.getMagicCircleIcon());
-		emc.setColor(this.getRenderColor(mData));
+		emc.setColor(this.getColor(mData));
 		return emc;
 	}
 
@@ -187,7 +186,7 @@ public abstract class MantraSquareArea extends MantraCommon {
 		if (size <= 0) return;
 		if (data.hasMarkEffect(1000)) return;
 		Entity entity = caster.iWantDirectCaster();
-		EffectMagicSquare ems = new EffectMagicSquare(entity.world, entity, size, this.getRenderColor(data));
+		EffectMagicSquare ems = new EffectMagicSquare(entity.world, entity, size, this.getColor(data));
 		ems.setCondition(new ConditionEffect(entity, data, 1000, false));
 		data.addEffect(caster, ems, 1000);
 		ems.setIcon(this.getMagicCircleIcon());
@@ -198,8 +197,6 @@ public abstract class MantraSquareArea extends MantraCommon {
 	public abstract void onAfterSpellingInit(World world, SquareData mData, ICaster caster, BlockPos pos);
 
 	public abstract boolean onAfterSpellingTick(World world, SquareData mData, ICaster caster);
-
-	public abstract void onAccumulate(World world, SquareData mData, ICaster caster);
 
 	@SideOnly(Side.CLIENT)
 	public ResourceLocation getMagicCircleIcon() {

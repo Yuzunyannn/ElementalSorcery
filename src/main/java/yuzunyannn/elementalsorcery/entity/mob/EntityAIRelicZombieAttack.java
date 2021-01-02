@@ -30,7 +30,7 @@ public class EntityAIRelicZombieAttack extends EntityAIAttackMelee {
 	public void updateTask() {
 		EntityLivingBase entitylivingbase = this.attacker.getAttackTarget();
 		RelicZombieType type = zombie.getType();
-		double d0 = type.getAttackDistance();
+		double d0 = type.getAttackDistance() / 3 * 2;
 		if (entitylivingbase.getDistanceSq(attacker) <= d0 * d0) {
 			this.attacker.getLookHelper().setLookPositionWithEntity(entitylivingbase, 30.0F, 30.0F);
 			attacker.getNavigator().clearPath();

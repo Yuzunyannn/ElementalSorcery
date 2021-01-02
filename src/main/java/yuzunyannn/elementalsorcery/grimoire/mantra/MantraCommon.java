@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -32,18 +33,29 @@ public class MantraCommon extends Mantra {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public int getRenderColor(IMantraData mData) {
-		return this.getRenderColor();
+	public int getColor(IMantraData mData) {
+		return this.color;
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void onSpelling(World world, IMantraData data, ICaster caster) {
-		if (world.isRemote) {
-			MantraDataCommon dataEffect = (MantraDataCommon) data;
-			if (dataEffect.isMarkContinue()) onSpellingEffect(world, data, caster);
+		MantraDataCommon mdc = (MantraDataCommon) data;
+		this.onCollectElement(world, data, caster, caster.iWantKnowCastTick() + mdc.speedTick);
+		Entity entity = caster.iWantCaster();
+		// 创造模式20倍加速！
+		if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative()) {
+			for (int i = 0; i < 20; i++) {
+				this.onCollectElement(world, data, caster, caster.iWantKnowCastTick() + ++mdc.speedTick);
+			}
 		}
+		if (world.isRemote) {
+			if (mdc.isMarkContinue()) onSpellingEffect(world, data, caster);
+		}
+	}
+
+	/** 尝试收集元素，增加进度，该函数可能在一个tick内调用多次，通过speedTick来进行区分 */
+	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
+
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -60,7 +72,7 @@ public class MantraCommon extends Mantra {
 			float r = this.getProgressRate(world, data, caster);
 			if (r < 0) break out;
 			MantraDataCommon dataEffect = (MantraDataCommon) data;
-			dataEffect.setProgress(r, this.getRenderColor(data), world, caster);
+			dataEffect.setProgress(r, this.getColor(data), world, caster);
 		}
 	}
 
@@ -72,7 +84,7 @@ public class MantraCommon extends Mantra {
 	@SideOnly(Side.CLIENT)
 	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity, IMantraData mData) {
 		EffectMagicCircle emc = new EffectMagicCircleIcon(world, entity, this.getIconResource());
-		emc.setColor(this.getRenderColor(mData));
+		emc.setColor(this.getColor(mData));
 		return emc;
 	}
 

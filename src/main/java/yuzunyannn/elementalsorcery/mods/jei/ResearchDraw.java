@@ -18,7 +18,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
-import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
+import yuzunyannn.elementalsorcery.container.ContainerResearch;
 import yuzunyannn.elementalsorcery.container.gui.GuiTranscribeInjection;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.event.EventClient;
@@ -44,7 +44,7 @@ public class ResearchDraw implements IDrawable {
 	public void setRecipe(IResearchRecipe recipe) {
 		topics.clear();
 		allNeed = 0;
-		Set<String> all = GuiResearch.getDefaultTopics();
+		Set<String> all = ContainerResearch.getDefaultTopics();
 		List<Entry<String, Integer>> list = recipe.getRecipeInput();
 		float size = list.size();
 		for (Entry<String, Integer> entry : list) {

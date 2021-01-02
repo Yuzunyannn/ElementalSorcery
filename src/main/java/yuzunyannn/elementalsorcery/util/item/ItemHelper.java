@@ -1,5 +1,9 @@
 package yuzunyannn.elementalsorcery.util.item;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
@@ -88,5 +92,37 @@ public class ItemHelper {
 			return true;
 		}
 		return false;
+	}
+
+	static public ItemStack[] toArray(Object... objects) {
+		List<ItemStack> list = toList(objects);
+		return list.toArray(new ItemStack[list.size()]);
+	}
+
+	static public List<ItemStack> toList(Object... objects) {
+		List<ItemStack> list = new ArrayList<ItemStack>();
+		for (int i = 0; i < objects.length; i++) {
+			Object obj = objects[i];
+			if (obj instanceof ItemStack) list.add((ItemStack) obj);
+			else if (obj instanceof Block || obj instanceof Item) {
+				int count = 1, meta = 0;
+				int now = i;
+				if (now < objects.length - 1) {
+					if (objects[now + 1] instanceof Number) {
+						count = ((Number) objects[now + 1]).intValue();
+						i = now + 1;
+						if (now < objects.length - 2) {
+							if (objects[now + 2] instanceof Number) {
+								meta = ((Number) objects[now + 2]).intValue();
+								i = now + 2;
+							}
+						}
+					}
+				}
+				if (obj instanceof Block) list.add(new ItemStack((Block) obj, count, meta));
+				else list.add(new ItemStack((Item) obj, count, meta));
+			}
+		}
+		return list;
 	}
 }

@@ -16,8 +16,8 @@ public class QuestRewardExp extends QuestReward {
 
 	protected int exp = 0;
 
-	public QuestRewardExp exp(int coin) {
-		this.exp = coin;
+	public QuestRewardExp exp(int exp) {
+		this.exp = exp;
 		return this;
 	}
 

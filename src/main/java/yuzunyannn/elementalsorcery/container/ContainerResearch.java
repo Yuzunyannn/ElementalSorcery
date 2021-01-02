@@ -1,6 +1,8 @@
 package yuzunyannn.elementalsorcery.container;
 
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +24,17 @@ import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ContainerResearch extends Container implements IContainerNetwork {
+
+	public static Set<String> getDefaultTopics() {
+		Set<String> all = new TreeSet<String>();
+		all.add("Mantra");
+		all.add("Engine");
+		all.add("Natural");
+		all.add("Ender");
+		all.add("Struct");
+		return all;
+	}
+
 	/** 交互的玩家 */
 	public final EntityPlayer player;
 	/** 交互方块 */

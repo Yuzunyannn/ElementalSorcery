@@ -17,6 +17,7 @@ public class MantraDataCommon implements IMantraData {
 
 	public final Set<Short> effectSet = new HashSet<>();
 	public boolean markContinue;
+	public int speedTick;
 
 	public MantraDataCommon() {
 	}

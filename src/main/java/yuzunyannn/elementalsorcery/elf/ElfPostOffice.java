@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,6 +25,9 @@ import yuzunyannn.elementalsorcery.util.NBTTag;
 
 /** 精灵邮局 */
 public class ElfPostOffice extends WorldSavedData {
+
+	/** 把玩家名作为地址时的前缀 */
+	public static final String PLAYER_ADDRESS_PREFIX = "$$";
 
 	static private long lastGC;
 
@@ -84,6 +88,12 @@ public class ElfPostOffice extends WorldSavedData {
 		return nbt.getString("address");
 	}
 
+	public static String getOwner(ItemStack addressPlate) {
+		NBTTagCompound nbt = addressPlate.getTagCompound();
+		if (nbt == null) return "";
+		return nbt.getString("signature");
+	}
+
 	public static boolean isVIPAddressPlate(ItemStack addressPlate) {
 		return addressPlate.getItem() == ESInit.ITEMS.ADDRESS_PLATE && addressPlate.getMetadata() == 1;
 	}
@@ -125,6 +135,14 @@ public class ElfPostOffice extends WorldSavedData {
 		this.markDirty();
 	}
 
+	public void pushParcel(EntityLivingBase sender, EntityPlayer address, List<ItemStack> goods) {
+		pushParcel(sender, PLAYER_ADDRESS_PREFIX + address.getName(), goods);
+	}
+
+	public void pushParcel(EntityPlayer address, ItemStack parcel) {
+		pushParcel(PLAYER_ADDRESS_PREFIX + address.getName(), parcel);
+	}
+
 	/** 移除并获取一个包裹 */
 	public ItemStack popParcel(String address) {
 		LinkedList<NBTTagCompound> list = parcels.get(address);
@@ -138,10 +156,26 @@ public class ElfPostOffice extends WorldSavedData {
 		return parcel;
 	}
 
+	public ItemStack popParcel(String address, String owner) {
+		ItemStack stack = popParcel(address);
+		if (!stack.isEmpty()) return stack;
+		return popParcel(PLAYER_ADDRESS_PREFIX + owner);
+	}
+
 	public boolean hasParcel(String address) {
 		LinkedList<NBTTagCompound> list = parcels.get(address);
 		if (list == null || list.isEmpty()) return false;
 		return true;
+	}
+
+	public boolean hasParcel(ItemStack addressPlate) {
+		String address = getAddress(addressPlate);
+		LinkedList<NBTTagCompound> list = parcels.get(address);
+		if (list != null && !list.isEmpty()) return true;
+		String owner = getOwner(addressPlate);
+		list = parcels.get(PLAYER_ADDRESS_PREFIX + owner);
+		if (list != null && !list.isEmpty()) return true;
+		return false;
 	}
 
 	/** 创建一个新的地址牌 */

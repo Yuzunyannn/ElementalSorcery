@@ -149,20 +149,16 @@ public class MantraSummon extends MantraCommon {
 	}
 
 	@Override
-	public void onSpelling(World world, IMantraData mData, ICaster caster) {
+	public void onCollectElement(World world, IMantraData mData, ICaster caster, int speedTick) {
 		Data data = (Data) mData;
 		// 收集能量
-		if (data.markContinue) {
-			if (data.power < 100) {
-				ElementStack need = new ElementStack(ESInit.ELEMENTS.MAGIC, 1, 50);
-				ElementStack get = caster.iWantSomeElement(need, true);
-				if (get.isEmpty()) return;
-				Entity entity = caster.iWantCaster();
-				if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative()) data.power += 25;
-				else data.power++;
-			}
+		if (!data.markContinue) return;
+		if (data.power < 100) {
+			ElementStack need = new ElementStack(ESInit.ELEMENTS.MAGIC, 1, 50);
+			ElementStack get = caster.iWantSomeElement(need, true);
+			if (get.isEmpty()) return;
+			data.power++;
 		}
-		super.onSpelling(world, data, caster);
 	}
 
 	@Override
@@ -171,7 +167,9 @@ public class MantraSummon extends MantraCommon {
 		if (data.power < 100) return;
 		Entry<BlockPos, EnumFacing> entry = caster.iWantBlockTarget();
 		if (entry == null) return;
-		data.pos = entry.getKey().up();
+		data.pos = entry.getKey();
+		if (world.getBlockState(data.pos).getBlock() == ESInit.BLOCKS.RITE_TABLE) data.pos = data.pos.down();
+		else data.pos = data.pos.up();
 		if (data.summonRecipe != null)
 			data.summon = data.summonRecipe.createSummon(data.keepsake, data.world, data.pos);
 		caster.iWantDirectCaster().setPosition(data.pos.getX(), data.pos.getY(), data.pos.getZ());
@@ -217,15 +215,15 @@ public class MantraSummon extends MantraCommon {
 		if (!data.markContinue) return;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (caster.iWantCaster() == Minecraft.getMinecraft().player) if (!dataEffect.hasMarkEffect(1))
-			dataEffect.addEffect(caster, new EffectLookAt(world, caster, this.getRenderColor(mData)), 1);
+			dataEffect.addEffect(caster, new EffectLookAt(world, caster, this.getColor(mData)), 1);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public int getRenderColor(IMantraData mData) {
-		if (mData == null) return super.getRenderColor(mData);
+	public int getColor(IMantraData mData) {
+		if (mData == null) return super.getColor(mData);
 		Data data = (Data) mData;
-		if (data.summonRecipe == null) return super.getRenderColor(mData);
+		if (data.summonRecipe == null) return super.getColor(mData);
 		return data.summonRecipe.getColor(data.keepsake);
 	}
 

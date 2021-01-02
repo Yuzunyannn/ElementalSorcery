@@ -19,6 +19,11 @@ public class ItemSome {
 		return new Item().setUnlocalizedName(unloaclizedName);
 	}
 
+	/** 遗迹宝石 */
+	static public Item newRelicGem() {
+		return newItem("relicGem");
+	}
+
 	/** 折光宝石 */
 	static public Item newJumpGem() {
 		return newItem("jumpGem");

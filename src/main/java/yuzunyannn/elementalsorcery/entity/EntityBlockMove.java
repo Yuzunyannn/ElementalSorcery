@@ -260,7 +260,8 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			return;
 		}
 		if (addPerTick <= 0) {
-			addPerTick = 1 / (float) ((trace.getTotalLength() / 5.0f) * 20);
+			if (trace.getTotalLength() == 0) addPerTick = 1;
+			else addPerTick = 1 / (float) ((trace.getTotalLength() / 5.0f) * 20);
 		}
 		this.lastTickPosX = this.posX;
 		this.lastTickPosY = this.posY;
@@ -349,7 +350,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 				Block.spawnAsEntity(world, to, stack);
 				return;
 			}
-			world.destroyBlock(to, this.hasFlag(FLAG_DESTRUCT_DROP));
+			if (!world.isRemote) world.destroyBlock(to, this.hasFlag(FLAG_DESTRUCT_DROP));
 		}
 		// 放置方块
 		Item item = stack.getItem();

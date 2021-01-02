@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.grimoire;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.annotation.Nullable;
 
@@ -82,6 +83,21 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 		nbt = nbt == null ? new NBTTagCompound() : nbt;
 		Info info = new Info(m, nbt);
 		mantraList.add(info);
+	}
+
+	public void add(Mantra m) {
+		this.add(m, null);
+	}
+
+	public void remove(Mantra m) {
+		Iterator<Info> iter = mantraList.iterator();
+		while (iter.hasNext()) {
+			Info info = iter.next();
+			if (info.mantra == m) {
+				iter.remove();
+				break;
+			}
+		}
 	}
 
 	public Info getInfo(int i) {

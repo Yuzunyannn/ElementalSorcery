@@ -115,10 +115,11 @@ public class MantraFireBall extends MantraCommon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData mData, ICaster caster) {
-		super.onSpellingEffect(world, mData, caster);
-		if (!caster.hasEffectFlags(MantraEffectFlags.MAGIC_CIRCLE)) return;
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return;
+
+		super.onSpellingEffect(world, mData, caster);
+		if (!caster.hasEffectFlags(MantraEffectFlags.MAGIC_CIRCLE)) return;
 		Data data = (Data) mData;
 		Entity entity = caster.iWantCaster();
 		Random rand = world.rand;
@@ -150,22 +151,21 @@ public class MantraFireBall extends MantraCommon {
 	}
 
 	@Override
-	public float getProgressRate(World world, IMantraData data, ICaster caster) {
+	@SideOnly(Side.CLIENT)
+	public float getProgressRate(World world, IMantraData mData, ICaster caster) {
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return -1;
-		return (tick - 20) / 80.0f;
+		Data data = (Data) mData;
+		return data.power / 32f;
 	}
 
 	@Override
-	public void onSpelling(World world, IMantraData mData, ICaster caster) {
+	public void onCollectElement(World world, IMantraData mData, ICaster caster, int speedTick) {
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return;
 		Data data = (Data) mData;
 		data.powerUp = false;
-		if (data.power >= 32) {
-			super.onSpelling(world, mData, caster);
-			return;
-		}
+		if (data.power >= 32) return;
 		// 每tick两点消耗，积攒火球，火元素是必须的，否则没法积攒其他元素
 		ElementStack need = new ElementStack(ESInit.ELEMENTS.FIRE, 2, 50);
 		ElementStack stack = caster.iWantSomeElement(need, true);
@@ -190,7 +190,6 @@ public class MantraFireBall extends MantraCommon {
 			if (world.isRemote) if (world.rand.nextInt(5) == 0) data.color = ElementKnowledge.COLOR;
 			else data.color = 0;
 		}
-		super.onSpelling(world, mData, caster);
 	}
 
 	@Override

@@ -1,0 +1,13 @@
+{
+    "lev": -1,
+    "need": [
+        "element/nature_dust"
+    ],
+    "linked": [
+        "elementalsorcery:rock_camera"
+    ],
+    "type": "normal",
+    "name": "rockCamera",
+    "item": "elementalsorcery:rock_camera",
+    "background": "elementalsorcery:rock_camera"
+}

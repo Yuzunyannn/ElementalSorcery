@@ -79,28 +79,29 @@ public class TileElfBeacon extends TileEntityNetwork implements IGetItemStack, I
 		if (address.isEmpty()) return;
 		// 没包裹，走人
 		ElfPostOffice postOffice = ElfPostOffice.getPostOffice(world);
-		if (!postOffice.hasParcel(address)) return;
+		if (!postOffice.hasParcel(plate)) return;
 		// 没箱子的话，走人
 		BlockPos chestPos = tryFindChestAround(world, pos);
 		if (chestPos == null) return;
 		// 周围有精灵了，让她给我放
 		EntityElfBase postmain = getPostmanAround(world, pos);
 		if (postmain != null) {
-			sendParcelForMe(postmain, address, chestPos);
+			sendParcelForMe(postmain, plate, chestPos);
 			return;
 		}
 		// 没能创建精灵，走人
 		postmain = tryCreatePostman(world, pos);
 		if (postmain == null) return;
 		// 设置送快递
-		sendParcelForMe(postmain, address, chestPos);
+		sendParcelForMe(postmain, plate, chestPos);
 	}
 
 	// 给予精灵任务
-	protected void sendParcelForMe(EntityElfBase elf, String address, BlockPos chestPos) {
+	protected void sendParcelForMe(EntityElfBase elf, ItemStack plate, BlockPos chestPos) {
 		NBTTagCompound nbt = elf.getEntityData();
 		NBTHelper.setBlockPos(nbt, "chest", chestPos);
-		nbt.setString("address", address);
+		nbt.setString("address", ElfPostOffice.getAddress(plate));
+		nbt.setString("addressOwner", ElfPostOffice.getOwner(plate));
 	}
 
 	// 尝试创建一个精灵，再周围

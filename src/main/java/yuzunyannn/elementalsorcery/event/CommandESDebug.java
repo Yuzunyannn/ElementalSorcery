@@ -39,18 +39,22 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.BuildingSaveData;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityMagicMelting;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
+import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class CommandESDebug {
 
 	public static final String[] autoTips = new String[] { "reflush", "saveBuilding", "recordBuilding", "buildTest",
-			"portalTest", "showInfo", "blockMoveTest", "smeltingTest", "reloadeTexture" };
+			"portalTest", "showInfo", "blockMoveTest", "smeltingTest", "reloadeTexture", "quest" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -85,6 +89,12 @@ public class CommandESDebug {
 			}
 		}
 			return;
+		case "quest": {
+			Quest quest = Quests.createExploreQuests5(null, (EntityPlayer) sender.getCommandSenderEntity());
+			ItemHelper.addItemStackToPlayer((EntityPlayer) sender.getCommandSenderEntity(),
+					ItemQuest.createQuest(quest));
+			return;
+		}
 		// 保存手中的建筑
 		case "saveBuilding": {
 			Entity entity = sender.getCommandSenderEntity();

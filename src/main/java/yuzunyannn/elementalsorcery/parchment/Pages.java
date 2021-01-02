@@ -132,6 +132,7 @@ public class Pages {
 	/** 基本页面 */
 	static public final String ERROR = "error";
 	static public final String BOOK = "book";
+	static public final String ROCK_CAMRERA = "rock_camera";
 
 	// 注册
 	static public void init(Side side) throws IOException {

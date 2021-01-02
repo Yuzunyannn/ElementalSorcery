@@ -4,10 +4,13 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
+import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
+import yuzunyannn.elementalsorcery.util.ExceptionHelper;
 
 public class ContainerElfTalk extends ContainerElf implements IContainerNetwork {
 
@@ -24,8 +27,23 @@ public class ContainerElfTalk extends ContainerElf implements IContainerNetwork 
 		if (!player.world.isRemote) {
 			// 推后一帧
 			EventServer.addTask(() -> {
-				this.setChapter(this.elf.getProfession().getChapter(this.elf, player, shiftData));
+				this.initChapter();
 			});
+		}
+	}
+
+	private void initChapter() {
+		try {
+			TalkChapter chapter = this.elf.getProfession().getChapter(this.elf, player, shiftData);
+			this.setChapter(chapter);
+		} catch (Exception e) {
+			String msg = "精灵对话出现异常！";
+			ElementalSorcery.logger.warn(msg, e);
+			ExceptionHelper.warnSend(this.elf.world, msg);
+			msg = ExceptionHelper.getExcptionMsg(msg);
+			TalkChapter chapter = new TalkChapter();
+			chapter.addScene(new TalkSceneSay(msg));
+			this.setChapter(chapter);
 		}
 	}
 

@@ -94,6 +94,22 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 		return chapter;
 	}
 
+	public static boolean checkAddress(String address) {
+		for (int i = 0; i < address.length(); i++) {
+			char ch = address.charAt(i);
+			switch (ch) {
+			case '$':
+			case '?':
+			case '%':
+			case '*':
+				return false;
+			default:
+				break;
+			}
+		}
+		return true;
+	}
+
 	public static TalkChapter getChapterForApplyAddressPlate(EntityElfBase elf, EntityPlayer player,
 			NBTTagCompound shiftData) {
 		TalkChapter chapter = new TalkChapter();
@@ -101,6 +117,11 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 		// 没地址
 		if (address.isEmpty()) {
 			chapter.addScene(new TalkSceneSay("say.submit.empty"));
+			return chapter;
+		}
+		// 检查地址内容
+		if (!checkAddress(address)) {
+			chapter.addScene(new TalkSceneSay("say.address.illegal"));
 			return chapter;
 		}
 		int rest = ItemElfPurse.extract(player.inventory, 500, true);

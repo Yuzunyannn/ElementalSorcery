@@ -38,6 +38,7 @@ import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.network.MessageEntitySync;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
+import yuzunyannn.elementalsorcery.util.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -212,7 +213,9 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		try {
 			this.onEntityUpdate();
 		} catch (Exception e) {
+			String msg = "魔导书使用过程中出现异常！";
 			ElementalSorcery.logger.warn("魔导书使用过程中出现异常！", e);
+			ExceptionHelper.warnSend(world, msg);
 			super.setDead();
 		}
 	}

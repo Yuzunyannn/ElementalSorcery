@@ -2,17 +2,21 @@ package yuzunyannn.elementalsorcery.item.crystal;
 
 import java.util.List;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.item.Item;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.entity.EntityPortal;
+import yuzunyannn.elementalsorcery.explore.ExploreManagement;
+import yuzunyannn.elementalsorcery.explore.Explores;
 
 public class ItemNatureCrystal extends ItemCrystal {
 
@@ -22,44 +26,33 @@ public class ItemNatureCrystal extends ItemCrystal {
 	}
 
 	/** 获取数据 */
-	static public NBTTagCompound getData(ItemStack natureCrystal, boolean all) {
+	static public NBTTagCompound getData(ItemStack natureCrystal) {
 		if (natureCrystal.isEmpty()) return null;
 		return natureCrystal.getSubCompound("natureData");
+	}
+
+	static public NBTTagCompound getOrCreateData(ItemStack natureCrystal) {
+		return natureCrystal.getOrCreateSubCompound("natureData");
+	}
+
+	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+		// 创造模式快捷的移动
+		if (playerIn.isCreative() && playerIn.isSneaking()) {
+			ItemStack stack = playerIn.getHeldItem(handIn);
+			NBTTagCompound data = getData(stack);
+			if (data == null) return super.onItemRightClick(worldIn, playerIn, handIn);
+			int worldId = Explores.BASE.getWorldId(data);
+			BlockPos to = Explores.BASE.getPos(data);
+			EntityPortal.moveTo(playerIn, new Vec3d(to).addVector(0.5, 0.1, 0.5), worldId);
+			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+		}
+		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		super.addInformation(stack, worldIn, tooltip, flagIn);
-		NBTTagCompound nbt = stack.getSubCompound("natureData");
-		if (nbt == null || !NBTHelper.hasPos(nbt, "pos")) return;
-
-		BlockPos pos = NBTHelper.getBlockPos(nbt, "pos");
-		int wrold = nbt.getInteger("world");
-		String biome = nbt.getString("biome");
-		float rainfall = nbt.getFloat("rainfall");
-		boolean elfTree = nbt.getBoolean("elfTree");
-		tooltip.add(TextFormatting.GREEN + I18n.format("info.select.axis", pos.getX(), pos.getY(), pos.getZ()));
-		tooltip.add(TextFormatting.GREEN + I18n.format("info.dimension.id", wrold) + " :: " + biome);
-		tooltip.add(TextFormatting.GREEN + I18n.format("info.rainfall", rainfall));
-		if (elfTree) tooltip.add(TextFormatting.GREEN + I18n.format("info.can.grow.elf.edifice"));
-
-		if (!nbt.hasKey("ore")) return;
-		String archi = nbt.getString("archi");
-		if (archi == null) return;
-		if (!archi.isEmpty()) tooltip.add(TextFormatting.GREEN + I18n.format("info.around.have", archi));
-
-		NBTTagCompound ore = nbt.getCompoundTag("ore");
-		if (ore == null || ore.hasNoTags()) return;
-		StringBuilder builder = new StringBuilder();
-		for (String id : ore.getKeySet()) {
-			Item item = Item.getByNameOrId(id);
-			if (item == null) continue;
-			NBTTagCompound data = ore.getCompoundTag(id);
-			ItemStack o = new ItemStack(item, 1, data.getInteger("meta"));
-			builder.append(I18n.format(o.getUnlocalizedName() + ".name"));
-			builder.append("X").append(data.getInteger("count")).append(' ');
-		}
-		tooltip.add(TextFormatting.GREEN + I18n.format("info.mineral.deposits", builder.toString()));
+		ExploreManagement.instance.addInformation(stack, tooltip);
 	}
 }

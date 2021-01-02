@@ -121,6 +121,7 @@ import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.KeyBoard;
+import yuzunyannn.elementalsorcery.explore.ExploreManagement;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
@@ -128,6 +129,7 @@ import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemElfWatch;
 import yuzunyannn.elementalsorcery.item.ItemGrimoire;
+import yuzunyannn.elementalsorcery.item.ItemKeepsakes;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicGoldTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
@@ -138,6 +140,7 @@ import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.item.ItemRedHandset;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
+import yuzunyannn.elementalsorcery.item.ItemRockCamera;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.item.ItemSome;
 import yuzunyannn.elementalsorcery.item.ItemSoulFragment;
@@ -387,6 +390,9 @@ public class ESInit {
 		ITEMS.UNSCRAMBLE_NOTE = new ItemUnscrambleNote();
 		ITEMS.SOUL_FRAGMENT = new ItemSoulFragment();
 		ITEMS.SOUL_WOOD_SWORD = new ItemSoulWoodSword();
+		ITEMS.RELIC_GEM = ItemSome.newRelicGem();
+		ITEMS.ROCK_CAMERA = new ItemRockCamera();
+		ITEMS.KEEPSAKES = new ItemKeepsakes();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -451,6 +457,8 @@ public class ESInit {
 		KnowledgeType.registerAll();
 		// 召唤注册
 		SummonRecipe.registerAll();
+		// 探索数据注册
+		ExploreManagement.registerAll();
 		// 注册精灵大厦楼层
 		ElfRegister.registerAllFloor();
 		// 任务相关注册
@@ -660,6 +668,10 @@ public class ESInit {
 		registerRender(ITEMS.UNSCRAMBLE_NOTE);
 		registerRender(ITEMS.SOUL_FRAGMENT);
 		registerRender(ITEMS.SOUL_WOOD_SWORD);
+		registerRender(ITEMS.RELIC_GEM);
+		registerRender(ITEMS.ROCK_CAMERA);
+		ItemKeepsakes.EnumType keepsakeType = ItemKeepsakes.EnumType.RELIC_FRAGMENT;
+		registerRender(ITEMS.KEEPSAKES, keepsakeType.getMeta(), keepsakeType.getName());
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

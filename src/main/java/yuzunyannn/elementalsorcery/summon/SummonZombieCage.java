@@ -22,41 +22,39 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
 public class SummonZombieCage extends SummonCommon {
 
+	public static final int MAX_SIZE = 8;
+
+	protected Class<? extends Entity> creatureClass;
+	protected int zombie;
+	protected int offsetX, offsetZ;
+
 	public SummonZombieCage(World world, BlockPos pos) {
-		super(world, pos, 0x192b13);
+		this(world, pos, 0x192b13, EntityZombie.class);
+
 	}
 
 	public SummonZombieCage(World world, BlockPos pos, int color, Class<? extends Entity> type) {
 		super(world, pos, color);
 		this.creatureClass = type;
-	}
-
-	public static final int MAX_SIZE = 8;
-
-	protected Class<? extends Entity> creatureClass;
-	protected int tick;
-	protected int zombie;
-	protected int offsetX, offsetZ;
-
-	@Override
-	public void initData() {
-		this.size = 3;
-		this.height = 3;
 		this.zombie = world.rand.nextInt(16) + 8;
-		this.creatureClass = EntityZombie.class;
 		this.offsetX = -MAX_SIZE;
 		this.offsetZ = -MAX_SIZE;
 	}
 
 	@Override
+	public void initData() {
+		this.size = 4;
+		this.height = 4;
+	}
+
+	@Override
 	public boolean update() {
-		tick++;
-		if (tick % 2 != 0) return true;
+		if (tick++ % 2 != 0) return true;
+		if (zombie <= 0) return false;
 		if (updateOffset()) updateOffset();
 		else genZombie();
 
@@ -99,20 +97,10 @@ public class SummonZombieCage extends SummonCommon {
 			if (world.isAirBlock(pos)) continue;
 			break;
 		}
-		Random rand = world.rand;
 		IBlockState state = Blocks.COBBLESTONE.getDefaultState();
-		if (world.provider.getDimensionType() == DimensionType.NETHER) {
-			state = Blocks.NETHERRACK.getDefaultState();
-		}
-		for (int i = 1; i <= 2; i++) {
-			Vec3d from = new Vec3d(this.pos.up());
-			from = from.addVector(rand.nextDouble() - 0.5, rand.nextDouble() - 0.5, rand.nextDouble() - 0.5);
-			EntityBlockMove entity = new EntityBlockMove(world, from, pos.up(i), state);
-			entity.setFlag(EntityBlockMove.FLAG_FORCE_DESTRUCT, true);
-			entity.setFlag(EntityBlockMove.FLAG_INTO_CHEST, false);
-			entity.setFlag(EntityBlockMove.FLAG_DESTRUCT_DROP, true);
-			world.spawnEntity(entity);
-		}
+		if (world.provider.getDimensionType() == DimensionType.NETHER) state = Blocks.NETHERRACK.getDefaultState();
+
+		for (int i = 1; i <= 2; i++) this.genBlock(pos.up(i), state);
 	}
 
 	public void genZombie() {

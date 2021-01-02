@@ -227,7 +227,7 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 	}
 
 	// 进行传送
-	public void moveTo(Entity entity, Vec3d to, int toWorld) {
+	public static void moveTo(Entity entity, Vec3d to, int toWorld) {
 		if (entity.world.isRemote) return;
 		if (entity.world.provider.getDimension() == toWorld) entity.setPositionAndUpdate(to.x, to.y, to.z);
 		else entity.changeDimension(toWorld, new Teleporter(to));

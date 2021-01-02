@@ -12,13 +12,17 @@ import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.effect.EntityLightningBolt;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityIronGolem;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -29,6 +33,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumHand;
@@ -46,11 +51,12 @@ import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
+import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class EntityRelicZombie extends EntityMob {
 
-	protected static final DataParameter<Integer> TYPE = EntityDataManager.<Integer>createKey(EntityRelicZombie.class,
-			DataSerializers.VARINT);
+	protected static final DataParameter<Byte> TYPE = EntityDataManager.<Byte>createKey(EntityRelicZombie.class,
+			DataSerializers.BYTE);
 	protected int skillType;
 
 	public EntityRelicZombie(World worldIn) {
@@ -60,7 +66,7 @@ public class EntityRelicZombie extends EntityMob {
 	public EntityRelicZombie(World worldIn, RelicZombieType type) {
 		super(worldIn);
 		this.setSize(0.6F, 1.95F);
-		this.dataManager.set(TYPE, type.getId());
+		this.dataManager.set(TYPE, (byte) type.getId());
 		this.experienceValue = 300;
 		switch (type) {
 		case WARRIOR:
@@ -92,7 +98,7 @@ public class EntityRelicZombie extends EntityMob {
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.24);
+		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.35);
 		this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(35);
 		this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(4);
 		this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(2);
@@ -102,7 +108,7 @@ public class EntityRelicZombie extends EntityMob {
 	@Override
 	protected void entityInit() {
 		super.entityInit();
-		this.dataManager.register(TYPE, 0);
+		this.dataManager.register(TYPE, (byte) 0);
 	}
 
 	@Override
@@ -114,11 +120,15 @@ public class EntityRelicZombie extends EntityMob {
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		super.readEntityFromNBT(compound);
-		this.dataManager.set(TYPE, (int) compound.getByte("rzType"));
+		this.dataManager.set(TYPE, compound.getByte("rzType"));
 	}
 
 	protected void setHeldItem(Item item) {
 		this.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(item));
+	}
+
+	protected void setHeldItem(ItemStack item) {
+		this.setHeldItem(EnumHand.MAIN_HAND, item);
 	}
 
 	protected SoundEvent getAmbientSound() {
@@ -135,6 +145,41 @@ public class EntityRelicZombie extends EntityMob {
 
 	protected SoundEvent getStepSound() {
 		return SoundEvents.ENTITY_ZOMBIE_STEP;
+	}
+
+	@Override
+	protected boolean canDespawn() {
+		return false;
+	}
+
+	@Override
+	protected void updateEquipmentIfNeeded(EntityItem itemEntity) {
+		ItemStack itemstack = itemEntity.getItem();
+		EntityEquipmentSlot entityequipmentslot = getSlotForItemStack(itemstack);
+		// 主手不允许替换
+		if (entityequipmentslot == EntityEquipmentSlot.MAINHAND) return;
+		super.updateEquipmentIfNeeded(itemEntity);
+	}
+
+	@Override
+	protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
+		DamageSource ds = this.getLastDamageSource();
+		if (ds != null && "player".equals(ds.damageType)) {
+			// 遗迹水晶
+			int n = 1 + this.rand.nextInt(lootingModifier / 2 + 1);
+			for (int i = 0; i < n; i++) {
+				if (this.rand.nextFloat() >= 0.8) break;
+				this.dropItem(ESInit.ITEMS.RELIC_GEM, 1);
+			}
+		}
+
+		int n = this.rand.nextInt(4);
+		if (lootingModifier > 0) n += this.rand.nextInt(lootingModifier + 1);
+		RandomHelper.WeightRandom<Item> wr = new RandomHelper.WeightRandom<>();
+		wr.add(Items.ROTTEN_FLESH, 50);
+		wr.add(ESInit.ITEMS.MAGIC_CRYSTAL, 20);
+		wr.add(Items.IRON_INGOT, 5);
+		for (int i = 0; i < n; i++) this.dropItem(wr.get(), 1);
 	}
 
 	// 效果的cd时间，防止播放太多
@@ -239,19 +284,32 @@ public class EntityRelicZombie extends EntityMob {
 	protected boolean attackEntityAsMobWizard(Entity entityIn) {
 		if (this.isHandActive()) {
 			int count = 20 * 60 - this.activeItemStackUseCount;
+			if (count % 10 == 0) {
+				Entity target = this.getAttackTarget();
+				if (target != null) this.getLookHelper().setLookPositionWithEntity(target, 40.0F, 40.0F);
+			}
 			switch (skillType) {
 			default: {
-				if (count < 20 * 5) return false;
+				if (count < 20 * 4) return false;
 				EntityLightningBolt lightning = new EntityLightningBolt(world, entityIn.posX, entityIn.posY,
 						entityIn.posZ, true);
 				world.addWeatherEffect(lightning);
-				entityIn.attackEntityFrom(DamageSource.LIGHTNING_BOLT, 10);
+				entityIn.attackEntityFrom(DamageSource.LIGHTNING_BOLT, 6);
 				this.resetActiveHand();
 				return true;
 			}
 			case 1: {
-				if (count < 20 * 10) return false;
+				if (count < 20 * 8) return false;
 				MantraFireBall.fire(world, this, 16 + rand.nextInt(16), true);
+				this.resetActiveHand();
+				return true;
+			}
+			case 2: {
+				if (count < 20 * 5) return false;
+				EntityZombie ez = new EntityZombie(world);
+				ez.setChild(true);
+				ez.setPosition(this.posX, this.posY, this.posZ);
+				world.spawnEntity(ez);
 				this.resetActiveHand();
 				return true;
 			}
@@ -259,7 +317,18 @@ public class EntityRelicZombie extends EntityMob {
 		}
 		if (this.rand.nextFloat() < 0.5) return false;
 		this.setActiveHand(EnumHand.MAIN_HAND);
-		skillType = rand.nextInt(2);
+		skillType = rand.nextInt(3);
+		switch (skillType) {
+		default:
+			this.setHeldItem(ESInit.ITEMS.ORDER_CRYSTAL);
+			break;
+		case 1:
+			this.setHeldItem(Item.getItemFromBlock(Blocks.TORCH));
+			break;
+		case 2:
+			this.setHeldItem(new ItemStack(Items.SKULL, 1, 2));
+			break;
+		}
 		return true;
 	}
 
@@ -290,16 +359,22 @@ public class EntityRelicZombie extends EntityMob {
 			double maxHealth = this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).getBaseValue();
 			double health = this.getHealth();
 			double rate = health / maxHealth;
-			if (rate < 0.5) {
-				this.addPotionEffect(new PotionEffect(MobEffects.SPEED, 20 * 10, 2));
+			if (rate < 0.4) {
+				this.addPotionEffect(new PotionEffect(MobEffects.SPEED, 20 * 10, 3));
 				this.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 20 * 10, 3));
 				this.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 20 * 10, 1));
 				this.addPotionEffect(new PotionEffect(MobEffects.HASTE, 20 * 10, 1));
-			} else if (rate < 0.6) this.setHeldItem(ESInit.ITEMS.MAGIC_GOLD_SWORD);
-			else if (rate < 0.7) this.setHeldItem(Items.DIAMOND_SWORD);
+				this.setHeldItem(ESInit.ITEMS.MAGIC_GOLD_SWORD);
+			} else if (rate < 0.6) this.setHeldItem(Items.DIAMOND_SWORD);
 			else if (rate < 0.8) this.setHeldItem(Items.IRON_SWORD);
 		}
 		return flag;
+	}
+
+	protected void priestResetEnd(Entity entity) {
+		world.playSound(null, entity.getPosition(), SoundEvents.ENTITY_SPLASH_POTION_BREAK, SoundCategory.PLAYERS, 1,
+				1);
+		this.resetActiveHand();
 	}
 
 	// 牧师攻击
@@ -308,30 +383,18 @@ public class EntityRelicZombie extends EntityMob {
 			int count = 20 * 60 - this.activeItemStackUseCount;
 			switch (skillType) {
 			default: {
-				if (count < 20 * 5) return false;
+				if (count < 20 * 4) return false;
 				if (entityIn instanceof EntityLivingBase) {
 					EntityLivingBase living = ((EntityLivingBase) entityIn);
 					living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20 * 10, rand.nextInt(3) + 1));
 					living.addPotionEffect(new PotionEffect(MobEffects.POISON, 20 * 5, rand.nextInt(3) + 1));
+					living.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 20 * 4, 1));
 				}
-				world.playSound(null, entityIn.getPosition(), SoundEvents.ENTITY_SPLASH_POTION_BREAK,
-						SoundCategory.PLAYERS, 1, 1);
-				this.resetActiveHand();
+				this.priestResetEnd(entityIn);
 				return true;
 			}
 			case 1: {
-				if (count < 20 * 3) return false;
-				if (entityIn instanceof EntityLivingBase) {
-					EntityLivingBase living = ((EntityLivingBase) entityIn);
-					living.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 20 * 4, 1));
-				}
-				world.playSound(null, entityIn.getPosition(), SoundEvents.ENTITY_SPLASH_POTION_BREAK,
-						SoundCategory.PLAYERS, 1, 1);
-				this.resetActiveHand();
-				return true;
-			}
-			case 2: {
-				if (count < 20 * 10) return false;
+				if (count < 20 * 4) return false;
 				AxisAlignedBB aabb = new AxisAlignedBB(entityIn.posX - 8, entityIn.posY, entityIn.posZ - 8,
 						entityIn.posX + 8, entityIn.posY + 4, entityIn.posZ + 8);
 				List<EntityMob> mobs = world.getEntitiesWithinAABB(EntityMob.class, aabb);
@@ -340,9 +403,21 @@ public class EntityRelicZombie extends EntityMob {
 					mob.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 20 * 10, 1 + rand.nextInt(2)));
 					mob.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 20 * 10, 1));
 				}
-				world.playSound(null, entityIn.getPosition(), SoundEvents.ENTITY_SPLASH_POTION_BREAK,
-						SoundCategory.PLAYERS, 1, 1);
-				this.resetActiveHand();
+				this.priestResetEnd(entityIn);
+				return true;
+			}
+			case 2: {
+				if (count < 20 * 4) return false;
+				AxisAlignedBB aabb = new AxisAlignedBB(entityIn.posX - 8, entityIn.posY, entityIn.posZ - 8,
+						entityIn.posX + 8, entityIn.posY + 4, entityIn.posZ + 8);
+				List<EntityMob> mobs = world.getEntitiesWithinAABB(EntityMob.class, aabb);
+				for (EntityMob mob : mobs) {
+					mob.addPotionEffect(new PotionEffect(MobEffects.HEALTH_BOOST, 20 * 10, 1 + rand.nextInt(2)));
+					mob.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, 20 * 10, 1 + rand.nextInt(2)));
+					mob.addPotionEffect(new PotionEffect(MobEffects.SPEED, 20 * 10, 1 + rand.nextInt(2)));
+					mob.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 20 * 10, 2 + rand.nextInt(2)));
+				}
+				this.priestResetEnd(entityIn);
 				return true;
 			}
 			}
@@ -350,6 +425,19 @@ public class EntityRelicZombie extends EntityMob {
 		if (this.rand.nextFloat() < 0.8) return false;
 		this.setActiveHand(EnumHand.MAIN_HAND);
 		skillType = rand.nextInt(3);
+		ItemStack handShow = new ItemStack(Items.POTIONITEM);
+		switch (skillType) {
+		default:
+			PotionUtils.addPotionToItemStack(handShow, PotionTypes.POISON);
+			break;
+		case 1:
+			PotionUtils.addPotionToItemStack(handShow, PotionTypes.REGENERATION);
+			break;
+		case 2:
+			PotionUtils.addPotionToItemStack(handShow, PotionTypes.STRENGTH);
+			break;
+		}
+		this.setHeldItem(handShow);
 		return true;
 	}
 

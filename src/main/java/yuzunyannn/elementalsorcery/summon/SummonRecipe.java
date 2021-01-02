@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.item.ItemKeepsakes;
 
 public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 
@@ -115,6 +116,8 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 	public static void registerAll() {
 		reg("silverfish_spring", SummonSilverfishSpring.class, 128, 0x109e41, new ItemStack(Items.EXPERIENCE_BOTTLE));
 		reg("zombie_cage", new SummonRecipeZombieCage());
+		reg("relic_zombie", SummonRelicZombie.class, 256, 0x285f57,
+				ItemKeepsakes.create(ItemKeepsakes.EnumType.RELIC_FRAGMENT, 1));
 	}
 
 	private static SummonRecipe reg(String name, SummonRecipe m) {

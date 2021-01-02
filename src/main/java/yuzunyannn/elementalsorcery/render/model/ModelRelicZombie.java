@@ -159,7 +159,7 @@ public class ModelRelicZombie extends ModelBase {
 		leftArm.rotateAngleY = 0.0F;
 
 		if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).isHandActive()) {
-			rightArm.rotateAngleX = -3.14f / 4 * 3 + MathHelper.sin(ageInTicks) * 0.2f;
+			rightArm.rotateAngleX = ageInTicks * 0.25f * 3.14f;
 		} else if (this.swingProgress > 0.0F) {
 			EnumHandSide enumhandside = this.getMainHand(entity);
 			ModelRenderer modelrenderer = this.getArmForSide(enumhandside);

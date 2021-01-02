@@ -15,6 +15,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.render.effect.StructElement2D;
+import yuzunyannn.elementalsorcery.util.ColorHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class RenderEntityPortalEffect implements EntityPortal.IPortalDraw {
@@ -60,7 +61,7 @@ public class RenderEntityPortalEffect implements EntityPortal.IPortalDraw {
 			GlStateManager.depthMask(true);
 		} else {
 			APERTURE.bind();
-			GlStateManager.color(118f / 255, 41f / 255, 141f / 255, 1);
+			GlStateManager.color(204f / 255, 0f / 255, 250f / 255, 1);
 			StructElement2D.renderRect(bufferbuilder, 1.75f);
 			tessellator.draw();
 		}
@@ -94,9 +95,10 @@ public class RenderEntityPortalEffect implements EntityPortal.IPortalDraw {
 
 		public Part(int mode) {
 			drawSize = 0.15f;
-			r = 118f / 255;
-			g = 41f / 255;
-			b = 141f / 255;
+			Vec3d color = ColorHelper.color(0xcc00fa);
+			r = (float) color.x;
+			g = (float) color.y;
+			b = (float) color.z;
 			if (mode == -1) return;
 			if (mode == 1) {
 				circle += rand.nextFloat() * 0.3f + 0.2f;

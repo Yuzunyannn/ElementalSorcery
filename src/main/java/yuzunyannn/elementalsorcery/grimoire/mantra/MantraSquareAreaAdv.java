@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.util.VariableSet;
 
 public abstract class MantraSquareAreaAdv extends MantraSquareArea {
@@ -72,9 +73,9 @@ public abstract class MantraSquareAreaAdv extends MantraSquareArea {
 	}
 
 	@Override
-	public void onAccumulate(World world, SquareData mData, ICaster caster) {
-		int tick = caster.iWantKnowCastTick();
-		if (tick % this.getAccumulatePreTick() != 0) return;
+	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
+		SquareData mData = (SquareData) data;
+		if (speedTick % this.getAccumulatePreTick() != 0) return;
 		boolean firstInfo = true;
 		for (CollectInfo info : collectList) {
 			ElementStack estack = mData.getElement(info.element.getElement());

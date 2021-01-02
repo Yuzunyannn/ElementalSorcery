@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.summon;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.math.BlockPos;
@@ -10,6 +11,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.util.ColorHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
@@ -19,6 +21,7 @@ public class SummonCommon extends Summon {
 	protected int size = 1;
 	protected int height = 2;
 	protected int color;
+	protected int tick;
 
 	public SummonCommon(World world, BlockPos pos) {
 		this(world, pos, 0xda003e);
@@ -35,8 +38,19 @@ public class SummonCommon extends Summon {
 
 	}
 
+	public BlockPos getPosition() {
+		return pos;
+	}
+
+	@Override
+	public boolean update() {
+		this.tick++;
+		return false;
+	}
+
 	@SideOnly(Side.CLIENT)
 	public void initRender() {
+		renders.clear();
 		Vec3d c = ColorHelper.color(getColor());
 		r = (float) c.x;
 		g = (float) c.y;
@@ -148,15 +162,25 @@ public class SummonCommon extends Summon {
 		return color;
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
-	public void updateRender() {
+	public int getRenderEndTick() {
+		return 20;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void updateRender(int endTick) {
 		preAlpha = alpha;
-		alpha += (1 - alpha) * 0.05f;
+		if (endTick >= 20) alpha += (1 - alpha) * 0.05f;
+		else alpha = endTick / 20f;
 		for (RenderObject obj : renders) obj.update();
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void doRender(Minecraft mc, float partialTicks) {
+		BlockPos pos = this.getPosition();
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(pos.getX() + 0.5, pos.getY() + 0.05, pos.getZ() + 0.5);
 		GlStateManager.rotate(90, 1, 0, 0);
@@ -165,6 +189,15 @@ public class SummonCommon extends Summon {
 		float alpha = RenderHelper.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
 		for (RenderObject obj : renders) obj.render(partialTicks, alpha);
 		GlStateManager.popMatrix();
+	}
+
+	protected void genBlock(BlockPos pos, IBlockState state) {
+		Vec3d from = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+		EntityBlockMove entity = new EntityBlockMove(world, from, pos, state);
+		entity.setFlag(EntityBlockMove.FLAG_FORCE_DESTRUCT, true);
+		entity.setFlag(EntityBlockMove.FLAG_INTO_CHEST, false);
+		entity.setFlag(EntityBlockMove.FLAG_DESTRUCT_DROP, true);
+		world.spawnEntity(entity);
 	}
 
 }

@@ -197,10 +197,10 @@ public class TileRiteTable extends TileEntityNetwork {
 			return true;
 		}
 		// 召唤仪式
-		if (summonRecipe != null) out: {
+		if (summonRecipe != null) {
 			int cost = summonRecipe.getSoulCost(specialItem, world, pos.up());
 			ItemSoulWoodSword.addSoul(tool, -cost);
-			MantraSummon.summon(world, pos.up(), entity, specialItem.copy(), summonRecipe);
+			MantraSummon.summon(world, pos.down(), entity, specialItem.copy(), summonRecipe);
 			ItemHelper.clear(inventory);
 			Block.spawnAsEntity(world, pos.up(), specialItem);
 			this.updateToClient();

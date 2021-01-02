@@ -71,6 +71,10 @@ public class ESObjects {
 		public Item UNSCRAMBLE_NOTE;
 		public Item SOUL_FRAGMENT;
 		public Item SOUL_WOOD_SWORD;
+		public Item RELIC_GEM;
+		public Item ROCK_CAMERA;
+		public Item KEEPSAKES;
+
 	}
 
 	static public class Blocks {

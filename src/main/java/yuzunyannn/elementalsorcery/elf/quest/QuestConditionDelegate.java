@@ -13,7 +13,7 @@ public class QuestConditionDelegate extends QuestCondition {
 	protected String name = "";
 
 	public QuestConditionDelegate delegate(EntityPlayer player) {
-		this.name = player.getName();
+		this.name = player == null ? "" : player.getName();
 		return this;
 	}
 

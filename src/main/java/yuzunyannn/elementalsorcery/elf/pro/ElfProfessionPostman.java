@@ -96,12 +96,12 @@ public class ElfProfessionPostman extends ElfProfessionUndetermined {
 		NBTTagCompound nbt = elf.getEntityData();
 		if (!nbt.hasKey("address", NBTTag.TAG_STRING)) return;
 		String address = nbt.getString("address");
+		String owner = nbt.getString("addressOwner");
 		if (address.isEmpty()) return;
 		if (nbt.hasKey("receiver")) {
 			int id = nbt.getInteger("receiver");
 			Entity entity = elf.world.getEntityByID(id);
 			if (entity == null || !(entity instanceof EntityLivingBase)) return;
-			EntityLivingBase living = (EntityLivingBase) entity;
 			elf.getLookHelper().setLookPositionWithEntity(entity, elf.getHorizontalFaceSpeed(),
 					elf.getVerticalFaceSpeed());
 			// 走过去
@@ -115,7 +115,7 @@ public class ElfProfessionPostman extends ElfProfessionUndetermined {
 				return;
 			}
 			ElfPostOffice postOffice = ElfPostOffice.getPostOffice(elf.world);
-			ItemStack parcel = postOffice.popParcel(address);
+			ItemStack parcel = postOffice.popParcel(address, owner);
 			if (parcel.isEmpty()) return;
 			elf.entityDropItem(parcel, 2);
 			entity.sendMessage(new TextComponentTranslation("say.your.pracel", elf.getName()));
@@ -134,7 +134,7 @@ public class ElfProfessionPostman extends ElfProfessionUndetermined {
 			if (inv == null) return;
 			// 放包裹
 			ElfPostOffice postOffice = ElfPostOffice.getPostOffice(elf.world);
-			ItemStack parcel = postOffice.popParcel(address);
+			ItemStack parcel = postOffice.popParcel(address, owner);
 			if (parcel.isEmpty()) return;
 			elf.swingArm(EnumHand.MAIN_HAND);
 			parcel = BlockHelper.insertInto(inv, parcel);

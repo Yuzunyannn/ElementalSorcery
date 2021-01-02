@@ -9,17 +9,24 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 public class EffectSummonRender extends EffectCondition {
 
 	public final MantraSummon.Data data;
+	public int endTick;
 
 	public EffectSummonRender(World world, MantraSummon.Data data) {
 		super(world);
 		this.lifeTime = 1;
 		this.data = data;
+		this.endTick = data.getSummon().getRenderEndTick();
 	}
 
 	@Override
 	public void onUpdate() {
-		super.onUpdate();
-		data.getSummon().updateRender();
+		if (this.isEnd()) {
+			if (--endTick <= 0) {
+				this.lifeTime = 0;
+				return;
+			}
+		}
+		data.getSummon().updateRender(endTick);
 	}
 
 	@Override

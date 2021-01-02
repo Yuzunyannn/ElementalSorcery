@@ -44,9 +44,15 @@ public class Summon implements INBTSerializable<NBTTagCompound> {
 	public void deserializeNBT(NBTTagCompound nbt) {
 		this.readFromNBT(nbt);
 	}
-	
+
+	/** 正常结束后，渲染保留的持续时间 */
 	@SideOnly(Side.CLIENT)
-	public void updateRender() {
+	public int getRenderEndTick() {
+		return 0;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void updateRender(int endTick) {
 
 	}
 

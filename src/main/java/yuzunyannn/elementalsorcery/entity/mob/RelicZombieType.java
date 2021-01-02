@@ -4,8 +4,8 @@ import java.util.Random;
 
 public enum RelicZombieType {
 	WARRIOR(0, 0xff0000, 1.5f),
-	WIZARD(1, 0x0000ff, 8),
-	PRIEST(2, 0x00ff00, 8);
+	WIZARD(1, 0x0000ff, 12),
+	PRIEST(2, 0x00ff00, 12);
 
 	final int color;
 	final int id;

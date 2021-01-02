@@ -8,6 +8,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -110,6 +113,13 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 		return this;
 	}
 
+	public ITextComponent getTextComponent() {
+		ITextComponent itextcomponent = new TextComponentString("[");
+		itextcomponent.appendSibling(new TextComponentTranslation(this.getUnlocalizedName() + ".name"));
+		itextcomponent.appendSibling(new TextComponentString("]"));
+		return itextcomponent;
+	}
+
 	@Nullable
 	static public Mantra getFromNBT(NBTTagCompound nbt) {
 		if (nbt == null) return null;
@@ -127,7 +137,7 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	 * @param mData 动态时候会传入
 	 */
 	@SideOnly(Side.CLIENT)
-	public int getRenderColor(@Nullable IMantraData mData) {
+	public int getColor(@Nullable IMantraData mData) {
 		return 0xcac5e0;
 	}
 

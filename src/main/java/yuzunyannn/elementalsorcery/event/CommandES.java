@@ -11,15 +11,18 @@ import javax.annotation.Nullable;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
@@ -32,11 +35,17 @@ import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
+import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
+import yuzunyannn.elementalsorcery.grimoire.Grimoire;
+import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.ItemAncientPaper.EnumType;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.util.text.TextHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class CommandES extends CommandBase {
@@ -57,13 +66,13 @@ public class CommandES extends CommandBase {
 		switch (args[0]) {
 		case "build":// 建筑
 		{
-			if (args.length == 1) throw new CommandException("commands.es.build.usage");
+			if (args.length == 1) throw new WrongUsageException("commands.es.build.usage");
 			Entity entity = sender.getCommandSenderEntity();
 			this.cmdBuild(args[1], (EntityLivingBase) entity, server.getEntityWorld());
 			return;
 		}
 		case "buildFloor": {
-			if (args.length == 1) throw new CommandException("commands.es.buildFloor.usage");
+			if (args.length == 1) throw new WrongUsageException("commands.es.buildFloor.usage");
 			Entity entity = sender.getCommandSenderEntity();
 			this.cmdBuildFloor(args[1], (EntityLivingBase) entity, server.getEntityWorld());
 			return;
@@ -71,7 +80,7 @@ public class CommandES extends CommandBase {
 		case "page":
 		// 页面
 		{
-			if (args.length == 1) throw new CommandException("commands.es.page.usage");
+			if (args.length == 1) throw new WrongUsageException("commands.es.page.usage");
 			String idStr = args[1];
 			if (!Pages.isVaild(idStr)) throw new CommandException("commands.es.page.fail");
 			Entity entity = sender.getCommandSenderEntity();
@@ -85,8 +94,12 @@ public class CommandES extends CommandBase {
 		}
 		case "quest": {
 			if (args.length == 1) throw new CommandException("commands.es.quest.usage");
-			Entity entity = sender.getCommandSenderEntity();
-			this.cmdQuest(Arrays.copyOfRange(args, 1, args.length), server, (EntityLivingBase) entity);
+			this.cmdQuest(Arrays.copyOfRange(args, 1, args.length), server, sender);
+			return;
+		}
+		case "mantra": {
+			if (args.length < 3) throw new CommandException("commands.es.mantra.usage");
+			this.cmdMantra(Arrays.copyOfRange(args, 1, args.length), server, sender);
 			return;
 		}
 		case "debug":
@@ -106,7 +119,7 @@ public class CommandES extends CommandBase {
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			@Nullable BlockPos targetPos) {
 		if (args.length == 1) {
-			String[] names = { "build", "page", "debug", "buildFloor", "quest" };
+			String[] names = { "build", "page", "debug", "buildFloor", "quest", "mantra" };
 			return CommandBase.getListOfStringsMatchingLastWord(args, names);
 		} else if (args.length >= 2) {
 			switch (args[0]) {
@@ -115,26 +128,30 @@ public class CommandES extends CommandBase {
 				List<String> arrayList = new ArrayList<>(bs.size() + 1);
 				for (Building b : bs) arrayList.add(b.getKeyName());
 				arrayList.add("it");
-				List<String> tips = CommandBase.getListOfStringsMatchingLastWord(args, arrayList);
+				List<String> tips = getListOfStringsMatchingLastWord(args, arrayList);
 				return tips;
 			}
 			case "buildFloor": {
 				Collection<ResourceLocation> bs = ElfEdificeFloor.REGISTRY.getKeys();
-				return CommandBase.getListOfStringsMatchingLastWord(args, bs);
+				return getListOfStringsMatchingLastWord(args, bs);
 			}
 			case "page": {
 				Set<String> set = Pages.getPageIds();
 				String[] names = new String[set.size()];
 				set.toArray(names);
-				return CommandBase.getListOfStringsMatchingLastWord(args, names);
+				return getListOfStringsMatchingLastWord(args, names);
 			}
 			case "quest": {
-				if (args.length > 2) return CommandBase.getListOfStringsMatchingLastWord(args,
-						sender.getCommandSenderEntity().getName());
-				return CommandBase.getListOfStringsMatchingLastWord(args, "clear");
+				if (args.length > 2) return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+				return getListOfStringsMatchingLastWord(args, "clear");
+			}
+			case "mantra": {
+				if (args.length > 3) return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+				if (args.length > 2) return getListOfStringsMatchingLastWord(args, Mantra.REGISTRY.getKeys());
+				return getListOfStringsMatchingLastWord(args, "give", "remove", "add");
 			}
 			case "debug": {
-				return CommandBase.getListOfStringsMatchingLastWord(args, CommandESDebug.autoTips);
+				return getListOfStringsMatchingLastWord(args, CommandESDebug.autoTips);
 			}
 			default:
 			}
@@ -142,17 +159,59 @@ public class CommandES extends CommandBase {
 		return CommandBase.getListOfStringsMatchingLastWord(args);
 	}
 
-	private void cmdQuest(String[] args, MinecraftServer server, EntityLivingBase entity) throws CommandException {
+	private void cmdMantra(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
+		EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity();
+		if (args.length > 2) player = getPlayer(server, sender, args[1]);
+		ResourceLocation id = TextHelper.toESResourceLocation(args[1]);
+		Mantra mantra = Mantra.REGISTRY.getValue(id);
+		if (mantra == null) throw new CommandException("commands.es.mantra.notFound", id.toString());
+
+		ItemStack grimoireStack = player.getHeldItem(EnumHand.MAIN_HAND);
+		Grimoire grimoire = grimoireStack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+		switch (args[0]) {
+		case "give":
+			AncientPaper ap = new AncientPaper();
+			grimoireStack = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, EnumType.NEW_WRITTEN.getMetadata());
+			ap.setMantra(mantra).setStart(0).setEnd(100);
+			ap.saveState(grimoireStack);
+			ItemHelper.addItemStackToPlayer(player, grimoireStack);
+			notifyCommandListener(sender, this, "commands.es.mantra.give", player.getName(), mantra.getTextComponent());
+			return;
+		case "remove":
+			if (grimoire == null) {
+				grimoireStack = new ItemStack(ESInit.ITEMS.GRIMOIRE);
+				throw new CommandException("commands.es.notFound",
+						grimoireStack.getTextComponent().setStyle(new Style().setColor(TextFormatting.RED)));
+			}
+			grimoire.remove(mantra);
+			grimoire.saveState(grimoireStack);
+			notifyCommandListener(sender, this, "commands.es.mantra.remove", player.getName(),
+					mantra.getTextComponent());
+			return;
+		case "add":
+			if (grimoire == null) {
+				grimoireStack = new ItemStack(ESInit.ITEMS.GRIMOIRE);
+				throw new CommandException("commands.es.notFound",
+						grimoireStack.getTextComponent().setStyle(new Style().setColor(TextFormatting.RED)));
+			}
+			grimoire.add(mantra);
+			grimoire.saveState(grimoireStack);
+			notifyCommandListener(sender, this, "commands.es.mantra.add", player.getName(), mantra.getTextComponent());
+			return;
+		default:
+			throw new CommandException("commands.es.mantra.usage");
+		}
+
+	}
+
+	private void cmdQuest(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
 		switch (args[0]) {
 		case "clear": {
-			EntityLivingBase player = entity;
-			if (args.length > 1) {
-				player = server.getPlayerList().getPlayerByUsername(args[1]);
-				if (player == null) throw new CommandException("commands.generic.player.notFound", args[1]);
-			}
+			EntityLivingBase player = (EntityLivingBase) sender.getCommandSenderEntity();
+			if (args.length > 1) player = getPlayer(server, sender, args[1]);
 			IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
 			if (adventurer != null) adventurer.removeAllQuest();
-			entity.sendMessage(new TextComponentTranslation("commands.es.quest.clear", entity.getName()));
+			notifyCommandListener(sender, this, "commands.es.quest.clear", player.getName());
 			return;
 		}
 		default:

@@ -13,11 +13,11 @@ import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
+import yuzunyannn.elementalsorcery.explore.Explores;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementScrew;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemStack {
 
@@ -76,10 +76,10 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 		if (world.isRemote) return;
 		if (stack.isEmpty()) return;
 		if (!this.checkIntact(structure)) return;
-		NBTTagCompound nbt = ItemNatureCrystal.getData(stack, false);
-		if (nbt == null) return;
-		BlockPos to = NBTHelper.getBlockPos(nbt, "pos");
-		int toWorldId = nbt.getInteger("world");
+		NBTTagCompound nbt = ItemNatureCrystal.getData(stack);
+		if (nbt == null || !Explores.BASE.hasExplore(nbt)) return;
+		BlockPos to = Explores.BASE.getPos(nbt);
+		int toWorldId = Explores.BASE.getWorldId(nbt);
 		World toWorld = world.getMinecraftServer().getWorld(toWorldId);
 		if (!canOpenPortal(to, toWorld)) return;
 		ElementStack get = getElementFromSpPlace(NEED, pos.up(3));

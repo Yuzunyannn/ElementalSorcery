@@ -83,6 +83,7 @@ public class ItemAddressPlate extends Item {
 		NBTTagCompound nbt = elf.getEntityData();
 		nbt.setInteger("receiver", player.getEntityId());
 		nbt.setString("address", address);
+		nbt.setString("addressOwner", player.getName());
 	}
 
 	@Override

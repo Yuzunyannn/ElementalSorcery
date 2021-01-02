@@ -65,20 +65,24 @@ public class MantraLush extends MantraCommon {
 	}
 
 	@Override
-	public void onSpelling(World world, IMantraData mData, ICaster caster) {
+	@SideOnly(Side.CLIENT)
+	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
+		int tick = caster.iWantKnowCastTick();
+		if (tick < 20) return;
+		super.onSpellingEffect(world, data, caster);
+	}
+
+	@Override
+	public void onCollectElement(World world, IMantraData mData, ICaster caster, int speedTick) {
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return;
 		Data data = (Data) mData;
-		if (data.power.getCount() >= 200) {
-			super.onSpelling(world, mData, caster);
-			return;
-		}
+		if (data.power.getCount() >= 200) return;
 		// 每tick两点消耗
 		ElementStack need = new ElementStack(ESInit.ELEMENTS.WOOD, 1, 50);
 		ElementStack estack = caster.iWantSomeElement(need, true);
 		if (estack.isEmpty()) return;
 		data.power.grow(estack);
-		super.onSpelling(world, mData, caster);
 	}
 
 	@Override
