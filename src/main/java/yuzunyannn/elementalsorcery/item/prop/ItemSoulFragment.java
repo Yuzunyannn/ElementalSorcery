@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.item;
+package yuzunyannn.elementalsorcery.item.prop;
 
 import java.util.List;
 
@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
 

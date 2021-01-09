@@ -1,0 +1,35 @@
+{
+	"pattern": [
+		"GAG",
+		"AVA",
+		"GAG",
+		"R  Z",
+		" NI ",
+		" ES ",
+		"O  B"
+	],
+	"key": {
+		"V": "elementalsorcery:vortex",
+		"A": "elementalsorcery:magic_crystal",
+		"N": "elementalsorcery:nature_crystal",
+		"I": "elementalsorcery:item_crystal",
+		"E": "elementalsorcery:element_crystal",
+		"S": "elementalsorcery:spell_crystal",
+		"R": "elementalsorcery:resonant_crystal",
+		"B": "elementalsorcery:architecture_crystal",
+		"O": "elementalsorcery:order_crystal",
+		"Z": "elementalsorcery:azure_crystal",
+		"G": "minecraft:redstone"
+	},
+	"element": [
+		{
+			"id": "earth",
+			"size": 160,
+			"power": 10
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:fusion_crystal",
+		"count": 1
+	}
+}

@@ -43,7 +43,7 @@ public class BlockMagicDesk extends BlockContainerNormal {
 
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		BlockHelper.dropWithIGetItemStack(worldIn, pos, state);
+		BlockHelper.dropWithGetItemStack(worldIn, pos, state);
 		super.breakBlock(worldIn, pos, state);
 	}
 

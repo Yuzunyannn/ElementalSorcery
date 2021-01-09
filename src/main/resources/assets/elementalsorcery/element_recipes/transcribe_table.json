@@ -1,0 +1,35 @@
+{
+	"pattern": [
+		"CCC",
+		"MPM",
+		" W "
+	],
+	"key": {
+		"P": "elementalsorcery:estone_prism",
+		"M": {
+			"item": "elementalsorcery:estone",
+			"data": 1
+		},
+		"W": {
+			"item": "elementalsorcery:estone",
+			"data": 2
+		},
+		"C": {
+			"item": "minecraft:carpet",
+			"data": 14
+		}
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 20,
+			"power": 300
+		},
+		{
+			"id": "water",
+			"size": 20,
+			"power": 300
+		}
+	],
+	"result": "elementalsorcery:transcribe_table"
+}

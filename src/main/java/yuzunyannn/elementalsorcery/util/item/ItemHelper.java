@@ -125,4 +125,10 @@ public class ItemHelper {
 		}
 		return list;
 	}
+
+	static public List<ItemStack> toList(ItemStack... stacks) {
+		List<ItemStack> list = new ArrayList<ItemStack>(stacks.length);
+		for (ItemStack stack : stacks) list.add(stack);
+		return list;
+	}
 }

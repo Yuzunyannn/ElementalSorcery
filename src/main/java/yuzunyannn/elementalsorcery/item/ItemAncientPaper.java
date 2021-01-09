@@ -9,7 +9,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -33,6 +32,7 @@ import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class ItemAncientPaper extends Item {
 
@@ -149,7 +149,7 @@ public class ItemAncientPaper extends Item {
 	protected boolean startUnscramble(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		EnumHand hand = handIn == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
 		ItemStack feather = playerIn.getHeldItem(hand);
-		if (feather.getItem() != Items.FEATHER) return false;
+		if (feather.getItem() != ESInit.ITEMS.QUILL) return false;
 		feather.shrink(1);
 		return true;
 	}

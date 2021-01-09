@@ -1,0 +1,28 @@
+{
+	"topics": {
+		"Natural": 5,
+		"Struct": 20
+	},
+	"items": [
+		{
+			"item": "minecraft:sticky_piston",
+			"count": 2
+		},
+		{
+			"item": "minecraft:TNT",
+			"count": 4
+		},
+		{
+			"item": "minecraft:ghast_tear",
+			"count": 1
+		},
+		{
+			"item": "elementalsorcery:resonant_crystal",
+			"count": 3
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:vortex",
+		"count": 2
+	}
+}

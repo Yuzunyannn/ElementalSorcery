@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.item;
+package yuzunyannn.elementalsorcery.item.prop;
 
 import java.util.List;
 
@@ -17,6 +17,11 @@ public class ItemSome {
 
 	static private Item newItem(String unloaclizedName) {
 		return new Item().setUnlocalizedName(unloaclizedName);
+	}
+
+	/** 融合水晶 */
+	static public Item newFusionCrystal() {
+		return new ItemSimpleFoiled().setUnlocalizedName("fusionCrystal");
 	}
 
 	/** 遗迹宝石 */

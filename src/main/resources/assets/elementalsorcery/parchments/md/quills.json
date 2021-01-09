@@ -1,0 +1,36 @@
+{
+    "lev": 2,
+    "need": [
+        "md/infusion"
+    ],
+    "linked": [
+        {
+            "id": "elementalsorcery:quill",
+            "data": 1
+        },
+        {
+            "id": "elementalsorcery:quill",
+            "data": 2
+        },
+        {
+            "id": "elementalsorcery:quill",
+            "data": 3
+        }
+    ],
+    "type": "infusion",
+    "name": "quills",
+    "item": [
+        {
+            "id": "elementalsorcery:quill",
+            "data": 0
+        },
+        {
+            "id": "elementalsorcery:quill",
+            "data": 1
+        }
+    ],
+    "icon": {
+        "id": "elementalsorcery:quill",
+        "data": 1
+    }
+}

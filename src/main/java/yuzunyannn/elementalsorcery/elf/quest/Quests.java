@@ -17,9 +17,9 @@ import net.minecraft.world.biome.Biome;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.explore.ExploreStructureFind;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.item.ItemKeepsakes;
 import yuzunyannn.elementalsorcery.item.ItemNatureDust;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
+import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -257,7 +257,7 @@ public class Quests {
 				ExploreStructureFind.ABANDONED_MINE_SHAFT, 0.4f, GET_ROCK_CAMERA_QUESTS_5, GET_ROCK_CAMERA_QUESTS_6,
 				ItemHelper.toList(Blocks.RAIL, Blocks.PLANKS, Blocks.CHEST));
 		quest.getType().addReward(QuestRewardItemParcel.create(ItemHelper.toArray(Items.REDSTONE, rand.nextInt(6) + 6,
-				ItemKeepsakes.create(ItemKeepsakes.EnumType.RELIC_FRAGMENT, rand.nextInt(3) + 1))));
+				ItemKeepsake.create(ItemKeepsake.EnumType.RELIC_FRAGMENT, rand.nextInt(3) + 1))));
 		return quest;
 	}
 

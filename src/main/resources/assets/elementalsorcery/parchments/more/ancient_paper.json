@@ -3,9 +3,16 @@
     "need": [
         "base/seal_stone"
     ],
-    "linked": "elementalsorcery:ancient_paper",
-    "type": "normal",
+    "linked": [
+        "elementalsorcery:ancient_paper",
+        {
+            "id": "elementalsorcery:quill",
+            "data": 0
+        }
+    ],
+    "type": "craft",
     "name": "ancientPaper",
+    "item": "elementalsorcery:quill",
     "icon": "elementalsorcery:ancient_paper",
     "background": "inherit"
 }

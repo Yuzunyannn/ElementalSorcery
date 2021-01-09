@@ -33,7 +33,7 @@ public class BlockBuildingAltar extends BlockContainerNormal {
 
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		BlockHelper.dropWithIGetItemStack(worldIn, pos, state);
+		BlockHelper.dropWithGetItemStack(worldIn, pos, state);
 		TileEntity tileentity = worldIn.getTileEntity(pos);
 		if (tileentity instanceof TileBuildingAltar && !worldIn.isRemote) {
 			if (((TileBuildingAltar) tileentity).isWorking())

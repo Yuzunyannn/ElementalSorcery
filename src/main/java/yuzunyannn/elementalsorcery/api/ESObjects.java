@@ -73,8 +73,10 @@ public class ESObjects {
 		public Item SOUL_WOOD_SWORD;
 		public Item RELIC_GEM;
 		public Item ROCK_CAMERA;
-		public Item KEEPSAKES;
-
+		public Item KEEPSAKE;
+		public Item QUILL;
+		public Item FUSION_CRYSTAL;
+		public Item VORTEX;
 	}
 
 	static public class Blocks {

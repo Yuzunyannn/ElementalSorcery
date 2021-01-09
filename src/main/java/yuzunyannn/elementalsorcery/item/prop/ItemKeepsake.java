@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.item;
+package yuzunyannn.elementalsorcery.item.prop;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -6,13 +6,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import yuzunyannn.elementalsorcery.init.ESInit;
 
-public class ItemKeepsakes extends Item {
+public class ItemKeepsake extends Item {
 
-	public static ItemStack create(ItemKeepsakes.EnumType type, int n) {
-		return new ItemStack(ESInit.ITEMS.KEEPSAKES, n, type.getMeta());
+	public static ItemStack create(ItemKeepsake.EnumType type, int n) {
+		return new ItemStack(ESInit.ITEMS.KEEPSAKE, n, type.getMeta());
 	}
 
-	public ItemKeepsakes() {
+	public ItemKeepsake() {
 		this.setHasSubtypes(true);
 	}
 

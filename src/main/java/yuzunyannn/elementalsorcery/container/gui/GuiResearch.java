@@ -25,6 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ContainerResearch;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
+import yuzunyannn.elementalsorcery.elf.research.Topics;
 import yuzunyannn.elementalsorcery.util.ColorHelper;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
@@ -43,7 +44,7 @@ public class GuiResearch extends GuiContainer {
 		super(new ContainerResearch(player, pos));
 		this.container = (ContainerResearch) inventorySlots;
 		ySize = xSize = 240;
-		Set<String> all = ContainerResearch.getDefaultTopics();
+		Set<String> all = Topics.getDefaultTopics();
 		for (String key : container.reasearher.keySet()) {
 			this.addTopics(key);
 			all.remove(key);

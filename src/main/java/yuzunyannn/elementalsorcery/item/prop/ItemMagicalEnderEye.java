@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.item;
+package yuzunyannn.elementalsorcery.item.prop;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;

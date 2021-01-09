@@ -49,33 +49,41 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 				return;
 			}
 			ItemStack stack = item.getItem();
-			// 必须先放入魔石
-			if (magicCount == 0) {
-				if (stack.getItem() == ESInit.ITEMS.MAGIC_STONE) {
-					this.addMagicStone(stack.getCount());
-					item.setDead();
-				} else item.setFire(5);
-				return;
-			}
-			// 之后的东西
+
+			// 是否为魔石
 			if (stack.getItem() == ESInit.ITEMS.MAGIC_STONE) {
 				this.addMagicStone(stack.getCount());
 				item.setDead();
-			} else if (Block.getBlockFromItem(stack.getItem()) == Blocks.STONE
+				return;
+			}
+
+			// 必须先放入魔石
+			if (magicCount == 0) {
+				item.setFire(5);
+				return;
+			}
+
+			// 是否为石头
+			if (Block.getBlockFromItem(stack.getItem()) == Blocks.STONE
 					|| Block.getBlockFromItem(stack.getItem()) == Blocks.COBBLESTONE) {
-						this.addStone(stack.getCount());
-						item.setDead();
-					} else
-				if (stack.getItem() == Items.REDSTONE) {
-					instableCount++;
-					this.markDirty();
-				} else {
-					// 是否为蓝晶石
-					if (OreDictionary.containsMatch(false, OreDictionary.getOres("kyanite"), stack)) {
-						this.addKyanite(stack.getCount());
-						item.setDead();
-					} else item.setFire(5);
-				}
+				this.addStone(stack.getCount());
+				item.setDead();
+				return;
+			}
+			// 是否为蓝晶石
+			if (OreDictionary.containsMatch(false, OreDictionary.getOres("kyanite"), stack)) {
+				this.addKyanite(stack.getCount());
+				item.setDead();
+				return;
+			}
+			// 红石
+			if (stack.getItem() == Items.REDSTONE) {
+				instableCount++;
+				this.markDirty();
+				return;
+			}
+			// 没有匹配，点燃
+			item.setFire(5);
 		}
 	}
 

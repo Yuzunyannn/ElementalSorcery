@@ -1,0 +1,47 @@
+{
+	"pattern": [
+		"WQW",
+		"WSW",
+		"W W",
+		"    ",
+		"MMMM",
+		"WPPW",
+		"WMMW"
+	],
+	"key": {
+		"S": "elementalsorcery:elf_star",
+		"Q": {
+			"item": "elementalsorcery:quill",
+			"data": 4
+		},
+		"W": {
+			"item": "elementalsorcery:estone",
+			"data": 2
+		},
+		"M": {
+			"item": "elementalsorcery:estone",
+			"data": 1
+		},
+		"P": "elementalsorcery:estone_prism"
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 500,
+			"power": 300
+		},
+		{
+			"id": "water",
+			"size": 500,
+			"power": 300
+		},
+		{
+			"id": "knowledge",
+			"size": 300,
+			"power": 200
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:transcribe_injection"
+	}
+}

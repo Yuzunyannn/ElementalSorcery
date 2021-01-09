@@ -24,9 +24,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
-import yuzunyannn.elementalsorcery.container.ContainerResearch;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
+import yuzunyannn.elementalsorcery.elf.research.Topics;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.util.ColorHelper;
 
@@ -52,7 +52,7 @@ public class PageResearch extends PageTransform {
 		ingredient = recipe.getIngredients();
 
 		allNeed = 0;
-		Set<String> all = ContainerResearch.getDefaultTopics();
+		Set<String> all = Topics.getDefaultTopics();
 		float size = topicInput.size();
 		for (Entry<String, Integer> entry : topicInput) {
 			allNeed += entry.getValue() / size;

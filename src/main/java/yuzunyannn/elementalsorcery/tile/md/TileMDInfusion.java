@@ -249,6 +249,8 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 		Recipe.ITest awalysTrue = (world, pos) -> {
 			return true;
 		};
+		addRecipe(new ItemStack(ITEMS.QUILL, 1, 0), new ItemStack(ITEMS.QUILL, 1, 1), ElementStack.magic(40, 20),
+				awalysTrue);
 		addRecipe(Items.REEDS, ITEMS.NATURE_CRYSTAL, 20, 20, awalysTrue);
 		addRecipe(Items.GOLD_INGOT, ITEMS.MAGIC_GOLD, 40, 20, awalysTrue);
 		addRecipe(ITEMS.MAGIC_CRYSTAL, ESInit.ITEMS.ELEMENT_CRYSTAL, 100, 20, (world, pos) -> {

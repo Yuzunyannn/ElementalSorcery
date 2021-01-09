@@ -30,6 +30,7 @@ import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 @JEIPlugin
 public class ESJEIPlugin implements IModPlugin {
@@ -102,19 +103,20 @@ public class ESJEIPlugin implements IModPlugin {
 		List<DescribeRecipeWrapper.Describe> describes = new ArrayList<>();
 		describes.add(new DescribeRecipeWrapper.Describe("page.starSand", "page.starSand.ct", BLOCKS.STAR_SAND,
 				BLOCKS.STAR_STONE, BLOCKS.STAR_SAND));
-		describes.add(
-				new DescribeRecipeWrapper.Describe("page.astone", "page.astone.ct.sec", new ItemStack(BLOCKS.ASTONE),
-						DescribeRecipeWrapper.Describe.asList(ITEMS.MAGIC_STONE, ITEMS.KYANITE, Blocks.COBBLESTONE),
-						DescribeRecipeWrapper.Describe.asList(new ItemStack(BLOCKS.ASTONE, 1, 1),
-								new ItemStack(BLOCKS.ASTONE, 1, 0))));
+		describes.add(new DescribeRecipeWrapper.Describe("page.astone", "page.astone.ct.sec",
+				new ItemStack(BLOCKS.ASTONE), ItemHelper.toList(ITEMS.MAGIC_STONE, ITEMS.KYANITE, Blocks.COBBLESTONE),
+				ItemHelper.toList(new ItemStack(BLOCKS.ASTONE, 1, 1), new ItemStack(BLOCKS.ASTONE, 1, 0))));
 		describes.add(new DescribeRecipeWrapper.Describe("page.enchantingBook", "page.enchantingBook.ct",
 				new ItemStack(Blocks.ENCHANTING_TABLE),
-				DescribeRecipeWrapper.Describe.asList(ITEMS.SPELLBOOK_ENCHANTMENT, Blocks.ENCHANTING_TABLE),
-				DescribeRecipeWrapper.Describe.asList(BLOCKS.INVALID_ENCHANTMENT_TABLE)));
+				ItemHelper.toList(ITEMS.SPELLBOOK_ENCHANTMENT, Blocks.ENCHANTING_TABLE),
+				ItemHelper.toList(BLOCKS.INVALID_ENCHANTMENT_TABLE)));
 		describes.add(new DescribeRecipeWrapper.Describe("page.azureCrystal", "page.azureCrystal.ct",
 				new ItemStack(ITEMS.AZURE_CRYSTAL),
-				DescribeRecipeWrapper.Describe.asList(ITEMS.MAGIC_CRYSTAL, new ItemStack(Items.DYE, 1, 4)),
-				DescribeRecipeWrapper.Describe.asList(ITEMS.AZURE_CRYSTAL)));
+				ItemHelper.toList(ITEMS.MAGIC_CRYSTAL, new ItemStack(Items.DYE, 1, 4)),
+				ItemHelper.toList(ITEMS.AZURE_CRYSTAL)));
+		describes.add(
+				new DescribeRecipeWrapper.Describe("page.quills", "page.quills.ct", new ItemStack(ITEMS.QUILL, 1, 1),
+						ItemHelper.toList(ITEMS.QUILL, 1, 1), ItemHelper.toList(ITEMS.QUILL, 1, 2, ITEMS.QUILL, 1, 3)));
 		return describes;
 	}
 }
