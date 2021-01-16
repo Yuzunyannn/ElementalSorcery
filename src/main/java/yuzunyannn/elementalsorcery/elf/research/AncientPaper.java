@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.elf.research;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
@@ -13,6 +15,7 @@ public class AncientPaper implements IItemCapbiltitySyn {
 	protected float progress = 1;
 	protected KnowledgeType type;
 
+	@Nullable
 	public Mantra getMantra() {
 		return mantra;
 	}
@@ -53,6 +56,7 @@ public class AncientPaper implements IItemCapbiltitySyn {
 		return this;
 	}
 
+	@Nullable
 	public KnowledgeType getType() {
 		return type;
 	}

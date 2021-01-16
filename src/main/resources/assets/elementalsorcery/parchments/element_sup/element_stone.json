@@ -1,0 +1,23 @@
+{
+	"lev": 5,
+	"need": [
+		"element_sup/fusion_crystal",
+		"elf/relic_zombie"
+	],
+	"linked": "elementalsorcery:element_stone",
+	"type": "mult",
+	"lock": 0,
+	"pages": [
+		{
+			"type": "craft",
+			"name": "elementStone",
+			"item": "elementalsorcery:element_stone"
+		},
+		{
+			"type": "normal",
+			"name": "elementStone",
+			"differ": "more",
+			"background": "elementalsorcery:element_stone"
+		}
+	]
+}

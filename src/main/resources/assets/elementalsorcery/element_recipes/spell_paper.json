@@ -5,7 +5,10 @@
 		" * "
 	],
 	"key": {
-		"#": "elementalsorcery:magic_paper",
+		"#": {
+			"item": "elementalsorcery:magic_paper",
+			"data": 0
+		},
 		"*": "elementalsorcery:spell_crystal"
 	},
 	"element": [
@@ -16,7 +19,8 @@
 		}
 	],
 	"result": {
-		"item": "elementalsorcery:spell_paper",
-		"count": 1
+		"item": "elementalsorcery:magic_paper",
+		"count": 1,
+		"data": 1
 	}
 }

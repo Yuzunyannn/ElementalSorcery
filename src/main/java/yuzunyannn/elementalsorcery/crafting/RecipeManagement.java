@@ -21,6 +21,7 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
+import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class RecipeManagement extends ESImplRegister<IRecipe> {
 
@@ -49,10 +50,19 @@ public class RecipeManagement extends ESImplRegister<IRecipe> {
 		ResearchRecipeManagement.registerAll();
 		// 加载json
 		for (ModContainer mod : Loader.instance().getActiveModList()) loadRecipes(mod);
+		// 独立的注册
+		registerElementRecipes();
+	}
+
+	public static void registerElementRecipes() {
+		instance.register(new RecipeGrimoire().setRegistryName(TextHelper.toESResourceLocation("grimoire")));
 	}
 
 	public static void loadRecipes(ModContainer mod) {
 		Json.ergodicAssets(mod, "/element_recipes", (file, json) -> {
+			String type = "normal";
+			if (json.hasString("type")) type = json.getString("type");
+
 			JsonArray patternJson = json.needArray("pattern");
 			ArrayList<String> pattern = patternJson.asStringArray();
 
@@ -66,7 +76,15 @@ public class RecipeManagement extends ESImplRegister<IRecipe> {
 
 			List<ElementStack> elements = json.needElements("element");
 
-			Recipe recipe = new Recipe(output);
+			Recipe recipe;
+			switch (type.toLowerCase()) {
+			case "inherit_element":
+				recipe = new RecipeInheritElement(output);
+				break;
+			default:
+				recipe = new Recipe(output);
+				break;
+			}
 			recipe.parse(output, pattern, map, elements);
 			ResourceLocation id = new ResourceLocation(mod.getModId(), Json.fileToId(file, "/element_recipes"));
 			instance.register(recipe.setRegistryName(id));

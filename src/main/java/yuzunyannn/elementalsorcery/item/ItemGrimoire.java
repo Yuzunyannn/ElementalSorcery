@@ -10,7 +10,6 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -34,7 +33,13 @@ public class ItemGrimoire extends Item {
 
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		super.getSubItems(tab, items);
+		if (this.isInCreativeTab(tab)) {
+			ItemStack stack = new ItemStack(this);
+			Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+			grimoire.setCapacityMax(Short.MAX_VALUE);
+			grimoire.saveState(stack);
+			items.add(stack);
+		}
 	}
 
 	public IElementInventory initElementInventory(ItemStack stack) {
@@ -59,15 +64,24 @@ public class ItemGrimoire extends Item {
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt != null) {
-			int cap = nbt.getShort("capacity");
-			if (cap < 20) tooltip.add(I18n.format("info.grimoire.blank", 20 - cap));
-			NBTTagList mantras = nbt.getTagList("mantra", 10);
-			int n = mantras.tagCount();
-			if (n == 0) tooltip.add(TextFormatting.GOLD + I18n.format("info.grimoire.nothing"));
-			else {
-				tooltip.add(TextFormatting.GOLD + I18n.format("info.grimoire.record", n));
-				Mantra m = Mantra.getFromNBT(Grimoire.getOriginNBT(stack));
+		if (nbt == null) {
+			tooltip.add(TextFormatting.GOLD + I18n.format("info.grimoire.nothing"));
+			return;
+		}
+
+		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+		if (grimoire == null) return;
+		grimoire.loadState(stack);
+
+		int cap = Math.max(0, grimoire.getCapacityMax() - grimoire.getCapacity());
+		tooltip.add(I18n.format("info.grimoire.blank", cap));
+		// 咒文信息
+		if (grimoire.isEmpty()) tooltip.add(TextFormatting.GOLD + I18n.format("info.grimoire.nothing"));
+		else {
+			tooltip.add(TextFormatting.GOLD + I18n.format("info.grimoire.record", grimoire.size()));
+			Grimoire.Info info = grimoire.getInfo(grimoire.getSelected());
+			if (info != null) {
+				Mantra m = info.getMantra();
 				if (m == null) tooltip.add(TextFormatting.AQUA + I18n.format("info.grimoire.error"));
 				else {
 					String name = I18n.format(m.getUnlocalizedName() + ".name");
@@ -75,16 +89,14 @@ public class ItemGrimoire extends Item {
 					String describe = m.getUnlocalizedName() + ".describe";
 					if (I18n.hasKey(describe)) tooltip.add(I18n.format(describe));
 				}
-			}
-		} else tooltip.add(TextFormatting.GOLD + I18n.format("info.grimoire.nothing"));
+			} else tooltip.add(TextFormatting.AQUA + I18n.format("info.grimoire.error"));
+		}
 		// 元素信息
-		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
-		if (grimoire == null) return;
-		grimoire.loadState(stack);
 		IElementInventory inventory = grimoire.getInventory();
 		if (inventory == null) return;
 		tooltip.add(TextFormatting.YELLOW + I18n.format("info.grimoire.element"));
-		ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
+		boolean has = ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
+		if (!has) tooltip.add(I18n.format("info.none"));
 	}
 
 	@Override

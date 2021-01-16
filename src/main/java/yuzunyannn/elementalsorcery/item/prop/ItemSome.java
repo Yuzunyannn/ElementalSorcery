@@ -19,11 +19,6 @@ public class ItemSome {
 		return new Item().setUnlocalizedName(unloaclizedName);
 	}
 
-	/** 融合水晶 */
-	static public Item newFusionCrystal() {
-		return new ItemSimpleFoiled().setUnlocalizedName("fusionCrystal");
-	}
-
 	/** 遗迹宝石 */
 	static public Item newRelicGem() {
 		return newItem("relicGem");
@@ -85,13 +80,4 @@ public class ItemSome {
 		return newItem("MDBase");
 	}
 
-	/** 魔法纸张 */
-	static public Item newMagicPaper() {
-		return newItem("magicPaper");
-	}
-
-	/** 咒术纸张 */
-	static public Item newSpellPaper() {
-		return new ItemSimpleFoiled().setUnlocalizedName("spellPaper");
-	}
 }

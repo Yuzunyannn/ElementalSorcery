@@ -130,6 +130,9 @@ public class JsonParser {
 				if (item == null) logger.warn("找不到背景：" + id);
 				else background = new ItemStack(item);
 			}
+		} else if (json.hasObject("background")) {
+			ItemRecord itemRecord = json.needItem("background");
+			background = itemRecord.getStack();
 		}
 		return new PageSimple(title, value == null ? "null" : value, icon, background);
 	}

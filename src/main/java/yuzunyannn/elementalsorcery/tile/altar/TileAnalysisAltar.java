@@ -294,7 +294,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 	protected ItemStack getStackToAnalysis() {
 		BlockPos pos = this.pos.down(3);
 		TileEntity tile = this.world.getTileEntity(pos);
-		if (tile instanceof IGetItemStack) { return ((IGetItemStack) tile).getStack(); }
+		if (tile instanceof IGetItemStack) return ((IGetItemStack) tile).getStack();
 		return ItemStack.EMPTY;
 	}
 

@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 public class CraftingLaunchAnimeNone implements ICraftingLaunchAnime {
 
 	@Override
-	public void update(ICraftingCommit c, World world, int endTick) {
+	public void update(ICraftingCommit c, World world, BlockPos pos, int endTick) {
 	}
 
 	@Override

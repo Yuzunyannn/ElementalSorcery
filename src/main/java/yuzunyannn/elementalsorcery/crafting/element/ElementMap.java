@@ -26,8 +26,9 @@ import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.IElementMap;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
-import yuzunyannn.elementalsorcery.api.register.IElementMap;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementItem;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
@@ -65,20 +66,6 @@ public class ElementMap implements IElementMap {
 	}
 
 	@Override
-	public ElementStack[] toElement(Item item) {
-		for (IToElement to : toList) {
-			ElementStack[] stacks = to.toElement(item);
-			if (stacks != null) return stacks;
-		}
-		return null;
-	}
-
-	@Override
-	public ElementStack[] toElement(Block block) {
-		return this.toElement(Item.getItemFromBlock(block));
-	}
-
-	@Override
 	public ItemStack remain(ItemStack stack) {
 		for (IToElement to : toList) {
 			ElementStack[] stacks = to.toElement(stack);
@@ -94,20 +81,6 @@ public class ElementMap implements IElementMap {
 			if (complex > 0) return complex;
 		}
 		return 0;
-	}
-
-	@Override
-	public int complex(Item item) {
-		for (IToElement to : toList) {
-			int complex = to.complex(item);
-			if (complex > 0) return complex;
-		}
-		return 0;
-	}
-
-	@Override
-	public int complex(Block block) {
-		return this.complex(Item.getItemFromBlock(block));
 	}
 
 	// ---------------------------------ADD----------------------------------------
@@ -163,6 +136,32 @@ public class ElementMap implements IElementMap {
 
 	// ---------------------------------ADDEND----------------------------------------
 
+	// 默认的接口转化
+	private static class DefaultInterfaceToElement implements IToElement {
+
+		@Override
+		public ElementStack[] toElement(ItemStack stack) {
+			Item item = stack.getItem();
+			if (item instanceof IToElementItem) return ((IToElementItem) item).toElement(stack);
+			return null;
+		}
+
+		@Override
+		public int complex(ItemStack stack) {
+			Item item = stack.getItem();
+			if (item instanceof IToElementItem) return ((IToElementItem) item).complex(stack);
+			return 0;
+		}
+
+		@Override
+		public ItemStack remain(ItemStack stack) {
+			Item item = stack.getItem();
+			if (item instanceof IToElementItem) return ((IToElementItem) item).remain(stack);
+			return ItemStack.EMPTY;
+		}
+
+	}
+
 	// 默认的实例化
 	private static class DefaultToElement implements IToElement {
 
@@ -217,7 +216,6 @@ public class ElementMap implements IElementMap {
 			return this.complex(stack.getItem());
 		}
 
-		@Override
 		public int complex(Item item) {
 			if (itemToElementMap.containsKey(item)) return itemToElementMap.get(item).complex;
 			return 0;
@@ -271,11 +269,6 @@ public class ElementMap implements IElementMap {
 		}
 
 		@Override
-		public ElementStack[] toElement(Item item) {
-			return null;
-		}
-
-		@Override
 		public ItemStack remain(ItemStack stack) {
 			if (stack.getItem() == Items.WATER_BUCKET || stack.getItem() == Items.LAVA_BUCKET) {
 				return new ItemStack(Items.BUCKET);
@@ -286,11 +279,6 @@ public class ElementMap implements IElementMap {
 		@Override
 		public int complex(ItemStack stack) {
 			if (stack.getItem() == Items.WATER_BUCKET || stack.getItem() == Items.LAVA_BUCKET) return 5;
-			return 0;
-		}
-
-		@Override
-		public int complex(Item item) {
 			return 0;
 		}
 
@@ -325,6 +313,7 @@ public class ElementMap implements IElementMap {
 	}
 
 	static public void registerAll() throws IOException {
+		instance.add(new DefaultInterfaceToElement());
 		instance.add(defaultToElementMap);
 		instance.add(new DefaultBucketToElement());
 
@@ -441,4 +430,5 @@ public class ElementMap implements IElementMap {
 		}
 		return newMap;
 	}
+
 }

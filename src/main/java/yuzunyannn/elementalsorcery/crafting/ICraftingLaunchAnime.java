@@ -15,7 +15,7 @@ public interface ICraftingLaunchAnime {
 	 *            -1表示正常运行，暂未结束，正数表明结束剩余的时间
 	 */
 	@SideOnly(Side.CLIENT)
-	void update(ICraftingCommit commit, World world, int endTick);
+	void update(ICraftingCommit commit, World world, BlockPos pos, int endTick);
 
 	/** 进行自定义渲染 */
 	@SideOnly(Side.CLIENT)

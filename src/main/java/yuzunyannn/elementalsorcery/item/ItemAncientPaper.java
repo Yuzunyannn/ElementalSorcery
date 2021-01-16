@@ -27,6 +27,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementItem;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
 import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
@@ -34,7 +36,7 @@ import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.init.ESInit;
 
-public class ItemAncientPaper extends Item {
+public class ItemAncientPaper extends Item implements IToElementItem {
 
 	public ItemAncientPaper() {
 		this.setHasSubtypes(true);
@@ -203,6 +205,38 @@ public class ItemAncientPaper extends Item {
 		if (end - start < 0) return;
 		if (end - start >= 100) return;
 		tooltip.add(TextFormatting.DARK_PURPLE + I18n.format("info.ancientPaper.record", start, end));
+	}
+
+	@Override
+	public ElementStack[] toElement(ItemStack stack) {
+		ElementStack[] estacks = new ElementStack[2];
+		estacks[0] = new ElementStack(ESInit.ELEMENTS.WOOD, 8, 20);
+		estacks[1] = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 4, 30);
+
+		AncientPaper ap = new AncientPaper(stack);
+		if (ap.hasType()) {
+			KnowledgeType type = ap.getType();
+			ElementStack knowledge = type.getKnowledge().copy();
+			knowledge.setCount((int) (knowledge.getCount() * (1 - ap.getProgress())));
+			estacks[1].grow(knowledge);
+		}
+		if (ap.hasMantra()) {
+			Mantra mantra = ap.getMantra();
+			int rarity = mantra.getRarity(null, null);
+			rarity = MathHelper.clamp(rarity, 10, 200);
+			ElementStack knowledge = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE);
+			double power = 20 - MathHelper.sqrt(rarity * 1.45);
+			knowledge.setPower(MathHelper.floor(power * power) + 10);
+			knowledge.setCount((220 - rarity) / 2);
+			estacks[1].grow(knowledge);
+		}
+
+		return estacks;
+	}
+
+	@Override
+	public int complex(ItemStack stack) {
+		return 8;
 	}
 
 }

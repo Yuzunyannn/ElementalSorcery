@@ -105,7 +105,6 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 		if (!eorigin.isEmpty() && !eorigin.areSameType(estack)) return false;
 		if (simulate) return true;
 		eorigin.growOrBecome(estack);
-		estack.setEmpty();
 		return true;
 	}
 

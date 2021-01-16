@@ -8,6 +8,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -44,9 +45,19 @@ public class ItemVortex extends Item {
 		return super.onEntityItemUpdate(entityItem);
 	}
 
+	static public EnumHand inEntityHand(Entity entityIn, ItemStack stack, int itemSlot, boolean isSelected) {
+		if (!(entityIn instanceof EntityLivingBase)) return null;
+		if (isSelected) return EnumHand.MAIN_HAND;
+		EntityLivingBase entity = (EntityLivingBase) entityIn;
+		if (itemSlot == 0 && stack == entity.getHeldItemOffhand()) return EnumHand.OFF_HAND;
+		return null;
+	}
+
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (!isSelected && itemSlot != 0) return;
+		EnumHand hand = ItemVortex.inEntityHand(entityIn, stack, itemSlot, isSelected);
+		if (hand == null) return;
+
 		double f = 0.2;
 		entityIn.motionX += (Math.random() - 0.5) * f;
 		entityIn.motionY += (Math.random() - 0.5) * f;

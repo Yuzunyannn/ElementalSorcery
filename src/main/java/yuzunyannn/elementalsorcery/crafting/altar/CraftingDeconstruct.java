@@ -26,6 +26,8 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	private LinkedList<ElementStack> restEStacks = null;
 	// 是否ok
 	private boolean isOk = true;
+	// 当前没有放入的元素
+	public ElementStack freeElement = ElementStack.EMPTY;
 
 	public CraftingDeconstruct(World world, ItemStack stack, int lvPower, IToElement toElement) {
 		itemList.add(stack);
@@ -72,6 +74,10 @@ public class CraftingDeconstruct implements ICraftingAltar {
 		this.itemList.clear();
 	}
 
+	public LinkedList<ElementStack> getRestElementStacks() {
+		return restEStacks;
+	}
+
 	// 更新一次
 	@Override
 	public void update(TileStaticMultiBlock tileMul) {
@@ -79,10 +85,11 @@ public class CraftingDeconstruct implements ICraftingAltar {
 			this.isOk = false;
 			return;
 		}
+		freeElement = ElementStack.EMPTY;
 		ElementStack estack = restEStacks.getFirst();
 		ElementStack put = estack.splitStack(1);
-		if (tileMul.putElementToSpPlace(put, tileMul.getPos().up())) {} else {
-
+		if (!tileMul.putElementToSpPlace(put, tileMul.getPos().up())) {
+			freeElement = put;
 		}
 		if (estack.isEmpty()) restEStacks.removeFirst();
 		if (restEStacks.isEmpty()) {

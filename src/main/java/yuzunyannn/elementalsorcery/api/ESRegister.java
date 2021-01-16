@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.api.register;
+package yuzunyannn.elementalsorcery.api;
 
 import net.minecraftforge.registries.IForgeRegistry;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;

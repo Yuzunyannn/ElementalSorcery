@@ -58,6 +58,11 @@ public class FireworkEffect {
 					case 1:
 						FirewrokShap.createCircle(world, pos, speed, size, colors, fadeColors, trail, flicker);
 						break;
+					case 10:
+						FirewrokShap.createEBall(world, pos, speed, size, colors);
+						break;
+					case 11:
+						FirewrokShap.createECircle(world, pos, speed, size, colors);
 					default:
 						break;
 					}

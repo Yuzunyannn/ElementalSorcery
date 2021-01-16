@@ -146,6 +146,34 @@ public class FirewrokShap {
 
 	}
 
+	/** 元素类型的球 */
+	public static void createEBall(World world, Vec3d position, double speed, int size, int[] colors) {
+
+		for (int i = -size; i <= size; ++i) {
+			for (int j = -size; j <= size; ++j) {
+				for (int k = -size; k <= size; ++k) {
+					double d3 = (double) j + (EventClient.rand.nextDouble() - EventClient.rand.nextDouble()) * 0.5D;
+					double d4 = (double) i + (EventClient.rand.nextDouble() - EventClient.rand.nextDouble()) * 0.5D;
+					double d5 = (double) k + (EventClient.rand.nextDouble() - EventClient.rand.nextDouble()) * 0.5D;
+					double d6 = (double) MathHelper.sqrt(d3 * d3 + d4 * d4 + d5 * d5) / speed
+							+ EventClient.rand.nextGaussian() * 0.05D;
+
+					EffectElementMove e = new EffectElementMove(world, position);
+					e.g = 0;
+					e.yDecay = e.xDecay = e.zDecay = 0.9;
+					e.setColor(colors[EventClient.rand.nextInt(colors.length)]);
+					e.setVelocity(d3 / d6, d4 / d6, d5 / d6);
+					Effect.addEffect(e);
+
+					if (i != -size && i != size && j != -size && j != size) {
+						k += size * 2 - 1;
+					}
+				}
+			}
+		}
+
+	}
+
 	/** 元素类型的环 */
 	static public void createECircle(World world, Vec3d position, double speed, int size, int[] colors) {
 		for (int i = -size; i <= size; ++i) {
@@ -155,6 +183,7 @@ public class FirewrokShap {
 				double d3 = (double) MathHelper.sqrt(d1 * d1 + d2 * d2) / speed
 						+ EventClient.rand.nextGaussian() * 0.05D;
 				EffectElementMove e = new EffectElementMove(world, position);
+				e.g = 0.005;
 				e.setColor(colors[EventClient.rand.nextInt(colors.length)]);
 				e.setVelocity(d1 / d3, 0.1, d2 / d3);
 				Effect.addEffect(e);

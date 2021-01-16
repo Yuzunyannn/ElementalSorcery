@@ -87,7 +87,7 @@ public class AnimeRenderCrafting implements ICraftingLaunchAnime {
 	}
 
 	@Override
-	public void update(ICraftingCommit commit, World world, int endTick) {
+	public void update(ICraftingCommit commit, World world, BlockPos pos, int endTick) {
 		if (endTick >= 0) {
 			this.preRange = this.range;
 			this.range = endTick / 20.0f * 0.75f;
@@ -110,7 +110,7 @@ public class AnimeRenderCrafting implements ICraftingLaunchAnime {
 				IRecipe recipe = RecipeManagement.instance.findMatchingRecipe(cc.getWorkingInventory(), world);
 				if (recipe != null) endColors = ElementHelper.toColor(recipe.getNeedElements());
 			}
-			if (endColors == null || endColors.length <= 0) endColors = new int[] { 0xe2e2ef, 0xcdcde4 };
+			if (endColors == null || endColors.length <= 0) endColors = new int[] { 0xe2e2ef, 0xa590de };
 		}
 	}
 

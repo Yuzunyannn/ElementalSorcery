@@ -36,7 +36,6 @@ public class ESObjects {
 		public Item RESONANT_CRYSTAL;
 		public Item PARCHMENT;
 		public Item MAGIC_PAPER;
-		public Item SPELL_PAPER;
 		public Item SPELL_CRYSTAL;
 		public Item SPELLBOOK_COVER;
 		public Item SCROLL;
@@ -77,6 +76,8 @@ public class ESObjects {
 		public Item QUILL;
 		public Item FUSION_CRYSTAL;
 		public Item VORTEX;
+		public Item ELEMENT_STONE;
+		public Item LIFE_LEATHER;
 	}
 
 	static public class Blocks {

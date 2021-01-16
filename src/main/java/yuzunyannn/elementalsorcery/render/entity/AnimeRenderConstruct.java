@@ -50,7 +50,7 @@ public class AnimeRenderConstruct implements ICraftingLaunchAnime {
 	}
 
 	@Override
-	public void update(ICraftingCommit commit, World world, int endTick) {
+	public void update(ICraftingCommit commit, World world, BlockPos pos, int endTick) {
 		if (endTick > 0) {
 			if (endTick % 3 == 0) {
 				if (this.op == GlStateManager.LogicOp.INVERT) this.op = GlStateManager.LogicOp.COPY;

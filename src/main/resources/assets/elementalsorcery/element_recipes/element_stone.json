@@ -1,0 +1,61 @@
+{
+	"type": "inherit_element",
+	"pattern": [
+		"DAD",
+		"AVA",
+		"DAD",
+		"N EF",
+		" F E",
+		"E F ",
+		"FE N"
+	],
+	"key": {
+		"V": "elementalsorcery:vortex",
+		"A": "elementalsorcery:magic_crystal",
+		"D": "minecraft:diamond",
+		"E": "elementalsorcery:element_crystal",
+		"N": "elementalsorcery:relic_gem",
+		"F": "elementalsorcery:fusion_crystal"
+	},
+	"element": [
+		{
+			"id": "knowledge",
+			"size": 200,
+			"power": 100
+		},
+		{
+			"id": "fire",
+			"size": 200,
+			"power": 50
+		},
+		{
+			"id": "water",
+			"size": 200,
+			"power": 50
+		},
+		{
+			"id": "earth",
+			"size": 200,
+			"power": 50
+		},
+		{
+			"id": "air",
+			"size": 200,
+			"power": 50
+		},
+		{
+			"id": "wood",
+			"size": 200,
+			"power": 100
+		},
+		{
+			"id": "metal",
+			"size": 200,
+			"power": 100
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:element_stone",
+		"count": 1
+	}
+}

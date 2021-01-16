@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.api.register.ESRegister;
+import yuzunyannn.elementalsorcery.api.ESRegister;
 import yuzunyannn.elementalsorcery.init.ESImplRegister;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;

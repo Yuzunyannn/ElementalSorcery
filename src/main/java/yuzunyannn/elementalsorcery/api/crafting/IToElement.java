@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.api.crafting;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -19,15 +18,8 @@ public interface IToElement {
 	@Nullable
 	ElementStack[] toElement(ItemStack stack);
 
-	/** 将物品转化成元素 */
-	@Nullable
-	ElementStack[] toElement(Item item);
-
 	/** 获取复杂度，返回小于等于0，表示失败 */
 	int complex(ItemStack stack);
-
-	/** 获取复杂度 */
-	int complex(Item item);
 
 	/** 获取该物品转化成元素后，可能返回的内容，返回的内容应当不用copy，被允许直接使用 */
 	default ItemStack remain(ItemStack stack) {

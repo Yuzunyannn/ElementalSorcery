@@ -30,8 +30,14 @@ public class ItemSoulWoodSword extends ItemSword {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand) {
 		// 收集所有物品栏内的灵魂碎片
-		boolean success = false;
 		ItemStack stack = player.getHeldItem(hand);
+		if (ItemSoulWoodSword.collectSouls(stack, player))
+			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+		return super.onItemRightClick(worldIn, player, hand);
+	}
+
+	public static boolean collectSouls(ItemStack stack, EntityPlayer player) {
+		boolean success = false;
 		for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
 			ItemStack item = player.inventory.getStackInSlot(i);
 			if (item.isEmpty()) continue;
@@ -42,8 +48,7 @@ public class ItemSoulWoodSword extends ItemSword {
 				success = true;
 			}
 		}
-		if (success) return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
-		return super.onItemRightClick(worldIn, player, hand);
+		return success;
 	}
 
 	public static void addSoul(ItemStack stack, int count) {

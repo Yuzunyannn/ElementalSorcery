@@ -197,7 +197,7 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 		Grimoire data = grimoire.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
 		if (data == null) return false;
 		data.loadState(grimoire);
-		int restCapacity = data.getCapacityTotally() - data.getCapacity();
+		int restCapacity = data.getCapacityMax() - data.getCapacity();
 		int capacity = this.getMantraCapacity(mantraType);
 		if (capacity > restCapacity) return false;
 		// 设置句柄，表示可以开始计时了

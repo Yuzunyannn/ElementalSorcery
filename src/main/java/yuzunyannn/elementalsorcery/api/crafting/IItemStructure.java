@@ -1,21 +1,10 @@
 package yuzunyannn.elementalsorcery.api.crafting;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public interface IItemStructure extends IToElement, IItemCapbiltitySyn {
-
-	@Override
-	default ElementStack[] toElement(Item item) {
-		return this.toElement(new ItemStack(item));
-	}
-
-	@Override
-	default int complex(Item item) {
-		return this.complex(new ItemStack(item));
-	}
 
 	/** 获取存放物品结构数目，通常只有1 */
 	int getItemCount();

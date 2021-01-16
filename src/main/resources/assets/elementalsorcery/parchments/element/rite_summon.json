@@ -1,6 +1,11 @@
 {
+    "lev": 3,
     "type": "mult",
     "lock": 0,
+    "linked": [
+        "elementalsorcery:soul_wood_sword",
+        "elementalsorcery:soul_fragment"
+    ],
     "need": [
         "base/rite"
     ],

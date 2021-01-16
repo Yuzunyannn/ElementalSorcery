@@ -9,6 +9,8 @@ import java.util.Map.Entry;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class KnowledgeType {
@@ -27,6 +29,8 @@ public class KnowledgeType {
 			else if (obj instanceof String) {
 				int count = ((Number) topics[++i]).intValue();
 				type.addTopic((String) obj, count);
+			} else if (obj instanceof ElementStack) {
+				type.setKnowledge((ElementStack) obj);
 			}
 		}
 		return type;
@@ -40,20 +44,25 @@ public class KnowledgeType {
 		register(newKnowledgeType(id, topics));
 	}
 
+	private static ElementStack knowledge(int count, int power) {
+		return new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, count, power);
+	}
+
 	public static void registerAll() {
-		register("magic_device", "Engine", 10, "Natural", 2, "Struct", 8);
-		register("architecture", "Engine", 10, "Natural", 10, "Struct", 2, "Ender", 3);
-		register("ender_boat", "Natural", 5, "Ender", 12);
-		//第一个为Mantra可以用作咒文
-		register("library", "Mantra", 5, "Struct", 5, "Engine", 5);
-		register("mantra", "Mantra", 10, "Struct", 5);
-		register("element", "Mantra", 2, "Struct", 12, "Natural", 2);
-		register("altar", "Mantra", 6, "Struct", 6, "Natural", 4, "Engine", 4);
+		register("magic_device", knowledge(10, 70), "Engine", 10, "Natural", 2, "Struct", 8);
+		register("architecture", knowledge(40, 10), "Engine", 10, "Natural", 10, "Struct", 2, "Ender", 3);
+		register("ender_boat", knowledge(5, 100), "Natural", 5, "Ender", 12);
+		// 第一个为Mantra可以用作咒文
+		register("library", knowledge(20, 50), "Mantra", 5, "Struct", 5, "Engine", 5);
+		register("mantra", knowledge(20, 50), "Mantra", 10, "Struct", 5);
+		register("element", knowledge(30, 10), "Mantra", 2, "Struct", 12, "Natural", 2);
+		register("altar", knowledge(40, 40), "Mantra", 6, "Struct", 6, "Natural", 4, "Engine", 4);
 	}
 
 	private String nameId;
 	private String unlocalizedName;
 	private List<Entry<String, Integer>> topics = new ArrayList<>();
+	private ElementStack knowledge = ElementStack.EMPTY;
 
 	public String getNameId() {
 		return nameId;
@@ -72,6 +81,14 @@ public class KnowledgeType {
 	@SideOnly(Side.CLIENT)
 	public String getUnlocalizedName() {
 		return "kType." + unlocalizedName;
+	}
+
+	public ElementStack getKnowledge() {
+		return knowledge;
+	}
+
+	public void setKnowledge(ElementStack knowledge) {
+		this.knowledge = knowledge;
 	}
 
 	public void setTopics(List<Entry<String, Integer>> topics) {

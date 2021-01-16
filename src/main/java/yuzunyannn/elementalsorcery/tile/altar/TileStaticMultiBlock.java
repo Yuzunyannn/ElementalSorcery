@@ -5,6 +5,7 @@ import java.util.Random;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
@@ -71,6 +72,7 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 		for (int i = 0; i < size; i++) {
 			int index = (startIndex + i) % size;
 			// 获取唤醒
+			BlockPos pos = structure.getSpecialBlockPos(index);
 			TileEntity tile = structure.getSpecialTileEntity(index);
 			IAltarWake altarWake = getAlterWake(tile);
 			if (altarWake == null) continue;
@@ -79,9 +81,8 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 			if (einv == null) continue;
 			ElementStack extract = einv.extractElement(need, true);
 			if (extract.arePowerfulAndMoreThan(need)) {
-				altarWake.wake(IAltarWake.SEND);
-				if (world.isRemote)
-					genParticleElementTo(true, extract.getColor(), structure.getSpecialBlockPos(index), animePos);
+				altarWake.wake(IAltarWake.SEND, this.pos);
+				if (world.isRemote) genParticleElementTo(true, altarWake, extract, pos, animePos);
 				else {
 					einv.extractElement(need, false);
 					if (ElementHelper.isEmpty(einv)) altarWake.onEmpty();
@@ -96,17 +97,17 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 	public boolean putElementToSpPlace(ElementStack estack, BlockPos animePos) {
 		for (int i = 0; i < structure.getSpecialBlockCount(); i++) {
 			// 获取唤醒
+			BlockPos pos = structure.getSpecialBlockPos(i);
 			TileEntity tile = structure.getSpecialTileEntity(i);
 			IAltarWake altarWake = getAlterWake(tile);
 			if (altarWake == null) continue;
 			// 获取仓库
 			IElementInventory einv = ElementHelper.getElementInventory(tile);
 			if (einv == null) continue;
-			int color = estack.getColor();
 			if (einv.insertElement(estack, true)) {
-				altarWake.wake(IAltarWake.OBTAIN);
+				altarWake.wake(IAltarWake.OBTAIN, this.pos);
 				einv.insertElement(estack, false);
-				if (world.isRemote) genParticleElementTo(false, color, animePos, structure.getSpecialBlockPos(i));
+				if (world.isRemote) genParticleElementTo(false, altarWake, estack, animePos, pos);
 				return true;
 			}
 		}
@@ -114,8 +115,18 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void genParticleElementTo(boolean isGet, int color, BlockPos from, BlockPos to) {
-		TileElementalCube.giveParticleElementTo(world, color, from, to, isGet ? 0.5f : 0.25f);
+	public void genParticleElementTo(boolean isGet, IAltarWake altarWake, ElementStack estack, BlockPos from,
+			BlockPos to) {
+		Vec3d refPos;
+		if (isGet) {
+			if (world.rand.nextFloat() < 0.5f) return;
+			refPos = new Vec3d(to).addVector(0.5, 0.5, 0.5);
+		} else {
+			if (world.rand.nextFloat() < 0.75f) return;
+			refPos = new Vec3d(from).addVector(0.5, 0.5, 0.5);
+		}
+
+		altarWake.updateEffect(world, isGet ? IAltarWake.SEND : IAltarWake.OBTAIN, estack, refPos);
 	}
 
 	/** 获取元素开始检查的下表，用于决定优先选择哪个 */

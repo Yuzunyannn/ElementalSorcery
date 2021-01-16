@@ -6,8 +6,9 @@
 	],
 	"key": {
 		"#": {
-			"id": "elementalsorcery:spell_paper",
-			"count": 3
+			"id": "elementalsorcery:magic_paper",
+			"count": 3,
+			"data": 1
 		},
 		"F": {
 			"id": "elementalsorcery:spellbook_cover",

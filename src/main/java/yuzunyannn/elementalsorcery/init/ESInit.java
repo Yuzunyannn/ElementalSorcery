@@ -156,7 +156,11 @@ import yuzunyannn.elementalsorcery.item.crystal.ItemItemCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemMagicalCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemResonantCrystal;
+import yuzunyannn.elementalsorcery.item.prop.ItemElementStone;
+import yuzunyannn.elementalsorcery.item.prop.ItemFusionCrystal;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
+import yuzunyannn.elementalsorcery.item.prop.ItemLifeLeather;
+import yuzunyannn.elementalsorcery.item.prop.ItemMagicPaper;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.item.prop.ItemSome;
 import yuzunyannn.elementalsorcery.item.prop.ItemSoulFragment;
@@ -347,8 +351,7 @@ public class ESInit {
 		ITEMS.MAGICAL_ENDER_EYE = ItemSome.newMagicalEnderEye();
 		ITEMS.MAGIC_CRYSTAL = new ItemMagicalCrystal();
 		ITEMS.TINY_KNIFE = ItemSome.newTinyKnife();
-		ITEMS.MAGIC_PAPER = ItemSome.newMagicPaper();
-		ITEMS.SPELL_PAPER = ItemSome.newSpellPaper();
+		ITEMS.MAGIC_PAPER = new ItemMagicPaper();
 		ITEMS.SPELL_CRYSTAL = ItemCrystal.newSpellCrystal();
 		ITEMS.MAGIC_STONE = ItemSome.newMagicStone();
 		ITEMS.KYANITE_PICKAXE = new ItemKyaniteTools.ItemKyanitePickaxe();
@@ -396,8 +399,10 @@ public class ESInit {
 		ITEMS.ROCK_CAMERA = new ItemRockCamera();
 		ITEMS.KEEPSAKE = new ItemKeepsake();
 		ITEMS.QUILL = new ItemQuill();
-		ITEMS.FUSION_CRYSTAL = ItemSome.newFusionCrystal();
+		ITEMS.FUSION_CRYSTAL = new ItemFusionCrystal();
 		ITEMS.VORTEX = new ItemVortex();
+		ITEMS.ELEMENT_STONE = new ItemElementStone();
+		ITEMS.LIFE_LEATHER = new ItemLifeLeather();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -627,8 +632,8 @@ public class ESInit {
 		registerRender(ITEMS.ELEMENT_CRYSTAL);
 		registerRender(ITEMS.MAGIC_CRYSTAL);
 		registerRender(ITEMS.PARCHMENT);
-		registerRender(ITEMS.MAGIC_PAPER);
-		registerRender(ITEMS.SPELL_PAPER);
+		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
+			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");
 		registerRender(ITEMS.SPELL_CRYSTAL);
 		registerRender(ITEMS.SPELLBOOK_COVER, 0, "spellbook_cover");
 		registerRender(ITEMS.SPELLBOOK_COVER, 1, "spellbook_back_cover");
@@ -680,6 +685,9 @@ public class ESInit {
 			registerRender(ITEMS.QUILL, quillType.getMeta(), "quill_" + quillType.getName());
 		registerRender(ITEMS.FUSION_CRYSTAL);
 		registerRender(ITEMS.VORTEX);
+		registerRender(ITEMS.ELEMENT_STONE);
+		registerRender(ITEMS.LIFE_LEATHER, 0, "life_leather_incomplete");
+		registerRender(ITEMS.LIFE_LEATHER, 1, "life_leather");
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

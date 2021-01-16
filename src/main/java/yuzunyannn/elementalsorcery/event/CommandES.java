@@ -179,10 +179,10 @@ public class CommandES extends CommandBase {
 			return;
 		case "remove":
 			if (grimoire == null) {
-				grimoireStack = new ItemStack(ESInit.ITEMS.GRIMOIRE);
 				throw new CommandException("commands.es.notFound",
 						grimoireStack.getTextComponent().setStyle(new Style().setColor(TextFormatting.RED)));
 			}
+			grimoire.loadState(grimoireStack);
 			grimoire.remove(mantra);
 			grimoire.saveState(grimoireStack);
 			notifyCommandListener(sender, this, "commands.es.mantra.remove", player.getName(),
@@ -190,10 +190,10 @@ public class CommandES extends CommandBase {
 			return;
 		case "add":
 			if (grimoire == null) {
-				grimoireStack = new ItemStack(ESInit.ITEMS.GRIMOIRE);
 				throw new CommandException("commands.es.notFound",
 						grimoireStack.getTextComponent().setStyle(new Style().setColor(TextFormatting.RED)));
 			}
+			grimoire.loadState(grimoireStack);
 			grimoire.add(mantra);
 			grimoire.saveState(grimoireStack);
 			notifyCommandListener(sender, this, "commands.es.mantra.add", player.getName(), mantra.getTextComponent());

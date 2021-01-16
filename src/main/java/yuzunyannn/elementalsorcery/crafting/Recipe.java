@@ -23,10 +23,10 @@ import yuzunyannn.elementalsorcery.util.json.Json.ParseExceptionCode;
 public class Recipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
 	// 信息
-	private int firstNotEmpty = -1;
-	private ItemStack output;
-	private List<ElementStack> elementList = new ArrayList<ElementStack>();
-	private NonNullList<Ingredient> matchList = NonNullList.<Ingredient>create();
+	protected int firstNotEmpty = -1;
+	protected ItemStack output;
+	protected List<ElementStack> elementList = new ArrayList<ElementStack>();
+	protected NonNullList<Ingredient> matchList = NonNullList.<Ingredient>create();
 
 	public Recipe(ItemStack output) {
 		this.output = output;
@@ -85,20 +85,13 @@ public class Recipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
 			for (int j = 0; j < str.length(); j++) {
 				String ch = str.substring(j, j + 1);
 				if (ch.charAt(0) != ' ') {
-					if (!map.containsKey(ch)) throw Json.exception(ParseExceptionCode.NOT_HAVE, "key");
+					if (!map.containsKey(ch)) throw Json.exception(ParseExceptionCode.NOT_HAVE, "key:" + ch);
 					ItemStack[] stacks = map.get(ch);
 					int index = (i - lock) * 4 + 9 + j;
 					this.setItemStack(index, stacks);
 				}
 			}
 		}
-	}
-
-	Recipe(ItemStack output, List<ElementStack> elist, NonNullList<Ingredient> mlist) {
-		this.output = output;
-		this.elementList = elist;
-		this.matchList = mlist;
-
 	}
 
 	// 设置指定位置的物品栈

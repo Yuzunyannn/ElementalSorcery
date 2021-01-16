@@ -42,22 +42,29 @@ public class ItemSoulFragment extends Item {
 		for (EntityItem ei : list) {
 			ItemStack stack = ei.getItem();
 			if (stack.getItem() == Items.WOODEN_SWORD) woodSword = ei;
+			else if (stack.getItem() == Items.LEATHER) woodSword = ei;
 			else if (stack.getItem() == ESInit.ITEMS.SOUL_WOOD_SWORD) soulWoodSword = ei;
+			else if (stack.getItem() == ESInit.ITEMS.LIFE_LEATHER && stack.getMetadata() == 0) soulWoodSword = ei;
 			if (soulWoodSword != null) break;
 		}
 		int count = entityItem.getItem().getCount();
 		Entity sword = null;
 		if (soulWoodSword != null) {
 			entityItem.setDead();
-			ItemSoulWoodSword.addSoul(soulWoodSword.getItem(), count);
+			ItemStack stack = soulWoodSword.getItem();
+			int meta = stack.getMetadata();
+			addSoul(stack, count);
+			if (meta != stack.getMetadata()) soulWoodSword.setItem(stack);
 			sword = soulWoodSword;
 		} else if (woodSword != null) {
 			entityItem.setDead();
-			ItemStack swSword = new ItemStack(ESInit.ITEMS.SOUL_WOOD_SWORD);
+			ItemStack swSword;
+			if (woodSword.getItem().getItem() == Items.LEATHER) swSword = new ItemStack(ESInit.ITEMS.LIFE_LEATHER);
+			else swSword = new ItemStack(ESInit.ITEMS.SOUL_WOOD_SWORD);
 			swSword.setItemDamage(woodSword.getItem().getItemDamage());
 			swSword.setTagCompound(woodSword.getItem().getTagCompound());
 			woodSword.setItem(swSword);
-			ItemSoulWoodSword.addSoul(swSword, count);
+			addSoul(swSword, count);
 			sword = woodSword;
 		}
 		if (sword != null) {
@@ -65,5 +72,10 @@ public class ItemSoulFragment extends Item {
 					new int[] { 0xe0ffff });
 			Effects.spawnEffect(world, Effects.FIREWROK, sword.getPositionVector().addVector(0, 0.5, 0), nbt);
 		}
+	}
+
+	public static void addSoul(ItemStack sword, int count) {
+		ItemSoulWoodSword.addSoul(sword, count);
+		if (sword.getItem() == ESInit.ITEMS.LIFE_LEATHER) ItemLifeLeather.transform(sword);
 	}
 }

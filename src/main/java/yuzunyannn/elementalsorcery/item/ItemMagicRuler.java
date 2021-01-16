@@ -45,12 +45,10 @@ public class ItemMagicRuler extends Item {
 		}
 		if (!player.isSneaking()) {
 			BlockPos pos2 = ItemMagicRuler.getRulerPos(stack, false);
-			if (this.checkFailToSelect(player, worldIn, pos, pos2))
-				return EnumActionResult.FAIL;
+			if (this.checkFailToSelect(player, worldIn, pos, pos2)) return EnumActionResult.FAIL;
 		} else {
 			BlockPos pos1 = ItemMagicRuler.getRulerPos(stack, true);
-			if (this.checkFailToSelect(player, worldIn, pos1, pos))
-				return EnumActionResult.FAIL;
+			if (this.checkFailToSelect(player, worldIn, pos1, pos)) return EnumActionResult.FAIL;
 		}
 		// 没有检测出错误，设置位置
 		ItemMagicRuler.setRulerPos(stack, pos, !player.isSneaking());
@@ -68,11 +66,9 @@ public class ItemMagicRuler extends Item {
 
 	/** 检测选择的距离是否失败 */
 	private boolean checkFailToSelect(EntityPlayer player, World worldIn, BlockPos pos1, BlockPos pos2) {
-		if (pos1 == null || pos2 == null)
-			return false;
+		if (pos1 == null || pos2 == null) return false;
 		if (pos1.distanceSq(pos2) > MAX_DIS_SQ) {
-			if (worldIn.isRemote)
-				player.sendMessage(new TextComponentTranslation("info.ruler.fail"));
+			if (worldIn.isRemote) player.sendMessage(new TextComponentTranslation("info.ruler.fail"));
 			return true;
 		}
 		return false;
@@ -82,12 +78,11 @@ public class ItemMagicRuler extends Item {
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
-		if (!worldIn.isRemote)
-			return;
+		if (!worldIn.isRemote) return;
 		if (entityIn instanceof EntityPlayer) {
 			if (isSelected) {
 				RenderRulerSelectRegion.showItem((EntityPlayer) entityIn, EnumHand.MAIN_HAND);
-			} else if (itemSlot == 0) {
+			} else if (itemSlot == 0 && stack == ((EntityPlayer) entityIn).getHeldItemOffhand()) {
 				RenderRulerSelectRegion.showItem((EntityPlayer) entityIn, EnumHand.OFF_HAND);
 			}
 		}
@@ -123,12 +118,9 @@ public class ItemMagicRuler extends Item {
 	/** 获取标尺世界 */
 	public static Integer getDimensionId(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null)
-			return null;
-		if (nbt.hasKey("world"))
-			return nbt.getInteger("world");
-		else
-			return null;
+		if (nbt == null) return null;
+		if (nbt.hasKey("world")) return nbt.getInteger("world");
+		else return null;
 	}
 
 	/** 设置标尺世界 */
@@ -148,17 +140,14 @@ public class ItemMagicRuler extends Item {
 			nbt = new NBTTagCompound();
 			stack.setTagCompound(nbt);
 		}
-		if (first)
-			NBTHelper.setBlockPos(nbt, "loc1", pos);
-		else
-			NBTHelper.setBlockPos(nbt, "loc2", pos);
+		if (first) NBTHelper.setBlockPos(nbt, "loc1", pos);
+		else NBTHelper.setBlockPos(nbt, "loc2", pos);
 	}
 
 	/** 清空ruler */
 	public static void clearRulerPos(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null)
-			return;
+		if (nbt == null) return;
 		nbt.removeTag("loc1x");
 		nbt.removeTag("loc1y");
 		nbt.removeTag("loc1z");
@@ -170,15 +159,12 @@ public class ItemMagicRuler extends Item {
 	/** 获取位置 */
 	public static @Nullable BlockPos getRulerPos(ItemStack stack, boolean first) {
 		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null)
-			return null;
+		if (nbt == null) return null;
 		if (first) {
-			if (NBTHelper.hasBlockPos(nbt, "loc1"))
-				return NBTHelper.getBlockPos(nbt, "loc1");
+			if (NBTHelper.hasBlockPos(nbt, "loc1")) return NBTHelper.getBlockPos(nbt, "loc1");
 			return null;
 		} else {
-			if (NBTHelper.hasBlockPos(nbt, "loc2"))
-				return NBTHelper.getBlockPos(nbt, "loc2");
+			if (NBTHelper.hasBlockPos(nbt, "loc2")) return NBTHelper.getBlockPos(nbt, "loc2");
 			return null;
 		}
 	}
@@ -186,8 +172,7 @@ public class ItemMagicRuler extends Item {
 	/** 获取颜色 */
 	public static EnumDyeColor getColor(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null)
-			return EnumDyeColor.PURPLE;
+		if (nbt == null) return EnumDyeColor.PURPLE;
 		if (nbt.hasKey("color")) {
 			int meta = nbt.getInteger("color");
 			return EnumDyeColor.byMetadata(meta);
@@ -197,8 +182,7 @@ public class ItemMagicRuler extends Item {
 
 	/** 设置颜色 */
 	public static ItemStack setColor(ItemStack stack, EnumDyeColor color) {
-		if (color == null)
-			color = EnumDyeColor.PURPLE;
+		if (color == null) color = EnumDyeColor.PURPLE;
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) {
 			nbt = new NBTTagCompound();

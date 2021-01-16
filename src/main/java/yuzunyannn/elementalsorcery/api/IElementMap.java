@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.api.register;
+package yuzunyannn.elementalsorcery.api;
 
 import javax.annotation.Nullable;
 
@@ -31,10 +31,4 @@ public interface IElementMap extends IToElement {
 	/** 添加一个新的block-estacks到图中 */
 	void add(Block block, int complex, ElementStack... estacks);
 
-	/** 将方块转成元素 */
-	@Nullable
-	ElementStack[] toElement(Block block);
-
-	/** 获取复杂度 */
-	int complex(Block block);
 }

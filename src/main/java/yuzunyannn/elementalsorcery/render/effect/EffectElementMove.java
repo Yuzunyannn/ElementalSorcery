@@ -6,6 +6,9 @@ import net.minecraft.world.World;
 public class EffectElementMove extends EffectElement {
 
 	public double g = 0.01f;
+	public double xDecay = 0.96;
+	public double yDecay = 1;
+	public double zDecay = 0.96;
 
 	public EffectElementMove(World world, Vec3d pos) {
 		super(world, pos.x, pos.y, pos.z);
@@ -32,8 +35,9 @@ public class EffectElementMove extends EffectElement {
 
 		motionY -= g;
 
-		motionX *= 0.96f;
-		motionZ *= 0.96f;
+		motionX *= xDecay;
+		motionY *= yDecay;
+		motionZ *= zDecay;
 	}
 
 }

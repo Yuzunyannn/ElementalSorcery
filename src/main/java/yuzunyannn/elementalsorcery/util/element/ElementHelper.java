@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class ElementHelper {
 
@@ -43,18 +44,27 @@ public class ElementHelper {
 
 	// 添加元素的信息
 	@SideOnly(Side.CLIENT)
-	public static void addElementInformation(IElementInventory inventory, World worldIn, List<String> tooltip,
+	public static boolean addElementInformation(IElementInventory inventory, World worldIn, List<String> tooltip,
 			ITooltipFlag flagIn) {
+		boolean has = false;
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ElementStack estack = inventory.getStackInSlot(i);
 			if (estack.isEmpty()) continue;
-			String str;
-			if (estack.usePower()) str = I18n.format("info.elementalCrystal.has",
-					I18n.format(estack.getElementUnlocalizedName()), estack.getCount(), estack.getPower());
-			else str = I18n.format("info.elementalCrystal.hasnp", I18n.format(estack.getElementUnlocalizedName()),
-					estack.getCount());
-			tooltip.add(TextFormatting.RED + str);
+			addElementInformation(estack, tooltip);
+			has = true;
 		}
+		return has;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static void addElementInformation(ElementStack estack, List<String> tooltip) {
+		if (estack.isEmpty()) return;
+		String str;
+		if (estack.usePower()) str = I18n.format("info.elementalCrystal.has",
+				I18n.format(estack.getElementUnlocalizedName()), estack.getCount(), estack.getPower());
+		else str = I18n.format("info.elementalCrystal.hasnp", I18n.format(estack.getElementUnlocalizedName()),
+				estack.getCount());
+		tooltip.add(TextFormatting.RED + str);
 	}
 
 	/** 从tileentity获取元素仓库 */
@@ -91,7 +101,7 @@ public class ElementHelper {
 	}
 
 	/** 合并 */
-	static public ElementStack[] merge(ElementStack[] estacks1, ElementStack[] estacks2) {
+	static public ElementStack[] merge(ElementStack[] estacks1, ElementStack... estacks2) {
 		ArrayList<ElementStack> list = new ArrayList<ElementStack>();
 		for (ElementStack e1 : estacks1) list.add(e1);
 		for (ElementStack e2 : estacks2) {
@@ -105,6 +115,15 @@ public class ElementHelper {
 			if (!e2.isEmpty()) list.add(e2);
 		}
 		return (ElementStack[]) list.toArray(new ElementStack[list.size()]);
+	}
+
+	static public void merge(IElementInventory to, IElementInventory from) {
+		if (to == null || from == null) return;
+		for (int j = 0; j < from.getSlots(); j++) {
+			ElementStack estack = from.getStackInSlot(j);
+			if (estack.isEmpty()) continue;
+			to.insertElement(estack, false);
+		}
 	}
 
 	/** 复制 */
@@ -125,5 +144,16 @@ public class ElementHelper {
 			i++;
 		}
 		return colors;
+	}
+
+	/** 随机取出 */
+	static public ElementStack randomExtract(IElementInventory einv) {
+		if (einv == null) return ElementStack.EMPTY;
+		int s = RandomHelper.rand.nextInt(einv.getSlots());
+		for (int i = 0; i < einv.getSlots(); i++) {
+			ElementStack estack = einv.getStackInSlot((s + i) % einv.getSlots());
+			if (!estack.isEmpty()) return estack;
+		}
+		return ElementStack.EMPTY;
 	}
 }

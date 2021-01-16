@@ -63,6 +63,7 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 	protected ArrayList<Info> mantraList = new ArrayList<>();
 	protected short at = 0;
 	protected short capacity = 0;
+	protected short capacityMax = 20;
 
 	/** 获取仓库 */
 	@Nullable
@@ -101,9 +102,11 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 	}
 
 	public Info getInfo(int i) {
+		if (i < 0 || i >= mantraList.size()) return null;
 		return mantraList.get(i);
 	}
 
+	/** 当前选择的咒文 */
 	public short getSelected() {
 		return at;
 	}
@@ -116,8 +119,12 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 		return capacity;
 	}
 
-	public int getCapacityTotally() {
-		return 20;
+	public int getCapacityMax() {
+		return capacityMax;
+	}
+
+	public void setCapacityMax(int capacityMax) {
+		this.capacityMax = (short) capacityMax;
 	}
 
 	@Override
@@ -136,6 +143,7 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 			this.add(m, data);
 		}
 		capacity = nbt.getShort("capacity");
+		capacityMax = nbt.getShort("capacityMax");
 		at = nbt.getShort("at");
 	}
 
@@ -149,6 +157,7 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 		}
 		nbt.setTag("mantra", mantras);
 		nbt.setShort("capacity", capacity);
+		nbt.setShort("capacityMax", capacityMax);
 		nbt.setShort("at", at);
 	}
 

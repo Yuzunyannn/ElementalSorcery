@@ -7,6 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
@@ -69,7 +70,9 @@ public class TileMDAbsorbBox extends TileMDBase implements ITickable {
 					this.magic.shrink(need);
 					if (world.isRemote) {
 						// 生成粒子效果
-						TileElementalCube.giveParticleElementTo(world, estack.getColor(), curPos, pos, 1.0f);
+						Vec3d from = new Vec3d(curPos).addVector(0.5, 0.5, 0.5);
+						Vec3d to = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+						TileElementalCube.giveParticleElementTo(world, estack.getColor(), from, to, 1.0f);
 					} else {
 						// 记录真实数据
 						inventory.insertElement(estack, false);

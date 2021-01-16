@@ -1,0 +1,14 @@
+{
+    "lev": 3,
+    "link": "elementalsorcery:life_leather",
+    "need": [
+        "element/rite_summon"
+    ],
+    "type": "normal",
+    "name": "lifeLeather",
+    "icon": "elementalsorcery:life_leather",
+    "background": {
+        "item": "elementalsorcery:life_leather",
+        "data": 1
+    }
+}

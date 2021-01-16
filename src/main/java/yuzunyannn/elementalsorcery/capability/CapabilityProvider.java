@@ -21,7 +21,6 @@ public class CapabilityProvider {
 		public ElementInventoryUseProvider(ItemStack dyStack, IElementInventory inventory) {
 			this.inventory = inventory == null ? new ElementInventory() : inventory;
 			if (this.inventory.hasState(dyStack)) this.inventory.loadState(dyStack);
-			else this.inventory.saveState(dyStack);
 		}
 
 		@Override

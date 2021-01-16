@@ -8,6 +8,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -149,12 +150,13 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void genParticleElementTo(boolean isGet, int color, BlockPos from, BlockPos to) {
+	public void genParticleElementTo(boolean isGet, IAltarWake altarWake, ElementStack estack, BlockPos from,
+			BlockPos to) {
 		Vec3d pos = new Vec3d(to).addVector(0.5f, 1.5f, 0.5f);
 		Vec3d at = new Vec3d(from).addVector(0.5f, 0.75f, 0.5f);
 		BlockPos tar = this.pos.subtract(from);
 		EffectElementScrew e = new EffectElementScrew(world, at, pos).setDirect(new Vec3d(tar.getX(), 1, 0));
-		e.setColor(color);
+		e.setColor(estack.getColor());
 		e.lifeTime = 150;
 		Effect.addEffect(e);
 	}

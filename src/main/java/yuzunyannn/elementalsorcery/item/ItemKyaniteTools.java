@@ -59,7 +59,9 @@ public class ItemKyaniteTools {
 	private static void dealBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, EntityLivingBase entity) {
 		IElementInventory inventory = new ElementInventory();
 		if (inventory.hasState(stack) == false) return;
-		ElementStack[] estacks = ElementMap.instance.toElement(state.getBlock());
+		ItemStack blockStack = ItemHelper.toItemStack(state);
+		if (blockStack.isEmpty()) return;
+		ElementStack[] estacks = ElementMap.instance.toElement(blockStack);
 		if (estacks != null) {
 			ElementStack estack;
 			if (Math.random() >= 0.333333) return;
@@ -73,7 +75,7 @@ public class ItemKyaniteTools {
 			} else {
 				estack = estacks[0].copy();
 				estack = estack.becomeElementWhenDeconstruct(worldIn, ItemHelper.toItemStack(state),
-						ElementMap.instance.complex(state.getBlock()), Element.DP_TOOLS);
+						ElementMap.instance.complex(blockStack), Element.DP_TOOLS);
 			}
 			inventory.loadState(stack);
 			inventory.insertElement(estack, false);

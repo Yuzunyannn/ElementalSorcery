@@ -15,6 +15,7 @@
   },
   "result": {
     "item": "elementalsorcery:magic_paper",
-    "count": 1
+    "count": 1,
+    "data" : 0
   }
 }

@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.tile.altar;
 
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -52,17 +54,18 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 
 	// 获取一次元素动画
 	@SideOnly(Side.CLIENT)
-	public static void giveParticleElementTo(World world, int color, BlockPos from, BlockPos pto, float possibility) {
+	public static void giveParticleElementTo(World world, int color, Vec3d from, Vec3d pto, float possibility) {
 		Random rand = world.rand;
 		if (rand.nextFloat() > possibility) return;
 		EffectElementFly effect;
-		if (pto.getY() > from.getY()) effect = new EffectElementFly(world,
-				new Vec3d(from.getX() + Math.random(), from.getY() + Math.random(), from.getZ() + Math.random()),
-				new Vec3d(pto.getX() + rand.nextDouble(), pto.getY() + 0.5, pto.getZ() + rand.nextDouble()));
-		else effect = new EffectElementFly(world,
-				new Vec3d(from.getX() + 0.25 + Math.random() * 0.5, from.getY() + 0.25 + Math.random() * 0.5,
-						from.getZ() + 0.25 + Math.random() * 0.5),
-				new Vec3d(pto.getX() + 0.5, pto.getY() + 1.0, pto.getZ() + 0.5));
+		if (pto.y > from.y) {
+			from = from.addVector(rand.nextDouble() - 0.5, rand.nextDouble() - 0.5, rand.nextDouble() - 0.5);
+			pto = pto.addVector(rand.nextDouble() - 0.5, 0, rand.nextDouble() - 0.5);
+		} else {
+			from = from.addVector(rand.nextDouble() * 0.5 - 0.25, rand.nextDouble() * 0.5 - 0.25,
+					rand.nextDouble() * 0.5 - 0.25);
+		}
+		effect = new EffectElementFly(world, from, pto);
 		effect.setColor(color);
 		yuzunyannn.elementalsorcery.render.effect.Effect.addEffect(effect);
 
@@ -107,7 +110,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 
 	// 唤醒
 	@Override
-	public boolean wake(int type) {
+	public boolean wake(int type, @Nullable BlockPos from) {
 		if (!this.world.isRemote) return true;
 		this.wake = 80;
 		this.markDirty();
@@ -117,6 +120,14 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	@Override
 	public void onEmpty() {
 		if (!world.isRemote) this.updateToClient();
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void updateEffect(World world, int type, ElementStack estack, Vec3d pos) {
+		Vec3d myPos = new Vec3d(this.pos).addVector(0.5, 0.5, 0.5);
+		if (type == IAltarWake.SEND) giveParticleElementTo(world, estack.getColor(), myPos, pos, 1);
+		else giveParticleElementTo(world, estack.getColor(), pos, myPos, 1);
 	}
 
 	// 设置仓库

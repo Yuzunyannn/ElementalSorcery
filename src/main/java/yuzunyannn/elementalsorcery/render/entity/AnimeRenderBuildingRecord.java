@@ -49,7 +49,7 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 	}
 
 	@Override
-	public void update(ICraftingCommit commit, World world, int endTick) {
+	public void update(ICraftingCommit commit, World world, BlockPos _pos, int endTick) {
 		if (endTick >= 0) theta = endTick;
 		else theta += 1;
 		BlockPos pos = cnr.getCurrPos();
@@ -121,9 +121,9 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 			GlStateManager.disableTexture2D();
 			GlStateManager.glLineWidth(5);
 			pos = pos.add(-tilePos.getX(), -tilePos.getY(), -tilePos.getZ());
-			//float x = pos.getX();
-			//float y = pos.getY();
-			//float z = pos.getZ();
+			// float x = pos.getX();
+			// float y = pos.getY();
+			// float z = pos.getZ();
 			float r = cnr.r;
 			float g = cnr.g;
 			float b = cnr.b;

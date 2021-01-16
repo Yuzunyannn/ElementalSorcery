@@ -120,7 +120,9 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 
 	@Override
 	public void writeSpawnData(ByteBuf buffer) {
-		ByteBufUtils.writeTag(buffer, this.getDataNBT());
+		NBTTagCompound nbt = this.getDataNBT();
+		if (this.commitNBT != null && !nbt.hasKey("cnbt")) nbt.setTag("cnbt", this.commitNBT);
+		ByteBufUtils.writeTag(buffer, nbt);
 	}
 
 	@Override
@@ -237,7 +239,8 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 				this.finishTick--;
 			}
 		}
-		this.craftingAnime.update(this.commit, this.world, finishTick);
+		BlockPos pos = this.pos == null ? this.getPosition() : this.pos;
+		this.craftingAnime.update(this.commit, this.world, pos, finishTick);
 	}
 
 	@Override
@@ -272,12 +275,12 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
-		this.recoveryDataFromNBT(compound.getCompoundTag("ecrafting"));
+		this.recoveryDataFromNBT(compound.getCompoundTag("ecraft"));
 	}
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
-		compound.setTag("ecrafting", this.getDataNBT());
+		compound.setTag("ecraft", this.getDataNBT());
 	}
 
 	@Override

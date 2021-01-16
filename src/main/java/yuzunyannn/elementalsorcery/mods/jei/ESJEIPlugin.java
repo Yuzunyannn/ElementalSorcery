@@ -117,6 +117,13 @@ public class ESJEIPlugin implements IModPlugin {
 		describes.add(
 				new DescribeRecipeWrapper.Describe("page.quills", "page.quills.ct", new ItemStack(ITEMS.QUILL, 1, 1),
 						ItemHelper.toList(ITEMS.QUILL, 1, 1), ItemHelper.toList(ITEMS.QUILL, 1, 2, ITEMS.QUILL, 1, 3)));
+		describes.add(new DescribeRecipeWrapper.Describe("page.lifeLeather", "page.lifeLeather.ct",
+				new ItemStack(ITEMS.LIFE_LEATHER, 1, 1), ItemHelper.toList(Items.LEATHER, ITEMS.SOUL_FRAGMENT),
+				ItemHelper.toList(ITEMS.LIFE_LEATHER, 1, 0, ITEMS.LIFE_LEATHER, 1, 1)));
+		describes.add(new DescribeRecipeWrapper.Describe("page.mantraPaper", "page.mantraPaper.ct",
+				new ItemStack(ITEMS.MAGIC_PAPER, 1, 3), ItemHelper.toList(ITEMS.MAGIC_PAPER, 1, 2),
+				ItemHelper.toList(ITEMS.MAGIC_PAPER, 1, 3)));
+
 		return describes;
 	}
 }

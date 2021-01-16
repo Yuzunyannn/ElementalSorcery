@@ -1,0 +1,26 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" P ",
+		"SSS",
+		"WWW"
+	],
+	"key": {
+		"P": {
+			"item": "elementalsorcery:quill",
+			"data": 4
+		},
+		"S": {
+			"item": "elementalsorcery:magic_paper",
+			"data": 1
+		},
+		"W": {
+			"item": "elementalsorcery:star_sand"
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:magic_paper",
+		"count": 1,
+		"data": 2
+	}
+}
