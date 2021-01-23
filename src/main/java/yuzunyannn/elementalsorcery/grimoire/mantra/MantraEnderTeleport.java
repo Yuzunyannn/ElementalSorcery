@@ -30,13 +30,14 @@ public class MantraEnderTeleport extends MantraCommon {
 	public MantraEnderTeleport() {
 		this.setUnlocalizedName("enderTeleport");
 		this.setRarity(25);
+		this.setOccupation(5);
 		this.setColor(0xc000eb);
 	}
 
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		ElementStack need = new ElementStack(ESInit.ELEMENTS.ENDER, 15, 50);
+		ElementStack need = new ElementStack(ESInit.ELEMENTS.ENDER, 10, 50);
 		ElementStack get = caster.iWantSomeElement(need, false);
 		dataEffect.markContinue(!get.isEmpty());
 	}
@@ -46,7 +47,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		if (caster.iWantKnowCastTick() < 5) return;
 		BlockPos pos = caster.iWantFoothold();
 		if (pos == null) return;
-		ElementStack need = new ElementStack(ESInit.ELEMENTS.ENDER, 15, 50);
+		ElementStack need = new ElementStack(ESInit.ELEMENTS.ENDER, 10, 50);
 		ElementStack stack = caster.iWantSomeElement(need, true);
 		if (stack.isEmpty()) return;
 		Entity entity = caster.iWantCaster();

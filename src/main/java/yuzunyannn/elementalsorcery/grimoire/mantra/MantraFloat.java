@@ -17,6 +17,7 @@ public class MantraFloat extends MantraCommon {
 	public MantraFloat() {
 		this.setUnlocalizedName("float");
 		this.setRarity(125);
+		this.setOccupation(1);
 		this.setColor(0xacffff);
 	}
 
@@ -28,7 +29,7 @@ public class MantraFloat extends MantraCommon {
 	@Override
 	public void onSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		if (caster.iWantKnowCastTick() % 5 == 0 || !dataEffect.isMarkContinue()) {
+		if (caster.iWantKnowCastTick() % 20 == 0 || !dataEffect.isMarkContinue()) {
 			dataEffect.markContinue(false);
 			ElementStack need = new ElementStack(ESInit.ELEMENTS.AIR, 1, 20);
 			ElementStack get = caster.iWantSomeElement(need, true);

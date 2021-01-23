@@ -5,12 +5,14 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.element.Element;
+import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 
 public class ESObjects {
 
 	public static Items ITEMS;
 	public static Blocks BLOCKS;
 	public static Elements ELEMENTS;
+	public static Mantras MANTRAS;
 	public static Village VILLAGE;
 	public static CreativeTabs CREATIVE_TABS;
 
@@ -153,6 +155,21 @@ public class ESObjects {
 		public Element METAL;
 		public Element WOOD;
 		public Element KNOWLEDGE;
+	}
+
+	static public class Mantras {
+		public Mantra ENDER_TELEPORT;
+		public Mantra FLOAT;
+		public Mantra SPRINT;
+		public Mantra FIRE_BALL;
+		public Mantra LUSH;
+		public Mantra BLOCK_CRASH;
+		public Mantra MINING_AREA;
+		public Mantra LIGHTNING_AREA;
+		public Mantra SUMMON;
+		public Mantra LAUNCH_ECR;
+		public Mantra LAUNCH_EDE;
+		public Mantra LAUNCH_ECO;
 	}
 
 	static public class Village {

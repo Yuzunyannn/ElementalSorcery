@@ -1,0 +1,23 @@
+{
+    "parent": "elementalsorcery:elf/elf_edifice",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:rock_camera",
+            "data": 0
+        },
+        "title": {
+            "translate": "es.adv.rockCamera.title"
+        },
+        "description": {
+            "translate": "es.adv.rockCamera.description"
+        }
+    },
+    "criteria": {
+        "use": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "use:rockCamera"
+            }
+        }
+    }
+}

@@ -12,12 +12,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectCondition;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectScreenProgress;
+import yuzunyannn.elementalsorcery.util.VariableSet;
 
 public class MantraDataCommon implements IMantraData {
 
 	public final Set<Short> effectSet = new HashSet<>();
-	public boolean markContinue;
 	public int speedTick;
+	protected boolean markContinue;
+	protected VariableSet extra = new VariableSet();
 
 	public MantraDataCommon() {
 	}
@@ -106,13 +108,23 @@ public class MantraDataCommon implements IMantraData {
 		}
 	}
 
+	public <T> void set(VariableSet.Variable<T> var, T obj) {
+		extra.set(var, obj);
+	}
+
+	public <T> T get(VariableSet.Variable<T> var) {
+		return extra.get(var);
+	}
+
 	@Override
 	public NBTTagCompound serializeNBT() {
+		if (!extra.isEmpty()) return extra.serializeNBT();
 		return null;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
+		extra.deserializeNBT(nbt);
 	}
 
 }

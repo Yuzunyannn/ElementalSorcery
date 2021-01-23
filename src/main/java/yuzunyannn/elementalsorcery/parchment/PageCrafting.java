@@ -102,6 +102,13 @@ public class PageCrafting extends PageEasy {
 		return itemOut.get(nowIndex);
 	}
 
+	public int getMaxSize() {
+		int maxSize = 0;
+		for (NonNullList<Ingredient> list : itemList) 
+			if (list.size() > maxSize) maxSize = list.size();
+		return maxSize;
+	}
+
 	@Override
 	public ItemStack getIcon() {
 		return this.getOutput();
@@ -120,7 +127,7 @@ public class PageCrafting extends PageEasy {
 	@Override
 	public void init(IPageManager pageManager) {
 		if (itemList.isEmpty()) return;
-		size = this.getCrafting().size() > 9 ? 25 : 9;
+		size = this.getMaxSize() > 9 ? 25 : 9;
 		int cX = this.getCX();
 		int cY = this.getCY();
 		for (int i = 0; i < size; i++) {

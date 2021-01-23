@@ -127,16 +127,16 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 		@Override
 		public NBTTagCompound serializeNBT() {
 			NBTTagCompound nbt = new NBTTagCompound();
-			NBTHelper.setPos(nbt, "from", from);
-			NBTHelper.setPos(nbt, "to", to);
+			NBTHelper.setVec3d(nbt, "from", from);
+			NBTHelper.setVec3d(nbt, "to", to);
 			nbt.setString("order", order);
 			return nbt;
 		}
 
 		@Override
 		public void deserializeNBT(NBTTagCompound nbt) {
-			from = NBTHelper.getPos(nbt, "from");
-			to = NBTHelper.getPos(nbt, "to");
+			from = NBTHelper.getVec3d(nbt, "from");
+			to = NBTHelper.getVec3d(nbt, "to");
 			order = nbt.getString("order");
 		}
 

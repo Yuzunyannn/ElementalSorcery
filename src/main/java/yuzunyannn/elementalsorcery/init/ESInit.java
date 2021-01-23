@@ -102,6 +102,7 @@ import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
+import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementAir;
@@ -124,6 +125,16 @@ import yuzunyannn.elementalsorcery.event.KeyBoard;
 import yuzunyannn.elementalsorcery.explore.ExploreManagement;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraBlockCrash;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireBall;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloat;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLaunch;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLightningArea;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLush;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraMiningArea;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSprint;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
@@ -245,6 +256,7 @@ public class ESInit {
 	public static final ESObjects.Items ITEMS = new ESObjects.Items();
 	public static final ESObjects.Blocks BLOCKS = new ESObjects.Blocks();
 	public static final ESObjects.Elements ELEMENTS = new ESObjects.Elements();
+	public static final ESObjects.Mantras MANTRAS = new ESObjects.Mantras();
 	public static final ESObjects.Village VILLAGE = new ESObjects.Village();
 	public static final ESCreativeTabs tab = ESCreativeTabs.TAB;
 
@@ -253,6 +265,7 @@ public class ESInit {
 		ESObjects.ITEMS = ITEMS;
 		ESObjects.BLOCKS = BLOCKS;
 		ESObjects.ELEMENTS = ELEMENTS;
+		ESObjects.MANTRAS = MANTRAS;
 		ESObjects.VILLAGE = VILLAGE;
 		// 创造物品栏
 		ESObjects.CREATIVE_TABS = tab;
@@ -265,6 +278,7 @@ public class ESInit {
 		instanceBlocks();
 		instanceItems();
 		instanceElements();
+		instanceMantras();
 		instanceVillage();
 		// 其他位置句柄获取
 		ItemCrystal.init();
@@ -421,6 +435,30 @@ public class ESInit {
 		}
 	}
 
+	private static final void instanceMantras() throws ReflectiveOperationException {
+		
+		MANTRAS.ENDER_TELEPORT = new MantraEnderTeleport();
+		MANTRAS.FLOAT = new MantraFloat();
+		MANTRAS.SPRINT = new MantraSprint();
+		MANTRAS.FIRE_BALL = new MantraFireBall();
+		MANTRAS.LUSH = new MantraLush();
+		MANTRAS.BLOCK_CRASH = new MantraBlockCrash();
+		MANTRAS.MINING_AREA = new MantraMiningArea();
+		MANTRAS.LIGHTNING_AREA = new MantraLightningArea();
+		MANTRAS.SUMMON = new MantraSummon();
+		MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);
+		MANTRAS.LAUNCH_EDE = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT, 0xff4a1a);
+		MANTRAS.LAUNCH_ECO = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT, 0x00b5e5);
+
+		// 初始化所有
+		Class<?> cls = MANTRAS.getClass();
+		Field[] fields = cls.getDeclaredFields();
+		for (Field field : fields) {
+			Mantra mantra = ((Mantra) field.get(MANTRAS));
+			mantra.setRegistryName(field.getName().toLowerCase());
+		}
+	}
+
 	private static final void instanceElements() {
 		ELEMENTS.FIRE = new ElementFire().setRegistryName("fire");
 		ELEMENTS.ENDER = new ElementEnder().setRegistryName("ender");
@@ -463,7 +501,7 @@ public class ESInit {
 		// 注册默认所有建筑
 		BuildingLib.registerAll();
 		// 注册咒文
-		Mantra.registerAll();
+		registerAllMantras();
 		KnowledgeType.registerAll();
 		// 召唤注册
 		SummonRecipe.registerAll();
@@ -567,6 +605,15 @@ public class ESInit {
 			} catch (NoSuchMethodException e) {
 				register(block);
 			}
+		}
+	}
+
+	static void registerAllMantras() throws IllegalArgumentException, IllegalAccessException {
+		// 遍历所有，将所有内容注册
+		Class<?> cls = ESInit.MANTRAS.getClass();
+		Field[] fields = cls.getDeclaredFields();
+		for (Field field : fields) {
+			register((Mantra) field.get(ESInit.MANTRAS));
 		}
 	}
 
@@ -799,6 +846,10 @@ public class ESInit {
 				return icalss.newInstance();
 			}
 		});
+	}
+
+	private static void register(Mantra mantra) {
+		Mantra.REGISTRY.register(mantra);
 	}
 
 	private static void register(Item item) {

@@ -42,8 +42,12 @@ public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk
 
 	public void renderBook(ItemStack book) {
 		Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
-		if (spellbook == null)
+		if (spellbook == null) {
+			GlStateManager.translate(0, 0, 0.1);
+			RenderHelper.layItemPositionFix(book);
+			Minecraft.getMinecraft().getRenderItem().renderItem(book, ItemCameraTransforms.TransformType.GROUND);
 			return;
+		}
 		SpellbookRenderInfo info = spellbook.render_info;
 		float n_rate = (1 - info.bookSpread);
 		GlStateManager.translate(0, 0.45 * info.bookSpread + 0.35 * n_rate, 0.35 * n_rate);

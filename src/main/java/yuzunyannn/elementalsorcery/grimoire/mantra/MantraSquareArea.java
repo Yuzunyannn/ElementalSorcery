@@ -158,7 +158,7 @@ public abstract class MantraSquareArea extends MantraCommon {
 		super.onSpellingEffect(world, mData, caster);
 		if (!caster.hasEffectFlags(MantraEffectFlags.INDICATOR)) return;
 		SquareData data = (SquareData) mData;
-		if (!data.markContinue) return;
+		if (!data.isMarkContinue()) return;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (caster.iWantCaster() == Minecraft.getMinecraft().player) if (!dataEffect.hasMarkEffect(1))
 			dataEffect.addEffect(caster, new EffectLookAt(world, caster, this.getColor(mData)), 1);
@@ -192,7 +192,9 @@ public abstract class MantraSquareArea extends MantraCommon {
 		ems.setIcon(this.getMagicCircleIcon());
 	}
 
-	public abstract SquareData getSquareData(NBTTagCompound origin, World world, ICaster caster);
+	public SquareData getSquareData(NBTTagCompound origin, World world, ICaster caster) {
+		return new SquareData();
+	}
 
 	public abstract void onAfterSpellingInit(World world, SquareData mData, ICaster caster, BlockPos pos);
 

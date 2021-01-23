@@ -45,7 +45,7 @@ import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 public class MantraFireBall extends MantraCommon {
 
 	static public void fire(World world, EntityLivingBase spller, int power, boolean needKnowledge) {
-		EntityGrimoire grimoire = new EntityGrimoire(world, spller, instance, null,
+		EntityGrimoire grimoire = new EntityGrimoire(world, spller, ESInit.MANTRAS.FIRE_BALL, null,
 				EntityGrimoire.STATE_AFTER_SPELLING);
 		Data data = (Data) grimoire.getMantraData();
 		data.power = power;
@@ -56,8 +56,6 @@ public class MantraFireBall extends MantraCommon {
 		grimoire.setPosition(spller.posX, spller.posY, spller.posZ);
 		world.spawnEntity(grimoire);
 	}
-
-	public final static MantraFireBall instance = new MantraFireBall();
 
 	protected static class Data extends MantraDataCommon {
 		protected float power = 0;
@@ -73,8 +71,8 @@ public class MantraFireBall extends MantraCommon {
 		public NBTTagCompound serializeNBT() {
 			NBTTagCompound nbt = new NBTTagCompound();
 			nbt.setFloat("power", power);
-			NBTHelper.setPos(nbt, "pos", pos);
-			NBTHelper.setPos(nbt, "toward", toward);
+			NBTHelper.setVec3d(nbt, "pos", pos);
+			NBTHelper.setVec3d(nbt, "toward", toward);
 			if (!metal.isEmpty()) nbt.setTag("metal", metal.serializeNBT());
 			if (!knowledge.isEmpty()) nbt.setTag("know", knowledge.serializeNBT());
 			return nbt;
@@ -83,8 +81,8 @@ public class MantraFireBall extends MantraCommon {
 		@Override
 		public void deserializeNBT(NBTTagCompound nbt) {
 			power = nbt.getFloat("power");
-			pos = NBTHelper.getPos(nbt, "pos");
-			toward = NBTHelper.getPos(nbt, "toward");
+			pos = NBTHelper.getVec3d(nbt, "pos");
+			toward = NBTHelper.getVec3d(nbt, "toward");
 			metal = new ElementStack(nbt.getCompoundTag("metal"));
 			knowledge = new ElementStack(nbt.getCompoundTag("know"));
 		}
@@ -93,6 +91,7 @@ public class MantraFireBall extends MantraCommon {
 	public MantraFireBall() {
 		this.setUnlocalizedName("fireBall");
 		this.setRarity(50);
+		this.setOccupation(3);
 		this.setColor(0xff8f02);
 	}
 
@@ -119,7 +118,7 @@ public class MantraFireBall extends MantraCommon {
 		if (tick < 20) return;
 
 		super.onSpellingEffect(world, mData, caster);
-		if (!caster.hasEffectFlags(MantraEffectFlags.MAGIC_CIRCLE)) return;
+		if (!hasEffectFlags(world, mData, caster, MantraEffectFlags.DECORATE)) return;
 		Data data = (Data) mData;
 		Entity entity = caster.iWantCaster();
 		Random rand = world.rand;

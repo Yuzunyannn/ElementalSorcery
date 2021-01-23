@@ -39,6 +39,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.network.MessageEntitySync;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
 import yuzunyannn.elementalsorcery.util.ExceptionHelper;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -152,8 +153,8 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	@Override
 	public void readSpawnData(ByteBuf additionalData) {
 		NBTTagCompound nbt = ByteBufUtils.readTag(additionalData);
-		if (nbt.hasKey("oData", 10)) metaData = nbt.getCompoundTag("oData");
-		if (nbt.hasKey("gData", 10)) grimoireDataFromServer = nbt.getCompoundTag("gData");
+		if (nbt.hasKey("oData", NBTTag.TAG_COMPOUND)) metaData = nbt.getCompoundTag("oData");
+		if (nbt.hasKey("gData", NBTTag.TAG_COMPOUND)) grimoireDataFromServer = nbt.getCompoundTag("gData");
 		readEntityFromNBT(nbt);
 	}
 

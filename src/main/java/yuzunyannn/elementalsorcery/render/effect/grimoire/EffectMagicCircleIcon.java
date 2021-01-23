@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.render.effect.grimoire;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -14,6 +15,11 @@ public class EffectMagicCircleIcon extends EffectMagicCircle {
 
 	public EffectMagicCircleIcon(World world, Entity binder, ResourceLocation icon) {
 		super(world, binder);
+		this.icon = icon;
+	}
+
+	public EffectMagicCircleIcon(World world, BlockPos pos, ResourceLocation icon) {
+		super(world, pos);
 		this.icon = icon;
 	}
 

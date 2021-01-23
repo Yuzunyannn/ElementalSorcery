@@ -23,9 +23,10 @@ public class MantraLightningArea extends MantraSquareAreaAdv {
 	public MantraLightningArea() {
 		this.setUnlocalizedName("lightningArea");
 		this.setRarity(50);
+		this.setOccupation(3);
 		this.setColor(0x0076ee);
-		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.AIR, 2, 50), 80, 25);
-		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.FIRE, 2, 40), -1, 25);
+		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.AIR, 2, 50), 80, 20);
+		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.FIRE, 2, 40), -1, 20);
 	}
 
 	@Override
@@ -35,13 +36,13 @@ public class MantraLightningArea extends MantraSquareAreaAdv {
 	}
 
 	@Override
-	public void init(World world, SquareDataAdv data, ICaster caster, BlockPos pos) {
+	public void init(World world, SquareData data, ICaster caster, BlockPos pos) {
 		ElementStack air = data.getElement(ESInit.ELEMENTS.AIR);
 		data.setSize(Math.min(air.getPower() / 80, 12) + 6);
 	}
 
 	@Override
-	public boolean tick(World world, SquareDataAdv data, ICaster caster, BlockPos originPos) {
+	public boolean tick(World world, SquareData data, ICaster caster, BlockPos originPos) {
 		int tick = caster.iWantKnowCastTick();
 		ElementStack air = data.getElement(ESInit.ELEMENTS.AIR);
 		if (air.isEmpty()) return false;

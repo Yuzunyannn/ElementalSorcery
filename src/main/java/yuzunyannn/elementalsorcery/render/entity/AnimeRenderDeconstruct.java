@@ -48,7 +48,7 @@ public class AnimeRenderDeconstruct implements ICraftingLaunchAnime {
 		int count = stack.getCount() / 14 + 1;
 		for (int i = 0; i < count; i++) {
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
-			GlStateManager.translate(0, 0.02, 0.02);
+			GlStateManager.translate(0.02, 0.02, 0.02);
 		}
 		GlStateManager.popMatrix();
 	}

@@ -267,17 +267,21 @@ public class ItemQuill extends Item {
 
 	public static void createWaterExplode(World world, EntityPlayer player, Vec3d pos, int level) {
 		world.createExplosion(null, pos.x, pos.y, pos.z, MathHelper.ceil(level / 2.0f), true);
-		BlockPos bPos = new BlockPos(pos);
-		for (int x = -level; x <= level; x++) {
-			for (int y = -level; y <= level; y++) {
-				for (int z = -level; z <= level; z++) {
-					if (world.isAirBlock(bPos.add(x, y, z))) {
-						if (world.rand.nextFloat() < 0.01)
-							world.setBlockState(bPos.add(x, y, z), Blocks.FLOWING_WATER.getDefaultState());
+
+		if (!world.provider.doesWaterVaporize()) {
+			BlockPos bPos = new BlockPos(pos);
+			for (int x = -level; x <= level; x++) {
+				for (int y = -level; y <= level; y++) {
+					for (int z = -level; z <= level; z++) {
+						if (world.isAirBlock(bPos.add(x, y, z))) {
+							if (world.rand.nextFloat() < 0.01)
+								world.setBlockState(bPos.add(x, y, z), Blocks.FLOWING_WATER.getDefaultState());
+						}
 					}
 				}
 			}
 		}
+		
 		NBTTagCompound nbt = FireworkEffect.fastNBT(10, level, level / 8.0f, new int[] { 0x0138fb, 0x1f89fe, 0x0f60fc },
 				new int[] { 0xc9dbff });
 		Effects.spawnEffect(world, Effects.FIREWROK, pos, nbt);

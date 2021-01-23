@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -79,9 +81,7 @@ public class CraftingConstruct implements ICraftingAltar {
 		// 测试元素是否合格
 		if (get.isEmpty()) needEStacks.get(index).grow(need);
 		else {
-			if (needEStacks.get(index).isEmpty()) {
-				needEStacks.remove(index);
-			}
+			if (needEStacks.get(index).isEmpty()) needEStacks.remove(index);
 			if (needEStacks.isEmpty()) {
 				needEStacks = null;
 				ok = true;

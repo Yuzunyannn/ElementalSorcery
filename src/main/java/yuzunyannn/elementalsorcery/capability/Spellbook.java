@@ -13,13 +13,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
+import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageSpellbook;
 import yuzunyannn.elementalsorcery.network.MessageSyncItemStack;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
-import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 public class Spellbook {
 
@@ -28,8 +29,7 @@ public class Spellbook {
 
 	/** 初始化释放 */
 	public void initSpelling(World world, ItemStack stack, EntityLivingBase player, EnumHand hand) {
-		if (this.inventory != null)
-			this.inventory.loadState(stack);
+		if (this.inventory != null) this.inventory.loadState(stack);
 	}
 
 	/** 开始释放 */
@@ -37,22 +37,18 @@ public class Spellbook {
 		this.spelling = true;
 		player.setActiveHand(hand);
 		// 发送动画消息
-		if (!world.isRemote)
-			sendMessageBegin(world, player, hand);
+		if (!world.isRemote) sendMessageBegin(world, player, hand);
 	}
 
 	/**
 	 * 结束释放
 	 * 
-	 * @param sync
-	 *            是否进行对客户端的同步，客户端该参数无效
+	 * @param sync 是否进行对客户端的同步，客户端该参数无效
 	 */
 	public void endSpelling(World world, EntityLivingBase player, ItemStack stack, boolean sync) {
 		this.spelling = false;
-		if (this.inventory != null)
-			this.inventory.saveState(stack);
-		if (sync && !world.isRemote)
-			sendMessageEnd(world, player, stack);
+		if (this.inventory != null) this.inventory.saveState(stack);
+		if (sync && !world.isRemote) sendMessageEnd(world, player, stack);
 	}
 
 	/** 释放状态 */
@@ -61,20 +57,19 @@ public class Spellbook {
 	/** 完成释放，运行该函数，诉客户端动画该结束了，不再运行 spelling函数，但是还会等待合上书时候调用endSpell函数 */
 	public void finishSpelling(World world, EntityLivingBase entity) {
 		this.spelling = false;
-		if (!world.isRemote) {
-			if (entity instanceof EntityPlayerMP) {
-				MessageSpellbook message = new MessageSpellbook().setSpellFinish(entity);
-				for (EntityPlayer player : world.playerEntities)
-					ESNetwork.instance.sendTo(message, (EntityPlayerMP) player);
-			}
-		}
+		if (world.isRemote) return;
+		MessageSpellbook message = new MessageSpellbook().setSpellFinish(entity);
+		TargetPoint point = new TargetPoint(world.provider.getDimension(), entity.posX, entity.posY, entity.posZ, 64);
+		ESNetwork.instance.sendToAllAround(message, point);
 	}
 
 	// 发送打开魔法书的消息
 	private void sendMessageBegin(World world, EntityLivingBase playerIn, EnumHand hand) {
+		if (world.isRemote) return;
 		MessageSpellbook message = new MessageSpellbook().setOpen(playerIn, hand);
-		for (EntityPlayer player : world.playerEntities)
-			ESNetwork.instance.sendTo(message, (EntityPlayerMP) player);
+		TargetPoint point = new TargetPoint(world.provider.getDimension(), playerIn.posX, playerIn.posY, playerIn.posZ,
+				64);
+		ESNetwork.instance.sendToAllAround(message, point);
 	}
 
 	// 发送结束魔法书时，书内信息的同步
@@ -129,8 +124,7 @@ public class Spellbook {
 
 		@Override
 		public void readNBT(Capability<Spellbook> capability, Spellbook instance, EnumFacing side, NBTBase tag) {
-			if (tag == null)
-				return;
+			if (tag == null) return;
 			NBTTagCompound nbt = (NBTTagCompound) tag;
 			if (nbt.hasKey("inventory") && instance.inventory != null) {
 				ElementInventory.Provider.storage.readNBT(ElementInventory.ELEMENTINVENTORY_CAPABILITY,
@@ -161,9 +155,7 @@ public class Spellbook {
 
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-			if (SPELLBOOK_CAPABILITY == capability) {
-				return (T) instance;
-			}
+			if (SPELLBOOK_CAPABILITY == capability) { return (T) instance; }
 			return null;
 		}
 

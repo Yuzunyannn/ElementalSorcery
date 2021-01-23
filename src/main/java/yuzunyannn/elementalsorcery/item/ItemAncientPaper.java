@@ -34,6 +34,7 @@ import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
 import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class ItemAncientPaper extends Item implements IToElementItem {
@@ -49,7 +50,9 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 
 		for (Mantra m : Mantra.REGISTRY) {
 			AncientPaper ap = new AncientPaper();
-			ItemStack stack = new ItemStack(this, 1, EnumType.NORMAL.getMetadata());
+			EnumType type = EnumType.NORMAL;
+			if (m instanceof MantraCommon) type = ((MantraCommon) m).getMantraSubItemType();
+			ItemStack stack = new ItemStack(this, 1, type.getMetadata());
 			ap.setMantra(m).setStart(0).setEnd(100);
 			ap.saveState(stack);
 			items.add(stack);

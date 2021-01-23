@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/supreme_table",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:order_crystal"
+        },
+        "title": {
+            "translate": "es.adv.itemConstruct.title"
+        },
+        "description": {
+            "translate": "es.adv.itemConstruct.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "construct:.*"
+            }
+        }
+    }
+}

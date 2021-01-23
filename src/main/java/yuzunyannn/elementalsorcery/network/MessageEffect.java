@@ -27,7 +27,7 @@ public class MessageEffect implements IMessage {
 	public MessageEffect(String name, Vec3d pos, NBTTagCompound nbt) {
 		this.nbt = nbt == null ? new NBTTagCompound() : nbt;
 		this.nbt.setString("id", name);
-		NBTHelper.setPos(this.nbt, "pos", pos);
+		NBTHelper.setVec3d(this.nbt, "pos", pos);
 	}
 
 	@Override
@@ -62,7 +62,7 @@ public class MessageEffect implements IMessage {
 		Minecraft mc = Minecraft.getMinecraft();
 		World world = mc.player.world;
 		Effects.Factory factory = Effects.getFactory(nbt.getString("id"));
-		Vec3d pos = NBTHelper.getPos(nbt, "pos");
+		Vec3d pos = NBTHelper.getVec3d(nbt, "pos");
 		factory.show(world, pos, nbt);
 	}
 }

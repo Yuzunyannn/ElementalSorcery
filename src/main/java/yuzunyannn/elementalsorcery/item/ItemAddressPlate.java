@@ -6,6 +6,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -18,6 +19,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
@@ -61,6 +63,9 @@ public class ItemAddressPlate extends Item {
 			// 没地址走人
 			String address = ElfPostOffice.getAddress(stack);
 			if (address.isEmpty()) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+			// 成就
+			if (playerIn instanceof EntityPlayerMP)
+				ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) playerIn, "post:vip");
 			// 周围有精灵了,直接召唤他，不花费次数
 			EntityElfBase postmain = TileElfBeacon.getPostmanAround(worldIn, playerIn.getPosition());
 			if (postmain != null) {

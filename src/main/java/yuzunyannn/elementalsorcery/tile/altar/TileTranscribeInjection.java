@@ -237,9 +237,10 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 		}
 	}
 
+	/** 获取某个咒文的容量 */
 	protected int getMantraCapacity(Mantra mantra) {
 		if (Mantra.isCustomMantra(mantra)) return 1;
-		return 2;
+		return Math.max(mantra.getOccupation(), 0);
 	}
 
 	@Nullable

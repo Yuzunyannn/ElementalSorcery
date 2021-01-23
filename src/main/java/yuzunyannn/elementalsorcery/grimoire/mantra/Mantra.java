@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
+import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.init.ESImplRegister;
@@ -29,6 +30,7 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 
 	private String unlocalizedName;
 	private byte rarity = 100;
+	private short occupation = 2;
 
 	/** 是否可以开始 */
 	public boolean canStart(EntityLivingBase user) {
@@ -103,6 +105,15 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	public void setRarity(int rarity) {
 		this.rarity = (byte) rarity;
 	}
+	
+	/**获取占容量消耗*/
+	public int getOccupation() {
+		return occupation;
+	}
+	
+	public void setOccupation(int occupation) {
+		this.occupation = (short) occupation;
+	}
 
 	public String getUnlocalizedName() {
 		return "mantra." + this.unlocalizedName;
@@ -157,22 +168,6 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	@Nonnull
 	public ResourceLocation getIconResource() {
 		return RenderObjects.MANTRA_VOID;
-	}
-
-	public static void registerAll() {
-		reg(new MantraEnderTeleport(), "ender_teleport");
-		reg(new MantraFloat(), "float");
-		reg(new MantraSprint(), "sprint");
-		reg(MantraFireBall.instance, "fire_ball");
-		reg(new MantraLush(), "lush");
-		reg(new MantraBlockCrash(), "block_crash");
-		reg(new MantraMiningArea(), "mining_area");
-		reg(new MantraLightningArea(), "lightning_area");
-		reg(MantraSummon.instance, "summon");
-	}
-
-	private static void reg(Mantra m, String name) {
-		Mantra.REGISTRY.register(m.setRegistryName(new ResourceLocation(ElementalSorcery.MODID, name)));
 	}
 
 }

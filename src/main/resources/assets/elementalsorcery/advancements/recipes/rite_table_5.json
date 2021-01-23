@@ -1,0 +1,28 @@
+{
+    "parent": "elementalsorcery:recipes/supreme_table",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:rite_table",
+            "nbt": "{level:5}"
+        },
+        "title": {
+            "translate": "es.adv.rite5.title"
+        },
+        "description": {
+            "translate": "es.adv.rite5.description"
+        }
+    },
+    "criteria": {
+        "craft_rite_table": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:rite_table",
+                        "nbt": "{level:5}"
+                    }
+                ]
+            }
+        }
+    }
+}

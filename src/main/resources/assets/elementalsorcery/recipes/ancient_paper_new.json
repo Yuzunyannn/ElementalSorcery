@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "paper",
+  "pattern": [
+    "APA",
+    "PXP",
+    "SSS"
+  ],
+  "key": {
+    "A":{
+      "item": "elementalsorcery:resonant_crystal"
+    },
+    "S": {
+      "item": "elementalsorcery:star_sand"
+    },
+    "P": {
+      "item": "minecraft:leather"
+    },
+    "X": {
+      "item": "elementalsorcery:magic_paper",
+      "data": 1
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:ancient_paper",
+    "count": 3,
+    "data": 2
+  }
+}

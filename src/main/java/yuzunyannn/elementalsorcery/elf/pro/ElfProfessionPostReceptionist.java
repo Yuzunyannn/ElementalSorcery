@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.elf.pro;
 import java.util.LinkedList;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -10,6 +11,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
@@ -84,6 +86,8 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 			playerData.removeTag("elfGuiItemBack");
 			ElfPostOffice postOffice = ElfPostOffice.getPostOffice(player.world);
 			postOffice.pushParcel(player, address, items);
+			if (player instanceof EntityPlayerMP)
+				ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "post:send");
 			return true;
 		});
 		confirm.addString("say.no", new TalkActionEnd());
@@ -134,6 +138,8 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 		chapter.addScene(new TalkSceneSay("say.apply.address.success"));
 		ElfPostOffice postOffice = ElfPostOffice.getPostOffice(player.world);
 		ItemHelper.addItemStackToPlayer(player, postOffice.createAddressPlate(player, address));
+		if (player instanceof EntityPlayerMP)
+			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "post:apply");
 		// 首次
 		NBTTagCompound playerData = EventServer.getPlayerNBT(player);
 		if (!playerData.getBoolean("HPFW")) {
@@ -171,6 +177,8 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 			player.inventory.addItemStackToInventory(stack);
 			ItemElfPurse.extract(player.inventory, 1000, false);
 			TalkActionGoTo.goTo("applySuccess", c, s, i);
+			if (player instanceof EntityPlayerMP)
+				ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "post:upgrade");
 			return true;
 		});
 		confirm.addString("say.no", new TalkActionEnd());

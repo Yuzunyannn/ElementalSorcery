@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.render.effect.grimoire;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -16,7 +17,7 @@ import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 public class EffectMagicCircle extends EffectCondition {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/magic_circles/element.png");
-	public Entity binder;
+	public IBinder binder;
 
 	public float r = 0;
 	public float g = 0;
@@ -25,8 +26,19 @@ public class EffectMagicCircle extends EffectCondition {
 	public EffectMagicCircle(World world, Entity binder) {
 		super(world);
 		this.lifeTime = 1;
-		this.binder = binder;
-		this.setPosition(binder);
+		this.binder = new IBinder.EntityBinder(binder);
+		this.setPosition(this.binder);
+	}
+
+	public EffectMagicCircle(World world, BlockPos pos) {
+		super(world);
+		this.lifeTime = 1;
+		this.binder = new IBinder.VecBinder(new Vec3d(pos).addVector(0.5, 0, 0.5));
+		this.setPosition(this.binder);
+	}
+
+	public void setPosition(IBinder binder) {
+		this.setPosition(binder.getPosition());
 	}
 
 	public void setColor(int color) {
@@ -60,21 +72,25 @@ public class EffectMagicCircle extends EffectCondition {
 			this.prevPosX = this.posX;
 			this.prevPosY = this.posY;
 			this.prevPosZ = this.posZ;
-			this.posX = binder.posX;
-			this.posY = binder.posY;
-			this.posZ = binder.posZ;
+			Vec3d vec = binder.getPosition();
+			this.posX = vec.x;
+			this.posY = vec.y;
+			this.posZ = vec.z;
 			this.alpha = Math.min(1, alpha + 0.05f);
 			float size = 32 * scale * 0.8f;
-			float hSize = size / 2;
-			Vec3d pos = this.getPositionVector().addVector(rand.nextDouble() * size - hSize, 0.1,
-					rand.nextDouble() * size - hSize);
-			EffectElementMove effect = new EffectElementMove(world, pos);
-			effect.g = 0;
-			effect.setVelocity(0, 0.05f, 0);
-			effect.setColor(r, g, b);
-			Effect.addEffect(effect);
+			this.onAddEffect(this.getPositionVector(), size);
 		}
 		this.rotate += 1f;
+	}
+
+	protected void onAddEffect(Vec3d pos, float size) {
+		float hSize = size / 2;
+		pos = pos.addVector(rand.nextDouble() * size - hSize, 0.1, rand.nextDouble() * size - hSize);
+		EffectElementMove effect = new EffectElementMove(world, pos);
+		effect.g = 0;
+		effect.setVelocity(0, 0.05f, 0);
+		effect.setColor(r, g, b);
+		Effect.addEffect(effect);
 	}
 
 	@Override
@@ -91,10 +107,14 @@ public class EffectMagicCircle extends EffectCondition {
 		float alpha = RenderHelper.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
 		GlStateManager.scale(scale, scale, scale);
 		GlStateManager.color(r, g, b, alpha);
-		TEXTURE.bind();
+		this.bindCircleIcon();
 		RenderHelper.drawTexturedRectInCenter(0, 0, 32, 32);
 		this.renderCenterIcon(partialTicks);
 		GlStateManager.popMatrix();
+	}
+
+	protected void bindCircleIcon() {
+		TEXTURE.bind();
 	}
 
 	protected void renderCenterIcon(float partialTicks) {

@@ -7,7 +7,6 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -28,11 +27,6 @@ import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class MantraLush extends MantraCommon {
 
-	protected static class Data extends MantraDataCommon {
-		ElementStack power = new ElementStack(ESInit.ELEMENTS.WOOD, 0);
-		int size = 0;
-	}
-
 	public MantraLush() {
 		this.setUnlocalizedName("lush");
 		this.setRarity(75);
@@ -42,11 +36,6 @@ public class MantraLush extends MantraCommon {
 	@Override
 	public ResourceLocation getIconResource() {
 		return RenderObjects.MANTRA_LUSH;
-	}
-
-	@Override
-	public IMantraData getData(NBTTagCompound origin, World world, ICaster caster) {
-		return new Data();
 	}
 
 	@Override
@@ -60,8 +49,8 @@ public class MantraLush extends MantraCommon {
 	public float getProgressRate(World world, IMantraData mData, ICaster caster) {
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return -1;
-		Data data = (Data) mData;
-		return data.power.getCount() / 200.0f;
+		MantraDataCommon data = (MantraDataCommon) mData;
+		return data.get(ELEMENT_WOOD).getCount() / 200.0f;
 	}
 
 	@Override
@@ -76,13 +65,15 @@ public class MantraLush extends MantraCommon {
 	public void onCollectElement(World world, IMantraData mData, ICaster caster, int speedTick) {
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return;
-		Data data = (Data) mData;
-		if (data.power.getCount() >= 200) return;
+		MantraDataCommon data = (MantraDataCommon) mData;
+		ElementStack power = data.get(ELEMENT_WOOD);
+		if (power.getCount() >= 200) return;
 		// 每tick两点消耗
 		ElementStack need = new ElementStack(ESInit.ELEMENTS.WOOD, 1, 50);
 		ElementStack estack = caster.iWantSomeElement(need, true);
 		if (estack.isEmpty()) return;
-		data.power.grow(estack);
+		if (power.isEmpty()) data.set(ELEMENT_WOOD, estack.copy());
+		else power.grow(estack);
 	}
 
 	@Override
@@ -91,22 +82,24 @@ public class MantraLush extends MantraCommon {
 
 	@Override
 	public boolean afterSpelling(World world, IMantraData mData, ICaster caster) {
-		Data data = (Data) mData;
-		if (data.power.isEmpty()) return false;
+		MantraDataCommon data = (MantraDataCommon) mData;
+		ElementStack wood = data.get(ELEMENT_WOOD);
+		if (wood.isEmpty()) return false;
 		int tick = caster.iWantKnowCastTick();
 		if (tick % 3 != 0) return true;
 		BlockPos pos = caster.iWantCaster().getPosition();
-		float power = data.power.getPower() * Math.max(0.2f, 1 - 0.05f * data.size);
-		data.power.shrink(data.size + 1);
-		for (int x = -data.size; x <= data.size; x++) {
-			if (x == -data.size || x == data.size)
-				for (int z = -data.size; z <= data.size; z++) magicAt(world, pos.add(x, 0, z), caster, power);
+		int size = data.get(SIZE);
+		float power = wood.getPower() * Math.max(0.2f, 1 - 0.05f * size);
+		wood.shrink(size + 1);
+		for (int x = -size; x <= size; x++) {
+			if (x == -size || x == size)
+				for (int z = -size; z <= size; z++) magicAt(world, pos.add(x, 0, z), caster, power);
 			else {
-				magicAt(world, pos.add(x, 0, -data.size), caster, power);
-				magicAt(world, pos.add(x, 0, data.size), caster, power);
+				magicAt(world, pos.add(x, 0, -size), caster, power);
+				magicAt(world, pos.add(x, 0, size), caster, power);
 			}
 		}
-		data.size++;
+		data.set(SIZE, size + 1);
 		return true;
 	}
 

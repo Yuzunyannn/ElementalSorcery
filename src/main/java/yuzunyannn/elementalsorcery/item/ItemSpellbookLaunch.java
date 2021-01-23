@@ -24,6 +24,7 @@ import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
+import yuzunyannn.elementalsorcery.util.text.TextHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemSpellbookLaunch extends ItemSpellbook {
@@ -62,22 +63,8 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 	@SideOnly(Side.CLIENT)
 	private String getUnlocalizedTypeName(ItemStack stack) {
 		String type = this.getBookType(stack);
-		String str = "";
-		switch (type) {
-		case ICraftingLaunch.TYPE_ELEMENT_CRAFTING:
-			str = "info.launchbook.craft";
-			break;
-		case ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT:
-			str = "info.launchbook.dec";
-			break;
-		case ICraftingLaunch.TYPE_BUILING_RECORD:
-			str = "info.launchbook.build";
-			break;
-		case ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT:
-			str = "info.launchbook.cons";
-			break;
-		}
-		return str;
+		String str = TextHelper.castToCamel("launch_" + type);
+		return "mantra." + str + ".name";
 	}
 
 	@Override
@@ -101,11 +88,9 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 					book.finishSpelling(world, entity);
 					String type = this.getBookType(stack);
 					ICraftingLaunch crafting = (ICraftingLaunch) tile;
-					if (crafting.isWorking())
-						return;
+					if (crafting.isWorking()) return;
 					EntityPlayer player = null;
-					if (entity instanceof EntityPlayer)
-						player = (EntityPlayer) entity;
+					if (entity instanceof EntityPlayer) player = (EntityPlayer) entity;
 					if (crafting.canCrafting(type, player)) {
 						// 开始Crafting！
 						EntityCrafting ecrafting = new EntityCrafting(world, pos, type, player);

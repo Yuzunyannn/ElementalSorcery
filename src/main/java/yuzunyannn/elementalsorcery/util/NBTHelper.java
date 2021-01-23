@@ -40,7 +40,6 @@ public class NBTHelper {
 		nbt.setTag(key, list);
 	}
 
-	@SuppressWarnings("unchecked")
 	public static <B extends NBTBase, T extends INBTSerializable<B>> List<T> getNBTSerializableList(NBTTagCompound nbt,
 			String key, Class<T> cls, Class<B> nbtCls) {
 		List<T> NBTSerializableList = new LinkedList<>();
@@ -100,18 +99,18 @@ public class NBTHelper {
 		return new BlockPos(nbt.getInteger(key + "x"), nbt.getInteger(key + "y"), nbt.getInteger(key + "z"));
 	}
 
-	public static void setPos(NBTTagCompound nbt, String key, Vec3d pos) {
+	public static void setVec3d(NBTTagCompound nbt, String key, Vec3d pos) {
 		if (pos == null) return;
 		nbt.setFloat(key + "x", (float) pos.x);
 		nbt.setFloat(key + "y", (float) pos.y);
 		nbt.setFloat(key + "z", (float) pos.z);
 	}
 
-	public static boolean hasPos(NBTTagCompound nbt, String key) {
+	public static boolean hasVec3d(NBTTagCompound nbt, String key) {
 		return nbt.hasKey(key + "x");
 	}
 
-	public static Vec3d getPos(NBTTagCompound nbt, String key) {
+	public static Vec3d getVec3d(NBTTagCompound nbt, String key) {
 		return new Vec3d(nbt.getFloat(key + "x"), nbt.getFloat(key + "y"), nbt.getFloat(key + "z"));
 	}
 

@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/supreme_table",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:grimoire"
+        },
+        "title": {
+            "translate": "es.adv.magician.title"
+        },
+        "description": {
+            "translate": "es.adv.magician.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "grimoire:put"
+            }
+        }
+    }
+}

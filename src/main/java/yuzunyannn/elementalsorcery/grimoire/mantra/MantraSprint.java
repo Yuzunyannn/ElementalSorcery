@@ -29,7 +29,7 @@ public class MantraSprint extends MantraCommon {
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataCommon = (MantraDataCommon) data;
-		ElementStack need = new ElementStack(ESInit.ELEMENTS.AIR, 5, 30);
+		ElementStack need = new ElementStack(ESInit.ELEMENTS.AIR, 4, 30);
 		ElementStack get = caster.iWantSomeElement(need, true);
 		if (get.isEmpty()) return;
 		dataCommon.markContinue(true);

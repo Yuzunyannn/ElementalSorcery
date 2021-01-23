@@ -4,41 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
-import yuzunyannn.elementalsorcery.util.VariableSet;
 
 public abstract class MantraSquareAreaAdv extends MantraSquareArea {
-
-	public static class SquareDataAdv extends SquareData {
-
-		protected VariableSet extra = new VariableSet();
-
-		public <T> void set(VariableSet.Variable<T> var, T obj) {
-			extra.set(var, obj);
-		}
-
-		public <T> T get(VariableSet.Variable<T> var) {
-			return extra.get(var);
-		}
-
-		@Override
-		public NBTTagCompound serializeNBT() {
-			NBTTagCompound nbt = super.serializeNBT();
-			if (!extra.isEmpty()) nbt.setTag("extra", extra.serializeNBT());
-			return nbt;
-		}
-
-		@Override
-		public void deserializeNBT(NBTTagCompound nbt) {
-			super.deserializeNBT(nbt);
-			extra.deserializeNBT(nbt.getCompoundTag("extra"));
-		}
-	}
 
 	protected static class CollectInfo {
 		public ElementStack element = ElementStack.EMPTY;
@@ -65,11 +37,6 @@ public abstract class MantraSquareAreaAdv extends MantraSquareArea {
 		info.element = need;
 		info.maxNeed = maxNeed;
 		info.minNeed = minNeed;
-	}
-
-	@Override
-	public SquareData getSquareData(NBTTagCompound origin, World world, ICaster caster) {
-		return new SquareDataAdv();
 	}
 
 	@Override
@@ -101,21 +68,21 @@ public abstract class MantraSquareAreaAdv extends MantraSquareArea {
 			ElementStack estack = mData.getElement(info.element.getElement());
 			if (estack.getCount() < info.minNeed) return;
 		}
-		this.init(world, (SquareDataAdv) mData, caster, pos);
+		this.init(world, (SquareData) mData, caster, pos);
 	}
 
 	@Override
 	public boolean onAfterSpellingTick(World world, SquareData mData, ICaster caster) {
 		Entity entity = caster.iWantDirectCaster();
-		return this.tick(world, (SquareDataAdv) mData, caster, entity.getPosition());
+		return this.tick(world, (SquareData) mData, caster, entity.getPosition());
 	}
 
 	public int getAccumulatePreTick() {
 		return 5;
 	}
 
-	public abstract void init(World world, SquareDataAdv mData, ICaster caster, BlockPos pos);
+	public abstract void init(World world, SquareData mData, ICaster caster, BlockPos pos);
 
-	public abstract boolean tick(World world, SquareDataAdv mData, ICaster caster, BlockPos pos);
+	public abstract boolean tick(World world, SquareData mData, ICaster caster, BlockPos pos);
 
 }

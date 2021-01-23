@@ -36,7 +36,7 @@ public class MantraSummon extends MantraCommon {
 
 	static public void summon(World world, BlockPos pos, EntityLivingBase summoner, ItemStack keepsake,
 			SummonRecipe summonRecipe) {
-		EntityGrimoire grimoire = new EntityGrimoire(world, summoner, instance, null,
+		EntityGrimoire grimoire = new EntityGrimoire(world, summoner, ESInit.MANTRAS.SUMMON, null,
 				EntityGrimoire.STATE_AFTER_SPELLING);
 		Data data = (Data) grimoire.getMantraData();
 		data.keepsake = keepsake;
@@ -47,8 +47,6 @@ public class MantraSummon extends MantraCommon {
 		grimoire.setPosition(data.pos.getX(), data.pos.getY(), data.pos.getZ());
 		world.spawnEntity(grimoire);
 	}
-
-	public final static MantraSummon instance = new MantraSummon();
 
 	public static class Data extends MantraDataCommon {
 
@@ -101,6 +99,7 @@ public class MantraSummon extends MantraCommon {
 	public MantraSummon() {
 		this.setUnlocalizedName("summon");
 		this.setRarity(2);
+		this.setOccupation(8);
 		this.setColor(0xda003e);
 	}
 
@@ -124,7 +123,7 @@ public class MantraSummon extends MantraCommon {
 				data.markContinue(true);
 			}
 		}
-		if (data.markContinue) {
+		if (data.isMarkContinue()) {
 			if (entity instanceof EntityPlayer && !((EntityPlayer) entity).isCreative()) {
 				int cost = data.summonRecipe.getSoulCost(data.keepsake, world, entity.getPosition());
 				ItemStack stack = findSoulTool((EntityPlayer) entity, cost);
@@ -152,7 +151,7 @@ public class MantraSummon extends MantraCommon {
 	public void onCollectElement(World world, IMantraData mData, ICaster caster, int speedTick) {
 		Data data = (Data) mData;
 		// 收集能量
-		if (!data.markContinue) return;
+		if (!data.isMarkContinue()) return;
 		if (data.power < 100) {
 			ElementStack need = new ElementStack(ESInit.ELEMENTS.MAGIC, 1, 50);
 			ElementStack get = caster.iWantSomeElement(need, true);
@@ -212,7 +211,7 @@ public class MantraSummon extends MantraCommon {
 		super.onSpellingEffect(world, mData, caster);
 		if (!caster.hasEffectFlags(MantraEffectFlags.INDICATOR)) return;
 		Data data = (Data) mData;
-		if (!data.markContinue) return;
+		if (!data.isMarkContinue()) return;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (caster.iWantCaster() == Minecraft.getMinecraft().player) if (!dataEffect.hasMarkEffect(1))
 			dataEffect.addEffect(caster, new EffectLookAt(world, caster, this.getColor(mData)), 1);

@@ -8,6 +8,7 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleFirework;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
@@ -149,6 +151,8 @@ public class TileSupremeTable extends TileStaticMultiBlock
 		case ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT:
 			craftingAltar = new CraftingConstruct(this, this.getOrderCrtstalGroupCount(),
 					ItemStructure.getItemStructure(this.getPlatformItem()));
+			if (player instanceof EntityPlayerMP)
+				ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "construct:start");
 			break;
 		default:
 			craftingAltar = null;

@@ -47,7 +47,7 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 		return this.ok;
 	}
 
-	public boolean checkIntact(MultiBlock structure) {
+	protected boolean checkIntact(MultiBlock structure) {
 		ok = structure.check(structure.face());
 		// 优先使用north方向
 		if (ok && structure.face() != EnumFacing.NORTH) {

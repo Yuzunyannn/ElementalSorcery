@@ -4,17 +4,27 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleIcon;
+import yuzunyannn.elementalsorcery.util.VariableSet;
+import yuzunyannn.elementalsorcery.util.VariableSet.Variable;
 
 public class MantraCommon extends Mantra {
+
+	public static final Variable<BlockPos> POS = new Variable<>("pos", VariableSet.BLOCK_POS);
+	public static final Variable<Short> LAYER = new Variable<>("layer", VariableSet.SHORT);
+	public static final Variable<Integer> SIZE = new Variable<>("size", VariableSet.INT);
+	public static final Variable<ElementStack> ELEMENT_WOOD = new Variable<>("eWood", VariableSet.ELEMENT);
 
 	protected int color = 0;
 
@@ -60,7 +70,7 @@ public class MantraCommon extends Mantra {
 
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		if (caster.hasEffectFlags(MantraEffectFlags.MAGIC_CIRCLE)) out: {
+		if (hasEffectFlags(world, data, caster, MantraEffectFlags.MAGIC_CIRCLE)) out: {
 			Entity entity = caster.iWantCaster();
 			if (!(entity instanceof EntityLivingBase)) break out;
 			EntityLivingBase eb = (EntityLivingBase) entity;
@@ -68,12 +78,17 @@ public class MantraCommon extends Mantra {
 			if (!dataEffect.hasMarkEffect(0))
 				dataEffect.addEffect(caster, this.getEffectMagicCircle(world, eb, data), 0);
 		}
-		if (caster.hasEffectFlags(MantraEffectFlags.PROGRESS)) out: {
+		if (hasEffectFlags(world, data, caster, MantraEffectFlags.PROGRESS)) out: {
 			float r = this.getProgressRate(world, data, caster);
 			if (r < 0) break out;
 			MantraDataCommon dataEffect = (MantraDataCommon) data;
 			dataEffect.setProgress(r, this.getColor(data), world, caster);
 		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	public boolean hasEffectFlags(World world, IMantraData data, ICaster caster, MantraEffectFlags flags) {
+		return caster.hasEffectFlags(flags);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -86,6 +101,10 @@ public class MantraCommon extends Mantra {
 		EffectMagicCircle emc = new EffectMagicCircleIcon(world, entity, this.getIconResource());
 		emc.setColor(this.getColor(mData));
 		return emc;
+	}
+
+	public ItemAncientPaper.EnumType getMantraSubItemType() {
+		return ItemAncientPaper.EnumType.NORMAL;
 	}
 
 }

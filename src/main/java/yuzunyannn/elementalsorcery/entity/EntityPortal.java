@@ -135,7 +135,7 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound nbt) {
-		NBTHelper.setPos(nbt, "otherPos", toPos);
+		NBTHelper.setVec3d(nbt, "otherPos", toPos);
 		nbt.setInteger("otherWorld", toWorldId);
 		nbt.setBoolean("open", dataManager.get(OPEN));
 		nbt.setByte("type", type);
@@ -144,7 +144,7 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound nbt) {
 		toWorldId = nbt.getInteger("otherWorld");
-		toPos = NBTHelper.getPos(nbt, "otherPos");
+		toPos = NBTHelper.getVec3d(nbt, "otherPos");
 		type = nbt.getByte("type");
 		dataManager.set(OPEN, nbt.getBoolean("open"));
 	}

@@ -1,0 +1,41 @@
+{
+    "parent": "elementalsorcery:elf/elf_edifice",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:address_plate",
+            "data": 0
+        },
+        "title": {
+            "translate": "es.adv.elfPost.title"
+        },
+        "description": {
+            "translate": "es.adv.elfPost.description"
+        }
+    },
+    "criteria": {
+        "use1": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "post:send"
+            }
+        },
+        "use2": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "post:apply"
+            }
+        },
+        "use3": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "post:upgrade"
+            }
+        },
+        "use4": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "post:vip"
+            }
+        }
+    }
+}

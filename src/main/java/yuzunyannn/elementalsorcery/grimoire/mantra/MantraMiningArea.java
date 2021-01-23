@@ -17,17 +17,15 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.VariableSet;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class MantraMiningArea extends MantraSquareAreaAdv {
 
-	public static final VariableSet.Variable<Short> LAYER = new VariableSet.Variable<Short>("layer", VariableSet.SHORT);
-
 	public MantraMiningArea() {
 		this.setUnlocalizedName("miningArea");
 		this.setRarity(2);
+		this.setOccupation(10);
 		this.setColor(0xc8971e);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.EARTH, 2, 75), 400, 32);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.METAL, 3, 50), -1, 32);
@@ -51,14 +49,14 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 	}
 
 	@Override
-	public void init(World world, SquareDataAdv data, ICaster caster, BlockPos pos) {
+	public void init(World world, SquareData data, ICaster caster, BlockPos pos) {
 		ElementStack earth = data.getElement(ESInit.ELEMENTS.EARTH);
 		data.setSize(Math.min(earth.getPower() / 200, 4) * 2 + 8);
 		data.set(LAYER, (short) (pos.getY() - 1));
 	}
 
 	@Override
-	public boolean tick(World world, SquareDataAdv data, ICaster caster, BlockPos originPos) {
+	public boolean tick(World world, SquareData data, ICaster caster, BlockPos originPos) {
 		int tick = caster.iWantKnowCastTick();
 		ElementStack earth = data.getElement(ESInit.ELEMENTS.EARTH);
 		ElementStack metal = data.getElement(ESInit.ELEMENTS.METAL);
@@ -112,7 +110,7 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 		return null;
 	}
 
-	public boolean canGet(World world, BlockPos pos, IBlockState state, SquareDataAdv data) {
+	public boolean canGet(World world, BlockPos pos, IBlockState state, SquareData data) {
 		return state.getBlock() == ESInit.BLOCKS.SEAL_STONE || BlockHelper.isOre(state);
 	}
 

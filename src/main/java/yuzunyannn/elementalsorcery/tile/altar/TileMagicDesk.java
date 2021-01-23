@@ -37,10 +37,13 @@ import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
+import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IGetItemStack {
 
@@ -58,13 +61,14 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		this.markDirty();
 		if (book.isEmpty()) return;
 		if (book.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null)) {
-			if (world.isRemote) {
-				Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
-				ItemSpellbook.renderStart(spellbook);
-			}
-		} else if (!world.isRemote) {
-			ElementalSorcery.logger.warn("魔法书桌上不应该放入除spellbook以外的物品");
+			if (!world.isRemote) return;
+			Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
+			ItemSpellbook.renderStart(spellbook);
+			return;
 		}
+		if (book.getItem() == ESInit.ITEMS.ANCIENT_PAPER) return;
+
+		ElementalSorcery.logger.warn("魔法书桌上不应该放入除spellbook和ancient_paper以外的物品");
 	}
 
 	@Override
@@ -80,7 +84,8 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 
 	@Override
 	public boolean canSetStack(ItemStack stack) {
-		return stack.getItem() instanceof ItemSpellbook;
+		return stack.getItem() instanceof ItemSpellbook
+				|| (stack.getItem() == ESInit.ITEMS.ANCIENT_PAPER && stack.getMetadata() == 2);
 	}
 
 	@Override
@@ -97,17 +102,13 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		super.readFromNBT(compound);
 		if (compound.hasKey("book")) book = new ItemStack(compound.getCompoundTag("book"));
 		else book = ItemStack.EMPTY;
-		if (this.isSending()) {
-			this.readNBTToUpdate(compound);
-		}
+		if (this.isSending()) this.readNBTToUpdate(compound);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		compound.setTag("book", book.serializeNBT());
-		if (this.isSending()) {
-			this.writeNBTToSend(compound);
-		}
+		if (this.isSending()) this.writeNBTToSend(compound);
 		return super.writeToNBT(compound);
 	}
 
@@ -130,7 +131,6 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 	@Override
 	public void update() {
 		if (book.isEmpty()) return;
-		if (!book.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null)) return;
 		tick++;
 		if (tick % 40 == 0) ok = structure.check(EnumFacing.NORTH);
 		if (world.isRemote) this.updateClientBookRender();
@@ -174,6 +174,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 	// 充能
 	public void updateCharge() {
 		Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
+		if (spellbook == null) return;
 		IElementInventory inv = spellbook.getInventory();
 		if (inv == null) return;
 		inv.loadState(book);
@@ -223,7 +224,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		if (!finish.isEmpty()) {
 			// 完成比对
 			automataList.clear();
-			this.finishCrafting(finish);
+			this.finishCrafting(finish.copy());
 		} else if (automataList.isEmpty()) {
 			// 失败比对
 			BlockPos pos = this.pos.up();
@@ -262,12 +263,12 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 				info.bookSpread = info.bookSpread > 1.0F ? 1.0F : info.bookSpread;
 				info.bookRotation = tRot;
 			}
-			// 新的粒子效果
-			BlockPos pos = this.pos.up();
-			Overlay effect = new Overlay(this.world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-			effect.setRBGColorF(1.0f, 1.0f, 1.0f);
-			Minecraft.getMinecraft().effectRenderer.addEffect(effect);
 		}
+		// 新的粒子效果
+		BlockPos pos = this.pos.up();
+		Overlay effect = new Overlay(this.world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
+		effect.setRBGColorF(1.0f, 1.0f, 1.0f);
+		Minecraft.getMinecraft().effectRenderer.addEffect(effect);
 	}
 
 	// 临时的例子效果
@@ -282,6 +283,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 	@SideOnly(Side.CLIENT)
 	public void updateClientBookRender() {
 		Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
+		if (spellbook == null) return;
 		SpellbookRenderInfo info = spellbook.render_info;
 		info.tickCount++;
 		info.bookSpreadPrev = info.bookSpread;
@@ -314,9 +316,9 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 
 	private void resetAllAutomata() {
 		automataList.clear();
-		if (this.book.getItem() == ESInit.ITEMS.SPELLBOOK) {
-			for (TileMagicDesk.Recipe r : getRecipes())
-				automataList.add(new ItemAutomata(r.getSequence(), r.getOutput()));
+		for (TileMagicDesk.Recipe r : getRecipes()) {
+			ItemStack input = r.getInput();
+			if (input.isItemEqual(book)) automataList.add(new ItemAutomata(r.getSequence(), r.getOutput()));
 		}
 	}
 
@@ -354,6 +356,17 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		recipes.add(r);
 	}
 
+	static public void addRecipeFromMantra(Mantra mantra, ItemStack... stacks) {
+		ItemStack input = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, 2);
+		ItemStack output = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, 3);
+
+		AncientPaper ap = new AncientPaper();
+		ap.setMantra(mantra).setStart(0).setEnd(100);
+		ap.saveState(output);
+
+		addRecipe(input, output, stacks);
+	}
+
 	static public List<ItemStack> findRecipe(ItemStack input) {
 		for (TileMagicDesk.Recipe r : getRecipes()) {
 			if (ItemStack.areItemsEqual(r.getInput(), input)) return r.sequence;
@@ -366,20 +379,28 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		ESObjects.Items ITEMS = ESInit.ITEMS;
 		// launch
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_LAUNCH),
-				new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 3), new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 10),
-				new ItemStack(Blocks.CRAFTING_TABLE, 2), new ItemStack(ESInit.ITEMS.PARCHMENT, 16));
+				new ItemStack(ESInit.ITEMS.QUILL, 1, 1), new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 3),
+				new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 10), new ItemStack(Blocks.CRAFTING_TABLE, 2),
+				new ItemStack(ESInit.ITEMS.PARCHMENT, 16));
 		// element
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ELEMENT),
-				new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 10), new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 32),
-				new ItemStack(Blocks.RED_FLOWER, 6), new ItemStack(Items.GOLD_INGOT, 3), new ItemStack(Items.COAL, 7),
-				new ItemStack(Blocks.OBSIDIAN, 2));
+				new ItemStack(ESInit.ITEMS.QUILL, 1, 1), new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 10),
+				new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 32), new ItemStack(Blocks.RED_FLOWER, 6),
+				new ItemStack(Items.GOLD_INGOT, 3), new ItemStack(Items.COAL, 7), new ItemStack(Blocks.OBSIDIAN, 2));
 		// building
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ARCHITECTURE),
-				new ItemStack(ESInit.BLOCKS.ESTONE, 16), new ItemStack(ESInit.ITEMS.ARCHITECTURE_CRYSTAL, 1),
-				new ItemStack(ESInit.BLOCKS.KYANITE_BLOCK, 2), new ItemStack(Blocks.STONE, 16),
-				new ItemStack(Blocks.IRON_BLOCK, 1), new ItemStack(Blocks.GOLD_BLOCK, 1),
-				new ItemStack(Blocks.REDSTONE_BLOCK, 1), new ItemStack(Blocks.OBSIDIAN, 1),
-				new ItemStack(Blocks.BRICK_BLOCK, 2));
+				new ItemStack(ESInit.ITEMS.QUILL, 1, 1), new ItemStack(ESInit.BLOCKS.ESTONE, 16),
+				new ItemStack(ESInit.ITEMS.ARCHITECTURE_CRYSTAL, 1), new ItemStack(ESInit.BLOCKS.KYANITE_BLOCK, 2),
+				new ItemStack(Blocks.STONE, 16), new ItemStack(Blocks.IRON_BLOCK, 1),
+				new ItemStack(Blocks.GOLD_BLOCK, 1), new ItemStack(Blocks.REDSTONE_BLOCK, 1),
+				new ItemStack(Blocks.OBSIDIAN, 1), new ItemStack(Blocks.BRICK_BLOCK, 2));
+		// 咒文
+		addRecipeFromMantra(ESInit.MANTRAS.LAUNCH_ECR,
+				ItemHelper.toArray(ITEMS.QUILL, 1, 1, Blocks.CRAFTING_TABLE, 2, ITEMS.QUILL, 1, 1));
+		addRecipeFromMantra(ESInit.MANTRAS.LAUNCH_EDE,
+				ItemHelper.toArray(ITEMS.QUILL, 1, 1, ITEMS.AZURE_CRYSTAL, 5, ITEMS.QUILL, 1, 1));
+		addRecipeFromMantra(ESInit.MANTRAS.LAUNCH_ECO,
+				ItemHelper.toArray(ITEMS.QUILL, 1, 1, ITEMS.ORDER_CRYSTAL, 5, ITEMS.QUILL, 1, 1));
 	}
 
 	// ItemStack的自动机

@@ -14,12 +14,13 @@ public class RenderObjects {
 
 	static final public ResourceLocation CRAFTING_TABLE = MCRes("textures/gui/container/crafting_table.png");
 	static final public ResourceLocation STONE = MCRes("textures/blocks/stone.png");
+	static final public ResourceLocation MC_PARTICLE = MCRes("textures/particle/particles.png");
 
 	static final public ResourceLocation KYANITE_BLOCK = ESRes("textures/blocks/kyanite_block.png");
 	static final public ResourceLocation KYANITE_ORE = ESRes("textures/blocks/kyanite_ore.png");
 	static final public ResourceLocation ASTONE = ESRes("textures/blocks/astone.png");
 	static final public ResourceLocation ASTONE_FRAGMENTED = ESRes("textures/blocks/astone_fragmented.png");
-
+	
 	static final public ResourceLocation MANTRA_VOID = ESRes("textures/mantras/void.png");
 	static final public ResourceLocation MANTRA_TELEPORT = ESRes("textures/mantras/teleport.png");
 	static final public ResourceLocation MANTRA_FLOAT = ESRes("textures/mantras/float.png");

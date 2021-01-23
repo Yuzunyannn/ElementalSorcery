@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.item;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,6 +15,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.explore.ExploreManagement;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
@@ -40,6 +42,8 @@ public class ItemRockCamera extends Item {
 			level = dust.getMetadata();
 		}
 		this.photograph(world, player, result.getBlockPos(), level);
+		if (player instanceof EntityPlayerMP)
+			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "use:rockCamera");
 		return new ActionResult(EnumActionResult.SUCCESS, player.getHeldItem(handIn));
 	}
 
