@@ -7,7 +7,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -23,15 +22,16 @@ import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectPlayerAt;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class MantraEnderTeleport extends MantraCommon {
 
 	public MantraEnderTeleport() {
 		this.setUnlocalizedName("enderTeleport");
+		this.setColor(0xc000eb);
+		this.setIcon("teleport");
 		this.setRarity(25);
 		this.setOccupation(5);
-		this.setColor(0xc000eb);
+
 	}
 
 	@Override
@@ -102,12 +102,6 @@ public class MantraEnderTeleport extends MantraCommon {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (caster.iWantCaster() == Minecraft.getMinecraft().player)
 			if (!dataEffect.hasMarkEffect(1)) dataEffect.addEffect(caster, new EffectPlayerAt(world, caster), 1);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ResourceLocation getIconResource() {
-		return RenderObjects.MANTRA_TELEPORT;
 	}
 
 }

@@ -17,7 +17,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -40,7 +39,6 @@ import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class MantraFireBall extends MantraCommon {
 
@@ -90,14 +88,10 @@ public class MantraFireBall extends MantraCommon {
 
 	public MantraFireBall() {
 		this.setUnlocalizedName("fireBall");
+		this.setColor(0xff8f02);
+		this.setIcon("fire_ball");
 		this.setRarity(50);
 		this.setOccupation(3);
-		this.setColor(0xff8f02);
-	}
-
-	@Override
-	public ResourceLocation getIconResource() {
-		return RenderObjects.MANTRA_FIRE_BALL;
 	}
 
 	@Override
@@ -150,15 +144,6 @@ public class MantraFireBall extends MantraCommon {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public float getProgressRate(World world, IMantraData mData, ICaster caster) {
-		int tick = caster.iWantKnowCastTick();
-		if (tick < 20) return -1;
-		Data data = (Data) mData;
-		return data.power / 32f;
-	}
-
-	@Override
 	public void onCollectElement(World world, IMantraData mData, ICaster caster, int speedTick) {
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return;
@@ -171,12 +156,13 @@ public class MantraFireBall extends MantraCommon {
 		if (stack.isEmpty()) return;
 		data.power += 0.4;
 		data.powerUp = true;
+		data.setProgress(data.power, 32);
 		// 获取金
 		if (data.metal.getCount() < 40) out: {
 			need = new ElementStack(ESInit.ELEMENTS.METAL, 1, 100);
 			stack = caster.iWantSomeElement(need, true);
 			if (stack.isEmpty()) break out;
-			data.metal.grow(stack);
+			data.metal.growOrBecome(stack);
 			if (world.isRemote) if (world.rand.nextInt(4) == 0) data.color = ElementMetal.COLOR;
 			else data.color = 0;
 		}
@@ -185,7 +171,7 @@ public class MantraFireBall extends MantraCommon {
 			need = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 1, 150);
 			stack = caster.iWantSomeElement(need, true);
 			if (stack.isEmpty()) break out;
-			data.knowledge.grow(stack);
+			data.knowledge.growOrBecome(stack);
 			if (world.isRemote) if (world.rand.nextInt(5) == 0) data.color = ElementKnowledge.COLOR;
 			else data.color = 0;
 		}
@@ -218,35 +204,33 @@ public class MantraFireBall extends MantraCommon {
 			}
 		}
 		data.pos = data.pos.add(data.toward);
-		if (!world.isRemote) {
-			// 方块计算
-			float power = Math.min(10, MathHelper.sqrt(data.power));
-			int size = (int) (power / 2);
-			BlockPos bPos = new BlockPos(pos);
-			for (int x = -size; x <= size; x++) {
-				for (int y = size; y >= -size; y--) {
-					for (int z = -size; z <= size; z++) {
-						IBlockState toState = this.affect(world, bPos, new Vec3i(x, y, z), data);
-						if (toState != null) world.setBlockState(bPos.add(x, y, z), toState);
-					}
+		if (world.isRemote) return true;
+		// 方块计算
+		float power = Math.min(10, MathHelper.sqrt(data.power));
+		int size = (int) (power / 2);
+		BlockPos bPos = new BlockPos(pos);
+		for (int x = -size; x <= size; x++) {
+			for (int y = size; y >= -size; y--) {
+				for (int z = -size; z <= size; z++) {
+					IBlockState toState = this.affect(world, bPos, new Vec3i(x, y, z), data);
+					if (toState != null) world.setBlockState(bPos.add(x, y, z), toState);
 				}
 			}
-			// 攻击敌人
-			double x = bPos.getX() + 0.5;
-			double y = bPos.getY() + 0.5;
-			double z = bPos.getZ() + 0.5;
-			Entity entity = caster.iWantCaster();
-			AxisAlignedBB aabb = new AxisAlignedBB(x - size, y - size, z - size, x + size, y + size, z + size);
-			List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb, (living) -> {
-				if (living == entity) return false;
-				return true;
-			});
-			for (EntityLivingBase living : entities) {
-				DamageSource ds = DamageSource.causeThornsDamage(entity).setMagicDamage();
-				if (living.attackEntityFrom(ds, data.power * data.power / 25)) living.setFire((int) (power * 2));
-			}
 		}
-
+		// 攻击敌人
+		double x = bPos.getX() + 0.5;
+		double y = bPos.getY() + 0.5;
+		double z = bPos.getZ() + 0.5;
+		Entity entity = caster.iWantCaster();
+		AxisAlignedBB aabb = new AxisAlignedBB(x - size, y - size, z - size, x + size, y + size, z + size);
+		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb, (living) -> {
+			if (living == entity) return false;
+			return true;
+		});
+		for (EntityLivingBase living : entities) {
+			DamageSource ds = DamageSource.causeThornsDamage(entity).setMagicDamage();
+			if (living.attackEntityFrom(ds, data.power * data.power / 25)) living.setFire((int) (power * 2));
+		}
 		return true;
 	}
 

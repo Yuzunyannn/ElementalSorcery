@@ -188,6 +188,8 @@ mantra.summon.name=召唤
 mantra.summon.describe=在魔力的缠绕下，召唤仪式可以随时进行
 mantra.lightningArea.name=雷鸣区域
 mantra.lightningArea.describe=气元素与火元素交织，唤起一块区域，进入的生物会受到雷劈。
+mantra.slowFall.name=缓降
+mantra.slowFall.describe=借助气元素的力量，让你得以在空中缓慢滑行
 
 key.es.func=功能键
 

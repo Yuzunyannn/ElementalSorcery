@@ -188,6 +188,8 @@ mantra.summon.name=召喚
 mantra.summon.describe=魔力にからまれて、召喚儀式は随時行われます。
 mantra.lightningArea.name=雷鳴の地
 mantra.lightningArea.describe=気元素と火元素が入り交じって、一つの地域を喚起して、入る生物は雷に打たれます。
+mantra.slowFall.name=緩降
+mantra.slowFall.describe=気元素て空中でゆっくり滑走きるようにします。
 
 key.es.func=機能キー
 

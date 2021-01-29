@@ -168,7 +168,7 @@ public class EntityRelicZombie extends EntityMob {
 			// 遗迹水晶
 			int n = 1 + this.rand.nextInt(lootingModifier / 2 + 1);
 			for (int i = 0; i < n; i++) {
-				if (this.rand.nextFloat() >= 0.8) break;
+				if (this.rand.nextFloat() >= 0.85f) break;
 				this.dropItem(ESInit.ITEMS.RELIC_GEM, 1);
 			}
 		}

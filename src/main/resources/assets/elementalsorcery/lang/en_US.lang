@@ -188,6 +188,8 @@ mantra.summon.name=Summon Rite
 mantra.summon.describe=With magic, The Summon Rite can be carried out at any time
 mantra.lightningArea.name=Lightning Area
 mantra.lightningArea.describe=With The Air Element and The Fire Element, a Area whoever entered will be struck by lightning is emerge.
+mantra.slowFall.name=Slow Fall
+mantra.slowFall.describe=With the Air Element, you can glide slowly.
 
 key.es.func=Function key
 

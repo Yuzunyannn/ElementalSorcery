@@ -2,7 +2,7 @@ package yuzunyannn.elementalsorcery.container;
 
 import java.util.List;
 
-import net.minecraft.block.Block;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
@@ -102,7 +102,7 @@ public class ContainerResearch extends Container implements IContainerNetwork {
 		wr.fixWeight(-minWeight + 1);
 		IResearchRecipe recipe = wr.get();
 		ItemStack stack = recipe.getRecipeOutput(costReasearher);
-		Block.spawnAsEntity(player.world, pos, stack);
+		ItemHelper.addItemStackToPlayer(player, stack.copy());
 		// 减少数据，创造模式不减少
 		if (!player.isCreative()) {
 			for (String key : costReasearher.keySet()) reasearher.shrink(key, costReasearher.get(key));

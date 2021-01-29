@@ -1,22 +1,17 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
@@ -26,26 +21,16 @@ import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleIcon;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 
 public abstract class MantraSquareArea extends MantraCommon {
 
 	public static class SquareData extends MantraDataCommon {
-
-		// 处理的数据
-		protected float progress = 0;
-
 		// 记录的数据
-		protected Map<Element, ElementStack> eMap = new HashMap<>();
 		protected int size = 0;
 		protected int delay = 0;
 
 		public void setSize(int size) {
 			this.size = size;
-		}
-
-		public void setProgress(float progress) {
-			this.progress = progress;
 		}
 
 		public void setDelay(int delay) {
@@ -60,43 +45,19 @@ public abstract class MantraSquareArea extends MantraCommon {
 			return delay;
 		}
 
-		public float getProgress() {
-			return progress;
-		}
-
-		public void addElement(ElementStack estack) {
-			if (estack.isEmpty()) return;
-			ElementStack origin = this.getElement(estack.getElement());
-			if (origin.isEmpty()) origin.become(estack);
-			else origin.grow(estack);
-		}
-
-		public ElementStack getElement(Element element) {
-			ElementStack estack = eMap.get(element);
-			if (estack == null) eMap.put(element, estack = ElementStack.EMPTY.copy());
-			return estack;
-		}
-
 		@Override
 		public NBTTagCompound serializeNBT() {
-			NBTTagCompound nbt = new NBTTagCompound();
+			NBTTagCompound nbt = super.serializeNBT();
 			nbt.setInteger("size", size);
 			nbt.setInteger("delay", delay);
-			if (!eMap.isEmpty()) {
-				NBTTagList list = new NBTTagList();
-				for (ElementStack estack : eMap.values()) if (!estack.isEmpty()) list.appendTag(estack.serializeNBT());
-				nbt.setTag("eles", list);
-			}
 			return nbt;
 		}
 
 		@Override
 		public void deserializeNBT(NBTTagCompound nbt) {
+			super.deserializeNBT(nbt);
 			size = nbt.getInteger("size");
 			delay = nbt.getInteger("delay");
-			eMap.clear();
-			NBTTagList list = nbt.getTagList("eles", NBTTag.TAG_COMPOUND);
-			for (NBTBase base : list) this.addElement(new ElementStack((NBTTagCompound) base));
 		}
 	}
 
@@ -169,8 +130,7 @@ public abstract class MantraSquareArea extends MantraCommon {
 	public float getProgressRate(World world, IMantraData mData, ICaster caster) {
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return -1;
-		SquareData data = (SquareData) mData;
-		return data.progress;
+		return super.getProgressRate(world, mData, caster);
 	}
 
 	@Override

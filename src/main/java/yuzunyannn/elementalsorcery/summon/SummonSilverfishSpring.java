@@ -37,7 +37,9 @@ public class SummonSilverfishSpring extends SummonCommon {
 		sliverFish--;
 		EntitySilverfish entity = new EntitySilverfish(world);
 		entity.setPosition(pos.x, pos.y, pos.z);
-		entity.setVelocity(rand.nextDouble() - 0.5, rand.nextDouble() * 0.2 + 0.4, rand.nextDouble() - 0.5);
+		entity.motionX = rand.nextDouble() - 0.5;
+		entity.motionY = rand.nextDouble() * 0.2 + 0.4;
+		entity.motionZ = rand.nextDouble() - 0.5;
 		int time = 20 * 60 * 60;
 		entity.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, time, 2));
 		entity.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, time, 1));

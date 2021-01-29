@@ -7,7 +7,6 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -19,38 +18,25 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
+import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class MantraLush extends MantraCommon {
 
 	public MantraLush() {
 		this.setUnlocalizedName("lush");
-		this.setRarity(75);
 		this.setColor(0x32CD32);
-	}
-
-	@Override
-	public ResourceLocation getIconResource() {
-		return RenderObjects.MANTRA_LUSH;
+		this.setIcon("lush");
+		this.setRarity(75);
 	}
 
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		dataEffect.markContinue(true);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public float getProgressRate(World world, IMantraData mData, ICaster caster) {
-		int tick = caster.iWantKnowCastTick();
-		if (tick < 20) return -1;
-		MantraDataCommon data = (MantraDataCommon) mData;
-		return data.get(ELEMENT_WOOD).getCount() / 200.0f;
 	}
 
 	@Override
@@ -66,24 +52,14 @@ public class MantraLush extends MantraCommon {
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return;
 		MantraDataCommon data = (MantraDataCommon) mData;
-		ElementStack power = data.get(ELEMENT_WOOD);
-		if (power.getCount() >= 200) return;
-		// 每tick两点消耗
-		ElementStack need = new ElementStack(ESInit.ELEMENTS.WOOD, 1, 50);
-		ElementStack estack = caster.iWantSomeElement(need, true);
-		if (estack.isEmpty()) return;
-		if (power.isEmpty()) data.set(ELEMENT_WOOD, estack.copy());
-		else power.grow(estack);
-	}
-
-	@Override
-	public void endSpelling(World world, IMantraData mData, ICaster caster) {
+		CollectResult cr = data.tryCollect(caster, ESInit.ELEMENTS.WOOD, 1, 50, 200);
+		data.setProgress(cr.getElementStack().getCount(), 200);
 	}
 
 	@Override
 	public boolean afterSpelling(World world, IMantraData mData, ICaster caster) {
 		MantraDataCommon data = (MantraDataCommon) mData;
-		ElementStack wood = data.get(ELEMENT_WOOD);
+		ElementStack wood = data.getElement(ESInit.ELEMENTS.WOOD);
 		if (wood.isEmpty()) return false;
 		int tick = caster.iWantKnowCastTick();
 		if (tick % 3 != 0) return true;

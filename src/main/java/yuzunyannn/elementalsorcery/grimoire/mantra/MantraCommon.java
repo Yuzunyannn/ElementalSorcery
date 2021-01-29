@@ -4,11 +4,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
@@ -24,9 +25,9 @@ public class MantraCommon extends Mantra {
 	public static final Variable<BlockPos> POS = new Variable<>("pos", VariableSet.BLOCK_POS);
 	public static final Variable<Short> LAYER = new Variable<>("layer", VariableSet.SHORT);
 	public static final Variable<Integer> SIZE = new Variable<>("size", VariableSet.INT);
-	public static final Variable<ElementStack> ELEMENT_WOOD = new Variable<>("eWood", VariableSet.ELEMENT);
 
 	protected int color = 0;
+	protected ResourceLocation icon;
 
 	public void setColor(int color) {
 		this.color = color;
@@ -80,9 +81,9 @@ public class MantraCommon extends Mantra {
 		}
 		if (hasEffectFlags(world, data, caster, MantraEffectFlags.PROGRESS)) out: {
 			float r = this.getProgressRate(world, data, caster);
-			if (r < 0) break out;
+			if (r <= 0) break out;
 			MantraDataCommon dataEffect = (MantraDataCommon) data;
-			dataEffect.setProgress(r, this.getColor(data), world, caster);
+			dataEffect.showProgress(r, this.getColor(data), world, caster);
 		}
 	}
 
@@ -93,7 +94,8 @@ public class MantraCommon extends Mantra {
 
 	@SideOnly(Side.CLIENT)
 	public float getProgressRate(World world, IMantraData data, ICaster caster) {
-		return -1;
+		MantraDataCommon dataEffect = (MantraDataCommon) data;
+		return dataEffect.getProgress();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -101,6 +103,20 @@ public class MantraCommon extends Mantra {
 		EffectMagicCircle emc = new EffectMagicCircleIcon(world, entity, this.getIconResource());
 		emc.setColor(this.getColor(mData));
 		return emc;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public ResourceLocation getIconResource() {
+		return icon;
+	}
+
+	public void setIcon(ResourceLocation icon) {
+		this.icon = icon;
+	}
+
+	public void setIcon(String name) {
+		this.icon = new ResourceLocation(ElementalSorcery.MODID, "textures/mantras/" + name + ".png");
 	}
 
 	public ItemAncientPaper.EnumType getMantraSubItemType() {

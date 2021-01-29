@@ -29,6 +29,7 @@ import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.elf.research.Topics;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.util.ColorHelper;
+import yuzunyannn.elementalsorcery.util.GameHelper;
 
 public class PageResearch extends PageTransform {
 
@@ -47,10 +48,15 @@ public class PageResearch extends PageTransform {
 			if (ire.getRecipeOutput().isItemEqual(stack)) allRecipe.add(ire);
 		}
 		IResearchRecipe recipe = allRecipe.get(0);
-		List<Entry<String, Integer>> topicInput = recipe.getRecipeInput();
 		output = recipe.getRecipeOutput();
 		ingredient = recipe.getIngredients();
+		GameHelper.clientRun(() -> {
+			this.initView(recipe);
+		});
+	}
 
+	private void initView(IResearchRecipe recipe) {
+		List<Entry<String, Integer>> topicInput = recipe.getRecipeInput();
 		allNeed = 0;
 		Set<String> all = Topics.getDefaultTopics();
 		float size = topicInput.size();

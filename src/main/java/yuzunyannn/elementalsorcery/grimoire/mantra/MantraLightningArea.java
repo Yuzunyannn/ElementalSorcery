@@ -6,33 +6,24 @@ import java.util.Random;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class MantraLightningArea extends MantraSquareAreaAdv {
 
 	public MantraLightningArea() {
 		this.setUnlocalizedName("lightningArea");
+		this.setColor(0x0076ee);
+		this.setIcon("lightning");
 		this.setRarity(50);
 		this.setOccupation(3);
-		this.setColor(0x0076ee);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.AIR, 2, 50), 80, 20);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.FIRE, 2, 40), -1, 20);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ResourceLocation getIconResource() {
-		return RenderObjects.MANTRA_LIGHTNING;
 	}
 
 	@Override

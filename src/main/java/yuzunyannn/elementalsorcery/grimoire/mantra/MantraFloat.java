@@ -1,24 +1,21 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class MantraFloat extends MantraCommon {
 
 	public MantraFloat() {
 		this.setUnlocalizedName("float");
+		this.setColor(0xacffff);
+		this.setIcon("float");
 		this.setRarity(125);
 		this.setOccupation(1);
-		this.setColor(0xacffff);
 	}
 
 	@Override
@@ -40,12 +37,6 @@ public class MantraFloat extends MantraCommon {
 		entity.motionY = 0.15;
 		entity.fallDistance = 0;
 		if (world.isRemote) onSpellingEffect(world, data, caster);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ResourceLocation getIconResource() {
-		return RenderObjects.MANTRA_FLOAT;
 	}
 
 }

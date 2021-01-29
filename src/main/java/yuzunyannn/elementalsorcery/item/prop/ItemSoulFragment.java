@@ -14,6 +14,9 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
+import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemSoulFragment extends Item {
 
@@ -63,9 +66,9 @@ public class ItemSoulFragment extends Item {
 			else swSword = new ItemStack(ESInit.ITEMS.SOUL_WOOD_SWORD);
 			swSword.setItemDamage(woodSword.getItem().getItemDamage());
 			swSword.setTagCompound(woodSword.getItem().getTagCompound());
-			woodSword.setItem(swSword);
 			addSoul(swSword, count);
-			sword = woodSword;
+			sword = ItemHelper.dropItem(world, woodSword.getPosition(), swSword);
+			woodSword.getItem().shrink(1);
 		}
 		if (sword != null) {
 			NBTTagCompound nbt = FireworkEffect.fastNBT(1, 1, 0.05f, new int[] { 0x3ad2f2, 0x7ef5ff },

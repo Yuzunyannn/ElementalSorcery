@@ -6,7 +6,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -26,16 +25,15 @@ import yuzunyannn.elementalsorcery.util.text.TextHelper;
 public class MantraLaunch extends MantraCommon {
 
 	protected String type;
-	protected ResourceLocation iconRes;
 	protected int spellTick = 20;
 
 	public MantraLaunch(String type, int color) {
 		this.type = type;
-		this.iconRes = TextHelper.toESResourceLocation("textures/mantras/launch_" + type + ".png");
 		this.setUnlocalizedName(TextHelper.castToCamel("launch_" + type));
+		this.setColor(color);
+		this.setIcon(TextHelper.toESResourceLocation("textures/mantras/launch_" + type + ".png"));
 		this.setRarity(150);
 		this.setOccupation(1);
-		this.setColor(color);
 	}
 
 	@Override
@@ -61,7 +59,7 @@ public class MantraLaunch extends MantraCommon {
 
 		int tick = caster.iWantKnowCastTick();
 		if (tick >= spellTick) {
-			this.onSpellingEffect(world, mData, caster);
+			if (world.isRemote) this.onSpellingEffect(world, mData, caster);
 			this.endSpelling(world, mData, caster);
 			return;
 		}
@@ -142,12 +140,6 @@ public class MantraLaunch extends MantraCommon {
 		EffectMagicCircleMantra emc = new EffectMagicCircleMantra(world, pos, this.getIconResource());
 		emc.setColor(this.getColor(mData));
 		return emc;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ResourceLocation getIconResource() {
-		return this.iconRes;
 	}
 
 }

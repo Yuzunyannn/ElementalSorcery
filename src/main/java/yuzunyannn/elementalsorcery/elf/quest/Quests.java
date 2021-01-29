@@ -213,7 +213,7 @@ public class Quests {
 	public static Quest createExploreQuests1(Quest lastQuest, EntityPlayer player) {
 		Random rand = player.world.rand;
 		Quest quest = createExploreQuestsCommont(player, 50 + rand.nextInt(100), 30 + rand.nextInt(50),
-				ExploreStructureFind.VILLAGE, 0.5f, GET_ROCK_CAMERA_QUESTS_1, GET_ROCK_CAMERA_QUESTS_2,
+				ExploreStructureFind.VILLAGE, 0.25f, GET_ROCK_CAMERA_QUESTS_1, GET_ROCK_CAMERA_QUESTS_2,
 				ItemHelper.toList(Blocks.LOG, Blocks.SANDSTONE, Blocks.BOOKSHELF, Blocks.COBBLESTONE, Blocks.CHEST));
 		quest.getType().addReward(QuestRewardItemParcel
 				.create(ItemHelper.toArray(Items.WHEAT, rand.nextInt(16) + 4, Items.IRON_INGOT, 4 + rand.nextInt(4))));

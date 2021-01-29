@@ -8,7 +8,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -23,14 +22,14 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
-import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class MantraBlockCrash extends MantraCommon {
 
 	public MantraBlockCrash() {
 		this.setUnlocalizedName("blockCrash");
-		this.setRarity(110);
 		this.setColor(0x785439);
+		this.setIcon("block_crash");
+		this.setRarity(110);
 	}
 
 	@Override
@@ -93,12 +92,6 @@ public class MantraBlockCrash extends MantraCommon {
 			effect.setVelocity(v.scale(0.2));
 			Effect.addEffect(effect);
 		}
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ResourceLocation getIconResource() {
-		return RenderObjects.MANTRA_BLOCK_CRASH;
 	}
 
 }

@@ -133,6 +133,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLaunch;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLightningArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLush;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraMiningArea;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSlowFall;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSprint;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
@@ -436,7 +437,7 @@ public class ESInit {
 	}
 
 	private static final void instanceMantras() throws ReflectiveOperationException {
-		
+
 		MANTRAS.ENDER_TELEPORT = new MantraEnderTeleport();
 		MANTRAS.FLOAT = new MantraFloat();
 		MANTRAS.SPRINT = new MantraSprint();
@@ -446,6 +447,8 @@ public class ESInit {
 		MANTRAS.MINING_AREA = new MantraMiningArea();
 		MANTRAS.LIGHTNING_AREA = new MantraLightningArea();
 		MANTRAS.SUMMON = new MantraSummon();
+		MANTRAS.SLOW_FALL = new MantraSlowFall();
+
 		MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);
 		MANTRAS.LAUNCH_EDE = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT, 0xff4a1a);
 		MANTRAS.LAUNCH_ECO = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT, 0x00b5e5);

@@ -3,7 +3,6 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -17,13 +16,13 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectResonance;
-import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class MantraSprint extends MantraCommon {
 
 	public MantraSprint() {
 		this.setUnlocalizedName("sprint");
 		this.setColor(0xabfffa);
+		this.setIcon("sprint");
 	}
 
 	@Override
@@ -62,12 +61,6 @@ public class MantraSprint extends MantraCommon {
 		EffectResonance effect = new EffectResonance(world, entity.posX, entity.posY + 1, entity.posZ);
 		effect.setColor(0xffffff);
 		Effect.addEffect(effect);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ResourceLocation getIconResource() {
-		return RenderObjects.MANTRA_SPRINT;
 	}
 
 }

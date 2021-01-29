@@ -21,8 +21,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
@@ -159,6 +158,7 @@ public class CommandES extends CommandBase {
 		return CommandBase.getListOfStringsMatchingLastWord(args);
 	}
 
+	/** 咒文 */
 	private void cmdMantra(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
 		EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity();
 		if (args.length > 2) player = getPlayer(server, sender, args[1]);
@@ -178,10 +178,8 @@ public class CommandES extends CommandBase {
 			notifyCommandListener(sender, this, "commands.es.mantra.give", player.getName(), mantra.getTextComponent());
 			return;
 		case "remove":
-			if (grimoire == null) {
-				throw new CommandException("commands.es.notFound",
-						grimoireStack.getTextComponent().setStyle(new Style().setColor(TextFormatting.RED)));
-			}
+			if (grimoire == null)
+				throw new CommandException("commands.es.notFound", new TextComponentTranslation("item.grimoire.name"));
 			grimoire.loadState(grimoireStack);
 			grimoire.remove(mantra);
 			grimoire.saveState(grimoireStack);
@@ -189,10 +187,8 @@ public class CommandES extends CommandBase {
 					mantra.getTextComponent());
 			return;
 		case "add":
-			if (grimoire == null) {
-				throw new CommandException("commands.es.notFound",
-						grimoireStack.getTextComponent().setStyle(new Style().setColor(TextFormatting.RED)));
-			}
+			if (grimoire == null)
+				throw new CommandException("commands.es.notFound", new TextComponentTranslation("item.grimoire.name"));
 			grimoire.loadState(grimoireStack);
 			grimoire.add(mantra);
 			grimoire.saveState(grimoireStack);

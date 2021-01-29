@@ -158,6 +158,11 @@ public class ESObjects {
 	}
 
 	static public class Mantras {
+		
+		public Mantra LAUNCH_ECR;
+		public Mantra LAUNCH_EDE;
+		public Mantra LAUNCH_ECO;
+		
 		public Mantra ENDER_TELEPORT;
 		public Mantra FLOAT;
 		public Mantra SPRINT;
@@ -167,9 +172,7 @@ public class ESObjects {
 		public Mantra MINING_AREA;
 		public Mantra LIGHTNING_AREA;
 		public Mantra SUMMON;
-		public Mantra LAUNCH_ECR;
-		public Mantra LAUNCH_EDE;
-		public Mantra LAUNCH_ECO;
+		public Mantra SLOW_FALL;
 	}
 
 	static public class Village {

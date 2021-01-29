@@ -10,7 +10,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,7 +29,6 @@ import yuzunyannn.elementalsorcery.summon.Summon;
 import yuzunyannn.elementalsorcery.summon.SummonRecipe;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
-import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class MantraSummon extends MantraCommon {
 
@@ -98,9 +96,10 @@ public class MantraSummon extends MantraCommon {
 
 	public MantraSummon() {
 		this.setUnlocalizedName("summon");
+		this.setColor(0xda003e);
+		this.setIcon("summon");
 		this.setRarity(2);
 		this.setOccupation(8);
-		this.setColor(0xda003e);
 	}
 
 	@Override
@@ -158,6 +157,7 @@ public class MantraSummon extends MantraCommon {
 			if (get.isEmpty()) return;
 			data.power++;
 		}
+		data.setProgress(data.power, 100);
 	}
 
 	@Override
@@ -200,13 +200,6 @@ public class MantraSummon extends MantraCommon {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public float getProgressRate(World world, IMantraData mData, ICaster caster) {
-		Data data = (Data) mData;
-		return data.power / 100.0f;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData mData, ICaster caster) {
 		super.onSpellingEffect(world, mData, caster);
 		if (!caster.hasEffectFlags(MantraEffectFlags.INDICATOR)) return;
@@ -224,12 +217,6 @@ public class MantraSummon extends MantraCommon {
 		Data data = (Data) mData;
 		if (data.summonRecipe == null) return super.getColor(mData);
 		return data.summonRecipe.getColor(data.keepsake);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ResourceLocation getIconResource() {
-		return RenderObjects.MANTRA_SUMMON;
 	}
 
 }

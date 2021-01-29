@@ -15,9 +15,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
-import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.init.ESImplRegister;
@@ -105,12 +103,12 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	public void setRarity(int rarity) {
 		this.rarity = (byte) rarity;
 	}
-	
-	/**获取占容量消耗*/
+
+	/** 获取占容量消耗 */
 	public int getOccupation() {
 		return occupation;
 	}
-	
+
 	public void setOccupation(int occupation) {
 		this.occupation = (short) occupation;
 	}
@@ -159,13 +157,14 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 		mc.getTextureManager().bindTexture(GuiMantraShitf.CIRCLE);
 		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 		ResourceLocation res = this.getIconResource();
+		if (res == null) res = RenderObjects.MANTRA_VOID;
 		mc.getTextureManager().bindTexture(res);
 		suggestSize = suggestSize * 0.5f;
 		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Nonnull
+	@SideOnly(Side.CLIENT)
 	public ResourceLocation getIconResource() {
 		return RenderObjects.MANTRA_VOID;
 	}

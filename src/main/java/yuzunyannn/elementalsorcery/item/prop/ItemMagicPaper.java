@@ -107,7 +107,7 @@ public class ItemMagicPaper extends Item {
 	public boolean onEntityItemUpdate(EntityItem entityItem) {
 		ItemStack stack = entityItem.getItem();
 		if (stack.getMetadata() != EnumType.WRITTEN.getMeta()) return false;
-		if (entityItem.getAge() > 0) entityItem.setNoDespawn();
+		entityItem.setNoDespawn();
 		if (entityItem.ticksExisted % 20 != 0) return false;
 		int size = 6;
 		World world = entityItem.world;

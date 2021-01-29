@@ -24,9 +24,10 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 
 	public MantraMiningArea() {
 		this.setUnlocalizedName("miningArea");
+		this.setColor(0xc8971e);
+		this.setIcon("auto_mining");
 		this.setRarity(2);
 		this.setOccupation(10);
-		this.setColor(0xc8971e);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.EARTH, 2, 75), 400, 32);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.METAL, 3, 50), -1, 32);
 	}
@@ -40,12 +41,6 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 	@SideOnly(Side.CLIENT)
 	public ResourceLocation getMagicCircleIcon() {
 		return RenderObjects.MAGIC_CIRCLE_PICKAXE;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ResourceLocation getIconResource() {
-		return RenderObjects.MANTRA_AUTO_MINING;
 	}
 
 	@Override
@@ -63,6 +58,7 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 		if (earth.isEmpty() || metal.isEmpty()) return false;
 		if (tick % 20 != 0) return true;
 		short layer = data.get(LAYER);
+		if (layer < 0) return false;
 		int hSize = data.size / 2;
 		BlockPos pos = new BlockPos(originPos.getX(), layer, originPos.getZ());
 		BlockPos go = findChestPos(world, originPos);
