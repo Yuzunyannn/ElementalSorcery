@@ -43,12 +43,16 @@ import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 public class MantraFireBall extends MantraCommon {
 
 	static public void fire(World world, EntityLivingBase spller, int power, boolean needKnowledge) {
+		fire(world, spller, spller.getLookVec(), power, needKnowledge);
+	}
+
+	static public void fire(World world, EntityLivingBase spller, Vec3d orient, int power, boolean needKnowledge) {
 		EntityGrimoire grimoire = new EntityGrimoire(world, spller, ESInit.MANTRAS.FIRE_BALL, null,
 				EntityGrimoire.STATE_AFTER_SPELLING);
 		Data data = (Data) grimoire.getMantraData();
 		data.power = power;
 		data.pos = spller.getPositionVector().addVector(0, spller.getEyeHeight(), 0);
-		data.toward = spller.getLookVec();
+		data.toward = orient.normalize();
 		data.pos = data.pos.add(data.toward.scale(2));
 		if (needKnowledge) data.knowledge = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 20, 150);
 		grimoire.setPosition(spller.posX, spller.posY, spller.posZ);
@@ -77,6 +81,11 @@ public class MantraFireBall extends MantraCommon {
 		}
 
 		@Override
+		public NBTTagCompound serializeNBTForSend() {
+			return this.serializeNBT();
+		}
+
+		@Override
 		public void deserializeNBT(NBTTagCompound nbt) {
 			power = nbt.getFloat("power");
 			pos = NBTHelper.getVec3d(nbt, "pos");
@@ -84,6 +93,7 @@ public class MantraFireBall extends MantraCommon {
 			metal = new ElementStack(nbt.getCompoundTag("metal"));
 			knowledge = new ElementStack(nbt.getCompoundTag("know"));
 		}
+
 	}
 
 	public MantraFireBall() {
@@ -168,7 +178,7 @@ public class MantraFireBall extends MantraCommon {
 		}
 		// 获取知识
 		if (data.knowledge.getCount() < 20) out: {
-			need = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 1, 150);
+			need = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 1, 100);
 			stack = caster.iWantSomeElement(need, true);
 			if (stack.isEmpty()) break out;
 			data.knowledge.growOrBecome(stack);

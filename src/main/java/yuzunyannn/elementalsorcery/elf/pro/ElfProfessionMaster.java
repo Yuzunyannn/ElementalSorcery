@@ -29,21 +29,22 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
-import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
+import yuzunyannn.elementalsorcery.grimoire.Grimoire;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireBall;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.item.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.effect.EffectElement;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
+import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 
 public class ElfProfessionMaster extends ElfProfession {
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
-		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.SPELLBOOK_ELEMENT));
+		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.GRIMOIRE));
 		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);// 不能掉书
 	}
 
@@ -70,7 +71,7 @@ public class ElfProfessionMaster extends ElfProfession {
 			}
 		} else {
 			World world = elf.world;
-			int what = elf.getRNG().nextInt(4);
+			int what = elf.getRNG().nextInt(5);
 			switch (what) {
 			case 0:
 				Entity entity = new EntityLightningBolt(world, target.posX, target.posY, target.posZ, false);
@@ -96,6 +97,13 @@ public class ElfProfessionMaster extends ElfProfession {
 					base.addPotionEffect(new PotionEffect(MobEffects.WITHER, 20 * 10, 1));
 					base.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 20 * 10, 1));
 				}
+				break;
+			case 4: {
+				Vec3d tar = target.getPositionVector()
+						.subtract(elf.getPositionVector().addVector(0, elf.getEyeHeight(), 0));
+				MantraFireBall.fire(world, elf, tar, 28, true);
+
+			}
 				break;
 			}
 		}
@@ -184,54 +192,61 @@ public class ElfProfessionMaster extends ElfProfession {
 	@Override
 	public void tick(EntityElfBase elf) {
 		if (elf.world.isRemote) {
-			// 展示书效果
-			ItemStack stack = elf.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-			Spellbook spbook = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
-			if (spbook != null) {
-				NBTTagCompound nbt = elf.getTempNBT();
-				boolean open = nbt.getBoolean("isOpen");
-				boolean isOpen = elf.isHandActive();
-				if (open != isOpen) {
-					if (isOpen) {
-						ItemSpellbook.renderStart(spbook);
-						nbt.setBoolean("isOpen", isOpen);
-					} else {
-						if (ItemSpellbook.renderClose(spbook)) {
-							ItemSpellbook.renderEnd(spbook);
-							nbt.setBoolean("isOpen", isOpen);
-						}
-					}
-				} else if (isOpen) {
-					ItemSpellbook.renderOpen(spbook);
-					showEffect(elf);
-				}
+			this.tickClient(elf);
+			return;
+		}
+		if (elf.motionY < 0) {
+			elf.motionY *= 0.75;
+			elf.fallDistance *= 0.75;
+		}
+		NBTTagCompound nbt = elf.getTempNBT();
+		boolean open = nbt.getBoolean("isOpen");
+		boolean isOpen = elf.getAttackTarget() != null;
+		if (open != isOpen) {
+			if (isOpen) {
+				elf.setFlyMode(true);
+				elf.setActiveHand(EnumHand.MAIN_HAND);
+				nbt.setBoolean("isOpen", isOpen);
+			} else {
+				elf.setFlyMode(false);
+				elf.resetActiveHand();
+				nbt.setBoolean("isOpen", isOpen);
 			}
-		} else {
-			if (elf.motionY < 0) {
-				elf.motionY *= 0.6;
-				elf.fallDistance *= 0.6;
-			}
-			NBTTagCompound nbt = elf.getTempNBT();
-			boolean open = nbt.getBoolean("isOpen");
-			boolean isOpen = elf.getAttackTarget() != null;
-			if (open != isOpen) {
-				if (isOpen) {
-					elf.setFlyMode(true);
-					elf.setActiveHand(EnumHand.MAIN_HAND);
-					nbt.setBoolean("isOpen", isOpen);
-				} else {
-					elf.setFlyMode(false);
-					elf.resetActiveHand();
-					nbt.setBoolean("isOpen", isOpen);
-				}
-			} else if (isOpen) {
-				if (!elf.world.isAirBlock(elf.getPosition().down(2))) elf.motionY += 0.1;
-			}
+		} else if (isOpen) {
+			if (!elf.world.isAirBlock(elf.getPosition().down(2))) elf.motionY += 0.1;
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
+	public void tickClient(EntityElfBase elf) {
+		// 展示书效果
+		ItemStack stack = elf.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+		if (grimoire == null) return;
+		RenderItemGrimoireInfo renderInfo = grimoire.getRenderInfo();
+		NBTTagCompound nbt = elf.getTempNBT();
+		boolean open = nbt.getBoolean("isOpen");
+		boolean isOpen = elf.isHandActive();
+		if (open != isOpen) {
+			if (isOpen) {
+				renderInfo.reset();
+				renderInfo.open();
+				nbt.setBoolean("isOpen", isOpen);
+			} else {
+				renderInfo.close();
+				if (renderInfo.update()) {
+					renderInfo.reset();
+					nbt.setBoolean("isOpen", isOpen);
+				}
+			}
+		} else if (isOpen) {
+			renderInfo.update();
+			showEffect(elf);
+		}
+	}
+
 	@Override
+	@SideOnly(Side.CLIENT)
 	public ResourceLocation getTexture(EntityElfBase elf) {
 		return RenderEntityElf.TEXTURE_MASTER;
 	}

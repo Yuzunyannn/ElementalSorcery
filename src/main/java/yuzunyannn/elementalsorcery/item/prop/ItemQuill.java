@@ -190,6 +190,18 @@ public class ItemQuill extends Item {
 		return false;
 	}
 
+	public static void playFireExtinguish(World world, BlockPos pos) {
+		int l = pos.getX();
+		int i = pos.getY();
+		int j = pos.getZ();
+		world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F,
+				2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
+		for (int k = 0; k < 8; ++k) {
+			world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double) l + Math.random(), (double) i + Math.random(),
+					(double) j + Math.random(), 0.0D, 0.0D, 0.0D);
+		}
+	}
+
 	public boolean onPutBlock(EntityPlayer player, IBlockState state) {
 		World world = player.world;
 		RayTraceResult ray = WorldHelper.getLookAtBlock(world, player, 8);
@@ -200,15 +212,7 @@ public class ItemQuill extends Item {
 		if (!flag && !world.getBlockState(pos).getBlock().isReplaceable(world, pos)) return false;
 		// 蒸发
 		if (world.provider.doesWaterVaporize() && state == Blocks.FLOWING_WATER.getDefaultState()) {
-			int l = pos.getX();
-			int i = pos.getY();
-			int j = pos.getZ();
-			world.playSound(player, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F,
-					2.6F + (world.rand.nextFloat() - world.rand.nextFloat()) * 0.8F);
-			for (int k = 0; k < 8; ++k) {
-				world.spawnParticle(EnumParticleTypes.SMOKE_LARGE, (double) l + Math.random(),
-						(double) i + Math.random(), (double) j + Math.random(), 0.0D, 0.0D, 0.0D);
-			}
+			playFireExtinguish(world, pos);
 			return true;
 		}
 		// 放置
@@ -281,7 +285,7 @@ public class ItemQuill extends Item {
 				}
 			}
 		}
-		
+
 		NBTTagCompound nbt = FireworkEffect.fastNBT(10, level, level / 8.0f, new int[] { 0x0138fb, 0x1f89fe, 0x0f60fc },
 				new int[] { 0xc9dbff });
 		Effects.spawnEffect(world, Effects.FIREWROK, pos, nbt);

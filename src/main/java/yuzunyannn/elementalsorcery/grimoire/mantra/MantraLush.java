@@ -42,24 +42,23 @@ public class MantraLush extends MantraCommon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		int tick = caster.iWantKnowCastTick();
-		if (tick < 20) return;
+		if (beforeGeneralStartTime(caster)) return;
 		super.onSpellingEffect(world, data, caster);
 	}
 
 	@Override
-	public void onCollectElement(World world, IMantraData mData, ICaster caster, int speedTick) {
+	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return;
-		MantraDataCommon data = (MantraDataCommon) mData;
-		CollectResult cr = data.tryCollect(caster, ESInit.ELEMENTS.WOOD, 1, 50, 200);
-		data.setProgress(cr.getElementStack().getCount(), 200);
+		MantraDataCommon mData = (MantraDataCommon) data;
+		CollectResult cr = mData.tryCollect(caster, ESInit.ELEMENTS.WOOD, 1, 50, 200);
+		mData.setProgress(cr.getStackCount(), 200);
 	}
 
 	@Override
 	public boolean afterSpelling(World world, IMantraData mData, ICaster caster) {
 		MantraDataCommon data = (MantraDataCommon) mData;
-		ElementStack wood = data.getElement(ESInit.ELEMENTS.WOOD);
+		ElementStack wood = data.get(ESInit.ELEMENTS.WOOD);
 		if (wood.isEmpty()) return false;
 		int tick = caster.iWantKnowCastTick();
 		if (tick % 3 != 0) return true;

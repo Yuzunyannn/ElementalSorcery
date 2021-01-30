@@ -24,10 +24,14 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
+import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.element.Element;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.edifice.BuilderWithInfo;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
@@ -97,8 +101,13 @@ public class CommandES extends CommandBase {
 			return;
 		}
 		case "mantra": {
-			if (args.length < 3) throw new CommandException("commands.es.mantra.usage");
+			if (args.length < 4) throw new CommandException("commands.es.mantra.usage");
 			this.cmdMantra(Arrays.copyOfRange(args, 1, args.length), server, sender);
+			return;
+		}
+		case "element": {
+			if (args.length < 4) throw new CommandException("commands.es.element.usage");
+			this.cmdElement(Arrays.copyOfRange(args, 1, args.length), server, sender);
 			return;
 		}
 		case "debug":
@@ -118,7 +127,7 @@ public class CommandES extends CommandBase {
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			@Nullable BlockPos targetPos) {
 		if (args.length == 1) {
-			String[] names = { "build", "page", "debug", "buildFloor", "quest", "mantra" };
+			String[] names = { "build", "page", "debug", "buildFloor", "quest", "mantra", "element" };
 			return CommandBase.getListOfStringsMatchingLastWord(args, names);
 		} else if (args.length >= 2) {
 			switch (args[0]) {
@@ -145,9 +154,15 @@ public class CommandES extends CommandBase {
 				return getListOfStringsMatchingLastWord(args, "clear");
 			}
 			case "mantra": {
-				if (args.length > 3) return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
-				if (args.length > 2) return getListOfStringsMatchingLastWord(args, Mantra.REGISTRY.getKeys());
+				if (args.length > 3) return getListOfStringsMatchingLastWord(args, Mantra.REGISTRY.getKeys());
+				if (args.length > 2) return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
 				return getListOfStringsMatchingLastWord(args, "give", "remove", "add");
+			}
+			case "element": {
+				if (args.length > 4) return CommandBase.getListOfStringsMatchingLastWord(args);
+				if (args.length > 3) return getListOfStringsMatchingLastWord(args, Element.REGISTRY.getKeys());
+				if (args.length > 2) return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+				return getListOfStringsMatchingLastWord(args, "give", "extract", "insert", "add");
 			}
 			case "debug": {
 				return getListOfStringsMatchingLastWord(args, CommandESDebug.autoTips);
@@ -161,10 +176,10 @@ public class CommandES extends CommandBase {
 	/** 咒文 */
 	private void cmdMantra(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
 		EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity();
-		if (args.length > 2) player = getPlayer(server, sender, args[1]);
-		ResourceLocation id = TextHelper.toESResourceLocation(args[1]);
+		player = getPlayer(server, sender, args[1]);
+		ResourceLocation id = TextHelper.toESResourceLocation(args[2]);
 		Mantra mantra = Mantra.REGISTRY.getValue(id);
-		if (mantra == null) throw new CommandException("commands.es.mantra.notFound", id.toString());
+		if (mantra == null) throw new CommandException("commands.es.notFound", id.toString());
 
 		ItemStack grimoireStack = player.getHeldItem(EnumHand.MAIN_HAND);
 		Grimoire grimoire = grimoireStack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
@@ -196,6 +211,75 @@ public class CommandES extends CommandBase {
 			return;
 		default:
 			throw new CommandException("commands.es.mantra.usage");
+		}
+
+	}
+
+	private IElementInventory getElementInventory(ItemStack stack) {
+		IElementInventory inv = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+		if (inv == null) inv = new ElementInventory();
+		if (inv.hasState(stack)) inv.loadState(stack);
+		return inv;
+	}
+
+	/** 元素 */
+	private void cmdElement(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
+		EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity();
+		player = getPlayer(server, sender, args[1]);
+		ResourceLocation id = TextHelper.toESResourceLocation(args[2]);
+		Element element = Element.REGISTRY.getValue(id);
+		if (element == null) throw new CommandException("commands.es.notFound", id.toString());
+
+		int count = 1;
+		int power = 100;
+		if (args.length > 3) count = Integer.parseInt(args[3]);
+		if (args.length > 4) power = Integer.parseInt(args[4]);
+
+		ElementStack estack = new ElementStack(element, count, power);
+		ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
+
+		switch (args[0]) {
+		case "give": {
+			ItemStack elementCrystal = new ItemStack(ESInit.ITEMS.ELEMENT_CRYSTAL);
+			IElementInventory inv = elementCrystal.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+			inv.insertElement(estack, false);
+			inv.saveState(elementCrystal);
+			ItemHelper.addItemStackToPlayer(player, elementCrystal);
+			notifyCommandListener(sender, this, "commands.es.element.give", player.getName(),
+					estack.getTextComponent());
+		}
+			return;
+		case "insert": {
+			if (stack.isEmpty()) throw new CommandException("commands.es.element.notFound");
+			IElementInventory inv = this.getElementInventory(stack);
+			inv.insertElement(estack, false);
+			inv.saveState(stack);
+			return;
+		}
+
+		case "extract": {
+			if (stack.isEmpty()) throw new CommandException("commands.es.element.notFound");
+			IElementInventory inv = this.getElementInventory(stack);
+			inv.extractElement(estack, false);
+			inv.saveState(stack);
+			return;
+		}
+
+		case "add": {
+			if (stack.isEmpty()) throw new CommandException("commands.es.element.notFound");
+			IElementInventory inv = this.getElementInventory(stack);
+			if (!inv.insertElement(estack, false)) {
+				ElementStack[] cache = new ElementStack[inv.getSlots()];
+				for (int i = 0; i < cache.length; i++) cache[i] = inv.getStackInSlot(i);
+				inv.setSlots(cache.length + 1);
+				for (int i = 0; i < cache.length; i++) inv.setStackInSlot(i, cache[i]);
+				inv.setStackInSlot(cache.length, estack);
+			}
+			inv.saveState(stack);
+			return;
+		}
+		default:
+			throw new CommandException("commands.es.element.usage");
 		}
 
 	}

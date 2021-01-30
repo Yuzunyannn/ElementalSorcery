@@ -131,12 +131,16 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 
 	@Override
 	protected void writeEntityToNBT(NBTTagCompound compound) {
+		this.writeEntityToNBT(compound, false);
+	}
+
+	protected void writeEntityToNBT(NBTTagCompound compound, boolean isSend) {
 		compound.setUniqueId("user", userUUID);
 		compound.setInteger("tick", tick);
 		compound.setByte("state", state);
 		compound.setString("mantra", mantra.getRegistryName().toString());
 		if (mantraData != null) {
-			NBTTagCompound nbt = mantraData.serializeNBT();
+			NBTTagCompound nbt = isSend ? mantraData.serializeNBTForSend() : mantraData.serializeNBT();
 			if (nbt != null && !nbt.hasNoTags()) compound.setTag("mData", nbt);
 		}
 	}
@@ -144,7 +148,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	@Override
 	public void writeSpawnData(ByteBuf buffer) {
 		NBTTagCompound nbt = new NBTTagCompound();
-		this.writeEntityToNBT(nbt);
+		this.writeEntityToNBT(nbt, true);
 		if (metaData != null) nbt.setTag("oData", metaData);
 		if (grimoire != null) nbt.setTag("gData", grimoire.serializeNBT());
 		ByteBufUtils.writeTag(buffer, nbt);

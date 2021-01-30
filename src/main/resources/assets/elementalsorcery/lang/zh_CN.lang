@@ -190,6 +190,8 @@ mantra.lightningArea.name=雷鸣区域
 mantra.lightningArea.describe=气元素与火元素交织，唤起一块区域，进入的生物会受到雷劈。
 mantra.slowFall.name=缓降
 mantra.slowFall.describe=借助气元素的力量，让你得以在空中缓慢滑行
+mantra.footbridge.name=天桥
+mantra.footbridge.describe=借助土元素的力量，抬起地上的方块，在前方架起来一座桥
 
 key.es.func=功能键
 
@@ -232,11 +234,13 @@ commands.es.page.usage=/es page <页面的id名称>
 commands.es.page.fail=不存在的的id名
 commands.es.quest.usage=/es quest <clear> <玩家>
 commands.es.quest.clear=已清空'%s'所有正在进行的任务
-commands.es.mantra.usage=/es mantra <give|add|remove> <咒文> <玩家>
-commands.es.mantra.notFound=找不到咒文%s
+commands.es.mantra.usage=/es mantra <give|add|remove> <玩家> <咒文>
 commands.es.mantra.give=给予了%s咒文%s
 commands.es.mantra.remove=为%s的魔典移除了咒文%s
 commands.es.mantra.add=为%s的魔典添加了咒文%s
+commands.es.element.usage=/es element <give|insert|extract|add> <玩家> <元素>
+commands.es.element.give=给予了%s元素水晶，包含%s
+commands.es.element.notFound=手上必须拿着物品
 
 arc.infusion.name=注魔祭坛
 arc.absorbBox.name=元素吸收祭坛

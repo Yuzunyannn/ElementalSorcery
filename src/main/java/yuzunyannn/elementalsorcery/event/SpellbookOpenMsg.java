@@ -32,13 +32,8 @@ public class SpellbookOpenMsg implements ITickTask {
 	}
 
 	static public void addSpellbookOpen(EntityLivingBase entity, ItemStack stack) {
-		if (!stack.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null)) return;
-		if (!(stack.getItem() instanceof ItemSpellbook)) return;
 		Spellbook book = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
-		if (book == null) {
-			ElementalSorcery.logger.warn("客户端传入的物品不包含Spellbook但检测到了null！" + stack.toString());
-			return;
-		}
+		if (book == null) return;
 		SpellbookOpenMsg msg = new SpellbookOpenMsg();
 		if (Minecraft.getMinecraft().player != entity) {
 			book.who = entity;

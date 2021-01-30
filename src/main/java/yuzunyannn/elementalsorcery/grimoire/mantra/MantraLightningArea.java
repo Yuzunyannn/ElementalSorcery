@@ -28,19 +28,20 @@ public class MantraLightningArea extends MantraSquareAreaAdv {
 
 	@Override
 	public void init(World world, SquareData data, ICaster caster, BlockPos pos) {
-		ElementStack air = data.getElement(ESInit.ELEMENTS.AIR);
+		ElementStack air = data.get(ESInit.ELEMENTS.AIR);
 		data.setSize(Math.min(air.getPower() / 80, 12) + 6);
 	}
 
 	@Override
 	public boolean tick(World world, SquareData data, ICaster caster, BlockPos originPos) {
+		if (world.isRemote) return true;
 		int tick = caster.iWantKnowCastTick();
-		ElementStack air = data.getElement(ESInit.ELEMENTS.AIR);
+		ElementStack air = data.get(ESInit.ELEMENTS.AIR);
 		if (air.isEmpty()) return false;
 		if (tick % 20 != 0) return true;
 		Random rand = world.rand;
 		air.shrink(8);
-		ElementStack fire = data.getElement(ESInit.ELEMENTS.FIRE);
+		ElementStack fire = data.get(ESInit.ELEMENTS.FIRE);
 		int maxCount = MathHelper.ceil(fire.getCount() / 16);
 		final float size = data.getSize() / 2;
 		AxisAlignedBB aabb = new AxisAlignedBB(originPos.getX() - size, originPos.getY(), originPos.getZ() - size,
@@ -59,7 +60,7 @@ public class MantraLightningArea extends MantraSquareAreaAdv {
 						false);
 				world.addWeatherEffect(lightning);
 				if (fire.getPower() > 200) {
-					float addDamage = (fire.getPower() - 200) / 125;
+					float addDamage = MathHelper.sqrt((fire.getPower() - 200) / 125);
 					living.attackEntityFrom(DamageSource.LIGHTNING_BOLT, addDamage);
 				}
 			}

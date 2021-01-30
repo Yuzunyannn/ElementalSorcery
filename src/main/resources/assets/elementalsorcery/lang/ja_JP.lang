@@ -190,6 +190,8 @@ mantra.lightningArea.name=雷鳴の地
 mantra.lightningArea.describe=気元素と火元素が入り交じって、一つの地域を喚起して、入る生物は雷に打たれます。
 mantra.slowFall.name=緩降
 mantra.slowFall.describe=気元素て空中でゆっくり滑走きるようにします。
+mantra.footbridge.name=歩道橋
+mantra.footbridge.describe=元素で地面の土を持ち上げて、前の方に橋をかけます。
 
 key.es.func=機能キー
 
@@ -232,11 +234,13 @@ commands.es.page.usage=/es page <ページのid>
 commands.es.page.fail=存在しないページのid
 commands.es.quest.usage=/es quest <clear> <プレイヤー>
 commands.es.quest.clear='%s'の進行中の依頼をすべてクリアされました。
-commands.es.mantra.usage=/es mantra <give|add|remove> <呪文> <プレイヤー>
-commands.es.mantra.notFound=呪文%sを見つからない
+commands.es.mantra.usage=/es mantra <give|add|remove> <プレイヤー> <呪文>
 commands.es.mantra.give=%sに呪文%sを与えた
 commands.es.mantra.remove=%sの魔典に呪文%sを除去しました
 commands.es.mantra.add=%sの魔典に呪文%sを加えました
+commands.es.element.usage=/es element <give|insert|extract|add> <プレイヤー> <元素>
+commands.es.element.give=%sに%sを含む元素の水晶を与えた
+commands.es.element.notFound=手に物を持たなければなりません。
 
 arc.infusion.name=エンチャント祭壇
 arc.absorbBox.name=元素を吸収する祭壇

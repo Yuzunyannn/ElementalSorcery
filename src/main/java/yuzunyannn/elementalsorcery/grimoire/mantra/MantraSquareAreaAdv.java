@@ -45,14 +45,14 @@ public abstract class MantraSquareAreaAdv extends MantraSquareArea {
 		if (speedTick % this.getAccumulatePreTick() != 0) return;
 		boolean firstInfo = true;
 		for (CollectInfo info : collectList) {
-			ElementStack estack = mData.getElement(info.element.getElement());
+			ElementStack estack = mData.get(info.element.getElement());
 			if (info.maxNeed > 0 && estack.getCount() >= info.maxNeed) {
 				// 第一个元素是主元素，收集到指标后就不再进行收集了
 				if (firstInfo) break;
 				else continue;
 			}
 			ElementStack stack = caster.iWantSomeElement(info.element, true);
-			mData.addElement(stack);
+			mData.add(stack);
 			if (firstInfo) {
 				mData.setProgress(estack.getCount() / (float) info.maxNeed);
 				// 第一个元素下，如果不存在，不进行其他元素的收获
@@ -65,7 +65,7 @@ public abstract class MantraSquareAreaAdv extends MantraSquareArea {
 	@Override
 	public void onAfterSpellingInit(World world, SquareData mData, ICaster caster, BlockPos pos) {
 		for (CollectInfo info : collectList) {
-			ElementStack estack = mData.getElement(info.element.getElement());
+			ElementStack estack = mData.get(info.element.getElement());
 			if (estack.getCount() < info.minNeed) return;
 		}
 		this.init(world, (SquareData) mData, caster, pos);

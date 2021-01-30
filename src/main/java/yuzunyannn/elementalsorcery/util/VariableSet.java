@@ -1,8 +1,10 @@
 package yuzunyannn.elementalsorcery.util;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.BiFunction;
 
 import javax.annotation.Nullable;
 
@@ -11,6 +13,7 @@ import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagIntArray;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagShort;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -40,6 +43,11 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 			if (obj instanceof Variable) return this.name.equals(((Variable) obj).name);
 			return false;
 		}
+
+		@Override
+		public String toString() {
+			return name;
+		}
 	}
 
 	public static interface IVariableType<T> {
@@ -54,6 +62,81 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 			} catch (Exception e) {}
 			return this.serializable(this.newInstance(null));
 		}
+	}
+
+	private NBTTagCompound nbt;
+	private Map<Variable, Object> map = new HashMap<>();
+
+	public <T> void set(Variable<T> var, T obj) {
+		if (obj == null) return;
+		map.put(var, obj);
+	}
+
+	public <T> T get(Variable<T> var) {
+		String key = var.name;
+		Object obj = map.get(var);
+		if (obj != null) {
+			try {
+				return (T) obj;
+			} catch (Exception e) {}
+		}
+		NBTBase base = null;
+		if (nbt != null) {
+			base = nbt.getTag(key);
+			nbt.removeTag(key);
+			if (nbt.hasNoTags()) nbt = null;
+		}
+		map.put(var, obj = var.type.newInstance(base));
+		return (T) obj;
+	}
+
+	public boolean has(Variable<?> var) {
+		if (map.containsKey(var)) return true;
+		return nbt == null ? false : nbt.hasKey(var.name);
+	}
+
+	public void remove(Variable<?> var) {
+		map.remove(var);
+		if (nbt != null) {
+			nbt.removeTag(var.name);
+			if (nbt.hasNoTags()) nbt = null;
+		}
+	}
+
+	public boolean isEmpty() {
+		if (map.isEmpty() && (nbt == null || nbt.hasNoTags())) return true;
+		return false;
+	}
+
+	@Override
+	public NBTTagCompound serializeNBT() {
+		return serializeNBT((key, obj) -> true);
+	}
+
+	public NBTTagCompound serializeNBT(BiFunction<String, Object, Boolean> check) {
+		NBTTagCompound nbt = new NBTTagCompound();
+		for (Entry<Variable, Object> entry : map.entrySet()) {
+			Variable<?> var = entry.getKey();
+			Object obj = entry.getValue();
+			if (check.apply(var.name, obj)) {
+				NBTBase base = var.type.serializableObject(obj);
+				if (base != null) nbt.setTag(var.name, base);
+			}
+		}
+		if (this.nbt == null) return nbt;
+		for (String key : this.nbt.getKeySet()) {
+			if (!nbt.hasKey(key)) {
+				NBTBase base = this.nbt.getTag(key);
+				if (check.apply(key, base)) nbt.setTag(key, base);
+			}
+		}
+		return nbt;
+	}
+
+	@Override
+	public void deserializeNBT(NBTTagCompound nbt) {
+		this.map.clear();
+		this.nbt = nbt;
 	}
 
 	public final static IVariableType<Integer> INT = new IVariableType<Integer>() {
@@ -121,58 +204,31 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 
 	};
 
-	private NBTTagCompound nbt;
-	private Map<Variable, Object> map = new HashMap<>();
+	public final static IVariableType<LinkedList<BlockPos>> BLOCK_POS_LIST_LINKED = new IVariableType<LinkedList<BlockPos>>() {
 
-	public <T> void set(Variable<T> var, T obj) {
-		if (obj == null) return;
-		map.put(var, obj);
-	}
-
-	public <T> T get(Variable<T> var) {
-		String key = var.name;
-		Object obj = map.get(var);
-		if (obj != null) {
-			try {
-				return (T) obj;
-			} catch (Exception e) {}
+		@Override
+		public LinkedList<BlockPos> newInstance(NBTBase base) {
+			if (base.getId() == NBTTag.TAG_LIST) {
+				NBTTagList array = (NBTTagList) base;
+				LinkedList<BlockPos> list = new LinkedList<BlockPos>();
+				for (NBTBase b : array) {
+					if (b.getId() == NBTTag.TAG_INT_ARRAY) {
+						int[] ints = ((NBTTagIntArray) b).getIntArray();
+						if (ints.length >= 3) list.add(new BlockPos(ints[0], ints[1], ints[2]));
+					}
+				}
+				return list;
+			}
+			return new LinkedList<BlockPos>();
 		}
-		NBTBase base = null;
-		if (nbt != null) {
-			base = nbt.getTag(key);
-			nbt.removeTag(key);
-			if (nbt.hasNoTags()) nbt = null;
+
+		@Override
+		public NBTBase serializable(LinkedList<BlockPos> obj) {
+			NBTTagList array = new NBTTagList();
+			for (BlockPos pos : obj)
+				array.appendTag(new NBTTagIntArray(new int[] { pos.getX(), pos.getY(), pos.getZ() }));
+			return array;
 		}
-		map.put(var, obj = var.type.newInstance(base));
-		return (T) obj;
-	}
 
-	public <T> boolean has(Variable<T> var) {
-		if (map.containsKey(var)) return true;
-		return nbt == null ? false : nbt.hasKey(var.name);
-	}
-
-	public boolean isEmpty() {
-		if (map.isEmpty() && (nbt == null || nbt.hasNoTags())) return true;
-		return false;
-	}
-
-	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound nbt = new NBTTagCompound();
-		for (Entry<Variable, Object> entry : map.entrySet()) {
-			Variable<?> var = entry.getKey();
-			NBTBase base = var.type.serializableObject(entry.getValue());
-			if (base != null) nbt.setTag(var.name, base);
-		}
-		if (this.nbt == null) return nbt;
-		for (String key : this.nbt.getKeySet()) if (!nbt.hasKey(key)) nbt.setTag(key, this.nbt.getTag(key));
-		return nbt;
-	}
-
-	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {
-		this.map.clear();
-		this.nbt = nbt;
-	}
+	};
 }

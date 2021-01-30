@@ -72,6 +72,11 @@ public class MantraSummon extends MantraCommon {
 			if (summon != null) nbt.setTag("sData", summon.serializeNBT());
 			return nbt;
 		}
+		
+		@Override
+		public NBTTagCompound serializeNBTForSend() {
+			return this.serializeNBT();
+		}
 
 		@Override
 		public void deserializeNBT(NBTTagCompound nbt) {

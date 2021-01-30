@@ -4,6 +4,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.ESObjects;
@@ -233,6 +236,13 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	/** 获取元素名称 */
 	public String getElementUnlocalizedName() {
 		return this.getElement().getUnlocalizedName(this) + ".name";
+	}
+
+	public ITextComponent getTextComponent() {
+		ITextComponent itextcomponent = new TextComponentString("[");
+		itextcomponent.appendSibling(new TextComponentTranslation(this.element.getUnlocalizedName(this) + ".name"));
+		itextcomponent.appendSibling(new TextComponentString("]"));
+		return itextcomponent;
 	}
 
 	@Override

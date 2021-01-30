@@ -26,6 +26,8 @@ public class EffectMagicSquare extends EffectCondition {
 
 	public float size = 8;
 
+	public Vec3d[] effectColors = null;
+
 	public EffectMagicSquare(World world, Entity binder, float size, int color) {
 		super(world);
 		this.lifeTime = 1;
@@ -94,6 +96,13 @@ public class EffectMagicSquare extends EffectCondition {
 
 			int times = (int) (size / 16 + 1);
 			for (int i = 0; i < times; i++) {
+				float r = this.r, g = this.g, b = this.b;
+				if (effectColors != null && effectColors.length > 0) {
+					Vec3d c = effectColors[rand.nextInt(effectColors.length)];
+					r = (float) c.x;
+					g = (float) c.y;
+					b = (float) c.z;
+				}
 				float hSize = size / 2;
 				Vec3d pos = this.getPositionVector().addVector(rand.nextDouble() * size - hSize, 0.1,
 						rand.nextDouble() * size - hSize);

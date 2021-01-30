@@ -2,12 +2,9 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import java.util.Map;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -17,9 +14,6 @@ import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleIcon;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
 
 public abstract class MantraSquareArea extends MantraCommon {
@@ -101,11 +95,9 @@ public abstract class MantraSquareArea extends MantraCommon {
 			data.delay = data.delay - 1;
 			return true;
 		}
-		if (world.isRemote) {
-			this.addAfterEffect(data, caster, data.size);
-			return true;
-		}
+		if (world.isRemote) this.addAfterEffect(data, caster, data.size);
 		if (!this.onAfterSpellingTick(world, data, caster)) {
+			if (world.isRemote) return true;
 			if (data.delay <= 0) return false;
 			data.delay = data.delay - 1;
 			return true;
@@ -115,30 +107,8 @@ public abstract class MantraSquareArea extends MantraCommon {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void onSpellingEffect(World world, IMantraData mData, ICaster caster) {
-		super.onSpellingEffect(world, mData, caster);
-		if (!caster.hasEffectFlags(MantraEffectFlags.INDICATOR)) return;
-		SquareData data = (SquareData) mData;
-		if (!data.isMarkContinue()) return;
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		if (caster.iWantCaster() == Minecraft.getMinecraft().player) if (!dataEffect.hasMarkEffect(1))
-			dataEffect.addEffect(caster, new EffectLookAt(world, caster, this.getColor(mData)), 1);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public float getProgressRate(World world, IMantraData mData, ICaster caster) {
-		int tick = caster.iWantKnowCastTick();
-		if (tick < 20) return -1;
-		return super.getProgressRate(world, mData, caster);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity, IMantraData mData) {
-		EffectMagicCircle emc = new EffectMagicCircleIcon(world, entity, this.getMagicCircleIcon());
-		emc.setColor(this.getColor(mData));
-		return emc;
+	public boolean hasEffectFlags(World world, IMantraData data, ICaster caster, MantraEffectFlags flags) {
+		return caster.hasEffectFlags(flags);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -159,10 +129,5 @@ public abstract class MantraSquareArea extends MantraCommon {
 	public abstract void onAfterSpellingInit(World world, SquareData mData, ICaster caster, BlockPos pos);
 
 	public abstract boolean onAfterSpellingTick(World world, SquareData mData, ICaster caster);
-
-	@SideOnly(Side.CLIENT)
-	public ResourceLocation getMagicCircleIcon() {
-		return this.getIconResource();
-	}
 
 }

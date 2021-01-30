@@ -45,16 +45,17 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 
 	@Override
 	public void init(World world, SquareData data, ICaster caster, BlockPos pos) {
-		ElementStack earth = data.getElement(ESInit.ELEMENTS.EARTH);
+		ElementStack earth = data.get(ESInit.ELEMENTS.EARTH);
 		data.setSize(Math.min(earth.getPower() / 200, 4) * 2 + 8);
 		data.set(LAYER, (short) (pos.getY() - 1));
 	}
 
 	@Override
 	public boolean tick(World world, SquareData data, ICaster caster, BlockPos originPos) {
+		if (world.isRemote) return true;
 		int tick = caster.iWantKnowCastTick();
-		ElementStack earth = data.getElement(ESInit.ELEMENTS.EARTH);
-		ElementStack metal = data.getElement(ESInit.ELEMENTS.METAL);
+		ElementStack earth = data.get(ESInit.ELEMENTS.EARTH);
+		ElementStack metal = data.get(ESInit.ELEMENTS.METAL);
 		if (earth.isEmpty() || metal.isEmpty()) return false;
 		if (tick % 20 != 0) return true;
 		short layer = data.get(LAYER);

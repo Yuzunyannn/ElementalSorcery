@@ -183,13 +183,15 @@ mantra.lush.describe=Use The Wood Element to Grow Everythings Around.
 mantra.blockCrash.name=Dirt Impact
 mantra.blockCrash.describe=With The Earth Element, there are a Dirt from the ground, and the enemy impact into the sky.
 mantra.miningArea.name=Unthinkable miner
-mantra.miningArea.describe=Earth and Mteal resonate with The Mantra, allowing Ores fly from the ground.
+mantra.miningArea.describe=Earth and Metal resonate with The Mantra, allowing Ores fly from the ground.
 mantra.summon.name=Summon Rite
 mantra.summon.describe=With magic, The Summon Rite can be carried out at any time
 mantra.lightningArea.name=Lightning Area
 mantra.lightningArea.describe=With The Air Element and The Fire Element, a Area whoever entered will be struck by lightning is emerge.
 mantra.slowFall.name=Slow Fall
 mantra.slowFall.describe=With the Air Element, you can glide slowly.
+mantra.footbridge.name=Footbridge
+mantra.footbridge.describe=With the Earth Element, raise blocks on the ground and build a bridge in front.
 
 key.es.func=Function key
 
@@ -232,11 +234,13 @@ commands.es.page.usage=/es page <page's id>
 commands.es.page.fail=Page's id are not exist
 commands.es.quest.usage=/es quest <clear> <player>
 commands.es.quest.clear=All Quest in progress for '%s' have been cleared.
-commands.es.mantra.usage=/es mantra <give|add|remove> <mantra> <player>
-commands.es.mantra.notFound=Can't find mantra %s.
+commands.es.mantra.usage=/es mantra <give|add|remove> <player> <mantra>
 commands.es.mantra.give=Give %s Mantra of %s
 commands.es.mantra.remove=Remove Mantra of %s for %s's Grimoire
 commands.es.mantra.add=Add Mantra of %s for %s's Grimoire
+commands.es.element.usage=/es element <give|insert|extract|add> <player> <element>
+commands.es.element.give=Give %s Element Crystal of %s
+commands.es.element.notFound=You have to have something in your hand
 
 arc.infusion.name= Enchanting Altar
 arc.absorbBox.name=Element Absorb Altar

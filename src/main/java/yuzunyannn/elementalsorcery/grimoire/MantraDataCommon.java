@@ -80,10 +80,10 @@ public class MantraDataCommon implements IMantraData {
 	@SideOnly(Side.CLIENT)
 	public void showProgress(float pro, int color, World world, ICaster caster) {
 		if (caster.iWantCaster() != Minecraft.getMinecraft().player) return;
-		if (!this.hasMarkEffect(10)) {
+		if (!this.hasMarkEffect(2)) {
 			effectProgress = new EffectScreenProgress(world);
 			effectProgress.setColor(color);
-			this.addEffect(caster, effectProgress, 10, false);
+			this.addEffect(caster, effectProgress, 2, false);
 		} else {
 			if (effectProgress == null) return;
 			effectProgress.setProgress(pro);
@@ -140,14 +140,14 @@ public class MantraDataCommon implements IMantraData {
 	}
 	// ---元素收集部分----
 
-	public void addElement(ElementStack estack) {
+	public void add(ElementStack estack) {
 		if (estack.isEmpty()) return;
-		ElementStack origin = this.getElement(estack.getElement());
+		ElementStack origin = this.get(estack.getElement());
 		if (origin.isEmpty()) origin.become(estack);
 		else origin.grow(estack);
 	}
 
-	public ElementStack getElement(Element element) {
+	public ElementStack get(Element element) {
 		if (collectMap == null) collectMap = new HashMap<>();
 		ElementStack estack = collectMap.get(element);
 		if (estack == null) collectMap.put(element, estack = ElementStack.EMPTY.copy());
@@ -173,10 +173,14 @@ public class MantraDataCommon implements IMantraData {
 		public ElementStack getElementStackGetted() {
 			return get;
 		}
+
+		public int getStackCount() {
+			return eStack.getCount();
+		}
 	}
 
 	public CollectResult tryCollect(ICaster caster, Element element, int point, int power, int max) {
-		ElementStack origin = this.getElement(element);
+		ElementStack origin = this.get(element);
 		if (origin.getCount() >= max) return new CollectResult(origin, ElementStack.EMPTY, true);
 		ElementStack need = new ElementStack(element, point, power);
 		ElementStack get = caster.iWantSomeElement(need, true);
@@ -195,15 +199,34 @@ public class MantraDataCommon implements IMantraData {
 		return extra.get(var);
 	}
 
-	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound nbt = extra.serializeNBT();
+	public boolean has(VariableSet.Variable<?> var) {
+		return extra.has(var);
+	}
+
+	public void remove(VariableSet.Variable<?> var) {
+		extra.remove(var);
+	}
+
+	private void writeCollectMapToNBT(NBTTagCompound nbt) {
 		if (collectMap != null && !collectMap.isEmpty()) {
 			NBTTagList list = new NBTTagList();
 			for (ElementStack estack : collectMap.values())
 				if (!estack.isEmpty()) list.appendTag(estack.serializeNBT());
 			nbt.setTag("$collect", list);
 		}
+	}
+
+	@Override
+	public NBTTagCompound serializeNBT() {
+		NBTTagCompound nbt = extra.serializeNBT();
+		this.writeCollectMapToNBT(nbt);
+		return nbt;
+	}
+
+	@Override
+	public NBTTagCompound serializeNBTForSend() {
+		NBTTagCompound nbt = extra.serializeNBT((str, obj) -> !str.startsWith("@"));
+		this.writeCollectMapToNBT(nbt);
 		return nbt;
 	}
 
@@ -215,7 +238,7 @@ public class MantraDataCommon implements IMantraData {
 		if (!list.hasNoTags()) {
 			if (collectMap == null) collectMap = new HashMap<>();
 			collectMap.clear();
-			for (NBTBase base : list) this.addElement(new ElementStack((NBTTagCompound) base));
+			for (NBTBase base : list) this.add(new ElementStack((NBTTagCompound) base));
 		}
 	}
 

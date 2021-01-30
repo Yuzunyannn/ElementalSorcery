@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +16,7 @@ import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleIcon;
 import yuzunyannn.elementalsorcery.util.VariableSet;
@@ -25,6 +27,7 @@ public class MantraCommon extends Mantra {
 	public static final Variable<BlockPos> POS = new Variable<>("pos", VariableSet.BLOCK_POS);
 	public static final Variable<Short> LAYER = new Variable<>("layer", VariableSet.SHORT);
 	public static final Variable<Integer> SIZE = new Variable<>("size", VariableSet.INT);
+	public static final Variable<Integer> POWER = new Variable<>("power", VariableSet.INT);
 
 	protected int color = 0;
 	protected ResourceLocation icon;
@@ -85,11 +88,16 @@ public class MantraCommon extends Mantra {
 			MantraDataCommon dataEffect = (MantraDataCommon) data;
 			dataEffect.showProgress(r, this.getColor(data), world, caster);
 		}
+		if (this.hasEffectFlags(world, data, caster, MantraEffectFlags.INDICATOR)) out: {
+			MantraDataCommon dataEffect = (MantraDataCommon) data;
+			if (caster.iWantCaster() != Minecraft.getMinecraft().player || dataEffect.hasMarkEffect(1)) break out;
+			dataEffect.addEffect(caster, new EffectLookAt(world, caster, this.getColor(dataEffect)), 1);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	public boolean hasEffectFlags(World world, IMantraData data, ICaster caster, MantraEffectFlags flags) {
-		return caster.hasEffectFlags(flags);
+		return flags != MantraEffectFlags.INDICATOR && caster.hasEffectFlags(flags);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -100,7 +108,7 @@ public class MantraCommon extends Mantra {
 
 	@SideOnly(Side.CLIENT)
 	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity, IMantraData mData) {
-		EffectMagicCircle emc = new EffectMagicCircleIcon(world, entity, this.getIconResource());
+		EffectMagicCircle emc = new EffectMagicCircleIcon(world, entity, this.getMagicCircleIcon());
 		emc.setColor(this.getColor(mData));
 		return emc;
 	}
@@ -109,6 +117,11 @@ public class MantraCommon extends Mantra {
 	@SideOnly(Side.CLIENT)
 	public ResourceLocation getIconResource() {
 		return icon;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public ResourceLocation getMagicCircleIcon() {
+		return this.getIconResource();
 	}
 
 	public void setIcon(ResourceLocation icon) {
@@ -121,6 +134,10 @@ public class MantraCommon extends Mantra {
 
 	public ItemAncientPaper.EnumType getMantraSubItemType() {
 		return ItemAncientPaper.EnumType.NORMAL;
+	}
+
+	public static boolean beforeGeneralStartTime(ICaster caster) {
+		return caster.iWantKnowCastTick() < 20;
 	}
 
 }
