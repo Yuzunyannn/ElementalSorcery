@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
+import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class EntityMagicMelting extends Entity implements IEntityAdditionalSpawnData {

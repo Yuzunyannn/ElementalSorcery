@@ -27,7 +27,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementItem;
+import yuzunyannn.elementalsorcery.crafting.element.ToElementInfoStatic;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
 import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
@@ -211,7 +213,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 	}
 
 	@Override
-	public ElementStack[] toElement(ItemStack stack) {
+	public IToElementInfo toElement(ItemStack stack) {
 		ElementStack[] estacks = new ElementStack[2];
 		estacks[0] = new ElementStack(ESInit.ELEMENTS.WOOD, 8, 20);
 		estacks[1] = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 4, 30);
@@ -234,12 +236,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 			estacks[1].grow(knowledge);
 		}
 
-		return estacks;
-	}
-
-	@Override
-	public int complex(ItemStack stack) {
-		return 8;
+		return ToElementInfoStatic.create(8, estacks);
 	}
 
 }

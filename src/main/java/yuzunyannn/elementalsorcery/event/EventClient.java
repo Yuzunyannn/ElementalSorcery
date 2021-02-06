@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -174,11 +175,11 @@ public class EventClient {
 		if (!ElementalSorcery.config.SHOW_ELEMENT_TOOLTIP) return;
 		EntityPlayer player = event.getEntityPlayer();
 		if (player == null || !player.isCreative()) return;
-		ElementStack[] estacks = ElementMap.instance.toElement(stack);
+		IToElementInfo teInfo = ElementMap.instance.toElement(stack);
+		ElementStack[] estacks = teInfo == null ? null : teInfo.element();
 		if (estacks == null) return;
 		List<String> tooltip = event.getToolTip();
-		tooltip.add(
-				TextFormatting.DARK_RED + I18n.format("info.itemCrystal.complex", ElementMap.instance.complex(stack)));
+		tooltip.add(TextFormatting.DARK_RED + I18n.format("info.itemCrystal.complex", teInfo.complex()));
 		for (ElementStack estack : estacks) {
 			if (estack.isEmpty()) continue;
 			String str;

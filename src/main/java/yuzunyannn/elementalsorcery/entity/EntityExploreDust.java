@@ -14,8 +14,8 @@ import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.explore.ExploreManagement;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
+import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
 
 public class EntityExploreDust extends Entity implements IEntityAdditionalSpawnData {
 

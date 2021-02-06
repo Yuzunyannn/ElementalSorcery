@@ -25,7 +25,7 @@ public class TileMDMagiclization extends TileMDBase implements ITickable {
 
 	@Override
 	public int getMaxCapacity() {
-		return 2000;
+		return 4000;
 	}
 
 	@Override

@@ -1,14 +1,12 @@
 package yuzunyannn.elementalsorcery.grimoire;
 
-import java.util.Map.Entry;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -44,17 +42,17 @@ public interface ICaster {
 
 	/**
 	 * 申请获取目标方块，通常是看到的
-	 * 
-	 * @return 一旦返回为非null，getKey()getValue()必不为空
 	 */
-	@Nullable
-	public Entry<BlockPos, EnumFacing> iWantBlockTarget();
+	@Nonnull
+	public WantedTargetResult iWantBlockTarget();
 
 	/**
 	 * 申请获取目标实体
+	 * 
+	 * @return 返回值为非null，肯定是RayTraceResult.Type.ENTITY
 	 */
-	@Nullable
-	public <T extends Entity> T iWantLivingTarget(Class<T> cls);
+	@Nonnull
+	public <T extends Entity> WantedTargetResult iWantLivingTarget(Class<T> cls);
 
 	/** 获取施法者 ，施法者在某些情况下不一定是entitylivingbase */
 	public Entity iWantCaster();

@@ -6,24 +6,34 @@ import javax.annotation.Nullable;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.element.IElementSpell;
-import yuzunyannn.elementalsorcery.api.element.IElementSpell.SpellPackage;
+import yuzunyannn.elementalsorcery.api.tile.IAcceptMagic;
+import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.element.EffectElementAbsorb;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemSpellbookElement extends ItemSpellbook {
+
 	final int level;
 
 	public ItemSpellbookElement() {
@@ -31,69 +41,8 @@ public class ItemSpellbookElement extends ItemSpellbook {
 		this.level = 1;
 	}
 
-	// 元素书的信息
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		Spellbook book = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
-		IElementInventory inventory = book.getInventory();
-		inventory.loadState(stack);
-		ElementStack estack = inventory.getStackInSlot(0);
-		if (estack.isEmpty())
-			return;
-		String str = I18n.format("info.spbe.has0", I18n.format(estack.getElementUnlocalizedName()));
-		tooltip.add("§6" + str);
-
-		if (estack.getElement() instanceof IElementSpell) {
-			IElementSpell es = (IElementSpell) estack.getElement();
-			// 添加数量，不足的话，显示红色
-			str = I18n.format("info.spbe.has1", estack.getCount());
-			if (es.cost(estack, this.level) > estack.getCount())
-				tooltip.add("§4" + str);
-			else
-				tooltip.add("§6" + str);
-			// 添加能量消息，如果不够，显示成红色
-			if (estack.usePower()) {
-				str = I18n.format("info.spbe.has2", estack.getPower());
-				if (es.lowestPower(estack, this.level) > estack.getPower())
-					tooltip.add("§4" + str);
-				else
-					tooltip.add("§6" + str);
-			}
-			// 消耗
-			int cost = es.cost(estack, this.level);
-			if (cost > 0) {
-				str = I18n.format("info.spbe.has3", es.cost(estack, this.level));
-				tooltip.add("§6" + str);
-			}
-			// 持续的平均消耗
-			if ((book.flags & IElementSpell.SPELLING) != 0) {
-				float ac = es.costSpellingAverage(this.level);
-				str = I18n.format("info.spbe.has4", (int) (ac * 20));
-				tooltip.add("§6" + str);
-			}
-			// 前摇时间
-			str = I18n.format("info.spbe.has5", es.cast(estack, this.level) / 20.0f);
-			tooltip.add("§6" + str);
-			// 效果
-			str = I18n.format("info.spbe.effect");
-			tooltip.add("§d" + str);
-			es.addInfo(estack, worldIn, tooltip, flagIn, this.level);
-		} else {
-			str = I18n.format("info.spbe.has1", estack.getCount());
-			tooltip.add("§6" + str);
-			if (estack.usePower()) {
-				str = I18n.format("info.spbe.has2", estack.getPower());
-				tooltip.add("§6" + str);
-			}
-			str = I18n.format("info.spbe.none");
-			tooltip.add("§8" + str);
-		}
-
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
 	protected void initRenderInfo(SpellbookRenderInfo info) {
 		info.texture = RenderItemSpellbook.instance.TEXTURE_SPELLBOOK_ELEMENT_01;
 	}
@@ -105,125 +54,139 @@ public class ItemSpellbookElement extends ItemSpellbook {
 
 	@Override
 	public int getCast(Spellbook book) {
-		return book.castTime;
+		return 20;
+	}
+
+	@Override
+	public void swap(World world, EntityLivingBase entity, ItemStack stack, Spellbook book) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) stack.setTagCompound(nbt = new NBTTagCompound());
+		boolean isAbsorb = nbt.getBoolean("absorb");
+		nbt.setBoolean("absorb", !isAbsorb);
+
+		if (world.isRemote && entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entity;
+			String uText = !isAbsorb ? "info.spbe.absorb" : "info.spbe.release";
+			player.sendMessage(new TextComponentTranslation(uText));
+		}
 	}
 
 	@Override
 	public boolean spellBegin(World world, EntityLivingBase entity, ItemStack stack, Spellbook book) {
-		IElementInventory inventory = book.getInventory();
-		ElementStack estack = inventory.getStackInSlot(0);
-		if (estack.isEmpty())
-			return false;
-		if (!(estack.getElement() instanceof IElementSpell))
-			return false;
-		IElementSpell es = (IElementSpell) estack.getElement();
-		// 获取包
-		IElementSpell.SpellPackage pack = getPack(world, entity, book, es, 0);
-		// 检测最少需要的量
-		if (estack.getCount() < es.cost(estack, this.level))
-			return false;
-		// 检测最低能量
-		if (estack.usePower() && estack.getPower() < es.lowestPower(estack, this.level))
-			return false;
-		// 准备开始
-		int flags = es.spellBegin(world, entity, estack, pack);
-		if (flags == IElementSpell.FAIL)
-			return false;
-		if (pack.power < 0)
-			return false;
-		book.castTime = es.cast(estack, this.level);
-		book.flags = flags;
-		book.obj = getPack(world, entity, book, es, 0);
-		estack.shrink(es.cost(estack, this.level));
+		NBTTagCompound nbt = stack.getTagCompound();
+		book.obj = nbt == null ? null : (nbt.getBoolean("absorb") ? true : null);
 		return true;
 	}
 
 	@Override
 	public void spelling(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
-		if (power < this.getCast(book))
-			return;
-		if (world.isRemote) {
-			this.giveMeParticleAboutSpelling(world, entity, stack, book, power);
-			// 别人释放的时候，仅仅是效果
-			if (!book.isMyself())
-				return;
-			IElementSpell.SpellPackage pack = (SpellPackage) book.obj;
-			if ((book.flags & IElementSpell.NEED_ENTITY) != 0) {
-				if (pack.entity != null)
-					this.giveMeParticleAboutSelect(world, book, pack.entity, power);
-			}
-			if ((book.flags & IElementSpell.NEED_BLOCK) != 0) {
-				if (pack.pos != null)
-					this.giveMeParticleAboutSelect(world, book, pack.pos, power);
-			}
-		}
-		if ((book.flags & IElementSpell.SPELLING) != 0) {
+		if (power < this.getCast(book)) return;
+
+		if (book.obj == null) {
+
 			IElementInventory inventory = book.getInventory();
 			ElementStack estack = inventory.getStackInSlot(0);
-			IElementSpell es = (IElementSpell) estack.getElement();
-			IElementSpell.SpellPackage pack = (SpellPackage) book.obj;
-			int cost = es.costSpelling(estack, pack.power, this.level);
-			if (cost < 0) {
-				pack = getPack(world, entity, book, es, pack.power);
-				pack.normal = false;
-			} else {
-				if (cost <= estack.getCount()) {
-					pack = getPack(world, entity, book, es, pack.power + 1);
-					pack.normal = true;
-					estack.shrink(cost);
-				} else {
-					pack = getPack(world, entity, book, es, pack.power);
-					pack.normal = false;
+			if (estack.isEmpty()) return;
+
+			RayTraceResult rt = WorldHelper.getLookAtBlock(world, entity, 32);
+			if (rt == null) return;
+			TileEntity tile = world.getTileEntity(rt.getBlockPos());
+
+			if (spellingInsert(world, entity, tile, estack)) return;
+			spellingInsertMD(world, entity, tile, estack, rt.sideHit);
+		} else {
+
+			RayTraceResult rt = WorldHelper.getLookAtBlock(world, entity, 32);
+			if (rt == null) return;
+			TileEntity tile = world.getTileEntity(rt.getBlockPos());
+			IElementInventory eInv = ElementHelper.getElementInventory(tile);
+			if (eInv == null) return;
+
+			IElementInventory inventory = book.getInventory();
+
+			for (int i = 0; i < eInv.getSlots(); i++) {
+				ElementStack estack = eInv.getStackInSlot(i);
+				if (estack.isEmpty()) continue;
+				ElementStack e = estack.copy();
+				e.setCount(Math.min(2, e.getCount()));
+
+				if (inventory.insertElement(e, true)) {
+					if (tile instanceof IAltarWake) ((IAltarWake) tile).wake(IAltarWake.SEND, null);
+					if (world.isRemote)
+						flyEffect(world, e.getColor(), new Vec3d(tile.getPos()).addVector(0.5, 0.5, 0.5), entity);
+					inventory.insertElement(e, false);
+					estack.shrink(e.getCount());
+					break;
 				}
 			}
-			book.obj = pack;
-			es.spelling(world, entity, estack, pack);
-		} else {
-			if (power % 10 == 0 && world.isRemote) {
-				IElementInventory inventory = book.getInventory();
-				ElementStack estack = inventory.getStackInSlot(0);
-				IElementSpell es = (IElementSpell) estack.getElement();
-				book.obj = getPack(world, entity, book, es, power);
-			}
+
 		}
+
 	}
 
+	/** 插入元素容器 */
+	private boolean spellingInsert(World world, EntityLivingBase entity, TileEntity tile, ElementStack estack) {
+		IElementInventory eInv = ElementHelper.getElementInventory(tile);
+		if (eInv == null) return false;
+		ElementStack e = estack.copy();
+		e.setCount(Math.min(2, e.getCount()));
+		if (!eInv.insertElement(e, true)) return false;
+		if (tile instanceof IAltarWake) ((IAltarWake) tile).wake(IAltarWake.OBTAIN, null);
+		if (world.isRemote) flyEffect(world, e.getColor(), entity.getPositionVector().addVector(0, 0.5, 0),
+				new Vec3d(tile.getPos()).addVector(0.5, 0.5, 0.5));
+		eInv.insertElement(e, false);
+		estack.shrink(e.getCount());
+		return true;
+	}
+
+	/** 插入魔力设备 */
+	private boolean spellingInsertMD(World world, EntityLivingBase entity, TileEntity tile, ElementStack estack,
+			EnumFacing face) {
+		if (!(tile instanceof IAcceptMagic)) return false;
+		IAcceptMagic accept = (IAcceptMagic) tile;
+
+		ElementStack e = estack.splitStack(2);
+		ElementStack magic = e.becomeMagic(world);
+
+		ElementStack ret = accept.accpetMagic(magic, entity.getPosition(), face);
+
+		if (world.isRemote) flyEffect(world, e.getColor(), entity.getPositionVector().addVector(0, 0.5, 0),
+				new Vec3d(tile.getPos()).addVector(0.5, 0.5, 0.5));
+
+		estack.grow(ret);
+
+		return true;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void flyEffect(World world, int color, Vec3d from, Vec3d to) {
+		EffectElementAbsorb eea = new EffectElementAbsorb(world, from, to);
+		eea.setColor(color);
+		Effect.addEffect(eea);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void flyEffect(World world, int color, Vec3d from, EntityLivingBase to) {
+		EffectElementAbsorb eea = new EffectElementAbsorb(world, from, to);
+		eea.setColor(color);
+		Effect.addEffect(eea);
+	}
+
+	// 元素书的信息
 	@Override
-	public boolean spellEnd(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
-		if (book.obj == null)
-			return false;
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) return;
+		boolean isAbsorb = nbt.getBoolean("absorb");
+		if (isAbsorb) tooltip.add(TextFormatting.GOLD + I18n.format("info.spbe.absorb"));
+		else tooltip.add(TextFormatting.GOLD + I18n.format("info.spbe.release"));
+
+		Spellbook book = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 		IElementInventory inventory = book.getInventory();
-		ElementStack estack = inventory.getStackInSlot(0);
-		IElementSpell es = (IElementSpell) estack.getElement();
-		IElementSpell.SpellPackage pack = getPack(world, entity, book, es, power);
-		pack.normal = true;
-		if ((book.flags & IElementSpell.SPELLING) != 0) {
-			pack.power = ((IElementSpell.SpellPackage) book.obj).power;
-		} else {
-			pack.power = power - this.getCast(book);
-		}
-		if (power < this.getCast(book)) {
-			pack.power = -1;
-		}
-		es.spellEnd(world, entity, estack, pack);
-		book.obj = null;
-		return false;
+		inventory.loadState(stack);
+		ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
 	}
 
-	public IElementSpell.SpellPackage getPack(World wrold, EntityLivingBase entity, Spellbook book, IElementSpell es,
-			int power) {
-		IElementSpell.SpellPackage pack = new IElementSpell.SpellPackage();
-		pack.book = book;
-		pack.power = power;
-		pack.level = this.level;
-		if ((book.flags & IElementSpell.NEED_ENTITY) != 0) {
-			pack.entity = WorldHelper.getLookAtEntity(wrold, entity, EntityLiving.class, 64);
-		}
-		if ((book.flags & IElementSpell.NEED_BLOCK) != 0) {
-			RayTraceResult result = WorldHelper.getLookAtBlock(wrold, entity, 64);
-			pack.pos = result == null ? null : result.getBlockPos();
-			pack.face = result == null ? null : result.sideHit;
-		}
-		return pack;
-	}
 }

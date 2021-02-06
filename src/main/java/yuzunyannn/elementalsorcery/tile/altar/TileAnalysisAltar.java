@@ -19,6 +19,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.tile.IItemStructureCraft;
 import yuzunyannn.elementalsorcery.building.Buildings;
@@ -265,20 +266,23 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		AnalysisPacket ans = new AnalysisPacket();
 		ans.daStack = stack;
 		// 解析元素
-		ans.daEstacks = ElementHelper.copy(elementMap.toElement(stack));
+		IToElementInfo teInfo = elementMap.toElement(stack);
+		if (teInfo == null) return null;
+		ans.daEstacks = ElementHelper.copy(teInfo.element());
 		if (ans.daEstacks == null) return null;
-		ans.daComplex = elementMap.complex(stack);
+		ans.daComplex = teInfo.complex();
 		if (!needRemian) return ans;
 		ItemStack remain = stack;
 		int rest = 1;
 		do {
-			remain = elementMap.remain(remain);
+			remain = teInfo.remain();
 			if (remain.isEmpty()) break;
 			if (rest <= 0) return null;
-			ElementStack[] remainStacks = ElementHelper.copy(elementMap.toElement(remain));
+			teInfo = elementMap.toElement(remain);
+			ElementStack[] remainStacks = ElementHelper.copy(teInfo.element());
 			if (remainStacks != null) {
 				ans.daEstacks = ElementHelper.merge(ans.daEstacks, remainStacks);
-				ans.daComplex = ans.daComplex + elementMap.complex(remain);
+				ans.daComplex = ans.daComplex + teInfo.complex();
 			}
 			rest--;
 		} while (true);

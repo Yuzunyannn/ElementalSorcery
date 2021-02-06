@@ -16,7 +16,7 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
+import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
 
 public class MantraSlowFall extends MantraCommon {
 

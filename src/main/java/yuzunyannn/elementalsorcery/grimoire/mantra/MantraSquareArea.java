@@ -1,7 +1,5 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
-import java.util.Map;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -14,6 +12,7 @@ import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
 
 public abstract class MantraSquareArea extends MantraCommon {
@@ -79,10 +78,10 @@ public abstract class MantraSquareArea extends MantraCommon {
 		data.markContinue(false);
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return;
-		Map.Entry<BlockPos, EnumFacing> entry = caster.iWantBlockTarget();
-		if (entry == null) return;
-		BlockPos pos = entry.getKey();
-		if (entry.getValue() == EnumFacing.UP) pos = pos.up();
+		WantedTargetResult wr = caster.iWantBlockTarget();
+		BlockPos pos = wr.getPos();
+		if (pos == null) return;
+		if (wr.getFace() == EnumFacing.UP) pos = pos.up();
 		caster.iWantDirectCaster().setPosition(pos.getX(), pos.getY(), pos.getZ());
 		this.onAfterSpellingInit(world, data, caster, pos);
 	}

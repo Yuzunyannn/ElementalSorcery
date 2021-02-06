@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 
@@ -25,11 +26,13 @@ public class ItemItemCrystal extends ItemCrystal {
 		IItemStructure istru = ItemStructure.getItemStructure(stack);
 		if (istru.getItemCount() == 0) return;
 		ItemStack showStack = istru.getStructureItem(0);
+		IToElementInfo teInfo = istru.toElement(showStack);
+		if (teInfo == null) return;
 		String name = I18n.format(showStack.getUnlocalizedName() + ".name");
 		tooltip.add(I18n.format("info.itemCrystal.data", name));
-		tooltip.add(I18n.format("info.itemCrystal.complex", istru.complex(showStack)));
+		tooltip.add(I18n.format("info.itemCrystal.complex", teInfo.complex()));
 		tooltip.add(I18n.format("info.itemCrystal.z"));
-		ElementStack[] estacks = istru.toElement(showStack);
+		ElementStack[] estacks = teInfo.element();
 		for (ElementStack esatck : estacks) {
 			name = I18n.format(esatck.getElementUnlocalizedName());
 			tooltip.add(I18n.format("info.itemCrystal.e", name, esatck.getCount(), esatck.getPower()));

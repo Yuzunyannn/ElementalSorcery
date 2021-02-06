@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.IRenderClient;
-import yuzunyannn.elementalsorcery.render.effect.EffectElement;
+import yuzunyannn.elementalsorcery.render.effect.element.EffectElement;
 import yuzunyannn.elementalsorcery.util.render.Framebuffer;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.util.render.WorldScene;

@@ -1,11 +1,8 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
-import java.util.Map.Entry;
-
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -16,6 +13,7 @@ import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleMantra;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
@@ -39,10 +37,10 @@ public class MantraLaunch extends MantraCommon {
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 
-		Entry<BlockPos, EnumFacing> entry = caster.iWantBlockTarget();
-		if (entry == null) return;
+		WantedTargetResult wr = caster.iWantBlockTarget();
+		BlockPos pos = wr.getPos();
+		if (pos == null) return;
 
-		BlockPos pos = entry.getKey();
 		ICraftingLaunch tile = BlockHelper.getTileEntity(world, pos, ICraftingLaunch.class);
 		if (tile == null) return;
 

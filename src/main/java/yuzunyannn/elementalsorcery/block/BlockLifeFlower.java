@@ -31,7 +31,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectElement;
+import yuzunyannn.elementalsorcery.render.effect.element.EffectElement;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
 import yuzunyannn.elementalsorcery.tile.TileLifeDirt;
 import yuzunyannn.elementalsorcery.util.RandomHelper;

@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -93,15 +94,9 @@ public class ItemStructure implements IItemStructure {
 	}
 
 	@Override
-	public ElementStack[] toElement(ItemStack stack) {
-		if (ItemHelper.areItemsEqual(this.stack, stack)) return estacks;
+	public IToElementInfo toElement(ItemStack stack) {
+		if (ItemHelper.areItemsEqual(this.stack, stack)) return ToElementInfoStatic.create(complex, estacks);
 		return null;
-	}
-
-	@Override
-	public int complex(ItemStack stack) {
-		if (ItemHelper.areItemsEqual(this.stack, stack)) return complex;
-		return 0;
 	}
 
 	@Override

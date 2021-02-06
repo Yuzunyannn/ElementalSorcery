@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.element;
 
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.material.MapColor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -79,7 +81,7 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 	 * @param estack 转化魔力时的元素栈，请直接修改这个元素栈
 	 * @return 返回值的元素会自动转变为magic，只需修改数量和能量即可
 	 */
-	public ElementStack changetoMagic(World world, ElementStack estack) {
+	public ElementStack changetoMagic(@Nullable World world, ElementStack estack) {
 		estack.weaken(0.5f);
 		float n = estack.getPower();
 		n = (float) Math.pow(n, 0.6) / 8 + 1;

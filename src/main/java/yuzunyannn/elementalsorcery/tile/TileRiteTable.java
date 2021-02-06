@@ -397,7 +397,7 @@ public class TileRiteTable extends TileEntityNetwork {
 
 		@Override
 		public int getLevel(ItemStack stack) {
-			ElementStack[] estacks = ElementMap.instance.toElement(stack);
+			ElementStack[] estacks = ElementMap.instance.toElementStack(stack);
 			if (estacks == null || estacks.length == 0) return 0;
 			ElementStack estack = estacks[0];
 			return estack.getPower() / 225;
@@ -405,7 +405,7 @@ public class TileRiteTable extends TileEntityNetwork {
 
 		@Override
 		public int getPower(ItemStack stack) {
-			ElementStack[] estacks = ElementMap.instance.toElement(stack);
+			ElementStack[] estacks = ElementMap.instance.toElementStack(stack);
 			if (estacks == null || estacks.length == 0) return 0;
 			ElementStack estack = estacks[0];
 			return (int) (Math.max(MathHelper.log2(estack.getCount()), 0.5) * 2);

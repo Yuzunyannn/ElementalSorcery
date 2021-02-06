@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -46,14 +47,18 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 	}
 
 	protected void drawInfo(int x, int y, int color, List<String> strs) {
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(0, 0, 500);
 		int maxWidth = 0;
 		for (String str : strs) {
 			int width = this.fontRenderer.getStringWidth(str);
 			if (width > maxWidth) maxWidth = width;
 		}
-		this.drawToolTipBackground(x, y, maxWidth, this.fontRenderer.FONT_HEIGHT * strs.size());
+		int height = this.fontRenderer.FONT_HEIGHT * strs.size();
+		this.drawToolTipBackground(x, y, maxWidth, height);
 		for (int i = 0; i < strs.size(); i++)
 			this.fontRenderer.drawString(strs.get(i), x, y + this.fontRenderer.FONT_HEIGHT * i, color);
+		GlStateManager.popMatrix();
 	}
 
 	List<String> infosTmp = new ArrayList<String>();

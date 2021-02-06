@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -24,6 +25,8 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	private List<ItemStack> itemList = new ArrayList<ItemStack>();
 	// 操作结果链表，该变量同时起到标定作用
 	private LinkedList<ElementStack> restEStacks = null;
+	// 保留的结果
+	private ItemStack remainStack = ItemStack.EMPTY;
 	// 是否ok
 	private boolean isOk = true;
 	// 当前没有放入的元素
@@ -32,14 +35,16 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	public CraftingDeconstruct(World world, ItemStack stack, int lvPower, IToElement toElement) {
 		itemList.add(stack);
 		ElementStack[] outEstacks;
-		if (toElement == null) outEstacks = ElementMap.instance.toElement(stack);
-		else outEstacks = toElement.toElement(stack);
+		if (toElement == null) toElement = ElementMap.instance;
+		IToElementInfo teInfo = toElement.toElement(stack);
+		outEstacks = teInfo == null ? null : teInfo.element();
 		if (outEstacks == null) return;
 		restEStacks = new LinkedList<ElementStack>();
 		for (ElementStack estack : outEstacks) {
-			for (int i = 0; i < stack.getCount(); i++) restEStacks.add(estack.copy().becomeElementWhenDeconstruct(world,
-					stack, ElementMap.instance.complex(stack), lvPower));
+			for (int i = 0; i < stack.getCount(); i++)
+				restEStacks.add(estack.copy().becomeElementWhenDeconstruct(world, stack, teInfo.complex(), lvPower));
 		}
+		remainStack = teInfo.remain();
 	}
 
 	public CraftingDeconstruct(NBTTagCompound nbt) {
@@ -53,15 +58,17 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		if (restEStacks != null) NBTHelper.setElementist(nbt, "rest_estacks", restEStacks);
+		if (restEStacks != null) NBTHelper.setElementist(nbt, "restEles", restEStacks);
 		NBTHelper.setItemList(nbt, "itemList", itemList);
+		if (!remainStack.isEmpty()) nbt.setTag("remain", remainStack.serializeNBT());
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
-		if (nbt.hasKey("rest_estacks")) restEStacks = NBTHelper.getElementList(nbt, "rest_estacks");
+		if (nbt.hasKey("restEles")) restEStacks = NBTHelper.getElementList(nbt, "restEles");
 		if (nbt.hasKey("itemList")) itemList = NBTHelper.getItemList(nbt, "itemList");
+		if (nbt.hasKey("remain")) remainStack = new ItemStack(nbt.getCompoundTag("remain"));
 	}
 
 	@Override
@@ -106,11 +113,9 @@ public class CraftingDeconstruct implements ICraftingAltar {
 
 	@Override
 	public boolean end(TileStaticMultiBlock tileMul) {
-		ItemStack stack = itemList.get(0);
 		itemList.clear();
 		if (!tileMul.isIntact()) return false;
-		stack = ElementMap.instance.remain(stack);
-		if (!stack.isEmpty()) itemList.add(stack);
+		if (!remainStack.isEmpty()) itemList.add(remainStack);
 		return true;
 	}
 

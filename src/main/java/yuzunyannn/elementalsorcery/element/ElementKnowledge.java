@@ -1,7 +1,6 @@
 
 package yuzunyannn.elementalsorcery.element;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -12,9 +11,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.element.IElementSpell;
 
-public class ElementKnowledge extends ElementInner {
+public class ElementKnowledge extends ElementCommon {
 
 	public static final int COLOR = 0x9b9b9b;
 
@@ -22,41 +20,18 @@ public class ElementKnowledge extends ElementInner {
 		super(COLOR, "knowledge");
 	}
 
-	@Override
-	public int spellBegin(World world, EntityLivingBase entity, ElementStack estack, SpellPackage pack) {
-		return IElementSpell.SPELL_ONCE;
-	}
 
-	@Override
-	public void spelling(World world, EntityLivingBase entity, ElementStack estack, SpellPackage pack) {
+//	@Override
+//	public void spellEnd(World world, EntityLivingBase entity, ElementStack estack, SpellPackage pack) {
+//		if (pack.isFail()) return;
+//		if (world.isRemote) return;
+//		if (entity instanceof EntityPlayer) {
+//			((EntityPlayer) entity).displayGui(new InteractionObject(world, entity.getPosition()));
+//		}
+//	}
 
-	}
 
-	@Override
-	public void spellEnd(World world, EntityLivingBase entity, ElementStack estack, SpellPackage pack) {
-		if (pack.isFail()) return;
-		if (world.isRemote) return;
-		if (entity instanceof EntityPlayer) {
-			((EntityPlayer) entity).displayGui(new InteractionObject(world, entity.getPosition()));
-		}
-	}
-
-	@Override
-	public int cast(ElementStack estack, int level) {
-		return 20;
-	}
-
-	@Override
-	public int cost(ElementStack estack, int level) {
-		return 10;
-	}
-
-	@Override
-	public int lowestPower(ElementStack estack, int level) {
-		return 10;
-	}
-
-	private static class InteractionObject implements IInteractionObject {
+	public static class InteractionObject implements IInteractionObject {
 		final World world;
 		final BlockPos pos;
 

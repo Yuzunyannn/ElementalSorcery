@@ -13,7 +13,7 @@ public interface IAcceptMagic {
 	 * @param magic
 	 *            魔力的元素栈
 	 * @param from
-	 *            魔力的给予者位置
+	 *            魔力的给予者位置，可能是某个实体的位置
 	 * @param facing
 	 *            魔力获取的面
 	 * @return 返回不需要的魔力，如果不接受，直接返回magic

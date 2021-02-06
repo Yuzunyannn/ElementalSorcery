@@ -30,6 +30,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
@@ -61,7 +62,8 @@ public class ItemKyaniteTools {
 		if (inventory.hasState(stack) == false) return;
 		ItemStack blockStack = ItemHelper.toItemStack(state);
 		if (blockStack.isEmpty()) return;
-		ElementStack[] estacks = ElementMap.instance.toElement(blockStack);
+		IToElementInfo teInfo = ElementMap.instance.toElement(blockStack);
+		ElementStack[] estacks = teInfo == null ? null : teInfo.element();
 		if (estacks != null) {
 			ElementStack estack;
 			if (Math.random() >= 0.333333) return;
@@ -74,8 +76,8 @@ public class ItemKyaniteTools {
 				estack = new ElementStack(ESInit.ELEMENTS.WATER, 1, 3);
 			} else {
 				estack = estacks[0].copy();
-				estack = estack.becomeElementWhenDeconstruct(worldIn, ItemHelper.toItemStack(state),
-						ElementMap.instance.complex(blockStack), Element.DP_TOOLS);
+				estack = estack.becomeElementWhenDeconstruct(worldIn, ItemHelper.toItemStack(state), teInfo.complex(),
+						Element.DP_TOOLS);
 			}
 			inventory.loadState(stack);
 			inventory.insertElement(estack, false);

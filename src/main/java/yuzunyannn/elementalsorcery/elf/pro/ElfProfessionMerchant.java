@@ -67,7 +67,7 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 
 	/** 给一个物品定价 */
 	public static int priceIt(ItemStack item) {
-		ElementStack[] estacks = ElementMap.instance.toElement(item);
+		ElementStack[] estacks = ElementMap.instance.toElementStack(item);
 		if (estacks == null) return -1;
 		int n = -1;
 		for (ElementStack estack : estacks)

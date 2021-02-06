@@ -488,12 +488,12 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	/** 获取达到多少值就可以向外发送了，超过了就会发送 */
 	protected int getOverflow() {
-		return 400;
+		return 800;
 	}
 
 	@Override
 	public int getMaxCapacity() {
-		return 500;
+		return 1000;
 	}
 
 	@Override

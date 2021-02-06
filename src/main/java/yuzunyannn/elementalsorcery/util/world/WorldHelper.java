@@ -4,7 +4,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.state.IBlockState;
+import com.google.common.base.Predicate;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -13,7 +14,6 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -51,55 +51,60 @@ public class WorldHelper {
 	}
 
 	/** 获取生物正在看的实体 */
-	@Nullable
-	static public <T extends Entity> T getLookAtEntity(World world, EntityLivingBase entity,
-			Class<? extends T> classEntity, float distance) {
+	static public <T extends Entity> RayTraceResult getLookAtEntity(World world, EntityLivingBase entity,
+			double distance, Class<T> entityType) {
 
-		final double pre_range = 0.5f;
+		Vec3d eye = entity.getPositionEyes(1.0f);
+		Vec3d look = entity.getLook(1.0F);
+		Vec3d lookEnd = eye.addVector(look.x * distance, look.y * distance, look.z * distance);
+		RayTraceResult rt = world.rayTraceBlocks(eye, lookEnd, false, false, true);
 
-		Vec3d vstart = entity.getPositionEyes(1.0F);
-		Vec3d vend = entity.getLookVec().scale(distance).add(vstart);
-		int times = MathHelper.ceil(vend.subtract(vstart).lengthVector() / (pre_range * 2));
-		Vec3d tar = vend.subtract(vstart).normalize().scale(pre_range * 2);
-		List<T> list = null;
-		T hitEntity = null;
-		for (int i = 0; i < times; i++) {
-			AxisAlignedBB aabb = new AxisAlignedBB(vstart.x - pre_range, vstart.y - pre_range, vstart.z - pre_range,
-					vstart.x + pre_range, vstart.y + pre_range, vstart.z + pre_range);
-			list = world.getEntitiesWithinAABB(classEntity, aabb);
-			// 下一个检查点
-			vstart = vstart.add(tar);
-			// 如果到方块了，就停下来
-			IBlockState state = world.getBlockState(new BlockPos(vstart.x, vstart.y, vstart.z));
-			if (state.getMaterial().isOpaque()) break;
-			// 判断list
-			if (list.isEmpty()) continue;
-			hitEntity = list.get(0);
-			if (hitEntity == entity) {
-				hitEntity = null;
-				list.remove(0);
-				if (list.isEmpty()) continue;
-				break;
+		if (rt != null) distance = rt.hitVec.distanceTo(eye);
+
+		Entity pointedEntity = null;
+		Vec3d hitVec = null;
+		AxisAlignedBB aabb = entity.getEntityBoundingBox()
+				.expand(look.x * distance, look.y * distance, look.z * distance).grow(1.0D, 1.0D, 1.0D);
+		List<Entity> list = world.getEntitiesInAABBexcluding(entity, aabb, new Predicate<Entity>() {
+			public boolean apply(@Nullable Entity check) {
+				return check != null && check != entity && entityType.isAssignableFrom(check.getClass());
 			}
-			break;
-		}
-		// 寻找最准确的位置
-		if (list != null && !list.isEmpty()) {
-			int min_index = 0;
-			double max_dot = 0;
-			tar = tar.normalize();
-			for (int i = 0; i < list.size(); i++) {
-				T e = list.get(i);
-				Vec3d to = e.getPositionVector().subtract(entity.getPositionEyes(1.0F)).normalize();
-				double num = to.dotProduct(tar);
-				if (num > max_dot) {
-					max_dot = num;
-					min_index = i;
+		});
+		double minDistance = distance;
+		for (int i = 0; i < list.size(); i++) {
+			Entity entity1 = list.get(i);
+			AxisAlignedBB entityAABB = entity1.getEntityBoundingBox().grow(entity1.getCollisionBorderSize());
+			RayTraceResult raytraceresult = entityAABB.calculateIntercept(eye, lookEnd);
+
+			if (entityAABB.contains(eye)) {
+				if (minDistance >= 0.0D) {
+					pointedEntity = entity1;
+					hitVec = raytraceresult == null ? eye : raytraceresult.hitVec;
+					minDistance = 0.0D;
+				}
+				continue;
+			}
+			if (raytraceresult == null) continue;
+
+			double len = eye.distanceTo(raytraceresult.hitVec);
+
+			if (len < minDistance || minDistance == 0) {
+				if (entity1.getLowestRidingEntity() == entity.getLowestRidingEntity() && !entity1.canRiderInteract()) {
+					if (minDistance == 0.0D) {
+						pointedEntity = entity1;
+						hitVec = raytraceresult.hitVec;
+					}
+				} else {
+					pointedEntity = entity1;
+					hitVec = raytraceresult.hitVec;
+					minDistance = len;
 				}
 			}
-			hitEntity = list.get(min_index);
 		}
-		return hitEntity;
+
+		if (pointedEntity != null) return new RayTraceResult(pointedEntity, hitVec);
+
+		return null;
 	}
 
 	static public void newLightning(World world, BlockPos pos) {

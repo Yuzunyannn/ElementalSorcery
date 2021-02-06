@@ -103,13 +103,19 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 			int z = rand.nextInt(l * 2) - l;
 			BlockPos at = originPos.add(x, 0, z);
 
+			if (world.isRemote) addEffect(world, new Vec3d(at).addVector(0.5, 0.5, 0.5));
+
 			if (world.isAirBlock(at)) {
 				if (fire.getPower() > 250) {
-					IBlockState LAVA = Blocks.FLOWING_LAVA.getDefaultState();
-					int level = rand.nextInt(10) + 1;
-					LAVA = LAVA.withProperty(BlockLiquid.LEVEL, level);
-					world.setBlockState(at, LAVA);
-					if (world.isRemote) addEffect(world, new Vec3d(at).addVector(0.5, 0.1 * level, 0.5));
+					int level = rand.nextInt(10) + 5;
+					if (!world.isRemote) {
+						IBlockState LAVA = Blocks.FLOWING_LAVA.getDefaultState();
+						LAVA = LAVA.withProperty(BlockLiquid.LEVEL, level);
+						world.setBlockState(at, LAVA);
+						for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+							if (world.isAirBlock(at.offset(facing))) world.setBlockState(at.offset(facing), LAVA);
+						}
+					}
 				} else {
 					world.setBlockState(at, Blocks.FIRE.getDefaultState());
 				}
@@ -121,13 +127,17 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 					ItemQuill.playFireExtinguish(world, at);
 
 				} else if (state.getBlock() instanceof IPlantable) {
-					world.setBlockToAir(at);
-					world.setBlockState(at, Blocks.FIRE.getDefaultState());
+					if (!world.isRemote) {
+						world.setBlockToAir(at);
+						world.setBlockState(at, Blocks.FIRE.getDefaultState());
+					}
 				} else {
-					EnumFacing facing = EnumFacing.random(rand);
-					int fb = state.getBlock().getFlammability(world, at, facing);
-					if (fb > 0 && world.isAirBlock(at.offset(facing))) {
-						world.setBlockState(at.offset(facing), Blocks.FIRE.getDefaultState());
+					if (!world.isRemote) {
+						EnumFacing facing = EnumFacing.random(rand);
+						int fb = state.getBlock().getFlammability(world, at, facing);
+						if (fb > 0 && world.isAirBlock(at.offset(facing))) {
+							world.setBlockState(at.offset(facing), Blocks.FIRE.getDefaultState());
+						}
 					}
 				}
 			}

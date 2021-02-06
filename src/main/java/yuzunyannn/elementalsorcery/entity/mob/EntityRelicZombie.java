@@ -48,9 +48,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireBall;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
+import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class EntityRelicZombie extends EntityMob {

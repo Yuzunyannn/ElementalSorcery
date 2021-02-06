@@ -2,14 +2,12 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Map.Entry;
 import java.util.Set;
 import java.util.function.Function;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -23,6 +21,7 @@ import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.VariableSet;
 import yuzunyannn.elementalsorcery.util.VariableSet.Variable;
@@ -49,10 +48,10 @@ public class MantraFootbridge extends MantraCommon {
 	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
 		if (beforeGeneralStartTime(caster)) return;
 		MantraDataCommon mData = (MantraDataCommon) data;
-		Entry<BlockPos, EnumFacing> entry = caster.iWantBlockTarget();
+		WantedTargetResult wr = caster.iWantBlockTarget();
 		int max = 96;
-		if (entry != null) {
-			BlockPos pos = entry.getKey();
+		BlockPos pos = wr.getPos();
+		if (pos != null) {
 			double dis = caster.iWantCaster().getDistance(pos.getX(), pos.getY(), pos.getZ());
 			max = MathHelper.ceil(Math.min(96, 3 * dis));
 		}
@@ -69,9 +68,9 @@ public class MantraFootbridge extends MantraCommon {
 		BlockPos pos1, pos2;
 		Entity entity = caster.iWantCaster();
 		pos1 = entity.getPosition().down();
-		Entry<BlockPos, EnumFacing> entry = caster.iWantBlockTarget();
-		if (entry != null) pos2 = entry.getKey();
-		else pos2 = null;
+		WantedTargetResult wr = caster.iWantBlockTarget();
+		pos2 = wr.getPos();
+
 		if (pos1 == null || pos2 == null) return;
 
 		Set<BlockPos> posSet = new HashSet<BlockPos>();

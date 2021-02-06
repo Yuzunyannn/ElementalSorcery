@@ -4,14 +4,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -36,7 +34,7 @@ public class CraftingConstruct implements ICraftingAltar {
 		itemList.add(structure.getStructureItem(0).copy());
 		itemList.get(0).setCount(cout);
 		// 获取处理所需元素
-		ElementStack[] estacks = structure.toElement(itemList.get(0));
+		ElementStack[] estacks = structure.toElementStack(itemList.get(0));
 		if (estacks != null && estacks.length > 0) {
 			needEStacks = new LinkedList<ElementStack>();
 			for (ElementStack estack : estacks) {

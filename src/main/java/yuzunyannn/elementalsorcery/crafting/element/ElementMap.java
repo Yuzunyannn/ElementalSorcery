@@ -28,6 +28,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.IElementMap;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementItem;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -57,30 +58,12 @@ public class ElementMap implements IElementMap {
 	}
 
 	@Override
-	public ElementStack[] toElement(ItemStack stack) {
+	public IToElementInfo toElement(ItemStack stack) {
 		for (IToElement to : toList) {
-			ElementStack[] stacks = to.toElement(stack);
-			if (stacks != null) return stacks;
+			IToElementInfo info = to.toElement(stack);
+			if (info != null) return info;
 		}
 		return null;
-	}
-
-	@Override
-	public ItemStack remain(ItemStack stack) {
-		for (IToElement to : toList) {
-			ElementStack[] stacks = to.toElement(stack);
-			if (stacks != null) return to.remain(stack);
-		}
-		return ItemStack.EMPTY;
-	}
-
-	@Override
-	public int complex(ItemStack stack) {
-		for (IToElement to : toList) {
-			int complex = to.complex(stack);
-			if (complex > 0) return complex;
-		}
-		return 0;
 	}
 
 	// ---------------------------------ADD----------------------------------------
@@ -140,24 +123,10 @@ public class ElementMap implements IElementMap {
 	private static class DefaultInterfaceToElement implements IToElement {
 
 		@Override
-		public ElementStack[] toElement(ItemStack stack) {
+		public IToElementInfo toElement(ItemStack stack) {
 			Item item = stack.getItem();
 			if (item instanceof IToElementItem) return ((IToElementItem) item).toElement(stack);
 			return null;
-		}
-
-		@Override
-		public int complex(ItemStack stack) {
-			Item item = stack.getItem();
-			if (item instanceof IToElementItem) return ((IToElementItem) item).complex(stack);
-			return 0;
-		}
-
-		@Override
-		public ItemStack remain(ItemStack stack) {
-			Item item = stack.getItem();
-			if (item instanceof IToElementItem) return ((IToElementItem) item).remain(stack);
-			return ItemStack.EMPTY;
 		}
 
 	}
@@ -196,29 +165,16 @@ public class ElementMap implements IElementMap {
 		}
 
 		@Override
-		public ElementStack[] toElement(ItemStack stack) {
+		public IToElementInfo toElement(ItemStack stack) {
 			for (ElementInfo info : this.stackToElementMap) {
-				if (this.compareItemStacks(stack, info.stack)) return info.estacks;
+				if (this.compareItemStacks(stack, info.stack)) return info;
 			}
 			return this.toElement(stack.getItem());
 		}
 
-		public ElementStack[] toElement(Item item) {
-			if (itemToElementMap.containsKey(item)) return itemToElementMap.get(item).estacks;
+		public IToElementInfo toElement(Item item) {
+			if (itemToElementMap.containsKey(item)) return itemToElementMap.get(item);
 			return null;
-		}
-
-		@Override
-		public int complex(ItemStack stack) {
-			for (ElementInfo info : this.stackToElementMap) {
-				if (this.compareItemStacks(stack, info.stack)) { return info.complex; }
-			}
-			return this.complex(stack.getItem());
-		}
-
-		public int complex(Item item) {
-			if (itemToElementMap.containsKey(item)) return itemToElementMap.get(item).complex;
-			return 0;
 		}
 
 		private boolean compareItemStacks(ItemStack stack1, ItemStack stack2) {
@@ -236,7 +192,7 @@ public class ElementMap implements IElementMap {
 			}
 		}
 
-		static public class ElementInfo {
+		static public class ElementInfo implements IToElementInfo {
 			final public ItemStack stack;
 			final public ElementStack[] estacks;
 			final public int complex;
@@ -246,6 +202,16 @@ public class ElementMap implements IElementMap {
 				this.estacks = estacks;
 				this.complex = complex;
 			}
+
+			@Override
+			public ElementStack[] element() {
+				return estacks;
+			}
+
+			@Override
+			public int complex() {
+				return complex;
+			}
 		}
 
 	}
@@ -253,33 +219,18 @@ public class ElementMap implements IElementMap {
 	// 默认的容器转化到元素
 	private static class DefaultBucketToElement implements IToElement {
 
-		protected static ElementStack[] water;
-		protected static ElementStack[] fire;
+		protected static IToElementInfo water;
+		protected static IToElementInfo fire;
 
 		@Override
-		public ElementStack[] toElement(ItemStack stack) {
-			if (stack.getItem() == Items.WATER_BUCKET) {
-				return water;
-			} else if (stack.getItem() == Items.LAVA_BUCKET) { return fire; }
+		public IToElementInfo toElement(ItemStack stack) {
+			if (stack.getItem() == Items.WATER_BUCKET) return water;
+			else if (stack.getItem() == Items.LAVA_BUCKET) return fire;
 			return null;
 			// IFluidHandlerItem fhi =
 			// stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY,
 			// null);
 			// if (fhi == null) return null;
-		}
-
-		@Override
-		public ItemStack remain(ItemStack stack) {
-			if (stack.getItem() == Items.WATER_BUCKET || stack.getItem() == Items.LAVA_BUCKET) {
-				return new ItemStack(Items.BUCKET);
-			}
-			return ItemStack.EMPTY;
-		}
-
-		@Override
-		public int complex(ItemStack stack) {
-			if (stack.getItem() == Items.WATER_BUCKET || stack.getItem() == Items.LAVA_BUCKET) return 5;
-			return 0;
 		}
 
 	}
@@ -324,8 +275,10 @@ public class ElementMap implements IElementMap {
 		// 自动扫描玩家自定义目录
 		loadRegisterFromFile();
 
-		DefaultBucketToElement.water = new ElementStack[] { newES(E.WATER, 25, 100) };
-		DefaultBucketToElement.fire = new ElementStack[] { newES(E.FIRE, 100, 500) };
+		DefaultBucketToElement.water = ToElementInfoStatic.create(3, new ItemStack(Items.BUCKET),
+				newES(E.WATER, 25, 100));
+		DefaultBucketToElement.fire = ToElementInfoStatic.create(7, new ItemStack(Items.BUCKET),
+				newES(E.FIRE, 100, 500));
 
 		instance.add(Items.BUCKET, newES(E.METAL, 24, 200));
 	}

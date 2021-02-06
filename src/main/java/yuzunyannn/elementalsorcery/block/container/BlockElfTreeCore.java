@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
+import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 
 public class BlockElfTreeCore extends BlockContainerNormal {

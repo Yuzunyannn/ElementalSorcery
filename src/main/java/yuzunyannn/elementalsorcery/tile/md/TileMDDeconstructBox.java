@@ -10,6 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -136,13 +137,14 @@ public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 		stack = originStack.copy();
 		stack.setCount(1);
 		// 获取检测分解物
-		ElementStack[] toEstacks = ElementMap.instance.toElement(stack);
+		IToElementInfo teInfo = ElementMap.instance.toElement(stack);
+		ElementStack[] toEstacks = teInfo == null ? null : teInfo.element();
 		if (toEstacks == null) return;
 		// 获取检测仓库
 		IElementInventory inventory = ElementHelper.getElementInventory(stackInv);
 		if (!ElementHelper.canInsert(inventory)) return;
 		// 检测是否可以插入
-		ElementStack inserted = this.findInsert(toEstacks, stack, inventory);
+		ElementStack inserted = this.findInsert(toEstacks, stack, inventory, teInfo);
 		if (inserted.isEmpty()) return;
 		// 开始
 		{
@@ -159,7 +161,7 @@ public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 			inventory.insertElement(inserted, false);
 			originStack.shrink(1);
 			inventory.saveState(stackInv);
-			stack = ElementMap.instance.remain(stack);
+			stack = teInfo.remain();
 			if (!stack.isEmpty()) {
 				if (originStack.isEmpty()) this.inventory.setStackInSlot(0, stack);
 				else Block.spawnAsEntity(world, pos.up(), stack);
@@ -168,10 +170,10 @@ public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 		}
 	}
 
-	private ElementStack findInsert(ElementStack[] toEstacks, ItemStack stack, IElementInventory inventory) {
+	private ElementStack findInsert(ElementStack[] toEstacks, ItemStack stack, IElementInventory inventory,
+			IToElementInfo teInfo) {
 		for (ElementStack estack : toEstacks) {
-			estack = estack.copy().becomeElementWhenDeconstruct(world, stack, ElementMap.instance.complex(stack),
-					Element.DP_BOX);
+			estack = estack.copy().becomeElementWhenDeconstruct(world, stack, teInfo.complex(), Element.DP_BOX);
 			if (inventory.insertElement(estack, true)) return estack;
 		}
 		return ElementStack.EMPTY;

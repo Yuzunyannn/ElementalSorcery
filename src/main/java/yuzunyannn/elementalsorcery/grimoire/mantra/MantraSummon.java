@@ -1,7 +1,5 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
-import java.util.Map.Entry;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -9,7 +7,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -21,6 +18,7 @@ import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
@@ -72,7 +70,7 @@ public class MantraSummon extends MantraCommon {
 			if (summon != null) nbt.setTag("sData", summon.serializeNBT());
 			return nbt;
 		}
-		
+
 		@Override
 		public NBTTagCompound serializeNBTForSend() {
 			return this.serializeNBT();
@@ -169,9 +167,9 @@ public class MantraSummon extends MantraCommon {
 	public void endSpelling(World world, IMantraData mData, ICaster caster) {
 		Data data = (Data) mData;
 		if (data.power < 100) return;
-		Entry<BlockPos, EnumFacing> entry = caster.iWantBlockTarget();
-		if (entry == null) return;
-		data.pos = entry.getKey();
+		WantedTargetResult wr = caster.iWantBlockTarget();
+		data.pos = wr.getPos();
+		if (data.pos == null) return;
 		if (world.getBlockState(data.pos).getBlock() == ESInit.BLOCKS.RITE_TABLE) data.pos = data.pos.down();
 		else data.pos = data.pos.up();
 		if (data.summonRecipe != null)

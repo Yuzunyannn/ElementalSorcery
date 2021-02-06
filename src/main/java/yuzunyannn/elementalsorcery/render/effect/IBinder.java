@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.effect.grimoire;
+package yuzunyannn.elementalsorcery.render.effect;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;

@@ -1,8 +1,6 @@
 package yuzunyannn.elementalsorcery.entity;
 
-import java.util.AbstractMap;
 import java.util.List;
-import java.util.Map.Entry;
 import java.util.UUID;
 
 import io.netty.buffer.ByteBuf;
@@ -20,6 +18,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
@@ -35,6 +34,7 @@ import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.network.MessageEntitySync;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
@@ -407,29 +407,34 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	@Override
-	public Entry<BlockPos, EnumFacing> iWantBlockTarget() {
+	public WantedTargetResult iWantBlockTarget() {
 		if (user != null) {
 			RayTraceResult rt = WorldHelper.getLookAtBlock(world, user, 128);
-			if (rt == null) return null;
-			if (rt.getBlockPos() == null) return null;
-			return new AbstractMap.SimpleEntry(rt.getBlockPos(), rt.sideHit == null ? EnumFacing.UP : rt.sideHit);
+			if (rt == null) return WantedTargetResult.EMPTY;
+			if (rt.getBlockPos() == null) return WantedTargetResult.EMPTY;
+			return new WantedTargetResult(rt.getBlockPos(), rt.sideHit, rt.hitVec);
 		} else {
 			BlockPos pos = this.getPosition();
-			return new AbstractMap.SimpleEntry(BlockHelper.tryFindAnySolid(world, pos, 6, 5, 5), EnumFacing.UP);
+			pos = BlockHelper.tryFindAnySolid(world, pos, 6, 5, 5);
+			if (pos == null) return WantedTargetResult.EMPTY;
+			return new WantedTargetResult(pos, EnumFacing.UP, new Vec3d(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5));
 		}
 	}
 
 	@Override
-	public <T extends Entity> T iWantLivingTarget(Class<T> cls) {
+	public <T extends Entity> WantedTargetResult iWantLivingTarget(Class<T> cls) {
 		if (user != null) {
-			return WorldHelper.getLookAtEntity(world, user, cls, 64);
+			RayTraceResult rt = WorldHelper.getLookAtEntity(world, user, 64, cls);
+			if (rt == null) return WantedTargetResult.EMPTY;
+			return new WantedTargetResult(rt.entityHit, rt.hitVec);
 		} else {
 			final int size = 2;
 			AxisAlignedBB aabb = new AxisAlignedBB(posX - size, posY - size, posZ - size, posX + size, posY + size,
 					posZ + size);
 			List<T> list = world.getEntitiesWithinAABB(cls, aabb);
-			if (list.isEmpty()) return null;
-			return list.get(rand.nextInt(list.size()));
+			if (list.isEmpty()) return WantedTargetResult.EMPTY;
+			T find = list.get(rand.nextInt(list.size()));
+			return new WantedTargetResult(find, find.getPositionVector().addVector(0, find.height, 0));
 		}
 	}
 

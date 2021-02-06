@@ -385,8 +385,9 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		// element
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ELEMENT),
 				new ItemStack(ESInit.ITEMS.QUILL, 1, 1), new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 10),
-				new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 32), new ItemStack(Blocks.RED_FLOWER, 6),
-				new ItemStack(Items.GOLD_INGOT, 3), new ItemStack(Items.COAL, 7), new ItemStack(Blocks.OBSIDIAN, 2));
+				new ItemStack(ESInit.ITEMS.MAGICAL_ENDER_EYE, 1), new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 32),
+				new ItemStack(Blocks.RED_FLOWER, 6), new ItemStack(Items.GOLD_INGOT, 3), new ItemStack(Items.COAL, 7),
+				new ItemStack(Blocks.OBSIDIAN, 2));
 		// building
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ARCHITECTURE),
 				new ItemStack(ESInit.ITEMS.QUILL, 1, 1), new ItemStack(ESInit.BLOCKS.ESTONE, 16),

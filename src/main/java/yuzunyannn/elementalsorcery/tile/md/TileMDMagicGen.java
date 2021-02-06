@@ -64,7 +64,7 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 
 	@Override
 	public int getMaxCapacity() {
-		return 2000;
+		return 3000;
 	}
 
 	@Override

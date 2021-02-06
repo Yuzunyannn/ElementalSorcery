@@ -1,61 +1,16 @@
 package yuzunyannn.elementalsorcery.element;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.element.IElementSpell;
 
-public class ElementMetal extends ElementInner {
+public class ElementMetal extends ElementCommon {
 
 	public static final int COLOR = 0xFFD700;
 
 	public ElementMetal() {
 		super(COLOR, "metal");
-	}
-
-	@Override
-	public int spellBegin(World world, EntityLivingBase entity, ElementStack estack, SpellPackage pack) {
-		return IElementSpell.SPELL_ONCE | IElementSpell.NEED_BLOCK | IElementSpell.SPELLING;
-	}
-
-	@Override
-	public void spellEnd(World world, EntityLivingBase entity, ElementStack estack, SpellPackage pack) {
-		if (pack.isFail()) return;
-		if (pack.pos == null) return;
-		int count = pack.power + 5;
-		IBlockState state = world.getBlockState(pack.pos);
-		if (this.canChangeLv1(state)) {
-			if (world.isRemote) {
-
-			} else this.changeLv1(world, pack.pos, count / 2, estack.getPower());
-		}
-	}
-
-	@Override
-	public int cast(ElementStack estack, int level) {
-		return 20 * 5;
-	}
-
-	@Override
-	public int cost(ElementStack estack, int level) {
-		return 50;
-	}
-
-	@Override
-	public int costSpelling(ElementStack estack, int power, int level) {
-		return power % 2 == 0 ? 1 : 0;
-	}
-
-	@Override
-	public float costSpellingAverage(int level) {
-		return 0.5f;
-	}
-
-	@Override
-	public int lowestPower(ElementStack estack, int level) {
-		return 225;
 	}
 
 	public boolean canChangeLv1(IBlockState state) {

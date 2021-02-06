@@ -1,13 +1,11 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import java.util.List;
-import java.util.Map.Entry;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -19,9 +17,10 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
+import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectElementMove;
+import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
 
 public class MantraBlockCrash extends MantraCommon {
 
@@ -50,12 +49,13 @@ public class MantraBlockCrash extends MantraCommon {
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
 		if (caster.iWantKnowCastTick() < 20) return;
 		BlockPos pos = null;
-		EntityLivingBase living = caster.iWantLivingTarget(EntityLivingBase.class);
+		WantedTargetResult wr = caster.iWantLivingTarget(EntityLivingBase.class);
+		EntityLivingBase living = (EntityLivingBase) wr.getEntity();
 		if (living != null) pos = living.getPosition();
 		if (pos == null) {
-			Entry<BlockPos, EnumFacing> target = caster.iWantBlockTarget();
-			if (target == null) return;
-			pos = target.getKey();
+			wr = caster.iWantBlockTarget();
+			pos = wr.getPos();
+			if (pos == null) return;
 			if (world.isAirBlock(pos)) return;
 		}
 		IBlockState state = world.getBlockState(pos);

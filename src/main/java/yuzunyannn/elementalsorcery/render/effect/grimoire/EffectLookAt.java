@@ -1,7 +1,5 @@
 package yuzunyannn.elementalsorcery.render.effect.grimoire;
 
-import java.util.Map.Entry;
-
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -11,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.util.ColorHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
@@ -53,13 +52,13 @@ public class EffectLookAt extends EffectCondition {
 		preScale = scale;
 		preAlpha = alpha;
 
-		Entry<BlockPos, EnumFacing> entry = caster.iWantBlockTarget();
-		if (entry == null) {
+		WantedTargetResult wr = caster.iWantBlockTarget();
+		BlockPos pos = wr.getPos();
+		if (pos == null) {
 			alpha += (0 - alpha) * 0.1;
 			return;
 		}
-		BlockPos pos = entry.getKey();
-		facing = entry.getValue();
+		facing = wr.getFace();
 		EnumFacing facing = this.facing == null ? EnumFacing.UP : this.facing;
 		Vec3i dv = facing.getDirectionVec();
 

@@ -44,8 +44,8 @@ public class ElementHelper {
 
 	// 添加元素的信息
 	@SideOnly(Side.CLIENT)
-	public static boolean addElementInformation(IElementInventory inventory, World worldIn, List<String> tooltip,
-			ITooltipFlag flagIn) {
+	public static boolean addElementInformation(IElementInventory inventory, @Nullable World worldIn,
+			List<String> tooltip, ITooltipFlag flagIn) {
 		boolean has = false;
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ElementStack estack = inventory.getStackInSlot(i);

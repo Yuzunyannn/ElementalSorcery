@@ -246,7 +246,7 @@ public class TileSupremeTable extends TileStaticMultiBlock
 				ItemStack centerStack = this.getCenterItem();
 				if (!centerStack.isEmpty()) {
 					IItemStructure structure = ItemStructure.getItemStructure(platformItem);
-					ElementStack[] estacks = structure.toElement(centerStack);
+					ElementStack[] estacks = structure.toElementStack(centerStack);
 					if (estacks != null) {
 						int count = centerStack.getCount();
 						outEStacks = new ArrayList<ElementStack>(estacks.length);
@@ -264,7 +264,7 @@ public class TileSupremeTable extends TileStaticMultiBlock
 				if (count > 0) {
 					IItemStructure structure = ItemStructure.getItemStructure(platformItem);
 					if (!structure.isEmpty()) {
-						ElementStack[] estacks = structure.toElement(structure.getStructureItem(0));
+						ElementStack[] estacks = structure.toElementStack(structure.getStructureItem(0));
 						if (estacks != null) {
 							outEStacks = new ArrayList<ElementStack>(estacks.length);
 							for (ElementStack estack : estacks) {

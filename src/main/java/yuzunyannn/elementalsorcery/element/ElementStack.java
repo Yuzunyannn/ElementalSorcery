@@ -152,7 +152,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		if (this.isEmpty()) return ElementStack.EMPTY;
 		ElementStack estack = this.copy();
 		this.shrink(size);
-		estack.setCount(size);
+		estack.setCount(Math.min(size, estack.getCount()));
 		return estack;
 	}
 

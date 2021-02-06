@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.item.ItemSpellbook;
-import yuzunyannn.elementalsorcery.render.effect.EffectElementFly;
+import yuzunyannn.elementalsorcery.render.effect.element.EffectElementFly;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.obj.Vertex;
@@ -125,7 +125,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void updateEffect(World world, int type, ElementStack estack, Vec3d pos) {
-		Vec3d myPos = new Vec3d(this.pos).addVector(0.5, 0.5, 0.5);
+		Vec3d myPos = new Vec3d(this.pos).addVector(0.5, 0.25 + this.getHigh(rotate, wakeUp), 0.5);
 		if (type == IAltarWake.SEND) giveParticleElementTo(world, estack.getColor(), myPos, pos, 1);
 		else giveParticleElementTo(world, estack.getColor(), pos, myPos, 1);
 	}

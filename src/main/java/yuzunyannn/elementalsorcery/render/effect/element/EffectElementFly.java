@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.effect;
+package yuzunyannn.elementalsorcery.render.effect.element;
 
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;

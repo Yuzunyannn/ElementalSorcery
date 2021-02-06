@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -146,6 +147,7 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 		}
 		IToElement toElement = this.getToElement();
 		if (toElement == null) toElement = ElementMap.instance;
-		outEstacks = toElement.toElement(stack);
+		IToElementInfo teInfo = toElement.toElement(stack);
+		outEstacks = teInfo == null ? null : teInfo.element();
 	}
 }
