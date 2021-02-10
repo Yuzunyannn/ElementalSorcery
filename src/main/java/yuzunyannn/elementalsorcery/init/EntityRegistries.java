@@ -15,6 +15,8 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.config.Config;
+import yuzunyannn.elementalsorcery.config.WorldGenAndSpawnConfig;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityBlockThrowEffect;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
@@ -41,12 +43,17 @@ import yuzunyannn.elementalsorcery.render.entity.RenderEntityRelicZombie;
 
 public class EntityRegistries {
 
+	@Config(kind = "spawn_and_gen", group = "elf", name = "#")
+	public static WorldGenAndSpawnConfig CONFIG_ELF = new WorldGenAndSpawnConfig(null,
+			new String[] { "plains", "desert", "hell", "forest", "birch_forest", "extreme_hills", "swampland" }, null,
+			new int[] { 8 });
+
 	public static void registerAll() {
 		// 生物
 		register(0, "elf", EntityElf.class, "Elf", 64, 3, true);
 		registerEgg("elf", 0x82bf71, 0x529b3d);
 		register(1, "elfTraveler", EntityElfTravelling.class, "Elf2", 64, 3, true);
-		Entry<Biome, Integer>[] entries = ElementalSorcery.config.SPAWN.SPAWN_ELF.getAllBiomes();
+		Entry<Biome, Integer>[] entries = CONFIG_ELF.getAllBiomes();
 		for (Entry<Biome, Integer> entry : entries) {
 			int num = entry.getValue();
 			int add = 0;

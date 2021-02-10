@@ -22,7 +22,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.relauncher.Side;
-import yuzunyannn.elementalsorcery.config.ESConfig;
 
 @Mod(modid = ElementalSorcery.MODID, name = ElementalSorcery.NAME, version = ElementalSorcery.VERSION)
 public class ElementalSorcery {
@@ -32,7 +31,6 @@ public class ElementalSorcery {
 
 	public static Logger logger;
 	public static Side side;
-	public static ESConfig config;
 	public static ESData data;
 
 	@Instance(ElementalSorcery.MODID)
@@ -44,11 +42,12 @@ public class ElementalSorcery {
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) throws Throwable {
 		try {
+
 			logger = event.getModLog();
 			side = event.getSide();
-			config = new ESConfig(event);
 			data = new ESData(event);
 			proxy.preInit(event);
+
 		} catch (Throwable e) {
 			CrashReport report = CrashReport.makeCrashReport(e, "Elementalsorcery初始化异常！");
 			if (event.getSide() == Side.CLIENT) {

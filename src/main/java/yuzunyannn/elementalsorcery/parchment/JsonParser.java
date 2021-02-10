@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.building.Building;
+import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
 import yuzunyannn.elementalsorcery.init.ESInit;
@@ -223,7 +224,7 @@ public class JsonParser {
 						if (building == null) continue;
 						for (Vec3d v3f : v3fs) {
 							BlockPos pos = new BlockPos(v3f);
-							Building.BuildingBlocks iter = building.getBuildingIterator().setPosOff(pos);
+							BuildingBlocks iter = building.getBuildingIterator().setPosOff(pos);
 							while (iter.next()) bPage.addExtraBlockNotOverlap(iter.getPos(), iter.getState());
 						}
 					} else {

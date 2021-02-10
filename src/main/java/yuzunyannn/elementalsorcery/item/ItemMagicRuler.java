@@ -148,12 +148,8 @@ public class ItemMagicRuler extends Item {
 	public static void clearRulerPos(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) return;
-		nbt.removeTag("loc1x");
-		nbt.removeTag("loc1y");
-		nbt.removeTag("loc1z");
-		nbt.removeTag("loc2x");
-		nbt.removeTag("loc2y");
-		nbt.removeTag("loc2z");
+		nbt.removeTag("loc1");
+		nbt.removeTag("loc2");
 	}
 
 	/** 获取位置 */

@@ -54,8 +54,8 @@ public class MultiBlock {
 	}
 
 	public boolean check(EnumFacing face) {
-		Building.BuildingBlocks iter = this.altar.getBuildingIterator().setFace(face);
-		iter.setPosOff(Building.BuildingBlocks.facePos(this.posOff, face).add(this.pos));
+		BuildingBlocks iter = this.altar.getBuildingIterator().setFace(face);
+		iter.setPosOff(BuildingBlocks.facePos(this.posOff, face).add(this.pos));
 		while (iter.next()) {
 			BlockPos pos = iter.getPos();
 			IBlockState should = iter.getState();
@@ -69,7 +69,7 @@ public class MultiBlock {
 			}
 			return false;
 		}
-		this.realPos = Building.BuildingBlocks.facePos(this.posOff, face).add(this.pos);
+		this.realPos = BuildingBlocks.facePos(this.posOff, face).add(this.pos);
 		this.facing = face;
 		return true;
 	}
@@ -97,7 +97,7 @@ public class MultiBlock {
 	public BlockPos getSpecialBlockPos(int index) {
 		if (facing == EnumFacing.NORTH) return realPos.add(specialBlocks.get(index));
 		BlockPos pos = specialBlocks.get(index);
-		pos = realPos.add(Building.BuildingBlocks.facePos(pos, facing));
+		pos = realPos.add(BuildingBlocks.facePos(pos, facing));
 		return pos;
 	}
 

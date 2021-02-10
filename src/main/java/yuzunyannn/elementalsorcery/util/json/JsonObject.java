@@ -19,10 +19,16 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 
+import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagIntArray;
+import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 
 public class JsonObject extends Json implements Iterable<String> {
 	final com.google.gson.JsonObject json;
@@ -61,6 +67,11 @@ public class JsonObject extends Json implements Iterable<String> {
 
 	public JsonObject(com.google.gson.JsonObject json) {
 		this.json = json;
+	}
+
+	public JsonObject(NBTTagCompound nbt) {
+		json = new com.google.gson.JsonObject();
+		this.parse(nbt);
 	}
 
 	@Override
@@ -186,6 +197,25 @@ public class JsonObject extends Json implements Iterable<String> {
 			}
 		}
 		return nbt;
+	}
+
+	private void parse(NBTTagCompound nbt) {
+		for (String key : nbt.getKeySet()) {
+			NBTBase base = nbt.getTag(key);
+			int id = base.getId();
+			if (base instanceof NBTPrimitive) {
+				NBTPrimitive primitive = ((NBTPrimitive) base);
+				if (id == NBTTag.TAG_FLOAT) this.set(key, primitive.getFloat());
+				else if (id == NBTTag.TAG_INT) this.set(key, primitive.getInt());
+				else if (id == NBTTag.TAG_DOUBLE) this.set(key, primitive.getDouble());
+				else if (id == NBTTag.TAG_LONG) this.set(key, primitive.getLong());
+				else if (id == NBTTag.TAG_SHORT) this.set(key, primitive.getShort());
+				else if (id == NBTTag.TAG_BYTE) this.set(key, primitive.getByte());
+			} else if (id == NBTTag.TAG_STRING) this.set(key, ((NBTTagString) base).getString());
+			else if (id == NBTTag.TAG_COMPOUND) this.set(key, new JsonObject((NBTTagCompound) base));
+			else if (id == NBTTag.TAG_LIST) this.set(key, new JsonArray((NBTTagList) base));
+			else if (id == NBTTag.TAG_INT_ARRAY) this.set(key, new JsonArray((NBTTagIntArray) base));
+		}
 	}
 
 	public List<ItemRecord> needItems(String key) {

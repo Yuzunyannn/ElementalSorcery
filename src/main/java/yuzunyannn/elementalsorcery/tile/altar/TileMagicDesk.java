@@ -252,7 +252,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		if (book.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null)) {
 			// 重置书的位置
 			Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
-			SpellbookRenderInfo info = spellbook.render_info;
+			SpellbookRenderInfo info = spellbook.renderInfo;
 			EntityPlayer entityplayer = this.world.getClosestPlayer((double) ((float) this.pos.getX() + 0.5F),
 					(double) ((float) this.pos.getY() + 0.5F), (double) ((float) this.pos.getZ() + 0.5F), 3.5D, false);
 			if (this.ok && entityplayer != null) {
@@ -284,7 +284,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 	public void updateClientBookRender() {
 		Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 		if (spellbook == null) return;
-		SpellbookRenderInfo info = spellbook.render_info;
+		SpellbookRenderInfo info = spellbook.renderInfo;
 		info.tickCount++;
 		info.bookSpreadPrev = info.bookSpread;
 		info.pageFlipPrev = info.pageFlip;

@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.elf.quest;
 
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.config.ESConfig;
 
 public interface IAdventurer extends Iterable<Quest> {
 
@@ -20,6 +20,6 @@ public interface IAdventurer extends Iterable<Quest> {
 
 	/** 获取最大任务数量 */
 	default public int getMaxQuests() {
-		return ElementalSorcery.config.QUEST_LIMIT;
+		return ESConfig.QUEST_LIMIT;
 	}
 }

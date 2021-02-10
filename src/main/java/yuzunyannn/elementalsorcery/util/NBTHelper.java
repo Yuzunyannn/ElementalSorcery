@@ -78,25 +78,30 @@ public class NBTHelper {
 	public static LinkedList<ElementStack> getElementList(NBTTagCompound nbt, String key) {
 		LinkedList<ElementStack> elementStackList = new LinkedList<ElementStack>();
 		NBTTagList list = nbt.getTagList(key, 10);
-		for (NBTBase n : list) {
-			elementStackList.add(new ElementStack((NBTTagCompound) n));
-		}
+		for (NBTBase n : list) elementStackList.add(new ElementStack((NBTTagCompound) n));
 		return elementStackList;
 	}
 
 	public static void setBlockPos(NBTTagCompound nbt, String key, BlockPos pos) {
 		if (pos == null) return;
-		nbt.setInteger(key + "x", pos.getX());
-		nbt.setInteger(key + "y", pos.getY());
-		nbt.setInteger(key + "z", pos.getZ());
+		nbt.setIntArray(key, toIntArray(pos));
 	}
 
 	public static boolean hasBlockPos(NBTTagCompound nbt, String key) {
-		return nbt.hasKey(key + "x");
+		return nbt.hasKey(key, NBTTag.TAG_INT_ARRAY);
 	}
 
 	public static BlockPos getBlockPos(NBTTagCompound nbt, String key) {
-		return new BlockPos(nbt.getInteger(key + "x"), nbt.getInteger(key + "y"), nbt.getInteger(key + "z"));
+		return toBlockPos(nbt.getIntArray(key));
+	}
+
+	public static int[] toIntArray(BlockPos pos) {
+		return new int[] { pos.getX(), pos.getY(), pos.getZ() };
+	}
+
+	public static BlockPos toBlockPos(int[] array) {
+		if (array.length >= 3) return new BlockPos(array[0], array[1], array[2]);
+		return BlockPos.ORIGIN;
 	}
 
 	public static void setVec3d(NBTTagCompound nbt, String key, Vec3d pos) {

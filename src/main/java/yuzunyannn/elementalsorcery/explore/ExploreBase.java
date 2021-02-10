@@ -50,7 +50,7 @@ public class ExploreBase implements IExploreHandle {
 				return false;
 			}
 		}
-		if (!NBTHelper.hasVec3d(data, "pos")) {
+		if (!NBTHelper.hasBlockPos(data, "pos")) {
 			NBTHelper.setBlockPos(data, "pos", pos);
 			return false;
 		}
@@ -87,7 +87,7 @@ public class ExploreBase implements IExploreHandle {
 
 	@Override
 	public boolean hasExplore(NBTTagCompound data) {
-		return NBTHelper.hasVec3d(data, "pos");
+		return NBTHelper.hasBlockPos(data, "pos");
 	}
 
 	public ItemStack getBlockAsItem(NBTTagCompound data) {

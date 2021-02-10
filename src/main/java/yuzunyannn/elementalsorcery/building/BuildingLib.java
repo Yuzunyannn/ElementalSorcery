@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -14,17 +15,28 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageGetBuilingInfo;
 import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class BuildingLib {
 
-	public static BuildingLib instance = new BuildingLib();
+	@Config(note = "[临时建筑保非活动停留最长，单位分钟，超时后将移除内存，使用时会强制加载][0表示不自动清除]")
+	@Config.NumberRange(min = 0, max = 60 * 24 * 365 * 100)
+	public static int BUILDING_MAX_REMAIN_TIMES = 60 * 24;
+
+	public static final BuildingLib instance = new BuildingLib();
 
 	private Map<String, Building> mapClient = new HashMap<String, Building>();
-	private Map<String, BuildingSaveData> mapSave = new HashMap<String, BuildingSaveData>();
 	private Map<String, Building> mapLib = new HashMap<String, Building>();
+	/**
+	 * mapClient只有客户端用，mapLib一旦加载完就是定死的，不应该修改<br/>
+	 * 为了节省内存，单人模式下mapClient没有作用 <br/>
+	 * 所以只有这个保存的缓存数据，会在服务器线程和客户端线程同时添加改查
+	 */
+	private Map<String, BuildingSaveData> mapSave = new ConcurrentHashMap<String, BuildingSaveData>();
+
 	long lastCheckTime = System.currentTimeMillis();
 
 	public Collection<Building> getBuildingsFromLib() {
@@ -33,24 +45,29 @@ public class BuildingLib {
 
 	/** 添加建筑到lib */
 	void addBuildingLib(String key, Building building) {
-		if (mapLib.containsKey(key)) throw new IllegalArgumentException("The key has already exist!");
+		if (mapLib.containsKey(key)) throw new IllegalArgumentException("The key(" + key + ") has already exist!");
 		building.setKeyName(key);
 		mapLib.put(key, building);
 	}
 
 	/** 添加建筑到建筑存储 */
-	void addBuilding(BuildingSaveData data) {
+	private void addBuilding(BuildingSaveData data) {
 		String key = data.building.getKeyName();
 		if (mapSave.containsKey(key)) {
-			ElementalSorcery.logger.warn("The key has already exist!");
+			ElementalSorcery.logger.warn("The key(" + key + ") has already exist!");
 			return;
 		}
 		mapSave.put(key, data);
 	}
 
-	/** 添加建筑到建筑存储 */
-	public String addBuilding(Building building) {
-		BuildingSaveData data = new BuildingSaveData(building);
+	/**
+	 * 添加建筑到建筑存储
+	 * 
+	 * @param isTemp 是否进入临时的建筑，临时建筑会随机key且以$开头，非临时建筑会在没有key时随机
+	 * 
+	 */
+	public String addBuilding(Building building, boolean isTemp) {
+		BuildingSaveData data = isTemp ? new BuildingSaveData(building) : new BuildingSaveDataJson(building);
 		this.addBuilding(data);
 		return data.building.getKeyName();
 	}
@@ -59,14 +76,15 @@ public class BuildingLib {
 	public Building getBuilding(String key) {
 		if (mapLib.containsKey(key)) return mapLib.get(key);
 		if (mapSave.containsKey(key)) return mapSave.get(key).building;
+		BuildingSaveData data = loadBuildingFromTemp(key);
+		if (data != null) return data.building;
 		return null;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public Building giveBuilding(String key) {
-		Building building = this.getBuilding(key);
-		if (building != null) return building;
-		if (mapClient.containsKey(key)) { return mapClient.get(key); }
+		if (mapLib.containsKey(key)) return mapLib.get(key);
+		if (mapClient.containsKey(key)) return mapClient.get(key);
 		mapClient.put(key, new Building());
 		return mapClient.get(key);
 	}
@@ -83,25 +101,13 @@ public class BuildingLib {
 		ESNetwork.instance.sendToServer(new MessageGetBuilingInfo(key));
 	}
 
-	/** 使用某个建筑，让建筑的时间更新 */
-	void use(String key) {
+	/** 当使用某个建筑，或者对其进行修改，让建筑的时间更新，并设置更新 */
+	public void use(String key) {
 		if (mapSave.containsKey(key)) {
 			BuildingSaveData data = mapSave.get(key);
 			data.use(this.lastCheckTime);
 		}
 	}
-
-	// 创建默认名字
-	/*
-	 * public static final String SPELLBOOK_ALTAR = "spellbook_altar"; public static
-	 * final String LARGE_ALTAR = "large_altar"; public static final String
-	 * ELEMENT_CRAFTING_ALTAR = "element_crafting_altar"; public static final String
-	 * DECONSTRUCT_ALTAR = "deconstruct_altar"; public static final String
-	 * BUILDING_ALTAR = "building_altar"; public static final String ANALYSIS_ALTAR
-	 * = "analysis_altar"; public static final String INFUSION = "infusion"; public
-	 * static final String ABSORB_BOX = "absorb_box"; public static final String
-	 * DECONSTRUCT_BOX = "deconstruct_box";
-	 */
 
 	public static void registerAll() throws IOException {
 		final ESData data = ElementalSorcery.data;
@@ -111,25 +117,27 @@ public class BuildingLib {
 			if (!path.endsWith(".nbt")) continue;
 			NBTTagCompound nbt = data.getNBTFromResource(new ResourceLocation(MODID, "structures/" + path));
 			if (path.lastIndexOf('.') != -1) path = path.substring(0, path.lastIndexOf('.'));
-			instance.addBuildingLib(path, new BuildingInherent(nbt, TextHelper.castToCamel(path)));
+			Building building = new BuildingInherent(nbt, TextHelper.castToCamel(path));
+			instance.addBuildingLib(path, building);
 		}
 		Buildings.init();
-		BuildingLib.loadBuilding();
 	}
 
-	/** 初始化加载 */
-	private static void loadBuilding() {
-		File file = ElementalSorcery.data.getFile("building/tmp", "");
-		File[] files = file.listFiles();
-		for (File f : files) {
-			try {
-				BuildingSaveData data = new BuildingSaveData(f);
-				BuildingLib.instance.addBuilding(data);
-			} catch (IOException e) {
-				ElementalSorcery.logger.warn("无效的建筑文件：" + f + "--处理：尝试删除！");
-				f.delete();
-			}
+	/** 加载一个建筑，从文件里 */
+	private static BuildingSaveData loadBuildingFromTemp(String key) {
+		File file;
+		boolean isTemp = key.charAt(0) == '$';
+		if (isTemp) file = ElementalSorcery.data.getFile("building/tmp", key);
+		else file = ElementalSorcery.data.getFile("building/", key + ".json");
+		if (!file.exists()) return null;
+		try {
+			BuildingSaveData data = isTemp ? new BuildingSaveData(file) : new BuildingSaveDataJson(file);
+			BuildingLib.instance.addBuilding(data);
+			return data;
+		} catch (IOException e) {
+			file.delete();
 		}
+		return null;
 	}
 
 	/** 处理文件信息 */
@@ -138,12 +146,15 @@ public class BuildingLib {
 		LinkedList<String> removeList = new LinkedList<String>();
 		for (Entry<String, BuildingSaveData> entry : mapSave.entrySet()) {
 			BuildingSaveData data = entry.getValue();
-			boolean out = data.deal(lastCheckTime);
+			boolean out = data.trySave(lastCheckTime);
 			if (out == false) removeList.add(entry.getKey());
 		}
-		for (String remove : removeList) {
-			this.mapSave.remove(remove);
-		}
+		for (String remove : removeList) this.mapSave.remove(remove);
+	}
+
+	public void releaseAllSaveData() {
+		this.dealSave();
+		this.mapSave.clear();
 	}
 
 }

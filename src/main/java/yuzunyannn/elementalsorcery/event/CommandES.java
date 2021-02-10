@@ -27,6 +27,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
+import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
@@ -43,6 +44,7 @@ import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper.EnumType;
+import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
@@ -78,6 +80,12 @@ public class CommandES extends CommandBase {
 			if (args.length == 1) throw new WrongUsageException("commands.es.buildFloor.usage");
 			Entity entity = sender.getCommandSenderEntity();
 			this.cmdBuildFloor(args[1], (EntityLivingBase) entity, server.getEntityWorld());
+			return;
+		}
+		case "building":// 建筑操作
+		{
+			if (args.length < 2) throw new WrongUsageException("commands.es.building.usage");
+			this.cmdBuilding(Arrays.copyOfRange(args, 1, args.length), server, sender);
 			return;
 		}
 		case "page":
@@ -127,7 +135,7 @@ public class CommandES extends CommandBase {
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			@Nullable BlockPos targetPos) {
 		if (args.length == 1) {
-			String[] names = { "build", "page", "debug", "buildFloor", "quest", "mantra", "element" };
+			String[] names = { "build", "page", "debug", "buildFloor", "quest", "mantra", "element", "building" };
 			return CommandBase.getListOfStringsMatchingLastWord(args, names);
 		} else if (args.length >= 2) {
 			switch (args[0]) {
@@ -142,6 +150,10 @@ public class CommandES extends CommandBase {
 			case "buildFloor": {
 				Collection<ResourceLocation> bs = ElfEdificeFloor.REGISTRY.getKeys();
 				return getListOfStringsMatchingLastWord(args, bs);
+			}
+			case "building": {
+				if (args.length > 2) return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+				return getListOfStringsMatchingLastWord(args, "record", "release");
 			}
 			case "page": {
 				Set<String> set = Pages.getPageIds();
@@ -312,12 +324,14 @@ public class CommandES extends CommandBase {
 		} else {
 			building = BuildingLib.instance.getBuilding(value);
 			RayTraceResult result = WorldHelper.getLookAtBlock(world, entity, 128);
-			if (result != null) pos = result.getBlockPos();
+			if (result != null) pos = result.getBlockPos().up();
 		}
 		if (building == null || pos == null) throw new CommandException("commands.es.build.fail");
-		Building.BuildingBlocks iter = building.getBuildingIterator();
+		BuildingBlocks iter = building.getBuildingIterator();
+		iter.setFace(entity.getHorizontalFacing().getOpposite());
 		while (iter.next()) {
-			world.setBlockState(iter.getPos().add(pos), iter.getState());
+			BlockPos at = iter.getPos().add(pos);
+			iter.buildState(world, at);
 		}
 	}
 
@@ -343,5 +357,41 @@ public class CommandES extends CommandBase {
 		builder.buildAll();
 		info.getType().surprise(builder, entity.getRNG());
 		info.getType().spawn(builder);
+	}
+
+	/** 建筑操作 */
+	private void cmdBuilding(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
+		EntityPlayer executer = (EntityPlayer) sender.getCommandSenderEntity();
+		EntityPlayer player = executer;
+		if (args.length > 1) player = getPlayer(server, sender, args[1]);
+
+		switch (args[0]) {
+		case "release":
+			BuildingLib.instance.releaseAllSaveData();
+			notifyCommandListener(sender, this, "commands.es.building.release");
+			System.gc();
+			break;
+		case "test":
+		case "record": {
+			ItemStack ruler = executer.getHeldItem(EnumHand.MAIN_HAND);
+			BlockPos pos1 = ItemMagicRuler.getRulerPos(ruler, true);
+			BlockPos pos2 = ItemMagicRuler.getRulerPos(ruler, false);
+			if (pos1 == null || pos2 == null) throw new WrongUsageException("commands.es.building.recordFail");
+			Building building = Building.createBuilding(sender.getEntityWorld(),
+					executer.getHorizontalFacing().getOpposite(), pos1, pos2, true);
+			building.setAuthor(executer.getName());
+			building.setName(executer.getName() + "'s building!");
+			if ("test".equals(args[0])) break;
+			BuildingLib.instance.addBuilding(building, false);
+			ItemStack ar = new ItemStack(ESInit.ITEMS.ARCHITECTURE_CRYSTAL);
+			ArcInfo.initArcInfoToItem(ar, building.getKeyName());
+			ItemHelper.addItemStackToPlayer(player, ar);
+			notifyCommandListener(sender, this, "commands.es.building.record", player.getName());
+			break;
+		}
+		default:
+			throw new WrongUsageException("commands.es.building.usage");
+		}
+
 	}
 }

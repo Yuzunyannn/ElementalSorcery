@@ -20,12 +20,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.parchment.Page;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 
 public class ItemManual extends Item {
+
+	@Config(kind = "item")
+	private int MANUAL_MAX_PAGES = 20;
 
 	public ItemManual() {
 		this.setUnlocalizedName("manual");
@@ -72,8 +76,7 @@ public class ItemManual extends Item {
 			tooltip.add(TextFormatting.GRAY + I18n.format("info.manual.count", Pages.getCount(), Pages.getCount()));
 		} else {
 			NBTTagList nbtList = ItemManual.getIds(stack);
-			tooltip.add(TextFormatting.GRAY
-					+ I18n.format("info.manual.count", nbtList.tagCount(), ElementalSorcery.config.MANUAL_MAX_PAGES));
+			tooltip.add(TextFormatting.GRAY + I18n.format("info.manual.count", nbtList.tagCount(), MANUAL_MAX_PAGES));
 		}
 	}
 
@@ -116,7 +119,7 @@ public class ItemManual extends Item {
 			}
 			if (has) player.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
 			else {
-				if (idsList.tagCount() < ElementalSorcery.config.MANUAL_MAX_PAGES) {
+				if (idsList.tagCount() < MANUAL_MAX_PAGES) {
 					idsList.appendTag(new NBTTagString(page.getId()));
 					player.inventory.setInventorySlotContents(i, ItemStack.EMPTY);
 				}

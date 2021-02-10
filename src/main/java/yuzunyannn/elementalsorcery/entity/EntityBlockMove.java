@@ -12,6 +12,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemDoor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -30,8 +31,10 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
@@ -273,7 +276,12 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 		this.prevPosZ = this.posZ = at.z;
 		if (world.isRemote) this.updateClient();
 		if (rate > 1) {
-			this.doFinish();
+			try {
+				this.doFinish();
+			} catch (Exception e) {
+				ElementalSorcery.logger.warn("EntityBlockMove放置物品时出现异常！", e);
+				ExceptionHelper.warnSend(world, "EntityBlockMove放置物品时出现异常！");
+			}
 			this.setDead();
 		}
 	}
@@ -354,9 +362,13 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 		}
 		// 放置方块
 		Item item = stack.getItem();
-		if (item instanceof ItemBlock && !world.isRemote) {
+		if (item instanceof ItemBlock) {
 			ItemBlock itemBlock = (ItemBlock) item;
 			IBlockState toState = itemBlock.getBlock().getStateFromMeta(stack.getItemDamage());
+			if (world.isRemote) {
+				world.setBlockState(to, toState);
+				return;
+			}
 			if (state != null && itemBlock.getBlock() == state.getBlock()) toState = state;
 			if (this.player == null) this.player = FakePlayerFactory.getMinecraft((WorldServer) world);
 			itemBlock.placeBlockAt(stack, this.player, world, to, EnumFacing.DOWN, 0, 0, 0, toState);
@@ -364,7 +376,9 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			IFluidHandlerItem fhi = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 			FluidStack fstack = fhi.drain(1000, true);
 			Block.spawnAsEntity(world, to, fhi.getContainer());
-			world.setBlockState(to, fstack.getFluid().getBlock().getDefaultState());
+			if (fstack != null) world.setBlockState(to, fstack.getFluid().getBlock().getDefaultState());
+		} else if (item instanceof ItemDoor) {
+			ItemDoor.placeDoor(world, to, facing.rotateY(), state.getBlock(), false);
 		} else if (state != null) {
 			world.setBlockState(to, state);
 		} else {

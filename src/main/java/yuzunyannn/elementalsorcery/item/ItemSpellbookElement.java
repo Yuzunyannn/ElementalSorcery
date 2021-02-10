@@ -44,7 +44,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 	@Override
 	@SideOnly(Side.CLIENT)
 	protected void initRenderInfo(SpellbookRenderInfo info) {
-		info.texture = RenderItemSpellbook.instance.TEXTURE_SPELLBOOK_ELEMENT_01;
+		info.texture = RenderItemSpellbook.instance.TEXTURE_SPELLBOOK_ELEMENT;
 	}
 
 	@Override

@@ -121,7 +121,7 @@ public class ItemSpellbook extends Item {
 				this.getInventory(stack));
 		if (SpellbookRenderInfo.renderInstance != null) {
 			Spellbook book = cap.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
-			this.initRenderInfo(book.render_info);
+			this.initRenderInfo(book.renderInfo);
 		}
 		return cap;
 	}
@@ -194,13 +194,13 @@ public class ItemSpellbook extends Item {
 	@SideOnly(Side.CLIENT)
 	static public void renderStart(Spellbook book) {
 		book.spelling = true;
-		book.render_info.tickCount = 0;
+		book.renderInfo.tickCount = 0;
 	}
 
 	// 渲染信息处理，改变书
 	@SideOnly(Side.CLIENT)
 	static public void renderChange(Spellbook book, float d) {
-		SpellbookRenderInfo info = book.render_info;
+		SpellbookRenderInfo info = book.renderInfo;
 		info.tickCount++;
 		info.bookSpreadPrev = info.bookSpread;
 		info.pageFlipPrev = info.pageFlip;
@@ -230,16 +230,16 @@ public class ItemSpellbook extends Item {
 	@SideOnly(Side.CLIENT)
 	static public boolean renderClose(Spellbook book) {
 		renderChange(book, -0.05F);
-		if (book.render_info.bookSpread <= 0) return true;
+		if (book.renderInfo.bookSpread <= 0) return true;
 		return false;
 	}
 
 	// 渲染信息处理，结束
 	@SideOnly(Side.CLIENT)
 	static public void renderEnd(Spellbook book) {
-		book.render_info.tickCount = 0;
-		book.render_info.bookRotation = book.render_info.bookRotationPrev = 0;
-		book.render_info.bookSpread = book.render_info.bookSpreadPrev = 0;
+		book.renderInfo.tickCount = 0;
+		book.renderInfo.bookRotation = book.renderInfo.bookRotationPrev = 0;
+		book.renderInfo.bookSpread = book.renderInfo.bookSpreadPrev = 0;
 	}
 
 	// 显示离子效果

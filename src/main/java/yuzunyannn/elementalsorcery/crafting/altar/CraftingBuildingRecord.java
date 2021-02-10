@@ -39,8 +39,7 @@ public class CraftingBuildingRecord implements ICraftingCommit {
 	}
 
 	private void setCenter() {
-		if (this.pos1 == null || this.pos2 == null)
-			return;
+		if (this.pos1 == null || this.pos2 == null) return;
 		center = new BlockPos((pos1.getX() + pos2.getX()) / 2, Math.min(pos1.getY(), pos2.getY()),
 				(pos1.getZ() + pos2.getZ()) / 2);
 	}
@@ -69,14 +68,10 @@ public class CraftingBuildingRecord implements ICraftingCommit {
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
-		if (nbt == null)
-			return;
-		if (NBTHelper.hasBlockPos(nbt, "pos1"))
-			this.pos1 = NBTHelper.getBlockPos(nbt, "pos1");
-		if (NBTHelper.hasBlockPos(nbt, "pos2"))
-			this.pos2 = NBTHelper.getBlockPos(nbt, "pos2");
-		if (NBTHelper.hasBlockPos(nbt, "pos"))
-			this.pos = NBTHelper.getBlockPos(nbt, "pos");
+		if (nbt == null) return;
+		if (NBTHelper.hasBlockPos(nbt, "pos1")) this.pos1 = NBTHelper.getBlockPos(nbt, "pos1");
+		if (NBTHelper.hasBlockPos(nbt, "pos2")) this.pos2 = NBTHelper.getBlockPos(nbt, "pos2");
+		if (NBTHelper.hasBlockPos(nbt, "pos")) this.pos = NBTHelper.getBlockPos(nbt, "pos");
 		author = nbt.getString("author");
 		this.setCenter();
 	}
@@ -95,14 +90,14 @@ public class CraftingBuildingRecord implements ICraftingCommit {
 	}
 
 	public Building createBuilding(World world, EnumFacing face) {
-		return Building.createBuilding(world, face, pos1, pos2);
+		Building building = Building.createBuilding(world, face, pos1, pos2, false);
+		building.setAuthor(author);
+		return building;
 	}
 
 	public boolean onUpdate(World world) {
-		if (this.pos1 == null || this.pos2 == null || this.pos == null)
-			return false;
-		if (this.pos1.distanceSq(this.pos2) > ItemMagicRuler.MAX_DIS_SQ)
-			return false;
+		if (this.pos1 == null || this.pos2 == null || this.pos == null) return false;
+		if (this.pos1.distanceSq(this.pos2) > ItemMagicRuler.MAX_DIS_SQ) return false;
 		do {
 			this.pos = Building.movePosOnce(pos, pos1, pos2);
 			if (this.pos == null) {
@@ -111,8 +106,7 @@ public class CraftingBuildingRecord implements ICraftingCommit {
 			}
 		} while (world.isAirBlock(this.pos));
 		if (!world.isAirBlock(pos)) {
-			if (center == null)
-				this.setCenter();
+			if (center == null) this.setCenter();
 		}
 		return true;
 	}

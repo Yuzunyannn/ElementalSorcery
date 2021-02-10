@@ -27,6 +27,10 @@ public class ESData {
 		file.mkdirs();
 	}
 
+	public File getFolder() {
+		return file;
+	}
+
 	/** 获取mod的存储路径下的某个目录下的文件 */
 	public File getFile(String filepath, String filename) {
 		File file = new File(this.file.getPath() + "/" + filepath);

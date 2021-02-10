@@ -16,7 +16,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.elf.quest.QuestTriggerDataSendParcel;
 import yuzunyannn.elementalsorcery.elf.quest.QuestTriggers;
 import yuzunyannn.elementalsorcery.init.ESInit;
@@ -26,6 +26,9 @@ import yuzunyannn.elementalsorcery.util.NBTTag;
 /** 精灵邮局 */
 public class ElfPostOffice extends WorldSavedData {
 
+	@Config(note = "[邮局储存包裹的最长保持时间，超过时间就会被清除，单位小时，如果为-1表示用不清除]")
+	private static float MAX_LIFE_TIME_OF_PARCEL = 24 * 16;
+
 	/** 把玩家名作为地址时的前缀 */
 	public static final String PLAYER_ADDRESS_PREFIX = "$$";
 
@@ -33,11 +36,11 @@ public class ElfPostOffice extends WorldSavedData {
 
 	/** 对长时间没有收获的包裹进行刪除处理 */
 	public static void GC(World world) {
-		if (ElementalSorcery.config.MAX_LIFE_TIME_OF_PARCEL < 0) return;
+		if (MAX_LIFE_TIME_OF_PARCEL < 0) return;
 		long now = System.currentTimeMillis();
 		if (now - lastGC < 1000 * 60 * 60) return;// 一小时一次
 		lastGC = now;
-		final long MAX_HOLD_TIME = (int) (1000 * 60 * 60 * ElementalSorcery.config.MAX_LIFE_TIME_OF_PARCEL);
+		final long MAX_HOLD_TIME = (int) (1000 * 60 * 60 * MAX_LIFE_TIME_OF_PARCEL);
 		MapStorage storage = world.getMapStorage();
 		WorldSavedData worldSave = storage.getOrLoadData(ElfPostOffice.class, "ESPostOffice");
 		if (worldSave == null) return;

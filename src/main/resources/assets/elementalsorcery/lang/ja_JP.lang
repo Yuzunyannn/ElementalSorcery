@@ -241,6 +241,10 @@ commands.es.mantra.add=%sの魔典に呪文%sを加えました
 commands.es.element.usage=/es element <give|insert|extract|add> <プレイヤー> <元素>
 commands.es.element.give=%sに%sを含む元素の水晶を与えた
 commands.es.element.notFound=手に物を持たなければなりません。
+commands.es.building.usage=/es building <record|release>
+commands.es.building.release=すべての建筑キャッシュを保存とリリースしました。
+commands.es.building.recordFail=あなたの持っている魔力ルーラーに領域データがあることを確認してください。
+commands.es.building.record=建築データを記録し、%sに建築の水晶を与えました。
 
 arc.infusion.name=エンチャント祭壇
 arc.absorbBox.name=元素を吸収する祭壇

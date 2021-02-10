@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
+import yuzunyannn.elementalsorcery.building.BlockItemTypeInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
@@ -53,8 +54,8 @@ public class ItemArchitectureCrystal extends ItemCrystal {
 		String author = info.building.getAuthor();
 		if (!author.isEmpty()) tooltip.add(I18n.format("info.arcCrystal.author", author));
 		tooltip.add(I18n.format("info.arcCrystal.name", info.building.getName()));
-		List<Building.BlockItemTypeInfo> list = info.building.getBlockTypeInfos();
-		for (Building.BlockItemTypeInfo tinfo : list) {
+		List<BlockItemTypeInfo> list = info.building.getBlockTypeInfos();
+		for (BlockItemTypeInfo tinfo : list) {
 			tooltip.add(I18n.format("info.arcCrystal.count", I18n.format(tinfo.getUnlocalizedName() + ".name"),
 					tinfo.getCount()));
 		}

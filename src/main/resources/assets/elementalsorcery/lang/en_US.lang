@@ -241,6 +241,10 @@ commands.es.mantra.add=Add Mantra of %s for %s's Grimoire
 commands.es.element.usage=/es element <give|insert|extract|add> <player> <element>
 commands.es.element.give=Give %s Element Crystal of %s
 commands.es.element.notFound=You have to have something in your hand
+commands.es.building.usage=/es building <record|release>
+commands.es.building.release=Save and Release all ref from temp building and call GC
+commands.es.building.recordFail=Please make sure the Magic Ruler in your hand has area data!
+commands.es.building.record=Successfully recorded building data and gave %s Structural Crystal
 
 arc.infusion.name= Enchanting Altar
 arc.absorbBox.name=Element Absorb Altar

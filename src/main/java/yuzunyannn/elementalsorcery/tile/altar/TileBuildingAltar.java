@@ -16,6 +16,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
+import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -43,7 +44,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 
 	/** 获取标尺 */
 	private ItemStack getRuler() {
-		BlockPos pos = this.pos.add(Building.BuildingBlocks.facePos(RULER_POS, structure.face()));
+		BlockPos pos = this.pos.add(BuildingBlocks.facePos(RULER_POS, structure.face()));
 		TileEntity tile = this.world.getTileEntity(pos);
 		if (tile instanceof IGetItemStack) {
 			ItemStack stack = ((IGetItemStack) tile).getStack();
@@ -152,9 +153,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		}
 		this.deadTime = 0;
 		CraftingBuildingRecord cnr = (CraftingBuildingRecord) commit;
-		if (!cnr.onUpdate(this.world)) {
-			this.canContinue = false;
-		}
+		if (!cnr.onUpdate(this.world)) this.canContinue = false;
 	}
 
 	@Override
@@ -186,8 +185,8 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		if (success) {
 			Building building = cnr.createBuilding(world, this.structure.face().getOpposite());
 			building.setName(building.getAuthor() + "的建筑");
-			building.mkdir();
-			String key = BuildingLib.instance.addBuilding(building);
+			building.markDirty();
+			String key = BuildingLib.instance.addBuilding(building, true);
 			ArcInfo.initArcInfoToItem(this.stack, key);
 		} else this.badEnd();
 		return ICraftingLaunch.SUCCESS;
@@ -214,8 +213,8 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 
 	@Override
 	public boolean canSetStack(ItemStack stack) {
-		return (stack.getItem() == ESInit.ITEMS.ARCHITECTURE_CRYSTAL
-				|| stack.getSubCompound("building") != null) && !ArcInfo.isArc(stack);
+		return (stack.getItem() == ESInit.ITEMS.ARCHITECTURE_CRYSTAL || stack.getSubCompound("building") != null)
+				&& !ArcInfo.isArc(stack);
 	}
 
 	@Override

@@ -96,10 +96,10 @@ public class Spellbook {
 	IElementInventory inventory = null;
 
 	/** 渲染信息 */
-	public SpellbookRenderInfo render_info = null;
+	public SpellbookRenderInfo renderInfo = null;
 	{
 		if (SpellbookRenderInfo.renderInstance != null) {
-			render_info = new SpellbookRenderInfo();
+			renderInfo = new SpellbookRenderInfo();
 		}
 	}
 

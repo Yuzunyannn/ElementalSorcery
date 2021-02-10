@@ -45,30 +45,23 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 		@Override
 		@Nonnull
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (Block.getBlockFromItem(stack.getItem()) != ESInit.BLOCKS.STAR_STONE)
-				return stack;
-			if (slot < 0 || slot >= this.getSlots())
-				return stack;
-			if (millList.size() >= this.getSlots())
-				return stack;
+			if (Block.getBlockFromItem(stack.getItem()) != ESInit.BLOCKS.STAR_STONE) return stack;
+			if (slot < 0 || slot >= this.getSlots()) return stack;
+			if (millList.size() >= this.getSlots()) return stack;
 			// 不同的物品不能同时放入
 			if (!millingItem.isEmpty()) {
-				if (!ItemStack.areItemsEqual(millingItem, stack))
-					return stack;
+				if (!ItemStack.areItemsEqual(millingItem, stack)) return stack;
 			}
 			// 获取添加到list的次数，规定list里，每一个位置只能有一个物品
 			int addTimes = (this.getSlots() - millList.size());
 			addTimes = addTimes <= stack.getCount() ? addTimes : stack.getCount();
-			if (addTimes == 0)
-				return stack;
-			if (simulate)
-				return ItemHandlerHelper.copyStackWithSize(stack, stack.getCount() - addTimes);
+			if (addTimes == 0) return stack;
+			if (simulate) return ItemHandlerHelper.copyStackWithSize(stack, stack.getCount() - addTimes);
 			for (int i = 0; i < addTimes; i++) {
 				Milling m = new Milling();
 				m.stack = new ItemStack(stack.getItem(), 1, stack.getItemDamage());
 				millList.add(m);
-				if (millingItem.isEmpty())
-					millingItem = m.stack.copy();
+				if (millingItem.isEmpty()) millingItem = m.stack.copy();
 			}
 			TileStoneMill.this.markDirty();
 			TileStoneMill.this.updateToClient();
@@ -179,26 +172,21 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 
 	// 进行一次研磨
 	public void mill() {
-		if (this.getCurrMillingItem().isEmpty())
-			return;
-		if (restTick <= 20)
-			restTick = 60;
+		if (this.getCurrMillingItem().isEmpty()) return;
+		if (restTick <= 20) restTick = 60;
 	}
 
 	// 获取研磨产物
 	public void millDrop() {
-		if (this.millingItem.isEmpty())
-			return;
+		if (this.millingItem.isEmpty()) return;
 		int need = this.getResultDustyCount(this.millingItem);
 		if (need <= this.dusty) {
 			ItemStack result = this.getResult(this.millingItem);
 			this.dusty -= need;
 			if (this.dusty == 0) {
-				if (this.millList.isEmpty())
-					this.millingItem = ItemStack.EMPTY;
+				if (this.millList.isEmpty()) this.millingItem = ItemStack.EMPTY;
 			}
-			if (!this.world.isRemote)
-				Block.spawnAsEntity(this.world, this.pos, result);
+			if (!this.world.isRemote) Block.spawnAsEntity(this.world, this.pos, result);
 			this.restTick = 0;
 			this.markDirty();
 		}
@@ -220,11 +208,9 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 							Milling m = itor.next();
 							m.degree += 25;
 							this.dusty += 25;
-							if (m.degree >= this.getDustyCount(m.stack))
-								itor.remove();
+							if (m.degree >= this.getDustyCount(m.stack)) itor.remove();
 						}
-						if (this.dusty > 1000)
-							this.dusty = 1000;
+						if (this.dusty > 1000) this.dusty = 1000;
 						this.markDirty();
 					}
 				}
@@ -235,25 +221,20 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 					this.rotate -= 3.1415926f * 2;
 				}
 			}
-			if (restTick == 0)
-				this.markDirty();
-			if (world.isRemote)
-				this.renderClient(true);
+			if (restTick == 0) this.markDirty();
+			if (world.isRemote) this.renderClient(true);
 		} else {
 			// 结束旋转
 			if (this.rotate > 0) {
 				if (this.rotate < 3.1415926f) {
 					this.rotate += ROTATE_RATE;
-					if (this.rotate > 3.1415926f)
-						this.prevRotate = this.rotate = 0;
+					if (this.rotate > 3.1415926f) this.prevRotate = this.rotate = 0;
 				} else {
 					this.rotate += ROTATE_RATE;
-					if (this.rotate > 3.1415926f * 2)
-						this.prevRotate = this.rotate = 0;
+					if (this.rotate > 3.1415926f * 2) this.prevRotate = this.rotate = 0;
 				}
 			}
-			if (world.isRemote)
-				this.renderClient(false);
+			if (world.isRemote) this.renderClient(false);
 		}
 	}
 
@@ -273,20 +254,17 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 		this.prevPlayerRoate = this.playerRoate;
 
 		if (lift) {
-			if (this.liftTick < 1.0f)
-				this.liftTick += 0.05f;
+			if (this.liftTick < 1.0f) this.liftTick += 0.05f;
 			EntityPlayer entityplayer = this.world.getClosestPlayer((double) ((float) this.pos.getX() + 0.5F),
 					(double) ((float) this.pos.getY() + 0.5F), (double) ((float) this.pos.getZ() + 0.5F), 4.0D, false);
 			if (entityplayer != null) {
 				double d0 = entityplayer.posX - (double) ((float) this.pos.getX() + 0.5F);
 				double d1 = entityplayer.posZ - (double) ((float) this.pos.getZ() + 0.5F);
 				this.playerRoate = -(float) MathHelper.atan2(d1, d0) + 3.1415926f;
-				if (this.playerRoate > 3.1415926f)
-					this.playerRoate -= 3.1415926f * 2;
+				if (this.playerRoate > 3.1415926f) this.playerRoate -= 3.1415926f * 2;
 			}
 		} else {
-			if (this.liftTick > 0.0f)
-				this.liftTick -= 0.05f;
+			if (this.liftTick > 0.0f) this.liftTick -= 0.05f;
 		}
 	}
 
@@ -314,10 +292,8 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 	public void readFromNBT(NBTTagCompound compound) {
 		millList = NBTHelper.getNBTSerializableList(compound, "inv", Milling.class, NBTTagCompound.class);
 		dusty = compound.getInteger("dusty");
-		if (compound.hasKey("milling"))
-			millingItem = new ItemStack((NBTTagCompound) compound.getTag("milling"));
-		if (this.isSending())
-			return;
+		if (compound.hasKey("milling")) millingItem = new ItemStack((NBTTagCompound) compound.getTag("milling"));
+		if (this.isSending()) return;
 		super.readFromNBT(compound);
 	}
 
@@ -326,24 +302,19 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 		NBTHelper.setNBTSerializableList(compound, "inv", millList);
 		compound.setInteger("dusty", dusty);
 		compound.setTag("milling", millingItem.serializeNBT());
-		if (this.isSending())
-			return compound;
+		if (this.isSending()) return compound;
 		return super.writeToNBT(compound);
 	}
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			return true;
-		}
+		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) return true;
 		return super.hasCapability(capability, facing);
 	}
 
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			return (T) inventory;
-		}
+		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) return (T) inventory;
 		return super.getCapability(capability, facing);
 	}
 }

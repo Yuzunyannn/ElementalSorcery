@@ -241,6 +241,10 @@ commands.es.mantra.add=为%s的魔典添加了咒文%s
 commands.es.element.usage=/es element <give|insert|extract|add> <玩家> <元素>
 commands.es.element.give=给予了%s元素水晶，包含%s
 commands.es.element.notFound=手上必须拿着物品
+commands.es.building.usage=/es building <record|release>
+commands.es.building.release=已保存并清空所有临时建筑缓存
+commands.es.building.recordFail=请确保您手里的魔力标尺有区域数据！
+commands.es.building.record=成功记录了建筑数据，并给予了%s建筑水晶
 
 arc.infusion.name=注魔祭坛
 arc.absorbBox.name=元素吸收祭坛

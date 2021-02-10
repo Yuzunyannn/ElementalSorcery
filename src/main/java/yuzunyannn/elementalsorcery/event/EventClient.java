@@ -25,6 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -172,7 +173,7 @@ public class EventClient {
 			event.getToolTip().add(TextFormatting.GOLD + "This item will be removed soon.");
 		}
 		// 显示元素
-		if (!ElementalSorcery.config.SHOW_ELEMENT_TOOLTIP) return;
+		if (!ESConfig.ENABLE_ITEM_ELEMENT_TOOLTIP_SHOW) return;
 		EntityPlayer player = event.getEntityPlayer();
 		if (player == null || !player.isCreative()) return;
 		IToElementInfo teInfo = ElementMap.instance.toElement(stack);

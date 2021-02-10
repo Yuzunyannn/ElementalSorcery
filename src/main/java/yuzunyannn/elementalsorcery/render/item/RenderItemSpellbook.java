@@ -20,7 +20,7 @@ public class RenderItemSpellbook implements IRenderItem {
 	public final TextureBinder TEXTURE_SPELLBOOK = new TextureBinder("textures/items/book/spellbook_01.png");
 	public final TextureBinder TEXTURE_SPELLBOOK_ARC = new TextureBinder("textures/items/book/spellbook_02.png");
 	public final TextureBinder TEXTURE_SPELLBOOK_LAUNCH = new TextureBinder("textures/items/book/spellbook_03.png");
-	public final TextureBinder TEXTURE_SPELLBOOK_ELEMENT_01 = new TextureBinder("textures/items/book/spellbook_04.png");
+	public final TextureBinder TEXTURE_SPELLBOOK_ELEMENT = new TextureBinder("textures/items/book/spellbook_04.png");
 
 	private final ModelSpellbook modelBook = new ModelSpellbook(1);
 
@@ -30,7 +30,7 @@ public class RenderItemSpellbook implements IRenderItem {
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		SpellbookRenderInfo info = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null).render_info;
+		SpellbookRenderInfo info = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null).renderInfo;
 		GlStateManager.pushMatrix();
 		GlStateManager.enableCull();
 		if (IRenderItem.isGUI(stack)) {

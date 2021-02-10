@@ -101,6 +101,7 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
+import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
@@ -486,8 +487,6 @@ public class ESInit {
 	// 正式开始进行注册
 
 	public final static void preInit(FMLPreInitializationEvent event) throws Throwable {
-		// 初始化创建所有实例
-		ESInit.instance();
 		// 注册物品
 		registerAllItems();
 		// 注册方块
@@ -570,7 +569,7 @@ public class ESInit {
 		// 客户端事件
 		MinecraftForge.EVENT_BUS.register(EventClient.class);
 		// 世界离屏渲染
-		if (ElementalSorcery.config.PORTAL_RENDER_TYPE == 2) WorldScene.init();
+		if (ESConfig.PORTAL_RENDER_TYPE == 2) WorldScene.init();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -879,6 +878,7 @@ public class ESInit {
 
 	private static void register(Class<? extends TileEntity> tileEntityClass, String id) {
 		GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation(ElementalSorcery.MODID, id));
+		ESConfig.load(tileEntityClass);
 	}
 
 	@SideOnly(Side.CLIENT)

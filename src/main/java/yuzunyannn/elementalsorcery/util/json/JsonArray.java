@@ -7,10 +7,15 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 
 import net.minecraft.nbt.NBTBase;
+import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagByte;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagFloat;
+import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.math.MathHelper;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 
 public class JsonArray extends Json {
 
@@ -22,6 +27,16 @@ public class JsonArray extends Json {
 
 	public JsonArray(com.google.gson.JsonArray json) {
 		this.json = json;
+	}
+
+	public JsonArray(NBTTagList nbt) {
+		this();
+		this.parse(nbt);
+	}
+
+	public JsonArray(NBTTagIntArray nbt) {
+		this();
+		this.parse(nbt);
 	}
 
 	public com.google.gson.JsonArray getGoogleJson() {
@@ -116,7 +131,17 @@ public class JsonArray extends Json {
 	}
 
 	@Override
-	public NBTTagList asNBT() {
+	public NBTBase asNBT() {
+		if (json.size() <= 0) return new NBTTagList();
+		// 检查intarray
+		JsonElement checkJE = json.get(0);
+		if (checkJE.isJsonPrimitive()) {
+			JsonPrimitive jp = checkJE.getAsJsonPrimitive();
+			Number number = jp.getAsNumber();
+			float f = number.floatValue();
+			if (f - MathHelper.floor(f) == 0) return this.asNBTIntArray();
+		}
+		// 其他情况
 		NBTTagList nbt = new NBTTagList();
 		for (JsonElement je : json) {
 			NBTBase base = null;
@@ -134,6 +159,42 @@ public class JsonArray extends Json {
 			else if (nbt.getTagType() == base.getId()) nbt.appendTag(base);
 		}
 		return nbt;
+
+	}
+
+	private NBTTagIntArray asNBTIntArray() {
+		ArrayList<Integer> array = new ArrayList<>();
+		for (JsonElement je : json) {
+			if (je.isJsonPrimitive()) {
+				JsonPrimitive jp = je.getAsJsonPrimitive();
+				if (jp.isNumber()) array.add(je.getAsInt());
+			}
+		}
+		int[] ints = new int[array.size()];
+		for (int i = 0; i < ints.length; i++) ints[i] = array.get(i);
+		return new NBTTagIntArray(ints);
+	}
+
+	private void parse(NBTTagList nbt) {
+		for (NBTBase base : nbt) {
+			int id = base.getId();
+			if (base instanceof NBTPrimitive) {
+				NBTPrimitive primitive = ((NBTPrimitive) base);
+				if (id == NBTTag.TAG_FLOAT) this.append(primitive.getFloat());
+				else if (id == NBTTag.TAG_INT) this.append(primitive.getInt());
+				else if (id == NBTTag.TAG_DOUBLE) this.append(primitive.getDouble());
+				else if (id == NBTTag.TAG_LONG) this.append(primitive.getLong());
+				else if (id == NBTTag.TAG_SHORT) this.append(primitive.getShort());
+				else if (id == NBTTag.TAG_BYTE) this.append(primitive.getByte());
+			} else if (id == NBTTag.TAG_STRING) this.append(((NBTTagString) base).getString());
+			else if (id == NBTTag.TAG_COMPOUND) this.append(new JsonObject((NBTTagCompound) base));
+			else if (id == NBTTag.TAG_LIST) this.append(new JsonArray((NBTTagList) base));
+			else if (id == NBTTag.TAG_INT_ARRAY) this.append(new JsonArray((NBTTagIntArray) base));
+		}
+	}
+
+	private void parse(NBTTagIntArray nbt) {
+		for (int i : nbt.getIntArray()) this.append(i);
 	}
 
 	public ArrayList<String> asStringArray() {

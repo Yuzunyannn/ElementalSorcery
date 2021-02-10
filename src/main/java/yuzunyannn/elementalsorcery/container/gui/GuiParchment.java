@@ -29,6 +29,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.Building;
+import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.container.ContainerParchment;
 import yuzunyannn.elementalsorcery.parchment.IPageManager;
 import yuzunyannn.elementalsorcery.parchment.Page;
@@ -380,7 +381,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
 		BlockModelRenderer render = blockrendererdispatcher.getBlockModelRenderer();
 		// 建筑遍历器
-		Building.BuildingBlocks iter = building.getBuildingIterator();
+		BuildingBlocks iter = building.getBuildingIterator();
 		// 开始
 		GlStateManager.disableCull();
 		while (iter.next()) {

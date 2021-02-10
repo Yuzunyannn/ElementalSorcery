@@ -13,10 +13,30 @@ import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.event.terraingen.PopulateChunkEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.config.ESConfigGenAndSpawnGetter;
+import yuzunyannn.elementalsorcery.config.Config;
+import yuzunyannn.elementalsorcery.config.WorldGenAndSpawnConfig;
 
 public class WorldGeneratorES {
+
+	static public String[] array(String... str) {
+		return str;
+	}
+
+	static public int[] array(int... i) {
+		return i;
+	}
+
+	@Config(kind = "spawn_and_gen", group = "kyanite_ore", name = "#")
+	public static WorldGenAndSpawnConfig CONFIG_KYANITE_ORE = new WorldGenAndSpawnConfig(null, null, null, null);
+	@Config(kind = "spawn_and_gen", group = "start_stone", name = "#")
+	public static WorldGenAndSpawnConfig CONFIG_START_STONE = new WorldGenAndSpawnConfig(null, null, null, null);
+	@Config(kind = "spawn_and_gen", group = "seal_stone", name = "#")
+	public static WorldGenAndSpawnConfig CONFIG_SEAL_STONE = new WorldGenAndSpawnConfig(
+			array("overworld", "the_nether"), null, array(0, -2), null);
+
+	@Config(kind = "spawn_and_gen", group = "elf_tree", name = "#")
+	public static WorldGenAndSpawnConfig CONFIG_ELF_TREE = new WorldGenAndSpawnConfig(null, null, null, null);
+
 	// 生成矿
 	static public class GenOre {
 
@@ -31,7 +51,7 @@ public class WorldGeneratorES {
 		}
 
 		static void gen(World world, BlockPos pos, Random rand, WorldGenerator generator,
-				ESConfigGenAndSpawnGetter config) {
+				WorldGenAndSpawnConfig config) {
 			Biome biome = world.getBiome(pos);
 			if (!config.canSpawn(world, biome)) return;
 			if (!TerrainGen.generateOre(world, rand, generator, pos, OreGenEvent.GenerateMinable.EventType.CUSTOM))
@@ -39,12 +59,12 @@ public class WorldGeneratorES {
 			generator.generate(world, rand, pos);
 		}
 
-		private void gen(OreGenEvent.Post event, WorldGenerator generator, ESConfigGenAndSpawnGetter config) {
+		private void gen(OreGenEvent.Post event, WorldGenerator generator, WorldGenAndSpawnConfig config) {
 			GenOre.gen(event.getWorld(), event.getPos(), event.getRand(), generator, config);
 		}
 
 		public void genKynateOre(OreGenEvent.Post event) {
-			gen(event, new WorldGenKyaniteOre(), ElementalSorcery.config.SPAWN.GEN_KYNATE);
+			gen(event, new WorldGenKyaniteOre(), CONFIG_KYANITE_ORE);
 		}
 	}
 
@@ -69,12 +89,12 @@ public class WorldGeneratorES {
 			ChunkPos chunkPos = event.getChunkPos();
 			Random rand = event.getRand();
 			Biome biome = world.getBiome(chunkPos.getBlock(0, 0, 0));
-			if (!ElementalSorcery.config.SPAWN.GEN_ELF_TREE.canSpawn(world, biome)) return;
+			if (!CONFIG_ELF_TREE.canSpawn(world, biome)) return;
 			if (!net.minecraftforge.event.terraingen.TerrainGen.decorate(world, rand, chunkPos,
 					DecorateBiomeEvent.Decorate.EventType.CUSTOM))
 				return;
 			WorldGenerator generator;
-			int expect = ElementalSorcery.config.SPAWN.GEN_ELF_TREE.getSpawnPoint(world, biome);
+			int expect = CONFIG_ELF_TREE.getSpawnPoint(world, biome);
 			if (biome == Biomes.PLAINS) {
 				if (rand.nextInt(Math.max(1, 5 - expect)) != 0) return;
 			} else if (rand.nextInt(Math.max(1, 10 - expect * 2)) != 0) return;
@@ -85,17 +105,17 @@ public class WorldGeneratorES {
 			generator.generate(world, rand, blockpos);
 		}
 
-		private void gen(DecorateBiomeEvent.Post event, WorldGenerator generator, ESConfigGenAndSpawnGetter config) {
+		private void gen(DecorateBiomeEvent.Post event, WorldGenerator generator, WorldGenAndSpawnConfig config) {
 			BlockPos pos = event.getChunkPos().getBlock(0, 0, 0);
 			GenOre.gen(event.getWorld(), pos.add(8, 0, 8), event.getRand(), generator, config);
 		}
 
 		public void genStarStone(DecorateBiomeEvent.Post event) {
-			gen(event, new WorldGenStarStone(), ElementalSorcery.config.SPAWN.GEN_START_STONE);
+			gen(event, new WorldGenStarStone(), CONFIG_START_STONE);
 		}
 
 		public void genSealStone(DecorateBiomeEvent.Post event) {
-			gen(event, new WorldGenSealStone(), ElementalSorcery.config.SPAWN.GEN_SEAL_STONE);
+			gen(event, new WorldGenSealStone(), CONFIG_SEAL_STONE);
 		}
 
 	}

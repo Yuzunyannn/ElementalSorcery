@@ -13,7 +13,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
-import yuzunyannn.elementalsorcery.building.Building;
+import yuzunyannn.elementalsorcery.building.BlockItemTypeInfo;
+import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
@@ -46,7 +47,7 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 		}
 		if (book.obj == null) { return; }
 		if (power < this.getCast(book)) return;
-		Building.BuildingBlocks blocks = ((Building.BuildingBlocks) book.obj);
+		BuildingBlocks blocks = ((BuildingBlocks) book.obj);
 		while (book.obj != null) {
 			if (blocks.next()) {
 				// 获取变量
@@ -58,8 +59,8 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 					if (entity instanceof EntityPlayer) {
 						// 如果不是创造模式
 						if (!((EntityPlayer) entity).isCreative()) {
-							ItemStack the = Building.BlockItemTypeInfo
-									.getItemStackCanUsed(((EntityPlayer) entity).inventory, need);
+							ItemStack the = BlockItemTypeInfo.getItemStackCanUsed(((EntityPlayer) entity).inventory,
+									need);
 							if (the.isEmpty()) continue;
 							need = the.splitStack(1);
 						}

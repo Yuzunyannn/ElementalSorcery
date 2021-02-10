@@ -9,7 +9,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class WorldGenStarStone extends WorldGenerator {
@@ -17,7 +16,7 @@ public class WorldGenStarStone extends WorldGenerator {
 	@Override
 	public boolean generate(World worldIn, Random rand, BlockPos postion) {
 		Biome biome = worldIn.getBiome(postion);
-		int expect = ElementalSorcery.config.SPAWN.GEN_START_STONE.getSpawnPoint(worldIn, biome);
+		int expect = WorldGeneratorES.CONFIG_START_STONE.getSpawnPoint(worldIn, biome);
 		int tryTime = 0;
 		if (biome == Biomes.DESERT && rand.nextFloat() > 0.20f) return true;
 		if (biome == Biomes.DESERT_HILLS) tryTime = rand.nextInt(3);

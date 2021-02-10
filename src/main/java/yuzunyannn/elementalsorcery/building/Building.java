@@ -2,41 +2,29 @@ package yuzunyannn.elementalsorcery.building;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCarpet;
-import net.minecraft.block.BlockLadder;
-import net.minecraft.block.BlockStaticLiquid;
-import net.minecraft.block.BlockTorch;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.inventory.IInventory;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
-import net.minecraftforge.fluids.BlockFluidBase;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class Building implements INBTSerializable<NBTTagCompound> {
 
@@ -44,18 +32,24 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 	public class BlockInfo implements INBTSerializable<NBTTagCompound> {
 		/** 方块的state */
 		IBlockState state;
-		/** 方块 */
-		Block block;
-		/** 方块的meta */
-		int meta;
+		/** 方块的保存数据 */
+		NBTTagCompound nbt;
 		/** 对应物品类型的索引 */
 		int typeIndex;
 
 		public BlockInfo(IBlockState state, int tpIndex) {
 			this.state = state;
-			this.block = state.getBlock() == null ? Blocks.AIR : state.getBlock();
-			this.meta = state.getBlock().getMetaFromState(state);
 			this.typeIndex = tpIndex;
+		}
+
+		public BlockInfo(IBlockState state, int tpIndex, TileEntity tile) {
+			this(state, tpIndex);
+			if (tile == null) return;
+			nbt = tile.serializeNBT();
+			nbt.removeTag("id");
+			nbt.removeTag("x");
+			nbt.removeTag("y");
+			nbt.removeTag("z");
 		}
 
 		private BlockInfo(NBTTagCompound nbt) {
@@ -64,14 +58,18 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 
 		@Override
 		public int hashCode() {
-			return block.hashCode() + meta;
+			if (nbt == null) return state.hashCode();
+			return state.hashCode() ^ nbt.hashCode();
 		}
 
 		@Override
 		public boolean equals(Object other) {
 			if (other instanceof BlockInfo) {
 				BlockInfo info = (BlockInfo) other;
-				return info.typeIndex == this.typeIndex && info.block == this.block && info.meta == this.meta;
+				boolean base = info.typeIndex == this.typeIndex && info.state == this.state;
+				if (!base) return base;
+				if (nbt == null) return info.nbt == null;
+				return info.nbt != null && this.nbt.equals(info.nbt);
 			}
 			return false;
 		}
@@ -80,96 +78,60 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			return state;
 		}
 
-		@Override
-		public NBTTagCompound serializeNBT() {
-			NBTTagCompound nbt = new NBTTagCompound();
-			nbt.setInteger("meta", meta);
-			nbt.setString("blockD", block.getRegistryName().getResourceDomain());
-			nbt.setString("blockP", block.getRegistryName().getResourcePath());
+		public NBTTagCompound getNBTData() {
+			return nbt;
+		}
+
+		public NBTTagCompound getNBTData(TileEntity tile) {
+			if (this.nbt == null) return null;
+			BlockPos pos = tile.getPos();
+
+			NBTTagCompound nbt = this.nbt.copy();
+			nbt.setInteger("x", pos.getX());
+			nbt.setInteger("y", pos.getY());
+			nbt.setInteger("z", pos.getZ());
+
+			ResourceLocation id = TileEntity.getKey(tile.getClass());
+			if (id == null) {
+				ElementalSorcery.logger.warn("建筑在初始化保存数据时，找不到tile:" + tile.getClass());
+				return null;
+			}
+			nbt.setString("id", id.toString());
+
 			return nbt;
 		}
 
 		@Override
-		public void deserializeNBT(NBTTagCompound nbt) {
-			this.meta = nbt.getInteger("meta");
-			ResourceLocation resourcelocation = new ResourceLocation(nbt.getString("blockD"), nbt.getString("blockP"));
-			if (Block.REGISTRY.containsKey(resourcelocation)) {
-				this.block = Block.REGISTRY.getObject(resourcelocation);
-			} else {
-				this.block = Blocks.DIRT;
-			}
-			this.state = this.block.getStateFromMeta(this.meta);
-		}
-	}
+		public NBTTagCompound serializeNBT() {
+			NBTTagCompound tag = new NBTTagCompound();
 
-	/** 方块类型的信息 */
-	public static class BlockItemTypeInfo {
-		private final ItemStack blockStack;
-		int count = 0;
+			Block block = state.getBlock();
+			int meta = block.getMetaFromState(state);
 
-		public BlockItemTypeInfo(IBlockState state) {
-			// 临时处理水
-			if (state.getMaterial().isLiquid()) {
-				ItemStack bucket = new ItemStack(Items.BUCKET);
-				if (state.getBlock() instanceof BlockStaticLiquid) {
-					if (state.getMaterial() == Material.WATER) {
-						bucket = new ItemStack(Items.WATER_BUCKET);
-					} else if (state.getMaterial() == Material.LAVA) {
-						bucket = new ItemStack(Items.LAVA_BUCKET);
-					} else {
-						// 其他情况，有问题暂时不管
-						IFluidHandlerItem handler = bucket
-								.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
-						BlockStaticLiquid blockLiquid = ((BlockStaticLiquid) state.getBlock());
-						FluidStack fstack = FluidRegistry.getFluidStack(blockLiquid.getRegistryName().getResourcePath(),
-								Fluid.BUCKET_VOLUME);
-						handler.fill(fstack, true);
-					}
-				}
-				this.blockStack = bucket;
-			} else {
-				if (state.getBlock() == Blocks.FLOWER_POT) {
-					blockStack = new ItemStack(Items.FLOWER_POT, 1);
-					return;
-				}
-				int meta = state.getBlock().damageDropped(state);
-				blockStack = new ItemStack(Item.getItemFromBlock(state.getBlock()), 1, meta);
-			}
-		}
+			tag.setShort("meta", (short) meta);
+			tag.setString("block", block.getRegistryName().toString());
+			if (this.nbt != null) tag.setTag("nbt", this.nbt);
 
-		public ItemStack getItemStack() {
-			return blockStack;
+			return tag;
 		}
 
 		@Override
-		public boolean equals(Object other) {
-			if (other instanceof BlockItemTypeInfo) {
-				BlockItemTypeInfo info = (BlockItemTypeInfo) other;
-				return info.blockStack.getItem() == this.blockStack.getItem()
-						&& info.blockStack.getMetadata() == this.blockStack.getMetadata();
-			}
-			return false;
-		}
+		public void deserializeNBT(NBTTagCompound tag) {
+			int meta = tag.getShort("meta");
 
-		public String getUnlocalizedName() {
-			return blockStack.getUnlocalizedName();
-		}
+			ResourceLocation id;
 
-		public int getCount() {
-			return this.count;
-		}
+			if (tag.hasKey("block", NBTTag.TAG_STRING)) id = new ResourceLocation(tag.getString("block"));
+			else id = new ResourceLocation(tag.getString("blockD"), tag.getString("blockP"));
 
-		public static ItemStack getItemStackCanUsed(IInventory inventory, ItemStack need) {
-			Block block = Block.getBlockFromItem(need.getItem());
-			for (int i = 0; i < inventory.getSizeInventory(); ++i) {
-				ItemStack stack = inventory.getStackInSlot(i);
-				if (block == Blocks.GRASS) {
-					Block blk = Block.getBlockFromItem(stack.getItem());
-					if (blk == Blocks.DIRT && stack.getItemDamage() == 0) return stack;
-				}
-				if (ItemStack.areItemsEqual(need, stack) && ItemStack.areItemStackTagsEqual(need, stack)) return stack;
-			}
-			return ItemStack.EMPTY;
+			Block block;
+
+			if (Block.REGISTRY.containsKey(id)) block = Block.REGISTRY.getObject(id);
+			else block = Blocks.DIRT;
+
+			if (tag.hasKey("nbt", NBTTag.TAG_COMPOUND)) this.nbt = tag.getCompoundTag("nbt");
+
+			this.state = block.getStateFromMeta(meta);
 		}
 	}
 
@@ -225,15 +187,15 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 	long mtime = System.currentTimeMillis();
 
 	/** 记录方块类型的线性表 */
-	private List<BlockInfo> infoList = new ArrayList<BlockInfo>();
+	protected List<BlockInfo> infoList = new ArrayList<BlockInfo>();
 	/** 记录位置到方块类型索引的哈希表，索引的int为infoList的下标 */
-	private Map<BlockPos, Integer> blockMap = new HashMap<BlockPos, Integer>();
+	protected Map<BlockPos, Integer> blockMap = new HashMap<BlockPos, Integer>();
 	/** 记录方块种类的线性表 */
-	private List<BlockItemTypeInfo> typeInfoList = new ArrayList<BlockItemTypeInfo>();
+	protected List<BlockItemTypeInfo> typeInfoList = new ArrayList<BlockItemTypeInfo>();
 	/** 建筑的方块 */
-	private int maxX = 0, minX = 0, maxY = 0, minY = 0, maxZ = 0, minZ = 0;
+	protected int maxX = 0, minX = 0, maxY = 0, minY = 0, maxZ = 0, minZ = 0;
 
-	public void mkdir() {
+	public void markDirty() {
 		this.mtime = System.currentTimeMillis();
 	}
 
@@ -245,21 +207,25 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		nbt.setString("name", this.name);
 		nbt.setString("author", this.author);
 		// nbt.setLong("mtime", this.mtime);
-		// 记录位置和索引
-		NBTTagList listMap = new NBTTagList();
-		for (Entry<BlockPos, Integer> entry : blockMap.entrySet()) {
-			NBTTagCompound posInfo = new NBTTagCompound();
-			NBTHelper.setBlockPos(posInfo, "pos", entry.getKey());
-			posInfo.setInteger("index", entry.getValue());
-			listMap.appendTag(posInfo);
-		}
-		nbt.setTag("blockMap", listMap);
-		// 记录所有被索引的方块类型
+
+		// 记录所有信息
 		NBTTagList listInfo = new NBTTagList();
-		for (BlockInfo info : infoList) {
-			listInfo.appendTag(info.serializeNBT());
+		NBTTagList[] posList = new NBTTagList[infoList.size()];
+		for (int i = 0; i < infoList.size(); i++) {
+			NBTTagCompound info = infoList.get(i).serializeNBT();
+			posList[i] = new NBTTagList();
+			info.setTag("pos", posList[i]);
+			listInfo.appendTag(info);
 		}
 		nbt.setTag("infoList", listInfo);
+
+		// 将坐标直接插入对应的信息里
+		for (Entry<BlockPos, Integer> entry : blockMap.entrySet()) {
+			int i = entry.getValue();
+			BlockPos pos = entry.getKey();
+			posList[i].appendTag(new NBTTagIntArray(NBTHelper.toIntArray(pos)));
+		}
+
 		return nbt;
 	}
 
@@ -271,21 +237,22 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		this.name = nbt.getString("name");
 		this.author = nbt.getString("author");
 		// this.mtime = nbt.getLong("mtime");
-		// 恢复方块位置和索引
-		NBTTagList listMap = nbt.getTagList("blockMap", 10);
-		for (NBTBase base : listMap) {
-			NBTTagCompound posInfo = (NBTTagCompound) base;
-			BlockPos pos = NBTHelper.getBlockPos(posInfo, "pos");
-			int index = posInfo.getInteger("index");
-			blockMap.put(pos, index);
-			this.update(pos);
-		}
+
 		// 恢复被索引的方块类型
 		NBTTagList listInfo = nbt.getTagList("infoList", 10);
-		for (NBTBase base : listInfo) {
-			NBTTagCompound info = (NBTTagCompound) base;
+		for (int i = 0; i < listInfo.tagCount(); i++) {
+			NBTTagCompound info = listInfo.getCompoundTagAt(i);
 			infoList.add(new BlockInfo(info));
+			// 恢复方块位置和索引
+			NBTTagList poss = info.getTagList("pos", NBTTag.TAG_INT_ARRAY);
+			for (NBTBase posArray : poss) {
+				NBTTagIntArray posA = (NBTTagIntArray) posArray;
+				BlockPos pos = NBTHelper.toBlockPos(posA.getIntArray());
+				blockMap.put(pos, i);
+				this.update(pos);
+			}
 		}
+
 		// 重置数据
 		for (Entry<BlockPos, Integer> entry : blockMap.entrySet()) {
 			BlockInfo info = infoList.get(entry.getValue());
@@ -293,8 +260,16 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			if (!typeInfoList.contains(tpInfo)) typeInfoList.add(tpInfo);
 			int tpIndex = typeInfoList.indexOf(tpInfo);
 			info.typeIndex = tpIndex;
-			typeInfoList.get(tpIndex).count++;
+			typeInfoList.get(tpIndex).addCountWith(info.state);
 		}
+	}
+
+	public JsonObject serializeJson() {
+		return new JsonObject(this.serializeNBT());
+	}
+
+	public void deserializeJson(JsonObject json) {
+		this.deserializeNBT(json.asNBT());
 	}
 
 	private void clear() {
@@ -303,21 +278,23 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		typeInfoList.clear();
 	}
 
-	// 为制定状态添加对应的相对位置！
 	public boolean add(IBlockState state, BlockPos pos) {
+		return this.add(state, pos, null);
+	}
+
+	// 为制定状态添加对应的相对位置！
+	public boolean add(IBlockState state, BlockPos pos, TileEntity tile) {
 		if (state.getMaterial() == Material.AIR) return false;
 		if (blockMap.containsKey(pos)) throw new IllegalArgumentException("Your pos has already exist!" + pos);
-		// 排除流动的液体
-		if (state.getMaterial().isLiquid()) {
-			if (state.getBlock().getMetaFromState(state) != 0) return false;
-		}
 		// 类型信息
 		BlockItemTypeInfo tpInfo = new BlockItemTypeInfo(state);
+		// 一些无法被找到的方块不记录
+		if (tpInfo.blockStack.isEmpty()) return false;
 		if (!typeInfoList.contains(tpInfo)) typeInfoList.add(tpInfo);
 		int tpIndex = typeInfoList.indexOf(tpInfo);
-		typeInfoList.get(tpIndex).count++;
+		typeInfoList.get(tpIndex).addCountWith(state);
 		// 方块信息
-		BlockInfo info = new BlockInfo(state, tpIndex);
+		BlockInfo info = new BlockInfo(state, tpIndex, tile);
 		if (!infoList.contains(info)) infoList.add(info);
 		int index = infoList.indexOf(info);
 		// 放入方块
@@ -351,134 +328,14 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		return typeInfoList;
 	}
 
-	/** 遍历用类 */
-	public static class BuildingBlocks {
-		private Iterator<Map.Entry<BlockPos, Integer>> iter = null;
-		private List<Map.Entry<BlockPos, Integer>> after = null;
-		private Map.Entry<BlockPos, Integer> entry = null;
-		private final Building building;
-		private BlockPos off = BlockPos.ORIGIN;
-		private EnumFacing facing = EnumFacing.NORTH;
-
-		public BuildingBlocks(Building building) {
-			this.building = building;
-		}
-
-		public boolean next() {
-			if (iter == null) {
-				iter = building.blockMap.entrySet().iterator();
-				after = new LinkedList<>();
-			}
-			// 是否拥有下一个
-			while (iter.hasNext()) {
-				entry = iter.next();
-				if (after != null && needToLater()) {
-					after.add(entry);
-					continue;
-				}
-				return true;
-			}
-			// 处理after
-			if (after != null && !after.isEmpty()) {
-				iter = after.iterator();
-				entry = iter.next();
-				after = null;
-				return true;
-			}
-			iter = null;
-			entry = null;
-			after = null;
-			return false;
-		}
-
-		protected boolean needToLater() {
-			IBlockState state = this.getState();
-			return needToLater(state);
-		}
-
-		public static boolean needToLater(IBlockState state) {
-			Block block = state.getBlock();
-			if (block instanceof BlockCarpet || block instanceof BlockTorch) return true;
-			if (block instanceof BlockFluidBase) return true;
-			if (block instanceof BlockLadder) return true;
-			return false;
-		}
-
-		/** 根据方向修正pos */
-		static public BlockPos facePos(BlockPos pos, EnumFacing facing) {
-			switch (facing) {
-			case SOUTH:
-				pos = new BlockPos(-pos.getX(), pos.getY(), -pos.getZ());
-				break;
-			case EAST:
-				pos = new BlockPos(-pos.getZ(), pos.getY(), pos.getX());
-				break;
-			case WEST:
-				pos = new BlockPos(pos.getZ(), pos.getY(), -pos.getX());
-				break;
-			default:
-				break;
-			}
-			return pos;
-		}
-
-		public BlockPos getPos() {
-			if (entry == null) return null;
-			BlockPos pos = entry.getKey();
-			return facePos(pos, this.facing).add(off);
-		}
-
-		/** 根据方向修正state */
-		static public IBlockState faceSate(IBlockState state, EnumFacing facing) {
-			switch (facing) {
-			case SOUTH:
-				state = state.withRotation(Rotation.CLOCKWISE_180);
-				break;
-			case EAST:
-				state = state.withRotation(Rotation.CLOCKWISE_90);
-				break;
-			case WEST:
-				state = state.withRotation(Rotation.COUNTERCLOCKWISE_90);
-				break;
-			default:
-				break;
-			}
-			return state;
-		}
-
-		public IBlockState getState() {
-			if (entry == null) return null;
-			IBlockState state = building.infoList.get(entry.getValue()).getState();
-			return faceSate(state, this.facing);
-		}
-
-		public ItemStack getItemStack() {
-			return entry == null ? ItemStack.EMPTY
-					: building.typeInfoList.get(building.infoList.get(entry.getValue()).typeIndex).blockStack.copy();
-		}
-
-		public BuildingBlocks setPosOff(BlockPos pos) {
-			off = pos;
-			return this;
-		}
-
-		public BuildingBlocks setFace(EnumFacing facing) {
-			this.facing = facing;
-			return this;
-		}
-
-		public EnumFacing getFacing() {
-			return facing;
-		}
-	}
-
 	/** 获取遍历对象 */
 	public BuildingBlocks getBuildingIterator() {
 		return new BuildingBlocks(this);
 	}
 
 	/** 通过两点，获取building */
-	public static Building createBuilding(World world, EnumFacing facing, BlockPos pos1, BlockPos pos2) {
+	public static Building createBuilding(World world, EnumFacing facing, BlockPos pos1, BlockPos pos2,
+			boolean checkTile) {
 		Building building = new Building();
 		BlockPos pos = pos1;
 		BlockPos center = new BlockPos((pos1.getX() + pos2.getX()) / 2, Math.min(pos1.getY(), pos2.getY()),
@@ -488,8 +345,14 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		// 记录方块
 		while (true) {
 			if (!world.isAirBlock(pos)) {
-				building.add(BuildingBlocks.faceSate(world.getBlockState(pos), facing),
-						BuildingBlocks.facePos(pos.subtract(center), facing));
+				IBlockState state = BuildingBlocks.faceSate(world.getBlockState(pos), facing);
+				BlockPos at = BuildingBlocks.facePos(pos.subtract(center), facing);
+				if (checkTile) {
+					if (state.getBlock().hasTileEntity(state)) {
+						TileEntity tile = world.getTileEntity(pos);
+						building.add(state, at, tile);
+					} else building.add(state, at);
+				} else building.add(state, at);
 			}
 			// 移动pos
 			pos = movePosOnce(pos, pos1, pos2);

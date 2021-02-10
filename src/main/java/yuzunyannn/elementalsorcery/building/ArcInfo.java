@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.building;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -19,17 +20,14 @@ public class ArcInfo {
 	public int flags = SUCCESS;
 
 	public ArcInfo(ItemStack stack, Side side) {
-		if (!ArcInfo.isArc(stack))
-			return;
+		if (!ArcInfo.isArc(stack)) return;
 		NBTTagCompound nbt = stack.getSubCompound("building");
 		this.flags = nbt.getInteger("flags");
-		if (this.flags == MISS)
-			return;
+		if (this.flags == MISS) return;
 		this.pos = NBTHelper.getBlockPos(nbt, "pos");
 		this.keyName = nbt.getString("key");
-		if (this.keyName.isEmpty())
-			return;
-		if (side.isClient()) {
+		if (this.keyName.isEmpty()) return;
+		if (side.isClient() && !Minecraft.getMinecraft().isSingleplayer()) {
 			this.building = BuildingLib.instance.giveBuilding(this.keyName);
 			long mtime = nbt.getLong("mtime");
 			if (this.building.mtime != mtime) {
@@ -46,9 +44,7 @@ public class ArcInfo {
 			nbt.setLong("mtime", this.building.mtime);
 			BuildingLib.instance.use(this.keyName);
 		}
-		if (nbt.hasKey("face")) {
-			this.facing = EnumFacing.values()[nbt.getByte("face")];
-		}
+		if (nbt.hasKey("face")) this.facing = EnumFacing.values()[nbt.getByte("face")];
 	}
 
 	public boolean isValid() {
@@ -65,20 +61,15 @@ public class ArcInfo {
 		nbt.setString("key", key);
 		NBTHelper.setBlockPos(nbt, "pos", BlockPos.ORIGIN);
 		Building building = BuildingLib.instance.getBuilding(key);
-		if (building != null)
-			nbt.setLong("mtime", building.mtime);
-		else
-			nbt.setLong("mtime", 0);
+		if (building != null) nbt.setLong("mtime", building.mtime);
+		else nbt.setLong("mtime", 0);
 	}
 
 	static public boolean isArc(ItemStack stack) {
 		NBTTagCompound nbt = stack.getSubCompound("building");
-		if (nbt == null)
-			return false;
-		if (!NBTHelper.hasBlockPos(nbt, "pos"))
-			return false;
-		if (!nbt.hasKey("key"))
-			return false;
+		if (nbt == null) return false;
+		if (!NBTHelper.hasBlockPos(nbt, "pos")) return false;
+		if (!nbt.hasKey("key")) return false;
 		return true;
 	}
 }

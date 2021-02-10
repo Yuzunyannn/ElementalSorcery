@@ -19,7 +19,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
 import yuzunyannn.elementalsorcery.render.effect.element.EffectElementScrew;
@@ -250,8 +250,8 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 
 	@SideOnly(Side.CLIENT)
 	public void initClient() {
-		if (ElementalSorcery.config.PORTAL_RENDER_TYPE == 2) drawInstance = new RenderEntityPortalWorldSecene();
-		else drawInstance = new RenderEntityPortalEffect(ElementalSorcery.config.PORTAL_RENDER_TYPE == 1);
+		if (ESConfig.PORTAL_RENDER_TYPE == 2) drawInstance = new RenderEntityPortalWorldSecene();
+		else drawInstance = new RenderEntityPortalEffect(ESConfig.PORTAL_RENDER_TYPE == 1);
 	}
 
 	// 临时变量客户端用

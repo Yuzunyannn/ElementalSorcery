@@ -9,7 +9,6 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.block.BlockSealStone;
 import yuzunyannn.elementalsorcery.init.ESInit;
 
@@ -18,7 +17,7 @@ public class WorldGenSealStone extends WorldGenerator {
 	@Override
 	public boolean generate(World worldIn, Random rand, BlockPos pos) {
 		Biome biome = worldIn.getBiome(pos);
-		int expect = ElementalSorcery.config.SPAWN.GEN_SEAL_STONE.getSpawnPoint(worldIn, biome);
+		int expect = WorldGeneratorES.CONFIG_SEAL_STONE.getSpawnPoint(worldIn, biome);
 		int tryTime = 3 + rand.nextInt(3) + expect;
 		for (int i = 0; i < tryTime; i++) {
 			int posX = pos.getX() + rand.nextInt(16);

@@ -1,9 +1,5 @@
 package yuzunyannn.elementalsorcery.event;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.function.Function;
 
 import net.minecraft.block.Block;
@@ -12,17 +8,13 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
-import net.minecraft.command.WrongUsageException;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -33,10 +25,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.building.ArcInfo;
-import yuzunyannn.elementalsorcery.building.Building;
-import yuzunyannn.elementalsorcery.building.BuildingLib;
-import yuzunyannn.elementalsorcery.building.BuildingSaveData;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
@@ -45,7 +33,6 @@ import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityMagicMelting;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
-import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -53,8 +40,8 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class CommandESDebug {
 
-	public static final String[] autoTips = new String[] { "reflush", "saveBuilding", "recordBuilding", "buildTest",
-			"portalTest", "showInfo", "blockMoveTest", "smeltingTest", "reloadeTexture", "quest" };
+	public static final String[] autoTips = new String[] { "reflush", "buildTest", "portalTest", "showInfo",
+			"blockMoveTest", "smeltingTest", "reloadeTexture", "quest" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -95,41 +82,6 @@ public class CommandESDebug {
 					ItemQuest.createQuest(quest));
 			return;
 		}
-		// 保存手中的建筑
-		case "saveBuilding": {
-			Entity entity = sender.getCommandSenderEntity();
-			ItemStack ruler = ((EntityPlayer) entity).getHeldItem(EnumHand.OFF_HAND);
-			if (ItemMagicRuler.getRulerPos(ruler, true) == null || ItemMagicRuler.getRulerPos(ruler, false) == null)
-				ruler = ((EntityPlayer) entity).getHeldItem(EnumHand.MAIN_HAND);
-			if (ItemMagicRuler.getRulerPos(ruler, true) == null || ItemMagicRuler.getRulerPos(ruler, false) == null)
-				throw new WrongUsageException("保存建筑失败，请将魔力标尺放在手上");
-			Building building = Building.createBuilding(sender.getEntityWorld(), EnumFacing.NORTH,
-					ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
-			building.setAuthor(sender.getName());
-			BuildingSaveData.debugSetKeyName(building);
-			File file = ElementalSorcery.data.getFile("building/debug",
-					BuildingSaveData.randomKeyName(entity.getName()));
-			try (OutputStream output = new FileOutputStream(file)) {
-				CompressedStreamTools.writeCompressed(building.serializeNBT(), output);
-				sender.sendMessage(new TextComponentString("建筑储存在了:" + file.getPath()));
-			} catch (IOException e) {
-				ElementalSorcery.logger.warn("debug指令错误", e);
-			}
-		}
-			return;
-		// 记录建筑数据
-		case "recordBuilding": {
-			EntityLivingBase entity = (EntityLivingBase) sender.getCommandSenderEntity();
-			ItemStack ruler = entity.getHeldItem(EnumHand.OFF_HAND);
-			ItemStack ar = entity.getHeldItem(EnumHand.MAIN_HAND);
-			Building building = Building.createBuilding(sender.getEntityWorld(), EnumFacing.NORTH,
-					ItemMagicRuler.getRulerPos(ruler, true), ItemMagicRuler.getRulerPos(ruler, false));
-			building.setAuthor(sender.getName());
-			BuildingLib.instance.addBuilding(building);
-			ArcInfo.initArcInfoToItem(ar, building.getKeyName());
-			sender.sendMessage(new TextComponentString("记录完成！"));
-		}
-			return;
 		default:
 			EntityLivingBase entity = (EntityLivingBase) sender.getCommandSenderEntity();
 			RayTraceResult rtr = WorldHelper.getLookAtBlock(entity.world, entity, 64);

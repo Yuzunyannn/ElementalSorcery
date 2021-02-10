@@ -11,7 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.building.Building.BuildingBlocks;
+import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 
 public class BuildProgress {
 
