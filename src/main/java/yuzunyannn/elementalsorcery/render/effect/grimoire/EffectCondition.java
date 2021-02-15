@@ -2,6 +2,9 @@ package yuzunyannn.elementalsorcery.render.effect.grimoire;
 
 import java.util.function.Function;
 
+import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.Vec3d;
@@ -64,6 +67,34 @@ public abstract class EffectCondition extends Effect {
 				return !(isFinish = !((EntityLivingBase) entity).isHandActive());
 			else return !(isFinish = entity.isDead);
 		}
+	}
+
+	protected void renderTexRectInCenter(float x, float y, float width, float height, float u, float v, float texWidth,
+			float texHeight, float textureWidth, float textureHeight, float partialTicks, float r, float g, float b,
+			float a) {
+
+		float f = 1.0F / textureWidth;
+		float f1 = 1.0F / textureHeight;
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		float hw = width / 2;
+		float hh = height / 2;
+
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+		bufferbuilder.pos(x - hw, y + hh, 0.0D).tex(u * f, (v + texHeight) * f1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		bufferbuilder.pos(x + hw, y + hh, 0.0D).tex((u + texWidth) * f, (v + texHeight) * f1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		bufferbuilder.pos(x + hw, y - hh, 0.0D).tex((u + texWidth) * f, v * f1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		bufferbuilder.pos(x - hw, y - hh, 0.0D).tex(u * f, v * f1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		tessellator.draw();
+	}
+
+	protected void renderTexRectInCenter(float x, float y, float width, float height, float partialTicks, float r,
+			float g, float b, float a) {
+		renderTexRectInCenter(x, y, width, height, 0, 0, 1, 1, 1, 1, partialTicks, r, g, b, a);
 	}
 
 }

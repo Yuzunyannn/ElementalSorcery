@@ -48,7 +48,7 @@ public class ItemMagicGoldTools {
 				false);
 	}
 
-	public static final ToolMaterial MAGIC_IRON = EnumHelper.addToolMaterial("MagicGold", 3, 16, 32, 12, 0);
+	public static final ToolMaterial MAGIC_GOLD = EnumHelper.addToolMaterial("MagicGold", 3, 16, 32, 12, 0);
 
 	/** 工具修理的通用句柄 */
 	public static interface MagicGoldToolsRepair extends TileMDRubbleRepair.IExtendRepair {
@@ -69,7 +69,7 @@ public class ItemMagicGoldTools {
 	// 镐子
 	public static class ItemMagicGoldPickaxe extends ItemPickaxe implements MagicGoldToolsRepair {
 		public ItemMagicGoldPickaxe() {
-			super(MAGIC_IRON);
+			super(MAGIC_GOLD);
 			this.setUnlocalizedName("magicGoldPickaxe");
 		}
 
@@ -126,7 +126,7 @@ public class ItemMagicGoldTools {
 	// 斧头
 	public static class ItemMagicGoldAxe extends ItemAxe implements MagicGoldToolsRepair {
 		public ItemMagicGoldAxe() {
-			super(MAGIC_IRON, MAGIC_IRON.getAttackDamage() * 1.75f, -3.2f);
+			super(MAGIC_GOLD, MAGIC_GOLD.getAttackDamage() * 1.75f, -3.2f);
 			this.setUnlocalizedName("magicGoldAxe");
 		}
 
@@ -163,7 +163,7 @@ public class ItemMagicGoldTools {
 	// 铁锨
 	public static class ItemMagicGoldSpade extends ItemSpade implements MagicGoldToolsRepair {
 		public ItemMagicGoldSpade() {
-			super(MAGIC_IRON);
+			super(MAGIC_GOLD);
 			this.setUnlocalizedName("magicGoldSpade");
 		}
 
@@ -218,7 +218,7 @@ public class ItemMagicGoldTools {
 	// 锄头
 	public static class ItemMagicGoldHoe extends ItemHoe implements MagicGoldToolsRepair {
 		public ItemMagicGoldHoe() {
-			super(MAGIC_IRON);
+			super(MAGIC_GOLD);
 			this.setUnlocalizedName("magicGoldHoe");
 		}
 
@@ -257,7 +257,7 @@ public class ItemMagicGoldTools {
 	// 剑
 	public static class ItemMagicGoldSword extends ItemSword implements MagicGoldToolsRepair {
 		public ItemMagicGoldSword() {
-			super(MAGIC_IRON);
+			super(MAGIC_GOLD);
 			this.setUnlocalizedName("magicGoldSword");
 		}
 
@@ -276,7 +276,7 @@ public class ItemMagicGoldTools {
 			for (EntityLiving entity : list) {
 				if (entity == target) continue;
 				DamageSource s = DamageSource.causeThornsDamage(attacker).setMagicDamage();
-				entity.attackEntityFrom(s, MAGIC_IRON.getAttackDamage() / 2.0f);
+				entity.attackEntityFrom(s, MAGIC_GOLD.getAttackDamage() / 2.0f);
 			}
 			if (!attacker.world.isRemote) {
 				NBTTagCompound nbt = FireworkEffect.fastNBT(1, 2, 0.5f, TileMDBase.PARTICLE_COLOR,

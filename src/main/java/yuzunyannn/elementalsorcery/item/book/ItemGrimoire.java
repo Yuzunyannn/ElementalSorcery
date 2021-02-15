@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.item;
+package yuzunyannn.elementalsorcery.item.book;
 
 import java.util.List;
 
@@ -17,6 +17,8 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
@@ -62,6 +64,28 @@ public class ItemGrimoire extends Item {
 	}
 
 	@Override
+	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+		ItemStack stack = playerIn.getHeldItem(handIn);
+		// 没有能力的，可能是别的内容
+		if (!stack.hasCapability(Grimoire.GRIMOIRE_CAPABILITY, null))
+			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+		// 必须主手
+		if (handIn != EnumHand.MAIN_HAND) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+		// 开始释放！
+		grimoire.loadState(stack);
+		// 获取咒文
+		NBTTagCompound originData = Grimoire.getOriginNBT(stack);
+		Mantra mantra = Mantra.getFromNBT(originData);
+		if (mantra == null) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+		if (!mantra.canStart(playerIn)) return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+		// 开始
+		EntityGrimoire.start(worldIn, playerIn, mantra, originData);
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) {
@@ -97,27 +121,6 @@ public class ItemGrimoire extends Item {
 		tooltip.add(TextFormatting.YELLOW + I18n.format("info.grimoire.element"));
 		boolean has = ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
 		if (!has) tooltip.add(I18n.format("info.none"));
-	}
-
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		ItemStack stack = playerIn.getHeldItem(handIn);
-		// 没有能力的，可能是别的内容
-		if (!stack.hasCapability(Grimoire.GRIMOIRE_CAPABILITY, null))
-			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
-		// 必须主手
-		if (handIn != EnumHand.MAIN_HAND) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
-		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
-		// 开始释放！
-		grimoire.loadState(stack);
-		// 获取咒文
-		NBTTagCompound originData = Grimoire.getOriginNBT(stack);
-		Mantra mantra = Mantra.getFromNBT(originData);
-		if (mantra == null) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
-		if (!mantra.canStart(playerIn)) return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
-		// 开始
-		EntityGrimoire.start(worldIn, playerIn, mantra, originData);
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}
 
 }

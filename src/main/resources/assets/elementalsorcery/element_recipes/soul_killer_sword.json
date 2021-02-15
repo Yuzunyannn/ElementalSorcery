@@ -1,0 +1,34 @@
+{
+	"pattern": [
+		"G#G",
+		"#W#",
+		" S "
+	],
+	"key": {
+		"#": "elementalsorcery:magic_gold",
+		"S": "minecraft:stick",
+		"G": "minecraft:gold_ingot",
+		"W": {
+			"id": "elementalsorcery:soul_wood_sword",
+			"nbt": {
+				"soul": 666
+			}
+		}
+	},
+	"element": [
+		{
+			"id": "water",
+			"size": 50,
+			"power": 50
+		},
+		{
+			"id": "wood",
+			"size": 50,
+			"power": 100
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:soul_killer_sword",
+		"count": 1
+	}
+}

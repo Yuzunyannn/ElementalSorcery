@@ -3,10 +3,12 @@ package yuzunyannn.elementalsorcery.util.render;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLadder;
 import net.minecraft.block.BlockPane;
+import net.minecraft.block.BlockTorch;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -16,8 +18,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBed;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.item.ItemGrimoire;
-import yuzunyannn.elementalsorcery.item.ItemSpellbook;
+import yuzunyannn.elementalsorcery.block.BlockLifeFlower;
+import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.book.ItemGrimoire;
+import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 
 public class RenderHelper {
@@ -46,6 +50,10 @@ public class RenderHelper {
 			GlStateManager.rotate(30, 1, 0, 1);
 			GlStateManager.translate(0.35, 0.26 + yoff, 0.35);
 			GlStateManager.scale(scale, scale, scale);
+			MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
+		} else if (IRenderItem.isTransform(stack, ItemCameraTransforms.TransformType.FIXED)) {
+			GlStateManager.translate(0.5, 0.5, 0.5);
+			GlStateManager.scale(scaleGround * 2, scaleGround * 2, scaleGround * 2);
 			MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
 		} else {
 			GlStateManager.translate(0.5, 0.4 + yoffGround, 0.5);
@@ -99,32 +107,43 @@ public class RenderHelper {
 	static public void layItemPositionFix(ItemStack stack) {
 		Item item = stack.getItem();
 		if (item instanceof ItemBed) {
-			GlStateManager.translate(0, 0.44, 0.125);
+			GlStateManager.translate(0, 0.44, 0);
+			GlStateManager.rotate(90, 1, 0, 0);
+			GlStateManager.scale(0.5, 0.5, 0.5);
 		} else if (item instanceof ItemSpellbook) {
 			GlStateManager.translate(0, 0.35, 0.2);
 			GlStateManager.scale(0.8, 0.8, 0.8);
 			GlStateManager.rotate(-90, 1, 0, 0);
 		} else if (item instanceof ItemGrimoire) {
-			GlStateManager.translate(0.05, 0.45, 0);
+			GlStateManager.translate(-0.15, 0.45, 0);
 			GlStateManager.rotate(-90, 1, 0, 0);
-			GlStateManager.scale(0.8, 0.8, 0.8);
+			GlStateManager.scale(0.75, 0.75, 0.75);
+		} else if (TileEntityItemStackRenderer.instance != stack.getItem().getTileEntityItemStackRenderer()) {
+			boolean canlay = item == ESInit.ITEMS.MAGIC_BLAST_WAND;
+			if (canlay) {
+				GlStateManager.translate(0, 0.4, 0.0);
+				GlStateManager.rotate(90, 1, 0, 0);
+				GlStateManager.scale(0.5, 0.5, 0.5);
+			} else {
+				GlStateManager.translate(0, 0.35, 0);
+				GlStateManager.scale(0.5, 0.5, 0.5);
+			}
 		} else {
 			Block block = Block.getBlockFromItem(stack.getItem());
 			boolean canlay = block == Blocks.AIR;
-			// canlay = canlay || (!block.isFullCube(block.getDefaultState()) &&
-			// !(block instanceof ITileEntityProvider));
 			canlay = canlay || block instanceof BlockPane;
 			canlay = canlay || block instanceof BlockLadder;
 			canlay = canlay || block instanceof net.minecraftforge.common.IPlantable;
 			canlay = canlay || block instanceof net.minecraftforge.common.IShearable;
+			canlay = canlay || block instanceof BlockTorch;
+			canlay = canlay || block instanceof BlockLifeFlower;
 			if (canlay) {
-				GlStateManager.translate(-0.125, 0.4, 0.0);
-				GlStateManager.rotate(90, 0, 1, 0);
+				GlStateManager.translate(0, 0.4, 0.0);
 				GlStateManager.rotate(90, 1, 0, 0);
+				GlStateManager.scale(0.5, 0.5, 0.5);
 			} else {
-				if (TileEntityItemStackRenderer.instance != stack.getItem().getTileEntityItemStackRenderer()) {
-					GlStateManager.translate(0, 0.475, 0);
-				} else GlStateManager.translate(0, 0.3, 0);
+				GlStateManager.translate(0, 0.45, 0);
+				GlStateManager.scale(0.5, 0.5, 0.5);
 			}
 		}
 	}

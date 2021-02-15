@@ -15,8 +15,6 @@ public class ESNetwork {
 	public static void registerAll() {
 		registerMessage(MessageSpellbook.Handler.class, MessageSpellbook.class, Side.CLIENT);
 
-		registerMessage(MessageSyncItemStack.Handler.class, MessageSyncItemStack.class, Side.CLIENT);
-
 		registerMessage(MessageEffect.Handler.class, MessageEffect.class, Side.CLIENT);
 
 		registerMessage(MessageEntitySync.Handler.class, MessageEntitySync.class, Side.CLIENT);

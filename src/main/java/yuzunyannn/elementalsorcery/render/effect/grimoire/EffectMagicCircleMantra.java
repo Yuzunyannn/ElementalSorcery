@@ -9,9 +9,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.render.effect.ParticleSpellScrew;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
+import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellScrew;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
@@ -47,18 +45,18 @@ public class EffectMagicCircleMantra extends EffectMagicCircleIcon {
 	}
 
 	@Override
-	protected void renderCenterIcon(float partialTicks) {
+	protected void renderCenterIcon(float partialTicks, float alpha) {
 		mc.getTextureManager().bindTexture(RenderObjects.MC_PARTICLE);
 
 		for (int i = 0; i < 12; i++) {
 			GlStateManager.pushMatrix();
 			GlStateManager.rotate(30 * i, 0, 0, 1);
 			GlStateManager.translate(12, 0, 0);
-			RenderHelper.drawTexturedRectInCenter(0, 0, 4, 4, 8 + 8 * i, 112, 8, 8, 128, 128);
+			this.renderTexRectInCenter(0, 0, 4, 4, 8 + 8 * i, 112, 8, 8, 128, 128, partialTicks, r, g, b, alpha);
 			GlStateManager.popMatrix();
 		}
 		GlStateManager.scale(1.75, 1.75, 1.75);
-		super.renderCenterIcon(partialTicks);
+		super.renderCenterIcon(partialTicks, alpha);
 
 	}
 

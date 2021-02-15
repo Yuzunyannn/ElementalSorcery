@@ -1,0 +1,24 @@
+{
+	"pattern": [
+		"XUG",
+		"UM ",
+		"G M"
+	],
+	"key": {
+		"X": "elementalsorcery:magic_gold",
+		"U": "elementalsorcery:magical_ender_eye",
+		"G": "minecraft:gold_ingot",
+		"M": "elementalsorcery:magic_crystal"
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 15,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:magic_blast_wand",
+		"count": 1
+	}
+}

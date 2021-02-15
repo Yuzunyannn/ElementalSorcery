@@ -17,7 +17,8 @@ public interface IBinder {
 
 		@Override
 		public Vec3d getPosition() {
-			return this.binder == null ? Vec3d.ZERO : this.binder.getPositionVector();
+			return this.binder == null ? Vec3d.ZERO
+					: this.binder.getPositionVector().addVector(0, this.binder.height / 2, 0);
 		}
 
 	}

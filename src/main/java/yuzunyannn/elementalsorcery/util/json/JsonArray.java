@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagByte;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagFloat;
+import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
@@ -152,7 +153,11 @@ public class JsonArray extends Json {
 				JsonPrimitive jp = je.getAsJsonPrimitive();
 				if (jp.isString()) base = new NBTTagString(je.getAsString());
 				else if (jp.isBoolean()) base = new NBTTagByte((byte) (je.getAsBoolean() ? 1 : 0));
-				else if (jp.isNumber()) base = new NBTTagFloat(je.getAsFloat());
+				else if (jp.isNumber()) {
+					float n = je.getAsFloat();
+					if (n == Math.floor(n)) base = new NBTTagInt(je.getAsInt());
+					else base = new NBTTagFloat(je.getAsFloat());
+				}
 			}
 			if (base == null) continue;
 			if (nbt.getTagType() == 0) nbt.appendTag(base);

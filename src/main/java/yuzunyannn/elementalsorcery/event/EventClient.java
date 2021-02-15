@@ -9,12 +9,14 @@ import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.InputEvent;
@@ -29,6 +31,7 @@ import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
 
 @SideOnly(Side.CLIENT)
 public class EventClient {
@@ -159,6 +162,18 @@ public class EventClient {
 	static public void playerExit(PlayerEvent.PlayerLoggedOutEvent e) {
 		renderList.clear();
 		Effect.clear();
+	}
+
+	@SubscribeEvent
+	static public void entityUpdate(LivingEvent.LivingUpdateEvent event) {
+		EntityLivingBase entity = event.getEntityLiving();
+		if (entity.world.isRemote && entity.isHandActive()) {
+			ItemStack stack = entity.getActiveItemStack();
+			Item item = stack.getItem();
+			if (item instanceof IItemUseClientUpdate) {
+				((IItemUseClientUpdate) item).onUsingTickClient(stack, entity, entity.getItemInUseCount());
+			}
+		}
 	}
 
 	/** 全局信息显示 */

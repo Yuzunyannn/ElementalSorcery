@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.item;
+package yuzunyannn.elementalsorcery.item.book;
 
 import java.util.List;
 import java.util.Random;
@@ -28,13 +28,15 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.render.effect.ParticleSpellbook;
-import yuzunyannn.elementalsorcery.render.effect.ParticleSpellbookSelect;
-import yuzunyannn.elementalsorcery.render.effect.ParticleSpellbookTo;
+import yuzunyannn.elementalsorcery.event.SpellbookOpenMsg;
+import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellbook;
+import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellbookSelect;
+import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellbookTo;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
 
-public class ItemSpellbook extends Item {
+public class ItemSpellbook extends Item implements IItemUseClientUpdate {
 
 	static public final Random rand = new Random();
 
@@ -72,8 +74,8 @@ public class ItemSpellbook extends Item {
 	 * @param power 积攒的时间，大于0表示释放成功
 	 * @return 是否同步，true表示需要同步，一般不需要
 	 */
-	public boolean spellEnd(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
-		return false;
+	public void spellEnd(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
+
 	}
 
 	/**
@@ -158,11 +160,10 @@ public class ItemSpellbook extends Item {
 	@Override
 	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
 		Spellbook spellbook = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
-		boolean sync = false;
 		if (entityLiving instanceof EntityPlayer)
-			sync = this.spellEnd(worldIn, entityLiving, stack, spellbook, this.getMaxItemUseDuration(stack) - timeLeft);
-		else sync = this.spellEnd(worldIn, entityLiving, stack, spellbook, -1);
-		spellbook.endSpelling(worldIn, entityLiving, stack, sync);
+			this.spellEnd(worldIn, entityLiving, stack, spellbook, this.getMaxItemUseDuration(stack) - timeLeft);
+		else this.spellEnd(worldIn, entityLiving, stack, spellbook, -1);
+		spellbook.endSpelling(worldIn, entityLiving, stack);
 	}
 
 	// 正在使用魔法书，服务端
@@ -170,18 +171,20 @@ public class ItemSpellbook extends Item {
 	public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
 		if (player.world.isRemote) return;
 		Spellbook spellbook = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
-		if (spellbook.spelling) {
-			this.spelling(player.world, player, stack, spellbook, this.getMaxItemUseDuration(stack) - count);
-		}
+		if (!spellbook.spelling) return;
+		this.spelling(player.world, player, stack, spellbook, this.getMaxItemUseDuration(stack) - count);
 	}
 
-	// 正在使用魔法书，客户端
-	@SideOnly(Side.CLIENT)
-	public void onUsingTickClient(EntityLivingBase entity, ItemStack stack, Spellbook spellbook) {
-		if (spellbook.spelling) {
-			this.spelling(entity.world, entity, stack, spellbook,
-					this.getMaxItemUseDuration(stack) - entity.getItemInUseCount());
-		}
+	@Override
+	public void onUsingTickClient(ItemStack stack, EntityLivingBase player, int count) {
+		Spellbook spellbook = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
+		// 首次
+		if (count == this.getMaxItemUseDuration(stack)) SpellbookOpenMsg.addSpellbookOpen(player, stack);
+		// 不能继续释放
+		if (!spellbook.spelling) return;
+		// 调用释放
+		this.spelling(player.world, player, stack, spellbook,
+				this.getMaxItemUseDuration(stack) - player.getItemInUseCount());
 	}
 
 	// 最长使用时间

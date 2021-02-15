@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.item;
+package yuzunyannn.elementalsorcery.item.book;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -88,9 +88,8 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 	}
 
 	@Override
-	public boolean spellEnd(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
+	public void spellEnd(World world, EntityLivingBase entity, ItemStack stack, Spellbook book, int power) {
 		book.obj = null;
-		return true;
 	}
 
 	private void finish(World world, EntityLivingBase entity, Spellbook book) {

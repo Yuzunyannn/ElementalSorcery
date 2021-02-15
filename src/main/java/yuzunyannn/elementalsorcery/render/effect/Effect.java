@@ -8,6 +8,7 @@ import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -26,12 +27,15 @@ public abstract class Effect {
 	}
 
 	protected World world;
+	/** 是否作为大量的粒子效果，是的话，会根据粒子效果的设置，决定是否展示 */
+	public boolean asParticle = false;
 	public double prevPosX;
 	public double prevPosY;
 	public double prevPosZ;
 	public double posX;
 	public double posY;
 	public double posZ;
+	/** 生存时间，同时也作为标定是否需要删除的变量 */
 	public int lifeTime;
 
 	static public final Random rand = new Random();
@@ -93,11 +97,15 @@ public abstract class Effect {
 	static private boolean inUpdate = false;
 
 	static public void addEffect(Effect effect) {
-		// 0渲染全部
-		if (Minecraft.getMinecraft().gameSettings.particleSetting != 0) {
-			// 其他的视形况
-			return;
+
+		if (effect.asParticle) {
+			// 0渲染全部
+			if (Minecraft.getMinecraft().gameSettings.particleSetting != 0) {
+				// 其他的视形况
+				return;
+			}
 		}
+
 		if (inUpdate) contextEffects.add(effect);
 		else {
 			if (effect instanceof IGUIEffect) guiEffects.add(effect);
@@ -137,6 +145,7 @@ public abstract class Effect {
 		GlStateManager.enableBlend();
 		GlStateManager.disableCull();
 		GlStateManager.depthMask(false);
+		RenderHelper.disableStandardItemLighting();
 		Iterator<Effect> iter = effects.iterator();
 		while (iter.hasNext()) {
 			Effect effect = iter.next();

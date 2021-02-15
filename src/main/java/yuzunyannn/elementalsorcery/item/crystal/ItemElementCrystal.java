@@ -16,6 +16,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ItemElementCrystal extends ItemCrystal {
+	
 	public ItemElementCrystal() {
 		super("elementCrystal", 69.8f, 0x40c9c0);
 		this.setMaxStackSize(1);

@@ -52,7 +52,7 @@ public class RenderTileStoneMill extends TileEntitySpecialRenderer<TileStoneMill
 			GlStateManager.translate(x + m.xoff, y + dustyYoff - ydown - 0.125f, z + m.zoff);
 			GlStateManager.rotate(m.roate, 0, 1, 0);
 			yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(m.stack);
-			Minecraft.getMinecraft().getRenderItem().renderItem(m.stack, ItemCameraTransforms.TransformType.GROUND);
+			Minecraft.getMinecraft().getRenderItem().renderItem(m.stack, ItemCameraTransforms.TransformType.FIXED);
 			GlStateManager.popMatrix();
 		}
 

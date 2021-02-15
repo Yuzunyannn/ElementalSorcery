@@ -18,6 +18,8 @@ import yuzunyannn.elementalsorcery.network.MessageEffect;
 public class Effects {
 
 	public static final String FIREWROK = "firewrok";
+	public static final String PARTICLE_EFFECT = "pEffect";
+	public static final String ENTITY_SOUL = "eSoul";
 
 	public static final int MAX_DIS = 64;
 
@@ -51,12 +53,8 @@ public class Effects {
 	@SideOnly(Side.CLIENT)
 	public static interface Factory {
 
-		Effect create(World world, Vec3d pos, NBTTagCompound nbt);
+		void show(World world, Vec3d pos, NBTTagCompound nbt);
 
-		default void show(World world, Vec3d pos, NBTTagCompound nbt) {
-			Effect effect = this.create(world, pos, nbt);
-			Effect.addEffect(effect);
-		}
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -77,7 +75,9 @@ public class Effects {
 	@SideOnly(Side.CLIENT)
 	public static void registerAll() {
 		EffectMap.map.clear();
-		EffectMap.register(FIREWROK, new FireworkEffect.Factory());
+		EffectMap.register(FIREWROK, FireworkEffect::show);
+		EffectMap.register(PARTICLE_EFFECT, ParticleEffects::showShow);
+		EffectMap.register(ENTITY_SOUL, EffectEntitySoul::show);
 	}
 
 }

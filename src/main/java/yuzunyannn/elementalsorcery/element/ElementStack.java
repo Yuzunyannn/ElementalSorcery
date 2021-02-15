@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.element;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -256,7 +258,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	}
 
 	/** 转化成元素时候回调 */
-	public ElementStack becomeMagic(World world) {
+	public ElementStack becomeMagic(@Nullable World world) {
 		if (this.isMagic()) return this;
 		ElementStack magic = this.element.changetoMagic(world, this);
 		magic.setElement(ESObjects.ELEMENTS.MAGIC);

@@ -30,42 +30,34 @@ public class FireworkEffect {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static class Factory implements Effects.Factory {
-		@Override
-		public Effect create(World world, Vec3d pos, NBTTagCompound nbt) {
-			return null;
-		}
-
-		@Override
-		public void show(World world, Vec3d pos, NBTTagCompound nbt) {
-			if (nbt.hasKey("Explosions", 9)) {
-				NBTTagList list = nbt.getTagList("Explosions", 10);
-				for (NBTBase base : list) {
-					nbt = (NBTTagCompound) base;
-					byte type = nbt.getByte("Type");
-					int size = nbt.getInteger("Size");
-					double speed = nbt.getDouble("Speed");
-					boolean trail = nbt.getBoolean("Trail");
-					boolean flicker = nbt.getBoolean("Flicker");
-					int[] colors = nbt.getIntArray("Colors");
-					int[] fadeColors = nbt.getIntArray("FadeColors");
-					if (colors.length == 0) colors = new int[] { ItemDye.DYE_COLORS[0] };
-					if (fadeColors.length == 0) fadeColors = new int[] { ItemDye.DYE_COLORS[0] };
-					switch (type) {
-					case 0:
-						FirewrokShap.createBall(world, pos, speed, size, colors, fadeColors, trail, flicker);
-						break;
-					case 1:
-						FirewrokShap.createCircle(world, pos, speed, size, colors, fadeColors, trail, flicker);
-						break;
-					case 10:
-						FirewrokShap.createEBall(world, pos, speed, size, colors);
-						break;
-					case 11:
-						FirewrokShap.createECircle(world, pos, speed, size, colors);
-					default:
-						break;
-					}
+	static public void show(World world, Vec3d pos, NBTTagCompound nbt) {
+		if (nbt.hasKey("Explosions", 9)) {
+			NBTTagList list = nbt.getTagList("Explosions", 10);
+			for (NBTBase base : list) {
+				nbt = (NBTTagCompound) base;
+				byte type = nbt.getByte("Type");
+				int size = nbt.getInteger("Size");
+				double speed = nbt.getDouble("Speed");
+				boolean trail = nbt.getBoolean("Trail");
+				boolean flicker = nbt.getBoolean("Flicker");
+				int[] colors = nbt.getIntArray("Colors");
+				int[] fadeColors = nbt.getIntArray("FadeColors");
+				if (colors.length == 0) colors = new int[] { ItemDye.DYE_COLORS[0] };
+				if (fadeColors.length == 0) fadeColors = new int[] { ItemDye.DYE_COLORS[0] };
+				switch (type) {
+				case 0:
+					FirewrokShap.createBall(world, pos, speed, size, colors, fadeColors, trail, flicker);
+					break;
+				case 1:
+					FirewrokShap.createCircle(world, pos, speed, size, colors, fadeColors, trail, flicker);
+					break;
+				case 10:
+					FirewrokShap.createEBall(world, pos, speed, size, colors);
+					break;
+				case 11:
+					FirewrokShap.createECircle(world, pos, speed, size, colors);
+				default:
+					break;
 				}
 			}
 		}

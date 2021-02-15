@@ -26,7 +26,7 @@ import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
-import yuzunyannn.elementalsorcery.item.ItemSpellbook;
+import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemRec;

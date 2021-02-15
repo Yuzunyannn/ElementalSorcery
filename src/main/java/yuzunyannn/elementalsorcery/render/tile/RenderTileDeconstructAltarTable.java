@@ -43,7 +43,7 @@ public class RenderTileDeconstructAltarTable extends TileEntitySpecialRenderer<T
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
 		yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
-		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
+		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
 		GlStateManager.popMatrix();
 	}
 

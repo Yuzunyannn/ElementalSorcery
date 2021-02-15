@@ -65,6 +65,7 @@ public class MantraBlockCrash extends MantraCommon {
 		}
 		if (state.getBlock() instanceof ITileEntityProvider) return;
 		if (!state.isFullBlock()) return;
+		if (!state.getBlock().isReplaceable(world, pos.up())) return;
 		ElementStack need = new ElementStack(ESInit.ELEMENTS.EARTH, 5, 25);
 		ElementStack stack = caster.iWantSomeElement(need, true);
 		if (stack.isEmpty()) return;

@@ -93,17 +93,15 @@ public class EffectLookAt extends EffectCondition {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0, 0, l * (1 - scale) * 0.2f);
 		GlStateManager.rotate(rotate, 0, 0, 1);
-		GlStateManager.color(r, g, b, scale * alpha);
 		GlStateManager.scale(scale, scale, scale);
-		RenderHelper.drawTexturedRectInCenter(0, 0, 1, 1);
+		this.renderTexRectInCenter(0, 0, 1, 1, partialTicks, r, g, b, scale * alpha);
 		GlStateManager.popMatrix();
 
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0, 0, l * scale * 0.1f);
 		GlStateManager.rotate(rotate, 0, 0, 1);
-		GlStateManager.color(r, g, b, (1 - scale) * alpha);
 		GlStateManager.scale(scale + 1, scale + 1, scale + 1);
-		RenderHelper.drawTexturedRectInCenter(0, 0, 1, 1);
+		this.renderTexRectInCenter(0, 0, 1, 1, partialTicks, r, g, b, (1 - scale) * alpha);
 		GlStateManager.popMatrix();
 
 		GlStateManager.popMatrix();

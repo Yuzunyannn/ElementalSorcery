@@ -31,6 +31,7 @@ public class EffectElement extends Effect {
 
 	public EffectElement(World worldIn, double posXIn, double posYIn, double posZIn) {
 		super(worldIn, posXIn, posYIn, posZIn);
+		this.asParticle = true;
 		this.alpha = 1.0f;
 		this.dalpha = 1.0f / this.lifeTime;
 		this.scale = rand.nextFloat() * 0.2f + 0.1f;
@@ -81,14 +82,18 @@ public class EffectElement extends Effect {
 		Vec3d v3 = new Vec3d(rX + rYZ, rXZ, rZ + rXY).scale(scale);
 		Vec3d v4 = new Vec3d(rX - rYZ, -rXZ, rZ - rXY).scale(scale);
 		if (isGlow) GlStateManager.depthFunc(519);
+
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
-		GlStateManager.color(r, g, b, a);
-		bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-		bufferbuilder.pos(x + v1.x, y + v1.y, z + v1.z).tex(0, 0).endVertex();
-		bufferbuilder.pos(x + v2.x, y + v2.y, z + v2.z).tex(0, 1).endVertex();
-		bufferbuilder.pos(x + v3.x, y + v3.y, z + v3.z).tex(1, 1).endVertex();
-		bufferbuilder.pos(x + v4.x, y + v4.y, z + v4.z).tex(1, 0).endVertex();
+		bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+		bufferbuilder.pos(x + v1.x, y + v1.y, z + v1.z).tex(0, 0);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		bufferbuilder.pos(x + v2.x, y + v2.y, z + v2.z).tex(0, 1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		bufferbuilder.pos(x + v3.x, y + v3.y, z + v3.z).tex(1, 1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		bufferbuilder.pos(x + v4.x, y + v4.y, z + v4.z).tex(1, 0);
+		bufferbuilder.color(r, g, b, a).endVertex();
 		tessellator.draw();
 		if (isGlow) GlStateManager.depthFunc(515);
 	}

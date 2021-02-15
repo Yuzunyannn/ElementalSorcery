@@ -59,7 +59,7 @@ public class WorldHelper {
 		Vec3d lookEnd = eye.addVector(look.x * distance, look.y * distance, look.z * distance);
 		RayTraceResult rt = world.rayTraceBlocks(eye, lookEnd, false, false, true);
 
-		if (rt != null) distance = rt.hitVec.distanceTo(eye);
+		if (rt != null) distance = rt.hitVec.distanceTo(eye) + 1;
 
 		Entity pointedEntity = null;
 		Vec3d hitVec = null;

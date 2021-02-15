@@ -8,6 +8,7 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -24,6 +25,7 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.enchant.EnchantmentES;
+import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 
 public class EventServer {
@@ -109,14 +111,24 @@ public class EventServer {
 		ElfPostOffice.GC(e.getWorld());
 	}
 
-	//任何死亡
+	// 任何死亡
 	@SubscribeEvent
 	public static void onLivingDead(LivingDeathEvent event) {
-		onLivingDeadEnchantmentDeal(event);
+		if (event.isCanceled()) return;
+		EntityLivingBase deader = event.getEntityLiving();
+		DamageSource source = event.getSource();
+		onLivingDeadEnchantmentDeal(deader, source);
+
+		Entity trueSource = source.getTrueSource();
+		if (trueSource instanceof EntityLivingBase) {
+			ItemStack held = ((EntityLivingBase) trueSource).getHeldItemMainhand();
+			Item item = held.getItem();
+			if (item instanceof IItemStronger) ((IItemStronger) item).onKillEntity(trueSource.world, held, deader,
+					(EntityLivingBase) trueSource, source);
+		}
 	}
 
-	private static void onLivingDeadEnchantmentDeal(LivingDeathEvent event) {
-		DamageSource source = event.getSource();
+	private static void onLivingDeadEnchantmentDeal(EntityLivingBase deader, DamageSource source) {
 		Entity s = source.getImmediateSource();
 		if (!(s instanceof EntityLivingBase)) return;
 		EntityLivingBase living = (EntityLivingBase) s;
@@ -126,8 +138,7 @@ public class EventServer {
 			int id = nbttaglist.getCompoundTagAt(i).getShort("id");
 			int lvl = nbttaglist.getCompoundTagAt(i).getShort("lvl");
 			Enchantment enchantment = Enchantment.getEnchantmentByID(id);
-			if (enchantment instanceof EnchantmentES)
-				((EnchantmentES) enchantment).onLivingDead(event.getEntityLiving(), source, lvl);
+			if (enchantment instanceof EnchantmentES) ((EnchantmentES) enchantment).onLivingDead(deader, source, lvl);
 		}
 	}
 

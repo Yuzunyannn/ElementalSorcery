@@ -16,23 +16,13 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
-import yuzunyannn.elementalsorcery.event.SpellbookOpenMsg;
-import yuzunyannn.elementalsorcery.item.ItemSpellbook;
+import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 
 public class MessageSpellbook implements IMessage {
 	public NBTTagCompound nbt = new NBTTagCompound();
 
 	public MessageSpellbook() {
 
-	}
-
-	public MessageSpellbook setOpen(EntityLivingBase playerIn, Enum hand) {
-		nbt.setUniqueId("uuid", playerIn.getUniqueID());
-		if (hand == EnumHand.MAIN_HAND)
-			nbt.setByte("flags", (byte) 1);
-		else
-			nbt.setByte("flags", (byte) 2);
-		return this;
 	}
 
 	public MessageSpellbook setSpellFinish(EntityLivingBase playerIn) {
@@ -54,8 +44,7 @@ public class MessageSpellbook implements IMessage {
 	static public class Handler implements IMessageHandler<MessageSpellbook, IMessage> {
 		@Override
 		public IMessage onMessage(MessageSpellbook message, MessageContext ctx) {
-			if (ctx.side != Side.CLIENT)
-				return null;
+			if (ctx.side != Side.CLIENT) return null;
 			UUID uuid = message.nbt.getUniqueId("uuid");
 			byte flags = message.nbt.getByte("flags");
 			Minecraft.getMinecraft().addScheduledTask(new Runnable() {
@@ -70,16 +59,8 @@ public class MessageSpellbook implements IMessage {
 						ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
 						if (!stack.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null))
 							stack = player.getHeldItem(EnumHand.OFF_HAND);
-						if (!stack.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null))
-							return;
+						if (!stack.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null)) return;
 						ItemSpellbook.renderFinish(stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null));
-					} else {
-						EnumHand hand;
-						if (flags == 1)
-							hand = EnumHand.MAIN_HAND;
-						else
-							hand = EnumHand.OFF_HAND;
-						SpellbookOpenMsg.addSpellbookOpen(player, player.getHeldItem(hand));
 					}
 				}
 			});

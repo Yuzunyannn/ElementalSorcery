@@ -263,8 +263,6 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	protected void onDead() {
-		// 客户端关书
-		if (world.isRemote) this.closeBook();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -417,7 +415,8 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 			BlockPos pos = this.getPosition();
 			pos = BlockHelper.tryFindAnySolid(world, pos, 6, 5, 5);
 			if (pos == null) return WantedTargetResult.EMPTY;
-			return new WantedTargetResult(pos, EnumFacing.UP, new Vec3d(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5));
+			return new WantedTargetResult(pos, EnumFacing.UP,
+					new Vec3d(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5));
 		}
 	}
 

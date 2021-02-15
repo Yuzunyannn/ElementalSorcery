@@ -33,11 +33,11 @@ public class TileMDMagicSolidify extends TileMDBase implements ITickable {
 	@Override
 	public void update() {
 		// this.autoTransfer();
-		if (this.world.isRemote) return;
 		if (tick % 10 != 0) return;
 		if (this.magic.isEmpty()) return;
 		ItemStack stack = inventory.getStackInSlot(0);
 		if (stack.isEmpty() || stack.getItem() == MAGIC_STONE.getItem() || stack.getItem() == MAGIC_PIECE.getItem()) {
+			if (this.world.isRemote) return;
 			this.solidify();
 			return;
 		}
@@ -46,6 +46,7 @@ public class TileMDMagicSolidify extends TileMDBase implements ITickable {
 		if (ElementHelper.canInsert(inventory) == false) return;
 		ElementStack estack = this.magic.splitStack(Math.min(10, this.magic.getCount()));
 		if (inventory.insertElement(estack, false)) {
+			if (this.world.isRemote) return;
 			inventory.saveState(stack);
 			this.markDirty();
 		} else this.magic.grow(estack);

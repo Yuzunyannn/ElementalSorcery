@@ -45,7 +45,7 @@ public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk
 		if (spellbook == null) {
 			GlStateManager.translate(0, 0, 0.1);
 			RenderHelper.layItemPositionFix(book);
-			Minecraft.getMinecraft().getRenderItem().renderItem(book, ItemCameraTransforms.TransformType.GROUND);
+			Minecraft.getMinecraft().getRenderItem().renderItem(book, ItemCameraTransforms.TransformType.FIXED);
 			return;
 		}
 		SpellbookRenderInfo info = spellbook.renderInfo;

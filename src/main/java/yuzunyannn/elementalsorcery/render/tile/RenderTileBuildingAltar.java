@@ -37,7 +37,7 @@ public class RenderTileBuildingAltar extends TileEntitySpecialRenderer<TileBuild
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y - 0.25, z + 0.5);
 		yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
-		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
+		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
 		GlStateManager.popMatrix();
 	}
 

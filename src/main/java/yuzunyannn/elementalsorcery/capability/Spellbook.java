@@ -3,8 +3,6 @@ package yuzunyannn.elementalsorcery.capability;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -19,7 +17,6 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageSpellbook;
-import yuzunyannn.elementalsorcery.network.MessageSyncItemStack;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 
 public class Spellbook {
@@ -36,8 +33,6 @@ public class Spellbook {
 	public void beginSpelling(World world, EntityLivingBase player, EnumHand hand) {
 		this.spelling = true;
 		player.setActiveHand(hand);
-		// 发送动画消息
-		if (!world.isRemote) sendMessageBegin(world, player, hand);
 	}
 
 	/**
@@ -45,10 +40,9 @@ public class Spellbook {
 	 * 
 	 * @param sync 是否进行对客户端的同步，客户端该参数无效
 	 */
-	public void endSpelling(World world, EntityLivingBase player, ItemStack stack, boolean sync) {
+	public void endSpelling(World world, EntityLivingBase player, ItemStack stack) {
 		this.spelling = false;
 		if (this.inventory != null) this.inventory.saveState(stack);
-		if (sync && !world.isRemote) sendMessageEnd(world, player, stack);
 	}
 
 	/** 释放状态 */
@@ -61,23 +55,6 @@ public class Spellbook {
 		MessageSpellbook message = new MessageSpellbook().setSpellFinish(entity);
 		TargetPoint point = new TargetPoint(world.provider.getDimension(), entity.posX, entity.posY, entity.posZ, 64);
 		ESNetwork.instance.sendToAllAround(message, point);
-	}
-
-	// 发送打开魔法书的消息
-	private void sendMessageBegin(World world, EntityLivingBase playerIn, EnumHand hand) {
-		if (world.isRemote) return;
-		MessageSpellbook message = new MessageSpellbook().setOpen(playerIn, hand);
-		TargetPoint point = new TargetPoint(world.provider.getDimension(), playerIn.posX, playerIn.posY, playerIn.posZ,
-				64);
-		ESNetwork.instance.sendToAllAround(message, point);
-	}
-
-	// 发送结束魔法书时，书内信息的同步
-	private void sendMessageEnd(World world, EntityLivingBase playerIn, ItemStack stack) {
-		if (playerIn instanceof EntityPlayerMP) {
-			ESNetwork.instance.sendTo(new MessageSyncItemStack((EntityPlayer) playerIn, stack),
-					(EntityPlayerMP) playerIn);
-		}
 	}
 
 	// 表明是否当前client玩家使用的

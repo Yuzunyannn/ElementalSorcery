@@ -6,7 +6,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class EffectMagicCircleIcon extends EffectMagicCircle {
@@ -24,9 +23,9 @@ public class EffectMagicCircleIcon extends EffectMagicCircle {
 	}
 
 	@Override
-	protected void renderCenterIcon(float partialTicks) {
+	protected void renderCenterIcon(float partialTicks, float alpha) {
 		if (icon == null) return;
 		mc.getTextureManager().bindTexture(icon);
-		RenderHelper.drawTexturedRectInCenter(0, 0, 12, 12);
+		this.renderTexRectInCenter(0, 0, 12, 12, partialTicks, r, g, b, alpha);
 	}
 }

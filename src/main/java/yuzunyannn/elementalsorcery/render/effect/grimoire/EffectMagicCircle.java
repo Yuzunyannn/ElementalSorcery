@@ -107,10 +107,9 @@ public class EffectMagicCircle extends EffectCondition {
 		float scale = RenderHelper.getPartialTicks(this.scale, this.preScale, partialTicks);
 		float alpha = RenderHelper.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
 		GlStateManager.scale(scale, scale, scale);
-		GlStateManager.color(r, g, b, alpha);
 		this.bindCircleIcon();
-		RenderHelper.drawTexturedRectInCenter(0, 0, 32, 32);
-		this.renderCenterIcon(partialTicks);
+		this.renderTexRectInCenter(0, 0, 32, 32, partialTicks, r, g, b, alpha);
+		this.renderCenterIcon(partialTicks, alpha);
 		GlStateManager.popMatrix();
 	}
 
@@ -118,7 +117,7 @@ public class EffectMagicCircle extends EffectCondition {
 		TEXTURE.bind();
 	}
 
-	protected void renderCenterIcon(float partialTicks) {
+	protected void renderCenterIcon(float partialTicks, float alpha) {
 
 	}
 

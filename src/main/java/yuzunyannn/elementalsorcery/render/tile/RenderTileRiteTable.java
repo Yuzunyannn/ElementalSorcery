@@ -51,7 +51,7 @@ public class RenderTileRiteTable extends TileEntitySpecialRenderer<TileRiteTable
 			oy = MathHelper.sin(i * 2.8f) * 0.6f;
 			GlStateManager.translate(ox, 0.67f, oy);
 			yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
-			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
+			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
 			GlStateManager.popMatrix();
 		}
 	}

@@ -40,7 +40,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.item.ItemSpellbook;
+import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;

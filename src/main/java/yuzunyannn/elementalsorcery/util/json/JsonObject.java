@@ -193,7 +193,11 @@ public class JsonObject extends Json implements Iterable<String> {
 				JsonPrimitive jp = je.getAsJsonPrimitive();
 				if (jp.isString()) nbt.setString(key, je.getAsString());
 				else if (jp.isBoolean()) nbt.setBoolean(key, je.getAsBoolean());
-				else if (jp.isNumber()) nbt.setFloat(key, je.getAsFloat());
+				else if (jp.isNumber()) {
+					float n = je.getAsFloat();
+					if (n == Math.floor(n)) nbt.setInteger(key, je.getAsInt());
+					else nbt.setFloat(key, je.getAsFloat());
+				}
 			}
 		}
 		return nbt;

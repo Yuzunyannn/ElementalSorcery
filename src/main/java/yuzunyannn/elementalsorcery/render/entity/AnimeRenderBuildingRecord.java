@@ -91,7 +91,7 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 		yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
 		GlStateManager.rotate(xr, 1, 0, 0);
 		GlStateManager.rotate(theta + partialTicks, 0, 1, 0);
-		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
+		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
 		GlStateManager.popMatrix();
 	}
 

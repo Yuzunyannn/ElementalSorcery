@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.tile.TileMagicPlatform;
+import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileMagicPlatform extends TileEntitySpecialRenderer<TileMagicPlatform> {
@@ -19,8 +20,8 @@ public class RenderTileMagicPlatform extends TileEntitySpecialRenderer<TileMagic
 		if (stack.isEmpty()) return;
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y - 0.05, z + 0.5);
-		yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
-		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
+		RenderHelper.layItemPositionFix(stack);
+		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
 		GlStateManager.popMatrix();
 	}
 

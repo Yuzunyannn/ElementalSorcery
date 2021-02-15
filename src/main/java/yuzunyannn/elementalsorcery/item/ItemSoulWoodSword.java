@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
@@ -11,8 +12,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class ItemSoulWoodSword extends ItemSword {
@@ -23,6 +27,16 @@ public class ItemSoulWoodSword extends ItemSword {
 	}
 
 	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		if (!this.isInCreativeTab(tab)) return;
+		items.add(new ItemStack(this));
+		ItemStack soulWith666 = new ItemStack(this);
+		ItemSoulWoodSword.addSoul(soulWith666, 666);
+		items.add(soulWith666);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		tooltip.add(TextFormatting.AQUA + I18n.format("info.soul.power", getSoul(stack)));
 	}

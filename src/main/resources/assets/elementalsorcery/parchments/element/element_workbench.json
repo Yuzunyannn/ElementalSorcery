@@ -1,7 +1,8 @@
 {
     "lev": 3,
     "need": [
-        "md/magic_crystal"
+        "md/magic_crystal",
+        "element/element_crystal"
     ],
     "linked": "elementalsorcery:element_workbench",
     "type": "craft",

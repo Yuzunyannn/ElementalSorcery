@@ -80,6 +80,8 @@ public class ESObjects {
 		public Item VORTEX;
 		public Item ELEMENT_STONE;
 		public Item LIFE_LEATHER;
+		public Item MAGIC_BLAST_WAND;
+		public Item SOUL_KILLER_SWORD;
 	}
 
 	static public class Blocks {
