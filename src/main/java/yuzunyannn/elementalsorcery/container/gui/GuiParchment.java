@@ -402,8 +402,8 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 				}
 			} else {
 				bufferbuilder.begin(7, DefaultVertexFormats.BLOCK);
-				render.renderModel(mc.world, blockrendererdispatcher.getModelForState(iblockstate), iblockstate,
-						blockpos, bufferbuilder, true, MathHelper.getPositionRandom(blockpos));
+				render.renderModelFlat(mc.world, blockrendererdispatcher.getModelForState(iblockstate), iblockstate,
+						blockpos, bufferbuilder, false, MathHelper.getPositionRandom(blockpos));
 				tessellator.draw();
 			}
 		}

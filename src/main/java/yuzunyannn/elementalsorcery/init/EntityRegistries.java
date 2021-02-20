@@ -26,6 +26,7 @@ import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.entity.EntityMagicMelting;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.entity.EntityResonantCrystal;
+import yuzunyannn.elementalsorcery.entity.EntityScapegoat;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
@@ -40,6 +41,7 @@ import yuzunyannn.elementalsorcery.render.entity.RenderEntityGrimoire;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityMagicMelting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortal;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityRelicZombie;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityScapegoat;
 
 public class EntityRegistries {
 
@@ -76,6 +78,8 @@ public class EntityRegistries {
 		register(41, "resonant_crystal", EntityResonantCrystal.class, "ResonantCrystal", 64, 10, true);
 		// 实体方块
 		register(20, "bulletin", EntityBulletin.class, "Bulletin", 64, 1, false);
+		register(21, "scapegoat", EntityScapegoat.class, "Scapegoat", 64, 1, false);
+
 	}
 
 	private static void register(int id, String registryName, Class<? extends Entity> entityClass, String name,
@@ -107,6 +111,7 @@ public class EntityRegistries {
 		registerRender(EntityBulletin.class, RenderEntitiyBulletin.class);
 		registerRender(EntityMagicMelting.class, RenderEntityMagicMelting.class);
 		registerRender(EntityBlockMove.class, RenderEntityBlockMove.class);
+		registerRender(EntityScapegoat.class, RenderEntityScapegoat.class);
 	}
 
 	@SideOnly(Side.CLIENT)

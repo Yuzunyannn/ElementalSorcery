@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.mods.jei;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import mezz.jei.api.IGuiHelper;
@@ -10,7 +11,9 @@ import mezz.jei.api.IModPlugin;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
+import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.IStackHelper;
+import mezz.jei.api.recipe.IVanillaRecipeFactory;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -93,8 +96,23 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipes(TileMDRubbleRepair.getRecipes(), UID_MDRUBBLEREPAIR);
 		registry.addRecipes(Arrays.asList(MDMagicSolidifyRW.FakeRecipe.values()), UID_MDMAGICSOLIDIFY);
 		registry.addRecipes(TileMDInfusion.getRecipes(), UID_MDINFUSION);
+		this.registerOther(registry);
 		// 描述类
 		registry.addRecipes(this.initDescribe(), DescribeCategory.UID);
+	}
+
+	private void registerOther(IModRegistry registry) {
+		IVanillaRecipeFactory vrf = jeiHelpers.getVanillaRecipeFactory();
+		// === 修理 ===
+		// 替罪羊
+		ItemStack stack = new ItemStack(ESInit.ITEMS.SCAPEGOAT);
+		stack.setItemDamage(stack.getMaxDamage() / 4 * 3);
+		ItemStack stack1 = stack.copy();
+		stack1.setItemDamage(stack.getMaxDamage());
+		ItemStack stack2 = new ItemStack(Items.WHEAT);
+		IRecipeWrapper repairWithMaterial = vrf.createAnvilRecipe(stack1, ItemHelper.toList(stack2),
+				ItemHelper.toList(stack));
+		registry.addRecipes(Collections.singletonList(repairWithMaterial), VanillaRecipeCategoryUid.ANVIL);
 	}
 
 	private List<DescribeRecipeWrapper.Describe> initDescribe() {

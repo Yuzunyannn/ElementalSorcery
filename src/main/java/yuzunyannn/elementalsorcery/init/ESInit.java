@@ -155,6 +155,7 @@ import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.item.ItemRedHandset;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.item.ItemRockCamera;
+import yuzunyannn.elementalsorcery.item.ItemScapegoat;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.item.ItemSoulKillerSword;
 import yuzunyannn.elementalsorcery.item.ItemSoulWoodSword;
@@ -426,6 +427,7 @@ public class ESInit {
 		ITEMS.LIFE_LEATHER = new ItemLifeLeather();
 		ITEMS.MAGIC_BLAST_WAND = new ItemMagicBlastWand();
 		ITEMS.SOUL_KILLER_SWORD = new ItemSoulKillerSword();
+		ITEMS.SCAPEGOAT = new ItemScapegoat();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -748,6 +750,7 @@ public class ESInit {
 		registerRender(ITEMS.LIFE_LEATHER, 1, "life_leather");
 		registerRender(ITEMS.MAGIC_BLAST_WAND, new RenderItemMagicBlastWand());
 		registerRender(ITEMS.SOUL_KILLER_SWORD);
+		registerRender(ITEMS.SCAPEGOAT);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

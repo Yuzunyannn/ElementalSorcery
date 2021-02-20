@@ -31,8 +31,8 @@ import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
-import yuzunyannn.elementalsorcery.entity.EntityMagicMelting;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
+import yuzunyannn.elementalsorcery.entity.EntityScapegoat;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -41,7 +41,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class CommandESDebug {
 
 	public static final String[] autoTips = new String[] { "reflush", "buildTest", "portalTest", "showInfo",
-			"blockMoveTest", "smeltingTest", "reloadeTexture", "quest" };
+			"blockMoveTest", "scapegoatTest", "reloadeTexture", "quest" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -106,9 +106,8 @@ public class CommandESDebug {
 				 */
 			}
 				return;
-			case "smeltingTest": {
-				EntityMagicMelting e = new EntityMagicMelting(entity.world, pos.up(),
-						new ItemStack(Blocks.DIAMOND_ORE));
+			case "scapegoatTest": {
+				EntityScapegoat e = new EntityScapegoat(entity.world, pos.up(), entity, ItemStack.EMPTY);
 				entity.world.spawnEntity(e);
 			}
 				return;

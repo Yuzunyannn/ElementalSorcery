@@ -29,6 +29,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptMagic;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
+import yuzunyannn.elementalsorcery.block.BlockLifeFlower;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
@@ -146,7 +147,7 @@ public class EntityResonantCrystal extends EntityThrowable {
 			Block block = state.getBlock();
 			if (block == ESInit.BLOCKS.LIFE_FLOWER) {
 				// 植物花
-				world.scheduleUpdate(pos, state.getBlock(), 0);
+				((BlockLifeFlower) block).tryGrowAll(world, pos);
 				return 5;
 			} else if (block instanceof BlockElfSapling) {
 				EntityPlayer player = null;

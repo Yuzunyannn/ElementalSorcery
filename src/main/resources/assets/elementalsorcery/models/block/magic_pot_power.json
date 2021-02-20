@@ -1,0 +1,6 @@
+{
+    "parent": "elementalsorcery:block/magic_pot",
+    "textures": {
+        "1": "elementalsorcery:blocks/magic_pot_dirt_power"
+    }
+}

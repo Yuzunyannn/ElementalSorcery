@@ -1,0 +1,11 @@
+{
+    "lev": 3,
+    "need": [
+        "md/magic_gold",
+        "element/rite_summon"
+    ],
+    "linked": "elementalsorcery:scapegoat",
+    "type": "craft",
+    "name": "scapegoat",
+    "item": "elementalsorcery:scapegoat"
+}

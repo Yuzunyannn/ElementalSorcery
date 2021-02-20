@@ -27,6 +27,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -40,6 +41,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.entity.EntityScapegoat;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
@@ -263,6 +265,24 @@ public class TileRiteTable extends TileEntityNetwork {
 			ItemHelper.clear(inventory);
 			this.updateToClient();
 			this.markDirty();
+		}
+		// 寻找替罪羊
+		{
+			final int size = 6;
+			double x = pos.getX() + 0.5;
+			double y = pos.getY() + 0.5;
+			double z = pos.getZ() + 0.5;
+			AxisAlignedBB aabb = new AxisAlignedBB(x - size, y - size, z - size, x + size, y + size, z + size);
+			String name = entity.getName();
+			List<EntityScapegoat> entities = world.getEntitiesWithinAABB(EntityScapegoat.class, aabb);
+			for (EntityScapegoat goat : entities) {
+				if (goat.hasCustomName()) {
+					if (name.equals(goat.getCustomNameTag())) {
+						entity = goat;
+						break;
+					}
+				} else entity = goat;
+			}
 		}
 		// 爆炸
 		world.createExplosion(null, entity.posX, entity.posY, entity.posZ, 0.15f * this.level * this.level + 0.2f,

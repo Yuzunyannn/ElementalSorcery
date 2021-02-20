@@ -1,0 +1,35 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "PWP",
+    "#C#",
+    "STS"
+  ],
+  "key": {
+    "P": {
+      "type": "forge:ore_dict",
+      "ore": "plankWood"
+    },
+    "S": {
+      "item": "elementalsorcery:soul_fragment"
+    },
+    "T": {
+      "type": "forge:ore_dict",
+      "ore": "stickWood"
+    },
+    "C": {
+      "item": "minecraft:hay_block"
+    },
+    "#": {
+      "item": "elementalsorcery:magic_gold"
+    },
+    "W": {
+      "item": "minecraft:wool",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:scapegoat",
+    "count": 1
+  }
+}

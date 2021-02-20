@@ -54,8 +54,8 @@ public class BlockLifeFlower extends Block {
 		return AABB;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
+	@SideOnly(Side.CLIENT)
 	public BlockRenderLayer getBlockLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
@@ -72,18 +72,18 @@ public class BlockLifeFlower extends Block {
 
 	@Override
 	public void neighborChanged(IBlockState state, World world, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if (pos.down().equals(fromPos)) {
-			if (world.getBlockState(fromPos).getBlock() != ESInit.BLOCKS.MAGIC_POT) {
-				this.dropBlockAsItem(world, pos, state, 0);
-				world.setBlockToAir(pos);
-			}
+		if (!pos.down().equals(fromPos)) return;
+		if (world.getBlockState(fromPos).getBlock() != ESInit.BLOCKS.MAGIC_POT) {
+			this.dropBlockAsItem(world, pos, state, 0);
+			world.setBlockToAir(pos);
 		}
 	}
 
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
-		if (this.hasPower(worldIn, pos)) if (placer instanceof EntityPlayerMP)
+		if (!this.isIntact(worldIn, pos)) return;
+		if (placer instanceof EntityPlayerMP)
 			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) placer, "build:garden");
 	}
 
@@ -106,6 +106,12 @@ public class BlockLifeFlower extends Block {
 		return ((BlockMagicPot) state.getBlock()).hasPower(worldIn, state, pos.down());
 	}
 
+	private boolean isIntact(World worldIn, BlockPos pos) {
+		IBlockState state = worldIn.getBlockState(pos.down());
+		if (state.getBlock() != ESInit.BLOCKS.MAGIC_POT) return false;
+		return ((BlockMagicPot) state.getBlock()).isIntact(worldIn, pos.down());
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
@@ -118,14 +124,31 @@ public class BlockLifeFlower extends Block {
 	}
 
 	@Override
-	public void updateTick(World worldIn, BlockPos posOrigin, IBlockState state, Random rand) {
-		if (!this.hasPower(worldIn, posOrigin)) return;
-		BlockPos center = posOrigin.down(2);
+	public void updateTick(World world, BlockPos flowerPos, IBlockState state, Random rand) {
+		if (!this.hasPower(world, flowerPos)) return;
+		growAll(world, flowerPos);
+
+		BlockPos potPos = flowerPos.down();
+		IBlockState potState = world.getBlockState(potPos);
+		int magic = potState.getValue(BlockMagicPot.MAGIC);
+		if (magic <= 0) return;
+		if (rand.nextDouble() < 0.02)
+			world.setBlockState(potPos, potState.withProperty(BlockMagicPot.MAGIC, magic - 1));
+	}
+
+	public void tryGrowAll(World world, BlockPos flowerPos) {
+		if (!this.hasPower(world, flowerPos)) return;
+		growAll(world, flowerPos);
+	}
+
+	/** 成长所有内容一次 */
+	public void growAll(World world, BlockPos flowerPos) {
+		BlockPos center = flowerPos.down(2);
 		for (int x = -4; x <= 4; x++) {
 			for (int z = -4; z <= 4; z++) {
 				BlockPos pos = center.add(x, 0, z);
-				if (worldIn.getBlockState(pos).getBlock() != ESInit.BLOCKS.LIFE_DIRT) continue;
-				grow(worldIn, pos);
+				if (world.getBlockState(pos).getBlock() != ESInit.BLOCKS.LIFE_DIRT) continue;
+				grow(world, pos);
 			}
 		}
 	}

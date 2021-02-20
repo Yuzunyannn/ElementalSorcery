@@ -82,6 +82,7 @@ public class ESObjects {
 		public Item LIFE_LEATHER;
 		public Item MAGIC_BLAST_WAND;
 		public Item SOUL_KILLER_SWORD;
+		public Item SCAPEGOAT;
 	}
 
 	static public class Blocks {

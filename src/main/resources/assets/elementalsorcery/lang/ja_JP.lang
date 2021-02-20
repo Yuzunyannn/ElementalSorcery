@@ -83,6 +83,7 @@ item.writtenPaper.name=魔文の紙
 item.mantraPaper.name=呪文の紙
 item.magicBlastWand.name=魔爆権杖
 item.soulKillerSword.name=魂喰の剣
+item.scapegoat.name=スケープゴート
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -601,6 +602,8 @@ page.magicCrystal=魔力の水晶
 page.magicCrystal.ct=通过给带有魔力的カイヤナイト再次エンチャント、从而得到的水晶、可以合成各种魔力物品。\nエンチャントの条件：少雨地区的白天
 page.natureCrystal=自然の水晶
 page.natureCrystal.ct=サトウキビにエンチャントすれば自然の水晶を貰える。自然の水晶は自然と共鳴することができる、そしてある場所の周囲に関する情報を取得できる。\nエンチャントの条件：いつでもどこでも
+page.scapegoat=替罪羊
+page.scapegoat.ct=通过魔力制成的代人受过之羊。\n放在仪式桌附近，当放置者进行仪式失败时，惩罚将转移到替罪羊身上。\n若替罪羊旁有怪物意图攻击，其目标便会被替罪羊所吸引。\n替罪羊每次受到的伤害不会超过1点。\n替罪羊的功效仅对其同名者生效。\n右键其进行拆解。
 page.quills=魔力羽毛笔
 page.quills.ct=通过给羽毛笔注魔，可以让魔力环绕在羽毛笔周围，形成魔力羽毛笔。\n将魔力羽毛笔投入岩浆湖或者湖中，会吸收周围的液体与魔力共振，形成火之羽毛笔或水之羽毛笔。
 page.estone=魔力石英
