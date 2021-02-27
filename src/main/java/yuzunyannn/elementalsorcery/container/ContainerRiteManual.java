@@ -6,10 +6,13 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.summon.SummonRecipe;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
@@ -66,10 +69,27 @@ public class ContainerRiteManual extends Container {
 				ContainerRiteManual.this.power = power;
 				if (power == 0) return;
 				ContainerRiteManual.this.level = TileRiteTable.sacrifice.getLevel(stack);
+
+				ItemStack quill = findQuill();
+				if (quill.isEmpty()) return;
+				ItemStack manual = findRiteManual();
+				ItemRiteManual.addRecord(manual, stack, ContainerRiteManual.this.level, ContainerRiteManual.this.power);
 			}
 		});
 
 		if (!world.isRemote) this.checkAdvancement();
+	}
+
+	protected ItemStack findQuill() {
+		ItemStack stack = this.player.getHeldItem(EnumHand.OFF_HAND);
+		if (stack.getItem() == ESInit.ITEMS.QUILL) return stack;
+		stack = this.player.getHeldItem(EnumHand.MAIN_HAND);
+		if (stack.getItem() == ESInit.ITEMS.QUILL) return stack;
+		return ItemStack.EMPTY;
+	}
+
+	protected ItemStack findRiteManual() {
+		return ItemRiteManual.findRiteManual(player);
 	}
 
 	public void checkAdvancement() {

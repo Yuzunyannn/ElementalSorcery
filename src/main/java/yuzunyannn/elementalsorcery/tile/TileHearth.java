@@ -30,8 +30,7 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 	protected ItemStackHandler inventory = new ItemStackHandler(4) {
 		@Override
 		public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-			if (TileEntityFurnace.isItemFuel(stack))
-				return super.insertItem(slot, stack, simulate);
+			if (TileEntityFurnace.isItemFuel(stack)) return super.insertItem(slot, stack, simulate);
 			return stack;
 		}
 	};
@@ -46,8 +45,7 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			if (facing == EnumFacing.UP)
-				return super.hasCapability(capability, facing);
+			if (facing == EnumFacing.UP) return super.hasCapability(capability, facing);
 			return true;
 		}
 		return super.hasCapability(capability, facing);
@@ -57,8 +55,7 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
-			if (facing == EnumFacing.UP)
-				return super.getCapability(capability, facing);
+			if (facing == EnumFacing.UP) return super.getCapability(capability, facing);
 			return (T) inventory;
 		}
 		return super.getCapability(capability, facing);
@@ -84,10 +81,8 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 
 	public static boolean giveBurnPower(TileEntity tile, int amount, int level) {
 		IAcceptBurnPower receiver = null;
-		if (tile instanceof IAcceptBurnPower)
-			receiver = (IAcceptBurnPower) tile;
-		if (receiver == null)
-			return false;
+		if (tile instanceof IAcceptBurnPower) receiver = (IAcceptBurnPower) tile;
+		if (receiver == null) return false;
 		if (level <= 0) {
 			amount = 0;
 			level = 0;
@@ -103,8 +98,7 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 
 	public static int getBurnLevel(World worldIn, BlockPos pos) {
 		IBlockState state = worldIn.getBlockState(pos);
-		if (state.getBlock() != ESInit.BLOCKS.HEARTH)
-			return 0;
+		if (state.getBlock() != ESInit.BLOCKS.HEARTH) return 0;
 		BlockHearth.EnumMaterial material = state.getValue(BlockHearth.MATERIAL);
 		int level = 0;
 		switch (material) {
@@ -139,29 +133,23 @@ public class TileHearth extends TileEntityNetwork implements ITickable, IField {
 			if (burnTime == 0 && !world.isRemote) {
 				this.markDirty();
 				brunIt(false);
-			} else
-				return;
+			} else return;
 		}
 		// 检查楼上是否能接受热量，不能的话，就不消耗一个新物品了
-		if (!giveBurnPower(tile, 0, 0))
-			return;
+		if (!giveBurnPower(tile, 0, 0)) return;
 		// 假装取出来个
 		ItemStack item_stack = ItemStack.EMPTY;
 		int slot;
 		for (slot = 0; slot < inventory.getSlots(); slot++) {
 			item_stack = inventory.extractItem(slot, 1, true);
-			if (!item_stack.isEmpty())
-				break;
+			if (!item_stack.isEmpty()) break;
 		}
-		if (item_stack.isEmpty())
-			return;
+		if (item_stack.isEmpty()) return;
 		// 重置燃烧时间
 		burnTime = TileEntityFurnace.getItemBurnTime(item_stack);
-		if (burnTime <= 0)
-			burnTime = 1;
+		if (burnTime <= 0) burnTime = 1;
 		totalBurnTime = burnTime;
-		if (world.isRemote)
-			return;
+		if (world.isRemote) return;
 		// 消耗掉这个物品
 		inventory.extractItem(slot, 1, false);
 		brunIt(true);

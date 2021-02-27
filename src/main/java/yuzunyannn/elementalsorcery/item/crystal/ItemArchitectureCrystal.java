@@ -34,8 +34,8 @@ public class ItemArchitectureCrystal extends ItemCrystal {
 		super("architectureCrystal", 32.6f, 0x2e7539);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 		ArcInfo info = new ArcInfo(stack, Side.CLIENT);
@@ -56,8 +56,7 @@ public class ItemArchitectureCrystal extends ItemCrystal {
 		tooltip.add(I18n.format("info.arcCrystal.name", info.building.getName()));
 		List<BlockItemTypeInfo> list = info.building.getBlockTypeInfos();
 		for (BlockItemTypeInfo tinfo : list) {
-			tooltip.add(I18n.format("info.arcCrystal.count", I18n.format(tinfo.getUnlocalizedName() + ".name"),
-					tinfo.getCount()));
+			tooltip.add(I18n.format("info.arcCrystal.count", tinfo.getDisplayName(), tinfo.getCount()));
 		}
 
 	}

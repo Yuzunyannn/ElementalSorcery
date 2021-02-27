@@ -3,6 +3,8 @@ package yuzunyannn.elementalsorcery.init;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Callable;
 
 import net.minecraft.block.Block;
@@ -178,6 +180,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemElementStone;
 import yuzunyannn.elementalsorcery.item.prop.ItemFusionCrystal;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.item.prop.ItemLifeLeather;
+import yuzunyannn.elementalsorcery.item.prop.ItemMagicCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicPaper;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.item.prop.ItemSome;
@@ -260,6 +263,8 @@ import yuzunyannn.elementalsorcery.util.render.WorldScene;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 
 public class ESInit {
+
+	public static final List<Class<? extends TileEntity>> ES_TILE_ENTITY = new ArrayList<>();
 
 	public static final ESObjects.Items ITEMS = new ESObjects.Items();
 	public static final ESObjects.Blocks BLOCKS = new ESObjects.Blocks();
@@ -428,6 +433,7 @@ public class ESInit {
 		ITEMS.MAGIC_BLAST_WAND = new ItemMagicBlastWand();
 		ITEMS.SOUL_KILLER_SWORD = new ItemSoulKillerSword();
 		ITEMS.SCAPEGOAT = new ItemScapegoat();
+		ITEMS.MAGIC_CORE = new ItemMagicCore();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -464,6 +470,7 @@ public class ESInit {
 		MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);
 		MANTRAS.LAUNCH_EDE = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT, 0xff4a1a);
 		MANTRAS.LAUNCH_ECO = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT, 0x00b5e5);
+		MANTRAS.LAUNCH_BRC = new MantraLaunch(ICraftingLaunch.TYPE_BUILING_RECORD, 0x18632b);
 
 		// 初始化所有
 		Class<?> cls = MANTRAS.getClass();
@@ -751,6 +758,7 @@ public class ESInit {
 		registerRender(ITEMS.MAGIC_BLAST_WAND, new RenderItemMagicBlastWand());
 		registerRender(ITEMS.SOUL_KILLER_SWORD);
 		registerRender(ITEMS.SCAPEGOAT);
+		registerRender(ITEMS.MAGIC_CORE);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -888,7 +896,7 @@ public class ESInit {
 
 	private static void register(Class<? extends TileEntity> tileEntityClass, String id) {
 		GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation(ElementalSorcery.MODID, id));
-		ESConfig.load(tileEntityClass);
+		ES_TILE_ENTITY.add(tileEntityClass);
 	}
 
 	@SideOnly(Side.CLIENT)

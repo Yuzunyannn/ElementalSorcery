@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -11,6 +12,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
@@ -120,8 +122,7 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 		TileEntity tile = world.getTileEntity(pos);
 		if (tile instanceof IGetItemStack) {
 			ItemStack stack = ((IGetItemStack) tile).getStack();
-			Item item = stack.getItem();
-			if (item instanceof ItemCrystal) this.resonance((ItemCrystal) item, liftDirt);
+			this.resonance(stack, liftDirt);
 		}
 		// 下一个
 		at = (at + 1) % structure.getSpecialBlockCount();
@@ -134,9 +135,13 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 	}
 
 	/** 共鸣 */
-	private void resonance(ItemCrystal icry, ItemStack liftDirt) {
+	private void resonance(ItemStack stack, ItemStack liftDirt) {
+		// 获取水晶
+		Item item = stack.getItem();
+		if (!(item instanceof ItemCrystal)) return;
+		ItemCrystal crystal = (ItemCrystal) stack.getItem();
 		// 计算频率
-		float fre = icry.getFrequency();
+		float fre = crystal.getFrequency(stack);
 		// 频率是上一个的话，直接跳过
 		if (fre == this.lastFreDiff) return;
 		// 找到清零
@@ -156,10 +161,10 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 		float originStable = this.stable;
 		this.stable -= Math.abs(diff / 100.0f * 1.5f);
 		// 查找生成植物
-		ItemCrystal cry = null;
+		ItemStack crystal = ItemStack.EMPTY;
 		if (!liftDirt.isEmpty()) {
-			cry = findCrystal();
-			if (cry != null) TileLifeDirt.setPlant(liftDirt, new ItemStack(cry));
+			crystal = findCrystal();
+			if (!crystal.isEmpty()) TileLifeDirt.setPlant(liftDirt, crystal);
 		}
 		// 发送数据到客户端
 		NBTTagCompound nbt = new NBTTagCompound();
@@ -167,7 +172,7 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 		if (originStable > 75 && stable < 75 || originStable > 50 && stable < 50 || originStable > 25 && stable < 25)
 			nbt.setFloat("stable", stable);
 		nbt.setFloat("fre", this.fre);
-		if (cry != null) nbt.setBoolean("fin", true);
+		if (!crystal.isEmpty()) nbt.setBoolean("fin", true);
 		return nbt;
 	}
 
@@ -186,22 +191,25 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 	}
 
 	/** 寻找该频率附近的水晶 */
-	public ItemCrystal findCrystal() {
+	public ItemStack findCrystal() {
 		final float range = 0.4f;
 		ArrayList<ItemCrystal> allCrystal = ItemCrystal.getCrysstals();
 		float minFreDiff = Float.MAX_VALUE;
-		ItemCrystal minCry = null;
-		for (ItemCrystal cry : allCrystal) {
-			float fre = cry.getFrequency();
-			float diff = Math.abs(fre - this.fre);
-			if (diff <= range) {
+		ItemStack minCry = ItemStack.EMPTY;
+		for (ItemCrystal crystal : allCrystal) {
+			NonNullList<ItemStack> list = NonNullList.create();
+			crystal.getSubItems(CreativeTabs.SEARCH, list);
+			for (ItemStack stack : list) {
+				float fre = crystal.getFrequency(stack);
+				float diff = Math.abs(fre - this.fre);
+				if (diff > range) continue;
 				if (diff < minFreDiff) {
 					minFreDiff = diff;
-					minCry = cry;
+					minCry = stack;
 				}
 			}
 		}
-		return minCry;
+		return minCry.copy();
 	}
 
 	private void reset() {
@@ -278,8 +286,8 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 				ItemStack stack = ((IGetItemStack) tile).getStack();
 				Item item = stack.getItem();
 				if (item instanceof ItemCrystal) {
-					effect.setColor(((ItemCrystal) item).getColor());
-					note = ((ItemCrystal) item).getFrequency() / 100.0f * 25;
+					effect.setColor(((ItemCrystal) item).getColor(stack));
+					note = ((ItemCrystal) item).getFrequency(stack) / 100.0f * 25;
 				}
 			}
 			float f = (float) Math.pow(2.0D, (double) (note - 12) / 12.0D);

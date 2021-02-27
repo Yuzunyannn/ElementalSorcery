@@ -47,8 +47,7 @@ public class ItemParchment extends Item {
 		ItemStack inner = RecipeRiteWrite.getInnerStack(stack);
 		if (!inner.isEmpty()) {
 			TileRiteTable.Recipe r = TileRiteTable.findRecipe(inner);
-			tooltip.add(TextFormatting.LIGHT_PURPLE
-					+ I18n.format("info.written", I18n.format(r.getOutput().getUnlocalizedName() + ".name")));
+			tooltip.add(TextFormatting.LIGHT_PURPLE + I18n.format("info.written", r.getOutput().getDisplayName()));
 		}
 	}
 

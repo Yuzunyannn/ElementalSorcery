@@ -26,6 +26,7 @@ import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.IRenderClient;
 import yuzunyannn.elementalsorcery.render.RenderRulerSelectRegion;
 import yuzunyannn.elementalsorcery.render.model.ModelBuildingAltar;
+import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderClient {
 
@@ -44,7 +45,7 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 		this.stack = stack;
 		this.cnr = commit;
 		tilePos = cnr.tile.getPos();
-		tile3DPos = new Vec3d(tilePos.getX() + 0.5, tilePos.getY() + 0.5, tilePos.getZ() + 0.5);
+		tile3DPos = new Vec3d(tilePos.getX() + 0.5, tilePos.getY() + 0.4, tilePos.getZ() + 0.5);
 		EventClient.addRenderTask(this);
 	}
 
@@ -66,7 +67,7 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 		Iterator<BlockEffect> iter = effects.iterator();
 		while (iter.hasNext()) {
 			BlockEffect e = iter.next();
-			e.endTime -= 0.05f;
+			e.endTime -= 0.045f;
 			e.onUpdate();
 			if (e.endTime <= 0) iter.remove();
 		}
@@ -80,7 +81,7 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 		GlStateManager.pushMatrix();
 		float high = 0.25f;
 		float xr = -90;
-		float xoff = 0.1f;
+		float xoff = 0f;
 		if (theta < 80) {
 			float rate = (theta + partialTicks) / 80.0f;
 			high = rate * high;
@@ -142,13 +143,11 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 			GlStateManager.popMatrix();
 		}
 
-		GlStateManager.enableBlend();
 		Iterator<BlockEffect> iter = effects.iterator();
 		while (iter.hasNext()) {
 			BlockEffect e = iter.next();
 			e.onRender(partialTicks);
 		}
-		GlStateManager.disableBlend();
 
 		return IRenderClient.SUCCESS;
 	}
@@ -157,9 +156,10 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 
 		final ItemStack stack;
 		float endTime = 1.0f;
+		double preX, preY, preZ;
 		double x, y, z;
 		double vx, vy, vz;
-		Vec3d tar;
+		float scale, preScale;
 
 		public BlockEffect(ItemStack stack) {
 			this.stack = stack;
@@ -167,27 +167,36 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 			x = loc.x + 0.5 + tilePos.getX();
 			y = loc.y + tilePos.getY();
 			z = loc.z + 0.5 + tilePos.getZ();
-			tar = tile3DPos.subtract(new Vec3d(x, y, z)).scale(0.005);
+			Vec3d tar = tile3DPos.subtract(new Vec3d(x, y, z)).scale(0.005);
 			vx = -tar.z * 0.5;
 			vy = 0;
 			vz = tar.x * 0.5;
 		}
 
 		public void onUpdate() {
-			tar = tile3DPos.subtract(new Vec3d(x, y, z)).scale(0.005);
+			preX = x;
+			preY = y;
+			preZ = z;
+
+			Vec3d tar = tile3DPos.subtract(new Vec3d(x, y, z)).scale(0.005);
 			x += vx;
 			y += vy;
 			z += vz;
 			vx += tar.x;
 			vy += tar.y;
 			vz += tar.z;
+
+			preScale = scale;
+			if (this.endTime > 0.5) scale = (1 - this.endTime) * 2;
+			else scale = this.endTime * 2;
 		}
 
 		public int onRender(float partialTicks) {
 			if (this.endTime < 0) return 0;
-			float scale;
-			if (this.endTime > 0.5) scale = (1 - this.endTime) * 2;
-			else scale = this.endTime * 2;
+			double x = RenderHelper.getPartialTicks(this.x, preX, partialTicks);
+			double y = RenderHelper.getPartialTicks(this.y, preY, partialTicks);
+			double z = RenderHelper.getPartialTicks(this.z, preZ, partialTicks);
+			float scale = RenderHelper.getPartialTicks(this.scale, preScale, partialTicks);
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(x, y, z);
 			GlStateManager.scale(scale * 0.175, scale * 0.175, scale * 0.175);

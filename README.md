@@ -6,10 +6,12 @@
 + 某天作者想到，如果mc的物品可以分解为某样东西，在通过这类东西反向合成emmm...如果我开始设计编写这个mod了。
 + 我会尽量完成并更新这个mod，尽可能的完善，添加一些有意思的系统等....但不排除由于时间精力等因素而放弃的可能T_T。
 + 如果你对这个mod感兴趣，支持一下作者的话，请star一下吧。^_^
++ mod已经发布了测试版，欢迎大家前来体验。（由于是测试版，可能会存在未知的bug，在服务器使用时，请及时备份您的服务器）
 + Someday, I had a sudden whim about if any items can deconstruct to something and those things can reconstruct to an item, therefore I started to design and program this mod. 
 + This mod is under development right now, I don't know when it can be released, or even whether if I can finish it without giving up T_T, but I will still try my best to release it. 
 + You can download pre-release to pre-view this mod.
 + If you are interested in it please star this repo.  ^_^
++ Mod has been pre-released, welcome to play. (There may be unknown bugs in Pre-release Version, so please back up your server in time if you install this mod on server)
 
 # 问题 Issue
 + 如果有对作者想提的问题，建议或者对这个mod有啥好点子之类的，请给作者发电子邮件吧。bug的话，优先在Issues部分提出。

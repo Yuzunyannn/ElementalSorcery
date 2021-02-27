@@ -152,8 +152,14 @@ public class CommandES extends CommandBase {
 				return getListOfStringsMatchingLastWord(args, bs);
 			}
 			case "building": {
-				if (args.length > 2) return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
-				return getListOfStringsMatchingLastWord(args, "record", "release");
+				if (args.length > 2) {
+					if ("give".equals(args[1])) {
+						if (args.length > 3) return CommandBase.getListOfStringsMatchingLastWord(args);
+						return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+					}
+					return CommandBase.getListOfStringsMatchingLastWord(args);
+				}
+				return getListOfStringsMatchingLastWord(args, "record", "release", "give");
 			}
 			case "page": {
 				Set<String> set = Pages.getPageIds();
@@ -363,7 +369,6 @@ public class CommandES extends CommandBase {
 	private void cmdBuilding(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
 		EntityPlayer executer = (EntityPlayer) sender.getCommandSenderEntity();
 		EntityPlayer player = executer;
-		if (args.length > 1) player = getPlayer(server, sender, args[1]);
 
 		switch (args[0]) {
 		case "release":
@@ -387,6 +392,16 @@ public class CommandES extends CommandBase {
 			ArcInfo.initArcInfoToItem(ar, building.getKeyName());
 			ItemHelper.addItemStackToPlayer(player, ar);
 			notifyCommandListener(sender, this, "commands.es.building.record", player.getName());
+			break;
+		}
+		case "give": {
+			if (args.length < 3) throw new WrongUsageException("commands.es.building.give.usage");
+			player = getPlayer(server, sender, args[1]);
+			String key = args[2];
+			ItemStack ar = new ItemStack(ESInit.ITEMS.ARCHITECTURE_CRYSTAL);
+			ArcInfo.initArcInfoToItem(ar, key);
+			ItemHelper.addItemStackToPlayer(player, ar);
+			notifyCommandListener(sender, this, "commands.es.building.give", player.getName());
 			break;
 		}
 		default:

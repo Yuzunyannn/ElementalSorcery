@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " X ",
+    "#E#",
+    " X "
+  ],
+  "key": {
+    "#": {
+      "item": "elementalsorcery:elf_crystal"
+    },
+    "E": {
+      "item": "elementalsorcery:magical_ender_eye"
+    },
+    "X": {
+      "item": "elementalsorcery:magic_stone"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:magic_core",
+    "count": 1
+  }
+}

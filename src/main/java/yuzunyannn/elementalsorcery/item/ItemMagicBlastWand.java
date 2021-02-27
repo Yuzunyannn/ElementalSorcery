@@ -3,6 +3,8 @@ package yuzunyannn.elementalsorcery.item;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -17,6 +19,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
@@ -27,6 +30,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
@@ -37,6 +41,17 @@ import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
+
+	@Config(kind = "item", note = "魔力爆炸的基础伤害，每n点魔力为1点伤害")
+	@Config.NumberRange(max = Double.MAX_VALUE, min = 0)
+	private static float MAGIC_BLAST_ONE_DAMAGE_PER_COUNT = 80;
+
+	@Config(kind = "item", note = "魔力爆炸的不衰减最大值，超出部分进行log10衰减")
+	private static float MAGIC_MAX_DAMAGE_LIMIT_FOR_DECAY = 50;
+
+	@Config(kind = "item", note = "魔力爆炸的范围衰减率，越大衰减越厉害")
+	@Config.NumberRange(max = Double.MAX_VALUE, min = 0)
+	private static float MAGIC_RANGE_DECAY_RATE = 0.65f;
 
 	public ItemMagicBlastWand() {
 		this.setUnlocalizedName("magicBlastWand");
@@ -125,7 +140,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 		if (magic.isEmpty()) return;
 		einv.saveState(stack);
 		magic.setPower(Math.round(magic.getPower() * powerUp));
-		blast(magic, entitiy, entityLiving);
+		blast(magic, entitiy, entityLiving, null);
 	}
 
 	static class MagicBlestInventory extends ElementInventory {
@@ -160,28 +175,70 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 		}
 	}
 
-	/** 爆炸 */
-	public static void blast(ElementStack magic, Entity target, Entity source) {
-		World world = target.world;
-		int level = MathHelper.clamp(MathHelper.ceil(magic.getCount() / 200f), 1, 4);
-		int size = level;
-		float dmg = magic.getPower() / 24f;
-		Vec3d pos = target.getPositionVector().addVector(0, target.height / 2, 0);
-		DamageSource ds = DamageSource.causeIndirectMagicDamage(null, source);
+	public static float getDamage(ElementStack magic) {
+		if (!magic.isMagic()) magic = magic.toMagic(null);
+		int count = magic.getCount();
+		int power = magic.getPower();
+		float point = MathHelper.sqrt(power) / 25f;
+		float dmg = count / MAGIC_BLAST_ONE_DAMAGE_PER_COUNT * (1 + point * point * point);
+		if (dmg > MAGIC_MAX_DAMAGE_LIMIT_FOR_DECAY) {
+			float more = dmg - MAGIC_MAX_DAMAGE_LIMIT_FOR_DECAY;
+			dmg = MAGIC_MAX_DAMAGE_LIMIT_FOR_DECAY + (float) Math.log10(more);
+		}
+		return dmg;
+	}
 
-		if (size > 1) {
-			AxisAlignedBB AABB = new AxisAlignedBB(pos.x - size, pos.y - size, pos.z - size, pos.x + size, pos.y + size,
-					pos.z + size);
+	public static void blast(ElementStack magic, Entity target, @Nullable Entity source,
+			@Nullable Entity directSource) {
+		blast(magic, target.world, target, null, source, null);
+	}
+
+	public static void blast(ElementStack magic, World world, Vec3d at, @Nullable Entity source,
+			@Nullable Entity directSource) {
+		blast(magic, world, null, at, source, directSource);
+	}
+
+	public static void blast(ElementStack magic, World world, BlockPos pos, @Nullable Entity source,
+			@Nullable Entity directSource) {
+		blast(magic, world, null, new Vec3d(pos).addVector(0.5, 0.5, 0.5), source, directSource);
+	}
+
+	/**
+	 * 爆炸 使用见<br/>
+	 * {@link ItemMagicBlastWand#blast(ElementStack, Entity, Entity, Entity)}
+	 * {@link ItemMagicBlastWand#blast(ElementStack, World, Vec3d, Entity, Entity)}
+	 * {@link ItemMagicBlastWand#blast(ElementStack, World, BlockPos, Entity, Entity)}
+	 */
+	private static void blast(ElementStack magic, World world, Entity target, Vec3d targetPos, Entity source,
+			Entity directSource) {
+
+		int level = MathHelper.clamp(MathHelper.ceil(magic.getCount() / 200f), 1, 5);
+		float dmg = getDamage(magic);
+
+		Vec3d pos;
+		if (target != null) pos = target.getPositionVector().addVector(0, target.height / 2, 0);
+		else pos = targetPos;
+
+		DamageSource ds;
+		if (directSource == null && source == null) ds = DamageSource.MAGIC;
+		else ds = DamageSource.causeIndirectMagicDamage(directSource, source);
+
+		if (level > 1 || target == null) {
+			AxisAlignedBB AABB;
+
+			final float s = level;
+			if (s == 1) AABB = new AxisAlignedBB(pos.x, pos.y, pos.z, pos.x + s, pos.y + s, pos.z + s);
+			else AABB = new AxisAlignedBB(pos.x - s, pos.y - s, pos.z - s, pos.x + s, pos.y + s, pos.z + s);
+
 			List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, AABB);
 			for (EntityLivingBase entity : entities) {
 				Vec3d at = entity.getPositionVector().addVector(0, entity.height / 2, 0);
-				float dmgRate = Math.min(1, 1 / (MathHelper.sqrt(pos.distanceTo(at) * 0.65f)));
+				float attenuate = MathHelper.sqrt(pos.distanceTo(at) * MAGIC_RANGE_DECAY_RATE);
+				float dmgRate = 1 / Math.max(attenuate, 1);
 				entity.attackEntityFrom(ds, dmgRate * dmg);
 			}
 
-		} else {
-			target.attackEntityFrom(ds, dmg);
-		}
+		} else target.attackEntityFrom(ds, dmg);
 
 		if (world.isRemote) return;
 

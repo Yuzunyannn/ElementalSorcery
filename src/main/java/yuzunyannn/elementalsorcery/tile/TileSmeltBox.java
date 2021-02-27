@@ -67,9 +67,7 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 		try {
 			BlockSmeltBox block = (BlockSmeltBox) world.getBlockState(pos).getBlock();
 			return block.material;
-		} catch (ClassCastException ex) {
-
-		}
+		} catch (ClassCastException ex) {}
 		return BlockHearth.EnumMaterial.COBBLESTONE;
 	}
 
@@ -226,7 +224,7 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 	// 拥有能力
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) { return true; }
+		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) return true;
 		return super.hasCapability(capability, facing);
 	}
 
@@ -235,11 +233,11 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
 			IBlockState state = world.getBlockState(pos);
-			EnumFacing wface;
+			EnumFacing backFace;
 			if (state.getBlock() == ESInit.BLOCKS.SMELT_BOX)
-				wface = state.getValue(BlockSmeltBox.FACING).getOpposite();
-			else wface = EnumFacing.DOWN;
-			if (facing == EnumFacing.DOWN || facing == wface) return (T) inventoryResult;
+				backFace = state.getValue(BlockSmeltBox.FACING).getOpposite();
+			else backFace = EnumFacing.DOWN;
+			if (facing == EnumFacing.DOWN || facing == backFace) return (T) inventoryResult;
 			return (T) inventorySmelt;
 		}
 		return super.getCapability(capability, facing);
@@ -254,17 +252,17 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 
 	// 是否可以熔炼
 	public boolean canSmelt() {
-		boolean can_smelt = false;
+		boolean canSmelt = false;
 		for (int i = 0; i < inventorySmelt.getSlots(); i++) {
-			ItemStack item_stack = inventorySmelt.extractItem(i, 1, true);
-			item_stack = getSmeltResult(item_stack, inventoryExtra.getStackInSlot(0));
-			if (item_stack.isEmpty()) continue;
-			item_stack = inventoryResult.insertItemForce(i, item_stack, true);
-			if (!item_stack.isEmpty()) continue;
-			can_smelt = true;
+			ItemStack itemStack = inventorySmelt.extractItem(i, 1, true);
+			itemStack = getSmeltResult(itemStack, inventoryExtra.getStackInSlot(0));
+			if (itemStack.isEmpty()) continue;
+			itemStack = inventoryResult.insertItemForce(i, itemStack, true);
+			if (!itemStack.isEmpty()) continue;
+			canSmelt = true;
 			break;
 		}
-		return can_smelt;
+		return canSmelt;
 	}
 
 	// 特效用，没啥用

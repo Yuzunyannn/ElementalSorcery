@@ -60,25 +60,19 @@ public class MessageEntitySync implements IMessage {
 
 	@SideOnly(Side.CLIENT)
 	static public void dealClient(NBTTagCompound data) {
-		Minecraft.getMinecraft().addScheduledTask(new Runnable() {
-			@Override
-			public void run() {
-				int id = data.getInteger("eId");
-				Entity entity = Minecraft.getMinecraft().world.getEntityByID(id);
-				if (entity instanceof IRecvData) ((IRecvData) entity).onRecv(data);
-			}
+		Minecraft.getMinecraft().addScheduledTask(() -> {
+			int id = data.getInteger("eId");
+			Entity entity = Minecraft.getMinecraft().world.getEntityByID(id);
+			if (entity instanceof IRecvData) ((IRecvData) entity).onRecv(data);
 		});
 	}
 
 	static public void dealServer(NBTTagCompound data, EntityPlayerMP player) {
 		final WorldServer world = player.getServerWorld();
-		world.addScheduledTask(new Runnable() {
-			@Override
-			public void run() {
-				int id = data.getInteger("eId");
-				Entity entity = world.getEntityByID(id);
-				if (entity instanceof IRecvData) ((IRecvData) entity).onRecv(data);
-			}
+		world.addScheduledTask(() -> {
+			int id = data.getInteger("eId");
+			Entity entity = world.getEntityByID(id);
+			if (entity instanceof IRecvData) ((IRecvData) entity).onRecv(data);
 		});
 	}
 }

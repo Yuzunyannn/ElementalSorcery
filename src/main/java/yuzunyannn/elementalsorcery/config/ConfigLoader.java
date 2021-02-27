@@ -14,7 +14,7 @@ public class ConfigLoader {
 	public final static ConfigLoader instance = new ConfigLoader();
 
 	/** 对一个obj进行反射，加载所有配置 */
-	public void load(Object obj, IConfigGetter getter) {
+	public void load(Object obj, IConfigGetter getter, boolean onlySync) {
 
 		boolean isStatic = obj instanceof Class;
 		Class<?> cls = isStatic ? (Class<?>) obj : obj.getClass();
@@ -22,14 +22,15 @@ public class ConfigLoader {
 		Field[] fields = cls.getDeclaredFields();
 
 		for (Field field : fields) {
-			if (Modifier.isStatic(field.getModifiers()) == isStatic) {
+			boolean canInject = isStatic ? Modifier.isStatic(field.getModifiers()) : true;
+			if (canInject) {
 				Config configType = field.getAnnotation(Config.class);
-				if (configType != null) set(field, obj, configType, getter);
+				if (configType != null) set(field, obj, configType, getter, onlySync);
 			}
 		}
 	}
 
-	private void set(Field field, Object obj, Config configType, IConfigGetter getter) {
+	private void set(Field field, Object obj, Config configType, IConfigGetter getter, boolean onlySync) {
 
 		String kind = configType.kind();
 		String group = configType.group();
@@ -63,16 +64,24 @@ public class ConfigLoader {
 					if (!Modifier.isStatic(_field.getModifiers())) {
 						Config ct = _field.getAnnotation(Config.class);
 						if (ct == null) continue;
+						if (onlySync && !ct.sync()) continue;
 						String _name = ct.name();
 						if (_name.isEmpty()) _name = _field.getName();
 						_name = _name.toLowerCase();
+						getter.begin(ct.sync());
 						set(_field, bean, kind, group, _name, ct.note(), getter);
+						getter.end();
 					}
 				}
 
 				// if (bean instanceof IConfigInjectInit) ((IConfigInjectInit) bean).init();
 
-			} else set(field, obj, kind, group, name, note, getter);
+			} else {
+				if (onlySync && !configType.sync()) return;
+				getter.begin(configType.sync());
+				set(field, obj, kind, group, name, note, getter);
+				getter.end();
+			}
 		} catch (Exception e) {
 			ElementalSorcery.logger.warn("注入配置出现异常" + name, e);
 		}

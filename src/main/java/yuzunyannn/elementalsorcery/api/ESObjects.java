@@ -83,6 +83,7 @@ public class ESObjects {
 		public Item MAGIC_BLAST_WAND;
 		public Item SOUL_KILLER_SWORD;
 		public Item SCAPEGOAT;
+		public Item MAGIC_CORE;
 	}
 
 	static public class Blocks {
@@ -165,6 +166,7 @@ public class ESObjects {
 		public Mantra LAUNCH_ECR;
 		public Mantra LAUNCH_EDE;
 		public Mantra LAUNCH_ECO;
+		public Mantra LAUNCH_BRC;
 
 		public Mantra ENDER_TELEPORT;
 		public Mantra FLOAT;

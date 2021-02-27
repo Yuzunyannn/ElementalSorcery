@@ -8,10 +8,12 @@ import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -23,10 +25,13 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
+import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.enchant.EnchantmentES;
 import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
+import yuzunyannn.elementalsorcery.network.ESNetwork;
+import yuzunyannn.elementalsorcery.network.MessageSyncConfig;
 
 public class EventServer {
 
@@ -46,6 +51,13 @@ public class EventServer {
 			if (player.inventory == null) return;
 			data.setBoolean("esFirstJoin", true);
 			player.inventory.addItemStackToInventory(ItemScroll.getScroll("rite"));
+		}
+
+		if (event.player instanceof EntityPlayerMP) {
+			EntityPlayerMP playerMP = (EntityPlayerMP) event.player;
+			MinecraftServer mc = playerMP.getServer();
+			if (mc.isSinglePlayer()) ESConfig.restore();
+			else ESNetwork.instance.sendTo(new MessageSyncConfig(ESConfig.getter.getSyncData()), playerMP);
 		}
 	}
 

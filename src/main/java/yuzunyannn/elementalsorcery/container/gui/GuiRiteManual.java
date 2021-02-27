@@ -4,10 +4,13 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ContainerRiteManual;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 
+@SideOnly(Side.CLIENT)
 public class GuiRiteManual extends GuiContainer {
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
@@ -42,15 +45,13 @@ public class GuiRiteManual extends GuiContainer {
 			String str = I18n.format("lev." + lev.name().toLowerCase());
 			this.fontRenderer.drawString(str, offsetX + 150, offsetY + 20, lev.getColor());
 		} else {
-			for (int i = 0; i <= TileRiteTable.MAX_LEVEL; i++) {
+
+			Level[] levels = toLevels(container.level, container.power);
+			for (int i = 0; i < levels.length; i++) {
+				Level lev = levels[i];
 				int y = i * this.fontRenderer.FONT_HEIGHT;
 				String str = I18n.format("info.level", i);
 				this.fontRenderer.drawString(str, offsetX + 150, offsetY + 20 + y, 0);
-				Level lev = Level.UNSUITED;
-				if (i >= container.level) {
-					int power = container.power / (i + 1 - container.level);
-					lev = Level.getLevel(power);
-				}
 				str = I18n.format("lev." + lev.name().toLowerCase());
 				this.fontRenderer.drawString(str, offsetX + 175, offsetY + 20 + y, lev.getColor());
 			}
@@ -58,7 +59,20 @@ public class GuiRiteManual extends GuiContainer {
 		if (container.summonShow) this.fontRenderer.drawString("★", offsetX + 135, offsetY + 5, 0xda003e);
 	}
 
-	static enum Level {
+	public static Level[] toLevels(int level, int power) {
+		Level[] levels = new Level[TileRiteTable.MAX_LEVEL + 1];
+		for (int i = 0; i <= TileRiteTable.MAX_LEVEL; i++) {
+			Level lev = Level.UNSUITED;
+			if (i >= level) {
+				int pw = power / (i + 1 - level);
+				lev = Level.getLevel(pw);
+			}
+			levels[i] = lev;
+		}
+		return levels;
+	}
+
+	public static enum Level {
 		DEFECTIVE(EnumDyeColor.GRAY),
 		UNSUITED(EnumDyeColor.GRAY),
 		SUBORDINATE(EnumDyeColor.GREEN),
@@ -83,6 +97,10 @@ public class GuiRiteManual extends GuiContainer {
 
 		public int getColor() {
 			return color.getColorValue();
+		}
+
+		public EnumDyeColor getDyeColor() {
+			return color;
 		}
 	}
 

@@ -48,7 +48,7 @@ public class QuestRewardItem extends QuestReward {
 			int count = stack.getCount();
 			String c = Integer.toString(count);
 			builder.append(I18n.format("quest.unit", c));
-			builder.append(I18n.format(stack.getUnlocalizedName() + ".name"));
+			builder.append(stack.getDisplayName());
 			if (i < size - 1) builder.append("、");
 		}
 		return builder.toString();

@@ -70,8 +70,8 @@ public class ItemCrystal extends Item {
 		this.setColor(color);
 	}
 
-	/** 水晶的频率，取值应当位于[0,100]之间，用于共振计算，不传入itemstack，我们认为没有subtype而且频率是一种水晶的固有值 */
-	public float getFrequency() {
+	/** 水晶的频率，取值应当位于[0,100]之间，用于共振计算 */
+	public float getFrequency(ItemStack stack) {
 		return frequency;
 	}
 
@@ -83,7 +83,7 @@ public class ItemCrystal extends Item {
 		this.color = color;
 	}
 
-	public int getColor() {
+	public int getColor(ItemStack stack) {
 		return color;
 	}
 
@@ -105,7 +105,7 @@ public class ItemCrystal extends Item {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		tooltip.add(TextFormatting.LIGHT_PURPLE + I18n.format("info.crystal.frequency", this.getFrequency()));
+		tooltip.add(TextFormatting.LIGHT_PURPLE + I18n.format("info.crystal.frequency", this.getFrequency(stack)));
 	}
 
 }

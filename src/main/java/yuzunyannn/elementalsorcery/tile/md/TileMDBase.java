@@ -3,7 +3,6 @@ package yuzunyannn.elementalsorcery.tile.md;
 import java.util.List;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
@@ -15,12 +14,8 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
@@ -34,7 +29,7 @@ import yuzunyannn.elementalsorcery.api.tile.IProvideMagic;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.render.effect.Effects;
+import yuzunyannn.elementalsorcery.item.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
 import yuzunyannn.elementalsorcery.util.IField;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
@@ -223,51 +218,12 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	static final public int[] PARTICLE_COLOR = new int[] { 0x7d17e3 };
 	static final public int[] PARTICLE_COLOR_FADE = new int[] { 0x9322b5 };
 
-	protected int breakExplosionLevel() {
-		float rate = this.getCurrentCapacity() / 4000.0f;
-		if (rate > 1.0f) rate = 1.0f;
-		return (int) (7 * rate) + 1;
-	}
-
 	/** 当被被破坏 */
 	public void onBreak() {
 		if (!this.world.isRemote) {
 			if (this.inventory != null) BlockHelper.drop(inventory, world, pos);
 			if (this.getCurrentCapacity() == 0) return;
-			int lev = this.breakExplosionLevel();
-			NBTTagList list = new NBTTagList();
-			NBTTagCompound nbt = new NBTTagCompound();
-			nbt.setByte("Type", (byte) 0);
-			nbt.setIntArray("Colors", TileMDBase.PARTICLE_COLOR);
-			nbt.setIntArray("FadeColors", TileMDBase.PARTICLE_COLOR_FADE);
-			nbt.setInteger("Size", MathHelper.ceil(lev / 2.0f));
-			nbt.setFloat("Speed", 0.075f * lev);
-			list.appendTag(nbt);
-			nbt = new NBTTagCompound();
-			nbt.setByte("Type", (byte) 1);
-			nbt.setIntArray("Colors", new int[] { 0x5c1771 });
-			nbt.setIntArray("FadeColors", new int[] { 0xf7deff });
-			nbt.setInteger("Size", lev);
-			nbt.setFloat("Speed", 0.2f * lev);
-			list.appendTag(nbt);
-			nbt = new NBTTagCompound();
-			nbt.setTag("Explosions", list);
-			Effects.spawnEffect(world, Effects.FIREWROK, pos, nbt);
-			this.dealDamage(lev);
-		}
-	}
-
-	/** 处理伤害 */
-	public void dealDamage(int level) {
-		Vec3d at = new Vec3d(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5);
-		AxisAlignedBB AABB = new AxisAlignedBB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1, pos.getY() + 1,
-				pos.getZ() + 1);
-		int baseDmg = this.magic.getPower() + level;
-		double range = level;
-		for (EntityLivingBase entitylivingbase : this.world.getEntitiesWithinAABB(EntityLivingBase.class,
-				AABB.grow(range))) {
-			float dmgRate = (float) (2.0 - entitylivingbase.getPositionVector().distanceTo(at) / (range + 1.0));
-			entitylivingbase.attackEntityFrom(DamageSource.MAGIC, dmgRate * dmgRate * baseDmg * 0.75f);
+			ItemMagicBlastWand.blast(magic, world, pos, null, null);
 		}
 	}
 
@@ -452,8 +408,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	/** 判断制定方向是否有torch */
 	public boolean hasTorch(EnumFacing facing) {
 		IBlockState state = this.world.getBlockState(pos.offset(facing));
-		return state.getBlock() == ESInit.BLOCKS.MAGIC_TORCH
-				&& state.getValue(BlockMagicTorch.FACING) == facing;
+		return state.getBlock() == ESInit.BLOCKS.MAGIC_TORCH && state.getValue(BlockMagicTorch.FACING) == facing;
 	}
 
 	/** 设置火把开关 */

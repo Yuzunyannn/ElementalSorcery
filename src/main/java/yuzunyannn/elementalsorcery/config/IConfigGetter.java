@@ -2,6 +2,14 @@ package yuzunyannn.elementalsorcery.config;
 
 public interface IConfigGetter {
 
+	default public void begin(boolean isSync) {
+
+	}
+
+	default public void end() {
+
+	}
+
 	public double get(String kind, String group, String name, double def, String note);
 
 	public int get(String kind, String group, String name, int def, String note);

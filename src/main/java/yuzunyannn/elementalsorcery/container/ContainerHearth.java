@@ -1,7 +1,6 @@
 package yuzunyannn.elementalsorcery.container;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IContainerListener;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.fml.relauncher.Side;
@@ -30,9 +29,9 @@ public class ContainerHearth extends ContainerNormal<TileHearth> implements IFie
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
 		for (int j = 0; j < this.listeners.size(); ++j) {
-			((IContainerListener) this.listeners.get(j)).sendWindowProperty(this, TileHearth.FIELD_BURN_TIME,
+			this.listeners.get(j).sendWindowProperty(this, TileHearth.FIELD_BURN_TIME,
 					tileEntity.getField(TileHearth.FIELD_BURN_TIME));
-			((IContainerListener) this.listeners.get(j)).sendWindowProperty(this, TileHearth.FIELD_TOTAL_BURN_TIME,
+			this.listeners.get(j).sendWindowProperty(this, TileHearth.FIELD_TOTAL_BURN_TIME,
 					tileEntity.getField(TileHearth.FIELD_TOTAL_BURN_TIME));
 		}
 	}

@@ -14,11 +14,14 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ContainerAnalysisAltar;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 
+@SideOnly(Side.CLIENT)
 public class GuiAnalysisAltar extends GuiNormal<ContainerAnalysisAltar> {
 
 	private static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
@@ -46,12 +49,12 @@ public class GuiAnalysisAltar extends GuiNormal<ContainerAnalysisAltar> {
 		if (estacks == null) {
 			String str = I18n.format("info.analysisAltar.itema");
 			this.fontRenderer.drawString(str, 52, 26, 4210752);
-			this.drawStringWithWidth(I18n.format(stack.getUnlocalizedName() + ".name"), 52, 35, 60);
+			this.drawStringWithWidth(stack.getDisplayName(), 52, 35, 60);
 			return;
 		}
 		String str = I18n.format("info.analysisAltar.item");
 		this.fontRenderer.drawString(str, 52, 26, 4210752);
-		this.drawStringWithWidth(I18n.format(stack.getUnlocalizedName() + ".name"), 52, 35, 60);
+		this.drawStringWithWidth(stack.getDisplayName(), 52, 35, 60);
 		if (estacks.length == 0) {
 			this.drawStringWithWidth(TextFormatting.RED + I18n.format("info.analysisAltar.itemfail"), 52, 44, 60);
 			return;

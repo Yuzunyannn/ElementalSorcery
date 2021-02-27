@@ -11,6 +11,7 @@ import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
+import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 public class CraftingBuildingRecord implements ICraftingCommit {

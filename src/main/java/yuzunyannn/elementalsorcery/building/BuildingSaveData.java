@@ -11,7 +11,6 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.util.IOHelper;
 
 public class BuildingSaveData implements INBTSerializable<NBTTagCompound> {
 
@@ -19,16 +18,12 @@ public class BuildingSaveData implements INBTSerializable<NBTTagCompound> {
 	protected Building building;
 	protected long time = System.currentTimeMillis();;
 
-	public static void debugSetKeyName(Building building) {
-		building.setKeyName(BuildingSaveData.randomKeyName(building.getAuthor()));
-	}
-
 	public static String randomKeyName(String user) {
 		return user + System.currentTimeMillis();
 	}
 
 	public BuildingSaveData(Building building) {
-		this(building, "tmp", "");
+		this(building, "tmp", ".nbt");
 	}
 
 	public BuildingSaveData(Building building, String fileFolder, String suffix) {
@@ -39,9 +34,10 @@ public class BuildingSaveData implements INBTSerializable<NBTTagCompound> {
 		this.markDirty();
 	}
 
-	public BuildingSaveData(File file) throws IOException {
+	public BuildingSaveData(String key, File file) throws IOException {
 		this.file = file;
 		this.readDataFromFile();
+		this.building.setKeyName(key);
 	}
 
 	protected String getKey(Building building) {
@@ -96,15 +92,11 @@ public class BuildingSaveData implements INBTSerializable<NBTTagCompound> {
 	}
 
 	public void readDataFromFile() throws IOException {
-		InputStream istream = null;
 		NBTTagCompound nbt = null;
-		try {
-			istream = new FileInputStream(file);
+		try (InputStream istream = new FileInputStream(file)) {
 			nbt = CompressedStreamTools.readCompressed(istream);
-		} finally {
-			IOHelper.closeQuietly(istream);
+			this.deserializeNBT(nbt);
 		}
-		this.deserializeNBT(nbt);
 	}
 
 	public void writeDataToFile() throws IOException {

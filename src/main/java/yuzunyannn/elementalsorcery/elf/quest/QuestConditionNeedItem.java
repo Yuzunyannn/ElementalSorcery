@@ -69,18 +69,18 @@ public class QuestConditionNeedItem extends QuestCondition {
 	}
 
 	@SideOnly(Side.CLIENT)
-	static public String getStackShow(ItemStack a) {
-		Item item = a.getItem();
+	static public String getStackShow(ItemStack stack) {
+		Item item = stack.getItem();
 		if (item == Items.ENCHANTED_BOOK) out: {
-			NBTTagList list = ItemEnchantedBook.getEnchantments(a);
+			NBTTagList list = ItemEnchantedBook.getEnchantments(stack);
 			if (list.hasNoTags()) break out;
 			NBTTagCompound data = list.getCompoundTagAt(0);
 			Enchantment enchantment = Enchantment.getEnchantmentByID(data.getShort("id"));
 			if (enchantment == null) break out;
-			return I18n.format(a.getUnlocalizedName() + ".name") + "(" + I18n.format(enchantment.getName())
+			return stack.getDisplayName() + "(" + I18n.format(enchantment.getName())
 					+ I18n.format("enchantment.level." + data.getShort("lvl")) + ")";
 		}
-		return I18n.format(a.getUnlocalizedName() + ".name");
+		return stack.getDisplayName();
 	}
 
 	protected List<ItemRec> checkResult = new ArrayList<>();

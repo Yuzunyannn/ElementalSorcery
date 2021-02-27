@@ -1,7 +1,9 @@
 package yuzunyannn.elementalsorcery.config;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
@@ -14,34 +16,52 @@ public class ESConfig {
 
 	public final static ConfigGetter getter = new ConfigGetter();
 
+	private static boolean isSync = false;
+
 	/** 初始化，并注入所有配置 */
 	public static void init() {
-		load(ESConfig.class);
-		load(ElfPostOffice.class);
-		load(WorldGeneratorES.class);
-		load(EntityRegistries.class);
-		load(BuildingLib.class);
-		loadRegs(ESInit.ITEMS);
-		loadRegs(ESInit.BLOCKS);
-		loadRegs(ESInit.ELEMENTS);
-		loadRegs(ESInit.MANTRAS);
-	}
-
-	public static void load(Object obj) {
-		ConfigLoader.instance.load(obj, getter);
-	}
-
-	public static void close() {
+		isSync = false;
+		loadAll(getter);
 		getter.close();
 	}
 
-	private static void loadRegs(Object esObject) {
+	public static void restore() {
+		sync(getter.getSyncData());
+	}
+
+	public static void sync(NBTTagCompound configNBT) {
+		isSync = true;
+		loadAll(new ConfigNBTGetter(configNBT));
+	}
+
+	private static void loadAll(IConfigGetter getter) {
+		load(ESConfig.class, getter);
+		load(ElfPostOffice.class, getter);
+		load(WorldGeneratorES.class, getter);
+		load(EntityRegistries.class, getter);
+		load(BuildingLib.class, getter);
+		loadList(ESInit.ES_TILE_ENTITY, getter);
+		loadRegs(ESInit.ITEMS, getter);
+		loadRegs(ESInit.BLOCKS, getter);
+		loadRegs(ESInit.ELEMENTS, getter);
+		loadRegs(ESInit.MANTRAS, getter);
+	}
+
+	private static void load(Object obj, IConfigGetter getter) {
+		ConfigLoader.instance.load(obj, getter, isSync);
+	}
+
+	private static void loadList(List<?> list, IConfigGetter getter) {
+		for (Object obj : list) load(obj, getter);
+	}
+
+	private static void loadRegs(Object esObject, IConfigGetter getter) {
 		Class<?> cls = esObject.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
 			try {
 				IForgeRegistryEntry reg = ((IForgeRegistryEntry<?>) field.get(esObject));
-				ConfigLoader.instance.load(reg, getter);
+				ConfigLoader.instance.load(reg, getter, false);
 			} catch (Exception e) {
 				ElementalSorcery.logger.warn("注入注册对象配置时出现异常", e);
 			}

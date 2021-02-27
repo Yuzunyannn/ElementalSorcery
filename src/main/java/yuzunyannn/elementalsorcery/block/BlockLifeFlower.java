@@ -29,6 +29,7 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.element.EffectElement;
@@ -37,6 +38,9 @@ import yuzunyannn.elementalsorcery.tile.TileLifeDirt;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class BlockLifeFlower extends Block {
+
+	@Config(kind = "block", note = "每进行一次生长，消耗掉花盆里魔力的概率")
+	private float PROBABILITY_OF_CONSUME_MAIGC_PER_GROW = 0.02f;
 
 	public static final AxisAlignedBB AABB = new AxisAlignedBB(0.09999999403953552D, 0.0D, 0.09999999403953552D,
 			0.8999999761581421D, 0.800000011920929D, 0.8999999761581421D);
@@ -127,12 +131,12 @@ public class BlockLifeFlower extends Block {
 	public void updateTick(World world, BlockPos flowerPos, IBlockState state, Random rand) {
 		if (!this.hasPower(world, flowerPos)) return;
 		growAll(world, flowerPos);
-
+		if (world.isRemote) return;
 		BlockPos potPos = flowerPos.down();
 		IBlockState potState = world.getBlockState(potPos);
 		int magic = potState.getValue(BlockMagicPot.MAGIC);
 		if (magic <= 0) return;
-		if (rand.nextDouble() < 0.02)
+		if (rand.nextDouble() < PROBABILITY_OF_CONSUME_MAIGC_PER_GROW)
 			world.setBlockState(potPos, potState.withProperty(BlockMagicPot.MAGIC, magic - 1));
 	}
 

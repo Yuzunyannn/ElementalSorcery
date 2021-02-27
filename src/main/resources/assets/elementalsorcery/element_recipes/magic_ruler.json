@@ -1,0 +1,30 @@
+{
+	"pattern": [
+		" MS",
+		"TWM",
+		"WM "
+	],
+	"key": {
+		"W": {
+			"type": "ore_dict",
+			"id": "plankWood"
+		},
+		"M": "elementalsorcery:magic_stone",
+		"T": "elementalsorcery:tiny_knife",
+		"S": {
+			"type": "ore_dict",
+			"id": "stickWood"
+		}
+	},
+	"element": [
+		{
+			"id": "magic",
+			"size": 100,
+			"power": 25
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:magic_ruler",
+		"count": 1
+	}
+}

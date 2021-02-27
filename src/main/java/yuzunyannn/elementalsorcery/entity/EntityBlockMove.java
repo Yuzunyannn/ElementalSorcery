@@ -3,19 +3,32 @@ package yuzunyannn.elementalsorcery.entity;
 import java.util.Collection;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBed;
+import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.BlockPistonBase;
+import net.minecraft.block.BlockRedstoneTorch;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemDoor;
+import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityBed;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -360,6 +373,33 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			}
 			if (!world.isRemote) world.destroyBlock(to, this.hasFlag(FLAG_DESTRUCT_DROP));
 		}
+		ItemStack drop = putBlock(world, player, to, stack, state, facing, null);
+		if (!drop.isEmpty()) Block.spawnAsEntity(world, to, drop);
+	}
+
+	private static void loadTileSave(World world, BlockPos at, NBTTagCompound tileSave) {
+		if (tileSave == null) return;
+		TileEntity tile = world.getTileEntity(at);
+		if (tile == null) return;
+
+		NBTTagCompound nbt = tileSave.copy();
+		nbt.setInteger("x", at.getX());
+		nbt.setInteger("y", at.getY());
+		nbt.setInteger("z", at.getZ());
+
+		ResourceLocation id = TileEntity.getKey(tile.getClass());
+		if (id == null) {
+			ElementalSorcery.logger.warn("回复tile数据时，找不到tile:" + tile.getClass());
+			return;
+		}
+		nbt.setString("id", id.toString());
+
+		tile.deserializeNBT(nbt);
+	}
+
+	public static ItemStack putBlock(World world, @Nullable EntityPlayer player, BlockPos to, ItemStack stack,
+			@Nullable IBlockState state, @Nullable EnumFacing facing, @Nullable NBTTagCompound tileSave) {
+		facing = facing == null ? getFacingFromState(state) : facing;
 		// 放置方块
 		Item item = stack.getItem();
 		if (item instanceof ItemBlock) {
@@ -367,23 +407,66 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			IBlockState toState = itemBlock.getBlock().getStateFromMeta(stack.getItemDamage());
 			if (world.isRemote) {
 				world.setBlockState(to, toState);
-				return;
+				return ItemStack.EMPTY;
 			}
-			if (state != null && itemBlock.getBlock() == state.getBlock()) toState = state;
-			if (this.player == null) this.player = FakePlayerFactory.getMinecraft((WorldServer) world);
-			itemBlock.placeBlockAt(stack, this.player, world, to, EnumFacing.DOWN, 0, 0, 0, toState);
+
+			Block block = toState.getBlock();
+			if (block == Blocks.PISTON || block == Blocks.STICKY_PISTON) {
+				// 活塞
+				if (state != null) toState = state.withProperty(BlockPistonBase.EXTENDED, false);
+				else toState = toState.withProperty(BlockPistonBase.FACING, facing);
+				world.setBlockState(to, toState);
+
+			} else {
+
+				if (state != null) {
+					if (state.getBlock() == Blocks.UNLIT_REDSTONE_TORCH) {
+						// 红石火把
+						facing = state.getValue(BlockRedstoneTorch.FACING);
+						toState = toState.withProperty(BlockRedstoneTorch.FACING, facing);
+					} else {
+						if (itemBlock instanceof ItemSlab) toState = state;
+						else if (itemBlock.getBlock() == state.getBlock()) toState = state;
+					}
+				}
+
+				boolean needPlace = false;
+				needPlace = needPlace || block instanceof BlockDoublePlant;
+
+				if (needPlace) {
+					if (player == null) player = FakePlayerFactory.getMinecraft((WorldServer) world);
+					itemBlock.placeBlockAt(stack, player, world, to, EnumFacing.UP, 0, 0, 0, toState);
+				} else world.setBlockState(to, toState);
+
+				loadTileSave(world, to, tileSave);
+
+			}
+			return ItemStack.EMPTY;
 		} else if (stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null) != null) {
+			// 液体
 			IFluidHandlerItem fhi = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 			FluidStack fstack = fhi.drain(1000, true);
-			Block.spawnAsEntity(world, to, fhi.getContainer());
 			if (fstack != null) world.setBlockState(to, fstack.getFluid().getBlock().getDefaultState());
+			return fhi.getContainer();
+		} else if (item == Items.BED) {
+			// 床
+			facing = state.getValue(BlockBed.FACING);
+			world.setBlockState(to, state);
+			world.setBlockState(to.offset(facing), state.cycleProperty(BlockBed.PART));
+			TileEntityBed bed = BlockHelper.getTileEntity(world, to, TileEntityBed.class);
+			if (bed != null) bed.setColor(EnumDyeColor.byMetadata(stack.getMetadata()));
+			bed = BlockHelper.getTileEntity(world, to.offset(facing), TileEntityBed.class);
+			if (bed != null) bed.setColor(EnumDyeColor.byMetadata(stack.getMetadata()));
+			return ItemStack.EMPTY;
 		} else if (item instanceof ItemDoor) {
 			ItemDoor.placeDoor(world, to, facing.rotateY(), state.getBlock(), false);
+			return ItemStack.EMPTY;
 		} else if (state != null) {
 			world.setBlockState(to, state);
-		} else {
-			Block.spawnAsEntity(world, to, stack);
+			loadTileSave(world, to, tileSave);
+			return ItemStack.EMPTY;
 		}
+		return stack;
 	}
 
 	@Override

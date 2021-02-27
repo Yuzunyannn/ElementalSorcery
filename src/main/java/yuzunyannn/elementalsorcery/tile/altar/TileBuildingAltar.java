@@ -91,6 +91,10 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 	protected EntityLivingBase player = null;
 	// 死亡时间，如果长时间不提供元素
 	protected int deadTime;
+	// 记录的时间
+	protected int tick;
+	// 上一次是否有能量
+	protected boolean hasLastPower = false;
 
 	@SideOnly(Side.CLIENT)
 	public void endWork() {
@@ -121,6 +125,8 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		this.canContinue = true;
 		this.player = player;
 		this.deadTime = 0;
+		this.tick = 0;
+		this.hasLastPower = false;
 		return new CraftingBuildingRecord(pos1, pos2, player.getName());
 	}
 
@@ -143,17 +149,19 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 			this.canContinue = false;
 			return;
 		}
-		ElementStack esatck = this.getElementFromSpPlace(ENEED1, this.pos);
-		if (esatck.isEmpty()) {
-			this.deadTime++;
-			if (this.deadTime > 20 * 20) {
-				this.canContinue = false;
+		this.tick++;
+		if (tick % 20 == 0 || !this.hasLastPower) {
+			ElementStack esatck = this.getElementFromSpPlace(ENEED1, this.pos);
+			if (esatck.isEmpty()) {
+				this.deadTime++;
+				if (this.deadTime > 20 * 60 * 30) this.canContinue = false;
+				return;
 			}
-			return;
+			this.hasLastPower = true;
 		}
 		this.deadTime = 0;
 		CraftingBuildingRecord cnr = (CraftingBuildingRecord) commit;
-		if (!cnr.onUpdate(this.world)) this.canContinue = false;
+		if (!cnr.onUpdate(world)) this.canContinue = false;
 	}
 
 	@Override

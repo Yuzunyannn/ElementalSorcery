@@ -28,7 +28,7 @@ public class ItemItemCrystal extends ItemCrystal {
 		ItemStack showStack = istru.getStructureItem(0);
 		IToElementInfo teInfo = istru.toElement(showStack);
 		if (teInfo == null) return;
-		String name = I18n.format(showStack.getUnlocalizedName() + ".name");
+		String name = showStack.getDisplayName();
 		tooltip.add(I18n.format("info.itemCrystal.data", name));
 		tooltip.add(I18n.format("info.itemCrystal.complex", teInfo.complex()));
 		tooltip.add(I18n.format("info.itemCrystal.z"));

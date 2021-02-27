@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -21,7 +23,6 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
@@ -33,7 +34,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		/** 方块的state */
 		IBlockState state;
 		/** 方块的保存数据 */
-		NBTTagCompound nbt;
+		NBTTagCompound tileSave;
 		/** 对应物品类型的索引 */
 		int typeIndex;
 
@@ -42,14 +43,14 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			this.typeIndex = tpIndex;
 		}
 
-		public BlockInfo(IBlockState state, int tpIndex, TileEntity tile) {
+		public BlockInfo(IBlockState state, int tpIndex, NBTTagCompound tileSave) {
 			this(state, tpIndex);
-			if (tile == null) return;
-			nbt = tile.serializeNBT();
-			nbt.removeTag("id");
-			nbt.removeTag("x");
-			nbt.removeTag("y");
-			nbt.removeTag("z");
+			if (tileSave == null) return;
+			this.tileSave = tileSave;
+			tileSave.removeTag("id");
+			tileSave.removeTag("x");
+			tileSave.removeTag("y");
+			tileSave.removeTag("z");
 		}
 
 		private BlockInfo(NBTTagCompound nbt) {
@@ -58,8 +59,8 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 
 		@Override
 		public int hashCode() {
-			if (nbt == null) return state.hashCode();
-			return state.hashCode() ^ nbt.hashCode();
+			if (tileSave == null) return state.hashCode();
+			return state.hashCode() ^ tileSave.hashCode();
 		}
 
 		@Override
@@ -68,8 +69,8 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 				BlockInfo info = (BlockInfo) other;
 				boolean base = info.typeIndex == this.typeIndex && info.state == this.state;
 				if (!base) return base;
-				if (nbt == null) return info.nbt == null;
-				return info.nbt != null && this.nbt.equals(info.nbt);
+				if (tileSave == null) return info.tileSave == null;
+				return info.tileSave != null && this.tileSave.equals(info.tileSave);
 			}
 			return false;
 		}
@@ -79,26 +80,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		}
 
 		public NBTTagCompound getNBTData() {
-			return nbt;
-		}
-
-		public NBTTagCompound getNBTData(TileEntity tile) {
-			if (this.nbt == null) return null;
-			BlockPos pos = tile.getPos();
-
-			NBTTagCompound nbt = this.nbt.copy();
-			nbt.setInteger("x", pos.getX());
-			nbt.setInteger("y", pos.getY());
-			nbt.setInteger("z", pos.getZ());
-
-			ResourceLocation id = TileEntity.getKey(tile.getClass());
-			if (id == null) {
-				ElementalSorcery.logger.warn("建筑在初始化保存数据时，找不到tile:" + tile.getClass());
-				return null;
-			}
-			nbt.setString("id", id.toString());
-
-			return nbt;
+			return tileSave;
 		}
 
 		@Override
@@ -110,7 +92,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 
 			tag.setShort("meta", (short) meta);
 			tag.setString("block", block.getRegistryName().toString());
-			if (this.nbt != null) tag.setTag("nbt", this.nbt);
+			if (this.tileSave != null) tag.setTag("nbt", this.tileSave);
 
 			return tag;
 		}
@@ -129,7 +111,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			if (Block.REGISTRY.containsKey(id)) block = Block.REGISTRY.getObject(id);
 			else block = Blocks.DIRT;
 
-			if (tag.hasKey("nbt", NBTTag.TAG_COMPOUND)) this.nbt = tag.getCompoundTag("nbt");
+			if (tag.hasKey("nbt", NBTTag.TAG_COMPOUND)) this.tileSave = tag.getCompoundTag("nbt");
 
 			this.state = block.getStateFromMeta(meta);
 		}
@@ -257,6 +239,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		for (Entry<BlockPos, Integer> entry : blockMap.entrySet()) {
 			BlockInfo info = infoList.get(entry.getValue());
 			BlockItemTypeInfo tpInfo = new BlockItemTypeInfo(info.state);
+			if (info.tileSave != null) tpInfo.updateWithTileEntitySaveData(info.tileSave);
 			if (!typeInfoList.contains(tpInfo)) typeInfoList.add(tpInfo);
 			int tpIndex = typeInfoList.indexOf(tpInfo);
 			info.typeIndex = tpIndex;
@@ -279,22 +262,23 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 	}
 
 	public boolean add(IBlockState state, BlockPos pos) {
-		return this.add(state, pos, null);
+		return this.add(state, pos, (NBTTagCompound) null);
 	}
 
 	// 为制定状态添加对应的相对位置！
-	public boolean add(IBlockState state, BlockPos pos, TileEntity tile) {
+	public boolean add(IBlockState state, BlockPos pos, @Nullable NBTTagCompound tileSave) {
 		if (state.getMaterial() == Material.AIR) return false;
 		if (blockMap.containsKey(pos)) throw new IllegalArgumentException("Your pos has already exist!" + pos);
 		// 类型信息
 		BlockItemTypeInfo tpInfo = new BlockItemTypeInfo(state);
+		if (tileSave != null) tpInfo.updateWithTileEntitySaveData(tileSave);
 		// 一些无法被找到的方块不记录
 		if (tpInfo.blockStack.isEmpty()) return false;
 		if (!typeInfoList.contains(tpInfo)) typeInfoList.add(tpInfo);
 		int tpIndex = typeInfoList.indexOf(tpInfo);
 		typeInfoList.get(tpIndex).addCountWith(state);
 		// 方块信息
-		BlockInfo info = new BlockInfo(state, tpIndex, tile);
+		BlockInfo info = new BlockInfo(state, tpIndex, tileSave);
 		if (!infoList.contains(info)) infoList.add(info);
 		int index = infoList.indexOf(info);
 		// 放入方块
@@ -350,7 +334,9 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 				if (checkTile) {
 					if (state.getBlock().hasTileEntity(state)) {
 						TileEntity tile = world.getTileEntity(pos);
-						building.add(state, at, tile);
+						NBTTagCompound tileSave = tile == null ? null : tile.serializeNBT();
+						tileSave = BuildingBlocks.tryFaceTile(state, tileSave, facing, false);
+						building.add(state, at, tileSave);
 					} else building.add(state, at);
 				} else building.add(state, at);
 			}

@@ -1,0 +1,30 @@
+{
+	"pattern": [
+		"ELE",
+		" AM",
+		"EPE"
+	],
+	"key": {
+		"P": {
+			"id": "elementalsorcery:magic_platform",
+			"data": 1
+		},
+		"E": {
+			"id": "elementalsorcery:estone",
+			"data": 1
+		},
+		"L": "elementalsorcery:estone_prism",
+		"A": "elementalsorcery:architecture_crystal",
+		"M": "elementalsorcery:magic_core"
+	},
+	"element": [
+		{
+			"id": "earth",
+			"size": 1200,
+			"power": 10
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:building_altar"
+	}
+}

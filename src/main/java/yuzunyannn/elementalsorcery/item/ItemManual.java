@@ -28,7 +28,7 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 
 public class ItemManual extends Item {
 
-	@Config(kind = "item")
+	@Config(kind = "item", sync = true, note = "元素手册页数上限")
 	private int MANUAL_MAX_PAGES = 20;
 
 	public ItemManual() {

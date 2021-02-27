@@ -127,11 +127,11 @@ public class BuildingLib {
 	private static BuildingSaveData loadBuildingFromTemp(String key) {
 		File file;
 		boolean isTemp = key.charAt(0) == '$';
-		if (isTemp) file = ElementalSorcery.data.getFile("building/tmp", key);
-		else file = ElementalSorcery.data.getFile("building/", key + ".json");
+		if (isTemp) file = ElementalSorcery.data.getFile("building/tmp/", key + ".nbt");
+		else file = ElementalSorcery.data.getFile("building/json/", key + ".json");
 		if (!file.exists()) return null;
 		try {
-			BuildingSaveData data = isTemp ? new BuildingSaveData(file) : new BuildingSaveDataJson(file);
+			BuildingSaveData data = isTemp ? new BuildingSaveData(key, file) : new BuildingSaveDataJson(key, file);
 			BuildingLib.instance.addBuilding(data);
 			return data;
 		} catch (IOException e) {

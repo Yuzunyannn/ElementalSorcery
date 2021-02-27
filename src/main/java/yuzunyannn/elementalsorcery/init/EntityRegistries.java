@@ -25,8 +25,8 @@ import yuzunyannn.elementalsorcery.entity.EntityExploreDust;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.entity.EntityMagicMelting;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
-import yuzunyannn.elementalsorcery.entity.EntityResonantCrystal;
 import yuzunyannn.elementalsorcery.entity.EntityScapegoat;
+import yuzunyannn.elementalsorcery.entity.EntityThrow;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
@@ -42,6 +42,7 @@ import yuzunyannn.elementalsorcery.render.entity.RenderEntityMagicMelting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortal;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityRelicZombie;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityScapegoat;
+import yuzunyannn.elementalsorcery.render.entity.RenderThrow;
 
 public class EntityRegistries {
 
@@ -75,7 +76,7 @@ public class EntityRegistries {
 		register(55, "entity_grimoire", EntityGrimoire.class, "EntityGrimoire", 64, 1, false);
 		register(56, "magic_melting", EntityMagicMelting.class, "EntityMagicMelting", 64, 1, false);
 		// 投掷
-		register(41, "resonant_crystal", EntityResonantCrystal.class, "ResonantCrystal", 64, 10, true);
+		register(40, "throw", EntityThrow.class, "Throw", 64, 10, true);
 		// 实体方块
 		register(20, "bulletin", EntityBulletin.class, "Bulletin", 64, 1, false);
 		register(21, "scapegoat", EntityScapegoat.class, "Scapegoat", 64, 1, false);
@@ -103,7 +104,7 @@ public class EntityRegistries {
 		registerRender(EntityBlockThrowEffect.class, RenderBlockThrowEffect.class);
 		registerRender(EntityCrafting.class, RenderEntityCrafting.class);
 		registerRender(EntityPortal.class, RenderEntityPortal.class);
-		registerRender(EntityResonantCrystal.class, new EntityResonantCrystal.Factory());
+		registerRender(EntityThrow.class, RenderThrow.class);
 		registerRender(EntityElf.class, RenderEntityElf.class);
 		registerRender(EntityRelicZombie.class, RenderEntityRelicZombie.class);
 		registerRender(EntityExploreDust.class, RenderEntityExploreDust.class);

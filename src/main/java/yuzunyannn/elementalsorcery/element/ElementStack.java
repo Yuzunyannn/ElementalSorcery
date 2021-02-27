@@ -265,6 +265,10 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		return magic;
 	}
 
+	public ElementStack toMagic(@Nullable World world) {
+		return this.copy().becomeMagic(world);
+	}
+
 	/** 序列化 */
 	@Override
 	public NBTTagCompound serializeNBT() {

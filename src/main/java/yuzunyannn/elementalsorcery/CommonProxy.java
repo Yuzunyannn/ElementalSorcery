@@ -12,9 +12,8 @@ public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) throws Throwable {
 		ESInit.instance();
-		ESConfig.init();
 		ESInit.preInit(event);
-		ESConfig.close();
+		ESConfig.init();
 	}
 
 	public void init(FMLInitializationEvent event) throws Throwable {

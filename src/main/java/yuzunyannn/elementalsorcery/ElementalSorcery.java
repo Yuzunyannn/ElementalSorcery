@@ -25,6 +25,7 @@ import net.minecraftforge.fml.relauncher.Side;
 
 @Mod(modid = ElementalSorcery.MODID, name = ElementalSorcery.NAME, version = ElementalSorcery.VERSION)
 public class ElementalSorcery {
+
 	public static final String MODID = "elementalsorcery";
 	public static final String NAME = "Elemental Sorcery";
 	public static final String VERSION = "0.6.0";

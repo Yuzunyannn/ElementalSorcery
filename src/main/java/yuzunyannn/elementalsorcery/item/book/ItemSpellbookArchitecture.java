@@ -61,8 +61,8 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 						if (!((EntityPlayer) entity).isCreative()) {
 							ItemStack the = BlockItemTypeInfo.getItemStackCanUsed(((EntityPlayer) entity).inventory,
 									need);
-							if (the.isEmpty()) continue;
-							need = the.splitStack(1);
+							if (the.getCount() < need.getCount()) continue;
+							need = the.splitStack(need.getCount());
 						}
 					}
 					Vec3d from = entity.getPositionVector();

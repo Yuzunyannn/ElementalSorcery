@@ -5,22 +5,30 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockButton;
 import net.minecraft.block.BlockCarpet;
-import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockLadder;
+import net.minecraft.block.BlockRailBase;
+import net.minecraft.block.BlockRedstoneWire;
+import net.minecraft.block.BlockSign;
+import net.minecraft.block.BlockSkull;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fluids.BlockFluidBase;
+import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 
 /** 遍历用类 */
 public class BuildingBlocks {
@@ -71,8 +79,12 @@ public class BuildingBlocks {
 	public static boolean needToLater(IBlockState state) {
 		Block block = state.getBlock();
 		if (block instanceof BlockCarpet || block instanceof BlockTorch) return true;
+		if (block instanceof BlockBush) return true;
+		if (block instanceof BlockRailBase) return true;
 		if (block instanceof BlockFluidBase) return true;
-		if (block instanceof IGrowable) return true;
+		if (block instanceof BlockRedstoneWire) return true;
+		if (block instanceof BlockSign) return true;
+		if (block instanceof IGrowable || block instanceof IPlantable) return true;
 		if (block instanceof BlockLadder) return true;
 		if (block instanceof BlockButton) return true;
 		return false;
@@ -94,6 +106,15 @@ public class BuildingBlocks {
 			break;
 		}
 		return pos;
+	}
+
+	static public NBTTagCompound tryFaceTile(IBlockState state, NBTTagCompound save, EnumFacing facing,
+			boolean needCopy) {
+		if (state.getBlock() instanceof BlockSkull) {
+			if (needCopy) save = save.copy();
+			save.setByte("Rot", (byte) faceRot(save.getByte("Rot"), facing));
+		}
+		return save;
 	}
 
 	public BlockPos getPos() {
@@ -120,33 +141,49 @@ public class BuildingBlocks {
 		return state;
 	}
 
-	public void buildState(World world, BlockPos pos) {
-		Building.BlockInfo info = building.infoList.get(entry.getValue());
-		IBlockState state = faceSate(info.getState(), this.facing);
-		if (state.getBlock() instanceof BlockDoor) {
-			world.setBlockState(pos, state, 2);
-			IBlockState s = state.withProperty(BlockDoor.HALF, BlockDoor.EnumDoorHalf.UPPER);
-			world.setBlockState(pos.up(), s, 2);
-			return;
+	/** 根据方向修正skull数值 */
+	static public int faceRot(int rot, EnumFacing facing) {
+		switch (facing) {
+		case SOUTH:
+			return (rot + 8) % 16;
+		case EAST:
+			return (rot + 4) % 16;
+		case WEST:
+			return (rot - 4 + 16) % 16;
+		default:
+			return rot;
 		}
-		world.setBlockState(pos, state);
-		NBTTagCompound nbt = info.getNBTData();
-		if (nbt == null) return;
-		TileEntity tile = world.getTileEntity(pos);
-		if (tile == null) return;
-		nbt = info.getNBTData(tile);
-		tile.deserializeNBT(nbt);
 	}
 
+	public void buildState(World world, BlockPos pos) {
+		IBlockState state = this.getState();
+		NBTTagCompound nbtSave = this.getTileNBTSave();
+		EntityBlockMove.putBlock(world, null, pos, getItemStack(), state, null, nbtSave);
+	}
+
+	@Nullable
 	public IBlockState getState() {
 		if (entry == null) return null;
 		IBlockState state = building.infoList.get(entry.getValue()).getState();
 		return faceSate(state, this.facing);
 	}
 
+	@Nullable
+	public NBTTagCompound getTileNBTSave() {
+		Building.BlockInfo info = building.infoList.get(entry.getValue());
+		NBTTagCompound nbt = info.getNBTData();
+		if (nbt == null) return null;
+		IBlockState state = info.getState();
+		return tryFaceTile(state, nbt, facing, true);
+	}
+
+	@Nonnull
 	public ItemStack getItemStack() {
-		return entry == null ? ItemStack.EMPTY
-				: building.typeInfoList.get(building.infoList.get(entry.getValue()).typeIndex).blockStack.copy();
+		if (entry == null) return ItemStack.EMPTY;
+		BlockItemTypeInfo iti = building.typeInfoList.get(building.infoList.get(entry.getValue()).typeIndex);
+		ItemStack stack = iti.blockStack.copy();
+		stack.setCount(BlockItemTypeInfo.getCountFromState(getState()));
+		return stack;
 	}
 
 	public BuildingBlocks setPosOff(BlockPos pos) {

@@ -82,7 +82,7 @@ public class ExploreOreScan implements IExploreHandle {
 			if (item == null) continue;
 			NBTTagCompound nbt = ore.getCompoundTag(id);
 			ItemStack o = new ItemStack(item, 1, nbt.getInteger("meta"));
-			builder.append(I18n.format(o.getUnlocalizedName() + ".name"));
+			builder.append(o.getDisplayName());
 			builder.append("X").append(nbt.getInteger("count")).append(' ');
 		}
 		tooltip.add(TextFormatting.GREEN + I18n.format("info.mineral.deposits", builder.toString()));

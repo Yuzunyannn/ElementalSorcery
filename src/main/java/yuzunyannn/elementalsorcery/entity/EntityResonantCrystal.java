@@ -38,6 +38,7 @@ import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.tile.md.TileMDResonantIncubator;
 
+@Deprecated
 public class EntityResonantCrystal extends EntityThrowable {
 
 	public static class Factory implements IRenderFactory<EntityResonantCrystal> {

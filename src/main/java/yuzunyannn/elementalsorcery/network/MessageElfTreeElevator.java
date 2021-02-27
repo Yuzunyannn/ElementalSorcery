@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.network;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -39,8 +40,13 @@ public class MessageElfTreeElevator implements IMessage {
 		@Override
 		public IMessage onMessage(MessageElfTreeElevator message, MessageContext ctx) {
 			if (ctx.side != Side.SERVER) return null;
-			EntityPlayerMP player = ctx.getServerHandler().player;
-			TileElfTreeCore.moveEntity(message.pos, player, message.to);
+
+			final EntityPlayerMP player = ctx.getServerHandler().player;
+			final WorldServer world = player.getServerWorld();
+			world.addScheduledTask(() -> {
+				TileElfTreeCore.moveEntity(message.pos, player, message.to);
+			});
+
 			return null;
 		}
 	}

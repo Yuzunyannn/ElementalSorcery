@@ -12,11 +12,11 @@ import yuzunyannn.elementalsorcery.util.json.JsonObject;
 public class BuildingSaveDataJson extends BuildingSaveData {
 
 	public BuildingSaveDataJson(Building building) {
-		super(building, "", ".json");
+		super(building, "json", ".json");
 	}
 
-	public BuildingSaveDataJson(File file) throws IOException {
-		super(file);
+	public BuildingSaveDataJson(String key, File file) throws IOException {
+		super(key, file);
 	}
 
 	@Override

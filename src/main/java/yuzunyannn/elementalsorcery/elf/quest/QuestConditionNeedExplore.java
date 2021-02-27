@@ -128,7 +128,7 @@ public class QuestConditionNeedExplore extends QuestCondition {
 		}
 
 		if (this.biome == null) {
-			String blockName = I18n.format(block.getUnlocalizedName() + ".name");
+			String blockName = block.getDisplayName();
 			builder.append(I18n.format("quest.explore.4", structure, blockName));
 		} else {
 			ResourceLocation biomeId = new ResourceLocation(biome);
@@ -137,7 +137,7 @@ public class QuestConditionNeedExplore extends QuestCondition {
 			if (block.isEmpty()) {
 				builder.append(I18n.format("quest.explore.1", biomeName));
 			} else {
-				String blockName = I18n.format(block.getUnlocalizedName() + ".name");
+				String blockName = block.getDisplayName();
 				if (structure != null) builder.append(I18n.format("quest.explore.3", biomeName, structure, blockName));
 				else builder.append(I18n.format("quest.explore.2", biomeName, blockName));
 			}

@@ -30,6 +30,7 @@ import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
 
@@ -178,7 +179,12 @@ public class EventClient {
 
 	/** 全局信息显示 */
 	@SubscribeEvent
-	static public void drawDebugTools(ItemTooltipEvent event) {
+	static public void drawTooltip(ItemTooltipEvent event) {
+		ItemRiteManual.drawTooltip(event);
+		drawDebugTooltip(event);
+	}
+
+	static public void drawDebugTooltip(ItemTooltipEvent event) {
 		ItemStack stack = event.getItemStack();
 		Item item = stack.getItem();
 		// 即将删除告示

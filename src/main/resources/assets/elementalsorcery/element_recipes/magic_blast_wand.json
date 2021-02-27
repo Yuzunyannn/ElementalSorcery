@@ -1,12 +1,12 @@
 {
 	"pattern": [
-		"XUG",
-		"UM ",
-		"G M"
+		"GXU",
+		" MX",
+		"M G"
 	],
 	"key": {
 		"X": "elementalsorcery:magic_gold",
-		"U": "elementalsorcery:magical_ender_eye",
+		"U": "elementalsorcery:magic_core",
 		"G": "minecraft:gold_ingot",
 		"M": "elementalsorcery:magic_crystal"
 	},

@@ -6,7 +6,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -46,7 +45,7 @@ public class BlockLifeDirt extends Block {
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		ItemStack itemStack = TileLifeDirt.getPlant(stack);
 		if (itemStack.isEmpty()) return;
-		tooltip.add(TextFormatting.YELLOW + I18n.format(itemStack.getUnlocalizedName() + ".name"));
+		tooltip.add(TextFormatting.YELLOW + itemStack.getDisplayName());
 	}
 
 	@Override
