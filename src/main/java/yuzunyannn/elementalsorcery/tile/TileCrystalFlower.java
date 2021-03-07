@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.tile;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
@@ -13,6 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.block.BlockCrystalFlower;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 /** 水晶花的tileentity除了记录数据与绘图外，还进行能量生长的判定 */
 public class TileCrystalFlower extends TileEntityNetwork {
@@ -25,6 +28,16 @@ public class TileCrystalFlower extends TileEntityNetwork {
 
 	public ItemStack getCrystal() {
 		return crystal;
+	}
+
+	public List<ItemStack> getDropCrystal() {
+		Item item = crystal.getItem();
+		if (item instanceof ItemCrystal) {
+			List<ItemStack> drops = new LinkedList();
+			((ItemCrystal) item).getDropsOfCrystalFlower(crystal, drops);
+			return drops;
+		}
+		return ItemHelper.toList(crystal);
 	}
 
 	public void setCrystal(ItemStack stack) {
@@ -58,9 +71,8 @@ public class TileCrystalFlower extends TileEntityNetwork {
 		if (item instanceof ItemCrystal) {
 			if (((ItemCrystal) item).onCrystalFlowerGrow(this.crystal, world, rand, state, this, lifeDirt))
 				world.setBlockState(pos, state);
-		}
-		// 如果是其他未录入的物品，则有25%的概率让生息之土重置
-		else {
+		} else {
+			// 如果是其他未录入的物品，则有25%的概率让生息之土重置
 			world.setBlockState(pos, state);
 			if (rand.nextInt(4) == 0) world.removeTileEntity(lifeDirt);
 		}

@@ -8,11 +8,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.tile.md.TileMDFrequencyMapping;
+import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
-public class BlockMDTransfer extends BlockMDBase {
+public class BlockMDFrequencyMapping extends BlockMDBase {
 
-	public BlockMDTransfer() {
-		super("MDTransfer");
+	public BlockMDFrequencyMapping() {
+		super("MDFrequencyMapping");
 	}
 
 	@Override
@@ -28,6 +29,6 @@ public class BlockMDTransfer extends BlockMDBase {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		return false;
+		return BlockHelper.onBlockActivatedWithIGetItemStack(worldIn, pos, state, playerIn, hand, true);
 	}
 }

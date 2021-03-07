@@ -20,7 +20,7 @@ public class WorldGenKyaniteOre extends WorldGenMinable {
 		int expect = WorldGeneratorES.CONFIG_KYANITE_ORE.getSpawnPoint(world, biome);
 		for (int i = 0; i < (4 + expect); i++) {
 			int posX = pos.getX() + rand.nextInt(16);
-			int posY = 2 + rand.nextInt(16);
+			int posY = 2 + rand.nextInt(24);
 			int posZ = pos.getZ() + rand.nextInt(16);
 			BlockPos blockpos = new BlockPos(posX, posY, posZ);
 			super.generate(world, rand, blockpos);

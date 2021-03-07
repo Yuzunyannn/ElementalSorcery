@@ -17,6 +17,7 @@ public class Buildings {
 	static public Building RESONANT_INCUBATOR;
 	static public Building PORTAL_ALTAR;
 	static public Building TRANSCRIBE_ALTAR;
+	static public Building MAPPING_ALTAR;
 
 	static public void init() {
 		INFUSION = BuildingLib.instance.getBuilding("infusion");
@@ -34,5 +35,6 @@ public class Buildings {
 		RESONANT_INCUBATOR = BuildingLib.instance.getBuilding("resonant_incubator");
 		PORTAL_ALTAR = BuildingLib.instance.getBuilding("portal_altar");
 		TRANSCRIBE_ALTAR = BuildingLib.instance.getBuilding("transcribe_altar");
+		MAPPING_ALTAR = BuildingLib.instance.getBuilding("mapping_altar");
 	}
 }

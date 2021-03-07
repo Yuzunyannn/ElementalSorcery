@@ -26,6 +26,9 @@ public class WorldGeneratorES {
 		return i;
 	}
 
+	@Config(kind = "spawn_and_gen", group = "scarlet_crystal_ore", name = "#")
+	public static WorldGenAndSpawnConfig CONFIG_SCARLET_CRYSTAL_ORE = new WorldGenAndSpawnConfig(null, null, null,
+			null);
 	@Config(kind = "spawn_and_gen", group = "kyanite_ore", name = "#")
 	public static WorldGenAndSpawnConfig CONFIG_KYANITE_ORE = new WorldGenAndSpawnConfig(null, null, null, null);
 	@Config(kind = "spawn_and_gen", group = "start_stone", name = "#")
@@ -48,6 +51,7 @@ public class WorldGeneratorES {
 			if (event.getPos().equals(this.pos)) return;
 			this.pos = event.getPos();
 			this.genKynateOre(event);
+			this.genScarletCrystalOre(event);
 		}
 
 		static void gen(World world, BlockPos pos, Random rand, WorldGenerator generator,
@@ -65,6 +69,10 @@ public class WorldGeneratorES {
 
 		public void genKynateOre(OreGenEvent.Post event) {
 			gen(event, new WorldGenKyaniteOre(), CONFIG_KYANITE_ORE);
+		}
+
+		public void genScarletCrystalOre(OreGenEvent.Post event) {
+			gen(event, new WorldGenScarletCrystalOre(), CONFIG_SCARLET_CRYSTAL_ORE);
 		}
 	}
 

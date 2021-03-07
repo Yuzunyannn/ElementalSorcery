@@ -64,6 +64,7 @@ import yuzunyannn.elementalsorcery.block.BlockLifeFlower;
 import yuzunyannn.elementalsorcery.block.BlockMagicPot;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.block.BlockResearcher;
+import yuzunyannn.elementalsorcery.block.BlockScarletCrystalOre;
 import yuzunyannn.elementalsorcery.block.BlockSealStone;
 import yuzunyannn.elementalsorcery.block.BlockStarSand;
 import yuzunyannn.elementalsorcery.block.BlockStarStone;
@@ -91,6 +92,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
 import yuzunyannn.elementalsorcery.block.md.BlockMDAbsorbBox;
 import yuzunyannn.elementalsorcery.block.md.BlockMDDeconstructBox;
+import yuzunyannn.elementalsorcery.block.md.BlockMDFrequencyMapping;
 import yuzunyannn.elementalsorcery.block.md.BlockMDHearth;
 import yuzunyannn.elementalsorcery.block.md.BlockMDInfusion;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagicGen;
@@ -176,6 +178,7 @@ import yuzunyannn.elementalsorcery.item.crystal.ItemItemCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemMagicalCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemResonantCrystal;
+import yuzunyannn.elementalsorcery.item.crystal.ItemScarletCrystal;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementStone;
 import yuzunyannn.elementalsorcery.item.prop.ItemFusionCrystal;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
@@ -217,6 +220,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileTranscribeTable;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDAbsorbBox;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDBase;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDDeconstructBox;
+import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDFrequencyMapping;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDHearth;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDInfusion;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagicGen;
@@ -251,6 +255,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeInjection;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeTable;
 import yuzunyannn.elementalsorcery.tile.md.TileMDAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.md.TileMDDeconstructBox;
+import yuzunyannn.elementalsorcery.tile.md.TileMDFrequencyMapping;
 import yuzunyannn.elementalsorcery.tile.md.TileMDHearth;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicGen;
@@ -350,6 +355,7 @@ public class ESInit {
 		BLOCKS.MD_MAGICLIZATION = new BlockMDMagiclization();
 		BLOCKS.MD_DECONSTRUCT_BOX = new BlockMDDeconstructBox();
 		BLOCKS.MD_RESONANT_INCUBATOR = new BlockMDResonantIncubator();
+		BLOCKS.MD_FREQUENCY_MAPPING = new BlockMDFrequencyMapping();
 		BLOCKS.LIFE_FLOWER = new BlockLifeFlower();
 		BLOCKS.MAGIC_POT = new BlockMagicPot();
 		BLOCKS.LIFE_DIRT = new BlockLifeDirt();
@@ -362,6 +368,7 @@ public class ESInit {
 		BLOCKS.ELF_BEACON = new BlockElfBeacon();
 		BLOCKS.RESEARCHER = new BlockResearcher();
 		BLOCKS.SEAL_STONE = new BlockSealStone();
+		BLOCKS.SCARLET_CRYSTAL_ORE = new BlockScarletCrystalOre();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -434,6 +441,7 @@ public class ESInit {
 		ITEMS.SOUL_KILLER_SWORD = new ItemSoulKillerSword();
 		ITEMS.SCAPEGOAT = new ItemScapegoat();
 		ITEMS.MAGIC_CORE = new ItemMagicCore();
+		ITEMS.SCARLET_CRYSTAL = new ItemScarletCrystal();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -663,6 +671,7 @@ public class ESInit {
 		register(TileMDMagiclization.class, "MDMagiclization");
 		register(TileMDDeconstructBox.class, "MDDeconstructBox");
 		register(TileMDResonantIncubator.class, "MDResonantIncubator");
+		register(TileMDFrequencyMapping.class, "MDFrequencyMapping");
 		register(TileLifeDirt.class, "LifeDirt");
 		register(TileCrystalFlower.class, "CrystalFlower");
 		register(TileItemStructureCraftNormal.class, "ISCraftNormal");
@@ -759,6 +768,7 @@ public class ESInit {
 		registerRender(ITEMS.SOUL_KILLER_SWORD);
 		registerRender(ITEMS.SCAPEGOAT);
 		registerRender(ITEMS.MAGIC_CORE);
+		registerRender(ITEMS.SCARLET_CRYSTAL);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -810,6 +820,7 @@ public class ESInit {
 		registerRender(BLOCKS.RESEARCHER);
 		registerRender(BLOCKS.SEAL_STONE, 0, "seal_stone");
 		registerRender(BLOCKS.SEAL_STONE, 1, "seal_stone_netherrack");
+		registerRender(BLOCKS.SCARLET_CRYSTAL_ORE);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());
@@ -835,13 +846,14 @@ public class ESInit {
 		registerRender(BLOCKS.MD_HEARTH, TileMDHearth.class, new RenderTileMDHearth());
 		registerRender(BLOCKS.MD_RUBBLE_REPAIR, TileMDRubbleRepair.class, new RenderTileMDRubbleRepair());
 		registerRender(BLOCKS.MD_INFUSION, TileMDInfusion.class, new RenderTileMDInfusion());
-		registerRender(BLOCKS.MD_TRANSFER, TileMDTransfer.class, new RenderTileMDTransfer());
+		registerRender(BLOCKS.MD_TRANSFER, TileMDFrequencyMapping.class, new RenderTileMDTransfer());
 		registerRender(BLOCKS.MD_MAGIC_SOLIDIFY, TileMDMagicSolidify.class, new RenderTileMDMagicSolidify());
 		registerRender(BLOCKS.MD_ABSORB_BOX, TileMDAbsorbBox.class, new RenderTileMDAbsorbBox());
 		registerRender(BLOCKS.MD_MAGICLIZATION, TileMDMagiclization.class, new RenderTileMDMagiclization());
 		registerRender(BLOCKS.MD_DECONSTRUCT_BOX, TileMDDeconstructBox.class, new RenderTileMDDeconstructBox());
 		registerRender(BLOCKS.MD_RESONANT_INCUBATOR, TileMDResonantIncubator.class,
 				new RenderTileMDResonantIncubator());
+		registerRender(BLOCKS.MD_FREQUENCY_MAPPING, TileMDFrequencyMapping.class, new RenderTileMDFrequencyMapping());
 		registerRender(BLOCKS.ELF_TREE_CORE, TileElfTreeCore.class, new RenderTileElfTreeCore());
 		registerRender(BLOCKS.TRANSCRIBE_INJECTION, TileTranscribeInjection.class, new RenderTileTranscribeInjection());
 		registerRender(BLOCKS.ELF_BEACON, TileElfBeacon.class, new RenderTileElfBeacon());

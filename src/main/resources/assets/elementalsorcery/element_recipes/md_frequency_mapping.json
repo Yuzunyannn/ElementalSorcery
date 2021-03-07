@@ -1,0 +1,37 @@
+{
+	"pattern": [
+		"ACA",
+		"AGA",
+		" B "
+	],
+	"key": {
+		"A": {
+			"id": "elementalsorcery:astone",
+			"data": 2
+		},
+		"B": "elementalsorcery:md_base",
+		"C": "elementalsorcery:scarlet_crystal",
+		"G": "elementalsorcery:resonant_crystal"
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 100,
+			"power": 10
+		},
+		{
+			"id": "metal",
+			"size": 100,
+			"power": 50
+		},
+		{
+			"id": "earth",
+			"size": 300,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:md_frequency_mapping",
+		"count": 1
+	}
+}

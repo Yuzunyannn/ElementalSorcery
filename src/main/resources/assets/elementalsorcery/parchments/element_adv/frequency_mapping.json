@@ -1,0 +1,32 @@
+{
+    "lev": 4,
+    "need": [
+        "element/element_crafting_table",
+        "more/scarlet_crystal"
+    ],
+    "linked": "elementalsorcery:md_frequency_mapping",
+    "type": "mult",
+    "lock": 0,
+    "pages": [
+        {
+            "type": "craft",
+            "name": "frequencyMapping",
+            "item": "elementalsorcery:md_frequency_mapping"
+        },
+        {
+            "type": "buidling",
+            "name": "frequencyMapping",
+            "building": "mapping_altar",
+            "extra": [
+                {
+                    "pos": [
+                        0,
+                        2,
+                        0
+                    ],
+                    "item": "elementalsorcery:md_frequency_mapping"
+                }
+            ]
+        }
+    ]
+}

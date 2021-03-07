@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,15 +24,22 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
+import yuzunyannn.elementalsorcery.config.Config;
+import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
+import yuzunyannn.elementalsorcery.item.crystal.ItemScarletCrystal;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectResonance;
 import yuzunyannn.elementalsorcery.tile.TileLifeDirt;
 
 public class TileMDResonantIncubator extends TileMDBase implements ITickable, IGetItemStack {
+
+	@Config(kind = "tile", note = "每次共振的魔力消耗")
+	@Config.NumberRange(min = 0, max = Integer.MAX_VALUE)
+	static private int COST_PRE_RESONANT = 20;
 
 	@Override
 	protected ItemStackHandler initItemStackHandler() {
@@ -78,7 +86,7 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 
 	/** 每次需求的能量 */
 	public int getNeedMagicPreResonance() {
-		return 20;
+		return COST_PRE_RESONANT;
 	}
 
 	// 当前搜索位置
@@ -197,6 +205,20 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 		float minFreDiff = Float.MAX_VALUE;
 		ItemStack minCry = ItemStack.EMPTY;
 		for (ItemCrystal crystal : allCrystal) {
+			if (crystal == ESInit.ITEMS.SCARLET_CRYSTAL) {
+				float fre = 50;
+				ElfTime time = new ElfTime(world);
+				int hour = time.getHour();
+				if (hour == 0) fre = time.getMinute() / 12f * 100f;
+				else fre = (12 - time.getMinute()) / 12f * 100f;
+				float diff = Math.abs(fre - this.fre);
+				if (diff > range) continue;
+				if (diff < minFreDiff) {
+					minFreDiff = diff;
+					minCry = ItemScarletCrystal.create(fre);
+				}
+				continue;
+			}
 			NonNullList<ItemStack> list = NonNullList.create();
 			crystal.getSubItems(CreativeTabs.SEARCH, list);
 			for (ItemStack stack : list) {
@@ -267,8 +289,11 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 	@SideOnly(Side.CLIENT)
 	public void resonantData() {
 		if (Minecraft.getMinecraft().player == null) return;
-		NBTTagCompound nbt = ElementalSorcery.getPlayerData(Minecraft.getMinecraft().player);
-		nbt.setFloat("resFre", this.fre);
+		EntityPlayer player = Minecraft.getMinecraft().player;
+		if (player.getDistanceSq(pos) <= 6 * 6) {
+			NBTTagCompound nbt = ElementalSorcery.getPlayerData(player);
+			nbt.setFloat("resFre", this.fre);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)

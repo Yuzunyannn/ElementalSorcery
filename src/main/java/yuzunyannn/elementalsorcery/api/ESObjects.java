@@ -84,6 +84,7 @@ public class ESObjects {
 		public Item SOUL_KILLER_SWORD;
 		public Item SCAPEGOAT;
 		public Item MAGIC_CORE;
+		public Item SCARLET_CRYSTAL;
 	}
 
 	static public class Blocks {
@@ -133,6 +134,7 @@ public class ESObjects {
 		public Block MD_MAGICLIZATION;
 		public Block MD_DECONSTRUCT_BOX;
 		public Block MD_RESONANT_INCUBATOR;
+		public Block MD_FREQUENCY_MAPPING;
 		public Block LIFE_FLOWER;
 		public Block MAGIC_POT;
 		public Block LIFE_DIRT;
@@ -145,6 +147,7 @@ public class ESObjects {
 		public Block ELF_BEACON;
 		public Block RESEARCHER;
 		public Block SEAL_STONE;
+		public Block SCARLET_CRYSTAL_ORE;
 	}
 
 	static public class Elements {

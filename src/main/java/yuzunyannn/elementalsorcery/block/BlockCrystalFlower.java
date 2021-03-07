@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.block;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -63,8 +64,11 @@ public class BlockCrystalFlower extends BlockBush implements ITileEntityProvider
 		if (state.getValue(STAGE) == MAX_STAGE) {
 			TileEntity tile = worldIn.getTileEntity(pos);
 			if (tile instanceof TileCrystalFlower) {
-				ItemStack plant = ((TileCrystalFlower) tile).getCrystal();
-				if (!plant.isEmpty()) Block.spawnAsEntity(worldIn, pos, plant);
+				List<ItemStack> plants = ((TileCrystalFlower) tile).getDropCrystal();
+				for (ItemStack plant : plants) {
+					if (plant.isEmpty()) continue;
+					Block.spawnAsEntity(worldIn, pos, plant);
+				}
 			}
 		}
 		// 移除

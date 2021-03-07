@@ -376,6 +376,7 @@ public class CommandES extends CommandBase {
 			notifyCommandListener(sender, this, "commands.es.building.release");
 			System.gc();
 			break;
+		case "recordNBT":
 		case "test":
 		case "record": {
 			ItemStack ruler = executer.getHeldItem(EnumHand.MAIN_HAND);
@@ -387,7 +388,8 @@ public class CommandES extends CommandBase {
 			building.setAuthor(executer.getName());
 			building.setName(executer.getName() + "'s building!");
 			if ("test".equals(args[0])) break;
-			BuildingLib.instance.addBuilding(building, false);
+			if ("recordNBT".equals(args[0])) BuildingLib.instance.addBuilding(building, true);
+			else BuildingLib.instance.addBuilding(building, false);
 			ItemStack ar = new ItemStack(ESInit.ITEMS.ARCHITECTURE_CRYSTAL);
 			ArcInfo.initArcInfoToItem(ar, building.getKeyName());
 			ItemHelper.addItemStackToPlayer(player, ar);

@@ -1,0 +1,11 @@
+{
+    "lev": 1,
+    "linked": "elementalsorcery:scarlet_crystal",
+    "need": [
+        "more/magic_stone",
+        "more/magic_piece"
+    ],
+    "type": "normal",
+    "name": "scarletCrystal",
+    "item": "elementalsorcery:scarlet_crystal"
+}

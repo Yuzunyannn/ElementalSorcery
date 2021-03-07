@@ -1,12 +1,12 @@
 {
 	"pattern": [
-		"GAG",
+		"NAN",
 		"AVA",
-		"GAG",
+		"NAN",
 		"R  Z",
-		" NI ",
+		" OI ",
 		" ES ",
-		"O  B"
+		"G  B"
 	],
 	"key": {
 		"V": "elementalsorcery:vortex",
@@ -19,7 +19,7 @@
 		"B": "elementalsorcery:architecture_crystal",
 		"O": "elementalsorcery:order_crystal",
 		"Z": "elementalsorcery:azure_crystal",
-		"G": "minecraft:redstone"
+		"G": "elementalsorcery:scarlet_crystal"
 	},
 	"element": [
 		{

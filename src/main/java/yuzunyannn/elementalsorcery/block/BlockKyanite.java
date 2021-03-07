@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 
 public class BlockKyanite extends Block {
+
 	public BlockKyanite() {
 		super(Material.ROCK);
 		this.setHarvestLevel("pickaxe", 2);

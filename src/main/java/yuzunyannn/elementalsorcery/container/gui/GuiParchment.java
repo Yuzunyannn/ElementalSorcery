@@ -90,7 +90,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			for (SlotButton slot : this.slotButtonList) if (!slot.stack.isEmpty()) drawItem(slot.stack, slot.x, slot.y);
 			// 文字
 			GlStateManager.pushMatrix();
-			GlStateManager.translate(offsetX, offsetY, 0);
+			GlStateManager.translate(offsetX, offsetY, 10);
 			this.page.drawValue(this);
 			GlStateManager.popMatrix();
 		} catch (Exception e) {

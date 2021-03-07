@@ -18,12 +18,12 @@ public class ElfTime {
 		this(world.getWorldTime());
 	}
 
-	/** 获取秒，即为tick，50秒一分钟 */
+	/** 获取秒，即为tick */
 	public int getSecond() {
 		return (int) ((time / 20) % 50);
 	}
 
-	/** 获取分钟，50秒一分钟，半天12小时 */
+	/** 获取分钟，50秒一分钟 */
 	public int getMinute() {
 		return (int) ((time / 1000) % 12);
 	}

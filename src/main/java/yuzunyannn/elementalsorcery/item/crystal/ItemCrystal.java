@@ -102,6 +102,11 @@ public class ItemCrystal extends Item {
 		return true;
 	}
 
+	/** 当水晶花掉落 */
+	public void getDropsOfCrystalFlower(ItemStack origin, List<ItemStack> drops) {
+		drops.add(origin.copy());
+	}
+
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {

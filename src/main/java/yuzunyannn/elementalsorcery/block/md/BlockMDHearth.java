@@ -46,9 +46,7 @@ public class BlockMDHearth extends BlockMDBase {
 
 	@Override
 	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		if (state.getValue(BlockHearth.BURNING)) {
-			return 12;
-		}
+		if (state.getValue(BlockHearth.BURNING)) return 12;
 		return 0;
 	}
 
@@ -70,8 +68,7 @@ public class BlockMDHearth extends BlockMDBase {
 
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-		if (stateIn.getValue(BlockHearth.BURNING))
-			BlockHearth.displayTick(worldIn, pos, rand);
+		if (stateIn.getValue(BlockHearth.BURNING)) BlockHearth.displayTick(worldIn, pos, rand);
 	}
 
 }
