@@ -13,16 +13,16 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageGetBuilingInfo;
+import yuzunyannn.elementalsorcery.util.IOHelper;
 import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class BuildingLib {
 
-	@Config(note = "[临时建筑保非活动停留最长，单位分钟，超时后将移除内存，使用时会强制加载][0表示不自动清除]")
+	@Config
 	@Config.NumberRange(min = 0, max = 60 * 24 * 365 * 100)
 	public static int BUILDING_MAX_REMAIN_TIMES = 60 * 24;
 
@@ -110,12 +110,11 @@ public class BuildingLib {
 	}
 
 	public static void registerAll() throws IOException {
-		final ESData data = ElementalSorcery.data;
 		final String MODID = ElementalSorcery.MODID;
-		String[] mapJsonNames = ESData.getFilesFromResource(new ResourceLocation(MODID, "structures"));
+		String[] mapJsonNames = IOHelper.getFilesFromResource(new ResourceLocation(MODID, "structures"));
 		for (String path : mapJsonNames) {
 			if (!path.endsWith(".nbt")) continue;
-			NBTTagCompound nbt = data.getNBTFromResource(new ResourceLocation(MODID, "structures/" + path));
+			NBTTagCompound nbt = IOHelper.readNBT(new ResourceLocation(MODID, "structures/" + path));
 			if (path.lastIndexOf('.') != -1) path = path.substring(0, path.lastIndexOf('.'));
 			Building building = new BuildingInherent(nbt, TextHelper.castToCamel(path));
 			instance.addBuildingLib(path, building);

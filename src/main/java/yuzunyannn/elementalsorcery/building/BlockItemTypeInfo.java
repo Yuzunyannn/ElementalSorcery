@@ -49,6 +49,7 @@ public class BlockItemTypeInfo {
 		else if (block == Blocks.REDSTONE_WIRE) blockStack = new ItemStack(Items.REDSTONE, 1, 0);
 		else if (block == Blocks.UNLIT_REDSTONE_TORCH)
 			blockStack = new ItemStack(Item.getItemFromBlock(Blocks.REDSTONE_TORCH), 1, 0);
+		else if (block == Blocks.REEDS) blockStack = new ItemStack(Items.REEDS);
 		else if (state.getMaterial().isLiquid()) this.dealLiquid(state);
 		else if (block instanceof BlockSkull) blockStack = new ItemStack(Items.SKULL, 1, 0);
 		else if (block instanceof BlockSlab) {

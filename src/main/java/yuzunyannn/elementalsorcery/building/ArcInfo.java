@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 public class ArcInfo {
@@ -63,6 +64,12 @@ public class ArcInfo {
 		Building building = BuildingLib.instance.getBuilding(key);
 		if (building != null) nbt.setLong("mtime", building.mtime);
 		else nbt.setLong("mtime", 0);
+	}
+
+	static public ItemStack createArcInfoItem(String key) {
+		ItemStack ar = new ItemStack(ESInit.ITEMS.ARCHITECTURE_CRYSTAL);
+		ArcInfo.initArcInfoToItem(ar, key);
+		return ar;
 	}
 
 	static public boolean isArc(ItemStack stack) {

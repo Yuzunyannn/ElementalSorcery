@@ -201,6 +201,10 @@ mantra.footbridge.name=Footbridge
 mantra.footbridge.describe=With the Earth Element, raise blocks on the ground and build a bridge in front.
 mantra.fireArea.name=Burning Area
 mantra.fireArea.describe=With The Fire Elemen, a Area whoever entered will be burning is emerge.
+mantra.magicStrafe.name=Magic Strafe
+mantra.magicStrafe.describe=Turn magic Into energy beam to attack enemies.
+mantra.floatArea.name=Floating Wind Area
+mantra.floatArea.describe=With the Air Element, produce updraft, blow the creatures that enter the area up.
 
 key.es.func=Function key
 

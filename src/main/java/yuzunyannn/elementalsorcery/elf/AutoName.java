@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.util.IOHelper;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
@@ -91,7 +90,7 @@ public class AutoName {
 
 	static public void init() {
 		File file = ElementalSorcery.data.getFile("elf/names", "");
-		List<String> paths = ESData.getFileRecursion(file);
+		List<String> paths = IOHelper.getFileRecursion(file);
 		for (String path : paths) {
 			file = new File(path);
 			FileInputStream inputStream = null;

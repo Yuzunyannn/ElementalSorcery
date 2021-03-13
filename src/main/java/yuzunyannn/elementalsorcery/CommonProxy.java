@@ -11,6 +11,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 public class CommonProxy {
 
 	public void preInit(FMLPreInitializationEvent event) throws Throwable {
+		ESConfig.initBase();
 		ESInit.instance();
 		ESInit.preInit(event);
 		ESConfig.init();

@@ -1,6 +1,38 @@
 package yuzunyannn.elementalsorcery.building;
 
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+
+import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.tile.md.TileMDFrequencyMapping.Vibrate;
+import yuzunyannn.elementalsorcery.util.json.JsonArray;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
+import yuzunyannn.elementalsorcery.util.text.TextHelper;
+
 public class Buildings {
+
+	public static class VibrateKey extends Vibrate {
+
+		private final String key;
+
+		public VibrateKey(String key) {
+			super(key);
+			this.key = key;
+		}
+
+		public VibrateKey(String key, float[] f) {
+			super(f);
+			this.key = key;
+		}
+
+		public String getKey() {
+			return key;
+		}
+
+	}
+
+	static public final List<VibrateKey> frequencyMapping = new ArrayList<>();
 
 	static public Building INFUSION;
 	static public Building ABSORB_BOX;
@@ -36,5 +68,60 @@ public class Buildings {
 		PORTAL_ALTAR = BuildingLib.instance.getBuilding("portal_altar");
 		TRANSCRIBE_ALTAR = BuildingLib.instance.getBuilding("transcribe_altar");
 		MAPPING_ALTAR = BuildingLib.instance.getBuilding("mapping_altar");
+		initFrequencyMapping();
+	}
+
+	static public void initFrequencyMapping() {
+		File mapFile = ElementalSorcery.data.getFile("building/", "frequency_map.json");
+		JsonObject mappingData;
+		try {
+			mappingData = new JsonObject(mapFile);
+		} catch (Exception e) {
+			mappingData = getDefaultMappingExample();
+			mappingData.save(mapFile, true);
+			copyExample("example_hut_1.json");
+			copyExample("example_hut_2.json");
+			copyExample("example_cactus_farm.json");
+			copyExample("example_useless_tower.json");
+		}
+		readFrequencyMapping(mappingData);
+	}
+
+	static private JsonObject getDefaultMappingExample() {
+		JsonObject mappingData = new JsonObject();
+		{
+			JsonArray array = new JsonArray();
+			array.append("example_hut_1");
+			array.append("example_hut_2");
+			mappingData.set("auto", array);
+		}
+		{
+			JsonObject mapData = new JsonObject();
+			mapData.set("example_cactus_farm", new JsonArray().append(22.22f).append(89.7f));
+			mapData.set("example_useless_tower", new JsonArray().append(89.7f).append(34.3f).append(27.77f));
+			mappingData.set("map", mapData);
+		}
+		return mappingData;
+	}
+
+	static private void copyExample(String name) {
+		try {
+			File file = ElementalSorcery.data.getFile("building/json/", name);
+			new JsonObject(TextHelper.toESResourceLocation("examples/" + name)).save(file, true);
+		} catch (Exception e) {}
+	}
+
+	static private void readFrequencyMapping(JsonObject mappingData) {
+		if (mappingData.hasArray("auto")) {
+			String[] keys = mappingData.getArray("auto").asStringArray();
+			for (String key : keys) frequencyMapping.add(new VibrateKey(key));
+		}
+		if (mappingData.hasObject("map")) {
+			JsonObject keys = mappingData.getObject("map");
+			for (String key : keys) {
+				if (!keys.hasArray(key)) continue;
+				frequencyMapping.add(new VibrateKey(key, keys.getArray(key).asFloatArray()));
+			}
+		}
 	}
 }

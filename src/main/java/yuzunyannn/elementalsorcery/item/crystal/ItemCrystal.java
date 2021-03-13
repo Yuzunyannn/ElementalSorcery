@@ -52,11 +52,6 @@ public class ItemCrystal extends Item {
 		return new ItemCrystal("elfCrystal", 22.22f, 0x096b18);
 	}
 
-	/** 秩序水晶 */
-	static public Item newOrderCrystal() {
-		return new ItemCrystal("orderCrystal", 59.35f, 0x385ab5);
-	}
-
 	protected float frequency = 0.0f;
 	protected int color = 0;
 

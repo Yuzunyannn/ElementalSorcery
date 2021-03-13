@@ -18,6 +18,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
@@ -41,7 +42,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class CommandESDebug {
 
 	public static final String[] autoTips = new String[] { "reflush", "buildTest", "portalTest", "showInfo",
-			"blockMoveTest", "scapegoatTest", "reloadeTexture", "quest" };
+			"blockMoveTest", "scapegoatTest", "reloadeTexture", "quest", "statistics", "statisticsHandle" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -156,6 +157,19 @@ public class CommandESDebug {
 				} else {
 
 				}
+			}
+
+			case "statistics": {
+				sender.sendMessage(new TextComponentString("手离开游戏，不要动"));
+				DevelopStatistics.clearAll();
+				World world = entity.getEntityWorld();
+				BlockPos at = entity.getPosition();
+				ChunkPos cp = new ChunkPos(at);
+				EventServer.addTickTask(new DevelopStatistics.Record(world, 10, cp));
+			}
+			case "statisticsHandle": {
+				DevelopStatistics.clearAll();
+				DevelopStatistics.handleResult();
 			}
 				return;
 			default:

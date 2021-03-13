@@ -37,7 +37,7 @@ import yuzunyannn.elementalsorcery.tile.TileLifeDirt;
 
 public class TileMDResonantIncubator extends TileMDBase implements ITickable, IGetItemStack {
 
-	@Config(kind = "tile", note = "每次共振的魔力消耗")
+	@Config(kind = "tile")
 	@Config.NumberRange(min = 0, max = Integer.MAX_VALUE)
 	static private int COST_PRE_RESONANT = 20;
 

@@ -42,14 +42,14 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 
-	@Config(kind = "item", note = "魔力爆炸的基础伤害，每n点魔力为1点伤害")
+	@Config(kind = "item")
 	@Config.NumberRange(max = Double.MAX_VALUE, min = 0)
 	private static float MAGIC_BLAST_ONE_DAMAGE_PER_COUNT = 80;
 
-	@Config(kind = "item", note = "魔力爆炸的不衰减最大值，超出部分进行log10衰减")
+	@Config(kind = "item")
 	private static float MAGIC_MAX_DAMAGE_LIMIT_FOR_DECAY = 50;
 
-	@Config(kind = "item", note = "魔力爆炸的范围衰减率，越大衰减越厉害")
+	@Config(kind = "item")
 	@Config.NumberRange(max = Double.MAX_VALUE, min = 0)
 	private static float MAGIC_RANGE_DECAY_RATE = 0.65f;
 
@@ -175,6 +175,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 		}
 	}
 
+	/** 通用的，魔力转伤害 */
 	public static float getDamage(ElementStack magic) {
 		if (!magic.isMagic()) magic = magic.toMagic(null);
 		int count = magic.getCount();
@@ -186,6 +187,12 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 			dmg = MAGIC_MAX_DAMAGE_LIMIT_FOR_DECAY + (float) Math.log10(more);
 		}
 		return dmg;
+	}
+
+	/** 通用的，魔法伤害 */
+	public static DamageSource getMagicDamageSource(@Nullable Entity source, @Nullable Entity directSource) {
+		if (directSource == null && source == null) return DamageSource.MAGIC;
+		else return DamageSource.causeIndirectMagicDamage(directSource, source);
 	}
 
 	public static void blast(ElementStack magic, Entity target, @Nullable Entity source,
@@ -219,9 +226,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 		if (target != null) pos = target.getPositionVector().addVector(0, target.height / 2, 0);
 		else pos = targetPos;
 
-		DamageSource ds;
-		if (directSource == null && source == null) ds = DamageSource.MAGIC;
-		else ds = DamageSource.causeIndirectMagicDamage(directSource, source);
+		DamageSource ds = getMagicDamageSource(source, directSource);
 
 		if (level > 1 || target == null) {
 			AxisAlignedBB AABB;

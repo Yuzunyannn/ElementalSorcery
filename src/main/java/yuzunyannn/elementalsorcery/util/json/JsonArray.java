@@ -68,11 +68,6 @@ public class JsonArray extends Json {
 		return json.get(i).getAsString();
 	}
 
-	public String needString(int i) {
-		if (hasString(i)) return getString(i);
-		throw exception(ParseExceptionCode.NOT_HAVE, i);
-	}
-
 	public void append(String str) {
 		json.add(str);
 	}
@@ -86,13 +81,9 @@ public class JsonArray extends Json {
 		return json.get(i).getAsNumber();
 	}
 
-	public Number needNumber(int i) {
-		if (hasNumber(i)) return getNumber(i);
-		throw exception(ParseExceptionCode.NOT_HAVE, i);
-	}
-
-	public void append(Number i) {
+	public JsonArray append(Number i) {
 		json.add(i);
+		return this;
 	}
 
 	public boolean hasObject(int i) {
@@ -104,13 +95,9 @@ public class JsonArray extends Json {
 		return new JsonObject(json.get(i).getAsJsonObject());
 	}
 
-	public JsonObject needObject(int i) {
-		if (hasObject(i)) return getObject(i);
-		throw exception(ParseExceptionCode.NOT_HAVE, i);
-	}
-
-	public void append(JsonObject obj) {
+	public JsonArray append(JsonObject obj) {
 		json.add(obj.getGoogleJson());
+		return this;
 	}
 
 	public boolean hasArray(int i) {
@@ -122,13 +109,34 @@ public class JsonArray extends Json {
 		return new JsonArray(json.get(i).getAsJsonArray());
 	}
 
-	public JsonArray needArray(int i) {
-		if (hasArray(i)) return getArray(i);
-		throw exception(ParseExceptionCode.NOT_HAVE, i);
+	public JsonArray append(JsonArray obj) {
+		json.add(obj.getGoogleJson());
+		return this;
 	}
 
-	public void append(JsonArray obj) {
-		json.add(obj.getGoogleJson());
+	public String[] asStringArray() {
+		String[] array = new String[json.size()];
+		for (int i = 0; i < json.size(); i++) if (hasString(i)) array[i] = getString(i);
+		return array;
+	}
+
+	public float[] asFloatArray() {
+		float[] array = new float[json.size()];
+		for (int i = 0; i < json.size(); i++) if (hasNumber(i)) array[i] = getNumber(i).floatValue();
+		return array;
+	}
+
+	private NBTTagIntArray asNBTIntArray() {
+		ArrayList<Integer> array = new ArrayList<>();
+		for (JsonElement je : json) {
+			if (je.isJsonPrimitive()) {
+				JsonPrimitive jp = je.getAsJsonPrimitive();
+				if (jp.isNumber()) array.add(je.getAsInt());
+			}
+		}
+		int[] ints = new int[array.size()];
+		for (int i = 0; i < ints.length; i++) ints[i] = array.get(i);
+		return new NBTTagIntArray(ints);
 	}
 
 	@Override
@@ -167,19 +175,6 @@ public class JsonArray extends Json {
 
 	}
 
-	private NBTTagIntArray asNBTIntArray() {
-		ArrayList<Integer> array = new ArrayList<>();
-		for (JsonElement je : json) {
-			if (je.isJsonPrimitive()) {
-				JsonPrimitive jp = je.getAsJsonPrimitive();
-				if (jp.isNumber()) array.add(je.getAsInt());
-			}
-		}
-		int[] ints = new int[array.size()];
-		for (int i = 0; i < ints.length; i++) ints[i] = array.get(i);
-		return new NBTTagIntArray(ints);
-	}
-
 	private void parse(NBTTagList nbt) {
 		for (NBTBase base : nbt) {
 			int id = base.getId();
@@ -202,10 +197,26 @@ public class JsonArray extends Json {
 		for (int i : nbt.getIntArray()) this.append(i);
 	}
 
-	public ArrayList<String> asStringArray() {
-		ArrayList<String> list = new ArrayList<>();
-		for (int i = 0; i < json.size(); i++) if (hasString(i)) list.add(getString(i));
-		return list;
+	// ---> need <---
+
+	public String needString(int i) {
+		if (hasString(i)) return getString(i);
+		throw exception(ParseExceptionCode.NOT_HAVE, i);
+	}
+
+	public Number needNumber(int i) {
+		if (hasNumber(i)) return getNumber(i);
+		throw exception(ParseExceptionCode.NOT_HAVE, i);
+	}
+
+	public JsonObject needObject(int i) {
+		if (hasObject(i)) return getObject(i);
+		throw exception(ParseExceptionCode.NOT_HAVE, i);
+	}
+
+	public JsonArray needArray(int i) {
+		if (hasArray(i)) return getArray(i);
+		throw exception(ParseExceptionCode.NOT_HAVE, i);
 	}
 
 	public List<ItemRecord> needItems(int i) {

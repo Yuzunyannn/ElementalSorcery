@@ -18,6 +18,7 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -67,10 +68,8 @@ public class BlockSmeltBox extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (facing == EnumFacing.DOWN)
-			return false;
-		if (worldIn.isRemote)
-			return true;
+		if (facing == EnumFacing.DOWN) return false;
+		if (worldIn.isRemote) return true;
 		playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_SMELT_BOX, worldIn, pos.getX(), pos.getY(),
 				pos.getZ());
 		return true;
@@ -102,9 +101,7 @@ public class BlockSmeltBox extends BlockContainer {
 	// 光亮程度
 	@Override
 	public int getLightValue(IBlockState state, IBlockAccess world, BlockPos pos) {
-		if (state.getValue(BURNING)) {
-			return 8;
-		}
+		if (state.getValue(BURNING)) { return 8; }
 		return 0;
 	}
 
@@ -131,6 +128,11 @@ public class BlockSmeltBox extends BlockContainer {
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.MODEL;
+	}
+
+	@Override
+	public IBlockState withRotation(IBlockState state, Rotation rot) {
+		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -173,11 +175,9 @@ public class BlockSmeltBox extends BlockContainer {
 			TileEntity tile = worldIn.getTileEntity(pos);
 			if (tile instanceof TileSmeltBox) {
 				TileSmeltBox box = (TileSmeltBox) tile;
-				if (!box.canUseExtraItem())
-					return;
+				if (!box.canUseExtraItem()) return;
 				ItemStack stack = box.getExtraItemStackHandler().getStackInSlot(0);
-				if (stack.isEmpty())
-					return;
+				if (stack.isEmpty()) return;
 				Item item = stack.getItem();
 				if (item == Items.ENDER_EYE || item == ESInit.ITEMS.MAGICAL_ENDER_EYE) {
 					for (int i = 0; i < 3; ++i) {

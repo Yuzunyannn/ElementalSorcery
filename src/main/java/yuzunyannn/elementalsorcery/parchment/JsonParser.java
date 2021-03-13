@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.parchment;
 
 import static yuzunyannn.elementalsorcery.ElementalSorcery.logger;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,7 +48,7 @@ public class JsonParser {
 		} catch (JsonParseException e) {}
 		if (json.hasArray("need")) {
 			JsonArray array = json.getArray("need");
-			packet.need = array.asStringArray();
+			packet.need = new ArrayList<>(Arrays.asList(array.asStringArray()));
 		}
 		packet.linked = json.needItems("linked");
 		return packet;

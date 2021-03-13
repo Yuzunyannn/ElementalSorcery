@@ -27,7 +27,7 @@ public class EffectMagicCircle extends EffectCondition {
 	public EffectMagicCircle(World world, Entity binder) {
 		super(world);
 		this.lifeTime = 1;
-		this.binder = new IBinder.EntityBinder(binder);
+		this.binder = new IBinder.EntityBinder(binder, 0);
 		this.setPosition(this.binder);
 	}
 

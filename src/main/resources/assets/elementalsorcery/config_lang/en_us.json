@@ -1,0 +1,22 @@
+{
+    "global.general.quest_limit": "The max quest limit of player can take in same time",
+    "global.general.portal_render_type": "The render type of portal [1 is particle effect] [0 is just a picture]",
+    "global.general.enable_item_element_tooltip_show": "Show element infomation when the mouse moves over the item [only creative mode]",
+    "global.general.max_life_time_of_parcel": "Max hour of Parcel be hold in post office, it will be remove if overdue [-1 is never overdue]",
+    "global.general.building_max_remain_times": "The max second limit of inactive temporary buildings in memory, it will be wrote to file and remove from memory if overdue, and read from file when used [0 is never remove from memory]",
+
+    "item.elementalsorcery_manual.manual_max_pages": "Capacity limit of Manual",
+    "item.elementalsorcery_rite_manual.max_record": "Record limt of Rite Manual",
+    "item.elementalsorcery_magic_blast_wand.magic_blast_one_damage_per_count": "Basic damage of magic blast, need [n] magic for 1 damage ",
+    "item.elementalsorcery_magic_blast_wand.magic_max_damage_limit_for_decay": "Max limit of damage before attenuation, over part will be attenuated with log10",
+    "item.elementalsorcery_magic_blast_wand.magic_range_decay_rate": "Range decay rate of damage, big number, more attenuation",
+
+    "block.elementalsorcery_life_flower.probability_of_consume_maigc_per_grow": "The chance to consume the magic in the Magic Pot pre growing",
+
+    "tile.elementalsorcery_mdresonantincubator.cost_pre_resonant": "Magic cost pre resonant",
+
+    "spawn_and_gen.world_gen_and_spawn_config.worlds": "The worlds can spawn [Invalid for Entity]",
+    "spawn_and_gen.world_gen_and_spawn_config.biomes": "The biomes can spawn",
+    "spawn_and_gen.world_gen_and_spawn_config.world_incrs": "Generated density for Worlds Array, 0 is default, big number bring more possibilities of generation",
+    "spawn_and_gen.world_gen_and_spawn_config.biome_incrs": "Generated density for Biomes Array, 0 is default, big number bring more possibilities of generation"
+}

@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.crafting;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.init.ESImplRegister;
@@ -60,11 +61,13 @@ public class RecipeManagement extends ESImplRegister<IRecipe> {
 
 	public static void loadRecipes(ModContainer mod) {
 		Json.ergodicAssets(mod, "/element_recipes", (file, json) -> {
+			if (!ElementMap.checkModDemands(json)) return false;
+
 			String type = "normal";
 			if (json.hasString("type")) type = json.getString("type");
 
 			JsonArray patternJson = json.needArray("pattern");
-			ArrayList<String> pattern = patternJson.asStringArray();
+			List<String> pattern = Arrays.asList(patternJson.asStringArray());
 
 			JsonObject obj = json.needObject("key");
 			Map<String, ItemStack[]> map = new HashMap<>();

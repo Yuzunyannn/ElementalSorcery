@@ -166,7 +166,8 @@ public abstract class Json {
 			if (!file.toString().endsWith(".json")) return false;
 			try {
 				Loader.instance().setActiveModContainer(mod);
-				return func.apply(file, new JsonObject(file));
+				func.apply(file, new JsonObject(file));
+				return true;
 			} catch (IOException e) {
 				ElementalSorcery.logger.warn("读取json文件过程中出现IO异常：" + file, e);
 				return false;
@@ -181,8 +182,10 @@ public abstract class Json {
 	}
 
 	static public enum ParseExceptionCode {
-		NOT_HAVE("NotHave", "找不到：%s"), PATTERN_ERROR("PatternError", "%s的格式错误，原因：%s"), EMPTY("Emtpy", "%s为空"),
-		NOT_LOAD_MOD("NotLoadMod", "找不到：%s因为没有加载mod：%s");
+		NOT_HAVE("NotHave", "找不到：%s"),
+		PATTERN_ERROR("PatternError", "%s的格式错误，原因：%s"),
+		EMPTY("Emtpy", "%s为空"),
+		NOT_LOAD_MOD("NotLoadMod", "找不到：%s可能是没有加载mod：%s");
 
 		final String code;
 		final String format;
@@ -268,5 +271,5 @@ public abstract class Json {
 		}
 		return items;
 	}
-	
+
 }

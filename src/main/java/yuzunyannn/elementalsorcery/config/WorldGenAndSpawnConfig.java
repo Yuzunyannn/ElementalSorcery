@@ -10,16 +10,16 @@ import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class WorldGenAndSpawnConfig {
 
-	@Config(note = "[会生成的世界][对生物类型无效]")
+	@Config(note = "spawn_and_gen.world_gen_and_spawn_config.worlds")
 	protected String[] WORLDS;
 
-	@Config(note = "[会生成的生物群系]")
+	@Config(note = "spawn_and_gen.world_gen_and_spawn_config.biomes")
 	protected String[] BIOMES;
 
-	@Config(note = "[生成的密度，对应世界数组，0默认，越大生成的可能越多]")
+	@Config(note = "spawn_and_gen.world_gen_and_spawn_config.world_incrs")
 	protected int[] WORLD_INCRS;
 
-	@Config(note = "[生成的密度，对应维度数组，0默认，越大生成的可能越多]")
+	@Config(note = "spawn_and_gen.world_gen_and_spawn_config.biome_incrs")
 	protected int[] BIOME_INCRS;
 
 	public WorldGenAndSpawnConfig(String[] worlds, String[] biomes, int[] worldIncrs, int[] biomeIncrs) {

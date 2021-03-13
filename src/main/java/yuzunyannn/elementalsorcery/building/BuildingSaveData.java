@@ -47,6 +47,7 @@ public class BuildingSaveData implements INBTSerializable<NBTTagCompound> {
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = building.serializeNBT();
+		nbt.removeTag("key");
 		return nbt;
 	}
 

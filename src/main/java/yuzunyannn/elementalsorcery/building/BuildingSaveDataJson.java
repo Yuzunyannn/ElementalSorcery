@@ -1,11 +1,7 @@
 package yuzunyannn.elementalsorcery.building;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-
-import com.google.gson.internal.Streams;
-import com.google.gson.stream.JsonWriter;
 
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
@@ -35,13 +31,7 @@ public class BuildingSaveDataJson extends BuildingSaveData {
 	@Override
 	public void writeDataToFile() throws IOException {
 		JsonObject json = new JsonObject(this.serializeNBT());
-
-		try (FileWriter fileWriter = new FileWriter(this.file)) {
-			JsonWriter jsonWriter = new JsonWriter(fileWriter);
-			jsonWriter.setIndent("  ");
-			Streams.write(json.getGoogleJson(), jsonWriter);
-		}
-
+		json.save(file, true);
 	}
 
 }

@@ -8,6 +8,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class ConfigLoader {
 
@@ -94,8 +95,26 @@ public class ConfigLoader {
 		return n;
 	}
 
+	private String translateNote(String note) {
+		try {
+			JsonObject map = ConfigTranslate.getOrLoadJsonMap();
+			return map.getString(note);
+		} catch (Throwable e) {
+			return note;
+		}
+	}
+
+	private String handleNote(String kind, String group, String name, String note) {
+		if (ConfigTranslate.isClose()) return note;
+		String key = note.isEmpty() ? kind + "." + group + "." + name : note;
+		if (ElementalSorcery.isDevelop) ConfigTranslate.keyStatistics(key);
+		note = translateNote(key);
+		return note;
+	}
+
 	private void set(Field field, Object obj, String kind, String group, String name, String note, IConfigGetter getter)
 			throws Exception {
+		note = handleNote(kind, group, name, note);
 		Class<?> type = field.getType();
 		field.setAccessible(true);
 		if (type == int.class || type == Integer.class) {

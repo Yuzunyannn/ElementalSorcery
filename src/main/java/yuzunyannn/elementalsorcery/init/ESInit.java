@@ -135,10 +135,12 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireBall;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloat;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloatArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFootbridge;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLaunch;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLightningArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLush;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraMagicStrafe;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraMiningArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSlowFall;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSprint;
@@ -177,6 +179,7 @@ import yuzunyannn.elementalsorcery.item.crystal.ItemElementCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemItemCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemMagicalCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
+import yuzunyannn.elementalsorcery.item.crystal.ItemOrderCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemResonantCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemScarletCrystal;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementStone;
@@ -401,7 +404,7 @@ public class ESInit {
 		ITEMS.MANUAL = new ItemManual();
 		ITEMS.MAGIC_RULER = new ItemMagicRuler();
 		ITEMS.ITEM_CRYSTAL = new ItemItemCrystal();
-		ITEMS.ORDER_CRYSTAL = ItemCrystal.newOrderCrystal();
+		ITEMS.ORDER_CRYSTAL = new ItemOrderCrystal();
 		ITEMS.MD_BASE = ItemSome.newMDBase();
 		ITEMS.RITE_MANUAL = new ItemRiteManual();
 		ITEMS.RED_HANDSET = new ItemRedHandset();
@@ -474,6 +477,8 @@ public class ESInit {
 		MANTRAS.SLOW_FALL = new MantraSlowFall();
 		MANTRAS.FOOTBRIDGE = new MantraFootbridge();
 		MANTRAS.FIRE_AREA = new MantraFireArea();
+		MANTRAS.MAGIC_STRAFE = new MantraMagicStrafe();
+		MANTRAS.FLOAT_AREA = new MantraFloatArea();
 
 		MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);
 		MANTRAS.LAUNCH_EDE = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT, 0xff4a1a);

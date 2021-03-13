@@ -201,6 +201,10 @@ mantra.footbridge.name=天桥
 mantra.footbridge.describe=借助土元素的力量，抬起地上的方块，在前方架起来一座桥
 mantra.fireArea.name=燃烧领域
 mantra.fireArea.describe=借助火元素的力量，唤起一块区域，进入的生物会受被烧伤。
+mantra.magicStrafe.name=魔力冲击
+mantra.magicStrafe.describe=将魔力转化为能量束，对敌人造成伤害。
+mantra.floatArea.name=漂浮风域
+mantra.floatArea.describe=借助气元素的力量，产生上升气流，将进入区域的生物吹向上方。
 
 key.es.func=功能键
 

@@ -18,10 +18,10 @@ public class WorldGenStarStone extends WorldGenerator {
 		Biome biome = worldIn.getBiome(postion);
 		int expect = WorldGeneratorES.CONFIG_START_STONE.getSpawnPoint(worldIn, biome);
 		int tryTime = 0;
-		if (biome == Biomes.DESERT && rand.nextFloat() > 0.20f) return true;
+		if (biome == Biomes.DESERT && rand.nextFloat() > 0.25f) return true;
 		if (biome == Biomes.DESERT_HILLS) tryTime = rand.nextInt(3);
 		else if (biome == Biomes.DESERT) tryTime = 1;
-		else if (biome == Biomes.BEACH || biome == Biomes.PLAINS) tryTime = 1 + rand.nextInt(4);
+		else if (biome == Biomes.BEACH || biome == Biomes.PLAINS) tryTime = 2 + rand.nextInt(5);
 		else tryTime = 2 + expect;
 		IBlockState starStoneState = ESInit.BLOCKS.STAR_STONE.getDefaultState();
 		IBlockState starSandState = ESInit.BLOCKS.STAR_SAND.getDefaultState();

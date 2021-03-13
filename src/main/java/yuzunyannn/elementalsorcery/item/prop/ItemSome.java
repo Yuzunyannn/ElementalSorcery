@@ -60,7 +60,7 @@ public class ItemSome {
 		return newItem("magicStone");
 	}
 
-	/** 魔石 */
+	/** 魔金 */
 	static public Item newMagicGold() {
 		return newItem("magicGold");
 	}

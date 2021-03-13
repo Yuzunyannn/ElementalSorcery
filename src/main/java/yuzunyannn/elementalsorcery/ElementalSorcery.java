@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery;
 
+import java.lang.management.ManagementFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,21 @@ public class ElementalSorcery {
 	public static final String MODID = "elementalsorcery";
 	public static final String NAME = "Elemental Sorcery";
 	public static final String VERSION = "0.6.0";
+	public static final boolean isDevelop;
+
+	static {
+		boolean debugOpen = false;
+		try {
+			List<String> args = ManagementFactory.getRuntimeMXBean().getInputArguments();
+			for (String arg : args) {
+				if (arg.startsWith("-agentlib:jdwp")) {
+					debugOpen = true;
+					break;
+				}
+			}
+		} catch (Throwable e) {}
+		isDevelop = debugOpen;
+	}
 
 	public static Logger logger;
 	public static Side side;

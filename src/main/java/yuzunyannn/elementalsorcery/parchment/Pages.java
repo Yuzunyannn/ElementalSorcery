@@ -17,6 +17,7 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.building.Building;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionScholar;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
@@ -151,6 +152,8 @@ public class Pages {
 
 	static public void loadParchments(ModContainer mod) {
 		Json.ergodicAssets(mod, "/parchments", (file, json) -> {
+			if (!ElementMap.checkModDemands(json)) return false;
+
 			JsonParser.Packet packet = JsonParser.read(json);
 			if (packet == null) return false;
 			String id = Json.fileToId(file, null);

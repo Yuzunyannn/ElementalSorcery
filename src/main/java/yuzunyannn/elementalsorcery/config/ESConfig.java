@@ -10,6 +10,7 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.init.EntityRegistries;
+import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 
 public class ESConfig {
@@ -18,11 +19,17 @@ public class ESConfig {
 
 	private static boolean isSync = false;
 
-	/** 初始化，并注入所有配置 */
+	/** 基础初始化，在一切初始化的最前面，真个游戏应该只调用一次 */
+	public static void initBase() {
+		ConfigTranslate.getOrLoadJsonMap();
+	}
+
+	/** 核心初始化初始化，并注入所有配置 */
 	public static void init() {
 		isSync = false;
 		loadAll(getter);
 		getter.close();
+		ConfigTranslate.foreverColse();
 	}
 
 	public static void restore() {
@@ -40,6 +47,7 @@ public class ESConfig {
 		load(WorldGeneratorES.class, getter);
 		load(EntityRegistries.class, getter);
 		load(BuildingLib.class, getter);
+		load(TileMDBase.class, getter);
 		loadList(ESInit.ES_TILE_ENTITY, getter);
 		loadRegs(ESInit.ITEMS, getter);
 		loadRegs(ESInit.BLOCKS, getter);
@@ -68,13 +76,13 @@ public class ESConfig {
 		}
 	}
 
-	@Config(note = "[每个玩家同时最多可以领取的任务个数]")
+	@Config
 	public static int QUEST_LIMIT = 5;
 
-	@Config(note = "[传送门绘制是使用的渲染类型][2为世界效果][1为粒子效果][0就一张图]")
+	@Config
 	public static int PORTAL_RENDER_TYPE = 1;
 
-	@Config(note = "[鼠标移动到物品上，显示其默认具有的元素][仅在创造模式生效]")
+	@Config
 	public static boolean ENABLE_ITEM_ELEMENT_TOOLTIP_SHOW = false;
 
 }

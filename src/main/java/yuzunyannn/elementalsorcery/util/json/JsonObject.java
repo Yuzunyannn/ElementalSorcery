@@ -2,7 +2,8 @@ package yuzunyannn.elementalsorcery.util.json;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -18,6 +19,8 @@ import java.util.Set;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+import com.google.gson.internal.Streams;
+import com.google.gson.stream.JsonWriter;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
@@ -27,6 +30,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 
@@ -40,21 +44,23 @@ public class JsonObject extends Json implements Iterable<String> {
 	public JsonObject(Path file) throws IOException {
 		try (BufferedReader reader = Files.newBufferedReader(file)) {
 			Gson gson = new Gson();
-			json = gson.fromJson(reader, com.google.gson.JsonObject.class);
+			com.google.gson.JsonObject json = gson.fromJson(reader, com.google.gson.JsonObject.class);
+			this.json = json == null ? new com.google.gson.JsonObject() : json;
 		}
 	}
 
 	public JsonObject(File file) throws IOException {
-		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"))) {
 			Gson gson = new Gson();
-			json = gson.fromJson(reader, com.google.gson.JsonObject.class);
+			com.google.gson.JsonObject json = gson.fromJson(reader, com.google.gson.JsonObject.class);
+			this.json = json == null ? new com.google.gson.JsonObject() : json;
 		}
 	}
 
 	public JsonObject(ResourceLocation resPath) throws IOException {
 		String rPath = "/assets/" + resPath.getResourceDomain() + "/" + resPath.getResourcePath();
 		try (BufferedReader reader = new BufferedReader(
-				new InputStreamReader(JsonObject.class.getResourceAsStream(rPath)))) {
+				new InputStreamReader(JsonObject.class.getResourceAsStream(rPath), "utf-8"))) {
 			Gson gson = new Gson();
 			json = gson.fromJson(reader, com.google.gson.JsonObject.class);
 		}
@@ -112,9 +118,11 @@ public class JsonObject extends Json implements Iterable<String> {
 		return new JsonObject(json.get(key).getAsJsonObject());
 	}
 
-	public JsonObject needObject(String key) {
-		if (this.hasObject(key)) return new JsonObject(json.get(key).getAsJsonObject());
-		throw exception(ParseExceptionCode.NOT_HAVE, key);
+	public JsonObject getOrCreateObject(String key) {
+		if (this.hasObject(key)) return this.getObject(key);
+		JsonObject jobj;
+		set(key, jobj = new JsonObject());
+		return jobj;
 	}
 
 	public void set(String key, JsonObject obj) {
@@ -129,9 +137,11 @@ public class JsonObject extends Json implements Iterable<String> {
 		return new JsonArray(json.get(key).getAsJsonArray());
 	}
 
-	public JsonArray needArray(String... keys) {
-		for (String key : keys) if (hasArray(key)) return getArray(key);
-		throw exception(ParseExceptionCode.NOT_HAVE, Arrays.asList(keys).toString());
+	public JsonArray getOrCreateArray(String key) {
+		if (this.hasArray(key)) return this.getArray(key);
+		JsonArray jarray;
+		set(key, jarray = new JsonArray());
+		return jarray;
 	}
 
 	public void set(String key, JsonArray array) {
@@ -150,9 +160,9 @@ public class JsonObject extends Json implements Iterable<String> {
 		return json.get(key).getAsString();
 	}
 
-	public String needString(String... keys) {
-		for (String key : keys) if (hasString(key)) return getString(key);
-		throw exception(ParseExceptionCode.NOT_HAVE, Arrays.asList(keys).toString());
+	public String getString(String key, String def) {
+		if (hasString(key)) return getString(key);
+		return def;
 	}
 
 	public void set(String key, String str) {
@@ -171,9 +181,9 @@ public class JsonObject extends Json implements Iterable<String> {
 		return json.get(key).getAsNumber();
 	}
 
-	public Number needNumber(String... keys) {
-		for (String key : keys) if (hasNumber(key)) return getNumber(key);
-		throw exception(ParseExceptionCode.NOT_HAVE, Arrays.asList(keys).toString());
+	public Number getNumber(String key, Number def) {
+		if (hasNumber(key)) return getNumber(key);
+		return def;
 	}
 
 	public void set(String key, Number n) {
@@ -220,6 +230,52 @@ public class JsonObject extends Json implements Iterable<String> {
 			else if (id == NBTTag.TAG_LIST) this.set(key, new JsonArray((NBTTagList) base));
 			else if (id == NBTTag.TAG_INT_ARRAY) this.set(key, new JsonArray((NBTTagIntArray) base));
 		}
+	}
+
+	public void save(File file, boolean useIndent) {
+		try (FileWriter fileWriter = new FileWriter(file)) {
+			JsonWriter jsonWriter = new JsonWriter(fileWriter);
+			if (useIndent) jsonWriter.setIndent("  ");
+			Streams.write(getGoogleJson(), jsonWriter);
+		} catch (Exception e) {
+			ElementalSorcery.logger.warn("json数据保存失败", e);
+		}
+	}
+
+	public void merge(JsonObject other) {
+		for (Map.Entry<String, JsonElement> entry : other.json.entrySet()) {
+			json.add(entry.getKey(), entry.getValue());
+		}
+	}
+
+	// ---> need <---
+
+	public JsonArray needArray(String... keys) {
+		for (String key : keys) if (hasArray(key)) return getArray(key);
+		throw exception(ParseExceptionCode.NOT_HAVE, Arrays.asList(keys).toString());
+	}
+
+	public JsonObject needObject(String key) {
+		if (this.hasObject(key)) return new JsonObject(json.get(key).getAsJsonObject());
+		throw exception(ParseExceptionCode.NOT_HAVE, key);
+	}
+
+	public String needString(String... keys) {
+		for (String key : keys) if (hasString(key)) return getString(key);
+		throw exception(ParseExceptionCode.NOT_HAVE, Arrays.asList(keys).toString());
+	}
+
+	public Number needNumber(String... keys) {
+		for (String key : keys) if (hasNumber(key)) return getNumber(key);
+		throw exception(ParseExceptionCode.NOT_HAVE, Arrays.asList(keys).toString());
+	}
+
+	public String[] needStrings(String... keys) {
+		for (String key : keys) {
+			if (hasString(key)) return new String[] { getString(key) };
+			else if (hasArray(key)) return getArray(key).asStringArray();
+		}
+		throw exception(ParseExceptionCode.NOT_HAVE, Arrays.asList(keys).toString());
 	}
 
 	public List<ItemRecord> needItems(String key) {

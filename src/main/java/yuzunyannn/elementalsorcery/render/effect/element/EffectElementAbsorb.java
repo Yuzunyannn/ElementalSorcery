@@ -25,7 +25,7 @@ public class EffectElementAbsorb extends EffectElement {
 	}
 
 	public EffectElementAbsorb(World world, Vec3d from, Entity to) {
-		this(world, from, new IBinder.EntityBinder(to));
+		this(world, from, new IBinder.EntityBinder(to, 0));
 	}
 
 	public void randMotion(double scale) {

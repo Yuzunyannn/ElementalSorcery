@@ -29,7 +29,7 @@ import yuzunyannn.elementalsorcery.util.NBTTag;
 
 public class ItemRiteManual extends Item {
 
-	@Config(kind = "item", note = "祭品研究手册可以记录的最大个数")
+	@Config(kind = "item")
 	@Config.NumberRange(max = 128, min = 0)
 	private static int MAX_RECORD = 10;
 

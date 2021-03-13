@@ -402,6 +402,8 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 				ItemHelper.toArray(ITEMS.QUILL, 1, 1, ITEMS.AZURE_CRYSTAL, 5, ITEMS.QUILL, 1, 1));
 		addRecipeFromMantra(ESInit.MANTRAS.LAUNCH_ECO,
 				ItemHelper.toArray(ITEMS.QUILL, 1, 1, ITEMS.ORDER_CRYSTAL, 5, ITEMS.QUILL, 1, 1));
+		addRecipeFromMantra(ESInit.MANTRAS.LAUNCH_BRC,
+				ItemHelper.toArray(ITEMS.QUILL, 1, 1, ITEMS.ARCHITECTURE_CRYSTAL, 3, ITEMS.QUILL, 1, 1));
 	}
 
 	// ItemStack的自动机

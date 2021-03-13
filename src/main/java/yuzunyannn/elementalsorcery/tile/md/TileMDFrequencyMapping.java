@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.tile.md;
 
 import java.util.List;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,6 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
+import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.init.ESInit;
@@ -29,6 +32,8 @@ import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class TileMDFrequencyMapping extends TileMDBase implements ITickable, IGetItemStack {
+
+	public static final float FREQUENCY_TICK = 1 / 800f;
 
 	static public interface IFrequencyMatcher {
 
@@ -95,7 +100,7 @@ public class TileMDFrequencyMapping extends TileMDBase implements ITickable, IGe
 			ItemCrystal crystal = (ItemCrystal) itemStack.getItem();
 			itemEntity.setNoDespawn();
 			float f = crystal.getFrequency(itemStack);
-			float at = MathHelper.sin(f / 800 * runTick);
+			float at = MathHelper.sin(f * runTick * FREQUENCY_TICK);
 			itemEntity.posY = at + pos.getY();
 			itemEntity.motionY = 0;
 			a += at;
@@ -145,12 +150,14 @@ public class TileMDFrequencyMapping extends TileMDBase implements ITickable, IGe
 	protected boolean canMapping(ItemStack stack) {
 		Item item = stack.getItem();
 		if (item == ESInit.ITEMS.PARCHMENT) return !Pages.isVaild(stack);
+		else if (item == ESInit.ITEMS.ARCHITECTURE_CRYSTAL) return !ArcInfo.isArc(stack);
 		return false;
 	}
 
 	protected IFrequencyMatcher getMappingMatcher(ItemStack stack) {
 		Item item = stack.getItem();
 		if (item == ESInit.ITEMS.PARCHMENT) return new ParchmentMather();
+		else if (item == ESInit.ITEMS.ARCHITECTURE_CRYSTAL) return new BuildingMather();
 		return null;
 	}
 
@@ -215,54 +222,47 @@ public class TileMDFrequencyMapping extends TileMDBase implements ITickable, IGe
 		Effect.addEffect(effect.setColor((int) (0xffffff * lastA)));
 	}
 
-	public static class ParchmentMather implements IFrequencyMatcher {
+	public static class Vibrate {
 
-		protected Page maySuccess;
+		public final float[] frequencies;
+
+		public Vibrate(String str) {
+			frequencies = new float[3];
+			int hash = str.hashCode();
+			frequencies[0] = ((hash & 0xff) % 200) / 2f;
+			frequencies[1] = (((hash >> 8) & 0xff) % 200) / 2f;
+			frequencies[2] = (((hash >> 16) & 0xff) % 200) / 2f;
+		}
+
+		public Vibrate(float[] frequencies) {
+			this.frequencies = frequencies;
+
+		}
+
+		public float amplitude(int tick) {
+			float a = 0;
+			for (float f : frequencies) a += MathHelper.sin(f * tick * FREQUENCY_TICK);
+			return a;
+		}
+	}
+
+	public static abstract class CommonMather<T> implements IFrequencyMatcher {
+
+		public final String type;
+
+		protected T maySuccessObject;
 		protected int successTick;
 		protected int index = 1;
 		protected float accuracy = 0.02f;
 
-		private float getPageA(Page page, int tick) {
-			int hash = page.getId().hashCode();
-			float f1 = (hash & 0xff) % 100;
-			float f2 = ((hash >> 8) & 0xff) % 100;
-			float f3 = ((hash >> 16) & 0xff) % 100;
-			return MathHelper.sin(f1 / 800 * tick) + MathHelper.sin(f2 / 800 * tick) + MathHelper.sin(f3 / 800 * tick);
-		}
-
-		@Override
-		public ItemStack match(World world, BlockPos pos, float a, float size, int tick) {
-
-			if (maySuccess != null) {
-				float at = getPageA(maySuccess, tick);
-				if (Math.abs(at - a) < accuracy) {
-					successTick++;
-					if (successTick >= 32) return ItemParchment.getParchment(maySuccess.getId());
-					return ItemStack.EMPTY;
-				} else maySuccess = null;
-			}
-
-			for (int i = 0; i < 10; i++) {
-				index = index + 1;
-				if (index >= Pages.getCount()) {
-					index = 2;
-					accuracy = accuracy + 0.01f;
-				}
-				Page page = Pages.getPage(index);
-				float at = getPageA(page, tick);
-				if (Math.abs(at - a) < 0.1) {
-					maySuccess = page;
-					successTick = 0;
-					break;
-				}
-			}
-			return ItemStack.EMPTY;
+		public CommonMather(String type) {
+			this.type = type;
 		}
 
 		@Override
 		public NBTTagCompound serializeStatusToNBT() {
 			NBTTagCompound tag = new NBTTagCompound();
-			tag.setBoolean("parchment", true);
+			tag.setBoolean(type, true);
 			tag.setShort("i", (short) index);
 			tag.setFloat("a", accuracy);
 			return tag;
@@ -270,12 +270,92 @@ public class TileMDFrequencyMapping extends TileMDBase implements ITickable, IGe
 
 		@Override
 		public void deserializeStatusToNBT(NBTTagCompound tag) {
-			if (tag.hasKey("parchment")) {
+			if (tag.getBoolean(type)) {
 				index = tag.getInteger("i");
 				accuracy = Math.max(0.01f, tag.getFloat("a"));
 			}
 		}
 
+		@Override
+		public ItemStack match(World world, BlockPos pos, float a, float size, int tick) {
+
+			if (maySuccessObject != null) {
+				float at = getAmplitude(maySuccessObject, size, tick);
+				if (Math.abs(at - a) < accuracy) {
+					successTick++;
+					if (successTick >= 32) return getResult(maySuccessObject, size, tick);
+					return ItemStack.EMPTY;
+				} else maySuccessObject = null;
+			}
+
+			for (int i = 0; i < 10; i++) {
+				T obj = findNext();
+				float at = getAmplitude(obj, size, tick);
+				if (Math.abs(at - a) < accuracy) {
+					maySuccessObject = obj;
+					successTick = 0;
+					break;
+				}
+			}
+			return ItemStack.EMPTY;
+		}
+
+		abstract public float getAmplitude(T obj, float size, int tick);
+
+		@Nonnull
+		abstract public ItemStack getResult(T obj, float size, int tick);
+
+		@Nonnull
+		abstract public T findNext();
+	}
+
+	public static class ParchmentMather extends CommonMather<Page> {
+		public ParchmentMather() {
+			super("parchment");
+		}
+
+		@Override
+		public ItemStack getResult(Page obj, float size, int tick) {
+			return ItemParchment.getParchment(obj.getId());
+		}
+
+		@Override
+		public float getAmplitude(Page obj, float size, int tick) {
+			return new Vibrate(obj.getId()).amplitude(tick);
+		}
+
+		@Override
+		public Page findNext() {
+			index = index + 1;
+			if (index >= Pages.getCount()) {
+				index = 2;
+				accuracy = accuracy + 0.01f;
+			}
+			return Pages.getPage(index);
+		}
+	}
+
+	public static class BuildingMather extends CommonMather<Buildings.VibrateKey> {
+
+		public BuildingMather() {
+			super("buiding");
+		}
+
+		@Override
+		public ItemStack getResult(Buildings.VibrateKey obj, float size, int tick) {
+			return ArcInfo.createArcInfoItem(obj.getKey());
+		}
+
+		@Override
+		public float getAmplitude(Buildings.VibrateKey obj, float size, int tick) {
+			return obj.amplitude(tick);
+		}
+
+		@Override
+		public Buildings.VibrateKey findNext() {
+			index = (index + 1) % Buildings.frequencyMapping.size();
+			return Buildings.frequencyMapping.get(index);
+		}
 	}
 
 }

@@ -1,0 +1,22 @@
+{
+    "global.general.quest_limit": "每个玩家同时最多可以领取的任务个数",
+    "global.general.portal_render_type": "传送门绘制是使用的渲染类型[2为世界效果][1为粒子效果][0就一张图]",
+    "global.general.enable_item_element_tooltip_show": "鼠标移动到物品上，显示其默认具有的元素[仅在创造模式生效]",
+    "global.general.max_life_time_of_parcel": "邮局储存包裹的最长保持时间，超过时间就会被清除，单位小时，如果为-1表示用不清除",
+    "global.general.building_max_remain_times": "临时建筑保非活动停留最长，单位分钟，超时后将移除内存，使用时会强制加载[0表示不自动清除]",
+
+    "item.elementalsorcery_manual.manual_max_pages": "元素手册页数上限",
+    "item.elementalsorcery_rite_manual.max_record": "祭品研究手册可以记录的最大个数",
+    "item.elementalsorcery_magic_blast_wand.magic_blast_one_damage_per_count": "魔力爆炸的基础伤害，每n点魔力为1点伤害",
+    "item.elementalsorcery_magic_blast_wand.magic_max_damage_limit_for_decay": "魔力爆炸的不衰减最大值，超出部分进行log10衰减",
+    "item.elementalsorcery_magic_blast_wand.magic_range_decay_rate": "魔力爆炸的范围衰减率，越大衰减越厉害",
+
+    "block.elementalsorcery_life_flower.probability_of_consume_maigc_per_grow": "每进行一次生长，消耗掉花盆里魔力的概率",
+
+    "tile.elementalsorcery_mdresonantincubator.cost_pre_resonant": "每次共振的魔力消耗",
+
+    "spawn_and_gen.world_gen_and_spawn_config.worlds": "[会生成的世界][对生物类型无效]",
+    "spawn_and_gen.world_gen_and_spawn_config.biomes": "[会生成的生物群系]",
+    "spawn_and_gen.world_gen_and_spawn_config.world_incrs": "[生成的密度，对应世界数组，0默认，越大生成的可能越多]",
+    "spawn_and_gen.world_gen_and_spawn_config.biome_incrs": "[生成的密度，对应维度数组，0默认，越大生成的可能越多]"
+}

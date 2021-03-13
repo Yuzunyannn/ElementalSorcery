@@ -24,6 +24,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
@@ -121,7 +122,8 @@ public class CommandES extends CommandBase {
 		case "debug":
 		// debug
 		{
-			if (args.length == 1) throw new CommandException("ES dubug 指令无效，随便使用debug指令可能会导致崩溃");
+			if (!ElementalSorcery.isDevelop) throw new CommandException("Dubug Command only can be used in Develop!");
+			if (args.length == 1) throw new CommandException("Dubug command error");
 			CommandESDebug.execute(server, sender, Arrays.copyOfRange(args, 1, args.length));
 			return;
 		}
@@ -390,9 +392,7 @@ public class CommandES extends CommandBase {
 			if ("test".equals(args[0])) break;
 			if ("recordNBT".equals(args[0])) BuildingLib.instance.addBuilding(building, true);
 			else BuildingLib.instance.addBuilding(building, false);
-			ItemStack ar = new ItemStack(ESInit.ITEMS.ARCHITECTURE_CRYSTAL);
-			ArcInfo.initArcInfoToItem(ar, building.getKeyName());
-			ItemHelper.addItemStackToPlayer(player, ar);
+			ItemHelper.addItemStackToPlayer(player, ArcInfo.createArcInfoItem(building.getKeyName()));
 			notifyCommandListener(sender, this, "commands.es.building.record", player.getName());
 			break;
 		}
@@ -400,9 +400,7 @@ public class CommandES extends CommandBase {
 			if (args.length < 3) throw new WrongUsageException("commands.es.building.give.usage");
 			player = getPlayer(server, sender, args[1]);
 			String key = args[2];
-			ItemStack ar = new ItemStack(ESInit.ITEMS.ARCHITECTURE_CRYSTAL);
-			ArcInfo.initArcInfoToItem(ar, key);
-			ItemHelper.addItemStackToPlayer(player, ar);
+			ItemHelper.addItemStackToPlayer(player, ArcInfo.createArcInfoItem(key));
 			notifyCommandListener(sender, this, "commands.es.building.give", player.getName());
 			break;
 		}

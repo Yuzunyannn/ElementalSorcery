@@ -18,6 +18,7 @@ public class TileLifeDirt extends TileEntity {
 		if (nbt == null) return false;
 		return nbt.hasKey("lifePlant", 10);
 	}
+	
 
 	public static void setPlant(ItemStack stack, ItemStack plant) {
 		NBTTagCompound nbt = stack.getTagCompound();

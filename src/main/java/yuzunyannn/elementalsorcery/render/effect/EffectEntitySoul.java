@@ -52,7 +52,7 @@ public class EffectEntitySoul extends Effect {
 	}
 
 	public void setBinder(Entity entity) {
-		binder = new IBinder.EntityBinder(entity);
+		binder = new IBinder.EntityBinder(entity, entity.height / 2);
 	}
 
 	public boolean isCanRender() {

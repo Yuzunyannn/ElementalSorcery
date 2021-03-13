@@ -37,9 +37,10 @@ public class WorldGenScarletCrystalOre extends WorldGenerator {
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		Biome biome = world.getBiome(pos);
 		int expect = WorldGeneratorES.CONFIG_SCARLET_CRYSTAL_ORE.getSpawnPoint(world, biome);
-		for (int i = 0; i < 6; i++) {
+		int posY = Math.min(20 + rand.nextInt(64) + expect * 4, 128);
+		while (posY >= 8) {
 			int posX = pos.getX() + 4 + rand.nextInt(8);
-			int posY = 8 + rand.nextInt(20 + Math.min(expect * 8, 128));
+			posY = posY - 1;
 			int posZ = pos.getZ() + 4 + rand.nextInt(8);
 			BlockPos blockpos = new BlockPos(posX, posY, posZ);
 			IBlockState state = world.getBlockState(blockpos);
@@ -53,23 +54,21 @@ public class WorldGenScarletCrystalOre extends WorldGenerator {
 					}
 				}
 			}
-			if (lava < 27) continue;
-			while (blockpos.getY() > Math.max(posY - 5, 0)) blockpos = blockpos.down();
-			int count = 0;
-			for (int x = -3; x <= 3; x++) {
-				for (int y = 3; y >= 0; y--) {
-					for (int z = -3; z <= 3; z++) {
-						if (rand.nextFloat() > (0.065f + expect * 0.025f)) continue;
-						BlockPos at = blockpos.add(x, y, z);
-						IBlockState origin = world.getBlockState(at);
-						if (origin.getBlock().isReplaceableOreGen(origin, world, at, predicate)) {
-							world.setBlockState(at, ore, 2);
-							count++;
-						}
-					}
-				}
+			int count = 16;
+			if (lava < 8) count = 8;
+			else if (lava < 16) count = 4;
+			while (blockpos.getY() > Math.max(posY - 5, 0)) {
+				if (state.getBlock() != Blocks.LAVA) break;
+				blockpos = blockpos.down();
 			}
-			if (count > 2) break;
+			posY = blockpos.getY() - 1;
+			count = count + expect;
+			for (int k = 0; k < count; k++) {
+				BlockPos at = blockpos.add(rand.nextInt(7) - 3, rand.nextInt(4), rand.nextInt(7) - 3);
+				IBlockState origin = world.getBlockState(at);
+				if (origin.getBlock().isReplaceableOreGen(origin, world, at, predicate))
+					world.setBlockState(at, ore, 2);
+			}
 		}
 		return true;
 	}

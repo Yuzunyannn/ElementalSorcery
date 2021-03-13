@@ -298,8 +298,26 @@ public class ElementMap implements IElementMap {
 		});
 	}
 
+	/** 检查是否满足mod的加载需求 */
+	public static boolean checkModDemands(JsonObject json) {
+		// 条件mod调查
+		String[] demandMods = null;
+		try {
+			demandMods = json.needStrings("demand", "demands", "demandMods", "demandMod", "mods");
+		} catch (RuntimeException e) {}
+		if (demandMods != null && demandMods.length > 0) {
+			for (String modId : demandMods) {
+				if (Loader.isModLoaded(modId)) continue;
+				// 存在没有加载mod的时候，直接走人
+				return false;
+			}
+		}
+		return true;
+	}
+
 	// 对一个json进行处理
 	public static void loadElementMap(JsonObject json, String fileName) {
+		if (!checkModDemands(json)) return;
 		JsonArray jarray = json.needArray("maps");
 		for (int i = 0; i < jarray.size(); i++) {
 			try {

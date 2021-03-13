@@ -183,6 +183,8 @@ public class ESObjects {
 		public Mantra SLOW_FALL;
 		public Mantra FOOTBRIDGE;
 		public Mantra FIRE_AREA;
+		public Mantra MAGIC_STRAFE;
+		public Mantra FLOAT_AREA;
 	}
 
 	static public class Village {
