@@ -3,11 +3,20 @@ package yuzunyannn.elementalsorcery.elf.research;
 import java.util.Set;
 
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 
 public class Researcher implements INBTSerializable<NBTTagCompound> {
+
+	public static void research(EntityLivingBase player, String topic, int count) {
+		Researcher researcher = new Researcher(player);
+		researcher.grow(topic, count);
+		researcher.save(player);
+		if (player instanceof EntityPlayerMP) ItemAncientPaper.sendTopicGrowMessage((EntityPlayerMP) player, topic);
+	}
 
 	protected NBTTagCompound map;
 

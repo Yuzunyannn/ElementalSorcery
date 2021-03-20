@@ -260,6 +260,12 @@ commands.es.building.release=すべての建築キャッシュを保存とリリ
 commands.es.building.recordFail=あなたの持っている魔力ルーラーに領域データがあることを確認してください。
 commands.es.building.record=建築データを記録し、%sに建築の水晶を与えました。
 commands.es.building.give=%sに%sの建築の水晶を与えました
+commands.es.edifice.usage=/es edifice <store|restore|build|fix> <データ>
+commands.es.edifice.restore.usage=/es edifice restore <データ>
+commands.es.edifice.no.core=木核心が見つからない、木核心の真下に立ってください
+commands.es.edifice.store.success=回復データを作成して（既にロゴに出力されました）:%s
+commands.es.edifice.restore.success=回復成功！
+commands.es.not.support.commandBlock=コマンドブロックがサポートされていません。
 
 arc.infusion.name=エンチャント祭壇
 arc.absorbBox.name=元素を吸収する祭壇

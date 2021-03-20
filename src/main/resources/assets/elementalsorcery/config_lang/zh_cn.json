@@ -14,6 +14,11 @@
     "block.elementalsorcery_life_flower.probability_of_consume_maigc_per_grow": "每进行一次生长，消耗掉花盆里魔力的概率",
 
     "tile.elementalsorcery_mdresonantincubator.cost_pre_resonant": "每次共振的魔力消耗",
+    "tile.general.md_base_max_capacity": "魔动设备默认的最大魔力储存上限",
+    "tile.general.md_base_overflow": "魔动设备默认向外发送魔力的最低值",
+    "tile.general.md_base_send_pre_second": "魔动设备默认每秒的传输量",
+    "tile.elementalsorcery_mdmagicgen.max_capacity": "热力魔分箱的最大魔力储存上限",
+    "tile.elementalsorcery_mdmagiclization.max_capacity": "魔化箱的最大魔力储存上限",
 
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "[会生成的世界][对生物类型无效]",
     "spawn_and_gen.world_gen_and_spawn_config.biomes": "[会生成的生物群系]",

@@ -97,9 +97,20 @@ public class ItemCrystal extends Item {
 		return true;
 	}
 
+	public int dropCountOfCrystalFlower(World world, ItemStack origin, Random rand) {
+		return origin.getCount();
+	}
+
 	/** 当水晶花掉落 */
-	public void getDropsOfCrystalFlower(ItemStack origin, List<ItemStack> drops) {
-		drops.add(origin.copy());
+	public void getDropsOfCrystalFlower(World world, ItemStack origin, List<ItemStack> drops) {
+		int count = this.dropCountOfCrystalFlower(world, origin, world.rand);
+		do {
+			ItemStack drop = origin.copy();
+			int c = Math.min(count, origin.getMaxStackSize());
+			drop.setCount(c);
+			drops.add(drop);
+			count = count - c;
+		} while (count > 0);
 	}
 
 	@Override

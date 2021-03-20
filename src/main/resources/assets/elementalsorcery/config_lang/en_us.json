@@ -14,6 +14,11 @@
     "block.elementalsorcery_life_flower.probability_of_consume_maigc_per_grow": "The chance to consume the magic in the Magic Pot pre growing",
 
     "tile.elementalsorcery_mdresonantincubator.cost_pre_resonant": "Magic cost pre resonant",
+    "tile.general.md_base_max_capacity": "The default max magic limit of Magic Drives",
+    "tile.general.md_base_overflow": "The default lower magic limit of Magic Drives can send magic to another",
+    "tile.general.md_base_send_pre_second": "Send magic per second of Magic Drives",
+    "tile.elementalsorcery_mdmagicgen.max_capacity": "The max magic limit of Magic Separator",
+    "tile.elementalsorcery_mdmagiclization.max_capacity": "The max magic limit of Element Magiclization Box",
 
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "The worlds can spawn [Invalid for Entity]",
     "spawn_and_gen.world_gen_and_spawn_config.biomes": "The biomes can spawn",

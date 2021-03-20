@@ -136,12 +136,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 		int count = MathHelper.floor(rCount);
 		float expect = (rCount) - MathHelper.floor(rCount);
 		count += rand.nextFloat() <= expect ? 1 : 0;
-		if (count > 0) {
-			Researcher researcher = new Researcher(player);
-			researcher.grow(topic.getKey(), count);
-			researcher.save(player);
-			sendTopicGrowMessage(player, topic.getKey());
-		}
+		if (count > 0) Researcher.research(player, topic.getKey(), count);
 	}
 
 	public static void sendTopicGrowMessage(EntityPlayer player, String type) {

@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.render.tile;
 
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
@@ -51,10 +52,12 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 	public void render(ItemStack stack, float partialTicks) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.5F, 0.5F, 0.5F);
-		if (stack.isOnItemFrame()) {
-			GlStateManager.scale(0.5F, 0.5F, 0.5F);
-		} else if (IRenderItem.isGUI(stack)) {
+		if (stack.isOnItemFrame()) GlStateManager.scale(0.5F, 0.5F, 0.5F);
+		else if (IRenderItem.isGUI(stack)) {
 			GlStateManager.rotate(45.0F, 1, 1, 1);
+			GlStateManager.scale(0.5F, 0.5F, 0.5F);
+		} else if (IRenderItem.isTransform(stack, TransformType.FIXED)) {
+			GlStateManager.translate(0.0F, 0.275F, 0.0F);
 			GlStateManager.scale(0.5F, 0.5F, 0.5F);
 		} else {
 			GlStateManager.disableLighting();

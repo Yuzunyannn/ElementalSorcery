@@ -34,7 +34,7 @@ public class TileCrystalFlower extends TileEntityNetwork {
 		Item item = crystal.getItem();
 		if (item instanceof ItemCrystal) {
 			List<ItemStack> drops = new LinkedList();
-			((ItemCrystal) item).getDropsOfCrystalFlower(crystal, drops);
+			((ItemCrystal) item).getDropsOfCrystalFlower(world, crystal, drops);
 			return drops;
 		}
 		return ItemHelper.toList(crystal);

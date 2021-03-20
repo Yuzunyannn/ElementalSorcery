@@ -24,7 +24,7 @@ public class RenderTileCrystalFlower extends TileEntitySpecialRenderer<TileCryst
 		GlStateManager.enableColorLogic();
 		GlStateManager.colorLogicOp(GlStateManager.LogicOp.NAND);
 		GlStateManager.translate(x + 0.5, y + 0.65, z + 0.5);
-		GlStateManager.scale(0.75, 0.75, 0.75);
+		GlStateManager.scale(0.85, 0.85, 0.85);
 		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
 		GlStateManager.rotate(90, 0, 1, 0);
 		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);

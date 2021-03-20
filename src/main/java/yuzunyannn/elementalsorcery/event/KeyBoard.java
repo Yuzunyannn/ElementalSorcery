@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.event;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import org.lwjgl.input.Keyboard;
@@ -58,23 +59,22 @@ public class KeyBoard {
 		if (player.world.getBlockState(pos) != ESInit.BLOCKS.ELF_LOG.getDefaultState()) return false;
 
 		if (elfTreeCoreCache.size() > 10) elfTreeCoreCache.removeFirst();
-		for (BlockPos p : elfTreeCoreCache) {
+		Iterator<BlockPos> iter = elfTreeCoreCache.iterator();
+		while (iter.hasNext()) {
+			BlockPos p = iter.next();
 			if (TileElfTreeCore.inRangeElevator(p, player)) {
-				TileElfTreeCore.openElevatorUI(p, player);
-				return true;
+				IBlockState state = player.world.getBlockState(p);
+				if (state.getBlock() == ESInit.BLOCKS.ELF_TREE_CORE) {
+					TileElfTreeCore.openElevatorUI(p, player);
+					return true;
+				} else iter.remove();
 			}
 		}
-		for (int y = 0; y < 100; y++) {
-			for (int x = -2; x <= 2; x++) {
-				for (int z = -2; z <= 2; z++) {
-					IBlockState state = player.world.getBlockState(pos.add(x, y, z));
-					if (state.getBlock() == ESInit.BLOCKS.ELF_TREE_CORE) {
-						elfTreeCoreCache.add(pos.add(x, y, z));
-						TileElfTreeCore.openElevatorUI(pos.add(x, y, z), player);
-						return true;
-					}
-				}
-			}
+		BlockPos corePos = TileElfTreeCore.findTreeCoreFrom(player.world, pos);
+		if (corePos != null) {
+			elfTreeCoreCache.add(corePos);
+			TileElfTreeCore.openElevatorUI(corePos, player);
+			return true;
 		}
 		return false;
 	}

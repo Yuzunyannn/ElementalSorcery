@@ -27,6 +27,7 @@ import yuzunyannn.elementalsorcery.api.tile.IAcceptMagic;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptMagicPesky;
 import yuzunyannn.elementalsorcery.api.tile.IProvideMagic;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemMagicBlastWand;
@@ -36,6 +37,15 @@ import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky, IProvideMagic, IField {
+
+	@Config(kind = "tile", sync = true)
+	static private int MD_BASE_MAX_CAPACITY = 1000;
+
+	@Config(kind = "tile")
+	static private int MD_BASE_OVERFLOW = 800;
+
+	@Config(kind = "tile")
+	static private int MD_BASE_SEND_PRE_SECOND = 100;
 
 	/** 给予魔力的目标 */
 	protected TargetInfo[] targets = new TargetInfo[6];
@@ -438,17 +448,17 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	/** 获取每秒的最大数量，需要在update中使用 autoTransfer函数 */
 	protected int getMaxSendPreSecond() {
-		return 100;
+		return MD_BASE_SEND_PRE_SECOND;
 	}
 
 	/** 获取达到多少值就可以向外发送了，超过了就会发送 */
 	protected int getOverflow() {
-		return 800;
+		return MD_BASE_OVERFLOW;
 	}
 
 	@Override
 	public int getMaxCapacity() {
-		return 1000;
+		return MD_BASE_MAX_CAPACITY;
 	}
 
 	@Override

@@ -120,7 +120,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 	@Override
 	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
 
-		RayTraceResult rt = WorldHelper.getLookAtEntity(worldIn, entityLiving, 32, EntityLiving.class);
+		RayTraceResult rt = WorldHelper.getLookAtEntity(worldIn, entityLiving, 32, EntityLivingBase.class);
 		if (rt == null) return;
 
 		EntityLiving entitiy = (EntityLiving) rt.entityHit;

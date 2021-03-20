@@ -45,6 +45,7 @@ public class RenderItemMagicBlastWand implements IRenderItem {
 		}
 
 		GlStateManager.popMatrix();
+		GlStateManager.enableCull();
 	}
 
 }

@@ -377,23 +377,28 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 		if (!drop.isEmpty()) Block.spawnAsEntity(world, to, drop);
 	}
 
-	private static void loadTileSave(World world, BlockPos at, NBTTagCompound tileSave) {
-		if (tileSave == null) return;
-		TileEntity tile = world.getTileEntity(at);
-		if (tile == null) return;
+	static public NBTTagCompound handleTileSave(NBTTagCompound tileSave, TileEntity tile) {
+		BlockPos at = tile.getPos();
 
-		NBTTagCompound nbt = tileSave.copy();
-		nbt.setInteger("x", at.getX());
-		nbt.setInteger("y", at.getY());
-		nbt.setInteger("z", at.getZ());
+		tileSave.setInteger("x", at.getX());
+		tileSave.setInteger("y", at.getY());
+		tileSave.setInteger("z", at.getZ());
 
 		ResourceLocation id = TileEntity.getKey(tile.getClass());
 		if (id == null) {
 			ElementalSorcery.logger.warn("回复tile数据时，找不到tile:" + tile.getClass());
-			return;
+			return new NBTTagCompound();
 		}
-		nbt.setString("id", id.toString());
+		tileSave.setString("id", id.toString());
 
+		return tileSave;
+	}
+
+	private static void loadTileSave(World world, BlockPos at, NBTTagCompound tileSave) {
+		if (tileSave == null) return;
+		TileEntity tile = world.getTileEntity(at);
+		if (tile == null) return;
+		NBTTagCompound nbt = handleTileSave(tileSave.copy(), tile);
 		tile.deserializeNBT(nbt);
 	}
 

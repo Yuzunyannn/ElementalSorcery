@@ -6,7 +6,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
-import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 
 public class QuestRewardTopic extends QuestReward {
 
@@ -37,10 +36,7 @@ public class QuestRewardTopic extends QuestReward {
 
 	@Override
 	public void reward(Quest quest, EntityPlayer player) {
-		Researcher researcher = new Researcher(player);
-		researcher.grow(type, count);
-		researcher.save(player);
-		ItemAncientPaper.sendTopicGrowMessage(player, type);
+		Researcher.research(player, type, count);
 	}
 
 	@Override

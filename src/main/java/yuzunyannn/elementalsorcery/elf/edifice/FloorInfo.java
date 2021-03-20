@@ -53,7 +53,7 @@ public class FloorInfo implements INBTSerializable<NBTTagCompound> {
 	public Status getStatus() {
 		return status;
 	}
-	
+
 	public NBTTagCompound getFloorData() {
 		return floorData;
 	}
@@ -69,6 +69,10 @@ public class FloorInfo implements INBTSerializable<NBTTagCompound> {
 
 	public BlockPos getBasicPos() {
 		return basicPos;
+	}
+
+	public void changeBasicPos(BlockPos basicPos) {
+		this.basicPos = basicPos;
 	}
 
 	public void setHigh(short high) {

@@ -9,11 +9,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptBurnPower;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurnPower {
+
+	@Config(kind = "tile", sync = true)
+	static private int MAX_CAPACITY = 3000;
 
 	/** 温度 */
 	protected float temperature;
@@ -64,17 +68,12 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 
 	@Override
 	public int getMaxCapacity() {
-		return 3000;
+		return MAX_CAPACITY;
 	}
 
 	@Override
 	protected int getOverflow() {
 		return 0;
-	}
-
-	@Override
-	protected int getMaxSendPreSecond() {
-		return 100;
 	}
 
 	public boolean isFire() {
@@ -153,8 +152,7 @@ public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurn
 				dRate = prevMeltRate;
 			}
 			// 增长
-			if (this.magic.isEmpty())
-				this.magic = new ElementStack(ESInit.ELEMENTS.MAGIC, (int) (dRate * 100), 25);
+			if (this.magic.isEmpty()) this.magic = new ElementStack(ESInit.ELEMENTS.MAGIC, (int) (dRate * 100), 25);
 			else this.magic.grow(new ElementStack(ESInit.ELEMENTS.MAGIC, (int) (dRate * 100), 25));
 			if (this.getCurrentCapacity() >= this.getMaxCapacity()) this.magic.setCount(this.getMaxCapacity());
 		} else {

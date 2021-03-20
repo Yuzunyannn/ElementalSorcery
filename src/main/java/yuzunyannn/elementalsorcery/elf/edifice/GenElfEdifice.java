@@ -38,6 +38,7 @@ public class GenElfEdifice {
 	public final boolean dispersed;
 	protected List<Map.Entry<BlockPos, IBlockState>> dispersedMap;
 	protected NBTTagCompound buildCoreData = new NBTTagCompound();
+	protected String restoreData;
 	public int treeSize = EDIFICE_SIZE;
 	public IBlockState elfLog = ESObjects.BLOCKS.ELF_LOG.getDefaultState();
 	IBlockState elfLeaf = ESInit.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false)
@@ -53,6 +54,10 @@ public class GenElfEdifice {
 		else world.setBlockState(pos, state, 2 | 16);
 	}
 
+	public void setRestoreData(String restoreData) {
+		this.restoreData = restoreData;
+	}
+
 	/** 分散建立中，将数据分散到每一tick进行设置 */
 	public void buildToTick(World world) {
 		if (!dispersed) return;
@@ -61,7 +66,6 @@ public class GenElfEdifice {
 		dispersedMap = new LinkedList<>();
 		NBTTagCompound coreData = buildCoreData;
 		buildCoreData = new NBTTagCompound();
-		;
 		EventServer.addTickTask(() -> {
 			int i = 0;
 			long time = System.currentTimeMillis();
@@ -90,6 +94,7 @@ public class GenElfEdifice {
 			return;
 		}
 		core.initTreeData(data.getInteger("size"), high);
+		if (restoreData != null) core.restore(restoreData);
 	}
 
 	public boolean checkCanGen(World world, BlockPos pos) {

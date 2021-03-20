@@ -8,6 +8,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.tile.md.TileMDFrequencyMapping;
+import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
 
 public class BlockMDTransfer extends BlockMDBase {
 
@@ -17,7 +18,7 @@ public class BlockMDTransfer extends BlockMDBase {
 
 	@Override
 	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileMDFrequencyMapping();
+		return new TileMDTransfer();
 	}
 
 	@Override

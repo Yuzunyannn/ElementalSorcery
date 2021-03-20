@@ -1,6 +1,8 @@
 package yuzunyannn.elementalsorcery.event;
 
-import java.util.ArrayList;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -17,6 +19,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.CommandBlockBaseLogic;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -30,6 +33,7 @@ import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
+import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.Element;
@@ -49,6 +53,7 @@ import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
+import yuzunyannn.elementalsorcery.util.GameHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.text.TextHelper;
@@ -67,18 +72,26 @@ public class CommandES extends CommandBase {
 	}
 
 	@Override
+	public boolean checkPermission(MinecraftServer server, ICommandSender sender) {
+		if (sender instanceof CommandBlockBaseLogic) return true;
+		return super.checkPermission(server, sender);
+	}
+
+	@Override
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		if (args.length < 1) throw new CommandException("commands.es.usage");
 		switch (args[0]) {
 		case "build":// 建筑
 		{
 			if (args.length == 1) throw new WrongUsageException("commands.es.build.usage");
+			checkUnsupportCommandBlock(sender);// 不支持命令方块
 			Entity entity = sender.getCommandSenderEntity();
 			this.cmdBuild(args[1], (EntityLivingBase) entity, server.getEntityWorld());
 			return;
 		}
 		case "buildFloor": {
 			if (args.length == 1) throw new WrongUsageException("commands.es.buildFloor.usage");
+			checkUnsupportCommandBlock(sender);// 不支持命令方块
 			Entity entity = sender.getCommandSenderEntity();
 			this.cmdBuildFloor(args[1], (EntityLivingBase) entity, server.getEntityWorld());
 			return;
@@ -105,7 +118,7 @@ public class CommandES extends CommandBase {
 			return;
 		}
 		case "quest": {
-			if (args.length == 1) throw new CommandException("commands.es.quest.usage");
+			if (args.length < 3) throw new CommandException("commands.es.quest.usage");
 			this.cmdQuest(Arrays.copyOfRange(args, 1, args.length), server, sender);
 			return;
 		}
@@ -117,6 +130,11 @@ public class CommandES extends CommandBase {
 		case "element": {
 			if (args.length < 4) throw new CommandException("commands.es.element.usage");
 			this.cmdElement(Arrays.copyOfRange(args, 1, args.length), server, sender);
+			return;
+		}
+		case "edifice": {
+			if (args.length < 2) throw new CommandException("commands.es.edifice.usage");
+			this.cmdEdifice(Arrays.copyOfRange(args, 1, args.length), server, sender);
 			return;
 		}
 		case "debug":
@@ -137,14 +155,13 @@ public class CommandES extends CommandBase {
 	public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args,
 			@Nullable BlockPos targetPos) {
 		if (args.length == 1) {
-			String[] names = { "build", "page", "debug", "buildFloor", "quest", "mantra", "element", "building" };
+			String[] names = { "build", "page", "debug", "buildFloor", "quest", "mantra", "element", "building",
+					"edifice" };
 			return CommandBase.getListOfStringsMatchingLastWord(args, names);
 		} else if (args.length >= 2) {
 			switch (args[0]) {
 			case "build": {
-				Collection<Building> bs = BuildingLib.instance.getBuildingsFromLib();
-				List<String> arrayList = new ArrayList<>(bs.size() + 1);
-				for (Building b : bs) arrayList.add(b.getKeyName());
+				List<String> arrayList = Buildings.getKeys();
 				arrayList.add("it");
 				List<String> tips = getListOfStringsMatchingLastWord(args, arrayList);
 				return tips;
@@ -156,7 +173,8 @@ public class CommandES extends CommandBase {
 			case "building": {
 				if (args.length > 2) {
 					if ("give".equals(args[1])) {
-						if (args.length > 3) return CommandBase.getListOfStringsMatchingLastWord(args);
+						if (args.length > 3)
+							return CommandBase.getListOfStringsMatchingLastWord(args, Buildings.getKeys());
 						return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
 					}
 					return CommandBase.getListOfStringsMatchingLastWord(args);
@@ -184,6 +202,9 @@ public class CommandES extends CommandBase {
 				if (args.length > 2) return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
 				return getListOfStringsMatchingLastWord(args, "give", "extract", "insert", "add");
 			}
+			case "edifice": {
+				return getListOfStringsMatchingLastWord(args, "store", "restore", "build", "fix");
+			}
 			case "debug": {
 				return getListOfStringsMatchingLastWord(args, CommandESDebug.autoTips);
 			}
@@ -193,10 +214,17 @@ public class CommandES extends CommandBase {
 		return CommandBase.getListOfStringsMatchingLastWord(args);
 	}
 
-	/** 咒文 */
+	/** 检测过滤不支持命令方块的指令 */
+	private void checkUnsupportCommandBlock(ICommandSender sender) throws CommandException {
+		Entity player = sender.getCommandSenderEntity();
+		if (player instanceof EntityPlayer) return;
+		throw new WrongUsageException("commands.es.not.support.commandBlock");
+	}
+
+	// =======================-------> 咒文 <-------=======================
 	private void cmdMantra(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
-		EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity();
-		player = getPlayer(server, sender, args[1]);
+		// EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity();
+		EntityPlayer player = getPlayer(server, sender, args[1]);
 		ResourceLocation id = TextHelper.toESResourceLocation(args[2]);
 		Mantra mantra = Mantra.REGISTRY.getValue(id);
 		if (mantra == null) throw new CommandException("commands.es.notFound", id.toString());
@@ -230,7 +258,7 @@ public class CommandES extends CommandBase {
 			notifyCommandListener(sender, this, "commands.es.mantra.add", player.getName(), mantra.getTextComponent());
 			return;
 		default:
-			throw new CommandException("commands.es.mantra.usage");
+			throw new WrongUsageException("commands.es.mantra.usage");
 		}
 
 	}
@@ -242,10 +270,9 @@ public class CommandES extends CommandBase {
 		return inv;
 	}
 
-	/** 元素 */
+	// =======================-------> 元素 <-------=======================
 	private void cmdElement(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
-		EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity();
-		player = getPlayer(server, sender, args[1]);
+		EntityPlayer player = getPlayer(server, sender, args[1]);
 		ResourceLocation id = TextHelper.toESResourceLocation(args[2]);
 		Element element = Element.REGISTRY.getValue(id);
 		if (element == null) throw new CommandException("commands.es.notFound", id.toString());
@@ -299,34 +326,35 @@ public class CommandES extends CommandBase {
 			return;
 		}
 		default:
-			throw new CommandException("commands.es.element.usage");
+			throw new WrongUsageException("commands.es.element.usage");
 		}
 
 	}
 
+	// =======================-------> 任务 <-------=======================
 	private void cmdQuest(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
+		EntityLivingBase player = getPlayer(server, sender, args[1]);
+
 		switch (args[0]) {
 		case "clear": {
-			EntityLivingBase player = (EntityLivingBase) sender.getCommandSenderEntity();
-			if (args.length > 1) player = getPlayer(server, sender, args[1]);
 			IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
 			if (adventurer != null) adventurer.removeAllQuest();
 			notifyCommandListener(sender, this, "commands.es.quest.clear", player.getName());
 			return;
 		}
 		default:
-			throw new CommandException("commands.es.quest.usage");
+			throw new WrongUsageException("commands.es.quest.usage");
 		}
 	}
 
-	/** 建造建筑 */
+	// =======================-------> 建造建筑 <-------=======================
 	private void cmdBuild(String value, EntityLivingBase entity, World world) throws CommandException {
 		Building building = null;
 		BlockPos pos = null;
 		if (value.toLowerCase().equals("it")) {
 			ItemStack stack = entity.getHeldItemMainhand();
 			ArcInfo info = new ArcInfo(stack, world.isRemote ? Side.CLIENT : Side.SERVER);
-			if (!info.isValid()) throw new CommandException("commands.es.build.it.usage");
+			if (!info.isValid()) throw new WrongUsageException("commands.es.build.it.usage");
 			building = info.building;
 			pos = info.pos;
 		} else {
@@ -343,6 +371,7 @@ public class CommandES extends CommandBase {
 		}
 	}
 
+	// =======================-------> 楼层操作 <-------=======================
 	private void cmdBuildFloor(String value, EntityLivingBase entity, World world) throws CommandException {
 		BlockPos pos = null;
 		ElfEdificeFloor floor = ElfEdificeFloor.REGISTRY.getValue(new ResourceLocation(value));
@@ -367,8 +396,10 @@ public class CommandES extends CommandBase {
 		info.getType().spawn(builder);
 	}
 
-	/** 建筑操作 */
+	// =======================-------> 建造操作 <-------=======================
 	private void cmdBuilding(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
+		checkUnsupportCommandBlock(sender); // 不支持命令方块
+
 		EntityPlayer executer = (EntityPlayer) sender.getCommandSenderEntity();
 		EntityPlayer player = executer;
 
@@ -407,6 +438,65 @@ public class CommandES extends CommandBase {
 		default:
 			throw new WrongUsageException("commands.es.building.usage");
 		}
+	}
 
+	// =======================-------> 精灵大厦 <-------=======================
+	private void cmdEdifice(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
+		Entity executer = sender.getCommandSenderEntity();
+		BlockPos ePos = sender.getPosition();
+		World world = sender.getEntityWorld();
+
+		switch (args[0]) {
+		case "fix": {
+			TileElfTreeCore core = findElfTreeCore(world, ePos);
+			core.restore(core.store());
+			notifyCommandListener(sender, this, "commands.es.edifice.restore.success");
+			return;
+		}
+		case "store": {
+			TileElfTreeCore core = findElfTreeCore(world, ePos);
+			String data = core.store();
+			ElementalSorcery.logger.info("Edifice Store Data:" + data);
+			GameHelper.clientRun(() -> {
+				Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
+				clip.setContents(new StringSelection(data), null);
+			});
+			notifyCommandListener(sender, this, "commands.es.edifice.store.success", data);
+			return;
+		}
+		case "restore": {
+			if (args.length < 2) throw new WrongUsageException("commands.es.edifice.restore.usage");
+			String data = args[1];
+			TileElfTreeCore core = findElfTreeCore(world, ePos);
+			core.restore(data);
+			notifyCommandListener(sender, this, "commands.es.edifice.restore.success");
+			return;
+		}
+		case "build": {
+			BlockPos pos = null;
+			if (executer instanceof EntityLivingBase) {
+				RayTraceResult result = WorldHelper.getLookAtBlock(world, (EntityLivingBase) executer, 128);
+				if (result != null) pos = result.getBlockPos();
+			} else pos = ePos;
+			if (pos == null) throw new CommandException("commands.es.build.fail");
+
+			GenElfEdifice g = new GenElfEdifice(true);
+			g.genMainTreeEdifice(world, pos.down(), world.rand);
+			g.clearAround(world, pos);
+			g.buildToTick(world);
+			if (args.length >= 2) g.setRestoreData(args[1]);
+			return;
+		}
+		default:
+			throw new WrongUsageException("commands.es.edifice.usage");
+		}
+	}
+
+	private TileElfTreeCore findElfTreeCore(World world, BlockPos pos) throws WrongUsageException {
+		BlockPos corePos = TileElfTreeCore.findTreeCoreFrom(world, pos);
+		if (corePos == null) throw new WrongUsageException("commands.es.edifice.no.core");
+		TileElfTreeCore core = BlockHelper.getTileEntity(world, corePos, TileElfTreeCore.class);
+		if (core == null) throw new WrongUsageException("commands.es.edifice.no.core");
+		return core;
 	}
 }

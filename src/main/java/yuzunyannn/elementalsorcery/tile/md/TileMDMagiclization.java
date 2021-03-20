@@ -6,9 +6,13 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public class TileMDMagiclization extends TileMDBase implements ITickable {
+
+	@Config(kind = "tile", sync = true)
+	static private int MAX_CAPACITY = 4500;
 
 	/** 初始化仓库 */
 	@Override
@@ -25,12 +29,12 @@ public class TileMDMagiclization extends TileMDBase implements ITickable {
 
 	@Override
 	public int getMaxCapacity() {
-		return 4000;
+		return MAX_CAPACITY;
 	}
 
 	@Override
 	protected int getOverflow() {
-		return 50;
+		return 30;
 	}
 
 	@Override

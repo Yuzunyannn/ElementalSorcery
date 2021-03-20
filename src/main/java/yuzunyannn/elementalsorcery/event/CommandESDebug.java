@@ -46,7 +46,6 @@ public class CommandESDebug {
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
-
 		switch (args[0]) {
 		// 重新加载材质
 		case "reloadeTexture": {

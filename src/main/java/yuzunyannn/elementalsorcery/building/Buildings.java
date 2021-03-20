@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.building;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import yuzunyannn.elementalsorcery.ElementalSorcery;
@@ -123,5 +124,13 @@ public class Buildings {
 				frequencyMapping.add(new VibrateKey(key, keys.getArray(key).asFloatArray()));
 			}
 		}
+	}
+
+	static public List<String> getKeys() {
+		Collection<Building> bs = BuildingLib.instance.getBuildingsFromLib();
+		List<String> list = new ArrayList<>(frequencyMapping.size() + bs.size());
+		for (Building b : bs) list.add(b.getKeyName());
+		for (VibrateKey vk : frequencyMapping) list.add(vk.getKey());
+		return list;
 	}
 }

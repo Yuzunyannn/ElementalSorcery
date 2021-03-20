@@ -1,9 +1,9 @@
 package yuzunyannn.elementalsorcery.item.crystal;
 
-import java.util.List;
+import java.util.Random;
 
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
+import net.minecraft.world.World;
 
 public class ItemOrderCrystal extends ItemCrystal {
 
@@ -12,10 +12,8 @@ public class ItemOrderCrystal extends ItemCrystal {
 	}
 
 	@Override
-	public void getDropsOfCrystalFlower(ItemStack origin, List<ItemStack> drops) {
-		ItemStack drop = origin.copy();
-		drop.setCount(drop.getCount() + RandomHelper.randomRange(2, 6));
-		drops.add(drop);
+	public int dropCountOfCrystalFlower(World world, ItemStack origin, Random rand) {
+		return origin.getCount() + rand.nextInt(5) + 2;
 	}
 
 	@Override

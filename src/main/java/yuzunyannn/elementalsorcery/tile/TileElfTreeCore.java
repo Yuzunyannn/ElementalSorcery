@@ -1,6 +1,9 @@
 package yuzunyannn.elementalsorcery.tile;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -12,6 +15,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -21,6 +25,7 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
@@ -33,11 +38,14 @@ import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo.Status;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.ExceptionHelper;
+import yuzunyannn.elementalsorcery.util.IOHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
@@ -61,7 +69,6 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		this.high = high;
 	}
 
-	// 虽然有数据同步，但客户端的数据仅作为显示使用！
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		nbt.setInteger("high", high);
@@ -69,6 +76,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		NBTTagList list = new NBTTagList();
 		for (FloorInfo info : floors) list.appendTag(info.serializeNBT());
 		nbt.setTag("floor", list);
+		// 虽然有数据同步，但客户端的数据仅作为显示使用！
 		if (this.isSending()) return nbt;
 		if (!invest.hasNoTags()) nbt.setTag("invest", invest);
 		return super.writeToNBT(nbt);
@@ -86,6 +94,39 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		super.readFromNBT(nbt);
 	}
 
+	/** 对树的核心进行保存，一旦出现异常可以进行还原 */
+	public String store() {
+		try {
+			NBTTagCompound nbt = this.serializeNBT();
+			ByteArrayOutputStream bout = new ByteArrayOutputStream();
+			CompressedStreamTools.writeCompressed(nbt, bout);
+			byte[] bytes = bout.toByteArray();
+			String data = Base64.getEncoder().encodeToString(bytes);
+			IOHelper.closeQuietly(bout);
+			return data;
+		} catch (Exception e) {}
+		return "";
+	}
+
+	public void restore(String data) {
+		try {
+			byte[] bytes = Base64.getDecoder().decode(data);
+			ByteArrayInputStream istream = new ByteArrayInputStream(bytes);
+			NBTTagCompound nbt = CompressedStreamTools.readCompressed(istream);
+			nbt = EntityBlockMove.handleTileSave(nbt, this);
+			this.deserializeNBT(nbt);
+		} catch (Exception e) {}
+
+		BlockPos basePos = this.getTreeBasicPos();
+		for (int i = 0; i < floors.size(); i++) {
+			int floorHigh = getFloorHigh(i - 1);
+			FloorInfo info = floors.get(i);
+			info.changeBasicPos(basePos.add(0, floorHigh + 1, 0));
+			info.setStatus(Status.PLANNING);
+		}
+		this.finishAllBuildTask();
+	}
+
 	public int tick = 0;
 
 	@Override
@@ -96,6 +137,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 			tick();
 		} catch (Exception e) {
 			ElementalSorcery.logger.warn("精灵大厦核心出现异常！", e);
+			ElementalSorcery.logger.info("核心数据：" + this.store());
 			EventServer.addTask(() -> {
 				world.setBlockToAir(pos);
 			});
@@ -122,6 +164,9 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		return pos.down(high - 1);
 	}
 
+	/**
+	 * @param n 当前层数-2
+	 */
 	public int getFloorHigh(int n) {
 		int high = 0;
 		for (int i = 0; i < floors.size() && i <= n; i++) {
@@ -375,6 +420,19 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		if (Math.abs(corePos.getX() - entity.posX) > 3) return false;
 		if (Math.abs(corePos.getZ() - entity.posZ) > 3) return false;
 		return true;
+	}
+
+	/** 寻找周围的精灵核心位置 */
+	public static BlockPos findTreeCoreFrom(World world, BlockPos pos) {
+		for (int y = 0; y < 100; y++) {
+			for (int x = -2; x <= 2; x++) {
+				for (int z = -2; z <= 2; z++) {
+					IBlockState state = world.getBlockState(pos.add(x, y, z));
+					if (state.getBlock() == ESInit.BLOCKS.ELF_TREE_CORE) return pos.add(x, y, z);
+				}
+			}
+		}
+		return null;
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -6,6 +6,8 @@ import net.minecraft.tileentity.TileEntity;
 
 public class TileLifeDirt extends TileEntity {
 
+	//give @p elementalsorcery:life_dirt 1 0 {"lifePlant":{"id":"elementalsorcery:order_crystal","Count":1,"Damage":0}}
+	
 	public static ItemStack getPlant(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) return ItemStack.EMPTY;

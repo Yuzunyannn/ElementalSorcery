@@ -260,6 +260,12 @@ commands.es.building.release=已保存并清空所有临时建筑缓存
 commands.es.building.recordFail=请确保您手里的魔力标尺有区域数据！
 commands.es.building.record=成功记录了建筑数据，并给予了%s建筑水晶
 commands.es.building.give=给予了%s建筑水晶，建筑为%s
+commands.es.edifice.usage=/es edifice <store|restore|build|fix> <数据>
+commands.es.edifice.restore.usage=/es edifice restore <数据>
+commands.es.edifice.no.core=找不到树核心，请站到树核心的正下方
+commands.es.edifice.store.success=成功创建了恢复数据(已经输出到了log里)：%s
+commands.es.edifice.restore.success=恢复成功！
+commands.es.not.support.commandBlock=不支持命令方块
 
 arc.infusion.name=注魔祭坛
 arc.absorbBox.name=元素吸收祭坛

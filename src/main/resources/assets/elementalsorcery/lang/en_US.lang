@@ -260,6 +260,12 @@ commands.es.building.release=Save and Release all ref from temp building and cal
 commands.es.building.recordFail=Please make sure the Magic Ruler in your hand has area data!
 commands.es.building.record=Successfully recorded building data and gave %s Structural Crystal
 commands.es.building.give=Gave %s Structural Crystal of %s
+commands.es.edifice.usage=/es edifice <store|restore|build|fix> <data>
+commands.es.edifice.restore.usage=/es edifice restore <data>
+commands.es.edifice.no.core=Can't find Tree Core, please stand directly below the tree core.
+commands.es.edifice.store.success=Restore data has been created(and output to log): %s
+commands.es.edifice.restore.success=Restore Success!
+commands.es.not.support.commandBlock=Unsupport Command Block
 
 arc.infusion.name= Enchanting Altar
 arc.absorbBox.name=Element Absorb Altar

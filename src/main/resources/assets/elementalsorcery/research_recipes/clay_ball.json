@@ -1,0 +1,24 @@
+{
+	"topics": {
+		"Natural": 3,
+		"Struct" : 1
+	},
+	"items": [
+		{
+			"item": "minecraft:dirt",
+			"count": 1
+		},
+		{
+			"item": "minecraft:iron_ore",
+			"count": 1
+		},
+		{
+			"item": "minecraft:gravel",
+			"count": 1
+		}
+	],
+	"result": {
+		"item": "minecraft:clay_ball",
+		"count": 16
+	}
+}

@@ -645,6 +645,7 @@ public class TileRiteTable extends TileEntityNetwork {
 			return 1;
 		});
 		addRecipe(new ItemStack(ESInit.ITEMS.ELF_COIN), new ItemStack(ESInit.ITEMS.ELF_PURSE), 120, 0);
-		addRecipe(new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, 1), new ItemStack(ESInit.ITEMS.UNSCRAMBLE_NOTE), 150, 2);
+		addRecipe(new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, 1), new ItemStack(ESInit.ITEMS.UNSCRAMBLE_NOTE), 120, 2);
+		addRecipe(new ItemStack(Blocks.RAIL), new ItemStack(Items.MINECART), 80, 0);
 	}
 }

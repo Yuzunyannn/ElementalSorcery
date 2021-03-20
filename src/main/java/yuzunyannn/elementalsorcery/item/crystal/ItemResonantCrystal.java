@@ -66,6 +66,11 @@ public class ItemResonantCrystal extends ItemCrystal implements EntityThrow.IIte
 	}
 
 	@Override
+	public int dropCountOfCrystalFlower(World world, ItemStack origin, Random rand) {
+		return origin.getCount() + rand.nextInt(3);
+	}
+
+	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		EntityThrow.shoot(playerIn, playerIn.getHeldItem(handIn));
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
