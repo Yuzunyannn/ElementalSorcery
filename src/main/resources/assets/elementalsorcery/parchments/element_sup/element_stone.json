@@ -2,7 +2,8 @@
 	"lev": 5,
 	"need": [
 		"element_sup/fusion_crystal",
-		"elf/relic_zombie"
+		"elf/relic_zombie",
+		"md/star_seed"
 	],
 	"linked": "elementalsorcery:element_stone",
 	"type": "mult",

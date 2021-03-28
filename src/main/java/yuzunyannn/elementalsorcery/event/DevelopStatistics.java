@@ -9,6 +9,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.BlockItemTypeInfo;
@@ -68,6 +69,7 @@ public class DevelopStatistics {
 	public static final String FILE_FILTER_WORLD = "statistics-filter-world.json";
 	public static final String FILE_FILTER_BIOME = "statistics-filter-biome.json";
 	public static final String FILE_FILTER_ALL = "statistics-filter-all.json";
+	public static final String FILE_FILTER_WORTH = "statistics-filter-worth.json";
 
 	public static JsonObject loadFile(File file) {
 		try {
@@ -146,9 +148,13 @@ public class DevelopStatistics {
 	public static void handleResult() {
 		JsonObject data = getData(FILE_STATISTICS);
 
+		JsonObject filterWorth = new JsonObject();
 		JsonObject filterAll = new JsonObject();
 		JsonObject filterWorld = new JsonObject();
 		JsonObject filterBiome = new JsonObject();
+
+		String maxItem;
+		long max = 0;
 
 		for (String world : data) {
 			JsonObject worldJson = data.getObject(world);
@@ -156,9 +162,12 @@ public class DevelopStatistics {
 				JsonObject biomeJson = worldJson.getObject(biome);
 				for (String item : biomeJson) {
 					long count = biomeJson.getNumber(item).longValue();
-
-					filterAll.set(item, filterAll.getNumber(item, 0).longValue() + count);
-
+					long newCount = filterAll.getNumber(item, 0).longValue() + count;
+					filterAll.set(item, newCount);
+					if (newCount > max) {
+						max = newCount;
+						maxItem = item;
+					}
 					JsonObject fWorld = filterWorld.getOrCreateObject(world);
 					fWorld.set(item, fWorld.getNumber(item, 0).longValue() + count);
 
@@ -168,9 +177,17 @@ public class DevelopStatistics {
 			}
 		}
 
+		for (String item : filterAll) {
+			long count = filterAll.getNumber(item, 0).longValue();
+			if (count == 0) continue;
+			filterWorth.set(item, MathHelper.ceil(max / count));
+		}
+
 		saveFile(FILE_FILTER_WORLD, filterWorld);
 		saveFile(FILE_FILTER_BIOME, filterBiome);
 		saveFile(FILE_FILTER_ALL, filterAll);
+		saveFile(FILE_FILTER_WORTH, filterWorth);
+
 	}
 
 }

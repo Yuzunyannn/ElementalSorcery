@@ -2,13 +2,13 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
@@ -56,15 +56,8 @@ public class MantraEnderTeleport extends MantraCommon {
 		double posZ = pos.getZ() + 0.5;
 		if (world.isRemote) {
 			// 客户端的粒子效果
-			for (int i = 0; i < 32; ++i) {
-				world.spawnParticle(EnumParticleTypes.PORTAL, posX, posY + RandomHelper.rand.nextDouble() * 2.0D, posZ,
-						RandomHelper.rand.nextGaussian(), 0.0D, RandomHelper.rand.nextGaussian());
-			}
-			for (int i = 0; i < 32; ++i) {
-				world.spawnParticle(EnumParticleTypes.PORTAL, entity.posX,
-						entity.posY + RandomHelper.rand.nextDouble() * 2.0D, entity.posZ,
-						RandomHelper.rand.nextGaussian(), 0.0D, RandomHelper.rand.nextGaussian());
-			}
+			addEffect(world, new Vec3d(posX, posY, posZ));
+			addEffect(world, new Vec3d(entity.posX, entity.posY, entity.posZ));
 			return;
 		}
 		if (entity instanceof EntityPlayerMP) {
@@ -80,11 +73,6 @@ public class MantraEnderTeleport extends MantraCommon {
 					// 移动
 					player.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
 					player.fallDistance = 0.0F;
-					// 声音
-					world.playSound((EntityPlayer) null, player.prevPosX, player.prevPosY, player.prevPosZ,
-							SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1.0F, 1.0F);
-					world.playSound((EntityPlayer) null, event.getTargetX(), event.getTargetY(), event.getTargetZ(),
-							SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1.0F, 1.0F);
 				}
 				if (entity.isWet()) entity.attackEntityFrom(DamageSource.DROWN, 1.0F);
 			}
@@ -102,6 +90,15 @@ public class MantraEnderTeleport extends MantraCommon {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (caster.iWantCaster() == Minecraft.getMinecraft().player)
 			if (!dataEffect.hasMarkEffect(1)) dataEffect.addEffect(caster, new EffectPlayerAt(world, caster), 1);
+	}
+
+	@SideOnly(Side.CLIENT)
+	static public void addEffect(World world, Vec3d vec) {
+		for (int i = 0; i < 32; ++i) {
+			world.spawnParticle(EnumParticleTypes.PORTAL, vec.x, vec.y + RandomHelper.rand.nextDouble() * 2.0D, vec.z,
+					RandomHelper.rand.nextGaussian(), 0.0D, RandomHelper.rand.nextGaussian());
+		}
+		world.playSound(vec.x, vec.y, vec.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1, 1, true);
 	}
 
 }

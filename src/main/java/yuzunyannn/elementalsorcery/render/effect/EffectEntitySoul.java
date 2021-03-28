@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.render.effect;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
+import net.minecraft.client.renderer.entity.RenderEnderman;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -36,6 +37,7 @@ public class EffectEntitySoul extends Effect {
 	public EntityLivingBase entity;
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/entity/soul_tex.png");
 
+	public float modelYoff = 0;
 	public float alpha = 1;
 	public float prevAlpha = alpha;
 
@@ -47,8 +49,9 @@ public class EffectEntitySoul extends Effect {
 			RenderLiving rl = (RenderLiving) render;
 			this.entity = entity;
 			this.model = rl.getMainModel();
+			if (render instanceof RenderEnderman) modelYoff = -2;
 		}
-
+		this.posY = this.posY + modelYoff;
 	}
 
 	public void setBinder(Entity entity) {
@@ -76,7 +79,7 @@ public class EffectEntitySoul extends Effect {
 
 		if (this.binder != null) {
 			Vec3d to = this.binder.getPosition();
-			Vec3d at = this.getPositionVector();
+			Vec3d at = this.getPositionVector().addVector(0, -modelYoff, 0);
 			Vec3d tar = to.subtract(at);
 			float f = (40 - Math.min(lifeTime, 40f)) / 40f;
 			tar = tar.scale(f * f);

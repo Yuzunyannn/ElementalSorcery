@@ -1,5 +1,8 @@
 {
 	"lev": 5,
+	"need": [
+		"elf/elf_floor_laboratory"
+	],
 	"linked": "elementalsorcery:vortex",
 	"type": "research",
 	"name": "vortex",

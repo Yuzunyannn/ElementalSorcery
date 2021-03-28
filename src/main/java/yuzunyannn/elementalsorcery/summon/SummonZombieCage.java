@@ -22,7 +22,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.util.world.WorldTime;
+import yuzunyannn.elementalsorcery.elf.ElfTime;
 
 public class SummonZombieCage extends SummonCommon {
 
@@ -127,8 +127,8 @@ public class SummonZombieCage extends SummonCommon {
 			ElementalSorcery.logger.warn("召唤仪式僵尸牢笼反射异常", e);
 			entity = new EntityZombie(world);
 		}
-		WorldTime time = new WorldTime(world);
-		if (!time.at(WorldTime.Period.NIGHT)) {
+		ElfTime time = new ElfTime(world);
+		if (!time.at(ElfTime.Period.NIGHT)) {
 			if (entity instanceof EntityZombie) ((EntityZombie) entity).setChild(true);
 			else if (entity instanceof EntitySkeleton) {
 				entity.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(Items.LEATHER_HELMET));

@@ -33,6 +33,8 @@ public class WorldGeneratorES {
 	public static WorldGenAndSpawnConfig CONFIG_KYANITE_ORE = new WorldGenAndSpawnConfig(null, null, null, null);
 	@Config(kind = "spawn_and_gen", group = "start_stone", name = "#")
 	public static WorldGenAndSpawnConfig CONFIG_START_STONE = new WorldGenAndSpawnConfig(null, null, null, null);
+	@Config(kind = "spawn_and_gen", group = "start_flower", name = "#")
+	public static WorldGenAndSpawnConfig CONFIG_START_FLOWER = new WorldGenAndSpawnConfig(null, null, null, null);
 	@Config(kind = "spawn_and_gen", group = "seal_stone", name = "#")
 	public static WorldGenAndSpawnConfig CONFIG_SEAL_STONE = new WorldGenAndSpawnConfig(
 			array("overworld", "the_nether"), null, array(0, -2), null);
@@ -87,8 +89,9 @@ public class WorldGeneratorES {
 			if (pos.equals(this.pos)) return; // 防止重复调用两次
 			this.pos = pos;
 			this.genElfTree(event);
-			this.genStarStone(event);
-			this.genSealStone(event);
+			gen(event, new WorldGenStarStone(), CONFIG_START_STONE);
+			gen(event, new WorldGenSealStone(), CONFIG_SEAL_STONE);
+			gen(event, new WorldGenStarFlower(), CONFIG_START_FLOWER);
 		}
 
 		// 生成精灵树
@@ -116,14 +119,6 @@ public class WorldGeneratorES {
 		private void gen(DecorateBiomeEvent.Post event, WorldGenerator generator, WorldGenAndSpawnConfig config) {
 			BlockPos pos = event.getChunkPos().getBlock(0, 0, 0);
 			GenOre.gen(event.getWorld(), pos.add(8, 0, 8), event.getRand(), generator, config);
-		}
-
-		public void genStarStone(DecorateBiomeEvent.Post event) {
-			gen(event, new WorldGenStarStone(), CONFIG_START_STONE);
-		}
-
-		public void genSealStone(DecorateBiomeEvent.Post event) {
-			gen(event, new WorldGenSealStone(), CONFIG_SEAL_STONE);
 		}
 
 	}

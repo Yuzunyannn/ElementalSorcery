@@ -131,13 +131,15 @@ public class BlockHelper {
 	static public BlockPos tryFind(World world, BiFunction<World, BlockPos, Boolean> testFun, BlockPos origin,
 			int tryTimes, int width, int height) {
 		int w = 2;
+		int h = 2;
 		for (int t = 0; t < tryTimes; t++) {
 			int x = Math.round((w * 0.5f - RandomHelper.rand.nextFloat() * w));
 			int z = Math.round((w * 0.5f - RandomHelper.rand.nextFloat() * w));
-			int y = Math.round((height - RandomHelper.rand.nextFloat() * height * 2));
+			int y = Math.round((h * 0.5f - RandomHelper.rand.nextFloat() * h));
 			BlockPos pos = origin.add(x, y, z);
 			if (testFun.apply(world, pos)) return pos;
 			w = Math.min(MathHelper.ceil(w * 1.5f), width * 2);
+			h = Math.min(MathHelper.ceil(h * 1.5f), height * 2);
 		}
 		return null;
 	}
@@ -172,6 +174,7 @@ public class BlockHelper {
 		case "oreTin":
 		case "oreLead":
 		case "oreZinc":
+		case "oreScarletCrystal":
 			return true;
 		default:
 			return false;
@@ -188,6 +191,14 @@ public class BlockHelper {
 
 	static public boolean isOre(IBlockState oreState) {
 		return isOre(ItemHelper.toItemStack(oreState));
+	}
+
+	static public boolean hasKeyInOreDictionary(ItemStack woodStack, String key) {
+		if (woodStack.isEmpty()) return false;
+		int[] ore = OreDictionary.getOreIDs(woodStack);
+		if (ore == null || ore.length == 0) return false;
+		String name = OreDictionary.getOreName(ore[0]);
+		return name.toLowerCase().lastIndexOf(key) != -1;
 	}
 
 }

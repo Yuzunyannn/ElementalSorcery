@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.init.Blocks;
@@ -19,7 +18,6 @@ import net.minecraft.item.ItemBed;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.block.BlockLifeFlower;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.book.ItemGrimoire;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
@@ -52,7 +50,7 @@ public class RenderHelper {
 			GlStateManager.scale(scale, scale, scale);
 			MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
 		} else if (IRenderItem.isTransform(stack, ItemCameraTransforms.TransformType.FIXED)) {
-			GlStateManager.translate(0.5, 0.5, 0.5);
+			GlStateManager.translate(0.5, 0.25, 0.5);
 			GlStateManager.scale(scaleGround * 2, scaleGround * 2, scaleGround * 2);
 			MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
 		} else {
@@ -118,16 +116,6 @@ public class RenderHelper {
 			GlStateManager.translate(-0.15, 0.45, 0);
 			GlStateManager.rotate(-90, 1, 0, 0);
 			GlStateManager.scale(0.75, 0.75, 0.75);
-		} else if (TileEntityItemStackRenderer.instance != stack.getItem().getTileEntityItemStackRenderer()) {
-			boolean canlay = item == ESInit.ITEMS.MAGIC_BLAST_WAND;
-			if (canlay) {
-				GlStateManager.translate(0, 0.4, 0.0);
-				GlStateManager.rotate(90, 1, 0, 0);
-				GlStateManager.scale(0.5, 0.5, 0.5);
-			} else {
-				GlStateManager.translate(0, 0.35, 0);
-				GlStateManager.scale(0.5, 0.5, 0.5);
-			}
 		} else {
 			Block block = Block.getBlockFromItem(stack.getItem());
 			boolean canlay = block == Blocks.AIR;
@@ -142,7 +130,7 @@ public class RenderHelper {
 				GlStateManager.rotate(90, 1, 0, 0);
 				GlStateManager.scale(0.5, 0.5, 0.5);
 			} else {
-				GlStateManager.translate(0, 0.45, 0);
+				GlStateManager.translate(0, 0.5, 0);
 				GlStateManager.scale(0.5, 0.5, 0.5);
 			}
 		}

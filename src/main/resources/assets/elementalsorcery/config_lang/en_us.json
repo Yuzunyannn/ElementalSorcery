@@ -10,6 +10,7 @@
     "item.elementalsorcery_magic_blast_wand.magic_blast_one_damage_per_count": "Basic damage of magic blast, need [n] magic for 1 damage ",
     "item.elementalsorcery_magic_blast_wand.magic_max_damage_limit_for_decay": "Max limit of damage before attenuation, over part will be attenuated with log10",
     "item.elementalsorcery_magic_blast_wand.magic_range_decay_rate": "Range decay rate of damage, big number, more attenuation",
+    "item.elementalsorcery_spellbook_element.ar_count_pre_tick":"Count of Absorb or Release elements per tick of The Wizard Book of Elements",
 
     "block.elementalsorcery_life_flower.probability_of_consume_maigc_per_grow": "The chance to consume the magic in the Magic Pot pre growing",
 

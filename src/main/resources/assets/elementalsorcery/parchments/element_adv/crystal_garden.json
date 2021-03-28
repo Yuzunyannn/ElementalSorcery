@@ -1,7 +1,8 @@
 {
     "lev": 4,
     "need": [
-        "element/element_crafting_table"
+        "element/element_crafting_table",
+        "md/star_seed"
     ],
     "linked": [
         "elementalsorcery:life_flower",

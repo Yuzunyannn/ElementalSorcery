@@ -10,6 +10,7 @@
     "item.elementalsorcery_magic_blast_wand.magic_blast_one_damage_per_count": "魔力爆炸的基础伤害，每n点魔力为1点伤害",
     "item.elementalsorcery_magic_blast_wand.magic_max_damage_limit_for_decay": "魔力爆炸的不衰减最大值，超出部分进行log10衰减",
     "item.elementalsorcery_magic_blast_wand.magic_range_decay_rate": "魔力爆炸的范围衰减率，越大衰减越厉害",
+    "item.elementalsorcery_spellbook_element.ar_count_pre_tick":"元素之书吸收释放每tick的量",
 
     "block.elementalsorcery_life_flower.probability_of_consume_maigc_per_grow": "每进行一次生长，消耗掉花盆里魔力的概率",
 

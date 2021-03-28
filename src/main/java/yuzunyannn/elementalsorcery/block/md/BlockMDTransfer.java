@@ -7,7 +7,6 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.tile.md.TileMDFrequencyMapping;
 import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
 
 public class BlockMDTransfer extends BlockMDBase {

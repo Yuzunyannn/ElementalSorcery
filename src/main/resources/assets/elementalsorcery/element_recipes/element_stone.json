@@ -2,7 +2,7 @@
 	"type": "inherit_element",
 	"pattern": [
 		"DAD",
-		"AVA",
+		"SVS",
 		"DAD",
 		"N EF",
 		" F E",
@@ -10,6 +10,10 @@
 		"FE N"
 	],
 	"key": {
+		"S": {
+			"id": "elementalsorcery:star_flower",
+			"data": 0
+		},
 		"V": "elementalsorcery:vortex",
 		"A": "elementalsorcery:magic_crystal",
 		"D": "minecraft:diamond",

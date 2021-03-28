@@ -88,6 +88,34 @@ public class PageBook extends Page {
 		pageManager.toPage(showPage[slot]);
 	}
 
+	private void setColorWithPageLevel(int level) {
+		switch (level) {
+		case -2:
+			GlStateManager.color(130 / 255f, 191 / 255f, 113 / 255f);
+			break;
+		case 0:
+			GlStateManager.color(240 / 255f, 240 / 255f, 240 / 255f);
+			break;
+		case 1:
+			GlStateManager.color(206 / 255f, 56 / 255f, 47 / 255f);
+			break;
+		case 2:
+			GlStateManager.color(246 / 255f, 167 / 255f, 80 / 255f);
+			break;
+		case 3:
+			GlStateManager.color(1 / 255f, 150 / 255f, 240 / 255f);
+			break;
+		case 4:
+			GlStateManager.color(209 / 255f, 0 / 255f, 202 / 255f);
+			break;
+		case 5:
+			GlStateManager.color(10 / 255f, 243 / 255f, 170 / 255f);
+			break;
+		default:
+			break;
+		}
+	}
+
 	@Override
 	public void drawBackground(int xoff, int yoff, IPageManager pageManager) {
 		GuiContainer gui = pageManager.getGui();
@@ -102,6 +130,13 @@ public class PageBook extends Page {
 			GlStateManager.disableLighting();
 			gui.drawTexturedModalRect(xoff, yoff, 77, 0, 97, 18);
 			gui.drawTexturedModalRect(xoff + gui.getXSize() / 2 - 5, yoff + 8, 77, 19, 94, 4);
+
+			int lev = page.level;
+			if (lev >= 0 || lev == -2) {
+				setColorWithPageLevel(lev);
+				gui.drawTexturedModalRect(xoff + 18, yoff + 3, 77, 24, 76, 1);
+			}
+
 			page.drawIcon(xoff, yoff, pageManager);
 			yoff += CATALOG_LOCAL_INTERVAL;
 		}

@@ -1,18 +1,24 @@
 
 package yuzunyannn.elementalsorcery.element;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.ContainerEnchantment;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class ElementKnowledge extends ElementCommon {
+public class ElementKnowledge extends ElementCommon implements IStarFlowerCast {
 
 	public static final int COLOR = 0x9b9b9b;
 
@@ -20,6 +26,20 @@ public class ElementKnowledge extends ElementCommon {
 		super(COLOR, "knowledge");
 	}
 
+	@Override
+	public ElementStack starFlowerCasting(World world, BlockPos pos, ElementStack estack, int tick) {
+		if (world.isRemote) return estack;
+		if (tick % 40 != 0) return estack;
+
+		int exp = MathHelper.ceil(MathHelper.sqrt(estack.getPower()));
+		int range = getStarFlowerRange(estack);
+		AxisAlignedBB aabb = WorldHelper.createAABB(pos, range, range, 0.5);
+		List<EntityPlayer> entities = world.getEntitiesWithinAABB(EntityPlayer.class, aabb);
+		for (EntityPlayer entity : entities) WorldHelper.createExpBall(entity, exp);
+		if (entities.isEmpty()) return estack;
+		estack.shrink(Math.max(4, entities.size() * 4));
+		return estack;
+	}
 
 //	@Override
 //	public void spellEnd(World world, EntityLivingBase entity, ElementStack estack, SpellPackage pack) {
@@ -29,7 +49,6 @@ public class ElementKnowledge extends ElementCommon {
 //			((EntityPlayer) entity).displayGui(new InteractionObject(world, entity.getPosition()));
 //		}
 //	}
-
 
 	public static class InteractionObject implements IInteractionObject {
 		final World world;

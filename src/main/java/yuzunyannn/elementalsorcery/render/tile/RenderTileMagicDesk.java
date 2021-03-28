@@ -57,6 +57,11 @@ public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		RenderHelper.render(stack, TEXTURE, MODEL, false, 0.05, 0.025, 0.46, 0.3);
+		if (IRenderItem.isTransform(stack, ItemCameraTransforms.TransformType.FIXED)) {
+			TEXTURE.bind();
+			GlStateManager.translate(0.5, 0.85, 0.5);
+			GlStateManager.scale(0.025 * 2, 0.025 * 2, 0.025 * 2);
+			MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
+		} else RenderHelper.render(stack, TEXTURE, MODEL, false, 0.05, 0.025, 0.46, 0.3);
 	}
 }

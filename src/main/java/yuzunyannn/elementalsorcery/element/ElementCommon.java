@@ -19,4 +19,8 @@ public abstract class ElementCommon extends Element {
 		return TEXTURE;
 	}
 
+	protected int getStarFlowerRange(ElementStack estack) {
+		return (int) Math.min(Math.ceil(16 * estack.getPower() / 1000f) + 4, 24);
+	}
+
 }

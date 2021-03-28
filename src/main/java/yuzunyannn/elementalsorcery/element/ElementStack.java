@@ -12,6 +12,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 
 public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
@@ -63,6 +64,8 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	private Element element;
 	/** 元素能量 */
 	private int power;
+	/** 自定义数据 */
+	private NBTTagCompound stackTagCompound;
 
 	private ElementStack() {
 
@@ -269,6 +272,19 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		return this.copy().becomeMagic(world);
 	}
 
+	public void setTagCompound(@Nullable NBTTagCompound nbt) {
+		this.stackTagCompound = nbt;
+	}
+
+	public NBTTagCompound getTagCompound() {
+		return stackTagCompound;
+	}
+
+	public NBTTagCompound getOrCreateTagCompound() {
+		if (stackTagCompound == null) stackTagCompound = new NBTTagCompound();
+		return stackTagCompound;
+	}
+
 	/** 序列化 */
 	@Override
 	public NBTTagCompound serializeNBT() {
@@ -288,6 +304,8 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		this.setCount(nbt.getInteger("size"));
 		// 读取元素能量
 		this.setPower(nbt.getInteger("power"));
+		// 自定义数据
+		if (nbt.hasKey("tag", NBTTag.TAG_COMPOUND)) this.setTagCompound(nbt.getCompoundTag("tag"));
 	}
 
 	/** 序列化 */
@@ -300,6 +318,8 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		nbt.setInteger("size", stackSize);
 		// 写入元素的能量
 		nbt.setInteger("power", power);
+		// 自定义数据
+		if (stackTagCompound != null && !stackTagCompound.hasNoTags()) nbt.setTag("tag", stackTagCompound);
 	}
 
 }

@@ -23,8 +23,8 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
 public class TileMDInfusion extends TileMDBase implements ITickable {
 	@Override
@@ -255,20 +255,20 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 		addRecipe(Items.GOLD_INGOT, ITEMS.MAGIC_GOLD, 40, 20, awalysTrue);
 		addRecipe(ITEMS.MAGIC_CRYSTAL, ESInit.ITEMS.ELEMENT_CRYSTAL, 100, 20, (world, pos) -> {
 			Biome biome = world.getBiome(pos);
-			WorldTime time = new WorldTime(world);
+			ElfTime time = new ElfTime(world);
 			if (biome != Biomes.PLAINS) return false;
-			if (time.at(WorldTime.Period.DAWN) || time.at(WorldTime.Period.DUSK)) return true;
+			if (time.at(ElfTime.Period.DAWN) || time.at(ElfTime.Period.DUSK)) return true;
 			return false;
 		});
 		addRecipe(ESInit.ITEMS.KYANITE, ESInit.ITEMS.MAGIC_CRYSTAL, 20, 20, (world, pos) -> {
 			Biome biome = world.getBiome(pos);
-			WorldTime time = new WorldTime(world);
-			if (time.at(WorldTime.Period.DAY)) return biome.getRainfall() <= 0.5f && !world.isRaining();
+			ElfTime time = new ElfTime(world);
+			if (time.at(ElfTime.Period.DAY)) return biome.getRainfall() <= 0.5f && !world.isRaining();
 			return false;
 		});
 		addRecipe(ESInit.ITEMS.MAGIC_CRYSTAL, ESInit.ITEMS.SPELL_CRYSTAL, 40, 20, (world, pos) -> {
-			WorldTime time = new WorldTime(world);
-			if (!time.at(WorldTime.Period.MIDNIGHT)) return false;
+			ElfTime time = new ElfTime(world);
+			if (!time.at(ElfTime.Period.MIDNIGHT)) return false;
 			int count = 0;
 			for (int y = -1; y <= 1; y++) {
 				for (int x = -2; x <= 2; x++) {

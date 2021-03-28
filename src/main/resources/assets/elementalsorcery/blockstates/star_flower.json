@@ -1,0 +1,18 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cross",
+        "textures": {
+            "cross": "elementalsorcery:blocks/star_flower"
+        }
+    },
+    "variants": {
+        "stage": {
+            "0": { "textures": { "cross": "elementalsorcery:blocks/star_flower_0" } },
+            "1": { "textures": { "cross": "elementalsorcery:blocks/star_flower_1" } },
+            "2": { "textures": { "cross": "elementalsorcery:blocks/star_flower" } },
+            "3": { "textures": { "cross": "elementalsorcery:blocks/star_flower_withered" } },
+            "4": { "textures": { "cross": "elementalsorcery:blocks/star_flower_element" } }
+        }
+    }
+}

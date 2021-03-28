@@ -33,6 +33,11 @@ public class Spellbook {
 	public void beginSpelling(World world, EntityLivingBase player, EnumHand hand) {
 		this.spelling = true;
 		player.setActiveHand(hand);
+		if (world.isRemote) return;
+		if (this.getInventory() == null) return;
+		MessageSpellbook message = new MessageSpellbook().setSpellStart(player, this);
+		TargetPoint point = new TargetPoint(world.provider.getDimension(), player.posX, player.posY, player.posZ, 64);
+		ESNetwork.instance.sendToAllAround(message, point);
 	}
 
 	/**

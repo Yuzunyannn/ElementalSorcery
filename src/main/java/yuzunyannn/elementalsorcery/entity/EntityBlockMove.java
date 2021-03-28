@@ -45,6 +45,7 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.building.BlockItemTypeInfo;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.ExceptionHelper;
@@ -210,7 +211,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 		this.player = player;
 		this.trace = new MoveTrace(new Vec3d(from.getX() + 0.5, from.getY(), from.getZ() + 0.5), to);
 		this.state = world.getBlockState(from);
-		this.stack = ItemHelper.toItemStack(this.state);
+		this.stack = new BlockItemTypeInfo(state).getItemStack();
 		this.facing = getFacingFromState(this.state).getOpposite().rotateY();
 		this.setPosition(this.trace.from.x, this.trace.from.y, this.trace.from.z);
 		this.trace.randomOrder(this.rand);
@@ -257,6 +258,10 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 
 	public void setColor(int color) {
 		this.color = color;
+	}
+
+	public IBlockState getBlockState() {
+		return state;
 	}
 
 	@Override

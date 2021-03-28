@@ -148,6 +148,7 @@ public class ESObjects {
 		public Block RESEARCHER;
 		public Block SEAL_STONE;
 		public Block SCARLET_CRYSTAL_ORE;
+		public Block STAR_FLOWER;
 	}
 
 	static public class Elements {

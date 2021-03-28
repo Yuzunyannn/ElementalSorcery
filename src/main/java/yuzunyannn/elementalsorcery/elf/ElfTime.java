@@ -33,7 +33,7 @@ public class ElfTime {
 		return (int) ((time / 12000) % 2);
 	}
 
-	/** 获取日，十天为一个月 */
+	/** 获取日，12天为一个月 */
 	public int getDay() {
 		return (int) ((time / 24000) % 12);
 	}
@@ -64,5 +64,28 @@ public class ElfTime {
 		builder.append(year).append(month).append(day).append(hour).append(min).append(sec);
 		return builder.toString();
 	}
+
+	public boolean at(Period period) {
+		int time = (int) (this.time % 24000);
+		if (period.start <= time && period.end > time) return true;
+		return false;
+	}
+
+	public static enum Period {
+		DAWN(0, 1800),
+		MORNING(1800, 6900),
+		AFTERNOON(6900, 12000),
+		DUSK(12000, 13800),
+		NIGHT(13800, 24000),
+		MIDNIGHT(17700, 20100),
+		DAY(1800, 12000);
+
+		public int start, end;
+
+		Period(int start, int end) {
+			this.start = start;
+			this.end = end;
+		}
+	};
 
 }

@@ -16,6 +16,7 @@ public class SpellbookOpenMsg implements ITickTask {
 	@Override
 	public int onTick() {
 		Spellbook book = this.stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
+		if (book == null) return ITickTask.END;
 		if (this.entity.isHandActive()) ItemSpellbook.renderOpen(book);
 		else {
 			if (ItemSpellbook.renderClose(book)) {

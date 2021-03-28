@@ -28,8 +28,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeColorHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
 public class BlockElfLeaf extends BlockLeaves {
 
@@ -79,8 +79,8 @@ public class BlockElfLeaf extends BlockLeaves {
 		if (worldIn.isRemote) return;
 		if (!state.getValue(BlockLeaves.CHECK_DECAY)) {
 			if (Math.random() < 0.05) return;
-			WorldTime time = new WorldTime(worldIn);
-			if (!time.at(WorldTime.Period.MORNING)) return;
+			ElfTime time = new ElfTime(worldIn);
+			if (!time.at(ElfTime.Period.MORNING)) return;
 			// 检测下方是否满足
 			BlockPos dPos = pos.down();
 			if (!worldIn.isAirBlock(dPos)) return;

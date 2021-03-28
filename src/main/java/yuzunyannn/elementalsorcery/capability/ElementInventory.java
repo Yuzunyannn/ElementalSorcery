@@ -175,7 +175,8 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 			NBTTagList list = nbt.getTagList("list", 10);
 			for (NBTBase base : list) {
 				NBTTagCompound data = (NBTTagCompound) base;
-				instance.setStackInSlot(data.getInteger("slot"), new ElementStack(data));
+				ElementStack etack = new ElementStack(data);
+				instance.setStackInSlot(data.getInteger("slot"), etack.isEmpty() ? ElementStack.EMPTY : etack);
 			}
 		}
 

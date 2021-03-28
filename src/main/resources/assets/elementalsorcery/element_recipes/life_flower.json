@@ -1,10 +1,14 @@
 {
 	"pattern": [
 		"RBY",
-		" # ",
+		" S ",
 		" # "
 	],
 	"key": {
+		"S": {
+			"id": "elementalsorcery:star_flower",
+			"data": 0
+		},
 		"#": "minecraft:wheat_seeds",
 		"R": {
 			"id": "minecraft:dye",

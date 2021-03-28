@@ -127,4 +127,13 @@ public class WorldHelper {
 		createExpBall(player.world, player.getPositionVector(), exp);
 	}
 
+	static public AxisAlignedBB createAABB(BlockPos pos, double range, double yUp, double yDown) {
+		return createAABB(new Vec3d(pos).addVector(0.5, 0.5, 0.5), range, yUp, yDown);
+	}
+
+	static public AxisAlignedBB createAABB(Vec3d pos, double range, double yUp, double yDown) {
+		return new AxisAlignedBB(pos.x - range, pos.y - yDown, pos.z - range, pos.x + range, pos.y + yUp,
+				pos.z + range);
+	}
+
 }

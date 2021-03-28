@@ -66,6 +66,7 @@ import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.block.BlockResearcher;
 import yuzunyannn.elementalsorcery.block.BlockScarletCrystalOre;
 import yuzunyannn.elementalsorcery.block.BlockSealStone;
+import yuzunyannn.elementalsorcery.block.BlockStarFlower;
 import yuzunyannn.elementalsorcery.block.BlockStarSand;
 import yuzunyannn.elementalsorcery.block.BlockStarStone;
 import yuzunyannn.elementalsorcery.block.BlocksEStone;
@@ -244,6 +245,7 @@ import yuzunyannn.elementalsorcery.tile.TileMagicPlatform;
 import yuzunyannn.elementalsorcery.tile.TileMeltCauldron;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.tile.TileSmeltBox;
+import yuzunyannn.elementalsorcery.tile.TileStarFlower;
 import yuzunyannn.elementalsorcery.tile.TileStoneMill;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
@@ -372,6 +374,7 @@ public class ESInit {
 		BLOCKS.RESEARCHER = new BlockResearcher();
 		BLOCKS.SEAL_STONE = new BlockSealStone();
 		BLOCKS.SCARLET_CRYSTAL_ORE = new BlockScarletCrystalOre();
+		BLOCKS.STAR_FLOWER = new BlockStarFlower();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -685,6 +688,7 @@ public class ESInit {
 		register(TileTranscribeInjection.class, "TranscribeInjection");
 		register(TileElfTreeCore.class, "ElfTreeCore");
 		register(TileElfBeacon.class, "ElfBeacon");
+		register(TileStarFlower.class, "StarFlower");
 	}
 
 	static void registerAllCapability() {
@@ -826,6 +830,9 @@ public class ESInit {
 		registerRender(BLOCKS.SEAL_STONE, 0, "seal_stone");
 		registerRender(BLOCKS.SEAL_STONE, 1, "seal_stone_netherrack");
 		registerRender(BLOCKS.SCARLET_CRYSTAL_ORE);
+		registerRender(BLOCKS.STAR_FLOWER, 0, "star_flower_seed");
+		registerRender(BLOCKS.STAR_FLOWER, 2, "star_flower");
+		registerRender(BLOCKS.STAR_FLOWER, 4, "star_flower_element");
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());

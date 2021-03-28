@@ -112,8 +112,7 @@ public class CommandESDebug {
 			}
 				return;
 			case "blockMoveTest": {
-				EntityBlockMove blockMove = new EntityBlockMove(entity.world, pos,
-						entity.getPositionVector().addVector(0, 1, 0));
+				EntityBlockMove blockMove = new EntityBlockMove(entity.world, pos, entity.getPosition().down());
 				blockMove.setColor(0xff0000);
 				blockMove.setFlag(EntityBlockMove.FLAG_FORCE_DROP, true);
 				entity.world.setBlockToAir(pos);

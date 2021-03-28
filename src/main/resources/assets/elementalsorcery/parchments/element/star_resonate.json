@@ -1,0 +1,16 @@
+{
+    "lev": 3,
+    "need": [
+        "base/star_flower",
+        "element/element_crystal",
+        "md/star_seed",
+        "element/spellbook_element"
+    ],
+    "type": "normal",
+    "name": "starResonate",
+    "icon": {
+        "id": "elementalsorcery:star_flower",
+        "data": 4
+    },
+    "background": "inherit"
+}

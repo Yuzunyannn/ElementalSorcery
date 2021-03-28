@@ -24,6 +24,7 @@ import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.element.EffectElementAbsorb;
@@ -33,6 +34,9 @@ import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemSpellbookElement extends ItemSpellbook {
+
+	@Config(kind = "item", sync = true)
+	private int AR_COUNT_PRE_TICK = 2;
 
 	final int level;
 
@@ -108,7 +112,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 				ElementStack estack = eInv.getStackInSlot(i);
 				if (estack.isEmpty()) continue;
 				ElementStack e = estack.copy();
-				e.setCount(Math.min(2, e.getCount()));
+				e.setCount(Math.min(AR_COUNT_PRE_TICK, e.getCount()));
 
 				if (inventory.insertElement(e, true)) {
 					if (tile instanceof IAltarWake) ((IAltarWake) tile).wake(IAltarWake.SEND, null);
@@ -129,7 +133,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 		IElementInventory eInv = ElementHelper.getElementInventory(tile);
 		if (eInv == null) return false;
 		ElementStack e = estack.copy();
-		e.setCount(Math.min(2, e.getCount()));
+		e.setCount(Math.min(AR_COUNT_PRE_TICK, e.getCount()));
 		if (!eInv.insertElement(e, true)) return false;
 		if (tile instanceof IAltarWake) ((IAltarWake) tile).wake(IAltarWake.OBTAIN, null);
 		if (world.isRemote) flyEffect(world, e.getColor(), entity.getPositionVector().addVector(0, 0.5, 0),

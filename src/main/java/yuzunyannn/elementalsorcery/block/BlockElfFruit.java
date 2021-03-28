@@ -41,9 +41,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.world.WorldTime;
 
 public class BlockElfFruit extends Block implements Mapper {
 
@@ -228,8 +228,8 @@ public class BlockElfFruit extends Block implements Mapper {
 			// 检测上面是否为树叶
 			if (worldIn.getBlockState(pos.up()).getBlock() != ESInit.BLOCKS.ELF_LEAF) return;
 			if (!worldIn.getBlockState(pos.up()).getValue(BlockElfLeaf.DECAYABLE)) return;
-			WorldTime time = new WorldTime(worldIn);
-			if (!time.at(WorldTime.Period.DAY)) return;
+			ElfTime time = new ElfTime(worldIn);
+			if (!time.at(ElfTime.Period.DAY)) return;
 			worldIn.setBlockState(pos, state.withProperty(STAGE, growState + 1));
 		} else {
 			this.falling(worldIn, pos, state, true);

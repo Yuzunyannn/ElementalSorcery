@@ -15,7 +15,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.api.ESRegister;
 import yuzunyannn.elementalsorcery.init.ESImplRegister;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
@@ -145,12 +144,12 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 
 	/** 根据元素获取注册名 */
 	public static ResourceLocation getNameFromElement(Element element) {
-		return ESRegister.ELEMENT.getKey(element);
+		return REGISTRY.getKey(element);
 	}
 
 	/** 根据注册名获取元素 */
 	public static Element getElementFromName(ResourceLocation name) {
-		return ESRegister.ELEMENT.getValue(name);
+		return REGISTRY.getValue(name);
 	}
 
 	public static Element getElementFromName(String name) {

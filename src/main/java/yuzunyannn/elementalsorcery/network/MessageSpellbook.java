@@ -31,6 +31,13 @@ public class MessageSpellbook implements IMessage {
 		return this;
 	}
 
+	public MessageSpellbook setSpellStart(EntityLivingBase playerIn, Spellbook book) {
+		nbt.setUniqueId("uuid", playerIn.getUniqueID());
+		nbt.setByte("flags", (byte) 1);
+		book.getInventory().saveState(nbt);
+		return this;
+	}
+
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		nbt = ByteBufUtils.readTag(buf);
@@ -55,12 +62,16 @@ public class MessageSpellbook implements IMessage {
 						ElementalSorcery.logger.warn("MessageSpellbook的包接受时候出现问题：clinet寻找不到对应的玩家！难道是僵尸？！");
 						return;
 					}
-					if (flags == 0) {
-						ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
-						if (!stack.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null))
-							stack = player.getHeldItem(EnumHand.OFF_HAND);
-						if (!stack.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null)) return;
+					ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
+					if (!stack.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null))
+						stack = player.getHeldItem(EnumHand.OFF_HAND);
+					if (!stack.hasCapability(Spellbook.SPELLBOOK_CAPABILITY, null)) return;
+
+					if (flags == 0)
 						ItemSpellbook.renderFinish(stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null));
+					else if (flags == 1) {
+						Spellbook book = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
+						book.getInventory().loadState(message.nbt);
 					}
 				}
 			});
