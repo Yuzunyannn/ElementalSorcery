@@ -2,43 +2,35 @@ package yuzunyannn.elementalsorcery.crafting.element;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import com.google.gson.JsonParseException;
 
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
-import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.IElementMap;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
-import yuzunyannn.elementalsorcery.api.crafting.IToElementItem;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar.AnalysisPacket;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
-import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
+import yuzunyannn.elementalsorcery.util.json.Json.ParseExceptionCode;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
@@ -47,6 +39,7 @@ public class ElementMap implements IElementMap {
 	public final static ElementMap instance = new ElementMap();
 
 	public final static DefaultToElement defaultToElementMap = new DefaultToElement();
+	public final static DefaultBucketToElement defaultBucketToElement = new DefaultBucketToElement();
 
 	private final List<IToElement> toList = new LinkedList<IToElement>();
 
@@ -117,123 +110,13 @@ public class ElementMap implements IElementMap {
 		this.add(Item.getItemFromBlock(block), complex, estacks);
 	}
 
+	public void add(Fluid fluid, int complex, ElementStack... estacks) {
+		if (fluid == null) return;
+		this.check(estacks);
+		defaultBucketToElement.add(fluid, complex, estacks);
+	}
+
 	// ---------------------------------ADDEND----------------------------------------
-
-	// 默认的接口转化
-	private static class DefaultInterfaceToElement implements IToElement {
-
-		@Override
-		public IToElementInfo toElement(ItemStack stack) {
-			Item item = stack.getItem();
-			if (item instanceof IToElementItem) return ((IToElementItem) item).toElement(stack);
-			return null;
-		}
-
-	}
-
-	// 默认的实例化
-	private static class DefaultToElement implements IToElement {
-
-		public List<ElementInfo> stackToElementMap = new ArrayList<ElementInfo>();
-		public Map<Item, ElementInfo> itemToElementMap = new HashMap<Item, ElementInfo>();
-
-		public void add(ItemStack stack, int complex, ElementStack... estacks) {
-			boolean checkNBT = false;
-			// 如果存在"checkNBTTag"字段，则添加标签，这个标签只是标记用的，所以要删除
-			if (stack.hasTagCompound()) {
-				NBTTagCompound nbt = stack.getTagCompound();
-				if (nbt.hasKey("checkNBTTag")) {
-					checkNBT = true;
-					nbt.removeTag("checkNBTTag");
-				}
-			}
-			// 检查是否存在
-			for (int i = 0; i < stackToElementMap.size(); i++) {
-				ElementInfo info = stackToElementMap.get(i);
-				// 有相同的就替换
-				if (ItemStack.areItemsEqual(info.stack, stack)) {
-					if (checkNBT && !ItemStack.areItemStackTagsEqual(info.stack, stack)) continue;
-					stackToElementMap.set(i, new ElementInfo(stack, estacks, complex));
-					return;
-				}
-			}
-			stackToElementMap.add(new ElementInfo(stack, estacks, complex));
-		}
-
-		public void add(Item item, int complex, ElementStack... estacks) {
-			itemToElementMap.put(item, new ElementInfo(ItemStack.EMPTY, estacks, complex));
-		}
-
-		@Override
-		public IToElementInfo toElement(ItemStack stack) {
-			for (ElementInfo info : this.stackToElementMap) {
-				if (this.compareItemStacks(stack, info.stack)) return info;
-			}
-			return this.toElement(stack.getItem());
-		}
-
-		public IToElementInfo toElement(Item item) {
-			if (itemToElementMap.containsKey(item)) return itemToElementMap.get(item);
-			return null;
-		}
-
-		private boolean compareItemStacks(ItemStack stack1, ItemStack stack2) {
-			return ItemHelper.areItemsEqual(stack1, stack2);
-		}
-
-		protected void merge(DefaultToElement other) {
-			for (Entry<Item, ElementInfo> entry : other.itemToElementMap.entrySet()) {
-				if (this.itemToElementMap.containsKey(entry.getKey())) continue;
-				this.itemToElementMap.put(entry.getKey(), entry.getValue());
-			}
-			for (ElementInfo info : other.stackToElementMap) {
-				if (this.toElement(info.stack) != null) continue;
-				this.stackToElementMap.add(info);
-			}
-		}
-
-		static public class ElementInfo implements IToElementInfo {
-			final public ItemStack stack;
-			final public ElementStack[] estacks;
-			final public int complex;
-
-			public ElementInfo(ItemStack stack, ElementStack[] estacks, int complex) {
-				this.stack = stack;
-				this.estacks = estacks;
-				this.complex = complex;
-			}
-
-			@Override
-			public ElementStack[] element() {
-				return estacks;
-			}
-
-			@Override
-			public int complex() {
-				return complex;
-			}
-		}
-
-	}
-
-	// 默认的容器转化到元素
-	private static class DefaultBucketToElement implements IToElement {
-
-		protected static IToElementInfo water;
-		protected static IToElementInfo fire;
-
-		@Override
-		public IToElementInfo toElement(ItemStack stack) {
-			if (stack.getItem() == Items.WATER_BUCKET) return water;
-			else if (stack.getItem() == Items.LAVA_BUCKET) return fire;
-			return null;
-			// IFluidHandlerItem fhi =
-			// stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY,
-			// null);
-			// if (fhi == null) return null;
-		}
-
-	}
 
 	// 方便操作
 	static public ElementStack newES(Element element, int size, int power) {
@@ -244,6 +127,7 @@ public class ElementMap implements IElementMap {
 	static public void reflush() {
 		defaultToElementMap.itemToElementMap.clear();
 		defaultToElementMap.stackToElementMap.clear();
+		defaultBucketToElement.fluidToElementMap.clear();
 		for (ModContainer mod : Loader.instance().getActiveModList()) loadElementMap(mod);
 		loadRegisterFromFile();
 		findAndRegisterCraft();
@@ -265,22 +149,15 @@ public class ElementMap implements IElementMap {
 
 	static public void registerAll() throws IOException {
 		instance.add(new DefaultInterfaceToElement());
+		instance.add(new DefaultEnchanmentBookToElement());
+		instance.add(defaultBucketToElement);
 		instance.add(defaultToElementMap);
-		instance.add(new DefaultBucketToElement());
-
-		final ESObjects.Elements E = ESInit.ELEMENTS;
-
 		// 自动扫描并加载json
 		for (ModContainer mod : Loader.instance().getActiveModList()) loadElementMap(mod);
 		// 自动扫描玩家自定义目录
 		loadRegisterFromFile();
 
-		DefaultBucketToElement.water = ToElementInfoStatic.create(3, new ItemStack(Items.BUCKET),
-				newES(E.WATER, 25, 100));
-		DefaultBucketToElement.fire = ToElementInfoStatic.create(7, new ItemStack(Items.BUCKET),
-				newES(E.FIRE, 100, 500));
-
-		instance.add(Items.BUCKET, newES(E.METAL, 24, 200));
+		// instance.add(Items.BUCKET, newES(E.METAL, 24, 200));
 	}
 
 	static public void findAndRegisterCraft() {
@@ -323,30 +200,33 @@ public class ElementMap implements IElementMap {
 			try {
 				JsonObject jobj = jarray.needObject(i);
 				List<ElementStack> estacks = jobj.needElements("element");
-				List<ItemRecord> items = jobj.needItems("item");
-				int complex = -1;
-				if (jobj.hasNumber("complex")) complex = jobj.getNumber("complex").intValue();
 				ElementStack[] es = estacks.toArray(new ElementStack[estacks.size()]);
-				for (ItemRecord ir : items) {
-					ir = dealItemRecord(ir);
-					if (complex > -1) {
-						if (ir.isJustItem()) instance.add(ir.getItem(), complex, es);
-						else instance.add(ir.getStack(), complex, es);
-					} else {
-						if (ir.isJustItem()) instance.add(ir.getItem(), es);
-						else instance.add(ir.getStack(), es);
+				int complex = jobj.hasNumber("complex") ? jobj.getNumber("complex").intValue() : -1;
+
+				if (jobj.hasString("fluid")) {
+
+					Fluid fluid = FluidRegistry.getFluid(jobj.getString("fluid"));
+					if (fluid == null) throw Json.exception(ParseExceptionCode.NOT_HAVE, fluid);
+					instance.add(fluid, complex > -1 ? complex : 2, es);
+
+				} else {
+
+					List<ItemRecord> items = jobj.needItems("item");
+					for (ItemRecord ir : items) {
+						if (complex > -1) {
+							if (ir.isJustItem()) instance.add(ir.getItem(), complex, es);
+							else instance.add(ir.getStack(), complex, es);
+						} else {
+							if (ir.isJustItem()) instance.add(ir.getItem(), es);
+							else instance.add(ir.getStack(), es);
+						}
 					}
 				}
+
 			} catch (JsonParseException e) {
 				ElementalSorcery.logger.warn("解析json出现异常：" + fileName, e);
 			}
 		}
-	}
-
-	private static ItemRecord dealItemRecord(ItemRecord ir) {
-		if (ir.isJustItem()) return ir;
-		if (ir.getStack().getMetadata() == OreDictionary.WILDCARD_VALUE) return new ItemRecord(ir.getStack().getItem());
-		return ir;
 	}
 
 	private static DefaultToElement dealCrafting() {

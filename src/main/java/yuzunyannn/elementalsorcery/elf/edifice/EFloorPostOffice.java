@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.elf.edifice;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -8,20 +7,14 @@ import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.elf.quest.Quest;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
-import yuzunyannn.elementalsorcery.elf.quest.Quests;
-import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
-import yuzunyannn.elementalsorcery.util.item.ItemRec;
 
 public class EFloorPostOffice extends ElfEdificeFloor {
 
@@ -88,8 +81,7 @@ public class EFloorPostOffice extends ElfEdificeFloor {
 		}
 		// 后面一排树叶
 		{
-			IBlockState LEAF = ESInit.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE,
-					false);
+			IBlockState LEAF = ESInit.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
 			IBlockState GLOWSTONE = Blocks.GLOWSTONE.getDefaultState();
 			int size = treeSize;
 			for (int y = 0; y < 1; y++) {
@@ -132,18 +124,7 @@ public class EFloorPostOffice extends ElfEdificeFloor {
 
 			}
 		}
-		// 刷点任务
-		World world = builder.getWorld();
-		EntityBulletin bulletin = core.getBulletin();
-		if (bulletin == null || bulletin.getQuestCount() > core.getMaxQuestCount()) return;
-		Random rand = world.rand;
-		List<ItemRec> need = new LinkedList<ItemRec>();
-		need.add(new ItemRec(Items.PAPER, rand.nextInt(128) + 32));
-		need.add(new ItemRec(Items.LEATHER, rand.nextInt(64) + 16));
-		int coin = rand.nextInt(80) + 20;
-		Quest quest = Quests.createPostOfficeMaterials(coin, need);
-		quest.getType().addReward(QuestRewardExp.create(rand.nextInt((int) (coin * 1.5)) + 15));
-		quest.setEndTime(world.getWorldTime() + 24000 + rand.nextInt(24000 * 2));
-		bulletin.addQuest(quest);
+		World world = core.getWorld();
+		this.trySpawnQuest(builder, 24000 * 2 + world.rand.nextInt(24000 * 2));
 	}
 }

@@ -14,6 +14,7 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
@@ -64,7 +65,7 @@ public class QuestDescribe implements INBTSerializable<NBTTagCompound> {
 
 	}
 
-	protected String type = null;
+//	protected String type = null;
 	protected String title = "";
 	protected List<Getter> strings = new ArrayList<>();
 
@@ -80,13 +81,17 @@ public class QuestDescribe implements INBTSerializable<NBTTagCompound> {
 		strings.add(new Getter(value, param));
 	}
 
-	public String getType() {
-		return type == null ? "none" : type;
+	public boolean isEmpty() {
+		return strings.isEmpty();
 	}
 
-	public void setType(String type) {
-		this.type = type;
-	}
+//	public String getType() {
+//		return type == null ? "none" : type;
+//	}
+//
+//	public void setType(String type) {
+//		this.type = type;
+//	}
 
 	@SideOnly(Side.CLIENT)
 	public String getMainDescribe(Quest quest, @Nullable EntityLivingBase player, boolean dynamic) {
@@ -111,7 +116,7 @@ public class QuestDescribe implements INBTSerializable<NBTTagCompound> {
 		}
 		tag.setTag("strs", list);
 		tag.setString("title", title);
-		if (type != null) tag.setString("type", type);
+		// if (type != null) tag.setString("type", type);
 		return tag;
 	}
 
@@ -126,7 +131,7 @@ public class QuestDescribe implements INBTSerializable<NBTTagCompound> {
 			strings.add(get);
 		}
 		title = tag.getString("title");
-		if (tag.hasKey("type", NBTTag.TAG_STRING)) type = tag.getString("type");
+		// if (tag.hasKey("type", NBTTag.TAG_STRING)) type = tag.getString("type");
 	}
 
 }

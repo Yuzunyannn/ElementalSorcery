@@ -11,7 +11,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityXPOrb;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -123,7 +122,7 @@ public class WorldHelper {
 		}
 	}
 
-	static public void createExpBall(EntityPlayer player, int exp) {
+	static public void createExpBall(EntityLivingBase player, int exp) {
 		createExpBall(player.world, player.getPositionVector(), exp);
 	}
 

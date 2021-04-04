@@ -1,13 +1,15 @@
 package yuzunyannn.elementalsorcery.util;
 
 import java.lang.reflect.Array;
+import java.security.SecureRandom;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
 public class RandomHelper {
 
-	static final public Random rand = new Random();
+	static final public Random rand = new SecureRandom();
 
 	static public int randomRange(int min, int max) {
 		return (int) (min + (max - min) * rand.nextFloat());
@@ -56,6 +58,17 @@ public class RandomHelper {
 
 		public void add(T obj, double weight) {
 			list.add(new Pair(obj, weight));
+		}
+
+		public void remove(T obj) {
+			Iterator<Pair> iter = list.iterator();
+			while (iter.hasNext()) {
+				Pair p = iter.next();
+				if (p.equals(obj)) {
+					iter.remove();
+					return;
+				}
+			}
 		}
 
 		public void fixWeight(double weight) {

@@ -1,4 +1,6 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.condition;
+
+import java.util.Map;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,9 +13,12 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.loader.ParamObtain;
 import yuzunyannn.elementalsorcery.explore.Explores;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class QuestConditionNeedExplore extends QuestCondition {
 
@@ -43,6 +48,23 @@ public class QuestConditionNeedExplore extends QuestCondition {
 			if (this.structure == null || this.block.isEmpty()) throw new RuntimeException("探索条件异常！");
 		}
 		return this;
+	}
+
+	@Override
+	public void initWithConfig(JsonObject json, Map<String, Object> context) {
+		try {
+			Object obj = ParamObtain.parser(json.needString("biome"), context);
+			if (obj instanceof String) this.biome = obj.toString();
+			else needBiome((Biome) obj);
+		} catch (Exception e) {}
+		try {
+			needBlock(json.needItem("block").getStack());
+		} catch (Exception e) {}
+		try {
+			String id = ParamObtain.parser(json.needString("structure"), context).toString();
+			needStructure(id);
+		} catch (Exception e) {}
+		check();
 	}
 
 	@Override

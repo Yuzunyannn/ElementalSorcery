@@ -1,8 +1,10 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.reward;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,8 +13,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.util.json.ItemRecord;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class QuestRewardItem extends QuestReward {
 
@@ -21,6 +26,13 @@ public class QuestRewardItem extends QuestReward {
 	public QuestRewardItem item(ItemStack... stacks) {
 		this.stacks = Arrays.asList(stacks);
 		return this;
+	}
+
+	@Override
+	public void initWithConfig(JsonObject json, Map<String, Object> context) {
+		stacks = ItemRecord.asItemStackList(json.needItems("value"));
+		Iterator<ItemStack> iter = stacks.iterator();
+		while (iter.hasNext()) if (iter.next().isEmpty()) iter.remove();
 	}
 
 	@Override
@@ -34,8 +46,9 @@ public class QuestRewardItem extends QuestReward {
 	}
 
 	@Override
-	public void reward(Quest quest, EntityPlayer player) {
-		for (ItemStack item : stacks) ItemHelper.addItemStackToPlayer(player, item.copy());
+	public void onReward(Quest quest, EntityLivingBase player) {
+		if (!(player instanceof EntityPlayer)) return;
+		for (ItemStack item : stacks) ItemHelper.addItemStackToPlayer((EntityPlayer) player, item.copy());
 	}
 
 	@Override

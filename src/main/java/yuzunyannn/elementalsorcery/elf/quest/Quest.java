@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.elf.quest;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
@@ -17,6 +18,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionNeedFame;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 
 public class Quest implements INBTSerializable<NBTTagCompound> {
@@ -27,6 +30,7 @@ public class Quest implements INBTSerializable<NBTTagCompound> {
 	protected long endTime = 0;
 	/** 任务的标识符 */
 	protected short id;
+	protected String adventurerName;
 	protected UUID adventurer;
 
 	public Quest() {
@@ -49,6 +53,7 @@ public class Quest implements INBTSerializable<NBTTagCompound> {
 		if (adventurer == null) return false;
 		if (adventurer.getQuests() >= adventurer.getMaxQuests()) return false;
 		this.adventurer = player.getUniqueID();
+		this.adventurerName = player.getName();
 		Set<Short> set = new HashSet<>();
 		id = 1;
 		for (int i = 0; i < adventurer.getQuests(); i++) {
@@ -100,6 +105,10 @@ public class Quest implements INBTSerializable<NBTTagCompound> {
 		return adventurer;
 	}
 
+	public String getAdventurerName() {
+		return adventurerName;
+	}
+
 	public boolean isAdventurer(EntityLivingBase player) {
 		return player.getUniqueID().equals(this.adventurer);
 	}
@@ -139,6 +148,7 @@ public class Quest implements INBTSerializable<NBTTagCompound> {
 		if (endTime > 0) nbt.setLong("end", endTime);
 		if (adventurer != null) {
 			nbt.setUniqueId("adv", adventurer);
+			if (adventurerName != null) nbt.setString("advn", adventurerName);
 			nbt.setShort("qid", id);
 		}
 		return nbt;
@@ -152,6 +162,7 @@ public class Quest implements INBTSerializable<NBTTagCompound> {
 		endTime = nbt.getLong("end");
 		if (nbt.hasKey("qid")) {
 			adventurer = nbt.getUniqueId("adv");
+			if (nbt.hasKey("advn")) adventurerName = nbt.getString("advn");
 			id = nbt.getShort("qid");
 		}
 	}
@@ -173,7 +184,10 @@ public class Quest implements INBTSerializable<NBTTagCompound> {
 		quest.getType().finish(quest, player);
 		quest.unsign(player);
 		quest.setStatus(QuestStatus.FINISH);
-		if (ItemQuest.isQuest(questStack)) questStack.setTagCompound(quest.serializeNBT());
+		if (ItemQuest.isQuest(questStack)) {
+			questStack.setTagCompound(quest.serializeNBT());
+			ItemQuest.setFinish(questStack);
+		}
 		if (player instanceof EntityPlayerMP)
 			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "quest:" + quest.getType().getName());
 		return true;
@@ -198,7 +212,15 @@ public class Quest implements INBTSerializable<NBTTagCompound> {
 			Quest q = iter.next();
 			if (q.isOverdue(now)) {
 				if (isReputationDecline) {
-					// 这里还需要进行其他数值的操作——+——+——+——+——+——+——
+					float dec = adventurer.getFame() / 100f + 1;
+					List<QuestCondition> preconditions = q.getType().getPreconditions();
+					for (QuestCondition con : preconditions) {
+						if (con instanceof QuestConditionNeedFame) {
+							float need = ((QuestConditionNeedFame) con).getFame();
+							dec = dec + need / 10;
+						}
+					}
+					adventurer.fame(-dec);
 				}
 				iter.remove();
 			}

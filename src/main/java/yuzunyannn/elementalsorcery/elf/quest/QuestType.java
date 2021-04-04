@@ -8,6 +8,10 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestReward;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 
 public class QuestType implements INBTSerializable<NBTTagCompound> {
@@ -23,6 +27,9 @@ public class QuestType implements INBTSerializable<NBTTagCompound> {
 	protected ArrayList<QuestCondition> conditions = new ArrayList<QuestCondition>();
 	protected ArrayList<QuestReward> rewards = new ArrayList<QuestReward>();
 	protected String name = "";
+
+	/** 类型的推荐时间，该字段不会被持久化 */
+	public int sustain;
 
 	public QuestType() {
 
@@ -98,6 +105,17 @@ public class QuestType implements INBTSerializable<NBTTagCompound> {
 
 	public void reward(Quest quest, EntityLivingBase player) {
 		for (QuestReward reward : this.rewards) reward.onReward(quest, player);
+	}
+
+	public void openContainerSync(Quest quest, EntityLivingBase player, NBTTagCompound sendData) {
+		for (QuestCondition con : this.preconditions) con.onCheckDataSync(quest, player, sendData);
+		for (QuestCondition con : this.conditions) con.onCheckDataSync(quest, player, sendData);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void openContainerSyncRecv(Quest quest, EntityLivingBase player, NBTTagCompound recvData) {
+		for (QuestCondition con : this.preconditions) con.onRecvDataSync(quest, player, recvData);
+		for (QuestCondition con : this.conditions) con.onRecvDataSync(quest, player, recvData);
 	}
 
 	@Override

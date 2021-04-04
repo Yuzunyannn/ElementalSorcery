@@ -15,7 +15,6 @@ import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionEnd;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionGoTo;
@@ -145,8 +144,8 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 		if (!playerData.getBoolean("HPFW")) {
 			playerData.setBoolean("HPFW", true);
 			chapter.addScene(new TalkSceneSay("say.post.first.welfare"));
-			Quest quest = Quests.createPostFirestWelfare(player);
-			quest.getType().addReward(QuestRewardExp.create(50));
+			Quest quest = Quests.createQuest("newbie_post_office", player);
+//			quest.getType().addReward(QuestRewardExp.create(50));
 			quest.setEndTime(player.world.getWorldTime() + 24000 * 10);
 			ItemStack stack = ItemQuest.createQuest(quest);
 			ItemHelper.addItemStackToPlayer(player, stack);

@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.IBinder;
 import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.ColorHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
@@ -17,7 +18,7 @@ import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 public class EffectMagicSquare extends EffectCondition {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/magic_circles/square.png");
-	public Entity binder;
+	public IBinder binder;
 	public ResourceLocation icon;
 
 	public float r = 0;
@@ -29,6 +30,14 @@ public class EffectMagicSquare extends EffectCondition {
 	public Vec3d[] effectColors = null;
 
 	public EffectMagicSquare(World world, Entity binder, float size, int color) {
+		this(world, new IBinder.EntityBinder(binder, 0), size, color);
+	}
+
+	public EffectMagicSquare(World world, Vec3d binder, float size, int color) {
+		this(world, new IBinder.VecBinder(binder), size, color);
+	}
+
+	public EffectMagicSquare(World world, IBinder binder, float size, int color) {
 		super(world);
 		this.lifeTime = 1;
 		this.binder = binder;
@@ -37,7 +46,7 @@ public class EffectMagicSquare extends EffectCondition {
 		r = (float) c.x;
 		g = (float) c.y;
 		b = (float) c.z;
-		this.setPosition(binder);
+		this.setPosition(binder.getPosition());
 	}
 
 	public void setIcon(ResourceLocation icon) {
@@ -78,9 +87,10 @@ public class EffectMagicSquare extends EffectCondition {
 			this.prevPosX = this.posX;
 			this.prevPosY = this.posY;
 			this.prevPosZ = this.posZ;
-			this.posX = binder.posX;
-			this.posY = binder.posY;
-			this.posZ = binder.posZ;
+			Vec3d v = binder.getPosition();
+			this.posX = v.x;
+			this.posY = v.y;
+			this.posZ = v.z;
 			this.alpha += (1 - alpha) * 0.1f;
 
 			if (eAlpha <= 0) {

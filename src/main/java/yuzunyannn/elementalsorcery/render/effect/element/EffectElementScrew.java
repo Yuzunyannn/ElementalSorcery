@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.render.effect.element;
 
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -73,6 +74,16 @@ public class EffectElementScrew extends EffectElement {
 		double y = to.y + r * MathHelper.cos(rotate) * a.y + r * MathHelper.sin(rotate) * b.y;
 		double z = to.z + r * MathHelper.cos(rotate) * a.z + r * MathHelper.sin(rotate) * b.z;
 		doRender(x, y, z, partialTicks);
+	}
+
+	@Override
+	protected void doRender(BufferBuilder bufferbuilder, float partialTicks) {
+		float rotate = this.prevRotate + (this.rotate - this.prevRotate) * partialTicks;
+		double r = this.prevR + (this.r - this.prevR) * partialTicks;
+		double x = to.x + r * MathHelper.cos(rotate) * a.x + r * MathHelper.sin(rotate) * b.x;
+		double y = to.y + r * MathHelper.cos(rotate) * a.y + r * MathHelper.sin(rotate) * b.y;
+		double z = to.z + r * MathHelper.cos(rotate) * a.z + r * MathHelper.sin(rotate) * b.z;
+		doRender(bufferbuilder, x, y, z, partialTicks);
 	}
 
 }

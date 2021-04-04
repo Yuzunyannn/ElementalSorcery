@@ -6,10 +6,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -28,21 +28,17 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
-import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
-import yuzunyannn.elementalsorcery.entity.EntityScapegoat;
-import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.parchment.Pages;
-import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class CommandESDebug {
 
 	public static final String[] autoTips = new String[] { "reflush", "buildTest", "portalTest", "showInfo",
-			"blockMoveTest", "scapegoatTest", "reloadeTexture", "quest", "statistics", "statisticsHandle" };
+			"blockMoveTest", "textTest", "reloadeTexture", "quest", "statistics", "statisticsHandle" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -70,6 +66,8 @@ public class CommandESDebug {
 				sender.sendMessage(new TextComponentString("教程羊皮卷数据刷新成功!"));
 				ResearchRecipeManagement.reload();
 				sender.sendMessage(new TextComponentString("研究合成表刷新成功!"));
+				Quests.loadAll();
+				sender.sendMessage(new TextComponentString("任务刷新成功!"));
 			} catch (Exception e) {
 				ElementalSorcery.logger.warn("刷新数据出现异常！", e);
 				sender.sendMessage(new TextComponentString("刷新数据出现异常！Refresh data exception!"));
@@ -77,9 +75,7 @@ public class CommandESDebug {
 		}
 			return;
 		case "quest": {
-			Quest quest = Quests.createExploreQuests5(null, (EntityPlayer) sender.getCommandSenderEntity());
-			ItemHelper.addItemStackToPlayer((EntityPlayer) sender.getCommandSenderEntity(),
-					ItemQuest.createQuest(quest));
+
 			return;
 		}
 		default:
@@ -106,9 +102,8 @@ public class CommandESDebug {
 				 */
 			}
 				return;
-			case "scapegoatTest": {
-				EntityScapegoat e = new EntityScapegoat(entity.world, pos.up(), entity, ItemStack.EMPTY);
-				entity.world.spawnEntity(e);
+			case "textTest": {
+				System.out.println(I18n.format("commands.es.quest.fame.change", "GH", 0.1f));
 			}
 				return;
 			case "blockMoveTest": {
@@ -163,7 +158,7 @@ public class CommandESDebug {
 				World world = entity.getEntityWorld();
 				BlockPos at = entity.getPosition();
 				ChunkPos cp = new ChunkPos(at);
-				EventServer.addTickTask(new DevelopStatistics.Record(world, 10, cp));
+				DevelopStatistics.record(world, 90, cp);
 			}
 			case "statisticsHandle": {
 				DevelopStatistics.clearAll();

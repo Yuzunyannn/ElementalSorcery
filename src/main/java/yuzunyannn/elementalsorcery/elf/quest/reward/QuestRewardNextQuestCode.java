@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.reward;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +8,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionDelegate;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 
-public class QuestRewardNextQuest extends QuestReward {
+public class QuestRewardNextQuestCode extends QuestReward {
 
 	protected Quest quest;
 
-	public QuestRewardNextQuest quest(Quest quest) {
+	public QuestRewardNextQuestCode quest(Quest quest) {
 		this.quest = quest;
 		return this;
 	}
@@ -31,17 +34,19 @@ public class QuestRewardNextQuest extends QuestReward {
 	}
 
 	@Override
-	public void reward(Quest quest, EntityPlayer player) {
+	public void onReward(Quest quest, EntityLivingBase player) {
+		if (!(player instanceof EntityPlayer)) return;
+
 		ElfPostOffice postOffice = ElfPostOffice.getPostOffice(player.world);
 		EntityLivingBase fakeSender = new EntityElf(player.world);
 
 		ArrayList<QuestCondition> preConditions = this.quest.getType().getPreconditions();
 		for (QuestCondition con : preConditions)
-			if (con instanceof QuestConditionDelegate) ((QuestConditionDelegate) con).delegate(player);
+			if (con instanceof QuestConditionDelegate) ((QuestConditionDelegate) con).delegate((EntityPlayer) player);
 
 		List<ItemStack> list = new ArrayList<>();
 		list.add(ItemQuest.createQuest(this.quest));
-		postOffice.pushParcel(fakeSender, player, list);
+		postOffice.pushParcel(fakeSender, (EntityPlayer) player, list);
 	}
 
 }

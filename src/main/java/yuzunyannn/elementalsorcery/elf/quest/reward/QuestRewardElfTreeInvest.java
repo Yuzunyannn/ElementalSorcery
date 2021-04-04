@@ -1,8 +1,7 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.reward;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -10,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
@@ -44,7 +44,7 @@ public class QuestRewardElfTreeInvest extends QuestReward {
 	}
 
 	@Override
-	public void reward(Quest quest, EntityPlayer player) {
+	public void onReward(Quest quest, EntityLivingBase player) {
 		if (type == null) return;
 		World world = player.world;
 		world.getChunkFromBlockCoords(elfCorePos);

@@ -77,7 +77,7 @@ public class ItemAddressPlate extends Item {
 			pos = pos.add(playerIn.getLookVec().scale(3));
 			postmain = TileElfBeacon.tryCreatePostman(worldIn, new BlockPos(pos.x, playerIn.posY, pos.z));
 			if (postmain == null) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
-			ElfPostOffice.addAddressPlateServiceCount(stack, -1);
+			if (!playerIn.isCreative()) ElfPostOffice.addAddressPlateServiceCount(stack, -1);
 			sendParcelForMe(postmain, address, playerIn);
 			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 		}

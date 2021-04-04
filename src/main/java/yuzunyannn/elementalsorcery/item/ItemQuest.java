@@ -27,6 +27,7 @@ public class ItemQuest extends Item {
 	public ItemQuest() {
 		this.setUnlocalizedName("quest");
 		this.setMaxStackSize(1);
+		this.setHasSubtypes(true);
 	}
 
 	@Override
@@ -69,6 +70,10 @@ public class ItemQuest extends Item {
 		NBTTagCompound nbt = stack.getTagCompound();
 		Quest quest = new Quest(nbt);
 		return quest;
+	}
+
+	public static void setFinish(ItemStack stack) {
+		stack.setItemDamage(1);
 	}
 
 }

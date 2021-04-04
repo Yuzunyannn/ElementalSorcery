@@ -1,0 +1,95 @@
+{
+    "name": "collect",
+    "site": "elementalsorcery:library",
+    "title": "quest.request.collect",
+    "describe": [
+        "quest.library.want",
+        "quest.end.polite.{random#2~3}"
+    ],
+    "condition": [
+        {
+            "type": "NeedItem",
+            "value": {
+                "type": "pool",
+                "times": "{random#4~6}",
+                "reward": [
+                    {
+                        "weight": 2,
+                        "item": {
+                            "item": "minecraft:paper",
+                            "count": "{random#8~34}"
+                        }
+                    },
+                    {
+                        "weight": 2,
+                        "item": {
+                            "item": "minecraft:book",
+                            "count": "{random#8~24}"
+                        }
+                    },
+                    {
+                        "weight": 2,
+                        "item": {
+                            "item": "minecraft:dye",
+                            "count": "{random#8~24}"
+                        }
+                    },
+                    {
+                        "weight": 2,
+                        "item": {
+                            "item": "minecraft:feather",
+                            "count": "{random#8~24}"
+                        }
+                    },
+                    {
+                        "weight": 2,
+                        "item": {
+                            "item": "minecraft:feather",
+                            "count": "{random#8~24}"
+                        }
+                    },
+                    {
+                        "weight": 1,
+                        "item": {
+                            "item": "elementalsorcery:magic_paper",
+                            "count": "{random#4~8}"
+                        }
+                    },
+                    {
+                        "weight": 1,
+                        "item": {
+                            "item": "elementalsorcery:spellbook",
+                            "count": 1
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "precondition": [
+        {
+            "type": "NeedFame",
+            "value": 1
+        }
+    ],
+    "reward": [
+        {
+            "type": "Coin",
+            "value": "{prandom#25~75}"
+        },
+        {
+            "type": "Exp",
+            "value": "{random#100~200}"
+        },
+        {
+            "type": "Fame",
+            "value": 0.5
+        },
+        {
+            "type": "Topic",
+            "chance": 0.1,
+            "value": 1,
+            "topic": "Mantra"
+        }
+    ]
+}

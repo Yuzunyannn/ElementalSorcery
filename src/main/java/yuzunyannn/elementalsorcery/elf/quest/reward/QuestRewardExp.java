@@ -1,11 +1,15 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.reward;
+
+import java.util.Map;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.loader.ParamObtain;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class QuestRewardExp extends QuestReward {
@@ -22,6 +26,11 @@ public class QuestRewardExp extends QuestReward {
 	}
 
 	@Override
+	public void initWithConfig(JsonObject json, Map<String, Object> context) {
+		exp(ParamObtain.parser(json, "value", context, Number.class).intValue());
+	}
+
+	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		nbt.setInteger("exp", exp);
 	}
@@ -32,7 +41,7 @@ public class QuestRewardExp extends QuestReward {
 	}
 
 	@Override
-	public void reward(Quest quest, EntityPlayer player) {
+	public void onReward(Quest quest, EntityLivingBase player) {
 		WorldHelper.createExpBall(player, exp);
 	}
 

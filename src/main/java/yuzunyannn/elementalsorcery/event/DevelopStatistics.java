@@ -17,6 +17,23 @@ import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class DevelopStatistics {
 
+	public static void record(World world, int size, ChunkPos origin) {
+		DevelopStatistics.Record r = new DevelopStatistics.Record(world, size, origin);
+//		GameHelper.clientRun(() -> {
+//			EventClient.addTickTask(() -> {
+//				synchronized (r) {
+//					try {
+//						r.wait();
+//					} catch (InterruptedException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//				return ITickTask.END;
+//			});
+//		});
+		EventServer.addTickTask(r);
+	}
+
 	public static class Record implements ITickTask {
 
 		public int x, z;
@@ -50,6 +67,9 @@ public class DevelopStatistics {
 						ElementalSorcery.logger.info("记录完成");
 						DevelopStatistics.saveAll();
 						DevelopStatistics.handleResult();
+//						synchronized (this) {
+//							this.notifyAll();
+//						}
 						return ITickTask.END;
 					}
 				}

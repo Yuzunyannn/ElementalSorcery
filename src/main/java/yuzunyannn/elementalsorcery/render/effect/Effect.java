@@ -1,14 +1,20 @@
 package yuzunyannn.elementalsorcery.render.effect;
 
 import java.util.ArrayDeque;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Set;
+
+import javax.annotation.Nullable;
 
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -77,8 +83,6 @@ public abstract class Effect {
 		this.prevPosZ = this.posZ = pos.posZ;
 	}
 
-	protected abstract void doRender(float partialTicks);
-
 	public double getRenderX(float partialTicks) {
 		return this.prevPosX + (this.posX - this.prevPosX) * partialTicks;
 	}
@@ -91,10 +95,29 @@ public abstract class Effect {
 		return this.prevPosZ + (this.posZ - this.prevPosZ) * partialTicks;
 	}
 
-	static final private ArrayDeque<Effect> effects = new ArrayDeque<Effect>();
-	static final private ArrayDeque<Effect> guiEffects = new ArrayDeque<Effect>();
-	static final private ArrayDeque<Effect> contextEffects = new ArrayDeque<Effect>();
-	static private boolean inUpdate = false;
+	/** 获取批量渲染的类型，同一种类型获取的实例应该是 单例！ */
+	@Nullable
+	protected EffectBatchType typeBatch() {
+		return null;
+	}
+
+	/** 进行渲染,在无EffectBatchType的时候进行调用 */
+	protected void doRender(float partialTicks) {
+
+	}
+
+	/** 进行渲染,在有EffectBatchType的时候进行调用 */
+	protected void doRender(BufferBuilder bufferbuilder, float partialTicks) {
+
+	}
+
+	// ============-= 全局 =-============
+
+	static final private Set<EffectBatchType> batchs = new HashSet<>();
+	static final private ArrayDeque<Effect> effects = new ArrayDeque<>();
+	static final private ArrayDeque<Effect> guiEffects = new ArrayDeque<>();
+	static final private ArrayDeque<Effect> contextEffects = new ArrayDeque<>();
+	static boolean inUpdate = false;
 
 	static public void addEffect(Effect effect) {
 
@@ -108,24 +131,34 @@ public abstract class Effect {
 
 		if (inUpdate) contextEffects.add(effect);
 		else {
+
 			if (effect instanceof IGUIEffect) guiEffects.add(effect);
-			else effects.add(effect);
+			else {
+				EffectBatchType batch = effect.typeBatch();
+				if (batch == null) effects.add(effect);
+				else {
+					batch.effects.add(effect);
+					batchs.add(batch);
+				}
+			}
 		}
 	}
 
 	static public void updateAllEffects() {
+		update(batchs);
 		update(effects);
 		update(guiEffects);
 		while (!contextEffects.isEmpty()) addEffect(contextEffects.pop());
 	}
 
 	static public void clear() {
+		batchs.clear();
 		effects.clear();
 		guiEffects.clear();
 		contextEffects.clear();
 	}
 
-	static private void update(ArrayDeque effects) {
+	static private void update(ArrayDeque<Effect> effects) {
 		Iterator<Effect> iter = effects.iterator();
 		World world = Minecraft.getMinecraft().world;
 		inUpdate = true;
@@ -140,17 +173,43 @@ public abstract class Effect {
 		inUpdate = false;
 	}
 
+	static private void update(Set<EffectBatchType> batchs) {
+		Iterator<EffectBatchType> iter = batchs.iterator();
+		while (iter.hasNext()) {
+			EffectBatchType batch = iter.next();
+			update(batch.effects);
+			if (batch.effects.isEmpty()) iter.remove();
+		}
+	}
+
+	static private void renderBatchs(Set<EffectBatchType> batchs, float partialTicks) {
+		if (batchs.isEmpty()) return;
+
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+
+		Iterator<EffectBatchType> iter = batchs.iterator();
+		while (iter.hasNext()) {
+			EffectBatchType batch = iter.next();
+			batch.beginRender(tessellator, bufferbuilder);
+			for (Effect effect : batch.effects) effect.doRender(bufferbuilder, partialTicks);
+			batch.endRender(tessellator, bufferbuilder);
+		}
+
+	}
+
+	static private void renderEffects(ArrayDeque<Effect> effects, float partialTicks) {
+		for (Effect effect : effects) effect.doRender(partialTicks);
+	}
+
 	static public void renderAllEffects(float partialTicks) {
 		GlStateManager.disableAlpha();
 		GlStateManager.enableBlend();
 		GlStateManager.disableCull();
 		GlStateManager.depthMask(false);
 		RenderHelper.disableStandardItemLighting();
-		Iterator<Effect> iter = effects.iterator();
-		while (iter.hasNext()) {
-			Effect effect = iter.next();
-			effect.doRender(partialTicks);
-		}
+		renderEffects(effects, partialTicks);
+		renderBatchs(batchs, partialTicks);
 		GlStateManager.depthMask(true);
 		GlStateManager.enableCull();
 		GlStateManager.disableBlend();
@@ -162,11 +221,7 @@ public abstract class Effect {
 		GlStateManager.enableBlend();
 		GlStateManager.disableAlpha();
 		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		Iterator<Effect> iter = guiEffects.iterator();
-		while (iter.hasNext()) {
-			Effect effect = iter.next();
-			effect.doRender(partialTicks);
-		}
+		renderEffects(guiEffects, partialTicks);
 		GlStateManager.enableAlpha();
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();

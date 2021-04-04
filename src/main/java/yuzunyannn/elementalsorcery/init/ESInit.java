@@ -123,6 +123,7 @@ import yuzunyannn.elementalsorcery.element.ElementWater;
 import yuzunyannn.elementalsorcery.element.ElementWood;
 import yuzunyannn.elementalsorcery.elf.AutoName;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
+import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.event.EventClient;
@@ -576,6 +577,8 @@ public class ESInit {
 		Pages.init(event.getSide());
 		// 注册所有知识
 		TileRiteTable.init();
+		// 所有任务
+		Quests.loadAll();
 	}
 
 	public final static void postInit(FMLPostInitializationEvent event) throws Throwable {
@@ -746,7 +749,8 @@ public class ESInit {
 		registerRender(ITEMS.ANCIENT_PAPER, 1, "ancient_paper_unscramble");
 		registerRender(ITEMS.ANCIENT_PAPER, 2, "ancient_paper_new");
 		registerRender(ITEMS.ANCIENT_PAPER, 3, "ancient_paper_new_written");
-		registerRender(ITEMS.QUEST);
+		registerRender(ITEMS.QUEST, 0 , "quest");
+		registerRender(ITEMS.QUEST, 1 , "quest_finish");
 		registerRender(ITEMS.ELF_WATCH);
 		registerRender(ITEMS.MAGIC_GOLD);
 		registerRender(ITEMS.MAGIC_GOLD_PICKAXE);

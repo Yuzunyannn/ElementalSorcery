@@ -14,24 +14,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.block.BlockCrystalFlower;
 import yuzunyannn.elementalsorcery.block.BlocksEStone.EStone;
 import yuzunyannn.elementalsorcery.block.container.BlockMagicPlatform;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.elf.quest.Quest;
-import yuzunyannn.elementalsorcery.elf.quest.QuestReward;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardNextQuestId;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardTopic;
-import yuzunyannn.elementalsorcery.elf.quest.Quests;
-import yuzunyannn.elementalsorcery.entity.EntityBulletin;
-import yuzunyannn.elementalsorcery.explore.ExploreStructureFind;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class EFloorLaboratory extends ElfEdificeFloor {
@@ -277,35 +267,10 @@ public class EFloorLaboratory extends ElfEdificeFloor {
 		if (core == null) return;
 		EFloorHall.trySpawnElf(builder, ElfProfession.RESEARCHER, 2);
 		// 任务
-		World world = builder.getWorld();
-		Random rand = world.rand;
-		if (rand.nextInt(2) != 0) return;
-		EntityBulletin bulletin = core.getBulletin();
-		if (bulletin == null || bulletin.getQuestCount() > core.getMaxQuestCount()) return;
-		Quest quest;
-		switch (rand.nextInt(3)) {
-		case 0: {
-			quest = Quests.createExploreQuest(100 + rand.nextInt(300), null,
-					RandomHelper.<ItemStack>randomSelect(1, new ItemStack(Blocks.STAINED_HARDENED_CLAY, 1, 11),
-							new ItemStack(Blocks.SANDSTONE), new ItemStack(Blocks.TNT))[0],
-					ExploreStructureFind.TEMPLE);
-			if (rand.nextInt(2) == 0) quest.getType().addReward(QuestRewardTopic.create("Struct", rand.nextInt(2) + 1));
-			if (rand.nextInt(2) == 0) {
-				quest.getType().addReward(QuestRewardNextQuestId.create(Quests.GET_ROCK_CAMERA_QUESTS_1));
-			}
-		}
-			break;
-		default:
-			quest = Quests.createExploreQuest(100 + rand.nextInt(300), Biome.REGISTRY.getRandomObject(rand),
-					ItemStack.EMPTY, null);
-			if (rand.nextInt(2) == 0) {
-				quest.getType().addReward(QuestRewardNextQuestId.create(Quests.GET_ROCK_CAMERA_QUEST));
-			}
-			break;
-		}
-		quest.getType().addReward(QuestReward.REGISTRY.newInstance(QuestRewardExp.class).exp(20 + rand.nextInt(80)));
-		quest.setEndTime(world.getWorldTime() + 24000 * 3 + rand.nextInt(24000 * 10));
-		bulletin.addQuest(quest);
+		World world = core.getWorld();
+		this.trySpawnQuest(builder, 24000 * 3 + world.rand.nextInt(24000 * 10));
+		
+		//Quests.GET_ROCK_CAMERA_QUESTS_1
 	}
 
 }

@@ -1,0 +1,67 @@
+{
+    "name": "newbie",
+    "title": "quest.explore",
+    "describe": [
+        "quest.explore.join"
+    ],
+    "condition": [
+        {
+            "type": "NeedItem",
+            "value": [
+                {
+                    "item": "elementalsorcery:elf_crystal",
+                    "count": 128
+                },
+                {
+                    "item": "elementalsorcery:nature_crystal",
+                    "count": 16
+                },
+                {
+                    "item": "minecraft:ender_pearl",
+                    "count": 2
+                },
+                {
+                    "item": "minecraft:glass_pane",
+                    "count": 8
+                },
+                {
+                    "item": "minecraft:glowstone_dust",
+                    "count": 32
+                },
+                {
+                    "item": "minecraft:redstone",
+                    "count": 32
+                }
+            ]
+        }
+    ],
+    "precondition": [
+        {
+            "type": "Delegate",
+            "value": "{player}"
+        }
+    ],
+    "reward": [
+        {
+            "type": "ItemParcel",
+            "value": [
+                "elementalsorcery:rock_camera",
+                {
+                    "item": "elementalsorcery:parchment",
+                    "nbt": {
+                        "pId": "rock_camera"
+                    }
+                },
+                {
+                    "item": "elementalsorcery:nature_dust",
+                    "data": 1,
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "type": "Exp",
+            "value": 75
+        }
+    ]
+}

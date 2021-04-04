@@ -31,8 +31,9 @@ public class MantraSprint extends MantraCommon {
 		ElementStack need = new ElementStack(ESInit.ELEMENTS.AIR, 4, 30);
 		ElementStack get = caster.iWantSomeElement(need, true);
 		if (get.isEmpty()) return;
+		Entity entity = caster.iWantCaster().asEntity();
+		if (entity == null) return;
 		dataCommon.markContinue(true);
-		Entity entity = caster.iWantCaster();
 		int power = get.getPower();
 		double scale = MathHelper.clamp(MathHelper.sqrt(power / 10), 1.5, 6);
 		scale = 6;
@@ -49,15 +50,15 @@ public class MantraSprint extends MantraCommon {
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataCommon = (MantraDataCommon) data;
 		if (!dataCommon.isMarkContinue()) return;
-		Entity entity = caster.iWantCaster();
+		Entity entity = caster.iWantCaster().asEntity();
+		if (entity == null) return;
 		entity.motionY = 0;
 		entity.fallDistance = 0;
-		if (world.isRemote) endEffect(world, caster);
+		if (world.isRemote) endEffect(world, entity);
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void endEffect(World world, ICaster caster) {
-		Entity entity = caster.iWantCaster();
+	public void endEffect(World world, Entity entity) {
 		EffectResonance effect = new EffectResonance(world, entity.posX, entity.posY + 1, entity.posZ);
 		effect.setColor(0xffffff);
 		Effect.addEffect(effect);

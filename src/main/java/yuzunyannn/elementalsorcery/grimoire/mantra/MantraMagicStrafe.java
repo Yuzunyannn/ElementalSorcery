@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
+import java.util.Random;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
@@ -60,7 +62,8 @@ public class MantraMagicStrafe extends MantraCommon {
 		get.grow(36);
 		get.weaken(Math.min(tick / 4, 60) / 20f);
 		float dmg = Math.max(ItemMagicBlastWand.getDamage(get), 0.25f);
-		DamageSource ds = ItemMagicBlastWand.getMagicDamageSource(caster.iWantCaster(), caster.iWantDirectCaster());
+		DamageSource ds = ItemMagicBlastWand.getMagicDamageSource(caster.iWantCaster().asEntity(),
+				caster.iWantDirectCaster().asEntity());
 		target.attackEntityFrom(ds, dmg);
 		target.hurtResistantTime = 0;
 	}
@@ -70,8 +73,13 @@ public class MantraMagicStrafe extends MantraCommon {
 		WantedTargetResult result = caster.iWantBlockTarget();
 		BlockPos pos = result.getPos();
 		if (pos == null) {
-			Entity entity = caster.iWantCaster();
-			Vec3d vec = entity.getPositionEyes(0).add(entity.getLookVec().scale(world.rand.nextInt(5) + 3));
+			Random rand = world.rand;
+			Entity entity = caster.iWantCaster().asEntity();
+			Vec3d vec;
+			if (entity == null) {
+				vec = new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian())
+						.scale(rand.nextFloat() * 2);
+			} else vec = entity.getPositionEyes(0).add(entity.getLookVec().scale(rand.nextInt(5) + 3));
 			onAttackEffect(world, vec, data, caster);
 			return;
 		}

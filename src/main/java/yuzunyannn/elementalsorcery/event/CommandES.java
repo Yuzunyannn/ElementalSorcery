@@ -44,6 +44,8 @@ import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
@@ -51,6 +53,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper.EnumType;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
+import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.GameHelper;
@@ -188,8 +191,9 @@ public class CommandES extends CommandBase {
 				return getListOfStringsMatchingLastWord(args, names);
 			}
 			case "quest": {
+				if (args.length > 3) return getListOfStringsMatchingLastWord(args, Quests.CREATOR.keySet());
 				if (args.length > 2) return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
-				return getListOfStringsMatchingLastWord(args, "clear");
+				return getListOfStringsMatchingLastWord(args, "clear", "give", "fame");
 			}
 			case "mantra": {
 				if (args.length > 3) return getListOfStringsMatchingLastWord(args, Mantra.REGISTRY.getKeys());
@@ -333,13 +337,36 @@ public class CommandES extends CommandBase {
 
 	// =======================-------> 任务 <-------=======================
 	private void cmdQuest(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
-		EntityLivingBase player = getPlayer(server, sender, args[1]);
+		EntityPlayer player = getPlayer(server, sender, args[1]);
 
 		switch (args[0]) {
 		case "clear": {
 			IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
 			if (adventurer != null) adventurer.removeAllQuest();
 			notifyCommandListener(sender, this, "commands.es.quest.clear", player.getName());
+			return;
+		}
+		case "give": {
+			if (args.length < 3) throw new WrongUsageException("commands.es.quest.give.usage");
+			ResourceLocation id = new ResourceLocation(args[2]);
+			Quest quest = Quests.createQuest(id, player);
+			if (quest == null) throw new CommandException("commands.es.notFound", id.toString());
+			ItemHelper.addItemStackToPlayer(player, ItemQuest.createQuest(quest));
+			return;
+		}
+		case "fame": {
+			if (args.length < 3) throw new WrongUsageException("commands.es.quest.fame.usage");
+			float d = 0;
+			try {
+				d = Float.parseFloat(args[2]);
+			} catch (NumberFormatException e) {
+				throw new WrongUsageException("commands.es.quest.fame.usage");
+			}
+			IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+			if (adventurer == null) throw new CommandException("commands.es.notFound", "adventurer");
+			adventurer.fame(d);
+			notifyCommandListener(sender, this, "commands.es.quest.fame.change", player.getName(),
+					adventurer.getFame());
 			return;
 		}
 		default:

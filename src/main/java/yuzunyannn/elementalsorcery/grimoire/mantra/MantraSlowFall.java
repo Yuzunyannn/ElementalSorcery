@@ -42,8 +42,10 @@ public class MantraSlowFall extends MantraCommon {
 			ElementStack get = caster.iWantSomeElement(need, true);
 			if (get.isEmpty()) return;
 		}
+		Entity entity = caster.iWantCaster().asEntity();
+		if (entity == null) return;
 		dataEffect.markContinue(true);
-		Entity entity = caster.iWantCaster();
+
 		if (entity.motionY < -0.2) {
 			entity.fallDistance *= 0.7;
 			entity.motionY *= 0.7;
@@ -61,8 +63,7 @@ public class MantraSlowFall extends MantraCommon {
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		if (!hasEffectFlags(world, data, caster, MantraEffectFlags.DECORATE)) return;
 		Random rand = world.rand;
-		Entity entity = caster.iWantCaster();
-		Vec3d pos = entity.getPositionVector();
+		Vec3d pos = caster.iWantCaster().getPositionVector();
 		float r = 0.5f;
 		float theta = EventClient.globalRotate / 180 * 3.14f * 10;
 		Vec3d at = pos.addVector(MathHelper.sin(theta) * r, 1, MathHelper.cos(theta) * r);

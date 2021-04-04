@@ -1,7 +1,5 @@
 package yuzunyannn.elementalsorcery.elf.edifice;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.BlockBed;
@@ -9,7 +7,6 @@ import net.minecraft.block.BlockChest;
 import net.minecraft.block.BlockFlower;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -21,15 +18,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
-import yuzunyannn.elementalsorcery.elf.quest.Quest;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
-import yuzunyannn.elementalsorcery.elf.quest.Quests;
-import yuzunyannn.elementalsorcery.entity.EntityBulletin;
-import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
-import yuzunyannn.elementalsorcery.util.item.ItemRec;
 
 public class EFloorLivingRoom extends ElfEdificeFloor {
 
@@ -144,31 +134,6 @@ public class EFloorLivingRoom extends ElfEdificeFloor {
 			EFloorHall.trySpawnElf(builder, null, 3);
 			break;
 		}
-		// 刷点任务
-		EntityBulletin bulletin = core.getBulletin();
-		if (bulletin == null || bulletin.getQuestCount() > core.getMaxQuestCount()) return;
-		Random rand = world.rand;
-		List<ItemRec> need = new LinkedList<ItemRec>();
-		need.add(new ItemRec(Blocks.PLANKS, rand.nextInt(64) + 16));
-		need.add(new ItemRec(Blocks.CARPET, rand.nextInt(64) + 16));
-		if (rand.nextBoolean()) need.add(new ItemRec(Items.FLOWER_POT, rand.nextInt(10) + 2));
-		if (rand.nextBoolean()) need.add(new ItemRec(Blocks.GLOWSTONE, rand.nextInt(7) + 1));
-		int coin = tryPriceItems(rand, need, rand.nextInt(50));
-		Quest quest = Quests.createRepair(coin, need);
-		quest.getType().addReward(QuestRewardExp.create(rand.nextInt((int) (coin * 1.5)) + 10));
-		quest.setEndTime(world.getWorldTime() + 24000 + rand.nextInt(24000 * 2));
-		bulletin.addQuest(quest);
-	}
-
-	public static int tryPriceItems(Random rand, List<ItemRec> needs, int base) {
-		for (ItemRec rec : needs) {
-			int price = ElfProfessionMerchant.priceIt(rec.getItemStack());
-			if (price <= 0) {
-				if (rec.getItemStack().getItem() instanceof ItemSpellbook) price = 200;
-			}
-			price = Math.max(2, price);
-			base += rand.nextInt(price / 2) + price / 2;
-		}
-		return base;
+		this.trySpawnQuest(builder, 24000 * 2 + world.rand.nextInt(24000 * 2));
 	}
 }

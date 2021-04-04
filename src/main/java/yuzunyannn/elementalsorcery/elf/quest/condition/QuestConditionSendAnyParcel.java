@@ -1,4 +1,6 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.condition;
+
+import java.util.Map;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
@@ -6,6 +8,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.QuestData;
+import yuzunyannn.elementalsorcery.elf.quest.QuestTrigger;
+import yuzunyannn.elementalsorcery.elf.quest.QuestTriggers;
+import yuzunyannn.elementalsorcery.elf.quest.loader.ParamObtain;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class QuestConditionSendAnyParcel extends QuestCondition {
 
@@ -14,6 +22,11 @@ public class QuestConditionSendAnyParcel extends QuestCondition {
 	public QuestConditionSendAnyParcel needCount(int count) {
 		this.needCount = Math.max(count, 1);
 		return this;
+	}
+
+	@Override
+	public void initWithConfig(JsonObject json, Map<String, Object> context) {
+		needCount(ParamObtain.parser(json, "value", context, Number.class).intValue());
 	}
 
 	@Override

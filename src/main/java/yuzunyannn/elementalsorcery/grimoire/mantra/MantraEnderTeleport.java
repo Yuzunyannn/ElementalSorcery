@@ -50,7 +50,8 @@ public class MantraEnderTeleport extends MantraCommon {
 		ElementStack need = new ElementStack(ESInit.ELEMENTS.ENDER, 10, 50);
 		ElementStack stack = caster.iWantSomeElement(need, true);
 		if (stack.isEmpty()) return;
-		Entity entity = caster.iWantCaster();
+		Entity entity = caster.iWantCaster().asEntity();
+		if (entity == null) return;
 		double posX = pos.getX() + 0.5;
 		double posY = pos.getY();
 		double posZ = pos.getZ() + 0.5;

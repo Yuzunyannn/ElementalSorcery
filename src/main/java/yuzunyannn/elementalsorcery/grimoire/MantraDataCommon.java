@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -79,7 +78,7 @@ public class MantraDataCommon implements IMantraData {
 
 	@SideOnly(Side.CLIENT)
 	public void showProgress(float pro, int color, World world, ICaster caster) {
-		if (caster.iWantCaster() != Minecraft.getMinecraft().player) return;
+		if (!caster.iWantCaster().isClientPlayer()) return;
 		if (!this.hasMarkEffect(2)) {
 			effectProgress = new EffectScreenProgress(world);
 			effectProgress.setColor(color);
@@ -92,11 +91,12 @@ public class MantraDataCommon implements IMantraData {
 
 	@SideOnly(Side.CLIENT)
 	public void addEffect(ICaster caster, EffectCondition effect, int markId, boolean checkContinue) {
-		markEffect(markId);
 		if (effect.getCondition() == null) {
-			Entity entity = caster.iWantCaster();
-			effect.setCondition(new ConditionEffect(entity, this, markId, checkContinue));
+			ICasterObject co = caster.iWantCaster();
+			if (co.asEntity() == null) return;
+			effect.setCondition(new ConditionEffect(co.asEntity(), this, markId, checkContinue));
 		}
+		markEffect(markId);
 		Effect.addEffect(effect);
 	}
 

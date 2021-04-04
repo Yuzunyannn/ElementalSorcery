@@ -1,9 +1,6 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -12,6 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
@@ -55,9 +53,9 @@ public class MantraCommon extends Mantra {
 	public void onSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		this.onCollectElement(world, data, caster, caster.iWantKnowCastTick() + mdc.speedTick);
-		Entity entity = caster.iWantCaster();
+		ICasterObject co = caster.iWantCaster();
 		// 创造模式20倍加速！
-		if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative()) {
+		if (co.isCreative()) {
 			for (int i = 0; i < 20; i++) {
 				this.onCollectElement(world, data, caster, caster.iWantKnowCastTick() + ++mdc.speedTick);
 			}
@@ -75,9 +73,9 @@ public class MantraCommon extends Mantra {
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		if (hasEffectFlags(world, data, caster, MantraEffectFlags.MAGIC_CIRCLE)) out: {
-			Entity entity = caster.iWantCaster();
-			if (!(entity instanceof EntityLivingBase)) break out;
-			EntityLivingBase eb = (EntityLivingBase) entity;
+			ICasterObject co = caster.iWantCaster();
+			EntityLivingBase eb = co.asEntityLivingBase();
+			if (eb == null) break out;
 			MantraDataCommon dataEffect = (MantraDataCommon) data;
 			if (!dataEffect.hasMarkEffect(0))
 				dataEffect.addEffect(caster, this.getEffectMagicCircle(world, eb, data), 0);
@@ -90,7 +88,7 @@ public class MantraCommon extends Mantra {
 		}
 		if (this.hasEffectFlags(world, data, caster, MantraEffectFlags.INDICATOR)) out: {
 			MantraDataCommon dataEffect = (MantraDataCommon) data;
-			if (caster.iWantCaster() != Minecraft.getMinecraft().player || dataEffect.hasMarkEffect(1)) break out;
+			if (!caster.iWantCaster().isClientPlayer() || dataEffect.hasMarkEffect(1)) break out;
 			dataEffect.addEffect(caster, new EffectLookAt(world, caster, this.getColor(dataEffect)), 1);
 		}
 	}

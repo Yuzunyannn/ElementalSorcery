@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
@@ -82,7 +83,8 @@ public abstract class MantraSquareArea extends MantraCommon {
 		BlockPos pos = wr.getPos();
 		if (pos == null) return;
 		if (wr.getFace() == EnumFacing.UP) pos = pos.up();
-		caster.iWantDirectCaster().setPosition(pos.getX(), pos.getY(), pos.getZ());
+		ICasterObject co = caster.iWantDirectCaster();
+		if (co.asEntity() != null) co.asEntity().setPosition(pos.getX(), pos.getY(), pos.getZ());
 		this.onAfterSpellingInit(world, data, caster, pos);
 	}
 
@@ -114,7 +116,8 @@ public abstract class MantraSquareArea extends MantraCommon {
 	public void addAfterEffect(SquareData data, ICaster caster, int size) {
 		if (size <= 0) return;
 		if (data.hasMarkEffect(1000)) return;
-		Entity entity = caster.iWantDirectCaster();
+		Entity entity = caster.iWantDirectCaster().asEntity();
+		if (entity == null) return;
 		EffectMagicSquare ems = new EffectMagicSquare(entity.world, entity, size, this.getColor(data));
 		ems.setCondition(new ConditionEffect(entity, data, 1000, false));
 		data.addEffect(caster, ems, 1000);

@@ -30,8 +30,10 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.ITickTask;
+import yuzunyannn.elementalsorcery.grimoire.CasterObjectEntity;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
@@ -438,13 +440,13 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	@Override
-	public Entity iWantCaster() {
-		return user == null ? this : user;
+	public ICasterObject iWantCaster() {
+		return new CasterObjectEntity(user == null ? this : user);
 	}
 
 	@Override
-	public Entity iWantDirectCaster() {
-		return this;
+	public ICasterObject iWantDirectCaster() {
+		return new CasterObjectEntity(this);
 	}
 
 	@Override

@@ -1,11 +1,15 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.reward;
+
+import java.util.Map;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.loader.ParamObtain;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class QuestRewardTopic extends QuestReward {
 
@@ -23,6 +27,12 @@ public class QuestRewardTopic extends QuestReward {
 	}
 
 	@Override
+	public void initWithConfig(JsonObject json, Map<String, Object> context) {
+		int value = ParamObtain.parser(json, "value", context, Number.class).intValue();
+		set(json.needString("topic"), value);
+	}
+
+	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		nbt.setInteger("count", count);
 		nbt.setString("type", type);
@@ -35,7 +45,7 @@ public class QuestRewardTopic extends QuestReward {
 	}
 
 	@Override
-	public void reward(Quest quest, EntityPlayer player) {
+	public void onReward(Quest quest, EntityLivingBase player) {
 		Researcher.research(player, type, count);
 	}
 

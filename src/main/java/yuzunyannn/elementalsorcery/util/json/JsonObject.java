@@ -35,7 +35,8 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 
 public class JsonObject extends Json implements Iterable<String> {
-	final com.google.gson.JsonObject json;
+
+	protected final com.google.gson.JsonObject json;
 
 	public JsonObject() {
 		json = new com.google.gson.JsonObject();
@@ -108,6 +109,14 @@ public class JsonObject extends Json implements Iterable<String> {
 	@Override
 	public Iterator<String> iterator() {
 		return keySet().iterator();
+	}
+
+	public void remove(String key) {
+		json.remove(key);
+	}
+
+	public boolean has(String key) {
+		return json.has(key);
 	}
 
 	public boolean hasObject(String key) {
@@ -190,6 +199,22 @@ public class JsonObject extends Json implements Iterable<String> {
 		json.add(key, new JsonPrimitive(n));
 	}
 
+	public boolean hasBoolean(String key) {
+		if (json.has(key)) {
+			JsonElement je = json.get(key);
+			return je.isJsonPrimitive() ? je.getAsJsonPrimitive().isBoolean() : false;
+		}
+		return false;
+	}
+
+	public boolean getBoolean(String key) {
+		return json.get(key).getAsBoolean();
+	}
+
+	public void set(String key, boolean n) {
+		json.add(key, new JsonPrimitive(n));
+	}
+
 	@Override
 	public NBTTagCompound asNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
@@ -250,13 +275,18 @@ public class JsonObject extends Json implements Iterable<String> {
 
 	// ---> need <---
 
+	public void need(String... keys) {
+		for (String key : keys) if (has(key)) return;
+		throw exception(ParseExceptionCode.NOT_HAVE, Arrays.asList(keys).toString());
+	}
+
 	public JsonArray needArray(String... keys) {
 		for (String key : keys) if (hasArray(key)) return getArray(key);
 		throw exception(ParseExceptionCode.NOT_HAVE, Arrays.asList(keys).toString());
 	}
 
 	public JsonObject needObject(String key) {
-		if (this.hasObject(key)) return new JsonObject(json.get(key).getAsJsonObject());
+		if (this.hasObject(key)) return this.getObject(key);
 		throw exception(ParseExceptionCode.NOT_HAVE, key);
 	}
 

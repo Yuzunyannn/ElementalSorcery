@@ -1,0 +1,56 @@
+{
+    "name": "collect",
+    "site": "elementalsorcery:library",
+    "title": "quest.request.collect",
+    "describe": [
+        "quest.library.want",
+        "quest.end.polite.{random#2~3}"
+    ],
+    "condition": [
+        {
+            "type": "NeedItem",
+            "value": {
+                "item": "minecraft:enchanted_book",
+                "call": "{enchant#random@random}"
+            }
+        }
+    ],
+    "precondition": [
+        {
+            "type": "NeedFame",
+            "value": 10
+        }
+    ],
+    "reward": [
+        {
+            "type": "Coin",
+            "value": "{prandom#25~75}"
+        },
+        {
+            "type": "Exp",
+            "value": "{random#200~500}"
+        },
+        {
+            "type": "Fame",
+            "value": 1
+        },
+        {
+            "type": "Topic",
+            "chance": 0.5,
+            "value": "{random#1~2}",
+            "topic": "Mantra"
+        },
+        {
+            "type": "Topic",
+            "chance": 0.5,
+            "value": "{random#1~2}",
+            "topic": "Natural"
+        },
+        {
+            "type": "Topic",
+            "chance": 0.5,
+            "value": "{random#1~2}",
+            "topic": "Struct"
+        }
+    ]
+}

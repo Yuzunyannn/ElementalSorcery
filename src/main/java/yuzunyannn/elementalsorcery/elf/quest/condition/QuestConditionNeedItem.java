@@ -1,8 +1,10 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.condition;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.enchantment.Enchantment;
@@ -18,11 +20,16 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.item.ItemRec;
+import yuzunyannn.elementalsorcery.util.json.ItemRecord;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
-public class QuestConditionNeedItem extends QuestCondition {
+public class QuestConditionNeedItem extends QuestCondition implements IQuestConditionPrice {
 
 	protected List<ItemRec> needs = new ArrayList<>();
 
@@ -34,6 +41,11 @@ public class QuestConditionNeedItem extends QuestCondition {
 	public QuestConditionNeedItem needItem(ItemRec... needs) {
 		this.needs = new ArrayList<ItemRec>(Arrays.asList(needs));
 		return this;
+	}
+
+	@Override
+	public void initWithConfig(JsonObject json, Map<String, Object> context) {
+		needs = ItemRecord.asItemRecList(json.needItems("value"));
 	}
 
 	@Override
@@ -159,6 +171,24 @@ public class QuestConditionNeedItem extends QuestCondition {
 			if (i < size - 1) builder.append("、");
 		}
 		return builder.toString();
+	}
+
+	@Override
+	public int price(Random rand) {
+		return QuestConditionNeedItem.tryPriceItems(rand, needs);
+	}
+
+	public static int tryPriceItems(Random rand, List<ItemRec> needs) {
+		int coin = 0;
+		for (ItemRec rec : needs) {
+			int price = ElfProfessionMerchant.priceIt(rec.getItemStack());
+			if (price <= 0) {
+				if (rec.getItemStack().getItem() instanceof ItemSpellbook) price = 200;
+			}
+			price = Math.max(2, price);
+			coin += rand.nextInt(price / 2) + price / 2;
+		}
+		return coin;
 	}
 
 }

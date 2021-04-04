@@ -2,21 +2,23 @@ package yuzunyannn.elementalsorcery.init;
 
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.elf.quest.QuestCondition;
-import yuzunyannn.elementalsorcery.elf.quest.QuestConditionDelegate;
-import yuzunyannn.elementalsorcery.elf.quest.QuestConditionNeedExplore;
-import yuzunyannn.elementalsorcery.elf.quest.QuestConditionNeedItem;
-import yuzunyannn.elementalsorcery.elf.quest.QuestConditionPlayerLevel;
-import yuzunyannn.elementalsorcery.elf.quest.QuestConditionSendAnyParcel;
-import yuzunyannn.elementalsorcery.elf.quest.QuestReward;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardCoin;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardElfTreeInvest;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardItem;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardItemParcel;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardNextQuest;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardNextQuestId;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardTopic;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionDelegate;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionNeedExplore;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionNeedFame;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionNeedItem;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionPlayerLevel;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionSendAnyParcel;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestReward;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardCoin;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardElfTreeInvest;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardExp;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardFame;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardItem;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardItemParcel;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardNextQuest;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardNextQuestCode;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardTopic;
 
 public class QuestRegister {
 
@@ -34,6 +36,7 @@ public class QuestRegister {
 		register("Delegate", QuestConditionDelegate.class);
 		register("SendAnyParcel", QuestConditionSendAnyParcel.class);
 		register("NeedExplore", QuestConditionNeedExplore.class);
+		register("NeedFame", QuestConditionNeedFame.class);
 
 		registerReward("Item", QuestRewardItem.class);
 		registerReward("Coin", QuestRewardCoin.class);
@@ -42,7 +45,7 @@ public class QuestRegister {
 		registerReward("Topic", QuestRewardTopic.class);
 		registerReward("ItemParcel", QuestRewardItemParcel.class);
 		registerReward("NextQuest", QuestRewardNextQuest.class);
-		registerReward("NextQuestId", QuestRewardNextQuestId.class);
-
+		registerReward("NextQuestCode", QuestRewardNextQuestCode.class);
+		registerReward("Fame", QuestRewardFame.class);
 	}
 }

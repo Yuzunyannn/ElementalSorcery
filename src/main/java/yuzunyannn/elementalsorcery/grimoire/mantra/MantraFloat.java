@@ -32,8 +32,9 @@ public class MantraFloat extends MantraCommon {
 			ElementStack get = caster.iWantSomeElement(need, true);
 			if (get.isEmpty()) return;
 		}
+		Entity entity = caster.iWantCaster().asEntity();
+		if (entity == null) return;
 		dataEffect.markContinue(true);
-		Entity entity = caster.iWantCaster();
 		entity.motionY = 0.15;
 		entity.fallDistance = 0;
 		if (world.isRemote) onSpellingEffect(world, data, caster);

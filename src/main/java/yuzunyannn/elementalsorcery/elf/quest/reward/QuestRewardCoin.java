@@ -1,4 +1,6 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.reward;
+
+import java.util.Map;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
@@ -6,7 +8,10 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.loader.ParamObtain;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class QuestRewardCoin extends QuestReward {
 
@@ -15,6 +20,11 @@ public class QuestRewardCoin extends QuestReward {
 	public QuestRewardCoin coin(int coin) {
 		this.coin = coin;
 		return this;
+	}
+
+	@Override
+	public void initWithConfig(JsonObject json, Map<String, Object> context) {
+		coin(ParamObtain.parser(json, "value", context, Number.class).intValue());
 	}
 
 	@Override
@@ -28,8 +38,10 @@ public class QuestRewardCoin extends QuestReward {
 	}
 
 	@Override
-	public void reward(Quest quest, EntityPlayer player) {
-		ItemElfPurse.insert(player, coin);
+	public void onReward(Quest quest, EntityLivingBase player) {
+		if (player instanceof EntityPlayer) {
+			ItemElfPurse.insert((EntityPlayer) player, coin);
+		}
 	}
 
 	@Override

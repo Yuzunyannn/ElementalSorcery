@@ -1,25 +1,29 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.reward;
+
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.loader.QuestCreateFailException;
 import yuzunyannn.elementalsorcery.init.ESImpClassRegister;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class QuestReward extends ESImpClassRegister.EasyImp<QuestReward> implements INBTSerializable<NBTTagCompound> {
 
 	public static final ESImpClassRegister<QuestReward> REGISTRY = new ESImpClassRegister();
 
-	/** 获得奖励 */
-	public void onReward(Quest quest, EntityLivingBase player) {
-		if (player instanceof EntityPlayer) this.reward(quest, (EntityPlayer) player);
+	public void initWithConfig(JsonObject json, Map<String, Object> context) {
+		throw new QuestCreateFailException(this.getRegistryName() + " is not finish [initWithConfig] function");
 	}
 
-	public void reward(Quest quest, EntityPlayer player) {
+	/** 获得奖励 */
+	public void onReward(Quest quest, EntityLivingBase player) {
 
 	}
 
@@ -49,4 +53,5 @@ public class QuestReward extends ESImpClassRegister.EasyImp<QuestReward> impleme
 	public void readFromNBT(NBTTagCompound nbt) {
 
 	}
+
 }

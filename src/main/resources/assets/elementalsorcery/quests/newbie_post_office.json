@@ -1,0 +1,32 @@
+{
+    "name": "newbie",
+    "title": "quest.newbie.task",
+    "describe": [
+        {
+            "value": "quest.post.first.welfare",
+            "param": "{player#name}"
+        }
+    ],
+    "condition": [
+        {
+            "type": "SendAnyParcel",
+            "value": 10
+        }
+    ],
+    "precondition": [
+        {
+            "type": "Delegate",
+            "value": "{player}"
+        }
+    ],
+    "reward": [
+        {
+            "type": "Item",
+            "value": "elementalsorcery:elf_star"
+        },
+        {
+            "type": "Exp",
+            "value": 50
+        }
+    ]
+}

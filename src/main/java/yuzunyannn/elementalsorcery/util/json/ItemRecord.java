@@ -1,18 +1,32 @@
 package yuzunyannn.elementalsorcery.util.json;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import yuzunyannn.elementalsorcery.util.item.ItemRec;
 
-/** 描述物品记录，是stack还是单单是物品 */
+/** 描述物品记录，是stack还是单单是物品，同时还可以作为一个物品池 */
 public class ItemRecord {
 
 	public static Ingredient asIngredient(List<ItemRecord> itemRecords) {
 		ItemStack[] stacks = new ItemStack[itemRecords.size()];
 		for (int i = 0; i < stacks.length; i++) stacks[i] = itemRecords.get(i).getStack();
 		return Ingredient.fromStacks(stacks);
+	}
+
+	public static List<ItemStack> asItemStackList(List<ItemRecord> itemRecords) {
+		List<ItemStack> list = new ArrayList<>();
+		for (ItemRecord ir : itemRecords) list.add(ir.getStack());
+		return list;
+	}
+
+	public static List<ItemRec> asItemRecList(List<ItemRecord> itemRecords) {
+		List<ItemRec> list = new ArrayList<>();
+		for (ItemRecord ir : itemRecords) list.add(new ItemRec(ir.getStack()));
+		return list;
 	}
 
 	private final ItemStack stack;

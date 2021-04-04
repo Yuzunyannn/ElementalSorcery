@@ -1,8 +1,5 @@
 package yuzunyannn.elementalsorcery.elf.edifice;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.BlockLadder;
@@ -25,15 +22,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.elf.quest.Quest;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardTopic;
-import yuzunyannn.elementalsorcery.elf.quest.Quests;
-import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
-import yuzunyannn.elementalsorcery.util.item.ItemRec;
 
 public class EFloorLibrary extends ElfEdificeFloor {
 
@@ -276,51 +267,7 @@ public class EFloorLibrary extends ElfEdificeFloor {
 		TileElfTreeCore core = helper.treeCore();
 		if (core == null) return;
 		EFloorHall.trySpawnElf(builder, ElfProfession.SCHOLAR_ADV, 2);
-		// 任务
-		World world = builder.getWorld();
-		Random rand = world.rand;
-		if (rand.nextInt(2) != 0) return;
-		EntityBulletin bulletin = core.getBulletin();
-		if (bulletin == null || bulletin.getQuestCount() > core.getMaxQuestCount()) return;
-		Quest quest;
-		if (rand.nextBoolean()) quest = createEnchantedBook(world);
-		else quest = createLibraryMaterials(world);
-		if (quest == null) return;
-		bulletin.addQuest(quest);
-	}
-
-	public static Quest createEnchantedBook(World world) {
-		Random rand = world.rand;
-		Enchantment enchantment = null;
-		for (int tryTimes = 0; tryTimes < 3; tryTimes++) {
-			Enchantment e = Enchantment.REGISTRY.getRandomObject(rand);
-			if (!e.isAllowedOnBooks()) continue;
-			enchantment = e;
-			break;
-		}
-		if (enchantment == null) return null;
-		int level = rand.nextInt(enchantment.getMaxLevel()) + 1;
-		int coin = 100 * level + rand.nextInt(250);
-		Quest quest = Quests.createEnchantedBook(coin, enchantment, level);
-		quest.getType().addReward(QuestRewardExp.create(125 * level + rand.nextInt(400)));
-		if (rand.nextBoolean()) quest.getType().addReward(QuestRewardTopic.create("Mantra", 1 + rand.nextInt(2)));
-		if (rand.nextBoolean()) quest.getType().addReward(QuestRewardTopic.create("Natural", 1 + rand.nextInt(2)));
-		if (rand.nextBoolean()) quest.getType().addReward(QuestRewardTopic.create("Struct", 1 + rand.nextInt(2)));
-		quest.setEndTime(world.getWorldTime() + 24000 + rand.nextInt(24000 * 2));
-		return quest;
-	}
-
-	public static Quest createLibraryMaterials(World world) {
-		Random rand = world.rand;
-		ItemRec[] irs = RandomHelper.randomSelect(rand.nextInt(4) + 2, new ItemRec[] {
-				new ItemRec(Items.PAPER, rand.nextInt(32) + 8), new ItemRec(Items.BOOK, rand.nextInt(16) + 8),
-				new ItemRec(Items.DYE, rand.nextInt(16) + 8), new ItemRec(Items.FEATHER, rand.nextInt(16) + 8),
-				new ItemRec(ESInit.ITEMS.MAGIC_PAPER, rand.nextInt(8) + 4), new ItemRec(ESInit.ITEMS.SPELLBOOK, 1) });
-		List<ItemRec> needs = new ArrayList<>(Arrays.asList(irs));
-		int coin = EFloorLivingRoom.tryPriceItems(rand, needs, rand.nextInt(80) + 20);
-		Quest quest = Quests.createLibraryMaterials(coin, needs);
-		quest.getType().addReward(QuestRewardExp.create(rand.nextInt((int) (coin * 1.5)) + 15));
-		quest.setEndTime(world.getWorldTime() + 24000 + rand.nextInt(24000 * 2));
-		return quest;
+		World world = core.getWorld();
+		this.trySpawnQuest(builder, 24000 * 2 + world.rand.nextInt(24000 * 2));
 	}
 }

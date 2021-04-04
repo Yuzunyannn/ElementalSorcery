@@ -1,4 +1,6 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.reward;
+
+import java.util.Map;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
@@ -8,7 +10,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class QuestRewardItemParcel extends QuestRewardItem {
 
@@ -24,6 +28,12 @@ public class QuestRewardItemParcel extends QuestRewardItem {
 	}
 
 	@Override
+	public void initWithConfig(JsonObject json, Map<String, Object> context) {
+		if (json.hasBoolean("hide")) hide(json.getBoolean("hide"));
+		super.initWithConfig(json, context);
+	}
+
+	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		super.writeToNBT(nbt);
 		nbt.setBoolean("hidden", hidden);
@@ -36,10 +46,11 @@ public class QuestRewardItemParcel extends QuestRewardItem {
 	}
 
 	@Override
-	public void reward(Quest quest, EntityPlayer player) {
+	public void onReward(Quest quest, EntityLivingBase player) {
+		if (!(player instanceof EntityPlayer)) return;
 		ElfPostOffice postOffice = ElfPostOffice.getPostOffice(player.world);
 		EntityLivingBase fakeSender = new EntityElf(player.world);
-		postOffice.pushParcel(fakeSender, player, stacks);
+		postOffice.pushParcel(fakeSender, (EntityPlayer) player, stacks);
 	}
 
 	@Override

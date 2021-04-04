@@ -20,11 +20,11 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ContainerQuest;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
-import yuzunyannn.elementalsorcery.elf.quest.QuestCondition;
 import yuzunyannn.elementalsorcery.elf.quest.QuestDescribe;
-import yuzunyannn.elementalsorcery.elf.quest.QuestReward;
 import yuzunyannn.elementalsorcery.elf.quest.QuestStatus;
 import yuzunyannn.elementalsorcery.elf.quest.QuestType;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestReward;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
@@ -120,6 +120,13 @@ public class GuiQuest extends GuiContainer {
 			yoff += fontRenderer.FONT_HEIGHT;
 		}
 		// 请求的人
+		String name = quest.getAdventurerName();
+		if (name != null) {
+			int w = fontRenderer.getStringWidth(name);
+			fontRenderer.drawString(name, 200 - w, 202, color);
+			fontRenderer.drawString("✏", 200 - w - 10, 203, color);
+		}
+
 		GlStateManager.popMatrix();
 		// 完成标记
 		if (status == QuestStatus.FINISH) {

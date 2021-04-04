@@ -11,12 +11,16 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.building.BlockItemTypeInfo;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
-import yuzunyannn.elementalsorcery.elf.quest.QuestRewardExp;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
+import yuzunyannn.elementalsorcery.elf.quest.loader.IQuestCreator;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardExp;
+import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.init.ESImplRegister;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.item.ItemRec;
@@ -138,6 +142,32 @@ public class ElfEdificeFloor extends IForgeRegistryEntry.Impl<ElfEdificeFloor> {
 
 	public String getUnlocalizedName() {
 		return unlocalizedName;
+	}
+
+	public void trySpawnQuest(IBuilder builder, long time) {
+		BuilderHelper helper = new BuilderHelper(builder);
+		TileElfTreeCore core = helper.treeCore();
+		if (core == null) return;
+
+		EntityBulletin bulletin = core.getBulletin();
+		if (bulletin == null || bulletin.getQuestCount() > core.getMaxQuestCount()) return;
+
+		World world = core.getWorld();
+		Random rand = world.rand;
+
+		List<ResourceLocation> list = new ArrayList<>();
+		for (Entry<ResourceLocation, IQuestCreator> entry : Quests.CREATOR.entrySet()) {
+			IQuestCreator creator = entry.getValue();
+			if (creator.canSpawn(this)) list.add(entry.getKey());
+		}
+
+		if (list.isEmpty()) return;
+
+		Quest quest = Quests.createQuest(list.get(rand.nextInt(list.size())), core);
+		if (quest == null) return;
+
+		quest.setEndTime(world.getWorldTime() + time);
+		bulletin.addQuest(quest);
 	}
 
 }

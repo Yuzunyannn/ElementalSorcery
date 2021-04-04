@@ -15,6 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
@@ -40,14 +41,15 @@ public class MantraFloatArea extends MantraSquareAreaAdv {
 	@SideOnly(Side.CLIENT)
 	public void addAfterEffect(SquareData data, ICaster caster, int size) {
 		super.addAfterEffect(data, caster, size);
-		Entity entity = caster.iWantDirectCaster();
-		Random rand = entity.world.rand;
+		ICasterObject co = caster.iWantDirectCaster();
+		World world = co.getWorld();
+		Random rand = world.rand;
 		int times = (int) (size / 16 + 1);
 		for (int i = 0; i < times; i++) {
 			float hSize = size / 2;
-			Vec3d pos = entity.getPositionVector().addVector(rand.nextDouble() * size - hSize, 0.1,
+			Vec3d pos = co.getPositionVector().addVector(rand.nextDouble() * size - hSize, 0.1,
 					rand.nextDouble() * size - hSize);
-			EffectElementMove effect = new EffectElementMove(entity.world, pos);
+			EffectElementMove effect = new EffectElementMove(world, pos);
 			effect.g = 0;
 			effect.setVelocity(0, rand.nextDouble() * 0.5 + 0.5, 0);
 			effect.setColor(getRenderColor());

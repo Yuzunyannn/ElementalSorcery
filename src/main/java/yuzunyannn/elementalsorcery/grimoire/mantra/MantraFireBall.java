@@ -30,9 +30,11 @@ import yuzunyannn.elementalsorcery.element.ElementMetal;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
@@ -124,10 +126,16 @@ public class MantraFireBall extends MantraCommon {
 		super.onSpellingEffect(world, mData, caster);
 		if (!hasEffectFlags(world, mData, caster, MantraEffectFlags.DECORATE)) return;
 		Data data = (Data) mData;
-		Entity entity = caster.iWantCaster();
 		Random rand = world.rand;
-		Vec3d pos = entity.getPositionVector();
-		pos = pos.add(entity.getLookVec()).addVector(0, entity.getEyeHeight(), 0);
+
+		ICasterObject co = caster.iWantCaster();
+		Vec3d pos = co.getPositionVector();
+		if (co.asEntity() == null) pos = pos.addVector(0.5, 1, 0.5);
+		else {
+			Entity entity = co.asEntity();
+			pos = pos.add(entity.getLookVec()).addVector(0, entity.getEyeHeight(), 0);
+		}
+
 		Vec3d from = pos.addVector(rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1);
 		Vec3d v = pos.subtract(from).normalize();
 		// 聚合特效
@@ -192,9 +200,19 @@ public class MantraFireBall extends MantraCommon {
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return;
 		Data data = (Data) mData;
-		Entity entity = caster.iWantCaster();
-		data.pos = entity.getPositionVector().addVector(0, entity.getEyeHeight(), 0);
-		data.toward = entity.getLookVec();
+		ICasterObject co = caster.iWantCaster();
+		Entity entity = co.asEntity();
+		if (entity == null) {
+			data.pos = co.getPositionVector().addVector(0.5, 0.5, 0.5);
+			WantedTargetResult result = caster.iWantLivingTarget(EntityLivingBase.class);
+			if (result.getEntity() == null) {
+				Random rand = world.rand;
+				data.toward = new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian()).normalize();
+			} else data.toward = result.getHitVec().addVector(0, 1, 0).subtract(data.pos).normalize();
+		} else {
+			data.pos = entity.getPositionVector().addVector(0, entity.getEyeHeight(), 0);
+			data.toward = entity.getLookVec();
+		}
 		data.pos = data.pos.add(data.toward.scale(2));
 		data.power = Math.min(data.power, 32);
 	}
@@ -231,7 +249,7 @@ public class MantraFireBall extends MantraCommon {
 		double x = bPos.getX() + 0.5;
 		double y = bPos.getY() + 0.5;
 		double z = bPos.getZ() + 0.5;
-		Entity entity = caster.iWantCaster();
+		Entity entity = caster.iWantCaster().asEntity();
 		AxisAlignedBB aabb = new AxisAlignedBB(x - size, y - size, z - size, x + size, y + size, z + size);
 		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb, (living) -> {
 			if (living == entity) return false;

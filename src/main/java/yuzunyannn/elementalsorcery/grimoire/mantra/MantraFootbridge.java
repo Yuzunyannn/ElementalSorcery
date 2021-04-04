@@ -7,7 +7,6 @@ import java.util.function.Function;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -17,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
@@ -50,9 +50,10 @@ public class MantraFootbridge extends MantraCommon {
 		MantraDataCommon mData = (MantraDataCommon) data;
 		WantedTargetResult wr = caster.iWantBlockTarget();
 		int max = 96;
-		BlockPos pos = wr.getPos();
+		Vec3d pos = wr.getHitVec();
 		if (pos != null) {
-			double dis = caster.iWantCaster().getDistance(pos.getX(), pos.getY(), pos.getZ());
+			ICasterObject co = caster.iWantCaster();
+			double dis = co.getPositionVector().distanceTo(pos);
 			max = MathHelper.ceil(Math.min(96, 3 * dis));
 		}
 		CollectResult cr = mData.tryCollect(caster, ESInit.ELEMENTS.EARTH, 1, 25, max);
@@ -66,8 +67,8 @@ public class MantraFootbridge extends MantraCommon {
 
 		MantraDataCommon mData = (MantraDataCommon) data;
 		BlockPos pos1, pos2;
-		Entity entity = caster.iWantCaster();
-		pos1 = entity.getPosition().down();
+		ICasterObject co = caster.iWantCaster();
+		pos1 = co.getPosition().down();
 		WantedTargetResult wr = caster.iWantBlockTarget();
 		pos2 = wr.getPos();
 

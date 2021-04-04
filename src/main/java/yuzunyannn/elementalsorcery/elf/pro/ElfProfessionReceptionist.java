@@ -132,6 +132,7 @@ public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 		chapter.addScene(what);
 		what.addString("say.take.quest", new TalkActionGoTo("howTQ"));
 		if (core.getFloorCount() > 1) what.addString("say.want.go.upstair", new TalkActionGoTo("howGS"));
+		what.addString("say.fame.query", new TalkActionGoTo("fameQuery"));
 		what.addString("say.no", new TalkActionEnd());
 		// 接任务指导
 		TalkSceneSay howTQ = new TalkSceneSay().setLabel("howTQ");
@@ -139,6 +140,14 @@ public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 		howTQ.addString("say.how.take.quest", Talker.OPPOSING);
 		howTQ.addString("say.very.thank", Talker.PLAYER);
 		howTQ.addAction(new TalkActionEnd());
+		// 信用查询
+		if (adventurer != null) {
+			TalkSceneSay fameQuery = new TalkSceneSay().setLabel("fameQuery");
+			chapter.addScene(fameQuery);
+			fameQuery.addString("#say.fame.query.result?" + adventurer.getFame(), Talker.OPPOSING);
+			fameQuery.addString("say.very.thank", Talker.PLAYER);
+			fameQuery.addAction(new TalkActionEnd());
+		}
 		// 电梯指导
 		TalkSceneSay howGS = new TalkSceneSay().setLabel("howGS");
 		chapter.addScene(howGS);

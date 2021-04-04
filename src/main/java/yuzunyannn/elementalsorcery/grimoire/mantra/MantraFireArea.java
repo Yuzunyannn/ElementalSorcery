@@ -26,6 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementKnowledge;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
@@ -55,7 +56,9 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 	public void addAfterEffect(SquareData data, ICaster caster, int size) {
 		if (size <= 0) return;
 		if (data.hasMarkEffect(1000)) return;
-		Entity entity = caster.iWantDirectCaster();
+		ICasterObject co = caster.iWantDirectCaster();
+		Entity entity = co.asEntity();
+		if (entity == null) return;
 		EffectMagicSquare ems = new EffectMagicSquare(entity.world, entity, size, this.getColor(data));
 		ems.setCondition(new ConditionEffect(entity, data, 1000, false));
 		data.addEffect(caster, ems, 1000);
@@ -76,7 +79,7 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 		Random rand = world.rand;
 		fire.shrink(8);
 
-		Entity entityCaster = caster.iWantCaster();
+		Entity entityCaster = caster.iWantCaster().asEntity();
 
 		final float size = data.getSize() / 2;
 		AxisAlignedBB aabb = new AxisAlignedBB(originPos.getX() - size, originPos.getY(), originPos.getZ() - size,

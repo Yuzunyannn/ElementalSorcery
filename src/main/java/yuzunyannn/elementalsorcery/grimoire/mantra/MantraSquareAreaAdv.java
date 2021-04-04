@@ -3,7 +3,6 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -73,8 +72,7 @@ public abstract class MantraSquareAreaAdv extends MantraSquareArea {
 
 	@Override
 	public boolean onAfterSpellingTick(World world, SquareData mData, ICaster caster) {
-		Entity entity = caster.iWantDirectCaster();
-		return this.tick(world, (SquareData) mData, caster, entity.getPosition());
+		return this.tick(world, (SquareData) mData, caster, caster.iWantDirectCaster().getPosition());
 	}
 
 	public int getAccumulatePreTick() {

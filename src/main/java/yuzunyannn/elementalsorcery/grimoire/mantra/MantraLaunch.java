@@ -1,15 +1,16 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
@@ -68,8 +69,8 @@ public class MantraLaunch extends MantraCommon {
 			return;
 		}
 
-		Entity entity = caster.iWantCaster();
-		if (entity.getDistanceSq(pos) > 16 * 16) {
+		ICasterObject co = caster.iWantCaster();
+		if (co.getPositionVector().squareDistanceTo(new Vec3d(pos)) > 16 * 16) {
 			mData.markContinue(false);
 			return;
 		}
@@ -101,11 +102,9 @@ public class MantraLaunch extends MantraCommon {
 		ICraftingLaunch tile = BlockHelper.getTileEntity(world, pos, ICraftingLaunch.class);
 		if (tile == null || tile.isWorking()) return;
 
-		Entity entity = caster.iWantCaster();
-		EntityPlayer player = null;
-		if (entity instanceof EntityPlayer) player = (EntityPlayer) entity;
-
 		if (world.isRemote) return;
+		
+		EntityPlayer player = caster.iWantCaster().asPlayer();
 
 		if (!tile.canCrafting(type, player)) {
 			world.createExplosion(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 1.0f, false);

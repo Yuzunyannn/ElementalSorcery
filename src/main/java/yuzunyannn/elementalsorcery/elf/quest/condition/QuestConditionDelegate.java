@@ -1,4 +1,6 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.condition;
+
+import java.util.Map;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
@@ -7,14 +9,24 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.loader.ParamObtain;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class QuestConditionDelegate extends QuestCondition {
 
 	protected String name = "";
 
-	public QuestConditionDelegate delegate(EntityPlayer player) {
+	public QuestConditionDelegate delegate(EntityLivingBase player) {
 		this.name = player == null ? "" : player.getName();
 		return this;
+	}
+
+	@Override
+	public void initWithConfig(JsonObject json, Map<String, Object> context) {
+		Object obj = ParamObtain.parser(json.needString("value"), context);
+		if (obj instanceof String) this.name = obj.toString();
+		else delegate((EntityPlayer) obj);
 	}
 
 	@Override
@@ -30,13 +42,8 @@ public class QuestConditionDelegate extends QuestCondition {
 	boolean checkResult = false;
 
 	@Override
-	public boolean check(Quest task, EntityPlayer player) {
+	public boolean onCheck(Quest task, EntityLivingBase player) {
 		return checkResult = player.getName().equals(name);
-	}
-
-	@Override
-	public void finish(Quest task, EntityPlayer player) {
-
 	}
 
 	@Override

@@ -23,6 +23,7 @@ public class Adventurer implements IAdventurer, INBTSerializable<NBTTagCompound>
 	public static Capability<IAdventurer> ADVENTURER_CAPABILITY;
 
 	protected List<Quest> tasks = new LinkedList<>();
+	protected float fame;
 
 	@Override
 	public Quest getQuest(int index) {
@@ -48,10 +49,25 @@ public class Adventurer implements IAdventurer, INBTSerializable<NBTTagCompound>
 	public void removeAllQuest() {
 		tasks.clear();
 	}
-	
+
 	@Override
 	public Iterator<Quest> iterator() {
 		return tasks.iterator();
+	}
+
+	@Override
+	public void fame(float count) {
+		fame = fame + count;
+	}
+
+	@Override
+	public float getFame() {
+		return fame;
+	}
+
+	@Override
+	public void setFame(float count) {
+		fame = count;
 	}
 
 	@Override
@@ -76,6 +92,7 @@ public class Adventurer implements IAdventurer, INBTSerializable<NBTTagCompound>
 				list.appendTag(task.serializeNBT());
 			}
 			nbt.setTag("tasks", list);
+			nbt.setFloat("fame", instance.getFame());
 			return nbt;
 		}
 
@@ -89,6 +106,7 @@ public class Adventurer implements IAdventurer, INBTSerializable<NBTTagCompound>
 				NBTTagCompound data = (NBTTagCompound) base;
 				instance.addQuest(new Quest(data));
 			}
+			instance.setFame(nbt.getFloat("fame"));
 		}
 
 	}

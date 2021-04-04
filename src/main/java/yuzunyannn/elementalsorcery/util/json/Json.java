@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.function.BiFunction;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
@@ -25,6 +25,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.RandomHelper.WeightRandom;
 
 public abstract class Json {
 
@@ -41,7 +43,7 @@ public abstract class Json {
 		return list;
 	}
 
-	private void loadItems(JsonElement json, List<ItemRecord> list) {
+	protected void loadItems(JsonElement json, List<ItemRecord> list) {
 		if (json == null) return;
 		if (json.isJsonPrimitive()) {
 			if (json.getAsJsonPrimitive().isString()) {
@@ -53,25 +55,38 @@ public abstract class Json {
 			throw exception(ParseExceptionCode.PATTERN_ERROR, "物品描述", "json字段不是字符串");
 		}
 		if (json.isJsonArray()) {
-			JsonArray jarray = json.getAsJsonArray();
+			com.google.gson.JsonArray jarray = json.getAsJsonArray();
 			for (JsonElement j : jarray) loadItems(j, list);
 			return;
 		} else if (json.isJsonObject()) {
 			JsonObject jobj = new JsonObject(json.getAsJsonObject());
+			String type = null;
+			if (jobj.hasString("type")) type = jobj.getString("type");
+
+			if (type != null) {
+				// 特殊，池子的情况
+				if ("pool".equals(type)) {
+					loadItemPool(jobj, list);
+					return;
+				}
+			}
+
 			String id = jobj.needString("id", "item", "ore");
 			if (jobj.size() == 1) {
 				// 一个，直接转到字符串
 				loadItems(new JsonPrimitive(id), list);
 				return;
 			}
-			if (jobj.hasString("type")) {
-				ResourceLocation rl = new ResourceLocation(jobj.getString("type"));
-				if ("ore_dict".equals(rl.getResourcePath())) {
+			if (type != null) {
+				if ("ore_dict".equals(type)) {
 					NonNullList<ItemStack> oreList = OreDictionary.getOres(id);
 					if (oreList.isEmpty()) ElementalSorcery.logger.warn("矿物词典：" + id + "中未包含任何内容");
 					for (ItemStack stack : oreList) {
-						if (stack.getHasSubtypes()) list.add(new ItemRecord(stack.copy()));
-						else list.add(new ItemRecord(stack.getItem()));
+						if (stack.getHasSubtypes()) {
+							if (stack.getMetadata() == OreDictionary.WILDCARD_VALUE)
+								list.add(new ItemRecord(stack.getItem()));
+							else list.add(new ItemRecord(stack.copy()));
+						} else list.add(new ItemRecord(stack.getItem()));
 					}
 					return;
 				}
@@ -89,8 +104,42 @@ public abstract class Json {
 			ItemStack stack = new ItemStack(item, count, meta);
 			// nbt
 			if (jobj.hasObject("nbt")) stack.setTagCompound(jobj.getObject("nbt").asNBT());
+			this.onLoadItemAdd(stack, jobj);
 			list.add(new ItemRecord(stack));
 		}
+	}
+
+	protected void loadItemPool(JsonObject jobj, List<ItemRecord> list) {
+		if (jobj.has("common")) loadItems(jobj.getGoogleJson().get("common"), list);
+		Random rand = RandomHelper.rand;
+		if (jobj.hasArray("reward")) {
+			JsonArray jarray = jobj.needArray("reward");
+			WeightRandom<List<ItemRecord>> wr = new WeightRandom<>();
+			for (int i = 0; i < jarray.size(); i++) {
+				JsonObject data = jarray.needObject(i);
+				List<ItemRecord> inner = new ArrayList<>();
+				loadItems(data.getGoogleJson().get("item"), inner);
+				wr.add(inner, data.needNumber("w", "weight").doubleValue());
+			}
+			onPoolRewardAdd(wr, jobj, rand, list);
+		}
+		if (jobj.hasArray("bonus")) {
+			JsonArray jarray = jobj.needArray("bonus");
+			for (int i = 0; i < jarray.size(); i++) {
+				JsonObject data = jarray.needObject(i);
+				double chance = data.needNumber("chance").doubleValue();
+				if (chance > rand.nextDouble()) loadItems(data.getGoogleJson().get("item"), list);
+			}
+		}
+	}
+
+	protected void onLoadItemAdd(ItemStack stack, JsonObject dataAboutItem) {
+
+	}
+
+	protected void onPoolRewardAdd(WeightRandom<List<ItemRecord>> wr, JsonObject data, Random rand,
+			List<ItemRecord> list) {
+		list.addAll(wr.get(rand));
 	}
 
 	/** 通过json元素获取元素 */
@@ -112,7 +161,7 @@ public abstract class Json {
 			throw exception(ParseExceptionCode.PATTERN_ERROR, "元素描述", "json字段不是字符串");
 		}
 		if (json.isJsonArray()) {
-			JsonArray jarray = json.getAsJsonArray();
+			com.google.gson.JsonArray jarray = json.getAsJsonArray();
 			for (JsonElement j : jarray) loadElements(j, list);
 			return;
 		} else if (json.isJsonObject()) {
@@ -146,7 +195,7 @@ public abstract class Json {
 	private void loadPos(JsonElement je, List<Vec3d> list) {
 		if (je == null || je.isJsonNull()) return;
 		if (je.isJsonArray()) {
-			JsonArray jarray = je.getAsJsonArray();
+			com.google.gson.JsonArray jarray = je.getAsJsonArray();
 			if (jarray.size() <= 0) return;
 			je = jarray.get(0);
 			if (je.isJsonArray()) for (JsonElement j : jarray) loadPos(j, list);

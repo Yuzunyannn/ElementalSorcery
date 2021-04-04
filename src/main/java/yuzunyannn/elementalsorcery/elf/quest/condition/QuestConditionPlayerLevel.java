@@ -1,8 +1,9 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.condition;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
 
 public class QuestConditionPlayerLevel extends QuestCondition {
 

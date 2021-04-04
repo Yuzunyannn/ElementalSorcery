@@ -1,4 +1,6 @@
-package yuzunyannn.elementalsorcery.elf.quest;
+package yuzunyannn.elementalsorcery.elf.quest.condition;
+
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -8,23 +10,42 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.elf.quest.QuestTrigger;
+import yuzunyannn.elementalsorcery.elf.quest.loader.QuestCreateFailException;
 import yuzunyannn.elementalsorcery.init.ESImpClassRegister;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class QuestCondition extends ESImpClassRegister.EasyImp<QuestCondition>
 		implements INBTSerializable<NBTTagCompound> {
 
 	public static final ESImpClassRegister<QuestCondition> REGISTRY = new ESImpClassRegister();
 
-	protected boolean asPrecondition = false;
+	protected boolean isPrecondition;
 
-	public void asPrecondition(boolean pre) {
-		this.asPrecondition = pre;
+	public void asPrecondition(boolean yes) {
+		isPrecondition = yes;
+	}
+
+	public void initWithConfig(JsonObject json, Map<String, Object> context) {
+		throw new QuestCreateFailException(this.getRegistryName() + " is not finish [initWithConfig] function");
+	}
+
+	/** 当需要进行数据同步 */
+	public void onCheckDataSync(Quest quest, EntityLivingBase player, NBTTagCompound sendData) {
+
+	}
+
+	/** 接受到同步数据 */
+	@SideOnly(Side.CLIENT)
+	public void onRecvDataSync(Quest quest, EntityLivingBase player, NBTTagCompound sendData) {
+
 	}
 
 	/** 检查条件是否满足 */
 	public boolean onCheck(Quest quest, EntityLivingBase player) {
 		if (player instanceof EntityPlayer) return this.check(quest, (EntityPlayer) player);
-		return false;
+		return true; // 非玩家全满足
 	}
 
 	/** 触发时，条件进行记录，记录信息 */

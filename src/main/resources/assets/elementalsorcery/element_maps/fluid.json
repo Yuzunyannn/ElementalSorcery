@@ -1,0 +1,26 @@
+{
+    "maps": [
+        {
+            "notes": "水",
+            "fluid": "water",
+            "element": [
+                {
+                    "id": "water",
+                    "size": 25,
+                    "power": 100
+                }
+            ]
+        },
+        {
+            "notes": "岩浆",
+            "fluid": "lava",
+            "element": [
+                {
+                    "id": "fire",
+                    "size": 100,
+                    "power": 500
+                }
+            ]
+        }
+    ]
+}

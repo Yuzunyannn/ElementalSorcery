@@ -38,13 +38,25 @@ public class ContainerQuest extends Container implements IContainerNetwork {
 			quest.getType().check(quest, player);
 			return;
 		}
-		// 如果是当前玩家正在进行，就将进行数据给客户端，进行显示
+
+		// 获取一些需要同步的数据，如果有就将进行数据给客户端，进行显示
+		Quest q = quest;
 		int i = quest.findSignQuest(player);
-		if (i == -1) return;
-		IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
-		Quest q = adventurer.getQuest(i);
+		if (i != -1) {
+			IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+			q = adventurer.getQuest(i);
+		}
+
+		NBTTagCompound nbt = new NBTTagCompound();
+		q.getType().openContainerSync(q, player, nbt);
+
+		NBTTagCompound data = q.getData().getNBT();
+		if (!data.hasNoTags()) nbt.setTag("$$", data);
+
+		if (nbt.hasNoTags()) return;
+
 		EventServer.addTask(() -> {
-			this.sendToClient(q.getData().getNBT(), player);
+			this.sendToClient(nbt, player);
 		});
 	}
 
@@ -52,7 +64,8 @@ public class ContainerQuest extends Container implements IContainerNetwork {
 	public void recvData(NBTTagCompound nbt, Side side) {
 		if (side == Side.SERVER) return;
 		if (quest != null) {
-			quest.updateData(nbt);
+			quest.getType().openContainerSyncRecv(quest, player, nbt);
+			quest.updateData(nbt.getCompoundTag("$$"));
 			quest.getType().check(quest, player);
 		}
 	}

@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.RayTraceResult;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -55,10 +54,12 @@ public interface ICaster {
 	public <T extends Entity> WantedTargetResult iWantLivingTarget(Class<T> cls);
 
 	/** 获取施法者 ，施法者在某些情况下不一定是entitylivingbase */
-	public Entity iWantCaster();
+	@Nonnull
+	public ICasterObject iWantCaster();
 
 	/** 获取直接施法者 ，直接释放者通常是马甲实体 */
-	public Entity iWantDirectCaster();
+	@Nonnull
+	public ICasterObject iWantDirectCaster();
 
 	/** 是否有特效标记，用于动画检测 */
 	@SideOnly(Side.CLIENT)

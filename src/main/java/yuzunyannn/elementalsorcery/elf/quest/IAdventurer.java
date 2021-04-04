@@ -22,4 +22,13 @@ public interface IAdventurer extends Iterable<Quest> {
 	default public int getMaxQuests() {
 		return ESConfig.QUEST_LIMIT;
 	}
+
+	/** 获取信誉 */
+	public float getFame();
+
+	public void setFame(float count);
+
+	/** 增加或减少信誉 */
+	public void fame(float count);
+
 }

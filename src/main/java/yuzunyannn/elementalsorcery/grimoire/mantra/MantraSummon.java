@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
@@ -113,9 +114,10 @@ public class MantraSummon extends MantraCommon {
 	@Override
 	public void startSpelling(World world, IMantraData mData, ICaster caster) {
 		Data data = (Data) mData;
-		// 寻找召唤任务
-		Entity entity = caster.iWantCaster();
 		data.markContinue(false);
+		Entity entity = caster.iWantCaster().asEntity();
+		if (entity == null) return;
+		// 寻找召唤任务
 		if (entity instanceof EntityLivingBase) {
 			ItemStack stack = ((EntityLivingBase) entity).getHeldItemOffhand();
 			SummonRecipe r = SummonRecipe.findRecipeWithKeepsake(stack, world, caster.iWantFoothold());
@@ -174,8 +176,11 @@ public class MantraSummon extends MantraCommon {
 		else data.pos = data.pos.up();
 		if (data.summonRecipe != null)
 			data.summon = data.summonRecipe.createSummon(data.keepsake, data.world, data.pos);
-		caster.iWantDirectCaster().setPosition(data.pos.getX(), data.pos.getY(), data.pos.getZ());
-		Entity entity = caster.iWantCaster();
+		// 重置位置
+		ICasterObject co = caster.iWantDirectCaster();
+		if (co.asEntity() != null) co.asEntity().setPosition(data.pos.getX(), data.pos.getY(), data.pos.getZ());
+		// 消耗灵魂
+		Entity entity = caster.iWantCaster().asEntity();
 		if (entity instanceof EntityPlayer && !((EntityPlayer) entity).isCreative()) {
 			int cost = data.summonRecipe.getSoulCost(data.keepsake, world, data.pos);
 			ItemStack stack = findSoulTool((EntityPlayer) entity, cost);
@@ -195,7 +200,8 @@ public class MantraSummon extends MantraCommon {
 	public void afterSpellingEffect(World world, IMantraData mData, ICaster caster) {
 		Data data = (Data) mData;
 		if (data.hasMarkEffect(1000)) return;
-		Entity entity = caster.iWantDirectCaster();
+		Entity entity = caster.iWantDirectCaster().asEntity();
+		if (entity == null) return;
 		EffectSummonRender ems = new EffectSummonRender(entity.world, data);
 		ems.setCondition(new ConditionEffect(entity, data, 1000, false));
 		data.addEffect(caster, ems, 1000);
