@@ -19,6 +19,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderDeconstruct;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class CraftingDeconstruct implements ICraftingAltar {
 
@@ -26,7 +27,7 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	// 操作结果链表，该变量同时起到标定作用
 	private LinkedList<ElementStack> restEStacks = null;
 	// 保留的结果
-	private ItemStack remainStack = ItemStack.EMPTY;
+	private ItemStack[] remainStacks = null;
 	// 是否ok
 	private boolean isOk = true;
 	// 当前没有放入的元素
@@ -44,7 +45,8 @@ public class CraftingDeconstruct implements ICraftingAltar {
 			for (int i = 0; i < stack.getCount(); i++)
 				restEStacks.add(estack.copy().becomeElementWhenDeconstruct(world, stack, teInfo.complex(), lvPower));
 		}
-		remainStack = teInfo.remain();
+		remainStacks = teInfo.remain();
+		remainStacks = ItemHelper.copy(remainStacks);
 	}
 
 	public CraftingDeconstruct(NBTTagCompound nbt) {
@@ -60,7 +62,7 @@ public class CraftingDeconstruct implements ICraftingAltar {
 		NBTTagCompound nbt = new NBTTagCompound();
 		if (restEStacks != null) NBTHelper.setElementist(nbt, "restEles", restEStacks);
 		NBTHelper.setItemList(nbt, "itemList", itemList);
-		if (!remainStack.isEmpty()) nbt.setTag("remain", remainStack.serializeNBT());
+		if (remainStacks != null) NBTHelper.setItemArray(nbt, "remains", remainStacks);
 		return nbt;
 	}
 
@@ -68,7 +70,10 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	public void deserializeNBT(NBTTagCompound nbt) {
 		if (nbt.hasKey("restEles")) restEStacks = NBTHelper.getElementList(nbt, "restEles");
 		if (nbt.hasKey("itemList")) itemList = NBTHelper.getItemList(nbt, "itemList");
-		if (nbt.hasKey("remain")) remainStack = new ItemStack(nbt.getCompoundTag("remain"));
+		if (nbt.hasKey("remains")) {
+			remainStacks = NBTHelper.getItemArray(nbt, "remains");
+			if (remainStacks.length == 0) remainStacks = null;
+		}
 	}
 
 	@Override
@@ -115,7 +120,9 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	public boolean end(TileStaticMultiBlock tileMul) {
 		itemList.clear();
 		if (!tileMul.isIntact()) return false;
-		if (!remainStack.isEmpty()) itemList.add(remainStack);
+		if (remainStacks != null) {
+			for (ItemStack stack : remainStacks) itemList.add(stack);
+		}
 		return true;
 	}
 

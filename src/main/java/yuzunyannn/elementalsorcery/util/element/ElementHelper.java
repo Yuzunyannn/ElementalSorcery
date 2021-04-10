@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.util.element;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -156,5 +157,15 @@ public class ElementHelper {
 			if (!estack.isEmpty()) return estack;
 		}
 		return ElementStack.EMPTY;
+	}
+
+	static public void sort(ElementStack[] estacks) {
+		Arrays.sort(estacks, (e1, e2) -> {
+			int n1 = e1.getCount();
+			int n2 = e2.getCount();
+			if (n1 > n2) return -1;
+			else if (n1 == n2) return 0;
+			else return 1;
+		});
 	}
 }

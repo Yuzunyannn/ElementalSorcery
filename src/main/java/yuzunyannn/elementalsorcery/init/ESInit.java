@@ -119,6 +119,7 @@ import yuzunyannn.elementalsorcery.element.ElementKnowledge;
 import yuzunyannn.elementalsorcery.element.ElementMagic;
 import yuzunyannn.elementalsorcery.element.ElementMetal;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.element.ElementStar;
 import yuzunyannn.elementalsorcery.element.ElementWater;
 import yuzunyannn.elementalsorcery.element.ElementWood;
 import yuzunyannn.elementalsorcery.elf.AutoName;
@@ -136,6 +137,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraBlockCrash;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireBall;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireCharge;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloat;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloatArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFootbridge;
@@ -483,6 +485,7 @@ public class ESInit {
 		MANTRAS.FIRE_AREA = new MantraFireArea();
 		MANTRAS.MAGIC_STRAFE = new MantraMagicStrafe();
 		MANTRAS.FLOAT_AREA = new MantraFloatArea();
+		MANTRAS.FIRE_CHARGE = new MantraFireCharge();
 
 		MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);
 		MANTRAS.LAUNCH_EDE = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT, 0xff4a1a);
@@ -507,6 +510,7 @@ public class ESInit {
 		ELEMENTS.WOOD = new ElementWood().setRegistryName("wood");
 		ELEMENTS.METAL = new ElementMetal().setRegistryName("metal");
 		ELEMENTS.KNOWLEDGE = new ElementKnowledge().setRegistryName("knowledge");
+		ELEMENTS.STAR = new ElementStar().setRegistryName("star");
 	}
 
 	private static final void instanceVillage() {
@@ -749,8 +753,8 @@ public class ESInit {
 		registerRender(ITEMS.ANCIENT_PAPER, 1, "ancient_paper_unscramble");
 		registerRender(ITEMS.ANCIENT_PAPER, 2, "ancient_paper_new");
 		registerRender(ITEMS.ANCIENT_PAPER, 3, "ancient_paper_new_written");
-		registerRender(ITEMS.QUEST, 0 , "quest");
-		registerRender(ITEMS.QUEST, 1 , "quest_finish");
+		registerRender(ITEMS.QUEST, 0, "quest");
+		registerRender(ITEMS.QUEST, 1, "quest_finish");
 		registerRender(ITEMS.ELF_WATCH);
 		registerRender(ITEMS.MAGIC_GOLD);
 		registerRender(ITEMS.MAGIC_GOLD_PICKAXE);

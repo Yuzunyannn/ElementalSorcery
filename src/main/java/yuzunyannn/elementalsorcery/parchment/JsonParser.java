@@ -145,7 +145,7 @@ public class JsonParser {
 		PageSimple page = readPageSimple(json);
 		List<ItemRecord> irList = json.needItems("item");
 		if (irList.isEmpty()) throw Json.exception(ParseExceptionCode.EMPTY, "item");
-		List<ItemStack> list = Json.to(irList);
+		List<ItemStack> list = ItemRecord.asItemStackList(irList);
 		// 有图标的情况复写下
 		if (!page.getIcon().isEmpty()) {
 			final ItemStack icon = page.getIcon();
@@ -165,7 +165,7 @@ public class JsonParser {
 		PageSimple page = readPageSimple(json);
 		List<ItemRecord> irList = json.needItems("item");
 		if (irList.isEmpty()) throw Json.exception(ParseExceptionCode.EMPTY, "item");
-		List<ItemStack> list = Json.to(irList);
+		List<ItemStack> list = ItemRecord.asItemStackList(irList);
 		switch (id) {
 		case PageTransform.SMELTING:
 			return new PageSmeltingSimple(page.getTitle(), page.getContext(), list.get(0));

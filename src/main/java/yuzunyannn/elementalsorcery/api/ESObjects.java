@@ -163,6 +163,7 @@ public class ESObjects {
 		public Element METAL;
 		public Element WOOD;
 		public Element KNOWLEDGE;
+		public Element STAR;
 	}
 
 	static public class Mantras {
@@ -186,6 +187,7 @@ public class ESObjects {
 		public Mantra FIRE_AREA;
 		public Mantra MAGIC_STRAFE;
 		public Mantra FLOAT_AREA;
+		public Mantra FIRE_CHARGE;
 	}
 
 	static public class Village {

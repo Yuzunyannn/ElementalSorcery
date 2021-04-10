@@ -7,7 +7,6 @@ import java.util.List;
 
 import com.google.gson.JsonParseException;
 
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,7 +19,6 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.api.IElementMap;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.element.Element;
@@ -34,7 +32,7 @@ import yuzunyannn.elementalsorcery.util.json.Json.ParseExceptionCode;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
-public class ElementMap implements IElementMap {
+public class ElementMap implements IToElement {
 
 	public final static ElementMap instance = new ElementMap();
 
@@ -61,26 +59,36 @@ public class ElementMap implements IElementMap {
 
 	// ---------------------------------ADD----------------------------------------
 
-	@Override
 	public void add(IToElement toElement) {
 		if (toElement == null) return;
 		if (toList.contains(toElement)) return;
 		toList.add(toElement);
 	}
 
-	@Override
-	public void add(ItemStack stack, ElementStack... estacks) {
-		this.add(stack, ElementHelper.getComplexFromElements(stack, estacks), estacks);
+	public void add(ItemStack stack, ItemStack[] remain, ElementStack[] estacks) {
+		this.add(stack, ElementHelper.getComplexFromElements(stack, estacks), remain, estacks);
 	}
 
-	@Override
-	public void add(Item item, ElementStack... estacks) {
-		this.add(item, ElementHelper.getComplexFromElements(new ItemStack(item), estacks), estacks);
+	public void add(Item item, ItemStack[] remain, ElementStack[] estacks) {
+		this.add(item, ElementHelper.getComplexFromElements(new ItemStack(item), estacks), remain, estacks);
 	}
 
-	@Override
-	public void add(Block block, ElementStack... estacks) {
-		this.add(block, ElementHelper.getComplexFromElements(new ItemStack(block), estacks), estacks);
+	public void add(ItemStack stack, int complex, ItemStack[] remain, ElementStack[] estacks) {
+		if (stack.isEmpty()) return;
+		check(estacks);
+		defaultToElementMap.add(stack, complex, remain, estacks);
+	}
+
+	public void add(Item item, int complex, ItemStack[] remain, ElementStack[] estacks) {
+		if (item == null) return;
+		check(estacks);
+		defaultToElementMap.add(item, complex, remain, estacks);
+	}
+
+	public void add(Fluid fluid, int complex, ElementStack[] estacks) {
+		if (fluid == null) return;
+		check(estacks);
+		defaultBucketToElement.add(fluid, complex, estacks);
 	}
 
 	private void check(ElementStack... estacks) {
@@ -89,31 +97,6 @@ public class ElementMap implements IElementMap {
 			if (estack == null) throw new IllegalArgumentException("estacks中存在null项目");
 			if (estack.isEmpty()) throw new IllegalArgumentException("estacks中存在empty项目");
 		}
-	}
-
-	@Override
-	public void add(ItemStack stack, int complex, ElementStack... estacks) {
-		if (stack.isEmpty()) return;
-		this.check(estacks);
-		defaultToElementMap.add(stack, complex, estacks);
-	}
-
-	@Override
-	public void add(Item item, int complex, ElementStack... estacks) {
-		if (item == null) return;
-		this.check(estacks);
-		defaultToElementMap.add(item, complex, estacks);
-	}
-
-	@Override
-	public void add(Block block, int complex, ElementStack... estacks) {
-		this.add(Item.getItemFromBlock(block), complex, estacks);
-	}
-
-	public void add(Fluid fluid, int complex, ElementStack... estacks) {
-		if (fluid == null) return;
-		this.check(estacks);
-		defaultBucketToElement.add(fluid, complex, estacks);
 	}
 
 	// ---------------------------------ADDEND----------------------------------------
@@ -149,9 +132,10 @@ public class ElementMap implements IElementMap {
 
 	static public void registerAll() throws IOException {
 		instance.add(new DefaultInterfaceToElement());
-		instance.add(new DefaultEnchanmentBookToElement());
-		instance.add(defaultBucketToElement);
+		instance.add(new DefaultEnchanmentToElement());
+		instance.add(new DefaultPotionToElement());
 		instance.add(defaultToElementMap);
+		instance.add(defaultBucketToElement);
 		// 自动扫描并加载json
 		for (ModContainer mod : Loader.instance().getActiveModList()) loadElementMap(mod);
 		// 自动扫描玩家自定义目录
@@ -204,21 +188,23 @@ public class ElementMap implements IElementMap {
 				int complex = jobj.hasNumber("complex") ? jobj.getNumber("complex").intValue() : -1;
 
 				if (jobj.hasString("fluid")) {
-
 					Fluid fluid = FluidRegistry.getFluid(jobj.getString("fluid"));
 					if (fluid == null) throw Json.exception(ParseExceptionCode.NOT_HAVE, fluid);
 					instance.add(fluid, complex > -1 ? complex : 2, es);
-
 				} else {
-
+					ItemStack[] remains = null;
+					try {
+						List<ItemRecord> remainList = jobj.needItems("remain");
+						remains = ItemRecord.asItemStackArray(remainList);
+					} catch (JsonParseException e) {}
 					List<ItemRecord> items = jobj.needItems("item");
 					for (ItemRecord ir : items) {
 						if (complex > -1) {
-							if (ir.isJustItem()) instance.add(ir.getItem(), complex, es);
-							else instance.add(ir.getStack(), complex, es);
+							if (ir.isJustItem()) instance.add(ir.getItem(), complex, remains, es);
+							else instance.add(ir.getStack(), complex, remains, es);
 						} else {
-							if (ir.isJustItem()) instance.add(ir.getItem(), es);
-							else instance.add(ir.getStack(), es);
+							if (ir.isJustItem()) instance.add(ir.getItem(), remains, es);
+							else instance.add(ir.getStack(), remains, es);
 						}
 					}
 				}
@@ -229,52 +215,61 @@ public class ElementMap implements IElementMap {
 		}
 	}
 
+	private static boolean doAnalysis(DefaultToElement newMap, ItemStack output, NonNullList<Ingredient> inputs) {
+		AnalysisPacket ans = null;
+		for (Ingredient ingredient : inputs) {
+			ItemStack[] s = ingredient.getMatchingStacks();
+			if (s == null || s.length == 0) continue;
+			AnalysisPacket ansTemp = TileAnalysisAltar.analysisItem(s[0], instance, true);
+			if (ansTemp == null) return false;
+			if (ans == null) ans = ansTemp;
+			else ans.merge(ansTemp);
+		}
+
+		// 没有成功
+		if (ans == null) return false;
+
+		// 处理多结果
+		if (output.getCount() > 1) {
+			int n = output.getCount();
+			for (ElementStack es : ans.daEstacks) {
+				if (es.getCount() > n) {
+					es.setCount(es.getCount() / n);
+					es.weaken(0.95f);
+				} else {
+					es.weaken(es.getCount() / (float) (n + 1));
+					es.setCount(1);
+				}
+			}
+		}
+		ans.daComplex = Math.max(ans.daComplex * 2 / 3, 1);
+		ElementHelper.sort(ans.daEstacks);
+
+		ItemStack[] remains = null;
+		if (output.getHasSubtypes()) newMap.add(output, ans.daComplex, remains, ans.daEstacks);
+		else newMap.add(output.getItem(), ans.daComplex, remains, ans.daEstacks);
+
+		return true;
+	}
+
 	private static DefaultToElement dealCrafting() {
 		DefaultToElement newMap = new DefaultToElement();
 		// 检测所有物品
 		for (Item item : Item.REGISTRY) {
-			// 只留下minecraft的
-			if (!"minecraft".equals(item.getRegistryName().getResourceDomain())) continue;
-			NonNullList<ItemStack> stacks = NonNullList.<ItemStack>create();
 			// 遍历所有类别
+			NonNullList<ItemStack> stacks = NonNullList.<ItemStack>create();
 			item.getSubItems(CreativeTabs.SEARCH, stacks);
-			for (ItemStack stack : stacks) next: {
+			for (ItemStack stack : stacks) {
 				if (stack.getTagCompound() != null) continue;
 				// 存在的话，就不查找了
 				if (instance.toElement(stack) != null) continue;
-				// 寻找合成表
+				// 寻找普通合成表
 				for (IRecipe irecipe : CraftingManager.REGISTRY) {
 					ItemStack output = irecipe.getRecipeOutput();
 					// 产出与物品相同，开始分析
 					if (output.isItemEqual(stack)) {
-						AnalysisPacket ans = null;
-						NonNullList<Ingredient> inputs = irecipe.getIngredients();
-						for (Ingredient ingredient : inputs) {
-							ItemStack[] s = ingredient.getMatchingStacks();
-							if (s == null || s.length == 0) continue;
-							AnalysisPacket ansTemp = TileAnalysisAltar.analysisItem(s[0], instance, true);
-							if (ansTemp == null) break next;
-							if (ans == null) ans = ansTemp;
-							else ans.merge(ansTemp);
-						}
-						// 如果解析成功就记录
-						if (ans != null) {
-							// 处理多结果
-							if (output.getCount() > 1) {
-								int n = output.getCount();
-								for (ElementStack es : ans.daEstacks) {
-									if (es.getCount() > n) es.setCount(es.getCount() / n);
-									else {
-										es.weaken(es.getCount() / (float) (n + 1));
-										es.setCount(1);
-									}
-								}
-							}
-							ans.daComplex = ans.daComplex * 2 / 3;
-							if (output.getHasSubtypes()) newMap.add(output, ans.daComplex, ans.daEstacks);
-							else newMap.add(output.getItem(), ans.daComplex, ans.daEstacks);
-						}
-						break;
+						boolean ret = doAnalysis(newMap, output, irecipe.getIngredients());
+						if (ret) break;
 					}
 				}
 			}

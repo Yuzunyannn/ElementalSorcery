@@ -68,6 +68,13 @@ public class MantraMagicStrafe extends MantraCommon {
 		target.hurtResistantTime = 0;
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void onSpellingEffect(World world, IMantraData mData, ICaster caster) {
+		super.onSpellingEffect(world, mData, caster);
+		this.addEffectEmitEffect(world, mData, caster);
+	}
+
 	@SideOnly(Side.CLIENT)
 	public void onAttackBlock(World world, IMantraData data, ICaster caster) {
 		WantedTargetResult result = caster.iWantBlockTarget();

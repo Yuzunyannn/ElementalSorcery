@@ -1,0 +1,110 @@
+{
+    "maps": [
+        {
+            "note": "蓝晶石矿",
+            "item": {
+                "type": "ore_dict",
+                "item": "oreKyanite"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 45,
+                    "power": 385
+                },
+                {
+                    "id": "magic",
+                    "size": 20,
+                    "power": 50
+                },
+                {
+                    "id": "earth",
+                    "size": 5,
+                    "power": 30
+                }
+            ]
+        },
+        {
+            "note": "蓝晶石",
+            "item": {
+                "type": "ore_dict",
+                "item": "kyanite"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 15,
+                    "power": 320
+                },
+                {
+                    "id": "magic",
+                    "size": 6,
+                    "power": 20
+                }
+            ]
+        },
+        {
+            "note": "附魔书",
+            "item": "elementalsorcery:spellbook_enchantment",
+            "element": {
+                "id": "knowledge",
+                "size": 100,
+                "power": 250
+            }
+        },
+        {
+            "note": "魔石碎片",
+            "item": "elementalsorcery:magic_piece",
+            "element": [
+                {
+                    "id": "magic",
+                    "size": 25,
+                    "power": 25
+                }
+            ]
+        },
+        {
+            "note": "星之种",
+            "item": "elementalsorcery:star_flower",
+            "element": [
+                {
+                    "id": "star",
+                    "size": 100,
+                    "power": 500
+                }
+            ]
+        },
+        {
+            "note": "星沙",
+            "item": "elementalsorcery:star_sand",
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 10,
+                    "power": 16
+                },
+                {
+                    "id": "star",
+                    "size": 5,
+                    "power": 12
+                }
+            ]
+        },
+        {
+            "note": "星石",
+            "item": "elementalsorcery:star_stone",
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 2,
+                    "power": 14
+                },
+                {
+                    "id": "star",
+                    "size": 1,
+                    "power": 8
+                }
+            ]
+        }
+    ]
+}

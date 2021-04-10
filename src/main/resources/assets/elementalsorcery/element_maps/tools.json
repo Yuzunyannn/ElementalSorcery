@@ -1,27 +1,18 @@
 {
     "maps": [
         {
-            "note": "有水",
-            "item": [
-                "minecraft:apple",
-                "minecraft:mushroom_stew",
-                "minecraft:beetroot_soup",
-                "minecraft:carrot",
-                "minecraft:potato",
-                "minecraft:poisonous_potato",
-                "minecraft:beetroot",
-                "minecraft:melon"
-            ],
+            "note": "命名牌",
+            "item": "minecraft:name_tag",
             "element": [
                 {
-                    "id": "wood",
-                    "size": 4,
-                    "power": 7
+                    "id": "knowledge",
+                    "size": 22,
+                    "power": 153
                 },
                 {
-                    "id": "water",
-                    "size": 2,
-                    "power": 3
+                    "id": "wood",
+                    "size": 12,
+                    "power": 88
                 }
             ]
         },
@@ -147,7 +138,7 @@
                 },
                 {
                     "id": "magic",
-                    "size":  100,
+                    "size": 100,
                     "power": 300
                 },
                 {

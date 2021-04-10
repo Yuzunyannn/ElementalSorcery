@@ -211,12 +211,7 @@ public class MantraSummon extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData mData, ICaster caster) {
 		super.onSpellingEffect(world, mData, caster);
-		if (!caster.hasEffectFlags(MantraEffectFlags.INDICATOR)) return;
-		Data data = (Data) mData;
-		if (!data.isMarkContinue()) return;
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		if (caster.iWantCaster() == Minecraft.getMinecraft().player) if (!dataEffect.hasMarkEffect(1))
-			dataEffect.addEffect(caster, new EffectLookAt(world, caster, this.getColor(mData)), 1);
+		this.addEffectIndicatorEffect(world, mData, caster);
 	}
 
 	@Override

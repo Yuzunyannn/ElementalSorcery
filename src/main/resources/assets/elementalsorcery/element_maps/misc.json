@@ -1,0 +1,551 @@
+{
+    "maps": [
+        {
+            "note": "煤",
+            "item": {
+                "item": "minecraft:coal",
+                "data": 0
+            },
+            "element": {
+                "id": "wood",
+                "size": 3,
+                "power": 75
+            }
+        },
+        {
+            "note": "炭",
+            "item": {
+                "item": "minecraft:coal",
+                "data": 1
+            },
+            "element": {
+                "id": "wood",
+                "size": 3,
+                "power": 20
+            }
+        },
+        {
+            "note": "钻石",
+            "item": {
+                "type": "ore_dict",
+                "item": "gemDiamond"
+            },
+            "element": {
+                "id": "wood",
+                "size": 12,
+                "power": 625
+            }
+        },
+        {
+            "note": "铁",
+            "item": {
+                "type": "ore_dict",
+                "item": "ingotIron"
+            },
+            "element": {
+                "id": "metal",
+                "size": 7,
+                "power": 285
+            }
+        },
+        {
+            "note": "金",
+            "item": {
+                "type": "ore_dict",
+                "item": "ingotGold"
+            },
+            "element": {
+                "id": "metal",
+                "size": 18,
+                "power": 450
+            }
+        },
+        {
+            "note": "木棒",
+            "item": "minecraft:stick",
+            "element": {
+                "id": "wood",
+                "size": 1,
+                "power": 4
+            }
+        },
+        {
+            "note": "线",
+            "item": "minecraft:string",
+            "element": {
+                "id": "wood",
+                "size": 1,
+                "power": 16
+            }
+        },
+        {
+            "note": "羽毛",
+            "item": "minecraft:feather",
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 1,
+                    "power": 12
+                },
+                {
+                    "id": "air",
+                    "size": 1,
+                    "power": 2
+                }
+            ]
+        },
+        {
+            "note": "火药",
+            "item": "minecraft:gunpowder",
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 2,
+                    "power": 8
+                },
+                {
+                    "id": "metal",
+                    "size": 2,
+                    "power": 2
+                }
+            ]
+        },
+        {
+            "note": "农作物",
+            "item": [
+                "minecraft:wheat_seeds",
+                "minecraft:pumpkin_seeds",
+                "minecraft:melon_seeds",
+                "minecraft:reeds",
+                "minecraft:wheat",
+                "minecraft:egg",
+                "minecraft:bone",
+                "minecraft:beetroot_seeds"
+            ],
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 2,
+                    "power": 7
+                },
+                {
+                    "id": "water",
+                    "size": 2,
+                    "power": 4
+                }
+            ]
+        },
+        {
+            "note": "燧石",
+            "item": [
+                "minecraft:flint"
+            ],
+            "element": {
+                "id": "earth",
+                "size": 2,
+                "power": 8
+            }
+        },
+        {
+            "notes": "水",
+            "fluid": "water",
+            "element": [
+                {
+                    "id": "water",
+                    "size": 20,
+                    "power": 100
+                }
+            ]
+        },
+        {
+            "notes": "岩浆",
+            "fluid": "lava",
+            "element": [
+                {
+                    "id": "fire",
+                    "size": 100,
+                    "power": 375
+                }
+            ]
+        },
+        {
+            "notes": "雪球",
+            "item": "minecraft:snowball",
+            "element": [
+                {
+                    "id": "water",
+                    "size": 5,
+                    "power": 50
+                }
+            ]
+        },
+        {
+            "notes": "皮革",
+            "item": [
+                "minecraft:leather",
+                "minecraft:rabbit_hide"
+            ],
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 19,
+                    "power": 119
+                }
+            ]
+        },
+        {
+            "notes": "牛奶桶",
+            "item": "minecraft:milk_bucket",
+            "element": [
+                {
+                    "id": "water",
+                    "size": 8,
+                    "power": 75
+                },
+                {
+                    "id": "wood",
+                    "size": 3,
+                    "power": 30
+                }
+            ],
+            "remain": "minecraft:bucket"
+        },
+        {
+            "notes": "粘土",
+            "item": [
+                "minecraft:clay_ball",
+                "minecraft:brick"
+            ],
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 27,
+                    "power": 183
+                },
+                {
+                    "id": "metal",
+                    "size": 11,
+                    "power": 152
+                }
+            ]
+        },
+        {
+            "notes": "书",
+            "item": "minecraft:book",
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 25,
+                    "power": 50
+                },
+                {
+                    "id": "knowledge",
+                    "size": 2,
+                    "power": 12
+                }
+            ]
+        },
+        {
+            "notes": "粘液球",
+            "item": "minecraft:slime_ball",
+            "element": [
+                {
+                    "id": "water",
+                    "size": 18,
+                    "power": 333
+                },
+                {
+                    "id": "air",
+                    "size": 7,
+                    "power": 111
+                }
+            ]
+        },
+        {
+            "notes": "萤石",
+            "item": "minecraft:glowstone_dust",
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 3,
+                    "power": 52
+                },
+                {
+                    "id": "earth",
+                    "size": 3,
+                    "power": 52
+                }
+            ]
+        },
+        {
+            "note": "染料",
+            "item": [
+                "minecraft:dye"
+            ],
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 1,
+                    "power": 1
+                },
+                {
+                    "id": "water",
+                    "size": 1,
+                    "power": 1
+                }
+            ]
+        },
+        {
+            "notes": "青金石",
+            "item": {
+                "item": "minecraft:dye",
+                "data": 4
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 10,
+                    "power": 437
+                },
+                {
+                    "id": "earth",
+                    "size": 9,
+                    "power": 385
+                }
+            ]
+        },
+        {
+            "notes": "末影珍珠",
+            "item": "minecraft:ender_pearl",
+            "element": [
+                {
+                    "id": "ender",
+                    "size": 48,
+                    "power": 666
+                }
+            ]
+        },
+        {
+            "notes": "烈焰棒",
+            "item": "minecraft:blaze_rod",
+            "element": [
+                {
+                    "id": "fire",
+                    "size": 10,
+                    "power": 425
+                },
+                {
+                    "id": "earth",
+                    "size": 2,
+                    "power": 234
+                }
+            ]
+        },
+        {
+            "note": "地狱疣",
+            "item": [
+                "minecraft:nether_wart"
+            ],
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 2,
+                    "power": 7
+                },
+                {
+                    "id": "fire",
+                    "size": 2,
+                    "power": 2
+                }
+            ]
+        },
+        {
+            "note": "附魔之瓶",
+            "item": [
+                "minecraft:experience_bottle"
+            ],
+            "element": [
+                {
+                    "id": "knowledge",
+                    "size": 5,
+                    "power": 64
+                },
+                {
+                    "id": "earth",
+                    "size": 6,
+                    "power": 10
+                }
+            ]
+        },
+        {
+            "notes": "绿宝石",
+            "item": {
+                "type": "ore_dict",
+                "item": "gemEmerald"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 14,
+                    "power": 702
+                },
+                {
+                    "id": "earth",
+                    "size": 12,
+                    "power": 613
+                }
+            ]
+        },
+        {
+            "notes": "下界之星",
+            "item": "minecraft:nether_star",
+            "element": [
+                {
+                    "id": "fire",
+                    "size": 125,
+                    "power": 828
+                },
+                {
+                    "id": "water",
+                    "size": 20,
+                    "power": 828
+                },
+                {
+                    "id": "knowledge",
+                    "size": 10,
+                    "power": 628
+                },
+                {
+                    "id": "star",
+                    "size": 8,
+                    "power": 100
+                }
+            ]
+        },
+        {
+            "note": "地狱砖",
+            "item": "minecraft:netherbrick",
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 1,
+                    "power": 3
+                },
+                {
+                    "id": "fire",
+                    "size": 2,
+                    "power": 4
+                }
+            ]
+        },
+        {
+            "note": "石英",
+            "item": {
+                "type": "ore_dict",
+                "item": "gemQuartz"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 2,
+                    "power": 100
+                }
+            ]
+        },
+        {
+            "note": "海晶碎片",
+            "item": [
+                "minecraft:prismarine_shard",
+                "minecraft:prismarine_crystals"
+            ],
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 2,
+                    "power": 75
+                },
+                {
+                    "id": "water",
+                    "size": 2,
+                    "power": 60
+                }
+            ]
+        },
+        {
+            "note": "铁马凯",
+            "item": "minecraft:iron_horse_armor",
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 35,
+                    "power": 285
+                }
+            ],
+            "complex": 10
+        },
+        {
+            "note": "金马凯",
+            "item": "minecraft:golden_horse_armor",
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 90,
+                    "power": 450
+                }
+            ],
+            "complex": 10
+        },
+        {
+            "note": "钻石马凯",
+            "item": "minecraft:diamond_horse_armor",
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 60,
+                    "power": 625
+                }
+            ],
+            "complex": 10
+        },
+        {
+            "note": "紫菘果",
+            "item": [
+                "minecraft:chorus_fruit",
+                "minecraft:chorus_fruit_popped"
+            ],
+            "element": [
+                {
+                    "id": "ender",
+                    "size": 4,
+                    "power": 36
+                },
+                {
+                    "id": "wood",
+                    "size": 2,
+                    "power": 8
+                },
+                {
+                    "id": "water",
+                    "size": 1,
+                    "power": 4
+                }
+            ]
+        },
+        {
+            "note": "潜影壳",
+            "item": "minecraft:shulker_shell",
+            "element": [
+                {
+                    "id": "ender",
+                    "size": 12,
+                    "power": 120
+                },
+                {
+                    "id": "wood",
+                    "size": 12,
+                    "power": 75
+                }
+            ]
+        }
+    ]
+}

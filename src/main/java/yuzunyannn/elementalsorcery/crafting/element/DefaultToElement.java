@@ -20,7 +20,7 @@ public class DefaultToElement implements IToElement {
 	public List<ElementInfo> stackToElementMap = new ArrayList<ElementInfo>();
 	public Map<Item, ElementInfo> itemToElementMap = new HashMap<Item, ElementInfo>();
 
-	public void add(ItemStack stack, int complex, ElementStack... estacks) {
+	public void add(ItemStack stack, int complex, ItemStack[] remains, ElementStack... estacks) {
 		boolean checkNBT = false;
 		// 如果存在"checkNBTTag"字段，则添加标签，这个标签只是标记用的，所以要删除
 		if (stack.hasTagCompound()) {
@@ -40,11 +40,15 @@ public class DefaultToElement implements IToElement {
 				return;
 			}
 		}
-		stackToElementMap.add(new ElementInfo(stack, estacks, complex));
+		boolean hasNoRemains = remains == null || remains.length <= 0;
+		if (hasNoRemains) stackToElementMap.add(new ElementInfo(stack, estacks, complex));
+		else stackToElementMap.add(new ElementInfoRemain(stack, estacks, complex, remains));
 	}
 
-	public void add(Item item, int complex, ElementStack... estacks) {
-		itemToElementMap.put(item, new ElementInfo(ItemStack.EMPTY, estacks, complex));
+	public void add(Item item, int complex, ItemStack[] remains, ElementStack... estacks) {
+		boolean hasNoRemains = remains == null || remains.length <= 0;
+		if (hasNoRemains) itemToElementMap.put(item, new ElementInfo(ItemStack.EMPTY, estacks, complex));
+		else itemToElementMap.put(item, new ElementInfoRemain(ItemStack.EMPTY, estacks, complex, remains));
 	}
 
 	@Override
@@ -95,6 +99,22 @@ public class DefaultToElement implements IToElement {
 		public int complex() {
 			return complex;
 		}
+	}
+
+	static public class ElementInfoRemain extends ElementInfo {
+
+		final public ItemStack[] remains;
+
+		public ElementInfoRemain(ItemStack stack, ElementStack[] estacks, int complex, ItemStack... remains) {
+			super(stack, estacks, complex);
+			this.remains = remains;
+		}
+
+		@Override
+		public ItemStack[] remain() {
+			return remains;
+		}
+
 	}
 
 }

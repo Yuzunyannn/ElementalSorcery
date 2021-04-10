@@ -19,6 +19,7 @@ import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 
@@ -161,10 +162,15 @@ public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 			inventory.insertElement(inserted, false);
 			originStack.shrink(1);
 			inventory.saveState(stackInv);
-			stack = teInfo.remain();
-			if (!stack.isEmpty()) {
-				if (originStack.isEmpty()) this.inventory.setStackInSlot(0, stack);
-				else Block.spawnAsEntity(world, pos.up(), stack);
+			ItemStack[] remains = teInfo.remain();
+			if (remains != null) {
+				remains = ItemHelper.copy(remains);
+				for (ItemStack remain : remains) {
+					if (originStack.isEmpty()) {
+						this.inventory.setStackInSlot(0, remain);
+						originStack = this.inventory.getStackInSlot(0);
+					} else Block.spawnAsEntity(world, pos.up(), remain);
+				}
 			}
 			this.markDirty();
 		}

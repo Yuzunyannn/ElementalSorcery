@@ -12,8 +12,8 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 
-public class DefaultEnchanmentBookToElement implements IToElement {
-
+public class DefaultEnchanmentToElement implements IToElement {
+ 
 	@Override
 	public IToElementInfo toElement(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
@@ -65,8 +65,9 @@ public class DefaultEnchanmentBookToElement implements IToElement {
 		if (magic.isEmpty()) return null;
 
 		ItemStack remain = stack.copy();
-		remain.removeSubCompound("StoredEnchantments");
-		remain.removeSubCompound("ench");
+		nbt = remain.getTagCompound();
+		nbt.removeTag("StoredEnchantments");
+		nbt.removeTag("ench");
 
 		return ToElementInfoStatic.create(MathHelper.ceil(complex), remain, knowledge, magic);
 	}

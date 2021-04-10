@@ -173,6 +173,7 @@ element.earth.name=土
 element.air.name=气
 element.metal.name=金
 element.knowledge.name=知识
+element.star.name=星
 
 mantra.launchElementCrafting.name=合成启动咒文
 mantra.launchElementDeconstruct.name=瓦解启动咒文
@@ -207,6 +208,8 @@ mantra.magicStrafe.name=魔力冲击
 mantra.magicStrafe.describe=将魔力转化为能量束，对敌人造成伤害。
 mantra.floatArea.name=漂浮风域
 mantra.floatArea.describe=借助气元素的力量，产生上升气流，将进入区域的生物吹向上方。
+mantra.fireCharge.name=火焰弹
+mantra.fireCharge.describe=借助火元素的力量，产生并发射火焰弹。
 
 key.es.func=功能键
 

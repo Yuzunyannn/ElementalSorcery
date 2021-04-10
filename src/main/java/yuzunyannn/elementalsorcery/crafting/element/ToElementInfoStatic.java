@@ -21,6 +21,10 @@ public class ToElementInfoStatic {
 	}
 
 	public static IToElementInfo create(int complex, ItemStack remain, ElementStack... estacks) {
+		return create(complex, new ItemStack[] { remain }, estacks);
+	}
+
+	public static IToElementInfo create(int complex, ItemStack[] remain, ElementStack... estacks) {
 		return new IToElementInfo() {
 			@Override
 			public int complex() {
@@ -33,7 +37,7 @@ public class ToElementInfoStatic {
 			}
 
 			@Override
-			public ItemStack remain() {
+			public ItemStack[] remain() {
 				return remain;
 			}
 		};

@@ -28,7 +28,7 @@ public class ElementCraftingDraw implements IDrawable {
 		if (list == null) return;
 		int xoff = 9 - 35;
 		int yoff = -1 - 21;
-		GuiSupremeTable.drawElements(minecraft, xoff, yoff, list, 6, (EventClient.tick / 40) % 6);
+		GuiSupremeTable.drawElements(minecraft, xoff, yoff, list, 6, EventClient.tick / 40);
 	}
 
 	private List<ElementStack> list;

@@ -46,6 +46,13 @@ public class MantraBlockCrash extends MantraCommon {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
+	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
+		super.onSpellingEffect(world, data, caster);
+		//addEffectIndicatorEffect(world, data, caster);
+	}
+
+	@Override
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
 		if (caster.iWantKnowCastTick() < 20) return;
 		BlockPos pos = null;

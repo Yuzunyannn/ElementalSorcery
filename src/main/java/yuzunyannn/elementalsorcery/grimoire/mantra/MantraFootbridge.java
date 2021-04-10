@@ -20,7 +20,6 @@ import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
-import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.VariableSet;
@@ -39,9 +38,11 @@ public class MantraFootbridge extends MantraCommon {
 		this.setOccupation(3);
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean hasEffectFlags(World world, IMantraData data, ICaster caster, MantraEffectFlags flags) {
-		return caster.hasEffectFlags(flags);
+	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
+		super.onSpellingEffect(world, data, caster);
+		addEffectIndicatorEffect(world, data, caster);
 	}
 
 	@Override

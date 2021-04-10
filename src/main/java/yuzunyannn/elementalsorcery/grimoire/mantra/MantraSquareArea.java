@@ -12,7 +12,6 @@ import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
-import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
 
@@ -108,8 +107,9 @@ public abstract class MantraSquareArea extends MantraCommon {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public boolean hasEffectFlags(World world, IMantraData data, ICaster caster, MantraEffectFlags flags) {
-		return caster.hasEffectFlags(flags);
+	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
+		super.onSpellingEffect(world, data, caster);
+		this.addEffectIndicatorEffect(world, data, caster);
 	}
 
 	@SideOnly(Side.CLIENT)

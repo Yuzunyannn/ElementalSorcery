@@ -19,6 +19,7 @@ import yuzunyannn.elementalsorcery.init.ESImplRegister;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
+import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
@@ -72,7 +73,7 @@ public class RecipeManagement extends ESImplRegister<IRecipe> {
 			JsonObject obj = json.needObject("key");
 			Map<String, ItemStack[]> map = new HashMap<>();
 			for (String key : obj) {
-				List<ItemStack> stacks = Json.to(obj.needItems(key));
+				List<ItemStack> stacks = ItemRecord.asItemStackList(obj.needItems(key));
 				map.put(key, stacks.toArray(new ItemStack[stacks.size()]));
 			}
 			ItemStack output = json.needItem("result").getStack();

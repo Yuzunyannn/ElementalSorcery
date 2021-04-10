@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.api.crafting;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -21,8 +22,9 @@ public interface IToElementInfo {
 	int complex();
 
 	/** 获取该物品转化成元素后，可能返回的内容，返回的内容应当不用copy，被允许直接使用 */
-	default ItemStack remain() {
-		return ItemStack.EMPTY;
+	@Nullable
+	default ItemStack[] remain() {
+		return null;
 	}
 
 }

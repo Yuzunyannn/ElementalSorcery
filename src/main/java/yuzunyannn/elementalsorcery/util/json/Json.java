@@ -312,13 +312,4 @@ public abstract class Json {
 		return id;
 	}
 
-	static public List<ItemStack> to(List<ItemRecord> list) {
-		List<ItemStack> items = new ArrayList<ItemStack>(list.size());
-		for (ItemRecord ir : list) {
-			if (ir.isJustItem()) items.add(new ItemStack(ir.getItem()));
-			else items.add(ir.getStack());
-		}
-		return items;
-	}
-
 }

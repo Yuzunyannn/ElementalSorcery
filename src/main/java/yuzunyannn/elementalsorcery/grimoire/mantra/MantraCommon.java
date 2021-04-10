@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -17,6 +18,7 @@ import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleIcon;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicEmit;
 import yuzunyannn.elementalsorcery.util.VariableSet;
 import yuzunyannn.elementalsorcery.util.VariableSet.Variable;
 
@@ -86,16 +88,33 @@ public class MantraCommon extends Mantra {
 			MantraDataCommon dataEffect = (MantraDataCommon) data;
 			dataEffect.showProgress(r, this.getColor(data), world, caster);
 		}
-		if (this.hasEffectFlags(world, data, caster, MantraEffectFlags.INDICATOR)) out: {
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void addEffectIndicatorEffect(World world, IMantraData data, ICaster caster) {
+		if (this.hasEffectFlags(world, data, caster, MantraEffectFlags.INDICATOR)) {
 			MantraDataCommon dataEffect = (MantraDataCommon) data;
-			if (!caster.iWantCaster().isClientPlayer() || dataEffect.hasMarkEffect(1)) break out;
+			if (!caster.iWantCaster().isClientPlayer() || dataEffect.hasMarkEffect(1)) return;
 			dataEffect.addEffect(caster, new EffectLookAt(world, caster, this.getColor(dataEffect)), 1);
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
+	public void addEffectEmitEffect(World world, IMantraData data, ICaster caster) {
+		if (this.hasEffectFlags(world, data, caster, MantraEffectFlags.DECORATE)) {
+			Entity entity = caster.iWantCaster().asEntity();
+			if (entity == null) return;
+			MantraDataCommon dataEffect = (MantraDataCommon) data;
+			if (dataEffect.hasMarkEffect(4)) return;
+			EffectMagicEmit emit = new EffectMagicEmit(world, entity);
+			emit.setColor(this.getColor(data));
+			dataEffect.addEffect(caster, emit, 4);
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
 	public boolean hasEffectFlags(World world, IMantraData data, ICaster caster, MantraEffectFlags flags) {
-		return flags != MantraEffectFlags.INDICATOR && caster.hasEffectFlags(flags);
+		return caster.hasEffectFlags(flags);
 	}
 
 	@SideOnly(Side.CLIENT)

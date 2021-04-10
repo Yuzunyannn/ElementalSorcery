@@ -131,4 +131,11 @@ public class ItemHelper {
 		for (ItemStack stack : stacks) list.add(stack);
 		return list;
 	}
+
+	public static ItemStack[] copy(ItemStack[] stacks) {
+		if (stacks == null) return null;
+		ItemStack[] newArray = new ItemStack[stacks.length];
+		for (int i = 0; i < newArray.length; i++) newArray[i] = stacks[i].copy();
+		return newArray;
+	}
 }

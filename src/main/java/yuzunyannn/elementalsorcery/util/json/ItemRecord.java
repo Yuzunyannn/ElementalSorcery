@@ -23,6 +23,13 @@ public class ItemRecord {
 		return list;
 	}
 
+	public static ItemStack[] asItemStackArray(List<ItemRecord> itemRecords) {
+		ItemStack[] array = new ItemStack[itemRecords.size()];
+		int i = 0;
+		for (ItemRecord ir : itemRecords) array[i++] = ir.getStack();
+		return array;
+	}
+
 	public static List<ItemRec> asItemRecList(List<ItemRecord> itemRecords) {
 		List<ItemRec> list = new ArrayList<>();
 		for (ItemRecord ir : itemRecords) list.add(new ItemRec(ir.getStack()));

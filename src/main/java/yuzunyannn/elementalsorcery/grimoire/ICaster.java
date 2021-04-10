@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -52,6 +53,10 @@ public interface ICaster {
 	 */
 	@Nonnull
 	public <T extends Entity> WantedTargetResult iWantLivingTarget(Class<T> cls);
+
+	/** 申请获取一个方向 */
+	@Nonnull
+	public Vec3d iWantDirection();
 
 	/** 获取施法者 ，施法者在某些情况下不一定是entitylivingbase */
 	@Nonnull

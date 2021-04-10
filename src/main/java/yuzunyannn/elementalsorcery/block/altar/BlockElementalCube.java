@@ -93,7 +93,7 @@ public class BlockElementalCube extends BlockContainer {
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return AXIS_BOX;
+		return FULL_BLOCK_AABB;
 	}
 
 	// 放置判定

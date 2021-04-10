@@ -75,6 +75,19 @@ public class NBTHelper {
 		NBTHelper.setNBTSerializableList(nbt, key, elementList);
 	}
 
+	public static void setItemArray(NBTTagCompound nbt, String key, ItemStack[] itemList) {
+		NBTTagList list = new NBTTagList();
+		for (ItemStack item : itemList) list.appendTag(item.serializeNBT());
+		nbt.setTag(key, list);
+	}
+
+	public static ItemStack[] getItemArray(NBTTagCompound nbt, String key) {
+		NBTTagList list = nbt.getTagList(key, NBTTag.TAG_COMPOUND);
+		ItemStack[] stacks = new ItemStack[list.tagCount()];
+		for (int i = 0; i < list.tagCount(); i++) stacks[i] = new ItemStack(list.getCompoundTagAt(i));
+		return stacks;
+	}
+
 	public static LinkedList<ElementStack> getElementList(NBTTagCompound nbt, String key) {
 		LinkedList<ElementStack> elementStackList = new LinkedList<ElementStack>();
 		NBTTagList list = nbt.getTagList(key, 10);

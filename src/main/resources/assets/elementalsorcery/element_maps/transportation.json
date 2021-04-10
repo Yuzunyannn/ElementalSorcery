@@ -1,0 +1,36 @@
+{
+    "maps": [
+        {
+            "note": "马鞍",
+            "item": "minecraft:saddle",
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 140,
+                    "power": 120
+                }
+            ]
+        },
+        {
+            "note": "鞘翅",
+            "item": "minecraft:elytra",
+            "element": [
+                {
+                    "id": "air",
+                    "size": 123,
+                    "power": 562
+                },
+                {
+                    "id": "ender",
+                    "size": 88,
+                    "power": 512
+                },
+                {
+                    "id": "wood",
+                    "size": 20,
+                    "power": 75
+                }
+            ]
+        }
+    ]
+}

@@ -70,7 +70,7 @@ public class GuiSupremeTable extends GuiNormal<ContainerSupremeTable> {
 		List<ElementStack> list = container.tileEntity.getNeedElements();
 		if (list == null) return;
 		RenderHelper.disableStandardItemLighting();
-		drawElements(mc, offsetX, offsetY, list, 8, (EventClient.tick / 40) % 8);
+		drawElements(mc, offsetX, offsetY, list, 8, EventClient.tick / 40);
 	}
 
 	public static void drawElements(Minecraft mc, int offsetX, int offsetY, List<ElementStack> list, int size,
@@ -78,6 +78,7 @@ public class GuiSupremeTable extends GuiNormal<ContainerSupremeTable> {
 		if (list.size() > size) {
 			int length = list.size();
 			for (int i = 0; i < size; i++) {
+				cycle = cycle < 0 ? -cycle : cycle;
 				ElementStack estack = list.get((cycle + i) % length);
 				int x;
 				int y = offsetY + 75;

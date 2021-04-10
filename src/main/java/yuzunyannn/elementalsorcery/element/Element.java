@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.element;
 
+import java.lang.reflect.Field;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -195,17 +196,13 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 		RenderHelper.drawTexturedRectInCenter(0, 0, 16, 16);
 	}
 
-	static public void registerAll() {
-		Element.REGISTRY.register(ESInit.ELEMENTS.VOID);
-		Element.REGISTRY.register(ESInit.ELEMENTS.MAGIC);
-		Element.REGISTRY.register(ESInit.ELEMENTS.ENDER);
-		Element.REGISTRY.register(ESInit.ELEMENTS.FIRE);
-		Element.REGISTRY.register(ESInit.ELEMENTS.WATER);
-		Element.REGISTRY.register(ESInit.ELEMENTS.AIR);
-		Element.REGISTRY.register(ESInit.ELEMENTS.EARTH);
-		Element.REGISTRY.register(ESInit.ELEMENTS.METAL);
-		Element.REGISTRY.register(ESInit.ELEMENTS.WOOD);
-		Element.REGISTRY.register(ESInit.ELEMENTS.KNOWLEDGE);
+	static public void registerAll() throws IllegalArgumentException, IllegalAccessException {
+		Class<?> cls = ESInit.ELEMENTS.getClass();
+		Field[] fields = cls.getDeclaredFields();
+		for (Field field : fields) {
+			Element element = ((Element) field.get(ESInit.ELEMENTS));
+			Element.REGISTRY.register(element);
+		}
 	}
 
 }

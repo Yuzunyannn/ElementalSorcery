@@ -9,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -17,7 +18,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
@@ -125,7 +125,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void updateEffect(World world, int type, ElementStack estack, Vec3d pos) {
-		Vec3d myPos = new Vec3d(this.pos).addVector(0.5, 0.25 + this.getHigh(rotate, wakeUp), 0.5);
+		Vec3d myPos = new Vec3d(this.pos).addVector(0.5, 0.25 + 0.5, 0.5);
 		if (type == IAltarWake.SEND) giveParticleElementTo(world, estack.getColor(), myPos, pos, 1);
 		else giveParticleElementTo(world, estack.getColor(), pos, myPos, 1);
 	}
@@ -167,22 +167,20 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	// 站起来的状态剩余tick
 	public int wake = 0;
 	// 站立来的比率0-1
-	public float wakeUp = 0.0f;
-	public float rotate = (float) (Math.random() * Math.PI * 2);
+	public float wakeRate = 0.0f;
+	public float preWakeRate = 0.0f;
+
 	public Vertex color = ORIGIN_COLOR;
 	public float colorRate = 0.0f;
 	public float detlaCr = 0.01f;
 
 	@SideOnly(Side.CLIENT)
 	public void tick() {
+		preWakeRate = wakeRate;
 		if (wake > 0) {
 			if (color == ORIGIN_COLOR) changeColor();
 			// 站起来的比率
-			if (wakeUp >= 1.0f) wakeUp = 1.0f;
-			else wakeUp += WAKE_UP_RARE;
-			// 旋转
-			rotate += SOTATE_PRE_TICK;
-			if (rotate >= Math.PI * 2) rotate -= Math.PI * 2;
+			wakeRate = MathHelper.clamp(wakeRate + WAKE_UP_RARE, 0, 1);
 			// 颜色转变
 			colorRate += detlaCr;
 			if (colorRate >= 1.0f || colorRate <= 0.0f) {
@@ -190,11 +188,8 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 				if (colorRate <= 0.0f) changeColor();
 			}
 			wake--;
-		} else {
-			if (wakeUp <= 0.0f) wakeUp = 0.0f;
-			else wakeUp -= WAKE_UP_RARE;
-		}
-		colorRate *= wakeUp;
+		} else wakeRate = MathHelper.clamp(wakeRate - WAKE_UP_RARE, 0, 1);
+		colorRate *= wakeRate;
 	}
 
 	// 切换颜色
@@ -205,19 +200,6 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 		int ecolor = color.toColor();
 		if (!estack.isEmpty()) ecolor = estack.getElement().getColor(estack);
 		color.toColor(ecolor);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public float getHigh(float rotate, float wakeUp) {
-		float rate = (float) Math.cos(rotate);
-		rate = rate * rate;
-		float high = (float) ((rate + 1) * (0.70F - BlockElementalCube.BLOCK_HALF_SIZE)) + 0.3F;
-		return high * wakeUp + (1 - wakeUp) * 0.25f;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public float getRoate(float rotate, float wakeUp) {
-		return rotate * wakeUp;
 	}
 
 }

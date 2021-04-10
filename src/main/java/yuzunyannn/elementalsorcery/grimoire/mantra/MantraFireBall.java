@@ -33,8 +33,6 @@ import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
-import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
@@ -122,43 +120,8 @@ public class MantraFireBall extends MantraCommon {
 	public void onSpellingEffect(World world, IMantraData mData, ICaster caster) {
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return;
-
 		super.onSpellingEffect(world, mData, caster);
-		if (!hasEffectFlags(world, mData, caster, MantraEffectFlags.DECORATE)) return;
-		Data data = (Data) mData;
-		Random rand = world.rand;
-
-		ICasterObject co = caster.iWantCaster();
-		Vec3d pos = co.getPositionVector();
-		if (co.asEntity() == null) pos = pos.addVector(0.5, 1, 0.5);
-		else {
-			Entity entity = co.asEntity();
-			pos = pos.add(entity.getLookVec()).addVector(0, entity.getEyeHeight(), 0);
-		}
-
-		Vec3d from = pos.addVector(rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1);
-		Vec3d v = pos.subtract(from).normalize();
-		// 聚合特效
-		if (data.powerUp) {
-			EffectElementMove effect = new EffectElementMove(world, from);
-			effect.g = 0;
-			int color = data.color == 0 ? this.getRenderColor() : data.color;
-			effect.setVelocity(v.scale(from.squareDistanceTo(pos) / effect.lifeTime));
-			effect.setColor(color);
-			Effect.addEffect(effect);
-		}
-		// 中心球特效
-		if (tick % 5 == 0) return;
-		if (data.power > 0) {
-			float s = Math.min(32, data.power) / 32.0f;
-			EffectElementMove effect = new EffectElementMove(world, pos);
-			effect.g = 0;
-			effect.scale = s * 0.2f;
-			effect.alpha = 0.75f;
-			effect.setColor(this.getRenderColor());
-			effect.setVelocity(v.scale(-0.005));
-			Effect.addEffect(effect);
-		}
+		this.addEffectEmitEffect(world, mData, caster);
 	}
 
 	@Override
@@ -201,18 +164,8 @@ public class MantraFireBall extends MantraCommon {
 		if (tick < 20) return;
 		Data data = (Data) mData;
 		ICasterObject co = caster.iWantCaster();
-		Entity entity = co.asEntity();
-		if (entity == null) {
-			data.pos = co.getPositionVector().addVector(0.5, 0.5, 0.5);
-			WantedTargetResult result = caster.iWantLivingTarget(EntityLivingBase.class);
-			if (result.getEntity() == null) {
-				Random rand = world.rand;
-				data.toward = new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian()).normalize();
-			} else data.toward = result.getHitVec().addVector(0, 1, 0).subtract(data.pos).normalize();
-		} else {
-			data.pos = entity.getPositionVector().addVector(0, entity.getEyeHeight(), 0);
-			data.toward = entity.getLookVec();
-		}
+		data.pos = co.getEyePosition();
+		data.toward = caster.iWantDirection();
 		data.pos = data.pos.add(data.toward.scale(2));
 		data.power = Math.min(data.power, 32);
 	}

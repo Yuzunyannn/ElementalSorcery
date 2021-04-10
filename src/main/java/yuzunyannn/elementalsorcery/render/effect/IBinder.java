@@ -7,6 +7,8 @@ public interface IBinder {
 
 	Vec3d getPosition();
 
+	Vec3d getDirection();
+
 	public static class EntityBinder implements IBinder {
 
 		final public Entity binder;
@@ -19,7 +21,12 @@ public interface IBinder {
 
 		@Override
 		public Vec3d getPosition() {
-			return this.binder == null ? Vec3d.ZERO : this.binder.getPositionVector().addVector(0, yoff, 0);
+			return this.binder.getPositionVector().addVector(0, yoff, 0);
+		}
+
+		@Override
+		public Vec3d getDirection() {
+			return binder.getLookVec();
 		}
 
 	}
@@ -35,6 +42,11 @@ public interface IBinder {
 		@Override
 		public Vec3d getPosition() {
 			return pos;
+		}
+
+		@Override
+		public Vec3d getDirection() {
+			return new Vec3d(1, 0, 0);
 		}
 
 	}

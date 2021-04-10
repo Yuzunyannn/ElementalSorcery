@@ -173,6 +173,7 @@ element.earth.name=土
 element.air.name=気
 element.metal.name=金
 element.knowledge.name=知識
+element.star.name=星
 
 mantra.launchElementCrafting.name=合成起動の呪文
 mantra.launchElementDeconstruct.name=瓦解起動の呪文
@@ -207,6 +208,8 @@ mantra.magicStrafe.name=魔力掃射
 mantra.magicStrafe.describe=魔力をエネルギー束に変換し、敵にダメージを与える。
 mantra.floatArea.name=漂り風域
 mantra.floatArea.describe=気元素て上昇気流が生じ、風域に入る生物を上に向けて吹きます。
+mantra.fireCharge.name=火炎弾
+mantra.fireCharge.describe=火元素て作る火炎弾を発射する。
 
 key.es.func=機能キー
 

@@ -100,6 +100,10 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 			this.daComplex = this.daComplex + other.daComplex;
 		}
 
+		public void merge(ElementStack... estacks2) {
+			this.daEstacks = ElementHelper.merge(this.daEstacks, estacks2);
+		}
+
 		@Override
 		public NBTTagCompound serializeNBT() {
 			NBTTagCompound nbt = new NBTTagCompound();
@@ -228,6 +232,11 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 						estack.setCount(Math.max(count, 1));
 					}
 				}
+				// 强制附加元素
+				ElementStack[] estacks = structureCraft.getExtraElements();
+				if (estacks != null) ans.merge(estacks);
+				// 排序元素
+				ElementHelper.sort(this.ans.daEstacks);
 			}
 		}
 	}
@@ -272,17 +281,20 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		if (ans.daEstacks == null) return null;
 		ans.daComplex = teInfo.complex();
 		if (!needRemian) return ans;
-		ItemStack remain = stack;
+		ItemStack[] remains = null;
 		int rest = 1;
 		do {
-			remain = teInfo.remain();
-			if (remain.isEmpty()) break;
+			remains = teInfo.remain();
+			if (remains == null) break;
 			if (rest <= 0) return null;
-			teInfo = elementMap.toElement(remain);
-			ElementStack[] remainStacks = ElementHelper.copy(teInfo.element());
-			if (remainStacks != null) {
-				ans.daEstacks = ElementHelper.merge(ans.daEstacks, remainStacks);
-				ans.daComplex = ans.daComplex + teInfo.complex();
+			for (ItemStack remain : remains) {
+				teInfo = elementMap.toElement(remain);
+				if (teInfo == null) return null;
+				ElementStack[] remainStacks = ElementHelper.copy(teInfo.element());
+				if (remainStacks != null) {
+					ans.daEstacks = ElementHelper.merge(ans.daEstacks, remainStacks);
+					ans.daComplex = ans.daComplex + teInfo.complex();
+				}
 			}
 			rest--;
 		} while (true);

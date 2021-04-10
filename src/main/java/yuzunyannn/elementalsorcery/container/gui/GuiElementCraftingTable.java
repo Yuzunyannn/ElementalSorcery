@@ -55,7 +55,7 @@ public class GuiElementCraftingTable extends GuiNormal<ContainerElementCraftingT
 		List<ElementStack> list = container.tileEntity.getNeedElements();
 		if (list == null) return;
 		RenderHelper.disableStandardItemLighting();
-		GuiSupremeTable.drawElements(mc, offsetX, offsetY, list, 8, (EventClient.tick / 40) % 8);
+		GuiSupremeTable.drawElements(mc, offsetX, offsetY, list, 8, EventClient.tick / 40);
 
 	}
 

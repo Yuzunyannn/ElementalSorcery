@@ -173,6 +173,7 @@ element.earth.name=Earth
 element.air.name=Air
 element.metal.name=Metal
 element.knowledge.name=Knowledge
+element.star.name=Star
 
 mantra.launchElementCrafting.name=Crafting Incantation
 mantra.launchElementDeconstruct.name=Disintegration Incantation
@@ -207,6 +208,8 @@ mantra.magicStrafe.name=Magic Strafe
 mantra.magicStrafe.describe=Turn magic Into energy beam to attack enemies.
 mantra.floatArea.name=Floating Wind Area
 mantra.floatArea.describe=With the Air Element, produce updraft, blow the creatures that enter the area up.
+mantra.fireCharge.name=Fire Charge
+mantra.fireCharge.describe=With the Fire Element, generate and shoot The Fire Charge
 
 key.es.func=Function key
 

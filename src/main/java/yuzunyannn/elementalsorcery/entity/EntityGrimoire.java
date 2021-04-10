@@ -440,6 +440,12 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	@Override
+	public Vec3d iWantDirection() {
+		if (user != null) return user.getLookVec();
+		return new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian()).normalize();
+	}
+
+	@Override
 	public ICasterObject iWantCaster() {
 		return new CasterObjectEntity(user == null ? this : user);
 	}
