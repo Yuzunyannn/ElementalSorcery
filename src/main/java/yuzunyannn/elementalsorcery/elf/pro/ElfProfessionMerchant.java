@@ -1,16 +1,23 @@
 package yuzunyannn.elementalsorcery.elf.pro;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
@@ -23,6 +30,7 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
+import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
@@ -51,7 +59,7 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 		case 2:
 			addACommodity(trade, new ItemStack(ITEMS.NATURE_DUST, 1, 1), 150, 3, 1000);
 		case 1:
-			addACommodity(trade, new ItemStack(ITEMS.RESONANT_CRYSTAL), 85, 8, 1000);
+			addACommodity(trade, new ItemStack(ITEMS.RESONANT_CRYSTAL), 50, 8, 1000);
 		default:
 			addACommodity(trade, new ItemStack(BLOCKS.ELF_FRUIT, 1, 2), 10, 20, 1000);
 		}
@@ -98,6 +106,46 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 	public boolean interact(EntityElfBase elf, EntityPlayer player) {
 		openTalkGui(player, elf);
 		return true;
+	}
+
+	@Override
+	public void tick(EntityElfBase elf) {
+		if (elf.tick % 100 != 0) return;
+		if (elf.getTalker() != null) return;
+		if (elf.world.isRemote) return;
+		NBTTagCompound nbt = elf.getEntityData();
+		if (nbt.hasKey(TradeCount.Bind.TAG)) {
+			TradeCount tradeCount = new TradeCount();
+			tradeCount.deserializeNBT(nbt.getCompoundTag(TradeCount.Bind.TAG));
+
+			int size = tradeCount.getTradeListSize();
+			for (int i = 0; i < size; i++) {
+				TradeList.TradeInfo info = tradeCount.getTradeInfo(i);
+				if (info.isReclaim()) continue;
+				if (tradeCount.stock(i) > 0) return;
+			}
+		}
+
+		ItemStack stack = elf.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+		if (stack.getItem() == ESInit.ITEMS.SPELLBOOK) {
+			elf.setDead();
+			elf.world.playSound(null, elf.posX, elf.posY, elf.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT,
+					SoundCategory.HOSTILE, 1, 1);
+		} else {
+			elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.SPELLBOOK));
+			elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
+			float size = 6;
+			AxisAlignedBB aabb = new AxisAlignedBB(elf.posX - size, elf.posY - size, elf.posZ - size, elf.posX + size,
+					elf.posY + size, elf.posZ + size);
+			List<EntityPlayer> list = elf.world.getEntitiesWithinAABB(EntityPlayer.class, aabb);
+			for (EntityPlayer player : list) {
+				ITextComponent text = new TextComponentString("[")
+						.appendSibling(new TextComponentTranslation("pro.merchant"))
+						.appendText("]" + elf.getName() + ":Bye~");
+				player.sendMessage(text);
+			}
+		}
+
 	}
 
 	@Override

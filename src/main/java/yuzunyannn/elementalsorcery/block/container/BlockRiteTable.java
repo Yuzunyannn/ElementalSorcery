@@ -119,7 +119,7 @@ public class BlockRiteTable extends BlockContainerNormal {
 		if (stack.getItem() == Items.WOODEN_SWORD) {
 			if (stack.getItemDamage() > 0 && !playerIn.isCreative()) return false;
 			if (trt.rite(playerIn, stack)) {
-				if (!playerIn.isCreative()) stack.setItemDamage(stack.getMaxDamage() / 2);
+				//if (!playerIn.isCreative()) stack.setItemDamage(stack.getMaxDamage() / 2);
 				playerIn.setHeldItem(hand, stack);
 			} else return false;
 		} else if (stack.getItem() == ESInit.ITEMS.SOUL_WOOD_SWORD) {

@@ -1,7 +1,0 @@
-{
-    "type": "craft",
-    "name": "stoneMill",
-    "linked": "elementalsorcery:stone_mill",
-    "item": "elementalsorcery:stone_mill",
-    "lev": 1
-}

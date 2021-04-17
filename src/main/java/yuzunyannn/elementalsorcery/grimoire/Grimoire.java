@@ -32,6 +32,9 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 	/** 渲染信息 */
 	private Object renderInfo;
 
+	/** 是否加载过，在施法过程中不会重复加载 */
+	public int lastLoaded = 0;
+
 	@SideOnly(Side.CLIENT)
 	public RenderItemGrimoireInfo getRenderInfo() {
 		if (renderInfo == null) renderInfo = new RenderItemGrimoireInfo();
@@ -54,6 +57,10 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 
 		public NBTTagCompound getData() {
 			return data;
+		}
+
+		public void setData(NBTTagCompound data) {
+			this.data = data == null ? this.data : data;
 		}
 	}
 
@@ -106,6 +113,10 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 		return mantraList.get(i);
 	}
 
+	public Info getSelectedInfo() {
+		return getInfo(getSelected());
+	}
+
 	/** 当前选择的咒文 */
 	public short getSelected() {
 		return at;
@@ -132,8 +143,14 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 		return nbt.hasKey("mantra", NBTTag.TAG_LIST);
 	}
 
+	public void tryLoadState(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt != null && nbt.hashCode() != lastLoaded) this.loadState(nbt);
+	}
+
 	@Override
 	public void loadState(NBTTagCompound nbt) {
+		lastLoaded = nbt.hashCode();
 		if (inventory != null) inventory.loadState(nbt);
 		NBTTagList mantras = nbt.getTagList("mantra", NBTTag.TAG_COMPOUND);
 		mantraList = new ArrayList<>(mantras.tagCount());

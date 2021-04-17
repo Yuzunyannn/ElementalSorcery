@@ -24,6 +24,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.util.IField;
+import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemStackLimitHandler;
 
 public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITickable, IField {
@@ -138,8 +139,8 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 				if ((stack.getItem() == Items.ENDER_EYE || stack.getItem() == Items.ENDER_PEARL) && power >= 8) {
 					return new ItemStack(ESInit.ITEMS.MAGICAL_ENDER_EYE, 1);
 				}
-				// 如果有3个以上的魔法末影之眼，可以将蓝晶石工具变成可以吸收元素的工具
-				if (power >= 3 && stack.getItem() instanceof ItemKyaniteTools.toolsCapability
+				// 如果有1个以上的魔法末影之眼，可以将蓝晶石工具变成可以吸收元素的工具
+				if (power >= 1 && stack.getItem() instanceof ItemKyaniteTools.toolsCapability
 						&& stack.getItemDamage() == 0
 						&& !stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null)) {
 					stack = new ItemStack(stack.getItem(), 1);
@@ -184,7 +185,8 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 				if (Math.random() < 0.10f + add) return new ItemStack(ESInit.ITEMS.MAGIC_PIECE);
 				break;
 			case KYANITE:
-				if (Math.random() < 0.50f + add) return new ItemStack(ESInit.ITEMS.MAGIC_PIECE);
+				if (Math.random() < 0.50f + add)
+					return new ItemStack(ESInit.ITEMS.MAGIC_PIECE, RandomHelper.randomRange(1, 3));
 				break;
 			default:
 				break;

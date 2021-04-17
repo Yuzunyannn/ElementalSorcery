@@ -199,7 +199,7 @@ mantra.summon.describe=魔力にからまれて、召喚儀式は随時行われ
 mantra.lightningArea.name=雷鳴の地
 mantra.lightningArea.describe=気元素と火元素が入り交じって、一つの地域を喚起して、入る生物は雷に打たれます。
 mantra.slowFall.name=緩降
-mantra.slowFall.describe=気元素て空中でゆっくり滑走きるようにします。
+mantra.slowFall.describe=気元素で空中でゆっくり滑走きるようにします。
 mantra.footbridge.name=歩道橋
 mantra.footbridge.describe=土元素で地面の土を持ち上げて、前の方に橋をかけます。
 mantra.fireArea.name=燃えの地
@@ -207,9 +207,11 @@ mantra.fireArea.describe=火元素で、一つの地域を喚起して、入る�
 mantra.magicStrafe.name=魔力掃射
 mantra.magicStrafe.describe=魔力をエネルギー束に変換し、敵にダメージを与える。
 mantra.floatArea.name=漂り風域
-mantra.floatArea.describe=気元素て上昇気流が生じ、風域に入る生物を上に向けて吹きます。
+mantra.floatArea.describe=気元素で上昇気流が生じ、風域に入る生物を上に向けて吹きます。
 mantra.fireCharge.name=火炎弾
-mantra.fireCharge.describe=火元素て作る火炎弾を発射する。
+mantra.fireCharge.describe=火元素で作る火炎弾を発射する。
+mantra.arrow.name=射手
+mantra.arrow.describe=気元素で矢を発射する。土木元素で矢を作れる、火元素でパワーを増える，土元素で敵を撃ち飛ばす。
 
 key.es.func=機能キー
 

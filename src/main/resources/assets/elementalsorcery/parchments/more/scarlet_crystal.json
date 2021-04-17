@@ -7,5 +7,6 @@
     ],
     "type": "normal",
     "name": "scarletCrystal",
-    "item": "elementalsorcery:scarlet_crystal"
+    "item": "elementalsorcery:scarlet_crystal",
+    "background": "elementalsorcery:scarlet_crystal"
 }

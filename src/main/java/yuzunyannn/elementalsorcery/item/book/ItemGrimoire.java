@@ -73,14 +73,13 @@ public class ItemGrimoire extends Item {
 		if (handIn != EnumHand.MAIN_HAND) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
 		// 开始释放！
-		grimoire.loadState(stack);
+		grimoire.tryLoadState(stack);
 		// 获取咒文
-		NBTTagCompound originData = Grimoire.getOriginNBT(stack);
-		Mantra mantra = Mantra.getFromNBT(originData);
+		Mantra mantra = grimoire.getSelectedInfo().getMantra();
 		if (mantra == null) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		if (!mantra.canStart(playerIn)) return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 		// 开始
-		EntityGrimoire.start(worldIn, playerIn, mantra, originData);
+		EntityGrimoire.start(worldIn, playerIn, grimoire);
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}
 

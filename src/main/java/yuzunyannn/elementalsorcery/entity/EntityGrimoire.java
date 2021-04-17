@@ -47,11 +47,12 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData, ICaster, MessageEntitySync.IRecvData {
 
-	public static void start(World world, EntityLivingBase user, Mantra mantra, NBTTagCompound originData) {
+	public static void start(World world, EntityLivingBase user, Grimoire grimoire) {
 		user.setActiveHand(EnumHand.MAIN_HAND);
 		if (world.isRemote) return;
-		if (mantra == null) return;
-		EntityGrimoire e = new EntityGrimoire(world, user, mantra, originData);
+		Grimoire.Info info = grimoire.getSelectedInfo();
+		if (info == null) return;
+		EntityGrimoire e = new EntityGrimoire(world, user, info.getMantra(), info.getData());
 		e.lockUser();
 		world.spawnEntity(e);
 	}
@@ -152,7 +153,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		NBTTagCompound nbt = new NBTTagCompound();
 		this.writeEntityToNBT(nbt, true);
 		if (metaData != null) nbt.setTag("oData", metaData);
-		if (grimoire != null) nbt.setTag("gData", grimoire.serializeNBT());
+		// if (grimoire != null) nbt.setTag("gData", grimoire.serializeNBT());
 		ByteBufUtils.writeTag(buffer, nbt);
 	}
 
@@ -160,7 +161,8 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	public void readSpawnData(ByteBuf additionalData) {
 		NBTTagCompound nbt = ByteBufUtils.readTag(additionalData);
 		if (nbt.hasKey("oData", NBTTag.TAG_COMPOUND)) metaData = nbt.getCompoundTag("oData");
-		if (nbt.hasKey("gData", NBTTag.TAG_COMPOUND)) grimoireDataFromServer = nbt.getCompoundTag("gData");
+		// if (nbt.hasKey("gData", NBTTag.TAG_COMPOUND)) grimoireDataFromServer =
+		// nbt.getCompoundTag("gData");
 		readEntityFromNBT(nbt);
 	}
 
@@ -180,9 +182,15 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 			ItemStack hold = user.getHeldItem(EnumHand.MAIN_HAND);
 			grimoireStack = hold;
 			grimoire = hold.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
-			if (world.isRemote) {
-				if (grimoireDataFromServer != null && grimoire != null) grimoire.deserializeNBT(grimoireDataFromServer);
-			}
+			if (grimoire != null) grimoire.tryLoadState(hold);
+//			if (world.isRemote) {
+//				if (grimoireDataFromServer != null && grimoire != null) grimoire.deserializeNBT(grimoireDataFromServer);
+//			}
+		}
+
+		if (grimoire != null) {
+			Grimoire.Info info = grimoire.getSelectedInfo();
+			metaData = info == null ? new NBTTagCompound() : info.getData();
 		}
 	}
 
@@ -292,16 +300,16 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		mantra.endSpelling(world, mantraData, this);
 		if (world.isRemote) return;
 		if (grimoireStack.isEmpty()) return;
+		Grimoire.Info info = grimoire.getSelectedInfo();
+		if (info != null && info.getMantra() == mantra) info.setData(metaData);
+//		grimoire.saveState(grimoireStack);
 		// 延迟一下，等待合书动画
 		EventServer.addTask(() -> {
-			if (user != null) {
-				// 使用者有开始用了
-				if (user.getHeldItemMainhand().getCapability(Grimoire.GRIMOIRE_CAPABILITY, null) == grimoire) {
-					if (user.isHandActive()) return;
-				}
+			if (user != null && user.isHandActive()) {
+				if (user.getHeldItemMainhand().getCapability(Grimoire.GRIMOIRE_CAPABILITY, null) == grimoire) return;
 			}
 			grimoire.saveState(grimoireStack);
-		}, 10);
+		}, 12);
 	}
 
 	protected void onAfterSpelling() {

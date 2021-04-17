@@ -31,7 +31,6 @@ public class BlockElfLog extends BlockLog {
 	}
 
 	@Override
-
 	protected ItemStack getSilkTouchDrop(IBlockState state) {
 		return new ItemStack(this.getItemDropped(state, RandomHelper.rand, 0));
 	}

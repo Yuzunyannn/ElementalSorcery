@@ -48,4 +48,14 @@ public class BlockStarStone extends Block {
 	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
 		return !worldIn.isAirBlock(pos.down()) && super.canPlaceBlockAt(worldIn, pos);
 	}
+
+	@Override
+	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
+		if (fromPos.getY() + 1 == pos.getY()) {
+			if (worldIn.isAirBlock(fromPos)) {
+				worldIn.destroyBlock(pos, true);
+			}
+		}
+	}
+
 }

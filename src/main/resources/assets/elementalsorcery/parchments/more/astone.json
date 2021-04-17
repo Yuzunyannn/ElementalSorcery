@@ -1,7 +1,9 @@
 {
     "lev": 1,
     "need": [
-        "more/melt_cauldron"
+        "more/melt_cauldron",
+        "base/kyanite",
+        "more/magic_stone"
     ],
     "linked": "elementalsorcery:astone",
     "type": "mult",

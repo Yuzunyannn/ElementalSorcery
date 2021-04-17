@@ -1,4 +1,5 @@
 {
+    "lev": 2,
     "need": [
         "base/rite_craft",
         "more/ancient_paper"

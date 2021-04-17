@@ -88,7 +88,7 @@ public class ItemKyaniteTools {
 	// 工具具有储存元素的能力
 	public static interface toolsCapability {
 		default void provide(ItemStack stack) {
-			IElementInventory inventory = new ElementInventory(3);
+			IElementInventory inventory = new ElementInventory(6);
 			inventory.saveState(stack);
 		}
 	}

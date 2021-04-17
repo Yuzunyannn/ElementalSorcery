@@ -108,10 +108,11 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 	public ElementStack changetoElementWhenDeconstruct(World world, ItemStack stack, ElementStack estack, int complex,
 			int lvPower) {
 		if (lvPower <= Element.DP_TOOLS) {
-			if (estack.getCount() > 25) estack.setCount(25);
+			if (estack.getCount() > 16) estack.setCount(16);
 			if (complex >= 10) estack.rise(-0.8f);
 			else estack.rise(-0.5f);
 			estack.weaken(0.2f);
+			if (estack.getPower() > 16) estack.setPower(16);
 		} else if (lvPower <= Element.DP_BOX) {
 			if (estack.getCount() > 100) estack.setCount(100);
 			if (complex > 10) estack.rise(-0.85f);

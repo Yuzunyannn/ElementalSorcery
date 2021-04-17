@@ -72,7 +72,7 @@ public class EffectMagicEmit extends EffectCondition {
 		} else {
 			this.lifeTime = 10;
 			Vec3d vec = binder.getPosition();
-			Vec3d look = binder.getDirection().scale(1.5);
+			Vec3d look = binder.getDirection().scale(1);
 			this.posX = vec.x + look.x;
 			this.posY = vec.y + look.y;
 			this.posZ = vec.z + look.z;

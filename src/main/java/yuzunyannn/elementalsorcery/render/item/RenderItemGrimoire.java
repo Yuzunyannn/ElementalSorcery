@@ -81,6 +81,12 @@ public class RenderItemGrimoire implements IRenderItem {
 				// 渲染
 				GlStateManager.scale(sacle, sacle, sacle);
 				MODEL_GRIMOIRE.render(null, dtick, flipRight, flipLeft, spread, 0.0F, 1.0F);
+
+//				GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE);
+//				GlStateManager.scale(1.2, 1.2, 1.2);
+//				GlStateManager.translate(-0.001, 0, 0);
+//				MODEL_GRIMOIRE.render(null, dtick, flipRight, flipLeft, spread, 0.0F, 1.0F);
+//				GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 			}
 		}
 		GlStateManager.popMatrix();

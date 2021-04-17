@@ -210,6 +210,8 @@ mantra.floatArea.name=Floating Wind Area
 mantra.floatArea.describe=With the Air Element, produce updraft, blow the creatures that enter the area up.
 mantra.fireCharge.name=Fire Charge
 mantra.fireCharge.describe=With the Fire Element, generate and shoot The Fire Charge
+mantra.arrow.name=Shooter
+mantra.arrow.describe=With the Air, shooting the arrow. With the Earth&Wood, making the arrow. Fire to strengthen, Earth to punch
 
 key.es.func=Function key
 

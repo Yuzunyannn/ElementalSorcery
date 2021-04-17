@@ -188,6 +188,7 @@ public class ESObjects {
 		public Mantra MAGIC_STRAFE;
 		public Mantra FLOAT_AREA;
 		public Mantra FIRE_CHARGE;
+		public Mantra ARROW;
 	}
 
 	static public class Village {

@@ -1,7 +1,8 @@
 {
     "lev": 1,
     "need": [
-        "base/kyanite"
+        "base/kyanite",
+        "more/magical_ender_eye"
     ],
     "linked": [
         "elementalsorcery:kyanite_axe",

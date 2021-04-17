@@ -55,7 +55,7 @@ public class GuiElfTrade extends GuiContainer {
 				this.drawTexturedModalRect(xoff, yoff, 176, 0, 3, 3);
 				if (container.trade.stock(i) <= 0) {
 					GlStateManager.pushMatrix();
-					GlStateManager.translate(xoff + 1, yoff - 17, 251);
+					GlStateManager.translate(xoff + 1, yoff - 17, 300);
 					GlStateManager.scale(0.4, 0.4, 1);
 					GlStateManager.rotate(45, 0, 0, 1);
 					this.drawTexturedModalRect(0, 0, 176, 3, 47, 11);

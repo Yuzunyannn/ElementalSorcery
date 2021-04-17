@@ -54,10 +54,9 @@ public class BlockLantern extends BlockContainerNormal {
 	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
-		if (worldIn.isRemote)
-			return;
+		if (worldIn.isRemote) return;
 		NBTTagCompound nbt = ElementalSorcery.getPlayerData(placer);
-		BlockPos prePos = NBTHelper.getBlockPos(nbt, "lan_pre");
+		BlockPos prePos = NBTHelper.getBlockPos(nbt, "lanPre");
 		TileEntity tile = worldIn.getTileEntity(prePos);
 		if (tile instanceof TileLantern) {
 			TileLantern tileLantern = (TileLantern) worldIn.getTileEntity(pos);
@@ -67,24 +66,22 @@ public class BlockLantern extends BlockContainerNormal {
 			TileLantern tileLantern = (TileLantern) worldIn.getTileEntity(pos);
 			tileLantern.setPlayerName(((EntityPlayer) placer).getName());
 		}
-		NBTHelper.setBlockPos(nbt, "lan_pre", pos);
+		NBTHelper.setBlockPos(nbt, "lanPre", pos);
 	}
 
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		if (worldIn.isRemote)
-			return;
+		if (worldIn.isRemote) return;
 		TileEntity tile = worldIn.getTileEntity(pos);
 		if (tile instanceof TileLantern) {
 			TileLantern tileLantern = (TileLantern) tile;
 			// 还原之前的位置
 			String uername = tileLantern.getPlayerName();
 			NBTTagCompound nbt = ElementalSorcery.getPlayerData(uername);
-			BlockPos prePos = NBTHelper.getBlockPos(nbt, "lan_pre");
+			BlockPos prePos = NBTHelper.getBlockPos(nbt, "lanPre");
 			if (prePos.equals(pos)) {
 				prePos = tileLantern.getNext();
-				if (prePos != null)
-					NBTHelper.setBlockPos(nbt, "lan_pre", prePos);
+				if (prePos != null) NBTHelper.setBlockPos(nbt, "lanPre", prePos);
 			}
 			// 离开
 			tileLantern.leave();
@@ -107,15 +104,14 @@ public class BlockLantern extends BlockContainerNormal {
 				}
 			} else {
 				NBTTagCompound nbt = ElementalSorcery.getPlayerData(playerIn);
-				NBTHelper.setBlockPos(nbt, "lan_pre", pos);
+				NBTHelper.setBlockPos(nbt, "lanPre", pos);
 			}
 			return true;
 		}
 		TileEntity tile = worldIn.getTileEntity(pos);
 		if (tile instanceof TileLantern) {
 			TileLantern tileLantern = (TileLantern) worldIn.getTileEntity(pos);
-			if (worldIn.isRemote)
-				tileLantern.wantTransmit();
+			if (worldIn.isRemote) tileLantern.wantTransmit();
 			return true;
 		}
 		return false;

@@ -48,7 +48,7 @@ public class BlockScarletCrystalOre extends Block {
 	public int quantityDroppedWithBonus(int fortune, Random random) {
 		int i = random.nextInt(fortune + 3);
 		i = MathHelper.clamp(i, 0, 8);
-		return i + 1;
+		return i + 2;
 	}
 
 	@Override

@@ -1,14 +1,23 @@
 {
     "lev": 1,
-    "need": [
-        "more/stone_mill"
-    ],
     "linked": [
         "elementalsorcery:star_sand",
-        "elementalsorcery:star_stone"
+        "elementalsorcery:star_stone",
+        "elementalsorcery:stone_mill"
     ],
-    "type": "normal",
-    "name": "starSand",
-    "icon": "elementalsorcery:star_sand",
-    "background": "elementalsorcery:star_sand"
+    "type": "mult",
+    "lock": 0,
+    "pages": [
+        {
+            "type": "normal",
+            "name": "starSand",
+            "icon": "elementalsorcery:star_sand",
+            "background": "elementalsorcery:star_sand"
+        },
+        {
+            "type": "craft",
+            "name": "stoneMill",
+            "item": "elementalsorcery:stone_mill"
+        }
+    ]
 }

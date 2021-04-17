@@ -11,7 +11,7 @@ public class EntityElfTravelling extends EntityElf {
 
 	@Override
 	protected boolean canDespawn() {
-		return true;
+		return false;
 	}
 
 }

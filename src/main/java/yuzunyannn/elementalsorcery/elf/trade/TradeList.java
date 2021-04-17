@@ -38,6 +38,7 @@ public class TradeList implements INBTSerializable<NBTTagCompound>, Iterable<Tra
 
 		ItemStack commodity = ItemStack.EMPTY;
 		int cost;
+		/** 回收 */
 		boolean reclaim;
 
 		public ItemStack getCommodity() {

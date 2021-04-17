@@ -107,8 +107,8 @@ public class WorldGeneratorES {
 			WorldGenerator generator;
 			int expect = CONFIG_ELF_TREE.getSpawnPoint(world, biome);
 			if (biome == Biomes.PLAINS) {
-				if (rand.nextInt(Math.max(1, 5 - expect)) != 0) return;
-			} else if (rand.nextInt(Math.max(1, 10 - expect * 2)) != 0) return;
+				if (rand.nextInt(Math.max(1, 8 - expect)) != 0) return;
+			} else if (rand.nextInt(Math.max(1, 16 - expect * 2)) != 0) return;
 			generator = WorldGenElfTree.getGenTreeFromBiome(false, biome);
 			int x = rand.nextInt(16) + 8;
 			int z = rand.nextInt(16) + 8;

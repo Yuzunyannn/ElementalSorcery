@@ -217,9 +217,11 @@ public abstract class EntityElfBase extends EntityCreature {
 		if (this.rand.nextInt(100) < 50) return;
 		int i = this.rand.nextInt(3);
 		if (lootingModifier > 0) i += this.rand.nextInt(lootingModifier + 1);
-		for (int j = 0; j < i; ++j) if (this.rand.nextInt(3) == 0)
-			this.entityDropItem(new ItemStack(ESInit.ITEMS.ELF_COIN, this.rand.nextInt(7) + 1), 0);
-		else this.entityDropItem(new ItemStack(ESInit.BLOCKS.ELF_FRUIT, 1, BlockElfFruit.MAX_STATE), 0);
+		for (int j = 0; j < i; ++j) {
+			if (this.rand.nextInt(3) == 0)
+				this.entityDropItem(new ItemStack(ESInit.ITEMS.ELF_COIN, this.rand.nextInt(8) + 2), 0);
+			else this.entityDropItem(new ItemStack(ESInit.BLOCKS.ELF_FRUIT, 1, BlockElfFruit.MAX_STATE), 0);
+		}
 	}
 
 	/** 捡起物品 */

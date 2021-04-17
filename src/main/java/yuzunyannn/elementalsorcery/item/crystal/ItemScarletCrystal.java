@@ -28,8 +28,8 @@ public class ItemScarletCrystal extends ItemCrystal {
 		if (entityItem.world.isRemote) return false;
 		if (!entityItem.isWet()) return false;
 		int count = entityItem.getItem().getCount();
-		entityItem.dropItem(ESInit.ITEMS.MAGIC_STONE, 1 * count);
-		entityItem.dropItem(ESInit.ITEMS.MAGIC_PIECE, RandomHelper.randomRange(1 * count, 4 * count));
+		entityItem.dropItem(ESInit.ITEMS.MAGIC_STONE, RandomHelper.randomRange(1 * count, 3 * count));
+		entityItem.dropItem(ESInit.ITEMS.MAGIC_PIECE, RandomHelper.randomRange(2 * count, 8 * count));
 		entityItem.setDead();
 		// 特效
 		NBTTagCompound nbt = FireworkEffect.fastNBT(0, 1, 0.1f, new int[] { 0x760e05, 0xd4584d },

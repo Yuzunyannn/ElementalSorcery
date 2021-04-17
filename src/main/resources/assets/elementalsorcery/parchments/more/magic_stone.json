@@ -1,7 +1,8 @@
 {
     "lev": 1,
     "need": [
-        "more/magic_piece"
+        "more/magic_piece",
+        "more/star_sand"
     ],
     "linked": "elementalsorcery:magic_stone",
     "type": "craft",

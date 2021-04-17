@@ -37,6 +37,11 @@ public class ItemParchment extends Item {
 		this.setUnlocalizedName("parchment");
 	}
 
+	@Override
+	public int getItemBurnTime(ItemStack itemStack) {
+		return 75;
+	}
+
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {

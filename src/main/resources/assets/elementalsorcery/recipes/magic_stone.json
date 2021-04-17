@@ -18,6 +18,7 @@
 		}
 	},
 	"result": {
-		"item": "elementalsorcery:magic_stone"
+		"item": "elementalsorcery:magic_stone",
+		"count": 2
 	}
 }

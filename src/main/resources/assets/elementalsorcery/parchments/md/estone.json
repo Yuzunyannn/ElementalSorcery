@@ -2,6 +2,9 @@
     "lev": 2,
     "type": "craft",
     "name": "estone",
+    "need": [
+        "md/magic_crystal"
+    ],
     "linked": [
         "elementalsorcery:estone",
         "elementalsorcery:estone_slab",

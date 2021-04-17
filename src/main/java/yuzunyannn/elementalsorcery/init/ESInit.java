@@ -133,6 +133,7 @@ import yuzunyannn.elementalsorcery.event.KeyBoard;
 import yuzunyannn.elementalsorcery.explore.ExploreManagement;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraArrow;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraBlockCrash;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireArea;
@@ -486,6 +487,7 @@ public class ESInit {
 		MANTRAS.MAGIC_STRAFE = new MantraMagicStrafe();
 		MANTRAS.FLOAT_AREA = new MantraFloatArea();
 		MANTRAS.FIRE_CHARGE = new MantraFireCharge();
+		MANTRAS.ARROW = new MantraArrow();
 
 		MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);
 		MANTRAS.LAUNCH_EDE = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT, 0xff4a1a);

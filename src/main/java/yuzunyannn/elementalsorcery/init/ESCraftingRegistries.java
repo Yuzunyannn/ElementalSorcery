@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.init;
 
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -28,6 +29,7 @@ public class ESCraftingRegistries {
 	private static void registerAllSmelting() {
 		ESObjects.Items ITEMS = ESInit.ITEMS;
 		ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
+		GameRegistry.addSmelting(BLOCKS.ELF_LOG, new ItemStack(Items.COAL, 1, 1), 0.25f);
 		GameRegistry.addSmelting(BLOCKS.KYANITE_ORE, new ItemStack(ITEMS.KYANITE), 0.5f);
 		GameRegistry.addSmelting(new ItemStack(BLOCKS.ELF_FRUIT, 1, 2), new ItemStack(ITEMS.ELF_CRYSTAL), 0.25f);
 	}

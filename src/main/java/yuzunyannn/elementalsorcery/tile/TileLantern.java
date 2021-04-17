@@ -36,8 +36,8 @@ public class TileLantern extends TileEntityNetwork {
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		if (compound.hasKey("prex")) pre = NBTHelper.getBlockPos(compound, "pre");
-		if (compound.hasKey("nextx")) next = NBTHelper.getBlockPos(compound, "next");
+		if (compound.hasKey("pre")) pre = NBTHelper.getBlockPos(compound, "pre");
+		if (compound.hasKey("next")) next = NBTHelper.getBlockPos(compound, "next");
 		super.readFromNBT(compound);
 	}
 
@@ -62,15 +62,11 @@ public class TileLantern extends TileEntityNetwork {
 	public void check() {
 		if (pre != null) {
 			TileEntity tile = this.world.getTileEntity(pre);
-			if (!(tile instanceof TileLantern)) {
-				pre = null;
-			}
+			if (!(tile instanceof TileLantern)) pre = null;
 		}
 		if (next != null) {
 			TileEntity tile = this.world.getTileEntity(next);
-			if (!(tile instanceof TileLantern)) {
-				next = null;
-			}
+			if (!(tile instanceof TileLantern)) next = null;
 		}
 	}
 
@@ -120,8 +116,8 @@ public class TileLantern extends TileEntityNetwork {
 		if (tile.next != null) {
 			tileNext = (TileLantern) this.world.getTileEntity(tile.next);
 		}
-		if (dis > MAX_DIS * MAX_DIS) { return this.link(tileNext, times, min); }
-		if (dis > min) { return this.link(tileNext, times, min); }
+		if (dis > MAX_DIS * MAX_DIS) return this.link(tileNext, times, min);
+		if (dis > min) return this.link(tileNext, times, min);
 		if (this.link(tileNext, times, dis) == false) {
 			this.setNext(tile.pos);
 			tile.setPre(this.pos);
