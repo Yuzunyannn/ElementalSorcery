@@ -96,7 +96,7 @@ public class BlockElfSapling extends BlockBush implements IGrowable {
 		String m = x + Integer.toString((int) seed);
 		int n = 0;
 		for (int i = 0; i < m.length(); i++) n = Math.abs(n * z) + m.charAt(i);
-		return n % 8 == 0;
+		return n % 10 == 0;
 	}
 
 	public void superGrow(World world, Random rand, BlockPos pos, IBlockState state, @Nullable EntityPlayer player,

@@ -34,7 +34,8 @@
                 "id": "wood",
                 "size": 12,
                 "power": 625
-            }
+            },
+            "complex": 4
         },
         {
             "note": "铁",
@@ -227,7 +228,8 @@
                     "size": 11,
                     "power": 152
                 }
-            ]
+            ],
+            "complex": 1
         },
         {
             "notes": "书",
@@ -545,7 +547,8 @@
                     "size": 12,
                     "power": 75
                 }
-            ]
+            ],
+            "complex": 8
         }
     ]
 }

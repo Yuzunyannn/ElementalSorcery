@@ -444,14 +444,15 @@
                 {
                     "id": "earth",
                     "size": 100,
-                    "power": 210
+                    "power": 190
                 },
                 {
                     "id": "metal",
                     "size": 44,
-                    "power": 190
+                    "power": 164
                 }
-            ]
+            ],
+            "complex": 2
         }
     ]
 }

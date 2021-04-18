@@ -9,8 +9,8 @@
             "element": [
                 {
                     "id": "metal",
-                    "size": 45,
-                    "power": 385
+                    "size": 42,
+                    "power": 350
                 },
                 {
                     "id": "magic",
@@ -33,8 +33,8 @@
             "element": [
                 {
                     "id": "metal",
-                    "size": 15,
-                    "power": 320
+                    "size": 14,
+                    "power": 304
                 },
                 {
                     "id": "magic",
@@ -72,7 +72,8 @@
                     "size": 100,
                     "power": 500
                 }
-            ]
+            ],
+            "complex": 9
         },
         {
             "note": "星沙",

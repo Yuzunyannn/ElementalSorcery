@@ -1,14 +1,18 @@
 package yuzunyannn.elementalsorcery.tile.altar;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -97,7 +101,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 
 		public void merge(AnalysisPacket other) {
 			this.daEstacks = ElementHelper.merge(this.daEstacks, other.daEstacks);
-			this.daComplex = this.daComplex + other.daComplex;
+			this.daComplex = Math.max(this.daComplex, other.daComplex);
 		}
 
 		public void merge(ElementStack... estacks2) {
@@ -188,7 +192,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 					// 试图直接解析
 					this.ans = analysisItem(stack, ElementMap.instance, true);
 					// 没法直接解析？进行递归搜索
-					if (this.ans == null) this.updateItemStructure(stack);
+					if (this.ans == null) this.updateItemStructure();
 					cannotAnalysis = this.ans == null;
 				}
 			} else {
@@ -205,40 +209,55 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 	}
 
 	/** 处理结构水晶的结果 */
-	private void updateItemStructure(ItemStack output) {
-		List<ItemStack> inputs = structureCraft.getInputs();
-		if (inputs != null && !inputs.isEmpty()) {
-			IToElement elementMap = this.getElementMapSample();
-			for (ItemStack input : inputs) {
-				if (input.isEmpty()) continue;
-				AnalysisPacket ans = analysisItem(input, elementMap, structureCraft.calcRemain(input));
-				// 存在任何一个找不到的，直接清除
-				if (ans == null) {
-					this.stateClear();
-					return;
-				}
-				if (this.ans == null) this.ans = ans;
-				else this.ans.merge(ans);
-			}
-			// 重置真正的物品
-			if (this.ans != null) {
-				this.ans.daStack = output.copy();
-				int n = this.ans.daStack.getCount();
-				// 处理多个物品
-				if (n > 1) {
-					this.ans.daStack.setCount(1);
-					for (ElementStack estack : this.ans.daEstacks) {
-						int count = estack.getCount() / n;
-						estack.setCount(Math.max(count, 1));
-					}
-				}
-				// 强制附加元素
-				ElementStack[] estacks = structureCraft.getExtraElements();
-				if (estacks != null) ans.merge(estacks);
-				// 排序元素
-				ElementHelper.sort(this.ans.daEstacks);
+	private void updateItemStructure() {
+		this.ans = analysisItems(structureCraft, getElementMapSample());
+		if (this.ans == null) this.stateClear();
+	}
+
+	static public AnalysisPacket analysisItems(IItemStructureCraft structureCraft, IToElement elementMap) {
+		ItemStack output = structureCraft.getOutput();
+		if (output.isEmpty()) return null;
+
+		Collection<ItemStack> inputs = structureCraft.getInputs();
+		if (inputs == null || inputs.isEmpty()) return null;
+
+		AnalysisPacket ret = null;
+
+		Set<Item> itemTyps = new HashSet<>();
+
+		for (ItemStack input : inputs) {
+			if (input.isEmpty()) continue;
+			AnalysisPacket ans = analysisItem(input, elementMap, structureCraft.calcRemain(input));
+			if (ans == null) return null;
+
+			itemTyps.add(input.getItem());
+
+			if (ret == null) ret = ans;
+			else ret.merge(ans);
+		}
+
+		if (ret == null) return null;
+
+		// 重置真正的物品
+		ret.daStack = output.copy();
+		int n = ret.daStack.getCount();
+		// 处理多个物品
+		if (n > 1) {
+			ret.daStack.setCount(1);
+			for (ElementStack estack : ret.daEstacks) {
+				int count = estack.getCount() / n;
+				estack.setCount(Math.max(count, 1));
 			}
 		}
+		// 强制附加元素
+		ElementStack[] estacks = structureCraft.getExtraElements();
+		if (estacks != null) ret.merge(estacks);
+		// 排序元素
+		ElementHelper.sort(ret.daEstacks);
+		// 重置复杂度
+		ret.daComplex = MathHelper.floor((itemTyps.size() / 4f + 1) * ret.daComplex);
+
+		return ret;
 	}
 
 	private void writeToItem(AnalysisPacket ans) {
@@ -293,7 +312,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 				ElementStack[] remainStacks = ElementHelper.copy(teInfo.element());
 				if (remainStacks != null) {
 					ans.daEstacks = ElementHelper.merge(ans.daEstacks, remainStacks);
-					ans.daComplex = ans.daComplex + teInfo.complex();
+					ans.daComplex = Math.max(ans.daComplex, teInfo.complex());
 				}
 			}
 			rest--;

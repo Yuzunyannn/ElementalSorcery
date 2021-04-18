@@ -30,6 +30,7 @@ import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
@@ -210,6 +211,10 @@ public class EventClient {
 			else str = I18n.format("info.elementalCrystal.hasnp", I18n.format(estack.getElementUnlocalizedName()),
 					estack.getCount());
 			tooltip.add(TextFormatting.RED + str);
+		}
+
+		if (ElementalSorcery.isDevelop) {
+			tooltip.add(TextFormatting.GOLD + "" + ElfProfessionMerchant.priceIt(stack) + "$");
 		}
 	}
 }

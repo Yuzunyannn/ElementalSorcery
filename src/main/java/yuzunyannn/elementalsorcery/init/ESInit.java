@@ -170,7 +170,7 @@ import yuzunyannn.elementalsorcery.item.ItemScapegoat;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.item.ItemSoulKillerSword;
 import yuzunyannn.elementalsorcery.item.ItemSoulWoodSword;
-import yuzunyannn.elementalsorcery.item.ItemSupremeTableComponent;
+import yuzunyannn.elementalsorcery.item.ItemStarBell;
 import yuzunyannn.elementalsorcery.item.ItemUnscrambleNote;
 import yuzunyannn.elementalsorcery.item.book.ItemGrimoire;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
@@ -197,6 +197,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.item.prop.ItemSome;
 import yuzunyannn.elementalsorcery.item.prop.ItemSoulFragment;
 import yuzunyannn.elementalsorcery.item.prop.ItemSpellbookCover;
+import yuzunyannn.elementalsorcery.item.prop.ItemSupremeTableComponent;
 import yuzunyannn.elementalsorcery.item.prop.ItemVortex;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.parchment.Pages;
@@ -452,6 +453,7 @@ public class ESInit {
 		ITEMS.SCAPEGOAT = new ItemScapegoat();
 		ITEMS.MAGIC_CORE = new ItemMagicCore();
 		ITEMS.SCARLET_CRYSTAL = new ItemScarletCrystal();
+		ITEMS.STAR_BELL = new ItemStarBell();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -788,6 +790,8 @@ public class ESInit {
 		registerRender(ITEMS.SCAPEGOAT);
 		registerRender(ITEMS.MAGIC_CORE);
 		registerRender(ITEMS.SCARLET_CRYSTAL);
+		registerRender(ITEMS.STAR_BELL,0,"bell");
+		registerRender(ITEMS.STAR_BELL, 1, "BELL_STAR");
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

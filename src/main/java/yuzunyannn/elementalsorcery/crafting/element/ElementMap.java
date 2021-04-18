@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.crafting.element;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -21,6 +23,7 @@ import net.minecraftforge.fml.common.ModContainer;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.tile.IItemStructureCraft;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
@@ -216,34 +219,28 @@ public class ElementMap implements IToElement {
 	}
 
 	private static boolean doAnalysis(DefaultToElement newMap, ItemStack output, NonNullList<Ingredient> inputs) {
-		AnalysisPacket ans = null;
-		for (Ingredient ingredient : inputs) {
-			ItemStack[] s = ingredient.getMatchingStacks();
-			if (s == null || s.length == 0) continue;
-			AnalysisPacket ansTemp = TileAnalysisAltar.analysisItem(s[0], instance, true);
-			if (ansTemp == null) return false;
-			if (ans == null) ans = ansTemp;
-			else ans.merge(ansTemp);
-		}
 
-		// 没有成功
-		if (ans == null) return false;
+		AnalysisPacket ans = TileAnalysisAltar.analysisItems(new IItemStructureCraft() {
 
-		// 处理多结果
-		if (output.getCount() > 1) {
-			int n = output.getCount();
-			for (ElementStack es : ans.daEstacks) {
-				if (es.getCount() > n) {
-					es.setCount(es.getCount() / n);
-					es.weaken(0.95f);
-				} else {
-					es.weaken(es.getCount() / (float) (n + 1));
-					es.setCount(1);
+			@Override
+			public Collection<ItemStack> getInputs() {
+				List<ItemStack> list = new ArrayList<>(inputs.size());
+				for (Ingredient ingredient : inputs) {
+					ItemStack[] s = ingredient.getMatchingStacks();
+					if (s == null || s.length == 0) continue;
+					list.add(s[0]);
 				}
+				return list;
 			}
-		}
-		ans.daComplex = Math.max(ans.daComplex * 2 / 3, 1);
-		ElementHelper.sort(ans.daEstacks);
+
+			@Override
+			public ItemStack getOutput() {
+				return output;
+			}
+
+		}, instance);
+
+		if (ans == null) return false;
 
 		ItemStack[] remains = null;
 		if (output.getHasSubtypes()) newMap.add(output, ans.daComplex, remains, ans.daEstacks);

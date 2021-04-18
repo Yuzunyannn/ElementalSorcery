@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "G G",
+    "G  ",
+    "RGG"
+  ],
+  "key": {
+    "R": {
+      "item": "minecraft:wool",
+      "data": 14
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:star_bell",
+    "count": 1,
+    "data": 0
+  }
+}

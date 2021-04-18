@@ -177,6 +177,13 @@ public class ItemKyaniteTools {
 		}
 
 		@Override
+		public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos,
+				EntityLivingBase entityLiving) {
+			ItemKyaniteTools.dealBlockDestroyed(stack, worldIn, state, entityLiving);
+			return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+		}
+
+		@Override
 		public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip,
 				ITooltipFlag flagIn) {
 			ItemKyaniteTools.addToolsInformation(stack, worldIn, tooltip, flagIn);
@@ -237,5 +244,20 @@ public class ItemKyaniteTools {
 				ITooltipFlag flagIn) {
 			ItemKyaniteTools.addToolsInformation(stack, worldIn, tooltip, flagIn);
 		}
+
+		public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+			IElementInventory inventory = new ElementInventory();
+			if (inventory.hasState(stack) && Math.random() < 0.333333) {
+				ElementStack estack = ElementStack.EMPTY;
+				if (attacker.isBurning()) estack = new ElementStack(ESInit.ELEMENTS.FIRE, 3, 3);
+				else if (attacker.isInWater() && Math.random() > 0.33333f)
+					estack = new ElementStack(ESInit.ELEMENTS.WATER, 1, 3);
+				else estack = new ElementStack(ESInit.ELEMENTS.WOOD, 1, 3);
+				inventory.loadState(stack);
+				inventory.insertElement(estack, false);
+				inventory.saveState(stack);
+			}
+			return super.hitEntity(stack, target, attacker);
+		};
 	}
 }

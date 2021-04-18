@@ -21,6 +21,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -67,20 +68,24 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 		for (int i = 0; i < 12 && trade.getTradeList().size() < 16; i++) {
 			ItemStack item = new ItemStack(Item.REGISTRY.getRandomObject(rand));
 			int price = priceIt(item);
-			if (price < 2) continue;
-			addACommodity(trade, item, price, Math.max(12 - (int) MathHelper.sqrt(price), 1), 125);
+			if (price < 1) continue;
+			addACommodity(trade, item, price, Math.max(16 - (int) MathHelper.sqrt(price), 1), 125);
 		}
 		nbt.setTag(TradeCount.Bind.TAG, trade.serializeNBT());
 	}
 
 	/** 给一个物品定价 */
 	public static int priceIt(ItemStack item) {
-		ElementStack[] estacks = ElementMap.instance.toElementStack(item);
-		if (estacks == null) return -1;
-		int n = -1;
-		for (ElementStack estack : estacks)
-			n += MathHelper.sqrt(estack.getPower()) * MathHelper.sqrt(estack.getCount());
-		return n;
+		IToElementInfo info = ElementMap.instance.toElement(item);
+		if (info == null) return -1;
+		ElementStack[] estacks = info.element();
+		float n = 0;
+		for (ElementStack estack : estacks) {
+			n += estack.getPower() / 10f * MathHelper.sqrt(estack.getCount());
+		}
+		float count = (float) Math.pow(1.4, MathHelper.sqrt(info.complex()));
+
+		return MathHelper.ceil(n * count);
 	}
 
 	public static void addACommodity(TradeCount trade, ItemStack item, int price, int count, int checkPrice) {

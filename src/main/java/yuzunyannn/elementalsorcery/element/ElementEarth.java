@@ -17,7 +17,7 @@ public class ElementEarth extends ElementCommon implements IStarFlowerCast {
 
 	@Override
 	public int complexWith(ItemStack stack, ElementStack estack, ElementStack other) {
-		if (other.getElement() == ESInit.ELEMENTS.METAL) return 10;
+		if (other.getElement() == ESInit.ELEMENTS.METAL) return 2;
 		return super.complexWith(stack, estack, other);
 	}
 

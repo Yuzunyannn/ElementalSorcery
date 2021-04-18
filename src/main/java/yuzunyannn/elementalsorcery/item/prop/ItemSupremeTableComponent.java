@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.item;
+package yuzunyannn.elementalsorcery.item.prop;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;

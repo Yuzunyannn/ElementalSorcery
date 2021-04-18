@@ -17,6 +17,7 @@ public class StarPrays {
 		prays.add(new StarPrayBattle());
 		prays.add(new StarPrayBackHome());
 		prays.add(new StarPrayEnchantment());
+		prays.add(new StarPrayItemChange());
 	}
 
 }

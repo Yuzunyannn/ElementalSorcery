@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.api.tile;
 
-import java.util.List;
+import java.util.Collection;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,7 +14,7 @@ public interface IItemStructureCraft {
 
 	/** 获得所有输入 */
 	@Nullable
-	List<ItemStack> getInputs();
+	Collection<ItemStack> getInputs();
 
 	/** 获取强制附加的元素 */
 	@Nullable
