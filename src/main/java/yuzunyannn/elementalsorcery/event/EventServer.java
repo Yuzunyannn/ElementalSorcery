@@ -11,22 +11,26 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
+import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.enchant.EnchantmentES;
 import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
@@ -41,6 +45,25 @@ public class EventServer {
 		NBTTagCompound nbt = new NBTTagCompound();
 		data.setTag("ESData", nbt);
 		return nbt;
+	}
+
+	/** 玩家死亡等，复制玩家数据 */
+	@SubscribeEvent
+	public static void onClone(net.minecraftforge.event.entity.player.PlayerEvent.Clone event) {
+		EntityPlayer player = event.getEntityPlayer();
+		EntityPlayer origin = event.getOriginal();
+		NBTTagCompound oData = origin.getEntityData();
+		if (oData.hasKey("ESData", 10)) player.getEntityData().setTag("ESData", oData.getTag("ESData"));
+
+		IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+		if (adventurer != null) {
+			IAdventurer oAdventurer = origin.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+			if (oAdventurer != null) {
+				IStorage<IAdventurer> storage = Adventurer.ADVENTURER_CAPABILITY.getStorage();
+				NBTBase base = storage.writeNBT(Adventurer.ADVENTURER_CAPABILITY, oAdventurer, null);
+				storage.readNBT(Adventurer.ADVENTURER_CAPABILITY, adventurer, null, base);
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -64,7 +87,7 @@ public class EventServer {
 	@SubscribeEvent
 	public static void onLogoff(PlayerEvent.PlayerLoggedOutEvent event) {
 		EntityPlayer player = event.player;
-		ElementalSorcery.removePlayerData(player);
+		ESData.removeRuntimeData(player);
 	}
 
 	@SubscribeEvent

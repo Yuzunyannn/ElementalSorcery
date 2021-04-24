@@ -1,13 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    " X ",
+    "GXG",
     "#E#",
-    " X "
+    "GXG"
   ],
   "key": {
     "#": {
       "item": "elementalsorcery:elf_crystal"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
     },
     "E": {
       "item": "elementalsorcery:magical_ender_eye"
@@ -18,6 +21,6 @@
   },
   "result": {
     "item": "elementalsorcery:magic_core",
-    "count": 1
+    "count": 2
   }
 }

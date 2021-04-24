@@ -11,6 +11,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
@@ -29,7 +30,7 @@ public abstract class ContainerElf extends Container {
 
 	public ContainerElf(EntityPlayer player) {
 		this.player = player;
-		NBTTagCompound nbt = ElementalSorcery.getPlayerData(player);
+		NBTTagCompound nbt = ESData.getRuntimeData(player);
 		Entity elf = null;
 		if (player.world.isRemote) elf = null;
 		else elf = (EntityElfBase) player.world.getEntityByID(nbt.getInteger("elfId"));
@@ -91,10 +92,10 @@ public abstract class ContainerElf extends Container {
 	public void changeUI(int modGuiId) {
 		noEnd = false;
 		if (elf != null) {
-			NBTTagCompound nbt = ElementalSorcery.getPlayerData(player);
+			NBTTagCompound nbt = ESData.getRuntimeData(player);
 			nbt.setInteger("elfId", elf.getEntityId());
 			NBTTagCompound shift = this.getShiftData();
-			if (nbt != null) nbt.setTag("shiftData", shift);
+			if (shift != null) nbt.setTag("shiftData", shift);
 		}
 		player.closeScreen();
 		BlockPos pos = player.getPosition();

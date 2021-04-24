@@ -102,7 +102,7 @@ public class ElfProfessionIronSmith extends ElfProfession {
 			elf.getNavigator().tryMoveToXYZ(pos.getX() + 0.5, pos.getY() + 0.1, pos.getZ() + 0.5, 1.25);
 			return;
 		}
-		final int need = 2 * 128;
+		final int need = 64 * 2;
 		int rest = ItemElfPurse.extract(new InventoryItemStackHandlerVest(handler), need, false);
 		if (rest < need) elf.swingArm(EnumHand.MAIN_HAND);
 		int money = need - rest;

@@ -59,7 +59,12 @@ public class BlockHelper {
 			stack = tile.getStack();
 			if (stack.isEmpty()) return false;
 			if (!worldIn.isRemote) {
-				tile.setStack(ItemStack.EMPTY);
+				if (justOne || playerIn.isSneaking()) tile.setStack(ItemStack.EMPTY);
+				else {
+					ItemStack get = stack.splitStack(1);
+					tile.setStack(stack);
+					stack = get;
+				}
 				boolean ok = false;
 				if (playerIn.inventory.getStackInSlot(playerIn.inventory.currentItem).isEmpty())
 					ok = playerIn.inventory.add(playerIn.inventory.currentItem, stack);

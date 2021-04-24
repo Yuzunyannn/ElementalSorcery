@@ -30,7 +30,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptMagic;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
@@ -54,7 +54,7 @@ public class ItemResonantCrystal extends ItemCrystal implements EntityThrow.IIte
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-		NBTTagCompound nbt = ElementalSorcery.getPlayerData(Minecraft.getMinecraft().player);
+		NBTTagCompound nbt = ESData.getRuntimeData(Minecraft.getMinecraft().player);
 		float fre = nbt.getFloat("resFre");
 		tooltip.add(TextFormatting.GOLD + I18n.format("info.crystal.percept", fre));
 		tooltip.add(I18n.format("info.resonantCrystal"));

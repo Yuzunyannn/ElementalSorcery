@@ -5,6 +5,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.elf.trade.Trade;
@@ -13,6 +14,8 @@ import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
+import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
 
 public class ContainerElfTrade extends ContainerElf implements IContainerNetwork {
@@ -58,19 +61,24 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 
 		@Override
 		public void putStack(ItemStack stack) {
-			if (trade == null) {
+			if (trade == null || stack.isEmpty() || player.world.isRemote) {
 				super.putStack(stack);
 				return;
 			}
 			// 寻找可以卖的交易信息
 			for (int i = 0; i < trade.getTradeListSize(); i++) {
 				if (!trade.getTradeInfo(i).isReclaim()) continue;
+				int stock = trade.stock(i);
+				if (stock <= 0) continue;
 				ItemStack c = trade.commodity(i);
 				if (ItemStack.areItemsEqual(c, stack)) {
-					int count = stack.getCount();
+					int count = Math.min(stack.getCount(), stock);
 					trade.reclaim(i, count);
 					ItemElfPurse.insert(player, count * trade.cost(i));
-					return;
+					changeTime = System.currentTimeMillis();
+					stack.shrink(count);
+					isSellLoadChange = true;
+					if (stack.isEmpty()) break;
 				}
 			}
 			super.putStack(stack);
@@ -130,6 +138,7 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 		}
 		NBTTagCompound nbt = trade.serializeNBT();
 		if (elf != null) nbt.setInteger("elfId", elf.getEntityId());
+		nbt.setBoolean("isInit", true);
 		this.sendToClient(nbt, player);
 		// 设置具体内容
 		soldOutCheck = new boolean[trade.getTradeListSize()];
@@ -143,6 +152,9 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 
 	long changeTime = System.currentTimeMillis();
 	long lastChangeTime = System.currentTimeMillis();
+
+	boolean isSellLoadChange = false;
+
 	boolean[] soldOutCheck;
 
 	@Override
@@ -150,25 +162,55 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 		super.detectAndSendChanges();
 		if (changeTime != lastChangeTime) {
 			changeTime = lastChangeTime;
-			if (soldOutCheck == null) return;
-			// 检查是否要发送售空
-			for (int i = 0; i < trade.getTradeListSize(); i++) {
-				if (i >= soldOutCheck.length) {
-					// 动态变多了！
-					return;
-				}
-				boolean soldOut = trade.stock(i) <= 0;
-				// 买完了吗，检查
-				if (soldOut != soldOutCheck[i]) {
-					soldOutCheck[i] = soldOut;
-					NBTTagCompound nbt = new NBTTagCompound();
-					if (soldOut) nbt.setShort("soldOut", (short) i);
-					else nbt.setShort("filling", (short) i);
-					sendToClient(nbt, player);
-				}
-			}
-		}
 
+			NBTTagCompound sendData = null;
+			if (isSellLoadChange) {
+				isSellLoadChange = false;
+				ItemStack stack = this.getSlot(36).getStack();
+				sendData = new NBTTagCompound();
+				sendData.setTag("sellSlot", stack.serializeNBT());
+			}
+
+			if (soldOutCheck != null) {
+
+				NBTTagList list = new NBTTagList();
+				// 检查是否要发送售空
+				for (int i = 0; i < trade.getTradeListSize(); i++) {
+					if (i >= soldOutCheck.length) {
+						// 动态变多了！
+						break;
+					}
+					boolean soldOut = trade.stock(i) <= 0;
+					// 买完了吗，检查
+					if (soldOut != soldOutCheck[i]) {
+						soldOutCheck[i] = soldOut;
+						NBTTagCompound nbt = new NBTTagCompound();
+						if (soldOut) nbt.setShort("soldOut", (short) i);
+						else nbt.setShort("filling", (short) i);
+						list.appendTag(nbt);
+					}
+				}
+
+				if (!list.hasNoTags()) {
+					if (sendData == null) sendData = new NBTTagCompound();
+					if (list.tagCount() == 1) {
+						NBTTagCompound data = list.getCompoundTagAt(0);
+						if (data.hasKey("soldOut")) sendData.setTag("soldOut", data.getTag("soldOut"));
+						else if (data.hasKey("filling")) sendData.setTag("filling", data.getTag("filling"));
+					} else sendData.setTag("recvList", list);
+				}
+
+			}
+
+			if (sendData != null) sendToClient(sendData, player);
+		}
+	}
+
+	@Override
+	public void onContainerClosed(EntityPlayer playerIn) {
+		ItemStack stack = sell.getStackInSlot(0);
+		ItemHelper.addItemStackToPlayer(playerIn, stack);
+		super.onContainerClosed(playerIn);
 	}
 
 	@Override
@@ -179,7 +221,17 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 
 	@SideOnly(Side.CLIENT)
 	public void recvData(NBTTagCompound nbt) {
-		if (nbt.hasKey("elfId")) elf = (EntityElfBase) player.world.getEntityByID(nbt.getInteger("elfId"));
+		if (nbt.hasKey("recvList", NBTTag.TAG_LIST)) {
+			NBTTagList list = nbt.getTagList("recvList", NBTTag.TAG_COMPOUND);
+			for (int i = 0; i < list.tagCount(); i++) {
+				recvData(list.getCompoundTagAt(i));
+			}
+		}
+
+		if (nbt.hasKey("sellSlot")) {
+			this.getSlot(36).putStack(new ItemStack(nbt.getCompoundTag("sellSlot")));
+		}
+
 		if (nbt.hasKey("soldOut")) {
 			if (this.trade instanceof TradeClient) ((TradeClient) this.trade).setSoldOut(nbt.getInteger("soldOut"));
 			return;
@@ -187,11 +239,11 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 			if (this.trade instanceof TradeClient) ((TradeClient) this.trade).setFilling(nbt.getInteger("filling"));
 			return;
 		}
-		if (nbt.getBoolean("clear")) {
-			this.trade = null;
-			return;
-		}
-		this.trade = new TradeClient(nbt);
+
+		if (nbt.hasKey("elfId")) elf = (EntityElfBase) player.world.getEntityByID(nbt.getInteger("elfId"));
+		if (nbt.getBoolean("isInit")) this.trade = new TradeClient(nbt);
+		if (nbt.getBoolean("clear")) this.trade = null;
+
 	}
 
 	// 转化

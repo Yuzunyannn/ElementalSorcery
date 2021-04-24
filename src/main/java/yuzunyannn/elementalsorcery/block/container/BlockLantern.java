@@ -18,7 +18,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.tile.TileLantern;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
@@ -34,8 +34,8 @@ public class BlockLantern extends BlockContainerNormal {
 		return new TileLantern();
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		TileLantern tile = (TileLantern) worldIn.getTileEntity(pos);
 		tile.randomDisplayTick();
@@ -55,16 +55,13 @@ public class BlockLantern extends BlockContainerNormal {
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
 		if (worldIn.isRemote) return;
-		NBTTagCompound nbt = ElementalSorcery.getPlayerData(placer);
+		NBTTagCompound nbt = ESData.getRuntimeData(placer);
 		BlockPos prePos = NBTHelper.getBlockPos(nbt, "lanPre");
 		TileEntity tile = worldIn.getTileEntity(prePos);
 		if (tile instanceof TileLantern) {
 			TileLantern tileLantern = (TileLantern) worldIn.getTileEntity(pos);
 			tileLantern.link((TileLantern) tile);
-		}
-		if (placer instanceof EntityPlayer) {
-			TileLantern tileLantern = (TileLantern) worldIn.getTileEntity(pos);
-			tileLantern.setPlayerName(((EntityPlayer) placer).getName());
+			if (placer instanceof EntityPlayer) tileLantern.setPlayerName(((EntityPlayer) placer).getName());
 		}
 		NBTHelper.setBlockPos(nbt, "lanPre", pos);
 	}
@@ -77,7 +74,7 @@ public class BlockLantern extends BlockContainerNormal {
 			TileLantern tileLantern = (TileLantern) tile;
 			// 还原之前的位置
 			String uername = tileLantern.getPlayerName();
-			NBTTagCompound nbt = ElementalSorcery.getPlayerData(uername);
+			NBTTagCompound nbt = ESData.getRuntimeData(uername);
 			BlockPos prePos = NBTHelper.getBlockPos(nbt, "lanPre");
 			if (prePos.equals(pos)) {
 				prePos = tileLantern.getNext();
@@ -103,7 +100,7 @@ public class BlockLantern extends BlockContainerNormal {
 					worldIn.spawnParticle(EnumParticleTypes.FLAME, d0, d1, d2, 0.0D, 0.0D, 0.0D);
 				}
 			} else {
-				NBTTagCompound nbt = ElementalSorcery.getPlayerData(playerIn);
+				NBTTagCompound nbt = ESData.getRuntimeData(playerIn);
 				NBTHelper.setBlockPos(nbt, "lanPre", pos);
 			}
 			return true;

@@ -54,11 +54,9 @@ public class BlockStoneMill extends BlockContainerNormal {
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		TileEntity tileentity = worldIn.getTileEntity(pos);
 		if (tileentity instanceof TileStoneMill) {
-			if (playerIn.isSneaking())
-				((TileStoneMill) tileentity).millDrop();
-			else
-				((TileStoneMill) tileentity).mill();
-
+			// ((TileStoneMill) tileentity).millOrDrop();
+			if (playerIn.isSneaking()) ((TileStoneMill) tileentity).millDrop();
+			else((TileStoneMill) tileentity).mill();
 			return true;
 		}
 		return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
@@ -76,11 +74,12 @@ public class BlockStoneMill extends BlockContainerNormal {
 	@Override
 	public Boolean isEntityInsideMaterial(IBlockAccess world, BlockPos blockpos, IBlockState iblockstate, Entity entity,
 			double yToTest, Material materialIn, boolean testingHead) {
+		if (entity.world.isRemote) return null;
+
 		if (entity instanceof EntityItem) {
 			if (yToTest <= blockpos.getY() + 1) {
 				TileEntity tile = world.getTileEntity(blockpos);
-				if (tile instanceof TileStoneMill)
-					((TileStoneMill) tile).eatItem((EntityItem) entity);
+				if (tile instanceof TileStoneMill) ((TileStoneMill) tile).eatItem((EntityItem) entity);
 			}
 		}
 		return null;

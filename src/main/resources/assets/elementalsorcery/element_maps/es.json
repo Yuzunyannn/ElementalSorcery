@@ -10,7 +10,7 @@
                 {
                     "id": "metal",
                     "size": 42,
-                    "power": 350
+                    "power": 330
                 },
                 {
                     "id": "magic",
@@ -58,10 +58,27 @@
             "element": [
                 {
                     "id": "magic",
-                    "size": 25,
-                    "power": 25
+                    "size": 50,
+                    "power": 50
                 }
             ]
+        },
+        {
+            "note": "魔石",
+            "item": "elementalsorcery:magic_stone",
+            "element": [
+                {
+                    "id": "magic",
+                    "size": 200,
+                    "power": 100
+                },
+                {
+                    "id": "earth",
+                    "size": 5,
+                    "power": 56
+                }
+            ],
+            "complex": 2
         },
         {
             "note": "星之种",

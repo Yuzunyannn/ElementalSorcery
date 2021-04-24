@@ -136,13 +136,13 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 
 	/** 吃掉一个物品 */
 	public void eatItem(EntityItem item) {
-		if (!this.world.isRemote) {
-			ItemStack stack = item.getItem();
-			if (inventory.insertItem(0, stack, true).isEmpty()) {
-				inventory.insertItem(0, stack, false);
-				item.setDead();
-			}
+		if (this.world.isRemote) return;
+		ItemStack stack = item.getItem();
+		if (inventory.insertItem(0, stack, true).isEmpty()) {
+			inventory.insertItem(0, stack, false);
+			item.setDead();
 		}
+
 	}
 
 	/** 获取当前粉尘数量 */
@@ -168,6 +168,11 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 	/** 获取产物消耗的粉尘数 */
 	public int getResultDustyCount(ItemStack stack) {
 		return 1000;
+	}
+
+	public void millOrDrop() {
+		this.mill();
+		this.millDrop();
 	}
 
 	// 进行一次研磨

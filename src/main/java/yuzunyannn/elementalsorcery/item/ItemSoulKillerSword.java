@@ -27,6 +27,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemSoulKillerSword extends ItemSword implements IItemStronger {
 
@@ -99,8 +100,7 @@ public class ItemSoulKillerSword extends ItemSword implements IItemStronger {
 
 		Vec3d pos = targetEntity.getPositionVector().addVector(0, targetEntity.height / 2, 0);
 		float size = MathHelper.clamp(count / 300, 1, 4);
-		AxisAlignedBB AABB = new AxisAlignedBB(pos.x - size, pos.y - size, pos.z - size, pos.x + size, pos.y + size,
-				pos.z + size);
+		AxisAlignedBB AABB = WorldHelper.createAABB(pos, size, size, size);
 		List<Entity> entities = player.world.getEntitiesWithinAABB(targetEntity.getClass(), AABB);
 		for (Entity entity : entities) {
 			if (entity == player) continue;
@@ -124,12 +124,12 @@ public class ItemSoulKillerSword extends ItemSword implements IItemStronger {
 			tooltip.add(TextFormatting.AQUA + I18n.format("entity." + key + ".name") + ":" + map.getInteger(key));
 		}
 	}
-	
+
 	@Override
 	public boolean getIsRepairable(ItemStack toRepair, ItemStack repair) {
 		return false;
 	}
-	
+
 	@Override
 	public boolean isEnchantable(ItemStack stack) {
 		return false;

@@ -11,7 +11,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 public class WorldGenKyaniteOre extends WorldGenMinable {
 
 	public WorldGenKyaniteOre() {
-		super(ESInit.BLOCKS.KYANITE_ORE.getDefaultState(), 9);
+		super(ESInit.BLOCKS.KYANITE_ORE.getDefaultState(), 14);
 	}
 
 	@Override
@@ -20,7 +20,7 @@ public class WorldGenKyaniteOre extends WorldGenMinable {
 		int expect = WorldGeneratorES.CONFIG_KYANITE_ORE.getSpawnPoint(world, biome);
 		for (int i = 0; i < (4 + expect); i++) {
 			int posX = pos.getX() + rand.nextInt(16);
-			int posY = 2 + rand.nextInt(24);
+			int posY = 2 + rand.nextInt(28);
 			int posZ = pos.getZ() + rand.nextInt(16);
 			BlockPos blockpos = new BlockPos(posX, posY, posZ);
 			super.generate(world, rand, blockpos);

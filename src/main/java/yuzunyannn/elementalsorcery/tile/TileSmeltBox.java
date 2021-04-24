@@ -195,10 +195,11 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 
 		}
 		// 有一定概率会出小颗粒， 蓝晶石箱子一定会出
-		if (Math.random() < 0.25f || material() == BlockHearth.EnumMaterial.KYANITE) {
-			if (stackNew.getItem() == Items.IRON_INGOT) {
-				return new ItemStack(Items.IRON_NUGGET, 1);
-			} else if (stackNew.getItem() == Items.GOLD_INGOT) { return new ItemStack(Items.GOLD_NUGGET, 1); }
+		if (Math.random() < 0.5f || material() == BlockHearth.EnumMaterial.KYANITE) {
+			if (stackNew.getItem() == Items.IRON_INGOT)
+				return new ItemStack(Items.IRON_NUGGET, RandomHelper.randomRange(1, 2));
+			else if (stackNew.getItem() == Items.GOLD_INGOT)
+				return new ItemStack(Items.GOLD_NUGGET, RandomHelper.randomRange(1, 2));
 		}
 		return ItemStack.EMPTY;
 	}

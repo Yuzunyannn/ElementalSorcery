@@ -383,6 +383,7 @@ info.star.bell=Star Bell made a %s sound
 info.sound.deep=Deep
 info.sound.crisp=Crisp
 info.sound.long=Long
+info.previous=Previous %s
 
 kType.magicDevice.name=Magic Device
 kType.architecture.name=Ancient architecture

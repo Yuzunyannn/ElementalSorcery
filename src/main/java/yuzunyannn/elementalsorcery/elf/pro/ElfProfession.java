@@ -20,6 +20,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
@@ -193,7 +194,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 
 	protected void openTalkGui(EntityPlayer player, EntityElfBase elf) {
 		if (player.world.isRemote) return;
-		NBTTagCompound nbt = ElementalSorcery.getPlayerData(player);
+		NBTTagCompound nbt = ESData.getRuntimeData(player);
 		nbt.setInteger("elfId", elf.getEntityId());
 		nbt.removeTag("shiftData");
 		player.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_ELF_TALK, player.world, 0, 0, 0);

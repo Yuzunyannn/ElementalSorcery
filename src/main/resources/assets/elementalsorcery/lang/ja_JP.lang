@@ -383,6 +383,7 @@ info.star.bell=星の鈴が%s音を立てた
 info.sound.deep=底力ある
 info.sound.crisp=さえた
 info.sound.long=長い
+info.previous=前の%s
 
 kType.magicDevice.name=魔力装置
 kType.architecture.name=古代建築

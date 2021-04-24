@@ -1,17 +1,12 @@
 package yuzunyannn.elementalsorcery;
 
 import java.lang.management.ManagementFactory;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -29,7 +24,7 @@ public class ElementalSorcery {
 
 	public static final String MODID = "elementalsorcery";
 	public static final String NAME = "Elemental Sorcery";
-	public static final String VERSION = "0.7.2";
+	public static final String VERSION = "0.7.4";
 	public static final boolean isDevelop;
 
 	static {
@@ -96,28 +91,6 @@ public class ElementalSorcery {
 		List<ModContainer> mods = Loader.instance().getModList();
 		for (ModContainer mod : mods) if (mod.getModId().equals(MODID)) return mod;
 		return null;
-	}
-
-	/** 记录ES玩家动态数据 */
-	private static final Map<String, NBTTagCompound> userData = new HashMap<String, NBTTagCompound>();
-
-	/** 获取玩家动态数据，不会储存 */
-	public static NBTTagCompound getPlayerData(EntityLivingBase player) {
-		if (player instanceof EntityPlayer) return getPlayerData(player.getName());
-		return new NBTTagCompound();
-	}
-
-	public static void removePlayerData(EntityPlayer player) {
-		removePlayerData(player.getName());
-	}
-
-	public static NBTTagCompound getPlayerData(String username) {
-		if (!userData.containsKey(username)) userData.put(username, new NBTTagCompound());
-		return userData.get(username);
-	}
-
-	public static void removePlayerData(String username) {
-		userData.remove(username);
 	}
 
 }

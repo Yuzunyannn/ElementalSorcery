@@ -20,7 +20,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -291,7 +291,7 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 		if (Minecraft.getMinecraft().player == null) return;
 		EntityPlayer player = Minecraft.getMinecraft().player;
 		if (player.getDistanceSq(pos) <= 6 * 6) {
-			NBTTagCompound nbt = ElementalSorcery.getPlayerData(player);
+			NBTTagCompound nbt = ESData.getRuntimeData(player);
 			nbt.setFloat("resFre", this.fre);
 		}
 	}

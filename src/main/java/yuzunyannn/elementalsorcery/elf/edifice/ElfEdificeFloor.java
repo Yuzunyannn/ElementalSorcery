@@ -83,7 +83,7 @@ public class ElfEdificeFloor extends IForgeRegistryEntry.Impl<ElfEdificeFloor> {
 		needs.add(new ItemRec(Items.WATER_BUCKET, 1));
 		if (rand.nextBoolean()) needs.add(new ItemRec(Items.BEEF, rand.nextInt(5) + 1));
 		if (rand.nextBoolean()) needs.add(new ItemRec(Items.CAKE, rand.nextInt(5) + 1));
-		int weight = rand.nextInt(10) + (int) (rCount / (float) count * this.getInvestWeight()) + 1;
+		int weight = rand.nextInt(16) + (int) (rCount / (float) count * this.getInvestWeight()) + 1;
 		// 创建任务
 		Quest quest = Quests.createBuildTask(core.getPos(), this, weight, needs);
 		quest.getType().addReward(QuestRewardExp.create(100 + rand.nextInt(200)));

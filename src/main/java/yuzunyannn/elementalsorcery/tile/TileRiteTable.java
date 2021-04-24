@@ -534,7 +534,8 @@ public class TileRiteTable extends TileEntityNetwork {
 		addSacrifice(BLOCKS.STAR_SAND, 15, 1, "star_sand");
 		addSacrifice(BLOCKS.STAR_STONE, 9, 1, "star_sand");
 
-		addSacrifice("oreGold", 12, 2);
+		addSacrifice("oreGold", 13, 2);
+		addSacrifice(ITEMS.SCARLET_CRYSTAL, 20, 2);
 		addSacrifice(Items.DIAMOND, 95, 2);
 		addSacrifice(Items.DIAMOND_AXE, 130, 2);
 		addSacrifice(Items.DIAMOND_HOE, 130, 2);

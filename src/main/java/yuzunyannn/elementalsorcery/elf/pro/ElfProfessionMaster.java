@@ -59,6 +59,11 @@ public class ElfProfessionMaster extends ElfProfession {
 	}
 
 	@Override
+	public boolean canDespawn(EntityElfBase elf) {
+		return true;
+	}
+
+	@Override
 	public boolean attackEntity(EntityElfBase elf, Entity target) {
 		float dis = (float) target.getPositionVector().distanceTo(elf.getPositionVector());
 		if (dis <= 5) {

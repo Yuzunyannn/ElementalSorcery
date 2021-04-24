@@ -384,7 +384,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		if (!elfs.isEmpty()) return;
 		// 刷一只精灵
 		EntityElf elf;
-		switch (rand.nextInt(5)) {
+		switch (rand.nextInt(6)) {
 		case 0:
 			elf = new EntityElf(world, ElfProfession.BUILDER);
 			break;

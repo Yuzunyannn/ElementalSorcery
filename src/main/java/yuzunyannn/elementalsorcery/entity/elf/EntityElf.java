@@ -23,12 +23,14 @@ public class EntityElf extends EntityElfBase {
 	public EntityElf(World worldIn) {
 		super(worldIn); 
 		if (world.isRemote) return;
-		//this.setProfession(ElfProfession.CRAZY);
-		if (this.rand.nextInt(4) == 0) this.setProfession(ElfProfession.SCHOLAR);
-		else if (this.rand.nextInt(5) == 0) this.setProfession(ElfProfession.CRAZY);
-		else if (this.rand.nextInt(4) == 0) 
-		this.setProfession(ElfProfession.MERCHANT);
 		this.setCustomNameTag(AutoName.getRandomName());
+		
+//		this.setProfession(ElfProfession.MERCHANT);
+		
+		if (this.rand.nextInt(5) == 0) this.setProfession(ElfProfession.SCHOLAR);
+		else if (this.rand.nextInt(4) == 0) this.setProfession(ElfProfession.CRAZY);
+		else if (this.rand.nextInt(4) == 0) this.setProfession(ElfProfession.MERCHANT);
+
 	}
 
 	public EntityElf(World worldIn, ElfProfession profession) {

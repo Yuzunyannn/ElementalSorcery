@@ -43,7 +43,8 @@ public class TradeCount extends Trade {
 
 	@Override
 	public void reclaim(int index, int count) {
-
+		int c = tradeListCount.get(index) - count;
+		tradeListCount.set(index, Math.max(0, c));
 	}
 
 	@Override
@@ -94,6 +95,16 @@ public class TradeCount extends Trade {
 		@Override
 		public void sell(int index, int count) {
 			super.sell(index, count);
+			this.setCount(index, count);
+		}
+
+		@Override
+		public void reclaim(int index, int count) {
+			super.reclaim(index, count);
+			this.setCount(index, count);
+		}
+
+		private void setCount(int index, int count) {
 			NBTTagCompound nbt = this.getNBT();
 			int[] cs = nbt.getIntArray("counts");
 			if (cs.length <= index) this.nbt.setTag(TAG, this.serializeNBT());

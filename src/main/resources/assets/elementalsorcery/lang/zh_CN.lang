@@ -383,6 +383,7 @@ info.star.bell=星之铃发出了%s的声音
 info.sound.deep=深沉
 info.sound.crisp=清脆
 info.sound.long=悠长
+info.previous=上一个%s
 
 kType.magicDevice.name=魔力设备
 kType.architecture.name=古代建筑

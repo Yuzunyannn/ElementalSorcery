@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
@@ -41,9 +42,17 @@ public class RenderTileDeconstructAltarTable extends TileEntitySpecialRenderer<T
 		ItemStack stack = tile.getStack();
 		if (stack.isEmpty()) return;
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
+
+		int n = MathHelper.ceil(MathHelper.sqrt(stack.getCount()) / 2);
+
+		GlStateManager.translate(x + 0.5 - n * 0.0125, y + 0.5, z + 0.5 - n * 0.0125);
 		yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
-		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
+
+		for (int i = 0; i < n; i++) {
+			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
+			GlStateManager.translate(0.05, 0.005, 0.05);
+		}
+
 		GlStateManager.popMatrix();
 	}
 

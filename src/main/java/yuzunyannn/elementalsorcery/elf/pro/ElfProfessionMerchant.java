@@ -55,14 +55,16 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 		NBTTagCompound nbt = elf.getEntityData();
 		TradeCount trade = new TradeCount();
 		Random rand = elf.getRNG();
-		int rn = rand.nextInt(3);
-		switch (rn) {
+		if (rand.nextInt(2) == 0) addACommodity(trade, new ItemStack(BLOCKS.ELF_FRUIT, 1, 2), 5, 20, 1000);
+		if (rand.nextInt(3) == 0) addACommodity(trade, new ItemStack(ITEMS.RESONANT_CRYSTAL), 50, 8, 1000);
+
+		switch (rand.nextInt(3)) {
 		case 2:
-			addACommodity(trade, new ItemStack(ITEMS.NATURE_DUST, 1, 1), 150, 3, 1000);
+			addACommodity(trade, new ItemStack(ITEMS.ELF_WATCH, 1, 0), 450, 1, 1000);
 		case 1:
-			addACommodity(trade, new ItemStack(ITEMS.RESONANT_CRYSTAL), 50, 8, 1000);
-		default:
-			addACommodity(trade, new ItemStack(BLOCKS.ELF_FRUIT, 1, 2), 10, 20, 1000);
+			addACommodity(trade, new ItemStack(ITEMS.RITE_MANUAL, 1, 0), 500, 1, 1000);
+		case 0:
+			addACommodity(trade, new ItemStack(ITEMS.NATURE_DUST, 1, 1), 150, 3, 1000);
 		}
 
 		for (int i = 0; i < 12 && trade.getTradeList().size() < 16; i++) {
@@ -81,7 +83,9 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 		ElementStack[] estacks = info.element();
 		float n = 0;
 		for (ElementStack estack : estacks) {
-			n += estack.getPower() / 10f * MathHelper.sqrt(estack.getCount());
+			float count = estack.getPower() / 10f * MathHelper.sqrt(estack.getCount());
+			if (estack.isMagic()) count = count / 4;
+			n += count;
 		}
 		float count = (float) Math.pow(1.4, MathHelper.sqrt(info.complex()));
 
@@ -91,9 +95,17 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 	public static void addACommodity(TradeCount trade, ItemStack item, int price, int count, int checkPrice) {
 		int sellPrice = (int) (price + price * RandomHelper.rand.nextFloat() * 2);
 		int reclaimPrice = (int) (price - price * RandomHelper.rand.nextFloat() * 0.5f);
-		if (price < checkPrice)
-			trade.addCommodity(item, sellPrice, (int) RandomHelper.randomRange(count * 0.5f, count * 1.5f));
-		trade.addCommodity(item, reclaimPrice, 1, true);
+
+		sellPrice = Math.max(1, sellPrice);
+		reclaimPrice = Math.max(1, reclaimPrice);
+
+		if (price < checkPrice) {
+			int c = (int) RandomHelper.randomRange(count * 0.5f, count * 1.5f);
+			c = Math.max(1, c);
+			trade.addCommodity(item, sellPrice, c);
+		}
+		count = (int) RandomHelper.randomRange(count * 0.5f, count * 1.5f) + 2;
+		trade.addCommodity(item, reclaimPrice, count, true);
 	}
 
 	@Override
