@@ -15,6 +15,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -22,11 +23,19 @@ import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class TileMDInfusion extends TileMDBase implements ITickable {
+
+	@Config
+	static private int GEN_MAX_MAIGC_PER_SEC = 50;
+
+	@Config(sync = true)
+	static private int MAX_CAPACITY = 1000;
+
 	@Override
 	protected ItemStackHandler initItemStackHandler() {
 		return new ItemStackHandler(5) {
@@ -57,6 +66,46 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 		this.infusionPower = nbt.getIntArray("powers");
 		if (this.infusionPower.length < 5) this.infusionPower = new int[5];
 		super.readFromNBT(nbt);
+	}
+
+	@Override
+	public int getMaxCapacity() {
+		return MAX_CAPACITY;
+	}
+
+	@Override
+	protected int getOverflow() {
+		return MAX_CAPACITY / 2;
+	}
+
+	public void updateMagicGrow() {
+		if (tick % 20 != 0) return;
+		if (world.isRemote) return;
+
+		ElfTime time = new ElfTime(world);
+		if (time.at(ElfTime.Period.DAY)) return;
+
+		if (!world.canBlockSeeSky(pos)) return;
+
+		int midNight = ElfTime.Period.MIDNIGHT.center();
+		int diff = Math.abs(midNight - time.getTime());
+		int length = (ElfTime.Period.NIGHT.length() + ElfTime.Period.DUSK.length()) / 2;
+
+		float rate = MathHelper.clamp(1 - diff / (float) length, 0, 1);
+		float high = MathHelper.sqrt(pos.getY() / 256f);
+		float weather = world.isRaining() ? (float) Math.random() * 0.15f : 1;
+
+		float light = 1 - world.getLightBrightness(pos);
+		light = light * light;
+		rate *= light;
+
+		rate *= (world.rand.nextFloat() * 0.2f + 0.9f);
+
+		int count = MathHelper.floor((rate * high * weather) * GEN_MAX_MAIGC_PER_SEC);
+		if (count <= 0) return;
+
+		this.magic.grow(ElementStack.magic(count, (int) (10 + (rate * 50 + high * 20) * weather)));
+		if (getCurrentCapacity() > getMaxCapacity()) this.magic.setCount(getMaxCapacity());
 	}
 
 	@Override
@@ -143,6 +192,8 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 			this.allPowerDrop();
 			return;
 		}
+		this.updateMagicGrow();
+
 		// 对有所物品进行遍历
 		for (int i = 0; i < infusionPower.length; i++) {
 			if (this.magic.isEmpty()) {
@@ -260,7 +311,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 			if (time.at(ElfTime.Period.DAWN) || time.at(ElfTime.Period.DUSK)) return true;
 			return false;
 		});
-		addRecipe(ESInit.ITEMS.KYANITE, ESInit.ITEMS.MAGIC_CRYSTAL, 20, 20, (world, pos) -> {
+		addRecipe(ESInit.ITEMS.KYANITE, ESInit.ITEMS.MAGIC_CRYSTAL, 20, 10, (world, pos) -> {
 			Biome biome = world.getBiome(pos);
 			ElfTime time = new ElfTime(world);
 			if (time.at(ElfTime.Period.DAY)) return biome.getRainfall() <= 0.5f && !world.isRaining();

@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Config {
 
-	String kind() default "global";
+	String kind() default "";
 
 	/** 不写的话，默认类型 */
 	String group() default "";

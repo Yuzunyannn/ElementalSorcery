@@ -162,6 +162,7 @@ tile.sealStone.name=Seal Stone
 tile.scarletCrystalOre.name=Scarlet Crystal Ore
 tile.starFlower.normal.name=Star Flower
 tile.starFlower.seed.name=Star Flower Seed
+tile.crudeQuartz.name=Crude Quartz
 
 enchantment.gatherSouls=Gather Souls
 

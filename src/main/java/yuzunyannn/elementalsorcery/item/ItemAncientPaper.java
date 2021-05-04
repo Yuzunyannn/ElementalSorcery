@@ -212,15 +212,15 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 	@Override
 	public IToElementInfo toElement(ItemStack stack) {
 		ElementStack[] estacks = new ElementStack[2];
-		estacks[0] = new ElementStack(ESInit.ELEMENTS.WOOD, 8, 20);
-		estacks[1] = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 4, 30);
+		estacks[1] = new ElementStack(ESInit.ELEMENTS.WOOD, 8, 20);
+		estacks[0] = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 4, 30);
 
 		AncientPaper ap = new AncientPaper(stack);
 		if (ap.hasType()) {
 			KnowledgeType type = ap.getType();
 			ElementStack knowledge = type.getKnowledge().copy();
 			knowledge.setCount((int) (knowledge.getCount() * (1 - ap.getProgress())));
-			estacks[1].grow(knowledge);
+			estacks[0].grow(knowledge);
 		}
 		if (ap.hasMantra()) {
 			Mantra mantra = ap.getMantra();
@@ -230,7 +230,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 			double power = 20 - MathHelper.sqrt(rarity * 1.45);
 			knowledge.setPower(MathHelper.floor(power * power) + 10);
 			knowledge.setCount((220 - rarity) / 2);
-			estacks[1].grow(knowledge);
+			estacks[0].grow(knowledge);
 		}
 
 		return ToElementInfoStatic.create(8, estacks);

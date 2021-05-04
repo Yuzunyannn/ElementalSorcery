@@ -14,7 +14,7 @@ public abstract class ElfProfessionUndetermined extends ElfProfession {
 	public Float attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
 		if (elf.world.isRemote) return amount;
 		if (source.getTrueSource() instanceof EntityLivingBase == false) return amount;
-		if (elf.getRNG().nextInt(100) < 2) elf.setProfession(ElfProfession.MASTER);
+		if (elf.getRNG().nextFloat() < 0.005f) elf.setProfession(ElfProfession.MASTER);
 		else if (elf.getRNG().nextInt(4) == 0) elf.setProfession(ElfProfession.BERSERKER);
 		else elf.setProfession(ElfProfession.WARRIOR);
 		// 吸怪

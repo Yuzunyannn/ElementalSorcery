@@ -46,7 +46,7 @@ public class GuiMDMagicGen extends GuiMDBase<ContainerMDMagicGen> {
 		GlStateManager.enableAlpha();
 	}
 
-	protected float moveX;
+	protected float moveX = (float) (Math.random() * 138 + 3);
 
 	protected void drawMagicStoneMelt(int offsetX, int offsetY, float partialTicks) {
 		float rate = this.container.tileEntity.getMeltRate();

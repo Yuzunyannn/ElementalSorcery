@@ -54,6 +54,7 @@ public class TileMDMagicSolidify extends TileMDBase implements ITickable {
 
 	private void solidify() {
 		if (this.magic.getPower() >= 25) {
+
 			if (this.magic.getCount() >= 100) {
 
 				if (this.insertStack(MAGIC_STONE)) {
@@ -62,7 +63,8 @@ public class TileMDMagicSolidify extends TileMDBase implements ITickable {
 				}
 
 			}
-		} else if (this.magic.getCount() >= 20) {
+
+		} else if (this.magic.getCount() >= 50) {
 
 			if (this.insertStack(MAGIC_PIECE)) {
 				this.magic.shrink(20);

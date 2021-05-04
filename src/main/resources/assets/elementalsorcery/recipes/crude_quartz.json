@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SAS",
+    "CQC",
+    "SAS"
+  ],
+  "key": {
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "S": {
+      "item": "minecraft:sand",
+      "data": 0
+    },
+    "A": {
+      "item": "minecraft:stone",
+      "data": 5
+    },
+    "C": {
+      "item": "minecraft:stone",
+      "data": 3
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:crude_quartz",
+    "count": 2
+  }
+}

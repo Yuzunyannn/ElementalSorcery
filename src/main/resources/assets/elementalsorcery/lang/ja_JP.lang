@@ -162,6 +162,7 @@ tile.sealStone.name=隠し石
 tile.scarletCrystalOre.name=緋色の水晶鉱
 tile.starFlower.normal.name=星の花
 tile.starFlower.seed.name=星花の種
+tile.crudeQuartz.name=粗造りの石英
 
 enchantment.gatherSouls=集魂
 

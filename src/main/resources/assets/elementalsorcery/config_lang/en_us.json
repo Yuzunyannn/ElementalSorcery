@@ -20,6 +20,8 @@
     "tile.general.md_base_send_pre_second": "Send magic per second of Magic Drives",
     "tile.elementalsorcery_mdmagicgen.max_capacity": "The max magic limit of Magic Separator",
     "tile.elementalsorcery_mdmagiclization.max_capacity": "The max magic limit of Element Magiclization Box",
+    "tile.elementalsorcery_mdfusion.gen_max_maigc_per_sec": "Magic Drive Enchanting Box gen Max Magic per seconds on night",
+    "tile.elementalsorcery_mdfusion.max_capacity": "The max magic limit of Element Magic Drive Enchanting Box",
 
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "The worlds can spawn [Invalid for Entity]",
     "spawn_and_gen.world_gen_and_spawn_config.biomes": "The biomes can spawn",

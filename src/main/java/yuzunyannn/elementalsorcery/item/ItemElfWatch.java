@@ -10,6 +10,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 
 public class ItemElfWatch extends Item {
@@ -25,6 +26,14 @@ public class ItemElfWatch extends Item {
 		if (worldIn == null) return;
 		ElfTime time = new ElfTime(worldIn);
 		tooltip.add(TextFormatting.GREEN + I18n.format("elf.time.calendar", time.getDate()));
+
+		if (!ElementalSorcery.isDevelop) return;
+		for (ElfTime.Period period : ElfTime.Period.values()) {
+			if (time.at(period)) {
+				tooltip.add(TextFormatting.YELLOW + period.name());
+				break;
+			}
+		}
 	}
 
 }

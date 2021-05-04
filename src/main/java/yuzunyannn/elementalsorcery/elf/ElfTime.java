@@ -48,8 +48,8 @@ public class ElfTime {
 		return (int) (time / 1152000);
 	}
 
-	public long getTime() {
-		return time - 1800;
+	public int getTime() {
+		return (int) ((time - 1800) % 24000) + 1800;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -74,17 +74,25 @@ public class ElfTime {
 	public static enum Period {
 		DAWN(0, 1800),
 		MORNING(1800, 6900),
-		AFTERNOON(6900, 12000),
-		DUSK(12000, 13800),
-		NIGHT(13800, 24000),
-		MIDNIGHT(17700, 20100),
-		DAY(1800, 12000);
+		AFTERNOON(6900, 13800),
+		DUSK(13800, 15600),
+		MIDNIGHT(18000, 21600),
+		NIGHT(15600, 24000),
+		DAY(1800, 13800);
 
 		public int start, end;
 
 		Period(int start, int end) {
 			this.start = start;
 			this.end = end;
+		}
+
+		public int center() {
+			return (end - start) / 2 + start;
+		}
+
+		public int length() {
+			return end - start;
 		}
 	};
 

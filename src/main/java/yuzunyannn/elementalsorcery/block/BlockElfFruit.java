@@ -227,7 +227,7 @@ public class BlockElfFruit extends Block implements Mapper {
 		if (growState < MAX_STATE) {
 			// 检测上面是否为树叶
 			if (worldIn.getBlockState(pos.up()).getBlock() != ESInit.BLOCKS.ELF_LEAF) return;
-			if (!worldIn.getBlockState(pos.up()).getValue(BlockElfLeaf.DECAYABLE)) return;
+			//if (!worldIn.getBlockState(pos.up()).getValue(BlockElfLeaf.DECAYABLE)) return;
 			ElfTime time = new ElfTime(worldIn);
 			if (!time.at(ElfTime.Period.DAY)) return;
 			worldIn.setBlockState(pos, state.withProperty(STAGE, growState + 1));

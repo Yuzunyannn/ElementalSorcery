@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.tile.md;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 
 import javax.annotation.Nonnull;
 
@@ -68,23 +69,22 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 		addRecipe(new ItemStack(ESInit.BLOCKS.ASTONE, 1, BlockAStone.EnumType.FRAGMENTED.ordinal()),
 				new ItemStack(ESInit.BLOCKS.ASTONE), 10);
 		addRecipe(new ItemStack(Blocks.STONEBRICK, 1, 2), new ItemStack(Blocks.STONEBRICK), 1);
+		addRecipe(new ItemStack(ESInit.BLOCKS.CRUDE_QUARTZ), new ItemStack(Blocks.QUARTZ_BLOCK), 6);
+
 		// 展示用
 		GameHelper.clientRun(() -> {
-			ItemStack input = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_AXE, 1, 1);
-			ItemStack output = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_AXE, 1, 0);
-			addRecipe(input, output, 10);
-			input = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_PICKAXE, 1, 1);
-			output = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_PICKAXE, 1, 0);
-			addRecipe(input, output, 10);
-			input = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_HOE, 1, 1);
-			output = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_HOE, 1, 0);
-			addRecipe(input, output, 10);
-			input = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_SPADE, 1, 1);
-			output = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_SPADE, 1, 0);
-			addRecipe(input, output, 10);
-			input = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_SWORD, 1, 1);
-			output = new ItemStack(ESInit.ITEMS.MAGIC_GOLD_SWORD, 1, 0);
-			addRecipe(input, output, 10);
+			BiFunction<Item, Integer, Void> addRepair = (item, magic) -> {
+				ItemStack input = new ItemStack(item, 1, 1);
+				ItemStack output = new ItemStack(item, 1, 0);
+				addRecipe(input, output, magic);
+				return null;
+			};
+			addRepair.apply(ESInit.ITEMS.MAGIC_GOLD_AXE, 10);
+			addRepair.apply(ESInit.ITEMS.MAGIC_GOLD_PICKAXE, 10);
+			addRepair.apply(ESInit.ITEMS.MAGIC_GOLD_HOE, 10);
+			addRepair.apply(ESInit.ITEMS.MAGIC_GOLD_SPADE, 10);
+			addRepair.apply(ESInit.ITEMS.MAGIC_GOLD_SWORD, 10);
+			addRepair.apply(ESInit.ITEMS.SCAPEGOAT, 5);
 		});
 	}
 
@@ -107,7 +107,6 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 	protected ItemStackHandler initItemStackHandler() {
 		return new ItemStackHandler(1) {
 			@Override
-			@Nonnull
 			public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
 				if (TileMDRubbleRepair.getDefaultRepairResult(stack).isEmpty()) return stack;
 				return super.insertItem(slot, stack, simulate);
@@ -136,6 +135,7 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 
 	int lastId;
 	ItemStack lastStack = ItemStack.EMPTY;
+	private int lastField2 = 0;
 	boolean isStart = false;
 
 	@Override
@@ -181,10 +181,18 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 	protected void detectAndSendItemType() {
 		ItemStack stack = inventory.getStackInSlot(0);
 		if (ItemStack.areItemsEqual(lastStack, stack)) {
-			if (this.detectAndWriteToNBT(sndTemp, 2)) this.updateToClient(sndTemp);
+
+			if (lastField2 != this.getField(2)) {
+				lastField2 = this.getField(2);
+				this.updateDataWriteToNBT(sndTemp, 2);
+				this.updateToClient(sndTemp);
+			}
+
 		} else {
+
 			lastStack = stack;
 			this.updateToClient(this.writeInventoryChangeToNBT(new NBTTagCompound(), 0, lastStack));
+
 		}
 	}
 

@@ -36,16 +36,13 @@ public class BlocksEStone {
 		return new EStone().setUnlocalizedName("estone");
 	}
 
-	public static Block newEStoneChiseled() {
-		return new EStone().setUnlocalizedName("estoneChiseled");
-	}
-
 	public static class EStone extends BlockQuartz implements Mapper {
 
 		public EStone() {
 			this.setUnlocalizedName("estone");
 			this.setHarvestLevel("pickaxe", 1);
-			this.setHardness(7.5F);
+			this.setSoundType(SoundType.STONE);
+			this.setHardness(1.2F);
 		}
 
 		@Override
@@ -98,8 +95,11 @@ public class BlocksEStone {
 			super(Material.ROCK);
 			this.setUnlocalizedName("estoneSlab");
 			this.setDefaultState(this.blockState.getBaseState().withProperty(HALF, EnumBlockHalf.BOTTOM));
+
 			this.setHarvestLevel("pickaxe", 1);
-			this.setHardness(7.5F);
+			this.setSoundType(SoundType.STONE);
+			this.setHardness(1.2F);
+
 			this.setLightOpacity(255);
 		}
 
@@ -219,8 +219,10 @@ public class BlocksEStone {
 		public EStoneStairs() {
 			super(ESInit.BLOCKS.ESTONE.getDefaultState());
 			this.setUnlocalizedName("estoneStairs");
+
 			this.setHarvestLevel("pickaxe", 1);
-			this.setHardness(7.5F);
+			this.setSoundType(SoundType.STONE);
+			this.setHardness(1.2F);
 		}
 
 	}
@@ -230,9 +232,11 @@ public class BlocksEStone {
 		public EStonePrism() {
 			super(Material.ROCK);
 			this.setUnlocalizedName("estonePrism");
-			this.setHarvestLevel("pickaxe", 1);
-			this.setHardness(7.5F);
 			this.setLightOpacity(150);
+
+			this.setHarvestLevel("pickaxe", 1);
+			this.setSoundType(SoundType.STONE);
+			this.setHardness(1.2F);
 		}
 
 		@Override

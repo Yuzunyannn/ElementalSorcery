@@ -50,6 +50,7 @@ import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
+import yuzunyannn.elementalsorcery.block.BlockCrudeQuartz;
 import yuzunyannn.elementalsorcery.block.BlockCrystalFlower;
 import yuzunyannn.elementalsorcery.block.BlockElementWorkbench;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
@@ -380,6 +381,7 @@ public class ESInit {
 		BLOCKS.SEAL_STONE = new BlockSealStone();
 		BLOCKS.SCARLET_CRYSTAL_ORE = new BlockScarletCrystalOre();
 		BLOCKS.STAR_FLOWER = new BlockStarFlower();
+		BLOCKS.CRUDE_QUARTZ = new BlockCrudeQuartz();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -790,7 +792,7 @@ public class ESInit {
 		registerRender(ITEMS.SCAPEGOAT);
 		registerRender(ITEMS.MAGIC_CORE);
 		registerRender(ITEMS.SCARLET_CRYSTAL);
-		registerRender(ITEMS.STAR_BELL,0,"bell");
+		registerRender(ITEMS.STAR_BELL, 0, "bell");
 		registerRender(ITEMS.STAR_BELL, 1, "BELL_STAR");
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
@@ -847,6 +849,7 @@ public class ESInit {
 		registerRender(BLOCKS.STAR_FLOWER, 0, "star_flower_seed");
 		registerRender(BLOCKS.STAR_FLOWER, 2, "star_flower");
 		registerRender(BLOCKS.STAR_FLOWER, 4, "star_flower_element");
+		registerRender(BLOCKS.CRUDE_QUARTZ);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());

@@ -16,7 +16,7 @@ import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class TileMDMagicGen extends TileMDBase implements ITickable, IAcceptBurnPower {
 
-	@Config(kind = "tile", sync = true)
+	@Config(sync = true)
 	static private int MAX_CAPACITY = 3000;
 
 	/** 温度 */

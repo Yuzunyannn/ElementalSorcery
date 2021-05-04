@@ -39,7 +39,7 @@ import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class BlockLifeFlower extends Block {
 
-	@Config(kind = "block")
+	@Config
 	private float PROBABILITY_OF_CONSUME_MAIGC_PER_GROW = 0.02f;
 
 	public static final AxisAlignedBB AABB = new AxisAlignedBB(0.09999999403953552D, 0.0D, 0.09999999403953552D,

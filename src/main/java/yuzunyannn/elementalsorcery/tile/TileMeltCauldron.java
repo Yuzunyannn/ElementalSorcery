@@ -48,6 +48,8 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 				item.setFire(5);
 				return;
 			}
+			if (item.isDead) return;
+			
 			ItemStack stack = item.getItem();
 
 			// 是否为魔石

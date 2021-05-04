@@ -1,20 +1,24 @@
 {
 	"type": "forge:ore_shaped",
 	"pattern": [
-		"X#X",
+		"XEX",
 		"#S#",
-		"X#X"
+		"XEX"
 	],
 	"key": {
 		"#": {
 			"type": "forge:ore_dict",
 			"ore": "kyanite"
 		},
+		"E": {
+			"item": "elementalsorcery:elf_crystal"
+		},
 		"X": {
 			"item": "elementalsorcery:magic_piece"
 		},
 		"S": {
-			"item": "elementalsorcery:star_sand"
+			"item": "minecraft:sand",
+			"data": 0
 		}
 	},
 	"result": {

@@ -48,9 +48,20 @@
             "item": "elementalsorcery:spellbook_enchantment",
             "element": {
                 "id": "knowledge",
-                "size": 100,
+                "size": 150,
                 "power": 250
             }
+        },
+        {
+            "note": "没树的附魔台",
+            "item": "elementalsorcery:invalid_enchantment_table",
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 48,
+                    "power": 95
+                }
+            ]
         },
         {
             "note": "魔石碎片",
@@ -58,7 +69,7 @@
             "element": [
                 {
                     "id": "magic",
-                    "size": 50,
+                    "size": 25,
                     "power": 50
                 }
             ]
@@ -69,13 +80,13 @@
             "element": [
                 {
                     "id": "magic",
-                    "size": 200,
+                    "size": 100,
                     "power": 100
                 },
                 {
                     "id": "earth",
-                    "size": 5,
-                    "power": 56
+                    "size": 3,
+                    "power": 10
                 }
             ],
             "complex": 2

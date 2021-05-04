@@ -1,7 +1,8 @@
 {
     "lev": 3,
     "need": [
-        "element/element_workbench"
+        "element/element_workbench",
+        "element/spell_crystal"
     ],
     "linked": "elementalsorcery:spellbook_cover",
     "type": "craft",

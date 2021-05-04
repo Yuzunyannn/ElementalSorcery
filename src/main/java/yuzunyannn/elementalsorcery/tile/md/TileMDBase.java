@@ -1,12 +1,8 @@
 package yuzunyannn.elementalsorcery.tile.md;
 
-import java.util.List;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IContainerListener;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -522,44 +518,11 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		return 2;
 	}
 
-	/** 容器更新检测使用 */
-	private int[] fieldDatas = new int[this.getFieldCount()];
-
-	/** 容器自动发送fild数据 */
-	public void detectAndSendChanges(Container container, List<IContainerListener> listeners) {
-		if (fieldDatas.length < this.getFieldCount()) fieldDatas = new int[this.getFieldCount()];
-		for (int i = 0; i < this.getFieldCount(); i++) {
-			if (this.getField(i) != fieldDatas[i]) {
-				fieldDatas[i] = this.getField(i);
-				for (int j = 0; j < listeners.size(); ++j) {
-					listeners.get(j).sendWindowProperty(container, i, this.getField(i));
-				}
-			}
-		}
-	}
-
-	/** 检测所有并返回nbt */
-	protected NBTTagCompound detectAndGetUpdateNBT() {
-		NBTTagCompound nbt = new NBTTagCompound();
-		for (int i = 0; i < this.getFieldCount(); i++) this.detectAndWriteToNBT(nbt, i);
-		return nbt.hasNoTags() ? null : nbt;
-	}
-
-	/** 检测设置nbt */
-	protected boolean detectAndWriteToNBT(NBTTagCompound nbt, int fieldIndex) {
-		if (this.getField(fieldIndex) != fieldDatas[fieldIndex]) {
-			fieldDatas[fieldIndex] = this.getField(fieldIndex);
-			this.updateDataWriteToNBT(nbt, fieldIndex);
-			return true;
-		}
-		return false;
-	}
-
 	/** 设置nbt数据 */
 	protected NBTTagCompound updateDataWriteToNBT(NBTTagCompound nbt, int fieldIndex) {
 		if (nbt.hasKey("field", 10)) nbt = nbt.getCompoundTag("field");
 		else nbt.setTag("field", nbt = new NBTTagCompound());
-		nbt.setInteger(Integer.toString(fieldIndex), fieldDatas[fieldIndex]);
+		nbt.setInteger(Integer.toString(fieldIndex), this.getField(fieldIndex));
 		return nbt;
 	}
 

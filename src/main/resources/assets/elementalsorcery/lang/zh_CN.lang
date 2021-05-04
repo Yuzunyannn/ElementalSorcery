@@ -162,6 +162,7 @@ tile.sealStone.s.name=封藏石
 tile.scarletCrystalOre.name=绯红水晶矿
 tile.starFlower.normal.name=星之花
 tile.starFlower.seed.name=星花之种
+tile.crudeQuartz.name=粗制石英
 
 enchantment.gatherSouls=聚魂
 
@@ -629,7 +630,7 @@ page.magicGen.ct=通过灶台，将魔石分解为魔力。\n魔石分解需要�
 page.magicTransfer=魔力转移箱
 page.magicTransfer.ct=作为魔力的中转站使用，唯一一个可以将魔力向上传送的设备。
 page.infusion=注魔箱
-page.infusion.ct=以注魔箱为中心构建的注魔祭坛，可以将魔力注入进入到蓝晶石，魔力水晶等物质中，来将物体转化成别的物质。\n注魔箱注魔条件和时间和位置有关。\n少雨的地方，蓝晶石可以注魔成魔力水晶\n日落日出之时，魔力水晶可以注魔成元素水晶\n等等..
+page.infusion.ct=以注魔箱为中心构建的注魔祭坛，可以将魔力注入进入到蓝晶石，魔力水晶等物质中，来将物体转化成别的物质。\n注魔箱注魔条件和时间和位置有关。\n少雨的地方，蓝晶石可以注魔成魔力水晶\n日落日出之时，魔力水晶可以注魔成元素水晶\n等等..\n此外，注魔箱顶部的星沙在夜间会与星空发生共鸣，随着午夜的到来，暴露在星空下的注魔箱会缓慢的吸收魔力。
 page.infusion.altar=注魔祭坛
 page.magicGold=魔金
 page.magicGold.ct=通过给金注魔而形成的带有魔力的金锭。\n注魔条件：任何时间地点

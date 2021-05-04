@@ -157,10 +157,11 @@ public class BlockSealStone extends Block implements Mapper {
 		wr.add(new ItemStack(ESInit.ITEMS.ELEMENT_CRYSTAL), 1);
 		wr.add(new ItemStack(ESInit.ITEMS.ORDER_CRYSTAL), 3);
 		wr.add(new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL), 10);
-		wr.add(new ItemStack(ESInit.ITEMS.RESONANT_CRYSTAL), 12);
-		wr.add(new ItemStack(ESInit.ITEMS.MAGIC_STONE), 30);
-		wr.add(new ItemStack(ESInit.ITEMS.MAGIC_PIECE), 80);
-		tryTime = rand.nextInt(fortune + 3) + 1;
+		wr.add(new ItemStack(ESInit.ITEMS.RESONANT_CRYSTAL), 16);
+		wr.add(new ItemStack(ESInit.ITEMS.MAGIC_STONE, 3), 40);
+		wr.add(new ItemStack(ESInit.ITEMS.MAGIC_PIECE, 4 + rand.nextInt(4)), 80);
+
+		tryTime = rand.nextInt(fortune + 5) + 2;
 		for (int i = 0; i < tryTime; i++) spawnAsEntity(worldIn, pos, wr.get());
 	}
 

@@ -15,8 +15,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.entity.EntityScapegoat;
+import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 
-public class ItemScapegoat extends Item {
+public class ItemScapegoat extends Item implements TileMDRubbleRepair.IExtendRepair {
 
 	public ItemScapegoat() {
 		this.setUnlocalizedName("scapegoat");
@@ -60,6 +61,19 @@ public class ItemScapegoat extends Item {
 	@Override
 	public boolean canApplyAtEnchantingTable(ItemStack stack, Enchantment enchantment) {
 		return enchantment == Enchantments.MENDING;
+	}
+
+	@Override
+	public ItemStack getRepairOutput(ItemStack input) {
+		if (input.getItemDamage() == 0) return ItemStack.EMPTY;
+		input = input.copy();
+		input.setItemDamage(input.getItemDamage() - 1);
+		return input;
+	}
+
+	@Override
+	public int getRepairCost(ItemStack input) {
+		return 5;
 	}
 
 }

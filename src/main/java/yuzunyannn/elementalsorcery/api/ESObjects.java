@@ -150,6 +150,7 @@ public class ESObjects {
 		public Block SEAL_STONE;
 		public Block SCARLET_CRYSTAL_ORE;
 		public Block STAR_FLOWER;
+		public Block CRUDE_QUARTZ;
 	}
 
 	static public class Elements {

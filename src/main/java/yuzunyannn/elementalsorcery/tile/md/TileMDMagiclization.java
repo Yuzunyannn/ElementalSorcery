@@ -44,7 +44,7 @@ public class TileMDMagiclization extends TileMDBase implements ITickable {
 		if (this.tick % 10 != 0) return;
 		ItemStack stack = inventory.getStackInSlot(0);
 		if (stack.isEmpty()) return;
-		final int need = 3;
+		final int need = 2;
 		if (need > this.getCurrentCapacity()) return;
 		if (this.getCurrentCapacity() >= this.getMaxCapacity()) return;
 		IElementInventory inventory = TileMDAbsorbBox.getElementInventory(stack);

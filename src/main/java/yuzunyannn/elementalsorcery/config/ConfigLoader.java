@@ -3,11 +3,15 @@ package yuzunyannn.elementalsorcery.config;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.element.Element;
+import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class ConfigLoader {
@@ -37,6 +41,19 @@ public class ConfigLoader {
 		String group = configType.group();
 		String name = configType.name();
 		String note = configType.note();
+
+		if (kind.isEmpty()) {
+			Class objClazz;
+			if (obj instanceof Class) objClazz = (Class) obj;
+			else objClazz = obj.getClass();
+
+			if (TileEntity.class.isAssignableFrom(objClazz)) kind = "tile";
+			else if (Item.class.isAssignableFrom(objClazz)) kind = "item";
+			else if (Block.class.isAssignableFrom(objClazz)) kind = "block";
+			else if (Element.class.isAssignableFrom(objClazz)) kind = "element";
+			else if (Mantra.class.isAssignableFrom(objClazz)) kind = "mantra";
+			else kind = "global";
+		}
 
 		if (group.isEmpty()) {
 			if (obj instanceof IForgeRegistryEntry) {

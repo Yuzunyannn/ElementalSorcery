@@ -25,6 +25,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
 import yuzunyannn.elementalsorcery.explore.ExploreSlimeChunk;
@@ -122,7 +123,8 @@ public class ItemStarBell extends Item {
 		}
 		if (canContinue) {
 			BlockPos pos = player.getPosition();
-			boolean isSpChunk = BlockElfSapling.chunkCanGrow(world, pos) || ExploreSlimeChunk.isSlimeChunk(world, pos);
+			boolean isSpChunk = world.provider.getDimensionType() == DimensionType.OVERWORLD
+					&& (BlockElfSapling.chunkCanGrow(world, pos) || ExploreSlimeChunk.isSlimeChunk(world, pos));
 			if (isSpChunk) {
 				ITextComponent sound = new TextComponentTranslation("info.sound.deep");
 				text.appendSibling(new TextComponentTranslation("info.star.bell", sound));

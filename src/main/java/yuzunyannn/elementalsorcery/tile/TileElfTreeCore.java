@@ -49,6 +49,7 @@ import yuzunyannn.elementalsorcery.util.IOHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 
@@ -378,13 +379,12 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		BlockPos pos = findAroundPlaceCanSpawn();
 		if (pos == null) return;
 		int searchRange = 16;
-		AxisAlignedBB aabb = new AxisAlignedBB(pos.getX() - searchRange, pos.getY() - searchRange,
-				pos.getZ() - searchRange, pos.getX() + searchRange, pos.getY() + searchRange, pos.getZ() + searchRange);
+		AxisAlignedBB aabb = WorldHelper.createAABB(pos, searchRange, searchRange, searchRange);
 		List<EntityElfBase> elfs = world.getEntitiesWithinAABB(EntityElfBase.class, aabb);
 		if (!elfs.isEmpty()) return;
 		// 刷一只精灵
 		EntityElf elf;
-		switch (rand.nextInt(6)) {
+		switch (rand.nextInt(8)) {
 		case 0:
 			elf = new EntityElf(world, ElfProfession.BUILDER);
 			break;

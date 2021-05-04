@@ -89,6 +89,28 @@
             ]
         },
         {
+            "note": "附魔台",
+            "item": "minecraft:enchanting_table",
+            "element": [
+                {
+                    "id": "magic",
+                    "size": 300,
+                    "power": 120
+                },
+                {
+                    "id": "knowledge",
+                    "size": 150,
+                    "power": 250
+                },
+                {
+                    "id": "earth",
+                    "size": 48,
+                    "power": 95
+                }
+            ],
+            "complex": 8
+        },
+        {
             "note": "末地传送门",
             "item": "minecraft:end_portal_frame",
             "element": [

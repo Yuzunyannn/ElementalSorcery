@@ -156,7 +156,7 @@ public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 		}
 		this.progress = originProgress;
 		this.progress++;
-		if (this.tick % 3 == 0) this.magic.shrink(1);
+		if (this.tick % 10 == 0) this.magic.shrink(1);
 		if (this.progress >= this.getMaxProgress()) {
 			this.progress = 0;
 			inventory.insertElement(inserted, false);

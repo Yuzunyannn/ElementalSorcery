@@ -150,6 +150,7 @@ public class CommandESDebug {
 				} else {
 
 				}
+				return;
 			}
 
 			case "statistics": {

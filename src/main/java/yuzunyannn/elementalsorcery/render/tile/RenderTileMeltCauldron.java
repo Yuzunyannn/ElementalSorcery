@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.render.tile;
 
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.GlStateManager.DestFactor;
+import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -36,6 +38,7 @@ public class RenderTileMeltCauldron extends TileEntitySpecialRenderer<TileMeltCa
 		int volume = tile.getVolume();
 		if (volume > 0) {
 			GlStateManager.pushMatrix();
+			GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 			GlStateManager.translate(x, y + 0.125f + volume / 1000.0f * 0.68f, z);
 			float T = (int) tile.getTemperature();
 			if (T < TileMeltCauldron.START_TEMPERATURE) {

@@ -534,8 +534,9 @@ public class TileRiteTable extends TileEntityNetwork {
 		addSacrifice(BLOCKS.STAR_SAND, 15, 1, "star_sand");
 		addSacrifice(BLOCKS.STAR_STONE, 9, 1, "star_sand");
 
-		addSacrifice("oreGold", 13, 2);
-		addSacrifice(ITEMS.SCARLET_CRYSTAL, 20, 2);
+		addSacrifice("oreGold", 25, 2);
+		addSacrifice("ingotGold", 18, 2);
+		addSacrifice(ITEMS.SCARLET_CRYSTAL, 30, 2);
 		addSacrifice(Items.DIAMOND, 95, 2);
 		addSacrifice(Items.DIAMOND_AXE, 130, 2);
 		addSacrifice(Items.DIAMOND_HOE, 130, 2);
@@ -546,9 +547,9 @@ public class TileRiteTable extends TileEntityNetwork {
 		addSacrifice(Items.EMERALD, 25, 2);
 		addSacrifice(Blocks.EMERALD_BLOCK, 200, 2);
 
-		addSacrifice(ITEMS.MAGIC_CRYSTAL, 10, 3, "magic_crystal");
-		addSacrifice(ITEMS.ELEMENT_CRYSTAL, 25, 3, "element_crystal");
-		addSacrifice(ITEMS.AZURE_CRYSTAL, 15, 3, "azure_crystal");
+		addSacrifice(ITEMS.MAGIC_CRYSTAL, 20, 3, "magic_crystal");
+		addSacrifice(ITEMS.ELEMENT_CRYSTAL, 30, 3, "element_crystal");
+		addSacrifice(ITEMS.AZURE_CRYSTAL, 25, 3, "azure_crystal");
 
 		addSacrifice(BLOCKS.LIFE_DIRT, 16, 4);
 		addSacrifice(ITEMS.ARCHITECTURE_CRYSTAL, 30, 4);
