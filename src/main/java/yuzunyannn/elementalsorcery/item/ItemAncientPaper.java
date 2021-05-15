@@ -100,6 +100,15 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 		}
 	}
 
+	public static void eliminateFatigue(EntityPlayer player, boolean showInfo) {
+		NBTTagCompound playerData = EventServer.getPlayerNBT(player);
+		if (!playerData.hasKey("unsNext")) return;
+		playerData.removeTag("unsNext");
+		if (showInfo) player.sendMessage(new TextComponentTranslation("info.not.atigue")
+				.setStyle(new Style().setColor(TextFormatting.GOLD).setBold(true)));
+
+	}
+
 	/** 进行一次解读 */
 	protected void doUnscramble(AncientPaper ap, World world, EntityPlayer player, EnumHand handIn) {
 		if (world.isRemote) return;

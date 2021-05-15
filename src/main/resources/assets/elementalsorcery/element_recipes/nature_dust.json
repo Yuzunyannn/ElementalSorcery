@@ -12,13 +12,13 @@
 	"element": [
 		{
 			"id": "earth",
-			"size": 40,
-			"power": 200
+			"size": 25,
+			"power": 50
 		}
 	],
 	"result": {
 		"item": "elementalsorcery:nature_dust",
-		"count": 2,
+		"count": 4,
 		"data":1
 	}
 }

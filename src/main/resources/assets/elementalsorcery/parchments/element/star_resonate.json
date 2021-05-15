@@ -2,8 +2,8 @@
     "lev": 3,
     "need": [
         "base/star_flower",
-        "element/element_crystal",
         "md/star_seed",
+        "element/element_crystal",
         "element/spellbook_element"
     ],
     "type": "normal",

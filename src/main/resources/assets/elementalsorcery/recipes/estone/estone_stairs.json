@@ -3,17 +3,17 @@
   "group": "estone",
   "pattern": [
     "  #",
-	" ##",
-	"###"
+    " ##",
+    "###"
   ],
   "key": {
     "#": {
       "item": "elementalsorcery:estone",
-	  "data":0
+      "data": 0
     }
   },
   "result": {
     "item": "elementalsorcery:estone_stairs",
-    "count": 4
+    "count": 8
   }
 }

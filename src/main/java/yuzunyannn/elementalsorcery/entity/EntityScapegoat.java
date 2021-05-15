@@ -77,6 +77,7 @@ public class EntityScapegoat extends EntityLiving {
 				if (living == null) living = e.getAttackTarget();
 				if (living instanceof EntityScapegoat) continue;
 				if (living == null) continue;
+				if (!living.isNonBoss()) continue;
 				if (name.isEmpty() || name.equals(living.getName())) {
 					e.setRevengeTarget(this);
 					e.setAttackTarget(this);

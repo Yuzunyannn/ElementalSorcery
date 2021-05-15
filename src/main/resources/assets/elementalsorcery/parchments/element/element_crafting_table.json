@@ -1,7 +1,7 @@
 {
     "lev": 3,
     "need": [
-        "md/astone",
+        "element/element_workbench",
         "element/spellbook_launch"
     ],
     "linked": "elementalsorcery:element_crafting_table",

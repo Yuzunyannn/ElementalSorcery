@@ -136,7 +136,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 
 		IElementInventory einv = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 		einv.loadState(stack);
-		ElementStack magic = einv.extractElement(ElementStack.magic(collect * 20, 20), false);
+		ElementStack magic = einv.extractElement(ElementStack.magic(collect * 20, 1), false);
 		if (magic.isEmpty()) return;
 		einv.saveState(stack);
 		magic.setPower(Math.round(magic.getPower() * powerUp));

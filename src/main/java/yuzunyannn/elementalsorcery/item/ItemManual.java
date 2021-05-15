@@ -29,7 +29,7 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 public class ItemManual extends Item {
 
 	@Config(sync = true)
-	private int MANUAL_MAX_PAGES = 20;
+	private int MANUAL_MAX_PAGES = 32;
 
 	public ItemManual() {
 		this.setUnlocalizedName("manual");

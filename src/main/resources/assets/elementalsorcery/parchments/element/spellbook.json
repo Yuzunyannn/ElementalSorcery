@@ -2,6 +2,7 @@
     "lev": 3,
     "need": [
         "element/spell_paper",
+        "element/book_cover",
         "element/spell_crystal"
     ],
     "linked": "elementalsorcery:spellbook",

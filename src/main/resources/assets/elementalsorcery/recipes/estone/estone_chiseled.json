@@ -3,7 +3,7 @@
   "group": "estone",
   "pattern": [
     "#",
-	"#"
+    "#"
   ],
   "key": {
     "#": {
@@ -13,6 +13,6 @@
   "result": {
     "item": "elementalsorcery:estone",
     "count": 1,
-	"data":1
+    "data": 1
   }
 }

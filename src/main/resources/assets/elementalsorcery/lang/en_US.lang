@@ -88,6 +88,7 @@ item.magicCore.name=Magic Core
 item.scarletCrystal.name=Scarlet Crystal
 item.starBell.normal.name=Bell
 item.starBell.star.name=Star Bell
+item.appleCandy.name=Apple Candy
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -366,6 +367,7 @@ info.ancientPaper.unknow=I can't understand what is recorded in this Ancient Pap
 info.ancientPaper.progress=Progress of unscrambling %s
 info.research.increase=Are you more interested in 「%s」
 info.want.not.unscramble=You're too tired to read any more
+info.not.atigue=You're no longer tired
 info.underway=underway
 info.complete=complete
 info.level.total.page.count=% Level Rite have %d different kinds of parchment.

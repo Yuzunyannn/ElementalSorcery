@@ -31,7 +31,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 public class TileMDInfusion extends TileMDBase implements ITickable {
 
 	@Config
-	static private int GEN_MAX_MAIGC_PER_SEC = 50;
+	static private int GEN_MAX_MAIGC_PER_SEC = 40;
 
 	@Config(sync = true)
 	static private int MAX_CAPACITY = 1000;
@@ -104,8 +104,10 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 		int count = MathHelper.floor((rate * high * weather) * GEN_MAX_MAIGC_PER_SEC);
 		if (count <= 0) return;
 
-		this.magic.grow(ElementStack.magic(count, (int) (10 + (rate * 50 + high * 20) * weather)));
-		if (getCurrentCapacity() > getMaxCapacity()) this.magic.setCount(getMaxCapacity());
+		if (getCurrentCapacity() < getMaxCapacity()) {
+			this.magic.grow(ElementStack.magic(count, (int) (10 + (rate * 50 + high * 20) * weather)));
+			if (getCurrentCapacity() > getMaxCapacity()) this.magic.setCount(getMaxCapacity());
+		}
 	}
 
 	@Override

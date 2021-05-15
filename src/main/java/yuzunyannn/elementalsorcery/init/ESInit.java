@@ -153,6 +153,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSprint;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
+import yuzunyannn.elementalsorcery.item.ItemAppleCandy;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemElfWatch;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
@@ -456,6 +457,7 @@ public class ESInit {
 		ITEMS.MAGIC_CORE = new ItemMagicCore();
 		ITEMS.SCARLET_CRYSTAL = new ItemScarletCrystal();
 		ITEMS.STAR_BELL = new ItemStarBell();
+		ITEMS.APPLE_CANDY = new ItemAppleCandy();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -850,6 +852,7 @@ public class ESInit {
 		registerRender(BLOCKS.STAR_FLOWER, 2, "star_flower");
 		registerRender(BLOCKS.STAR_FLOWER, 4, "star_flower_element");
 		registerRender(BLOCKS.CRUDE_QUARTZ);
+		registerRender(ITEMS.APPLE_CANDY);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());

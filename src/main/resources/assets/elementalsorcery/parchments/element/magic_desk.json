@@ -2,7 +2,7 @@
     "lev": 3,
     "need": [
         "md/estone",
-        "element/spell_crystal"
+        "md/magic_crystal"
     ],
     "linked": "elementalsorcery:magic_desk",
     "type": "mult",

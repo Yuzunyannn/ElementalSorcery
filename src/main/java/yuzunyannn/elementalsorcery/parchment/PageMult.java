@@ -31,7 +31,7 @@ public class PageMult extends Page {
 
 	@Override
 	public void open(IPageManager pageManager) {
-		pageAt = 0;
+		//pageAt = 0;
 	}
 
 	@Override

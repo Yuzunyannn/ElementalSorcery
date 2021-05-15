@@ -88,6 +88,7 @@ item.magicCore.name=魔力のたま
 item.scarletCrystal.name=緋色の水晶
 item.starBell.normal.name=鈴
 item.starBell.star.name=星の鈴
+item.appleCandy.name=林檎飴
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -366,6 +367,7 @@ info.ancientPaper.unknow=この古巻に記載されている内容が分かり�
 info.ancientPaper.progress=解読進捗%s
 info.research.increase=あなたは「%s」にもっと興味があります。
 info.want.not.unscramble=あなたは疲れました、読み続けたくない
+info.not.atigue=あなたもう疲れません
 info.underway=進行中
 info.complete=完了
 info.level.total.page.count=%d級の儀式は%d種類の羊皮纸を持っています

@@ -33,7 +33,7 @@ public class PageBook extends Page {
 
 	@Override
 	public void open(IPageManager pageManager) {
-		pageAt = 0;
+		//pageAt = 0;
 	}
 
 	@Override

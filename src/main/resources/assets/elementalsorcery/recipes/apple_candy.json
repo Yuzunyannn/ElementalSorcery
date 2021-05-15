@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " GA",
+    " SG",
+    "S  "
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:apple"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "G": {
+      "item": "minecraft:sugar"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:apple_candy",
+    "count": 1
+  }
+}

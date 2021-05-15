@@ -208,16 +208,16 @@
             "element": [
                 {
                     "id": "earth",
-                    "size": 90,
+                    "size": 20,
                     "power": 191
                 },
                 {
                     "id": "metal",
-                    "size": 40,
+                    "size": 14,
                     "power": 165
                 }
             ],
-            "complex": 3
+            "complex": 6
         },
         {
             "note": "头骨",

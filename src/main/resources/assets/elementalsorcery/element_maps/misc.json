@@ -220,13 +220,13 @@
             "element": [
                 {
                     "id": "earth",
-                    "size": 27,
-                    "power": 183
+                    "size": 6,
+                    "power": 142
                 },
                 {
                     "id": "metal",
-                    "size": 11,
-                    "power": 152
+                    "size": 4,
+                    "power": 105
                 }
             ],
             "complex": 1

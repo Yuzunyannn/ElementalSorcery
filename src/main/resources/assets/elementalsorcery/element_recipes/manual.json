@@ -12,8 +12,8 @@
 	"element": [
 		{
 			"id": "knowledge",
-			"size": 25,
-			"power": 30
+			"size": 5,
+			"power": 10
 		}
 	],
 	"result": {
