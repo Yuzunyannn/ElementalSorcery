@@ -1,9 +1,11 @@
 package yuzunyannn.elementalsorcery.util;
 
+import java.io.BufferedReader;
 import java.io.Closeable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -37,6 +39,17 @@ public class IOHelper {
 		try (InputStream istream = ESData.class.getResourceAsStream(rPath)) {
 			return CompressedStreamTools.readCompressed(istream);
 		}
+	}
+
+	public static String readString(ResourceLocation path) throws IOException {
+		String rPath = "/assets/" + path.getResourceDomain() + "/" + path.getResourcePath();
+		StringBuilder buider = new StringBuilder();
+		String line;
+		try (InputStream istream = ESData.class.getResourceAsStream(rPath)) {
+			BufferedReader br = new BufferedReader(new InputStreamReader(istream, "utf-8"));
+			while ((line = br.readLine()) != null) buider.append(line);
+		}
+		return buider.toString();
 	}
 
 	/** 获取某个文件夹下的全部路径，注意检测后缀，jar下可能获取到目录 */

@@ -13,6 +13,7 @@
     "item.elementalsorcery_spellbook_element.ar_count_pre_tick":"元素之书吸收释放每tick的量",
 
     "block.elementalsorcery_life_flower.probability_of_consume_maigc_per_grow": "每进行一次生长，消耗掉花盆里魔力的概率",
+    "block.elementalsorcery_seal_stone.mantra_drop_probability_per_lucky": "破坏一个藏封石，每一点时运，掉落咒文古卷的概率",
 
     "tile.elementalsorcery_mdresonantincubator.cost_pre_resonant": "每次共振的魔力消耗",
     "tile.general.md_base_max_capacity": "魔动设备默认的最大魔力储存上限",
@@ -23,8 +24,10 @@
     "tile.elementalsorcery_mdfusion.gen_max_maigc_per_sec": "注魔箱每秒自动生产的最大魔力量(夜晚)",
     "tile.elementalsorcery_mdfusion.max_capacity": "注魔箱的最大魔力储存上限",
 
+    "tile.elementalsorcery_ritetable.normal_rite_awlays_success": "映像仪式不会失败",
+
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "[会生成的世界][对生物类型无效]",
     "spawn_and_gen.world_gen_and_spawn_config.biomes": "[会生成的生物群系]",
     "spawn_and_gen.world_gen_and_spawn_config.world_incrs": "[生成的密度，对应世界数组，0默认，越大生成的可能越多]",
     "spawn_and_gen.world_gen_and_spawn_config.biome_incrs": "[生成的密度，对应维度数组，0默认，越大生成的可能越多]"
-}
+} 

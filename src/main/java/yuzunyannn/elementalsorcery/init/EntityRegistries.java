@@ -29,6 +29,7 @@ import yuzunyannn.elementalsorcery.entity.EntityScapegoat;
 import yuzunyannn.elementalsorcery.entity.EntityThrow;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
+import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
 import yuzunyannn.elementalsorcery.render.entity.EntityRenderFactory;
 import yuzunyannn.elementalsorcery.render.entity.RenderBlockThrowEffect;
@@ -37,6 +38,7 @@ import yuzunyannn.elementalsorcery.render.entity.RenderEntityBlockMove;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityExploreDust;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityFairyCube;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityGrimoire;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityMagicMelting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortal;
@@ -80,6 +82,7 @@ public class EntityRegistries {
 		// 实体方块
 		register(20, "bulletin", EntityBulletin.class, "Bulletin", 64, 1, false);
 		register(21, "scapegoat", EntityScapegoat.class, "Scapegoat", 64, 1, false);
+		register(22, "fairy_cube", EntityFairyCube.class, "FairyCube", 64, 3, false);
 
 	}
 
@@ -113,6 +116,7 @@ public class EntityRegistries {
 		registerRender(EntityMagicMelting.class, RenderEntityMagicMelting.class);
 		registerRender(EntityBlockMove.class, RenderEntityBlockMove.class);
 		registerRender(EntityScapegoat.class, RenderEntityScapegoat.class);
+		registerRender(EntityFairyCube.class, RenderEntityFairyCube.class);
 	}
 
 	@SideOnly(Side.CLIENT)

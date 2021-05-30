@@ -38,6 +38,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -55,6 +56,9 @@ import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class TileRiteTable extends TileEntityNetwork {
+
+	@Config
+	static public boolean NORMAL_RITE_ALWAYS_SUCCESS = false;
 
 	/** 桌子的仓库 */
 	protected ItemStackHandler inventory = new ItemStackHandler(6) {
@@ -155,7 +159,7 @@ public class TileRiteTable extends TileEntityNetwork {
 				specialItem = ItemStack.EMPTY;
 			}
 		}
-
+		boolean isNormalRite = recipe == null && summonRecipe == null;
 		// 获取总能量
 		List<String> pool = new LinkedList<String>();
 		int power = 0;
@@ -178,8 +182,10 @@ public class TileRiteTable extends TileEntityNetwork {
 		int rnum = 100;
 		if (recipe != null) rnum = recipe.needPower();
 		else if (summonRecipe != null) rnum = 100;
+		//是否可以被惩罚
+		boolean canPunish = isNormalRite && !NORMAL_RITE_ALWAYS_SUCCESS;
 		// 随机可能性
-		if (power < RandomHelper.rand.nextInt(rnum)) {
+		if (canPunish && power < RandomHelper.rand.nextInt(rnum)) {
 			this.punish(entity);
 			if (!specialItem.isEmpty()) Block.spawnAsEntity(world, pos.up(), specialItem);
 			return true;

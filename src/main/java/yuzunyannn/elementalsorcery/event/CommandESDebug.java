@@ -6,10 +6,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureManager;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -32,17 +32,29 @@ import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
+import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class CommandESDebug {
 
 	public static final String[] autoTips = new String[] { "reflush", "buildTest", "portalTest", "showInfo",
-			"blockMoveTest", "textTest", "reloadeTexture", "quest", "statistics", "statisticsHandle" };
+			"blockMoveTest", "textTest", "reloadeTexture", "quest", "statistics", "statisticsHandle", "reloadShader" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		switch (args[0]) {
+		case "reloadShader": {
+			Minecraft.getMinecraft().addScheduledTask(() -> {
+				try {
+					Shaders.HSV.reload();
+				} catch (Exception e) {
+					ElementalSorcery.logger.warn(e);
+				}
+			});
+			return;
+		}
 		// 重新加载材质
 		case "reloadeTexture": {
 			String path = args[1];
@@ -103,7 +115,9 @@ public class CommandESDebug {
 			}
 				return;
 			case "textTest": {
-				System.out.println(I18n.format("commands.es.quest.fame.change", "GH", 0.1f));
+				EntityFairyCube efc = new EntityFairyCube((EntityPlayer) entity, null);
+				efc.setPosition(pos.getX(), pos.getY() + 2, pos.getZ());
+				entity.world.spawnEntity(efc);
 			}
 				return;
 			case "blockMoveTest": {

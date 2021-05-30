@@ -31,7 +31,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 public class TileMDInfusion extends TileMDBase implements ITickable {
 
 	@Config
-	static private int GEN_MAX_MAIGC_PER_SEC = 40;
+	static private int GEN_MAX_MAIGC_PER_SEC = 30;
 
 	@Config(sync = true)
 	static private int MAX_CAPACITY = 1000;

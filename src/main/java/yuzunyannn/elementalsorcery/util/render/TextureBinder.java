@@ -30,6 +30,10 @@ public class TextureBinder {
 		mc.getTextureManager().bindTexture(resource);
 	}
 
+	public ResourceLocation getResource() {
+		return resource;
+	}
+
 //	private int texId = -1;
 //
 //	private void init(ResourceLocation path) {

@@ -89,6 +89,7 @@ item.scarletCrystal.name=Scarlet Crystal
 item.starBell.normal.name=Bell
 item.starBell.star.name=Star Bell
 item.appleCandy.name=Apple Candy
+item.fairyCube.name=Elf Cube
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -233,6 +234,7 @@ entity.Villager.eslearner=ElementLearner
 entity.Villager.magicallearner=MagicLearner
 entity.Elf.name=Elf
 entity.RelicZombie.name=Relic Zombie
+entity.FairyCube.name=Elf Cube
 
 pro.none=Idle
 pro.warrior=Warrior
@@ -387,6 +389,9 @@ info.sound.deep=Deep
 info.sound.crisp=Crisp
 info.sound.long=Long
 info.previous=Previous %s
+
+fairy.cube.destoryBlock.random=Random
+fairy.cube.destoryBlock.direct=Tunnel
 
 kType.magicDevice.name=Magic Device
 kType.architecture.name=Ancient architecture

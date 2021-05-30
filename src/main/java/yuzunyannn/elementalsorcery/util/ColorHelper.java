@@ -13,19 +13,18 @@ public class ColorHelper {
 		return new Vec3d(r, g, b);
 	}
 
-	static public int rgbToHSV(int R, int G, int B) {
-		int max = Math.max(R, Math.max(G, B));
-		int min = Math.min(R, Math.min(G, B));
-		int V = Math.max(R, Math.max(G, B));
-		int S = (max - min) * 255 / max;
-		int H = 0;
-		if (max - min != 0) {
-			if (R == max) H = (G - B) / (max - min) * 60;
-			else if (G == max) H = 120 + (B - R) / (max - min) * 60;
-			else if (B == max) H = 240 + (R - G) / (max - min) * 60;
-			if (H < 0) H = H + 360;
-		}
-		return (H << 16) | (S << 8) | (V << 0);
+	static public Vec3d rgbToHSV(float R, float G, float B) {
+		float max = Math.max(R, Math.max(G, B));
+		float min = Math.min(R, Math.min(G, B));
+		float V = max;
+		float S = (max - min) / max;
+		float H = 0;
+		if (R == max) H = (G - B) / (max - min);
+		else if (G == max) H = 2 + (B - R) / (max - min);
+		else if (B == max) H = 4 + (R - G) / (max - min);
+		H *= 60;
+		if (H < 0) H = H + 360;
+		return new Vec3d(H, S, V);
 	}
 
 	static public TextFormatting toTextFormatting(EnumDyeColor color) {

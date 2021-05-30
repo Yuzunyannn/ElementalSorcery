@@ -19,7 +19,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -28,10 +30,13 @@ import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
+import yuzunyannn.elementalsorcery.capability.ESPlayerCapabilityProvider;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.enchant.EnchantmentES;
+import yuzunyannn.elementalsorcery.entity.fcube.Behavior;
+import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
@@ -91,10 +96,17 @@ public class EventServer {
 	}
 
 	@SubscribeEvent
-	public static void asAdventurer(AttachCapabilitiesEvent<Entity> event) {
+	public static void attachCapabilities(AttachCapabilitiesEvent<Entity> event) {
 		if (event.getObject() instanceof EntityPlayer) {
-			event.addCapability(new ResourceLocation(ElementalSorcery.MODID, "adventurer"), new Adventurer.Provider());
+			event.addCapability(new ResourceLocation(ElementalSorcery.MODID, "capability"),
+					new ESPlayerCapabilityProvider());
 		}
+	}
+
+	@SubscribeEvent
+	public static void entityCanUpdate(EntityEvent.CanUpdate evt) {
+		Entity entity = evt.getEntity();
+		if (entity instanceof EntityFairyCube) evt.setCanUpdate(true);
 	}
 
 	static private final List<ITickTask> tickList = new LinkedList<ITickTask>();
@@ -144,6 +156,13 @@ public class EventServer {
 	public static void gameSave(WorldEvent.Save e) {
 		BuildingLib.instance.dealSave();
 		ElfPostOffice.GC(e.getWorld());
+	}
+
+	// 破坏方块
+	@SubscribeEvent
+	public static void onBlockDestory(BlockEvent.BreakEvent event) {
+		EntityPlayer player = event.getPlayer();
+		EntityFairyCube.addBehavior(player, Behavior.harvestBlock(event.getPos(), event.getState()));
 	}
 
 	// 任何死亡

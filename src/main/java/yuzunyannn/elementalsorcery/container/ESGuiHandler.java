@@ -15,6 +15,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiElfSendParcel;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfTalk;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfTrade;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfTreeElevator;
+import yuzunyannn.elementalsorcery.container.gui.GuiFairyCube;
 import yuzunyannn.elementalsorcery.container.gui.GuiHearth;
 import yuzunyannn.elementalsorcery.container.gui.GuiItemStructureCraft;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDAbsorbBox;
@@ -62,6 +63,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_MD_MAGICLIZATION = 27;
 	public static final int GUI_MD_DECONSTRUCTBOX = 28;
 
+	public static final int GUI_FAIRY_CUBE = 38;
 	public static final int GUI_QUEST = 39;
 	public static final int GUI_ELF_TALK = 40;
 	public static final int GUI_ELF_TRADE = 41;
@@ -119,6 +121,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new ContainerMDMagiclization(player, tileEntity);
 			case GUI_MD_DECONSTRUCTBOX:
 				return new ContainerMDDeconstructBox(player, tileEntity);
+			case GUI_FAIRY_CUBE:
+				return new ContainerFairyCube(player);
 			case GUI_QUEST:
 				return new ContainerQuest(player);
 			case GUI_ELF_TALK:
@@ -188,6 +192,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiMDMagiclization(new ContainerMDMagiclization(player, tileEntity), player.inventory);
 			case GUI_MD_DECONSTRUCTBOX:
 				return new GuiMDDeconstructBox(new ContainerMDDeconstructBox(player, tileEntity), player.inventory);
+			case GUI_FAIRY_CUBE:
+				return new GuiFairyCube(new ContainerFairyCube(player));
 			case GUI_QUEST:
 				return new GuiQuest(player);
 			case GUI_ELF_TALK:

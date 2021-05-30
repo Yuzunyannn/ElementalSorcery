@@ -53,7 +53,7 @@ public class ESImpClassRegister<T extends IForgeRegistryEntry<T>> {
 			Class<? extends T> cls = REGISTRY.get(id);
 			if (cls == null) return null;
 			Class<?>[] clss = new Class<?>[objs.length];
-			for (int i = 0; i < clss.length; i++) clss[i] = objs.getClass();
+			for (int i = 0; i < clss.length; i++) clss[i] = objs[i].getClass();
 			Constructor<T> constructor = (Constructor<T>) cls.getConstructor(clss);
 			return constructor.newInstance(objs).setRegistryName(id);
 		} catch (Exception e) {
@@ -64,6 +64,10 @@ public class ESImpClassRegister<T extends IForgeRegistryEntry<T>> {
 
 	public T newInstance(String id) {
 		return newInstance(TextHelper.toESResourceLocation(id));
+	}
+
+	public T newInstance(String id, Object... objs) {
+		return newInstance(TextHelper.toESResourceLocation(id), objs);
 	}
 
 	public <U extends T> U newInstance(Class<U> cls) {

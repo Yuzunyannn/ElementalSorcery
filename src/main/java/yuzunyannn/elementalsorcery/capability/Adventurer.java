@@ -9,9 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
@@ -72,12 +70,12 @@ public class Adventurer implements IAdventurer, INBTSerializable<NBTTagCompound>
 
 	@Override
 	public NBTTagCompound serializeNBT() {
-		return (NBTTagCompound) Provider.storage.writeNBT(ADVENTURER_CAPABILITY, this, null);
+		return (NBTTagCompound) CapabilityProvider.AdventurerProvider.storage.writeNBT(ADVENTURER_CAPABILITY, this, null);
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
-		Provider.storage.readNBT(ADVENTURER_CAPABILITY, this, null, nbt);
+		CapabilityProvider.AdventurerProvider.storage.readNBT(ADVENTURER_CAPABILITY, this, null, nbt);
 	}
 
 	// 能力保存
@@ -109,41 +107,6 @@ public class Adventurer implements IAdventurer, INBTSerializable<NBTTagCompound>
 			instance.setFame(nbt.getFloat("fame"));
 		}
 
-	}
-
-	public static class Provider implements ICapabilitySerializable<NBTTagCompound> {
-
-		private IAdventurer adventurer;
-		public final static IStorage<IAdventurer> storage = ADVENTURER_CAPABILITY.getStorage();
-
-		public Provider() {
-			this(null);
-		}
-
-		public Provider(IAdventurer adventurer) {
-			this.adventurer = adventurer == null ? new Adventurer() : adventurer;
-		}
-
-		@Override
-		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-			return ADVENTURER_CAPABILITY.equals(capability);
-		}
-
-		@Override
-		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-			if (ADVENTURER_CAPABILITY.equals(capability)) return (T) adventurer;
-			return null;
-		}
-
-		@Override
-		public NBTTagCompound serializeNBT() {
-			return (NBTTagCompound) storage.writeNBT(ADVENTURER_CAPABILITY, adventurer, null);
-		}
-
-		@Override
-		public void deserializeNBT(NBTTagCompound compound) {
-			storage.readNBT(ADVENTURER_CAPABILITY, adventurer, null, compound);
-		}
 	}
 
 }

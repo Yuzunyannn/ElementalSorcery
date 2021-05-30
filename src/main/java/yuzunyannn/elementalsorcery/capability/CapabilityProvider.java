@@ -4,8 +4,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
+import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeMaster;
 
 public class CapabilityProvider {
 
@@ -120,6 +123,78 @@ public class CapabilityProvider {
 
 		@Override
 		public void deserializeNBT(NBTTagCompound compound) {
+		}
+	}
+
+	/** 精灵主人 */
+	public static class FairyCubeMasterProvider implements ICapabilitySerializable<NBTTagCompound> {
+
+		private IFairyCubeMaster master;
+		public final static IStorage<IFairyCubeMaster> storage = FairyCubeMaster.FAIRY_CUBE_MASTER_CAPABILITY
+				.getStorage();
+
+		public FairyCubeMasterProvider() {
+			this(null);
+		}
+
+		public FairyCubeMasterProvider(IFairyCubeMaster master) {
+			this.master = master == null ? new FairyCubeMaster() : master;
+		}
+
+		@Override
+		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+			return FairyCubeMaster.FAIRY_CUBE_MASTER_CAPABILITY.equals(capability);
+		}
+
+		@Override
+		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+			if (FairyCubeMaster.FAIRY_CUBE_MASTER_CAPABILITY.equals(capability)) return (T) master;
+			return null;
+		}
+
+		@Override
+		public NBTTagCompound serializeNBT() {
+			return (NBTTagCompound) storage.writeNBT(FairyCubeMaster.FAIRY_CUBE_MASTER_CAPABILITY, master, null);
+		}
+
+		@Override
+		public void deserializeNBT(NBTTagCompound compound) {
+			storage.readNBT(FairyCubeMaster.FAIRY_CUBE_MASTER_CAPABILITY, master, null, compound);
+		}
+	}
+
+	public static class AdventurerProvider implements ICapabilitySerializable<NBTTagCompound> {
+	
+		private IAdventurer adventurer;
+		public final static IStorage<IAdventurer> storage = Adventurer.ADVENTURER_CAPABILITY.getStorage();
+	
+		public AdventurerProvider() {
+			this(null);
+		}
+	
+		public AdventurerProvider(IAdventurer adventurer) {
+			this.adventurer = adventurer == null ? new Adventurer() : adventurer;
+		}
+	
+		@Override
+		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+			return Adventurer.ADVENTURER_CAPABILITY.equals(capability);
+		}
+	
+		@Override
+		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+			if (Adventurer.ADVENTURER_CAPABILITY.equals(capability)) return (T) adventurer;
+			return null;
+		}
+	
+		@Override
+		public NBTTagCompound serializeNBT() {
+			return (NBTTagCompound) storage.writeNBT(Adventurer.ADVENTURER_CAPABILITY, adventurer, null);
+		}
+	
+		@Override
+		public void deserializeNBT(NBTTagCompound compound) {
+			storage.readNBT(Adventurer.ADVENTURER_CAPABILITY, adventurer, null, compound);
 		}
 	}
 

@@ -13,6 +13,7 @@
     "item.elementalsorcery_spellbook_element.ar_count_pre_tick":"Count of Absorb or Release elements per tick of The Wizard Book of Elements",
 
     "block.elementalsorcery_life_flower.probability_of_consume_maigc_per_grow": "The chance to consume the magic in the Magic Pot pre growing",
+    "block.elementalsorcery_seal_stone.mantra_drop_probability_per_lucky": "The probability of One Point Fortune dropping the Ancient Paper with Mantra when destroy a Seal Stone",
 
     "tile.elementalsorcery_mdresonantincubator.cost_pre_resonant": "Magic cost pre resonant",
     "tile.general.md_base_max_capacity": "The default max magic limit of Magic Drives",
@@ -22,6 +23,8 @@
     "tile.elementalsorcery_mdmagiclization.max_capacity": "The max magic limit of Element Magiclization Box",
     "tile.elementalsorcery_mdfusion.gen_max_maigc_per_sec": "Magic Drive Enchanting Box gen Max Magic per seconds on night",
     "tile.elementalsorcery_mdfusion.max_capacity": "The max magic limit of Element Magic Drive Enchanting Box",
+
+    "tile.elementalsorcery_ritetable.normal_rite_always_success": "Print Rite is Always Success",
 
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "The worlds can spawn [Invalid for Entity]",
     "spawn_and_gen.world_gen_and_spawn_config.biomes": "The biomes can spawn",

@@ -106,6 +106,7 @@ import yuzunyannn.elementalsorcery.block.md.BlockMDTransfer;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.capability.FairyCubeMaster;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
@@ -128,6 +129,7 @@ import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
+import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeMaster;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.KeyBoard;
@@ -156,6 +158,7 @@ import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemAppleCandy;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemElfWatch;
+import yuzunyannn.elementalsorcery.item.ItemFairyCube;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.item.ItemMagicGoldTools;
@@ -205,6 +208,7 @@ import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
+import yuzunyannn.elementalsorcery.render.item.RenderItemFairyCube;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoire;
 import yuzunyannn.elementalsorcery.render.item.RenderItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
@@ -276,6 +280,7 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDMagiclization;
 import yuzunyannn.elementalsorcery.tile.md.TileMDResonantIncubator;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
+import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.render.WorldScene;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 
@@ -458,6 +463,7 @@ public class ESInit {
 		ITEMS.SCARLET_CRYSTAL = new ItemScarletCrystal();
 		ITEMS.STAR_BELL = new ItemStarBell();
 		ITEMS.APPLE_CANDY = new ItemAppleCandy();
+		ITEMS.FAIRY_CUBE = new ItemFairyCube();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -562,6 +568,8 @@ public class ESInit {
 		QuestRegister.registerAll();
 		// 附魔注册
 		EnchantmentRegister.registerAll();
+		// 精灵立方体模块注册
+		FairyCubeModuleRegister.registerAll();
 		// 测试村庄相关
 		VillegeRegistries.registerAll();
 		// 注册战利品
@@ -599,7 +607,7 @@ public class ESInit {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public final static void preInitClient(FMLPreInitializationEvent event) {
+	public final static void preInitClient(FMLPreInitializationEvent event) throws Throwable {
 		// 设置自定义模型加载
 		TileItemRenderRegistries.instance = new TileItemRenderRegistries();
 		ModelLoaderRegistry.registerLoader(TileItemRenderRegistries.instance);
@@ -615,6 +623,8 @@ public class ESInit {
 		MinecraftForge.EVENT_BUS.register(EventClient.class);
 		// 世界离屏渲染
 		if (ESConfig.PORTAL_RENDER_TYPE == 2) WorldScene.init();
+		// 所有shader
+		Shaders.init();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -711,6 +721,7 @@ public class ESInit {
 		register(Spellbook.class, new Spellbook.Storage(), Spellbook.class);
 		register(Grimoire.class, new Grimoire.Storage(), Grimoire.class);
 		register(IAdventurer.class, new Adventurer.Storage(), Adventurer.class);
+		register(IFairyCubeMaster.class, new FairyCubeMaster.Storage(), FairyCubeMaster.class);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -796,6 +807,7 @@ public class ESInit {
 		registerRender(ITEMS.SCARLET_CRYSTAL);
 		registerRender(ITEMS.STAR_BELL, 0, "bell");
 		registerRender(ITEMS.STAR_BELL, 1, "BELL_STAR");
+		registerRender(ITEMS.FAIRY_CUBE, new RenderItemFairyCube());
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

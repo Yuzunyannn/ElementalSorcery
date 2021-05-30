@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.util;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -115,6 +116,26 @@ public class NBTHelper {
 	public static BlockPos toBlockPos(int[] array) {
 		if (array.length >= 3) return new BlockPos(array[0], array[1], array[2]);
 		return BlockPos.ORIGIN;
+	}
+
+	public static void setBlockPosList(NBTTagCompound nbt, String key, List<BlockPos> posList) {
+		int[] datas = new int[posList.size() * 3];
+		int i = 0;
+		for (BlockPos pos : posList) {
+			datas[i] = pos.getX();
+			datas[++i] = pos.getY();
+			datas[++i] = pos.getZ();
+			i++;
+		}
+		nbt.setIntArray(key, datas);
+	}
+
+	public static List<BlockPos> getBlockPosList(NBTTagCompound nbt, String key) {
+		int[] datas = nbt.getIntArray(key);
+		int length = (datas.length / 3) * 3;
+		List<BlockPos> posList = new ArrayList<>(length / 3);
+		for (int i = 0; i < length; i += 3) posList.add(new BlockPos(datas[i], datas[i + 1], datas[i + 2]));
+		return posList;
 	}
 
 	public static void setVec3d(NBTTagCompound nbt, String key, Vec3d pos) {

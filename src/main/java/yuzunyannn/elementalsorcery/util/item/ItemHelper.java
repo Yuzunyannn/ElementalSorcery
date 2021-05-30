@@ -5,12 +5,15 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -138,4 +141,16 @@ public class ItemHelper {
 		for (int i = 0; i < newArray.length; i++) newArray[i] = stacks[i].copy();
 		return newArray;
 	}
+
+	public static void addEnchantment(ItemStack item, Enchantment ench, int level) {
+		NBTTagCompound nbt = item.getTagCompound();
+		if (nbt == null) item.setTagCompound(nbt = new NBTTagCompound());
+		if (!nbt.hasKey("ench", 9)) nbt.setTag("ench", new NBTTagList());
+		NBTTagList nbttaglist = nbt.getTagList("ench", 10);
+		NBTTagCompound nbttagcompound = new NBTTagCompound();
+		nbttagcompound.setShort("id", (short) Enchantment.getEnchantmentID(ench));
+		nbttagcompound.setShort("lvl", (short) level);
+		nbttaglist.appendTag(nbttagcompound);
+	}
+
 }

@@ -16,7 +16,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
-import net.minecraftforge.common.util.FakePlayerFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -27,6 +26,7 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.ESFakePlayer;
 
 public class MantraArrow extends MantraCommon {
 
@@ -90,7 +90,7 @@ public class MantraArrow extends MantraCommon {
 
 		EntityLivingBase entity = co.asEntityLivingBase();
 		if (entity == null) {
-			entity = FakePlayerFactory.getMinecraft((WorldServer) world);
+			entity = ESFakePlayer.get((WorldServer) world);
 			entity.setPosition(vec.x, vec.y - entity.getEyeHeight() + 0.1, vec.z);
 			float raw = (float) MathHelper.atan2(dir.z, dir.x) / 3.1415926f * 180 - 90;
 			entity.rotationYaw = raw;

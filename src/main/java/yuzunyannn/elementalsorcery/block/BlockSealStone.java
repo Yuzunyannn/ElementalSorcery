@@ -22,6 +22,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
 import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
@@ -30,6 +31,9 @@ import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class BlockSealStone extends Block implements Mapper {
+
+	@Config
+	private static float MANTRA_DROP_PROBABILITY_PER_LUCKY = 0.075f;
 
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 
@@ -98,7 +102,8 @@ public class BlockSealStone extends Block implements Mapper {
 		AncientPaper ap = new AncientPaper();
 
 		boolean isMantra = false;
-		for (int i = 0; i < fortune + 1; i++) isMantra = isMantra || rand.nextFloat() <= 0.02f;
+		for (int i = 0; i < fortune + 1; i++)
+			isMantra = isMantra || rand.nextFloat() <= MANTRA_DROP_PROBABILITY_PER_LUCKY;
 		isMantra = isMantra && player != null;
 
 		float at = rand.nextFloat();

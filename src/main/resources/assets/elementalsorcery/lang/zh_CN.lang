@@ -89,6 +89,7 @@ item.scarletCrystal.name=绯红水晶
 item.starBell.normal.name=铃铛
 item.starBell.star.name=星之铃
 item.appleCandy.name=苹果糖
+item.fairyCube.name=精灵立方体
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -233,6 +234,7 @@ entity.Villager.eslearner=元素知识学者
 entity.Villager.magicallearner=魔力学者
 entity.Elf.name=精灵
 entity.RelicZombie.name=遗迹僵尸
+entity.FairyCube.name=精灵立方体
 
 pro.none=闲人
 pro.warrior=战士
@@ -387,6 +389,9 @@ info.sound.deep=深沉
 info.sound.crisp=清脆
 info.sound.long=悠长
 info.previous=上一个%s
+
+fairy.cube.destoryBlock.random=随机
+fairy.cube.destoryBlock.direct=隧道
 
 kType.magicDevice.name=魔力设备
 kType.architecture.name=古代建筑
