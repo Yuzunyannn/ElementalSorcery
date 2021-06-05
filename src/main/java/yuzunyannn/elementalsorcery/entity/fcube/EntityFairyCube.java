@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import io.netty.buffer.ByteBuf;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
@@ -33,6 +34,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
+import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
@@ -42,14 +45,16 @@ import yuzunyannn.elementalsorcery.container.ContainerFairyCube;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.item.ItemFairyCube;
+import yuzunyannn.elementalsorcery.item.ItemFairyCubeModule;
 import yuzunyannn.elementalsorcery.network.MessageEntitySync;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTreatEntity;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
-public class EntityFairyCube extends EntityLivingBase implements MessageEntitySync.IRecvData {
+public class EntityFairyCube extends EntityLivingBase
+		implements MessageEntitySync.IRecvData, IEntityAdditionalSpawnData {
 
 	/** 吃一次食物，直接增加经验的cd */
 	public static final int FOOD_EXP_CD = 20 * 20;
@@ -103,6 +108,18 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 		this.setEntityInvulnerable(true);
 		this.setSize(1, 1);
 		this.noClip = true;
+	}
+
+	@Override
+	public void writeSpawnData(ByteBuf buffer) {
+		NBTTagCompound tag = new NBTTagCompound();
+		this.writeFairyCubeToNBT(tag);
+		ByteBufUtils.writeTag(buffer, tag);
+	}
+
+	@Override
+	public void readSpawnData(ByteBuf additionalData) {
+		this.readFairyCubeFromNBT(ByteBufUtils.readTag(additionalData));
 	}
 
 	public void writeFairyCubeToNBT(NBTTagCompound compound) {
@@ -347,6 +364,10 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 		this.setLookAt(new Vec3d(pos).addVector(0.5, 0.5, 0.5));
 	}
 
+	public void setLookAt(Entity entity) {
+		this.setLookAt(entity.getPositionEyes(1));
+	}
+
 	static public void addBehavior(EntityLivingBase master, Behavior behavior) {
 		IFairyCubeMaster myMaster = master.getCapability(FairyCubeMaster.FAIRY_CUBE_MASTER_CAPABILITY, null);
 		if (myMaster == null) return;
@@ -354,10 +375,12 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 	}
 
 	protected void updateModule(EntityLivingBase master) {
+		for (FairyCubeModule module : modules) module.onTick(master);
 		if (execute > 0) {
 			execute = execute - 1;
 			executeModule.onExecute(master, execute);
-			if (execute == 0) this.addExp(executeModule.getExecuteExpForFairyCube());
+			if (execute == -1) execute = 0;
+			else if (execute == 0) this.addExp(executeModule.getExecuteExpForFairyCube());
 			return;
 		}
 		IFairyCubeMaster myMaster = master.getCapability(FairyCubeMaster.FAIRY_CUBE_MASTER_CAPABILITY, null);
@@ -421,6 +444,10 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 		this.execute = duration;
 	}
 
+	public void stopExecute() {
+		this.execute = -1;
+	}
+
 	public List<FairyCubeModule> getModules() {
 		return modules;
 	}
@@ -452,9 +479,10 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 	}
 
 	public void addExp(float count) {
+		count = this.getAttribute("experience:cube", count);
 		while (true) {
 			int lev = Math.max(MathHelper.ceil(this.getLevel()), 1);
-			float decay = (float) Math.pow(lev, 2.4f) * 32;
+			float decay = (float) Math.pow(lev, 3.2f) * 32;
 			float need = 1 - this.getLevelUpgradeProgress();
 			if (count / decay < need) {
 				level += count / decay;
@@ -479,9 +507,21 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 	}
 
 	public float getAttribute(String name) {
-		float attribute = this.getAttributeDefault(name);
-		for (FairyCubeModule module : modules) attribute = module.modifyAttribute(name, attribute);
+		return getAttribute(name, getAttributeDefault(name));
+	}
+
+	public float getAttribute(String name, float attribute) {
+		for (FairyCubeModule module : modules) {
+			if (!module.isClose()) attribute = module.modifyAttribute(name, attribute);
+		}
 		return attribute;
+	}
+
+	public boolean hasAttribute(String name) {
+		for (FairyCubeModule module : modules) {
+			if (!module.isClose() && module.modifyAttribute(name, 0) != 0) return true;
+		}
+		return false;
 	}
 
 	public int getCubeLevel() {
@@ -496,7 +536,7 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 		boolean hasAbsorb = false;
 		for (FairyCubeModule module : modules) {
 			if (module.isClose()) continue;
-			hasAbsorb = hasAbsorb || module.absorbElements(einv);
+			hasAbsorb = module.absorbElements(einv) || hasAbsorb;
 		}
 		return hasAbsorb;
 	}
@@ -551,22 +591,12 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 
 	protected boolean applyPlayerInteractionItemStack(EntityPlayer player, Vec3d vec, ItemStack stack) {
 		Item item = stack.getItem();
+
 		if (item instanceof ItemFood) {
-			ItemFood food = (ItemFood) item;
-			float ha = food.getHealAmount(stack);
-			if (foodExpCD <= 0) {
-				this.addExp(ha);
-				if (foodExpCD <= 0) this.letsHappy(2);
-				foodExpCD = FOOD_EXP_CD;
-			} else {
-				if (physicalStrength < 32) this.letsHappy(1);
-			}
-			physicalStrength = physicalStrength + ha;
-			if (physicalStrength > 20) physicalStrength = physicalStrength * 0.93f;
-			stack.shrink(1);
-			world.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.NEUTRAL, 1, 1);
+			eatFood(stack);
 			return true;
 		}
+
 		IElementInventory env = ElementHelper.getElementInventory(stack);
 		if (!ElementHelper.isEmpty(env)) {
 			this.absorbColors.clear();
@@ -576,7 +606,35 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 				return true;
 			}
 		}
+
+		ResourceLocation moduleId = ItemFairyCubeModule.getModuleId(stack);
+		if (moduleId != null) {
+			NBTTagCompound data = ItemFairyCubeModule.getModuleData(stack);
+			if (this.installModule(moduleId, data)) {
+				boolean noShrink = player.isCreative() || (data != null && data.getBoolean("noShrink"));
+				if (!noShrink) stack.shrink(1);
+				this.letsHappy(3);
+				return true;
+			}
+		}
+
 		return false;
+	}
+
+	private void eatFood(ItemStack foodStack) {
+		ItemFood food = (ItemFood) foodStack.getItem();
+		float ha = food.getHealAmount(foodStack);
+		if (foodExpCD <= 0) {
+			this.addExp(ha);
+			if (foodExpCD <= 0) this.letsHappy(2);
+			foodExpCD = FOOD_EXP_CD;
+		} else {
+			if (physicalStrength < 32) this.letsHappy(1);
+		}
+		physicalStrength = physicalStrength + ha;
+		if (physicalStrength > 20) physicalStrength = physicalStrength * 0.93f;
+		foodStack.shrink(1);
+		world.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_GENERIC_EAT, SoundCategory.NEUTRAL, 1, 1);
 	}
 
 	@Override
@@ -605,8 +663,8 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 	}
 
 	// 颜色缓存，减少发送量
-	private Set<Integer> lastColorsCache;
-	private long lastColorCacheTime;
+//	private Set<Integer> lastColorsCache;
+//	private long lastColorCacheTime;
 
 	public void letsElementGrow() {
 		if (absorbColors.isEmpty()) return;
@@ -625,22 +683,46 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 		MessageEntitySync.sendToClient(this, nbt);
 	}
 
-	public void letsCastingToBlock(int duration, int[] colors, List<BlockPos> list) {
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setByte("T", (byte) 1);
-		nbt.setIntArray("C", colors);
-		nbt.setShort("D", (short) duration);
-		NBTHelper.setBlockPosList(nbt, "P", list);
-		MessageEntitySync.sendToClient(this, nbt);
+	public void sendModuleDataToClient(FairyCubeModule module, NBTTagCompound nbt) {
+		for (int i = 0; i < modules.size(); i++) {
+			if (modules.get(i) == module) {
+				nbt.setByte("T", (byte) 1);
+				nbt.setShort("M", (short) i);
+				MessageEntitySync.sendToClient(this, nbt);
+				return;
+			}
+		}
 	}
+
+//	public void letsCastingToBlock(int duration, int[] colors, List<BlockPos> list) {
+//		NBTTagCompound nbt = new NBTTagCompound();
+//		nbt.setByte("T", (byte) 1);
+//		nbt.setIntArray("C", colors);
+//		nbt.setShort("D", (short) duration);
+//		NBTHelper.setBlockPosList(nbt, "P", list);
+//		MessageEntitySync.sendToClient(this, nbt);
+//	}
+//
+//	public void letsCastingToEntity(int duration, int[] colors, Entity entity) {
+//		NBTTagCompound nbt = new NBTTagCompound();
+//		nbt.setByte("T", (byte) 1);
+//		nbt.setIntArray("C", colors);
+//		nbt.setShort("D", (short) duration);
+//		nbt.setInteger("E", entity.getEntityId());
+//		MessageEntitySync.sendToClient(this, nbt);
+//	}
 
 	@Override
 	public void onRecv(NBTTagCompound data) {
 		byte type = data.getByte("T");
 		switch (type) {
-		case 1:
-			this.doClientCasting(data);
-			break;
+		case 1: {
+			int index = data.getInteger("M");
+			if (index < modules.size() && index >= 0) {
+				modules.get(index).onRecv(data);
+			}
+			return;
+		}
 		case 2:
 			this.doClientHappy(data.getInteger("K"));
 			break;
@@ -687,6 +769,10 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 
 	@SideOnly(Side.CLIENT)
 	public void doClientHappy(int kind) {
+		if (kind == 3) {
+			this.doClientCastingEntity(this, new int[] { 0xb6f3e0, 0x408982, 0x00d081 });
+			return;
+		}
 		boolean canShift = true;
 		if (effctRemain > 0) {
 			canShift = effctKind != 2;
@@ -714,10 +800,8 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void doClientCasting(NBTTagCompound data) {
-		this.swingArm(data.getInteger("D"));
-		int[] colors = data.getIntArray("C");
-		if (colors.length == 0) colors = new int[] { 0x00d081, 0xb9f4e4 };
+	public void doClientSwingArm(int duration, int[] colors) {
+		this.swingArm(duration);
 		Vec3d vec = this.getPositionVector().addVector(0, 0.5, 0);
 		for (int k = 0; k < 20; ++k) {
 			EffectElementMove em = new EffectElementMove(world, vec);
@@ -730,10 +814,12 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 			em.setColor(colors[rand.nextInt(colors.length)]);
 			Effect.addEffect(em);
 		}
+	}
 
-		List<BlockPos> list = NBTHelper.getBlockPosList(data, "P");
+	@SideOnly(Side.CLIENT)
+	public void doClientCastingBlock(List<BlockPos> list, int[] colors) {
 		for (BlockPos pos : list) {
-			vec = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+			Vec3d vec = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
 			for (int k = 0; k < 5; ++k) {
 				Vec3d at;
 				{
@@ -755,5 +841,13 @@ public class EntityFairyCube extends EntityLivingBase implements MessageEntitySy
 				Effect.addEffect(em);
 			}
 		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void doClientCastingEntity(Entity entity, int[] colors) {
+		Vec3d vec = entity.getPositionVector().addVector(0, entity.height / 2, 0);
+		EffectTreatEntity te = new EffectTreatEntity(world, vec);
+		te.bindEntity(entity).setColors(colors);
+		Effect.addEffect(te);
 	}
 }

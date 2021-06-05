@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
-import yuzunyannn.elementalsorcery.render.effect.element.EffectElementFly;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementFly;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.obj.Vertex;

@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 
 @SideOnly(Side.CLIENT)
 public class FirewrokShap {

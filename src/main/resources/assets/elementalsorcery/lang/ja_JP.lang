@@ -90,6 +90,7 @@ item.starBell.normal.name=鈴
 item.starBell.star.name=星の鈴
 item.appleCandy.name=林檎飴
 item.fairyCube.name=精霊立方体
+item.fairyCubeModule.name=精霊立方体のルーン
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -389,9 +390,31 @@ info.sound.deep=底力ある
 info.sound.crisp=さえた
 info.sound.long=長い
 info.previous=前の%s
+info.fairy.cube.module.count=ルーンの所持：%d
+
+fairy.cube.destoryBlock.name=掘り起こす
+fairy.cube.attrSilk.name=シルクタッチ
+fairy.cube.fortune.name=幸運
+fairy.cube.placeBlock.name=配置者
+fairy.cube.heal.name=治療
+fairy.cube.lightweight.name=軽身
+fairy.cube.attack.name=攻撃
+fairy.cube.plunder.name=略奪
+fairy.cube.attackRange.name=攻撃エリア
+fairy.cube.attackCritical.name=暴撃
+fairy.cube.expUp.name=経験アップ
 
 fairy.cube.destoryBlock.random=ランダム
 fairy.cube.destoryBlock.direct=トンネル
+fairy.cube.place.single=単一
+fairy.cube.place.series=連続
+fairy.cube.attack.normal=標準
+fairy.cube.attack.thump=強打
+fairy.cube.attack.range=範囲
+fairy.cube.attackCritical.steady=穏健
+fairy.cube.attackCritical.lucky=幸運
+fairy.cube.attackCritical.unparalleled=無双
+
 
 kType.magicDevice.name=魔力装置
 kType.architecture.name=古代建築

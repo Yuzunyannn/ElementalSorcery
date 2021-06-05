@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.init;
 
 import java.lang.reflect.Constructor;
+import java.util.Set;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -81,6 +82,10 @@ public class ESImpClassRegister<T extends IForgeRegistryEntry<T>> {
 
 	public void register(ResourceLocation id, Class<? extends T> value) {
 		REGISTRY.put(id, value);
+	}
+
+	public Set<ResourceLocation> keySet() {
+		return REGISTRY.keySet();
 	}
 
 }

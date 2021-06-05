@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 
 public class MantraBlockCrash extends MantraCommon {
 

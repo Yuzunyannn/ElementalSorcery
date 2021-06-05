@@ -32,7 +32,7 @@ import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.element.EffectElement;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectElement;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
 import yuzunyannn.elementalsorcery.tile.TileLifeDirt;
 import yuzunyannn.elementalsorcery.util.RandomHelper;

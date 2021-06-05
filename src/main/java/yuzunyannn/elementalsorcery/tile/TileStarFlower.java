@@ -17,7 +17,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.element.EffectElementMove;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 
 public class TileStarFlower extends TileEntityNetwork implements ITickable {
 

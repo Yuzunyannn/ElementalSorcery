@@ -90,6 +90,7 @@ item.starBell.normal.name=Bell
 item.starBell.star.name=Star Bell
 item.appleCandy.name=Apple Candy
 item.fairyCube.name=Elf Cube
+item.fairyCubeModule.name=Elf Cube Rune
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -389,9 +390,30 @@ info.sound.deep=Deep
 info.sound.crisp=Crisp
 info.sound.long=Long
 info.previous=Previous %s
+info.fairy.cube.module.count=Rune of possession: %d
+
+fairy.cube.destoryBlock.name=Excavate
+fairy.cube.attrSilk.name=Silk Touch
+fairy.cube.fortune.name=Fortune
+fairy.cube.placeBlock.name=Placer
+fairy.cube.heal.name=Heal
+fairy.cube.lightweight.name=Light Weight
+fairy.cube.attack.name=Attack
+fairy.cube.plunder.name=Plunder
+fairy.cube.attackRange.name=Attack Range
+fairy.cube.attackCritical.name=Attack Critical
+fairy.cube.expUp.name=Exp Up
 
 fairy.cube.destoryBlock.random=Random
 fairy.cube.destoryBlock.direct=Tunnel
+fairy.cube.place.single=Single
+fairy.cube.place.series=Series
+fairy.cube.attack.normal=Normal
+fairy.cube.attack.thump=Thump
+fairy.cube.attack.range=Range
+fairy.cube.attackCritical.steady=Steady
+fairy.cube.attackCritical.lucky=Lucky
+fairy.cube.attackCritical.unparalleled=Unparalleled
 
 kType.magicDevice.name=Magic Device
 kType.architecture.name=Ancient architecture

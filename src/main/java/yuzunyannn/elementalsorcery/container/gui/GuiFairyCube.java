@@ -19,6 +19,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ContainerFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.FairyCubeModule;
+import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeModuleClient;
 import yuzunyannn.elementalsorcery.util.ColorHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
@@ -123,6 +124,7 @@ public class GuiFairyCube extends GuiScreen {
 	public class ModuleRenderInfo {
 		public final int index;
 		public FairyCubeModule module;
+		public IFairyCubeModuleClient render;
 		public float alpha = 0.5f, prevAlpha = 0.5f;
 		public float srate = 0, prevSRate = 0;
 		public float nilRate = 0;
@@ -184,12 +186,14 @@ public class GuiFairyCube extends GuiScreen {
 				if (this.module != null) shiftRate = 1;
 			}
 			this.module = module;
+			if (this.module != null) render = IFairyCubeModuleClient.get(this.module);
+			else render = null;
 		}
 
 		public void click() {
 			if (module == null) nilRate = 1;
 			else if (sendCD > 0) return;
-			sendCD = 15;
+			sendCD = 5;
 			container.sendChangeStatus(index);
 		}
 
@@ -222,8 +226,8 @@ public class GuiFairyCube extends GuiScreen {
 			GlStateManager.color(1, 1, 1, a);
 			RenderHelper.drawTexturedRectInCenter(0, 0, 52, 52, 0, 55, 52, 52, 256, 256);
 
-			if (module != null) {
-				module.onRenderGUIIcon();
+			if (module != null && render != null) {
+				render.doRenderGUIIcon(module);
 				boolean isSelect = selected == index;
 				String statusValue = null;
 				if (isSelect) statusValue = module.getStatusValue(module.getCurrStatus());
@@ -235,12 +239,12 @@ public class GuiFairyCube extends GuiScreen {
 					mc.getTextureManager().bindTexture(TEXTURE);
 
 					RenderHelper.drawTexturedRectInCenter(-3, 16, 8, 8, 48, 107, 16, 16, 256, 256);
-					int level = module.getLimitLevel();
+					int level = module.getLevelUsed();
 					int realLevel = MathHelper.floor(module.getLevel());
 					if (realLevel > level) {
 						RenderHelper.drawTexturedRectInCenter(-10, 13, 5, 5, 32, 107, 16, 16, 256, 256);
 					}
-					String levString = TextFormatting.BOLD.toString() + level;
+					String levString = TextFormatting.BOLD.toString() + (level + 1);
 					fontRenderer.drawString(levString, -3 + 6, 16 - 3, ((int) (a * 255) << 24) | 0x133435);
 				}
 
@@ -309,7 +313,7 @@ public class GuiFairyCube extends GuiScreen {
 			RenderHelper.drawTexturedRectInCenter(xoff, 24, 4, 4, 0, 124, 4, 4, 256, 256);
 		}
 
-		String levString = TextFormatting.BOLD.toString() + fairyCube.getCubeLevel();
+		String levString = TextFormatting.BOLD.toString() + (fairyCube.getCubeLevel() + 1);
 		this.fontRenderer.drawString(levString, 3, 12 - 3, 0x12cc80);
 		String powString = TextFormatting.BOLD.toString() + MathHelper.ceil(fairyCube.getPhysicalStrength());
 		this.fontRenderer.drawString(powString, 3, -3, 0x12cc80);

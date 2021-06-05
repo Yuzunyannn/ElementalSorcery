@@ -1,11 +1,11 @@
-package yuzunyannn.elementalsorcery.render.effect.element;
+package yuzunyannn.elementalsorcery.render.effect.batch;
 
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class EffectElementMove extends EffectElement {
 
-	public double g = 0.01f;
+	public double g = 0;
 	public double xDecay = 0.96;
 	public double yDecay = 1;
 	public double zDecay = 0.96;

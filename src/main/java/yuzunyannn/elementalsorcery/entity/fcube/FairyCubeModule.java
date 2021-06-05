@@ -19,8 +19,8 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 	// 构造数据
 	private float priority;
 	private int statusCount;
-	private ElementStack expExample = ElementStack.EMPTY;
-	private short onceExpGetMax = 1;
+	protected ElementStack expExample = ElementStack.EMPTY;
+	protected short onceExpGetMax = 2;
 	public final EntityFairyCube fairyCube;
 
 	// 动态数据
@@ -33,7 +33,7 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 		status = 1;
 	}
 
-	public int getLimitLevel() {
+	public int getLevelUsed() {
 		return Math.min(fairyCube.getCubeLevel(), MathHelper.floor(this.getLevel()));
 	}
 
@@ -80,13 +80,16 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 		if (status <= 0) return 0x000000;
 		switch (status) {
 		case 1:
+			if (priority >= 100) return 0x4df3f9;
 			return 0x1ed68b;
 		case 2:
+			if (priority >= 100) return 0x8b58ff;
 			return 0xe7ff20;
 		case 3:
-			return 0xee372e;
+			if (priority >= 100) return 0xee372e;
+			return 0xffae00;
 		case 4:
-			return 0xbb23e1;
+			return 0x874697;
 		case 5:
 			return 0x2f2ffd;
 		case 6:
@@ -107,6 +110,11 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 		return value == null ? null : I18n.format(value);
 	}
 
+	/** 在gui被点击 */
+	public void onClickOnGUI(int type) {
+		this.changeToNextStatus();
+	}
+
 	/** 当一个模块被安装，只在被安装的第一次调用 */
 	public void onInstall(NBTTagCompound installData) {
 
@@ -119,7 +127,7 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 
 	/**
 	 * 返回优先级 <br/>
-	 * 对于属性修改来说：0+是操作层的 100+是直接数值修改层 200+是百分比修改层 300+是数值决定层<br/>
+	 * 对于属性修改来说：0+是操作层的 100+是数值决定层 200+是百分比修改层 300+是直接数值修改层<br/>
 	 * 
 	 */
 	public float getPriority() {
@@ -130,19 +138,23 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 	public boolean absorbElements(IElementInventory einv) {
 		if (expExample.isEmpty()) return false;
 		int max = Math.max(1, fairyCube.getRNG().nextInt(onceExpGetMax / 2) + onceExpGetMax / 2);
-		ElementStack example = expExample.copy();
+		return absorbElementToExp(expExample, einv, max);
+	}
 
+	protected boolean absorbElementToExp(ElementStack expExample, IElementInventory einv, int maxCount) {
+		if (expExample.isEmpty()) return false;
+		ElementStack example = expExample.copy();
 		while (true) {
-			int count = max * expExample.getCount();
+			int count = maxCount * expExample.getCount();
 			example.setCount(count);
 			ElementStack get = einv.extractElement(example, false);
 			if (!get.isEmpty()) {
 				fairyCube.absorbColors.add(get.getColor());
-				this.addExp(max);
+				this.addExp(maxCount);
 				return true;
 			}
-			max = max / 2;
-			if (max == 0) break;
+			maxCount = maxCount / 2;
+			if (maxCount == 0) break;
 		}
 		return false;
 	}
@@ -150,6 +162,11 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 	/** 修改属性，其他的模块来获取某些自定义属性 */
 	public float modifyAttribute(String attribute, float value) {
 		return value;
+	}
+
+	/** 模块的tick，只要模块被安装，就会调用 */
+	public void onTick(EntityLivingBase master) {
+
 	}
 
 	/** 模块的更新 */
@@ -188,6 +205,12 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 	}
 
 	@Override
+	public void deserializeNBT(NBTTagCompound nbt) {
+		this.level = nbt.getFloat("level");
+		this.status = nbt.getInteger("status");
+	}
+
+	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setString("id", this.getRegistryName().toString());
@@ -201,9 +224,10 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 	}
 
 	public void addExp(float count) {
+		count = fairyCube.getAttribute("experience:module", count);
 		while (true) {
 			int lev = Math.max(MathHelper.ceil(this.getLevel()), 1);
-			float decay = (float) Math.pow(lev, 1.75f) * 16;
+			float decay = (float) Math.pow(lev, 1.25f) * 24;
 			float need = 1 - this.getLevelUpgradeProgress();
 			if (count / decay < need) {
 				level += count / decay;
@@ -214,10 +238,13 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 		}
 	}
 
-	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {
-		this.level = nbt.getFloat("level");
-		this.status = nbt.getInteger("status");
+	public void sendToClient(NBTTagCompound nbt) {
+		fairyCube.sendModuleDataToClient(this, nbt);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void onRecv(NBTTagCompound nbt) {
+
 	}
 
 	public FairyCubeModule setPriority(float priority) {
@@ -231,7 +258,7 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 			this.setPriority(0);
 			break;
 		case MODIFY_ADD:
-			this.setPriority(100);
+			this.setPriority(300);
 			break;
 		case MODIFY_MULTI:
 			this.setPriority(200);
@@ -244,12 +271,6 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 		EXECUTER,
 		MODIFY_ADD,
 		MODIFY_MULTI,
-
 	};
-
-	@SideOnly(Side.CLIENT)
-	public void onRenderGUIIcon() {
-
-	}
 
 }

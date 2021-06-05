@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.effect.element;
+package yuzunyannn.elementalsorcery.render.effect.batch;
 
 import org.lwjgl.opengl.GL11;
 

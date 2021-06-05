@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
-import yuzunyannn.elementalsorcery.render.effect.element.EffectElementScrew;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementScrew;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortalEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortalWorldSecene;
 import yuzunyannn.elementalsorcery.tile.altar.TilePortalAltar;

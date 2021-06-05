@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.effect.element;
+package yuzunyannn.elementalsorcery.render.effect.batch;
 
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.util.math.MathHelper;

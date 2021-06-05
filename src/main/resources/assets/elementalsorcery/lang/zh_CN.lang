@@ -90,6 +90,7 @@ item.starBell.normal.name=铃铛
 item.starBell.star.name=星之铃
 item.appleCandy.name=苹果糖
 item.fairyCube.name=精灵立方体
+item.fairyCubeModule.name=精灵立方体符文
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -389,9 +390,30 @@ info.sound.deep=深沉
 info.sound.crisp=清脆
 info.sound.long=悠长
 info.previous=上一个%s
+info.fairy.cube.module.count=拥有符文：%d
+
+fairy.cube.destoryBlock.name=挖掘
+fairy.cube.attrSilk.name=精准
+fairy.cube.fortune.name=时运
+fairy.cube.placeBlock.name=放置者
+fairy.cube.heal.name=治疗
+fairy.cube.lightweight.name=轻身
+fairy.cube.attack.name=进攻
+fairy.cube.plunder.name=掠夺
+fairy.cube.attackRange.name=进攻区域
+fairy.cube.attackCritical.name=暴击
+fairy.cube.expUp.name=经验上升
 
 fairy.cube.destoryBlock.random=随机
 fairy.cube.destoryBlock.direct=隧道
+fairy.cube.place.single=单一
+fairy.cube.place.series=连续
+fairy.cube.attack.normal=普通
+fairy.cube.attack.thump=重击
+fairy.cube.attack.range=范围
+fairy.cube.attackCritical.steady=稳健
+fairy.cube.attackCritical.lucky=幸运
+fairy.cube.attackCritical.unparalleled=无双
 
 kType.magicDevice.name=魔力设备
 kType.architecture.name=古代建筑

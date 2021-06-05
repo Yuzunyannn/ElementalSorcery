@@ -21,6 +21,9 @@ import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LootingLevelEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -35,8 +38,11 @@ import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.enchant.EnchantmentES;
-import yuzunyannn.elementalsorcery.entity.fcube.Behavior;
+import yuzunyannn.elementalsorcery.entity.fcube.BehaviorAttack;
+import yuzunyannn.elementalsorcery.entity.fcube.BehaviorBlock;
+import yuzunyannn.elementalsorcery.entity.fcube.BehaviorClick;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
+import yuzunyannn.elementalsorcery.entity.fcube.FCMAttack;
 import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
@@ -162,7 +168,32 @@ public class EventServer {
 	@SubscribeEvent
 	public static void onBlockDestory(BlockEvent.BreakEvent event) {
 		EntityPlayer player = event.getPlayer();
-		EntityFairyCube.addBehavior(player, Behavior.harvestBlock(event.getPos(), event.getState()));
+		EntityFairyCube.addBehavior(player, BehaviorBlock.harvestBlock(event.getPos(), event.getState()));
+	}
+
+	// 右键
+	@SubscribeEvent
+	public static void onRightClick(PlayerInteractEvent.RightClickItem event) {
+		EntityPlayer player = event.getEntityPlayer();
+		EntityFairyCube.addBehavior(player, BehaviorClick.rightClick(event.getHand()));
+	}
+
+	// 攻击实体
+	@SubscribeEvent
+	public static void onPlayerAttack(AttackEntityEvent event) {
+		EntityPlayer player = event.getEntityPlayer();
+		EntityFairyCube.addBehavior(player, BehaviorAttack.attack(event.getTarget()));
+	}
+
+	// 掉落
+	@SubscribeEvent
+	public static void onLooting(LootingLevelEvent event) {
+		DamageSource ds = event.getDamageSource();
+		Entity entity = ds.getImmediateSource();
+		if (entity instanceof EntityFairyCube) {
+			float plunder = FCMAttack.getPlunder((EntityFairyCube) entity);
+			event.setLootingLevel(Math.max((int) plunder, event.getLootingLevel()));
+		}
 	}
 
 	// 任何死亡

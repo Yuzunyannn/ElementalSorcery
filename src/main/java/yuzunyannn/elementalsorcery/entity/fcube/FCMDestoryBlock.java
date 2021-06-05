@@ -11,8 +11,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
@@ -21,9 +25,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.ESFakePlayer;
+import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class FCMDestoryBlock extends FairyCubeModule {
 
@@ -34,31 +38,32 @@ public class FCMDestoryBlock extends FairyCubeModule {
 		this.setElementNeedPerExp(new ElementStack(ESInit.ELEMENTS.EARTH, 10, 75), 16);
 	}
 
-	public BlockPos masterLastPosAt;
 	public List<BlockPos> executeList;
 
 	@Override
 	public void onUpdate(EntityLivingBase master, IFairyCubeMaster fairyCubeMaster) {
-		Behavior behavior = fairyCubeMaster.getRecentBehavior(master);
-		if (behavior == null) return;
+		Behavior behaviorBase = fairyCubeMaster.getRecentBehavior(master);
+		if (behaviorBase == null) return;
 		if (master.isSneaking()) return;
-		if (!behavior.is("harvest", "block")) return;
+		if (!behaviorBase.is("block", "harvest")) return;
+		BehaviorBlock behavior = behaviorBase.to(BehaviorBlock.class);
+		if (behavior == null) return;
+
 		int status = this.getCurrStatus();
 
 		BlockPos pos = behavior.getTargetPos();
-		BlockPos orient = tryGetOrient(pos, masterLastPosAt);
-		masterLastPosAt = pos;
 		IBlockState state = behavior.getTargetState();
 		List<BlockPos> list = null;
 
-		int level = this.getLimitLevel();
+		int level = this.getLevelUsed();
 		int maxCount = (int) (Math.pow(level, 1.05f) * 4 + 4);
 
 		if (status == 1) {
-			list = findBlockAroundRandom(fairyCube, maxCount, state, pos);
+			list = findBlockAroundRandom(fairyCube, maxCount, state, pos, master.getPosition().down());
 		} else if (status == 2) {
-			if (orient == null) return;
-			list = findBlockDirect(fairyCube, maxCount, state, pos, orient);
+			RayTraceResult result = getOrient(pos, master);
+			if (result == null) return;
+			list = findBlockDirect(fairyCube, maxCount, state, pos, result.sideHit);
 		}
 
 		if (list == null || list.isEmpty()) return;
@@ -74,7 +79,7 @@ public class FCMDestoryBlock extends FairyCubeModule {
 		List<BlockPos> list = executeList;
 		executeList = null;
 
-		boolean silkHarvest = fairyCube.getAttribute("silk") > 0;
+		boolean silkHarvest = fairyCube.hasAttribute("silk");
 		int fortune = silkHarvest ? 0 : (int) fairyCube.getAttribute("fortune");
 		for (BlockPos pos : list) {
 			if (silkHarvest || fortune > 0) {
@@ -89,7 +94,10 @@ public class FCMDestoryBlock extends FairyCubeModule {
 				world.playEvent(2001, pos, Block.getStateId(iblockstate));
 			} else world.destroyBlock(pos, true);
 		}
-		fairyCube.letsCastingToBlock(20, new int[] { 0xb5f4de, 0x785439, 0x133435 }, list);
+
+		NBTTagCompound nbt = new NBTTagCompound();
+		NBTHelper.setBlockPosList(nbt, "P", list);
+		this.sendToClient(nbt);
 	}
 
 	@Override
@@ -97,22 +105,23 @@ public class FCMDestoryBlock extends FairyCubeModule {
 		executeList = null;
 	}
 
-	public BlockPos tryGetOrient(BlockPos nowPos, BlockPos origin) {
-		if (origin == null) return null;
-		BlockPos tar = nowPos.subtract(origin);
-		if (tar.getX() == 0 && tar.getY() == 0) return tar;
-		if (tar.getY() == 0 && tar.getZ() == 0) return tar;
-		if (tar.getX() == 0 && tar.getZ() == 0) return tar;
-		return null;
+	@SideOnly(Side.CLIENT)
+	public void onRecv(NBTTagCompound nbt) {
+		int[] colors = new int[] { 0xb5f4de, 0x785439, 0x133435 };
+		fairyCube.doClientSwingArm(20, colors);
+		List<BlockPos> list = NBTHelper.getBlockPosList(nbt, "P");
+		fairyCube.doClientCastingBlock(list, colors);
 	}
 
-	public static EnumFacing toFace(BlockPos pos) {
-		if (pos.getX() == 1) return EnumFacing.NORTH;
-		return EnumFacing.NORTH;
+	public RayTraceResult getOrient(BlockPos pos, EntityLivingBase master) {
+		AxisAlignedBB aabb = new AxisAlignedBB(pos);
+		Vec3d vs = master.getPositionEyes(1);
+		Vec3d ve = vs.add(master.getLookVec().scale(64));// new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+		return aabb.calculateIntercept(vs, ve);
 	}
 
 	public List<BlockPos> findBlockAroundRandom(EntityFairyCube fairyCube, int maxCount, IBlockState state,
-			BlockPos center) {
+			BlockPos center, BlockPos masterFoot) {
 		World world = fairyCube.world;
 		List<BlockPos> list = new ArrayList<>();
 		int range = (int) (Math.pow(maxCount, 1 / 3f) / 2.f) + 1;
@@ -123,6 +132,7 @@ public class FCMDestoryBlock extends FairyCubeModule {
 				for (int z = -range; z <= range; z++) {
 					BlockPos pos = center.add(x, y, z);
 					IBlockState findState = world.getBlockState(pos);
+					if (pos.equals(masterFoot)) continue;
 					if (findState == state) list.add(pos);
 				}
 			}
@@ -133,7 +143,7 @@ public class FCMDestoryBlock extends FairyCubeModule {
 	}
 
 	public List<BlockPos> findBlockDirect(EntityFairyCube fairyCube, int maxCount, IBlockState state, BlockPos center,
-			BlockPos orient) {
+			EnumFacing facing) {
 		World world = fairyCube.world;
 		List<BlockPos> list = new ArrayList<>();
 		int length = (int) (maxCount / 9f) + 1;
@@ -143,33 +153,27 @@ public class FCMDestoryBlock extends FairyCubeModule {
 			if (list.size() >= maxCount) return true;
 			return false;
 		};
-		if (orient.getX() > 0) {
+		if (facing == EnumFacing.WEST) {
 			for (int x = 0; x <= length; x++) for (int y = -1; y <= 1; y++)
 				for (int z = -1; z <= 1; z++) if (add.apply(center.add(x, y, z))) return list;
-		} else if (orient.getX() < 0) {
+		} else if (facing == EnumFacing.EAST) {
 			for (int x = 0; x >= -length; x--) for (int y = -1; y <= 1; y++)
 				for (int z = -1; z <= 1; z++) if (add.apply(center.add(x, y, z))) return list;
-		} else if (orient.getZ() > 0) {
+		} else if (facing == EnumFacing.NORTH) {
 			for (int x = -1; x <= 1; x++) for (int y = -1; y <= 1; y++)
 				for (int z = 0; z <= length; z++) if (add.apply(center.add(x, y, z))) return list;
-		} else if (orient.getZ() < 0) {
+		} else if (facing == EnumFacing.SOUTH) {
 			for (int x = -1; x <= 1; x++) for (int y = -1; y <= 1; y++)
 				for (int z = 0; z >= -length; z--) if (add.apply(center.add(x, y, z))) return list;
-		} else if (orient.getY() > 0) {
+		} else if (facing == EnumFacing.DOWN) {
 			for (int x = -1; x <= 1; x++) for (int y = 0; y <= length; y++)
 				for (int z = -1; z <= 1; z++) if (add.apply(center.add(x, y, z))) return list;
-		} else if (orient.getY() < 0) {
+		} else if (facing == EnumFacing.UP) {
 			for (int x = -1; x <= 1; x++) for (int y = 0; y >= -length; y--)
 				for (int z = -1; z <= 1; z++) if (add.apply(center.add(x, y, z))) return list;
 		}
 
 		return list;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void onRenderGUIIcon() {
-		RenderHelper.drawTexturedRectInCenter(0, -6, 32, 32, 53, 55, 32, 32, 256, 256);
 	}
 
 	@Override

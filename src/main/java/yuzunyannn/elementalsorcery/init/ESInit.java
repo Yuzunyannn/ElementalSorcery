@@ -159,6 +159,7 @@ import yuzunyannn.elementalsorcery.item.ItemAppleCandy;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemElfWatch;
 import yuzunyannn.elementalsorcery.item.ItemFairyCube;
+import yuzunyannn.elementalsorcery.item.ItemFairyCubeModule;
 import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.item.ItemMagicGoldTools;
@@ -209,6 +210,7 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.item.RenderItemFairyCube;
+import yuzunyannn.elementalsorcery.render.item.RenderItemFairyCubeModule;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoire;
 import yuzunyannn.elementalsorcery.render.item.RenderItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
@@ -464,6 +466,7 @@ public class ESInit {
 		ITEMS.STAR_BELL = new ItemStarBell();
 		ITEMS.APPLE_CANDY = new ItemAppleCandy();
 		ITEMS.FAIRY_CUBE = new ItemFairyCube();
+		ITEMS.FAIRY_CUBE_MODULE = new ItemFairyCubeModule();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -619,6 +622,8 @@ public class ESInit {
 		Topic.registerAll();
 		// 所有需要网传的特效
 		Effects.registerAll();
+		// 精灵立方体图标注册
+		FairyCubeModuleRegister.registerAllRender();
 		// 客户端事件
 		MinecraftForge.EVENT_BUS.register(EventClient.class);
 		// 世界离屏渲染
@@ -808,6 +813,7 @@ public class ESInit {
 		registerRender(ITEMS.STAR_BELL, 0, "bell");
 		registerRender(ITEMS.STAR_BELL, 1, "BELL_STAR");
 		registerRender(ITEMS.FAIRY_CUBE, new RenderItemFairyCube());
+		registerRender(ITEMS.FAIRY_CUBE_MODULE, new RenderItemFairyCubeModule());
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

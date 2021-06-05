@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.explore.Explores;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.element.EffectElementScrew;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementScrew;
 
 public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemStack {
 

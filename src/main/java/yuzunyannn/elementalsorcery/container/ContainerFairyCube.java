@@ -89,11 +89,14 @@ public class ContainerFairyCube extends Container implements IContainerNetwork {
 			try {
 				int index = nbt.getInteger("I");
 				FairyCubeModule module = fairyCube.getModules().get(index);
-				module.changeToNextStatus();
-				NBTTagCompound data = new NBTTagCompound();
-				data.setByte("S", (byte) module.getCurrStatus());
-				data.setByte("I", (byte) index);
-				this.sendToClient(data, player);
+				int status = module.getCurrStatus();
+				module.onClickOnGUI(0);
+				if (module.getCurrStatus() != status) {
+					NBTTagCompound data = new NBTTagCompound();
+					data.setByte("S", (byte) module.getCurrStatus());
+					data.setByte("I", (byte) index);
+					this.sendToClient(data, player);
+				}
 			} catch (Exception e) {}
 		}
 	}
