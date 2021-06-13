@@ -4,10 +4,16 @@ public class Behavior {
 
 	final String type;
 	final String subType;
+	final int priority;
 
-	public Behavior(String type, String subType) {
+	public Behavior(String type, String subType, int priority) {
 		this.type = type;
 		this.subType = subType == null ? "" : subType;
+		this.priority = priority;
+	}
+
+	public int getPriority() {
+		return priority;
 	}
 
 	public boolean is(String type) {

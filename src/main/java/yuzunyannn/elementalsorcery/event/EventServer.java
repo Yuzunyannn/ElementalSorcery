@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -25,6 +26,7 @@ import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
@@ -37,10 +39,12 @@ import yuzunyannn.elementalsorcery.capability.ESPlayerCapabilityProvider;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
+import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.enchant.EnchantmentES;
 import yuzunyannn.elementalsorcery.entity.fcube.BehaviorAttack;
 import yuzunyannn.elementalsorcery.entity.fcube.BehaviorBlock;
 import yuzunyannn.elementalsorcery.entity.fcube.BehaviorClick;
+import yuzunyannn.elementalsorcery.entity.fcube.BehaviorInteract;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMAttack;
 import yuzunyannn.elementalsorcery.item.IItemStronger;
@@ -168,13 +172,35 @@ public class EventServer {
 	@SubscribeEvent
 	public static void onBlockDestory(BlockEvent.BreakEvent event) {
 		EntityPlayer player = event.getPlayer();
+		if (player.world.isRemote) return;
 		EntityFairyCube.addBehavior(player, BehaviorBlock.harvestBlock(event.getPos(), event.getState()));
+		Researcher.onDestoryBlock(player, event.getState());
+	}
+
+	// 实体交互
+	@SubscribeEvent
+	public static void onInteract(PlayerInteractEvent.EntityInteract event) {
+		EntityPlayer player = event.getEntityPlayer();
+		if (player.world.isRemote) return;
+		Entity target = event.getTarget();
+		EnumHand hand = event.getHand();
+		if (hand == EnumHand.MAIN_HAND) EntityFairyCube.addBehavior(player, BehaviorInteract.interact(target, hand));
+		Researcher.onInteractWithEntity(player, target, hand);
+	}
+
+	// 放置方块
+	@SubscribeEvent
+	public static void onPlaceBlock(PlaceEvent event) {
+		EntityPlayer player = event.getPlayer();
+		if (player.world.isRemote) return;
+		EntityFairyCube.addBehavior(player, BehaviorBlock.placeBlock(event.getPos(), event.getPlacedBlock()));
 	}
 
 	// 右键
 	@SubscribeEvent
 	public static void onRightClick(PlayerInteractEvent.RightClickItem event) {
 		EntityPlayer player = event.getEntityPlayer();
+		if (player.world.isRemote) return;
 		EntityFairyCube.addBehavior(player, BehaviorClick.rightClick(event.getHand()));
 	}
 
@@ -182,7 +208,9 @@ public class EventServer {
 	@SubscribeEvent
 	public static void onPlayerAttack(AttackEntityEvent event) {
 		EntityPlayer player = event.getEntityPlayer();
-		EntityFairyCube.addBehavior(player, BehaviorAttack.attack(event.getTarget()));
+		Entity target = event.getTarget();
+		EntityFairyCube.addBehavior(player, BehaviorAttack.attack(target));
+		Researcher.onAttackWithEntity(player, target);
 	}
 
 	// 掉落

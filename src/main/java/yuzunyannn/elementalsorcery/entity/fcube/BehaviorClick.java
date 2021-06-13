@@ -11,7 +11,7 @@ public class BehaviorClick extends Behavior {
 	protected EnumHand hand;
 
 	public BehaviorClick(String type, String subType) {
-		super(type, subType);
+		super(type, subType, 0);
 	}
 
 	public EnumHand getHand() {

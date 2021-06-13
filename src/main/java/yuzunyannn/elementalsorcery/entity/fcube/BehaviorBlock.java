@@ -9,11 +9,15 @@ public class BehaviorBlock extends Behavior {
 		return new BehaviorBlock("block", "harvest").setTargetPos(pos).setTargetState(state);
 	}
 
+	public static BehaviorBlock placeBlock(BlockPos pos, IBlockState state) {
+		return new BehaviorBlock("block", "place").setTargetPos(pos).setTargetState(state);
+	}
+
 	protected BlockPos targetPos;
 	protected IBlockState targetState;
 
 	public BehaviorBlock(String type, String subType) {
-		super(type, subType);
+		super(type, subType, 1);
 	}
 
 	public BlockPos getTargetPos() {

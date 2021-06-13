@@ -386,6 +386,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 		GlStateManager.disableCull();
 		while (iter.next()) {
 			BlockPos blockpos = iter.getPos();
+			blockpos = new BlockPos(-blockpos.getX(), blockpos.getY(), blockpos.getZ());
 			IBlockState iblockstate = iter.getState();
 			if (iblockstate.getRenderType() != EnumBlockRenderType.MODEL) {
 				if (iblockstate.getBlock() instanceof BlockContainer) {

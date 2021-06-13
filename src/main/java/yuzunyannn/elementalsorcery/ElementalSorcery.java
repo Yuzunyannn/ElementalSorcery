@@ -55,6 +55,11 @@ public class ElementalSorcery {
 	public void preInit(FMLPreInitializationEvent event) throws Throwable {
 		try {
 
+//			LaunchClassLoader classLoader = (LaunchClassLoader) proxy.getClass().getClassLoader();
+//			classLoader.loadClass("yuzunyannn.elementalsorcery.mods.ModRequire");
+//			classLoader.loadClass("yuzunyannn.elementalsorcery.mods.LambdaGatherer");
+//			classLoader.registerTransformer("yuzunyannn.elementalsorcery.mods.ModCheckClassTransformer");
+
 			logger = event.getModLog();
 			side = event.getSide();
 			data = new ESData(event);

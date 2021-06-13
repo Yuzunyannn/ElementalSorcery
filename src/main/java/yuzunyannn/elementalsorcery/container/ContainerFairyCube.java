@@ -5,8 +5,10 @@ import java.lang.ref.WeakReference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.FairyCubeModule;
 import yuzunyannn.elementalsorcery.event.EventServer;
@@ -62,9 +64,10 @@ public class ContainerFairyCube extends Container implements IContainerNetwork {
 		return fairyCube != null && !fairyCube.isDead;
 	}
 
-	public void sendChangeStatus(int index) {
+	public void sendChangeStatus(int index, int key) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setByte("I", (byte) index);
+		nbt.setByte("K", (byte) key);
 		this.sendToServer(nbt);
 	}
 
@@ -90,7 +93,7 @@ public class ContainerFairyCube extends Container implements IContainerNetwork {
 				int index = nbt.getInteger("I");
 				FairyCubeModule module = fairyCube.getModules().get(index);
 				int status = module.getCurrStatus();
-				module.onClickOnGUI(0);
+				module.onClickOnGUI(nbt.getByte("K"), this);
 				if (module.getCurrStatus() != status) {
 					NBTTagCompound data = new NBTTagCompound();
 					data.setByte("S", (byte) module.getCurrStatus());
@@ -101,4 +104,13 @@ public class ContainerFairyCube extends Container implements IContainerNetwork {
 		}
 	}
 
+	public void closeContainer() {
+		player.closeScreen();
+	}
+
+	public void changeContainer(int modGuiId) {
+		this.closeContainer();
+		BlockPos pos = player.getPosition();
+		player.openGui(ElementalSorcery.instance, modGuiId, player.world, pos.getX(), pos.getY(), pos.getZ());
+	}
 }

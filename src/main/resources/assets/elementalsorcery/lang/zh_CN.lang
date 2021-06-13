@@ -283,6 +283,8 @@ commands.es.edifice.no.core=找不到树核心，请站到树核心的正下方
 commands.es.edifice.store.success=成功创建了恢复数据(已经输出到了log里)：%s
 commands.es.edifice.restore.success=恢复成功！
 commands.es.not.support.commandBlock=不支持命令方块
+commands.es.research.usage=/es research <add|sub> <玩家> <类型> <数值>
+commands.es.research.add=给予了%s%s点%s
 
 arc.infusion.name=注魔祭坛
 arc.absorbBox.name=元素吸收祭坛
@@ -403,6 +405,7 @@ fairy.cube.plunder.name=掠夺
 fairy.cube.attackRange.name=进攻区域
 fairy.cube.attackCritical.name=暴击
 fairy.cube.expUp.name=经验上升
+fairy.cube.farm.name=农主
 
 fairy.cube.destoryBlock.random=随机
 fairy.cube.destoryBlock.direct=隧道
@@ -414,6 +417,7 @@ fairy.cube.attack.range=范围
 fairy.cube.attackCritical.steady=稳健
 fairy.cube.attackCritical.lucky=幸运
 fairy.cube.attackCritical.unparalleled=无双
+fairy.cube.farm.accurate=精准
 
 kType.magicDevice.name=魔力设备
 kType.architecture.name=古代建筑
@@ -422,12 +426,14 @@ kType.library.name=图书馆
 kType.mantra.name=咒术
 kType.element.name=元素
 kType.altar.name=祭坛
+kType.monster.name=怪物
 
 topic.Struct.name=结构
 topic.Ender.name=末影
 topic.Natural.name=自然
 topic.Engine.name=机械
 topic.Mantra.name=咒术
+topic.Biology.name=生物
 
 elf.time.year=%d年
 elf.time.mon.0=春
@@ -573,7 +579,7 @@ page.elfPostOffice.ct=精灵邮政可以提供寄送包裹的服务。在这里�
 page.elfBeacon=精灵信标
 page.elfBeacon.ct=精灵信标是使用精灵之星制作的魔力道具，将地址牌放入其中，快递员会将送往这个地址的包裹放入入旁边的箱子中。\n精灵之星是贵重的物品，前期很难获得，不过好在，精灵邮局会给申请地址牌的新人一个新人任务，完成它即可获得一个精灵之星。
 page.elfLaboratory=实验室
-page.elfLaboratory.ct=实验室里可以进行研究，研究员会将研究方桌放到地上，史蒂夫便可以花费研究点数，进行物品的研究了。\n关于研究：带好研究所需的物品，通过投入不同类型的研究点数，来制作新的物品。研究类型的配比和携带的物品可以决定研究出来的物品。研究成功时，会扣除投入的点数，但失败并不会，所以可以随便的尝试。\n研究者比较喜爱古代文献，如果把没解读过的古卷给他们的话，可能能获得一些研究点数。
+page.elfLaboratory.ct=实验室里可以进行研究，研究员会将研究方桌放到地上，史蒂夫便可以花费研究点数，进行物品的研究了。\n关于研究：带好研究所需的物品，通过投入不同类型的研究点数，来制作新的物品。研究类型的配比和携带的物品可以决定研究出来的物品。研究无论成功还是失败都不会减少点数，所以可以随便的尝试。\n研究者比较喜爱古代文献，如果把没解读过的古卷给他们的话，可能能获得一些研究点数。
 page.rockCamera=岩石相机
 page.rockCamera.ct=求知粉尘可以与自然发生共鸣，但其共鸣的速度较慢，而且仅能获得周边范围的信息。使用精灵工匠制作出来的岩石相机，消耗粉尘，对准方块进行使用，快速的将周边环境的信息输入，并且还可以精准的获取到目标方块的信息，是探索的最佳选择。
 page.relicZombie=遗迹僵尸

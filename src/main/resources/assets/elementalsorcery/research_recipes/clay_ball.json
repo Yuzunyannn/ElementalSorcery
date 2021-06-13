@@ -1,7 +1,7 @@
 {
 	"topics": {
-		"Natural": 3,
-		"Struct" : 1
+		"Natural": 15,
+		"Struct" : 5
 	},
 	"items": [
 		{
@@ -19,6 +19,6 @@
 	],
 	"result": {
 		"item": "minecraft:clay_ball",
-		"count": 16
+		"count": 8
 	}
 }

@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.init;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -8,7 +9,9 @@ import yuzunyannn.elementalsorcery.entity.fcube.FCMAttack;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMAttackCritical;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMAttackRange;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMDestoryBlock;
+import yuzunyannn.elementalsorcery.entity.fcube.FCMEnderChest;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMExpUp;
+import yuzunyannn.elementalsorcery.entity.fcube.FCMFarm;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMFortune;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMHeal;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMLightweight;
@@ -37,6 +40,8 @@ public class FairyCubeModuleRegister {
 		register("attack_range", FCMAttackRange.class);
 		register("attack_critical", FCMAttackCritical.class);
 		register("exp_up", FCMExpUp.class);
+		register("ender_chest", FCMEnderChest.class);
+		register("farm", FCMFarm.class);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -48,6 +53,16 @@ public class FairyCubeModuleRegister {
 	private static void register(String id, int x, int y) {
 		String name = TextHelper.castToCamel(id);
 		register(id, new IFairyCubeModuleClient.FairyCubeModuleDeafultRender(x * 32, 224 - y * 32, name));
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static void register(String id, int x, int y, String customName) {
+		register(id, new IFairyCubeModuleClient.FairyCubeModuleDeafultRender(x * 32, 224 - y * 32, customName) {
+			@Override
+			public String getDiplayName() {
+				return I18n.format(unlocalizedName);
+			}
+		});
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -63,5 +78,7 @@ public class FairyCubeModuleRegister {
 		register("attack_range", 5, 0);
 		register("attack_critical", 6, 0);
 		register("exp_up", 7, 0);
+		register("ender_chest", 7, 1, "tile.enderChest.name");
+		register("farm", 3, 1);
 	}
 }

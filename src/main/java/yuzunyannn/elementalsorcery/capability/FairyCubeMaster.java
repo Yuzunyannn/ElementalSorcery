@@ -21,6 +21,9 @@ public class FairyCubeMaster implements IFairyCubeMaster, INBTSerializable<NBTTa
 
 	@Override
 	public void addBehavior(EntityLivingBase player, Behavior behavior) {
+		if (this.tick == player.ticksExisted) {
+			if (this.behavior != null && this.behavior.getPriority() > behavior.getPriority()) return;
+		}
 		this.behavior = behavior;
 		this.tick = player.ticksExisted;
 	}

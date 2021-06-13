@@ -1,7 +1,7 @@
 {
 	"topics": {
-		"Natural": 5,
-		"Struct": 20
+		"Natural": 75,
+		"Struct": 125
 	},
 	"items": [
 		{
@@ -23,6 +23,6 @@
 	],
 	"result": {
 		"item": "elementalsorcery:vortex",
-		"count": 2
+		"count": 1
 	}
 }

@@ -1,8 +1,8 @@
 {
 	"topics": {
-		"Ender": 30,
-		"Natural": 10,
-		"Struct": 5
+		"Ender": 120,
+		"Natural": 60,
+		"Struct": 40
 	},
 	"items": [
 		{
@@ -11,7 +11,7 @@
 		},
 		{
 			"item": "elementalsorcery:magic_stone",
-			"count": 5
+			"count": 8
 		}
 	],
 	"result": {

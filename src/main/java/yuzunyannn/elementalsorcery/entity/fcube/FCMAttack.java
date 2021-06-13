@@ -109,29 +109,13 @@ public class FCMAttack extends FairyCubeModule {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void doClientEntityEffect(Entity entity, int[] colors) {
-		Vec3d vec = entity.getPositionVector().addVector(0, entity.height / 3 * 2, 0);
-		Random rand = fairyCube.getRNG();
-		for (int i = 0; i < 10; i++) {
-			EffectElementMove em = new EffectElementMove(entity.world, vec);
-			double d2 = rand.nextGaussian() * 0.2 + 0.1;
-			double d0 = rand.nextGaussian() * 0.2 + 0.1;
-			double d1 = rand.nextGaussian() * 0.2 + 0.1;
-			em.setVelocity(d0, d2, d1);
-			em.xDecay = em.yDecay = em.zDecay = 0.5;
-			em.setColor(colors[rand.nextInt(colors.length)]);
-			Effect.addEffect(em);
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
 	public void onRecv(NBTTagCompound nbt) {
 		int[] colors = new int[] { 0xb5f4de, 0xea421c, 0xea861c, 0x5a1717 };
 		fairyCube.doClientSwingArm(nbt.getInteger("D"), colors);
 		Entity entity = fairyCube.world.getEntityByID(nbt.getInteger("E"));
 		if (entity == null) return;
 		float range = nbt.getFloat("R");
-		if (range < 1) doClientEntityEffect(entity, colors);
+		if (range < 1) fairyCube.doClientEntityEffect(entity, colors);
 		else {
 			Vec3d center = entity.getPositionVector().addVector(0, entity.height / 3 * 2, 0);
 			Random rand = fairyCube.getRNG();
@@ -150,7 +134,7 @@ public class FCMAttack extends FairyCubeModule {
 			EntityLivingBase master = fairyCube.getMaster();
 			if (master == null) return;
 			List<EntityLivingBase> targets = this.getTargets(master, entity, range);
-			for (EntityLivingBase target : targets) doClientEntityEffect(target, colors);
+			for (EntityLivingBase target : targets) fairyCube.doClientEntityEffect(target, colors);
 		}
 	}
 

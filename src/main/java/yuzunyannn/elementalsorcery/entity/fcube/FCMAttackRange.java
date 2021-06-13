@@ -14,11 +14,14 @@ public class FCMAttackRange extends FairyCubeModule {
 		this.setElementNeedPerExp(new ElementStack(ESInit.ELEMENTS.WATER, 9, 111), 16);
 	}
 
-	public float getRange() {
-		int level = this.getLevelUsed();
+	public static float commonRange(int level) {
 		if (level > 20) return 16;
 		float range = 1 + (float) Math.pow(level / 2f, 1.2);
 		return Math.min(16, range);
+	}
+
+	public float getRange() {
+		return commonRange(this.getLevelUsed());
 	}
 
 	@Override

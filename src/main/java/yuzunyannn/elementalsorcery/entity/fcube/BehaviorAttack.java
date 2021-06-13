@@ -12,7 +12,7 @@ public class BehaviorAttack extends Behavior {
 	protected Entity target;
 
 	public BehaviorAttack(String type, String subType) {
-		super(type, subType);
+		super(type, subType, 2);
 	}
 
 	public EntityLivingBase getLivingTarget() {

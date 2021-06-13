@@ -54,6 +54,7 @@ public class ContainerResearch extends Container implements IContainerNetwork {
 	@Override
 	public void recvData(NBTTagCompound nbt, Side side) {
 		if (side == Side.CLIENT) {
+			nbt.removeTag("gui");
 			reasearher.deserializeNBT(nbt);
 			fromSrverUpdateFlag = true;
 			return;
@@ -104,8 +105,8 @@ public class ContainerResearch extends Container implements IContainerNetwork {
 		ItemHelper.addItemStackToPlayer(player, stack.copy());
 		// 减少数据，创造模式不减少
 		if (!player.isCreative()) {
-			for (String key : costReasearher.keySet()) reasearher.shrink(key, costReasearher.get(key));
-			reasearher.save(player);
+//			for (String key : costReasearher.keySet()) reasearher.shrink(key, costReasearher.get(key));
+//			reasearher.save(player);
 			ItemHelper.unorderMatch(recipe.getIngredients(), player.inventory, true);
 		}
 		// 特效

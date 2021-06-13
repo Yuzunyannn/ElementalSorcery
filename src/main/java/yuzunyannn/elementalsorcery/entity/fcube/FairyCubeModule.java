@@ -8,6 +8,7 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.container.ContainerFairyCube;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESImpClassRegister;
 
@@ -31,6 +32,12 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 		this.fairyCube = fairyCube;
 		statusCount = 1;
 		status = 1;
+	}
+
+	public float getLuck() {
+		float plunder = fairyCube.getAttribute("plunder");
+		float fortune = fairyCube.getAttribute("fortune");
+		return fairyCube.getAttribute("luck", (plunder + fortune) / 2);
 	}
 
 	public int getLevelUsed() {
@@ -80,6 +87,7 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 		if (status <= 0) return 0x000000;
 		switch (status) {
 		case 1:
+			if (priority >= 1000) return 0xffaaff;
 			if (priority >= 100) return 0x4df3f9;
 			return 0x1ed68b;
 		case 2:
@@ -111,8 +119,12 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 	}
 
 	/** 在gui被点击 */
-	public void onClickOnGUI(int type) {
+	public void onClickOnGUI(int type, ContainerFairyCube container) {
 		this.changeToNextStatus();
+//		container.closeContainer();
+//		InventoryEnderChest inventoryenderchest = container.player.getInventoryEnderChest();
+//		inventoryenderchest.setChestTileEntity(null);
+//		container.player.displayGUIChest(inventoryenderchest);
 	}
 
 	/** 当一个模块被安装，只在被安装的第一次调用 */
@@ -263,6 +275,9 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 		case MODIFY_MULTI:
 			this.setPriority(200);
 			break;
+		case CONTAINER:
+			this.setPriority(1000);
+			break;
 		}
 		return this;
 	}
@@ -271,6 +286,7 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 		EXECUTER,
 		MODIFY_ADD,
 		MODIFY_MULTI,
+		CONTAINER;
 	};
 
 }

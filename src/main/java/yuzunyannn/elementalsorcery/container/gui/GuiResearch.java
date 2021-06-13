@@ -44,11 +44,19 @@ public class GuiResearch extends GuiContainer {
 		super(new ContainerResearch(player, pos));
 		this.container = (ContainerResearch) inventorySlots;
 		ySize = xSize = 240;
+		this.refresh();
+	}
+
+	public void refresh() {
+		topics.clear();
 		Set<String> all = Topics.getDefaultTopics();
-		for (String key : container.reasearher.keySet()) {
-			this.addTopics(key);
-			all.remove(key);
-		}
+//		for (String key : container.reasearher.keySet()) {
+//			this.addTopics(key);
+//			all.remove(key);
+//		}
+//		for (TopicInfo info : topics) {
+//			info.maxPower = container.reasearher.get(info.topic.getTypeName());
+//		}
 		// 必须有5个，玩家携带不足的话，强行补
 		for (String key : all) {
 			if (topics.size() >= 5) break;
@@ -89,7 +97,6 @@ public class GuiResearch extends GuiContainer {
 		public int maxPower = 0;
 
 		public int getMaxPower() {
-			if (container.fromSrverUpdateFlag) maxPower = container.reasearher.get(topic.getTypeName());
 			return maxPower;
 		}
 
@@ -248,13 +255,16 @@ public class GuiResearch extends GuiContainer {
 	@Override
 	public void updateScreen() {
 		super.updateScreen();
+		if (container.fromSrverUpdateFlag) {
+			this.refresh();
+			container.fromSrverUpdateFlag = false;
+		}
 		sendCD = Math.max(sendCD - 1, 0);
 		float allPower = Math.max(this.allPower, 1);
 		int size = topics.size();
 		for (int i = 0; i < size; i++) {
 			TopicInfo info = topics.get(i);
 			info.update();
-			if (container.fromSrverUpdateFlag) info.getMaxPower();
 			float at = mapVertex.get(i);
 			mapPrevVertex.set(i, at);
 			float target = Math.min(1, info.power / allPower);
@@ -268,8 +278,6 @@ public class GuiResearch extends GuiContainer {
 		if (isSelectedCenter) fogAlpha += (1f - fogAlpha) * 0.15f;
 		else fogAlpha += (0.4f - fogAlpha) * 0.15f;
 		fogRotate += 0.1f;
-
-		container.fromSrverUpdateFlag = false;
 	}
 
 	public int getTopicsWithPostion(int mouseX, int mouseY) {

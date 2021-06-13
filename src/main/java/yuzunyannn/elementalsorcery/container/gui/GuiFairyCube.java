@@ -103,7 +103,7 @@ public class GuiFairyCube extends GuiScreen {
 		}
 		if (Mouse.getEventButtonState()) {
 			if (selected != -1) {
-				moduleRenders.get(selected).click();
+				moduleRenders.get(selected).click(Mouse.getEventButton());
 			}
 		}
 	}
@@ -190,11 +190,11 @@ public class GuiFairyCube extends GuiScreen {
 			else render = null;
 		}
 
-		public void click() {
+		public void click(int key) {
 			if (module == null) nilRate = 1;
 			else if (sendCD > 0) return;
 			sendCD = 5;
-			container.sendChangeStatus(index);
+			container.sendChangeStatus(index, key);
 		}
 
 		public void update() {

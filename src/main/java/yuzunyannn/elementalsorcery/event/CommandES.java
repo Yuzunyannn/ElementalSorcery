@@ -47,6 +47,8 @@ import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
+import yuzunyannn.elementalsorcery.elf.research.Researcher;
+import yuzunyannn.elementalsorcery.elf.research.Topics;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.init.ESInit;
@@ -130,6 +132,11 @@ public class CommandES extends CommandBase {
 			this.cmdMantra(Arrays.copyOfRange(args, 1, args.length), server, sender);
 			return;
 		}
+		case "research": {
+			if (args.length < 4) throw new CommandException("commands.es.research.usage");
+			this.cmdResearch(Arrays.copyOfRange(args, 1, args.length), server, sender);
+			return;
+		}
 		case "element": {
 			if (args.length < 4) throw new CommandException("commands.es.element.usage");
 			this.cmdElement(Arrays.copyOfRange(args, 1, args.length), server, sender);
@@ -159,7 +166,7 @@ public class CommandES extends CommandBase {
 			@Nullable BlockPos targetPos) {
 		if (args.length == 1) {
 			String[] names = { "build", "page", "debug", "buildFloor", "quest", "mantra", "element", "building",
-					"edifice" };
+					"edifice", "research" };
 			return CommandBase.getListOfStringsMatchingLastWord(args, names);
 		} else if (args.length >= 2) {
 			switch (args[0]) {
@@ -205,6 +212,11 @@ public class CommandES extends CommandBase {
 				if (args.length > 3) return getListOfStringsMatchingLastWord(args, Element.REGISTRY.getKeys());
 				if (args.length > 2) return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
 				return getListOfStringsMatchingLastWord(args, "give", "extract", "insert", "add");
+			}
+			case "research": {
+				if (args.length > 3) return getListOfStringsMatchingLastWord(args, Topics.getDefaultTopics());
+				if (args.length > 2) return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
+				return getListOfStringsMatchingLastWord(args, "add", "sub");
 			}
 			case "edifice": {
 				return getListOfStringsMatchingLastWord(args, "store", "restore", "build", "fix");
@@ -332,6 +344,32 @@ public class CommandES extends CommandBase {
 		default:
 			throw new WrongUsageException("commands.es.element.usage");
 		}
+
+	}
+
+	// =======================-------> 研究 <-------=======================
+	private void cmdResearch(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
+		EntityPlayer player = getPlayer(server, sender, args[1]);
+		String topic = args[2];
+		int count = 1;
+		if (args.length > 3) count = Integer.parseInt(args[3]);
+
+		switch (args[0]) {
+		case "add":
+			break;
+		case "sub":
+			count = -count;
+			break;
+		default:
+			throw new WrongUsageException("commands.es.research.usage");
+		}
+
+		Researcher researcher = new Researcher(player);
+		if (count < 0) count = -Math.min(-count, researcher.get(topic));
+		researcher.grow(topic, count);
+		researcher.save(player);
+		notifyCommandListener(sender, this, "commands.es.research.add", player.getName(), Integer.toString(count),
+				topic);
 
 	}
 

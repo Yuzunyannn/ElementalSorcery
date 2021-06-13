@@ -283,6 +283,8 @@ commands.es.edifice.no.core=Can't find Tree Core, please stand directly below th
 commands.es.edifice.store.success=Restore data has been created(and output to log): %s
 commands.es.edifice.restore.success=Restore Success!
 commands.es.not.support.commandBlock=Unsupport Command Block
+commands.es.research.usage=/es research <add|sub> <player> <type> <value>
+commands.es.research.add=Give %s %s %s
 
 arc.infusion.name= Enchanting Altar
 arc.absorbBox.name=Element Absorb Altar
@@ -403,6 +405,7 @@ fairy.cube.plunder.name=Plunder
 fairy.cube.attackRange.name=Attack Range
 fairy.cube.attackCritical.name=Attack Critical
 fairy.cube.expUp.name=Exp Up
+fairy.cube.farm.name=Farmer
 
 fairy.cube.destoryBlock.random=Random
 fairy.cube.destoryBlock.direct=Tunnel
@@ -414,6 +417,7 @@ fairy.cube.attack.range=Range
 fairy.cube.attackCritical.steady=Steady
 fairy.cube.attackCritical.lucky=Lucky
 fairy.cube.attackCritical.unparalleled=Unparalleled
+fairy.cube.farm.accurate=Accurate
 
 kType.magicDevice.name=Magic Device
 kType.architecture.name=Ancient architecture
@@ -422,12 +426,14 @@ kType.library.name=Library
 kType.mantra.name=Mantra
 kType.element.name=Element
 kType.altar.name=Altar
+kType.monster.name=Monster
 
 topic.Struct.name=Struct
 topic.Ender.name=Ender
 topic.Natural.name=Natural
 topic.Engine.name=Engine
 topic.Mantra.name=Mantra
+topic.Biology.name=Biology
 
 elf.time.year=%d Year 
 elf.time.mon.0=Spring 

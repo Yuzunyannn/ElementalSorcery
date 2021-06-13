@@ -57,11 +57,12 @@ public class Topic {
 	}
 
 	public static void registerAll() {
-		register("Engine", TopicEngine.class);
-		register("Struct", TopicStruct.class);
-		register("Ender", TopicEnder.class);
-		register("Natural", TopicNatural.class);
-		register("Mantra", TopicMantra.class);
+		register(Topics.ENGINE, TopicEngine.class);
+		register(Topics.STRUCT, TopicStruct.class);
+		register(Topics.ENDER, TopicEnder.class);
+		register(Topics.NATURAL, TopicNatural.class);
+		register(Topics.MANTRA, TopicMantra.class);
+		register(Topics.BIOLOGY, TopicBiology.class);
 	}
 
 }

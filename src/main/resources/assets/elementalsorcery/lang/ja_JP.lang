@@ -283,6 +283,8 @@ commands.es.edifice.no.core=木核心が見つからない、木核心の真下�
 commands.es.edifice.store.success=回復データを作成して（既にロゴに出力されました）:%s
 commands.es.edifice.restore.success=回復成功！
 commands.es.not.support.commandBlock=コマンドブロックがサポートされていません。
+commands.es.research.usage=/es research <add|sub> <プレイヤー> <タイプ> <数値>
+commands.es.research.add=%sに%sの%sを与えました
 
 arc.infusion.name=エンチャント祭壇
 arc.absorbBox.name=元素を吸収する祭壇
@@ -403,6 +405,7 @@ fairy.cube.plunder.name=略奪
 fairy.cube.attackRange.name=攻撃エリア
 fairy.cube.attackCritical.name=暴撃
 fairy.cube.expUp.name=経験アップ
+fairy.cube.farm.name=農夫
 
 fairy.cube.destoryBlock.random=ランダム
 fairy.cube.destoryBlock.direct=トンネル
@@ -414,7 +417,7 @@ fairy.cube.attack.range=範囲
 fairy.cube.attackCritical.steady=穏健
 fairy.cube.attackCritical.lucky=幸運
 fairy.cube.attackCritical.unparalleled=無双
-
+fairy.cube.farm.accurate=正確
 
 kType.magicDevice.name=魔力装置
 kType.architecture.name=古代建築
@@ -423,12 +426,14 @@ kType.library.name=図書館
 kType.mantra.name=呪文
 kType.element.name=元素
 kType.altar.name=祭壇
+kType.monster.name=モンスター
 
 topic.Struct.name=構造
 topic.Ender.name=エンダー
 topic.Natural.name=自然
 topic.Engine.name=機械
 topic.Mantra.name=呪術
+kType.Biology.name=生物
 
 elf.time.year=%d年
 elf.time.mon.0=春

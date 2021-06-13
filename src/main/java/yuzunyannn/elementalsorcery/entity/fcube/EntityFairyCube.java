@@ -577,6 +577,7 @@ public class EntityFairyCube extends EntityLivingBase
 		if (applyPlayerInteractionItemStack(player, vec, stack)) return EnumActionResult.SUCCESS;
 
 		if (stack.isEmpty() && player.isSneaking()) {
+			if (!player.onGround) return EnumActionResult.PASS;
 			this.setToDrop();
 			return EnumActionResult.SUCCESS;
 		}
@@ -840,6 +841,21 @@ public class EntityFairyCube extends EntityLivingBase
 				em.setColor(colors[rand.nextInt(colors.length)]);
 				Effect.addEffect(em);
 			}
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void doClientEntityEffect(Entity entity, int[] colors) {
+		Vec3d vec = entity.getPositionVector().addVector(0, entity.height / 3 * 2, 0);
+		for (int i = 0; i < 10; i++) {
+			EffectElementMove em = new EffectElementMove(entity.world, vec);
+			double d2 = rand.nextGaussian() * 0.2 + 0.1;
+			double d0 = rand.nextGaussian() * 0.2 + 0.1;
+			double d1 = rand.nextGaussian() * 0.2 + 0.1;
+			em.setVelocity(d0, d2, d1);
+			em.xDecay = em.yDecay = em.zDecay = 0.5;
+			em.setColor(colors[rand.nextInt(colors.length)]);
+			Effect.addEffect(em);
 		}
 	}
 
