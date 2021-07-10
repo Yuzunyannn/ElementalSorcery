@@ -77,7 +77,7 @@ public class EntityScapegoat extends EntityLiving {
 				if (living == null) living = e.getAttackTarget();
 				if (living instanceof EntityScapegoat) continue;
 				if (living == null) continue;
-				//if (!living.isNonBoss()) continue;
+				// if (!living.isNonBoss()) continue;
 				if (name.isEmpty() || name.equals(living.getName())) {
 					e.setRevengeTarget(this);
 					e.setAttackTarget(this);
@@ -133,7 +133,8 @@ public class EntityScapegoat extends EntityLiving {
 		if (source.canHarmInCreative()) return super.attackEntityFrom(source, amount);
 		float finalDamage = amount;
 		Entity entity = source.getTrueSource();
-		if (!entity.isNonBoss()) {
+		if (entity == null) finalDamage = Math.min(1, amount);
+		else if (!entity.isNonBoss()) {
 			if (rand.nextInt(3) == 0) finalDamage = amount;
 			else finalDamage = Math.min(8, amount);
 		} else if (source.isMagicDamage()) finalDamage = Math.min(8, amount / 2);

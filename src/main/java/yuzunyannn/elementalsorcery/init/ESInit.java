@@ -28,7 +28,6 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
@@ -200,6 +199,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemLifeLeather;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicPaper;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
+import yuzunyannn.elementalsorcery.item.prop.ItemRabidLeather;
 import yuzunyannn.elementalsorcery.item.prop.ItemSome;
 import yuzunyannn.elementalsorcery.item.prop.ItemSoulFragment;
 import yuzunyannn.elementalsorcery.item.prop.ItemSpellbookCover;
@@ -467,6 +467,7 @@ public class ESInit {
 		ITEMS.APPLE_CANDY = new ItemAppleCandy();
 		ITEMS.FAIRY_CUBE = new ItemFairyCube();
 		ITEMS.FAIRY_CUBE_MODULE = new ItemFairyCubeModule();
+		ITEMS.RABID_LEATHER = new ItemRabidLeather();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -576,7 +577,7 @@ public class ESInit {
 		// 测试村庄相关
 		VillegeRegistries.registerAll();
 		// 注册战利品
-		registerAllLoot();
+		LootRegister.registerAll();
 		// 成就触发器
 		ESCriteriaTriggers.init();
 		// 注册GUI句柄
@@ -642,12 +643,6 @@ public class ESInit {
 	public final static void postInitClinet(FMLPostInitializationEvent event) {
 		// 注册所有渲染
 		registerAllRenderPost();
-	}
-
-	// 注册
-
-	static void registerAllLoot() {
-		LootTableList.register(new ResourceLocation(ElementalSorcery.MODID, "hall/es_hall"));
 	}
 
 	static void registerAllItems() throws IllegalArgumentException, IllegalAccessException {
@@ -814,6 +809,7 @@ public class ESInit {
 		registerRender(ITEMS.STAR_BELL, 1, "BELL_STAR");
 		registerRender(ITEMS.FAIRY_CUBE, new RenderItemFairyCube());
 		registerRender(ITEMS.FAIRY_CUBE_MODULE, new RenderItemFairyCubeModule());
+		registerRender(ITEMS.RABID_LEATHER);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

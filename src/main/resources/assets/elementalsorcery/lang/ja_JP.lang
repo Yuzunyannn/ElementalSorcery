@@ -91,6 +91,7 @@ item.starBell.star.name=星の鈴
 item.appleCandy.name=林檎飴
 item.fairyCube.name=精霊立方体
 item.fairyCubeModule.name=精霊立方体のルーン
+item.rabidLeather.name=狂暴の革
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -236,6 +237,7 @@ entity.Villager.magicallearner=魔力学者
 entity.Elf.name=精霊
 entity.RelicZombie.name=遺跡ゾンビ
 entity.FairyCube.name=精霊立方体
+entity.RabidRabbit.name=狂暴うさぎ
 
 pro.none=アイドル
 pro.warrior=戦士
@@ -584,6 +586,8 @@ page.rockCamera=岩石相机
 page.rockCamera.ct=求知粉尘可以与自然发生共鸣，但其共鸣的速度较慢，而且仅能获得周边范围的信息。使用精灵工匠制作出来的岩石相机，消耗粉尘，快速的将周边环境的信息输入，并且还可以精准的获取到目标方块的信息，是探索的最佳选择。
 page.relicZombie=遗迹僵尸
 page.relicZombie.ct=使用遗迹碎片作为信物，可以召唤出遗迹僵尸，若能用在其身旁击败他，则可获得遗迹宝石。\n遗迹僵尸共有三种类型，红色的「战士」、蓝色的「法师」、绿色的「牧师」，他们会使用不同的技能。\n「战士」随着生命减少，会更换武器，并且增加速度等效果\n「法师」无视远程伤害，会释放火球，落雷和召唤小僵尸\n「牧师」会给敌人增加负面效果，给友方增加正面效果，生命减少时，还会给自己增加防御效果。
+page.rabidRabbit=Rabid Rabbit
+page.rabidRabbit.ct=全身雪白但略微发红，眼睛尤为发红。它们会疯狂的攻击周围的生物，并从中获取能量迅速的繁殖。\n狂暴兔但只并不足畏惧，一旦他们成群的发送攻击，可不是什么好受的事情。\n通过兔皮或者兔脚作为信物可以召唤狂暴兔，击败它们有几率掉落狂暴皮革。
 
 page.crafting.need=必要な元素：
 page.crafting.show=%sは %d点を必要、パワーの最低限度は%d 

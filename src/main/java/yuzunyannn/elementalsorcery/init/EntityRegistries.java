@@ -30,6 +30,7 @@ import yuzunyannn.elementalsorcery.entity.EntityThrow;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
+import yuzunyannn.elementalsorcery.entity.mob.EntityRabidRabbit;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
 import yuzunyannn.elementalsorcery.render.entity.EntityRenderFactory;
 import yuzunyannn.elementalsorcery.render.entity.RenderBlockThrowEffect;
@@ -42,6 +43,7 @@ import yuzunyannn.elementalsorcery.render.entity.RenderEntityFairyCube;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityGrimoire;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityMagicMelting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortal;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityRabidRabbit;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityRelicZombie;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityScapegoat;
 import yuzunyannn.elementalsorcery.render.entity.RenderThrow;
@@ -68,6 +70,8 @@ public class EntityRegistries {
 		}
 		register(2, "relicZombie", EntityRelicZombie.class, "RelicZombie", 64, 3, true);
 		registerEgg("relicZombie", 0x00a3a3, 0x529b3d);
+		register(3, "rabidRabbit", EntityRabidRabbit.class, "RabidRabbit", 64, 3, true);
+		registerEgg("rabidRabbit", 0xffd1d9, 0xde225b);
 
 		// 效果处理
 		register(50, "block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);
@@ -117,10 +121,12 @@ public class EntityRegistries {
 		registerRender(EntityBlockMove.class, RenderEntityBlockMove.class);
 		registerRender(EntityScapegoat.class, RenderEntityScapegoat.class);
 		registerRender(EntityFairyCube.class, RenderEntityFairyCube.class);
+		registerRender(EntityRabidRabbit.class, RenderEntityRabidRabbit.class);
 	}
 
 	@SideOnly(Side.CLIENT)
-	private static <T extends Entity> void registerRender(Class<T> entityClass, Class<? extends Render<T>> render) {
+	private static <T extends Entity> void registerRender(Class<T> entityClass,
+			Class<? extends Render<? super T>> render) {
 		RenderingRegistry.registerEntityRenderingHandler(entityClass, new EntityRenderFactory<T>(render));
 	}
 

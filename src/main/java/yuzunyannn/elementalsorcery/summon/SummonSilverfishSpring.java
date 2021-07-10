@@ -16,7 +16,11 @@ public class SummonSilverfishSpring extends SummonCommon {
 	protected int sliverFish;
 
 	public SummonSilverfishSpring(World world, BlockPos pos) {
-		super(world, pos, 0x109e41);
+		this(world, pos, 0x109e41);
+	}
+
+	public SummonSilverfishSpring(World world, BlockPos pos, int color) {
+		super(world, pos, color);
 		this.sliverFish = world.rand.nextInt(36) + 16;
 	}
 
@@ -35,6 +39,11 @@ public class SummonSilverfishSpring extends SummonCommon {
 		Random rand = world.rand;
 		if (sliverFish <= 0) return false;
 		sliverFish--;
+		this.spawn(pos, rand);
+		return sliverFish > 0;
+	}
+
+	public void spawn(Vec3d pos, Random rand) {
 		EntitySilverfish entity = new EntitySilverfish(world);
 		entity.setPosition(pos.x, pos.y, pos.z);
 		entity.motionX = rand.nextDouble() - 0.5;
@@ -47,7 +56,6 @@ public class SummonSilverfishSpring extends SummonCommon {
 		entity.addPotionEffect(new PotionEffect(MobEffects.STRENGTH, time, 3));
 		world.spawnEntity(entity);
 		WorldHelper.createExpBall(world, pos, 25 + rand.nextInt(50));
-		return sliverFish > 0;
 	}
 
 	@Override

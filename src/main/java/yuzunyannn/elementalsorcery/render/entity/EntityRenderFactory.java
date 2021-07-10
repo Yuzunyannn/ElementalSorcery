@@ -9,9 +9,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class EntityRenderFactory<T extends Entity> implements IRenderFactory<T> {
-	private final Class<? extends Render<T>> renderClass;
+	private final Class<? extends Render<? super T>> renderClass;
 
-	public EntityRenderFactory(Class<? extends Render<T>> renderClass) {
+	public EntityRenderFactory(Class<? extends Render<? super T>> renderClass) {
 		this.renderClass = renderClass;
 	}
 

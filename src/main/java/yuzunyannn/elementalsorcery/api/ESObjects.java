@@ -89,6 +89,7 @@ public class ESObjects {
 		public Item APPLE_CANDY;
 		public Item FAIRY_CUBE;
 		public Item FAIRY_CUBE_MODULE;
+		public Item RABID_LEATHER;
 	}
 
 	static public class Blocks {

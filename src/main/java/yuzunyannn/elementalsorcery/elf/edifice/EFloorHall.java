@@ -17,11 +17,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
+import yuzunyannn.elementalsorcery.init.LootRegister;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -236,7 +236,7 @@ public class EFloorHall extends ElfEdificeFloor {
 		World world = builder.getWorld();
 		TileEntityChest chest = BlockHelper.getTileEntity(world, at, TileEntityChest.class);
 		if (chest != null) {
-			ResourceLocation loot = new ResourceLocation(ElementalSorcery.MODID, "hall/es_hall");
+			ResourceLocation loot = LootRegister.ES_HALL;
 			chest.setLootTable(loot, rand.nextLong());
 		}
 		this.createBulltin(builder);

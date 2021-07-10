@@ -26,7 +26,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -79,7 +78,7 @@ public class FCMFarm extends FairyCubeModule {
 			}
 			if (executeMode == 0) return;
 			executeTarget = target;
-			executeStack = stack.copy();
+			executeStack = stack;
 			fairyCube.setLookAt(target);
 			fairyCube.doExecute(40);
 		} else if (behaviorBase.is("block", "place")) {
@@ -171,8 +170,18 @@ public class FCMFarm extends FairyCubeModule {
 		int status = this.getCurrStatus();
 
 		int level = this.getLevelUsed();
-		float range = FCMAttackRange.commonRange(level) + 16;
+		float range = FCMAttackRange.commonRange(level);
 		World world = master.world;
+
+		ItemStack copyStack = ItemStack.EMPTY;
+		EntityPlayer player;
+		if (master instanceof EntityPlayer) {
+			player = (EntityPlayer) master;
+			if (player.isCreative() || executeMode == 0x11) copyStack = stack.copy();
+		} else {
+			player = ESFakePlayer.get((WorldServer) world);
+			player.setHeldItem(EnumHand.MAIN_HAND, stack.copy());
+		}
 
 		if (executeMode == 0x01) {
 			List<EntityLivingBase> shearables = this.getTargets(master, range, stack, target);
@@ -190,28 +199,27 @@ public class FCMFarm extends FairyCubeModule {
 				}
 			}
 		} else if (executeMode == 0x02) {
+			if (stack != master.getHeldItem(EnumHand.MAIN_HAND)) return;
+
 			List<EntityLivingBase> breeds = this.getTargets(master, range, stack, target);
-			FakePlayer fakePlayer = ESFakePlayer.get((WorldServer) master.world);
+			if (master instanceof EntityPlayer && ((EntityPlayer) master).isCreative()) copyStack = stack.copy();
 			for (EntityLivingBase living : breeds) {
 				EntityAnimal animal = (EntityAnimal) living;
-				fakePlayer.setHeldItem(EnumHand.MAIN_HAND, stack.copy());
-				animal.processInteract(fakePlayer, EnumHand.MAIN_HAND);
+				animal.processInteract(player, EnumHand.MAIN_HAND);
+				if (stack.isEmpty()) {
+					if (!copyStack.isEmpty()) {
+						stack = copyStack.copy();
+						player.setHeldItem(EnumHand.MAIN_HAND, stack);
+					} else break;
+				}
 			}
+
+			if (!copyStack.isEmpty()) player.setHeldItem(EnumHand.MAIN_HAND, copyStack);
+
 		} else if (executeMode == 0x10 || executeMode == 0x11) {
-			int size = Math.max(1, (int) range / 2);
 			if (stack != master.getHeldItem(EnumHand.MAIN_HAND) && executeMode != 0x11) return;
 
-			ItemStack copyStack = ItemStack.EMPTY;
-			EntityPlayer player;
-			if (master instanceof EntityPlayer) {
-				player = (EntityPlayer) master;
-				if (player.isCreative() || executeMode == 0x11) copyStack = stack.copy();
-			} else {
-				player = ESFakePlayer.get((WorldServer) world);
-				ItemStack fakeStack = stack.copy();
-				player.setHeldItem(EnumHand.MAIN_HAND, fakeStack);
-			}
-
+			int size = Math.max(1, (int) range / 2);
 			for (int x = -size; x <= size; x++) over: {
 				for (int z = -size; z <= size; z++) {
 					if (x == 0 && z == 0) continue;
@@ -239,7 +247,10 @@ public class FCMFarm extends FairyCubeModule {
 					}
 				}
 			}
-			if (!copyStack.isEmpty()) player.setHeldItem(EnumHand.MAIN_HAND, copyStack);
+			if (!copyStack.isEmpty()) {
+				player.setHeldItem(EnumHand.MAIN_HAND, copyStack);
+				if (executeMode == 0x11 && !player.isCreative()) copyStack.damageItem(1, player);
+			}
 		} else {
 			this.fairyCube.stopExecute();
 			return;

@@ -14,6 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 
@@ -114,10 +115,12 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 	}
 
 	public static void registerAll() {
-		reg("silverfish_spring", SummonSilverfishSpring.class, 128, 0x109e41, new ItemStack(Items.EXPERIENCE_BOTTLE));
+		reg("silverfish_spring", SummonSilverfishSpring.class, 96, 0x109e41, new ItemStack(Items.EXPERIENCE_BOTTLE));
 		reg("zombie_cage", new SummonRecipeZombieCage());
 		reg("relic_zombie", SummonRelicZombie.class, 256, 0x285f57,
 				ItemKeepsake.create(ItemKeepsake.EnumType.RELIC_FRAGMENT, 1));
+		reg("rabid_rabbit_spring", SummonRabidRabbit.class, 128, 0xf2e9ea,
+				ItemHelper.toArray(Items.RABBIT_FOOT, Items.RABBIT_HIDE));
 	}
 
 	private static SummonRecipe reg(String name, SummonRecipe m) {

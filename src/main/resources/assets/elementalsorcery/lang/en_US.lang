@@ -91,6 +91,7 @@ item.starBell.star.name=Star Bell
 item.appleCandy.name=Apple Candy
 item.fairyCube.name=Elf Cube
 item.fairyCubeModule.name=Elf Cube Rune
+item.rabidLeather.name=Rabid Leather
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -236,6 +237,7 @@ entity.Villager.magicallearner=MagicLearner
 entity.Elf.name=Elf
 entity.RelicZombie.name=Relic Zombie
 entity.FairyCube.name=Elf Cube
+entity.RabidRabbit.name=Rabid Rabbit
 
 pro.none=Idle
 pro.warrior=Warrior
@@ -584,6 +586,8 @@ page.rockCamera=岩石相机
 page.rockCamera.ct=求知粉尘可以与自然发生共鸣，但其共鸣的速度较慢，而且仅能获得周边范围的信息。使用精灵工匠制作出来的岩石相机，消耗粉尘，快速的将周边环境的信息输入，并且还可以精准的获取到目标方块的信息，是探索的最佳选择。
 page.relicZombie=遗迹僵尸
 page.relicZombie.ct=使用遗迹碎片作为信物，可以召唤出遗迹僵尸，若能用在其身旁击败他，则可获得遗迹宝石。\n遗迹僵尸共有三种类型，红色的战士、蓝色的法师、绿色的牧师，他们会使用不同的技能。\n战士随着生命减少，会更换武器，并且增加速度等效果\n法师无视远程伤害，会释放火球，落雷和召唤小僵尸\n牧师会给敌人增加负面效果，给友方增加正面效果，生命减少时，还会给自己增加防御效果。
+page.rabidRabbit=Rabid Rabbit
+page.rabidRabbit.ct=全身雪白但略微发红，眼睛尤为发红。它们会疯狂的攻击周围的生物，并从中获取能量迅速的繁殖。\n狂暴兔但只并不足畏惧，一旦他们成群的发送攻击，可不是什么好受的事情。\n通过兔皮或者兔脚作为信物可以召唤狂暴兔，击败它们有几率掉落狂暴皮革。
 
 page.crafting.need=Elements are required to craft: 
 page.crafting.show=%s requires %d lower limit %d 
