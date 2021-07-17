@@ -1,11 +1,35 @@
 package yuzunyannn.elementalsorcery.render.effect.batch;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.IBinder;
+import yuzunyannn.elementalsorcery.util.NBTHelper;
 
+@SideOnly(Side.CLIENT)
 public class EffectElementAbsorb extends EffectElement {
+
+	public static void show(World world, Vec3d pos, NBTTagCompound nbt) {
+		int id = nbt.getInteger("targetEntity");
+		Entity target = world.getEntityByID(id);
+		Vec3d targetPos = null;
+		if (target != null) targetPos = target.getPositionVector().addVector(0, target.height / 2, 0);
+		else if (NBTHelper.hasVec3d(nbt, "targetPos")) targetPos = NBTHelper.getVec3d(nbt, "targetPos");
+
+		if (targetPos == null) return;
+		int[] colors = nbt.getIntArray("colors");
+		int times = Math.max(1, nbt.getInteger("times"));
+
+		for (int i = 0; i < times; i++) {
+			EffectElementAbsorb effect = new EffectElementAbsorb(world, pos, targetPos);
+			effect.setColor(colors.length == 0 ? rand.nextInt() : colors[rand.nextInt(colors.length)]);
+			Effect.addEffect(effect);
+		}
+	}
 
 	/** 位置 */
 	public IBinder binder = null;

@@ -49,7 +49,7 @@ import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.item.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
-import yuzunyannn.elementalsorcery.summon.SummonRecipe;
+import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable.Recipe.Happiness;
 import yuzunyannn.elementalsorcery.util.MultiRets;
 import yuzunyannn.elementalsorcery.util.RandomHelper;

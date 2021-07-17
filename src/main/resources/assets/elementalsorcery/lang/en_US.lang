@@ -92,6 +92,7 @@ item.appleCandy.name=Apple Candy
 item.fairyCube.name=Elf Cube
 item.fairyCubeModule.name=Elf Cube Rune
 item.rabidLeather.name=Rabid Leather
+item.dreadFragment.name=Dread Fragment
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -238,6 +239,7 @@ entity.Elf.name=Elf
 entity.RelicZombie.name=Relic Zombie
 entity.FairyCube.name=Elf Cube
 entity.RabidRabbit.name=Rabid Rabbit
+entity.DreadCube.name=Dread Cube
 
 pro.none=Idle
 pro.warrior=Warrior

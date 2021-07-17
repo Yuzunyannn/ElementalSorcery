@@ -59,6 +59,10 @@ public class TextHelper {
 		return toResourceLocation(id, ElementalSorcery.MODID);
 	}
 
+	static public ResourceLocation toMCResourceLocation(String id) {
+		return toResourceLocation(id, "minecraft");
+	}
+
 	public static String replaceStringWith$(String str, Function<Integer, String> getter) {
 		Pattern p = Pattern.compile("\\$(\\d+)");
 		String[] strs = p.split(str);

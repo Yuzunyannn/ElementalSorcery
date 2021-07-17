@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.util.world;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Nullable;
 
@@ -11,11 +12,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 
@@ -106,12 +109,12 @@ public class WorldHelper {
 		return null;
 	}
 
-	static public void newLightning(World world, BlockPos pos) {
+	static public void newLightning(World world, Vec3d pos) {
 		newLightning(world, pos, false);
 	}
 
-	static public void newLightning(World world, BlockPos pos, boolean effectOnly) {
-		world.spawnEntity(new EntityLightningBolt(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, effectOnly));
+	static public void newLightning(World world, Vec3d pos, boolean effectOnly) {
+		world.addWeatherEffect(new EntityLightningBolt(world, pos.x + 0.5, pos.y, pos.z + 0.5, effectOnly));
 	}
 
 	static public void createExpBall(World world, Vec3d pos, int exp) {
@@ -133,6 +136,19 @@ public class WorldHelper {
 	static public AxisAlignedBB createAABB(Vec3d pos, double range, double yUp, double yDown) {
 		return new AxisAlignedBB(pos.x - range, pos.y - yDown, pos.z - range, pos.x + range, pos.y + yUp,
 				pos.z + range);
+	}
+
+	static public EntityLivingBase restoreLiving(World world, UUID playerUUID) {
+		List<EntityLivingBase> list = world.getEntities(EntityLivingBase.class, (e) -> {
+			return e.getUniqueID().equals(playerUUID);
+		});
+		if (!list.isEmpty()) return list.get(0);
+		if (world instanceof WorldServer) {
+			WorldServer ws = (WorldServer) world;
+			PlayerList pl = ws.getMinecraftServer().getPlayerList();
+			return pl.getPlayerByUUID(playerUUID);
+		}
+		return null;
 	}
 
 }

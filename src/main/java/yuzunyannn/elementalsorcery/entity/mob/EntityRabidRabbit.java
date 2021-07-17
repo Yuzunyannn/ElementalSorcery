@@ -120,7 +120,10 @@ public class EntityRabidRabbit extends EntityRabbit implements IMob {
 		if (living instanceof EntityPlayer) return ((EntityPlayer) living).isCreative() ? -1 : 10;
 		if (living instanceof INpc) return 8;
 		if (living instanceof EntityAnimal) return 5;
-		if (living instanceof IMob) return 2;
+		if (living instanceof IMob) {
+			if (living instanceof EntityDreadCube) return -1;
+			return 2;
+		}
 		return -1;
 	}
 
@@ -138,6 +141,13 @@ public class EntityRabidRabbit extends EntityRabbit implements IMob {
 
 	@Override
 	public boolean attackEntityAsMob(Entity entityIn) {
+
+		boolean succ = entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), 6.0F);
+		this.playSound(SoundEvents.ENTITY_RABBIT_ATTACK, 1.0F,
+				(this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
+
+		if (!succ) return false;
+
 		if (this.isChild()) this.addGrowth(60 * 20);
 		else if (!this.isInLove()) {
 			EntityPlayer player = entityIn instanceof EntityPlayer ? (EntityPlayer) entityIn : null;
@@ -145,10 +155,7 @@ public class EntityRabidRabbit extends EntityRabbit implements IMob {
 		}
 
 		this.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 30, 3));
-
-		this.playSound(SoundEvents.ENTITY_RABBIT_ATTACK, 1.0F,
-				(this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F);
-		return entityIn.attackEntityFrom(DamageSource.causeMobDamage(this), 6.0F);
+		return succ;
 	}
 
 	@Override

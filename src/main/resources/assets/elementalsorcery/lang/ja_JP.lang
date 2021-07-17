@@ -92,6 +92,7 @@ item.appleCandy.name=林檎飴
 item.fairyCube.name=精霊立方体
 item.fairyCubeModule.name=精霊立方体のルーン
 item.rabidLeather.name=狂暴の革
+item.dreadFragment.name=恐怖のかけら
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -238,6 +239,7 @@ entity.Elf.name=精霊
 entity.RelicZombie.name=遺跡ゾンビ
 entity.FairyCube.name=精霊立方体
 entity.RabidRabbit.name=狂暴うさぎ
+entity.DreadCube.name=恐怖立方体
 
 pro.none=アイドル
 pro.warrior=戦士

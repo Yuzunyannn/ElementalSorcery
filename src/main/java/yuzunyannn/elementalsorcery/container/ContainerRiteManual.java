@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
-import yuzunyannn.elementalsorcery.summon.SummonRecipe;
+import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
 

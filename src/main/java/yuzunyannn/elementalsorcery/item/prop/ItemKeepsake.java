@@ -33,7 +33,8 @@ public class ItemKeepsake extends Item {
 	}
 
 	public static enum EnumType {
-		RELIC_FRAGMENT("relicFragment");
+		RELIC_FRAGMENT("relicFragment"),
+		DREAD_FRAGMENT("dreadFragment");
 
 		final String unlocalizedName;
 

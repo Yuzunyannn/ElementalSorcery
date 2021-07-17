@@ -246,7 +246,7 @@ import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagiclization;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDResonantIncubator;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDTransfer;
-import yuzunyannn.elementalsorcery.summon.SummonRecipe;
+import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
 import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
@@ -792,7 +792,8 @@ public class ESInit {
 		registerRender(ITEMS.SOUL_WOOD_SWORD);
 		registerRender(ITEMS.RELIC_GEM);
 		registerRender(ITEMS.ROCK_CAMERA);
-		registerRender(ITEMS.KEEPSAKE, 0, "relic_fragment");
+		for (ItemKeepsake.EnumType keepsakeType : ItemKeepsake.EnumType.values())
+			registerRender(ITEMS.KEEPSAKE, keepsakeType.getMeta(), keepsakeType.getName());
 		for (ItemQuill.EnumType quillType : ItemQuill.EnumType.values())
 			registerRender(ITEMS.QUILL, quillType.getMeta(), "quill_" + quillType.getName());
 		registerRender(ITEMS.FUSION_CRYSTAL);

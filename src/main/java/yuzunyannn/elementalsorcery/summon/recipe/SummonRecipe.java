@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.summon;
+package yuzunyannn.elementalsorcery.summon.recipe;
 
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
@@ -14,6 +14,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
+import yuzunyannn.elementalsorcery.summon.Summon;
+import yuzunyannn.elementalsorcery.summon.SummonDreadCube;
+import yuzunyannn.elementalsorcery.summon.SummonRabidRabbit;
+import yuzunyannn.elementalsorcery.summon.SummonRelicZombie;
+import yuzunyannn.elementalsorcery.summon.SummonSilverfishSpring;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
@@ -117,10 +122,13 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 	public static void registerAll() {
 		reg("silverfish_spring", SummonSilverfishSpring.class, 96, 0x109e41, new ItemStack(Items.EXPERIENCE_BOTTLE));
 		reg("zombie_cage", new SummonRecipeZombieCage());
-		reg("relic_zombie", SummonRelicZombie.class, 256, 0x285f57,
-				ItemKeepsake.create(ItemKeepsake.EnumType.RELIC_FRAGMENT, 1));
 		reg("rabid_rabbit_spring", SummonRabidRabbit.class, 128, 0xf2e9ea,
 				ItemHelper.toArray(Items.RABBIT_FOOT, Items.RABBIT_HIDE));
+		reg("mob_create", new SummonRecipeMob());
+		reg("relic_zombie", SummonRelicZombie.class, 192, 0x285f57,
+				ItemKeepsake.create(ItemKeepsake.EnumType.RELIC_FRAGMENT, 1));
+		reg("dread_cube", SummonDreadCube.class, 256, 0x671111,
+				ItemKeepsake.create(ItemKeepsake.EnumType.DREAD_FRAGMENT, 1));
 	}
 
 	private static SummonRecipe reg(String name, SummonRecipe m) {

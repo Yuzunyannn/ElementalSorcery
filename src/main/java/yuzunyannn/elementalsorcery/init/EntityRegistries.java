@@ -30,6 +30,7 @@ import yuzunyannn.elementalsorcery.entity.EntityThrow;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
+import yuzunyannn.elementalsorcery.entity.mob.EntityDreadCube;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRabidRabbit;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
 import yuzunyannn.elementalsorcery.render.entity.EntityRenderFactory;
@@ -37,6 +38,7 @@ import yuzunyannn.elementalsorcery.render.entity.RenderBlockThrowEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntitiyBulletin;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityBlockMove;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityDreadCube;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityExploreDust;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityFairyCube;
@@ -72,6 +74,8 @@ public class EntityRegistries {
 		registerEgg("relicZombie", 0x00a3a3, 0x529b3d);
 		register(3, "rabidRabbit", EntityRabidRabbit.class, "RabidRabbit", 64, 3, true);
 		registerEgg("rabidRabbit", 0xffd1d9, 0xde225b);
+		register(4, "dreadCube", EntityDreadCube.class, "DreadCube", 64, 1, true);
+		registerEgg("dreadCube", 0x161616, 0x6a1212);
 
 		// 效果处理
 		register(50, "block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);
@@ -122,6 +126,7 @@ public class EntityRegistries {
 		registerRender(EntityScapegoat.class, RenderEntityScapegoat.class);
 		registerRender(EntityFairyCube.class, RenderEntityFairyCube.class);
 		registerRender(EntityRabidRabbit.class, RenderEntityRabidRabbit.class);
+		registerRender(EntityDreadCube.class, RenderEntityDreadCube.class);
 	}
 
 	@SideOnly(Side.CLIENT)

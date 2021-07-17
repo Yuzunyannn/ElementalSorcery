@@ -20,7 +20,6 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -33,7 +32,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
@@ -52,6 +50,7 @@ import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTreatEntity;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class EntityFairyCube extends EntityLivingBase
 		implements MessageEntitySync.IRecvData, IEntityAdditionalSpawnData {
@@ -210,18 +209,9 @@ public class EntityFairyCube extends EntityLivingBase
 		long now = System.currentTimeMillis();
 		if (now - masterFindFailCD < 1000 * 10) return;
 
-		master = null;
-		List<EntityLivingBase> list = world.getEntities(EntityLivingBase.class, (e) -> {
-			return e.getUniqueID().equals(playerUUID);
-		});
-		if (list.isEmpty()) {
-			if (world instanceof WorldServer) {
-				WorldServer ws = (WorldServer) world;
-				PlayerList pl = ws.getMinecraftServer().getPlayerList();
-				EntityLivingBase player = pl.getPlayerByUUID(playerUUID);
-				this.setMaster(player);
-			}
-		} else this.setMaster(list.get(0));
+		EntityLivingBase master = WorldHelper.restoreLiving(world, playerUUID);
+		this.setMaster(master);
+
 		if (master == null) {
 			masterFindFailCD = now;
 			masterFindFailTimes++;

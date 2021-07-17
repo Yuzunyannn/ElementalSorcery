@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,14 +17,12 @@ import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
-import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemSoulWoodSword;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectSummonRender;
 import yuzunyannn.elementalsorcery.summon.Summon;
-import yuzunyannn.elementalsorcery.summon.SummonRecipe;
+import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 
@@ -33,6 +30,7 @@ public class MantraSummon extends MantraCommon {
 
 	static public void summon(World world, BlockPos pos, EntityLivingBase summoner, ItemStack keepsake,
 			SummonRecipe summonRecipe) {
+		if (world.isRemote) return;
 		EntityGrimoire grimoire = new EntityGrimoire(world, summoner, ESInit.MANTRAS.SUMMON, null,
 				EntityGrimoire.STATE_AFTER_SPELLING);
 		Data data = (Data) grimoire.getMantraData();

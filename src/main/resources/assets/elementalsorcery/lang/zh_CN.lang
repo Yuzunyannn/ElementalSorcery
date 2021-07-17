@@ -92,6 +92,7 @@ item.appleCandy.name=苹果糖
 item.fairyCube.name=精灵立方体
 item.fairyCubeModule.name=精灵立方体符文
 item.rabidLeather.name=狂暴皮革
+item.dreadFragment.name=恐惧碎片
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -238,6 +239,7 @@ entity.Elf.name=精灵
 entity.RelicZombie.name=遗迹僵尸
 entity.FairyCube.name=精灵立方体
 entity.RabidRabbit.name=狂暴兔
+entity.DreadCube.name=恐惧立方体
 
 pro.none=闲人
 pro.warrior=战士
