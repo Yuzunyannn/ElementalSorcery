@@ -2,45 +2,34 @@ package yuzunyannn.elementalsorcery.block.altar;
 
 import java.util.List;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
-public class BlockElementalCube extends BlockContainer {
+public class BlockElementalCube extends BlockElementContainer {
 
-	// 获取带有能力的物品
+	// 获取带有能力的物品，规定函数用于反射
 	public ItemBlock getItemBlock() {
 		ItemBlock item = new ItemBlock(this) {
 			@Override
-			@Nullable
-			public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack,
-					@Nullable NBTTagCompound nbt) {
+			public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
 				return new CapabilityProvider.ElementInventoryUseProvider(stack);
 			}
 		};
@@ -66,32 +55,6 @@ public class BlockElementalCube extends BlockContainer {
 	}
 
 	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
-		// 不进行绘画，直接使用Tile的绘图
-		return EnumBlockRenderType.INVISIBLE;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		if (stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null)) {
-			IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-			ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
-		}
-	}
-
-	// 不是完成方块哟
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-
-	// 是透明方块哟
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return FULL_BLOCK_AABB;
 	}
@@ -112,49 +75,6 @@ public class BlockElementalCube extends BlockContainer {
 		yes = yes && state.isFullCube() && state.isOpaqueCube();
 
 		return yes;
-	}
-
-	private TileEntity temp_tile;
-
-	// 破坏方块，因为掉落物即将要删除tile_entity，暂时存储下
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		temp_tile = worldIn.getTileEntity(pos);
-		super.breakBlock(worldIn, pos, state);
-	}
-
-	// 掉落物
-	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,
-			int fortune) {
-		ItemStack stack = new ItemStack(this);
-		TileEntity tile = temp_tile;
-		temp_tile = null;
-		if (!(tile instanceof TileElementalCube)) {
-			drops.add(stack);
-			return;
-		}
-		TileElementalCube tile_ec = (TileElementalCube) tile;
-		tile_ec.toElementInventory(stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null));
-		drops.add(stack);
-
-		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		inventory.getStackInSlot(0).grow(-1);
-		inventory.saveState(stack);
-	}
-
-	// 当被放置
-	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase player,
-			ItemStack stack) {
-		TileEntity tile = worldIn.getTileEntity(pos);
-		if (!(tile instanceof TileElementalCube)) return;
-		TileElementalCube tile_ec = (TileElementalCube) tile;
-		if (player instanceof EntityPlayer) {
-			if (((EntityPlayer) player).isCreative()) {
-				stack = stack.copy();
-			}
-		}
-		tile_ec.setElementInventory(ElementHelper.getElementInventory(stack));
 	}
 
 	// 周围改变

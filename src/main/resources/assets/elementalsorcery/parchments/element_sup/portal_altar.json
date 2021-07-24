@@ -2,7 +2,7 @@
 	"lev": 5,
 	"need": [
 		"element_adv/supreme_table",
-		"element_sup/jump_gem"
+		"element_adv/jump_gem"
 	],
 	"linked": "elementalsorcery:portal_altar",
 	"type": "mult",

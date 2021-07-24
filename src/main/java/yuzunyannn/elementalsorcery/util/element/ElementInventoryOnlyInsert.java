@@ -7,6 +7,8 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public class ElementInventoryOnlyInsert extends ElementInventory {
 
+	protected boolean forbid = true;
+
 	public ElementInventoryOnlyInsert() {
 		super();
 	}
@@ -15,13 +17,20 @@ public class ElementInventoryOnlyInsert extends ElementInventory {
 		super(slots);
 	}
 
+	public ElementInventoryOnlyInsert setForbid(boolean forbid) {
+		this.forbid = forbid;
+		return this;
+	}
+
 	@Override
 	public ElementStack extractElement(ElementStack estack, boolean simulate) {
-		return estack;
+		if (forbid) return ElementStack.EMPTY;
+		return super.extractElement(estack, simulate);
 	}
 
 	@Override
 	public ElementStack extractElement(int slot, @Nonnull ElementStack estack, boolean simulate) {
-		return estack;
+		if (forbid) return ElementStack.EMPTY;
+		return super.extractElement(slot, estack, simulate);
 	}
 }

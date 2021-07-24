@@ -81,6 +81,7 @@ import yuzunyannn.elementalsorcery.block.altar.BlockPortalAltar;
 import yuzunyannn.elementalsorcery.block.altar.BlockSupremeTable;
 import yuzunyannn.elementalsorcery.block.altar.BlockTranscribeInjection;
 import yuzunyannn.elementalsorcery.block.altar.BlockTranscribeTable;
+import yuzunyannn.elementalsorcery.block.container.BlockElementPlatform;
 import yuzunyannn.elementalsorcery.block.container.BlockElfBeacon;
 import yuzunyannn.elementalsorcery.block.container.BlockElfTreeCore;
 import yuzunyannn.elementalsorcery.block.container.BlockHearth;
@@ -192,6 +193,8 @@ import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemOrderCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemResonantCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemScarletCrystal;
+import yuzunyannn.elementalsorcery.item.prop.ItemCubeCore;
+import yuzunyannn.elementalsorcery.item.prop.ItemDreadGem;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementStone;
 import yuzunyannn.elementalsorcery.item.prop.ItemFusionCrystal;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
@@ -221,6 +224,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileBuildingAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileCrystalFlower;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileElementPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementalCube;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElfBeacon;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElfTreeCore;
@@ -248,6 +252,7 @@ import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDTransfer;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
+import yuzunyannn.elementalsorcery.tile.TileElementPlatform;
 import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
@@ -390,6 +395,7 @@ public class ESInit {
 		BLOCKS.SCARLET_CRYSTAL_ORE = new BlockScarletCrystalOre();
 		BLOCKS.STAR_FLOWER = new BlockStarFlower();
 		BLOCKS.CRUDE_QUARTZ = new BlockCrudeQuartz();
+		BLOCKS.ELEMENT_PLATFORM = new BlockElementPlatform();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -468,6 +474,8 @@ public class ESInit {
 		ITEMS.FAIRY_CUBE = new ItemFairyCube();
 		ITEMS.FAIRY_CUBE_MODULE = new ItemFairyCubeModule();
 		ITEMS.RABID_LEATHER = new ItemRabidLeather();
+		ITEMS.CUBE_CORE = new ItemCubeCore();
+		ITEMS.DREAD_GEM = new ItemDreadGem();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -714,6 +722,7 @@ public class ESInit {
 		register(TileElfTreeCore.class, "ElfTreeCore");
 		register(TileElfBeacon.class, "ElfBeacon");
 		register(TileStarFlower.class, "StarFlower");
+		register(TileElementPlatform.class, "ElementPlatform");
 	}
 
 	static void registerAllCapability() {
@@ -811,6 +820,9 @@ public class ESInit {
 		registerRender(ITEMS.FAIRY_CUBE, new RenderItemFairyCube());
 		registerRender(ITEMS.FAIRY_CUBE_MODULE, new RenderItemFairyCubeModule());
 		registerRender(ITEMS.RABID_LEATHER);
+		registerRender(ITEMS.APPLE_CANDY);
+		registerRender(ITEMS.CUBE_CORE);
+		registerRender(ITEMS.DREAD_GEM);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -867,7 +879,6 @@ public class ESInit {
 		registerRender(BLOCKS.STAR_FLOWER, 2, "star_flower");
 		registerRender(BLOCKS.STAR_FLOWER, 4, "star_flower_element");
 		registerRender(BLOCKS.CRUDE_QUARTZ);
-		registerRender(ITEMS.APPLE_CANDY);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());
@@ -904,6 +915,7 @@ public class ESInit {
 		registerRender(BLOCKS.ELF_TREE_CORE, TileElfTreeCore.class, new RenderTileElfTreeCore());
 		registerRender(BLOCKS.TRANSCRIBE_INJECTION, TileTranscribeInjection.class, new RenderTileTranscribeInjection());
 		registerRender(BLOCKS.ELF_BEACON, TileElfBeacon.class, new RenderTileElfBeacon());
+		registerRender(BLOCKS.ELEMENT_PLATFORM, TileElementPlatform.class, new RenderTileElementPlatform());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

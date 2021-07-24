@@ -1,0 +1,18 @@
+{
+    "lev": -2,
+    "need": [
+        "element/rite_summon"
+    ],
+    "linked": [
+        "elementalsorcery:cube_core",
+        "elementalsorcery:dread_gem",
+        {
+            "item": "elementalsorcery:keepsake",
+            "data": 1
+        }
+    ],
+    "type": "normal",
+    "name": "dreadCube",
+    "item": "elementalsorcery:dread_gem",
+    "background": "inherit"
+}

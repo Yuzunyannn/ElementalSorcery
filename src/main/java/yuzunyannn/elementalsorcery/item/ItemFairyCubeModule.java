@@ -15,11 +15,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.entity.fcube.FairyCubeModule;
 import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeModuleClient;
+import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
+import yuzunyannn.elementalsorcery.tile.TileElementPlatform;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
-public class ItemFairyCubeModule extends Item {
+public class ItemFairyCubeModule extends Item implements TileElementPlatform.IPlatformTickable {
 
 	public ItemFairyCubeModule() {
 		this.setUnlocalizedName("fairyCubeModule");
@@ -51,9 +56,13 @@ public class ItemFairyCubeModule extends Item {
 
 	public static ItemStack getFairyCubeModule(ResourceLocation id) {
 		ItemStack stack = new ItemStack(ESInit.ITEMS.FAIRY_CUBE_MODULE);
+		setFairyCubeModule(stack, id);
+		return stack;
+	}
+
+	public static void setFairyCubeModule(ItemStack stack, ResourceLocation id) {
 		NBTTagCompound nbt = stack.getOrCreateSubCompound("fcm");
 		nbt.setString("id", id.toString());
-		return stack;
 	}
 
 	public static ResourceLocation getModuleId(ItemStack stack) {
@@ -66,4 +75,26 @@ public class ItemFairyCubeModule extends Item {
 		return stack.getSubCompound("fcm");
 	}
 
+	@Override
+	public boolean platformUpdate(World world, ItemStack stack, ICasterObject caster, NBTTagCompound runData,
+			int tick) {
+		if (tick % (16 * 20) != 0) return false;
+		if (getModuleId(stack) != null) return false;
+		if (world.isRemote) return false;
+
+		IElementInventory srcInv = ElementHelper.getElementInventory(caster);
+		if (srcInv == null) return false;
+
+		for (Class<? extends FairyCubeModule> cls : FairyCubeModule.REGISTRY.valueSet()) {
+			if (FairyCubeModule.tryMatchAndConsumeForCraft(cls, world, caster.getPosition(), srcInv)) {
+				ResourceLocation id = FairyCubeModule.REGISTRY.getKey(cls);
+				setFairyCubeModule(stack, id);
+				FireworkEffect.spawn(world, caster.getPositionVector().addVector(0, 0.8, 0), 10, 1, 0.1f,
+						new int[] { 0x173839, 0x198663, 0x2ee715 }, new int[] { 0x9cef91 });
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

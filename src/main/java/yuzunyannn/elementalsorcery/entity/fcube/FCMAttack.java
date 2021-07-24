@@ -7,22 +7,43 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAnimal;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemMatchResult;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class FCMAttack extends FairyCubeModule {
+
+	@FairyCubeModuleRecipe
+	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
+		if (world.isRaining()) return false;
+		Biome biome = world.getBiome(pos);
+		ElfTime time = new ElfTime(world);
+		if (biome.getRegistryName().getResourcePath().indexOf("desert") == -1) return false;
+		if (!time.at(ElfTime.Period.DAY)) return false;
+
+		return matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.BLAZE_POWDER, 12),
+				ElementHelper.toList(ESInit.ELEMENTS.FIRE, 150, 50));
+	}
 
 	public FCMAttack(EntityFairyCube fairyCube) {
 		super(fairyCube);

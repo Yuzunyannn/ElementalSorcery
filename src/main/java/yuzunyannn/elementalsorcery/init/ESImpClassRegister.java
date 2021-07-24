@@ -80,12 +80,20 @@ public class ESImpClassRegister<T extends IForgeRegistryEntry<T>> {
 		return rev.get(cls);
 	}
 
+	public Class<? extends T> getValue(ResourceLocation id) {
+		return REGISTRY.get(id);
+	}
+
 	public void register(ResourceLocation id, Class<? extends T> value) {
 		REGISTRY.put(id, value);
 	}
 
 	public Set<ResourceLocation> keySet() {
 		return REGISTRY.keySet();
+	}
+
+	public Set<Class<? extends T>> valueSet() {
+		return REGISTRY.values();
 	}
 
 }

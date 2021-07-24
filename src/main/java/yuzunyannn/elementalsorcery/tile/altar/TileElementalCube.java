@@ -136,14 +136,6 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 		if (world.isRemote) changeColor();
 	}
 
-	// 转移仓库
-	public void toElementInventory(IElementInventory inventory) {
-		inventory.setSlots(this.inventory.getSlots());
-		for (int i = 0; i < this.inventory.getSlots(); i++) {
-			inventory.setStackInSlot(i, this.inventory.getStackInSlot(i).copy());
-		}
-	}
-
 	// 更新规则
 	@Override
 	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {

@@ -80,7 +80,7 @@ public class PageSimple extends PageEasy {
 		GlStateManager.pushMatrix();
 		textureManager.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		textureManager.getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).setBlurMipmap(false, false);
-		GlStateManager.translate(xoff + 175, yoff + 110, 0F);
+		GlStateManager.translate(xoff + 175, yoff + 110, -20F);
 		GlStateManager.translate(8.0F, 8.0F, 20);
 		GlStateManager.scale(1.0F, -1.0F, 1.0F);
 		GlStateManager.scale(12.0F, 12.0F, 12.0F);

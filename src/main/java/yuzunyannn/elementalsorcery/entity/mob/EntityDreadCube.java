@@ -301,7 +301,7 @@ public class EntityDreadCube extends EntityMob {
 				new int[] { 0xb43232 });
 		Effects.spawnEffect(world, Effects.FIREWROK, this.getPositionVector().addVector(0, 0.5, 0), nbt);
 
-		return super.attackEntityFrom(source, Math.min(1, amount));
+		return super.attackEntityFrom(source, 1);
 	}
 
 	public boolean summonMonster(EntityLivingBase target) {

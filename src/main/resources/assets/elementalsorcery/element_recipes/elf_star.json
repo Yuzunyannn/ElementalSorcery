@@ -2,23 +2,24 @@
 	"pattern": [
 		"EPE",
 		" S ",
-		"EJE",
-		"P  P",
-		" EE ",
-		" EE ",
-		"P  P"
+		"EJE"
 	],
 	"key": {
 		"J": "elementalsorcery:jump_gem",
 		"S": "minecraft:nether_star",
-		"E":  "elementalsorcery:elf_crystal",
+		"E": "elementalsorcery:elf_crystal",
 		"P": "minecraft:ender_eye"
 	},
 	"element": [
 		{
 			"id": "ender",
-			"size": 500,
+			"size": 420,
 			"power": 20
+		},
+		{
+			"id": "star",
+			"size": 10,
+			"power": 10
 		}
 	],
 	"result": {

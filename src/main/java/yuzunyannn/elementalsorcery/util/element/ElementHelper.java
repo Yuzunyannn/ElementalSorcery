@@ -13,14 +13,24 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class ElementHelper {
+
+	/** 复制src到dst */
+	public static void toElementInventory(IElementInventory src, IElementInventory dst) {
+		dst.setSlots(src.getSlots());
+		for (int i = 0; i < src.getSlots(); i++) {
+			dst.setStackInSlot(i, src.getStackInSlot(i).copy());
+		}
+	}
 
 	public static boolean canInsert(IElementInventory inventory) {
 		if (inventory == null) return false;
@@ -88,6 +98,12 @@ public class ElementHelper {
 		return inventory;
 	}
 
+	@Nullable
+	static public IElementInventory getElementInventory(ICapabilityProvider provider) {
+		if (!provider.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null)) return null;
+		return provider.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+	}
+
 	/** 获取一组元素的默认复杂度 */
 	static public int getComplexFromElements(ItemStack stack, ElementStack[] estacks) {
 		if (estacks == null || estacks.length == 0) return 0;
@@ -128,14 +144,6 @@ public class ElementHelper {
 		}
 	}
 
-	/** 复制 */
-	static public ElementStack[] copy(ElementStack[] estacks) {
-		if (estacks == null) return null;
-		ElementStack[] newEStacks = new ElementStack[estacks.length];
-		for (int i = 0; i < estacks.length; i++) newEStacks[i] = estacks[i].copy();
-		return newEStacks;
-	}
-
 	/** 转颜色 */
 	static public int[] toColor(Collection<ElementStack> estacks) {
 		if (estacks == null) return null;
@@ -168,4 +176,50 @@ public class ElementHelper {
 			else return 1;
 		});
 	}
+
+	static public ElementStack[] toArray(Object... objects) {
+		List<ElementStack> list = toList(objects);
+		return list.toArray(new ElementStack[list.size()]);
+	}
+
+	static public List<ElementStack> toList(Object... objects) {
+		List<ElementStack> list = new ArrayList<>();
+		for (int i = 0; i < objects.length; i++) {
+			Object obj = objects[i];
+			if (obj instanceof ElementStack) list.add((ElementStack) obj);
+			else if (obj instanceof Element) {
+				int count = 1, power = 1;
+				int now = i;
+				if (now < objects.length - 1) {
+					if (objects[now + 1] instanceof Number) {
+						count = ((Number) objects[now + 1]).intValue();
+						i = now + 1;
+						if (now < objects.length - 2) {
+							if (objects[now + 2] instanceof Number) {
+								power = ((Number) objects[now + 2]).intValue();
+								i = now + 2;
+							}
+						}
+					}
+				}
+				list.add(new ElementStack((Element) obj, count, power));
+			}
+		}
+		return list;
+	}
+
+	static public List<ElementStack> toList(ElementStack... stacks) {
+		List<ElementStack> list = new ArrayList<ElementStack>(stacks.length);
+		for (ElementStack stack : stacks) list.add(stack);
+		return list;
+	}
+
+	/** 复制 */
+	static public ElementStack[] copy(ElementStack[] estacks) {
+		if (estacks == null) return null;
+		ElementStack[] newEStacks = new ElementStack[estacks.length];
+		for (int i = 0; i < estacks.length; i++) newEStacks[i] = estacks[i].copy();
+		return newEStacks;
+	}
+
 }

@@ -1,0 +1,23 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"#M#",
+		"MXM",
+		"#M#"
+	],
+	"key": {
+		"M": {
+			"item": "elementalsorcery:magic_piece"
+		},
+		"X": {
+			"item": "elementalsorcery:cube_core"
+		},
+		"#": {
+			"item": "elementalsorcery:magic_crystal"
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:elemental_cube",
+		"count": 2
+	}
+}

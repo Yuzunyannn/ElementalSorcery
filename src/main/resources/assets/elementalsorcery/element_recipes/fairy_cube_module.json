@@ -1,0 +1,32 @@
+{
+	"pattern": [
+		"MGM",
+		"TCT",
+		"MGM"
+	],
+	"key": {
+		"C": "elementalsorcery:magic_core",
+		"T": {
+			"item": "elementalsorcery:astone",
+			"data": 2
+		},
+		"M": "elementalsorcery:elf_crystal",
+		"G": "minecraft:glass_pane"
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 100,
+			"power": 300
+		},
+		{
+			"id": "earth",
+			"size": 200,
+			"power": 25
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:fairy_cube_module",
+		"count": 1
+	}
+}

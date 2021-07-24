@@ -103,13 +103,13 @@ public class ItemSpellbookElement extends ItemSpellbook {
 			RayTraceResult rt = WorldHelper.getLookAtBlock(world, entity, 32);
 			if (rt == null) return;
 			TileEntity tile = world.getTileEntity(rt.getBlockPos());
-			IElementInventory eInv = ElementHelper.getElementInventory(tile);
-			if (eInv == null) return;
+			IElementInventory srcInv = ElementHelper.getElementInventory(tile);
+			if (!ElementHelper.canExtract(srcInv)) return;
 
 			IElementInventory inventory = book.getInventory();
 
-			for (int i = 0; i < eInv.getSlots(); i++) {
-				ElementStack estack = eInv.getStackInSlot(i);
+			for (int i = 0; i < srcInv.getSlots(); i++) {
+				ElementStack estack = srcInv.getStackInSlot(i);
 				if (estack.isEmpty()) continue;
 				ElementStack e = estack.copy();
 				e.setCount(Math.min(AR_COUNT_PRE_TICK, e.getCount()));

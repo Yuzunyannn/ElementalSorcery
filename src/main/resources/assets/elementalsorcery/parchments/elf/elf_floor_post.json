@@ -23,6 +23,11 @@
             "type": "craft",
             "name": "elfBeacon",
             "item": "elementalsorcery:elf_beacon"
+        },
+        {
+            "type": "craft",
+            "name": "elfStar",
+            "item": "elementalsorcery:elf_star"
         }
     ]
 }

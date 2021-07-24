@@ -1,16 +1,25 @@
 package yuzunyannn.elementalsorcery.entity.fcube;
 
+import java.lang.reflect.Method;
+import java.util.List;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.container.ContainerFairyCube;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESImpClassRegister;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemMatchResult;
 
 public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 		implements INBTSerializable<NBTTagCompound> {
@@ -288,5 +297,44 @@ public class FairyCubeModule extends ESImpClassRegister.EasyImp<FairyCubeModule>
 		MODIFY_MULTI,
 		CONTAINER;
 	};
+
+	public static boolean tryMatchAndConsumeForCraft(Class<? extends FairyCubeModule> cls, World world, BlockPos pos,
+			IElementInventory inv) {
+		try {
+			Method method = cls.getDeclaredMethod("matchAndConsumeForCraft", World.class, BlockPos.class,
+					IElementInventory.class);
+			Object ret = method.invoke(cls, world, pos, inv);
+			if (ret instanceof Boolean) return (Boolean) ret;
+		} catch (ReflectiveOperationException e) {
+			if (ElementalSorcery.isDevelop) {
+				ElementalSorcery.logger.warn("存在模块没完成matchAndConsumeForCraft函数:" + cls.getName());
+			}
+		}
+		return false;
+	}
+
+	/** 匹配，如果匹配成功了，消耗元素，返回true，表示合成 */
+	@FairyCubeModuleRecipe
+	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
+		return false;
+	}
+
+	/** 通用匹配 */
+	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv,
+			List<ItemStack> needItems, List<ElementStack> needElements) {
+
+		for (ElementStack estack : needElements) {
+			ElementStack extractStack = inv.extractElement(estack, true);
+			if (!extractStack.arePowerfulAndMoreThan(estack)) return false;
+		}
+
+		ItemMatchResult result = ItemHelper.tryMatchItemInWord(world, pos, null, needItems);
+		if (!result.isSuccess()) return false;
+
+		result.doShrink();
+		for (ElementStack estack : needElements) inv.extractElement(estack, false);
+
+		return true;
+	}
 
 }

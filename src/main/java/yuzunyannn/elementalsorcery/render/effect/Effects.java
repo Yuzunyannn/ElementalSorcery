@@ -90,6 +90,13 @@ public class Effects {
 
 	// 下面是通用的show
 
+	public static void spawnTypeEffect(World world, Vec3d pos, int type, int level) {
+		NBTTagCompound effect = new NBTTagCompound();
+		effect.setByte("lev", (byte) level);
+		effect.setByte("type", (byte) 0);
+		Effects.spawnEffect(world, Effects.PARTICLE_EFFECT, pos, effect);
+	}
+
 	public static void spawnSummonEntity(Entity entity) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setInteger("target", entity.getEntityId());

@@ -386,7 +386,7 @@ public class CommandES extends CommandBase {
 		}
 		case "give": {
 			if (args.length < 3) throw new WrongUsageException("commands.es.quest.give.usage");
-			ResourceLocation id = new ResourceLocation(args[2]);
+			ResourceLocation id = TextHelper.toESResourceLocation(args[2]);
 			Quest quest = Quests.createQuest(id, player);
 			if (quest == null) throw new CommandException("commands.es.notFound", id.toString());
 			ItemHelper.addItemStackToPlayer(player, ItemQuest.createQuest(quest));

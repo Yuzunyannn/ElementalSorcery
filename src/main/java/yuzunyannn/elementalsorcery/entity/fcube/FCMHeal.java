@@ -2,16 +2,31 @@ package yuzunyannn.elementalsorcery.entity.fcube;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class FCMHeal extends FairyCubeModule {
+
+	@FairyCubeModuleRecipe
+	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
+		ElfTime time = new ElfTime(world);
+		if (!time.at(ElfTime.Period.AFTERNOON)) return false;
+		return matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.GOLDEN_APPLE, 4),
+				ElementHelper.toList(ESInit.ELEMENTS.WOOD, 10, 400));
+	}
 
 	public FCMHeal(EntityFairyCube fairyCube) {
 		super(fairyCube);

@@ -1,0 +1,34 @@
+{
+	"pattern": [
+		" M ",
+		"ESE",
+		"NDN"
+	],
+	"key": {
+		"M": {
+			"id": "elementalsorcery:magic_platform",
+			"data": 1
+		},
+		"S": {
+			"id": "elementalsorcery:estone",
+			"data": 2
+		},
+		"E": "elementalsorcery:element_crystal",
+		"N": {
+			"id": "elementalsorcery:estone",
+			"data": 0
+		},
+		"D": "minecraft:diamond"
+	},
+	"element": [
+		{
+			"id": "earth",
+			"size": 20,
+			"power": 20
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:element_platform",
+		"count": 1
+	}
+}

@@ -5,6 +5,9 @@ import java.util.List;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Biomes;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumActionResult;
@@ -14,15 +17,27 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.ESFakePlayer;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class FCMPlaceBlock extends FairyCubeModule {
+
+	@FairyCubeModuleRecipe
+	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
+		Biome biome = world.getBiome(pos);
+		if (biome != Biomes.PLAINS) return false;
+		return matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Blocks.DIRT, 256, Items.ENDER_PEARL, 8),
+				ElementHelper.toList(ESInit.ELEMENTS.ENDER, 128, 400, ESInit.ELEMENTS.AIR, 64, 10));
+	}
 
 	public FCMPlaceBlock(EntityFairyCube fairyCube) {
 		super(fairyCube);

@@ -1,14 +1,29 @@
 package yuzunyannn.elementalsorcery.entity.fcube;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class FCMPlunder extends FairyCubeModule {
+
+	@FairyCubeModuleRecipe
+	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
+		ElfTime time = new ElfTime(world);
+		if (!time.at(ElfTime.Period.DUSK)) return false;
+		return matchAndConsumeForCraft(world, pos, inv,
+				ItemHelper.toList(Items.ROTTEN_FLESH, 64, Items.BONE, 64, Items.GUNPOWDER, 64),
+				ElementHelper.toList(ESInit.ELEMENTS.WATER, 50, 200, ESInit.ELEMENTS.METAL, 100, 300));
+	}
 
 	protected float absorbRate = 0;
 

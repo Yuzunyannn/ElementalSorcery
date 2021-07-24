@@ -22,7 +22,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemMultiTexture.Mapper;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -39,7 +38,6 @@ import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.explore.StarPrays;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.tile.TileStarFlower;
@@ -122,9 +120,8 @@ public class BlockStarFlower extends BlockBush implements IGrowable, Mapper, ITi
 		bene(playerIn, pos);
 		if (worldIn.isRemote) return true;
 
-		NBTTagCompound nbt = FireworkEffect.fastNBT(0, 1, 0.1f, new int[] { 0xe5eef5, 0xf1f8ff, 0xd0e3ee },
+		FireworkEffect.spawn(worldIn, pos, 0, 1, 0.1f, new int[] { 0xe5eef5, 0xf1f8ff, 0xd0e3ee },
 				new int[] { 0xf1f8ff });
-		Effects.spawnEffect(worldIn, Effects.FIREWROK, pos, nbt);
 		return true;
 	}
 
@@ -172,9 +169,8 @@ public class BlockStarFlower extends BlockBush implements IGrowable, Mapper, ITi
 				ElfTime time = new ElfTime(worldIn);
 				if (worldIn.rand.nextFloat() < 0.75 && time.at(ElfTime.Period.MIDNIGHT))
 					worldIn.setBlockState(pos, state.withProperty(STAGE, STAGE_ELEMENT));
-				NBTTagCompound nbt = FireworkEffect.fastNBT(0, 1, 0.1f, new int[] { 0xe5eef5, 0xd0e3ee, 0x2bb9b0 },
+				FireworkEffect.spawn(worldIn, pos, 0, 1, 0.1f, new int[] { 0xe5eef5, 0xd0e3ee, 0x2bb9b0 },
 						new int[] { 0xf1f8ff });
-				Effects.spawnEffect(worldIn, Effects.FIREWROK, pos, nbt);
 			}
 		}
 	}

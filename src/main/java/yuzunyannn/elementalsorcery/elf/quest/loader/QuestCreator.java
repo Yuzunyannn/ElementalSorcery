@@ -86,6 +86,7 @@ public class QuestCreator implements IQuestCreator {
 	}
 
 	static private void loadReward(JsonObject data, List<QuestReward> list, Map<String, Object> context) {
+		if (data == null) return;
 		if (data.hasNumber("chance")) {
 			double chance = data.getNumber("chance").doubleValue();
 			Random rand = (Random) context.get("random");
@@ -105,16 +106,16 @@ public class QuestCreator implements IQuestCreator {
 			return;
 		}
 
-		QuestReward condtion = QuestReward.REGISTRY.newInstance(TextHelper.toESResourceLocation(key));
-		if (condtion == null) throw new QuestCreateFailException("create reward [" + key + "] fail");
+		QuestReward reward = QuestReward.REGISTRY.newInstance(TextHelper.toESResourceLocation(key));
+		if (reward == null) throw new QuestCreateFailException("create reward [" + key + "] fail");
 		try {
 			QuestLoadJson qlj = new QuestLoadJson(data);
 			qlj.setContext(context);
-			condtion.initWithConfig(qlj, context);
+			reward.initWithConfig(qlj, context);
 		} catch (ClassCastException e) {
 			throw new QuestCreateFailException(e);
 		}
-		list.add(condtion);
+		list.add(reward);
 	}
 
 	static public List<QuestReward> loadRewards(JsonArray json, Map<String, Object> context) {
@@ -126,21 +127,38 @@ public class QuestCreator implements IQuestCreator {
 		return list;
 	}
 
+	static public void loadCondition(JsonObject data, List<QuestCondition> list, Map<String, Object> context) {
+		if (data == null) return;
+		String key = data.needString("type");
+
+		if ("pool".equals(key)) {
+			JsonArray array = data.needArray("reward", "conditions");
+			WeightRandom<JsonObject> wr = new WeightRandom<>();
+			for (int j = 0; j < array.size(); j++) {
+				JsonObject jobj = array.getObject(j);
+				wr.add(jobj, jobj.needNumber("weight", "w").doubleValue());
+			}
+			loadCondition(wr.get(), list, context);
+			return;
+		}
+
+		QuestCondition condtion = QuestCondition.REGISTRY.newInstance(TextHelper.toESResourceLocation(key));
+		if (condtion == null) throw new QuestCreateFailException("create condition [" + key + "] fail");
+		try {
+			QuestLoadJson qlj = new QuestLoadJson(data);
+			qlj.setContext(context);
+			condtion.initWithConfig(qlj, context);
+		} catch (ClassCastException e) {
+			throw new QuestCreateFailException(e);
+		}
+		list.add(condtion);
+	}
+
 	static public List<QuestCondition> loadConditions(JsonArray json, Map<String, Object> context) {
 		List<QuestCondition> list = new LinkedList<>();
 		for (int i = 0; i < json.size(); i++) {
 			JsonObject data = json.needObject(i);
-			String key = data.needString("type");
-			QuestCondition condtion = QuestCondition.REGISTRY.newInstance(TextHelper.toESResourceLocation(key));
-			if (condtion == null) throw new QuestCreateFailException("create condition [" + key + "] fail");
-			try {
-				QuestLoadJson qlj = new QuestLoadJson(data);
-				qlj.setContext(context);
-				condtion.initWithConfig(qlj, context);
-			} catch (ClassCastException e) {
-				throw new QuestCreateFailException(e);
-			}
-			list.add(condtion);
+			loadCondition(data, list, context);
 		}
 		if (list.isEmpty()) throw new QuestCreateFailException("condition list is empty!");
 		return list;

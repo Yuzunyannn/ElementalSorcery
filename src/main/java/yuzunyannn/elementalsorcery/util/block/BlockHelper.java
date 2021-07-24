@@ -11,14 +11,17 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.oredict.OreDictionary;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class BlockHelper {
@@ -130,6 +133,10 @@ public class BlockHelper {
 		TileEntity tile = world.getTileEntity(pos);
 		if (tile == null) return null;
 		return tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, face);
+	}
+
+	static public IElementInventory getElementInventory(IBlockAccess world, BlockPos pos, EnumFacing face) {
+		return ElementHelper.getElementInventory(world.getTileEntity(pos));
 	}
 
 	/** 尝试寻找某个方块 */

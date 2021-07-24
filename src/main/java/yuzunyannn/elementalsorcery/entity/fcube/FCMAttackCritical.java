@@ -1,11 +1,26 @@
 package yuzunyannn.elementalsorcery.entity.fcube;
 
+import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class FCMAttackCritical extends FairyCubeModule {
+
+	@FairyCubeModuleRecipe
+	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
+		ElfTime time = new ElfTime(world);
+		if (!time.at(ElfTime.Period.NIGHT)) return false;
+
+		return matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.DIAMOND_AXE, 1),
+				ElementHelper.toList(ESInit.ELEMENTS.FIRE, 75, 50));
+	}
 
 	protected float absorbRate = 0;
 

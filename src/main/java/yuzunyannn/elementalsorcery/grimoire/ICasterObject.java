@@ -8,10 +8,11 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface ICasterObject {
+public interface ICasterObject extends ICapabilityProvider {
 
 	Vec3d getPositionVector();
 
@@ -51,6 +52,11 @@ public interface ICasterObject {
 	@SideOnly(Side.CLIENT)
 	default boolean isClientPlayer() {
 		return asEntity() == Minecraft.getMinecraft().player;
+	}
+
+	default void markDirty() {
+		TileEntity tile = this.asTileEntity();
+		if (tile != null) tile.markDirty();
 	}
 
 }

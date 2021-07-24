@@ -4,6 +4,7 @@ import net.minecraft.item.ItemDye;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -11,8 +12,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class FireworkEffect {
 
-	static public NBTTagCompound fastNBT(int type, int size, float speed, int color, int colorFade) {
-		return fastNBT(type, size, speed, new int[] { color }, new int[] { colorFade });
+	static public void spawn(World world, BlockPos pos, int type, int size, float speed, int[] color, int[] colorFade) {
+		spawn(world, new Vec3d(pos).addVector(0.5, 0.5, 0.5), type, size, speed, color, colorFade);
+	}
+
+	static public void spawn(World world, Vec3d pos, int type, int size, float speed, int[] color, int[] colorFade) {
+		NBTTagCompound nbt = FireworkEffect.fastNBT(type, size, speed, color, colorFade);
+		Effects.spawnEffect(world, Effects.FIREWROK, pos, nbt);
 	}
 
 	static public NBTTagCompound fastNBT(int type, int size, float speed, int[] color, int[] colorFade) {

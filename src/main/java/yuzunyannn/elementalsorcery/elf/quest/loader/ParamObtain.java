@@ -129,6 +129,7 @@ public class ParamObtain {
 			} else stack.addEnchantment(enchantment, level);
 			return true;
 		}
+		case "priceRandom":
 		case "prandom": {
 			int base = doRandom(ctrl, context);
 			QuestType qType = (QuestType) context.get("self");

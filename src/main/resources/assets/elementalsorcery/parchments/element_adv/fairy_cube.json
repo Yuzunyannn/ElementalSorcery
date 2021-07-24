@@ -1,0 +1,33 @@
+{
+    "lev": 4,
+    "need": [
+        "elf/dread_cube",
+        "elf/elf_post",
+        "element_adv/element_platform"
+    ],
+    "linked": "elementalsorcery:fairy_cube",
+    "type": "mult",
+    "lock": 0,
+    "pages": [
+        {
+            "type": "craft",
+            "name": "fairyCube",
+            "item": "elementalsorcery:fairy_cube"
+        },
+        {
+            "type": "craft",
+            "name": "fairyCubeModule",
+            "item": "elementalsorcery:fairy_cube_module"
+        },
+        {
+            "type": "normal",
+            "name": "fairyCubeModuleCraft",
+            "differ": "fir"
+        },
+        {
+            "type": "normal",
+            "name": "fairyCubeModuleCraft",
+            "differ": "sec"
+        }
+    ]
+}

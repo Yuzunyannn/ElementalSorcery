@@ -1,0 +1,24 @@
+{
+	"pattern": [
+		"MSM",
+		"GCG",
+		"MGM"
+	],
+	"key": {
+		"C": "elementalsorcery:cube_core",
+		"S": "elementalsorcery:elf_star",
+		"M": "elementalsorcery:elf_crystal",
+		"G": "minecraft:glass_pane"
+	},
+	"element": [
+		{
+			"id": "wood",
+			"size": 100,
+			"power": 300
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:fairy_cube",
+		"count": 1
+	}
+}

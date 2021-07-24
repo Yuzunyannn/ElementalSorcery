@@ -247,10 +247,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 
 		if (world.isRemote) return;
 
-		NBTTagCompound effect = new NBTTagCompound();
-		effect.setByte("lev", (byte) level);
-		effect.setByte("type", (byte) 0);
-		Effects.spawnEffect(world, Effects.PARTICLE_EFFECT, pos, effect);
+		Effects.spawnTypeEffect(world, pos, 0, level);
 	}
 
 }

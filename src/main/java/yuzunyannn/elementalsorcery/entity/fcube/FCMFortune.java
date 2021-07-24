@@ -1,14 +1,29 @@
 package yuzunyannn.elementalsorcery.entity.fcube;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class FCMFortune extends FairyCubeModule {
+
+	@FairyCubeModuleRecipe
+	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
+		ElfTime time = new ElfTime(world);
+		if (!time.at(ElfTime.Period.DUSK)) return false;
+		return matchAndConsumeForCraft(world, pos, inv,
+				ItemHelper.toList(Items.COAL, 32, Items.DIAMOND, 4, Items.EMERALD, 4),
+				ElementHelper.toList(ESInit.ELEMENTS.WOOD, 24, 400, ESInit.ELEMENTS.METAL, 100, 300));
+	}
 
 	protected float absorbRate = 0;
 

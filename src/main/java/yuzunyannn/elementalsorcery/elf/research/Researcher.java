@@ -33,7 +33,10 @@ public class Researcher implements INBTSerializable<NBTTagCompound> {
 		if (!state.isFullBlock() || !state.isFullCube()) return;
 		if (block instanceof ITileEntityProvider) {
 			if (rand.nextBoolean()) researchSP(player, Topics.ENGINE);
-		} else researchSP(player, Topics.NATURAL);
+		} else {
+			if (block.getRegistryName().getResourcePath().indexOf("ender") != -1) researchSP(player, Topics.ENDER);
+			else researchSP(player, Topics.NATURAL);
+		}
 	}
 
 	public static void onAttackWithEntity(EntityPlayer player, Entity target) {

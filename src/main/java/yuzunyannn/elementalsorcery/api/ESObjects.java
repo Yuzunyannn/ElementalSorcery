@@ -90,6 +90,9 @@ public class ESObjects {
 		public Item FAIRY_CUBE;
 		public Item FAIRY_CUBE_MODULE;
 		public Item RABID_LEATHER;
+		public Item CUBE_CORE;
+		public Item DREAD_GEM;
+
 	}
 
 	static public class Blocks {
@@ -155,6 +158,7 @@ public class ESObjects {
 		public Block SCARLET_CRYSTAL_ORE;
 		public Block STAR_FLOWER;
 		public Block CRUDE_QUARTZ;
+		public Block ELEMENT_PLATFORM;
 	}
 
 	static public class Elements {

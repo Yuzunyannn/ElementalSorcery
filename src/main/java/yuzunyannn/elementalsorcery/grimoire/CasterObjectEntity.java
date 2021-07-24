@@ -2,9 +2,11 @@ package yuzunyannn.elementalsorcery.grimoire;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 
 public class CasterObjectEntity implements ICasterObject {
 
@@ -39,4 +41,13 @@ public class CasterObjectEntity implements ICasterObject {
 		return entity.world;
 	}
 
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		return entity.hasCapability(capability, facing);
+	}
+	
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		return entity.getCapability(capability, facing);
+	}
 }

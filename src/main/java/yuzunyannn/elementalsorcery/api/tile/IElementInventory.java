@@ -83,7 +83,7 @@ public interface IElementInventory extends IItemCapbiltitySyn {
 	 *
 	 * @param slot     要取出的槽位
 	 * @param estack   要取出来如同estack一样的内容，该变量不应被任何修改
-	 * @param simulate 如果为true，插入结果仅为模拟的结果
+	 * @param simulate 如果为true取出的结果仅为模拟的结果
 	 * @return 实际能取出来的内容
 	 **/
 	@Nonnull
