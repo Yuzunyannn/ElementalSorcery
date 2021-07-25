@@ -190,7 +190,6 @@ mantra.launchElementCrafting.name=合成启动咒文
 mantra.launchElementDeconstruct.name=瓦解启动咒文
 mantra.launchBuilingRecord.name=建筑解析启动咒文
 mantra.launchElementConstruct.name=构成启动咒文
-
 mantra.enderTeleport.name=末影移动
 mantra.enderTeleport.describe=末影元素与咒文结合，瞬移再也不是末影人的特权了。嗯？为啥不能在雨天使用...
 mantra.float.name=漂浮
@@ -354,12 +353,6 @@ info.analysisAltar.item=解析物品：
 info.analysisAltar.complex=结构复杂度：%d
 info.elementCrafting=元素合成
 info.level=%d级
-lev.defective=次品
-lev.unsuited=不适合
-lev.subordinate=下级
-lev.intermediate=中级
-lev.senior=高级
-lev.super=传说
 info.written=上面写着：%s
 info.crystal.frequency=水晶频率：%.1f
 info.crystal.percept=感知的频率：%.1f
@@ -401,6 +394,13 @@ info.sound.long=悠长
 info.previous=上一个%s
 info.fairy.cube.module.count=拥有符文：%d
 
+lev.defective=次品
+lev.unsuited=不适合
+lev.subordinate=下级
+lev.intermediate=中级
+lev.senior=高级
+lev.super=传说
+
 fairy.cube.destoryBlock.name=挖掘
 fairy.cube.attrSilk.name=精准
 fairy.cube.fortune.name=时运
@@ -413,7 +413,6 @@ fairy.cube.attackRange.name=进攻区域
 fairy.cube.attackCritical.name=暴击
 fairy.cube.expUp.name=经验上升
 fairy.cube.farm.name=农主
-
 fairy.cube.destoryBlock.random=随机
 fairy.cube.destoryBlock.direct=隧道
 fairy.cube.place.single=单一
@@ -598,7 +597,6 @@ page.rabidRabbit=狂暴兔
 page.rabidRabbit.ct=全身雪白但略微发红，眼睛尤为发红。它们会疯狂的攻击周围的生物，并从中获取能量迅速的繁殖。\n狂暴兔但只并不足畏惧，一旦他们成群的发送攻击，可不是什么好受的事情。\n通过兔皮或者兔脚作为信物可以召唤狂暴兔，击败它们有几率掉落狂暴皮革。
 page.dreadCube=恐惧立方体
 page.dreadCube.ct=来自异界的漆黑立方体生物，漂浮在半空中，吞噬者周围所有的方块，失去活性的方块会变成无用的沙砾，同时会吐出多余的灵魂碎片。\n好在它不会主动发起攻击，这可能会让你想到，用它来自动生产灵魂碎片。\n当受到玩家攻击后会召唤怪物并进入休眠状态。如果召唤怪物成功，将会消耗自身的生命。生命越少召唤的怪物越多越强。\n通过任务得到的恐惧碎片作为信物可以召唤它，击败它们有几率掉落恐惧核心和立方体核心。
-
 page.crafting.need=需要元素参与合成：
 page.crafting.show=%s需要%d强度下限 %d 
 page.crafting.npshow=%s需要%d
@@ -843,7 +841,6 @@ es.adv.smelt.title=更好的炉灶
 es.adv.smelt.description=制作一个圆石烧炼箱和圆石灶台
 es.adv.archaeologists.title=考古家
 es.adv.archaeologists.description=获得并解读一个古卷
-
 es.adv.elfTree.title=寻找精灵树
 es.adv.elfTree.description=找到一颗精灵树，获取精灵木吧
 es.adv.elfKiller.title=精灵杀手
@@ -866,7 +863,6 @@ es.adv.rockCamera.title=自然学家
 es.adv.rockCamera.description=获取到岩石相机，并使用其对方块进行记录
 es.adv.elfPost.title=忠实客户
 es.adv.elfPost.description=全面使用精灵快递服务
-
 es.adv.rite1.title=升级仪式桌
 es.adv.rite1.description=制作一个1级的仪式桌，从而来获取更多教程吧
 es.adv.meltCauldron.title=做好炼制的万全准备
@@ -879,7 +875,6 @@ es.adv.astone.title=炼制专家
 es.adv.astone.description=成功获取通魔石
 es.adv.rite2.title=再次升级仪式桌
 es.adv.rite2.description=制作一个2级的仪式桌，从而来获取关于魔动设备的教程吧
-
 es.adv.MDMagicGen.title=魔力时代
 es.adv.MDMagicGen.description=制作出热力魔分箱，进入使用魔力装置的时代
 es.adv.MDRubbleRepair.title=安心炼制
@@ -888,7 +883,6 @@ es.adv.MDInfusion.title=注魔学
 es.adv.MDInfusion.description=制作出注魔箱，开始注魔！
 es.adv.MDDeconstructBox.title=物质瓦解
 es.adv.MDDeconstructBox.description=制作出物质瓦解箱，将物品瓦解成元素
-
 es.adv.infusionMagicCrystal.title=白日的馈赠
 es.adv.infusionMagicCrystal.description=注魔得到魔力水晶
 es.adv.infusionSpellCrystal.title=知识的馈赠
@@ -899,14 +893,12 @@ es.adv.azureCrystal.title=烈焰的馈赠
 es.adv.azureCrystal.description=魔力水晶和蓝晶石吸收岩浆形成湛蓝水晶
 es.adv.infusionArchCrystal.title=沙漠的馈赠
 es.adv.infusionArchCrystal.description=注魔得到建筑水晶
-
 es.adv.estone.title=祭坛基材
 es.adv.estone.description=制作获得魔力石英块
 es.adv.rite3.title=元素时代的向导
 es.adv.rite3.description=制作一个3级的仪式桌，从而来获取关于元素篇章上的教程吧
 es.adv.elementAge.title=元素时代
 es.adv.elementAge.description=拿着你的元素立方体，开始使用元素的时代
-
 es.adv.spellbookEnch.title=这也可以？
 es.adv.spellbookEnch.description=将附魔书从附魔台上拆下
 es.adv.spellbook.title=魔法师学徒
@@ -919,7 +911,6 @@ es.adv.spellbookElement.title=元素转移
 es.adv.spellbookElement.description=通过魔法书桌制造一个元素之书
 es.adv.spellbookArchitecture.title=怠惰的建筑师
 es.adv.spellbookArchitecture.description=通过魔法书桌制造一个建筑之书
-
 es.adv.elementWorkbench.title=元素合成
 es.adv.elementWorkbench.description=使用元素工作台，通过元素合成一样物品吧！
 es.adv.elementCraftingAltar.title=高级元素合成
@@ -938,7 +929,6 @@ es.adv.analysisAltar.title=探本溯源
 es.adv.analysisAltar.description=建造出一个结构解析台
 es.adv.supremeAltar.title=传说中的祭坛
 es.adv.supremeAltar.description=建造一个元素方桌，然后搭建元素神坛吧
-
 es.adv.rite5.title=真·最终仪式
 es.adv.rite5.description=制作一个5级的仪式桌，从而来获取关于神坛章的教程吧
 es.adv.itemConstruct.title=物质重组

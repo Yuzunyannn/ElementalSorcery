@@ -1,0 +1,4613 @@
+{
+  "itemGroup": {
+    "itemGroup.ElementalSorcery": {
+      "zh_CN": "元素魔法",
+      "en_US": "Elemental Sorcery",
+      "ja_JP": "元素魔法"
+    }
+  },
+  "item": {
+    "item.kyanite.name": {
+      "zh_CN": "蓝晶石",
+      "en_US": "Kyanite",
+      "ja_JP": "カイヤナイト"
+    },
+    "item.magicalPiece.name": {
+      "zh_CN": "魔力碎片",
+      "en_US": "Magic Fragment",
+      "ja_JP": "魔力欠片"
+    },
+    "item.magicalEnderEye.name": {
+      "zh_CN": "带有魔力的末影之眼",
+      "en_US": "Eye of Ender with Magic",
+      "ja_JP": "魔力を帯びたエンダーアイ"
+    },
+    "item.kyanitePickaxe.name": {
+      "zh_CN": "蓝晶石镐",
+      "en_US": "Kyanite Pickaxe",
+      "ja_JP": "カイヤナイトの鶴嘴"
+    },
+    "item.kyaniteAxe.name": {
+      "zh_CN": "蓝晶石斧",
+      "en_US": "Kyanite Axe",
+      "ja_JP": "カイヤナイトの斧"
+    },
+    "item.kyaniteSpade.name": {
+      "zh_CN": "蓝晶石铲",
+      "en_US": "Kyanite Shovel",
+      "ja_JP": "カイヤナイトのシャベル"
+    },
+    "item.kyaniteHoe.name": {
+      "zh_CN": "蓝晶石锄",
+      "en_US": "Kyanite Hoe",
+      "ja_JP": "カイヤナイトんのクワ"
+    },
+    "item.kyaniteSword.name": {
+      "zh_CN": "蓝晶石剑",
+      "en_US": "Kyanite Sword",
+      "ja_JP": "カイヤナイトの剣"
+    },
+    "item.spellbook.name": {
+      "zh_CN": "平凡的魔导书",
+      "en_US": "Ordinary Wizard Book",
+      "ja_JP": "平凡の魔導書"
+    },
+    "item.spellbookArchitecture.name": {
+      "zh_CN": "建筑之魔导书",
+      "en_US": "Wizard Book of Architecture",
+      "ja_JP": "建築の魔導書"
+    },
+    "item.spellbookEnchantment.name": {
+      "zh_CN": "附魔书",
+      "en_US": "Enchantment Book",
+      "ja_JP": "エンチャントの本"
+    },
+    "item.spellbookLaunch.name": {
+      "zh_CN": "起始之魔导书",
+      "en_US": "Wizard Book of Launcher",
+      "ja_JP": "起動の魔導書"
+    },
+    "item.spellbookElement.name": {
+      "zh_CN": "元素之魔导书",
+      "en_US": "Wizard Book of Elements",
+      "ja_JP": "元素の魔導書"
+    },
+    "item.architectureCrystal.name": {
+      "zh_CN": "建筑水晶",
+      "en_US": "Architectural Crystal",
+      "ja_JP": "建築の水晶"
+    },
+    "item.elementCrystal.name": {
+      "zh_CN": "元素水晶",
+      "en_US": "Elemental Crystal",
+      "ja_JP": "元素の水晶"
+    },
+    "item.magicalCrystal.name": {
+      "zh_CN": "魔力水晶石",
+      "en_US": "Magic Crystal",
+      "ja_JP": "魔力の水晶石"
+    },
+    "item.spellCrystal.name": {
+      "zh_CN": "咒术水晶",
+      "en_US": "Incantation Crystal",
+      "ja_JP": "呪術の水晶"
+    },
+    "item.itemCrystal.name": {
+      "zh_CN": "结构水晶",
+      "en_US": "Structural Crystal",
+      "ja_JP": "構造の水晶"
+    },
+    "item.orderCrystal.name": {
+      "zh_CN": "秩序水晶",
+      "en_US": "Order Crystal",
+      "ja_JP": "秩序の水晶"
+    },
+    "item.azureCrystal.name": {
+      "zh_CN": "湛蓝水晶",
+      "en_US": "Azure Crystal",
+      "ja_JP": "真っ青の水晶"
+    },
+    "item.resonantCrystal.name": {
+      "zh_CN": "共鸣水晶",
+      "en_US": "Resonance Crystal",
+      "ja_JP": "共鳴の水晶"
+    },
+    "item.natureCrystal.name": {
+      "zh_CN": "自然水晶",
+      "en_US": "Nature Crystal",
+      "ja_JP": "自然の水晶"
+    },
+    "item.elfCrystal.name": {
+      "zh_CN": "精灵结晶",
+      "en_US": "Elf Crystal",
+      "ja_JP": "精霊 の結晶"
+    },
+    "item.parchment.name": {
+      "zh_CN": "羊皮纸",
+      "en_US": "Parchment",
+      "ja_JP": "羊皮紙"
+    },
+    "item.magicPaper.name": {
+      "zh_CN": "魔法纸张",
+      "en_US": "Magic Paper",
+      "ja_JP": "魔法の紙"
+    },
+    "item.spellPaper.name": {
+      "zh_CN": "咒术纸张",
+      "en_US": "Incantation Paper",
+      "ja_JP": "呪術の紙"
+    },
+    "item.spellbookCover.name": {
+      "zh_CN": "魔导书封面",
+      "en_US": "Front Cover",
+      "ja_JP": "魔導書の表紙"
+    },
+    "item.spellbookCover.back.name": {
+      "zh_CN": "魔导书封底",
+      "en_US": "Back Cover",
+      "ja_JP": "魔導書の裏表紙"
+    },
+    "item.scroll.name": {
+      "zh_CN": "羊皮卷轴",
+      "en_US": "Parchment Scroll",
+      "ja_JP": "羊皮巻物"
+    },
+    "item.manual.name": {
+      "zh_CN": "元素手册",
+      "en_US": "Parchment Manual",
+      "ja_JP": "元素マニュアル"
+    },
+    "item.magicRuler.name": {
+      "zh_CN": "魔力标尺",
+      "en_US": "Magic Ruler",
+      "ja_JP": "魔力ルーラー"
+    },
+    "item.magicStone.name": {
+      "zh_CN": "魔石",
+      "en_US": "Dimensity",
+      "ja_JP": "魔石"
+    },
+    "item.tinyKnife.name": {
+      "zh_CN": "精巧刻刀",
+      "en_US": "Exquisite Carving Knife",
+      "ja_JP": "精巧彫刻刀"
+    },
+    "item.MDBase.name": {
+      "zh_CN": "魔动基座",
+      "en_US": "Magic Drive Foundation",
+      "ja_JP": "魔動の土台"
+    },
+    "item.riteManual.name": {
+      "zh_CN": "祭品研究手册",
+      "en_US": "Rite Research Manual",
+      "ja_JP": "祭物研究マニュアル"
+    },
+    "item.redHandset.name": {
+      "zh_CN": "红石遥控",
+      "en_US": "Red Stone Remote Control",
+      "ja_JP": "ラッドストーンリモコン"
+    },
+    "item.supremeTable.leg.name": {
+      "zh_CN": "魔力桌腿",
+      "en_US": "Magic Square Table Leg",
+      "ja_JP": "魔力四角桌の脚"
+    },
+    "item.supremeTable.top.name": {
+      "zh_CN": "魔力桌板",
+      "en_US": "Magic Square Table Top",
+      "ja_JP": "魔力四角桌のデスクトップ"
+    },
+    "item.elfCoin.name": {
+      "zh_CN": "精灵钱币",
+      "en_US": "Elf Coin",
+      "ja_JP": "精霊貨幣"
+    },
+    "item.elfPurse.name": {
+      "zh_CN": "精灵钱袋",
+      "en_US": "Elf Purse",
+      "ja_JP": "精霊巾着"
+    },
+    "item.natureDust.nature.name": {
+      "zh_CN": "自然粉尘",
+      "en_US": "Nature Dust",
+      "ja_JP": "自然粉塵"
+    },
+    "item.natureDust.explore.name": {
+      "zh_CN": "求知粉尘",
+      "en_US": "Seek Dust",
+      "ja_JP": "知識求め粉塵"
+    },
+    "item.natureDust.exploreAdv.name": {
+      "zh_CN": "探索粉尘",
+      "en_US": "Explore Dust",
+      "ja_JP": "探索し粉塵"
+    },
+    "item.grimoire.name": {
+      "zh_CN": "魔典",
+      "en_US": "Grimoire",
+      "ja_JP": "魔典"
+    },
+    "item.ancientPaper.normal.name": {
+      "zh_CN": "古卷",
+      "en_US": "Ancient Paper",
+      "ja_JP": "古巻"
+    },
+    "item.ancientPaper.unscramble.name": {
+      "zh_CN": "古卷解读中",
+      "en_US": "Unscramble Ancient Paper",
+      "ja_JP": "古巻解読中"
+    },
+    "item.ancientPaper.new.name": {
+      "zh_CN": "空白书写纸",
+      "en_US": "Blank Writing Paper",
+      "ja_JP": "空白の呪文の紙"
+    },
+    "item.ancientPaper.newWritten.name": {
+      "zh_CN": "书写纸",
+      "en_US": "Writing Paper",
+      "ja_JP": "呪文の紙"
+    },
+    "item.quest.name": {
+      "zh_CN": "委托书",
+      "en_US": "Quest",
+      "ja_JP": "依頼書"
+    },
+    "item.elfWatch.name": {
+      "zh_CN": "精灵时钟",
+      "en_US": "Elf Watch",
+      "ja_JP": "精霊時計"
+    },
+    "item.magicGold.name": {
+      "zh_CN": "魔金",
+      "en_US": "Magical Gold",
+      "ja_JP": "魔金"
+    },
+    "item.magicGoldPickaxe.name": {
+      "zh_CN": "魔金镐",
+      "en_US": "Magical Gold Pickaxe",
+      "ja_JP": "魔金の鶴嘴"
+    },
+    "item.magicGoldAxe.name": {
+      "zh_CN": "魔金斧",
+      "en_US": "Magical Gold Axe",
+      "ja_JP": "魔金の斧"
+    },
+    "item.magicGoldSpade.name": {
+      "zh_CN": "魔金铲",
+      "en_US": "Magical Gold Spade",
+      "ja_JP": "魔金のシャベル"
+    },
+    "item.magicGoldHoe.name": {
+      "zh_CN": "魔金锄",
+      "en_US": "Magical Gold Hoe",
+      "ja_JP": "魔金のクワ"
+    },
+    "item.magicGoldSword.name": {
+      "zh_CN": "魔金剑",
+      "en_US": "Magical Gold Sword",
+      "ja_JP": "魔金の剣"
+    },
+    "item.parcel.name": {
+      "zh_CN": "包裹",
+      "en_US": "Parcel",
+      "ja_JP": "小包"
+    },
+    "item.addressPlate.normal.name": {
+      "zh_CN": "地址牌",
+      "en_US": "Address Plate",
+      "ja_JP": "住所カード"
+    },
+    "item.addressPlate.vip.name": {
+      "zh_CN": "超级地址牌",
+      "en_US": "VIP Address Plate",
+      "ja_JP": "超級住所カード"
+    },
+    "item.elfStar.name": {
+      "zh_CN": "精灵之星",
+      "en_US": "Elf Star",
+      "ja_JP": "精霊の星"
+    },
+    "item.jumpGem.name": {
+      "zh_CN": "折光宝石",
+      "en_US": "Refract Gem",
+      "ja_JP": "折り光宝石"
+    },
+    "item.unscrambleNote.name": {
+      "zh_CN": "解读手账",
+      "en_US": "Unscramble Note",
+      "ja_JP": "解読手帳"
+    },
+    "item.soulFragment.name": {
+      "zh_CN": "灵魂碎片",
+      "en_US": "Soul Fragment",
+      "ja_JP": "魂のかけら"
+    },
+    "item.soulWoodSword.name": {
+      "zh_CN": "灵魂缠绕的木剑",
+      "en_US": "Wood Sword with Soul Entwined",
+      "ja_JP": "魂に纏わる木剣"
+    },
+    "item.relicGem.name": {
+      "zh_CN": "遗迹宝石",
+      "en_US": "Relic Gem",
+      "ja_JP": "遺跡宝石"
+    },
+    "item.rockCamera.name": {
+      "zh_CN": "岩石相机",
+      "en_US": "Rock Camera",
+      "ja_JP": "岩石カメラ"
+    },
+    "item.relicFragment.name": {
+      "zh_CN": "遗迹碎片",
+      "en_US": "Relic fragment",
+      "ja_JP": "遺跡のかけら"
+    },
+    "item.quill.normal.name": {
+      "zh_CN": "羽毛笔",
+      "en_US": "Quill",
+      "ja_JP": "羽ペン"
+    },
+    "item.quill.magic.name": {
+      "zh_CN": "魔力羽毛笔",
+      "en_US": "Magic Quill",
+      "ja_JP": "魔力の羽ペン"
+    },
+    "item.quill.fire.name": {
+      "zh_CN": "火之羽毛笔",
+      "en_US": "Fire Quill",
+      "ja_JP": "火の羽ペン"
+    },
+    "item.quill.water.name": {
+      "zh_CN": "水之羽毛笔",
+      "en_US": "Water Quill",
+      "ja_JP": "水の羽ペン"
+    },
+    "item.quill.element.name": {
+      "zh_CN": "元素之羽毛笔 ",
+      "en_US": "Element Quill",
+      "ja_JP": "元素の羽ペン "
+    },
+    "item.fusionCrystal.name": {
+      "zh_CN": "融合水晶",
+      "en_US": "Fusion Crystal",
+      "ja_JP": "融合の水晶"
+    },
+    "item.vortex.name": {
+      "zh_CN": "漩涡",
+      "en_US": "Vortex",
+      "ja_JP": "渦巻き"
+    },
+    "item.elementStone.name": {
+      "zh_CN": "元素之石",
+      "en_US": "Element Stone",
+      "ja_JP": "元素の石"
+    },
+    "item.lifeLeather.name": {
+      "zh_CN": "生命之革",
+      "en_US": "Life Leather",
+      "ja_JP": "生命の革"
+    },
+    "item.lifeLeather.incomplete.name": {
+      "zh_CN": "灵魂缠绕的皮革",
+      "en_US": "Leather with Soul Entwined",
+      "ja_JP": "魂に纏わるレザー"
+    },
+    "item.writtenPaper.name": {
+      "zh_CN": "魔文纸张",
+      "en_US": "Magical Written Paper",
+      "ja_JP": "魔文の紙"
+    },
+    "item.mantraPaper.name": {
+      "zh_CN": "咒文纸张",
+      "en_US": "Mantra Paper",
+      "ja_JP": "呪文の紙"
+    },
+    "item.magicBlastWand.name": {
+      "zh_CN": "魔爆权杖",
+      "en_US": "Magic Blast Wand",
+      "ja_JP": "魔爆権杖"
+    },
+    "item.soulKillerSword.name": {
+      "zh_CN": "噬魂剑",
+      "en_US": "Soul Killer",
+      "ja_JP": "魂喰の剣"
+    },
+    "item.scapegoat.name": {
+      "zh_CN": "替罪羊",
+      "en_US": "Scapegoat",
+      "ja_JP": "スケープゴート"
+    },
+    "item.magicCore.name": {
+      "zh_CN": "魔力核心",
+      "en_US": "Magic Core",
+      "ja_JP": "魔力のたま"
+    },
+    "item.scarletCrystal.name": {
+      "zh_CN": "绯红水晶",
+      "en_US": "Scarlet Crystal",
+      "ja_JP": "緋色の水晶"
+    },
+    "item.starBell.normal.name": {
+      "zh_CN": "铃铛",
+      "en_US": "Bell",
+      "ja_JP": "鈴"
+    },
+    "item.starBell.star.name": {
+      "zh_CN": "星之铃",
+      "en_US": "Star Bell",
+      "ja_JP": "星の鈴"
+    },
+    "item.appleCandy.name": {
+      "zh_CN": "苹果糖",
+      "en_US": "Apple Candy",
+      "ja_JP": "林檎飴"
+    },
+    "item.fairyCube.name": {
+      "zh_CN": "精灵立方体",
+      "en_US": "Elf Cube",
+      "ja_JP": "精霊立方体"
+    },
+    "item.fairyCubeModule.name": {
+      "zh_CN": "精灵立方体符文",
+      "en_US": "Elf Cube Rune",
+      "ja_JP": "精霊立方体のルーン"
+    },
+    "item.rabidLeather.name": {
+      "zh_CN": "狂暴皮革",
+      "en_US": "Rabid Leather",
+      "ja_JP": "狂暴の革"
+    },
+    "item.dreadFragment.name": {
+      "zh_CN": "恐惧碎片",
+      "en_US": "Dread Fragment",
+      "ja_JP": "恐怖のかけら"
+    },
+    "item.dreadGem.name": {
+      "zh_CN": "恐惧宝石",
+      "en_US": "Dread Gem",
+      "ja_JP": "恐怖の宝石"
+    },
+    "item.cubeCore.name": {
+      "zh_CN": "立方体核心",
+      "en_US": "Cube Core",
+      "ja_JP": "立方体の核心"
+    }
+  },
+  "tile": {
+    "tile.elementalCube.name": {
+      "zh_CN": "元素立方体",
+      "en_US": "Element Cube",
+      "ja_JP": "元素立方体"
+    },
+    "tile.smeltBox.cobblestone.name": {
+      "zh_CN": "圆石烧炼箱",
+      "en_US": "Cobblestone Smelting Box",
+      "ja_JP": "丸石の烧炼箱"
+    },
+    "tile.smeltBox.iron.name": {
+      "zh_CN": "铁质烧炼箱",
+      "en_US": "Iron Smelting Box",
+      "ja_JP": "铁の烧炼箱"
+    },
+    "tile.smeltBox.kyanite.name": {
+      "zh_CN": "蓝晶石烧炼箱",
+      "en_US": "kyanite Smelting Box",
+      "ja_JP": "カイヤナイトの烧炼箱"
+    },
+    "tile.hearth.cobblestone.name": {
+      "zh_CN": "圆石灶台",
+      "en_US": "Cobblestone Hearth",
+      "ja_JP": "丸石の囲炉裏"
+    },
+    "tile.hearth.iron.name": {
+      "zh_CN": "铁质灶台",
+      "en_US": "Iron Hearth",
+      "ja_JP": "铁の囲炉裏"
+    },
+    "tile.hearth.kyanite.name": {
+      "zh_CN": "蓝晶石灶台",
+      "en_US": "kyanite Hearth",
+      "ja_JP": "カイヤナイトの囲炉裏"
+    },
+    "tile.kyaniteOre.name": {
+      "zh_CN": "蓝晶石矿",
+      "en_US": "Kyanite Ore",
+      "ja_JP": "カイヤナイト鉱石"
+    },
+    "tile.kyaniteBlock.name": {
+      "zh_CN": "蓝晶石方块",
+      "en_US": "Block of Kyanite",
+      "ja_JP": "カイヤナイトブロック"
+    },
+    "tile.estone.default.name": {
+      "zh_CN": "魔力石英块",
+      "en_US": "Block of Magic Quartz",
+      "ja_JP": "魔力石英ブロック"
+    },
+    "tile.estone.chiseled.name": {
+      "zh_CN": "錾制魔力石英块",
+      "en_US": "Chisel Magic Quartz Block",
+      "ja_JP": "模様入りの魔力石英ブロック"
+    },
+    "tile.estone.lines.name": {
+      "zh_CN": "竖纹魔力石英块",
+      "en_US": "Pillar Magic Quartz Block",
+      "ja_JP": "柱状の魔力石英ブロック"
+    },
+    "tile.estoneStairs.name": {
+      "zh_CN": "魔力石英楼梯",
+      "en_US": "Magic Quartz Stairs",
+      "ja_JP": "魔力石英の階段"
+    },
+    "tile.estoneSlab.name": {
+      "zh_CN": "魔力石英台阶",
+      "en_US": "Magic Quartz Slab",
+      "ja_JP": "魔力石英のハーフブロック"
+    },
+    "tile.estonePrism.name": {
+      "zh_CN": "棱镜石英",
+      "en_US": "Prism Quartz",
+      "ja_JP": "プリズムの石英ブロック"
+    },
+    "tile.magicPlatform.astone.name": {
+      "zh_CN": "魔力平台",
+      "en_US": "Magic Platform",
+      "ja_JP": "魔力プラットフォーム"
+    },
+    "tile.magicPlatform.estone.name": {
+      "zh_CN": "石制魔力平台",
+      "en_US": "Magic Quartz Magic Platform",
+      "ja_JP": "石の魔力プラットフォーム"
+    },
+    "tile.invalidEnchantmentTable.name": {
+      "zh_CN": "失去魔力的附魔台",
+      "en_US": "Enchanting Table without Enchanting Book",
+      "ja_JP": "魔力を失ったエンチャントテーブル"
+    },
+    "tile.elementWorkbench.name": {
+      "zh_CN": "元素工作台",
+      "en_US": "Element Crafting Workbench",
+      "ja_JP": "元素作業台"
+    },
+    "tile.magicDesk.name": {
+      "zh_CN": "魔力方桌",
+      "en_US": "Magic Desk",
+      "ja_JP": "魔力四角桌"
+    },
+    "tile.elementCraftingTable.name": {
+      "zh_CN": "元素合成台",
+      "en_US": "Element Crafting Altar",
+      "ja_JP": "元素合成台"
+    },
+    "tile.deconstructAltarTable.name": {
+      "zh_CN": "物质瓦解台",
+      "en_US": "Material Disintegration Altar",
+      "ja_JP": "物質瓦解台"
+    },
+    "tile.deconstructAltarTableAdv.name": {
+      "zh_CN": "高级物质瓦解台",
+      "en_US": "Advanced Material Disintegration Altar",
+      "ja_JP": "高級物質瓦解台"
+    },
+    "tile.stela.name": {
+      "zh_CN": "知识映射碑",
+      "en_US": "Knowledge Mapping Monument",
+      "ja_JP": "知識映射碑"
+    },
+    "tile.riteTable.name": {
+      "zh_CN": "仪式桌",
+      "en_US": "Ritual Table",
+      "ja_JP": "式場桌"
+    },
+    "tile.lantern.name": {
+      "zh_CN": "引路灯",
+      "en_US": "Guide Lamp",
+      "ja_JP": "道を引く灯"
+    },
+    "tile.buildingAltar.name": {
+      "zh_CN": "建筑解析台",
+      "en_US": "Architectural Analysis Altar",
+      "ja_JP": "建築解析台"
+    },
+    "tile.analysisAltar.name": {
+      "zh_CN": "结构解析台",
+      "en_US": "Structure Analysis Altar",
+      "ja_JP": "構造解析台"
+    },
+    "tile.supremeTable.name": {
+      "zh_CN": "元素方桌",
+      "en_US": "Element Square Table",
+      "ja_JP": "元素四角桌"
+    },
+    "tile.magicTorch.name": {
+      "zh_CN": "魔石火把",
+      "en_US": "Magic Stone Torch",
+      "ja_JP": "魔石松明"
+    },
+    "tile.astone.stone.name": {
+      "zh_CN": "通魔石",
+      "en_US": "Stone with Magic",
+      "ja_JP": "通魔石"
+    },
+    "tile.astone.fragmented.name": {
+      "zh_CN": "碎裂通魔石",
+      "en_US": "Stone with Magic but Broken",
+      "ja_JP": "割る通魔石"
+    },
+    "tile.astone.smooth.name": {
+      "zh_CN": "平滑通魔石",
+      "en_US": "Smooth Stone with Magic",
+      "ja_JP": "スムージングの通魔石"
+    },
+    "tile.astone.vein.name": {
+      "zh_CN": "纹路通魔石",
+      "en_US": "Vein Stone with Magic",
+      "ja_JP": "模様の通魔石"
+    },
+    "tile.astone.circle.name": {
+      "zh_CN": "环路通魔石",
+      "en_US": "Ring Stone with Magic",
+      "ja_JP": "环の通魔石"
+    },
+    "tile.astone.brick.name": {
+      "zh_CN": "半纹路通魔石",
+      "en_US": "Brick Stone with Magic",
+      "ja_JP": "ハーフ模様の通魔石"
+    },
+    "tile.astone.trans.name": {
+      "zh_CN": "流路通魔石",
+      "en_US": "Magic Transfer Stone",
+      "ja_JP": "流す通魔石"
+    },
+    "tile.starStone.name": {
+      "zh_CN": "星石",
+      "en_US": "Star Stone",
+      "ja_JP": "星石"
+    },
+    "tile.starSand.name": {
+      "zh_CN": "星沙",
+      "en_US": "Star Sand",
+      "ja_JP": "星砂"
+    },
+    "tile.stoneMill.name": {
+      "zh_CN": "捣粉臼",
+      "en_US": "Stone Mill",
+      "ja_JP": "臼"
+    },
+    "tile.meltCauldron.name": {
+      "zh_CN": "熔岩锅",
+      "en_US": "Melt Cauldron",
+      "ja_JP": "熔岩鍋"
+    },
+    "tile.elfLog.name": {
+      "zh_CN": "精灵木",
+      "en_US": "Elf Log",
+      "ja_JP": "精霊の原木"
+    },
+    "tile.elfLeaf.name": {
+      "zh_CN": "精灵叶",
+      "en_US": "Elf Tree Leaf",
+      "ja_JP": "精霊の葉"
+    },
+    "tile.elfPlank.normal.name": {
+      "zh_CN": "精灵木板",
+      "en_US": "Elf Tree Plank",
+      "ja_JP": "精霊の木材"
+    },
+    "tile.elfPlank.dark.name": {
+      "zh_CN": "魔力木板",
+      "en_US": "Elf Tree Dark Plank",
+      "ja_JP": "魔力の木材"
+    },
+    "tile.elfSapling.name": {
+      "zh_CN": "精灵树苗",
+      "en_US": "Elf Tree Sapling",
+      "ja_JP": "精霊树苗"
+    },
+    "tile.elfFruit.s0.name": {
+      "zh_CN": "未成熟的精灵果",
+      "en_US": "Immature Elf Fruit",
+      "ja_JP": "未成熟の精霊実"
+    },
+    "tile.elfFruit.s2.name": {
+      "zh_CN": "精灵果",
+      "en_US": "Elf Fruit",
+      "ja_JP": "精霊実"
+    },
+    "tile.MDMagicGen.name": {
+      "zh_CN": "热力魔分箱",
+      "en_US": "Magic Separator",
+      "ja_JP": "熱力魔分箱"
+    },
+    "tile.MDHearth.name": {
+      "zh_CN": "魔动灶台",
+      "en_US": "Magic Drive Hearth",
+      "ja_JP": "魔動囲炉裏"
+    },
+    "tile.MDRubbleRepair.name": {
+      "zh_CN": "魔动碎石修复箱",
+      "en_US": "Magic Drive Stone Repairer",
+      "ja_JP": "魔動割る石修復箱"
+    },
+    "tile.MDInfusion.name": {
+      "zh_CN": "注魔箱",
+      "en_US": "Magic Drive Enchanting Box",
+      "ja_JP": "魔力を注しの箱"
+    },
+    "tile.MDTransfer.name": {
+      "zh_CN": "魔力转移箱",
+      "en_US": "Magic Transfer Box",
+      "ja_JP": "魔力転移箱"
+    },
+    "tile.MDMagicSolidify.name": {
+      "zh_CN": "魔力固化箱",
+      "en_US": "Magic Solidify Box",
+      "ja_JP": "魔力固化箱"
+    },
+    "tile.MDAbsorbBox.name": {
+      "zh_CN": "元素吸收箱",
+      "en_US": "Magic Drive Element Absorber",
+      "ja_JP": "元素吸収箱"
+    },
+    "tile.MDMagiclization.name": {
+      "zh_CN": "魔化箱",
+      "en_US": "Element Magiclization Box",
+      "ja_JP": "魔化箱"
+    },
+    "tile.MDDeconstructBox.name": {
+      "zh_CN": "物质瓦解箱",
+      "en_US": "Magic Drive Material Disintegration Box",
+      "ja_JP": "物質瓦解箱"
+    },
+    "tile.MDResonantIncubator.name": {
+      "zh_CN": "共鸣培养箱",
+      "en_US": "Resonance Incubator",
+      "ja_JP": "共鳴培養箱"
+    },
+    "tile.MDFrequencyMapping.name": {
+      "zh_CN": "频率共感器",
+      "en_US": "Frequency Inductor",
+      "ja_JP": "周波数共感器"
+    },
+    "tile.lifeFlower.name": {
+      "zh_CN": "生命之花",
+      "en_US": "Life Flower",
+      "ja_JP": "生命の花"
+    },
+    "tile.magicPot.name": {
+      "zh_CN": "魔力花盆",
+      "en_US": "Magic Pot",
+      "ja_JP": "魔力植木鉢"
+    },
+    "tile.lifeDirt.name": {
+      "zh_CN": "生息土壤",
+      "en_US": "Lived Soil",
+      "ja_JP": "生息の土壌"
+    },
+    "tile.crystalFlower.name": {
+      "zh_CN": "水晶花",
+      "en_US": "Crystal Flower",
+      "ja_JP": "水晶花"
+    },
+    "tile.ISCraftNormal.name": {
+      "zh_CN": "合成结构记录台",
+      "en_US": "Crafting Structure Recorder",
+      "ja_JP": "合成構造記録台"
+    },
+    "tile.portalAltar.name": {
+      "zh_CN": "折光祭坛",
+      "en_US": "Refract Altar",
+      "ja_JP": "折り光祭壇"
+    },
+    "tile.transcribeTable.name": {
+      "zh_CN": "撰录方桌",
+      "en_US": "Transcribe Square Table",
+      "ja_JP": "書き写し四角桌"
+    },
+    "tile.transcribeInjection.name": {
+      "zh_CN": "咒文撰录祭坛",
+      "en_US": "Mantra Transcribe Altar",
+      "ja_JP": "呪文撰录祭壇"
+    },
+    "tile.elfBeacon.name": {
+      "zh_CN": "精灵信标",
+      "en_US": "Elf Beacon",
+      "ja_JP": "精霊のビーコン"
+    },
+    "tile.researcher.name": {
+      "zh_CN": "研究方桌",
+      "en_US": "Research Square Table",
+      "ja_JP": "研究四角桌"
+    },
+    "tile.sealStone.s.name": {
+      "zh_CN": "封藏石",
+      "en_US": "Seal Stone",
+      "ja_JP": "隠し石"
+    },
+    "tile.scarletCrystalOre.name": {
+      "zh_CN": "绯红水晶矿",
+      "en_US": "Scarlet Crystal Ore",
+      "ja_JP": "緋色の水晶鉱"
+    },
+    "tile.starFlower.normal.name": {
+      "zh_CN": "星之花",
+      "en_US": "Star Flower",
+      "ja_JP": "星の花"
+    },
+    "tile.starFlower.seed.name": {
+      "zh_CN": "星花之种",
+      "en_US": "Star Flower Seed",
+      "ja_JP": "星花の種"
+    },
+    "tile.crudeQuartz.name": {
+      "zh_CN": "粗制石英",
+      "en_US": "Crude Quartz",
+      "ja_JP": "粗造りの石英"
+    },
+    "tile.elementPlatform.name": {
+      "zh_CN": "元素平台",
+      "en_US": "Element Platform",
+      "ja_JP": "元素プラットフォーム"
+    }
+  },
+  "enchantment": {
+    "enchantment.gatherSouls": {
+      "zh_CN": "聚魂",
+      "en_US": "Gather Souls",
+      "ja_JP": "集魂"
+    }
+  },
+  "element": {
+    "element.void.name": {
+      "zh_CN": "虚空",
+      "en_US": "void",
+      "ja_JP": "虚空"
+    },
+    "element.magic.name": {
+      "zh_CN": "魔力",
+      "en_US": "Magic",
+      "ja_JP": "魔力"
+    },
+    "element.ender.name": {
+      "zh_CN": "末影",
+      "en_US": "Ender",
+      "ja_JP": "エンダー"
+    },
+    "element.fire.name": {
+      "zh_CN": "火",
+      "en_US": "Fire",
+      "ja_JP": "火"
+    },
+    "element.wood.name": {
+      "zh_CN": "木",
+      "en_US": "Wood",
+      "ja_JP": "木"
+    },
+    "element.water.name": {
+      "zh_CN": "水",
+      "en_US": "Water",
+      "ja_JP": "水"
+    },
+    "element.earth.name": {
+      "zh_CN": "土",
+      "en_US": "Earth",
+      "ja_JP": "土"
+    },
+    "element.air.name": {
+      "zh_CN": "气",
+      "en_US": "Air",
+      "ja_JP": "気"
+    },
+    "element.metal.name": {
+      "zh_CN": "金",
+      "en_US": "Metal",
+      "ja_JP": "金"
+    },
+    "element.knowledge.name": {
+      "zh_CN": "知识",
+      "en_US": "Knowledge",
+      "ja_JP": "知識"
+    },
+    "element.star.name": {
+      "zh_CN": "星",
+      "en_US": "Star",
+      "ja_JP": "星"
+    }
+  },
+  "mantra": {
+    "mantra.launchElementCrafting.name": {
+      "zh_CN": "合成启动咒文",
+      "en_US": "Crafting Incantation",
+      "ja_JP": "合成起動の呪文"
+    },
+    "mantra.launchElementDeconstruct.name": {
+      "zh_CN": "瓦解启动咒文",
+      "en_US": "Disintegration Incantation",
+      "ja_JP": "瓦解起動の呪文"
+    },
+    "mantra.launchBuilingRecord.name": {
+      "zh_CN": "建筑解析启动咒文",
+      "en_US": "Architectural Analysis Incantation",
+      "ja_JP": "建築解析起動の呪文"
+    },
+    "mantra.launchElementConstruct.name": {
+      "zh_CN": "构成启动咒文",
+      "en_US": "Constitute Incantation",
+      "ja_JP": "構成启动の呪文"
+    },
+    "mantra.enderTeleport.name": {
+      "zh_CN": "末影移动",
+      "en_US": "Ender Move",
+      "ja_JP": "エンダー移動"
+    },
+    "mantra.enderTeleport.describe": {
+      "zh_CN": "末影元素与咒文结合，瞬移再也不是末影人的特权了。嗯？为啥不能在雨天使用...",
+      "en_US": "The Ender Element with Mantra, teleport is no longer the privilege of Enderman. Well, why can't be used in rainy days?",
+      "ja_JP": "エンダー元素と呪文が結びついて、テレポートはエンダーマンの特権ではなくなった。けれど、なぜ雨の日で使えないですか？"
+    },
+    "mantra.float.name": {
+      "zh_CN": "漂浮",
+      "en_US": "Float",
+      "ja_JP": "浮遊"
+    },
+    "mantra.float.describe": {
+      "zh_CN": "通过气元素，进行缓慢上升",
+      "en_US": "Through The Air Element, I can float slowly.",
+      "ja_JP": "気元素を通して、ゆっくり浮遊している"
+    },
+    "mantra.sprint.name": {
+      "zh_CN": "前冲",
+      "en_US": "Sprint",
+      "ja_JP": "突き進み"
+    },
+    "mantra.sprint.describe": {
+      "zh_CN": "通过气元素，达到更便捷的移动",
+      "en_US": "Through The Air Element, to achieve more convenient movement.",
+      "ja_JP": "気元素を通して、より便利に移動します。"
+    },
+    "mantra.fireBall.name": {
+      "zh_CN": "火焰冲击",
+      "en_US": "Flame impact",
+      "ja_JP": "ファイアショック"
+    },
+    "mantra.fireBall.describe": {
+      "zh_CN": "以火元素为核心，烧坏前方的方块。金元素的加入可以让矿物翻倍，知识元素的加入可以掠过无法烧制的方块。",
+      "en_US": "With The Fire Element as the core, burn the Block in front. The addition of The Metal can double amount of Ore, and the addition of The Knowledge Element can skip the unfired blocks.",
+      "ja_JP": "火元素を中心に前方のブロックを焼き潰す。金元素の添加は鉱物を倍増させて、知識元素の添加は焼却できないブロックを通りすぎることができます。"
+    },
+    "mantra.lush.name": {
+      "zh_CN": "郁郁葱葱",
+      "en_US": "Lush",
+      "ja_JP": "青々と生い茂る"
+    },
+    "mantra.lush.describe": {
+      "zh_CN": "使用木元素，让周围的一切生长",
+      "en_US": "Use The Wood Element to Grow Everythings Around.",
+      "ja_JP": "木元素て周りを成長させます。"
+    },
+    "mantra.blockCrash.name": {
+      "zh_CN": "土块撞击",
+      "en_US": "Dirt Impact",
+      "ja_JP": "土の衝突"
+    },
+    "mantra.blockCrash.describe": {
+      "zh_CN": "土元素抬起地上的土块，将敌人撞飞天",
+      "en_US": "With The Earth Element, there are a Dirt from the ground, and the enemy impact into the sky.",
+      "ja_JP": "土元素て地面の土を持ち上げ，敵を空に打ち上げる。"
+    },
+    "mantra.miningArea.name": {
+      "zh_CN": "不思议的矿工",
+      "en_US": "Unthinkable miner",
+      "ja_JP": "不思議な鉱夫"
+    },
+    "mantra.miningArea.describe": {
+      "zh_CN": "土元素和金元素与咒文的共鸣下，让矿物从地中飞出来",
+      "en_US": "Earth and Metal resonate with The Mantra, allowing Ores fly from the ground.",
+      "ja_JP": "土元素と金元素と呪文の共鳴のもとで、地の中から鉱物を飛び出させます。"
+    },
+    "mantra.summon.name": {
+      "zh_CN": "召唤",
+      "en_US": "Summon Rite",
+      "ja_JP": "召喚"
+    },
+    "mantra.summon.describe": {
+      "zh_CN": "在魔力的缠绕下，召唤仪式可以随时进行",
+      "en_US": "With magic, The Summon Rite can be carried out at any time",
+      "ja_JP": "魔力にからまれて、召喚儀式は随時行われます。"
+    },
+    "mantra.lightningArea.name": {
+      "zh_CN": "雷鸣区域",
+      "en_US": "Lightning Area",
+      "ja_JP": "雷鳴の地"
+    },
+    "mantra.lightningArea.describe": {
+      "zh_CN": "气元素与火元素交织，唤起一块区域，进入的生物会受到雷劈。",
+      "en_US": "With The Air Element and The Fire Element, a Area whoever entered will be struck by lightning is emerge.",
+      "ja_JP": "気元素と火元素が入り交じって、一つの地域を喚起して、入る生物は雷に打たれます。"
+    },
+    "mantra.slowFall.name": {
+      "zh_CN": "缓降",
+      "en_US": "Slow Fall",
+      "ja_JP": "緩降"
+    },
+    "mantra.slowFall.describe": {
+      "zh_CN": "借助气元素的力量，让你得以在空中缓慢滑行",
+      "en_US": "With the Air Element, you can glide slowly.",
+      "ja_JP": "気元素で空中でゆっくり滑走きるようにします。"
+    },
+    "mantra.footbridge.name": {
+      "zh_CN": "天桥",
+      "en_US": "Footbridge",
+      "ja_JP": "歩道橋"
+    },
+    "mantra.footbridge.describe": {
+      "zh_CN": "借助土元素的力量，抬起地上的方块，在前方架起来一座桥",
+      "en_US": "With the Earth Element, raise blocks on the ground and build a bridge in front.",
+      "ja_JP": "土元素で地面の土を持ち上げて、前の方に橋をかけます。"
+    },
+    "mantra.fireArea.name": {
+      "zh_CN": "燃烧领域",
+      "en_US": "Burning Area",
+      "ja_JP": "燃えの地"
+    },
+    "mantra.fireArea.describe": {
+      "zh_CN": "借助火元素的力量，唤起一块区域，进入的生物会受被烧伤。",
+      "en_US": "With The Fire Elemen, a Area whoever entered will be burning is emerge.",
+      "ja_JP": "火元素で、一つの地域を喚起して、入る生物はやけどをします。"
+    },
+    "mantra.magicStrafe.name": {
+      "zh_CN": "魔力冲击",
+      "en_US": "Magic Strafe",
+      "ja_JP": "魔力掃射"
+    },
+    "mantra.magicStrafe.describe": {
+      "zh_CN": "将魔力转化为能量束，对敌人造成伤害。",
+      "en_US": "Turn magic Into energy beam to attack enemies.",
+      "ja_JP": "魔力をエネルギー束に変換し、敵にダメージを与える。"
+    },
+    "mantra.floatArea.name": {
+      "zh_CN": "漂浮风域",
+      "en_US": "Floating Wind Area",
+      "ja_JP": "漂り風域"
+    },
+    "mantra.floatArea.describe": {
+      "zh_CN": "借助气元素的力量，产生上升气流，将进入区域的生物吹向上方。",
+      "en_US": "With the Air Element, produce updraft, blow the creatures that enter the area up.",
+      "ja_JP": "気元素で上昇気流が生じ、風域に入る生物を上に向けて吹きます。"
+    },
+    "mantra.fireCharge.name": {
+      "zh_CN": "火焰弹",
+      "en_US": "Fire Charge",
+      "ja_JP": "火炎弾"
+    },
+    "mantra.fireCharge.describe": {
+      "zh_CN": "借助火元素的力量，产生并发射火焰弹。",
+      "en_US": "With the Fire Element, generate and shoot The Fire Charge",
+      "ja_JP": "火元素で作る火炎弾を発射する。"
+    },
+    "mantra.arrow.name": {
+      "zh_CN": "射手",
+      "en_US": "Shooter",
+      "ja_JP": "射手"
+    },
+    "mantra.arrow.describe": {
+      "zh_CN": "借助气元素，将箭矢发射出去。土木元素可以构造出箭矢，火元素会为箭矢增添力量，土元素会让箭矢击飞敌人。",
+      "en_US": "With the Air, shooting the arrow. With the Earth&Wood, making the arrow. Fire to strengthen, Earth to punch",
+      "ja_JP": "気元素で矢を発射する。土木元素で矢を作れる、火元素でパワーを増える，土元素で敵を撃ち飛ばす。"
+    }
+  },
+  "key": {
+    "key.es.func": {
+      "zh_CN": "功能键",
+      "en_US": "Function key",
+      "ja_JP": "機能キー"
+    }
+  },
+  "info.element": {
+    "info.element.spell.fire": {
+      "zh_CN": "点燃指定的方块",
+      "en_US": "Ignite the specified block",
+      "ja_JP": "指定されたブロックに火をつける"
+    },
+    "info.element.spell.ender": {
+      "zh_CN": "借助末影元素的力量，史蒂夫可以向末影人一样，传送至远方",
+      "en_US": "With the power of Enderman, Steve can be transmitted to the distance just like enderman",
+      "ja_JP": "エンダー元素の力を貸して、スティーブがエンダーマンみたい、遠くに転移する"
+    },
+    "info.element.spell.water": {
+      "zh_CN": "在指定方块的上面召唤水",
+      "en_US": "Emerge water above a block.",
+      "ja_JP": "ブロックの上で水を召喚する"
+    },
+    "info.element.spell.wood": {
+      "zh_CN": "在木之元素环绕之下，周围的植物可以快速生长",
+      "en_US": "Surrounded by Wood Element, the surrounding plants can grow rapidly.",
+      "ja_JP": "木の元素に囲まれて、周りの植物が速く成長できる"
+    },
+    "info.element.spell.knowledge": {
+      "zh_CN": "知识元素可以随时随地的让史蒂夫进行附魔",
+      "en_US": "Knowledge Element can make Steve enchant anytime, anywhere.",
+      "ja_JP": "知識の元素で、スティーブはいつでもどこでもエンチャントできる"
+    },
+    "info.element.spell.air": {
+      "zh_CN": "瞬间改变周围的空气流动，让史蒂夫急速减速",
+      "en_US": "Instantly changed the air flow around Steve, and making slow down quickly.",
+      "ja_JP": "一瞬で周りの空気を変え、スティーブを急に減速させる"
+    },
+    "info.element.spell.metal": {
+      "zh_CN": "点石成金，元素与矿石之类的方块发生共鸣，改变它们的结构，从而产生新的矿石",
+      "en_US": "Be able to perform wonders. Metal Element resonate with a block like ore, and change their structure into a new ore.",
+      "ja_JP": "石を金に変える、金の元素は鉱石のようなブロックと共鳴し、構造を変えり、新しい鉱石を変更する"
+    },
+    "info.element.spell.earth": {
+      "zh_CN": "让方块，坠落吧",
+      "en_US": "Let block fall.",
+      "ja_JP": "ブロックを墜落させましょう"
+    }
+  },
+  "entity": {
+    "entity.Villager.paperman": {
+      "zh_CN": "古纸收集者",
+      "en_US": "PaperMan",
+      "ja_JP": "古紙集荷者"
+    },
+    "entity.Villager.eslearner": {
+      "zh_CN": "元素知识学者",
+      "en_US": "ElementLearner",
+      "ja_JP": "元素知識学者"
+    },
+    "entity.Villager.magicallearner": {
+      "zh_CN": "魔力学者",
+      "en_US": "MagicLearner",
+      "ja_JP": "魔力学者"
+    },
+    "entity.Elf.name": {
+      "zh_CN": "精灵",
+      "en_US": "Elf",
+      "ja_JP": "精霊"
+    },
+    "entity.RelicZombie.name": {
+      "zh_CN": "遗迹僵尸",
+      "en_US": "Relic Zombie",
+      "ja_JP": "遺跡ゾンビ"
+    },
+    "entity.FairyCube.name": {
+      "zh_CN": "精灵立方体",
+      "en_US": "Elf Cube",
+      "ja_JP": "精霊立方体"
+    },
+    "entity.RabidRabbit.name": {
+      "zh_CN": "狂暴兔",
+      "en_US": "Rabid Rabbit",
+      "ja_JP": "狂暴うさぎ"
+    },
+    "entity.DreadCube.name": {
+      "zh_CN": "恐惧立方体",
+      "en_US": "Dread Cube",
+      "ja_JP": "恐怖立方体"
+    }
+  },
+  "pro": {
+    "pro.none": {
+      "zh_CN": "闲人",
+      "en_US": "Idle",
+      "ja_JP": "アイドル"
+    },
+    "pro.warrior": {
+      "zh_CN": "战士",
+      "en_US": "Warrior",
+      "ja_JP": "戦士"
+    },
+    "pro.berserker": {
+      "zh_CN": "狂战士",
+      "en_US": "Berserker",
+      "ja_JP": "狂戦士"
+    },
+    "pro.master": {
+      "zh_CN": "魔法大师",
+      "en_US": "Magic Master",
+      "ja_JP": "魔法のマスター"
+    },
+    "pro.scholar": {
+      "zh_CN": "学者",
+      "en_US": "Scholar",
+      "ja_JP": "学者"
+    },
+    "pro.crazy": {
+      "zh_CN": "疯子",
+      "en_US": "Crazy",
+      "ja_JP": "狂人"
+    },
+    "pro.merchant": {
+      "zh_CN": "商人",
+      "en_US": "Merchant",
+      "ja_JP": "商人"
+    },
+    "pro.ironsmith": {
+      "zh_CN": "铁匠",
+      "en_US": "Ironsmith",
+      "ja_JP": "かじさん"
+    },
+    "pro.builder": {
+      "zh_CN": "建筑工",
+      "en_US": "Builder",
+      "ja_JP": "建築工"
+    },
+    "pro.receptionist": {
+      "zh_CN": "接待员",
+      "en_US": "Receptionist",
+      "ja_JP": "接待係"
+    },
+    "pro.postReceptionist": {
+      "zh_CN": "邮局接待员",
+      "en_US": "Poster Office Receptionist",
+      "ja_JP": "郵便局の受付"
+    },
+    "pro.postman": {
+      "zh_CN": "邮递员",
+      "en_US": "Postman",
+      "ja_JP": "郵便配達"
+    },
+    "pro.researcher": {
+      "zh_CN": "研究员",
+      "en_US": "Researcher",
+      "ja_JP": "研究員"
+    }
+  },
+  "commands": {
+    "commands.es.usage": {
+      "zh_CN": "/es <操作> <参数>...",
+      "en_US": "/es <operate> <parameters>...",
+      "ja_JP": "/es <操作> <パラメータ>..."
+    },
+    "commands.es.notFound": {
+      "zh_CN": "找不到%s",
+      "en_US": "Can't find %s",
+      "ja_JP": "%sを見つからない"
+    },
+    "commands.es.buildFloor.usage": {
+      "zh_CN": "/es buildFloor <层的名称>",
+      "en_US": "/es buildFloor <floor name>",
+      "ja_JP": "/es buildFloor <階の名前>"
+    },
+    "commands.es.build.usage": {
+      "zh_CN": "/es build <it|建筑名称>",
+      "en_US": "/es build <it> or <builing name>",
+      "ja_JP": "/es build <it>や<建物の名前>"
+    },
+    "commands.es.build.it.usage": {
+      "zh_CN": "/es build it 会自动将主手上的建筑水晶建造",
+      "en_US": "/es build it will build the architecture in mainhand's Architectural Crystal.",
+      "ja_JP": "/es build it 主の手の建築水晶の中で記録する建物を建てる"
+    },
+    "commands.es.build.fail": {
+      "zh_CN": "建造失败",
+      "en_US": "Build failure",
+      "ja_JP": "ビルド失敗"
+    },
+    "commands.es.page.usage": {
+      "zh_CN": "/es page <页面的id名称>",
+      "en_US": "/es page <page's id>",
+      "ja_JP": "/es page <ページのid>"
+    },
+    "commands.es.page.fail": {
+      "zh_CN": "不存在的的id名",
+      "en_US": "Page's id are not exist",
+      "ja_JP": "存在しないページのid"
+    },
+    "commands.es.quest.usage": {
+      "zh_CN": "/es quest <clear|give|fame> <玩家> <数据>",
+      "en_US": "/es quest <clear|give|fame> <player> <quest>",
+      "ja_JP": "/es quest <clear|give|fame> <プレイヤー> <依頼>"
+    },
+    "commands.es.quest.clear": {
+      "zh_CN": "已清空'%s'所有正在进行的任务",
+      "en_US": "All Quest in progress for '%s' have been cleared.",
+      "ja_JP": "'%s'の進行中の依頼をすべてクリアされました。"
+    },
+    "commands.es.quest.give.usage": {
+      "zh_CN": "/es quest give <玩家> <任务>",
+      "en_US": "/es quest give <player> <quest>",
+      "ja_JP": "/es quest give <プレイヤー> <依頼>"
+    },
+    "commands.es.quest.fame.usage": {
+      "zh_CN": "/es quest fame <玩家> <变更点数>",
+      "en_US": "/es quest fame <player> <Change Points>",
+      "ja_JP": "/es quest fame <プレイヤー> <ポイント変更>"
+    },
+    "commands.es.quest.fame.change": {
+      "zh_CN": "变更信誉成功！%s的信誉目前为%s点",
+      "en_US": "Change Fame successfully! %s's Fame currently is %s points",
+      "ja_JP": "信用変更成功！%sの信用現在は%sです"
+    },
+    "commands.es.mantra.usage": {
+      "zh_CN": "/es mantra <give|add|remove> <玩家> <咒文>",
+      "en_US": "/es mantra <give|add|remove> <player> <mantra>",
+      "ja_JP": "/es mantra <give|add|remove> <プレイヤー> <呪文>"
+    },
+    "commands.es.mantra.give": {
+      "zh_CN": "给予了%s咒文%s",
+      "en_US": "Give %s Mantra of %s",
+      "ja_JP": "%sに呪文%sを与えた"
+    },
+    "commands.es.mantra.remove": {
+      "zh_CN": "为%s的魔典移除了咒文%s",
+      "en_US": "Remove Mantra of %s for %s's Grimoire",
+      "ja_JP": "%sの魔典に呪文%sを除去しました"
+    },
+    "commands.es.mantra.add": {
+      "zh_CN": "为%s的魔典添加了咒文%s",
+      "en_US": "Add Mantra of %s for %s's Grimoire",
+      "ja_JP": "%sの魔典に呪文%sを加えました"
+    },
+    "commands.es.element.usage": {
+      "zh_CN": "/es element <give|insert|extract|add> <玩家> <元素>",
+      "en_US": "/es element <give|insert|extract|add> <player> <element>",
+      "ja_JP": "/es element <give|insert|extract|add> <プレイヤー> <元素>"
+    },
+    "commands.es.element.give": {
+      "zh_CN": "给予了%s元素水晶，包含%s",
+      "en_US": "Give %s Element Crystal of %s",
+      "ja_JP": "%sに%sを含む元素の水晶を与えた"
+    },
+    "commands.es.element.notFound": {
+      "zh_CN": "手上必须拿着物品s",
+      "en_US": "You have to have something in your hand",
+      "ja_JP": "手に物を持たなければなりません。"
+    },
+    "commands.es.building.usage": {
+      "zh_CN": "/es building <record|release|give> <...>",
+      "en_US": "/es building <record|release|give> <...>",
+      "ja_JP": "/es building <record|release|give> <...>"
+    },
+    "commands.es.building.give.usage": {
+      "zh_CN": "/es building give <玩家> <建筑key>",
+      "en_US": "/es building give <player> <builing key>",
+      "ja_JP": "/es building give <プレイヤー> <建築key>"
+    },
+    "commands.es.building.release": {
+      "zh_CN": "已保存并清空所有临时建筑缓存",
+      "en_US": "Save and Release all ref from temp building and call GC",
+      "ja_JP": "すべての建築キャッシュを保存とリリースしました。"
+    },
+    "commands.es.building.recordFail": {
+      "zh_CN": "请确保您手里的魔力标尺有区域数据！",
+      "en_US": "Please make sure the Magic Ruler in your hand has area data!",
+      "ja_JP": "あなたの持っている魔力ルーラーに領域データがあることを確認してください。"
+    },
+    "commands.es.building.record": {
+      "zh_CN": "成功记录了建筑数据，并给予了%s建筑水晶",
+      "en_US": "Successfully recorded building data and gave %s Structural Crystal",
+      "ja_JP": "建築データを記録し、%sに建築の水晶を与えました。"
+    },
+    "commands.es.building.give": {
+      "zh_CN": "给予了%s建筑水晶，建筑为%s",
+      "en_US": "Gave %s Structural Crystal of %s",
+      "ja_JP": "%sに%sの建築の水晶を与えました"
+    },
+    "commands.es.edifice.usage": {
+      "zh_CN": "/es edifice <store|restore|build|fix> <数据>",
+      "en_US": "/es edifice <store|restore|build|fix> <data>",
+      "ja_JP": "/es edifice <store|restore|build|fix> <データ>"
+    },
+    "commands.es.edifice.restore.usage": {
+      "zh_CN": "/es edifice restore <数据>",
+      "en_US": "/es edifice restore <data>",
+      "ja_JP": "/es edifice restore <データ>"
+    },
+    "commands.es.edifice.no.core": {
+      "zh_CN": "找不到树核心，请站到树核心的正下方",
+      "en_US": "Can't find Tree Core, please stand directly below the tree core.",
+      "ja_JP": "木核心が見つからない、木核心の真下に立ってください"
+    },
+    "commands.es.edifice.store.success": {
+      "zh_CN": "成功创建了恢复数据(已经输出到了log里)：%s",
+      "en_US": "Restore data has been created(and output to log): %s",
+      "ja_JP": "回復データを作成して（既にロゴに出力されました）:%s"
+    },
+    "commands.es.edifice.restore.success": {
+      "zh_CN": "恢复成功！",
+      "en_US": "Restore Success!",
+      "ja_JP": "回復成功！"
+    },
+    "commands.es.not.support.commandBlock": {
+      "zh_CN": "不支持命令方块",
+      "en_US": "Unsupport Command Block",
+      "ja_JP": "コマンドブロックがサポートされていません。"
+    },
+    "commands.es.research.usage": {
+      "zh_CN": "/es research <add|sub> <玩家> <类型> <数值>",
+      "en_US": "/es research <add|sub> <player> <type> <value>",
+      "ja_JP": "/es research <add|sub> <プレイヤー> <タイプ> <数値>"
+    },
+    "commands.es.research.add": {
+      "zh_CN": "给予了%s%s点%s",
+      "en_US": "Give %s %s %s",
+      "ja_JP": "%sに%sの%sを与えました"
+    }
+  },
+  "arc": {
+    "arc.infusion.name": {
+      "zh_CN": "注魔祭坛",
+      "en_US": " Enchanting Altar",
+      "ja_JP": "エンチャント祭壇"
+    },
+    "arc.absorbBox.name": {
+      "zh_CN": "元素吸收祭坛",
+      "en_US": "Element Absorb Altar",
+      "ja_JP": "元素を吸収する祭壇"
+    },
+    "arc.deconstructBox.name": {
+      "zh_CN": "物质瓦解通魔石祭坛",
+      "en_US": "Material Disintegrate Altar With Stone Magic",
+      "ja_JP": "物質瓦解通魔石の祭壇"
+    },
+    "arc.supremeAltar.name": {
+      "zh_CN": "元素神坛",
+      "en_US": "Supreme Altar",
+      "ja_JP": "元素神壇"
+    },
+    "arc.spellbookAltar.name": {
+      "zh_CN": "魔法书祭坛",
+      "en_US": "Magic Desk Altar",
+      "ja_JP": "魔導書祭壇"
+    },
+    "arc.elementCraftingAltar.name": {
+      "zh_CN": "元素合成祭坛",
+      "en_US": "Element Crafting Altar",
+      "ja_JP": "元素合成祭壇"
+    },
+    "arc.deconstructAltar.name": {
+      "zh_CN": "物质瓦解小祭坛",
+      "en_US": "Small Material Disintegrate Altar",
+      "ja_JP": "物質瓦解小祭壇"
+    },
+    "arc.deconstructAltarAdv.name": {
+      "zh_CN": "物质瓦解祭坛",
+      "en_US": "Material Disintegrate Altar",
+      "ja_JP": "物質瓦解祭壇"
+    },
+    "arc.builingAltar.name": {
+      "zh_CN": "建筑解析祭坛",
+      "en_US": "Architectural Analysis Altar",
+      "ja_JP": "建築解析祭壇"
+    },
+    "arc.analysisAltar.name": {
+      "zh_CN": "结构解析祭坛",
+      "en_US": "Structural Analysis Altar",
+      "ja_JP": "構造解析祭壇"
+    },
+    "arc.analysisAltarAdd.name": {
+      "zh_CN": "结构解析祭坛附属石柱",
+      "en_US": "Structural Analysis Altar Subsidiary Pillar",
+      "ja_JP": "構造解析祭壇の付属の石柱"
+    },
+    "arc.crystalGarden.name": {
+      "zh_CN": "水晶花园",
+      "en_US": "Crystal Garden",
+      "ja_JP": "水晶花園"
+    },
+    "arc.resonantIncubator.name": {
+      "zh_CN": "共鸣培养祭坛",
+      "en_US": "Resonant Incubator Altar",
+      "ja_JP": "共鳴培養祭壇"
+    },
+    "arc.portalAltar.name": {
+      "zh_CN": "折光祭坛",
+      "en_US": "Refract Altar",
+      "ja_JP": "折り光祭壇"
+    },
+    "arc.transcribeAltar.name": {
+      "zh_CN": "撰录祭坛",
+      "en_US": "Transcribe Altar",
+      "ja_JP": "書き写し祭壇"
+    }
+  },
+  "info": {
+    "info.none": {
+      "zh_CN": "无",
+      "en_US": "nothing",
+      "ja_JP": "無"
+    },
+    "info.unknow": {
+      "zh_CN": "未知",
+      "en_US": "unknow",
+      "ja_JP": "未知"
+    },
+    "info.wrong.dimension": {
+      "zh_CN": "已有数据不属于该纬度！",
+      "en_US": "The existing data does not belong to this world!",
+      "ja_JP": "既存のデータはこの緯度に属していません"
+    },
+    "info.posSet.success": {
+      "zh_CN": "成功选择了位置：(%d,%d,%d)",
+      "en_US": "Location selected successfully: (%d,%d,%d)",
+      "ja_JP": "選択しました位置：(%d,%d,%d)"
+    },
+    "info.magicalPiece.itcando": {
+      "zh_CN": "这个魔力碎片貌似可以合成某些东西，emmmm...",
+      "en_US": "This Magic Fragment seems to be able to craft something, emmmm...",
+      "ja_JP": "この魔力欠片は何かを合成できるようです、emmmm..."
+    },
+    "info.elementalCrystal.has": {
+      "zh_CN": "%s 拥有%d，能量为%d",
+      "en_US": "%s have %d, power is %d",
+      "ja_JP": "%sは%dを含む、パワーは%d"
+    },
+    "info.elementalCrystal.hasnp": {
+      "zh_CN": "%s 拥有%d",
+      "en_US": "%s have %d",
+      "ja_JP": "%sは%dを含む"
+    },
+    "info.kyaniteTools.el": {
+      "zh_CN": "具有有元素亲和",
+      "en_US": "It has elemental affinity",
+      "ja_JP": "元素親和性を持ってる"
+    },
+    "info.scroll.none": {
+      "zh_CN": "该卷轴内仅有%d张空白的羊皮纸，右键打开",
+      "en_US": "There are %d blank parchments in this scroll, right click to open",
+      "ja_JP": "この羊皮巻物の中でただ%d枚の空白の羊皮紙を含む、右クリックで開く"
+    },
+    "info.scroll.has": {
+      "zh_CN": "该卷轴包含有%d张羊皮纸，右键打开",
+      "en_US": "There are %d parchments in this scroll, right click to open",
+      "ja_JP": "この羊皮巻物の中で%d枚の羊皮紙を含む、右クリックで開く"
+    },
+    "info.manual.info": {
+      "zh_CN": "shift+右键存入包中所有羊皮卷（重复的会被清除）",
+      "en_US": "Shift+Right Click to store all the parchments in this manual.(The duplicate will be cleared.)",
+      "ja_JP": "shift+右クリックでカバンの中にある羊皮紙を全部に預く（繰り返しのはクリアされる）"
+    },
+    "info.manual.count": {
+      "zh_CN": "当前包含：%d/%d",
+      "en_US": "Contains: %d/%d",
+      "ja_JP": "現在は%d/%dを含んでいる"
+    },
+    "info.arcCrystal.choice": {
+      "zh_CN": "shift+右键，选择对应的方块上方",
+      "en_US": "Shift Right-Click to select the block above",
+      "ja_JP": "shift+右クリックでブロックの上を選択する"
+    },
+    "info.arcCrystal.miss": {
+      "zh_CN": "建筑结构丢失",
+      "en_US": "Structure miss",
+      "ja_JP": "建築構造が失われます"
+    },
+    "info.arcCrystal.wait": {
+      "zh_CN": "建筑结构构建中...",
+      "en_US": "Building...",
+      "ja_JP": "建築構造構築中…"
+    },
+    "info.arcCrystal.name": {
+      "zh_CN": "建筑名称：%s",
+      "en_US": "Name: %s",
+      "ja_JP": "建築名前：%s"
+    },
+    "info.arcCrystal.author": {
+      "zh_CN": "建筑作者：%s",
+      "en_US": "Author: %s",
+      "ja_JP": "建築作者：%s"
+    },
+    "info.select.axis": {
+      "zh_CN": "选定坐标：(%d,%d,%d)",
+      "en_US": "Selected coordinate: (%d,%d,%d)",
+      "ja_JP": "選択しました座標：(%d,%d,%d)"
+    },
+    "info.arcCrystal.face": {
+      "zh_CN": "选定方向：%s",
+      "en_US": "Selected direction: %s",
+      "ja_JP": "選択した方向：%s"
+    },
+    "info.arcCrystal.count": {
+      "zh_CN": "%s需要：%d",
+      "en_US": "%s need: %d",
+      "ja_JP": "%sは%dが必要です"
+    },
+    "info.arcCrystal.blank": {
+      "zh_CN": "这里面什么都没有记录，无法进行设置位置",
+      "en_US": "There is no record of anything in it. You can't set the location.",
+      "ja_JP": "この中には何も記録されていないので、位置の設定ができない"
+    },
+    "info.dimension.id": {
+      "zh_CN": "维度：%d",
+      "en_US": "Dimension: %d",
+      "ja_JP": "次元： %d"
+    },
+    "info.rainfall": {
+      "zh_CN": "降水：%.2f",
+      "en_US": "Rainfall: %.2f",
+      "ja_JP": "降水：%.2f"
+    },
+    "info.can.grow.elf.edifice": {
+      "zh_CN": "这里具有充足的精灵力",
+      "en_US": "There's plenty of elf power here.",
+      "ja_JP": "ここは十分な精霊力が含まれている"
+    },
+    "info.slime.chunk": {
+      "zh_CN": "史莱姆在这里栖息",
+      "en_US": "Slime lives here.",
+      "ja_JP": "スライムはここに住んでいる"
+    },
+    "info.mineral.deposits": {
+      "zh_CN": "矿藏：%s",
+      "en_US": "Minerals: %s",
+      "ja_JP": "地下資源：%s"
+    },
+    "info.around.have": {
+      "zh_CN": "周边存在着%s",
+      "en_US": "There is %s around",
+      "ja_JP": "周辺に%sがある"
+    },
+    "info.spbe.absorb": {
+      "zh_CN": "元素吸收",
+      "en_US": "Element Absorb",
+      "ja_JP": "元素吸収"
+    },
+    "info.spbe.release": {
+      "zh_CN": "元素释放",
+      "en_US": "Element Release ",
+      "ja_JP": "元素釈放"
+    },
+    "info.launchbook.shift": {
+      "zh_CN": "shift+右键切换咒文",
+      "en_US": "Shift+Right Click to switch incantation",
+      "ja_JP": "shift+右クリックで起動呪文を切り替え"
+    },
+    "info.ruler.pos": {
+      "zh_CN": "坐标%d：(%d,%d,%d)",
+      "en_US": "Coordinate %d: (%d,%d,%d)",
+      "ja_JP": "座標%d：(%d,%d,%d)"
+    },
+    "info.ruler.color": {
+      "zh_CN": "当前颜色：%s",
+      "en_US": "Current Color: %s",
+      "ja_JP": "色：%s"
+    },
+    "info.ruler.none": {
+      "zh_CN": "当前无记录，右键和shift右键分别记录两个方块位置",
+      "en_US": "There is no record. Right click and shift right-click to record the positions of two squares",
+      "ja_JP": "今は記録なし、shift+右クリックで2つのブロックの位置をそれぞれ記録する"
+    },
+    "info.ruler.fail": {
+      "zh_CN": "两点的距离过远，无法设定",
+      "en_US": "The distance between two points is too far to set",
+      "ja_JP": "2点の距離が遠すぎので、設定できない"
+    },
+    "info.itemCrystal.data": {
+      "zh_CN": "结构数据：%s",
+      "en_US": "Structural Data: %s",
+      "ja_JP": "構造データ：%s"
+    },
+    "info.itemCrystal.complex": {
+      "zh_CN": "复杂度：%d",
+      "en_US": "Complexity: %d",
+      "ja_JP": "複雑さ：%d"
+    },
+    "info.itemCrystal.z": {
+      "zh_CN": "组成元素：",
+      "en_US": "Elements:",
+      "ja_JP": "構成元素："
+    },
+    "info.itemCrystal.e": {
+      "zh_CN": "%s:%d 能量:%d",
+      "en_US": "%s:%d power: %d",
+      "ja_JP": "%s:%d パワー:%d"
+    },
+    "info.analysisAltar.none": {
+      "zh_CN": "无需要解析的物品",
+      "en_US": "Nothing to analyze",
+      "ja_JP": "解析したいものがない"
+    },
+    "info.analysisAltar.itema": {
+      "zh_CN": "正在解析：",
+      "en_US": "Analyzing:",
+      "ja_JP": "解析中："
+    },
+    "info.analysisAltar.itemfail": {
+      "zh_CN": "解析失败",
+      "en_US": "Analyze Fail",
+      "ja_JP": "解析失敗"
+    },
+    "info.analysisAltar.item": {
+      "zh_CN": "解析物品：",
+      "en_US": "Analyze Items:",
+      "ja_JP": "解析のアイテム："
+    },
+    "info.analysisAltar.complex": {
+      "zh_CN": "结构复杂度：%d",
+      "en_US": "Complexity: %d",
+      "ja_JP": "構造複雑さ：%d"
+    },
+    "info.elementCrafting": {
+      "zh_CN": "元素合成",
+      "en_US": "Element Crafting",
+      "ja_JP": "元素合成"
+    },
+    "info.level": {
+      "zh_CN": "%d级",
+      "en_US": "Level %d",
+      "ja_JP": "レベル%d"
+    },
+    "info.written": {
+      "zh_CN": "上面写着：%s",
+      "en_US": "It says: %s",
+      "ja_JP": "%sと書いてる"
+    },
+    "info.crystal.frequency": {
+      "zh_CN": "水晶频率：%.1f",
+      "en_US": "Crystal frequency: %.1f",
+      "ja_JP": "水晶の周波数：%.1f"
+    },
+    "info.crystal.percept": {
+      "zh_CN": "感知的频率：%.1f",
+      "en_US": "Perceived frequency: %.1f",
+      "ja_JP": "感知した周波数：%.1f"
+    },
+    "info.resonantCrystal": {
+      "zh_CN": "这种水晶看着就想把它扔出去...",
+      "en_US": "This kind of crystal just wants to throw it out...",
+      "ja_JP": "この水晶は見ているだけで投げ出したいな…"
+    },
+    "info.page.need": {
+      "zh_CN": "查看这张羊皮卷前你应当先查看：",
+      "en_US": "Before you look at this scroll, you should check:",
+      "ja_JP": "查看这张羊皮紙前你应当先查看：この羊の羊皮紙を見る前に、まず以下の内容を確認してください。"
+    },
+    "info.elfPurse.coin": {
+      "zh_CN": "拥有%d元",
+      "en_US": "Have %d yuan",
+      "ja_JP": "%d元を持っている"
+    },
+    "info.grimoire.element": {
+      "zh_CN": "魔典内蕴含的元素：",
+      "en_US": "Element in Grimoire:",
+      "ja_JP": "魔典に含まれている元素："
+    },
+    "info.grimoire.record": {
+      "zh_CN": "魔典中记载着%d个咒文",
+      "en_US": "There are %d mantra recorded in this grimoire.",
+      "ja_JP": "魔典には%dの呪文が記載されています"
+    },
+    "info.grimoire.nothing": {
+      "zh_CN": "魔典中什么也没有写",
+      "en_US": "There's nothing in grimoire.",
+      "ja_JP": "魔典には何も書かれていません"
+    },
+    "info.grimoire.current": {
+      "zh_CN": "当前咒文：%s",
+      "en_US": "Current mantra: %s",
+      "ja_JP": "現在の呪文：%s"
+    },
+    "info.grimoire.error": {
+      "zh_CN": "当前咒文已失效",
+      "en_US": "Current mantra is invalid.",
+      "ja_JP": "現在の呪文は失効した。"
+    },
+    "info.grimoire.blank": {
+      "zh_CN": "书中还有%d页空白",
+      "en_US": "There are %d blank pages left in the book.",
+      "ja_JP": "本の中にまだ%d空白ページがある"
+    },
+    "info.ancientPaper.mantra": {
+      "zh_CN": "这上面记录着被称作「%s」的咒文",
+      "en_US": "This paper records the Mantra called 「%s」",
+      "ja_JP": "この上には「%s」という呪文が記されています。"
+    },
+    "info.ancientPaper.normal": {
+      "zh_CN": "这上面记录着有关「%s」的内容",
+      "en_US": "This paper records about 「%s」",
+      "ja_JP": "この上には「%s」に関する内容が記録されています。"
+    },
+    "info.ancientPaper.record": {
+      "zh_CN": "这上面可阅读的部分似乎只有%d%%~%d%%",
+      "en_US": "The only readable part of this paper seems to be %d%% ~ %d%%",
+      "ja_JP": "この上の内容は読める部分が%d%%~%d%%だけらしい"
+    },
+    "info.ancientPaper.unknow": {
+      "zh_CN": "我看不懂这张古卷上记载的内容",
+      "en_US": "I can't understand what is recorded in this Ancient Paper",
+      "ja_JP": "この古巻に記載されている内容が分かりません。"
+    },
+    "info.ancientPaper.progress": {
+      "zh_CN": "解读进度%s",
+      "en_US": "Progress of unscrambling %s",
+      "ja_JP": "解読進捗%s"
+    },
+    "info.research.increase": {
+      "zh_CN": "你对「%s」更加感兴趣了",
+      "en_US": "Are you more interested in 「%s」",
+      "ja_JP": "あなたは「%s」にもっと興味があります。"
+    },
+    "info.want.not.unscramble": {
+      "zh_CN": "你疲倦了，不想在继续解读了",
+      "en_US": "You're too tired to read any more",
+      "ja_JP": "あなたは疲れました、読み続けたくない"
+    },
+    "info.not.atigue": {
+      "zh_CN": "你不再疲倦了",
+      "en_US": "You're no longer tired",
+      "ja_JP": "あなたもう疲れません"
+    },
+    "info.underway": {
+      "zh_CN": "正在进行",
+      "en_US": "underway",
+      "ja_JP": "進行中"
+    },
+    "info.complete": {
+      "zh_CN": "完成",
+      "en_US": "complete",
+      "ja_JP": "完了"
+    },
+    "info.level.total.page.count": {
+      "zh_CN": "%d级仪式拥有%d种不同的羊皮卷",
+      "en_US": "% Level Rite have %d different kinds of parchment.",
+      "ja_JP": "%d級の儀式は%d種類の羊皮纸を持っています"
+    },
+    "info.page.from": {
+      "zh_CN": "这张羊皮纸来自于%s",
+      "en_US": "This parchment is from %s",
+      "ja_JP": "この羊皮紙は%sから来ました"
+    },
+    "info.address": {
+      "zh_CN": "地址：%s",
+      "en_US": "Address：%s",
+      "ja_JP": "住所：%s"
+    },
+    "info.signature": {
+      "zh_CN": "署名：%s",
+      "en_US": "Signature：%s",
+      "ja_JP": "署名：%s"
+    },
+    "info.from": {
+      "zh_CN": "来自%s",
+      "en_US": "From %s",
+      "ja_JP": "%sから"
+    },
+    "info.service.times": {
+      "zh_CN": "服务次数：%d",
+      "en_US": "Service Times: %d",
+      "ja_JP": "サービス回数：%d"
+    },
+    "info.remain.space": {
+      "zh_CN": "剩余空间：%s",
+      "en_US": "Remaining Space：%s",
+      "ja_JP": "空き容量：%s"
+    },
+    "info.soul.power": {
+      "zh_CN": "魂力：%d",
+      "en_US": "Power of Soul: %d",
+      "ja_JP": "魂の力：%d"
+    },
+    "info.attr.hardness": {
+      "zh_CN": "硬度：%s",
+      "en_US": "Hardness：%s",
+      "ja_JP": "硬度：%s"
+    },
+    "info.power": {
+      "zh_CN": "能量：%s",
+      "en_US": "Power: %s",
+      "ja_JP": "パワー：%s"
+    },
+    "info.following.record": {
+      "zh_CN": "记录了：",
+      "en_US": "The following are recorded:",
+      "ja_JP": "記録しました:"
+    },
+    "info.ding.ring.ring": {
+      "zh_CN": "叮铃铃~",
+      "en_US": "Ding Ring Ring ~",
+      "ja_JP": "ジリリ~"
+    },
+    "info.star.bell": {
+      "zh_CN": "星之铃发出了%s的声音",
+      "en_US": "Star Bell made a %s sound",
+      "ja_JP": "星の鈴が%s音を立てた"
+    },
+    "info.sound.deep": {
+      "zh_CN": "深沉",
+      "en_US": "Deep",
+      "ja_JP": "底力ある"
+    },
+    "info.sound.crisp": {
+      "zh_CN": "清脆",
+      "en_US": "Crisp",
+      "ja_JP": "さえた"
+    },
+    "info.sound.long": {
+      "zh_CN": "悠长",
+      "en_US": "Long",
+      "ja_JP": "長い"
+    },
+    "info.previous": {
+      "zh_CN": "上一个%s",
+      "en_US": "Previous %s",
+      "ja_JP": "前の%s"
+    },
+    "info.fairy.cube.module.count": {
+      "zh_CN": "拥有符文：%d",
+      "en_US": "Rune of possession: %d",
+      "ja_JP": "ルーンの所持：%d"
+    }
+  },
+  "lev": {
+    "lev.defective": {
+      "zh_CN": "次品",
+      "en_US": "defective",
+      "ja_JP": "劣等品"
+    },
+    "lev.unsuited": {
+      "zh_CN": "不适合",
+      "en_US": "unsuited",
+      "ja_JP": "似合わない "
+    },
+    "lev.subordinate": {
+      "zh_CN": "下级",
+      "en_US": "subordinate",
+      "ja_JP": "下級"
+    },
+    "lev.intermediate": {
+      "zh_CN": "中级",
+      "en_US": "intermediate",
+      "ja_JP": "中級"
+    },
+    "lev.senior": {
+      "zh_CN": "高级",
+      "en_US": "senior",
+      "ja_JP": "高級"
+    },
+    "lev.super": {
+      "zh_CN": "传说",
+      "en_US": "legend",
+      "ja_JP": "伝说"
+    }
+  },
+  "fairy": {
+    "fairy.cube.destoryBlock.name": {
+      "zh_CN": "挖掘",
+      "en_US": "Excavate",
+      "ja_JP": "掘り起こす"
+    },
+    "fairy.cube.attrSilk.name": {
+      "zh_CN": "精准",
+      "en_US": "Silk Touch",
+      "ja_JP": "シルクタッチ"
+    },
+    "fairy.cube.fortune.name": {
+      "zh_CN": "时运",
+      "en_US": "Fortune",
+      "ja_JP": "幸運"
+    },
+    "fairy.cube.placeBlock.name": {
+      "zh_CN": "放置者",
+      "en_US": "Placer",
+      "ja_JP": "配置者"
+    },
+    "fairy.cube.heal.name": {
+      "zh_CN": "治疗",
+      "en_US": "Heal",
+      "ja_JP": "治療"
+    },
+    "fairy.cube.lightweight.name": {
+      "zh_CN": "轻身",
+      "en_US": "Light Weight",
+      "ja_JP": "軽身"
+    },
+    "fairy.cube.attack.name": {
+      "zh_CN": "进攻",
+      "en_US": "Attack",
+      "ja_JP": "攻撃"
+    },
+    "fairy.cube.plunder.name": {
+      "zh_CN": "掠夺",
+      "en_US": "Plunder",
+      "ja_JP": "略奪"
+    },
+    "fairy.cube.attackRange.name": {
+      "zh_CN": "进攻区域",
+      "en_US": "Attack Range",
+      "ja_JP": "攻撃エリア"
+    },
+    "fairy.cube.attackCritical.name": {
+      "zh_CN": "暴击",
+      "en_US": "Attack Critical",
+      "ja_JP": "暴撃"
+    },
+    "fairy.cube.expUp.name": {
+      "zh_CN": "经验上升",
+      "en_US": "Exp Up",
+      "ja_JP": "経験アップ"
+    },
+    "fairy.cube.farm.name": {
+      "zh_CN": "农主",
+      "en_US": "Farmer",
+      "ja_JP": "農夫"
+    },
+    "fairy.cube.destoryBlock.random": {
+      "zh_CN": "随机",
+      "en_US": "Random",
+      "ja_JP": "ランダム"
+    },
+    "fairy.cube.destoryBlock.direct": {
+      "zh_CN": "隧道",
+      "en_US": "Tunnel",
+      "ja_JP": "トンネル"
+    },
+    "fairy.cube.place.single": {
+      "zh_CN": "单一",
+      "en_US": "Single",
+      "ja_JP": "単一"
+    },
+    "fairy.cube.place.series": {
+      "zh_CN": "连续",
+      "en_US": "Series",
+      "ja_JP": "連続"
+    },
+    "fairy.cube.attack.normal": {
+      "zh_CN": "普通",
+      "en_US": "Normal",
+      "ja_JP": "標準"
+    },
+    "fairy.cube.attack.thump": {
+      "zh_CN": "重击",
+      "en_US": "Thump",
+      "ja_JP": "強打"
+    },
+    "fairy.cube.attack.range": {
+      "zh_CN": "范围",
+      "en_US": "Range",
+      "ja_JP": "範囲"
+    },
+    "fairy.cube.attackCritical.steady": {
+      "zh_CN": "稳健",
+      "en_US": "Steady",
+      "ja_JP": "穏健"
+    },
+    "fairy.cube.attackCritical.lucky": {
+      "zh_CN": "幸运",
+      "en_US": "Lucky",
+      "ja_JP": "幸運"
+    },
+    "fairy.cube.attackCritical.unparalleled": {
+      "zh_CN": "无双",
+      "en_US": "Unparalleled",
+      "ja_JP": "無双"
+    },
+    "fairy.cube.farm.accurate": {
+      "zh_CN": "精准",
+      "en_US": "Accurate",
+      "ja_JP": "正確"
+    }
+  },
+  "kType": {
+    "kType.magicDevice.name": {
+      "zh_CN": "魔力设备",
+      "en_US": "Magic Device",
+      "ja_JP": "魔力装置"
+    },
+    "kType.architecture.name": {
+      "zh_CN": "古代建筑",
+      "en_US": "Ancient architecture",
+      "ja_JP": "古代建築"
+    },
+    "kType.enderBoat.name": {
+      "zh_CN": "末影船",
+      "en_US": "Ender Boat",
+      "ja_JP": "エンダー船"
+    },
+    "kType.library.name": {
+      "zh_CN": "图书馆",
+      "en_US": "Library",
+      "ja_JP": "図書館"
+    },
+    "kType.mantra.name": {
+      "zh_CN": "咒术",
+      "en_US": "Mantra",
+      "ja_JP": "呪文"
+    },
+    "kType.element.name": {
+      "zh_CN": "元素",
+      "en_US": "Element",
+      "ja_JP": "元素"
+    },
+    "kType.altar.name": {
+      "zh_CN": "祭坛",
+      "en_US": "Altar",
+      "ja_JP": "祭壇"
+    },
+    "kType.monster.name": {
+      "zh_CN": "怪物",
+      "en_US": "Monster",
+      "ja_JP": "モンスター"
+    }
+  },
+  "topic": {
+    "topic.Struct.name": {
+      "zh_CN": "结构",
+      "en_US": "Struct",
+      "ja_JP": "構造"
+    },
+    "topic.Ender.name": {
+      "zh_CN": "末影",
+      "en_US": "Ender",
+      "ja_JP": "エンダー"
+    },
+    "topic.Natural.name": {
+      "zh_CN": "自然",
+      "en_US": "Natural",
+      "ja_JP": "自然"
+    },
+    "topic.Engine.name": {
+      "zh_CN": "机械",
+      "en_US": "Engine",
+      "ja_JP": "機械"
+    },
+    "topic.Mantra.name": {
+      "zh_CN": "咒术",
+      "en_US": "Mantra",
+      "ja_JP": "呪術"
+    },
+    "topic.Biology.name": {
+      "zh_CN": "生物",
+      "en_US": "Biology",
+      "ja_JP": "生物"
+    }
+  },
+  "elf": {
+    "elf.time.year": {
+      "zh_CN": "%d年",
+      "en_US": "%d Year ",
+      "ja_JP": "%d年"
+    },
+    "elf.time.mon.0": {
+      "zh_CN": "春",
+      "en_US": "Spring ",
+      "ja_JP": "春"
+    },
+    "elf.time.mon.1": {
+      "zh_CN": "夏",
+      "en_US": "Summer ",
+      "ja_JP": "夏"
+    },
+    "elf.time.mon.2": {
+      "zh_CN": "秋",
+      "en_US": "Autumn ",
+      "ja_JP": "秋"
+    },
+    "elf.time.mon.3": {
+      "zh_CN": "冬",
+      "en_US": "Winter ",
+      "ja_JP": "冬"
+    },
+    "elf.time.day": {
+      "zh_CN": "%s号",
+      "en_US": "%s Day ",
+      "ja_JP": "%s号"
+    },
+    "elf.time.hour.0": {
+      "zh_CN": "朝",
+      "en_US": "Morning ",
+      "ja_JP": "朝"
+    },
+    "elf.time.hour.1": {
+      "zh_CN": "暮",
+      "en_US": "Twilight ",
+      "ja_JP": "暮"
+    },
+    "elf.time.min": {
+      "zh_CN": "%d时",
+      "en_US": "%d Time ",
+      "ja_JP": "%d時"
+    },
+    "elf.time.sec": {
+      "zh_CN": "%d秒",
+      "en_US": "%d Sec ",
+      "ja_JP": "%d秒"
+    },
+    "elf.time.calendar": {
+      "zh_CN": "精灵历：%s",
+      "en_US": "Elf Calendar: %s",
+      "ja_JP": "精霊のカレンダー：%s"
+    }
+  },
+  "say": {
+    "say.scholar.buy": {
+      "zh_CN": "别说了，我要买羊皮卷",
+      "en_US": "Stop talking. I want to buy some parchment.",
+      "ja_JP": "黙って羊皮紙を買いたい"
+    },
+    "say.scholar.konw": {
+      "zh_CN": "我明白了",
+      "en_US": "Oh, I see",
+      "ja_JP": "わかりました"
+    },
+    "say.scholar.unkonw": {
+      "zh_CN": "我不明白",
+      "en_US": "I don't understand",
+      "ja_JP": "わからない"
+    },
+    "say.ok": {
+      "zh_CN": "好的",
+      "en_US": "Ok",
+      "ja_JP": "はい"
+    },
+    "say.no": {
+      "zh_CN": "我在考虑一下",
+      "en_US": "Let me think",
+      "ja_JP": "もう少し考えてみます"
+    },
+    "say.scholar.pretendKnow": {
+      "zh_CN": "就当你明白了",
+      "en_US": "Pretend you understand.",
+      "ja_JP": "わかったふりして"
+    },
+    "say.scholar.nice.goods": {
+      "zh_CN": "我这里除了记载知识的羊皮卷以外，还有一些好东西你可以买到",
+      "en_US": "In addition to the parchment for recording knowledge, there are some good things you can buy here.",
+      "ja_JP": "ここでは知識を記載した羊皮紙以外に、いいものがあります"
+    },
+    "say.scholar.becare": {
+      "zh_CN": "你要小心疯子，她们什么都打",
+      "en_US": "You have to be careful of The Crazy. They fight everything.",
+      "ja_JP": "狂人に注意してください、彼たちは何でもします"
+    },
+    "say.scholar.master": {
+      "zh_CN": "精灵魔法大师非常的强大，几乎无人是她的对手，我也想成为那样强大的法师。",
+      "en_US": "The Magic Master is very powerful, almost no one is her opponent, I also want to be such a powerful mage.",
+      "ja_JP": "魔法のマスターはとっても強い、彼の相手はほとんどいません、僕はその強くをなりたい"
+    },
+    "say.scholar.more.floor": {
+      "zh_CN": "可以在巨大的精灵树上建立许多不同类型的层：商会、邮局等等，我好像要个大图书馆呀。（这些内容随更新加入）",
+      "en_US": "Many different types of floor can be build on the giant Elf Tree like Chamber of Commerce, Post Office, etc. I hope The Big Library can be build. (These are added with the update)",
+      "ja_JP": "巨大な精霊の木に様々な種類の層を作ることができます、例えば商会、郵便局など。私なら大図書館がほしいな。（これらの内容は更新とともに追加されます。）"
+    },
+    "say.scholar.watch": {
+      "zh_CN": "精灵怀表是由我们的工匠打造的，可以看到当前世界的时间。以日出为始、50秒为1时、12时分朝暮、12朝暮分四季。如果想要的话，可以问问商人有没有。",
+      "en_US": "The Elf Watch is made by our craftsmen and can see the time of the current world. 50 Sec is 1 Time, 12 Time divide Morning&Twilight,  12 Morning&Twilight divide four seasons. If you want it, ask the Elf Merchant whether have one.",
+      "ja_JP": "精霊の精霊時計は私達の職人によって作られました。今の世界の時間が見えます。50秒は1時、12時は朝暮、12朝暮は四季。欲しいなら、商人に聞いてもいいです。"
+    },
+    "say.merchant.good.goods": {
+      "zh_CN": "快来看看吧，我这里全是好东西",
+      "en_US": "Come and have a look. I have a lot of good things here.",
+      "ja_JP": "いらっしゃいませ、ここは全部いいものです"
+    },
+    "say.builder.working": {
+      "zh_CN": "我正在工作...",
+      "en_US": "I'm working.",
+      "ja_JP": "仕事中です"
+    },
+    "say.builder.hope": {
+      "zh_CN": "我希望可以居住在这里...",
+      "en_US": "I hope we can live here...",
+      "ja_JP": "ここに住みたいですけど"
+    },
+    "say.builder.help": {
+      "zh_CN": "有什么可以帮忙的吗？",
+      "en_US": "Can I help you?",
+      "ja_JP": "何か手伝うことがありますか？"
+    },
+    "say.builder.need": {
+      "zh_CN": "我要一些资金，大概500元吧",
+      "en_US": "I need some money, about 500 yuan.",
+      "ja_JP": "ちょっとお金がほしいですが、500元ぐらいかかりますか？"
+    },
+    "say.builder.ok": {
+      "zh_CN": "我要赞助他们",
+      "en_US": "I want to sponsor them.",
+      "ja_JP": "彼らを助けたいです"
+    },
+    "say.builder.no": {
+      "zh_CN": "还是算了吧",
+      "en_US": "Let's forget it.",
+      "ja_JP": "いやです"
+    },
+    "say.very.thank": {
+      "zh_CN": "非常感谢",
+      "en_US": "Thank you very much.",
+      "ja_JP": "ありがとうございます"
+    },
+    "say.nomoney": {
+      "zh_CN": "你好像没带够钱",
+      "en_US": "You don't seem to have enough money.",
+      "ja_JP": "お金を十分に持っていないようです"
+    },
+    "say.edifice.broken": {
+      "zh_CN": "这颗树的核心被破坏了，我们也要离开这里了...",
+      "en_US": "This Tree's Core is broken, we will leave here soon.",
+      "ja_JP": "この木の芯が壊れました。私達もここを離れる予定です。"
+    },
+    "say.can.help": {
+      "zh_CN": "你好呀，有什么事我可以帮忙的吗？",
+      "en_US": "Hello, what can I do for you?",
+      "ja_JP": "何か手伝いましょうか？"
+    },
+    "say.take.quest": {
+      "zh_CN": "我要领取委托",
+      "en_US": "I want to take this quest.",
+      "ja_JP": "依頼を引き受ける"
+    },
+    "say.how.take.quest": {
+      "zh_CN": "如果想领取委托，可以到上方的公告板上去看一看，定期会有人在上面张贴委托，委托内容，条件以及报酬都会在上面写着哦。如果有想接的委托，就拿着委托书来找我吧。\\n大部分任务有信用的要求，如果任务规定时间内未完成，该任务需要的信用越多，对您的信用影响越大。",
+      "en_US": "If you want to get the Quest, you can go to the bulletin board above to have a look. The Quest written contents, conditions and rewards will be posting on it regularly. If you have a Quest you want to accept, come to me with the Quest.\\nMost Quests have Fame requirements, If the Quest is overdue, the more fame the quest needs, the greater the impact on your fame.",
+      "ja_JP": "依頼を受けたいなら、上の掲示板を見てください。定期的に依頼を張り出す人がいます、上に依頼内容、条件、報酬などが書かれています。受けたい依頼があれば、依頼書を持ってきてください。大部分の依頼は信用の要求があります。もし依頼の規定時間内に完成していないなら、依頼に必要な信用がもっと多くて、あなたの信用に影響が大きいです。"
+    },
+    "say.want.go.upstair": {
+      "zh_CN": "我想上楼",
+      "en_US": "I want to go upstairs",
+      "ja_JP": "上に行きたいです"
+    },
+    "say.how.go.upstair": {
+      "zh_CN": "在树中部，按下「功能键(默认TAB)」可以唤起大树的电梯。不过需要等楼层建好了。祝您愉快。",
+      "en_US": "In the middle of the Tree, press the \"function key\" to call up the elevator of the tree. But we need to wait until the floor is ready. Have a good time.",
+      "ja_JP": "木の中部で、「機能キー」を押すと、大木のエレベーターを喚起する。でも、階の建造を待つ必要があります。楽しい時間を過ごしてください。"
+    },
+    "say.overdue.quest": {
+      "zh_CN": "你手上的委托已经到期了。",
+      "en_US": "The Quest at hand is due.",
+      "ja_JP": "持っている依頼はもう期限が切れました。"
+    },
+    "say.underway.quest": {
+      "zh_CN": "你手上的委托正在进行或者已经完成了。",
+      "en_US": "The Quest at hand is in progress or has been completed.",
+      "ja_JP": "持っている依頼は進行中か、またはすでに完了しました。"
+    },
+    "say.cannot.quest": {
+      "zh_CN": "你无法领取这个委托。",
+      "en_US": "You can't take this Quest.",
+      "ja_JP": "この依頼を受け取れません。"
+    },
+    "say.nofinish.quest": {
+      "zh_CN": "你的委托还没完成吧。",
+      "en_US": "You haven't finished your task yet.",
+      "ja_JP": "君の依頼はまだ終わっていないだろう。"
+    },
+    "say.take.quest.confirm": {
+      "zh_CN": "确定要领取「%s」这个委托吗？请确认好，如果规定时间内未完成，可能会影响到你的信誉。",
+      "en_US": "Are you sure you want to claim the 「%s」 Quest? Please confirm it. If it is not completed within the specified time, it may affect your Fame.",
+      "ja_JP": "この「%s」という依頼を受け取りますか？よく確認してください。規定時間内に完成していないと、信用に影響を与えるかもしれません。"
+    },
+    "say.take.quest.finish": {
+      "zh_CN": "我已经给您登记了，你可以开始这个委托了！此外请不要弄丢这张委托书，这个是你委托的凭证。",
+      "en_US": "I have signed you. You can start this Quest! In addition, please don't lose this Quest which is the certificate of your quest.",
+      "ja_JP": "依頼を登録しました。この依頼を開始してもいいです。また、この依頼書をなくしないでください、これはあなたの依頼の証明です。"
+    },
+    "say.reputation.decline": {
+      "zh_CN": "您接受的委托中存在超出期限的委托，已经为您注销了这些委托。由于您未按时提交，您的信誉可能会有所降低。",
+      "en_US": "There are overdue Quest in the Quest you have accepted. These Quest have been logged out for you. Your Fame may be reduced due to your late submission.",
+      "ja_JP": "あなたが受けた依頼には期限を超えたものがあります。これらの依頼はすでにキャンセルされました。その結果で、あなたの信用が低下するかもしれません。"
+    },
+    "say.quest.finish": {
+      "zh_CN": "恭喜你完成了这个委托！这是给你的奖励。",
+      "en_US": "Congratulations on completing this Quest! This is a reward for you.",
+      "ja_JP": "この依頼を達成したことをおめでとうございます。これはあなたへのご褒美です。"
+    },
+    "say.fame.query": {
+      "zh_CN": "信用查询",
+      "en_US": "Fame Query",
+      "ja_JP": "信用照会"
+    },
+    "say.fame.query.result": {
+      "zh_CN": "让我看看^_^_^_^_^_^_^_^_^您的信用记录是%s",
+      "en_US": "Let me see ^_^_^_^_^_^_^_^_^ Your Fame is %s",
+      "ja_JP": "ちょっと待ってください^_^_^_^_^_^_^_^_^あなたの信用記録は%sです。"
+    },
+    "say.ironsmith.info": {
+      "zh_CN": "你把需要烧炼的矿物放到那边的箱子堆里，我会帮你烧炼，烧好了记得到炉子两边的箱子里去拿。\\n我可不是白烧的，一个矿2元，记得一起放到箱子里。",
+      "en_US": "Put the ore into the boxes over there. I'll help you smelt them. When work done, remember to take them from the boxes on both sides of the stove. \\N I don't work for nothing, a ore costs 2 yuan, remember to put it in the box together.",
+      "ja_JP": "製錬したい鉱物をあちらの箱の中に入れてください。製錬した後でストーブの両側の箱の中で取ってください。\\n無料ではないです。一つの鉱石は2元です。一緒に箱に入れてください。"
+    },
+    "say.send.parcel": {
+      "zh_CN": "寄送包裹",
+      "en_US": "Send a parcel",
+      "ja_JP": "小包を送る"
+    },
+    "say.apply.address.plate": {
+      "zh_CN": "申请地址牌",
+      "en_US": "Apply for address plate",
+      "ja_JP": "住所カードを申請する"
+    },
+    "say.submit": {
+      "zh_CN": "提交",
+      "en_US": "Submit",
+      "ja_JP": "送信"
+    },
+    "say.submit.empty": {
+      "zh_CN": "您还没有填写地址吧。",
+      "en_US": "You haven't filled in the address yet.",
+      "ja_JP": "住所はまだ書いてないですよね"
+    },
+    "say.submit.empty.item": {
+      "zh_CN": "寄送包裹的话，总要有点东西吧。",
+      "en_US": "I think there must be something when send a parcel.",
+      "ja_JP": "小包を送る時、なにでもいい、荷物が必要ですよね"
+    },
+    "say.address.illegal": {
+      "zh_CN": "您填的地址名不太好吧",
+      "en_US": "Your address is not very good, is it?",
+      "ja_JP": "ご記入の住所名はよくないですよね？"
+    },
+    "say.send.mail.money": {
+      "zh_CN": "我算下，寄送这个包裹，您一共需要支付%s元。",
+      "en_US": "You will have to pay %s yuan to send this parcel.",
+      "ja_JP": "この小包を送るには全部で%s元を支払う必要があります"
+    },
+    "say.as.soon.to.sned": {
+      "zh_CN": "我们会尽快为您配送。",
+      "en_US": "We will ship it to you as soon as possible.",
+      "ja_JP": "できるだけ早く配送します"
+    },
+    "say.apply.address.help": {
+      "zh_CN": "您可以花费%s元来申请一个地址牌，将地址牌放到精灵信标里，当有您的包裹时，我们会将包裹送到精灵信标附近的箱子里。",
+      "en_US": "You can spend %s yuan to apply for an Address Plate and put it in the Elf Beacon. When there is your parcel, we will send it to the chest near the Elf Beacon",
+      "ja_JP": "%s元を使って住所カードを申請して、住所カードを精霊のビーコンに入れ、小包がある時、私達は精霊のビーコンの近くの箱に小包を送ります"
+    },
+    "say.apply.address.success": {
+      "zh_CN": "请收好您的地址牌。",
+      "en_US": "Please keep your Address Plate.",
+      "ja_JP": "住所カードを受け取ってください"
+    },
+    "say.i.want": {
+      "zh_CN": "我想%s",
+      "en_US": "I want %s",
+      "ja_JP": "%sと欲しい"
+    },
+    "say.upgrade.plate": {
+      "zh_CN": "升级地址牌",
+      "en_US": "Upgrade Address Plate",
+      "ja_JP": "住所カードを級が上がる"
+    },
+    "say.upgrade.help": {
+      "zh_CN": "您可以花费%s元来升级到高级的地址牌，高级地址牌可以随时呼叫快递员进行服务，一共有10次的使用机会。",
+      "en_US": "You can spend %s yuan to upgrade to the VIP Address Plate, which can call the courier for service at any time, with a total of 10 use opportunities.",
+      "ja_JP": "%s元を使って超級住所カードにアップグレードすることができます。超級住所カードはいつでも宅急便員を呼んでサービスを行うことができます。全部で10回の利用機会があります。"
+    },
+    "say.add.service.plate": {
+      "zh_CN": "增加服务次数",
+      "en_US": "Increase service times",
+      "ja_JP": "サービスの回数を増やす"
+    },
+    "say.add.service.help": {
+      "zh_CN": "您是高级地址牌用户，您可以花费%s元来增加10次的服务次数。",
+      "en_US": "You are an VIP Address Plate user. You can spend %s yuan to increase 10 service times.",
+      "ja_JP": "あなたは超級住所カードのユーザです。10回のサービス回数を増やすために%s元を使うことができます。 "
+    },
+    "say.add.service.success": {
+      "zh_CN": "以成功为您增加了10次服务次数",
+      "en_US": "We have successfully added 10 service times for your VIP Address Plate.",
+      "ja_JP": "10回のサービスを追加しました。"
+    },
+    "say.your.pracel": {
+      "zh_CN": "%s：您的包裹到了",
+      "en_US": "%s: Here is your package",
+      "ja_JP": "%s：あなたの小包が届きました"
+    },
+    "say.post.first.welfare": {
+      "zh_CN": "您是第一次来使用我们的快递服务，我们特此为您准了一个新手委托，请您收下。",
+      "en_US": "You are the first time to use our express service, we hereby allow you a novice Quest, please accept it.",
+      "ja_JP": "初めての宅急便サービスです。そこで初心者の依頼を用意しました。受け取ってください。"
+    },
+    "say.how.research": {
+      "zh_CN": "你可以去那边的方桌上进行研究，花费研究点数在不同的题目上，没准可以研究出你想要的东西出来。",
+      "en_US": "You can go to the square table over there and spend research points on different topics. Maybe you can find out what you want.",
+      "ja_JP": "そちら四角桌に行って研究してもいいです。違ったテーマに研究点数を使って、あなたの欲しいものが手に入るかもしれない。"
+    },
+    "say.want.paper": {
+      "zh_CN": "可以把你手上的古卷送给我吗？作为报酬，我会教你一些东西的。",
+      "en_US": "Can you give me the Ancient Paper you have? In return, I'll teach you something.",
+      "ja_JP": "手に持っている古巻を送ってもらえますか？報酬として、何かを教えてあげます。"
+    },
+    "say.teach.me": {
+      "zh_CN": "教我知识",
+      "en_US": "Teach me",
+      "ja_JP": "知識を教えてください"
+    },
+    "say.buy.something": {
+      "zh_CN": "买东西",
+      "en_US": "Shopping",
+      "ja_JP": "買い物する"
+    },
+    "say.buy.parchment": {
+      "zh_CN": "我这里有关于您手中物品的羊皮卷，您是否想要花费%s来购买呢？",
+      "en_US": "I have a parchment about your held item, would you want spend %s yuan for it?",
+      "ja_JP": "貴方持っているものに関する羊皮紙がいますが、%s元で買いたいですか？"
+    }
+  },
+  "floor": {
+    "floor.hall.name": {
+      "zh_CN": "大厅",
+      "en_US": "Hall",
+      "ja_JP": "広間"
+    },
+    "floor.livingRoom.name": {
+      "zh_CN": "住房",
+      "en_US": "Living Room",
+      "ja_JP": "部屋"
+    },
+    "floor.workshop.name": {
+      "zh_CN": "工作间",
+      "en_US": "Workshop",
+      "ja_JP": "作業場"
+    },
+    "floor.refinery.name": {
+      "zh_CN": "精炼厂",
+      "en_US": "Refinery",
+      "ja_JP": "精錬所"
+    },
+    "floor.postOffice.name": {
+      "zh_CN": "邮局",
+      "en_US": "Post Office",
+      "ja_JP": "郵便局"
+    },
+    "floor.laboratory.name": {
+      "zh_CN": "实验室",
+      "en_US": "Laboratory",
+      "ja_JP": "実験室"
+    },
+    "floor.library.name": {
+      "zh_CN": "大图书馆",
+      "en_US": "Great Library",
+      "ja_JP": "大図書館"
+    }
+  },
+  "quest": {
+    "quest.end": {
+      "zh_CN": "结束时间：%s",
+      "en_US": "End Time：%s",
+      "ja_JP": "終了時間：%s"
+    },
+    "quest.pre.condition": {
+      "zh_CN": "接受条件",
+      "en_US": "Preconditions",
+      "ja_JP": "事前条件"
+    },
+    "quest.reward": {
+      "zh_CN": "奖励",
+      "en_US": "Reward",
+      "ja_JP": "奨励"
+    },
+    "quest.reward.coin": {
+      "zh_CN": "报酬%d元",
+      "en_US": "Remuneration %d yuan",
+      "ja_JP": "報酬%d元"
+    },
+    "quest.reward.exp": {
+      "zh_CN": "经验%d点",
+      "en_US": "Exp %d points",
+      "ja_JP": "経験%d点"
+    },
+    "quest.reward.elf.invest": {
+      "zh_CN": "精灵树「%s」层规划权重增加%d",
+      "en_US": "Elf Tree %s Floor planning weight increased by %d",
+      "ja_JP": "精霊木「%s」层計画の重みが%d増加します"
+    },
+    "quest.reward.parcel": {
+      "zh_CN": "邮寄%s",
+      "en_US": "Send %s",
+      "ja_JP": "郵送%s"
+    },
+    "quest.reward.fame": {
+      "zh_CN": "信誉%.1f点",
+      "en_US": "Fame %.1f points",
+      "ja_JP": "信用度%.1f点"
+    },
+    "quest.reward.fame.need": {
+      "zh_CN": "信誉大于%.1f",
+      "en_US": "Fame is greater than %.1f",
+      "ja_JP": "信用が%.1fより大きい"
+    },
+    "quest.delegate": {
+      "zh_CN": "委派给%s",
+      "en_US": "Delegate %s",
+      "ja_JP": "%sに委任する"
+    },
+    "quest.unit": {
+      "zh_CN": "%s个",
+      "en_US": "%sx",
+      "ja_JP": "%s個"
+    },
+    "quest.use.send.parcel": {
+      "zh_CN": "使用精灵快递%s次",
+      "en_US": "Use Elf Post %s times",
+      "ja_JP": "精霊宅配%s回を使う"
+    },
+    "quest.request.collect": {
+      "zh_CN": "请求收集",
+      "en_US": "Request Collect",
+      "ja_JP": "收集の依頼"
+    },
+    "quest.newbie.task": {
+      "zh_CN": "新手委托",
+      "en_US": "Newbie Task",
+      "ja_JP": "初心者の依頼"
+    },
+    "quest.elf.invest": {
+      "zh_CN": "精灵树投资",
+      "en_US": "Elf Tree Invest",
+      "ja_JP": "精霊木投資"
+    },
+    "quest.explore": {
+      "zh_CN": "探索委托",
+      "en_US": "Explore",
+      "ja_JP": "探索"
+    },
+    "quest.broken.house": {
+      "zh_CN": "我门的房子坏了，需要$0，来进行修理，",
+      "en_US": "My house is broken, $0 is needed to repair,  ",
+      "ja_JP": "私の家が壊れました、修理に$0が必要です、"
+    },
+    "quest.elf.invest.want": {
+      "zh_CN": "我觉得我们的大厦中缺少%s，请求集资，列表如下：$0，",
+      "en_US": "I think we are short of %s in our Tree, so we need to raise funds, the list is as follows：$0,  ",
+      "ja_JP": "私たちのビルには%sが足りないと思います、資金集めをお願いします、リストは以下の通りです。$0、"
+    },
+    "quest.post.office.want": {
+      "zh_CN": "包裹量太大了，邮局需要一些物资来提供更好的服务，本次需求的物资如下：$0",
+      "en_US": "The post office needs some materials to provide better service. The materials needed this time are as follows: $0",
+      "ja_JP": "小包の量が大きすぎて、郵便局はより良いサービスを提供する物資が必要です。今回の需要の物資は以下の通り:$0、"
+    },
+    "quest.post.first.welfare": {
+      "zh_CN": "欢迎%s使用精灵快递服务，这是为新人提供的委托，只要$0就可以获得一颗精灵之星。",
+      "en_US": "Welcome %s to use the Elf Post Service, which is a Quest for new people. As long as $0, you can get a spirit star.",
+      "ja_JP": "精霊の宅配サービスを利用してありがとうございます。これは新人のための依頼です。$0で精霊の星を獲得できます。"
+    },
+    "quest.library.want": {
+      "zh_CN": "图书馆的物资不足了，需要$0这些东西，",
+      "en_US": "The library is short of supplies and needs $0, ",
+      "ja_JP": "図書館の物資が足りなくなりました。$0のが必要です、"
+    },
+    "quest.library.enchant": {
+      "zh_CN": "图书馆需要$0来进行研究，",
+      "en_US": "The library need $0 for research, ",
+      "ja_JP": "図書館の研究のために$0が必要です、"
+    },
+    "quest.research.want": {
+      "zh_CN": "研究室需要$0来进行研究，",
+      "en_US": "The Lab needs $0 for research, ",
+      "ja_JP": "研究のために$0が必要です、"
+    },
+    "quest.explore.research": {
+      "zh_CN": "研究缺少一些数据，期望能获得包含$0的自然水晶，",
+      "en_US": "The research lacks some data and hopes to get a Natural Crystal containing $0,",
+      "ja_JP": "研究にはいくつかのデータが不足しています、$0を含む自然水晶がほしいです、"
+    },
+    "quest.explore.ruins": {
+      "zh_CN": "遗迹是重要的研究课题，如果能取到包含$0的自然水晶，会对研究有很大帮助，冒险家们，",
+      "en_US": "Ruins are an important research topic. If you can get a Natural Crystal containing $0, it will be of great help to the research, adventurers,",
+      "ja_JP": "遺跡は重要な研究課題です。$0を含む自然水晶を取れば、研究に役立ちます。冒険家よ、"
+    },
+    "quest.explore.custom": {
+      "zh_CN": "包含$0的自然水晶对于研究生活习俗很有帮助，",
+      "en_US": "A Natural Crystal containing $0 is very helpful for studying customs,",
+      "ja_JP": "$0を含む自然水晶は生活習慣の研究に役立ちます、"
+    },
+    "quest.explore.join": {
+      "zh_CN": "我们看到你完成了探索委托，你想对环境有更深入的研究吗，提供$0这些素材，我们会帮你制作「岩石相机」，做好后同使用说明一起一起发给你。",
+      "en_US": "We see that you has completed the Explore Quest. Do you want to have a more in-depth study on the natural? We will help you make the 「Rock Camera」 with $0 materials, and send it to you together with the instructions.",
+      "ja_JP": "貴方は探索依頼が完了したのを見ましたが、環境についてもっと深く研究したいですか？$0の素材を提供しなら、「岩石カメラ」を作ってあげます、できたら使用説明と一緒に送ります。"
+    },
+    "quest.end.polite.1": {
+      "zh_CN": "如果可以帮我的话，我会给予一些报酬的。",
+      "en_US": "If you can help me, I will give you some reward.",
+      "ja_JP": "助けてくれるなら、何らかの報酬を与えます。"
+    },
+    "quest.end.polite.2": {
+      "zh_CN": "非常感谢你的帮助！",
+      "en_US": "Very Think for your Help.",
+      "ja_JP": "助けてくれてありがとうございます。"
+    },
+    "quest.end.polite.3": {
+      "zh_CN": "有了你的帮助，我们会发展的更好。",
+      "en_US": "With your help, we will develop better.",
+      "ja_JP": "あなたの助けがあって、私たちはもっと発展します。"
+    },
+    "quest.next.polite.1": {
+      "zh_CN": "上一个委托你完成的很好，如果可以的话，也请接下这个委托吧：",
+      "en_US": "You have done a good job in the last Quest. If you can, please accept this Quest:",
+      "ja_JP": "前の依頼はよくできました。できれば、この依頼を受けてください："
+    },
+    "quest.next.polite.2": {
+      "zh_CN": "非常感谢你之前的帮助，有空的话，可以看下这个委托吗：",
+      "en_US": "Thank you very much for your help. If you are free, can you take a look at this Quest:",
+      "ja_JP": "前の助けに感謝します。暇があれば、この依頼を見てもいいですか："
+    },
+    "quest.explore.1": {
+      "zh_CN": "%s地区的数据",
+      "en_US": "data of %s Biome",
+      "ja_JP": "%s地区のデータ"
+    },
+    "quest.explore.2": {
+      "zh_CN": "%s地区里%s的数据",
+      "en_US": "data of in %s Biome %s",
+      "ja_JP": "%s地区で%sのデータ"
+    },
+    "quest.explore.3": {
+      "zh_CN": "%s地区里%s中「%s」的数据",
+      "en_US": "data of in %s Biome %s's　「%s」",
+      "ja_JP": "%s地区で%s中「%s」のデータ"
+    },
+    "quest.explore.4": {
+      "zh_CN": "%s中「%s」的数据",
+      "en_US": "data of %s's 「%s」",
+      "ja_JP": "%s中「%s」のデータ"
+    }
+  },
+  "page": {
+    "page.elf": {
+      "zh_CN": "精灵",
+      "en_US": "Elf",
+      "ja_JP": "精霊"
+    },
+    "page.elf.ct": {
+      "zh_CN": "精灵是从精灵世界过来的一种新的生物，她们通常生活在巨大的精灵树上。精灵属于中立生物，而且有着不同的职业。如果你攻击她们，她们将可能会转变到战斗职业来进行防卫。\\n精灵中会产生疯子，她会到处乱攻击。\\n此外精灵学者会告诉你一些你可能想知道的内容，同时她也会出售教程。\\n[精灵部分教程只能从学者获取]",
+      "en_US": "Elf are a new kind of creature from the elves world. They usually live in the giant elf trees. Elves are neutral creatures and have different professions. If you attack them, they will probably switch to combat profession to defend.\\nThere will be Crazy in the elves, and she will attack everything.\\nIn addition, the Elf Scholar will tell you something you may want to know, and she will also sell tutorials.\\n[It's a other way to get the tutorial for elf in this mod]",
+      "ja_JP": "精霊は精霊の世界から来た新しい生物で、彼たちはいつも巨大な精霊の木に住んでいます。精霊は中立的な生物であり、また異なる職業を持っている。彼たちを攻撃すれば、彼たちは戦闘職業に転じて防衛することができます。\\n精霊の中で狂人がいる、彼はあちこちで攻撃します。\\nまた、精霊学者があなたに教えてくれます・同時に教程も販売しています。\\n[精霊部分教程は学者からしか入手できません。]"
+    },
+    "page.elfTree": {
+      "zh_CN": "精灵树",
+      "en_US": "Elf Tree",
+      "ja_JP": "精霊木"
+    },
+    "page.elfTree.ct": {
+      "zh_CN": "精灵树是一种具有魔法的树木，在自然界中生成，不过自然生成的树通常是很小的一棵。\\n砍下得到精灵木，这可能是你将来使用的重要材料。",
+      "en_US": "Elf Tree is a kind of magic tree, which is generated in nature, but the natural tree is usually very small.\\nCut down to get the spirit wood, which may be an important material for you to use in the future.",
+      "ja_JP": "精霊の木は魔法の木で、自然界で生成しますが、自然にできた木は小さい木です。\\n精霊の木を切り落とし、これは将来の重要な材料かもしれません。"
+    },
+    "page.elfFruit": {
+      "zh_CN": "精灵果",
+      "en_US": "Elf Fruit",
+      "ja_JP": "精霊果"
+    },
+    "page.elfFruit.ct": {
+      "zh_CN": "精灵果是精灵树上生长的一种果子，只在白天生长，成熟变绿，并掉落。\\n精灵果中蕴含着魔力，可以食用，连续使用的话可产生不同的效果。",
+      "en_US": "精灵果是精灵树上生长的一种果子，只在白天生长，成熟变绿，并掉落。\\n精灵果中蕴含着魔力，可以食用，连续使用的话可产生不同的效果。",
+      "ja_JP": "精灵果是精灵树上生长的一种果子，只在白天生长，成熟变绿，并掉落。\\n精灵果中蕴含着魔力，可以食用，连续使用的话可产生不同的效果。"
+    },
+    "page.elfCrystal": {
+      "zh_CN": "精灵结晶",
+      "en_US": "精灵结晶",
+      "ja_JP": "精灵结晶"
+    },
+    "page.elfCrystal.ct": {
+      "zh_CN": "精灵果可以进行烧制，其内部液体结晶而形成精灵结晶，具有良好的魔力亲和性，似乎可以存储魔力。\\n哦！对了，它还可以做精灵币与精灵进行交易。",
+      "en_US": "精灵果可以进行烧制，其内部液体结晶而形成精灵结晶，具有良好的魔力亲和性，似乎可以存储魔力。\\n哦！对了，它还可以做精灵币与精灵进行交易。",
+      "ja_JP": "精灵果可以进行烧制，其内部液体结晶而形成精灵结晶，具有良好的魔力亲和性，似乎可以存储魔力。\\n哦！对了，它还可以做精灵币与精灵进行交易。"
+    },
+    "page.elfMerchant": {
+      "zh_CN": "精灵商人",
+      "en_US": "精灵商人",
+      "ja_JP": "精灵商人"
+    },
+    "page.elfMerchant.ct": {
+      "zh_CN": "精灵商人会游走在世界各处，通过精灵币，你或许可以从他们那里买到些东西。（绿色出售、红色回收）",
+      "en_US": "精灵商人会游走在世界各处，通过精灵币，你或许可以从他们那里买到些东西。（绿色出售、红色回收）",
+      "ja_JP": "精灵商人会游走在世界各处，通过精灵币，你或许可以从他们那里买到些东西。（绿色出售、红色回收）"
+    },
+    "page.resonantCrystal": {
+      "zh_CN": "共鸣水晶",
+      "en_US": "共鸣水晶",
+      "ja_JP": "共鸣水晶"
+    },
+    "page.resonantCrystal.ct": {
+      "zh_CN": "通过精灵工艺制作的水晶，被广泛引用到各种需要共鸣的设备中。\\n该水晶可以投掷出去，砸到不同的设备上时，似乎会有不同的反应。",
+      "en_US": "通过精灵工艺制作的水晶，被广泛引用到各种需要共鸣的设备中。\\n该水晶可以投掷出去，砸到不同的设备上时，似乎会有不同的反应。",
+      "ja_JP": "通过精灵工艺制作的水晶，被广泛引用到各种需要共鸣的设备中。\\n该水晶可以投掷出去，砸到不同的设备上时，似乎会有不同的反应。"
+    },
+    "page.elfPower": {
+      "zh_CN": "精灵土地",
+      "en_US": "精灵土地",
+      "ja_JP": "精灵土地"
+    },
+    "page.elfPower.ct": {
+      "zh_CN": "在世界中，存在着一部分土地充斥着精灵力，在这些土地上可以长出参天的精灵树。\\n如果史蒂夫寻找到了这块地，在确保有两层完整土地且周围没有杂物的时候，使用共鸣水晶砸向精灵树苗，即可长出巨大的精灵树，这种树似乎会吸引精灵前来居住。\\n精灵商人买的某些东西或许可以检测某个区块是否拥有着精灵力。",
+      "en_US": "在世界中，存在着一部分土地充斥着精灵力，在这些土地上可以长出参天的精灵树。\\n如果史蒂夫寻找到了这块地，在确保有两层完整土地且周围没有杂物的时候，使用共鸣水晶砸向精灵树苗，即可长出巨大的精灵树，这种树似乎会吸引精灵前来居住。\\n精灵商人买的某些东西或许可以检测某个区块是否云行着精灵力。",
+      "ja_JP": "在世界中，存在着一部分土地充斥着精灵力，在这些土地上可以长出参天的精灵树。\\n如果史蒂夫寻找到了这块地，在确保有两层完整土地且周围没有杂物的时候，使用共鸣水晶砸向精灵树苗，即可长出巨大的精灵树，这种树似乎会吸引精灵前来居住。\\n精灵商人买的某些东西或许可以检测某个区块是否云行着精灵力。"
+    },
+    "page.elfEdifice": {
+      "zh_CN": "巨型精灵树",
+      "en_US": "巨型精灵树",
+      "ja_JP": "巨型精灵树"
+    },
+    "page.elfEdifice.ct": {
+      "zh_CN": "带有核心的巨大的精灵树可以吸引精灵们入住，他们会在树中搭建各式各样的楼层。要想开启精灵树的建造，试着和其周边的精灵说说话吧。",
+      "en_US": "带有核心的巨大的精灵树可以吸引精灵们入住，他们会在树中搭建各式各样的楼层。要想开启精灵树的建造，试着和其周边的精灵说说话吧。",
+      "ja_JP": "带有核心的巨大的精灵树可以吸引精灵们入住，他们会在树中搭建各式各样的楼层。要想开启精灵树的建造，试着和其周边的精灵说说话吧。"
+    },
+    "page.elfFloorHall": {
+      "zh_CN": "精灵大厅",
+      "en_US": "精灵大厅",
+      "ja_JP": "精灵大厅"
+    },
+    "page.elfFloorHall.ct": {
+      "zh_CN": "巨大的精灵树中，第一层永远会建造精灵大厅，这里是精灵树的核心区域，分为两小层，下层服务人员可以帮助玩家进行各种业务，上层则是委托的公告板，大家可以将委托贴在上面。",
+      "en_US": "巨大的精灵树中，第一层永远会建造精灵大厅，这里是精灵树的核心区域，分为两小层，下层服务人员可以帮助玩家进行各种业务，上层则是委托的公告板，大家可以将委托贴在上面。",
+      "ja_JP": "巨大的精灵树中，第一层永远会建造精灵大厅，这里是精灵树的核心区域，分为两小层，下层服务人员可以帮助玩家进行各种业务，上层则是委托的公告板，大家可以将委托贴在上面。"
+    },
+    "page.elfQuest": {
+      "zh_CN": "精灵委托",
+      "en_US": "精灵委托",
+      "ja_JP": "精灵委托"
+    },
+    "page.elfQuest.ct": {
+      "zh_CN": "随着巨型精灵树不同类型层数的增加，会有不同精灵的委托张贴在精灵大厅的公告板上，拿这想要的委托，去找大厅下方的服务人员，即可领取委托，领取的委托需要保管好，且不能转让，并需要在相应的时间内完成才能获得报酬。\\n其中有一种建筑类型的委托，称作「精灵树投资」，完成后可以积攒权重，当达到一定值后，精灵建筑工会开始建造新的楼层。",
+      "en_US": "随着巨型精灵树不同类型层数的增加，会有不同精灵的委托张贴在精灵大厅的公告板上，拿这想要的委托，去找大厅下方的服务人员，即可领取委托，领取的委托需要保管好，且不能转让，并需要在相应的时间内完成才能获得报酬。\\n其中有一种建筑类型的委托，称作「精灵树投资」，完成后可以积攒权重，当达到一定值后，精灵建筑工会开始建造新的楼层。",
+      "ja_JP": "随着巨型精灵树不同类型层数的增加，会有不同精灵的委托张贴在精灵大厅的公告板上，拿这想要的委托，去找大厅下方的服务人员，即可领取委托，领取的委托需要保管好，且不能转让，并需要在相应的时间内完成才能获得报酬。\\n其中有一种建筑类型的委托，称作「精灵树投资」，完成后可以积攒权重，当达到一定值后，精灵建筑工会开始建造新的楼层。"
+    },
+    "page.elfRefinery": {
+      "zh_CN": "精灵精炼厂",
+      "en_US": "精灵精炼厂",
+      "ja_JP": "精灵精炼厂"
+    },
+    "page.elfRefinery.ct": {
+      "zh_CN": "精灵精炼厂可以帮助你精炼各种矿物，使得矿物的获取翻倍。只要一点点钱，精灵铁匠就会帮您完成矿物的精炼。",
+      "en_US": "精灵精炼厂可以帮助你精炼各种矿物，使得矿物的获取翻倍。只要一点点钱，精灵铁匠就会帮您完成矿物的精炼。",
+      "ja_JP": "精灵精炼厂可以帮助你精炼各种矿物，使得矿物的获取翻倍。只要一点点钱，精灵铁匠就会帮您完成矿物的精炼。"
+    },
+    "page.elfPostOffice": {
+      "zh_CN": "精灵邮政",
+      "en_US": "精灵邮政",
+      "ja_JP": "精灵邮政"
+    },
+    "page.elfPostOffice.ct": {
+      "zh_CN": "精灵邮政可以提供寄送包裹的服务。在这里你可以申请地址牌，将地址放到精灵信标里，精灵快递员便会将包裹送到这个信标旁边的箱子中。\\n同时，精灵地址牌可以升级成超级地址牌服务，无需信标，只要点击就可以呼唤快递员进行服务。\\n地址牌是署名的，一些内容会通过快递发送给你，如果不存在署名的地址牌，你可能就收不到这些东西了。",
+      "en_US": "精灵邮政可以提供寄送包裹的服务。在这里你可以申请地址牌，将地址放到精灵信标里，精灵快递员便会将包裹送到这个信标旁边的箱子中。\\n同时，精灵地址牌可以升级成超级地址牌服务，无需信标，只要点击就可以呼唤快递员进行服务。\\n地址牌是署名的，一些内容会通过快递发送给你，如果不存在署名的地址牌，你可能就收不到这些东西了。",
+      "ja_JP": "精灵邮政可以提供寄送包裹的服务。在这里你可以申请地址牌，将地址放到精灵信标里，精灵快递员便会将包裹送到这个信标旁边的箱子中。\\n同时，精灵地址牌可以升级成超级地址牌服务，无需信标，只要点击就可以呼唤快递员进行服务。\\n地址牌是署名的，一些内容会通过快递发送给你，如果不存在署名的地址牌，你可能就收不到这些东西了。"
+    },
+    "page.elfBeacon": {
+      "zh_CN": "精灵信标",
+      "en_US": "精灵信标",
+      "ja_JP": "精灵信标"
+    },
+    "page.elfBeacon.ct": {
+      "zh_CN": "精灵信标是使用精灵之星制作的魔力道具，将地址牌放入其中，快递员会将送往这个地址的包裹放入入旁边的箱子中。\\n精灵之星是贵重的物品，前期很难获得，不过好在，精灵邮局会给申请地址牌的新人一个新人任务，完成它即可获得一个精灵之星。",
+      "en_US": "精灵信标是使用精灵之星制作的魔力道具，将地址牌放入其中，快递员会将送往这个地址的包裹放入入旁边的箱子中。\\n精灵之星是贵重的物品，前期很难获得，不过好在，精灵邮局会给申请地址牌的新人一个新人任务，完成它即可获得一个精灵之星。",
+      "ja_JP": "精灵信标是使用精灵之星制作的魔力道具，将地址牌放入其中，快递员会将送往这个地址的包裹放入入旁边的箱子中。\\n精灵之星是贵重的物品，前期很难获得，不过好在，精灵邮局会给申请地址牌的新人一个新人任务，完成它即可获得一个精灵之星。"
+    },
+    "page.elfStar": {
+      "zh_CN": "精灵之星",
+      "en_US": "精灵之星",
+      "ja_JP": "精灵之星"
+    },
+    "page.elfStar.ct": {
+      "zh_CN": "当然精灵之星也是可以制作的。不过前期你可能得不到它。",
+      "en_US": "当然精灵之星也是可以制作的。不过前期你可能得不到它。",
+      "ja_JP": "当然精灵之星也是可以制作的。不过前期你可能得不到它。"
+    },
+    "page.elfLaboratory": {
+      "zh_CN": "实验室",
+      "en_US": "实验室",
+      "ja_JP": "实验室"
+    },
+    "page.elfLaboratory.ct": {
+      "zh_CN": "实验室里可以进行研究，研究员会将研究方桌放到地上，史蒂夫便可以花费研究点数，进行物品的研究了。\\n关于研究：带好研究所需的物品，通过投入不同类型的研究点数，来制作新的物品。研究类型的配比和携带的物品可以决定研究出来的物品。研究无论成功还是失败都不会减少点数，所以可以随便的尝试。\\n研究者比较喜爱古代文献，如果把没解读过的古卷给他们的话，可能能获得一些研究点数。",
+      "en_US": "实验室里可以进行研究，研究员会将研究方桌放到地上，史蒂夫便可以花费研究点数，进行物品的研究了。\\n关于研究：带好研究所需的物品，通过投入不同类型的研究点数，来制作新的物品。研究类型的配比和携带的物品可以决定研究出来的物品。研究成功时，会扣除投入的点数，但失败并不会，所以可以随便的尝试。",
+      "ja_JP": "实验室里可以进行研究，研究员会将研究方桌放到地上，史蒂夫便可以花费研究点数，进行物品的研究了。\\n关于研究：带好研究所需的物品，通过投入不同类型的研究点数，来制作新的物品。研究类型的配比和携带的物品可以决定研究出来的物品。研究成功时，会扣除投入的点数，但失败并不会，所以可以随便的尝试。"
+    },
+    "page.rockCamera": {
+      "zh_CN": "岩石相机",
+      "en_US": "岩石相机",
+      "ja_JP": "岩石相机"
+    },
+    "page.rockCamera.ct": {
+      "zh_CN": "求知粉尘可以与自然发生共鸣，但其共鸣的速度较慢，而且仅能获得周边范围的信息。使用精灵工匠制作出来的岩石相机，消耗粉尘，对准方块进行使用，快速的将周边环境的信息输入，并且还可以精准的获取到目标方块的信息，是探索的最佳选择。",
+      "en_US": "求知粉尘可以与自然发生共鸣，但其共鸣的速度较慢，而且仅能获得周边范围的信息。使用精灵工匠制作出来的岩石相机，消耗粉尘，快速的将周边环境的信息输入，并且还可以精准的获取到目标方块的信息，是探索的最佳选择。",
+      "ja_JP": "求知粉尘可以与自然发生共鸣，但其共鸣的速度较慢，而且仅能获得周边范围的信息。使用精灵工匠制作出来的岩石相机，消耗粉尘，快速的将周边环境的信息输入，并且还可以精准的获取到目标方块的信息，是探索的最佳选择。"
+    },
+    "page.relicZombie": {
+      "zh_CN": "遗迹僵尸",
+      "en_US": "遗迹僵尸",
+      "ja_JP": "遗迹僵尸"
+    },
+    "page.relicZombie.ct": {
+      "zh_CN": "使用遗迹碎片作为信物，可以召唤出遗迹僵尸，若能用在其身旁击败他，则可获得遗迹宝石。\\n遗迹僵尸共有三种类型，红色的战士、蓝色的法师、绿色的牧师，他们会使用不同的技能。\\n战士随着生命减少，会更换武器，并且增加速度等效果\\n法师无视远程伤害，会释放火球，落雷和召唤小僵尸\\n牧师会给敌人增加负面效果，给友方增加正面效果，生命减少时，还会给自己增加防御效果。",
+      "en_US": "使用遗迹碎片作为信物，可以召唤出遗迹僵尸，若能用在其身旁击败他，则可获得遗迹宝石。\\n遗迹僵尸共有三种类型，红色的战士、蓝色的法师、绿色的牧师，他们会使用不同的技能。\\n战士随着生命减少，会更换武器，并且增加速度等效果\\n法师无视远程伤害，会释放火球，落雷和召唤小僵尸\\n牧师会给敌人增加负面效果，给友方增加正面效果，生命减少时，还会给自己增加防御效果。",
+      "ja_JP": "使用遗迹碎片作为信物，可以召唤出遗迹僵尸，若能用在其身旁击败他，则可获得遗迹宝石。\\n遗迹僵尸共有三种类型，红色的「战士」、蓝色的「法师」、绿色的「牧师」，他们会使用不同的技能。\\n「战士」随着生命减少，会更换武器，并且增加速度等效果\\n「法师」无视远程伤害，会释放火球，落雷和召唤小僵尸\\n「牧师」会给敌人增加负面效果，给友方增加正面效果，生命减少时，还会给自己增加防御效果。"
+    },
+    "page.rabidRabbit": {
+      "zh_CN": "狂暴兔",
+      "en_US": "Rabid Rabbit",
+      "ja_JP": "Rabid Rabbit"
+    },
+    "page.rabidRabbit.ct": {
+      "zh_CN": "全身雪白但略微发红，眼睛尤为发红。它们会疯狂的攻击周围的生物，并从中获取能量迅速的繁殖。\\n狂暴兔但只并不足畏惧，一旦他们成群的发送攻击，可不是什么好受的事情。\\n通过兔皮或者兔脚作为信物可以召唤狂暴兔，击败它们有几率掉落狂暴皮革。",
+      "en_US": "全身雪白但略微发红，眼睛尤为发红。它们会疯狂的攻击周围的生物，并从中获取能量迅速的繁殖。\\n狂暴兔但只并不足畏惧，一旦他们成群的发送攻击，可不是什么好受的事情。\\n通过兔皮或者兔脚作为信物可以召唤狂暴兔，击败它们有几率掉落狂暴皮革。",
+      "ja_JP": "全身雪白但略微发红，眼睛尤为发红。它们会疯狂的攻击周围的生物，并从中获取能量迅速的繁殖。\\n狂暴兔但只并不足畏惧，一旦他们成群的发送攻击，可不是什么好受的事情。\\n通过兔皮或者兔脚作为信物可以召唤狂暴兔，击败它们有几率掉落狂暴皮革。"
+    },
+    "page.dreadCube": {
+      "zh_CN": "恐惧立方体",
+      "en_US": "恐惧立方体",
+      "ja_JP": "恐惧立方体"
+    },
+    "page.dreadCube.ct": {
+      "zh_CN": "来自异界的漆黑立方体生物，漂浮在半空中，吞噬者周围所有的方块，失去活性的方块会变成无用的沙砾，同时会吐出多余的灵魂碎片。\\n好在它不会主动发起攻击，这可能会让你想到，用它来自动生产灵魂碎片。\\n当受到玩家攻击后会召唤怪物并进入休眠状态。如果召唤怪物成功，将会消耗自身的生命。生命越少召唤的怪物越多越强。\\n通过任务得到的恐惧碎片作为信物可以召唤它，击败它们有几率掉落恐惧核心和立方体核心。",
+      "en_US": "来自异界的漆黑立方体生物，漂浮在半空中，吞噬者周围所有的方块，失去活性的方块会变成无用的沙砾，同时会吐出多余的灵魂碎片。\\n好在它不会主动发起攻击，这可能会让你想到，用它来自动生产灵魂碎片。\\n当受到玩家攻击后会召唤怪物并进入休眠状态。如果召唤怪物成功，将会消耗自身的生命。生命越少召唤的怪物越多越强。\\n通过任务得到的恐惧碎片作为信物可以召唤它，击败它们有几率掉落恐惧核心和立方体核心。",
+      "ja_JP": "来自异界的漆黑立方体生物，漂浮在半空中，吞噬者周围所有的方块，失去活性的方块会变成无用的沙砾，同时会吐出多余的灵魂碎片。\\n好在它不会主动发起攻击，这可能会让你想到，用它来自动生产灵魂碎片。\\n当受到玩家攻击后会召唤怪物并进入休眠状态。如果召唤怪物成功，将会消耗自身的生命。生命越少召唤的怪物越多越强。\\n通过任务得到的恐惧碎片作为信物可以召唤它，击败它们有几率掉落恐惧核心和立方体核心。"
+    },
+    "page.crafting.need": {
+      "zh_CN": "需要元素参与合成：",
+      "en_US": "Elements are required to craft: ",
+      "ja_JP": "必要な元素："
+    },
+    "page.crafting.show": {
+      "zh_CN": "%s需要%d强度下限 %d ",
+      "en_US": "%s requires %d lower limit %d ",
+      "ja_JP": "%sは %d点を必要、パワーの最低限度は%d "
+    },
+    "page.crafting.npshow": {
+      "zh_CN": "%s需要%d",
+      "en_US": "%s requires %d",
+      "ja_JP": "%sは%d点を必要"
+    },
+    "page.error": {
+      "zh_CN": "错误页面",
+      "en_US": "Page Error",
+      "ja_JP": "ページエラー"
+    },
+    "page.error.ct": {
+      "zh_CN": "您所需的页面已经丢失！或是异常！\\n404？500~正常情况下，您不应该看到该页面！\\n看到此页面的时候，请将log文件和错误信息发送给作者~如果是您自行修改nbt的结果，就不必了",
+      "en_US": "The page you need is missing or error!\\nUnder normal circumstances, you should not see this page!\\nWhen you see this page, please send the log file and error message to the author.",
+      "ja_JP": "このページはエラーが発生します！\\n通常の場合でこのページを見ることはできません！\\nこのページを見た時はlogとエラーメッセージを作者に送っていただきます。"
+    },
+    "page.catalog": {
+      "zh_CN": "目录",
+      "en_US": "Catalog",
+      "ja_JP": "目録"
+    },
+    "page.catalog.none": {
+      "zh_CN": "书中啥都没有",
+      "en_US": "There is nothing in the book.",
+      "ja_JP": "本の中には何もありません"
+    },
+    "page.how2ply": {
+      "zh_CN": "知识与羊皮卷",
+      "en_US": "Knowledge and Parchment",
+      "ja_JP": "知識と羊皮紙"
+    },
+    "page.how2ply.ct": {
+      "zh_CN": "现在正在阅读的是含有知识的羊皮卷，在这里记载着的，各种各样的知识，可以帮助你开始你的魔法之旅。",
+      "en_US": "Now reading is parchment with knowledge, all kinds of knowledge are recorded here which can help you start your magical journey!",
+      "ja_JP": "今読んでいるのは知識が含まれた羊皮紙です、この中で記録した色々な知識は魔法の途中であなたを導く。"
+    },
+    "page.stela": {
+      "zh_CN": "知识映像(弃用)",
+      "en_US": "知识映像(弃用)",
+      "ja_JP": "知識映像(弃用)"
+    },
+    "page.stela.ct": {
+      "zh_CN": "知识映像石碑，可以将物品与史蒂夫们的智慧相连，从而将知识映像到羊皮卷上。石碑可以摆放到任何位置，请将空白的羊皮纸放在碑前，任何物品放到碑旁的小台子上，最后别忘了在石碑左右插两束花朵，随着时间的推移，有关放入物品的知识就会映射到台面上的羊皮纸上。这个东西没法建造，不过你可以从村民手中买到。",
+      "en_US": "知识映像石碑，可以将物品与史蒂夫们的智慧相连，从而将知识映像到羊皮卷上。石碑可以摆放到任何位置，请将空白的羊皮纸放在碑前，任何物品放到碑旁的小台子上，最后别忘了在石碑左右插两束花朵，随着时间的推移，有关放入物品的知识就会映射到台面上的羊皮纸上。这个东西没法建造，不过你可以从村民手中买到。",
+      "ja_JP": "知識映像石碑、可以将物品与スティーブ们的智慧相连、从而将知識映像到羊皮紙上。石碑可以摆放到任何位置、请将空白的羊皮纸放在碑前、任何物品放到碑旁的小台子上、最后别忘了在石碑左右插两束花朵、随着时间的推移、有关放入物品的知識就会映射到台面上的羊皮纸上。这个东西没法建造、不过你可以从村民手中买到。"
+    },
+    "page.riteTable": {
+      "zh_CN": "映像仪式",
+      "en_US": "Print Rite",
+      "ja_JP": "映像儀式"
+    },
+    "page.riteTable.ct.fir": {
+      "zh_CN": "通过映像仪式，可将史蒂夫们的智慧相连，从而将知识映像到羊皮卷上。是本模组中教程获取的方式。不同等级的仪式会给予不同等级的羊皮卷。",
+      "en_US": "Print Rite can connect the wisdom of Steves for mapping knowledge to parchments. It's a way to get the tutorial in this mod. Different levels of Print Rite will give different levels of parchments.",
+      "ja_JP": "映像儀式でスティーブたちの知恵を繋げることができる、そして知識を羊皮紙にイメージできる。このmodの教程を取得する方式です。異なった等級の儀式は異なった等級の羊皮紙を与えます。"
+    },
+    "page.riteTable.ct.sec": {
+      "zh_CN": "想进行仪式，首先需要一个仪式桌。仪式桌分为不同的等级，等级越高制作越难，目前只需要制作0级的即可。仪式桌上可以放六件物品作为祭品。",
+      "en_US": "想进行仪式，首先需要一个仪式桌。仪式桌分为不同的等级，等级越高制作越难，目前只需要制作0级的即可。仪式桌上可以放六件物品作为祭品。",
+      "ja_JP": "想进行儀式、首先需要一个儀式桌。儀式桌分为不同的等级、等级越高制作越难、目前只需要制作0级的即可。儀式桌上可以放六件物品作为祭品。"
+    },
+    "page.sacrifice": {
+      "zh_CN": "祭品",
+      "en_US": "祭品",
+      "ja_JP": "祭品"
+    },
+    "page.sacrifice.ct.fir": {
+      "zh_CN": "大多数物品都可以成为祭品，物品的好坏决定着仪式的成败。但并不是每个等级的仪式都可以使用优秀的祭品，比如钻石。等级低的仪式只能接受普通的物品，当然对于等级低的仪式来说，这已经足够了。\\n史蒂夫知道，0级的仪式可以石头、原木、煤炭作为祭品，显然煤炭会更好一些，另外圆石是受到众人讨厌的祭品。",
+      "en_US": "大多数物品都可以成为祭品，物品的好坏决定着仪式的成败。但并不是每个等级的仪式都可以使用优秀的祭品，比如钻石。等级低的仪式只能接受普通的物品，当然对于等级低的仪式来说，这已经足够了。\\n史蒂夫知道，0级的仪式可以石头、原木、煤炭作为祭品，显然煤炭会更好一些，另外圆石是受到众人讨厌的祭品。",
+      "ja_JP": "大多数物品都可以成为祭品、物品的好坏决定着儀式的成败。但并不是每个等级的儀式都可以使用优秀的祭品、比如钻石。等级低的儀式只能接受普通的物品、当然对于等级低的儀式来说、这已经足够了。\\nスティーブ知道、0级的儀式可以石头、原木、煤炭作为祭品、显然煤炭会更好一些、另外圆石是受到众人讨厌的祭品。"
+    },
+    "page.sacrifice.ct.sec": {
+      "zh_CN": "每种祭品有「能量」属性，所有祭品的能量综合越高，仪式的成功率越大。如果高级仪式使用低级仪式的祭品，物品所能提供的能量会大打折扣。\\n史蒂夫知道，在0级仪式中，如果使用四个煤炭作为祭品是肯定会成功的。",
+      "en_US": "每种祭品有「能量」属性，所有祭品的能量综合越高，仪式的成功率越大。如果高级仪式使用低级仪式的祭品，物品所能提供的能量会大打折扣。\\n史蒂夫知道，在0级仪式中，如果使用四个煤炭作为祭品是肯定会成功的。",
+      "ja_JP": "每种祭品有「パワー」属性、所有祭品的パワー综合越高、儀式的成功率越大。如果高级儀式使用低级儀式的祭品、物品所能提供的パワー会大打折扣。\\nスティーブ知道、在0级儀式中、如果使用四个煤炭作为祭品是肯定会成功的。"
+    },
+    "page.rite": {
+      "zh_CN": "仪式进行",
+      "en_US": "仪式进行",
+      "ja_JP": "儀式进行"
+    },
+    "page.rite.ct": {
+      "zh_CN": "仪式桌放到高一格的地面上，仪式桌为中心的5×5范围不能出现任何方块，仪式桌下方为中心的5×5范围内应插满鲜花或者火把，将祭品放到桌子上，手持满耐久的木剑发动仪式。仪式成功会有天雷将知识进行同步，并以卷轴的形式给予。如果失败后，会受到天罚，仪式等级越高收到的惩罚力度越大。",
+      "en_US": "仪式桌放到高一格的地面上，仪式桌为中心的5×5范围不能出现任何方块，仪式桌下方为中心的5×5范围内应插满鲜花或者火把，将祭品放到桌子上，手持满耐久的木剑发动仪式。仪式成功会有天雷将知识进行同步，并以卷轴的形式给予。如果失败后，会受到天罚，仪式等级越高收到的惩罚力度越大。",
+      "ja_JP": "儀式桌放到高一格的地面上、儀式桌为中心的5×5范围不能出现任何方块、儀式桌下方为中心的5×5范围内应插满鲜花或者火把、将祭品放到桌子上、手持满耐久的木剑发动儀式。儀式成功会有天雷将知識进行同步、并以卷轴的形式给予。如果失败后、会受到天罚、儀式等级越高收到的惩罚力度越大。"
+    },
+    "page.riteManual": {
+      "zh_CN": "祭品研究手册",
+      "en_US": "祭品研究手册",
+      "ja_JP": "祭品研究手册"
+    },
+    "page.riteManual.ct": {
+      "zh_CN": "哪种物品可以作为祭品？究竟有多少能量？具体可以用到几级仪式上？关于这些内容，史蒂夫无从知晓。不过针对这个问题有许多的人都在研究，去村庄看看，没准能买到这样一个手册。\\n如果在另外一直手里，拿着一支羽毛笔的话，没准可以把查看过的内容记录下。副手拿着有记录的手册，可以在物品信息上快速查看记录的结果。",
+      "en_US": "哪种物品可以作为祭品？究竟有多少能量？具体可以用到几级仪式上？关于这些内容，史蒂夫无从知晓。不过针对这个问题有许多的人都在研究，去村庄看看，没准能买到这样一个手册。",
+      "ja_JP": "哪种物品可以作为祭品？究竟有多少パワー？具体可以用到几级儀式上？关于这些内容、スティーブ无从知晓。不过针对这个问题有许多的人都在研究、去村庄看看、没准能买到这样一个手册。"
+    },
+    "page.riteCraft": {
+      "zh_CN": "寻求仪式",
+      "en_US": "Seek Rite",
+      "ja_JP": "寻求儀式"
+    },
+    "page.riteCraft.ct": {
+      "zh_CN": "寻求仪式，可以使用写有某样物品的样片卷来向史蒂夫们寻求这样物品。该仪式和映像仪式基本一样，不同点：一是需要一张「信息羊皮卷」；二是寻求的物品对仪式等级有要求。\\n「信息羊皮卷」可以通过：墨囊、羽毛、羊皮卷和象征性物品进行合成。象征性物品根据寻求的物品不同而不同。",
+      "en_US": "寻求仪式，可以使用写有某样物品的样片卷来向史蒂夫们寻求这样物品。该仪式和映像仪式基本一样，不同点: 一是需要一张「信息羊皮卷」；二是寻求的物品对仪式等级有要求。\\n「信息羊皮卷」可以通过: 墨囊、羽毛、羊皮卷和象征性物品进行合成。象征性物品根据寻求的物品不同而不同。",
+      "ja_JP": "寻求儀式、可以使用写有某样物品的样片卷来向スティーブ们寻求这样物品。该儀式和映像儀式基本一样、不同点：一是需要一张「信息羊皮紙」；二是寻求的物品对儀式等级有要求。\\n「信息羊皮紙」可以通过：墨囊、羽毛、羊皮紙和象征性物品进行合成。象征性物品根据寻求的物品不同而不同。"
+    },
+    "page.lantern": {
+      "zh_CN": "引路灯",
+      "en_US": "引路灯",
+      "ja_JP": "引路灯"
+    },
+    "page.lantern.ct": {
+      "zh_CN": "引路灯是具有魔力的一盏灯，放下后会自动发出火焰指向上一个灯。由于其的特殊性，可以通过寻求仪式献祭物品从而所求。\\n通过shift+右键可以设置下次放置的链接位置\\n（加了高清修复，请把粒子效果打开）。",
+      "en_US": "引路灯是具有魔力的一盏灯，放下后会自动发出火焰指向上一个灯。由于其的特殊性，可以通过寻求仪式献祭物品从而所求。\\n通过shift+右键可以设置下次放置的链接位置\\n（加了高清修复，请把粒子效果打开）。",
+      "ja_JP": "引路灯是具有魔力的一盏灯、放下后会自动发出火焰指向上一个灯。由于其的特殊性、可以通过寻求儀式献祭物品从而所求。\\n通过shift+右键可以设置下次放置的链接位置\\n（加了高清修复、请把粒子效果打开）。"
+    },
+    "page.element": {
+      "zh_CN": "元素",
+      "en_US": "元素",
+      "ja_JP": "元素"
+    },
+    "page.element.ct": {
+      "zh_CN": "古代的研究，从魔力中发现了构成物质的魔力元素，元素作为特殊的魔力，似乎可以来改变我的世界。\\n元素你可以逆变为魔力或元素态的魔力，这是很容易的一件事，但反之则是几乎不可能的。",
+      "en_US": "古代的研究，从魔力中发现了构成物质的魔力元素，元素作为特殊的魔力，似乎可以来改变我的世界。\\n元素你可以逆变为魔力或元素态的魔力，这是很容易的一件事，但反之则是几乎不可能的。",
+      "ja_JP": "古代的研究、从魔力中发现了构成物质的魔力元素、元素作为特殊的魔力、似乎可以来改变我的世界。\\n元素你可以逆变为魔力或元素态的魔力、这是很容易的一件事、但反之则是几乎不可能的。"
+    },
+    "page.parchment": {
+      "zh_CN": "羊皮纸",
+      "en_US": "羊皮纸",
+      "ja_JP": "羊皮纸"
+    },
+    "page.parchment.ct": {
+      "zh_CN": "羊皮纸上会记录先前史蒂夫门知识，知识可能是某样物品或者某些系统等，通过这些知识，来发展吧！",
+      "en_US": "羊皮纸上会记录先前史蒂夫门知识，知识可能是某样物品或者某些系统等，通过这些知识，来发展吧！",
+      "ja_JP": "羊皮纸上会记录先前スティーブ门知識、知識可能是某样物品或者某些系统等、通过这些知識、来发展吧！"
+    },
+    "page.hearth": {
+      "zh_CN": "灶台",
+      "en_US": "灶台",
+      "ja_JP": "灶台"
+    },
+    "page.hearth.ct": {
+      "zh_CN": "灶台中可以放入燃料，用来加热上方的方块。\\n灶台的材质有：原石、铁、蓝晶石，依次排序，材质等级越高的灶台，加热上方方块的速度越快。",
+      "en_US": "灶台中可以放入燃料，用来加热上方的方块。\\n灶台的材质有: 原石、铁、蓝晶石，依次排序，材质等级越高的灶台，加热上方方块的速度越快。",
+      "ja_JP": "灶台中可以放入燃料、用来加热上方的方块。\\n灶台的材质有：原石、铁、カイヤナイト、依次排序、材质等级越高的灶台、加热上方方块的速度越快。"
+    },
+    "page.smeltBox": {
+      "zh_CN": "烧炼箱",
+      "en_US": "烧炼箱",
+      "ja_JP": "烧炼箱"
+    },
+    "page.smeltBox.ct": {
+      "zh_CN": "烧炼箱可以像熔炉一样的使用，不过它可以同时烧两种东西。\\n烧炼箱的材质有：原石、铁、蓝晶石，铁级以上的烧炼箱子可以放置额外物品共同烧制，比如放入“魔影之眼”来烧制蓝晶石矿？\\n将烧炼放在蓝晶石灶台上，体验飞一样的烧炼速度。",
+      "en_US": "烧炼箱可以像熔炉一样的使用，不过它可以同时烧两种东西。\\n烧炼箱的材质有: 原石、铁、蓝晶石，铁级以上的烧炼箱子可以放置额外物品共同烧制，比如放入“魔影之眼”来烧制蓝晶石矿？\\n将烧炼放在蓝晶石灶台上，体验飞一样的烧炼速度。",
+      "ja_JP": "烧炼箱可以像熔炉一样的使用、不过它可以同时烧两种东西。\\n烧炼箱的材质有：原石、铁、カイヤナイト、铁级以上的烧炼箱子可以放置额外物品共同烧制、比如放入“魔影之眼”来烧制カイヤナイト矿？\\n将烧炼放在カイヤナイト灶台上、体验飞一样的烧炼速度。"
+    },
+    "page.starFlower": {
+      "zh_CN": "星之花",
+      "en_US": "Star Flower",
+      "ja_JP": "星之花"
+    },
+    "page.starFlower.ct": {
+      "zh_CN": "星之花是自然界生成的一种即为稀少的花朵，其极为脆弱，无法掉落。\\n不过它可以为你带来好运，空手或持有某些道具右键想其许愿，它可能会赐予你一些buff或者工具，或是为你将你传送回家。\\n不过许愿后的星之花将会枯萎。",
+      "en_US": "星之花是自然界生成的一种即为稀少的花朵，其极为脆弱，无法掉落。\\n不过它可以为你带来好运，空手或持有某些道具右键想其许愿，它可能会赐予你一些buff或者工具，或是为你将你传送回家。\\n不过许愿后的星之花将会枯萎。",
+      "ja_JP": "星之花是自然界生成的一种即为稀少的花朵，其极为脆弱，无法掉落。\\n不过它可以为你带来好运，空手或持有某些道具右键想其许愿，它可能会赐予你一些buff或者工具，或是为你将你传送回家。\\n不过许愿后的星之花将会枯萎。"
+    },
+    "page.kyanite": {
+      "zh_CN": "蓝晶石",
+      "en_US": "Kyanite",
+      "ja_JP": "カイヤナイト"
+    },
+    "page.kyanite.ct": {
+      "zh_CN": "蓝晶石是生成在地下的一种带有魔力的矿物，19层以下可能更容易找到它。\\n蓝晶石矿可以经过烧制形成蓝晶石。\\n在烧制蓝晶石矿的时候，通过“末影之眼”的辅助，可以将存在于蓝晶石矿物中的魔力碎片取出。\\n蓝晶石可以制作工具，与铁的挖掘等级相同，不过有更好的耐久性。\\n[使用该物品可以做1级仪了]",
+      "en_US": "蓝晶石是生成在地下的一种带有魔力的矿物，19层以下可能更容易找到它。\\n蓝晶石矿可以经过烧制形成蓝晶石。\\n在烧制蓝晶石矿的时候，通过“末影之眼”的辅助，可以将存在于蓝晶石矿物中的魔力碎片取出。\\n蓝晶石可以制作工具，与铁的挖掘等级相同，不过有更好的耐久性。\\n[使用该物品可以做1级仪了]",
+      "ja_JP": "カイヤナイト是生成在地下的一种带有魔力的矿物、19层以下可能更容易找到它。\\nカイヤナイト矿可以经过烧制形成カイヤナイト。\\n在烧制カイヤナイト矿的时候、通过“エンダーアイ”的辅助、可以将存在于カイヤナイト矿物中的魔力碎片取出。\\nカイヤナイト可以制作工具、与铁的挖掘等级相同、不过有更好的耐久性。\\n[使用该物品可以做1级仪了]"
+    },
+    "page.mgicalPiece": {
+      "zh_CN": "魔力碎片",
+      "en_US": "Magic Fragment",
+      "ja_JP": "魔力碎片"
+    },
+    "page.mgicalPiece.ct": {
+      "zh_CN": "由魔力构成的碎片，可以合成带有魔力的物品，同时也可以通过注魔箱，将魔力注入蓝晶石、水晶等矿物中，让它们的状态发生变化。许多人都在研究这个，这样的话...村庄中或许可以买到。此外，据说烧炼蓝晶石的过程中获取到。",
+      "en_US": "由魔力构成的碎片，可以合成带有魔力的物品，同时也可以通过注魔箱，将魔力注入蓝晶石、水晶等矿物中，让它们的状态发生变化。许多人都在研究这个，这样的话...村庄中或许可以买到。此外，据说烧炼蓝晶石的过程中获取到。",
+      "ja_JP": "由魔力构成的碎片、可以合成带有魔力的物品、同时也可以通过エンチャント箱、将魔力注入カイヤナイト、水晶等矿物中、让它们的状态发生变化。许多人都在研究这个、这样的话...村庄中或许可以买到。此外、据说烧炼カイヤナイト的过程中获取到。"
+    },
+    "page.sealStone": {
+      "zh_CN": "封藏石",
+      "en_US": "Seal Stone",
+      "ja_JP": "封藏石"
+    },
+    "page.sealStone.ct": {
+      "zh_CN": "古代用来保存东西的一种石头，打碎后，可以掉出一些东西来。其中有一些古代的文献，似乎有着一些的价值。",
+      "en_US": "古代用来保存东西的一种石头，打碎后，可以掉出一些东西来。其中有一些古代的文献，似乎有着一些的价值。",
+      "ja_JP": "古代用来保存东西的一种石头，打碎后，可以掉出一些东西来。其中有一些古代的文献，似乎有着一些的价值。"
+    },
+    "page.starSand": {
+      "zh_CN": "星沙",
+      "en_US": "Star Sand",
+      "ja_JP": "星沙"
+    },
+    "page.starSand.ct": {
+      "zh_CN": "沙子长期沐浴在星光下而形成的沙子，是上好的研究材料。形成一整块的星沙在自然中有些困难，不过，在沙子上可以找到少量星沙凝聚成的星石。或许可以将收集到的多块星石，通过捣粉臼来将其捣碎，从而获得星沙。\\n另外，据说这种星石似乎在沙丘上比较多。",
+      "en_US": "沙子长期沐浴在星光下而形成的沙子，是上好的研究材料。形成一整块的星沙在自然中有些困难，不过，在沙子上可以找到少量星沙凝聚成的星石。或许可以将收集到的多块星石，通过捣粉臼来将其捣碎，从而获得星沙。\\n另外，据说这种星石似乎在沙丘上比较多。",
+      "ja_JP": "沙子长期沐浴在星光下而形成的沙子、是上好的研究材料。形成一整块的星沙在自然中有些困难、不过、在沙子上可以找到少量星沙凝聚成的星石。或许可以将收集到的多块星石、通过捣粉臼来将其捣碎、从而获得星沙。\\n另外、据说这种星石似乎在沙丘上比较多。"
+    },
+    "page.starSeed": {
+      "zh_CN": "星之种",
+      "en_US": "Star Seed",
+      "ja_JP": "星之种"
+    },
+    "page.starSeed.ct": {
+      "zh_CN": "在午夜空手想星之花许愿，可以得到星之种。星之种可以向普通种子一样种到地上，暴露在繁星满天的午夜时会自动生长。不过要注意，未成熟的星之花更加的脆弱，如果被日光照射可能会直接枯萎。\\n星之种有极低的概率掉落两个，因此星之花被认作不可再生的资源。",
+      "en_US": "在午夜空手想星之花许愿，可以得到星之种。星之种可以向普通种子一样种到地上，暴露在繁星满天的午夜时会自动生长。不过要注意，未成熟的星之花更加的脆弱，如果被日光照射可能会直接枯萎。\\n星之种有极低的概率掉落两个，因此星之花被认作不可再生的资源。",
+      "ja_JP": "在午夜空手想星之花许愿，可以得到星之种。星之种可以向普通种子一样种到地上，暴露在繁星满天的午夜时会自动生长。不过要注意，未成熟的星之花更加的脆弱，如果被日光照射可能会直接枯萎。\\n星之种有极低的概率掉落两个，因此星之花被认作不可再生的资源。"
+    },
+    "page.stoneMill": {
+      "zh_CN": "捣粉臼",
+      "en_US": "捣粉臼",
+      "ja_JP": "捣粉臼"
+    },
+    "page.stoneMill.ct": {
+      "zh_CN": "用石头做成的臼，可以将星石扔进去，然后使用锤子将星石捣捣碎，从而获取星沙。(shift+右击取下)",
+      "en_US": "用石头做成的臼，可以将星石扔进去，然后使用锤子将星石捣捣碎，从而获取星沙。(shift+右击取下)",
+      "ja_JP": "用石头做成的臼、可以将星石扔进去、然后使用锤子将星石捣捣碎、从而获取星沙。(shift+右击取下)"
+    },
+    "page.magicStone": {
+      "zh_CN": "魔石",
+      "en_US": "魔石",
+      "ja_JP": "魔石"
+    },
+    "page.magicStone.ct": {
+      "zh_CN": "魔力碎片蓝晶石融于星沙而形成的石头，带有大量的魔力，同时还可以与其他能量发生反应，是魔力研究的重要材料。",
+      "en_US": "魔力碎片蓝晶石融于星沙而形成的石头，带有大量的魔力，同时还可以与其他能量发生反应，是魔力研究的重要材料。",
+      "ja_JP": "魔力碎片カイヤナイト融于星沙而形成的石头、带有大量的魔力、同时还可以与其他パワー发生反应、是魔力研究的重要材料。"
+    },
+    "page.meltCauldron": {
+      "zh_CN": "熔岩锅",
+      "en_US": "熔岩锅",
+      "ja_JP": "熔岩锅"
+    },
+    "page.meltCauldron.ct": {
+      "zh_CN": "熔岩锅，借助灶台，可以将鹅卵石等石头等熔炼成通魔石。\\n不过，熔岩锅只能使用一次，一旦灶台起火加入石头，在本次熔炼结束后，该锅就无法再次使用了。带熔浆冷却后，将锅打碎，取出熔炼后的物品。\\n加热温度升高，到一定温度后才能开始熔化物品。",
+      "en_US": "熔岩锅，借助灶台，可以将鹅卵石等石头等熔炼成通魔石。\\n不过，熔岩锅只能使用一次，一旦灶台起火加入石头，在本次熔炼结束后，该锅就无法再次使用了。带熔浆冷却后，将锅打碎，取出熔炼后的物品。\\n加热温度升高，到一定温度后才能开始熔化物品。",
+      "ja_JP": "熔岩锅、借助灶台、可以将鹅卵石等石头等熔炼成通魔石。\\n不过、熔岩锅只能使用一次、一旦灶台起火加入石头、在本次熔炼结束后、该锅就无法再次使用了。带熔浆冷却后、将锅打碎、取出熔炼后的物品。\\n加热温度升高、到一定温度后才能开始熔化物品。"
+    },
+    "page.magicalEndereye": {
+      "zh_CN": "带魔力的末影之眼",
+      "en_US": "带魔力的末影之眼",
+      "ja_JP": "带魔力的エンダーアイ"
+    },
+    "page.magicalEndereye.ct": {
+      "zh_CN": "通过末影之眼和魔力碎片合成，可以作为烧制使用的额外物品。\\n放在烧炼箱中，可以提升烧制速度，不过每完成一轮烧制，其耐久会降低，为0时就会消失\\n不过没有关系，它在激活状态就会脱去魔力，变成普通的末影之眼，不过会发生小规模的爆炸，请注意。\\n多个可以叠加，虽然会共同浪费耐久，不过会有意想不到的效果。",
+      "en_US": "通过末影之眼和魔力碎片合成，可以作为烧制使用的额外物品。\\n放在烧炼箱中，可以提升烧制速度，不过每完成一轮烧制，其耐久会降低，为0时就会消失\\n不过没有关系，它在激活状态就会脱去魔力，变成普通的末影之眼，不过会发生小规模的爆炸，请注意。\\n多个可以叠加，虽然会共同浪费耐久，不过会有意想不到的效果。",
+      "ja_JP": "通过エンダーアイ和魔力碎片合成、可以作为烧制使用的额外物品。\\n放在烧炼箱中、可以提升烧制速度、不过每完成一轮烧制、其耐久会降低、为0时就会消失\\n不过没有关系、它在激活状态就会脱去魔力、变成普通的エンダーアイ、不过会发生小规模的爆炸、请注意。\\n多个可以叠加、虽然会共同浪费耐久、不过会有意想不到的效果。"
+    },
+    "page.kynatieTools": {
+      "zh_CN": "蓝晶石工具",
+      "en_US": "Kynatie Tools",
+      "ja_JP": "カイヤナイト工具"
+    },
+    "page.kynatieTools.ct": {
+      "zh_CN": "用蓝晶石制作的工具，虽然挖掘等级和铁相同，但是耐久度高，适合挖掘工作。\\n蓝晶石具有魔力亲和性，通过\"带有魔力的末影之眼\"再次烧制未使用过的工具，可获得\"元素亲和\"属性，在工具使用的过程中，可以积攒元素。\\n对于蓝晶石锄，在具有一定的\"末影\"元素时，可以将发挥\"分离性\"：可以将附魔台上的书，末地门上的末影之眼，分离下来。",
+      "en_US": "用蓝晶石制作的工具，虽然挖掘等级和铁相同，但是耐久度高，适合挖掘工作。\\n蓝晶石具有魔力亲和性，使用三个以上的\"带有魔力的末影之眼\"再次烧制工具，可获得\"元素亲和\"属性，在工具使用的过程中，可以积攒元素。\\n对于蓝晶石锄，在具有一定的\"末影\"元素时，可以将发挥\"分离性\": 可以将附魔台上的书，末地门上的末影之眼，分离下来。",
+      "ja_JP": "用カイヤナイト制作的工具、虽然挖掘等级和铁相同、但是耐久度高、适合挖掘工作。\\nカイヤナイト具有魔力亲和性、使用三个以上的\"带有魔力的エンダーアイ\"再次烧制工具、可获得\"元素亲和\"属性、在工具使用的过程中、可以积攒元素。\\n对于カイヤナイト锄、在具有一定的\"エンダー\"元素时、可以将发挥\"分离性\"：可以将エンチャント台上的书、末地门上的エンダーアイ、分离下来。"
+    },
+    "page.ancientPaper": {
+      "zh_CN": "古卷",
+      "en_US": "古卷",
+      "ja_JP": "古卷"
+    },
+    "page.ancientPaper.ct": {
+      "zh_CN": "古代的文献，在上面记载着许多的内容，但通常是无法直接看懂的，需要进行解读。一手拿着羽毛笔，一手拿着古卷，右键点击即可开始进行解读。\\n如果解读疲倦的话，过半天之后在进行解读吧，随着解读次数的增多，越不容易疲倦。\\n如果你疲倦了，吃一点苹果糖来消除疲劳。\\n此外，在解读过程中，可能还会增加某些点数，在将来可以用到。",
+      "en_US": "古代的文献，在上面记载着许多的内容，但通常是无法直接看懂的，需要进行解读。一手拿着羽毛笔，一手拿着古卷，右键点击即可开始进行解读。\\n如果解读疲倦的话，过半天之后在进行解读吧，随着解读次数的增多，越不容易疲倦。\\n此外，在解读过程中，可能还会增加某些点数，在将来可以用到。",
+      "ja_JP": "古代的文献，在上面记载着许多的内容，但通常是无法直接看懂的，需要进行解读。一手拿着羽毛笔，一手拿着古卷，右键点击即可开始进行解读。\\n如果解读疲倦的话，过半天之后在进行解读吧，随着解读次数的增多，越不容易疲倦。\\n此外，在解读过程中，可能还会增加某些点数，在将来可以用到。"
+    },
+    "page.scarletCrystal": {
+      "zh_CN": "绯红水晶",
+      "en_US": "绯红水晶",
+      "ja_JP": "绯红水晶"
+    },
+    "page.scarletCrystal.ct": {
+      "zh_CN": "一种奇异的红色水晶，在地下的岩浆之下，可能会发现绯红水晶矿的身影。\\n所有水晶拥有频率这一属性，绯红水晶也不例外，但是它是少数频率可以变化的水晶。\\n绯红水晶遇水会产生变化，碎裂并分解成魔石与碎片。",
+      "en_US": "一种奇异的红色水晶，在地下的岩浆之下，可能会发现绯红水晶矿的身影。\\n所有水晶拥有频率这一属性，绯红水晶也不例外，但是它是少数频率可以变化的水晶。\\n绯红水晶遇水会产生变化，碎裂并分解成魔石与碎片。",
+      "ja_JP": "一种奇异的红色水晶，在地下的岩浆之下，可能会发现绯红水晶矿的身影。\\n所有水晶拥有频率这一属性，绯红水晶也不例外，但是它是少数频率可以变化的水晶。\\n绯红水晶遇水会产生变化，碎裂并分解成魔石与碎片。"
+    },
+    "page.bell": {
+      "zh_CN": "叮铃铃",
+      "en_US": "叮铃铃",
+      "ja_JP": "叮铃铃"
+    },
+    "page.bell.ct": {
+      "zh_CN": "用金制作出一个铃铛，摇一摇，叮铃铃~吸引周围的动物，同时也会吸引怪物的攻击。",
+      "en_US": "用金制作出一个铃铛，摇一摇，叮铃铃~吸引周围的动物，同时也会吸引怪物的攻击。",
+      "ja_JP": "用金制作出一个铃铛，摇一摇，叮铃铃~吸引周围的动物，同时也会吸引怪物的攻击。"
+    },
+    "page.starBell": {
+      "zh_CN": "星之铃",
+      "en_US": "星之铃",
+      "ja_JP": "星之铃"
+    },
+    "page.starBell.ct": {
+      "zh_CN": "手持铃铛，向星之花许愿，星之花会将星元素与铃铛共鸣，形成蓝白色的星之铃。\\n星之铃在摇动的时候，会因周围的环境发出不同特性的声音。\\n脚下有岩浆会发出清脆的声音、周围有高价值方块会发出悠长的声音、周围具有精灵力或者是史莱姆区块会发出深沉的声音。",
+      "en_US": "手持铃铛，向星之花许愿，星之花会将星元素与铃铛共鸣，形成蓝白色的星之铃。\\n星之铃在摇动的时候，会因周围的环境发出不同特性的声音。\\n脚下有岩浆会发出清脆的声音、周围有高价值方块会发出悠长的声音、周围具有精灵力或者是史莱姆区块会发出深沉的声音。",
+      "ja_JP": "手持铃铛，向星之花许愿，星之花会将星元素与铃铛共鸣，形成蓝白色的星之铃。\\n星之铃在摇动的时候，会因周围的环境发出不同特性的声音。\\n脚下有岩浆会发出清脆的声音、周围有高价值方块会发出悠长的声音、周围具有精灵力或者是史莱姆区块会发出深沉的声音。"
+    },
+    "page.astone": {
+      "zh_CN": "通魔石",
+      "en_US": "通魔石",
+      "ja_JP": "通魔石"
+    },
+    "page.astone.ct.fir": {
+      "zh_CN": "由蓝晶石、石头、魔石等混合而成的石头，具有非常好的魔力适应性，可以制作各种魔法装置，乃至祭坛。\\n[使用该物品可以做2级仪了]",
+      "en_US": "由蓝晶石、石头、魔石等混合而成的石头，具有非常好的魔力适应性，可以制作各种魔法装置，乃至祭坛。\\n[使用该物品可以做2级仪了]",
+      "ja_JP": "由カイヤナイト、石头、魔石等混合而成的石头、具有非常好的魔力适应性、可以制作各种魔法装置、乃至祭壇。\\n[使用该物品可以做2级仪了]"
+    },
+    "page.astone.ct.sec": {
+      "zh_CN": "将魔石，石头，蓝晶石以1:8:4的比例放入熔岩锅中，熔化，冷却即可获得通魔石。比例请注意，不合适的话，很有可能出现不期望的结果。\\n另外，红石可以让蓝晶石的效力提升，减少蓝晶石的放入量，但提升效果具有随机性，而打破预计划的比率。\\n熔岩锅加满后，物品就不能再加入了。",
+      "en_US": "将魔石，石头，蓝晶石以1:8:4的比例放入熔岩锅中，熔化，冷却即可获得通魔石。比例请注意，不合适的话，很有可能出现不期望的结果。\\n另外，红石可以让蓝晶石的效力提升，减少蓝晶石的放入量，但提升效果具有随机性，而打破预计划的比率。\\n熔岩锅加满后，物品就不能再加入了。",
+      "ja_JP": "将魔石、石头、カイヤナイト以1:8:4的比例放入熔岩锅中、熔化、冷却即可获得通魔石。比例请注意、不合适的话、很有可能出现不期望的结果。\\n另外、红石可以让カイヤナイト的效力提升、减少カイヤナイト的放入量、但提升效果具有随机性、而打破预计划的比率。\\n熔岩锅加满后、物品就不能再加入了。"
+    },
+    "page.astone.ct.thi": {
+      "zh_CN": "蓝晶石为抗火材料，再者灶台的温度也并不很高，因此在熔化之前，先放入魔石，形成魔石溶液，使其他石头在魔石溶液中熔解。\\n另外需要使用高级的灶台加热，不然温度很有可能无法达到预期。",
+      "en_US": "蓝晶石为抗火材料，再者灶台的温度也并不很高，因此在熔化之前，先放入魔石，形成魔石溶液，使其他石头在魔石溶液中熔解。\\n另外需要使用高级的灶台加热，不然温度很有可能无法达到预期。",
+      "ja_JP": "カイヤナイト为抗火材料、再者灶台的温度也并不很高、因此在熔化之前、先放入魔石、形成魔石溶液、使其他石头在魔石溶液中熔解。\\n另外需要使用高级的灶台加热、不然温度很有可能无法达到预期。"
+    },
+    "page.astoneCrafting": {
+      "zh_CN": "更多通魔石",
+      "en_US": "更多通魔石",
+      "ja_JP": "更多通魔石"
+    },
+    "page.astoneCrafting.ct": {
+      "zh_CN": "使用蓝晶石和木棒制作的精致的小刻刀，可以将普通的通魔石雕刻成更高级的通魔石。\\n使用高级的通魔石可以更好的完成魔法装置的制作。",
+      "en_US": "使用蓝晶石和木棒制作的精致的小刻刀，可以将普通的通魔石雕刻成更高级的通魔石。\\n使用高级的通魔石可以更好的完成魔法装置的制作。",
+      "ja_JP": "使用カイヤナイト和木棒制作的精致的小刻刀、可以将普通的通魔石雕刻成更高级的通魔石。\\n使用高级的通魔石可以更好的完成魔法装置的制作。"
+    },
+    "page.unscrambleNote": {
+      "zh_CN": "解读手账",
+      "en_US": "解读手账",
+      "ja_JP": "解读手账"
+    },
+    "page.unscrambleNote.ct": {
+      "zh_CN": "解读速度太慢？使用解读手账来记录解读时的内容，可以帮助你提升解读效率。\\n每次解读时，副手拿着解读手账，就会将内容记录到手账当中，随着积累的记录越来越多，你解读的速度也会越来越快。\\n只有自己记录的内容，才能产生作用。",
+      "en_US": "解读速度太慢？使用解读手账来记录解读时的内容，可以帮助你提升解读效率。\\n每次解读时，副手拿着解读手账，就会将内容记录到手账当中，随着积累的记录越来越多，你解读的速度也会越来越快。\\n只有自己记录的内容，才能产生作用。",
+      "ja_JP": "解读速度太慢？使用解读手账来记录解读时的内容，可以帮助你提升解读效率。\\n每次解读时，副手拿着解读手账，就会将内容记录到手账当中，随着积累的记录越来越多，你解读的速度也会越来越快。\\n只有自己记录的内容，才能产生作用。"
+    },
+    "page.md": {
+      "zh_CN": "魔动装置",
+      "en_US": "魔动装置",
+      "ja_JP": "魔動装置"
+    },
+    "page.md.ct": {
+      "zh_CN": "通过魔通石，史蒂夫将魔力作为驱动源，制造出魔力设备来使用。\\n魔力设备中都可以储存魔力，如果破坏掉储存魔力的设备，魔力会爆发出来，对周围造成伤害。",
+      "en_US": "通过魔通石，史蒂夫将魔力作为驱动源，制造出魔力设备来使用。\\n魔力设备中都可以储存魔力，如果破坏掉储存魔力的设备，魔力会爆发出来，对周围造成伤害。",
+      "ja_JP": "通过魔通石、スティーブ将魔力作为驱动源、制造出魔力设备来使用。\\n魔力设备中都可以储存魔力、如果破坏掉储存魔力的设备、魔力会爆发出来、对周围造成伤害。"
+    },
+    "page.magicTorch": {
+      "zh_CN": "魔石火把",
+      "en_US": "魔石火把",
+      "ja_JP": "魔石火把"
+    },
+    "page.magicTorch.ct": {
+      "zh_CN": "魔石火把具有很好的魔力亲和性，并且将魔力传送出去。将火把插在魔力装置的一面，火把便可以从盖面抽取魔力，将魔力直线传到另外一个装置区。",
+      "en_US": "魔石火把具有很好的魔力亲和性，并且将魔力传送出去。将火把插在魔力装置的一面，火把便可以从盖面抽取魔力，将魔力直线传到另外一个装置区。",
+      "ja_JP": "魔石火把具有很好的魔力亲和性、并且将魔力传送出去。将火把插在魔力装置的一面、火把便可以从盖面抽取魔力、将魔力直线传到另外一个装置区。"
+    },
+    "page.magicGen": {
+      "zh_CN": "热力魔分箱",
+      "en_US": "热力魔分箱",
+      "ja_JP": "热力魔分箱"
+    },
+    "page.magicGen.ct": {
+      "zh_CN": "通过灶台，将魔石分解为魔力。\\n魔石分解需要热力魔分箱达到一定的温度才可以开始进行。",
+      "en_US": "通过灶台，将魔石分解为魔力。\\n魔石分解需要热力魔分箱达到一定的温度才可以开始进行。",
+      "ja_JP": "通过灶台、将魔石分解为魔力。\\n魔石分解需要热力魔分箱达到一定的温度才可以开始进行。"
+    },
+    "page.magicTransfer": {
+      "zh_CN": "魔力转移箱",
+      "en_US": "魔力转移箱",
+      "ja_JP": "魔力转移箱"
+    },
+    "page.magicTransfer.ct": {
+      "zh_CN": "作为魔力的中转站使用，唯一一个可以将魔力向上传送的设备。",
+      "en_US": "作为魔力的中转站使用，唯一一个可以将魔力向上传送的设备。",
+      "ja_JP": "作为魔力的中转站使用、唯一一个可以将魔力向上传送的设备。"
+    },
+    "page.infusion": {
+      "zh_CN": "注魔箱",
+      "en_US": "注魔箱",
+      "ja_JP": "エンチャント箱"
+    },
+    "page.infusion.ct": {
+      "zh_CN": "以注魔箱为中心构建的注魔祭坛，可以将魔力注入进入到蓝晶石，魔力水晶等物质中，来将物体转化成别的物质。\\n注魔箱注魔条件和时间和位置有关。\\n少雨的地方，蓝晶石可以注魔成魔力水晶\\n日落日出之时，魔力水晶可以注魔成元素水晶\\n等等..\\n此外，注魔箱顶部的星沙在夜间会与星空发生共鸣，随着午夜的到来，暴露在星空下的注魔箱会缓慢的吸收魔力。",
+      "en_US": "以注魔箱为中心构建的注魔祭坛，可以将魔力注入进入到蓝晶石，魔力水晶等物质中，来将物体转化成别的物质。\\n注魔箱注魔条件和时间和位置有关。\\n少雨的地方，蓝晶石可以注魔成魔力水晶\\n日落日出之时，魔力水晶可以注魔成元素水晶\\n等等..",
+      "ja_JP": "以エンチャント箱为中心构建的エンチャント祭壇、可以将魔力注入进入到カイヤナイト、魔力水晶等物质中、来将物体转化成别的物质。\\nエンチャント箱エンチャントの条件和时间和位置有关。\\n少雨的地方、カイヤナイト可以エンチャント成魔力水晶\\n日落日出之时、魔力水晶可以エンチャント成元素水晶\\n等等.."
+    },
+    "page.infusion.altar": {
+      "zh_CN": "注魔祭坛",
+      "en_US": "注魔祭坛",
+      "ja_JP": "エンチャント祭壇"
+    },
+    "page.magicGold": {
+      "zh_CN": "魔金",
+      "en_US": "Magical Gold",
+      "ja_JP": "魔金"
+    },
+    "page.magicGold.ct": {
+      "zh_CN": "通过给金注魔而形成的带有魔力的金锭。\\n注魔条件：任何时间地点",
+      "en_US": "A Magical Gold formed by injecting magic into gold.\\nEnchanting condition: Any time and place.",
+      "ja_JP": "金に魔を注すことによって作られた魔力を持つ金锭。\\nエンチャントの条件：いつでもどこでも"
+    },
+    "page.magicGoldTools": {
+      "zh_CN": "魔金工具",
+      "en_US": "Magical Gold Tools",
+      "ja_JP": "魔金のツール"
+    },
+    "page.magicGoldTools.ct": {
+      "zh_CN": "魔金可以制作工具，魔金工具的性能远超钻石工具，而且使用时由于魔力的的作用，会产生不同的效果。\\n不过可惜的是，这种工具的耐久度极低，并不适合长期使用。",
+      "en_US": "Magical Gold can be used to make tools. The performance of Magical Gold tools is far better than diamond tools, and different effects will be produced when using Magical Gold tools.\\nUnfortunately, the durability of this tool is very low and it is not suitable for long-term use.",
+      "ja_JP": "魔金のツールを作ることができます、魔金のツールの性能はダイヤモンドツールより超えています、 また、使用時に魔力の作用により、異なる効果が発生します。\\n残念なことに、このようなツールの耐久度はきわめて低く、長期使用には適していません。。"
+    },
+    "page.rubbleRepair": {
+      "zh_CN": "修复碎石",
+      "en_US": "修复碎石",
+      "ja_JP": "修复碎石"
+    },
+    "page.rubbleRepair.ct": {
+      "zh_CN": "在制作通魔石的过程中出现了意外？产生了碎裂的石头？使用碎石修复箱可以将碎裂的石头重新修好，每修一个碎裂的通魔石需要10点魔力。\\n当然碎石修复机也可以修复其他的碎石，乃至某些工具。",
+      "en_US": "在制作通魔石的过程中出现了意外？产生了碎裂的石头？使用碎石修复箱可以将碎裂的石头重新修好，每修一个碎裂的通魔石需要10点魔力。\\n当然随时修复机也可以修复其他的碎石",
+      "ja_JP": "在制作通魔石的过程中出现了意外？产生了碎裂的石头？使用碎石修复箱可以将碎裂的石头重新修好、每修一个碎裂的通魔石需要10点魔力。\\n当然随时修复机也可以修复其他的碎石"
+    },
+    "page.absorbBox": {
+      "zh_CN": "元素转移",
+      "en_US": "元素转移",
+      "ja_JP": "元素转移"
+    },
+    "page.absorbBox.ct": {
+      "zh_CN": "在元素吸收箱为中心的祭坛里，元素可以从一个元素容器中，转移到另一个元素容器中。\\n元素吸收箱消耗魔力，将可以储存元素的东西放在箱内，将魔力平台放在吸收箱附近，物品放在平台上，这样就开始吸收平台上物品中所含的元素了。",
+      "en_US": "在元素吸收箱为中心的祭坛里，元素可以从一个物品中，转移到元素的容器中。\\n元素吸收箱消耗魔力，将可以储存元素的东西放在箱内，将魔力平台放在吸收箱附近，物品放在平台上，这样就开始吸收平台上物品中所含的元素了。",
+      "ja_JP": "在元素吸收箱为中心的祭壇里、元素可以从一个物品中、转移到元素的容器中。\\n元素吸收箱消耗魔力、将可以储存元素的东西放在箱内、将魔力平台放在吸收箱附近、物品放在平台上、这样就开始吸收平台上物品中所含的元素了。"
+    },
+    "page.absorbBox.altar": {
+      "zh_CN": "元素吸收祭坛",
+      "en_US": "元素吸收祭坛",
+      "ja_JP": "元素吸收祭壇"
+    },
+    "page.MDhearth": {
+      "zh_CN": "魔动灶台",
+      "en_US": "魔动灶台",
+      "ja_JP": "魔動灶台"
+    },
+    "page.MDhearth.ct": {
+      "zh_CN": "通过魔力间反应，转化成热量，进行烧制物品。",
+      "en_US": "通过魔力间反应，转化成热量，进行烧制物品。",
+      "ja_JP": "通过魔力间反应、转化成热量、进行烧制物品。"
+    },
+    "page.magicSolidify": {
+      "zh_CN": "魔力固化",
+      "en_US": "魔力固化",
+      "ja_JP": "魔力固化"
+    },
+    "page.magicSolidify.ct": {
+      "zh_CN": "使用魔力固化箱，将魔力再次转化到魔石。魔力固化箱只有魔力达到要求就会开始工作。此外，使用可以存放元素的东西，可以将魔力元素化并存入。元素化的魔力和魔动设备里的魔力并没有什么取别。",
+      "en_US": "使用魔力固化箱，将魔力再次转化到魔石。魔力固化箱只有魔力达到要求就会开始工作。此外，使用可以存放元素的东西，可以将魔力元素化并存入。元素化的魔力和魔动设备里的魔力并没有什么取别。",
+      "ja_JP": "使用魔力固化箱、将魔力再次转化到魔石。魔力固化箱只有魔力达到要求就会开始工作。此外、使用可以存放元素的东西、可以将魔力元素化并存入。元素化的魔力和魔動设备里的魔力并没有什么取别。"
+    },
+    "page.magiclization": {
+      "zh_CN": "魔力化",
+      "en_US": "魔力化",
+      "ja_JP": "魔力化"
+    },
+    "page.magiclization.ct": {
+      "zh_CN": "在魔化箱中，元素可以去特征化，转化到魔力。此过程需要消耗魔力进行转化，使用能量高的元素，往往可以转化到更多的魔力。\\n一旦元素去特征化到魔力后，再后悔也是没有用的。",
+      "en_US": "在魔化箱中，元素可以去特征化，转化到魔力。此过程需要消耗魔力进行转化，使用能量高的元素，往往可以转化到更多的魔力。\\n一旦元素去特征化到魔力后，再后悔也是没有用的。",
+      "ja_JP": "在魔化箱中、元素可以去特征化、转化到魔力。此过程需要消耗魔力进行转化、使用パワー高的元素、往往可以转化到更多的魔力。\\n一旦元素去特征化到魔力后、再后悔也是没有用的。"
+    },
+    "page.magicPl": {
+      "zh_CN": "魔力平台",
+      "en_US": "魔力平台",
+      "ja_JP": "魔力平台"
+    },
+    "page.magicPl.ct": {
+      "zh_CN": "魔力平台上可以放上一个物品。\\n因为，魔力平台可以被某些方块感知到，这些方块就可以获取到平台上的物品进行操作了。",
+      "en_US": "魔力平台上可以放上一个物品。\\n因为，魔力平台可以被某些方块感知到，这些方块就可以获取到平台上的物品进行操作了。",
+      "ja_JP": "魔力平台上可以放上一个物品。\\n因为、魔力平台可以被某些方块感知到、这些方块就可以获取到平台上的物品进行操作了。"
+    },
+    "page.magicCrystal": {
+      "zh_CN": "魔力水晶",
+      "en_US": "魔力水晶",
+      "ja_JP": "魔力の水晶"
+    },
+    "page.magicCrystal.ct": {
+      "zh_CN": "通过给带有魔力的蓝晶石再次注魔，从而得到的水晶，可以合成各种魔力物品。\\n注魔条件：少雨地区的白天",
+      "en_US": "通过给带有魔力的蓝晶石再次注魔，从而得到的水晶，可以合成各种魔力物品。\\n注魔条件: 少雨地区的白天",
+      "ja_JP": "通过给带有魔力的カイヤナイト再次エンチャント、从而得到的水晶、可以合成各种魔力物品。\\nエンチャントの条件：少雨地区的白天"
+    },
+    "page.natureCrystal": {
+      "zh_CN": "自然水晶",
+      "en_US": "Nature Crystal",
+      "ja_JP": "自然の水晶"
+    },
+    "page.natureCrystal.ct": {
+      "zh_CN": "通过给甘蔗注魔，可以得到自然水晶。自然水晶可以与自然发生共鸣，从而获取到某个地点周围的相关信息。\\n注魔条件：任何时间地点",
+      "en_US": "By enchanting Sugar Canes, you can get Natural Crystal. It can resonate with nature, so as to obtain the relevant information around a place. \\nEnchanting condition: Any time and place.",
+      "ja_JP": "サトウキビにエンチャントすれば自然の水晶を貰える。自然の水晶は自然と共鳴することができる、そしてある場所の周囲に関する情報を取得できる。\\nエンチャントの条件：いつでもどこでも"
+    },
+    "page.scapegoat": {
+      "zh_CN": "替罪羊",
+      "en_US": "Scapegoat",
+      "ja_JP": "替罪羊"
+    },
+    "page.scapegoat.ct": {
+      "zh_CN": "通过魔力制成的代人受过之羊。\\n放在仪式桌附近，当放置者进行仪式失败时，惩罚将转移到替罪羊身上。\\n若替罪羊旁有怪物意图攻击，其目标便会被替罪羊所吸引。(BOSS无效)\\n替罪羊每次受到的伤害不会超过1点。\\n替罪羊的功效仅对其同名者生效。\\n右键其进行拆解。",
+      "en_US": "通过魔力制成的代人受过之羊。\\n放在仪式桌附近，当放置者进行仪式失败时，惩罚将转移到替罪羊身上。\\n若替罪羊旁有怪物意图攻击，其目标便会被替罪羊所吸引。\\n替罪羊每次受到的伤害不会超过1点。\\n替罪羊的功效仅对其同名者生效。\\n右键其进行拆解。",
+      "ja_JP": "通过魔力制成的代人受过之羊。\\n放在仪式桌附近，当放置者进行仪式失败时，惩罚将转移到替罪羊身上。\\n若替罪羊旁有怪物意图攻击，其目标便会被替罪羊所吸引。\\n替罪羊每次受到的伤害不会超过1点。\\n替罪羊的功效仅对其同名者生效。\\n右键其进行拆解。"
+    },
+    "page.quills": {
+      "zh_CN": "魔力羽毛笔",
+      "en_US": "魔力羽毛笔",
+      "ja_JP": "魔力羽毛笔"
+    },
+    "page.quills.ct": {
+      "zh_CN": "通过给羽毛笔注魔，可以让魔力环绕在羽毛笔周围，形成魔力羽毛笔。\\n将魔力羽毛笔投入岩浆湖或者湖中，会吸收周围的液体与魔力共振，形成火之羽毛笔或水之羽毛笔，是制作元素羽毛笔的先决条件。",
+      "en_US": "通过给羽毛笔注魔，可以让魔力环绕在羽毛笔周围，形成魔力羽毛笔。\\n将魔力羽毛笔投入岩浆湖或者湖中，会吸收周围的液体与魔力共振，形成火之羽毛笔或水之羽毛笔。",
+      "ja_JP": "通过给羽毛笔注魔，可以让魔力环绕在羽毛笔周围，形成魔力羽毛笔。\\n将魔力羽毛笔投入岩浆湖或者湖中，会吸收周围的液体与魔力共振，形成火之羽毛笔或水之羽毛笔。"
+    },
+    "page.estone": {
+      "zh_CN": "魔力石英",
+      "en_US": "魔力石英",
+      "ja_JP": "魔力石英"
+    },
+    "page.estone.ct": {
+      "zh_CN": "通过魔力水晶和石英制作成的，带有魔力的石英块，是建造魔力建筑的必备材料。\\n[使用该物品可以做3级仪了]",
+      "en_US": "通过魔力水晶和石英制作成的，带有魔力的石英块，是建造魔力建筑的必备材料。\\n[使用该物品可以做3级仪了]",
+      "ja_JP": "通过魔力水晶和石英制作成的、带有魔力的石英块、是建造魔力建築的必备材料。\\n[使用该物品可以做3级仪了]"
+    },
+    "page.azureCrystal": {
+      "zh_CN": "湛蓝水晶",
+      "en_US": "湛蓝水晶",
+      "ja_JP": "湛蓝水晶"
+    },
+    "page.azureCrystal.ct": {
+      "zh_CN": "魔力水晶和青金石吸收岩浆后形成的一种蓝色的水晶，研究者发现在特定条件下，该水晶周围的物质开始变得不在那么稳定了。\\n将一个魔力水晶和一个青金石扔到岩浆边上，等待一段时间，生成湛蓝水晶。",
+      "en_US": "魔力水晶和青金石吸收岩浆后形成的一种蓝色的水晶，研究者发现在特定条件下，该水晶周围的物质开始变得不在那么稳定了。\\n将一个魔力水晶和一个青金石扔到岩浆边上，等待一段时间，生成湛蓝水晶。",
+      "ja_JP": "魔力水晶和青金石吸收岩浆后形成的一种蓝色的水晶、研究者发现在特定条件下、该水晶周围的物质开始变得不在那么稳定了。\\n将一个魔力水晶和一个青金石扔到岩浆边上、等待一段时间、生成湛蓝水晶。"
+    },
+    "page.decBox": {
+      "zh_CN": "物质瓦解",
+      "en_US": "物质瓦解",
+      "ja_JP": "物质瓦解"
+    },
+    "page.decBox.ct": {
+      "zh_CN": "物质瓦解箱，在简易的祭坛下，通过魔力，将物品分解成元素，存入元素的容器。\\n瓦解箱只能分解简单结构的物品，无法分解复杂结构的元素，而且分解元素的效率十分低下。\\n不过制作简单，方便使用，是它的唯一优点。",
+      "en_US": "物质瓦解箱，在简易的祭坛下，通过魔力，将物品分解成元素，存入元素的容器。\\n瓦解箱只能分解简单结构的物品，无法分解复杂结构的元素，而且分解元素的效率十分低下。\\n不过制作简单，方便使用，是它的唯一优点。",
+      "ja_JP": "物质瓦解箱、在简易的祭壇下、通过魔力、将物品分解成元素、存入元素的容器。\\n瓦解箱只能分解简单構造的物品、无法分解复杂構造的元素、而且分解元素的效率十分低下。\\n不过制作简单、方便使用、是它的唯一优点。"
+    },
+    "page.decBox.altar": {
+      "zh_CN": "瓦解箱祭坛",
+      "en_US": "瓦解箱祭坛",
+      "ja_JP": "瓦解箱祭壇"
+    },
+    "page.elementCrystal": {
+      "zh_CN": "元素水晶",
+      "en_US": "元素水晶",
+      "ja_JP": "元素水晶"
+    },
+    "page.elementCrystal.ct": {
+      "zh_CN": "元素水晶有非常好的元素亲和性，可以一种元素容器来储存元素。\\n元素水晶可以通过魔力水晶再次注魔得到，在元素活跃的时间段内，才可能注魔成功。\\n注魔条件：日出日落的平原上",
+      "en_US": "元素水晶有非常好的元素亲和性，可以一种元素容器来储存元素。\\n元素水晶可以通过魔力水晶再次注魔得到，在元素活跃的时间段内，才可能注魔成功。\\n注魔条件: 日出日落的平原上",
+      "ja_JP": "元素水晶有非常好的元素亲和性、可以一种元素容器来储存元素。\\n元素水晶可以通过魔力水晶再次エンチャント得到、在元素活跃的时间段内、才可能エンチャント成功。\\nエンチャントの条件：日出日落的平原上"
+    },
+    "page.starResonate": {
+      "zh_CN": "星之共鸣",
+      "en_US": "星之共鸣",
+      "ja_JP": "星之共鸣"
+    },
+    "page.starResonate.ct": {
+      "zh_CN": "在繁星满天的午夜，将带有元素储存的物品投入到成熟的星之花上，星之花可能会转化到可以和元素共鸣的共鸣态。\\n共鸣星之花不在那么的脆弱，打掉后会掉落一个星之种。\\n共鸣星之花可以通过元素之书为其注入元素，根据注入元素的不同，共鸣星之花将会产生不同的效果。\\n无法共鸣的元素无法注入。",
+      "en_US": "在繁星满天的午夜，将带有元素储存的物品投入到成熟的星之花上，星之花可能会转化到可以和元素共鸣的共鸣态。\\n共鸣星之花不在那么的脆弱，打掉后会掉落一个星之种。\\n共鸣星之花可以通过元素之书为其注入元素，根据注入元素的不同，共鸣星之花将会产生不同的效果。\\n无法共鸣的元素无法注入。",
+      "ja_JP": "在繁星满天的午夜，将带有元素储存的物品投入到成熟的星之花上，星之花可能会转化到可以和元素共鸣的共鸣态。\\n共鸣星之花不在那么的脆弱，打掉后会掉落一个星之种。\\n共鸣星之花可以通过元素之书为其注入元素，根据注入元素的不同，共鸣星之花将会产生不同的效果。\\n无法共鸣的元素无法注入。"
+    },
+    "page.enchantingBook": {
+      "zh_CN": "附魔书",
+      "en_US": "附魔书",
+      "ja_JP": "エンチャント书"
+    },
+    "page.enchantingBook.ct": {
+      "zh_CN": "附魔台上的书，可以用带有\"末影\"元素的蓝晶石锄将其从附魔台上分离下来。\\n附魔书携带较多的\"知识\"元素。没准在日后会用到。\\n另外由于附魔台的复杂度较高，千万不要用低级的瓦解箱直接对其进行使用，否则你会后悔的。",
+      "en_US": "附魔台上的书，可以用带有\"末影\"元素的蓝晶石锄将其从附魔台上分离下来。\\n附魔书携带较多的\"知识\"元素。没准在日后会用到。\\n另外由于附魔台的复杂度较高，千万不要用低级的瓦解箱直接对其进行使用，否则你会后悔的。",
+      "ja_JP": "エンチャント台上的书、可以用带有\"エンダー\"元素的カイヤナイト锄将其从エンチャント台上分离下来。\\nエンチャント书携带较多的\"知識\"元素。没准在日后会用到。\\n另外由于エンチャント台的复杂度较高、千万不要用低级的瓦解箱直接对其进行使用、否则你会后悔的。"
+    },
+    "page.spellCrystal": {
+      "zh_CN": "咒术水晶",
+      "en_US": "咒术水晶",
+      "ja_JP": "咒术水晶"
+    },
+    "page.spellCrystal.ct": {
+      "zh_CN": "携带咒术的水晶，制作魔导书必备的材料。\\n咒术水晶可以通过魔力水晶再次注魔得到，需要在午夜时分，吸收咒文才可能注魔成功。\\n注魔条件：午夜，周围有超过14个书架",
+      "en_US": "携带咒术的水晶，制作魔导书必备的材料。\\n咒术水晶可以通过魔力水晶再次注魔得到，需要在午夜时分，吸收咒文才可能注魔成功。\\n注魔条件: 午夜，周围有超过14个书架",
+      "ja_JP": "携带咒术的水晶、制作魔導書必备的材料。\\n咒术水晶可以通过魔力水晶再次エンチャント得到、需要在午夜时分、吸收呪文才可能エンチャント成功。\\nエンチャントの条件：午夜、周围有超过14个书架"
+    },
+    "page.EWorkbench": {
+      "zh_CN": "元素合成台",
+      "en_US": "元素合成台",
+      "ja_JP": "元素合成台"
+    },
+    "page.EWorkbench.ct": {
+      "zh_CN": "元素合成台可以像普通合成台一样使用，同时也可以放入元素水晶，让物品和元素共同合成。\\n深色橡木是与魔力契合性最好的木材，因此元素合成台只能选择使用深色橡木。",
+      "en_US": "元素合成台可以像普通合成台一样使用，同时也可以放入元素水晶，让物品和元素共同合成。\\n深色橡木是与魔力契合性最好的木材，因此元素合成台只能选择使用深色橡木。",
+      "ja_JP": "元素合成台可以像普通合成台一样使用、同时也可以放入元素水晶、让物品和元素共同合成。\\n深色橡木是与魔力契合性最好的木材、因此元素合成台只能选择使用深色橡木。"
+    },
+    "page.natureDust": {
+      "zh_CN": "求知粉尘",
+      "en_US": "Seek Dust",
+      "ja_JP": "知識求め粉塵"
+    },
+    "page.natureDust.ct": {
+      "zh_CN": "通过自然粉尘制作而成的求知粉尘，可以与自然发生共鸣，从而获得到周边的各种信息。将求知粉尘放到地上，开始共鸣，结束后自然水晶掉落，捡起便可看到周边的各种信息。\\n同时求知粉尘也可检测周围是否蕴含着充足的精灵力。",
+      "en_US": "Seek Dust made from Nature Dust can resonate with nature, so as to get all kinds of information around. Put Seek Dust on the ground and pick Nature Dust after resonating.\\nSeek Dust can also detect elf power.",
+      "ja_JP": "自然粉塵で得られた知識求め粉塵は自然と共鳴することができます、そして周辺の様々な情報を得ることができます。知識求め粉塵を床に置き、終わった後に落ちる自然水晶で情報を記録します。\\nまた、知識求め粉塵は精霊力の検出ができます。"
+    },
+    "page.soulSummon": {
+      "zh_CN": "灵魂召唤",
+      "en_US": "灵魂召唤",
+      "ja_JP": "灵魂召唤"
+    },
+    "page.soulSummon.ct": {
+      "zh_CN": "「聚魂」附魔的武器，在打死生物后，会掉落灵魂碎片，掉落的灵魂碎片可以缠绕在木剑上形成「灵魂缠绕的木剑」，使用该木剑可以将将灵魂与信物共鸣，从而进行「召唤」仪式。",
+      "en_US": "「聚魂」附魔的武器，在打死生物后，会掉落灵魂碎片，掉落的灵魂碎片可以缠腰在木剑上形成「灵魂缠绕的木剑」，使用该木剑可以将将灵魂与信物共鸣，从而进行「召唤」仪式。",
+      "ja_JP": "「聚魂」附魔的武器，在打死生物后，会掉落灵魂碎片，掉落的灵魂碎片可以缠腰在木剑上形成「灵魂缠绕的木剑」，使用该木剑可以将将灵魂与信物共鸣，从而进行「召唤」仪式。"
+    },
+    "page.riteSummon": {
+      "zh_CN": "召唤仪式",
+      "en_US": "召唤仪式",
+      "ja_JP": "召唤仪式"
+    },
+    "page.riteSummon.ct": {
+      "zh_CN": "召唤仪式，可以将灵魂与信物共鸣，从而召唤出各种东西。该仪式和映像仪式基本一样，不同点：一是桌面上需要摆放信物；二是需要使用「灵魂缠绕的木剑」并且会消耗灵魂。\\n如果灵魂不足或者没有信物的话召唤仪式就会变成普通的映像仪式。\\n此外召唤仪式必须使用3级及以上的仪式桌才能进行。\\n信物是什么？祭品研究手册上没准有一些标记。",
+      "en_US": "召唤仪式，可以将灵魂与信物共鸣，从而召唤出各种东西。该仪式和映像仪式基本一样，不同点：一是桌面上需要摆放信物；二是需要使用「灵魂缠绕的木剑」并且会消耗灵魂。\\n如果灵魂不足或者没有信物的话召唤仪式就会变成普通的映像仪式。\\n此外召唤仪式必须使用3级及以上的仪式桌才能进行。\\n信物是什么？祭品研究手册上没准有一些标记。",
+      "ja_JP": "召唤仪式，可以将灵魂与信物共鸣，从而召唤出各种东西。该仪式和映像仪式基本一样，不同点：一是桌面上需要摆放信物；二是需要使用「灵魂缠绕的木剑」并且会消耗灵魂。\\n如果灵魂不足或者没有信物的话召唤仪式就会变成普通的映像仪式。\\n此外召唤仪式必须使用3级及以上的仪式桌才能进行。\\n信物是什么？祭品研究手册上没准有一些标记。"
+    },
+    "page.manual": {
+      "zh_CN": "元素手册",
+      "en_US": "元素手册",
+      "ja_JP": "元素手册"
+    },
+    "page.manual.ct": {
+      "zh_CN": "大量的羊皮卷没有地方装？制作一个元素手册吧，可以将身上多余的羊皮卷装入手册中，更好的储存与查阅。(手册后面的数字是页面的标号哦)",
+      "en_US": "大量的羊皮卷没有地方装？制作一个元素手册吧，可以将身上多余的羊皮卷装入手册中，更好的储存与查阅。(手册后面的数字是页面的标号哦)",
+      "ja_JP": "大量的羊皮紙没有地方装？制作一个元素手册吧、可以将身上多余的羊皮紙装入手册中、更好的储存与查阅。(手册后面的数字是页面的标号哦)"
+    },
+    "page.lifeLeather": {
+      "zh_CN": "生命之革",
+      "en_US": "生命之革",
+      "ja_JP": "生命之革"
+    },
+    "page.lifeLeather.ct": {
+      "zh_CN": "灵魂碎片可以像缠绕在木剑上一样，缠绕在皮革上，当皮革收集到一定的灵魂后，可以转变成「生命之革」。\\n「生命之革」可以快速的在身上缠绕，形成一套皮甲，或许这对战斗有所帮助，不过要注意的是生成的皮甲会强行顶掉身上所穿的装备，同时还具有绑定和消失诅咒。",
+      "en_US": "灵魂碎片可以像缠绕在木剑上一样，缠绕在皮革上，当皮革收集到一定的灵魂后，可以转变成「生命之革」。\\n「生命之革」可以快速的在身上缠绕，形成一套皮甲，或许这对战斗有所帮助，不过要注意的是生成的皮甲会强行顶掉身上所穿的装备，同时还具有绑定和消失诅咒。",
+      "ja_JP": "灵魂碎片可以像缠绕在木剑上一样，缠绕在皮革上，当皮革收集到一定的灵魂后，可以转变成「生命之革」。\\n「生命之革」可以快速的在身上缠绕，形成一套皮甲，或许这对战斗有所帮助，不过要注意的是生成的皮甲会强行顶掉身上所穿的装备，同时还具有绑定和消失诅咒。"
+    },
+    "page.magicBlastWand": {
+      "zh_CN": "魔爆权杖",
+      "en_US": "魔爆权杖",
+      "ja_JP": "魔爆权杖"
+    },
+    "page.magicBlastWand.ct": {
+      "zh_CN": "摧毁带有魔力的设备后，魔力会爆发出来，对周围的生物造成伤害。利用这个性质而制作的魔爆权杖，可以让魔力从某个生物身上爆发出来，造成可观的伤害。\\n魔爆权杖可以像元素水晶一样充能，元素会被魔力化并充入权杖。",
+      "en_US": "摧毁带有魔力的设备后，魔力会爆发出来，对周围的生物造成伤害。利用这个性质而制作的魔爆权杖，可以让魔力从某个生物身上爆发出来，造成可观的伤害。\\n魔爆权杖可以像元素水晶一样充能，元素会被魔力化并充入权杖。",
+      "ja_JP": "摧毁带有魔力的设备后，魔力会爆发出来，对周围的生物造成伤害。利用这个性质而制作的魔爆权杖，可以让魔力从某个生物身上爆发出来，造成可观的伤害。\\n魔爆权杖可以像元素水晶一样充能，元素会被魔力化并充入权杖。"
+    },
+    "page.magicPaper": {
+      "zh_CN": "魔力纸张",
+      "en_US": "魔力纸张",
+      "ja_JP": "魔力纸张"
+    },
+    "page.magicPaper.ct": {
+      "zh_CN": "注入魔力的纸张，应该可以用它来制作咒术纸张。",
+      "en_US": "注入魔力的纸张，应该可以用它来制作咒术纸张。",
+      "ja_JP": "注入魔力的纸张、应该可以用它来制作咒术纸张。"
+    },
+    "page.spellPaper": {
+      "zh_CN": "咒术纸张",
+      "en_US": "咒术纸张",
+      "ja_JP": "咒术纸张"
+    },
+    "page.spellPaper.ct": {
+      "zh_CN": "咒术纸张可以将咒文和魔力元素很好的结合在一块，是制作魔导书的必须纸张。",
+      "en_US": "咒术纸张可以将咒文和魔力元素很好的结合在一块，是制作魔导书的必须纸张。",
+      "ja_JP": "咒术纸张可以将呪文和魔力元素很好的结合在一块、是制作魔導書的必须纸张。"
+    },
+    "page.bookCover": {
+      "zh_CN": "封皮",
+      "en_US": "封皮",
+      "ja_JP": "封皮"
+    },
+    "page.bookCover.ct": {
+      "zh_CN": "魔导书的封面和封低。\\n魔导书的封皮可不是便宜货哦。",
+      "en_US": "魔导书的封面和封低。\\n魔导书的封皮可不是便宜货哦。",
+      "ja_JP": "魔導書的封面和封低。\\n魔導書的封皮可不是便宜货哦。"
+    },
+    "page.spellbook": {
+      "zh_CN": "魔导书",
+      "en_US": "魔导书",
+      "ja_JP": "魔導書"
+    },
+    "page.spellbook.ct": {
+      "zh_CN": "封皮，封底和咒术纸张，共同制作出来最基础的魔导书，拥有这本魔导书，就可以开始元素魔法之旅了。",
+      "en_US": "封皮，封底和咒术纸张，共同制作出来最基础的魔导书，拥有这本魔导书，就可以开始元素魔法之旅了。",
+      "ja_JP": "封皮、封底和咒术纸张、共同制作出来最基础的魔導書、拥有这本魔導書、就可以开始元素魔法之旅了。"
+    },
+    "page.spellbook.ct.fir": {
+      "zh_CN": "魔导书是使用元素魔法的最基础道具，拥有了它，你就可以完成更高级的合成，操作元素之力完成各种各样的工作。",
+      "en_US": "魔导书是使用元素魔法的最基础道具，拥有了它，你就可以完成更高级的合成，操作元素之力完成各种各样的工作。",
+      "ja_JP": "魔導書是使用元素魔法的最基础道具、拥有了它、你就可以完成更高级的合成、操作元素之力完成各种各样的工作。"
+    },
+    "page.spellbook.ct.sec": {
+      "zh_CN": "能合成出来的魔导书是最低级的，它基本上没有任何用处，不过你可以通过\"魔法书桌\"给予它对应物品，写入咒文、转化成更高级的魔法书。\\n高级的魔法书记录的咒文不同，完成的功能也会有所不同。",
+      "en_US": "能合成出来的魔导书是最低级的，它基本上没有任何用处，不过你可以通过\"魔法书桌\"给予它对应物品，写入咒文、转化成更高级的魔法书。\\n高级的魔法书记录的咒文不同，完成的功能也会有所不同。",
+      "ja_JP": "能合成出来的魔導書是最低级的、它基本上没有任何用处、不过你可以通过\"魔法书桌\"给予它对应物品、写入呪文、转化成更高级的魔法书。\\n高级的魔法书记录的呪文不同、完成的功能也会有所不同。"
+    },
+    "page.elementCube": {
+      "zh_CN": "元素立方体",
+      "en_US": "元素立方体",
+      "ja_JP": "元素立方体"
+    },
+    "page.elementCube.ct": {
+      "zh_CN": "元素水晶虽然已经可以储存元素了，不过它还不足以将元素进行隔空输送。这时就需要元素立方体了。将元素立方体放在某些祭坛的某些位置，元素立方体就会与祭坛产生共鸣，提供祭坛工作所需的元素等。",
+      "en_US": "元素水晶虽然已经可以储存元素了，不过它还不足以将元素进行隔空输送。这时就需要元素立方体了。将元素立方体放在某些祭坛的某些位置，元素立方体就会与祭坛产生共鸣，提供祭坛工作所需的元素等。",
+      "ja_JP": "元素水晶虽然已经可以储存元素了、不过它还不足以将元素进行隔空输送。这时就需要元素立方体了。将元素立方体放在某些祭壇的某些位置、元素立方体就会与祭壇产生共鸣、提供祭壇工作所需的元素等。"
+    },
+    "page.magicDesk": {
+      "zh_CN": "魔导书祭坛",
+      "en_US": "魔导书祭坛",
+      "ja_JP": "魔導書祭壇"
+    },
+    "page.magicDesk.ct": {
+      "zh_CN": "魔法书桌是魔法书祭坛的核心，它可以将物品中的魔力汇聚于魔导书中，让魔导书发生改变，写入咒文、转化成更高级的魔法书。\\n同时该祭坛还可以为魔导书补充元素，将元素进入书中。",
+      "en_US": "魔法书桌是魔法书祭坛的核心，它可以将物品中的魔力汇聚于魔导书中，让魔导书发生改变，写入咒文、转化成更高级的魔法书。\\n同时该祭坛还可以为魔导书补充元素，将元素进入书中。",
+      "ja_JP": "魔法书桌是魔法书祭壇的核心、它可以将物品中的魔力汇聚于魔導書中、让魔導書发生改变、写入呪文、转化成更高级的魔法书。\\n同时该祭壇还可以为魔導書补充元素、将元素进入书中。"
+    },
+    "page.magicDesk.ct.crafting": {
+      "zh_CN": "魔导书祭坛可以让魔导书将物品吸收，从而产生咒文，转化成新的魔导书。\\n将物品扔到书桌上，物品将会进入书中。\\n要想做出不同的魔导书，物品进入的顺序和数量有着严格的限定，如果进入了不该进入的物品，那么就会前功尽弃，请重新准备材料吧。\\n在祭坛面上的物品，会被自动弹到说书桌上，所以请不要在这个祭坛上乱丢东西！",
+      "en_US": "魔导书祭坛可以让魔导书将物品吸收，从而产生咒文，转化成新的魔导书。\\n将物品扔到书桌上，物品将会进入书中。\\n要想做出不同的魔导书，物品进入的顺序和数量有着严格的限定，如果进入了不该进入的物品，那么就会前功尽弃，请重新准备材料吧。\\n在祭坛面上的物品，会被自动弹到说书桌上，所以请不要在这个祭坛上乱丢东西！",
+      "ja_JP": "魔導書祭壇可以让魔導書将物品吸收、从而产生呪文、转化成新的魔導書。\\n将物品扔到书桌上、物品将会进入书中。\\n要想做出不同的魔導書、物品进入的顺序和数量有着严格的限定、如果进入了不该进入的物品、那么就会前功尽弃、请重新准备材料吧。\\n在祭壇面上的物品、会被自动弹到说书桌上、所以请不要在这个祭壇上乱丢东西！"
+    },
+    "page.magicDesk.ct.charge": {
+      "zh_CN": "魔导书祭坛还可以给部分魔导书补充元素。有了充足的元素，这些魔导书才可以正常使用。\\n将元素立方体放在祭坛的四个錾制石上，祭坛就会自动吸取元素，为桌面上的魔导书补充元素。\\n补充元素是不可逆的过程，进入魔导书中的元素除非消耗光，否则是无法移除的，请注意！",
+      "en_US": "魔导书祭坛还可以给部分魔导书补充元素。有了充足的元素，这些魔导书才可以正常使用。\\n将元素立方体放在祭坛的四个錾制石上，祭坛就会自动吸取元素，为桌面上的魔导书补充元素。\\n补充元素是不可逆的过程，进入魔导书中的元素除非消耗光，否则是无法移除的，请注意！",
+      "ja_JP": "魔導書祭壇还可以给部分魔導書补充元素。有了充足的元素、这些魔導書才可以正常使用。\\n将元素立方体放在祭壇的四个錾制石上、祭壇就会自动吸取元素、为桌面上的魔導書补充元素。\\n补充元素是不可逆的过程、进入魔導書中的元素除非消耗光、否则是无法移除的、请注意！"
+    },
+    "page.spLaunch": {
+      "zh_CN": "起始之魔导书",
+      "en_US": "起始之魔导书",
+      "ja_JP": "起始之魔導書"
+    },
+    "page.spLaunch.ct": {
+      "zh_CN": "起始之魔导书包含这各种咒文，并且可以将启动咒文魔力化，并发送给不同的祭坛，从而启动各种各样的合成或程式。\\n通过魔法书桌将平凡的魔导书转化到起始之魔导书。",
+      "en_US": "起始之魔导书包含这各种咒文，并且可以将启动咒文魔力化，并发送给不同的祭坛，从而启动各种各样的合成或程式。\\n通过魔法书桌将平凡的魔导书转化到起始之魔导书。",
+      "ja_JP": "起始之魔導書包含这各种呪文、并且可以将启动呪文魔力化、并发送给不同的祭壇、从而启动各种各样的合成或程式。\\n通过魔法书桌将平凡的魔導書转化到起始之魔導書。"
+    },
+    "page.eCraftTable": {
+      "zh_CN": "元素合成祭坛",
+      "en_US": "元素合成祭坛",
+      "ja_JP": "元素合成祭壇"
+    },
+    "page.eCraftTable.ct": {
+      "zh_CN": "并不是所有元素合成都只需要一种元素的，当元素合成需要多种元素的时候，元素合成台显然不能满足史蒂夫的要求。由此，元素合成祭坛诞生了，在祭坛的十字方向放上元素立方体，通过起始之魔导书启动后祭坛会自动吸收元素立方体中存储的元素，进行合成。\\n[使用该物品可以做4级仪了]",
+      "en_US": "并不是所有元素合成都只需要一种元素的，当元素合成需要多种元素的时候，元素合成台显然不能满足史蒂夫的要求。由此，元素合成祭坛诞生了，在祭坛的十字方向放上元素立方体，通过起始之魔导书启动后祭坛会自动吸收元素立方体中存储的元素，进行合成。\\n[使用该物品可以做4级仪了]",
+      "ja_JP": "并不是所有元素合成都只需要一种元素的、当元素合成需要多种元素的时候、元素合成台显然不能满足スティーブ的要求。由此、元素合成祭壇诞生了、在祭壇的十字方向放上元素立方体、通过起始之魔導書启动后祭壇会自动吸收元素立方体中存储的元素、进行合成。\\n[使用该物品可以做4级仪了]"
+    },
+    "page.deconstructAltar": {
+      "zh_CN": "瓦解小祭坛",
+      "en_US": "瓦解小祭坛",
+      "ja_JP": "瓦解小祭壇"
+    },
+    "page.deconstructAltar.ct": {
+      "zh_CN": "物质瓦解箱虽然可以将物质瓦解到元素，但是其只能提取物质中的一种元素，而且，转化率十分的低下。为了解决这个问题，史蒂夫们设计了物质瓦解小祭坛，来瓦解物质得到更多的元素。\\n该祭坛的使用方式和元素合成祭坛基本相同，将物质放到中心的桌子上，通过始之魔导书的瓦解咒文来启动合成。",
+      "en_US": "物质瓦解箱虽然可以将物质瓦解到元素，但是其只能提取物质中的一种元素，而且，转化率十分的低下。为了解决这个问题，史蒂夫们设计了物质瓦解小祭坛，来瓦解物质得到更多的元素。\\n该祭坛的使用方式和元素合成祭坛基本相同，将物质放到中心的桌子上，通过始之魔导书的瓦解咒文来启动合成。",
+      "ja_JP": "物质瓦解箱虽然可以将物质瓦解到元素、但是其只能提取物质中的一种元素、而且、转化率十分的低下。为了解决这个问题、スティーブ们设计了物质瓦解小祭壇、来瓦解物质得到更多的元素。\\n该祭壇的使用方式和元素合成祭壇基本相同、将物质放到中心的桌子上、通过始之魔導書的瓦解呪文来启动合成。"
+    },
+    "page.deconstructAltarAdv": {
+      "zh_CN": "瓦解祭坛",
+      "en_US": "瓦解祭坛",
+      "ja_JP": "瓦解祭壇"
+    },
+    "page.deconstructAltarAdv.ct": {
+      "zh_CN": "瓦解小祭坛虽然好用，但是无论使其效率还是可以分解的物品都是有限的。史蒂夫通过给瓦解台注入大量的末影元素，使之形成更高级的瓦解台，并设计了物质瓦解祭坛，来使其工作。\\n瓦解祭坛比小瓦解祭坛的瓦解效率更高、能放下更多的立方体，与此同时还可以在魔力平台上放置结构水晶进行标定瓦解。",
+      "en_US": "瓦解小祭坛虽然好用，但是无论使其效率还是可以分解的物品都是有限的。史蒂夫通过给瓦解台注入大量的末影元素，使之形成更高级的瓦解台，并设计了物质瓦解祭坛，来使其工作。\\n瓦解祭坛比小瓦解祭坛的瓦解效率更高、能放下更多的立方体，与此同时还可以在魔力平台上放置结构水晶进行标定瓦解。",
+      "ja_JP": "瓦解小祭壇虽然好用、但是无论使其效率还是可以分解的物品都是有限的。スティーブ通过给瓦解台注入大量的エンダー元素、使之形成更高级的瓦解台、并设计了物质瓦解祭壇、来使其工作。\\n瓦解祭壇比小瓦解祭壇的瓦解效率更高、能放下更多的立方体、与此同时还可以在魔力平台上放置構造水晶进行标定瓦解。"
+    },
+    "page.elementPlatform": {
+      "zh_CN": "元素平台",
+      "en_US": "元素平台",
+      "ja_JP": "元素平台"
+    },
+    "page.elementPlatform.ct": {
+      "zh_CN": "元素平台和魔力平台相似，也可以放置物品，供其他设备使用。\\n不过元素平台可以存入四种元素，并且会将元素尝试与上方的物品进行共鸣。\\n注意，元素一旦存入，只能通过元素吸收箱回收了，其他设备无法直接取出。",
+      "en_US": "元素平台和魔力平台相似，也可以放置物品，供其他设备使用。\\n不过元素平台可以存入四种元素，并且会将元素尝试与上方的物品进行共鸣。",
+      "ja_JP": "元素平台和魔力平台相似，也可以放置物品，供其他设备使用。\\n不过元素平台可以存入四种元素，并且会将元素尝试与上方的物品进行共鸣。"
+    },
+    "page.spElement": {
+      "zh_CN": "元素之魔导书",
+      "en_US": "元素之魔导书",
+      "ja_JP": "元素之魔導書"
+    },
+    "page.spElement.ct": {
+      "zh_CN": "元素魔导书拥有特殊的咒文，可以从元素立方体之类的元素容器中提取出来元素，或者将书中的元素再次放回到元素容器之中。",
+      "en_US": "元素魔导书拥有特殊的咒文，可以从元素立方体之类的元素容器中提取出来元素，或者将书中的元素再次放回到元素容器之中。",
+      "ja_JP": "元素魔导书拥有特殊的咒文，可以从元素立方体之类的元素容器中提取出来元素，或者将书中的元素再次放回到元素容器之中。"
+    },
+    "page.spArchitecture": {
+      "zh_CN": "建筑之魔导书",
+      "en_US": "建筑之魔导书",
+      "ja_JP": "建築之魔導書"
+    },
+    "page.spArchitecture.ct": {
+      "zh_CN": "建筑之魔导书可以读取建筑水晶中的建筑信息，利用土元素与咒文结合，将物品栏里的物品发送到指定的位置，以快速完成建筑的建造。\\n(存有结构数据的建筑水晶使用shift+右键可以标定一个建筑锚点)",
+      "en_US": "建筑之魔导书可以读取建筑水晶中的建筑信息，利用土元素与咒文结合，将物品栏里的物品发送到指定的位置，以快速完成建筑的建造。\\n(存有结构数据的建筑水晶使用shift+右键可以标定一个建筑锚点)",
+      "ja_JP": "建築之魔導書可以读取建築水晶中的建築信息、利用土元素与呪文结合、将物品栏里的物品发送到指定的位置、以快速完成建築的建造。\\n(存有構造数据的建築水晶使用shift+右键可以标定一个建築锚点)"
+    },
+    "page.archCrystal": {
+      "zh_CN": "建筑水晶",
+      "en_US": "建筑水晶",
+      "ja_JP": "建築水晶"
+    },
+    "page.archCrystal.ct": {
+      "zh_CN": "由于大型祭坛结构过于复杂，史蒂夫发现了一种水晶，称之为建筑水晶。它是由精灵结晶注魔得到的，由于其特殊的结构，可以存储空间的结构数据，因此被广泛的用于记录祭坛的结构中。\\n(使用带有建筑数据的羊皮卷与其可以进行快速祭坛数据录入)\\n注魔条件：沙漠中、周围有超过320个方块掉落在地上",
+      "en_US": "由于大型祭坛结构过于复杂，史蒂夫发现了一种水晶，称之为建筑水晶。它是由精灵结晶注魔得到的，由于其特殊的结构，可以存储空间的结构数据，因此被广泛的用于记录祭坛的结构中。\\n(使用带有建筑数据的羊皮卷与其可以进行快速祭坛数据录入)\\n注魔条件: 沙漠中、周围有超过320个方块掉落在地上",
+      "ja_JP": "由于大型祭壇構造过于复杂、スティーブ发现了一种水晶、称之为建築水晶。它是由精霊结晶エンチャント得到的、由于其特殊的構造、可以存储空间的構造数据、因此被广泛的用于记录祭壇的構造中。\\n(使用带有建築数据的羊皮紙与其可以进行快速祭壇数据录入)\\nエンチャントの条件：沙漠中、周围有超过320个方块掉落在地上"
+    },
+    "page.crystalGarden": {
+      "zh_CN": "水晶花园",
+      "en_US": "水晶花园",
+      "ja_JP": "水晶花园"
+    },
+    "page.crystalGarden.ct": {
+      "zh_CN": "一个用魔力构造的花园，可以种植各种作物乃至水晶。一个花园里最核心的就是借助星之种制作而成的「生命之花」，生命之花会为周围土地生长提供能量。",
+      "en_US": "一个用魔力构造的花园，可以种植各种作物乃至水晶。一个花园里最核心的就是「生命之花」，生命之花会为周围土地生长提供能量。",
+      "ja_JP": "一个用魔力构造的花园、可以种植各种作物乃至水晶。一个花园里最核心的就是「生命之花」、生命之花会为周围土地生长提供パワー。"
+    },
+    "page.fairyCube": {
+      "zh_CN": "精灵立方体",
+      "en_US": "精灵立方体",
+      "ja_JP": "精灵立方体"
+    },
+    "page.fairyCube.ct": {
+      "zh_CN": "在立方体核心的驱动下构建的精灵立方体，会漂浮在你的身边，是你得力的小助手。\\n在装有不同精灵符文的情况下，精灵立方体会模拟你的行为，帮助你更好的完成各种工作。\\n饿了是干不动的，需要给精灵立方体投喂食物，让它充满干劲。\\n同时，间断的投喂食物会让它快速获得经验进行升级。",
+      "en_US": "在立方体核心的驱动下构建的精灵立方体，会漂浮在你的身边，是你得力的小助手。\\n在装有不同精灵符文的情况下，精灵立方体会模拟你的行为，帮助你更好的完成各种工作。\\n饿了是干不动的，需要给精灵立方体投喂食物，让它充满干劲。\\n同时，间断的投喂食物会让它快速获得经验进行升级。",
+      "ja_JP": "在立方体核心的驱动下构建的精灵立方体，会漂浮在你的身边，是你得力的小助手。\\n在装有不同精灵符文的情况下，精灵立方体会模拟你的行为，帮助你更好的完成各种工作。\\n饿了是干不动的，需要给精灵立方体投喂食物，让它充满干劲。\\n同时，间断的投喂食物会让它快速获得经验进行升级。"
+    },
+    "page.fairyCubeModule": {
+      "zh_CN": "精灵符文",
+      "en_US": "精灵符文",
+      "ja_JP": "精灵符文"
+    },
+    "page.fairyCubeModule.ct": {
+      "zh_CN": "精灵符文可以挂载到精灵立方体上，以产生各种不同的效果，每个精灵立方体最多能持有12个符文，而且挂载后无法取出。\\n符文也是有等级的且不超过立方体等级，投喂给立方体元素，让符文增加经验，不同符文需要的元素是不一样的。\\n最好不要让立方体只获取一种元素。",
+      "en_US": "精灵符文可以挂载到精灵立方体上，以产生各种不同的效果，每个精灵立方体最多能持有12个符文，而且挂载后无法取出。\\n精灵符文分为：执行型，增强型和其他。\\n执行型的符文会让精灵立方体根据你的某种动作做出反馈\\n增强型会让一些效果更加明显\\n符文也是有等级的，通过投喂给精灵立方体元素，可以让符文增加经验，不同的符文需要的元素也是不一样的。\\n符文等级不会超过立方体的当前等级。",
+      "ja_JP": "精灵符文可以挂载到精灵立方体上，以产生各种不同的效果，每个精灵立方体最多能持有12个符文，而且挂载后无法取出。\\n精灵符文分为：执行型，增强型和其他。\\n符文也是有等级的，通过投喂给精灵立方体元素，可以让符文增加经验，不同的符文需要的元素也是不一样的。\\n符文等级不会超过立方体的当前等级。"
+    },
+    "page.fairyCubeModuleCraft": {
+      "zh_CN": "符文映射",
+      "en_US": "符文映射",
+      "ja_JP": "符文映射"
+    },
+    "page.fairyCubeModuleCraft.ct.fir": {
+      "zh_CN": "\\n精灵符文分为：执行型，增强型和其他。\\n将空白的精灵立方体符文放到元素平台上，并将元素注入元素平台，符文便可和元素发生共鸣。\\n不同的元素在不同的位置周围有不同的物品，就可能产生各种不同的符文，具体能产生啥这就需要史蒂夫来慢慢探索了。\\n目前记载：\\n沙漠、白天、火、烈焰粉\\n地下、土、石头\\n末地、末影\\n夜晚、钻石斧、火\\n木、黎明、小麦土豆胡萝卜",
+      "en_US": "将空白的精灵立方体符文放到元素平台上，并将元素注入元素平台，符文便可和元素发生共鸣。\\n不同的元素在不同的位置周围有不同的物品，就可能产生各种不同的符文，具体能产生啥这就需要史蒂夫来慢慢探索了。\\n目前记载：\\n沙漠、白天、火、烈焰粉",
+      "ja_JP": "将空白的精灵立方体符文放到元素平台上，并将元素注入元素平台，符文便可和元素发生共鸣。\\n不同的元素在不同的位置周围有不同的物品，就可能产生各种不同的符文，具体能产生啥这就需要史蒂夫来慢慢探索了。\\n目前记载：\\n沙漠、白天、火、烈焰粉"
+    },
+    "page.fairyCubeModuleCraft.ct.sec": {
+      "zh_CN": "木、牛肉大餐\\n水、雨、萤石粉\\n木、金、黄昏、煤、钻石、绿宝石\\n土、金、煤矿\\n午后、木、金苹果\\n水、金、黄昏、腐肉、骨头、火药\\n高空、气、羽毛、兔脚\\n平原、末影、气、泥土、末影珍珠",
+      "en_US": "木、牛肉大餐\\n水、雨、萤石粉\\n木、金、黄昏、煤、钻石、绿宝石\\n土、金、煤矿\\n午后、木、金苹果\\n水、金、黄昏、腐肉、骨头、火药\\n高空、气、羽毛、兔脚\\n平原、末影、气、泥土、末影珍珠",
+      "ja_JP": "木、牛肉大餐\\n水、雨、萤石粉\\n木、金、黄昏、煤、钻石、绿宝石\\n土、金、煤矿\\n午后、木、金苹果\\n水、金、黄昏、腐肉、骨头、火药\\n高空、气、羽毛、兔脚\\n平原、末影、气、泥土、末影珍珠"
+    },
+    "page.magicPot": {
+      "zh_CN": "魔力花盆",
+      "en_US": "魔力花盆",
+      "ja_JP": "魔力花盆"
+    },
+    "page.magicPot.ct": {
+      "zh_CN": "具有魔力的花盆，生命之花只能放到魔力花盆的上面。\\n手拿着魔石，右键花盆，可以给土壤补充魔力。只有在花盆有魔力的时候，生命之花才能正常工作。\\n生命之花每次为周围提供能量，有2%的概率消耗花盆中的魔力。",
+      "en_US": "具有魔力的花盆，生命之花只能放到魔力花盆的上面。",
+      "ja_JP": "具有魔力的花盆、生命之花只能放到魔力花盆的上面。"
+    },
+    "page.lifeDirt": {
+      "zh_CN": "生息土壤",
+      "en_US": "生息土壤",
+      "ja_JP": "生息土壤"
+    },
+    "page.lifeDirt.ct": {
+      "zh_CN": "生息土壤是水晶花园土壤的基础构成，可以在上面种上各种植物，在生命之花的作用下，植物欣欣向荣。\\n同时，生息土壤可以融入植物的「生命精华」，在生命之花的作用下，带有「生命精华」的土壤会自动产生植物，并生长。\\n（生息土壤和植物种子可以合成带有生命的精华的土壤，一旦打掉，土壤内的「生命精华」将会消失)",
+      "en_US": "生息土壤是水晶花园土壤的基础构成，可以在上面种上各种植物，在生命之花的作用下，植物欣欣向荣。\\n同时，生息土壤可以融入植物的「生命精华」，在生命之花的作用下，带有「生命精华」的土壤会自动产生植物，并生长。\\n（生息土壤和植物种子可以合成带有生命的精华的土壤，一旦打掉，土壤内的「生命精华」将会消失)",
+      "ja_JP": "生息土壤是水晶花园土壤的基础构成、可以在上面种上各种植物、在生命之花的作用下、植物欣欣向荣。\\n同时、生息土壤可以融入植物的「生命精华」、在生命之花的作用下、带有「生命精华」的土壤会自动产生植物、并生长。\\n（生息土壤和植物种子可以合成带有生命的精华的土壤、一旦打掉、土壤内的「生命精华」将会消失)"
+    },
+    "page.resonantIncubator": {
+      "zh_CN": "共鸣培养",
+      "en_US": "共鸣培养",
+      "ja_JP": "共鸣培养"
+    },
+    "page.resonantIncubator.ct": {
+      "zh_CN": "细心的你可能已经注意到了，所有水晶都有一个频率属性。共鸣培养箱，通过水晶间频率的共鸣，调整生息土壤的频率，一旦频率调整到与某种水晶相同，则会在土壤中萌生出该水晶的「生命精华」。该土壤可以在水晶花园中生长出水晶花。\\n（每次水晶花成熟后，「生命精华」都会有一定几率消失)",
+      "en_US": "细心的你可能已经注意到了，所有水晶都有一个频率属性。共鸣培养箱，通过水晶间频率的共鸣，调整生息土壤的频率，一旦频率调整到与某种水晶相同，则会在土壤中萌生出该水晶的「生命精华」。该土壤可以在水晶花园中生长出水晶花。\\n（每次水晶花成熟后，「生命精华」都会有一定几率消失)",
+      "ja_JP": "细心的你可能已经注意到了、所有水晶都有一个周波数属性。共鸣培养箱、通过水晶间周波数的共鸣、调整生息土壤的周波数、一旦周波数调整到与某种水晶相同、则会在土壤中萌生出该水晶的「生命精华」。该土壤可以在水晶花园中生长出水晶花。\\n（每次水晶花成熟后、「生命精华」都会有一定几率消失)"
+    },
+    "page.frequencyMapping": {
+      "zh_CN": "频率共感",
+      "en_US": "Frequency Induct",
+      "ja_JP": "频率共感"
+    },
+    "page.frequencyMapping.ct": {
+      "zh_CN": "将不同频率的水晶放到频率共感周围，将可以共感的物品放到共感器中，便会开始搜寻。当周围水晶的震动曲线与某一个数据的震动曲线在1.6秒内低于误差，数据将会写入到共感的物品当中。\\n每个水晶提供1振幅。\\n(误差范围会随时间增加)",
+      "en_US": "将不同频率的水晶放到频率共感周围，将可以共感的物品放到共感器中，便会开始搜寻。当周围水晶的震动曲线与某一个数据的震动曲线在1.6秒内低于误差，数据将会写入到共感的物品当中。\\n每个水晶提供1振幅。\\n(误差范围会随时间增加)",
+      "ja_JP": "将不同频率的水晶放到频率共感周围，将可以共感的物品放到共感器中，便会开始搜寻。当周围水晶的震动曲线与某一个数据的震动曲线在1.6秒内低于误差，数据将会写入到共感的物品当中。\\n每个水晶提供1振幅。\\n(误差范围会随时间增加)"
+    },
+    "page.soulKillerSword": {
+      "zh_CN": "噬魂剑",
+      "en_US": "噬魂剑",
+      "ja_JP": "噬魂剑"
+    },
+    "page.soulKillerSword.ct": {
+      "zh_CN": "噬魂剑击杀大部分生物后，会将其灵魂收入剑中，随着某种灵魂收集的增加，对该类生物横扫附加的伤害与范围也会缓慢增加。\\n右键使用会消耗所有种类的灵魂1点，为自身进行回血。\\n噬魂剑的耐久很低，不过每击杀一个生物都会将耐久回满。\\n需要一个恰好拥有666点魂力的木剑才可以制作。",
+      "en_US": "噬魂剑击杀大部分生物后，会将其灵魂收入剑中，随着某种灵魂收集的增加，对该类生物横扫附加的伤害与范围也会缓慢增加。右键使用会消耗所有种类的灵魂1点，为自身进行回血。\\n噬魂剑的耐久很低，不过每击杀一个生物都会将耐久回满。\\n需要一个恰好拥有666点魂力的木剑才可以制作。",
+      "ja_JP": "噬魂剑击杀大部分生物后，会将其灵魂收入剑中，随着某种灵魂收集的增加，对该类生物横扫附加的伤害与范围也会缓慢增加。右键使用会消耗所有种类的灵魂1点，为自身进行回血。\\n噬魂剑的耐久很低，不过每击杀一个生物都会将耐久回满。\\n需要一个恰好拥有666点魂力的木剑才可以制作。"
+    },
+    "page.magicRuler": {
+      "zh_CN": "度量区域",
+      "en_US": "Measure Area",
+      "ja_JP": "度量区域"
+    },
+    "page.magicRuler.ct": {
+      "zh_CN": "通过雕刻出来的魔力标尺，可以有效地进行区域标定。\\n右键和shift右键分别标定两个点，当手里拿着标尺时，可以看到标定的区域。\\n标尺可以在工作台里通过染料染色。",
+      "en_US": "通过雕刻出来的魔力标尺，可以有效地进行区域标定。\\nRight click and shift + Right click to point two postion, you can see area with ruler in hand.\\nRuler can be dyed with Dye.",
+      "ja_JP": "通过雕刻出来的魔力标尺，可以有效地进行区域标定。\\n右键和shift右键分别标定两个点，当手里拿着标尺时，可以看到标定的区域。\\n标尺可以在工作台里通过染料染色。"
+    },
+    "page.buildingAltar": {
+      "zh_CN": "建筑祭坛",
+      "en_US": "Architecture Altar",
+      "ja_JP": "建筑祭坛"
+    },
+    "page.buildingAltar.ct": {
+      "zh_CN": "通过建筑可以对魔力标尺记录的区域进行扫描，并将建筑数据记录在建筑水晶里。\\n将空的建筑水晶放到建筑解析台上，标有区域的魔力标尺放在魔力平台上，通过起始之魔导书启动，消耗土元素进行记录。\\n建筑祭坛的方向应该指向区域的中心，且不能过远，才能正常工作。\\n注意：工作中的建筑解析台如果出现异常，会发生爆炸。",
+      "en_US": "通过建筑可以对魔力标尺记录的区域进行扫描，并将建筑数据记录在建筑水晶里。\\n将空的建筑水晶放到建筑解析台上，标有区域的魔力标尺放在魔力平台上，通过起始之魔导书启动，消耗土元素进行记录。\\n建筑祭坛的方向应该指向区域的中心，且不能过远，才能正常工作。\\n注意：工作中的建筑解析台如果出现异常，会发生爆炸。",
+      "ja_JP": "通过建筑可以对魔力标尺记录的区域进行扫描，并将建筑数据记录在建筑水晶里。\\n将空的建筑水晶放到建筑解析台上，标有区域的魔力标尺放在魔力平台上，通过起始之魔导书启动，消耗土元素进行记录。\\n建筑祭坛的方向应该指向区域的中心，且不能过远，才能正常工作。\\n注意：工作中的建筑解析台如果出现异常，会发生爆炸。"
+    },
+    "page.itemCrystal": {
+      "zh_CN": "结构水晶",
+      "en_US": "结构水晶",
+      "ja_JP": "構造水晶"
+    },
+    "page.itemCrystal.ct": {
+      "zh_CN": "结构水晶是一种可以保存物质结构的水晶，其可以保存物质具有的元素以及复杂度。\\n该水晶可以通过共鸣培养调频共鸣获得。",
+      "en_US": "结构水晶是一种可以保存物质结构的水晶，其可以保存物质具有的元素以及复杂度。\\n该水晶可以通过共鸣培养调频共鸣获得。",
+      "ja_JP": "構造水晶是一种可以保存物质構造的水晶、其可以保存物质具有的元素以及复杂度。\\n该水晶可以通过共鸣培养调频共鸣获得。"
+    },
+    "page.analysisAltar": {
+      "zh_CN": "结构解析",
+      "en_US": "结构解析",
+      "ja_JP": "構造解析"
+    },
+    "page.analysisAltar.ct": {
+      "zh_CN": "想知道物品里究竟含有什么元素？这就需要搭建一个结构解析祭坛。\\n在下方摆上魔力平台，并放上物品，上方的便可解析出该物品所具有的元素。\\n同时也可以将解析后的输入存入结构水晶。",
+      "en_US": "想知道物品里究竟含有什么元素？这就需要搭建一个结构解析祭坛。\\n在下方摆上魔力平台，并放上物品，上方的便可解析出该物品所具有的元素。\\n同时也可以将解析后的输入存入结构水晶。",
+      "ja_JP": "想知道物品里究竟含有什么元素？这就需要搭建一个構造解析祭壇。\\n在下方摆上魔力平台、并放上物品、上方的便可解析出该物品所具有的元素。\\n同时也可以将解析后的输入存入構造水晶。"
+    },
+    "page.jumpGem": {
+      "zh_CN": "折光宝石",
+      "en_US": "折光宝石",
+      "ja_JP": "折光宝石"
+    },
+    "page.jumpGem.ct": {
+      "zh_CN": "折光宝石拥有扭曲空间的能力，尝尝被用于远程能力设备的制作当中。\\n可以通过研究获取到这种宝石。",
+      "en_US": "折光宝石拥有扭曲空间的能力，尝尝被用于远程能力设备的制作当中。\\n可以通过研究获取到这种宝石。",
+      "ja_JP": "折光宝石拥有扭曲空间的能力，尝尝被用于远程能力设备的制作当中。\\n可以通过研究获取到这种宝石。"
+    },
+    "page.iscNormal": {
+      "zh_CN": "结构记录",
+      "en_US": "结构记录",
+      "ja_JP": "構造记录"
+    },
+    "page.iscNormal.ct": {
+      "zh_CN": "物品的复杂程度不一样，不是所有物品都可以被直接解析的，因此合成结构记录台将会是你解析复杂物品的最好帮手。\\n将结构解析祭坛下方的魔力平台换成记录台，在记录台里用物品标定出合成的结构，便可解析出对应的内容。",
+      "en_US": "物品的复杂程度不一样，不是所有物品都可以被直接解析的，因此合成结构记录台将会是你解析复杂物品的最好帮手。\\n将结构解析祭坛下方的魔力平台换成记录台，在记录台里用物品标定出合成的结构，便可解析出对应的内容。",
+      "ja_JP": "物品的复杂程度不一样、不是所有物品都可以被直接解析的、因此合成構造记录台将会是你解析复杂物品的最好帮手。\\n将構造解析祭壇下方的魔力平台换成记录台、在记录台里用物品标定出合成的構造、便可解析出对应的内容。"
+    },
+    "page.iscNormal.ct.fir": {
+      "zh_CN": "当然这要求着所有作为合成材料的物品能单独被结构解析台解析出来，但实际情况通常不会如你所愿。\\n好在史蒂夫研究者通过在结构解析祭坛周围搭建复数石柱来解决了这个问题。\\n只要将记录该材料的结构水晶放入石柱的箱子内，即可被结构解析台读取，从而完成结构记录。",
+      "en_US": "当然这要求着所有作为合成材料的物品能单独被结构解析台解析出来，但实际情况通常不会如你所愿。\\n好在史蒂夫研究者通过在结构解析祭坛周围搭建复数石柱来解决了这个问题。\\n只要将记录该材料的结构水晶放入石柱的箱子内，即可被结构解析台读取，从而完成结构记录。",
+      "ja_JP": "当然这要求着所有作为合成材料的物品能单独被構造解析台解析出来、但实际情况通常不会如你所愿。\\n好在スティーブ研究者通过在構造解析祭壇周围搭建复数石柱来解决了这个问题。\\n只要将记录该材料的構造水晶放入石柱的箱子内、即可被構造解析台读取、从而完成構造记录。"
+    },
+    "page.supremeAltar": {
+      "zh_CN": "元素神坛",
+      "en_US": "元素神坛",
+      "ja_JP": "元素神坛"
+    },
+    "page.supremeAltar.ct": {
+      "zh_CN": "结合众多史蒂夫智慧制作的特大型祭坛，其杰出的设计构造可以执行各种各样的功能，甚至可以取代之前的一些祭坛。\\n元素神坛可以基本上无损的对物质进行瓦解，并且多出16格个合成空间，可以制作一些更强大的的设备，甚至可以物质构成。",
+      "en_US": "结合众多史蒂夫智慧制作的特大型祭坛，其杰出的设计构造可以执行各种各样的功能，甚至可以取代之前的一些祭坛。\\n元素神坛可以基本上无损的对物质进行瓦解，并且多出16格个合成空间，可以制作一些更强大的的设备，甚至可以物质构成。",
+      "ja_JP": "结合众多スティーブ智慧制作的特大型祭壇、其杰出的设计构造可以执行各种各样的功能、甚至可以取代之前的一些祭壇。\\n元素神坛可以基本上无损的对物质进行瓦解、并且多出16格个合成空间、可以制作一些更强大的的设备、甚至可以物质构成。"
+    },
+    "page.supremeTable": {
+      "zh_CN": "元素方桌",
+      "en_US": "元素方桌",
+      "ja_JP": "元素方桌"
+    },
+    "page.supremeTable.ct": {
+      "zh_CN": "元素方桌是元素神坛的核心。融合各种元素制作而成桌子，可以完成各种各样的功能，在没有祭坛的加持下，方桌仍可以作为普通的工作台进行使用。\\n当然制作它的成本也是很高的。",
+      "en_US": "元素方桌是元素神坛的核心。融合各种元素制作而成桌子，可以完成各种各样的功能，在没有祭坛的加持下，方桌仍可以作为普通的工作台进行使用。\\n当然制作它的成本也是很高的。",
+      "ja_JP": "元素方桌是元素神坛的核心。融合各种元素制作而成桌子、可以完成各种各样的功能、在没有祭壇的加持下、方桌仍可以作为普通的工作台进行使用。\\n当然制作它的成本也是很高的。"
+    },
+    "page.orderCrystal": {
+      "zh_CN": "秩序水晶",
+      "en_US": "秩序水晶",
+      "ja_JP": "秩序水晶"
+    },
+    "page.orderCrystal.ct": {
+      "zh_CN": "秩序水晶具有元素引导性，可以引导元素组成物质。\\n利用它似乎可以将元素构成到物质。",
+      "en_US": "秩序水晶具有元素引导性，可以引导元素组成物质。\\n利用它似乎可以将元素构成到物质。",
+      "ja_JP": "秩序水晶具有元素引导性、可以引导元素组成物质。\\n利用它似乎可以将元素构成到物质。"
+    },
+    "page.construct": {
+      "zh_CN": "物质构造",
+      "en_US": "物质构造",
+      "ja_JP": "物质构造"
+    },
+    "page.construct.ct": {
+      "zh_CN": "物质可以瓦解为为元素，同时元素也可以构造成物品，这就需要元素神坛了。/n在神坛下方放上需要构造物品的结构水晶，方桌中心9格的四个角上，分别放上秩序水晶，然后通吟唱构造咒文，元素便可反向构造成对应的物质。",
+      "en_US": "物质可以瓦解为为元素，同时元素也可以构造成物品，这就需要元素神坛了。/n在神坛下方放上需要构造物品的结构水晶，方桌中心9格的四个角上，分别放上秩序水晶，然后通吟唱构造咒文，元素便可反向构造成对应的物质。",
+      "ja_JP": "物质可以瓦解为为元素、同时元素也可以构造成物品、这就需要元素神坛了。/n在神坛下方放上需要构造物品的構造水晶、方桌中心9格的四个角上、分别放上秩序水晶、然后通吟唱构造呪文、元素便可反向构造成对应的物质。"
+    },
+    "page.natureDustAdv": {
+      "zh_CN": "探索粉尘",
+      "en_US": "Explore Dust",
+      "ja_JP": "探索し粉塵"
+    },
+    "page.natureDustAdv.ct": {
+      "zh_CN": "求知粉尘获得的信息是有限的。通过更多元素的融合，制作出的探索粉尘可以与周边发生强烈的共鸣，检测出周边地下所蕴含的资源。",
+      "en_US": "The information obtained through Seek Dust is limited. Through more elements, Explore Dust produced can have strong resonance with the surrounding and detect resources contained in the underground.",
+      "ja_JP": "探索し粉塵で得られた情報は限られている。 多くの元素の融合を通じて作った探索し粉塵は周辺と強い共鳴できる、周辺の地下に含まれている資源を知れる。"
+    },
+    "page.portalAltar": {
+      "zh_CN": "折光祭坛",
+      "en_US": "Refract Altar",
+      "ja_JP": "折り光祭壇"
+    },
+    "page.portalAltar.ct": {
+      "zh_CN": "通过大量末影元素的注入，而形成的折光祭坛拥有扭曲空间的力量，可以将史蒂夫从一个位置转移到另一个位置上去。",
+      "en_US": "Through the injection of a large number of Ender Elements, Refract Altar has the power to distort the space which can transfer Steve from one position to another.",
+      "ja_JP": "大量のエンダー元素の注入によって形成された折り光祭壇は屈折空間の力を持ち、 スティーブを一つの位置から別の位置に移動させることができる。"
+    },
+    "page.portalAltar.ct.more": {
+      "zh_CN": "在祭坛的石柱上，放上带有末影元素的元素立方体，将记录有维度位置信息的自然水晶放入折光祭坛中，便会消耗能量末影元素打开传送门。\\n打开传送门时消耗的元素较多，传送门打开后会一直消耗相对较少的元素对此进行维持。\\n传送门打开的位置附近，不允许有任何的杂物，否则传送门很有可能无法打开。",
+      "en_US": "Put the element cube with Ender Element on the stone pillars of the altar. Put Natural Crystal with dimension position information into Refract Altar. It will consume Ender Element to open portal.\\nMore elements are consumed when the gate is opened, and a relatively small number of elements are consumed after the gate is opened.\\nNo sundries are allowed near the opening position of the portal, otherwise the portal may not be opened.",
+      "ja_JP": "祭壇の石柱の上にエンダー元素を持した元素立方体を置き、位置情報を記録した自然水晶を折り光祭壇に入れ、そしてエンダー元素を消費し、転送扉を開けます。\\n転送扉を開ける時の元素消耗が多く、転送扉を維持する時の元素消耗が比較的少ない。\\n転送扉が開いている位置の近くには何かの雑物があってはいけません、そうでないと、転送扉が開けられない可能性があります。"
+    },
+    "page.vortex": {
+      "zh_CN": "漩涡",
+      "en_US": "Vortex",
+      "ja_JP": "漩涡"
+    },
+    "page.vortex.ct": {
+      "zh_CN": "漩涡可以将多种物品有效的融合在一起，是制作一些道具的必备条件。\\n可以通过研究获取漩涡。\\n此外最好不要把漩涡拿在手里，更不要把漩涡扔到地上！",
+      "en_US": "漩涡可以将多种物品有效的融合在一起，是制作一些道具的必备条件。\\n可以通过研究获取漩涡。\\n此外最好不要把漩涡拿在手里，更不要把漩涡扔到地上！",
+      "ja_JP": "漩涡可以将多种物品有效的融合在一起，是制作一些道具的必备条件。\\n可以通过研究获取漩涡。\\n此外最好不要把漩涡拿在手里，更不要把漩涡扔到地上！"
+    },
+    "page.fusionCrystal": {
+      "zh_CN": "融合水晶",
+      "en_US": "融合水晶",
+      "ja_JP": "融合水晶"
+    },
+    "page.fusionCrystal.ct": {
+      "zh_CN": "通过漩涡将许多水晶融合到一块，而形成的融合态的水晶。\\n拿在手里似乎可以稍微提升下属性。",
+      "en_US": "通过漩涡将许多水晶融合到一块，而形成的融合态的水晶。\\n拿在手里似乎可以稍微提升下属性。",
+      "ja_JP": "通过漩涡将许多水晶融合到一块，而形成的融合态的水晶。\\n拿在手里似乎可以稍微提升下属性。"
+    },
+    "page.elementStone": {
+      "zh_CN": "元素之石",
+      "en_US": "元素之石",
+      "ja_JP": "元素之石"
+    },
+    "page.elementStone.ct": {
+      "zh_CN": "「遗迹宝石」、「融合水晶」、「元素水晶」、「星之种」等材料在漩涡的融合下而产生的石头，拥有奇妙的力量，可以同时存放四种元素。",
+      "en_US": "「遗迹宝石」、「融合水晶」、「元素水晶」等材料在漩涡的融合下而产生的石头，拥有奇妙的力量，可以同时存放四种元素。",
+      "ja_JP": "「遗迹宝石」、「融合水晶」、「元素水晶」等材料在漩涡的融合下而产生的石头，拥有奇妙的力量，可以同时存放四种元素。"
+    },
+    "page.elementStone.ct.more": {
+      "zh_CN": "如果「元素之石」中存有元素，使用或拿在手上的时候可能会产生一些效果：\\n「气」缓慢下落\\n「土」移动加速\\n「金」破坏矿物\\n「木」回复饥饿\\n「水」回复氧气\\n「火」无畏熔岩\\n「末影」上方传送",
+      "en_US": "如果「元素之石」中存有元素，使用或拿在手上的时候可能会产生一些效果：\\n「气」缓慢下落\\n「土」移动加速\\n「金」破坏矿物\\n「木」回复饥饿\\n「水」回复氧气\\n「火」无畏熔岩\\n「末影」上方传送",
+      "ja_JP": "如果「元素之石」中存有元素，使用或拿在手上的时候可能会产生一些效果：\\n「气」缓慢下落\\n「土」移动加速\\n「金」破坏矿物\\n「木」回复饥饿\\n「水」回复氧气\\n「火」无畏熔岩\\n「末影」上方传送"
+    },
+    "page.quillElement": {
+      "zh_CN": "元素羽毛笔",
+      "en_US": "元素羽毛笔",
+      "ja_JP": "元素羽毛笔"
+    },
+    "page.quillElement.ct": {
+      "zh_CN": "火之羽毛笔和水之羽毛笔在漩涡下，而形成的元素羽毛笔，是撰写高级咒文的必备工具。\\n交融的元素并不稳定，所以除了撰写咒文，不要再其他地方使用它。",
+      "en_US": "火之羽毛笔和水之羽毛笔在漩涡下，而形成的元素羽毛笔，是撰写高级咒文的必备工具。\\n交融的元素并不稳定，所以除了撰写咒文，不要再其他地方使用它。",
+      "ja_JP": "火之羽毛笔和水之羽毛笔在漩涡下，而形成的元素羽毛笔，是撰写高级咒文的必备工具。\\n交融的元素并不稳定，所以除了撰写咒文，不要再其他地方使用它。"
+    },
+    "page.writtenPaper": {
+      "zh_CN": "魔文纸张",
+      "en_US": "魔文纸张",
+      "ja_JP": "魔文纸张"
+    },
+    "page.writtenPaper.ct": {
+      "zh_CN": "通过元素之笔在咒术纸张上撰写魔文而形成的具有特殊效果的魔文纸张",
+      "en_US": "通过元素之笔在咒术纸张上撰写魔文而形成的具有特殊效果的魔文纸张",
+      "ja_JP": "通过元素之笔在咒术纸张上撰写魔文而形成的具有特殊效果的魔文纸张"
+    },
+    "page.mantraPaper": {
+      "zh_CN": "咒文纸张",
+      "en_US": "咒文纸张",
+      "ja_JP": "咒文纸张"
+    },
+    "page.mantraPaper.ct": {
+      "zh_CN": "魔文纸张在地面上的时候会吸收同层周围元素立方体中的元素，来进行能量的积攒。当能量达到一定的值后，魔文纸张会脱去魔文，进化成咒文纸张",
+      "en_US": "魔文纸张在地面上的时候会吸收同层周围元素立方体中的元素，来进行能量的积攒。当能量达到一定的值后，魔文纸张会脱去魔文，进化成咒文纸张",
+      "ja_JP": "魔文纸张在地面上的时候会吸收同层周围元素立方体中的元素，来进行能量的积攒。当能量达到一定的值后，魔文纸张会脱去魔文，进化成咒文纸张"
+    },
+    "page.grimoire": {
+      "zh_CN": "魔典",
+      "en_US": "Grimoire",
+      "ja_JP": "魔典"
+    },
+    "page.grimoire.ct": {
+      "zh_CN": "魔典，作为最高级的魔导书，可以让元素与咒文共鸣，吟唱出各种各样的魔法。\\n当然制作它并不简单，需要用到较为昂贵的素材。\\n增加中间一列「咒文纸张」的数量，可以提升魔典的容量，以便装下更多咒文。",
+      "en_US": "魔典，作为最高级的魔导书，可以让元素与咒文共鸣，吟唱出各种各样的魔法。\\n当然制作它并不简单，需要用到较为昂贵的素材。\\n增加中间一列「咒文纸张」的数量，可以提升魔典的容量，以便装下更多咒文。",
+      "ja_JP": "魔典，作为最高级的魔导书，可以让元素与咒文共鸣，吟唱出各种各样的魔法。\\n当然制作它并不简单，需要用到较为昂贵的素材。\\n增加中间一列「咒文纸张」的数量，可以提升魔典的容量，以便装下更多咒文。"
+    },
+    "page.transcribe": {
+      "zh_CN": "撰录",
+      "en_US": "撰录",
+      "ja_JP": "撰录"
+    },
+    "page.transcribe.ct": {
+      "zh_CN": "制作出来的魔典是空白的，并不能释放魔法。这就需要撰录祭坛，来将咒文写入魔典之中。\\n除此之外，撰录祭坛还可以为魔典进行元素补充，让咒文可以正常吟唱。",
+      "en_US": "制作出来的魔典是空白的，并不能释放魔法。这就需要撰录祭坛，来将咒文写入魔典之中。\\n除此之外，撰录祭坛还可以为魔典进行元素补充，让咒文可以正常吟唱。",
+      "ja_JP": "制作出来的魔典是空白的，并不能释放魔法。这就需要撰录祭坛，来将咒文写入魔典之中。\\n除此之外，撰录祭坛还可以为魔典进行元素补充，让咒文可以正常吟唱。"
+    },
+    "page.transcribe.ct.more": {
+      "zh_CN": "在解读古卷的过程中会发现，一些古卷上记载了有关咒文的内容。\\n若能凑齐某种咒文，将其放入撰录祭坛里，将魔典放到方桌上，在知识、火、水元素的缠绕下 ，可以将古卷上记录的咒文撰录成魔典可以使用的咒文，并写入魔典当中。\\n若撰录祭坛里不放入任何东西，仅仅将魔典放到方桌上，祭坛就会自动吸取周围所有的元素，注入到魔典里。\\n咒文的吟唱会消耗某些元素、一个魔典中可以存放多个咒文，这与魔典的容量有关，使用「功能键(默认TAB)」进行切换。",
+      "en_US": "在解读古卷的过程中会发现，一些古卷上记载了有关咒文的内容。\\n若能凑齐某种咒文，将其放入撰录祭坛里，将魔典放到方桌上，在知识、火、水元素的缠绕下 ，可以将古卷上记录的咒文撰录成魔典可以使用的咒文，并写入魔典当中。\\n若撰录祭坛里不放入任何东西，仅仅将魔典放到方桌上，祭坛就会自动吸取周围所有的元素，注入到魔典里。\\n咒文的吟唱会消耗某些元素、一个魔典中可以存放多个咒文，这与魔典的容量有关，使用「功能键(默认TAB)」进行切换。",
+      "ja_JP": "在解读古卷的过程中会发现，一些古卷上记载了有关咒文的内容。\\n若能凑齐某种咒文，将其放入撰录祭坛里，将魔典放到方桌上，在知识、火、水元素的缠绕下 ，可以将古卷上记录的咒文撰录成魔典可以使用的咒文，并写入魔典当中。\\n若撰录祭坛里不放入任何东西，仅仅将魔典放到方桌上，祭坛就会自动吸取周围所有的元素，注入到魔典里。\\n咒文的吟唱会消耗某些元素、一个魔典中可以存放多个咒文，这与魔典的容量有关，使用「功能键(默认TAB)」进行切换。"
+    }
+  },
+  "es.adv": {
+    "es.adv.root.title": {
+      "zh_CN": "元素魔法",
+      "en_US": "Elemental Sorcery",
+      "ja_JP": "元素魔法"
+    },
+    "es.adv.root.description": {
+      "zh_CN": "打开手中的卷轴，开始元素魔法",
+      "en_US": "Open the scroll in your hand and start Elemental Sorcery!",
+      "ja_JP": "手の中の巻物を開けて、元素魔法は始まり。"
+    },
+    "es.adv.kyanite.title": {
+      "zh_CN": "新的矿物",
+      "en_US": "New Ore",
+      "ja_JP": "新しい鉱物"
+    },
+    "es.adv.kyanite.description": {
+      "zh_CN": "在地下19层以下挖到一个蓝晶石矿吧",
+      "en_US": "Get some kyanite ore below the 19th floor",
+      "ja_JP": "地下19階以下にカヤナイト鉱を掘りましょう"
+    },
+    "es.adv.rite0.title": {
+      "zh_CN": "仪式桌",
+      "en_US": "Rite",
+      "ja_JP": "儀式桌"
+    },
+    "es.adv.rite0.description": {
+      "zh_CN": "制作一个0级的仪式桌，开始你的「映射仪式」吧，从而来获取教程吧",
+      "en_US": "Crafting a level 0 Rite Table, and start your 「Print Rite」, which can get more tutorial.",
+      "ja_JP": "レベル0の式場桌を作って、「映像儀式」を始めましょう"
+    },
+    "es.adv.lantern.title": {
+      "zh_CN": "回家的路",
+      "en_US": "The way home",
+      "ja_JP": "帰り道"
+    },
+    "es.adv.lantern.description": {
+      "zh_CN": "使用「寻求仪式」获得引路灯。",
+      "en_US": "Get Guide Lamp whit「Seek Rite」",
+      "ja_JP": "「探求儀式」で道を引く灯を手に入ましょう"
+    },
+    "es.adv.smelt.title": {
+      "zh_CN": "更好的炉灶",
+      "en_US": "Butter Kitchen Range",
+      "ja_JP": "よりよいかまど"
+    },
+    "es.adv.smelt.description": {
+      "zh_CN": "制作一个圆石烧炼箱和圆石灶台",
+      "en_US": "Crafting a Cobblestone Hearth and Cobblestone Smelting Box",
+      "ja_JP": "丸石の囲炉裏と丸石の烧炼箱を作りましょう"
+    },
+    "es.adv.archaeologists.title": {
+      "zh_CN": "考古家",
+      "en_US": "Archaeologists ",
+      "ja_JP": "考古学者"
+    },
+    "es.adv.archaeologists.description": {
+      "zh_CN": "获得并解读一个古卷",
+      "en_US": "Get and Unscrambling an Ancient Paper",
+      "ja_JP": "古巻を獲得して解読しょう"
+    },
+    "es.adv.elfTree.title": {
+      "zh_CN": "寻找精灵树",
+      "en_US": "Looking for a Elf Tree",
+      "ja_JP": "寻找精霊树"
+    },
+    "es.adv.elfTree.description": {
+      "zh_CN": "找到一颗精灵树，获取精灵木吧",
+      "en_US": "Find a Elf Tree and get Elf Log",
+      "ja_JP": "找到一颗精霊树、获取精霊木吧"
+    },
+    "es.adv.elfKiller.title": {
+      "zh_CN": "精灵杀手",
+      "en_US": "Elf Killer",
+      "ja_JP": "精霊杀手"
+    },
+    "es.adv.elfKiller.description": {
+      "zh_CN": "杀死一只精灵。不过不推荐这么做...",
+      "en_US": "Kill a elf, but not suggest...",
+      "ja_JP": "杀死一只精霊。不过不推荐这么做..."
+    },
+    "es.adv.killByElf.title": {
+      "zh_CN": "这不可能",
+      "en_US": "It's impossible!",
+      "ja_JP": "这不可能"
+    },
+    "es.adv.killByElf.description": {
+      "zh_CN": "被精灵杀死",
+      "en_US": "Killed by Elf",
+      "ja_JP": "被精霊杀死"
+    },
+    "es.adv.hurtByCrazy.title": {
+      "zh_CN": "讨厌的疯子",
+      "en_US": "A hateful Crazy",
+      "ja_JP": "讨厌的疯子"
+    },
+    "es.adv.hurtByCrazy.description": {
+      "zh_CN": "受到一只疯子精灵的攻击，你要反击吗？",
+      "en_US": "Hurt by a Crazy, would you want to revenge?",
+      "ja_JP": "受到一只疯子精霊的攻击、你要反击吗？"
+    },
+    "es.adv.noCreative.title": {
+      "zh_CN": "公平的决斗?",
+      "en_US": "A fair fight?",
+      "ja_JP": "公平的决斗?"
+    },
+    "es.adv.noCreative.description": {
+      "zh_CN": "被精灵魔法大师强制转到生存模式",
+      "en_US": "Turn to Survival Mode by a Elf Matser",
+      "ja_JP": "被精霊魔法大师强制转到生存模式"
+    },
+    "es.adv.elfMasterKiller.title": {
+      "zh_CN": "举世无双",
+      "en_US": "Peerless",
+      "ja_JP": "举世无双"
+    },
+    "es.adv.elfMasterKiller.description": {
+      "zh_CN": "杀死精灵魔法大师",
+      "en_US": "Kill the Elf Master",
+      "ja_JP": "杀死精霊魔法大师"
+    },
+    "es.adv.eatElfFruit.title": {
+      "zh_CN": "好吃的精灵果",
+      "en_US": "Delicious Elf fruit",
+      "ja_JP": "好吃的精霊果"
+    },
+    "es.adv.eatElfFruit.description": {
+      "zh_CN": "连续吃8个精灵果",
+      "en_US": "Eat 8 Elf Fruit",
+      "ja_JP": "连续吃8个精霊果"
+    },
+    "es.adv.elfEdifice.title": {
+      "zh_CN": "参天大树",
+      "en_US": "Towering trees",
+      "ja_JP": "参天大树"
+    },
+    "es.adv.elfEdifice.description": {
+      "zh_CN": "让一颗巨大精灵树生长起来",
+      "en_US": "Let a giant Elf tree grow",
+      "ja_JP": "让一颗巨大精灵树生长起来"
+    },
+    "es.adv.elfAdventurer.title": {
+      "zh_CN": "冒险家",
+      "en_US": "Adventurer",
+      "ja_JP": "冒险家"
+    },
+    "es.adv.elfAdventurer.description": {
+      "zh_CN": "完成一个精灵的委托",
+      "en_US": "Finish a Elf Quest",
+      "ja_JP": "完成一个精灵的委托"
+    },
+    "es.adv.rockCamera.title": {
+      "zh_CN": "自然学家",
+      "en_US": "Naturalist",
+      "ja_JP": "自然学家"
+    },
+    "es.adv.rockCamera.description": {
+      "zh_CN": "获取到岩石相机，并使用其对方块进行记录",
+      "en_US": "Record the blocks with Rock Camera",
+      "ja_JP": "获取到岩石相机，并使用其对方块进行记录"
+    },
+    "es.adv.elfPost.title": {
+      "zh_CN": "忠实客户",
+      "en_US": "Loyal customers",
+      "ja_JP": "忠实客户"
+    },
+    "es.adv.elfPost.description": {
+      "zh_CN": "全面使用精灵快递服务",
+      "en_US": "Full Use of Elf post service",
+      "ja_JP": "全面使用精灵快递服务"
+    },
+    "es.adv.rite1.title": {
+      "zh_CN": "升级仪式桌",
+      "en_US": "Upgrade your rite table",
+      "ja_JP": "升级儀式桌"
+    },
+    "es.adv.rite1.description": {
+      "zh_CN": "制作一个1级的仪式桌，从而来获取更多教程吧",
+      "en_US": "Crafting a level 1 rite table",
+      "ja_JP": "制作一个1级的儀式桌、从而来获取更多教程吧"
+    },
+    "es.adv.meltCauldron.title": {
+      "zh_CN": "做好炼制的万全准备",
+      "en_US": "Complete preparation for refining",
+      "ja_JP": "做好炼制的万全准备"
+    },
+    "es.adv.meltCauldron.description": {
+      "zh_CN": "制作一个熔岩锅和灶台来炼制通魔石。",
+      "en_US": "Crafint a Melt Cauldron for smelting The Stone With Magic with Hearth",
+      "ja_JP": "制作一个熔岩锅和灶台来炼制通魔石。"
+    },
+    "es.adv.meltFire.title": {
+      "zh_CN": "好烫啊",
+      "en_US": "So hot!",
+      "ja_JP": "好烫啊"
+    },
+    "es.adv.meltFire.description": {
+      "zh_CN": "跳进起火的熔岩锅",
+      "en_US": "Jump into Melt Cauldron",
+      "ja_JP": "跳进起火的熔岩锅"
+    },
+    "es.adv.fragmentedAstone.title": {
+      "zh_CN": "炼制学徒",
+      "en_US": "Refining Apprentice",
+      "ja_JP": "炼制学徒"
+    },
+    "es.adv.fragmentedAstone.description": {
+      "zh_CN": "炼制过程中产生碎裂的通魔石",
+      "en_US": "Smelting out a Stone with Magic but Broken",
+      "ja_JP": "炼制过程中产生碎裂的通魔石"
+    },
+    "es.adv.astone.title": {
+      "zh_CN": "炼制专家",
+      "en_US": "Refining Expert",
+      "ja_JP": "炼制专家"
+    },
+    "es.adv.astone.description": {
+      "zh_CN": "成功获取通魔石",
+      "en_US": "Smelting out The Stone with Magic successfully",
+      "ja_JP": "成功获取通魔石"
+    },
+    "es.adv.rite2.title": {
+      "zh_CN": "再次升级仪式桌",
+      "en_US": "Upgrade your rite table again",
+      "ja_JP": "再次升级儀式桌"
+    },
+    "es.adv.rite2.description": {
+      "zh_CN": "制作一个2级的仪式桌，从而来获取关于魔动设备的教程吧",
+      "en_US": "Crafting a level 2 rite table and get more tutorial about Magic Drive",
+      "ja_JP": "制作一个2级的儀式桌、从而来获取关于魔動设备的教程吧"
+    },
+    "es.adv.MDMagicGen.title": {
+      "zh_CN": "魔力时代",
+      "en_US": "Magic Age",
+      "ja_JP": "魔力时代"
+    },
+    "es.adv.MDMagicGen.description": {
+      "zh_CN": "制作出热力魔分箱，进入使用魔力装置的时代",
+      "en_US": "Crafting a Magic Separator for into Magic Age",
+      "ja_JP": "制作出热力魔分箱、进入使用魔力装置的时代"
+    },
+    "es.adv.MDRubbleRepair.title": {
+      "zh_CN": "安心炼制",
+      "en_US": "Reassuring Refining",
+      "ja_JP": "安心炼制"
+    },
+    "es.adv.MDRubbleRepair.description": {
+      "zh_CN": "制作出碎石修复箱，再也不怕炼制过程中产生碎裂的通魔石了",
+      "en_US": "Crafting a Magic Drive Stone Repairer, and you are no longer afraid for Smelting out Broken Stone with Magic",
+      "ja_JP": "制作出碎石修复箱、再也不怕炼制过程中产生碎裂的通魔石了"
+    },
+    "es.adv.MDInfusion.title": {
+      "zh_CN": "注魔学",
+      "en_US": "Enchantology",
+      "ja_JP": "エンチャント学"
+    },
+    "es.adv.MDInfusion.description": {
+      "zh_CN": "制作出注魔箱，开始注魔！",
+      "en_US": "Crafting a Magic Drive Enchanting Box for Enchanting Craft!",
+      "ja_JP": "制作出エンチャント箱、开始エンチャント！"
+    },
+    "es.adv.MDDeconstructBox.title": {
+      "zh_CN": "物质瓦解",
+      "en_US": "Material Disintegration",
+      "ja_JP": "物质瓦解"
+    },
+    "es.adv.MDDeconstructBox.description": {
+      "zh_CN": "制作出物质瓦解箱，将物品瓦解成元素",
+      "en_US": "Crafting a  Magic Drive Disintegration Box, you can disintegrate any thing!",
+      "ja_JP": "制作出物质瓦解箱、将物品瓦解成元素"
+    },
+    "es.adv.infusionMagicCrystal.title": {
+      "zh_CN": "白日的馈赠",
+      "en_US": "The gift of Day",
+      "ja_JP": "白日的馈赠"
+    },
+    "es.adv.infusionMagicCrystal.description": {
+      "zh_CN": "注魔得到魔力水晶",
+      "en_US": "Enchant out Magic Crystal",
+      "ja_JP": "エンチャント得到魔力水晶"
+    },
+    "es.adv.infusionSpellCrystal.title": {
+      "zh_CN": "知识的馈赠",
+      "en_US": "The gift of Konwledge",
+      "ja_JP": "知識的馈赠"
+    },
+    "es.adv.infusionSpellCrystal.description": {
+      "zh_CN": "注魔得到咒术水晶",
+      "en_US": "Enchant out Spell Crystal",
+      "ja_JP": "エンチャント得到咒术水晶"
+    },
+    "es.adv.infusionElementCrystal.title": {
+      "zh_CN": "晨曦暮霭的馈赠",
+      "en_US": "The gift of Morning and evening",
+      "ja_JP": "晨曦暮霭的馈赠"
+    },
+    "es.adv.infusionElementCrystal.description": {
+      "zh_CN": "注魔得到元素水晶",
+      "en_US": "Enchant out Element Crystal",
+      "ja_JP": "エンチャント得到元素水晶"
+    },
+    "es.adv.azureCrystal.title": {
+      "zh_CN": "烈焰的馈赠",
+      "en_US": "The gift of Flame",
+      "ja_JP": "烈焰的馈赠"
+    },
+    "es.adv.azureCrystal.description": {
+      "zh_CN": "魔力水晶和蓝晶石吸收岩浆形成湛蓝水晶",
+      "en_US": "Magic Crystal and Kyanite Absorb Lava to form Azure Crystal",
+      "ja_JP": "魔力水晶和カイヤナイト吸收岩浆形成湛蓝水晶"
+    },
+    "es.adv.infusionArchCrystal.title": {
+      "zh_CN": "沙漠的馈赠",
+      "en_US": "The gift of Desert",
+      "ja_JP": "沙漠的馈赠"
+    },
+    "es.adv.infusionArchCrystal.description": {
+      "zh_CN": "注魔得到建筑水晶",
+      "en_US": "Enchant out Architectural Crystal",
+      "ja_JP": "エンチャント得到建築水晶"
+    },
+    "es.adv.estone.title": {
+      "zh_CN": "祭坛基材",
+      "en_US": "Base of Altar",
+      "ja_JP": "祭壇基材"
+    },
+    "es.adv.estone.description": {
+      "zh_CN": "制作获得魔力石英块",
+      "en_US": "Craft a Block of Magic Quartz",
+      "ja_JP": "制作获得魔力石英块"
+    },
+    "es.adv.rite3.title": {
+      "zh_CN": "元素时代的向导",
+      "en_US": "Guide of Element Age",
+      "ja_JP": "元素时代的向导"
+    },
+    "es.adv.rite3.description": {
+      "zh_CN": "制作一个3级的仪式桌，从而来获取关于元素篇章上的教程吧",
+      "en_US": "Craft a level 3 rite table and get more tutorial about Element Chapter",
+      "ja_JP": "制作一个3级的儀式桌、从而来获取关于元素篇章上的教程吧"
+    },
+    "es.adv.elementAge.title": {
+      "zh_CN": "元素时代",
+      "en_US": "Element Age",
+      "ja_JP": "元素时代"
+    },
+    "es.adv.elementAge.description": {
+      "zh_CN": "拿着你的元素立方体，开始使用元素的时代",
+      "en_US": "Hold your Element Cube and Enter into The Element Age",
+      "ja_JP": "拿着你的元素立方体、开始使用元素的时代"
+    },
+    "es.adv.spellbookEnch.title": {
+      "zh_CN": "这也可以？",
+      "en_US": "What?",
+      "ja_JP": "这也可以？"
+    },
+    "es.adv.spellbookEnch.description": {
+      "zh_CN": "将附魔书从附魔台上拆下",
+      "en_US": "Get the enchantment book from the Enchantment Table",
+      "ja_JP": "将エンチャント书从エンチャント台上拆下"
+    },
+    "es.adv.spellbook.title": {
+      "zh_CN": "魔法师学徒",
+      "en_US": "Wizard apprentice",
+      "ja_JP": "魔法师学徒"
+    },
+    "es.adv.spellbook.description": {
+      "zh_CN": "制作一本平凡的魔导书，开始元素魔法的",
+      "en_US": "Craft a Ordinary Wizard Book and start your Elemental Sorcery",
+      "ja_JP": "制作一本平凡的魔導書、开始元素魔法的"
+    },
+    "es.adv.magicDesk.title": {
+      "zh_CN": "悬浮的书桌",
+      "en_US": "Floating Desk",
+      "ja_JP": "悬浮的书桌"
+    },
+    "es.adv.magicDesk.description": {
+      "zh_CN": "制作一个魔法书桌祭坛",
+      "en_US": "Craft a Magic Desk Altar",
+      "ja_JP": "制作一个魔法书桌祭壇"
+    },
+    "es.adv.spellbookLaunch.title": {
+      "zh_CN": "启动",
+      "en_US": "Launch",
+      "ja_JP": "启动"
+    },
+    "es.adv.spellbookLaunch.description": {
+      "zh_CN": "通过魔法书桌制造一个起始之书",
+      "en_US": "Craft a Wizard Book of Launcher with Magic Desk",
+      "ja_JP": "通过魔法书桌制造一个起始之书"
+    },
+    "es.adv.spellbookElement.title": {
+      "zh_CN": "元素转移",
+      "en_US": "Element Transfer",
+      "ja_JP": "我会魔法"
+    },
+    "es.adv.spellbookElement.description": {
+      "zh_CN": "通过魔法书桌制造一个元素之书",
+      "en_US": "Craft a Wizard Book of Elements with Magic Desk",
+      "ja_JP": "通过魔法书桌制造一个元素之书"
+    },
+    "es.adv.spellbookArchitecture.title": {
+      "zh_CN": "怠惰的建筑师",
+      "en_US": "A Lazy Architect",
+      "ja_JP": "怠惰的建築师"
+    },
+    "es.adv.spellbookArchitecture.description": {
+      "zh_CN": "通过魔法书桌制造一个建筑之书",
+      "en_US": "Craft a Wizard Book of Architecture with Magic Desk",
+      "ja_JP": "通过魔法书桌制造一个建築之书"
+    },
+    "es.adv.elementWorkbench.title": {
+      "zh_CN": "元素合成",
+      "en_US": "Element Craft",
+      "ja_JP": "元素合成"
+    },
+    "es.adv.elementWorkbench.description": {
+      "zh_CN": "使用元素工作台，通过元素合成一样物品吧！",
+      "en_US": "Craft something with Element Crafting Workbench",
+      "ja_JP": "使用元素工作台、通过元素合成一样物品吧！"
+    },
+    "es.adv.elementCraftingAltar.title": {
+      "zh_CN": "高级元素合成",
+      "en_US": "Advanced Element Craft",
+      "ja_JP": "高级元素合成"
+    },
+    "es.adv.elementCraftingAltar.description": {
+      "zh_CN": "搭建一个元素合成祭坛吧",
+      "en_US": "Build a Element Crafting Altar",
+      "ja_JP": "搭建一个元素合成祭壇吧"
+    },
+    "es.adv.rite4.title": {
+      "zh_CN": "最终仪式",
+      "en_US": "Final Rite",
+      "ja_JP": "最终儀式"
+    },
+    "es.adv.rite4.description": {
+      "zh_CN": "制作一个4级的仪式桌，从而来获取关于元素篇章下的教程吧",
+      "en_US": "Craft a level 4 rite table and get more tutorial about Element Chapter 2",
+      "ja_JP": "制作一个4级的儀式桌、从而来获取关于元素篇章下的教程吧"
+    },
+    "es.adv.deconstructAltar.title": {
+      "zh_CN": "物质崩坏",
+      "en_US": "Material Collapse",
+      "ja_JP": "物质崩坏"
+    },
+    "es.adv.deconstructAltar.description": {
+      "zh_CN": "搭建出一个物质瓦解小祭坛吧",
+      "en_US": "Build a Material Disintegration Altar",
+      "ja_JP": "搭建出一个物质瓦解小祭壇吧"
+    },
+    "es.adv.deconstructAltarAdv.title": {
+      "zh_CN": "定向崩坏",
+      "en_US": "Directional Material Collapse",
+      "ja_JP": "定向崩坏"
+    },
+    "es.adv.deconstructAltarAdv.description": {
+      "zh_CN": "搭建出一个物质瓦解祭坛吧",
+      "en_US": "Build a Advanced Material Disintegration Altar",
+      "ja_JP": "搭建出一个物质瓦解祭壇吧"
+    },
+    "es.adv.crystalGarden.title": {
+      "zh_CN": "不可思议的花园",
+      "en_US": "Incredible Garden",
+      "ja_JP": "不可思议的花园"
+    },
+    "es.adv.crystalGarden.description": {
+      "zh_CN": "建造出一个水晶花园",
+      "en_US": "Build a Crystal Garden",
+      "ja_JP": "建造出一个水晶花园"
+    },
+    "es.adv.MDResonantIncubator.title": {
+      "zh_CN": "交响共鸣",
+      "en_US": "Symphonic Resonance",
+      "ja_JP": "交响共鸣"
+    },
+    "es.adv.MDResonantIncubator.description": {
+      "zh_CN": "建造出一个共鸣培养箱",
+      "en_US": "=Build a Resonance Incubator",
+      "ja_JP": "建造出一个共鸣培养箱"
+    },
+    "es.adv.analysisAltar.title": {
+      "zh_CN": "探本溯源",
+      "en_US": "Trace to the source ",
+      "ja_JP": "探本溯源"
+    },
+    "es.adv.analysisAltar.description": {
+      "zh_CN": "建造出一个结构解析台",
+      "en_US": "Build a Structure Analysis Altar",
+      "ja_JP": "建造出一个構造解析台"
+    },
+    "es.adv.supremeAltar.title": {
+      "zh_CN": "传说中的祭坛",
+      "en_US": "The Legendary Altar",
+      "ja_JP": "传说中的祭壇"
+    },
+    "es.adv.supremeAltar.description": {
+      "zh_CN": "建造一个元素方桌，然后搭建元素神坛吧",
+      "en_US": "Build a Supreme Altar",
+      "ja_JP": "建造一个元素方桌、然后搭建元素神坛吧"
+    },
+    "es.adv.rite5.title": {
+      "zh_CN": "真·最终仪式",
+      "en_US": "Real Final Rite",
+      "ja_JP": "真·最终儀式"
+    },
+    "es.adv.rite5.description": {
+      "zh_CN": "制作一个5级的仪式桌，从而来获取关于神坛章的教程吧",
+      "en_US": "Craft a level 5 rite table and get more tutorial about Element Chapter 3",
+      "ja_JP": "制作一个5级的儀式桌、从而来获取关于神坛章的教程吧"
+    },
+    "es.adv.itemConstruct.title": {
+      "zh_CN": "物质重组",
+      "en_US": "Material Construct",
+      "ja_JP": "物质重组"
+    },
+    "es.adv.itemConstruct.description": {
+      "zh_CN": "利用元素神坛，进行物质构成吧！",
+      "en_US": "Construct something with Supreme Altar",
+      "ja_JP": "利用元素神坛，进行物质构成吧！"
+    },
+    "es.adv.magician.title": {
+      "zh_CN": "魔导士",
+      "en_US": "Sorcerer",
+      "ja_JP": "魔导士"
+    },
+    "es.adv.magician.description": {
+      "zh_CN": "拿着你的魔典，放在撰录方桌上！",
+      "en_US": "Put your Grimoire to Transcribe Square Table",
+      "ja_JP": "拿着你的魔典，放在撰录方桌上！"
+    }
+  }
+}
