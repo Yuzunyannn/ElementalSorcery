@@ -13,9 +13,12 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraftforge.client.event.EntityViewRenderEvent.FogColors;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
+import net.minecraftforge.client.event.sound.PlaySoundEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -33,6 +36,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.ts.PocketWatchClient;
 import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
 
 @SideOnly(Side.CLIENT)
@@ -76,6 +80,8 @@ public class EventClient {
 	public static final float DGLOBAL_ROTATE = 2.25f * 0.5f;
 	// 全局client的tick
 	public static int tick = 0;
+	// 全局client的渲染专用tick
+	public static int tickRender = 0;
 	// 全局随机的，隔一段时间随机的一个整数
 	public static int randInt = rand.nextInt();
 	// 客户端的mc指针
@@ -85,7 +91,12 @@ public class EventClient {
 	@SideOnly(Side.CLIENT)
 	static public void onTick(TickEvent.ClientTickEvent event) {
 		if (mc.isGamePaused()) return;
-		if (event.phase != Phase.END) return;
+		if (event.phase == Phase.START) {
+			if (!PocketWatchClient.isActive()) return;
+			PocketWatchClient.tick();
+			Effect.updateGuiEffects();
+			return;
+		}
 		// tick增加
 		tick++;
 		// 处理tick队列
@@ -95,6 +106,8 @@ public class EventClient {
 			int flags = task.onTick();
 			if (flags == ITickTask.END) iter.remove();
 		}
+		if (PocketWatchClient.isActive()) return;
+		tickRender++;
 		// 全局旋转
 		globalRotate += DGLOBAL_ROTATE;
 		if (globalRotate >= 360 * 1000) {
@@ -124,10 +137,18 @@ public class EventClient {
 		renderList.add(task);
 	}
 
+	@SubscribeEvent
+	static public void onPlaySound(PlaySoundEvent event) {
+		if (!PocketWatchClient.isActive()) return;
+		if (event.getSound().getCategory() != SoundCategory.PLAYERS) {
+			event.setResultSound(null);
+			return;
+		}
+	}
+
 	private static int renderIterate = 0;
 
 	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
 	static public void renderWord(RenderWorldLastEvent e) {
 		GlStateManager.pushMatrix();
 		float partialTicks = e.getPartialTicks();
@@ -137,6 +158,7 @@ public class EventClient {
 		double ey = entityplayer.lastTickPosY + (entityplayer.posY - entityplayer.lastTickPosY) * (double) partialTicks;
 		double ez = entityplayer.lastTickPosZ + (entityplayer.posZ - entityplayer.lastTickPosZ) * (double) partialTicks;
 		GlStateManager.translate(-ex, -ey, -ez);
+		if (PocketWatchClient.isActive()) partialTicks = 0;
 		renderIterate++;
 		try {
 			Iterator<IRenderClient> iter = renderList.iterator();
@@ -150,12 +172,21 @@ public class EventClient {
 			ElementalSorcery.logger.warn("post渲染异常！", exce);
 		}
 		renderIterate--;
-		Effect.renderAllEffects(e.getPartialTicks());
+		Effect.renderAllEffects(partialTicks);
 		GlStateManager.popMatrix();
 	}
 
 	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
+	static public void onFogColors(FogColors event) {
+		if (PocketWatchClient.isActive()) {
+			float c = event.getRed() * 0.299f + event.getGreen() * 0.587f + event.getBlue() * 0.114f;
+			event.setBlue(c);
+			event.setRed(c);
+			event.setGreen(c);
+		}
+	}
+
+	@SubscribeEvent
 	static public void renderGUI(RenderGameOverlayEvent.Post e) {
 		Effect.renderAllGuiEffects(e.getPartialTicks());
 	}

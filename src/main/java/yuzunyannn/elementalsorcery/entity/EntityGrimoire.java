@@ -118,6 +118,10 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		return mantraData;
 	}
 
+	public byte getState() {
+		return state;
+	}
+
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
 		userUUID = compound.getUniqueId("user");

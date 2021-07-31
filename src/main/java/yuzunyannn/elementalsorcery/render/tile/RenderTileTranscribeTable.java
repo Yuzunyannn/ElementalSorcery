@@ -23,7 +23,7 @@ public class RenderTileTranscribeTable extends TileEntitySpecialRenderer<TileTra
 		GlStateManager.pushMatrix();
 		RenderItemGrimoireInfo info = grimoire.getRenderInfo();
 		info.bookSpreadPrev = info.bookSpread = 1;
-		info.tickCount = EventClient.tick;
+		info.tickCount = EventClient.tickRender;
 		float _float = MathHelper.cos(EventClient.getGlobalRotateInRender(partialTicks) / 180 * 3.1415f);
 		GlStateManager.translate(x + 0.5, y + 0.65 + _float * 0.02f, z + 0.5);
 		GlStateManager.rotate(90, 0, 0, 1);

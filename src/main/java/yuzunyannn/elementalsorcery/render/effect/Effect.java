@@ -151,6 +151,11 @@ public abstract class Effect {
 		while (!contextEffects.isEmpty()) addEffect(contextEffects.pop());
 	}
 
+	static public void updateGuiEffects() {
+		update(guiEffects);
+		while (!contextEffects.isEmpty()) addEffect(contextEffects.pop());
+	}
+
 	static public void clear() {
 		batchs.clear();
 		effects.clear();

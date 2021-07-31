@@ -25,7 +25,8 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 	static public final ModelElementCube MODEL = new ModelElementCube();
 
 	static public final TextureBinder TEXTURE_ITEM = new TextureBinder("textures/blocks/element_cube_item.png");
-	static public final TextureBinder TEXTURE_ITEM_COVER = new TextureBinder("textures/blocks/element_cube_item_cover.png");
+	static public final TextureBinder TEXTURE_ITEM_COVER = new TextureBinder(
+			"textures/blocks/element_cube_item_cover.png");
 
 	public RenderTileElementalCube() {
 	}
@@ -39,12 +40,12 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 
 		float wake = RenderHelper.getPartialTicks(tile.wakeRate, tile.preWakeRate, partialTicks);
 		TEXTURE.bind();
-		MODEL.render(null, wake, EventClient.tick + partialTicks, 0, 0, 0, 1);
+		MODEL.render(null, wake, EventClient.tickRender + partialTicks, 0, 0, 0, 1);
 		GlStateManager.color(tile.color.x * tile.colorRate + (1.0F - tile.colorRate) * TileElementalCube.ORIGIN_COLOR.x,
 				tile.color.y * tile.colorRate + (1.0F - tile.colorRate) * TileElementalCube.ORIGIN_COLOR.y,
 				tile.color.z * tile.colorRate + (1.0F - tile.colorRate) * TileElementalCube.ORIGIN_COLOR.z);
 		TEXTURE_COVER.bind();
-		MODEL.render(null, wake, EventClient.tick + partialTicks, 0, 0, 0, 1);
+		MODEL.render(null, wake, EventClient.tickRender + partialTicks, 0, 0, 0, 1);
 
 		RenderHelper.endRender();
 	}

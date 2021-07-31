@@ -75,7 +75,8 @@ public class ItemGrimoire extends Item {
 		// 开始释放！
 		grimoire.tryLoadState(stack);
 		// 获取咒文
-		Mantra mantra = grimoire.getSelectedInfo().getMantra();
+		Grimoire.Info info = grimoire.getSelectedInfo();
+		Mantra mantra = info == null ? null : info.getMantra();
 		if (mantra == null) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		if (!mantra.canStart(playerIn)) return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 		// 开始

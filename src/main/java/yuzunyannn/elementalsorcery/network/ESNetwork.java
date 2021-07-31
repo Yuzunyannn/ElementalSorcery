@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 
 public class ESNetwork {
-	
+
 	public final static SimpleNetworkWrapper instance = NetworkRegistry.INSTANCE
 			.newSimpleChannel(ElementalSorcery.MODID);
 	private static int nextID = 0;
@@ -28,6 +28,8 @@ public class ESNetwork {
 		registerMessage(MessageSyncContainer.Handler.class, MessageSyncContainer.class, Side.SERVER);
 
 		registerMessage(MessageSyncConfig.Handler.class, MessageSyncConfig.class, Side.CLIENT);
+
+		registerMessage(MessagePocketWatch.Handler.class, MessagePocketWatch.class, Side.CLIENT);
 	}
 
 	public static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(

@@ -58,6 +58,7 @@ import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
+import yuzunyannn.elementalsorcery.ts.PocketWatch;
 import yuzunyannn.elementalsorcery.util.GameHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -147,6 +148,12 @@ public class CommandES extends CommandBase {
 			this.cmdEdifice(Arrays.copyOfRange(args, 1, args.length), server, sender);
 			return;
 		}
+		case "test": {
+			if (args.length < 2)
+				throw new CommandException("Don't use Test Command before you konw what you will to do");
+			this.cmdTest(Arrays.copyOfRange(args, 1, args.length), server, sender);
+			return;
+		}
 		case "debug":
 		// debug
 		{
@@ -166,7 +173,7 @@ public class CommandES extends CommandBase {
 			@Nullable BlockPos targetPos) {
 		if (args.length == 1) {
 			String[] names = { "build", "page", "debug", "buildFloor", "quest", "mantra", "element", "building",
-					"edifice", "research" };
+					"edifice", "research", "test" };
 			return CommandBase.getListOfStringsMatchingLastWord(args, names);
 		} else if (args.length >= 2) {
 			switch (args[0]) {
@@ -220,6 +227,9 @@ public class CommandES extends CommandBase {
 			}
 			case "edifice": {
 				return getListOfStringsMatchingLastWord(args, "store", "restore", "build", "fix");
+			}
+			case "test": {
+				if (args.length == 2) return getListOfStringsMatchingLastWord(args, "timeStop");
 			}
 			case "debug": {
 				return getListOfStringsMatchingLastWord(args, CommandESDebug.autoTips);
@@ -563,5 +573,25 @@ public class CommandES extends CommandBase {
 		TileElfTreeCore core = BlockHelper.getTileEntity(world, corePos, TileElfTreeCore.class);
 		if (core == null) throw new WrongUsageException("commands.es.edifice.no.core");
 		return core;
+	}
+
+	private void cmdTest(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
+		String id = args[0];
+		Entity executer = sender.getCommandSenderEntity();
+
+		switch (id) {
+		case "timeStop": {
+			int tick = 20 * 8;
+			EntityLivingBase living = null;
+			try {
+				tick = Integer.parseInt(args[1]);
+				living = (EntityLivingBase) executer;
+			} catch (Exception e) {}
+			PocketWatch.stopWorld(executer.world, tick, living);
+		}
+			break;
+		default:
+			break;
+		}
 	}
 }

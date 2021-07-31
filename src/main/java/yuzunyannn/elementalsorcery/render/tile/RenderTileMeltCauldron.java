@@ -46,7 +46,7 @@ public class RenderTileMeltCauldron extends TileEntitySpecialRenderer<TileMeltCa
 				float alpha = T / TileMeltCauldron.START_TEMPERATURE;
 				// 画流体
 				GlStateManager.color(1.0f, 1.0f, 1.0f, alpha);
-				int at = EventClient.tick % 32;
+				int at = EventClient.tickRender % 32;
 				TEXTURE_FLUID.bind();
 				this.drawVolume(at * 0.03125, 0.03125);
 				// 画方块

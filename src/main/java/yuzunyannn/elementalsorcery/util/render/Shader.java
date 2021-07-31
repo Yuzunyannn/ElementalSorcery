@@ -11,8 +11,9 @@ import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class Shader {
 
-	private int program;
-	private ResourceLocation shaderPath;
+	protected int program;
+	protected ResourceLocation shaderPath;
+	protected boolean isActive;
 
 	public Shader(String res) throws IOException {
 		this(TextHelper.toESResourceLocation(res));
@@ -56,12 +57,18 @@ public class Shader {
 		program = 0;
 	}
 
+	public boolean isActive() {
+		return isActive;
+	}
+
 	public void bind() {
 		OpenGlHelper.glUseProgram(program);
+		isActive = true;
 	}
 
 	public void unbind() {
 		OpenGlHelper.glUseProgram(0);
+		isActive = false;
 	}
 
 	public void setUniform(String name, float n) {

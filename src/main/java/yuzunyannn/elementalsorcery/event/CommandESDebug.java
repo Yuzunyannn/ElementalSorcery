@@ -9,7 +9,6 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -32,8 +31,8 @@ import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
-import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.ts.PocketWatch;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -48,7 +47,7 @@ public class CommandESDebug {
 		case "reloadShader": {
 			Minecraft.getMinecraft().addScheduledTask(() -> {
 				try {
-					Shaders.HSV.reload();
+					Shaders.GRAY.reload();
 				} catch (Exception e) {
 					ElementalSorcery.logger.warn(e);
 				}
@@ -115,9 +114,7 @@ public class CommandESDebug {
 			}
 				return;
 			case "textTest": {
-				EntityFairyCube efc = new EntityFairyCube((EntityPlayer) entity, null);
-				efc.setPosition(pos.getX(), pos.getY() + 2, pos.getZ());
-				entity.world.spawnEntity(efc);
+				PocketWatch.stopWorld(entity.world, 20 * 10, entity);
 			}
 				return;
 			case "blockMoveTest": {

@@ -45,7 +45,8 @@ public class SummonDreadCube extends SummonCommon {
 	private void finish() {
 		if (world.isRemote) return;
 		EntityDreadCube dreadCube = new EntityDreadCube(world);
-		dreadCube.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
+		if (!world.isAirBlock(pos)) dreadCube.setPosition(pos.getX() + 0.5, pos.getY() + 2, pos.getZ() + 0.5);
+		else dreadCube.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 		world.spawnEntity(dreadCube);
 	}
 

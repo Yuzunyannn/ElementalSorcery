@@ -15,9 +15,11 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.ClassInheritanceMultiMap;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.EntityEvent;
@@ -26,11 +28,15 @@ import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
 import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
+import net.minecraftforge.event.world.ChunkDataEvent;
+import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
@@ -51,6 +57,9 @@ import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageSyncConfig;
+import yuzunyannn.elementalsorcery.ts.PocketWatch;
+import yuzunyannn.elementalsorcery.ts.PocketWatchClient;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 
 public class EventServer {
 
@@ -113,11 +122,13 @@ public class EventServer {
 		}
 	}
 
-	@SubscribeEvent
-	public static void entityCanUpdate(EntityEvent.CanUpdate evt) {
-		Entity entity = evt.getEntity();
-		if (entity instanceof EntityFairyCube) evt.setCanUpdate(true);
-	}
+//	@SubscribeEvent
+//	public static void entityCanUpdate(EntityEvent.CanUpdate evt) {
+//		Entity entity = evt.getEntity();
+//		if (entity instanceof EntityFairyCube) {
+//			evt.setCanUpdate(true);
+//		}
+//	}
 
 	static private final List<ITickTask> tickList = new LinkedList<ITickTask>();
 
@@ -154,6 +165,11 @@ public class EventServer {
 
 	@SubscribeEvent
 	public static void serverTick(TickEvent.ServerTickEvent event) {
+		if (event.phase == Phase.START) {
+			PocketWatch.tick();
+			return;
+		}
+
 		Iterator<ITickTask> iter = tickList.iterator();
 		while (iter.hasNext()) {
 			ITickTask task = iter.next();
@@ -168,6 +184,56 @@ public class EventServer {
 		ElfPostOffice.GC(e.getWorld());
 	}
 
+	@SubscribeEvent
+	public static void gameChunkSave(ChunkDataEvent.Save event) {
+		World world = event.getWorld();
+		if (world.isRemote) return;
+		if (PocketWatch.isActive(world)) {
+			NBTTagCompound nbt = event.getData().getCompoundTag("Level");
+			NBTTagList list = nbt.getTagList("Entities", NBTTag.TAG_COMPOUND);
+			for (int i = 0; i < list.tagCount(); i++) {
+				NBTTagCompound entityData = list.getCompoundTagAt(i);
+				entityData.setBoolean("UpdateBlocked", false);
+			}
+		}
+
+	}
+
+	// 区块卸载
+	@SubscribeEvent
+	public static void onChunkUnload(ChunkEvent.Unload event) {
+		World world = event.getWorld();
+		if (world.isRemote) return;
+		boolean worldStop = PocketWatch.isActive(world);
+		ClassInheritanceMultiMap<Entity>[] entitiess = event.getChunk().getEntityLists();
+		for (ClassInheritanceMultiMap<Entity> entities : entitiess) {
+			for (Entity entity : entities) {
+				if (worldStop) entity.updateBlocked = false;
+				if (entity instanceof EntityFairyCube) {
+					((EntityFairyCube) entity).onLivingUpdate();
+				}
+			}
+		}
+	}
+
+	// 玩家更换维度
+	@SubscribeEvent
+	public static void onPlayerChangedDimensionEvent(PlayerEvent.PlayerChangedDimensionEvent event) {
+		EntityPlayer player = event.player;
+		if (player.world.isRemote) return;
+		if (PocketWatch.isActive(player.world)) PocketWatch.sendPlayStopWord(player);
+	}
+
+	@SubscribeEvent
+	public static void onNeighborNotify(NeighborNotifyEvent event) {
+		World world = event.getWorld();
+		if (world.isRemote) {
+			if (PocketWatchClient.isActive()) event.setCanceled(true);
+		} else {
+			if (PocketWatch.isActive(world)) event.setCanceled(true);
+		}
+	}
+
 	// 破坏方块
 	@SubscribeEvent
 	public static void onBlockDestory(BlockEvent.BreakEvent event) {
@@ -179,13 +245,18 @@ public class EventServer {
 
 	// 实体交互
 	@SubscribeEvent
-	public static void onInteract(PlayerInteractEvent.EntityInteract event) {
+	public static void onInteractWithEntity(PlayerInteractEvent.EntityInteract event) {
 		EntityPlayer player = event.getEntityPlayer();
-		if (player.world.isRemote) return;
+		if (player.world.isRemote) {
+			if (PocketWatchClient.isActive()) event.setCanceled(true);
+			return;
+		}
 		Entity target = event.getTarget();
 		EnumHand hand = event.getHand();
 		if (hand == EnumHand.MAIN_HAND) EntityFairyCube.addBehavior(player, BehaviorInteract.interact(target, hand));
 		Researcher.onInteractWithEntity(player, target, hand);
+
+		if (PocketWatch.isActive(event.getWorld())) event.setCanceled(true);
 	}
 
 	// 放置方块
