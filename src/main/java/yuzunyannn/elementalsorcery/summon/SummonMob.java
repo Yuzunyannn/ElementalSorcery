@@ -87,7 +87,7 @@ public class SummonMob extends SummonCommon {
 			if (!isCreative) entity.setAttackTarget(attackTarget);
 		}
 
-		Effects.spawnSummonEntity(entity);
+		Effects.spawnSummonEntity(entity, null);
 
 		mobCount--;
 		return mobCount > 0 ? true : tick < 40;

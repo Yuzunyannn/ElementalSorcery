@@ -18,13 +18,16 @@ public class EffectSummonEntity extends Effect {
 	public static void show(World world, Vec3d pos, NBTTagCompound nbt) {
 		int id = nbt.getInteger("target");
 		Entity target = world.getEntityByID(id);
+
+		int[] colors = nbt.getIntArray("colors");
+		if (colors.length <= 0) colors = new int[] { 0x101313, 0x570000, 0x6b0e0e, 0xb43232 };
+
 		if (target instanceof EntityLivingBase) {
 			EffectSummonEntity effect = new EffectSummonEntity(world, target.getPositionVector());
-			effect.bindEntity(target);
-			effect.setColors(new int[] { 0x101313, 0x570000, 0x6b0e0e, 0xb43232 });
+			effect.bindEntity(target).setColors(colors);
 			Effect.addEffect(effect);
 		} else {
-			EffectSummonEntity effect = new EffectSummonEntity(world, pos);
+			EffectSummonEntity effect = new EffectSummonEntity(world, pos).setColors(colors);
 			Effect.addEffect(effect);
 		}
 	}

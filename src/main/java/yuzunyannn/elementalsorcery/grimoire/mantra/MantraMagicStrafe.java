@@ -22,6 +22,7 @@ import yuzunyannn.elementalsorcery.item.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleMagicFall;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
+import yuzunyannn.elementalsorcery.util.DamageHelper;
 
 public class MantraMagicStrafe extends MantraCommon {
 
@@ -62,7 +63,7 @@ public class MantraMagicStrafe extends MantraCommon {
 		get.grow(36);
 		get.weaken(Math.min(tick / 4, 60) / 20f);
 		float dmg = Math.max(ItemMagicBlastWand.getDamage(get), 0.25f);
-		DamageSource ds = ItemMagicBlastWand.getMagicDamageSource(caster.iWantCaster().asEntity(),
+		DamageSource ds = DamageHelper.getMagicDamageSource(caster.iWantCaster().asEntity(),
 				caster.iWantDirectCaster().asEntity());
 		target.attackEntityFrom(ds, dmg);
 		target.hurtResistantTime = 0;

@@ -194,6 +194,7 @@ import yuzunyannn.elementalsorcery.item.crystal.ItemOrderCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemResonantCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemScarletCrystal;
 import yuzunyannn.elementalsorcery.item.prop.ItemCubeCore;
+import yuzunyannn.elementalsorcery.item.prop.ItemDejectedTear;
 import yuzunyannn.elementalsorcery.item.prop.ItemDreadGem;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementStone;
 import yuzunyannn.elementalsorcery.item.prop.ItemFusionCrystal;
@@ -476,6 +477,7 @@ public class ESInit {
 		ITEMS.RABID_LEATHER = new ItemRabidLeather();
 		ITEMS.CUBE_CORE = new ItemCubeCore();
 		ITEMS.DREAD_GEM = new ItemDreadGem();
+		ITEMS.DEJECTED_TEAR = new ItemDejectedTear();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -823,6 +825,7 @@ public class ESInit {
 		registerRender(ITEMS.APPLE_CANDY);
 		registerRender(ITEMS.CUBE_CORE);
 		registerRender(ITEMS.DREAD_GEM);
+		registerRender(ITEMS.DEJECTED_TEAR);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

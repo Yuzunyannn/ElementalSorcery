@@ -28,6 +28,7 @@ import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
+import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class BlockSealStone extends Block implements Mapper {
@@ -160,7 +161,8 @@ public class BlockSealStone extends Block implements Mapper {
 		// 一些其他东西
 		RandomHelper.WeightRandom<ItemStack> wr = new RandomHelper.WeightRandom();
 		wr.add(new ItemStack(ESInit.ITEMS.ELEMENT_CRYSTAL), 1);
-		wr.add(new ItemStack(ESInit.ITEMS.ORDER_CRYSTAL), 3);
+		wr.add(new ItemStack(ESInit.ITEMS.KEEPSAKE, 1, ItemKeepsake.EnumType.UNDELIVERED_LETTER.getMeta()), 3);
+		wr.add(new ItemStack(ESInit.ITEMS.ORDER_CRYSTAL), 4);
 		wr.add(new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL), 10);
 		wr.add(new ItemStack(ESInit.ITEMS.RESONANT_CRYSTAL), 16);
 		wr.add(new ItemStack(ESInit.ITEMS.MAGIC_STONE, 3), 40);

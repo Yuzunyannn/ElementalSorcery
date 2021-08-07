@@ -6,6 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.item.prop.ItemDejectedTear;
 
 public class ESObjects {
 
@@ -92,7 +93,7 @@ public class ESObjects {
 		public Item RABID_LEATHER;
 		public Item CUBE_CORE;
 		public Item DREAD_GEM;
-
+		public Item DEJECTED_TEAR;
 	}
 
 	static public class Blocks {

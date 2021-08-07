@@ -17,6 +17,7 @@ import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageEffect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementAbsorb;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectSummonEntity;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTreatEntity;
 
 public class Effects {
 
@@ -24,6 +25,7 @@ public class Effects {
 	public static final String PARTICLE_EFFECT = "pEffect";
 	public static final String ENTITY_SOUL = "eSoul";
 	public static final String SUMMON_ENTITY = "eSummon";
+	public static final String TREAT_ENTITY = "eTreat";
 	public static final String ELEMENT_ABSORB = "eAbsorb";
 
 	public static final int MAX_DIS = 64;
@@ -85,7 +87,7 @@ public class Effects {
 		EffectMap.register(ENTITY_SOUL, EffectEntitySoul::show);
 		EffectMap.register(SUMMON_ENTITY, EffectSummonEntity::show);
 		EffectMap.register(ELEMENT_ABSORB, EffectElementAbsorb::show);
-
+		EffectMap.register(TREAT_ENTITY, EffectTreatEntity::show);
 	}
 
 	// 下面是通用的show
@@ -97,10 +99,18 @@ public class Effects {
 		Effects.spawnEffect(world, Effects.PARTICLE_EFFECT, pos, effect);
 	}
 
-	public static void spawnSummonEntity(Entity entity) {
+	public static void spawnSummonEntity(Entity entity, int[] colors) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setInteger("target", entity.getEntityId());
+		if (colors != null && colors.length > 0) nbt.setIntArray("colors", colors);
 		Effects.spawnEffect(entity.world, Effects.SUMMON_ENTITY, entity.getPositionVector(), nbt);
+	}
+
+	public static void spawnTreatEntity(Entity entity, int[] colors) {
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setInteger("target", entity.getEntityId());
+		if (colors != null && colors.length > 0) nbt.setIntArray("colors", colors);
+		Effects.spawnEffect(entity.world, Effects.TREAT_ENTITY, entity.getPositionVector(), nbt);
 	}
 
 	public static void spawnElementAbsorb(Vec3d from, Entity target, int count, int[] colors) {

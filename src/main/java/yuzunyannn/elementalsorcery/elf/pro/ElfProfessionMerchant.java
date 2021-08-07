@@ -34,6 +34,7 @@ import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
 import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
@@ -65,6 +66,13 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 			addACommodity(trade, new ItemStack(ITEMS.RITE_MANUAL, 1, 0), 500, 1, 1000);
 		case 0:
 			addACommodity(trade, new ItemStack(ITEMS.NATURE_DUST, 1, 1), 150, 3, 1000);
+		}
+
+		if (rand.nextInt(10) == 0) {
+			int c = (int) RandomHelper.randomRange(50, 150);
+			ItemStack letter = new ItemStack(ESInit.ITEMS.KEEPSAKE, 1,
+					ItemKeepsake.EnumType.UNDELIVERED_LETTER.getMeta());
+			trade.addCommodity(letter, c, 3, true);
 		}
 
 		for (int i = 0; i < 12 && trade.getTradeList().size() < 16; i++) {

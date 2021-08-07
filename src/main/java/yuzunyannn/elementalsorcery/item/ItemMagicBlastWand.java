@@ -35,6 +35,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.DamageHelper;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
@@ -189,12 +190,6 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 		return dmg;
 	}
 
-	/** 通用的，魔法伤害 */
-	public static DamageSource getMagicDamageSource(@Nullable Entity source, @Nullable Entity directSource) {
-		if (directSource == null && source == null) return DamageSource.MAGIC;
-		else return DamageSource.causeIndirectMagicDamage(directSource, source);
-	}
-
 	public static void blast(ElementStack magic, Entity target, @Nullable Entity source,
 			@Nullable Entity directSource) {
 		blast(magic, target.world, target, null, source, null);
@@ -226,7 +221,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 		if (target != null) pos = target.getPositionVector().addVector(0, target.height / 2, 0);
 		else pos = targetPos;
 
-		DamageSource ds = getMagicDamageSource(source, directSource);
+		DamageSource ds = DamageHelper.getMagicDamageSource(source, directSource);
 
 		if (level > 1 || target == null) {
 			AxisAlignedBB AABB;

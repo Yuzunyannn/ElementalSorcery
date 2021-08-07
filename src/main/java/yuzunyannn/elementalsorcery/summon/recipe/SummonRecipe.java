@@ -15,6 +15,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.summon.Summon;
+import yuzunyannn.elementalsorcery.summon.SummonDejectedSkeleton;
 import yuzunyannn.elementalsorcery.summon.SummonDreadCube;
 import yuzunyannn.elementalsorcery.summon.SummonRabidRabbit;
 import yuzunyannn.elementalsorcery.summon.SummonRelicZombie;
@@ -129,6 +130,9 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 				ItemKeepsake.create(ItemKeepsake.EnumType.RELIC_FRAGMENT, 1));
 		reg("dread_cube", SummonDreadCube.class, 256, 0x671111,
 				ItemKeepsake.create(ItemKeepsake.EnumType.DREAD_FRAGMENT, 1));
+		reg("dejected_skeleton", SummonDejectedSkeleton.class, 125, 0x757575,
+				ItemKeepsake.create(ItemKeepsake.EnumType.UNDELIVERED_LETTER, 1));
+
 	}
 
 	private static SummonRecipe reg(String name, SummonRecipe m) {

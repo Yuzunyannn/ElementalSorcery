@@ -1,0 +1,29 @@
+{
+    "lev": -2,
+    "need": [
+        "element/rite_summon"
+    ],
+    "linked": [
+        "elementalsorcery:dejected_tear",
+        {
+            "item": "elementalsorcery:keepsake",
+            "data": 2
+        }
+    ],
+    "type": "mult",
+    "lock": 1,
+    "pages": [
+        {
+            "type": "normal",
+            "name": "dejectedSkeleton",
+            "item": "elementalsorcery:dejected_tear",
+            "background": "inherit",
+            "differ": "fir"
+        },
+        {
+            "type": "normal",
+            "name": "dejectedSkeleton",
+            "differ": "sec"
+        }
+    ]
+}

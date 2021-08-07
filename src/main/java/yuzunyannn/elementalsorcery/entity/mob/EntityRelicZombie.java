@@ -35,7 +35,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -51,6 +50,7 @@ import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.DamageHelper;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class EntityRelicZombie extends EntityMob {
@@ -334,7 +334,7 @@ public class EntityRelicZombie extends EntityMob {
 
 	// 巫师受到攻击
 	protected boolean attackEntityFromWizard(DamageSource source, float amount) {
-		if (source instanceof EntityDamageSourceIndirect) {
+		if (DamageHelper.isRangedDamage(source)) {
 			if (source.getTrueSource() instanceof EntityLivingBase) {
 				Entity src = source.getImmediateSource();
 				Vec3d vec;

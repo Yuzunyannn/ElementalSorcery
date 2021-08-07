@@ -23,9 +23,9 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.item.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.DamageHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemMatchResult;
@@ -103,7 +103,7 @@ public class FCMAttack extends FairyCubeModule {
 		float damage = 1 + (float) Math.pow(level * 0.75, 1.2);
 
 		if (status == 2) damage = damage * 3;
-		DamageSource ds = ItemMagicBlastWand.getMagicDamageSource(master, fairyCube);
+		DamageSource ds = DamageHelper.getMagicDamageSource(master, fairyCube);
 		damage = fairyCube.getAttribute("attack:damage", damage);
 		float range = fairyCube.getAttribute("attack:range");
 

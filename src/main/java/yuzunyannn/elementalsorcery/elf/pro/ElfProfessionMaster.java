@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
@@ -39,6 +38,7 @@ import yuzunyannn.elementalsorcery.render.effect.batch.EffectElement;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
+import yuzunyannn.elementalsorcery.util.DamageHelper;
 
 public class ElfProfessionMaster extends ElfProfession {
 
@@ -133,7 +133,7 @@ public class ElfProfessionMaster extends ElfProfession {
 	public Float attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
 		super.attackedFrom(elf, source, amount);
 		// 远程攻击吸引
-		if (source instanceof EntityDamageSourceIndirect) {
+		if (DamageHelper.isRangedDamage(source)) {
 			if (source.getTrueSource() instanceof EntityLivingBase) {
 				BlockPos pos = elf.getRandomTeleportPos(54, 2, 4, source.getTrueSource().getPosition());
 				if (pos == null) return null;
