@@ -80,11 +80,16 @@ public class BlockHelper {
 		if (!tile.canSetStack(stack)) return false;
 		if (tile.getStack().isEmpty()) {
 			if (!worldIn.isRemote) {
-				ItemStack inStack = ItemStack.EMPTY;
-				inStack = stack.copy();
-				inStack.setCount(1);
-				stack.shrink(1);
-				tile.setStack(inStack);
+				if (justOne) {
+					ItemStack inStack = ItemStack.EMPTY;
+					inStack = stack.copy();
+					inStack.setCount(1);
+					stack.shrink(1);
+					tile.setStack(inStack);
+				} else {
+					playerIn.setHeldItem(hand, ItemStack.EMPTY);
+					tile.setStack(stack);
+				}
 			}
 		} else {
 			if (justOne) return false;

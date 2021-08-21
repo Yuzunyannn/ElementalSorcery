@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.entity.elf;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
@@ -19,14 +20,15 @@ import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
 public class EntityElf extends EntityElfBase {
 
 	protected IInventory inventory = new ItemStackHandlerInventory(16);
+	protected EntityAIBase aiStroll;
 
 	public EntityElf(World worldIn) {
-		super(worldIn); 
+		super(worldIn);
 		if (world.isRemote) return;
 		this.setCustomNameTag(AutoName.getRandomName());
-		
+
 //		this.setProfession(ElfProfession.MERCHANT);
-		
+
 		if (this.rand.nextInt(5) == 0) this.setProfession(ElfProfession.SCHOLAR);
 		else if (this.rand.nextInt(4) == 0) this.setProfession(ElfProfession.CRAZY);
 		else if (this.rand.nextInt(4) == 0) this.setProfession(ElfProfession.MERCHANT);
@@ -44,8 +46,8 @@ public class EntityElf extends EntityElfBase {
 	protected void initEntityAI() {
 		super.initEntityAI();
 		this.tasks.addTask(4, new EntityAIMoveToLookBlock(this));
-		this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1));
-		this.tasks.addTask(6, new EntityAIStrollAroundElfTree(this));
+//		this.tasks.addTask(5, new EntityAIMoveTowardsRestriction(this, 1));
+		this.tasks.addTask(6, aiStroll = new EntityAIStrollAroundElfTree(this));
 		this.tasks.addTask(7, new EntityAILookBlock(this).setMaxDistance(4).setChance(0.5f));
 		this.tasks.addTask(7, new EntityAIMoveToEntityItem(this).setMaxDistance(6));
 		this.tasks.addTask(8, new EntityAIHarvestBlock(this));

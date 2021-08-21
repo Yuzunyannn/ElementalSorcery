@@ -40,9 +40,9 @@
             }
         },
         {
-            "type": "normal",
+            "type": "craft",
             "name": "elfMerchant",
-            "background": "elementalsorcery:elf_coin"
+            "item": "elementalsorcery:merchant_invitation"
         }
     ]
 }

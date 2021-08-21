@@ -94,6 +94,8 @@ public class ESObjects {
 		public Item CUBE_CORE;
 		public Item DREAD_GEM;
 		public Item DEJECTED_TEAR;
+		public Item MERCHANT_INVITATION;
+		public Item ELEMENT_BOARD;
 	}
 
 	static public class Blocks {

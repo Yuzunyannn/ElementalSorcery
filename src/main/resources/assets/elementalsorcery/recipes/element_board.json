@@ -1,0 +1,34 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "KPK",
+    "AGA",
+    "ZEZ"
+  ],
+  "key": {
+    "K": {
+      "item": "elementalsorcery:tiny_knife"
+    },
+    "P": {
+      "item": "elementalsorcery:astone",
+      "data": 2
+    },
+    "A": {
+      "item": "minecraft:stone",
+      "data": 5
+    },
+    "G": {
+      "item": "elementalsorcery:resonant_crystal"
+    },
+    "E": {
+      "item": "elementalsorcery:element_crystal"
+    },
+    "Z": {
+      "item": "elementalsorcery:azure_crystal"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:element_board",
+    "count": 1
+  }
+}

@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import com.google.gson.JsonParseException;
 
@@ -251,8 +253,13 @@ public class ElementMap implements IToElement {
 
 	private static DefaultToElement dealCrafting() {
 		DefaultToElement newMap = new DefaultToElement();
+		Set<String> dealSet = new HashSet<>();
+		dealSet.add("minecraft");
+		dealSet.add(ElementalSorcery.MODID);
 		// 检测所有物品
 		for (Item item : Item.REGISTRY) {
+			String modId = item.getRegistryName().getResourceDomain();
+			if (!dealSet.contains(modId)) continue;
 			// 遍历所有类别
 			NonNullList<ItemStack> stacks = NonNullList.<ItemStack>create();
 			item.getSubItems(CreativeTabs.SEARCH, stacks);

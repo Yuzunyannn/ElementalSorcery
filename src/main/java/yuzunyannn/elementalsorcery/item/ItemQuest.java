@@ -37,7 +37,7 @@ public class ItemQuest extends Item {
 		BlockPos pos = playerIn.getPosition();
 		playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_QUEST, worldIn, pos.getX(), pos.getY(),
 				pos.getZ());
-		return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}
 
 	@Override

@@ -1,16 +1,21 @@
 package yuzunyannn.elementalsorcery.elf.pro;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -36,6 +41,7 @@ import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 
 public class ElfProfessionMerchant extends ElfProfessionUndetermined {
@@ -116,10 +122,21 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 		trade.addCommodity(item, reclaimPrice, count, true);
 	}
 
+	public static void setRemainTimeBeforeLeave(EntityElfBase elf, int tick) {
+		NBTTagCompound nbt = elf.getEntityData();
+		nbt.setInteger("tradeRemainTime", tick);
+	}
+
 	@Override
 	public void transferElf(EntityElfBase elf, ElfProfession next) {
-		NBTTagCompound nbt = elf.getEntityData();
-		nbt.removeTag(TradeCount.Bind.TAG);
+//		NBTTagCompound nbt = elf.getEntityData();
+//		nbt.removeTag(TradeCount.Bind.TAG);
+//		nbt.removeTag("tradeRemainTime");
+	}
+
+	@Override
+	public boolean needPickup(EntityElfBase elf, ItemStack stack) {
+		return super.needPickup(elf, stack) || stack.getItem() == Items.STRING;
 	}
 
 	@Override
@@ -138,11 +155,47 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 		if (elf.tick % 100 != 0) return;
 		if (elf.getTalker() != null) return;
 		if (elf.world.isRemote) return;
+
+		// 吃药
+		ItemStack potion = elf.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
+		if (potion.getItem() == Items.POTIONITEM) {
+			elf.playSound(SoundEvents.ENTITY_GENERIC_DRINK, 0.5F, elf.world.rand.nextFloat() * 0.1F + 0.9F);
+			for (PotionEffect effect : PotionUtils.getEffectsFromStack(potion)) elf.addPotionEffect(effect);
+			elf.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, ItemStack.EMPTY);
+		} else if (elf.getHealth() < 10) {
+			if (!potion.isEmpty()) elf.entityDropItem(potion, elf.height / 2);
+			potion = new ItemStack(Items.POTIONITEM);
+			List<PotionEffect> effects = new ArrayList<>();
+			effects.add(new PotionEffect(MobEffects.REGENERATION, 20 * 8, 2));
+			PotionUtils.appendEffects(potion, effects);
+			elf.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, potion);
+		}
+
+		// 判断是否要离开
+		ItemStack stack = elf.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+		if (stack.getItem() == ESInit.ITEMS.SPELLBOOK) {
+			elf.setDead();
+			elf.world.playSound(null, elf.posX, elf.posY, elf.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT,
+					SoundCategory.HOSTILE, 1, 1);
+			return;
+		}
 		NBTTagCompound nbt = elf.getEntityData();
+
+		// 如果有剩余时间，检查剩余时间
+		if (nbt.hasKey("tradeRemainTime", NBTTag.TAG_NUMBER)) {
+			int remainTick = nbt.getInteger("tradeRemainTime") - 100;// 因为100tick进入一次，不精准，但足够
+			if (remainTick <= 0) {
+				this.setLeave(elf);
+				nbt.removeTag("tradeRemainTime");
+				return;
+			}
+			nbt.setInteger("remainTime", remainTick);
+		}
+
+		// 检查是否所有东西全卖出去了
 		if (nbt.hasKey(TradeCount.Bind.TAG)) {
 			TradeCount tradeCount = new TradeCount();
 			tradeCount.deserializeNBT(nbt.getCompoundTag(TradeCount.Bind.TAG));
-
 			int size = tradeCount.getTradeListSize();
 			for (int i = 0; i < size; i++) {
 				TradeList.TradeInfo info = tradeCount.getTradeInfo(i);
@@ -151,26 +204,26 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 			}
 		}
 
-		ItemStack stack = elf.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-		if (stack.getItem() == ESInit.ITEMS.SPELLBOOK) {
-			elf.setDead();
-			elf.world.playSound(null, elf.posX, elf.posY, elf.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT,
-					SoundCategory.HOSTILE, 1, 1);
-		} else {
-			elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.SPELLBOOK));
-			elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
-			float size = 6;
-			AxisAlignedBB aabb = new AxisAlignedBB(elf.posX - size, elf.posY - size, elf.posZ - size, elf.posX + size,
-					elf.posY + size, elf.posZ + size);
-			List<EntityPlayer> list = elf.world.getEntitiesWithinAABB(EntityPlayer.class, aabb);
-			for (EntityPlayer player : list) {
-				ITextComponent text = new TextComponentString("[")
-						.appendSibling(new TextComponentTranslation("pro.merchant"))
-						.appendText("]" + elf.getName() + ":Bye~");
-				player.sendMessage(text);
-			}
-		}
+		// 是的情况下，离开
+		this.setLeave(elf);
+	}
 
+	protected void setLeave(EntityElfBase elf) {
+		ItemStack stack = elf.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+		if (stack.getItem() == ESInit.ITEMS.SPELLBOOK) return;
+
+		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.SPELLBOOK));
+		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
+		float size = 6;
+		AxisAlignedBB aabb = new AxisAlignedBB(elf.posX - size, elf.posY - size, elf.posZ - size, elf.posX + size,
+				elf.posY + size, elf.posZ + size);
+		List<EntityPlayer> list = elf.world.getEntitiesWithinAABB(EntityPlayer.class, aabb);
+		for (EntityPlayer player : list) {
+			ITextComponent text = new TextComponentString("[")
+					.appendSibling(new TextComponentTranslation("pro.merchant"))
+					.appendText("]" + elf.getName() + ":Bye~");
+			player.sendMessage(text);
+		}
 	}
 
 	@Override

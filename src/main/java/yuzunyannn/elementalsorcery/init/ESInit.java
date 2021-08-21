@@ -156,6 +156,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemAppleCandy;
+import yuzunyannn.elementalsorcery.item.ItemElementBoard;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemElfWatch;
 import yuzunyannn.elementalsorcery.item.ItemFairyCube;
@@ -165,6 +166,7 @@ import yuzunyannn.elementalsorcery.item.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.item.ItemMagicGoldTools;
 import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemManual;
+import yuzunyannn.elementalsorcery.item.ItemMerchantInvitation;
 import yuzunyannn.elementalsorcery.item.ItemNatureDust;
 import yuzunyannn.elementalsorcery.item.ItemParcel;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
@@ -478,6 +480,8 @@ public class ESInit {
 		ITEMS.CUBE_CORE = new ItemCubeCore();
 		ITEMS.DREAD_GEM = new ItemDreadGem();
 		ITEMS.DEJECTED_TEAR = new ItemDejectedTear();
+		ITEMS.MERCHANT_INVITATION = new ItemMerchantInvitation();
+		ITEMS.ELEMENT_BOARD = new ItemElementBoard();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -826,6 +830,8 @@ public class ESInit {
 		registerRender(ITEMS.CUBE_CORE);
 		registerRender(ITEMS.DREAD_GEM);
 		registerRender(ITEMS.DEJECTED_TEAR);
+		registerRender(ITEMS.MERCHANT_INVITATION);
+		registerRender(ITEMS.ELEMENT_BOARD);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

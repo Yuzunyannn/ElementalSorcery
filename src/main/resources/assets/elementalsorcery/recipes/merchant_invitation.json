@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PL ",
+    "ZH "
+  ],
+  "key": {
+    "P": {
+      "item": "elementalsorcery:quill",
+      "data": 0
+    },
+    "Z": {
+      "item": "elementalsorcery:parchment"
+    },
+    "L": {
+      "item": "minecraft:emerald"
+    },
+    "H": {
+      "item": "minecraft:wool",
+      "data": 14
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:merchant_invitation",
+    "count": 1
+  }
+}

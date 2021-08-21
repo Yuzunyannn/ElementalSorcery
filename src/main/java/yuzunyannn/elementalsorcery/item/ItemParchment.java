@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,12 +43,14 @@ public class ItemParchment extends Item {
 		return 75;
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if (Pages.isVaild(stack)) {
 			Page page = Pages.getPage(stack);
 			page.addItemInformation(stack, worldIn, tooltip, flagIn);
+		} else if (Minecraft.getMinecraft().player.isCreative()) {
+			tooltip.add(TextFormatting.YELLOW + I18n.format("info.page.creative.check"));
 		}
 		ItemStack inner = RecipeRiteWrite.getInnerStack(stack);
 		if (!inner.isEmpty()) {
@@ -57,16 +60,25 @@ public class ItemParchment extends Item {
 	}
 
 	@Override
-	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-		if (handIn != EnumHand.MAIN_HAND) return super.onItemRightClick(worldIn, playerIn, handIn);
-		ItemStack stack = playerIn.getHeldItem(handIn);
-		if (!Pages.isVaild(stack)) return super.onItemRightClick(worldIn, playerIn, handIn);
-		if (worldIn.isRemote) {
-			BlockPos pos = playerIn.getPosition();
-			playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_PARCHMENT, worldIn, pos.getX(), pos.getY(),
+	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand handIn) {
+		if (handIn != EnumHand.MAIN_HAND) return super.onItemRightClick(world, player, handIn);
+		ItemStack stack = player.getHeldItem(handIn);
+		if (!Pages.isVaild(stack)) {
+			if (player.isCreative() && handIn == EnumHand.MAIN_HAND) {
+				Page page = Pages.itemToPage(player.getHeldItem(EnumHand.OFF_HAND));
+				if (page != null) {
+					Pages.setPage(page.getId(), stack);
+					return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(handIn));
+				}
+			}
+			return super.onItemRightClick(world, player, handIn);
+		}
+		if (world.isRemote) {
+			BlockPos pos = player.getPosition();
+			player.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_PARCHMENT, world, pos.getX(), pos.getY(),
 					pos.getZ());
 		}
-		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
+		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, player.getHeldItem(handIn));
 	}
 
 }

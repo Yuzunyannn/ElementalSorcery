@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.block.container;
 
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFlower;
@@ -28,9 +29,14 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.ESCreativeTabs;
+import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
+import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class BlockRiteTable extends BlockContainerNormal {
 
@@ -61,6 +67,7 @@ public class BlockRiteTable extends BlockContainerNormal {
 
 	public BlockRiteTable() {
 		super(Material.ROCK, "riteTable", 5);
+		this.setTickRandomly(true);
 	}
 
 	protected static final AxisAlignedBB AABB_BOX = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 10.0 / 16.0, 1.0D);
@@ -167,5 +174,43 @@ public class BlockRiteTable extends BlockContainerNormal {
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
 		if (face == EnumFacing.UP) return BlockFaceShape.SOLID;
 		return BlockFaceShape.UNDEFINED;
+	}
+
+	@Override
+	public void randomTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
+		this.updateTick(worldIn, pos, state, random);
+		if (worldIn.isRemote) return;
+		TileRiteTable tile = BlockHelper.getTileEntity(worldIn, pos, TileRiteTable.class);
+		if (tile == null) return;
+		ItemStackHandler handler = tile.getInventory();
+		ItemStack merchantInvitation = ItemStack.EMPTY;
+		int price = 0;
+		for (int i = 0; i < handler.getSlots(); i++) {
+			ItemStack stack = handler.getStackInSlot(i);
+			if (stack.isEmpty()) continue;
+			if (stack.getItem() == ESInit.ITEMS.MERCHANT_INVITATION) merchantInvitation = stack;
+			else {
+				int p = ElfProfessionMerchant.priceIt(stack);
+				if (p > 0) price += p;
+			}
+		}
+		if (merchantInvitation.isEmpty()) return;
+		if (price < random.nextInt(100) + 50);
+
+		AxisAlignedBB aabb = WorldHelper.createAABB(pos, 12, 4, 4);
+		List<EntityElfBase> merchants = WorldHelper.getElfWithAABB(worldIn, aabb, ElfProfession.MERCHANT);
+		if (merchants.size() >= 3) return;
+
+		BlockPos spawnPos = WorldHelper.tryFindPlaceToSpawn(worldIn, random, pos, 4);
+		if (spawnPos == null) return;
+		IBlockState spawState = worldIn.getBlockState(spawnPos);
+
+		EntityElfBase elf = new EntityElfTravelling(worldIn);
+		elf.setPosition(spawnPos.getX() + 0.5, spawnPos.getY() + 1, spawnPos.getZ() + 0.5);
+		if (!spawState.canEntitySpawn(elf)) return;
+
+		ElfProfessionMerchant.setRemainTimeBeforeLeave(elf, (int) (20 * 60 * 60 * (0.5f + random.nextFloat() * 4)));
+		worldIn.spawnEntity(elf);
+
 	}
 }

@@ -8,6 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.gui.GuiAnalysisAltar;
+import yuzunyannn.elementalsorcery.container.gui.GuiElementBoard;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementCraftingTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfApplyAddressPlate;
@@ -53,6 +54,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_ITEM_STRUCTURE_CRAFT = 12;
 	public static final int GUI_TRANSCRIBE_INJECTION = 13;
 	public static final int GUI_RESEARCHER = 14;
+	public static final int GUI_ELEMENT_BOARD = 15;
 
 	public static final int GUI_MD_MAGIC_GEN = 21;
 	public static final int GUI_MD_HEARTH = 22;
@@ -97,13 +99,15 @@ public class ESGuiHandler implements IGuiHandler {
 			case GUI_INVENTORY_WORKBENCH:
 				return new ContainerWorkbenchWithInventory(player, tileEntity);
 			case GUI_RITE_MANUAL:
-				return new ContainerRiteManual(player.inventory, world, pos);
+				return new ContainerRiteManual(player);
 			case GUI_ITEM_STRUCTURE_CRAFT:
 				return new ContainerItemStructureCraft(player, tileEntity);
 			case GUI_TRANSCRIBE_INJECTION:
 				return new ContainerTranscribeInjection(player, tileEntity);
 			case GUI_RESEARCHER:
 				return new ContainerResearch(player, pos);
+			case GUI_ELEMENT_BOARD:
+				return new ContainerElementBoard(player);
 
 			case GUI_MD_MAGIC_GEN:
 				return new ContainerMDMagicGen(player, tileEntity);
@@ -168,13 +172,15 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiSimple(new ContainerWorkbenchWithInventory(player, tileEntity), player.inventory,
 						"tile.supremeTable.name", TEXTURE_CRAFTING_TABLE);
 			case GUI_RITE_MANUAL:
-				return new GuiRiteManual(new ContainerRiteManual(player.inventory, world, pos));
+				return new GuiRiteManual(new ContainerRiteManual(player));
 			case GUI_ITEM_STRUCTURE_CRAFT:
 				return new GuiItemStructureCraft(new ContainerItemStructureCraft(player, tileEntity));
 			case GUI_TRANSCRIBE_INJECTION:
 				return new GuiTranscribeInjection(new ContainerTranscribeInjection(player, tileEntity));
 			case GUI_RESEARCHER:
 				return new GuiResearch(player, pos);
+			case GUI_ELEMENT_BOARD:
+				return new GuiElementBoard(new ContainerElementBoard(player));
 
 			case GUI_MD_MAGIC_GEN:
 				return new GuiMDMagicGen(new ContainerMDMagicGen(player, tileEntity), player.inventory);

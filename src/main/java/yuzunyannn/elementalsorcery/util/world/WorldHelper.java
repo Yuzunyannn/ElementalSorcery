@@ -1,12 +1,14 @@
 package yuzunyannn.elementalsorcery.util.world;
 
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,6 +17,7 @@ import net.minecraft.entity.item.EntityXPOrb;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -23,6 +26,33 @@ import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 
 public class WorldHelper {
+
+	public static boolean isBlockPassable(World world, BlockPos pos) {
+		if (world.isAirBlock(pos)) return true;
+		IBlockState state = world.getBlockState(pos);
+		return state.getBlock().isReplaceable(world, pos);
+	}
+
+	@Nullable
+	public static BlockPos tryFindPlaceToSpawn(World world, Random rand, BlockPos center, float range) {
+		float theta = rand.nextFloat() * 3.1415926f * 2;
+		final int tryUp = 8;
+		for (int tryTimes = 0; tryTimes < 6; tryTimes++) {
+			double x = center.getX() + 0.5 + MathHelper.sin(theta) * range;
+			double z = center.getZ() + 0.5 + MathHelper.cos(theta) * range;
+			BlockPos pos = new BlockPos(x, center.getY() + tryUp, z);
+			for (int k = 0; k < tryUp * 2 && pos.getY() > 0; k++, pos = pos.down())
+				if (!isBlockPassable(world, pos)) break;
+
+			if (isBlockPassable(world, pos)) return null;
+
+			if (!isBlockPassable(world, pos.up(1))) return null;
+			if (!isBlockPassable(world, pos.up(2))) return null;
+
+			return pos;
+		}
+		return null;
+	}
 
 	static public List<EntityElfBase> getElfWithAABB(World world, AxisAlignedBB aabb, ElfProfession profession) {
 		return world.getEntitiesWithinAABB(EntityElfBase.class, aabb, (entity) -> {

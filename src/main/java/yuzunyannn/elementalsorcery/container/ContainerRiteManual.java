@@ -1,7 +1,6 @@
 package yuzunyannn.elementalsorcery.container;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
@@ -34,10 +33,10 @@ public class ContainerRiteManual extends Container {
 
 	private boolean needCheckSummon = false;
 
-	public ContainerRiteManual(InventoryPlayer playerInventory, World worldIn, BlockPos posIn) {
-		this.world = worldIn;
-		this.pos = posIn;
-		this.player = playerInventory.player;
+	public ContainerRiteManual(EntityPlayer player) {
+		this.world = player.world;
+		this.pos = player.getPosition();
+		this.player = player;
 
 		final int xoff = 48;
 		final int yoff = 90;
@@ -64,7 +63,7 @@ public class ContainerRiteManual extends Container {
 					summonShow = false;
 					return;
 				}
-				if (needCheckSummon) summonShow = SummonRecipe.findRecipeWithKeepsake(stack, worldIn, posIn) != null;
+				if (needCheckSummon) summonShow = SummonRecipe.findRecipeWithKeepsake(stack, world, pos) != null;
 				int power = TileRiteTable.sacrifice.getPower(stack);
 				ContainerRiteManual.this.power = power;
 				if (power == 0) return;
