@@ -43,7 +43,7 @@ public class RenderItemGrimoireInfo {
 	}
 
 	public void close() {
-		dBookSpread = -0.1f;
+		dBookSpread = -0.2f;
 	}
 
 	public void reset() {
@@ -58,4 +58,5 @@ public class RenderItemGrimoireInfo {
 	public void bind() {
 		TEXTURE.bind();
 	}
+
 }

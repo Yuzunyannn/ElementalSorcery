@@ -36,6 +36,7 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.DamageHelper;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -105,6 +106,18 @@ public class MantraFireBall extends MantraCommon {
 	}
 
 	@Override
+	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
+		super.potentAttack(world, grimoire, caster, target);
+		if (world.rand.nextInt(5) != 0) return;
+		ElementStack stack = getElement(caster, ESInit.ELEMENTS.FIRE, 10, 50);
+		if (stack.isEmpty()) return;
+		ElementStack knowledge = getElement(caster, ESInit.ELEMENTS.KNOWLEDGE, 2, 50);
+
+		int power = 3 + Math.min(stack.getPower() / 200, 4);
+		MantraFireBall.fire(world, caster.iWantCaster().asEntityLivingBase(), power, !knowledge.isEmpty());
+	}
+
+	@Override
 	public IMantraData getData(NBTTagCompound origin, World world, ICaster caster) {
 		return new Data();
 	}
@@ -135,7 +148,7 @@ public class MantraFireBall extends MantraCommon {
 		ElementStack need = new ElementStack(ESInit.ELEMENTS.FIRE, 2, 50);
 		ElementStack stack = caster.iWantSomeElement(need, true);
 		if (stack.isEmpty()) return;
-		data.power += 0.4;
+		data.power = data.power + 0.2f + Math.min(stack.getPower() / 1000f, 0.4f);
 		data.powerUp = true;
 		data.setProgress(data.power, 32);
 		// 获取金
@@ -167,7 +180,8 @@ public class MantraFireBall extends MantraCommon {
 		data.pos = co.getEyePosition();
 		data.toward = caster.iWantDirection();
 		data.pos = data.pos.add(data.toward.scale(2));
-		data.power = Math.min(data.power, 32);
+		float potent = caster.iWantBePotent(5, false);
+		data.power = Math.min(data.power, 32) * (1 + potent * 0.25f);
 	}
 
 	@Override
@@ -209,8 +223,9 @@ public class MantraFireBall extends MantraCommon {
 			return true;
 		});
 		for (EntityLivingBase living : entities) {
-			DamageSource ds = DamageSource.causeThornsDamage(entity).setMagicDamage();
-			if (living.attackEntityFrom(ds, data.power * data.power / 25)) living.setFire((int) (power * 2));
+			DamageSource ds = DamageHelper.getMagicDamageSource(entity, caster.iWantDirectCaster().asEntity());
+			float dmg = data.power * data.power / 32;
+			if (living.attackEntityFrom(ds, dmg)) living.setFire((int) (power * 2));
 		}
 		return true;
 	}

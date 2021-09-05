@@ -31,7 +31,7 @@ public class GuiSupremeTable extends GuiNormal<ContainerSupremeTable> {
 
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		String s = I18n.format(this.getUnlocalizedTitle());
+		String s = this.getDisplayTitle();
 		this.fontRenderer.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 4210752);
 		this.fontRenderer.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 36,
 				this.ySize - 96 + 2, 4210752);

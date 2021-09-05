@@ -189,7 +189,7 @@ public class RenderEntityPortalWorldSecene implements IRenderClient, EntityPorta
 			GlStateManager.translate(x, y, 0);
 			GlStateManager.scale(scale, scale, scale);
 			GlStateManager.color(1, 1, 1, fade);
-			EffectElement.TEXTURE.bind();
+			EffectElement.BATCH_TYPE.bind();
 			renderRect((int) referenceScale);
 			GlStateManager.popMatrix();
 		}

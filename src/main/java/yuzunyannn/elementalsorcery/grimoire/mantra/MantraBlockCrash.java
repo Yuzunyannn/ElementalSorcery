@@ -1,11 +1,15 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -32,6 +36,23 @@ public class MantraBlockCrash extends MantraCommon {
 	}
 
 	@Override
+	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
+		super.potentAttack(world, grimoire, caster, target);
+
+		ElementStack stack = getElement(caster, ESInit.ELEMENTS.EARTH, 2, 25);
+		if (stack.isEmpty()) return;
+
+		Vec3d dir = caster.iWantDirection();
+		dir = dir.addVector(0, 0.5, 0).normalize();
+		float speed = MathHelper.clamp(MathHelper.sqrt(stack.getPower() / 10) / 4, 1, 5);
+		dir = dir.scale(speed);
+
+		target.motionX += dir.x;
+		target.motionY += dir.y;
+		target.motionZ += dir.z;
+	}
+
+	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		ElementStack need = new ElementStack(ESInit.ELEMENTS.EARTH, 5, 25);
@@ -40,16 +61,16 @@ public class MantraBlockCrash extends MantraCommon {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public float getProgressRate(World world, IMantraData data, ICaster caster) {
-		return Math.min(caster.iWantKnowCastTick() / 20.0f, 1);
+	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
+		MantraDataCommon mdc = (MantraDataCommon) data;
+		mdc.setProgress(caster.iWantKnowCastTick(), 20.0f);
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		super.onSpellingEffect(world, data, caster);
-		//addEffectIndicatorEffect(world, data, caster);
+		// addEffectIndicatorEffect(world, data, caster);
 	}
 
 	@Override
@@ -65,6 +86,19 @@ public class MantraBlockCrash extends MantraCommon {
 			if (pos == null) return;
 			if (world.isAirBlock(pos)) return;
 		}
+
+		float potent = caster.iWantBePotent(0.5f, true);
+		if (potent >= 0.5f) {
+			caster.iWantBePotent(0.5f, false);
+			doOnce(world, pos, caster, 1);
+			doOnce(world, pos.offset(EnumFacing.NORTH), caster, 1);
+			doOnce(world, pos.offset(EnumFacing.SOUTH), caster, 1);
+			doOnce(world, pos.offset(EnumFacing.EAST), caster, 1);
+			doOnce(world, pos.offset(EnumFacing.WEST), caster, 1);
+		} else doOnce(world, pos, caster, 5);
+	}
+
+	private void doOnce(World world, BlockPos pos, ICaster caster, int needElementPoint) {
 		IBlockState state = world.getBlockState(pos);
 		if (state.getBlock().isReplaceable(world, pos)) {
 			pos = pos.down();
@@ -73,9 +107,10 @@ public class MantraBlockCrash extends MantraCommon {
 		if (state.getBlock() instanceof ITileEntityProvider) return;
 		if (!state.isFullBlock()) return;
 		if (!state.getBlock().isReplaceable(world, pos.up())) return;
-		ElementStack need = new ElementStack(ESInit.ELEMENTS.EARTH, 5, 25);
-		ElementStack stack = caster.iWantSomeElement(need, true);
+
+		ElementStack stack = getElement(caster, ESInit.ELEMENTS.EARTH, needElementPoint, 25);
 		if (stack.isEmpty()) return;
+
 		float speed = MathHelper.clamp(MathHelper.sqrt(stack.getPower() / 10) / 4, 1, 5);
 		AxisAlignedBB aabb = new AxisAlignedBB(pos.up());
 		List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
@@ -91,13 +126,24 @@ public class MantraBlockCrash extends MantraCommon {
 	public void addBlockEffect(BlockPos pos, IBlockState state) {
 		Minecraft mc = Minecraft.getMinecraft();
 		mc.effectRenderer.addBlockDestroyEffects(pos, state);
+		addBlockElementEffect(new Vec3d(pos).addVector(0.5, 0.5, 0.5), this.getRenderColor());
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static void addBlockElementEffect(Vec3d pos, int color) {
+		Minecraft mc = Minecraft.getMinecraft();
+		Random rand = mc.world.rand;
 		for (int i = 0; i < 20; i++) {
-			EffectElementMove effect = new EffectElementMove(mc.world, new Vec3d(pos).addVector(0.5, 0.5, 0.5));
-			effect.g = 0;
-			Vec3d v = new Vec3d(mc.world.rand.nextFloat() - 0.5, mc.world.rand.nextFloat() - 0.5,
-					mc.world.rand.nextFloat() - 0.5);
-			effect.setColor(this.getRenderColor());
-			effect.setVelocity(v.scale(0.2));
+			EffectElementMove effect = new EffectElementMove(mc.world, pos);
+			Vec3d v = new Vec3d(rand.nextFloat() - 0.5, rand.nextFloat() - 0.5, rand.nextFloat() - 0.5).scale(0.2);
+			effect.setColor(color);
+			effect.setVelocity(v);
+			v = new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian()).scale(0.01);
+			effect.xAccelerate = v.x;
+			effect.yAccelerate = v.y;
+			effect.zAccelerate = v.z;
+			effect.xDecay = effect.yDecay = effect.zDecay = 0.8;
+
 			Effect.addEffect(effect);
 		}
 	}

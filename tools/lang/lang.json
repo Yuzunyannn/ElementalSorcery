@@ -868,6 +868,11 @@
       "zh_CN": "元素平台",
       "en_US": "Element Platform",
       "ja_JP": "元素プラットフォーム"
+    },
+    "tile.fluorspar.name": {
+      "zh_CN": "荧光",
+      "en_US": "Fluorspar",
+      "ja_JP": "蛍光"
     }
   },
   "enchantment": {
@@ -1114,6 +1119,26 @@
       "zh_CN": "借助气元素，将箭矢发射出去。土木元素可以构造出箭矢，火元素会为箭矢增添力量，土元素会让箭矢击飞敌人。",
       "en_US": "With the Air, shooting the arrow. With the Earth&Wood, making the arrow. Fire to strengthen, Earth to punch",
       "ja_JP": "気元素で矢を発射する。土木元素で矢を作れる、火元素でパワーを増える，土元素で敵を撃ち飛ばす。"
+    },
+    "mantra.potent.name": {
+      "zh_CN": "强效",
+      "en_US": "Potent",
+      "ja_JP": "強効"
+    },
+    "mantra.potent.describe": {
+      "zh_CN": "将强大的魔力附加于魔典，魔典进入强效状态，发挥出超常效果。\\n不仅咒文的效果会变强，部分咒文在魔典普通攻击时，也会产生特殊的效果。\\n施法过程中积攒少量强效，施法结束可瞬间积攒大量。",
+      "en_US": "Attach powerful magic to the Grimoire and become a powerful state. Your Mantra will have an extraordinary effect.\\nThe Mantra not only is more powerful but also will appear special effect on normal attack with The Grimoire.\\nAccumulate few powerful during casting, and many powerful will be accumulated at the end of casting.",
+      "ja_JP": "強力な魔力を魔典に付加し、呪文は強力な効果を発揮できる。\\n呪文の効果が強くなるだけでなく、一部の呪文は魔典で普通攻撃時にも特殊な効果が発生できる。\\n施法中に少量の強効をため込み、施法が終わったら瞬時に大量の強効をため込みます。"
+    },
+    "mantra.fluorspar.name": {
+      "zh_CN": "荧光聚合",
+      "en_US": "Fluorspar Flock",
+      "ja_JP": "蛍光重合"
+    },
+    "mantra.fluorspar.describe": {
+      "zh_CN": "借助金元素，将荧光固化到岩石中，让岩石照亮周围。",
+      "en_US": "With the Metal, solidify the fluorescence into the rock and let the rock illuminate the surroundings.",
+      "ja_JP": "蛍光を岩に硬化させ、岩を周囲を明るくします。"
     }
   },
   "key": {
@@ -1559,11 +1584,6 @@
       "en_US": "%s have %d, power is %d",
       "ja_JP": "%sは%dを含む、パワーは%d"
     },
-    "info.elementalCrystal.hasnp": {
-      "zh_CN": "%s 拥有%d",
-      "en_US": "%s have %d",
-      "ja_JP": "%sは%dを含む"
-    },
     "info.kyaniteTools.el": {
       "zh_CN": "具有有元素亲和",
       "en_US": "It has elemental affinity",
@@ -1779,7 +1799,7 @@
       "en_US": "Before you look at this scroll, you should check:",
       "ja_JP": "查看这张羊皮紙前你应当先查看：この羊の羊皮紙を見る前に、まず以下の内容を確認してください。"
     },
-    "info.page.creative.check" :{
+    "info.page.creative.check": {
       "zh_CN": "创造模式下Shift+右键可以查找关于副手物品的羊皮卷，并将数据写入",
       "en_US": "Use Shift + RightClick to find and write the infomation about item on off hand to this parchment in creative mode.",
       "ja_JP": "Shift + 右ボタンを使って副手の物品について検索したインフォメーションを羊皮巻物に書き込むことができます"
@@ -2976,11 +2996,6 @@
       "zh_CN": "%s需要%d强度下限 %d ",
       "en_US": "%s requires %d lower limit %d ",
       "ja_JP": "%sは %d点を必要、パワーの最低限度は%d "
-    },
-    "page.crafting.npshow": {
-      "zh_CN": "%s需要%d",
-      "en_US": "%s requires %d",
-      "ja_JP": "%sは%d点を必要"
     },
     "page.error": {
       "zh_CN": "错误页面",

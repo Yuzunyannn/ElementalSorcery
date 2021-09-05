@@ -212,6 +212,7 @@ public class EntityDejectedSkeleton extends EntitySkeleton {
 			this.shiftStateTickRemain = Math.min(this.shiftStateTickRemain + 5, 20 * 10);
 			// 治愈自身
 			this.heal(amount);
+			if (living == null) return false;
 			living.attackEntityFrom(source, amount);
 			return false;
 		case ATTACK:
@@ -251,6 +252,7 @@ public class EntityDejectedSkeleton extends EntitySkeleton {
 		case RANGED_PHYSICAL:
 			if (!(DamageHelper.isRangedDamage(source) && DamageHelper.isPhysicalDamage(source))) {
 				if (!world.isRemote) {
+					if (living == null) return false;
 					int time = 5 * 20 + rand.nextInt(10) * 20;
 					living.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, time, 3));
 					living.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, time, 3));

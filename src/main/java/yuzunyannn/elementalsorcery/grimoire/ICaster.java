@@ -27,10 +27,42 @@ public interface ICaster {
 	 * @param consume 是否取出后要实际消耗，true是要，false是不需要
 	 * @return 实际取出来的，如果取出来的不为空，则一定强于need
 	 */
+	@Nonnull
 	public ElementStack iWantSomeElement(@Nonnull ElementStack need, boolean consume);
+
+	/**
+	 * 给予某些元素
+	 * 
+	 * @param give   给予的元素
+	 * @param accept 是否实真正的接收，true是cast会真正接受，false是只进行模拟
+	 * @return 没收下的内容
+	 */
+	@Nonnull
+	public ElementStack iWantGiveSomeElement(@Nonnull ElementStack give, boolean accept);
 
 	/** 获取积攒tick */
 	public int iWantKnowCastTick();
+
+	/**
+	 * 花费多少点的强效值
+	 * 
+	 * @param point 花费的点数
+	 * @parma justTry 仅仅尝试获取返回值，并不真正消耗point
+	 * 
+	 * @return 默认在0-1之前，通常情况下不会超过1，超过表示更强
+	 */
+	public float iWantBePotent(float point, boolean justTry);
+
+	/**
+	 * 给予caster强效点数
+	 * 
+	 * @potent 强效值
+	 * @point 强效点数
+	 * 
+	 */
+	default public void iWantGivePotent(float potent, float point) {
+
+	}
 
 	/**
 	 * 申请获取一个落脚点，通常是玩家看到方块，但不见得一定是，

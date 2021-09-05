@@ -19,19 +19,18 @@ public class EffectPlayerAt extends EffectCondition {
 	static {
 		MODEL.isChild = false;
 	}
-	public ICaster caster;
-	BlockPos pos;
+
+	public boolean isGlow;
+	public BlockPos pos;
 
 	public EffectPlayerAt(World world, ICaster caster) {
 		super(world);
 		this.lifeTime = 1;
-		this.caster = caster;
 	}
 
 	@Override
 	public void onUpdate() {
 		super.onUpdate();
-		pos = caster.iWantFoothold();
 	}
 
 	@Override
@@ -42,6 +41,8 @@ public class EffectPlayerAt extends EffectCondition {
 		double x = pos.getX() + 0.5;
 		double y = pos.getY();
 		double z = pos.getZ() + 0.5;
+
+		if (isGlow) GlStateManager.depthFunc(519);
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x, y, z);
 		Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("textures/entity/steve.png"));
@@ -53,6 +54,8 @@ public class EffectPlayerAt extends EffectCondition {
 		MODEL.render(player, 0, 0, 0, 0, 0, 0.0625f);
 		GlStateManager.depthMask(false);
 		GlStateManager.popMatrix();
+		if (isGlow) GlStateManager.depthFunc(515);
+
 	}
 
 }

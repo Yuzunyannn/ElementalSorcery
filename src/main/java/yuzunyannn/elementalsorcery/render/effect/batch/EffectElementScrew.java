@@ -56,6 +56,8 @@ public class EffectElementScrew extends EffectElement {
 	@Override
 	public void onUpdate() {
 		this.prevAlpha = this.alpha;
+		this.prevScale = this.scale;
+		
 		this.alpha -= this.dalpha;
 		this.lifeTime--;
 

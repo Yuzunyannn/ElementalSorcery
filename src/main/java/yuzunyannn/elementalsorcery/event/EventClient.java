@@ -237,10 +237,8 @@ public class EventClient {
 		for (ElementStack estack : estacks) {
 			if (estack.isEmpty()) continue;
 			String str;
-			if (estack.usePower()) str = I18n.format("info.elementalCrystal.has",
-					I18n.format(estack.getElementUnlocalizedName()), estack.getCount(), estack.getPower());
-			else str = I18n.format("info.elementalCrystal.hasnp", I18n.format(estack.getElementUnlocalizedName()),
-					estack.getCount());
+			str = I18n.format("info.elementalCrystal.has", I18n.format(estack.getElementUnlocalizedName()),
+					estack.getCount(), estack.getPower());
 			tooltip.add(TextFormatting.RED + str);
 		}
 

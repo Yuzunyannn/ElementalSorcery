@@ -63,6 +63,8 @@ public class EffectElementAbsorb extends EffectElement {
 	@Override
 	public void onUpdate() {
 		this.prevAlpha = this.alpha;
+		this.prevScale = this.scale;
+		
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;

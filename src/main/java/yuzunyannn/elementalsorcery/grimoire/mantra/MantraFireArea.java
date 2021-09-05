@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -43,12 +44,20 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 		this.setOccupation(3);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.FIRE, 2, 40), 80, 20);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 1, 100), 20, -1);
+		this.setPotentPowerCollect(0.1f, 2);
+	}
+
+	@Override
+	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
+		super.potentAttack(world, grimoire, caster, target);
+		target.setFire(200);
 	}
 
 	@Override
 	public void init(World world, SquareData data, ICaster caster, BlockPos pos) {
 		ElementStack fire = data.get(ESInit.ELEMENTS.FIRE);
-		data.setSize(Math.min(fire.getPower() / 80, 12) + 6);
+		float rate = 0.6f * caster.iWantBePotent(0.75f, false) + 1;
+		data.setSize(Math.min(fire.getPower() / 80, 12) * rate + 6);
 	}
 
 	@Override
@@ -75,6 +84,9 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 		ElementStack fire = data.get(ESInit.ELEMENTS.FIRE);
 		if (fire.isEmpty()) return false;
 		if (tick % 20 != 0) return true;
+
+		float pp = data.get(POTENT_POWER);
+
 		ElementStack knowledge = data.get(ESInit.ELEMENTS.KNOWLEDGE);
 		Random rand = world.rand;
 		fire.shrink(8);
@@ -94,7 +106,7 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 			entity.setFire(5);
 			if (world.isRemote) addEffect(world, entity.getPositionVector().addVector(0, entity.height / 2, 0));
 			if (fire.getPower() > 50) {
-				float addDamage = MathHelper.sqrt((fire.getPower() - 50) / 25);
+				float addDamage = MathHelper.sqrt((fire.getPower() - 50) / 25) * (1 + pp * 0.5f);
 				entity.attackEntityFrom(DamageSource.IN_FIRE, addDamage);
 			}
 		}

@@ -269,6 +269,8 @@ public class EntityRelicZombie extends EntityMob {
 			Entity src = source.getTrueSource();
 			if (src != null && src.getClass() == EntityRelicZombie.class) return false;
 		}
+		if (source.canHarmInCreative()) return super.attackEntityFrom(source, amount);
+		
 		switch (this.getType()) {
 		case WARRIOR:
 			return this.attackEntityFromWarrior(source, amount);

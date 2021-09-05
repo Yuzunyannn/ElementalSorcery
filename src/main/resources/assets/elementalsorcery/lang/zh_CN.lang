@@ -175,6 +175,7 @@ tile.starFlower.normal.name=星之花
 tile.starFlower.seed.name=星花之种
 tile.crudeQuartz.name=粗制石英
 tile.elementPlatform.name=元素平台
+tile.fluorspar.name=荧光
 
 enchantment.gatherSouls=聚魂
 
@@ -226,6 +227,10 @@ mantra.fireCharge.name=火焰弹
 mantra.fireCharge.describe=借助火元素的力量，产生并发射火焰弹。
 mantra.arrow.name=射手
 mantra.arrow.describe=借助气元素，将箭矢发射出去。土木元素可以构造出箭矢，火元素会为箭矢增添力量，土元素会让箭矢击飞敌人。
+mantra.potent.name=强效
+mantra.potent.describe=将强大的魔力附加于魔典，魔典进入强效状态，发挥出超常效果。\n不仅咒文的效果会变强，部分咒文在魔典普通攻击时，也会产生特殊的效果。\n施法过程中积攒少量强效，施法结束可瞬间积攒大量。
+mantra.fluorspar.name=荧光聚合
+mantra.fluorspar.describe=借助金元素，将荧光固化到岩石中，让岩石照亮周围。
 
 key.es.func=功能键
 
@@ -319,7 +324,6 @@ info.wrong.dimension=已有数据不属于该纬度！
 info.posSet.success=成功选择了位置：(%d,%d,%d)
 info.magicalPiece.itcando=这个魔力碎片貌似可以合成某些东西，emmmm...
 info.elementalCrystal.has=%s 拥有%d，能量为%d
-info.elementalCrystal.hasnp=%s 拥有%d
 info.kyaniteTools.el=具有有元素亲和
 info.scroll.none=该卷轴内仅有%d张空白的羊皮纸，右键打开
 info.scroll.has=该卷轴包含有%d张羊皮纸，右键打开
@@ -363,7 +367,7 @@ info.crystal.frequency=水晶频率：%.1f
 info.crystal.percept=感知的频率：%.1f
 info.resonantCrystal=这种水晶看着就想把它扔出去...
 info.page.need=查看这张羊皮卷前你应当先查看：
-info.page.creative.check=创造模式下Shift+右键可以将查找并写入关于副手物品的羊皮卷
+info.page.creative.check=创造模式下Shift+右键可以查找关于副手物品的羊皮卷，并将数据写入
 info.elfPurse.coin=拥有%d元
 info.grimoire.element=魔典内蕴含的元素：
 info.grimoire.record=魔典中记载着%d个咒文
@@ -608,7 +612,6 @@ page.dejectedSkeleton.ct.fir=不知何时，骷髅开始变得忧郁了。\n忧�
 page.dejectedSkeleton.ct.sec=忧郁光芒的作用：\n红色：只接受普通剑击，反之获得回血并获得buff\n蓝色：只接受魔法攻击，反之反弹伤害\n绿色：只接受远程物理攻击，反之给予debuff\n黄色：只接受火焰或爆炸伤害，反之发生爆炸和着火\n淡灰色：将攻击随机反弹到周围单位身上包括自身\n紫色：无敌，回血并反弹任何伤害。
 page.crafting.need=需要元素参与合成：
 page.crafting.show=%s需要%d强度下限 %d 
-page.crafting.npshow=%s需要%d
 page.error=错误页面
 page.error.ct=您所需的页面已经丢失！或是异常！\n404？500~正常情况下，您不应该看到该页面！\n看到此页面的时候，请将log文件和错误信息发送给作者~如果是您自行修改nbt的结果，就不必了
 page.catalog=目录

@@ -75,6 +75,9 @@ public class MantraFootbridge extends MantraCommon {
 
 		if (pos1 == null || pos2 == null) return;
 
+		float potent = caster.iWantBePotent(1.75f, false);
+		mData.set(POTENT_POWER, potent);
+
 		Set<BlockPos> posSet = new HashSet<BlockPos>();
 		LinkedList<BlockPos> posList = new LinkedList<BlockPos>();
 		ElementStack estack = mData.get(ESInit.ELEMENTS.EARTH);
@@ -94,7 +97,8 @@ public class MantraFootbridge extends MantraCommon {
 		};
 
 		while (start.squareDistanceTo(end) > 1 && !estack.isEmpty()) {
-			estack.shrink(3);
+			int shrink = (int) (3 - Math.min((potent * 2), 2));
+			estack.shrink(shrink);
 			for (int i = 0; i < 2; i++) {
 				start = start.add(tar);
 				BlockPos pos = new BlockPos(start);
@@ -118,35 +122,40 @@ public class MantraFootbridge extends MantraCommon {
 	public boolean afterSpelling(World world, IMantraData data, ICaster caster) {
 		if (world.isRemote) return true;
 		MantraDataCommon mData = (MantraDataCommon) data;
-		if (!mData.has(POS_LIST)) return false;
-		LinkedList<BlockPos> posList = mData.get(POS_LIST);
-		if (posList.isEmpty()) return false;
-		BlockPos pos = posList.pop();
-		if (posList.isEmpty()) mData.remove(POS_LIST);
 
-		int power = mData.get(POWER);
+		int times = (int) (mData.get(POTENT_POWER) * 4 + 1);
 
-		BlockPos fly = pos;
-		for (int i = 0; i <= 100 && fly != null && fly.getY() > 0; i++) {
-			fly = fly.down();
-			if (world.isAirBlock(fly)) continue;
-			IBlockState state = world.getBlockState(fly);
-			Block block = state.getBlock();
-			if (block.isReplaceable(world, fly)) continue;
-			if (!state.isOpaqueCube()) continue;
-			if (block.hasTileEntity(state)) fly = null;
-			float hardness = block.getBlockHardness(state, world, fly);
-			if (hardness <= 0 || hardness > Math.max(power / 20, 3)) fly = null;
-			if (!state.isFullBlock() || !state.isFullCube()) fly = null;
-			break;
+		for (int n = 0; n < times; n++) {
+			if (!mData.has(POS_LIST)) return false;
+			LinkedList<BlockPos> posList = mData.get(POS_LIST);
+			if (posList.isEmpty()) return false;
+			BlockPos pos = posList.pop();
+			if (posList.isEmpty()) mData.remove(POS_LIST);
+
+			int power = mData.get(POWER);
+
+			BlockPos fly = pos;
+			for (int i = 0; i <= 100 && fly != null && fly.getY() > 0; i++) {
+				fly = fly.down();
+				if (world.isAirBlock(fly)) continue;
+				IBlockState state = world.getBlockState(fly);
+				Block block = state.getBlock();
+				if (block.isReplaceable(world, fly)) continue;
+				if (!state.isOpaqueCube()) continue;
+				if (block.hasTileEntity(state)) fly = null;
+				float hardness = block.getBlockHardness(state, world, fly);
+				if (hardness <= 0 || hardness > Math.max(power / 20, 3)) fly = null;
+				if (!state.isFullBlock() || !state.isFullCube()) fly = null;
+				break;
+			}
+
+			if (fly == null) return true;
+
+			EntityBlockMove blockMove = new EntityBlockMove(world, fly, pos);
+			blockMove.setColor(this.getColor(data));
+			world.spawnEntity(blockMove);
+			world.setBlockToAir(fly);
 		}
-
-		if (fly == null) return true;
-
-		EntityBlockMove blockMove = new EntityBlockMove(world, fly, pos);
-		blockMove.setColor(this.getColor(data));
-		world.spawnEntity(blockMove);
-		world.setBlockToAir(fly);
 
 		return true;
 	}

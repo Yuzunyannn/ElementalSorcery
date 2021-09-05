@@ -175,6 +175,7 @@ tile.starFlower.normal.name=Star Flower
 tile.starFlower.seed.name=Star Flower Seed
 tile.crudeQuartz.name=Crude Quartz
 tile.elementPlatform.name=Element Platform
+tile.fluorspar.name=Fluorspar
 
 enchantment.gatherSouls=Gather Souls
 
@@ -226,6 +227,10 @@ mantra.fireCharge.name=Fire Charge
 mantra.fireCharge.describe=With the Fire Element, generate and shoot The Fire Charge
 mantra.arrow.name=Shooter
 mantra.arrow.describe=With the Air, shooting the arrow. With the Earth&Wood, making the arrow. Fire to strengthen, Earth to punch
+mantra.potent.name=Potent
+mantra.potent.describe=Attach powerful magic to the Grimoire and become a powerful state. Your Mantra will have an extraordinary effect.\nThe Mantra not only is more powerful but also will appear special effect on normal attack with The Grimoire.\nAccumulate few powerful during casting, and many powerful will be accumulated at the end of casting.
+mantra.fluorspar.name=Fluorspar Flock
+mantra.fluorspar.describe=With the Metal, solidify the fluorescence into the rock and let the rock illuminate the surroundings.
 
 key.es.func=Function key
 
@@ -319,7 +324,6 @@ info.wrong.dimension=The existing data does not belong to this world!
 info.posSet.success=Location selected successfully: (%d,%d,%d)
 info.magicalPiece.itcando=This Magic Fragment seems to be able to craft something, emmmm...
 info.elementalCrystal.has=%s have %d, power is %d
-info.elementalCrystal.hasnp=%s have %d
 info.kyaniteTools.el=It has elemental affinity
 info.scroll.none=There are %d blank parchments in this scroll, right click to open
 info.scroll.has=There are %d parchments in this scroll, right click to open
@@ -608,7 +612,6 @@ page.dejectedSkeleton.ct.fir=不知何时，骷髅开始变得忧郁了。\n忧�
 page.dejectedSkeleton.ct.sec=忧郁光芒的作用：\n红色：只接受普通剑击，反之获得回血并获得buff\n蓝色：只接受魔法攻击，反之反弹伤害\n绿色：只接受远程物理攻击，反之给予debuff\n黄色：只接受火焰或爆炸伤害，反之发生爆炸和着火\n淡灰色：将攻击随机反弹到周围单位身上包括自身\n紫色：无敌，回血并反弹任何伤害。
 page.crafting.need=Elements are required to craft: 
 page.crafting.show=%s requires %d lower limit %d 
-page.crafting.npshow=%s requires %d
 page.error=Page Error
 page.error.ct=The page you need is missing or error!\nUnder normal circumstances, you should not see this page!\nWhen you see this page, please send the log file and error message to the author.
 page.catalog=Catalog

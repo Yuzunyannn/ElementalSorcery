@@ -91,7 +91,7 @@ public class TileStarFlower extends TileEntityNetwork implements ITickable {
 		double y = pos.getY() + 0.75;
 		double z = pos.getZ() + 0.5;
 		EffectElementMove effect = new EffectElementMove(world, new Vec3d(x, y, z));
-		effect.g = -0.0005;
+		effect.yAccelerate = 0.0005;
 		effect.setVelocity(rand.nextGaussian() * 0.01, rand.nextGaussian() * 0.01, rand.nextGaussian() * 0.01);
 		effect.setColor(estack.getColor());
 		Effect.addEffect(effect);

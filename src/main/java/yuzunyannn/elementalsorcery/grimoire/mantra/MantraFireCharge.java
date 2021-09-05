@@ -2,9 +2,11 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import java.util.Random;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.projectile.EntityFireball;
 import net.minecraft.entity.projectile.EntitySmallFireball;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -27,14 +29,32 @@ public class MantraFireCharge extends MantraCommon {
 	}
 
 	@Override
+	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
+		super.potentAttack(world, grimoire, caster, target);
+		ElementStack stack = getElement(caster, ESInit.ELEMENTS.FIRE, 1, 20);
+		if (stack.isEmpty()) return;
+		if (world.isRemote) return;
+		world.createExplosion(null, target.posX, target.posY + target.height / 2, target.posZ, 0.5f, false);
+	}
+
+	@Override
 	public void onSpelling(World world, IMantraData data, ICaster caster) {
 		int tick = caster.iWantKnowCastTick();
 		if (tick < 20) return;
-		if (tick % 5 != 0) return;
+
+		float potent = caster.iWantBePotent(0.05f, true);
+		boolean isPotent = false;
+		if (potent >= 0.2f) {
+			caster.iWantBePotent(0.05f, false);
+			isPotent = true;
+		}
+
+		if (!isPotent) {
+			if (tick % 5 != 0) return;
+		}
 
 		((MantraDataCommon) data).markContinue(true);
-		ElementStack need = new ElementStack(ESInit.ELEMENTS.FIRE, 4, 20);
-		ElementStack get = caster.iWantSomeElement(need, true);
+		ElementStack get = getElement(caster, ESInit.ELEMENTS.FIRE, isPotent ? 1 : 4, 20);
 		if (get.isEmpty()) return;
 
 		if (world.isRemote) {

@@ -1,10 +1,11 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -16,12 +17,17 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
+import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectPlayerAt;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.world.CasterHelper;
 
 public class MantraEnderTeleport extends MantraCommon {
 
@@ -29,68 +35,126 @@ public class MantraEnderTeleport extends MantraCommon {
 		this.setUnlocalizedName("enderTeleport");
 		this.setColor(0xc000eb);
 		this.setIcon("teleport");
-		this.setRarity(25);
+		this.setRarity(40);
 		this.setOccupation(5);
+	}
 
+	@Override
+	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
+		super.potentAttack(world, grimoire, caster, target);
+		if (!target.isNonBoss()) return;
+
+		BlockPos pos = caster.iWantFoothold();
+		if (pos == null) return;
+
+		ElementStack stack = getElement(caster, ESInit.ELEMENTS.ENDER, 10, 40);
+		if (stack.isEmpty()) return;
+
+		doEnderTeleport(world, target, new Vec3d(pos).addVector(0.5, 0, 0.5));
 	}
 
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
+		Entity entity = caster.iWantCaster().asEntity();
+		if (entity == null) return;
+
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		ElementStack need = new ElementStack(ESInit.ELEMENTS.ENDER, 10, 50);
-		ElementStack get = caster.iWantSomeElement(need, false);
-		dataEffect.markContinue(!get.isEmpty());
+		ElementStack stack = caster.iWantSomeElement(need, false);
+		dataEffect.markContinue(!stack.isEmpty());
+	}
+
+	@Override
+	public void onSpelling(World world, IMantraData data, ICaster caster) {
+		MantraDataCommon mdc = (MantraDataCommon) data;
+		mdc.setProgress(caster.iWantKnowCastTick(), 5);
+		super.onSpelling(world, data, caster);
 	}
 
 	@Override
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
-		if (caster.iWantKnowCastTick() < 5) return;
-		BlockPos pos = caster.iWantFoothold();
-		if (pos == null) return;
-		ElementStack need = new ElementStack(ESInit.ELEMENTS.ENDER, 10, 50);
-		ElementStack stack = caster.iWantSomeElement(need, true);
-		if (stack.isEmpty()) return;
+		MantraDataCommon mdc = (MantraDataCommon) data;
+		if (mdc.getProgress() < 1) return;
+
 		Entity entity = caster.iWantCaster().asEntity();
 		if (entity == null) return;
-		double posX = pos.getX() + 0.5;
-		double posY = pos.getY();
-		double posZ = pos.getZ() + 0.5;
-		if (world.isRemote) {
-			// 客户端的粒子效果
-			addEffect(world, new Vec3d(posX, posY, posZ));
-			addEffect(world, new Vec3d(entity.posX, entity.posY, entity.posZ));
-			return;
+
+		boolean needSuper = checkCanBeSuper(caster, entity);
+
+		BlockPos pos = findFoothold(world, caster, needSuper);
+		if (pos == null) return;
+
+		ElementStack stack = getElement(caster, ESInit.ELEMENTS.ENDER, 10, 50);
+		if (stack.isEmpty()) return;
+
+		if (needSuper) caster.iWantBePotent(0.75f, false);
+
+		doEnderTeleport(world, entity, new Vec3d(pos).addVector(0.5, 0, 0.5));
+	}
+
+	public static BlockPos findFoothold(World world, ICaster caster, boolean isSuper) {
+		if (!isSuper) return caster.iWantFoothold();
+		WantedTargetResult result = caster.iWantBlockTarget();
+		BlockPos pos = result.getPos();
+		EnumFacing facing = result.getFace();
+		if (pos == null || facing == null) return null;
+		facing = facing.getOpposite();
+
+		for (int i = 0; i < 64; i++) {
+			if (world.isOutsideBuildHeight(pos)) return null;
+			if (CasterHelper.canStand(world, pos) && CasterHelper.canStand(world, pos.up())) return pos;
+			pos = pos.offset(facing);
 		}
-		if (entity instanceof EntityPlayerMP) {
-			EntityPlayerMP player = (EntityPlayerMP) entity;
-			if (player.connection.getNetworkManager().isChannelOpen() && player.world == world
-					&& !player.isPlayerSleeping()) {
-				// 传送事件
-				EnderTeleportEvent event = new EnderTeleportEvent(player, posX, posY, posZ, 5.0F);
-				// 事件成功
-				if (!MinecraftForge.EVENT_BUS.post(event)) {
-					// 下坐骑
-					if (player.isRiding()) player.dismountRidingEntity();
-					// 移动
-					player.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
-					player.fallDistance = 0.0F;
-				}
-				if (entity.isWet()) entity.attackEntityFrom(DamageSource.DROWN, 1.0F);
-			}
-		} else if (entity != null) {
-			entity.setPositionAndUpdate(posX, posY, posZ);
-			entity.fallDistance = 0.0F;
-		}
+
+		return null;
+	}
+
+	private boolean checkCanBeSuper(ICaster caster, Entity entity) {
+		if (entity.isSneaking()) return caster.iWantBePotent(0.75f, true) >= 0.5f;
+		return false;
 	}
 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		super.onSpellingEffect(world, data, caster);
-		if (hasEffectFlags(world, data, caster, MantraEffectFlags.INDICATOR)) return;
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		if (caster.iWantCaster() == Minecraft.getMinecraft().player)
-			if (!dataEffect.hasMarkEffect(1)) dataEffect.addEffect(caster, new EffectPlayerAt(world, caster), 1);
+		if (!hasEffectFlags(world, data, caster, MantraEffectFlags.INDICATOR)) return;
+		MantraDataCommon mdc = (MantraDataCommon) data;
+		ICasterObject casterObject = caster.iWantCaster();
+		if (casterObject.isClientPlayer()) {
+			if (!mdc.hasMarkEffect(1)) mdc.addEffect(caster, new EffectPlayerAt(world, caster), 1);
+		}
+
+		Entity entity = caster.iWantCaster().asEntity();
+		if (entity == null) return;
+
+		boolean needSuper = checkCanBeSuper(caster, entity);
+
+		// super模式下 添加指针
+		if (needSuper && casterObject.isClientPlayer()) {
+			if (!mdc.hasMarkEffect(4)) {
+				EffectLookAt lookAt = new EffectLookAt(world, caster, getColor(mdc));
+				lookAt.setCondition(new ConditionEffect(caster.iWantCaster().asEntity(), mdc, 4, true) {
+					@Override
+					public Boolean apply(Void t) {
+						if (!super.apply(t)) return false;
+						isFinish = !checkCanBeSuper(caster, entity);
+						if (isFinish) {
+							data.unmarkEffect(unmark);
+							return false;
+						}
+						return true;
+					}
+				});
+				mdc.addEffect(caster, lookAt, 4);
+			}
+		}
+
+		EffectPlayerAt effectPlayAt = mdc.getMarkEffect(1, EffectPlayerAt.class);
+		if (effectPlayAt == null) return;
+
+		effectPlayAt.isGlow = needSuper;
+		effectPlayAt.pos = findFoothold(world, caster, needSuper);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -100,6 +164,35 @@ public class MantraEnderTeleport extends MantraCommon {
 					RandomHelper.rand.nextGaussian(), 0.0D, RandomHelper.rand.nextGaussian());
 		}
 		world.playSound(vec.x, vec.y, vec.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1, 1, true);
+	}
+
+	public static void doEnderTeleport(World world, Entity target, Vec3d pos) {
+		if (world.isRemote) {
+			// 客户端的粒子效果
+			addEffect(world, pos);
+			addEffect(world, new Vec3d(target.posX, target.posY, target.posZ));
+			return;
+		}
+		if (target instanceof EntityPlayerMP) {
+			EntityPlayerMP player = (EntityPlayerMP) target;
+			if (player.connection.getNetworkManager().isChannelOpen() && player.world == world
+					&& !player.isPlayerSleeping()) {
+				// 传送事件
+				EnderTeleportEvent event = new EnderTeleportEvent(player, pos.x, pos.y, pos.z, 5.0F);
+				// 事件成功
+				if (!MinecraftForge.EVENT_BUS.post(event)) {
+					// 下坐骑
+					if (player.isRiding()) player.dismountRidingEntity();
+					// 移动
+					player.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+					player.fallDistance = 0.0F;
+				}
+				if (target.isWet()) target.attackEntityFrom(DamageSource.DROWN, 1.0F);
+			}
+		} else if (target != null) {
+			target.setPositionAndUpdate(pos.x, pos.y, pos.z);
+			target.fallDistance = 0.0F;
+		}
 	}
 
 }

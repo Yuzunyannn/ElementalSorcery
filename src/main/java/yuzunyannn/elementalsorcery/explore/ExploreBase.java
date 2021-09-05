@@ -74,8 +74,7 @@ public class ExploreBase implements IExploreHandle {
 			ItemStack stack = new ItemStack(block, 1, data.getByte("bMeta"));
 			if (stack.isEmpty()) stack = new ItemStack(Item.getByNameOrId(blockId), 1, data.getByte("bMeta"));
 			String name = "";
-			if (!stack.isEmpty() && I18n.hasKey(stack.getUnlocalizedName() + ".name"))
-				name = I18n.format(stack.getUnlocalizedName() + ".name");
+			if (!stack.isEmpty()) name = stack.getDisplayName();
 			else {
 				if (I18n.hasKey(block.getUnlocalizedName() + ".name"))
 					name = I18n.format(block.getUnlocalizedName() + ".name");

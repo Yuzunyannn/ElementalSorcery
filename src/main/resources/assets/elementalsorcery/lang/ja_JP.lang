@@ -175,6 +175,7 @@ tile.starFlower.normal.name=星の花
 tile.starFlower.seed.name=星花の種
 tile.crudeQuartz.name=粗造りの石英
 tile.elementPlatform.name=元素プラットフォーム
+tile.fluorspar.name=蛍光
 
 enchantment.gatherSouls=集魂
 
@@ -226,6 +227,10 @@ mantra.fireCharge.name=火炎弾
 mantra.fireCharge.describe=火元素で作る火炎弾を発射する。
 mantra.arrow.name=射手
 mantra.arrow.describe=気元素で矢を発射する。土木元素で矢を作れる、火元素でパワーを増える，土元素で敵を撃ち飛ばす。
+mantra.potent.name=強効
+mantra.potent.describe=強力な魔力を魔典に付加し、呪文は強力な効果を発揮できる。\n呪文の効果が強くなるだけでなく、一部の呪文は魔典で普通攻撃時にも特殊な効果が発生できる。\n施法中に少量の強効をため込み、施法が終わったら瞬時に大量の強効をため込みます。
+mantra.fluorspar.name=蛍光重合
+mantra.fluorspar.describe=蛍光を岩に硬化させ、岩を周囲を明るくします。
 
 key.es.func=機能キー
 
@@ -319,7 +324,6 @@ info.wrong.dimension=既存のデータはこの緯度に属していません
 info.posSet.success=選択しました位置：(%d,%d,%d)
 info.magicalPiece.itcando=この魔力欠片は何かを合成できるようです、emmmm...
 info.elementalCrystal.has=%sは%dを含む、パワーは%d
-info.elementalCrystal.hasnp=%sは%dを含む
 info.kyaniteTools.el=元素親和性を持ってる
 info.scroll.none=この羊皮巻物の中でただ%d枚の空白の羊皮紙を含む、右クリックで開く
 info.scroll.has=この羊皮巻物の中で%d枚の羊皮紙を含む、右クリックで開く
@@ -608,7 +612,6 @@ page.dejectedSkeleton.ct.fir=不知何时，骷髅开始变得忧郁了。\n忧�
 page.dejectedSkeleton.ct.sec=忧郁光芒的作用：\n红色：只接受普通剑击，反之获得回血并获得buff\n蓝色：只接受魔法攻击，反之反弹伤害\n绿色：只接受远程物理攻击，反之给予debuff\n黄色：只接受火焰或爆炸伤害，反之发生爆炸和着火\n淡灰色：将攻击随机反弹到周围单位身上包括自身\n紫色：无敌，回血并反弹任何伤害。
 page.crafting.need=必要な元素：
 page.crafting.show=%sは %d点を必要、パワーの最低限度は%d 
-page.crafting.npshow=%sは%d点を必要
 page.error=ページエラー
 page.error.ct=このページはエラーが発生します！\n通常の場合でこのページを見ることはできません！\nこのページを見た時はlogとエラーメッセージを作者に送っていただきます。
 page.catalog=目録

@@ -92,6 +92,9 @@ public class GuiMantraShitf extends GuiScreen {
 	public float selectRoate = 0;
 	public float prevSelectRoate = selectRoate;
 
+	public float cR = 128 / 255f, cG = 114 / 255f, cB = 169 / 255f;
+	public float sR = 128 / 255f, sG = 114 / 255f, sB = 169 / 255f;
+
 	/** 每一种咒文的绘图 */
 	public class MantraInfo {
 
@@ -210,6 +213,16 @@ public class GuiMantraShitf extends GuiScreen {
 				prevSelectRoate -= 360;
 			}
 			selectRoate += (deta - selectRoate) * rate;
+
+			MantraInfo mantra = mantras.get(selected);
+			cR = cR + (mantra.r - cR) * 0.1f;
+			cG = cG + (mantra.g - cG) * 0.1f;
+			cB = cB + (mantra.b - cB) * 0.1f;
+
+			sR = Math.min((sR + (mantra.r - sR) * 0.1f) * 1.02f, 1);
+			sG = Math.min((sG + (mantra.g - sG) * 0.1f) * 1.02f, 1);
+			sB = Math.min((sB + (mantra.b - sB) * 0.1f) * 1.02f, 1);
+
 		}
 	}
 
@@ -272,7 +285,7 @@ public class GuiMantraShitf extends GuiScreen {
 
 		GlStateManager.translate(cX, cY, 0);
 		GlStateManager.rotate(roate, 0, 0, 1);
-		GlStateManager.color(128 / 255f, 114 / 255f, 169 / 255f);
+		GlStateManager.color(cR, cG, cB);
 		this.setTexture(RING, 256, 256);
 		this.draw(0, 0, size, size, 0, 0, 256, 256);
 		GlStateManager.popMatrix();
@@ -285,7 +298,7 @@ public class GuiMantraShitf extends GuiScreen {
 		// 画所有咒文图标
 		for (MantraInfo mantra : mantras) mantra.draw(partialTicks);
 		// 选择旋转
-		GlStateManager.color(202 / 255f, 197 / 255f, 224 / 255f);
+		GlStateManager.color(sR, sG, sB);
 		roate = prevSelectRoate + (selectRoate - prevSelectRoate) * partialTicks;
 		GlStateManager.rotate(roate, 0, 0, 1);
 		if (!mantras.isEmpty()) GlStateManager.translate(0, -partialRadius, 0);

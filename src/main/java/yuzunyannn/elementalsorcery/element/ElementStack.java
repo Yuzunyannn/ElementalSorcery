@@ -166,7 +166,6 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		if (estack.isEmpty()) return;
 		if (!this.areSameType(estack)) return;
 		this.grow(estack.getCount());
-		if (!this.usePower()) return;
 		// 加权平均的能量
 		int total = estack.getCount() + this.getCount();
 		total = total == 0 ? 1 : total;
@@ -184,9 +183,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
 	/** 削弱 */
 	public void weaken(float rate) {
-		if (this.usePower()) {
-			this.setPower(MathHelper.ceil(this.power * rate));
-		}
+		this.setPower(MathHelper.ceil(this.power * rate));
 	}
 
 	/** 是否为空 */
@@ -213,15 +210,9 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		return this.isEmpty();
 	}
 
-	/** 是否启用能量 */
-	public boolean usePower() {
-		return element.usePower;
-	}
-
 	/** 是否为同一个类型 */
 	public boolean areSameType(ElementStack estack) {
 		if (this.element != estack.element) return false;
-		if (!this.usePower() && this.power != estack.power) return false;
 		return true;
 	}
 

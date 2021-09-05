@@ -192,7 +192,7 @@ public class BlockStarFlower extends BlockBush implements IGrowable, Mapper, ITi
 			double y = pos.getY() + 0.7 + rand.nextFloat() * 0.15;
 			double z = pos.getZ() + 0.5 + rand.nextGaussian() * 0.2;
 			EffectElementMove effect = new EffectElementMove(world, new Vec3d(x, y, z));
-			effect.g = 0.0005;
+			effect.yAccelerate = -0.0005;
 			effect.setColor(229 / 255f, 238 / 255f, 245 / 255f);
 			Effect.addEffect(effect);
 		}

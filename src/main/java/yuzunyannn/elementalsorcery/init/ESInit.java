@@ -57,6 +57,7 @@ import yuzunyannn.elementalsorcery.block.BlockElfLeaf;
 import yuzunyannn.elementalsorcery.block.BlockElfLog;
 import yuzunyannn.elementalsorcery.block.BlockElfPlank;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
+import yuzunyannn.elementalsorcery.block.BlockFluorspar;
 import yuzunyannn.elementalsorcery.block.BlockInvalidEnchantmentTable;
 import yuzunyannn.elementalsorcery.block.BlockKyanite;
 import yuzunyannn.elementalsorcery.block.BlockLifeDirt;
@@ -144,12 +145,14 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireBall;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireCharge;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloat;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloatArea;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFluorspar;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFootbridge;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLaunch;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLightningArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLush;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraMagicStrafe;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraMiningArea;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraPotent;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSlowFall;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSprint;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
@@ -399,6 +402,7 @@ public class ESInit {
 		BLOCKS.STAR_FLOWER = new BlockStarFlower();
 		BLOCKS.CRUDE_QUARTZ = new BlockCrudeQuartz();
 		BLOCKS.ELEMENT_PLATFORM = new BlockElementPlatform();
+		BLOCKS.FLUORSPAR = new BlockFluorspar();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -518,6 +522,8 @@ public class ESInit {
 		MANTRAS.FLOAT_AREA = new MantraFloatArea();
 		MANTRAS.FIRE_CHARGE = new MantraFireCharge();
 		MANTRAS.ARROW = new MantraArrow();
+		MANTRAS.POTENT = new MantraPotent();
+		MANTRAS.FLUORSPAR = new MantraFluorspar();
 
 		MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);
 		MANTRAS.LAUNCH_EDE = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT, 0xff4a1a);
@@ -888,6 +894,13 @@ public class ESInit {
 		registerRender(BLOCKS.STAR_FLOWER, 2, "star_flower");
 		registerRender(BLOCKS.STAR_FLOWER, 4, "star_flower_element");
 		registerRender(BLOCKS.CRUDE_QUARTZ);
+		registerRender(BLOCKS.FLUORSPAR, 0, "fluorspar_stone");
+		registerRender(BLOCKS.FLUORSPAR, 1, "fluorspar_cobblestone");
+		registerRender(BLOCKS.FLUORSPAR, 2, "fluorspar_dirt");
+		registerRender(BLOCKS.FLUORSPAR, 3, "fluorspar_netherrack");
+		registerRender(BLOCKS.FLUORSPAR, 4, "fluorspar_andesite");
+		registerRender(BLOCKS.FLUORSPAR, 5, "fluorspar_granite");
+		registerRender(BLOCKS.FLUORSPAR, 6, "fluorspar_diorite");
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());

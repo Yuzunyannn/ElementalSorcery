@@ -32,6 +32,10 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 
 	public abstract String getUnlocalizedTitle();
 
+	public String getDisplayTitle() {
+		return I18n.format(this.getUnlocalizedTitle());
+	}
+
 	// 黑色背景和鼠标移动过去的显示名字
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
@@ -43,7 +47,7 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 	// 名称和物品栏信息
 	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
-		String s = I18n.format(this.getUnlocalizedTitle());
+		String s = this.getDisplayTitle();
 		this.fontRenderer.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 4210752);
 		this.fontRenderer.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8, this.ySize - 96 + 2,
 				4210752);

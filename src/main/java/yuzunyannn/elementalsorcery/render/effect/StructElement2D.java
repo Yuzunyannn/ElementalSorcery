@@ -55,7 +55,7 @@ public class StructElement2D {
 		GlStateManager.color(r, g, b, alpha);
 		GlStateManager.translate(x, y, -0.001f);
 		GlStateManager.scale(scale, scale, scale);
-		EffectElement.TEXTURE.bind();
+		EffectElement.BATCH_TYPE.bind();
 		renderRect(bufferbuilder, drawSize);
 		tessellator.draw();
 		GlStateManager.popMatrix();

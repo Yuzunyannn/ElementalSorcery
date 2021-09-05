@@ -18,6 +18,8 @@ public abstract class MantraSquareAreaAdv extends MantraSquareArea {
 	}
 
 	protected List<CollectInfo> collectList = new ArrayList<>();
+	protected float potentCollectTick = 0;
+	protected float potentPowerMax = 0;
 
 	protected void addElementCollect(ElementStack need, int maxNeed, int minNeed) {
 		if (need.isEmpty()) return;
@@ -38,10 +40,24 @@ public abstract class MantraSquareAreaAdv extends MantraSquareArea {
 		info.minNeed = minNeed;
 	}
 
+	protected void setPotentPowerCollect(float tickGet, float max) {
+		this.potentCollectTick = tickGet;
+		this.potentPowerMax = max;
+	}
+
 	@Override
 	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
 		SquareData mData = (SquareData) data;
 		if (speedTick % this.getAccumulatePreTick() != 0) return;
+
+		if (potentCollectTick > 0 && mData.getProgress() < 1) {
+			float pp = mData.get(POTENT_POWER);
+			if (pp < potentPowerMax || potentPowerMax == -1) {
+				float potent = caster.iWantBePotent(potentCollectTick, false);
+				if (potent > 0) mData.set(POTENT_POWER, pp + potent * potentCollectTick);
+			}
+		}
+
 		boolean firstInfo = true;
 		for (CollectInfo info : collectList) {
 			ElementStack estack = mData.get(info.element.getElement());

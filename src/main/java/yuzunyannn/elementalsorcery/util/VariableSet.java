@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagFloat;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
@@ -165,6 +166,21 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		@Override
 		public NBTBase serializable(Short obj) {
 			return new NBTTagShort(obj);
+		}
+
+	};
+
+	public final static IVariableType<Float> FLOAT = new IVariableType<Float>() {
+
+		@Override
+		public Float newInstance(NBTBase base) {
+			if (base instanceof NBTPrimitive) return ((NBTPrimitive) base).getFloat();
+			return 0f;
+		}
+
+		@Override
+		public NBTBase serializable(Float obj) {
+			return new NBTTagFloat(obj);
 		}
 
 	};

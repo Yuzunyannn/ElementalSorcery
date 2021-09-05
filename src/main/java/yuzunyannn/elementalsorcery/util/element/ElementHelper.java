@@ -72,10 +72,8 @@ public class ElementHelper {
 	public static void addElementInformation(ElementStack estack, List<String> tooltip) {
 		if (estack.isEmpty()) return;
 		String str;
-		if (estack.usePower()) str = I18n.format("info.elementalCrystal.has",
-				I18n.format(estack.getElementUnlocalizedName()), estack.getCount(), estack.getPower());
-		else str = I18n.format("info.elementalCrystal.hasnp", I18n.format(estack.getElementUnlocalizedName()),
-				estack.getCount());
+		str = I18n.format("info.elementalCrystal.has", I18n.format(estack.getElementUnlocalizedName()),
+				estack.getCount(), estack.getPower());
 		tooltip.add(TextFormatting.RED + str);
 	}
 

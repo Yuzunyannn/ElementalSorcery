@@ -104,8 +104,7 @@ public class PageCrafting extends PageEasy {
 
 	public int getMaxSize() {
 		int maxSize = 0;
-		for (NonNullList<Ingredient> list : itemList) 
-			if (list.size() > maxSize) maxSize = list.size();
+		for (NonNullList<Ingredient> list : itemList) if (list.size() > maxSize) maxSize = list.size();
 		return maxSize;
 	}
 
@@ -180,13 +179,8 @@ public class PageCrafting extends PageEasy {
 		if (eList == null) return;
 		TextHelper.addInfo(contexts, "page.crafting.need");
 		for (ElementStack stack : eList) {
-			if (stack.usePower()) {
-				TextHelper.addInfo(contexts, "page.crafting.show", TextFormatting.GOLD,
-						I18n.format(stack.getElementUnlocalizedName()), stack.getCount(), stack.getPower());
-			} else {
-				TextHelper.addInfo(contexts, "page.crafting.npshow", TextFormatting.GOLD,
-						I18n.format(stack.getElementUnlocalizedName()), stack.getCount());
-			}
+			TextHelper.addInfo(contexts, "page.crafting.show", TextFormatting.GOLD,
+					I18n.format(stack.getElementUnlocalizedName()), stack.getCount(), stack.getPower());
 		}
 	}
 

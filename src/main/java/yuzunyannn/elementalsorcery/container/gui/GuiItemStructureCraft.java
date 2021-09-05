@@ -10,10 +10,14 @@ public class GuiItemStructureCraft extends GuiNormal<ContainerItemStructureCraft
 		container.tileEntity.initGui(this);
 	}
 
-	
 	@Override
 	public String getUnlocalizedTitle() {
-		return container.tileEntity.getTitle();
+		return "";
+	}
+
+	@Override
+	public String getDisplayTitle() {
+		return container.tileEntity.getDisplayTitle();
 	}
 
 	@Override

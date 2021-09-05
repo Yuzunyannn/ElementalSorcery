@@ -61,24 +61,24 @@ public class EffectElementFly extends EffectElement {
 	public void onUpdate() {
 		if (this.isEnd) {
 			super.onUpdate();
-		} else
-			this.move();
+		} else this.move();
 	}
 
 	private void move() {
 		this.prevPosX = this.posX;
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
+
 		this.prevAlpha = this.alpha;
+		this.prevScale = this.scale;
+
 		this.posY += this.motionY;
 		if (this.fadeOut) {
 			this.alpha -= 0.02;
-			if (this.alpha <= 0.5)
-				this.fadeOut = false;
+			if (this.alpha <= 0.5) this.fadeOut = false;
 		} else {
 			this.alpha += 0.02;
-			if (this.alpha >= 0.75)
-				this.fadeOut = true;
+			if (this.alpha >= 0.75) this.fadeOut = true;
 		}
 		if (this.straight) {
 			this.motionY += g;
@@ -89,8 +89,7 @@ public class EffectElementFly extends EffectElement {
 					this.theta = this.dtheta = AT_HIGH_SPEED / r;
 				}
 			} else {
-				if (this.posY < bottom)
-					this.setEnd();
+				if (this.posY < bottom) this.setEnd();
 			}
 		} else {
 			this.theta += this.dtheta;
@@ -101,8 +100,7 @@ public class EffectElementFly extends EffectElement {
 			this.posX = pos.x;
 			this.posZ = pos.z;
 			if (this.upward) {
-				if (this.theta >= Math.PI)
-					this.setEnd();
+				if (this.theta >= Math.PI) this.setEnd();
 			} else {
 				if (this.theta >= Math.PI) {
 					this.straight = true;

@@ -50,7 +50,7 @@ public class BlockElfTreeCore extends BlockContainerNormal {
 		double x = rand.nextFloat() * 0.5 - 0.25;
 		double z = rand.nextFloat() * 0.5 - 0.25;
 		EffectElementMove effect = new EffectElementMove(worldIn, at.addVector(x, 0, z));
-		effect.g = 0.0025;
+		effect.yAccelerate = -0.0025;
 		effect.setColor(0x0d9d17);
 		Effect.addEffect(effect);
 	}

@@ -1,8 +1,12 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -26,6 +30,26 @@ public class MantraSprint extends MantraCommon {
 	}
 
 	@Override
+	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
+		ElementStack stack = getElement(caster, ESInit.ELEMENTS.AIR, 2, 25);
+		if (stack.isEmpty()) return;
+
+		float potent = caster.iWantBePotent(0.2f, false);
+		doPotentAttackEffect(world, caster, target);
+
+		Vec3d dir = caster.iWantDirection();
+		dir = dir.addVector(0, 0.5, 0).normalize();
+		float speed = MathHelper.clamp(MathHelper.sqrt(stack.getPower() / 10f), 1.5f, 5) * (1 + potent / 5);
+		dir = dir.scale(speed);
+		target.motionX += dir.x;
+		target.motionY += dir.y;
+		target.motionZ += dir.z;
+		if (target instanceof EntityLivingBase) {
+			((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 100, 3));
+		}
+	}
+
+	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataCommon = (MantraDataCommon) data;
 		ElementStack need = new ElementStack(ESInit.ELEMENTS.AIR, 4, 30);
@@ -35,14 +59,16 @@ public class MantraSprint extends MantraCommon {
 		if (entity == null) return;
 		dataCommon.markContinue(true);
 		int power = get.getPower();
-		double scale = MathHelper.clamp(MathHelper.sqrt(power / 10), 1.5, 6);
-		scale = 6;
+		double scale = MathHelper.clamp(MathHelper.sqrt(power / 10f), 1.5, 6);
 		Vec3d look = entity.getLookVec().addVector(0, 0.05, 0).normalize().scale(scale);
 		entity.motionX += look.x;
 		entity.motionY += look.y;
 		entity.motionZ += look.z;
 		world.playSound((EntityPlayer) null, entity.posX, entity.posY, entity.posZ, SoundEvents.ENTITY_PLAYER_BIG_FALL,
 				SoundCategory.PLAYERS, 1.0F, 1.0F);
+		if (entity instanceof EntityLivingBase) {
+			((EntityLivingBase) entity).addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST, 100, 3));
+		}
 		onSpelling(world, dataCommon, caster);
 	}
 

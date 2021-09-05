@@ -162,6 +162,7 @@ public class ESObjects {
 		public Block STAR_FLOWER;
 		public Block CRUDE_QUARTZ;
 		public Block ELEMENT_PLATFORM;
+		public Block FLUORSPAR;
 	}
 
 	static public class Elements {
@@ -202,6 +203,8 @@ public class ESObjects {
 		public Mantra FLOAT_AREA;
 		public Mantra FIRE_CHARGE;
 		public Mantra ARROW;
+		public Mantra POTENT;
+		public Mantra FLUORSPAR;
 	}
 
 	static public class Village {

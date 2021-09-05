@@ -26,6 +26,10 @@ public abstract class MantraSquareArea extends MantraCommon {
 			this.size = size;
 		}
 
+		public void setSize(float size) {
+			this.size = Math.round(size);
+		}
+
 		public void setDelay(int delay) {
 			this.delay = delay;
 		}

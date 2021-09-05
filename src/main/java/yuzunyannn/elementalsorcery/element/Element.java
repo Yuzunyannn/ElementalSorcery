@@ -29,11 +29,6 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 	/** 元素的颜色 */
 	private int color;
 
-	/**
-	 * 是否元素使用能量系统 如果使用，相同元素不同能量的ElementStack看作同一类，进行合并
-	 */
-	public final boolean usePower;
-
 	public static int rgb(int r, int g, int b) {
 		return r << 16 | g << 8 | b;
 	}
@@ -43,13 +38,7 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 	}
 
 	public Element(int color) {
-		this(color, true);
-	}
-
-	public Element(int color, boolean usePower) {
 		this.color = color;
-		this.usePower = usePower;
-
 	}
 
 	/** 非本地化名称 */
@@ -180,12 +169,10 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 			String s = Integer.toString(count);
 			mc.fontRenderer.drawString(s, x + +19 - 2 - mc.fontRenderer.getStringWidth(s), y + 9, 16777215, true);
 		}
-		if (estack.usePower()) {
-			int power = estack.getPower();
-			if (power > 1) {
-				String s = Integer.toString(power);
-				mc.fontRenderer.drawString(s, x + +19 - 2 - mc.fontRenderer.getStringWidth(s), y - 3, 0xfff993, true);
-			}
+		int power = estack.getPower();
+		if (power > 1) {
+			String s = Integer.toString(power);
+			mc.fontRenderer.drawString(s, x + +19 - 2 - mc.fontRenderer.getStringWidth(s), y - 3, 0xfff993, true);
 		}
 	}
 

@@ -26,7 +26,7 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 		this.setUnlocalizedName("miningArea");
 		this.setColor(0xc8971e);
 		this.setIcon("auto_mining");
-		this.setRarity(2);
+		this.setRarity(20);
 		this.setOccupation(10);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.EARTH, 2, 75), 400, 32);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.METAL, 3, 50), -1, 32);
@@ -46,7 +46,8 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 	@Override
 	public void init(World world, SquareData data, ICaster caster, BlockPos pos) {
 		ElementStack earth = data.get(ESInit.ELEMENTS.EARTH);
-		data.setSize(Math.min(earth.getPower() / 200, 4) * 2 + 8);
+		float rate = 1f * caster.iWantBePotent(2f, false) + 1;
+		data.setSize(Math.min(earth.getPower() / 200, 4) * 2 * rate + 8);
 		data.set(LAYER, (short) (pos.getY() - 1));
 	}
 

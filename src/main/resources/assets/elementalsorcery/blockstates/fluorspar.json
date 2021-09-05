@@ -1,0 +1,48 @@
+{
+	"forge_marker": 1,
+	"defaults": {
+		"model": "minecraft:cube_all",
+		"textures": {
+			"all": "elementalsorcery:blocks/fluorspar/stone"
+		}
+	},
+	"variants": {
+		"variant": {
+			"stone": {
+				"textures": {
+					"all": "elementalsorcery:blocks/fluorspar/stone"
+				}
+			},
+			"cobblestone": {
+				"textures": {
+					"all": "elementalsorcery:blocks/fluorspar/cobblestone"
+				}
+			},
+			"dirt": {
+				"textures": {
+					"all": "elementalsorcery:blocks/fluorspar/dirt"
+				}
+			},
+			"netherrack": {
+				"textures": {
+					"all": "elementalsorcery:blocks/fluorspar/netherrack"
+				}
+			},
+			"andesite": {
+				"textures": {
+					"all": "elementalsorcery:blocks/fluorspar/andesite"
+				}
+			},
+			"diorite": {
+				"textures": {
+					"all": "elementalsorcery:blocks/fluorspar/diorite"
+				}
+			},
+			"granite": {
+				"textures": {
+					"all": "elementalsorcery:blocks/fluorspar/granite"
+				}
+			}
+		}
+	}
+}

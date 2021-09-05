@@ -1,9 +1,7 @@
 package yuzunyannn.elementalsorcery.grimoire;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTBase;
@@ -24,7 +22,9 @@ public class MantraDataCommon implements IMantraData {
 
 	// ---动态数据----
 
-	public final Set<Short> effectSet = new HashSet<>();
+	@SideOnly(Side.CLIENT)
+	public final Map<Short, EffectCondition> effectMap = new HashMap<>();
+
 	public int speedTick;
 	protected boolean markContinue;
 	/** 当前进度数据 */
@@ -50,16 +50,33 @@ public class MantraDataCommon implements IMantraData {
 		return markContinue;
 	}
 
-	public void markEffect(int id) {
-		effectSet.add((short) id);
+	// effect
+
+	@SideOnly(Side.CLIENT)
+	public void markEffect(int id, EffectCondition effect) {
+		effectMap.put((short) id, effect);
 	}
 
+	@SideOnly(Side.CLIENT)
 	public void unmarkEffect(int id) {
-		effectSet.remove((short) id);
+		effectMap.remove((short) id);
 	}
 
+	@SideOnly(Side.CLIENT)
 	public boolean hasMarkEffect(int id) {
-		return effectSet.contains((short) id);
+		return effectMap.containsKey((short) id);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public EffectCondition getMarkEffect(int id) {
+		return effectMap.get((short) id);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public <T extends EffectCondition> T getMarkEffect(int id, Class<T> cls) {
+		EffectCondition effect = effectMap.get((short) id);
+		if (cls.isAssignableFrom(effect.getClass())) return (T) effect;
+		return null;
 	}
 
 	// ---进度数据----
@@ -96,7 +113,7 @@ public class MantraDataCommon implements IMantraData {
 			if (co.asEntity() == null) return;
 			effect.setCondition(new ConditionEffect(co.asEntity(), this, markId, checkContinue));
 		}
-		markEffect(markId);
+		markEffect(markId, effect);
 		Effect.addEffect(effect);
 	}
 

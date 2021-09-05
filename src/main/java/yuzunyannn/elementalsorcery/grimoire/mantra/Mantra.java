@@ -1,10 +1,16 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -94,6 +100,15 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 		return false;
 	}
 
+	/** 是否可以进行强效攻击 */
+	public boolean canPotentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
+		return false;
+	}
+
+	/** 强效攻击，用魔典攻击敌人时调用 */
+	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
+	}
+
 	/** 获取咒文的稀有度，值越小，越稀有。小于0表示不存在 */
 	public int getRarity(@Nullable World world, @Nullable BlockPos pos) {
 		return rarity;
@@ -161,6 +176,12 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 		mc.getTextureManager().bindTexture(res);
 		suggestSize = suggestSize * 0.5f;
 		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		String describe = getUnlocalizedName() + ".describe";
+		if (I18n.hasKey(describe)) tooltip.add(I18n.format(describe));
 	}
 
 	@Nonnull

@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
@@ -19,11 +20,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
+import yuzunyannn.elementalsorcery.grimoire.AttackCaster;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.util.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ItemGrimoire extends Item {
@@ -85,6 +89,34 @@ public class ItemGrimoire extends Item {
 	}
 
 	@Override
+	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity targetEntity) {
+		float f = player.getCooledAttackStrength(0);
+		if (f != 1) return false;
+
+		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+		if (grimoire == null) return false;
+		grimoire.loadState(stack);
+		Grimoire.Info info = grimoire.getInfo(grimoire.getSelected());
+		if (info == null) return false;
+
+		try {
+			AttackCaster caster = new AttackCaster(player, grimoire);
+			boolean attack = info.getMantra().canPotentAttack(player.world, stack, caster, targetEntity);
+			if (!attack) return false;
+
+			info.getMantra().potentAttack(player.world, stack, caster, targetEntity);
+			if (!player.world.isRemote) grimoire.saveState(stack);
+			player.resetCooldown();
+		} catch (Exception e) {
+			ElementalSorcery.logger.warn("强效攻击出现异常", e);
+			ExceptionHelper.warnSend(player.world, "强效攻击出现异常");
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		NBTTagCompound nbt = stack.getTagCompound();
@@ -110,8 +142,7 @@ public class ItemGrimoire extends Item {
 				else {
 					String name = I18n.format(m.getUnlocalizedName() + ".name");
 					tooltip.add(TextFormatting.AQUA + I18n.format("info.grimoire.current", name));
-					String describe = m.getUnlocalizedName() + ".describe";
-					if (I18n.hasKey(describe)) tooltip.add(I18n.format(describe));
+					info.getMantra().addInformation(stack, worldIn, tooltip, flagIn);
 				}
 			} else tooltip.add(TextFormatting.AQUA + I18n.format("info.grimoire.error"));
 		}
@@ -121,6 +152,10 @@ public class ItemGrimoire extends Item {
 		tooltip.add(TextFormatting.YELLOW + I18n.format("info.grimoire.element"));
 		boolean has = ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
 		if (!has) tooltip.add(I18n.format("info.none"));
+
+		if (ElementalSorcery.isDevelop) {
+			tooltip.add("Power: " + grimoire.getPotent() + " - " + grimoire.potentPoint);
+		}
 	}
 
 }

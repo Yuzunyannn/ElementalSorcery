@@ -18,6 +18,7 @@ public class StarPrays {
 		prays.add(new StarPrayBackHome());
 		prays.add(new StarPrayEnchantment());
 		prays.add(new StarPrayItemChange());
+		prays.add(new StarPrayGrimoirePotent());
 	}
 
 }

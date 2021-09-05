@@ -60,9 +60,11 @@ public class MantraMagicStrafe extends MantraCommon {
 			return;
 		}
 
+		float potent = caster.iWantBePotent(0.05f, false);
+
 		get.grow(36);
 		get.weaken(Math.min(tick / 4, 60) / 20f);
-		float dmg = Math.max(ItemMagicBlastWand.getDamage(get), 0.25f);
+		float dmg = Math.max(ItemMagicBlastWand.getDamage(get), 0.25f) * (1 + potent * 0.5f);
 		DamageSource ds = DamageHelper.getMagicDamageSource(caster.iWantCaster().asEntity(),
 				caster.iWantDirectCaster().asEntity());
 		target.attackEntityFrom(ds, dmg);

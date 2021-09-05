@@ -5,8 +5,10 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -31,6 +33,16 @@ public class MantraLush extends MantraCommon {
 		this.setColor(0x32CD32);
 		this.setIcon("lush");
 		this.setRarity(75);
+	}
+
+	@Override
+	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
+		ElementStack stack = getElement(caster, ESInit.ELEMENTS.WOOD, 1, 10);
+		if (stack.isEmpty()) return;
+
+		float potent = caster.iWantBePotent(0.2f, false);
+		doPotentAttackEffect(world, caster, target);
+		magicAt(world, target.getPosition(), caster, stack.getPower() * (1 + potent));
 	}
 
 	@Override
@@ -84,7 +96,7 @@ public class MantraLush extends MantraCommon {
 		for (int i = 0; i < rand.nextInt(3) + 1; i++) {
 			Vec3d at = new Vec3d(pos).addVector(rand.nextDouble(), rand.nextDouble() * 0.25 + 0.1, rand.nextDouble());
 			EffectElementMove effect = new EffectElementMove(world, at);
-			effect.g = -0.001;
+			effect.yAccelerate = 0.001;
 			effect.setColor(this.getRenderColor());
 			Effect.addEffect(effect);
 		}
@@ -119,6 +131,11 @@ public class MantraLush extends MantraCommon {
 		// 泥土变草
 		if (block == Blocks.DIRT) {
 			world.setBlockState(pos, Blocks.GRASS.getDefaultState());
+			return;
+		}
+		// 雪消失
+		if (block == Blocks.SNOW_LAYER) {
+			world.setBlockState(pos, Blocks.AIR.getDefaultState());
 			return;
 		}
 		// 草方块长草

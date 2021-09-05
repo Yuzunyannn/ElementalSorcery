@@ -46,15 +46,30 @@ public class MantraSlowFall extends MantraCommon {
 		if (entity == null) return;
 		dataEffect.markContinue(true);
 
-		if (entity.motionY < -0.2) {
+		float potent = caster.iWantBePotent(0.05f, true);
+		Vec3d look = entity.getLookVec();
+
+		if (potent >= 0.75f) {
+			caster.iWantBePotent(0.05f, false);
+			look = look.scale(0.05 * (1 + potent));
+			if (entity.motionY < 0) {
+				entity.fallDistance *= 0.7;
+				entity.motionY *= 0.7;
+			}
+			entity.motionX += look.x;
+			entity.motionZ += look.z;
+			entity.motionY += look.y;
+		} else if (entity.motionY < -0.2) {
 			entity.fallDistance *= 0.7;
 			entity.motionY *= 0.7;
 			if (!entity.onGround) {
-				Vec3d look = entity.getLookVec().scale(0.05);
+				potent = caster.iWantBePotent(0.01f, false);
+				look = look.scale(0.05 * (1 + potent));
 				entity.motionX += look.x;
 				entity.motionZ += look.z;
 			}
 		}
+
 		if (world.isRemote) onSpellingEffect(world, data, caster);
 	}
 

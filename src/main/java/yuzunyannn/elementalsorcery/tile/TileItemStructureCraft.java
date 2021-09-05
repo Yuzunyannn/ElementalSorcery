@@ -67,8 +67,8 @@ public abstract class TileItemStructureCraft extends TileEntityNetwork implement
 		return ouputInv.getStackInSlot(0);
 	}
 
-	public String getTitle() {
-		return this.world.getBlockState(pos).getBlock().getUnlocalizedName() + ".name";
+	public String getDisplayTitle() {
+		return this.world.getBlockState(pos).getBlock().getLocalizedName();
 	}
 
 	abstract public void initGui(ContainerItemStructureCraft gui);

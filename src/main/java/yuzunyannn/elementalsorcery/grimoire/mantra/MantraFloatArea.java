@@ -6,6 +6,9 @@ import java.util.Random;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.MobEffects;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -32,9 +35,22 @@ public class MantraFloatArea extends MantraSquareAreaAdv {
 	}
 
 	@Override
+	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
+		super.potentAttack(world, grimoire, caster, target);
+
+		ElementStack stack = getElement(caster, ESInit.ELEMENTS.AIR, 2, 20);
+		if (stack.isEmpty()) return;
+		target.motionY += 1;
+		if (target instanceof EntityLivingBase) {
+			((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 120, 3));
+		}
+	}
+
+	@Override
 	public void init(World world, SquareData data, ICaster caster, BlockPos pos) {
-		ElementStack fire = data.get(ESInit.ELEMENTS.AIR);
-		data.setSize(Math.min(fire.getPower() / 80, 12) + 6);
+		ElementStack air = data.get(ESInit.ELEMENTS.AIR);
+		float rate = 0.6f * caster.iWantBePotent(0.5f, false) + 1;
+		data.setSize(Math.min(air.getPower() / 80, 12) * rate + 6);
 	}
 
 	@Override

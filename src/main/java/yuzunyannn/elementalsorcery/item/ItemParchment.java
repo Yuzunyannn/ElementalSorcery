@@ -49,8 +49,10 @@ public class ItemParchment extends Item {
 		if (Pages.isVaild(stack)) {
 			Page page = Pages.getPage(stack);
 			page.addItemInformation(stack, worldIn, tooltip, flagIn);
-		} else if (Minecraft.getMinecraft().player.isCreative()) {
-			tooltip.add(TextFormatting.YELLOW + I18n.format("info.page.creative.check"));
+		} else {
+			EntityPlayer player = Minecraft.getMinecraft().player;
+			if (player != null && player.isCreative())
+				tooltip.add(TextFormatting.YELLOW + I18n.format("info.page.creative.check"));
 		}
 		ItemStack inner = RecipeRiteWrite.getInnerStack(stack);
 		if (!inner.isEmpty()) {

@@ -71,6 +71,9 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 	protected short at = 0;
 	protected short capacity = 0;
 	protected short capacityMax = 20;
+	/** 强效 */
+	protected float potent = 0;
+	public float potentPoint;
 
 	/** 获取仓库 */
 	@Nullable
@@ -138,6 +141,29 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 		this.capacityMax = (short) capacityMax;
 	}
 
+	public float getPotent() {
+		if (potentPoint <= 0) return 0;
+		return potent;
+	}
+
+	public void setPotent(float potent) {
+		this.potent = Math.max(potent, 0);
+	}
+
+	public void addPotentPoint(float point) {
+		this.potentPoint = this.potentPoint + point;
+		if (this.potentPoint <= 0) {
+			this.potentPoint = 0;
+			this.potent = 0;
+		}
+	}
+
+	public void addPotent(float potent, float point) {
+		if (this.potent == 0) potentPoint = 0;
+		this.potent = (potent * point + this.potent * potentPoint) / (point + potentPoint);
+		addPotentPoint(point);
+	}
+
 	@Override
 	public boolean hasState(NBTTagCompound nbt) {
 		return nbt.hasKey("mantra", NBTTag.TAG_LIST);
@@ -162,6 +188,8 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 		capacity = nbt.getShort("capacity");
 		capacityMax = nbt.getShort("capacityMax");
 		at = nbt.getShort("at");
+		potent = nbt.getFloat("potent");
+		potentPoint = nbt.getFloat("potentP");
 	}
 
 	@Override
@@ -176,6 +204,9 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 		nbt.setShort("capacity", capacity);
 		nbt.setShort("capacityMax", capacityMax);
 		nbt.setShort("at", at);
+		nbt.setFloat("potent", potent);
+		nbt.setFloat("potentP", potentPoint);
+
 	}
 
 	@Override
