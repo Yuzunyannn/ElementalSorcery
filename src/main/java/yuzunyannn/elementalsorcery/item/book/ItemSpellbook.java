@@ -111,7 +111,7 @@ public class ItemSpellbook extends Item implements IItemUseClientUpdate {
 		IElementInventory inventory = book.getInventory();
 		if (inventory == null) return;
 		inventory.loadState(stack);
-		ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
+		inventory.addInformation(worldIn, tooltip, flagIn);
 	}
 
 	// 添加能力

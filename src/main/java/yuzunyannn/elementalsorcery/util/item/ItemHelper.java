@@ -25,6 +25,12 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemHelper {
 
+	static public NBTTagCompound getOrCreateTagCompound(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) stack.setTagCompound(nbt = new NBTTagCompound());
+		return nbt;
+	}
+
 	@Nonnull
 	static public ItemMatchResult tryMatchItemInWord(World world, BlockPos pos, AxisAlignedBB aabb,
 			List<ItemStack> stacks) {

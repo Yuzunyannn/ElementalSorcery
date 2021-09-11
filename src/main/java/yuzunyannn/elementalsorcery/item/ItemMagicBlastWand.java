@@ -74,7 +74,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		IElementInventory einv = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 		einv.loadState(stack);
-		ElementHelper.addElementInformation(einv, worldIn, tooltip, flagIn);
+		einv.addInformation(worldIn, tooltip, flagIn);
 	}
 
 	@Override

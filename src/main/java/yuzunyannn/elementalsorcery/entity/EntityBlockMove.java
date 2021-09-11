@@ -336,7 +336,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			if (ticksExisted % 6 != 0) return;
 			BlockPos to = new BlockPos(trace.to);
 			AxisAlignedBB aabb = Block.FULL_BLOCK_AABB;
-			if (state != null) aabb = state.getBlock().getBoundingBox(state, world, to);
+			if (state != null) aabb = state.getBoundingBox(world, to);
 			Vec3d pos = this.getPositionVector().addVector(-this.width / 2, 0, -this.width / 2);
 			for (int x = 0; x <= 1; x++) {
 				for (int y = 0; y <= 1; y++) {

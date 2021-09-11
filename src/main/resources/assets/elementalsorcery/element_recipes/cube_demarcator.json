@@ -1,0 +1,26 @@
+{
+	"pattern": [
+		"FGM",
+		"GCG",
+		"EGZ"
+	],
+	"key": {
+		"C": "elementalsorcery:cube_core",
+		"F": "elementalsorcery:scarlet_crystal",
+		"Z": "elementalsorcery:azure_crystal",
+		"M": "elementalsorcery:magic_stone",
+		"E": "elementalsorcery:elf_crystal",
+		"G": "minecraft:gold_ingot"
+	},
+	"element": [
+		{
+			"id": "earth",
+			"size": 50,
+			"power": 10
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:cube_demarcator",
+		"count": 1
+	}
+}

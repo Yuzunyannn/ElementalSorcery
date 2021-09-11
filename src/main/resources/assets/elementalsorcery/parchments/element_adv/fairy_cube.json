@@ -2,7 +2,7 @@
     "lev": 4,
     "need": [
         "elf/dread_cube",
-        "elf/elf_post",
+        "elf/elf_floor_post",
         "element_adv/element_platform"
     ],
     "linked": "elementalsorcery:fairy_cube",

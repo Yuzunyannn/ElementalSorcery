@@ -2,26 +2,42 @@ package yuzunyannn.elementalsorcery.block.altar;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
+import yuzunyannn.elementalsorcery.util.ColorHelper;
+import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.element.ElementInventoryLimit;
 
 public class BlockElementalCube extends BlockElementContainer {
 
@@ -30,7 +46,18 @@ public class BlockElementalCube extends BlockElementContainer {
 		ItemBlock item = new ItemBlock(this) {
 			@Override
 			public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-				return new CapabilityProvider.ElementInventoryUseProvider(stack);
+				return new CapabilityProvider.ElementInventoryUseProvider(stack, new ElementInventoryLimit(1));
+			}
+
+			@Override
+			public String getItemStackDisplayName(ItemStack stack) {
+				String name = super.getItemStackDisplayName(stack);
+				EnumDyeColor color = getDyeColor(stack);
+				if (color != null) {
+					String colorName = I18n.translateToLocal("item.fireworksCharge." + color.getUnlocalizedName());
+					name = name + ColorHelper.toTextFormatting(color) + " " + colorName;
+				}
+				return name;
 			}
 		};
 		item.setMaxStackSize(1);
@@ -89,12 +116,96 @@ public class BlockElementalCube extends BlockElementContainer {
 	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
 		List<Element> list = Element.REGISTRY.getValues();
 		for (Element e : list) {
+			if (e == ESInit.ELEMENTS.VOID) {
+				for (EnumDyeColor dye : EnumDyeColor.values()) {
+					ItemStack stack = new ItemStack(this);
+					items.add(setDyeColor(stack, dye));
+				}
+			}
 			ItemStack stack = new ItemStack(this);
 			ElementStack estack = new ElementStack(e, 10000, 1000);
 			IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 			inventory.setStackInSlot(0, estack);
+			
+			ElementInventoryLimit cc = (ElementInventoryLimit) inventory;
+			cc.setLowerLimit(100);
+			
 			inventory.saveState(stack);
 			items.add(stack);
+
+		}
+	}
+
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (worldIn.isRemote) {
+			TileElementalCube cube = BlockHelper.getTileEntity(worldIn, pos, TileElementalCube.class);
+			if (cube != null && cube.wake <= 0) cube.colorRate = 1;
+		}
+		return false;
+	}
+
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase player,
+			ItemStack stack) {
+		super.onBlockPlacedBy(worldIn, pos, state, player, stack);
+		TileElementalCube cube = BlockHelper.getTileEntity(worldIn, pos, TileElementalCube.class);
+		if (cube == null) return;
+		cube.setDyeColor(getDyeColor(stack));
+	}
+	
+
+	@Override
+	protected void modifyDropStack(IBlockAccess world, BlockPos pos, ItemStack stack, TileEntity originTile) {
+		super.modifyDropStack(world, pos, stack, originTile);
+		if (originTile instanceof TileElementalCube) setDyeColor(stack, ((TileElementalCube) originTile).getDyeColor());
+	}
+
+	@Nullable
+	public static EnumDyeColor getDyeColor(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) return null;
+		if (!nbt.hasKey("colorMeta")) return null;
+		return EnumDyeColor.byMetadata(nbt.getByte("colorMeta"));
+	}
+
+	public static ItemStack setDyeColor(ItemStack stack, EnumDyeColor color) {
+		if (color == null) return stack;
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) stack.setTagCompound(nbt = new NBTTagCompound());
+		nbt.setByte("colorMeta", (byte) color.getMetadata());
+		return stack;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static Color toColorType(EnumDyeColor dye) {
+		if (dye == null) return defaultColor;
+		Vec3d color = ColorHelper.color(dye.getColorValue());
+		color = new Vec3d(color.x * 0.5, color.y * 0.5, color.z * 0.5);
+		return new Color(dye.getColorValue(), ColorHelper.color(color));
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static final Color defaultColor = new Color(0x48fff9, 0x1d736d);
+
+	@SideOnly(Side.CLIENT)
+	public static class Color {
+
+		final Vec3d base;
+		final Vec3d cover;
+
+		public Color(int base, int cover) {
+			this.base = ColorHelper.color(base);
+			this.cover = ColorHelper.color(cover);
+		}
+
+		public Vec3d getBaseColor() {
+			return base;
+		}
+
+		public Vec3d getCoverColor() {
+			return cover;
 		}
 	}
 }

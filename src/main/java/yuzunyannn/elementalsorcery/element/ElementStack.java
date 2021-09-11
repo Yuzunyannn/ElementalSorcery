@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.element;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
@@ -11,6 +12,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 
@@ -231,7 +234,12 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
 	/** 获取元素名称 */
 	public String getElementUnlocalizedName() {
-		return this.getElement().getUnlocalizedName(this) + ".name";
+		return getElement().getUnlocalizedName(this) + ".name";
+	}
+
+	@SideOnly(Side.CLIENT)
+	public String getDisplayName() {
+		return I18n.format(this.getElementUnlocalizedName());
 	}
 
 	public ITextComponent getTextComponent() {

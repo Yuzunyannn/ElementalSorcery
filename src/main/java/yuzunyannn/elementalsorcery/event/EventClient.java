@@ -37,6 +37,7 @@ import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.ts.PocketWatchClient;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
 
 @SideOnly(Side.CLIENT)
@@ -110,9 +111,7 @@ public class EventClient {
 		tickRender++;
 		// 全局旋转
 		globalRotate += DGLOBAL_ROTATE;
-		if (globalRotate >= 360 * 1000) {
-			globalRotate -= 360 * 1000;
-		}
+		if (globalRotate >= 360 * 10000) globalRotate -= 360 * 10000;
 		// 全局随机整数
 		if (tick % 80 == 0) {
 			randInt = rand.nextInt();
@@ -236,10 +235,7 @@ public class EventClient {
 		tooltip.add(TextFormatting.DARK_RED + I18n.format("info.itemCrystal.complex", teInfo.complex()));
 		for (ElementStack estack : estacks) {
 			if (estack.isEmpty()) continue;
-			String str;
-			str = I18n.format("info.elementalCrystal.has", I18n.format(estack.getElementUnlocalizedName()),
-					estack.getCount(), estack.getPower());
-			tooltip.add(TextFormatting.RED + str);
+			ElementHelper.addElementInformation(estack, tooltip);
 		}
 
 		if (ElementalSorcery.isDevelop) {

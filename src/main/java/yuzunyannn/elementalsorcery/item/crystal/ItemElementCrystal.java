@@ -35,6 +35,6 @@ public class ItemElementCrystal extends ItemCrystal {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
 		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 		inventory.loadState(stack);
-		ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
+		inventory.addInformation(worldIn, tooltip, flagIn);
 	}
 }

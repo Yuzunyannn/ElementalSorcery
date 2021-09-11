@@ -4,7 +4,7 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.EnumDyeColor;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -13,18 +13,19 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementFly;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
+import yuzunyannn.elementalsorcery.util.ColorHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
-import yuzunyannn.elementalsorcery.util.obj.Vertex;
+import yuzunyannn.elementalsorcery.util.element.ElementInventoryLimit;
 
 public class TileElementalCube extends TileEntityNetwork implements ITickable, IAltarWake {
 
@@ -71,41 +72,42 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 
 	}
 
-	// 保存句柄
-	private static IStorage<IElementInventory> storage = ElementInventory.ELEMENTINVENTORY_CAPABILITY.getStorage();
 	// 仓库
-	private IElementInventory inventory = new ElementInventory();
+	protected ElementInventory inventory = new ElementInventoryLimit();
 
-	// 拥有能力
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability) { return true; }
+		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability) return true;
 		return super.hasCapability(capability, facing);
 	}
 
-	// 获取能力
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability) { return (T) inventory; }
+		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY == capability) return (T) inventory;
 		return super.getCapability(capability, facing);
+	}
+
+	@Override
+	protected void setWorldCreate(World worldIn) {
+		this.setWorld(worldIn);
 	}
 
 	// 加载
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		super.readFromNBT(compound);
-		storage.readNBT(ElementInventory.ELEMENTINVENTORY_CAPABILITY, inventory, null,
-				compound.getCompoundTag("inventory"));
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		inventory.deserializeNBT(nbt.getCompoundTag("inventory"));
+		if (nbt.hasKey("color")) setDyeColor(EnumDyeColor.byMetadata(nbt.getByte("color")));
 		if (this.isSending()) {
 			if (ElementHelper.isEmpty(inventory)) this.wake = 0;
 		}
 	}
 
-	// 保存
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound.setTag("inventory", storage.writeNBT(ElementInventory.ELEMENTINVENTORY_CAPABILITY, inventory, null));
-		return super.writeToNBT(compound);
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		nbt.setTag("inventory", inventory.serializeNBT());
+		if (dyeColor != null) nbt.setByte("color", (byte) dyeColor.getMetadata());
+		return super.writeToNBT(nbt);
 	}
 
 	// 唤醒
@@ -132,14 +134,8 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 
 	// 设置仓库
 	public void setElementInventory(IElementInventory inventory) {
-		this.inventory = inventory;
+		ElementHelper.toElementInventory(inventory, this.inventory);
 		if (world.isRemote) changeColor();
-	}
-
-	// 更新规则
-	@Override
-	public boolean shouldRefresh(World world, BlockPos pos, IBlockState oldState, IBlockState newState) {
-		return oldState.getBlock() != newState.getBlock();
 	}
 
 	@Override
@@ -150,8 +146,36 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 		}
 	}
 
-	// 默认颜色
-	public static final Vertex ORIGIN_COLOR = new Vertex(29.0F / 255, 115.0F / 255, 109.0F / 255);
+	// 记录的颜色类型
+	protected EnumDyeColor dyeColor = null;
+
+	public void setDyeColor(@Nullable EnumDyeColor dyeColor) {
+		this.dyeColor = dyeColor;
+		if (world.isRemote) this.setColorType(BlockElementalCube.toColorType(dyeColor));
+	}
+
+	public EnumDyeColor getDyeColor() {
+		return dyeColor;
+	}
+
+	// 客户端使用的真实颜色
+	@SideOnly(Side.CLIENT)
+	protected BlockElementalCube.Color colorType = BlockElementalCube.defaultColor;
+
+	public void setColorType(BlockElementalCube.Color colorType) {
+		this.colorType = colorType;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public Vec3d getBaseColor() {
+		return colorType.getBaseColor();
+	}
+
+	@SideOnly(Side.CLIENT)
+	public Vec3d getCoverColor() {
+		return colorType.getCoverColor();
+	}
+
 	// 默认旋转角度，每tick
 	public static final float SOTATE_PRE_TICK = (float) (Math.PI / 4) / 20.0f;
 	// 默认站立来的比率增加量
@@ -162,15 +186,18 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	public float wakeRate = 0.0f;
 	public float preWakeRate = 0.0f;
 
-	public Vertex color = ORIGIN_COLOR;
+	@SideOnly(Side.CLIENT)
+	public Vec3d color = Vec3d.ZERO;
+	@SideOnly(Side.CLIENT)
 	public float colorRate = 0.0f;
+	@SideOnly(Side.CLIENT)
 	public float detlaCr = 0.01f;
 
 	@SideOnly(Side.CLIENT)
 	public void tick() {
+		if (color == Vec3d.ZERO) changeColor();
 		preWakeRate = wakeRate;
 		if (wake > 0) {
-			if (color == ORIGIN_COLOR) changeColor();
 			// 站起来的比率
 			wakeRate = MathHelper.clamp(wakeRate + WAKE_UP_RARE, 0, 1);
 			// 颜色转变
@@ -180,18 +207,19 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 				if (colorRate <= 0.0f) changeColor();
 			}
 			wake--;
-		} else wakeRate = MathHelper.clamp(wakeRate - WAKE_UP_RARE, 0, 1);
-		colorRate *= wakeRate;
+		} else {
+			wakeRate = MathHelper.clamp(wakeRate - WAKE_UP_RARE, 0, 1);
+			colorRate = colorRate - colorRate * 0.05f;
+		}
 	}
 
 	// 切换颜色
 	@SideOnly(Side.CLIENT)
 	private void changeColor() {
-		if (color == ORIGIN_COLOR) color = new Vertex(ORIGIN_COLOR);
 		ElementStack estack = ItemSpellbook.giveMeRandomElement(inventory);
-		int ecolor = color.toColor();
+		int ecolor = ColorHelper.color(colorType.getCoverColor());
 		if (!estack.isEmpty()) ecolor = estack.getElement().getColor(estack);
-		color.toColor(ecolor);
+		color = ColorHelper.color(ecolor);
 	}
 
 }

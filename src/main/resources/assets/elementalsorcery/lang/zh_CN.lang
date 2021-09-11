@@ -99,6 +99,7 @@ item.undeliveredLetter.name=未送达之信
 item.dejectedTear.name=忧郁之泪
 item.merchantInvitation.name=商人邀请函
 item.elementBoard.name=元素共鸣板
+item.cubeDemarcator.name=元素立方体定标器
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -176,6 +177,7 @@ tile.starFlower.seed.name=星花之种
 tile.crudeQuartz.name=粗制石英
 tile.elementPlatform.name=元素平台
 tile.fluorspar.name=荧光
+tile.deconstructWindmill.name=瓦解风车
 
 enchantment.gatherSouls=聚魂
 
@@ -323,7 +325,9 @@ info.unknow=未知
 info.wrong.dimension=已有数据不属于该纬度！
 info.posSet.success=成功选择了位置：(%d,%d,%d)
 info.magicalPiece.itcando=这个魔力碎片貌似可以合成某些东西，emmmm...
-info.elementalCrystal.has=%s 拥有%d，能量为%d
+info.elementCrystal.has=%s 拥有%d，能量为%d
+info.elementCube.limit.upper=能量上限%s
+info.elementCube.limit.lower=能量下限%s
 info.kyaniteTools.el=具有有元素亲和
 info.scroll.none=该卷轴内仅有%d张空白的羊皮纸，右键打开
 info.scroll.has=该卷轴包含有%d张羊皮纸，右键打开
@@ -403,6 +407,7 @@ info.sound.crisp=清脆
 info.sound.long=悠长
 info.previous=上一个%s
 info.fairy.cube.module.count=拥有符文：%d
+info.set.common=设置%s
 
 lev.defective=次品
 lev.unsuited=不适合
@@ -789,6 +794,8 @@ page.fairyCubeModule.ct=精灵符文可以挂载到精灵立方体上，以产�
 page.fairyCubeModuleCraft=符文映射
 page.fairyCubeModuleCraft.ct.fir=\n精灵符文分为：执行型，增强型和其他。\n将空白的精灵立方体符文放到元素平台上，并将元素注入元素平台，符文便可和元素发生共鸣。\n不同的元素在不同的位置周围有不同的物品，就可能产生各种不同的符文，具体能产生啥这就需要史蒂夫来慢慢探索了。\n目前记载：\n沙漠、白天、火、烈焰粉\n地下、土、石头\n末地、末影\n夜晚、钻石斧、火\n木、黎明、小麦土豆胡萝卜
 page.fairyCubeModuleCraft.ct.sec=木、牛肉大餐\n水、雨、萤石粉\n木、金、黄昏、煤、钻石、绿宝石\n土、金、煤矿\n午后、木、金苹果\n水、金、黄昏、腐肉、骨头、火药\n高空、气、羽毛、兔脚\n平原、末影、气、泥土、末影珍珠
+page.cubeDemarcator=能量定标
+page.cubeDemarcator.ct=通过立方体核心制作出的标定器，可以给元素立方体标定接受元素能量的上限或这下限，不满足标定的元素不如进入该立方体。\n对空气右键和shift右键，增加或降低定标的值。对立方体右键和shift右键为立方体定标。\n定标值为0表述不进行限制。\n注意定标器有使用耐久，可以通过修复箱修复。
 page.magicPot=魔力花盆
 page.magicPot.ct=具有魔力的花盆，生命之花只能放到魔力花盆的上面。\n手拿着魔石，右键花盆，可以给土壤补充魔力。只有在花盆有魔力的时候，生命之花才能正常工作。\n生命之花每次为周围提供能量，有2%的概率消耗花盆中的魔力。
 page.lifeDirt=生息土壤

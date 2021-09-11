@@ -153,6 +153,7 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 		@Override
 		public NBTBase writeNBT(Capability<IElementInventory> capability, IElementInventory instance, EnumFacing side) {
 			NBTTagCompound nbt = new NBTTagCompound();
+			instance.writeCustomDataToNBT(nbt);
 			NBTTagList list = new NBTTagList();
 			for (int i = 0; i < instance.getSlots(); i++) {
 				if (instance.getStackInSlot(i).isEmpty()) continue;
@@ -178,6 +179,7 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 				ElementStack etack = new ElementStack(data);
 				instance.setStackInSlot(data.getInteger("slot"), etack.isEmpty() ? ElementStack.EMPTY : etack);
 			}
+			instance.readCustomDataFromNBT(nbt);
 		}
 
 	}

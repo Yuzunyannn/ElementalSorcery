@@ -13,6 +13,11 @@ public class ColorHelper {
 		return new Vec3d(r, g, b);
 	}
 
+	static public int color(Vec3d color) {
+		return ((((int) (color.x * 255)) << 16) & 0xff0000) | ((((int) (color.y * 255)) << 8) & 0x00ff00)
+				| ((((int) (color.z * 255)) << 0) & 0x0000ff);
+	}
+
 	static public Vec3d rgbToHSV(float R, float G, float B) {
 		float max = Math.max(R, Math.max(G, B));
 		float min = Math.min(R, Math.min(G, B));

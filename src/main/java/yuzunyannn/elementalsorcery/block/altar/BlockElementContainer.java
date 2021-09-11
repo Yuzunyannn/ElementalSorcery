@@ -11,6 +11,7 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -25,22 +26,22 @@ import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public abstract class BlockElementContainer extends BlockContainer {
 
-	private static IElementInventory einvTemp;
+	private static TileEntity tileTemp;
 
-	public static void setDropElementInventory(IElementInventory einv) {
-		einvTemp = einv;
+	public static void setDropTile(TileEntity tile) {
+		tileTemp = tile;
 	}
 
-	public static IElementInventory popDropElementInventory() {
-		IElementInventory einv = einvTemp;
-		einvTemp = null;
-		return einv;
+	public static TileEntity popDropTile() {
+		TileEntity tile = tileTemp;
+		tileTemp = null;
+		return tile;
 	}
 
-	public static IElementInventory getOrPopDropElementInventory(IBlockAccess world, BlockPos pos) {
-		IElementInventory temp = popDropElementInventory();
-		IElementInventory einv = BlockHelper.getElementInventory(world, pos, null);
-		if (einv != null) return einv;
+	public static TileEntity getOrPopDropTile(IBlockAccess world, BlockPos pos) {
+		TileEntity temp = popDropTile();
+		TileEntity tile = world.getTileEntity(pos);
+		if (tile != null) return tile;
 		return temp;
 	}
 
@@ -56,7 +57,8 @@ public abstract class BlockElementContainer extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		IElementInventory inventory = ElementHelper.getElementInventory(stack);
-		ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
+		if (inventory == null) return;
+		inventory.addInformation(worldIn, tooltip, flagIn);
 	}
 
 	// 不是完成方块哟
@@ -80,8 +82,8 @@ public abstract class BlockElementContainer extends BlockContainer {
 
 	// 破坏方块
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		IElementInventory einv = BlockHelper.getElementInventory(worldIn, pos, null);
-		if (einv != null) setDropElementInventory(einv);
+		TileEntity einv = worldIn.getTileEntity(pos);
+		if (einv != null) setDropTile(einv);
 		super.breakBlock(worldIn, pos, state);
 	}
 
@@ -91,7 +93,13 @@ public abstract class BlockElementContainer extends BlockContainer {
 			int fortune) {
 		ItemStack stack = new ItemStack(this);
 		drops.add(stack);
-		IElementInventory eInv = getOrPopDropElementInventory(world, pos);
+
+		TileEntity tile = getOrPopDropTile(world, pos);
+		this.modifyDropStack(world, pos, stack, tile);
+	}
+
+	protected void modifyDropStack(IBlockAccess world, BlockPos pos, ItemStack stack, TileEntity originTile) {
+		IElementInventory eInv = ElementHelper.getElementInventory(originTile);
 		if (eInv == null) return;
 
 		IElementInventory itemInv = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);

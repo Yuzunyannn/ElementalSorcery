@@ -4,16 +4,18 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelElementCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
-import yuzunyannn.elementalsorcery.util.obj.Vertex;
+import yuzunyannn.elementalsorcery.util.ColorHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
@@ -38,12 +40,18 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 		RenderHelper.startRender(x + 0.5, y + 0.3, z + 0.5, 0.5, alpha);
 		GlStateManager.scale(0.04, 0.04, 0.04);
 
+		Vec3d color = tile.getBaseColor();
+		Vec3d coverColor = tile.getCoverColor();
+
 		float wake = RenderHelper.getPartialTicks(tile.wakeRate, tile.preWakeRate, partialTicks);
+
+		GlStateManager.color((float) color.x, (float) color.y, (float) color.z);
 		TEXTURE.bind();
 		MODEL.render(null, wake, EventClient.tickRender + partialTicks, 0, 0, 0, 1);
-		GlStateManager.color(tile.color.x * tile.colorRate + (1.0F - tile.colorRate) * TileElementalCube.ORIGIN_COLOR.x,
-				tile.color.y * tile.colorRate + (1.0F - tile.colorRate) * TileElementalCube.ORIGIN_COLOR.y,
-				tile.color.z * tile.colorRate + (1.0F - tile.colorRate) * TileElementalCube.ORIGIN_COLOR.z);
+
+		GlStateManager.color((float) (tile.color.x * tile.colorRate + (1.0F - tile.colorRate) * coverColor.x),
+				(float) (tile.color.y * tile.colorRate + (1.0F - tile.colorRate) * coverColor.y),
+				(float) (tile.color.z * tile.colorRate + (1.0F - tile.colorRate) * coverColor.z));
 		TEXTURE_COVER.bind();
 		MODEL.render(null, wake, EventClient.tickRender + partialTicks, 0, 0, 0, 1);
 
@@ -66,18 +74,24 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 		}
 
 		GlStateManager.scale(0.0325, 0.0325, 0.0325);
-		TEXTURE_ITEM.bind();
-		MODEL.render(null, 0, 0, 0, 0, 0, 1);
 
-		Vertex color = TileElementalCube.ORIGIN_COLOR;
+		BlockElementalCube.Color colorType = BlockElementalCube.toColorType(BlockElementalCube.getDyeColor(stack));
+		Vec3d color = colorType.getBaseColor();
+		Vec3d coverColor = colorType.getCoverColor();
 		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 		if (inventory != null) {
 			inventory.loadState(stack);
 			ElementStack estack = inventory.getStackInSlot(0);
-			if (!estack.isEmpty()) color = new Vertex().toColor(estack.getColor());
+			if (!estack.isEmpty()) coverColor = ColorHelper.color(estack.getColor());
 		}
 
-		GlStateManager.color(color.x, color.y, color.z);
+		// 主体
+		GlStateManager.color((float) color.x, (float) color.y, (float) color.z);
+		TEXTURE_ITEM.bind();
+		MODEL.render(null, 0, 0, 0, 0, 0, 1);
+
+		// cover
+		GlStateManager.color((float) coverColor.x, (float) coverColor.y, (float) coverColor.z);
 		TEXTURE_ITEM_COVER.bind();
 		MODEL.render(null, 0, 0, 0, 0, 0, 1);
 

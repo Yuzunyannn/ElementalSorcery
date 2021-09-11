@@ -190,7 +190,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 		Spellbook book = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 		IElementInventory inventory = book.getInventory();
 		inventory.loadState(stack);
-		ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
+		inventory.addInformation(worldIn, tooltip, flagIn);
 	}
 
 }

@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -30,6 +31,9 @@ public class ElementHelper {
 		for (int i = 0; i < src.getSlots(); i++) {
 			dst.setStackInSlot(i, src.getStackInSlot(i).copy());
 		}
+		NBTTagCompound nbt = new NBTTagCompound();
+		src.writeCustomDataToNBT(nbt);
+		dst.readCustomDataFromNBT(nbt);
 	}
 
 	public static boolean canInsert(IElementInventory inventory) {
@@ -72,7 +76,7 @@ public class ElementHelper {
 	public static void addElementInformation(ElementStack estack, List<String> tooltip) {
 		if (estack.isEmpty()) return;
 		String str;
-		str = I18n.format("info.elementalCrystal.has", I18n.format(estack.getElementUnlocalizedName()),
+		str = I18n.format("info.elementCrystal.has", estack.getDisplayName(),
 				estack.getCount(), estack.getPower());
 		tooltip.add(TextFormatting.RED + str);
 	}

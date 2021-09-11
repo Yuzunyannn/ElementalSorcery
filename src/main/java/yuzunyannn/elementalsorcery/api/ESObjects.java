@@ -6,7 +6,6 @@ import net.minecraft.item.Item;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.item.prop.ItemDejectedTear;
 
 public class ESObjects {
 
@@ -96,6 +95,7 @@ public class ESObjects {
 		public Item DEJECTED_TEAR;
 		public Item MERCHANT_INVITATION;
 		public Item ELEMENT_BOARD;
+		public Item CUBE_DEMARCATOR;
 	}
 
 	static public class Blocks {
@@ -163,6 +163,7 @@ public class ESObjects {
 		public Block CRUDE_QUARTZ;
 		public Block ELEMENT_PLATFORM;
 		public Block FLUORSPAR;
+		public Block DECONSTRUCT_WINDMILL;
 	}
 
 	static public class Elements {

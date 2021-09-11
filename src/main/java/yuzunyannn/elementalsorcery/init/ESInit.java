@@ -75,6 +75,7 @@ import yuzunyannn.elementalsorcery.block.altar.BlockAnalysisAltar;
 import yuzunyannn.elementalsorcery.block.altar.BlockBuildingAltar;
 import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructAltarTableAdv;
+import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructWindmill;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementCraftingTable;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
 import yuzunyannn.elementalsorcery.block.altar.BlockMagicDesk;
@@ -159,6 +160,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemAppleCandy;
+import yuzunyannn.elementalsorcery.item.ItemCubeDemarcator;
 import yuzunyannn.elementalsorcery.item.ItemElementBoard;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemElfWatch;
@@ -229,6 +231,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileAnalysisAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileBuildingAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileCrystalFlower;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructWindmill;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementalCube;
@@ -275,6 +278,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTableAdv;
+import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructWindmill;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
@@ -403,6 +407,7 @@ public class ESInit {
 		BLOCKS.CRUDE_QUARTZ = new BlockCrudeQuartz();
 		BLOCKS.ELEMENT_PLATFORM = new BlockElementPlatform();
 		BLOCKS.FLUORSPAR = new BlockFluorspar();
+		BLOCKS.DECONSTRUCT_WINDMILL = new BlockDeconstructWindmill();
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -486,6 +491,7 @@ public class ESInit {
 		ITEMS.DEJECTED_TEAR = new ItemDejectedTear();
 		ITEMS.MERCHANT_INVITATION = new ItemMerchantInvitation();
 		ITEMS.ELEMENT_BOARD = new ItemElementBoard();
+		ITEMS.CUBE_DEMARCATOR = new ItemCubeDemarcator();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -735,6 +741,7 @@ public class ESInit {
 		register(TileElfBeacon.class, "ElfBeacon");
 		register(TileStarFlower.class, "StarFlower");
 		register(TileElementPlatform.class, "ElementPlatform");
+		register(TileDeconstructWindmill.class, "DeconstructWindmill");
 	}
 
 	static void registerAllCapability() {
@@ -838,6 +845,7 @@ public class ESInit {
 		registerRender(ITEMS.DEJECTED_TEAR);
 		registerRender(ITEMS.MERCHANT_INVITATION);
 		registerRender(ITEMS.ELEMENT_BOARD);
+		registerRender(ITEMS.CUBE_DEMARCATOR);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -938,6 +946,7 @@ public class ESInit {
 		registerRender(BLOCKS.TRANSCRIBE_INJECTION, TileTranscribeInjection.class, new RenderTileTranscribeInjection());
 		registerRender(BLOCKS.ELF_BEACON, TileElfBeacon.class, new RenderTileElfBeacon());
 		registerRender(BLOCKS.ELEMENT_PLATFORM, TileElementPlatform.class, new RenderTileElementPlatform());
+		registerRender(BLOCKS.DECONSTRUCT_WINDMILL, TileDeconstructWindmill.class, new RenderTileDeconstructWindmill());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

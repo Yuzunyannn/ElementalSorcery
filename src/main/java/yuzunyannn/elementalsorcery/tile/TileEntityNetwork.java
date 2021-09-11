@@ -5,6 +5,8 @@ import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
@@ -12,6 +14,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 
 public class TileEntityNetwork extends TileEntity {
 
@@ -75,5 +78,37 @@ public class TileEntityNetwork extends TileEntity {
 			((EntityPlayerMP) player).connection.sendPacket(this.getUpdatePacket());
 		}
 		isNetwork = false;
+	}
+
+	/** 设置itemStack */
+	public void nbtSetItemStack(NBTTagCompound nbt, String key, ItemStack stack) {
+		if (stack.isEmpty()) return;
+		if (this.isSending()) {
+			NBTTagCompound stackNBT = new NBTTagCompound();
+
+			stackNBT.setInteger("id", Item.REGISTRY.getIDForObject(stack.getItem()));
+
+			if (stack.getCount() != 1) stackNBT.setByte("n", (byte) stack.getCount());
+			if (stack.getItemDamage() != 0) nbt.setShort("d", (short) stack.getItemDamage());
+
+			NBTTagCompound tag = stack.getTagCompound();
+			if (tag != null && !tag.hasNoTags()) nbt.setTag("t", tag);
+
+			nbt.setTag(key, stackNBT);
+		} else nbt.setTag(key, stack.serializeNBT());
+	}
+
+	/** 获取设置itemStack */
+	public ItemStack nbtGetItemStack(NBTTagCompound nbt, String key) {
+		if (!nbt.hasKey(key, NBTTag.TAG_COMPOUND)) return ItemStack.EMPTY;
+		if (this.isSending()) {
+			NBTTagCompound stackNBT = nbt.getCompoundTag(key);
+			Item item = Item.REGISTRY.getObjectById(stackNBT.getInteger("id"));
+			ItemStack stack = new ItemStack(item);
+			if (stackNBT.hasKey("n", NBTTag.TAG_NUMBER)) stack.setCount(stackNBT.getInteger("n"));
+			if (stackNBT.hasKey("d", NBTTag.TAG_NUMBER)) stack.setItemDamage(stackNBT.getInteger("d"));
+			if (stackNBT.hasKey("t", NBTTag.TAG_COMPOUND)) stack.setTagCompound(stackNBT.getCompoundTag("t"));
+			return stack;
+		} else return new ItemStack(nbt.getCompoundTag(key));
 	}
 }

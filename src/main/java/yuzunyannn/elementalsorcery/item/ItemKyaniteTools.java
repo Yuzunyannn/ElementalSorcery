@@ -53,7 +53,7 @@ public class ItemKyaniteTools {
 		if (inventory.hasState(stack) == false) return;
 		inventory.loadState(stack);
 		tooltip.add("§d" + I18n.format("info.kyaniteTools.el"));
-		ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
+		inventory.addInformation(worldIn, tooltip, flagIn);
 	}
 
 	/// 当破坏方块

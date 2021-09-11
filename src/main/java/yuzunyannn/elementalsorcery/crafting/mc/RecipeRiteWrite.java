@@ -14,6 +14,7 @@ import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 
 public class RecipeRiteWrite extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe>
 		implements IRecipe, IPageCraftDynamicIngredients {
+	
 	/** 获取物品内置物品 */
 	public static ItemStack getInnerStack(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();

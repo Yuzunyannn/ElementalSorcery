@@ -12,10 +12,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileLifeDirt;
 
-public class RecipeLifeDirt extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
+public class RecipeLifeDirt extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
 
 	protected boolean canCraft(ItemStack stack) {
 		Item item = stack.getItem();

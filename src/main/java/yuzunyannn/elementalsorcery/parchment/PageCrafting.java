@@ -6,7 +6,6 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -179,8 +178,8 @@ public class PageCrafting extends PageEasy {
 		if (eList == null) return;
 		TextHelper.addInfo(contexts, "page.crafting.need");
 		for (ElementStack stack : eList) {
-			TextHelper.addInfo(contexts, "page.crafting.show", TextFormatting.GOLD,
-					I18n.format(stack.getElementUnlocalizedName()), stack.getCount(), stack.getPower());
+			TextHelper.addInfo(contexts, "page.crafting.show", TextFormatting.GOLD, stack.getDisplayName(),
+					stack.getCount(), stack.getPower());
 		}
 	}
 

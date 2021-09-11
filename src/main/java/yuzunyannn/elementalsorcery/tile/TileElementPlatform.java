@@ -5,27 +5,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.item.IPlatformTickable;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.CasterObjectTileEntity;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryOnlyInsert;
 
 public class TileElementPlatform extends TileEntityNetwork implements IGetItemStack, ITickable {
-
-	public static interface IPlatformTickable {
-		/**
-		 * @return true 表示需要更新stack状态到client
-		 */
-		boolean platformUpdate(World world, ItemStack stack, ICasterObject caster, NBTTagCompound runData, int tick);
-	}
 
 	// 只能存不能取
 	protected ElementInventoryOnlyInsert inventory = new ElementInventoryOnlyInsert(4);

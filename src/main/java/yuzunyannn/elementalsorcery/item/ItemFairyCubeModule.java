@@ -15,16 +15,16 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.item.IPlatformTickable;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.entity.fcube.FairyCubeModule;
 import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeModuleClient;
 import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
-import yuzunyannn.elementalsorcery.tile.TileElementPlatform;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
-public class ItemFairyCubeModule extends Item implements TileElementPlatform.IPlatformTickable {
+public class ItemFairyCubeModule extends Item implements IPlatformTickable {
 
 	public ItemFairyCubeModule() {
 		this.setUnlocalizedName("fairyCubeModule");
