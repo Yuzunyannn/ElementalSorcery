@@ -17,16 +17,16 @@ public class EffectElementMove extends EffectElement {
 		super(world, pos.x, pos.y, pos.z);
 	}
 
-	public void setVelocity(double x, double y, double z) {
-		motionX = x;
-		motionY = y;
-		motionZ = z;
+	public void setAccelerate(double x, double y, double z) {
+		xAccelerate = x;
+		yAccelerate = y;
+		zAccelerate = z;
 	}
 
-	public void setVelocity(Vec3d v) {
-		motionX = v.x;
-		motionY = v.y;
-		motionZ = v.z;
+	public void setAccelerate(Vec3d acce) {
+		xAccelerate = acce.x;
+		yAccelerate = acce.y;
+		zAccelerate = acce.z;
 	}
 
 	@Override

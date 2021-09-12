@@ -123,9 +123,11 @@ public abstract class Effect {
 
 		if (effect.asParticle) {
 			// 0渲染全部
-			if (Minecraft.getMinecraft().gameSettings.particleSetting != 0) {
-				// 其他的视形况
-				return;
+			int particleSetting = mc.gameSettings.particleSetting;
+			if (particleSetting != 0) {
+				if (particleSetting == 1) {
+					if (rand.nextInt(10) != 0) return;
+				} else return;
 			}
 		}
 

@@ -96,6 +96,7 @@ public class ESObjects {
 		public Item MERCHANT_INVITATION;
 		public Item ELEMENT_BOARD;
 		public Item CUBE_DEMARCATOR;
+		public Item WINDMILL_BLADE;
 	}
 
 	static public class Blocks {

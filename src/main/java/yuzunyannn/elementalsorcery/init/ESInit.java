@@ -185,6 +185,7 @@ import yuzunyannn.elementalsorcery.item.ItemSoulKillerSword;
 import yuzunyannn.elementalsorcery.item.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.item.ItemStarBell;
 import yuzunyannn.elementalsorcery.item.ItemUnscrambleNote;
+import yuzunyannn.elementalsorcery.item.ItemWindmillBlade;
 import yuzunyannn.elementalsorcery.item.book.ItemGrimoire;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbookArchitecture;
@@ -492,6 +493,7 @@ public class ESInit {
 		ITEMS.MERCHANT_INVITATION = new ItemMerchantInvitation();
 		ITEMS.ELEMENT_BOARD = new ItemElementBoard();
 		ITEMS.CUBE_DEMARCATOR = new ItemCubeDemarcator();
+		ITEMS.WINDMILL_BLADE = new ItemWindmillBlade();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -846,6 +848,7 @@ public class ESInit {
 		registerRender(ITEMS.MERCHANT_INVITATION);
 		registerRender(ITEMS.ELEMENT_BOARD);
 		registerRender(ITEMS.CUBE_DEMARCATOR);
+		registerRender(ITEMS.WINDMILL_BLADE);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

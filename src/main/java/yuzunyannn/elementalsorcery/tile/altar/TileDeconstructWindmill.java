@@ -1,24 +1,40 @@
 package yuzunyannn.elementalsorcery.tile.altar;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.item.IWindmillBlade;
+import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
+import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementAbsorb;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.TileEntityGetter;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGetItemStack, ITickable {
 
@@ -30,6 +46,9 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
 		blade = nbtGetItemStack(compound, "blade");
+		if (!isSending()) {
+			NBTHelper.setElementist(compound, "elms", outList);
+		}
 		super.readFromNBT(compound);
 
 	}
@@ -37,6 +56,9 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
 		nbtSetItemStack(compound, "blade", blade);
+		if (!isSending()) {
+			outList = NBTHelper.getElementList(compound, "elms");
+		}
 		return super.writeToNBT(compound);
 	}
 
@@ -107,6 +129,15 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 	}
 
 	protected float speed = 0;
+	protected List<ElementStack> outList = new ArrayList<>();
+	protected TileEntityGetter tileGetter = new TileEntityGetter();
+
+	@Override
+	public void onLoad() {
+		super.onLoad();
+		tileGetter.setBox(WorldHelper.createAABB(pos, 6, 10, 3));
+		tileGetter.setChecker(tile -> ElementHelper.canInsert(ElementHelper.getElementInventory(tile)));
+	}
 
 	@Override
 	public void update() {
@@ -120,15 +151,81 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 			return;
 		}
 
-		speed = speed + (getWindScale(world, pos.up(7)) - speed) * 0.01f;
+		if (checkTime % 200 == 0) tileGetter.doCheck(world);
 
 		try {
-			windmillBlade.bladeUpdate(world, pos.up(7), blade, speed, checkTime);
+			BlockPos bladePos = pos.up(7);
+			speed = speed + (windmillBlade.bladeWindScale(world, bladePos, blade) - speed) * 0.01f;
+			windmillBlade.bladeUpdate(world, bladePos, blade, outList, speed, checkTime);
+			updateElementProduce();
 		} catch (Exception e) {
 			ElementalSorcery.logger.warn("风车旋转出现异常", e);
 			setStack(ItemStack.EMPTY);
 		}
+	}
 
+	public static final int MAX_ONCE_PRODUCE = 10; // 一次最多产出的值
+	public static final int MIN_PRODUCE_BEFORE_NEXT = 2; // 积累产出多少后，就可以退出了
+	public static final int MAX_LIST_LENGTH = 32; // list最长多少，超出后，就强制产出
+
+	public void updateElementProduce() {
+		if (outList.isEmpty()) return;
+
+		int produceCount = 0;
+		Iterator<ElementStack> iter = outList.iterator();
+		while (iter.hasNext() && produceCount < MIN_PRODUCE_BEFORE_NEXT) {
+			ElementStack estack = iter.next();
+			// 如果满足最一次最多的产出或者超过了队列长度，就直接生产
+			if (estack.getCount() < MAX_ONCE_PRODUCE || outList.size() > MAX_LIST_LENGTH) {
+				iter.remove();
+				doProduce(estack);
+				if (outList.size() <= MAX_LIST_LENGTH) produceCount = produceCount + estack.getCount();
+				continue;
+			}
+			int output = MathHelper.ceil(estack.getCount() / 2f);
+			doProduce(estack.splitStack(output));
+			produceCount = produceCount + output;
+		}
+	}
+
+	/** 进行一次产出 */
+	public void doProduce(ElementStack estack) {
+		TileEntity outTile = tileGetter.checkAndGetTileCanInsertElement(world, rand.nextInt(100), estack);
+		if (world.isRemote) doProduceEffect(estack, outTile);
+		if (outTile == null) return;
+
+		IAltarWake altarWake = null;
+		if (outTile instanceof IAltarWake) altarWake = ((IAltarWake) outTile);
+
+		IElementInventory eInv = ElementHelper.getElementInventory(outTile);
+		boolean isEmpty = ElementHelper.isEmpty(eInv);
+		eInv.insertElement(estack, false);
+		if (altarWake != null) {
+			altarWake.wake(IAltarWake.OBTAIN, pos);
+			if (isEmpty) altarWake.onEmptyStatusChange();
+		}
+
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void doProduceEffect(ElementStack estack, TileEntity outTile) {
+		Vec3d vec = new Vec3d(pos).addVector(0.5, 7.5, 0.5);
+		vec = vec.addVector(rand.nextGaussian() * 1.25, rand.nextGaussian() * 1.25, rand.nextGaussian() * 1.25);
+		Vec3d speed = new Vec3d(structure.face().getDirectionVec()).scale(0.05 * this.speed);
+		if (outTile == null) {
+			EffectElementMove effect = new EffectElementMove(world, vec);
+			effect.setColor(estack.getColor());
+			effect.setVelocity(speed);
+			effect.xDecay = effect.zDecay = 0.9;
+			Effect.addEffect(effect);
+		} else {
+			EffectElementAbsorb effect = new EffectElementAbsorb(world, vec,
+					new Vec3d(outTile.getPos()).addVector(0.5, 0.5, 0.5));
+			effect.setColor(estack.getColor());
+			effect.setVelocity(speed);
+			effect.startTick = 10;
+			Effect.addEffect(effect);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -152,7 +249,7 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 		bladeRotate += speed * 0.04f;
 	}
 
-	/** 获取风级 */
+	/** 根据位置获取通用风级 */
 	public static float getWindScale(World world, BlockPos pos) {
 		Biome biome = world.getBiome(pos);
 		float thunderStrength = world.getThunderStrength(1);
@@ -166,11 +263,12 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 		if (timeSpace % 2 == 0) worldBaseWindScale = 2;
 		if (timeSpace % 5 == 0) worldBaseWindScale = 0;
 		if (rainStrength > 0) worldBaseWindScale = worldBaseWindScale + 0.5f;
+		if (thunderStrength > 0 && worldBaseWindScale < 1.5f) worldBaseWindScale = worldBaseWindScale + thunderStrength;
 
 		if (worldBaseWindScale == 0) return 0;
 
 		float temperature = biome.getTemperature(pos);
-		temperature = MathHelper.clamp(temperature * temperature, 0, 0.2f);
+		temperature = MathHelper.clamp(temperature * temperature, 0, 0.15f);
 
 		int randSeed = pos.getX() * pos.getX() + pos.getZ() + pos.getY() * worldTime;
 		randSeed = randSeed ^ randSeed << 3;

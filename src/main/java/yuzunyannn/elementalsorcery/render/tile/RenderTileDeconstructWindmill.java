@@ -29,7 +29,7 @@ public class RenderTileDeconstructWindmill extends TileEntitySpecialRenderer<Til
 
 	static public final ModelDeconstructWindmillBlade MODEL_BLADE = new ModelDeconstructWindmillBlade();
 	static public final ResourceLocation TEXTURE_BLADE_NORMAL = TextHelper
-			.toESResourceLocation("textures/blocks/deconstruct_windmill_blade.png");
+			.toESResourceLocation("textures/blocks/windmill_blade.png");
 
 	public RenderTileDeconstructWindmill() {
 	}
@@ -51,7 +51,7 @@ public class RenderTileDeconstructWindmill extends TileEntitySpecialRenderer<Til
 		if (!blade.isEmpty()) {
 			GlStateManager.pushMatrix();
 
-			GlStateManager.translate(x + 0.5, y + 0.12 + high / 16, z + 0.5);
+			GlStateManager.translate(x + 0.5, y + 0.105 + high / 16, z + 0.5);
 			yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(blade);
 			Minecraft.getMinecraft().getRenderItem().renderItem(blade, ItemCameraTransforms.TransformType.FIXED);
 

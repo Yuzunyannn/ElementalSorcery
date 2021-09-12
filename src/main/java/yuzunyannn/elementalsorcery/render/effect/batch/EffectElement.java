@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.render.effect.batch;
 
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -36,5 +37,17 @@ public class EffectElement extends EffectFacing {
 	@Override
 	protected TextureBinder getTexture() {
 		return BATCH_TYPE.TEXTURE;
+	}
+
+	public void setVelocity(Vec3d v) {
+		motionX = v.x;
+		motionY = v.y;
+		motionZ = v.z;
+	}
+
+	public void setVelocity(double x, double y, double z) {
+		motionX = x;
+		motionY = y;
+		motionZ = z;
 	}
 }

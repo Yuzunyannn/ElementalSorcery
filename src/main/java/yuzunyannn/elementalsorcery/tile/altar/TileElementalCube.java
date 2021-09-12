@@ -98,8 +98,9 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 		super.readFromNBT(nbt);
 		inventory.deserializeNBT(nbt.getCompoundTag("inventory"));
 		if (nbt.hasKey("color")) setDyeColor(EnumDyeColor.byMetadata(nbt.getByte("color")));
-		if (this.isSending()) {
+		if (isSending()) {
 			if (ElementHelper.isEmpty(inventory)) this.wake = 0;
+			if (world.isRemote) changeColor();
 		}
 	}
 
@@ -120,7 +121,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	}
 
 	@Override
-	public void onEmpty() {
+	public void onEmptyStatusChange() {
 		if (!world.isRemote) this.updateToClient();
 	}
 

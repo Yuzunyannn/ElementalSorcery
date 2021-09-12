@@ -100,6 +100,7 @@ item.dejectedTear.name=Dejected Tear
 item.merchantInvitation.name=Merchant Invitation
 item.elementBoard.name=Element Resonance Board
 item.cubeDemarcator.name=Element Cube Demarcator
+item.windmillBlade.name=Quartz Blade
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box

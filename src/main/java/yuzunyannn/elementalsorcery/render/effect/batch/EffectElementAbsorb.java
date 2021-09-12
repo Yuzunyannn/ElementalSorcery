@@ -11,7 +11,7 @@ import yuzunyannn.elementalsorcery.render.effect.IBinder;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 
 @SideOnly(Side.CLIENT)
-public class EffectElementAbsorb extends EffectElement {
+public class EffectElementAbsorb extends EffectElementMove {
 
 	public static void show(World world, Vec3d pos, NBTTagCompound nbt) {
 		int id = nbt.getInteger("targetEntity");
@@ -37,11 +37,12 @@ public class EffectElementAbsorb extends EffectElement {
 	public int startTick = 0;
 
 	public EffectElementAbsorb(World world, Vec3d from, IBinder to) {
-		super(world, from.x, from.y, from.z);
+		super(world, from);
 		this.binder = to;
 		startTick = rand.nextInt(20) + 20;
 		randMotion(startTick / 80.0f);
-		this.alpha = 0;
+		this.dalpha = this.alpha = 0;
+		yDecay = xDecay = zDecay = 0.9;
 	}
 
 	public EffectElementAbsorb(World world, Vec3d from, Vec3d to) {
@@ -62,45 +63,25 @@ public class EffectElementAbsorb extends EffectElement {
 
 	@Override
 	public void onUpdate() {
-		this.prevAlpha = this.alpha;
-		this.prevScale = this.scale;
-		
-		this.prevPosX = this.posX;
-		this.prevPosY = this.posY;
-		this.prevPosZ = this.posZ;
-
-		this.posX += this.motionX;
-		this.posY += this.motionY;
-		this.posZ += this.motionZ;
+		this.lifeTime = 2;
+		super.onUpdate();
 
 		if (startTick <= 0) {
 			Vec3d to = binder.getPosition();
 			Vec3d at = this.getPositionVector();
 			Vec3d tar = to.subtract(at);
 			double len = tar.lengthVector();
-			if (len < 4) {
-				this.alpha = (float) (len / 4);
-			}
+			if (len < 4) this.alpha = (float) (len / 4);
 			// 结束
 			if (len < 0.75) {
 				this.lifeTime = 0;
 				return;
 			}
-			tar = tar.normalize().scale(0.1);
-			this.motionX += tar.x;
-			this.motionY += tar.y;
-			this.motionZ += tar.z;
-
+			setAccelerate(tar.normalize().scale(0.05));
 		} else {
 			this.alpha += (1 - alpha) * 0.1f;
 			startTick--;
 		}
-
-		double factor = 0.9;
-		this.motionX *= factor;
-		this.motionY *= factor;
-		this.motionZ *= factor;
-
 	}
 
 }

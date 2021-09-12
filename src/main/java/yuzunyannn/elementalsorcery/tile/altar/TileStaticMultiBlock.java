@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.tile.altar;
 
 import java.util.Random;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +18,7 @@ import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 
-	static final public Random rand = new Random();
+	public static final Random rand = new Random();
 
 	// 祭坛是否成形
 	protected boolean ok = false;
@@ -39,6 +40,16 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 
 	// 初始化多方块
 	public abstract void initMultiBlock();
+
+	@Override
+	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		return super.writeToNBT(compound);
+	}
+
+	@Override
+	public void readFromNBT(NBTTagCompound compound) {
+		super.readFromNBT(compound);
+	}
 
 	// 是否完整
 	public boolean isIntact() {
@@ -83,7 +94,7 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 				if (world.isRemote) genParticleElementTo(true, altarWake, extract, pos, animePos);
 				else {
 					einv.extractElement(need, false);
-					if (ElementHelper.isEmpty(einv)) altarWake.onEmpty();
+					if (ElementHelper.isEmpty(einv)) altarWake.onEmptyStatusChange();
 				}
 				return extract;
 			}

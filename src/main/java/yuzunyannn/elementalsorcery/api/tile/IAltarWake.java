@@ -26,8 +26,8 @@ public interface IAltarWake {
 	 */
 	boolean wake(int type, @Nullable BlockPos from);
 
-	/** 当TileEntity的元素被拿光时候调用，可以进行C/S同步 */
-	void onEmpty();
+	/** 当TileEntity的元素被拿光时或者从无到有时，可以进行C/S同步 */
+	void onEmptyStatusChange();
 
 	/**
 	 * 发送一个粒子效果

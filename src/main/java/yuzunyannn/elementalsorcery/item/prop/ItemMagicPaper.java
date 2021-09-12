@@ -131,7 +131,7 @@ public class ItemMagicPaper extends Item {
 
 				estack = estack.splitStack(Math.min(estack.getCount(), 4));
 				altarWake.wake(IAltarWake.SEND, pos);
-				if (ElementHelper.isEmpty(einv)) altarWake.onEmpty();
+				if (ElementHelper.isEmpty(einv)) altarWake.onEmptyStatusChange();
 
 				if (world.isRemote) {
 					for (int i = 0; i < 4; i++) {

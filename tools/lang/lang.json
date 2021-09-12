@@ -496,6 +496,11 @@
       "zh_CN": "元素立方体定标器",
       "en_US": "Element Cube Demarcator",
       "ja_JP": "元素立方体の画定器"
+    },
+    "item.windmillBlade.name": {
+      "zh_CN": "石英扇叶",
+      "en_US": "Quartz Blade",
+      "ja_JP": "石英扇"
     }
   },
   "tile": {
