@@ -1,0 +1,30 @@
+{
+	"pattern": [
+		"WCW",
+		"CFC",
+		"WCW"
+	],
+	"key": {
+		"F": {
+			"item": "elementalsorcery:windmill_blade_frame",
+			"data": 1
+		  },
+		  "W": {
+			"item": "elementalsorcery:estone",
+			"data": 0
+		  },
+		  "C": "elementalsorcery:rabid_leather",
+		  "G": "elementalsorcery:resonant_crystal"
+	},
+	"element": [
+		{
+			"id": "air",
+			"size": 750,
+			"power": 10
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:windmill_blade",
+		"count": 1
+	}
+}

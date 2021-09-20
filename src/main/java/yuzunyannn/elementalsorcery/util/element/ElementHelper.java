@@ -75,9 +75,8 @@ public class ElementHelper {
 	@SideOnly(Side.CLIENT)
 	public static void addElementInformation(ElementStack estack, List<String> tooltip) {
 		if (estack.isEmpty()) return;
-		String str;
-		str = I18n.format("info.elementCrystal.has", estack.getDisplayName(),
-				estack.getCount(), estack.getPower());
+		String str = I18n.format("info.elementCrystal.has", estack.getDisplayName(), estack.getCount(),
+				estack.getPower());
 		tooltip.add(TextFormatting.RED + str);
 	}
 

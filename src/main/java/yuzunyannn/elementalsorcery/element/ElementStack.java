@@ -93,7 +93,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	}
 
 	protected void setElement(Element element) {
-		this.element = element;
+		this.element = element == null ? EMPTY.element : element;
 	}
 
 	public void become(ElementStack estack) {
@@ -262,6 +262,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	/** 转化成元素时候回调 */
 	public ElementStack becomeMagic(@Nullable World world) {
 		if (this.isMagic()) return this;
+		if (this.isEmpty()) return this;
 		ElementStack magic = this.element.changetoMagic(world, this);
 		magic.setElement(ESObjects.ELEMENTS.MAGIC);
 		return magic;

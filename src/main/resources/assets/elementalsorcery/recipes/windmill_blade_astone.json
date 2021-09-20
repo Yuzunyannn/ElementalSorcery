@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WMW",
+    "GFG",
+    "WMW"
+  ],
+  "key": {
+    "F": {
+      "item": "elementalsorcery:windmill_blade_frame",
+      "data": 0
+    },
+    "W": {
+      "item": "elementalsorcery:astone",
+      "data": 0
+    },
+    "M": {
+      "item": "elementalsorcery:magic_stone"
+    },
+    "G": {
+      "item": "elementalsorcery:resonant_crystal"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:windmill_blade_astone"
+  }
+}

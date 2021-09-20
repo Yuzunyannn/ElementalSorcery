@@ -34,6 +34,7 @@ import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.TileEntityGetter;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGetItemStack, ITickable {
@@ -45,7 +46,7 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		blade = nbtGetItemStack(compound, "blade");
+		blade = nbtReadItemStack(compound, "blade");
 		if (!isSending()) {
 			NBTHelper.setElementist(compound, "elms", outList);
 		}
@@ -55,7 +56,7 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		nbtSetItemStack(compound, "blade", blade);
+		nbtWriteItemStack(compound, "blade", blade);
 		if (!isSending()) {
 			outList = NBTHelper.getElementList(compound, "elms");
 		}
@@ -146,7 +147,8 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 		if (!isIntact()) return;
 
 		IWindmillBlade windmillBlade = getWindmillBlade();
-		if (windmillBlade == null) {
+		boolean canTwirl = windmillBlade != null && windmillBlade.canTwirl(world, pos, blade);
+		if (!canTwirl) {
 			speed = speed - speed * 0.1f;
 			return;
 		}
@@ -156,7 +158,8 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 		try {
 			BlockPos bladePos = pos.up(7);
 			speed = speed + (windmillBlade.bladeWindScale(world, bladePos, blade) - speed) * 0.01f;
-			windmillBlade.bladeUpdate(world, bladePos, blade, outList, speed, checkTime);
+			boolean needUpdate = windmillBlade.bladeUpdate(world, bladePos, blade, outList, speed, checkTime);
+			if (needUpdate) updateToClient();
 			updateElementProduce();
 		} catch (Exception e) {
 			ElementalSorcery.logger.warn("风车旋转出现异常", e);
@@ -190,6 +193,8 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 
 	/** 进行一次产出 */
 	public void doProduce(ElementStack estack) {
+		if (estack.isEmpty()) return;
+
 		TileEntity outTile = tileGetter.checkAndGetTileCanInsertElement(world, rand.nextInt(100), estack);
 		if (world.isRemote) doProduceEffect(estack, outTile);
 		if (outTile == null) return;
@@ -249,40 +254,65 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 		bladeRotate += speed * 0.04f;
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public double getMaxRenderDistanceSquared() {
+		if (TILE_ENTITY_RENDER_DISTANCE > 0) return TILE_ENTITY_RENDER_DISTANCE * TILE_ENTITY_RENDER_DISTANCE;
+		int distance = RenderHelper.getRenderDistanceChunks() * 16;
+		return distance * distance;
+	}
+
 	/** 根据位置获取通用风级 */
 	public static float getWindScale(World world, BlockPos pos) {
-		Biome biome = world.getBiome(pos);
-		float thunderStrength = world.getThunderStrength(1);
-		float rainStrength = world.getRainStrength(1);
-		if (!biome.canRain()) rainStrength = thunderStrength = 0;
-		rainStrength = rainStrength / 2 + thunderStrength * 1.5f;
+		int dimension = world.provider.getDimension();
 
-		float worldBaseWindScale = 3;
 		int worldTime = (int) (world.getTotalWorldTime());
-		int timeSpace = worldTime / 20 / 60;
-		if (timeSpace % 2 == 0) worldBaseWindScale = 2;
-		if (timeSpace % 5 == 0) worldBaseWindScale = 0;
-		if (rainStrength > 0) worldBaseWindScale = worldBaseWindScale + 0.5f;
-		if (thunderStrength > 0 && worldBaseWindScale < 1.5f) worldBaseWindScale = worldBaseWindScale + thunderStrength;
 
-		if (worldBaseWindScale == 0) return 0;
-
-		float temperature = biome.getTemperature(pos);
-		temperature = MathHelper.clamp(temperature * temperature, 0, 0.15f);
+		if (dimension == 1) {
+			int timeSpace = worldTime / 20 / 60;
+			return 1 + (timeSpace % 10) / 9f * 3;
+		}
 
 		int randSeed = pos.getX() * pos.getX() + pos.getZ() + pos.getY() * worldTime;
 		randSeed = randSeed ^ randSeed << 3;
 		float rand = (Math.abs(randSeed) % 10000) / 10000f;
 
+		Biome biome = world.getBiome(pos);
+		float worldBaseWindScale = 3;
+		float addition = 0;
+		float targetHigh;
+
+		if (dimension == -1) {
+			int timeSpace = worldTime / 20 / 16;
+			if (timeSpace % 5 == 0) worldBaseWindScale = 2;
+			else worldBaseWindScale = 1;
+
+			targetHigh = 40 - rand * 20;
+		} else {
+			float thunderStrength = world.getThunderStrength(1);
+			float rainStrength = world.getRainStrength(1);
+			if (!biome.canRain()) rainStrength = thunderStrength = 0;
+			int timeSpace = worldTime / 20 / 120;
+			if (timeSpace % 2 == 0) worldBaseWindScale = 2;
+			if (timeSpace % 5 == 0) worldBaseWindScale = 0;
+			if (rainStrength > 0) worldBaseWindScale = worldBaseWindScale + 0.5f;
+			if (thunderStrength > 0 && worldBaseWindScale < 1.5f)
+				worldBaseWindScale = worldBaseWindScale + thunderStrength;
+
+			addition = rainStrength / 2 + thunderStrength * 1.5f;
+			targetHigh = 130 + rand * 20;
+		}
+
+		if (worldBaseWindScale == 0) return 0;
+
 		float high = pos.getY();
-		float h = 130 + rand * 20;
-		float dif = Math.abs(h - high);
+		float dif = Math.abs(targetHigh - high);
 
 		float rate = 1;
 		if (dif < 75) rate = 1 - dif / 85.3f;
 		else rate = 1 / MathHelper.sqrt(dif);
 
-		return worldBaseWindScale * rate * (1 + rand) * (1 + rainStrength) * (1 + temperature);
+		return worldBaseWindScale * rate * (1 + rand) * (1 + addition);
 	}
 
 }

@@ -498,9 +498,34 @@
       "ja_JP": "元素立方体の画定器"
     },
     "item.windmillBlade.name": {
-      "zh_CN": "石英扇叶",
-      "en_US": "Quartz Blade",
+      "zh_CN": "石英风轮",
+      "en_US": "Quartz Wind Wheel",
       "ja_JP": "石英扇"
+    },
+    "item.windmillBlade.astone.name": {
+      "zh_CN": "通魔石风轮",
+      "en_US": "Stone with Magic Wind Wheel",
+      "ja_JP": "通魔石英扇"
+    },
+    "item.windmillBlade.wood.name": {
+      "zh_CN": "木制风轮",
+      "en_US": "Wooden Wind Wheel",
+      "ja_JP": "木の扇"
+    },
+    "item.windmillBlade.crystal.name": {
+      "zh_CN": "水晶石英风轮",
+      "en_US": "Crytsal Quartz Wind Wheel",
+      "ja_JP": "水晶石英扇"
+    },
+    "item.windmillBladeFrame.name": {
+      "zh_CN": "风轮框架",
+      "en_US": "Frame of Wind Wheel",
+      "ja_JP": "扇のフレーム"
+    },
+    "item.windmillBladeFrame.adv.name": {
+      "zh_CN": "高级风轮框架",
+      "en_US": "Advanced Frame of Wind Wheel",
+      "ja_JP": "高級扇のフレーム"
     }
   },
   "tile": {
@@ -888,6 +913,11 @@
       "zh_CN": "瓦解风车",
       "en_US": "Deconstruct Windmill",
       "ja_JP": "瓦解風車"
+    },
+    "tile.elementTranslocator.name":{
+      "zh_CN": "元素转移台",
+      "en_US": "Element Translocator",
+      "ja_JP": "元素移動台"
     }
   },
   "enchantment": {

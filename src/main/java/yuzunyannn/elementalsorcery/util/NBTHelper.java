@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,6 +14,7 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public class NBTHelper {
@@ -151,6 +153,55 @@ public class NBTHelper {
 
 	public static Vec3d getVec3d(NBTTagCompound nbt, String key) {
 		return new Vec3d(nbt.getFloat(key + "x"), nbt.getFloat(key + "y"), nbt.getFloat(key + "z"));
+	}
+
+	public static void setIntegerForSend(NBTTagCompound nbt, String key, int n) {
+		if (n > 0) {
+			if (n < Byte.MAX_VALUE) nbt.setByte(key, (byte) n);
+			else if (n < Short.MAX_VALUE) nbt.setShort(key, (short) n);
+			else nbt.setInteger(key, (int) n);
+		} else {
+			if (n > Byte.MIN_VALUE) nbt.setByte(key, (byte) n);
+			else if (n > Short.MIN_VALUE) nbt.setShort(key, (short) n);
+			else nbt.setInteger(key, (int) n);
+		}
+	}
+
+	public static NBTTagCompound serializeItemStackForSend(ItemStack stack) {
+		NBTTagCompound stackNBT = new NBTTagCompound();
+		stackNBT.setInteger("id", Item.REGISTRY.getIDForObject(stack.getItem()));
+		if (stack.getCount() != 1) stackNBT.setByte("n", (byte) stack.getCount());
+		if (stack.getItemDamage() != 0) stackNBT.setShort("d", (short) stack.getItemDamage());
+		NBTTagCompound tag = stack.getTagCompound();
+		if (tag != null && !tag.hasNoTags()) stackNBT.setTag("t", tag);
+		return stackNBT;
+	}
+
+	public static ItemStack deserializeItemStackFromSend(NBTTagCompound stackNBT) {
+		Item item = Item.REGISTRY.getObjectById(stackNBT.getInteger("id"));
+		ItemStack stack = new ItemStack(item);
+		if (stackNBT.hasKey("n", NBTTag.TAG_NUMBER)) stack.setCount(stackNBT.getInteger("n"));
+		if (stackNBT.hasKey("d", NBTTag.TAG_NUMBER)) stack.setItemDamage(stackNBT.getInteger("d"));
+		if (stackNBT.hasKey("t", NBTTag.TAG_COMPOUND)) stack.setTagCompound(stackNBT.getCompoundTag("t"));
+		return stack;
+	}
+
+	public static NBTTagCompound serializeElementStackForSend(ElementStack stack) {
+		NBTTagCompound stackNBT = new NBTTagCompound();
+		stackNBT.setInteger("id", Element.getIdFromElement(stack.getElement()));
+		if (stack.getCount() != 1) setIntegerForSend(stackNBT, "n", stack.getCount());
+		setIntegerForSend(stackNBT, "p", stack.getPower());
+		NBTTagCompound tag = stack.getTagCompound();
+		if (tag != null && !tag.hasNoTags()) stackNBT.setTag("t", tag);
+		return stackNBT;
+	}
+
+	public static ElementStack deserializeElementStackFromSend(NBTTagCompound stackNBT) {
+		ElementStack stack = new ElementStack(Element.getElementFromId(stackNBT.getInteger("id")));
+		if (stackNBT.hasKey("n", NBTTag.TAG_NUMBER)) stack.setCount(stackNBT.getInteger("n"));
+		if (stackNBT.hasKey("p", NBTTag.TAG_NUMBER)) stack.setPower(stackNBT.getInteger("p"));
+		if (stackNBT.hasKey("t", NBTTag.TAG_COMPOUND)) stack.setTagCompound(stackNBT.getCompoundTag("t"));
+		return stack;
 	}
 
 }

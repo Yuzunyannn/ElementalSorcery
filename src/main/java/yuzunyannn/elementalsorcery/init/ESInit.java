@@ -77,6 +77,7 @@ import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructAltarTableAdv;
 import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructWindmill;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementCraftingTable;
+import yuzunyannn.elementalsorcery.block.altar.BlockElementTranslocator;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
 import yuzunyannn.elementalsorcery.block.altar.BlockMagicDesk;
 import yuzunyannn.elementalsorcery.block.altar.BlockPortalAltar;
@@ -160,32 +161,23 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemAppleCandy;
-import yuzunyannn.elementalsorcery.item.ItemCubeDemarcator;
 import yuzunyannn.elementalsorcery.item.ItemElementBoard;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemElfWatch;
 import yuzunyannn.elementalsorcery.item.ItemFairyCube;
 import yuzunyannn.elementalsorcery.item.ItemFairyCubeModule;
-import yuzunyannn.elementalsorcery.item.ItemKyaniteTools;
-import yuzunyannn.elementalsorcery.item.ItemMagicBlastWand;
-import yuzunyannn.elementalsorcery.item.ItemMagicGoldTools;
-import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemManual;
 import yuzunyannn.elementalsorcery.item.ItemMerchantInvitation;
 import yuzunyannn.elementalsorcery.item.ItemNatureDust;
 import yuzunyannn.elementalsorcery.item.ItemParcel;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
-import yuzunyannn.elementalsorcery.item.ItemRedHandset;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
-import yuzunyannn.elementalsorcery.item.ItemRockCamera;
 import yuzunyannn.elementalsorcery.item.ItemScapegoat;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
-import yuzunyannn.elementalsorcery.item.ItemSoulKillerSword;
-import yuzunyannn.elementalsorcery.item.ItemSoulWoodSword;
-import yuzunyannn.elementalsorcery.item.ItemStarBell;
 import yuzunyannn.elementalsorcery.item.ItemUnscrambleNote;
 import yuzunyannn.elementalsorcery.item.ItemWindmillBlade;
+import yuzunyannn.elementalsorcery.item.ItemWindmillBlades;
 import yuzunyannn.elementalsorcery.item.book.ItemGrimoire;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbookArchitecture;
@@ -217,6 +209,17 @@ import yuzunyannn.elementalsorcery.item.prop.ItemSoulFragment;
 import yuzunyannn.elementalsorcery.item.prop.ItemSpellbookCover;
 import yuzunyannn.elementalsorcery.item.prop.ItemSupremeTableComponent;
 import yuzunyannn.elementalsorcery.item.prop.ItemVortex;
+import yuzunyannn.elementalsorcery.item.prop.ItemWindmillBladeFrame;
+import yuzunyannn.elementalsorcery.item.tool.ItemCubeDemarcator;
+import yuzunyannn.elementalsorcery.item.tool.ItemKyaniteTools;
+import yuzunyannn.elementalsorcery.item.tool.ItemMagicBlastWand;
+import yuzunyannn.elementalsorcery.item.tool.ItemMagicGoldTools;
+import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
+import yuzunyannn.elementalsorcery.item.tool.ItemRedHandset;
+import yuzunyannn.elementalsorcery.item.tool.ItemRockCamera;
+import yuzunyannn.elementalsorcery.item.tool.ItemSoulKillerSword;
+import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
+import yuzunyannn.elementalsorcery.item.tool.ItemStarBell;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
@@ -235,6 +238,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructWindmill;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementPlatform;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileElementTranslocator;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementalCube;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElfBeacon;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElfTreeCore;
@@ -281,6 +285,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTableAdv;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructWindmill;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementTranslocator;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.altar.TilePortalAltar;
@@ -409,6 +414,8 @@ public class ESInit {
 		BLOCKS.ELEMENT_PLATFORM = new BlockElementPlatform();
 		BLOCKS.FLUORSPAR = new BlockFluorspar();
 		BLOCKS.DECONSTRUCT_WINDMILL = new BlockDeconstructWindmill();
+		BLOCKS.ELEMENT_TRANSLOCATOR = new BlockElementTranslocator();
+
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -493,7 +500,11 @@ public class ESInit {
 		ITEMS.MERCHANT_INVITATION = new ItemMerchantInvitation();
 		ITEMS.ELEMENT_BOARD = new ItemElementBoard();
 		ITEMS.CUBE_DEMARCATOR = new ItemCubeDemarcator();
+		ITEMS.WINDMILL_BLADE_FRAME = new ItemWindmillBladeFrame();
 		ITEMS.WINDMILL_BLADE = new ItemWindmillBlade();
+		ITEMS.WINDMILL_BLADE_ASTONE = new ItemWindmillBlades.AStone();
+		ITEMS.WINDMILL_BLADE_WOOD = new ItemWindmillBlades.WOOD();
+		ITEMS.WINDMILL_BLADE_CRYSTAL = new ItemWindmillBlades.CRYSTAL();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -744,6 +755,7 @@ public class ESInit {
 		register(TileStarFlower.class, "StarFlower");
 		register(TileElementPlatform.class, "ElementPlatform");
 		register(TileDeconstructWindmill.class, "DeconstructWindmill");
+		register(TileElementTranslocator.class, "ElementTranslocator");
 	}
 
 	static void registerAllCapability() {
@@ -848,7 +860,12 @@ public class ESInit {
 		registerRender(ITEMS.MERCHANT_INVITATION);
 		registerRender(ITEMS.ELEMENT_BOARD);
 		registerRender(ITEMS.CUBE_DEMARCATOR);
+		registerRender(ITEMS.WINDMILL_BLADE_FRAME, 0, "windmill_blade_frame");
+		registerRender(ITEMS.WINDMILL_BLADE_FRAME, 1, "windmill_blade_frame_adv");
 		registerRender(ITEMS.WINDMILL_BLADE);
+		registerRender(ITEMS.WINDMILL_BLADE_ASTONE);
+		registerRender(ITEMS.WINDMILL_BLADE_WOOD);
+		registerRender(ITEMS.WINDMILL_BLADE_CRYSTAL);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -950,6 +967,7 @@ public class ESInit {
 		registerRender(BLOCKS.ELF_BEACON, TileElfBeacon.class, new RenderTileElfBeacon());
 		registerRender(BLOCKS.ELEMENT_PLATFORM, TileElementPlatform.class, new RenderTileElementPlatform());
 		registerRender(BLOCKS.DECONSTRUCT_WINDMILL, TileDeconstructWindmill.class, new RenderTileDeconstructWindmill());
+		registerRender(BLOCKS.ELEMENT_TRANSLOCATOR, TileElementTranslocator.class, new RenderTileElementTranslocator());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

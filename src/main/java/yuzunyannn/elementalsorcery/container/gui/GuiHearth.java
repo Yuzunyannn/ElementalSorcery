@@ -1,7 +1,6 @@
 package yuzunyannn.elementalsorcery.container.gui;
 
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ContainerHearth;
@@ -9,12 +8,12 @@ import yuzunyannn.elementalsorcery.tile.TileHearth;
 
 public class GuiHearth extends GuiNormal {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/container/hearth.png");
 	protected ContainerHearth inventory;
 
-	public GuiHearth(ContainerHearth inventorySlotsIn, InventoryPlayer playerInv) {
-		super(inventorySlotsIn, playerInv);
+	public GuiHearth(ContainerHearth inventorySlotsIn) {
+		super(inventorySlotsIn, inventorySlotsIn.player.inventory);
 		inventory = inventorySlotsIn;
 	}
 

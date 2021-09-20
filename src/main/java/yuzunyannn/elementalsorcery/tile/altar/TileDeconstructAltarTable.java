@@ -35,14 +35,14 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		stack = nbtGetItemStack(compound, "stack");
+		stack = nbtReadItemStack(compound, "stack");
 		super.readFromNBT(compound);
 
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		nbtSetItemStack(compound, "stack", stack);
+		nbtWriteItemStack(compound, "stack", stack);
 		return super.writeToNBT(compound);
 	}
 

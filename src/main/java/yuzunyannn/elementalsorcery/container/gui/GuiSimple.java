@@ -5,19 +5,27 @@ import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiSimple extends GuiNormal {
+
+	public final int titleColor;
 	public final String unlocalizedTitle;
 	public final ResourceLocation texture;
 
 	public GuiSimple(Container inventorySlotsIn, InventoryPlayer playerInv, String unlocalizedTitle,
-			ResourceLocation texture) {
+			ResourceLocation texture, int titleColor) {
 		super(inventorySlotsIn, playerInv);
 		this.unlocalizedTitle = unlocalizedTitle;
 		this.texture = texture;
+		this.titleColor = titleColor;
 	}
 
 	@Override
 	public String getUnlocalizedTitle() {
 		return unlocalizedTitle;
+	}
+
+	@Override
+	public int getTitleColor() {
+		return titleColor;
 	}
 
 	@Override

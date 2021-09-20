@@ -21,11 +21,17 @@ public class GuiTranscribeInjection extends GuiNormal {
 	}
 
 	@Override
+	public int getTitleColor() {
+		return 0x1a1a45;
+	}
+
+	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		String s = this.getDisplayTitle();
-		this.fontRenderer.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 4210752);
+		int color = this.getTitleColor();
+		this.fontRenderer.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, color);
 		this.fontRenderer.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 8,
-				this.ySize - 152 + 2, 4210752);
+				this.ySize - 152 + 2, color);
 	}
 
 	@Override

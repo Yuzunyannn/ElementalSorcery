@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockLadder;
 import net.minecraft.block.BlockPane;
 import net.minecraft.block.BlockTorch;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
@@ -171,5 +172,11 @@ public class RenderHelper {
 
 	public static void drawTexturedRectInCenter(float x, float y, float width, float height) {
 		drawTexturedRectInCenter(x, y, width, height, 0, 0, 1, 1, 1, 1);
+	}
+
+	public static final Minecraft mc = Minecraft.getMinecraft();
+
+	public static int getRenderDistanceChunks() {
+		return mc.gameSettings.renderDistanceChunks;
 	}
 }

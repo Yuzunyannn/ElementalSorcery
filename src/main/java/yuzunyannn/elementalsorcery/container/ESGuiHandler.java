@@ -10,6 +10,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.gui.GuiAnalysisAltar;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementBoard;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementCraftingTable;
+import yuzunyannn.elementalsorcery.container.gui.GuiElementTranslocator;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfApplyAddressPlate;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfSendParcel;
@@ -37,6 +38,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiSmeltBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiSupremeTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiTranscribeInjection;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
+import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class ESGuiHandler implements IGuiHandler {
 
@@ -55,6 +57,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_TRANSCRIBE_INJECTION = 13;
 	public static final int GUI_RESEARCHER = 14;
 	public static final int GUI_ELEMENT_BOARD = 15;
+	public static final int GUI_ELEMENT_TRANSLOCATOR = 16;
 
 	public static final int GUI_MD_MAGIC_GEN = 21;
 	public static final int GUI_MD_HEARTH = 22;
@@ -108,6 +111,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new ContainerResearch(player, pos);
 			case GUI_ELEMENT_BOARD:
 				return new ContainerElementBoard(player);
+			case GUI_ELEMENT_TRANSLOCATOR:
+				return new ContainerElementTranslocator(player, tileEntity);
 
 			case GUI_MD_MAGIC_GEN:
 				return new ContainerMDMagicGen(player, tileEntity);
@@ -153,9 +158,9 @@ public class ESGuiHandler implements IGuiHandler {
 			TileEntity tileEntity = world.getTileEntity(pos);
 			switch (ID) {
 			case GUI_HEARTH:
-				return new GuiHearth(new ContainerHearth(player, tileEntity), player.inventory);
+				return new GuiHearth(new ContainerHearth(player, tileEntity));
 			case GUI_SMELT_BOX:
-				return new GuiSmeltBox(new ContainerSmeltBox(player, tileEntity), player.inventory);
+				return new GuiSmeltBox(new ContainerSmeltBox(player, tileEntity));
 			case GUI_ELEMENT_WORKBENCH:
 				return new GuiElementWorkbench(new ContainerElementWorkbench(player.inventory, world, pos),
 						player.inventory);
@@ -165,12 +170,12 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiElementCraftingTable(new ContainerElementCraftingTable(player, tileEntity),
 						player.inventory);
 			case GUI_ANALYSIS_ALTAR:
-				return new GuiAnalysisAltar(new ContainerAnalysisAltar(player, tileEntity), player.inventory);
+				return new GuiAnalysisAltar(new ContainerAnalysisAltar(player, tileEntity));
 			case GUI_SUPREME_TABLE:
-				return new GuiSupremeTable(new ContainerSupremeTable(player, tileEntity), player.inventory);
+				return new GuiSupremeTable(new ContainerSupremeTable(player, tileEntity));
 			case GUI_INVENTORY_WORKBENCH:
 				return new GuiSimple(new ContainerWorkbenchWithInventory(player, tileEntity), player.inventory,
-						"tile.supremeTable.name", TEXTURE_CRAFTING_TABLE);
+						"tile.supremeTable.name", TEXTURE_CRAFTING_TABLE, 0x1a1a45);
 			case GUI_RITE_MANUAL:
 				return new GuiRiteManual(new ContainerRiteManual(player));
 			case GUI_ITEM_STRUCTURE_CRAFT:
@@ -181,6 +186,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiResearch(player, pos);
 			case GUI_ELEMENT_BOARD:
 				return new GuiElementBoard(new ContainerElementBoard(player));
+			case GUI_ELEMENT_TRANSLOCATOR:
+				return new GuiElementTranslocator(new ContainerElementTranslocator(player, tileEntity));
 
 			case GUI_MD_MAGIC_GEN:
 				return new GuiMDMagicGen(new ContainerMDMagicGen(player, tileEntity), player.inventory);
@@ -223,7 +230,7 @@ public class ESGuiHandler implements IGuiHandler {
 		}
 	}
 
-	public static final ResourceLocation TEXTURE_CRAFTING_TABLE = new ResourceLocation("minecraft",
-			"textures/gui/container/crafting_table.png");
+	public static final ResourceLocation TEXTURE_CRAFTING_TABLE = TextHelper
+			.toESResourceLocation("textures/gui/container/crafting_table_altar.png");
 
 }

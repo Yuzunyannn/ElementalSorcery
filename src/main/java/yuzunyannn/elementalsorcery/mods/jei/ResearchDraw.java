@@ -18,7 +18,7 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
-import yuzunyannn.elementalsorcery.container.gui.GuiTranscribeInjection;
+import yuzunyannn.elementalsorcery.container.gui.GuiHearth;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.elf.research.Topics;
 import yuzunyannn.elementalsorcery.event.EventClient;
@@ -82,8 +82,8 @@ public class ResearchDraw implements IDrawable {
 
 	@Override
 	public void draw(Minecraft mc, int xOffset, int yOffset) {
-		mc.getTextureManager().bindTexture(GuiTranscribeInjection.TEXTURE);
-		Gui.drawModalRectWithCustomSizedTexture(xOffset, yOffset + 120, 7, 26, 162, 18, 256, 256);
+		mc.getTextureManager().bindTexture(GuiHearth.TEXTURE);
+		Gui.drawModalRectWithCustomSizedTexture(xOffset, yOffset + 120, 7, 83, 162, 18, 256, 256);
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(81, 68, 0);
 		GlStateManager.rotate(EventClient.getGlobalRotateInRender(mc.getRenderPartialTicks()) / 8, 0, 0, 1);

@@ -32,6 +32,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
@@ -239,7 +240,17 @@ public class EventClient {
 		}
 
 		if (ElementalSorcery.isDevelop) {
+			tooltip.add(TextFormatting.GREEN + "Develop Info:");
 			tooltip.add(TextFormatting.GOLD + "" + ElfProfessionMerchant.priceIt(stack) + "$");
+			tooltip.add(TextFormatting.AQUA + "Deconstruct Test:");
+			for (ElementStack estack : estacks) {
+				if (estack.isEmpty()) continue;
+				estack = estack.copy().becomeElementWhenDeconstruct(Minecraft.getMinecraft().world, stack,
+						teInfo.complex(), Element.DP_ALTAR_ADV);
+				String str = I18n.format("info.elementCrystal.has", estack.getDisplayName(), estack.getCount(),
+						estack.getPower());
+				tooltip.add(TextFormatting.AQUA + str);
+			}
 		}
 	}
 }

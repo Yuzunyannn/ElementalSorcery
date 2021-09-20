@@ -1,0 +1,38 @@
+{
+	"pattern": [
+		"GAG",
+		"AXA",
+		"GAG"
+	],
+	"key": {
+		"X": "elementalsorcery:vortex",
+		"G": "elementalsorcery:magic_gold",
+		"A": "elementalsorcery:azure_crystal"
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 20,
+			"power": 300
+		},
+		{
+			"id": "water",
+			"size": 20,
+			"power": 300
+		},
+		{
+			"id": "air",
+			"size": 20,
+			"power": 100
+		},
+		{
+			"id": "ender",
+			"size": 24,
+			"power": 300
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:windmill_blade_frame",
+		"data": 1
+	}
+}

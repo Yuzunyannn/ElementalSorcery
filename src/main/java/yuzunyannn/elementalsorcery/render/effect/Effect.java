@@ -61,6 +61,14 @@ public abstract class Effect {
 		this.prevPosZ = this.posZ;
 	}
 
+	public boolean isDead() {
+//		if (mc.getRenderViewEntity() == null) return true;
+//		float distance = mc.gameSettings.renderDistanceChunks * 16;
+//		double renderDistance = mc.getRenderViewEntity().getPositionVector().squareDistanceTo(getPositionVector());
+//		if (renderDistance > distance * distance) return true;
+		return this.lifeTime <= 0;
+	}
+
 	public Vec3d getPositionVector() {
 		return new Vec3d(posX, posY, posZ);
 	}
@@ -120,7 +128,6 @@ public abstract class Effect {
 	static boolean inUpdate = false;
 
 	static public void addEffect(Effect effect) {
-
 		if (effect.asParticle) {
 			// 0渲染全部
 			int particleSetting = mc.gameSettings.particleSetting;
@@ -171,7 +178,7 @@ public abstract class Effect {
 		inUpdate = true;
 		while (iter.hasNext()) {
 			Effect effect = iter.next();
-			if (effect.lifeTime <= 0 || world != effect.world) {
+			if (effect.isDead() || world != effect.world) {
 				iter.remove();
 				continue;
 			}

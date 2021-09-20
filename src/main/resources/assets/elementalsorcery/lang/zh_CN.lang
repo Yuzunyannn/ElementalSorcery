@@ -100,7 +100,12 @@ item.dejectedTear.name=忧郁之泪
 item.merchantInvitation.name=商人邀请函
 item.elementBoard.name=元素共鸣板
 item.cubeDemarcator.name=元素立方体定标器
-item.windmillBlade.name=石英扇叶
+item.windmillBlade.name=石英风轮
+item.windmillBlade.astone.name=通魔石风轮
+item.windmillBlade.wood.name=木制风轮
+item.windmillBlade.crystal.name=水晶石英风轮
+item.windmillBladeFrame.name=风轮框架
+item.windmillBladeFrame.adv.name=高级风轮框架
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -179,6 +184,7 @@ tile.crudeQuartz.name=粗制石英
 tile.elementPlatform.name=元素平台
 tile.fluorspar.name=荧光
 tile.deconstructWindmill.name=瓦解风车
+tile.elementTranslocator.name=元素转移台
 
 enchantment.gatherSouls=聚魂
 

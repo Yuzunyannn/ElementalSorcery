@@ -134,6 +134,59 @@
                     "power": 8
                 }
             ]
+        },
+        {
+            "note": "狂暴皮革",
+            "item": "elementalsorcery:rabid_leather",
+            "element": [
+                {
+                    "id": "air",
+                    "size": 3,
+                    "power": 521
+                },
+                {
+                    "id": "wood",
+                    "size": 23,
+                    "power": 200
+                }
+            ]
+        },
+        {
+            "note": "忧郁之泪",
+            "item": "elementalsorcery:dejected_tear",
+            "element": [
+                {
+                    "id": "water",
+                    "size": 16,
+                    "power": 575
+                },
+                {
+                    "id": "knowledge",
+                    "size": 8,
+                    "power": 475
+                },
+                {
+                    "id": "fire",
+                    "size": 5,
+                    "power": 444
+                }
+            ]
+        },
+        {
+            "note": "恐惧宝石",
+            "item": "elementalsorcery:dread_gem",
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 185,
+                    "power": 486
+                },
+                {
+                    "id": "metal",
+                    "size": 142,
+                    "power": 444
+                }
+            ]
         }
     ]
 }

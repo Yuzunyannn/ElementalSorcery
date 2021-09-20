@@ -13,16 +13,14 @@ public class ItemSpellbookCover extends Item {
 
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		if (!this.isInCreativeTab(tab))
-			return;
+		if (!this.isInCreativeTab(tab)) return;
 		items.add(new ItemStack(this, 1, 0));
 		items.add(new ItemStack(this, 1, 1));
 	}
 
 	@Override
 	public String getUnlocalizedName(ItemStack stack) {
-		if (stack.getMetadata() == 0)
-			return "item.spellbookCover";
+		if (stack.getMetadata() == 0) return "item.spellbookCover";
 		return "item.spellbookCover.back";
 	}
 

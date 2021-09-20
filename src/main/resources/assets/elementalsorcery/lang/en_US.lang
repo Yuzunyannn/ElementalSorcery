@@ -100,7 +100,12 @@ item.dejectedTear.name=Dejected Tear
 item.merchantInvitation.name=Merchant Invitation
 item.elementBoard.name=Element Resonance Board
 item.cubeDemarcator.name=Element Cube Demarcator
-item.windmillBlade.name=Quartz Blade
+item.windmillBlade.name=Quartz Wind Wheel
+item.windmillBlade.astone.name=Stone with Magic Wind Wheel
+item.windmillBlade.wood.name=Wooden Wind Wheel
+item.windmillBlade.crystal.name=Crytsal Quartz Wind Wheel
+item.windmillBladeFrame.name=Frame of Wind Wheel
+item.windmillBladeFrame.adv.name=Advanced Frame of Wind Wheel
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -179,6 +184,7 @@ tile.crudeQuartz.name=Crude Quartz
 tile.elementPlatform.name=Element Platform
 tile.fluorspar.name=Fluorspar
 tile.deconstructWindmill.name=Deconstruct Windmill
+tile.elementTranslocator.name=Element Translocator
 
 enchantment.gatherSouls=Gather Souls
 

@@ -23,7 +23,7 @@ public class RiteCategory implements IRecipeCategory<RiteRecipeWrapper> {
 
 	public RiteCategory() {
 		background = ESJEIPlugin.guiHelper.createDrawable(
-				new ResourceLocation(ElementalSorcery.MODID, "textures/gui/rite_craft.png"), 0, 0, 148, 60);
+				new ResourceLocation(ElementalSorcery.MODID, "textures/gui/jei/rite_craft.png"), 0, 0, 148, 60);
 	}
 
 	@Override

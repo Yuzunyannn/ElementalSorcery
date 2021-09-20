@@ -138,6 +138,11 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 		return REGISTRY.getKey(element);
 	}
 
+	/** 根据元素获取注册id */
+	public static int getIdFromElement(Element element) {
+		return REGISTRY.getId(element);
+	}
+
 	/** 根据注册名获取元素 */
 	public static Element getElementFromName(ResourceLocation name) {
 		return REGISTRY.getValue(name);
@@ -145,6 +150,11 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 
 	public static Element getElementFromName(String name) {
 		return getElementFromName(new ResourceLocation(name));
+	}
+
+	/** 根据注册id获取元素 */
+	public static Element getElementFromId(int id) {
+		return REGISTRY.getValue(id);
 	}
 
 	/** 默认的资源 */

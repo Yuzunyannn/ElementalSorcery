@@ -1,0 +1,37 @@
+{
+	"pattern": [
+		"WCW",
+		"CFC",
+		"WCW",
+		" W  ",
+		" RRW",
+		"WRR ",
+		"  W "
+	],
+	"key": {
+		"F": {
+			"item": "elementalsorcery:windmill_blade_frame",
+			"data": 1
+		},
+		"W": "elementalsorcery:estone_prism",
+		"C": "elementalsorcery:rabid_leather",
+		"G": "elementalsorcery:resonant_crystal",
+		"R": "elementalsorcery:fusion_crystal"
+	},
+	"element": [
+		{
+			"id": "air",
+			"size": 1000,
+			"power": 10
+		},
+		{
+			"id": "ender",
+			"size": 200,
+			"power": 10
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:windmill_blade_crystal",
+		"count": 1
+	}
+}

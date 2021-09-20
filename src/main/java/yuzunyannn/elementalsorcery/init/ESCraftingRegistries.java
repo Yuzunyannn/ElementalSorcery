@@ -13,7 +13,7 @@ import yuzunyannn.elementalsorcery.crafting.mc.RecipeColorful;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeLifeDirt;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipePageBuilding;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
-import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
+import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
 
 public class ESCraftingRegistries {
 

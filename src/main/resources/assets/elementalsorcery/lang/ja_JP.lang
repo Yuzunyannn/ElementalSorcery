@@ -101,6 +101,11 @@ item.merchantInvitation.name=商人の招待状
 item.elementBoard.name=元素共鳴の板
 item.cubeDemarcator.name=元素立方体の画定器
 item.windmillBlade.name=石英扇
+item.windmillBlade.astone.name=通魔石英扇
+item.windmillBlade.wood.name=木の扇
+item.windmillBlade.crystal.name=水晶石英扇
+item.windmillBladeFrame.name=扇のフレーム
+item.windmillBladeFrame.adv.name=高級扇のフレーム
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -179,6 +184,7 @@ tile.crudeQuartz.name=粗造りの石英
 tile.elementPlatform.name=元素プラットフォーム
 tile.fluorspar.name=蛍光
 tile.deconstructWindmill.name=瓦解風車
+tile.elementTranslocator.name=元素移動台
 
 enchantment.gatherSouls=集魂
 

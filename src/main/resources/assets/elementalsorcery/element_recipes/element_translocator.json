@@ -1,0 +1,37 @@
+{
+	"pattern": [
+		" Q ",
+		"ETE",
+		"PCP"
+	],
+	"key": {
+		"T": "elementalsorcery:dejected_tear",
+		"C": "elementalsorcery:scarlet_crystal",
+		"E": {
+			"item": "elementalsorcery:estone",
+			"data": 0
+		},
+		"P": "elementalsorcery:estone_slab",
+		"Q": "elementalsorcery:element_crystal"
+	},
+	"element": [
+		{
+			"id": "wood",
+			"size": 6,
+			"power": 300
+		},
+		{
+			"id": "air",
+			"size": 30,
+			"power": 50
+		},
+		{
+			"id": "ender",
+			"size": 10,
+			"power": 300
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:element_translocator"
+	}
+}

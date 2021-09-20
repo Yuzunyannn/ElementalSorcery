@@ -2,7 +2,7 @@
 	"lev": 5,
 	"need": [
 		"element_adv/supreme_table",
-		"element_sup/vortex"
+		"element_adv/vortex"
 	],
 	"linked": "elementalsorcery:fusion_crystal",
 	"type": "craft",

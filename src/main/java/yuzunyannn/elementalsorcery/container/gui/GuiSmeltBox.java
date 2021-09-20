@@ -1,7 +1,6 @@
 package yuzunyannn.elementalsorcery.container.gui;
 
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ContainerSmeltBox;
@@ -12,8 +11,8 @@ public class GuiSmeltBox extends GuiNormal {
 			"textures/gui/container/smelt_box.png");
 	protected ContainerSmeltBox inventory;
 
-	public GuiSmeltBox(ContainerSmeltBox inventorySlotsIn, InventoryPlayer playerInv) {
-		super(inventorySlotsIn, playerInv);
+	public GuiSmeltBox(ContainerSmeltBox inventorySlotsIn) {
+		super(inventorySlotsIn, inventorySlotsIn.player.inventory);
 		inventory = inventorySlotsIn;
 	}
 

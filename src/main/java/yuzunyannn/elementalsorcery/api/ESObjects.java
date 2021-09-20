@@ -96,7 +96,11 @@ public class ESObjects {
 		public Item MERCHANT_INVITATION;
 		public Item ELEMENT_BOARD;
 		public Item CUBE_DEMARCATOR;
+		public Item WINDMILL_BLADE_FRAME;
 		public Item WINDMILL_BLADE;
+		public Item WINDMILL_BLADE_ASTONE;
+		public Item WINDMILL_BLADE_WOOD;
+		public Item WINDMILL_BLADE_CRYSTAL;
 	}
 
 	static public class Blocks {
@@ -165,6 +169,7 @@ public class ESObjects {
 		public Block ELEMENT_PLATFORM;
 		public Block FLUORSPAR;
 		public Block DECONSTRUCT_WINDMILL;
+		public Block ELEMENT_TRANSLOCATOR;
 	}
 
 	static public class Elements {

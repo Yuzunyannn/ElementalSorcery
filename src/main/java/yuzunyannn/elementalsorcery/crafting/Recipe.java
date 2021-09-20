@@ -69,7 +69,7 @@ public class Recipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe
 			for (int j = 0; j < str.length(); j++) {
 				String ch = str.substring(j, j + 1);
 				if (ch.charAt(0) != ' ') {
-					if (!map.containsKey(ch)) throw Json.exception(ParseExceptionCode.NOT_HAVE, "key");
+					if (!map.containsKey(ch)) throw Json.exception(ParseExceptionCode.NOT_HAVE, "key:" + ch);
 					ItemStack[] stacks = map.get(ch);
 					int index = i * 3 + j;
 					this.setItemStack(index, stacks);

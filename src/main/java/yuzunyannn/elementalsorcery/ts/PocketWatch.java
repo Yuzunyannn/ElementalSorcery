@@ -132,7 +132,7 @@ public class PocketWatch {
 		blockAllEntities(world, data, false);
 
 		for (TileEntity tile : data.tickableTileEntities) {
-			if (world.loadedTileEntityList.contains(tile)) data.tickableTileEntities.add(tile);
+			if (world.loadedTileEntityList.contains(tile)) world.tickableTileEntities.add(tile);
 		}
 		data.tickableTileEntities.clear();
 	}

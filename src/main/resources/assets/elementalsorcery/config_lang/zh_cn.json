@@ -15,10 +15,12 @@
     "block.elementalsorcery_life_flower.probability_of_consume_maigc_per_grow": "每进行一次生长，消耗掉花盆里魔力的概率",
     "block.elementalsorcery_seal_stone.mantra_drop_probability_per_lucky": "破坏一个藏封石，每一点时运，掉落咒文古卷的概率",
 
-    "tile.elementalsorcery_mdresonantincubator.cost_pre_resonant": "每次共振的魔力消耗",
+    "tile.general.tile_entity_render_distance": "tile类型方块的最大渲染距离，超出后不渲染。[0表示程序默认][-1表示跟随渲染距离]",
     "tile.general.md_base_max_capacity": "魔动设备默认的最大魔力储存上限",
     "tile.general.md_base_overflow": "魔动设备默认向外发送魔力的最低值",
     "tile.general.md_base_send_pre_second": "魔动设备默认每秒的传输量",
+
+    "tile.elementalsorcery_mdresonantincubator.cost_pre_resonant": "每次共振的魔力消耗",
     "tile.elementalsorcery_mdmagicgen.max_capacity": "热力魔分箱的最大魔力储存上限",
     "tile.elementalsorcery_mdmagiclization.max_capacity": "魔化箱的最大魔力储存上限",
     "tile.elementalsorcery_mdfusion.gen_max_maigc_per_sec": "注魔箱每秒自动生产的最大魔力量(夜晚)",

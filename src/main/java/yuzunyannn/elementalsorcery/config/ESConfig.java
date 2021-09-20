@@ -10,6 +10,7 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.init.EntityRegistries;
+import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 
@@ -48,6 +49,7 @@ public class ESConfig {
 		load(EntityRegistries.class, getter);
 		load(BuildingLib.class, getter);
 		load(TileMDBase.class, getter);
+		load(TileEntityNetwork.class, getter);
 		loadList(ESInit.ES_TILE_ENTITY, getter);
 		loadRegs(ESInit.ITEMS, getter);
 		loadRegs(ESInit.BLOCKS, getter);

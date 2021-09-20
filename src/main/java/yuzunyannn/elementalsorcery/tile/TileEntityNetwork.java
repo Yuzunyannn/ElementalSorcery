@@ -5,7 +5,6 @@ import javax.annotation.Nullable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -14,9 +13,18 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.config.Config;
+import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class TileEntityNetwork extends TileEntity {
+
+	@Config
+	static protected int TILE_ENTITY_RENDER_DISTANCE = -1;
 
 	private boolean isNetwork = false;
 
@@ -66,6 +74,17 @@ public class TileEntityNetwork extends TileEntity {
 		return oldState.getBlock() != newState.getBlock();
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public double getMaxRenderDistanceSquared() {
+		if (TILE_ENTITY_RENDER_DISTANCE > 0) return TILE_ENTITY_RENDER_DISTANCE * TILE_ENTITY_RENDER_DISTANCE;
+		if (TILE_ENTITY_RENDER_DISTANCE == -1) {
+			int distance = RenderHelper.getRenderDistanceChunks() * 16;
+			return distance * distance;
+		}
+		return 128 * 128;
+	}
+
 	/** 将数据更新到client端 */
 	public void updateToClient() {
 		if (world.isRemote) return;
@@ -81,34 +100,28 @@ public class TileEntityNetwork extends TileEntity {
 	}
 
 	/** 设置itemStack */
-	public void nbtSetItemStack(NBTTagCompound nbt, String key, ItemStack stack) {
+	public void nbtWriteItemStack(NBTTagCompound nbt, String key, ItemStack stack) {
 		if (stack.isEmpty()) return;
-		if (this.isSending()) {
-			NBTTagCompound stackNBT = new NBTTagCompound();
-
-			stackNBT.setInteger("id", Item.REGISTRY.getIDForObject(stack.getItem()));
-
-			if (stack.getCount() != 1) stackNBT.setByte("n", (byte) stack.getCount());
-			if (stack.getItemDamage() != 0) nbt.setShort("d", (short) stack.getItemDamage());
-
-			NBTTagCompound tag = stack.getTagCompound();
-			if (tag != null && !tag.hasNoTags()) nbt.setTag("t", tag);
-
-			nbt.setTag(key, stackNBT);
-		} else nbt.setTag(key, stack.serializeNBT());
+		if (this.isSending()) nbt.setTag(key, NBTHelper.serializeItemStackForSend(stack));
+		else nbt.setTag(key, stack.serializeNBT());
 	}
 
-	/** 获取设置itemStack */
-	public ItemStack nbtGetItemStack(NBTTagCompound nbt, String key) {
+	/** 获取itemStack */
+	public ItemStack nbtReadItemStack(NBTTagCompound nbt, String key) {
 		if (!nbt.hasKey(key, NBTTag.TAG_COMPOUND)) return ItemStack.EMPTY;
-		if (this.isSending()) {
-			NBTTagCompound stackNBT = nbt.getCompoundTag(key);
-			Item item = Item.REGISTRY.getObjectById(stackNBT.getInteger("id"));
-			ItemStack stack = new ItemStack(item);
-			if (stackNBT.hasKey("n", NBTTag.TAG_NUMBER)) stack.setCount(stackNBT.getInteger("n"));
-			if (stackNBT.hasKey("d", NBTTag.TAG_NUMBER)) stack.setItemDamage(stackNBT.getInteger("d"));
-			if (stackNBT.hasKey("t", NBTTag.TAG_COMPOUND)) stack.setTagCompound(stackNBT.getCompoundTag("t"));
-			return stack;
-		} else return new ItemStack(nbt.getCompoundTag(key));
+		if (this.isSending()) return NBTHelper.deserializeItemStackFromSend(nbt.getCompoundTag(key));
+		else return new ItemStack(nbt.getCompoundTag(key));
+	}
+
+	/** 设置stack仓库 */
+	public void nbtWriteItemStackHanlder(NBTTagCompound nbt, String key, ItemStackHandler inventory) {
+		nbt.setTag(key, inventory.serializeNBT());
+	}
+
+	/** 获取stack仓库 */
+	public boolean nbtReadItemStackHanlder(NBTTagCompound nbt, String key, ItemStackHandler inventory) {
+		if (!nbt.hasKey(key, NBTTag.TAG_COMPOUND)) return false;
+		inventory.deserializeNBT(nbt.getCompoundTag(key));
+		return true;
 	}
 }

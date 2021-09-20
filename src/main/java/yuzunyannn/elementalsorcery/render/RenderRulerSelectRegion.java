@@ -21,7 +21,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.IRenderClient;
 import yuzunyannn.elementalsorcery.event.ITickTask;
-import yuzunyannn.elementalsorcery.item.ItemMagicRuler;
+import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
 
 @SideOnly(Side.CLIENT)
 public class RenderRulerSelectRegion implements IRenderClient, ITickTask {

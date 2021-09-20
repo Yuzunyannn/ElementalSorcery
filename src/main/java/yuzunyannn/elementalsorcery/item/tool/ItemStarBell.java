@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.item;
+package yuzunyannn.elementalsorcery.item.tool;
 
 import java.util.List;
 import java.util.function.BiFunction;

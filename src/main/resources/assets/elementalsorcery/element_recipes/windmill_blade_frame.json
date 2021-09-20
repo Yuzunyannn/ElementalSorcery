@@ -1,0 +1,28 @@
+{
+	"pattern": [
+		"GAG",
+		"AXA",
+		"GAG"
+	],
+	"key": {
+		"X": "elementalsorcery:vortex",
+		"G": "minecraft:gold_ingot",
+		"A": "elementalsorcery:azure_crystal"
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 5,
+			"power": 100
+		},
+		{
+			"id": "air",
+			"size": 5,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:windmill_blade_frame",
+		"data": 0
+	}
+}

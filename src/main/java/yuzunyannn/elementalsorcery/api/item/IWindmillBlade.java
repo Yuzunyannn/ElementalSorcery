@@ -14,13 +14,23 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public interface IWindmillBlade {
 
-	void bladeUpdate(World world, BlockPos pos, ItemStack stack, List<ElementStack> outList, float speed, int tick);
+	/**
+	 * @return true表示需要将stack数据更新到客户端
+	 */
+	boolean bladeUpdate(World world, BlockPos pos, ItemStack stack, List<ElementStack> outList, float speed, int tick);
 
 	float bladeWindScale(World world, BlockPos pos, ItemStack stack);
+
+	boolean canTwirl(World world, BlockPos pos, ItemStack stack);
 
 	@Nullable
 	@SideOnly(Side.CLIENT)
 	default ResourceLocation getWindmillBladeSkin() {
 		return null;
+	}
+
+	@SideOnly(Side.CLIENT)
+	default boolean isWindmillBladeSkinNeedBlend() {
+		return false;
 	}
 }

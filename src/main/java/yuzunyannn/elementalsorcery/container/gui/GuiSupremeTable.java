@@ -5,8 +5,6 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ContainerSupremeTable;
@@ -18,8 +16,8 @@ public class GuiSupremeTable extends GuiNormal<ContainerSupremeTable> {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/container/element_crafting_table.png");
 
-	public GuiSupremeTable(ContainerSupremeTable inventorySlotsIn, InventoryPlayer playerInv) {
-		super(inventorySlotsIn, playerInv);
+	public GuiSupremeTable(ContainerSupremeTable inventorySlotsIn) {
+		super(inventorySlotsIn, inventorySlotsIn.player.inventory);
 		this.xSize = 230;
 		this.ySize = 242;
 	}
@@ -30,11 +28,17 @@ public class GuiSupremeTable extends GuiNormal<ContainerSupremeTable> {
 	}
 
 	@Override
+	public int getTitleColor() {
+		return 0x1a1a45;
+	}
+
+	@Override
 	protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
 		String s = this.getDisplayTitle();
-		this.fontRenderer.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, 4210752);
+		int color = this.getTitleColor();
+		this.fontRenderer.drawString(s, this.xSize / 2 - this.fontRenderer.getStringWidth(s) / 2, 6, color);
 		this.fontRenderer.drawString(this.playerInventory.getDisplayName().getUnformattedText(), 36,
-				this.ySize - 96 + 2, 4210752);
+				this.ySize - 96 + 2, color);
 	}
 
 	@Override

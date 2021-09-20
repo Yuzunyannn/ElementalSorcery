@@ -11,7 +11,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityThrow;
-import yuzunyannn.elementalsorcery.item.ItemMagicBlastWand;
+import yuzunyannn.elementalsorcery.item.tool.ItemMagicBlastWand;
 
 public class ItemMagicCore extends Item implements EntityThrow.IItemThrowAction {
 

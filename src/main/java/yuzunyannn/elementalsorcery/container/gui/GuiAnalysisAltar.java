@@ -10,7 +10,6 @@ import net.minecraft.client.renderer.block.model.IBakedModel;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
@@ -27,13 +26,18 @@ public class GuiAnalysisAltar extends GuiNormal<ContainerAnalysisAltar> {
 	private static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/container/analysis_altar.png");
 
-	public GuiAnalysisAltar(ContainerAnalysisAltar inventorySlotsIn, InventoryPlayer playerInv) {
-		super(inventorySlotsIn, playerInv);
+	public GuiAnalysisAltar(ContainerAnalysisAltar inventorySlotsIn) {
+		super(inventorySlotsIn, inventorySlotsIn.player.inventory);
 	}
 
 	@Override
 	public String getUnlocalizedTitle() {
 		return "tile.analysisAltar.name";
+	}
+
+	@Override
+	public int getTitleColor() {
+		return 0x1a1a45;
 	}
 
 	@Override

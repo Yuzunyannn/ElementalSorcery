@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "WWW",
+    "WFW",
+    "WWW"
+  ],
+  "key": {
+    "F": {
+      "item": "elementalsorcery:windmill_blade_frame",
+      "data": 0
+    },
+    "W": {
+      "item": "elementalsorcery:elf_plank",
+      "data": 1
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:windmill_blade_wood"
+  }
+}
