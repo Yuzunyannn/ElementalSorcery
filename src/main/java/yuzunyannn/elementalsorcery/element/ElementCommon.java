@@ -2,9 +2,11 @@ package yuzunyannn.elementalsorcery.element;
 
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.element.IElementExplosion;
+import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
 
 //简单的icon返回的元素
-public abstract class ElementCommon extends Element {
+public abstract class ElementCommon extends Element implements IStarFlowerCast, IElementExplosion {
 
 	ResourceLocation TEXTURE;
 

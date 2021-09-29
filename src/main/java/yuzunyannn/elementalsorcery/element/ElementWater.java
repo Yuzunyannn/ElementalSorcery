@@ -3,14 +3,17 @@ package yuzunyannn.elementalsorcery.element;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidBase;
-import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
+import yuzunyannn.elementalsorcery.element.explosion.EEWater;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 
-public class ElementWater extends ElementCommon implements IStarFlowerCast {
+public class ElementWater extends ElementCommon {
 
 	public ElementWater() {
 		super(0x6472f7, "water");
@@ -62,6 +65,11 @@ public class ElementWater extends ElementCommon implements IStarFlowerCast {
 			else return Blocks.COBBLESTONE.getDefaultState();
 		}
 		return null;
+	}
+
+	@Override
+	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
+		return new EEWater(world, pos, ElementExplosion.getStrength(eStack), eStack);
 	}
 
 }

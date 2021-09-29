@@ -154,7 +154,8 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 
 	/** 根据注册id获取元素 */
 	public static Element getElementFromId(int id) {
-		return REGISTRY.getValue(id);
+		Element element = REGISTRY.getValue(id);
+		return element == null ? ElementStack.EMPTY.getElement() : element;
 	}
 
 	/** 默认的资源 */

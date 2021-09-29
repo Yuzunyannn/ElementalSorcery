@@ -2,18 +2,20 @@ package yuzunyannn.elementalsorcery.element;
 
 import java.util.List;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
+import yuzunyannn.elementalsorcery.element.explosion.EEAir;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class ElementAir extends ElementCommon implements IStarFlowerCast {
+public class ElementAir extends ElementCommon {
 
 	public ElementAir() {
-		super(rgb(242, 243, 243), "air");
+		super(0xe5ffff, "air");
 	}
 
 	@Override
@@ -32,5 +34,10 @@ public class ElementAir extends ElementCommon implements IStarFlowerCast {
 		if (entities.isEmpty()) return estack;
 		estack.shrink(Math.max(1, entities.size() / 5));
 		return estack;
+	}
+
+	@Override
+	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
+		return new EEAir(world, pos, ElementExplosion.getStrength(eStack), eStack);
 	}
 }

@@ -5,18 +5,21 @@ import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
-import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.element.explosion.EEMetal;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
-public class ElementMetal extends ElementCommon implements IStarFlowerCast {
+public class ElementMetal extends ElementCommon {
 
 	public static final int COLOR = 0xFFD700;
 	protected List<ItemStack> ores;
@@ -69,6 +72,11 @@ public class ElementMetal extends ElementCommon implements IStarFlowerCast {
 				break;
 			}
 		}
+	}
+
+	@Override
+	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
+		return new EEMetal(world, pos, ElementExplosion.getStrength(eStack), eStack);
 	}
 
 }

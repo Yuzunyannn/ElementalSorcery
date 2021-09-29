@@ -1,15 +1,19 @@
 package yuzunyannn.elementalsorcery.element;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
+import yuzunyannn.elementalsorcery.api.element.IElementExplosion;
+import yuzunyannn.elementalsorcery.element.explosion.EEEarth;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.init.ESInit;
 
-public class ElementEarth extends ElementCommon implements IStarFlowerCast {
+public class ElementEarth extends ElementCommon  {
 
 	public ElementEarth() {
 		super(0x785439, "earth");
@@ -47,5 +51,10 @@ public class ElementEarth extends ElementCommon implements IStarFlowerCast {
 		}
 
 		return estack;
+	}
+
+	@Override
+	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
+		return new EEEarth(world, pos, ElementExplosion.getStrength(eStack), eStack);
 	}
 }

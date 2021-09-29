@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ExploreOreScan implements IExploreHandle {
 
@@ -55,12 +56,8 @@ public class ExploreOreScan implements IExploreHandle {
 	}
 
 	public static ItemStack scanningOre(IBlockState state) {
-		if (isSpecialBlock(state)) return new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state));
-		ItemStack oreStack = new ItemStack(state.getBlock(), 1, state.getBlock().getMetaFromState(state));
-		if (oreStack.isEmpty()) return ItemStack.EMPTY;
-		int[] ore = OreDictionary.getOreIDs(oreStack);
-		if (ore == null || ore.length == 0) return ItemStack.EMPTY;
-		String name = OreDictionary.getOreName(ore[0]);
+		if (isSpecialBlock(state)) return ItemHelper.toItemStack(state);
+		String name = BlockHelper.getOreName(ItemHelper.toItemStack(state));
 		if (!BlockHelper.isOre(name)) return ItemStack.EMPTY;
 		return OreDictionary.getOres(name).get(0);
 	}

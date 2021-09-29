@@ -15,12 +15,16 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
@@ -120,6 +124,36 @@ public abstract class BlockElementContainer extends BlockContainer {
 			}
 		}
 		ElementHelper.toElementInventory(ElementHelper.getElementInventory(stack), einv);
+	}
+
+	@Override
+	public boolean canDropFromExplosion(Explosion explosionIn) {
+		return false;
+	}
+
+	@Override
+	public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {
+		IBlockState state = world.getBlockState(pos);
+		IElementInventory einv = BlockHelper.getElementInventory(world, pos, null);
+		super.onBlockExploded(world, pos, explosion);
+		if (world.isRemote) return;
+		if (einv != null) {
+			Vec3d at = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+			for (int i = 0; i < einv.getSlots(); i++) {
+				ElementStack stack = einv.getStackInSlot(i);
+				if (stack.isEmpty()) continue;
+				EntityLivingBase attacker = explosion.getExplosivePlacedBy();
+				stack = stack.copy();
+				stack.grow(10);
+				stack.setPower(stack.getPower() + 75);
+				if (ElementExplosion.doExplosion(world, at, stack, attacker) != null) {
+					einv.setStackInSlot(i, ElementStack.EMPTY);
+				}
+			}
+		}
+		try {
+			dropBlockAsItemWithChance(world, pos, state, 0.75f, 0);
+		} catch (Exception e) {}
 	}
 
 }

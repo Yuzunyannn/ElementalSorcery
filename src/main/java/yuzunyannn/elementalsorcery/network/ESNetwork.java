@@ -30,6 +30,8 @@ public class ESNetwork {
 		registerMessage(MessageSyncConfig.Handler.class, MessageSyncConfig.class, Side.CLIENT);
 
 		registerMessage(MessagePocketWatch.Handler.class, MessagePocketWatch.class, Side.CLIENT);
+
+		registerMessage(MessageElementExplosion.Handler.class, MessageElementExplosion.class, Side.CLIENT);
 	}
 
 	public static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(

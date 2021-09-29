@@ -3,17 +3,20 @@ package yuzunyannn.elementalsorcery.element;
 import java.util.List;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
+import yuzunyannn.elementalsorcery.element.explosion.EEFire;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireArea;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class ElementFire extends ElementCommon implements IStarFlowerCast {
+public class ElementFire extends ElementCommon {
 
 	public ElementFire() {
 		super(rgb(255, 153, 2), "fire");
@@ -36,6 +39,11 @@ public class ElementFire extends ElementCommon implements IStarFlowerCast {
 		if (entities.isEmpty()) return estack;
 		estack.shrink(Math.max(1, entities.size() / 5));
 		return estack;
+	}
+
+	@Override
+	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
+		return new EEFire(world, pos, ElementExplosion.getStrength(eStack), eStack);
 	}
 
 }

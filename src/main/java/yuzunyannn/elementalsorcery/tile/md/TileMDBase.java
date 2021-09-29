@@ -25,8 +25,8 @@ import yuzunyannn.elementalsorcery.api.tile.IProvideMagic;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.item.tool.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
 import yuzunyannn.elementalsorcery.util.IField;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
@@ -229,7 +229,7 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 		if (!this.world.isRemote) {
 			if (this.inventory != null) BlockHelper.drop(inventory, world, pos);
 			if (this.getCurrentCapacity() == 0) return;
-			ItemMagicBlastWand.blast(magic, world, pos, null, null);
+			ElementExplosion.doExplosion(world, pos, magic, null);
 		}
 	}
 

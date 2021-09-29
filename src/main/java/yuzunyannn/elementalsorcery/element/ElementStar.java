@@ -2,16 +2,19 @@ package yuzunyannn.elementalsorcery.element;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
+import yuzunyannn.elementalsorcery.element.explosion.EEStar;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
-public class ElementStar extends ElementCommon implements IStarFlowerCast {
+public class ElementStar extends ElementCommon {
 
 	public ElementStar() {
 		super(0xcaf4ff, "star");
@@ -49,5 +52,10 @@ public class ElementStar extends ElementCommon implements IStarFlowerCast {
 		world.playEvent(2001, at, Block.getStateId(world.getBlockState(at)));
 
 		return estack;
+	}
+
+	@Override
+	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
+		return new EEStar(world, pos, ElementExplosion.getStrength(eStack) + 0.5f, eStack);
 	}
 }

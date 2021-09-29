@@ -3,6 +3,8 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockFire;
 import net.minecraft.block.BlockLiquid;
@@ -207,7 +209,7 @@ public class MantraFireBall extends MantraCommon {
 		for (int x = -size; x <= size; x++) {
 			for (int y = size; y >= -size; y--) {
 				for (int z = -size; z <= size; z++) {
-					IBlockState toState = this.affect(world, bPos, new Vec3i(x, y, z), data);
+					IBlockState toState = affect(world, bPos, new Vec3i(x, y, z), data);
 					if (toState != null) world.setBlockState(bPos.add(x, y, z), toState);
 				}
 			}
@@ -231,7 +233,7 @@ public class MantraFireBall extends MantraCommon {
 	}
 
 	/** 方块操作 */
-	public IBlockState affect(World world, BlockPos pos, Vec3i add, Data data) {
+	public static IBlockState affect(World world, BlockPos pos, Vec3i add, @Nullable Data data) {
 		pos = pos.add(add);
 		if (world.isAirBlock(pos)) return null;
 		IBlockState origin = world.getBlockState(pos);
@@ -252,13 +254,13 @@ public class MantraFireBall extends MantraCommon {
 			return Blocks.AIR.getDefaultState();
 		}
 		ItemStack stack = ItemHelper.toItemStack(origin);
-		boolean noChange = data.knowledge.getCount() >= 20;
+		boolean noChange = data == null ? false : data.knowledge.getCount() >= 20;
 		if (!stack.isEmpty()) {
 			ItemStack ore = stack;
 			ItemStack result = FurnaceRecipes.instance().getSmeltingResult(ore);
 			if (!result.isEmpty()) {
 				stack = result.copy();
-				if (!data.metal.isEmpty()) {
+				if (data != null && !data.metal.isEmpty()) {
 					if (BlockHelper.isOre(ore)) {
 						data.metal.shrink(1);
 						stack.grow(1);

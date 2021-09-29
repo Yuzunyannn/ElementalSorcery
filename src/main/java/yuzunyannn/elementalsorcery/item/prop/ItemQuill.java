@@ -1,7 +1,5 @@
 package yuzunyannn.elementalsorcery.item.prop;
 
-import java.util.Random;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.item.EntityItem;
@@ -10,7 +8,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -20,12 +17,12 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.render.effect.Effects;
-import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
+import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -251,68 +248,72 @@ public class ItemQuill extends Item {
 		return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 	}
 
-	public static void createFireExplode(World world, EntityPlayer player, Vec3d pos, int level) {
-		world.createExplosion(null, pos.x, pos.y, pos.z, MathHelper.ceil(level / 2.0f), true);
-		BlockPos bPos = new BlockPos(pos);
-		for (int x = -level; x <= level; x++) {
-			for (int y = -level; y <= level; y++) {
-				for (int z = -level; z <= level; z++) {
-					if (world.isAirBlock(bPos.add(x, y, z))) {
-						if (world.rand.nextFloat() < 0.01)
-							world.setBlockState(bPos.add(x, y, z), Blocks.FLOWING_LAVA.getDefaultState());
-					}
-				}
-			}
-		}
-		NBTTagCompound nbt = FireworkEffect.fastNBT(10, level, level / 8.0f, new int[] { 0xff6600, 0xffb21c, 0xff9311 },
-				new int[] { 0xffe7d7 });
-		Effects.spawnEffect(world, Effects.FIREWROK, pos, nbt);
-	}
-
-	public static void createWaterExplode(World world, EntityPlayer player, Vec3d pos, int level) {
-		world.createExplosion(null, pos.x, pos.y, pos.z, MathHelper.ceil(level / 2.0f), true);
-
-		if (!world.provider.doesWaterVaporize()) {
-			BlockPos bPos = new BlockPos(pos);
-			for (int x = -level; x <= level; x++) {
-				for (int y = -level; y <= level; y++) {
-					for (int z = -level; z <= level; z++) {
-						if (world.isAirBlock(bPos.add(x, y, z))) {
-							if (world.rand.nextFloat() < 0.01)
-								world.setBlockState(bPos.add(x, y, z), Blocks.FLOWING_WATER.getDefaultState());
-						}
-					}
-				}
-			}
-		}
-
-		NBTTagCompound nbt = FireworkEffect.fastNBT(10, level, level / 8.0f, new int[] { 0x0138fb, 0x1f89fe, 0x0f60fc },
-				new int[] { 0xc9dbff });
-		Effects.spawnEffect(world, Effects.FIREWROK, pos, nbt);
-	}
-
-	protected void createExplode(int i, World world, EntityPlayer player, Vec3d pos) {
-		int n = i % 2;
-		switch (n) {
-		case 0:
-			createFireExplode(world, player, pos, world.rand.nextInt(3) + 2);
-			break;
-		case 1:
-			createWaterExplode(world, player, pos, world.rand.nextInt(3) + 2);
-			break;
-		}
-	}
-
 	public void explode(World world, EntityPlayer player, BlockPos pos) {
 		if (world.isRemote) return;
 		Vec3d at = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
-		Random rand = world.rand;
-		world.createExplosion(null, at.x, at.y, at.z, 4, true);
-		for (int i = 0; i < 4; i++) {
-			Vec3d p = at.addVector(rand.nextDouble() * 8 - 4, rand.nextDouble() * 8 - 4, rand.nextDouble() * 8 - 4);
-			this.createExplode(i, world, player, p);
-		}
+		ElementExplosion.doExplosion(world, at, new ElementStack(ESInit.ELEMENTS.FIRE, 200, 1000), player);
+		ElementExplosion.doExplosion(world, at, new ElementStack(ESInit.ELEMENTS.WATER, 200, 1000), player);
+
+//		Vec3d at = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+//		Random rand = world.rand;
+//		world.createExplosion(null, at.x, at.y, at.z, 4, true);
+//		for (int i = 0; i < 4; i++) {
+//			Vec3d p = at.addVector(rand.nextDouble() * 8 - 4, rand.nextDouble() * 8 - 4, rand.nextDouble() * 8 - 4);
+//			this.createExplode(i, world, player, p);
+//		}
 
 	}
+
+//	public static void createFireExplode(World world, EntityPlayer player, Vec3d pos, int level) {
+//		world.createExplosion(null, pos.x, pos.y, pos.z, MathHelper.ceil(level / 2.0f), true);
+//		BlockPos bPos = new BlockPos(pos);
+//		for (int x = -level; x <= level; x++) {
+//			for (int y = -level; y <= level; y++) {
+//				for (int z = -level; z <= level; z++) {
+//					if (world.isAirBlock(bPos.add(x, y, z))) {
+//						if (world.rand.nextFloat() < 0.01)
+//							world.setBlockState(bPos.add(x, y, z), Blocks.FLOWING_LAVA.getDefaultState());
+//					}
+//				}
+//			}
+//		}
+//		NBTTagCompound nbt = FireworkEffect.fastNBT(10, level, level / 8.0f, new int[] { 0xff6600, 0xffb21c, 0xff9311 },
+//				new int[] { 0xffe7d7 });
+//		Effects.spawnEffect(world, Effects.FIREWROK, pos, nbt);
+//	}
+//
+//	public static void createWaterExplode(World world, EntityPlayer player, Vec3d pos, int level) {
+//		world.createExplosion(null, pos.x, pos.y, pos.z, MathHelper.ceil(level / 2.0f), true);
+//
+//		if (!world.provider.doesWaterVaporize()) {
+//			BlockPos bPos = new BlockPos(pos);
+//			for (int x = -level; x <= level; x++) {
+//				for (int y = -level; y <= level; y++) {
+//					for (int z = -level; z <= level; z++) {
+//						if (world.isAirBlock(bPos.add(x, y, z))) {
+//							if (world.rand.nextFloat() < 0.01)
+//								world.setBlockState(bPos.add(x, y, z), Blocks.FLOWING_WATER.getDefaultState());
+//						}
+//					}
+//				}
+//			}
+//		}
+//
+//		NBTTagCompound nbt = FireworkEffect.fastNBT(10, level, level / 8.0f, new int[] { 0x0138fb, 0x1f89fe, 0x0f60fc },
+//				new int[] { 0xc9dbff });
+//		Effects.spawnEffect(world, Effects.FIREWROK, pos, nbt);
+//	}
+
+//	protected void createExplode(int i, World world, EntityPlayer player, Vec3d pos) {
+//		int n = i % 2;
+//		switch (n) {
+//		case 0:
+//			createFireExplode(world, player, pos, world.rand.nextInt(3) + 2);
+//			break;
+//		case 1:
+//			createWaterExplode(world, player, pos, world.rand.nextInt(3) + 2);
+//			break;
+//		}
+//	}
 
 }

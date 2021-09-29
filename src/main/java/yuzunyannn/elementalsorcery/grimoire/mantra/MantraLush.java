@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
@@ -121,10 +123,11 @@ public class MantraLush extends MantraCommon {
 			magicEffectAt(world, pos, caster);
 			return;
 		}
-		this.magicToBlock(world, pos, state, caster, power);
+		magicToBlock(world, pos, state, power, caster.iWantCaster().asEntity());
 	}
 
-	protected void magicToBlock(World world, BlockPos pos, IBlockState state, ICaster caster, float power) {
+	public static void magicToBlock(World world, BlockPos pos, IBlockState state, float power,
+			@Nullable Entity entity) {
 		Block block = state.getBlock();
 		Random rand = world.rand;
 		float dP = MathHelper.sqrt(power / 8.0f);
@@ -163,7 +166,7 @@ public class MantraLush extends MantraCommon {
 		if (block == ESInit.BLOCKS.ELF_SAPLING && power > 600) {
 			if (rand.nextFloat() < dP * 0.05) {
 				EntityPlayer player = null;
-				if (caster.iWantCaster() instanceof EntityPlayer) player = (EntityPlayer) caster.iWantCaster();
+				if (entity instanceof EntityPlayer) player = (EntityPlayer) entity;
 				((BlockElfSapling) block).superGrow(world, rand, pos, state, player, true);
 				return;
 			}

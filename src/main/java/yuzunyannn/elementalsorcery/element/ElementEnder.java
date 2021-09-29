@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.element;
 
 import java.util.List;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -10,14 +11,16 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
-import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
+import yuzunyannn.elementalsorcery.element.explosion.EEEnder;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class ElementEnder extends ElementCommon implements IStarFlowerCast {
+public class ElementEnder extends ElementCommon {
 
 	public ElementEnder() {
 		super(0xcc00fa, "ender");
@@ -27,7 +30,7 @@ public class ElementEnder extends ElementCommon implements IStarFlowerCast {
 	public ElementStack starFlowerCasting(World world, BlockPos pos, ElementStack estack, int tick) {
 		if (tick % 60 != 0) return estack;
 		if (world.isRemote) return estack;
-		
+
 		int range = getStarFlowerRange(estack);
 		AxisAlignedBB aabb = WorldHelper.createAABB(pos, range, range, range);
 
@@ -65,6 +68,11 @@ public class ElementEnder extends ElementCommon implements IStarFlowerCast {
 				SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1, 1);
 		estack.shrink(Math.max(1, count / 3));
 		return estack;
+	}
+
+	@Override
+	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
+		return new EEEnder(world, pos, ElementExplosion.getStrength(eStack), eStack);
 	}
 
 }

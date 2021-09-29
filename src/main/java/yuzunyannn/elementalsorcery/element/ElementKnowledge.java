@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.element;
 
 import java.util.List;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -10,15 +11,17 @@ import net.minecraft.inventory.ContainerEnchantment;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
+import yuzunyannn.elementalsorcery.element.explosion.EEKnowledge;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class ElementKnowledge extends ElementCommon implements IStarFlowerCast {
+public class ElementKnowledge extends ElementCommon {
 
 	public static final int COLOR = 0x9b9b9b;
 
@@ -39,6 +42,11 @@ public class ElementKnowledge extends ElementCommon implements IStarFlowerCast {
 		if (entities.isEmpty()) return estack;
 		estack.shrink(Math.max(4, entities.size() * 4));
 		return estack;
+	}
+
+	@Override
+	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
+		return new EEKnowledge(world, pos, ElementExplosion.getStrength(eStack) + 1, eStack);
 	}
 
 //	@Override

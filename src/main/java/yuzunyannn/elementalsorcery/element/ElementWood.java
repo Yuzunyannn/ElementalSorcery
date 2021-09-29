@@ -4,17 +4,20 @@ import java.util.List;
 
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
+import yuzunyannn.elementalsorcery.element.explosion.EEWood;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class ElementWood extends ElementCommon implements IStarFlowerCast {
+public class ElementWood extends ElementCommon {
 
 	public ElementWood() {
 		super(0x32CD32, "wood");
@@ -52,6 +55,11 @@ public class ElementWood extends ElementCommon implements IStarFlowerCast {
 		}
 
 		return estack;
+	}
+
+	@Override
+	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
+		return new EEWood(world, pos, ElementExplosion.getStrength(eStack) * 1.05f, eStack);
 	}
 
 }

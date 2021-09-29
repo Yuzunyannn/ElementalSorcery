@@ -11,6 +11,8 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.block.container.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
+import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementTranslocator;
 import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
@@ -38,7 +40,11 @@ public class BlockElementTranslocator extends BlockContainerNormal {
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileElementTranslocator tile = BlockHelper.getTileEntity(worldIn, pos, TileElementTranslocator.class);
-		if (tile != null) BlockHelper.drop(tile.getItemStackHandler(), worldIn, pos);
+		if (tile != null) {
+			BlockHelper.drop(tile.getItemStackHandler(), worldIn, pos);
+			ElementStack estack = tile.getElementStack();
+			ElementExplosion.doExplosion(worldIn, pos, estack, harvesters.get());
+		}
 		super.breakBlock(worldIn, pos, state);
 	}
 

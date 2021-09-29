@@ -32,6 +32,7 @@ import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
@@ -209,6 +210,10 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 	 * {@link ItemMagicBlastWand#blast(ElementStack, Entity, Entity, Entity)}
 	 * {@link ItemMagicBlastWand#blast(ElementStack, World, Vec3d, Entity, Entity)}
 	 * {@link ItemMagicBlastWand#blast(ElementStack, World, BlockPos, Entity, Entity)}
+	 * 
+	 * 新爆炸直接使用通用元素接口<br/>
+	 * {@link ElementExplosion#doExplosion(World, Vec3d, ElementStack, EntityLivingBase)}
+	 * {@link ElementExplosion#doExplosion(World, BlockPos, ElementStack, EntityLivingBase)}
 	 */
 	private static void blast(ElementStack magic, World world, Entity target, Vec3d targetPos, Entity source,
 			Entity directSource) {

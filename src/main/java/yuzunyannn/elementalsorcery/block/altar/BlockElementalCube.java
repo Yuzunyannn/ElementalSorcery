@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -90,23 +89,25 @@ public class BlockElementalCube extends BlockElementContainer {
 	@Override
 	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
 		boolean yes = super.canPlaceBlockAt(worldIn, pos);
-		yes = yes && !worldIn.isAirBlock(pos.down());
-		new BlockPos(pos.getX() - 1, pos.getY(), pos.getZ() - 1);
+		yes = yes && canPlaceBlockAtAround(worldIn, pos);
+//		IBlockState state = worldIn.getBlockState(pos.down());
+//		yes = yes && state.isFullCube() && state.isOpaqueCube();
+		return yes;
+	}
+
+	public boolean canPlaceBlockAtAround(World worldIn, BlockPos pos) {
+		boolean yes = true;
 		yes = yes && worldIn.isAirBlock(pos.north());
 		yes = yes && worldIn.isAirBlock(pos.south());
 		yes = yes && worldIn.isAirBlock(pos.west());
 		yes = yes && worldIn.isAirBlock(pos.east());
 		yes = yes && worldIn.isAirBlock(pos.up());
-
-		IBlockState state = worldIn.getBlockState(pos.down());
-		yes = yes && state.isFullCube() && state.isOpaqueCube();
-
 		return yes;
 	}
 
 	// 周围改变
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if (!this.canPlaceBlockAt(worldIn, pos)) {
+		if (!this.canPlaceBlockAtAround(worldIn, pos)) {
 			this.dropBlockAsItem(worldIn, pos, state, 0);
 			worldIn.setBlockToAir(pos);
 		}
@@ -126,10 +127,6 @@ public class BlockElementalCube extends BlockElementContainer {
 			ElementStack estack = new ElementStack(e, 10000, 1000);
 			IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 			inventory.setStackInSlot(0, estack);
-			
-			ElementInventoryLimit cc = (ElementInventoryLimit) inventory;
-			cc.setLowerLimit(100);
-			
 			inventory.saveState(stack);
 			items.add(stack);
 
@@ -154,7 +151,6 @@ public class BlockElementalCube extends BlockElementContainer {
 		if (cube == null) return;
 		cube.setDyeColor(getDyeColor(stack));
 	}
-	
 
 	@Override
 	protected void modifyDropStack(IBlockAccess world, BlockPos pos, ItemStack stack, TileEntity originTile) {
