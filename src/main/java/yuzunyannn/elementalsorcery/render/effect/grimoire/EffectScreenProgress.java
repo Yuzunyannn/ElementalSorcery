@@ -85,11 +85,11 @@ public class EffectScreenProgress extends EffectScreen {
 	protected void doRender(float partialTicks) {
 		if (mc.gameSettings.thirdPersonView != 0) return;
 		TEXTURE.bind();
+		GlStateManager.depthMask(false);
 		float alpha = RenderHelper.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
 		float progress = RenderHelper.getPartialTicks(this.progress, this.preProgress, partialTicks);
 		GlStateManager.color(r, g, b, alpha);
 		RenderHelper.drawTexturedModalRect(width / 2 - 256 / 2, height - 50, 0, 0, 5 + 251 * progress, 13, 256, 256);
-		GlStateManager.depthMask(false);
 		GlStateManager.translate(0, 0, 1);
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();

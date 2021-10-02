@@ -78,10 +78,10 @@ public class ElementExplosion {
 
 		IElementExplosion explosion = getElementExplosion(eStack);
 		if (explosion == null) return null;
-		if (explosion == SELF_DEAL) return SELF_DEAL;
-
+		
 		ElementExplosion instance = explosion.newExplosion(world, pos, eStack, attacker);
 		if (instance == null) return null;
+		if (instance == SELF_DEAL) return SELF_DEAL;
 		if (instance.size < 0.01f) return null;
 
 		instance.setAttacker(attacker);

@@ -52,7 +52,7 @@ public class EffectMagicCircleMantra extends EffectMagicCircleIcon {
 			GlStateManager.pushMatrix();
 			GlStateManager.rotate(30 * i, 0, 0, 1);
 			GlStateManager.translate(12, 0, 0);
-			this.renderTexRectInCenter(0, 0, 4, 4, 8 + 8 * i, 112, 8, 8, 128, 128, partialTicks, r, g, b, alpha);
+			this.renderTexRectInCenter(0, 0, 4, 4, 8 + 8 * i, 112, 8, 8, 128, 128, r, g, b, alpha);
 			GlStateManager.popMatrix();
 		}
 		GlStateManager.scale(1.75, 1.75, 1.75);

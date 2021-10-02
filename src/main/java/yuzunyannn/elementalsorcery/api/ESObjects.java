@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.api;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
@@ -13,6 +14,7 @@ public class ESObjects {
 	public static Blocks BLOCKS;
 	public static Elements ELEMENTS;
 	public static Mantras MANTRAS;
+	public static Potions POTIONS;
 	public static Village VILLAGE;
 	public static CreativeTabs CREATIVE_TABS;
 
@@ -212,6 +214,11 @@ public class ESObjects {
 		public Mantra ARROW;
 		public Mantra POTENT;
 		public Mantra FLUORSPAR;
+		public Mantra TIME_HOURGLASS;
+	}
+
+	static public class Potions {
+		public Potion TIME_SLOW;
 	}
 
 	static public class Village {

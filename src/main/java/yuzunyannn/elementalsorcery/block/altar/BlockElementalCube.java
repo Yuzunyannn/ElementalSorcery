@@ -25,8 +25,6 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
@@ -174,19 +172,16 @@ public class BlockElementalCube extends BlockElementContainer {
 		return stack;
 	}
 
-	@SideOnly(Side.CLIENT)
 	public static Color toColorType(EnumDyeColor dye) {
-		if (dye == null) return defaultColor;
+		if (dye == null) return Color.defaultColor;
 		Vec3d color = ColorHelper.color(dye.getColorValue());
 		color = new Vec3d(color.x * 0.5, color.y * 0.5, color.z * 0.5);
 		return new Color(dye.getColorValue(), ColorHelper.color(color));
 	}
 
-	@SideOnly(Side.CLIENT)
-	public static final Color defaultColor = new Color(0x48fff9, 0x1d736d);
-
-	@SideOnly(Side.CLIENT)
 	public static class Color {
+
+		public static final Color defaultColor = new Color(0x48fff9, 0x1d736d);
 
 		final Vec3d base;
 		final Vec3d cover;

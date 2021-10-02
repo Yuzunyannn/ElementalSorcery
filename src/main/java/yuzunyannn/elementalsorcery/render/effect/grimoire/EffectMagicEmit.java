@@ -104,7 +104,7 @@ public class EffectMagicEmit extends EffectCondition {
 		GlStateManager.rotate(rotate, 0, 0, 1);
 
 		TEXTURE.bind();
-		this.renderTexRectInCenter(0, 0, 32, 32, partialTicks, r, g, b, alpha);
+		this.renderTexRectInCenter(0, 0, 32, 32, r, g, b, alpha);
 
 		GlStateManager.popMatrix();
 	}

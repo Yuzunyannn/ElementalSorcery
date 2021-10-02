@@ -14,6 +14,9 @@ public class PageBuilding extends PageEasy {
 	public Building extra;
 	private float rX, rY, rZ;
 
+	public int xoff, yoff;
+	public float scale = 1;
+
 	public PageBuilding(Building building) {
 		this.building = building;
 		rX = 145;
@@ -42,8 +45,8 @@ public class PageBuilding extends PageEasy {
 
 	@Override
 	public void drawBackground(int xoff, int yoff, IPageManager pageManager) {
-		int x = pageManager.getGui().getXSize() / 2;
-		int y = pageManager.getGui().getYSize() / 2 + 20;
+		int x = pageManager.getGui().getXSize() / 2 + this.xoff;
+		int y = pageManager.getGui().getYSize() / 2 + 20 + this.yoff;
 		AxisAlignedBB box = building.getBox();
 		double lx = box.maxX - box.minX;
 		double lz = box.maxZ - box.minZ;
@@ -55,7 +58,7 @@ public class PageBuilding extends PageEasy {
 			distance = Math.max(distance, Math.max(lx, lz));
 		}
 		float scale = 1.5f;
-		scale = (float) (2.25f / MathHelper.sqrt(distance * 0.4));
+		scale = (float) (2.25f / MathHelper.sqrt(distance * 0.4)) * this.scale;
 		pageManager.drawBuilding(building, xoff + x, yoff + y, rX, rY, rZ, scale);
 		if (extra != null) pageManager.drawBuilding(extra, xoff + x, yoff + y, rX, rY, rZ, scale);
 	}

@@ -70,6 +70,7 @@ public class PocketWatch {
 		return map.containsKey(world.provider.getDimension());
 	}
 
+	/** Time Stop! */
 	static public void stopWorld(World world, int tick, @Nullable EntityLivingBase caster) {
 		if (disable) return;
 		if (isActive(world)) return;

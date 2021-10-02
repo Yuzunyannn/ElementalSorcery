@@ -183,8 +183,10 @@ tile.starFlower.seed.name=Star Flower Seed
 tile.crudeQuartz.name=Crude Quartz
 tile.elementPlatform.name=Element Platform
 tile.fluorspar.name=Fluorspar
-tile.deconstructWindmill.name=Deconstruct Windmill
+tile.deconstructWindmill.name=Windmill Platform
 tile.elementTranslocator.name=Element Translocator
+
+es.effect.timeSlow=Time Slowly
 
 enchantment.gatherSouls=Gather Souls
 
@@ -240,6 +242,8 @@ mantra.potent.name=Potent
 mantra.potent.describe=Attach powerful magic to the Grimoire and become a powerful state. Your Mantra will have an extraordinary effect.\nThe Mantra not only is more powerful but also will appear special effect on normal attack with The Grimoire.\nAccumulate few powerful during casting, and many powerful will be accumulated at the end of casting.
 mantra.fluorspar.name=Fluorspar Flock
 mantra.fluorspar.describe=With the Metal, solidify the fluorescence into the rock and let the rock illuminate the surroundings.
+mantra.timeHourglass.name=Time Hourglass
+mantra.timeHourglass.describe=With the Star, Slow down the creatures around you. Maybe The Potent can make it return to its true power.
 
 key.es.func=Function key
 
@@ -773,6 +777,8 @@ page.spellbook.ct.sec=能合成出来的魔导书是最低级的，它基本上�
 page.elementCube=元素立方体
 page.elementCube.ct=元素水晶虽然已经可以储存元素了，不过它还不足以将元素进行隔空输送。这时就需要元素立方体了。将元素立方体放在某些祭坛的某些位置，元素立方体就会与祭坛产生共鸣，提供祭坛工作所需的元素等。
 
+page.elementExplosion=Element Explosion
+page.elementExplosion.ct=盛有不同元素的元素立方体在受到爆炸时，内部的元素也会与爆炸共鸣，并产不同的爆炸效果。\n例如末影元素会传送周边方块和实体，火元素伤害高并且会生成岩浆等等
 page.magicDesk=魔导书祭坛
 page.magicDesk.ct=魔法书桌是魔法书祭坛的核心，它可以将物品中的魔力汇聚于魔导书中，让魔导书发生改变，写入咒文、转化成更高级的魔法书。\n同时该祭坛还可以为魔导书补充元素，将元素进入书中。
 page.magicDesk.ct.crafting=魔导书祭坛可以让魔导书将物品吸收，从而产生咒文，转化成新的魔导书。\n将物品扔到书桌上，物品将会进入书中。\n要想做出不同的魔导书，物品进入的顺序和数量有着严格的限定，如果进入了不该进入的物品，那么就会前功尽弃，请重新准备材料吧。\n在祭坛面上的物品，会被自动弹到说书桌上，所以请不要在这个祭坛上乱丢东西！
@@ -802,12 +808,18 @@ page.fairyCubeModule.ct=精灵符文可以挂载到精灵立方体上，以产�
 page.fairyCubeModuleCraft=符文映射
 page.fairyCubeModuleCraft.ct.fir=将空白的精灵立方体符文放到元素平台上，并将元素注入元素平台，符文便可和元素发生共鸣。\n不同的元素在不同的位置周围有不同的物品，就可能产生各种不同的符文，具体能产生啥这就需要史蒂夫来慢慢探索了。\n目前记载：\n沙漠、白天、火、烈焰粉
 page.fairyCubeModuleCraft.ct.sec=木、牛肉大餐\n水、雨、萤石粉\n木、金、黄昏、煤、钻石、绿宝石\n土、金、煤矿\n午后、木、金苹果\n水、金、黄昏、腐肉、骨头、火药\n高空、气、羽毛、兔脚\n平原、末影、气、泥土、末影珍珠
-page.cubeDemarcator=Power Demarcation
+page.deconstructWindmill=瓦解风车
+page.deconstructWindmill.ct=如果把将物质瓦解的设备做成风车形式，获取可以自动的分解元素，与此，瓦解风车诞生了。\n通过「风车平台」搭建出瓦解祭坛，并将风轮放到平台上，在风力的驱动下，风车开始工作，将周围的物质转化为元素，并存入祭坛周边的元素容器之中。
+page.windmillBlade=风轮
+page.windmillBlade.ct=通过魔力材质制作的风轮放到「风车平台」上，便可在祭坛上方生成风车扇叶，风力越大，转动越快，分解效率也越高。\n随着时间的迁移，风轮会消耗耐久，直至销毁。不同材质的风轮的耐久不同，其特性也具有微弱的不同。
 page.cubeDemarcator.ct=通过立方体核心制作出的标定器，可以给元素立方体标定接受元素能量的上限或这下限，不满足标定的元素不如进入该立方体。\n对空气右键和shift右键，增加或降低定标的值。对立方体右键和shift右键为立方体定标。\n定标值为0表述不进行限制。\n注意定标器有使用耐久，可以通过修复箱修复。
 page.magicPot=Magic Pot
 page.magicPot.ct=具有魔力的花盆，生命之花只能放到魔力花盆的上面。
 page.lifeDirt=Lived Soil
 page.lifeDirt.ct=生息土壤是水晶花园土壤的基础构成，可以在上面种上各种植物，在生命之花的作用下，植物欣欣向荣。\n同时，生息土壤可以融入植物的「生命精华」，在生命之花的作用下，带有「生命精华」的土壤会自动产生植物，并生长。\n（生息土壤和植物种子可以合成带有生命的精华的土壤，一旦打掉，土壤内的「生命精华」将会消失)
+page.elementTranslocator=Precise Element Transfer
+page.elementTranslocator.ct=在祭坛的使用中，经常出现不同能量合并的情况，合并后整数化的能量必然会造成更多个损失。通过「元素转移台」可以精准的将元素非整数化储存起来，并统一输出到另外一个元素容器之中。
+要注意的的是，转移台中存有元素的情况下破坏的话，会发生元素爆炸。
 page.resonantIncubator=共鸣培养
 page.resonantIncubator.ct=细心的你可能已经注意到了，所有水晶都有一个频率属性。共鸣培养箱，通过水晶间频率的共鸣，调整生息土壤的频率，一旦频率调整到与某种水晶相同，则会在土壤中萌生出该水晶的「生命精华」。该土壤可以在水晶花园中生长出水晶花。\n（每次水晶花成熟后，「生命精华」都会有一定几率消失)
 page.frequencyMapping=Frequency Induct

@@ -2,8 +2,11 @@ package yuzunyannn.elementalsorcery.util.render;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 
+@SideOnly(Side.CLIENT)
 public class TextureBinder {
 
 	static public final Minecraft mc = Minecraft.getMinecraft();

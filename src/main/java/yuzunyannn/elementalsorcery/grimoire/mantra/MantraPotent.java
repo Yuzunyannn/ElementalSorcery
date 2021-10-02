@@ -52,7 +52,7 @@ public class MantraPotent extends MantraCommon {
 	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
 		float potent = caster.iWantBePotent(2f, false);
 		doPotentAttackEffect(world, caster, target);
-		
+
 		EntityLivingBase player = caster.iWantCaster().asEntityLivingBase();
 		float damage = DamageHelper.getNormalAttackDamage(player, target) + 1;
 
@@ -87,17 +87,18 @@ public class MantraPotent extends MantraCommon {
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		if (!mdc.isMarkContinue()) return;
 		int tick = caster.iWantKnowCastTick();
+		int times = caster.iWantCaster().isCreative() ? 20 : 1;
 
-		mdc.setProgress(tick, 20 * 20);
-		float progress = mdc.getProgress();
-		if (progress < 1) {
+		mdc.setProgress(tick, 20 * 20 / times);
+		for (int i = 0; i < times; i++) {
+			float progress = mdc.getProgress();
+			if (progress >= 1) break;
 			CollectResult cr = mdc.tryCollect(caster, ESInit.ELEMENTS.MAGIC, 8, 65, 3000);
 			ElementStack magic = cr.getElementStackGetted();
 			if (!magic.isEmpty() && progress > 0.2f) {
 				caster.iWantGivePotent(MathHelper.clamp(magic.getPower() / 950f, 0, 0.4f) * progress, 0.005f);
 			}
 		}
-
 		if (world.isRemote) onSpellingEffect(world, data, caster);
 	}
 

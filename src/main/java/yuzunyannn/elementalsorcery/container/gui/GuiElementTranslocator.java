@@ -71,13 +71,16 @@ public class GuiElementTranslocator extends GuiNormal<ContainerElementTranslocat
 	}
 
 	public void updateElement(int id, ElementStack estack) {
-		this.estack = estack;
-		container.tileEntity.setElementStack(estack);
 		if (id == IAltarWake.OBTAIN) {
 			effects.add(new EffectRate(false, estack.getColor()));
 		} else if (id == IAltarWake.SEND) {
 			effects.add(new EffectRate(true, estack.getColor()));
+		} else if (id == 0xf) {
+			if (this.estack.getCount() < estack.getCount()) effects.add(new EffectRate(false, estack.getColor()));
+			else if (this.estack.getCount() > estack.getCount()) effects.add(new EffectRate(true, estack.getColor()));
 		}
+		this.estack = estack;
+		container.tileEntity.setElementStack(estack);
 	}
 
 	@Override

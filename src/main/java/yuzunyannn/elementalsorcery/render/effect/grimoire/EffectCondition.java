@@ -69,9 +69,31 @@ public abstract class EffectCondition extends Effect {
 		}
 	}
 
+	protected void renderTexRect(float x, float y, float width, float height, float u, float v, float texWidth,
+			float texHeight, float textureWidth, float textureHeight, float r, float g, float b, float a, float anchorX,
+			float anchorY) {
+
+		float f = 1.0F / textureWidth;
+		float f1 = 1.0F / textureHeight;
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		float hw = width * anchorX;
+		float hh = height * anchorY;
+
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+		bufferbuilder.pos(x - hw, y + hh, 0.0D).tex(u * f, (v + texHeight) * f1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		bufferbuilder.pos(x + (width - hw), y + hh, 0.0D).tex((u + texWidth) * f, (v + texHeight) * f1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		bufferbuilder.pos(x + (width - hw), y - (height - hh), 0.0D).tex((u + texWidth) * f, v * f1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		bufferbuilder.pos(x - hw, y - (height - hh), 0.0D).tex(u * f, v * f1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		tessellator.draw();
+	}
+
 	protected void renderTexRectInCenter(float x, float y, float width, float height, float u, float v, float texWidth,
-			float texHeight, float textureWidth, float textureHeight, float partialTicks, float r, float g, float b,
-			float a) {
+			float texHeight, float textureWidth, float textureHeight, float r, float g, float b, float a) {
 
 		float f = 1.0F / textureWidth;
 		float f1 = 1.0F / textureHeight;
@@ -92,9 +114,9 @@ public abstract class EffectCondition extends Effect {
 		tessellator.draw();
 	}
 
-	protected void renderTexRectInCenter(float x, float y, float width, float height, float partialTicks, float r,
-			float g, float b, float a) {
-		renderTexRectInCenter(x, y, width, height, 0, 0, 1, 1, 1, 1, partialTicks, r, g, b, a);
+	protected void renderTexRectInCenter(float x, float y, float width, float height, float r, float g, float b,
+			float a) {
+		renderTexRectInCenter(x, y, width, height, 0, 0, 1, 1, 1, 1, r, g, b, a);
 	}
 
 }

@@ -76,12 +76,16 @@ public class RenderTileDeconstructWindmill extends TileEntitySpecialRenderer<Til
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y + 7.5 + high / 10, z + 0.5);
 
+		ResourceLocation texture = null;
+		boolean needBlend = blend < 0.999f;
+		
 		IWindmillBlade windmillBlade = tile.getWindmillBlade();
-		ResourceLocation texture = windmillBlade == null ? null : windmillBlade.getWindmillBladeSkin();
+		if (windmillBlade != null) {
+			needBlend = needBlend || windmillBlade.isWindmillBladeSkinNeedBlend();
+			texture = windmillBlade.getWindmillBladeSkin();
+		} 
 		texture = texture == null ? TEXTURE_BLADE_NORMAL : texture;
 
-		boolean needBlend = blend < 0.999f || windmillBlade.isWindmillBladeSkinNeedBlend();
-		
 		if (needBlend) {
 			GlStateManager.enableBlend();
 			GlStateManager.disableAlpha();

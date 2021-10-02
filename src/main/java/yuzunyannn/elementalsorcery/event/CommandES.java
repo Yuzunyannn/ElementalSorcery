@@ -53,9 +53,9 @@ import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper.EnumType;
-import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
+import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.ts.PocketWatch;
@@ -249,7 +249,6 @@ public class CommandES extends CommandBase {
 
 	// =======================-------> 咒文 <-------=======================
 	private void cmdMantra(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
-		// EntityPlayer player = (EntityPlayer) sender.getCommandSenderEntity();
 		EntityPlayer player = getPlayer(server, sender, args[1]);
 		ResourceLocation id = TextHelper.toESResourceLocation(args[2]);
 		Mantra mantra = Mantra.REGISTRY.getValue(id);

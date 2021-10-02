@@ -219,6 +219,12 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		return true;
 	}
 
+	public boolean areSameEqual(ElementStack estack) {
+		if (this.isEmpty()) return estack.isEmpty();
+		if (!this.areSameType(estack)) return false;
+		return this.getCount() == estack.getCount() && this.getPower() == estack.getPower();
+	}
+
 	/** 是否强于 */
 	public boolean arePowerfulThan(ElementStack estack) {
 		if (this.isEmpty()) return false;

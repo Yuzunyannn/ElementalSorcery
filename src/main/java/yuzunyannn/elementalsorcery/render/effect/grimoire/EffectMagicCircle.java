@@ -88,7 +88,6 @@ public class EffectMagicCircle extends EffectCondition {
 		float hSize = size / 2;
 		pos = pos.addVector(rand.nextDouble() * size - hSize, 0.1, rand.nextDouble() * size - hSize);
 		EffectElementMove effect = new EffectElementMove(world, pos);
-		effect.g = 0;
 		effect.setVelocity(0, 0.05f, 0);
 		effect.setColor(r, g, b);
 		Effect.addEffect(effect);
@@ -108,7 +107,7 @@ public class EffectMagicCircle extends EffectCondition {
 		float alpha = RenderHelper.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
 		GlStateManager.scale(scale, scale, scale);
 		this.bindCircleIcon();
-		this.renderTexRectInCenter(0, 0, 32, 32, partialTicks, r, g, b, alpha);
+		this.renderTexRectInCenter(0, 0, 32, 32, r, g, b, alpha);
 		this.renderCenterIcon(partialTicks, alpha);
 		GlStateManager.popMatrix();
 	}

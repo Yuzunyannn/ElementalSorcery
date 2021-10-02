@@ -211,6 +211,10 @@ public class JsonParser {
 			PageBuildingSimple bPage = new PageBuildingSimple(page.getTitle(), building);
 			// 额外添加,数组型,pos字段为位置，item字段为方块类型
 			try {
+				if (json.hasNumber("x")) bPage.xoff = json.getNumber("x").intValue();
+				if (json.hasNumber("y")) bPage.yoff = json.getNumber("y").intValue();
+				if (json.hasNumber("scale")) bPage.scale = json.getNumber("scale").floatValue();
+
 				JsonArray extra = json.needArray("extra", "add", "attach");
 				for (int i = 0; i < extra.size(); i++) {
 					if (!extra.hasObject(i)) continue;

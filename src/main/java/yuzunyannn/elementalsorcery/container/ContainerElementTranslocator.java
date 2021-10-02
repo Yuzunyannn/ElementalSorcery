@@ -57,11 +57,27 @@ public class ContainerElementTranslocator extends ContainerNormal<TileElementTra
 		else if (id == IAltarWake.SEND) result = tileEntity.doTransferOutput(count);
 
 		if (result) {
-			NBTTagCompound ret = NBTHelper.serializeElementStackForSend(tileEntity.getElementStack());
+			lastStack = tileEntity.getElementStack();
+			NBTTagCompound ret = NBTHelper.serializeElementStackForSend(lastStack);
 			ret.setByte("cid", id);
-			this.sendToClient(ret, listeners);
+			this.sendToClient(ret, player);
 		}
 
+	}
+
+	public ElementStack lastStack = ElementStack.EMPTY;
+
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+		ElementStack estack = this.tileEntity.getElementStack();
+		if (!estack.areSameEqual(lastStack)) {
+			NBTTagCompound ret = NBTHelper.serializeElementStackForSend(estack);
+			// 判断防止首次播动画
+			if (lastStack != ElementStack.EMPTY) ret.setByte("cid", (byte) 0xf);
+			lastStack = estack;
+			this.sendToClient(ret, player);
+		}
 	}
 
 	@SideOnly(Side.CLIENT)

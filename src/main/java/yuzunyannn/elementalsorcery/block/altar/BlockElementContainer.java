@@ -144,8 +144,8 @@ public abstract class BlockElementContainer extends BlockContainer {
 				if (stack.isEmpty()) continue;
 				EntityLivingBase attacker = explosion.getExplosivePlacedBy();
 				stack = stack.copy();
-				stack.grow(10);
-				stack.setPower(stack.getPower() + 75);
+				stack.grow(50);
+				stack.setPower(stack.getPower() + 125);
 				if (ElementExplosion.doExplosion(world, at, stack, attacker) != null) {
 					einv.setStackInSlot(i, ElementStack.EMPTY);
 				}

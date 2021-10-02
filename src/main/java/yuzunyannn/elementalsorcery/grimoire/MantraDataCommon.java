@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.grimoire;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTBase;
@@ -22,7 +23,6 @@ public class MantraDataCommon implements IMantraData {
 
 	// ---动态数据----
 
-	@SideOnly(Side.CLIENT)
 	public final Map<Short, EffectCondition> effectMap = new HashMap<>();
 
 	public int speedTick;
@@ -75,8 +75,20 @@ public class MantraDataCommon implements IMantraData {
 	@SideOnly(Side.CLIENT)
 	public <T extends EffectCondition> T getMarkEffect(int id, Class<T> cls) {
 		EffectCondition effect = effectMap.get((short) id);
+		if (effect == null) return null;
 		if (cls.isAssignableFrom(effect.getClass())) return (T) effect;
 		return null;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void removeMarkEffect(int id) {
+		EffectCondition effect = effectMap.get((short) id);
+		if (effect != null) {
+			Function<Void, Boolean> cond = effect.getCondition();
+			if (cond instanceof EffectCondition.ConditionEntityAction)
+				((EffectCondition.ConditionEntityAction) cond).isFinish = true;
+		}
+		this.unmarkEffect(id);
 	}
 
 	// ---进度数据----

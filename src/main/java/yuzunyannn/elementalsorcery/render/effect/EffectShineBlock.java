@@ -67,7 +67,7 @@ public class EffectShineBlock extends Effect {
 		GlStateManager.scale(0.0625, 0.0625, 0.0625);
 		RenderTileElfTreeCore.MODEL.render(null, 0, 0, 0, 0, 0, 1);
 
-//		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
+		GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 		GlStateManager.enableTexture2D();
 		GlStateManager.depthFunc(515);
 		GlStateManager.popMatrix();

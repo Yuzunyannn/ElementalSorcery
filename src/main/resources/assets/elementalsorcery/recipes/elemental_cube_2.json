@@ -13,11 +13,11 @@
 			"item": "elementalsorcery:cube_core"
 		},
 		"#": {
-			"item": "elementalsorcery:magic_crystal"
+			"item": "elementalsorcery:element_crystal"
 		}
 	},
 	"result": {
 		"item": "elementalsorcery:elemental_cube",
-		"count": 2
+		"count": 4
 	}
 }

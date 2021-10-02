@@ -137,10 +137,10 @@ public class EffectMagicSquare extends EffectCondition {
 
 		float alpha = RenderHelper.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
 		GlStateManager.scale(1, 1, 1);
-		this.renderTexRectInCenter(0, 0, size, size, partialTicks, r, g, b, alpha);
+		this.renderTexRectInCenter(0, 0, size, size, r, g, b, alpha);
 		if (icon != null) {
 			mc.getTextureManager().bindTexture(icon);
-			this.renderTexRectInCenter(0, 0, size * 0.15f, size * 0.15f, partialTicks, r, g, b, alpha);
+			this.renderTexRectInCenter(0, 0, size * 0.15f, size * 0.15f, r, g, b, alpha);
 		}
 
 		if (this.eAlpha >= 0) {
@@ -149,10 +149,10 @@ public class EffectMagicSquare extends EffectCondition {
 			float eScale = RenderHelper.getPartialTicks(this.eScale, this.ePreScale, partialTicks);
 			GlStateManager.translate(0, 0, -eScale + 1);
 			GlStateManager.scale(eScale, eScale, eScale);
-			this.renderTexRectInCenter(0, 0, size, size, partialTicks, r, g, b, eAlpha);
+			this.renderTexRectInCenter(0, 0, size, size, r, g, b, eAlpha);
 			if (icon != null) {
 				mc.getTextureManager().bindTexture(icon);
-				this.renderTexRectInCenter(0, 0, size * 0.15f, size * 0.15f, partialTicks, r, g, b, eAlpha);
+				this.renderTexRectInCenter(0, 0, size * 0.15f, size * 0.15f, r, g, b, eAlpha);
 			}
 		}
 

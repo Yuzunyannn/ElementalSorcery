@@ -363,53 +363,59 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 
 	@Override
 	public void drawBuilding(Building building, int x, int y, float roateX, float roateY, float roateZ, float scale) {
-		GlStateManager.pushMatrix();
-		RenderHelper.disableStandardItemLighting();
-		// 移动到位置
-		GlStateManager.translate(x, y, 512);
-		// 绑定逻辑材质
-		mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
-		GlStateManager.rotate(roateX, 1, 0, 0);
-		GlStateManager.rotate(roateZ, 0, 0, 1);
-		GlStateManager.rotate(roateY, 0, 1, 0);
-		scale *= 10;
-		GlStateManager.scale(scale, scale, scale);
-		GlStateManager.translate(-0.5, -0.5, -0.5);
-		// 获取必要绘图实例
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferbuilder = tessellator.getBuffer();
-		BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
-		BlockModelRenderer render = blockrendererdispatcher.getBlockModelRenderer();
-		// 建筑遍历器
-		BuildingBlocks iter = building.getBuildingIterator();
-		// 开始
-		GlStateManager.disableCull();
-		while (iter.next()) {
-			BlockPos blockpos = iter.getPos();
-			blockpos = new BlockPos(-blockpos.getX(), blockpos.getY(), blockpos.getZ());
-			IBlockState iblockstate = iter.getState();
-			if (iblockstate.getRenderType() != EnumBlockRenderType.MODEL) {
-				if (iblockstate.getBlock() instanceof BlockContainer) {
-					try {
-						TileEntity tile = iblockstate.getBlock().createTileEntity(mc.world, iblockstate);
-						TileEntitySpecialRenderer<TileEntity> tileRender = TileEntityRendererDispatcher.instance
-								.getRenderer(tile);
-						if (tileRender == null) continue;
-						tileRender.render(tile, blockpos.getX(), blockpos.getY(), blockpos.getZ(),
-								mc.getRenderPartialTicks(), -1, 1);
-					} catch (Exception e) {}
-					// 再次绑定
-					mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+		try {
+			GlStateManager.pushMatrix();
+			RenderHelper.disableStandardItemLighting();
+			// 移动到位置
+			GlStateManager.translate(x, y, 512);
+			// 绑定逻辑材质
+			mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+			GlStateManager.rotate(roateX, 1, 0, 0);
+			GlStateManager.rotate(roateZ, 0, 0, 1);
+			GlStateManager.rotate(roateY, 0, 1, 0);
+			scale *= 10;
+			GlStateManager.scale(scale, scale, scale);
+			GlStateManager.translate(-0.5, -0.5, -0.5);
+			// 获取必要绘图实例
+			Tessellator tessellator = Tessellator.getInstance();
+			BufferBuilder bufferbuilder = tessellator.getBuffer();
+			BlockRendererDispatcher blockrendererdispatcher = Minecraft.getMinecraft().getBlockRendererDispatcher();
+			BlockModelRenderer render = blockrendererdispatcher.getBlockModelRenderer();
+			// 建筑遍历器
+			BuildingBlocks iter = building.getBuildingIterator();
+			// 开始
+			GlStateManager.disableCull();
+			while (iter.next()) {
+				BlockPos blockpos = iter.getPos();
+				blockpos = new BlockPos(blockpos.getX(), blockpos.getY(), blockpos.getZ());
+				IBlockState iblockstate = iter.getState();
+				if (iblockstate.getRenderType() != EnumBlockRenderType.MODEL) {
+					if (iblockstate.getBlock() instanceof BlockContainer) {
+						try {
+							TileEntity tile = iblockstate.getBlock().createTileEntity(mc.world, iblockstate);
+							TileEntitySpecialRenderer<TileEntity> tileRender = TileEntityRendererDispatcher.instance
+									.getRenderer(tile);
+							if (tileRender == null) continue;
+							tileRender.render(tile, blockpos.getX(), blockpos.getY(), blockpos.getZ(),
+									mc.getRenderPartialTicks(), -1, 1);
+						} catch (Exception e) {}
+						// 再次绑定
+						mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+					}
+				} else {
+					bufferbuilder.begin(7, DefaultVertexFormats.BLOCK);
+					render.renderModelFlat(mc.world, blockrendererdispatcher.getModelForState(iblockstate), iblockstate,
+							blockpos, bufferbuilder, false, MathHelper.getPositionRandom(blockpos));
+					tessellator.draw();
 				}
-			} else {
-				bufferbuilder.begin(7, DefaultVertexFormats.BLOCK);
-				render.renderModelFlat(mc.world, blockrendererdispatcher.getModelForState(iblockstate), iblockstate,
-						blockpos, bufferbuilder, false, MathHelper.getPositionRandom(blockpos));
-				tessellator.draw();
 			}
+			RenderHelper.enableStandardItemLighting();
+			GlStateManager.popMatrix();
+		} catch (Exception e) {
+			String id = this.page == null ? "null" : this.page.getId();
+			ElementalSorcery.logger.warn("羊皮卷(" + id + ")gui:drawBuilding异常", e);
+			this.toPage = Pages.getErrorPage();
 		}
-		RenderHelper.enableStandardItemLighting();
-		GlStateManager.popMatrix();
 	}
 
 }

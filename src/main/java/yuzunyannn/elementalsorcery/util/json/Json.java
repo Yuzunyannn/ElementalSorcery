@@ -96,7 +96,7 @@ public abstract class Json {
 			int meta = 0;
 			int count = 1;
 			try {
-				meta = jobj.needNumber("data", "damage").intValue();
+				meta = jobj.needNumber("data", "damage", "meta").intValue();
 			} catch (JsonParseException e) {}
 			try {
 				count = jobj.needNumber("count", "size").intValue();

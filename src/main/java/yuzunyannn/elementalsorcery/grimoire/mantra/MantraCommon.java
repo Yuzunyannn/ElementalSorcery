@@ -75,7 +75,7 @@ public class MantraCommon extends Mantra {
 		else {
 			// 强效加速
 			if (mdc.getProgress() < 1) {
-				float potent = caster.iWantBePotent(0.05f, false);
+				float potent = caster.iWantBePotent(0.04f, false);
 				times = (int) (potent * 10);
 			}
 		}
@@ -98,6 +98,7 @@ public class MantraCommon extends Mantra {
 		if (player == null) return false;
 		if (!target.canBeAttackedWithItem()) return false;
 		if (target.hitByEntity(player)) return false;
+		if (target instanceof EntityPlayer && ((EntityPlayer) target).isCreative()) return false;
 		float potent = caster.iWantBePotent(0.2f, true);
 		return potent > 0.125f;
 	}
@@ -108,7 +109,7 @@ public class MantraCommon extends Mantra {
 
 		EntityLivingBase player = caster.iWantCaster().asEntityLivingBase();
 		doPotentAttackEffect(world, caster, target);
-		
+
 		float damage = DamageHelper.getNormalAttackDamage(player, target);
 		if (damage <= 0) return;
 

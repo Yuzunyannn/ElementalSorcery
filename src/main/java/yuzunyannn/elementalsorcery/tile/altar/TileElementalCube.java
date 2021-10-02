@@ -160,8 +160,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	}
 
 	// 客户端使用的真实颜色
-	@SideOnly(Side.CLIENT)
-	protected BlockElementalCube.Color colorType = BlockElementalCube.defaultColor;
+	protected BlockElementalCube.Color colorType = BlockElementalCube.Color.defaultColor;
 
 	public void setColorType(BlockElementalCube.Color colorType) {
 		this.colorType = colorType;
@@ -187,11 +186,8 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	public float wakeRate = 0.0f;
 	public float preWakeRate = 0.0f;
 
-	@SideOnly(Side.CLIENT)
 	public Vec3d color = Vec3d.ZERO;
-	@SideOnly(Side.CLIENT)
 	public float colorRate = 0.0f;
-	@SideOnly(Side.CLIENT)
 	public float detlaCr = 0.01f;
 
 	@SideOnly(Side.CLIENT)
@@ -218,7 +214,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	@SideOnly(Side.CLIENT)
 	private void changeColor() {
 		ElementStack estack = ItemSpellbook.giveMeRandomElement(inventory);
-		int ecolor = ColorHelper.color(colorType.getCoverColor());
+		int ecolor = ColorHelper.color(getCoverColor());
 		if (!estack.isEmpty()) ecolor = estack.getElement().getColor(estack);
 		color = ColorHelper.color(ecolor);
 	}

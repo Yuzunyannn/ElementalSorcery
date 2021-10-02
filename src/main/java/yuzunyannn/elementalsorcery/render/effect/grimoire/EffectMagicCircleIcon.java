@@ -26,6 +26,6 @@ public class EffectMagicCircleIcon extends EffectMagicCircle {
 	protected void renderCenterIcon(float partialTicks, float alpha) {
 		if (icon == null) return;
 		mc.getTextureManager().bindTexture(icon);
-		this.renderTexRectInCenter(0, 0, 12, 12, partialTicks, r, g, b, alpha);
+		this.renderTexRectInCenter(0, 0, 12, 12, r, g, b, alpha);
 	}
 }

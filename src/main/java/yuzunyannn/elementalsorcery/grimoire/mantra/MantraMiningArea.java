@@ -26,7 +26,7 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 		this.setUnlocalizedName("miningArea");
 		this.setColor(0xc8971e);
 		this.setIcon("auto_mining");
-		this.setRarity(20);
+		this.setRarity(25);
 		this.setOccupation(10);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.EARTH, 2, 75), 400, 32);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.METAL, 3, 50), -1, 32);

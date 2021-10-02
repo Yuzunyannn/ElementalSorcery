@@ -1,0 +1,9 @@
+{
+    "lev": 3,
+    "need": [
+        "element/element_cube"
+    ],
+    "type": "normal",
+    "name": "elementExplosion",
+    "item": "minecraft:tnt"
+}

@@ -1,0 +1,40 @@
+{
+	"pattern": [
+		" A ",
+		"ESE",
+		"MAM"
+	],
+	"key": {
+		"M": {
+			"id": "elementalsorcery:estone",
+			"data": 2
+		},
+		"E": "minecraft:ender_eye",
+		"A": "elementalsorcery:azure_crystal",
+		"S": {
+			"id": "elementalsorcery:estone",
+			"data": 1
+		}
+	},
+	"element": [
+		{
+			"id": "star",
+			"size": 64,
+			"power": 375
+		},
+		{
+			"id": "ender",
+			"size": 64,
+			"power": 500
+		},
+		{
+			"id": "metal",
+			"size": 64,
+			"power": 452
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:deconstruct_windmill",
+		"count": 1
+	}
+}

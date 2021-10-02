@@ -26,6 +26,8 @@ public class RenderObjects {
 	static final public ResourceLocation MAGIC_CIRCLE_SUMMON = ESRes("textures/magic_circles/summon.png");
 	static final public ResourceLocation MAGIC_CIRCLE_PICKAXE = ESRes("textures/magic_circles/pickaxe.png");
 
+	public static final TextureBinder EFFECT_BUFF = new TextureBinder("textures/gui/effect_buff.png");
+
 	static public ResourceLocation ESRes(String path) {
 		return new ResourceLocation(ElementalSorcery.MODID, path);
 	}

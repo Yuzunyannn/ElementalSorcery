@@ -62,8 +62,7 @@ public class MantraLush extends MantraCommon {
 
 	@Override
 	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
-		int tick = caster.iWantKnowCastTick();
-		if (tick < 20) return;
+		if (beforeGeneralStartTime(caster)) return;
 		MantraDataCommon mData = (MantraDataCommon) data;
 		CollectResult cr = mData.tryCollect(caster, ESInit.ELEMENTS.WOOD, 1, 50, 200);
 		mData.setProgress(cr.getStackCount(), 200);

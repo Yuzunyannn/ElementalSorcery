@@ -23,6 +23,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemMultiTexture.Mapper;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
@@ -158,6 +159,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraPotent;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSlowFall;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSprint;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraTimeHourglass;
 import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemAppleCandy;
@@ -222,6 +224,7 @@ import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.item.tool.ItemStarBell;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.potion.PotionTimeSlow;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.item.RenderItemFairyCube;
@@ -315,6 +318,7 @@ public class ESInit {
 	public static final ESObjects.Blocks BLOCKS = new ESObjects.Blocks();
 	public static final ESObjects.Elements ELEMENTS = new ESObjects.Elements();
 	public static final ESObjects.Mantras MANTRAS = new ESObjects.Mantras();
+	public static final ESObjects.Potions POTIONS = new ESObjects.Potions();
 	public static final ESObjects.Village VILLAGE = new ESObjects.Village();
 	public static final ESCreativeTabs tab = ESCreativeTabs.TAB;
 
@@ -324,6 +328,7 @@ public class ESInit {
 		ESObjects.BLOCKS = BLOCKS;
 		ESObjects.ELEMENTS = ELEMENTS;
 		ESObjects.MANTRAS = MANTRAS;
+		ESObjects.POTIONS = POTIONS;
 		ESObjects.VILLAGE = VILLAGE;
 		// 创造物品栏
 		ESObjects.CREATIVE_TABS = tab;
@@ -337,6 +342,7 @@ public class ESInit {
 		instanceItems();
 		instanceElements();
 		instanceMantras();
+		instancePotions();
 		instanceVillage();
 		// 其他位置句柄获取
 		ItemCrystal.init();
@@ -543,6 +549,7 @@ public class ESInit {
 		MANTRAS.ARROW = new MantraArrow();
 		MANTRAS.POTENT = new MantraPotent();
 		MANTRAS.FLUORSPAR = new MantraFluorspar();
+		MANTRAS.TIME_HOURGLASS = new MantraTimeHourglass();
 
 		MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);
 		MANTRAS.LAUNCH_EDE = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT, 0xff4a1a);
@@ -568,6 +575,17 @@ public class ESInit {
 		ELEMENTS.METAL = new ElementMetal().setRegistryName("metal");
 		ELEMENTS.KNOWLEDGE = new ElementKnowledge().setRegistryName("knowledge");
 		ELEMENTS.STAR = new ElementStar().setRegistryName("star");
+	}
+
+	private static final void instancePotions() throws ReflectiveOperationException {
+		POTIONS.TIME_SLOW = new PotionTimeSlow();
+
+		Class<?> cls = POTIONS.getClass();
+		Field[] fields = cls.getDeclaredFields();
+		for (Field field : fields) {
+			Potion potion = ((Potion) field.get(POTIONS));
+			potion.setRegistryName(field.getName().toLowerCase());
+		}
 	}
 
 	private static final void instanceVillage() {
@@ -611,6 +629,8 @@ public class ESInit {
 		QuestRegister.registerAll();
 		// 附魔注册
 		EnchantmentRegister.registerAll();
+		// bufff
+		registerAllPotions();
 		// 精灵立方体模块注册
 		FairyCubeModuleRegister.registerAll();
 		// 测试村庄相关
@@ -714,6 +734,14 @@ public class ESInit {
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
 			register((Mantra) field.get(ESInit.MANTRAS));
+		}
+	}
+
+	static void registerAllPotions() throws IllegalArgumentException, IllegalAccessException {
+		Class<?> cls = ESInit.POTIONS.getClass();
+		Field[] fields = cls.getDeclaredFields();
+		for (Field field : fields) {
+			register((Potion) field.get(ESInit.POTIONS));
 		}
 	}
 
@@ -1020,6 +1048,10 @@ public class ESInit {
 	private static void register(Class<? extends TileEntity> tileEntityClass, String id) {
 		GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation(ElementalSorcery.MODID, id));
 		ES_TILE_ENTITY.add(tileEntityClass);
+	}
+
+	private static void register(Potion potion) {
+		ForgeRegistries.POTIONS.register(potion);
 	}
 
 	@SideOnly(Side.CLIENT)

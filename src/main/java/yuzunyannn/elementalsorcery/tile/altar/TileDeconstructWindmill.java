@@ -239,9 +239,9 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 	public float prevBladeRotate;
 
 	@SideOnly(Side.CLIENT)
-	public float bladeShiftRate = 0;
+	public float bladeShiftRate;
 	@SideOnly(Side.CLIENT)
-	public float prevBladeShiftRate = 0;
+	public float prevBladeShiftRate;
 
 	@SideOnly(Side.CLIENT)
 	public void updateClient() {
