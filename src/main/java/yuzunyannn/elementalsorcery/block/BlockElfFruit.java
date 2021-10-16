@@ -15,7 +15,6 @@ import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -41,11 +40,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
+import yuzunyannn.elementalsorcery.entity.EntityFallingElfFruit;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class BlockElfFruit extends Block implements Mapper {
+
+	@Config
+	public static float ELF_FRUIT_GEN_PROBABILITY = 0.1f;
+
+	@Config
+	public static float ELF_FRUIT_DROP_PROBABILITY = 0.2f;
 
 	public ItemBlock getItemBlock() {
 		// 可以吃的
@@ -164,8 +171,8 @@ public class BlockElfFruit extends Block implements Mapper {
 
 	@Override
 	public String apply(ItemStack stack) {
-		int stage = stack.getMetadata();
-		return "s" + stage;
+		if (stack.getMetadata() == MAX_STATE) return "s" + MAX_STATE;
+		return "s0";
 	}
 
 	@Override
@@ -227,11 +234,14 @@ public class BlockElfFruit extends Block implements Mapper {
 		if (growState < MAX_STATE) {
 			// 检测上面是否为树叶
 			if (worldIn.getBlockState(pos.up()).getBlock() != ESInit.BLOCKS.ELF_LEAF) return;
-			//if (!worldIn.getBlockState(pos.up()).getValue(BlockElfLeaf.DECAYABLE)) return;
+			// if (!worldIn.getBlockState(pos.up()).getValue(BlockElfLeaf.DECAYABLE))
+			// return;
+			if (rand.nextFloat() < 0.5f) return;
 			ElfTime time = new ElfTime(worldIn);
 			if (!time.at(ElfTime.Period.DAY)) return;
 			worldIn.setBlockState(pos, state.withProperty(STAGE, growState + 1));
 		} else {
+			if (rand.nextFloat() > ELF_FRUIT_DROP_PROBABILITY) return;
 			this.falling(worldIn, pos, state, true);
 		}
 	}
@@ -243,8 +253,7 @@ public class BlockElfFruit extends Block implements Mapper {
 	protected void falling(World world, BlockPos pos, IBlockState state, boolean force) {
 		if (world.isRemote) return;
 		if (world.isAirBlock(pos.down()) && (force || !world.isBlockFullCube(pos.up()))) {
-			EntityFallingBlock falling = new EntityFallingBlock(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
-					state);
+			EntityFallingElfFruit falling = new EntityFallingElfFruit(world, pos);
 			world.spawnEntity(falling);
 		}
 	}
@@ -261,7 +270,7 @@ public class BlockElfFruit extends Block implements Mapper {
 				case 1:
 					return 0x7777ff;
 				}
-				return 0xffffff;
+				return 0xffffff0;
 			}
 		};
 	}

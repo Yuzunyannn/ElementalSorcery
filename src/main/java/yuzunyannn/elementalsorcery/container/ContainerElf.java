@@ -20,6 +20,9 @@ import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public abstract class ContainerElf extends Container {
+
+	protected int moreSlots = 0;
+
 	public final BlockPos pos;
 	/** 交互的玩家 */
 	public final EntityPlayer player;
@@ -100,6 +103,30 @@ public abstract class ContainerElf extends Container {
 		player.closeScreen();
 		BlockPos pos = player.getPosition();
 		player.openGui(ElementalSorcery.instance, modGuiId, player.world, pos.getX(), pos.getY(), pos.getZ());
+	}
+
+	@Override
+	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+		Slot slot = inventorySlots.get(index);
+
+		if (slot == null || !slot.getHasStack()) return ItemStack.EMPTY;
+
+		ItemStack newStack = slot.getStack();
+		ItemStack oldStack = newStack.copy();
+
+		boolean isMerged = false;
+		final int max = 36 + moreSlots;
+		if (index < 27) isMerged = mergeItemStack(newStack, 36, max, false) || mergeItemStack(newStack, 27, 36, false);
+		else if (index >= 27 && index < 36)
+			isMerged = mergeItemStack(newStack, 36, max, false) || mergeItemStack(newStack, 0, 27, false);
+		else isMerged = mergeItemStack(newStack, 0, 36, false);
+
+		if (!isMerged) return ItemStack.EMPTY;
+
+		if (newStack.isEmpty()) slot.putStack(ItemStack.EMPTY);
+		slot.onTake(playerIn, newStack);
+
+		return oldStack;
 	}
 
 }

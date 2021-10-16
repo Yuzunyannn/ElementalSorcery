@@ -164,10 +164,12 @@ import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemAppleCandy;
 import yuzunyannn.elementalsorcery.item.ItemElementBoard;
+import yuzunyannn.elementalsorcery.item.ItemElfFruitBomb;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemElfWatch;
 import yuzunyannn.elementalsorcery.item.ItemFairyCube;
 import yuzunyannn.elementalsorcery.item.ItemFairyCubeModule;
+import yuzunyannn.elementalsorcery.item.ItemGlassCup;
 import yuzunyannn.elementalsorcery.item.ItemManual;
 import yuzunyannn.elementalsorcery.item.ItemMerchantInvitation;
 import yuzunyannn.elementalsorcery.item.ItemNatureDust;
@@ -224,11 +226,14 @@ import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.item.tool.ItemStarBell;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.potion.PotionFireWalker;
+import yuzunyannn.elementalsorcery.potion.PotionTideWalker;
 import yuzunyannn.elementalsorcery.potion.PotionTimeSlow;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.item.RenderItemFairyCube;
 import yuzunyannn.elementalsorcery.render.item.RenderItemFairyCubeModule;
+import yuzunyannn.elementalsorcery.render.item.RenderItemGlassCup;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoire;
 import yuzunyannn.elementalsorcery.render.item.RenderItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
@@ -511,6 +516,8 @@ public class ESInit {
 		ITEMS.WINDMILL_BLADE_ASTONE = new ItemWindmillBlades.AStone();
 		ITEMS.WINDMILL_BLADE_WOOD = new ItemWindmillBlades.WOOD();
 		ITEMS.WINDMILL_BLADE_CRYSTAL = new ItemWindmillBlades.CRYSTAL();
+		ITEMS.ELF_FRUIT_BOMB = new ItemElfFruitBomb();
+		ITEMS.GLASS_CUP = new ItemGlassCup();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -579,6 +586,8 @@ public class ESInit {
 
 	private static final void instancePotions() throws ReflectiveOperationException {
 		POTIONS.TIME_SLOW = new PotionTimeSlow();
+		POTIONS.FIRE_WALKER = new PotionFireWalker();
+		POTIONS.TIDE_WALKER = new PotionTideWalker();
 
 		Class<?> cls = POTIONS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -894,6 +903,8 @@ public class ESInit {
 		registerRender(ITEMS.WINDMILL_BLADE_ASTONE);
 		registerRender(ITEMS.WINDMILL_BLADE_WOOD);
 		registerRender(ITEMS.WINDMILL_BLADE_CRYSTAL);
+		registerRender(ITEMS.ELF_FRUIT_BOMB);
+		registerRender(ITEMS.GLASS_CUP, new RenderItemGlassCup());
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

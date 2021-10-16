@@ -106,6 +106,8 @@ item.windmillBlade.wood.name=木の扇
 item.windmillBlade.crystal.name=水晶石英扇
 item.windmillBladeFrame.name=扇のフレーム
 item.windmillBladeFrame.adv.name=高級扇のフレーム
+item.elfFruitBomb.name=精霊実の爆弾
+item.glassCup.name=ガラスのコップ
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -187,6 +189,8 @@ tile.deconstructWindmill.name=風車プラットフォーム
 tile.elementTranslocator.name=元素移動台
 
 es.effect.timeSlow=時間遅い
+es.effect.fireWalker=火炎の行者
+es.effect.tideWalker=潮流の行者
 
 enchantment.gatherSouls=集魂
 
@@ -590,7 +594,7 @@ page.elf.ct=精霊は精霊の世界から来た新しい生物で、彼たち�
 page.elfTree=精霊木
 page.elfTree.ct=精霊の木は魔法の木で、自然界で生成しますが、自然にできた木は小さい木です。\n精霊の木を切り落とし、これは将来の重要な材料かもしれません。
 page.elfFruit=精霊果
-page.elfFruit.ct=精灵果是精灵树上生长的一种果子，只在白天生长，成熟变绿，并掉落。\n精灵果中蕴含着魔力，可以食用，连续使用的话可产生不同的效果。
+page.elfFruit.ct=精灵果是精灵树上生长的一种果子，只在白天生长，成熟变绿，并掉落。\n精灵果从高处掉落有几率会坏掉，并向周围产生随机效果。\n精灵果中蕴含着魔力，可以食用，连续使用的话可产生不同的效果。
 page.elfCrystal=精灵结晶
 page.elfCrystal.ct=精灵果可以进行烧制，其内部液体结晶而形成精灵结晶，具有良好的魔力亲和性，似乎可以存储魔力。\n哦！对了，它还可以做精灵币与精灵进行交易。
 page.elfMerchant=精灵商人

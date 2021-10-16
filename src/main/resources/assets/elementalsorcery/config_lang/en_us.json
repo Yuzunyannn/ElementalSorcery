@@ -14,6 +14,8 @@
 
     "block.elementalsorcery_life_flower.probability_of_consume_maigc_per_grow": "The chance to consume the magic in the Magic Pot pre growing",
     "block.elementalsorcery_seal_stone.mantra_drop_probability_per_lucky": "The probability of One Point Fortune dropping the Ancient Paper with Mantra when destroy a Seal Stone",
+    "block.elementalsorcery_elf_fruit.elf_fruit_gen_probability": "The probability of trying to generate Elf Fruit under the Elf Leaf",
+    "block.elementalsorcery_elf_fruit.elf_fruit_drop_probability": "The probability of Elf Fruit trying to fall",
 
     "tile.general.tile_entity_render_distance": "The maximum rendering distance of TileEntity, beyond which no rendering is allowed. [0 is program default][-1 is following rendering chunk distance]",
     "tile.general.md_base_max_capacity": "The default max magic limit of Magic Drives",

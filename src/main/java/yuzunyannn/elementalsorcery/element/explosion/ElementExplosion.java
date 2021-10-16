@@ -30,6 +30,7 @@ import net.minecraftforge.fml.common.network.NetworkRegistry.TargetPoint;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.element.IElementExplosion;
+import yuzunyannn.elementalsorcery.api.element.IExplosionExecutor;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
@@ -41,7 +42,7 @@ import yuzunyannn.elementalsorcery.util.DamageHelper;
 import yuzunyannn.elementalsorcery.util.SeedRandom;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class ElementExplosion {
+public class ElementExplosion implements IExplosionExecutor {
 
 	/** 自行处理的马甲 */
 	public static final ElementExplosion SELF_DEAL = new ElementExplosion();
@@ -67,31 +68,30 @@ public class ElementExplosion {
 	}
 
 	@Nullable
-	public static ElementExplosion doExplosion(World world, BlockPos pos, ElementStack eStack,
+	public static IExplosionExecutor doExplosion(World world, BlockPos pos, ElementStack eStack,
 			@Nullable EntityLivingBase attacker) {
 		return doExplosion(world, new Vec3d(pos).addVector(0.5, 0.5, 0.5), eStack, attacker);
 	}
 
 	@Nullable
-	public static ElementExplosion doExplosion(World world, Vec3d pos, ElementStack eStack,
+	public static IExplosionExecutor doExplosion(World world, Vec3d pos, ElementStack eStack,
 			@Nullable EntityLivingBase attacker) {
 
 		IElementExplosion explosion = getElementExplosion(eStack);
 		if (explosion == null) return null;
-		
-		ElementExplosion instance = explosion.newExplosion(world, pos, eStack, attacker);
+
+		IExplosionExecutor instance = explosion.newExplosion(world, pos, eStack, attacker);
 		if (instance == null) return null;
 		if (instance == SELF_DEAL) return SELF_DEAL;
-		if (instance.size < 0.01f) return null;
+		if (instance.getExplosionSize() < 0.01f) return null;
 
-		instance.setAttacker(attacker);
+		if (instance instanceof ElementExplosion) ((ElementExplosion) instance).setAttacker(attacker);
 		if (world.isRemote) return instance;
 
 		MessageElementExplosion msg = new MessageElementExplosion(eStack, pos, instance.getRandSeed());
 		TargetPoint point = new TargetPoint(world.provider.getDimension(), pos.x, pos.y, pos.z, 128);
 		ESNetwork.instance.sendToAllAround(msg, point);
 
-		instance.doExplosionCheckBlock();
 		instance.doExplosionBlock();
 		instance.doExplosionEntity();
 
@@ -104,10 +104,9 @@ public class ElementExplosion {
 			MessageElementExplosion msg) {
 		if (msg.estack.isEmpty()) return;
 		Vec3d pos = new Vec3d(msg.x, msg.y, msg.z);
-		ElementExplosion instance = doExplosion(world, pos, msg.estack, null);
+		IExplosionExecutor instance = doExplosion(world, pos, msg.estack, null);
 		if (instance == null) return;
 		instance.setRandSeed(msg.seed);
-		instance.doExplosionCheckBlock();
 		instance.doExplosionBlock();
 		instance.doExplosionEntity();
 	}
@@ -146,7 +145,8 @@ public class ElementExplosion {
 		rand.setSeed(seed);
 	}
 
-	public float getSize() {
+	@Override
+	public float getExplosionSize() {
 		return size;
 	}
 
@@ -188,7 +188,6 @@ public class ElementExplosion {
 
 	/** A:进行检测爆炸方块 */
 	public void doExplosionCheckBlock() {
-		if (passExplosionBlock) return;
 		final int faceSize = 16 - 1;
 		for (int j = 0; j <= faceSize; ++j) {
 			for (int k = 0; k <= faceSize; ++k) {
@@ -203,13 +202,16 @@ public class ElementExplosion {
 	}
 
 	/** B:进行方块爆炸 */
+	@Override
 	public void doExplosionBlock() {
 		if (passExplosionBlock) return;
+		doExplosionCheckBlock();
 		if (world.isRemote) doExplosionBlockEffect();
 		for (BlockPos pos : affectedBlockPositions) doExplosionBlockAt(pos);
 	}
 
 	/** C:进行对实体爆炸 */
+	@Override
 	public void doExplosionEntity() {
 		if (passClientExplosionEntity && world.isRemote) return;
 

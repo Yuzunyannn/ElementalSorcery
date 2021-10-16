@@ -103,6 +103,8 @@ public class ESObjects {
 		public Item WINDMILL_BLADE_ASTONE;
 		public Item WINDMILL_BLADE_WOOD;
 		public Item WINDMILL_BLADE_CRYSTAL;
+		public Item ELF_FRUIT_BOMB;
+		public Item GLASS_CUP;
 	}
 
 	static public class Blocks {
@@ -219,6 +221,8 @@ public class ESObjects {
 
 	static public class Potions {
 		public Potion TIME_SLOW;
+		public Potion FIRE_WALKER;
+		public Potion TIDE_WALKER;
 	}
 
 	static public class Village {

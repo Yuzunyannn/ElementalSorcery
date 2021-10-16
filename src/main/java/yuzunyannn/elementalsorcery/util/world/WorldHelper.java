@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.util.world;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.function.BiFunction;
 
 import javax.annotation.Nullable;
 
@@ -14,6 +15,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -179,6 +182,35 @@ public class WorldHelper {
 			return pl.getPlayerByUUID(playerUUID);
 		}
 		return null;
+	}
+
+	public static void applySplash(World world, Vec3d center, List<PotionEffect> potions) {
+		applySplash(world, center, potions, null);
+	}
+
+	public static void applySplash(World world, Vec3d center, List<PotionEffect> potions,
+			BiFunction<EntityLivingBase, PotionEffect, Boolean> needApply) {
+		int range = 4;
+		AxisAlignedBB aabb = createAABB(center, range, range, range);
+		List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
+		if (list.isEmpty()) return;
+		for (EntityLivingBase target : list) {
+			if (!target.canBeHitWithPotion()) continue;
+			double dis = center
+					.squareDistanceTo(new Vec3d(target.posX, target.posY + target.height * 0.25f, target.posZ));
+			if (dis > range * range) return;
+			double d1 = 1.0D - MathHelper.sqrt(dis) / range;
+			for (PotionEffect potioneffect : potions) {
+				if (needApply != null && !needApply.apply(target, potioneffect)) continue;
+				Potion potion = potioneffect.getPotion();
+				if (potion.isInstant()) potion.affectEntity(null, null, target, potioneffect.getAmplifier(), d1);
+				else {
+					int i = (int) (d1 * (double) potioneffect.getDuration() + 0.5D);
+					if (i > 20) target.addPotionEffect(new PotionEffect(potion, i, potioneffect.getAmplifier(),
+							potioneffect.getIsAmbient(), potioneffect.doesShowParticles()));
+				}
+			}
+		}
 	}
 
 }

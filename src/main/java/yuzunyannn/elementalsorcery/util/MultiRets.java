@@ -30,6 +30,13 @@ public class MultiRets {
 		return null;
 	}
 
+	public <T> T get(int index, T defaultRet) {
+		if (index < 0 || index >= objs.length) return defaultRet;
+		Object obj = objs[index];
+		if (obj != null && defaultRet.getClass().isAssignableFrom(obj.getClass())) return (T) obj;
+		return defaultRet;
+	}
+
 	public <T extends Number> T getNumber(int index, Class<T> cls) {
 		if (index < 0 || index >= objs.length) return null;
 		Object obj = objs[index];

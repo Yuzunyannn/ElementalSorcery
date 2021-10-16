@@ -8,8 +8,8 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 
-public interface IElementExplosion {
 
+public interface IElementExplosion {
 	/**
 	 * 创建一个爆炸操作
 	 * 
@@ -17,7 +17,7 @@ public interface IElementExplosion {
 	 *         返回null表示没有处理
 	 */
 	@Nullable
-	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack,
+	public IExplosionExecutor newExplosion(World world, Vec3d pos, ElementStack eStack,
 			@Nullable EntityLivingBase attacker);
 
 }

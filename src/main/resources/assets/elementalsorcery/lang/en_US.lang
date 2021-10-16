@@ -106,6 +106,8 @@ item.windmillBlade.wood.name=Wooden Wind Wheel
 item.windmillBlade.crystal.name=Crytsal Quartz Wind Wheel
 item.windmillBladeFrame.name=Frame of Wind Wheel
 item.windmillBladeFrame.adv.name=Advanced Frame of Wind Wheel
+item.elfFruitBomb.name=Elf Fruit Bomb
+item.glassCup.name=Tumbler
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -187,6 +189,8 @@ tile.deconstructWindmill.name=Windmill Platform
 tile.elementTranslocator.name=Element Translocator
 
 es.effect.timeSlow=Time Slowly
+es.effect.fireWalker=Flame Walker
+es.effect.tideWalker=Tide Walker
 
 enchantment.gatherSouls=Gather Souls
 
@@ -590,7 +594,7 @@ page.elf.ct=Elf are a new kind of creature from the elves world. They usually li
 page.elfTree=Elf Tree
 page.elfTree.ct=Elf Tree is a kind of magic tree, which is generated in nature, but the natural tree is usually very small.\nCut down to get the spirit wood, which may be an important material for you to use in the future.
 page.elfFruit=Elf Fruit
-page.elfFruit.ct=精灵果是精灵树上生长的一种果子，只在白天生长，成熟变绿，并掉落。\n精灵果中蕴含着魔力，可以食用，连续使用的话可产生不同的效果。
+page.elfFruit.ct=精灵果是精灵树上生长的一种果子，只在白天生长，成熟变绿，并掉落。\n精灵果从高处掉落有几率会坏掉，并向周围产生随机效果。\n精灵果中蕴含着魔力，可以食用，连续使用的话可产生不同的效果。
 page.elfCrystal=精灵结晶
 page.elfCrystal.ct=精灵果可以进行烧制，其内部液体结晶而形成精灵结晶，具有良好的魔力亲和性，似乎可以存储魔力。\n哦！对了，它还可以做精灵币与精灵进行交易。
 page.elfMerchant=精灵商人

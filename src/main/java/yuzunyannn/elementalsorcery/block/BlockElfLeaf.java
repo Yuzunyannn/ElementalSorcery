@@ -19,7 +19,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.stats.StatList;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.ColorizerFoliage;
@@ -77,34 +76,38 @@ public class BlockElfLeaf extends BlockLeaves {
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		super.updateTick(worldIn, pos, state, rand);
 		if (worldIn.isRemote) return;
-		if (!state.getValue(BlockLeaves.CHECK_DECAY)) {
-			if (Math.random() < 0.05) return;
-			ElfTime time = new ElfTime(worldIn);
-			if (!time.at(ElfTime.Period.MORNING)) return;
-			// 检测下方是否满足
-			BlockPos dPos = pos.down();
+		if (state.getValue(BlockLeaves.CHECK_DECAY)) return;
+		if (rand.nextFloat() > BlockElfFruit.ELF_FRUIT_GEN_PROBABILITY) return;
+		ElfTime time = new ElfTime(worldIn);
+		if (!time.at(ElfTime.Period.MORNING)) return;
+		// 检测下方是否满足
+		BlockPos dPos = pos.down();
+		if (!worldIn.isAirBlock(dPos)) return;
+		// 必须距离地面5格
+		for (int i = 0; i < 5; i++) {
 			if (!worldIn.isAirBlock(dPos)) return;
-			int count = 0;
-			for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-				if (!worldIn.isAirBlock(dPos.offset(facing))) {
-					count++;
-					if (count > 1) return;
-				}
-			}
-			for (int i = 0; i < 5; i++) {
-				if (!worldIn.isAirBlock(dPos)) return;
-				dPos = dPos.down();
-			}
-			// 检测上方是否有两个叶子
-			BlockPos uPos = pos.up();
-			for (int i = 0; i < 2; i++) {
-				if (worldIn.getBlockState(uPos) != state) return;
-				uPos = uPos.up();
-			}
-			// 生成
-			final IBlockState fruitState = ESInit.BLOCKS.ELF_FRUIT.getDefaultState();
-			worldIn.setBlockState(pos.down(), fruitState);
+			dPos = dPos.down();
 		}
+		// 检测上方是否有2个叶子
+		BlockPos uPos = pos.up();
+		for (int i = 0; i < 2; i++) {
+			if (worldIn.getBlockState(uPos) != state) return;
+			uPos = uPos.up();
+		}
+		// 检测周围
+		int size = 2;
+		dPos = pos.down();
+		for (int x = -size; x <= size; x++) {
+			for (int z = -size; z <= size; z++) {
+				BlockPos at = dPos.add(x, 0, z);
+				IBlockState checkState = worldIn.getBlockState(at);
+				if (checkState.getBlock() == ESInit.BLOCKS.ELF_FRUIT) return;
+			}
+		}
+
+		// 生成
+		final IBlockState fruitState = ESInit.BLOCKS.ELF_FRUIT.getDefaultState();
+		worldIn.setBlockState(pos.down(), fruitState);
 	}
 
 	@SideOnly(Side.CLIENT)

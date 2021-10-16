@@ -20,7 +20,12 @@ public interface IRenderItem {
 	}
 
 	static boolean isTransform(ItemStack stack, ItemCameraTransforms.TransformType type) {
+		return getTransform(stack) == type;
+	}
+
+	static ItemCameraTransforms.TransformType getTransform(ItemStack stack) {
 		IBakedModel ibakedmodel = Minecraft.getMinecraft().getRenderItem().getItemModelMesher().getItemModel(stack);
-		return ibakedmodel == null ? false : ((ItemRendererBakedModel) ibakedmodel).cameraType == type;
+		return ibakedmodel == null ? ItemCameraTransforms.TransformType.NONE
+				: ((ItemRendererBakedModel) ibakedmodel).cameraType;
 	}
 }

@@ -19,6 +19,13 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public class NBTHelper {
 
+	public static NBTTagCompound getOrCreateNBTTagCompound(NBTTagCompound nbt, String key) {
+		if (nbt.hasKey(key, NBTTag.TAG_COMPOUND)) return nbt.getCompoundTag(key);
+		NBTTagCompound newNbt = new NBTTagCompound();
+		nbt.setTag(key, newNbt);
+		return newNbt;
+	}
+
 	public static List<String> getStringListForNBTTagList(NBTTagList nbtList) {
 		List<String> list = new LinkedList<>();
 		for (NBTBase base : nbtList) {

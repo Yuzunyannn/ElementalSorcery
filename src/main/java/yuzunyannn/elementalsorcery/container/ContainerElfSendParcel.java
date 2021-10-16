@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -22,6 +23,7 @@ public class ContainerElfSendParcel extends ContainerElf implements IContainerNe
 		for (int i = 0; i < 6; ++i) {
 			this.addSlotToContainer(new Slot(inventory, i, 34 + i * 18, 44));
 		}
+		moreSlots = 6;
 	}
 
 	@Override

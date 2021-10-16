@@ -4,6 +4,7 @@ import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Biomes;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -44,14 +45,42 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 	@Override
 	public boolean generate(World worldIn, Random rand, BlockPos position) {
 		WorldGenAbstractTree genTree;
+		boolean isGen = false;
+		int treeSize = 0;
 		switch (type) {
 		case 1:
-			genTree = new WorldGenMegaJungle(doBlockNotify, 8, 4, WOOD, LEAVE);
-			return genTree.generate(worldIn, rand, position);
+			treeSize = 8;
+			genTree = new WorldGenMegaJungle(doBlockNotify, treeSize, 4, WOOD, LEAVE);
+			isGen = genTree.generate(worldIn, rand, position);
 		default:
-			int treeSize = rand.nextInt(6) + 4;
+			treeSize = rand.nextInt(6) + 4;
 			genTree = new WorldGenTrees(doBlockNotify, treeSize, WOOD, LEAVE, false);
-			return genTree.generate(worldIn, rand, position);
+			isGen = genTree.generate(worldIn, rand, position);
 		}
+		if (!isGen) return false;
+
+		IBlockState FRUIT = ESInit.BLOCKS.ELF_FRUIT.getDefaultState();
+		BlockPos pos = position.offset(EnumFacing.UP, treeSize);
+		int n = rand.nextInt(3) + type == 1 ? 1 : 0;
+		int count = 0;
+		int yCheck = type == 1 ? 2 : 1;
+		int xzCheck = type == 1 ? 3 : 2;
+		for (int i = 0; i < 6; i++) {
+			BlockPos at = pos.add(rand.nextInt(xzCheck * 2 + 1) - xzCheck, rand.nextInt(yCheck * 2 + 1) - yCheck,
+					rand.nextInt(xzCheck * 2 + 1) - xzCheck);
+			IBlockState state = worldIn.getBlockState(at);
+			if (state.getBlock() != ESInit.BLOCKS.ELF_LEAF) continue;
+			for (int j = 0; j < 5; j++) {
+				at = at.down();
+				if (worldIn.isAirBlock(at)) {
+					setBlockAndNotifyAdequately(worldIn, at, FRUIT);
+					count++;
+					break;
+				}
+			}
+			if (count >= n) break;
+		}
+
+		return true;
 	}
 }

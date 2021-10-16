@@ -378,8 +378,8 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 	public void trySpawnElfAround() {
 		BlockPos pos = findAroundPlaceCanSpawn();
 		if (pos == null) return;
-		int searchRange = 16;
-		AxisAlignedBB aabb = WorldHelper.createAABB(pos, searchRange, searchRange, searchRange);
+		int searchRange = 24;
+		AxisAlignedBB aabb = WorldHelper.createAABB(pos, searchRange, 16, 16);
 		List<EntityElfBase> elfs = world.getEntitiesWithinAABB(EntityElfBase.class, aabb);
 		if (!elfs.isEmpty()) return;
 		// 刷一只精灵

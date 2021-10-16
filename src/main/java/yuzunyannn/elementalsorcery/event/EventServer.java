@@ -22,7 +22,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
-import net.minecraftforge.event.entity.EntityEvent;
+import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -53,6 +53,7 @@ import yuzunyannn.elementalsorcery.entity.fcube.BehaviorClick;
 import yuzunyannn.elementalsorcery.entity.fcube.BehaviorInteract;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMAttack;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
@@ -310,6 +311,17 @@ public class EventServer {
 			if (item instanceof IItemStronger) ((IItemStronger) item).onKillEntity(trueSource.world, held, deader,
 					(EntityLivingBase) trueSource, source);
 		}
+	}
+
+	@SubscribeEvent
+	public static void onLivingAttack(LivingAttackEvent event) {
+		EntityLivingBase entity = event.getEntityLiving();
+		DamageSource dmg = event.getSource();
+
+//		if (dmg.isFireDamage() && entity.isPotionActive(ESInit.POTIONS.FIRE_WALK)) {
+//			event.setCanceled(true);
+//			return;
+//		}
 	}
 
 	private static void onLivingDeadEnchantmentDeal(EntityLivingBase deader, DamageSource source) {
