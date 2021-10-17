@@ -1,0 +1,230 @@
+﻿This Doc will tell your how to add custom recipes in this mod
+这个文档来描述你如何添加为本mod添加自定义合成表
+
+First you need find .minecraft/Elemental Sorcery/recipes/ 
+首先找到这个文件夹：.minecraft/Elemental Sorcery/recipes/
+
+If you want to use Custom Recipe, Ensure that the server and client are consistent as much as possible
+如果你想使用自定义合成表，请尽可能的确保客户端和服务端一致
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Element Craft : element_craft/
+You can custom your Element Craft Recipe Json in this folder
+If your Json File Name as same with Json in src/main/resources/assets/elementalsorcery/element_recipes/ in Project, the origin recipe with be replaced
+Specific examples are as follows :
+元素合成表： element_craft/
+你可以添加自定义的元素合成表的Json在这个文件夹里
+如果你的json文件名和工程里 src/main/resources/assets/elementalsorcery/element_recipes/ 中的文件名相同，合成表将替换成你自行设置的
+具体的例子如下：
+
+Example 1:
+例子1:
+{
+	"pattern": [
+		"NSN",
+		"M#M",
+		"NSN"
+	],
+	"key": {
+		"#": "minecraft:ender_eye",
+		"S": "elementalsorcery:spell_crystal",
+		"M": "elementalsorcery:magic_crystal",
+		"N": "minecraft:leather"
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 10,
+			"power": 25
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:spellbook_cover",
+		"count": 1,
+		"data": 0
+	}
+}
+Example 2:
+例子2:
+{
+	"pattern": [
+		"M#M",
+		"#W#",
+		"M#M",
+		"G  G",
+		"G##G",
+		"G##G",
+		"G  G"
+	],
+	"key": {
+		"#": "elementalsorcery:nature_dust",
+		"W": {
+			"item": "elementalsorcery:nature_dust",
+			"data": 1
+		},
+		"M": "elementalsorcery:star_sand",
+		"G": {
+			"type":"ore_dict",
+			"id":"ingotGold"
+		}
+	},
+	"element": [
+		{
+			"id": "earth",
+			"size": 100,
+			"power": 300
+		},
+		{
+			"id": "metal",
+			"size": 50,
+			"power": 300
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:nature_dust",
+		"count": 2,
+		"data": 2
+	}
+}
+
+All Elements:
+全部的元素：
+    elementalsorcery:magic
+	elementalsorcery:ender
+	elementalsorcery:fire
+	elementalsorcery:water
+	elementalsorcery:air
+	elementalsorcery:earth
+	elementalsorcery:metal
+	elementalsorcery:wood
+	elementalsorcery:knowledge
+	elementalsorcery:star
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Research  Craft : research/
+You can custom your Research Craft Recipe Json in this folder
+If your Json File Name as same with Json in src/main/resources/assets/elementalsorcery/research_recipes/ in Project, the origin recipe with be replaced
+Specific examples are as follows :
+研究合成表：element_craft/
+你可以添加自定义的研究合成表的Json在这个文件夹里
+如果你的json文件名和工程里 src/main/resources/assets/elementalsorcery/research_recipes/ 中的文件名相同，合成表将替换成你自行设置的
+具体的例子如下：
+
+{
+	"topics": {
+		"Struct": 25,
+		"Natural": 45
+	},
+	"items": [
+		{
+			"item": "minecraft:emerald",
+			"count": 4
+		},
+		{
+			"item": "minecraft:glowstone",
+			"count": 1
+		},
+		{
+			"item": "minecraft:potion",
+			"count": 2
+		}
+	],
+	"result": {
+		"item": "minecraft:sea_lantern",
+		"count": 1
+	}
+}
+
+All Topics:
+全部的研究点：
+    Struct
+	Engine
+	Natural
+	Mantra
+	Ender
+	Biology
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Element Mapping : element_mapping/
+You can custom your Item mapping to Element
+Mapping in this folder can override Origin Mapping
+Specific examples are as follows :
+元素映射：element_mapping/
+你可以自定义物品到元素的映射关系
+这个文件里的映射，可以覆盖掉原有的映射
+具体的例子如下：
+
+{
+    "maps": [
+        {
+            "item": {
+                "item": "minecraft:coal",
+                "data": 0
+            },
+            "element": {
+                "id": "wood",
+                "size": 3,
+                "power": 75
+            }
+        },
+        {
+            "item": {
+                "item": "minecraft:coal",
+                "data": 1
+            },
+            "element": {
+                "id": "wood",
+                "size": 3,
+                "power": 20
+            }
+        }
+    ]
+}
+
+You can write all Mapping in one json or split into multiple for classification which is recommended
+你可以将你的映射全部写道一个json里，当然也可以拆成多个进行分类，推荐拆成多个
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Enchanting Box : enchanting_box/
+The Origin Recipes is written in Code, so you can not override Origin Recipes
+But you can add New Simple Recipes, Not Support Ore Dict
+Specific examples are as follows :
+注魔箱：enchanting_box/
+因为原始合成表在代码里写死了，所以你不能对其进行覆盖
+不过你可以添加新的简单合成表，不支持矿物词典
+具体的例子如下：
+
+{
+    "input": "minecraft:dirt",
+    "output": "minecraft:diamond",
+    "magic": 50,
+    "power": 200
+}
+
+Change One "minecraft:dirt" to "minecraft:diamond" need magic, count lower limit 10 , power lower limit 200
+转化一个"minecraft:dirt"到"minecraft:diamond"需要魔力，数量下限10点，能量下限200点
+
+Because of the playing method of The Enchanting Box, magic should lower than 100, power should lower than 200
+Otherwise Any Slot in Enchanting Box can not be provided magic
+因为注魔箱的玩法，magic的量需要小于100，power需要小于200
+否则注魔箱的任何位置上，都无法提供魔力
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Stone Repairer Box : stone_repairer/
+The Origin Recipes is written in Code, so you can not override Origin Recipes
+But you can add New Simple Recipes, Not Support Ore Dict
+Specific examples are as follows :
+注魔箱：enchanting_box/
+因为原始合成表在代码里写死了，所以你不能对其进行覆盖
+不过你可以添加新的简单合成表，不支持矿物词典
+具体的例子如下：
+
+{
+    "input": "minecraft:dirt",
+    "output": "minecraft:diamond",
+    "cost": 10
+}
+
+Change One "minecraft:dirt" to "minecraft:diamond" need 10 magic
+转化一个"minecraft:dirt"到"minecraft:diamond"需要10点魔力

@@ -136,8 +136,18 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 		return result;
 	}
 
+	@SideOnly(Side.CLIENT)
+	public void setOutput(ItemStack stack) {
+		result = stack;
+	}
+
 	public List<ElementStack> getNeedElements() {
 		return needEstacks;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void setNeedElements(List<ElementStack> list) {
+		needEstacks = list;
 	}
 
 	public void onCraftMatrixChanged() {

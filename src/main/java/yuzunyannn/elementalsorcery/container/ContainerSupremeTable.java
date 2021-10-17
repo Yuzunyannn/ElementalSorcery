@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.container;
 
+import java.util.List;
+
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -11,6 +13,8 @@ import net.minecraft.inventory.SlotCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.server.SPacketSetSlot;
 import net.minecraft.stats.RecipeBook;
 import net.minecraft.tileentity.TileEntity;
@@ -21,9 +25,13 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
+import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
+import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 
-public class ContainerSupremeTable extends ContainerNormal<TileSupremeTable> {
+public class ContainerSupremeTable extends ContainerNormal<TileSupremeTable> implements IContainerNetwork {
 	public final static int[] craftingRelative = new int[] { 0, 0, 18, 0, 36, 0, 0, 18, 18, 18, 36, 18, 0, 36, 18, 36,
 			36, 36, -36, -36, -18, -36, 54, -36, 72, -36, -36, -18, -18, -18, 54, -18, 72, -18, -36, 54, -18, 54, 54,
 			54, 72, 54, -36, 72, -18, 72, 54, 72, 72, 72 };
@@ -149,7 +157,8 @@ public class ContainerSupremeTable extends ContainerNormal<TileSupremeTable> {
 		craftResult.setInventorySlotContents(0, itemstack);
 	}
 
-	private byte lastShowMode = 0;
+	protected byte lastShowMode = 0;
+	protected NBTTagList lastElementList = new NBTTagList();
 
 	@Override
 	public void detectAndSendChanges() {
@@ -157,9 +166,28 @@ public class ContainerSupremeTable extends ContainerNormal<TileSupremeTable> {
 		super.detectAndSendChanges();
 		if (lastShowMode == showMode) return;
 		lastShowMode = showMode;
-		for (int j = 0; j < this.listeners.size(); ++j) {
-			((IContainerListener) this.listeners.get(j)).sendWindowProperty(this, 0, this.showMode);
+
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setByte("S", this.showMode);
+
+		List<ElementStack> list = tileEntity.getNeedElements();
+		NBTTagList nbtList;
+		if (list == null) nbtList = new NBTTagList();
+		else nbtList = NBTHelper.serializeElementStackListForSend(list);
+		if (!lastElementList.equals(nbtList)) {
+			lastElementList = nbtList;
+			nbt.setTag("E", nbtList);
 		}
+
+		sendToClient(nbt, listeners);
+	}
+
+	@Override
+	public void recvData(NBTTagCompound nbt, Side side) {
+		if (side == Side.SERVER) return;
+		if (nbt.hasKey("S")) showMode = nbt.getByte("S");
+		if (nbt.hasKey("E")) tileEntity.setNeedElements(
+				NBTHelper.deserializeElementStackListFromSend(nbt.getTagList("E", NBTTag.TAG_COMPOUND)));
 	}
 
 	// 发送产出结果的数据
@@ -174,19 +202,6 @@ public class ContainerSupremeTable extends ContainerNormal<TileSupremeTable> {
 				if (listener instanceof EntityPlayerMP) ((EntityPlayerMP) listener).connection
 						.sendPacket(new SPacketSetSlot(this.windowId, resultSlotId, itemstack));
 			}
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	@Override
-	public void updateProgressBar(int id, int data) {
-		switch (id) {
-		case 0:
-			this.showMode = (byte) data;
-			break;
-
-		default:
-			break;
 		}
 	}
 

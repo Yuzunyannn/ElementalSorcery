@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.util.json;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -230,6 +231,42 @@ public abstract class Json {
 		}, true, true);
 	}
 
+	public static void ergodicFile(String dataPath, BiFunction<File, JsonObject, Boolean> func) {
+		File folder = ElementalSorcery.data.getFile(dataPath, "");
+		ergodicFile(folder, func);
+	}
+
+	private static void ergodicFile(File folder, BiFunction<File, JsonObject, Boolean> func) {
+		File[] files = folder.listFiles();
+		for (File file : files) {
+			if (!file.isFile()) {
+				ergodicFile(file, func);
+				continue;
+			}
+			try {
+				JsonObject json = new JsonObject(file);
+				func.apply(file, json);
+			} catch (IOException e) {
+				ElementalSorcery.logger.warn("自定义json数据读取失败:" + file);
+			} catch (JsonSyntaxException e1) {
+				ElementalSorcery.logger.warn("读取json文件的内容出现异常：" + file, e1);
+			} catch (JsonParseException e2) {
+				ElementalSorcery.logger.warn("解析json出现异常：" + file, e2);
+
+			}
+		}
+	}
+
+	public static void trySyntaxJson(Runnable run, String filePath) {
+		try {
+			run.run();
+		} catch (JsonSyntaxException e1) {
+			ElementalSorcery.logger.warn("读取json文件的内容出现异常：" + filePath, e1);
+		} catch (JsonParseException e2) {
+			ElementalSorcery.logger.warn("解析json出现异常：" + filePath, e2);
+		}
+	}
+
 	static public enum ParseExceptionCode {
 		NOT_HAVE("NotHave", "找不到：%s"),
 		PATTERN_ERROR("PatternError", "%s的格式错误，原因：%s"),
@@ -290,6 +327,10 @@ public abstract class Json {
 	}
 
 	static public String fileToId(Path file, String root) {
+		return idFormat(file.toString(), root);
+	}
+
+	static public String fileToId(File file, String root) {
 		return idFormat(file.toString(), root);
 	}
 

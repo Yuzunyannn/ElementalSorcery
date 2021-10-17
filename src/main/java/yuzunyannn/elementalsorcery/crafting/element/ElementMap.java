@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.crafting.element;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -122,17 +121,10 @@ public class ElementMap implements IToElement {
 	}
 
 	static public void loadRegisterFromFile() {
-		File folder = ElementalSorcery.data.getFile("element/mapping", "");
-		File[] files = folder.listFiles();
-		for (File file : files) {
-			if (!file.isFile()) continue;
-			try {
-				JsonObject json = new JsonObject(file);
-				loadElementMap(json, file.getPath());
-			} catch (IOException e) {
-				ElementalSorcery.logger.warn("自定义json数据读取失败:" + file);
-			}
-		}
+		Json.ergodicFile("recipes/element_mapping", (file, json) -> {
+			loadElementMap(json, file.toString());
+			return true;
+		});
 	}
 
 	static public void registerAll() throws IOException {

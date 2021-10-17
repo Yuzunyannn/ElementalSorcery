@@ -330,6 +330,11 @@ public class TileSupremeTable extends TileStaticMultiBlock
 		return outEStacks;
 	}
 
+	@SideOnly(Side.CLIENT)
+	public void setNeedElements(List<ElementStack> outEStacks) {
+		this.outEStacks = outEStacks;
+	}
+
 	public ItemStack getPlatformItem() {
 		IGetItemStack getItem = this.getPlatform();
 		if (getItem != null) return getItem.getStack();

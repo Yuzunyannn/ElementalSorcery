@@ -92,7 +92,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipes(RecipeManagement.instance.getValues(), ElementCraftingCategory.UID);
 		registry.addRecipes(TileRiteTable.getRecipes(), RiteCategory.UID);
 		registry.addRecipes(TileMagicDesk.getRecipes(), MagicDeskCategory.UID);
-		registry.addRecipes(ResearchRecipeManagement.instance.getRecipes(), ResearchCategory.UID);
+		registry.addRecipes(ResearchRecipeManagement.instance.getRecipes().values(), ResearchCategory.UID);
 		registry.addRecipes(TileMDRubbleRepair.getRecipes(), UID_MDRUBBLEREPAIR);
 		registry.addRecipes(Arrays.asList(MDMagicSolidifyRW.FakeRecipe.values()), UID_MDMAGICSOLIDIFY);
 		registry.addRecipes(TileMDInfusion.getRecipes(), UID_MDINFUSION);

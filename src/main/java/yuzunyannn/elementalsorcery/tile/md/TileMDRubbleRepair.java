@@ -14,9 +14,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
 import yuzunyannn.elementalsorcery.util.GameHelper;
+import yuzunyannn.elementalsorcery.util.json.ItemRecord;
+import yuzunyannn.elementalsorcery.util.json.Json;
 
 public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 
@@ -70,6 +73,16 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 				new ItemStack(ESInit.BLOCKS.ASTONE), 10);
 		addRecipe(new ItemStack(Blocks.STONEBRICK, 1, 2), new ItemStack(Blocks.STONEBRICK), 1);
 		addRecipe(new ItemStack(ESInit.BLOCKS.CRUDE_QUARTZ), new ItemStack(Blocks.QUARTZ_BLOCK), 6);
+
+		// 自定义
+		Json.ergodicFile("recipes/stone_repairer", (file, json) -> {
+			if (!ElementMap.checkModDemands(json)) return false;
+			ItemRecord input = json.needItem("input");
+			ItemRecord output = json.needItem("output");
+			int count = json.needNumber("magic", "count", "cost").intValue();
+			addRecipe(input.getStack(), output.getStack(), count);
+			return true;
+		});
 
 		// 展示用
 		GameHelper.clientRun(() -> {

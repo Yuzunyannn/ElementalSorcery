@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.util;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -209,6 +210,21 @@ public class NBTHelper {
 		if (stackNBT.hasKey("p", NBTTag.TAG_NUMBER)) stack.setPower(stackNBT.getInteger("p"));
 		if (stackNBT.hasKey("t", NBTTag.TAG_COMPOUND)) stack.setTagCompound(stackNBT.getCompoundTag("t"));
 		return stack;
+	}
+
+	public static NBTTagList serializeElementStackListForSend(Collection<ElementStack> list) {
+		NBTTagList nbtList = new NBTTagList();
+		for (ElementStack estack : list) nbtList.appendTag(serializeElementStackForSend(estack));
+		return nbtList;
+	}
+
+	public static List<ElementStack> deserializeElementStackListFromSend(NBTTagList stackNBT) {
+		List<ElementStack> list = new ArrayList<>();
+		for (int i = 0; i < stackNBT.tagCount(); i++) {
+			ElementStack stack = deserializeElementStackFromSend(stackNBT.getCompoundTagAt(i));
+			if (!stack.isEmpty()) list.add(stack);
+		}
+		return list;
 	}
 
 }

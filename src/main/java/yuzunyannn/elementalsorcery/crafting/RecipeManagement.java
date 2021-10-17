@@ -1,9 +1,14 @@
 package yuzunyannn.elementalsorcery.crafting;
 
+import java.io.File;
+import java.util.AbstractMap;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.annotation.Nullable;
 
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -11,6 +16,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -51,49 +57,82 @@ public class RecipeManagement extends ESImplRegister<IRecipe> {
 		// 研究
 		ResearchRecipeManagement.registerAll();
 		// 加载json
-		for (ModContainer mod : Loader.instance().getActiveModList()) loadRecipes(mod);
+		for (ModContainer mod : Loader.instance().getActiveModList()) {
+			boolean isElementalSorcery = mod.getModId().equals(ElementalSorcery.MODID);
+			// 自定义
+			final Map<ResourceLocation, Entry<File, JsonObject>> customRecipes = new HashMap<>();
+			if (isElementalSorcery) {
+				Json.ergodicFile("recipes/element_craft", (file, json) -> {
+					ResourceLocation id = new ResourceLocation(mod.getModId(), Json.fileToId(file, "/element_craft"));
+					customRecipes.put(id, new AbstractMap.SimpleEntry(file, json));
+					return true;
+				});
+			}
+			loadRecipes(mod, customRecipes);
+			// 自定义加载
+			if (isElementalSorcery) {
+				for (Entry<ResourceLocation, Entry<File, JsonObject>> entry : customRecipes.entrySet()) {
+					Json.trySyntaxJson(() -> {
+						loadRecipe(entry.getKey(), entry.getValue().getValue());
+					}, entry.getValue().getKey().toString());
+				}
+			}
+		}
 		// 独立的注册
 		registerElementRecipes();
+		// 包外的注册
 	}
 
 	public static void registerElementRecipes() {
 		instance.register(new RecipeGrimoire().setRegistryName(TextHelper.toESResourceLocation("grimoire")));
 	}
 
-	public static void loadRecipes(ModContainer mod) {
+	public static void loadRecipes(ModContainer mod,
+			@Nullable Map<ResourceLocation, Entry<File, JsonObject>> customRecipes) {
 		Json.ergodicAssets(mod, "/element_recipes", (file, json) -> {
-			if (!ElementMap.checkModDemands(json)) return false;
-
-			String type = "normal";
-			if (json.hasString("type")) type = json.getString("type");
-
-			JsonArray patternJson = json.needArray("pattern");
-			List<String> pattern = Arrays.asList(patternJson.asStringArray());
-
-			JsonObject obj = json.needObject("key");
-			Map<String, ItemStack[]> map = new HashMap<>();
-			for (String key : obj) {
-				List<ItemStack> stacks = ItemRecord.asItemStackList(obj.needItems(key));
-				map.put(key, stacks.toArray(new ItemStack[stacks.size()]));
-			}
-			ItemStack output = json.needItem("result").getStack();
-
-			List<ElementStack> elements = json.needElements("element");
-
-			Recipe recipe;
-			switch (type.toLowerCase()) {
-			case "inherit_element":
-				recipe = new RecipeInheritElement(output);
-				break;
-			default:
-				recipe = new Recipe(output);
-				break;
-			}
-			recipe.parse(output, pattern, map, elements);
 			ResourceLocation id = new ResourceLocation(mod.getModId(), Json.fileToId(file, "/element_recipes"));
-			instance.register(recipe.setRegistryName(id));
-			return true;
+			if (customRecipes == null) return loadRecipe(id, json);
+			// 替换到玩家自定义的合成表
+			if (customRecipes.containsKey(id)) {
+				json = customRecipes.get(id).getValue();
+				customRecipes.remove(id);
+			}
+			return loadRecipe(id, json);
+
 		});
+	}
+
+	public static boolean loadRecipe(ResourceLocation id, JsonObject json) {
+		if (!ElementMap.checkModDemands(json)) return false;
+
+		String type = "normal";
+		if (json.hasString("type")) type = json.getString("type");
+
+		JsonArray patternJson = json.needArray("pattern");
+		List<String> pattern = Arrays.asList(patternJson.asStringArray());
+
+		JsonObject obj = json.needObject("key");
+		Map<String, ItemStack[]> map = new HashMap<>();
+		for (String key : obj) {
+			List<ItemStack> stacks = ItemRecord.asItemStackList(obj.needItems(key));
+			map.put(key, stacks.toArray(new ItemStack[stacks.size()]));
+		}
+		ItemStack output = json.needItem("result").getStack();
+
+		List<ElementStack> elements = json.needElements("element");
+
+		Recipe recipe;
+		switch (type.toLowerCase()) {
+		case "inherit_element":
+			recipe = new RecipeInheritElement(output);
+			break;
+		default:
+			recipe = new Recipe(output);
+			break;
+		}
+		recipe.parse(output, pattern, map, elements);
+		instance.register(recipe.setRegistryName(id));
+		return true;
 	}
 
 }

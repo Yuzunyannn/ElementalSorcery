@@ -44,7 +44,7 @@ public class PageResearch extends PageTransform {
 
 	public PageResearch(ItemStack stack) {
 		List<IResearchRecipe> allRecipe = new LinkedList();
-		for (IResearchRecipe ire : ResearchRecipeManagement.instance.getRecipes()) {
+		for (IResearchRecipe ire : ResearchRecipeManagement.instance.getRecipes().values()) {
 			if (ire.getRecipeOutput().isItemEqual(stack)) allRecipe.add(ire);
 		}
 		IResearchRecipe recipe = allRecipe.get(0);

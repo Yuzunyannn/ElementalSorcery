@@ -42,6 +42,8 @@ public class ESImplRegister<T extends IForgeRegistryEntry<T>> implements IForgeR
 
 	@Override
 	public void register(T value) {
+		if (REGISTRY.containsKey(value.getRegistryName()))
+			throw new RuntimeException("Duplicate ID : " + value.getRegistryName());
 		REGISTRY.register(nId++, value.getRegistryName(), value);
 	}
 

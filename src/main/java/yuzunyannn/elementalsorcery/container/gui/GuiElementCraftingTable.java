@@ -16,6 +16,8 @@ public class GuiElementCraftingTable extends GuiNormal<ContainerElementCraftingT
 
 	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/gui/container/element_crafting_table.png");
+	public static final ResourceLocation TEXTURE_BG = new ResourceLocation(ElementalSorcery.MODID,
+			"textures/gui/container/element_altar_bg.png");
 
 	public GuiElementCraftingTable(ContainerElementCraftingTable inventorySlotsIn, InventoryPlayer playerInv) {
 		super(inventorySlotsIn, playerInv);
@@ -44,10 +46,11 @@ public class GuiElementCraftingTable extends GuiNormal<ContainerElementCraftingT
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
 		this.drawTexturedModalRect(offsetX + 106, offsetY + 111, 230, 60, 18, 18);
 		if (!container.isBig) {
-			this.drawTexturedModalRect(offsetX + 52, offsetY + 21, 3, 21, 36, 36);
-			this.drawTexturedModalRect(offsetX + 142, offsetY + 21, 3, 5, 36, 36);
-			this.drawTexturedModalRect(offsetX + 52, offsetY + 111, 3, 21, 36, 36);
-			this.drawTexturedModalRect(offsetX + 142, offsetY + 111, 3, 5, 36, 36);
+			this.mc.getTextureManager().bindTexture(TEXTURE_BG);
+			this.drawTexturedModalRect(offsetX + 52, offsetY + 21, 52, 21, 36, 36);
+			this.drawTexturedModalRect(offsetX + 142, offsetY + 21, 142, 21, 36, 36);
+			this.drawTexturedModalRect(offsetX + 52, offsetY + 111, 52, 111, 36, 36);
+			this.drawTexturedModalRect(offsetX + 142, offsetY + 111, 142, 111, 36, 36);
 		}
 		ItemStack stack = container.tileEntity.getOutput();
 		if (stack.isEmpty()) return;

@@ -1,16 +1,26 @@
 package yuzunyannn.elementalsorcery.container;
 
+import java.util.List;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
+import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
+import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 
-public class ContainerElementCraftingTable extends ContainerNormal<TileElementCraftingTable> {
+public class ContainerElementCraftingTable extends ContainerNormal<TileElementCraftingTable>
+		implements IContainerNetwork {
 	public final boolean isBig;
 	private ItemStackHandler result = new ItemStackHandler(1);
 
@@ -51,6 +61,41 @@ public class ContainerElementCraftingTable extends ContainerNormal<TileElementCr
 		this.tileEntity.onCraftMatrixChanged();
 		this.result.setStackInSlot(0, this.tileEntity.getOutput());
 		super.onCraftMatrixChanged(inventoryIn);
+	}
+
+	protected NBTTagList lastElementList = new NBTTagList();
+
+	@Override
+	public void detectAndSendChanges() {
+		super.detectAndSendChanges();
+
+		if (result.getStackInSlot(0).isEmpty()) {
+			lastElementList = new NBTTagList();
+			return;
+		}
+		
+		NBTTagList nbtList;
+		List<ElementStack> list = tileEntity.getNeedElements();
+		if (list == null) nbtList = new NBTTagList();
+		else nbtList = NBTHelper.serializeElementStackListForSend(list);
+
+		if (!lastElementList.equals(nbtList)) {
+			lastElementList = nbtList;
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setTag("E", nbtList);
+			sendToClient(nbt, listeners);
+		}
+
+	}
+
+	@Override
+	public void recvData(NBTTagCompound nbt, Side side) {
+		if (side == Side.SERVER) return;
+		if (nbt.hasKey("E")) {
+			tileEntity.setNeedElements(
+					NBTHelper.deserializeElementStackListFromSend(nbt.getTagList("E", NBTTag.TAG_COMPOUND)));
+		}
+		tileEntity.setOutput(result.getStackInSlot(0));
 	}
 
 }

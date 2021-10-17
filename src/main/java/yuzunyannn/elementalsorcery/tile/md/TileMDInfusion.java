@@ -24,9 +24,12 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.config.Config;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.json.ItemRecord;
+import yuzunyannn.elementalsorcery.util.json.Json;
 
 public class TileMDInfusion extends TileMDBase implements ITickable {
 
@@ -356,6 +359,17 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 				count += stack.getCount();
 			}
 			return count >= 320;
+		});
+
+		// 自定义
+		Json.ergodicFile("recipes/enchanting_box", (file, json) -> {
+			if (!ElementMap.checkModDemands(json)) return false;
+			ItemRecord input = json.needItem("input");
+			ItemRecord output = json.needItem("output");
+			int count = json.needNumber("magic", "count", "lowerLimitMagic", "lowerLimitConut").intValue();
+			int power = json.needNumber("power", "lowerLimitPower").intValue();
+			addRecipe(input.getStack(), output.getStack(), ElementStack.magic(count, power), awalysTrue);
+			return true;
 		});
 	}
 }
