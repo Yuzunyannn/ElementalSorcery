@@ -9,7 +9,6 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
 
-import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -27,14 +26,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
+import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 
 public class WorldHelper {
-
-	public static boolean isBlockPassable(World world, BlockPos pos) {
-		if (world.isAirBlock(pos)) return true;
-		IBlockState state = world.getBlockState(pos);
-		return state.getBlock().isReplaceable(world, pos);
-	}
 
 	@Nullable
 	public static BlockPos tryFindPlaceToSpawn(World world, Random rand, BlockPos center, float range) {
@@ -45,12 +39,12 @@ public class WorldHelper {
 			double z = center.getZ() + 0.5 + MathHelper.cos(theta) * range;
 			BlockPos pos = new BlockPos(x, center.getY() + tryUp, z);
 			for (int k = 0; k < tryUp * 2 && pos.getY() > 0; k++, pos = pos.down())
-				if (!isBlockPassable(world, pos)) break;
+				if (!BlockHelper.isPassableBlock(world, pos)) break;
 
-			if (isBlockPassable(world, pos)) return null;
+			if (BlockHelper.isPassableBlock(world, pos)) return null;
 
-			if (!isBlockPassable(world, pos.up(1))) return null;
-			if (!isBlockPassable(world, pos.up(2))) return null;
+			if (!BlockHelper.isPassableBlock(world, pos.up(1))) return null;
+			if (!BlockHelper.isPassableBlock(world, pos.up(2))) return null;
 
 			return pos;
 		}
@@ -164,6 +158,10 @@ public class WorldHelper {
 
 	static public AxisAlignedBB createAABB(BlockPos pos, double range, double yUp, double yDown) {
 		return createAABB(new Vec3d(pos).addVector(0.5, 0.5, 0.5), range, yUp, yDown);
+	}
+
+	static public AxisAlignedBB createAABB(Entity entity, double range, double yUp, double yDown) {
+		return createAABB(new Vec3d(entity.posX, entity.posY, entity.posZ), range, yUp, yDown);
 	}
 
 	static public AxisAlignedBB createAABB(Vec3d pos, double range, double yUp, double yDown) {

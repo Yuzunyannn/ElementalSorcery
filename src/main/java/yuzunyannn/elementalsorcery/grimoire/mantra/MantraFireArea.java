@@ -33,6 +33,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
 import yuzunyannn.elementalsorcery.util.ColorHelper;
+import yuzunyannn.elementalsorcery.util.EntityHelper;
 
 public class MantraFireArea extends MantraSquareAreaAdv {
 
@@ -100,7 +101,7 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 		for (Entity entity : entities) {
 			if (!(entity instanceof EntityLivingBase) && !(entity instanceof EntityItem)) continue;
 			if (knowledge.getCount() >= 20) {
-				if (entity == entityCaster) continue;
+				if (EntityHelper.isSameTeam(entityCaster, entity)) continue;
 				if (entity instanceof EntityItem) continue;
 			}
 			entity.setFire(5);

@@ -10,7 +10,6 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -23,6 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
+import yuzunyannn.elementalsorcery.util.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class SummonMob extends SummonCommon {
@@ -82,8 +82,7 @@ public class SummonMob extends SummonCommon {
 		}
 
 		if (attackTarget != null) {
-			boolean isCreative = false;
-			if (attackTarget instanceof EntityPlayer) isCreative = ((EntityPlayer) attackTarget).isCreative();
+			boolean isCreative = EntityHelper.isCreative(attackTarget);
 			if (!isCreative) entity.setAttackTarget(attackTarget);
 		}
 

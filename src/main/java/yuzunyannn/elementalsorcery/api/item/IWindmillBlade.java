@@ -7,10 +7,12 @@ import javax.annotation.Nullable;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.entity.EntityRotaryWindmillBlate;
 
 public interface IWindmillBlade {
 
@@ -22,6 +24,8 @@ public interface IWindmillBlade {
 	float bladeWindScale(World world, BlockPos pos, ItemStack stack);
 
 	boolean canTwirl(World world, BlockPos pos, ItemStack stack);
+
+	void bladePitch(World world, Vec3d pos, ItemStack stack, EntityRotaryWindmillBlate blate);
 
 	@Nullable
 	@SideOnly(Side.CLIENT)

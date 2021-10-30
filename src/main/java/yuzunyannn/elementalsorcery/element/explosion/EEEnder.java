@@ -66,7 +66,8 @@ public class EEEnder extends ElementExplosion {
 		if (world.isOutsideBuildHeight(new BlockPos(at))) {
 			at = new Vec3d(at.x, entity.posY, at.z);
 		}
-		MantraEnderTeleport.doEnderTeleport(world, entity, at);
+		MantraEnderTeleport.doEnderTeleportWithDrown(world, entity, at);
+
 	}
 
 }

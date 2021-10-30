@@ -191,6 +191,17 @@ tile.elementTranslocator.name=元素转移台
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者
 es.effect.tideWalker=潮汐行者
+es.effect.windWalker=疾风行者
+es.effect.fluoresceWalker=荧光行者
+es.effect.poundWalker=震地行者
+es.effect.verdantWalker=青葱行者
+es.effect.enderization=末影化
+es.effect.endercorps=末影军团
+es.effect.rebirthFromFire=浴火重生
+es.effect.waterCalamity=水难
+es.effect.windShield=风之盾
+es.effect.goldenEye=黄金之眼
+es.effect.powerPitcher=巨力投手
 
 enchantment.gatherSouls=聚魂
 

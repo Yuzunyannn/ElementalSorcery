@@ -243,4 +243,23 @@ public class BlockHelper {
 		return isOre(ItemHelper.toItemStack(oreState));
 	}
 
+	public static boolean isSolidBlock(World world, BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
+		return state.isFullBlock() && state.isFullCube() && state.isOpaqueCube();
+	}
+
+	public static boolean isReplaceBlock(World world, BlockPos pos) {
+		return world.getBlockState(pos).getBlock().isReplaceable(world, pos);
+	}
+
+	public static boolean isPassableBlock(World world, BlockPos pos) {
+		if (world.isAirBlock(pos)) return true;
+		return isReplaceBlock(world, pos);
+	}
+
+	public static boolean isFluid(World world, BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
+		return state.getMaterial().isLiquid();
+	}
+
 }

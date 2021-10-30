@@ -191,6 +191,17 @@ tile.elementTranslocator.name=Element Translocator
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
 es.effect.tideWalker=Tide Walker
+es.effect.windWalker=Wind Walker
+es.effect.fluoresceWalker=Fluoresce Walker
+es.effect.poundWalker=Pound Walker
+es.effect.verdantWalker=Verdant Walker
+es.effect.enderization=Enderization
+es.effect.endercorps=Endercorps
+es.effect.rebirthFromFire=Rebirth From The Fire
+es.effect.waterCalamity=Water Calamity
+es.effect.windShield=Wind Shield
+es.effect.goldenEye=Golden Eye
+es.effect.powerPitcher=Power Pitcher
 
 enchantment.gatherSouls=Gather Souls
 

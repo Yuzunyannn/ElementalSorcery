@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -50,7 +51,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		ElementStack stack = getElement(caster, ESInit.ELEMENTS.ENDER, 10, 40);
 		if (stack.isEmpty()) return;
 
-		doEnderTeleport(world, target, new Vec3d(pos).addVector(0.5, 0, 0.5));
+		doEnderTeleportWithDrown(world, target, new Vec3d(pos).addVector(0.5, 0, 0.5));
 	}
 
 	@Override
@@ -89,7 +90,7 @@ public class MantraEnderTeleport extends MantraCommon {
 
 		if (needSuper) caster.iWantBePotent(0.75f, false);
 
-		doEnderTeleport(world, entity, new Vec3d(pos).addVector(0.5, 0, 0.5));
+		doEnderTeleportWithDrown(world, entity, new Vec3d(pos).addVector(0.5, 0, 0.5));
 	}
 
 	public static BlockPos findFoothold(World world, ICaster caster, boolean isSuper) {
@@ -166,6 +167,11 @@ public class MantraEnderTeleport extends MantraCommon {
 		world.playSound(vec.x, vec.y, vec.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1, 1, true);
 	}
 
+	public static void doEnderTeleportWithDrown(World world, Entity target, Vec3d pos) {
+		doEnderTeleport(world, target, pos);
+		if (target.isWet()) target.attackEntityFrom(DamageSource.DROWN, 1.0F);
+	}
+	
 	public static void doEnderTeleport(World world, Entity target, Vec3d pos) {
 		if (world.isRemote) {
 			// 客户端的粒子效果
@@ -187,9 +193,9 @@ public class MantraEnderTeleport extends MantraCommon {
 					player.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
 					player.fallDistance = 0.0F;
 				}
-				if (target.isWet()) target.attackEntityFrom(DamageSource.DROWN, 1.0F);
 			}
 		} else if (target != null) {
+			if (target instanceof EntityCreature) ((EntityCreature) target).getNavigator().clearPath();
 			target.setPositionAndUpdate(pos.x, pos.y, pos.z);
 			target.fallDistance = 0.0F;
 		}

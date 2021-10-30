@@ -2,13 +2,19 @@ package yuzunyannn.elementalsorcery.item;
 
 import java.util.List;
 
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.entity.EntityRotaryWindmillBlate;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
@@ -25,6 +31,7 @@ public class ItemWindmillBlades {
 
 		public AStone() {
 			super("astone", 4 * 60 * 60);
+			bladeDamage = 1;
 		}
 
 		@Override
@@ -45,12 +52,20 @@ public class ItemWindmillBlades {
 			return TEXTURE_BLADE_ASTONE;
 		}
 
+		@Override
+		public void bladePitch(World world, Vec3d vec, ItemStack stack, EntityRotaryWindmillBlate eBlate) {
+			if (world.isRemote) return;
+			super.bladePitch(world, vec, stack, eBlate);
+			if (eBlate.tick % 40 == 0) pitchMoveNextTarget(world, vec, 8, eBlate);
+		}
+
 	}
 
 	public static class WOOD extends ItemWindmillBlade {
 
 		public WOOD() {
 			super("wood", 1 * 60 * 60);
+			bladeDamage = 0.5f;
 		}
 
 		@Override
@@ -85,12 +100,23 @@ public class ItemWindmillBlades {
 			return TEXTURE_BLADE_WOOD;
 		}
 
+		@Override
+		protected void pitchDoAttackEntity(EntityLivingBase target, Vec3d center, DamageSource ds, float damage) {
+			super.pitchDoAttackEntity(target, center, ds, damage * 0.5f);
+			target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 20, 3));
+			Vec3d vec = new Vec3d(target.posX, target.posY + target.height / 2, target.posZ);
+			Vec3d tar = center.subtract(vec).normalize().scale(0.5);
+			target.motionX += tar.x;
+			target.motionZ += tar.z;
+		}
+
 	}
 
 	public static class CRYSTAL extends ItemWindmillBlade {
 
 		public CRYSTAL() {
 			super("crystal", 24 * 60 * 60);
+			bladeDamage = 3.5f;
 		}
 
 		@Override

@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.state.IBlockState;
@@ -96,6 +98,7 @@ public class MantraFluorspar extends MantraCommon {
 
 	}
 
+	@Nullable
 	public static IBlockState getChange(IBlockState state) {
 		IBlockState fluorsparState = ESInit.BLOCKS.FLUORSPAR.getDefaultState();
 		Block block = state.getBlock();

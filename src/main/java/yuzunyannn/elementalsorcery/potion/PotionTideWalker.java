@@ -2,25 +2,22 @@ package yuzunyannn.elementalsorcery.potion;
 
 import java.util.Random;
 
-import net.minecraft.client.gui.Gui;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionEffect;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
+import net.minecraftforge.fluids.BlockFluidBase;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
-public class PotionTideWalker extends Potion {
+public class PotionTideWalker extends PotionCommon {
 
 	public PotionTideWalker() {
-		super(true, 0x2f43f4);
-		setPotionName("es.effect.tideWalker");
-		registerPotionAttributeModifier(SharedMonsterAttributes.MOVEMENT_SPEED, "26ee6c1d-e2b9-44ed-ab64-10de3e407e48",
-				0.04, 2);
+		super(false, 0x2f43f4, "tideWalker");
+		iconIndex = 2;
 	}
 
 	@Override
@@ -30,12 +27,22 @@ public class PotionTideWalker extends Potion {
 
 	@Override
 	public void performEffect(EntityLivingBase entity, int amplifier) {
+		World world = entity.world;
 		if (entity.isInWater()) {
 			if (entity.motionY < 0) entity.motionY = 0;
 			amplifier = Math.min(5, amplifier);
 			entity.motionX *= (1.2 + 0.005f * amplifier);
 			entity.motionZ *= (1.2 + 0.005f * amplifier);
+		} else {
+			if (!world.isRemote) {
+				BlockPos pos = entity.getPosition().down();
+				tryChange(world, pos);
+				if (amplifier >= 1) {
+					for (EnumFacing facing : EnumFacing.HORIZONTALS) tryChange(world, pos.offset(facing));
+				}
+			}
 		}
+		entity.extinguish();
 		if (entity.world.isRemote) {
 			Random rand = RandomHelper.rand;
 			entity.world.spawnParticle(EnumParticleTypes.WATER_SPLASH, entity.posX + rand.nextGaussian(), entity.posY,
@@ -43,11 +50,11 @@ public class PotionTideWalker extends Potion {
 		}
 	}
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void renderHUDEffect(PotionEffect effect, Gui gui, int x, int y, float z, float alpha) {
-		RenderObjects.EFFECT_BUFF.bind();
-		RenderHelper.drawTexturedModalRect(x + 2, y + 3, 18 * 2, 0, 18, 18, 128, 128);
+	protected void tryChange(World world, BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
+		if (state.getMaterial() != Material.LAVA) return;
+		if (state.getValue(BlockFluidBase.LEVEL) == 0) world.setBlockState(pos, Blocks.OBSIDIAN.getDefaultState());
+		else world.setBlockState(pos, Blocks.COBBLESTONE.getDefaultState());
 	}
 
 }

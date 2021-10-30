@@ -38,6 +38,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGlassCup;
 import yuzunyannn.elementalsorcery.util.ColorHelper;
+import yuzunyannn.elementalsorcery.util.EntityHelper;
 import yuzunyannn.elementalsorcery.util.MultiRets;
 import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -285,7 +286,7 @@ public class Juice implements IJuice {
 			modulate(JuiceMaterial.WATER, 200);
 			return true;
 		} else if (state.getBlock() == Blocks.LAVA) {
-			boolean isCreative = drinker instanceof EntityPlayer && ((EntityPlayer) drinker).isCreative();
+			boolean isCreative = EntityHelper.isCreative(drinker);
 			if (!glassCup.isEmpty() && !isCreative) {
 				world.playSound(null, pos, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
 				glassCup.shrink(1);

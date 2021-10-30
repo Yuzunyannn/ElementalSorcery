@@ -26,6 +26,7 @@ import yuzunyannn.elementalsorcery.entity.EntityFallingElfFruit;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.entity.EntityMagicMelting;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
+import yuzunyannn.elementalsorcery.entity.EntityRotaryWindmillBlate;
 import yuzunyannn.elementalsorcery.entity.EntityScapegoat;
 import yuzunyannn.elementalsorcery.entity.EntityThrow;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
@@ -51,6 +52,7 @@ import yuzunyannn.elementalsorcery.render.entity.RenderEntityMagicMelting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortal;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityRabidRabbit;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityRelicZombie;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityRotaryWindmillBlate;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityScapegoat;
 import yuzunyannn.elementalsorcery.render.entity.RenderThrow;
 
@@ -84,21 +86,22 @@ public class EntityRegistries {
 		registerEgg("dejectedSkeleton", 0xe8e8e8, 0x9c9c9c);
 
 		// 实体方块
-		register(20, "bulletin", EntityBulletin.class, "Bulletin", 64, 1, false);
-		register(21, "scapegoat", EntityScapegoat.class, "Scapegoat", 64, 1, false);
+		register(20, "bulletin", EntityBulletin.class, "Bulletin", 64, 20, false);
+		register(21, "scapegoat", EntityScapegoat.class, "Scapegoat", 64, 20, false);
 		register(22, "fairy_cube", EntityFairyCube.class, "FairyCube", 64, 3, false);
 
 		// 效果处理
-		register(40, "throw", EntityThrow.class, "Throw", 64, 10, true);
-		register(41, "falling_elf_fruit", EntityFallingElfFruit.class, "Falling", 64, 1, true);
+		register(40, "throw", EntityThrow.class, "Throw", 64, 1, true);
+		register(41, "falling_elf_fruit", EntityFallingElfFruit.class, "Falling", 64, 2, true);
+		register(42, "rotary_windmill_blate", EntityRotaryWindmillBlate.class, "WindmillBlate", 64, 2, false);
 
 		register(50, "block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);
 		register(51, "block_move", EntityBlockMove.class, "EntityBlockMove", 128, 1, false);
 		register(52, "entity_crafting", EntityCrafting.class, "EntityCrafting", 128, 1, false);
-		register(53, "portal", EntityPortal.class, "EntityPortal", 64, 1, false);
-		register(54, "explore_dust", EntityExploreDust.class, "EntityPortal", 64, 1, false);
-		register(55, "entity_grimoire", EntityGrimoire.class, "EntityGrimoire", 64, 1, false);
-		register(56, "magic_melting", EntityMagicMelting.class, "EntityMagicMelting", 64, 1, false);
+		register(53, "portal", EntityPortal.class, "EntityPortal", 64, 20, false);
+		register(54, "explore_dust", EntityExploreDust.class, "ExploreDust", 64, 20, false);
+		register(55, "entity_grimoire", EntityGrimoire.class, "EntityGrimoire", 64, 3, false);
+		register(56, "magic_melting", EntityMagicMelting.class, "EntityMagicMelting", 64, 20, false);
 
 	}
 
@@ -137,6 +140,7 @@ public class EntityRegistries {
 		registerRender(EntityDreadCube.class, RenderEntityDreadCube.class);
 		registerRender(EntityDejectedSkeleton.class, RenderEntityDejectedSkeleton.class);
 		registerRender(EntityFallingElfFruit.class, RenderEntityFallingElfFruit.class);
+		registerRender(EntityRotaryWindmillBlate.class, RenderEntityRotaryWindmillBlate.class);
 	}
 
 	@SideOnly(Side.CLIENT)

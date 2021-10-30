@@ -8,6 +8,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleMagicFall;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
@@ -20,6 +21,9 @@ public class ParticleEffects {
 		switch (id) {
 		case 0:
 			magicBlast(world, pos, nbt.getByte("lev"));
+			break;
+		case 1:
+			PotionRebirthFromFire.doEffect(world, pos, nbt);
 			break;
 		}
 	}

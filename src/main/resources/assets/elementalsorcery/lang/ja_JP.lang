@@ -191,6 +191,17 @@ tile.elementTranslocator.name=元素移動台
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
 es.effect.tideWalker=潮流の行者
+es.effect.windWalker=疾風の行者
+es.effect.fluoresceWalker=蛍光の行者
+es.effect.poundWalker=地響の行者
+es.effect.verdantWalker=緑豊の行者
+es.effect.enderization=エンダー化
+es.effect.endercorps=エンダー部隊
+es.effect.rebirthFromFire=火を浴びて生まれ変わる
+es.effect.waterCalamity=水難
+es.effect.windShield=風の盾
+es.effect.goldenEye=ゴールデンアイ
+es.effect.powerPitcher=巨力投手
 
 enchantment.gatherSouls=集魂
 

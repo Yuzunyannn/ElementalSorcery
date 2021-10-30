@@ -37,6 +37,7 @@ import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.DamageHelper;
+import yuzunyannn.elementalsorcery.util.EntityHelper;
 import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -125,7 +126,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 		if (rt == null) return;
 
 		EntityLiving entitiy = (EntityLiving) rt.entityHit;
-		if (entitiy.isOnSameTeam(entityLiving)) return;
+		if (EntityHelper.isSameTeam(entitiy, entityLiving)) return;
 
 		if (worldIn.isRemote) return;
 

@@ -8,7 +8,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.init.Items;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -26,9 +25,9 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.DamageHelper;
+import yuzunyannn.elementalsorcery.util.EntityHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.item.ItemMatchResult;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class FCMAttack extends FairyCubeModule {
@@ -86,7 +85,7 @@ public class FCMAttack extends FairyCubeModule {
 		return world.getEntitiesWithinAABB(EntityLivingBase.class, aabb, e -> {
 			if (e == master) return false;
 			if (e == fairyCube) return false;
-			if (master.isOnSameTeam(e)) return false;
+			if (EntityHelper.isSameTeam(master, e)) return false;
 			if (target instanceof IMob) return e instanceof IMob;
 			if (target instanceof EntityAnimal) return e instanceof EntityAnimal;
 			return target.getClass() == e.getClass();

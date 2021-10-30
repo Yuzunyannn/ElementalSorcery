@@ -148,7 +148,7 @@ public class FirewrokShap {
 	}
 
 	/** 元素类型的球 */
-	public static void createEBall(World world, Vec3d position, double speed, int size, int[] colors) {
+	public static void createEBall(World world, Vec3d position, double speed, int size, int[] colors, int extra) {
 
 		for (int i = -size; i <= size; ++i) {
 			for (int j = -size; j <= size; ++j) {
@@ -160,15 +160,17 @@ public class FirewrokShap {
 							+ EventClient.rand.nextGaussian() * 0.05D;
 
 					EffectElementMove e = new EffectElementMove(world, position);
-					e.g = 0;
 					e.yDecay = e.xDecay = e.zDecay = 0.9;
 					e.setColor(colors[EventClient.rand.nextInt(colors.length)]);
 					e.setVelocity(d3 / d6, d4 / d6, d5 / d6);
+					if (extra == 1) {
+						e.yAccelerate = 0.005f + 0.002f * (2 * size - (size + i));
+						e.xAccelerate = e.motionX / 30;
+						e.zAccelerate = e.motionZ / 30;
+					}
 					Effect.addEffect(e);
 
-					if (i != -size && i != size && j != -size && j != size) {
-						k += size * 2 - 1;
-					}
+					if (i != -size && i != size && j != -size && j != size) k += size * 2 - 1;
 				}
 			}
 		}

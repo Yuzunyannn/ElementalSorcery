@@ -20,6 +20,7 @@ import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTimeHourglass;
 import yuzunyannn.elementalsorcery.ts.PocketWatch;
+import yuzunyannn.elementalsorcery.util.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class MantraTimeHourglass extends MantraCommon {
@@ -134,7 +135,7 @@ public class MantraTimeHourglass extends MantraCommon {
 		for (EntityLivingBase entity : entities) {
 			if (self != null) {
 				if (self == entity) continue;
-				if (self.isOnSameTeam(entity)) continue;
+				if (EntityHelper.isSameTeam(self, entity)) continue;
 			}
 			if (world.isRemote) MantraBlockCrash.addBlockElementEffect(entity.getPositionEyes(0), getColor(data));
 			else entity.addPotionEffect(new PotionEffect(ESInit.POTIONS.TIME_SLOW, time, 3));

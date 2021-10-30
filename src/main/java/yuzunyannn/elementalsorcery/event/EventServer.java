@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -17,6 +18,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ClassInheritanceMultiMap;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -24,6 +26,7 @@ import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -58,6 +61,11 @@ import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageSyncConfig;
+import yuzunyannn.elementalsorcery.potion.PotionEndercorps;
+import yuzunyannn.elementalsorcery.potion.PotionEnderization;
+import yuzunyannn.elementalsorcery.potion.PotionPowerPitcher;
+import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
+import yuzunyannn.elementalsorcery.potion.PotionWindShield;
 import yuzunyannn.elementalsorcery.ts.PocketWatch;
 import yuzunyannn.elementalsorcery.ts.PocketWatchClient;
 import yuzunyannn.elementalsorcery.util.NBTTag;
@@ -70,6 +78,81 @@ public class EventServer {
 		NBTTagCompound nbt = new NBTTagCompound();
 		data.setTag("ESData", nbt);
 		return nbt;
+	}
+
+	static private final List<ITickTask> tickList = new LinkedList<ITickTask>();
+	static private final List<IWorldTickTask> worldTickList = new LinkedList<IWorldTickTask>();
+
+	/** 添加一个服务端的tick任务 */
+	static public void addTickTask(ITickTask task) {
+		if (task == null) return;
+		tickList.add(task);
+	}
+
+	static public void addTickTask(ITickTask task, int tickout) {
+		if (task == null) return;
+		if (tickout <= 0) tickList.add(task);
+		else tickList.add(new ITickTask() {
+			int tick = 0;
+
+			@Override
+			public int onTick() {
+				if (tick < tickout) {
+					tick++;
+					return ITickTask.SUCCESS;
+				}
+				return task.onTick();
+			}
+		});
+	}
+
+	static public void addTask(ITickTask.ITickTaskOnce task) {
+		addTickTask((ITickTask) task);
+	}
+
+	static public void addTask(ITickTask.ITickTaskOnce task, int tickout) {
+		addTickTask((ITickTask) task, tickout);
+	}
+
+	/** 添加一个世界tick任务 */
+	static public void addWorldTickTask(IWorldTickTask task) {
+		if (task == null) return;
+		worldTickList.add(task);
+	}
+
+	/** 添加一个一次性的的世界tick任务，该世界运行完后直接结束 */
+	static public void addWorldTask(IWorldTickTask.IWorldTickTaskOnce task) {
+		addWorldTickTask((IWorldTickTask) task);
+	}
+
+	@SubscribeEvent
+	public static void serverTick(TickEvent.ServerTickEvent event) {
+		if (event.phase == Phase.START) {
+			PocketWatch.tick();
+			return;
+		}
+
+		Iterator<ITickTask> iter = tickList.iterator();
+		while (iter.hasNext()) {
+			ITickTask task = iter.next();
+			int flags = task.onTick();
+			if (flags == ITickTask.END) iter.remove();
+		}
+	}
+
+	@SubscribeEvent
+	public static void worldTick(TickEvent.WorldTickEvent event) {
+		if (event.phase == Phase.START) return;
+
+		World world = event.world;
+		if (world.isRemote) return;
+
+		Iterator<IWorldTickTask> iter = worldTickList.iterator();
+		while (iter.hasNext()) {
+			IWorldTickTask task = iter.next();
+			int flags = task.onTick(world);
+			if (flags == ITickTask.END) iter.remove();
+		}
 	}
 
 	/** 玩家死亡等，复制玩家数据 */
@@ -120,62 +203,6 @@ public class EventServer {
 		if (event.getObject() instanceof EntityPlayer) {
 			event.addCapability(new ResourceLocation(ElementalSorcery.MODID, "capability"),
 					new ESPlayerCapabilityProvider());
-		}
-	}
-
-//	@SubscribeEvent
-//	public static void entityCanUpdate(EntityEvent.CanUpdate evt) {
-//		Entity entity = evt.getEntity();
-//		if (entity instanceof EntityFairyCube) {
-//			evt.setCanUpdate(true);
-//		}
-//	}
-
-	static private final List<ITickTask> tickList = new LinkedList<ITickTask>();
-
-	/** 添加一个服务端的tick任务 */
-	static public void addTickTask(ITickTask task) {
-		if (task == null) return;
-		tickList.add(task);
-	}
-
-	static public void addTickTask(ITickTask task, int tickout) {
-		if (task == null) return;
-		if (tickout <= 0) tickList.add(task);
-		else tickList.add(new ITickTask() {
-			int tick = 0;
-
-			@Override
-			public int onTick() {
-				if (tick < tickout) {
-					tick++;
-					return ITickTask.SUCCESS;
-				}
-				return task.onTick();
-			}
-		});
-	}
-
-	static public void addTask(ITickTask.ITickTaskOnce task) {
-		addTickTask((ITickTask) task);
-	}
-
-	static public void addTask(ITickTask.ITickTaskOnce task, int tickout) {
-		addTickTask((ITickTask) task, tickout);
-	}
-
-	@SubscribeEvent
-	public static void serverTick(TickEvent.ServerTickEvent event) {
-		if (event.phase == Phase.START) {
-			PocketWatch.tick();
-			return;
-		}
-
-		Iterator<ITickTask> iter = tickList.iterator();
-		while (iter.hasNext()) {
-			ITickTask task = iter.next();
-			int flags = task.onTick();
-			if (flags == ITickTask.END) iter.remove();
 		}
 	}
 
@@ -270,8 +297,21 @@ public class EventServer {
 
 	// 右键
 	@SubscribeEvent
-	public static void onRightClick(PlayerInteractEvent.RightClickItem event) {
+	public static void onRightClickItem(PlayerInteractEvent.RightClickItem event) {
 		EntityPlayer player = event.getEntityPlayer();
+		if (event.isCanceled()) return;
+
+		ItemStack stack = event.getItemStack();
+		if (player.isPotionActive(ESInit.POTIONS.POWER_PITCHER)) {
+			int amplifier = player.getActivePotionEffect(ESInit.POTIONS.POWER_PITCHER).getAmplifier();
+			EnumActionResult result = PotionPowerPitcher.doPowerPitch(player, event.getHand(), stack, amplifier);
+			if (result != EnumActionResult.PASS) {
+				event.setCanceled(true);
+				event.setCancellationResult(result);
+				return;
+			}
+		}
+
 		if (player.world.isRemote) return;
 		EntityFairyCube.addBehavior(player, BehaviorClick.rightClick(event.getHand()));
 	}
@@ -296,12 +336,32 @@ public class EventServer {
 		}
 	}
 
+	// 设置攻击目标
+	@SubscribeEvent
+	public static void setAttackTarget(LivingSetAttackTargetEvent event) {
+		EntityLivingBase living = event.getEntityLiving();
+		EntityLivingBase target = event.getTarget();
+		if (target == null) return;
+		// 末影化和军团后看末影人不会攻击你
+		if (living instanceof EntityEnderman) {
+			if (target.isPotionActive(ESInit.POTIONS.ENDERIZATION)) ((EntityEnderman) living).setAttackTarget(null);
+			if (target.isPotionActive(ESInit.POTIONS.ENDERCORPS) && !PotionEndercorps.isEnd(target.world))
+				((EntityEnderman) living).setAttackTarget(null);
+		}
+	}
+
 	// 任何死亡
 	@SubscribeEvent
 	public static void onLivingDead(LivingDeathEvent event) {
-		if (event.isCanceled()) return;
 		EntityLivingBase deader = event.getEntityLiving();
 		DamageSource source = event.getSource();
+
+		if (PotionRebirthFromFire.needRebirth(deader, source)) {
+			PotionRebirthFromFire.doRebirth(deader);
+			event.setCanceled(true);
+		}
+
+		if (event.isCanceled()) return;
 		onLivingDeadEnchantmentDeal(deader, source);
 
 		Entity trueSource = source.getTrueSource();
@@ -315,14 +375,33 @@ public class EventServer {
 
 	@SubscribeEvent
 	public static void onLivingAttack(LivingAttackEvent event) {
-		EntityLivingBase entity = event.getEntityLiving();
-		DamageSource dmg = event.getSource();
+		if (event.isCanceled()) return;
 
-//		if (dmg.isFireDamage() && entity.isPotionActive(ESInit.POTIONS.FIRE_WALK)) {
-//			event.setCanceled(true);
-//			return;
-//		}
+		EntityLivingBase entity = event.getEntityLiving();
+		DamageSource source = event.getSource();
+		float amount = event.getAmount();
+
+		if (PotionEnderization.tryAttackEntityFrom(entity, source, amount)) {
+			event.setCanceled(true);
+			return;
+		}
+
+		Entity attackerEntity = source.getTrueSource();
+		if (attackerEntity instanceof EntityLivingBase) {
+			EntityLivingBase attacker = (EntityLivingBase) attackerEntity;
+			if (PotionEndercorps.tryAttackEntityFrom(entity, attacker, source, amount)) {
+				event.setCanceled(true);
+				return;
+			}
+			PotionWindShield.tryAttackEntityFrom(entity, attacker, source, amount);
+		}
+
 	}
+
+//	@SubscribeEvent
+//	public static void onLivingUpdate(LivingUpdateEvent evt) {
+//		EntityLivingBase entity = evt.getEntityLiving();
+//	}
 
 	private static void onLivingDeadEnchantmentDeal(EntityLivingBase deader, DamageSource source) {
 		Entity s = source.getImmediateSource();

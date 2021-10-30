@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.GlStateManager.DestFactor;
 import net.minecraft.client.renderer.GlStateManager.SourceFactor;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -47,6 +48,10 @@ public class EffectShineBlock extends Effect {
 		if (this.lifeTime > 20) {
 			int count = this.lifeTime - 20;
 			this.alpha = Math.abs(MathHelper.cos(count * 0.05f));
+			if (mc.getRenderViewEntity() != null) {
+				Vec3d pos = mc.getRenderViewEntity().getPositionEyes(0);
+				if (pos.squareDistanceTo(posX, posY, posZ) <= 8) this.lifeTime = 20;
+			}
 		} else this.alpha = this.lifeTime / 20f;
 	}
 

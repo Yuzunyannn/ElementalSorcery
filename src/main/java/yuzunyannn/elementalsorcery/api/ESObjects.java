@@ -223,6 +223,18 @@ public class ESObjects {
 		public Potion TIME_SLOW;
 		public Potion FIRE_WALKER;
 		public Potion TIDE_WALKER;
+		public Potion WIND_WALKER;
+		public Potion FLUORESCE_WALKER;
+		public Potion POUND_WALKER;
+		public Potion VERDANT_WALKER;
+		public Potion REBIRTH_FROM_FIRE;
+		public Potion WATER_CALAMITY;
+		public Potion ENDERIZATION;
+		public Potion ENDERCORPS;
+		public Potion WIND_SHIELD;
+		public Potion GOLDEN_EYE;
+		public Potion POWER_PITCHER;
+
 	}
 
 	static public class Village {

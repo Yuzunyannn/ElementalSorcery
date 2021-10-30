@@ -409,6 +409,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 
 	public static ItemStack putBlock(World world, @Nullable EntityPlayer player, BlockPos to, ItemStack stack,
 			@Nullable IBlockState state, @Nullable EnumFacing facing, @Nullable NBTTagCompound tileSave) {
+		if (!BlockHelper.isReplaceBlock(world, to)) return stack;
 		facing = facing == null ? getFacingFromState(state) : facing;
 		// 放置方块
 		Item item = stack.getItem();
@@ -456,10 +457,15 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			// 液体
 			IFluidHandlerItem fhi = stack.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
 			FluidStack fstack = fhi.drain(1000, true);
-			if (fstack != null) world.setBlockState(to, fstack.getFluid().getBlock().getDefaultState());
+			if (fstack != null) {
+				IBlockState fluidState = fstack.getFluid().getBlock().getDefaultState();
+				world.setBlockState(to, fluidState);
+//				world.notifyBlockUpdate(to, fluidState, fluidState, 0);
+			}
 			return fhi.getContainer();
 		} else if (item == Items.BED) {
 			// 床
+			if (state == null) return stack;
 			facing = state.getValue(BlockBed.FACING);
 			world.setBlockState(to, state);
 			world.setBlockState(to.offset(facing), state.cycleProperty(BlockBed.PART));
@@ -469,6 +475,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			if (bed != null) bed.setColor(EnumDyeColor.byMetadata(stack.getMetadata()));
 			return ItemStack.EMPTY;
 		} else if (item instanceof ItemDoor) {
+			if (state == null) return stack;
 			ItemDoor.placeDoor(world, to, facing.rotateY(), state.getBlock(), false);
 			return ItemStack.EMPTY;
 		} else if (state != null) {
