@@ -34,7 +34,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 /** 方块类型的信息 */
 public class BlockItemTypeInfo {

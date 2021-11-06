@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class BlockElfBeacon extends BlockContainerNormal {
 

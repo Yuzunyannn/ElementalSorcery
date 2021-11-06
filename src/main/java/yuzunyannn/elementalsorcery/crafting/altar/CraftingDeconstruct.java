@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderDeconstruct;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class CraftingDeconstruct implements ICraftingAltar {

@@ -17,8 +17,8 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementContainer;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.tile.TileElementPlatform;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryOnlyInsert;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class BlockElementPlatform extends BlockElementContainer {
 

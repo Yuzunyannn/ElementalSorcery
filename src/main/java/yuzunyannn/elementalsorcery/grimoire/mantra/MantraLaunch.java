@@ -18,8 +18,8 @@ import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleMantra;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
+import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class MantraLaunch extends MantraCommon {
 

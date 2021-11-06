@@ -15,7 +15,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.render.effect.StructElement2D;
-import yuzunyannn.elementalsorcery.util.ColorHelper;
+import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class RenderEntityPortalEffect implements EntityPortal.IPortalDraw {

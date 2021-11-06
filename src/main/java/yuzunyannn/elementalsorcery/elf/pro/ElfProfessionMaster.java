@@ -38,7 +38,7 @@ import yuzunyannn.elementalsorcery.render.effect.batch.EffectElement;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
-import yuzunyannn.elementalsorcery.util.DamageHelper;
+import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 
 public class ElfProfessionMaster extends ElfProfession {
 

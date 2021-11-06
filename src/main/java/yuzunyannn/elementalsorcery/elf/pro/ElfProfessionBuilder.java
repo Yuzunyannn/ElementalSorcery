@@ -34,7 +34,7 @@ import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class ElfProfessionBuilder extends ElfProfessionUndetermined {
 

@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.api.element;
 
 import java.util.Map;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
@@ -16,6 +17,7 @@ public interface IElemetJuice {
 	 * 
 	 * 
 	 */
-	public void onDrinkJuice(World world, ElementStack estack, float water, Map<JuiceMaterial, Float> drinkMap);
+	public void onDrinkJuice(World world, EntityLivingBase drinker, ElementStack estack, float water,
+			Map<JuiceMaterial, Float> drinkMap);
 
 }

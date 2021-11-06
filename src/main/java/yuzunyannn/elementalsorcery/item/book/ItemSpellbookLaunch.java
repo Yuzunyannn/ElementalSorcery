@@ -24,7 +24,7 @@ import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemSpellbookLaunch extends ItemSpellbook {

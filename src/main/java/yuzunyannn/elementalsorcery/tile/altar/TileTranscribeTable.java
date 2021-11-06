@@ -5,7 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class TileTranscribeTable extends TileEntityNetwork implements IGetItemStack {

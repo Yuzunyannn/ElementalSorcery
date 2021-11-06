@@ -32,9 +32,9 @@ import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
-import yuzunyannn.elementalsorcery.util.ColorHelper;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryLimit;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 
 public class BlockElementalCube extends BlockElementContainer {
 

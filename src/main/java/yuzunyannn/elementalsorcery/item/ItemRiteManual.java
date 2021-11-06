@@ -24,8 +24,8 @@ import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.container.gui.GuiRiteManual;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.ColorHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 
 public class ItemRiteManual extends Item {
 

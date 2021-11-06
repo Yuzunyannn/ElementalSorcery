@@ -202,6 +202,10 @@ es.effect.waterCalamity=水难
 es.effect.windShield=风之盾
 es.effect.goldenEye=黄金之眼
 es.effect.powerPitcher=巨力投手
+es.effect.healthBalance=生命天平
+es.effect.combatSkill=战斗技巧
+es.effect.defenseSkill=防守技巧
+es.effect.star=星
 
 enchantment.gatherSouls=聚魂
 
@@ -826,7 +830,7 @@ page.fairyCubeModuleCraft.ct.sec=木、牛肉大餐\n水、雨、萤石粉\n木�
 page.deconstructWindmill=瓦解风车
 page.deconstructWindmill.ct=如果把将物质瓦解的设备做成风车形式，获取可以自动的分解元素，与此，瓦解风车诞生了。\n通过「风车平台」搭建出瓦解祭坛，并将风轮放到平台上，在风力的驱动下，风车开始工作，将周围的物质转化为元素，并存入祭坛周边的元素容器之中。
 page.windmillBlade=风轮
-page.windmillBlade.ct=通过魔力材质制作的风轮放到「风车平台」上，便可在祭坛上方生成风车扇叶，风力越大，转动越快，分解效率也越高。\n随着时间的迁移，风轮会消耗耐久，直至销毁。不同材质的风轮的耐久不同，其特性也具有微弱的不同。
+page.windmillBlade.ct=通过魔力材质制作的风轮放到「风车平台」上，便可在祭坛上方生成风车扇叶，风力越大，转动越快，分解效率也越高。\n随着时间的迁移，风轮会消耗耐久，直至销毁。不同材质的风轮的耐久不同，其特性也具有微弱的不同。\n此外，如果你具有足够的力量，没准可以把风轮投出去当作武器。
 page.cubeDemarcator.ct=通过立方体核心制作出的标定器，可以给元素立方体标定接受元素能量的上限或这下限，不满足标定的元素不如进入该立方体。\n对空气右键和shift右键，增加或降低定标的值。对立方体右键和shift右键为立方体定标。\n定标值为0表述不进行限制。\n注意定标器有使用耐久，可以通过修复箱修复。
 page.magicPot=魔力花盆
 page.magicPot.ct=具有魔力的花盆，生命之花只能放到魔力花盆的上面。\n手拿着魔石，右键花盆，可以给土壤补充魔力。只有在花盆有魔力的时候，生命之花才能正常工作。\n生命之花每次为周围提供能量，有2%的概率消耗花盆中的魔力。

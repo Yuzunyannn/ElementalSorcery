@@ -42,8 +42,8 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.model.ModelSupremeTable;
-import yuzunyannn.elementalsorcery.util.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.TickOut;
+import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.item.IItemStackHandlerInventory;
 
 public class TileSupremeTable extends TileStaticMultiBlock

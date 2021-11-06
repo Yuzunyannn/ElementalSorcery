@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.util;
+package yuzunyannn.elementalsorcery.util.helper;
 
 import java.io.BufferedReader;
 import java.io.Closeable;

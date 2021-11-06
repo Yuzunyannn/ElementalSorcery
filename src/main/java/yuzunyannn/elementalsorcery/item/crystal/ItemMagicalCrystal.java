@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class ItemMagicalCrystal extends ItemCrystal {
 

@@ -20,7 +20,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.tile.TileLantern;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class BlockLantern extends BlockContainerNormal {
 

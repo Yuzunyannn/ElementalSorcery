@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.event.KeyBoard;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageElfTreeElevator;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)

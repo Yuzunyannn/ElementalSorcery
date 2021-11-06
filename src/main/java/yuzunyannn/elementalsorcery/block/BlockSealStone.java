@@ -29,7 +29,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class BlockSealStone extends Block implements Mapper {
 

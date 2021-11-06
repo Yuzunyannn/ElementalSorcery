@@ -18,8 +18,8 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageGetBuilingInfo;
-import yuzunyannn.elementalsorcery.util.IOHelper;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
+import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.helper.IOHelper;
 
 public class BuildingLib {
 

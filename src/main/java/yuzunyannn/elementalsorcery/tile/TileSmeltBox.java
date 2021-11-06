@@ -24,7 +24,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.tool.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.util.IField;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemStackLimitHandler;
 
 public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITickable, IField {

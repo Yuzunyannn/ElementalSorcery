@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -15,7 +16,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.element.explosion.EEWood;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
+import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
+import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
 
 public class ElementWood extends ElementCommon {
 
@@ -60,6 +64,25 @@ public class ElementWood extends ElementCommon {
 	@Override
 	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
 		return new EEWood(world, pos, ElementExplosion.getStrength(eStack) * 1.05f, eStack);
+	}
+
+	@Override
+	protected void addDrinkJuiceEffect(DrinkJuiceEffectAdder helper) {
+
+		helper.preparatory(ESInit.POTIONS.VERDANT_WALKER, 40, 125);
+		helper.check(JuiceMaterial.ELF_FRUIT, 75).checkRatio(JuiceMaterial.APPLE, 0.25f, 0.75f).join();
+		helper.descend(JuiceMaterial.APPLE, 0, 0.8f);
+		
+		helper.preparatory(ESInit.POTIONS.HEALTH_BALANCE, 40, 125);
+		helper.check(JuiceMaterial.ELF_FRUIT, 75).checkRatio(JuiceMaterial.MELON, 0.25f, 0.75f).join();
+		helper.descend(JuiceMaterial.MELON, 0, 0.8f);
+		
+		helper.preparatory(MobEffects.REGENERATION, 10, 250);
+		helper.check(JuiceMaterial.APPLE, 50).join();
+		
+		helper.preparatory(MobEffects.HEALTH_BOOST, 30, 150);
+		helper.check(JuiceMaterial.MELON, 75).join();
+		
 	}
 
 }

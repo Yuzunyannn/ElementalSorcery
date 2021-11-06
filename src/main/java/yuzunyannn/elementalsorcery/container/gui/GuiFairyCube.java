@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.container.ContainerFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.FairyCubeModule;
 import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeModuleClient;
-import yuzunyannn.elementalsorcery.util.ColorHelper;
+import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 

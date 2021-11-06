@@ -18,8 +18,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.item.IWindmillBlade;
-import yuzunyannn.elementalsorcery.util.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.MasterBinder;
+import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class EntityRotaryWindmillBlate extends EntityObject implements IEntityAdditionalSpawnData {

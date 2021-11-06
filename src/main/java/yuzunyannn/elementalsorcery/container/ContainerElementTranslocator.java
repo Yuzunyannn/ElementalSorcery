@@ -13,8 +13,8 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementTranslocator;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class ContainerElementTranslocator extends ContainerNormal<TileElementTranslocator>
 		implements IContainerNetwork {

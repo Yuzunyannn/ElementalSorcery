@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTimeHourglass;
 import yuzunyannn.elementalsorcery.ts.PocketWatch;
-import yuzunyannn.elementalsorcery.util.EntityHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class MantraTimeHourglass extends MantraCommon {

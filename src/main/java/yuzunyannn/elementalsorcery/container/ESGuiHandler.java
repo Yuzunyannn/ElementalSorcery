@@ -38,7 +38,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiSmeltBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiSupremeTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiTranscribeInjection;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public class ESGuiHandler implements IGuiHandler {
 

@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.util.text;
+package yuzunyannn.elementalsorcery.util;
 
 import java.util.List;
 import java.util.function.Function;

@@ -47,8 +47,8 @@ import yuzunyannn.elementalsorcery.block.BlockElfFruit;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public abstract class EntityElfBase extends EntityCreature {
 

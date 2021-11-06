@@ -13,11 +13,11 @@ import yuzunyannn.elementalsorcery.elf.quest.QuestDescribe;
 import yuzunyannn.elementalsorcery.elf.quest.QuestType;
 import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
 import yuzunyannn.elementalsorcery.elf.quest.reward.QuestReward;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
-import yuzunyannn.elementalsorcery.util.RandomHelper.WeightRandom;
+import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper.WeightRandom;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class QuestCreator implements IQuestCreator {
 

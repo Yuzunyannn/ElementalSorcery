@@ -21,37 +21,37 @@ import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTreatEntity;
 
 public class Effects {
 
-	public static final String FIREWROK = "firewrok";
-	public static final String PARTICLE_EFFECT = "pEffect";
-	public static final String ENTITY_SOUL = "eSoul";
-	public static final String SUMMON_ENTITY = "eSummon";
-	public static final String TREAT_ENTITY = "eTreat";
-	public static final String ELEMENT_ABSORB = "eAbsorb";
+	public static final int FIREWROK = 1;
+	public static final int PARTICLE_EFFECT = 2;
+	public static final int ENTITY_SOUL = 3;
+	public static final int SUMMON_ENTITY = 4;
+	public static final int TREAT_ENTITY = 5;
+	public static final int ELEMENT_ABSORB = 6;
 
 	public static final int MAX_DIS = 64;
 
 	/** 生成特殊效果 */
-	public static void spawnEffect(World world, String name, Vec3d pos, NBTTagCompound nbt) {
+	public static void spawnEffect(World world, int id, Vec3d pos, NBTTagCompound nbt) {
 		if (world.isRemote) {
-			spawnEffect(name, pos, nbt);
+			spawnEffect(id, pos, nbt);
 			return;
 		}
 		for (EntityPlayer player : world.playerEntities) {
 			if (player.getDistanceSq(pos.x, pos.y, pos.z) > MAX_DIS * MAX_DIS) continue;
-			ESNetwork.instance.sendTo(new MessageEffect(name, pos, nbt), (EntityPlayerMP) player);
+			ESNetwork.instance.sendTo(new MessageEffect(id, pos, nbt), (EntityPlayerMP) player);
 		}
 	}
 
-	public static void spawnEffect(World world, String name, BlockPos pos, NBTTagCompound nbt) {
-		spawnEffect(world, name, new Vec3d(pos).addVector(0.5, 0.5, 0.5), nbt);
+	public static void spawnEffect(World world, int id, BlockPos pos, NBTTagCompound nbt) {
+		spawnEffect(world, id, new Vec3d(pos).addVector(0.5, 0.5, 0.5), nbt);
 	}
 
 	@SideOnly(Side.CLIENT)
-	private static void spawnEffect(String name, Vec3d pos, NBTTagCompound nbt) {
+	private static void spawnEffect(int id, Vec3d pos, NBTTagCompound nbt) {
 		try {
 			EntityPlayer player = Minecraft.getMinecraft().player;
 			if (player.getDistanceSq(pos.x, pos.y, pos.z) > MAX_DIS * MAX_DIS) return;
-			Effects.Factory factory = Effects.getFactory(name);
+			Effects.Factory factory = Effects.getFactory(id);
 			factory.show(player.world, pos, nbt);
 		} catch (Exception e) {}
 		return;
@@ -66,17 +66,17 @@ public class Effects {
 
 	@SideOnly(Side.CLIENT)
 	public static class EffectMap {
-		public static final Map<String, Factory> map = new HashMap<>();
+		public static final Map<Integer, Factory> map = new HashMap<>();
 
-		public static void register(String name, Factory factory) {
-			if (name == null || factory == null) return;
-			map.put(name, factory);
+		public static void register(int id, Factory factory) {
+			if (factory == null) return;
+			map.put(id, factory);
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static Factory getFactory(String key) {
-		return EffectMap.map.get(key);
+	public static Factory getFactory(int id) {
+		return EffectMap.map.get(id);
 	}
 
 	@SideOnly(Side.CLIENT)

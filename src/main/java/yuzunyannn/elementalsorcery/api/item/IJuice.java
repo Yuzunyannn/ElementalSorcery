@@ -6,10 +6,12 @@ import javax.annotation.Nullable;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 
 public interface IJuice {
 
@@ -17,7 +19,7 @@ public interface IJuice {
 	boolean canDrink(World world, EntityLivingBase drinker);
 
 	/** 当喝完，添加各种效果 */
-	void onDrink(World world, EntityLivingBase drinker);
+	void onDrink(World world, EntityLivingBase drinker, @Nullable IElementInventory eInv);
 
 	/**
 	 * 盛取某些液体
@@ -37,5 +39,10 @@ public interface IJuice {
 
 	@SideOnly(Side.CLIENT)
 	void addJuiceInformation(World worldIn, List<String> tooltip, ITooltipFlag flagIn);
+
+	@Nullable
+	default IElementInventory getElementInventory(ItemStack stack) {
+		return null;
+	}
 
 }

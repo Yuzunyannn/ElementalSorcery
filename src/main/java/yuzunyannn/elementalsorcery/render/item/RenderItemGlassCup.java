@@ -33,8 +33,12 @@ public class RenderItemGlassCup implements IRenderItem {
 			if (tt == TransformType.GROUND) {
 				GlStateManager.translate(0.5, 0.3, 0.5);
 				GlStateManager.scale(0.015, 0.015, 0.015);
-			} else if (tt == TransformType.FIXED) {
+			} else if (stack.getItemFrame() != null) {
 				GlStateManager.translate(0.5, 0.1, 0.5);
+				GlStateManager.scale(0.04, 0.04, 0.04);
+			} else if (tt == TransformType.FIXED) {
+				GlStateManager.rotate(-90, 1, 0, 0);
+				GlStateManager.translate(0.5, -0.65, 0.5);
 				GlStateManager.scale(0.04, 0.04, 0.04);
 			} else if (tt == TransformType.THIRD_PERSON_LEFT_HAND || tt == TransformType.THIRD_PERSON_RIGHT_HAND) {
 				GlStateManager.translate(0.5, 0.425, 0.6);

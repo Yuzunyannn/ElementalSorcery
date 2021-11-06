@@ -25,7 +25,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
@@ -61,8 +63,11 @@ import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageSyncConfig;
+import yuzunyannn.elementalsorcery.potion.PotionCombatSkill;
+import yuzunyannn.elementalsorcery.potion.PotionDefenseSkill;
 import yuzunyannn.elementalsorcery.potion.PotionEndercorps;
 import yuzunyannn.elementalsorcery.potion.PotionEnderization;
+import yuzunyannn.elementalsorcery.potion.PotionHealthBalance;
 import yuzunyannn.elementalsorcery.potion.PotionPowerPitcher;
 import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
 import yuzunyannn.elementalsorcery.potion.PotionWindShield;
@@ -373,6 +378,7 @@ public class EventServer {
 		}
 	}
 
+	// 攻击
 	@SubscribeEvent
 	public static void onLivingAttack(LivingAttackEvent event) {
 		if (event.isCanceled()) return;
@@ -396,6 +402,43 @@ public class EventServer {
 			PotionWindShield.tryAttackEntityFrom(entity, attacker, source, amount);
 		}
 
+	}
+
+	// 受到伤害，修改amount
+	@SubscribeEvent
+	public static void onLivingHurt(LivingHurtEvent event) {
+		if (event.isCanceled()) return;
+
+		EntityLivingBase entity = event.getEntityLiving();
+		DamageSource source = event.getSource();
+		float amount = event.getAmount();
+
+		Entity attackerEntity = source.getTrueSource();
+		if (attackerEntity instanceof EntityLivingBase) {
+			EntityLivingBase attacker = (EntityLivingBase) attackerEntity;
+			float factor = 1;
+			if (PotionCombatSkill.canSkill(entity, attacker, source, amount))
+				factor = factor + PotionCombatSkill.doSkill(entity, attacker, source, amount);
+			if (PotionDefenseSkill.canSkill(entity, attacker, source, amount))
+				factor = Math.max(factor - PotionDefenseSkill.doSkill(entity, attacker, source, amount), 0);
+			if (factor != 1) event.setAmount(factor * amount);
+		}
+	}
+
+	// 受到伤害，在LivingHurtEvent之后，这里根据amount计算数据
+	@SubscribeEvent
+	public static void onLivingDamage(LivingDamageEvent event) {
+		if (event.isCanceled()) return;
+
+		EntityLivingBase entity = event.getEntityLiving();
+		DamageSource source = event.getSource();
+		float amount = event.getAmount();
+
+		Entity attackerEntity = source.getTrueSource();
+		if (attackerEntity instanceof EntityLivingBase) {
+			EntityLivingBase attacker = (EntityLivingBase) attackerEntity;
+			PotionHealthBalance.tryBalance(entity, attacker, source, amount);
+		}
 	}
 
 //	@SubscribeEvent

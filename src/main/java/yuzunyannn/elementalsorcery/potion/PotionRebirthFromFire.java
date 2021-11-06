@@ -19,6 +19,7 @@ public class PotionRebirthFromFire extends PotionCommon {
 
 	public PotionRebirthFromFire() {
 		super(false, 0xcc7204, "rebirthFromFire");
+		setBeneficial();
 		iconIndex = 8;
 	}
 

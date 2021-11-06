@@ -37,9 +37,9 @@ import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageElementExplosion;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
-import yuzunyannn.elementalsorcery.util.ColorHelper;
-import yuzunyannn.elementalsorcery.util.DamageHelper;
 import yuzunyannn.elementalsorcery.util.SeedRandom;
+import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
+import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ElementExplosion implements IExplosionExecutor {

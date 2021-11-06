@@ -26,7 +26,7 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class MantraLush extends MantraCommon {
 

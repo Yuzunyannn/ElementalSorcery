@@ -32,8 +32,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.init.LootRegister;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
-import yuzunyannn.elementalsorcery.util.ColorHelper;
-import yuzunyannn.elementalsorcery.util.DamageHelper;
+import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
+import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class EntityDejectedSkeleton extends EntitySkeleton {

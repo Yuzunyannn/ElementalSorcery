@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public class PageEasy extends Page {
 

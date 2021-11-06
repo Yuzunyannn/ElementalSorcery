@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.util;
+package yuzunyannn.elementalsorcery.util.helper;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -17,6 +17,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 
 public class NBTHelper {
 

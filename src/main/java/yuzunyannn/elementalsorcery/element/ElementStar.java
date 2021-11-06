@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -11,8 +12,10 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.element.explosion.EEStar;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
 
 public class ElementStar extends ElementCommon {
 
@@ -57,5 +60,15 @@ public class ElementStar extends ElementCommon {
 	@Override
 	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
 		return new EEStar(world, pos, ElementExplosion.getStrength(eStack) + 0.5f, eStack);
+	}
+
+	@Override
+	protected void addDrinkJuiceEffect(DrinkJuiceEffectAdder helper) {
+		helper.preparatory(ESInit.POTIONS.STAR, 32, 256);
+		helper.check(JuiceMaterial.APPLE, 512).checkRatio(JuiceMaterial.MELON, 0.95f, 1.05f).join();
+
+		helper.preparatory(MobEffects.LUCK, 32, 128);
+		helper.check(JuiceMaterial.ELF_FRUIT, 100).join();
+
 	}
 }

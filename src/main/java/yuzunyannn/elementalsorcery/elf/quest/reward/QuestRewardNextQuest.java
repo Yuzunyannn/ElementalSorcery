@@ -16,8 +16,8 @@ import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.quest.loader.ParamObtain;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class QuestRewardNextQuest extends QuestReward {
 

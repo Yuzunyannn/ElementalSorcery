@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 /** 服务器向客户端同步特效数据 */
 public class MessageEffect implements IMessage {
@@ -24,9 +24,10 @@ public class MessageEffect implements IMessage {
 		nbt = new NBTTagCompound();
 	}
 
-	public MessageEffect(String name, Vec3d pos, NBTTagCompound nbt) {
+	public MessageEffect(int id, Vec3d pos, NBTTagCompound nbt) {
 		this.nbt = nbt == null ? new NBTTagCompound() : nbt;
-		this.nbt.setString("id", name);
+//		this.nbt.setInteger("id", id);
+		this.nbt.setByte("id", (byte) id);// 目前用不到int，所以发送byte
 		NBTHelper.setVec3d(this.nbt, "pos", pos);
 	}
 
@@ -61,7 +62,7 @@ public class MessageEffect implements IMessage {
 	public static void clientUpdate(NBTTagCompound nbt) {
 		Minecraft mc = Minecraft.getMinecraft();
 		World world = mc.player.world;
-		Effects.Factory factory = Effects.getFactory(nbt.getString("id"));
+		Effects.Factory factory = Effects.getFactory(nbt.getInteger("id"));
 		Vec3d pos = NBTHelper.getVec3d(nbt, "pos");
 		factory.show(world, pos, nbt);
 	}

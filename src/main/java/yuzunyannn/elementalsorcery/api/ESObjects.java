@@ -234,7 +234,10 @@ public class ESObjects {
 		public Potion WIND_SHIELD;
 		public Potion GOLDEN_EYE;
 		public Potion POWER_PITCHER;
-
+		public Potion HEALTH_BALANCE;
+		public Potion COMBAT_SKILL;
+		public Potion DEFENSE_SKILL;
+		public Potion STAR;
 	}
 
 	static public class Village {

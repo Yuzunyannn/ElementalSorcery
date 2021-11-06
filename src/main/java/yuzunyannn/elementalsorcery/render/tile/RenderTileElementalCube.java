@@ -15,7 +15,7 @@ import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelElementCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
-import yuzunyannn.elementalsorcery.util.ColorHelper;
+import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 

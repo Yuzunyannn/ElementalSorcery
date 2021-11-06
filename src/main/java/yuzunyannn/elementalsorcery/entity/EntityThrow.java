@@ -28,7 +28,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.util.ESFakePlayer;
-import yuzunyannn.elementalsorcery.util.EntityHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
 public class EntityThrow extends EntityThrowable implements IEntityAdditionalSpawnData {
 

@@ -24,8 +24,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.RenderRulerSelectRegion;
-import yuzunyannn.elementalsorcery.util.ColorHelper;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class ItemMagicRuler extends Item {
 

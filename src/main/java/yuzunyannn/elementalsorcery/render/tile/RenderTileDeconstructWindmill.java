@@ -16,9 +16,9 @@ import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelDeconstructWindmill;
 import yuzunyannn.elementalsorcery.render.model.ModelDeconstructWindmillBlade;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructWindmill;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileDeconstructWindmill extends TileEntitySpecialRenderer<TileDeconstructWindmill>

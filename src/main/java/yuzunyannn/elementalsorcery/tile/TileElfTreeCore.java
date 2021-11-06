@@ -44,11 +44,11 @@ import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.ExceptionHelper;
-import yuzunyannn.elementalsorcery.util.IOHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
+import yuzunyannn.elementalsorcery.util.helper.IOHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class TileElfTreeCore extends TileEntityNetwork implements ITickable {

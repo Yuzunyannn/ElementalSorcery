@@ -28,8 +28,8 @@ import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class ContainerSupremeTable extends ContainerNormal<TileSupremeTable> implements IContainerNetwork {
 	public final static int[] craftingRelative = new int[] { 0, 0, 18, 0, 36, 0, 0, 18, 18, 18, 36, 18, 0, 36, 18, 36,

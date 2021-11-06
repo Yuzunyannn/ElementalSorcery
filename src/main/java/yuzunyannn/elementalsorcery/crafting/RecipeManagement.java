@@ -25,11 +25,11 @@ import yuzunyannn.elementalsorcery.init.ESImplRegister;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class RecipeManagement extends ESImplRegister<IRecipe> {
 

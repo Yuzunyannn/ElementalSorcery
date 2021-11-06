@@ -7,6 +7,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -17,7 +18,10 @@ import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.explosion.EEMetal;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
 
 public class ElementMetal extends ElementCommon {
 
@@ -77,6 +81,23 @@ public class ElementMetal extends ElementCommon {
 	@Override
 	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
 		return new EEMetal(world, pos, ElementExplosion.getStrength(eStack), eStack);
+	}
+
+	@Override
+	protected void addDrinkJuiceEffect(DrinkJuiceEffectAdder helper) {
+
+		helper.preparatory(MobEffects.BLINDNESS, 8, 0);
+		helper.check(JuiceMaterial.ELF_FRUIT, 375).join();
+
+		helper.preparatory(ESInit.POTIONS.FLUORESCE_WALKER, 30, 75);
+		helper.check(JuiceMaterial.APPLE, 75).checkRatio(JuiceMaterial.MELON, 0.1f, 0.5f).join();
+
+		helper.preparatory(MobEffects.NIGHT_VISION, 35, 0);
+		helper.check(JuiceMaterial.ELF_FRUIT, 100).checkRatio(JuiceMaterial.APPLE, 0.2f, 1.2f).join();
+
+		helper.preparatory(ESInit.POTIONS.GOLDEN_EYE, 35, 100);
+		helper.check(JuiceMaterial.ELF_FRUIT, 100).checkRatio(JuiceMaterial.MELON, 0.2f, 1.2f).join();
+
 	}
 
 }

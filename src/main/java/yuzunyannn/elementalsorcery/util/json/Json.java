@@ -26,8 +26,8 @@ import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
-import yuzunyannn.elementalsorcery.util.RandomHelper.WeightRandom;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper.WeightRandom;
 
 public abstract class Json {
 

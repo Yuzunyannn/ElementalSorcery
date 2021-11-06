@@ -7,7 +7,7 @@ import java.util.Random;
 import com.google.gson.JsonParseException;
 
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.util.RandomHelper.WeightRandom;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper.WeightRandom;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 

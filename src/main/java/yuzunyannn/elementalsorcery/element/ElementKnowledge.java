@@ -19,7 +19,10 @@ import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.element.explosion.EEKnowledge;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
+import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
+import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
 
 public class ElementKnowledge extends ElementCommon {
 
@@ -47,6 +50,15 @@ public class ElementKnowledge extends ElementCommon {
 	@Override
 	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
 		return new EEKnowledge(world, pos, ElementExplosion.getStrength(eStack) + 1, eStack);
+	}
+
+	@Override
+	protected void addDrinkJuiceEffect(DrinkJuiceEffectAdder helper) {
+		helper.preparatory(ESInit.POTIONS.COMBAT_SKILL, 30, 125);
+		helper.check(JuiceMaterial.APPLE, 125).join();
+
+		helper.preparatory(ESInit.POTIONS.DEFENSE_SKILL, 30, 150);
+		helper.check(JuiceMaterial.MELON, 125).join();
 	}
 
 //	@Override

@@ -4,9 +4,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.Language;
 import net.minecraft.client.resources.LanguageManager;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.util.IOHelper;
+import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.helper.IOHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class ConfigTranslate {
 

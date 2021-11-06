@@ -28,8 +28,8 @@ import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.elf.research.Topics;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.util.ColorHelper;
-import yuzunyannn.elementalsorcery.util.GameHelper;
+import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
+import yuzunyannn.elementalsorcery.util.helper.GameHelper;
 
 public class PageResearch extends PageTransform {
 

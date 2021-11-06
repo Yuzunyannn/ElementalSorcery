@@ -32,16 +32,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.element.IElemetJuice;
 import yuzunyannn.elementalsorcery.api.item.IJuice;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
+import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.ItemGlassCup;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGlassCup;
-import yuzunyannn.elementalsorcery.util.ColorHelper;
-import yuzunyannn.elementalsorcery.util.EntityHelper;
 import yuzunyannn.elementalsorcery.util.MultiRets;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class Juice implements IJuice {
 
@@ -105,15 +107,11 @@ public class Juice implements IJuice {
 		return c;
 	}
 
-	/** 添加元素 */
-	public void addElement(ElementStack estack) {
-		ElementStack originEStack = getElement();
-		originEStack.growOrBecome(estack);
-		juiceData.setTag("element", originEStack.serializeNBT());
-	}
-
-	public ElementStack getElement() {
-		return new ElementStack(juiceData.getCompoundTag("element"));
+	/** 获取成分 */
+	public float component(JuiceMaterial material) {
+		if (JuiceMaterial.WATER == material) return juiceData.getFloat("water");
+		NBTTagCompound materials = NBTHelper.getOrCreateNBTTagCompound(juiceData, "material");
+		return materials.getFloat(material.key);
 	}
 
 	/** 添加一种材料 */
@@ -140,10 +138,9 @@ public class Juice implements IJuice {
 	}
 
 	/** 喝一定量的果汁，返回材料浓度 */
-	public MultiRets drink(float water) {
+	public MultiRets drink(float water, boolean justTry) {
 		float originWater = getJuiceCount();
 
-		ElementStack estack = getElement();
 		Map<JuiceMaterial, Float> drinkMap = new HashMap<>();
 		if (water >= originWater) {
 			NBTTagCompound materials = juiceData.getCompoundTag("material");
@@ -154,10 +151,11 @@ public class Juice implements IJuice {
 					drinkMap.put(material, count);
 				}
 			}
-			juiceData.removeTag("material");
-			juiceData.removeTag("element");
-			juiceData.setFloat("water", 0);
-			return MultiRets.ret(drinkMap, estack);
+			if (!justTry) {
+				juiceData.removeTag("material");
+				juiceData.setFloat("water", 0);
+			}
+			return MultiRets.ret(drinkMap, 1);
 		}
 
 		float r = water / originWater;
@@ -168,18 +166,17 @@ public class Juice implements IJuice {
 			if (material != null) {
 				float count = materials.getFloat(key);
 				float realCount = r * count;
-				float remainCount = count - realCount;
-				if (remainCount < 0.1f) removeKeys.add(key);
-				else materials.setFloat(key, remainCount);
 				drinkMap.put(material, realCount);
+				if (!justTry) {
+					float remainCount = count - realCount;
+					if (remainCount < 0.1f) removeKeys.add(key);
+					else materials.setFloat(key, remainCount);
+				}
 			}
 		}
 		for (String key : removeKeys) materials.removeTag(key);
-		juiceData.setFloat("water", originWater - water);
-		ElementStack outEStack = estack.splitStack((int) (estack.getCount() * r));
-		juiceData.setTag("element", estack.serializeNBT());
-
-		return MultiRets.ret(drinkMap, outEStack);
+		if (!justTry) juiceData.setFloat("water", originWater - water);
+		return MultiRets.ret(drinkMap, r);
 	}
 
 	@Override
@@ -188,12 +185,12 @@ public class Juice implements IJuice {
 	}
 
 	@Override
-	public void onDrink(World world, EntityLivingBase drinker) {
+	public void onDrink(World world, EntityLivingBase drinker, IElementInventory eInv) {
 		if (world.isRemote) return;
-		float drinkCount = drinker.getRNG().nextFloat() * 200 + 300;
-		MultiRets rets = drink(drinkCount);
+		float drinkCount = drinker.getRNG().nextFloat() * 300 + 300;
+		MultiRets rets = drink(drinkCount, false);
 		Map<JuiceMaterial, Float> drinkMap = rets.get(0, Map.class);
-		ElementStack estack = rets.get(1, ElementStack.EMPTY);
+		float rate = rets.getNumber(1, Float.class);
 
 		if (drinkMap.isEmpty()) return;
 
@@ -223,8 +220,10 @@ public class Juice implements IJuice {
 		}
 
 		if (sugar > 6) drinker.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, (int) (20 * 1.5f * sugar)));
-		if (coco > 6) drinker.addPotionEffect(
-				new PotionEffect(MobEffects.POISON, (int) (20 * 2f * coco), Math.min(3, (int) (coco / 10))));
+		if (coco > 6) {
+			int level = Math.min(3, (int) (coco / 10));
+			drinker.addPotionEffect(new PotionEffect(MobEffects.POISON, (int) (20 * 2f * coco), level));
+		}
 
 		sugar = MathHelper.sqrt(sugar) / 4;
 		coco = MathHelper.sqrt(coco) / 6;
@@ -244,10 +243,19 @@ public class Juice implements IJuice {
 			}
 		}
 
-		if (estack.isEmpty()) return;
-		Element elemet = estack.getElement();
-		if (elemet instanceof IElemetJuice) {
-			((IElemetJuice) elemet).onDrinkJuice(world, estack, drinkCount, drinkMap);
+		if (eInv == null) return;
+
+		for (int i = 0; i < eInv.getSlots(); i++) {
+			ElementStack estack = eInv.getStackInSlot(i);
+			if (estack.isEmpty()) continue;
+
+			int count = (int) (rate * estack.getCount());
+			estack = estack.splitStack(count);
+
+			Element elemet = estack.getElement();
+			if (elemet instanceof IElemetJuice) {
+				((IElemetJuice) elemet).onDrinkJuice(world, drinker, estack, drinkCount, drinkMap);
+			}
 		}
 	}
 
@@ -295,9 +303,9 @@ public class Juice implements IJuice {
 		}
 
 		if (ElementalSorcery.isDevelop) {
-			modulate(JuiceMaterial.ELF_FRUIT, 3);
-//			modulate(JuiceMaterial.MELON, 1);
-			modulate(JuiceMaterial.MELON, 1);
+//			modulate(JuiceMaterial.ELF_FRUIT, 1f);
+//			modulate(JuiceMaterial.MELON, 0.5f);
+//			modulate(JuiceMaterial.APPLE, 1);
 //			modulate(JuiceMaterial.COCO, 20);
 //			modulate(JuiceMaterial.SUGAR, 6);
 //			juiceData.setFloat("water", 200);
@@ -306,6 +314,11 @@ public class Juice implements IJuice {
 		}
 
 		return false;
+	}
+
+	@Override
+	public IElementInventory getElementInventory(ItemStack stack) {
+		return new JuiceElementInventory(stack);
 	}
 
 	@Override
@@ -319,8 +332,6 @@ public class Juice implements IJuice {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addJuiceInformation(World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		ElementStack estack = getElement();
-		if (!estack.isEmpty()) ElementHelper.addElementInformation(estack, tooltip);
 		NBTTagCompound materials = NBTHelper.getOrCreateNBTTagCompound(juiceData, "material");
 		float water = getJuiceCount();
 		for (String key : materials.getKeySet()) {
@@ -372,6 +383,35 @@ public class Juice implements IJuice {
 			return keysMap.get(key);
 		}
 
+	}
+
+	static public class JuiceElementInventory extends ElementInventory {
+
+		public final ItemStack juiceStack;
+
+		public JuiceElementInventory(ItemStack stack) {
+			juiceStack = stack;
+		}
+
+		@Override
+		public boolean insertElement(int slot, ElementStack estack, boolean simulate) {
+			IJuice ijuice = ItemGlassCup.getJuice(juiceStack);
+			if (ijuice instanceof Juice) {
+				Juice juice = (Juice) ijuice;
+				if (juice.component(JuiceMaterial.ELF_FRUIT) <= 0.001f) return false;
+			}
+			return super.insertElement(slot, estack, simulate);
+		}
+
+		@Override
+		public ElementStack extractElement(ElementStack estack, boolean simulate) {
+			return ElementStack.EMPTY;
+		}
+
+		@Override
+		public ElementStack extractElement(int slot, ElementStack estack, boolean simulate) {
+			return ElementStack.EMPTY;
+		}
 	}
 
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -17,8 +18,11 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import yuzunyannn.elementalsorcery.element.explosion.EEEnder;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
+import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
 
 public class ElementEnder extends ElementCommon {
 
@@ -73,6 +77,20 @@ public class ElementEnder extends ElementCommon {
 	@Override
 	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
 		return new EEEnder(world, pos, ElementExplosion.getStrength(eStack), eStack);
+	}
+
+	@Override
+	protected void addDrinkJuiceEffect(DrinkJuiceEffectAdder helper) {
+
+		helper.preparatory(MobEffects.LEVITATION, 10, 0);
+		helper.check(JuiceMaterial.APPLE, 100).checkRatio(JuiceMaterial.MELON, 0.75f, 1.25f).join();
+
+		helper.preparatory(ESInit.POTIONS.ENDERIZATION, 20, 75);
+		helper.check(JuiceMaterial.APPLE, 125).join();
+
+		helper.preparatory(ESInit.POTIONS.ENDERCORPS, 16, 150);
+		helper.check(JuiceMaterial.MELON, 125).join();
+
 	}
 
 }

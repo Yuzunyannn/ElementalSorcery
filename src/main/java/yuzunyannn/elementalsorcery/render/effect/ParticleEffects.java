@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleMagicFall;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class ParticleEffects {
 

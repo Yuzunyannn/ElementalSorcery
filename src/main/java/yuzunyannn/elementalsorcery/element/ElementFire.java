@@ -5,6 +5,7 @@ import java.util.List;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.init.MobEffects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -14,7 +15,10 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.element.explosion.EEFire;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireArea;
+import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
+import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
 
 public class ElementFire extends ElementCommon {
 
@@ -44,6 +48,25 @@ public class ElementFire extends ElementCommon {
 	@Override
 	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
 		return new EEFire(world, pos, ElementExplosion.getStrength(eStack), eStack);
+	}
+
+	@Override
+	protected void addDrinkJuiceEffect(DrinkJuiceEffectAdder helper) {
+
+		helper.preparatory(MobEffects.STRENGTH, 35, 80);
+		helper.check(JuiceMaterial.APPLE, 100).join();
+		helper.descend(JuiceMaterial.APPLE, 40, 0.9f);
+
+		helper.preparatory(ESInit.POTIONS.REBIRTH_FROM_FIRE, 45, 100);
+		helper.check(JuiceMaterial.APPLE, 240).checkRatio(JuiceMaterial.MELON, 0.25f, 0.5f).join();
+		helper.descend(JuiceMaterial.MELON, 30, 1);
+
+		helper.preparatory(ESInit.POTIONS.FIRE_WALKER, 20, 60);
+		helper.check(JuiceMaterial.MELON, 60).join();
+		helper.descend(JuiceMaterial.MELON, 10, 0.9f);
+
+		helper.preparatory(MobEffects.FIRE_RESISTANCE, 30, 0);
+		helper.check(JuiceMaterial.MELON, 90).join();
 	}
 
 }

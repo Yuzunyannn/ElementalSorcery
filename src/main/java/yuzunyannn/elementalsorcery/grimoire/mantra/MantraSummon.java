@@ -23,8 +23,8 @@ import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectSummonRender;
 import yuzunyannn.elementalsorcery.summon.Summon;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class MantraSummon extends MantraCommon {
 

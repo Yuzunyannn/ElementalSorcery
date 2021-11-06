@@ -27,7 +27,7 @@ import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectPlayerAt;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.world.CasterHelper;
 
 public class MantraEnderTeleport extends MantraCommon {

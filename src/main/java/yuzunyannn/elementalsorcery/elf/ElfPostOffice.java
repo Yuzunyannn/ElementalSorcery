@@ -20,8 +20,8 @@ import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.elf.quest.QuestTriggerDataSendParcel;
 import yuzunyannn.elementalsorcery.elf.quest.QuestTriggers;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 /** 精灵邮局 */
 public class ElfPostOffice extends WorldSavedData {

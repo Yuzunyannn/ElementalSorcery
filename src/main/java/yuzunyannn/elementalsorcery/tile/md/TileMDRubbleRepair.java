@@ -17,7 +17,7 @@ import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
-import yuzunyannn.elementalsorcery.util.GameHelper;
+import yuzunyannn.elementalsorcery.util.helper.GameHelper;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
 

@@ -17,7 +17,7 @@ import net.minecraftforge.items.SlotItemHandler;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraft;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ContainerItemStructureCraft extends Container {

@@ -59,10 +59,10 @@ import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.ts.PocketWatch;
-import yuzunyannn.elementalsorcery.util.GameHelper;
-import yuzunyannn.elementalsorcery.util.block.BlockHelper;
+import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.GameHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class CommandES extends CommandBase {

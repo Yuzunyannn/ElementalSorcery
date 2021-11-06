@@ -28,7 +28,7 @@ import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementScrew;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectSpiralMove;
-import yuzunyannn.elementalsorcery.util.DamageHelper;
+import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class MantraPotent extends MantraCommon {

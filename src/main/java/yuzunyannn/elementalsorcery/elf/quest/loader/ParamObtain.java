@@ -17,7 +17,7 @@ import net.minecraft.world.biome.Biome;
 import yuzunyannn.elementalsorcery.elf.quest.QuestType;
 import yuzunyannn.elementalsorcery.elf.quest.condition.IQuestConditionPrice;
 import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 /** 参数获取，这版写的不太好，先凑合了 */

@@ -15,7 +15,7 @@ import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderConstruct;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class CraftingConstruct implements ICraftingAltar {
 

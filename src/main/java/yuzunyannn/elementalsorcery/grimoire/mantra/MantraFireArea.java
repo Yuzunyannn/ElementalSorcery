@@ -32,8 +32,8 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
-import yuzunyannn.elementalsorcery.util.ColorHelper;
-import yuzunyannn.elementalsorcery.util.EntityHelper;
+import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
 public class MantraFireArea extends MantraSquareAreaAdv {
 

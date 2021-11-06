@@ -9,7 +9,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagList;
 import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class PageBook extends Page {
 

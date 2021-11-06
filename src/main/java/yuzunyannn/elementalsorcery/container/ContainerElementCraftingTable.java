@@ -16,8 +16,8 @@ import net.minecraftforge.items.SlotItemHandler;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
 import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class ContainerElementCraftingTable extends ContainerNormal<TileElementCraftingTable>
 		implements IContainerNetwork {

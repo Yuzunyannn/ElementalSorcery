@@ -77,28 +77,6 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 	}
 
 	@Override
-	public boolean insertElement(ElementStack estack, boolean simulate) {
-		for (int i = 0; i < this.getSlots(); i++) {
-			if (insertElement(i, estack, simulate)) return true;
-		}
-		return false;
-	}
-
-	@Override
-	public ElementStack extractElement(ElementStack estack, boolean simulate) {
-		if (estack.isEmpty()) return ElementStack.EMPTY.copy();
-		ElementStack ret = ElementStack.EMPTY.copy();
-		ElementStack tmp = estack.copy();
-		for (int i = 0; i < this.getSlots(); i++) {
-			ElementStack _new = extractElement(i, tmp, simulate);
-			ret.growOrBecome(_new);
-			if (ret.arePowerfulAndMoreThan(estack)) return ret;
-			else tmp.grow(-_new.getCount());
-		}
-		return ret;
-	}
-
-	@Override
 	public boolean insertElement(int slot, ElementStack estack, boolean simulate) {
 		if (estack.isEmpty()) return true;
 		ElementStack eorigin = getStackInSlot(slot);

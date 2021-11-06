@@ -7,9 +7,9 @@ import java.util.List;
 
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.tile.md.TileMDFrequencyMapping.Vibrate;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class Buildings {
 

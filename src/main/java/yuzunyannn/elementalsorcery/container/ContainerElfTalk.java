@@ -10,7 +10,7 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
-import yuzunyannn.elementalsorcery.util.ExceptionHelper;
+import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 
 public class ContainerElfTalk extends ContainerElf implements IContainerNetwork {
 

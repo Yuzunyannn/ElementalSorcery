@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public class WorldGenAndSpawnConfig {
 

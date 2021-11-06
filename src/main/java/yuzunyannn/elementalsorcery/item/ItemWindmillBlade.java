@@ -6,6 +6,7 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
@@ -27,7 +28,7 @@ import yuzunyannn.elementalsorcery.entity.EntityRotaryWindmillBlate;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.potion.PotionPowerPitcher;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructWindmill;
-import yuzunyannn.elementalsorcery.util.EntityHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPowerPitcher.IPowerPitcher {
@@ -151,15 +152,48 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 		if (stack.getMaxDamage() - stack.getItemDamage() <= 25) return EnumActionResult.FAIL;
 
 		Vec3d look = entity.getLookVec();
-		Vec3d hLook = new Vec3d(look.x, look.y * 0.15, look.z).normalize();
-		if (hLook.lengthSquared() < 0.1) return EnumActionResult.FAIL;
+		Vec3d hLook = new Vec3d(look.x, 0, look.z).normalize();
+		if (hLook.lengthSquared() < 0.01) return EnumActionResult.FAIL;
+		hLook = hLook.addVector(0, look.y * 0.3, 0).normalize();
 
 		if (world.isRemote) return EnumActionResult.SUCCESS;
 		int length = 8 + amplifier * 2;
 
 		Vec3d pos = entity.getPositionVector().add(hLook.scale(length)).addVector(0, 0.2, 0);
-		pos = findAttackPosition(world, entity, pos, length);
+		// 寻找目标
+		AxisAlignedBB aabb = WorldHelper.createAABB(pos, length, 3, 2);
+		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
+		if (!entities.isEmpty()) {
+			Vec3d vecLook = entity.getLook(1.0F).normalize();
+			//按照向量夹角进行排序
+			entities.sort((a, b) -> {
+				Vec3d tarA = new Vec3d(a.posX - entity.posX,
+						(a.posY + a.height / 2 - (entity.posY + entity.height / 2)) * 0.15, a.posZ - entity.posZ);
+				Vec3d tarB = new Vec3d(b.posX - entity.posX,
+						(b.posY + b.height / 2 - (entity.posY + entity.height / 2)) * 0.15, b.posZ - entity.posZ);
 
+				double lenA = tarA.lengthVector();
+				double lenB = tarB.lengthVector();
+
+				if (lenA == 0) lenA = 0.00001;
+				if (lenB == 0) lenB = 0.00001;
+
+				double cosA = tarA.dotProduct(vecLook) / (lenA * vecLook.lengthVector());
+				double cosB = tarB.dotProduct(vecLook) / (lenB * vecLook.lengthVector());
+
+				return cosA < cosB ? 1 : -1;
+			});
+			int i = 0;
+			for (Entity target : entities) {
+				if (i >= 3) break;
+				i = i + 1;
+				if (entity != null && EntityHelper.isSameTeam(entity, target)) continue;
+				pos = new Vec3d(target.posX, target.posY + target.height / 2, target.posZ);
+				break;
+			}
+		}
+		
+		//飞！
 		ItemStack blade = stack.copy();
 		blade.damageItem(25, entity);
 		EntityRotaryWindmillBlate entityBlate = new EntityRotaryWindmillBlate(world, blade, entity, amplifier);

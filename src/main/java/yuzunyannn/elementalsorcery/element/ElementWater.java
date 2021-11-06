@@ -5,6 +5,7 @@ import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -12,6 +13,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidBase;
 import yuzunyannn.elementalsorcery.element.explosion.EEWater;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
+import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
+import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
 
 public class ElementWater extends ElementCommon {
 
@@ -70,6 +74,24 @@ public class ElementWater extends ElementCommon {
 	@Override
 	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
 		return new EEWater(world, pos, ElementExplosion.getStrength(eStack), eStack);
+	}
+
+	@Override
+	protected void addDrinkJuiceEffect(DrinkJuiceEffectAdder helper) {
+
+		helper.preparatory(MobEffects.RESISTANCE, 28, 135);
+		helper.check(JuiceMaterial.ELF_FRUIT, 50).join();
+		
+		helper.preparatory(MobEffects.WATER_BREATHING, 32, 75);
+		helper.check(JuiceMaterial.MELON, 75).join();
+
+		helper.preparatory(ESInit.POTIONS.TIDE_WALKER, 40, 100);
+		helper.check(JuiceMaterial.MELON, 100).checkRatio(JuiceMaterial.APPLE, 1.25f, 2).join();
+		helper.descend(JuiceMaterial.APPLE, 50, 0.8f).descend(JuiceMaterial.MELON, 40, 0.8f);
+
+		helper.preparatory(ESInit.POTIONS.WATER_CALAMITY, 30, 80);
+		helper.check(JuiceMaterial.MELON, 120).checkRatio(JuiceMaterial.APPLE, 0.5f, 1.5f).join();
+
 	}
 
 }

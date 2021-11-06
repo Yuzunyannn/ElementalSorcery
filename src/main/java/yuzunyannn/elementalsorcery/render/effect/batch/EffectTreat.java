@@ -42,10 +42,6 @@ public class EffectTreat extends Effect {
 	public float scale;
 	public float scaleHeight = 2, prevScaleHeight = 2;
 
-	public double motionX;
-	public double motionY;
-	public double motionZ;
-
 	public EffectTreat(World worldIn, double posXIn, double posYIn, double posZIn) {
 		super(worldIn, posXIn, posYIn, posZIn);
 		this.asParticle = true;
@@ -72,8 +68,7 @@ public class EffectTreat extends Effect {
 		super.onUpdate();
 		this.prevScaleHeight = this.scaleHeight;
 		this.prevAlpha = this.alpha;
-		this.posY += this.motionY;
-		this.alpha = MathHelper.sin(this.lifeTime / this.maxLifeTime * 3.1415f);
+		this.alpha = MathHelper.sin(this.lifeTime / this.maxLifeTime * 3.1415f) * 0.75f;
 		this.scaleHeight = MathHelper.cos((this.lifeTime / this.maxLifeTime - 1) * 3.1415f / 2) * 1 + 2;
 	}
 

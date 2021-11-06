@@ -25,7 +25,7 @@ import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
-import yuzunyannn.elementalsorcery.util.ExceptionHelper;
+import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 
 public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData {
 

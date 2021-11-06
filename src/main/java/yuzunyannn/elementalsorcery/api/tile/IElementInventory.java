@@ -63,7 +63,13 @@ public interface IElementInventory extends IItemCapbiltitySyn, ICustomNBTSeriali
 	 * @param simulate 如果为true，插入结果仅为模拟的结果
 	 * @return 是否成功插入
 	 **/
-	boolean insertElement(@Nonnull ElementStack estack, boolean simulate);
+
+	default boolean insertElement(ElementStack estack, boolean simulate) {
+		for (int i = 0; i < this.getSlots(); i++) {
+			if (insertElement(i, estack, simulate)) return true;
+		}
+		return false;
+	}
 
 	/**
 	 * 从仓库里取来元素
@@ -72,9 +78,19 @@ public interface IElementInventory extends IItemCapbiltitySyn, ICustomNBTSeriali
 	 * @param simulate 如果为true，插入结果仅为模拟的结果
 	 * @return 实际能取出来的内容
 	 **/
-
 	@Nonnull
-	ElementStack extractElement(@Nonnull ElementStack estack, boolean simulate);
+	default ElementStack extractElement(ElementStack estack, boolean simulate) {
+		if (estack.isEmpty()) return ElementStack.EMPTY.copy();
+		ElementStack ret = ElementStack.EMPTY.copy();
+		ElementStack tmp = estack.copy();
+		for (int i = 0; i < this.getSlots(); i++) {
+			ElementStack _new = extractElement(i, tmp, simulate);
+			ret.growOrBecome(_new);
+			if (ret.arePowerfulAndMoreThan(estack)) return ret;
+			else tmp.grow(-_new.getCount());
+		}
+		return ret;
+	}
 
 	/**
 	 * 插入一个ElementStack到仓库里的指定位置

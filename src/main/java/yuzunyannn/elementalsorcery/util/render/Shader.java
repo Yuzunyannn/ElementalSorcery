@@ -6,8 +6,8 @@ import org.lwjgl.opengl.GL20;
 
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.util.IOHelper;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
+import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.helper.IOHelper;
 
 public class Shader {
 

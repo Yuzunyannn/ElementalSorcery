@@ -23,11 +23,11 @@ import yuzunyannn.elementalsorcery.elf.quest.reward.QuestReward;
 import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardElfTreeInvest;
 import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardFame;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
+import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemRec;
 import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
 
 public class Quests {
 

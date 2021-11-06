@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.util.block;
+package yuzunyannn.elementalsorcery.util.helper;
 
 import java.util.function.BiFunction;
 
@@ -20,7 +20,6 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
-import yuzunyannn.elementalsorcery.util.RandomHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 

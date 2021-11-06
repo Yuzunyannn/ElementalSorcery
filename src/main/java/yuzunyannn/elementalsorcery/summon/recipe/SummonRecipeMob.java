@@ -17,7 +17,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.summon.Summon;
 import yuzunyannn.elementalsorcery.summon.SummonMob;
 import yuzunyannn.elementalsorcery.util.NBTTag;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public class SummonRecipeMob extends SummonRecipe {
 

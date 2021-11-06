@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.entity.fcube.FCMPlunder;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMSilk;
 import yuzunyannn.elementalsorcery.entity.fcube.FairyCubeModule;
 import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeModuleClient;
-import yuzunyannn.elementalsorcery.util.text.TextHelper;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public class FairyCubeModuleRegister {
 

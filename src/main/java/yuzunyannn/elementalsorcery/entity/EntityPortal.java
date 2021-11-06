@@ -26,7 +26,7 @@ import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementScrew;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortalEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortalWorldSecene;
 import yuzunyannn.elementalsorcery.tile.altar.TilePortalAltar;
-import yuzunyannn.elementalsorcery.util.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 
