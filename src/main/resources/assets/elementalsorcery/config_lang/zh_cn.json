@@ -28,7 +28,7 @@
     "tile.elementalsorcery_mdmagiclization.max_capacity": "魔化箱的最大魔力储存上限",
     "tile.elementalsorcery_mdfusion.gen_max_maigc_per_sec": "注魔箱每秒自动生产的最大魔力量(夜晚)",
     "tile.elementalsorcery_mdfusion.max_capacity": "注魔箱的最大魔力储存上限",
-
+    "tile.elementalsorcery_mdliquidizer.juice_max_capacity": "榨汁机可以存放的果汁容量上限",
     "tile.elementalsorcery_ritetable.normal_rite_always_success": "映像仪式不会失败",
 
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "[会生成的世界][对生物类型无效]",

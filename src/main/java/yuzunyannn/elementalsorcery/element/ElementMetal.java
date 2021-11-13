@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
-import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
+import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ElementMetal extends ElementCommon {
 

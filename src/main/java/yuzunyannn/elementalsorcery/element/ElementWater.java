@@ -15,7 +15,7 @@ import yuzunyannn.elementalsorcery.element.explosion.EEWater;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
-import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
+import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ElementWater extends ElementCommon {
 
@@ -81,9 +81,13 @@ public class ElementWater extends ElementCommon {
 
 		helper.preparatory(MobEffects.RESISTANCE, 28, 135);
 		helper.check(JuiceMaterial.ELF_FRUIT, 50).join();
-		
+
 		helper.preparatory(MobEffects.WATER_BREATHING, 32, 75);
 		helper.check(JuiceMaterial.MELON, 75).join();
+		helper.descend(JuiceMaterial.MELON, 20, 1);
+
+		helper.preparatory(MobEffects.FIRE_RESISTANCE, 30, 0);
+		helper.check(JuiceMaterial.MELON, 90).join();
 
 		helper.preparatory(ESInit.POTIONS.TIDE_WALKER, 40, 100);
 		helper.check(JuiceMaterial.MELON, 100).checkRatio(JuiceMaterial.APPLE, 1.25f, 2).join();

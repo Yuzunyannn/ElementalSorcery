@@ -13,7 +13,7 @@ import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 public class RenderTileMDFrequencyMapping extends RenderTileMDBase<TileMDFrequencyMapping> {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/md_frequency_mapping.png");
-	protected static final ModelBase MODEL = new ModelMDFrequencyMapping();
+	public static final ModelBase MODEL = new ModelMDFrequencyMapping();
 
 	@Override
 	public void render(TileMDFrequencyMapping tile, double x, double y, double z, float partialTicks, int destroyStage,

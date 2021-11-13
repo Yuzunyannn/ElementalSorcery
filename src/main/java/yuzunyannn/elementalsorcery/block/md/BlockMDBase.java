@@ -27,8 +27,7 @@ public abstract class BlockMDBase extends BlockContainerNormal {
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
 		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
-		if (worldIn.isRemote)
-			return;
+		if (worldIn.isRemote) return;
 		TileEntity tile = worldIn.getTileEntity(pos);
 		if (tile instanceof TileMDBase) {
 			((TileMDBase) tile).coming();
@@ -38,19 +37,15 @@ public abstract class BlockMDBase extends BlockContainerNormal {
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity tile = worldIn.getTileEntity(pos);
-		if (tile instanceof TileMDBase)
-			((TileMDBase) tile).onBreak();
+		if (tile instanceof TileMDBase) ((TileMDBase) tile).onBreak();
 		super.breakBlock(worldIn, pos, state);
-		if (worldIn.isRemote)
-			return;
-		if (tile instanceof TileMDBase)
-			((TileMDBase) tile).leaving(pos);
+		if (worldIn.isRemote) return;
+		if (tile instanceof TileMDBase) ((TileMDBase) tile).leaving(pos);
 	}
 
 	@Override
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
-		if (worldIn.isRemote)
-			return;
+		if (worldIn.isRemote) return;
 		TileEntity tile = worldIn.getTileEntity(pos);
 		if (tile instanceof TileMDBase) {
 			pos = fromPos.subtract(pos);
@@ -61,13 +56,10 @@ public abstract class BlockMDBase extends BlockContainerNormal {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (hitY < 0.45
-				&& Block.getBlockFromItem(playerIn.getHeldItem(hand).getItem()) == ESInit.BLOCKS.MAGIC_TORCH)
+		if (hitY < 0.45 && Block.getBlockFromItem(playerIn.getHeldItem(hand).getItem()) == ESInit.BLOCKS.MAGIC_TORCH)
 			return false;
-		if (!this.canOpenGUI(worldIn, facing, hitX, hitY, hitZ, playerIn.getHeldItem(hand)))
-			return false;
-		if (worldIn.isRemote)
-			return true;
+		if (!this.canOpenGUI(worldIn, facing, hitX, hitY, hitZ, playerIn.getHeldItem(hand))) return false;
+		if (worldIn.isRemote) return true;
 		playerIn.openGui(ElementalSorcery.instance, this.guiId(), worldIn, pos.getX(), pos.getY(), pos.getZ());
 		return true;
 	}
@@ -77,5 +69,7 @@ public abstract class BlockMDBase extends BlockContainerNormal {
 		return true;
 	}
 
-	protected abstract int guiId();
+	protected int guiId() {
+		return 0;
+	}
 }

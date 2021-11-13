@@ -17,7 +17,7 @@ import yuzunyannn.elementalsorcery.api.element.IElementExplosion;
 import yuzunyannn.elementalsorcery.api.element.IElemetJuice;
 import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
-import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
+import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 //简单的icon返回的元素
 public abstract class ElementCommon extends Element implements IStarFlowerCast, IElementExplosion, IElemetJuice {

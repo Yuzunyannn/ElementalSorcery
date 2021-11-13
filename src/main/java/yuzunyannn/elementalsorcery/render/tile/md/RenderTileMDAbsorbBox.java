@@ -11,7 +11,7 @@ import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 public class RenderTileMDAbsorbBox extends RenderTileMDBase<TileMDAbsorbBox> {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/md_absorb_box.png");
-	protected final ModelBase MODEL = new ModelMDAbsorbBox();
+	public static final ModelBase MODEL = new ModelMDAbsorbBox();
 
 	@Override
 	public void render(TileMDAbsorbBox tile, double x, double y, double z, float partialTicks, int destroyStage,

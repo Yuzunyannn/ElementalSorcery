@@ -27,7 +27,7 @@
     "tile.elementalsorcery_mdmagiclization.max_capacity": "The max magic limit of Element Magiclization Box",
     "tile.elementalsorcery_mdfusion.gen_max_maigc_per_sec": "Magic Drive Enchanting Box gen Max Magic per seconds on night",
     "tile.elementalsorcery_mdfusion.max_capacity": "The max magic limit of Element Magic Drive Enchanting Box",
-    
+    "tile.elementalsorcery_mdliquidizer.juice_max_capacity": "The max limit of juice capacity that the Liquidizer can store",
     "tile.elementalsorcery_ritetable.normal_rite_always_success": "Print Rite is Always Success",
 
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "The worlds can spawn [Invalid for Entity]",

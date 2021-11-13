@@ -1,11 +1,12 @@
 package yuzunyannn.elementalsorcery.world;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.TreeMap;
+import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.GlStateManager;
@@ -13,7 +14,6 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
@@ -21,6 +21,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.FoodStats;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -29,35 +30,40 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementItem;
 import yuzunyannn.elementalsorcery.api.element.IElemetJuice;
 import yuzunyannn.elementalsorcery.api.item.IJuice;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.block.BlockElfFruit;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.crafting.element.ToElementInfoStatic;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemGlassCup;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGlassCup;
+import yuzunyannn.elementalsorcery.tile.md.TileMDLiquidizer;
 import yuzunyannn.elementalsorcery.util.MultiRets;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
-public class Juice implements IJuice {
+public class Juice implements IJuice, IToElementItem {
 
-	public final ItemStack glassCup;
 	public final NBTTagCompound juiceData;
 
 	public Juice(ItemStack stack) {
-		glassCup = stack;
-		juiceData = glassCup.getOrCreateSubCompound("juice");
+		juiceData = stack.getOrCreateSubCompound("juice");
 	}
 
 	public Juice(NBTTagCompound juiceData) {
-		glassCup = ItemStack.EMPTY;
 		this.juiceData = juiceData;
+	}
+
+	public Juice() {
+		this.juiceData = new NBTTagCompound();
 	}
 
 	public NBTTagCompound getJuiceData() {
@@ -105,6 +111,20 @@ public class Juice implements IJuice {
 		juiceData.setInteger("colorCache", c);
 
 		return c;
+	}
+
+	/** 根据材料计算实际的水分 */
+	public float calcWater() {
+		float water = 0;
+		NBTTagCompound materials = NBTHelper.getOrCreateNBTTagCompound(juiceData, "material");
+		for (String key : materials.getKeySet()) {
+			JuiceMaterial material = JuiceMaterial.fromKey(key);
+			if (material != null) {
+				float count = materials.getFloat(key);
+				water += count * material.occupancy;
+			}
+		}
+		return water;
 	}
 
 	/** 获取成分 */
@@ -179,15 +199,45 @@ public class Juice implements IJuice {
 		return MultiRets.ret(drinkMap, r);
 	}
 
+	/** 盛果汁 */
+	public boolean ladle(Juice juice, float water) {
+		float currWater = getJuiceCount();
+		float remainWater = getMaxJuiceCount() - currWater;
+		if (water <= 0) water = remainWater;
+		if (remainWater <= 0) return false;
+		float canGetWater = Math.min(Math.min(remainWater, juice.getJuiceCount()), water);
+		if (canGetWater <= 0) return false;
+		MultiRets rets = juice.drink(canGetWater, false);
+		Map<JuiceMaterial, Float> drinkMap = rets.get(0, Map.class);
+		NBTTagCompound materials = NBTHelper.getOrCreateNBTTagCompound(juiceData, "material");
+		for (Entry<JuiceMaterial, Float> entry : drinkMap.entrySet()) {
+			JuiceMaterial material = entry.getKey();
+			float val = entry.getValue();
+			materials.setFloat(material.key, materials.getFloat(material.key) + val);
+		}
+		juiceData.setFloat("water", currWater + canGetWater);
+		juiceData.removeTag("colorCache");
+		return true;
+	}
+
 	@Override
-	public boolean canDrink(World world, EntityLivingBase drinker) {
+	public boolean canDrink(World world, ItemStack stack, EntityLivingBase drinker) {
 		return getJuiceCount() >= 20;
 	}
 
 	@Override
-	public void onDrink(World world, EntityLivingBase drinker, IElementInventory eInv) {
+	public void onDrink(World world, ItemStack stack, EntityLivingBase drinker, IElementInventory eInv) {
 		if (world.isRemote) return;
 		float drinkCount = drinker.getRNG().nextFloat() * 300 + 300;
+		if (drinker instanceof EntityPlayer) {
+			// 越饿喝的越多
+			EntityPlayer player = (EntityPlayer) drinker;
+			FoodStats foodStats = player.getFoodStats();
+			float r = foodStats.getFoodLevel() / 20f;
+			float baseCount = (1 - Math.min(1, r)) * 400 + 200;
+			drinkCount = drinker.getRNG().nextFloat() * (800 - baseCount) + baseCount;
+		}
+
 		MultiRets rets = drink(drinkCount, false);
 		Map<JuiceMaterial, Float> drinkMap = rets.get(0, Map.class);
 		float rate = rets.getNumber(1, Float.class);
@@ -285,7 +335,7 @@ public class Juice implements IJuice {
 	}
 
 	@Override
-	public boolean onContain(World world, EntityLivingBase drinker, BlockPos pos) {
+	public boolean onContain(World world, ItemStack glassCup, EntityLivingBase drinker, BlockPos pos) {
 
 		if (getJuiceCount() >= getMaxJuiceCount()) return false;
 		IBlockState state = world.getBlockState(pos);
@@ -300,9 +350,15 @@ public class Juice implements IJuice {
 				glassCup.shrink(1);
 				return true;
 			}
+		} else if (state.getBlock() == ESInit.BLOCKS.MD_LIQUIDIZER) {
+			TileMDLiquidizer tile = BlockHelper.getTileEntity(world, pos, TileMDLiquidizer.class);
+			if (tile == null) return false;
+			if (world.isRemote) return true;
+			if (ladle(tile.getJuice(), getColor())) tile.sendWaterUpdateToClient();
+			return true;
 		}
 
-		if (ElementalSorcery.isDevelop) {
+//		if (ElementalSorcery.isDevelop) {
 //			modulate(JuiceMaterial.ELF_FRUIT, 1f);
 //			modulate(JuiceMaterial.MELON, 0.5f);
 //			modulate(JuiceMaterial.APPLE, 1);
@@ -310,8 +366,8 @@ public class Juice implements IJuice {
 //			modulate(JuiceMaterial.SUGAR, 6);
 //			juiceData.setFloat("water", 200);
 //			addElement(new ElementStack(ESInit.ELEMENTS.FIRE, 10, 20));
-			return true;
-		}
+//			return true;
+//		}
 
 		return false;
 	}
@@ -337,52 +393,21 @@ public class Juice implements IJuice {
 		for (String key : materials.getKeySet()) {
 			JuiceMaterial material = JuiceMaterial.fromKey(key);
 			if (material == null) continue;
+			if (!material.isMain) continue;
 			String name = material.item.getDisplayName();
-			if (material.isMain) name = TextFormatting.GOLD + name;
 			float count = materials.getFloat(key);
+			name = TextFormatting.GOLD + name;
 			tooltip.add(String.format("%sx%.1f - %.2f%%", name, count, count * material.occupancy / water));
 		}
-	}
-
-	public static enum JuiceMaterial {
-
-		WATER("water", 1, 0, ItemStack.EMPTY, false),
-		ELF_FRUIT("EF", 120, 0x055f11, new ItemStack(ESInit.BLOCKS.ELF_FRUIT, 1, BlockElfFruit.MAX_STATE), true),
-		APPLE("AP", 80, 0xffd368, Items.APPLE, true),
-		MELON("ME", 200, 0xbd2417, Items.MELON, true),
-		SUGAR("SU", 5, 0, Items.SUGAR, false),
-		COCO("CO", 10, 0x704425, new ItemStack(Items.DYE, 1, 3), false);
-
-		static final Map<String, JuiceMaterial> keysMap = new TreeMap<>();
-
-		static {
-			for (JuiceMaterial material : values()) {
-				keysMap.put(material.key, material);
-			}
+		for (String key : materials.getKeySet()) {
+			JuiceMaterial material = JuiceMaterial.fromKey(key);
+			if (material == null) continue;
+			if (material.isMain) continue;
+			String name = material.item.getDisplayName();
+			float count = materials.getFloat(key);
+			float rate = Math.max(count * material.occupancy / water, 0.01f);
+			tooltip.add(String.format("%sx%.1f - %.2f%%", name, count, rate));
 		}
-
-		final public String key;
-		final public float occupancy;
-		final public boolean isMain;
-		final public int color;
-		final public ItemStack item;
-
-		JuiceMaterial(String key, float occupancy, int color, ItemStack item, boolean isMain) {
-			this.key = key;
-			this.occupancy = occupancy;
-			this.isMain = isMain;
-			this.item = item;
-			this.color = color;
-		}
-
-		JuiceMaterial(String key, float occupancy, int color, Item item, boolean isMain) {
-			this(key, occupancy, color, new ItemStack(item), isMain);
-		}
-
-		public static JuiceMaterial fromKey(String key) {
-			return keysMap.get(key);
-		}
-
 	}
 
 	static public class JuiceElementInventory extends ElementInventory {
@@ -412,6 +437,57 @@ public class Juice implements IJuice {
 		public ElementStack extractElement(int slot, ElementStack estack, boolean simulate) {
 			return ElementStack.EMPTY;
 		}
+	}
+
+	@Override
+	public IToElementInfo toElement(ItemStack stack) {
+		float water = getJuiceCount();
+		if (water <= 0) return null;
+		int complex = 1;
+
+		List<ElementStack> list = new ArrayList<>();
+		list.add(new ElementStack(ESInit.ELEMENTS.WATER, Math.max(1, (int) (20 * water / 1000)), 100));
+
+		MultiRets rets = drink(water, true);
+		Map<JuiceMaterial, Float> drinkMap = rets.get(0, Map.class);
+		float woodCount = 0;
+		for (Entry<JuiceMaterial, Float> entry : drinkMap.entrySet()) {
+			JuiceMaterial material = entry.getKey();
+			Float count = entry.getValue();
+			if (material.isMain) woodCount += 4 * count;
+			else woodCount += 2 * count;
+			complex++;
+		}
+		woodCount = Math.round(woodCount);
+		if (woodCount > 0) list.add(new ElementStack(ESInit.ELEMENTS.WOOD, (int) woodCount, 8));
+
+		ItemStack remain = stack.copy();
+		remain.getTagCompound().removeTag("juice");
+
+		return ToElementInfoStatic.create(complex, remain, list);
+	}
+
+	static public ItemStack randomJuice(Random rand, boolean needElement) {
+		ItemStack cup = new ItemStack(ESInit.ITEMS.GLASS_CUP);
+		Juice juice = new Juice(cup);
+		JuiceMaterial[] materials = JuiceMaterial.values();
+		while (juice.getJuiceCount() < juice.getMaxJuiceCount()) {
+			JuiceMaterial material = materials[rand.nextInt(materials.length)];
+			juice.modulate(material, 1);
+		}
+		if (!needElement) return cup;
+		IElementInventory eInv = ElementHelper.getElementInventory(cup);
+		if (eInv == null) return cup;
+		for (int i = 0; i < 3; i++) {
+			Element element = Element.REGISTRY.getRandomObject(rand);
+			if (element instanceof IElemetJuice) {
+				ElementStack estack = new ElementStack(element, 100 + rand.nextInt(700), 100 + rand.nextInt(400));
+				eInv.insertElement(estack, false);
+				break;
+			}
+		}
+		eInv.saveState(cup);
+		return cup;
 	}
 
 }

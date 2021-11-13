@@ -10,7 +10,7 @@ import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 public class RenderTileMDMagicGen extends RenderTileMDBase<TileMDMagicGen> {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/md_magic_gen.png");
-	protected final ModelMDMagicGen MODEL = new ModelMDMagicGen();
+	public static final ModelMDMagicGen MODEL = new ModelMDMagicGen();
 
 	@Override
 	public void render(TileMDMagicGen tile, double x, double y, double z, float partialTicks, int destroyStage,

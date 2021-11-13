@@ -98,13 +98,8 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
-		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) { return (T) inventory; }
+		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) return (T) inventory;
 		return super.getCapability(capability, facing);
-	}
-
-	@Override
-	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		return super.hasCapability(capability, facing) || this.getCapability(capability, facing) != null;
 	}
 
 	/** 记录目标的数据 */

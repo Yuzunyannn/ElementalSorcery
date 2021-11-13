@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/element_crafting_table",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:windmill_blade"
+        },
+        "title": {
+            "translate": "es.adv.windmillBladePitcher.title"
+        },
+        "description": {
+            "translate": "es.adv.windmillBladePitcher.description"
+        }
+    },
+    "criteria": {
+        "build": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "pitcher:windmillBlade"
+            }
+        }
+    }
+}

@@ -131,6 +131,7 @@ public class ElementMap implements IToElement {
 		instance.add(new DefaultInterfaceToElement());
 		instance.add(new DefaultEnchanmentToElement());
 		instance.add(new DefaultPotionToElement());
+		instance.add(new DefaultElementToElement());
 		instance.add(defaultToElementMap);
 		instance.add(defaultBucketToElement);
 		// 自动扫描并加载json

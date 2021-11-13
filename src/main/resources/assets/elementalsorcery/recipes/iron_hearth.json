@@ -3,22 +3,22 @@
   "group": "es_hearth",
   "pattern": [
     "###",
-	"# #",
-	"#X#"
+    "# #",
+    "#X#"
   ],
   "key": {
     "#": {
-	  "type":"forge:ore_dict",
+      "type": "forge:ore_dict",
       "ore": "ingotIron"
     },
-	"X": {
-	  "type":"forge:ore_dict",
+    "X": {
+      "type": "forge:ore_dict",
       "ore": "blockIron"
     }
   },
   "result": {
     "item": "elementalsorcery:hearth",
     "count": 1,
-	"data":1
+    "data": 1
   }
 }

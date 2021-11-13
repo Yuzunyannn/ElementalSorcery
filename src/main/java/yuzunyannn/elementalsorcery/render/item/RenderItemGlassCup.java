@@ -76,7 +76,7 @@ public class RenderItemGlassCup implements IRenderItem {
 
 	public static void drawJuiceInCup(float fullRate, int frameIndex) {
 
-		if (fullRate < 0.01f) return;
+		if (fullRate < 0.0001f) return;
 		float high = fullRate * 12;
 
 		int indexX = 0;

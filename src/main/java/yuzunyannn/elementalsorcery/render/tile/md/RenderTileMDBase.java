@@ -11,7 +11,7 @@ import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 public class RenderTileMDBase<T extends TileMDBase> extends TileEntitySpecialRenderer<T> implements IRenderItem {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/md_base.png");
-	protected static final ModelMDBase MODEL_BASE = new ModelMDBase();
+	public static final ModelMDBase MODEL_BASE = new ModelMDBase();
 
 	@Override
 	public void render(T tile, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {

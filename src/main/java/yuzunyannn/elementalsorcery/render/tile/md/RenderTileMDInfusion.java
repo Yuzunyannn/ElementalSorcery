@@ -7,8 +7,9 @@ import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class RenderTileMDInfusion extends RenderTileMDBase<TileMDInfusion> {
+	
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/md_infusion.png");
-	protected final ModelMDInfusion MODEL = new ModelMDInfusion();
+	public static final ModelMDInfusion MODEL = new ModelMDInfusion();
 
 	@Override
 	public void render(TileMDInfusion tile, double x, double y, double z, float partialTicks, int destroyStage,

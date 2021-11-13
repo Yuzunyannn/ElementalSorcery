@@ -31,6 +31,10 @@ public class TalkChapter {
 		return scenes;
 	}
 
+	public boolean isEmpty() {
+		return scenes.isEmpty();
+	}
+
 	public class Iter {
 		protected int iter = 0;
 		protected int sceneIter = 0;

@@ -155,6 +155,7 @@ public class ESObjects {
 		public Block MD_DECONSTRUCT_BOX;
 		public Block MD_RESONANT_INCUBATOR;
 		public Block MD_FREQUENCY_MAPPING;
+		public Block MD_LIQUIDIZER;
 		public Block LIFE_FLOWER;
 		public Block MAGIC_POT;
 		public Block LIFE_DIRT;

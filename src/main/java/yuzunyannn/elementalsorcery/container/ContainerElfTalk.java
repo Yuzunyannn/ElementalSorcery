@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.container;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
@@ -52,6 +54,7 @@ public class ContainerElfTalk extends ContainerElf implements IContainerNetwork 
 		this.shiftData = shiftData;
 	}
 
+	@Nullable
 	public TalkChapter.Iter getChapterIter() {
 		return iter;
 	}
@@ -59,7 +62,11 @@ public class ContainerElfTalk extends ContainerElf implements IContainerNetwork 
 	public void setChapter(TalkChapter chapterIn) {
 		if (chapter == chapterIn) return;
 		chapter = chapterIn;
-		if (chapter == null) return;
+		if (chapter == null || chapter.isEmpty()) {
+			chapter = null;
+			iter = null;
+			return;
+		}
 		iter = chapter.createIter();
 		if (player.world.isRemote) return;
 		NBTTagCompound nbt = chapter.serializeNBTToSend();

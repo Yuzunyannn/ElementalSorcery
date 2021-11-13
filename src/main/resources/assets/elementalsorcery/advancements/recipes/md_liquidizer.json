@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/astone",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:md_liquidizer"
+        },
+        "title": {
+            "translate": "es.adv.MDLiquidizer.title"
+        },
+        "description": {
+            "translate": "es.adv.MDLiquidizer.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "elementalsorcery:md/md_liquidizer"
+            }
+        }
+    }
+}

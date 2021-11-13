@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.annotation.Nullable;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -18,25 +19,30 @@ import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementItem;
 import yuzunyannn.elementalsorcery.api.item.IJuice;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
+import yuzunyannn.elementalsorcery.crafting.element.ToElementInfoStatic;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementCommon;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.MultiRets;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 import yuzunyannn.elementalsorcery.world.Juice;
-import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
+import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
-public class ItemGlassCup extends Item {
+public class ItemGlassCup extends Item implements IToElementItem {
 
 	static public IJuice getJuice(ItemStack stack) {
 		return new Juice(stack);
@@ -95,7 +101,7 @@ public class ItemGlassCup extends Item {
 		IJuice juice = getJuice(stack);
 		if (juice == null) return stack;
 		IElementInventory eInv = ElementHelper.getElementInventory(stack);
-		juice.onDrink(worldIn, entityLiving, eInv);
+		juice.onDrink(worldIn, stack, entityLiving, eInv);
 		if (eInv != null) eInv.saveState(stack);
 		if (entityLiving instanceof EntityPlayer) {
 			((EntityPlayer) entityLiving).addStat(StatList.getObjectUseStats(this));
@@ -122,16 +128,39 @@ public class ItemGlassCup extends Item {
 		float dis = (float) playerIn.getEntityAttribute(EntityPlayer.REACH_DISTANCE).getAttributeValue();
 		RayTraceResult ray = WorldHelper.getLookAtBlock(worldIn, playerIn, dis, true, false, false);
 		if (ray != null) {
-			if (juice.onContain(worldIn, playerIn, ray.getBlockPos()))
+			if (juice.onContain(worldIn, itemstack, playerIn, ray.getBlockPos()))
 				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
 		}
 
-		if (juice.canDrink(worldIn, playerIn)) {
+		if (juice.canDrink(worldIn, itemstack, playerIn)) {
 			playerIn.setActiveHand(handIn);
 			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, itemstack);
 		}
 
 		return new ActionResult<ItemStack>(EnumActionResult.FAIL, itemstack);
+	}
+
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		if (this.isInCreativeTab(tab)) {
+			items.add(new ItemStack(this));
+			for (int i = 0; i < 3; i++) items.add(Juice.randomJuice(itemRand, true));
+		}
+	}
+
+	@Override
+	public IToElementInfo toElement(ItemStack stack) {
+		IJuice juice = getJuice(stack);
+		if (juice == null) return cupToElement();
+		if (juice.getJuiceCount() <= 0) return cupToElement();
+		IElementInventory eInv = ElementHelper.getElementInventory(stack);
+		if (!ElementHelper.isEmpty(eInv)) return null;
+		if (juice instanceof IToElementItem) return ((IToElementItem) juice).toElement(stack);
+		return null;
+	}
+
+	private IToElementInfo cupToElement() {
+		return ToElementInfoStatic.create(2, new ElementStack(ESInit.ELEMENTS.EARTH, 12, 45));
 	}
 
 }

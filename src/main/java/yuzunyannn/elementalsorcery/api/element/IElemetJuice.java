@@ -5,7 +5,7 @@ import java.util.Map;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
+import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public interface IElemetJuice {
 

@@ -3,7 +3,6 @@ package yuzunyannn.elementalsorcery.entity.elf;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAILookIdle;
-import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -12,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.AutoName;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -27,7 +27,10 @@ public class EntityElf extends EntityElfBase {
 		if (world.isRemote) return;
 		this.setCustomNameTag(AutoName.getRandomName());
 
-//		this.setProfession(ElfProfession.MERCHANT);
+		if (ElementalSorcery.isDevelop) {
+			this.setProfession(ElfProfession.MERCHANT);
+			return;
+		}
 
 		if (this.rand.nextInt(5) == 0) this.setProfession(ElfProfession.SCHOLAR);
 		else if (this.rand.nextInt(4) == 0) this.setProfession(ElfProfession.CRAZY);

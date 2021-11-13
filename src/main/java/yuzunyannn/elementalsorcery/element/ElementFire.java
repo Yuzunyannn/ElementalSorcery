@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireArea;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
-import yuzunyannn.elementalsorcery.world.Juice.JuiceMaterial;
+import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ElementFire extends ElementCommon {
 
@@ -64,9 +64,6 @@ public class ElementFire extends ElementCommon {
 		helper.preparatory(ESInit.POTIONS.FIRE_WALKER, 20, 60);
 		helper.check(JuiceMaterial.MELON, 60).join();
 		helper.descend(JuiceMaterial.MELON, 10, 0.9f);
-
-		helper.preparatory(MobEffects.FIRE_RESISTANCE, 30, 0);
-		helper.check(JuiceMaterial.MELON, 90).join();
 	}
 
 }

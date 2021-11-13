@@ -43,6 +43,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
+import yuzunyannn.elementalsorcery.world.Juice;
 
 public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 
@@ -64,6 +65,13 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 		Random rand = elf.getRNG();
 		if (rand.nextInt(2) == 0) addACommodity(trade, new ItemStack(BLOCKS.ELF_FRUIT, 1, 2), 5, 20, 1000);
 		if (rand.nextInt(3) == 0) addACommodity(trade, new ItemStack(ITEMS.RESONANT_CRYSTAL), 50, 8, 1000);
+		if (rand.nextInt(2) == 0) {
+			for (int i = 0; i < 3; i++) {
+				if (rand.nextFloat() < 0.25) break;
+				ItemStack cup = Juice.randomJuice(rand, false);
+				addACommodity(trade, cup, priceIt(cup), 3, 0);
+			}
+		}
 
 		switch (rand.nextInt(3)) {
 		case 2:
@@ -92,6 +100,13 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 
 	/** 给一个物品定价 */
 	public static int priceIt(ItemStack item) {
+		float ret = priceIt(item, 0);
+		if (ret == -1) return -1;
+		return MathHelper.ceil(ret);
+	}
+
+	private static float priceIt(ItemStack item, int deep) {
+		if (deep > 5) return -1;
 		IToElementInfo info = ElementMap.instance.toElement(item);
 		if (info == null) return -1;
 		ElementStack[] estacks = info.element();
@@ -99,11 +114,20 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 		for (ElementStack estack : estacks) {
 			float count = estack.getPower() / 10f * MathHelper.sqrt(estack.getCount());
 			if (estack.isMagic()) count = count / 4;
+			if (estack.getElement() == ESInit.ELEMENTS.STAR) count = count * 3;
 			n += count;
 		}
 		float count = (float) Math.pow(1.4, MathHelper.sqrt(info.complex()));
-
-		return MathHelper.ceil(n * count);
+		float money = n * count;
+		ItemStack[] remains = info.remain();
+		if (remains != null) {
+			for (ItemStack stack : remains) {
+				float ret = priceIt(stack, deep + 1);
+				if (ret == -1) return -1;
+				money = money + ret;
+			}
+		}
+		return money;
 	}
 
 	public static void addACommodity(TradeCount trade, ItemStack item, int price, int count, int checkPrice) {

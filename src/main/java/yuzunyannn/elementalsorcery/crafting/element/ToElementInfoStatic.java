@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.crafting.element;
 
+import java.util.Collection;
+
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -41,6 +43,10 @@ public class ToElementInfoStatic {
 				return remain;
 			}
 		};
+	}
+
+	public static IToElementInfo create(int complex, ItemStack remain, Collection<ElementStack> estacks) {
+		return create(complex, new ItemStack[] { remain }, estacks.toArray(new ElementStack[estacks.size()]));
 	}
 
 }

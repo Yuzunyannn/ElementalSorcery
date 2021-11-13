@@ -101,6 +101,7 @@ import yuzunyannn.elementalsorcery.block.md.BlockMDDeconstructBox;
 import yuzunyannn.elementalsorcery.block.md.BlockMDFrequencyMapping;
 import yuzunyannn.elementalsorcery.block.md.BlockMDHearth;
 import yuzunyannn.elementalsorcery.block.md.BlockMDInfusion;
+import yuzunyannn.elementalsorcery.block.md.BlockMDLiquidizer;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagicGen;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagicSolidify;
 import yuzunyannn.elementalsorcery.block.md.BlockMDMagiclization;
@@ -281,6 +282,7 @@ import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDDeconstructBox;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDFrequencyMapping;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDHearth;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDInfusion;
+import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDLiquidizer;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagicGen;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagicSolidify;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDMagiclization;
@@ -320,6 +322,7 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.md.TileMDFrequencyMapping;
 import yuzunyannn.elementalsorcery.tile.md.TileMDHearth;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
+import yuzunyannn.elementalsorcery.tile.md.TileMDLiquidizer;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicGen;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicSolidify;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagiclization;
@@ -422,6 +425,7 @@ public class ESInit {
 		BLOCKS.MD_DECONSTRUCT_BOX = new BlockMDDeconstructBox();
 		BLOCKS.MD_RESONANT_INCUBATOR = new BlockMDResonantIncubator();
 		BLOCKS.MD_FREQUENCY_MAPPING = new BlockMDFrequencyMapping();
+		BLOCKS.MD_LIQUIDIZER = new BlockMDLiquidizer();
 		BLOCKS.LIFE_FLOWER = new BlockLifeFlower();
 		BLOCKS.MAGIC_POT = new BlockMagicPot();
 		BLOCKS.LIFE_DIRT = new BlockLifeDirt();
@@ -811,6 +815,7 @@ public class ESInit {
 		register(TileMDDeconstructBox.class, "MDDeconstructBox");
 		register(TileMDResonantIncubator.class, "MDResonantIncubator");
 		register(TileMDFrequencyMapping.class, "MDFrequencyMapping");
+		register(TileMDLiquidizer.class, "MDLiquidizer");
 		register(TileLifeDirt.class, "LifeDirt");
 		register(TileCrystalFlower.class, "CrystalFlower");
 		register(TileItemStructureCraftNormal.class, "ISCraftNormal");
@@ -1031,6 +1036,7 @@ public class ESInit {
 		registerRender(BLOCKS.MD_RESONANT_INCUBATOR, TileMDResonantIncubator.class,
 				new RenderTileMDResonantIncubator());
 		registerRender(BLOCKS.MD_FREQUENCY_MAPPING, TileMDFrequencyMapping.class, new RenderTileMDFrequencyMapping());
+		registerRender(BLOCKS.MD_LIQUIDIZER, TileMDLiquidizer.class, new RenderTileMDLiquidizer());
 		registerRender(BLOCKS.ELF_TREE_CORE, TileElfTreeCore.class, new RenderTileElfTreeCore());
 		registerRender(BLOCKS.TRANSCRIBE_INJECTION, TileTranscribeInjection.class, new RenderTileTranscribeInjection());
 		registerRender(BLOCKS.ELF_BEACON, TileElfBeacon.class, new RenderTileElfBeacon());

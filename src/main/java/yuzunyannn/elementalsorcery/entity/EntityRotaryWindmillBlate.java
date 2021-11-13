@@ -6,6 +6,7 @@ import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,6 +18,7 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.item.IWindmillBlade;
 import yuzunyannn.elementalsorcery.util.MasterBinder;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
@@ -45,6 +47,8 @@ public class EntityRotaryWindmillBlate extends EntityObject implements IEntityAd
 		this.blate = blate;
 		masterBinder.setMaster(thrower);
 		this.setPosition(thrower.posX, thrower.posY + thrower.getEyeHeight() - 0.5, thrower.posZ);
+		if (thrower instanceof EntityPlayerMP)
+			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) thrower, "pitcher:windmillBlade");
 	}
 
 	public void shoot(Vec3d vec, int remainTick) {
