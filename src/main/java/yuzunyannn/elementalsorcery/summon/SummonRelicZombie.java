@@ -13,6 +13,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
 import yuzunyannn.elementalsorcery.entity.mob.RelicZombieType;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class SummonRelicZombie extends SummonCommon {
 
@@ -90,7 +91,7 @@ public class SummonRelicZombie extends SummonCommon {
 		for (int x = -2; x <= 2; x++) {
 			for (int y = 0; y <= 3; y++) {
 				for (int z = -2; z <= 2; z++) {
-					world.destroyBlock(pos.add(x, y, z), true);
+					if (!BlockHelper.isBedrock(world, pos)) world.destroyBlock(pos.add(x, y, z), true);
 				}
 			}
 		}

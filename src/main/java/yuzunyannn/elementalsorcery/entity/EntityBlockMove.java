@@ -370,7 +370,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			Block.spawnAsEntity(world, to, stack);
 			return;
 		}
-		if (!world.isAirBlock(to)) {
+		if (!world.isAirBlock(to) && !BlockHelper.isBedrock(world, to)) {
 			// 没放进去，就尝试破坏
 			if (!this.hasFlag(FLAG_FORCE_DESTRUCT)) {
 				Block.spawnAsEntity(world, to, stack);

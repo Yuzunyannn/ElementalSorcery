@@ -58,7 +58,8 @@ public class PotionPoundWalker extends PotionCommon {
 		IBlockState state = world.getBlockState(randomPos);
 		BlockPos upPos = randomPos.up();
 
-		if (!canPound(state) && BlockHelper.isReplaceBlock(world, upPos)) return;
+		if (BlockHelper.isBedrock(world, randomPos)) return;
+		if (!canPound(state) || !BlockHelper.isReplaceBlock(world, upPos)) return;
 
 		world.destroyBlock(upPos, true);
 

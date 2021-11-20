@@ -494,7 +494,10 @@ public class CommandES extends CommandBase {
 					executer.getHorizontalFacing().getOpposite(), pos1, pos2, true);
 			building.setAuthor(executer.getName());
 			building.setName(executer.getName() + "'s building!");
-			if ("test".equals(args[0])) break;
+			if ("test".equals(args[0])) {
+				if (ElementalSorcery.isDevelop) CommandESDebug.printBuildingPos(building);
+				break;
+			}
 			if ("recordNBT".equals(args[0])) BuildingLib.instance.addBuilding(building, true);
 			else BuildingLib.instance.addBuilding(building, false);
 			ItemHelper.addItemStackToPlayer(player, ArcInfo.createArcInfoItem(building.getKeyName()));

@@ -536,6 +536,16 @@
 			"zh_CN": "玻璃杯",
 			"en_US": "Tumbler",
 			"ja_JP": "ガラスのコップ"
+		},
+		"item.blessingJade.name": {
+			"zh_CN": "祝福之玉",
+			"en_US": "Blessing Jade",
+			"ja_JP": "祝福の玉"
+		},
+		"item.calamityGem.name": {
+			"zh_CN": "灾害宝石",
+			"en_US": "Calamity Gem",
+			"ja_JP": "災害の宝石"
 		}
 	},
 	"tile": {
@@ -933,6 +943,11 @@
 			"zh_CN": "榨汁机",
 			"en_US": "Liquidize",
 			"ja_JP": "ジューサー"
+		},
+		"tile.goatGoldBrick.common.name": {
+			"zh_CN": "金砖",
+			"en_US": "Gold Brick",
+			"ja_JP": "金れんが"
 		}
 	},
 	"es.effect": {
@@ -1025,6 +1040,16 @@
 			"zh_CN": "星",
 			"en_US": "Star",
 			"ja_JP": "星"
+		},
+		"es.effect.calamity": {
+			"zh_CN": "灾害",
+			"en_US": "Calamity",
+			"ja_JP": "災害"
+		},
+		"es.effect.blessing": {
+			"zh_CN": "祝福",
+			"en_US": "Blessing",
+			"ja_JP": "祝福"
 		}
 	},
 	"enchantment": {
@@ -1397,6 +1422,11 @@
 			"zh_CN": "忧郁骷髅",
 			"en_US": "Dejected Skeleton",
 			"ja_JP": "憂鬱スカル"
+		},
+		"entity.ArrogantSheep.name": {
+			"zh_CN": "傲慢的绵羊",
+			"en_US": "Arrogant Sheep",
+			"ja_JP": "傲慢なヒツジ"
 		}
 	},
 	"pro": {
@@ -2737,6 +2767,41 @@
 			"zh_CN": "我这里有关于您手中物品的羊皮卷，您是否想要花费%s来购买呢？",
 			"en_US": "I have a parchment about your held item, would you want spend %s yuan for it?",
 			"ja_JP": "貴方持っているものに関する羊皮紙がいますが、%s元で買いたいですか？"
+		},
+		"say.arrogantSheep.myFur": {
+			"zh_CN": "我的黄金毛！",
+			"en_US": "My Golden Wool!",
+			"ja_JP": "われの黄金毛！"
+		},
+		"say.arrogantSheep.welcome": {
+			"zh_CN": "欢迎来到我的黄金迷宫！",
+			"en_US": "Welcome To My Golden Maze!",
+			"ja_JP": "われの黄金迷宮にようこそ！"
+		},
+		"say.arrogantSheep.uselessAttack": {
+			"zh_CN": "你的攻击对我的黄金毛来说是没有用的！",
+			"en_US": "Your attack is useless to My Golden Wool!",
+			"ja_JP": "お前の攻撃はわれの黄金毛にとって無駄です！"
+		},
+		"say.arrogantSheep.explain": {
+			"zh_CN": "我的金砖阻碍你的跳跃和放置，不过迷宫里有一块金砖可以强化你跳跃并让你来到二层。想必也不可能找到！",
+			"en_US": "My Gold Brick hinders your jumping and places Any Block, but there is a gold brick in The Maze that can strengthen your jumping and bring you to the second floor. It must be impossible to find it!",
+			"ja_JP": "われの金れんがはお前のジャンプとブロックの配置を邪魔だ、しかし、迷宮の中にはジャンプを強化する金れんがあります、そこで二階まで行ける。まぁ、きっと見つけられない。"
+		},
+		"say.arrogantSheep.longFind": {
+			"zh_CN": "这么久了，看来你是找不到了。不过你也别想这么容易出去！",
+			"en_US": "It's been so long that you can't find me. But you don't want to get out so easily!",
+			"ja_JP": "こんなに長くなりました。見つけられないよう。でも、そんなに簡単に外に出るとは思わない。"
+		},
+		"say.arrogantSheep.summonZombie": {
+			"zh_CN": "召唤黄金僵尸！",
+			"en_US": "Summon the golden zombie!",
+			"ja_JP": "黄金ゾンビを召喚！"
+		},
+		"say.arrogantSheep.toHere": {
+			"zh_CN": "你居然真就到这里了，哈哈别想回去了！",
+			"en_US": "What? You really come here! So, you will never go back!",
+			"ja_JP": "何？お前は本当にここに来るの？でも大丈夫、ここはお前の墓場です！"
 		}
 	},
 	"floor": {

@@ -56,6 +56,10 @@ public class EntityRotaryWindmillBlate extends EntityObject implements IEntityAd
 		this.remainTick = remainTick;
 	}
 
+	public void stop() {
+		this.remainTick = 0;
+	}
+
 	@Nullable
 	public EntityLivingBase getMaster() {
 		return masterBinder.tryGetMaster(world);

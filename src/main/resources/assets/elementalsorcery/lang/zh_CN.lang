@@ -108,6 +108,8 @@ item.windmillBladeFrame.name=风轮框架
 item.windmillBladeFrame.adv.name=高级风轮框架
 item.elfFruitBomb.name=精灵果炸弹
 item.glassCup.name=玻璃杯
+item.blessingJade.name=祝福之玉
+item.calamityGem.name=灾害宝石
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -188,6 +190,7 @@ tile.fluorspar.name=荧光
 tile.deconstructWindmill.name=风车平台
 tile.elementTranslocator.name=元素转移台
 tile.MDLiquidize.name=榨汁机
+tile.goatGoldBrick.common.name=金砖
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者
@@ -207,6 +210,8 @@ es.effect.healthBalance=生命天平
 es.effect.combatSkill=战斗技巧
 es.effect.defenseSkill=防守技巧
 es.effect.star=星
+es.effect.calamity=灾害
+es.effect.blessing=祝福
 
 enchantment.gatherSouls=聚魂
 
@@ -285,6 +290,7 @@ entity.FairyCube.name=精灵立方体
 entity.RabidRabbit.name=狂暴兔
 entity.DreadCube.name=恐惧立方体
 entity.DejectedSkeleton.name=忧郁骷髅
+entity.ArrogantSheep.name=傲慢的绵羊
 
 pro.none=闲人
 pro.warrior=战士
@@ -559,6 +565,13 @@ say.want.paper=可以把你手上的古卷送给我吗？作为报酬，我会�
 say.teach.me=教我知识
 say.buy.something=买东西
 say.buy.parchment=我这里有关于您手中物品的羊皮卷，您是否想要花费%s来购买呢？
+say.arrogantSheep.myFur=我的黄金毛！
+say.arrogantSheep.welcome=欢迎来到我的黄金迷宫！
+say.arrogantSheep.uselessAttack=你的攻击对我的黄金毛来说是没有用的！
+say.arrogantSheep.explain=我的金砖阻碍你的跳跃和放置，不过迷宫里有一块金砖可以强化你跳跃并让你来到二层。想必也不可能找到！
+say.arrogantSheep.longFind=这么久了，看来你是找不到了。不过你也别想这么容易出去！
+say.arrogantSheep.summonZombie=召唤黄金僵尸！
+say.arrogantSheep.toHere=你居然真就到这里了，哈哈别想回去了！
 
 floor.hall.name=大厅
 floor.livingRoom.name=住房

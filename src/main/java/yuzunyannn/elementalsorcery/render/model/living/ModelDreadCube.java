@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.model;
+package yuzunyannn.elementalsorcery.render.model.living;
 
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.model.ModelBox;
@@ -8,10 +8,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-/**
- * @author yuzun
- *
- */
 @SideOnly(Side.CLIENT)
 public class ModelDreadCube extends ModelBase {
 

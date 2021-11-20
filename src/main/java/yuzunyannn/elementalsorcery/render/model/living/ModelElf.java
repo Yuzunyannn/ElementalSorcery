@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.model;
+package yuzunyannn.elementalsorcery.render.model.living;
 
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBox;

@@ -30,7 +30,7 @@ import yuzunyannn.elementalsorcery.parchment.Page;
 import yuzunyannn.elementalsorcery.parchment.PageEasy;
 import yuzunyannn.elementalsorcery.parchment.PageMult;
 import yuzunyannn.elementalsorcery.parchment.Pages;
-import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
+import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class ElfProfessionScholar extends ElfProfessionUndetermined {

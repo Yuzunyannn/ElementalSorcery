@@ -48,6 +48,7 @@ import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipeMob;
 import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class EntityDreadCube extends EntityMob {
 
@@ -225,6 +226,7 @@ public class EntityDreadCube extends EntityMob {
 		if (block == Blocks.SAND) return false;
 		if (block == Blocks.SANDSTONE) return false;
 		if (block == Blocks.SANDSTONE_STAIRS) return false;
+		if (BlockHelper.isBedrock(world, pos)) return false;
 
 		if (world.getTileEntity(pos) != null) {
 			world.destroyBlock(pos, true);
@@ -242,6 +244,7 @@ public class EntityDreadCube extends EntityMob {
 			world.destroyBlock(pos, false);
 			return true;
 		}
+		if (state.getBlockHardness(world, pos) > 50) return false;
 
 		soul += 0.1f;
 		world.setBlockState(pos, Blocks.GRAVEL.getDefaultState());

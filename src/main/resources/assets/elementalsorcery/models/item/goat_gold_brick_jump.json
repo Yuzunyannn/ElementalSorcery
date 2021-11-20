@@ -1,0 +1,7 @@
+{
+    "parent": "minecraft:block/cube_column",
+    "textures": {
+        "end": "elementalsorcery:blocks/goat_gold_brick/gold_brick_top_jump",
+        "side": "elementalsorcery:blocks/goat_gold_brick/gold_brick"
+    }
+}

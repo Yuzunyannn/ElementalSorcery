@@ -66,6 +66,7 @@ public class ItemWindmillBlades {
 		public WOOD() {
 			super("wood", 1 * 60 * 60);
 			bladeDamage = 0.5f;
+			bladeDestroyHardness = 3;
 		}
 
 		@Override
@@ -117,6 +118,7 @@ public class ItemWindmillBlades {
 		public CRYSTAL() {
 			super("crystal", 24 * 60 * 60);
 			bladeDamage = 3.5f;
+			bladeDestroyHardness = 75;
 		}
 
 		@Override

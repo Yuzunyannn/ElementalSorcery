@@ -108,6 +108,8 @@ item.windmillBladeFrame.name=Frame of Wind Wheel
 item.windmillBladeFrame.adv.name=Advanced Frame of Wind Wheel
 item.elfFruitBomb.name=Elf Fruit Bomb
 item.glassCup.name=Tumbler
+item.blessingJade.name=Blessing Jade
+item.calamityGem.name=Calamity Gem
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -188,6 +190,7 @@ tile.fluorspar.name=Fluorspar
 tile.deconstructWindmill.name=Windmill Platform
 tile.elementTranslocator.name=Element Translocator
 tile.MDLiquidize.name=Liquidize
+tile.goatGoldBrick.common.name=Gold Brick
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
@@ -207,6 +210,8 @@ es.effect.healthBalance=The Health Balance
 es.effect.combatSkill=Combat Skill
 es.effect.defenseSkill=Defense Skill
 es.effect.star=Star
+es.effect.calamity=Calamity
+es.effect.blessing=Blessing
 
 enchantment.gatherSouls=Gather Souls
 
@@ -285,6 +290,7 @@ entity.FairyCube.name=Elf Cube
 entity.RabidRabbit.name=Rabid Rabbit
 entity.DreadCube.name=Dread Cube
 entity.DejectedSkeleton.name=Dejected Skeleton
+entity.ArrogantSheep.name=Arrogant Sheep
 
 pro.none=Idle
 pro.warrior=Warrior
@@ -559,6 +565,13 @@ say.want.paper=Can you give me the Ancient Paper you have? In return, I'll teach
 say.teach.me=Teach me
 say.buy.something=Shopping
 say.buy.parchment=I have a parchment about your held item, would you want spend %s yuan for it?
+say.arrogantSheep.myFur=My Golden Wool!
+say.arrogantSheep.welcome=Welcome To My Golden Maze!
+say.arrogantSheep.uselessAttack=Your attack is useless to My Golden Wool!
+say.arrogantSheep.explain=My Gold Brick hinders your jumping and places Any Block, but there is a gold brick in The Maze that can strengthen your jumping and bring you to the second floor. It must be impossible to find it!
+say.arrogantSheep.longFind=It's been so long that you can't find me. But you don't want to get out so easily!
+say.arrogantSheep.summonZombie=Summon the golden zombie!
+say.arrogantSheep.toHere=What? You really come here! So, you will never go back!
 
 floor.hall.name=Hall
 floor.livingRoom.name=Living Room

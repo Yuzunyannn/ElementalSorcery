@@ -28,6 +28,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.config.ESConfig;
@@ -242,7 +243,6 @@ public class EventClient {
 		if (ElementalSorcery.isDevelop) {
 			tooltip.add(TextFormatting.GREEN + "Develop Info:");
 			tooltip.add(TextFormatting.GOLD + "" + ElfProfessionMerchant.priceIt(stack) + "$");
-			tooltip.add(TextFormatting.AQUA + "Deconstruct Test:");
 			for (ElementStack estack : estacks) {
 				if (estack.isEmpty()) continue;
 				estack = estack.copy().becomeElementWhenDeconstruct(Minecraft.getMinecraft().world, stack,
@@ -250,6 +250,10 @@ public class EventClient {
 				String str = I18n.format("info.elementCrystal.has", estack.getDisplayName(), estack.getCount(),
 						estack.getPower());
 				tooltip.add(TextFormatting.AQUA + str);
+			}
+			int[] ids = OreDictionary.getOreIDs(stack);
+			for (int i : ids) {
+				tooltip.add(TextFormatting.BOLD + OreDictionary.getOreName(i));
 			}
 		}
 	}

@@ -27,7 +27,7 @@ import yuzunyannn.elementalsorcery.entity.elf.EntityAIMoveToLookBlock;
 import yuzunyannn.elementalsorcery.entity.elf.EntityAIStrollAroundElfTree;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
-import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
+import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;

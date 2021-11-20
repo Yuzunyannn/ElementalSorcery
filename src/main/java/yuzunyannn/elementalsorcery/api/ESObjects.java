@@ -105,6 +105,8 @@ public class ESObjects {
 		public Item WINDMILL_BLADE_CRYSTAL;
 		public Item ELF_FRUIT_BOMB;
 		public Item GLASS_CUP;
+		public Item CALAMITY_GEM;
+		public Item BLESSING_JADE;
 	}
 
 	static public class Blocks {
@@ -175,6 +177,7 @@ public class ESObjects {
 		public Block FLUORSPAR;
 		public Block DECONSTRUCT_WINDMILL;
 		public Block ELEMENT_TRANSLOCATOR;
+		public Block GOAT_GOLD_BRICK;
 	}
 
 	static public class Elements {
@@ -239,6 +242,8 @@ public class ESObjects {
 		public Potion COMBAT_SKILL;
 		public Potion DEFENSE_SKILL;
 		public Potion STAR;
+		public Potion CALAMITY;
+		public Potion BLESSING;
 	}
 
 	static public class Village {

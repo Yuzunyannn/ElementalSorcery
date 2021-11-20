@@ -4,6 +4,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -15,26 +17,32 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ClassInheritanceMultiMap;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
+import net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
-import net.minecraftforge.event.world.BlockEvent.PlaceEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
@@ -44,6 +52,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.tile.IBlockJumpModify;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.capability.ESPlayerCapabilityProvider;
@@ -63,6 +72,8 @@ import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageSyncConfig;
+import yuzunyannn.elementalsorcery.potion.PotionBlessing;
+import yuzunyannn.elementalsorcery.potion.PotionCalamity;
 import yuzunyannn.elementalsorcery.potion.PotionCombatSkill;
 import yuzunyannn.elementalsorcery.potion.PotionDefenseSkill;
 import yuzunyannn.elementalsorcery.potion.PotionEndercorps;
@@ -74,6 +85,7 @@ import yuzunyannn.elementalsorcery.potion.PotionWindShield;
 import yuzunyannn.elementalsorcery.ts.PocketWatch;
 import yuzunyannn.elementalsorcery.ts.PocketWatchClient;
 import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
 public class EventServer {
 
@@ -294,7 +306,7 @@ public class EventServer {
 
 	// 放置方块
 	@SubscribeEvent
-	public static void onPlaceBlock(PlaceEvent event) {
+	public static void onPlaceBlock(BlockEvent.PlaceEvent event) {
 		EntityPlayer player = event.getPlayer();
 		if (player.world.isRemote) return;
 		EntityFairyCube.addBehavior(player, BehaviorBlock.placeBlock(event.getPos(), event.getPlacedBlock()));
@@ -321,6 +333,20 @@ public class EventServer {
 		EntityFairyCube.addBehavior(player, BehaviorClick.rightClick(event.getHand()));
 	}
 
+	// 右键方块
+	@SubscribeEvent
+	public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+		BlockPos pos = event.getPos();
+		World world = event.getWorld();
+		if (world.getBlockState(pos).getBlock() == ESInit.BLOCKS.GOAT_GOLD_BRICK) {
+			if (!EntityHelper.isCreative(event.getEntityPlayer())) {
+//			ItemStack holdItem = event.getItemStack();
+				event.setCanceled(true);
+				return;
+			}
+		}
+	}
+
 	// 攻击实体
 	@SubscribeEvent
 	public static void onPlayerAttack(AttackEntityEvent event) {
@@ -339,6 +365,25 @@ public class EventServer {
 			float plunder = FCMAttack.getPlunder((EntityFairyCube) entity);
 			event.setLootingLevel(Math.max((int) plunder, event.getLootingLevel()));
 		}
+	}
+
+	// 方快掉落
+	@SubscribeEvent
+	public static void onHarvestDrops(HarvestDropsEvent event) {
+		if (event.isSilkTouching()) return;
+		EntityPlayer player = event.getHarvester();
+		if (player == null) return;
+
+		if (player.isPotionActive(ESInit.POTIONS.BLESSING)) {
+			int amplifier = player.getActivePotionEffect(ESInit.POTIONS.BLESSING).getAmplifier();
+			PotionBlessing.addOres(amplifier, event.getDropChance(), event.getDrops(), player.getRNG());
+		}
+
+		if (player.isPotionActive(ESInit.POTIONS.CALAMITY)) {
+			int amplifier = player.getActivePotionEffect(ESInit.POTIONS.CALAMITY).getAmplifier();
+			PotionCalamity.eliminateOres(amplifier, event.getDrops(), player.getRNG());
+		}
+
 	}
 
 	// 设置攻击目标
@@ -441,10 +486,43 @@ public class EventServer {
 		}
 	}
 
-//	@SubscribeEvent
-//	public static void onLivingUpdate(LivingUpdateEvent evt) {
-//		EntityLivingBase entity = evt.getEntityLiving();
-//	}
+	// 添加buff
+	@SubscribeEvent
+	public static void onPotionApplicable(PotionApplicableEvent event) {
+		PotionEffect effect = event.getPotionEffect();
+		if (effect == null) return;
+		EntityLivingBase entity = event.getEntityLiving();
+
+		Potion potion = effect.getPotion();
+		float factor = 0;
+		if (entity.isPotionActive(ESInit.POTIONS.CALAMITY)) {
+			int amplifier = entity.getActivePotionEffect(ESInit.POTIONS.CALAMITY).getAmplifier() + 1;
+			factor = factor + (potion.isBadEffect() ? 0.4f * amplifier : 0);
+			factor = factor + (potion.isBeneficial() ? -0.15f * amplifier : 0);
+		}
+		if (entity.isPotionActive(ESInit.POTIONS.BLESSING) && potion != ESInit.POTIONS.BLESSING) {
+			int amplifier = entity.getActivePotionEffect(ESInit.POTIONS.BLESSING).getAmplifier() + 1;
+			factor = factor + (potion.isBadEffect() ? -0.075f * amplifier : 0);
+			factor = factor + (potion.isBeneficial() ? 0.125f * amplifier : 0);
+		}
+		if (factor != 0) {
+			int duration = MathHelper.clamp((int) (effect.getDuration() * (1 + factor)), 1, Short.MAX_VALUE);
+			EntityHelper.setPotionEffectDuration(effect, Math.max(duration, effect.getDuration()));
+		}
+	}
+
+	// 跳跃
+	@SubscribeEvent
+	public static void onLivingJump(LivingJumpEvent event) {
+		EntityLivingBase entity = event.getEntityLiving();
+		if (entity instanceof EntityPlayer) {
+			BlockPos pos = new BlockPos(entity.posX, entity.posY - 0.1, entity.posZ);
+			IBlockState state = entity.world.getBlockState(pos);
+			Block block = state.getBlock();
+			if (block instanceof IBlockJumpModify)
+				((IBlockJumpModify) block).onPlayerJump(entity.world, pos, state, entity);
+		}
+	}
 
 	private static void onLivingDeadEnchantmentDeal(EntityLivingBase deader, DamageSource source) {
 		Entity s = source.getImmediateSource();

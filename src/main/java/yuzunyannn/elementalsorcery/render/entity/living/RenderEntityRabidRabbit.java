@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.entity;
+package yuzunyannn.elementalsorcery.render.entity.living;
 
 import net.minecraft.client.model.ModelRabbit;
 import net.minecraft.client.renderer.entity.RenderLiving;

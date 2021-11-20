@@ -76,4 +76,5 @@ public class BlockElfLog extends BlockLog {
 		}
 		return i;
 	}
+
 }

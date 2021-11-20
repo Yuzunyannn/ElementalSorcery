@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
@@ -192,6 +193,7 @@ public class SummonCommon extends Summon {
 	}
 
 	protected void genBlock(BlockPos pos, IBlockState state) {
+		if (BlockHelper.isBedrock(world, pos)) return;
 		Vec3d from = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
 		EntityBlockMove entity = new EntityBlockMove(world, from, pos, state);
 		entity.setFlag(EntityBlockMove.FLAG_FORCE_DESTRUCT, true);

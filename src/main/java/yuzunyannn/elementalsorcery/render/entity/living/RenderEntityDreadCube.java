@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.entity;
+package yuzunyannn.elementalsorcery.render.entity.living;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.entity.mob.EntityDreadCube;
-import yuzunyannn.elementalsorcery.render.model.ModelDreadCube;
+import yuzunyannn.elementalsorcery.render.model.living.ModelDreadCube;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 

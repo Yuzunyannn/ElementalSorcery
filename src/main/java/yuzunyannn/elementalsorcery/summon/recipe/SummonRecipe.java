@@ -13,10 +13,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.summon.Summon;
 import yuzunyannn.elementalsorcery.summon.SummonDejectedSkeleton;
 import yuzunyannn.elementalsorcery.summon.SummonDreadCube;
+import yuzunyannn.elementalsorcery.summon.SummonMaze;
 import yuzunyannn.elementalsorcery.summon.SummonRabidRabbit;
 import yuzunyannn.elementalsorcery.summon.SummonRelicZombie;
 import yuzunyannn.elementalsorcery.summon.SummonSilverfishSpring;
@@ -52,6 +54,7 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 	protected ItemStack[] keepsakes = new ItemStack[0];
 	protected int cost = 50;
 	protected int color = 0xda003e;
+	protected int buildHeight = 0;
 
 	public SummonRecipe setKeepsakes(ItemStack... keepsake) {
 		this.keepsakes = keepsake;
@@ -65,6 +68,11 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 
 	public SummonRecipe setColor(int color) {
 		this.color = color;
+		return this;
+	}
+
+	public SummonRecipe setBuildHeight(int buildHeight) {
+		this.buildHeight = buildHeight;
 		return this;
 	}
 
@@ -98,6 +106,7 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 	 * @param pos 召唤处理的地点
 	 */
 	public boolean canBeKeepsake(ItemStack keepsake, World world, BlockPos pos) {
+		if (world.isOutsideBuildHeight(pos.up(buildHeight))) return false;
 		for (ItemStack stack : this.keepsakes) if (stack.isItemEqual(keepsake)) return true;
 		return false;
 	}
@@ -132,6 +141,8 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 				ItemKeepsake.create(ItemKeepsake.EnumType.DREAD_FRAGMENT, 1));
 		reg("dejected_skeleton", SummonDejectedSkeleton.class, 125, 0x757575,
 				ItemKeepsake.create(ItemKeepsake.EnumType.UNDELIVERED_LETTER, 1));
+		reg("maze", SummonMaze.class, 200, 0x3f9e15, new ItemStack(ESInit.BLOCKS.ELF_LEAF)).setBuildHeight(3);
+		reg("arrogant_sheep", new SummonRecipeArrogantSheep());
 
 	}
 
@@ -146,6 +157,7 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 				new SummonRecipe().setCost(cost).setKeepsakes(keepsake).setSummonClass(summonClass).setColor(color));
 	}
 
+	@SuppressWarnings("unused")
 	private static SummonRecipe reg(String name, BiFunction<World, BlockPos, Summon> summonFatory, int cost, int color,
 			ItemStack... keepsake) {
 		SummonRecipe sr = new SummonRecipe().setCost(cost).setKeepsakes(keepsake).setSummonFatory(summonFatory)

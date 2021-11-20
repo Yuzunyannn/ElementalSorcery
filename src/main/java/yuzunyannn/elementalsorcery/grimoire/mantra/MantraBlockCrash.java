@@ -25,6 +25,7 @@ import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class MantraBlockCrash extends MantraCommon {
 
@@ -106,7 +107,8 @@ public class MantraBlockCrash extends MantraCommon {
 		}
 		if (state.getBlock() instanceof ITileEntityProvider) return;
 		if (!state.isFullBlock()) return;
-		if (!state.getBlock().isReplaceable(world, pos.up())) return;
+		if (!BlockHelper.isReplaceBlock(world, pos.up())) return;
+		if (!BlockHelper.isHardnessLower(world, pos, 75)) return;
 
 		ElementStack stack = getElement(caster, ESInit.ELEMENTS.EARTH, needElementPoint, 25);
 		if (stack.isEmpty()) return;

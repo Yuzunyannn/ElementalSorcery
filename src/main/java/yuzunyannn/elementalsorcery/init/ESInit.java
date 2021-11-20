@@ -59,6 +59,7 @@ import yuzunyannn.elementalsorcery.block.BlockElfLog;
 import yuzunyannn.elementalsorcery.block.BlockElfPlank;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
 import yuzunyannn.elementalsorcery.block.BlockFluorspar;
+import yuzunyannn.elementalsorcery.block.BlockGoatGoldBrick;
 import yuzunyannn.elementalsorcery.block.BlockInvalidEnchantmentTable;
 import yuzunyannn.elementalsorcery.block.BlockKyanite;
 import yuzunyannn.elementalsorcery.block.BlockLifeDirt;
@@ -198,6 +199,8 @@ import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemOrderCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemResonantCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemScarletCrystal;
+import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJade;
+import yuzunyannn.elementalsorcery.item.prop.ItemCalamityGem;
 import yuzunyannn.elementalsorcery.item.prop.ItemCubeCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemDejectedTear;
 import yuzunyannn.elementalsorcery.item.prop.ItemDreadGem;
@@ -227,6 +230,8 @@ import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.item.tool.ItemStarBell;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.potion.PotionBlessing;
+import yuzunyannn.elementalsorcery.potion.PotionCalamity;
 import yuzunyannn.elementalsorcery.potion.PotionCombatSkill;
 import yuzunyannn.elementalsorcery.potion.PotionDefenseSkill;
 import yuzunyannn.elementalsorcery.potion.PotionEndercorps;
@@ -445,6 +450,7 @@ public class ESInit {
 		BLOCKS.FLUORSPAR = new BlockFluorspar();
 		BLOCKS.DECONSTRUCT_WINDMILL = new BlockDeconstructWindmill();
 		BLOCKS.ELEMENT_TRANSLOCATOR = new BlockElementTranslocator();
+		BLOCKS.GOAT_GOLD_BRICK = new BlockGoatGoldBrick();
 
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
@@ -537,6 +543,8 @@ public class ESInit {
 		ITEMS.WINDMILL_BLADE_CRYSTAL = new ItemWindmillBlades.CRYSTAL();
 		ITEMS.ELF_FRUIT_BOMB = new ItemElfFruitBomb();
 		ITEMS.GLASS_CUP = new ItemGlassCup();
+		ITEMS.CALAMITY_GEM = new ItemCalamityGem();
+		ITEMS.BLESSING_JADE = new ItemBlessingJade();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -622,6 +630,8 @@ public class ESInit {
 		POTIONS.COMBAT_SKILL = new PotionCombatSkill();
 		POTIONS.DEFENSE_SKILL = new PotionDefenseSkill();
 		POTIONS.STAR = new PotionStar();
+		POTIONS.CALAMITY = new PotionCalamity();
+		POTIONS.BLESSING = new PotionBlessing();
 
 		Class<?> cls = POTIONS.getClass();
 		Field[] fields = cls.getDeclaredFields();
@@ -940,6 +950,8 @@ public class ESInit {
 		registerRender(ITEMS.WINDMILL_BLADE_CRYSTAL);
 		registerRender(ITEMS.ELF_FRUIT_BOMB);
 		registerRender(ITEMS.GLASS_CUP, new RenderItemGlassCup());
+		registerRender(ITEMS.CALAMITY_GEM);
+		registerRender(ITEMS.BLESSING_JADE);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -1003,6 +1015,10 @@ public class ESInit {
 		registerRender(BLOCKS.FLUORSPAR, 4, "fluorspar_andesite");
 		registerRender(BLOCKS.FLUORSPAR, 5, "fluorspar_granite");
 		registerRender(BLOCKS.FLUORSPAR, 6, "fluorspar_diorite");
+		registerRender(BLOCKS.GOAT_GOLD_BRICK, 0, "goat_gold_brick_normal");
+		registerRender(BLOCKS.GOAT_GOLD_BRICK, 1, "goat_gold_brick_glow");
+		registerRender(BLOCKS.GOAT_GOLD_BRICK, 2, "goat_gold_brick_move");
+		registerRender(BLOCKS.GOAT_GOLD_BRICK, 3, "goat_gold_brick_jump");
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());

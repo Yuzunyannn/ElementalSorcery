@@ -118,7 +118,8 @@ public class MantraSummon extends MantraCommon {
 		// 寻找召唤任务
 		if (entity instanceof EntityLivingBase) {
 			ItemStack stack = ((EntityLivingBase) entity).getHeldItemOffhand();
-			SummonRecipe r = SummonRecipe.findRecipeWithKeepsake(stack, world, caster.iWantFoothold());
+			BlockPos foothold = caster.iWantFoothold();
+			SummonRecipe r = foothold == null ? null : SummonRecipe.findRecipeWithKeepsake(stack, world, foothold);
 			if (r != null) {
 				data.keepsake = stack.copy();
 				data.summonRecipe = r;

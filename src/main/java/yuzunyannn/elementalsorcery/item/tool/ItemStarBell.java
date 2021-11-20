@@ -8,7 +8,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.IMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -68,7 +68,7 @@ public class ItemStarBell extends Item {
 				PathNavigate navigator = creature.getNavigator();
 				if (navigator.noPath() && creature.getRNG().nextInt(3) == 0)
 					navigator.tryMoveToEntityLiving(player, creature.getMoveHelper().getSpeed());
-			} else if (creature instanceof EntityMob) {
+			} else if (creature instanceof IMob) {
 				if (creature.getAttackTarget() == null) creature.setAttackTarget(player);
 			}
 		}

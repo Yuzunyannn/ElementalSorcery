@@ -17,6 +17,7 @@ public class ItemRabidLeather extends Item {
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+		if (worldIn.isRemote) return;
 		EnumHand hand = ItemVortex.inEntityHand(entityIn, stack, itemSlot, isSelected);
 		if (hand == null) return;
 		if (entityIn.ticksExisted % 100 == 0) {

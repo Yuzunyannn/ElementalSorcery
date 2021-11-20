@@ -261,4 +261,18 @@ public class BlockHelper {
 		return state.getMaterial().isLiquid();
 	}
 
+	public static boolean isBedrock(World world, BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
+		if (state.getMaterial().isLiquid()) return false;
+		return state.getBlockHardness(world, pos) < 0;
+	}
+
+	public static boolean isHardnessLower(World world, BlockPos pos, float n) {
+		IBlockState state = world.getBlockState(pos);
+		if (state.getMaterial().isLiquid()) return true;
+		float h = state.getBlockHardness(world, pos);
+		if (h < 0) return false;
+		return h < n;
+	}
+
 }

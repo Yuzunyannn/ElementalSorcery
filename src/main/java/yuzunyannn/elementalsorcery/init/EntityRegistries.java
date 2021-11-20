@@ -32,6 +32,7 @@ import yuzunyannn.elementalsorcery.entity.EntityThrow;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
+import yuzunyannn.elementalsorcery.entity.mob.EntityArrogantSheep;
 import yuzunyannn.elementalsorcery.entity.mob.EntityDejectedSkeleton;
 import yuzunyannn.elementalsorcery.entity.mob.EntityDreadCube;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRabidRabbit;
@@ -41,20 +42,21 @@ import yuzunyannn.elementalsorcery.render.entity.RenderBlockThrowEffect;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntitiyBulletin;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityBlockMove;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
-import yuzunyannn.elementalsorcery.render.entity.RenderEntityDejectedSkeleton;
-import yuzunyannn.elementalsorcery.render.entity.RenderEntityDreadCube;
-import yuzunyannn.elementalsorcery.render.entity.RenderEntityElf;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityExploreDust;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityFairyCube;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityFallingElfFruit;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityGrimoire;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityMagicMelting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortal;
-import yuzunyannn.elementalsorcery.render.entity.RenderEntityRabidRabbit;
-import yuzunyannn.elementalsorcery.render.entity.RenderEntityRelicZombie;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityRotaryWindmillBlate;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityScapegoat;
 import yuzunyannn.elementalsorcery.render.entity.RenderThrow;
+import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityArrogantSheep;
+import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityDejectedSkeleton;
+import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityDreadCube;
+import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
+import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityRabidRabbit;
+import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityRelicZombie;
 
 public class EntityRegistries {
 
@@ -84,6 +86,8 @@ public class EntityRegistries {
 		registerEgg("dreadCube", 0x161616, 0x6a1212);
 		register(5, "dejectedSkeleton", EntityDejectedSkeleton.class, "DejectedSkeleton", 64, 3, true);
 		registerEgg("dejectedSkeleton", 0xe8e8e8, 0x9c9c9c);
+		register(6, "arrogantSheep", EntityArrogantSheep.class, "ArrogantSheep", 64, 3, true);
+		registerEgg("arrogantSheep", 0xfedf0d, 0xea8900);
 
 		// 实体方块
 		register(20, "bulletin", EntityBulletin.class, "Bulletin", 64, 20, false);
@@ -141,6 +145,7 @@ public class EntityRegistries {
 		registerRender(EntityDejectedSkeleton.class, RenderEntityDejectedSkeleton.class);
 		registerRender(EntityFallingElfFruit.class, RenderEntityFallingElfFruit.class);
 		registerRender(EntityRotaryWindmillBlate.class, RenderEntityRotaryWindmillBlate.class);
+		registerRender(EntityArrogantSheep.class, RenderEntityArrogantSheep.class);
 	}
 
 	@SideOnly(Side.CLIENT)

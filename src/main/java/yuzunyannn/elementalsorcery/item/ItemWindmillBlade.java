@@ -34,8 +34,10 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPowerPitcher.IPowerPitcher {
 
 	public static final int MAX_ELEMENT_POWER = 64;
+	public static final int PITCH_DAMAGE = 160;
 
 	protected float bladeDamage = 2;
+	protected float bladeDestroyHardness = 20;
 
 	public ItemWindmillBlade() {
 		this("", 6 * 60 * 60);
@@ -149,7 +151,7 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 	@Override
 	public EnumActionResult onRightClickItemAsPitcher(World world, EntityLivingBase entity, ItemStack stack,
 			EnumHand hand, int amplifier) {
-		if (stack.getMaxDamage() - stack.getItemDamage() <= 25) return EnumActionResult.FAIL;
+		if (stack.getMaxDamage() - stack.getItemDamage() <= PITCH_DAMAGE) return EnumActionResult.FAIL;
 
 		Vec3d look = entity.getLookVec();
 		Vec3d hLook = new Vec3d(look.x, 0, look.z).normalize();
@@ -165,7 +167,7 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
 		if (!entities.isEmpty()) {
 			Vec3d vecLook = entity.getLook(1.0F).normalize();
-			//按照向量夹角进行排序
+			// 按照向量夹角进行排序
 			entities.sort((a, b) -> {
 				Vec3d tarA = new Vec3d(a.posX - entity.posX,
 						(a.posY + a.height / 2 - (entity.posY + entity.height / 2)) * 0.15, a.posZ - entity.posZ);
@@ -192,10 +194,10 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 				break;
 			}
 		}
-		
-		//飞！
+
+		// 飞！
 		ItemStack blade = stack.copy();
-		blade.damageItem(25, entity);
+		blade.damageItem(PITCH_DAMAGE, entity);
 		EntityRotaryWindmillBlate entityBlate = new EntityRotaryWindmillBlate(world, blade, entity, amplifier);
 		entityBlate.shoot(pos, 20 * (3 + amplifier * 2));
 		world.spawnEntity(entityBlate);
@@ -217,16 +219,21 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 		return pos;
 	}
 
-	protected void pitchDestoryBlock(World world, BlockPos pos, int size) {
+	protected void pitchDestoryBlock(World world, BlockPos pos, int size, EntityRotaryWindmillBlate eBlate) {
 		for (int x = -size; x <= size; x++) {
 			for (int z = -size; z <= size; z++) {
 				BlockPos at = pos.add(x, 0, z);
 				IBlockState state = world.getBlockState(at);
 				Block block = state.getBlock();
 				if (block.isAir(state, world, pos)) continue;
+				float hardness = state.getBlockHardness(world, pos);
+				if (!state.getMaterial().isLiquid() && (hardness < 0 || hardness > bladeDestroyHardness)) {
+					eBlate.stop();
+					continue;
+				}
 				if (!state.getMaterial().isLiquid()) {
-					world.playEvent(2001, pos, Block.getStateId(state));
-					block.dropBlockAsItem(world, pos, state, 0);
+					world.playEvent(2001, at, Block.getStateId(state));
+					block.dropBlockAsItem(world, at, state, 0);
 				}
 				world.setBlockState(at, Blocks.AIR.getDefaultState(), 3);
 			}
@@ -261,6 +268,6 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 		final int size = 2;
 		if (eBlate.tick % 10 == 0) pitchAttackEntity(world, vec, size, eBlate);
 		if (world.isRemote) return;
-		if (eBlate.tick % 3 == 0) pitchDestoryBlock(world, new BlockPos(vec), size);
+		if (eBlate.tick % 3 == 0) pitchDestoryBlock(world, new BlockPos(vec), size, eBlate);
 	}
 }

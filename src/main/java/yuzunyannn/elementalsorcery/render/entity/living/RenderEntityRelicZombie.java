@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.entity;
+package yuzunyannn.elementalsorcery.render.entity.living;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
-import yuzunyannn.elementalsorcery.render.model.ModelRelicZombie;
+import yuzunyannn.elementalsorcery.render.model.living.ModelRelicZombie;
 
 @SideOnly(Side.CLIENT)
 public class RenderEntityRelicZombie extends RenderLiving<EntityRelicZombie> {

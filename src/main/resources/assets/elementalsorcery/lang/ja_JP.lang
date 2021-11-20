@@ -108,6 +108,8 @@ item.windmillBladeFrame.name=扇のフレーム
 item.windmillBladeFrame.adv.name=高級扇のフレーム
 item.elfFruitBomb.name=精霊実の爆弾
 item.glassCup.name=ガラスのコップ
+item.blessingJade.name=祝福の玉
+item.calamityGem.name=災害の宝石
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -188,6 +190,7 @@ tile.fluorspar.name=蛍光
 tile.deconstructWindmill.name=風車プラットフォーム
 tile.elementTranslocator.name=元素移動台
 tile.MDLiquidize.name=ジューサー
+tile.goatGoldBrick.common.name=金れんが
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -207,6 +210,8 @@ es.effect.healthBalance=生命の天秤
 es.effect.combatSkill=戦闘テクニック
 es.effect.defenseSkill=守備テクニック
 es.effect.star=星
+es.effect.calamity=災害
+es.effect.blessing=祝福
 
 enchantment.gatherSouls=集魂
 
@@ -285,6 +290,7 @@ entity.FairyCube.name=精霊立方体
 entity.RabidRabbit.name=狂暴うさぎ
 entity.DreadCube.name=恐怖立方体
 entity.DejectedSkeleton.name=憂鬱スカル
+entity.ArrogantSheep.name=傲慢なヒツジ
 
 pro.none=アイドル
 pro.warrior=戦士
@@ -559,6 +565,13 @@ say.want.paper=手に持っている古巻を送ってもらえますか？報�
 say.teach.me=知識を教えてください
 say.buy.something=買い物する
 say.buy.parchment=貴方持っているものに関する羊皮紙がいますが、%s元で買いたいですか？
+say.arrogantSheep.myFur=われの黄金毛！
+say.arrogantSheep.welcome=われの黄金迷宮にようこそ！
+say.arrogantSheep.uselessAttack=お前の攻撃はわれの黄金毛にとって無駄です！
+say.arrogantSheep.explain=われの金れんがはお前のジャンプとブロックの配置を邪魔だ、しかし、迷宮の中にはジャンプを強化する金れんがあります、そこで二階まで行ける。まぁ、きっと見つけられない。
+say.arrogantSheep.longFind=こんなに長くなりました。見つけられないよう。でも、そんなに簡単に外に出るとは思わない。
+say.arrogantSheep.summonZombie=黄金ゾンビを召喚！
+say.arrogantSheep.toHere=何？お前は本当にここに来るの？でも大丈夫、ここはお前の墓場です！
 
 floor.hall.name=広間
 floor.livingRoom.name=部屋
