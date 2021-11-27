@@ -116,7 +116,7 @@ public class VillageESHall extends Village {
 		this.setBlockState(worldIn, blockWoodStair, 5, 1, 5, structureBoundingBoxIn);
 		this.setBlockState(worldIn, blockWoodStair, 9, 1, 5, structureBoundingBoxIn);
 		// 箱子
-		ResourceLocation loot = LootRegister.ES_HALL;
+		ResourceLocation loot = LootRegister.ES_VILLAGE_HALL;
 		this.generateChest(worldIn, structureBoundingBoxIn, randomIn, 11, 1, 9, loot);
 		// 原木横条
 		this.fillWithBlocks(worldIn, structureBoundingBoxIn, 2, 1, 1, 4, 1, 1, blockLog, blockLog, false);

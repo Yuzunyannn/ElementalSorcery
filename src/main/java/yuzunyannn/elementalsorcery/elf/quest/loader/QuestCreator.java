@@ -95,6 +95,14 @@ public class QuestCreator implements IQuestCreator {
 
 		String key = data.needString("type");
 
+		// 单纯的组合
+		if ("list".equals(key)) {
+			JsonArray array = data.needArray("value", "values");
+			for (int j = 0; j < array.size(); j++) loadReward(array.getObject(j), list, context);
+			return;
+		}
+
+		// 在池里选一个
 		if ("pool".equals(key)) {
 			JsonArray array = data.needArray("reward");
 			WeightRandom<JsonObject> wr = new WeightRandom<>();
@@ -131,6 +139,7 @@ public class QuestCreator implements IQuestCreator {
 		if (data == null) return;
 		String key = data.needString("type");
 
+		// 在池子里选一个
 		if ("pool".equals(key)) {
 			JsonArray array = data.needArray("reward", "conditions");
 			WeightRandom<JsonObject> wr = new WeightRandom<>();

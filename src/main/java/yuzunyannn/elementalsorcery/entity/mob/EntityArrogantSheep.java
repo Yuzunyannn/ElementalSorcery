@@ -2,8 +2,10 @@ package yuzunyannn.elementalsorcery.entity.mob;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.UUID;
 
 import com.google.common.collect.Lists;
@@ -18,7 +20,9 @@ import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -27,11 +31,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
@@ -40,20 +47,28 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.block.BlockGoatGoldBrick;
+import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class EntityArrogantSheep extends EntityMob {
 
 	protected static final DataParameter<Boolean> IS_SHEARED = EntityDataManager
 			.<Boolean>createKey(EntityArrogantSheep.class, DataSerializers.BOOLEAN);
 
+	protected int shareTims = 0;
+
 	// 描述迷宫内玩家的状态
 	public static class PlayerInMazeStatus {
 		boolean isTowFloor;
 		boolean isFristInTwoFloor = true;
 		int findTimes = 0;
+		int overTimes = 60;
 	}
 
 	protected Map<UUID, PlayerInMazeStatus> playerInMaze = new HashMap<>();
@@ -77,9 +92,16 @@ public class EntityArrogantSheep extends EntityMob {
 		this.tasks.addTask(8, new EntityAILookIdle(this));
 	}
 
+	public void dyingSay() {
+		List<EntityPlayer> list = getPlayerInMaze(true);
+		ITextComponent text = createSheepSay("say.arrogantSheep.myFur");
+		for (EntityPlayer player : list) player.sendMessage(text);
+	}
+
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
+		this.extinguish();
 		if (world.isRemote) return;
 
 		if (getSheared()) {
@@ -87,28 +109,24 @@ public class EntityArrogantSheep extends EntityMob {
 			setRevengeTarget(revenge);
 			if (this.ticksExisted % 20 == 0) {
 				setHealth(getHealth() - 64);
-				if (rand.nextFloat() < 0.25f) {
-					List<EntityPlayer> list = getPlayerInMaze(true);
-					ITextComponent text = createSheepSay("say.arrogantSheep.myFur");
-					for (EntityPlayer player : list) player.sendMessage(text);
-				}
+				if (getHealth() <= 0) BlockGoatGoldBrick.tryWitherGoatGoldBrickArea(world, this.getPosition(), true);
+				if (rand.nextFloat() < 0.25f) dyingSay();
 			}
 			return;
 		}
 
 		if (this.ticksExisted % (20 * 3) != 0) return;
 
-		Map<UUID, PlayerInMazeStatus> lastPlayerInMaze = playerInMaze;
-		playerInMaze = new HashMap<>();
 		zombieCache = null;
 		List<EntityPlayer> list = getPlayerInMaze(false);
 
 		for (EntityPlayer player : list) {
 			UUID playerUUID = player.getUniqueID();
-			PlayerInMazeStatus status = lastPlayerInMaze.get(playerUUID);
+			PlayerInMazeStatus status = playerInMaze.get(playerUUID);
 			boolean isFirst = status == null;
 			if (status == null) status = new PlayerInMazeStatus();
 			playerInMaze.put(playerUUID, status);
+			status.overTimes = 20 * 2;
 
 			if (isFirst) {
 				player.sendMessage(createSheepSay("say.arrogantSheep.welcome"));
@@ -121,11 +139,22 @@ public class EntityArrogantSheep extends EntityMob {
 			if (status.isTowFloor) status.isFristInTwoFloor = false;
 		}
 
+		Iterator<Entry<UUID, PlayerInMazeStatus>> iter = playerInMaze.entrySet().iterator();
+		while (iter.hasNext()) {
+			Entry<UUID, PlayerInMazeStatus> entry = iter.next();
+			if (--entry.getValue().overTimes <= 0) iter.remove();
+		}
+
 	}
 
 	protected ITextComponent createSheepSay(String str) {
 		return new TextComponentString(this.getName()).setStyle(new Style().setColor(TextFormatting.GOLD))
 				.appendText(": ").appendSibling(new TextComponentTranslation(str));
+	}
+
+	@Override
+	public void setFire(int seconds) {
+
 	}
 
 	public List<EntityPlayer> getPlayerInMaze(boolean around) {
@@ -178,7 +207,8 @@ public class EntityArrogantSheep extends EntityMob {
 			if (status.findTimes >= (20 * 3) && status.findTimes % 5 == 0 && rand.nextDouble() < 0.5) {
 				BlockPos pos = player.getPosition().offset(player.getHorizontalFacing());
 				if (BlockHelper.isPassableBlock(world, pos)) {
-					summonZombie(pos, player);
+					int p = (status.findTimes - (20 * 3)) / 20;
+					summonZombie(pos, player, p);
 					player.sendMessage(createSheepSay("say.arrogantSheep.summonZombie"));
 				}
 			}
@@ -193,13 +223,39 @@ public class EntityArrogantSheep extends EntityMob {
 
 	}
 
-	protected EntityZombie summonZombie(BlockPos pos, EntityPlayer player) {
+	protected EntityZombie summonZombie(BlockPos pos, EntityPlayer player, int power) {
 		EntityZombie zombie = new EntityZombie(world);
 		zombie.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
-		zombie.setItemStackToSlot(EntityEquipmentSlot.HEAD, new ItemStack(Items.GOLDEN_HELMET));
-		zombie.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Items.GOLDEN_CHESTPLATE));
-		zombie.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(Items.GOLDEN_LEGGINGS));
-		zombie.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(Items.GOLDEN_BOOTS));
+
+		power = MathHelper.clamp(power, 0, 8);
+
+		ItemStack helmet = new ItemStack(Items.GOLDEN_HELMET);
+		zombie.setItemStackToSlot(EntityEquipmentSlot.HEAD, helmet);
+		if (power > 2) helmet.addEnchantment(Enchantments.PROTECTION, power - 4);
+
+		ItemStack chestplate = new ItemStack(Items.GOLDEN_CHESTPLATE);
+		zombie.setItemStackToSlot(EntityEquipmentSlot.CHEST, chestplate);
+		if (power > 3) chestplate.addEnchantment(Enchantments.PROTECTION, power - 3);
+
+		ItemStack leggings = new ItemStack(Items.GOLDEN_LEGGINGS);
+		zombie.setItemStackToSlot(EntityEquipmentSlot.LEGS, leggings);
+		if (power > 4) leggings.addEnchantment(Enchantments.PROTECTION, power - 4);
+
+		ItemStack boots = new ItemStack(Items.GOLDEN_BOOTS);
+		zombie.setItemStackToSlot(EntityEquipmentSlot.FEET, boots);
+		if (power > 5) boots.addEnchantment(Enchantments.PROTECTION, power - 5);
+
+		if (power > 2) {
+			ItemStack sword = new ItemStack(Items.GOLDEN_SWORD);
+			zombie.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, sword);
+			if (power > 3) boots.addEnchantment(Enchantments.SHARPNESS, power - 3);
+			if (power > 4) boots.addEnchantment(Enchantments.KNOCKBACK, power - 5);
+		}
+
+		if (power > 5) zombie.addPotionEffect(new PotionEffect(MobEffects.SPEED, 20 * 60 * 30, Math.min(power - 6, 3)));
+
+		for (EntityEquipmentSlot slot : EntityEquipmentSlot.values()) zombie.setDropChance(slot, 0);
+
 		world.spawnEntity(zombie);
 		zombie.setAttackTarget(player);
 		Effects.spawnSummonEntity(zombie, new int[] { 0x101313, 0xf6c905 });
@@ -215,10 +271,13 @@ public class EntityArrogantSheep extends EntityMob {
 			zombieCache = world.getEntitiesWithinAABB(EntityMob.class, aabb);
 		}
 
-		if (zombieCache.size() > 12) return false;
+		int maxCount = Math.min(this.shareTims * 2 + 6, 16);
+		if (zombieCache.size() > maxCount) return false;
 
 		BlockPos at = pos.add(rand.nextGaussian() * 13, -5, rand.nextGaussian() * 13);
-		EntityZombie zombie = summonZombie(at, player);
+		if (!BlockHelper.isReplaceBlock(world, at)) at = at.up();
+		if (!BlockHelper.isReplaceBlock(world, at)) at = at.up();
+		EntityZombie zombie = summonZombie(at, player, (int) Math.round(this.shareTims * 1.5) - 1);
 		zombieCache.add(zombie);
 
 		return true;
@@ -338,12 +397,69 @@ public class EntityArrogantSheep extends EntityMob {
 
 		if (item != Items.SHEARS) return false;
 
-		if (player.getDistance(this) > 2) return false;
+		this.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1.0F, 1.0F);
+
+		if (shareTims++ < 4) {
+			this.emitting(player);
+			return false;
+		}
+
+		double pro = 1.4f - 1f / ((shareTims - 3) * 0.75f);
+		if (rand.nextDouble() > pro) {
+			this.emitting(player);
+			return false;
+		}
 
 		this.setSheared(true);
-		this.playSound(SoundEvents.ENTITY_SHEEP_SHEAR, 1.0F, 1.0F);
 		this.setRevengeTarget(player);
 
+		if (world.isRemote) return true;
+		dyingSay();
+
+		float luck = player.getLuck();
+
+		ItemStack wool = new ItemStack(ESInit.ITEMS.ARROGANT_WOOL, 1 + MathHelper.floor(rand.nextFloat() * luck / 2));
+		ItemHelper.dropItem(world, this.getPosition(), wool);
+
 		return true;
+	}
+
+	@Override
+	protected Item getDropItem() {
+		return Items.MUTTON;
+	}
+
+	protected void emitting(EntityLivingBase player) {
+		Vec3d thisVec = new Vec3d(posX, posY + height, posZ);
+		Vec3d tar = player.getPositionEyes(0).subtract(thisVec).normalize();
+		Vec3d speed = new Vec3d(tar.x, 0, tar.z).normalize().scale(1.5);
+		player.motionX += speed.x;
+		player.motionY += 0.5;
+		player.motionZ += speed.z;
+
+		for (EnumHand hand : EnumHand.values()) {
+			ItemStack stack = player.getHeldItem(hand);
+			if (!stack.isEmpty()) {
+				player.setHeldItem(hand, ItemStack.EMPTY);
+				if (!world.isRemote) player.entityDropItem(stack, player.getEyeHeight());
+			}
+		}
+
+		if (world.isRemote) {
+			double dis = player.getDistance(this);
+			showLineEffect(thisVec, tar, dis);
+			player.sendMessage(createSheepSay("say.arrogantSheep.stayAway"));
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	private void showLineEffect(Vec3d thisVec, Vec3d tar, double dis) {
+		for (int i = 0; i < 16; i++) {
+			Vec3d at = thisVec.add(tar.scale(dis / 16 * i));
+			EffectElementMove effect = new EffectElementMove(world, at);
+			effect.setColor(0xf6c905);
+			effect.setVelocity(rand.nextGaussian() * 0.01, rand.nextGaussian() * 0.01, rand.nextGaussian() * 0.01);
+			Effect.addEffect(effect);
+		}
 	}
 }

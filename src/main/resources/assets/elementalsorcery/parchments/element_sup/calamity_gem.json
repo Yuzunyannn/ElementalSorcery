@@ -1,0 +1,14 @@
+{
+	"lev": 5,
+	"need": [
+		"element_adv/supreme_table",
+		"elf/rabid_rabbit",
+		"elf/dread_cube",
+		"elf/dejected_skeleton",
+		"elf/arrogant_sheep"
+	],
+	"linked": "elementalsorcery:calamity_gem",
+	"type": "craft",
+	"name": "calamityGem",
+	"item": "elementalsorcery:calamity_gem"
+}

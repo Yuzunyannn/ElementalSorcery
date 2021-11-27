@@ -110,6 +110,8 @@ item.elfFruitBomb.name=精灵果炸弹
 item.glassCup.name=玻璃杯
 item.blessingJade.name=祝福之玉
 item.calamityGem.name=灾害宝石
+item.arrogantWool.name=傲慢的羊毛
+item.blessingJadePiece.name=祝福之玉碎片
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -572,6 +574,7 @@ say.arrogantSheep.explain=我的金砖阻碍你的跳跃和放置，不过迷宫
 say.arrogantSheep.longFind=这么久了，看来你是找不到了。不过你也别想这么容易出去！
 say.arrogantSheep.summonZombie=召唤黄金僵尸！
 say.arrogantSheep.toHere=你居然真就到这里了，哈哈别想回去了！
+say.arrogantSheep.stayAway=离我远一点！傲慢震击！
 
 floor.hall.name=大厅
 floor.livingRoom.name=住房
@@ -659,6 +662,8 @@ page.dreadCube.ct=来自异界的漆黑立方体生物，漂浮在半空中，�
 page.dejectedSkeleton=忧郁的骷髅
 page.dejectedSkeleton.ct.fir=不知何时，骷髅开始变得忧郁了。\n忧郁骷髅和普通骷髅样子以及攻击方式几乎一致，不过它们拥有更多的生命，并且可以在阳光下行走。\n在攻击或者被攻击时，会发出犹豫的光芒，不同颜色的光会产生不同的效果。\n使用「未送达之信」作为信物可以召唤出法阵，并会将周围的骷髅变得忧郁，击败它们有几率掉落「忧郁之泪」。
 page.dejectedSkeleton.ct.sec=忧郁光芒的作用：\n红色：只接受普通剑击，反之获得回血并获得buff\n蓝色：只接受魔法攻击，反之反弹伤害\n绿色：只接受远程物理攻击，反之给予debuff\n黄色：只接受火焰或爆炸伤害，反之发生爆炸和着火\n淡灰色：将攻击随机反弹到周围单位身上包括自身\n紫色：无敌，回血并反弹任何伤害。
+page.arrogantSheep=傲慢的绵羊
+page.arrogantSheep.ct=使用「黄色羊毛」作为信物，再加上大量的灵魂可以召唤出傲慢绵羊的迷宫（远离召唤点巨大的迷宫便会开始建造）。\n迷宫的由几乎无法被破坏的特殊金砖构成，一共分为两层，傲慢的绵羊便位于第二层。\n要战胜它，剪刀和绯红水晶是不可缺少的东西。\n从它身上获取到的傲慢的羊毛是一种十分贵重的材料，不仅如此，将它放到「元素平台」上会吸收周围的金元素并产生金锭，不过每产生一个金锭羊毛都有可能会消失。
 page.crafting.need=需要元素参与合成：
 page.crafting.show=%s需要%d强度下限 %d 
 page.error=错误页面
@@ -908,6 +913,11 @@ page.grimoire.ct=魔典，作为最高级的魔导书，可以让元素与咒文
 page.transcribe=撰录
 page.transcribe.ct=制作出来的魔典是空白的，并不能释放魔法。这就需要撰录祭坛，来将咒文写入魔典之中。\n除此之外，撰录祭坛还可以为魔典进行元素补充，让咒文可以正常吟唱。
 page.transcribe.ct.more=在解读古卷的过程中会发现，一些古卷上记载了有关咒文的内容。\n若能凑齐某种咒文，将其放入撰录祭坛里，将魔典放到方桌上，在知识、火、水元素的缠绕下 ，可以将古卷上记录的咒文撰录成魔典可以使用的咒文，并写入魔典当中。\n若撰录祭坛里不放入任何东西，仅仅将魔典放到方桌上，祭坛就会自动吸取周围所有的元素，注入到魔典里。\n咒文的吟唱会消耗某些元素、一个魔典中可以存放多个咒文，这与魔典的容量有关，使用「功能键(默认TAB)」进行切换。
+page.calamityGem=灾害宝石
+page.calamityGem.ct=这是一个十分贵重，但是却没有什么人想入手的东西，它会为持有者带来「灾害」。\n「灾害」会让史蒂夫打坏的方块不掉落，有限作为怪物的目标，总是被雷劈等等厄运。\n如果你身上持有高级的「灾害」，那你已经接近死亡了。
+page.blessingJade=祝福之玉碎片
+page.blessingJade.ct.fir=这是个人人都想入手的贵重物品，它会为持有者带来「祝福」。\n但它并不是这么容易就能获得到，需要凑齐8片碎片，才能制作出来。\「祝福」可以为你带来好运，比如挖矿掉落变多，生命值低下时获得意外的生命恢复等等。
+page.blessingJade.ct.sec=不同的碎片获取的方式不尽相同，一些提示如下：\n1:封藏石\n2:噬魂\n3:商人\n4:钓鱼\n5:村庄\n6:研究\n7:烧制\n8:委托
 
 es.adv.root.title=元素魔法
 es.adv.root.description=打开手中的卷轴，开始元素魔法

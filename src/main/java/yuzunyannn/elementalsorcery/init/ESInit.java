@@ -199,7 +199,9 @@ import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemOrderCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemResonantCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemScarletCrystal;
+import yuzunyannn.elementalsorcery.item.prop.ItemArrogantWool;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJade;
+import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.item.prop.ItemCalamityGem;
 import yuzunyannn.elementalsorcery.item.prop.ItemCubeCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemDejectedTear;
@@ -545,6 +547,8 @@ public class ESInit {
 		ITEMS.GLASS_CUP = new ItemGlassCup();
 		ITEMS.CALAMITY_GEM = new ItemCalamityGem();
 		ITEMS.BLESSING_JADE = new ItemBlessingJade();
+		ITEMS.ARROGANT_WOOL = new ItemArrogantWool();
+		ITEMS.BLESSING_JADE_PIECE = new ItemBlessingJadePiece();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -952,6 +956,15 @@ public class ESInit {
 		registerRender(ITEMS.GLASS_CUP, new RenderItemGlassCup());
 		registerRender(ITEMS.CALAMITY_GEM);
 		registerRender(ITEMS.BLESSING_JADE);
+		registerRender(ITEMS.ARROGANT_WOOL);
+		registerRender(ITEMS.BLESSING_JADE_PIECE, 0, "blessing_jade_piece/p0");
+		registerRender(ITEMS.BLESSING_JADE_PIECE, 1, "blessing_jade_piece/p1");
+		registerRender(ITEMS.BLESSING_JADE_PIECE, 2, "blessing_jade_piece/p2");
+		registerRender(ITEMS.BLESSING_JADE_PIECE, 3, "blessing_jade_piece/p3");
+		registerRender(ITEMS.BLESSING_JADE_PIECE, 4, "blessing_jade_piece/p4");
+		registerRender(ITEMS.BLESSING_JADE_PIECE, 5, "blessing_jade_piece/p5");
+		registerRender(ITEMS.BLESSING_JADE_PIECE, 6, "blessing_jade_piece/p6");
+		registerRender(ITEMS.BLESSING_JADE_PIECE, 7, "blessing_jade_piece/p7");
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -1019,6 +1032,7 @@ public class ESInit {
 		registerRender(BLOCKS.GOAT_GOLD_BRICK, 1, "goat_gold_brick_glow");
 		registerRender(BLOCKS.GOAT_GOLD_BRICK, 2, "goat_gold_brick_move");
 		registerRender(BLOCKS.GOAT_GOLD_BRICK, 3, "goat_gold_brick_jump");
+		registerRender(BLOCKS.GOAT_GOLD_BRICK, 4, "goat_gold_brick_wither");
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());

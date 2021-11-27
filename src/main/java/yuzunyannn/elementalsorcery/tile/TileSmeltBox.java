@@ -22,8 +22,10 @@ import yuzunyannn.elementalsorcery.block.container.BlockHearth;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.item.tool.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.util.IField;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemStackLimitHandler;
 
@@ -175,11 +177,16 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 	 */
 	public @Nonnull ItemStack getAdditionalItem(@Nonnull ItemStack stackOld, @Nonnull ItemStack stackNew,
 			@Nonnull ItemStack extra) {
+
+		// 额外物品是末影之眼+概率
+		float add = 0.0f;
+		if (extra.getItem() == Items.ENDER_EYE) add = 0.25f;
+		if (extra.getItem() == ESInit.ITEMS.MAGICAL_ENDER_EYE) add = 0.5f;
+
+		if (BlockHelper.isOre(stackOld) && Math.random() < 0.01f + add / 16)
+			return ItemBlessingJadePiece.createPiece(6);
+
 		if (stackNew.getItem() == ESInit.ITEMS.KYANITE) {
-			float add = 0.0f;
-			// 额外物品是末影之眼+概率
-			if (extra.getItem() == Items.ENDER_EYE) add = 0.25f;
-			if (extra.getItem() == ESInit.ITEMS.MAGICAL_ENDER_EYE) add = 0.5f;
 			switch (material()) {
 			case IRON:
 				if (Math.random() < 0.10f + add) return new ItemStack(ESInit.ITEMS.MAGIC_PIECE);

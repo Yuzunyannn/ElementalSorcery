@@ -7,6 +7,7 @@ import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.item.prop.ItemArrogantWool;
 
 public class ESObjects {
 
@@ -107,6 +108,8 @@ public class ESObjects {
 		public Item GLASS_CUP;
 		public Item CALAMITY_GEM;
 		public Item BLESSING_JADE;
+		public Item ARROGANT_WOOL;
+		public Item BLESSING_JADE_PIECE;
 	}
 
 	static public class Blocks {

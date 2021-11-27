@@ -30,7 +30,8 @@ public class RenderTileElementPlatform extends TileEntitySpecialRenderer<TileEle
 		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
 		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
 
-		MODEL.render(null, 0, 0, EventClient.getGlobalRotateInRender(partialTicks), 0, 0, 1.0f);
+		float rand = tile.getPos().hashCode() % 360;
+		MODEL.render(null, 0, 0, rand + EventClient.getGlobalRotateInRender(partialTicks), 0, 0, 1.0f);
 
 		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);

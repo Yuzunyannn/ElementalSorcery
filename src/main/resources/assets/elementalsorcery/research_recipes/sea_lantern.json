@@ -1,24 +1,31 @@
 {
 	"topics": {
-		"Struct": 25,
-		"Natural": 45
+		"Struct": 50,
+		"Natural": 50,
+		"Mantra": 20
 	},
 	"items": [
 		{
-			"item": "minecraft:emerald",
-			"count": 4
+			"item": "elementalsorcery:kyanite",
+			"count": 8
 		},
 		{
-			"item": "minecraft:glowstone",
+			"item": "minecraft:dye",
+			"count": 16,
+			"data": 4
+		},
+		{
+			"item": "minecraft:glass",
+			"count": 32
+		},
+		{
+			"item": "elementalsorcery:magic_core",
 			"count": 1
-		},
-		{
-			"item": "minecraft:potion",
-			"count": 2
 		}
 	],
 	"result": {
-		"item": "minecraft:sea_lantern",
-		"count": 1
+		"item": "elementalsorcery:blessing_jade_piece",
+		"count": 1,
+		"data": 5
 	}
 }

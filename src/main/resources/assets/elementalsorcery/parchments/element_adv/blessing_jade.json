@@ -1,0 +1,29 @@
+{
+	"lev": 4,
+	"need": [
+		"element/element_crafting_table"
+	],
+	"linked": [
+		"elementalsorcery:blessing_jade",
+		"elementalsorcery:blessing_jade_piece"
+	],
+	"type": "mult",
+	"lock": 0,
+	"pages": [
+		{
+			"type": "craft",
+			"name": "blessingJade",
+			"differ": "fir",
+			"item": "elementalsorcery:blessing_jade"
+		},
+		{
+			"type": "research",
+			"name": "blessingJade",
+			"differ": "sec",
+			"item": {
+				"item": "elementalsorcery:blessing_jade_piece",
+				"data": 5
+			}
+		}
+	]
+}

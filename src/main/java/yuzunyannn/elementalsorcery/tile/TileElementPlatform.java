@@ -86,7 +86,7 @@ public class TileElementPlatform extends TileEntityNetwork implements IGetItemSt
 			inventory.setForbid(false);
 			try {
 				boolean needUpdate = ((IPlatformTickable) item).platformUpdate(world, stack, caster, runData, tick);
-				if (needUpdate) {
+				if (needUpdate || stack.isEmpty()) {
 					this.markDirty();
 					this.updateToClient();
 				}

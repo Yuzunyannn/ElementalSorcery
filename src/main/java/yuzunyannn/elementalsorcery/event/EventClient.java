@@ -246,7 +246,7 @@ public class EventClient {
 			for (ElementStack estack : estacks) {
 				if (estack.isEmpty()) continue;
 				estack = estack.copy().becomeElementWhenDeconstruct(Minecraft.getMinecraft().world, stack,
-						teInfo.complex(), Element.DP_ALTAR_ADV);
+						teInfo.complex(), Element.DP_ALTAR_SURPREME);
 				String str = I18n.format("info.elementCrystal.has", estack.getDisplayName(), estack.getCount(),
 						estack.getPower());
 				tooltip.add(TextFormatting.AQUA + str);

@@ -64,16 +64,35 @@
     ],
     "reward": [
         {
-            "type": "Coin",
-            "value": "{prandom#75~100}"
-        },
-        {
-            "type": "Exp",
-            "value": "{random#100~150}"
-        },
-        {
-            "type": "Fame",
-            "value": 1
+            "type": "pool",
+            "reward": [
+                {
+                    "weight": 100,
+                    "type": "list",
+                    "value": [
+                        {
+                            "type": "Coin",
+                            "value": "{prandom#75~100}"
+                        },
+                        {
+                            "type": "Exp",
+                            "value": "{random#100~150}"
+                        },
+                        {
+                            "type": "Fame",
+                            "value": 1
+                        }
+                    ]
+                },
+                {
+                    "weight": 10,
+                    "type": "ItemParcel",
+                    "value": {
+                        "item": "elementalsorcery:blessing_jade_piece",
+                        "data": 7
+                    }
+                }
+            ]
         },
         {
             "type": "Topic",
@@ -86,23 +105,6 @@
             "chance": 0.5,
             "value": "{random#1~1}",
             "topic": "Struct"
-        },
-        {
-            "type": "pool",
-            "reward": [
-                {
-                    "chance": 0.75,
-                    "weight": 50,
-                    "type": "NextQuest",
-                    "value": "elementalsorcery:laboratory_want_1"
-                },
-                {
-                    "chance": 0.5,
-                    "weight": 40,
-                    "type": "NextQuest",
-                    "value": "elementalsorcery:laboratory_want_2"
-                }
-            ]
         }
     ]
 }

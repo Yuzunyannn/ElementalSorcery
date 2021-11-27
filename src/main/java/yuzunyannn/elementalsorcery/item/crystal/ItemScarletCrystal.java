@@ -3,8 +3,8 @@ package yuzunyannn.elementalsorcery.item.crystal;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import yuzunyannn.elementalsorcery.block.BlockGoatGoldBrick;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.util.NBTTag;
@@ -26,16 +26,17 @@ public class ItemScarletCrystal extends ItemCrystal {
 	@Override
 	public boolean onEntityItemUpdate(EntityItem entityItem) {
 		if (entityItem.world.isRemote) return false;
-		if (!entityItem.isWet()) return false;
+		if (!entityItem.isWet()) {
+			BlockGoatGoldBrick.onScarletCrystalUpdate(entityItem);
+			return false;
+		}
 		int count = entityItem.getItem().getCount();
 		entityItem.dropItem(ESInit.ITEMS.MAGIC_STONE, RandomHelper.randomRange(1 * count, 3 * count));
 		entityItem.dropItem(ESInit.ITEMS.MAGIC_PIECE, RandomHelper.randomRange(2 * count, 8 * count));
 		entityItem.setDead();
 		// 特效
-		NBTTagCompound nbt = FireworkEffect.fastNBT(0, 1, 0.1f, new int[] { 0x760e05, 0xd4584d },
-				TileMDBase.PARTICLE_COLOR_FADE);
-		Effects.spawnEffect(entityItem.world, Effects.FIREWROK,
-				entityItem.getPositionVector().addVector(0, entityItem.height, 0), nbt);
+		FireworkEffect.spawn(entityItem.world, entityItem.getPositionVector().addVector(0, entityItem.height, 0), 0, 1,
+				0.1f, new int[] { 0x760e05, 0xd4584d }, TileMDBase.PARTICLE_COLOR_FADE);
 		return false;
 	}
 

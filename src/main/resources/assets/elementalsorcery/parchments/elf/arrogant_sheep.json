@@ -1,0 +1,15 @@
+{
+    "lev": -2,
+    "need": [
+        "element/rite_summon",
+        "element_adv/element_platform",
+        "more/scarlet_crystal"
+    ],
+    "linked": [
+        "elementalsorcery:arrogant_wool"
+    ],
+    "type": "normal",
+    "name": "arrogantSheep",
+    "item": "elementalsorcery:arrogant_wool",
+    "background": "inherit"
+}

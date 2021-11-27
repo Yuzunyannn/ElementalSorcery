@@ -14,6 +14,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntityZombie;
 import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -25,6 +26,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -67,6 +69,28 @@ public class PotionCalamity extends PotionCommon {
 				BlockPos at = pos.offset(facing);
 				if (!BlockHelper.isBedrock(world, at) && !BlockHelper.isFluid(world, pos))
 					world.destroyBlock(at, false);
+			}
+
+			if (entity instanceof EntityPlayer) {
+				EntityPlayer player = (EntityPlayer) entity;
+				int size = player.inventory.getSizeInventory();
+				if (size > 0) {
+					for (int i = 0; i < 8; i++) {
+						int index = rand.nextInt(size);
+						ItemStack stack = player.inventory.getStackInSlot(index);
+						if (stack.isEmpty()) continue;
+						if (stack.getItem() == ESInit.ITEMS.CALAMITY_GEM) continue;
+						player.inventory.setInventorySlotContents(index, ItemStack.EMPTY);
+						entity.entityDropItem(stack, entity.getEyeHeight());
+						if (rand.nextInt() < 0.75f) break;
+					}
+				}
+			} else {
+				ItemStack stack = entity.getHeldItem(EnumHand.MAIN_HAND);
+				if (!stack.isEmpty() && stack.getItem() != ESInit.ITEMS.CALAMITY_GEM) {
+					entity.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
+					entity.entityDropItem(stack, entity.getEyeHeight());
+				}
 			}
 		}
 

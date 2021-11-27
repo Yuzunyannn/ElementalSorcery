@@ -146,10 +146,13 @@ public class SummonArrogantSheep extends SummonMaze {
 		int roofHigh = maxSize + 1 - roofSize;
 
 		boolean notGlow = false;
+		boolean mustGlow = false;
 		boolean isFullLayer = roofHigh == 1 || roofHigh == 10;
 		if (roofHigh > 1 && roofHigh <= 6) {
-			if (roofHigh == 2) notGlow = (Math.abs(xRoof) <= 2 && Math.abs(zRoof) <= 2);
-			else notGlow = (Math.abs(xRoof) <= 1 && Math.abs(zRoof) <= 1);
+			if (roofHigh == 2) {
+				notGlow = (Math.abs(xRoof) <= 2 && Math.abs(zRoof) <= 2);
+				mustGlow = true; 
+			} else notGlow = (Math.abs(xRoof) <= 1 && Math.abs(zRoof) <= 1);
 			isFullLayer = isFullLayer || notGlow;
 		}
 		if (xRoof <= roofSize) {
@@ -162,7 +165,9 @@ public class SummonArrogantSheep extends SummonMaze {
 						int gz = zRoof + maxSize - 1;
 						if (elevatorGrid.x == gx && elevatorGrid.z == gz) return true;
 					}
-					buildRoof(pos, !notGlow);
+					if (mustGlow) genMazeBlock(pos, 1, defaultBuildBlockState.withProperty(BlockGoatGoldBrick.VARIANT,
+							BlockGoatGoldBrick.EnumType.GLOW));
+					else buildRoof(pos, !notGlow);
 					return true;
 				} else if (moveBrickTimes > 0 && world.rand.nextFloat() < 0.01) {
 					moveBrickTimes--;

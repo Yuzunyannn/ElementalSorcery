@@ -119,6 +119,23 @@
             "chance": 0.5,
             "value": "{random#1~2}",
             "topic": "Struct"
+        },
+        {
+            "type": "pool",
+            "reward": [
+                {
+                    "chance": 0.75,
+                    "weight": 50,
+                    "type": "NextQuest",
+                    "value": "elementalsorcery:laboratory_want_1"
+                },
+                {
+                    "chance": 0.75,
+                    "weight": 40,
+                    "type": "NextQuest",
+                    "value": "elementalsorcery:laboratory_want_3"
+                }
+            ]
         }
     ]
 }

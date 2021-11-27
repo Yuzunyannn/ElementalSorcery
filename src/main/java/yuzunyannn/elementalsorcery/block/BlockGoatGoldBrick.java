@@ -14,6 +14,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemMultiTexture.Mapper;
 import net.minecraft.item.ItemStack;
@@ -27,10 +28,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IBlockJumpModify;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class BlockGoatGoldBrick extends Block implements Mapper, IBlockJumpModify {
 
@@ -108,10 +112,81 @@ public class BlockGoatGoldBrick extends Block implements Mapper, IBlockJumpModif
 		}
 	}
 
+	static public void onScarletCrystalUpdate(EntityItem eItem) {
+		if (eItem.ticksExisted % 100 != 0) return;
+		BlockPos pos = new BlockPos(eItem.posX, eItem.posY - 0.2, eItem.posZ);
+		IBlockState state = eItem.world.getBlockState(pos);
+		if (state.getBlock() != ESInit.BLOCKS.GOAT_GOLD_BRICK) return;
+		EnumType type = state.getValue(VARIANT);
+		if (type != EnumType.NORMAL) {
+			eItem.motionY = 0.2;
+			eItem.motionX += RandomHelper.rand.nextGaussian() * 0.2;
+			eItem.motionZ += RandomHelper.rand.nextGaussian() * 0.2;
+			return;
+		}
+
+		for (int x = -1; x <= 1; x++) {
+			for (int z = -1; z <= 1; z++) {
+				BlockPos at = pos.add(x, 0, z);
+				state = eItem.world.getBlockState(at);
+				if (state.getBlock() != ESInit.BLOCKS.GOAT_GOLD_BRICK) continue;
+				type = state.getValue(VARIANT);
+				if (type == EnumType.NORMAL && x == 0 && z == 0) {
+					FireworkEffect.spawn(eItem.world, at.up(), 0, 1, 0.1f, new int[] { 0x760e05, 0xd4584d },
+							new int[] { 0xf1c301, 0xfbd903 });
+					eItem.world.setBlockState(at, state.withProperty(VARIANT, EnumType.JUMP));
+				} else if (type == EnumType.JUMP || type == EnumType.GLOW) {
+					FireworkEffect.spawn(eItem.world, at.up(), 0, 1, 0.1f, new int[] { 0xf1c301, 0xfbd903 },
+							new int[] { 0x760e05, 0xd4584d });
+					eItem.world.setBlockState(at, state.withProperty(VARIANT, EnumType.NORMAL));
+				}
+			}
+		}
+		eItem.getItem().shrink(1);
+	}
+
+	public static boolean tryWitherGoatGoldBrick(World worldIn, BlockPos at) {
+		IBlockState state = worldIn.getBlockState(at);
+		if (state.getBlock() != ESInit.BLOCKS.GOAT_GOLD_BRICK) return false;
+		EnumType type = state.getValue(VARIANT);
+		if (type == EnumType.WITHER) return true;
+		worldIn.setBlockState(at, state.withProperty(VARIANT, EnumType.WITHER));
+		return true;
+	}
+
+	public static void tryWitherGoatGoldBrickArea(World worldIn, BlockPos pos, boolean passFastFind) {
+		if (worldIn.isRemote) return;
+		int size = 4;
+
+		if (!passFastFind) {
+			Random rand = worldIn.rand;
+			boolean isFind = false;
+			for (int i = 0; i < 8; i++) {
+				BlockPos at = pos.add(rand.nextGaussian() * size, rand.nextGaussian() * size,
+						rand.nextGaussian() * size);
+				if (tryWitherGoatGoldBrick(worldIn, at)) isFind = true;
+			}
+			if (isFind) size = 1;
+		}
+
+		for (int x = -size; x <= size; x++) {
+			for (int y = -size; y <= size; y++) {
+				for (int z = -size; z <= size; z++) {
+					tryWitherGoatGoldBrick(worldIn, pos.add(x, y, z));
+				}
+			}
+		}
+	}
+
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random random) {
 		if (worldIn.isRemote) return;
 		EnumType type = state.getValue(VARIANT);
+		if (type == EnumType.WITHER) {
+			tryWitherGoatGoldBrickArea(worldIn, pos, false);
+			worldIn.destroyBlock(pos, false);
+			return;
+		}
 		if (type == EnumType.MOVE) {
 			List<BlockPos> moveList = new ArrayList<>();
 			for (EnumFacing facing : EnumFacing.HORIZONTALS) {
@@ -129,6 +204,7 @@ public class BlockGoatGoldBrick extends Block implements Mapper, IBlockJumpModif
 	@Override
 	public void onPlayerJump(World world, BlockPos pos, IBlockState state, EntityLivingBase entity) {
 		EnumType type = state.getValue(VARIANT);
+		if (type == EnumType.WITHER) return;
 		if (type == EnumType.JUMP || type == EnumType.MOVE) {
 			if (entity.motionY < 2) {
 				entity.motionY += 0.25f;
@@ -161,7 +237,8 @@ public class BlockGoatGoldBrick extends Block implements Mapper, IBlockJumpModif
 		NORMAL("normal"),
 		GLOW("glow"),
 		MOVE("move"),
-		JUMP("jump");
+		JUMP("jump"),
+		WITHER("wither");
 
 		final String name;
 

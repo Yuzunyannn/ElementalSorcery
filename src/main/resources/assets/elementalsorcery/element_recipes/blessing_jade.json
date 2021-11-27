@@ -1,0 +1,54 @@
+{
+	"pattern": [
+		"ABC",
+		"H D",
+		"GFE"
+	],
+	"key": {
+		"A": {
+			"item": "elementalsorcery:blessing_jade_piece",
+			"data": 0
+		},
+		"B": {
+			"item": "elementalsorcery:blessing_jade_piece",
+			"data": 1
+		},
+		"C": {
+			"item": "elementalsorcery:blessing_jade_piece",
+			"data": 2
+		},
+		"D": {
+			"item": "elementalsorcery:blessing_jade_piece",
+			"data": 3
+		},
+		"E": {
+			"item": "elementalsorcery:blessing_jade_piece",
+			"data": 4
+		},
+		"F": {
+			"item": "elementalsorcery:blessing_jade_piece",
+			"data": 5
+		},
+		"G": {
+			"item": "elementalsorcery:blessing_jade_piece",
+			"data": 6
+		},
+		"H": {
+			"item": "elementalsorcery:blessing_jade_piece",
+			"data": 7
+		}
+	},
+	"element": [
+		{
+			"id": "earth",
+			"size": 175,
+			"power": 100
+		},
+		{
+			"id": "knowledge",
+			"size": 175,
+			"power": 20
+		}
+	],
+	"result": "elementalsorcery:blessing_jade"
+}

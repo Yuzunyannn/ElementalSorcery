@@ -28,6 +28,7 @@ import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
+import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
@@ -146,6 +147,8 @@ public class BlockSealStone extends Block implements Mapper {
 		if (worldIn.isRemote) return;
 		EntityPlayer player = harvesters.get();
 
+		if (player != null) fortune = (int) (fortune * (1 + player.getLuck() / 32f));
+
 		Random rand = worldIn.rand;
 		int tryTime = rand.nextInt(fortune + 2) + 1;
 
@@ -161,7 +164,8 @@ public class BlockSealStone extends Block implements Mapper {
 		// 一些其他东西
 		RandomHelper.WeightRandom<ItemStack> wr = new RandomHelper.WeightRandom();
 		wr.add(new ItemStack(ESInit.ITEMS.ELEMENT_CRYSTAL), 1);
-		wr.add(new ItemStack(ESInit.ITEMS.KEEPSAKE, 1, ItemKeepsake.EnumType.UNDELIVERED_LETTER.getMeta()), 3);
+		wr.add(ItemBlessingJadePiece.createPiece(0), 2);
+		wr.add(new ItemStack(ESInit.ITEMS.KEEPSAKE, 1, ItemKeepsake.EnumType.UNDELIVERED_LETTER.getMeta()), 4);
 		wr.add(new ItemStack(ESInit.ITEMS.ORDER_CRYSTAL), 4);
 		wr.add(new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL), 10);
 		wr.add(new ItemStack(ESInit.ITEMS.RESONANT_CRYSTAL), 16);

@@ -1,0 +1,115 @@
+{
+    "name": "collect",
+    "site": "elementalsorcery:laboratory",
+    "title": "quest.request.collect",
+    "describe": [
+        {
+            "condition": "{has#previous}",
+            "value": "quest.next.polite.{random#1~2}"
+        },
+        "quest.research.want",
+        "quest.end.polite.{random#2~3}"
+    ],
+    "condition": [
+        {
+            "type": "NeedItem",
+            "value": {
+                "type": "pool",
+                "times": "{random#2~3}",
+                "reward": [
+                    {
+                        "weight": 10,
+                        "item": {
+                            "item": "minecraft:rotten_flesh",
+                            "count": "{random#16~32}"
+                        }
+                    },
+                    {
+                        "weight": 10,
+                        "item": {
+                            "item": "minecraft:spider_eye",
+                            "count": "{random#16~32}"
+                        }
+                    },
+                    {
+                        "weight": 10,
+                        "item": {
+                            "item": "minecraft:gunpowder",
+                            "count": "{random#16~32}"
+                        }
+                    },
+                    {
+                        "weight": 10,
+                        "item": {
+                            "item": "minecraft:bone",
+                            "count": "{random#16~32}"
+                        }
+                    },
+                    {
+                        "weight": 5,
+                        "item": {
+                            "item": "minecraft:ender_pearl",
+                            "count": "{random#1~2}"
+                        }
+                    },
+                    {
+                        "weight": 5,
+                        "item": {
+                            "item": "minecraft:blaze_rod",
+                            "count": "{random#4~8}"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "precondition": [
+        {
+            "type": "NeedFame",
+            "value": 10
+        }
+    ],
+    "reward": [
+        {
+            "type": "Coin",
+            "value": "{prandom#75~100}"
+        },
+        {
+            "type": "Exp",
+            "value": "{random#100~150}"
+        },
+        {
+            "type": "Fame",
+            "value": 1
+        },
+        {
+            "type": "Topic",
+            "chance": 0.5,
+            "value": "{random#1~1}",
+            "topic": "Biology"
+        },
+        {
+            "type": "Topic",
+            "chance": 0.25,
+            "value": "{random#1~1}",
+            "topic": "Natural"
+        },
+        {
+            "type": "pool",
+            "reward": [
+                {
+                    "chance": 0.75,
+                    "weight": 50,
+                    "type": "NextQuest",
+                    "value": "elementalsorcery:laboratory_want_1"
+                },
+                {
+                    "chance": 0.75,
+                    "weight": 40,
+                    "type": "NextQuest",
+                    "value": "elementalsorcery:laboratory_want_2"
+                }
+            ]
+        }
+    ]
+}

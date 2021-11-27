@@ -1,0 +1,38 @@
+{
+	"pattern": [
+		"R#R",
+		"#V#",
+		"R#R",
+		" ## ",
+		"#AB#",
+		"#CD#",
+		" ## "
+	],
+	"key": {
+		"V": "elementalsorcery:vortex",
+		"A": "elementalsorcery:dejected_tear",
+		"B": "elementalsorcery:rabid_leather",
+		"C": "elementalsorcery:arrogant_wool",
+		"D": "elementalsorcery:dread_gem",
+		"#": {
+			"item": "minecraft:concrete",
+			"data": 7
+		},
+		"R" :"minecraft:coal_block"
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 100,
+			"power": 350
+		},
+		{
+			"id": "wood",
+			"size": 50,
+			"power": 600
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:calamity_gem"
+	}
+}

@@ -1,0 +1,7 @@
+{
+    "parent": "minecraft:block/cube_column",
+    "textures": {
+        "side": "elementalsorcery:blocks/goat_gold_brick/gold_brick_twither",
+        "end": "elementalsorcery:blocks/goat_gold_brick/gold_brick_twither"
+    }
+}

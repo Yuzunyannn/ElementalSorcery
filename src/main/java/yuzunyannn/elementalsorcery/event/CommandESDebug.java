@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.event;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
-import java.util.List;
 import java.util.function.Function;
 
 import net.minecraft.block.Block;
@@ -17,12 +16,12 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -37,9 +36,8 @@ import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
+import yuzunyannn.elementalsorcery.init.LootRegister;
 import yuzunyannn.elementalsorcery.parchment.Pages;
-import yuzunyannn.elementalsorcery.util.MazeCreator;
-import yuzunyannn.elementalsorcery.util.MazeCreator.Grid;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -126,41 +124,9 @@ public class CommandESDebug {
 //				ElementExplosion.doExplosion(entity.world, new Vec3d(pos),
 //						new ElementStack(ESObjects.ELEMENTS.STAR, 100, 500), entity);
 //				System.out.println(((EntityPlayer) entity).getLuck());
-				int w = 16, h = 16;
-				int s = 1;
-				int gs = s + 1;
-				MazeCreator maze = new MazeCreator(w, h);
-				maze.generate(RandomHelper.rand);
-				for (int i = 0; i < w; i++) {
-					for (int j = 0; j < h; j++) {
-						List<Grid> list = maze.buildWallGridList(i, j, s, 1);
-						BlockPos thisGrid = pos.add(i * gs, 0, j * gs);
-						for (Grid g : list) {
-							BlockPos at = thisGrid.add(g.toBlockPos(0));
-							EntityBlockMove move = new EntityBlockMove(entity.world,
-									new Vec3d(at).addVector(0.5, 1, 0.5), at.up(1), Blocks.STONE.getDefaultState());
-							entity.world.spawnEntity(move);
-							// entity.world.setBlockState(at.up(1), Blocks.STONE.getDefaultState());
-//							entity.world.setBlockState(at.up(2), Blocks.STONE.getDefaultState());
-						}
-					}
-				}
-				for (int x = -1; x < w * gs; x++) {
-					BlockPos at = pos.add(x, 1, -1);
-					entity.world.setBlockState(at, Blocks.WOOL.getDefaultState());
-				}
-				for (int x = -1; x < w * gs; x++) {
-					BlockPos at = pos.add(x, 1, h * gs - 1);
-					entity.world.setBlockState(at, Blocks.WOOL.getDefaultState());
-				}
-				for (int z = -1; z < h * gs; z++) {
-					BlockPos at = pos.add(-1, 1, z);
-					entity.world.setBlockState(at, Blocks.WOOL.getDefaultState());
-				}
-				for (int z = -1; z < h * gs; z++) {
-					BlockPos at = pos.add(w * gs - 1, 1, z);
-					entity.world.setBlockState(at, Blocks.WOOL.getDefaultState());
-				}
+				entity.world.setBlockState(pos, Blocks.CHEST.getDefaultState());
+				TileEntityChest chest = (TileEntityChest) entity.world.getTileEntity(pos);
+				chest.setLootTable(LootRegister.ES_VILLAGE_HALL, RandomHelper.rand.nextLong());
 			}
 				return;
 			case "blockMoveTest": {

@@ -39,6 +39,7 @@ import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
 import net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
+import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
@@ -70,6 +71,7 @@ import yuzunyannn.elementalsorcery.entity.fcube.FCMAttack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
+import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageSyncConfig;
 import yuzunyannn.elementalsorcery.potion.PotionBlessing;
@@ -521,6 +523,24 @@ public class EventServer {
 			Block block = state.getBlock();
 			if (block instanceof IBlockJumpModify)
 				((IBlockJumpModify) block).onPlayerJump(entity.world, pos, state, entity);
+		}
+	}
+
+	// 钓鱼
+	@SubscribeEvent
+	public static void onFished(ItemFishedEvent event) {
+		if (event.isCanceled()) return;
+		EntityPlayer player = event.getEntityPlayer();
+		ItemBlessingJadePiece.onFished(player, event.getHookEntity());
+	}
+
+	@SubscribeEvent
+	public static void onEntityInteractSpecific(PlayerInteractEvent.EntityInteractSpecific event) {
+		World world = event.getWorld();
+		if (world.isRemote) return;
+		if (PocketWatch.isActive(world)) {
+			event.setCanceled(true);
+			return;
 		}
 	}
 
