@@ -499,13 +499,11 @@ public class EventServer {
 		float factor = 0;
 		if (entity.isPotionActive(ESInit.POTIONS.CALAMITY)) {
 			int amplifier = entity.getActivePotionEffect(ESInit.POTIONS.CALAMITY).getAmplifier() + 1;
-			factor = factor + (potion.isBadEffect() ? 0.4f * amplifier : 0);
-			factor = factor + (potion.isBeneficial() ? -0.15f * amplifier : 0);
+			factor = factor + (potion.isBadEffect() ? (0.4f * amplifier) : (-0.15f * amplifier));
 		}
 		if (entity.isPotionActive(ESInit.POTIONS.BLESSING) && potion != ESInit.POTIONS.BLESSING) {
 			int amplifier = entity.getActivePotionEffect(ESInit.POTIONS.BLESSING).getAmplifier() + 1;
-			factor = factor + (potion.isBadEffect() ? -0.075f * amplifier : 0);
-			factor = factor + (potion.isBeneficial() ? 0.125f * amplifier : 0);
+			factor = factor + (potion.isBadEffect() ? (-0.075f * amplifier) : (0.125f * amplifier));
 		}
 		if (factor != 0) {
 			int duration = MathHelper.clamp((int) (effect.getDuration() * (1 + factor)), 1, Short.MAX_VALUE);

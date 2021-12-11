@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityFallingBlock;
 import net.minecraft.entity.item.EntityItem;
@@ -75,10 +74,10 @@ public class PotionPoundWalker extends PotionCommon {
 			if (entity instanceof EntityItem) entity.motionY = falling.motionY * 3.5;
 			else if (entity instanceof EntityLivingBase) {
 				entity.motionY = falling.motionY * 3.5;
-				EntityLiving living = (EntityLiving) entity;
-				if (entity.motionY > 0.8f) {
+				EntityLivingBase living = (EntityLivingBase) entity;
+				living.velocityChanged = true;
+				if (entity.motionY > 0.8f)
 					living.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, (int) (entity.motionY * 20 * 10)));
-				}
 			}
 		}
 	}

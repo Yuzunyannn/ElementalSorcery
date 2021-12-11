@@ -204,13 +204,10 @@ public class EntityRotaryWindmillBlate extends EntityObject implements IEntityAd
 		}
 	}
 
-	@SideOnly(Side.CLIENT)
+	// ------ client ------ 
 	public float bladeRotate;
-	@SideOnly(Side.CLIENT)
 	public float prevBladeRotate;
-	@SideOnly(Side.CLIENT)
 	public float bladeScale = 0;
-	@SideOnly(Side.CLIENT)
 	public float prevBladeScale;
 
 	@SideOnly(Side.CLIENT)

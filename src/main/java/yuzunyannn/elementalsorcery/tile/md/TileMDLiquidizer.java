@@ -64,17 +64,14 @@ public class TileMDLiquidizer extends TileMDBase implements ITickable {
 	protected Juice juice = new JuiceMax();
 	protected List<RotateData> ingredients = new ArrayList<>();
 
-	@SideOnly(Side.CLIENT)
+	
+	// -------- client --------
+	
 	public float rotate;
-	@SideOnly(Side.CLIENT)
 	public float prevRotate;
-	@SideOnly(Side.CLIENT)
 	protected float prevWater = 0;
-	@SideOnly(Side.CLIENT)
 	protected Vec3d waterColor = new Vec3d(0, 0, 0);
-	@SideOnly(Side.CLIENT)
 	protected float waterServer = -1;
-	@SideOnly(Side.CLIENT)
 	protected Vec3d waterServerColor;
 
 	@Override
@@ -192,6 +189,7 @@ public class TileMDLiquidizer extends TileMDBase implements ITickable {
 			} else juice.modulate(rd.material, drop);
 			if (rd.remain <= 0) iter.remove();
 		}
+		this.markDirty();
 	}
 
 	@SideOnly(Side.CLIENT)

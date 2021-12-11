@@ -25,7 +25,6 @@ public class PotionDefenseSkill extends PotionCommon {
 		if (target instanceof EntityPlayer) level = ((EntityPlayer) target).experienceLevel;
 		else level = target.getMaxHealth();
 		float factor = (float) (Math.pow(level / 10, 1.1) / 16 * (1 + amplifier * 0.075));
-		System.out.println(factor);
 		return Math.min(0.9f, factor);
 	}
 

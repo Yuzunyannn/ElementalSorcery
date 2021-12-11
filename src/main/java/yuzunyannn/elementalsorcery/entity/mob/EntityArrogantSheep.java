@@ -12,6 +12,7 @@ import com.google.common.collect.Lists;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -41,7 +42,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -148,7 +148,8 @@ public class EntityArrogantSheep extends EntityMob {
 	}
 
 	protected ITextComponent createSheepSay(String str) {
-		return new TextComponentString(this.getName()).setStyle(new Style().setColor(TextFormatting.GOLD))
+		String s = EntityList.getEntityString(this);
+		return new TextComponentTranslation("entity." + s + ".name").setStyle(new Style().setColor(TextFormatting.GOLD))
 				.appendText(": ").appendSibling(new TextComponentTranslation(str));
 	}
 
@@ -410,10 +411,11 @@ public class EntityArrogantSheep extends EntityMob {
 			return false;
 		}
 
+		if (world.isRemote) return true;
+
 		this.setSheared(true);
 		this.setRevengeTarget(player);
 
-		if (world.isRemote) return true;
 		dyingSay();
 
 		float luck = player.getLuck();

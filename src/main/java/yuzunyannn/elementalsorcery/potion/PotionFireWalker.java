@@ -13,7 +13,7 @@ import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 public class PotionFireWalker extends PotionCommon {
 
 	public PotionFireWalker() {
-		super(false, 0xd38409, "fireWalker");
+		super(true, 0xd38409, "fireWalker");
 		iconIndex = 1;
 
 		registerPotionAttributeModifier(SharedMonsterAttributes.MOVEMENT_SPEED, "26ee6c1d-e2b9-44ed-ab64-10de3e407e48",
