@@ -106,7 +106,7 @@ public class FCMDestoryBlock extends FairyCubeModule {
 		}
 
 		NBTTagCompound nbt = new NBTTagCompound();
-		NBTHelper.setBlockPosList(nbt, "P", list);
+		NBTHelper.setBlockPosCollection(nbt, "P", list);
 		this.sendToClient(nbt);
 	}
 

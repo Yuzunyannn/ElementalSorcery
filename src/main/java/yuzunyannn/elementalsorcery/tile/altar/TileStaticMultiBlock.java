@@ -94,7 +94,7 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 				if (world.isRemote) genParticleElementTo(true, altarWake, extract, pos, animePos);
 				else {
 					einv.extractElement(need, false);
-					if (ElementHelper.isEmpty(einv)) altarWake.onEmptyStatusChange();
+					if (ElementHelper.isEmpty(einv)) altarWake.onInventoryStatusChange();
 				}
 				return extract;
 			}

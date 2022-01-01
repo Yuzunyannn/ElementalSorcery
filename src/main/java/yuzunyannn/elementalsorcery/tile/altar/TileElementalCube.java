@@ -121,7 +121,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	}
 
 	@Override
-	public void onEmptyStatusChange() {
+	public void onInventoryStatusChange() {
 		if (!world.isRemote) this.updateToClient();
 	}
 

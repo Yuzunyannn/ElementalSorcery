@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.block.altar;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +20,7 @@ import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 public class BlockAnalysisAltar extends BlockContainerNormal {
 
 	public BlockAnalysisAltar() {
-		super(Material.ROCK, "analysisAltar", 6.5F); 
+		super(Material.ROCK, "analysisAltar", 6.5F, MapColor.QUARTZ);
 	}
 
 	@Override
@@ -30,10 +31,8 @@ public class BlockAnalysisAltar extends BlockContainerNormal {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (facing == EnumFacing.DOWN)
-			return false;
-		if (worldIn.isRemote)
-			return true;
+		if (facing == EnumFacing.DOWN) return false;
+		if (worldIn.isRemote) return true;
 		playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_ANALYSIS_ALTAR, worldIn, pos.getX(), pos.getY(),
 				pos.getZ());
 		return true;

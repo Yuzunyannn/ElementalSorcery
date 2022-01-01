@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -68,9 +69,10 @@ public class BlockElementalCube extends BlockElementContainer {
 			0.5F + BLOCK_HALF_SIZE);
 
 	public BlockElementalCube() {
-		super(Material.GLASS);
+		super(Material.GLASS, MapColor.CYAN);
 		this.setUnlocalizedName("elementalCube");
 		this.setLightLevel(0.75F);
+		this.setHardness(0.5f);
 	}
 
 	@Override

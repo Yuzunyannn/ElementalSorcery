@@ -88,7 +88,7 @@ public class GuiSupremeTable extends GuiNormal<ContainerSupremeTable> {
 				int y = offsetY + 75;
 				if (i < size / 2) x = offsetX + 34 + i * 18;
 				else x = offsetX + 142 + (i - size / 2) * 18;
-				estack.getElement().drawElemntIconInGUI(estack, x + 1, y + 1, mc);
+				estack.getElement().drawElemntIconInGUI(estack, x + 1, y + 1, 0);
 			}
 		} else {
 			byte left = 0;
@@ -103,7 +103,7 @@ public class GuiSupremeTable extends GuiNormal<ContainerSupremeTable> {
 					x = offsetX + 142 + 18 * right;
 					right++;
 				}
-				estack.getElement().drawElemntIconInGUI(estack, x + 1, y + 1, mc);
+				estack.getElement().drawElemntIconInGUI(estack, x + 1, y + 1, 0);
 			}
 		}
 

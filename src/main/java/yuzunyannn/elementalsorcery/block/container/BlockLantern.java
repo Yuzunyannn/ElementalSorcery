@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.block.container;
 
 import java.util.Random;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -25,7 +26,7 @@ import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 public class BlockLantern extends BlockContainerNormal {
 
 	public BlockLantern() {
-		super(Material.ROCK, "lantern", 3.5F);
+		super(Material.ROCK, "lantern", 3.5F, MapColor.STONE);
 		this.setLightLevel(1.0f);
 	}
 

@@ -193,6 +193,7 @@ tile.deconstructWindmill.name=风车平台
 tile.elementTranslocator.name=元素转移台
 tile.MDLiquidize.name=榨汁机
 tile.goatGoldBrick.common.name=金砖
+tile.devolveCube.name=协调立方体
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者

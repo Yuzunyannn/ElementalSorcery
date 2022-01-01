@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.block.container;
 
 import java.util.Random;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -23,7 +24,7 @@ import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 public class BlockElfTreeCore extends BlockContainerNormal {
 
 	public BlockElfTreeCore() {
-		super(Material.GLASS, "elfTreeCore", 20F);
+		super(Material.GLASS, "elfTreeCore", 20F, MapColor.GREEN);
 		this.setLightLevel(0.5f);
 	}
 

@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.block.altar;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -25,7 +26,7 @@ import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 public class BlockTranscribeTable extends BlockContainerNormal {
 
 	public BlockTranscribeTable() {
-		super(Material.ROCK, "transcribeTable", 6.5F);
+		super(Material.ROCK, "transcribeTable", 6.5F, MapColor.QUARTZ);
 	}
 
 	@Override

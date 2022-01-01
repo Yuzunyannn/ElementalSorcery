@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -41,7 +42,7 @@ public class BlockGoatGoldBrick extends Block implements Mapper, IBlockJumpModif
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 
 	public BlockGoatGoldBrick() {
-		super(Material.ROCK);
+		super(Material.ROCK, MapColor.GOLD);
 		this.setUnlocalizedName("goatGoldBrick");
 		this.setHarvestLevel("pickaxe", 4);
 		this.setHardness(500F);

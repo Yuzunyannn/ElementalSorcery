@@ -51,7 +51,6 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 			NBTHelper.setElementist(compound, "elms", outList);
 		}
 		super.readFromNBT(compound);
-
 	}
 
 	@Override
@@ -207,7 +206,7 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 		eInv.insertElement(estack, false);
 		if (altarWake != null) {
 			altarWake.wake(IAltarWake.OBTAIN, pos);
-			if (isEmpty) altarWake.onEmptyStatusChange();
+			if (isEmpty) altarWake.onInventoryStatusChange();
 		}
 
 	}

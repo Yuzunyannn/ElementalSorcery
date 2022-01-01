@@ -29,6 +29,8 @@
     "tile.elementalsorcery_mdfusion.max_capacity": "The max magic limit of Element Magic Drive Enchanting Box",
     "tile.elementalsorcery_mdliquidizer.juice_max_capacity": "The max limit of juice capacity that the Liquidizer can store",
     "tile.elementalsorcery_ritetable.normal_rite_always_success": "Print Rite is Always Success",
+    "tile.elementalsorcery_devolvecube.max_auto_transfer_count": "The max limit of Auto Element Transfers that one Devolve Cube can manage",
+    "tile.elementalsorcery_devolvecube.max_auto_transfer_volume_per_sec": "The max limit per sec for Devolve Cube auto transfer Element",
 
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "The worlds can spawn [Invalid for Entity]",
     "spawn_and_gen.world_gen_and_spawn_config.biomes": "The biomes can spawn",

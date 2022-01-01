@@ -128,7 +128,7 @@ public class FCMPlaceBlock extends FairyCubeModule {
 
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setInteger("D", status == 2 ? (16 + addTime * 8) : (2 + addTime));
-		NBTHelper.setBlockPosList(nbt, "P", list);
+		NBTHelper.setBlockPosCollection(nbt, "P", list);
 		this.sendToClient(nbt);
 	}
 

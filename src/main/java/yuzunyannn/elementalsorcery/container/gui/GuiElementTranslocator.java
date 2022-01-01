@@ -167,7 +167,7 @@ public class GuiElementTranslocator extends GuiNormal<ContainerElementTranslocat
 		for (GuiTextField tf : counts) tf.drawTextBox();
 
 		if (!estack.isEmpty()) {
-			estack.getElement().drawElemntIconInGUI(estack, offsetX + 80, offsetY + 39, mc);
+			estack.getElement().drawElemntIconInGUI(estack, offsetX + 80, offsetY + 39, 0);
 		}
 
 		this.mc.getTextureManager().bindTexture(TEXTURE);
@@ -217,7 +217,7 @@ public class GuiElementTranslocator extends GuiNormal<ContainerElementTranslocat
 		for (GuiTextField tf : counts) tf.mouseClicked(mouseX, mouseY, mouseButton);
 	}
 
-	static class GuiTextFieldOnlyNumber extends GuiTextField {
+	static public class GuiTextFieldOnlyNumber extends GuiTextField {
 
 		public GuiTextFieldOnlyNumber(int componentId, FontRenderer fontrendererObj, int x, int y, int par5Width,
 				int par6Height) {

@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.block.container;
 
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraftforge.fml.relauncher.Side;
@@ -12,8 +13,16 @@ public abstract class BlockContainerNormal extends BlockContainer {
 		super(materialIn);
 	}
 
-	protected BlockContainerNormal(Material materialIn, String unlocalizedName, float hardness) {
-		super(materialIn);
+//	protected BlockContainerNormal(Material materialIn, String unlocalizedName, float hardness, MapColor color) {
+//		super(materialIn);
+//		this.setUnlocalizedName(unlocalizedName);
+//		this.setHardness(hardness);
+//		if (materialIn == Material.ROCK) this.setHarvestLevel("pickaxe", 1);
+//		else if (materialIn == Material.WOOD) this.setHarvestLevel("axe", 1);
+//	}
+
+	protected BlockContainerNormal(Material materialIn, String unlocalizedName, float hardness, MapColor color) {
+		super(materialIn, color);
 		this.setUnlocalizedName(unlocalizedName);
 		this.setHardness(hardness);
 		if (materialIn == Material.ROCK) this.setHarvestLevel("pickaxe", 1);

@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.block;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
@@ -17,7 +18,7 @@ public class BlockAStone extends Block implements Mapper {
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 
 	public BlockAStone() {
-		super(Material.ROCK);
+		super(Material.ROCK, MapColor.BLUE);
 		this.setUnlocalizedName("astone");
 		this.setHarvestLevel("pickaxe", 1);
 		this.setHardness(10F);
@@ -29,8 +30,7 @@ public class BlockAStone extends Block implements Mapper {
 	}
 
 	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
-		for (EnumType enumtype : EnumType.values())
-			items.add(new ItemStack(this, 1, enumtype.ordinal()));
+		for (EnumType enumtype : EnumType.values()) items.add(new ItemStack(this, 1, enumtype.ordinal()));
 	}
 
 	@Override
@@ -54,10 +54,15 @@ public class BlockAStone extends Block implements Mapper {
 	}
 
 	public static enum EnumType implements IStringSerializable {
-		STONE("stone"), FRAGMENTED("fragmented"), SMOOTH("smooth"), VEIN("vein"), CIRCLE("circle"), BRICK(
-				"brick"), TRANS("trans");
+		STONE("stone"),
+		FRAGMENTED("fragmented"),
+		SMOOTH("smooth"),
+		VEIN("vein"),
+		CIRCLE("circle"),
+		BRICK("brick"),
+		TRANS("trans");
 
-		final String name; 
+		final String name;
 
 		EnumType(String name) {
 			this.name = name;

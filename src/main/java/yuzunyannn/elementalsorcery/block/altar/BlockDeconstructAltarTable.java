@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.block.altar;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,11 +15,11 @@ import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class BlockDeconstructAltarTable extends BlockContainerNormal {
 	public BlockDeconstructAltarTable() {
-		super(Material.ROCK, "deconstructAltarTable", 5.5F);
+		super(Material.ROCK, "deconstructAltarTable", 5.5F, MapColor.QUARTZ);
 	}
 
 	protected BlockDeconstructAltarTable(Material materialIn, String unlocalizedName, float hardness) {
-		super(materialIn, unlocalizedName, hardness);
+		super(materialIn, unlocalizedName, hardness, MapColor.QUARTZ);
 	}
 
 	@Override

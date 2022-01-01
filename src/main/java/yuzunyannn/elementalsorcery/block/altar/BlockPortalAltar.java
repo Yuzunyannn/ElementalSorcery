@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.block.altar;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +20,7 @@ import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 public class BlockPortalAltar extends BlockContainerNormal {
 
 	public BlockPortalAltar() {
-		super(Material.ROCK, "portalAltar", 6.5F);
+		super(Material.ROCK, "portalAltar", 6.5F, MapColor.QUARTZ);
 		this.setHarvestLevel("pickaxe", 2);
 	}
 

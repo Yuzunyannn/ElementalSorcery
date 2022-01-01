@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.block.container;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,7 +37,7 @@ public class BlockElementPlatform extends BlockElementContainer {
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 15.0 / 16.0, 1.0D);
 
 	public BlockElementPlatform() {
-		super(Material.ROCK);
+		super(Material.ROCK, MapColor.QUARTZ);
 		this.setHarvestLevel("pickaxe", 1);
 		this.setUnlocalizedName("elementPlatform");
 		this.setHardness(1.5f);

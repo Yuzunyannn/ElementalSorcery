@@ -958,6 +958,11 @@
 			"zh_CN": "金砖",
 			"en_US": "Gold Brick",
 			"ja_JP": "金れんが"
+		},
+		"tile.devolveCube.name": {
+			"zh_CN": "协调立方体",
+			"en_US": "Devolve Cube",
+			"ja_JP": "てんい立方体"
 		}
 	},
 	"es.effect": {

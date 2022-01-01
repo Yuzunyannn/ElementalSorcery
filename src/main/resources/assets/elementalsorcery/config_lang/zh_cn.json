@@ -30,6 +30,8 @@
     "tile.elementalsorcery_mdfusion.max_capacity": "注魔箱的最大魔力储存上限",
     "tile.elementalsorcery_mdliquidizer.juice_max_capacity": "榨汁机可以存放的果汁容量上限",
     "tile.elementalsorcery_ritetable.normal_rite_always_success": "映像仪式不会失败",
+    "tile.elementalsorcery_devolvecube.max_auto_transfer_count": "协调立方体可管理的自动元素转移的最大数目",
+    "tile.elementalsorcery_devolvecube.max_auto_transfer_volume_per_sec": "协调立方体自动传输元素每秒的最大限流",
 
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "[会生成的世界][对生物类型无效]",
     "spawn_and_gen.world_gen_and_spawn_config.biomes": "[会生成的生物群系]",

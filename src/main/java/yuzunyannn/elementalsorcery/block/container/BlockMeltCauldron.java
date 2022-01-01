@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.block.container;
 
 import java.util.List;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -21,7 +22,7 @@ public class BlockMeltCauldron extends BlockContainerNormal {
 	protected static final AxisAlignedBB BLOCK_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D);
 
 	public BlockMeltCauldron() {
-		super(Material.ROCK, "meltCauldron", 5.0F);
+		super(Material.ROCK, "meltCauldron", 5.0F, MapColor.IRON);
 	}
 
 	@Override
@@ -75,13 +76,11 @@ public class BlockMeltCauldron extends BlockContainerNormal {
 		if (entity instanceof EntityItem) {
 			if (yToTest <= blockpos.getY() + 1) {
 				TileEntity tile = world.getTileEntity(blockpos);
-				if (tile instanceof TileMeltCauldron)
-					((TileMeltCauldron) tile).eatItem((EntityItem) entity);
+				if (tile instanceof TileMeltCauldron) ((TileMeltCauldron) tile).eatItem((EntityItem) entity);
 			}
 		} else if (entity instanceof EntityLivingBase) {
 			TileEntity tile = world.getTileEntity(blockpos);
-			if (tile instanceof TileMeltCauldron)
-				((TileMeltCauldron) tile).livingEnter((EntityLivingBase) entity);
+			if (tile instanceof TileMeltCauldron) ((TileMeltCauldron) tile).livingEnter((EntityLivingBase) entity);
 		}
 		return null;
 	}

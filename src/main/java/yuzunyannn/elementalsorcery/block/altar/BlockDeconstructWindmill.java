@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.block.altar;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +16,7 @@ import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 public class BlockDeconstructWindmill extends BlockContainerNormal {
 
 	public BlockDeconstructWindmill() {
-		super(Material.ROCK, "deconstructWindmill", 5.5F);
+		super(Material.ROCK, "deconstructWindmill", 5.5F, MapColor.QUARTZ);
 	}
 
 	@Override

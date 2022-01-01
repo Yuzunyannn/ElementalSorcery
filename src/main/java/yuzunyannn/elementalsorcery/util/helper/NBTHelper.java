@@ -3,8 +3,10 @@ package yuzunyannn.elementalsorcery.util.helper;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -129,10 +131,10 @@ public class NBTHelper {
 		return BlockPos.ORIGIN;
 	}
 
-	public static void setBlockPosList(NBTTagCompound nbt, String key, List<BlockPos> posList) {
-		int[] datas = new int[posList.size() * 3];
+	public static void setBlockPosCollection(NBTTagCompound nbt, String key, Collection<BlockPos> posCollection) {
+		int[] datas = new int[posCollection.size() * 3];
 		int i = 0;
-		for (BlockPos pos : posList) {
+		for (BlockPos pos : posCollection) {
 			datas[i] = pos.getX();
 			datas[++i] = pos.getY();
 			datas[++i] = pos.getZ();
@@ -147,6 +149,14 @@ public class NBTHelper {
 		List<BlockPos> posList = new ArrayList<>(length / 3);
 		for (int i = 0; i < length; i += 3) posList.add(new BlockPos(datas[i], datas[i + 1], datas[i + 2]));
 		return posList;
+	}
+
+	public static Set<BlockPos> getBlockPosSet(NBTTagCompound nbt, String key) {
+		int[] datas = nbt.getIntArray(key);
+		int length = (datas.length / 3) * 3;
+		Set<BlockPos> posSet = new HashSet<>();
+		for (int i = 0; i < length; i += 3) posSet.add(new BlockPos(datas[i], datas[i + 1], datas[i + 2]));
+		return posSet;
 	}
 
 	public static void setVec3d(NBTTagCompound nbt, String key, Vec3d pos) {

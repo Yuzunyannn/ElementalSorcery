@@ -70,7 +70,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	/** 自定义数据 */
 	private NBTTagCompound stackTagCompound;
 
-	private ElementStack() {
+	protected ElementStack() {
 
 	}
 
@@ -83,9 +83,9 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	}
 
 	public ElementStack(Element element, int size, int power) {
-		this.element = element == null ? EMPTY.element : element;
-		this.stackSize = size >= 0 ? size : 0;
-		this.power = power >= 0 ? power : 0;
+		setElement(element);
+		setCount(size >= 0 ? size : 0);
+		setPower(power >= 0 ? power : 0);
 	}
 
 	public ElementStack(NBTTagCompound compound) {
@@ -97,9 +97,9 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	}
 
 	public void become(ElementStack estack) {
-		this.setElement(estack.element);
-		this.stackSize = estack.stackSize;
-		this.power = estack.power;
+		this.setElement(estack.getElement());
+		setCount(estack.getCount());
+		setPower(estack.getPower());
 	}
 
 	public ElementStack copy() {
@@ -115,7 +115,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
 	/** 获取元素颜色 */
 	public int getColor() {
-		return element.getColor(this);
+		return getElement().getColor(this);
 	}
 
 	/** 获取元素能量 */
@@ -186,12 +186,13 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
 	/** 削弱 */
 	public void weaken(float rate) {
-		this.setPower(MathHelper.ceil(this.power * rate));
+		this.setPower(MathHelper.ceil(getPower() * rate));
 	}
 
 	/** 是否为空 */
 	public boolean isEmpty() {
-		if (this.element == EMPTY.element) return true;
+		Element element = this.getElement();
+		if (element == EMPTY.element) return true;
 		else if (element != null) {
 			if (stackSize <= 0) return true;
 			return false;
@@ -205,7 +206,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
 	/** 是否为魔力元素 */
 	public boolean isMagic() {
-		return this.element == ESObjects.ELEMENTS.MAGIC;
+		return getElement() == ESObjects.ELEMENTS.MAGIC;
 	}
 
 	/** 是否为空 */
@@ -215,7 +216,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
 	/** 是否为同一个类型 */
 	public boolean areSameType(ElementStack estack) {
-		if (this.element != estack.element) return false;
+		if (getElement() != estack.getElement()) return false;
 		return true;
 	}
 
@@ -250,26 +251,26 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
 	public ITextComponent getTextComponent() {
 		ITextComponent itextcomponent = new TextComponentString("[");
-		itextcomponent.appendSibling(new TextComponentTranslation(this.element.getUnlocalizedName(this) + ".name"));
+		itextcomponent.appendSibling(new TextComponentTranslation(getElement().getUnlocalizedName(this) + ".name"));
 		itextcomponent.appendSibling(new TextComponentString("]"));
 		return itextcomponent;
 	}
 
 	@Override
 	public String toString() {
-		return this.stackSize + "x" + this.getElement().getUnlocalizedName(this) + ":" + this.power;
+		return getCount() + "x" + this.getElement().getUnlocalizedName(this) + ":" + getPower();
 	}
 
 	/** 物品被析构成元素的时候回调 */
 	public ElementStack becomeElementWhenDeconstruct(World world, ItemStack stack, int complex, int lvPower) {
-		return this.element.changetoElementWhenDeconstruct(world, stack, this, complex, lvPower);
+		return getElement().changetoElementWhenDeconstruct(world, stack, this, complex, lvPower);
 	}
 
 	/** 转化成元素时候回调 */
 	public ElementStack becomeMagic(@Nullable World world) {
 		if (this.isMagic()) return this;
 		if (this.isEmpty()) return this;
-		ElementStack magic = this.element.changetoMagic(world, this);
+		ElementStack magic = getElement().changetoMagic(world, this);
 		magic.setElement(ESObjects.ELEMENTS.MAGIC);
 		return magic;
 	}
@@ -305,7 +306,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		// 读取元素类型
 		ResourceLocation name = new ResourceLocation(nbt.getString("id"));
 		this.setElement(Element.getElementFromName(name));
-		if (element == null) this.setElement(EMPTY.element);
+		if (getElement() == null) this.setElement(EMPTY.element);
 		// 读取元素数量
 		this.setCount(nbt.getInteger("size"));
 		// 读取元素能量
@@ -317,13 +318,13 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	/** 序列化 */
 	public void writeToNBT(NBTTagCompound nbt) {
 		// 写入元素类型
-		ResourceLocation resourcelocation = Element.getNameFromElement(this.element);
+		ResourceLocation resourcelocation = Element.getNameFromElement(getElement());
 		nbt.setString("id", resourcelocation == null ? EMPTY.getElement().getRegistryName().toString()
 				: resourcelocation.toString());
 		// 写入元素的数量
-		nbt.setInteger("size", stackSize);
+		nbt.setInteger("size", getCount());
 		// 写入元素的能量
-		nbt.setInteger("power", power);
+		nbt.setInteger("power", getPower());
 		// 自定义数据
 		if (stackTagCompound != null && !stackTagCompound.hasNoTags()) nbt.setTag("tag", stackTagCompound);
 	}

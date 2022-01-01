@@ -98,12 +98,12 @@ public class GuiAnalysisAltar extends GuiNormal<ContainerAnalysisAltar> {
 		if (estacks.length <= 3) {
 			for (int i = 0; i < estacks.length; i++) {
 				ElementStack estack = estacks[i];
-				estack.getElement().drawElemntIconInGUI(estack, offsetX + 56 + i * 17, offsetY + 58, mc);
+				estack.getElement().drawElemntIconInGUI(estack, offsetX + 56 + i * 17, offsetY + 58, 0);
 			}
 		} else {
 			for (int i = 0; i < 3; i++) {
 				ElementStack estack = estacks[i + at];
-				estack.getElement().drawElemntIconInGUI(estack, offsetX + 56 + i * 17, offsetY + 58, mc);
+				estack.getElement().drawElemntIconInGUI(estack, offsetX + 56 + i * 17, offsetY + 58, 0);
 			}
 		}
 		this.mc.getTextureManager().bindTexture(TEXTURE);

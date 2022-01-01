@@ -5,9 +5,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.capabilities.Capability;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.item.IPlatformTickable;
+import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
@@ -17,13 +19,14 @@ import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryOnlyInsert;
 
-public class TileElementPlatform extends TileEntityNetwork implements IGetItemStack, ITickable {
+public class TileElementPlatform extends TileEntityNetwork implements IGetItemStack, ITickable, IAltarWake {
 
 	// 只能存不能取
 	protected ElementInventoryOnlyInsert inventory = new ElementInventoryOnlyInsert(4);
 	protected ItemStack stack = ItemStack.EMPTY;
 	protected NBTTagCompound runData = null;
 	protected int tick;
+	protected boolean needSyncEInv;
 
 	final public CasterObjectTileEntity caster = new CasterObjectTileEntity(this);
 
@@ -47,20 +50,24 @@ public class TileElementPlatform extends TileEntityNetwork implements IGetItemSt
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		if (nbt.hasKey("stack")) stack = new ItemStack(nbt.getCompoundTag("stack"));
-		else stack = ItemStack.EMPTY;
+		stack = nbtReadItemStack(nbt, "stack");
 		if (nbt.hasKey("runData", NBTTag.TAG_COMPOUND)) runData = nbt.getCompoundTag("runData");
-		if (this.isSending()) return;
-		else runData = null;
+		if (this.isSending()) {
+			if (inventory.hasState(nbt)) inventory.loadState(nbt);
+			return;
+		} else runData = null;
 		inventory.loadState(nbt);
 		super.readFromNBT(nbt);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
-		nbt.setTag("stack", stack.serializeNBT());
+		nbtWriteItemStack(nbt, "stack", stack);
 		if (runData != null) nbt.setTag("runData", runData);
-		if (this.isSending()) return nbt;
+		if (this.isSending()) {
+			if (needSyncEInv) inventory.saveState(nbt);
+			return nbt;
+		}
 		inventory.saveState(nbt);
 		return super.writeToNBT(nbt);
 	}
@@ -114,6 +121,18 @@ public class TileElementPlatform extends TileEntityNetwork implements IGetItemSt
 				dstInv.saveState(stack);
 			}
 		}
+	}
+
+	@Override
+	public boolean wake(int type, BlockPos from) {
+		return type == OBTAIN;
+	}
+
+	@Override
+	public void onInventoryStatusChange() {
+		needSyncEInv = true;
+		updateToClient();
+		needSyncEInv = false;
 	}
 
 }

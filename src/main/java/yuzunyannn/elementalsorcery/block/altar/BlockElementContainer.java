@@ -5,6 +5,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
@@ -49,8 +50,8 @@ public abstract class BlockElementContainer extends BlockContainer {
 		return temp;
 	}
 
-	public BlockElementContainer(Material materialIn) {
-		super(materialIn);
+	public BlockElementContainer(Material materialIn, MapColor color) {
+		super(materialIn, color);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.block.container;
 
 import java.util.List;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -26,7 +27,7 @@ public class BlockStoneMill extends BlockContainerNormal {
 	public static final AxisAlignedBB AABB_WALL_WEST = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 0.125D, 1.0D, 1.0D);
 
 	public BlockStoneMill() {
-		super(Material.ROCK, "stoneMill", 3.5F);
+		super(Material.ROCK, "stoneMill", 3.5F, MapColor.STONE);
 	}
 
 	@Override

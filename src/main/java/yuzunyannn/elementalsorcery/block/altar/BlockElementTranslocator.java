@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.block.altar;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +20,7 @@ import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 public class BlockElementTranslocator extends BlockContainerNormal {
 
 	public BlockElementTranslocator() {
-		super(Material.ROCK, "elementTranslocator", 5.5f);
+		super(Material.ROCK, "elementTranslocator", 5.5f, MapColor.QUARTZ);
 	}
 
 	@Override

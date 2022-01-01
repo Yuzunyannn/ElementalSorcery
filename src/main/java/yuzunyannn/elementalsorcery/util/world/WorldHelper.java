@@ -24,6 +24,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
@@ -58,6 +60,7 @@ public class WorldHelper {
 		});
 	}
 
+	@SideOnly(Side.CLIENT)
 	static public boolean canChangeRender() {
 		return Minecraft.getMinecraft().isSingleplayer()
 				|| (Minecraft.getMinecraft().world != null && Minecraft.getMinecraft().world.isRemote);

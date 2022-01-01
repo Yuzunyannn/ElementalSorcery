@@ -88,15 +88,28 @@ public class TileEntityNetwork extends TileEntity {
 	/** 将数据更新到client端 */
 	public void updateToClient() {
 		if (world.isRemote) return;
+		isNetwork = true;
+		updateToClient(getUpdatePacket());
+		isNetwork = false;
+	}
+
+	public void updateToClient(NBTTagCompound custom) {
+		if (world.isRemote) return;
+		isNetwork = true;
+		SPacketUpdateTileEntity packet = new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), custom);
+		updateToClient(packet);
+		isNetwork = false;
+	}
+
+	protected void updateToClient(SPacketUpdateTileEntity packet) {
+		if (world.isRemote) return;
 		WorldServer world = (WorldServer) this.world;
 		int distance = world.getMinecraftServer().getPlayerList().getViewDistance();
 		distance = distance * 16;
-		isNetwork = true;
 		for (EntityPlayer player : world.playerEntities) {
 			if (player.getPosition().distanceSq(this.pos) > distance * distance) continue;
-			((EntityPlayerMP) player).connection.sendPacket(this.getUpdatePacket());
+			((EntityPlayerMP) player).connection.sendPacket(packet);
 		}
-		isNetwork = false;
 	}
 
 	/** 设置itemStack */

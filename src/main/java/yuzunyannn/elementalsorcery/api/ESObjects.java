@@ -7,7 +7,6 @@ import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.item.prop.ItemArrogantWool;
 
 public class ESObjects {
 
@@ -181,6 +180,7 @@ public class ESObjects {
 		public Block DECONSTRUCT_WINDMILL;
 		public Block ELEMENT_TRANSLOCATOR;
 		public Block GOAT_GOLD_BRICK;
+		public Block DEVOLVE_CUBE;
 	}
 
 	static public class Elements {

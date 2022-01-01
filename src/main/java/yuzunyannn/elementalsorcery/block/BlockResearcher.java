@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
@@ -30,7 +31,7 @@ public class BlockResearcher extends Block {
 	public static final AxisAlignedBB AABB = new AxisAlignedBB(0, 0, 0, 1, 0.625, 1);
 
 	public BlockResearcher() {
-		super(Material.ROCK);
+		super(Material.ROCK, MapColor.QUARTZ);
 		this.setHarvestLevel("pickaxe", 3);
 		this.setUnlocalizedName("researcher");
 		this.setHardness(8.5f);

@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.block.md;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,7 +21,7 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 public abstract class BlockMDBase extends BlockContainerNormal {
 
 	protected BlockMDBase(String unlocalizedName) {
-		super(Material.ROCK, unlocalizedName, 10.0F);
+		super(Material.ROCK, unlocalizedName, 10.0F, MapColor.BLACK);
 	}
 
 	@Override

@@ -168,22 +168,26 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 		return VIOD_RESOURCELOCATION;
 	}
 
+	public static final int DRAW_GUI_FLAG_NOSHADOW = 0x1;
+
 	/** 在GUI绘画元素 */
 	@SideOnly(Side.CLIENT)
-	public void drawElemntIconInGUI(ElementStack estack, int x, int y, Minecraft mc) {
+	public void drawElemntIconInGUI(ElementStack estack, int x, int y, int flag) {
+		Minecraft mc = Minecraft.getMinecraft();
 		ResourceLocation res = this.getIconResourceLocation();
 		mc.getTextureManager().bindTexture(res);
 		GlStateManager.color(1, 1, 1);
 		Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
 		int count = estack.getCount();
+		boolean isShadow = (flag & DRAW_GUI_FLAG_NOSHADOW) == 0;
 		if (count > 1) {
 			String s = Integer.toString(count);
-			mc.fontRenderer.drawString(s, x + +19 - 2 - mc.fontRenderer.getStringWidth(s), y + 9, 16777215, true);
+			mc.fontRenderer.drawString(s, x + +19 - 2 - mc.fontRenderer.getStringWidth(s), y + 9, 16777215, isShadow);
 		}
 		int power = estack.getPower();
 		if (power > 1) {
 			String s = Integer.toString(power);
-			mc.fontRenderer.drawString(s, x + +19 - 2 - mc.fontRenderer.getStringWidth(s), y - 3, 0xfff993, true);
+			mc.fontRenderer.drawString(s, x + +19 - 2 - mc.fontRenderer.getStringWidth(s), y - 3, 0xfff993, isShadow);
 		}
 	}
 

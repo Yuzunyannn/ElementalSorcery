@@ -11,6 +11,7 @@ import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockRedstoneTorch;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.IBlockState;
@@ -442,7 +443,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 				}
 
 				boolean needPlace = false;
-				needPlace = needPlace || block instanceof BlockDoublePlant;
+				needPlace = needPlace || block instanceof BlockDoublePlant || block instanceof ITileEntityProvider;
 
 				if (needPlace) {
 					if (player == null) player = ESFakePlayer.get((WorldServer) world);

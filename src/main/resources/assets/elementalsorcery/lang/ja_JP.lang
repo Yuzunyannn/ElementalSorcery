@@ -193,6 +193,7 @@ tile.deconstructWindmill.name=風車プラットフォーム
 tile.elementTranslocator.name=元素移動台
 tile.MDLiquidize.name=ジューサー
 tile.goatGoldBrick.common.name=金れんが
+tile.devolveCube.name=てんい立方体
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者

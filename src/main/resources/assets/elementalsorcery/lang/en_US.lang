@@ -193,6 +193,7 @@ tile.deconstructWindmill.name=Windmill Platform
 tile.elementTranslocator.name=Element Translocator
 tile.MDLiquidize.name=Liquidize
 tile.goatGoldBrick.common.name=Gold Brick
+tile.devolveCube.name=Devolve Cube
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker

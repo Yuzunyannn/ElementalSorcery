@@ -12,9 +12,9 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 /** 只有继承这个接口的TileEntity并且拥有仓库，才能被祭坛所使用 */
 public interface IAltarWake {
 
-	/** 获取元素，元素送过来 */
+	/** 获取元素，对于继承者来说，是元素送过来了 */
 	public final static int OBTAIN = 0;
-	/** 给予元素，将元素送出去 */
+	/** 给予元素，对于继承者来说，是元素送出去了 */
 	public final static int SEND = 1;
 
 	/**
@@ -26,14 +26,15 @@ public interface IAltarWake {
 	 */
 	boolean wake(int type, @Nullable BlockPos from);
 
-	/** 当TileEntity的元素被拿光时或者从无到有时，可以进行C/S同步 */
-	void onEmptyStatusChange();
+	/** 当TileEntity状态改变时，通常是元素被拿光时或者从无到有时，可以进行C/S同步 */
+	void onInventoryStatusChange();
 
 	/**
 	 * 发送一个粒子效果
 	 * 
 	 */
 	@SideOnly(Side.CLIENT)
-	void updateEffect(World world, int type, ElementStack estack, Vec3d pos);
+	default void updateEffect(World world, int type, ElementStack estack, Vec3d pos) {
+	}
 
 }

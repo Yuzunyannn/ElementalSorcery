@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.block.altar;
 
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
@@ -23,7 +24,7 @@ import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 public class BlockTranscribeInjection extends BlockContainerNormal {
 
 	public BlockTranscribeInjection() {
-		super(Material.ROCK, "transcribeInjection", 6.5F);
+		super(Material.ROCK, "transcribeInjection", 6.5F, MapColor.QUARTZ);
 	}
 
 	@Override
