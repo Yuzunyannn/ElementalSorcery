@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 
 /** 只有继承这个接口的TileEntity并且拥有仓库，才能被祭坛所使用 */
-public interface IAltarWake {
+public interface IAltarWake extends IElementInventoryPromote {
 
 	/** 获取元素，对于继承者来说，是元素送过来了 */
 	public final static int OBTAIN = 0;
@@ -22,12 +22,9 @@ public interface IAltarWake {
 	 * 
 	 * @param type 唤醒的原型
 	 * @param from 唤醒来源
-	 * @return 唤醒是否成功
+	 * @return 唤醒是否成功 (目前没有用
 	 */
 	boolean wake(int type, @Nullable BlockPos from);
-
-	/** 当TileEntity状态改变时，通常是元素被拿光时或者从无到有时，可以进行C/S同步 */
-	void onInventoryStatusChange();
 
 	/**
 	 * 发送一个粒子效果

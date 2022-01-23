@@ -89,7 +89,7 @@ public class CraftingConstruct implements ICraftingAltar {
 
 	@Override
 	public boolean canContinue(TileStaticMultiBlock tileMul) {
-		return tileMul.isIntact() && needEStacks != null;
+		return tileMul.isAndCheckIntact() && needEStacks != null;
 	}
 
 	@Override

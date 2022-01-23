@@ -194,6 +194,7 @@ tile.elementTranslocator.name=Element Translocator
 tile.MDLiquidize.name=Liquidize
 tile.goatGoldBrick.common.name=Gold Brick
 tile.devolveCube.name=Devolve Cube
+tile.disintegrateStela.name=Material Collapse Stela
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
@@ -329,6 +330,7 @@ commands.es.mantra.add=Add Mantra of %s for %s's Grimoire
 commands.es.element.usage=/es element <give|insert|extract|add> <player> <element>
 commands.es.element.give=Give %s Element Crystal of %s
 commands.es.element.notFound=You have to have something in your hand
+commands.es.element.notModifiable=Element Inventory in your hand cannot are not allowed to modify.
 commands.es.building.usage=/es building <record|release|give> <...>
 commands.es.building.give.usage=/es building give <player> <builing key>
 commands.es.building.release=Save and Release all ref from temp building and call GC
@@ -359,6 +361,9 @@ arc.crystalGarden.name=Crystal Garden
 arc.resonantIncubator.name=Resonant Incubator Altar
 arc.portalAltar.name=Refract Altar
 arc.transcribeAltar.name=Transcribe Altar
+arc.mappingAltar.name=Frequency Inductor Altar
+arc.deconstructWindmill.name=Material Disintegrate Windmill
+arc.disintegrateAltar.name=Material Collapse Altar
 
 info.none=nothing
 info.unknow=unknow
@@ -918,6 +923,8 @@ page.calamityGem.ct=这是一个十分贵重，但是却没有什么人想入手
 page.blessingJade=Blessing Jade Fragment
 page.blessingJade.ct.fir=这是个人人都想入手的贵重物品，它会为持有者带来「祝福」。\n但它并不是这么容易就能获得到，需要凑齐8片碎片，才能制作出来。\「祝福」可以为你带来好运，比如挖矿掉落变多，生命值低下时获得意外的生命恢复等等。
 page.blessingJade.ct.sec=不同的碎片获取的方式不尽相同，一些提示如下：\n1:封藏石\n2:噬魂\n3:商人\n4:钓鱼\n5:村庄\n6:研究\n7:烧制\n8:委托
+page.devolveCube=Element Dispatch
+page.devolveCube.ct=协调立方体可以扫描并管理以自身为中心32*32区域中的元素容器。对区域内的元素进行吸收和派送。\n选择元素容器后出现的控制条内，传输按钮左键单次传输，右键持续自动传输。\n虽然可以设置传输量，但自动传输每秒是有最大带宽的，这是的传输量同时还作为优先级使用。
 
 es.adv.root.title=Elemental Sorcery
 es.adv.root.description=Open the scroll in your hand and start Elemental Sorcery!

@@ -179,7 +179,7 @@ public class TileMDDeconstructBox extends TileMDBase implements ITickable {
 	private ElementStack findInsert(ElementStack[] toEstacks, ItemStack stack, IElementInventory inventory,
 			IToElementInfo teInfo) {
 		for (ElementStack estack : toEstacks) {
-			estack = estack.copy().becomeElementWhenDeconstruct(world, stack, teInfo.complex(), Element.DP_BOX);
+			estack = estack.copy().onDeconstruct(world, stack, teInfo.complex(), Element.DP_BOX);
 			if (inventory.insertElement(estack, true)) return estack;
 		}
 		return ElementStack.EMPTY;

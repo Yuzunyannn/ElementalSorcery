@@ -78,7 +78,7 @@ public class CraftingCrafting implements ICraftingAltar {
 
 	@Override
 	public boolean canContinue(TileStaticMultiBlock tileMul) {
-		return tileMul.isIntact() && this.isOk;
+		return tileMul.isAndCheckIntact() && this.isOk;
 	}
 
 	// 更新一次
@@ -182,7 +182,7 @@ public class CraftingCrafting implements ICraftingAltar {
 	@Override
 	public boolean end(TileStaticMultiBlock tileMul) {
 		if (workingResult.isEmpty()) return false;
-		if (!tileMul.isIntact()) return false;
+		if (!tileMul.isAndCheckIntact()) return false;
 		itemList.clear();
 		// 重置剩余的物品
 		for (int i = 0; i < workingInventory.getSlots(); i++) {

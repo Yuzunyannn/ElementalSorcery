@@ -144,7 +144,7 @@ public class EntityThrow extends EntityThrowable implements IEntityAdditionalSpa
 
 		if ((flag & FLAG_BLOCK_PLACE) != 0 && ray.typeOfHit == Type.BLOCK) {
 			stack = EntityBlockMove.putBlock(world, player, ray.getBlockPos().offset(ray.sideHit), stack, null, null,
-					null);
+					null, false);
 			if (stack.isEmpty()) return;
 		}
 

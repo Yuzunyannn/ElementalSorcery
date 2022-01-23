@@ -96,7 +96,7 @@ public class TileSupremeTable extends TileStaticMultiBlock
 	}
 
 	@Override
-	public boolean isIntact() {
+	public boolean isAndCheckIntact() {
 		return this.ok;
 	}
 
@@ -127,7 +127,7 @@ public class TileSupremeTable extends TileStaticMultiBlock
 
 	@Override
 	public boolean canCrafting(String type, EntityLivingBase player) {
-		if (!this.isIntact()) return false;
+		if (!this.isAndCheckIntact()) return false;
 		nowType = this.onCraftMatrixChanged();
 		if (nowType == null) return false;
 		if (!nowType.equals(type)) return false;

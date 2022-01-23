@@ -29,6 +29,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
@@ -341,9 +342,11 @@ public class CommandES extends CommandBase {
 			if (stack.isEmpty()) throw new CommandException("commands.es.element.notFound");
 			IElementInventory inv = this.getElementInventory(stack);
 			if (!inv.insertElement(estack, false)) {
+				if (!(inv instanceof IElementInventoryModifiable))
+					throw new CommandException("commands.es.element.notModifiable");
 				ElementStack[] cache = new ElementStack[inv.getSlots()];
 				for (int i = 0; i < cache.length; i++) cache[i] = inv.getStackInSlot(i);
-				inv.setSlots(cache.length + 1);
+				((IElementInventoryModifiable) inv).setSlots(cache.length + 1);
 				for (int i = 0; i < cache.length; i++) inv.setStackInSlot(i, cache[i]);
 				inv.setStackInSlot(cache.length, estack);
 			}

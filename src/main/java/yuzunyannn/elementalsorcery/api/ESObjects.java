@@ -181,6 +181,7 @@ public class ESObjects {
 		public Block ELEMENT_TRANSLOCATOR;
 		public Block GOAT_GOLD_BRICK;
 		public Block DEVOLVE_CUBE;
+		public Block DISINTEGRATE_STELA;
 	}
 
 	static public class Elements {

@@ -21,18 +21,22 @@ import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptMagic;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptMagicPesky;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventoryPromote;
 import yuzunyannn.elementalsorcery.api.tile.IProvideMagic;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
+import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
 import yuzunyannn.elementalsorcery.util.IField;
+import yuzunyannn.elementalsorcery.util.element.ElementInventoryAdapter;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
-public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky, IProvideMagic, IField {
+public abstract class TileMDBase extends TileEntity
+		implements IAcceptMagicPesky, IProvideMagic, IField, IElementInventoryPromote {
 
 	@Config(kind = "tile", sync = true)
 	static private int MD_BASE_MAX_CAPACITY = 1000;
@@ -43,16 +47,75 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 	@Config(kind = "tile")
 	static private int MD_BASE_SEND_PRE_SECOND = 100;
 
+	protected class MDElementInventory extends ElementInventoryAdapter {
+
+		@Override
+		public int getSlots() {
+			return 1;
+		};
+
+		@Override
+		public int getMaxSizeInSlot(int slot) {
+			if (slot == 0) return getMaxCapacity();
+			return 0;
+		}
+
+		@Override
+		public ElementStack getStackInSlot(int slot) {
+			return magic;
+		};
+
+		@Override
+		public ElementStack setStackInSlot(int slot, ElementStack estack) {
+			if (slot == 0) {
+				ElementStack originMagic = magic;
+				magic = estack == ElementStack.EMPTY ? ElementStack.magic(0, 0) : estack;
+				if (!magic.isMagic()) magic = magic.becomeMagic(world);
+				return originMagic;
+			}
+			return ElementStack.EMPTY;
+		};
+
+		@Override
+		public boolean insertElement(int slot, ElementStack estack, boolean simulate) {
+			if (estack.isEmpty()) return true;
+			if (!estack.isMagic()) return false;
+			if (magic.getCount() + estack.getCount() > getMaxSizeInSlot(slot)) return false;
+
+			if (simulate) return true;
+			magic.growOrBecome(estack);
+			return true;
+		};
+
+		@Override
+		public ElementStack extractElement(int slot, ElementStack estack, boolean simulate) {
+			if (slot != 0 || !estack.isMagic() || magic.isEmpty()) return ElementStack.EMPTY;
+			if (!magic.arePowerfulThan(estack)) return ElementStack.EMPTY;
+			ElementStack get = magic.copy();
+			get.setCount(Math.min(get.getCount(), estack.getCount()));
+			if (simulate) return get;
+			magic.shrink(get.getCount());
+			return get;
+		};
+	}
+
 	/** 给予魔力的目标 */
 	protected TargetInfo[] targets = new TargetInfo[6];
 	/** 魔力仓库使用 */
 	protected ElementStack magic = new ElementStack(ESInit.ELEMENTS.MAGIC, 0, 25);
 	/** 需求的仓库 */
 	protected ItemStackHandler inventory = this.initItemStackHandler();
+	/** 元素仓库马甲 */
+	protected MDElementInventory eInventory = this.initMDElementInventory();
 
 	/** 初始化仓库，不需要返回null */
 	protected ItemStackHandler initItemStackHandler() {
 		return null;
+	};
+
+	/** 初始化元素容器马甲 */
+	protected MDElementInventory initMDElementInventory() {
+		return new MDElementInventory();
 	};
 
 	@Override
@@ -98,8 +161,16 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability)) return (T) eInventory;
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) return (T) inventory;
 		return super.getCapability(capability, facing);
+	}
+
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability)) return true;
+		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) return inventory != null;
+		return super.hasCapability(capability, facing);
 	}
 
 	/** 记录目标的数据 */
@@ -574,6 +645,18 @@ public abstract class TileMDBase extends TileEntity implements IAcceptMagicPesky
 				inventory.setStackInSlot(slot, stack);
 			}
 		}
+		if (tag.hasKey("MG") && tag.hasKey("MP")) {
+			magic.setCount(tag.getInteger("MG"));
+			magic.setPower(tag.getInteger("MP"));
+		}
 		this.customUpdate(tag);
+	}
+
+	@Override
+	public void onInventoryStatusChange() {
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setInteger("MG", magic.getCount());
+		nbt.setInteger("MP", magic.getPower());
+		updateToClient(nbt);
 	}
 }

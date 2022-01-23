@@ -88,31 +88,31 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 	}
 
 	@Override
-	public boolean isIntact() {
+	public boolean isAndCheckIntact() {
 		int checkInterval = 20 * 30;
 		if (!ok) checkInterval = 40;
-		if (checkTime++ % checkInterval == 0) {
-			EnumFacing facing = structure.face();
-			ok = structure.check(facing);
-			if (!ok) ok = structure.check(facing.rotateY());
-			if (ok) {
-				facing = structure.face().rotateY();
-				ok = ok && world.isAirBlock(pos.up(5));
-				ok = ok && world.isAirBlock(pos.up(5).offset(facing, 1));
-				ok = ok && world.isAirBlock(pos.up(5).offset(facing, -1));
-				for (int y = 0; y < 4; y++) {
-					ok = ok && world.isAirBlock(pos.up(6 + y));
-					ok = ok && world.isAirBlock(pos.up(6 + y).offset(facing, 1));
-					ok = ok && world.isAirBlock(pos.up(6 + y).offset(facing, 2));
-					ok = ok && world.isAirBlock(pos.up(6 + y).offset(facing, -1));
-					ok = ok && world.isAirBlock(pos.up(6 + y).offset(facing, -2));
-				}
-			}
-		}
+		if (checkTime++ % checkInterval == 0) checkIntact(structure);
 		return this.ok;
 	}
 
-	public boolean isIntactWithCheck() {
+	@Override
+	protected boolean checkIntact(MultiBlock structure) {
+		EnumFacing facing = structure.face();
+		ok = structure.check(facing);
+		if (!ok) ok = structure.check(facing.rotateY());
+		if (ok) {
+			facing = structure.face().rotateY();
+			ok = ok && world.isAirBlock(pos.up(5));
+			ok = ok && world.isAirBlock(pos.up(5).offset(facing, 1));
+			ok = ok && world.isAirBlock(pos.up(5).offset(facing, -1));
+			for (int y = 0; y < 4; y++) {
+				ok = ok && world.isAirBlock(pos.up(6 + y));
+				ok = ok && world.isAirBlock(pos.up(6 + y).offset(facing, 1));
+				ok = ok && world.isAirBlock(pos.up(6 + y).offset(facing, 2));
+				ok = ok && world.isAirBlock(pos.up(6 + y).offset(facing, -1));
+				ok = ok && world.isAirBlock(pos.up(6 + y).offset(facing, -2));
+			}
+		}
 		return ok;
 	}
 
@@ -136,14 +136,15 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 	public void onLoad() {
 		super.onLoad();
 		tileGetter.setBox(WorldHelper.createAABB(pos, 6, 10, 3));
-		tileGetter.setChecker(tile -> ElementHelper.canInsert(ElementHelper.getElementInventory(tile)));
+		tileGetter.setChecker(
+				tile -> ElementHelper.canInsert(ElementHelper.getElementInventory(tile)) && tile instanceof IAltarWake);
 	}
 
 	@Override
 	public void update() {
 
 		if (world.isRemote) updateClient();
-		if (!isIntact()) return;
+		if (!isAndCheckIntact()) return;
 
 		IWindmillBlade windmillBlade = getWindmillBlade();
 		boolean canTwirl = windmillBlade != null && windmillBlade.canTwirl(world, pos, blade);
@@ -200,15 +201,13 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 
 		IAltarWake altarWake = null;
 		if (outTile instanceof IAltarWake) altarWake = ((IAltarWake) outTile);
+		if (altarWake == null) return;
 
 		IElementInventory eInv = ElementHelper.getElementInventory(outTile);
 		boolean isEmpty = ElementHelper.isEmpty(eInv);
 		eInv.insertElement(estack, false);
-		if (altarWake != null) {
-			altarWake.wake(IAltarWake.OBTAIN, pos);
-			if (isEmpty) altarWake.onInventoryStatusChange();
-		}
-
+		altarWake.wake(IAltarWake.OBTAIN, pos);
+		if (isEmpty) altarWake.onInventoryStatusChange();
 	}
 
 	@SideOnly(Side.CLIENT)

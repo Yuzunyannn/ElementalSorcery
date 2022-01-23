@@ -69,7 +69,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 	public boolean canCrafting(String type, @Nullable EntityLivingBase player) {
 		if (!ICraftingLaunch.TYPE_ELEMENT_CRAFTING.equals(type)) return false;
 		if (this.isEmpty()) return false;
-		if (!this.isIntact()) return false;
+		if (!this.isAndCheckIntact()) return false;
 		this.onCraftMatrixChanged();
 		if (this.getOutput().isEmpty()) return false;
 		return true;

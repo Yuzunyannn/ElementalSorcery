@@ -83,7 +83,7 @@ public class MantraLaunch extends MantraCommon {
 		TileStaticMultiBlock tile = BlockHelper.getTileEntity(world, pos, TileStaticMultiBlock.class);
 		if (tile == null) return;
 
-		tile.isIntact();
+		tile.isAndCheckIntact();
 	}
 
 	@Override

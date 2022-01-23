@@ -51,7 +51,7 @@ public class BlockSupremeTable extends BlockContainerNormal {
 		if (worldIn.isRemote) return true;
 		TileEntity tile = worldIn.getTileEntity(pos);
 		if (tile instanceof TileStaticMultiBlock) {
-			if (((TileStaticMultiBlock) tile).isIntact()) {
+			if (((TileStaticMultiBlock) tile).isAndCheckIntact()) {
 				playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_SUPREME_TABLE, worldIn, pos.getX(),
 						pos.getY(), pos.getZ());
 				return true;

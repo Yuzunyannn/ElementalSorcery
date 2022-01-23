@@ -92,7 +92,7 @@ public class ContainerSupremeTable extends ContainerNormal<TileSupremeTable> imp
 
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
-		return super.canInteractWith(playerIn) && tileEntity.isIntact();
+		return super.canInteractWith(playerIn) && tileEntity.isAndCheckIntact();
 	}
 
 	@Override

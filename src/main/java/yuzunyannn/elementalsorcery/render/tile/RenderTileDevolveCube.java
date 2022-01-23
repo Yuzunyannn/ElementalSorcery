@@ -5,7 +5,6 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelDevolveCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube;
@@ -28,7 +27,8 @@ public class RenderTileDevolveCube extends TileEntitySpecialRenderer<TileDevolve
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		float rand = tile.getPos().hashCode();
-		MODEL.render(null, 0, 0, rand + EventClient.tickRender + partialTicks, 0, 0, 1.0f);
+		float renderTick = RenderHelper.getPartialTicks(tile.renderTick, tile.prevRenderTick, partialTicks);
+		MODEL.render(null, 0, 0, rand + renderTick, 0, 0, 1.0f);
 		GlStateManager.disableBlend();
 		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);

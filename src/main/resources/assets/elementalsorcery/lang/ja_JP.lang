@@ -194,6 +194,7 @@ tile.elementTranslocator.name=元素移動台
 tile.MDLiquidize.name=ジューサー
 tile.goatGoldBrick.common.name=金れんが
 tile.devolveCube.name=てんい立方体
+tile.disintegrateStela.name=崩解し石碑
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -329,6 +330,7 @@ commands.es.mantra.add=%sの魔典に呪文%sを加えました
 commands.es.element.usage=/es element <give|insert|extract|add> <プレイヤー> <元素>
 commands.es.element.give=%sに%sを含む元素の水晶を与えた
 commands.es.element.notFound=手に物を持たなければなりません。
+commands.es.element.notModifiable=所持品の元素容器に数量を追加することはできません。
 commands.es.building.usage=/es building <record|release|give> <...>
 commands.es.building.give.usage=/es building give <プレイヤー> <建築key>
 commands.es.building.release=すべての建築キャッシュを保存とリリースしました。
@@ -359,6 +361,9 @@ arc.crystalGarden.name=水晶花園
 arc.resonantIncubator.name=共鳴培養祭壇
 arc.portalAltar.name=折り光祭壇
 arc.transcribeAltar.name=書き写し祭壇
+arc.mappingAltar.name=周波数共感祭壇
+arc.deconstructWindmill.name=物質瓦解風車
+arc.disintegrateAltar.name=崩解し祭壇
 
 info.none=無
 info.unknow=未知
@@ -918,6 +923,8 @@ page.calamityGem.ct=这是一个十分贵重，但是却没有什么人想入手
 page.blessingJade=祝福の玉のかけら
 page.blessingJade.ct.fir=这是个人人都想入手的贵重物品，它会为持有者带来「祝福」。\n但它并不是这么容易就能获得到，需要凑齐8片碎片，才能制作出来。\「祝福」可以为你带来好运，比如挖矿掉落变多，生命值低下时获得意外的生命恢复等等。
 page.blessingJade.ct.sec=不同的碎片获取的方式不尽相同，一些提示如下：\n1:封藏石\n2:噬魂\n3:商人\n4:钓鱼\n5:村庄\n6:研究\n7:烧制\n8:委托
+page.devolveCube=元素派遣
+page.devolveCube.ct=协调立方体可以扫描并管理以自身为中心32*32区域中的元素容器。对区域内的元素进行吸收和派送。\n选择元素容器后出现的控制条内，传输按钮左键单次传输，右键持续自动传输。\n虽然可以设置传输量，但自动传输每秒是有最大带宽的，这是的传输量同时还作为优先级使用。
 
 es.adv.root.title=元素魔法
 es.adv.root.description=手の中の巻物を開けて、元素魔法は始まり。

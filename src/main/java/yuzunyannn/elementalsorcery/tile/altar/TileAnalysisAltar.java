@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -15,7 +17,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
@@ -28,10 +29,10 @@ import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.tile.IItemStructureCraft;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
-import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.util.element.ElementAnalysisPacket;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -86,57 +87,18 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 
 	public static final ElementStack[] EMPTY_ESTACKS = new ElementStack[0];
 
-	public static class AnalysisPacket implements INBTSerializable<NBTTagCompound> {
-		public ElementStack[] daEstacks = null;
-		public ItemStack daStack = ItemStack.EMPTY;
-		public int daComplex = 0;
-
-		public AnalysisPacket() {
-
-		}
-
-		public AnalysisPacket(NBTTagCompound nbt) {
-			this.deserializeNBT(nbt);
-		}
-
-		public void merge(AnalysisPacket other) {
-			this.daEstacks = ElementHelper.merge(this.daEstacks, other.daEstacks);
-			this.daComplex = Math.max(this.daComplex, other.daComplex);
-		}
-
-		public void merge(ElementStack... estacks2) {
-			this.daEstacks = ElementHelper.merge(this.daEstacks, estacks2);
-		}
-
-		@Override
-		public NBTTagCompound serializeNBT() {
-			NBTTagCompound nbt = new NBTTagCompound();
-			nbt.setInteger("complex", daComplex);
-			nbt.setTag("item", daStack.serializeNBT());
-			nbt.setTag("einv", new ElementInventory(daEstacks).serializeNBT());
-			return nbt;
-		}
-
-		@Override
-		public void deserializeNBT(NBTTagCompound nbt) {
-			daComplex = nbt.getInteger("complex");
-			daStack = new ItemStack(nbt.getCompoundTag("item"));
-			daEstacks = new ElementInventory(nbt.getCompoundTag("einv")).getEStacksAndClear();
-		}
-	}
-
 	protected IItemStructureCraft structureCraft = null;
-	protected AnalysisPacket ans = null;
+	protected ElementAnalysisPacket ans = null;
 	protected boolean cannotAnalysis = false;
 
-	public AnalysisPacket getAnalysisPacket() {
+	public ElementAnalysisPacket getAnalysisPacket() {
 		return ans;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void setAnalysisPacket(NBTTagCompound nbt) {
 		if (nbt == null) this.ans = null;
-		else this.ans = new AnalysisPacket(nbt);
+		else this.ans = new ElementAnalysisPacket(nbt);
 	}
 
 	public ItemStack getDAStack() {
@@ -158,7 +120,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 
 	@SideOnly(Side.CLIENT)
 	public void setCannotAnalysis() {
-		this.ans = new AnalysisPacket();
+		this.ans = new ElementAnalysisPacket();
 		this.ans.daStack = this.getStackToAnalysis();
 		this.ans.daEstacks = new ElementStack[0];
 	}
@@ -172,7 +134,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 	@Override
 	public void update() {
 		// 检查是否完整
-		if (!this.isIntact()) {
+		if (!this.isAndCheckIntact()) {
 			this.stateClear();
 			return;
 		}
@@ -214,20 +176,20 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		if (this.ans == null) this.stateClear();
 	}
 
-	static public AnalysisPacket analysisItems(IItemStructureCraft structureCraft, IToElement elementMap) {
+	static public ElementAnalysisPacket analysisItems(IItemStructureCraft structureCraft, IToElement elementMap) {
 		ItemStack output = structureCraft.getOutput();
 		if (output.isEmpty()) return null;
 
 		Collection<ItemStack> inputs = structureCraft.getInputs();
 		if (inputs == null || inputs.isEmpty()) return null;
 
-		AnalysisPacket ret = null;
+		ElementAnalysisPacket ret = null;
 
 		Set<Item> itemTyps = new HashSet<>();
 
 		for (ItemStack input : inputs) {
 			if (input.isEmpty()) continue;
-			AnalysisPacket ans = analysisItem(input, elementMap, structureCraft.calcRemain(input));
+			ElementAnalysisPacket ans = analysisItem(input, elementMap, structureCraft.calcRemain(input));
 			if (ans == null) return null;
 
 			itemTyps.add(input.getItem());
@@ -260,7 +222,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		return ret;
 	}
 
-	private void writeToItem(AnalysisPacket ans) {
+	private void writeToItem(ElementAnalysisPacket ans) {
 		if (this.world.isRemote) return;
 		if (ans == null) return;
 		// 结构数据写入水晶
@@ -290,8 +252,9 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		}
 	}
 
-	public static AnalysisPacket analysisItem(ItemStack stack, IToElement elementMap, boolean needRemian) {
-		AnalysisPacket ans = new AnalysisPacket();
+	@Nullable
+	public static ElementAnalysisPacket analysisItem(ItemStack stack, IToElement elementMap, boolean needRemian) {
+		ElementAnalysisPacket ans = new ElementAnalysisPacket();
 		ans.daStack = stack;
 		// 解析元素
 		IToElementInfo teInfo = elementMap.toElement(stack);
@@ -306,15 +269,8 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 			remains = teInfo.remain();
 			if (remains == null) break;
 			if (rest <= 0) return null;
-			for (ItemStack remain : remains) {
-				teInfo = elementMap.toElement(remain);
-				if (teInfo == null) return null;
-				ElementStack[] remainStacks = ElementHelper.copy(teInfo.element());
-				if (remainStacks != null) {
-					ans.daEstacks = ElementHelper.merge(ans.daEstacks, remainStacks);
-					ans.daComplex = Math.max(ans.daComplex, teInfo.complex());
-				}
-			}
+			for (ItemStack remain : remains) ans.merge(teInfo = elementMap.toElement(remain));
+			if (teInfo == null) return null;
 			rest--;
 		} while (true);
 		return ans;

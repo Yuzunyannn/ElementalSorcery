@@ -14,6 +14,19 @@ public class TileMDMagiclization extends TileMDBase implements ITickable {
 	@Config(kind = "tile", sync = true)
 	static private int MAX_CAPACITY = 4500;
 
+	protected class MDMagiclizationElementInventory extends MDElementInventory {
+
+		@Override
+		public boolean insertElement(int slot, ElementStack estack, boolean simulate) {
+			if (estack.isEmpty()) return true;
+			if (magic.getCount() >= getMaxSizeInSlot(slot)) return false;
+			if (simulate) return true;
+			magic.growOrBecome(estack.becomeMagic(world));
+			return true;
+		}
+
+	}
+
 	/** 初始化仓库 */
 	@Override
 	protected ItemStackHandler initItemStackHandler() {
@@ -25,6 +38,11 @@ public class TileMDMagiclization extends TileMDBase implements ITickable {
 				return stack;
 			}
 		};
+	}
+
+	@Override
+	protected MDElementInventory initMDElementInventory() {
+		return new MDMagiclizationElementInventory();
 	}
 
 	@Override
@@ -51,6 +69,7 @@ public class TileMDMagiclization extends TileMDBase implements ITickable {
 		if (inventory == null) return;
 		ElementStack estack = getFirstNotEmpty(inventory);
 		if (estack.isEmpty()) return;
+
 		estack = estack.splitStack(Math.min(8, estack.getCount()));
 		estack = estack.becomeMagic(world);
 		this.magicShrink(need);

@@ -5,12 +5,12 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.ContainerArrayDetecter.ICanArrayDetected;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 
-public class ElementStackDoubleExchanger implements INBTSerializable<NBTTagCompound>, IElementInventory,
+public class ElementStackDoubleExchanger implements INBTSerializable<NBTTagCompound>, IElementInventoryModifiable,
 		ICanArrayDetected<ElementStackDouble, NBTTagCompound> {
 
 	protected ElementStackDouble[] edstacks;
@@ -96,7 +96,7 @@ public class ElementStackDoubleExchanger implements INBTSerializable<NBTTagCompo
 
 	@Override
 	public boolean insertElement(ElementStack estack, boolean simulate) {
-		return IElementInventory.super.insertElement(estack, simulate);
+		return IElementInventoryModifiable.super.insertElement(estack, simulate);
 	}
 
 	@Override

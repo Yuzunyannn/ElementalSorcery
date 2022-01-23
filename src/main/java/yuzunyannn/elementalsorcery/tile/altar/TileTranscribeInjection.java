@@ -119,7 +119,7 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 	}
 
 	private boolean updateCheck() {
-		if (!isIntact()) {
+		if (!isAndCheckIntact()) {
 			transcribeProgress = 0;
 			return true;
 		}

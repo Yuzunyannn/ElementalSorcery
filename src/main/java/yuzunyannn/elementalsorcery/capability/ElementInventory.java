@@ -12,10 +12,11 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 
-public class ElementInventory implements IElementInventory, INBTSerializable<NBTTagCompound> {
+public class ElementInventory implements IElementInventoryModifiable, INBTSerializable<NBTTagCompound> {
 
 	@CapabilityInject(IElementInventory.class)
 	public static Capability<IElementInventory> ELEMENTINVENTORY_CAPABILITY;
@@ -66,7 +67,7 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 
 	@Override
 	public int getMaxSizeInSlot(int slot) {
-		return 10000;
+		return -1;
 	}
 
 	@Override
@@ -150,12 +151,15 @@ public class ElementInventory implements IElementInventory, INBTSerializable<NBT
 			if (tag == null) return;
 			NBTTagCompound nbt = (NBTTagCompound) tag;
 			int size = nbt.getInteger("size");
-			instance.setSlots(size);
+			if (instance instanceof IElementInventoryModifiable)
+				((IElementInventoryModifiable) instance).setSlots(size);
 			NBTTagList list = nbt.getTagList("list", 10);
 			for (NBTBase base : list) {
 				NBTTagCompound data = (NBTTagCompound) base;
 				ElementStack etack = new ElementStack(data);
-				instance.setStackInSlot(data.getInteger("slot"), etack.isEmpty() ? ElementStack.EMPTY : etack);
+				int slot = data.getInteger("slot");
+				if (slot < instance.getSlots())
+					instance.setStackInSlot(slot, etack.isEmpty() ? ElementStack.EMPTY : etack);
 			}
 			instance.readCustomDataFromNBT(nbt);
 		}

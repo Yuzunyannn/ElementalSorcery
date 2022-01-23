@@ -21,6 +21,7 @@ import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -29,6 +30,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventoryPromote;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -86,19 +88,31 @@ public class TileDevolveCube extends TileEntityNetwork implements ITickable {
 	public long selectedVersion; // 元素容器
 	public long exchangerVersion; // 自身元素
 
+	/** 检查范围，固定半径16 */
 	static public final int DETECTION_RANGE = 16;
+	/** 自身容器大小，固定为4 */
 	static public final int SLOT_COUNT = 4;
 
 	@Config
 	static public short MAX_AUTO_TRANSFER_COUNT = 8;
-	@Config
+	@Config(sync = true)
 	static public int MAX_AUTO_TRANSFER_VOLUME_PER_SEC = 512;
 
-	protected byte[] colors = new byte[(DETECTION_RANGE * 2) * (DETECTION_RANGE * 2)];
-	protected Map<BlockPos, DevolveData> elementContainer = new HashMap<>();
-	protected int ergodicIndex = 0;
 	protected int tick;
+
+	/** 所有地图像素点的颜色code */
+	protected byte[] colors = new byte[(DETECTION_RANGE * 2) * (DETECTION_RANGE * 2)];
+	/** 所有的元素容器map */
+	protected Map<BlockPos, DevolveData> elementContainer = new HashMap<>();
+	/** 地图当前遍历的index位置 */
+	protected int ergodicIndex = 0;
+	/** 自身的元素容器 */
 	protected ElementStackDoubleExchanger exchanger = new ElementStackDoubleExchanger(SLOT_COUNT);
+	/** 自动传输列表，为elementContainer的value in/outEnable的记录set */
+	protected Set<BlockPos> autoTransferSet = new HashSet<>();
+	/** 自动传输列表的更新mark用于数据同步 */
+	protected boolean autoTransferSetChangeMark;
+	/** 用于container数据检查更新elementContainer的句柄 */
 	protected ContainerMapDetecter.ICanMapDetected<BlockPos, DevolveData, NBTTagIntArray, NBTTagInt> canMapDetected = new ContainerMapDetecter.ICanMapDetected<BlockPos, DevolveData, NBTTagIntArray, NBTTagInt>() {
 
 		@Override
@@ -141,9 +155,6 @@ public class TileDevolveCube extends TileEntityNetwork implements ITickable {
 		}
 
 	};
-
-	protected Set<BlockPos> autoTransferSet = new HashSet<>();
-	protected boolean autoTransferSetChangeMark;
 
 	public byte[] getColors() {
 		return colors;
@@ -265,11 +276,19 @@ public class TileDevolveCube extends TileEntityNetwork implements ITickable {
 
 	public boolean tryUpdateDetectionMark;
 	public boolean hasOneTrun = false;
+	public float renderTick = 0;
+	public float prevRenderTick = 0;
+	public float renderTickGrow = 0.25f;
 
 	@Override
 	public void update() {
 		tick++;
-		if (tick % 20 == 0) updateAutoTranfer();
+		prevRenderTick = renderTick;
+		renderTick += renderTickGrow;
+		if (tick % 20 == 0) {
+			if (renderTickGrow > 0.25f) renderTickGrow = Math.max(0.25f, renderTickGrow - 0.1f);
+			updateAutoTranfer();
+		}
 		if (world.isRemote) return;
 		// 扫描地图，有标记，加快进行，没标记，5分钟龟速扫描，减少资源占用
 		if (tryUpdateDetectionMark) {
@@ -429,6 +448,9 @@ public class TileDevolveCube extends TileEntityNetwork implements ITickable {
 
 	@SideOnly(Side.CLIENT)
 	public void playTranferEffectClient(BlockPos pos, int sendType, int color) {
+
+		renderTickGrow = 1.5f;
+
 		DevolveData devolveDat = elementContainer.get(pos);
 		int tryTimes = devolveDat == null ? 1 : MathHelper.clamp(devolveDat.count / 64, 1, 6);
 
@@ -449,6 +471,12 @@ public class TileDevolveCube extends TileEntityNetwork implements ITickable {
 
 		IAltarWake alterWake = BlockHelper.getTileEntity(world, pos, IAltarWake.class);
 		if (alterWake != null) alterWake.wake(sendType, this.pos);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public AxisAlignedBB getRenderBoundingBox() {
+		return super.getRenderBoundingBox();
 	}
 
 	/**
@@ -477,9 +505,11 @@ public class TileDevolveCube extends TileEntityNetwork implements ITickable {
 		ElementStack tranferStack = ElementStack.EMPTY;
 		boolean hasElement = false;
 		IAltarWake altarWake = null;
+		IElementInventoryPromote eInvPromote = null;
 		boolean changeStatus = (flag & 0x4) != 0;
 		// boolean isAuto = (flag & 0x8) != 0;
 
+		if (tileEntity instanceof IElementInventoryPromote) eInvPromote = (IElementInventoryPromote) tileEntity;
 		if (tileEntity instanceof IAltarWake) altarWake = (IAltarWake) tileEntity;
 
 		if (sendType == IAltarWake.SEND) {
@@ -524,10 +554,9 @@ public class TileDevolveCube extends TileEntityNetwork implements ITickable {
 		}
 		if ((flag & 0x2) != 0) playTranferEffectServer(pos, sendType, color);
 
-		if (altarWake != null) {
-			altarWake.wake(sendType, pos);
-			if (changeStatus) altarWake.onInventoryStatusChange();
-		}
+		if (eInvPromote != null && changeStatus) eInvPromote.onInventoryStatusChange();
+		if (altarWake != null) altarWake.wake(sendType, pos);
+
 		return tranferStack;
 	}
 

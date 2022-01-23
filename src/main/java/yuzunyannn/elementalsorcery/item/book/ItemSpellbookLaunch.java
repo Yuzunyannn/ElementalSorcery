@@ -156,7 +156,7 @@ public class ItemSpellbookLaunch extends ItemSpellbook {
 		boolean ok = true;
 		if (power - book.castTime > this.getCast(book)) {
 			if (tile instanceof TileStaticMultiBlock) {
-				ok = ((TileStaticMultiBlock) tile).isIntact();
+				ok = ((TileStaticMultiBlock) tile).isAndCheckIntact();
 			}
 			return ok;
 		}

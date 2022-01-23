@@ -94,7 +94,7 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 	 * @param complex 析构物品的复杂度
 	 * @return 返回真正得到的元素数量和能量
 	 */
-	public ElementStack changetoElementWhenDeconstruct(World world, ItemStack stack, ElementStack estack, int complex,
+	public ElementStack onDeconstructToElement(World world, ItemStack stack, ElementStack estack, int complex,
 			int lvPower) {
 		if (lvPower <= Element.DP_TOOLS) {
 			if (estack.getCount() > 16) estack.setCount(16);
@@ -102,20 +102,22 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 			else estack.rise(-0.5f);
 			estack.weaken(0.2f);
 			if (estack.getPower() > 16) estack.setPower(16);
-		} else if (lvPower <= Element.DP_BOX) {
+		} else if (lvPower <= Element.DP_BOX) { // 20
 			if (estack.getCount() > 100) estack.setCount(100);
 			if (complex > 10) estack.rise(-0.85f);
 			else estack.rise(-0.7f);
 			if (complex > 20) estack.weaken(0.05f);
 			else estack.weaken(0.35f);
-		} else if (lvPower <= Element.DP_ALTAR) {
-			if (estack.getCount() > 200) estack.setCount(200);
-			estack.rise(-0.5f);
-			estack.weaken(0.5f);
-		} else if (lvPower <= Element.DP_ALTAR_ADV) {
+		} else if (lvPower <= Element.DP_ALTAR) { // 100
+			float r = (lvPower - Element.DP_BOX) / (Element.DP_ALTAR - Element.DP_BOX);
+			if (estack.getCount() > 300) estack.setCount(300);
+			estack.rise(-0.5f * (1 - r) + -0.2f * r);
+			estack.weaken(0.5f * (1 - r) * 0.75f * r);
+		} else if (lvPower <= Element.DP_ALTAR_ADV) { // 300
+			float r = (lvPower - Element.DP_ALTAR) / (Element.DP_ALTAR_ADV - Element.DP_ALTAR);
 			if (estack.getCount() > 500) estack.setCount(500);
-			estack.rise(-0.15f);
-			estack.weaken(0.8f);
+			estack.rise(-0.15f * (1 - r) + -0.02f * r);
+			estack.weaken(0.8f * (1 - r) * 0.95f * r);
 		} else if (lvPower <= Element.DP_ALTAR_SURPREME) {
 			estack.rise(-0.02f);
 		}

@@ -44,7 +44,6 @@ public class EffectTreat extends Effect {
 
 	public EffectTreat(World worldIn, double posXIn, double posYIn, double posZIn) {
 		super(worldIn, posXIn, posYIn, posZIn);
-		this.asParticle = true;
 		this.alpha = 0f;
 		this.lifeTime = 30 + rand.nextInt(10);
 		this.maxLifeTime = this.lifeTime;

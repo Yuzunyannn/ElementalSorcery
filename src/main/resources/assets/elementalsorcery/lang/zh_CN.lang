@@ -194,6 +194,7 @@ tile.elementTranslocator.name=元素转移台
 tile.MDLiquidize.name=榨汁机
 tile.goatGoldBrick.common.name=金砖
 tile.devolveCube.name=协调立方体
+tile.disintegrateStela.name=崩解石碑
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者
@@ -328,7 +329,8 @@ commands.es.mantra.remove=为%s的魔典移除了咒文%s
 commands.es.mantra.add=为%s的魔典添加了咒文%s
 commands.es.element.usage=/es element <give|insert|extract|add> <玩家> <元素>
 commands.es.element.give=给予了%s元素水晶，包含%s
-commands.es.element.notFound=手上必须拿着物品s
+commands.es.element.notFound=手上必须拿着物品
+commands.es.element.notModifiable=手上拿着物品的容器不允许添加数量
 commands.es.building.usage=/es building <record|release|give> <...>
 commands.es.building.give.usage=/es building give <玩家> <建筑key>
 commands.es.building.release=已保存并清空所有临时建筑缓存
@@ -359,6 +361,9 @@ arc.crystalGarden.name=水晶花园
 arc.resonantIncubator.name=共鸣培养祭坛
 arc.portalAltar.name=折光祭坛
 arc.transcribeAltar.name=撰录祭坛
+arc.mappingAltar.name=频率共祭坛
+arc.deconstructWindmill.name=物质瓦解风车
+arc.disintegrateAltar.name=崩解祭坛
 
 info.none=无
 info.unknow=未知
@@ -918,6 +923,8 @@ page.calamityGem.ct=这是一个十分贵重，但是却没有什么人想入手
 page.blessingJade=祝福之玉碎片
 page.blessingJade.ct.fir=这是个人人都想入手的贵重物品，它会为持有者带来「祝福」。\n但它并不是这么容易就能获得到，需要凑齐8片碎片，才能制作出来。\「祝福」可以为你带来好运，比如挖矿掉落变多，生命值低下时获得意外的生命恢复等等。
 page.blessingJade.ct.sec=不同的碎片获取的方式不尽相同，一些提示如下：\n1:封藏石\n2:噬魂\n3:商人\n4:钓鱼\n5:村庄\n6:研究\n7:烧制\n8:委托
+page.devolveCube=元素调运
+page.devolveCube.ct=协调立方体可以扫描并管理以自身为中心32*32区域中的元素容器。对区域内的元素进行吸收和派送。\n选择元素容器后出现的控制条内，传输按钮左键单次传输，右键持续自动传输。\n虽然可以设置传输量，但自动传输每秒是有最大带宽的，这是的传输量同时还作为优先级使用。
 
 es.adv.root.title=元素魔法
 es.adv.root.description=打开手中的卷轴，开始元素魔法

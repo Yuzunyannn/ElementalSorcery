@@ -119,6 +119,19 @@ public abstract class Effect {
 
 	}
 
+	/** 是否需要生成 */
+	protected boolean canPassSpawn() {
+		if (!asParticle) return false;
+		// 0渲染全部
+		int particleSetting = mc.gameSettings.particleSetting;
+		if (particleSetting != 0) {
+			if (particleSetting == 1) {
+				if (rand.nextInt(10) != 0) return true;
+			} else return true;
+		}
+		return false;
+	}
+
 	// ============-= 全局 =-============
 
 	static final private Set<EffectBatchType> batchs = new HashSet<>();
@@ -128,16 +141,7 @@ public abstract class Effect {
 	static boolean inUpdate = false;
 
 	static public void addEffect(Effect effect) {
-		if (effect.asParticle) {
-			// 0渲染全部
-			int particleSetting = mc.gameSettings.particleSetting;
-			if (particleSetting != 0) {
-				if (particleSetting == 1) {
-					if (rand.nextInt(10) != 0) return;
-				} else return;
-			}
-		}
-
+		if (effect.canPassSpawn()) return;
 		if (inUpdate) contextEffects.add(effect);
 		else {
 

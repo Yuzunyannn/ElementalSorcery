@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.render.effect.batch;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -49,5 +51,15 @@ public class EffectElement extends EffectFacing {
 		motionX = x;
 		motionY = y;
 		motionZ = z;
+	}
+
+	@Override
+	protected boolean canPassSpawn() {
+		if (super.canPassSpawn()) return true;
+		EntityPlayerSP player = Minecraft.getMinecraft().player;
+		if (player == null) return true;
+		float len = Minecraft.getMinecraft().gameSettings.renderDistanceChunks * 16 * 0.75f;
+		if (player.getDistanceSq(posX, posY, posZ) >= len * len) return true;
+		return false;
 	}
 }

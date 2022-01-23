@@ -43,7 +43,7 @@ public class CraftingDeconstruct implements ICraftingAltar {
 		restEStacks = new LinkedList<ElementStack>();
 		for (ElementStack estack : outEstacks) {
 			for (int i = 0; i < stack.getCount(); i++)
-				restEStacks.add(estack.copy().becomeElementWhenDeconstruct(world, stack, teInfo.complex(), lvPower));
+				restEStacks.add(estack.copy().onDeconstruct(world, stack, teInfo.complex(), lvPower));
 		}
 		remainStacks = teInfo.remain();
 		remainStacks = ItemHelper.copy(remainStacks);
@@ -100,9 +100,7 @@ public class CraftingDeconstruct implements ICraftingAltar {
 		freeElement = ElementStack.EMPTY;
 		ElementStack estack = restEStacks.getFirst();
 		ElementStack put = estack.splitStack(1);
-		if (!tileMul.putElementToSpPlace(put, tileMul.getPos().up())) {
-			freeElement = put;
-		}
+		if (tileMul.putElementToSpPlace(put, tileMul.getPos().up()) != -1) freeElement = put;
 		if (estack.isEmpty()) restEStacks.removeFirst();
 		if (restEStacks.isEmpty()) {
 			restEStacks = null;
@@ -113,13 +111,13 @@ public class CraftingDeconstruct implements ICraftingAltar {
 
 	@Override
 	public boolean canContinue(TileStaticMultiBlock tileMul) {
-		return tileMul.isIntact() && this.isOk;
+		return tileMul.isAndCheckIntact() && this.isOk;
 	}
 
 	@Override
 	public boolean end(TileStaticMultiBlock tileMul) {
 		itemList.clear();
-		if (!tileMul.isIntact()) return false;
+		if (!tileMul.isAndCheckIntact()) return false;
 		if (remainStacks != null) {
 			for (ItemStack stack : remainStacks) itemList.add(stack);
 		}

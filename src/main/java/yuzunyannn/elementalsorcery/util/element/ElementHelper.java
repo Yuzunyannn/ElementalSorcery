@@ -18,6 +18,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -27,10 +28,10 @@ public class ElementHelper {
 
 	/** 复制src到dst */
 	public static void toElementInventory(IElementInventory src, IElementInventory dst) {
-		dst.setSlots(src.getSlots());
-		for (int i = 0; i < src.getSlots(); i++) {
+		if (dst instanceof IElementInventoryModifiable) ((IElementInventoryModifiable) dst).setSlots(src.getSlots());
+		for (int i = 0; i < Math.min(src.getSlots(), dst.getSlots()); i++)
 			dst.setStackInSlot(i, src.getStackInSlot(i).copy());
-		}
+		for (int i = src.getSlots(); i < dst.getSlots(); i++) dst.setStackInSlot(i, ElementStack.EMPTY);
 		NBTTagCompound nbt = new NBTTagCompound();
 		src.writeCustomDataToNBT(nbt);
 		dst.readCustomDataFromNBT(nbt);

@@ -125,7 +125,7 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 			} else getElementFromSpPlace(NEED, pos.up(3));
 			return;
 		}
-		if (stack.isEmpty() || enderPower < -20 || !this.isIntact()) {
+		if (stack.isEmpty() || enderPower < -20 || !this.isAndCheckIntact()) {
 			portal.setDead();
 			return;
 		}

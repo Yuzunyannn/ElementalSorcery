@@ -52,6 +52,7 @@ public class Buildings {
 	static public Building TRANSCRIBE_ALTAR;
 	static public Building MAPPING_ALTAR;
 	static public Building DECONSTRUCT_WINDMILL;
+	static public Building DISINTEGRATE_ALTAR;
 	
 
 	static public void init() {
@@ -72,6 +73,7 @@ public class Buildings {
 		TRANSCRIBE_ALTAR = BuildingLib.instance.getBuilding("transcribe_altar");
 		MAPPING_ALTAR = BuildingLib.instance.getBuilding("mapping_altar");
 		DECONSTRUCT_WINDMILL = BuildingLib.instance.getBuilding("deconstruct_windmill");
+		DISINTEGRATE_ALTAR = BuildingLib.instance.getBuilding("disintegrate_altar");
 		initFrequencyMapping();
 	}
 

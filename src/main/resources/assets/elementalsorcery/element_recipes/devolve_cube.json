@@ -1,0 +1,47 @@
+{
+	"pattern": [
+		"MP ",
+		"DCD",
+		" PM",
+		"QGGF",
+		"GEEG",
+		"GEEG",
+		"FGGQ"
+	],
+	"key": {
+		"Q": "elementalsorcery:azure_crystal",
+		"F": "elementalsorcery:scarlet_crystal",
+		"G": "elementalsorcery:estone_prism",
+		"E": "elementalsorcery:element_crystal",
+		"C": "elementalsorcery:cube_core",
+		"D": "elementalsorcery:dejected_tear",
+		"M": "elementalsorcery:magic_core",
+		"P": "elementalsorcery:fusion_crystal"
+	},
+	"element": [
+		{
+			"id": "knowledge",
+			"size": 50,
+			"power": 100
+		},
+		{
+			"id": "ender",
+			"size": 120,
+			"power": 300
+		},
+		{
+			"id": "air",
+			"size": 120,
+			"power": 50
+		},
+		{
+			"id": "wood",
+			"size": 21,
+			"power": 300
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:devolve_cube",
+		"count": 1
+	}
+}

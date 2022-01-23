@@ -79,6 +79,7 @@ import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructAltarTableAdv;
 import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructWindmill;
 import yuzunyannn.elementalsorcery.block.altar.BlockDevolveCube;
+import yuzunyannn.elementalsorcery.block.altar.BlockDisintegrateStela;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementCraftingTable;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementTranslocator;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
@@ -269,6 +270,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileCrystalFlower;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructWindmill;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDevolveCube;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileDisintegrateStela;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementTranslocator;
@@ -319,6 +321,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTableAdv;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructWindmill;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube;
+import yuzunyannn.elementalsorcery.tile.altar.TileDisintegrateStela;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementTranslocator;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
@@ -457,6 +460,7 @@ public class ESInit {
 		BLOCKS.ELEMENT_TRANSLOCATOR = new BlockElementTranslocator();
 		BLOCKS.GOAT_GOLD_BRICK = new BlockGoatGoldBrick();
 		BLOCKS.DEVOLVE_CUBE = new BlockDevolveCube();
+		BLOCKS.DISINTEGRATE_STELA = new BlockDisintegrateStela();
 
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
@@ -847,6 +851,7 @@ public class ESInit {
 		register(TileDeconstructWindmill.class, "DeconstructWindmill");
 		register(TileElementTranslocator.class, "ElementTranslocator");
 		register(TileDevolveCube.class, "DevolveCube");
+		register(TileDisintegrateStela.class, "DisintegrateStela");
 	}
 
 	static void registerAllCapability() {
@@ -1079,6 +1084,7 @@ public class ESInit {
 		registerRender(BLOCKS.DECONSTRUCT_WINDMILL, TileDeconstructWindmill.class, new RenderTileDeconstructWindmill());
 		registerRender(BLOCKS.ELEMENT_TRANSLOCATOR, TileElementTranslocator.class, new RenderTileElementTranslocator());
 		registerRender(BLOCKS.DEVOLVE_CUBE, TileDevolveCube.class, new RenderTileDevolveCube());
+		registerRender(BLOCKS.DISINTEGRATE_STELA, TileDisintegrateStela.class, new RenderTileDisintegrateStela());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

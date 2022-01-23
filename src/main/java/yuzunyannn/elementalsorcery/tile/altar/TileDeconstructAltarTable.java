@@ -85,7 +85,7 @@ public class TileDeconstructAltarTable extends TileStaticMultiBlock implements I
 	@Override
 	public boolean canCrafting(String type, @Nullable EntityLivingBase player) {
 		if (!ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT.equals(type)) return false;
-		if (!this.isIntact()) return false;
+		if (!this.isAndCheckIntact()) return false;
 		this.recheckDeconstructResult();
 		if (outEstacks == null) return false;
 		return outEstacks != null;

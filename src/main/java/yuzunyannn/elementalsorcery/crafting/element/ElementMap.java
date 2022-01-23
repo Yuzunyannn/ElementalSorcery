@@ -28,7 +28,7 @@ import yuzunyannn.elementalsorcery.api.tile.IItemStructureCraft;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
-import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar.AnalysisPacket;
+import yuzunyannn.elementalsorcery.util.element.ElementAnalysisPacket;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
@@ -215,7 +215,7 @@ public class ElementMap implements IToElement {
 
 	private static boolean doAnalysis(DefaultToElement newMap, ItemStack output, NonNullList<Ingredient> inputs) {
 
-		AnalysisPacket ans = TileAnalysisAltar.analysisItems(new IItemStructureCraft() {
+		ElementAnalysisPacket ans = TileAnalysisAltar.analysisItems(new IItemStructureCraft() {
 
 			@Override
 			public Collection<ItemStack> getInputs() {

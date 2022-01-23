@@ -262,8 +262,8 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	}
 
 	/** 物品被析构成元素的时候回调 */
-	public ElementStack becomeElementWhenDeconstruct(World world, ItemStack stack, int complex, int lvPower) {
-		return getElement().changetoElementWhenDeconstruct(world, stack, this, complex, lvPower);
+	public ElementStack onDeconstruct(World world, ItemStack stack, int complex, int lvPower) {
+		return getElement().onDeconstructToElement(world, stack, this, complex, lvPower);
 	}
 
 	/** 转化成元素时候回调 */

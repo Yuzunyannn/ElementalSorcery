@@ -52,8 +52,12 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 	}
 
 	// 是否完整
-	public boolean isIntact() {
+	public boolean isAndCheckIntact() {
 		if (checkTime++ % 40 == 0) this.checkIntact(structure);
+		return this.ok;
+	}
+
+	public boolean isIntact() {
 		return this.ok;
 	}
 
@@ -103,22 +107,30 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 	}
 
 	/** 根据给入，存储一个元素 */
-	public boolean putElementToSpPlace(ElementStack estack, BlockPos animePos) {
+	public int putElementToSpPlace(ElementStack estack, BlockPos animePos) {
 		for (int i = 0; i < structure.getSpecialBlockCount(); i++) {
-			// 获取唤醒
-			BlockPos pos = structure.getSpecialBlockPos(i);
-			TileEntity tile = structure.getSpecialTileEntity(i);
-			IAltarWake altarWake = getAlterWake(tile);
-			if (altarWake == null) continue;
-			// 获取仓库
-			IElementInventory einv = ElementHelper.getElementInventory(tile);
-			if (einv == null) continue;
-			if (einv.insertElement(estack, true)) {
-				altarWake.wake(IAltarWake.OBTAIN, this.pos);
-				einv.insertElement(estack, false);
-				if (world.isRemote) genParticleElementTo(false, altarWake, estack, animePos, pos);
-				return true;
-			}
+			if (tryPutElementToSpPlace(i, estack, animePos)) return i;
+		}
+		return -1;
+	}
+
+	protected boolean tryPutElementToSpPlace(int index, ElementStack estack, BlockPos animePos) {
+		// 获取唤醒
+		BlockPos pos = structure.getSpecialBlockPos(index);
+		if (pos == null) return false;
+		TileEntity tile = structure.getSpecialTileEntity(index);
+		IAltarWake altarWake = getAlterWake(tile);
+		if (altarWake == null) return false;
+		// 获取仓库
+		IElementInventory einv = ElementHelper.getElementInventory(tile);
+		if (einv == null) return false;
+		if (einv.insertElement(estack, true)) {
+			boolean isEmpty = ElementHelper.isEmpty(einv);
+			altarWake.wake(IAltarWake.OBTAIN, this.pos);
+			einv.insertElement(estack, false);
+			if (world.isRemote) genParticleElementTo(false, altarWake, estack, animePos, pos);
+			else if (isEmpty) altarWake.onInventoryStatusChange();
+			return true;
 		}
 		return false;
 	}
@@ -134,8 +146,12 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 			if (world.rand.nextFloat() < 0.75f) return;
 			refPos = new Vec3d(from).addVector(0.5, 0.5, 0.5);
 		}
-
-		altarWake.updateEffect(world, isGet ? IAltarWake.SEND : IAltarWake.OBTAIN, estack, refPos);
+		if (altarWake == null) {
+			if (isGet) TileElementalCube.giveParticleElementTo(world, estack.getColor(),
+					new Vec3d(from).addVector(0.5, 0.5, 0.5), refPos, 1);
+			else TileElementalCube.giveParticleElementTo(world, estack.getColor(), refPos,
+					new Vec3d(to).addVector(0.5, 0.5, 0.5), 1);
+		} else altarWake.updateEffect(world, isGet ? IAltarWake.SEND : IAltarWake.OBTAIN, estack, refPos);
 	}
 
 	/** 获取元素开始检查的下表，用于决定优先选择哪个 */

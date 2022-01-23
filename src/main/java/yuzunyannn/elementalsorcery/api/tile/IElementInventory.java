@@ -16,13 +16,6 @@ import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 public interface IElementInventory extends IItemCapbiltitySyn, ICustomNBTSerialize {
 
 	/**
-	 * 设置槽位个数
-	 * 
-	 * @param slots 储存槽位的个数
-	 */
-	void setSlots(int slots);
-
-	/**
 	 * 获取最多有多少个槽位，每个槽位只能存放一种ElementStack
 	 * 
 	 * @return 储存槽位的个数
@@ -54,7 +47,9 @@ public interface IElementInventory extends IItemCapbiltitySyn, ICustomNBTSeriali
 	 * @param slot 访问的槽位
 	 * @return 该槽位的最大容量，-1表示无限
 	 */
-	int getMaxSizeInSlot(int slot);
+	default int getMaxSizeInSlot(int slot) {
+		return -1;
+	}
 
 	/**
 	 * 插入一个ElementStack到仓库里，只要仓库中有位置

@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.building;
 
 import java.util.ArrayList;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.tileentity.TileEntity;
@@ -94,11 +96,16 @@ public class MultiBlock {
 	}
 
 	// 获取位置
+	@Nullable
 	public BlockPos getSpecialBlockPos(int index) {
-		if (facing == EnumFacing.NORTH) return realPos.add(specialBlocks.get(index));
-		BlockPos pos = specialBlocks.get(index);
-		pos = realPos.add(BuildingBlocks.facePos(pos, facing));
-		return pos;
+		try {
+			if (facing == EnumFacing.NORTH) return realPos.add(specialBlocks.get(index));
+			BlockPos pos = specialBlocks.get(index);
+			pos = realPos.add(BuildingBlocks.facePos(pos, facing));
+			return pos;
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
 	}
 
 	// 获取个数

@@ -158,7 +158,7 @@ public class BuildingBlocks {
 	public void buildState(World world, BlockPos pos) {
 		IBlockState state = this.getState();
 		NBTTagCompound nbtSave = this.getTileNBTSave();
-		EntityBlockMove.putBlock(world, null, pos, getItemStack(), state, null, nbtSave);
+		EntityBlockMove.putBlock(world, null, pos, getItemStack(), state, null, nbtSave, true);
 	}
 
 	@Nullable

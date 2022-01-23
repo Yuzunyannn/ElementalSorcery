@@ -1,0 +1,12 @@
+{
+    "lev": 5,
+    "need": [
+        "element_adv/supreme_table",
+        "elf/dread_cube",
+        "elf/dejected_skeleton"
+    ],
+    "linked": "elementalsorcery:devolve_cube",
+    "type": "craft",
+    "name": "devolveCube",
+    "item": "elementalsorcery:devolve_cube"
+}

@@ -12,6 +12,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
+import yuzunyannn.elementalsorcery.util.element.ElementAnalysisPacket;
 
 public class ContainerAnalysisAltar extends ContainerNormal<TileAnalysisAltar> implements IContainerNetwork {
 
@@ -23,13 +24,13 @@ public class ContainerAnalysisAltar extends ContainerNormal<TileAnalysisAltar> i
 	}
 
 	int lastPower = -1;
-	TileAnalysisAltar.AnalysisPacket lastAns;
+	ElementAnalysisPacket lastAns;
 	boolean lastError;
 
 	@Override
 	public void addListener(IContainerListener listener) {
 		super.addListener(listener);
-		TileAnalysisAltar.AnalysisPacket ans = tileEntity.getAnalysisPacket();
+		ElementAnalysisPacket ans = tileEntity.getAnalysisPacket();
 		if (ans != null) this.sendToClient(ans.serializeNBT(), listener);
 		else {
 			if (lastError) {} else {
@@ -60,7 +61,7 @@ public class ContainerAnalysisAltar extends ContainerNormal<TileAnalysisAltar> i
 			}
 		}
 
-		TileAnalysisAltar.AnalysisPacket ans = tileEntity.getAnalysisPacket();
+		ElementAnalysisPacket ans = tileEntity.getAnalysisPacket();
 		if (ans != lastAns) {
 			lastAns = ans;
 			if (ans == null) {

@@ -379,7 +379,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			}
 			if (!world.isRemote) world.destroyBlock(to, this.hasFlag(FLAG_DESTRUCT_DROP));
 		}
-		ItemStack drop = putBlock(world, player, to, stack, state, facing, null);
+		ItemStack drop = putBlock(world, player, to, stack, state, facing, null, false);
 		if (!drop.isEmpty()) Block.spawnAsEntity(world, to, drop);
 	}
 
@@ -409,8 +409,9 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 	}
 
 	public static ItemStack putBlock(World world, @Nullable EntityPlayer player, BlockPos to, ItemStack stack,
-			@Nullable IBlockState state, @Nullable EnumFacing facing, @Nullable NBTTagCompound tileSave) {
-		if (!BlockHelper.isReplaceBlock(world, to)) return stack;
+			@Nullable IBlockState state, @Nullable EnumFacing facing, @Nullable NBTTagCompound tileSave,
+			boolean forcePut) {
+		if (!BlockHelper.isReplaceBlock(world, to) && !forcePut) return stack;
 		facing = facing == null ? getFacingFromState(state) : facing;
 		// 放置方块
 		Item item = stack.getItem();
@@ -461,7 +462,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			if (fstack != null) {
 				IBlockState fluidState = fstack.getFluid().getBlock().getDefaultState();
 				world.setBlockState(to, fluidState);
-//				world.notifyBlockUpdate(to, fluidState, fluidState, 0);
+				// world.notifyBlockUpdate(to, fluidState, fluidState, 0);
 			}
 			return fhi.getContainer();
 		} else if (item == Items.BED) {

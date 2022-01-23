@@ -963,6 +963,11 @@
 			"zh_CN": "协调立方体",
 			"en_US": "Devolve Cube",
 			"ja_JP": "てんい立方体"
+		},
+		"tile.disintegrateStela.name": {
+			"zh_CN": "崩解石碑",
+			"en_US": "Material Collapse Stela",
+			"ja_JP": "崩解し石碑"
 		}
 	},
 	"es.effect": {
@@ -1608,9 +1613,14 @@
 			"ja_JP": "%sに%sを含む元素の水晶を与えた"
 		},
 		"commands.es.element.notFound": {
-			"zh_CN": "手上必须拿着物品s",
+			"zh_CN": "手上必须拿着物品",
 			"en_US": "You have to have something in your hand",
 			"ja_JP": "手に物を持たなければなりません。"
+		},
+		"commands.es.element.notModifiable": {
+			"zh_CN": "手上拿着物品的容器不允许添加数量",
+			"en_US": "Element Inventory in your hand cannot are not allowed to modify.",
+			"ja_JP": "所持品の元素容器に数量を追加することはできません。"
 		},
 		"commands.es.building.usage": {
 			"zh_CN": "/es building <record|release|give> <...>",
@@ -1758,6 +1768,21 @@
 			"zh_CN": "撰录祭坛",
 			"en_US": "Transcribe Altar",
 			"ja_JP": "書き写し祭壇"
+		},
+		"arc.mappingAltar.name": {
+			"zh_CN": "频率共祭坛",
+			"en_US": "Frequency Inductor Altar",
+			"ja_JP": "周波数共感祭壇"
+		},
+		"arc.deconstructWindmill.name": {
+			"zh_CN": "物质瓦解风车",
+			"en_US": "Material Disintegrate Windmill",
+			"ja_JP": "物質瓦解風車"
+		},
+		"arc.disintegrateAltar.name": {
+			"zh_CN": "崩解祭坛",
+			"en_US": "Material Collapse Altar",
+			"ja_JP": "崩解し祭壇"
 		}
 	},
 	"info": {
@@ -4513,6 +4538,16 @@
 			"zh_CN": "不同的碎片获取的方式不尽相同，一些提示如下：\\n1:封藏石\\n2:噬魂\\n3:商人\\n4:钓鱼\\n5:村庄\\n6:研究\\n7:烧制\\n8:委托",
 			"en_US": "不同的碎片获取的方式不尽相同，一些提示如下：\\n1:封藏石\\n2:噬魂\\n3:商人\\n4:钓鱼\\n5:村庄\\n6:研究\\n7:烧制\\n8:委托",
 			"ja_JP": "不同的碎片获取的方式不尽相同，一些提示如下：\\n1:封藏石\\n2:噬魂\\n3:商人\\n4:钓鱼\\n5:村庄\\n6:研究\\n7:烧制\\n8:委托"
+		},
+		"page.devolveCube": {
+			"zh_CN": "元素调运",
+			"en_US": "Element Dispatch",
+			"ja_JP": "元素派遣"
+		},
+		"page.devolveCube.ct": {
+			"zh_CN": "协调立方体可以扫描并管理以自身为中心32*32区域中的元素容器。对区域内的元素进行吸收和派送。\\n选择元素容器后出现的控制条内，传输按钮左键单次传输，右键持续自动传输。\\n虽然可以设置传输量，但自动传输每秒是有最大带宽的，这是的传输量同时还作为优先级使用。",
+			"en_US": "协调立方体可以扫描并管理以自身为中心32*32区域中的元素容器。对区域内的元素进行吸收和派送。\\n选择元素容器后出现的控制条内，传输按钮左键单次传输，右键持续自动传输。\\n虽然可以设置传输量，但自动传输每秒是有最大带宽的，这是的传输量同时还作为优先级使用。",
+			"ja_JP": "协调立方体可以扫描并管理以自身为中心32*32区域中的元素容器。对区域内的元素进行吸收和派送。\\n选择元素容器后出现的控制条内，传输按钮左键单次传输，右键持续自动传输。\\n虽然可以设置传输量，但自动传输每秒是有最大带宽的，这是的传输量同时还作为优先级使用。"
 		}
 	},
 	"es.adv": {
