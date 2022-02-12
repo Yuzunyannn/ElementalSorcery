@@ -6,13 +6,14 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.render.effect.EffectBatchType;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class EffectElement extends EffectFacing {
 
 	public final static EffectBatchTypeNormal BATCH_TYPE = new EffectBatchTypeNormal(
+			"textures/effect/element_flare.png");
+	public final static EffectBatchTypeNormal BATCH_TYPE_GLOW = new EffectBatchTypeGlow(
 			"textures/effect/element_flare.png");
 
 	public float dalpha;
@@ -32,13 +33,13 @@ public class EffectElement extends EffectFacing {
 	}
 
 	@Override
-	protected EffectBatchType typeBatch() {
-		return BATCH_TYPE;
+	protected EffectBatchTypeNormal typeBatch() {
+		return isGlow ? BATCH_TYPE_GLOW : BATCH_TYPE;
 	}
 
 	@Override
 	protected TextureBinder getTexture() {
-		return BATCH_TYPE.TEXTURE;
+		return typeBatch().TEXTURE;
 	}
 
 	public void setVelocity(Vec3d v) {

@@ -233,7 +233,8 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		}
 		IItemStructure structure = ItemStructure.getItemStructure(stack);
 		// 是否满了
-		if (structure.getItemCount() >= structure.getItemMaxCount()) {
+		int vacancy = structure.getVacancy();
+		if (vacancy == -1) {
 			this.powerTime = 0;
 			return;
 		}
@@ -246,7 +247,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		if (this.powerTime >= this.getTotalPowerTime()) {
 			this.powerTime = 0;
 			// 进行新的数据插入
-			structure.add(ans.daStack, ans.daComplex, ans.daEstacks);
+			structure.set(vacancy, ans.daStack, ans.daComplex, ans.daEstacks);
 			structure.saveState(stack);
 			this.markDirty();
 		}

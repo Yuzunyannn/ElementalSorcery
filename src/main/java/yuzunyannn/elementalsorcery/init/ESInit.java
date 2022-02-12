@@ -208,6 +208,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemCalamityGem;
 import yuzunyannn.elementalsorcery.item.prop.ItemCubeCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemDejectedTear;
 import yuzunyannn.elementalsorcery.item.prop.ItemDreadGem;
+import yuzunyannn.elementalsorcery.item.prop.ItemElementCrack;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementStone;
 import yuzunyannn.elementalsorcery.item.prop.ItemFusionCrystal;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
@@ -256,6 +257,7 @@ import yuzunyannn.elementalsorcery.potion.PotionWindShield;
 import yuzunyannn.elementalsorcery.potion.PotionWindWalker;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
+import yuzunyannn.elementalsorcery.render.item.RenderItemElementCrack;
 import yuzunyannn.elementalsorcery.render.item.RenderItemFairyCube;
 import yuzunyannn.elementalsorcery.render.item.RenderItemFairyCubeModule;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGlassCup;
@@ -557,6 +559,7 @@ public class ESInit {
 		ITEMS.BLESSING_JADE = new ItemBlessingJade();
 		ITEMS.ARROGANT_WOOL = new ItemArrogantWool();
 		ITEMS.BLESSING_JADE_PIECE = new ItemBlessingJadePiece();
+		ITEMS.ELEMENT_CRACK = new ItemElementCrack();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -975,6 +978,7 @@ public class ESInit {
 		registerRender(ITEMS.BLESSING_JADE_PIECE, 5, "blessing_jade_piece/p5");
 		registerRender(ITEMS.BLESSING_JADE_PIECE, 6, "blessing_jade_piece/p6");
 		registerRender(ITEMS.BLESSING_JADE_PIECE, 7, "blessing_jade_piece/p7");
+		registerRender(ITEMS.ELEMENT_CRACK, new RenderItemElementCrack());
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

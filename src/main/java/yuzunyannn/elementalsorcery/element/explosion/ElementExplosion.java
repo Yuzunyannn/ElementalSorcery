@@ -77,6 +77,8 @@ public class ElementExplosion implements IExplosionExecutor {
 	public static IExplosionExecutor doExplosion(World world, Vec3d pos, ElementStack eStack,
 			@Nullable EntityLivingBase attacker) {
 
+		if (eStack.isEmpty()) return null;
+
 		IElementExplosion explosion = getElementExplosion(eStack);
 		if (explosion == null) return null;
 

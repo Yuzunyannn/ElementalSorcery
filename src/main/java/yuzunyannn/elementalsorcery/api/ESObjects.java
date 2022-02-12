@@ -109,6 +109,7 @@ public class ESObjects {
 		public Item BLESSING_JADE;
 		public Item ARROGANT_WOOL;
 		public Item BLESSING_JADE_PIECE;
+		public Item ELEMENT_CRACK;
 	}
 
 	static public class Blocks {
@@ -188,13 +189,13 @@ public class ESObjects {
 		public Element VOID;
 		public Element MAGIC;
 
-		public Element ENDER;
-		public Element FIRE;
 		public Element WATER;
-		public Element AIR;
+		public Element FIRE;
 		public Element EARTH;
-		public Element METAL;
+		public Element AIR;
 		public Element WOOD;
+		public Element METAL;
+		public Element ENDER;
 		public Element KNOWLEDGE;
 		public Element STAR;
 	}

@@ -109,18 +109,20 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 			if (complex > 20) estack.weaken(0.05f);
 			else estack.weaken(0.35f);
 		} else if (lvPower <= Element.DP_ALTAR) { // 100
-			float r = (lvPower - Element.DP_BOX) / (Element.DP_ALTAR - Element.DP_BOX);
+			float r = (lvPower - Element.DP_BOX) / (float) (Element.DP_ALTAR - Element.DP_BOX);
 			if (estack.getCount() > 300) estack.setCount(300);
 			estack.rise(-0.5f * (1 - r) + -0.2f * r);
 			estack.weaken(0.5f * (1 - r) * 0.75f * r);
 		} else if (lvPower <= Element.DP_ALTAR_ADV) { // 300
-			float r = (lvPower - Element.DP_ALTAR) / (Element.DP_ALTAR_ADV - Element.DP_ALTAR);
+			float r = (lvPower - Element.DP_ALTAR) / (float) (Element.DP_ALTAR_ADV - Element.DP_ALTAR);
 			if (estack.getCount() > 500) estack.setCount(500);
-			estack.rise(-0.15f * (1 - r) + -0.02f * r);
-			estack.weaken(0.8f * (1 - r) * 0.95f * r);
-		} else if (lvPower <= Element.DP_ALTAR_SURPREME) {
-			estack.rise(-0.02f);
-		}
+			estack.rise(-0.15f * (1 - r) + -0.075f * r);
+			estack.weaken(0.8f * (1 - r) * 0.9f * r);
+		} else if (lvPower <= Element.DP_ALTAR_SURPREME) { // 500
+			float r = (lvPower - Element.DP_ALTAR_ADV) / (float) (Element.DP_ALTAR_SURPREME - Element.DP_ALTAR_ADV);
+			estack.rise(-0.075f * (1 - r) + -0.02f * r);
+			estack.weaken(0.9f * (1 - r) * 1f * r);
+		} else estack.rise(-0.005f);
 		return estack;
 	}
 

@@ -36,7 +36,7 @@ public class RenderTileDisintegrateStela extends TileEntitySpecialRenderer<TileD
 
 		float wakeRate = RenderHelper.getPartialTicks(tile.wakeRate, tile.prevWakeRate, partialTicks);
 		float shakeRotate = 0;
-		float overLoadRate = RenderHelper.getPartialTicks(tile.getOverLoadRate(), tile.prevOverLoad, partialTicks);
+		float overLoadRate = RenderHelper.getPartialTicks(tile.getOverloadRate(), tile.prevOverload, partialTicks);
 		if (overLoadRate > 1) shakeRotate = MathHelper.clamp(overLoadRate, 1, 2) - 1;
 
 		float roate = RenderHelper.getPartialTicks(tile.roate, tile.prevRoate, partialTicks);

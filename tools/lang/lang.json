@@ -556,6 +556,11 @@
 			"zh_CN": "祝福之玉碎片",
 			"en_US": "Blessing Jade Fragment",
 			"ja_JP": "祝福の玉のかけら"
+		},
+		"item.elementCrack.name":{
+			"zh_CN": "元素裂縫",
+			"en_US": "Element Crack",
+			"ja_JP": "元素ひび割れ"
 		}
 	},
 	"tile": {

@@ -112,6 +112,7 @@ item.blessingJade.name=祝福之玉
 item.calamityGem.name=灾害宝石
 item.arrogantWool.name=傲慢的羊毛
 item.blessingJadePiece.name=祝福之玉碎片
+item.elementCrack.name=元素裂縫
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱

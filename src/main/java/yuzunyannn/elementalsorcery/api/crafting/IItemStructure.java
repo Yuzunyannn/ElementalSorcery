@@ -30,9 +30,12 @@ public interface IItemStructure extends IToElement, IItemCapbiltitySyn {
 		return false;
 	}
 
+	default int getVacancy() {
+		for (int i = 0; i < this.getItemMaxCount(); i++) if (this.getStructureItem(i).isEmpty()) return i;
+		return -1;
+	}
+
 	/** 设置使用 */
 	public void set(int index, ItemStack stack, int complex, ElementStack... estacks);
 
-	/** 添加使用 */
-	public void add(ItemStack stack, int complex, ElementStack... estacks);
 }

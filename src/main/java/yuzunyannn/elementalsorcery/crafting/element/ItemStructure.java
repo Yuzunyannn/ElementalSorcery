@@ -46,11 +46,6 @@ public class ItemStructure implements IItemStructure {
 	}
 
 	@Override
-	public void add(ItemStack stack, int complex, ElementStack... estacks) {
-		this.set(0, stack, complex, estacks);
-	}
-
-	@Override
 	public boolean hasState(NBTTagCompound nbt) {
 		nbt = nbt.getCompoundTag("istru");
 		if (!nbt.hasKey("els", 9)) return false;
@@ -85,7 +80,7 @@ public class ItemStructure implements IItemStructure {
 			NBTTagCompound _new = new NBTTagCompound();
 			nbt.setTag("istru", _new);
 			nbt = _new;
-		}
+		} else nbt = nbt.getCompoundTag("istru");
 		nbt.setTag("item", this.stack.serializeNBT());
 		NBTTagList list = new NBTTagList();
 		for (ElementStack estack : estacks) list.appendTag(estack.serializeNBT());
@@ -117,5 +112,10 @@ public class ItemStructure implements IItemStructure {
 	@Override
 	public boolean hasItem(ItemStack stack) {
 		return ItemHelper.areItemsEqual(this.stack, stack);
+	}
+
+	@Override
+	public int getVacancy() {
+		return stack.isEmpty() ? 0 : -1;
 	}
 }

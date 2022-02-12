@@ -4,14 +4,21 @@ import java.util.List;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemItemCrystal extends ItemCrystal {
 	public ItemItemCrystal() {
@@ -38,5 +45,22 @@ public class ItemItemCrystal extends ItemCrystal {
 			tooltip.add(I18n.format("info.itemCrystal.e", name, esatck.getCount(), esatck.getPower()));
 		}
 
+	}
+
+	@Override
+	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
+			EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (!player.isCreative()) return EnumActionResult.PASS;
+		if (!player.isSneaking()) return EnumActionResult.PASS;
+		if (!ElementalSorcery.isDevelop) return EnumActionResult.PASS;
+		if (worldIn.isRemote) return EnumActionResult.SUCCESS;
+
+		ItemStack targetItem = ItemHelper.toItemStack(worldIn.getBlockState(pos));
+		ItemStack stack = player.getHeldItem(hand);
+		IItemStructure istru = ItemStructure.getItemStructure(stack);
+		istru.set(0, targetItem, 1, ElementStack.magic(200, 10));
+		istru.saveState(stack);
+		
+		return EnumActionResult.SUCCESS;
 	}
 }

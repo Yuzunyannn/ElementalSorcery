@@ -1,8 +1,10 @@
 package yuzunyannn.elementalsorcery.event;
 
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -88,6 +90,7 @@ import yuzunyannn.elementalsorcery.ts.PocketWatch;
 import yuzunyannn.elementalsorcery.ts.PocketWatchClient;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
+import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 
 public class EventServer {
 
@@ -100,7 +103,7 @@ public class EventServer {
 	}
 
 	static private final List<ITickTask> tickList = new LinkedList<ITickTask>();
-	static private final List<IWorldTickTask> worldTickList = new LinkedList<IWorldTickTask>();
+	static private final Map<Integer, List<IWorldTickTask>> worldTickMapList = new HashMap<>();
 
 	/** 添加一个服务端的tick任务 */
 	static public void addTickTask(ITickTask task) {
@@ -134,14 +137,17 @@ public class EventServer {
 	}
 
 	/** 添加一个世界tick任务 */
-	static public void addWorldTickTask(IWorldTickTask task) {
+	static public void addWorldTickTask(World world, IWorldTickTask task) {
 		if (task == null) return;
-		worldTickList.add(task);
+		int id = world.provider.getDimension();
+		List<IWorldTickTask> tasks = worldTickMapList.get(id);
+		if (tasks == null) worldTickMapList.put(id, tasks = new LinkedList<>());
+		tasks.add(task);
 	}
 
 	/** 添加一个一次性的的世界tick任务，该世界运行完后直接结束 */
-	static public void addWorldTask(IWorldTickTask.IWorldTickTaskOnce task) {
-		addWorldTickTask((IWorldTickTask) task);
+	static public void addWorldTask(World world, IWorldTickTask.IWorldTickTaskOnce task) {
+		addWorldTickTask(world, (IWorldTickTask) task);
 	}
 
 	@SubscribeEvent
@@ -154,8 +160,13 @@ public class EventServer {
 		Iterator<ITickTask> iter = tickList.iterator();
 		while (iter.hasNext()) {
 			ITickTask task = iter.next();
-			int flags = task.onTick();
-			if (flags == ITickTask.END) iter.remove();
+			try {
+				int flags = task.onTick();
+				if (flags == ITickTask.END) iter.remove();
+			} catch (Exception e) {
+				ElementalSorcery.logger.warn("Server Tick Error", e);
+				iter.remove();
+			}
 		}
 	}
 
@@ -166,11 +177,25 @@ public class EventServer {
 		World world = event.world;
 		if (world.isRemote) return;
 
-		Iterator<IWorldTickTask> iter = worldTickList.iterator();
-		while (iter.hasNext()) {
-			IWorldTickTask task = iter.next();
-			int flags = task.onTick(world);
-			if (flags == ITickTask.END) iter.remove();
+		int id = world.provider.getDimension();
+		if (PocketWatch.isActive(world)) return;
+
+		List<IWorldTickTask> tasks = worldTickMapList.get(id);
+
+		if (tasks != null) {
+			Iterator<IWorldTickTask> iter = tasks.iterator();
+			while (iter.hasNext()) {
+				IWorldTickTask task = iter.next();
+				try {
+					int flags = task.onTick(world);
+					if (flags == ITickTask.END) iter.remove();
+				} catch (Exception e) {
+					ElementalSorcery.logger.warn("Server World Tick Error", e);
+					ExceptionHelper.warnSend(world, "Server World Tick Error");
+					iter.remove();
+				}
+			}
+			if (tasks.isEmpty()) worldTickMapList.remove(id);
 		}
 	}
 

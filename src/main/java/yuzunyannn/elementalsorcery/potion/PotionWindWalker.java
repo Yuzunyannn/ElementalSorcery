@@ -63,6 +63,7 @@ public class PotionWindWalker extends PotionCommon {
 				entity.motionX += speed.x;
 				entity.motionY += speed.y;
 				entity.motionZ += speed.z;
+				if (entity instanceof EntityPlayer) entity.velocityChanged = true;
 			}
 		}
 	}

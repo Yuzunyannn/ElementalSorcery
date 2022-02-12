@@ -112,6 +112,7 @@ item.blessingJade.name=Blessing Jade
 item.calamityGem.name=Calamity Gem
 item.arrogantWool.name=Arrogant Wool
 item.blessingJadePiece.name=Blessing Jade Fragment
+item.elementCrack.name=Element Crack
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box

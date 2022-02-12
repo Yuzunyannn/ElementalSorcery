@@ -51,16 +51,16 @@ public class EEEnder extends ElementExplosion {
 		doDamageSource(entity, damage * 0.05);
 
 		if (!entity.isNonBoss()) return;
+		float sizeModifier = 1;
 		if (entity instanceof EntityLivingBase) {
 			float power = eStack.getPower();
 			EntityLivingBase living = (EntityLivingBase) entity;
 			if (power / 12 < living.getMaxHealth()) return;
-
 		} else if (entity instanceof EntityItem) {
-
+			
 		} else return;
 
-		float size = this.size * 2f;
+		float size = this.size * 2f * sizeModifier;
 		Vec3d at = entity.getPositionVector().addVector(size * rand.nextGaussian(), size * rand.nextGaussian(),
 				size * rand.nextGaussian());
 		if (world.isOutsideBuildHeight(new BlockPos(at))) {

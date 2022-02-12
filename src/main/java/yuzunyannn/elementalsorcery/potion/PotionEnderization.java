@@ -102,7 +102,7 @@ public class PotionEnderization extends PotionCommon {
 						SoundCategory.HOSTILE, 1, 1);
 			};
 			// 为什么要分呢？ 解决 NetHandlerPlayServer#lastGoodX 报 move wrong! 问题
-			if (owner instanceof EntityPlayer) EventServer.addWorldTask(task);
+			if (owner instanceof EntityPlayer) EventServer.addWorldTask(world, task);
 			else task.onTick(world);
 			return true;
 		}
@@ -140,7 +140,7 @@ public class PotionEnderization extends PotionCommon {
 			entity.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
 		};
 
-		if (entity instanceof EntityPlayer) EventServer.addWorldTask(task);
+		if (entity instanceof EntityPlayer) EventServer.addWorldTask(entity.world, task);
 		else task.onTick(entity.world);
 
 		return true;

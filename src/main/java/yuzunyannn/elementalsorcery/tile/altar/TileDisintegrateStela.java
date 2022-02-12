@@ -2,9 +2,14 @@ package yuzunyannn.elementalsorcery.tile.altar;
 
 import java.util.AbstractMap;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
+import java.util.function.Function;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -16,22 +21,34 @@ import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
+import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.event.ITickTask;
+import yuzunyannn.elementalsorcery.event.IWorldTickTask;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.element.ElementAnalysisPacket;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHandlerAdapter;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class TileDisintegrateStela extends TileStaticMultiBlock implements ITickable, IGetItemStack {
 
@@ -49,6 +66,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 	};
 
 	public static final int SEND_DATA_CD_INTERVAL = 30;
+	public static final float OVERLOAD_BELOW_ONE_DECLINE = 0.001f;
 
 	protected int tick = 0;
 	/** 分解的队列 */
@@ -58,9 +76,17 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 	/** server计算展示数据的map */
 	protected Map<Integer, Integer> tickSendMap = new HashMap<>();
 	/** 超载比例 0-2 */
-	protected float overLoad = 0;
+	protected float overload = 0;
 	/** 服务端处理要不要更新，客户端进行渲染 */
-	public float prevOverLoad = 0;
+	public float prevOverload = 0;
+	/** 元素超载记录，不写入NBT储存了 */
+	protected Map<Element, Float> overloadMap = new HashMap<>();
+	/** 超载保护 0~1~Float.MAX_VALUE */
+	protected float overloadProtect = 1f;
+	/** 使用的toElement */
+	protected ElementMap toElement = null;
+	/** 距离超载爆炸的tick记时 */
+	protected int overloadExplosionTick = 0;
 
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
@@ -89,13 +115,13 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound.setFloat("overload", overLoad);
+		compound.setFloat("overload", overload);
 		return super.writeToNBT(compound);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound compound) {
-		overLoad = compound.getFloat("overload");
+		overload = compound.getFloat("overload");
 		super.readFromNBT(compound);
 	}
 
@@ -121,7 +147,9 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 	public boolean disintegrate(ItemStack stack, boolean simulate) {
 		if (!isIntact()) return false;
 		if (world.isRemote) return true;
-		ElementAnalysisPacket packet = TileAnalysisAltar.analysisItem(stack, ElementMap.instance, true);
+		if (overloadExplosionTick > 0) return false;
+		if (toElement == null) toElement = ElementMap.instance;
+		ElementAnalysisPacket packet = TileAnalysisAltar.analysisItem(stack, toElement, true);
 		if (packet == null) return false;
 		if (simulate) return true;
 		eaPacketStack.addLast(packet);
@@ -139,31 +167,140 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 			return;
 		}
 
-		while (!eaPacketStack.isEmpty()) {
-			ElementAnalysisPacket packet = eaPacketStack.removeFirst();
-			if (packet.daStack.isEmpty()) continue;
-			ElementStack[] estacks = packet.element();
-			if (estacks == null) continue;
-			for (ElementStack estack : estacks) {
-				estack.setCount(estack.getCount() * packet.daStack.getCount());
-				estack = estack.onDeconstruct(world, packet.daStack, packet.complex(), Element.DP_ALTAR_ADV).copy();
-				if (estack.isEmpty()) continue;
-				int posIndex = doSendElement(estack) + 1;
-				int id = Element.getIdFromElement(estack.getElement());
-				int idKey = (id << 4) | (posIndex & 0xf);
-				Integer oCount = tickSendMap.get(idKey);
-				tickSendMap.put(idKey, (oCount == null ? 0 : oCount.intValue()) + estack.getCount());
+		if (overloadExplosionTick > 0) {
+			overloadExplosionTick--;
+			if (overloadExplosionTick == 0) {
+				BlockPos pos = this.pos;
+				world.setBlockToAir(pos);
+				doOverloadExplosion(world, pos);
 			}
-		}
-
-		if (tickSendDataCD > 0) {
-			tickSendDataCD--;
 			return;
 		}
 
-		if (tickSendMap.isEmpty() && prevOverLoad == overLoad) return;
-		tickSendDataCD = SEND_DATA_CD_INTERVAL;
-		updateDeconstructDataToClient();
+		if (overload < 1f) overload = Math.max(0, overload - OVERLOAD_BELOW_ONE_DECLINE);
+		else overload = overload - OVERLOAD_BELOW_ONE_DECLINE * 10;
+
+		if (!eaPacketStack.isEmpty()) {
+
+			int lvPower = Element.DP_ALTAR_ADV + (Element.DP_ALTAR_SURPREME - Element.DP_ALTAR_ADV) * 3 / 4;
+			float ol = MathHelper.clamp((2 - overload) / 2, 0, 1);
+			lvPower = (int) (lvPower * ol * ol);
+
+			// 记录本次分解存在哪些元素的Set
+			Set<Element> elementOverloadSet = new HashSet<>();
+
+			while (!eaPacketStack.isEmpty()) {
+				ElementAnalysisPacket packet = eaPacketStack.removeFirst();
+				if (packet.daStack.isEmpty()) continue;
+				ElementStack[] estacks = packet.element();
+				if (estacks == null) continue;
+				for (ElementStack estack : estacks) {
+					// 计算分解
+					estack = estack.onDeconstruct(world, packet.daStack, packet.complex(), Element.DP_ALTAR_ADV).copy();
+					if (estack.isEmpty()) continue;
+					estack.setCount(estack.getCount() * packet.daStack.getCount());
+					// 处理过载
+					elementOverloadSet.add(doIncrOverload(estack));
+					// 分发
+					int posIndex = doSendElement(estack) + 1;
+					// 生成发送更新数据
+					int id = Element.getIdFromElement(estack.getElement());
+					int idKey = (id << 4) | (posIndex & 0xf);
+					Integer oCount = tickSendMap.get(idKey);
+					tickSendMap.put(idKey, (oCount == null ? 0 : oCount.intValue()) + estack.getCount());
+				}
+			}
+
+			// 降低所有本次分解处理中，不包括的元素
+			reduceOverloadMap(0.8f, e -> elementOverloadSet.contains(e));
+
+			if (overload >= 2) overloadExplosionTick = 20 * 4;
+		}
+
+		// 再过载大于1时，会强行降低overload数据
+		if (tick % 20 == 0 && overload > 1) reduceOverloadMap(0.5f, e -> false);
+		// 更新发送数据
+		updateCheckAndSendData();
+
+		if (tick % 100 == 0) refreshAmbitus();
+	}
+
+	public static void doOverloadExplosion(World world, BlockPos pos) {
+		if (world.isRemote) return;
+		world.createExplosion(null, pos.getX(), pos.getY(), pos.getZ(), 20, true);
+		EventServer.addWorldTickTask(world, new IWorldTickTask() {
+			final List<Element> elements = Element.REGISTRY.getValues();
+			int index = 0;
+			int tick = 0;
+
+			@Override
+			public int onTick(World w) {
+				if (!world.isBlockLoaded(pos)) return ITickTask.END;
+				if ((this.tick++) % 5 != 0) return ITickTask.SUCCESS;
+				Element element = elements.get(this.index++);
+				BlockPos at = pos.add(RandomHelper.rand.nextGaussian() * 4, RandomHelper.rand.nextGaussian() * 4,
+						RandomHelper.rand.nextGaussian() * 4);
+				ElementExplosion.doExplosion(world, at, new ElementStack(element, 5000, 5000), null);
+				return this.index >= elements.size() ? ITickTask.END : ITickTask.SUCCESS;
+			}
+		});
+		ItemHelper.dropItem(world, pos, new ItemStack(ESInit.ITEMS.ELEMENT_CRACK)).setNoDespawn();
+	}
+
+	public void ergodicMaigcPlatform(Function<BlockPos, Boolean> callback) {
+		for (int x = -2; x <= 2; x++) {
+			for (int z = -2; z <= 2; z++) {
+				if (Math.abs(x) != 2 && z != -2) z = 2;
+				callback.apply(pos.add(x, -3, z));
+			}
+		}
+	}
+
+	/** 刷新周边参数 */
+	protected void refreshAmbitus() {
+
+		toElement = null;
+		overloadProtect = 0;
+
+		Integer[] ppRef = new Integer[] { 0 };
+
+		ergodicMaigcPlatform(at -> {
+			IGetItemStack itemGetter = BlockHelper.getTileEntity(world, at, IGetItemStack.class);
+			if (itemGetter == null) return false;
+			ItemStack stack = itemGetter.getStack();
+			if (stack.isEmpty()) return false;
+
+			if (stack.getItem() == ESInit.ITEMS.BLESSING_JADE) ppRef[0] = ppRef[0] + 1;
+
+			NBTTagCompound nbt = stack.getTagCompound();
+			if (nbt == null) return true;
+
+			IItemStructure itemStructure = ItemStructure.getItemStructure(stack);
+			if (!itemStructure.isEmpty()) {
+				if (toElement == null) toElement = new ElementMap();
+				toElement.add(itemStructure);
+			}
+
+			if (nbt.hasKey("_DSOP", NBTTag.TAG_NUMBER)) ppRef[0] = ppRef[0] + nbt.getInteger("_DSOP");
+
+			return true;
+		});
+
+		float protectPotin = ppRef[0];
+		overloadProtect = (float) (Math.pow(0.001, 1 / protectPotin) * (-1 / (protectPotin + 1) + 1.4));
+
+		if (toElement != null) toElement.add(ElementMap.instance);
+	}
+
+	/** 减少过载数据记录 */
+	protected void reduceOverloadMap(float rate, Function<Element, Boolean> passer) {
+		Iterator<Entry<Element, Float>> iter = overloadMap.entrySet().iterator();
+		while (iter.hasNext()) {
+			Entry<Element, Float> entry = iter.next();
+			if (passer.apply(entry.getKey())) continue;
+			entry.setValue(entry.getValue() * rate);
+			if (entry.getValue() < 0.01f) iter.remove();
+		}
 	}
 
 	/**
@@ -175,7 +312,44 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 		return putElementToSpPlace(estack, this.pos);
 	}
 
-	private void updateDeconstructDataToClient() {
+	/** 处理过载 */
+	protected Element doIncrOverload(ElementStack estack) {
+
+		float drop = 1 - overloadProtect;
+		final float dropDivide = 0.25f;
+		if (drop < dropDivide) drop = dropDivide / (dropDivide - drop + 1);
+
+		Element element = estack.getElement();
+		Float f = overloadMap.get(element);
+		float overRatio = f == null ? 0 : f.floatValue();
+		float overIncr = estack.getCount() / 10f * (1 + MathHelper.log2(Math.max(estack.getPower(), 1)) / 7);
+		overRatio = overRatio + overIncr * drop;
+
+		float overloadInc = overRatio / 92f;
+		if (overload > 1) overloadInc = overloadInc / (float) Math.pow(overload, 4);
+		overloadInc = overloadInc * drop;
+		overload = Math.min(overload + overloadInc, 2);
+
+		if (overloadInc > OVERLOAD_BELOW_ONE_DECLINE * 2) overRatio = overRatio * Math.min(0.875f + 0.125f * drop, 1);
+		overloadMap.put(element, overRatio);
+
+		return element;
+	}
+
+	/** 每tick调用更新 */
+	protected void updateCheckAndSendData() {
+		if (tickSendDataCD > 0) {
+			tickSendDataCD--;
+			return;
+		}
+
+		if (tickSendMap.isEmpty() && prevOverload == overload) return;
+		tickSendDataCD = SEND_DATA_CD_INTERVAL;
+		updateDeconstructDataToClient();
+	}
+
+	/** 处理数据，并更新到客户端 */
+	protected void updateDeconstructDataToClient() {
 		NBTTagCompound nbt = new NBTTagCompound();
 
 		if (!tickSendMap.isEmpty()) {
@@ -189,9 +363,9 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 			tickSendMap.clear();
 		}
 
-		if (prevOverLoad != overLoad) {
-			nbt.setFloat("DOL", overLoad);
-			prevOverLoad = overLoad;
+		if (prevOverload != overload) {
+			nbt.setFloat("DOL", overload);
+			prevOverload = overload;
 		}
 
 		if (nbt.hasNoTags()) return;
@@ -199,13 +373,21 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 		updateToClient(nbt);
 	}
 
+	protected LinkedList<Entry<Integer, Integer>> effectList = new LinkedList();
+	public float roate, prevRoate;
+	public float animeRate = 0; // 动画比例，转的快还是慢
+	public float wakeRate = 0, prevWakeRate = 0; // 是否起来可以旋转
+	/** 客户端overload变更预期值，渲染平滑过度 */
+	public float targetOverload = 0;
+
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void handleUpdateTag(NBTTagCompound tag) {
 		if (!tag.hasKey("DDS") && !tag.hasKey("DOL")) {
 			super.handleUpdateTag(tag);
 			return;
 		}
-		if (tag.hasKey("DOL")) overLoad = tag.getFloat("DOL");
+		if (tag.hasKey("DOL")) targetOverload = tag.getFloat("DOL");
 		if (!tag.hasKey("DDS")) return;
 		// 根据传过来的数据，计算最佳的list
 		// 比如。每隔 x tick传输一次，就要尽可能的平均分成x次到client处理特效的帧内
@@ -234,19 +416,14 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 		}
 	}
 
-	protected LinkedList<Entry<Integer, Integer>> effectList = new LinkedList();
-	public float roate, prevRoate;
-	public float animeRate = 0; // 动画比例，转的快还是慢
-	public float wakeRate = 0, prevWakeRate = 0; // 是否起来可以旋转
-
 	@SideOnly(Side.CLIENT)
-	public float getOverLoadRate() {
-		return overLoad;
+	public float getOverloadRate() {
+		return overload;
 	}
 
 	@SideOnly(Side.CLIENT)
 	private void updateClient() {
-		prevOverLoad = overLoad;
+		prevOverload = overload;
 		prevRoate = roate;
 		prevWakeRate = wakeRate;
 
@@ -258,8 +435,10 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 			wakeRate = Math.max(0, r * r);
 		}
 
+		overload = overload + (targetOverload - overload) * 0.075f;
+
 		genActiveEffect();
-		if (overLoad > 1) genOverLoadEffect();
+		if (overload > 1) genOverloadEffect();
 		if (tick % 2 != 0) return;
 
 		if (effectList.isEmpty()) {
@@ -288,8 +467,8 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void genOverLoadEffect() {
-		int n = MathHelper.ceil((MathHelper.clamp(overLoad, 1, 2) - 1) * 4);
+	public void genOverloadEffect() {
+		int n = MathHelper.ceil((MathHelper.clamp(overload, 1, 2) - 1) * 4);
 		final int[] OVERLOAD_COLORS = new int[] { 0x992500, 0xc22f00, 0xca4619, 0xdc663e };
 		for (int i = 0; i < n; i++) {
 			Vec3d pos = new Vec3d(this.pos).addVector(0.5, 0.5, 0.5);
@@ -338,7 +517,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 		final int[] COLORS = new int[] { 0x1b6eb8, 0x196ab5, 0x458ed1, 0x86c0f6 };
 		final int[] OVERLOAD_COLORS = new int[] { 0x992500, 0xc22f00, 0xca4619, 0xdc663e };
 		int color = 0;
-		if (overLoad > Effect.rand.nextFloat()) color = OVERLOAD_COLORS[Effect.rand.nextInt(OVERLOAD_COLORS.length)];
+		if (overload > Effect.rand.nextFloat()) color = OVERLOAD_COLORS[Effect.rand.nextInt(OVERLOAD_COLORS.length)];
 		else color = COLORS[Effect.rand.nextInt(COLORS.length)];
 		effect.setColor(color);
 		Vec3d speed = new Vec3d(0, Effect.rand.nextDouble(), 0);
