@@ -110,18 +110,18 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 			else estack.weaken(0.35f);
 		} else if (lvPower <= Element.DP_ALTAR) { // 100
 			float r = (lvPower - Element.DP_BOX) / (float) (Element.DP_ALTAR - Element.DP_BOX);
-			if (estack.getCount() > 300) estack.setCount(300);
+			if (estack.getCount() > 200) estack.setCount(200);
 			estack.rise(-0.5f * (1 - r) + -0.2f * r);
-			estack.weaken(0.5f * (1 - r) * 0.75f * r);
+			estack.weaken(0.4f * (1 - r) + 0.7f * r);
 		} else if (lvPower <= Element.DP_ALTAR_ADV) { // 300
 			float r = (lvPower - Element.DP_ALTAR) / (float) (Element.DP_ALTAR_ADV - Element.DP_ALTAR);
 			if (estack.getCount() > 500) estack.setCount(500);
 			estack.rise(-0.15f * (1 - r) + -0.075f * r);
-			estack.weaken(0.8f * (1 - r) * 0.9f * r);
+			estack.weaken(0.75f * (1 - r) + 0.85f * r);
 		} else if (lvPower <= Element.DP_ALTAR_SURPREME) { // 500
 			float r = (lvPower - Element.DP_ALTAR_ADV) / (float) (Element.DP_ALTAR_SURPREME - Element.DP_ALTAR_ADV);
 			estack.rise(-0.075f * (1 - r) + -0.02f * r);
-			estack.weaken(0.9f * (1 - r) * 1f * r);
+			estack.weaken(0.9f * (1 - r) + 1f * r);
 		} else estack.rise(-0.005f);
 		return estack;
 	}

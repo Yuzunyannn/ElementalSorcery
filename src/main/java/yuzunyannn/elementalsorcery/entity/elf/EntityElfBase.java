@@ -206,6 +206,7 @@ public abstract class EntityElfBase extends EntityCreature {
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
 		if (hand != EnumHand.MAIN_HAND) return EnumActionResult.PASS;
+		if (this.getHealth() <= 0) return EnumActionResult.FAIL;
 		if (this.getTalker() != null) return EnumActionResult.FAIL;
 		ElfProfession pro = this.getProfession();
 		return pro.interact(this, player) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;

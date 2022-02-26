@@ -191,7 +191,6 @@ public class MantraArrow extends MantraCommon {
 		for (int i = 0; i < 8; i++) {
 			vec = vec.add(dir);
 			EffectElementMove effect = new EffectElementMove(world, vec);
-			effect.g = 0;
 			Vec3d speed = new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian()).normalize();
 			effect.setVelocity(speed.scale(0.1f));
 			effect.setColor(color);

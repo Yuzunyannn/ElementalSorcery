@@ -1,10 +1,12 @@
 package yuzunyannn.elementalsorcery.potion;
 
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
@@ -16,7 +18,7 @@ public class PotionCommon extends Potion {
 		super(isBadEffectIn, liquidColorIn);
 		setPotionName("es.effect." + name);
 	}
-	
+
 	@Override
 	public boolean isReady(int duration, int amplifier) {
 		return false;
@@ -38,11 +40,17 @@ public class PotionCommon extends Potion {
 		int c = iconIndex % 7;
 		int r = iconIndex / 7;
 		RenderHelper.drawTexturedModalRect(x + 6, y + 6, 18 * c, 18 * r, 18, 18, 128, 128);
-//		int amplifier = effect.getAmplifier();
-//		if (amplifier > 3) {
-//			String s = I18n.format("enchantment.level." + (amplifier + 1));
-//			RenderHelper.mc.fontRenderer.drawStringWithShadow(s, x + 4, y + 3, 16777215);
-//		}
+
+		int amplifier = effect.getAmplifier();
+		if (amplifier > 3) {
+			String s1 = I18n.format(getName());
+			int w = RenderHelper.mc.fontRenderer.getStringWidth(s1);
+
+			String v = " ";
+			if (amplifier >= 10) v = v + TextHelper.toRoman(amplifier + 1);
+			else v = v + I18n.format("enchantment.level." + (amplifier + 1));
+			RenderHelper.mc.fontRenderer.drawStringWithShadow(v, x + 10 + 18 + w, y + 6, 16777215);
+		}
 	}
 
 }

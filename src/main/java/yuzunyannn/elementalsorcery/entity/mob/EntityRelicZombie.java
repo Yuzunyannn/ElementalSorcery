@@ -207,7 +207,6 @@ public class EntityRelicZombie extends EntityMob {
 			effect.lifeTime = 20;
 			effect.dalpha = 1.0f / effect.lifeTime;
 			effect.scale = 0.2f;
-			effect.g = 0;
 			effect.setColor(this.getType().getColor());
 			Effect.addEffect(effect);
 		}

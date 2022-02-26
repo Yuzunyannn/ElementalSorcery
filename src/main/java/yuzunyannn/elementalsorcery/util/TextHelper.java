@@ -50,6 +50,18 @@ public class TextHelper {
 		return sb.toString();
 	}
 
+	static public String toRoman(int num) {
+		String[][] c = { { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" },
+				{ "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC" },
+				{ "", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM" }, { "", "M", "MM", "MMM" } };
+		StringBuffer ret = new StringBuffer();
+		ret.append(c[3][num / 1000 % 4]);
+		ret.append(c[2][num / 100 % 10]);
+		ret.append(c[1][num / 10 % 10]);
+		ret.append(c[0][num % 10]);
+		return ret.toString();
+	}
+
 	static public ResourceLocation toResourceLocation(String id, String defaultDomain) {
 		if (id.indexOf(':') == -1) return new ResourceLocation(defaultDomain, id);
 		return new ResourceLocation(id);

@@ -1,6 +1,8 @@
 package yuzunyannn.elementalsorcery.util.render;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -10,6 +12,10 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 public class TextureBinder {
 
 	static public final Minecraft mc = Minecraft.getMinecraft();
+
+	public static void bindTexture(ResourceLocation texture) {
+		mc.getTextureManager().bindTexture(texture);
+	}
 
 	public TextureBinder(String path) {
 		this(ElementalSorcery.MODID, path);
@@ -31,6 +37,19 @@ public class TextureBinder {
 
 	public void bind() {
 		mc.getTextureManager().bindTexture(resource);
+	}
+
+	public void bindAtive(int active) {
+		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit + active);
+		TextureBinder.mc.getTextureManager().bindTexture(resource);
+		GlStateManager.enableTexture2D();
+		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
+	}
+
+	public void unbindAtive(int active) {
+		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit + active);
+		GlStateManager.disableTexture2D();
+		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
 	}
 
 	public ResourceLocation getResource() {

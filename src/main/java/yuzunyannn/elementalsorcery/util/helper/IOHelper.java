@@ -47,7 +47,7 @@ public class IOHelper {
 		String line;
 		try (InputStream istream = ESData.class.getResourceAsStream(rPath)) {
 			BufferedReader br = new BufferedReader(new InputStreamReader(istream, "utf-8"));
-			while ((line = br.readLine()) != null) buider.append(line);
+			while ((line = br.readLine()) != null) buider.append(line).append("\n");
 		}
 		return buider.toString();
 	}

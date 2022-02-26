@@ -245,8 +245,8 @@ public class EventClient {
 			tooltip.add(TextFormatting.GOLD + "" + ElfProfessionMerchant.priceIt(stack) + "$");
 			for (ElementStack estack : estacks) {
 				if (estack.isEmpty()) continue;
-				estack = estack.copy().onDeconstruct(Minecraft.getMinecraft().world, stack,
-						teInfo.complex(), Element.DP_ALTAR_SURPREME);
+				estack = estack.copy().onDeconstruct(Minecraft.getMinecraft().world, stack, teInfo.complex(),
+						Element.DP_ALTAR_SURPREME);
 				String str = I18n.format("info.elementCrystal.has", estack.getDisplayName(), estack.getCount(),
 						estack.getPower());
 				tooltip.add(TextFormatting.AQUA + str);

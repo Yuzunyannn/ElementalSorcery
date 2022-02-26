@@ -114,7 +114,6 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 		Vec3d speed = new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian());
 		EffectElementMove effect = new EffectElementMove(player.world, vec);
 		effect.setColor(0x4d2175);
-		effect.g = 0;
 		effect.setVelocity(speed.normalize().scale(0.025));
 		Effect.addEffect(effect);
 	}

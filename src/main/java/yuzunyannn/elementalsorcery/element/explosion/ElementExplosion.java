@@ -206,9 +206,10 @@ public class ElementExplosion implements IExplosionExecutor {
 	/** B:进行方块爆炸 */
 	@Override
 	public void doExplosionBlock() {
+		if (world.isRemote) doExplosionBlockEffect();
+		
 		if (passExplosionBlock) return;
 		doExplosionCheckBlock();
-		if (world.isRemote) doExplosionBlockEffect();
 		for (BlockPos pos : affectedBlockPositions) doExplosionBlockAt(pos);
 	}
 

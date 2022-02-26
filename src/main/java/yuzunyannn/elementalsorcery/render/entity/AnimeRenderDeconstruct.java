@@ -80,7 +80,6 @@ public class AnimeRenderDeconstruct implements ICraftingLaunchAnime {
 				Vec3d at = new Vec3d(pos.up());
 				at = at.addVector(0.5, high, 0.5);
 				EffectElementMove move = new EffectElementMove(world, at);
-				move.g = 0;
 				Vec3d speed = new Vec3d(Math.random(), Math.random(), Math.random()).normalize();
 				move.setVelocity(speed.scale(Math.random() * 0.1 - 0.05));
 				move.setColor(cd.freeElement.getColor());

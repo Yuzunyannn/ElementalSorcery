@@ -66,7 +66,6 @@ public class MantraFloatArea extends MantraSquareAreaAdv {
 			Vec3d pos = co.getPositionVector().addVector(rand.nextDouble() * size - hSize, 0.1,
 					rand.nextDouble() * size - hSize);
 			EffectElementMove effect = new EffectElementMove(world, pos);
-			effect.g = 0;
 			effect.setVelocity(0, rand.nextDouble() * 0.5 + 0.5, 0);
 			effect.setColor(getRenderColor());
 			Effect.addEffect(effect);

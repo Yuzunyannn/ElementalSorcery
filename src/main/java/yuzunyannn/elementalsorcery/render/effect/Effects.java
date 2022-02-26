@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageEffect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementAbsorb;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectElementCrackAttack;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectSummonEntity;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTreatEntity;
 
@@ -27,6 +28,7 @@ public class Effects {
 	public static final int SUMMON_ENTITY = 4;
 	public static final int TREAT_ENTITY = 5;
 	public static final int ELEMENT_ABSORB = 6;
+	public static final int ELEMENT_CRACK_ATTACK = 7;
 
 	public static final int MAX_DIS = 64;
 
@@ -88,6 +90,7 @@ public class Effects {
 		EffectMap.register(SUMMON_ENTITY, EffectSummonEntity::show);
 		EffectMap.register(ELEMENT_ABSORB, EffectElementAbsorb::show);
 		EffectMap.register(TREAT_ENTITY, EffectTreatEntity::show);
+		EffectMap.register(ELEMENT_CRACK_ATTACK, EffectElementCrackAttack::show);
 	}
 
 	// 下面是通用的show

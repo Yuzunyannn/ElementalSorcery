@@ -239,6 +239,7 @@ import yuzunyannn.elementalsorcery.potion.PotionBlessing;
 import yuzunyannn.elementalsorcery.potion.PotionCalamity;
 import yuzunyannn.elementalsorcery.potion.PotionCombatSkill;
 import yuzunyannn.elementalsorcery.potion.PotionDefenseSkill;
+import yuzunyannn.elementalsorcery.potion.PotionElementCrackAttack;
 import yuzunyannn.elementalsorcery.potion.PotionEndercorps;
 import yuzunyannn.elementalsorcery.potion.PotionEnderization;
 import yuzunyannn.elementalsorcery.potion.PotionFireWalker;
@@ -647,6 +648,7 @@ public class ESInit {
 		POTIONS.STAR = new PotionStar();
 		POTIONS.CALAMITY = new PotionCalamity();
 		POTIONS.BLESSING = new PotionBlessing();
+		POTIONS.ELEMENT_CRACK_ATTACK = new PotionElementCrackAttack();
 
 		Class<?> cls = POTIONS.getClass();
 		Field[] fields = cls.getDeclaredFields();

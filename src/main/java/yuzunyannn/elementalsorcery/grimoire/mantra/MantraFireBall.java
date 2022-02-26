@@ -292,7 +292,6 @@ public class MantraFireBall extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public void afterSpellingEffect(World world, Vec3d lineAt, int color) {
 		EffectElementMove effect = new EffectElementMove(world, lineAt);
-		effect.g = 0;
 		effect.setColor(color);
 		Random rand = world.rand;
 		Vec3d vec = new Vec3d(rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1, rand.nextDouble() * 2 - 1)

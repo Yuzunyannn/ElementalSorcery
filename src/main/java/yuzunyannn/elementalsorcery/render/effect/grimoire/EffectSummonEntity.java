@@ -84,7 +84,6 @@ public class EffectSummonEntity extends Effect {
 		float z = MathHelper.cos(rate * 3.1415926f * 8f) * width / 2;
 		vec = vec.addVector(x, height * rate, z);
 		EffectElementMove move = new EffectElementMove(world, vec);
-		move.g = 0;
 //		move.motionY = 0.01f;
 		move.setColor(this.getColor());
 		addEffect(move);

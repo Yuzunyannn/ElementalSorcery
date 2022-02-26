@@ -249,6 +249,7 @@ public class ESObjects {
 		public Potion STAR;
 		public Potion CALAMITY;
 		public Potion BLESSING;
+		public Potion ELEMENT_CRACK_ATTACK;
 	}
 
 	static public class Village {

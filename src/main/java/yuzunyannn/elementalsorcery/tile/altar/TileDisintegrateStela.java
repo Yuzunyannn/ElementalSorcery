@@ -82,7 +82,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 	/** 元素超载记录，不写入NBT储存了 */
 	protected Map<Element, Float> overloadMap = new HashMap<>();
 	/** 超载保护 0~1~Float.MAX_VALUE */
-	protected float overloadProtect = 1f;
+	protected float overloadProtect = 0;
 	/** 使用的toElement */
 	protected ElementMap toElement = null;
 	/** 距离超载爆炸的tick记时 */
@@ -184,7 +184,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 
 			int lvPower = Element.DP_ALTAR_ADV + (Element.DP_ALTAR_SURPREME - Element.DP_ALTAR_ADV) * 3 / 4;
 			float ol = MathHelper.clamp((2 - overload) / 2, 0, 1);
-			lvPower = (int) (lvPower * ol * ol);
+			lvPower = (int) (lvPower * ol * ol * ol);
 
 			// 记录本次分解存在哪些元素的Set
 			Set<Element> elementOverloadSet = new HashSet<>();
@@ -196,7 +196,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 				if (estacks == null) continue;
 				for (ElementStack estack : estacks) {
 					// 计算分解
-					estack = estack.onDeconstruct(world, packet.daStack, packet.complex(), Element.DP_ALTAR_ADV).copy();
+					estack = estack.onDeconstruct(world, packet.daStack, packet.complex(), lvPower).copy();
 					if (estack.isEmpty()) continue;
 					estack.setCount(estack.getCount() * packet.daStack.getCount());
 					// 处理过载

@@ -1,0 +1,47 @@
+{
+	"pattern": [
+		"NNN",
+		"ECE",
+		"SES",
+		" NN ",
+		" NN ",
+		"SEES",
+		"PSSP"
+	],
+	"key": {
+		"N": "elementalsorcery:azure_crystal",
+		"C": "elementalsorcery:element_stone",
+		"E": "minecraft:ender_pearl",
+		"S": {
+			"item": "elementalsorcery:estone",
+			"meta": 1
+		},
+		"P": "elementalsorcery:estone_prism"
+	},
+	"element": [
+		{
+			"id": "ender",
+			"size": 2048,
+			"power": 600
+		},
+		{
+			"id": "fire",
+			"size": 128,
+			"power": 400
+		},
+		{
+			"id": "knowledge",
+			"size": 32,
+			"power": 500
+		},
+		{
+			"id": "star",
+			"size": 32,
+			"power": 333
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:disintegrate_stela",
+		"count": 1
+	}
+}

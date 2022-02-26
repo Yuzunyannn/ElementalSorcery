@@ -108,7 +108,7 @@ public class EntityArrogantSheep extends EntityMob {
 			EntityLivingBase revenge = getRevengeTarget();
 			setRevengeTarget(revenge);
 			if (this.ticksExisted % 20 == 0) {
-				setHealth(getHealth() - 64);
+				setHealth(getHealth() - getMaxHealth() / 16);
 				if (getHealth() <= 0) BlockGoatGoldBrick.tryWitherGoatGoldBrickArea(world, this.getPosition(), true);
 				if (rand.nextFloat() < 0.25f) dyingSay();
 			}
@@ -319,7 +319,7 @@ public class EntityArrogantSheep extends EntityMob {
 	@Override
 	protected void applyEntityAttributes() {
 		super.applyEntityAttributes();
-		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(1024D);
+		this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(1048576D);
 		this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
 	}
 
@@ -439,10 +439,10 @@ public class EntityArrogantSheep extends EntityMob {
 		player.motionY += 0.5;
 		player.motionZ += speed.z;
 
-		for (EnumHand hand : EnumHand.values()) {
-			ItemStack stack = player.getHeldItem(hand);
+		for (EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
+			ItemStack stack = player.getItemStackFromSlot(slot);
 			if (!stack.isEmpty()) {
-				player.setHeldItem(hand, ItemStack.EMPTY);
+				player.setItemStackToSlot(slot, ItemStack.EMPTY);
 				if (!world.isRemote) player.entityDropItem(stack, player.getEyeHeight());
 			}
 		}

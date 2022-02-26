@@ -195,6 +195,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		if (element == EMPTY.element) return true;
 		else if (element != null) {
 			if (stackSize <= 0) return true;
+			if (power <= 0) return true;
 			return false;
 		} else return true;
 	}

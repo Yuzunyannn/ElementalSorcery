@@ -84,7 +84,6 @@ public class MantraSlowFall extends MantraCommon {
 		Vec3d at = pos.addVector(MathHelper.sin(theta) * r, 1, MathHelper.cos(theta) * r);
 		EffectElementMove effect = new EffectElementMove(world, at);
 		effect.scale = 0.2f;
-		effect.g = 0;
 		Vec3d v = new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian()).normalize();
 		effect.setVelocity(v.scale(rand.nextFloat() * 0.1f));
 		effect.setColor(this.getColor(data));

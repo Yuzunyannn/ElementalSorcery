@@ -70,7 +70,7 @@ public class WorldScene {
 		mc.gameSettings.hideGUI = true;
 
 		WorldSceneEventHandle.instance.push(this);
-		buffer.bindFrame();
+		buffer.bindFrame(true);
 		mc.entityRenderer.renderWorld(mc.getRenderPartialTicks(), System.nanoTime());
 		buffer.unbindFrame();
 		WorldSceneEventHandle.instance.pop();
@@ -85,7 +85,7 @@ public class WorldScene {
 	}
 
 	public boolean doRenderSky() {
-		buffer.bindFrame();
+		buffer.bindFrame(true);
 		GlStateManager.clear(16640);
 		float partialTicks = mc.getRenderPartialTicks();
 

@@ -28,7 +28,6 @@ public class RenderItemElementCrack implements IRenderItem {
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 
-		GlStateManager.disableLighting();
 		GlStateManager.pushMatrix();
 		GlStateManager.disableCull();
 

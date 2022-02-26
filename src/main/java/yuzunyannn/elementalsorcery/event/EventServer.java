@@ -510,6 +510,9 @@ public class EventServer {
 		if (attackerEntity instanceof EntityLivingBase) {
 			EntityLivingBase attacker = (EntityLivingBase) attackerEntity;
 			PotionHealthBalance.tryBalance(entity, attacker, source, amount);
+
+			PotionEffect effect = entity.getActivePotionEffect(ESInit.POTIONS.ELEMENT_CRACK_ATTACK);
+			if (effect != null) event.setAmount(amount * (1 + effect.getAmplifier() * effect.getAmplifier() * 0.1f));
 		}
 	}
 

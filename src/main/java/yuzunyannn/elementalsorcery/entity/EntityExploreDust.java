@@ -127,7 +127,7 @@ public class EntityExploreDust extends Entity implements IEntityAdditionalSpawnD
 		EffectElementMove effect = new EffectElementMove(world, pos);
 		effect.lifeTime = rand.nextInt(10) + 20;
 		effect.dalpha = 1.0f / effect.lifeTime;
-		effect.g = 0.005f;
+		effect.yAccelerate = -0.005f;
 		effect.setVelocity(0, 0.075f, 0);
 		effect.setColor(DEAFULT_COLOR[rand.nextInt(DEAFULT_COLOR.length)]);
 		Effect.addEffect(effect);

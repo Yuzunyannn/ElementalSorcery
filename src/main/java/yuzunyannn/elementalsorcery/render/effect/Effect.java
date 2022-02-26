@@ -20,6 +20,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 
 /** ES使用的自主particle */
 @SideOnly(Side.CLIENT)
@@ -144,7 +145,6 @@ public abstract class Effect {
 		if (effect.canPassSpawn()) return;
 		if (inUpdate) contextEffects.add(effect);
 		else {
-
 			if (effect instanceof IGUIEffect) guiEffects.add(effect);
 			else {
 				EffectBatchType batch = effect.typeBatch();
@@ -206,18 +206,34 @@ public abstract class Effect {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 
-		Iterator<EffectBatchType> iter = batchs.iterator();
-		while (iter.hasNext()) {
-			EffectBatchType batch = iter.next();
+		Iterator<EffectBatchType> batchIter = batchs.iterator();
+		while (batchIter.hasNext()) {
+			EffectBatchType batch = batchIter.next();
 			batch.beginRender(tessellator, bufferbuilder);
-			for (Effect effect : batch.effects) effect.doRender(bufferbuilder, partialTicks);
+			Iterator<Effect> iter = batch.effects.iterator();
+			while (iter.hasNext()) {
+				try {
+					iter.next().doRender(bufferbuilder, partialTicks);
+				} catch (Exception e) {
+					iter.remove();
+					ElementalSorcery.logger.warn("Effect Batch Render Error", e);
+				}
+			}
 			batch.endRender(tessellator, bufferbuilder);
 		}
 
 	}
 
 	static private void renderEffects(ArrayDeque<Effect> effects, float partialTicks) {
-		for (Effect effect : effects) effect.doRender(partialTicks);
+		Iterator<Effect> iter = effects.iterator();
+		while (iter.hasNext()) {
+			try {
+				iter.next().doRender(partialTicks);
+			} catch (Exception e) {
+				iter.remove();
+				ElementalSorcery.logger.warn("Effect Render Error", e);
+			}
+		}
 	}
 
 	static public void renderAllEffects(float partialTicks) {

@@ -117,7 +117,6 @@ public class EffectMagicSquare extends EffectCondition {
 				Vec3d pos = this.getPositionVector().addVector(rand.nextDouble() * size - hSize, 0.1,
 						rand.nextDouble() * size - hSize);
 				EffectElementMove effect = new EffectElementMove(world, pos);
-				effect.g = 0;
 				effect.setVelocity(0, 0.05f, 0);
 				effect.setColor(r, g, b);
 				Effect.addEffect(effect);

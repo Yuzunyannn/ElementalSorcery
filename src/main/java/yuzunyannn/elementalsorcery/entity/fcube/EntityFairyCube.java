@@ -176,7 +176,6 @@ public class EntityFairyCube extends EntityLivingBase
 		Vec3d pos = this.getPositionVector();
 		for (int k = 0; k < 20; ++k) {
 			EffectElementMove em = new EffectElementMove(world, pos.addVector(0, 0.5, 0));
-			em.g = 0;
 			double d2 = this.rand.nextGaussian() * 0.125;
 			double d0 = this.rand.nextGaussian() * 0.125;
 			double d1 = this.rand.nextGaussian() * 0.125;
@@ -745,7 +744,7 @@ public class EntityFairyCube extends EntityLivingBase
 			} else if (effctKind == 0xffAB) {
 				Vec3d vec = new Vec3d(posX, posY + 0.5, posZ);
 				EffectElementMove em = new EffectElementMove(world, vec);
-				em.g = -0.005f;
+				em.yAccelerate = 0.005f;
 				double d2 = this.rand.nextGaussian() * 0.075;
 				double d0 = this.rand.nextGaussian() * 0.075;
 				double d1 = this.rand.nextGaussian() * 0.075;
@@ -796,7 +795,6 @@ public class EntityFairyCube extends EntityLivingBase
 		Vec3d vec = this.getPositionVector().addVector(0, 0.5, 0);
 		for (int k = 0; k < 20; ++k) {
 			EffectElementMove em = new EffectElementMove(world, vec);
-			em.g = 0;
 			double d2 = this.rand.nextGaussian() * 0.2;
 			double d0 = this.rand.nextGaussian() * 0.2;
 			double d1 = this.rand.nextGaussian() * 0.2;
@@ -820,7 +818,6 @@ public class EntityFairyCube extends EntityLivingBase
 					at = vec.addVector(d2, d0, d1);
 				}
 				EffectElementMove em = new EffectElementMove(world, at);
-				em.g = 0;
 				{
 					double d2 = this.rand.nextGaussian() * 0.01;
 					double d0 = this.rand.nextGaussian() * 0.01;

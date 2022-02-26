@@ -1,14 +1,13 @@
 package yuzunyannn.elementalsorcery.util.helper;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class EntityHelper {
 
-	static public boolean isCreative(EntityLivingBase entity) {
+	static public boolean isCreative(Entity entity) {
 		if (entity instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer) entity;
 			return player.isCreative() || player.isSpectator();

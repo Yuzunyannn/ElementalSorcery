@@ -45,7 +45,7 @@ public class BlockGoatGoldBrick extends Block implements Mapper, IBlockJumpModif
 		super(Material.ROCK, MapColor.GOLD);
 		this.setUnlocalizedName("goatGoldBrick");
 		this.setHarvestLevel("pickaxe", 4);
-		this.setHardness(500F);
+		this.setHardness(Float.MAX_VALUE / 10);
 		this.setTickRandomly(true);
 		this.setDefaultState(this.getDefaultState().withProperty(VARIANT, EnumType.NORMAL));
 	}

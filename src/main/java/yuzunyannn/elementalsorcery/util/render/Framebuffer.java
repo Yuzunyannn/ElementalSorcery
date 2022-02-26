@@ -19,17 +19,19 @@ public class Framebuffer {
 		buffer.framebufferClear();
 	}
 
-	public void bindFrame() {
+	public void bindFrame(boolean resetViewPort) {
 		if (originFrameName >= 0 || buffer == null) return;
 		originFrameName = GL11.glGetInteger(GL30.GL_FRAMEBUFFER_BINDING);
-		buffer.bindFramebuffer(true);
+		buffer.bindFramebuffer(resetViewPort);
 	}
 
-	public void unbindFrame() {
-		if (originFrameName < 0 || buffer == null) return;
+	public int unbindFrame() {
+		if (originFrameName < 0 || buffer == null) return 0;
+		int oid = originFrameName;
 		buffer.unbindFramebuffer();
 		OpenGlHelper.glBindFramebuffer(OpenGlHelper.GL_FRAMEBUFFER, originFrameName);
 		originFrameName = -1;
+		return oid;
 	}
 
 	public void bindTexture() {
@@ -45,6 +47,10 @@ public class Framebuffer {
 		this.unbindFrame();
 		buffer.deleteFramebuffer();
 		buffer = null;
+	}
+
+	public net.minecraft.client.shader.Framebuffer getMCBuffer() {
+		return buffer;
 	}
 
 	@Override

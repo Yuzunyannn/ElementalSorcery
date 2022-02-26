@@ -195,7 +195,6 @@ public class ItemElementStone extends Item {
 		for (int i = 0; i < 8; i++) {
 			Vec3d pos = new Vec3d(bPos).addVector(Math.random(), Math.random(), Math.random());
 			EffectElementMove em = new EffectElementMove(entity.world, pos);
-			em.g = 0;
 			Vec3d v = new Vec3d(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize()
 					.scale(Math.random() * 0.05);
 			em.setVelocity(v);

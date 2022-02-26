@@ -81,6 +81,14 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			this.setOrder((new String[] { "xyz", "xzy", "yxz", "yzx", "zxy", "zyx" })[rand.nextInt(6)]);
 		}
 
+		public Vec3d getFrom() {
+			return from;
+		}
+
+		public Vec3d getTo() {
+			return to;
+		}
+
 		private double getAxis(char axis, Vec3d vec) {
 			switch (axis) {
 			case 'x':
@@ -253,6 +261,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 		return (flags & flag) != 0;
 	}
 
+	@Nullable
 	public MoveTrace getTrace() {
 		return trace;
 	}
@@ -349,7 +358,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 						Vec3d at = pos.add(offset);
 						EffectElementMove effect = new EffectElementMove(world, at);
 						effect.setColor(color);
-						effect.g = 0.0001f;
+						effect.yAccelerate = -0.0001f;
 						effect.lifeTime = 20;
 						effect.dalpha = 1.0f / effect.lifeTime;
 						Effect.addEffect(effect);

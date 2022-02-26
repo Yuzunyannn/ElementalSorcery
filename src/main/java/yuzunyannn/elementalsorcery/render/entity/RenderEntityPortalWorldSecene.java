@@ -104,7 +104,7 @@ public class RenderEntityPortalWorldSecene implements IRenderClient, EntityPorta
 		GlStateManager.loadIdentity();
 		GlStateManager.translate(mc.displayWidth / 2.0f, mc.displayHeight / 2.0f, -2000);
 
-		portal.bindFrame();
+		portal.bindFrame(true);
 		GlStateManager.clearColor(1, 1, 1, 0);
 		GlStateManager.clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_ACCUM);
 

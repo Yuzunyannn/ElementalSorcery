@@ -11,13 +11,14 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public abstract class EffectFacing extends Effect {
 
 	public boolean isGlow;
 
-	public float r, g, b;
+	public final Color color = new Color();
 	public float alpha, prevAlpha;
 
 	public float scale, prevScale;
@@ -31,15 +32,11 @@ public abstract class EffectFacing extends Effect {
 	}
 
 	public void setColor(float r, float g, float b) {
-		this.r = r;
-		this.g = g;
-		this.b = b;
+		color.setColor(r, g, b);
 	}
 
-	public void setColor(int color) {
-		this.r = ((color >> 16) & 0xff) / 255.0f;
-		this.g = ((color >> 8) & 0xff) / 255.0f;
-		this.b = ((color >> 0) & 0xff) / 255.0f;
+	public void setColor(int c) {
+		color.setColor(c);
 	}
 
 	@Override
@@ -94,6 +91,11 @@ public abstract class EffectFacing extends Effect {
 			v4 = rotate(v4, nor, rotate);
 		}
 		if (isGlow) GlStateManager.depthFunc(519);
+
+		float r = color.r;
+		float g = color.g;
+		float b = color.b;
+
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
@@ -132,6 +134,10 @@ public abstract class EffectFacing extends Effect {
 			v4 = rotate(v4, nor, rotate);
 		}
 
+		float r = color.r;
+		float g = color.g;
+		float b = color.b;
+
 		bufferbuilder.pos(x + v1.x, y + v1.y, z + v1.z).tex(0, 0);
 		bufferbuilder.color(r, g, b, a).endVertex();
 		bufferbuilder.pos(x + v2.x, y + v2.y, z + v2.z).tex(0, 1);
@@ -142,14 +148,14 @@ public abstract class EffectFacing extends Effect {
 		bufferbuilder.color(r, g, b, a).endVertex();
 	}
 
-	protected static Vec3d normalPlane(Vec3d v1, Vec3d v2, Vec3d v3) {
+	public static Vec3d normalPlane(Vec3d v1, Vec3d v2, Vec3d v3) {
 		double nx = (v2.y - v1.y) * (v3.z - v1.z) - (v2.z - v1.z) * (v3.y - v1.y);
 		double ny = (v2.z - v1.z) * (v3.x - v1.x) - (v2.x - v1.x) * (v3.z - v1.z);
 		double nz = (v2.x - v1.x) * (v3.y - v1.y) - (v2.y - v1.y) * (v3.x - v1.x);
 		return new Vec3d(nx, ny, nz).normalize();
 	}
 
-	protected static Vec3d rotate(Vec3d point, Vec3d raxis, double theta) {
+	public static Vec3d rotate(Vec3d point, Vec3d raxis, double theta) {
 		float r = (float) (theta * 3.1415926 / 180);
 		double c = MathHelper.cos(r);
 		double s = MathHelper.sin(r);
