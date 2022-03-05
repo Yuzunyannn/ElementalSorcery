@@ -196,6 +196,8 @@ tile.MDLiquidize.name=Liquidize
 tile.goatGoldBrick.common.name=Gold Brick
 tile.devolveCube.name=Devolve Cube
 tile.disintegrateStela.name=Material Collapse Stela
+tile.iceRockStand.name=Icerock Pedestal
+tile.iceRockCrystalBlock.name=Icerock Crystal Block
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
@@ -455,6 +457,7 @@ info.sound.long=Long
 info.previous=Previous %s
 info.fairy.cube.module.count=Rune of possession: %d
 info.set.common=Set %s
+info.magic.fragment=Magic Fragment
 
 lev.defective=defective
 lev.unsuited=unsuited

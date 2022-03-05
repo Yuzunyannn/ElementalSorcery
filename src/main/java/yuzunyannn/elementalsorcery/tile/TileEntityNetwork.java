@@ -89,7 +89,7 @@ public class TileEntityNetwork extends TileEntity {
 	public void updateToClient() {
 		if (world.isRemote) return;
 		isNetwork = true;
-		updateToClient(getUpdatePacket());
+		updateToClient(new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), this.getUpdateTag()));
 		isNetwork = false;
 	}
 

@@ -196,6 +196,8 @@ tile.MDLiquidize.name=榨汁机
 tile.goatGoldBrick.common.name=金砖
 tile.devolveCube.name=协调立方体
 tile.disintegrateStela.name=崩解石碑
+tile.iceRockStand.name=岩冰塔座
+tile.iceRockCrystalBlock.name=岩冰水晶块
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者
@@ -455,6 +457,7 @@ info.sound.long=悠长
 info.previous=上一个%s
 info.fairy.cube.module.count=拥有符文：%d
 info.set.common=设置%s
+info.magic.fragment=魔力片元
 
 lev.defective=次品
 lev.unsuited=不适合

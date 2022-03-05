@@ -196,6 +196,8 @@ tile.MDLiquidize.name=ジューサー
 tile.goatGoldBrick.common.name=金れんが
 tile.devolveCube.name=てんい立方体
 tile.disintegrateStela.name=崩解し石碑
+tile.iceRockStand.name=岩氷の台座
+tile.iceRockCrystalBlock.name=岩氷の水晶ブロック
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -455,6 +457,7 @@ info.sound.long=長い
 info.previous=前の%s
 info.fairy.cube.module.count=ルーンの所持：%d
 info.set.common=設定%s
+info.magic.fragment=魔力断片
 
 lev.defective=劣等品
 lev.unsuited=似合わない 

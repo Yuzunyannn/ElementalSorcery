@@ -27,6 +27,20 @@ public class TextHelper {
 		}
 	}
 
+	static final String[] ABBREVIATED_TABLE = new String[] { "k", "M", "G", "T", "P", "E", "Z", "Y" };
+
+	static public String toAbbreviatedNumber(double n) {
+		for (int i = 0; i < ABBREVIATED_TABLE.length; i++) {
+			double c = n / 1000;
+			if (c < 1) {
+				if (i == 0) return String.format("%.0f", n);
+				else return String.format("%.3f" + ABBREVIATED_TABLE[i - 1], n);
+			}
+			n = c;
+		}
+		return String.format("%.3f" + ABBREVIATED_TABLE[ABBREVIATED_TABLE.length - 1], n);
+	}
+
 	static public String castToCamel(String str) {
 		String[] strs = str.split("_");
 		if (strs.length == 1) return strs[0].toLowerCase();

@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"status=normal": {
+			"model": "elementalsorcery:ice_rock_crystal_block"
+		},
+		"status=active": {
+			"model": "elementalsorcery:ice_rock_crystal_block"
+		}
+    }
+}

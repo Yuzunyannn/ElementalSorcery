@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.block.container.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
@@ -30,25 +31,6 @@ import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public abstract class BlockElementContainer extends BlockContainer {
-
-	private static TileEntity tileTemp;
-
-	public static void setDropTile(TileEntity tile) {
-		tileTemp = tile;
-	}
-
-	public static TileEntity popDropTile() {
-		TileEntity tile = tileTemp;
-		tileTemp = null;
-		return tile;
-	}
-
-	public static TileEntity getOrPopDropTile(IBlockAccess world, BlockPos pos) {
-		TileEntity temp = popDropTile();
-		TileEntity tile = world.getTileEntity(pos);
-		if (tile != null) return tile;
-		return temp;
-	}
 
 	public BlockElementContainer(Material materialIn, MapColor color) {
 		super(materialIn, color);
@@ -88,7 +70,7 @@ public abstract class BlockElementContainer extends BlockContainer {
 	// 破坏方块
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileEntity einv = worldIn.getTileEntity(pos);
-		if (einv != null) setDropTile(einv);
+		if (einv != null) BlockContainerNormal.setDropTile(einv);
 		super.breakBlock(worldIn, pos, state);
 	}
 
@@ -99,7 +81,7 @@ public abstract class BlockElementContainer extends BlockContainer {
 		ItemStack stack = new ItemStack(this);
 		drops.add(stack);
 
-		TileEntity tile = getOrPopDropTile(world, pos);
+		TileEntity tile = BlockContainerNormal.getOrPopDropTile(world, pos);
 		this.modifyDropStack(world, pos, stack, tile);
 	}
 

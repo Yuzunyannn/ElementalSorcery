@@ -183,6 +183,8 @@ public class ESObjects {
 		public Block GOAT_GOLD_BRICK;
 		public Block DEVOLVE_CUBE;
 		public Block DISINTEGRATE_STELA;
+		public Block ICE_ROCK_STAND;
+		public Block ICE_ROCK_CRYSTAL_BLOCK;
 	}
 
 	static public class Elements {
