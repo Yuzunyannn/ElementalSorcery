@@ -88,7 +88,7 @@ public class WorldHelper {
 
 		Vec3d eye = entity.getPositionEyes(1.0f);
 		Vec3d look = entity.getLook(1.0F);
-		Vec3d lookEnd = eye.addVector(look.x * distance, look.y * distance, look.z * distance);
+		Vec3d lookEnd = eye.add(look.x * distance, look.y * distance, look.z * distance);
 		RayTraceResult rt = world.rayTraceBlocks(eye, lookEnd, false, false, true);
 
 		if (rt != null) distance = rt.hitVec.distanceTo(eye) + 1;
@@ -160,7 +160,7 @@ public class WorldHelper {
 	}
 
 	static public AxisAlignedBB createAABB(BlockPos pos, double range, double yUp, double yDown) {
-		return createAABB(new Vec3d(pos).addVector(0.5, 0.5, 0.5), range, yUp, yDown);
+		return createAABB(new Vec3d(pos).add(0.5, 0.5, 0.5), range, yUp, yDown);
 	}
 
 	static public AxisAlignedBB createAABB(Entity entity, double range, double yUp, double yDown) {

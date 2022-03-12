@@ -110,7 +110,7 @@ public class BlockItemTypeInfo {
 				else if (nbt.hasKey("ExtraType", 8)) {
 					String s = nbt.getString("ExtraType");
 					if (!StringUtils.isNullOrEmpty(s))
-						playerProfile = TileEntitySkull.updateGameprofile(new GameProfile(null, s));
+						playerProfile = TileEntitySkull.updateGameProfile(new GameProfile(null, s));
 				}
 
 				if (playerProfile != null) {
@@ -140,7 +140,7 @@ public class BlockItemTypeInfo {
 				IFluidHandlerItem handler = bucket.getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY,
 						null);
 				BlockStaticLiquid blockLiquid = ((BlockStaticLiquid) state.getBlock());
-				FluidStack fstack = FluidRegistry.getFluidStack(blockLiquid.getRegistryName().getResourcePath(),
+				FluidStack fstack = FluidRegistry.getFluidStack(blockLiquid.getRegistryName().getPath(),
 						Fluid.BUCKET_VOLUME);
 				handler.fill(fstack, true);
 			}
@@ -172,8 +172,8 @@ public class BlockItemTypeInfo {
 		return false;
 	}
 
-	public String getUnlocalizedName() {
-		return blockStack.getUnlocalizedName();
+	public String getTranslationKey() {
+		return blockStack.getTranslationKey();
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -67,12 +67,12 @@ public class SummonMob extends SummonCommon {
 
 		if (world.isRemote) return true;
 
-		Vec3d pos = new Vec3d(this.pos).addVector(0.5, 0.1, 0.5);
+		Vec3d pos = new Vec3d(this.pos).add(0.5, 0.1, 0.5);
 		Random rand = world.rand;
 		EntityCreature entity = this.createMob();
 
 		final float size = 2;
-		pos = pos.addVector(rand.nextDouble() * size * 2 - size, 0, rand.nextDouble() * size * 2 - size);
+		pos = pos.add(rand.nextDouble() * size * 2 - size, 0, rand.nextDouble() * size * 2 - size);
 		entity.setPosition(pos.x, pos.y, pos.z);
 		world.spawnEntity(entity);
 

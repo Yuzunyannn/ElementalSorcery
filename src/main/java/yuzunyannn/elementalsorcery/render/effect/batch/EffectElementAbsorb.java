@@ -17,7 +17,7 @@ public class EffectElementAbsorb extends EffectElementMove {
 		int id = nbt.getInteger("targetEntity");
 		Entity target = world.getEntityByID(id);
 		Vec3d targetPos = null;
-		if (target != null) targetPos = target.getPositionVector().addVector(0, target.height / 2, 0);
+		if (target != null) targetPos = target.getPositionVector().add(0, target.height / 2, 0);
 		else if (NBTHelper.hasVec3d(nbt, "targetPos")) targetPos = NBTHelper.getVec3d(nbt, "targetPos");
 
 		if (targetPos == null) return;
@@ -70,7 +70,7 @@ public class EffectElementAbsorb extends EffectElementMove {
 			Vec3d to = binder.getPosition();
 			Vec3d at = this.getPositionVector();
 			Vec3d tar = to.subtract(at);
-			double len = tar.lengthVector();
+			double len = tar.length();
 			if (len < 4) this.alpha = (float) (len / 4);
 			// 结束
 			if (len < 0.75) {

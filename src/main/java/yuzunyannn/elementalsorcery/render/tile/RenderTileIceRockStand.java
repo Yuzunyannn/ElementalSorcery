@@ -14,7 +14,8 @@ import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.model.ModelIceRockStand;
-import yuzunyannn.elementalsorcery.tile.TileIceRockStand;
+import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.render.Framebuffer;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
@@ -64,6 +65,13 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 			double ratio = tile.getMagicFragment() / tile.getMagicFragmentCapacity();
 			renderCrystal(tile, count + 1, Math.min(ratio, 1), rotation / 20);
 			GlStateManager.popMatrix();
+
+			if (this.rendererDispatcher.cameraHitResult != null
+					&& tile.getPos().equals(this.rendererDispatcher.cameraHitResult.getBlockPos())) {
+				this.setLightmapDisabled(true);
+				this.drawNameplate(tile, TextHelper.toAbbreviatedNumber(tile.getMagicFragment()), x, y - 1.25, z, 12);
+				this.setLightmapDisabled(false);
+			}
 		}
 
 	}
@@ -96,11 +104,11 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 
 		Shaders.BlockIceRockCrystal.bind();
 		TEXTUREL_CRYSTAL.bind();
-		TEXTUREL_CRYSTAL_FULL.bindAtive(1);
-		TEXTUREL_CRYSTAL_MASK.bindAtive(2);
+		TEXTUREL_CRYSTAL_FULL.bindAtive(3);
+		TEXTUREL_CRYSTAL_MASK.bindAtive(4);
 		Shaders.BlockIceRockCrystal.setUniform("texA", 0);
-		Shaders.BlockIceRockCrystal.setUniform("texB", 1);
-		Shaders.BlockIceRockCrystal.setUniform("mask", 2);
+		Shaders.BlockIceRockCrystal.setUniform("texB", 3);
+		Shaders.BlockIceRockCrystal.setUniform("mask", 4);
 		Shaders.BlockIceRockCrystal.setUniform("r", ratio);
 		Shaders.BlockIceRockCrystal.setUniform("yoffset", offset);
 
@@ -111,8 +119,8 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 		bufferbuilder.pos(128, 0, -64).tex(1, 0).endVertex();
 		tessellator.draw();
 
-		TEXTUREL_CRYSTAL_FULL.unbindAtive(1);
-		TEXTUREL_CRYSTAL_MASK.unbindAtive(2);
+		TEXTUREL_CRYSTAL_FULL.unbindAtive(3);
+		TEXTUREL_CRYSTAL_MASK.unbindAtive(4);
 		Shaders.BlockIceRockCrystal.unbind();
 
 		GlStateManager.depthMask(true);

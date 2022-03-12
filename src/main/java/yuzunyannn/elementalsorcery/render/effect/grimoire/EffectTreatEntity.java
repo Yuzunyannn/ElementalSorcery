@@ -29,7 +29,7 @@ public class EffectTreatEntity extends Effect {
 	private static void show(World world, Vec3d pos, int id, int[] colors) {
 		Entity target = world.getEntityByID(id);
 		if (colors.length <= 0) colors = new int[] { 0xe61818, 0xfa6f6f, 0xa00a0a };
-		Vec3d vec = target.getPositionVector().addVector(0, target.height / 2, 0);
+		Vec3d vec = target.getPositionVector().add(0, target.height / 2, 0);
 		EffectTreatEntity te = new EffectTreatEntity(world, vec).setColors(colors);
 		if (target instanceof EntityLivingBase) te.bindEntity(target);
 		Effect.addEffect(te);
@@ -84,7 +84,7 @@ public class EffectTreatEntity extends Effect {
 		}
 		if (this.lifeTime % 6 == 0) {
 			Vec3d vec = this.getPositionVector();
-			vec = vec.addVector(rand.nextGaussian() * width, rand.nextGaussian() * width, rand.nextGaussian() * width);
+			vec = vec.add(rand.nextGaussian() * width, rand.nextGaussian() * width, rand.nextGaussian() * width);
 			EffectElementMove move = new EffectElementMove(world, vec);
 			move.motionY = 0.01f;
 			move.setColor(this.getColor());

@@ -39,13 +39,13 @@ public abstract class TileMDBase extends TileEntity
 		implements IAcceptMagicPesky, IProvideMagic, IField, IElementInventoryPromote {
 
 	@Config(kind = "tile", sync = true)
-	static private int MD_BASE_MAX_CAPACITY = 1000;
+	static public int MD_BASE_MAX_CAPACITY = 1000;
 
 	@Config(kind = "tile")
-	static private int MD_BASE_OVERFLOW = 800;
+	static public int MD_BASE_OVERFLOW = 800;
 
 	@Config(kind = "tile")
-	static private int MD_BASE_SEND_PRE_SECOND = 100;
+	static public int MD_BASE_SEND_PRE_SECOND = 100;
 
 	protected class MDElementInventory extends ElementInventoryAdapter {
 
@@ -84,6 +84,7 @@ public abstract class TileMDBase extends TileEntity
 
 			if (simulate) return true;
 			magic.growOrBecome(estack);
+			markDirty();
 			return true;
 		};
 
@@ -95,6 +96,7 @@ public abstract class TileMDBase extends TileEntity
 			get.setCount(Math.min(get.getCount(), estack.getCount()));
 			if (simulate) return get;
 			magic.shrink(get.getCount());
+			markDirty();
 			return get;
 		};
 	}
@@ -247,15 +249,22 @@ public abstract class TileMDBase extends TileEntity
 		}
 	}
 
-	/** 寻找一个目标 */
 	public TargetInfo findTarget(BlockPos pos, EnumFacing facing, int distance) {
+		TileEntity tile = findTarget(world, pos, facing, distance);
+		if (tile != null) return new TargetInfo(tile.getPos(), (IAcceptMagic) tile);
+		return null;
+	}
+
+	/** 寻找一个目标 */
+	public static <T extends TileEntity & IAcceptMagic> T findTarget(World world, BlockPos pos, EnumFacing facing,
+			int distance) {
 		for (int i = 0; i < distance; i++) {
 			pos = pos.offset(facing);
-			IBlockState state = this.world.getBlockState(pos);
+			IBlockState state = world.getBlockState(pos);
 			if (state.isOpaqueCube()) return null;
-			TileEntity tile = this.world.getTileEntity(pos);
+			TileEntity tile = world.getTileEntity(pos);
 			if (tile == null) continue;
-			if (tile instanceof IAcceptMagic) return new TargetInfo(pos, (IAcceptMagic) tile);
+			if (tile instanceof IAcceptMagic) return (T) tile;
 			return null;
 		}
 		return null;
@@ -309,9 +318,10 @@ public abstract class TileMDBase extends TileEntity
 		int index = facing.getIndex();
 		// 不能发送的时候
 		if (!this.canSend(facing)) {
+			TargetInfo origin = targets[index];
 			targets[index] = null;
 			this.torch(facing, false);
-			this.markDirty();
+			if (origin != null) this.markDirty();
 			return;
 		}
 		// 寻找目标
@@ -328,7 +338,6 @@ public abstract class TileMDBase extends TileEntity
 		}
 		if (targets[index] == null) this.torch(facing, false);
 		this.markDirty();
-
 	}
 
 	/** 其他tile找到自己的时候 */
@@ -356,14 +365,14 @@ public abstract class TileMDBase extends TileEntity
 
 	/** 检查所有位置状态 */
 	public void checkAll() {
-		for (int i = 0; i < targets.length; i++) this.find(EnumFacing.getFront(i), true);
+		for (int i = 0; i < targets.length; i++) this.find(EnumFacing.byIndex(i), true);
 	}
 
 	/** 关闭所有火把 */
 	protected void allTorchOff() {
 		for (int i = 0; i < targets.length; i++) {
 			if (targets[i] == null) continue;
-			this.torch(EnumFacing.getFront(i), false);
+			this.torch(EnumFacing.byIndex(i), false);
 		}
 	}
 
@@ -396,9 +405,16 @@ public abstract class TileMDBase extends TileEntity
 			return;
 		}
 		// 发送
+		boolean hasSend = false;
 		for (int i = 0; i < targets.length; i++) {
 			if (targets[i] == null) continue;
-			EnumFacing facing = EnumFacing.getFront(i);
+			if (targets[i].accepter == null) {
+				if (!targets[i].check()) {
+					targets[i] = null;
+					continue;
+				}
+			}
+			EnumFacing facing = EnumFacing.byIndex(i);
 			if (sendMagic.isEmpty()) {
 				this.torch(facing, false);
 				continue;
@@ -407,12 +423,14 @@ public abstract class TileMDBase extends TileEntity
 			count = count == 0 ? 1 : count;
 			ElementStack send = sendMagic.splitStack(count);
 			ElementStack remain = targets[i].accpetMagic(send, this.pos, facing.getOpposite());
-			if (remain.isEmpty() || remain.getCount() != count) this.torch(facing, true);
-			else this.torch(facing, false);
+			if (remain.isEmpty() || remain.getCount() != count) {
+				this.torch(facing, true);
+				hasSend = true;
+			} else this.torch(facing, false);
 			sendMagic.grow(remain);
 		}
 		this.magic.grow(sendMagic);
-		this.markDirty();
+		if (hasSend) this.markDirty();
 	}
 
 	@Override
@@ -431,7 +449,7 @@ public abstract class TileMDBase extends TileEntity
 	protected void transferClientEffect() {
 		if (tick % 2 != 0) return;
 		for (int i = 0; i < targets.length; i++) {
-			EnumFacing facing = EnumFacing.getFront(i);
+			EnumFacing facing = EnumFacing.byIndex(i);
 			if (this.hasTorch(facing) && this.canSend(facing)) {
 				if (this.world.getBlockState(pos.offset(facing)).getValue(BlockMagicTorch.LIT)) {
 					// 客户端和服务器并没有同步这些数据，想要展示效果需要重新找，当然是用autoTransfer会自动查找，这部分可能是多余的
@@ -439,15 +457,15 @@ public abstract class TileMDBase extends TileEntity
 					else if (!targets[i].check()) this.find(facing, false);
 					// 这种情况应该不存在
 					if (targets[i] == null) continue;
-					this.effectTo(facing, targets[i].pos);
+					magicEffectTo(world, this.pos, facing, targets[i].pos);
 				}
 			}
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
-	protected void effectTo(EnumFacing facing, BlockPos to) {
-		BlockPos pos = this.pos.offset(facing);
+	public static void magicEffectTo(World world, BlockPos from, EnumFacing facing, BlockPos to) {
+		BlockPos pos = from.offset(facing);
 		if (pos.equals(to)) return;
 		FirewrokShap.createSparkUniformlySpeed(world, pos.getX() + 0.5, pos.getY() + 0.7, pos.getZ() + 0.5,
 				to.getX() + 0.5, to.getY() + 0.5, to.getZ() + 0.5, 0.2f, TileMDBase.PARTICLE_COLOR,
@@ -466,10 +484,8 @@ public abstract class TileMDBase extends TileEntity
 	protected void autoTransfer() {
 		tick++;
 		if (tick % 5 != 0) return;
-		// 2秒进行全部遍历一次
-		if (tick % 40 == 0) {
-			this.checkAll();
-		}
+		// 3秒进行全部遍历一次
+		if (tick % 60 == 0) this.checkAll();
 		if (this.world.isRemote) {
 			this.transferClientEffect();
 		} else {
@@ -478,18 +494,27 @@ public abstract class TileMDBase extends TileEntity
 	}
 
 	/** 判断制定方向是否有torch */
-	public boolean hasTorch(EnumFacing facing) {
-		IBlockState state = this.world.getBlockState(pos.offset(facing));
+	public static boolean hasTorch(World world, BlockPos pos, EnumFacing facing) {
+		IBlockState state = world.getBlockState(pos.offset(facing));
 		return state.getBlock() == ESInit.BLOCKS.MAGIC_TORCH && state.getValue(BlockMagicTorch.FACING) == facing;
 	}
 
 	/** 设置火把开关 */
-	public void torch(EnumFacing facing, boolean open) {
-		if (!this.hasTorch(facing)) return;
-		BlockPos pos = this.pos.offset(facing);
-		IBlockState state = this.world.getBlockState(pos);
-		if (state.getValue(BlockMagicTorch.LIT) == open) return;
-		this.world.setBlockState(pos, state.withProperty(BlockMagicTorch.LIT, open));
+	public static boolean torch(World world, BlockPos pos, EnumFacing facing, boolean open) {
+		if (!hasTorch(world, pos, facing)) return false;
+		pos = pos.offset(facing);
+		IBlockState state = world.getBlockState(pos);
+		if (state.getValue(BlockMagicTorch.LIT) == open) return false;
+		world.setBlockState(pos, state.withProperty(BlockMagicTorch.LIT, open));
+		return true;
+	}
+
+	public boolean hasTorch(EnumFacing facing) {
+		return hasTorch(world, pos, facing);
+	}
+
+	public boolean torch(EnumFacing facing, boolean open) {
+		return torch(world, pos, facing, open);
 	}
 
 	/** 判断是否可以接受 */

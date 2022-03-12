@@ -25,7 +25,7 @@ public class BlockLifeDirt extends Block {
 	public BlockLifeDirt() {
 		super(Material.GROUND);
 		this.setSoundType(SoundType.GROUND);
-		this.setUnlocalizedName("lifeDirt");
+		this.setTranslationKey("lifeDirt");
 		this.setHardness(0.5F);
 		this.setHarvestLevel("shovel", 0);
 	}

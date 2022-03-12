@@ -20,7 +20,7 @@ public class ElfRegister {
 
 	private static void register(String id, ElfEdificeFloor floor) {
 		floor = floor.setRegistryName(new ResourceLocation(ElementalSorcery.MODID, id));
-		if (floor.getUnlocalizedName() == null) floor = floor.setUnlocalizedName(TextHelper.castToCamel(id));
+		if (floor.getTranslationKey() == null) floor = floor.setTranslationKey(TextHelper.castToCamel(id));
 		ElfEdificeFloor.REGISTRY.register(floor);
 	}
 
@@ -42,7 +42,7 @@ public class ElfRegister {
 			ElfProfession elfPro = (ElfProfession) field.get(ElfProfession.class);
 			String id = field.getName().toLowerCase();
 			elfPro.setRegistryName(new ResourceLocation(ElementalSorcery.MODID, id));
-			if (elfPro.getUnlocalizedName() == null) elfPro.setUnlocalizedName(TextHelper.castToCamel(id));
+			if (elfPro.getTranslationKey() == null) elfPro.setTranslationKey(TextHelper.castToCamel(id));
 			ElfProfession.REGISTRY.register(elfPro);
 		}
 	}

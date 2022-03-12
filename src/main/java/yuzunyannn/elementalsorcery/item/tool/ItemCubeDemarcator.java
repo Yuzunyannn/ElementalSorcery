@@ -30,7 +30,7 @@ import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 public class ItemCubeDemarcator extends Item implements TileMDRubbleRepair.IExtendRepair {
 
 	public ItemCubeDemarcator() {
-		this.setUnlocalizedName("cubeDemarcator");
+		this.setTranslationKey("cubeDemarcator");
 		this.setMaxDamage(512);
 		this.setMaxStackSize(1);
 	}

@@ -47,7 +47,7 @@ public class PotionWindShield extends PotionCommon {
 			Vec3d change = new Vec3d(-tar.z, 0, tar.x).normalize();
 			if (change.lengthSquared() < 0.1f)
 				change = new Vec3d(rand.nextGaussian(), 0, rand.nextGaussian()).normalize();
-			double dis = Math.max(1, tar.lengthVector());
+			double dis = Math.max(1, tar.length());
 			change = change.scale(power / dis);
 			entity.motionX += change.x;
 			entity.motionZ += change.z;
@@ -60,7 +60,7 @@ public class PotionWindShield extends PotionCommon {
 		float theta = entity.ticksExisted * 0.5f;
 		float r = 1;
 		float h = entity.height / 2 * 1.2f;
-		Vec3d at = vec.addVector(r * MathHelper.sin(theta), h + h * MathHelper.sin(theta * 0.1f),
+		Vec3d at = vec.add(r * MathHelper.sin(theta), h + h * MathHelper.sin(theta * 0.1f),
 				r * MathHelper.cos(theta));
 		EffectElementMove effect = new EffectElementMove(entity.world, at);
 		effect.setColor(0xaef8ff);
@@ -80,8 +80,8 @@ public class PotionWindShield extends PotionCommon {
 		Vec3d targetAt = new Vec3d(target.posX, target.posY + target.height / 2, target.posZ);
 		Vec3d attackerAt = new Vec3d(attacker.posX, attacker.posY + attacker.height / 2, attacker.posZ);
 		Vec3d tar = attackerAt.subtract(targetAt);
-		double dis = Math.max(1, tar.lengthVector());
-		tar = tar.addVector(0, 0.5, 0).normalize().scale(power / dis);
+		double dis = Math.max(1, tar.length());
+		tar = tar.add(0, 0.5, 0).normalize().scale(power / dis);
 
 		attacker.motionX += tar.x;
 		attacker.motionY += tar.y;

@@ -16,7 +16,7 @@ public class BlockElfLog extends BlockLog {
 
 	public BlockElfLog() {
 		Blocks.FIRE.setFireInfo(this, 5, 5);
-		this.setUnlocalizedName("elfLog");
+		this.setTranslationKey("elfLog");
 		this.setDefaultState(this.blockState.getBaseState().withProperty(LOG_AXIS, BlockLog.EnumAxis.Y));
 		this.setTickRandomly(true);
 	}

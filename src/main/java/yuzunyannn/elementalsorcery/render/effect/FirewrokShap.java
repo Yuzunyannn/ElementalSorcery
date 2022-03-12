@@ -76,7 +76,7 @@ public class FirewrokShap {
 	public static void createSparkUniformlySpeed(World world, double x, double y, double z, double toX, double toY,
 			double toZ, double speed, int[] colors, int[] fadeoutColors, boolean trail, boolean flicker) {
 		Vec3d vec = new Vec3d(toX - x, toY - y, toZ - z);
-		int age = MathHelper.ceil(vec.lengthVector() / speed);
+		int age = MathHelper.ceil(vec.length() / speed);
 		vec = vec.normalize();
 		SparkUniformlySpeed spark = new SparkUniformlySpeed(world, x, y, z, vec.x * speed, vec.y * speed, vec.z * speed,
 				age + 1, 0, manager);

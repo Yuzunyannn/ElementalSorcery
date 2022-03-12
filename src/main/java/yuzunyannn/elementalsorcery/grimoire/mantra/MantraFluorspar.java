@@ -31,7 +31,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 public class MantraFluorspar extends MantraCommon {
 
 	public MantraFluorspar() {
-		this.setUnlocalizedName("fluorspar");
+		this.setTranslationKey("fluorspar");
 		this.setColor(0xf6e069);
 		this.setIcon("fluorspar");
 		this.setRarity(95);
@@ -187,7 +187,7 @@ public class MantraFluorspar extends MantraCommon {
 		if (state == null) return;
 		world.setBlockState(pos, state);
 		if (world.isRemote) {
-			MantraBlockCrash.addBlockElementEffect(new Vec3d(pos).addVector(0.5, 0.5, 0.5), this.getRenderColor());
+			MantraBlockCrash.addBlockElementEffect(new Vec3d(pos).add(0.5, 0.5, 0.5), this.getRenderColor());
 		}
 	}
 

@@ -15,7 +15,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 public class MantraFloat extends MantraCommon {
 
 	public MantraFloat() {
-		this.setUnlocalizedName("float");
+		this.setTranslationKey("float");
 		this.setColor(0xacffff);
 		this.setIcon("float");
 		this.setRarity(125);

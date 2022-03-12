@@ -48,7 +48,7 @@ public class ItemStarBell extends Item {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getTranslationKey(ItemStack stack) {
 		if (stack.getMetadata() == 0) return "item.starBell.normal";
 		return "item.starBell.star";
 	}

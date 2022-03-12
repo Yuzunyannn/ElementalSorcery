@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class ItemDejectedTear extends Item {
 
 	public ItemDejectedTear() {
-		this.setUnlocalizedName("dejectedTear");
+		this.setTranslationKey("dejectedTear");
 	}
 
 	@Override

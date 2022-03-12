@@ -37,7 +37,7 @@ public class FCMAttack extends FairyCubeModule {
 		if (world.isRaining()) return false;
 		Biome biome = world.getBiome(pos);
 		ElfTime time = new ElfTime(world);
-		if (biome.getRegistryName().getResourcePath().indexOf("desert") == -1) return false;
+		if (biome.getRegistryName().getPath().indexOf("desert") == -1) return false;
 		if (!time.at(ElfTime.Period.DAY)) return false;
 
 		return matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.BLAZE_POWDER, 12),
@@ -137,7 +137,7 @@ public class FCMAttack extends FairyCubeModule {
 		float range = nbt.getFloat("R");
 		if (range < 1) fairyCube.doClientEntityEffect(entity, colors);
 		else {
-			Vec3d center = entity.getPositionVector().addVector(0, entity.height / 3 * 2, 0);
+			Vec3d center = entity.getPositionVector().add(0, entity.height / 3 * 2, 0);
 			Random rand = fairyCube.getRNG();
 			for (int i = 0; i < range * 20; i++) {
 				EffectElementMove em = new EffectElementMove(entity.world, center);

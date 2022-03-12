@@ -197,7 +197,7 @@ public class ElfProfessionBuilder extends ElfProfessionUndetermined {
 		BlockPos elfPos = elf.getPosition();
 		NBTTagCompound cache = elf.getTempNBT();
 		// 尝试走到中心
-		Vec3d at = elf.getPositionVector().addVector(0, 1, 0);
+		Vec3d at = elf.getPositionVector().add(0, 1, 0);
 		Vec3d tar = new Vec3d(pos).subtract(at).normalize().scale(1.1);
 		BlockPos to = new BlockPos(at.add(tar));
 		int r = elf.getRNG().nextInt(8);

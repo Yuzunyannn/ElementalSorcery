@@ -63,14 +63,14 @@ public class QuestConditionNeedItem extends QuestCondition implements IQuestCond
 		if (item == Items.ENCHANTED_BOOK) out: {
 			if (!a.isItemEqual(b)) return false;
 			NBTTagList list = ItemEnchantedBook.getEnchantments(a);
-			if (list.hasNoTags()) break out;
+			if (list.isEmpty()) break out;
 			NBTTagCompound data = list.getCompoundTagAt(0);
 			if (!data.hasKey("id", NBTTag.TAG_NUMBER)) break out;
 			int id = data.getShort("id");
 			int level = data.getShort("lvl");
 
 			list = ItemEnchantedBook.getEnchantments(b);
-			if (list.hasNoTags()) return false;
+			if (list.isEmpty()) return false;
 			for (int i = 0; i < list.tagCount(); i++) {
 				data = list.getCompoundTagAt(i);
 				if (data.getShort("id") == id && data.getShort("lvl") >= level) return true;
@@ -85,7 +85,7 @@ public class QuestConditionNeedItem extends QuestCondition implements IQuestCond
 		Item item = stack.getItem();
 		if (item == Items.ENCHANTED_BOOK) out: {
 			NBTTagList list = ItemEnchantedBook.getEnchantments(stack);
-			if (list.hasNoTags()) break out;
+			if (list.isEmpty()) break out;
 			NBTTagCompound data = list.getCompoundTagAt(0);
 			Enchantment enchantment = Enchantment.getEnchantmentByID(data.getShort("id"));
 			if (enchantment == null) break out;

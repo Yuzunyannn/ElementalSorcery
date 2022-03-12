@@ -34,7 +34,7 @@ public class ItemSoulKillerSword extends ItemSword implements IItemStronger {
 
 	public ItemSoulKillerSword() {
 		super(ToolMaterial.GOLD);
-		this.setUnlocalizedName("soulKillerSword");
+		this.setTranslationKey("soulKillerSword");
 	}
 
 	@Override
@@ -76,7 +76,7 @@ public class ItemSoulKillerSword extends ItemSword implements IItemStronger {
 		Vec3d pos = playerIn.getPositionVector();
 		NBTTagCompound nbt = FireworkEffect.fastNBT(0, 1, 0.2f, new int[] { 0x3ad2f2, 0xff0000 },
 				new int[] { 0xe0ffff });
-		Effects.spawnEffect(worldIn, Effects.FIREWROK, pos.addVector(0, playerIn.height / 2, 0), nbt);
+		Effects.spawnEffect(worldIn, Effects.FIREWROK, pos.add(0, playerIn.height / 2, 0), nbt);
 
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}
@@ -99,20 +99,20 @@ public class ItemSoulKillerSword extends ItemSword implements IItemStronger {
 		DamageSource ds = DamageSource.causeIndirectMagicDamage(player, player);
 		float dmg = MathHelper.sqrt(count) - 4;
 
-		Vec3d pos = targetEntity.getPositionVector().addVector(0, targetEntity.height / 2, 0);
+		Vec3d pos = targetEntity.getPositionVector().add(0, targetEntity.height / 2, 0);
 		float size = MathHelper.clamp(count / 300, 1, 4);
 		AxisAlignedBB AABB = WorldHelper.createAABB(pos, size, size, size);
 		List<Entity> entities = player.world.getEntitiesWithinAABB(targetEntity.getClass(), AABB);
 		for (Entity entity : entities) {
 			if (entity == player) continue;
-			Vec3d at = entity.getPositionVector().addVector(0, entity.height / 2, 0);
+			Vec3d at = entity.getPositionVector().add(0, entity.height / 2, 0);
 			float dmgRate = Math.min(1, 1 / (MathHelper.sqrt(pos.distanceTo(at) * 0.65f)));
 			entity.attackEntityFrom(ds, dmgRate * dmg);
 		}
 
 		NBTTagCompound nbt = FireworkEffect.fastNBT(1, (int) size, 0.1f * size, new int[] { 0x3ad2f2 },
 				new int[] { 0xe0ffff });
-		Effects.spawnEffect(player.world, Effects.FIREWROK, pos.addVector(0, targetEntity.height / 2, 0), nbt);
+		Effects.spawnEffect(player.world, Effects.FIREWROK, pos.add(0, targetEntity.height / 2, 0), nbt);
 
 		return false;
 	}

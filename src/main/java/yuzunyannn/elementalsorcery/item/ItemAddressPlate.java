@@ -28,7 +28,7 @@ public class ItemAddressPlate extends Item {
 
 	public ItemAddressPlate() {
 		this.setHasSubtypes(true);
-		this.setUnlocalizedName("addressPlate");
+		this.setTranslationKey("addressPlate");
 	}
 
 	@Override
@@ -92,7 +92,7 @@ public class ItemAddressPlate extends Item {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getTranslationKey(ItemStack stack) {
 		return "item.addressPlate." + EnumType.byMetadata(stack.getMetadata()).getName();
 	}
 

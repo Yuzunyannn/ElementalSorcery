@@ -27,7 +27,7 @@ import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 public class MantraMagicStrafe extends MantraCommon {
 
 	public MantraMagicStrafe() {
-		this.setUnlocalizedName("magicStrafe");
+		this.setTranslationKey("magicStrafe");
 		this.setColor(0x7d17e3);
 		this.setIcon("magic_strafe");
 		this.setRarity(100);

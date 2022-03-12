@@ -33,7 +33,7 @@ import yuzunyannn.elementalsorcery.util.world.CasterHelper;
 public class MantraEnderTeleport extends MantraCommon {
 
 	public MantraEnderTeleport() {
-		this.setUnlocalizedName("enderTeleport");
+		this.setTranslationKey("enderTeleport");
 		this.setColor(0xc000eb);
 		this.setIcon("teleport");
 		this.setRarity(40);
@@ -51,7 +51,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		ElementStack stack = getElement(caster, ESInit.ELEMENTS.ENDER, 10, 40);
 		if (stack.isEmpty()) return;
 
-		doEnderTeleportWithDrown(world, target, new Vec3d(pos).addVector(0.5, 0, 0.5));
+		doEnderTeleportWithDrown(world, target, new Vec3d(pos).add(0.5, 0, 0.5));
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class MantraEnderTeleport extends MantraCommon {
 
 		if (needSuper) caster.iWantBePotent(0.75f, false);
 
-		doEnderTeleportWithDrown(world, entity, new Vec3d(pos).addVector(0.5, 0, 0.5));
+		doEnderTeleportWithDrown(world, entity, new Vec3d(pos).add(0.5, 0, 0.5));
 	}
 
 	public static BlockPos findFoothold(World world, ICaster caster, boolean isSuper) {

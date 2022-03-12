@@ -33,13 +33,13 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 public class BlocksEStone {
 
 	public static Block newEStone() {
-		return new EStone().setUnlocalizedName("estone");
+		return new EStone().setTranslationKey("estone");
 	}
 
 	public static class EStone extends BlockQuartz implements Mapper {
 
 		public EStone() {
-			this.setUnlocalizedName("estone");
+			this.setTranslationKey("estone");
 			this.setHarvestLevel("pickaxe", 1);
 			this.setSoundType(SoundType.STONE);
 			this.setHardness(1.2F);
@@ -93,7 +93,7 @@ public class BlocksEStone {
 
 		public EStoneSlab() {
 			super(Material.ROCK);
-			this.setUnlocalizedName("estoneSlab");
+			this.setTranslationKey("estoneSlab");
 			this.setDefaultState(this.blockState.getBaseState().withProperty(HALF, EnumBlockHalf.BOTTOM));
 
 			this.setHarvestLevel("pickaxe", 1);
@@ -218,7 +218,7 @@ public class BlocksEStone {
 
 		public EStoneStairs() {
 			super(ESInit.BLOCKS.ESTONE.getDefaultState());
-			this.setUnlocalizedName("estoneStairs");
+			this.setTranslationKey("estoneStairs");
 
 			this.setHarvestLevel("pickaxe", 1);
 			this.setSoundType(SoundType.STONE);
@@ -231,7 +231,7 @@ public class BlocksEStone {
 
 		public EStonePrism() {
 			super(Material.ROCK);
-			this.setUnlocalizedName("estonePrism");
+			this.setTranslationKey("estonePrism");
 			this.setLightOpacity(150);
 
 			this.setHarvestLevel("pickaxe", 1);
@@ -250,7 +250,7 @@ public class BlocksEStone {
 		}
 
 		@SideOnly(Side.CLIENT)
-		public BlockRenderLayer getBlockLayer() {
+		public BlockRenderLayer getRenderLayer() {
 			return BlockRenderLayer.TRANSLUCENT;
 		}
 

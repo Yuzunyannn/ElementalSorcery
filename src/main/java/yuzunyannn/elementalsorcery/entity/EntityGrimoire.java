@@ -144,7 +144,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		nbt.setString("mantra", mantra.getRegistryName().toString());
 		if (mantraData != null) {
 			NBTTagCompound mData = isSend ? mantraData.serializeNBTForSend() : mantraData.serializeNBT();
-			if (mData != null && !mData.hasNoTags()) nbt.setTag("mData", mData);
+			if (mData != null && !mData.isEmpty()) nbt.setTag("mData", mData);
 		}
 	}
 
@@ -449,7 +449,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 			List<T> list = world.getEntitiesWithinAABB(cls, aabb);
 			if (list.isEmpty()) return WantedTargetResult.EMPTY;
 			T find = list.get(rand.nextInt(list.size()));
-			return new WantedTargetResult(find, find.getPositionVector().addVector(0, find.height, 0));
+			return new WantedTargetResult(find, find.getPositionVector().add(0, find.height, 0));
 		}
 	}
 

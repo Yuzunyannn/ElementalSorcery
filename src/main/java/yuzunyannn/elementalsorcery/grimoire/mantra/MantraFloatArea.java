@@ -26,7 +26,7 @@ import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 public class MantraFloatArea extends MantraSquareAreaAdv {
 
 	public MantraFloatArea() {
-		this.setUnlocalizedName("floatArea");
+		this.setTranslationKey("floatArea");
 		this.setColor(0x9cddfb);
 		this.setIcon("float_area");
 		this.setRarity(80);
@@ -63,7 +63,7 @@ public class MantraFloatArea extends MantraSquareAreaAdv {
 		int times = (int) (size / 16 + 1);
 		for (int i = 0; i < times; i++) {
 			float hSize = size / 2;
-			Vec3d pos = co.getPositionVector().addVector(rand.nextDouble() * size - hSize, 0.1,
+			Vec3d pos = co.getPositionVector().add(rand.nextDouble() * size - hSize, 0.1,
 					rand.nextDouble() * size - hSize);
 			EffectElementMove effect = new EffectElementMove(world, pos);
 			effect.setVelocity(0, rand.nextDouble() * 0.5 + 0.5, 0);

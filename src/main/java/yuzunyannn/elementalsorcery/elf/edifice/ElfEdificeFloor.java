@@ -31,7 +31,7 @@ public class ElfEdificeFloor extends IForgeRegistryEntry.Impl<ElfEdificeFloor> {
 
 	protected String unlocalizedName;
 
-	public ElfEdificeFloor setUnlocalizedName(String unlocalizedName) {
+	public ElfEdificeFloor setTranslationKey(String unlocalizedName) {
 		this.unlocalizedName = unlocalizedName;
 		return this;
 	}
@@ -140,7 +140,7 @@ public class ElfEdificeFloor extends IForgeRegistryEntry.Impl<ElfEdificeFloor> {
 
 	}
 
-	public String getUnlocalizedName() {
+	public String getTranslationKey() {
 		return unlocalizedName;
 	}
 

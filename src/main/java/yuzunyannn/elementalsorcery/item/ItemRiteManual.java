@@ -34,7 +34,7 @@ public class ItemRiteManual extends Item {
 	private static int MAX_RECORD = 10;
 
 	public ItemRiteManual() {
-		this.setUnlocalizedName("riteManual");
+		this.setTranslationKey("riteManual");
 		this.setMaxStackSize(1);
 	}
 
@@ -52,7 +52,7 @@ public class ItemRiteManual extends Item {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) return;
 		NBTTagList list = nbt.getTagList("recs", NBTTag.TAG_COMPOUND);
-		if (list.hasNoTags()) return;
+		if (list.isEmpty()) return;
 		tooltip.add(TextFormatting.GOLD + I18n.format("info.following.record"));
 		int i = 0;
 		for (NBTBase base : list) {

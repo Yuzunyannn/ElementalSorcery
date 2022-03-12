@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemRedHandset extends Item {
 	public ItemRedHandset() {
-		this.setUnlocalizedName("redHandset");
+		this.setTranslationKey("redHandset");
 	}
 
 	@Override

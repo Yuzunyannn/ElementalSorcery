@@ -9,7 +9,7 @@ public class BlockStarSand extends BlockFalling {
 	public BlockStarSand() {
 		super(Material.SAND);
 		this.setSoundType(SoundType.SAND);
-		this.setUnlocalizedName("starSand");
+		this.setTranslationKey("starSand");
 		this.setHarvestLevel("shovel", 0);
 		this.setHardness(1.0f);
 	}

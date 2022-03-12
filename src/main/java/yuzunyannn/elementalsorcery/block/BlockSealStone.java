@@ -41,7 +41,7 @@ public class BlockSealStone extends Block implements Mapper {
 
 	public BlockSealStone() {
 		super(Material.ROCK);
-		setUnlocalizedName("sealStone");
+		setTranslationKey("sealStone");
 		setHarvestLevel("pickaxe", 1);
 		setHardness(1.5F);
 		setResistance(10.0F);

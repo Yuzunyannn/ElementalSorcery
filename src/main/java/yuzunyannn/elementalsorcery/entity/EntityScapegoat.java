@@ -53,7 +53,7 @@ public class EntityScapegoat extends EntityLiving {
 	@Override
 	public void writeEntityToNBT(NBTTagCompound compound) {
 		super.writeEntityToNBT(compound);
-		if (itemNBT != null && !itemNBT.hasNoTags()) compound.setTag("itemNBT", itemNBT);
+		if (itemNBT != null && !itemNBT.isEmpty()) compound.setTag("itemNBT", itemNBT);
 	}
 
 	@Override

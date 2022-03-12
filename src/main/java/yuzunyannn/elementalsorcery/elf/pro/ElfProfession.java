@@ -52,12 +52,12 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 
 	protected String unlocalizedName;
 
-	public ElfProfession setUnlocalizedName(String unlocalizedName) {
+	public ElfProfession setTranslationKey(String unlocalizedName) {
 		this.unlocalizedName = unlocalizedName;
 		return this;
 	}
 
-	public String getUnlocalizedName() {
+	public String getTranslationKey() {
 		return "pro." + unlocalizedName + ".name";
 	}
 

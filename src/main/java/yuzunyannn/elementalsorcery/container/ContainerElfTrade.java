@@ -191,7 +191,7 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 					}
 				}
 
-				if (!list.hasNoTags()) {
+				if (!list.isEmpty()) {
 					if (sendData == null) sendData = new NBTTagCompound();
 					if (list.tagCount() == 1) {
 						NBTTagCompound data = list.getCompoundTagAt(0);

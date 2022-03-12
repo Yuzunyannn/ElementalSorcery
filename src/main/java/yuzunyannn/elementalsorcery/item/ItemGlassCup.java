@@ -49,7 +49,7 @@ public class ItemGlassCup extends Item implements IToElementItem {
 	}
 
 	public ItemGlassCup() {
-		this.setUnlocalizedName("glassCup");
+		this.setTranslationKey("glassCup");
 		this.setMaxStackSize(1);
 	}
 

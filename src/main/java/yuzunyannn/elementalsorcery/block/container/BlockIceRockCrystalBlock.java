@@ -15,7 +15,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -23,12 +26,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.tile.TileIceRockCrystalBlock;
-import yuzunyannn.elementalsorcery.tile.TileIceRockStand;
+import yuzunyannn.elementalsorcery.tile.ir.TileIceRockCrystalBlock;
+import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
-public class BlockIceRockCrystalBlock extends BlockContainerNormal {
+public class BlockIceRockCrystalBlock extends BlockIceRockSendRecv {
 
 	public static final PropertyEnum<EnumStatus> STATUS = PropertyEnum.create("status", EnumStatus.class);
 
@@ -83,6 +86,12 @@ public class BlockIceRockCrystalBlock extends BlockContainerNormal {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
+	public BlockRenderLayer getRenderLayer() {
+		return BlockRenderLayer.SOLID;
+	}
+
+	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
 		if (worldIn.isRemote) return;
@@ -93,7 +102,7 @@ public class BlockIceRockCrystalBlock extends BlockContainerNormal {
 
 		NBTTagCompound nbt = stack.getTagCompound();
 		double fragment = nbt != null ? nbt.getDouble("magicFragment") : 0;
-		tileCrystalBlock.setMagicFragment(fragment);
+		tileCrystalBlock.setMagicFragmentOwn(fragment);
 
 		for (int i = 0; i < BlockIceRockStand.TOWER_MAX_HEIGHT; i++) {
 			BlockPos at = pos.down(i + 1);
@@ -111,6 +120,10 @@ public class BlockIceRockCrystalBlock extends BlockContainerNormal {
 
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		TileIceRockCrystalBlock tileCrystalBlock = BlockHelper.getTileEntity(worldIn, pos,
+				TileIceRockCrystalBlock.class);
+		tileCrystalBlock.canNotLinkMark = true;
+
 		TileIceRockStand stand = null;
 		for (int i = 0; i < BlockIceRockStand.TOWER_MAX_HEIGHT; i++) {
 			BlockPos at = pos.down(i + 1);
@@ -124,12 +137,23 @@ public class BlockIceRockCrystalBlock extends BlockContainerNormal {
 			}
 			break;
 		}
-		setDropTile(worldIn.getTileEntity(pos));
+		setDropTile(tileCrystalBlock);
 		super.breakBlock(worldIn, pos, state);
 		if (stand != null) {
 			stand.checkAndBuildStructure();
 			stand.updateStandDataToClent();
 		}
+	}
+
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) return false;
+		if (!playerIn.isSneaking()) return false;
+		TileIceRockCrystalBlock tileCrystalBlock = BlockHelper.getTileEntity(worldIn, pos,
+				TileIceRockCrystalBlock.class);
+		if (tileCrystalBlock == null) return false;
+		return tileCrystalBlock.doShiftStatus(facing, playerIn);
 	}
 
 	@Override
@@ -144,7 +168,7 @@ public class BlockIceRockCrystalBlock extends BlockContainerNormal {
 		drops.add(stack);
 		TileEntity tile = getOrPopDropTile(world, pos);
 		if (tile instanceof TileIceRockCrystalBlock) {
-			double fragment = ((TileIceRockCrystalBlock) tile).getMagicFragment();
+			double fragment = ((TileIceRockCrystalBlock) tile).getMagicFragmentOwn();
 			NBTTagCompound nbt = stack.getTagCompound();
 			if (nbt == null) stack.setTagCompound(nbt = new NBTTagCompound());
 			nbt.setDouble("magicFragment", fragment);

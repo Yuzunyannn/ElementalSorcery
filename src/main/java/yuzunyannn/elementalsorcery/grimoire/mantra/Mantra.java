@@ -128,18 +128,18 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 		this.occupation = (short) occupation;
 	}
 
-	public String getUnlocalizedName() {
+	public String getTranslationKey() {
 		return "mantra." + this.unlocalizedName;
 	}
 
-	public Mantra setUnlocalizedName(String unlocalizedName) {
+	public Mantra setTranslationKey(String unlocalizedName) {
 		this.unlocalizedName = unlocalizedName;
 		return this;
 	}
 
 	public ITextComponent getTextComponent() {
 		ITextComponent itextcomponent = new TextComponentString("[");
-		itextcomponent.appendSibling(new TextComponentTranslation(this.getUnlocalizedName() + ".name"));
+		itextcomponent.appendSibling(new TextComponentTranslation(this.getTranslationKey() + ".name"));
 		itextcomponent.appendSibling(new TextComponentString("]"));
 		return itextcomponent;
 	}
@@ -180,7 +180,7 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		String describe = getUnlocalizedName() + ".describe";
+		String describe = getTranslationKey() + ".describe";
 		if (I18n.hasKey(describe)) tooltip.add(I18n.format(describe));
 	}
 

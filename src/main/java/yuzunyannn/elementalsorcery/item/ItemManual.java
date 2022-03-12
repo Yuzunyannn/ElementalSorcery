@@ -32,7 +32,7 @@ public class ItemManual extends Item {
 	private int MANUAL_MAX_PAGES = 32;
 
 	public ItemManual() {
-		this.setUnlocalizedName("manual");
+		this.setTranslationKey("manual");
 		this.setMaxStackSize(1);
 	}
 

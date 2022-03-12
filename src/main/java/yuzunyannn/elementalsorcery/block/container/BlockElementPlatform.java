@@ -39,7 +39,7 @@ public class BlockElementPlatform extends BlockElementContainer {
 	public BlockElementPlatform() {
 		super(Material.ROCK, MapColor.QUARTZ);
 		this.setHarvestLevel("pickaxe", 1);
-		this.setUnlocalizedName("elementPlatform");
+		this.setTranslationKey("elementPlatform");
 		this.setHardness(1.5f);
 	}
 

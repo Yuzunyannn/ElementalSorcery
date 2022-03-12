@@ -235,7 +235,7 @@ public class GuiMantraShitf extends GuiScreen {
 		int cX = this.width / 2;
 		int cY = this.height / 2;
 		Vec3d tar = new Vec3d(mouseX - cX, mouseY - cY, 0);
-		double length = tar.lengthVector();
+		double length = tar.length();
 		if (length < 1) return;
 		double cos = -tar.y / length;
 		double angle = Math.acos(cos) / Math.PI * 180;

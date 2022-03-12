@@ -74,8 +74,8 @@ public class EntityResonantCrystal extends EntityThrowable {
 	public void handleStatusUpdate(byte id) {
 		Vec3d v3d = this.getPositionVector();
 		if (!world.isAirBlock(this.getPosition())) {
-			v3d = v3d.addVector(0, 1, 0);
-			if (!world.isAirBlock(new BlockPos(v3d))) v3d = v3d.addVector(0, 1, 0);
+			v3d = v3d.add(0, 1, 0);
+			if (!world.isAirBlock(new BlockPos(v3d))) v3d = v3d.add(0, 1, 0);
 		}
 		switch (id) {
 		case 3:

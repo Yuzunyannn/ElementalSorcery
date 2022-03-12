@@ -44,7 +44,7 @@ public class ItemNatureCrystal extends ItemCrystal {
 			if (data == null) return super.onItemRightClick(worldIn, playerIn, handIn);
 			int worldId = Explores.BASE.getWorldId(data);
 			BlockPos to = Explores.BASE.getPos(data);
-			EntityPortal.moveTo(playerIn, new Vec3d(to).addVector(0.5, 0.1, 0.5), worldId);
+			EntityPortal.moveTo(playerIn, new Vec3d(to).add(0.5, 0.1, 0.5), worldId);
 			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 		}
 		return super.onItemRightClick(worldIn, playerIn, handIn);

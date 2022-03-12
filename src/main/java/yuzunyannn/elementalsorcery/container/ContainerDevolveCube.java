@@ -38,11 +38,11 @@ public class ContainerDevolveCube extends Container implements IContainerNetwork
 		if (mapChange) nbt.setByteArray("cs", tile.getColors());
 		if (elementContainerChange) {
 			NBTTagList changeList = containerDetecter.detecte(tile.getCanMapDetected());
-			if (!changeList.hasNoTags()) nbt.setTag("cl", changeList);
+			if (!changeList.isEmpty()) nbt.setTag("cl", changeList);
 		}
 		if (exchangerChange) {
 			NBTTagList changeList = exchangerDetecter.detecte(tile.getExchanger());
-			if (!changeList.hasNoTags()) nbt.setTag("ec", changeList);
+			if (!changeList.isEmpty()) nbt.setTag("ec", changeList);
 		}
 		this.sendToClient(nbt, player);
 	}

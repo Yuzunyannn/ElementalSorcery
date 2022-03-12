@@ -368,7 +368,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 			prevOverload = overload;
 		}
 
-		if (nbt.hasNoTags()) return;
+		if (nbt.isEmpty()) return;
 
 		updateToClient(nbt);
 	}
@@ -471,7 +471,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 		int n = MathHelper.ceil((MathHelper.clamp(overload, 1, 2) - 1) * 4);
 		final int[] OVERLOAD_COLORS = new int[] { 0x992500, 0xc22f00, 0xca4619, 0xdc663e };
 		for (int i = 0; i < n; i++) {
-			Vec3d pos = new Vec3d(this.pos).addVector(0.5, 0.5, 0.5);
+			Vec3d pos = new Vec3d(this.pos).add(0.5, 0.5, 0.5);
 			EffectElementMove effect = new EffectElementMove(world, pos);
 			effect.lifeTime = 40;
 			effect.dalpha = 1f / effect.lifeTime;
@@ -511,7 +511,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 			break;
 		}
 		Vec3d pos = new Vec3d(this.pos)
-				.addVector(Effect.rand.nextGaussian() * range + 0.5, 0.5, Effect.rand.nextGaussian() * range + 0.5)
+				.add(Effect.rand.nextGaussian() * range + 0.5, 0.5, Effect.rand.nextGaussian() * range + 0.5)
 				.add(targetVec);
 		EffectElementMove effect = new EffectElementMove(world, pos);
 		final int[] COLORS = new int[] { 0x1b6eb8, 0x196ab5, 0x458ed1, 0x86c0f6 };
@@ -529,11 +529,11 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 
 	@SideOnly(Side.CLIENT)
 	public void genNowherePlaceEffect(ElementStack elementStack) {
-		Vec3d pos = new Vec3d(this.pos).addVector(0.5, 0.5, 0.5);
+		Vec3d pos = new Vec3d(this.pos).add(0.5, 0.5, 0.5);
 		EffectElementMove effect = new EffectElementMove(world, pos);
 		effect.setColor(elementStack.getColor());
 		Vec3d speed = new Vec3d(Effect.rand.nextGaussian(), 0, Effect.rand.nextGaussian());
-		effect.setVelocity(speed.normalize().addVector(0, Effect.rand.nextDouble() * 0.5 + 0.5, 0).scale(0.3));
+		effect.setVelocity(speed.normalize().add(0, Effect.rand.nextDouble() * 0.5 + 0.5, 0).scale(0.3));
 		effect.xDecay = effect.zDecay = effect.yDecay = 0.6;
 		Effect.addEffect(effect);
 	}
@@ -543,13 +543,13 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 	public void genParticleElementTo(boolean isGet, IAltarWake altarWake, ElementStack estack, BlockPos from,
 			BlockPos to) {
 		Vec3d refPos;
-		if (isGet) refPos = new Vec3d(to).addVector(0.5, 0.5, 0.5);
-		else refPos = new Vec3d(from).addVector(0.5, 0.5, 0.5);
+		if (isGet) refPos = new Vec3d(to).add(0.5, 0.5, 0.5);
+		else refPos = new Vec3d(from).add(0.5, 0.5, 0.5);
 		if (altarWake == null) {
 			if (isGet) TileElementalCube.giveParticleElementTo(world, estack.getColor(),
-					new Vec3d(from).addVector(0.5, 0.5, 0.5), refPos, 1);
+					new Vec3d(from).add(0.5, 0.5, 0.5), refPos, 1);
 			else TileElementalCube.giveParticleElementTo(world, estack.getColor(), refPos,
-					new Vec3d(to).addVector(0.5, 0.5, 0.5), 1);
+					new Vec3d(to).add(0.5, 0.5, 0.5), 1);
 		} else altarWake.updateEffect(world, isGet ? IAltarWake.SEND : IAltarWake.OBTAIN, estack, refPos);
 	}
 

@@ -38,8 +38,8 @@ public class ItemMagicPaper extends Item {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
-		return "item." + EnumType.fromId(stack.getMetadata()).getUnlocalizedName();
+	public String getTranslationKey(ItemStack stack) {
+		return "item." + EnumType.fromId(stack.getMetadata()).getTranslationKey();
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class ItemMagicPaper extends Item {
 			return this.ordinal();
 		}
 
-		public String getUnlocalizedName() {
+		public String getTranslationKey() {
 			return unlocalizedName;
 		}
 
@@ -136,7 +136,7 @@ public class ItemMagicPaper extends Item {
 				if (world.isRemote) {
 					for (int i = 0; i < 4; i++) {
 						altarWake.updateEffect(world, IAltarWake.SEND, estack,
-								entityItem.getPositionVector().addVector(0, 0.5, 0));
+								entityItem.getPositionVector().add(0, 0.5, 0));
 						if (world.rand.nextFloat() >= 0.75) break;
 					}
 				}
@@ -155,7 +155,7 @@ public class ItemMagicPaper extends Item {
 			entityItem.setItem(stack);
 			NBTTagCompound nbt = FireworkEffect.fastNBT(1, 1, 0.05f, TileMDBase.PARTICLE_COLOR,
 					TileMDBase.PARTICLE_COLOR_FADE);
-			Effects.spawnEffect(world, Effects.FIREWROK, entityItem.getPositionVector().addVector(0, 0.5, 0), nbt);
+			Effects.spawnEffect(world, Effects.FIREWROK, entityItem.getPositionVector().add(0, 0.5, 0), nbt);
 		}
 
 		return false;

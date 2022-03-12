@@ -75,7 +75,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		Vec3i tar = center.subtract(this.pos);
 		Vec3d v1 = new Vec3d(vec.getX(), vec.getY(), vec.getZ());
 		Vec3d v2 = new Vec3d(tar.getX(), tar.getY(), tar.getZ());
-		double cos = v1.dotProduct(v2) / (v1.lengthVector() * v2.lengthVector());
+		double cos = v1.dotProduct(v2) / (v1.length() * v2.length());
 		if (cos < 0.5253219) return false;
 		return true;
 	}

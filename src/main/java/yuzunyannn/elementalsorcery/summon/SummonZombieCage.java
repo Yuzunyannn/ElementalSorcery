@@ -58,7 +58,7 @@ public class SummonZombieCage extends SummonCommon {
 		if (updateOffset()) updateOffset();
 		else genZombie();
 
-		Vec3d center = new Vec3d(this.pos).addVector(0.5, 0.5, 0.5);
+		Vec3d center = new Vec3d(this.pos).add(0.5, 0.5, 0.5);
 		final int size = MAX_SIZE;
 		AxisAlignedBB aabb = new AxisAlignedBB(pos.getX() - size, pos.getY() - 1, pos.getZ() - size, pos.getX() + size,
 				pos.getY() + 1, pos.getZ() + size);
@@ -105,13 +105,13 @@ public class SummonZombieCage extends SummonCommon {
 
 	public void genZombie() {
 		if (world.isRemote) return;
-		Vec3d pos = new Vec3d(this.pos).addVector(0.5, 0.1, 0.5);
+		Vec3d pos = new Vec3d(this.pos).add(0.5, 0.1, 0.5);
 		Random rand = world.rand;
 		EntityCreature entity = this.createZombie();
 		final int size = MAX_SIZE - 1;
 		entity.setPosition(pos.x, pos.y, pos.z);
 		world.spawnEntity(entity);
-		pos = pos.addVector(rand.nextDouble() * size * 2 - size, 0, rand.nextDouble() * size * 2 - size);
+		pos = pos.add(rand.nextDouble() * size * 2 - size, 0, rand.nextDouble() * size * 2 - size);
 		Vec3d tar = pos.subtract(entity.getPositionVector()).normalize().scale(0.5 + rand.nextDouble() * 0.5);
 		entity.addVelocity(tar.x, 0, tar.z);
 		this.zombie--;

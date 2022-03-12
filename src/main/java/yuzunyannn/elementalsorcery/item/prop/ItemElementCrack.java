@@ -34,7 +34,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class ItemElementCrack extends Item {
 
 	public ItemElementCrack() {
-		this.setUnlocalizedName("elementCrack");
+		this.setTranslationKey("elementCrack");
 		this.setMaxStackSize(1);
 	}
 
@@ -140,7 +140,7 @@ public class ItemElementCrack extends Item {
 			}
 
 			Effects.spawnEffect(world, Effects.ELEMENT_CRACK_ATTACK,
-					living.getPositionVector().addVector(0, living.height / 2, 0), effectNBT);
+					living.getPositionVector().add(0, living.height / 2, 0), effectNBT);
 		}
 
 	}
@@ -150,7 +150,7 @@ public class ItemElementCrack extends Item {
 	@SideOnly(Side.CLIENT)
 	public void playTickEffect(World world, Vec3d vec, int tick) {
 		for (int i = 0; i < 3; i++) {
-			EffectElementMove effect = new EffectElementMove(world, vec.addVector(0, 0.3, 0));
+			EffectElementMove effect = new EffectElementMove(world, vec.add(0, 0.3, 0));
 			effect.isGlow = true;
 			effect.prevScale = effect.scale = 0.12f;
 			effect.setColor(color[i]);

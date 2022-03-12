@@ -194,7 +194,7 @@ public class SummonCommon extends Summon {
 
 	protected void genBlock(BlockPos pos, IBlockState state) {
 		if (BlockHelper.isBedrock(world, pos)) return;
-		Vec3d from = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+		Vec3d from = new Vec3d(pos).add(0.5, 0.5, 0.5);
 		EntityBlockMove entity = new EntityBlockMove(world, from, pos, state);
 		entity.setFlag(EntityBlockMove.FLAG_FORCE_DESTRUCT, true);
 		entity.setFlag(EntityBlockMove.FLAG_INTO_CHEST, false);

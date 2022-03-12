@@ -192,7 +192,7 @@ public class NBTHelper {
 		if (stack.getCount() != 1) stackNBT.setByte("n", (byte) stack.getCount());
 		if (stack.getItemDamage() != 0) stackNBT.setShort("d", (short) stack.getItemDamage());
 		NBTTagCompound tag = stack.getTagCompound();
-		if (tag != null && !tag.hasNoTags()) stackNBT.setTag("t", tag);
+		if (tag != null && !tag.isEmpty()) stackNBT.setTag("t", tag);
 		return stackNBT;
 	}
 
@@ -211,7 +211,7 @@ public class NBTHelper {
 		if (stack.getCount() != 1) setIntegerForSend(stackNBT, "n", stack.getCount());
 		setIntegerForSend(stackNBT, "p", stack.getPower());
 		NBTTagCompound tag = stack.getTagCompound();
-		if (tag != null && !tag.hasNoTags()) stackNBT.setTag("t", tag);
+		if (tag != null && !tag.isEmpty()) stackNBT.setTag("t", tag);
 		return stackNBT;
 	}
 

@@ -28,7 +28,7 @@ public class MantraLaunch extends MantraCommon {
 
 	public MantraLaunch(String type, int color) {
 		this.type = type;
-		this.setUnlocalizedName(TextHelper.castToCamel("launch_" + type));
+		this.setTranslationKey(TextHelper.castToCamel("launch_" + type));
 		this.setColor(color);
 		this.setIcon(TextHelper.toESResourceLocation("textures/mantras/launch_" + type + ".png"));
 		this.setRarity(150);

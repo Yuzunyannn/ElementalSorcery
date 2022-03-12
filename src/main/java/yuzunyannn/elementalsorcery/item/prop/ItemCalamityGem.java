@@ -28,7 +28,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class ItemCalamityGem extends Item implements IPlatformTickable {
 
 	public ItemCalamityGem() {
-		this.setUnlocalizedName("calamityGem");
+		this.setTranslationKey("calamityGem");
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class ItemCalamityGem extends Item implements IPlatformTickable {
 	@SideOnly(Side.CLIENT)
 	public static void randEffect(World world, BlockPos center, float range, int[] colors) {
 		Random rand = Effect.rand;
-		Vec3d vec = new Vec3d(center).addVector(0.5 + rand.nextGaussian() * range, 0.5 + rand.nextFloat() * range / 2,
+		Vec3d vec = new Vec3d(center).add(0.5 + rand.nextGaussian() * range, 0.5 + rand.nextFloat() * range / 2,
 				0.5 + rand.nextGaussian() * range);
 		EffectElementMove effect = new EffectElementMove(world, vec);
 		effect.setColor(colors[rand.nextInt(colors.length)]);

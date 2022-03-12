@@ -60,7 +60,7 @@ public class ItemCrystal extends Item {
 	}
 
 	public ItemCrystal(String unlocalizedName, float frequency, int color) {
-		this.setUnlocalizedName(unlocalizedName);
+		this.setTranslationKey(unlocalizedName);
 		this.setFrequency(frequency);
 		this.setColor(color);
 	}

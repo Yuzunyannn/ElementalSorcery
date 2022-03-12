@@ -66,7 +66,7 @@ public class ContainerResearch extends Container implements IContainerNetwork {
 
 	private void onFailEnd() {
 		NBTTagCompound nbt = FireworkEffect.fastNBT(0, 1, 0.05f, new int[] { 0xc90000 }, new int[] { 0xec8282 });
-		Effects.spawnEffect(player.world, Effects.FIREWROK, new Vec3d(pos).addVector(0.5, 0.8, 0.5), nbt);
+		Effects.spawnEffect(player.world, Effects.FIREWROK, new Vec3d(pos).add(0.5, 0.8, 0.5), nbt);
 	}
 
 	public void doCrafting(Researcher costReasearher) {
@@ -111,7 +111,7 @@ public class ContainerResearch extends Container implements IContainerNetwork {
 		}
 		// 特效
 		NBTTagCompound nbt = FireworkEffect.fastNBT(0, 1, 0.05f, new int[] { 0x096b18 }, new int[] { 0x5ac37b });
-		Effects.spawnEffect(player.world, Effects.FIREWROK, new Vec3d(pos).addVector(0.5, 0.8, 0.5), nbt);
+		Effects.spawnEffect(player.world, Effects.FIREWROK, new Vec3d(pos).add(0.5, 0.8, 0.5), nbt);
 	}
 
 }

@@ -35,7 +35,7 @@ public class EffectElementFly extends EffectElement {
 		// 计算圆弧
 		tar = to.subtract(from);
 		tar = new Vec3d(tar.x, 0, tar.z);
-		r = tar.lengthVector() / 2;
+		r = tar.length() / 2;
 		if (from.y > to.y) {
 			// 高到低
 			bottom = to.y;

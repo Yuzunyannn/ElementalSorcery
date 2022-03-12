@@ -30,7 +30,7 @@ import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 public class MantraBlockCrash extends MantraCommon {
 
 	public MantraBlockCrash() {
-		this.setUnlocalizedName("blockCrash");
+		this.setTranslationKey("blockCrash");
 		this.setColor(0x785439);
 		this.setIcon("block_crash");
 		this.setRarity(110);
@@ -44,7 +44,7 @@ public class MantraBlockCrash extends MantraCommon {
 		if (stack.isEmpty()) return;
 
 		Vec3d dir = caster.iWantDirection();
-		dir = dir.addVector(0, 0.5, 0).normalize();
+		dir = dir.add(0, 0.5, 0).normalize();
 		float speed = MathHelper.clamp(MathHelper.sqrt(stack.getPower() / 10) / 4, 1, 5);
 		dir = dir.scale(speed);
 
@@ -128,7 +128,7 @@ public class MantraBlockCrash extends MantraCommon {
 	public void addBlockEffect(BlockPos pos, IBlockState state) {
 		Minecraft mc = Minecraft.getMinecraft();
 		mc.effectRenderer.addBlockDestroyEffects(pos, state);
-		addBlockElementEffect(new Vec3d(pos).addVector(0.5, 0.5, 0.5), this.getRenderColor());
+		addBlockElementEffect(new Vec3d(pos).add(0.5, 0.5, 0.5), this.getRenderColor());
 	}
 
 	@SideOnly(Side.CLIENT)

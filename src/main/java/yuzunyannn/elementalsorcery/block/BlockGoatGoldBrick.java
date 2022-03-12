@@ -43,7 +43,7 @@ public class BlockGoatGoldBrick extends Block implements Mapper, IBlockJumpModif
 
 	public BlockGoatGoldBrick() {
 		super(Material.ROCK, MapColor.GOLD);
-		this.setUnlocalizedName("goatGoldBrick");
+		this.setTranslationKey("goatGoldBrick");
 		this.setHarvestLevel("pickaxe", 4);
 		this.setHardness(Float.MAX_VALUE / 10);
 		this.setTickRandomly(true);
@@ -224,7 +224,7 @@ public class BlockGoatGoldBrick extends Block implements Mapper, IBlockJumpModif
 		Random rand = player.getRNG();
 		for (int i = 0; i < 7; i++) {
 			Vec3d vec = player.getPositionVector();
-			vec = vec.addVector(rand.nextGaussian() * 0.5, isUp ? 0 : player.height, rand.nextGaussian() * 0.5);
+			vec = vec.add(rand.nextGaussian() * 0.5, isUp ? 0 : player.height, rand.nextGaussian() * 0.5);
 			EffectElementMove em = new EffectElementMove(world, vec);
 			em.yDecay = 0.8;
 			em.motionY = 0.2 + rand.nextFloat() * 0.2;

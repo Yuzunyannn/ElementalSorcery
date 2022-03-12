@@ -16,7 +16,7 @@ import yuzunyannn.elementalsorcery.elf.ElfTime;
 public class ItemElfWatch extends Item {
 
 	public ItemElfWatch() {
-		this.setUnlocalizedName("elfWatch");
+		this.setTranslationKey("elfWatch");
 		this.setMaxStackSize(1);
 	}
 

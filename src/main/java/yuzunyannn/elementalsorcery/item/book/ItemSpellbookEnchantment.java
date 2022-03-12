@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 public class ItemSpellbookEnchantment extends ItemSpellbook {
 
 	public ItemSpellbookEnchantment() {
-		this.setUnlocalizedName("spellbookEnchantment");
+		this.setTranslationKey("spellbookEnchantment");
 		this.setMaxStackSize(64);
 	}
 

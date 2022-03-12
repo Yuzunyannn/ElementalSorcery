@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemSome {
 
 	static private Item newItem(String unloaclizedName) {
-		return new Item().setUnlocalizedName(unloaclizedName);
+		return new Item().setTranslationKey(unloaclizedName);
 	}
 
 	/** 遗迹宝石 */
@@ -31,7 +31,7 @@ public class ItemSome {
 
 	/** 精灵之星 */
 	static public Item newElfStar() {
-		return new ItemSimpleFoiled().setUnlocalizedName("elfStar");
+		return new ItemSimpleFoiled().setTranslationKey("elfStar");
 	}
 
 	/** 精灵币 */
@@ -52,7 +52,7 @@ public class ItemSome {
 					ITooltipFlag flagIn) {
 				tooltip.add(I18n.format("info.magicalPiece.itcando"));
 			}
-		}.setUnlocalizedName("magicalPiece");
+		}.setTranslationKey("magicalPiece");
 	}
 
 	/** 魔石 */

@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 public class ItemRabidLeather extends Item {
 
 	public ItemRabidLeather() {
-		this.setUnlocalizedName("rabidLeather");
+		this.setTranslationKey("rabidLeather");
 	}
 
 	@Override

@@ -269,6 +269,7 @@ import yuzunyannn.elementalsorcery.render.item.RenderItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSupremeTable;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileIceRockCrystalBlock;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileAnalysisAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileBuildingAltar;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileCrystalFlower;
@@ -312,8 +313,6 @@ import yuzunyannn.elementalsorcery.tile.TileElementPlatform;
 import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
-import yuzunyannn.elementalsorcery.tile.TileIceRockCrystalBlock;
-import yuzunyannn.elementalsorcery.tile.TileIceRockStand;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftNormal;
 import yuzunyannn.elementalsorcery.tile.TileLantern;
 import yuzunyannn.elementalsorcery.tile.TileLifeDirt;
@@ -338,6 +337,8 @@ import yuzunyannn.elementalsorcery.tile.altar.TilePortalAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeInjection;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeTable;
+import yuzunyannn.elementalsorcery.tile.ir.TileIceRockCrystalBlock;
+import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
 import yuzunyannn.elementalsorcery.tile.md.TileMDAbsorbBox;
 import yuzunyannn.elementalsorcery.tile.md.TileMDDeconstructBox;
 import yuzunyannn.elementalsorcery.tile.md.TileMDFrequencyMapping;
@@ -377,9 +378,9 @@ public class ESInit {
 		// 创造物品栏
 		ESObjects.CREATIVE_TABS = tab;
 		// 初始化虚空元素
-		ELEMENTS.VOID = new Element(Element.rgb(0, 0, 0)).setRegistryName("void").setUnlocalizedName("void");
+		ELEMENTS.VOID = new Element(Element.rgb(0, 0, 0)).setRegistryName("void").setTranslationKey("void");
 		// 初始化魔力元素
-		ELEMENTS.MAGIC = new ElementMagic().setRegistryName("magic").setUnlocalizedName("magic");
+		ELEMENTS.MAGIC = new ElementMagic().setRegistryName("magic").setTranslationKey("magic");
 		initVoidElement();
 		// 实例化方块和物品等
 		instanceBlocks();
@@ -1064,6 +1065,7 @@ public class ESInit {
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());
 		registerRender(TilePortalAltar.class, new RenderTileShowItem<TilePortalAltar>(0.65));
 		registerRender(TileTranscribeTable.class, new RenderTileTranscribeTable());
+		registerRender(TileIceRockCrystalBlock.class, new RenderTileIceRockCrystalBlock());
 
 		registerRender(BLOCKS.ELEMENTAL_CUBE, TileElementalCube.class, new RenderTileElementalCube());
 		registerRender(BLOCKS.MAGIC_DESK, TileMagicDesk.class, new RenderTileMagicDesk());
@@ -1173,7 +1175,7 @@ public class ESInit {
 
 	@SideOnly(Side.CLIENT)
 	private static void registerRender(Item item, int meta, String id) {
-		ResourceLocation location = new ResourceLocation(item.getRegistryName().getResourceDomain(), id);
+		ResourceLocation location = new ResourceLocation(item.getRegistryName().getNamespace(), id);
 		ModelResourceLocation model = new ModelResourceLocation(location, "inventory");
 		ModelLoader.setCustomModelResourceLocation(item, meta, model);
 	}
@@ -1238,7 +1240,7 @@ public class ESInit {
 
 	@SideOnly(Side.CLIENT)
 	private static void registerRender(Block block, int meta) {
-		registerRender(block, meta, block.getRegistryName().getResourcePath());
+		registerRender(block, meta, block.getRegistryName().getPath());
 	}
 
 	@SideOnly(Side.CLIENT)

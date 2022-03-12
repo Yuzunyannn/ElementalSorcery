@@ -70,7 +70,7 @@ public class RenderEntityBlockMove extends Render<EntityBlockMove> {
 	}
 
 	private static void useBlockModel(World world, BlockPos pos, IBlockState state) {
-		boolean needBlend = state.getBlock().getBlockLayer() != BlockRenderLayer.SOLID;
+		boolean needBlend = state.getBlock().getRenderLayer() != BlockRenderLayer.SOLID;
 
 		TextureBinder.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.pushMatrix();

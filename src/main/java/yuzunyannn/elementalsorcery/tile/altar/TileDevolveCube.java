@@ -337,7 +337,7 @@ public class TileDevolveCube extends TileEntityNetwork implements ITickable {
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(this.pos.getX() + x,
 				Math.min(this.pos.getY() + DETECTION_RANGE, 230), this.pos.getZ() + z);
 
-		Chunk chunk = world.getChunkFromBlockCoords(pos);
+		Chunk chunk = world.getChunk(pos);
 		if (chunk.isEmpty()) return false;
 
 		byte colorByte = 0;
@@ -356,7 +356,10 @@ public class TileDevolveCube extends TileEntityNetwork implements ITickable {
 			if (block instanceof ITileEntityProvider) {
 				TileEntity tileEntity = chunk.getTileEntity(pos, Chunk.EnumCreateEntityType.CHECK);
 				IElementInventory eInv = ElementHelper.getElementInventory(tileEntity);
-				if (eInv != null) {
+				boolean canTransfer = eInv != null;
+				if (tileEntity instanceof IElementInventoryPromote)
+					canTransfer = ((IElementInventoryPromote) tileEntity).canInventoryOperateBy(this);
+				if (canTransfer) {
 					BlockPos at = new BlockPos(pos);
 					if (!elementContainer.containsKey(at)) {
 						elementContainer.put(at, new DevolveData());
@@ -454,8 +457,8 @@ public class TileDevolveCube extends TileEntityNetwork implements ITickable {
 		DevolveData devolveDat = elementContainer.get(pos);
 		int tryTimes = devolveDat == null ? 1 : MathHelper.clamp(devolveDat.count / 64, 1, 6);
 
-		Vec3d vec1 = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
-		Vec3d vec2 = new Vec3d(this.pos).addVector(0.5, 0.5, 0.5);
+		Vec3d vec1 = new Vec3d(pos).add(0.5, 0.5, 0.5);
+		Vec3d vec2 = new Vec3d(this.pos).add(0.5, 0.5, 0.5);
 
 		for (int i = 0; i < tryTimes; i++) {
 			EffectElementAbsorb effect;

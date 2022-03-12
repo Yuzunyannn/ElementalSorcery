@@ -52,7 +52,7 @@ public class BlockElementalCube extends BlockElementContainer {
 				String name = super.getItemStackDisplayName(stack);
 				EnumDyeColor color = getDyeColor(stack);
 				if (color != null) {
-					String colorName = I18n.translateToLocal("item.fireworksCharge." + color.getUnlocalizedName());
+					String colorName = I18n.translateToLocal("item.fireworksCharge." + color.getTranslationKey());
 					name = name + ColorHelper.toTextFormatting(color) + " " + colorName;
 				}
 				return name;
@@ -70,7 +70,7 @@ public class BlockElementalCube extends BlockElementContainer {
 
 	public BlockElementalCube() {
 		super(Material.GLASS, MapColor.CYAN);
-		this.setUnlocalizedName("elementalCube");
+		this.setTranslationKey("elementalCube");
 		this.setLightLevel(0.75F);
 		this.setHardness(0.5f);
 	}

@@ -237,7 +237,7 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) return;
 		NBTTagList list = nbt.getTagList("mantra", 10);
-		if (list.hasNoTags()) return;
+		if (list.isEmpty()) return;
 		if (to < 0 || to >= list.tagCount()) return;
 		nbt.setShort("at", to);
 	}

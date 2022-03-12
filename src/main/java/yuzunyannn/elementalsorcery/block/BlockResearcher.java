@@ -33,7 +33,7 @@ public class BlockResearcher extends Block {
 	public BlockResearcher() {
 		super(Material.ROCK, MapColor.QUARTZ);
 		this.setHarvestLevel("pickaxe", 3);
-		this.setUnlocalizedName("researcher");
+		this.setTranslationKey("researcher");
 		this.setHardness(8.5f);
 	}
 

@@ -41,7 +41,7 @@ public class ItemSpellbookElement extends ItemSpellbook {
 	final int level;
 
 	public ItemSpellbookElement() {
-		this.setUnlocalizedName("spellbookElement");
+		this.setTranslationKey("spellbookElement");
 		this.level = 1;
 	}
 
@@ -113,13 +113,14 @@ public class ItemSpellbookElement extends ItemSpellbook {
 				if (estack.isEmpty()) continue;
 				ElementStack e = estack.copy();
 				e.setCount(Math.min(AR_COUNT_PRE_TICK, e.getCount()));
-
-				if (inventory.insertElement(e, true)) {
+				e = srcInv.extractElement(e, true);
+				if (!e.isEmpty() && inventory.insertElement(e, true)) {
 					if (tile instanceof IAltarWake) ((IAltarWake) tile).wake(IAltarWake.SEND, null);
 					if (world.isRemote)
-						flyEffect(world, e.getColor(), new Vec3d(tile.getPos()).addVector(0.5, 0.5, 0.5), entity);
+						flyEffect(world, e.getColor(), new Vec3d(tile.getPos()).add(0.5, 0.5, 0.5), entity);
 					inventory.insertElement(e, false);
-					estack.shrink(e.getCount());
+					srcInv.extractElement(e, false);
+					tile.markDirty();
 					break;
 				}
 			}
@@ -136,10 +137,11 @@ public class ItemSpellbookElement extends ItemSpellbook {
 		e.setCount(Math.min(AR_COUNT_PRE_TICK, e.getCount()));
 		if (!eInv.insertElement(e, true)) return false;
 		if (tile instanceof IAltarWake) ((IAltarWake) tile).wake(IAltarWake.OBTAIN, null);
-		if (world.isRemote) flyEffect(world, e.getColor(), entity.getPositionVector().addVector(0, 0.5, 0),
-				new Vec3d(tile.getPos()).addVector(0.5, 0.5, 0.5));
+		if (world.isRemote) flyEffect(world, e.getColor(), entity.getPositionVector().add(0, 0.5, 0),
+				new Vec3d(tile.getPos()).add(0.5, 0.5, 0.5));
 		eInv.insertElement(e, false);
 		estack.shrink(e.getCount());
+		tile.markDirty();
 		return true;
 	}
 
@@ -154,8 +156,8 @@ public class ItemSpellbookElement extends ItemSpellbook {
 
 		ElementStack ret = accept.accpetMagic(magic, entity.getPosition(), face);
 
-		if (world.isRemote) flyEffect(world, e.getColor(), entity.getPositionVector().addVector(0, 0.5, 0),
-				new Vec3d(tile.getPos()).addVector(0.5, 0.5, 0.5));
+		if (world.isRemote) flyEffect(world, e.getColor(), entity.getPositionVector().add(0, 0.5, 0),
+				new Vec3d(tile.getPos()).add(0.5, 0.5, 0.5));
 
 		estack.grow(ret);
 

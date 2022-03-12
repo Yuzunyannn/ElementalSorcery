@@ -97,9 +97,7 @@ public class CraftingCrafting implements ICraftingAltar {
 			List<ElementStack> needs = workingIrecipe.getNeedElements();
 			if (needs != null && !needs.isEmpty()) {
 				workingEInventory = new ElementInventory(needs.size());
-				for (int i = 0; i < needs.size(); i++) {
-					workingEInventory.setStackInSlot(i, needs.get(i).copy());
-				}
+				for (int i = 0; i < needs.size(); i++) workingEInventory.setStackInSlot(i, needs.get(i).copy());
 			}
 		}
 		// 如果有需要的元素

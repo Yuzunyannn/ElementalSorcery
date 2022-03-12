@@ -24,8 +24,8 @@ public class BlockFluorspar extends Block {
 	public ItemBlock getItemBlock() {
 		return new ItemMultiTexture(this, this, (stack) -> "") {
 			@Override
-			public String getUnlocalizedName(ItemStack stack) {
-				String name = BlockFluorspar.EnumType.byMetadata(stack.getMetadata()).getUnlocalizedName();
+			public String getTranslationKey(ItemStack stack) {
+				String name = BlockFluorspar.EnumType.byMetadata(stack.getMetadata()).getTranslationKey();
 				return "tile." + name;
 			}
 
@@ -42,7 +42,7 @@ public class BlockFluorspar extends Block {
 	public BlockFluorspar() {
 		super(Material.ROCK);
 		this.setHardness(1).setLightLevel(1.0F);
-		this.setUnlocalizedName("fluorspar");
+		this.setTranslationKey("fluorspar");
 		this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, BlockFluorspar.EnumType.STONE));
 	}
 
@@ -114,7 +114,7 @@ public class BlockFluorspar extends Block {
 			return name;
 		}
 
-		public String getUnlocalizedName() {
+		public String getTranslationKey() {
 			return unlocalizedName;
 		}
 

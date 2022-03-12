@@ -34,7 +34,7 @@ public class EffectMagicCircle extends EffectCondition {
 	public EffectMagicCircle(World world, BlockPos pos) {
 		super(world);
 		this.lifeTime = 1;
-		this.binder = new IBinder.VecBinder(new Vec3d(pos).addVector(0.5, 0, 0.5));
+		this.binder = new IBinder.VecBinder(new Vec3d(pos).add(0.5, 0, 0.5));
 		this.setPosition(this.binder);
 	}
 
@@ -86,7 +86,7 @@ public class EffectMagicCircle extends EffectCondition {
 
 	protected void onAddEffect(Vec3d pos, float size) {
 		float hSize = size / 2;
-		pos = pos.addVector(rand.nextDouble() * size - hSize, 0.1, rand.nextDouble() * size - hSize);
+		pos = pos.add(rand.nextDouble() * size - hSize, 0.1, rand.nextDouble() * size - hSize);
 		EffectElementMove effect = new EffectElementMove(world, pos);
 		effect.setVelocity(0, 0.05f, 0);
 		effect.setColor(r, g, b);

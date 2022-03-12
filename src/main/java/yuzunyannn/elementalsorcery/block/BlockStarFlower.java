@@ -52,7 +52,7 @@ public class BlockStarFlower extends BlockBush implements IGrowable, Mapper, ITi
 	public BlockStarFlower() {
 		super(Material.PLANTS, MapColor.GREEN);
 		this.setSoundType(SoundType.PLANT);
-		this.setUnlocalizedName("starFlower");
+		this.setTranslationKey("starFlower");
 		this.setTickRandomly(true);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, MAX_STAGE));
 	}
@@ -158,7 +158,7 @@ public class BlockStarFlower extends BlockBush implements IGrowable, Mapper, ITi
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
 		if (worldIn.isRemote) return;
 		int stage = state.getValue(STAGE);
 		if (stage != MAX_STAGE) return;

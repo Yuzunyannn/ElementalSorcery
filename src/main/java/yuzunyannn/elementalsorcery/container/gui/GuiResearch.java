@@ -285,7 +285,7 @@ public class GuiResearch extends GuiContainer {
 		int cX = this.width / 2;
 		int cY = this.height / 2;
 		Vec3d tar = new Vec3d(mouseX - cX, mouseY - cY, 0);
-		double length = tar.lengthVector();
+		double length = tar.length();
 		if (length < partialRadius - topicSize / 2) return -1;
 		if (length > partialRadius + topicSize / 2) return -1;
 		double cos = -tar.y / length;

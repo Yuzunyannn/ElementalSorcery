@@ -1,0 +1,145 @@
+package yuzunyannn.elementalsorcery.tile.ir;
+
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.MathHelper;
+import net.minecraftforge.common.capabilities.Capability;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventoryPromote;
+import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.element.Element;
+import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
+import yuzunyannn.elementalsorcery.util.element.ElementInventoryAdapter;
+
+public abstract class TileIceRockBase extends TileEntityNetwork implements IElementInventoryPromote {
+
+	static final double ln2 = Math.log(2);
+
+	/**
+	 * @return fragment unit
+	 */
+	static public double toFragmentUnit(Element element, double power) {
+		return Math.pow(2.4, Math.log(power) / ln2);
+	}
+
+	/**
+	 * @return fragment
+	 */
+	static public double toFragment(Element element, double count, double power) {
+		return toFragmentUnit(element, power) * count;
+	}
+
+	static public double toFragment(ElementStack estack) {
+		return toFragmentUnit(estack.getElement(), estack.getPower()) * estack.getCount();
+	}
+
+	/**
+	 * @return count
+	 */
+	static public double fromFragment(Element element, double fragment, double targetPower) {
+		return fragment / toFragmentUnit(element, targetPower);
+	}
+
+	/**
+	 * @retrun 剩余没有成功插入的片元
+	 */
+	abstract public double insertMagicFragment(double count, boolean simulate);
+
+	/**
+	 * @retrun 真正能取出来的量
+	 */
+	abstract public double extractMagicFragment(double count, boolean simulate);
+
+	abstract public double getMagicFragment();
+
+	abstract protected void setMagicFragment(double fragment);
+
+	@Override
+	public boolean canInventoryOperateBy(Object operater) {
+		return true;
+	}
+
+	@Override
+	public void onInventoryStatusChange() {
+	}
+
+	protected void onFromOrToFragmentChange(double wastageFragment) {
+		markDirty();
+	}
+
+	protected class IceRockElementInventory extends ElementInventoryAdapter {
+
+		@Override
+		public int getSlots() {
+			return 4;
+		};
+
+		@Override
+		public int getMaxSizeInSlot(int slot) {
+			return -1;
+		}
+
+		public int getPowerFromSlot(int slot) {
+			return (int) (50 * Math.pow(2, (slot)));
+		}
+
+		@Override
+		public ElementStack getStackInSlot(int slot) {
+			int power = getPowerFromSlot(slot);
+			if (power <= 0) return ElementStack.EMPTY;
+			int count = MathHelper.floor(fromFragment(ESInit.ELEMENTS.MAGIC, getMagicFragment(), power));
+			if (count <= 0) return ElementStack.EMPTY;
+			return ElementStack.magic(count, power);
+		};
+
+		@Override
+		public ElementStack setStackInSlot(int slot, ElementStack estack) {
+			ElementStack origin = getStackInSlot(slot);
+			setMagicFragment(toFragment(estack.toMagic(world)));
+			return origin;
+		};
+
+		@Override
+		public boolean insertElement(int slot, ElementStack estack, boolean simulate) {
+			if (estack.isEmpty()) return true;
+			if (estack.isMagic()) estack = estack.toMagic(world);
+			double fragment = toFragment(estack);
+			double rest = insertMagicFragment(fragment, simulate);
+			if (rest == fragment) return false;
+			if (!simulate) onFromOrToFragmentChange(rest);
+			return true;
+		};
+
+		@Override
+		public ElementStack extractElement(int slot, ElementStack estack, boolean simulate) {
+			if (!estack.isMagic()) return ElementStack.EMPTY;
+			int power = estack.getPower();
+			double fragment = extractMagicFragment(toFragment(estack), simulate);
+			double dcount = fromFragment(ESInit.ELEMENTS.MAGIC, fragment, power);
+			int count = MathHelper.floor(dcount);
+			if (!simulate) onFromOrToFragmentChange(toFragment(ESInit.ELEMENTS.MAGIC, dcount - count, power));
+			return ElementStack.magic(count, power);
+		};
+
+	}
+
+	protected IceRockElementInventory eInventoryAdapter = new IceRockElementInventory();
+
+	public IElementInventory getElementInventoryAdapter() {
+		return eInventoryAdapter;
+	}
+
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability)) return true;
+		return super.hasCapability(capability, facing);
+	}
+
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		if (ElementInventory.ELEMENTINVENTORY_CAPABILITY.equals(capability)) return (T) eInventoryAdapter;
+		return super.getCapability(capability, facing);
+	}
+
+}

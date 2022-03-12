@@ -43,7 +43,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class ItemElementStone extends Item {
 
 	public ItemElementStone() {
-		this.setUnlocalizedName("elementStone");
+		this.setTranslationKey("elementStone");
 		this.setMaxStackSize(1);
 	}
 
@@ -184,7 +184,7 @@ public class ItemElementStone extends Item {
 	@SideOnly(Side.CLIENT)
 	public void showEffect(EntityLivingBase entity, ElementStack element) {
 		if (entity.ticksExisted % 4 != 0) return;
-		Vec3d pos = entity.getPositionVector().addVector(Math.random() - 0.5, Math.random() * 2, Math.random() - 0.5);
+		Vec3d pos = entity.getPositionVector().add(Math.random() - 0.5, Math.random() * 2, Math.random() - 0.5);
 		EffectElementMove em = new EffectElementMove(entity.world, pos);
 		em.setColor(element.getColor());
 		Effect.addEffect(em);
@@ -193,7 +193,7 @@ public class ItemElementStone extends Item {
 	@SideOnly(Side.CLIENT)
 	public void showEffect(EntityLivingBase entity, ElementStack element, BlockPos bPos) {
 		for (int i = 0; i < 8; i++) {
-			Vec3d pos = new Vec3d(bPos).addVector(Math.random(), Math.random(), Math.random());
+			Vec3d pos = new Vec3d(bPos).add(Math.random(), Math.random(), Math.random());
 			EffectElementMove em = new EffectElementMove(entity.world, pos);
 			Vec3d v = new Vec3d(Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5).normalize()
 					.scale(Math.random() * 0.05);

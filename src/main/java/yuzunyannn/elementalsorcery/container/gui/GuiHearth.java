@@ -18,7 +18,7 @@ public class GuiHearth extends GuiNormal {
 	}
 
 	public String getUnlocalizedTitle() {
-		return inventory.getUnlocalizedName();
+		return inventory.getTranslationKey();
 	}
 
 	@Override

@@ -51,9 +51,9 @@ public class ContainerQuest extends Container implements IContainerNetwork {
 		q.getType().openContainerSync(q, player, nbt);
 
 		NBTTagCompound data = q.getData().getNBT();
-		if (!data.hasNoTags()) nbt.setTag("$$", data);
+		if (!data.isEmpty()) nbt.setTag("$$", data);
 
-		if (nbt.hasNoTags()) return;
+		if (nbt.isEmpty()) return;
 
 		EventServer.addTask(() -> {
 			this.sendToClient(nbt, player);

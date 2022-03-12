@@ -37,7 +37,7 @@ public class EffectElementScrew extends EffectElement {
 		b = dir.crossProduct(tar);
 		b = b.crossProduct(tar).normalize();
 		rotate = 3.1415f;
-		r = tar.lengthVector();
+		r = tar.length();
 		this.prevR = this.r;
 		this.prevRotate = this.rotate;
 		return this;

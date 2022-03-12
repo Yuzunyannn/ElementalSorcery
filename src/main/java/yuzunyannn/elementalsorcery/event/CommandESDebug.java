@@ -123,17 +123,17 @@ public class CommandESDebug {
 			case "textTest": {
 
 //				EffectBlockDisintegrate effect = new EffectBlockDisintegrate(Minecraft.getMinecraft().world,
-//						new Vec3d(pos).addVector(0.5, 1.5, 0.5), entity.world.getBlockState(pos));
+//						new Vec3d(pos).add(0.5, 1.5, 0.5), entity.world.getBlockState(pos));
 //				Effect.addEffect(effect);
 //				final BlockPos at = pos;
 //				EventServer.addTask(() -> {
 //					EffectBlockDisintegrate e = new EffectBlockDisintegrate(Minecraft.getMinecraft().world,
-//							new Vec3d(at).addVector(1.5, 1.5, 0.5), entity.world.getBlockState(at));
+//							new Vec3d(at).add(1.5, 1.5, 0.5), entity.world.getBlockState(at));
 //					Effect.addEffect(e);
 //				}, 10);
 //
 //				EffectElementCrackAttack effect = new EffectElementCrackAttack(Minecraft.getMinecraft().world,
-//						new Vec3d(pos).addVector(0.5, 1.5, 0.5));
+//						new Vec3d(pos).add(0.5, 1.5, 0.5));
 //				Effect.addEffect(effect);
 
 

@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class ItemSoulFragment extends Item {
 
 	public ItemSoulFragment() {
-		this.setUnlocalizedName("soulFragment");
+		this.setTranslationKey("soulFragment");
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class ItemSoulFragment extends Item {
 		if (sword != null) {
 			NBTTagCompound nbt = FireworkEffect.fastNBT(1, 1, 0.05f, new int[] { 0x3ad2f2, 0x7ef5ff },
 					new int[] { 0xe0ffff });
-			Effects.spawnEffect(world, Effects.FIREWROK, sword.getPositionVector().addVector(0, 0.5, 0), nbt);
+			Effects.spawnEffect(world, Effects.FIREWROK, sword.getPositionVector().add(0, 0.5, 0), nbt);
 		}
 	}
 

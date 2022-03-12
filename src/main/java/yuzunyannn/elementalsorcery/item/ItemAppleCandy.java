@@ -9,7 +9,7 @@ public class ItemAppleCandy extends ItemFood {
 
 	public ItemAppleCandy() {
 		super(4, false);
-		this.setUnlocalizedName("appleCandy");
+		this.setTranslationKey("appleCandy");
 		this.setMaxStackSize(8);
 		this.setAlwaysEdible();
 	}

@@ -57,7 +57,7 @@ public class AnimeRenderDeconstruct implements ICraftingLaunchAnime {
 	public void endEffect(ICraftingCommit commit, World world, BlockPos pos, int flags) {
 		if (flags != ICraftingLaunch.SUCCESS) return;
 		if (endColors != null) {
-			Vec3d position = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+			Vec3d position = new Vec3d(pos).add(0.5, 0.5, 0.5);
 			FirewrokShap.createECircle(world, position, 0.2, 2, endColors);
 			return;
 		}
@@ -78,7 +78,7 @@ public class AnimeRenderDeconstruct implements ICraftingLaunchAnime {
 			CraftingDeconstruct cd = (CraftingDeconstruct) commit;
 			if (!cd.freeElement.isEmpty() && world.rand.nextFloat() <= 0.5) {
 				Vec3d at = new Vec3d(pos.up());
-				at = at.addVector(0.5, high, 0.5);
+				at = at.add(0.5, high, 0.5);
 				EffectElementMove move = new EffectElementMove(world, at);
 				Vec3d speed = new Vec3d(Math.random(), Math.random(), Math.random()).normalize();
 				move.setVelocity(speed.scale(Math.random() * 0.1 - 0.05));

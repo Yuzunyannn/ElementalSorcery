@@ -227,7 +227,7 @@ public class TileLantern extends TileEntityNetwork {
 							/ (TIME_TICK * TIME_TICK * TIME_TICK);
 				} else {
 					Vec3d vec = path.getCurrentPos();
-					vec = vec.addVector(0.5, 0.5, 0.5);
+					vec = vec.add(0.5, 0.5, 0.5);
 					path.incrementPathIndex();
 					this.ax = (vec.x - this.x - 0.5 * this.vx * TIME_TICK * TIME_TICK) * 3
 							/ (TIME_TICK * TIME_TICK * TIME_TICK);

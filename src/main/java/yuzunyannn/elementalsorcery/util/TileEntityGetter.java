@@ -44,7 +44,7 @@ public class TileEntityGetter {
 		posList.clear();
 		for (int x = pos1.x; x <= pos2.x; x++) {
 			for (int z = pos1.z; z <= pos2.z; z++) {
-				Chunk chunk = world.getChunkFromChunkCoords(x, z);
+				Chunk chunk = world.getChunk(x, z);
 				checkTileToList(chunk);
 			}
 		}
@@ -56,7 +56,7 @@ public class TileEntityGetter {
 		for (TileEntity tile : tiles.values()) {
 			if (checker != null && !checker.apply(tile)) continue;
 			BlockPos pos = tile.getPos();
-			if (checkBox.contains(new Vec3d(pos).addVector(0.5, 0.5, 0.5))) posList.add(pos);
+			if (checkBox.contains(new Vec3d(pos).add(0.5, 0.5, 0.5))) posList.add(pos);
 		}
 	}
 

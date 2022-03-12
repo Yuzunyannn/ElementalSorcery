@@ -79,7 +79,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		nbt.setTag("floor", list);
 		// 虽然有数据同步，但客户端的数据仅作为显示使用！
 		if (this.isSending()) return nbt;
-		if (!invest.hasNoTags()) nbt.setTag("invest", invest);
+		if (!invest.isEmpty()) nbt.setTag("invest", invest);
 		return super.writeToNBT(nbt);
 	}
 

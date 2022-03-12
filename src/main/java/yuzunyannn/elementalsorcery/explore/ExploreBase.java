@@ -66,7 +66,7 @@ public class ExploreBase implements IExploreHandle {
 		ResourceLocation biomeId = new ResourceLocation(data.getString("biome"));
 		String blockId = data.getString("block");
 		tooltip.add(TextFormatting.GREEN + I18n.format("info.select.axis", pos.getX(), pos.getY(), pos.getZ()));
-		String db = I18n.format("info.dimension.id", wrold) + " :: " + biomeId.getResourcePath();
+		String db = I18n.format("info.dimension.id", wrold) + " :: " + biomeId.getPath();
 		tooltip.add(TextFormatting.GREEN + db);
 		if (!blockId.isEmpty()) {
 			Block block = Block.getBlockFromName(blockId);
@@ -76,8 +76,8 @@ public class ExploreBase implements IExploreHandle {
 			String name = "";
 			if (!stack.isEmpty()) name = stack.getDisplayName();
 			else {
-				if (I18n.hasKey(block.getUnlocalizedName() + ".name"))
-					name = I18n.format(block.getUnlocalizedName() + ".name");
+				if (I18n.hasKey(block.getTranslationKey() + ".name"))
+					name = I18n.format(block.getTranslationKey() + ".name");
 				else name = block.getRegistryName().toString();
 			}
 			tooltip.add(TextFormatting.GREEN + "-=" + name + "=-");

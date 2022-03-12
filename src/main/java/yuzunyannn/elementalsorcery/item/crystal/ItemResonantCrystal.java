@@ -176,8 +176,8 @@ public class ItemResonantCrystal extends ItemCrystal implements EntityThrow.IIte
 		World world = entity.world;
 		Vec3d v3d = entity.getPositionVector();
 		if (!world.isAirBlock(entity.getPosition())) {
-			v3d = v3d.addVector(0, 1, 0);
-			if (!world.isAirBlock(new BlockPos(v3d))) v3d = v3d.addVector(0, 1, 0);
+			v3d = v3d.add(0, 1, 0);
+			if (!world.isAirBlock(new BlockPos(v3d))) v3d = v3d.add(0, 1, 0);
 		}
 		switch (id) {
 		case 3:

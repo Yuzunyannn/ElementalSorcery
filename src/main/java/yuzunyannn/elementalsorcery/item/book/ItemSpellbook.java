@@ -41,7 +41,7 @@ public class ItemSpellbook extends Item implements IItemUseClientUpdate {
 	static public final Random rand = new Random();
 
 	public ItemSpellbook() {
-		this.setUnlocalizedName("spellbook");
+		this.setTranslationKey("spellbook");
 		this.setMaxStackSize(1);
 		this.setMaxDamage(50);
 	}

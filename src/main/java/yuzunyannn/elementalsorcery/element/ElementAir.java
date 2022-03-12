@@ -29,8 +29,8 @@ public class ElementAir extends ElementCommon {
 		AxisAlignedBB aabb = WorldHelper.createAABB(pos, range, range, 0.5);
 		List<EntityMob> entities = world.getEntitiesWithinAABB(EntityMob.class, aabb);
 		for (EntityMob entity : entities) {
-			Vec3d c = new Vec3d(pos).addVector(0.5, 0, 0.5);
-			Vec3d tar = entity.getPositionVector().addVector(0, 0.5, 0).subtract(c);
+			Vec3d c = new Vec3d(pos).add(0.5, 0, 0.5);
+			Vec3d tar = entity.getPositionVector().add(0, 0.5, 0).subtract(c);
 //			double l = entity.getDistance(c.x, c.y, c.z) / 10;
 			tar = tar.normalize().scale(1);// .scale(Math.min(1 / Math.max(0.01, l), 0.1));
 			entity.addVelocity(tar.x, 0, tar.z);

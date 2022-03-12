@@ -138,7 +138,7 @@ public class BlockElfFruit extends Block implements Mapper {
 
 	public BlockElfFruit() {
 		super(Material.PLANTS);
-		this.setUnlocalizedName("elfFruit");
+		this.setTranslationKey("elfFruit");
 		this.setTickRandomly(true);
 		Blocks.FIRE.setFireInfo(this, 20, 5);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, 0));
@@ -216,7 +216,7 @@ public class BlockElfFruit extends Block implements Mapper {
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
 		this.falling(worldIn, pos, state, true);
 	}
 

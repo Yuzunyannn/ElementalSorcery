@@ -16,7 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ExploreSlimeChunk implements IExploreHandle {
 
 	public static boolean isSlimeChunk(World world, BlockPos pos) {
-		Chunk chunk = world.getChunkFromBlockCoords(pos);
+		Chunk chunk = world.getChunk(pos);
 		return chunk.getRandomWithSeed(987234911L).nextInt(10) == 0;
 	}
 

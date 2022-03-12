@@ -142,7 +142,7 @@ public class DevelopStatistics {
 		JsonObject data = getData(FILE_STATISTICS);
 		JsonObject typeMap = getData(FILE_STATISTICS_TYPE);
 
-		world.getChunkFromChunkCoords(chuckPos.x, chuckPos.z);
+		world.getChunk(chuckPos.x, chuckPos.z);
 		data = data.getOrCreateObject(Long.toString(world.getSeed()));
 		data = data.getOrCreateObject(world.getBiome(chuckPos.getBlock(0, 0, 0)).getRegistryName().toString());
 

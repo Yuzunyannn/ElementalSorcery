@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 public class MantraMiningArea extends MantraSquareAreaAdv {
 
 	public MantraMiningArea() {
-		this.setUnlocalizedName("miningArea");
+		this.setTranslationKey("miningArea");
 		this.setColor(0xc8971e);
 		this.setIcon("auto_mining");
 		this.setRarity(25);

@@ -16,7 +16,7 @@ import yuzunyannn.elementalsorcery.item.tool.ItemMagicBlastWand;
 public class ItemMagicCore extends Item implements EntityThrow.IItemThrowAction {
 
 	public ItemMagicCore() {
-		this.setUnlocalizedName("magicCore");
+		this.setTranslationKey("magicCore");
 	}
 
 	@Override
@@ -29,7 +29,7 @@ public class ItemMagicCore extends Item implements EntityThrow.IItemThrowAction 
 	public void onImpact(EntityThrow entity, RayTraceResult result) {
 		Vec3d vec = result.hitVec;
 		if (vec == null) return;
-		if (result.entityHit != null) vec = vec.addVector(0, result.entityHit.height / 2, 0);
+		if (result.entityHit != null) vec = vec.add(0, result.entityHit.height / 2, 0);
 		ItemMagicBlastWand.blast(ElementStack.magic(200, 128), entity.world, vec, entity.getThrower(), entity);
 	}
 

@@ -162,7 +162,7 @@ public class EntityMagicMelting extends Entity implements IEntityAdditionalSpawn
 
 		if (progress % 20 != 0) return;
 		EffectElementMove effect = new EffectElementMove(world, this.getPositionVector()
-				.addVector(rand.nextDouble() * 0.25 - 0.125, 0.8, rand.nextDouble() * 0.25 - 0.125));
+				.add(rand.nextDouble() * 0.25 - 0.125, 0.8, rand.nextDouble() * 0.25 - 0.125));
 		effect.yAccelerate = -0.001;
 		effect.motionY = 0.03 * rand.nextDouble() + 0.01;
 		effect.setColor(ESInit.ELEMENTS.FIRE.getColor(ElementStack.EMPTY));

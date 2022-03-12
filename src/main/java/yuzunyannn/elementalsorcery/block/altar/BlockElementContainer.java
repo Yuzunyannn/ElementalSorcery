@@ -121,7 +121,7 @@ public abstract class BlockElementContainer extends BlockContainer {
 		super.onBlockExploded(world, pos, explosion);
 		if (world.isRemote) return;
 		if (einv != null) {
-			Vec3d at = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+			Vec3d at = new Vec3d(pos).add(0.5, 0.5, 0.5);
 			for (int i = 0; i < einv.getSlots(); i++) {
 				ElementStack stack = einv.getStackInSlot(i);
 				if (stack.isEmpty()) continue;
@@ -129,9 +129,8 @@ public abstract class BlockElementContainer extends BlockContainer {
 				stack = stack.copy();
 				stack.grow(50);
 				stack.setPower(stack.getPower() + 125);
-				if (ElementExplosion.doExplosion(world, at, stack, attacker) != null) {
+				if (ElementExplosion.doExplosion(world, at, stack, attacker) != null)
 					einv.setStackInSlot(i, ElementStack.EMPTY);
-				}
 			}
 		}
 		try {

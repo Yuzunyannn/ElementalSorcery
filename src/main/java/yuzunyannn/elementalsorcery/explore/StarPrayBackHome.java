@@ -37,7 +37,7 @@ public class StarPrayBackHome implements IStarPray {
 		if (!(entity instanceof EntityPlayer)) return;
 		EntityPlayer player = (EntityPlayer) entity;
 		BlockPos bed = player.getBedLocation();
-		EntityPortal.moveTo(player, new Vec3d(bed).addVector(0.5, 0.25, 0.5), player.dimension);
+		EntityPortal.moveTo(player, new Vec3d(bed).add(0.5, 0.25, 0.5), player.dimension);
 	}
 
 }

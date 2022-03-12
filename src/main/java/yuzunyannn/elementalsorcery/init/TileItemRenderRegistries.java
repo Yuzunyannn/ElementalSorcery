@@ -23,7 +23,7 @@ public class TileItemRenderRegistries implements ICustomModelLoader {
 	private Map<ResourceLocation, IRenderItem> items = new HashMap<>();
 
 	private static ResourceLocation getItemKey(ResourceLocation rsname) {
-		return new ResourceLocation(rsname.getResourceDomain(), "models/item/" + rsname.getResourcePath());
+		return new ResourceLocation(rsname.getNamespace(), "models/item/" + rsname.getPath());
 	}
 
 	public void register(Item item, IRenderItem render) {

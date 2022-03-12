@@ -38,7 +38,7 @@ public class ElementFire extends ElementCommon {
 			entity.setFire(3);
 			if (addDamage > 0) entity.attackEntityFrom(DamageSource.IN_FIRE, addDamage);
 			if (world.isRemote)
-				MantraFireArea.addEffect(world, entity.getPositionVector().addVector(0, entity.height / 2, 0));
+				MantraFireArea.addEffect(world, entity.getPositionVector().add(0, entity.height / 2, 0));
 		}
 		if (entities.isEmpty()) return estack;
 		estack.shrink(Math.max(1, entities.size() / 5));

@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ItemMerchantInvitation extends Item {
 
 	public ItemMerchantInvitation() {
-		this.setUnlocalizedName("merchantInvitation");
+		this.setTranslationKey("merchantInvitation");
 	}
 
 	@Override

@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public class ItemFusionCrystal extends ItemSimpleFoiled {
 
 	public ItemFusionCrystal() {
-		this.setUnlocalizedName("fusionCrystal");
+		this.setTranslationKey("fusionCrystal");
 	}
 
 	@Override

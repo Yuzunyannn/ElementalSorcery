@@ -19,7 +19,7 @@ public class BlockAStone extends Block implements Mapper {
 
 	public BlockAStone() {
 		super(Material.ROCK, MapColor.BLUE);
-		this.setUnlocalizedName("astone");
+		this.setTranslationKey("astone");
 		this.setHarvestLevel("pickaxe", 1);
 		this.setHardness(10F);
 		this.setDefaultState(this.getDefaultState().withProperty(VARIANT, EnumType.STONE));

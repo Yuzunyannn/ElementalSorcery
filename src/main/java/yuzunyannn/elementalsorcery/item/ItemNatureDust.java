@@ -26,7 +26,7 @@ public class ItemNatureDust extends Item {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getTranslationKey(ItemStack stack) {
 		return "item.natureDust." + EnumType.byMetadata(stack.getMetadata()).getName();
 	}
 

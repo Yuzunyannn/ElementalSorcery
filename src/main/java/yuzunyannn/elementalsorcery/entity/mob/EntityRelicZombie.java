@@ -202,7 +202,7 @@ public class EntityRelicZombie extends EntityMob {
 	@SideOnly(Side.CLIENT)
 	public void onEntityUpdateClient() {
 		if (this.ticksExisted % 10 == 0) {
-			Vec3d pos = this.getPositionVector().addVector(0, 1.22 - MathHelper.cos(ticksExisted * 0.03F) * 0.075, 0);
+			Vec3d pos = this.getPositionVector().add(0, 1.22 - MathHelper.cos(ticksExisted * 0.03F) * 0.075, 0);
 			EffectElementMove effect = new EffectElementMove(world, pos);
 			effect.lifeTime = 20;
 			effect.dalpha = 1.0f / effect.lifeTime;
@@ -340,7 +340,7 @@ public class EntityRelicZombie extends EntityMob {
 				Entity src = source.getImmediateSource();
 				Vec3d vec;
 				if (src != null) vec = src.getPositionVector();
-				else vec = this.getPositionVector().addVector(0, 1, 0);
+				else vec = this.getPositionVector().add(0, 1, 0);
 				if (!world.isRemote && effectCD <= 0) {
 					effectCD = 30;
 					NBTTagCompound nbt = FireworkEffect.fastNBT(0, 1, 0.1f, new int[] { 0x0000ff },

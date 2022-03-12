@@ -126,7 +126,7 @@ public class FCMDestoryBlock extends FairyCubeModule {
 	public RayTraceResult getOrient(BlockPos pos, EntityLivingBase master) {
 		AxisAlignedBB aabb = new AxisAlignedBB(pos);
 		Vec3d vs = master.getPositionEyes(1);
-		Vec3d ve = vs.add(master.getLookVec().scale(64));// new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+		Vec3d ve = vs.add(master.getLookVec().scale(64));// new Vec3d(pos).add(0.5, 0.5, 0.5);
 		return aabb.calculateIntercept(vs, ve);
 	}
 

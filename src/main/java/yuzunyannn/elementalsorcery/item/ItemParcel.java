@@ -23,7 +23,7 @@ public class ItemParcel extends Item {
 
 	public ItemParcel() {
 		this.setHasSubtypes(true);
-		this.setUnlocalizedName("parcel");
+		this.setTranslationKey("parcel");
 	}
 
 	@Override

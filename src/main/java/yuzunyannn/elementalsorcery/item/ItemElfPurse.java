@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 public class ItemElfPurse extends Item {
 
 	public ItemElfPurse() {
-		this.setUnlocalizedName("elfPurse");
+		this.setTranslationKey("elfPurse");
 		this.setMaxStackSize(1);
 	}
 

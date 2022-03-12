@@ -35,7 +35,7 @@ public class ItemScarletCrystal extends ItemCrystal {
 		entityItem.dropItem(ESInit.ITEMS.MAGIC_PIECE, RandomHelper.randomRange(2 * count, 8 * count));
 		entityItem.setDead();
 		// 特效
-		FireworkEffect.spawn(entityItem.world, entityItem.getPositionVector().addVector(0, entityItem.height, 0), 0, 1,
+		FireworkEffect.spawn(entityItem.world, entityItem.getPositionVector().add(0, entityItem.height, 0), 0, 1,
 				0.1f, new int[] { 0x760e05, 0xd4584d }, TileMDBase.PARTICLE_COLOR_FADE);
 		return false;
 	}

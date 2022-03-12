@@ -85,7 +85,7 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		if (nbt != null) {
 			base = nbt.getTag(key);
 			nbt.removeTag(key);
-			if (nbt.hasNoTags()) nbt = null;
+			if (nbt.isEmpty()) nbt = null;
 		}
 		map.put(var, obj = var.type.newInstance(base));
 		return (T) obj;
@@ -100,12 +100,12 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		map.remove(var);
 		if (nbt != null) {
 			nbt.removeTag(var.name);
-			if (nbt.hasNoTags()) nbt = null;
+			if (nbt.isEmpty()) nbt = null;
 		}
 	}
 
 	public boolean isEmpty() {
-		if (map.isEmpty() && (nbt == null || nbt.hasNoTags())) return true;
+		if (map.isEmpty() && (nbt == null || nbt.isEmpty())) return true;
 		return false;
 	}
 

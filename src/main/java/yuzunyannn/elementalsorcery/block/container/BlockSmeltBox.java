@@ -42,7 +42,7 @@ public class BlockSmeltBox extends BlockContainer {
 	public BlockSmeltBox(BlockHearth.EnumMaterial material) {
 		super(Material.ROCK);
 		this.material = material;
-		this.setUnlocalizedName("smeltBox." + material.getName());
+		this.setTranslationKey("smeltBox." + material.getName());
 		this.setHarvestLevel("pickaxe", 1);
 		switch (material) {
 		case IRON:
@@ -113,7 +113,7 @@ public class BlockSmeltBox extends BlockContainer {
 
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		EnumFacing facing = EnumFacing.getHorizontal(meta & 3);
+		EnumFacing facing = EnumFacing.byHorizontalIndex(meta & 3);
 		Boolean burning = Boolean.valueOf((meta & 8) != 0);
 		return this.getDefaultState().withProperty(BURNING, burning).withProperty(FACING, facing);
 	}

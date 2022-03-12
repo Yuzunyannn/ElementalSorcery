@@ -15,7 +15,7 @@ public class BlockElementWorkbench extends Block {
 
 	public BlockElementWorkbench() {
 		super(Material.WOOD);
-		this.setUnlocalizedName("elementWorkbench");
+		this.setTranslationKey("elementWorkbench");
 		this.setHardness(3.0F);
 		this.setHarvestLevel("axe", 1);
 	}

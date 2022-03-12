@@ -19,7 +19,7 @@ public class ItemUnscrambleNote extends Item {
 	public static final int MAX_CAPACITY = 1000;
 
 	public ItemUnscrambleNote() {
-		this.setUnlocalizedName("unscrambleNote");
+		this.setTranslationKey("unscrambleNote");
 		this.setMaxStackSize(1);
 	}
 

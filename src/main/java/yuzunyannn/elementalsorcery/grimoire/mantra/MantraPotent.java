@@ -34,7 +34,7 @@ import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 public class MantraPotent extends MantraCommon {
 
 	public MantraPotent() {
-		this.setUnlocalizedName("potent");
+		this.setTranslationKey("potent");
 		this.setColor(0xffde00);
 		this.setIcon("potent");
 		this.setRarity(20);
@@ -62,7 +62,7 @@ public class MantraPotent extends MantraCommon {
 			if (hp < potent * 30) {
 				damage = hp;
 				if (world.isRemote) FirewrokShap.createECircleDispersed(world,
-						target.getPositionVector().addVector(0, target.height / 2, 0), 1f, 4,
+						target.getPositionVector().add(0, target.height / 2, 0), 1f, 4,
 						new int[] { this.getRenderColor() });
 			}
 		}
@@ -131,7 +131,7 @@ public class MantraPotent extends MantraCommon {
 
 		Random rand = world.rand;
 		Vec3d vec = caster.iWantCaster().getEyePosition();
-		Vec3d at = vec.addVector(rand.nextGaussian() * 3, rand.nextGaussian() * 2, rand.nextGaussian() * 3);
+		Vec3d at = vec.add(rand.nextGaussian() * 3, rand.nextGaussian() * 2, rand.nextGaussian() * 3);
 		EffectElementScrew screw = new EffectElementScrew(world, at, at);
 		screw.lifeTime = 75 + rand.nextInt(50);
 		screw.setColor(this.getColor(mdc));
@@ -144,7 +144,7 @@ public class MantraPotent extends MantraCommon {
 		Vec3d vec = ico.getPositionVector();
 		Random rand = world.rand;
 		for (int i = 0; i < 125; i++) {
-			Vec3d at = vec.addVector(rand.nextGaussian() * 3, rand.nextDouble() * 2 + 0.5f, rand.nextGaussian() * 3);
+			Vec3d at = vec.add(rand.nextGaussian() * 3, rand.nextDouble() * 2 + 0.5f, rand.nextGaussian() * 3);
 			EffectElementMove effect = new EffectElementMove(world, at);
 			effect.motionY = rand.nextGaussian() * 0.2;
 			effect.yDecay = 0.75;
@@ -152,7 +152,7 @@ public class MantraPotent extends MantraCommon {
 			Effect.addEffect(effect);
 		}
 		for (int i = 0; i < 25; i++) {
-			Vec3d at = vec.addVector(rand.nextGaussian() * 3, rand.nextDouble() * 2 + 0.5f, rand.nextGaussian() * 3);
+			Vec3d at = vec.add(rand.nextGaussian() * 3, rand.nextDouble() * 2 + 0.5f, rand.nextGaussian() * 3);
 			EffectSpiralMove effect = new EffectSpiralMove(world, at);
 			effect.motionY = rand.nextDouble() * 0.01f + 0.005f;
 			effect.yDecay = 0.98f;

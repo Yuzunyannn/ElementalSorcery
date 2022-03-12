@@ -31,7 +31,7 @@ public class MantraFootbridge extends MantraCommon {
 			VariableSet.BLOCK_POS_LIST_LINKED);
 
 	public MantraFootbridge() {
-		this.setUnlocalizedName("footbridge");
+		this.setTranslationKey("footbridge");
 		this.setColor(0x00e682);
 		this.setIcon("footbridge");
 		this.setRarity(80);

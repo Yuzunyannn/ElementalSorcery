@@ -24,7 +24,7 @@ import yuzunyannn.elementalsorcery.render.effect.Effects;
 public class ItemBlessingJade extends Item implements IPlatformTickable, EntityThrow.IItemThrowAction {
 
 	public ItemBlessingJade() {
-		this.setUnlocalizedName("blessingJade");
+		this.setTranslationKey("blessingJade");
 	}
 
 	@Override

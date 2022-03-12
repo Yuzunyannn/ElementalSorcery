@@ -36,7 +36,7 @@ public class BuilderHelper {
 	}
 
 	public EnumFacing toward() {
-		return EnumFacing.getFront(data.getByte("toward"));
+		return EnumFacing.byIndex(data.getByte("toward"));
 	}
 
 	public BuilderHelper toward(EnumFacing face) {

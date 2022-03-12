@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 public class ItemScapegoat extends Item implements TileMDRubbleRepair.IExtendRepair {
 
 	public ItemScapegoat() {
-		this.setUnlocalizedName("scapegoat");
+		this.setTranslationKey("scapegoat");
 		this.setMaxDamage(64);
 		this.setMaxStackSize(1);
 		this.canRepair = true;

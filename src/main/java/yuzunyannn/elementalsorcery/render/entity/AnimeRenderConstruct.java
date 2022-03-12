@@ -44,7 +44,7 @@ public class AnimeRenderConstruct implements ICraftingLaunchAnime {
 	@Override
 	public void endEffect(ICraftingCommit commit, World world, BlockPos pos, int flags) {
 		if (flags != ICraftingLaunch.SUCCESS) return;
-		Vec3d position = new Vec3d(pos).addVector(0.5, 1.25, 0.5);
+		Vec3d position = new Vec3d(pos).add(0.5, 1.25, 0.5);
 		FirewrokShap.createECircle(world, position, 0.2, 3,
 				new int[] { 0xe2e2ef, 0xcdcde4, 0x99ecff, 0x5c9ad8, 0x25346e });
 	}

@@ -97,7 +97,7 @@ public class ItemKyaniteTools {
 	public static class ItemKyanitePickaxe extends ItemPickaxe implements toolsCapability {
 		public ItemKyanitePickaxe() {
 			super(KYANITE);
-			this.setUnlocalizedName("kyanitePickaxe");
+			this.setTranslationKey("kyanitePickaxe");
 		}
 
 		@Override
@@ -118,7 +118,7 @@ public class ItemKyaniteTools {
 	public static class ItemKyaniteAxe extends ItemAxe implements toolsCapability {
 		public ItemKyaniteAxe() {
 			super(KYANITE, KYANITE.getAttackDamage() * 3, -3.1F);
-			this.setUnlocalizedName("kyaniteAxe");
+			this.setTranslationKey("kyaniteAxe");
 		}
 
 		@Override
@@ -140,7 +140,7 @@ public class ItemKyaniteTools {
 	public static class ItemKyaniteSpade extends ItemSpade implements toolsCapability {
 		public ItemKyaniteSpade() {
 			super(KYANITE);
-			this.setUnlocalizedName("kyaniteSpade");
+			this.setTranslationKey("kyaniteSpade");
 		}
 
 		@Override
@@ -161,7 +161,7 @@ public class ItemKyaniteTools {
 	public static class ItemKyaniteHoe extends ItemHoe implements toolsCapability {
 		public ItemKyaniteHoe() {
 			super(KYANITE);
-			this.setUnlocalizedName("kyaniteHoe");
+			this.setTranslationKey("kyaniteHoe");
 		}
 
 		@Override
@@ -236,7 +236,7 @@ public class ItemKyaniteTools {
 	public static class ItemKyaniteSword extends ItemSword implements toolsCapability {
 		public ItemKyaniteSword() {
 			super(KYANITE);
-			this.setUnlocalizedName("kyaniteSword");
+			this.setTranslationKey("kyaniteSword");
 		}
 
 		@Override

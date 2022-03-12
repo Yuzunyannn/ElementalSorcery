@@ -24,7 +24,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class ItemFairyCube extends Item {
 
 	public ItemFairyCube() {
-		this.setUnlocalizedName("fairyCube");
+		this.setTranslationKey("fairyCube");
 		this.setMaxStackSize(1);
 	}
 

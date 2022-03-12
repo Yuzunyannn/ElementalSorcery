@@ -30,7 +30,7 @@ public class BlockMagicPlatform extends BlockContainer implements Mapper {
 	public BlockMagicPlatform() {
 		super(Material.ROCK);
 		this.setHarvestLevel("pickaxe", 1);
-		this.setUnlocalizedName("magicPlatform");
+		this.setTranslationKey("magicPlatform");
 		this.setHardness(3.5f);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(MATERIAL, EnumMaterial.ASTONE));
 	}

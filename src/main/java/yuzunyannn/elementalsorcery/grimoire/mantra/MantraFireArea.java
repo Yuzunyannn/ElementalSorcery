@@ -38,7 +38,7 @@ import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 public class MantraFireArea extends MantraSquareAreaAdv {
 
 	public MantraFireArea() {
-		this.setUnlocalizedName("fireArea");
+		this.setTranslationKey("fireArea");
 		this.setColor(0xee5a00);
 		this.setIcon("fire_area");
 		this.setRarity(60);
@@ -105,7 +105,7 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 				if (entity instanceof EntityItem) continue;
 			}
 			entity.setFire(5);
-			if (world.isRemote) addEffect(world, entity.getPositionVector().addVector(0, entity.height / 2, 0));
+			if (world.isRemote) addEffect(world, entity.getPositionVector().add(0, entity.height / 2, 0));
 			if (fire.getPower() > 50) {
 				float addDamage = MathHelper.sqrt((fire.getPower() - 50) / 25) * (1 + pp * 0.5f);
 				entity.attackEntityFrom(DamageSource.IN_FIRE, addDamage);
@@ -119,7 +119,7 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 			int z = rand.nextInt(l * 2) - l;
 			BlockPos at = originPos.add(x, 0, z);
 
-			if (world.isRemote) addEffect(world, new Vec3d(at).addVector(0.5, 0.5, 0.5));
+			if (world.isRemote) addEffect(world, new Vec3d(at).add(0.5, 0.5, 0.5));
 
 			if (world.isAirBlock(at)) {
 				if (fire.getPower() > 250) {

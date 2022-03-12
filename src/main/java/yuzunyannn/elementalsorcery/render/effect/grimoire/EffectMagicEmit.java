@@ -33,7 +33,7 @@ public class EffectMagicEmit extends EffectCondition {
 	public EffectMagicEmit(World world, BlockPos pos) {
 		super(world);
 		this.lifeTime = 1;
-		this.binder = new IBinder.VecBinder(new Vec3d(pos).addVector(0.5, 0, 0.5));
+		this.binder = new IBinder.VecBinder(new Vec3d(pos).add(0.5, 0, 0.5));
 		this.setPosition(this.binder);
 	}
 

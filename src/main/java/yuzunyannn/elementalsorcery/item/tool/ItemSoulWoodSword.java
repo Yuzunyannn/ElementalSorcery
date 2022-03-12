@@ -23,7 +23,7 @@ public class ItemSoulWoodSword extends ItemSword {
 
 	public ItemSoulWoodSword() {
 		super(ToolMaterial.WOOD);
-		this.setUnlocalizedName("soulWoodSword");
+		this.setTranslationKey("soulWoodSword");
 	}
 
 	@Override

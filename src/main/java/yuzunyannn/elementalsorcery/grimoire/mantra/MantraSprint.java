@@ -24,7 +24,7 @@ import yuzunyannn.elementalsorcery.render.effect.EffectResonance;
 public class MantraSprint extends MantraCommon {
 
 	public MantraSprint() {
-		this.setUnlocalizedName("sprint");
+		this.setTranslationKey("sprint");
 		this.setColor(0xabfffa);
 		this.setIcon("sprint");
 	}
@@ -38,7 +38,7 @@ public class MantraSprint extends MantraCommon {
 		doPotentAttackEffect(world, caster, target);
 
 		Vec3d dir = caster.iWantDirection();
-		dir = dir.addVector(0, 0.5, 0).normalize();
+		dir = dir.add(0, 0.5, 0).normalize();
 		float speed = MathHelper.clamp(MathHelper.sqrt(stack.getPower() / 10f), 1.5f, 5) * (1 + potent / 5);
 		dir = dir.scale(speed);
 		target.motionX += dir.x;
@@ -60,7 +60,7 @@ public class MantraSprint extends MantraCommon {
 		dataCommon.markContinue(true);
 		int power = get.getPower();
 		double scale = MathHelper.clamp(MathHelper.sqrt(power / 10f), 1.5, 6);
-		Vec3d look = entity.getLookVec().addVector(0, 0.05, 0).normalize().scale(scale);
+		Vec3d look = entity.getLookVec().add(0, 0.05, 0).normalize().scale(scale);
 		entity.motionX += look.x;
 		entity.motionY += look.y;
 		entity.motionZ += look.z;

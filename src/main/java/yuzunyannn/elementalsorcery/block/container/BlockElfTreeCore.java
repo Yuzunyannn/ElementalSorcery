@@ -47,10 +47,10 @@ public class BlockElfTreeCore extends BlockContainerNormal {
 	@SideOnly(Side.CLIENT)
 	@Override
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
-		Vec3d at = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+		Vec3d at = new Vec3d(pos).add(0.5, 0.5, 0.5);
 		double x = rand.nextFloat() * 0.5 - 0.25;
 		double z = rand.nextFloat() * 0.5 - 0.25;
-		EffectElementMove effect = new EffectElementMove(worldIn, at.addVector(x, 0, z));
+		EffectElementMove effect = new EffectElementMove(worldIn, at.add(x, 0, z));
 		effect.yAccelerate = -0.0025;
 		effect.setColor(0x0d9d17);
 		Effect.addEffect(effect);

@@ -33,7 +33,7 @@ import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 public class ItemGrimoire extends Item {
 
 	public ItemGrimoire() {
-		this.setUnlocalizedName("grimoire");
+		this.setTranslationKey("grimoire");
 		this.setMaxStackSize(1);
 	}
 
@@ -140,7 +140,7 @@ public class ItemGrimoire extends Item {
 				Mantra m = info.getMantra();
 				if (m == null) tooltip.add(TextFormatting.AQUA + I18n.format("info.grimoire.error"));
 				else {
-					String name = I18n.format(m.getUnlocalizedName() + ".name");
+					String name = I18n.format(m.getTranslationKey() + ".name");
 					tooltip.add(TextFormatting.AQUA + I18n.format("info.grimoire.current", name));
 					info.getMantra().addInformation(stack, worldIn, tooltip, flagIn);
 				}

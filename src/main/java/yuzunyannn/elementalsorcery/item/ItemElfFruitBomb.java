@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class ItemElfFruitBomb extends Item implements EntityThrow.IItemThrowAction {
 
 	public ItemElfFruitBomb() {
-		this.setUnlocalizedName("elfFruitBomb");
+		this.setTranslationKey("elfFruitBomb");
 	}
 
 	@Override

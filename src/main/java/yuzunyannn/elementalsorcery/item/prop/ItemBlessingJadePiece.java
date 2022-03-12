@@ -29,7 +29,7 @@ public class ItemBlessingJadePiece extends Item {
 
 	public ItemBlessingJadePiece() {
 		this.setHasSubtypes(true);
-		this.setUnlocalizedName("blessingJadePiece");
+		this.setTranslationKey("blessingJadePiece");
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class ItemBlessingJadePiece extends Item {
 		Vec3d vec = player.getPositionVector().subtract(eItem.getPositionVector());
 		Vec3d speed = vec.scale(0.1);
 		eItem.motionX = speed.x;
-		eItem.motionY = speed.y + MathHelper.sqrt(vec.lengthVector()) * 0.08;
+		eItem.motionY = speed.y + MathHelper.sqrt(vec.length()) * 0.08;
 		eItem.motionZ = speed.z;
 		player.world.spawnEntity(eItem);
 	}

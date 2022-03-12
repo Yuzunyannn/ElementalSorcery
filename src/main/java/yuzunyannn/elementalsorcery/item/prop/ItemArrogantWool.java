@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 public class ItemArrogantWool extends Item implements IPlatformTickable {
 
 	public ItemArrogantWool() {
-		this.setUnlocalizedName("arrogantWool");
+		this.setTranslationKey("arrogantWool");
 	}
 
 	@Override
@@ -46,12 +46,12 @@ public class ItemArrogantWool extends Item implements IPlatformTickable {
 	@SideOnly(Side.CLIENT)
 	public static void randEffect(World world, BlockPos center, float range, int[] colors) {
 		Random rand = Effect.rand;
-		Vec3d vec = new Vec3d(center).addVector(0.5 + rand.nextGaussian() * range, 0.5 + rand.nextFloat() * range / 2,
+		Vec3d vec = new Vec3d(center).add(0.5 + rand.nextGaussian() * range, 0.5 + rand.nextFloat() * range / 2,
 				0.5 + rand.nextGaussian() * range);
 		EffectElementMove effect = new EffectElementMove(world, vec);
 		effect.setColor(colors[rand.nextInt(colors.length)]);
 		Vec3d speed = new Vec3d(center.getX() + 0.5, center.getY() + 1, center.getZ() + 0.5).subtract(vec);
-		double dis = speed.lengthVector();
+		double dis = speed.length();
 		speed = speed.normalize();
 		effect.setVelocity(speed.scale(rand.nextDouble() * 0.07 + 0.05).scale(dis));
 		effect.xDecay = effect.yDecay = effect.zDecay = 0.9;

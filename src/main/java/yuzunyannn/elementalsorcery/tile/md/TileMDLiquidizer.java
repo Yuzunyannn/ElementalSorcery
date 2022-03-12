@@ -212,10 +212,10 @@ public class TileMDLiquidizer extends TileMDBase implements ITickable {
 		if (rotateSpeed > 0.25) {
 			float r = getJuiceRate(0);
 			Random rand = RandomHelper.rand;
-			Vec3d vec = new Vec3d(this.pos).addVector(0.5, 0.1, 0.5);
+			Vec3d vec = new Vec3d(this.pos).add(0.5, 0.1, 0.5);
 
 			{
-				Vec3d at = vec.addVector(rand.nextGaussian() * 0.1, 0, rand.nextGaussian() * 0.1);
+				Vec3d at = vec.add(rand.nextGaussian() * 0.1, 0, rand.nextGaussian() * 0.1);
 				ParticleWaterBubble p = new ParticleWaterBubble(world, at, new Vec3d(0, 0, 0));
 				p.yAccelerate = 0.004f * r;
 				p.setScale((float) rand.nextDouble() * 0.3f + 0.1f);

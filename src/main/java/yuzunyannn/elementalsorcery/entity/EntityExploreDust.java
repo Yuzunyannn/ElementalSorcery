@@ -104,7 +104,7 @@ public class EntityExploreDust extends Entity implements IEntityAdditionalSpawnD
 
 	public void onDead() {
 		if (world.isRemote) {
-			Vec3d pos = this.getPositionVector().addVector(0, this.height / 2, 0);
+			Vec3d pos = this.getPositionVector().add(0, this.height / 2, 0);
 			FirewrokShap.createECircle(world, pos, 0.25, 3, DEAFULT_COLOR);
 			FirewrokShap.createECircle(world, pos, 0.5, 4, DEAFULT_COLOR);
 			return;
@@ -122,7 +122,7 @@ public class EntityExploreDust extends Entity implements IEntityAdditionalSpawnD
 	@SideOnly(Side.CLIENT)
 	public void onUpdateClient() {
 		if (EventClient.tick % 4 != 0) return;
-		Vec3d pos = this.getPositionVector().addVector(rand.nextDouble() * 1.5 - 0.75, 0.1,
+		Vec3d pos = this.getPositionVector().add(rand.nextDouble() * 1.5 - 0.75, 0.1,
 				rand.nextDouble() * 1.5 - 0.75);
 		EffectElementMove effect = new EffectElementMove(world, pos);
 		effect.lifeTime = rand.nextInt(10) + 20;

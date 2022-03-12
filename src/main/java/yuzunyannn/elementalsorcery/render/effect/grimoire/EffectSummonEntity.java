@@ -82,7 +82,7 @@ public class EffectSummonEntity extends Effect {
 		Vec3d vec = this.getPositionVector();
 		float x = MathHelper.sin(rate * 3.1415926f * 8f) * width / 2;
 		float z = MathHelper.cos(rate * 3.1415926f * 8f) * width / 2;
-		vec = vec.addVector(x, height * rate, z);
+		vec = vec.add(x, height * rate, z);
 		EffectElementMove move = new EffectElementMove(world, vec);
 //		move.motionY = 0.01f;
 		move.setColor(this.getColor());

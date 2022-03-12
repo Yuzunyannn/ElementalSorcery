@@ -346,7 +346,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 			Biome biome = world.getBiome(pos);
 			if (biome != Biomes.DESERT && biome != Biomes.DESERT_HILLS && biome != Biomes.MUTATED_DESERT) return false;
 			final int size = 4;
-			Vec3d v3d = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+			Vec3d v3d = new Vec3d(pos).add(0.5, 0.5, 0.5);
 			AxisAlignedBB aabb = new AxisAlignedBB(v3d.x - size, v3d.y - size, v3d.z - size, v3d.x + size, v3d.y + size,
 					v3d.z + size);
 			List<EntityItem> list = world.getEntitiesWithinAABB(EntityItem.class, aabb);

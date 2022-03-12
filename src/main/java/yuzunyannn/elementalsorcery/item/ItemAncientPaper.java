@@ -44,7 +44,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 
 	public ItemAncientPaper() {
 		this.setHasSubtypes(true);
-		this.setUnlocalizedName("ancientPaper");
+		this.setTranslationKey("ancientPaper");
 	}
 
 	@Override
@@ -65,7 +65,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getTranslationKey(ItemStack stack) {
 		return "item.ancientPaper." + EnumType.byMetadata(stack.getMetadata()).getName();
 	}
 
@@ -204,11 +204,11 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 		}
 		if (ap.hasMantra()) {
 			Mantra m = ap.getMantra();
-			String name = I18n.format(m.getUnlocalizedName() + ".name");
+			String name = I18n.format(m.getTranslationKey() + ".name");
 			tooltip.add(TextFormatting.YELLOW + I18n.format("info.ancientPaper.mantra", name));
 		} else if (ap.hasType()) {
 			KnowledgeType type = ap.getType();
-			String name = I18n.format(type.getUnlocalizedName() + ".name");
+			String name = I18n.format(type.getTranslationKey() + ".name");
 			tooltip.add(TextFormatting.YELLOW + I18n.format("info.ancientPaper.normal", name));
 		} else return;
 		int start = ap.getStart();

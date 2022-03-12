@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class FireworkEffect {
 
 	static public void spawn(World world, BlockPos pos, int type, int size, float speed, int[] color, int[] colorFade) {
-		spawn(world, new Vec3d(pos).addVector(0.5, 0.5, 0.5), type, size, speed, color, colorFade);
+		spawn(world, new Vec3d(pos).add(0.5, 0.5, 0.5), type, size, speed, color, colorFade);
 	}
 
 	static public void spawn(World world, Vec3d pos, int type, int size, float speed, int[] color, int[] colorFade) {

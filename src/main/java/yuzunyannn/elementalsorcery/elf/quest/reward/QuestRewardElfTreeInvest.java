@@ -47,7 +47,7 @@ public class QuestRewardElfTreeInvest extends QuestReward {
 	public void onReward(Quest quest, EntityLivingBase player) {
 		if (type == null) return;
 		World world = player.world;
-		world.getChunkFromBlockCoords(elfCorePos);
+		world.getChunk(elfCorePos);
 		TileElfTreeCore core = BlockHelper.getTileEntity(world, elfCorePos, TileElfTreeCore.class);
 		if (core == null) return;
 		core.floorInvest(type, weight);
@@ -57,7 +57,7 @@ public class QuestRewardElfTreeInvest extends QuestReward {
 	@SideOnly(Side.CLIENT)
 	public String getDescribe(Quest task, EntityLivingBase player) {
 		if (type == null) return "";
-		String floorName = I18n.format("floor." + type.getUnlocalizedName() + ".name");
+		String floorName = I18n.format("floor." + type.getTranslationKey() + ".name");
 		return I18n.format("quest.reward.elf.invest", floorName, weight);
 	}
 }

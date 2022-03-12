@@ -28,7 +28,7 @@ import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 public class ItemLifeLeather extends Item {
 
 	public ItemLifeLeather() {
-		this.setUnlocalizedName("lifeLeather");
+		this.setTranslationKey("lifeLeather");
 		this.setHasSubtypes(true);
 	}
 
@@ -40,9 +40,9 @@ public class ItemLifeLeather extends Item {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
-		if (stack.getMetadata() == 0) return super.getUnlocalizedName(stack) + ".incomplete";
-		return super.getUnlocalizedName(stack);
+	public String getTranslationKey(ItemStack stack) {
+		if (stack.getMetadata() == 0) return super.getTranslationKey(stack) + ".incomplete";
+		return super.getTranslationKey(stack);
 	}
 
 	@Override

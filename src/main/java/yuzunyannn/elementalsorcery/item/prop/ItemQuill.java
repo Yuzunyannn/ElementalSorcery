@@ -40,8 +40,8 @@ public class ItemQuill extends Item {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
-		return "item.quill." + EnumType.fromId(stack.getMetadata()).getUnlocalizedName();
+	public String getTranslationKey(ItemStack stack) {
+		return "item.quill." + EnumType.fromId(stack.getMetadata()).getTranslationKey();
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class ItemQuill extends Item {
 			return this.ordinal();
 		}
 
-		public String getUnlocalizedName() {
+		public String getTranslationKey() {
 			return unlocalizedName;
 		}
 
@@ -250,15 +250,15 @@ public class ItemQuill extends Item {
 
 	public void explode(World world, EntityPlayer player, BlockPos pos) {
 		if (world.isRemote) return;
-		Vec3d at = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+		Vec3d at = new Vec3d(pos).add(0.5, 0.5, 0.5);
 		ElementExplosion.doExplosion(world, at, new ElementStack(ESInit.ELEMENTS.FIRE, 200, 1000), player);
 		ElementExplosion.doExplosion(world, at, new ElementStack(ESInit.ELEMENTS.WATER, 200, 1000), player);
 
-//		Vec3d at = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+//		Vec3d at = new Vec3d(pos).add(0.5, 0.5, 0.5);
 //		Random rand = world.rand;
 //		world.createExplosion(null, at.x, at.y, at.z, 4, true);
 //		for (int i = 0; i < 4; i++) {
-//			Vec3d p = at.addVector(rand.nextDouble() * 8 - 4, rand.nextDouble() * 8 - 4, rand.nextDouble() * 8 - 4);
+//			Vec3d p = at.add(rand.nextDouble() * 8 - 4, rand.nextDouble() * 8 - 4, rand.nextDouble() * 8 - 4);
 //			this.createExplode(i, world, player, p);
 //		}
 

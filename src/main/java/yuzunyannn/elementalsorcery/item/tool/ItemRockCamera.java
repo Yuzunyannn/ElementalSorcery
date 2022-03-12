@@ -29,7 +29,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class ItemRockCamera extends Item {
 
 	public ItemRockCamera() {
-		this.setUnlocalizedName("rockCamera");
+		this.setTranslationKey("rockCamera");
 	}
 
 	@Override

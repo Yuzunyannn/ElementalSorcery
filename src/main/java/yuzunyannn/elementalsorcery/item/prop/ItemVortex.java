@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
 public class ItemVortex extends Item implements EntityThrow.IItemThrowAction {
 
 	public ItemVortex() {
-		this.setUnlocalizedName("vortex");
+		this.setTranslationKey("vortex");
 	}
 
 	private void absorb(World world, Vec3d center) {
@@ -48,7 +48,7 @@ public class ItemVortex extends Item implements EntityThrow.IItemThrowAction {
 		if (entityItem.onGround) {
 			World world = entityItem.world;
 			entityItem.setDead();
-			Vec3d center = entityItem.getPositionVector().addVector(0.5, 0.5, 0.5);
+			Vec3d center = entityItem.getPositionVector().add(0.5, 0.5, 0.5);
 			absorb(world, center);
 		}
 		return super.onEntityItemUpdate(entityItem);
@@ -87,7 +87,7 @@ public class ItemVortex extends Item implements EntityThrow.IItemThrowAction {
 	public void onImpact(EntityThrow entity, RayTraceResult result) {
 		Vec3d vec = result.hitVec;
 		if (vec == null) return;
-		if (result.entityHit != null) vec = vec.addVector(0, result.entityHit.height / 2, 0);
+		if (result.entityHit != null) vec = vec.add(0, result.entityHit.height / 2, 0);
 		absorb(entity.world, vec);
 	}
 }

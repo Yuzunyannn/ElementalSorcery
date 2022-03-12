@@ -100,7 +100,7 @@ public class PocketWatchClient {
 			return new TileEntitySpecialRendererPacker<>(render);
 		});
 		// Profiler包装
-		originProfiler = mc.mcProfiler;
+		originProfiler = mc.profiler;
 		ObfuscationReflectionHelper.setPrivateValue(Minecraft.class, mc, new ProfilerPacker(originProfiler),
 				"field_71424_I");
 		// 默认玩家渲染

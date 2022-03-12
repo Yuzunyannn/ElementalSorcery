@@ -101,7 +101,7 @@ public class Quests {
 		type.addCondition(QuestCondition.REGISTRY.newInstance(QuestConditionNeedItem.class).needItem(itemstack));
 		QuestDescribe describe = type.getDescribe();
 		describe.setTitle("quest.elf.invest");
-		describe.addDescribe("quest.elf.invest.want", "floor." + floorType.getUnlocalizedName() + ".name");
+		describe.addDescribe("quest.elf.invest.want", "floor." + floorType.getTranslationKey() + ".name");
 		describe.addDescribe("quest.end.polite.2");
 		QuestRewardElfTreeInvest reward = QuestReward.REGISTRY.newInstance(QuestRewardElfTreeInvest.class);
 		type.addReward(reward.floor(floorType, corePos, weight));

@@ -208,7 +208,7 @@ public class EntityDreadCube extends EntityMob {
 			}
 		}
 		if (changeCount > 0) {
-			Effects.spawnElementAbsorb(new Vec3d(unlucky).addVector(0.5, 0.5, 0.5), this, Math.min(32, changeCount * 2),
+			Effects.spawnElementAbsorb(new Vec3d(unlucky).add(0.5, 0.5, 0.5), this, Math.min(32, changeCount * 2),
 					new int[] { 0x101313, 0x570000, 0x6b0e0e, 0xb43232 });
 		}
 	}
@@ -302,7 +302,7 @@ public class EntityDreadCube extends EntityMob {
 
 		NBTTagCompound nbt = FireworkEffect.fastNBT(0, 1, 0.1f, new int[] { 0x101313, 0x570000, 0x6b0e0e, 0xb43232 },
 				new int[] { 0xb43232 });
-		Effects.spawnEffect(world, Effects.FIREWROK, this.getPositionVector().addVector(0, 0.5, 0), nbt);
+		Effects.spawnEffect(world, Effects.FIREWROK, this.getPositionVector().add(0, 0.5, 0), nbt);
 
 		return super.attackEntityFrom(source, 1);
 	}

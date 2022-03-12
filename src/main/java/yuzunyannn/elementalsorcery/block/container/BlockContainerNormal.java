@@ -38,7 +38,7 @@ public abstract class BlockContainerNormal extends BlockContainer {
 
 	protected BlockContainerNormal(Material materialIn, String unlocalizedName, float hardness, MapColor color) {
 		super(materialIn, color);
-		this.setUnlocalizedName(unlocalizedName);
+		this.setTranslationKey(unlocalizedName);
 		this.setHardness(hardness);
 		if (materialIn == Material.ROCK) this.setHarvestLevel("pickaxe", 1);
 		else if (materialIn == Material.WOOD) this.setHarvestLevel("axe", 1);

@@ -22,7 +22,7 @@ public class BlockElfPlank extends Block implements Mapper {
 	public BlockElfPlank() {
 		super(Material.WOOD);
 		this.setSoundType(SoundType.WOOD);
-		this.setUnlocalizedName("elfPlank");
+		this.setTranslationKey("elfPlank");
 		this.setHardness(2.5f);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, BlockElfPlank.EnumType.NORMAL));
 		Blocks.FIRE.setFireInfo(this, 5, 20);

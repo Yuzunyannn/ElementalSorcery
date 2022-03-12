@@ -98,7 +98,7 @@ public class EntityRabidRabbit extends EntityRabbit implements IMob {
 				Vec3d tar = target.getPositionVector().subtract(pos);
 				if (tar.lengthSquared() > 2 * 2) {
 					tar = tar.normalize();
-					double cos = look.dotProduct(tar) / look.lengthVector() * tar.lengthVector();
+					double cos = look.dotProduct(tar) / look.length() * tar.length();
 					if (cos > 0.8) {
 						tar = tar.scale(0.75);
 						this.motionX += tar.x;

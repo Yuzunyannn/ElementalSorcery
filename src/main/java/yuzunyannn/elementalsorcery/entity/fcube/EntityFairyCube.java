@@ -97,7 +97,7 @@ public class EntityFairyCube extends EntityLivingBase
 	public EntityFairyCube(EntityPlayer master, NBTTagCompound data) {
 		super(master.world);
 		this.master = new WeakReference<>(master);
-		if (data != null && !data.hasNoTags()) this.readFairyCubeFromNBT(data);
+		if (data != null && !data.isEmpty()) this.readFairyCubeFromNBT(data);
 		this.playerUUID = master.getUniqueID();
 	}
 
@@ -175,7 +175,7 @@ public class EntityFairyCube extends EntityLivingBase
 	public void dispearEffect() {
 		Vec3d pos = this.getPositionVector();
 		for (int k = 0; k < 20; ++k) {
-			EffectElementMove em = new EffectElementMove(world, pos.addVector(0, 0.5, 0));
+			EffectElementMove em = new EffectElementMove(world, pos.add(0, 0.5, 0));
 			double d2 = this.rand.nextGaussian() * 0.125;
 			double d0 = this.rand.nextGaussian() * 0.125;
 			double d1 = this.rand.nextGaussian() * 0.125;
@@ -350,7 +350,7 @@ public class EntityFairyCube extends EntityLivingBase
 	}
 
 	public void setLookAt(BlockPos pos) {
-		this.setLookAt(new Vec3d(pos).addVector(0.5, 0.5, 0.5));
+		this.setLookAt(new Vec3d(pos).add(0.5, 0.5, 0.5));
 	}
 
 	public void setLookAt(Entity entity) {
@@ -792,7 +792,7 @@ public class EntityFairyCube extends EntityLivingBase
 	@SideOnly(Side.CLIENT)
 	public void doClientSwingArm(int duration, int[] colors) {
 		this.swingArm(duration);
-		Vec3d vec = this.getPositionVector().addVector(0, 0.5, 0);
+		Vec3d vec = this.getPositionVector().add(0, 0.5, 0);
 		for (int k = 0; k < 20; ++k) {
 			EffectElementMove em = new EffectElementMove(world, vec);
 			double d2 = this.rand.nextGaussian() * 0.2;
@@ -808,14 +808,14 @@ public class EntityFairyCube extends EntityLivingBase
 	@SideOnly(Side.CLIENT)
 	public void doClientCastingBlock(List<BlockPos> list, int[] colors) {
 		for (BlockPos pos : list) {
-			Vec3d vec = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+			Vec3d vec = new Vec3d(pos).add(0.5, 0.5, 0.5);
 			for (int k = 0; k < 5; ++k) {
 				Vec3d at;
 				{
 					double d2 = this.rand.nextGaussian() * 0.5;
 					double d0 = this.rand.nextGaussian() * 0.5;
 					double d1 = this.rand.nextGaussian() * 0.5;
-					at = vec.addVector(d2, d0, d1);
+					at = vec.add(d2, d0, d1);
 				}
 				EffectElementMove em = new EffectElementMove(world, at);
 				{
@@ -833,7 +833,7 @@ public class EntityFairyCube extends EntityLivingBase
 
 	@SideOnly(Side.CLIENT)
 	public void doClientEntityEffect(Entity entity, int[] colors) {
-		Vec3d vec = entity.getPositionVector().addVector(0, entity.height / 3 * 2, 0);
+		Vec3d vec = entity.getPositionVector().add(0, entity.height / 3 * 2, 0);
 		for (int i = 0; i < 10; i++) {
 			EffectElementMove em = new EffectElementMove(entity.world, vec);
 			double d2 = rand.nextGaussian() * 0.2 + 0.1;
@@ -848,7 +848,7 @@ public class EntityFairyCube extends EntityLivingBase
 
 	@SideOnly(Side.CLIENT)
 	public void doClientCastingEntity(Entity entity, int[] colors) {
-		Vec3d vec = entity.getPositionVector().addVector(0, entity.height / 2, 0);
+		Vec3d vec = entity.getPositionVector().add(0, entity.height / 2, 0);
 		EffectTreatEntity te = new EffectTreatEntity(world, vec);
 		te.bindEntity(entity).setColors(colors);
 		Effect.addEffect(te);

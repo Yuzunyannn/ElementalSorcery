@@ -58,11 +58,11 @@ public class ConfigLoader {
 		if (group.isEmpty()) {
 			if (obj instanceof IForgeRegistryEntry) {
 				ResourceLocation id = ((IForgeRegistryEntry) obj).getRegistryName();
-				group = id.getResourceDomain() + "_" + id.getResourcePath();
+				group = id.getNamespace() + "_" + id.getPath();
 			} else {
 				if (obj instanceof Class && TileEntity.class.isAssignableFrom((Class) obj)) {
 					ResourceLocation id = TileEntity.getKey((Class) obj);
-					if (id != null) group = id.getResourceDomain() + "_" + id.getResourcePath();
+					if (id != null) group = id.getNamespace() + "_" + id.getPath();
 				}
 			}
 			if (group.isEmpty()) group = "general";

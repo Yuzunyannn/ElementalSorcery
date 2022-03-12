@@ -14,7 +14,7 @@ import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 public class ItemElementBoard extends Item {
 
 	public ItemElementBoard() {
-		this.setUnlocalizedName("elementBoard");
+		this.setTranslationKey("elementBoard");
 		this.setMaxStackSize(1);
 	}
 

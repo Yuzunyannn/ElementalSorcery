@@ -72,7 +72,7 @@ public class ExploreOreScan implements IExploreHandle {
 	@SideOnly(Side.CLIENT)
 	public void addExploreInfo(NBTTagCompound data, List<String> tooltip) {
 		NBTTagCompound ore = data.getCompoundTag("ores");
-		if (ore == null || ore.hasNoTags()) return;
+		if (ore == null || ore.isEmpty()) return;
 		StringBuilder builder = new StringBuilder();
 		for (String id : ore.getKeySet()) {
 			Item item = Item.getByNameOrId(id);

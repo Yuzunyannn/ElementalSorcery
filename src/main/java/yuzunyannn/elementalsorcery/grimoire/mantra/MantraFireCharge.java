@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 public class MantraFireCharge extends MantraCommon {
 
 	public MantraFireCharge() {
-		this.setUnlocalizedName("fireCharge");
+		this.setTranslationKey("fireCharge");
 		this.setColor(0xeeac18);
 		this.setIcon("fire_charge");
 		this.setRarity(100);
@@ -64,7 +64,7 @@ public class MantraFireCharge extends MantraCommon {
 		Random rand = world.rand;
 		Vec3d eyePos = caster.iWantCaster().getEyePosition();
 		Vec3d tar = caster.iWantDirection();
-		eyePos = eyePos.add(tar.scale(1.25)).addVector(rand.nextGaussian() * 0.25, rand.nextGaussian() * 0.25,
+		eyePos = eyePos.add(tar.scale(1.25)).add(rand.nextGaussian() * 0.25, rand.nextGaussian() * 0.25,
 				rand.nextGaussian() * 0.25);
 
 		world.playSound(null, eyePos.x, eyePos.y, eyePos.z, SoundEvents.ENTITY_GHAST_SHOOT, SoundCategory.BLOCKS, 1, 1);

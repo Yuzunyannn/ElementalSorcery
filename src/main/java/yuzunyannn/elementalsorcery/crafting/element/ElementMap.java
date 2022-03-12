@@ -251,7 +251,7 @@ public class ElementMap implements IToElement {
 		dealSet.add(ElementalSorcery.MODID);
 		// 检测所有物品
 		for (Item item : Item.REGISTRY) {
-			String modId = item.getRegistryName().getResourceDomain();
+			String modId = item.getRegistryName().getNamespace();
 			if (!dealSet.contains(modId)) continue;
 			// 遍历所有类别
 			NonNullList<ItemStack> stacks = NonNullList.<ItemStack>create();

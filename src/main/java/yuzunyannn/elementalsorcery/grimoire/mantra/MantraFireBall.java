@@ -55,7 +55,7 @@ public class MantraFireBall extends MantraCommon {
 				EntityGrimoire.STATE_AFTER_SPELLING);
 		Data data = (Data) grimoire.getMantraData();
 		data.power = power;
-		data.pos = spller.getPositionVector().addVector(0, spller.getEyeHeight(), 0);
+		data.pos = spller.getPositionVector().add(0, spller.getEyeHeight(), 0);
 		data.toward = orient.normalize();
 		data.pos = data.pos.add(data.toward.scale(2));
 		if (needKnowledge) data.knowledge = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 20, 150);
@@ -101,7 +101,7 @@ public class MantraFireBall extends MantraCommon {
 	}
 
 	public MantraFireBall() {
-		this.setUnlocalizedName("fireBall");
+		this.setTranslationKey("fireBall");
 		this.setColor(0xff8f02);
 		this.setIcon("fire_ball");
 		this.setRarity(50);

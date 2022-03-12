@@ -97,7 +97,7 @@ public class MantraSummon extends MantraCommon {
 	}
 
 	public MantraSummon() {
-		this.setUnlocalizedName("summon");
+		this.setTranslationKey("summon");
 		this.setColor(0xda003e);
 		this.setIcon("summon");
 		this.setRarity(2);

@@ -28,7 +28,7 @@ public class MantraTimeHourglass extends MantraCommon {
 	public static final float TIME_STOP_MIN_POTENT = 0.9f;
 
 	public MantraTimeHourglass() {
-		this.setUnlocalizedName("timeHourglass");
+		this.setTranslationKey("timeHourglass");
 		this.setColor(0xe0e0e0);
 		this.setIcon("time_hourglass");
 		this.setRarity(20);

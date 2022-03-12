@@ -63,6 +63,6 @@ public class ItemRecord {
 
 	@Override
 	public String toString() {
-		return item == null ? stack.toString() : item.getUnlocalizedName();
+		return item == null ? stack.toString() : item.getTranslationKey();
 	}
 }

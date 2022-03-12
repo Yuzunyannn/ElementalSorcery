@@ -25,7 +25,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 public class ItemQuest extends Item {
 
 	public ItemQuest() {
-		this.setUnlocalizedName("quest");
+		this.setTranslationKey("quest");
 		this.setMaxStackSize(1);
 		this.setHasSubtypes(true);
 	}

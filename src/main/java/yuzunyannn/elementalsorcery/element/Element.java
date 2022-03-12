@@ -47,7 +47,7 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 	/**
 	 * 设置元素的"非本地化名称"(UnlocalizedName), 前缀为"element."
 	 */
-	public Element setUnlocalizedName(String unlocalizedName) {
+	public Element setTranslationKey(String unlocalizedName) {
 		this.unlocalizedName = unlocalizedName;
 		return this;
 	}
@@ -55,7 +55,7 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 	/**
 	 * 获取"非本地化名称"，有前缀"element."
 	 */
-	public String getUnlocalizedName(ElementStack estack) {
+	public String getTranslationKey(ElementStack estack) {
 		return "element." + this.unlocalizedName;
 	}
 

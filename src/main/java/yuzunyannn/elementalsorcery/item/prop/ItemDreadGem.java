@@ -16,7 +16,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 public class ItemDreadGem extends Item {
 
 	public ItemDreadGem() {
-		this.setUnlocalizedName("dreadGem");
+		this.setTranslationKey("dreadGem");
 	}
 
 	@Override

@@ -24,7 +24,7 @@ public class BlockMagicTorch extends BlockTorch {
 
 	public BlockMagicTorch() {
 		this.setSoundType(SoundType.WOOD);
-		this.setUnlocalizedName("magicTorch");
+		this.setTranslationKey("magicTorch");
 		this.setDefaultState(this.getDefaultState().withProperty(LIT, false));
 	}
 
@@ -63,9 +63,9 @@ public class BlockMagicTorch extends BlockTorch {
 
 			if (enumfacing.getAxis().isHorizontal()) {
 				EnumFacing enumfacing1 = enumfacing.getOpposite();
-				d0 += 0.27D * (double) enumfacing1.getFrontOffsetX();
+				d0 += 0.27D * (double) enumfacing1.getXOffset();
 				d1 += 0.22D;
-				d2 += 0.27D * (double) enumfacing1.getFrontOffsetZ();
+				d2 += 0.27D * (double) enumfacing1.getZOffset();
 			}
 			Particle effect = new ParticleMagicTorch(worldIn, d0, d1, d2, 1.0f, 0.7f, 0.25f, 0.9f);
 			Minecraft.getMinecraft().effectRenderer.addEffect(effect);

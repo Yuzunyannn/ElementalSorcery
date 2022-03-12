@@ -35,7 +35,7 @@ public class SummonSilverfishSpring extends SummonCommon {
 		if (world.isRemote) return true;
 		if (tick++ < 20 * 5) return true;
 		if (tick % 2 != 0) return true;
-		Vec3d pos = new Vec3d(this.pos).addVector(0.5, 0.1 + 1.5, 0.5);
+		Vec3d pos = new Vec3d(this.pos).add(0.5, 0.1 + 1.5, 0.5);
 		Random rand = world.rand;
 		if (sliverFish <= 0) return false;
 		sliverFish--;

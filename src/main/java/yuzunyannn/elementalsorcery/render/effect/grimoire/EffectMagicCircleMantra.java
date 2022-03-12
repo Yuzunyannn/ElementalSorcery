@@ -35,7 +35,7 @@ public class EffectMagicCircleMantra extends EffectMagicCircleIcon {
 	protected void onAddEffect(Vec3d pos, float size) {
 		float hSize = size / 5 * 2;
 		float theta = (float) rand.nextGaussian() * 3.14f;
-		Vec3d at = pos.addVector(MathHelper.sin(theta) * hSize, 0.1, MathHelper.cos(theta) * hSize);
+		Vec3d at = pos.add(MathHelper.sin(theta) * hSize, 0.1, MathHelper.cos(theta) * hSize);
 		Vec3d tar = at.subtract(pos).normalize();
 		tar = new Vec3d(-tar.z, 0, tar.x);
 		ParticleSpellScrew effect = new ParticleSpellScrew(world, at);

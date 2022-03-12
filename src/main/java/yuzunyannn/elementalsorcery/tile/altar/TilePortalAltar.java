@@ -85,8 +85,8 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 		if (!canOpenPortal(to, toWorld)) return;
 		ElementStack get = getElementFromSpPlace(NEED, pos.up(3));
 		if (get.isEmpty()) return;
-		EntityPortal.createPortal(EntityPortal.TYPE_CHECK_TILE, world, new Vec3d(pos.up(3)).addVector(0.5, 0, 0.5),
-				EntityPortal.TYPE_PERMANENT, toWorld, new Vec3d(to).addVector(0.5, 0, 0.5));
+		EntityPortal.createPortal(EntityPortal.TYPE_CHECK_TILE, world, new Vec3d(pos.up(3)).add(0.5, 0, 0.5),
+				EntityPortal.TYPE_PERMANENT, toWorld, new Vec3d(to).add(0.5, 0, 0.5));
 		enderPower = 0;
 	}
 
@@ -152,8 +152,8 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 	@SideOnly(Side.CLIENT)
 	public void genParticleElementTo(boolean isGet, IAltarWake altarWake, ElementStack estack, BlockPos from,
 			BlockPos to) {
-		Vec3d pos = new Vec3d(to).addVector(0.5f, 1.5f, 0.5f);
-		Vec3d at = new Vec3d(from).addVector(0.5f, 0.75f, 0.5f);
+		Vec3d pos = new Vec3d(to).add(0.5f, 1.5f, 0.5f);
+		Vec3d at = new Vec3d(from).add(0.5f, 0.75f, 0.5f);
 		BlockPos tar = this.pos.subtract(from);
 		EffectElementScrew e = new EffectElementScrew(world, at, pos).setDirect(new Vec3d(tar.getX(), 1, 0));
 		e.setColor(estack.getColor());

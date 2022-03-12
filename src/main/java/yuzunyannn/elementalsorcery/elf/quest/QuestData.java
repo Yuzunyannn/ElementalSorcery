@@ -30,7 +30,7 @@ public class QuestData implements INBTSerializable<NBTTagCompound> {
 	}
 
 	public boolean isEmpty() {
-		return data.hasNoTags();
+		return data.isEmpty();
 	}
 
 	public int getInteger(String key) {

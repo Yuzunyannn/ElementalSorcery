@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 public class ItemScroll extends Item {
 
 	public ItemScroll() {
-		this.setUnlocalizedName("scroll");
+		this.setTranslationKey("scroll");
 	}
 
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {

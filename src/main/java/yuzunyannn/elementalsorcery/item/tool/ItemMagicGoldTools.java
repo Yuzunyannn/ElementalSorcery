@@ -38,7 +38,7 @@ public class ItemMagicGoldTools {
 
 	@SideOnly(Side.CLIENT)
 	public static void createShape(World world, BlockPos pos) {
-		FirewrokShap.createCircle(world, new Vec3d(pos).addVector(0.5, 0.5, 0.5), 0.2, 1, TileMDBase.PARTICLE_COLOR,
+		FirewrokShap.createCircle(world, new Vec3d(pos).add(0.5, 0.5, 0.5), 0.2, 1, TileMDBase.PARTICLE_COLOR,
 				TileMDBase.PARTICLE_COLOR_FADE, false, false);
 	}
 
@@ -70,7 +70,7 @@ public class ItemMagicGoldTools {
 	public static class ItemMagicGoldPickaxe extends ItemPickaxe implements MagicGoldToolsRepair {
 		public ItemMagicGoldPickaxe() {
 			super(MAGIC_GOLD);
-			this.setUnlocalizedName("magicGoldPickaxe");
+			this.setTranslationKey("magicGoldPickaxe");
 		}
 
 		@Override
@@ -127,7 +127,7 @@ public class ItemMagicGoldTools {
 	public static class ItemMagicGoldAxe extends ItemAxe implements MagicGoldToolsRepair {
 		public ItemMagicGoldAxe() {
 			super(MAGIC_GOLD, MAGIC_GOLD.getAttackDamage() * 1.75f, -3.2f);
-			this.setUnlocalizedName("magicGoldAxe");
+			this.setTranslationKey("magicGoldAxe");
 		}
 
 		@Override
@@ -164,7 +164,7 @@ public class ItemMagicGoldTools {
 	public static class ItemMagicGoldSpade extends ItemSpade implements MagicGoldToolsRepair {
 		public ItemMagicGoldSpade() {
 			super(MAGIC_GOLD);
-			this.setUnlocalizedName("magicGoldSpade");
+			this.setTranslationKey("magicGoldSpade");
 		}
 
 		@Override
@@ -219,7 +219,7 @@ public class ItemMagicGoldTools {
 	public static class ItemMagicGoldHoe extends ItemHoe implements MagicGoldToolsRepair {
 		public ItemMagicGoldHoe() {
 			super(MAGIC_GOLD);
-			this.setUnlocalizedName("magicGoldHoe");
+			this.setTranslationKey("magicGoldHoe");
 		}
 
 		@Override
@@ -242,7 +242,7 @@ public class ItemMagicGoldTools {
 						result = super.onItemUse(player, worldIn, at, hand, facing, hitX, hitY, hitZ);
 						itemstack.setItemDamage(originDmg);
 						if (worldIn.isRemote && result == EnumActionResult.SUCCESS) {
-							Vec3d position = new Vec3d(at).addVector(0.5, 1.3, 0.5);
+							Vec3d position = new Vec3d(at).add(0.5, 1.3, 0.5);
 							createShape(worldIn, position);
 						}
 					}
@@ -258,7 +258,7 @@ public class ItemMagicGoldTools {
 	public static class ItemMagicGoldSword extends ItemSword implements MagicGoldToolsRepair {
 		public ItemMagicGoldSword() {
 			super(MAGIC_GOLD);
-			this.setUnlocalizedName("magicGoldSword");
+			this.setTranslationKey("magicGoldSword");
 		}
 
 		@Override
@@ -268,7 +268,7 @@ public class ItemMagicGoldTools {
 
 		@Override
 		public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-			Vec3d pos = target.getPositionVector().addVector(0, attacker.getEyeHeight(), 0);
+			Vec3d pos = target.getPositionVector().add(0, attacker.getEyeHeight(), 0);
 			int size = 5;
 			AxisAlignedBB aabb = new AxisAlignedBB(pos.x - size, pos.y - size, pos.z - size, pos.x + size, pos.y + size,
 					pos.z + size);

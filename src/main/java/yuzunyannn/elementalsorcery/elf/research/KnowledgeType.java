@@ -22,7 +22,7 @@ public class KnowledgeType {
 	}
 
 	public static KnowledgeType newKnowledgeType(String id, Object... topics) throws RuntimeException {
-		KnowledgeType type = new KnowledgeType().setNameId(id).setUnlocalizedName(TextHelper.castToCamel(id));
+		KnowledgeType type = new KnowledgeType().setNameId(id).setTranslationKey(TextHelper.castToCamel(id));
 		for (int i = 0; i < topics.length; i++) {
 			Object obj = topics[i];
 			if (obj instanceof Entry) type.addTopic((Entry<String, Integer>) obj);
@@ -74,13 +74,13 @@ public class KnowledgeType {
 		return this;
 	}
 
-	public KnowledgeType setUnlocalizedName(String unlocalizedName) {
+	public KnowledgeType setTranslationKey(String unlocalizedName) {
 		this.unlocalizedName = unlocalizedName;
 		return this;
 	}
 
 	@SideOnly(Side.CLIENT)
-	public String getUnlocalizedName() {
+	public String getTranslationKey() {
 		return "kType." + unlocalizedName;
 	}
 

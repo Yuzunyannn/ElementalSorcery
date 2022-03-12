@@ -79,7 +79,7 @@ public class EffectEntitySoul extends Effect {
 
 		if (this.binder != null) {
 			Vec3d to = this.binder.getPosition();
-			Vec3d at = this.getPositionVector().addVector(0, -modelYoff, 0);
+			Vec3d at = this.getPositionVector().add(0, -modelYoff, 0);
 			Vec3d tar = to.subtract(at);
 			float f = (40 - Math.min(lifeTime, 40f)) / 40f;
 			tar = tar.scale(f * f);

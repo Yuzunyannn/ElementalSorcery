@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 
 public class ItemSpellbookArchitecture extends ItemSpellbook {
 	public ItemSpellbookArchitecture() {
-		this.setUnlocalizedName("spellbookArchitecture");
+		this.setTranslationKey("spellbookArchitecture");
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class ItemSpellbookArchitecture extends ItemSpellbook {
 						}
 					}
 					Vec3d from = entity.getPositionVector();
-					from = from.addVector(MathHelper.sin(rand.nextFloat() * 6.28f) * 5, rand.nextDouble() + 1,
+					from = from.add(MathHelper.sin(rand.nextFloat() * 6.28f) * 5, rand.nextDouble() + 1,
 							MathHelper.sin(rand.nextFloat() * 6.28f) * 5);
 					EntityBlockMove toBlock = new EntityBlockMove(world, ((EntityPlayer) entity), from, pos, need,
 							state);

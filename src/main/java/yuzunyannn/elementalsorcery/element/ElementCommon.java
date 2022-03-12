@@ -27,7 +27,7 @@ public abstract class ElementCommon extends Element implements IStarFlowerCast, 
 	public ElementCommon(int color, String resName) {
 		super(color);
 		TEXTURE = new ResourceLocation(ElementalSorcery.MODID, "textures/elements/" + resName + ".png");
-		this.setUnlocalizedName(resName);
+		this.setTranslationKey(resName);
 	}
 
 	@Override

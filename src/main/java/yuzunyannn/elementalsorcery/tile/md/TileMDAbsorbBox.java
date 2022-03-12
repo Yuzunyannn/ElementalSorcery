@@ -70,8 +70,8 @@ public class TileMDAbsorbBox extends TileMDBase implements ITickable {
 					this.magic.shrink(need);
 					if (world.isRemote) {
 						// 生成粒子效果
-						Vec3d from = new Vec3d(curPos).addVector(0.5, 0.5, 0.5);
-						Vec3d to = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+						Vec3d from = new Vec3d(curPos).add(0.5, 0.5, 0.5);
+						Vec3d to = new Vec3d(pos).add(0.5, 0.5, 0.5);
 						TileElementalCube.giveParticleElementTo(world, estack.getColor(), from, to, 1.0f);
 					} else {
 						// 记录真实数据

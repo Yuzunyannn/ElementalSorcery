@@ -56,7 +56,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 	private static float MAGIC_RANGE_DECAY_RATE = 0.65f;
 
 	public ItemMagicBlastWand() {
-		this.setUnlocalizedName("magicBlastWand");
+		this.setTranslationKey("magicBlastWand");
 		this.setMaxStackSize(1);
 	}
 
@@ -109,8 +109,8 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 		Random rand = RandomHelper.rand;
 		if (rand.nextInt(80) > count) return;
 
-		Vec3d vec = player.getPositionVector().addVector(0, player.getEyeHeight(), 0);
-		vec = vec.add(player.getLookVec()).addVector(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian());
+		Vec3d vec = player.getPositionVector().add(0, player.getEyeHeight(), 0);
+		vec = vec.add(player.getLookVec()).add(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian());
 		Vec3d speed = new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian());
 		EffectElementMove effect = new EffectElementMove(player.world, vec);
 		effect.setColor(0x4d2175);
@@ -202,7 +202,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 
 	public static void blast(ElementStack magic, World world, BlockPos pos, @Nullable Entity source,
 			@Nullable Entity directSource) {
-		blast(magic, world, null, new Vec3d(pos).addVector(0.5, 0.5, 0.5), source, directSource);
+		blast(magic, world, null, new Vec3d(pos).add(0.5, 0.5, 0.5), source, directSource);
 	}
 
 	/**
@@ -222,7 +222,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 		float dmg = getDamage(magic);
 
 		Vec3d pos;
-		if (target != null) pos = target.getPositionVector().addVector(0, target.height / 2, 0);
+		if (target != null) pos = target.getPositionVector().add(0, target.height / 2, 0);
 		else pos = targetPos;
 
 		DamageSource ds = DamageHelper.getMagicDamageSource(source, directSource);
@@ -236,7 +236,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 
 			List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, AABB);
 			for (EntityLivingBase entity : entities) {
-				Vec3d at = entity.getPositionVector().addVector(0, entity.height / 2, 0);
+				Vec3d at = entity.getPositionVector().add(0, entity.height / 2, 0);
 				float attenuate = MathHelper.sqrt(pos.distanceTo(at) * MAGIC_RANGE_DECAY_RATE);
 				float dmgRate = 1 / Math.max(attenuate, 1);
 				entity.attackEntityFrom(ds, dmgRate * dmg);

@@ -21,7 +21,7 @@ compileJava {
 }
 
 minecraft {
-    version = "1.12.2-14.23.5.2816"
+    version = "1.12.2-14.23.5.2847"
     runDir = "run"
     
     // the mappings can be changed at any time, and must be in the following format.
@@ -29,21 +29,52 @@ minecraft {
     // stable_#            stables are built at the discretion of the MCP team.
     // Use non-default mappings at your own risk. they may not always work.
     // simply re-run your setup task after changing the mappings to update your workspace.
-    mappings = "snapshot_20180415"
+    mappings = "stable_39"
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 }
 
 repositories {
     maven {
-        //JEI
+        name 'jei'
         url = "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        name 'ic2'
+        url 'https://maven.ic2.player.to'
+    }
+    maven {
+        name 'CoFH'
+        url 'https://maven.covers1624.net'
+    }
+    maven {
+        name 'CB'
+        url "http://chickenbones.net/maven/"
     }
 }
 
 dependencies {
     //JEI
     def jei_version = "4.8.5.151"
+    //ic2
+    def ic2_version = "2.8.170-ex112"
+
+    //api
     deobfCompile "mezz.jei:jei_1.12.2:${jei_version}"
+    compileOnly "net.industrial-craft:industrialcraft-2:${ic2_version}:api"
+
+    //-------- runtime for test （#￣▽￣#）-------- 
+
+    //ic2 test
+    // deobfCompile "net.industrial-craft:industrialcraft-2:${ic2_version}"
+
+    //cofh test
+    // deobfCompile "cofh:CoFHCore:1.12.2-4.6.0.+:universal"
+    // deobfCompile "cofh:RedstoneFlux:1.12-2.1.0.+:universal"
+    // deobfCompile "codechicken:CodeChickenLib:1.12.2-3.2.+:universal"
+    // deobfCompile "cofh:CoFHWorld:1.12.2-1.2.0.+:universal"
+    // deobfCompile "cofh:ThermalFoundation:1.12.2-2.6.0.+:universal"
+    // deobfCompile "cofh:ThermalDynamics:1.12.2-2.+:universal"
+    // deobfCompile "cofh:ThermalExpansion:1.12.2-5.+:universal"   
 }
 
 processResources {
@@ -71,6 +102,7 @@ tasks.withType(JavaCompile) {
 
 task deobfJar(type: Jar) {
     from(sourceSets.main.output)
+    from(sourceSets.main.java)
     archiveName = "${baseName}-${version}-deobf.${extension}"
 }
 

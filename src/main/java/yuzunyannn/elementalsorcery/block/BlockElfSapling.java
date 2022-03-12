@@ -31,7 +31,7 @@ public class BlockElfSapling extends BlockBush implements IGrowable {
 
 	public BlockElfSapling() {
 		this.setSoundType(SoundType.PLANT);
-		this.setUnlocalizedName("elfSapling");
+		this.setTranslationKey("elfSapling");
 		this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, Integer.valueOf(0)));
 	}
 

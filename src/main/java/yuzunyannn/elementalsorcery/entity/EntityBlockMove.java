@@ -347,7 +347,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			BlockPos to = new BlockPos(trace.to);
 			AxisAlignedBB aabb = Block.FULL_BLOCK_AABB;
 			if (state != null) aabb = state.getBoundingBox(world, to);
-			Vec3d pos = this.getPositionVector().addVector(-this.width / 2, 0, -this.width / 2);
+			Vec3d pos = this.getPositionVector().add(-this.width / 2, 0, -this.width / 2);
 			for (int x = 0; x <= 1; x++) {
 				for (int y = 0; y <= 1; y++) {
 					for (int z = 0; z <= 1; z++) {
@@ -502,7 +502,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 		stack = new ItemStack(nbt.getCompoundTag("item"));
 		rate = nbt.getFloat("rate");
 		flags = nbt.getByte("flags");
-		facing = EnumFacing.getHorizontal(nbt.getByte("face"));
+		facing = EnumFacing.byHorizontalIndex(nbt.getByte("face"));
 		if (nbt.hasKey("color", NBTTag.TAG_NUMBER)) color = nbt.getInteger("color");
 		if (nbt.hasKey("trace", NBTTag.TAG_COMPOUND)) trace = new MoveTrace(nbt.getCompoundTag("trace"));
 		if (nbt.hasKey("state", NBTTag.TAG_NUMBER)) state = Block.getStateById(nbt.getInteger("state"));

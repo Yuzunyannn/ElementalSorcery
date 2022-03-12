@@ -70,7 +70,7 @@ public class ElementExplosion implements IExplosionExecutor {
 	@Nullable
 	public static IExplosionExecutor doExplosion(World world, BlockPos pos, ElementStack eStack,
 			@Nullable EntityLivingBase attacker) {
-		return doExplosion(world, new Vec3d(pos).addVector(0.5, 0.5, 0.5), eStack, attacker);
+		return doExplosion(world, new Vec3d(pos).add(0.5, 0.5, 0.5), eStack, attacker);
 	}
 
 	@Nullable
@@ -229,8 +229,8 @@ public class ElementExplosion implements IExplosionExecutor {
 			double distanceRate = entity.getDistance(this.position.x, this.position.y, this.position.z) / checkRange;
 			if (distanceRate > 1.0D) continue;
 
-			Vec3d orient = entity.getPositionVector().addVector(0, entity.getEyeHeight(), 0).subtract(position);
-			double distanceOfEntityWithExplosionCenter = orient.lengthVector();
+			Vec3d orient = entity.getPositionVector().add(0, entity.getEyeHeight(), 0).subtract(position);
+			double distanceOfEntityWithExplosionCenter = orient.length();
 			if (distanceOfEntityWithExplosionCenter == 0.0D) continue;
 
 			double blockDensity = this.world.getBlockDensity(this.position, entity.getEntityBoundingBox());
@@ -318,13 +318,13 @@ public class ElementExplosion implements IExplosionExecutor {
 
 	@SideOnly(Side.CLIENT)
 	protected void spawnEffectFromBlock(BlockPos pos) {
-		Vec3d at = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+		Vec3d at = new Vec3d(pos).add(0.5, 0.5, 0.5);
 		doExplosionEntityAtEfect(world, eStack.getColor(), at, at.subtract(position).normalize());
 
-		Vec3d randPos = new Vec3d(pos).addVector(world.rand.nextFloat(), world.rand.nextFloat(),
+		Vec3d randPos = new Vec3d(pos).add(world.rand.nextFloat(), world.rand.nextFloat(),
 				world.rand.nextFloat());
 		Vec3d orient = randPos.subtract(position);
-		double length = orient.lengthVector();
+		double length = orient.length();
 		orient = orient.normalize();
 		double scale = 0.5 / (length / this.size + 0.1);
 		scale = scale * (world.rand.nextFloat() * world.rand.nextFloat() + 0.3);
@@ -345,7 +345,7 @@ public class ElementExplosion implements IExplosionExecutor {
 	@SideOnly(Side.CLIENT)
 	protected static void doExplosionEntityAtEfect(World world, int color, Vec3d vec, Vec3d orient) {
 		EffectElementMove move = new EffectElementMove(world,
-				vec.addVector(world.rand.nextGaussian(), world.rand.nextGaussian(), world.rand.nextGaussian()));
+				vec.add(world.rand.nextGaussian(), world.rand.nextGaussian(), world.rand.nextGaussian()));
 		move.setColor(color);
 		move.setVelocity(orient.scale(0.1f * EffectElementMove.rand.nextDouble()));
 

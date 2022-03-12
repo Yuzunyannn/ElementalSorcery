@@ -31,7 +31,7 @@ import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 public class MantraLush extends MantraCommon {
 
 	public MantraLush() {
-		this.setUnlocalizedName("lush");
+		this.setTranslationKey("lush");
 		this.setColor(0x32CD32);
 		this.setIcon("lush");
 		this.setRarity(75);
@@ -95,7 +95,7 @@ public class MantraLush extends MantraCommon {
 	protected void magicEffectAt(World world, BlockPos pos, ICaster caster) {
 		Random rand = RandomHelper.rand;
 		for (int i = 0; i < rand.nextInt(3) + 1; i++) {
-			Vec3d at = new Vec3d(pos).addVector(rand.nextDouble(), rand.nextDouble() * 0.25 + 0.1, rand.nextDouble());
+			Vec3d at = new Vec3d(pos).add(rand.nextDouble(), rand.nextDouble() * 0.25 + 0.1, rand.nextDouble());
 			EffectElementMove effect = new EffectElementMove(world, at);
 			effect.yAccelerate = 0.001;
 			effect.setColor(this.getRenderColor());

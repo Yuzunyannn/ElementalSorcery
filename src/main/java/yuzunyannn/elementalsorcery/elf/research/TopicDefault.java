@@ -49,7 +49,7 @@ public class TopicDefault extends Topic {
 		final int FONT_HEIGHT = mc.fontRenderer.FONT_HEIGHT;
 		RenderHelper.drawTexturedRectInCenter(tick * 4 - 20, -FONT_HEIGHT + 1, 54, 8, 0, 32, 27, 4, 128, 128);
 		RenderHelper.drawTexturedRectInCenter(20 - tick * 4, FONT_HEIGHT, 54, 8, 0, 35, 27, 4, 128, 128);
-		String str = this.getUnlocalizedName() + ".name";
+		String str = this.getTranslationKey() + ".name";
 		if (I18n.hasKey(str)) str = I18n.format(str);
 		else str = this.type;
 		mc.fontRenderer.drawString(str, -mc.fontRenderer.getStringWidth(str) / 2, -FONT_HEIGHT / 2, color);

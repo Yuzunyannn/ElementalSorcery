@@ -66,7 +66,7 @@ public class BlockElfLeaf extends BlockLeaves {
 
 	public BlockElfLeaf() {
 		Blocks.FIRE.setFireInfo(this, 30, 60);
-		this.setUnlocalizedName("elfLeaf");
+		this.setTranslationKey("elfLeaf");
 		this.leavesFancy = true;
 		this.setDefaultState(this.blockState.getBaseState().withProperty(CHECK_DECAY, Boolean.valueOf(true))
 				.withProperty(DECAYABLE, Boolean.valueOf(true)));

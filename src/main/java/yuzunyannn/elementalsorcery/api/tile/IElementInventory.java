@@ -23,7 +23,7 @@ public interface IElementInventory extends IItemCapbiltitySyn, ICustomNBTSeriali
 	int getSlots();
 
 	/**
-	 * 根据槽位下标获取ElementStack
+	 * 根据槽位下标获取ElementStack，取出来的不一定仓库里真正存储的引用
 	 * 
 	 * @param slot 访问的槽位
 	 * @return 当前在solt的ElementStack
@@ -32,7 +32,7 @@ public interface IElementInventory extends IItemCapbiltitySyn, ICustomNBTSeriali
 	ElementStack getStackInSlot(int slot);
 
 	/**
-	 * 将新的ElementStack放在槽位上
+	 * 将新的ElementStack放在槽位上，不代表会对estack进行引用，可能会对estack进行引用
 	 * 
 	 * @param slot   访问的槽位
 	 * @param estack 要设置的ElementStack

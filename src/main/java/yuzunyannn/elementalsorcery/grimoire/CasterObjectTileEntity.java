@@ -28,7 +28,7 @@ public class CasterObjectTileEntity implements ICasterObject {
 
 	@Override
 	public Vec3d getPositionVector() {
-		return new Vec3d(tile.getPos()).addVector(0.5, 0, 0.5);
+		return new Vec3d(tile.getPos()).add(0.5, 0, 0.5);
 	}
 
 	@Override

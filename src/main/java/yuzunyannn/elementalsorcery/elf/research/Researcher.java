@@ -34,7 +34,7 @@ public class Researcher implements INBTSerializable<NBTTagCompound> {
 		if (block instanceof ITileEntityProvider) {
 			if (rand.nextBoolean()) researchSP(player, Topics.ENGINE);
 		} else {
-			if (block.getRegistryName().getResourcePath().indexOf("ender") != -1) researchSP(player, Topics.ENDER);
+			if (block.getRegistryName().getPath().indexOf("ender") != -1) researchSP(player, Topics.ENDER);
 			else researchSP(player, Topics.NATURAL);
 		}
 	}

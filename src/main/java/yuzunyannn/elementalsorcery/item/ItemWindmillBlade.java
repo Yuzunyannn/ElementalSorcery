@@ -44,7 +44,7 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 	}
 
 	public ItemWindmillBlade(String unlocalizedName, int maxUseSec) {
-		this.setUnlocalizedName("windmillBlade" + (unlocalizedName.isEmpty() ? "" : ("." + unlocalizedName)));
+		this.setTranslationKey("windmillBlade" + (unlocalizedName.isEmpty() ? "" : ("." + unlocalizedName)));
 		this.setMaxStackSize(1);
 		this.setMaxDamage(maxUseSec);
 	}
@@ -156,12 +156,12 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 		Vec3d look = entity.getLookVec();
 		Vec3d hLook = new Vec3d(look.x, 0, look.z).normalize();
 		if (hLook.lengthSquared() < 0.01) return EnumActionResult.FAIL;
-		hLook = hLook.addVector(0, look.y * 0.3, 0).normalize();
+		hLook = hLook.add(0, look.y * 0.3, 0).normalize();
 
 		if (world.isRemote) return EnumActionResult.SUCCESS;
 		int length = 8 + amplifier * 2;
 
-		Vec3d pos = entity.getPositionVector().add(hLook.scale(length)).addVector(0, 0.2, 0);
+		Vec3d pos = entity.getPositionVector().add(hLook.scale(length)).add(0, 0.2, 0);
 		// 寻找目标
 		AxisAlignedBB aabb = WorldHelper.createAABB(pos, length, 3, 2);
 		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
@@ -174,14 +174,14 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 				Vec3d tarB = new Vec3d(b.posX - entity.posX,
 						(b.posY + b.height / 2 - (entity.posY + entity.height / 2)) * 0.15, b.posZ - entity.posZ);
 
-				double lenA = tarA.lengthVector();
-				double lenB = tarB.lengthVector();
+				double lenA = tarA.length();
+				double lenB = tarB.length();
 
 				if (lenA == 0) lenA = 0.00001;
 				if (lenB == 0) lenB = 0.00001;
 
-				double cosA = tarA.dotProduct(vecLook) / (lenA * vecLook.lengthVector());
-				double cosB = tarB.dotProduct(vecLook) / (lenB * vecLook.lengthVector());
+				double cosA = tarA.dotProduct(vecLook) / (lenA * vecLook.length());
+				double cosB = tarB.dotProduct(vecLook) / (lenB * vecLook.length());
 
 				return cosA < cosB ? 1 : -1;
 			});

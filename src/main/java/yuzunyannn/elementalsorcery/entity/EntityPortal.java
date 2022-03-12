@@ -32,7 +32,7 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 
 	public static void createPortal(World world1, BlockPos pos1, World world2, BlockPos pos2) {
 		if (world1.isRemote) return;
-		createPortal(world1, new Vec3d(pos1).addVector(0.5, 0, 0.5), world2, new Vec3d(pos2).addVector(0.5, 0, 0.5));
+		createPortal(world1, new Vec3d(pos1).add(0.5, 0, 0.5), world2, new Vec3d(pos2).add(0.5, 0, 0.5));
 	}
 
 	public static void createPortal(World world1, Vec3d pos1, World world2, Vec3d pos2) {
@@ -165,7 +165,7 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 
 	// 寻找传送门
 	public static EntityPortal findOther(World world, Vec3d pos, float size) {
-		world.getChunkFromBlockCoords(new BlockPos(pos));
+		world.getChunk(new BlockPos(pos));
 		AxisAlignedBB aabb = new AxisAlignedBB(pos.x - size, pos.y - size, pos.z - size, pos.x + size, pos.y + size,
 				pos.z + size);
 		List<EntityPortal> list = world.getEntitiesWithinAABB(EntityPortal.class, aabb);
@@ -213,12 +213,12 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 		for (Entity entity : list) {
 			if (entity == this) continue;
 			if (entity.timeUntilPortal > 0) continue;
-			double dis = this.getPositionVector().addVector(0, 2, 0)
-					.distanceTo(entity.getPositionVector().addVector(0, entity.getEyeHeight(), 0));
+			double dis = this.getPositionVector().add(0, 2, 0)
+					.distanceTo(entity.getPositionVector().add(0, entity.getEyeHeight(), 0));
 			double h = entity.posY - this.posY + 0.05f;
 			if (dis < 2f && entity.posY >= this.posY && entity.posY + entity.height < this.posY + this.height - 0.2f) {
 				Vec3d tar = this.getPositionVector().subtract(entity.getPositionVector()).normalize().scale(2f);
-				moveTo(entity, toPos.addVector(tar.x, h, tar.z), toWorldId);
+				moveTo(entity, toPos.add(tar.x, h, tar.z), toWorldId);
 				entity.motionX = tar.x * 0.8;
 				entity.motionZ = tar.z * 0.8;
 				entity.timeUntilPortal = 20;
@@ -285,7 +285,7 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 
 	@SideOnly(Side.CLIENT)
 	public void onOpenTick() {
-		Vec3d pos = this.getPositionVector().addVector(0, this.height / 2, 0);
+		Vec3d pos = this.getPositionVector().add(0, this.height / 2, 0);
 		Vec3d at = pos.add(new Vec3d(3, 0, 3));
 		EffectElementScrew e = new EffectElementScrew(world, at, pos).setDirect(new Vec3d(1, 1, 0));
 		e.setColor(118f / 255, 41f / 255, 141f / 255);
@@ -311,7 +311,7 @@ public class EntityPortal extends Entity implements IEntityAdditionalSpawnData {
 
 	@SideOnly(Side.CLIENT)
 	public void deadEffect() {
-		FirewrokShap.createECircle(world, this.getPositionVector().addVector(0, this.height / 2, 0), 0.5, 4,
+		FirewrokShap.createECircle(world, this.getPositionVector().add(0, this.height / 2, 0), 0.5, 4,
 				new int[] { 0x76298d, 0xa957c1 });
 	}
 

@@ -22,7 +22,7 @@ public class DefaultEnchanmentToElement implements IToElement {
 		if (nbt.hasKey("StoredEnchantments", NBTTag.TAG_LIST))
 			list = nbt.getTagList("StoredEnchantments", NBTTag.TAG_COMPOUND);
 		else if (nbt.hasKey("ench", NBTTag.TAG_LIST)) list = nbt.getTagList("ench", NBTTag.TAG_COMPOUND);
-		if (list == null || list.hasNoTags()) return null;
+		if (list == null || list.isEmpty()) return null;
 
 		ElementStack knowledge = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 0, 25);
 		ElementStack magic = new ElementStack(ESInit.ELEMENTS.MAGIC, 0, 20);

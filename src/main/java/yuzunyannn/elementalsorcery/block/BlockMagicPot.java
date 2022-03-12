@@ -24,7 +24,7 @@ public class BlockMagicPot extends Block {
 
 	public BlockMagicPot() {
 		super(Material.CIRCUITS);
-		this.setUnlocalizedName("magicPot");
+		this.setTranslationKey("magicPot");
 		this.setHarvestLevel("pickaxe", 1);
 		this.setHardness(3.5f);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(MAGIC, 0));

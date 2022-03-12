@@ -19,7 +19,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 public class MantraLightningArea extends MantraSquareAreaAdv {
 
 	public MantraLightningArea() {
-		this.setUnlocalizedName("lightningArea");
+		this.setTranslationKey("lightningArea");
 		this.setColor(0x0076ee);
 		this.setIcon("lightning");
 		this.setRarity(50);

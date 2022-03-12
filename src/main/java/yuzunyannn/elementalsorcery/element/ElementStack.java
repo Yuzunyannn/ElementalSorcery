@@ -242,7 +242,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
 	/** 获取元素名称 */
 	public String getElementUnlocalizedName() {
-		return getElement().getUnlocalizedName(this) + ".name";
+		return getElement().getTranslationKey(this) + ".name";
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -252,14 +252,14 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
 	public ITextComponent getTextComponent() {
 		ITextComponent itextcomponent = new TextComponentString("[");
-		itextcomponent.appendSibling(new TextComponentTranslation(getElement().getUnlocalizedName(this) + ".name"));
+		itextcomponent.appendSibling(new TextComponentTranslation(getElement().getTranslationKey(this) + ".name"));
 		itextcomponent.appendSibling(new TextComponentString("]"));
 		return itextcomponent;
 	}
 
 	@Override
 	public String toString() {
-		return getCount() + "x" + this.getElement().getUnlocalizedName(this) + ":" + getPower();
+		return getCount() + "x" + this.getElement().getTranslationKey(this) + ":" + getPower();
 	}
 
 	/** 物品被析构成元素的时候回调 */
@@ -327,7 +327,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		// 写入元素的能量
 		nbt.setInteger("power", getPower());
 		// 自定义数据
-		if (stackTagCompound != null && !stackTagCompound.hasNoTags()) nbt.setTag("tag", stackTagCompound);
+		if (stackTagCompound != null && !stackTagCompound.isEmpty()) nbt.setTag("tag", stackTagCompound);
 	}
 
 }

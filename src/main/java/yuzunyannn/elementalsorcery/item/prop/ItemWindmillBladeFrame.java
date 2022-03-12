@@ -8,14 +8,14 @@ import net.minecraft.util.NonNullList;
 public class ItemWindmillBladeFrame extends Item {
 
 	public ItemWindmillBladeFrame() {
-		this.setUnlocalizedName("windmillBladeFrame");
+		this.setTranslationKey("windmillBladeFrame");
 		this.setHasSubtypes(true);
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
-		if (stack.getMetadata() == 1) return super.getUnlocalizedName(stack) + ".adv";
-		return super.getUnlocalizedName(stack);
+	public String getTranslationKey(ItemStack stack) {
+		if (stack.getMetadata() == 1) return super.getTranslationKey(stack) + ".adv";
+		return super.getTranslationKey(stack);
 	}
 
 	@Override

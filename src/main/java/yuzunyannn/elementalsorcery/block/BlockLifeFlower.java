@@ -47,7 +47,7 @@ public class BlockLifeFlower extends Block {
 
 	public BlockLifeFlower() {
 		super(Material.PLANTS);
-		this.setUnlocalizedName("lifeFlower");
+		this.setTranslationKey("lifeFlower");
 		this.setSoundType(SoundType.PLANT);
 		this.setTickRandomly(true);
 		this.setLightLevel(1);
@@ -60,7 +60,7 @@ public class BlockLifeFlower extends Block {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
 
@@ -120,8 +120,8 @@ public class BlockLifeFlower extends Block {
 	@SideOnly(Side.CLIENT)
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if (!this.hasPower(worldIn, pos)) return;
-		Vec3d v3d = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
-		v3d = v3d.addVector(Math.random() - 0.5, Math.random() - 0.25, Math.random() - 0.5);
+		Vec3d v3d = new Vec3d(pos).add(0.5, 0.5, 0.5);
+		v3d = v3d.add(Math.random() - 0.5, Math.random() - 0.25, Math.random() - 0.5);
 		EffectElement effect = new EffectElement(worldIn, v3d.x, v3d.y, v3d.z);
 		effect.setColor(RandomHelper.rand.nextInt());
 		Effect.addEffect(effect);

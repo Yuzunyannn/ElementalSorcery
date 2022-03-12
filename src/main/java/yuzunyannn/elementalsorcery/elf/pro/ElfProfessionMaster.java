@@ -105,7 +105,7 @@ public class ElfProfessionMaster extends ElfProfession {
 				break;
 			case 4: {
 				Vec3d tar = target.getPositionVector()
-						.subtract(elf.getPositionVector().addVector(0, elf.getEyeHeight(), 0));
+						.subtract(elf.getPositionVector().add(0, elf.getEyeHeight(), 0));
 				MantraFireBall.fire(world, elf, tar, 28, true);
 
 			}
@@ -174,7 +174,7 @@ public class ElfProfessionMaster extends ElfProfession {
 						player.setGameType(GameType.SURVIVAL);
 						NBTTagCompound nbt = FireworkEffect.fastNBT(0, 3, 0.375f, TileMDBase.PARTICLE_COLOR,
 								TileMDBase.PARTICLE_COLOR_FADE);
-						Effects.spawnEffect(elf.world, Effects.FIREWROK, elf.getPositionVector().addVector(0, 1, 0),
+						Effects.spawnEffect(elf.world, Effects.FIREWROK, elf.getPositionVector().add(0, 1, 0),
 								nbt);
 					}
 				}
@@ -187,7 +187,7 @@ public class ElfProfessionMaster extends ElfProfession {
 	protected void showEffect(EntityElfBase elf) {
 		if (Math.random() < 0.3) {
 			Vec3d v3d = elf.getPositionVector();
-			v3d = v3d.addVector(Math.random() * 2 - 1, Math.random() * 0.4f - 0.2f, Math.random() * 2 - 1);
+			v3d = v3d.add(Math.random() * 2 - 1, Math.random() * 0.4f - 0.2f, Math.random() * 2 - 1);
 			EffectElement effect = new EffectElement(elf.world, v3d.x, v3d.y, v3d.z);
 			effect.setColor((float) Math.random(), (float) Math.random(), (float) Math.random());
 			EffectElement.addEffect(effect);

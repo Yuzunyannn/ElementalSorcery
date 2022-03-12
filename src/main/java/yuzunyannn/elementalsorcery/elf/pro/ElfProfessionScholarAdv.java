@@ -24,7 +24,7 @@ import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 public class ElfProfessionScholarAdv extends ElfProfessionScholar {
 
 	public ElfProfessionScholarAdv() {
-		this.setUnlocalizedName("scholar");
+		this.setTranslationKey("scholar");
 	}
 
 	public static TalkChapter getChapterForBuyParchment(Page page, EntityPlayer player) {

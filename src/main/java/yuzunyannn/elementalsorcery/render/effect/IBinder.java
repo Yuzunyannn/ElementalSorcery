@@ -21,7 +21,7 @@ public interface IBinder {
 
 		@Override
 		public Vec3d getPosition() {
-			return this.binder.getPositionVector().addVector(0, yoff, 0);
+			return this.binder.getPositionVector().add(0, yoff, 0);
 		}
 
 		@Override

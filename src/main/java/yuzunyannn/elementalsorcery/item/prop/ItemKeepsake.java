@@ -23,8 +23,8 @@ public class ItemKeepsake extends Item {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
-		return "item." + EnumType.fromId(stack.getMetadata()).getUnlocalizedName();
+	public String getTranslationKey(ItemStack stack) {
+		return "item." + EnumType.fromId(stack.getMetadata()).getTranslationKey();
 	}
 
 	@Override
@@ -47,7 +47,7 @@ public class ItemKeepsake extends Item {
 			return this.ordinal();
 		}
 
-		public String getUnlocalizedName() {
+		public String getTranslationKey() {
 			return unlocalizedName;
 		}
 

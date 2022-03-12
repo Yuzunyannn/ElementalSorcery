@@ -114,7 +114,7 @@ public class EffectMagicSquare extends EffectCondition {
 					b = (float) c.z;
 				}
 				float hSize = size / 2;
-				Vec3d pos = this.getPositionVector().addVector(rand.nextDouble() * size - hSize, 0.1,
+				Vec3d pos = this.getPositionVector().add(rand.nextDouble() * size - hSize, 0.1,
 						rand.nextDouble() * size - hSize);
 				EffectElementMove effect = new EffectElementMove(world, pos);
 				effect.setVelocity(0, 0.05f, 0);

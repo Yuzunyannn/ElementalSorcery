@@ -154,7 +154,7 @@ public class QuestConditionNeedExplore extends QuestCondition {
 			builder.append(I18n.format("quest.explore.4", structure, blockName));
 		} else {
 			ResourceLocation biomeId = new ResourceLocation(biome);
-			String biomeName = biomeId.getResourcePath();
+			String biomeName = biomeId.getPath();
 
 			if (block.isEmpty()) {
 				builder.append(I18n.format("quest.explore.1", biomeName));

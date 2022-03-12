@@ -44,7 +44,7 @@ public class Topic {
 		return 0;
 	}
 
-	public String getUnlocalizedName() {
+	public String getTranslationKey() {
 		return "topic." + this.type;
 	}
 

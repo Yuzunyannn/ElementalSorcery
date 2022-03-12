@@ -60,7 +60,7 @@ public class ContainerHearth extends ContainerNormal<TileHearth> implements IFie
 	}
 
 	// 获取名字
-	public String getUnlocalizedName() {
+	public String getTranslationKey() {
 		return tileEntity.getBlockUnlocalizedName();
 	}
 

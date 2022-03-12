@@ -264,7 +264,7 @@ public class MantraDataCommon implements IMantraData {
 		extra.deserializeNBT(nbt);
 
 		NBTTagList list = nbt.getTagList("$collect", NBTTag.TAG_COMPOUND);
-		if (!list.hasNoTags()) {
+		if (!list.isEmpty()) {
 			if (collectMap == null) collectMap = new HashMap<>();
 			collectMap.clear();
 			for (NBTBase base : list) this.add(new ElementStack((NBTTagCompound) base));

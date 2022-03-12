@@ -19,7 +19,7 @@ public class ItemSpellbookCover extends Item {
 	}
 
 	@Override
-	public String getUnlocalizedName(ItemStack stack) {
+	public String getTranslationKey(ItemStack stack) {
 		if (stack.getMetadata() == 0) return "item.spellbookCover";
 		return "item.spellbookCover.back";
 	}

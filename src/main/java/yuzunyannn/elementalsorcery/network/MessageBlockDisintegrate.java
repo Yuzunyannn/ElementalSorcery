@@ -150,7 +150,7 @@ public class MessageBlockDisintegrate implements IMessage {
 
 			if (state.getMaterial().isLiquid()) continue;
 
-			Vec3d vec = new Vec3d(pos).addVector(0.5, 0.5, 0.5);
+			Vec3d vec = new Vec3d(pos).add(0.5, 0.5, 0.5);
 			EffectBlockDisintegrate effect = new EffectBlockDisintegrate(world, vec, state);
 
 			ElementStack[] elements = ElementMap.instance.toElementStack(ItemHelper.toItemStack(state));

@@ -35,14 +35,14 @@ public class IOHelper {
 	}
 
 	public static NBTTagCompound readNBT(ResourceLocation path) throws IOException {
-		String rPath = "/assets/" + path.getResourceDomain() + "/" + path.getResourcePath();
+		String rPath = "/assets/" + path.getNamespace() + "/" + path.getPath();
 		try (InputStream istream = ESData.class.getResourceAsStream(rPath)) {
 			return CompressedStreamTools.readCompressed(istream);
 		}
 	}
 
 	public static String readString(ResourceLocation path) throws IOException {
-		String rPath = "/assets/" + path.getResourceDomain() + "/" + path.getResourcePath();
+		String rPath = "/assets/" + path.getNamespace() + "/" + path.getPath();
 		StringBuilder buider = new StringBuilder();
 		String line;
 		try (InputStream istream = ESData.class.getResourceAsStream(rPath)) {
@@ -56,17 +56,17 @@ public class IOHelper {
 	public static String[] getFilesFromResource(ResourceLocation path) throws IOException {
 		List<ModContainer> mods = Loader.instance().getModList();
 		for (ModContainer mc : mods) {
-			if (mc.getModId().equals(path.getResourceDomain())) {
+			if (mc.getModId().equals(path.getNamespace())) {
 				File file = mc.getSource();
 				if (file.isDirectory()) {
-					String rPath = "/assets/" + path.getResourceDomain() + "/" + path.getResourcePath();
+					String rPath = "/assets/" + path.getNamespace() + "/" + path.getPath();
 					file = new File(file.getAbsolutePath() + rPath);
 					List<String> list = new ArrayList<String>();
 					getFileRecursion("", list, file);
 					return list.toArray(new String[list.size()]);
 				} else {
-					String rPath = "assets/" + path.getResourceDomain() + "/";
-					String iPath = path.getResourcePath();
+					String rPath = "assets/" + path.getNamespace() + "/";
+					String iPath = path.getPath();
 					if (iPath.indexOf('/') == 0) iPath = iPath.substring(1);
 					JarFile jar = null;
 					try {

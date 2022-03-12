@@ -212,8 +212,8 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 
 	@SideOnly(Side.CLIENT)
 	public void doProduceEffect(ElementStack estack, TileEntity outTile) {
-		Vec3d vec = new Vec3d(pos).addVector(0.5, 7.5, 0.5);
-		vec = vec.addVector(rand.nextGaussian() * 1.25, rand.nextGaussian() * 1.25, rand.nextGaussian() * 1.25);
+		Vec3d vec = new Vec3d(pos).add(0.5, 7.5, 0.5);
+		vec = vec.add(rand.nextGaussian() * 1.25, rand.nextGaussian() * 1.25, rand.nextGaussian() * 1.25);
 		Vec3d speed = new Vec3d(structure.face().getDirectionVec()).scale(0.05 * this.speed);
 		if (outTile == null) {
 			EffectElementMove effect = new EffectElementMove(world, vec);
@@ -223,7 +223,7 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 			Effect.addEffect(effect);
 		} else {
 			EffectElementAbsorb effect = new EffectElementAbsorb(world, vec,
-					new Vec3d(outTile.getPos()).addVector(0.5, 0.5, 0.5));
+					new Vec3d(outTile.getPos()).add(0.5, 0.5, 0.5));
 			effect.setColor(estack.getColor());
 			effect.setVelocity(speed);
 			effect.startTick = 10;

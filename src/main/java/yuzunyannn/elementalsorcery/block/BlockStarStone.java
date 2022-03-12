@@ -14,7 +14,7 @@ public class BlockStarStone extends Block {
 
 	public BlockStarStone() {
 		super(Material.ROCK);
-		this.setUnlocalizedName("starStone");
+		this.setTranslationKey("starStone");
 		this.setHardness(3.5f);
 		this.setHarvestLevel("pickaxe", 0);
 	}

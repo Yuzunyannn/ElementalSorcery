@@ -201,7 +201,7 @@ public class GenElfEdifice {
 				boolean pup = rand.nextInt(4) == 0;
 				if (pup) yoff = 1;
 				else yoff = 0;
-				point = point.addVector(d.x, yoff, d.z);
+				point = point.add(d.x, yoff, d.z);
 				at = new BlockPos(point);
 				if (this.isReplaceable(world, at)) setBlockState(world, at, elfLog);
 			}

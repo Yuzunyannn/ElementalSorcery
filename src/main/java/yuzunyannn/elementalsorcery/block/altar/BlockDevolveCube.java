@@ -25,7 +25,7 @@ public class BlockDevolveCube extends BlockContainer {
 
 	public BlockDevolveCube() {
 		super(Material.GLASS);
-		this.setUnlocalizedName("devolveCube");
+		this.setTranslationKey("devolveCube");
 		this.setLightLevel(0.75F);
 		this.setHardness(5f);
 	}
@@ -46,7 +46,7 @@ public class BlockDevolveCube extends BlockContainer {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getBlockLayer() {
+	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.TRANSLUCENT;
 	}
 

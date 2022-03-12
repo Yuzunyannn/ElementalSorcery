@@ -31,7 +31,7 @@ import yuzunyannn.elementalsorcery.util.ESFakePlayer;
 public class MantraArrow extends MantraCommon {
 
 	public MantraArrow() {
-		this.setUnlocalizedName("arrow");
+		this.setTranslationKey("arrow");
 		this.setColor(0xccffff);
 		this.setIcon("arrow");
 		this.setRarity(95);

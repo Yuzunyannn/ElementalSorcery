@@ -15,7 +15,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 public class ItemMagicalEnderEye extends ItemEnderEye {
 
 	public ItemMagicalEnderEye() {
-		this.setUnlocalizedName("magicalEnderEye");
+		this.setTranslationKey("magicalEnderEye");
 		this.setMaxStackSize(16);
 		this.setMaxDamage(20);
 	}

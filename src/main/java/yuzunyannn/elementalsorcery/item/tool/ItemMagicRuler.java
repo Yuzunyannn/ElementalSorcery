@@ -30,7 +30,7 @@ import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 public class ItemMagicRuler extends Item {
 
 	public ItemMagicRuler() {
-		this.setUnlocalizedName("magicRuler");
+		this.setTranslationKey("magicRuler");
 		this.setMaxStackSize(1);
 	}
 
@@ -94,7 +94,7 @@ public class ItemMagicRuler extends Item {
 
 		EnumDyeColor dyeColor = ItemMagicRuler.getColor(stack);
 		tooltip.add(I18n.format("info.ruler.color", ColorHelper.toTextFormatting(dyeColor)
-				+ I18n.format("item.fireworksCharge." + dyeColor.getUnlocalizedName())));
+				+ I18n.format("item.fireworksCharge." + dyeColor.getTranslationKey())));
 		Integer dimensionId = ItemMagicRuler.getDimensionId(stack);
 		if (dimensionId == null) {
 			tooltip.add(TextFormatting.YELLOW + I18n.format("info.ruler.none"));

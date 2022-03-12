@@ -299,8 +299,8 @@ public abstract class Json {
 		Item item = Item.getByNameOrId(id);
 		if (item == null) {
 			ResourceLocation lid = new ResourceLocation(id);
-			if (!Loader.isModLoaded(lid.getResourceDomain()))
-				throw exception(ParseExceptionCode.NOT_LOAD_MOD, id, lid.getResourceDomain());
+			if (!Loader.isModLoaded(lid.getNamespace()))
+				throw exception(ParseExceptionCode.NOT_LOAD_MOD, id, lid.getNamespace());
 			throw exception(ParseExceptionCode.NOT_HAVE, id);
 		}
 		return item;
@@ -310,8 +310,8 @@ public abstract class Json {
 		Element element = Element.getElementFromName(id);
 		if (element == null) {
 			ResourceLocation lid = new ResourceLocation(id);
-			if (!Loader.isModLoaded(lid.getResourceDomain()))
-				throw exception(ParseExceptionCode.NOT_LOAD_MOD, id, lid.getResourceDomain());
+			if (!Loader.isModLoaded(lid.getNamespace()))
+				throw exception(ParseExceptionCode.NOT_LOAD_MOD, id, lid.getNamespace());
 			throw exception(ParseExceptionCode.NOT_HAVE, id);
 		}
 		return element;

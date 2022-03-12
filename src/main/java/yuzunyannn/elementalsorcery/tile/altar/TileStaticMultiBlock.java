@@ -97,6 +97,7 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 				altarWake.wake(IAltarWake.SEND, this.pos);
 				if (world.isRemote) genParticleElementTo(true, altarWake, extract, pos, animePos);
 				else {
+					markDirty();
 					einv.extractElement(need, false);
 					if (ElementHelper.isEmpty(einv)) altarWake.onInventoryStatusChange();
 				}
@@ -130,6 +131,7 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 			einv.insertElement(estack, false);
 			if (world.isRemote) genParticleElementTo(false, altarWake, estack, animePos, pos);
 			else if (isEmpty) altarWake.onInventoryStatusChange();
+			markDirty();
 			return true;
 		}
 		return false;
@@ -141,16 +143,16 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 		Vec3d refPos;
 		if (isGet) {
 			if (world.rand.nextFloat() < 0.5f) return;
-			refPos = new Vec3d(to).addVector(0.5, 0.5, 0.5);
+			refPos = new Vec3d(to).add(0.5, 0.5, 0.5);
 		} else {
 			if (world.rand.nextFloat() < 0.75f) return;
-			refPos = new Vec3d(from).addVector(0.5, 0.5, 0.5);
+			refPos = new Vec3d(from).add(0.5, 0.5, 0.5);
 		}
 		if (altarWake == null) {
 			if (isGet) TileElementalCube.giveParticleElementTo(world, estack.getColor(),
-					new Vec3d(from).addVector(0.5, 0.5, 0.5), refPos, 1);
+					new Vec3d(from).add(0.5, 0.5, 0.5), refPos, 1);
 			else TileElementalCube.giveParticleElementTo(world, estack.getColor(), refPos,
-					new Vec3d(to).addVector(0.5, 0.5, 0.5), 1);
+					new Vec3d(to).add(0.5, 0.5, 0.5), 1);
 		} else altarWake.updateEffect(world, isGet ? IAltarWake.SEND : IAltarWake.OBTAIN, estack, refPos);
 	}
 

@@ -38,7 +38,7 @@ public class SummonDreadCube extends SummonCommon {
 
 	private void randLightning() {
 		Vec3d vec = new Vec3d(pos);
-		vec = vec.addVector(0.5 + world.rand.nextGaussian(), 0, 0.5 + world.rand.nextGaussian());
+		vec = vec.add(0.5 + world.rand.nextGaussian(), 0, 0.5 + world.rand.nextGaussian());
 		WorldHelper.newLightning(world, vec);
 	}
 

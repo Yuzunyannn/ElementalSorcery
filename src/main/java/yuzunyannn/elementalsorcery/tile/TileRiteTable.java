@@ -215,7 +215,7 @@ public class TileRiteTable extends TileEntityNetwork {
 			this.markDirty();
 			NBTTagCompound nbt = FireworkEffect.fastNBT(0, 3, 0.1f, new int[] { 0x3ad2f2, 0x7ef5ff },
 					new int[] { 0xe0ffff });
-			Effects.spawnEffect(world, Effects.FIREWROK, new Vec3d(pos.up()).addVector(0.5, 0, 0.5), nbt);
+			Effects.spawnEffect(world, Effects.FIREWROK, new Vec3d(pos.up()).add(0.5, 0, 0.5), nbt);
 			return true;
 		}
 		// 默认仪式，进行随机获取

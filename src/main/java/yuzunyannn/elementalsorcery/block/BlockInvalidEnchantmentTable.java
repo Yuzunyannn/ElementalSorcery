@@ -17,7 +17,7 @@ public class BlockInvalidEnchantmentTable extends Block {
 	public BlockInvalidEnchantmentTable() {
 		super(Material.ROCK, MapColor.RED);
 		this.setLightOpacity(0);
-		this.setUnlocalizedName("invalidEnchantmentTable");
+		this.setTranslationKey("invalidEnchantmentTable");
 		setHarvestLevel("pickaxe", 1);
 		setHardness(5.0f);
 	}

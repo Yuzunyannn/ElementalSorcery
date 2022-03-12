@@ -59,7 +59,7 @@ public class JsonObject extends Json implements Iterable<String> {
 	}
 
 	public JsonObject(ResourceLocation resPath) throws IOException {
-		String rPath = "/assets/" + resPath.getResourceDomain() + "/" + resPath.getResourcePath();
+		String rPath = "/assets/" + resPath.getNamespace() + "/" + resPath.getPath();
 		try (BufferedReader reader = new BufferedReader(
 				new InputStreamReader(JsonObject.class.getResourceAsStream(rPath), "utf-8"))) {
 			Gson gson = new Gson();

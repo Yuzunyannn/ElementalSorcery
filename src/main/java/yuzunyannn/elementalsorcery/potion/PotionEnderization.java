@@ -114,7 +114,7 @@ public class PotionEnderization extends PotionCommon {
 		Vec3d vecTargetToOwner = new Vec3d(owner.posX - target.posX,
 				owner.getEntityBoundingBox().minY + owner.getEyeHeight() - (target.posY + target.getEyeHeight()),
 				owner.posZ - target.posZ);
-		double length = vecTargetToOwner.lengthVector();
+		double length = vecTargetToOwner.length();
 		vecTargetToOwner = vecTargetToOwner.normalize();
 		double dot = vecLook.dotProduct(vecTargetToOwner);
 		return dot > 1.0D - 0.025D / length ? target.canEntityBeSeen(owner) : false;
@@ -134,7 +134,7 @@ public class PotionEnderization extends PotionCommon {
 		if (entity.world.isRemote) return true;
 
 		IWorldTickTask.IWorldTickTaskOnce task = w -> {
-			MantraEnderTeleport.doEnderTeleport(entity.world, entity, new Vec3d(pos).addVector(0.5, 0.1, 0.5));
+			MantraEnderTeleport.doEnderTeleport(entity.world, entity, new Vec3d(pos).add(0.5, 0.1, 0.5));
 			entity.world.playSound((EntityPlayer) null, entity.prevPosX, entity.prevPosY, entity.prevPosZ,
 					SoundEvents.ENTITY_ENDERMEN_TELEPORT, entity.getSoundCategory(), 1.0F, 1.0F);
 			entity.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);

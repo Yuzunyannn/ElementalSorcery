@@ -45,7 +45,7 @@ public class Effects {
 	}
 
 	public static void spawnEffect(World world, int id, BlockPos pos, NBTTagCompound nbt) {
-		spawnEffect(world, id, new Vec3d(pos).addVector(0.5, 0.5, 0.5), nbt);
+		spawnEffect(world, id, new Vec3d(pos).add(0.5, 0.5, 0.5), nbt);
 	}
 
 	@SideOnly(Side.CLIENT)

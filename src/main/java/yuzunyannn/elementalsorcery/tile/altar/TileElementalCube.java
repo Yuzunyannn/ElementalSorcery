@@ -60,10 +60,10 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 		if (rand.nextFloat() > possibility) return;
 		EffectElementFly effect;
 		if (pto.y > from.y) {
-			from = from.addVector(rand.nextDouble() - 0.5, rand.nextDouble() - 0.5, rand.nextDouble() - 0.5);
-			pto = pto.addVector(rand.nextDouble() - 0.5, 0, rand.nextDouble() - 0.5);
+			from = from.add(rand.nextDouble() - 0.5, rand.nextDouble() - 0.5, rand.nextDouble() - 0.5);
+			pto = pto.add(rand.nextDouble() - 0.5, 0, rand.nextDouble() - 0.5);
 		} else {
-			from = from.addVector(rand.nextDouble() * 0.5 - 0.25, rand.nextDouble() * 0.5 - 0.25,
+			from = from.add(rand.nextDouble() * 0.5 - 0.25, rand.nextDouble() * 0.5 - 0.25,
 					rand.nextDouble() * 0.5 - 0.25);
 		}
 		effect = new EffectElementFly(world, from, pto);
@@ -128,7 +128,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void updateEffect(World world, int type, ElementStack estack, Vec3d pos) {
-		Vec3d myPos = new Vec3d(this.pos).addVector(0.5, 0.25 + 0.5, 0.5);
+		Vec3d myPos = new Vec3d(this.pos).add(0.5, 0.25 + 0.5, 0.5);
 		if (type == IAltarWake.SEND) giveParticleElementTo(world, estack.getColor(), myPos, pos, 1);
 		else giveParticleElementTo(world, estack.getColor(), pos, myPos, 1);
 	}

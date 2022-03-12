@@ -24,8 +24,8 @@ public interface ICasterObject extends ICapabilityProvider {
 
 	default Vec3d getEyePosition() {
 		Entity entity = asEntity();
-		if (entity == null) return getPositionVector().addVector(0.5, 0.5, 0.5);
-		else return entity.getPositionVector().addVector(0, entity.getEyeHeight(), 0);
+		if (entity == null) return getPositionVector().add(0.5, 0.5, 0.5);
+		else return entity.getPositionVector().add(0, entity.getEyeHeight(), 0);
 	}
 
 	default BlockPos getPosition() {

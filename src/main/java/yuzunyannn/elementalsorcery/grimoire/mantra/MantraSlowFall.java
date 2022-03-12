@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 public class MantraSlowFall extends MantraCommon {
 
 	public MantraSlowFall() {
-		this.setUnlocalizedName("slowFall");
+		this.setTranslationKey("slowFall");
 		this.setColor(0xacffff);
 		this.setIcon("slow_fall");
 		this.setRarity(125);
@@ -81,7 +81,7 @@ public class MantraSlowFall extends MantraCommon {
 		Vec3d pos = caster.iWantCaster().getPositionVector();
 		float r = 0.5f;
 		float theta = EventClient.globalRotate / 180 * 3.14f * 10;
-		Vec3d at = pos.addVector(MathHelper.sin(theta) * r, 1, MathHelper.cos(theta) * r);
+		Vec3d at = pos.add(MathHelper.sin(theta) * r, 1, MathHelper.cos(theta) * r);
 		EffectElementMove effect = new EffectElementMove(world, at);
 		effect.scale = 0.2f;
 		Vec3d v = new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian()).normalize();

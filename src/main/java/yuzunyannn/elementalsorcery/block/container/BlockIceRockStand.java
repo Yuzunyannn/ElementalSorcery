@@ -6,9 +6,12 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.tile.TileIceRockStand;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class BlockIceRockStand extends BlockContainerNormal {
@@ -38,5 +41,13 @@ public class BlockIceRockStand extends BlockContainerNormal {
 		if (tile != null) tile.checkAndBreakStructure();
 		super.breakBlock(worldIn, pos, state);
 	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public BlockRenderLayer getRenderLayer() {
+		return BlockRenderLayer.SOLID;
+	}
+	
+	
 
 }

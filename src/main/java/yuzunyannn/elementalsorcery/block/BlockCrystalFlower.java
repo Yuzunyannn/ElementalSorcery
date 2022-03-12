@@ -32,7 +32,7 @@ public class BlockCrystalFlower extends BlockBush implements ITileEntityProvider
 	public BlockCrystalFlower() {
 		super(Material.PLANTS, MapColor.GREEN);
 		this.setSoundType(SoundType.PLANT);
-		this.setUnlocalizedName("crystalFlower");
+		this.setTranslationKey("crystalFlower");
 		Blocks.FIRE.setFireInfo(this, 20, 5);
 		this.hasTileEntity = true;
 		this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, 0));

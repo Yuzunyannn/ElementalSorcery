@@ -272,7 +272,7 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 		double x = rand.nextDouble() * 0.2 + 0.4;
 		double z = rand.nextDouble() * 0.2 + 0.4;
 		double y = rand.nextDouble() * 0.1 + 0.45;
-		ParticleTranscribe effect = new ParticleTranscribe(world, pos.addVector(x, y, z));
+		ParticleTranscribe effect = new ParticleTranscribe(world, pos.add(x, y, z));
 		int c = mantraHandle.getColor(null);
 		float r = ((c >> 16) & 0xff) / 255f;
 		float g = ((c >> 8) & 0xff) / 255f;
@@ -365,7 +365,7 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 		double x = rand.nextDouble() * 0.5 + 0.25;
 		double z = rand.nextDouble() * 0.5 + 0.25;
 		double y = rand.nextDouble() * 0.1 + 0.45;
-		Vec3d pos = new Vec3d(this.pos).addVector(x, y, z);
+		Vec3d pos = new Vec3d(this.pos).add(x, y, z);
 		EffectElementMove effect = new EffectElementMove(world, pos);
 		effect.setColor(estack.getColor());
 		Effect.addEffect(effect);

@@ -29,7 +29,7 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemSpellbookLaunch extends ItemSpellbook {
 	public ItemSpellbookLaunch() {
-		this.setUnlocalizedName("spellbookLaunch");
+		this.setTranslationKey("spellbookLaunch");
 	}
 
 	@SideOnly(Side.CLIENT)

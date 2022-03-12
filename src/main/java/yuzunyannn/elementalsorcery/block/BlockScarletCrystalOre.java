@@ -24,12 +24,12 @@ public class BlockScarletCrystalOre extends Block {
 		super(Material.ROCK);
 		this.setHarvestLevel("pickaxe", 2);
 		this.setHardness(2F);
-		this.setUnlocalizedName("scarletCrystalOre");
+		this.setTranslationKey("scarletCrystalOre");
 		this.setLightLevel(0.25f);
 	}
 
 	@Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
 		if (entityIn instanceof EntityLivingBase) entityIn.setFire(2);
 	}
 

@@ -35,7 +35,7 @@ public class ItemParchment extends Item {
 	}
 
 	public ItemParchment() {
-		this.setUnlocalizedName("parchment");
+		this.setTranslationKey("parchment");
 	}
 
 	@Override

@@ -75,6 +75,12 @@ public class TileEntityNetwork extends TileEntity {
 	}
 
 	@Override
+	public void markDirty() {
+		if (world.isRemote) return;
+		super.markDirty();
+	}
+
+	@Override
 	@SideOnly(Side.CLIENT)
 	public double getMaxRenderDistanceSquared() {
 		if (TILE_ENTITY_RENDER_DISTANCE > 0) return TILE_ENTITY_RENDER_DISTANCE * TILE_ENTITY_RENDER_DISTANCE;

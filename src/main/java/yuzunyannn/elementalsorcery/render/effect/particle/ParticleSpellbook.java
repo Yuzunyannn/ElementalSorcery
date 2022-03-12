@@ -32,7 +32,7 @@ public class ParticleSpellbook extends Particle {
 		this.prevPosY = this.posY;
 		this.prevPosZ = this.posZ;
 		// 计算速度
-		Vec3d at = entity.getPositionVector().addVector(0, 1.0, 0);
+		Vec3d at = entity.getPositionVector().add(0, 1.0, 0);
 		Vec3d distance = at.subtract(posX, posY, posZ);
 		double F = G * distance.lengthSquared();
 		Vec3d a = distance.normalize().scale(F);
