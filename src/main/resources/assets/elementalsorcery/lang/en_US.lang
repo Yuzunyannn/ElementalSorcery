@@ -113,6 +113,7 @@ item.calamityGem.name=Calamity Gem
 item.arrogantWool.name=Arrogant Wool
 item.blessingJadePiece.name=Blessing Jade Fragment
 item.elementCrack.name=Element Crack
+item.entangleNode.name=Entangle Node
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -198,6 +199,7 @@ tile.devolveCube.name=Devolve Cube
 tile.disintegrateStela.name=Material Collapse Stela
 tile.iceRockStand.name=Icerock Pedestal
 tile.iceRockCrystalBlock.name=Icerock Crystal Block
+tile.iceRockNode.name=<->
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
@@ -458,6 +460,7 @@ info.previous=Previous %s
 info.fairy.cube.module.count=Rune of possession: %d
 info.set.common=Set %s
 info.magic.fragment=Magic Fragment
+info.tileEntity.not.find=No Block's Data
 
 lev.defective=defective
 lev.unsuited=unsuited

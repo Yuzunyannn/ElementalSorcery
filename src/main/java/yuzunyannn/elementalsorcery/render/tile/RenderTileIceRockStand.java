@@ -62,8 +62,14 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 			GlStateManager.translate(0.5, 0.5, 0.5);
 			GlStateManager.rotate(rotation / 3, 0, 1, 0);
 			GlStateManager.translate(-0.5, -0.5, -0.5);
-			double ratio = tile.getMagicFragment() / tile.getMagicFragmentCapacity();
-			renderCrystal(tile, count + 1, Math.min(ratio, 1), rotation / 20);
+			double ratio = 0;
+			double fragment = tile.getMagicFragment();
+			double fragmentCapacity = tile.getMagicFragmentCapacity();
+			if (fragment < 100000) ratio = fragment / 100000 * 0.15;
+			else ratio = 0.15 + 0.85 * (fragment - 100000) / (fragmentCapacity - 100000);
+			renderCrystalTexture(Math.min(ratio, 1), rotation / 20);
+			getFrameBuff().bindTexture();
+			renderCrystal(count + 1);
 			GlStateManager.popMatrix();
 
 			if (this.rendererDispatcher.cameraHitResult != null
@@ -83,8 +89,7 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 		GlStateManager.enableCull();
 	}
 
-	public static void renderCrystal(TileIceRockStand tile, int high, double ratio, float offset) {
-
+	public static void renderCrystalTexture(double ratio, float offset) {
 		getFrameBuff().bindFrame(false);
 
 		net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
@@ -131,9 +136,13 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 		GlStateManager.popMatrix();
 
 		net.minecraft.client.renderer.RenderHelper.enableStandardItemLighting();
-
 		getFrameBuff().unbindFrame();
-		getFrameBuff().bindTexture();
+	}
+
+	public static void renderCrystal(int high) {
+
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
 
 		double len = 0.8536;
 		double rlen = 1 - len;

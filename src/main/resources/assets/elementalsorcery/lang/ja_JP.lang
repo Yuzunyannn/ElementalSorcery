@@ -113,6 +113,7 @@ item.calamityGem.name=災害の宝石
 item.arrogantWool.name=傲慢な羊毛
 item.blessingJadePiece.name=祝福の玉のかけら
 item.elementCrack.name=元素ひび割れ
+item.entangleNode.name=絡み合うノード
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -198,6 +199,7 @@ tile.devolveCube.name=てんい立方体
 tile.disintegrateStela.name=崩解し石碑
 tile.iceRockStand.name=岩氷の台座
 tile.iceRockCrystalBlock.name=岩氷の水晶ブロック
+tile.iceRockNode.name=<->
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -458,6 +460,7 @@ info.previous=前の%s
 info.fairy.cube.module.count=ルーンの所持：%d
 info.set.common=設定%s
 info.magic.fragment=魔力断片
+info.tileEntity.not.find=ブロックのデータなし
 
 lev.defective=劣等品
 lev.unsuited=似合わない 

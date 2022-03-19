@@ -19,7 +19,8 @@ public class DamageHelper {
 
 	/** 通用的，魔法伤害 */
 	public static DamageSource getMagicDamageSource(@Nullable Entity source, @Nullable Entity directSource) {
-		if (directSource == null && source == null) return DamageSource.MAGIC;
+		if (directSource == null && source == null)
+			return new DamageSource("magic").setDamageBypassesArmor().setMagicDamage();
 		else return DamageSource.causeIndirectMagicDamage(directSource, source);
 	}
 

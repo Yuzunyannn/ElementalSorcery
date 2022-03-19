@@ -278,7 +278,7 @@ public abstract class TileMDBase extends TileEntity
 				// 没有火把的情况下，由于是第一出来，也会强行说hi
 				TargetInfo info = this.findTarget(this.pos, facing, this.getDistance());
 				if (info != null) {
-					TileMDBase tile = info.to(TileMDBase.class);
+					IProvideMagic tile = info.to(IProvideMagic.class);
 					if (tile != null) tile.hi(this.pos, facing.getOpposite());
 				}
 			}

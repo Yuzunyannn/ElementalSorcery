@@ -561,6 +561,11 @@
 			"zh_CN": "元素裂縫",
 			"en_US": "Element Crack",
 			"ja_JP": "元素ひび割れ"
+		},
+		"item.entangleNode.name": {
+			"zh_CN": "缠绕节点",
+			"en_US": "Entangle Node",
+			"ja_JP": "絡み合うノード"
 		}
 	},
 	"tile": {
@@ -974,15 +979,20 @@
 			"en_US": "Material Collapse Stela",
 			"ja_JP": "崩解し石碑"
 		},
-		"tile.iceRockStand.name":{
+		"tile.iceRockStand.name": {
 			"zh_CN": "岩冰塔座",
 			"en_US": "Icerock Pedestal",
 			"ja_JP": "岩氷の台座"
 		},
-		"tile.iceRockCrystalBlock.name":{
+		"tile.iceRockCrystalBlock.name": {
 			"zh_CN": "岩冰水晶块",
 			"en_US": "Icerock Crystal Block",
 			"ja_JP": "岩氷の水晶ブロック"
+		},
+		"tile.iceRockNode.name": {
+			"zh_CN": "<->",
+			"en_US": "<->",
+			"ja_JP": "<->"
 		}
 	},
 	"es.effect": {
@@ -2246,10 +2256,15 @@
 			"en_US": "Set %s",
 			"ja_JP": "設定%s"
 		},
-		"info.magic.fragment":{
+		"info.magic.fragment": {
 			"zh_CN": "魔力片元",
 			"en_US": "Magic Fragment",
 			"ja_JP": "魔力断片"
+		},
+		"info.tileEntity.not.find": {
+			"zh_CN": "没有方块的数据",
+			"en_US": "No Block's Data",
+			"ja_JP": "ブロックのデータなし"
 		}
 	},
 	"lev": {

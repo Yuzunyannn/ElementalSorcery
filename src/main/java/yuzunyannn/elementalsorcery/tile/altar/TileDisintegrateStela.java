@@ -218,7 +218,11 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 		}
 
 		// 再过载大于1时，会强行降低overload数据
-		if (tick % 20 == 0 && overload > 1) reduceOverloadMap(0.5f, e -> false);
+		if (tick % 20 == 0) {
+			float olp = Math.max(overloadProtect, 0);
+			if (overload > 1) reduceOverloadMap(0.5f / (olp + 1), e -> false);
+			else if (olp > 0.25f) reduceOverloadMap(1 / (olp + 1), e -> false);
+		}
 		// 更新发送数据
 		updateCheckAndSendData();
 

@@ -161,17 +161,19 @@ public class NBTHelper {
 
 	public static void setVec3d(NBTTagCompound nbt, String key, Vec3d pos) {
 		if (pos == null) return;
-		nbt.setFloat(key + "x", (float) pos.x);
-		nbt.setFloat(key + "y", (float) pos.y);
-		nbt.setFloat(key + "z", (float) pos.z);
+		nbt.setIntArray(key, new int[] { Float.floatToIntBits((float) pos.x), Float.floatToIntBits((float) pos.y),
+				Float.floatToIntBits((float) pos.z) });
 	}
 
 	public static boolean hasVec3d(NBTTagCompound nbt, String key) {
-		return nbt.hasKey(key + "x");
+		return nbt.hasKey(key);
 	}
 
 	public static Vec3d getVec3d(NBTTagCompound nbt, String key) {
-		return new Vec3d(nbt.getFloat(key + "x"), nbt.getFloat(key + "y"), nbt.getFloat(key + "z"));
+		int[] array = nbt.getIntArray(key);
+		if (array == null || array.length < 3) return Vec3d.ZERO;
+		return new Vec3d(Float.intBitsToFloat(array[0]), Float.intBitsToFloat(array[1]),
+				Float.intBitsToFloat(array[2]));
 	}
 
 	public static void setIntegerForSend(NBTTagCompound nbt, String key, int n) {

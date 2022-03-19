@@ -48,6 +48,12 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 	}
 
 	@Override
+	public void onChunkUnload() {
+		super.onChunkUnload();
+		if (Mods.isLoaded(Mods.IC2)) this.onChunkUnloadIC2();
+	}
+
+	@Override
 	public void onUpdate() {
 		super.onUpdate();
 		if (tick % 80 == 0) findMagicDriverAll();
@@ -69,6 +75,24 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 		return false;
 	}
 
+	public boolean isCannotTransferTile(TileEntity other, int type) {
+		if (other == null) return true;
+		if (other instanceof TileIceRockSendRecv) {
+			if (type == 1) return true;
+			TileIceRockSendRecv sr = (TileIceRockSendRecv) other;
+			if (sr.getLinkPos() == null) return true;
+			if (this.getLinkPos() == null) return true;
+			if (this.getLinkPos().equals(sr.getLinkPos())) return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void link(BlockPos standPos) {
+		super.link(standPos);
+		checkAroundEnergyCache();
+	}
+
 	/**
 	 * ==================================================================== ^_^ <br>
 	 * ↓ MD Part ↓ <br>
@@ -79,7 +103,7 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 
 	public void onUpdateMagicTranfer(int tick) {
 		if (world.isRemote) {
-			this.onUpdateMagicTranferClint(tick);
+			this.onUpdateMagicTranferClient(tick);
 			return;
 		}
 		BlockPos pos = getPos();
@@ -120,7 +144,7 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void onUpdateMagicTranferClint(int tick) {
+	public void onUpdateMagicTranferClient(int tick) {
 		if (tick % 2 == 0) return;
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			if (TileMDBase.hasTorch(world, pos, facing)) {
@@ -157,7 +181,12 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 
 	public void findMagicDriver(EnumFacing facing, boolean sayHi) {
 		int index = facing.getHorizontalIndex();
-		if (!TileMDBase.hasTorch(world, pos, facing)) {
+		if (!TileMDBase.hasTorch(world, pos, facing)) ending: {
+			FaceStatus fs = getFaceStatus(facing);
+			if (fs == FaceStatus.OUT) {
+				TileEntity tile = (TileEntity) BlockHelper.getTileEntity(world, pos.offset(facing), IAcceptMagic.class);
+				if (!isCannotTransferTile(tile, 1)) break ending;
+			}
 			if (mdFacePos == null) return;
 			mdFacePos[index] = null;
 			TileMDBase.torch(world, pos, facing, false);
@@ -165,6 +194,7 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 		}
 		if (mdFacePos == null) mdFacePos = new BlockPos[4];
 		TileEntity tile = TileMDBase.findTarget(world, pos, facing, 16);
+		if (isCannotTransferTile(tile, 2)) tile = null;
 		mdFacePos[index] = tile == null ? null : tile.getPos();
 		if (mdFacePos[index] != null) {
 			if (sayHi && tile instanceof IProvideMagic) ((IProvideMagic) tile).hi(pos, facing.getOpposite());
@@ -187,10 +217,9 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 		for (int i = 0; i < energyCache.length; i++) {
 			IEnergyStorage storage = energyCache[i];
 			if (storage == null) continue;
-			EnumFacing facing = EnumFacing.byHorizontalIndex(i);
+			EnumFacing facing = EnumFacing.byIndex(i);
 			FaceStatus fs = getFaceStatus(facing);
 			if (fs != FaceStatus.OUT) continue;
-
 			double capacity = core.getMagicFragmentCapacity();
 			double fragmet = core.getMagicFragment();
 			double sendFragmet = Math.min(capacity - fragmet, core.getMaxFragmentOnceTransfer());
@@ -204,18 +233,20 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 	}
 
 	public void checkAroundEnergyCache() {
-		for (EnumFacing facing : EnumFacing.HORIZONTALS) checkFaceChange(facing);
+		if (hasUpDownFace()) for (EnumFacing facing : EnumFacing.VALUES) checkFaceChange(facing);
+		else for (EnumFacing facing : EnumFacing.HORIZONTALS) checkFaceChange(facing);
 	}
 
 	@Override
 	public void checkFaceChange(EnumFacing facing) {
 		if (world.isRemote) return;
-		if (facing.getHorizontalIndex() < 0) return;
-		energyCache[facing.getHorizontalIndex()] = null;
+		if (!hasUpDownFace() && facing.getHorizontalIndex() < 0) return;
+		energyCache[facing.getIndex()] = null;
 		TileEntity tile = world.getTileEntity(pos.offset(facing));
 		if (tile == null) return;
+		if (isCannotTransferTile(tile, 2)) return;
 		if (!tile.hasCapability(CapabilityEnergy.ENERGY, facing.getOpposite())) return;
-		energyCache[facing.getHorizontalIndex()] = tile.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite());
+		energyCache[facing.getIndex()] = tile.getCapability(CapabilityEnergy.ENERGY, facing.getOpposite());
 	}
 
 	@Override
@@ -335,10 +366,8 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 		if (ic2EnergyTileHelper != null) ic2EnergyTileHelper.onLoad();
 	}
 
-	@Override
 	@Optional.Method(modid = Mods.IC2)
-	public void onChunkUnload() {
-		super.onChunkUnload();
+	public void onChunkUnloadIC2() {
 		if (ic2EnergyTileHelper != null) ic2EnergyTileHelper.onChunkUnload();
 	}
 

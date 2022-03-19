@@ -41,6 +41,12 @@ public abstract class TileIceRockBase extends TileEntityNetwork implements IElem
 		return fragment / toFragmentUnit(element, targetPower);
 	}
 
+	@Override
+	public void onChunkUnload() {
+		super.onChunkUnload();
+		tileEntityInvalid = true;
+	}
+
 	/**
 	 * @retrun 剩余没有成功插入的片元
 	 */
@@ -103,7 +109,7 @@ public abstract class TileIceRockBase extends TileEntityNetwork implements IElem
 		@Override
 		public boolean insertElement(int slot, ElementStack estack, boolean simulate) {
 			if (estack.isEmpty()) return true;
-			if (estack.isMagic()) estack = estack.toMagic(world);
+			if (!estack.isMagic()) estack = estack.toMagic(world);
 			double fragment = toFragment(estack);
 			double rest = insertMagicFragment(fragment, simulate);
 			if (rest == fragment) return false;

@@ -8,13 +8,18 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
+import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
-public abstract class TileIceRockSendRecv extends TileIceRockBase {
+public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAltarWake {
 
 	static public enum FaceStatus {
 		NONE,
@@ -23,7 +28,7 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase {
 	};
 
 	protected BlockPos linkPos;
-	protected FaceStatus[] faceStatus = new FaceStatus[4];
+	protected FaceStatus[] faceStatus = new FaceStatus[6];
 	protected WeakReference<TileIceRockStand> tileCoreRef = new WeakReference<>(null);
 
 	@Override
@@ -51,6 +56,10 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase {
 		else linkPos = null;
 	}
 
+	public boolean hasUpDownFace() {
+		return false;
+	}
+
 	public boolean isLinked() {
 		return linkPos != null;
 	}
@@ -72,7 +81,7 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase {
 		tileCoreRef = new WeakReference<>(null);
 	}
 
-	private void findIceRockCore() {
+	protected void findIceRockCore() {
 		TileIceRockStand tile = BlockHelper.getTileEntity(world, linkPos, TileIceRockStand.class);
 		tileCoreRef = new WeakReference<>(tile);
 	}
@@ -93,7 +102,7 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase {
 
 	public FaceStatus getFaceStatus(EnumFacing facing) {
 		try {
-			FaceStatus status = faceStatus[facing.getHorizontalIndex()];
+			FaceStatus status = faceStatus[facing.getIndex()];
 			return status == null ? FaceStatus.NONE : status;
 		} catch (ArrayIndexOutOfBoundsException e) {
 			return FaceStatus.NONE;
@@ -102,7 +111,7 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase {
 
 	public void setFaceStatus(EnumFacing facing, FaceStatus status) {
 		try {
-			faceStatus[facing.getHorizontalIndex()] = status;
+			faceStatus[facing.getIndex()] = status;
 		} catch (ArrayIndexOutOfBoundsException e) {}
 	}
 
@@ -175,7 +184,7 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase {
 	}
 
 	public void checkFaceChange(EnumFacing facing) {
-		
+
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -198,7 +207,7 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase {
 		faceAnimeData = new FaceAnimeData[faceStatus.length];
 		for (int i = 0; i < faceAnimeData.length; i++) {
 			faceAnimeData[i] = new FaceAnimeData();
-			checkFaceChange(EnumFacing.byHorizontalIndex(i));
+			checkFaceChange(EnumFacing.byIndex(i));
 		}
 	}
 
@@ -224,8 +233,13 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase {
 		}
 
 		if (tick % 20 == 0) {
-			for (EnumFacing facing : EnumFacing.HORIZONTALS)
-				faceAnimeData[facing.getHorizontalIndex()].shouldShow = !world.isAirBlock(pos.offset(facing));
+			if (hasUpDownFace()) {
+				for (EnumFacing facing : EnumFacing.VALUES)
+					faceAnimeData[facing.getIndex()].shouldShow = !world.isAirBlock(pos.offset(facing));
+			} else {
+				for (EnumFacing facing : EnumFacing.HORIZONTALS)
+					faceAnimeData[facing.getIndex()].shouldShow = !world.isAirBlock(pos.offset(facing));
+			}
 		}
 
 		if (clientUpdateFlag) {
@@ -246,11 +260,30 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase {
 	@SideOnly(Side.CLIENT)
 	public float getFaceAnimeRate(EnumFacing facing, float partialTicks) {
 		try {
-			FaceAnimeData dat = faceAnimeData[facing.getHorizontalIndex()];
+			if (!hasUpDownFace() && facing.getHorizontalIndex() < 0) return 0;
+			FaceAnimeData dat = faceAnimeData[facing.getIndex()];
 			return RenderHelper.getPartialTicks(dat.r, dat.prevR, partialTicks);
 		} catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
-			return 1;
+			return 0;
 		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	public boolean needRenderFaceEffect() {
+		return isLinked();
+	}
+
+	@Override
+	public boolean wake(int type, BlockPos from) {
+		return true;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void updateEffect(World world, int type, ElementStack estack, Vec3d pos) {
+		Vec3d myPos = new Vec3d(this.pos).add(0.5, 0.25 + 0.5, 0.5);
+		if (type == IAltarWake.SEND) TileElementalCube.giveParticleElementTo(world, estack.getColor(), myPos, pos, 1);
+		else TileElementalCube.giveParticleElementTo(world, estack.getColor(), pos, myPos, 1);
 	}
 
 }

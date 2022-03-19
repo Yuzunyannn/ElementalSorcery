@@ -1,18 +1,39 @@
 package yuzunyannn.elementalsorcery.tile.ir;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
+import java.util.function.Function;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.block.container.BlockIceRockStand;
+import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.render.effect.Effects;
+import yuzunyannn.elementalsorcery.tile.ir.TileIceRockSendRecv.FaceStatus;
+import yuzunyannn.elementalsorcery.util.LamdaReference;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.Color;
+import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class TileIceRockStand extends TileIceRockBase implements ITickable {
+
+	public static final float ONE_DAMAGE_ENND_FRAGMENT = 100000f;
+	public static final float DAMAGE_GROW_POWER = 1.1f;
 
 	protected int tick;
 
@@ -20,6 +41,13 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 	protected int linkCount = 0;
 	/** 服务端检查变化量是否值得更新 */
 	public double lastUpdateMagicFragment = 0;
+	/** 子节点管 */
+	protected List<BlockPos> subNodes = new LinkedList<>();
+	/** 发动攻击的时间，配合动画，同时作为cd */
+	protected int attackReadyTick = 0;
+	protected float attackDamage;
+	protected Vec3d attackVec;
+	protected EntityLivingBase attackCaller;
 
 	@Override
 	public double getMagicFragment() {
@@ -32,17 +60,22 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 	}
 
 	@Override
-	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound.setInteger("linkCount", linkCount);
-		compound.setDouble("fragment", getMagicFragment());
-		return super.writeToNBT(compound);
+	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
+		nbt = super.writeToNBT(nbt);
+		nbt.setInteger("linkCount", linkCount);
+		nbt.setDouble("fragment", getMagicFragment());
+		if (isSending()) return nbt;
+		NBTHelper.setBlockPosCollection(nbt, "subNs", subNodes);
+		return nbt;
 	}
 
 	@Override
-	public void readFromNBT(NBTTagCompound compound) {
-		linkCount = compound.getInteger("linkCount");
-		setMagicFragment(compound.getDouble("fragment"));
-		super.readFromNBT(compound);
+	public void readFromNBT(NBTTagCompound nbt) {
+		super.readFromNBT(nbt);
+		linkCount = nbt.getInteger("linkCount");
+		setMagicFragment(nbt.getDouble("fragment"));
+		if (isSending()) return;
+		subNodes = new LinkedList<>(NBTHelper.getBlockPosList(nbt, "subNs"));
 	}
 
 	/** 檢查合并建築 */
@@ -57,6 +90,12 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 			setMagicFragment(getMagicFragment() + tile.transferMagicFragment());
 			tile.link(pos);
 			linkCount++;
+		}
+		if (linkCount > 0) {
+			ergodicSubNodes(sub -> {
+				sub.link(pos);
+				return null;
+			});
 		}
 
 		markDirty();
@@ -81,13 +120,17 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 			}
 		}
 
+		ergodicSubNodes(sub -> {
+			sub.unlink();
+			return null;
+		});
+
 		linkCount = 0;
 		setMagicFragment(0);
 		markDirty();
 	}
 
 	public void updateStandDataToClent() {
-		System.out.print("??");
 		lastUpdateMagicFragment = getMagicFragment();
 		this.updateToClient();
 	}
@@ -112,7 +155,7 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 	}
 
 	public double getMaxFragmentOnceTransfer() {
-		return getMagicFragmentCapacity() / 32;
+		return getMagicFragmentCapacity() / 128;
 	}
 
 //	/** 高速缓存 */
@@ -141,10 +184,18 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 
 		if (world.isRemote) return;
 
+		// 尝试更新
 		if (tick % 20 == 0) {
 			double fragment = getMagicFragment();
 			double log10 = Math.max(Math.log10(fragment) - 3, 1);
 			if (Math.ceil(fragment / log10) != Math.ceil(lastUpdateMagicFragment / log10)) updateStandDataToClent();
+		}
+
+		if (tick % 200 == 0) onUpdateSubNode();
+
+		if (attackReadyTick > 0) {
+			attackReadyTick--;
+			if (attackReadyTick == 0) doAttack();
 		}
 	}
 
@@ -169,6 +220,10 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 		return remian;
 	}
 
+	/**
+	 * 
+	 * return 实际取出来的
+	 */
 	@Override
 	public double extractMagicFragment(double count, boolean simulate) {
 		double fragment = getMagicFragment();
@@ -177,6 +232,184 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 		setMagicFragment(fragment - extract);
 		markDirty();
 		return extract;
+	}
+
+	public int getRadiationRange() {
+		return Math.min(linkCount * 5 + 8, 16 * 3);
+	}
+
+	public boolean isInRange(BlockPos pos, int extend) {
+		int range = getRadiationRange();
+		return MathHelper.sqrt(this.pos.distanceSq(pos)) <= range + extend;
+	}
+
+	public boolean isInRange(Vec3d pos, int extend) {
+		int range = getRadiationRange();
+		return new Vec3d(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5).distanceTo(pos) <= range
+				+ extend;
+	}
+
+	/** 进行攻击 */
+	protected void doAttack() {
+		if (attackVec == null) return;
+		if (attackDamage <= 0) return;
+		double rang = MathHelper.clamp(Math.pow(attackDamage, 0.25), 1, 4) + 2;
+		AxisAlignedBB aabb = WorldHelper.createAABB(attackVec, rang, rang, rang);
+		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
+		for (EntityLivingBase entity : entities) {
+			if (attackCaller != null && EntityHelper.isSameTeam(attackCaller, entity)) continue;
+			DamageSource ds = DamageHelper.getMagicDamageSource(this.attackCaller, null);
+			float attenuation = (float) Math.max(entity.getDistance(attackVec.x, attackVec.y, attackVec.z) - 1, 0.8);
+			entity.attackEntityFrom(ds, attackDamage / attenuation);
+		}
+		attackDamage = 0;
+		attackVec = null;
+	}
+
+	public void notifySubNodeCome(TileIceRockSendRecv node) {
+		if (world.isRemote) return;
+		if (subNodes.indexOf(node.getPos()) == -1) node.unlink();
+	}
+
+	/** 获取子节点的最多个数 */
+	public int getMaxSubNodeCount() {
+		return linkCount - 2;
+	}
+
+	public void ergodicSubNodes(Function<TileIceRockNode, Boolean> act) {
+		Iterator<BlockPos> iter = subNodes.iterator();
+		while (iter.hasNext()) {
+			BlockPos at = iter.next();
+			TileIceRockNode node = BlockHelper.getTileEntity(world, at, TileIceRockNode.class);
+			if (node == null) {
+				iter.remove();
+				continue;
+			}
+			BlockPos nodeLinkPos = node.getLinkPos();
+			if (nodeLinkPos == null) node.link(pos);
+			else if (!nodeLinkPos.equals(pos)) {
+				iter.remove();
+				continue;
+			}
+			Boolean ret = act.apply(node);
+			if (ret == Boolean.TRUE) {
+				iter.remove();
+				node.unlink();
+			}
+		}
+	}
+
+	protected BlockPos lastNodeFindPos;
+
+	public void onUpdateSubNode() {
+		int maxCount = getMaxSubNodeCount();
+		ergodicSubNodes(node -> {
+			return subNodes.size() > maxCount || !isInRange(node.getPos(), 1);
+		});
+		if (maxCount <= subNodes.size()) return;
+
+		while (maxCount > subNodes.size()) {
+			TileIceRockNode node = spawnNode(findNodeGenPos());
+			if (node == null) break;
+		}
+	}
+
+	public TileIceRockNode spawnNode(BlockPos pos) {
+		if (pos == null) return null;
+		if (world.isRemote) return null;
+		subNodes.add(pos);
+		world.setBlockState(pos, ESInit.BLOCKS.ICE_ROCK_NODE.getDefaultState());
+		TileIceRockNode node = BlockHelper.getTileEntity(world, pos, TileIceRockNode.class);
+		for (EnumFacing facing : EnumFacing.VALUES) node.setFaceStatus(facing, FaceStatus.OUT);
+		node.link(this.pos);
+		node.updateClient();
+		node.markDirty();
+		markDirty();
+		if (!world.isRemote) {
+			float r = (float) (getMagicFragment() / getMagicFragmentCapacity());
+			Vec3d vec = new Vec3d(this.pos).add(0.5, 0.5 + linkCount / 2, 0.5);
+			Vec3d to = new Vec3d(pos).add(0.5, 0.5, 0.5);
+			Effects.spawnFragmentTo(world, vec, to, new Color(0x7cd0d3).weight(new Color(0x9956d0), r).toInt(), 1);
+		}
+		return node;
+	}
+
+	public BlockPos findNodeGenPos() {
+		Random rand = world.rand;
+		int range = getRadiationRange() - 4;
+		BlockPos pos = this.pos.add(rand.nextGaussian() * range, 10, rand.nextGaussian() * range);
+		if (!BlockHelper.isReplaceBlock(world, pos)) return null;
+		for (int i = 0; i < 20; i++) {
+			pos = pos.down();
+			if (BlockHelper.isFluid(world, pos)) return pos.up();
+			if (!BlockHelper.isReplaceBlock(world, pos)) return pos.up();
+		}
+		return null;
+	}
+
+	public boolean callSubNodeCome(BlockPos at) {
+		if (!isInRange(at, 0)) return false;
+		int maxCount = getMaxSubNodeCount();
+
+		// 个数压根没到最大
+		if (subNodes.size() < maxCount) {
+			spawnNode(at);
+			return true;
+		}
+
+		// 寻找最近的
+		LamdaReference<Double> minDistance = LamdaReference.of(Double.MAX_VALUE);
+		LamdaReference<TileIceRockNode> findedNode = LamdaReference.of(null);
+		ergodicSubNodes(node -> {
+			double dis = at.distanceSq(node.getPos());
+			if (minDistance.get() > dis) {
+				minDistance.set(dis);
+				findedNode.set(node);
+			}
+			return false;
+		});
+
+		// 有被删除的
+		if (subNodes.size() < maxCount) {
+			spawnNode(at);
+			return true;
+		}
+
+		TileIceRockNode node = findedNode.get();
+		if (node == null) return false;
+
+		node.unlink();
+		BlockPos pos = node.getPos();
+		subNodes.remove(pos);
+
+		spawnNode(at);
+		return true;
+	}
+
+	public boolean callFragmentAttack(EntityLivingBase target, EntityLivingBase caller) {
+		if (attackReadyTick > 0) return false;
+		if (target == null || !isInRange(target.getPositionVector(), 0)) return false;
+		if (world.isRemote) return true;
+
+		float hp = target.getHealth() + 2;
+		double fragmentNeed = ONE_DAMAGE_ENND_FRAGMENT * Math.pow(hp, DAMAGE_GROW_POWER);
+		double fragmentGet = extractMagicFragment(Math.min(fragmentNeed, getMaxFragmentOnceTransfer()), false);
+		if (fragmentGet <= 0) return false;
+
+		double dmg = Math.pow(fragmentGet / ONE_DAMAGE_ENND_FRAGMENT, 1 / DAMAGE_GROW_POWER);
+
+		this.attackDamage = (float) dmg;
+		this.attackCaller = caller;
+		this.attackVec = target.getPositionVector().add(0, target.height / 2, 0);
+		this.attackReadyTick = 20;
+
+		double rang = MathHelper.clamp(Math.pow(attackDamage, 0.25), 1, 4) + 2;
+		float r = (float) (getMagicFragment() / getMagicFragmentCapacity());
+		Vec3d vec = new Vec3d(this.pos).add(0.5, 0.5 + linkCount / 2, 0.5);
+		int color = new Color(0x7cd0d3).weight(new Color(0x9956d0), r).toInt();
+		Effects.spawnFragmentTo(world, vec, this.attackVec, color, (1 << 24) | MathHelper.floor(rang));
+
+		return true;
 	}
 
 }

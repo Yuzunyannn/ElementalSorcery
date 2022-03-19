@@ -7,7 +7,7 @@ import yuzunyannn.elementalsorcery.render.effect.EffectBatchType;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
-public class EffectSpiral extends EffectFacing {
+public abstract class EffectSpiral extends EffectFacing {
 
 	public final static EffectBatchTypeNormal BATCH_TYPE = new EffectBatchTypeNormal("textures/effect/spiral.png");
 

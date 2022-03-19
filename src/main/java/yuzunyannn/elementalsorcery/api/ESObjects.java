@@ -110,6 +110,7 @@ public class ESObjects {
 		public Item ARROGANT_WOOL;
 		public Item BLESSING_JADE_PIECE;
 		public Item ELEMENT_CRACK;
+		public Item ENTANGLE_NODE;
 	}
 
 	static public class Blocks {
@@ -185,6 +186,7 @@ public class ESObjects {
 		public Block DISINTEGRATE_STELA;
 		public Block ICE_ROCK_STAND;
 		public Block ICE_ROCK_CRYSTAL_BLOCK;
+		public Block ICE_ROCK_NODE;
 	}
 
 	static public class Elements {

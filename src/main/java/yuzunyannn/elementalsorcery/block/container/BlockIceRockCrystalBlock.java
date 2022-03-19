@@ -36,7 +36,7 @@ public class BlockIceRockCrystalBlock extends BlockIceRockSendRecv {
 	public static final PropertyEnum<EnumStatus> STATUS = PropertyEnum.create("status", EnumStatus.class);
 
 	public BlockIceRockCrystalBlock() {
-		super(Material.ROCK, "iceRockCrystalBlock", 5.5f, MapColor.QUARTZ);
+		super(Material.GLASS, "iceRockCrystalBlock", 5.5f, MapColor.LIGHT_BLUE_STAINED_HARDENED_CLAY);
 		setDefaultState(blockState.getBaseState().withProperty(STATUS, EnumStatus.NORMAL));
 	}
 
@@ -143,17 +143,6 @@ public class BlockIceRockCrystalBlock extends BlockIceRockSendRecv {
 			stand.checkAndBuildStructure();
 			stand.updateStandDataToClent();
 		}
-	}
-
-	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
-			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (facing == EnumFacing.UP || facing == EnumFacing.DOWN) return false;
-		if (!playerIn.isSneaking()) return false;
-		TileIceRockCrystalBlock tileCrystalBlock = BlockHelper.getTileEntity(worldIn, pos,
-				TileIceRockCrystalBlock.class);
-		if (tileCrystalBlock == null) return false;
-		return tileCrystalBlock.doShiftStatus(facing, playerIn);
 	}
 
 	@Override

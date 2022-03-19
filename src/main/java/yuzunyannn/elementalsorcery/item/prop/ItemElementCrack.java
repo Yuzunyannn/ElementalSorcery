@@ -13,7 +13,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -28,6 +27,7 @@ import yuzunyannn.elementalsorcery.network.MessageBlockDisintegrate.Disintegrate
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -112,8 +112,7 @@ public class ItemElementCrack extends Item {
 			if (living.getHealth() <= 0) return;
 			if (EntityHelper.isCreative(living)) return;
 
-			DamageSource ds = (source == null ? new DamageSource("magic") : new EntityDamageSource("magic", source))
-					.setMagicDamage().setDamageAllowedInCreativeMode();
+			DamageSource ds = DamageHelper.getMagicDamageSource(source, null).setDamageAllowedInCreativeMode();
 			living.attackEntityFrom(ds, 20f + living.getHealth() * 0.05f);
 
 			if (living instanceof EntityPlayer) {
