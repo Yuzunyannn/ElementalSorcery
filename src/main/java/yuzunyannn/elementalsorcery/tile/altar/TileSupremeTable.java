@@ -24,7 +24,7 @@ import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
-import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
+import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -234,7 +234,7 @@ public class TileSupremeTable extends TileStaticMultiBlock
 		ItemStack platformItem = this.getPlatformItem();
 		if (platformItem.isEmpty()) {
 			// 检测是否合成
-			IRecipe irecipe = RecipeManagement.instance.findMatchingRecipe(this, world);
+			IElementRecipe irecipe = RecipeManagement.instance.findMatchingRecipe(this, world);
 			if (irecipe != null) {
 				output = irecipe.getCraftingResult(this).copy();
 				outEStacks = irecipe.getNeedElements();

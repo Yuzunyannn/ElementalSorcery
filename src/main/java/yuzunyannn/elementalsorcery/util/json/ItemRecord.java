@@ -41,7 +41,7 @@ public class ItemRecord {
 
 	public ItemRecord(ItemStack stack) {
 		this.stack = stack;
-		this.item = null;
+		this.item = stack.getItem();
 	}
 
 	public ItemRecord(Item item) {

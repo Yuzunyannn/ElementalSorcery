@@ -18,7 +18,7 @@ public class ItemBlessingJadePiece extends Item {
 	 * 1 用噬魂武器击倒怪物有几率掉落 <br>
 	 * 2 精灵商人有几率卖 <br>
 	 * 3 钓鱼有几率得到 <br>
-	 * 4 村民箱子大概率 <br>
+	 * 4 熔岩锅熔炼 <br>
 	 * 5 研究得到 <br>
 	 * 6 烧蓝晶石有概率<br>
 	 * 7 任务 <br>

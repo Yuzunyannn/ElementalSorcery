@@ -6,7 +6,7 @@ import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
+import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
@@ -25,18 +25,18 @@ public class ElementCraft extends CriterionTriggerAdapter<ElementCraft.Instance>
 
 	@Override
 	boolean test(EntityPlayerMP player, ElementCraft.Instance criterion, Object... objs) {
-		return criterion.test(player, (IRecipe) objs[0]);
+		return criterion.test(player, (IElementRecipe) objs[0]);
 	}
 
 	public static class Instance extends AbstractCriterionInstance {
-		final IRecipe recipe;
+		final IElementRecipe recipe;
 
 		public Instance(ResourceLocation criterionIn, String id) {
 			super(criterionIn);
 			this.recipe = RecipeManagement.instance.getValue(new ResourceLocation(id));
 		}
 
-		public boolean test(EntityPlayerMP player, IRecipe recipeIn) {
+		public boolean test(EntityPlayerMP player, IElementRecipe recipeIn) {
 			return recipe == null ? true : recipeIn == recipe;
 		}
 	}

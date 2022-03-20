@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
+import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
@@ -31,17 +31,17 @@ import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
-public class RecipeManagement extends ESImplRegister<IRecipe> {
+public class RecipeManagement extends ESImplRegister<IElementRecipe> {
 
 	static final public RecipeManagement instance = new RecipeManagement();
 
 	public RecipeManagement() {
-		super(IRecipe.class);
+		super(IElementRecipe.class);
 	}
 
 	// 寻找合成表
-	public IRecipe findMatchingRecipe(IInventory craftMatrix, World worldIn) {
-		for (IRecipe irecipe : this.getValues()) {
+	public IElementRecipe findMatchingRecipe(IInventory craftMatrix, World worldIn) {
+		for (IElementRecipe irecipe : this.getValues()) {
 			if (irecipe.matches(craftMatrix, worldIn)) return irecipe;
 		}
 		return null;

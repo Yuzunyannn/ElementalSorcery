@@ -12,7 +12,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
+import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
@@ -107,7 +107,7 @@ public class AnimeRenderCrafting implements ICraftingLaunchAnime {
 		if (endColors == null) {
 			if (commit instanceof CraftingCrafting) {
 				CraftingCrafting cc = (CraftingCrafting) commit;
-				IRecipe recipe = RecipeManagement.instance.findMatchingRecipe(cc.getWorkingInventory(), world);
+				IElementRecipe recipe = RecipeManagement.instance.findMatchingRecipe(cc.getWorkingInventory(), world);
 				if (recipe != null) endColors = ElementHelper.toColor(recipe.getNeedElements());
 			}
 			if (endColors == null || endColors.length <= 0) endColors = new int[] { 0xe2e2ef, 0xa590de };

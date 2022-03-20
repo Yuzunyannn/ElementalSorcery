@@ -20,7 +20,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
+import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
@@ -29,6 +29,8 @@ import yuzunyannn.elementalsorcery.mods.jei.md.MDCategory;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDInfusionRW;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDMagicSolidifyRW;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDRubbleRepairRW;
+import yuzunyannn.elementalsorcery.tile.TileMeltCauldron;
+import yuzunyannn.elementalsorcery.tile.TileMeltCauldron.MeltCauldronRecipe;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
@@ -55,6 +57,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipeCategories(new ElementCraftingCategory());
 		registry.addRecipeCategories(new MagicDeskCategory());
 		registry.addRecipeCategories(new ResearchCategory());
+		registry.addRecipeCategories(new MeltCauldronCategory());
 		registry.addRecipeCategories(new MDCategory<MDRubbleRepairRW>(UID_MDRUBBLEREPAIR));
 		registry.addRecipeCategories(new MDCategory<MDMagicSolidifyRW>(UID_MDMAGICSOLIDIFY));
 		registry.addRecipeCategories(new MDCategory<MDInfusionRW>(UID_MDINFUSION));
@@ -70,9 +73,10 @@ public class ESJEIPlugin implements IModPlugin {
 		// 注册工厂
 		registry.handleRecipes(DescribeRecipeWrapper.Describe.class, DescribeRecipeWrapper::new, DescribeCategory.UID);
 		registry.handleRecipes(TileRiteTable.Recipe.class, RiteRecipeWrapper::new, RiteCategory.UID);
-		registry.handleRecipes(IRecipe.class, ElementCraftingRecipeWrapper::new, ElementCraftingCategory.UID);
+		registry.handleRecipes(IElementRecipe.class, ElementCraftingRecipeWrapper::new, ElementCraftingCategory.UID);
 		registry.handleRecipes(TileMagicDesk.Recipe.class, MagicDeskRecipeWrapper::new, MagicDeskCategory.UID);
 		registry.handleRecipes(IResearchRecipe.class, ResearchRecipeWrapper::new, ResearchCategory.UID);
+		registry.handleRecipes(MeltCauldronRecipe.class, MeltCauldronRecipeWrapper::new, MeltCauldronCategory.UID);
 		registry.handleRecipes(TileMDRubbleRepair.Recipe.class, MDRubbleRepairRW::new, UID_MDRUBBLEREPAIR);
 		registry.handleRecipes(MDMagicSolidifyRW.FakeRecipe.class, MDMagicSolidifyRW::new, UID_MDMAGICSOLIDIFY);
 		registry.handleRecipes(TileMDInfusion.Recipe.class, MDInfusionRW::new, UID_MDINFUSION);
@@ -85,6 +89,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.ELEMENT_WORKBENCH), ElementCraftingCategory.UID);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MAGIC_DESK), MagicDeskCategory.UID);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.RESEARCHER), ResearchCategory.UID);
+		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MELT_CAULDRON), MeltCauldronCategory.UID);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_RUBBLE_REPAIR), UID_MDRUBBLEREPAIR);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_MAGIC_SOLIDIFY), UID_MDMAGICSOLIDIFY);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_INFUSION), UID_MDINFUSION);
@@ -93,6 +98,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipes(TileRiteTable.getRecipes(), RiteCategory.UID);
 		registry.addRecipes(TileMagicDesk.getRecipes(), MagicDeskCategory.UID);
 		registry.addRecipes(ResearchRecipeManagement.instance.getRecipes().values(), ResearchCategory.UID);
+		registry.addRecipes(TileMeltCauldron.recipes, MeltCauldronCategory.UID);
 		registry.addRecipes(TileMDRubbleRepair.getRecipes(), UID_MDRUBBLEREPAIR);
 		registry.addRecipes(Arrays.asList(MDMagicSolidifyRW.FakeRecipe.values()), UID_MDMAGICSOLIDIFY);
 		registry.addRecipes(TileMDInfusion.getRecipes(), UID_MDINFUSION);
@@ -121,9 +127,9 @@ public class ESJEIPlugin implements IModPlugin {
 		List<DescribeRecipeWrapper.Describe> describes = new ArrayList<>();
 		describes.add(new DescribeRecipeWrapper.Describe("page.starSand", "page.starSand.ct", BLOCKS.STAR_SAND,
 				BLOCKS.STAR_STONE, BLOCKS.STAR_SAND));
-		describes.add(new DescribeRecipeWrapper.Describe("page.astone", "page.astone.ct.sec",
-				new ItemStack(BLOCKS.ASTONE), ItemHelper.toList(ITEMS.MAGIC_STONE, ITEMS.KYANITE, Blocks.COBBLESTONE),
-				ItemHelper.toList(new ItemStack(BLOCKS.ASTONE, 1, 1), new ItemStack(BLOCKS.ASTONE, 1, 0))));
+//		describes.add(new DescribeRecipeWrapper.Describe("page.astone", "page.astone.ct.sec",
+//				new ItemStack(BLOCKS.ASTONE), ItemHelper.toList(ITEMS.MAGIC_STONE, ITEMS.KYANITE, Blocks.COBBLESTONE),
+//				ItemHelper.toList(new ItemStack(BLOCKS.ASTONE, 1, 1), new ItemStack(BLOCKS.ASTONE, 1, 0))));
 		describes.add(new DescribeRecipeWrapper.Describe("page.enchantingBook", "page.enchantingBook.ct",
 				new ItemStack(Blocks.ENCHANTING_TABLE),
 				ItemHelper.toList(ITEMS.SPELLBOOK_ENCHANTMENT, Blocks.ENCHANTING_TABLE),

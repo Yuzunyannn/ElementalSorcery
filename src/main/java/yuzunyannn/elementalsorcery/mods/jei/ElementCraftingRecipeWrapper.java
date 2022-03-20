@@ -6,13 +6,13 @@ import mezz.jei.api.recipe.IStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
-import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
+import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 
 public class ElementCraftingRecipeWrapper implements IRecipeWrapper {
 
-	final IRecipe recipe;
+	final IElementRecipe recipe;
 
-	public ElementCraftingRecipeWrapper(IRecipe recipe) {
+	public ElementCraftingRecipeWrapper(IElementRecipe recipe) {
 		this.recipe = recipe;
 	}
 
@@ -24,7 +24,7 @@ public class ElementCraftingRecipeWrapper implements IRecipeWrapper {
 		ingredients.setOutput(ItemStack.class, recipe.getCraftingResult(null));
 	}
 
-	public IRecipe getRecipe() {
+	public IElementRecipe getRecipe() {
 		return recipe;
 	}
 

@@ -12,24 +12,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
-import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.model.ModelIceRockStand;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
 import yuzunyannn.elementalsorcery.util.TextHelper;
-import yuzunyannn.elementalsorcery.util.render.Framebuffer;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRockStand> implements IRenderItem {
-
-	static private Framebuffer frameBuff = null;
-
-	static public Framebuffer getFrameBuff() {
-		if (frameBuff == null) frameBuff = new Framebuffer(128, 128, false);
-		return frameBuff;
-	}
 
 	static public final TextureBinder TEXTUREL_CRYSTAL = new TextureBinder(
 			"textures/blocks/ice_rock/ice_rock_crystal.png");
@@ -68,7 +59,7 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 			if (fragment < 100000) ratio = fragment / 100000 * 0.15;
 			else ratio = 0.15 + 0.85 * (fragment - 100000) / (fragmentCapacity - 100000);
 			renderCrystalTexture(Math.min(ratio, 1), rotation / 20);
-			getFrameBuff().bindTexture();
+			RenderHelper.bindOffscreenTexture128();
 			renderCrystal(count + 1);
 			GlStateManager.popMatrix();
 
@@ -90,53 +81,31 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 	}
 
 	public static void renderCrystalTexture(double ratio, float offset) {
-		getFrameBuff().bindFrame(false);
+		RenderHelper.renderOffscreenTexture128(e -> {
+			Tessellator tessellator = Tessellator.getInstance();
+			BufferBuilder bufferbuilder = tessellator.getBuffer();
 
-		net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
+			Shaders.BlockIceRockCrystal.bind();
+			TEXTUREL_CRYSTAL.bind();
+			TEXTUREL_CRYSTAL_FULL.bindAtive(3);
+			TEXTUREL_CRYSTAL_MASK.bindAtive(4);
+			Shaders.BlockIceRockCrystal.setUniform("texA", 0);
+			Shaders.BlockIceRockCrystal.setUniform("texB", 3);
+			Shaders.BlockIceRockCrystal.setUniform("mask", 4);
+			Shaders.BlockIceRockCrystal.setUniform("r", ratio);
+			Shaders.BlockIceRockCrystal.setUniform("yoffset", offset);
 
-		GlStateManager.matrixMode(GL11.GL_PROJECTION);
-		GlStateManager.pushMatrix();
-		GlStateManager.loadIdentity();
-		GlStateManager.ortho(0.0D, 128, 128, 0.0D, 0, 128);
-		GlStateManager.matrixMode(GL11.GL_MODELVIEW);
-		GlStateManager.pushMatrix();
-		GlStateManager.loadIdentity();
-		GlStateManager.viewport(0, 0, 128, 128);
-		GlStateManager.depthMask(false);
+			bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+			bufferbuilder.pos(0, 0, -64).tex(0, 0).endVertex();
+			bufferbuilder.pos(0, 128, -64).tex(0, 1).endVertex();
+			bufferbuilder.pos(128, 128, -64).tex(1, 1).endVertex();
+			bufferbuilder.pos(128, 0, -64).tex(1, 0).endVertex();
+			tessellator.draw();
 
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferbuilder = tessellator.getBuffer();
-
-		Shaders.BlockIceRockCrystal.bind();
-		TEXTUREL_CRYSTAL.bind();
-		TEXTUREL_CRYSTAL_FULL.bindAtive(3);
-		TEXTUREL_CRYSTAL_MASK.bindAtive(4);
-		Shaders.BlockIceRockCrystal.setUniform("texA", 0);
-		Shaders.BlockIceRockCrystal.setUniform("texB", 3);
-		Shaders.BlockIceRockCrystal.setUniform("mask", 4);
-		Shaders.BlockIceRockCrystal.setUniform("r", ratio);
-		Shaders.BlockIceRockCrystal.setUniform("yoffset", offset);
-
-		bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-		bufferbuilder.pos(0, 0, -64).tex(0, 0).endVertex();
-		bufferbuilder.pos(0, 128, -64).tex(0, 1).endVertex();
-		bufferbuilder.pos(128, 128, -64).tex(1, 1).endVertex();
-		bufferbuilder.pos(128, 0, -64).tex(1, 0).endVertex();
-		tessellator.draw();
-
-		TEXTUREL_CRYSTAL_FULL.unbindAtive(3);
-		TEXTUREL_CRYSTAL_MASK.unbindAtive(4);
-		Shaders.BlockIceRockCrystal.unbind();
-
-		GlStateManager.depthMask(true);
-		GlStateManager.viewport(0, 0, Effect.mc.displayWidth, Effect.mc.displayHeight);
-		GlStateManager.matrixMode(GL11.GL_PROJECTION);
-		GlStateManager.popMatrix();
-		GlStateManager.matrixMode(GL11.GL_MODELVIEW);
-		GlStateManager.popMatrix();
-
-		net.minecraft.client.renderer.RenderHelper.enableStandardItemLighting();
-		getFrameBuff().unbindFrame();
+			TEXTUREL_CRYSTAL_FULL.unbindAtive(3);
+			TEXTUREL_CRYSTAL_MASK.unbindAtive(4);
+			Shaders.BlockIceRockCrystal.unbind();
+		});
 	}
 
 	public static void renderCrystal(int high) {

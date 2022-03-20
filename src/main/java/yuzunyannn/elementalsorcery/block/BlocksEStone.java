@@ -244,11 +244,6 @@ public class BlocksEStone {
 			return false;
 		}
 
-		@Override
-		public boolean isFullCube(IBlockState state) {
-			return false;
-		}
-
 		@SideOnly(Side.CLIENT)
 		public BlockRenderLayer getRenderLayer() {
 			return BlockRenderLayer.TRANSLUCENT;

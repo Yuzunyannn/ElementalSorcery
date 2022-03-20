@@ -1,5 +1,9 @@
 package yuzunyannn.elementalsorcery.util.render;
 
+import java.util.function.Consumer;
+
+import org.lwjgl.opengl.GL11;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockLadder;
 import net.minecraft.block.BlockPane;
@@ -22,6 +26,7 @@ import yuzunyannn.elementalsorcery.block.BlockLifeFlower;
 import yuzunyannn.elementalsorcery.item.book.ItemGrimoire;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
 
 public class RenderHelper {
 
@@ -179,4 +184,44 @@ public class RenderHelper {
 	public static int getRenderDistanceChunks() {
 		return mc.gameSettings.renderDistanceChunks;
 	}
+
+	static private Framebuffer frameBuff128 = null;
+
+	static public Framebuffer getFrameBuff128() {
+		if (frameBuff128 == null) frameBuff128 = new Framebuffer(128, 128, false);
+		return frameBuff128;
+	}
+
+	public static void bindOffscreenTexture128() {
+		getFrameBuff128().bindTexture();
+	}
+
+	public static void renderOffscreenTexture128(Consumer<Void> render) {
+		getFrameBuff128().bindFrame(false);
+
+		net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
+
+		GlStateManager.matrixMode(GL11.GL_PROJECTION);
+		GlStateManager.pushMatrix();
+		GlStateManager.loadIdentity();
+		GlStateManager.ortho(0.0D, 128, 128, 0.0D, 0, 128);
+		GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+		GlStateManager.pushMatrix();
+		GlStateManager.loadIdentity();
+		GlStateManager.viewport(0, 0, 128, 128);
+		GlStateManager.depthMask(false);
+
+		render.accept(null);
+
+		GlStateManager.depthMask(true);
+		GlStateManager.viewport(0, 0, Effect.mc.displayWidth, Effect.mc.displayHeight);
+		GlStateManager.matrixMode(GL11.GL_PROJECTION);
+		GlStateManager.popMatrix();
+		GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+		GlStateManager.popMatrix();
+
+		net.minecraft.client.renderer.RenderHelper.enableStandardItemLighting();
+		getFrameBuff128().unbindFrame();
+	}
+
 }

@@ -18,17 +18,6 @@
 					"name": "elementalsorcery:chests/es_course_some",
 					"weight": 65,
 					"quality": 1
-				},
-				{
-					"type": "item",
-					"name": "elementalsorcery:blessing_jade_piece",
-					"weight": 50,
-					"functions": [
-						{
-							"function": "set_data",
-							"data": 4
-						}
-					]
 				}
 			]
 		}

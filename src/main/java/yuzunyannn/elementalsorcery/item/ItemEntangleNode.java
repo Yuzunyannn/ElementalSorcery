@@ -58,7 +58,7 @@ public class ItemEntangleNode extends Item {
 
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		if (ElementalSorcery.isDevelop) super.getSubItems(tab, items);
+		
 	}
 
 	@Override

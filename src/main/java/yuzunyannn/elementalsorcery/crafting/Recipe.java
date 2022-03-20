@@ -15,12 +15,12 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
+import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.util.json.Json.ParseExceptionCode;
 
-public class Recipe extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
+public class Recipe extends IForgeRegistryEntry.Impl<IElementRecipe> implements IElementRecipe {
 
 	// 信息
 	protected int firstNotEmpty = -1;

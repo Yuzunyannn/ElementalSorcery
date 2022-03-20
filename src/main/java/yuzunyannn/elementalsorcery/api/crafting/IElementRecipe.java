@@ -11,7 +11,7 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 
-public interface IRecipe extends net.minecraftforge.registries.IForgeRegistryEntry<IRecipe> {
+public interface IElementRecipe extends net.minecraftforge.registries.IForgeRegistryEntry<IElementRecipe> {
 
 	/**
 	 * 检查匹配情况

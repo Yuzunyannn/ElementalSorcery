@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.util.item;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -54,6 +55,17 @@ public class ItemHelper {
 			if (count > 0) return ItemMatchResult.fail();
 		}
 		return result;
+	}
+
+	static public List<ItemStack> find(Ingredient ingredient, Collection<ItemStack> items) {
+		List<ItemStack> list = new ArrayList<>();
+		ItemStack[] stacks = ingredient.getMatchingStacks();
+		for (ItemStack src : stacks) {
+			for (ItemStack dst : items) {
+				if (ItemStack.areItemsEqual(src, dst)) list.add(dst);
+			}
+		}
+		return list;
 	}
 
 	static public boolean unorderMatch(NonNullList<Ingredient> list, IInventory inv, boolean shrink) {

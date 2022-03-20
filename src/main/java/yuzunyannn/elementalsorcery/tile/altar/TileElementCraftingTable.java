@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
+import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
@@ -151,7 +151,7 @@ public class TileElementCraftingTable extends TileStaticMultiBlock
 	}
 
 	public void onCraftMatrixChanged() {
-		IRecipe irecipe = RecipeManagement.instance.findMatchingRecipe(this, world);
+		IElementRecipe irecipe = RecipeManagement.instance.findMatchingRecipe(this, world);
 		if (irecipe == null) {
 			result = ItemStack.EMPTY;
 			return;

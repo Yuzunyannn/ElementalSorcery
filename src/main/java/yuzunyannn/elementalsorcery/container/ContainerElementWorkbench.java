@@ -24,7 +24,7 @@ import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ContainerElementWorkbench extends Container {
 
-	private yuzunyannn.elementalsorcery.api.crafting.IRecipe irecipe = null;
+	private yuzunyannn.elementalsorcery.api.crafting.IElementRecipe irecipe = null;
 	public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
 	public InventoryCrafting craftElement = new InventoryCrafting(this, 1, 1);
 	public InventoryCraftResult craftResult = new InventoryCraftResult();

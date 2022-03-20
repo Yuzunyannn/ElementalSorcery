@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.event.EventClient;
@@ -23,6 +22,9 @@ public class RenderTileMeltCauldron extends TileEntitySpecialRenderer<TileMeltCa
 
 	static final public TextureBinder TEXTURE = new TextureBinder("textures/blocks/melt_cauldron.png");
 	static final public TextureBinder TEXTURE_FLUID = new TextureBinder("textures/blocks/fluids/magic_melt.png");
+	static final public TextureBinder TEXTURE_FLUID_BLOCK = new TextureBinder(
+			"textures/blocks/fluids/magic_melt_block.png");
+
 	private final ModelMeltCauldron MODEL = new ModelMeltCauldron();
 
 	@Override
@@ -35,8 +37,9 @@ public class RenderTileMeltCauldron extends TileEntitySpecialRenderer<TileMeltCa
 		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);
 
-		int volume = tile.getVolume();
-		if (volume > 0) {
+		if (tile.getVolume() > 0) {
+			tile.isRendered = true;
+			float volume = RenderHelper.getPartialTicks(tile.getVolume(), tile.prevVolume, partialTicks);
 			GlStateManager.pushMatrix();
 			GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
 			GlStateManager.translate(x, y + 0.125f + volume / 1000.0f * 0.68f, z);
@@ -50,12 +53,10 @@ public class RenderTileMeltCauldron extends TileEntitySpecialRenderer<TileMeltCa
 				TEXTURE_FLUID.bind();
 				this.drawVolume(at * 0.03125, 0.03125);
 				// 画方块
-				ResourceLocation tex = tile.getResultTexture();
-				if (tex != null) {
-					GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f - alpha);
-					this.bindTexture(tex);
-					this.drawVolume(0, 1);
-				}
+				tile.bindDynamicTexture();
+				GlStateManager.enableBlend();
+				GlStateManager.color(1.0f, 1.0f, 1.0f, 1.0f - alpha);
+				this.drawVolume(0, 1);
 				GlStateManager.disableBlend();
 			} else {
 				int at = EventClient.tick % 32;

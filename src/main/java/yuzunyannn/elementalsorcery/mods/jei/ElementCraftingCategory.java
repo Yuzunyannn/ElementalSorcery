@@ -12,7 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
+import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.container.ContainerSupremeTable;
 
 public class ElementCraftingCategory implements IRecipeCategory<ElementCraftingRecipeWrapper> {
@@ -43,7 +43,7 @@ public class ElementCraftingCategory implements IRecipeCategory<ElementCraftingR
 	@Override
 	public void setRecipe(IRecipeLayout recipeLayout, ElementCraftingRecipeWrapper recipeWrapper,
 			IIngredients ingredients) {
-		IRecipe recipe = recipeWrapper.getRecipe();
+		IElementRecipe recipe = recipeWrapper.getRecipe();
 		int xoff = 9 - 35;
 		int yoff = -1 - 21;
 		NonNullList<Ingredient> list = recipe.getIngredients();

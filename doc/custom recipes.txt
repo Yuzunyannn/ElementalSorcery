@@ -228,3 +228,79 @@ Specific examples are as follows :
 
 Change One "minecraft:dirt" to "minecraft:diamond" need 10 magic
 转化一个"minecraft:dirt"到"minecraft:diamond"需要10点魔力
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Melt Cauldron : melt_cauldron/
+The Origin Recipes is written in Code, so you can not override Origin Recipes
+But you can add New Recipes
+Specific examples are as follows :
+熔岩锅 : melt_cauldron/
+因为原始合成表在代码里写死了，所以你不能对其进行覆盖
+不过你可以添加新的合成表
+具体的例子如下：
+
+First Type : volume
+Describe how much volume an item occupies
+Melt Cauldron Has 1000 volume
+第一种类型：容量
+描述某种物品一个占用多少容量
+熔岩锅有1000的容量
+
+{
+    "type": "volume",
+    "list": [
+        {
+            "id": "minecraft:coal",
+            "count": 12
+        }
+    ]
+}
+
+* One Coal will occupy 12 volume.
+* Volume describe does not support Item Meta, so 'minecraft:coal' not only for Coal, but also for Charcoal
+* 一个煤占用12点容量.
+* 容量描述并不支持Meta，所以'minecraft:coal'及代表煤又代表木炭
+
+Second Type : melt
+Real Recipe
+第二种类型：熔炼
+真正的合成表
+
+{
+    "type": "melt",
+    "magicStoneCount": 2,
+    "list": [
+        [
+            {
+                "id": "minecraft:stone",
+                "count": 1
+            },
+            {
+                "id": "minecraft:cobblestone",
+                "count": 1
+            }
+        ],
+        {
+            "id": "minecraft:coal",
+            "count": 4
+        }
+    ],
+    "result": [
+        {
+            "deviation": 2,
+            "item": "minecraft:coal_ore"
+        },
+        {
+            "deviation": 999,
+            "item": {
+                "id": "minecraft:dirt",
+                "meta": 1
+            }
+        }
+    ]
+}
+
+* 'magicStoneCount' is Dimensity's Count, Dimensity must be put in first!
+* When the actual and expected('list') deviation value is less than 'deviation', will select this result 'item'
+* 'magicStoneCount'是魔石的数量，魔石必须第一个放入
+* 实际放入的和预期('list')的偏差值小于'deviation'的时候，将会得到对应的结果'item'

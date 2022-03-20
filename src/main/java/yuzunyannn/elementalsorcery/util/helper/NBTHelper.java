@@ -79,9 +79,32 @@ public class NBTHelper {
 	}
 
 	public static LinkedList<ItemStack> getItemList(NBTTagCompound nbt, String key) {
-		LinkedList<ItemStack> itemList = new LinkedList<ItemStack>();
+		LinkedList<ItemStack> itemList = new LinkedList<>();
 		NBTTagList list = nbt.getTagList(key, 10);
 		for (NBTBase n : list) itemList.add(new ItemStack((NBTTagCompound) n));
+		return itemList;
+	}
+
+	public static void setItemListICount(NBTTagCompound nbt, String key, List<ItemStack> itemList) {
+		NBTTagList list = new NBTTagList();
+		for (ItemStack stack : itemList) {
+			NBTTagCompound dat = stack.serializeNBT();
+			dat.setInteger("Count", stack.getCount());
+			list.appendTag(dat);
+		}
+		nbt.setTag(key, list);
+	}
+
+	public static LinkedList<ItemStack> getItemListICount(NBTTagCompound nbt, String key) {
+		LinkedList<ItemStack> itemList = new LinkedList<>();
+		NBTTagList list = nbt.getTagList(key, 10);
+		for (NBTBase n : list) {
+			NBTTagCompound tag = (NBTTagCompound) n;
+			int count = tag.getInteger("Count");
+			ItemStack stack = new ItemStack(tag);
+			stack.setCount(count);
+			itemList.add(stack);
+		}
 		return itemList;
 	}
 

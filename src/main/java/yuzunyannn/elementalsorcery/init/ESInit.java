@@ -685,10 +685,10 @@ public class ESInit {
 		registerAllItems();
 		// 注册方块
 		registerAllBlocks();
-		// 注册tileentity
-		registerAllTiles();
 		// 注册元素
 		Element.registerAll();
+		// 注册tileentity
+		registerAllTiles();
 		// 注册能力
 		registerAllCapability();
 		// 矿物词典注册
@@ -744,6 +744,8 @@ public class ESInit {
 		Pages.init(event.getSide());
 		// 注册所有知识
 		TileRiteTable.init();
+		// 所有熔炼容量
+		TileMeltCauldron.initVolumeMap();
 		// 所有任务
 		Quests.loadAll();
 	}

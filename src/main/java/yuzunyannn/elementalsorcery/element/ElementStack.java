@@ -29,15 +29,17 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		}
 
 		public Unchangeable(Element element) {
-			super(element, 1);
+			this(element, 1);
 		}
 
 		public Unchangeable(Element element, int size) {
-			super(element, size, 0);
+			this(element, size, 0);
 		}
 
 		public Unchangeable(Element element, int size, int power) {
-			super(element, size, power);
+			super.setElement(element);
+			super.setCount(size >= 0 ? size : 0);
+			super.setPower(power >= 0 ? power : 0);
 		}
 
 		@Override

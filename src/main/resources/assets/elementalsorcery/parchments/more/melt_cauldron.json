@@ -1,7 +1,8 @@
 {
     "lev": 1,
     "need": [
-        "more/magic_piece"
+        "more/magic_piece",
+        "more/magic_stone"
     ],
     "linked": "elementalsorcery:melt_cauldron",
     "type": "craft",

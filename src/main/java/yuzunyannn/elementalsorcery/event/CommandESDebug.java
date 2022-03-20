@@ -54,7 +54,7 @@ public class CommandESDebug {
 		case "reloadShader": {
 			Minecraft.getMinecraft().addScheduledTask(() -> {
 				try {
-					Shaders.BlockIceRockCrystal.reload();
+					Shaders.BlockMeltCauldron.reload();
 				} catch (Exception e) {
 					ElementalSorcery.logger.warn(e);
 				}

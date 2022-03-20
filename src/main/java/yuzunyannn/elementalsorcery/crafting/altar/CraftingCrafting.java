@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
-import yuzunyannn.elementalsorcery.api.crafting.IRecipe;
+import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
@@ -36,7 +36,7 @@ public class CraftingCrafting implements ICraftingAltar {
 	// 进行时的剩余需要元素
 	private ElementInventory workingEInventory = null;
 	// 进行时的合成表
-	private IRecipe workingIrecipe = null;
+	private IElementRecipe workingIrecipe = null;
 	// 尝试tick
 	private int tryTick = 50;
 	// 玩家
@@ -71,7 +71,7 @@ public class CraftingCrafting implements ICraftingAltar {
 	}
 
 	public ItemStack getResult(World world) {
-		IRecipe irecipe = RecipeManagement.instance.findMatchingRecipe(workingInventory, world);
+		IElementRecipe irecipe = RecipeManagement.instance.findMatchingRecipe(workingInventory, world);
 		if (irecipe != null) return irecipe.getCraftingResult(workingInventory).copy();
 		return ItemStack.EMPTY;
 	}
@@ -134,7 +134,7 @@ public class CraftingCrafting implements ICraftingAltar {
 			this.isOk = false;
 			return;
 		}
-		IRecipe irecipe = workingIrecipe;
+		IElementRecipe irecipe = workingIrecipe;
 		workingIrecipe.shrink(workingInventory);
 		workingIrecipe = null;
 		if (tileMul.getWorld().isRemote) return;
