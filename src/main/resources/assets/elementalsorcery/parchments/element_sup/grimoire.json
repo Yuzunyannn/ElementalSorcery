@@ -3,6 +3,7 @@
 	"need": [
 		"element_sup/mantra_paper",
 		"element_sup/element_stone",
+		"element_adv/fairy_cube",
 		"element/life_leather",
 		"more/ancient_paper"
 	],

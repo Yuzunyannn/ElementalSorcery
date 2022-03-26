@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.mods.jei;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import mezz.jei.api.ingredients.IIngredients;
@@ -18,8 +19,9 @@ public class MeltCauldronRecipeWrapper implements IRecipeWrapper {
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		for (Ingredient ingredient : recipe.getNeedList())
-			ingredients.setInput(ItemStack.class, Arrays.asList(ingredient.getMatchingStacks()));
+		ArrayList<ItemStack> list = new ArrayList<>();
+		for (Ingredient ingredient : recipe.getNeedList()) list.addAll(Arrays.asList(ingredient.getMatchingStacks()));
+		ingredients.setInputs(ItemStack.class, list);
 		ingredients.setOutput(ItemStack.class, recipe.getResultList());
 	}
 

@@ -97,7 +97,7 @@ public class BlockSealStone extends Block implements Mapper {
 		return "s";
 	}
 
-	public ItemStack getAncientPaper(World worldIn, @Nullable EntityPlayer player, int fortune) {
+	public ItemStack getAncientPaper(World worldIn, @Nullable EntityPlayer player, int fortune, boolean isSuperDrop) {
 		Random rand = worldIn.rand;
 		ItemStack stack = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, ItemAncientPaper.EnumType.NORMAL.getMetadata());
 
@@ -106,10 +106,13 @@ public class BlockSealStone extends Block implements Mapper {
 		boolean isMantra = false;
 		for (int i = 0; i < fortune + 1; i++)
 			isMantra = isMantra || rand.nextFloat() <= MANTRA_DROP_PROBABILITY_PER_LUCKY;
+		if (isSuperDrop) isMantra = isMantra || rand.nextBoolean();
+		// 只有玩家打碎的时候才会掉mantra
 		isMantra = isMantra && player != null;
 
 		float at = rand.nextFloat();
 		float length = rand.nextFloat() * 0.5f + 0.05f + Math.min(0.2f, fortune / 50.0f);
+		if (isSuperDrop) length += rand.nextFloat() * 0.1f + 0.1f;
 		at = findRangeStart(length, at);
 		int start = MathHelper.floor(at * 100);
 		ap.setStart(start).setEnd(start + MathHelper.floor(length * 100));
@@ -126,15 +129,29 @@ public class BlockSealStone extends Block implements Mapper {
 
 		// 如果是咒文
 		if (isMantra) {
+			BlockPos pos = player.getPosition();
 			RandomHelper.WeightRandom<Mantra> wMantras = new RandomHelper.WeightRandom();
 			for (Entry<ResourceLocation, Mantra> entry : Mantra.REGISTRY.getEntries()) {
 				Mantra mantra = entry.getValue();
-				float rarity = mantra.getRarity(worldIn, player.getPosition());
+				float rarity = mantra.getRarity(worldIn, pos);
 				if (rarity <= 0) continue;
 				rarity = rarity + (100 - rarity) * Math.min(0.5f, fortune / 25.0f);// 所有都向100靠拢
 				wMantras.add(entry.getValue(), rarity);
 			}
 			Mantra mantra = wMantras.get();
+			if (isSuperDrop) {
+				// 超级掉落选择随机几次更稀有的
+				int rarityTryTimes = 1;
+				float raritier = mantra.getRarity(worldIn, pos);
+				for (int i = 0; i < rarityTryTimes; i++) {
+					Mantra check = wMantras.get();
+					float r = check.getRarity(worldIn, pos);
+					if (r < raritier) {
+						mantra = check;
+						raritier = r;
+					}
+				}
+			}
 			ap.setMantra(mantra);
 		}
 
@@ -146,18 +163,24 @@ public class BlockSealStone extends Block implements Mapper {
 	public void dropBlockAsItemWithChance(World worldIn, BlockPos pos, IBlockState state, float chance, int fortune) {
 		if (worldIn.isRemote) return;
 		EntityPlayer player = harvesters.get();
+		boolean isSuperDrop = false;
 
-		if (player != null) fortune = (int) (fortune * (1 + player.getLuck() / 32f));
+		if (player != null) {
+			fortune = (int) (fortune * (1 + player.getLuck() / 32f));
+			ItemStack stack = player.getHeldItemMainhand();
+			if (stack.getItem() == ESInit.ITEMS.DRAGON_BREATH_PICKAXE) {
+				isSuperDrop = true;
+				fortune = fortune + 1;
+			}
+		}
 
 		Random rand = worldIn.rand;
 		int tryTime = rand.nextInt(fortune + 2) + 1;
 
-		if (player != null) {}
-
 		for (int i = 0; i < tryTime; i++) {
 			if (rand.nextFloat() > chance) continue;
 			chance = chance * 0.75f;
-			ItemStack stack = getAncientPaper(worldIn, player, fortune);
+			ItemStack stack = getAncientPaper(worldIn, player, fortune, isSuperDrop);
 			spawnAsEntity(worldIn, pos, stack);
 		}
 

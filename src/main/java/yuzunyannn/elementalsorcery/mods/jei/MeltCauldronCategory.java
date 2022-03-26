@@ -71,8 +71,11 @@ public class MeltCauldronCategory implements IRecipeCategory<MeltCauldronRecipeW
 		group.addTooltipCallback((slotIndex, input, stack, tooltip) -> {
 			if (slotIndex == lastSlotIndex) {
 				r.ergodicResult(entry -> {
-					if (ItemStack.areItemsEqual(entry.getValue(), stack)) tooltip.add(
-							TextFormatting.YELLOW + I18n.format("info.standardDeviation") + " < " + entry.getKey());
+					if (ItemStack.areItemsEqual(entry.getValue(), stack)
+							&& entry.getValue().getCount() == stack.getCount()) {
+						tooltip.add(
+								TextFormatting.YELLOW + I18n.format("info.standardDeviation") + " < " + entry.getKey());
+					}
 				});
 			}
 		});

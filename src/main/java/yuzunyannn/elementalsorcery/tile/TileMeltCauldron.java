@@ -88,6 +88,17 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 		blessingJadePiece.addResult(1f, ItemBlessingJadePiece.createPiece(4));
 		recipes.add(blessingJadePiece);
 
+		MeltCauldronRecipe iceRockSpar = new MeltCauldronRecipe();
+		iceRockSpar.setMagicStoneCount(2);
+		iceRockSpar.add(new ItemStack(ESInit.ITEMS.ICE_ROCK_CHIP, 8));
+		iceRockSpar.add(new ItemStack(ESInit.ITEMS.INVERT_GEM, 1));
+		iceRockSpar.add(new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 16));
+		iceRockSpar.add(new ItemStack(Items.ENDER_PEARL, 16));
+		iceRockSpar.addResult(0.5f, new ItemStack(ESInit.ITEMS.ICE_ROCK_SPAR, 12));
+		iceRockSpar.addResult(3.0f, new ItemStack(ESInit.ITEMS.ICE_ROCK_SPAR, 6));
+		iceRockSpar.addResult(10.0f, new ItemStack(ESInit.ITEMS.INVERT_GEM, 1));
+		recipes.add(iceRockSpar);
+
 		// 自定义
 		Json.ergodicFile("recipes/melt_cauldron", (file, json) -> {
 			if (!ElementMap.checkModDemands(json)) return false;

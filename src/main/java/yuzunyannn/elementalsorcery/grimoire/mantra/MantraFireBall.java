@@ -38,10 +38,10 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
-import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class MantraFireBall extends MantraCommon {
@@ -265,7 +265,7 @@ public class MantraFireBall extends MantraCommon {
 			if (!result.isEmpty()) {
 				stack = result.copy();
 				if (data != null && !data.metal.isEmpty()) {
-					if (BlockHelper.isOre(ore)) {
+					if (OreHelper.isOre(ore)) {
 						data.metal.shrink(1);
 						stack.grow(1);
 					}

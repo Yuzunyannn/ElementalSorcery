@@ -1,0 +1,14 @@
+{
+	"lev": 5,
+	"need": [
+		"element_adv/supreme_table",
+		"element_adv/blessing_jade",
+		"element_sup/element_stone",
+		"element_sup/calamity_gem",
+		"more/scarlet_crystal"
+	],
+	"linked": "elementalsorcery:invert_gem",
+	"type": "craft",
+	"name": "invertGem",
+	"item": "elementalsorcery:invert_gem"
+}

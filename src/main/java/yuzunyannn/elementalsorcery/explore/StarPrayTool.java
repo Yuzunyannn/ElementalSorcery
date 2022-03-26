@@ -12,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import yuzunyannn.elementalsorcery.api.tile.IStarPray;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 
 public class StarPrayTool implements IStarPray {
 
@@ -32,7 +33,7 @@ public class StarPrayTool implements IStarPray {
 	@Override
 	public void doPray(World world, BlockPos pos, EntityLivingBase entity) {
 		ItemStack stack = entity.getHeldItemOffhand();
-		if (BlockHelper.isOre(stack) || BlockHelper.hasKeyInOreDictionary(stack, "stone"))
+		if (OreHelper.isOre(stack) || BlockHelper.hasKeyInOreDictionary(stack, "stone"))
 			entity.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.IRON_PICKAXE));
 		else if (BlockHelper.hasKeyInOreDictionary(stack, "wood"))
 			entity.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(Items.IRON_AXE));

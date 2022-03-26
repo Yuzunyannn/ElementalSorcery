@@ -12,7 +12,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFluorspar;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectShineBlock;
-import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 
 public class EEMetal extends ElementExplosion {
 
@@ -31,7 +31,7 @@ public class EEMetal extends ElementExplosion {
 		if (state.getMaterial() == Material.AIR) return;
 		int n = 20 - Math.min(14, eStack.getPower() / 75);
 
-		int oreColor = BlockHelper.getOreColor(state);
+		int oreColor = OreHelper.getOreColor(state);
 		if (oreColor != -1) {
 			if (world.isRemote) shineBlock(pos, oreColor);
 		} else {

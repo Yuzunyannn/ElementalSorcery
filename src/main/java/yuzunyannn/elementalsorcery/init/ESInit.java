@@ -214,7 +214,11 @@ import yuzunyannn.elementalsorcery.item.prop.ItemDejectedTear;
 import yuzunyannn.elementalsorcery.item.prop.ItemDreadGem;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementCrack;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementStone;
+import yuzunyannn.elementalsorcery.item.prop.ItemFairyCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemFusionCrystal;
+import yuzunyannn.elementalsorcery.item.prop.ItemIceRockChip;
+import yuzunyannn.elementalsorcery.item.prop.ItemIceRockSpar;
+import yuzunyannn.elementalsorcery.item.prop.ItemInvertGem;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.item.prop.ItemLifeLeather;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicCore;
@@ -228,6 +232,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemSupremeTableComponent;
 import yuzunyannn.elementalsorcery.item.prop.ItemVortex;
 import yuzunyannn.elementalsorcery.item.prop.ItemWindmillBladeFrame;
 import yuzunyannn.elementalsorcery.item.tool.ItemCubeDemarcator;
+import yuzunyannn.elementalsorcery.item.tool.ItemDragonBreathPickaxe;
 import yuzunyannn.elementalsorcery.item.tool.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicGoldTools;
@@ -575,6 +580,11 @@ public class ESInit {
 		ITEMS.BLESSING_JADE_PIECE = new ItemBlessingJadePiece();
 		ITEMS.ELEMENT_CRACK = new ItemElementCrack();
 		ITEMS.ENTANGLE_NODE = new ItemEntangleNode();
+		ITEMS.DRAGON_BREATH_PICKAXE = new ItemDragonBreathPickaxe();
+		ITEMS.INVERT_GEM = new ItemInvertGem();
+		ITEMS.ICE_ROCK_CHIP = new ItemIceRockChip();
+		ITEMS.ICE_ROCK_SPAR = new ItemIceRockSpar();
+		ITEMS.FAIRY_CORE = new ItemFairyCore();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1001,6 +1011,11 @@ public class ESInit {
 		registerRender(ITEMS.BLESSING_JADE_PIECE, 7, "blessing_jade_piece/p7");
 		registerRender(ITEMS.ELEMENT_CRACK, new RenderItemElementCrack());
 		registerRender(ITEMS.ENTANGLE_NODE);
+		registerRender(ITEMS.DRAGON_BREATH_PICKAXE);
+		registerRender(ITEMS.INVERT_GEM);
+		registerRender(ITEMS.ICE_ROCK_CHIP);
+		registerRender(ITEMS.ICE_ROCK_SPAR);
+		registerRender(ITEMS.FAIRY_CORE);
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

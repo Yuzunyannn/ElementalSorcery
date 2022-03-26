@@ -1,0 +1,81 @@
+{
+    "name": "survey",
+    "title": "quest.request.survey",
+    "describe": [
+        {
+            "condition": "{has#previous}",
+            "value": "quest.next.polite.{random#1~2}"
+        },
+        "quest.survey.ore",
+        "quest.end.polite.{random#1~3}"
+    ],
+    "condition": [
+        {
+            "type": "NeedItem",
+            "value": {
+                "type": "pool",
+                "times": "{random#2~3}",
+                "reward": [
+                    {
+                        "weight": 10,
+                        "item": {
+                            "item": "minecraft:emerald_ore",
+                            "count": "{random#4~8}"
+                        }
+                    },
+                    {
+                        "weight": 10,
+                        "item": {
+                            "item": "minecraft:lapis_ore",
+                            "count": "{random#4~12}"
+                        }
+                    },
+                    {
+                        "weight": 10,
+                        "item": {
+                            "item": "elementalsorcery:kyanite_ore",
+                            "count": "{random#8~16}"
+                        }
+                    }
+                ]
+            }
+        }
+    ],
+    "precondition": [
+        {
+            "type": "NeedFame",
+            "value": 20
+        }
+    ],
+    "reward": [
+        {
+            "type": "Coin",
+            "value": "{prandom#100~150}"
+        },
+        {
+            "type": "Exp",
+            "value": "{random#200~300}"
+        },
+        {
+            "type": "Fame",
+            "value": 1
+        },
+        {
+            "type": "Topic",
+            "chance": 0.5,
+            "value": "{random#1~1}",
+            "topic": "Struct"
+        },
+        {
+            "type": "Topic",
+            "chance": 0.5,
+            "value": "{random#1~1}",
+            "topic": "Natural"
+        },
+        {
+            "chance": 0.75,
+            "type": "NextQuest",
+            "value": "elementalsorcery:laboratory_ore_survey_adv_2"
+        }
+    ]
+}

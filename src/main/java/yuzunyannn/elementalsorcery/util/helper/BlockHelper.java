@@ -21,7 +21,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
-import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class BlockHelper {
 	/** 获取tile实体 */
@@ -184,62 +183,6 @@ public class BlockHelper {
 		if (ore == null || ore.length == 0) return "";
 		String name = OreDictionary.getOreName(ore[0]);
 		return name == null ? "" : name;
-	}
-
-	/** 根据名称获取矿物颜色，如果返回-1则表示不是矿物 */
-	static public int getOreColor(String oreName) {
-		switch (oreName) {
-		case "oreGold":
-			return 0xfcee4b;
-		case "oreIron":
-			return 0xd8af93;
-		case "oreDiamond":
-			return 0x5decf5;
-		case "oreLapis":
-			return 0x1445bc;
-		case "oreRedstone":
-			return 0xff0000;
-		case "oreEmerald":
-			return 0x17dd62;
-		case "oreQuartz":
-			return 0xe8e2d8;
-		case "oreCoal":
-			return 0x454545;
-		case "oreKyanite":
-			return 0x43a0df;
-		case "oreCopper":
-			return 0xc16e36;
-		case "oreTin":
-			return 0xbebebe;
-		case "oreLead":
-			return 0x76888a;
-		case "oreZinc":
-			return 0xb8ac96;
-		case "oreScarletCrystal":
-			return 0xbc2120;
-		default:
-			return -1;
-		}
-	}
-
-	static public int getOreColor(ItemStack oreStack) {
-		return getOreColor(getOreName(oreStack));
-	}
-
-	static public int getOreColor(IBlockState oreState) {
-		return getOreColor(ItemHelper.toItemStack(oreState));
-	}
-
-	static public boolean isOre(String oreName) {
-		return getOreColor(oreName) != -1;
-	}
-
-	static public boolean isOre(ItemStack oreStack) {
-		return BlockHelper.isOre(getOreName(oreStack));
-	}
-
-	static public boolean isOre(IBlockState oreState) {
-		return isOre(ItemHelper.toItemStack(oreState));
 	}
 
 	public static boolean isSolidBlock(World world, BlockPos pos) {

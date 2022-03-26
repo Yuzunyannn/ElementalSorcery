@@ -31,6 +31,7 @@ import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.item.InventoryItemStackHandlerVest;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
 
@@ -115,7 +116,7 @@ public class ElfProfessionIronSmith extends ElfProfession {
 			// 取矿
 			for (int i = 0; i < handler.getSlots(); i++) {
 				ItemStack ore = handler.getStackInSlot(i);
-				if (!BlockHelper.isOre(ore)) continue;
+				if (!OreHelper.isOre(ore)) continue;
 				int maxCount = money / 2;
 				if (maxCount == 0) break;
 				int rCount = Math.max(0, ore.getCount() - maxCount);

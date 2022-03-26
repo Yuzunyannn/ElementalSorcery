@@ -7,6 +7,7 @@ import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.item.prop.ItemFairyCore;
 
 public class ESObjects {
 
@@ -111,6 +112,11 @@ public class ESObjects {
 		public Item BLESSING_JADE_PIECE;
 		public Item ELEMENT_CRACK;
 		public Item ENTANGLE_NODE;
+		public Item DRAGON_BREATH_PICKAXE;
+		public Item INVERT_GEM;
+		public Item ICE_ROCK_CHIP;
+		public Item ICE_ROCK_SPAR;
+		public Item FAIRY_CORE;
 	}
 
 	static public class Blocks {

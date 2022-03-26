@@ -1,0 +1,51 @@
+{
+    "name": "survey",
+    "title": "quest.request.survey",
+    "describe": [
+        "quest.craft.ore.dragonBreathPickaxe"
+    ],
+    "condition": [
+        {
+            "type": "NeedItem",
+            "value": [
+                {
+                    "item": "elementalsorcery:elf_star",
+                    "count": 1
+                },
+                {
+                    "item": "minecraft:dragon_breath",
+                    "count": 3
+                },
+                {
+                    "item": "minecraft:diamond_block",
+                    "count": 1
+                },
+                {
+                    "item": "elementalsorcery:scarlet_crystal_ore",
+                    "count": 16
+                }
+            ]
+        }
+    ],
+    "precondition": [
+        {
+            "type": "NeedFame",
+            "value": 50
+        }
+    ],
+    "reward": [
+        {
+            "type": "Exp",
+            "value": "{random#1000~2000}"
+        },
+        {
+            "type": "ItemParcel",
+            "value": [
+                {
+                    "item": "elementalsorcery:dragon_breath_pickaxe",
+                    "count": 1
+                }
+            ]
+        }
+    ]
+}

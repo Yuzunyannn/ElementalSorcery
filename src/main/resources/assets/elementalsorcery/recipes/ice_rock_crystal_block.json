@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SCS",
+    "CSC",
+    "SCS"
+  ],
+  "key": {
+    "S": {
+      "item": "elementalsorcery:ice_rock_spar"
+    },
+    "C": {
+      "item": "elementalsorcery:ice_rock_chip"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:ice_rock_crystal_block",
+    "count": 1
+  }
+}

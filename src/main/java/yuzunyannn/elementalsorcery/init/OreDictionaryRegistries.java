@@ -15,5 +15,7 @@ public class OreDictionaryRegistries {
 		OreDictionary.registerOre("plankWood", new ItemStack(BLOCKS.ELF_PLANK, 1, OreDictionary.WILDCARD_VALUE));
 		OreDictionary.registerOre("logWood", new ItemStack(BLOCKS.ELF_PLANK, 1, OreDictionary.WILDCARD_VALUE));
 		OreDictionary.registerOre("oreScarletCrystal", BLOCKS.SCARLET_CRYSTAL_ORE);
+		OreDictionary.registerOre("scarletCrystal", ESInit.ITEMS.SCARLET_CRYSTAL);
+		OreDictionary.registerOre("chipIceRock", ESInit.ITEMS.ICE_ROCK_CHIP);
 	}
 }

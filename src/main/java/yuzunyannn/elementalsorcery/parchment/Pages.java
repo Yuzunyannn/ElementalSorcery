@@ -25,6 +25,9 @@ import yuzunyannn.elementalsorcery.util.json.Json;
 
 public class Pages {
 
+	public static final int PAGE_LEVEL_NONE = -1;
+	public static final int PAGE_LEVEL_ELF = -2;
+
 	/** 记录所有的page */
 	static final Map<String, Page> pages = new HashMap<>();
 	/** 数组形式记录所有page */
@@ -164,7 +167,7 @@ public class Pages {
 			}
 			regPage(id, packet.page);
 			if (packet.page.level < 0) {
-				if (packet.page.level == -2) ElfProfessionScholar.addScholarPage(packet.page);
+				if (packet.page.level == PAGE_LEVEL_ELF) ElfProfessionScholar.addScholarPage(packet.page);
 				return true;
 			}
 			TileRiteTable.addPage(id, packet.page.level);

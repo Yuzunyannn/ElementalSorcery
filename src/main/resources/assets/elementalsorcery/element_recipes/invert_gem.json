@@ -1,0 +1,40 @@
+{
+	"pattern": [
+		"B S",
+		" E ",
+		"S C",
+		" NN ",
+		"NAAN",
+		"NAAN",
+		" NN "
+	],
+	"key": {
+		"B": "elementalsorcery:calamity_gem",
+		"C": "elementalsorcery:blessing_jade",
+		"S": "elementalsorcery:elf_star",
+		"E": "elementalsorcery:element_stone",
+		"N": "minecraft:TNT",
+		"A": "elementalsorcery:scarlet_crystal"
+	},
+	"element": [
+		{
+			"id": "earth",
+			"size": 2048,
+			"power": 20
+		},
+		{
+			"id": "water",
+			"size": 1280,
+			"power": 20
+		},
+		{
+			"id": "star",
+			"size": 50,
+			"power": 400
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:invert_gem",
+		"count": 1
+	}
+}

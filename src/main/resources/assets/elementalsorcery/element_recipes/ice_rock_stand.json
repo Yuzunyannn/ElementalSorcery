@@ -1,0 +1,42 @@
+{
+	"pattern": [
+		"R R",
+		"M M",
+		"G G",
+		"    ",
+		"N  N",
+		"NEEN",
+		"NNNN"
+	],
+	"key": {
+		"E": "elementalsorcery:fairy_core",
+		"N": {
+			"item": "elementalsorcery:estone",
+			"data": 1
+		},
+		"G": "minecraft:gold_block",
+		"M": "elementalsorcery:magic_core",
+		"R": "minecraft:redstone_block"
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 720,
+			"power": 400
+		},
+		{
+			"id": "earth",
+			"size": 650,
+			"power": 400
+		},
+		{
+			"id": "air",
+			"size": 240,
+			"power": 400
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:ice_rock_stand",
+		"count": 1
+	}
+}

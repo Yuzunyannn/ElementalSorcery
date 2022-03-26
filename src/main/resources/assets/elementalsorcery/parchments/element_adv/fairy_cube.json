@@ -5,14 +5,21 @@
         "elf/elf_floor_post",
         "element_adv/element_platform"
     ],
-    "linked": "elementalsorcery:fairy_cube",
+    "linked": [
+        "elementalsorcery:fairy_cube",
+        "elementalsorcery:fairy_core"
+    ],
     "type": "mult",
     "lock": 0,
     "pages": [
         {
             "type": "craft",
             "name": "fairyCube",
-            "item": "elementalsorcery:fairy_cube"
+            "icon": "elementalsorcery:fairy_cube",
+            "item": [
+                "elementalsorcery:fairy_core",
+                "elementalsorcery:fairy_cube"
+            ]
         },
         {
             "type": "craft",

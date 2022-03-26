@@ -1,0 +1,10 @@
+{
+	"lev": 5,
+	"need": [
+		"element_adv/supreme_table"
+	],
+	"linked": "elementalsorcery:ice_rock_stand",
+	"type": "craft",
+	"name": "iceRockStand",
+	"item": "elementalsorcery:ice_rock_stand"
+}

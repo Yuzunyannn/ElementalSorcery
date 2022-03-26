@@ -25,7 +25,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.item.tool.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.util.IField;
-import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemStackLimitHandler;
 
@@ -183,7 +183,7 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 		if (extra.getItem() == Items.ENDER_EYE) add = 0.25f;
 		if (extra.getItem() == ESInit.ITEMS.MAGICAL_ENDER_EYE) add = 0.5f;
 
-		if (BlockHelper.isOre(stackOld) && Math.random() < 0.01f + add / 16)
+		if (OreHelper.isOre(stackOld) && Math.random() < 0.01f + add / 16)
 			return ItemBlessingJadePiece.createPiece(6);
 
 		if (stackNew.getItem() == ESInit.ITEMS.KYANITE) {

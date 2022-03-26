@@ -1,0 +1,29 @@
+{
+	"pattern": [
+		"GEG",
+		"ESE",
+		"GTG"
+	],
+	"key": {
+		"S": "elementalsorcery:elf_star",
+		"G": "minecraft:glass",
+		"E": "elementalsorcery:elf_crystal",
+		"T": "minecraft:ghast_tear"
+	},
+	"element": [
+		{
+			"id": "wood",
+			"size": 200,
+			"power": 100
+		},
+		{
+			"id": "knowledge",
+			"size": 100,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:fairy_core",
+		"count": 1
+	}
+}

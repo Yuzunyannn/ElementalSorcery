@@ -10,7 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectShineBlock;
-import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 
 public class PotionGoldenEye extends PotionCommon {
 
@@ -42,7 +42,7 @@ public class PotionGoldenEye extends PotionCommon {
 					BlockPos at = pos.add(x, y, z);
 					IBlockState state = world.getBlockState(at);
 					if (state.getBlock().isAir(state, world, at)) continue;
-					if (!BlockHelper.isOre(state)) continue;
+					if (!OreHelper.isOre(state)) continue;
 					shineBlock(world, at, 2, 0xffcd04);
 				}
 			}

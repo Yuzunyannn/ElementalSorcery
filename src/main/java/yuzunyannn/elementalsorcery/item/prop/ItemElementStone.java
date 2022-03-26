@@ -36,7 +36,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
-import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -68,7 +68,7 @@ public class ItemElementStone extends Item {
 		if (ray != null) {
 			BlockPos pos = ray.getBlockPos();
 			// 强制挖矿
-			if (BlockHelper.isOre(world.getBlockState(pos))
+			if (OreHelper.isOre(world.getBlockState(pos))
 					&& this.consumeElement(ESInit.ELEMENTS.METAL, stack, player, true)) {
 				world.destroyBlock(pos, true);
 				if (world.isRemote) this.showEffect(player, new ElementStack(ESInit.ELEMENTS.METAL), pos);
