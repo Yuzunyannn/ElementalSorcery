@@ -19,7 +19,7 @@
 			"building": "disintegrate_altar",
 			"extra": [
 				{
-					"pos": [ 0, 1, 0 ],
+					"pos": [ 0, 4, 0 ],
 					"item": "elementalsorcery:disintegrate_stela"
 				},
 				{

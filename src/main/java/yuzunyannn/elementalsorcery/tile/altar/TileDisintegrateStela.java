@@ -48,7 +48,6 @@ import yuzunyannn.elementalsorcery.util.element.ElementAnalysisPacket;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHandlerAdapter;
-import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class TileDisintegrateStela extends TileStaticMultiBlock implements ITickable, IGetItemStack {
 
@@ -248,7 +247,8 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 				return this.index >= elements.size() ? ITickTask.END : ITickTask.SUCCESS;
 			}
 		});
-		ItemHelper.dropItem(world, pos, new ItemStack(ESInit.ITEMS.ELEMENT_CRACK)).setNoDespawn();
+		// ItemHelper.dropItem(world, pos, new
+		// ItemStack(ESInit.ITEMS.ELEMENT_CRACK)).setNoDespawn();
 	}
 
 	public void ergodicMaigcPlatform(Function<BlockPos, Boolean> callback) {
@@ -493,7 +493,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 
 	@SideOnly(Side.CLIENT)
 	public void genActiveEffect() {
-
+		if (!isIntact()) return;
 		EntityPlayerSP player = Minecraft.getMinecraft().player;
 		if (player == null) return;
 		if (player.getDistanceSq(this.pos) > 64 * 64) return;

@@ -9,6 +9,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -17,8 +18,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
@@ -92,6 +91,16 @@ public class BlockIceRockCrystalBlock extends BlockIceRockSendRecv {
 	}
 
 	@Override
+	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
+		items.add(new ItemStack(this));
+		ItemStack itemStack = new ItemStack(this);
+		NBTTagCompound tag;
+		itemStack.setTagCompound(tag = new NBTTagCompound());
+		tag.setDouble("magicFragment", Math.pow(10, 12));
+		items.add(itemStack);
+	}
+
+	@Override
 	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
 			ItemStack stack) {
 		if (worldIn.isRemote) return;
@@ -112,7 +121,7 @@ public class BlockIceRockCrystalBlock extends BlockIceRockSendRecv {
 			if (tile instanceof TileIceRockCrystalBlock) continue;
 			if (tile instanceof TileIceRockStand) {
 				((TileIceRockStand) tile).checkAndBuildStructure();
-				((TileIceRockStand) tile).updateStandDataToClent();
+				((TileIceRockStand) tile).updateToClient();
 			}
 			break;
 		}
@@ -141,7 +150,7 @@ public class BlockIceRockCrystalBlock extends BlockIceRockSendRecv {
 		super.breakBlock(worldIn, pos, state);
 		if (stand != null) {
 			stand.checkAndBuildStructure();
-			stand.updateStandDataToClent();
+			stand.updateToClient();
 		}
 	}
 

@@ -72,7 +72,6 @@ public class BlockElementalCube extends BlockElementContainer {
 		super(Material.GLASS, MapColor.CYAN);
 		this.setTranslationKey("elementalCube");
 		this.setLightLevel(0.75F);
-		this.setHardness(0.5f);
 	}
 
 	@Override

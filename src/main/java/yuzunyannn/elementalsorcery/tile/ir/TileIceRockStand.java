@@ -130,14 +130,15 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 		markDirty();
 	}
 
-	public void updateStandDataToClent() {
+	@Override
+	public void updateToClient() {
 		lastUpdateMagicFragment = getMagicFragment();
-		this.updateToClient();
+		super.updateToClient();
 	}
 
 	@Override
 	public void onInventoryStatusChange() {
-		updateStandDataToClent();
+		updateToClient();
 	}
 
 	public int getLinkCount() {
@@ -176,7 +177,7 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 			if (tile == null) {
 				this.checkAndBreakStructure();
 				this.checkAndBuildStructure();
-				this.updateStandDataToClent();
+				this.updateToClient();
 				return;
 			}
 			tile.onUpdate();
@@ -188,7 +189,7 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 		if (tick % 20 == 0) {
 			double fragment = getMagicFragment();
 			double log10 = Math.max(Math.log10(fragment) - 3, 1);
-			if (Math.ceil(fragment / log10) != Math.ceil(lastUpdateMagicFragment / log10)) updateStandDataToClent();
+			if (Math.ceil(fragment / log10) != Math.ceil(lastUpdateMagicFragment / log10)) updateToClient();
 		}
 
 		if (tick % 200 == 0) onUpdateSubNode();
@@ -318,15 +319,16 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 		if (pos == null) return null;
 		if (world.isRemote) return null;
 		subNodes.add(pos);
-		world.setBlockState(pos, ESInit.BLOCKS.ICE_ROCK_NODE.getDefaultState());
+		if (!world.setBlockState(pos, ESInit.BLOCKS.ICE_ROCK_NODE.getDefaultState())) return null;
 		TileIceRockNode node = BlockHelper.getTileEntity(world, pos, TileIceRockNode.class);
 		for (EnumFacing facing : EnumFacing.VALUES) node.setFaceStatus(facing, FaceStatus.OUT);
 		node.link(this.pos);
-		node.updateClient();
+		node.updateToClient();
 		node.markDirty();
 		markDirty();
 		if (!world.isRemote) {
 			float r = (float) (getMagicFragment() / getMagicFragmentCapacity());
+			r = MathHelper.clamp(r, 0, 1);
 			Vec3d vec = new Vec3d(this.pos).add(0.5, 0.5 + linkCount / 2, 0.5);
 			Vec3d to = new Vec3d(pos).add(0.5, 0.5, 0.5);
 			Effects.spawnFragmentTo(world, vec, to, new Color(0x7cd0d3).weight(new Color(0x9956d0), r).toInt(), 1);
@@ -405,6 +407,7 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 
 		double rang = MathHelper.clamp(Math.pow(attackDamage, 0.25), 1, 4) + 2;
 		float r = (float) (getMagicFragment() / getMagicFragmentCapacity());
+		r = MathHelper.clamp(r, 0, 1);
 		Vec3d vec = new Vec3d(this.pos).add(0.5, 0.5 + linkCount / 2, 0.5);
 		int color = new Color(0x7cd0d3).weight(new Color(0x9956d0), r).toInt();
 		Effects.spawnFragmentTo(world, vec, this.attackVec, color, (1 << 24) | MathHelper.floor(rang));

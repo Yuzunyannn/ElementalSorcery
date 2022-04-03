@@ -31,6 +31,7 @@ public class OreHelper {
 		TIN("oreTin", 0xbebebe, "ingotTin"),
 		LEAD("oreLead", 0x76888a, "ingotLead"),
 		ZINC("oreZinc", 0xb8ac96, "ingotZinc"),
+		OSMIUM("oreOsmium", 0x9eb7df, "ingotOsmium"),
 		IRON("oreIron", 0xd8af93, "ingotIron");
 
 		final public int c;

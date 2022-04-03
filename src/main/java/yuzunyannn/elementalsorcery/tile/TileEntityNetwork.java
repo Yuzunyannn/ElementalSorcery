@@ -16,12 +16,13 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.api.tile.ICanUpdate;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
-public class TileEntityNetwork extends TileEntity {
+public class TileEntityNetwork extends TileEntity implements ICanUpdate {
 
 	@Config
 	static protected int TILE_ENTITY_RENDER_DISTANCE = -1;
@@ -91,9 +92,11 @@ public class TileEntityNetwork extends TileEntity {
 		return 128 * 128;
 	}
 
-	/** 将数据更新到client端 */
+	/** 将数据更新到client端，优化有可能不是同步的 */
+	@Override
 	public void updateToClient() {
 		if (world.isRemote) return;
+		// world.notifyBlockUpdate(pos, null, null, TILE_ENTITY_RENDER_DISTANCE);
 		isNetwork = true;
 		updateToClient(new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), this.getUpdateTag()));
 		isNetwork = false;
