@@ -97,9 +97,9 @@ public class EffectScreenProgress extends EffectScreen {
 		GlStateManager.depthMask(true);
 	}
 
-	List<Part> list = new LinkedList<>();
+	protected List<Part> list = new LinkedList<>();
 
-	private class Part extends StructElement2D {
+	protected class Part extends StructElement2D {
 
 		public float tR, tG, tB;
 		public float vx, vy;

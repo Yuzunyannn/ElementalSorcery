@@ -29,7 +29,7 @@ public class MessageSyncContainer implements IMessage {
 			if (nbt == null) return;
 			MessageSyncContainer message = new MessageSyncContainer();
 			message.nbt = nbt;
-			message.nbt.setInteger("gui", ((Container) this).windowId);
+			message.nbt.setInteger("_gui", ((Container) this).windowId);
 			ESNetwork.instance.sendToServer(message);
 		}
 
@@ -37,7 +37,7 @@ public class MessageSyncContainer implements IMessage {
 			if (nbt == null) return;
 			MessageSyncContainer message = new MessageSyncContainer();
 			message.nbt = nbt;
-			message.nbt.setInteger("gui", ((Container) this).windowId);
+			message.nbt.setInteger("_gui", ((Container) this).windowId);
 			for (IContainerListener listener : listeners) {
 				if (listener instanceof EntityPlayerMP) ESNetwork.instance.sendTo(message, (EntityPlayerMP) listener);
 			}
@@ -47,7 +47,7 @@ public class MessageSyncContainer implements IMessage {
 			if (nbt == null || listener == null) return;
 			MessageSyncContainer message = new MessageSyncContainer();
 			message.nbt = nbt;
-			message.nbt.setInteger("gui", ((Container) this).windowId);
+			message.nbt.setInteger("_gui", ((Container) this).windowId);
 			if (listener instanceof EntityPlayerMP) ESNetwork.instance.sendTo(message, (EntityPlayerMP) listener);
 		}
 
@@ -100,14 +100,14 @@ public class MessageSyncContainer implements IMessage {
 		public void updateToClient(MessageSyncContainer msg) {
 			EntityPlayerSP player = Minecraft.getMinecraft().player;
 			Container gui = player.openContainer;
-			if (gui != null && gui instanceof IContainerNetwork && gui.windowId == msg.nbt.getInteger("gui"))
+			if (gui != null && gui instanceof IContainerNetwork && gui.windowId == msg.nbt.getInteger("_gui"))
 				((IContainerNetwork) gui).recvData(msg.nbt, Side.CLIENT);
 			else ElementalSorcery.logger.warn("gui不吻合");
 		}
 
 		public void requestFromClient(MessageSyncContainer msg, EntityPlayerMP player) {
 			Container gui = player.openContainer;
-			if (gui != null && gui instanceof IContainerNetwork && gui.windowId == msg.nbt.getInteger("gui"))
+			if (gui != null && gui instanceof IContainerNetwork && gui.windowId == msg.nbt.getInteger("_gui"))
 				((IContainerNetwork) gui).recvData(msg.nbt, Side.SERVER);
 			else ElementalSorcery.logger.warn("gui不吻合");
 		}

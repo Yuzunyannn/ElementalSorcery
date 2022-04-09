@@ -24,7 +24,12 @@ public class ItemElementCrystal extends ItemCrystal {
 
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, @Nullable NBTTagCompound nbt) {
-		return new CapabilityProvider.ElementInventoryUseProvider(stack);
+		return new CapabilityProvider.ElementInventoryUseProvider(stack, new ElementInventory() {
+			@Override
+			public int getMaxSizeInSlot(int slot) {
+				return super.getMaxSizeInSlot(slot) / 10;
+			}
+		});
 	}
 
 	@Override

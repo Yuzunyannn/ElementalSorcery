@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -67,7 +68,7 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 
 	@Override
 	public int getMaxSizeInSlot(int slot) {
-		return -1;
+		return 10000;
 	}
 
 	@Override
@@ -82,6 +83,12 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 		if (estack.isEmpty()) return true;
 		ElementStack eorigin = getStackInSlot(slot);
 		if (!eorigin.isEmpty() && !eorigin.areSameType(estack)) return false;
+		int maxSize = getMaxSizeInSlot(slot);
+		if (maxSize > 0) {
+			if (eorigin.getCount() >= maxSize) return false;
+			int newCount = eorigin.getCount() + estack.getCount();
+			if (newCount >= MathHelper.ceil(maxSize * 1.025f)) return false;
+		}
 		if (simulate) return true;
 		eorigin.growOrBecome(estack);
 		return true;

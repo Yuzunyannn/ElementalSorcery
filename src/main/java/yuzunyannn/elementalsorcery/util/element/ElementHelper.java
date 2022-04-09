@@ -22,6 +22,7 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class ElementHelper {
@@ -67,17 +68,18 @@ public class ElementHelper {
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ElementStack estack = inventory.getStackInSlot(i);
 			if (estack.isEmpty()) continue;
-			addElementInformation(estack, tooltip);
+			addElementInformation(estack, tooltip, inventory.getMaxSizeInSlot(i));
 			has = true;
 		}
 		return has;
 	}
 
 	@SideOnly(Side.CLIENT)
-	public static void addElementInformation(ElementStack estack, List<String> tooltip) {
+	public static void addElementInformation(ElementStack estack, List<String> tooltip, int capacity) {
 		if (estack.isEmpty()) return;
-		String str = I18n.format("info.elementCrystal.has", estack.getDisplayName(), estack.getCount(),
-				estack.getPower());
+		String countString = String.valueOf(estack.getCount());
+		if (capacity > 0) countString = countString + "/" + TextHelper.toAbbreviatedNumber(capacity, 1);
+		String str = I18n.format("info.elementCrystal.has", estack.getDisplayName(), countString, estack.getPower());
 		tooltip.add(TextFormatting.RED + str);
 	}
 
@@ -222,6 +224,33 @@ public class ElementHelper {
 		ElementStack[] newEStacks = new ElementStack[estacks.length];
 		for (int i = 0; i < estacks.length; i++) newEStacks[i] = estacks[i].copy();
 		return newEStacks;
+	}
+
+	static final double ln2 = Math.log(2);
+
+	/**
+	 * @return fragment unit
+	 */
+	static public double toFragmentUnit(Element element, double power) {
+		return Math.pow(2.4, Math.log(power) / ln2);
+	}
+
+	/**
+	 * @return fragment
+	 */
+	static public double toFragment(Element element, double count, double power) {
+		return toFragmentUnit(element, power) * count;
+	}
+
+	static public double toFragment(ElementStack estack) {
+		return toFragmentUnit(estack.getElement(), estack.getPower()) * estack.getCount();
+	}
+
+	/**
+	 * @return count
+	 */
+	static public double fromFragment(Element element, double fragment, double targetPower) {
+		return fragment / toFragmentUnit(element, targetPower);
 	}
 
 }

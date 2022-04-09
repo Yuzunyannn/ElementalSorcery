@@ -11,6 +11,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiAnalysisAltar;
 import yuzunyannn.elementalsorcery.container.gui.GuiDevolveCube;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementBoard;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementCraftingTable;
+import yuzunyannn.elementalsorcery.container.gui.GuiElementInventoryStronger;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementTranslocator;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
 import yuzunyannn.elementalsorcery.container.gui.GuiElfApplyAddressPlate;
@@ -60,6 +61,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_ELEMENT_BOARD = 15;
 	public static final int GUI_ELEMENT_TRANSLOCATOR = 16;
 	public static final int GUI_DEVOLVE_CUBE = 17;
+	public static final int GUI_ELEMENT_INVENTORY_STRONGER = 18;
 
 	public static final int GUI_MD_MAGIC_GEN = 21;
 	public static final int GUI_MD_HEARTH = 22;
@@ -117,6 +119,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new ContainerElementTranslocator(player, tileEntity);
 			case GUI_DEVOLVE_CUBE:
 				return new ContainerDevolveCube(player, tileEntity);
+			case GUI_ELEMENT_INVENTORY_STRONGER:
+				return new ContainerElementInventoryStronger(player, tileEntity);
 
 			case GUI_MD_MAGIC_GEN:
 				return new ContainerMDMagicGen(player, tileEntity);
@@ -194,6 +198,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiElementTranslocator(new ContainerElementTranslocator(player, tileEntity));
 			case GUI_DEVOLVE_CUBE:
 				return new GuiDevolveCube(new ContainerDevolveCube(player, tileEntity));
+			case GUI_ELEMENT_INVENTORY_STRONGER:
+				return new GuiElementInventoryStronger(new ContainerElementInventoryStronger(player, tileEntity));
 
 			case GUI_MD_MAGIC_GEN:
 				return new GuiMDMagicGen(new ContainerMDMagicGen(player, tileEntity), player.inventory);

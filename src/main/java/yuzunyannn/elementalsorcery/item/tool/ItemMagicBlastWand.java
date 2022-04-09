@@ -36,6 +36,7 @@ import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.element.MagicExchangeInventory;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
@@ -80,7 +81,12 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-		return new CapabilityProvider.ElementInventoryUseProvider(stack, new MagicBlestInventory());
+		return new CapabilityProvider.ElementInventoryUseProvider(stack, new MagicExchangeInventory() {
+			@Override
+			public int getMaxSizeInSlot(int slot) {
+				return -1;
+			}
+		});
 	}
 
 	@Override
@@ -142,38 +148,6 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 		einv.saveState(stack);
 		magic.setPower(Math.round(magic.getPower() * powerUp));
 		blast(magic, entitiy, entityLiving, null);
-	}
-
-	static class MagicBlestInventory extends ElementInventory {
-
-		public MagicBlestInventory() {
-			super(1);
-		}
-
-		@Override
-		public boolean insertElement(ElementStack estack, boolean simulate) {
-			return this.insertElement(0, estack, simulate);
-		}
-
-		@Override
-		public ElementStack extractElement(ElementStack estack, boolean simulate) {
-			return super.extractElement(0, estack, simulate);
-		}
-
-		@Override
-		public boolean insertElement(int slot, ElementStack estack, boolean simulate) {
-			if (!estack.isMagic()) {
-				estack = estack.copy();
-				estack = estack.becomeMagic(null);
-			}
-			return super.insertElement(slot, estack, simulate);
-		}
-
-		@Override
-		public ElementStack extractElement(int slot, ElementStack estack, boolean simulate) {
-			if (!estack.isMagic()) return ElementStack.EMPTY.copy();
-			return super.extractElement(slot, estack, simulate);
-		}
 	}
 
 	/** 通用的，魔力转伤害 */

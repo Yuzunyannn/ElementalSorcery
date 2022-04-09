@@ -16,11 +16,6 @@ public class ElementMagic extends Element implements IElementExplosion {
 		super(0x4d2175);
 	}
 
-	@Override
-	public ElementStack changetoMagic(World world, ElementStack estack) {
-		return estack;
-	}
-
 	/** 默认的资源 */
 	public final static ResourceLocation MAGIC_RESOURCELOCATION = new ResourceLocation(ElementalSorcery.MODID,
 			"textures/elements/magic.png");

@@ -24,7 +24,7 @@ import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementFly;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
-import yuzunyannn.elementalsorcery.util.element.ElementInventoryLimit;
+import yuzunyannn.elementalsorcery.util.element.ElementInventoryStronger;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 
 public class TileElementalCube extends TileEntityNetwork implements ITickable, IAltarWake {
@@ -73,7 +73,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	}
 
 	// 仓库
-	protected ElementInventory inventory = new ElementInventoryLimit();
+	protected ElementInventoryStronger inventory = new ElementInventoryStronger();
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
@@ -109,6 +109,10 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 		nbt.setTag("inventory", inventory.serializeNBT());
 		if (dyeColor != null) nbt.setByte("color", (byte) dyeColor.getMetadata());
 		return super.writeToNBT(nbt);
+	}
+
+	public ElementInventoryStronger getElementInventory() {
+		return inventory;
 	}
 
 	// 唤醒

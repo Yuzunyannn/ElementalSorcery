@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ElementStack implements INBTSerializable<NBTTagCompound> {
 
@@ -273,9 +274,12 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	public ElementStack becomeMagic(@Nullable World world) {
 		if (this.isMagic()) return this;
 		if (this.isEmpty()) return this;
-		ElementStack magic = getElement().changetoMagic(world, this);
-		magic.setElement(ESObjects.ELEMENTS.MAGIC);
-		return magic;
+		this.setElement(ESObjects.ELEMENTS.MAGIC);
+		float newPower = this.getPower() > 1 ? this.getPower() / 2.0f : 1;
+		double fragment = ElementHelper.toFragment(this) * 0.975;
+		this.setPower(MathHelper.floor(newPower));
+		this.setCount(MathHelper.floor(ElementHelper.fromFragment(getElement(), fragment, newPower)));
+		return this;
 	}
 
 	public ElementStack toMagic(@Nullable World world) {

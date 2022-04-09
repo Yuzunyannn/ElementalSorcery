@@ -19,9 +19,7 @@ public class StructElement2D {
 	public float drawSize = 0.5f;
 
 	public void setColor(int c) {
-		r = ((c >> 16) & 0xff) / 255f;
-		g = ((c >> 8) & 0xff) / 255f;
-		b = ((c >> 0) & 0xff) / 255f;
+		setColor(((c >> 16) & 0xff) / 255f, ((c >> 8) & 0xff) / 255f, ((c >> 0) & 0xff) / 255f);
 	}
 
 	public void setColor(float r, float g, float b) {

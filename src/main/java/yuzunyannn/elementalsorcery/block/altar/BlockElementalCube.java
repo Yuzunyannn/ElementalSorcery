@@ -33,7 +33,7 @@ import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
-import yuzunyannn.elementalsorcery.util.element.ElementInventoryLimit;
+import yuzunyannn.elementalsorcery.util.element.ElementInventoryStronger;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 
@@ -44,7 +44,7 @@ public class BlockElementalCube extends BlockElementContainer {
 		ItemBlock item = new ItemBlock(this) {
 			@Override
 			public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-				return new CapabilityProvider.ElementInventoryUseProvider(stack, new ElementInventoryLimit(1));
+				return new CapabilityProvider.ElementInventoryUseProvider(stack, new ElementInventoryStronger(1));
 			}
 
 			@Override
@@ -81,7 +81,7 @@ public class BlockElementalCube extends BlockElementContainer {
 
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return FULL_BLOCK_AABB;
+		return super.getBoundingBox(state, source, pos);
 	}
 
 	// 放置判定
@@ -105,6 +105,7 @@ public class BlockElementalCube extends BlockElementContainer {
 	}
 
 	// 周围改变
+	@Override
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		if (!this.canPlaceBlockAtAround(worldIn, pos)) {
 			this.dropBlockAsItem(worldIn, pos, state, 0);
@@ -135,11 +136,13 @@ public class BlockElementalCube extends BlockElementContainer {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		TileElementalCube cube = BlockHelper.getTileEntity(worldIn, pos, TileElementalCube.class);
+		if (cube == null) return true;
 		if (worldIn.isRemote) {
-			TileElementalCube cube = BlockHelper.getTileEntity(worldIn, pos, TileElementalCube.class);
-			if (cube != null && cube.wake <= 0) cube.colorRate = 1;
+			if (cube.wake <= 0) cube.colorRate = 1;
+			return true;
 		}
-		return false;
+		return cube.getElementInventory().openTerminal(worldIn, pos, playerIn);
 	}
 
 	@Override
