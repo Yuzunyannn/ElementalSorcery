@@ -1,10 +1,11 @@
-package yuzunyannn.elementalsorcery.render.effect;
+package yuzunyannn.elementalsorcery.render.effect.gui;
 
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElement;
+import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class StructElement2D {
@@ -14,18 +15,16 @@ public class StructElement2D {
 	public float scale = 1;
 	public float alpha = 1;
 	public float preAlpha = alpha;
-	public float r, g, b;
 	public int lifeTime;
 	public float drawSize = 0.5f;
+	public final Color color = new Color();
 
 	public void setColor(int c) {
 		setColor(((c >> 16) & 0xff) / 255f, ((c >> 8) & 0xff) / 255f, ((c >> 0) & 0xff) / 255f);
 	}
 
 	public void setColor(float r, float g, float b) {
-		this.r = r;
-		this.b = b;
-		this.g = g;
+		color.setColor(r, g, b);
 	}
 
 	public void setPosition(float x, float y) {
@@ -50,13 +49,17 @@ public class StructElement2D {
 		float x = RenderHelper.getPartialTicks(this.x, preX, partialTicks);
 		float y = RenderHelper.getPartialTicks(this.y, preY, partialTicks);
 		float alpha = RenderHelper.getPartialTicks(this.alpha, preAlpha, partialTicks);
-		GlStateManager.color(r, g, b, alpha);
+		GlStateManager.color(color.r, color.g, color.b, alpha);
 		GlStateManager.translate(x, y, -0.001f);
 		GlStateManager.scale(scale, scale, scale);
-		EffectElement.BATCH_TYPE.bind();
+		bindTexture();
 		renderRect(bufferbuilder, drawSize);
 		tessellator.draw();
 		GlStateManager.popMatrix();
+	}
+
+	public void bindTexture() {
+		EffectElement.BATCH_TYPE.bind();
 	}
 
 	public static void renderRect(BufferBuilder bufferbuilder, float size) {

@@ -26,6 +26,10 @@ public class Color {
 		setColor(c);
 	}
 
+	public Color(Color c) {
+		setColor(c);
+	}
+
 	public Color setColor(float r, float g, float b) {
 		this.r = r;
 		this.g = g;
@@ -70,10 +74,32 @@ public class Color {
 				| ((((int) (b * 255)) << 0) & 0x0000ff);
 	}
 
+	public Color copy() {
+		return new Color(this);
+	}
+
 	public Color weight(Color other, float r) {
 		this.r = this.r * (1 - r) + other.r * r;
 		this.g = this.g * (1 - r) + other.g * r;
 		this.b = this.b * (1 - r) + other.b * r;
 		return this;
+	}
+
+	public Color add(float c) {
+		this.r = Math.min(1, this.r + c);
+		this.g = Math.min(1, this.g + c);
+		this.b = Math.min(1, this.b + c);
+		return this;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj instanceof Color) {
+			Color other = (Color) obj;
+			return (int) (other.r * 255) == (int) (this.r * 255) && (int) (other.g * 255) == (int) (this.g * 255)
+					&& (int) (other.b * 255) == (int) (this.b * 255);
+		}
+		return false;
 	}
 }

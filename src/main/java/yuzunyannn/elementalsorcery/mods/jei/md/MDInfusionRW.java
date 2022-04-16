@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDBase;
+import yuzunyannn.elementalsorcery.container.gui.GuiNormal;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
@@ -90,7 +91,7 @@ public class MDInfusionRW implements MDRecipeWrapper {
 
 	@Override
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
-		if (GuiMDBase.isMouseIn(mouseX, mouseY, 15, 19 - 10, 144, 10)) {
+		if (GuiNormal.isMouseIn(mouseX, mouseY, 15, 19 - 10, 144, 10)) {
 			List<String> list = new LinkedList<String>();
 			int power = recipe.getCost().getPower();
 			list.add(I18n.format("page.crafting.show", I18n.format("element.magic.name"), cost, power));

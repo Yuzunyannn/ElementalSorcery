@@ -21,6 +21,7 @@ public class ElementWater extends ElementCommon {
 
 	public ElementWater() {
 		super(0x6472f7, "water");
+		setTransition(2, 180, 180);
 	}
 
 	@Override

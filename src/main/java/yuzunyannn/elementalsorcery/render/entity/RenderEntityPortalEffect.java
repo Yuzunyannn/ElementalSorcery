@@ -14,8 +14,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
-import yuzunyannn.elementalsorcery.render.effect.StructElement2D;
-import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
+import yuzunyannn.elementalsorcery.render.effect.gui.StructElement2D;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class RenderEntityPortalEffect implements EntityPortal.IPortalDraw {
@@ -95,10 +94,7 @@ public class RenderEntityPortalEffect implements EntityPortal.IPortalDraw {
 
 		public Part(int mode) {
 			drawSize = 0.15f;
-			Vec3d color = ColorHelper.color(0xcc00fa);
-			r = (float) color.x;
-			g = (float) color.y;
-			b = (float) color.z;
+			this.color.setColor(0xcc00fa);
 			if (mode == -1) return;
 			if (mode == 1) {
 				circle += rand.nextFloat() * 0.3f + 0.2f;
@@ -109,9 +105,7 @@ public class RenderEntityPortalEffect implements EntityPortal.IPortalDraw {
 				vy = (float) vec.y;
 				this.lifeTime = 75;
 				float c = rand.nextFloat() * 0.6f;
-				r += c;
-				g += c;
-				b += c;
+				this.color.add(c);
 			} else {
 				float circle = rand.nextFloat() * 3.14f * 2;
 				x = MathHelper.cos(circle) * range;
@@ -162,9 +156,7 @@ public class RenderEntityPortalEffect implements EntityPortal.IPortalDraw {
 			x = rand.nextFloat() * 360;
 
 			float c = rand.nextFloat() * 0.5f;
-			r += c;
-			g += c;
-			b += c;
+			color.add(c);
 		}
 
 		@Override
@@ -191,7 +183,7 @@ public class RenderEntityPortalEffect implements EntityPortal.IPortalDraw {
 		public void render(float partialTicks, BufferBuilder bufferbuilder, Tessellator tessellator) {
 			LIGHT.bind();
 			GlStateManager.pushMatrix();
-			GlStateManager.color(r, g, b, alpha);
+			GlStateManager.color(color.r, color.g, color.b, alpha);
 			GlStateManager.rotate(x, 0, 0, 1);
 			renderRect(bufferbuilder, 2f);
 			tessellator.draw();

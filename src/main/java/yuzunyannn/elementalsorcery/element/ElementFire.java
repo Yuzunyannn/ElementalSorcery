@@ -24,6 +24,7 @@ public class ElementFire extends ElementCommon {
 
 	public ElementFire() {
 		super(rgb(255, 153, 2), "fire");
+		setTransition(2, 0, 180);
 	}
 
 	@Override

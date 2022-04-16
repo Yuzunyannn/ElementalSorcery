@@ -12,6 +12,7 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDBase;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDRubbleRepair;
+import yuzunyannn.elementalsorcery.container.gui.GuiNormal;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
@@ -53,7 +54,7 @@ public class MDRubbleRepairRW implements MDRecipeWrapper {
 
 	@Override
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
-		if (GuiMDBase.isMouseIn(mouseX, mouseY, 15, 59, 144, 10)) {
+		if (GuiNormal.isMouseIn(mouseX, mouseY, 15, 59, 144, 10)) {
 			List<String> list = new LinkedList<String>();
 			int cost = recipe.getCost();
 			list.add(I18n.format("info.arcCrystal.count", I18n.format("element.magic.name"), cost));

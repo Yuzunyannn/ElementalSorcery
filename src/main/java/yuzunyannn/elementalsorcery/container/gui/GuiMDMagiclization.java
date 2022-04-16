@@ -24,7 +24,7 @@ public class GuiMDMagiclization extends GuiMDBase<ContainerMDMagiclization> {
 	
 	@Override
 	protected boolean showMagicInfo(int mouseX, int mouseY) {
-		return isMouseIn(mouseX, mouseY, 15, 44, 144, 25);
+		return GuiNormal.isMouseIn(mouseX, mouseY, 15, 44, 144, 25);
 	}
 
 }

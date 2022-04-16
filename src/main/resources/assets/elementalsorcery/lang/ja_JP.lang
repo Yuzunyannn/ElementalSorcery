@@ -206,6 +206,7 @@ tile.disintegrateStela.name=崩解し石碑
 tile.iceRockStand.name=魔力エネルギーコントローラの台座
 tile.iceRockCrystalBlock.name=岩氷の水晶ブロック
 tile.iceRockNode.name=<->
+tile.elementReactor.name=元素炉
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者

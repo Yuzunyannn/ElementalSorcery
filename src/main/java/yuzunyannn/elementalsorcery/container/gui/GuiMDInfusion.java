@@ -69,7 +69,7 @@ public class GuiMDInfusion extends GuiMDBase<ContainerMDInfusion> {
 
 	@Override
 	protected boolean showMagicInfo(int mouseX, int mouseY) {
-		return isMouseIn(mouseX, mouseY, 15, 19, 144, 10);
+		return GuiNormal.isMouseIn(mouseX, mouseY, 15, 19, 144, 10);
 	}
 
 }

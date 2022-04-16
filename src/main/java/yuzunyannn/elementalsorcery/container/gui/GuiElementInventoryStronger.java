@@ -2,8 +2,6 @@ package yuzunyannn.elementalsorcery.container.gui;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.client.audio.PositionedSoundRecord;
@@ -20,10 +18,12 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.container.ContainerElementInventoryStronger;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementTranslocator.GuiTextFieldOnlyNumber;
+import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.StructElement2D;
+import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatch;
+import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatchList;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryStronger;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
@@ -158,9 +158,8 @@ public class GuiElementInventoryStronger extends GuiContainer {
 		if (!currStack.isEmpty()) {
 			color = new Color(currStack.getColor());
 			int x = offsetX + 79, y = offsetY + 45;
-			GlStateManager.translate(x, y, 0);
-			currStack.getElement().drawElemntIcon(currStack, 1);
-			GlStateManager.translate(-x, -y, 0);
+			currStack.getElement().drawElemntIconInGUI(currStack, x, y,
+					Element.DRAW_GUI_FLAG_CENTER | Element.DRAW_GUI_FLAG_NO_INFO);
 
 			String str;
 			if (maxCount > 0) str = String.format("%s/%s", currStack.getCount(), maxCount);
@@ -177,7 +176,7 @@ public class GuiElementInventoryStronger extends GuiContainer {
 					colorInt);
 		}
 		GlStateManager.translate(0, 0, 1);
-		for (Part part : parts) part.render(partialTicks);
+		guiEffectList.render(partialTicks);
 
 		for (GuiTextField field : fields) field.drawTextBox();
 
@@ -255,30 +254,23 @@ public class GuiElementInventoryStronger extends GuiContainer {
 		float targetRatio = Math.min(currStack.getCount(), targetCount) / (float) targetCount;
 		capacityRatio = capacityRatio + (targetRatio - capacityRatio) * 0.25f;
 
-		Iterator<Part> iter = parts.iterator();
-		while (iter.hasNext()) {
-			Part part = iter.next();
-			part.update();
-			if (part.lifeTime <= 0) iter.remove();
-		}
+		guiEffectList.update();
 
 		float t = 0.2f + 20f / Math.max(1, MathHelper.sqrt(currStack.getPower())) + 2f - capacityRatio * 2f;
 		if (t > 1) {
 			if (EventClient.tick % (int) t == 0) {
 				Part p = new Part();
-				p.setColor(currStack.getColor());
+				p.color.setColor(currStack.getColor()).add(0.25f);
 				p.setPosition(guiLeft + 24 + (float) Math.random() * capacityRatio * 112, guiTop + 86);
-				p.updatePrev();
-				parts.add(p);
+				guiEffectList.add(p);
 			}
 		} else {
 			int times = (int) (1 / t);
 			for (int i = 0; i < times; i++) {
 				Part p = new Part();
-				p.setColor(currStack.getColor());
+				p.color.setColor(currStack.getColor()).add(0.25f);
 				p.setPosition(guiLeft + 24 + (float) Math.random() * capacityRatio * 112, guiTop + 86);
-				p.updatePrev();
-				parts.add(p);
+				guiEffectList.add(p);
 			}
 		}
 
@@ -307,35 +299,22 @@ public class GuiElementInventoryStronger extends GuiContainer {
 			limitUpper.setText(String.valueOf(stronger.getUpperLimit()));
 	}
 
-	protected List<Part> parts = new LinkedList<>();
+	protected GUIEffectBatchList<Part> guiEffectList = new GUIEffectBatchList<>();
 
-	public static class Part extends StructElement2D {
+	public static class Part extends GUIEffectBatch {
 
-		public float tR, tG, tB;
 		public float vx, vy;
 		public int startLifeTime = 40;
 
 		public Part() {
 			drawSize = 2;
-			scale = Effect.rand.nextFloat() * 0.75f + 1.25f;
-			this.lifeTime = this.startLifeTime;
-			this.alpha = 1;
+			prevScale = scale = Effect.rand.nextFloat() * 0.75f + 1.25f;
+			lifeTime = startLifeTime;
 			vy = -(Effect.rand.nextFloat() * 0.5f + 0.25f);
-			this.updatePrev();
-		}
-
-		@Override
-		public void setColor(float r, float g, float b) {
-			tR = r;
-			tB = b;
-			tG = g;
-			this.r = Math.min(1, tR + 0.25f);
-			this.g = Math.min(1, tG + 0.25f);
-			this.b = Math.min(1, tB + 0.25f);
 		}
 
 		public void update() {
-			this.updatePrev();
+			super.update();
 			this.lifeTime--;
 			x += vx;
 			y += vy;

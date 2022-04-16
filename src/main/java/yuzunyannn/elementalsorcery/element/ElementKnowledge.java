@@ -30,6 +30,7 @@ public class ElementKnowledge extends ElementCommon {
 
 	public ElementKnowledge() {
 		super(COLOR, "knowledge");
+		setTransition(3f, 90, 180);
 	}
 
 	@Override

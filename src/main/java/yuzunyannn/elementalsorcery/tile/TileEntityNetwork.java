@@ -54,9 +54,7 @@ public class TileEntityNetwork extends TileEntity implements ICanUpdate {
 
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
-		isNetwork = true;
-		this.handleUpdateTag(pkt.getNbtCompound());
-		isNetwork = false;
+		handleUpdateTagFromPacketData(pkt.getNbtCompound());
 	}
 
 	// 该函数还会被普通的调用，表明首次更新，首次调用是mc来管理
@@ -67,7 +65,7 @@ public class TileEntityNetwork extends TileEntity implements ICanUpdate {
 
 	@Override
 	public void handleUpdateTag(NBTTagCompound tag) {
-		super.handleUpdateTag(tag);
+		this.readFromNBT(tag);
 	}
 
 	@Override
@@ -92,22 +90,35 @@ public class TileEntityNetwork extends TileEntity implements ICanUpdate {
 		return 128 * 128;
 	}
 
+	// 处理 onDataPacket 接受的 tag
+	public void handleUpdateTagFromPacketData(NBTTagCompound nbt) {
+		isNetwork = true;
+		this.handleUpdateTag(nbt);
+		isNetwork = false;
+	}
+
+	// 获取 updateToClient 使用的 tag
+	public NBTTagCompound getUpdateTagForUpdateToClient() {
+		isNetwork = true;
+		NBTTagCompound nbt = this.getUpdateTag();
+		isNetwork = false;
+		return nbt;
+	}
+
 	/** 将数据更新到client端，优化有可能不是同步的 */
 	@Override
 	public void updateToClient() {
 		if (world.isRemote) return;
 		// world.notifyBlockUpdate(pos, null, null, TILE_ENTITY_RENDER_DISTANCE);
-		isNetwork = true;
-		updateToClient(new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), this.getUpdateTag()));
-		isNetwork = false;
+		updateToClient(new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), getUpdateTagForUpdateToClient()));
 	}
 
 	public void updateToClient(NBTTagCompound custom) {
 		if (world.isRemote) return;
 		isNetwork = true;
 		SPacketUpdateTileEntity packet = new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), custom);
-		updateToClient(packet);
 		isNetwork = false;
+		updateToClient(packet);
 	}
 
 	protected void updateToClient(SPacketUpdateTileEntity packet) {

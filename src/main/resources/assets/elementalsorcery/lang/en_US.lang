@@ -206,6 +206,7 @@ tile.disintegrateStela.name=Material Collapse Stela
 tile.iceRockStand.name=Magic Energy Controller Pedestal
 tile.iceRockCrystalBlock.name=Icerock Crystal Block
 tile.iceRockNode.name=<->
+tile.elementReactor.name=Element Reactor
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker

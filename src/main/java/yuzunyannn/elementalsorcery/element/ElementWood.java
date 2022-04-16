@@ -25,6 +25,7 @@ public class ElementWood extends ElementCommon {
 
 	public ElementWood() {
 		super(0x32CD32, "wood");
+		setTransition(2.5f, 112.5f, 60);
 	}
 
 	@Override

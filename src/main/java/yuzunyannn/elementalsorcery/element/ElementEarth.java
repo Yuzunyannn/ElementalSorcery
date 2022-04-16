@@ -19,6 +19,7 @@ public class ElementEarth extends ElementCommon {
 
 	public ElementEarth() {
 		super(0x785439, "earth");
+		setTransition(2.5f, 22.5f, 120);
 	}
 
 	@Override

@@ -28,6 +28,7 @@ public class ElementEnder extends ElementCommon {
 
 	public ElementEnder() {
 		super(0xcc00fa, "ender");
+		setTransition(3f, 270, 180);
 	}
 
 	@Override

@@ -81,6 +81,7 @@ import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructWindmill;
 import yuzunyannn.elementalsorcery.block.altar.BlockDevolveCube;
 import yuzunyannn.elementalsorcery.block.altar.BlockDisintegrateStela;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementCraftingTable;
+import yuzunyannn.elementalsorcery.block.altar.BlockElementReactor;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementTranslocator;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
 import yuzunyannn.elementalsorcery.block.altar.BlockMagicDesk;
@@ -285,6 +286,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileDevolveCube;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDisintegrateStela;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementPlatform;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileElementReactor;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementTranslocator;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementalCube;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElfBeacon;
@@ -338,6 +340,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructWindmill;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileDisintegrateStela;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
+import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementTranslocator;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
@@ -482,6 +485,7 @@ public class ESInit {
 		BLOCKS.ICE_ROCK_STAND = new BlockIceRockStand();
 		BLOCKS.ICE_ROCK_CRYSTAL_BLOCK = new BlockIceRockCrystalBlock();
 		BLOCKS.ICE_ROCK_NODE = new BlockIceRockNode();
+		BLOCKS.ELEMENT_REACTOR = new BlockElementReactor();
 
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
@@ -696,7 +700,7 @@ public class ESInit {
 		// 注册方块
 		registerAllBlocks();
 		// 注册元素
-		Element.registerAll();
+		registerAllElements();
 		// 注册tileentity
 		registerAllTiles();
 		// 注册能力
@@ -824,6 +828,15 @@ public class ESInit {
 		}
 	}
 
+	static public void registerAllElements() throws IllegalArgumentException, IllegalAccessException {
+		Class<?> cls = ESInit.ELEMENTS.getClass();
+		Field[] fields = cls.getDeclaredFields();
+		for (Field field : fields) {
+			Element element = ((Element) field.get(ESInit.ELEMENTS));
+			Element.REGISTRY.register(element);
+		}
+	}
+
 	static void registerAllMantras() throws IllegalArgumentException, IllegalAccessException {
 		// 遍历所有，将所有内容注册
 		Class<?> cls = ESInit.MANTRAS.getClass();
@@ -886,6 +899,7 @@ public class ESInit {
 		register(TileIceRockStand.class, "IceRockStand");
 		register(TileIceRockCrystalBlock.class, "IceRockCrystalBlock");
 		register(TileIceRockNode.class, "IceRockNode");
+		register(TileElementReactor.class, "ElementReactor");
 	}
 
 	static void registerAllCapability() {
@@ -1130,6 +1144,7 @@ public class ESInit {
 		registerRender(BLOCKS.DISINTEGRATE_STELA, TileDisintegrateStela.class, new RenderTileDisintegrateStela());
 		registerRender(BLOCKS.ICE_ROCK_STAND, TileIceRockStand.class, new RenderTileIceRockStand());
 		registerRender(BLOCKS.ICE_ROCK_NODE, TileIceRockNode.class, new RenderTileIceRockNode());
+		registerRender(BLOCKS.ELEMENT_REACTOR, TileElementReactor.class, new RenderTileElementReactor());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

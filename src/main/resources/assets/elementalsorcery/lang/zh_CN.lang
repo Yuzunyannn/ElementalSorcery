@@ -206,6 +206,7 @@ tile.disintegrateStela.name=崩解石碑
 tile.iceRockStand.name=魔控基座
 tile.iceRockCrystalBlock.name=岩冰水晶块
 tile.iceRockNode.name=<->
+tile.elementReactor.name=元素反应堆
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者

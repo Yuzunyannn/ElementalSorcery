@@ -20,6 +20,7 @@ public class ElementAir extends ElementCommon {
 
 	public ElementAir() {
 		super(0xe5ffff, "air");
+		setTransition(2.5f, 202.5f, 120);
 	}
 
 	@Override

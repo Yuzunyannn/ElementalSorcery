@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ContainerElementBoard;
+import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
@@ -50,10 +51,11 @@ public class GuiElementBoard extends GuiContainer {
 		float progress = Math.min(1, rate);
 
 		GlStateManager.pushMatrix();
-		GlStateManager.translate(offsetX + 93, offsetY + 93, 0);
-		sample.getElement().drawElemntIcon(sample, 1);
-		mc.getTextureManager().bindTexture(TEXTURE);
+		sample.getElement().drawElemntIconInGUI(sample, offsetX + 93, offsetY + 93,
+				Element.DRAW_GUI_FLAG_CENTER | Element.DRAW_GUI_FLAG_NO_INFO);
 
+		mc.getTextureManager().bindTexture(TEXTURE);
+		GlStateManager.translate(offsetX + 93, offsetY + 93, 0);
 		GlStateManager.color((float) c.x, (float) c.y, (float) c.z, 1);
 		for (int i = 0; i < 4; i++) {
 			drawTexturedModalRect(9, 8, 186, 18, (int) (35 * progress), (int) (35 * progress));

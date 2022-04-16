@@ -1023,6 +1023,11 @@
 			"zh_CN": "<->",
 			"en_US": "<->",
 			"ja_JP": "<->"
+		},
+		"tile.elementReactor.name": {
+			"zh_CN": "元素反应堆",
+			"en_US": "Element Reactor",
+			"ja_JP": "元素炉"
 		}
 	},
 	"es.effect": {

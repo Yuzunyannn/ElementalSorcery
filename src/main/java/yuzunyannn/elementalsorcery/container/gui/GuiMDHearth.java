@@ -25,7 +25,7 @@ public class GuiMDHearth extends GuiMDBase<ContainerMDBase<TileMDHearth>> {
 
 	@Override
 	protected boolean showMagicInfo(int mouseX, int mouseY) {
-		return isMouseIn(mouseX, mouseY, 15, 40, 144, 29);
+		return GuiNormal.isMouseIn(mouseX, mouseY, 15, 40, 144, 29);
 	}
 
 }

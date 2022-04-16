@@ -65,6 +65,6 @@ public class GuiMDMagicGen extends GuiMDBase<ContainerMDMagicGen> {
 	}
 
 	protected boolean showMagicInfo(int mouseX, int mouseY) {
-		return isMouseIn(mouseX, mouseY, 15, 19, 144, 50) && !isMouseIn(mouseX, mouseY, 79, 60, 18, 18);
+		return GuiNormal.isMouseIn(mouseX, mouseY, 15, 19, 144, 50) && !GuiNormal.isMouseIn(mouseX, mouseY, 79, 60, 18, 18);
 	}
 }

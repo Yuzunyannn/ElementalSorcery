@@ -7,7 +7,6 @@ import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.item.prop.ItemFairyCore;
 
 public class ESObjects {
 
@@ -193,6 +192,7 @@ public class ESObjects {
 		public Block ICE_ROCK_STAND;
 		public Block ICE_ROCK_CRYSTAL_BLOCK;
 		public Block ICE_ROCK_NODE;
+		public Block ELEMENT_REACTOR;
 	}
 
 	static public class Elements {

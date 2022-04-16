@@ -40,12 +40,6 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 		}
 	}
 
-	public static boolean isMouseIn(int mouseX, int mouseY, int x, int y, int width, int height) {
-		if (mouseX < x || mouseX >= x + width) return false;
-		if (mouseY < y || mouseY >= y + height) return false;
-		return true;
-	}
-
 	protected void drawInfo(int x, int y, int color, List<String> strs) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0, 0, 500);
@@ -84,7 +78,7 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 
 	/** 是否展示魔力数据 */
 	protected boolean showMagicInfo(int mouseX, int mouseY) {
-		return isMouseIn(mouseX, mouseY, 15, 59, 144, 10);
+		return GuiNormal.isMouseIn(mouseX, mouseY, 15, 59, 144, 10);
 	}
 
 	/** 基础绘画 */

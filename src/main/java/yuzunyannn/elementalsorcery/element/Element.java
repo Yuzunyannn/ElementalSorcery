@@ -1,7 +1,8 @@
 package yuzunyannn.elementalsorcery.element;
 
-import java.lang.reflect.Field;
 import java.util.Random;
+
+import javax.annotation.Nullable;
 
 import net.minecraft.block.material.MapColor;
 import net.minecraft.client.Minecraft;
@@ -15,7 +16,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.init.ESImplRegister;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class Element extends IForgeRegistryEntry.Impl<Element> {
@@ -25,7 +25,11 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 	protected Random rand = new Random();
 
 	/** 元素的颜色 */
-	private int color;
+	protected int color;
+	/** 非本地化名称 */
+	protected String unlocalizedName;
+	/** 跃迁数据 */
+	protected ElementTransition elementTransition;
 
 	public static int rgb(int r, int g, int b) {
 		return r << 16 | g << 8 | b;
@@ -38,9 +42,6 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 	public Element(int color) {
 		this.color = color;
 	}
-
-	/** 非本地化名称 */
-	protected String unlocalizedName;
 
 	/**
 	 * 设置元素的"非本地化名称"(UnlocalizedName), 前缀为"element."
@@ -111,6 +112,25 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 	}
 
 	/**
+	 * 获取元素的跃迁的数据，用于元素间转化
+	 * 
+	 * @return 跃迁的数据，返回null表示无法跃迁
+	 */
+	@Nullable
+	public ElementTransition getTransition() {
+		return elementTransition;
+	}
+
+	public Element setTransition(ElementTransition elementTransition) {
+		this.elementTransition = elementTransition;
+		return this;
+	}
+
+	public Element setTransition(float level, float kernelAngle, float regionAngle) {
+		return setTransition(new ElementTransition(level, kernelAngle, regionAngle));
+	}
+
+	/**
 	 * 获取当前元素和另一个元素处于同一个物品时候的复杂度叠加值[求默认复杂度使用]
 	 * 
 	 * @param stack  当前处理的物品
@@ -156,7 +176,9 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 		return VIOD_RESOURCELOCATION;
 	}
 
-	public static final int DRAW_GUI_FLAG_NOSHADOW = 0x1;
+	public static final int DRAW_GUI_FLAG_NO_SHADOW = 0x1;
+	public static final int DRAW_GUI_FLAG_NO_INFO = 0x2;
+	public static final int DRAW_GUI_FLAG_CENTER = 0x4;
 
 	/** 在GUI绘画元素 */
 	@SideOnly(Side.CLIENT)
@@ -165,34 +187,25 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 		ResourceLocation res = this.getIconResourceLocation();
 		mc.getTextureManager().bindTexture(res);
 		GlStateManager.color(1, 1, 1);
-		Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
+		boolean isCenter = (flag & DRAW_GUI_FLAG_CENTER) != 0;
+		if (isCenter) RenderHelper.drawTexturedRectInCenter(x, y, 16, 16);
+		else Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
+
+		if ((flag & DRAW_GUI_FLAG_NO_INFO) != 0) return;
+
 		int count = estack.getCount();
-		boolean isShadow = (flag & DRAW_GUI_FLAG_NOSHADOW) == 0;
+		boolean isShadow = (flag & DRAW_GUI_FLAG_NO_SHADOW) == 0;
 		if (count > 1) {
 			String s = Integer.toString(count);
-			mc.fontRenderer.drawString(s, x + +19 - 2 - mc.fontRenderer.getStringWidth(s), y + 9, 16777215, isShadow);
+			int w = mc.fontRenderer.getStringWidth(s);
+			mc.fontRenderer.drawString(s, x + (isCenter ? 11 : 19) - 2 - w, y + (isCenter ? 1 : 9), 16777215, isShadow);
 		}
 		int power = estack.getPower();
 		if (power > 1) {
 			String s = Integer.toString(power);
-			mc.fontRenderer.drawString(s, x + +19 - 2 - mc.fontRenderer.getStringWidth(s), y - 3, 0xfff993, isShadow);
-		}
-	}
-
-	/** 绘画元素 ，在任何地方 */
-	@SideOnly(Side.CLIENT)
-	public void drawElemntIcon(ElementStack estack, float alpha) {
-		ResourceLocation res = this.getIconResourceLocation();
-		Minecraft.getMinecraft().getTextureManager().bindTexture(res);
-		RenderHelper.drawTexturedRectInCenter(0, 0, 16, 16);
-	}
-
-	static public void registerAll() throws IllegalArgumentException, IllegalAccessException {
-		Class<?> cls = ESInit.ELEMENTS.getClass();
-		Field[] fields = cls.getDeclaredFields();
-		for (Field field : fields) {
-			Element element = ((Element) field.get(ESInit.ELEMENTS));
-			Element.REGISTRY.register(element);
+			int w = mc.fontRenderer.getStringWidth(s);
+			mc.fontRenderer.drawString(s, x + (isCenter ? 11 : 19) - 2 - w, y + (isCenter ? -11 : -3), 0xfff993,
+					isShadow);
 		}
 	}
 

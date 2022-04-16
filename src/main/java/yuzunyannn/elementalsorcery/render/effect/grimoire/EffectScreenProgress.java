@@ -1,16 +1,12 @@
 package yuzunyannn.elementalsorcery.render.effect.grimoire;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-
-import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.render.effect.StructElement2D;
+import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatch;
+import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatchList;
+import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
@@ -62,12 +58,7 @@ public class EffectScreenProgress extends EffectScreen {
 		}
 		if (setProgressInTick) setProgressInTick = false;
 		else preProgress = this.progress;
-		Iterator<Part> iter = list.iterator();
-		while (iter.hasNext()) {
-			Part part = iter.next();
-			part.update();
-			if (part.lifeTime <= 0) iter.remove();
-		}
+		guiEffectList.update();
 		if (progress > 0.98f) return;
 		float originX = width / 2 - 256 / 2;
 		float x = originX + 256 * progress + 0.5f;
@@ -75,9 +66,8 @@ public class EffectScreenProgress extends EffectScreen {
 		for (int i = 0; i < 2; i++) {
 			Part part = new Part();
 			part.setPosition(x, y);
-			part.updatePrev();
 			part.setColor(r, g, b);
-			list.add(part);
+			guiEffectList.add(part);
 		}
 	}
 
@@ -91,50 +81,42 @@ public class EffectScreenProgress extends EffectScreen {
 		GlStateManager.color(r, g, b, alpha);
 		RenderHelper.drawTexturedModalRect(width / 2 - 256 / 2, height - 50, 0, 0, 5 + 251 * progress, 13, 256, 256);
 		GlStateManager.translate(0, 0, 1);
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferbuilder = tessellator.getBuffer();
-		for (Part part : list) part.render(partialTicks, bufferbuilder, tessellator);
+		guiEffectList.render(partialTicks);
 		GlStateManager.depthMask(true);
 	}
 
-	protected List<Part> list = new LinkedList<>();
+	protected GUIEffectBatchList<Part> guiEffectList = new GUIEffectBatchList<>();
 
-	protected class Part extends StructElement2D {
+	protected class Part extends GUIEffectBatch {
 
-		public float tR, tG, tB;
+		public final Color tColor = new Color();
 		public float vx, vy;
 		public float myAlpha = 1;
 
 		public Part() {
 			drawSize = 3;
 			scale = rand.nextFloat() * 1 + 1.5f;
-			this.lifeTime = 30;
-			this.alpha = myAlpha * EffectScreenProgress.this.alpha;
+			lifeTime = 30;
+			prevAlpha = alpha = myAlpha * EffectScreenProgress.this.alpha;
 			vy = rand.nextFloat() * 2 - 1;
-			this.updatePrev();
 		}
 
-		@Override
 		public void setColor(float r, float g, float b) {
-			tR = r;
-			tB = b;
-			tG = g;
-			this.r = Math.min(1, tR + 0.25f);
-			this.g = Math.min(1, tG + 0.25f);
-			this.b = Math.min(1, tB + 0.25f);
+			tColor.setColor(r, g, b);
+			color.setColor(tColor).add(0.25f);
 		}
 
 		public void update() {
-			this.updatePrev();
+			super.update();
 			this.lifeTime--;
 			x += vx;
 			y += vy;
 			scale -= 0.05f;
-			myAlpha = this.lifeTime / 30.0f;
-			this.alpha = myAlpha * EffectScreenProgress.this.alpha;
-			r = r + (tR - r) * 0.1f;
-			g = g + (tG - g) * 0.1f;
-			b = b + (tB - b) * 0.1f;
+			myAlpha = lifeTime / 30.0f;
+			alpha = myAlpha * EffectScreenProgress.this.alpha;
+			color.r = color.r + (tColor.r - color.r) * 0.1f;
+			color.g = color.g + (tColor.g - color.g) * 0.1f;
+			color.b = color.b + (tColor.b - color.b) * 0.1f;
 		}
 
 	}

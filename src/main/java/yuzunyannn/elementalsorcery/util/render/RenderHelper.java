@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -177,6 +178,13 @@ public class RenderHelper {
 
 	public static void drawTexturedRectInCenter(float x, float y, float width, float height) {
 		drawTexturedRectInCenter(x, y, width, height, 0, 0, 1, 1, 1, 1);
+	}
+
+	public static void disableLightmap(boolean disabled) {
+		GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
+		if (disabled) GlStateManager.disableTexture2D();
+		else GlStateManager.enableTexture2D();
+		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
 	}
 
 	public static final Minecraft mc = Minecraft.getMinecraft();

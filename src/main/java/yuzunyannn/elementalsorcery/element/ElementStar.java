@@ -21,6 +21,7 @@ public class ElementStar extends ElementCommon {
 
 	public ElementStar() {
 		super(0xcaf4ff, "star");
+		setTransition(4f, 0, 360);
 	}
 
 	@Override

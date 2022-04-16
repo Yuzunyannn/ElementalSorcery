@@ -30,6 +30,7 @@ public class ElementMetal extends ElementCommon {
 
 	public ElementMetal() {
 		super(COLOR, "metal");
+		setTransition(2.5f, 292.5f, 60);
 	}
 
 	@Override

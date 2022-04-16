@@ -153,4 +153,16 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 		tessellator.draw();
 	}
 
+	public static boolean isMouseIn(int mouseX, int mouseY, int x, int y, int width, int height) {
+		if (mouseX < x || mouseX >= x + width) return false;
+		if (mouseY < y || mouseY >= y + height) return false;
+		return true;
+	}
+
+	public static boolean isMouseIn(int mouseX, int mouseY, float x, float y, float width, float height) {
+		if (mouseX < x || mouseX >= x + width) return false;
+		if (mouseY < y || mouseY >= y + height) return false;
+		return true;
+	}
+
 }
