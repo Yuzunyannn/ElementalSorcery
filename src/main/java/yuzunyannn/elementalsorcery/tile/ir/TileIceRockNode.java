@@ -7,7 +7,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectFragmentMove;
-import yuzunyannn.elementalsorcery.util.helper.Color;
 
 public class TileIceRockNode extends TileIceRockEnergy implements ITickable {
 
@@ -19,6 +18,7 @@ public class TileIceRockNode extends TileIceRockEnergy implements ITickable {
 	@Override
 	public void update() {
 		if (!isLinked()) {
+			if (world.isRemote) return;
 			onUnLink();
 			return;
 		}
@@ -41,9 +41,6 @@ public class TileIceRockNode extends TileIceRockEnergy implements ITickable {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public float stockRatio;
-
-	@SideOnly(Side.CLIENT)
 	public boolean isRendered;
 
 	@SideOnly(Side.CLIENT)
@@ -51,12 +48,6 @@ public class TileIceRockNode extends TileIceRockEnergy implements ITickable {
 
 	@SideOnly(Side.CLIENT)
 	public void updateClient() {
-
-		if ((tick - 1) % 20 == 0) {
-			TileIceRockStand tile = getIceRockCore();
-			if (tile != null)
-				stockRatio = (float) Math.min(tile.getMagicFragment() / tile.getMagicFragmentCapacity(), 1);
-		}
 
 		prevSpawnRatio = spawnRatio;
 		spawnRatio = spawnRatio + (1 - spawnRatio) * 0.075f;
@@ -69,7 +60,7 @@ public class TileIceRockNode extends TileIceRockEnergy implements ITickable {
 			EffectFragmentMove effect = new EffectFragmentMove(world, at);
 			effect.lifeTime = 20 + Effect.rand.nextInt(20);
 			Effect.addEffect(effect);
-			effect.color.setColor(0x7cd0d3).weight(new Color(0x9956d0), stockRatio);
+			effect.color.setColor(getRenderColor());
 			BlockPos link = getLinkPos();
 			if (link != null) {
 				Vec3d target = new Vec3d(link).add(0.5, 0.5 + 1, 0.5);

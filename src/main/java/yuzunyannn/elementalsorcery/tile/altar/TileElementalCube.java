@@ -118,9 +118,11 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	// 唤醒
 	@Override
 	public boolean wake(int type, @Nullable BlockPos from) {
-		if (!this.world.isRemote) return true;
+		if (!world.isRemote) {
+			this.markDirty();
+			return true;
+		}
 		this.wake = 80;
-		this.markDirty();
 		return true;
 	}
 

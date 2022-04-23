@@ -12,7 +12,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.item.IPlatformTickable;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -24,7 +24,7 @@ public class ItemArrogantWool extends Item implements IPlatformTickable {
 	}
 
 	@Override
-	public boolean platformUpdate(World world, ItemStack stack, ICasterObject caster, NBTTagCompound runData,
+	public boolean platformUpdate(World world, ItemStack stack, IWorldObject caster, NBTTagCompound runData,
 			int tick) {
 		if (world.isRemote) {
 			if (tick % 10 == 0)

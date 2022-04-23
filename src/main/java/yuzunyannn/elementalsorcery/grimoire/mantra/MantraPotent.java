@@ -15,10 +15,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
@@ -140,7 +140,7 @@ public class MantraPotent extends MantraCommon {
 
 	@SideOnly(Side.CLIENT)
 	public void onEndEffect(World world, IMantraData mData, ICaster caster) {
-		ICasterObject ico = caster.iWantCaster();
+		IWorldObject ico = caster.iWantCaster();
 		Vec3d vec = ico.getPositionVector();
 		Random rand = world.rand;
 		for (int i = 0; i < 125; i++) {

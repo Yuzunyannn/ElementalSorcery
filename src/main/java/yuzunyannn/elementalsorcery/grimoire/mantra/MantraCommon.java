@@ -15,10 +15,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
@@ -68,7 +68,7 @@ public class MantraCommon extends Mantra {
 	public void onSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		this.onCollectElement(world, data, caster, caster.iWantKnowCastTick() + mdc.speedTick);
-		ICasterObject co = caster.iWantCaster();
+		IWorldObject co = caster.iWantCaster();
 		// 创造模式20倍加速！
 		int times = 0;
 		if (co.isCreative()) times = 20;
@@ -153,7 +153,7 @@ public class MantraCommon extends Mantra {
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		if (hasEffectFlags(world, data, caster, MantraEffectFlags.MAGIC_CIRCLE)) out: {
-			ICasterObject co = caster.iWantCaster();
+			IWorldObject co = caster.iWantCaster();
 			EntityLivingBase eb = co.asEntityLivingBase();
 			if (eb == null) break out;
 			MantraDataCommon dataEffect = (MantraDataCommon) data;

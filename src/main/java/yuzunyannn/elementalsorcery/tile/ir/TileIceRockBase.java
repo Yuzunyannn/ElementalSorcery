@@ -17,7 +17,6 @@ public abstract class TileIceRockBase extends TileEntityNetwork implements IElem
 	@Override
 	public void onChunkUnload() {
 		super.onChunkUnload();
-		tileEntityInvalid = true;
 	}
 
 	/**

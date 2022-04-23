@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.grimoire;
+package yuzunyannn.elementalsorcery.api.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
@@ -8,11 +8,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 
-public class CasterObjectEntity implements ICasterObject {
+public class WorldObjectEntity implements IWorldObject {
 
 	public final Entity entity;
 
-	public CasterObjectEntity(Entity entity) {
+	public WorldObjectEntity(Entity entity) {
 		this.entity = entity;
 	}
 
@@ -45,9 +45,16 @@ public class CasterObjectEntity implements ICasterObject {
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		return entity.hasCapability(capability, facing);
 	}
-	
+
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		return entity.getCapability(capability, facing);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj instanceof WorldObjectEntity) return ((WorldObjectEntity) obj).entity == this.entity;
+		return false;
 	}
 }

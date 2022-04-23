@@ -11,6 +11,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -121,7 +122,7 @@ public class MantraDataCommon implements IMantraData {
 	@SideOnly(Side.CLIENT)
 	public void addEffect(ICaster caster, EffectCondition effect, int markId, boolean checkContinue) {
 		if (effect.getCondition() == null) {
-			ICasterObject co = caster.iWantCaster();
+			IWorldObject co = caster.iWantCaster();
 			if (co.asEntity() == null) return;
 			effect.setCondition(new ConditionEffect(co.asEntity(), this, markId, checkContinue));
 		}

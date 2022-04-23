@@ -242,8 +242,10 @@ public abstract class Effect {
 		GlStateManager.disableCull();
 		GlStateManager.depthMask(false);
 		RenderHelper.disableStandardItemLighting();
+		yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
 		renderEffects(effects, partialTicks);
 		renderBatchs(batchs, partialTicks);
+		yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(false);
 		GlStateManager.depthMask(true);
 		GlStateManager.enableCull();
 		GlStateManager.disableBlend();

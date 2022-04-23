@@ -9,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 
@@ -92,11 +93,11 @@ public interface ICaster {
 
 	/** 获取施法者 ，施法者在某些情况下不一定是entitylivingbase */
 	@Nonnull
-	public ICasterObject iWantCaster();
+	public IWorldObject iWantCaster();
 
 	/** 获取直接施法者 ，直接释放者通常是马甲实体 */
 	@Nonnull
-	public ICasterObject iWantDirectCaster();
+	public IWorldObject iWantDirectCaster();
 
 	/** 是否有特效标记，用于动画检测 */
 	@SideOnly(Side.CLIENT)

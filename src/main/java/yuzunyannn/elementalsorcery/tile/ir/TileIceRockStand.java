@@ -323,7 +323,6 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 		TileIceRockNode node = BlockHelper.getTileEntity(world, pos, TileIceRockNode.class);
 		for (EnumFacing facing : EnumFacing.VALUES) node.setFaceStatus(facing, FaceStatus.OUT);
 		node.link(this.pos);
-		node.updateToClient();
 		node.markDirty();
 		markDirty();
 		if (!world.isRemote) {

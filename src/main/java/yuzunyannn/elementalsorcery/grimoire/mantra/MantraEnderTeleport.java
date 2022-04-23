@@ -16,9 +16,9 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
@@ -121,7 +121,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		super.onSpellingEffect(world, data, caster);
 		if (!hasEffectFlags(world, data, caster, MantraEffectFlags.INDICATOR)) return;
 		MantraDataCommon mdc = (MantraDataCommon) data;
-		ICasterObject casterObject = caster.iWantCaster();
+		IWorldObject casterObject = caster.iWantCaster();
 		if (casterObject.isClientPlayer()) {
 			if (!mdc.hasMarkEffect(1)) mdc.addEffect(caster, new EffectPlayerAt(world, caster), 1);
 		}

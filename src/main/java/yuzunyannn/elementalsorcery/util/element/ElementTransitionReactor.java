@@ -27,7 +27,6 @@ public class ElementTransitionReactor {
 	public float lastDetaStep;
 	public float lastDiffAngle;
 	public float lastDiffStep;
-	public Element lastTransitionSuggest;
 
 	// 变量
 	protected Element rElement = ElementStack.EMPTY.getElement();
@@ -94,8 +93,8 @@ public class ElementTransitionReactor {
 		float dAngle = ab < ba ? (ab) : (-ba);
 		float dStep = et.getLevel() - step;
 		float cRate = (float) Math.max(fragment / (fragment + this.fragment), 0.05);
-		lastDetaAngle = dAngle = dAngle * 0.1f * cRate;
-		lastDetaStep = dStep = dStep * 0.1f * cRate;
+		lastDetaAngle = dAngle = dAngle * 0.2f * cRate;
+		lastDetaStep = dStep = dStep * 0.2f * cRate;
 
 		angle = ElementTransition.formatAngle(angle + dAngle);
 		step = Math.max(step + dStep, 1);
@@ -104,34 +103,52 @@ public class ElementTransitionReactor {
 		if (met == null) return;
 		this.lastDiffAngle = ElementTransition.formatAngle(met.getKernelAngle() - angle);
 		this.lastDiffStep = Math.abs(met.getLevel() - step);
+	}
 
-		this.lastTransitionSuggest = null;
+	public Element getSuggestTransition() {
+		Element transitionSuggest = null;
 		Element[] elements = getInvolvedElements();
-		float maxDIFF = -1;
+		float minDS = Float.MAX_VALUE;
 		for (Element targetElement : elements) {
 			ElementTransition tet = targetElement.getTransition();
 			float da = Math.min(ElementTransition.formatAngle(angle - tet.getKernelAngle()),
 					ElementTransition.formatAngle(tet.getKernelAngle() - angle));
 			if (da > tet.getRegionAngle() / 2) continue;
 			float ds = Math.abs(tet.getLevel() - step);
-			if (ds <= this.lastDiffStep / 8 || ds <= 0.05f) {
-				float diff = Math.abs(this.lastDiffStep - ds);
-				if (diff > maxDIFF) {
-					maxDIFF = diff;
-					this.lastTransitionSuggest = targetElement;
+			if (ds <= this.lastDiffStep / 4 || ds <= 0.075f) {
+				if (ds < minDS) {
+					minDS = ds;
+					transitionSuggest = targetElement;
 				}
 			}
 		}
+		return transitionSuggest;
 	}
 
 	public void insert(Element element, double fragment) {
 		if (this.rElement == ElementStack.EMPTY.getElement()) {
 			this.fragment += fragment;
 			transitTo(element);
+			ElementTransition et = element.getTransition();
+			if (et != null) this.angle = et.getKernelAngle();
 			return;
 		}
-		transit(element, fragment);
+		if (this.rElement != element) transit(element, fragment);
 		this.fragment += fragment;
+	}
+
+	public ElementStack extract(double cost, int maxSize, int power, boolean simulate) {
+		if (this.rElement == ElementStack.EMPTY.getElement()) return ElementStack.EMPTY;
+		double costFragment = this.fragment * cost;
+		double countDouble = ElementHelper.fromFragment(this.rElement, costFragment, power);
+		int count = (int) countDouble;
+		if (count < 1) return ElementStack.EMPTY;
+		if (maxSize > 1) count = Math.min(maxSize, count);
+		ElementStack eStack = new ElementStack(this.rElement, count, power);
+		if (simulate) return eStack;
+		this.fragment = this.fragment - costFragment
+				+ ElementHelper.toFragment(this.rElement, countDouble - count, power);
+		return eStack;
 	}
 
 }

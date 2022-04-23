@@ -7,8 +7,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
@@ -86,7 +86,7 @@ public abstract class MantraSquareArea extends MantraCommon {
 		BlockPos pos = wr.getPos();
 		if (pos == null) return;
 		if (wr.getFace() == EnumFacing.UP) pos = pos.up();
-		ICasterObject co = caster.iWantDirectCaster();
+		IWorldObject co = caster.iWantDirectCaster();
 		if (co.asEntity() != null) co.asEntity().setPosition(pos.getX(), pos.getY(), pos.getZ());
 		this.onAfterSpellingInit(world, data, caster, pos);
 	}

@@ -9,7 +9,7 @@ public interface IBinder {
 
 	Vec3d getDirection();
 
-	public static class EntityBinder implements IBinder {
+	public final static class EntityBinder implements IBinder {
 
 		final public Entity binder;
 		final public float yoff;
@@ -31,17 +31,17 @@ public interface IBinder {
 
 	}
 
-	public static class VecBinder implements IBinder {
+	public final static class VecBinder implements IBinder {
 
-		final public Vec3d pos;
+		final public Vec3d vec;
 
 		public VecBinder(Vec3d pos) {
-			this.pos = pos;
+			this.vec = pos;
 		}
 
 		@Override
 		public Vec3d getPosition() {
-			return pos;
+			return vec;
 		}
 
 		@Override

@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.api.tile;
 
-public interface ICanUpdate {
+public interface ICanSync {
 
 	void updateToClient();
 

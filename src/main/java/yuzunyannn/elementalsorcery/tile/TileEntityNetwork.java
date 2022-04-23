@@ -16,13 +16,14 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.api.tile.ICanUpdate;
+import yuzunyannn.elementalsorcery.api.tile.IAliveStatusable;
+import yuzunyannn.elementalsorcery.api.tile.ICanSync;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
-public class TileEntityNetwork extends TileEntity implements ICanUpdate {
+public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveStatusable {
 
 	@Config
 	static protected int TILE_ENTITY_RENDER_DISTANCE = -1;
@@ -52,9 +53,20 @@ public class TileEntityNetwork extends TileEntity implements ICanUpdate {
 		return new SPacketUpdateTileEntity(this.pos, this.getBlockMetadata(), this.getUpdateTag());
 	}
 
+	// 该函数是接受自行发送消息的packet
 	@Override
 	public void onDataPacket(NetworkManager net, SPacketUpdateTileEntity pkt) {
 		handleUpdateTagFromPacketData(pkt.getNbtCompound());
+	}
+
+	@Override
+	public void onChunkUnload() {
+		this.invalidate();
+	}
+
+	@Override
+	public boolean isAlive() {
+		return !this.isInvalid();
 	}
 
 	// 该函数还会被普通的调用，表明首次更新，首次调用是mc来管理

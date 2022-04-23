@@ -10,11 +10,13 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementReactor;
 import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.event.IRenderClient;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor.ReactorStatus;
@@ -69,22 +71,28 @@ public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElem
 		if (destroyStage > 0) return;
 		if (status == ReactorStatus.OFF) return;
 
-		GlStateManager.disableCull();
-		GlStateManager.disableAlpha();
-		GlStateManager.enableBlend();
-		GlStateManager.depthMask(false);
-		GlStateManager.disableLighting();
-		RenderHelper.disableLightmap(true);
+		EventClient.addRenderTask((p) -> {
+			BlockPos pos = tile.getPos();
+			double xoff = pos.getX(), yoff = pos.getY(), zoff = pos.getZ();
+			GlStateManager.disableCull();
+			GlStateManager.disableAlpha();
+			GlStateManager.enableBlend();
+			GlStateManager.depthMask(false);
+			GlStateManager.disableLighting();
+			RenderHelper.disableLightmap(true);
 
-		if (status == ReactorStatus.ON) renderEffectOn(tile, x, y, z, partialTicks);
-		else if (status == ReactorStatus.STANDBY) renderEffectStandby(tile, x, y, z, partialTicks);
+			if (status.isRunning) renderEffectOn(tile, xoff, yoff, zoff, partialTicks);
+			else if (status == ReactorStatus.STANDBY) renderEffectStandby(tile, xoff, yoff, zoff, partialTicks);
 
-		GlStateManager.enableLighting();
-		RenderHelper.disableLightmap(false);
-		GlStateManager.enableCull();
-		GlStateManager.enableAlpha();
-		GlStateManager.disableBlend();
-		GlStateManager.depthMask(true);
+			GlStateManager.enableLighting();
+			RenderHelper.disableLightmap(false);
+			GlStateManager.enableCull();
+			GlStateManager.enableAlpha();
+			GlStateManager.disableBlend();
+			GlStateManager.depthMask(true);
+			return IRenderClient.END;
+		});
+
 	}
 
 	@Override

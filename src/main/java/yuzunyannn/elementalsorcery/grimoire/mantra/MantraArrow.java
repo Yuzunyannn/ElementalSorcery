@@ -18,9 +18,9 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.init.ESInit;
@@ -89,7 +89,7 @@ public class MantraArrow extends MantraCommon {
 
 	public void tryShoot(World world, IMantraData data, ICaster caster, int count) {
 
-		ICasterObject co = caster.iWantCaster();
+		IWorldObject co = caster.iWantCaster();
 		Vec3d vec = co.getEyePosition();
 		Vec3d dir = caster.iWantDirection();
 		if (world.isRemote) {

@@ -52,7 +52,7 @@ public class RenderTileIceRockSendRecv<T extends TileIceRockSendRecv> extends Ti
 		RenderHelper.disableStandardItemLighting();
 
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-			float r = tile.getFaceAnimeRate(facing, partialTicks);
+			float r = tile.getFaceAnimeRatio(facing, partialTicks);
 			if (r < 0.0001) continue;
 			float rotation = -facing.getHorizontalAngle() - 180;
 			GlStateManager.pushMatrix();
@@ -64,13 +64,13 @@ public class RenderTileIceRockSendRecv<T extends TileIceRockSendRecv> extends Ti
 				GlStateManager.rotate(changeRotate, 0, 0, 1);
 				GlStateManager.scale(changeScale, changeScale, changeScale);
 			}
-			drawWithStatus(tile.getFaceStatus(facing));
+			drawWithStatus(tile.getFaceStatus(facing), 1);
 			GlStateManager.popMatrix();
 		}
 
 		if (tile.hasUpDownFace()) {
 			for (EnumFacing facing : UP_DOWN) {
-				float r = tile.getFaceAnimeRate(facing, partialTicks);
+				float r = tile.getFaceAnimeRatio(facing, partialTicks);
 				if (r < 0.0001) continue;
 				GlStateManager.pushMatrix();
 				GlStateManager.rotate(facing == EnumFacing.UP ? 90 : -90, 1, 0, 0);
@@ -81,7 +81,7 @@ public class RenderTileIceRockSendRecv<T extends TileIceRockSendRecv> extends Ti
 					GlStateManager.rotate(changeRotate, 0, 0, 1);
 					GlStateManager.scale(changeScale, changeScale, changeScale);
 				}
-				drawWithStatus(tile.getFaceStatus(facing));
+				drawWithStatus(tile.getFaceStatus(facing), 1);
 				GlStateManager.popMatrix();
 			}
 		}
@@ -94,20 +94,20 @@ public class RenderTileIceRockSendRecv<T extends TileIceRockSendRecv> extends Ti
 		GlStateManager.enableCull();
 	}
 
-	public void drawWithStatus(FaceStatus status) {
+	public static void drawWithStatus(FaceStatus status, float a) {
 		switch (status) {
 		case OUT:
-			GlStateManager.color(85 / 255f, 160 / 255f, 254 / 255f);
+			GlStateManager.color(85 / 255f, 160 / 255f, 254 / 255f, a);
 			TEXTURE_FACE_OUT.bind();
 			renderCull();
 			break;
 		case IN:
-			GlStateManager.color(254 / 255f, 104 / 255f, 104 / 255f);
+			GlStateManager.color(254 / 255f, 104 / 255f, 104 / 255f, a);
 			TEXTURE_FACE_IN.bind();
 			renderCull();
 			break;
 		default:
-			GlStateManager.color(149 / 255f, 81 / 255f, 205 / 255f);
+			GlStateManager.color(149 / 255f, 81 / 255f, 205 / 255f, a);
 			break;
 		}
 		TEXTURE_FACE_P.bind();

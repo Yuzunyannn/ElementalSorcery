@@ -174,7 +174,7 @@ public abstract class EntityElfBase extends EntityCreature {
 	@Nullable
 	public TileElfTreeCore getEdificeCore() {
 		TileElfTreeCore core = coreCache.get();
-		if (core != null && core.getWorld() == this.world) return core;
+		if (core != null && core.getWorld() == this.world && core.isAlive()) return core;
 		NBTTagCompound nbt = this.getEntityData();
 		BlockPos at = NBTHelper.getBlockPos(nbt, "edifice");
 		core = BlockHelper.getTileEntity(world, at, TileElfTreeCore.class);

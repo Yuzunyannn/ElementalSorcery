@@ -13,10 +13,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
@@ -53,7 +53,7 @@ public class MantraFootbridge extends MantraCommon {
 		int max = 96;
 		Vec3d pos = wr.getHitVec();
 		if (pos != null) {
-			ICasterObject co = caster.iWantCaster();
+			IWorldObject co = caster.iWantCaster();
 			double dis = co.getPositionVector().distanceTo(pos);
 			max = MathHelper.ceil(Math.min(96, 3 * dis));
 		}
@@ -68,7 +68,7 @@ public class MantraFootbridge extends MantraCommon {
 
 		MantraDataCommon mData = (MantraDataCommon) data;
 		BlockPos pos1, pos2;
-		ICasterObject co = caster.iWantCaster();
+		IWorldObject co = caster.iWantCaster();
 		pos1 = co.getPosition().down();
 		WantedTargetResult wr = caster.iWantBlockTarget();
 		pos2 = wr.getPos();

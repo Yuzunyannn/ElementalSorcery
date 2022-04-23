@@ -4,8 +4,10 @@ import java.lang.ref.WeakReference;
 
 import javax.annotation.Nullable;
 
+import io.netty.buffer.Unpooled;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -13,9 +15,16 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
+import yuzunyannn.elementalsorcery.api.tile.IMagicBeamHandler;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLaser;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLaserMagicTransfer;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
@@ -90,14 +99,14 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 	@Nullable
 	public TileIceRockStand getIceRockCore() {
 		if (!isLinked()) return null;
-		if (tileCoreRef.get() == null) findIceRockCore();
 		TileIceRockStand tile = tileCoreRef.get();
+		if (tile == null || !tile.isAlive()) findIceRockCore();
+		tile = tileCoreRef.get();
 		if (tile == null) {
 			this.unlink();
 			return null;
 		}
-		if (tile.isInvalid()) findIceRockCore();
-		return tileCoreRef.get();
+		return tile;
 	}
 
 	public FaceStatus getFaceStatus(EnumFacing facing) {
@@ -131,6 +140,7 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 		return getFaceStatus(facing);
 	}
 
+	/** 切换一个面的状态 */
 	public boolean doShiftStatus(EnumFacing facing, EntityLivingBase player) {
 		if (world.isRemote) return true;
 		FaceStatus oldStatus = getFaceStatus(facing);
@@ -176,39 +186,121 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 		if (core != null) core.setMagicFragment(fragment);
 	}
 
-	protected int tick;
-
-	public void onUpdate() {
-		tick++;
-		if (world.isRemote) onUpdateClient();
-	}
-
 	public void checkFaceChange(EnumFacing facing) {
 
 	}
 
-	@SideOnly(Side.CLIENT)
-	private static class FaceAnimeData {
-		public float r = 0;
-		public float prevR = r;
-		public FaceStatus lastStatus = FaceStatus.NONE;
-		public boolean shouldShow = false;
-		public int shiftTick = 0;
+	public void setBeamHandler(EnumFacing facing, IMagicBeamHandler handler) {
+		if (world.isRemote) return;
+		int index = facing.getIndex();
+		if (handler == null && faceBeamHandlers[index] == null) return;
+		if (handler == faceBeamHandlers[index]) return;
+		faceBeamHandlers[index] = handler;
+		faceBeamActiveTicks[index] = 0;
+		IWorldObject siteBinder = handler != null ? handler.getWorldObject() : null;
+		if (faceBeamHandlerSites[index] == siteBinder) return;
+		if (siteBinder != null && siteBinder.equals(faceBeamHandlerSites[index])) return;
+		faceBeamHandlerSites[index] = siteBinder;
+		// updateToClient();
 	}
 
-	@SideOnly(Side.CLIENT)
-	public boolean clientUpdateFlag;
-	@SideOnly(Side.CLIENT)
-	public FaceAnimeData[] faceAnimeData;
+	protected IWorldObject[] faceBeamHandlerSites = new IWorldObject[faceStatus.length];
+	protected IMagicBeamHandler[] faceBeamHandlers = new IMagicBeamHandler[faceStatus.length];
+	// 当有输入输出的时候，这个值位置为倒计时，发送给客户端决定是否展示特效
+	protected int[] faceBeamActiveTicks = new int[faceStatus.length];
+	protected int tick;
 
-	@SideOnly(Side.CLIENT)
-	public void initFaceAnimeData() {
-		if (faceAnimeData != null) return;
-		faceAnimeData = new FaceAnimeData[faceStatus.length];
-		for (int i = 0; i < faceAnimeData.length; i++) {
-			faceAnimeData[i] = new FaceAnimeData();
-			checkFaceChange(EnumFacing.byIndex(i));
+	public void onUpdate() {
+		tick++;
+		if (world.isRemote) {
+			onUpdateClient();
+			return;
 		}
+		updateBeamTransmission();
+	}
+
+	private void updateBeamOnveFace(TileIceRockStand core, int i) {
+		FaceStatus fs = getFaceStatus(EnumFacing.byIndex(i));
+		if (fs != FaceStatus.IN && fs != FaceStatus.OUT) {
+			faceBeamActiveTicks[i] = 0;
+			return;
+		}
+		faceBeamActiveTicks[i] = Math.max(0, faceBeamActiveTicks[i] - 1);
+		IMagicBeamHandler handler = faceBeamHandlers[i];
+		double capacity = core.getMagicFragmentCapacity();
+		double fragmet = core.getMagicFragment();
+		if (fs == FaceStatus.IN) {
+			// 输入
+			double transferFragmet = Math.min(capacity - fragmet, core.getMaxFragmentOnceTransfer());
+			if (transferFragmet > 0) {
+				double extract = handler.extractMagicFragment(transferFragmet, false);
+				if (extract > 0) {
+					core.insertMagicFragment(extract, false);
+					faceBeamActiveTicks[i] = 4 * 20;
+				}
+			}
+			return;
+		}
+		// 输出
+		double transferFragmet = Math.min(fragmet, core.getMaxFragmentOnceTransfer());
+		if (transferFragmet > 0) {
+			double extract = core.extractMagicFragment(transferFragmet, false);
+			if (extract > 0) {
+				double remain = handler.insertMagicFragment(extract, false);
+				if (remain > 0) {
+					core.insertMagicFragment(remain, false);
+					if (remain < extract) faceBeamActiveTicks[i] = 4 * 20;
+				}
+			}
+		}
+	}
+
+	/** 更新激光传输 */
+	protected void updateBeamTransmission() {
+
+		TileIceRockStand core = getIceRockCore();
+		if (core == null) return;
+
+		boolean faceActiveChange = false;
+		for (int i = 0; i < faceBeamHandlers.length; i++) {
+			IMagicBeamHandler handler = faceBeamHandlers[i];
+			if (handler == null) continue;
+			if (!handler.isAlive()) {
+				faceActiveChange = true;
+				setBeamHandler(EnumFacing.byIndex(i), null);
+				continue;
+			}
+			int oaTick = faceBeamActiveTicks[i];
+			updateBeamOnveFace(core, i);
+			int caTick = faceBeamActiveTicks[i];
+			if ((oaTick == 0 && caTick > 0) || (oaTick > 0 && caTick == 0)) faceActiveChange = true;
+		}
+
+		if (faceActiveChange) updateToClient();
+	}
+
+	@Override
+	public boolean wake(int type, BlockPos from) {
+		return true;
+	}
+
+	@Override
+	public NBTTagCompound getUpdateTag() {
+		NBTTagCompound nbt = super.getUpdateTag();
+		PacketBuffer buf = new PacketBuffer(Unpooled.buffer());
+		for (int i = 0; i < faceBeamHandlerSites.length; i++) {
+			if (faceBeamHandlerSites[i] != null && faceBeamHandlers[i] != null) {
+				buf.writeByte(i);
+				buf.writeByte(faceBeamActiveTicks[i] == 0 ? 0 : 1);
+				IWorldObject.writeSendToBuf(buf, faceBeamHandlerSites[i]);
+			}
+		}
+		if (buf.writerIndex() > 0) {
+			byte[] bytes = new byte[buf.writerIndex()];
+			buf.getBytes(0, bytes);
+			nbt.setByteArray("fbSites", bytes);
+		}
+		return nbt;
 	}
 
 	@Override
@@ -220,26 +312,130 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 			initFaceAnimeData();
 			for (int i = 0; i < faceAnimeData.length; i++) faceAnimeData[i].lastStatus = faceStatus[i];
 		}
+		for (int i = 0; i < faceBeamHandlerSites.length; i++) faceBeamHandlerSites[i] = null;
+		if (tag.hasKey("fbSites", NBTTag.TAG_BYTE_ARRAY)) {
+			PacketBuffer buf = new PacketBuffer(Unpooled.wrappedBuffer(tag.getByteArray("fbSites")));
+			while (buf.readerIndex() < buf.readableBytes()) {
+				byte i = buf.readByte();
+				faceBeamActiveTicks[i] = buf.readByte();
+				faceBeamHandlerSites[i] = IWorldObject.readSendFromBuf(buf, world);
+			}
+		}
+
+	}
+
+	@SideOnly(Side.CLIENT)
+	private static class FaceAnimeData {
+		public FaceStatus lastStatus = FaceStatus.NONE;
+		public float r = 0;
+		public float prevR = r;
+		public boolean shouldShow = false;
+		public int shiftTick = 0;
+		public EffectLaser effectLaser;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public boolean clientUpdateFlag;
+
+	@SideOnly(Side.CLIENT)
+	public FaceAnimeData[] faceAnimeData;
+
+	@SideOnly(Side.CLIENT)
+	public Color renderColor;
+
+	@SideOnly(Side.CLIENT)
+	public float stockRatio;
+
+	@SideOnly(Side.CLIENT)
+	public Color getRenderColor() {
+		if (renderColor == null) renderColor = new Color(0x7cd0d3).weight(new Color(0x9956d0), stockRatio);
+		return renderColor;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void initFaceAnimeData() {
+		if (faceAnimeData != null) return;
+		faceAnimeData = new FaceAnimeData[faceStatus.length];
+		for (int i = 0; i < faceAnimeData.length; i++) {
+			faceAnimeData[i] = new FaceAnimeData();
+			checkFaceChange(EnumFacing.byIndex(i));
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	protected void updateFacingAnimeStatus(EnumFacing facing) {
+		int index = facing.getIndex();
+		FaceAnimeData fad = faceAnimeData[index];
+		fad.shouldShow = !world.isAirBlock(pos.offset(facing));
+		if (faceBeamHandlerSites[index] != null && faceBeamActiveTicks[index] > 0) {
+			if (fad.effectLaser == null) {
+				EffectLaserMagicTransfer laser = new EffectLaserMagicTransfer(world, this, facing, new Vec3d(this.pos),
+						faceBeamHandlerSites[index].getPositionVector());
+				laser.color.setColor(0x7cd0d3).weight(new Color(0xffffff), 0.75f);
+				laser.magicColor.setColor(0x9956d0).weight(laser.color, 0.5f);
+				fad.effectLaser = laser;
+				updateEffectLaser(index, true);
+				Effect.addEffect(fad.effectLaser);
+			}
+		} else if (fad.effectLaser != null) fad.effectLaser = null;
+	}
+
+	@SideOnly(Side.CLIENT)
+	protected void updateEffectLaser(int index, boolean isForce) {
+		FaceAnimeData fad = faceAnimeData[index];
+		if (faceBeamHandlerSites[index] == null || faceBeamActiveTicks[index] <= 0) {
+			fad.effectLaser = null;
+			return;
+		}
+		IWorldObject wobj = faceBeamHandlerSites[index];
+		if (wobj.asTileEntity() != null) {
+			if (isForce) {
+				Vec3d myPos = new Vec3d(getPos()).add(0.5, 0.5, 0.5);
+				Vec3d targetPos = new Vec3d(wobj.asTileEntity().getPos()).add(0.5, 0.5, 0.5);
+				Vec3d tar = targetPos.subtract(myPos).normalize();
+				myPos = myPos.add(tar.scale(0.6));
+				targetPos = targetPos.add(tar.scale(-0.5));
+				fad.effectLaser.setPosition(myPos);
+				fad.effectLaser.setTargetPosition(targetPos);
+			}
+		} else if (wobj.asEntity() != null) {
+			Vec3d myPos = new Vec3d(getPos()).add(0.5, 0.5, 0.5);
+			Vec3d targetPos = wobj.getPositionVector();
+			Vec3d tar = targetPos.subtract(myPos).normalize();
+			myPos = myPos.add(tar.scale(0.6));
+			fad.effectLaser.setPosition(myPos);
+			fad.effectLaser.setTargetPosition(targetPos);
+		}
+
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void onUpdateClient() {
 		initFaceAnimeData();
-		for (FaceAnimeData dat : faceAnimeData) {
+
+		if ((tick - 1) % 20 == 0) {
+			TileIceRockStand core = getIceRockCore();
+			if (core != null) {
+				stockRatio = (float) Math.min(core.getMagicFragment() / core.getMagicFragmentCapacity(), 1);
+				renderColor = null;
+			}
+		}
+
+		for (int i = 0; i < faceAnimeData.length; i++) {
+			FaceAnimeData dat = faceAnimeData[i];
 			dat.prevR = dat.r;
 			if (dat.shiftTick > 0) dat.shiftTick--;
-			if (!dat.shouldShow && dat.shiftTick <= 0) dat.r = dat.r + (0 - dat.r) * 0.1f;
+			if (dat.effectLaser != null) {
+				dat.effectLaser.hold(20);
+				updateEffectLaser(i, false);
+			}
+			if (!dat.shouldShow && dat.shiftTick <= 0 && dat.effectLaser == null) dat.r = dat.r + (0 - dat.r) * 0.1f;
 			else dat.r = dat.r + (1 - dat.r) * 0.1f;
 		}
 
 		if (tick % 20 == 0) {
-			if (hasUpDownFace()) {
-				for (EnumFacing facing : EnumFacing.VALUES)
-					faceAnimeData[facing.getIndex()].shouldShow = !world.isAirBlock(pos.offset(facing));
-			} else {
-				for (EnumFacing facing : EnumFacing.HORIZONTALS)
-					faceAnimeData[facing.getIndex()].shouldShow = !world.isAirBlock(pos.offset(facing));
-			}
+			if (hasUpDownFace()) for (EnumFacing facing : EnumFacing.VALUES) updateFacingAnimeStatus(facing);
+			else for (EnumFacing facing : EnumFacing.HORIZONTALS) updateFacingAnimeStatus(facing);
 		}
 
 		if (clientUpdateFlag) {
@@ -257,8 +453,9 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 		}
 	}
 
+	// 获取展示特效的动画进度
 	@SideOnly(Side.CLIENT)
-	public float getFaceAnimeRate(EnumFacing facing, float partialTicks) {
+	public float getFaceAnimeRatio(EnumFacing facing, float partialTicks) {
 		try {
 			if (!hasUpDownFace() && facing.getHorizontalIndex() < 0) return 0;
 			FaceAnimeData dat = faceAnimeData[facing.getIndex()];
@@ -268,14 +465,10 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 		}
 	}
 
+	// 侧面是否能展示特效
 	@SideOnly(Side.CLIENT)
 	public boolean needRenderFaceEffect() {
 		return isLinked();
-	}
-
-	@Override
-	public boolean wake(int type, BlockPos from) {
-		return true;
 	}
 
 	@Override

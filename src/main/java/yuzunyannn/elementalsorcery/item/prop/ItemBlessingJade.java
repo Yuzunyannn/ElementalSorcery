@@ -16,8 +16,8 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.item.IPlatformTickable;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.entity.EntityThrow;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 
@@ -77,7 +77,7 @@ public class ItemBlessingJade extends Item implements IPlatformTickable, EntityT
 	}
 
 	@Override
-	public boolean platformUpdate(World world, ItemStack stack, ICasterObject caster, NBTTagCompound runData,
+	public boolean platformUpdate(World world, ItemStack stack, IWorldObject caster, NBTTagCompound runData,
 			int tick) {
 		if (world.isRemote) {
 			ItemCalamityGem.randEffect(world, caster.getPosition(), 8, new int[] { 0x5ba3ff, 0x3876d8 });

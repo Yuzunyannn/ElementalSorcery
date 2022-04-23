@@ -103,7 +103,7 @@ public class GuiElementReactor extends GuiScreen {
 		this.reactor = container.tileEntity;
 		this.container.guiObject = this;
 		this.reactorStatus = this.reactor.getStatus();
-		this.currState = this.reactorStatus == ReactorStatus.ON ? new RunningState() : new WaitingStartState();
+		this.currState = this.reactorStatus.isRunning ? new RunningState() : new WaitingStartState();
 	}
 
 	@Override
@@ -374,7 +374,7 @@ public class GuiElementReactor extends GuiScreen {
 				fontRenderer.drawString(fragment, -w / 2, 24, iColor);
 			}
 			// 一条线
-			int lenWidth = 32;
+			int lenWidth = 42;
 			GlStateManager.disableTexture2D();
 			GL11.glLineWidth(2);
 			Tessellator tessellator = Tessellator.getInstance();
@@ -386,9 +386,21 @@ public class GuiElementReactor extends GuiScreen {
 			GlStateManager.enableTexture2D();
 			// 率
 			{
-				String text = "100% -> 0%";
+				int offset = -9;
+				float ir = (float) (reactor.getInstableRatio() * 100);
+				String text = ir > 0.1f ? String.format("|| %.1f%% ||", ir) : "|| <0.1% ||";
+				int w1 = fontRenderer.getStringWidth(text);
+				fontRenderer.drawString(text, -w1 + offset, 31, iColor);
+				float ifr = (float) (reactor.getInstableFragment() / reactor.getInstableFragmentCapacity() * 100);
+				text = String.format(" %s(%.1f%%)", TextHelper.toAbbreviatedNumber(reactor.getInstableFragment(), 1),
+						ifr);
+				fontRenderer.drawString(text, offset, 31, iColor);
+			}
+			// 能量线
+			{
+				String text = String.format("| %d |", reactor.getPowerLine());
 				int w = fontRenderer.getStringWidth(text);
-				fontRenderer.drawString(text, -w / 2, 31, iColor);
+				fontRenderer.drawString(text, -w / 2, -40, iColor);
 			}
 
 			GlStateManager.popMatrix();
@@ -568,7 +580,7 @@ public class GuiElementReactor extends GuiScreen {
 
 		@Override
 		public void onStatusChange() {
-			if (reactorStatus == ReactorStatus.ON) canNextState = true;
+			if (reactorStatus == ReactorStatus.RUNNING) canNextState = true;
 		}
 	}
 

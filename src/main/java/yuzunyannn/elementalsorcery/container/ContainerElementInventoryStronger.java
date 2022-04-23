@@ -7,7 +7,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.tile.ICanUpdate;
+import yuzunyannn.elementalsorcery.api.tile.ICanSync;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementInventoryStronger;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
@@ -33,7 +33,7 @@ public class ContainerElementInventoryStronger extends Container implements ICon
 		}
 		if (player.world.isRemote) return;
 		if (this.stronger == null) return;
-		if (tileEntity instanceof ICanUpdate) ((ICanUpdate) tileEntity).updateToClient();
+		if (tileEntity instanceof ICanSync) ((ICanSync) tileEntity).updateToClient();
 		else {
 			EventServer.addTask(() -> {
 				updateAllInventoryToClient();
@@ -62,7 +62,7 @@ public class ContainerElementInventoryStronger extends Container implements ICon
 		stronger.setUpperLimit(dat.getInteger("lu"));
 		tileEntity.markDirty();
 		if (tileEntity.getWorld().isRemote) return;
-		if (tileEntity instanceof ICanUpdate) ((ICanUpdate) tileEntity).updateToClient();
+		if (tileEntity instanceof ICanSync) ((ICanSync) tileEntity).updateToClient();
 		else updateAllInventoryToClient();
 	}
 

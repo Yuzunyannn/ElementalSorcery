@@ -1,5 +1,8 @@
-package yuzunyannn.elementalsorcery.grimoire;
+package yuzunyannn.elementalsorcery.api.util;
 
+import javax.annotation.Nullable;
+
+import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,7 +15,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public interface ICasterObject extends ICapabilityProvider {
+public interface IWorldObject extends ICapabilityProvider {
 
 	Vec3d getPositionVector();
 
@@ -57,6 +60,40 @@ public interface ICasterObject extends ICapabilityProvider {
 	default void markDirty() {
 		TileEntity tile = this.asTileEntity();
 		if (tile != null) tile.markDirty();
+	}
+
+	static public void writeSendToBuf(ByteBuf buf, IWorldObject caster) {
+		if (caster.asTileEntity() != null) {
+			BlockPos pos = caster.asTileEntity().getPos();
+			buf.writeByte((byte) 1);
+			buf.writeInt(pos.getX());
+			buf.writeInt(pos.getY());
+			buf.writeInt(pos.getZ());
+		} else if (caster.asEntity() != null) {
+			buf.writeByte((byte) 2);
+			buf.writeInt(caster.asEntity().getEntityId());
+		}
+	}
+
+	@Nullable
+	static public IWorldObject readSendFromBuf(ByteBuf buf, World world) {
+		try {
+			byte type = buf.readByte();
+			if (type == 1) {
+				int x = buf.readInt();
+				int y = buf.readInt();
+				int z = buf.readInt();
+				BlockPos pos = new BlockPos(x, y, z);
+				TileEntity tile = world.getTileEntity(pos);
+				if (tile == null) return null;
+				return new WorldObjectTileEntity(tile);
+			} else if (type == 2) {
+				Entity entity = world.getEntityByID(buf.readInt());
+				if (entity == null) return null;
+				return new WorldObjectEntity(entity);
+			}
+		} catch (Exception e) {}
+		return null;
 	}
 
 }

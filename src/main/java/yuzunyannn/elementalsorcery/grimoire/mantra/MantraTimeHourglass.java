@@ -10,9 +10,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
@@ -77,7 +77,7 @@ public class MantraTimeHourglass extends MantraCommon {
 		super.onSpellingEffect(world, data, caster);
 		ElementStack star = mdc.get(ESInit.ELEMENTS.STAR);
 		if (star.getCount() > 50 && hasEffectFlags(world, data, caster, MantraEffectFlags.MAGIC_CIRCLE)) out: {
-			ICasterObject co = caster.iWantCaster();
+			IWorldObject co = caster.iWantCaster();
 			EntityLivingBase eb = co.asEntityLivingBase();
 			if (eb == null) break out;
 			EffectTimeHourglass eth = mdc.getMarkEffect(0, EffectTimeHourglass.class);

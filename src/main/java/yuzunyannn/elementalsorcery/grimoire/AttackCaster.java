@@ -7,6 +7,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.world.CasterHelper;
 
@@ -71,13 +73,13 @@ public class AttackCaster implements ICaster {
 	}
 
 	@Override
-	public ICasterObject iWantCaster() {
-		return new CasterObjectEntity(attacker);
+	public IWorldObject iWantCaster() {
+		return new WorldObjectEntity(attacker);
 	}
 
 	@Override
-	public ICasterObject iWantDirectCaster() {
-		return new CasterObjectEntity(attacker);
+	public IWorldObject iWantDirectCaster() {
+		return new WorldObjectEntity(attacker);
 	}
 
 	@Override

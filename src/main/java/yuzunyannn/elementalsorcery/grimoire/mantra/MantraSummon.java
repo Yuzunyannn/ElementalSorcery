@@ -10,10 +10,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
@@ -176,7 +176,7 @@ public class MantraSummon extends MantraCommon {
 		if (data.summonRecipe != null)
 			data.summon = data.summonRecipe.createSummon(data.keepsake, data.world, data.pos);
 		// 重置位置
-		ICasterObject co = caster.iWantDirectCaster();
+		IWorldObject co = caster.iWantDirectCaster();
 		if (co.asEntity() != null) co.asEntity().setPosition(data.pos.getX(), data.pos.getY(), data.pos.getZ());
 		// 消耗灵魂
 		Entity entity = caster.iWantCaster().asEntity();

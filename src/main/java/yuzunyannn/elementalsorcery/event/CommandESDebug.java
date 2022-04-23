@@ -20,7 +20,6 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
@@ -39,7 +38,7 @@ import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLaser;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -122,6 +121,10 @@ public class CommandESDebug {
 				return;
 			case "textTest": {
 
+				EffectLaser effect = new EffectLaser(Minecraft.getMinecraft().world, entity.getPositionVector(),
+						new Vec3d(pos).add(0.5, 1.5, 0.5));
+				Effect.addEffect(effect);
+
 //				EffectBlockDisintegrate effect = new EffectBlockDisintegrate(Minecraft.getMinecraft().world,
 //						new Vec3d(pos).add(0.5, 1.5, 0.5), entity.world.getBlockState(pos));
 //				Effect.addEffect(effect);
@@ -135,7 +138,6 @@ public class CommandESDebug {
 //				EffectElementCrackAttack effect = new EffectElementCrackAttack(Minecraft.getMinecraft().world,
 //						new Vec3d(pos).add(0.5, 1.5, 0.5));
 //				Effect.addEffect(effect);
-
 
 //				entity.world.setBlockToAir(pos);
 //				PocketWatch.stopWorld(entity.world, 20 * 10, entity);

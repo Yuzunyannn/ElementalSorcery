@@ -23,13 +23,13 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.ITickTask;
-import yuzunyannn.elementalsorcery.grimoire.CasterObjectEntity;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
@@ -460,13 +460,13 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	@Override
-	public ICasterObject iWantCaster() {
-		return new CasterObjectEntity(user == null ? this : user);
+	public IWorldObject iWantCaster() {
+		return new WorldObjectEntity(user == null ? this : user);
 	}
 
 	@Override
-	public ICasterObject iWantDirectCaster() {
-		return new CasterObjectEntity(this);
+	public IWorldObject iWantDirectCaster() {
+		return new WorldObjectEntity(this);
 	}
 
 	@Override

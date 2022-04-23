@@ -130,7 +130,6 @@ public class EffectBlockDisintegrate extends Effect {
 			RenderItemElementCrack.END_SKY_TEXTURE.unbindAtive(3);
 		}
 
-		GlStateManager.disableLighting();
 		GlStateManager.enableBlend();
 		GlStateManager.enableTexture2D();
 		GlStateManager.depthMask(false);

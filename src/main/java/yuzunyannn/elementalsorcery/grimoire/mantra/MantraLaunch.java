@@ -7,10 +7,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
@@ -69,7 +69,7 @@ public class MantraLaunch extends MantraCommon {
 			return;
 		}
 
-		ICasterObject co = caster.iWantCaster();
+		IWorldObject co = caster.iWantCaster();
 		if (co.getPositionVector().squareDistanceTo(new Vec3d(pos)) > 16 * 16) {
 			mData.markContinue(false);
 			return;

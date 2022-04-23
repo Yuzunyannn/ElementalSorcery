@@ -17,9 +17,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.item.IPlatformTickable;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.entity.fcube.FairyCubeModule;
 import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeModuleClient;
-import yuzunyannn.elementalsorcery.grimoire.ICasterObject;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.FireworkEffect;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -76,7 +76,7 @@ public class ItemFairyCubeModule extends Item implements IPlatformTickable {
 	}
 
 	@Override
-	public boolean platformUpdate(World world, ItemStack stack, ICasterObject caster, NBTTagCompound runData,
+	public boolean platformUpdate(World world, ItemStack stack, IWorldObject caster, NBTTagCompound runData,
 			int tick) {
 		if (tick % (16 * 20) != 0) return false;
 		if (getModuleId(stack) != null) return false;
