@@ -1,10 +1,11 @@
 package yuzunyannn.elementalsorcery.render.effect;
 
 import java.util.ArrayDeque;
-import java.util.HashSet;
-import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import javax.annotation.Nullable;
 
@@ -14,26 +15,26 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 
 /** ES使用的自主particle */
 @SideOnly(Side.CLIENT)
 public abstract class Effect {
 
+	public static final String GROUP_GUI = "gui";
+	public static final String GROUP_NORMAL = "normal";
+	public static final String GROUP_BATCH = "batch";
+
 	public static final Minecraft mc = Minecraft.getMinecraft();
+	public static int displayWidth = mc.displayWidth;
+	public static int displayHeight = mc.displayHeight;
+	public static boolean displayChange;
 
-	/** 继承该接口的效果认为是gui效果 **/
-	static public interface IGUIEffect {
-
-	}
-
-	protected World world;
+	public final World world;
 	/** 是否作为大量的粒子效果，是的话，会根据粒子效果的设置，决定是否展示 */
 	public boolean asParticle = false;
 	public double prevPosX;
@@ -63,10 +64,11 @@ public abstract class Effect {
 	}
 
 	public boolean isDead() {
-//		if (mc.getRenderViewEntity() == null) return true;
-//		float distance = mc.gameSettings.renderDistanceChunks * 16;
-//		double renderDistance = mc.getRenderViewEntity().getPositionVector().squareDistanceTo(getPositionVector());
-//		if (renderDistance > distance * distance) return true;
+		// if (mc.getRenderViewEntity() == null) return true;
+		// float distance = mc.gameSettings.renderDistanceChunks * 16;
+		// double renderDistance =
+		// mc.getRenderViewEntity().getPositionVector().squareDistanceTo(getPositionVector());
+		// if (renderDistance > distance * distance) return true;
 		return this.lifeTime <= 0;
 	}
 
@@ -104,6 +106,10 @@ public abstract class Effect {
 		return this.prevPosZ + (this.posZ - this.prevPosZ) * partialTicks;
 	}
 
+	protected String myGroup() {
+		return typeBatch() == null ? GROUP_NORMAL : GROUP_BATCH;
+	}
+
 	/** 获取批量渲染的类型，同一种类型获取的实例应该是 单例！ */
 	@Nullable
 	protected EffectBatchType typeBatch() {
@@ -135,9 +141,26 @@ public abstract class Effect {
 
 	// ============-= 全局 =-============
 
-	static final private Set<EffectBatchType> batchs = new HashSet<>();
-	static final private ArrayDeque<Effect> effects = new ArrayDeque<>();
-	static final private ArrayDeque<Effect> guiEffects = new ArrayDeque<>();
+	static final protected EffectGroup effectBatch = new EffectBatchSet();
+	static final protected EffectGroup effectNormal = new EffectList();
+	static final protected EffectGroup effectGUI = new EffectListGUI();
+
+	static final public Map<String, EffectGroup> groupMap = new HashMap<>();
+	static final private List<EffectGroup> worldGroupList = new ArrayList<>();
+	static final private List<EffectGroup> guiGroupList = new ArrayList<>();
+	static {
+		addEffectGroup(GROUP_BATCH, effectBatch);
+		addEffectGroup(GROUP_NORMAL, effectNormal);
+		addEffectGroup(GROUP_GUI, effectGUI);
+	}
+
+	static public void addEffectGroup(String id, EffectGroup group) {
+		groupMap.put(id, group);
+		if (group.isGUI()) guiGroupList.add(group);
+		else worldGroupList.add(group);
+	}
+
+	/** 運行effect時添加effect的容器 */
 	static final private ArrayDeque<Effect> contextEffects = new ArrayDeque<>();
 	static boolean inUpdate = false;
 
@@ -145,95 +168,41 @@ public abstract class Effect {
 		if (effect.canPassSpawn()) return;
 		if (inUpdate) contextEffects.add(effect);
 		else {
-			if (effect instanceof IGUIEffect) guiEffects.add(effect);
-			else {
-				EffectBatchType batch = effect.typeBatch();
-				if (batch == null) effects.add(effect);
-				else {
-					batch.effects.add(effect);
-					batchs.add(batch);
-				}
-			}
+			String groupId = effect.myGroup();
+			EffectGroup group = groupMap.get(groupId);
+			if (group == null) return;
+			group.add(effect);
+		}
+	}
+
+	static public void clear() {
+		for (EffectGroup group : groupMap.values()) group.clear();
+		contextEffects.clear();
+	}
+
+	static private void updateProps() {
+		displayChange = false;
+		if (displayWidth != mc.displayWidth || displayHeight != mc.displayHeight) {
+			displayWidth = mc.displayWidth;
+			displayHeight = mc.displayHeight;
+			displayChange = true;
 		}
 	}
 
 	static public void updateAllEffects() {
-		update(batchs);
-		update(effects);
-		update(guiEffects);
+		updateProps();
+		inUpdate = true;
+		for (EffectGroup group : worldGroupList) group.update();
+		for (EffectGroup group : guiGroupList) group.update();
+		inUpdate = false;
 		while (!contextEffects.isEmpty()) addEffect(contextEffects.pop());
 	}
 
 	static public void updateGuiEffects() {
-		update(guiEffects);
-		while (!contextEffects.isEmpty()) addEffect(contextEffects.pop());
-	}
-
-	static public void clear() {
-		batchs.clear();
-		effects.clear();
-		guiEffects.clear();
-		contextEffects.clear();
-	}
-
-	static private void update(ArrayDeque<Effect> effects) {
-		Iterator<Effect> iter = effects.iterator();
-		World world = Minecraft.getMinecraft().world;
 		inUpdate = true;
-		while (iter.hasNext()) {
-			Effect effect = iter.next();
-			if (effect.isDead() || world != effect.world) {
-				iter.remove();
-				continue;
-			}
-			effect.onUpdate();
-		}
+		for (EffectGroup group : guiGroupList) group.update();
 		inUpdate = false;
-	}
-
-	static private void update(Set<EffectBatchType> batchs) {
-		Iterator<EffectBatchType> iter = batchs.iterator();
-		while (iter.hasNext()) {
-			EffectBatchType batch = iter.next();
-			update(batch.effects);
-			if (batch.effects.isEmpty()) iter.remove();
-		}
-	}
-
-	static private void renderBatchs(Set<EffectBatchType> batchs, float partialTicks) {
-		if (batchs.isEmpty()) return;
-
-		Tessellator tessellator = Tessellator.getInstance();
-		BufferBuilder bufferbuilder = tessellator.getBuffer();
-
-		Iterator<EffectBatchType> batchIter = batchs.iterator();
-		while (batchIter.hasNext()) {
-			EffectBatchType batch = batchIter.next();
-			batch.beginRender(tessellator, bufferbuilder);
-			Iterator<Effect> iter = batch.effects.iterator();
-			while (iter.hasNext()) {
-				try {
-					iter.next().doRender(bufferbuilder, partialTicks);
-				} catch (Exception e) {
-					iter.remove();
-					ElementalSorcery.logger.warn("Effect Batch Render Error", e);
-				}
-			}
-			batch.endRender(tessellator, bufferbuilder);
-		}
-
-	}
-
-	static private void renderEffects(ArrayDeque<Effect> effects, float partialTicks) {
-		Iterator<Effect> iter = effects.iterator();
-		while (iter.hasNext()) {
-			try {
-				iter.next().doRender(partialTicks);
-			} catch (Exception e) {
-				iter.remove();
-				ElementalSorcery.logger.warn("Effect Render Error", e);
-			}
-		}
+		while (!contextEffects.isEmpty()) addEffect(contextEffects.pop());
 	}
 
 	static public void renderAllEffects(float partialTicks) {
@@ -241,10 +210,10 @@ public abstract class Effect {
 		GlStateManager.enableBlend();
 		GlStateManager.disableCull();
 		GlStateManager.depthMask(false);
+		GlStateManager.enableNormalize();
 		RenderHelper.disableStandardItemLighting();
 		yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
-		renderEffects(effects, partialTicks);
-		renderBatchs(batchs, partialTicks);
+		for (EffectGroup group : worldGroupList) group.render(partialTicks);
 		yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(false);
 		GlStateManager.depthMask(true);
 		GlStateManager.enableCull();
@@ -257,7 +226,7 @@ public abstract class Effect {
 		GlStateManager.enableBlend();
 		GlStateManager.disableAlpha();
 		GlStateManager.blendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
-		renderEffects(guiEffects, partialTicks);
+		for (EffectGroup group : guiGroupList) group.render(partialTicks);
 		GlStateManager.enableAlpha();
 		GlStateManager.disableBlend();
 		GlStateManager.popMatrix();

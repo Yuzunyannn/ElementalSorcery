@@ -10,6 +10,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleMagicFall;
+import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 

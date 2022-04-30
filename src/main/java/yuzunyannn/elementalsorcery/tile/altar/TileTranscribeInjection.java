@@ -58,6 +58,9 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 		structure.addSpecialBlock(new BlockPos(-4, 1, 8));
 	}
 
+	static public final byte WORK_TYPE_TRANSCRIBE = 1;
+	static public final byte WORK_TYPE_CHARGE = 2;
+
 	/** 撰录类型：1撰录、2充能 */
 	protected byte workType;
 	/** 正在撰录的句柄，1模式下才有 */
@@ -85,7 +88,7 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 	}
 
 	public boolean inWork() {
-		return !finish && (workType == 1 || workType == 2);
+		return !finish && (workType == WORK_TYPE_TRANSCRIBE || workType == WORK_TYPE_CHARGE);
 	}
 
 	@Override
@@ -93,14 +96,14 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 		if (world.isRemote) this.updateTranscribeAltarClient();
 		if (!inWork()) return;
 		switch (workType) {
-		case 1:
+		case WORK_TYPE_TRANSCRIBE:
 			if (mantraHandle == null) return;
 			if (updateCheck()) return;
 			updateTranscribe();
 			break;
-		case 2:
+		case WORK_TYPE_CHARGE:
 			if (updateCheck()) return;
-			this.updateCharge();
+			updateCharge();
 			break;
 		default:
 			finish = true;
@@ -108,14 +111,14 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 		}
 	}
 
-	public float animeRate = 0;
-	public float prevAnimeRate = 0;
+	public float animeRatio = 0;
+	public float prevAnimeRatio = 0;
 
 	@SideOnly(Side.CLIENT)
 	public void updateTranscribeAltarClient() {
-		this.prevAnimeRate = this.animeRate;
-		if (inWork() && this.ok) this.animeRate = Math.min(1, this.animeRate + 0.01f);
-		else this.animeRate = Math.max(0, this.animeRate - 0.01f);
+		this.prevAnimeRatio = this.animeRatio;
+		if (inWork() && this.ok) this.animeRatio = Math.min(1, this.animeRatio + 0.01f);
+		else this.animeRatio = Math.max(0, this.animeRatio - 0.01f);
 	}
 
 	private boolean updateCheck() {
@@ -138,7 +141,11 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 
 	protected void doCheck() {
 		// 进行写入判断
-		this.check();
+		checkBlock: {
+			this.clearState();
+			if (this.checkCanTranscribe()) break checkBlock;
+			if (this.checkCanCharge()) break checkBlock;
+		}
 		// 状态变化，更新状态
 		if (this.hasStateChange()) {
 			this.syncState();
@@ -146,13 +153,6 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 			this.markDirty();
 			this.updateToClient();
 		}
-	}
-
-	protected void check() {
-		this.clearState();
-		if (this.checkCanTranscribe()) return;
-		if (this.checkCanCharge()) return;
-
 	}
 
 	public ItemStack getGrimoire() {
@@ -202,7 +202,7 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 		if (capacity > restCapacity) return false;
 		// 设置句柄，表示可以开始计时了
 		mantraHandle = mantraType;
-		workType = 1;
+		workType = WORK_TYPE_TRANSCRIBE;
 		return true;
 	}
 
@@ -302,7 +302,7 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 		data.loadState(grimoire);
 		IElementInventory einv = data.getInventory();
 		if (!ElementHelper.canInsert(einv)) return false;
-		workType = 2;
+		workType = WORK_TYPE_CHARGE;
 		return true;
 	}
 

@@ -14,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
-import yuzunyannn.elementalsorcery.render.effect.FirewrokShap;
+import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
 
 @SideOnly(Side.CLIENT)
 public class AnimeRenderConstruct implements ICraftingLaunchAnime {

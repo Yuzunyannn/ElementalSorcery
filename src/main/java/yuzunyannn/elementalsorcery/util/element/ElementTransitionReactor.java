@@ -27,6 +27,7 @@ public class ElementTransitionReactor {
 	public float lastDetaStep;
 	public float lastDiffAngle;
 	public float lastDiffStep;
+	public boolean lastElementDiff;
 
 	// 变量
 	protected Element rElement = ElementStack.EMPTY.getElement();
@@ -79,10 +80,14 @@ public class ElementTransitionReactor {
 	}
 
 	public void transitTo(Element element) {
+		ElementTransition oEt = this.rElement.getTransition();
+		ElementTransition nEt = element.getTransition();
 		this.rElement = element;
-		ElementTransition et = element.getTransition();
-		if (et == null) return;
-		step = et.getLevel();
+		if (nEt == null) return;
+		step = nEt.getLevel();
+		if (oEt == null) return;
+		fragment = ElementHelper.transitionFrom(element, fragment, oEt.getLevel());
+		fragment = ElementHelper.transitionTo(element, fragment, nEt.getLevel());
 	}
 
 	public void transit(Element element, double fragment) {
@@ -133,7 +138,11 @@ public class ElementTransitionReactor {
 			if (et != null) this.angle = et.getKernelAngle();
 			return;
 		}
-		if (this.rElement != element) transit(element, fragment);
+		lastElementDiff = false;
+		if (this.rElement != element) {
+			transit(element, fragment);
+			lastElementDiff = true;
+		}
 		this.fragment += fragment;
 	}
 
@@ -149,6 +158,12 @@ public class ElementTransitionReactor {
 		this.fragment = this.fragment - costFragment
 				+ ElementHelper.toFragment(this.rElement, countDouble - count, power);
 		return eStack;
+	}
+
+	public double shrink(double n) {
+		double shrinkCount = Math.min(fragment, n);
+		fragment = fragment - shrinkCount;
+		return shrinkCount;
 	}
 
 }

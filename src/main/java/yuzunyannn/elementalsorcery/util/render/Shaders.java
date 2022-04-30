@@ -13,6 +13,7 @@ public class Shaders {
 	public static Shader BlockIceRockCrystal;
 	public static Shader BlockMeltCauldron;
 	public static Shader RGBColorMapping;
+	public static Shader ErrorCode;
 
 	public static void init() throws IOException {
 		Minecraft mc = Minecraft.getMinecraft();
@@ -23,6 +24,7 @@ public class Shaders {
 		BlockIceRockCrystal = new Shader("shaders/block_ice_rock_crystal.fsh");
 		BlockMeltCauldron = new Shader("shaders/block_melt_cauldron.fsh");
 		RGBColorMapping = new Shader("shaders/rgb_color_mapping.fsh");
+		ErrorCode = new Shader("shaders/error_code.fsh");
 	}
 
 }

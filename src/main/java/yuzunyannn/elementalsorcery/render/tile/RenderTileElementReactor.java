@@ -99,7 +99,7 @@ public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElem
 	public void render(ItemStack stack, float partialTicks) {
 		GlStateManager.disableCull();
 		GlStateManager.color(0.691f, 0.980f, 0.992f);
-		RenderHelper.render(stack, TEXTURE, MODEL, false, 0.4, 0.25, 0.3, 0.15);
+		RenderHelper.render(stack, TEXTURE, MODEL, false, 0.4, 0.175, 0.3, 0.15);
 		GlStateManager.enableCull();
 	}
 

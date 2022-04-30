@@ -1,13 +1,11 @@
 package yuzunyannn.elementalsorcery.render.effect;
 
-import java.util.ArrayDeque;
-
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 
 public abstract class EffectBatchType {
 
-	ArrayDeque<Effect> effects = new ArrayDeque<Effect>();
+	public final EffectList effects = new EffectList();
 
 	public abstract void beginRender(Tessellator tessellator, BufferBuilder bufferbuilder);
 

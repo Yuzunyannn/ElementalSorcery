@@ -122,7 +122,6 @@ public class EventClient {
 		// 更新所有ES粒子效果
 		Effect.updateAllEffects();
 		// 其他处理
-
 	}
 
 	/** 获取渲染旋转角度 */

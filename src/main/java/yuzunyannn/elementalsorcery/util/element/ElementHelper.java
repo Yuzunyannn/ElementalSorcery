@@ -253,4 +253,12 @@ public class ElementHelper {
 		return fragment / toFragmentUnit(element, targetPower);
 	}
 
+	static public double transitionFrom(Element element, double fragment, double level) {
+		return fragment * Math.pow(level, 1.125);
+	}
+
+	static public double transitionTo(Element element, double fragment, double level) {
+		return fragment / Math.pow(level, 1.125);
+	}
+
 }

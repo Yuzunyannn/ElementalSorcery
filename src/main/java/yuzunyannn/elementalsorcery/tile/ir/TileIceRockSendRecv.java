@@ -196,7 +196,6 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 		if (handler == null && faceBeamHandlers[index] == null) return;
 		if (handler == faceBeamHandlers[index]) return;
 		faceBeamHandlers[index] = handler;
-		faceBeamActiveTicks[index] = 0;
 		IWorldObject siteBinder = handler != null ? handler.getWorldObject() : null;
 		if (faceBeamHandlerSites[index] == siteBinder) return;
 		if (siteBinder != null && siteBinder.equals(faceBeamHandlerSites[index])) return;
@@ -264,7 +263,14 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 		boolean faceActiveChange = false;
 		for (int i = 0; i < faceBeamHandlers.length; i++) {
 			IMagicBeamHandler handler = faceBeamHandlers[i];
-			if (handler == null) continue;
+			if (handler == null) {
+				// 被设置为null，数据要同步到前端
+				if (faceBeamActiveTicks[i] > 0) {
+					faceBeamActiveTicks[i] = 0;
+					faceActiveChange = true;
+				}
+				continue;
+			}
 			if (!handler.isAlive()) {
 				faceActiveChange = true;
 				setBeamHandler(EnumFacing.byIndex(i), null);

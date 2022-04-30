@@ -19,7 +19,7 @@ import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectResonance;
+import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectResonance;
 
 public class MantraSprint extends MantraCommon {
 

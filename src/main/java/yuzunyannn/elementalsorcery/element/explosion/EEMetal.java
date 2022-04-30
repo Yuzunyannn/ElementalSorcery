@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFluorspar;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectShineBlock;
+import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectShineBlock;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 
 public class EEMetal extends ElementExplosion {

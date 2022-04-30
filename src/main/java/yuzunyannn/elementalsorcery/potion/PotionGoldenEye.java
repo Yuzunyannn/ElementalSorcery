@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectShineBlock;
+import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectShineBlock;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 
 public class PotionGoldenEye extends PotionCommon {

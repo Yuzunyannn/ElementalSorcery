@@ -58,6 +58,8 @@ public class BlockElementReactor extends BlockContainerNormal {
 
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		TileElementReactor reactor = BlockHelper.getTileEntity(worldIn, pos, TileElementReactor.class);
+		if (reactor != null) reactor.onBreak();
 		super.breakBlock(worldIn, pos, state);
 	}
 }

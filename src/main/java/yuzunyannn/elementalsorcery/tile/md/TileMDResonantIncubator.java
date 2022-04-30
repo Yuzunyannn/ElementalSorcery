@@ -32,7 +32,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemScarletCrystal;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectResonance;
+import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectResonance;
 import yuzunyannn.elementalsorcery.tile.TileLifeDirt;
 
 public class TileMDResonantIncubator extends TileMDBase implements ITickable, IGetItemStack {

@@ -26,7 +26,7 @@ public class RenderTileTranscribeInjection extends TileEntitySpecialRenderer<Til
 		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.03125, alpha);
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
-		float rate = RenderHelper.getPartialTicks(tile.animeRate, tile.prevAnimeRate, partialTicks);
+		float rate = RenderHelper.getPartialTicks(tile.animeRatio, tile.prevAnimeRatio, partialTicks);
 		float rotate = EventClient.getGlobalRotateInRender(partialTicks);
 		MODEL.render(null, rate, rotate / 180 * 3.14f * 2, 0, 0, 0, 1.0f);
 		GlStateManager.disableBlend();

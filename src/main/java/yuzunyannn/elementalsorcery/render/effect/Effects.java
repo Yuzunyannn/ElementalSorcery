@@ -20,6 +20,8 @@ import yuzunyannn.elementalsorcery.render.effect.batch.EffectFragmentP2P;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectElementCrackAttack;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectSummonEntity;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTreatEntity;
+import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectEntitySoul;
+import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class Effects {

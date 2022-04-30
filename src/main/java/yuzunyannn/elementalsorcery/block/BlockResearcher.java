@@ -24,7 +24,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectTopic;
+import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectTopic;
 
 public class BlockResearcher extends Block {
 

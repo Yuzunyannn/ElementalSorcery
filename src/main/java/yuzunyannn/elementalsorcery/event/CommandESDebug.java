@@ -38,7 +38,7 @@ import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLaser;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectBlockConfusion;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -53,7 +53,7 @@ public class CommandESDebug {
 		case "reloadShader": {
 			Minecraft.getMinecraft().addScheduledTask(() -> {
 				try {
-					Shaders.RGBColorMapping.reload();
+					Shaders.ErrorCode.reload();
 				} catch (Exception e) {
 					ElementalSorcery.logger.warn(e);
 				}
@@ -121,8 +121,13 @@ public class CommandESDebug {
 				return;
 			case "textTest": {
 
-				EffectLaser effect = new EffectLaser(Minecraft.getMinecraft().world, entity.getPositionVector(),
-						new Vec3d(pos).add(0.5, 1.5, 0.5));
+//				EffectLaser effect = new EffectLaser(Minecraft.getMinecraft().world, entity.getPositionVector(),
+//						new Vec3d(pos).add(0.5, 1.5, 0.5));
+//				Effect.addEffect(effect);
+
+				EffectBlockConfusion effect = new EffectBlockConfusion(Minecraft.getMinecraft().world,
+						new Vec3d(pos).add(0.5, 0.5, 0.5), entity.world.getBlockState(pos));
+				effect.setChangeTo(Blocks.DIAMOND_BLOCK.getDefaultState(), true);
 				Effect.addEffect(effect);
 
 //				EffectBlockDisintegrate effect = new EffectBlockDisintegrate(Minecraft.getMinecraft().world,

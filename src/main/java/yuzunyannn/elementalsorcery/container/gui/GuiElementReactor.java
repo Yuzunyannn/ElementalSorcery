@@ -91,7 +91,10 @@ public class GuiElementReactor extends GuiScreen {
 		public void mouseMove(int mouseX, int mouseY) {
 		}
 
-		public void mouseClick(int mouseX, int mouseY) {
+		public void mousePress(int mouseX, int mouseY) {
+		}
+
+		public void mouseReleased(int mouseX, int mouseY) {
 		}
 
 		public void onStatusChange() {
@@ -167,8 +170,22 @@ public class GuiElementReactor extends GuiScreen {
 	}
 
 	@Override
+	protected void keyTyped(char typedChar, int keyCode) throws IOException {
+		if (keyCode == 1 || this.mc.gameSettings.keyBindInventory.isActiveAndMatches(keyCode)) {
+			this.mc.player.closeScreen();
+			return;
+		}
+		super.keyTyped(typedChar, keyCode);
+	}
+
+	@Override
 	protected void mouseClicked(int mouseX, int mouseY, int mouseButton) throws IOException {
-		currState.mouseClick(mouseX, mouseY);
+		currState.mousePress(mouseX, mouseY);
+	}
+
+	@Override
+	protected void mouseReleased(int mouseX, int mouseY, int state) {
+		currState.mouseReleased(mouseX, mouseY);
 	}
 
 	// 画一个弧形
@@ -199,6 +216,9 @@ public class GuiElementReactor extends GuiScreen {
 		public float startRatio, prevStartRatio;
 		public float rotation, prevRotation;
 		public float transitionRation, prevTransitionRation;
+		public boolean canNextState;
+		public float stopRatio = 0;
+		public int lastSendTick;
 
 		public Color color;
 		public Color colorLight;
@@ -213,13 +233,33 @@ public class GuiElementReactor extends GuiScreen {
 			colorLight = new Color(color).weight(new Color(0xffffff), 0.9f);
 		}
 
+		public void trySendStop() {
+			if (lastSendTick > 0) {
+				lastSendTick--;
+				return;
+			}
+			if (reactorStatus != ReactorStatus.RUNNING) return;
+			if (stopRatio < 0.5f) return;
+			lastSendTick = 20;
+			// 发送数据，告知服务端要停止了
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setBoolean("S", true);
+			container.sendToServer(nbt);
+		}
+
 		@Override
 		public void update() {
 			prevStartRatio = startRatio;
 			if (startRatio < 1) startRatio = Math.min(1, startRatio + 0.05f);
 
 			prevRotation = rotation;
-			rotation += 0.25f;
+			rotation += 0.25f - 0.5f * stopRatio;
+
+			if (reactorStatus == ReactorStatus.CLOSING) stopRatio = Math.min(1, stopRatio + 0.2f);
+			else if (stageIndex == 2) {
+				stopRatio = Math.min(1, stopRatio + 0.01f);
+				trySendStop();
+			} else stopRatio = Math.max(0, stopRatio - 0.1f);
 
 			prevTransitionRation = transitionRation;
 			if (stageIndex == 1) {
@@ -254,8 +294,17 @@ public class GuiElementReactor extends GuiScreen {
 			}
 		}
 
+		@Override
+		public boolean updateOver() {
+			prevStartRatio = startRatio;
+			if (startRatio > 0) startRatio = Math.max(0, startRatio - 0.05f);
+			else return false;
+			return true;
+		}
+
 		public void updateCircleEffect() {
 			Random rand = Effect.rand;
+			if (rand.nextFloat() < stopRatio) return;
 			int cX = width / 2, cY = height / 2;
 			for (int i = 0; i < 4; i++) {
 				Part p = new Part() {
@@ -284,13 +333,19 @@ public class GuiElementReactor extends GuiScreen {
 		}
 
 		@Override
+		public void onStatusChange() {
+			if (reactorStatus == ReactorStatus.STANDBY) canNextState = true;
+		}
+
+		@Override
 		public ActionState getNextState() {
-			return null;
+			return canNextState ? new WaitingStartState() : null;
 		}
 
 		@Override
 		public void mouseMove(int mouseX, int mouseY) {
 			if (startRatio < 1) return;
+			if (stageIndex == 2) return;
 			int cX = width / 2, cY = height / 2;
 			float centerSize = 24;
 			stageIndex = 0;
@@ -298,6 +353,22 @@ public class GuiElementReactor extends GuiScreen {
 				stageIndex = 1;
 				return;
 			}
+		}
+
+		@Override
+		public void mousePress(int mouseX, int mouseY) {
+			if (startRatio < 1) return;
+			int cX = width / 2, cY = height / 2;
+			float centerSize = 24;
+			if (GuiNormal.isMouseIn(mouseX, mouseY, cX - centerSize / 2, cY - centerSize / 2, centerSize, centerSize)) {
+				stageIndex = 2;
+				return;
+			}
+		}
+
+		@Override
+		public void mouseReleased(int mouseX, int mouseY) {
+			if (stageIndex == 2) stageIndex = 0;
 		}
 
 		@Override
@@ -374,7 +445,7 @@ public class GuiElementReactor extends GuiScreen {
 				fontRenderer.drawString(fragment, -w / 2, 24, iColor);
 			}
 			// 一条线
-			int lenWidth = 42;
+			int lenWidth = 43;
 			GlStateManager.disableTexture2D();
 			GL11.glLineWidth(2);
 			Tessellator tessellator = Tessellator.getInstance();
@@ -386,9 +457,9 @@ public class GuiElementReactor extends GuiScreen {
 			GlStateManager.enableTexture2D();
 			// 率
 			{
-				int offset = -9;
+				int offset = -6;
 				float ir = (float) (reactor.getInstableRatio() * 100);
-				String text = ir > 0.1f ? String.format("|| %.1f%% ||", ir) : "|| <0.1% ||";
+				String text = ir >= 0.01f ? String.format("|| %.2f%% ||", ir) : "|| <0.01% ||";
 				int w1 = fontRenderer.getStringWidth(text);
 				fontRenderer.drawString(text, -w1 + offset, 31, iColor);
 				float ifr = (float) (reactor.getInstableFragment() / reactor.getInstableFragmentCapacity() * 100);
@@ -479,7 +550,7 @@ public class GuiElementReactor extends GuiScreen {
 		}
 
 		@Override
-		public void mouseClick(int mouseX, int mouseY) {
+		public void mouseReleased(int mouseX, int mouseY) {
 			if (!mouseHover) return;
 			if (startRatio < 1) return;
 			if (launchCD > 0) return;

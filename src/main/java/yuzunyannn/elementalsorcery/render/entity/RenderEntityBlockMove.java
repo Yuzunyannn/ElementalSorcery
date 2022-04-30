@@ -75,6 +75,7 @@ public class RenderEntityBlockMove extends Render<EntityBlockMove> {
 		TextureBinder.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		GlStateManager.pushMatrix();
 		GlStateManager.disableLighting();
+
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 

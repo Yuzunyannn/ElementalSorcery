@@ -9,14 +9,23 @@ public class Framebuffer {
 
 	private net.minecraft.client.shader.Framebuffer buffer;
 	private int originFrameName = -1;
+	private final boolean useDepth;
+
+	public Framebuffer(boolean useDepth) {
+		this.useDepth = useDepth;
+	}
 
 	public Framebuffer(int width, int height, boolean useDepth) {
 		buffer = new net.minecraft.client.shader.Framebuffer(width, height, useDepth);
+		this.useDepth = useDepth;
 	}
 
 	public void resize(int width, int height) {
-		buffer.createBindFramebuffer(width, height);
-		buffer.framebufferClear();
+		if (buffer == null) buffer = new net.minecraft.client.shader.Framebuffer(width, height, useDepth);
+		else {
+			buffer.createBindFramebuffer(width, height);
+			buffer.framebufferClear();
+		}
 	}
 
 	public void bindFrame(boolean resetViewPort) {
@@ -47,6 +56,10 @@ public class Framebuffer {
 		this.unbindFrame();
 		buffer.deleteFramebuffer();
 		buffer = null;
+	}
+
+	public boolean isDispose() {
+		return this.buffer == null;
 	}
 
 	public net.minecraft.client.shader.Framebuffer getMCBuffer() {

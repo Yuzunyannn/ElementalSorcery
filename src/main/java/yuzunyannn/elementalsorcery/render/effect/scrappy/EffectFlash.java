@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.effect;
+package yuzunyannn.elementalsorcery.render.effect.scrappy;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
@@ -9,10 +9,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
-public class EffectFlash extends Effect implements Effect.IGUIEffect {
+public class EffectFlash extends Effect {
 
 	public float alpha, prevAlpha;
 
@@ -26,6 +27,11 @@ public class EffectFlash extends Effect implements Effect.IGUIEffect {
 		this.lifeTime--;
 		prevAlpha = alpha;
 		alpha = MathHelper.cos((1 - this.lifeTime / 8f) * 3.14f / 2);
+	}
+
+	@Override
+	protected String myGroup() {
+		return GROUP_GUI;
 	}
 
 	@Override
