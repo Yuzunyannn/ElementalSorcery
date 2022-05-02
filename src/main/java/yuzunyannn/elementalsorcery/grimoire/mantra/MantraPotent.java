@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import java.util.Random;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
@@ -30,6 +29,7 @@ import yuzunyannn.elementalsorcery.render.effect.batch.EffectSpiralMove;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
+import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class MantraPotent extends MantraCommon {
 
@@ -61,9 +61,9 @@ public class MantraPotent extends MantraCommon {
 			float hp = ((EntityLiving) target).getHealth();
 			if (hp < potent * 30) {
 				damage = hp;
-				if (world.isRemote) FirewrokShap.createECircleDispersed(world,
-						target.getPositionVector().add(0, target.height / 2, 0), 1f, 4,
-						new int[] { this.getRenderColor() });
+				if (world.isRemote)
+					FirewrokShap.createECircleDispersed(world, target.getPositionVector().add(0, target.height / 2, 0),
+							1f, 4, new int[] { this.getRenderColor() });
 			}
 		}
 		// 超级强效攻击
@@ -164,12 +164,11 @@ public class MantraPotent extends MantraCommon {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void renderShiftIcon(Minecraft mc, NBTTagCompound mantraData, float suggestSize, float suggestAlpha,
-			float partialTicks) {
-		mc.getTextureManager().bindTexture(GuiMantraShitf.CIRCLE);
+	public void renderShiftIcon(NBTTagCompound mantraData, float suggestSize, float suggestAlpha, float partialTicks) {
+		TextureBinder.bindTexture(GuiMantraShitf.CIRCLE);
 		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 		GlStateManager.color(1, 1, 1);
-		mc.getTextureManager().bindTexture(this.icon);
+		TextureBinder.bindTexture(this.icon);
 		suggestSize = suggestSize * 0.5f;
 		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 	}

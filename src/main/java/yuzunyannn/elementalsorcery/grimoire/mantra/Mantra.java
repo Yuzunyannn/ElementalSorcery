@@ -1,11 +1,11 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
@@ -24,9 +24,11 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
+import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher;
 import yuzunyannn.elementalsorcery.init.ESImplRegister;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
+import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 
@@ -35,6 +37,7 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	private String unlocalizedName;
 	private byte rarity = 100;
 	private short occupation = 2;
+	private List<IFragmentMantraLauncher> fmLaunchers;
 
 	/** 是否可以开始 */
 	public boolean canStart(EntityLivingBase user) {
@@ -109,6 +112,21 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
 	}
 
+	/**
+	 * 获取远程法术处理器，元素反应堆使用
+	 * 
+	 * @return 返回这个咒文支持的所有全程启动魔法，返回null表示不支持，顺序铭感，用于储存
+	 */
+	@Nullable
+	public List<IFragmentMantraLauncher> getFragmentMantraLaunchers() {
+		return fmLaunchers;
+	}
+
+	public void addFragmentMantraLauncher(IFragmentMantraLauncher launcher) {
+		if (fmLaunchers == null) fmLaunchers = new ArrayList<>();
+		fmLaunchers.add(launcher);
+	}
+
 	/** 获取咒文的稀有度，值越小，越稀有。小于0表示不存在 */
 	public int getRarity(@Nullable World world, @Nullable BlockPos pos) {
 		return rarity;
@@ -167,13 +185,12 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 
 	/** 渲染该咒文切换时的图标 */
 	@SideOnly(Side.CLIENT)
-	public void renderShiftIcon(Minecraft mc, NBTTagCompound mantraData, float suggestSize, float suggestAlpha,
-			float partialTicks) {
-		mc.getTextureManager().bindTexture(GuiMantraShitf.CIRCLE);
+	public void renderShiftIcon(NBTTagCompound mantraData, float suggestSize, float suggestAlpha, float partialTicks) {
+		TextureBinder.bindTexture(GuiMantraShitf.CIRCLE);
 		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 		ResourceLocation res = this.getIconResource();
 		if (res == null) res = RenderObjects.MANTRA_VOID;
-		mc.getTextureManager().bindTexture(res);
+		TextureBinder.bindTexture(res);
 		suggestSize = suggestSize * 0.5f;
 		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 	}

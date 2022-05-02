@@ -11,6 +11,7 @@ import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagFloat;
 import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagIntArray;
@@ -109,6 +110,11 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		return false;
 	}
 
+	public void clear() {
+		nbt = null;
+		map.clear();
+	}
+
 	@Override
 	public NBTTagCompound serializeNBT() {
 		return serializeNBT((key, obj) -> true);
@@ -185,6 +191,21 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 
 	};
 
+	public final static IVariableType<Double> DOUBLE = new IVariableType<Double>() {
+
+		@Override
+		public Double newInstance(NBTBase base) {
+			if (base instanceof NBTPrimitive) return ((NBTPrimitive) base).getDouble();
+			return Double.valueOf(0);
+		}
+
+		@Override
+		public NBTBase serializable(Double obj) {
+			return new NBTTagDouble(obj);
+		}
+
+	};
+
 	public final static IVariableType<ElementStack> ELEMENT = new IVariableType<ElementStack>() {
 
 		@Override
@@ -247,4 +268,5 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		}
 
 	};
+
 }

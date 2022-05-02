@@ -50,6 +50,7 @@ public class RenderTileIceRockSendRecv<T extends TileIceRockSendRecv> extends Ti
 		GlStateManager.depthMask(false);
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		RenderHelper.disableStandardItemLighting();
+		yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
 
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			float r = tile.getFaceAnimeRatio(facing, partialTicks);

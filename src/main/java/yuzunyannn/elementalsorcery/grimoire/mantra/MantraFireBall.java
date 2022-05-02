@@ -35,6 +35,7 @@ import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
+import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFireBall;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
@@ -106,6 +107,7 @@ public class MantraFireBall extends MantraCommon {
 		this.setIcon("fire_ball");
 		this.setRarity(50);
 		this.setOccupation(3);
+		this.addFragmentMantraLauncher(new FMantraFireBall());
 	}
 
 	@Override

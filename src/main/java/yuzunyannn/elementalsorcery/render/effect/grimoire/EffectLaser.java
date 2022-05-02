@@ -97,7 +97,8 @@ public class EffectLaser extends Effect {
 		GlStateManager.rotate(yR, 0, 1, 0);
 		GlStateManager.rotate(xR - 90, 1, 0, 0);
 		renderHeadTail(len, a, partialTicks);
-		GlStateManager.rotate((EventClient.tickRender + partialTicks) * 60, 0, 0, 1);
+		float rotation = (EventClient.tickRender + partialTicks) * 60;
+		GlStateManager.rotate(rotation, 0, 0, 1);
 		GlStateManager.color(color.r, color.g, color.b, a);
 		TEXTURE.bind();
 		bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
@@ -111,11 +112,17 @@ public class EffectLaser extends Effect {
 			bufferbuilder.pos(-xf, -yf, len).tex(0, 1).endVertex();
 		}
 		tessellator.draw();
+		GlStateManager.rotate(-rotation, 0, 0, 1);
+		renderHeadTailPost(len, a, partialTicks);
 
 		GlStateManager.popMatrix();
 	}
 
 	protected void renderHeadTail(double len, float a, float partialTicks) {
+
+	}
+
+	protected void renderHeadTailPost(double len, float a, float partialTicks) {
 
 	}
 

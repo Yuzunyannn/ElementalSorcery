@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -14,6 +15,7 @@ import yuzunyannn.elementalsorcery.element.ElementTransition;
 public class ElementTransitionReactor {
 
 	private static Element[] involvedElements;
+	private TileEntity holder;
 
 	public static Element[] getInvolvedElements() {
 		if (involvedElements != null) return involvedElements;
@@ -28,6 +30,17 @@ public class ElementTransitionReactor {
 	public float lastDiffAngle;
 	public float lastDiffStep;
 	public boolean lastElementDiff;
+
+	public ElementTransitionReactor(TileEntity holder) {
+		this.holder = holder;
+	}
+
+	public ElementTransitionReactor() {
+	}
+
+	public TileEntity getHeldTileEntity() {
+		return holder;
+	}
 
 	// 变量
 	protected Element rElement = ElementStack.EMPTY.getElement();

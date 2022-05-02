@@ -130,8 +130,7 @@ public class MantraCommon extends Mantra {
 		Vec3d vec = target.getPositionVector().add(0, target.height / 2, 0);
 		Random rand = world.rand;
 		for (int i = 0; i < 25; i++) {
-			Vec3d at = vec.add(rand.nextGaussian() * 1.25, rand.nextGaussian() * 0.75,
-					rand.nextGaussian() * 1.25);
+			Vec3d at = vec.add(rand.nextGaussian() * 1.25, rand.nextGaussian() * 0.75, rand.nextGaussian() * 1.25);
 			EffectElementMove effect = new EffectElementMove(world, at);
 			effect.motionY = rand.nextGaussian() * 0.2;
 			effect.yDecay = 0.75;
@@ -139,8 +138,7 @@ public class MantraCommon extends Mantra {
 			Effect.addEffect(effect);
 		}
 		for (int i = 0; i < 5; i++) {
-			Vec3d at = vec.add(rand.nextGaussian() * 1.25, rand.nextGaussian() * 0.75,
-					rand.nextGaussian() * 1.25);
+			Vec3d at = vec.add(rand.nextGaussian() * 1.25, rand.nextGaussian() * 0.75, rand.nextGaussian() * 1.25);
 			EffectSpiralMove effect = new EffectSpiralMove(world, at);
 			effect.motionY = rand.nextDouble() * 0.01f + 0.005f;
 			effect.yDecay = 0.98f;

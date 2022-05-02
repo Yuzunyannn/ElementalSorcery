@@ -377,6 +377,7 @@ arc.transcribeAltar.name=撰录祭坛
 arc.mappingAltar.name=频率共祭坛
 arc.deconstructWindmill.name=物质瓦解风车
 arc.disintegrateAltar.name=崩解祭坛
+arc.elementReactor.name=星空祭坛
 
 info.none=无
 info.unknow=未知

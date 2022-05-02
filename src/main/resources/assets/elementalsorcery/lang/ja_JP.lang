@@ -377,6 +377,7 @@ arc.transcribeAltar.name=書き写し祭壇
 arc.mappingAltar.name=周波数共感祭壇
 arc.deconstructWindmill.name=物質瓦解風車
 arc.disintegrateAltar.name=崩解し祭壇
+arc.elementReactor.name=星空祭壇
 
 info.none=無
 info.unknow=未知

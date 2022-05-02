@@ -24,6 +24,7 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
+import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportTo;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectPlayerAt;
@@ -38,6 +39,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		this.setIcon("teleport");
 		this.setRarity(40);
 		this.setOccupation(5);
+		this.addFragmentMantraLauncher(new FMantraEnderTeleportTo());
 	}
 
 	@Override
@@ -171,7 +173,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		doEnderTeleport(world, target, pos);
 		if (target.isWet()) target.attackEntityFrom(DamageSource.DROWN, 1.0F);
 	}
-	
+
 	public static void doEnderTeleport(World world, Entity target, Vec3d pos) {
 		if (world.isRemote) {
 			// 客户端的粒子效果

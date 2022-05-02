@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.container.gui;
+package yuzunyannn.elementalsorcery.container.gui.elf;
 
 import java.io.IOException;
 

@@ -14,7 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.container.gui.GuiElementReactor;
+import yuzunyannn.elementalsorcery.container.gui.reactor.GuiElementReactor;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.IRenderClient;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
@@ -53,7 +53,6 @@ public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElem
 		RenderHelper.startRender(x + 0.5, y + 0.5, z + 0.5, 0.5f, alpha);
 
 		GlStateManager.disableCull();
-		GlStateManager.enableBlend();
 
 		if (status != ReactorStatus.OFF) {
 			float rotation = EventClient.getGlobalRotateInRender(partialTicks);
@@ -62,7 +61,6 @@ public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElem
 
 		MODEL_SPHERE.render();
 
-		GlStateManager.disableBlend();
 		GlStateManager.enableCull();
 
 		RenderHelper.endRender();
@@ -141,6 +139,8 @@ public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElem
 
 		float r2 = EventClient.getGlobalRotateInRender(partialTicks);
 		Color color = tile.getRenderColor();
+		Color color2 = null;
+		if (tile.getRunningMantraPair() != null) color2 = new Color(tile.getRunningMantraPair().mantra.getColor(null));
 
 		float l = (r2 / 160) % 1;
 		if (l < 0.25) l = 0;
@@ -152,6 +152,12 @@ public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElem
 			renderCircle(-r2, color, 0.5f * MathHelper.cos(-l * 3.1415926f / 2), a);
 			GlStateManager.translate(0, MathHelper.sin(l * 3.1415926f / 2) * 0.5f * 2, 0);
 			renderCircle(-r2, color, 0.5f * MathHelper.cos(l * 3.1415926f / 2), a);
+			if (color2 != null) {
+				GlStateManager.translate(0, MathHelper.sin(-l * 3.1415926f / 2) * 0.5f * 2, 0);
+				renderCircle(-r2, color2, 0.75f * MathHelper.cos(-l * 3.1415926f / 2), a);
+				GlStateManager.translate(0, MathHelper.sin(l * 3.1415926f / 2) * 0.5f * 2, 0);
+				renderCircle(-r2, color2, 0.75f * MathHelper.cos(l * 3.1415926f / 2), a);
+			}
 			GlStateManager.popMatrix();
 		}
 
@@ -160,7 +166,11 @@ public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElem
 		GlStateManager.popMatrix();
 	}
 
-	public void renderCircle(float rotation, Color color, float size, float aplha) {
+	public static void renderCircle(float rotation, Color color, float size, float aplha) {
+		renderCircle(rotation, color, size, aplha, false);
+	}
+
+	public static void renderCircle(float rotation, Color color, float size, float aplha, boolean changeDepth) {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 
@@ -175,6 +185,12 @@ public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElem
 		bufferbuilder.pos(size, 0, size).tex(1, 1).endVertex();
 		bufferbuilder.pos(-size, 0, size).tex(1, 0).endVertex();
 		tessellator.draw();
+
+		if (changeDepth) {
+			GlStateManager.enableAlpha();
+			GlStateManager.depthMask(true);
+		}
+
 		GuiElementReactor.RING.bind();
 		GlStateManager.color(color.r, color.g, color.b, aplha);
 		bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
@@ -187,6 +203,12 @@ public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElem
 		bufferbuilder.pos(size, 0.01, size).tex(1, 1).endVertex();
 		bufferbuilder.pos(-size, 0.01, size).tex(1, 0).endVertex();
 		tessellator.draw();
+
+		if (changeDepth) {
+			GlStateManager.disableAlpha();
+			GlStateManager.depthMask(false);
+		}
+
 		GlStateManager.rotate(-rotation, 0, 1, 0);
 	}
 

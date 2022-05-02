@@ -155,7 +155,7 @@ public class GuiMantraShitf extends GuiScreen {
 			GlStateManager.popMatrix();
 			// 再画icon标签
 			a = prevA + (this.a - prevA) * partialTicks;
-			mantra.renderShiftIcon(mc, mantraData, mantraSize, a, partialTicks);
+			mantra.renderShiftIcon(mantraData, mantraSize, a, partialTicks);
 			GlStateManager.popMatrix();
 		}
 	}

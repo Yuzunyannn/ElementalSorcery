@@ -8,9 +8,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
@@ -21,6 +23,7 @@ import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectElementCrackAtta
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectSummonEntity;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTreatEntity;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectEntitySoul;
+import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectReactorMantraSpell;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
@@ -34,8 +37,7 @@ public class Effects {
 	public static final int ELEMENT_ABSORB = 6;
 	public static final int ELEMENT_CRACK_ATTACK = 7;
 	public static final int FRAGMENT_TO = 8;
-
-	public static final int MAX_DIS = 64;
+	public static final int REACTOR_MANREA = 9;
 
 	/** 生成特殊效果 */
 	public static void spawnEffect(World world, int id, Vec3d pos, NBTTagCompound nbt) {
@@ -43,10 +45,23 @@ public class Effects {
 			spawnEffect(id, pos, nbt);
 			return;
 		}
+		MinecraftServer server = ((WorldServer) world).getMinecraftServer();
+		float viewDis = server.getPlayerList().getViewDistance() * 16;
 		for (EntityPlayer player : world.playerEntities) {
-			if (player.getDistanceSq(pos.x, pos.y, pos.z) > MAX_DIS * MAX_DIS) continue;
+			if (player.getDistanceSq(pos.x, pos.y, pos.z) > viewDis * viewDis) continue;
 			ESNetwork.instance.sendTo(new MessageEffect(id, pos, nbt), (EntityPlayerMP) player);
 		}
+	}
+
+	public static void spawnEffect(EntityPlayer player, int id, Vec3d pos, NBTTagCompound nbt) {
+		if (player.world.isRemote) {
+			spawnEffect(id, pos, nbt);
+			return;
+		}
+		MinecraftServer server = ((WorldServer) player.world).getMinecraftServer();
+		float viewDis = server.getPlayerList().getViewDistance() * 16;
+		if (player.getDistanceSq(pos.x, pos.y, pos.z) > viewDis * viewDis) return;
+		ESNetwork.instance.sendTo(new MessageEffect(id, pos, nbt), (EntityPlayerMP) player);
 	}
 
 	public static void spawnEffect(World world, int id, BlockPos pos, NBTTagCompound nbt) {
@@ -57,7 +72,6 @@ public class Effects {
 	private static void spawnEffect(int id, Vec3d pos, NBTTagCompound nbt) {
 		try {
 			EntityPlayer player = Minecraft.getMinecraft().player;
-			if (player.getDistanceSq(pos.x, pos.y, pos.z) > MAX_DIS * MAX_DIS) return;
 			Effects.Factory factory = Effects.getFactory(id);
 			factory.show(player.world, pos, nbt);
 		} catch (Exception e) {}
@@ -97,6 +111,8 @@ public class Effects {
 		EffectMap.register(TREAT_ENTITY, EffectTreatEntity::show);
 		EffectMap.register(ELEMENT_CRACK_ATTACK, EffectElementCrackAttack::show);
 		EffectMap.register(FRAGMENT_TO, EffectFragmentP2P::show);
+		EffectMap.register(REACTOR_MANREA, EffectReactorMantraSpell::show);
+
 	}
 
 	// 下面是通用的show

@@ -239,14 +239,9 @@ public class BlocksEStone {
 			this.setHardness(1.2F);
 		}
 
-		@Override
-		public boolean isOpaqueCube(IBlockState state) {
-			return false;
-		}
-
 		@SideOnly(Side.CLIENT)
 		public BlockRenderLayer getRenderLayer() {
-			return BlockRenderLayer.TRANSLUCENT;
+			return BlockRenderLayer.SOLID;
 		}
 
 	}

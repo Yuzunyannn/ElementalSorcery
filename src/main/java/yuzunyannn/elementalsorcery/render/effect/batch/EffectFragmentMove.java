@@ -82,7 +82,7 @@ public class EffectFragmentMove extends EffectFragment {
 		if (this.lifeTime < endLifeTick) {
 			this.alpha = this.lifeTime / (float) endLifeTick;
 			this.scale = this.defaultScale * this.alpha;
-		}
+		} else this.alpha = 1;
 	}
 
 }

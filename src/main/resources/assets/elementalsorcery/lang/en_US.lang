@@ -377,6 +377,7 @@ arc.transcribeAltar.name=Transcribe Altar
 arc.mappingAltar.name=Frequency Inductor Altar
 arc.deconstructWindmill.name=Material Disintegrate Windmill
 arc.disintegrateAltar.name=Material Collapse Altar
+arc.elementReactor.name=Starry Altar
 
 info.none=nothing
 info.unknow=unknow

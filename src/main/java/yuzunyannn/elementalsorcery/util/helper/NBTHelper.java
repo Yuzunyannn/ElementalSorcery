@@ -14,11 +14,13 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 
 public class NBTHelper {
@@ -261,6 +263,21 @@ public class NBTHelper {
 			if (!stack.isEmpty()) list.add(stack);
 		}
 		return list;
+	}
+
+	public static NBTTagList serializeMantra(List<Mantra> mantras) {
+		NBTTagList list = new NBTTagList();
+		for (Mantra mantra : mantras) list.appendTag(new NBTTagString(mantra.getRegistryName().toString()));
+		return list;
+	}
+
+	public static List<Mantra> deserializeMantra(NBTTagList list) {
+		List<Mantra> mantras = new ArrayList<>(list.tagCount());
+		for (int i = 0; i < list.tagCount(); i++) {
+			Mantra mantra = Mantra.REGISTRY.getValue(new ResourceLocation(list.getStringTagAt(i)));
+			if (mantra != null) mantras.add(mantra);
+		}
+		return mantras;
 	}
 
 }

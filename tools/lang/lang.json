@@ -1848,6 +1848,11 @@
 			"zh_CN": "崩解祭坛",
 			"en_US": "Material Collapse Altar",
 			"ja_JP": "崩解し祭壇"
+		},
+		"arc.elementReactor.name": {
+			"zh_CN": "星空祭坛",
+			"en_US": "Starry Altar",
+			"ja_JP": "星空祭壇"
 		}
 	},
 	"info": {

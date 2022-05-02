@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.container.gui;
+package yuzunyannn.elementalsorcery.container.gui.elf;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
