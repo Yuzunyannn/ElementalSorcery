@@ -32,6 +32,7 @@ public class EffectReactorMantraSpell extends EffectLaser {
 
 	public final Color circleColor = new Color();
 	public float progress, prevProgress;
+	public float upEndProgress = -1, prevUpEndProgress;
 	public IFragmentMantraLauncher launcher;
 	public boolean isDown;
 
@@ -84,6 +85,11 @@ public class EffectReactorMantraSpell extends EffectLaser {
 				effect.motionY = speed.y;
 				effect.motionZ = speed.z;
 				addEffect(effect);
+			}
+		} else {
+			if (upEndProgress >= 0) {
+				prevUpEndProgress = upEndProgress;
+				upEndProgress = upEndProgress + (1 - upEndProgress) * 0.2f;
 			}
 		}
 	}
@@ -144,14 +150,21 @@ public class EffectReactorMantraSpell extends EffectLaser {
 		if (tick < 20) a_aplha = (tick + partialTicks) / 20.0f;
 		if (tick < 40) b_aplha = (tick + partialTicks) / 40.0f;
 		float rotation = EventClient.getGlobalRotateInRender(partialTicks);
+		float defaultYMove = 0;
+		float endPorgress = 0;
 
-		GlStateManager.translate(0, 3.5, 0);
-		RenderTileElementReactor.renderCircle(rotation, circleColor, 8.2f, a_aplha * aplha, true);
-		GlStateManager.translate(0, -3.5, 0);
+		if (upEndProgress >= 0) {
+			endPorgress = RenderHelper.getPartialTicks(this.upEndProgress, this.prevUpEndProgress, partialTicks);
+			defaultYMove = (float) (endPorgress * len);
+			progress = Math.max(progress, endPorgress);
+		}
+		GlStateManager.translate(0, 3.5 + defaultYMove, 0);
+		RenderTileElementReactor.renderCircle(rotation, circleColor, 8.2f + 10f * endPorgress, a_aplha * aplha, true);
+		GlStateManager.translate(0, -3.5 - defaultYMove, 0);
 
-		GlStateManager.translate(0, 4.5, 0);
-		RenderTileElementReactor.renderCircle(-rotation, circleColor, 4f, b_aplha * aplha, true);
-		GlStateManager.translate(0, -4.5, 0);
+		GlStateManager.translate(0, 4.5 + defaultYMove, 0);
+		RenderTileElementReactor.renderCircle(-rotation, circleColor, 4f + 6f * endPorgress, b_aplha * aplha, true);
+		GlStateManager.translate(0, -4.5 - defaultYMove, 0);
 
 		GlStateManager.translate(0, 3.5 + (len - 4) * progress, 0);
 		RenderTileElementReactor.renderCircle(rotation, circleColor, 8.2f, progress * a_aplha * aplha, true);

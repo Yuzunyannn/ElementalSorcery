@@ -1,0 +1,28 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"XEX",
+		"#S#",
+		"XEX"
+	],
+	"key": {
+		"#": {
+			"type": "forge:ore_dict",
+			"ore": "kyanite"
+		},
+		"E": {
+			"item": "elementalsorcery:elf_crystal"
+		},
+		"X": {
+			"item": "elementalsorcery:material_debris"
+		},
+		"S": {
+			"item": "minecraft:sand",
+			"data": 0
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:magic_stone",
+		"count": 2
+	}
+}

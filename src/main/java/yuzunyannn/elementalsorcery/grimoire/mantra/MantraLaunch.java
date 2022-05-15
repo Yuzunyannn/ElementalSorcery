@@ -8,13 +8,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
-import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
+import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
+import yuzunyannn.elementalsorcery.item.ItemAncientPaper.EnumType;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleMantra;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
@@ -38,7 +40,7 @@ public class MantraLaunch extends MantraCommon {
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 
-		WantedTargetResult wr = caster.iWantBlockTarget();
+		WorldTarget wr = caster.iWantBlockTarget();
 		BlockPos pos = wr.getPos();
 		if (pos == null) return;
 
@@ -137,6 +139,11 @@ public class MantraLaunch extends MantraCommon {
 		EffectMagicCircleMantra emc = new EffectMagicCircleMantra(world, pos, this.getIconResource());
 		emc.setColor(this.getColor(mData));
 		return emc;
+	}
+	
+	@Override
+	public EnumType getMantraSubItemType() {
+		return ItemAncientPaper.EnumType.NEW_WRITTEN;
 	}
 
 }

@@ -2,12 +2,35 @@ package yuzunyannn.elementalsorcery.render.effect;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.Vec3d;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 
 public interface IBinder {
 
 	Vec3d getPosition();
 
 	Vec3d getDirection();
+
+	public final static class WorldObjectBinder implements IBinder {
+
+		final public IWorldObject wo;
+		final public float yoff;
+
+		public WorldObjectBinder(IWorldObject wo, float yoff) {
+			this.wo = wo;
+			this.yoff = yoff;
+		}
+
+		@Override
+		public Vec3d getPosition() {
+			return this.wo.getPositionVector().add(0, yoff, 0);
+		}
+
+		@Override
+		public Vec3d getDirection() {
+			return new Vec3d(1, 0, 0);
+		}
+
+	}
 
 	public final static class EntityBinder implements IBinder {
 

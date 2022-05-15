@@ -2,14 +2,17 @@ package yuzunyannn.elementalsorcery.grimoire;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.CasterHelper;
 
 public class AttackCaster implements ICaster {
@@ -32,8 +35,27 @@ public class AttackCaster implements ICaster {
 	}
 
 	@Override
+	public ElementStack iWantAnyElementSample(int seed) {
+		seed = Math.abs(seed);
+		IElementInventory eInv = grimoire.getInventory();
+		if (eInv == null || eInv.getSlots() == 0) {
+			if (EntityHelper.isCreative(attacker))
+				return new ElementStack(Element.getElementFromIndex(seed, true), 1000, 1000);
+			return ElementStack.EMPTY;
+		}
+		for (int i = 0; i < eInv.getSlots(); i++) {
+			ElementStack estack = eInv.getStackInSlot((i + seed) % eInv.getSlots());
+			if (estack.isEmpty()) continue;
+			return estack.copy();
+		}
+		if (EntityHelper.isCreative(attacker))
+			return new ElementStack(Element.getElementFromIndex(seed, true), 1000, 1000);
+		return ElementStack.EMPTY;
+	}
+
+	@Override
 	public ElementStack iWantSomeElement(ElementStack need, boolean consume) {
-		if (attacker instanceof EntityPlayer && ((EntityPlayer) attacker).isCreative()) {
+		if (EntityHelper.isCreative(attacker)) {
 			need = need.copy();
 			need.setPower(1000);
 			return need;
@@ -58,12 +80,12 @@ public class AttackCaster implements ICaster {
 	}
 
 	@Override
-	public WantedTargetResult iWantBlockTarget() {
-		return CasterHelper.findLookBlockResult(attacker, 64);
+	public WorldTarget iWantBlockTarget() {
+		return CasterHelper.findLookBlockResult(attacker, 64, false);
 	}
 
 	@Override
-	public <T extends Entity> WantedTargetResult iWantLivingTarget(Class<T> cls) {
+	public <T extends Entity> WorldTarget iWantEntityTarget(Class<T> cls) {
 		return CasterHelper.findLookTargetResult(cls, attacker, 128);
 	}
 
@@ -78,8 +100,8 @@ public class AttackCaster implements ICaster {
 	}
 
 	@Override
-	public IWorldObject iWantDirectCaster() {
-		return new WorldObjectEntity(attacker);
+	public Entity iWantDirectCaster() {
+		return attacker;
 	}
 
 	@Override

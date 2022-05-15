@@ -32,8 +32,8 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class TileIceRockStand extends TileIceRockBase implements ITickable {
 
-	public static final float ONE_DAMAGE_ENND_FRAGMENT = 100000f;
-	public static final float DAMAGE_GROW_POWER = 1.1f;
+	public static final float ONE_DAMAGE_ENND_FRAGMENT = 75000f;
+	public static final float DAMAGE_GROW_POWER = 1.125f;
 
 	protected int tick;
 
@@ -260,6 +260,7 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 		for (EntityLivingBase entity : entities) {
 			if (attackCaller != null && EntityHelper.isSameTeam(attackCaller, entity)) continue;
 			DamageSource ds = DamageHelper.getMagicDamageSource(this.attackCaller, null);
+			ds.setDamageBypassesArmor();
 			float attenuation = (float) Math.max(entity.getDistance(attackVec.x, attackVec.y, attackVec.z) - 1, 0.8);
 			entity.attackEntityFrom(ds, attackDamage / attenuation);
 		}
@@ -397,7 +398,7 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 		double fragmentGet = extractMagicFragment(Math.min(fragmentNeed, getMaxFragmentOnceTransfer()), false);
 		if (fragmentGet <= 0) return false;
 
-		double dmg = Math.pow(fragmentGet / ONE_DAMAGE_ENND_FRAGMENT, 1 / DAMAGE_GROW_POWER);
+		double dmg = getDamageWithFragment(fragmentGet);
 
 		this.attackDamage = (float) dmg;
 		this.attackCaller = caller;
@@ -412,6 +413,10 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 		Effects.spawnFragmentTo(world, vec, this.attackVec, color, (1 << 24) | MathHelper.floor(rang));
 
 		return true;
+	}
+
+	static public double getDamageWithFragment(double fragment) {
+		return Math.pow(fragment / ONE_DAMAGE_ENND_FRAGMENT, 1 / DAMAGE_GROW_POWER);
 	}
 
 }

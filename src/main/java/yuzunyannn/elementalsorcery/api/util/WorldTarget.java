@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.grimoire;
+package yuzunyannn.elementalsorcery.api.util;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -7,26 +7,27 @@ import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
-public class WantedTargetResult {
+public class WorldTarget {
 
-	public static final WantedTargetResult EMPTY = new WantedTargetResult();
+	public static final WorldTarget EMPTY = new WorldTarget();
 
 	protected Entity entity;
 	protected BlockPos pos;
 	protected Vec3d hit;
 	protected EnumFacing face;
 
-	protected WantedTargetResult() {
+	protected WorldTarget() {
 
 	}
 
-	public WantedTargetResult(Entity entity, Vec3d hit) {
+	public WorldTarget(Entity entity, Vec3d hit) {
 		this.entity = entity;
 		this.hit = hit;
 	}
 
-	public WantedTargetResult(BlockPos pos, EnumFacing face, Vec3d hit) {
+	public WorldTarget(BlockPos pos, EnumFacing face, Vec3d hit) {
 		this.pos = pos;
 		this.face = face;
 		this.hit = hit;
@@ -52,4 +53,14 @@ public class WantedTargetResult {
 		return entity;
 	}
 
+	public boolean isEmpty() {
+		return entity == null && pos == null;
+	}
+
+	@Nullable
+	public IWorldObject toWorldObject(World world) {
+		if (entity != null) return new WorldObjectEntity(entity);
+		if (pos != null) return new WorldObjectBlock(world, pos);
+		return null;
+	}
 }

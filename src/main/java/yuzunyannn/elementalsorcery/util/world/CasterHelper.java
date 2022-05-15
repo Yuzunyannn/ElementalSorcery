@@ -7,7 +7,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 
 public class CasterHelper {
 
@@ -29,18 +29,18 @@ public class CasterHelper {
 		return null;
 	}
 
-	public static WantedTargetResult findLookBlockResult(EntityLivingBase entity, float dis) {
-		RayTraceResult rt = WorldHelper.getLookAtBlock(entity.world, entity, dis);
-		if (rt == null) return WantedTargetResult.EMPTY;
-		if (rt.getBlockPos() == null) return WantedTargetResult.EMPTY;
-		return new WantedTargetResult(rt.getBlockPos(), rt.sideHit, rt.hitVec);
+	public static WorldTarget findLookBlockResult(EntityLivingBase entity, float dis, boolean stopOnLiquid) {
+		RayTraceResult rt = WorldHelper.getLookAtBlock(entity.world, entity, dis, stopOnLiquid, false, false);
+		if (rt == null) return WorldTarget.EMPTY;
+		if (rt.getBlockPos() == null) return WorldTarget.EMPTY;
+		return new WorldTarget(rt.getBlockPos(), rt.sideHit, rt.hitVec);
 	}
 
-	public static <T extends Entity> WantedTargetResult findLookTargetResult(Class<T> cls, EntityLivingBase entity,
+	public static <T extends Entity> WorldTarget findLookTargetResult(Class<T> cls, EntityLivingBase entity,
 			float dis) {
 		RayTraceResult rt = WorldHelper.getLookAtEntity(entity.world, entity, 64, cls);
-		if (rt == null) return WantedTargetResult.EMPTY;
-		return new WantedTargetResult(rt.entityHit, rt.hitVec);
+		if (rt == null) return WorldTarget.EMPTY;
+		return new WorldTarget(rt.entityHit, rt.hitVec);
 	}
 
 }

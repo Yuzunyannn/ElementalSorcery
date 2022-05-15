@@ -155,6 +155,7 @@ public abstract class Effect {
 	}
 
 	static public void addEffectGroup(String id, EffectGroup group) {
+		if (groupMap.containsKey(id)) return;
 		groupMap.put(id, group);
 		if (group.isGUI()) guiGroupList.add(group);
 		else worldGroupList.add(group);
@@ -214,7 +215,6 @@ public abstract class Effect {
 		RenderHelper.disableStandardItemLighting();
 		yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
 		for (EffectGroup group : worldGroupList) group.render(partialTicks);
-		yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(false);
 		GlStateManager.depthMask(true);
 		GlStateManager.enableCull();
 		GlStateManager.disableBlend();

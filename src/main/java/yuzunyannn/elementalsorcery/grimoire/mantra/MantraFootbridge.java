@@ -14,13 +14,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
-import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.VariableSet;
 import yuzunyannn.elementalsorcery.util.VariableSet.Variable;
@@ -49,7 +49,7 @@ public class MantraFootbridge extends MantraCommon {
 	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
 		if (beforeGeneralStartTime(caster)) return;
 		MantraDataCommon mData = (MantraDataCommon) data;
-		WantedTargetResult wr = caster.iWantBlockTarget();
+		WorldTarget wr = caster.iWantBlockTarget();
 		int max = 96;
 		Vec3d pos = wr.getHitVec();
 		if (pos != null) {
@@ -70,7 +70,7 @@ public class MantraFootbridge extends MantraCommon {
 		BlockPos pos1, pos2;
 		IWorldObject co = caster.iWantCaster();
 		pos1 = co.getPosition().down();
-		WantedTargetResult wr = caster.iWantBlockTarget();
+		WorldTarget wr = caster.iWantBlockTarget();
 		pos2 = wr.getPos();
 
 		if (pos1 == null || pos2 == null) return;
@@ -115,7 +115,7 @@ public class MantraFootbridge extends MantraCommon {
 		}
 		if (posList.isEmpty()) return;
 		mData.set(POS_LIST, posList);
-		mData.set(POWER, power);
+		mData.set(POWERI, power);
 	}
 
 	@Override
@@ -132,7 +132,7 @@ public class MantraFootbridge extends MantraCommon {
 			BlockPos pos = posList.pop();
 			if (posList.isEmpty()) mData.remove(POS_LIST);
 
-			int power = mData.get(POWER);
+			int power = mData.get(POWERI);
 
 			BlockPos fly = pos;
 			for (int i = 0; i <= 100 && fly != null && fly.getY() > 0; i++) {

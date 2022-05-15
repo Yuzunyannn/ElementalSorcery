@@ -120,6 +120,7 @@ item.invertGem.name=逆変の宝石
 item.iceRockChip.name=岩氷の結晶
 item.iceRockSpar.name=岩冰の晶石
 item.fairyCore.name=精霊核心
+item.materialDebris.name=物質の残片
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -286,6 +287,10 @@ mantra.fluorspar.name=蛍光重合
 mantra.fluorspar.describe=蛍光を岩に硬化させ、岩を周囲を明るくします。
 mantra.timeHourglass.name=砂時計
 mantra.timeHourglass.describe=星の力で、周りの生物をゆっくりさせる。強効で本物の威力を返せるかもしれません。
+mantra.elementWhirl.name=元素旋回
+mantra.elementWhirl.describe=元素を高速で旋回させる呪文
+mantra.laser.name=元素クラスター
+mantra.laser.describe=元素を集めて光を放つ呪文は、元素によって効果が異なる場合がある
 
 key.es.func=機能キー
 
@@ -308,6 +313,7 @@ entity.RabidRabbit.name=狂暴うさぎ
 entity.DreadCube.name=恐怖立方体
 entity.DejectedSkeleton.name=憂鬱スカル
 entity.ArrogantSheep.name=傲慢なヒツジ
+entity.EntityGrimoire.name=呪文
 
 pro.none=アイドル
 pro.warrior=戦士

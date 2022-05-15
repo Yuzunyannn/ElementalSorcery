@@ -596,6 +596,11 @@
 			"zh_CN": "精灵核心",
 			"en_US": "Elf Core",
 			"ja_JP": "精霊核心"
+		},
+		"item.materialDebris.name": {
+			"zh_CN": "物质残片",
+			"en_US": "Material Debris",
+			"ja_JP": "物質の残片"
 		}
 	},
 	"tile": {
@@ -1411,6 +1416,26 @@
 			"zh_CN": "借助星元素，让周围的生物缓慢下来。或许强效能让其发回正真的威力。",
 			"en_US": "With the Star, Slow down the creatures around you. Maybe The Potent can make it return to its true power.",
 			"ja_JP": "星の力で、周りの生物をゆっくりさせる。強効で本物の威力を返せるかもしれません。"
+		},
+		"mantra.elementWhirl.name": {
+			"zh_CN": "元素回旋",
+			"en_US": "Element Whirl",
+			"ja_JP": "元素旋回"
+		},
+		"mantra.elementWhirl.describe": {
+			"zh_CN": "让元素高速回旋的咒文",
+			"en_US": "spin Element at high speed",
+			"ja_JP": "元素を高速で旋回させる呪文"
+		},
+		"mantra.laser.name": {
+			"zh_CN": "元素集束",
+			"en_US": "Element Cluster",
+			"ja_JP": "元素クラスター"
+		},
+		"mantra.laser.describe": {
+			"zh_CN": "让元素集中在一起并以光线射出的咒文，不同元素可能会产生不同的效果",
+			"en_US": "Element be brought together to emit laser, different Element may have different effects",
+			"ja_JP": "元素を集めて光を放つ呪文は、元素によって効果が異なる場合がある"
 		}
 	},
 	"key": {
@@ -1512,6 +1537,11 @@
 			"zh_CN": "傲慢的绵羊",
 			"en_US": "Arrogant Sheep",
 			"ja_JP": "傲慢なヒツジ"
+		},
+		"entity.EntityGrimoire.name": {
+			"zh_CN": "咒文",
+			"en_US": "Mantra",
+			"ja_JP": "呪文"
 		}
 	},
 	"pro": {
@@ -2316,7 +2346,7 @@
 			"en_US": "Standard Deviation",
 			"ja_JP": "標準偏差"
 		},
-		"info.installer.success" :{
+		"info.installer.success": {
 			"zh_CN": "安装成功",
 			"en_US": "Installed Successfully",
 			"ja_JP": "インストール成功"

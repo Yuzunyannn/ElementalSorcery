@@ -56,7 +56,6 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 			EnumType type = EnumType.NORMAL;
 			if (m instanceof MantraCommon) type = ((MantraCommon) m).getMantraSubItemType();
 			ItemStack stack = new ItemStack(this, 1, type.getMetadata());
-			if (m instanceof MantraLaunch) stack.setItemDamage(EnumType.NEW_WRITTEN.getMetadata());
 			ap.setMantra(m).setStart(0).setEnd(100);
 			ap.saveState(stack);
 			items.add(stack);

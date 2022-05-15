@@ -85,7 +85,7 @@ public class MantraTimeHourglass extends MantraCommon {
 				mdc.removeMarkEffect(0);
 				eth = new EffectTimeHourglass(world, eb);
 				eth.setColor(getColor(mdc));
-				mdc.addEffect(caster, eth, 0);
+				mdc.addConditionEffect(caster, eth, 0);
 			}
 			eth.nextPotinerRate = mdc.getProgress();
 		}

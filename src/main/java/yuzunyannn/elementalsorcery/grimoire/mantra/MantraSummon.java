@@ -10,14 +10,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
-import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectSummonRender;
@@ -168,7 +167,7 @@ public class MantraSummon extends MantraCommon {
 	public void endSpelling(World world, IMantraData mData, ICaster caster) {
 		Data data = (Data) mData;
 		if (data.power < 100) return;
-		WantedTargetResult wr = caster.iWantBlockTarget();
+		WorldTarget wr = caster.iWantBlockTarget();
 		data.pos = wr.getPos();
 		if (data.pos == null) return;
 		if (world.getBlockState(data.pos).getBlock() == ESInit.BLOCKS.RITE_TABLE) data.pos = data.pos.down();
@@ -176,8 +175,8 @@ public class MantraSummon extends MantraCommon {
 		if (data.summonRecipe != null)
 			data.summon = data.summonRecipe.createSummon(data.keepsake, data.world, data.pos);
 		// 重置位置
-		IWorldObject co = caster.iWantDirectCaster();
-		if (co.asEntity() != null) co.asEntity().setPosition(data.pos.getX(), data.pos.getY(), data.pos.getZ());
+		Entity entityCaster = caster.iWantDirectCaster();
+		entityCaster.setPosition(data.pos.getX(), data.pos.getY(), data.pos.getZ());
 		// 消耗灵魂
 		Entity entity = caster.iWantCaster().asEntity();
 		if (entity instanceof EntityPlayer && !((EntityPlayer) entity).isCreative()) {
@@ -199,11 +198,10 @@ public class MantraSummon extends MantraCommon {
 	public void afterSpellingEffect(World world, IMantraData mData, ICaster caster) {
 		Data data = (Data) mData;
 		if (data.hasMarkEffect(1000)) return;
-		Entity entity = caster.iWantDirectCaster().asEntity();
-		if (entity == null) return;
+		Entity entity = caster.iWantDirectCaster();
 		EffectSummonRender ems = new EffectSummonRender(entity.world, data);
 		ems.setCondition(new ConditionEffect(entity, data, 1000, false));
-		data.addEffect(caster, ems, 1000);
+		data.addConditionEffect(caster, ems, 1000);
 	}
 
 	@Override

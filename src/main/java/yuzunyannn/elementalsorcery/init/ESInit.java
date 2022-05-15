@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.init;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
@@ -150,6 +151,7 @@ import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraArrow;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraBlockCrash;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraElementWhirl;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireBall;
@@ -158,6 +160,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloat;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloatArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFluorspar;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFootbridge;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLaser;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLaunch;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLightningArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLush;
@@ -224,6 +227,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.item.prop.ItemLifeLeather;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicPaper;
+import yuzunyannn.elementalsorcery.item.prop.ItemMaterialDebris;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.item.prop.ItemRabidLeather;
 import yuzunyannn.elementalsorcery.item.prop.ItemSome;
@@ -363,6 +367,9 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDMagiclization;
 import yuzunyannn.elementalsorcery.tile.md.TileMDResonantIncubator;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
+import yuzunyannn.elementalsorcery.util.VariableSet;
+import yuzunyannn.elementalsorcery.util.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.util.Variables;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.render.WorldScene;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
@@ -589,6 +596,7 @@ public class ESInit {
 		ITEMS.ICE_ROCK_CHIP = new ItemIceRockChip();
 		ITEMS.ICE_ROCK_SPAR = new ItemIceRockSpar();
 		ITEMS.FAIRY_CORE = new ItemFairyCore();
+		ITEMS.MATERIAL_DEBRIS = new ItemMaterialDebris();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -628,6 +636,8 @@ public class ESInit {
 		MANTRAS.POTENT = new MantraPotent();
 		MANTRAS.FLUORSPAR = new MantraFluorspar();
 		MANTRAS.TIME_HOURGLASS = new MantraTimeHourglass();
+		MANTRAS.ELEMENT_WHIRL = new MantraElementWhirl();
+		MANTRAS.LASER = new MantraLaser();
 
 		MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);
 		MANTRAS.LAUNCH_EDE = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT, 0xff4a1a);
@@ -828,12 +838,23 @@ public class ESInit {
 		}
 	}
 
-	static public void registerAllElements() throws IllegalArgumentException, IllegalAccessException {
+	static public void registerAllElements() throws ReflectiveOperationException {
 		Class<?> cls = ESInit.ELEMENTS.getClass();
+		Field idField = Element.class.getDeclaredField("registryId");
+		idField.setAccessible(true);
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
 			Element element = ((Element) field.get(ESInit.ELEMENTS));
 			Element.REGISTRY.register(element);
+			idField.set(element, Element.getIdFromElement(element));
+			try {
+				Field mantraElementMarkField = Variables.class.getDeclaredField(field.getName());
+				mantraElementMarkField.setAccessible(true);
+				Field modifiersField = Field.class.getDeclaredField("modifiers");
+				modifiersField.setAccessible(true);
+				modifiersField.setInt(mantraElementMarkField, mantraElementMarkField.getModifiers() & ~Modifier.FINAL);
+				mantraElementMarkField.set(null, new Variable<>("E^" + element.getRegistryId(), VariableSet.ELEMENT));
+			} catch (ReflectiveOperationException e) {}
 		}
 	}
 
@@ -1030,7 +1051,8 @@ public class ESInit {
 		registerRender(ITEMS.ICE_ROCK_CHIP);
 		registerRender(ITEMS.ICE_ROCK_SPAR);
 		registerRender(ITEMS.FAIRY_CORE);
-
+		registerRender(ITEMS.MATERIAL_DEBRIS);
+		
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
 		registerRender(BLOCKS.HEARTH, 1, "iron_hearth");

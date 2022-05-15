@@ -120,6 +120,7 @@ item.invertGem.name=逆变宝石
 item.iceRockChip.name=岩冰结晶
 item.iceRockSpar.name=岩冰晶石
 item.fairyCore.name=精灵核心
+item.materialDebris.name=物质残片
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -286,6 +287,10 @@ mantra.fluorspar.name=荧光聚合
 mantra.fluorspar.describe=借助金元素，将荧光固化到岩石中，让岩石照亮周围。
 mantra.timeHourglass.name=时间沙漏
 mantra.timeHourglass.describe=借助星元素，让周围的生物缓慢下来。或许强效能让其发回正真的威力。
+mantra.elementWhirl.name=元素回旋
+mantra.elementWhirl.describe=让元素高速回旋的咒文
+mantra.laser.name=元素集束
+mantra.laser.describe=让元素集中在一起并以光线射出的咒文，不同元素可能会产生不同的效果
 
 key.es.func=功能键
 
@@ -308,6 +313,7 @@ entity.RabidRabbit.name=狂暴兔
 entity.DreadCube.name=恐惧立方体
 entity.DejectedSkeleton.name=忧郁骷髅
 entity.ArrogantSheep.name=傲慢的绵羊
+entity.EntityGrimoire.name=咒文
 
 pro.none=闲人
 pro.warrior=战士

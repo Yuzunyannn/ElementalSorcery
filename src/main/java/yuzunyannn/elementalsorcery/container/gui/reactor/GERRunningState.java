@@ -29,6 +29,7 @@ import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementTransitionReactor;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.util.world.WorldLocation;
@@ -118,6 +119,7 @@ public class GERRunningState extends GERActionState {
 
 		prevRotation = rotation;
 		rotation += 0.25f - 0.5f * stopRatio;
+		if (reactor.getStatus() == ReactorStatus.RUNAWAY) rotation += RandomHelper.rand.nextGaussian() * 10;
 
 		if (gui.reactorStatus != ReactorStatus.RUNNING) stageIndex = STAGE_NONE;
 		if (gui.reactorStatus == ReactorStatus.CLOSING) stopRatio = Math.min(1, stopRatio + 0.1f);
@@ -498,7 +500,8 @@ public class GERRunningState extends GERActionState {
 			GlStateManager.disableAlpha();
 		}
 		// 旋转归位
-		GlStateManager.rotate(-rotation * 2, 0, 0, 1);
+		GlStateManager.rotate(-rotation, 0, 0, 1);
+		GlStateManager.rotate(-tick / 2, 0, 0, 1);
 		// 中心fog
 		Color fogColor = color;
 		if (mantraRatio > 0) {
@@ -509,7 +512,7 @@ public class GERRunningState extends GERActionState {
 		TextureBinder.bindTexture(GuiMantraShitf.FOG);
 		RenderHelper.drawTexturedRectInCenter(0, 0, 80, 80);
 		// 切换状态
-		GlStateManager.rotate(rotation, 0, 0, 1);
+		GlStateManager.rotate(tick / 2, 0, 0, 1);
 		if (startRatio < 1) {
 			if (startRatio < 0.75) GlStateManager.scale(0, 0, 0);
 			else {

@@ -41,7 +41,7 @@ public class MantraArrow extends MantraCommon {
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon mData = (MantraDataCommon) data;
-		mData.set(POWER, 26);
+		mData.set(POWERI, 26);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class MantraArrow extends MantraCommon {
 		int tick = caster.iWantKnowCastTick();
 
 		MantraDataCommon mData = (MantraDataCommon) data;
-		int preTick = Math.max(mData.get(POWER), 1);
+		int preTick = Math.max(mData.get(POWERI), 1);
 
 		if ((tick - 2) % preTick == 0) {
 			ElementStack need = new ElementStack(ESInit.ELEMENTS.AIR, 1, 3);
@@ -65,16 +65,16 @@ public class MantraArrow extends MantraCommon {
 
 		if (preTick > 8) {
 			float potent = caster.iWantBePotent(0.1f, false);
-			mData.set(POWER, preTick - 1 - (int) (potent * 5));
+			mData.set(POWERI, preTick - 1 - (int) (potent * 5));
 		} else if (preTick > 1) {
 			float potent = caster.iWantBePotent(0.05f, true);
 			if (potent >= 0.5f) {
 				caster.iWantBePotent(0.05f, false);
-				mData.set(POWER, preTick - (int) (potent * 2));
-			} else mData.set(POWER, 8);
+				mData.set(POWERI, preTick - (int) (potent * 2));
+			} else mData.set(POWERI, 8);
 		} else {
 			float potent = caster.iWantBePotent(0.05f, false);
-			if (potent < 0.5f) mData.set(POWER, 8);
+			if (potent < 0.5f) mData.set(POWERI, 8);
 		}
 	}
 
@@ -203,7 +203,7 @@ public class MantraArrow extends MantraCommon {
 	public float getProgressRate(World world, IMantraData data, ICaster caster) {
 		int tick = caster.iWantKnowCastTick();
 		MantraDataCommon mData = (MantraDataCommon) data;
-		int preTick = Math.max(mData.get(POWER), 1);
+		int preTick = Math.max(mData.get(POWERI), 1);
 
 		int count = tick % preTick + 1;
 		return count / (float) preTick;

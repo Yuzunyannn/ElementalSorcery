@@ -31,7 +31,6 @@ import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.ElementKnowledge;
 import yuzunyannn.elementalsorcery.element.ElementMetal;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
@@ -39,9 +38,10 @@ import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFireBall;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.VariableSet;
+import yuzunyannn.elementalsorcery.util.Variables;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
-import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -52,53 +52,19 @@ public class MantraFireBall extends MantraCommon {
 	}
 
 	static public void fire(World world, EntityLivingBase spller, Vec3d orient, int power, boolean needKnowledge) {
-		EntityGrimoire grimoire = new EntityGrimoire(world, spller, ESInit.MANTRAS.FIRE_BALL, null,
-				EntityGrimoire.STATE_AFTER_SPELLING);
-		Data data = (Data) grimoire.getMantraData();
-		data.power = power;
-		data.pos = spller.getPositionVector().add(0, spller.getEyeHeight(), 0);
-		data.toward = orient.normalize();
-		data.pos = data.pos.add(data.toward.scale(2));
-		if (needKnowledge) data.knowledge = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 20, 150);
-		grimoire.setPosition(spller.posX, spller.posY, spller.posZ);
-		world.spawnEntity(grimoire);
+		VariableSet set = new VariableSet();
+		orient = orient.normalize();
+		Vec3d pos = spller.getPositionVector().add(0, spller.getEyeHeight(), 0).add(orient.scale(2));
+		set.set(POWERI, power);
+		set.set(VEC, pos);
+		set.set(TOWARD, orient);
+		if (needKnowledge) set.set(Variables.KNOWLEDGE, new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 20, 150));
+		MantraCommon.fireMantra(world, ESInit.MANTRAS.FIRE_BALL, spller, set);
 	}
 
 	protected static class Data extends MantraDataCommon {
-		protected float power = 0;
-		protected Vec3d pos;
-		protected Vec3d toward;
-		protected ElementStack metal = new ElementStack(ESInit.ELEMENTS.METAL, 0);
-		protected ElementStack knowledge = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 0);
-
 		protected int color = 0;
 		protected boolean powerUp = false;
-
-		@Override
-		public NBTTagCompound serializeNBT() {
-			NBTTagCompound nbt = new NBTTagCompound();
-			nbt.setFloat("power", power);
-			NBTHelper.setVec3d(nbt, "pos", pos);
-			NBTHelper.setVec3d(nbt, "toward", toward);
-			if (!metal.isEmpty()) nbt.setTag("metal", metal.serializeNBT());
-			if (!knowledge.isEmpty()) nbt.setTag("know", knowledge.serializeNBT());
-			return nbt;
-		}
-
-		@Override
-		public NBTTagCompound serializeNBTForSend() {
-			return this.serializeNBT();
-		}
-
-		@Override
-		public void deserializeNBT(NBTTagCompound nbt) {
-			power = nbt.getFloat("power");
-			pos = NBTHelper.getVec3d(nbt, "pos");
-			toward = NBTHelper.getVec3d(nbt, "toward");
-			metal = new ElementStack(nbt.getCompoundTag("metal"));
-			knowledge = new ElementStack(nbt.getCompoundTag("know"));
-		}
-
 	}
 
 	public MantraFireBall() {
@@ -148,29 +114,23 @@ public class MantraFireBall extends MantraCommon {
 		if (tick < 20) return;
 		Data data = (Data) mData;
 		data.powerUp = false;
-		if (data.power >= 32) return;
+		float power = data.get(POWERF);
+		if (power >= 32) return;
 		// 每tick两点消耗，积攒火球，火元素是必须的，否则没法积攒其他元素
 		ElementStack need = new ElementStack(ESInit.ELEMENTS.FIRE, 2, 50);
 		ElementStack stack = caster.iWantSomeElement(need, true);
 		if (stack.isEmpty()) return;
-		data.power = data.power + 0.2f + Math.min(stack.getPower() / 1000f, 0.4f);
+		data.set(POWERF, power = power + 0.2f + Math.min(stack.getPower() / 1000f, 0.4f));
 		data.powerUp = true;
-		data.setProgress(data.power, 32);
+		data.setProgress(power, 32);
 		// 获取金
-		if (data.metal.getCount() < 40) out: {
-			need = new ElementStack(ESInit.ELEMENTS.METAL, 1, 100);
-			stack = caster.iWantSomeElement(need, true);
-			if (stack.isEmpty()) break out;
-			data.metal.growOrBecome(stack);
+
+		if (!data.tryCollect(caster, ESInit.ELEMENTS.METAL, 1, 100, 40).get.isEmpty()) {
 			if (world.isRemote) if (world.rand.nextInt(4) == 0) data.color = ElementMetal.COLOR;
 			else data.color = 0;
 		}
 		// 获取知识
-		if (data.knowledge.getCount() < 20) out: {
-			need = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 1, 100);
-			stack = caster.iWantSomeElement(need, true);
-			if (stack.isEmpty()) break out;
-			data.knowledge.growOrBecome(stack);
+		if (!data.tryCollect(caster, ESInit.ELEMENTS.KNOWLEDGE, 1, 100, 20).get.isEmpty()) {
 			if (world.isRemote) if (world.rand.nextInt(5) == 0) data.color = ElementKnowledge.COLOR;
 			else data.color = 0;
 		}
@@ -182,32 +142,33 @@ public class MantraFireBall extends MantraCommon {
 		if (tick < 20) return;
 		Data data = (Data) mData;
 		IWorldObject co = caster.iWantCaster();
-		data.pos = co.getEyePosition();
-		data.toward = caster.iWantDirection();
-		data.pos = data.pos.add(data.toward.scale(2));
+		data.set(TOWARD, caster.iWantDirection());
+		data.set(VEC, co.getEyePosition().add(data.get(TOWARD).scale(2)));
 		float potent = caster.iWantBePotent(5, false);
-		data.power = Math.min(data.power, 32) * (1 + potent * 0.25f);
+		data.set(POWERF, Math.min(data.get(POWERF), 32) * (1 + potent * 0.25f));
 	}
 
 	@Override
 	public boolean afterSpelling(World world, IMantraData mData, ICaster caster) {
 		Data data = (Data) mData;
-		if (data.power <= 0) return false;
-		data.power--;
-		Vec3d pos = data.pos;
+		float power = data.get(POWERF);
+		if (power <= 0) return false;
+		data.set(POWERF, --power);
+		Vec3d pos = data.get(VEC);
+		Vec3d toward = data.get(TOWARD);
 		if (world.isRemote) {
 			// 客户端动画
-			Vec3d toward = data.toward.scale(0.1);
+			Vec3d towards = data.get(TOWARD).scale(0.1);
 			for (double i = 0.1; i <= 1; i += 0.1) {
-				pos = pos.add(toward);
+				pos = pos.add(towards);
 				afterSpellingEffect(world, pos, getRandomEffectColorFromData(world, data));
 			}
 		}
-		data.pos = data.pos.add(data.toward);
+		data.set(VEC, data.get(VEC).add(toward));
 		if (world.isRemote) return true;
 		// 方块计算
-		float power = Math.min(10, MathHelper.sqrt(data.power));
-		int size = (int) (power / 2);
+		float sqPower = Math.min(10, MathHelper.sqrt(power));
+		int size = (int) (sqPower / 2);
 		BlockPos bPos = new BlockPos(pos);
 		for (int x = -size; x <= size; x++) {
 			for (int y = size; y >= -size; y--) {
@@ -228,18 +189,18 @@ public class MantraFireBall extends MantraCommon {
 			return true;
 		});
 
-		boolean passTeam = data.knowledge.getCount() >= 12;
+		boolean passTeam = data.get(Variables.KNOWLEDGE).getCount() >= 12;
 		for (EntityLivingBase living : entities) {
 			if (passTeam && EntityHelper.isSameTeam(entity, living)) continue;
-			DamageSource ds = DamageHelper.getMagicDamageSource(entity, caster.iWantDirectCaster().asEntity());
-			float dmg = data.power * data.power / 32;
+			DamageSource ds = DamageHelper.getMagicDamageSource(entity, caster.iWantDirectCaster());
+			float dmg = power * power / 32;
 			if (living.attackEntityFrom(ds, dmg)) living.setFire((int) (power * 2));
 		}
 		return true;
 	}
 
 	/** 方块操作 */
-	public static IBlockState affect(World world, BlockPos pos, Vec3i add, @Nullable Data data) {
+	public static IBlockState affect(World world, BlockPos pos, Vec3i add, @Nullable MantraDataCommon data) {
 		pos = pos.add(add);
 		if (world.isAirBlock(pos)) return null;
 		IBlockState origin = world.getBlockState(pos);
@@ -260,15 +221,15 @@ public class MantraFireBall extends MantraCommon {
 			return Blocks.AIR.getDefaultState();
 		}
 		ItemStack stack = ItemHelper.toItemStack(origin);
-		boolean noChange = data == null ? false : data.knowledge.getCount() >= 20;
+		boolean noChange = data == null ? false : data.get(Variables.KNOWLEDGE).getCount() >= 20;
 		if (!stack.isEmpty()) {
 			ItemStack ore = stack;
 			ItemStack result = FurnaceRecipes.instance().getSmeltingResult(ore);
 			if (!result.isEmpty()) {
 				stack = result.copy();
-				if (data != null && !data.metal.isEmpty()) {
+				if (data != null && !data.get(Variables.METAL).isEmpty()) {
 					if (OreHelper.isOre(ore)) {
-						data.metal.shrink(1);
+						data.get(Variables.METAL).shrink(1);
 						stack.grow(1);
 					}
 				}
@@ -306,13 +267,13 @@ public class MantraFireBall extends MantraCommon {
 
 	@SideOnly(Side.CLIENT)
 	public int getRandomEffectColorFromData(World world, Data data) {
-		int color = this.getRenderColor();
+		int color = getColor(data);
 		switch (world.rand.nextInt(6)) {
 		case 0:
-			if (!data.knowledge.isEmpty()) color = ElementKnowledge.COLOR;
+			if (!data.get(Variables.KNOWLEDGE).isEmpty()) color = ElementKnowledge.COLOR;
 			break;
 		case 1:
-			if (!data.metal.isEmpty()) color = ElementMetal.COLOR;
+			if (!data.get(Variables.METAL).isEmpty()) color = ElementMetal.COLOR;
 			break;
 		default:
 			break;

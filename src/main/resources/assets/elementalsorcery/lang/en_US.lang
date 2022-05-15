@@ -120,6 +120,7 @@ item.invertGem.name=Invert Gem
 item.iceRockChip.name=Icerock Chip
 item.iceRockSpar.name=Icerock Spar
 item.fairyCore.name=Elf Core
+item.materialDebris.name=Material Debris
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -286,6 +287,10 @@ mantra.fluorspar.name=Fluorspar Flock
 mantra.fluorspar.describe=With the Metal, solidify the fluorescence into the rock and let the rock illuminate the surroundings.
 mantra.timeHourglass.name=Time Hourglass
 mantra.timeHourglass.describe=With the Star, Slow down the creatures around you. Maybe The Potent can make it return to its true power.
+mantra.elementWhirl.name=Element Whirl
+mantra.elementWhirl.describe=spin Element at high speed
+mantra.laser.name=Element Cluster
+mantra.laser.describe=Element be brought together to emit laser, different Element may have different effects
 
 key.es.func=Function key
 
@@ -308,6 +313,7 @@ entity.RabidRabbit.name=Rabid Rabbit
 entity.DreadCube.name=Dread Cube
 entity.DejectedSkeleton.name=Dejected Skeleton
 entity.ArrogantSheep.name=Arrogant Sheep
+entity.EntityGrimoire.name=Mantra
 
 pro.none=Idle
 pro.warrior=Warrior

@@ -3,18 +3,25 @@ package yuzunyannn.elementalsorcery.element;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.MobEffects;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidBase;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.element.explosion.EEWater;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.VariableSet;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ElementWater extends ElementCommon {
@@ -22,6 +29,7 @@ public class ElementWater extends ElementCommon {
 	public ElementWater() {
 		super(0x6472f7, "water");
 		setTransition(2, 180, 180);
+		setLaserCostOnce(1, 2);
 	}
 
 	@Override
@@ -97,6 +105,40 @@ public class ElementWater extends ElementCommon {
 		helper.preparatory(ESInit.POTIONS.WATER_CALAMITY, 30, 80);
 		helper.check(JuiceMaterial.MELON, 120).checkRatio(JuiceMaterial.APPLE, 0.5f, 1.5f).join();
 
+	}
+
+	@Override
+	protected void onExecuteLaser(World world, IWorldObject caster, WorldTarget target, ElementStack storage,
+			VariableSet content) {
+		if (world.isRemote) return;
+
+		Entity entity = target.getEntity();
+		if (entity != null) {
+			if (entity instanceof EntityLivingBase) {
+				EntityLivingBase living = (EntityLivingBase) entity;
+				living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, storage.getPower() * 10,
+						storage.getPower() > 200 ? 2 : 1));
+			}
+			return;
+		}
+
+		BlockPos pos = target.getPos();
+		IBlockState state = world.getBlockState(pos);
+		Block block = state.getBlock();
+		if (block == Blocks.LAVA) world.setBlockState(pos, Blocks.OBSIDIAN.getDefaultState());
+		else if (block == Blocks.FLOWING_LAVA) world.setBlockState(pos, Blocks.COBBLESTONE.getDefaultState());
+		else if (!world.provider.doesWaterVaporize()) {
+			BlockPos at = pos.offset(target.getFace());
+			if (BlockHelper.isReplaceBlock(world, at)) {
+				IBlockState waterState = Blocks.FLOWING_WATER.getDefaultState().withProperty(BlockFluidBase.LEVEL, 8);
+				world.setBlockState(at, waterState);
+				waterState = Blocks.FLOWING_WATER.getDefaultState().withProperty(BlockFluidBase.LEVEL, 1);
+				for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+					BlockPos dAt = at.offset(facing);
+					if (BlockHelper.isReplaceBlock(world, dAt)) world.setBlockState(dAt, waterState);
+				}
+			}
+		}
 	}
 
 }

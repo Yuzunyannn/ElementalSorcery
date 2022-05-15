@@ -118,6 +118,8 @@ public class EffectElementCrackAttack extends Effect {
 
 		float a = RenderHelper.getPartialTicks(alpha, prevAlpha, partialTicks);
 
+		GlStateManager.disableBlend();
+		GlStateManager.color(1, 1, 1, 1);
 		RenderItemElementCrack.END_SKY_TEXTURE.bind();
 		GlStateManager.depthFunc(519);
 
@@ -190,5 +192,6 @@ public class EffectElementCrackAttack extends Effect {
 		GlStateManager.disableTexGenCoord(GlStateManager.TexGen.R);
 
 		GlStateManager.depthFunc(515);
+		GlStateManager.enableBlend();
 	}
 }

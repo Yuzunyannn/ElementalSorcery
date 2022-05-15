@@ -6,7 +6,6 @@ import java.util.UUID;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -23,8 +22,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.ITickTask;
@@ -32,12 +33,12 @@ import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
-import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.network.MessageEntitySync;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.world.CasterHelper;
 
@@ -138,7 +139,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	protected void writeEntityToNBT(NBTTagCompound nbt, boolean isSend) {
-		nbt.setUniqueId("user", userUUID);
+		if (userUUID != null) nbt.setUniqueId("user", userUUID);
 		nbt.setInteger("tick", tick);
 		nbt.setByte("state", state);
 		nbt.setString("mantra", mantra.getRegistryName().toString());
@@ -338,8 +339,26 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	@Override
+	public ElementStack iWantAnyElementSample(int seed) {
+		seed = Math.abs(seed);
+		IElementInventory eInv = grimoire.getInventory();
+		if (eInv == null || eInv.getSlots() == 0) {
+			if (EntityHelper.isCreative(user))
+				return new ElementStack(Element.getElementFromIndex(seed, true), 1000, 1000);
+			return ElementStack.EMPTY;
+		}
+		for (int i = 0; i < eInv.getSlots(); i++) {
+			ElementStack estack = eInv.getStackInSlot((i + seed) % eInv.getSlots());
+			if (estack.isEmpty()) continue;
+			return estack.copy();
+		}
+		if (EntityHelper.isCreative(user)) return new ElementStack(Element.getElementFromIndex(seed, true), 1000, 1000);
+		return ElementStack.EMPTY;
+	}
+
+	@Override
 	public ElementStack iWantSomeElement(ElementStack need, boolean consume) {
-		if (user instanceof EntityPlayer && ((EntityPlayer) user).isCreative()) {
+		if (EntityHelper.isCreative(user)) {
 			need = need.copy();
 			need.setPower(1000);
 			return need;
@@ -428,28 +447,27 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	@Override
-	public WantedTargetResult iWantBlockTarget() {
-		if (user != null) return CasterHelper.findLookBlockResult(user, 128);
+	public WorldTarget iWantBlockTarget() {
+		if (user != null) return CasterHelper.findLookBlockResult(user, 128, false);
 		else {
 			BlockPos pos = this.getPosition();
 			pos = BlockHelper.tryFindAnySolid(world, pos, 6, 5, 5);
-			if (pos == null) return WantedTargetResult.EMPTY;
-			return new WantedTargetResult(pos, EnumFacing.UP,
-					new Vec3d(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5));
+			if (pos == null) return WorldTarget.EMPTY;
+			return new WorldTarget(pos, EnumFacing.UP, new Vec3d(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5));
 		}
 	}
 
 	@Override
-	public <T extends Entity> WantedTargetResult iWantLivingTarget(Class<T> cls) {
+	public <T extends Entity> WorldTarget iWantEntityTarget(Class<T> cls) {
 		if (user != null) return CasterHelper.findLookTargetResult(cls, user, 128);
 		else {
 			final int size = 2;
 			AxisAlignedBB aabb = new AxisAlignedBB(posX - size, posY - size, posZ - size, posX + size, posY + size,
 					posZ + size);
 			List<T> list = world.getEntitiesWithinAABB(cls, aabb);
-			if (list.isEmpty()) return WantedTargetResult.EMPTY;
+			if (list.isEmpty()) return WorldTarget.EMPTY;
 			T find = list.get(rand.nextInt(list.size()));
-			return new WantedTargetResult(find, find.getPositionVector().add(0, find.height, 0));
+			return new WorldTarget(find, find.getPositionVector().add(0, find.height, 0));
 		}
 	}
 
@@ -465,8 +483,8 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	@Override
-	public IWorldObject iWantDirectCaster() {
-		return new WorldObjectEntity(this);
+	public Entity iWantDirectCaster() {
+		return this;
 	}
 
 	@Override

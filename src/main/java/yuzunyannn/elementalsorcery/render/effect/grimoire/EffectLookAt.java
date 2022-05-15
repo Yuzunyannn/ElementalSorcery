@@ -8,8 +8,9 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
+import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
@@ -52,7 +53,7 @@ public class EffectLookAt extends EffectCondition {
 		preScale = scale;
 		preAlpha = alpha;
 
-		WantedTargetResult wr = caster.iWantBlockTarget();
+		WorldTarget wr = caster.iWantBlockTarget();
 		BlockPos pos = wr.getPos();
 		if (pos == null) {
 			alpha += (0 - alpha) * 0.1;

@@ -12,7 +12,7 @@ import yuzunyannn.elementalsorcery.api.item.IPlatformTickable;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
-import yuzunyannn.elementalsorcery.api.util.WorldObjectTileEntity;
+import yuzunyannn.elementalsorcery.api.util.WorldObjectBlock;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.NBTTag;
@@ -28,7 +28,7 @@ public class TileElementPlatform extends TileEntityNetwork implements IGetItemSt
 	protected int tick;
 	protected boolean needSyncEInv;
 
-	final public WorldObjectTileEntity caster = new WorldObjectTileEntity(this);
+	final public WorldObjectBlock caster = new WorldObjectBlock(this);
 
 	@Override
 	public void setStack(ItemStack stack) {

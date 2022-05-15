@@ -35,7 +35,7 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	public static final ESImplRegister<Mantra> REGISTRY = new ESImplRegister(Mantra.class);
 
 	private String unlocalizedName;
-	private byte rarity = 100;
+	private byte rarity = 0;
 	private short occupation = 2;
 	private List<IFragmentMantraLauncher> fmLaunchers;
 
@@ -127,7 +127,7 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 		fmLaunchers.add(launcher);
 	}
 
-	/** 获取咒文的稀有度，值越小，越稀有。小于0表示不存在 */
+	/** 获取咒文的稀有度，值越小，越稀有。小于等于0表示不存在，不能通用掉落获取 */
 	public int getRarity(@Nullable World world, @Nullable BlockPos pos) {
 		return rarity;
 	}
@@ -178,7 +178,6 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	 * 
 	 * @param mData 动态时候会传入
 	 */
-	@SideOnly(Side.CLIENT)
 	public int getColor(@Nullable IMantraData mData) {
 		return 0xcac5e0;
 	}

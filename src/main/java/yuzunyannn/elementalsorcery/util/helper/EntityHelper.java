@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.util.helper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class EntityHelper {
@@ -24,6 +25,10 @@ public class EntityHelper {
 		try {
 			ObfuscationReflectionHelper.setPrivateValue(PotionEffect.class, effect, duration, "field_76460_b");
 		} catch (Exception e) {}
+	}
+
+	public static void setPositionAndUpdate(Entity entity, Vec3d vec) {
+		entity.setPositionAndUpdate(vec.x, vec.y, vec.z);
 	}
 
 }

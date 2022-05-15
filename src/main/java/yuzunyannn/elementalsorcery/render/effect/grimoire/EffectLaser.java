@@ -55,8 +55,11 @@ public class EffectLaser extends Effect {
 		this.prevTargetX = this.targetX;
 		this.prevTargetY = this.targetY;
 		this.prevTargetZ = this.targetZ;
-		this.prevAlpha = this.alpha;
+		updateAlpha();
+	}
 
+	public void updateAlpha() {
+		this.prevAlpha = this.alpha;
 		if (lifeTime < 20) {
 			alpha = (laserStart - laserWeak * 0.35f) * lifeTime / 20f;
 		} else if (laserStart < 1) {

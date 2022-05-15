@@ -120,22 +120,25 @@ public abstract class BlockElementContainer extends BlockContainer {
 		IElementInventory einv = BlockHelper.getElementInventory(world, pos, null);
 		super.onBlockExploded(world, pos, explosion);
 		if (world.isRemote) return;
-		if (einv != null) {
-			Vec3d at = new Vec3d(pos).add(0.5, 0.5, 0.5);
-			for (int i = 0; i < einv.getSlots(); i++) {
-				ElementStack stack = einv.getStackInSlot(i);
-				if (stack.isEmpty()) continue;
-				EntityLivingBase attacker = explosion.getExplosivePlacedBy();
-				stack = stack.copy();
-				stack.grow(50);
-				stack.setPower(stack.getPower() + 125);
-				if (ElementExplosion.doExplosion(world, at, stack, attacker) != null)
-					einv.setStackInSlot(i, ElementStack.EMPTY);
-			}
-		}
+		EntityLivingBase attacker = explosion.getExplosivePlacedBy();
+		doExploded(world, pos, einv, attacker);
 		try {
 			dropBlockAsItemWithChance(world, pos, state, 0.75f, 0);
 		} catch (Exception e) {}
+	}
+
+	public static void doExploded(World world, BlockPos pos, IElementInventory einv, EntityLivingBase attacker) {
+		if (einv == null) return;
+		Vec3d at = new Vec3d(pos).add(0.5, 0.5, 0.5);
+		for (int i = 0; i < einv.getSlots(); i++) {
+			ElementStack stack = einv.getStackInSlot(i);
+			if (stack.isEmpty()) continue;
+			stack = stack.copy();
+			stack.grow(50);
+			stack.setPower(stack.getPower() + 125);
+			if (ElementExplosion.doExplosion(world, at, stack, attacker) != null)
+				einv.setStackInSlot(i, ElementStack.EMPTY);
+		}
 	}
 
 }

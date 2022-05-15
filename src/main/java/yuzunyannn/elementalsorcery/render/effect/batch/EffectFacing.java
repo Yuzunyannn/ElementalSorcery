@@ -39,6 +39,10 @@ public abstract class EffectFacing extends Effect {
 		color.setColor(c);
 	}
 
+	public void setColor(Color c) {
+		color.setColor(c);
+	}
+
 	@Override
 	public void onUpdate() {
 		super.onUpdate();

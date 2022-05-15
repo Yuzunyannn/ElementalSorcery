@@ -10,6 +10,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 
@@ -20,6 +21,17 @@ public interface ICaster {
 
 	/** 停止释放 */
 	public void stopCaster();
+
+	/**
+	 * 随机或者顺寻获取任何一个元素
+	 *
+	 * @param seed 种子，继承ICaster的对象可以考虑使用
+	 * 
+	 * @return 只是元素的样本，及可以被消耗的元素，并不会真正的消耗元素，消耗元素的时候，依然使用iWantSomeElement进行获取
+	 * 
+	 */
+	@Nonnull
+	public ElementStack iWantAnyElementSample(int seed);
 
 	/**
 	 * 获取某些元素
@@ -77,7 +89,7 @@ public interface ICaster {
 	 * 申请获取目标方块，通常是看到的
 	 */
 	@Nonnull
-	public WantedTargetResult iWantBlockTarget();
+	public WorldTarget iWantBlockTarget();
 
 	/**
 	 * 申请获取目标实体
@@ -85,7 +97,7 @@ public interface ICaster {
 	 * @return 返回值为非null，肯定是RayTraceResult.Type.ENTITY
 	 */
 	@Nonnull
-	public <T extends Entity> WantedTargetResult iWantLivingTarget(Class<T> cls);
+	public <T extends Entity> WorldTarget iWantEntityTarget(Class<T> cls);
 
 	/** 申请获取一个方向 */
 	@Nonnull
@@ -95,9 +107,9 @@ public interface ICaster {
 	@Nonnull
 	public IWorldObject iWantCaster();
 
-	/** 获取直接施法者 ，直接释放者通常是马甲实体 */
+	/** 获取直接施法者 ，直接释放者是马甲实体，或直接使用FakePlayer(最好不要用，因为实体的生命意味着某些动画是否结束) */
 	@Nonnull
-	public IWorldObject iWantDirectCaster();
+	public Entity iWantDirectCaster();
 
 	/** 是否有特效标记，用于动画检测 */
 	@SideOnly(Side.CLIENT)

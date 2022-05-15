@@ -1,6 +1,9 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import java.util.Random;
+import java.util.function.Function;
+
+import javax.annotation.Nullable;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -16,12 +19,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.WorldObjectBlock;
+import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.grimoire.remote.FMantraBase;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
@@ -32,15 +39,21 @@ import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleIcon;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicEmit;
 import yuzunyannn.elementalsorcery.util.VariableSet;
 import yuzunyannn.elementalsorcery.util.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
+import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class MantraCommon extends Mantra {
 
+	public static final Variable<Vec3d> VEC = new Variable<>("vec", VariableSet.VEC3D);
+	public static final Variable<Vec3d> TOWARD = new Variable<>("toward", VariableSet.VEC3D);
 	public static final Variable<BlockPos> POS = new Variable<>("pos", VariableSet.BLOCK_POS);
 	public static final Variable<Short> LAYER = new Variable<>("layer", VariableSet.SHORT);
 	public static final Variable<Integer> SIZE = new Variable<>("size", VariableSet.INT);
-	public static final Variable<Integer> POWER = new Variable<>("power", VariableSet.INT);
+	public static final Variable<Integer> POWERI = new Variable<>("power", VariableSet.INT);
+	public static final Variable<Float> POWERF = new Variable<>("power", VariableSet.FLOAT);
 	public static final Variable<Float> POTENT_POWER = new Variable<>("potentPower", VariableSet.FLOAT);
+	public static final Variable<ElementStack> ELEMENT = new Variable<>("eStack", VariableSet.ELEMENT);
 
 	protected int color = 0;
 	protected ResourceLocation icon;
@@ -49,18 +62,62 @@ public class MantraCommon extends Mantra {
 		this.color = color;
 	}
 
+	public static void fireMantra(World world, Mantra mantra, Entity caster, VariableSet params) {
+		if (mantra instanceof MantraCommon) {
+			MantraCommon common = (MantraCommon) mantra;
+			Vec3d vec = null;
+			if (params.has(VEC)) vec = params.get(VEC);
+			else if (params.has(POS)) vec = new Vec3d(params.get(POS));
+			else vec = caster.getPositionVector();
+			common.directLaunchMantra(world, vec, new WorldObjectEntity(caster), params, null);
+		}
+	}
+
+	public Entity directLaunchMantra(World world, Vec3d vec, IWorldObject caster, VariableSet params,
+			NBTTagCompound meta) {
+		EntityGrimoire grimoire = new EntityGrimoire(world, caster.asEntityLivingBase(), this, meta,
+				EntityGrimoire.STATE_AFTER_SPELLING);
+		IMantraData mantraData = grimoire.getMantraData();
+		try {
+			MantraDataCommon mc = (MantraDataCommon) mantraData;
+			mc.setExtra(params);
+		} catch (Exception e) {
+			return null;
+		}
+		if (vec != null) grimoire.setPosition(vec.x, vec.y, vec.z);
+		this.initDirectLaunchMantraGrimoire(grimoire, params);
+		world.spawnEntity(grimoire);
+		return grimoire;
+	}
+
+	protected void initDirectLaunchMantraGrimoire(EntityGrimoire grimoire, VariableSet params) {
+
+	}
+
+	public void setDirectLaunchFragmentMantraLauncher(Element element, float maxCharge, float chargetSpeed,
+			Function<Double, VariableSet> callback) {
+		FMantraBase fmb = new FMantraBase() {
+			@Override
+			public void cast(World world, BlockPos pos, WorldLocation to, VariableSet content) {
+				VariableSet parmas = callback.apply(content.get(CHARGE));
+				MantraCommon.this.directLaunchMantra(to.getWorld(world), new Vec3d(to.getPos()),
+						new WorldObjectBlock(world.getTileEntity(pos)), parmas, null);
+			}
+		};
+		fmb.setIconRes(getIconResource());
+		fmb.addCanUseElement(element);
+		fmb.setMaxCharge(maxCharge);
+		fmb.setChargetSpeed(chargetSpeed);
+		this.addFragmentMantraLauncher(fmb);
+	}
+
 	@Override
 	public IMantraData getData(NBTTagCompound origin, World world, ICaster caster) {
 		return new MantraDataCommon();
 	}
 
-	@SideOnly(Side.CLIENT)
-	public int getRenderColor() {
-		return color;
-	}
-
 	@Override
-	public int getColor(IMantraData mData) {
+	public int getColor(@Nullable IMantraData data) {
 		return this.color;
 	}
 
@@ -126,7 +183,18 @@ public class MantraCommon extends Mantra {
 	}
 
 	@SideOnly(Side.CLIENT)
+	private Color potentContextColor;
+
+	@SideOnly(Side.CLIENT)
+	public void setPotentContextColor(Color potentContextColor) {
+		this.potentContextColor = potentContextColor;
+	}
+
+	@SideOnly(Side.CLIENT)
 	public void onPotentAttackEffect(World world, ICaster caster, Entity target) {
+		Color color = potentContextColor;
+		if (color == null) color = new Color(getColor(null));
+		else potentContextColor = null;
 		Vec3d vec = target.getPositionVector().add(0, target.height / 2, 0);
 		Random rand = world.rand;
 		for (int i = 0; i < 25; i++) {
@@ -134,7 +202,7 @@ public class MantraCommon extends Mantra {
 			EffectElementMove effect = new EffectElementMove(world, at);
 			effect.motionY = rand.nextGaussian() * 0.2;
 			effect.yDecay = 0.75;
-			effect.setColor(this.getRenderColor());
+			effect.setColor(color);
 			Effect.addEffect(effect);
 		}
 		for (int i = 0; i < 5; i++) {
@@ -143,21 +211,31 @@ public class MantraCommon extends Mantra {
 			effect.motionY = rand.nextDouble() * 0.01f + 0.005f;
 			effect.yDecay = 0.98f;
 			effect.alpha = 0;
-			effect.setColor(this.getRenderColor());
+			effect.setColor(color);
 			Effect.addEffect(effect);
 		}
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
+		addEffectMagicCircle(world, data, caster);
+		addEffectProgress(world, data, caster);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void addEffectMagicCircle(World world, IMantraData data, ICaster caster) {
 		if (hasEffectFlags(world, data, caster, MantraEffectFlags.MAGIC_CIRCLE)) out: {
 			IWorldObject co = caster.iWantCaster();
 			EntityLivingBase eb = co.asEntityLivingBase();
 			if (eb == null) break out;
 			MantraDataCommon dataEffect = (MantraDataCommon) data;
 			if (!dataEffect.hasMarkEffect(0))
-				dataEffect.addEffect(caster, this.getEffectMagicCircle(world, eb, data), 0);
+				dataEffect.addConditionEffect(caster, this.getEffectMagicCircle(world, eb, data), 0);
 		}
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void addEffectProgress(World world, IMantraData data, ICaster caster) {
 		if (hasEffectFlags(world, data, caster, MantraEffectFlags.PROGRESS)) out: {
 			float r = this.getProgressRate(world, data, caster);
 			if (r <= 0) break out;
@@ -171,7 +249,7 @@ public class MantraCommon extends Mantra {
 		if (this.hasEffectFlags(world, data, caster, MantraEffectFlags.INDICATOR)) {
 			MantraDataCommon dataEffect = (MantraDataCommon) data;
 			if (!caster.iWantCaster().isClientPlayer() || dataEffect.hasMarkEffect(1)) return;
-			dataEffect.addEffect(caster, new EffectLookAt(world, caster, this.getColor(dataEffect)), 1);
+			dataEffect.addConditionEffect(caster, new EffectLookAt(world, caster, this.getColor(dataEffect)), 1);
 		}
 	}
 
@@ -184,7 +262,7 @@ public class MantraCommon extends Mantra {
 			if (dataEffect.hasMarkEffect(4)) return;
 			EffectMagicEmit emit = new EffectMagicEmit(world, entity);
 			emit.setColor(this.getColor(data));
-			dataEffect.addEffect(caster, emit, 4);
+			dataEffect.addConditionEffect(caster, emit, 4);
 		}
 	}
 

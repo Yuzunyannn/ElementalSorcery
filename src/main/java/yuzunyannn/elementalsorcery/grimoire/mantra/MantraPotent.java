@@ -63,7 +63,7 @@ public class MantraPotent extends MantraCommon {
 				damage = hp;
 				if (world.isRemote)
 					FirewrokShap.createECircleDispersed(world, target.getPositionVector().add(0, target.height / 2, 0),
-							1f, 4, new int[] { this.getRenderColor() });
+							1f, 4, new int[] { getColor(null) });
 			}
 		}
 		// 超级强效攻击

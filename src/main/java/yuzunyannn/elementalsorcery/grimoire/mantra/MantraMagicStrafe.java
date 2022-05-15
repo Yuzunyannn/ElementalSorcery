@@ -12,12 +12,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
-import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleMagicFall;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
@@ -47,7 +47,7 @@ public class MantraMagicStrafe extends MantraCommon {
 
 		if (world.isRemote) this.onSpellingEffect(world, data, caster);
 
-		WantedTargetResult result = caster.iWantLivingTarget(EntityLivingBase.class);
+		WorldTarget result = caster.iWantEntityTarget(EntityLivingBase.class);
 		EntityLivingBase target = (EntityLivingBase) result.getEntity();
 
 		if (target == null) {
@@ -66,7 +66,7 @@ public class MantraMagicStrafe extends MantraCommon {
 		get.weaken(Math.min(tick / 4, 60) / 20f);
 		float dmg = Math.max(ItemMagicBlastWand.getDamage(get), 0.25f) * (1 + potent * 0.5f);
 		DamageSource ds = DamageHelper.getMagicDamageSource(caster.iWantCaster().asEntity(),
-				caster.iWantDirectCaster().asEntity());
+				caster.iWantDirectCaster());
 		target.attackEntityFrom(ds, dmg);
 		target.hurtResistantTime = 0;
 	}
@@ -80,7 +80,7 @@ public class MantraMagicStrafe extends MantraCommon {
 
 	@SideOnly(Side.CLIENT)
 	public void onAttackBlock(World world, IMantraData data, ICaster caster) {
-		WantedTargetResult result = caster.iWantBlockTarget();
+		WorldTarget result = caster.iWantBlockTarget();
 		BlockPos pos = result.getPos();
 		if (pos == null) {
 			Random rand = world.rand;

@@ -4,12 +4,15 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
 import java.util.function.BiFunction;
 
 import javax.annotation.Nullable;
 
+import io.netty.buffer.Unpooled;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
+import net.minecraft.nbt.NBTTagByteArray;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagDouble;
 import net.minecraft.nbt.NBTTagFloat;
@@ -17,7 +20,10 @@ import net.minecraft.nbt.NBTTagInt;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagShort;
+import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 
@@ -64,6 +70,10 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 			} catch (Exception e) {}
 			return this.serializable(this.newInstance(null));
 		}
+
+		default T cast(Object obj) {
+			return (T) obj;
+		}
 	}
 
 	private NBTTagCompound nbt;
@@ -79,7 +89,7 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		Object obj = map.get(var);
 		if (obj != null) {
 			try {
-				return (T) obj;
+				return var.type.cast(obj);
 			} catch (Exception e) {}
 		}
 		NBTBase base = null;
@@ -90,6 +100,18 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		}
 		map.put(var, obj = var.type.newInstance(base));
 		return (T) obj;
+	}
+
+	@Nullable
+	public Object ask(String name) {
+		return map.get(new Variable<Object>(name, null));
+	}
+
+	@Nullable
+	public Object ask(String name, Class<?> cls) {
+		Object obj = get(new Variable<Object>(name, null));
+		if (obj != null && cls.isAssignableFrom(obj.getClass())) return obj;
+		return null;
 	}
 
 	public boolean has(Variable<?> var) {
@@ -159,6 +181,10 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 			return new NBTTagInt(obj);
 		}
 
+		public Integer cast(Object obj) {
+			return obj instanceof Number ? ((Number) obj).intValue() : 0;
+		};
+
 	};
 
 	public final static IVariableType<Short> SHORT = new IVariableType<Short>() {
@@ -173,6 +199,10 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		public NBTBase serializable(Short obj) {
 			return new NBTTagShort(obj);
 		}
+
+		public Short cast(Object obj) {
+			return obj instanceof Number ? ((Number) obj).shortValue() : 0;
+		};
 
 	};
 
@@ -189,6 +219,10 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 			return new NBTTagFloat(obj);
 		}
 
+		public Float cast(Object obj) {
+			return obj instanceof Number ? ((Number) obj).floatValue() : 0;
+		};
+
 	};
 
 	public final static IVariableType<Double> DOUBLE = new IVariableType<Double>() {
@@ -204,6 +238,10 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 			return new NBTTagDouble(obj);
 		}
 
+		public Double cast(Object obj) {
+			return obj instanceof Number ? ((Number) obj).doubleValue() : 0;
+		};
+
 	};
 
 	public final static IVariableType<ElementStack> ELEMENT = new IVariableType<ElementStack>() {
@@ -211,12 +249,39 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		@Override
 		public ElementStack newInstance(NBTBase base) {
 			if (base instanceof NBTTagCompound) return new ElementStack((NBTTagCompound) base);
-			return ElementStack.EMPTY;
+			return ElementStack.EMPTY.copy();
 		}
 
 		@Override
 		public NBTBase serializable(ElementStack obj) {
-			return obj.serializeNBT();
+			return obj.isEmpty() ? null : obj.serializeNBT();
+		}
+
+	};
+
+	public final static IVariableType<UUID> UUID = new IVariableType<UUID>() {
+
+		@Override
+		public UUID newInstance(NBTBase base) {
+			if (base instanceof NBTTagByteArray) {
+				try {
+					byte[] bytes = ((NBTTagByteArray) base).getByteArray();
+					PacketBuffer buf = new PacketBuffer(Unpooled.wrappedBuffer(bytes));
+					return buf.readUniqueId();
+				} catch (Exception e) {
+					return new UUID(0, 0);
+				}
+			}
+			return new UUID(0, 0);
+		}
+
+		@Override
+		public NBTBase serializable(UUID obj) {
+			PacketBuffer buf = new PacketBuffer(Unpooled.buffer());
+			buf.writeUniqueId(obj);
+			byte[] bytes = new byte[buf.writerIndex()];
+			buf.getBytes(0, bytes);
+			return new NBTTagByteArray(bytes);
 		}
 
 	};
@@ -238,6 +303,10 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		public NBTBase serializable(BlockPos obj) {
 			return new NBTTagIntArray(new int[] { obj.getX(), obj.getY(), obj.getZ() });
 		}
+
+		public BlockPos cast(Object obj) {
+			return obj instanceof Vec3d ? new BlockPos((Vec3d) obj) : (BlockPos) obj;
+		};
 
 	};
 
@@ -266,6 +335,32 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 				array.appendTag(new NBTTagIntArray(new int[] { pos.getX(), pos.getY(), pos.getZ() }));
 			return array;
 		}
+
+	};
+
+	public final static IVariableType<Vec3d> VEC3D = new IVariableType<Vec3d>() {
+
+		@Override
+		public Vec3d newInstance(NBTBase base) {
+			if (base instanceof NBTTagIntArray) {
+				NBTTagIntArray array = (NBTTagIntArray) base;
+				int[] ints = array.getIntArray();
+				if (ints.length < 3) return Vec3d.ZERO;
+				return new Vec3d(Float.intBitsToFloat(ints[0]), Float.intBitsToFloat(ints[1]),
+						Float.intBitsToFloat((ints[2])));
+			}
+			return Vec3d.ZERO;
+		}
+
+		@Override
+		public NBTBase serializable(Vec3d obj) {
+			return new NBTTagIntArray(new int[] { Float.floatToIntBits((float) obj.x),
+					Float.floatToIntBits((float) obj.y), Float.floatToIntBits((float) obj.z) });
+		}
+
+		public Vec3d cast(Object obj) {
+			return obj instanceof Vec3i ? new Vec3d((Vec3i) obj) : (Vec3d) obj;
+		};
 
 	};
 

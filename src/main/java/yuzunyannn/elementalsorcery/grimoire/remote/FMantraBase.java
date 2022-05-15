@@ -54,10 +54,11 @@ public abstract class FMantraBase implements IFragmentMantraLauncher {
 	}
 
 	public float getChargetSpeed(World world, ElementTransitionReactor core) {
-		return chargetSpeed * 100;
+		return chargetSpeed;
 	}
 
 	public void addCanUseElement(Element element) {
+		if (element == null) return;
 		canUseElementSet.add(element);
 	}
 

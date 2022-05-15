@@ -34,20 +34,17 @@ public class WorldHelper {
 
 	@Nullable
 	public static BlockPos tryFindPlaceToSpawn(World world, Random rand, BlockPos center, float range) {
-		float theta = rand.nextFloat() * 3.1415926f * 2;
 		final int tryUp = 8;
-		for (int tryTimes = 0; tryTimes < 6; tryTimes++) {
+		for (int tryTimes = 0; tryTimes < 3; tryTimes++) {
+			float theta = rand.nextFloat() * 3.1415926f * 2;
 			double x = center.getX() + 0.5 + MathHelper.sin(theta) * range;
 			double z = center.getZ() + 0.5 + MathHelper.cos(theta) * range;
 			BlockPos pos = new BlockPos(x, center.getY() + tryUp, z);
 			for (int k = 0; k < tryUp * 2 && pos.getY() > 0; k++, pos = pos.down())
 				if (!BlockHelper.isPassableBlock(world, pos)) break;
-
-			if (BlockHelper.isPassableBlock(world, pos)) return null;
-
-			if (!BlockHelper.isPassableBlock(world, pos.up(1))) return null;
-			if (!BlockHelper.isPassableBlock(world, pos.up(2))) return null;
-
+			if (BlockHelper.isPassableBlock(world, pos)) continue;
+			if (!BlockHelper.isPassableBlock(world, pos.up(1))) continue;
+			if (!BlockHelper.isPassableBlock(world, pos.up(2))) continue;
 			return pos;
 		}
 		return null;

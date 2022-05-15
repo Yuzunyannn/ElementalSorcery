@@ -176,6 +176,27 @@ public class RenderHelper {
 		tessellator.draw();
 	}
 
+	public static void drawTexturedRectInCenter(float x, float y, float width, float height, float u, float v,
+			float texWidth, float texHeight, float textureWidth, float textureHeight, float r, float g, float b,
+			float a, float anchorX, float anchorY) {
+		float f = 1.0F / textureWidth;
+		float f1 = 1.0F / textureHeight;
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		float hw = width * anchorX;
+		float hh = height * anchorY;
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX_COLOR);
+		bufferbuilder.pos(x - hw, y + hh, 0.0D).tex(u * f, (v + texHeight) * f1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		bufferbuilder.pos(x + (width - hw), y + hh, 0.0D).tex((u + texWidth) * f, (v + texHeight) * f1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		bufferbuilder.pos(x + (width - hw), y - (height - hh), 0.0D).tex((u + texWidth) * f, v * f1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		bufferbuilder.pos(x - hw, y - (height - hh), 0.0D).tex(u * f, v * f1);
+		bufferbuilder.color(r, g, b, a).endVertex();
+		tessellator.draw();
+	}
+
 	public static void drawTexturedRectInCenter(float x, float y, float width, float height) {
 		drawTexturedRectInCenter(x, y, width, height, 0, 0, 1, 1, 1, 1);
 	}
@@ -183,7 +204,8 @@ public class RenderHelper {
 	public static void disableLightmap(boolean disabled) {
 		GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
 		if (disabled) GlStateManager.disableTexture2D();
-		else GlStateManager.enableTexture2D();
+		else 
+			GlStateManager.enableTexture2D();
 		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
 	}
 

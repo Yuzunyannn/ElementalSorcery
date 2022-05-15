@@ -61,7 +61,7 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 		if (tick % 20 != 0) return true;
 		short layer = data.get(LAYER);
 		if (layer < 0) return false;
-		int hSize = data.size / 2;
+		int hSize = data.getSize() / 2;
 		BlockPos pos = new BlockPos(originPos.getX(), layer, originPos.getZ());
 		BlockPos go = findChestPos(world, originPos);
 		for (int x = -hSize; x < hSize; x++) {

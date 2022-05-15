@@ -20,12 +20,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.block.BlockFluorspar;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class MantraFluorspar extends MantraCommon {
@@ -72,7 +72,7 @@ public class MantraFluorspar extends MantraCommon {
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		if (mdc.getProgress() < 1) return;
-		WantedTargetResult result = caster.iWantBlockTarget();
+		WorldTarget result = caster.iWantBlockTarget();
 		if (result.getPos() == null) return;
 		BlockPos pos = result.getPos();
 		IBlockState originState = world.getBlockState(pos);
@@ -186,9 +186,7 @@ public class MantraFluorspar extends MantraCommon {
 		IBlockState state = getChange(world.getBlockState(pos));
 		if (state == null) return;
 		world.setBlockState(pos, state);
-		if (world.isRemote) {
-			MantraBlockCrash.addBlockElementEffect(new Vec3d(pos).add(0.5, 0.5, 0.5), this.getRenderColor());
-		}
+		if (world.isRemote) MantraBlockCrash.addBlockElementEffect(new Vec3d(pos).add(0.5, 0.5, 0.5), getColor(null));
 	}
 
 	@Override

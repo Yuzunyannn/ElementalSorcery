@@ -24,17 +24,19 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IMagicBeamHandler;
+import yuzunyannn.elementalsorcery.building.Buildings;
+import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.ElementTransition;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraElementWhirl;
 import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectFragmentMove;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectReactorMantraSpell;
-import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockCrystalBlock;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockSendRecv;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
@@ -47,7 +49,7 @@ import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.world.MapHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
-public class TileElementReactor extends TileEntityNetwork implements ITickable, IMagicBeamHandler {
+public class TileElementReactor extends TileStaticMultiBlock implements ITickable, IMagicBeamHandler {
 
 	static public final int SELECT_MAP_SIZE = 32;
 
@@ -66,12 +68,13 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 	/** 默认运行消耗片元个数基数，实际消耗 基数*能量线 */
 	static public final double WORKING_COST_MAGIC_FRAGMENT_BASE = 64;
 
-	protected ReactorStatus status = ReactorStatus.STANDBY;
+	protected ReactorStatus status = ReactorStatus.OFF;
 	protected ElementTransitionReactor core = new ElementTransitionReactor(this);
 	protected int runTick = 0;
 	protected double instableRatio = 1;
 	protected double instableFragment = 0;
 	protected int powerLevelLine = Integer.MAX_VALUE;
+	public int blastCD;
 	// 反应堆远程魔法部分
 	protected List<Mantra> mantras = new ArrayList<>();
 	// 地图显示数据记录
@@ -96,7 +99,7 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 	public Element lastReactorElement;
 
 	public static enum ReactorInstableSection {
-		ON_RUNAWAY(0.98, 0.001, 512),
+		ON_RUNAWAY(0.98, 0.001, 1024),
 		NO_IELEMENT_INVENTORY(0.9995, 0.0001, 8),
 		INVENTORY_NO_CHANGE(0.9998, 0.00001, 4),
 		DIFF_ELEMENT(0.996, 0.0001, 32);
@@ -137,12 +140,18 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 	public TileElementReactor() {
 		addMantra(ESInit.MANTRAS.ENDER_TELEPORT);
 		addMantra(ESInit.MANTRAS.FIRE_BALL);
+		addMantra(ESInit.MANTRAS.LUSH);
 	}
 
 	@Override
 	public void onLoad() {
 		super.onLoad();
 		worldMap = new MapHelper(this.pos, SELECT_MAP_SIZE);
+	}
+
+	@Override
+	public void initMultiBlock() {
+		structure = new MultiBlock(Buildings.ELEMENT_REACTOR, this, new BlockPos(0, -6, 0));
 	}
 
 	public void addMantra(Mantra mantra) {
@@ -243,6 +252,7 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 		nbt.setFloat("iR", (float) instableRatio);
 		nbt.setDouble("iF", instableFragment);
 		nbt.setInteger("pLine", powerLevelLine);
+		if (isChargeFinMark) nbt.setBoolean("cFin", true);
 		if (!isSending()) {
 			nbt.setTag("mas", NBTHelper.serializeMantra(mantras));
 		}
@@ -261,6 +271,7 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 		instableRatio = nbt.getDouble("iR");
 		instableFragment = nbt.getDouble("iF");
 		powerLevelLine = nbt.getInteger("pLine");
+		isChargeFinMark = nbt.getBoolean("cFin");
 		core.readFromNBT(nbt);
 		if (nbt.hasKey("mas", NBTTag.TAG_LIST))
 			mantras = NBTHelper.deserializeMantra(nbt.getTagList("mas", NBTTag.TAG_STRING));
@@ -309,6 +320,7 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 		if (world.isRemote) return false;
 		if (status.isRunning) return true;
 		if (status != ReactorStatus.STANDBY) return false;
+		if (!checkIntact(structure)) return false;
 		updateMapLocation(null, false);
 		powerLevelLine = 16;
 		status = ReactorStatus.RUNNING;
@@ -336,6 +348,7 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 	}
 
 	public boolean launchMantra(IFragmentMantraLauncher.MLPair pair) {
+		if (status != ReactorStatus.RUNNING) return false;
 		if (runningMantraPair != null) return true;
 		if (pair == null) return false;
 		if (!pair.launcher.canUse(core)) return false;
@@ -381,6 +394,8 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 				return false;
 			isChargeFinMark = isFin;
 		}
+		this.markDirty();
+		this.updateToClient();
 		return true;
 	}
 
@@ -472,25 +487,51 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 		return world.getTileEntity(pos.add(x, 0, z));
 	}
 
+	protected void updateStatus(ReactorStatus newStatus) {
+		ReactorStatus status = getStatus();
+		if (status == newStatus) return;
+		this.status = newStatus;
+		updateToClient();
+	}
+
 	@Override
 	public void update() {
 		ReactorStatus status = getStatus();
-		if (!status.isRunning) return;
+		// 非运行
+		if (!status.isRunning) {
+			if (world.isRemote) return;
+			if (isAndCheckIntact()) {
+				if (status == ReactorStatus.OFF) updateStatus(ReactorStatus.STANDBY);
+			} else {
+				if (status == ReactorStatus.STANDBY) updateStatus(ReactorStatus.OFF);
+			}
+			return;
+		}
+		// 运行
 		if (world.isRemote) updateClientEffect();
+		else {
+			// 没有失控的情况下进行检测，如果结构破坏了，会失控
+			if (status != ReactorStatus.RUNAWAY) {
+				if (!isAndCheckIntact()) updateStatus(ReactorStatus.RUNAWAY);
+			}
+		}
 		runTick++;
 		if (runTick % 10 == 0) tryHandle: {
 			if (!canReactor()) break tryHandle;
 			updateBlast();
 			updateByIndex(runTick / 10 - 1);
 			// 正常情况，每次消耗两点片元，失控下消耗大量
-			if (status == ReactorStatus.RUNAWAY) instable(ReactorInstableSection.ON_RUNAWAY, 1);
-			else growInstableFragmentFromCore(2);
+			if (status == ReactorStatus.RUNAWAY) {
+				instable(ReactorInstableSection.ON_RUNAWAY, 1);
+				if (core.getFragment() == 0) onClose();
+			} else growInstableFragmentFromCore(2);
 			if (world.isRemote) return;
 			if (lastReactorElement != core.getElement()) {
 				lastReactorElement = core.getElement();
 				this.updateToClient();
 			}
 		}
+		if (blastCD > 0) blastCD--;
 		// 咒文
 		if (isRunningMantra()) {
 			IFragmentMantraLauncher launcher = getRunningMantraPair().launcher;
@@ -547,16 +588,27 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 			Effects.spawnEffect(player, Effects.REACTOR_MANREA, new Vec3d(targetLocation.getPos()).add(0.5, 1, 0.5),
 					nbt);
 		}
+
+		NBTTagCompound launchTag = new NBTTagCompound();
+		launchTag.setBoolean("cast~start", true);
+		updateToClient(launchTag);
 	}
 
 	public void updateBlast() {
+		if (blastCD > 0) return;
 		double instableFragment = getInstableFragment();
 		double instableFragmentRatio = instableFragment / getInstableFragmentCapacity();
 		if (instableFragmentRatio < 1) return;
 		if (world.rand.nextDouble() < 0.8 / instableFragmentRatio) return;
 		double useInstableFragment = instableFragment / 2;
 		setInstableFragment(instableFragment - useInstableFragment);
-		doBlast(useInstableFragment);
+		Vec3d to = doBlast(useInstableFragment, false);
+		blastCD = 80;
+
+		NBTTagCompound tag = new NBTTagCompound();
+		tag.setBoolean("~blast", true);
+		if (to != null) NBTHelper.setVec3d(tag, "~blast", to);
+		updateToClient(tag);
 	}
 
 	public void onBreak() {
@@ -564,18 +616,33 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 		if (!status.isRunning) return;
 		setInstableRatio(getInstableRatio() * 0.5);
 		growInstableFragmentFromCore(core.getFragment());
-		doBlast(getInstableFragment());
+		doBlast(getInstableFragment(), true);
 	}
 
-	public void doBlast(double instableFragment) {
-		if (world.isRemote) return;
-		// TODO 不稳定魔力片元溢出爆炸
-		System.out.println("爆炸！" + instableFragment);
+	public Vec3d doBlast(double instableFragment, boolean isSelf) {
+		if (world.isRemote) return null;
+		ReactorStatus status = getStatus();
+
+		Vec3d at;
+		if (isSelf) at = new Vec3d(this.pos).add(0.5, 0.5, 0.5);
+		else {
+			Vec3d tar = new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian());
+			if (status == ReactorStatus.RUNAWAY) tar = tar.scale(rand.nextDouble() * 24);
+			else tar = tar.scale(rand.nextDouble() * 16 + 16);
+			at = new Vec3d(this.pos).add(tar);
+		}
+
+		int power = MathHelper.ceil(Math.pow(POWER_LINE_COEFFICIENT, this.powerLevelLine + 1));
+		double count = ElementHelper.fromFragment(ESInit.ELEMENTS.MAGIC, instableFragment, power);
+
+		MantraElementWhirl.booom(world, at, ElementStack.magic(MathHelper.ceil(count), power), null);
+
+		return at;
 	}
 
 	/** 当关闭 */
 	public void onClose() {
-		this.status = ReactorStatus.STANDBY;
+		this.status = isAndCheckIntact() ? ReactorStatus.STANDBY : ReactorStatus.OFF;
 		tryLinkOrUnlinkMagicIR(false);
 		updateToClient();
 		markDirty();
@@ -757,6 +824,13 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 	}
 
 	@SideOnly(Side.CLIENT)
+	public Color getMantraRenderColor() {
+		IFragmentMantraLauncher.MLPair mpair = getRunningMantraPair();
+		if (mpair == null) return getRenderColor();
+		return new Color(mpair.mantra.getColor(null));
+	}
+
+	@SideOnly(Side.CLIENT)
 	public void playChangeEffect(BlockPos to, int changeFlag) {
 		Vec3d p1 = new Vec3d(to).add(0.5, 0.5, 0.5);
 		Vec3d p2 = new Vec3d(pos).add(0.5, 0.5, 0.5);
@@ -789,12 +863,32 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 	}
 
 	@SideOnly(Side.CLIENT)
+	public void onBeforeCast() {
+		if (effectLink == null) return;
+		effectLink.prevUpEndProgress = effectLink.upEndProgress = 0;
+
+		Vec3d center = new Vec3d(pos).add(0.5, 4.5, 0.5);
+		for (int i = 0; i < 128; i++) {
+			float theta = Effect.rand.nextFloat() * 3.1415926f * 2;
+			double x = MathHelper.sin(theta) * (6 + Effect.rand.nextGaussian());
+			double z = MathHelper.cos(theta) * (6 + Effect.rand.nextGaussian());
+			Vec3d at = center.add(x, 0, z);
+			EffectFragmentMove f = new EffectFragmentMove(world, at);
+			f.color.setColor(effectLink.circleColor).weight(new Color(0xffffff), Effect.rand.nextFloat() * 0.25f);
+			f.motionY = -Effect.rand.nextFloat() * 1.5;
+			f.yAccelerate = Effect.rand.nextFloat() * 0.01;
+			f.yDecay = 0.6;
+			Effect.addEffect(f);
+		}
+	}
+
+	@SideOnly(Side.CLIENT)
 	public void updateClientEffect() {
 
 		if (isRunningMantra()) {
 			if (effectLink == null) {
 				effectLink = new EffectReactorMantraSpell(world, new Vec3d(pos).add(0.5, 1, 0.5), false);
-				effectLink.setMainColor(renderColor);
+				effectLink.setMainColor(getMantraRenderColor());
 				effectLink.launcher = getRunningMantraPair().launcher;
 				Effect.addEffect(effectLink);
 			}
@@ -826,6 +920,14 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void handleUpdateTag(NBTTagCompound tag) {
+		if (tag.hasKey("cast~start")) {
+			onBeforeCast();
+			return;
+		}
+		if (tag.hasKey("~blast")) {
+			playBlastEffect(NBTHelper.getVec3d(tag, "~blast"));
+			return;
+		}
 		super.handleUpdateTag(tag);
 		Element element = core.getElement();
 		if (element == ElementStack.EMPTY.getElement()) renderColor = null;
@@ -838,5 +940,26 @@ public class TileElementReactor extends TileEntityNetwork implements ITickable, 
 	@SideOnly(Side.CLIENT)
 	public AxisAlignedBB getRenderBoundingBox() {
 		return super.getRenderBoundingBox().grow(0.25);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void playBlastEffect(Vec3d to) {
+		Vec3d vec = new Vec3d(this.pos).add(0.5, 0.5, 0.5);
+		Vec3d tTar = to.subtract(vec);
+		Vec3d acce = tTar.normalize().scale(0.01);
+		for (int i = 0; i < 64; i++) {
+			vec = vec.add(tTar.scale(1 / 64f));
+			Vec3d tar = new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian()).scale(0.25);
+			EffectFragmentMove effect = new EffectFragmentMove(world, vec);
+			effect.motionX = tar.x;
+			effect.motionY = tar.z;
+			effect.motionZ = tar.y;
+			effect.xAccelerate = acce.x;
+			effect.yAccelerate = acce.y;
+			effect.zAccelerate = acce.z;
+			effect.xDecay = effect.yDecay = effect.zDecay = 0.7;
+			effect.color.setColor(0x8e00dd);
+			Effect.addEffect(effect);
+		}
 	}
 }

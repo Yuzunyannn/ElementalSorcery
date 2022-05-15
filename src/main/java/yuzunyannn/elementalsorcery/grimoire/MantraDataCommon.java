@@ -5,9 +5,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -15,16 +13,17 @@ import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectCondition;
+import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectScreenProgress;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.VariableSet;
+import yuzunyannn.elementalsorcery.util.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.util.Variables;
 
 public class MantraDataCommon implements IMantraData {
 
 	// ---动态数据----
 
-	public final Map<Short, EffectCondition> effectMap = new HashMap<>();
+	public final Map<Short, Effect> effectMap = new HashMap<>();
 
 	public int speedTick;
 	protected boolean markContinue;
@@ -37,8 +36,6 @@ public class MantraDataCommon implements IMantraData {
 
 	/** 额外数据集 */
 	protected VariableSet extra = new VariableSet();
-	/** 搜集的元素 */
-	protected Map<Element, ElementStack> collectMap;
 
 	public MantraDataCommon() {
 	}
@@ -54,7 +51,7 @@ public class MantraDataCommon implements IMantraData {
 	// effect
 
 	@SideOnly(Side.CLIENT)
-	public void markEffect(int id, EffectCondition effect) {
+	public void markEffect(int id, Effect effect) {
 		effectMap.put((short) id, effect);
 	}
 
@@ -69,13 +66,13 @@ public class MantraDataCommon implements IMantraData {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public EffectCondition getMarkEffect(int id) {
+	public Effect getMarkEffect(int id) {
 		return effectMap.get((short) id);
 	}
 
 	@SideOnly(Side.CLIENT)
-	public <T extends EffectCondition> T getMarkEffect(int id, Class<T> cls) {
-		EffectCondition effect = effectMap.get((short) id);
+	public <T extends Effect> T getMarkEffect(int id, Class<T> cls) {
+		Effect effect = getMarkEffect(id);
 		if (effect == null) return null;
 		if (cls.isAssignableFrom(effect.getClass())) return (T) effect;
 		return null;
@@ -83,56 +80,32 @@ public class MantraDataCommon implements IMantraData {
 
 	@SideOnly(Side.CLIENT)
 	public void removeMarkEffect(int id) {
-		EffectCondition effect = effectMap.get((short) id);
-		if (effect != null) {
-			Function<Void, Boolean> cond = effect.getCondition();
+		Effect effect = effectMap.get((short) id);
+		if (effect instanceof EffectCondition) {
+			Function<Void, Boolean> cond = ((EffectCondition) effect).getCondition();
 			if (cond instanceof EffectCondition.ConditionEntityAction)
 				((EffectCondition.ConditionEntityAction) cond).isFinish = true;
 		}
 		this.unmarkEffect(id);
 	}
 
-	// ---进度数据----
-
-	public float getProgress() {
-		return progress;
-	}
-
-	public void setProgress(float progress) {
-		this.progress = progress;
-	}
-
-	public void setProgress(float now, float total) {
-		this.setProgress(Math.min(now / total, 1));
-	}
-
 	@SideOnly(Side.CLIENT)
-	public void showProgress(float pro, int color, World world, ICaster caster) {
-		if (!caster.iWantCaster().isClientPlayer()) return;
-		if (!this.hasMarkEffect(2)) {
-			effectProgress = new EffectScreenProgress(world);
-			effectProgress.setColor(color);
-			this.addEffect(caster, effectProgress, 2, false);
-		} else {
-			if (effectProgress == null) return;
-			effectProgress.setProgress(pro);
-		}
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void addEffect(ICaster caster, EffectCondition effect, int markId, boolean checkContinue) {
-		if (effect.getCondition() == null) {
-			IWorldObject co = caster.iWantCaster();
-			if (co.asEntity() == null) return;
-			effect.setCondition(new ConditionEffect(co.asEntity(), this, markId, checkContinue));
+	public void addConditionEffect(ICaster caster, EffectCondition effect, int markId, boolean checkContinue) {
+		if (effect instanceof EffectCondition) {
+			EffectCondition eCondition = (EffectCondition) effect;
+			if (eCondition.getCondition() == null) {
+				IWorldObject co = caster.iWantCaster();
+				if (co.asEntity() == null) return;
+				eCondition.setCondition(new ConditionEffect(co.asEntity(), this, markId, checkContinue));
+			}
 		}
 		markEffect(markId, effect);
 		Effect.addEffect(effect);
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void addEffect(ICaster caster, EffectCondition effect, int markId) {
-		addEffect(caster, effect, markId, true);
+	public void addConditionEffect(ICaster caster, EffectCondition effect, int markId) {
+		addConditionEffect(caster, effect, markId, true);
 	}
 
 	/** 通用性的条件 */
@@ -168,6 +141,34 @@ public class MantraDataCommon implements IMantraData {
 			return true;
 		}
 	}
+
+	// ---进度数据----
+
+	public float getProgress() {
+		return progress;
+	}
+
+	public void setProgress(float progress) {
+		this.progress = progress;
+	}
+
+	public void setProgress(float now, float total) {
+		this.setProgress(Math.min(now / total, 1));
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void showProgress(float pro, int color, World world, ICaster caster) {
+		if (!caster.iWantCaster().isClientPlayer()) return;
+		if (!this.hasMarkEffect(2)) {
+			effectProgress = new EffectScreenProgress(world);
+			effectProgress.setColor(color);
+			this.addConditionEffect(caster, effectProgress, 2, false);
+		} else {
+			if (effectProgress == null) return;
+			effectProgress.setProgress(pro);
+		}
+	}
+
 	// ---元素收集部分----
 
 	public void add(ElementStack estack) {
@@ -178,10 +179,11 @@ public class MantraDataCommon implements IMantraData {
 	}
 
 	public ElementStack get(Element element) {
-		if (collectMap == null) collectMap = new HashMap<>();
-		ElementStack estack = collectMap.get(element);
-		if (estack == null) collectMap.put(element, estack = ElementStack.EMPTY.copy());
-		return estack;
+		return get(Variables.getElementVar(element));
+	}
+
+	public void remove(Element element) {
+		remove(new Variable<>("E^" + element.getRegistryId(), VariableSet.ELEMENT));
 	}
 
 	public static class CollectResult {
@@ -237,39 +239,29 @@ public class MantraDataCommon implements IMantraData {
 		extra.remove(var);
 	}
 
-	private void writeCollectMapToNBT(NBTTagCompound nbt) {
-		if (collectMap != null && !collectMap.isEmpty()) {
-			NBTTagList list = new NBTTagList();
-			for (ElementStack estack : collectMap.values())
-				if (!estack.isEmpty()) list.appendTag(estack.serializeNBT());
-			nbt.setTag("$collect", list);
-		}
+	public void setExtra(VariableSet extra) {
+		this.extra = extra;
+
+	}
+
+	public VariableSet getExtra() {
+		return extra;
 	}
 
 	@Override
 	public NBTTagCompound serializeNBT() {
-		NBTTagCompound nbt = extra.serializeNBT();
-		this.writeCollectMapToNBT(nbt);
-		return nbt;
+		return extra.serializeNBT();
 	}
 
 	@Override
 	public NBTTagCompound serializeNBTForSend() {
 		NBTTagCompound nbt = extra.serializeNBT((str, obj) -> !str.startsWith("@"));
-		this.writeCollectMapToNBT(nbt);
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
 		extra.deserializeNBT(nbt);
-
-		NBTTagList list = nbt.getTagList("$collect", NBTTag.TAG_COMPOUND);
-		if (!list.isEmpty()) {
-			if (collectMap == null) collectMap = new HashMap<>();
-			collectMap.clear();
-			for (NBTBase base : list) this.add(new ElementStack((NBTTagCompound) base));
-		}
 	}
 
 }

@@ -35,6 +35,10 @@ public class MasterBinder {
 
 	}
 
+	public boolean isOwnerless() {
+		return this.uuid == null;
+	}
+
 	@Nullable
 	public EntityLivingBase getMaster() {
 		return master == null ? null : master.get();
@@ -50,6 +54,12 @@ public class MasterBinder {
 		this.uuid = master.getUniqueID();
 		masterFindFailCD = 0;
 		masterFindFailTimes = 0;
+	}
+
+	public void setMaster(UUID uuid) {
+		if (uuid == null) return;
+		this.master = null;
+		this.uuid = uuid;
 	}
 
 	@Nullable

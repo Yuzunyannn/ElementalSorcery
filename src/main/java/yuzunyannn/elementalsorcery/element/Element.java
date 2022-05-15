@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.element;
 
+import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Nullable;
@@ -24,6 +25,8 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 
 	protected Random rand = new Random();
 
+	/** 用来计数的id */
+	private final int registryId;
 	/** 元素的颜色 */
 	protected int color;
 	/** 非本地化名称 */
@@ -41,6 +44,11 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 
 	public Element(int color) {
 		this.color = color;
+		this.registryId = -1;
+	}
+
+	public int getRegistryId() {
+		return registryId;
 	}
 
 	/**
@@ -164,6 +172,12 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 	public static Element getElementFromId(int id) {
 		Element element = REGISTRY.getValue(id);
 		return element == null ? ElementStack.EMPTY.getElement() : element;
+	}
+
+	public static Element getElementFromIndex(int index, boolean onlyValid) {
+		List<Element> list = Element.REGISTRY.getValues();
+		if (onlyValid) return list.get(index % (list.size() - 1) + 1);
+		return list.get(index % list.size());
 	}
 
 	/** 默认的资源 */

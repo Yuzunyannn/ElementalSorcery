@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.element.ElementKnowledge;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
@@ -66,12 +65,10 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 	public void addAfterEffect(SquareData data, ICaster caster, int size) {
 		if (size <= 0) return;
 		if (data.hasMarkEffect(1000)) return;
-		IWorldObject co = caster.iWantDirectCaster();
-		Entity entity = co.asEntity();
-		if (entity == null) return;
+		Entity entity = caster.iWantDirectCaster();
 		EffectMagicSquare ems = new EffectMagicSquare(entity.world, entity, size, this.getColor(data));
 		ems.setCondition(new ConditionEffect(entity, data, 1000, false));
-		data.addEffect(caster, ems, 1000);
+		data.addConditionEffect(caster, ems, 1000);
 		ems.setIcon(this.getMagicCircleIcon());
 		List<Vec3d> vec = new ArrayList<>();
 		vec.add(ColorHelper.color(getColor(data)));

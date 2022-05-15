@@ -17,11 +17,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
@@ -78,7 +78,7 @@ public class MantraBlockCrash extends MantraCommon {
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
 		if (caster.iWantKnowCastTick() < 20) return;
 		BlockPos pos = null;
-		WantedTargetResult wr = caster.iWantLivingTarget(EntityLivingBase.class);
+		WorldTarget wr = caster.iWantEntityTarget(EntityLivingBase.class);
 		EntityLivingBase living = (EntityLivingBase) wr.getEntity();
 		if (living != null) pos = living.getPosition();
 		if (pos == null) {
@@ -128,7 +128,7 @@ public class MantraBlockCrash extends MantraCommon {
 	public void addBlockEffect(BlockPos pos, IBlockState state) {
 		Minecraft mc = Minecraft.getMinecraft();
 		mc.effectRenderer.addBlockDestroyEffects(pos, state);
-		addBlockElementEffect(new Vec3d(pos).add(0.5, 0.5, 0.5), this.getRenderColor());
+		addBlockElementEffect(new Vec3d(pos).add(0.5, 0.5, 0.5), getColor(null));
 	}
 
 	@SideOnly(Side.CLIENT)

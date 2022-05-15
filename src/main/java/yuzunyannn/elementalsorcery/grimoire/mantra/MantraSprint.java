@@ -27,6 +27,7 @@ public class MantraSprint extends MantraCommon {
 		this.setTranslationKey("sprint");
 		this.setColor(0xabfffa);
 		this.setIcon("sprint");
+		this.setRarity(100);
 	}
 
 	@Override

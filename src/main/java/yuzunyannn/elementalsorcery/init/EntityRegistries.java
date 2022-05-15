@@ -104,7 +104,7 @@ public class EntityRegistries {
 		register(52, "entity_crafting", EntityCrafting.class, "EntityCrafting", 128, 1, false);
 		register(53, "portal", EntityPortal.class, "EntityPortal", 64, 20, false);
 		register(54, "explore_dust", EntityExploreDust.class, "ExploreDust", 64, 20, false);
-		register(55, "entity_grimoire", EntityGrimoire.class, "EntityGrimoire", 64, 3, false);
+		register(55, "entity_grimoire", EntityGrimoire.class, "EntityGrimoire", 128, 3, false);
 		register(56, "magic_melting", EntityMagicMelting.class, "EntityMagicMelting", 64, 20, false);
 
 	}

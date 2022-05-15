@@ -31,14 +31,14 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraElementWhirl;
 import yuzunyannn.elementalsorcery.parchment.Pages;
-import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectBlockConfusion;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -121,14 +121,37 @@ public class CommandESDebug {
 				return;
 			case "textTest": {
 
-//				EffectLaser effect = new EffectLaser(Minecraft.getMinecraft().world, entity.getPositionVector(),
-//						new Vec3d(pos).add(0.5, 1.5, 0.5));
+//				World world = Minecraft.getMinecraft().world;
+//				Vec3d center = new Vec3d(pos).add(0.5, 4.5, 0.5);
+//				Minecraft.getMinecraft().addScheduledTask(() -> {
+//					for (int i = 0; i < 128; i++) {
+//						float theta = Effect.rand.nextFloat() * 3.1415926f * 2;
+//						double x = MathHelper.sin(theta) * (6 + Effect.rand.nextGaussian());
+//						double z = MathHelper.cos(theta) * (6 + Effect.rand.nextGaussian());
+//						Vec3d at = center.add(x, 0, z);
+//						EffectFragmentMove f = new EffectFragmentMove(world, at);
+//						f.motionY = -Effect.rand.nextFloat() * 1.5;
+//						f.yAccelerate = Effect.rand.nextFloat() * 0.01;
+//						f.yDecay = 0.6;
+//						Effect.addEffect(f);
+//					}
+//				});
+
+//				EffectSphericalBlast effect = new EffectSphericalBlast(Minecraft.getMinecraft().world,
+//						new Vec3d(pos).add(0.5, 1.5, 0.5), 5);
+//				effect.lifeTime = (int) (80 * 0.6f);
+//				effect.color.setColor(1, 0.5, 1);
 //				Effect.addEffect(effect);
 
-				EffectBlockConfusion effect = new EffectBlockConfusion(Minecraft.getMinecraft().world,
-						new Vec3d(pos).add(0.5, 0.5, 0.5), entity.world.getBlockState(pos));
-				effect.setChangeTo(Blocks.DIAMOND_BLOCK.getDefaultState(), true);
-				Effect.addEffect(effect);
+				MantraElementWhirl.booom(entity.world, new Vec3d(pos).add(0.5, 1.5, 0.5),
+						ElementStack.magic(1000, 1000), entity);
+
+//				MantraFireBall.fire(entity.world, entity, 32, true);
+
+//				EffectBlockConfusion effect = new EffectBlockConfusion(Minecraft.getMinecraft().world,
+//						new Vec3d(pos).add(0.5, 0.5, 0.5), entity.world.getBlockState(pos));
+//				effect.setChangeTo(Blocks.DIAMOND_BLOCK.getDefaultState(), true);
+//				Effect.addEffect(effect);
 
 //				EffectBlockDisintegrate effect = new EffectBlockDisintegrate(Minecraft.getMinecraft().world,
 //						new Vec3d(pos).add(0.5, 1.5, 0.5), entity.world.getBlockState(pos));

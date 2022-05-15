@@ -5,6 +5,7 @@ import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
 
 @SideOnly(Side.CLIENT)
 public abstract class EffectScreen extends EffectCondition {

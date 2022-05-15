@@ -17,13 +17,13 @@ import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
-import yuzunyannn.elementalsorcery.grimoire.WantedTargetResult;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportTo;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
@@ -97,7 +97,7 @@ public class MantraEnderTeleport extends MantraCommon {
 
 	public static BlockPos findFoothold(World world, ICaster caster, boolean isSuper) {
 		if (!isSuper) return caster.iWantFoothold();
-		WantedTargetResult result = caster.iWantBlockTarget();
+		WorldTarget result = caster.iWantBlockTarget();
 		BlockPos pos = result.getPos();
 		EnumFacing facing = result.getFace();
 		if (pos == null || facing == null) return null;
@@ -125,7 +125,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		IWorldObject casterObject = caster.iWantCaster();
 		if (casterObject.isClientPlayer()) {
-			if (!mdc.hasMarkEffect(1)) mdc.addEffect(caster, new EffectPlayerAt(world, caster), 1);
+			if (!mdc.hasMarkEffect(1)) mdc.addConditionEffect(caster, new EffectPlayerAt(world, caster), 1);
 		}
 
 		Entity entity = caster.iWantCaster().asEntity();
@@ -149,7 +149,7 @@ public class MantraEnderTeleport extends MantraCommon {
 						return true;
 					}
 				});
-				mdc.addEffect(caster, lookAt, 4);
+				mdc.addConditionEffect(caster, lookAt, 4);
 			}
 		}
 

@@ -32,6 +32,8 @@ public class EffectBlockConfusion extends Effect {
 	public ItemStack stackB = ItemStack.EMPTY;
 	public TileEntity tileB;
 
+	public float scale = 1;
+
 	public boolean showA = true;
 	public boolean clientSet;
 
@@ -69,6 +71,7 @@ public class EffectBlockConfusion extends Effect {
 		double y = getRenderY(partialTicks);
 		double z = getRenderZ(partialTicks);
 		GlStateManager.translate(x, y, z);
+		if (scale != 1) GlStateManager.scale(scale, scale, scale);
 		GlStateManager.scale(1.05, 1.05, 1.05);
 		GlStateManager.translate(0, -0.5, 0);
 		try {

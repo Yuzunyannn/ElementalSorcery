@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.api.util;
 import javax.annotation.Nullable;
 
 import io.netty.buffer.ByteBuf;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,6 +25,10 @@ public interface IWorldObject extends ICapabilityProvider {
 	TileEntity asTileEntity();
 
 	Entity asEntity();
+
+	default IBlockState asBlockState() {
+		return getWorld().getBlockState(getPosition());
+	}
 
 	default Vec3d getEyePosition() {
 		Entity entity = asEntity();
@@ -63,15 +68,15 @@ public interface IWorldObject extends ICapabilityProvider {
 	}
 
 	static public void writeSendToBuf(ByteBuf buf, IWorldObject caster) {
-		if (caster.asTileEntity() != null) {
-			BlockPos pos = caster.asTileEntity().getPos();
+		if (caster.asEntity() != null) {
+			buf.writeByte((byte) 2);
+			buf.writeInt(caster.asEntity().getEntityId());
+		} else if (caster.getPosition() != null) {
+			BlockPos pos = caster.getPosition();
 			buf.writeByte((byte) 1);
 			buf.writeInt(pos.getX());
 			buf.writeInt(pos.getY());
 			buf.writeInt(pos.getZ());
-		} else if (caster.asEntity() != null) {
-			buf.writeByte((byte) 2);
-			buf.writeInt(caster.asEntity().getEntityId());
 		}
 	}
 
@@ -84,9 +89,7 @@ public interface IWorldObject extends ICapabilityProvider {
 				int y = buf.readInt();
 				int z = buf.readInt();
 				BlockPos pos = new BlockPos(x, y, z);
-				TileEntity tile = world.getTileEntity(pos);
-				if (tile == null) return null;
-				return new WorldObjectTileEntity(tile);
+				return new WorldObjectBlock(world, pos);
 			} else if (type == 2) {
 				Entity entity = world.getEntityByID(buf.readInt());
 				if (entity == null) return null;

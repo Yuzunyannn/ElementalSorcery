@@ -4,6 +4,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
+import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
 
 @SideOnly(Side.CLIENT)
 public class EffectSummonRender extends EffectCondition {
