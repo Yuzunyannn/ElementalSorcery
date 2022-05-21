@@ -84,7 +84,7 @@ public abstract class ElementCommon extends Element
 	@Override
 	public ElementStack onLaserPotentPreStorage(World world) {
 		if (laserOnceCost.isEmpty()) return ElementStack.EMPTY;
-		return new ElementStack(this, laserOnceCost.getCount() * 12, laserOnceCost.getPower());
+		return new ElementStack(this, laserOnceCost.getCount() * 16, laserOnceCost.getPower());
 	}
 
 	@Override
@@ -106,8 +106,8 @@ public abstract class ElementCommon extends Element
 		int tick = content.get(Variables.TICK);
 		int tickCount = (int) MathHelper.clamp(200 / MathHelper.sqrt(storage.getPower()), 3, 20);
 		if (tick % tickCount != 0) return;
-		storage.shrink(laserOnceCost.getCount());
 		onExecuteLaser(world, caster, target, storage, content);
+		storage.shrink(laserOnceCost.getCount());
 	}
 
 	protected void onExecuteLaser(World world, IWorldObject caster, WorldTarget target, ElementStack storage,

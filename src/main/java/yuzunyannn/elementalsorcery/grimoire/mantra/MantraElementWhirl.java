@@ -166,6 +166,7 @@ public class MantraElementWhirl extends MantraCommon {
 			BlockElementContainer.doExploded(world, at, eInv, caster.iWantCaster().asEntityLivingBase());
 		}
 		if (world.rand.nextFloat() < 0.25) ItemHelper.dropItem(world, at, new ItemStack(ESInit.ITEMS.MATERIAL_DEBRIS));
+		world.destroyBlock(at, false);
 	}
 
 	public static void affect(World world, ICaster caster, EntityLivingBase entity, double fragment) {

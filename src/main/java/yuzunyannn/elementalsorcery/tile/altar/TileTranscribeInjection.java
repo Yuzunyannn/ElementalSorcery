@@ -26,6 +26,7 @@ import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleTranscribe;
@@ -194,12 +195,17 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 		// 是否可以写入的检查
 		ItemStack grimoire = this.getGrimoire();
 		if (grimoire.isEmpty()) return false;
-		Grimoire data = grimoire.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
-		if (data == null) return false;
-		data.loadState(grimoire);
-		int restCapacity = data.getCapacityMax() - data.getCapacity();
-		int capacity = this.getMantraCapacity(mantraType);
-		if (capacity > restCapacity) return false;
+		if (ItemMantraGem.isMantraGem(grimoire)) {
+			Mantra innerMantra = ItemMantraGem.getMantraFromMantraGem(grimoire);
+			if (innerMantra != null) return false;
+		} else {
+			Grimoire data = grimoire.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+			if (data == null) return false;
+			data.loadState(grimoire);
+			int restCapacity = data.getCapacityMax() - data.getCapacity();
+			int capacity = this.getMantraCapacity(mantraType);
+			if (capacity > restCapacity) return false;
+		}
 		// 设置句柄，表示可以开始计时了
 		mantraHandle = mantraType;
 		workType = WORK_TYPE_TRANSCRIBE;
@@ -253,9 +259,15 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 	protected void transcribe() {
 		ItemStack grimoire = this.getGrimoire();
 		if (grimoire.isEmpty()) return;
+		finish = true;
+		// 咒文宝石
+		if (ItemMantraGem.isMantraGem(grimoire)) {
+			ItemMantraGem.setMantraToMantraGem(grimoire, mantraHandle);
+			return;
+		}
+		// 书
 		Grimoire data = grimoire.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
 		if (data == null) return;
-		finish = true;
 		if (world.isRemote) return;
 		data.loadState(grimoire);
 		int capacity = this.getMantraCapacity(mantraHandle);

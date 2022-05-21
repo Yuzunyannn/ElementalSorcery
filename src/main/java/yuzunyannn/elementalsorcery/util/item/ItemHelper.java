@@ -20,6 +20,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -105,8 +106,11 @@ public class ItemHelper {
 		double d0 = (double) (world.rand.nextFloat() * 0.5F) + 0.25D;
 		double d1 = (double) (world.rand.nextFloat() * 0.5F) + 0.25D;
 		double d2 = (double) (world.rand.nextFloat() * 0.5F) + 0.25D;
-		EntityItem entityitem = new EntityItem(world, (double) pos.getX() + d0, (double) pos.getY() + d1,
-				(double) pos.getZ() + d2, stack);
+		return dropItem(world, new Vec3d(pos.getX() + d0, pos.getY() + d1, pos.getZ() + d2), stack);
+	}
+
+	static public EntityItem dropItem(World world, Vec3d pos, ItemStack stack) {
+		EntityItem entityitem = new EntityItem(world, pos.x, pos.y, pos.z, stack);
 		entityitem.setDefaultPickupDelay();
 		world.spawnEntity(entityitem);
 		return entityitem;

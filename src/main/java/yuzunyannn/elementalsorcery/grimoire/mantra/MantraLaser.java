@@ -90,6 +90,7 @@ public class MantraLaser extends MantraCommon {
 			return;
 		}
 
+		preGet.grow((int) (preGet.getCount() * (potent - 0.5f)));
 		caster.iWantBePotent(0.5f, true);
 		if (world.isRemote) setPotentContextColor(new Color(preGet.getColor()));
 		super.potentAttack(world, grimoire, caster, target);

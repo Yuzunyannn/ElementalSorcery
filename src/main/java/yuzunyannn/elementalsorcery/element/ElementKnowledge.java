@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.element;
 
 import java.util.List;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -17,10 +18,20 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.explosion.EEKnowledge;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.VariableSet;
+import yuzunyannn.elementalsorcery.util.Variables;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
@@ -111,5 +122,29 @@ public class ElementKnowledge extends ElementCommon {
 			return "minecraft:enchanting_table";
 		}
 
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public ElementStack onLaserUpdate(World world, IWorldObject caster, WorldTarget target, ElementStack eStack,
+			VariableSet content) {
+		if (!world.isRemote) return ElementStack.EMPTY;
+		int tick = content.get(Variables.TICK);
+		if (tick % 5 != 0) return ElementStack.EMPTY;
+		BlockPos pos = target.getPos();
+		if (pos == null) return ElementStack.EMPTY;
+		if (world.isAirBlock(pos)) return ElementStack.EMPTY;
+		IBlockState state = world.getBlockState(pos);
+		ElementStack[] eStacks = ElementMap.instance.toElementStack(ItemHelper.toItemStack(state));
+		if (eStacks != null && eStacks.length > 0) {
+			Vec3d speed = new Vec3d(rand.nextGaussian(), rand.nextGaussian(), rand.nextGaussian());
+			ElementStack sStack = eStacks[rand.nextInt(eStacks.length)];
+			EffectElementMove effect = new EffectElementMove(world, target.getHitVec());
+			effect.color.setColor(sStack.getColor());
+			effect.setVelocity(speed.scale(0.1));
+			effect.xDecay = effect.yDecay = effect.zDecay = 0.75;
+			Effect.addEffect(effect);
+		}
+		return ElementStack.EMPTY;
 	}
 }

@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLaser;
+import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
 
 public class ESObjects {
 
@@ -118,6 +119,7 @@ public class ESObjects {
 		public Item ICE_ROCK_SPAR;
 		public Item FAIRY_CORE;
 		public Item MATERIAL_DEBRIS;
+		public Item MANTRA_GEM;
 	}
 
 	static public class Blocks {

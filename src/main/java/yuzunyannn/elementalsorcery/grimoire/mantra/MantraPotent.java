@@ -37,7 +37,7 @@ public class MantraPotent extends MantraCommon {
 		this.setTranslationKey("potent");
 		this.setColor(0xffde00);
 		this.setIcon("potent");
-		this.setRarity(20);
+		this.setRarity(18);
 		this.setOccupation(7);
 	}
 

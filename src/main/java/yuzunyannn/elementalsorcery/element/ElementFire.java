@@ -45,7 +45,7 @@ public class ElementFire extends ElementCommon {
 	public ElementFire() {
 		super(rgb(255, 153, 2), "fire");
 		setTransition(2, 0, 180);
-		setLaserCostOnce(1, 50);
+		setLaserCostOnce(1, 75);
 	}
 
 	@Override

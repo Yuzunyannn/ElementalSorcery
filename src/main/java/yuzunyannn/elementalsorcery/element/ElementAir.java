@@ -2,16 +2,22 @@ package yuzunyannn.elementalsorcery.element;
 
 import java.util.List;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.element.explosion.EEAir;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.VariableSet;
+import yuzunyannn.elementalsorcery.util.Variables;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 import yuzunyannn.elementalsorcery.world.JuiceMaterial;
@@ -21,6 +27,7 @@ public class ElementAir extends ElementCommon {
 	public ElementAir() {
 		super(0xe5ffff, "air");
 		setTransition(2.5f, 202.5f, 120);
+		setLaserCostOnce(1, 10);
 	}
 
 	@Override
@@ -64,6 +71,50 @@ public class ElementAir extends ElementCommon {
 		helper.preparatory(ESInit.POTIONS.WIND_SHIELD, 32, 85);
 		helper.check(JuiceMaterial.MELON, 85).checkRatio(JuiceMaterial.APPLE, 0.5f, 1.5f).join();
 		helper.descend(JuiceMaterial.APPLE, 20, 0.8f);
+
+	}
+
+	@Override
+	public void onLaserExecute(World world, IWorldObject caster, WorldTarget target, ElementStack lastCost,
+			VariableSet content) {
+		if (laserOnceCost.isEmpty()) return;
+		if (!lastCost.isEmpty()) content.set(Variables.STORAGE_ELEMENT, lastCost);
+		ElementStack storage = content.get(Variables.STORAGE_ELEMENT);
+		if (storage.isEmpty()) return;
+		int tick = content.get(Variables.TICK);
+		int tickCount = (int) MathHelper.clamp(200 / MathHelper.sqrt(storage.getPower()), 3, 20);
+		if (tick % tickCount == 0) storage.shrink(laserOnceCost.getCount());
+		onExecuteLaser(world, caster, target, storage, content);
+	}
+
+	@Override
+	protected void onExecuteLaser(World world, IWorldObject caster, WorldTarget target, ElementStack storage,
+			VariableSet content) {
+		if (world.isRemote) return;
+
+		Vec3d casterVec = caster.getEyePosition();
+		Entity entity = target.getEntity();
+		float ratio = Math.max(MathHelper.sqrt(storage.getPower()) / 100f, 0.05f);
+		EntityLivingBase casterEntity = caster.asEntityLivingBase();
+		Vec3d tar = target.getHitVec().subtract(casterVec).normalize().scale(ratio);
+		if (ratio > 0.5f) ratio = 0.5f;
+		if (casterEntity != null && casterEntity.isSneaking()) {
+			tar = tar.scale(-1);
+			casterEntity.motionX += tar.x;
+			casterEntity.motionY += tar.y * 1.1;
+			casterEntity.motionZ += tar.z;
+			if (tar.y > 0) casterEntity.fallDistance = 0;
+			casterEntity.velocityChanged = true;
+			return;
+		}
+
+		if (entity != null) {
+			entity.motionX += tar.x;
+			entity.motionY += tar.y * 1.1;
+			entity.motionZ += tar.z;
+			entity.velocityChanged = true;
+			return;
+		}
 
 	}
 }

@@ -26,6 +26,10 @@ public class EffectElement extends EffectFacing {
 		this.prevScale = this.scale = rand.nextFloat() * 0.2f + 0.1f;
 	}
 
+	public EffectElement(World worldIn, Vec3d vec) {
+		this(worldIn, vec.x, vec.y, vec.z);
+	}
+
 	@Override
 	public void onUpdate() {
 		super.onUpdate();

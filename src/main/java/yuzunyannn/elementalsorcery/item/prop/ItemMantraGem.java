@@ -1,0 +1,48 @@
+package yuzunyannn.elementalsorcery.item.prop;
+
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.init.ESInit;
+
+public class ItemMantraGem extends Item {
+
+	static public boolean isMantraGem(ItemStack stack) {
+		return stack.getItem() == ESInit.ITEMS.MANTRA_GEM;
+	}
+
+	static public Mantra getMantraFromMantraGem(ItemStack stack) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) return null;
+		return Mantra.REGISTRY.getValue(new ResourceLocation(nbt.getString("mantraGemId")));
+	}
+
+	static public void setMantraToMantraGem(ItemStack stack, Mantra mantra) {
+		NBTTagCompound nbt = stack.getTagCompound();
+		if (nbt == null) stack.setTagCompound(nbt = new NBTTagCompound());
+		nbt.setString("mantraGemId", mantra.getRegistryName().toString());
+	}
+
+	public ItemMantraGem() {
+		this.setTranslationKey("mantraGem");
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		Mantra mantra = getMantraFromMantraGem(stack);
+		if (mantra == null) return;
+		tooltip.add(TextFormatting.AQUA + I18n.format(mantra.getTranslationKey() + ".name"));
+	}
+
+}

@@ -601,6 +601,11 @@
 			"zh_CN": "物质残片",
 			"en_US": "Material Debris",
 			"ja_JP": "物質の残片"
+		},
+		"item.mantraGem.name": {
+			"zh_CN": "咒文宝石",
+			"en_US": "Mantra Gem",
+			"ja_JP": "呪文の宝石"
 		}
 	},
 	"tile": {

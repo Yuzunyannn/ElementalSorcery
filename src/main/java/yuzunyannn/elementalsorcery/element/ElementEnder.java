@@ -2,6 +2,10 @@ package yuzunyannn.elementalsorcery.element;
 
 import java.util.List;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.MobEffects;
@@ -16,9 +20,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.element.explosion.EEEnder;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.VariableSet;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -29,6 +37,7 @@ public class ElementEnder extends ElementCommon {
 	public ElementEnder() {
 		super(0xcc00fa, "ender");
 		setTransition(3f, 270, 180);
+		setLaserCostOnce(1, 50);
 	}
 
 	@Override
@@ -92,6 +101,40 @@ public class ElementEnder extends ElementCommon {
 		helper.preparatory(ESInit.POTIONS.ENDERCORPS, 16, 150);
 		helper.check(JuiceMaterial.MELON, 125).join();
 
+	}
+
+	@Override
+	protected void onExecuteLaser(World world, IWorldObject caster, WorldTarget target, ElementStack storage,
+			VariableSet content) {
+
+		Entity entity = target.getEntity();
+		if (entity != null) {
+			if (!entity.isNonBoss()) return;
+			if (entity.height > 2) return;
+			if (entity.width > 1.5) return;
+			BlockPos pos = WorldHelper.tryFindPlaceToSpawn(world, rand, entity.getPosition(),
+					8 + 16 * rand.nextFloat());
+			if (pos != null) {
+				if (world.isRemote) {
+					MantraEnderTeleport.addEffect(world, target.getHitVec());
+				} else MantraEnderTeleport.doEnderTeleport(world, entity, new Vec3d(pos).add(0.5, 1, 0.5));
+			}
+			return;
+		}
+		if (world.isRemote) return;
+		BlockPos pos = target.getPos();
+		IBlockState state = world.getBlockState(pos);
+		if (state.getMaterial() == Material.AIR) return;
+		Block block = state.getBlock();
+		if (block.hasTileEntity(state)) return;
+		if (!state.isFullBlock()) return;
+
+		BlockPos at = pos.add(rand.nextGaussian() * 16, rand.nextGaussian() * 16, rand.nextGaussian() * 16);
+		if (!BlockHelper.isReplaceBlock(world, at)) return;
+		world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+				SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1, 1);
+		world.setBlockToAir(pos);
+		world.setBlockState(at, state);
 	}
 
 }

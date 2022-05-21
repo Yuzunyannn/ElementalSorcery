@@ -4,6 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
+import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -25,7 +26,8 @@ public class TileTranscribeTable extends TileEntityNetwork implements IGetItemSt
 	public void callInjection() {
 		if (world.isRemote) return;
 		if (grimoire.isEmpty()) return;
-		if (grimoire.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null) == null) return;
+		if (grimoire.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null) == null && !ItemMantraGem.isMantraGem(grimoire))
+			return;
 		TileTranscribeInjection tile = BlockHelper.getTileEntity(world, pos.up(4), TileTranscribeInjection.class);
 		if (tile == null) return;
 		tile.wake();
@@ -38,7 +40,7 @@ public class TileTranscribeTable extends TileEntityNetwork implements IGetItemSt
 
 	@Override
 	public boolean canSetStack(ItemStack stack) {
-		return stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null) != null;
+		return stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null) != null || ItemMantraGem.isMantraGem(stack);
 	}
 
 	@Override

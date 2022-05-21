@@ -9,6 +9,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class ParticleTranscribe extends Particle {
 
+	public double yDecay = 0.928;
+	
 	public ParticleTranscribe(World worldIn, Vec3d from) {
 		super(worldIn, from.x, from.y, from.z);
 		this.setParticleTextureIndex((int) (Math.random() * 26.0D + 1.0D + 224.0D));
@@ -28,7 +30,7 @@ public class ParticleTranscribe extends Particle {
 		this.posY += this.motionY;
 		this.posZ += this.motionZ;
 		// 阻力
-		this.motionY *= 0.925;
+		this.motionY *= yDecay;
 		this.particleScale -= 0.02f;
 		this.particleAngle += 3.14f / 100;
 		if (this.particleScale <= 0) this.setExpired();

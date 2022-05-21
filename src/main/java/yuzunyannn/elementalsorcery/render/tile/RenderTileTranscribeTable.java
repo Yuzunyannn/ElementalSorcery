@@ -10,6 +10,7 @@ import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeTable;
+import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class RenderTileTranscribeTable extends TileEntitySpecialRenderer<TileTranscribeTable> {
 
@@ -18,15 +19,20 @@ public class RenderTileTranscribeTable extends TileEntitySpecialRenderer<TileTra
 			float alpha) {
 		ItemStack stack = tile.getStack();
 		if (stack.isEmpty()) return;
-		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
-		if (grimoire == null) return;
 		GlStateManager.pushMatrix();
-		RenderItemGrimoireInfo info = grimoire.getRenderInfo();
-		info.bookSpreadPrev = info.bookSpread = 1;
-		info.tickCount = EventClient.tickRender;
-		float _float = MathHelper.cos(EventClient.getGlobalRotateInRender(partialTicks) / 180 * 3.1415f);
-		GlStateManager.translate(x + 0.5, y + 0.65 + _float * 0.02f, z + 0.5);
-		GlStateManager.rotate(90, 0, 0, 1);
+		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+		if (grimoire == null) {
+			double f = MathHelper.sin((EventClient.tickRender + partialTicks) / 20f) * 0.025 + 0.1;
+			GlStateManager.translate(x + 0.5, y + 0.2 + f, z + 0.5);
+			RenderHelper.layItemPositionFix(stack);
+		} else {
+			RenderItemGrimoireInfo info = grimoire.getRenderInfo();
+			info.bookSpreadPrev = info.bookSpread = 1;
+			info.tickCount = EventClient.tickRender;
+			float _float = MathHelper.cos(EventClient.getGlobalRotateInRender(partialTicks) / 180 * 3.1415f);
+			GlStateManager.translate(x + 0.5, y + 0.65 + _float * 0.02f, z + 0.5);
+			GlStateManager.rotate(90, 0, 0, 1);
+		}
 		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
 		GlStateManager.popMatrix();
 	}

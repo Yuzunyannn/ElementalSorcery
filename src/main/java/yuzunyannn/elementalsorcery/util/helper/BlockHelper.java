@@ -5,6 +5,8 @@ import java.util.function.BiFunction;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -13,6 +15,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
+import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -20,7 +24,9 @@ import net.minecraftforge.items.ItemHandlerHelper;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
+import yuzunyannn.elementalsorcery.util.ESFakePlayer;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class BlockHelper {
 	/** 获取tile实体 */
@@ -48,6 +54,19 @@ public class BlockHelper {
 		if (tile == null) return;
 		IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
 		BlockHelper.drop(itemHandler, worldIn, pos);
+	}
+
+	public static void destroyBlock(World world, BlockPos pos, boolean silkHarvest, int fortune) {
+		if (world.isAirBlock(pos)) return;
+		ItemStack silkTool = new ItemStack(Items.WOODEN_PICKAXE);
+		FakePlayer fakePlayer = ESFakePlayer.get((WorldServer) world);
+		if (silkHarvest) silkTool.addEnchantment(Enchantments.SILK_TOUCH, 1);
+		else ItemHelper.addEnchantment(silkTool, Enchantments.FORTUNE, fortune);
+		IBlockState iblockstate = world.getBlockState(pos);
+		Block block = iblockstate.getBlock();
+		block.harvestBlock(world, fakePlayer, pos, iblockstate, null, silkTool);
+		world.setBlockToAir(pos);
+		world.playEvent(2001, pos, Block.getStateId(iblockstate));
 	}
 
 	/** 方块激活的时候，处理继承IGetItemStack的物品栈 */

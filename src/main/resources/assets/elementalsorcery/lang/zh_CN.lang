@@ -121,6 +121,7 @@ item.iceRockChip.name=岩冰结晶
 item.iceRockSpar.name=岩冰晶石
 item.fairyCore.name=精灵核心
 item.materialDebris.name=物质残片
+item.mantraGem.name=咒文宝石
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱

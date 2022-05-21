@@ -227,6 +227,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.item.prop.ItemLifeLeather;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicPaper;
+import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
 import yuzunyannn.elementalsorcery.item.prop.ItemMaterialDebris;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.item.prop.ItemRabidLeather;
@@ -597,6 +598,7 @@ public class ESInit {
 		ITEMS.ICE_ROCK_SPAR = new ItemIceRockSpar();
 		ITEMS.FAIRY_CORE = new ItemFairyCore();
 		ITEMS.MATERIAL_DEBRIS = new ItemMaterialDebris();
+		ITEMS.MANTRA_GEM = new ItemMantraGem();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1052,7 +1054,9 @@ public class ESInit {
 		registerRender(ITEMS.ICE_ROCK_SPAR);
 		registerRender(ITEMS.FAIRY_CORE);
 		registerRender(ITEMS.MATERIAL_DEBRIS);
+		registerRender(ITEMS.MANTRA_GEM);
 		
+
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
 		registerRender(BLOCKS.HEARTH, 1, "iron_hearth");

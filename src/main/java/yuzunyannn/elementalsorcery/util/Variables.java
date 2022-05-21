@@ -10,6 +10,7 @@ public class Variables {
 
 	public static final Variable<ElementStack> STORAGE_ELEMENT = new Variable<>("stESk", VariableSet.ELEMENT);
 	public static final Variable<UUID> sUUID = new Variable<>("@uuid", VariableSet.UUID);
+	public static final Variable<Integer> idI = new Variable<>("id", VariableSet.INT);
 
 	public static final Variable<ElementStack> MAGIC;
 	public static final Variable<ElementStack> METAL;

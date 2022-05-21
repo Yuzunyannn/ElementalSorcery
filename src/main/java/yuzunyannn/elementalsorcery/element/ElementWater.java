@@ -29,7 +29,7 @@ public class ElementWater extends ElementCommon {
 	public ElementWater() {
 		super(0x6472f7, "water");
 		setTransition(2, 180, 180);
-		setLaserCostOnce(1, 2);
+		setLaserCostOnce(1, 5);
 	}
 
 	@Override
@@ -113,22 +113,26 @@ public class ElementWater extends ElementCommon {
 		if (world.isRemote) return;
 
 		Entity entity = target.getEntity();
+		BlockPos pos;
+		EnumFacing face = target.getFace();
 		if (entity != null) {
 			if (entity instanceof EntityLivingBase) {
 				EntityLivingBase living = (EntityLivingBase) entity;
 				living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, storage.getPower() * 10,
 						storage.getPower() > 200 ? 2 : 1));
 			}
-			return;
-		}
-
-		BlockPos pos = target.getPos();
+			pos = new BlockPos(entity.posX, entity.posY - 0.5, entity.posZ);
+			face = EnumFacing.UP;
+		} else pos = target.getPos();
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
-		if (block == Blocks.LAVA) world.setBlockState(pos, Blocks.OBSIDIAN.getDefaultState());
+		if (block == Blocks.AIR) return;
+		else if (block == Blocks.LAVA) world.setBlockState(pos, Blocks.OBSIDIAN.getDefaultState());
 		else if (block == Blocks.FLOWING_LAVA) world.setBlockState(pos, Blocks.COBBLESTONE.getDefaultState());
+		else if (block == Blocks.WATER) world.setBlockState(pos, Blocks.ICE.getDefaultState());
+		else if (block == Blocks.ICE);
 		else if (!world.provider.doesWaterVaporize()) {
-			BlockPos at = pos.offset(target.getFace());
+			BlockPos at = pos.offset(face);
 			if (BlockHelper.isReplaceBlock(world, at)) {
 				IBlockState waterState = Blocks.FLOWING_WATER.getDefaultState().withProperty(BlockFluidBase.LEVEL, 8);
 				world.setBlockState(at, waterState);

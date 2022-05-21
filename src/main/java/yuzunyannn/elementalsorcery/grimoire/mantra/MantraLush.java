@@ -70,7 +70,7 @@ public class MantraLush extends MantraCommon {
 	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
 		if (beforeGeneralStartTime(caster)) return;
 		MantraDataCommon mData = (MantraDataCommon) data;
-		CollectResult cr = mData.tryCollect(caster, ESInit.ELEMENTS.WOOD, 1, 50, 200);
+		CollectResult cr = mData.tryCollect(caster, ESInit.ELEMENTS.WOOD, 1, 50, 125);
 		mData.setProgress(cr.getStackCount(), 200);
 	}
 

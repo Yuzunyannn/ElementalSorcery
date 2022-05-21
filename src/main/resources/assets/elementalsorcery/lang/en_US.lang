@@ -121,6 +121,7 @@ item.iceRockChip.name=Icerock Chip
 item.iceRockSpar.name=Icerock Spar
 item.fairyCore.name=Elf Core
 item.materialDebris.name=Material Debris
+item.mantraGem.name=Mantra Gem
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box

@@ -31,7 +31,7 @@ public class MantraTimeHourglass extends MantraCommon {
 		this.setTranslationKey("timeHourglass");
 		this.setColor(0xe0e0e0);
 		this.setIcon("time_hourglass");
-		this.setRarity(20);
+		this.setRarity(30);
 	}
 
 	@Override
