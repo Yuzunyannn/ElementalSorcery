@@ -66,6 +66,7 @@ public class GERRunningState extends GERActionState {
 	int stageIndex = STAGE_NONE;
 
 	List<GuiLocationBar> bars = new ArrayList<>();
+	List<Mantra> mantras;
 
 	@Override
 	public void init(GuiElementReactor guiReactor) {
@@ -77,6 +78,8 @@ public class GERRunningState extends GERActionState {
 		int i = MathHelper.floor(localList.size() / 2.0f);
 		addLocationBar(localList, 0, i, true);
 		addLocationBar(localList, i, localList.size(), false);
+
+		if (mantras == null) mantras = reactor.checkAndGetMantras();
 	}
 
 	protected void addLocationBar(List<WorldLocation> list, int i, int j, boolean isLeft) {
@@ -98,7 +101,7 @@ public class GERRunningState extends GERActionState {
 	}
 
 	public List<Mantra> getMantraList() {
-		return reactor.getMantras();
+		return mantras;
 	}
 
 	public void trySendStop() {
@@ -322,14 +325,13 @@ public class GERRunningState extends GERActionState {
 
 		if (isRunningMantra()) {
 
-			for (GuiLocationBar bar : bars) {
-				if (bar.isSelect(mouseX, mouseY)) {
-					sendShiftMapLocation(bar.getLocaltion());
-					break;
-				}
-			}
-
 			if (isMantraReady()) {
+				for (GuiLocationBar bar : bars) {
+					if (bar.isSelect(mouseX, mouseY)) {
+						sendShiftMapLocation(bar.getLocaltion());
+						break;
+					}
+				}
 				float x = (mouseX - gui.width / 2) / (GuiElementReactor.MAP_DRAW_SIZE / 2.0f);
 				float y = (mouseY - gui.height / 2) / (GuiElementReactor.MAP_DRAW_SIZE / 2.0f);
 				float len = MathHelper.sqrt(x * x + y * y);
@@ -373,6 +375,7 @@ public class GERRunningState extends GERActionState {
 
 		if (GuiNormal.isMouseIn(mouseX, mouseY, cX - centerSize / 2, cY - centerSize / 2, centerSize, centerSize)) {
 			stageIndex = STAGE_TOOL;
+			mantras = reactor.checkAndGetMantras();
 			return;
 		}
 	}

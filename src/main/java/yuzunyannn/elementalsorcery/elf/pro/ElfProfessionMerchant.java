@@ -39,6 +39,7 @@ import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
 import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
@@ -64,6 +65,11 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 		NBTTagCompound nbt = elf.getEntityData();
 		TradeCount trade = new TradeCount();
 		Random rand = elf.getRNG();
+		if (rand.nextFloat() <= 0.1) {
+			float r = RandomHelper.rand.nextFloat() * 0.4f + 0.1f;
+			int money = (int) (2500 + RandomHelper.rand.nextInt(5000) + 7500 * r);
+			trade.addCommodity(ItemAncientPaper.createPaper(ESInit.MANTRAS.LASER, r), money, 1);
+		}
 		if (rand.nextInt(2) == 0) addACommodity(trade, new ItemStack(BLOCKS.ELF_FRUIT, 1, 2), 5, 20, 1000);
 		if (rand.nextInt(3) == 0) addACommodity(trade, new ItemStack(ITEMS.RESONANT_CRYSTAL), 50, 8, 1000);
 		if (rand.nextInt(2) == 0) {

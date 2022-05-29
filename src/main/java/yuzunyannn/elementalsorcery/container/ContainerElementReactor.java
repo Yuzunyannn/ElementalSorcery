@@ -95,7 +95,7 @@ public class ContainerElementReactor extends Container implements IContainerNetw
 			lastIFragment = ifCheck;
 			lastPair = tileEntity.getRunningMantraPair();
 			NBTTagCompound nbt = tileEntity.getUpdateTagForUpdateToClient();
-			if (isFirst) nbt.setTag("mas", NBTHelper.serializeMantra(tileEntity.getMantras()));
+//			if (isFirst) nbt.setTag("mas", NBTHelper.serializeMantra(tileEntity.getMantras()));
 			this.sendToClient(nbt, player);
 			isFirst = false;
 		}

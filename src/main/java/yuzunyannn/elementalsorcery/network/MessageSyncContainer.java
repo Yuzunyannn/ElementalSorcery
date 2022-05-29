@@ -100,16 +100,18 @@ public class MessageSyncContainer implements IMessage {
 		public void updateToClient(MessageSyncContainer msg) {
 			EntityPlayerSP player = Minecraft.getMinecraft().player;
 			Container gui = player.openContainer;
-			if (gui != null && gui instanceof IContainerNetwork && gui.windowId == msg.nbt.getInteger("_gui"))
+			if (gui != null && gui instanceof IContainerNetwork && gui.windowId == msg.nbt.getInteger("_gui")) {
+				msg.nbt.removeTag("_gui");
 				((IContainerNetwork) gui).recvData(msg.nbt, Side.CLIENT);
-			else ElementalSorcery.logger.warn("gui不吻合");
+			} else ElementalSorcery.logger.warn("gui不吻合");
 		}
 
 		public void requestFromClient(MessageSyncContainer msg, EntityPlayerMP player) {
 			Container gui = player.openContainer;
-			if (gui != null && gui instanceof IContainerNetwork && gui.windowId == msg.nbt.getInteger("_gui"))
+			if (gui != null && gui instanceof IContainerNetwork && gui.windowId == msg.nbt.getInteger("_gui")) {
+				msg.nbt.removeTag("_gui");
 				((IContainerNetwork) gui).recvData(msg.nbt, Side.SERVER);
-			else ElementalSorcery.logger.warn("gui不吻合");
+			} else ElementalSorcery.logger.warn("gui不吻合");
 		}
 
 	}

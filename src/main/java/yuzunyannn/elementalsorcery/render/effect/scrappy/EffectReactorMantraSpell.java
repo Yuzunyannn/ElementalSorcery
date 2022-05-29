@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.render.effect.scrappy;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -28,6 +29,7 @@ public class EffectReactorMantraSpell extends EffectLaser {
 		EffectReactorMantraSpell effect = new EffectReactorMantraSpell(world, pos, true);
 		effect.setMainColor(new Color(pair.mantra.getColor(null)));
 		Effect.addEffect(effect);
+		pair.launcher.castClientTo(world, new BlockPos(pos.subtract(0, -0.5, 0)));
 	}
 
 	public final Color circleColor = new Color();

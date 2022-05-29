@@ -76,7 +76,7 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 		GlStateManager.disableCull();
-		RenderHelper.render(stack, TEXTUREL, MODEL, false, 0.038, 0.0175, 0, 0);
+		RenderHelper.render(stack, TEXTUREL, MODEL, true, 0.038, 0.0175, 0, 0);
 		GlStateManager.enableCull();
 	}
 

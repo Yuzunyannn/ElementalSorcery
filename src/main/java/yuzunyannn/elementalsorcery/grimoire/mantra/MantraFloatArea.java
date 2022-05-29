@@ -31,6 +31,7 @@ public class MantraFloatArea extends MantraSquareAreaAdv {
 		this.setRarity(80);
 		this.setOccupation(4);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.AIR, 2, 25), 60, 10);
+		this.initAndAddDefaultMantraLauncher(0.0075);
 	}
 
 	@Override
@@ -69,7 +70,6 @@ public class MantraFloatArea extends MantraSquareAreaAdv {
 			effect.setColor(getColor(data));
 			Effect.addEffect(effect);
 		}
-
 	}
 
 	@Override

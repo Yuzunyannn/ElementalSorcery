@@ -17,6 +17,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
+import yuzunyannn.elementalsorcery.grimoire.remote.FMantraSprint;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectResonance;
@@ -28,6 +29,7 @@ public class MantraSprint extends MantraCommon {
 		this.setColor(0xabfffa);
 		this.setIcon("sprint");
 		this.setRarity(100);
+		this.addFragmentMantraLauncher(new FMantraSprint(this));
 	}
 
 	@Override

@@ -2,7 +2,7 @@
 	"pattern": [
 		"R R",
 		"M M",
-		"G G",
+		"GJG",
 		"    ",
 		"N  N",
 		"NEEN",
@@ -16,7 +16,11 @@
 		},
 		"G": "minecraft:gold_block",
 		"M": "elementalsorcery:magic_core",
-		"R": "minecraft:redstone_block"
+		"R": "minecraft:redstone_block",
+		"J": {
+			"id": "elementalsorcery:controller",
+			"meta": 0
+		}
 	},
 	"element": [
 		{

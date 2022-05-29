@@ -27,6 +27,7 @@ public class MantraLightningArea extends MantraSquareAreaAdv {
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.AIR, 2, 50), 80, 20);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.FIRE, 2, 40), -1, 20);
 		this.setPotentPowerCollect(0.1f, 2);
+		this.initAndAddDefaultMantraLauncher(0.002);
 	}
 
 	@Override

@@ -26,8 +26,6 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
-import yuzunyannn.elementalsorcery.util.VariableSet;
-import yuzunyannn.elementalsorcery.util.Variables;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class MantraLush extends MantraCommon {
@@ -37,11 +35,7 @@ public class MantraLush extends MantraCommon {
 		this.setColor(0x32CD32);
 		this.setIcon("lush");
 		this.setRarity(75);
-		this.setDirectLaunchFragmentMantraLauncher(ESInit.ELEMENTS.WOOD, 4000, 20, charge -> {
-			VariableSet set = new VariableSet();
-			set.set(Variables.WOOD, new ElementStack(ESInit.ELEMENTS.WOOD, (int) (charge / 10), (int) (charge / 10)));
-			return set;
-		});
+		this.setDirectLaunchFragmentMantraLauncher(new ElementStack(ESInit.ELEMENTS.WOOD, 125, 50), 2, 0.0075, null);
 	}
 
 	@Override

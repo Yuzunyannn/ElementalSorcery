@@ -1,0 +1,10 @@
+{
+	"lev": 5,
+	"need": [
+		"element_sup/grimoire"
+	],
+	"linked": "elementalsorcery:mantra_gem",
+	"type": "research",
+	"name": "mantraTangibilization",
+	"item": "elementalsorcery:mantra_gem"
+}

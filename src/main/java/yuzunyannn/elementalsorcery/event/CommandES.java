@@ -56,6 +56,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper.EnumType;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
+import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
@@ -276,11 +277,14 @@ public class CommandES extends CommandBase {
 					mantra.getTextComponent());
 			return;
 		case "add":
-			if (grimoire == null)
-				throw new CommandException("commands.es.notFound", new TextComponentTranslation("item.grimoire.name"));
-			grimoire.loadState(grimoireStack);
-			grimoire.add(mantra);
-			grimoire.saveState(grimoireStack);
+			if (ItemMantraGem.isMantraGem(grimoireStack)) ItemMantraGem.setMantraToMantraGem(grimoireStack, mantra);
+			else {
+				if (grimoire == null) throw new CommandException("commands.es.notFound",
+						new TextComponentTranslation("item.grimoire.name"));
+				grimoire.loadState(grimoireStack);
+				grimoire.add(mantra);
+				grimoire.saveState(grimoireStack);
+			}
 			notifyCommandListener(sender, this, "commands.es.mantra.add", player.getName(), mantra.getTextComponent());
 			return;
 		default:

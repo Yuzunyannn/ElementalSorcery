@@ -37,10 +37,26 @@ import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
-import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLaunch;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class ItemAncientPaper extends Item implements IToElementItem {
+
+	static public ItemStack createPaper(Mantra mantra, float progress) {
+		ItemStack stack = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, 0);
+		AncientPaper ap = new AncientPaper();
+		ap.setMantra(mantra);
+		if (progress >= 1) ap.setStart(0).setEnd(100);
+		else {
+			float r = RandomHelper.rand.nextFloat();
+			if (r - progress * 0.5f < 0) r = 0;
+			else if (r + progress * 0.5f > 1) r = 1 - progress;
+			else r = r - progress * 0.5f;
+			ap.setStart((int) (r * 100)).setEnd((int) ((r + progress) * 100));
+		}
+		ap.saveState(stack);
+		return stack;
+	}
 
 	public ItemAncientPaper() {
 		this.setHasSubtypes(true);

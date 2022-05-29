@@ -54,7 +54,7 @@ public class KnowledgeType {
 		register("ender_boat", knowledge(5, 100), "Natural", 5, "Ender", 12);
 		register("monster", knowledge(10, 80), Topics.BIOLOGY, 110, Topics.NATURAL, 5);
 		// 第一个为Mantra可以用作咒文
-		register("library", knowledge(20, 50), Topics.MANTRA, 5, "Struct", 5, "Engine", 5);
+		register("library", knowledge(20, 50), Topics.MANTRA, 5, Topics.STRUCT, 5, "Engine", 5);
 		register("mantra", knowledge(20, 50), Topics.MANTRA, 10, Topics.STRUCT, 5, Topics.BIOLOGY, 4);
 		register("element", knowledge(30, 10), Topics.MANTRA, 2, "Struct", 12, "Natural", 2);
 		register("altar", knowledge(40, 40), Topics.MANTRA, 6, "Struct", 6, "Natural", 4, "Engine", 4);

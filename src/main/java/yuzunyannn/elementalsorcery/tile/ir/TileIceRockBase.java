@@ -66,7 +66,7 @@ public abstract class TileIceRockBase extends TileEntityNetwork implements IElem
 		public ElementStack getStackInSlot(int slot) {
 			int power = getPowerFromSlot(slot);
 			if (power <= 0) return ElementStack.EMPTY;
-			int count = MathHelper.floor(ElementHelper.fromFragment(ESInit.ELEMENTS.MAGIC, getMagicFragment(), power));
+			int count = MathHelper.floor(ElementHelper.fromFragmentByPower(ESInit.ELEMENTS.MAGIC, getMagicFragment(), power));
 			if (count <= 0) return ElementStack.EMPTY;
 			return ElementStack.magic(count, power);
 		};
@@ -94,7 +94,7 @@ public abstract class TileIceRockBase extends TileEntityNetwork implements IElem
 			if (!estack.isMagic()) return ElementStack.EMPTY;
 			int power = estack.getPower();
 			double fragment = extractMagicFragment(ElementHelper.toFragment(estack), simulate);
-			double dcount = ElementHelper.fromFragment(ESInit.ELEMENTS.MAGIC, fragment, power);
+			double dcount = ElementHelper.fromFragmentByPower(ESInit.ELEMENTS.MAGIC, fragment, power);
 			int count = MathHelper.floor(dcount);
 			if (!simulate)
 				onFromOrToFragmentChange(ElementHelper.toFragment(ESInit.ELEMENTS.MAGIC, dcount - count, power));

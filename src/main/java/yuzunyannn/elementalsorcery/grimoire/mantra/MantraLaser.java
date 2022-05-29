@@ -58,7 +58,7 @@ public class MantraLaser extends MantraCommon {
 		this.setTranslationKey("laser");
 		this.setColor(0xe2feff);
 		this.setIcon("laser");
-		this.setRarity(54);
+		this.setRarity(-1);
 		this.setOccupation(4);
 	}
 

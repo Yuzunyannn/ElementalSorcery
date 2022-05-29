@@ -1,0 +1,30 @@
+{
+	"pattern": [
+		"PEP",
+		"   ",
+		"PEP"
+	],
+	"key": {
+		"E": {
+			"id": "elementalsorcery:magic_platform",
+			"meta": 1
+		},
+		"P": "elementalsorcery:estone_prism"
+	},
+	"element": [
+		{
+			"id": "metal",
+			"size": 648,
+			"power": 275
+		},
+		{
+			"id": "wood",
+			"size": 648,
+			"power": 275
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:estone_matrix",
+		"count": 1
+	}
+}

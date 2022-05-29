@@ -45,6 +45,7 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.FIRE, 2, 40), 80, 20);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 1, 100), 20, -1);
 		this.setPotentPowerCollect(0.1f, 2);
+		this.initAndAddDefaultMantraLauncher(0.002);
 	}
 
 	@Override

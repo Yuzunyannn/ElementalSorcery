@@ -1,0 +1,17 @@
+{
+    "lev": 4,
+    "need": [
+        "element/element_crafting_table",
+        "md/magic_platform"
+    ],
+    "linked": [
+        "elementalsorcery:estone_prism",
+        "elementalsorcery:estone_matrix"
+    ],
+    "type": "craft",
+    "name": "estoneAdv",
+    "item": [
+        "elementalsorcery:estone_prism",
+        "elementalsorcery:estone_matrix"
+    ]
+}

@@ -1,7 +1,10 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Random;
-import java.util.function.Function;
+import java.util.function.BiFunction;
 
 import javax.annotation.Nullable;
 
@@ -19,7 +22,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
-import yuzunyannn.elementalsorcery.api.util.WorldObjectBlock;
 import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
@@ -28,7 +30,7 @@ import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
-import yuzunyannn.elementalsorcery.grimoire.remote.FMantraBase;
+import yuzunyannn.elementalsorcery.grimoire.remote.FMantraElementDirectLaunch;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
@@ -41,7 +43,6 @@ import yuzunyannn.elementalsorcery.util.VariableSet;
 import yuzunyannn.elementalsorcery.util.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
-import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class MantraCommon extends Mantra {
 
@@ -62,21 +63,21 @@ public class MantraCommon extends Mantra {
 		this.color = color;
 	}
 
-	public static void fireMantra(World world, Mantra mantra, Entity caster, VariableSet params) {
+	public static void fireMantra(World world, Mantra mantra, @Nullable Entity caster, VariableSet params) {
 		if (mantra instanceof MantraCommon) {
 			MantraCommon common = (MantraCommon) mantra;
 			Vec3d vec = null;
 			if (params.has(VEC)) vec = params.get(VEC);
 			else if (params.has(POS)) vec = new Vec3d(params.get(POS));
-			else vec = caster.getPositionVector();
-			common.directLaunchMantra(world, vec, new WorldObjectEntity(caster), params, null);
+			else if (caster != null) vec = caster.getPositionVector();
+			common.directLaunchMantra(world, vec, caster != null ? new WorldObjectEntity(caster) : null, params, null);
 		}
 	}
 
-	public Entity directLaunchMantra(World world, Vec3d vec, IWorldObject caster, VariableSet params,
+	public Entity directLaunchMantra(World world, Vec3d vec, @Nullable IWorldObject caster, VariableSet params,
 			NBTTagCompound meta) {
-		EntityGrimoire grimoire = new EntityGrimoire(world, caster.asEntityLivingBase(), this, meta,
-				EntityGrimoire.STATE_AFTER_SPELLING);
+		EntityGrimoire grimoire = new EntityGrimoire(world, caster == null ? null : caster.asEntityLivingBase(), this,
+				meta, EntityGrimoire.STATE_AFTER_SPELLING);
 		IMantraData mantraData = grimoire.getMantraData();
 		try {
 			MantraDataCommon mc = (MantraDataCommon) mantraData;
@@ -94,20 +95,19 @@ public class MantraCommon extends Mantra {
 
 	}
 
-	public void setDirectLaunchFragmentMantraLauncher(Element element, float maxCharge, float chargetSpeed,
-			Function<Double, VariableSet> callback) {
-		FMantraBase fmb = new FMantraBase() {
-			@Override
-			public void cast(World world, BlockPos pos, WorldLocation to, VariableSet content) {
-				VariableSet parmas = callback.apply(content.get(CHARGE));
-				MantraCommon.this.directLaunchMantra(to.getWorld(world), new Vec3d(to.getPos()),
-						new WorldObjectBlock(world.getTileEntity(pos)), parmas, null);
-			}
-		};
+	public void setDirectLaunchFragmentMantraLauncher(ElementStack element, double mult, double chargeSpeedRatio,
+			BiFunction<Double, VariableSet, VariableSet> callback) {
+		List<ElementStack> list = new ArrayList<>(1);
+		list.add(element);
+		setDirectLaunchFragmentMantraLauncher(list, mult, chargeSpeedRatio, callback);
+	}
+
+	public void setDirectLaunchFragmentMantraLauncher(Collection<ElementStack> elements, double mult,
+			double chargeSpeedRatio, BiFunction<Double, VariableSet, VariableSet> callback) {
+		FMantraElementDirectLaunch fmb = new FMantraElementDirectLaunch(this, elements, mult);
+		fmb.parmasGenerator = callback;
 		fmb.setIconRes(getIconResource());
-		fmb.addCanUseElement(element);
-		fmb.setMaxCharge(maxCharge);
-		fmb.setChargetSpeed(chargetSpeed);
+		fmb.setChargeSpeedRatio((float) chargeSpeedRatio);
 		this.addFragmentMantraLauncher(fmb);
 	}
 

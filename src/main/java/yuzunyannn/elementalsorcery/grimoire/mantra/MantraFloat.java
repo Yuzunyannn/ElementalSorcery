@@ -10,6 +10,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
+import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFloat;
 import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class MantraFloat extends MantraCommon {
@@ -20,6 +21,7 @@ public class MantraFloat extends MantraCommon {
 		this.setIcon("float");
 		this.setRarity(125);
 		this.setOccupation(1);
+		this.addFragmentMantraLauncher(new FMantraFloat(this));
 	}
 
 	@Override

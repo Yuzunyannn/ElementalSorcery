@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.grimoire.remote;
 
 import java.util.List;
+import java.util.function.Function;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,40 +22,65 @@ import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 public class FMantraEnderTeleportTo extends FMantraBase {
 
 	public FMantraEnderTeleportTo() {
-		addCanUseElement(ESInit.ELEMENTS.ENDER);
+		addCanUseElementWithSameLevel(ESInit.ELEMENTS.ENDER);
 		setMaxCharge(10000);
-		setChargetSpeed(10);
-		setIconRes("textures/mantras/teleport_f_goto.png");
+		setChargeSpeedRatio(10f / 10000f);
+		setMinChargeRatio(1);
+		setIconRes(initTexturePath());
+	}
+
+	String initTexturePath() {
+		return "textures/mantras/teleport_f_goto.png";
 	}
 
 	@Override
 	public void cast(World world, BlockPos pos, WorldLocation to, VariableSet content) {
 		double charge = content.get(CHARGE);
-		int count = (int) Math.pow(1.1, charge / 100);
-		if (count == 0) return;
+		;
 		float range = (float) ((charge / 10000) * 4 + 4);
+		ergodicTeleportEntities(world, pos, to, range, e -> {
+			executeTeleport(world, pos, to, e);
+			return null;
+		});
+		// sound
+		World toWorld = to.getWorld(world);
+		if (toWorld != null) {
+			Vec3d toVec = new Vec3d(to.getPos()).add(0.5, 0.5, 0.5);
+			toWorld.playSound(null, toVec.x, toVec.y, toVec.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT,
+					SoundCategory.HOSTILE, 2, 1);
+		}
+		Vec3d fromVec = new Vec3d(pos).add(0.5, 0.5, 0.5);
+		world.playSound(null, fromVec.x, fromVec.y, fromVec.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT,
+				SoundCategory.HOSTILE, 2, 1);
+	}
+
+	protected void ergodicTeleportEntities(World world, BlockPos pos, WorldLocation to, float range,
+			Function<Entity, Void> callback) {
 		AxisAlignedBB aabb = WorldHelper.createAABB(pos, range, range, range);
 		List<Entity> list = world.getEntitiesWithinAABB(Entity.class, aabb, e -> {
 			return e instanceof EntityLivingBase || e instanceof EntityItem;
 		});
-		Vec3d toVec = new Vec3d(to.getPos());
-		for (Entity e : list) {
-			Vec3d at = e.getPositionVector().subtract(new Vec3d(pos)).add(toVec);
-			BlockPos atPos = new BlockPos(at);
-			for (int i = 0; i < 10; i++) {
-				int y = i / 2 + 1;
-				if (i % 2 == 0) y = -y;
-				BlockPos checkPos = atPos.up(y);
-				if (BlockHelper.isPassableBlock(world, checkPos) && BlockHelper.isPassableBlock(world, checkPos.up())) {
-					at = at.add(0, y, 0);
-					break;
-				}
-			}
-			EntityPortal.moveTo(e, at, to.getDimension());
-		}
-		world.playSound(null, toVec.x, toVec.y, toVec.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 2,
-				1);
+		for (Entity e : list) callback.apply(e);
+	}
 
+	protected void executeTeleport(World world, BlockPos pos, WorldLocation to, Entity target) {
+		Vec3d at = target.getPositionVector().subtract(new Vec3d(pos)).add(new Vec3d(to.getPos()));
+		at = findAccpetPlace(world, at);
+		EntityPortal.moveTo(target, at, to.getDimension());
+	}
+
+	static public Vec3d findAccpetPlace(World world, Vec3d at) {
+		BlockPos atPos = new BlockPos(at);
+		for (int i = 0; i < 10; i++) {
+			int y = i / 2 + 1;
+			if (i % 2 == 0) y = -y;
+			BlockPos checkPos = atPos.up(y);
+			if (BlockHelper.isPassableBlock(world, checkPos) && BlockHelper.isPassableBlock(world, checkPos.up())) {
+				at = at.add(0, y, 0);
+				break;
+			}
+		}
+		return at;
 	}
 
 }

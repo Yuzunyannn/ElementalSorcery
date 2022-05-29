@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.block.altar;
 
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,19 +15,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.block.container.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube;
 
-public class BlockDevolveCube extends BlockContainer {
+public class BlockDevolveCube extends BlockContainerNormal {
 
 	public static final AxisAlignedBB AXIS_BOX = new AxisAlignedBB(0.5 - 0.2, 0.5 - 0.3, 0.5 - 0.2, 0.5 + 0.2,
 			0.5 + 0.3, 0.5 + 0.2);
 
 	public BlockDevolveCube() {
-		super(Material.GLASS);
-		this.setTranslationKey("devolveCube");
+		super(Material.GLASS, "devolveCube", 5f, MapColor.PURPLE);
 		this.setLightLevel(0.75F);
-		this.setHardness(5f);
 	}
 
 	@Override
@@ -57,16 +56,6 @@ public class BlockDevolveCube extends BlockContainer {
 
 	@Override
 	public boolean isFullBlock(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
 		return false;
 	}
 

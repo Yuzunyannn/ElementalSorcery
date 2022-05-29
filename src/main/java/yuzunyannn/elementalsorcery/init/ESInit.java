@@ -90,6 +90,7 @@ import yuzunyannn.elementalsorcery.block.altar.BlockPortalAltar;
 import yuzunyannn.elementalsorcery.block.altar.BlockSupremeTable;
 import yuzunyannn.elementalsorcery.block.altar.BlockTranscribeInjection;
 import yuzunyannn.elementalsorcery.block.altar.BlockTranscribeTable;
+import yuzunyannn.elementalsorcery.block.container.BlockEStoneMatrix;
 import yuzunyannn.elementalsorcery.block.container.BlockElementPlatform;
 import yuzunyannn.elementalsorcery.block.container.BlockElfBeacon;
 import yuzunyannn.elementalsorcery.block.container.BlockElfTreeCore;
@@ -213,6 +214,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemArrogantWool;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJade;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.item.prop.ItemCalamityGem;
+import yuzunyannn.elementalsorcery.item.prop.ItemController;
 import yuzunyannn.elementalsorcery.item.prop.ItemCubeCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemDejectedTear;
 import yuzunyannn.elementalsorcery.item.prop.ItemDreadGem;
@@ -289,6 +291,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructWindmill;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDevolveCube;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDisintegrateStela;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileEStoneMatrix;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementReactor;
@@ -324,6 +327,7 @@ import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDTransfer;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
+import yuzunyannn.elementalsorcery.tile.TileEStoneMatrix;
 import yuzunyannn.elementalsorcery.tile.TileElementPlatform;
 import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
@@ -425,6 +429,7 @@ public class ESInit {
 		BLOCKS.ESTONE_SLAB = new BlocksEStone.EStoneSlab();
 		BLOCKS.ESTONE_STAIRS = new BlocksEStone.EStoneStairs();
 		BLOCKS.ESTONE_PRISM = new BlocksEStone.EStonePrism();
+		BLOCKS.ESTONE_MATRIX = new BlockEStoneMatrix();
 		BLOCKS.ASTONE = new BlockAStone();
 
 		BLOCKS.ELEMENTAL_CUBE = new BlockElementalCube();
@@ -599,6 +604,7 @@ public class ESInit {
 		ITEMS.FAIRY_CORE = new ItemFairyCore();
 		ITEMS.MATERIAL_DEBRIS = new ItemMaterialDebris();
 		ITEMS.MANTRA_GEM = new ItemMantraGem();
+		ITEMS.CONTROLLER = new ItemController();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -923,6 +929,7 @@ public class ESInit {
 		register(TileIceRockCrystalBlock.class, "IceRockCrystalBlock");
 		register(TileIceRockNode.class, "IceRockNode");
 		register(TileElementReactor.class, "ElementReactor");
+		register(TileEStoneMatrix.class, "EStoneMatrix");
 	}
 
 	static void registerAllCapability() {
@@ -952,8 +959,6 @@ public class ESInit {
 		registerRender(ITEMS.ELEMENT_CRYSTAL);
 		registerRender(ITEMS.MAGIC_CRYSTAL);
 		registerRender(ITEMS.PARCHMENT);
-		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
-			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");
 		registerRender(ITEMS.SPELL_CRYSTAL);
 		registerRender(ITEMS.SPELLBOOK_COVER, 0, "spellbook_cover");
 		registerRender(ITEMS.SPELLBOOK_COVER, 1, "spellbook_back_cover");
@@ -1001,10 +1006,6 @@ public class ESInit {
 		registerRender(ITEMS.SOUL_WOOD_SWORD);
 		registerRender(ITEMS.RELIC_GEM);
 		registerRender(ITEMS.ROCK_CAMERA);
-		for (ItemKeepsake.EnumType keepsakeType : ItemKeepsake.EnumType.values())
-			registerRender(ITEMS.KEEPSAKE, keepsakeType.getMeta(), keepsakeType.getName());
-		for (ItemQuill.EnumType quillType : ItemQuill.EnumType.values())
-			registerRender(ITEMS.QUILL, quillType.getMeta(), "quill_" + quillType.getName());
 		registerRender(ITEMS.FUSION_CRYSTAL);
 		registerRender(ITEMS.VORTEX);
 		registerRender(ITEMS.ELEMENT_STONE);
@@ -1056,6 +1057,14 @@ public class ESInit {
 		registerRender(ITEMS.MATERIAL_DEBRIS);
 		registerRender(ITEMS.MANTRA_GEM);
 		
+		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
+			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");
+		for (ItemKeepsake.EnumType keepsakeType : ItemKeepsake.EnumType.values())
+			registerRender(ITEMS.KEEPSAKE, keepsakeType.getMeta(), keepsakeType.getName());
+		for (ItemQuill.EnumType quillType : ItemQuill.EnumType.values())
+			registerRender(ITEMS.QUILL, quillType.getMeta(), "quill_" + quillType.getName());
+		for (ItemController.EnumType keepsakeType : ItemController.EnumType.values())
+			registerRender(ITEMS.CONTROLLER, keepsakeType.getMeta(), "controller_" + keepsakeType.getName());
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");
@@ -1171,6 +1180,7 @@ public class ESInit {
 		registerRender(BLOCKS.ICE_ROCK_STAND, TileIceRockStand.class, new RenderTileIceRockStand());
 		registerRender(BLOCKS.ICE_ROCK_NODE, TileIceRockNode.class, new RenderTileIceRockNode());
 		registerRender(BLOCKS.ELEMENT_REACTOR, TileElementReactor.class, new RenderTileElementReactor());
+		registerRender(BLOCKS.ESTONE_MATRIX, TileEStoneMatrix.class, new RenderTileEStoneMatrix());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

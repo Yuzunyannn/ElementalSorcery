@@ -36,6 +36,7 @@ public class MantraFluorspar extends MantraCommon {
 		this.setIcon("fluorspar");
 		this.setRarity(95);
 		this.setOccupation(2);
+		this.setDirectLaunchFragmentMantraLauncher(new ElementStack(ESInit.ELEMENTS.METAL, 20, 40), 2, 0.005, null);
 	}
 
 	@Override
@@ -94,8 +95,20 @@ public class MantraFluorspar extends MantraCommon {
 
 		doFluorsparChange(world, pos);
 
-		if (superSpell) doFluorsparChangeSuper(world, pos, facing);
+		if (superSpell) doFluorsparChangeSuper(world, pos, facing, 30);
 
+	}
+
+	@Override
+	public boolean afterSpelling(World world, IMantraData data, ICaster caster) {
+		if (world.isRemote) return false;
+		MantraDataCommon mdc = (MantraDataCommon) data;
+		ElementStack eStack = mdc.get(ESInit.ELEMENTS.METAL);
+		if (eStack.isEmpty()) return false;
+		BlockPos pos = caster.iWantDirectCaster().getPosition();
+		doFluorsparChangeSuper(world, pos, EnumFacing.UP,
+				(int) Math.min(128, ((eStack.getCount() - 30) / 2 + 30) * (eStack.getPower() / 100f + 1)));
+		return false;
 	}
 
 	@Nullable
@@ -161,11 +174,11 @@ public class MantraFluorspar extends MantraCommon {
 		return EnumFacing.NORTH;
 	}
 
-	public void doFluorsparChangeSuper(World world, BlockPos pos, EnumFacing facing) {
+	public void doFluorsparChangeSuper(World world, BlockPos pos, EnumFacing facing, int count) {
 		Random rand = world.rand;
-		for (int i = 0; i < 30; i++) {
+		for (int i = 0; i < count; i++) {
 			float theta = rand.nextFloat() * 3.1415926f * 2;
-			float r = rand.nextFloat() * Math.min(i * 4, 16) + 2;
+			float r = rand.nextFloat() * Math.min(i * 4, count / 2 + 1) + 2;
 
 			float a = MathHelper.cos(theta) * r;
 			float b = MathHelper.sin(theta) * r;

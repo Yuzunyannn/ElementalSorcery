@@ -47,7 +47,7 @@ public class RenderTileElementPlatform extends TileEntitySpecialRenderer<TileEle
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		RenderHelper.render(stack, TEXTURE, MODEL, false, 0.038, 0.0175, 0.1, 0);
+		RenderHelper.render(stack, TEXTURE, MODEL, true, 0.038, 0.0175, 0.1, 0);
 	}
 
 }

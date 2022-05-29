@@ -33,8 +33,8 @@ public class EffectListBufferConfusion extends EffectListBuffer {
 
 		Shaders.ErrorCode.bind();
 		if (!PocketWatchClient.isActive()) {
-			Shaders.ErrorCode.setUniform("u_a", Effect.rand.nextDouble() * 0.02);
-			Shaders.ErrorCode.setUniform("u_n", EventClient.tickRender + 0.1);
+			Shaders.ErrorCode.setUniform("u_a", Effect.rand.nextDouble() * 0.0125);
+			Shaders.ErrorCode.setUniform("u_n", EventClient.tickRender / 4 + 0.1);
 		}
 		buffer.bindFrame(false);
 		Tessellator tessellator = Tessellator.getInstance();

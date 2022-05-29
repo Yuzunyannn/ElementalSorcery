@@ -37,10 +37,7 @@ public class BlockElementPlatform extends BlockElementContainer {
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 15.0 / 16.0, 1.0D);
 
 	public BlockElementPlatform() {
-		super(Material.ROCK, MapColor.QUARTZ);
-		this.setHarvestLevel("pickaxe", 1);
-		this.setTranslationKey("elementPlatform");
-		this.setHardness(1.5f);
+		super(Material.ROCK, "elementPlatform", 1.5f, MapColor.QUARTZ);
 	}
 
 	@Override

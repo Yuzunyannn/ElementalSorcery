@@ -1,0 +1,30 @@
+{
+	"topics": {
+		"Mantra": 120,
+		"Struct": 160,
+		"Engine": 64
+	},
+	"items": [
+		{
+			"item": "elementalsorcery:spell_crystal",
+			"count": 4
+		},
+		{
+			"item": "elementalsorcery:magic_paper",
+			"count": 8,
+			"meta": 3
+		},
+		{
+			"item": "elementalsorcery:fusion_crystal",
+			"count": 1
+		},
+		{
+			"item": "minecraft:gold_block",
+			"count": 2
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:mantra_gem",
+		"count": 1
+	}
+}

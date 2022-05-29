@@ -21,6 +21,7 @@ import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
+import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFlyIsland;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.VariableSet;
 import yuzunyannn.elementalsorcery.util.VariableSet.Variable;
@@ -36,6 +37,7 @@ public class MantraFootbridge extends MantraCommon {
 		this.setIcon("footbridge");
 		this.setRarity(80);
 		this.setOccupation(3);
+		this.addFragmentMantraLauncher(new FMantraFlyIsland());
 	}
 
 	@Override
@@ -133,9 +135,10 @@ public class MantraFootbridge extends MantraCommon {
 			if (posList.isEmpty()) mData.remove(POS_LIST);
 
 			int power = mData.get(POWERI);
+			int depth = Math.max(100, mData.get(LAYER));
 
 			BlockPos fly = pos;
-			for (int i = 0; i <= 100 && fly != null && fly.getY() > 0; i++) {
+			for (int i = 0; i <= depth && fly != null && fly.getY() > 0; i++) {
 				fly = fly.down();
 				if (world.isAirBlock(fly)) continue;
 				IBlockState state = world.getBlockState(fly);

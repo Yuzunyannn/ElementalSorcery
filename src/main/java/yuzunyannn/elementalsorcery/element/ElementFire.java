@@ -42,8 +42,10 @@ import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ElementFire extends ElementCommon {
 
+	public static final int COLOR = 0xff9902;
+
 	public ElementFire() {
-		super(rgb(255, 153, 2), "fire");
+		super(COLOR, "fire");
 		setTransition(2, 0, 180);
 		setLaserCostOnce(1, 75);
 	}

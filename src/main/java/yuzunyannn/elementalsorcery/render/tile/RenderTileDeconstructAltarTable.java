@@ -58,7 +58,7 @@ public class RenderTileDeconstructAltarTable extends TileEntitySpecialRenderer<T
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		RenderHelper.render(stack, texture, MODEL, false);
+		RenderHelper.render(stack, texture, MODEL, true);
 	}
 
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -30,10 +29,10 @@ import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
-public abstract class BlockElementContainer extends BlockContainer {
+public abstract class BlockElementContainer extends BlockContainerNormal {
 
-	public BlockElementContainer(Material materialIn, MapColor color) {
-		super(materialIn, color);
+	public BlockElementContainer(Material materialIn, String unlocalizedName, float hardness, MapColor color) {
+		super(materialIn, unlocalizedName, hardness, color);
 	}
 
 	@Override
@@ -46,25 +45,6 @@ public abstract class BlockElementContainer extends BlockContainer {
 		IElementInventory inventory = ElementHelper.getElementInventory(stack);
 		if (inventory == null) return;
 		inventory.addInformation(worldIn, tooltip, flagIn);
-	}
-
-	// 不是完成方块哟
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-
-	// 是透明方块哟
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
-
-	// 要有破坏进度
-	@Override
-	@SideOnly(Side.CLIENT)
-	public boolean hasCustomBreakingProgress(IBlockState state) {
-		return true;
 	}
 
 	// 破坏方块

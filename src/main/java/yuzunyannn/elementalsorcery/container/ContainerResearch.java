@@ -54,12 +54,10 @@ public class ContainerResearch extends Container implements IContainerNetwork {
 	@Override
 	public void recvData(NBTTagCompound nbt, Side side) {
 		if (side == Side.CLIENT) {
-			nbt.removeTag("gui");
 			reasearher.deserializeNBT(nbt);
 			fromSrverUpdateFlag = true;
 			return;
 		}
-		nbt.removeTag("gui");
 		doCrafting(new Researcher(nbt));
 		isEnd = true;
 	}

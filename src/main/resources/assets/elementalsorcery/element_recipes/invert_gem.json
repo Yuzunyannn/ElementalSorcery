@@ -4,8 +4,8 @@
 		" E ",
 		"S C",
 		" NN ",
-		"NAAN",
-		"NAAN",
+		"NHAN",
+		"NAHN",
 		" NN "
 	],
 	"key": {
@@ -14,7 +14,13 @@
 		"S": "elementalsorcery:elf_star",
 		"E": "elementalsorcery:element_stone",
 		"N": "minecraft:TNT",
-		"A": "elementalsorcery:scarlet_crystal"
+		"A": "elementalsorcery:scarlet_crystal",
+		"H": {
+			"id": "elementalsorcery:mantra_gem",
+			"nbt": {
+				"mantraGemId": "elementalsorcery:element_whirl"
+			}
+		}
 	},
 	"element": [
 		{

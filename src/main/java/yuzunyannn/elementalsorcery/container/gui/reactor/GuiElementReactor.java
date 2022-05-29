@@ -215,13 +215,13 @@ public class GuiElementReactor extends GuiScreen {
 			float x = (float) vec.x * pScale;
 			float y = (float) vec.z * pScale;
 			bufferbuilder.pos(x - fSize, y - fSize, 0.0D).tex(64 / 256.0, 0);
-			bufferbuilder.color(c.r, c.b, c.g, 1).endVertex();
+			bufferbuilder.color(c.r, c.b, c.g, alpha).endVertex();
 			bufferbuilder.pos(x - fSize, y + fSize, 0.0D).tex(64 / 256.0, 8 / 256.0);
-			bufferbuilder.color(c.r, c.b, c.g, 1).endVertex();
+			bufferbuilder.color(c.r, c.b, c.g, alpha).endVertex();
 			bufferbuilder.pos(x + fSize, y + fSize, 0.0D).tex((64 + 9) / 256.0, 8 / 256.0);
-			bufferbuilder.color(c.r, c.b, c.g, 1).endVertex();
+			bufferbuilder.color(c.r, c.b, c.g, alpha).endVertex();
 			bufferbuilder.pos(x + fSize, y - fSize, 0.0D).tex((64 + 9) / 256.0, 0);
-			bufferbuilder.color(c.r, c.b, c.g, 1).endVertex();
+			bufferbuilder.color(c.r, c.b, c.g, alpha).endVertex();
 		}
 		tessellator.draw();
 	}

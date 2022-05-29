@@ -61,13 +61,13 @@ public class BlockElementReactor extends BlockContainerNormal {
 	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileElementReactor reactor = BlockHelper.getTileEntity(worldIn, pos, TileElementReactor.class);
-		if (reactor != null) reactor.onBreak();
+		if (reactor != null) reactor.onBreak(harvesters.get());
 		super.breakBlock(worldIn, pos, state);
 	}
 
 	@Override
 	public float getExplosionResistance(World world, BlockPos pos, Entity exploder, Explosion explosion) {
-		return Float.MAX_VALUE;
+		return Float.MAX_VALUE / 2;
 	}
 
 }

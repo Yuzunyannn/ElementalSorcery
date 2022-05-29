@@ -278,7 +278,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		float newPower = this.getPower() > 1 ? this.getPower() / 2.0f : 1;
 		double fragment = ElementHelper.toFragment(this) * 0.975;
 		this.setPower(MathHelper.floor(newPower));
-		this.setCount(MathHelper.floor(ElementHelper.fromFragment(getElement(), fragment, newPower)));
+		this.setCount(MathHelper.floor(ElementHelper.fromFragmentByPower(getElement(), fragment, newPower)));
 		return this;
 	}
 

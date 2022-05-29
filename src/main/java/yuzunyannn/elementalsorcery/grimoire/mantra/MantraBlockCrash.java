@@ -22,6 +22,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
+import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFlyIsland;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
@@ -34,6 +35,7 @@ public class MantraBlockCrash extends MantraCommon {
 		this.setColor(0x785439);
 		this.setIcon("block_crash");
 		this.setRarity(110);
+		this.addFragmentMantraLauncher(new FMantraFlyIsland());
 	}
 
 	@Override

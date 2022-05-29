@@ -40,8 +40,9 @@ public abstract class BlockContainerNormal extends BlockContainer {
 		super(materialIn, color);
 		this.setTranslationKey(unlocalizedName);
 		this.setHardness(hardness);
-		if (materialIn == Material.ROCK) this.setHarvestLevel("pickaxe", 1);
-		else if (materialIn == Material.WOOD) this.setHarvestLevel("axe", 1);
+		if (materialIn == Material.WOOD) this.setHarvestLevel("axe", 1);
+		else this.setHarvestLevel("pickaxe", 1);
+		useNeighborBrightness = true;
 	}
 
 	@Override

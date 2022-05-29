@@ -227,12 +227,20 @@ public class ElementHelper {
 	}
 
 	static final double ln2 = Math.log(2);
+	static final double ln2_4 = Math.log(2.4);
 
 	/**
 	 * @return fragment unit
 	 */
 	static public double toFragmentUnit(Element element, double power) {
 		return Math.pow(2.4, Math.log(power) / ln2);
+	}
+
+	/**
+	 * @return power
+	 */
+	static public double fromFragmentUnit(Element element, double fragment) {
+		return Math.pow(Math.E, Math.log(fragment) * ln2 / ln2_4);
 	}
 
 	/**
@@ -249,8 +257,15 @@ public class ElementHelper {
 	/**
 	 * @return count
 	 */
-	static public double fromFragment(Element element, double fragment, double targetPower) {
+	static public double fromFragmentByPower(Element element, double fragment, double targetPower) {
 		return fragment / toFragmentUnit(element, targetPower);
+	}
+
+	/**
+	 * @return power
+	 */
+	static public double fromFragmentByCount(Element element, double fragment, double count) {
+		return ElementHelper.fromFragmentUnit(element, fragment / count);
 	}
 
 	static public double transitionFrom(Element element, double fragment, double level) {

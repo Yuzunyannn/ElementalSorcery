@@ -193,8 +193,8 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 			ElementStack estack = TileElementalCube.getAndTestElementTransBetweenInventory(need.copy(), inv, inv_other);
 			if (!estack.isEmpty()) {
 				altarWake.wake(IAltarWake.SEND, this.pos);
-				if (world.isRemote && world.rand.nextFloat() <= 0.5) altarWake.updateEffect(world, IAltarWake.SEND,
-						estack, new Vec3d(this.pos.up()).add(0.5, 0.5, 0.5));
+				if (world.isRemote && world.rand.nextFloat() <= 0.5)
+					altarWake.updateEffect(world, IAltarWake.SEND, estack, new Vec3d(this.pos.up()).add(0.5, 0.5, 0.5));
 				inv_other.extractElement(estack, false);
 				inv.insertElement(estack, false);
 				succuess = true;

@@ -21,7 +21,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -31,16 +30,18 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
-import yuzunyannn.elementalsorcery.grimoire.mantra.MantraElementWhirl;
+import yuzunyannn.elementalsorcery.grimoire.remote.FMantraBase;
+import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFlyIsland;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.util.VariableSet;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
+import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class CommandESDebug {
 
@@ -120,6 +121,10 @@ public class CommandESDebug {
 			}
 				return;
 			case "textTest": {
+				FMantraFlyIsland is = new FMantraFlyIsland();
+				VariableSet content = new VariableSet();
+				content.set(FMantraBase.CHARGE, is.getMaxCharge(null, null));
+				is.cast(entity.world, pos, new WorldLocation(entity.world.provider.getDimension(), pos), content);
 
 //				World world = Minecraft.getMinecraft().world;
 //				Vec3d center = new Vec3d(pos).add(0.5, 4.5, 0.5);
@@ -142,9 +147,9 @@ public class CommandESDebug {
 //				effect.lifeTime = (int) (80 * 0.6f);
 //				effect.color.setColor(1, 0.5, 1);
 //				Effect.addEffect(effect);
-
-				MantraElementWhirl.booom(entity.world, new Vec3d(pos).add(0.5, 1.5, 0.5),
-						ElementStack.magic(1000, 1000), entity);
+//
+//				MantraElementWhirl.booom(entity.world, new Vec3d(pos).add(0.5, 1.5, 0.5),
+//						ElementStack.magic(1000, 1000), entity);
 
 //				MantraFireBall.fire(entity.world, entity, 32, true);
 

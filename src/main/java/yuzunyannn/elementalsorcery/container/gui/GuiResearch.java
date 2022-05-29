@@ -50,13 +50,11 @@ public class GuiResearch extends GuiContainer {
 	public void refresh() {
 		topics.clear();
 		Set<String> all = Topics.getDefaultTopics();
-//		for (String key : container.reasearher.keySet()) {
-//			this.addTopics(key);
-//			all.remove(key);
-//		}
-//		for (TopicInfo info : topics) {
-//			info.maxPower = container.reasearher.get(info.topic.getTypeName());
-//		}
+		for (String key : container.reasearher.keySet()) {
+			this.addTopics(key);
+			all.remove(key);
+		}
+		for (TopicInfo info : topics) info.maxPower = container.reasearher.get(info.topic.getTypeName());
 		// 必须有5个，玩家携带不足的话，强行补
 		for (String key : all) {
 			if (topics.size() >= 5) break;

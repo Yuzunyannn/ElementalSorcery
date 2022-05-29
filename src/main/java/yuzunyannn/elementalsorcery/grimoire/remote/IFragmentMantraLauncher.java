@@ -83,10 +83,26 @@ public interface IFragmentMantraLauncher {
 	public float getMinCanCastCharge(World world, ElementTransitionReactor core, VariableSet content);
 
 	/**
-	 * 释放
+	 * 释放 <br/>
+	 * 只有 Server 调用
+	 * 
+	 * @param world   释放者所在的世界
+	 * @param pos     释放者的位置
+	 * @param to      目标的位置，包括维度信息的位置信息，可能和world不在同一个维度
+	 * @param content 施法上下文
 	 * 
 	 */
 	public void cast(World world, BlockPos pos, WorldLocation to, VariableSet content);
+
+	/** 释放 Client 目标位置 */
+	@SideOnly(Side.CLIENT)
+	default public void castClientTo(World world, BlockPos to) {
+	}
+
+	/** 释放 Client 释放位置 */
+	@SideOnly(Side.CLIENT)
+	default public void castClientFrom(World world, BlockPos from) {
+	}
 
 	/** 画对应的技能icon */
 	@SideOnly(Side.CLIENT)

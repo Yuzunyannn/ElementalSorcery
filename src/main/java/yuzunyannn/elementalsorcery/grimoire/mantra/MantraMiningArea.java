@@ -30,6 +30,7 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 		this.setOccupation(10);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.EARTH, 2, 75), 400, 32);
 		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.METAL, 3, 50), -1, 32);
+		this.initAndAddDefaultMantraLauncher(0.0005);
 	}
 
 	@Override
@@ -58,9 +59,9 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 		ElementStack earth = data.get(ESInit.ELEMENTS.EARTH);
 		ElementStack metal = data.get(ESInit.ELEMENTS.METAL);
 		if (earth.isEmpty() || metal.isEmpty()) return false;
-		if (tick % 20 != 0) return true;
 		short layer = data.get(LAYER);
 		if (layer < 0) return false;
+		if (tick % 20 != 0) return true;
 		int hSize = data.getSize() / 2;
 		BlockPos pos = new BlockPos(originPos.getX(), layer, originPos.getZ());
 		BlockPos go = findChestPos(world, originPos);

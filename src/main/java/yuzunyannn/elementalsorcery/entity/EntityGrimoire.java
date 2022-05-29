@@ -3,6 +3,8 @@ package yuzunyannn.elementalsorcery.entity;
 import java.util.List;
 import java.util.UUID;
 
+import javax.annotation.Nullable;
+
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -63,7 +65,8 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 	}
 
 	// 这个构造方法是给予某些不通过魔法书进行处理的
-	public EntityGrimoire(World worldIn, EntityLivingBase user, Mantra mantra, NBTTagCompound metaData, byte state) {
+	public EntityGrimoire(World worldIn, @Nullable EntityLivingBase user, Mantra mantra, NBTTagCompound metaData,
+			byte state) {
 		super(worldIn);
 		this.user = user;
 		if (user != null) this.userUUID = user.getUniqueID();

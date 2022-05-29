@@ -11,6 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.EffectListBufferConfusion;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityBlockMove;
 import yuzunyannn.elementalsorcery.render.item.RenderItemElementCrack;
@@ -29,6 +30,8 @@ public class EffectBlockDisintegrate extends Effect {
 	static {
 		for (int i = 0; i < MASKS.length; i++)
 			MASKS[i] = new TextureBinder(String.format("textures/effect/block_disintegrate_mask/s_%02d.png", i + 1));
+		@SuppressWarnings("unused")
+		EffectListBufferConfusion elist = EffectBlockConfusion.effectConfusion;
 	}
 
 	public IBlockState state;
@@ -50,6 +53,11 @@ public class EffectBlockDisintegrate extends Effect {
 		this.stack = ItemHelper.toItemStack(state);
 		this.start = new BlockPos(pos);
 		this.lifeTime = 20 + 1;
+	}
+
+	@Override
+	protected String myGroup() {
+		return EffectBlockConfusion.GROUP_CONFUSION;
 	}
 
 	@Override
@@ -86,7 +94,6 @@ public class EffectBlockDisintegrate extends Effect {
 		double y = getRenderY(partialTicks);
 		double z = getRenderZ(partialTicks);
 		GlStateManager.translate(x, y - 0.5f, z);
-		GlStateManager.depthMask(true);
 
 		float rate = RenderHelper.getPartialTicks(this.rate, this.prevRate, partialTicks);
 		int a = Math.min(MathHelper.floor(rate), MASKS.length - 1);
@@ -130,9 +137,7 @@ public class EffectBlockDisintegrate extends Effect {
 			RenderItemElementCrack.END_SKY_TEXTURE.unbindAtive(3);
 		}
 
-		GlStateManager.enableBlend();
 		GlStateManager.enableTexture2D();
-		GlStateManager.depthMask(false);
 		GlStateManager.popMatrix();
 	}
 

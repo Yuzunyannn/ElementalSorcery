@@ -6,8 +6,10 @@ import java.util.List;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
+import yuzunyannn.elementalsorcery.util.VariableSet;
 
 public abstract class MantraSquareAreaAdv extends MantraSquareArea {
 
@@ -43,6 +45,32 @@ public abstract class MantraSquareAreaAdv extends MantraSquareArea {
 	protected void setPotentPowerCollect(float tickGet, float max) {
 		this.potentCollectTick = tickGet;
 		this.potentPowerMax = max;
+	}
+
+	protected void initAndAddDefaultMantraLauncher(double speedRatio) {
+		ArrayList<ElementStack> list = new ArrayList<>();
+		float mainRatio = 0;
+		for (int i = 0; i < collectList.size(); i++) {
+			CollectInfo info = collectList.get(i);
+			ElementStack eStack = info.element.copy();
+			if (info.maxNeed < 0) eStack.setCount((int) (info.element.getCount() * mainRatio));
+			else eStack.setCount(info.maxNeed);
+			if (i == 0) mainRatio = info.maxNeed / (float) info.element.getCount();
+			else {
+				int min = Math.max(info.minNeed, 0);
+				int max = eStack.getCount();
+				eStack.setCount(min + (max - min) * 3 / 4);
+			}
+			list.add(eStack);
+		}
+		setDirectLaunchFragmentMantraLauncher(list, 3, speedRatio, null);
+	}
+
+	@Override
+	protected void initDirectLaunchMantraGrimoire(EntityGrimoire grimoire, VariableSet params) {
+		grimoire.setPosition(grimoire.posX, grimoire.posY + 1, grimoire.posZ);
+		SquareData squareData = (SquareData) grimoire.getMantraData();
+		this.init(grimoire.world, squareData, grimoire, grimoire.getPosition());
 	}
 
 	@Override

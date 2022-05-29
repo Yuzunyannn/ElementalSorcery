@@ -56,6 +56,7 @@ public class RenderHelper {
 			GlStateManager.translate(0.35, 0.26 + yoff, 0.35);
 			GlStateManager.scale(scale, scale, scale);
 			MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
+			if (needLighting) GlStateManager.disableLighting();
 		} else if (IRenderItem.isTransform(stack, ItemCameraTransforms.TransformType.FIXED)) {
 			GlStateManager.translate(0.5, 0.25, 0.5);
 			GlStateManager.scale(scaleGround * 2, scaleGround * 2, scaleGround * 2);

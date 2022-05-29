@@ -65,7 +65,7 @@ public class RenderTileRiteTable extends TileEntitySpecialRenderer<TileRiteTable
 			lev = TileRiteTable.pLevel(lev);
 			if (lev >= TEXTURE.length) lev = TEXTURE.length - 1;
 		}
-		RenderHelper.render(stack, TEXTURE[lev], MODEL, false, 0.038, 0.0175, 0.2f, 0);
+		RenderHelper.render(stack, TEXTURE[lev], MODEL, true, 0.038, 0.0175, 0.2f, 0);
 	}
 
 }

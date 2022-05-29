@@ -29,6 +29,7 @@ import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
+import yuzunyannn.elementalsorcery.grimoire.remote.FMantraElementWhirl;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -60,13 +61,9 @@ public class MantraElementWhirl extends MantraCommon {
 		this.setTranslationKey("elementWhirl");
 		this.setColor(0xce77ff);
 		this.setIcon("element_whirl");
-		this.setRarity(-1);
+		this.setRarity(45);
 		this.setOccupation(3);
-	}
-
-	@Override
-	public ItemAncientPaper.EnumType getMantraSubItemType() {
-		return ItemAncientPaper.EnumType.NEW_WRITTEN;
+		this.addFragmentMantraLauncher(new FMantraElementWhirl(this));
 	}
 
 	@Override
@@ -110,13 +107,13 @@ public class MantraElementWhirl extends MantraCommon {
 	@Override
 	public boolean afterSpelling(World world, IMantraData mData, ICaster caster) {
 		MantraDataCommon data = (MantraDataCommon) mData;
-		ElementStack estack = data.get(ESInit.ELEMENTS.MAGIC);
-		if (estack.isEmpty()) return false;
+		ElementStack eStack = data.get(ESInit.ELEMENTS.MAGIC);
+		if (eStack.isEmpty()) return false;
 		int tick = Math.min(data.get(Variables.TICK), 80);
 		data.set(Variables.TICK, tick - 1);
 		if (tick <= 0) return false;
 
-		double fragment = ElementHelper.toFragment(estack);
+		double fragment = ElementHelper.toFragment(eStack);
 		double size = Math.floor(MathHelper.clamp(Math.sqrt(fragment) / 2048, 1, 8));
 		if (world.isRemote) addAfterEffect(data, caster, tick, size);
 
@@ -205,8 +202,7 @@ public class MantraElementWhirl extends MantraCommon {
 	public void addAfterEffect(MantraDataCommon data, ICaster caster, int tick, double size) {
 		if (data.hasMarkEffect(1000)) return;
 		Entity entity = caster.iWantDirectCaster();
-		EffectSphericalBlast effect = new EffectSphericalBlast(entity.world, entity.getPositionVector(), 5);
-		effect.maxSize = (float) size;
+		EffectSphericalBlast effect = new EffectSphericalBlast(entity.world, entity.getPositionVector(), (float) size);
 		effect.lifeTime = tick;
 		effect.color.setColor(0xb736ff);
 		Effect.addEffect(effect);

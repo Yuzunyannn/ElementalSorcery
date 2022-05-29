@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.management.PlayerList;
@@ -23,6 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.tile.IMagicBeamHandler;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -33,6 +37,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraElementWhirl;
 import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectFragmentMove;
@@ -40,10 +45,10 @@ import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectReactorMantraSpel
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockCrystalBlock;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockSendRecv;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.VariableSet;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementTransitionReactor;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.world.MapHelper;
@@ -57,7 +62,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	static public final double INSTABLE_FRAGMENT_BASE_CAPACITY = 1000000;
 	/** 每次取出元素的比例 */
 	static public final double ONCE_EXTRACT_RATIO = 0.5;
-	/** 在释放咒文的时候，每次取出来的量 */
+	/** 在释放咒文的时候，每次取出来的量，释放咒文的时候，不会存入只会取出 */
 	static public final double ONCE_EXTRACT_RATIO_IN_MANTRA = 0.01;
 	/** 每次放入元素的比例 */
 	static public final double ONCE_INSERT_RATIO = 0.5;
@@ -75,8 +80,6 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	protected double instableFragment = 0;
 	protected int powerLevelLine = Integer.MAX_VALUE;
 	public int blastCD;
-	// 反应堆远程魔法部分
-	protected List<Mantra> mantras = new ArrayList<>();
 	// 地图显示数据记录
 	public boolean hasInConatinerMark;
 	// 地图部分
@@ -102,6 +105,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		ON_RUNAWAY(0.98, 0.001, 1024),
 		NO_IELEMENT_INVENTORY(0.9995, 0.0001, 8),
 		INVENTORY_NO_CHANGE(0.9998, 0.00001, 4),
+		BLLAST(0.99, 0.00001, 0),
 		DIFF_ELEMENT(0.996, 0.0001, 32);
 
 		public final double chaos;
@@ -138,9 +142,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	}
 
 	public TileElementReactor() {
-		addMantra(ESInit.MANTRAS.ENDER_TELEPORT);
-		addMantra(ESInit.MANTRAS.FIRE_BALL);
-		addMantra(ESInit.MANTRAS.LUSH);
+
 	}
 
 	@Override
@@ -152,15 +154,6 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	@Override
 	public void initMultiBlock() {
 		structure = new MultiBlock(Buildings.ELEMENT_REACTOR, this, new BlockPos(0, -6, 0));
-	}
-
-	public void addMantra(Mantra mantra) {
-		List<IFragmentMantraLauncher> list = mantra.getFragmentMantraLaunchers();
-		if (list == null) return;
-		if (list.isEmpty()) return;
-		if (mantras.size() >= 4) return;
-		if (mantras.indexOf(mantra) != -1) return;
-		mantras.add(mantra);
 	}
 
 	public void updateMapLocation(WorldLocation location, boolean force) {
@@ -189,10 +182,6 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 
 	public void setTargetLocation(WorldLocation targetLocation) {
 		this.targetLocation = targetLocation;
-	}
-
-	public List<Mantra> getMantras() {
-		return mantras;
 	}
 
 	public MapHelper getWorldMap() {
@@ -253,9 +242,9 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		nbt.setDouble("iF", instableFragment);
 		nbt.setInteger("pLine", powerLevelLine);
 		if (isChargeFinMark) nbt.setBoolean("cFin", true);
-		if (!isSending()) {
-			nbt.setTag("mas", NBTHelper.serializeMantra(mantras));
-		}
+//		if (!isSending()) {
+//			nbt.setTag("mas", NBTHelper.serializeMantra(mantras));
+//		}
 		if (runningMantraPair != null) {
 			nbt.setString("mlId", runningMantraPair.toId());
 			nbt.setTag("mac", mantraContent.serializeNBT());
@@ -273,8 +262,8 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		powerLevelLine = nbt.getInteger("pLine");
 		isChargeFinMark = nbt.getBoolean("cFin");
 		core.readFromNBT(nbt);
-		if (nbt.hasKey("mas", NBTTag.TAG_LIST))
-			mantras = NBTHelper.deserializeMantra(nbt.getTagList("mas", NBTTag.TAG_STRING));
+//		if (nbt.hasKey("mas", NBTTag.TAG_LIST))
+//			mantras = NBTHelper.deserializeMantra(nbt.getTagList("mas", NBTTag.TAG_STRING));
 		if (nbt.hasKey("mlId")) {
 			runningMantraPair = IFragmentMantraLauncher.fromId(nbt.getString("mlId"));
 			mantraContent.deserializeNBT(nbt.getCompoundTag("mac"));
@@ -334,7 +323,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	}
 
 	/**
-	 * 关机
+	 * 关机，会进行即将关闭处理
 	 */
 	public boolean shutdown() {
 		if (world.isRemote) return false;
@@ -345,6 +334,14 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		updateToClient();
 		markDirty();
 		return true;
+	}
+
+	/** 当关闭 */
+	public void onClose() {
+		this.status = isAndCheckIntact() ? ReactorStatus.STANDBY : ReactorStatus.OFF;
+		tryLinkOrUnlinkMagicIR(false);
+		updateToClient();
+		markDirty();
 	}
 
 	public boolean launchMantra(IFragmentMantraLauncher.MLPair pair) {
@@ -403,6 +400,36 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		return mantraChargeProgress < 1;
 	}
 
+	public static void tryAddMantra(List<Mantra> mantras, Mantra mantra) {
+		List<IFragmentMantraLauncher> list = mantra.getFragmentMantraLaunchers();
+		if (list == null) return;
+		if (list.isEmpty()) return;
+		if (mantras.size() >= 4) return;
+		if (mantras.indexOf(mantra) != -1) return;
+		mantras.add(mantra);
+	}
+
+	public List<Mantra> checkAndGetMantras() {
+		ReactorStatus status = getStatus();
+		if (status != ReactorStatus.RUNNING) return new ArrayList<>();
+		List<Mantra> mantras = new ArrayList<>(4);
+		for (int x = -1; x <= 1; x += 2) {
+			for (int z = -1; z <= 1; z += 2) {
+				BlockPos at = this.pos.add(x * 7, 0, z * 7);
+				IGetItemStack get = BlockHelper.getTileEntity(world, at, IGetItemStack.class);
+				if (get == null) continue;
+				ItemStack stack = get.getStack();
+				if (stack.isEmpty()) continue;
+				if (ItemMantraGem.isMantraGem(stack)) {
+					Mantra mantra = ItemMantraGem.getMantraFromMantraGem(stack);
+					if (mantra != null) tryAddMantra(mantras, mantra);
+				}
+			}
+		}
+		return mantras;
+	}
+
+	/** 是否可以進行核心反应 */
 	public boolean canReactor() {
 		return !isRunningMantra() || getRunningMantraPair().launcher.needContinueReact(world, core, mantraContent);
 	}
@@ -444,7 +471,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 			return getCount - mustCost;
 		}
 
-		double insertCount = Math.min(getCount - mustCost, getInstableFragmentMaxTransmissionCount());
+		double insertCount = Math.min(getCount - mustCost, getInstableFragmentMaxTransmissionCount() * 10);
 		double ratio = getInstableFragmentRatio() * 2;
 		double costCount = Math.min(instableFragment * ratio, insertCount);
 		pushBackInstableFragmentToCore(costCount / ratio);
@@ -524,7 +551,12 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 			if (status == ReactorStatus.RUNAWAY) {
 				instable(ReactorInstableSection.ON_RUNAWAY, 1);
 				if (core.getFragment() == 0) onClose();
-			} else growInstableFragmentFromCore(2);
+			} else if (status == ReactorStatus.RUNNING) {
+				double pl = (getPowerLine() / 6.0 + 1);
+				if (pl < 2) growInstableFragmentFromCore(2);
+				else growInstableFragmentFromCore(2 + Math.pow(pl - 2, 6) * 2);
+			}
+
 			if (world.isRemote) return;
 			if (lastReactorElement != core.getElement()) {
 				lastReactorElement = core.getElement();
@@ -599,6 +631,8 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		double instableFragment = getInstableFragment();
 		double instableFragmentRatio = instableFragment / getInstableFragmentCapacity();
 		if (instableFragmentRatio < 1) return;
+
+		instable(ReactorInstableSection.BLLAST, 1);
 		if (world.rand.nextDouble() < 0.8 / instableFragmentRatio) return;
 		double useInstableFragment = instableFragment / 2;
 		setInstableFragment(instableFragment - useInstableFragment);
@@ -611,7 +645,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		updateToClient(tag);
 	}
 
-	public void onBreak() {
+	public void onBreak(@Nullable EntityLivingBase breaker) {
 		ReactorStatus status = getStatus();
 		if (!status.isRunning) return;
 		setInstableRatio(getInstableRatio() * 0.5);
@@ -633,19 +667,11 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		}
 
 		int power = MathHelper.ceil(Math.pow(POWER_LINE_COEFFICIENT, this.powerLevelLine + 1));
-		double count = ElementHelper.fromFragment(ESInit.ELEMENTS.MAGIC, instableFragment, power);
+		double count = ElementHelper.fromFragmentByPower(ESInit.ELEMENTS.MAGIC, instableFragment, power);
 
 		MantraElementWhirl.booom(world, at, ElementStack.magic(MathHelper.ceil(count), power), null);
 
 		return at;
-	}
-
-	/** 当关闭 */
-	public void onClose() {
-		this.status = isAndCheckIntact() ? ReactorStatus.STANDBY : ReactorStatus.OFF;
-		tryLinkOrUnlinkMagicIR(false);
-		updateToClient();
-		markDirty();
 	}
 
 	/**
@@ -794,8 +820,8 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 
 	protected int updateClosing(IElementInventory eInv) {
 		if (eInv == null) {
-			this.powerLevelLine = MathHelper.ceil(this.powerLevelLine * 0.5);
-			if (this.powerLevelLine <= 1) return 0;
+//			this.powerLevelLine = MathHelper.ceil(this.powerLevelLine * 0.5);
+//			if (this.powerLevelLine <= 1) return 0;
 			return 2;
 		}
 		boolean isInster = false;
@@ -866,7 +892,6 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	public void onBeforeCast() {
 		if (effectLink == null) return;
 		effectLink.prevUpEndProgress = effectLink.upEndProgress = 0;
-
 		Vec3d center = new Vec3d(pos).add(0.5, 4.5, 0.5);
 		for (int i = 0; i < 128; i++) {
 			float theta = Effect.rand.nextFloat() * 3.1415926f * 2;
@@ -880,6 +905,8 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 			f.yDecay = 0.6;
 			Effect.addEffect(f);
 		}
+		IFragmentMantraLauncher.MLPair pair = getRunningMantraPair();
+		if (pair != null) pair.launcher.castClientFrom(world, pos);
 	}
 
 	@SideOnly(Side.CLIENT)

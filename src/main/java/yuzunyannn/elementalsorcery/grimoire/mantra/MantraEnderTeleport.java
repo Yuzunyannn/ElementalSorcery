@@ -24,6 +24,7 @@ import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportFrom;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportTo;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
@@ -40,6 +41,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		this.setRarity(40);
 		this.setOccupation(5);
 		this.addFragmentMantraLauncher(new FMantraEnderTeleportTo());
+		this.addFragmentMantraLauncher(new FMantraEnderTeleportFrom());
 	}
 
 	@Override

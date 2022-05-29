@@ -29,7 +29,7 @@ public class RenderTileElementCraftingTable extends TileEntitySpecialRenderer<Ti
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		RenderHelper.render(stack, TEXTURE, MODEL, false, 0.05, 0.025, 0, 0);
+		RenderHelper.render(stack, TEXTURE, MODEL, true, 0.05, 0.025, 0, 0);
 	}
 
 }

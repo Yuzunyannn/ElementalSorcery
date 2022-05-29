@@ -107,7 +107,7 @@ public class RenderTileDeconstructWindmill extends TileEntitySpecialRenderer<Til
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		RenderHelper.render(stack, TEXTURE, MODEL, false);
+		RenderHelper.render(stack, TEXTURE, MODEL, true);
 	}
 
 }

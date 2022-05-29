@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.block.container;
 
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
@@ -22,17 +22,19 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.tile.TileMagicPlatform;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
-public class BlockMagicPlatform extends BlockContainer implements Mapper {
+public class BlockMagicPlatform extends BlockContainerNormal implements Mapper {
 
 	protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 5.0 / 16.0, 1.0D);
 	public static final PropertyEnum<EnumMaterial> MATERIAL = PropertyEnum.create("material", EnumMaterial.class);
 
 	public BlockMagicPlatform() {
-		super(Material.ROCK);
-		this.setHarvestLevel("pickaxe", 1);
-		this.setTranslationKey("magicPlatform");
-		this.setHardness(3.5f);
+		super(Material.ROCK, "magicPlatform", 3.5f, MapColor.QUARTZ);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(MATERIAL, EnumMaterial.ASTONE));
+	}
+
+	@Override
+	public MapColor getMapColor(IBlockState state, IBlockAccess worldIn, BlockPos pos) {
+		return state.getValue(MATERIAL) == EnumMaterial.ASTONE ? MapColor.BLACK : MapColor.QUARTZ;
 	}
 
 	@Override
@@ -43,16 +45,6 @@ public class BlockMagicPlatform extends BlockContainer implements Mapper {
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return AABB;
-	}
-
-	@Override
-	public boolean isFullCube(IBlockState state) {
-		return false;
-	}
-
-	@Override
-	public boolean isOpaqueCube(IBlockState state) {
-		return false;
 	}
 
 	@Override
@@ -100,7 +92,8 @@ public class BlockMagicPlatform extends BlockContainer implements Mapper {
 	}
 
 	public static enum EnumMaterial implements IStringSerializable {
-		ASTONE("astone"), ESTONE("estone");
+		ASTONE("astone"),
+		ESTONE("estone");
 
 		private String name;
 

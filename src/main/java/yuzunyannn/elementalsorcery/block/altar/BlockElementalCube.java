@@ -69,8 +69,7 @@ public class BlockElementalCube extends BlockElementContainer {
 			0.5F + BLOCK_HALF_SIZE);
 
 	public BlockElementalCube() {
-		super(Material.GLASS, MapColor.CYAN);
-		this.setTranslationKey("elementalCube");
+		super(Material.GLASS, "elementalCube", 0, MapColor.CYAN);
 		this.setLightLevel(0.75F);
 	}
 

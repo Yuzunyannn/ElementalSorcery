@@ -1,0 +1,29 @@
+{
+	"pattern": [
+		"MNM",
+		" Y ",
+		"MNM"
+	],
+	"key": {
+		"Y": "elementalsorcery:relic_gem",
+		"N": {
+			"id": "elementalsorcery:mantra_gem",
+			"nbt": {
+				"mantraGemId": "elementalsorcery:laser"
+			}
+		},
+		"M": "elementalsorcery:magic_crystal"
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 200,
+			"power": 400
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:controller",
+		"count": 1,
+		"meta": 0
+	}
+}

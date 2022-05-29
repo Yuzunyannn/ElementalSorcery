@@ -1,0 +1,47 @@
+{
+	"pattern": [
+		"C C",
+		" E ",
+		"C C",
+		"IIII",
+		"IRRI",
+		"IRRI",
+		"IIII"
+	],
+	"key": {
+		"R": "elementalsorcery:invert_gem",
+		"I": "elementalsorcery:ice_rock_spar",
+		"E": "elementalsorcery:fairy_core",
+		"C": {
+			"item": "elementalsorcery:controller",
+			"meta": 0
+		}
+	},
+	"element": [
+		{
+			"id": "fire",
+			"size": 320,
+			"power": 400
+		},
+		{
+			"id": "water",
+			"size": 320,
+			"power": 400
+		},
+		{
+			"id": "wood",
+			"size": 320,
+			"power": 400
+		},
+		{
+			"id": "metal",
+			"size": 320,
+			"power": 400
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:controller",
+		"count": 1,
+		"meta": 1
+	}
+}

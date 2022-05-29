@@ -162,7 +162,7 @@ public class ElementTransitionReactor {
 	public ElementStack extract(double cost, int maxSize, int power, boolean simulate) {
 		if (this.rElement == ElementStack.EMPTY.getElement()) return ElementStack.EMPTY;
 		double costFragment = this.fragment * cost;
-		double countDouble = ElementHelper.fromFragment(this.rElement, costFragment, power);
+		double countDouble = ElementHelper.fromFragmentByPower(this.rElement, costFragment, power);
 		int count = (int) countDouble;
 		if (count < 1) return ElementStack.EMPTY;
 		if (maxSize > 1) count = Math.min(maxSize, count);

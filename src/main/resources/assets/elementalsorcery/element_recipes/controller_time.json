@@ -1,0 +1,33 @@
+{
+	"pattern": [
+		" I ",
+		" I ",
+		" T ",
+		"    ",
+		"    ",
+		"IBBI",
+		"IIII"
+	],
+	"key": {
+		"B": "minecraft:iron_block",
+		"I": "minecraft:iron_ingot",
+		"T": {
+			"id": "elementalsorcery:mantra_gem",
+			"nbt": {
+				"mantraGemId": "elementalsorcery:time_hourglass"
+			}
+		}
+	},
+	"element": [
+		{
+			"id": "star",
+			"size": 128,
+			"power": 475
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:controller",
+		"count": 1,
+		"meta": 2
+	}
+}
