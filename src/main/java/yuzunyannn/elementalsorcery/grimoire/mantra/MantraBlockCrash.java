@@ -22,8 +22,8 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFlyIsland;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.potion.PotionPoundWalker;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
@@ -35,7 +35,7 @@ public class MantraBlockCrash extends MantraCommon {
 		this.setColor(0x785439);
 		this.setIcon("block_crash");
 		this.setRarity(110);
-		this.addFragmentMantraLauncher(new FMantraFlyIsland());
+		this.setDirectLaunchFragmentMantraLauncher(new ElementStack(ESInit.ELEMENTS.EARTH, 20, 25), 2, 0.0075, null);
 	}
 
 	@Override
@@ -99,6 +99,27 @@ public class MantraBlockCrash extends MantraCommon {
 			doOnce(world, pos.offset(EnumFacing.EAST), caster, 1);
 			doOnce(world, pos.offset(EnumFacing.WEST), caster, 1);
 		} else doOnce(world, pos, caster, 5);
+	}
+
+	@Override
+	public boolean afterSpelling(World world, IMantraData data, ICaster caster) {
+		if (world.isRemote) return false;
+		MantraDataCommon mdc = (MantraDataCommon) data;
+		ElementStack eStack = mdc.get(ESInit.ELEMENTS.EARTH);
+		if (eStack.isEmpty()) return false;
+		float count = eStack.getCount();
+		if (caster.iWantKnowCastTick() % 5 == 0) eStack.shrink(1);
+		int range = (int) (4 + 4 * Math.min(1, count / 20f));
+		for (int i = 0; i < range / 4; i++) {
+			BlockPos center = caster.iWantDirectCaster().getPosition();
+			BlockPos randomPos = center.add(world.rand.nextGaussian() * range, 0, world.rand.nextGaussian() * range);
+			randomPos = randomPos.up(3);
+			for (int j = 0; j < 6 && !PotionPoundWalker.canPound(world.getBlockState(randomPos)); j++)
+				randomPos = randomPos.down();
+			float amplifier = 2 + MathHelper.sqrt(eStack.getPower()) * 1f;
+			PotionPoundWalker.pound(world, randomPos, amplifier, caster.iWantCaster().asEntityLivingBase());
+		}
+		return true;
 	}
 
 	private void doOnce(World world, BlockPos pos, ICaster caster, int needElementPoint) {

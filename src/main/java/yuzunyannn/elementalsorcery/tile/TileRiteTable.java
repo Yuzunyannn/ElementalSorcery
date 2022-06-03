@@ -182,7 +182,7 @@ public class TileRiteTable extends TileEntityNetwork {
 		int rnum = 100;
 		if (recipe != null) rnum = recipe.needPower();
 		else if (summonRecipe != null) rnum = 100;
-		//是否可以被惩罚
+		// 是否可以被惩罚
 		boolean canPunish = isNormalRite && !NORMAL_RITE_ALWAYS_SUCCESS;
 		// 随机可能性
 		if (canPunish && power < RandomHelper.rand.nextInt(rnum)) {
@@ -561,6 +561,9 @@ public class TileRiteTable extends TileEntityNetwork {
 		addSacrifice(ITEMS.ARCHITECTURE_CRYSTAL, 30, 4);
 		addSacrifice(ITEMS.ITEM_CRYSTAL, 30, 4);
 		addSacrifice(ITEMS.ORDER_CRYSTAL, 20, 4);
+
+		addSacrifice(ITEMS.ICE_ROCK_SPAR, 200, 5, "element_reactor");
+		addSacrifice(BLOCKS.ICE_ROCK_CRYSTAL_BLOCK, 600, 5, "element_reactor");
 	}
 
 	/** 所有的页面等级，从0开始 */

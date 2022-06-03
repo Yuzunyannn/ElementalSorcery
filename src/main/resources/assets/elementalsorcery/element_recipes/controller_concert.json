@@ -1,0 +1,36 @@
+{
+	"pattern": [
+		"E P",
+		" F ",
+		"P E",
+		" II ",
+		"IRRI",
+		"IRRI",
+		" II "
+	],
+	"key": {
+		"R": "elementalsorcery:star_sand",
+		"I": {
+			"id": "elementalsorcery:magic_paper",
+			"meta": 3
+		},
+		"P": "elementalsorcery:dejected_tear",
+		"F": {
+			"id": "elementalsorcery:star_bell",
+			"meta": 1
+		},
+		"E": "elementalsorcery:element_stone"
+	},
+	"element": [
+		{
+			"id": "knowledge",
+			"size": 1250,
+			"power": 200
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:controller",
+		"count": 1,
+		"meta": 3
+	}
+}

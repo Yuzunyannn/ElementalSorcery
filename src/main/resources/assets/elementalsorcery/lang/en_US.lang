@@ -122,9 +122,12 @@ item.iceRockSpar.name=Icerock Spar
 item.fairyCore.name=Elf Core
 item.materialDebris.name=Material Debris
 item.mantraGem.name=Mantra Gem
+item.magicTerminal.name=Magic Terminal
 item.controller.energy.name=Energy Controller
 item.controller.invert.name=Invert Controller
 item.controller.time.name=Time Controller
+item.controller.concert.name=Concert Controller
+item.controller.shell.name=Reactor Shell
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -211,7 +214,7 @@ tile.disintegrateStela.name=Material Collapse Stela
 tile.iceRockStand.name=Magic Energy Controller Pedestal
 tile.iceRockCrystalBlock.name=Icerock Crystal Block
 tile.iceRockNode.name=<->
-tile.elementReactor.name=Element Reactor
+tile.elementReactor.name=Invert Reactor
 tile.estoneMatrix.name=Matrix Quartz Platform
 
 es.effect.timeSlow=Time Slowly
@@ -971,9 +974,14 @@ page.invertGem.ct=将祝福与灾害融合起来、并将元素回旋的力量�
 page.iceRock=岩冰造物
 page.iceRock.ct=岩冰结晶中蕴含着转变元素的力量\n将魔石，岩冰结晶，魔力水晶，末影珍珠，逆变宝石以2:8:16:16:1的比例放入熔岩锅中，可熔炼出岩冰晶石。\n融合了逆变宝石的岩冰晶石，能将稳定的元素混乱化，形成数量与能量归一的物质，被称作元素片元。这似乎有着某些意义。
 page.iceRockCrystal=岩冰水晶
-page.iceRockCrystal.ct=岩冰晶石制作出来的水晶块，拥有强大的逆变能力，会将元素直接归一到魔力片元，同时似乎还能储存这些魔力片元，如果有控制平台便可组合成水晶塔。
+page.iceRockCrystal.ct=用拥有强大的逆变能力的岩冰晶石制作出来的水晶块，会将元素直接归一到魔力片元，同时似乎还能储存这些魔力片元，如果有控制平台便可组合成水晶塔。
 page.iceRockStand=Magic Energy Controller Pedestal
 page.iceRockStand.ct=控制魔力造物与能量流动的高级控制器，只要有转化和存储魔力造物的材料，便可形成强大的魔力造物能量塔。
+page.invert=Starry Invert
+page.invert.ct=如果逆变反应可控，将元素转化到元素片元在转化到元素，理论上就可以自由的控制元素的数量和能量了。\n通过时间力量控制的逆变反应核心就完成了。\n完成的核心比预期的更加强大，不仅可以进行元素反应还可以作为强大的咒文发射平台，因此必须要更加强大的星空祭坛来支持。\n星空祭坛必须暴露在露天下。
+page.starryAltar=Starry Altar
+page.invertReactor=Reactor
+page.invertReactor.ct=反应进行会顺序吸收或释放元素到周围的元素容器之中，并会消耗核心中的元素片元转为不稳定片元。及时调整正对着核心位置的水晶输入能量，可以将不稳定片元重新转为元素片元，在不存在不稳定片元的情况下，能量线的逐步增加，输出时的能量也会越来越高。\n核心在吸收了与内部不同的元素等情况下稳定度会降低，稳定度越低会产生不明反应导致同样的元素片元会转化到更多的不稳定片元，不稳定片元超过容器容量后会释放出来，及时调整正对着核心位置的水晶输出能量，不稳定片元会转化到魔力片元输出。\n祭坛周围可以放置咒文宝石，核心元素类型满足时，可以启动对应的咒文，身上携带的自然水晶可以进行位置标定。
 
 es.adv.root.title=Elemental Sorcery
 es.adv.root.description=Open the scroll in your hand and start Elemental Sorcery!

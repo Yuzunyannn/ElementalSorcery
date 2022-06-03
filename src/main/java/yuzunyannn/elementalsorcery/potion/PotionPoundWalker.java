@@ -3,6 +3,8 @@ package yuzunyannn.elementalsorcery.potion;
 import java.util.List;
 import java.util.Random;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -54,26 +56,30 @@ public class PotionPoundWalker extends PotionCommon {
 		look = look.scale(rand.nextGaussian() * lmax);
 
 		BlockPos randomPos = new BlockPos(center.add(vertical).add(look)).down();
-		IBlockState state = world.getBlockState(randomPos);
-		BlockPos upPos = randomPos.up();
+		pound(world, randomPos, amplifier, owner);
+	}
 
-		if (BlockHelper.isBedrock(world, randomPos)) return;
+	public static void pound(World world, BlockPos pos, float amplifier, @Nullable EntityLivingBase owner) {
+		IBlockState state = world.getBlockState(pos);
+		BlockPos upPos = pos.up();
+
+		if (BlockHelper.isBedrock(world, pos)) return;
 		if (!canPound(state) || !BlockHelper.isReplaceBlock(world, upPos)) return;
 
 		world.destroyBlock(upPos, true);
 
-		EntityFallingBlock falling = new EntityFallingBlock(world, randomPos.getX() + 0.5, randomPos.getY(),
-				randomPos.getZ() + 0.5, state);
-		falling.motionY = Math.min(0.2 + 0.04 * amplifier, 0.4);
+		EntityFallingBlock falling = new EntityFallingBlock(world, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5,
+				state);
+		falling.motionY = Math.min(0.2 + 0.04 * Math.min(8, amplifier), 0.4);
 		world.spawnEntity(falling);
 
-		AxisAlignedBB aabb = new AxisAlignedBB(randomPos.up());
+		AxisAlignedBB aabb = new AxisAlignedBB(pos.up());
 		List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, aabb);
 		for (Entity entity : entities) {
 			if (entity == owner) continue;
 			if (entity instanceof EntityItem) entity.motionY = falling.motionY * 3.5;
 			else if (entity instanceof EntityLivingBase) {
-				entity.motionY = falling.motionY * 3.5;
+				entity.motionY = 0.2 + 0.14 * amplifier;
 				EntityLivingBase living = (EntityLivingBase) entity;
 				living.velocityChanged = true;
 				if (entity.motionY > 0.8f)

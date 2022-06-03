@@ -365,6 +365,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 	public void drawBuilding(Building building, int x, int y, float roateX, float roateY, float roateZ, float scale) {
 		try {
 			GlStateManager.pushMatrix();
+//			yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
 			RenderHelper.disableStandardItemLighting();
 			// 移动到位置
 			GlStateManager.translate(x, y, 512);

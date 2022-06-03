@@ -67,7 +67,7 @@ public class FMantraElementDirectLaunch extends FMantraBase {
 		}
 		if (parmasGenerator != null) parmas = parmasGenerator.apply(charge, parmas);
 		if (parmas == null) return;
-		WorldObjectBlock wo = new WorldObjectBlock(world.getTileEntity(pos));
+		WorldObjectBlock wo = new WorldObjectBlock(world, pos);
 		mantra.directLaunchMantra(to.getWorld(world), new Vec3d(to.getPos()), wo, parmas, null);
 	}
 

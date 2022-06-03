@@ -1,8 +1,8 @@
 {
 	"pattern": [
-		"MP ",
+		"MPT",
 		"DCD",
-		" PM",
+		"TPM",
 		"QGGF",
 		"GEEG",
 		"GEEG",
@@ -16,7 +16,8 @@
 		"C": "elementalsorcery:cube_core",
 		"D": "elementalsorcery:dejected_tear",
 		"M": "elementalsorcery:magic_core",
-		"P": "elementalsorcery:fusion_crystal"
+		"P": "elementalsorcery:fusion_crystal",
+		"T": "elementalsorcery:magic_terminal"
 	},
 	"element": [
 		{

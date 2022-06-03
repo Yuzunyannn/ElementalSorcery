@@ -1,0 +1,37 @@
+{
+	"pattern": [
+		"#R#",
+		"HHH",
+		"G#B"
+	],
+	"key": {
+		"#": "elementalsorcery:magic_crystal",
+		"R": {
+			"id": "minecraft:dye",
+			"meta": 1
+		},
+		"G": {
+			"id": "minecraft:dye",
+			"meta": 2
+		},
+		"B": {
+			"id": "minecraft:dye",
+			"meta": 4
+		},
+		"H": {
+			"type": "ore_dict",
+			"item": "blockGlass"
+		}
+	},
+	"element": [
+		{
+			"id": "metal",
+			"size": 50,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:magic_terminal",
+		"count": 1
+	}
+}

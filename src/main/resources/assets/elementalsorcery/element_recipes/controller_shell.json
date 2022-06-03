@@ -1,0 +1,37 @@
+{
+	"pattern": [
+		"JGJ",
+		" P ",
+		"JGJ",
+		" GG ",
+		"GDDG",
+		"GDDG",
+		" GG "
+	],
+	"key": {
+		"J": "elementalsorcery:ice_rock_spar",
+		"G": {
+			"type": "ore_dict",
+			"item": "blockGlass"
+		},
+		"P": {
+			"id": "elementalsorcery:mantra_gem",
+			"nbt": {
+				"mantraGemId": "elementalsorcery:potent"
+			}
+		},
+		"D": "minecraft:diamond"
+	},
+	"element": [
+		{
+			"id": "earth",
+			"size": 852,
+			"power": 280
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:controller",
+		"count": 2,
+		"meta": 4
+	}
+}

@@ -210,7 +210,8 @@ public class GuiElementReactor extends GuiScreen {
 		for (MapHelper.EntityData ed : list) {
 			if (ed.pos == null) continue;
 			Vec3d vec = ed.pos.subtract(new Vec3d(pos));
-			if (vec.length() / range > 0.9) continue;
+			double hLen = MathHelper.sqrt(vec.x * vec.x + vec.z * vec.z);
+			if (hLen / range > 0.9) continue;
 			Color c = new Color(ed.name.hashCode());
 			float x = (float) vec.x * pScale;
 			float y = (float) vec.z * pScale;

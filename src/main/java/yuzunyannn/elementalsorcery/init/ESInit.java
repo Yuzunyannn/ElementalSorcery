@@ -229,6 +229,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.item.prop.ItemLifeLeather;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicPaper;
+import yuzunyannn.elementalsorcery.item.prop.ItemMagicTerminal;
 import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
 import yuzunyannn.elementalsorcery.item.prop.ItemMaterialDebris;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
@@ -605,6 +606,7 @@ public class ESInit {
 		ITEMS.MATERIAL_DEBRIS = new ItemMaterialDebris();
 		ITEMS.MANTRA_GEM = new ItemMantraGem();
 		ITEMS.CONTROLLER = new ItemController();
+		ITEMS.MAGIC_TERMINAL = new ItemMagicTerminal();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1056,6 +1058,7 @@ public class ESInit {
 		registerRender(ITEMS.FAIRY_CORE);
 		registerRender(ITEMS.MATERIAL_DEBRIS);
 		registerRender(ITEMS.MANTRA_GEM);
+		registerRender(ITEMS.MAGIC_TERMINAL);
 		
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");

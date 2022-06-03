@@ -36,7 +36,8 @@ import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraBase;
-import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFlyIsland;
+import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.VariableSet;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
@@ -121,9 +122,9 @@ public class CommandESDebug {
 			}
 				return;
 			case "textTest": {
-				FMantraFlyIsland is = new FMantraFlyIsland();
+				IFragmentMantraLauncher is = ESInit.MANTRAS.BLOCK_CRASH.getFragmentMantraLaunchers().get(0);
 				VariableSet content = new VariableSet();
-				content.set(FMantraBase.CHARGE, is.getMaxCharge(null, null));
+				content.set(FMantraBase.CHARGE, 99999.0);
 				is.cast(entity.world, pos, new WorldLocation(entity.world.provider.getDimension(), pos), content);
 
 //				World world = Minecraft.getMinecraft().world;

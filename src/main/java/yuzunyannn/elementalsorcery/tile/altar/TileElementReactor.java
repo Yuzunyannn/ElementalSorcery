@@ -45,6 +45,7 @@ import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectReactorMantraSpel
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockCrystalBlock;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockSendRecv;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
+import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.VariableSet;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementTransitionReactor;
@@ -156,6 +157,13 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		structure = new MultiBlock(Buildings.ELEMENT_REACTOR, this, new BlockPos(0, -6, 0));
 	}
 
+	@Override
+	protected boolean checkIntact(MultiBlock structure) {
+		this.ok = world.canSeeSky(pos.up(5));
+		if (!this.ok) return false;
+		return super.checkIntact(structure);
+	}
+
 	public void updateMapLocation(WorldLocation location, boolean force) {
 		if (world.isRemote) return;
 		if (location == null) location = new WorldLocation(world, pos);
@@ -241,7 +249,10 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		nbt.setFloat("iR", (float) instableRatio);
 		nbt.setDouble("iF", instableFragment);
 		nbt.setInteger("pLine", powerLevelLine);
-		if (isChargeFinMark) nbt.setBoolean("cFin", true);
+		if (isChargeFinMark) {
+			nbt.setBoolean("cFin", true);
+			nbt.setFloat("cPro", mantraChargeProgress);
+		}
 //		if (!isSending()) {
 //			nbt.setTag("mas", NBTHelper.serializeMantra(mantras));
 //		}
@@ -261,6 +272,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		instableFragment = nbt.getDouble("iF");
 		powerLevelLine = nbt.getInteger("pLine");
 		isChargeFinMark = nbt.getBoolean("cFin");
+		if (nbt.hasKey("cPro", NBTTag.TAG_NUMBER)) mantraChargeProgress = nbt.getFloat("cPro");
 		core.readFromNBT(nbt);
 //		if (nbt.hasKey("mas", NBTTag.TAG_LIST))
 //			mantras = NBTHelper.deserializeMantra(nbt.getTagList("mas", NBTTag.TAG_STRING));

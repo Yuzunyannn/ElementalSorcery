@@ -35,7 +35,9 @@ public class ItemController extends Item {
 	public static enum EnumType {
 		ENERGY("energy"),
 		INVERT("invert"),
-		TIME("time");
+		TIME("time"),
+		CONCERT("concert"),
+		SHELL("shell");
 
 		final String unlocalizedName;
 

@@ -1,6 +1,6 @@
 {
 	"pattern": [
-		"EPE",
+		"TPE",
 		"PEP",
 		"PIP"
 	],
@@ -10,7 +10,8 @@
 			"data": 0
 		},
 		"I": "elementalsorcery:item_crystal",
-		"E": "elementalsorcery:estone"
+		"E": "elementalsorcery:estone",
+		"T": "elementalsorcery:magic_terminal"
 	},
 	"element": [
 		{

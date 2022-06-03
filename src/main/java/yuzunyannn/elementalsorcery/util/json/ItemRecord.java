@@ -38,19 +38,22 @@ public class ItemRecord {
 
 	private final ItemStack stack;
 	private final Item item;
+	private final boolean justItem;
 
 	public ItemRecord(ItemStack stack) {
 		this.stack = stack;
 		this.item = stack.getItem();
+		this.justItem = false;
 	}
 
 	public ItemRecord(Item item) {
 		this.item = item;
 		this.stack = new ItemStack(item);
+		this.justItem = true;
 	}
 
 	public boolean isJustItem() {
-		return item != null;
+		return justItem;
 	}
 
 	public ItemStack getStack() {

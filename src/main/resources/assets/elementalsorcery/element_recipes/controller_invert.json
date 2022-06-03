@@ -20,22 +20,22 @@
 	"element": [
 		{
 			"id": "fire",
-			"size": 320,
+			"size": 640,
 			"power": 400
 		},
 		{
 			"id": "water",
-			"size": 320,
+			"size": 640,
 			"power": 400
 		},
 		{
 			"id": "wood",
-			"size": 320,
+			"size": 640,
 			"power": 400
 		},
 		{
 			"id": "metal",
-			"size": 320,
+			"size": 640,
 			"power": 400
 		}
 	],

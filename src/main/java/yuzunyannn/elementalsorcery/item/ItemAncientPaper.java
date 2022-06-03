@@ -237,7 +237,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 	public IToElementInfo toElement(ItemStack stack) {
 		ElementStack[] estacks = new ElementStack[2];
 		estacks[1] = new ElementStack(ESInit.ELEMENTS.WOOD, 8, 20);
-		estacks[0] = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 4, 30);
+		estacks[0] = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 4, 28);
 
 		AncientPaper ap = new AncientPaper(stack);
 		if (ap.hasType()) {
@@ -246,14 +246,16 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 			knowledge.setCount((int) (knowledge.getCount() * (1 - ap.getProgress())));
 			estacks[0].grow(knowledge);
 		}
-		if (ap.hasMantra()) {
+		if (ap.hasMantra()) mantra: {
 			Mantra mantra = ap.getMantra();
 			int rarity = mantra.getRarity(null, null);
+			if (rarity < 0) break mantra;
 			rarity = MathHelper.clamp(rarity, 10, 200);
 			ElementStack knowledge = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE);
-			double power = 20 - MathHelper.sqrt(rarity * 1.45);
+			double power = 28 - MathHelper.sqrt(rarity * 1.45);
 			knowledge.setPower(MathHelper.floor(power * power) + 10);
-			knowledge.setCount((220 - rarity) / 2);
+			int count = (110 - rarity / 2) / 3;
+			knowledge.setCount(count + (int) (count * 2 * (1 - ap.getProgress())));
 			estacks[0].grow(knowledge);
 		}
 

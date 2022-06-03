@@ -2,7 +2,7 @@
 	"pattern": [
 		"FGM",
 		"GCG",
-		"EGZ"
+		"ETZ"
 	],
 	"key": {
 		"C": "elementalsorcery:cube_core",
@@ -10,7 +10,8 @@
 		"Z": "elementalsorcery:azure_crystal",
 		"M": "elementalsorcery:magic_stone",
 		"E": "elementalsorcery:elf_crystal",
-		"G": "minecraft:gold_ingot"
+		"G": "minecraft:gold_ingot",
+		"T": "elementalsorcery:magic_terminal"
 	},
 	"element": [
 		{

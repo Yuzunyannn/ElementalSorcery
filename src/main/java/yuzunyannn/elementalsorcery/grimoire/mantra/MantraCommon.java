@@ -285,7 +285,6 @@ public class MantraCommon extends Mantra {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
 	public ResourceLocation getIconResource() {
 		return icon;
 	}

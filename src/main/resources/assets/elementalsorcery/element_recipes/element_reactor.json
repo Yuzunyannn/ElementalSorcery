@@ -1,0 +1,41 @@
+{
+	"pattern": [
+		" A ",
+		" T ",
+		"B C",
+		" GG ",
+		"G  G",
+		"G  G",
+		" GG "
+	],
+	"key": {
+		"T": "elementalsorcery:magic_terminal",
+		"A": {
+			"item": "elementalsorcery:controller",
+			"meta": 3
+		},
+		"B": {
+			"item": "elementalsorcery:controller",
+			"meta": 1
+		},
+		"C": {
+			"item": "elementalsorcery:controller",
+			"meta": 2
+		},
+		"G": {
+			"item": "elementalsorcery:controller",
+			"meta": 4
+		}
+	},
+	"element": [
+		{
+			"id": "magic",
+			"size": 8192,
+			"power": 50
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:element_reactor",
+		"count": 1
+	}
+}
