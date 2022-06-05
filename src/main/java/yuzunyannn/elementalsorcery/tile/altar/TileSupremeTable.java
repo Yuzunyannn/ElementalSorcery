@@ -23,8 +23,9 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
-import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
+import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -264,16 +265,18 @@ public class TileSupremeTable extends TileStaticMultiBlock
 				if (count > 0) {
 					IItemStructure structure = ItemStructure.getItemStructure(platformItem);
 					if (!structure.isEmpty()) {
-						ElementStack[] estacks = structure.toElementStack(structure.getStructureItem(0));
-						if (estacks != null) {
-							outEStacks = new ArrayList<ElementStack>(estacks.length);
-							for (ElementStack estack : estacks) {
-								estack = estack.copy();
-								estack.setCount(count * estack.getCount());
-								outEStacks.add(estack);
-							}
-							return ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT;
+						IToElementInfo info = structure.toElement(structure.getStructureItem(0));
+						if (info == null) return null;
+						ElementStack[] estacks = info.element();
+						if (TileInstantConstitute.getOrderValUsed(info) > 5) return null;
+						if (estacks == null) return null;
+						outEStacks = new ArrayList<ElementStack>(estacks.length);
+						for (ElementStack estack : estacks) {
+							estack = estack.copy();
+							estack.setCount(count * estack.getCount());
+							outEStacks.add(estack);
 						}
+						return ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT;
 					}
 				}
 			}

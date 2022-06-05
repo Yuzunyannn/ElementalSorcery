@@ -101,38 +101,10 @@ public class BlockIceRockCrystalBlock extends BlockIceRockSendRecv {
 	}
 
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
-			ItemStack stack) {
-		if (worldIn.isRemote) return;
-
-		TileIceRockCrystalBlock tileCrystalBlock = BlockHelper.getTileEntity(worldIn, pos,
-				TileIceRockCrystalBlock.class);
-		if (tileCrystalBlock == null) return;
-
-		NBTTagCompound nbt = stack.getTagCompound();
-		double fragment = nbt != null ? nbt.getDouble("magicFragment") : 0;
-		tileCrystalBlock.setMagicFragmentOwn(fragment);
-
-		for (int i = 0; i < BlockIceRockStand.TOWER_MAX_HEIGHT; i++) {
-			BlockPos at = pos.down(i + 1);
-			if (worldIn.isOutsideBuildHeight(at)) break;
-			TileEntity tile = worldIn.getTileEntity(at);
-			if (tile == null) break;
-			if (tile instanceof TileIceRockCrystalBlock) continue;
-			if (tile instanceof TileIceRockStand) {
-				((TileIceRockStand) tile).checkAndBuildStructure();
-				((TileIceRockStand) tile).updateToClient();
-			}
-			break;
-		}
-	}
-
-	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		TileIceRockCrystalBlock tileCrystalBlock = BlockHelper.getTileEntity(worldIn, pos,
 				TileIceRockCrystalBlock.class);
 		tileCrystalBlock.canNotLinkMark = true;
-
 		TileIceRockStand stand = null;
 		for (int i = 0; i < BlockIceRockStand.TOWER_MAX_HEIGHT; i++) {
 			BlockPos at = pos.down(i + 1);
@@ -146,7 +118,6 @@ public class BlockIceRockCrystalBlock extends BlockIceRockSendRecv {
 			}
 			break;
 		}
-		setDropTile(tileCrystalBlock);
 		super.breakBlock(worldIn, pos, state);
 		if (stand != null) {
 			stand.checkAndBuildStructure();
@@ -160,16 +131,43 @@ public class BlockIceRockCrystalBlock extends BlockIceRockSendRecv {
 	}
 
 	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,
-			int fortune) {
-		ItemStack stack = new ItemStack(Item.getItemFromBlock(this), 1, 0);
-		drops.add(stack);
-		TileEntity tile = getOrPopDropTile(world, pos);
+	public void writeTileDataToItemStack(IBlockAccess world, BlockPos pos, EntityLivingBase user, TileEntity tile,
+			ItemStack stack) {
+		super.writeTileDataToItemStack(world, pos, user, tile, stack);
 		if (tile instanceof TileIceRockCrystalBlock) {
 			double fragment = ((TileIceRockCrystalBlock) tile).getMagicFragmentOwn();
 			NBTTagCompound nbt = stack.getTagCompound();
 			if (nbt == null) stack.setTagCompound(nbt = new NBTTagCompound());
 			nbt.setDouble("magicFragment", fragment);
+		}
+	}
+
+	@Override
+	public void readTileDataFromItemStack(IBlockAccess world, BlockPos pos, EntityLivingBase user, TileEntity tile,
+			ItemStack stack) {
+		super.readTileDataFromItemStack(world, pos, user, tile, stack);
+		if (tile instanceof TileIceRockCrystalBlock) {
+			TileIceRockCrystalBlock tileCrystalBlock = (TileIceRockCrystalBlock) tile;
+			NBTTagCompound nbt = stack.getTagCompound();
+			double fragment = nbt != null ? nbt.getDouble("magicFragment") : 0;
+			tileCrystalBlock.setMagicFragmentOwn(fragment);
+		}
+	}
+
+	@Override
+	public void onTileBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
+			ItemStack stack, TileEntity te) {
+		for (int i = 0; i < BlockIceRockStand.TOWER_MAX_HEIGHT; i++) {
+			BlockPos at = pos.down(i + 1);
+			if (worldIn.isOutsideBuildHeight(at)) break;
+			TileEntity tile = worldIn.getTileEntity(at);
+			if (tile == null) break;
+			if (tile instanceof TileIceRockCrystalBlock) continue;
+			if (tile instanceof TileIceRockStand) {
+				((TileIceRockStand) tile).checkAndBuildStructure();
+				((TileIceRockStand) tile).updateToClient();
+			}
+			break;
 		}
 	}
 

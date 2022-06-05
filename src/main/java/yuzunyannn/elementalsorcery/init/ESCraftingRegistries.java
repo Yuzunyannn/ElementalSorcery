@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
+import yuzunyannn.elementalsorcery.block.altar.BlockElementCube;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeColorful;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeLifeDirt;
@@ -31,7 +31,7 @@ public class ESCraftingRegistries {
 		RECIPES.register(new RecipeColorful(new ItemStack(ESInit.ITEMS.MAGIC_RULER))
 				.colorSetter((stack, color) -> ItemMagicRuler.setColor(stack, color)).setRegistryName("magicRuler"));
 		RECIPES.register(new RecipeColorful(new ItemStack(ESInit.BLOCKS.ELEMENTAL_CUBE))
-				.colorSetter((stack, color) -> BlockElementalCube.setDyeColor(stack, color))
+				.colorSetter((stack, color) -> BlockElementCube.setDyeColor(stack, color))
 				.setRegistryName("colorElementCube"));
 	}
 

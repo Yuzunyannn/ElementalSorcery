@@ -17,7 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
+import yuzunyannn.elementalsorcery.block.altar.BlockElementCube;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
@@ -158,7 +158,7 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 
 	public void setDyeColor(@Nullable EnumDyeColor dyeColor) {
 		this.dyeColor = dyeColor;
-		if (world.isRemote) this.setColorType(BlockElementalCube.toColorType(dyeColor));
+		if (world.isRemote) this.setColorType(BlockElementCube.toColorType(dyeColor));
 	}
 
 	public EnumDyeColor getDyeColor() {
@@ -166,9 +166,9 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	}
 
 	// 客户端使用的真实颜色
-	protected BlockElementalCube.Color colorType = BlockElementalCube.Color.defaultColor;
+	protected BlockElementCube.Color colorType = BlockElementCube.Color.defaultColor;
 
-	public void setColorType(BlockElementalCube.Color colorType) {
+	public void setColorType(BlockElementCube.Color colorType) {
 		this.colorType = colorType;
 	}
 

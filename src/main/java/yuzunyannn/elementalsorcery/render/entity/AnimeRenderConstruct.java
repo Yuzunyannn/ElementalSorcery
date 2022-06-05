@@ -21,7 +21,7 @@ public class AnimeRenderConstruct implements ICraftingLaunchAnime {
 
 	public float roate;
 	public float preRoate;
-	GlStateManager.LogicOp op = GlStateManager.LogicOp.INVERT;
+	GlStateManager.LogicOp op = GlStateManager.LogicOp.AND;
 
 	@Override
 	public void doRender(ICraftingCommit commit, double x, double y, double z, float entityYaw, float partialTicks) {
@@ -53,16 +53,16 @@ public class AnimeRenderConstruct implements ICraftingLaunchAnime {
 	public void update(ICraftingCommit commit, World world, BlockPos pos, int endTick) {
 		if (endTick > 0) {
 			if (endTick % 3 == 0) {
-				if (this.op == GlStateManager.LogicOp.INVERT) this.op = GlStateManager.LogicOp.COPY;
-				else this.op = GlStateManager.LogicOp.INVERT;
+				if (this.op == GlStateManager.LogicOp.AND) this.op = GlStateManager.LogicOp.COPY;
+				else this.op = GlStateManager.LogicOp.AND;
 			}
 		}
 		this.preRoate = this.roate;
 		this.roate += 1.0f;
 		if (this.roate <= 60) {
 			if (((int) this.roate) % 5 == 0) {
-				if (this.op == GlStateManager.LogicOp.INVERT) this.op = null;
-				else this.op = GlStateManager.LogicOp.INVERT;
+				if (this.op == GlStateManager.LogicOp.AND) this.op = null;
+				else this.op = GlStateManager.LogicOp.AND;
 			}
 		}
 	}

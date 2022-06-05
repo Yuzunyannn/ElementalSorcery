@@ -5,10 +5,9 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import yuzunyannn.elementalsorcery.block.container.BlockEStoneCrock;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.item.prop.ItemController;
-import yuzunyannn.elementalsorcery.item.prop.ItemMagicTerminal;
 
 public class ESObjects {
 
@@ -200,6 +199,8 @@ public class ESObjects {
 		public Block ICE_ROCK_NODE;
 		public Block ELEMENT_REACTOR;
 		public Block ESTONE_MATRIX;
+		public Block INSTANT_CONSTITUTE;
+		public Block ESTONE_CROCK;
 	}
 
 	static public class Elements {

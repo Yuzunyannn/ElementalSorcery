@@ -8,7 +8,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
+import yuzunyannn.elementalsorcery.block.altar.BlockElementCube;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
@@ -42,29 +42,33 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 
 		Vec3d color = tile.getBaseColor();
 		Vec3d coverColor = tile.getCoverColor();
-
+		
 		float wake = RenderHelper.getPartialTicks(tile.wakeRate, tile.preWakeRate, partialTicks);
 
 		GlStateManager.color((float) color.x, (float) color.y, (float) color.z);
 		TEXTURE.bind();
 		MODEL.render(null, wake, EventClient.tickRender + partialTicks, 0, 0, 0, 1);
-
+		
+		RenderHelper.disableLightmap(true);
 		GlStateManager.color((float) (tile.color.x * tile.colorRate + (1.0F - tile.colorRate) * coverColor.x),
 				(float) (tile.color.y * tile.colorRate + (1.0F - tile.colorRate) * coverColor.y),
 				(float) (tile.color.z * tile.colorRate + (1.0F - tile.colorRate) * coverColor.z));
 		TEXTURE_COVER.bind();
 		MODEL.render(null, wake, EventClient.tickRender + partialTicks, 0, 0, 0, 1);
-
+		RenderHelper.disableLightmap(false);
+		
 		RenderHelper.endRender();
 	}
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
+		GlStateManager.enableLighting();
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.5F, 0.5F, 0.5F);
 		if (stack.isOnItemFrame()) GlStateManager.scale(0.5F, 0.5F, 0.5F);
 		else if (IRenderItem.isGUI(stack)) {
-			GlStateManager.rotate(45.0F, 1, 1, 1);
+			GlStateManager.rotate(45, 0, 1, 0);
+			GlStateManager.rotate(30, 1, 0, 1);
 			GlStateManager.scale(0.5F, 0.5F, 0.5F);
 		} else if (IRenderItem.isTransform(stack, TransformType.FIXED)) {
 			GlStateManager.scale(0.5F, 0.5F, 0.5F);
@@ -75,7 +79,7 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 
 		GlStateManager.scale(0.0325, 0.0325, 0.0325);
 
-		BlockElementalCube.Color colorType = BlockElementalCube.toColorType(BlockElementalCube.getDyeColor(stack));
+		BlockElementCube.Color colorType = BlockElementCube.toColorType(BlockElementCube.getDyeColor(stack));
 		Vec3d color = colorType.getBaseColor();
 		Vec3d coverColor = colorType.getCoverColor();
 		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);

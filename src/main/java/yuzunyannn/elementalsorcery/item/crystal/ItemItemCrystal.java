@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -58,9 +59,11 @@ public class ItemItemCrystal extends ItemCrystal {
 		ItemStack targetItem = ItemHelper.toItemStack(worldIn.getBlockState(pos));
 		ItemStack stack = player.getHeldItem(hand);
 		IItemStructure istru = ItemStructure.getItemStructure(stack);
-		istru.set(0, targetItem, 1, ElementStack.magic(200, 10));
+		IToElementInfo info = ElementMap.instance.toElement(targetItem);
+		if (info != null) istru.set(0, targetItem, info.complex(), info.element());
+		else istru.set(0, targetItem, 1, ElementStack.magic(200, 10));
 		istru.saveState(stack);
-		
+
 		return EnumActionResult.SUCCESS;
 	}
 }

@@ -54,7 +54,7 @@ public class Buildings {
 	static public Building DECONSTRUCT_WINDMILL;
 	static public Building DISINTEGRATE_ALTAR;
 	static public Building ELEMENT_REACTOR;
-
+	static public Building INSTANT_CONSTITUTE;
 
 	static public void init() {
 		INFUSION = BuildingLib.instance.getBuilding("infusion");
@@ -76,6 +76,7 @@ public class Buildings {
 		DECONSTRUCT_WINDMILL = BuildingLib.instance.getBuilding("deconstruct_windmill");
 		DISINTEGRATE_ALTAR = BuildingLib.instance.getBuilding("disintegrate_altar");
 		ELEMENT_REACTOR = BuildingLib.instance.getBuilding("element_reactor");
+		INSTANT_CONSTITUTE = BuildingLib.instance.getBuilding("instant_constitute");
 		initFrequencyMapping();
 	}
 

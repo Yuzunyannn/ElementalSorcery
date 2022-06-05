@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.util.helper;
 
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 public class Color {
@@ -86,9 +87,9 @@ public class Color {
 	}
 
 	public Color add(float c) {
-		this.r = Math.min(1, this.r + c);
-		this.g = Math.min(1, this.g + c);
-		this.b = Math.min(1, this.b + c);
+		this.r = MathHelper.clamp(this.r + c, 0, 1);
+		this.g = MathHelper.clamp(this.g + c, 0, 1);
+		this.b = MathHelper.clamp(this.b + c, 0, 1);
 		return this;
 	}
 

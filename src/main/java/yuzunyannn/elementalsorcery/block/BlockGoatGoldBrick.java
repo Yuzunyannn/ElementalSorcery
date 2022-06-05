@@ -195,7 +195,7 @@ public class BlockGoatGoldBrick extends Block implements Mapper, IBlockJumpModif
 			}
 			if (moveList.isEmpty()) return;
 			Collections.shuffle(moveList);
-			BlockPos at = moveList.get(1);
+			BlockPos at = moveList.get(0);
 			worldIn.destroyBlock(pos, false);
 			worldIn.setBlockState(at, state);
 			if (random.nextFloat() > 0.25f) worldIn.scheduleBlockUpdate(at, state.getBlock(), 20, 0);

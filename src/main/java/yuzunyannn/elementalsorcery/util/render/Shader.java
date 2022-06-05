@@ -35,7 +35,8 @@ public class Shader {
 		GL20.glCompileShader(shaderId);
 
 		String info = GL20.glGetShaderInfoLog(shaderId, 1024);
-		if (!info.isEmpty()) {
+		if (!info.isEmpty()) errorPart: {
+			if (info.toLowerCase().indexOf("no error") != -1) break errorPart;
 			if (info.indexOf("error") != -1) throw new RuntimeException(info);
 			// ElementalSorcery.logger.warn("Shader Warnning:\n" + info);
 		}

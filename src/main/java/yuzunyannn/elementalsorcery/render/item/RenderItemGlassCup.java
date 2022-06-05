@@ -75,42 +75,43 @@ public class RenderItemGlassCup implements IRenderItem {
 	static final float topOffset = 6.05f;
 
 	public static void drawJuiceInCup(float fullRate, int frameIndex) {
-
 		if (fullRate < 0.0001f) return;
 		float high = fullRate * 12;
 
 		int indexX = 0;
 		int indexY = frameIndex % 32;
+		if (indexY < 0) indexY += 32;
 
 		float ax = indexX * texBlockRateX;
 		float ay = indexY * texBlockRateY;
 		float bx = (indexX + 1) * texBlockRateX;
 		float by = (indexY + 1) * texBlockRateY;
+		float cy = (indexY + fullRate) * texBlockRateY;
 
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
 
 		// four side
-		bufferbuilder.pos(-sideOffset, topOffset, sideOffset).tex(ax, by).endVertex();
+		bufferbuilder.pos(-sideOffset, topOffset, sideOffset).tex(ax, cy).endVertex();
 		bufferbuilder.pos(-sideOffset, high + topOffset, sideOffset).tex(ax, ay).endVertex();
 		bufferbuilder.pos(sideOffset, high + topOffset, sideOffset).tex(bx, ay).endVertex();
-		bufferbuilder.pos(sideOffset, topOffset, sideOffset).tex(bx, by).endVertex();
+		bufferbuilder.pos(sideOffset, topOffset, sideOffset).tex(bx, cy).endVertex();
 
-		bufferbuilder.pos(-sideOffset, topOffset, -sideOffset).tex(ax, by).endVertex();
+		bufferbuilder.pos(-sideOffset, topOffset, -sideOffset).tex(ax, cy).endVertex();
 		bufferbuilder.pos(-sideOffset, high + topOffset, -sideOffset).tex(ax, ay).endVertex();
 		bufferbuilder.pos(sideOffset, high + topOffset, -sideOffset).tex(bx, ay).endVertex();
-		bufferbuilder.pos(sideOffset, topOffset, -sideOffset).tex(bx, by).endVertex();
+		bufferbuilder.pos(sideOffset, topOffset, -sideOffset).tex(bx, cy).endVertex();
 
-		bufferbuilder.pos(sideOffset, topOffset, -sideOffset).tex(ax, by).endVertex();
+		bufferbuilder.pos(sideOffset, topOffset, -sideOffset).tex(ax, cy).endVertex();
 		bufferbuilder.pos(sideOffset, high + topOffset, -sideOffset).tex(ax, ay).endVertex();
 		bufferbuilder.pos(sideOffset, high + topOffset, sideOffset).tex(bx, ay).endVertex();
-		bufferbuilder.pos(sideOffset, topOffset, sideOffset).tex(bx, by).endVertex();
+		bufferbuilder.pos(sideOffset, topOffset, sideOffset).tex(bx, cy).endVertex();
 
-		bufferbuilder.pos(-sideOffset, topOffset, -sideOffset).tex(ax, by).endVertex();
+		bufferbuilder.pos(-sideOffset, topOffset, -sideOffset).tex(ax, cy).endVertex();
 		bufferbuilder.pos(-sideOffset, high + topOffset, -sideOffset).tex(ax, ay).endVertex();
 		bufferbuilder.pos(-sideOffset, high + topOffset, sideOffset).tex(bx, ay).endVertex();
-		bufferbuilder.pos(-sideOffset, topOffset, sideOffset).tex(bx, by).endVertex();
+		bufferbuilder.pos(-sideOffset, topOffset, sideOffset).tex(bx, cy).endVertex();
 
 		// bottom
 

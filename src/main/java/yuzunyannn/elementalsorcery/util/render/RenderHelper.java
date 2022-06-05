@@ -61,8 +61,13 @@ public class RenderHelper {
 			GlStateManager.translate(0.5, 0.25, 0.5);
 			GlStateManager.scale(scaleGround * 2, scaleGround * 2, scaleGround * 2);
 			MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		} else {
+		} else if (IRenderItem.isTransform(stack, ItemCameraTransforms.TransformType.GROUND)) {
 			GlStateManager.translate(0.5, 0.4 + yoffGround, 0.5);
+			GlStateManager.scale(scaleGround, scaleGround, scaleGround);
+			MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
+		} else {
+			GlStateManager.translate(0.5, 0.5 + yoffGround, 0.5);
+			GlStateManager.rotate(60, 1, 0, 0);
 			GlStateManager.scale(scaleGround, scaleGround, scaleGround);
 			MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
 		}
@@ -205,8 +210,7 @@ public class RenderHelper {
 	public static void disableLightmap(boolean disabled) {
 		GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit);
 		if (disabled) GlStateManager.disableTexture2D();
-		else 
-			GlStateManager.enableTexture2D();
+		else GlStateManager.enableTexture2D();
 		GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
 	}
 

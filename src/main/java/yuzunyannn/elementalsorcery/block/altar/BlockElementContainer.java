@@ -9,11 +9,9 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
-import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.Explosion;
@@ -28,6 +26,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
 public abstract class BlockElementContainer extends BlockContainerNormal {
 
@@ -47,45 +46,25 @@ public abstract class BlockElementContainer extends BlockContainerNormal {
 		inventory.addInformation(worldIn, tooltip, flagIn);
 	}
 
-	// 破坏方块
-	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
-		TileEntity einv = worldIn.getTileEntity(pos);
-		if (einv != null) BlockContainerNormal.setDropTile(einv);
-		super.breakBlock(worldIn, pos, state);
-	}
-
-	// 掉落物
 	@Override
-	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,
-			int fortune) {
-		ItemStack stack = new ItemStack(this);
-		drops.add(stack);
-
-		TileEntity tile = BlockContainerNormal.getOrPopDropTile(world, pos);
-		this.modifyDropStack(world, pos, stack, tile);
-	}
-
-	protected void modifyDropStack(IBlockAccess world, BlockPos pos, ItemStack stack, TileEntity originTile) {
-		IElementInventory eInv = ElementHelper.getElementInventory(originTile);
+	public void writeTileDataToItemStack(IBlockAccess world, BlockPos pos, EntityLivingBase user, TileEntity tile,
+			ItemStack stack) {
+		super.writeTileDataToItemStack(world, pos, user, tile, stack);
+		IElementInventory eInv = ElementHelper.getElementInventory(tile);
 		if (eInv == null) return;
-
 		IElementInventory itemInv = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
 		ElementHelper.toElementInventory(eInv, itemInv);
 		itemInv.getStackInSlot(0).grow(-1);
 		itemInv.saveState(stack);
 	}
 
-	// 当被放置
 	@Override
-	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase player,
+	public void readTileDataFromItemStack(IBlockAccess world, BlockPos pos, EntityLivingBase user, TileEntity tile,
 			ItemStack stack) {
-		IElementInventory einv = BlockHelper.getElementInventory(worldIn, pos, null);
+		super.readTileDataFromItemStack(world, pos, user, tile, stack);
+		IElementInventory einv = BlockHelper.getElementInventory(world, pos, null);
 		if (einv == null) return;
-		if (player instanceof EntityPlayer) {
-			if (((EntityPlayer) player).isCreative()) {
-				stack = stack.copy();
-			}
-		}
+		if (EntityHelper.isCreative(user)) stack = stack.copy();
 		ElementHelper.toElementInventory(ElementHelper.getElementInventory(stack), einv);
 	}
 

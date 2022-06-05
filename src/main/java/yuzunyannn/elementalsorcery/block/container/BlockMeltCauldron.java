@@ -71,18 +71,17 @@ public class BlockMeltCauldron extends BlockContainerNormal {
 	}
 
 	@Override
-	public Boolean isEntityInsideMaterial(IBlockAccess world, BlockPos blockpos, IBlockState iblockstate, Entity entity,
-			double yToTest, Material materialIn, boolean testingHead) {
+	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
+		if (entity.world.isRemote) return;
 		if (entity instanceof EntityItem) {
-			if (yToTest <= blockpos.getY() + 1) {
-				TileEntity tile = world.getTileEntity(blockpos);
+			if (entity.posY <= pos.getY() + 1) {
+				TileEntity tile = world.getTileEntity(pos);
 				if (tile instanceof TileMeltCauldron) ((TileMeltCauldron) tile).eatItem((EntityItem) entity);
 			}
 		} else if (entity instanceof EntityLivingBase) {
-			TileEntity tile = world.getTileEntity(blockpos);
+			TileEntity tile = world.getTileEntity(pos);
 			if (tile instanceof TileMeltCauldron) ((TileMeltCauldron) tile).livingEnter((EntityLivingBase) entity);
 		}
-		return null;
 	}
 
 }

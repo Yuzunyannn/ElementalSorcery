@@ -84,12 +84,14 @@ import yuzunyannn.elementalsorcery.block.altar.BlockDisintegrateStela;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementCraftingTable;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementReactor;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementTranslocator;
-import yuzunyannn.elementalsorcery.block.altar.BlockElementalCube;
+import yuzunyannn.elementalsorcery.block.altar.BlockElementCube;
+import yuzunyannn.elementalsorcery.block.altar.BlockInstantConstitute;
 import yuzunyannn.elementalsorcery.block.altar.BlockMagicDesk;
 import yuzunyannn.elementalsorcery.block.altar.BlockPortalAltar;
 import yuzunyannn.elementalsorcery.block.altar.BlockSupremeTable;
 import yuzunyannn.elementalsorcery.block.altar.BlockTranscribeInjection;
 import yuzunyannn.elementalsorcery.block.altar.BlockTranscribeTable;
+import yuzunyannn.elementalsorcery.block.container.BlockEStoneCrock;
 import yuzunyannn.elementalsorcery.block.container.BlockEStoneMatrix;
 import yuzunyannn.elementalsorcery.block.container.BlockElementPlatform;
 import yuzunyannn.elementalsorcery.block.container.BlockElfBeacon;
@@ -303,6 +305,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileElfTreeCore;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileIceRockNode;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileIceRockSendRecv;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileIceRockStand;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileInstantConstitute;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileLantern;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
@@ -328,6 +331,7 @@ import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDTransfer;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
+import yuzunyannn.elementalsorcery.tile.TileEStoneCrock;
 import yuzunyannn.elementalsorcery.tile.TileEStoneMatrix;
 import yuzunyannn.elementalsorcery.tile.TileElementPlatform;
 import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
@@ -353,6 +357,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileElementCraftingTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementTranslocator;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
+import yuzunyannn.elementalsorcery.tile.altar.TileInstantConstitute;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.altar.TilePortalAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
@@ -426,14 +431,15 @@ public class ESInit {
 
 	private static final void instanceBlocks() throws ReflectiveOperationException {
 
+		BLOCKS.ASTONE = new BlockAStone();
 		BLOCKS.ESTONE = new BlocksEStone.EStone();
 		BLOCKS.ESTONE_SLAB = new BlocksEStone.EStoneSlab();
 		BLOCKS.ESTONE_STAIRS = new BlocksEStone.EStoneStairs();
 		BLOCKS.ESTONE_PRISM = new BlocksEStone.EStonePrism();
 		BLOCKS.ESTONE_MATRIX = new BlockEStoneMatrix();
-		BLOCKS.ASTONE = new BlockAStone();
+		BLOCKS.ESTONE_CROCK = new BlockEStoneCrock();
 
-		BLOCKS.ELEMENTAL_CUBE = new BlockElementalCube();
+		BLOCKS.ELEMENTAL_CUBE = new BlockElementCube();
 		BLOCKS.HEARTH = new BlockHearth();
 		BLOCKS.SMELT_BOX = new BlockSmeltBox(BlockHearth.EnumMaterial.COBBLESTONE);
 		BLOCKS.SMELT_BOX_IRON = new BlockSmeltBox(BlockHearth.EnumMaterial.IRON);
@@ -500,6 +506,7 @@ public class ESInit {
 		BLOCKS.ICE_ROCK_CRYSTAL_BLOCK = new BlockIceRockCrystalBlock();
 		BLOCKS.ICE_ROCK_NODE = new BlockIceRockNode();
 		BLOCKS.ELEMENT_REACTOR = new BlockElementReactor();
+		BLOCKS.INSTANT_CONSTITUTE = new BlockInstantConstitute();
 
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
@@ -932,6 +939,8 @@ public class ESInit {
 		register(TileIceRockNode.class, "IceRockNode");
 		register(TileElementReactor.class, "ElementReactor");
 		register(TileEStoneMatrix.class, "EStoneMatrix");
+		register(TileInstantConstitute.class, "IConstitute");
+		register(TileEStoneCrock.class, "EStoneCrock");
 	}
 
 	static void registerAllCapability() {
@@ -1059,7 +1068,7 @@ public class ESInit {
 		registerRender(ITEMS.MATERIAL_DEBRIS);
 		registerRender(ITEMS.MANTRA_GEM);
 		registerRender(ITEMS.MAGIC_TERMINAL);
-		
+
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");
 		for (ItemKeepsake.EnumType keepsakeType : ItemKeepsake.EnumType.values())
@@ -1137,6 +1146,7 @@ public class ESInit {
 		registerRender(BLOCKS.GOAT_GOLD_BRICK, 3, "goat_gold_brick_jump");
 		registerRender(BLOCKS.GOAT_GOLD_BRICK, 4, "goat_gold_brick_wither");
 		registerRender(BLOCKS.ICE_ROCK_CRYSTAL_BLOCK);
+		registerRender(BLOCKS.ESTONE_CROCK);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());
@@ -1184,6 +1194,7 @@ public class ESInit {
 		registerRender(BLOCKS.ICE_ROCK_NODE, TileIceRockNode.class, new RenderTileIceRockNode());
 		registerRender(BLOCKS.ELEMENT_REACTOR, TileElementReactor.class, new RenderTileElementReactor());
 		registerRender(BLOCKS.ESTONE_MATRIX, TileEStoneMatrix.class, new RenderTileEStoneMatrix());
+		registerRender(BLOCKS.INSTANT_CONSTITUTE, TileInstantConstitute.class, new RenderTileInstantConstitute());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

@@ -53,7 +53,7 @@ public abstract class TileStaticMultiBlock extends TileEntityNetwork {
 
 	// 是否完整
 	public boolean isAndCheckIntact() {
-		if (checkTime++ % 40 == 0) this.checkIntact(structure);
+		if (checkTime++ % 60 == 0) this.checkIntact(structure);
 		return this.ok;
 	}
 

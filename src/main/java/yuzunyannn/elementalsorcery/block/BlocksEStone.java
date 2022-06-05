@@ -101,6 +101,8 @@ public class BlocksEStone {
 			this.setHardness(1.2F);
 
 			this.setLightOpacity(255);
+			
+			this.useNeighborBrightness = true;
 		}
 
 		@Override
@@ -223,6 +225,8 @@ public class BlocksEStone {
 			this.setHarvestLevel("pickaxe", 1);
 			this.setSoundType(SoundType.STONE);
 			this.setHardness(1.2F);
+			
+			this.useNeighborBrightness = true;
 		}
 
 	}
