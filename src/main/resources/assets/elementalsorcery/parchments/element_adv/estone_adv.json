@@ -6,12 +6,14 @@
     ],
     "linked": [
         "elementalsorcery:estone_prism",
-        "elementalsorcery:estone_matrix"
+        "elementalsorcery:estone_matrix",
+        "elementalsorcery:estone_crock"
     ],
     "type": "craft",
     "name": "estoneAdv",
     "item": [
         "elementalsorcery:estone_prism",
-        "elementalsorcery:estone_matrix"
+        "elementalsorcery:estone_matrix",
+        "elementalsorcery:estone_crock"
     ]
 }

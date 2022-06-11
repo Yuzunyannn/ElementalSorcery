@@ -385,7 +385,6 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			// 建筑遍历器
 			BuildingBlocks iter = building.getBuildingIterator();
 			// 开始
-			GlStateManager.disableCull();
 			while (iter.next()) {
 				BlockPos blockpos = iter.getPos();
 				blockpos = new BlockPos(blockpos.getX(), blockpos.getY(), blockpos.getZ());
@@ -404,6 +403,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 						mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 					}
 				} else {
+					GlStateManager.disableCull();
 					bufferbuilder.begin(7, DefaultVertexFormats.BLOCK);
 					render.renderModelFlat(mc.world, blockrendererdispatcher.getModelForState(iblockstate), iblockstate,
 							blockpos, bufferbuilder, false, MathHelper.getPositionRandom(blockpos));

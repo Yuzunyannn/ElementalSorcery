@@ -3,7 +3,8 @@
     "need": [
         "element_adv/supreme_table",
         "elf/dread_cube",
-        "elf/dejected_skeleton"
+        "elf/dejected_skeleton",
+        "element_adv/void_container"
     ],
     "linked": "elementalsorcery:devolve_cube",
     "type": "craft",

@@ -29,6 +29,7 @@ import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class BlockHelper {
+
 	/** 获取tile实体 */
 	public static <T> T getTileEntity(IBlockAccess world, BlockPos pos, Class<T> type) {
 		TileEntity tile = world.getTileEntity(pos);

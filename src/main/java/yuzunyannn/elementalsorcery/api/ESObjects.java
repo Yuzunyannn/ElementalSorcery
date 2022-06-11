@@ -5,7 +5,6 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
-import yuzunyannn.elementalsorcery.block.container.BlockEStoneCrock;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 
@@ -121,6 +120,9 @@ public class ESObjects {
 		public Item MANTRA_GEM;
 		public Item CONTROLLER;
 		public Item MAGIC_TERMINAL;
+		public Item VOID_FRAGMENT;
+		public Item VOID_CONTAINER;
+		public Item VOID_CONTAINER_ELEMENT;
 	}
 
 	static public class Blocks {

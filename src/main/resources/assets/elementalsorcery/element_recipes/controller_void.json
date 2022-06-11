@@ -1,0 +1,28 @@
+{
+	"pattern": [
+		"FCF",
+		"CXC",
+		"FCF",
+		"C  C",
+		" XX ",
+		" XX ",
+		"C  C"
+	],
+	"key": {
+		"X": "elementalsorcery:void_container",
+		"F": "elementalsorcery:void_fragment",
+		"C": "elementalsorcery:magic_core"
+	},
+	"element": [
+		{
+			"id": "ender",
+			"size": 1024,
+			"power": 636
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:controller",
+		"count": 1,
+		"meta": 5
+	}
+}

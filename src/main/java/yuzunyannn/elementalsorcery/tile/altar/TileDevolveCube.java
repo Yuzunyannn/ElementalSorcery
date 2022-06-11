@@ -293,7 +293,7 @@ public class TileDevolveCube extends TileEntityNetwork implements ITickable {
 		// 扫描地图，有标记，加快进行，没标记，5分钟龟速扫描，减少资源占用
 		if (tryUpdateDetectionMark) {
 			tryUpdateDetectionMark = false;
-			if (tick % 20 == 0) updateWithTimes(16 + RandomHelper.rand.nextInt(64));
+			if (tick % 10 == 0) updateWithTimes(16 + RandomHelper.rand.nextInt(64));
 		} else {
 			if (hasOneTrun) {
 				if (tick % (20 * 60 * 5) == 0) updateWithTimes(16 + RandomHelper.rand.nextInt(64));

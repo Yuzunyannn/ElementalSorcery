@@ -37,7 +37,8 @@ public class ItemController extends Item {
 		INVERT("invert"),
 		TIME("time"),
 		CONCERT("concert"),
-		SHELL("shell");
+		SHELL("shell"),
+		VOID("void");
 
 		final String unlocalizedName;
 

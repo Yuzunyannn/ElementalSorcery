@@ -2,7 +2,8 @@
 	"lev": 5,
 	"need": [
 		"element_adv/supreme_table",
-		"element_sup/element_stone"
+		"element_sup/element_stone",
+		"element_sup/mantra_gem"
 	],
 	"linked": "elementalsorcery:disintegrate_stela",
 	"type": "mult",

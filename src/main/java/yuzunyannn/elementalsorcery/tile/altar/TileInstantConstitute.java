@@ -10,30 +10,41 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.tile.IMagicBeamHandler;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectInstantConstituteCharge;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
+import yuzunyannn.elementalsorcery.tile.TileEStoneCrock;
+import yuzunyannn.elementalsorcery.tile.ir.TileIceRockCrystalBlock;
+import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class TileInstantConstitute extends TileStaticMultiBlock implements ITickable {
+
+	public static final double ONE_ORDER_CRYSTAL_NEED_FRAGMENT = 1024;
 
 	public static int getOrderValUsed(IToElementInfo info) {
 		return info.complex() + 1;
@@ -45,6 +56,8 @@ public class TileInstantConstitute extends TileStaticMultiBlock implements ITick
 	protected int orderVal;
 	/** 之前的数量，客户端用于动画，服务端用于判定是否要发送更新 */
 	public int prevOrderVal;
+	/** 发送动画用的记录数组 */
+	public int[] sendList = new int[4];
 
 	@Override
 	public void initMultiBlock() {
@@ -91,6 +104,19 @@ public class TileInstantConstitute extends TileStaticMultiBlock implements ITick
 	protected void writeMyNBT(NBTTagCompound compound) {
 		compound.setInteger("oVal", getOrderVal());
 		compound.setInteger("ovMax", getMaxOrderVal());
+		if (isSending()) {
+			boolean needSend = false;
+			for (int n : sendList) {
+				if (n != 0) {
+					needSend = true;
+					break;
+				}
+			}
+			if (needSend) {
+				compound.setIntArray("~sList", sendList);
+				sendList = new int[sendList.length];
+			}
+		}
 	}
 
 	@Override
@@ -209,15 +235,75 @@ public class TileInstantConstitute extends TileStaticMultiBlock implements ITick
 	@Override
 	public void handleUpdateTag(NBTTagCompound tag) {
 		if (tag.hasKey("~!~", NBTTag.TAG_LIST)) doConstituteClient(tag.getTagList("~!~", NBTTag.TAG_COMPOUND));
+		if (tag.hasKey("~sList")) {
+			int[] sendList = tag.getIntArray("~sList");
+			for (int i = 0; i < Math.min(sendList.length, this.sendList.length); i++) this.sendList[i] += sendList[i];
+		}
 		super.handleUpdateTag(tag);
 	}
 
+	public int tick;
+
 	@Override
 	public void update() {
+		tick++;
 		if (world.isRemote) updateClient();
-		else {
-			if (checkTime++ % 10 != 0) return;
-			tryUpdateOrderValToClient();
+		else if (tick % 10 == 0) tryUpdateOrderValToClient();
+		if (tick % 60 == 0) tryUpdateCrockCraft();
+	}
+
+	protected class CrockCraft implements TileEStoneCrock.ICrockCraft {
+
+		protected BlockPos connectPos;
+		protected final int index;
+
+		public CrockCraft(int index, BlockPos connectPos) {
+			this.index = index;
+			this.connectPos = connectPos;
+		}
+
+		@Override
+		public boolean isAlive() {
+			return TileInstantConstitute.this.isAlive();
+		}
+
+		@Override
+		public void tryConnect(World world, BlockPos pos, IMagicBeamHandler hanlder) {
+			TileIceRockCrystalBlock tile = BlockHelper.getTileEntity(world, connectPos, TileIceRockCrystalBlock.class);
+			if (tile == null) return;
+			TileIceRockStand core = tile.getIceRockCore();
+			if (core == null) return;
+			EnumFacing facing = EnumFacing.byHorizontalIndex(index).rotateY();
+			tile.setBeamHandler(facing.getOpposite(), hanlder);
+		}
+
+		@Override
+		public double getCraftCost(World world, BlockPos pos, ItemStack stack) {
+			if (stack.getItem() == ESInit.ITEMS.ORDER_CRYSTAL) return ONE_ORDER_CRYSTAL_NEED_FRAGMENT;
+			return -1;
+		}
+
+		@Override
+		public ItemStack doCraft(World world, BlockPos pos, ItemStack stack) {
+			stack.shrink(1);
+			TileInstantConstitute.this.growOrderVal(1);
+			sendList[index % sendList.length]++;
+			if (stack.isEmpty()) {
+				TileInstantConstitute.this.prevOrderVal = TileInstantConstitute.this.getOrderVal();
+				TileInstantConstitute.this.updateToClient();
+			}
+			return stack;
+		}
+
+	}
+
+	public void tryUpdateCrockCraft() {
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+			BlockPos at = this.pos.offset(facing, 6);
+			TileEStoneCrock crock = BlockHelper.getTileEntity(world, at, TileEStoneCrock.class);
+			if (crock == null) continue;
+			if (crock.getCraft() != null) continue;
+			crock.setCraft(new CrockCraft(facing.getHorizontalIndex(), at.offset(facing.rotateY(), 6)));
 		}
 	}
 
@@ -236,6 +322,15 @@ public class TileInstantConstitute extends TileStaticMultiBlock implements ITick
 		Vec3d dstVec = new Vec3d(this.pos).add(0.5, 1, 0.5);
 		FirewrokShap.createECircle(world, dstVec, 0.1, 1,
 				new int[] { 0xe2e2ef, 0xcdcde4, 0x99ecff, 0x5c9ad8, 0x25346e });
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void clientSendEffect(EnumFacing facing) {
+		int[] colors = new int[] { 0x385ab5, 0x293e80, 0x8ae3ff, 0xc9faff };
+		BlockPos at = this.pos.offset(facing, 6);
+		EffectInstantConstituteCharge effect = new EffectInstantConstituteCharge(world, at, facing.getOpposite());
+		effect.color.setColor(colors[rand.nextInt(colors.length)]);
+		Effect.addEffect(effect);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -284,6 +379,12 @@ public class TileInstantConstitute extends TileStaticMultiBlock implements ITick
 	public void updateClient() {
 		prevOrderVal = targetOrderVal;
 		targetOrderVal = getOrderVal();
+		for (int i = 0; i < sendList.length; i++) {
+			if (sendList[i] > 0) {
+				sendList[i]--;
+				clientSendEffect(EnumFacing.byHorizontalIndex(i));
+			}
+		}
 	}
 
 	@SideOnly(Side.CLIENT)

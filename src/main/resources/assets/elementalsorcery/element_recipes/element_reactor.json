@@ -1,6 +1,6 @@
 {
 	"pattern": [
-		" A ",
+		"A D",
 		" T ",
 		"B C",
 		" GG ",
@@ -21,6 +21,10 @@
 		"C": {
 			"item": "elementalsorcery:controller",
 			"meta": 2
+		},
+		"D": {
+			"item": "elementalsorcery:controller",
+			"meta": 5
 		},
 		"G": {
 			"item": "elementalsorcery:controller",

@@ -1,0 +1,30 @@
+{
+	"pattern": [
+		"E E",
+		"P P",
+		"EPE"
+	],
+	"key": {
+		"E": {
+			"id": "elementalsorcery:estone",
+			"meta": 0
+		},
+		"P": "elementalsorcery:estone_prism"
+	},
+	"element": [
+		{
+			"id": "metal",
+			"size": 648,
+			"power": 275
+		},
+		{
+			"id": "wood",
+			"size": 648,
+			"power": 275
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:estone_crock",
+		"count": 1
+	}
+}

@@ -1,0 +1,20 @@
+{
+	"type": "forge:ore_shaped",
+	"pattern": [
+		"# #",
+		" X ",
+		"# #"
+	],
+	"key": {
+		"#": {
+			"item": "elementalsorcery:element_crystal"
+		},
+		"X": {
+			"item": "elementalsorcery:void_container"
+		}
+	},
+	"result": {
+		"item": "elementalsorcery:void_container_element",
+		"count": 1
+	}
+}

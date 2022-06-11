@@ -58,6 +58,13 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 		volumeMap.put(ESInit.ITEMS.MAGIC_STONE, 16);
 		volumeMap.put(Item.getItemFromBlock(Blocks.GLASS), 4);
 
+		// 自定义
+		Json.ergodicFile("recipes/melt_cauldron", (file, json) -> {
+			if (!ElementMap.checkModDemands(json)) return false;
+			return readJson(json);
+		});
+
+		// 预设
 		MeltCauldronRecipe astone = new MeltCauldronRecipe();
 		astone.setMagicStoneCount(1);
 		astone.add(new ItemStack(Blocks.STONE, 8), new ItemStack(Blocks.COBBLESTONE, 8));
@@ -98,12 +105,16 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 		iceRockSpar.addResult(3.0f, new ItemStack(ESInit.ITEMS.ICE_ROCK_SPAR, 6));
 		iceRockSpar.addResult(10.0f, new ItemStack(ESInit.ITEMS.INVERT_GEM, 1));
 		recipes.add(iceRockSpar);
+		
+		MeltCauldronRecipe voidContainer  = new MeltCauldronRecipe();
+		voidContainer.setMagicStoneCount(9);
+		voidContainer.add(new ItemStack(ESInit.ITEMS.VOID_FRAGMENT, 9));
+		voidContainer.add(new ItemStack(ESInit.ITEMS.JUMP_GEM, 6));
+		voidContainer.add(new ItemStack(Items.ENDER_PEARL, 12));
+		voidContainer.addResult(0.5f, new ItemStack(ESInit.ITEMS.VOID_CONTAINER, 1));
+		voidContainer.addResult(8.0f, new ItemStack(ESInit.ITEMS.VOID_FRAGMENT, 8));
+		recipes.add(voidContainer);
 
-		// 自定义
-		Json.ergodicFile("recipes/melt_cauldron", (file, json) -> {
-			if (!ElementMap.checkModDemands(json)) return false;
-			return readJson(json);
-		});
 	}
 
 	static public boolean readJson(JsonObject json) {
@@ -179,7 +190,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 				boolean hasMatch = false;
 				for (Ingredient ingredient : list) {
 					for (ItemStack src : ingredient.getMatchingStacks()) {
-						if (ItemStack.areItemsEqual(src, act)) {
+						if (ItemHelper.isItemMatch(src, act)) {
 							hasMatch = true;
 							break;
 						}

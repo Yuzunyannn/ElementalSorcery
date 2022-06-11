@@ -4,7 +4,8 @@
         "more/scarlet_crystal",
         "md/estone",
         "element/element_explosion",
-        "elf/dejected_skeleton"
+        "elf/dejected_skeleton",
+        "element_adv/void_container"
     ],
     "linked": "elementalsorcery:element_translocator",
     "type": "craft",

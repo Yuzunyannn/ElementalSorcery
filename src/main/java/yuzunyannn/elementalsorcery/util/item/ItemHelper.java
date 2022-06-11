@@ -15,6 +15,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.NonNullList;
@@ -58,12 +59,30 @@ public class ItemHelper {
 		return result;
 	}
 
+	static public boolean isItemMatch(ItemStack sample, ItemStack stack) {
+		if (sample.isEmpty()) return stack.isEmpty();
+		if (sample.getItem() != stack.getItem()) return false;
+		if (sample.getMetadata() != stack.getMetadata()) return false;
+		if (sample.getTagCompound() == null) return true;
+		if (stack.getTagCompound() == null) return false;
+		NBTTagCompound sampleNBT = sample.getTagCompound();
+		NBTTagCompound nbt = stack.getTagCompound();
+		for (String key : sampleNBT.getKeySet()) {
+			NBTBase sampleTag = sampleNBT.getTag(key);
+			if (sampleTag == null) continue;
+			NBTBase tag = nbt.getTag(key);
+			if (tag == null) return false;
+			if (!sampleTag.equals(tag)) return false;
+		}
+		return true;
+	}
+
 	static public List<ItemStack> find(Ingredient ingredient, Collection<ItemStack> items) {
 		List<ItemStack> list = new ArrayList<>();
 		ItemStack[] stacks = ingredient.getMatchingStacks();
-		for (ItemStack src : stacks) {
+		for (ItemStack sample : stacks) {
 			for (ItemStack dst : items) {
-				if (ItemStack.areItemsEqual(src, dst)) list.add(dst);
+				if (isItemMatch(sample, dst)) list.add(dst);
 			}
 		}
 		return list;
@@ -77,11 +96,11 @@ public class ItemHelper {
 			if (stacks == null) continue;
 			int count = stacks[0].getCount();
 			// 对比所有矿物词典
-			for (ItemStack stack : stacks) {
+			for (ItemStack sample : stacks) {
 				for (int i = 0; i < inv.getSizeInventory(); i++) {
 					ItemStack origin = inv.getStackInSlot(i);
 					if (origin.isEmpty()) continue;
-					if (ItemStack.areItemsEqual(origin, stack)) {
+					if (isItemMatch(sample, origin)) {
 						int s = Math.min(count, origin.getCount());
 						count -= s;
 						if (shrink) origin.shrink(s);

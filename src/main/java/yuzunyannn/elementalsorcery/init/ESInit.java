@@ -82,9 +82,9 @@ import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructWindmill;
 import yuzunyannn.elementalsorcery.block.altar.BlockDevolveCube;
 import yuzunyannn.elementalsorcery.block.altar.BlockDisintegrateStela;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementCraftingTable;
+import yuzunyannn.elementalsorcery.block.altar.BlockElementCube;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementReactor;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementTranslocator;
-import yuzunyannn.elementalsorcery.block.altar.BlockElementCube;
 import yuzunyannn.elementalsorcery.block.altar.BlockInstantConstitute;
 import yuzunyannn.elementalsorcery.block.altar.BlockMagicDesk;
 import yuzunyannn.elementalsorcery.block.altar.BlockPortalAltar;
@@ -240,6 +240,9 @@ import yuzunyannn.elementalsorcery.item.prop.ItemSome;
 import yuzunyannn.elementalsorcery.item.prop.ItemSoulFragment;
 import yuzunyannn.elementalsorcery.item.prop.ItemSpellbookCover;
 import yuzunyannn.elementalsorcery.item.prop.ItemSupremeTableComponent;
+import yuzunyannn.elementalsorcery.item.prop.ItemVoidContainer;
+import yuzunyannn.elementalsorcery.item.prop.ItemVoidContainerElement;
+import yuzunyannn.elementalsorcery.item.prop.ItemVoidFragment;
 import yuzunyannn.elementalsorcery.item.prop.ItemVortex;
 import yuzunyannn.elementalsorcery.item.prop.ItemWindmillBladeFrame;
 import yuzunyannn.elementalsorcery.item.tool.ItemCubeDemarcator;
@@ -614,6 +617,9 @@ public class ESInit {
 		ITEMS.MANTRA_GEM = new ItemMantraGem();
 		ITEMS.CONTROLLER = new ItemController();
 		ITEMS.MAGIC_TERMINAL = new ItemMagicTerminal();
+		ITEMS.VOID_FRAGMENT = new ItemVoidFragment();
+		ITEMS.VOID_CONTAINER = new ItemVoidContainer();
+		ITEMS.VOID_CONTAINER_ELEMENT = new ItemVoidContainerElement();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1068,6 +1074,9 @@ public class ESInit {
 		registerRender(ITEMS.MATERIAL_DEBRIS);
 		registerRender(ITEMS.MANTRA_GEM);
 		registerRender(ITEMS.MAGIC_TERMINAL);
+		registerRender(ITEMS.VOID_FRAGMENT);
+		registerRender(ITEMS.VOID_CONTAINER);
+		registerRender(ITEMS.VOID_CONTAINER_ELEMENT);
 
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");

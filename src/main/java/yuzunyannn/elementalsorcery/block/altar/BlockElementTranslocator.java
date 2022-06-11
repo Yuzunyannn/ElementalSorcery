@@ -13,8 +13,8 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.block.container.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementTranslocator;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class BlockElementTranslocator extends BlockContainerNormal {
@@ -44,7 +44,7 @@ public class BlockElementTranslocator extends BlockContainerNormal {
 		if (tile != null) {
 			BlockHelper.drop(tile.getItemStackHandler(), worldIn, pos);
 			ElementStack estack = tile.getElementStack();
-			ElementExplosion.doExplosion(worldIn, pos, estack, harvesters.get());
+			ElementHelper.onElementFreeFromVoid(worldIn, pos, estack, harvesters.get());
 		}
 		super.breakBlock(worldIn, pos, state);
 	}

@@ -9,9 +9,11 @@ import javax.annotation.Nullable;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -22,6 +24,7 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
@@ -226,6 +229,20 @@ public class ElementHelper {
 		return newEStacks;
 	}
 
+	public static void onElementFreeFromVoid(World worldIn, BlockPos pos, IElementInventory eInv,
+			@Nullable EntityLivingBase trigger) {
+		if (eInv == null) return;
+		for (int i = 0; i < eInv.getSlots(); i++) {
+			ElementStack eStack = eInv.getStackInSlot(i);
+			onElementFreeFromVoid(worldIn, pos, eStack, trigger);
+		}
+	}
+
+	public static void onElementFreeFromVoid(World worldIn, BlockPos pos, ElementStack estack,
+			@Nullable EntityLivingBase trigger) {
+		ElementExplosion.doExplosion(worldIn, pos, estack, trigger);
+	}
+
 	static final double ln2 = Math.log(2);
 	static final double ln2_4 = Math.log(2.4);
 
@@ -275,5 +292,4 @@ public class ElementHelper {
 	static public double transitionTo(Element element, double fragment, double level) {
 		return fragment / Math.pow(level, 1.125);
 	}
-
 }

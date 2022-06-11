@@ -2,7 +2,7 @@
 	"pattern": [
 		"NNN",
 		"ECE",
-		"SES",
+		"SRS",
 		" NN ",
 		" NN ",
 		"SEES",
@@ -12,6 +12,12 @@
 		"N": "elementalsorcery:azure_crystal",
 		"C": "elementalsorcery:element_stone",
 		"E": "minecraft:ender_pearl",
+		"R": {
+			"id": "elementalsorcery:mantra_gem",
+			"nbt": {
+				"mantraGemId": "elementalsorcery:launch_ede"
+			}
+		},
 		"S": {
 			"item": "elementalsorcery:estone",
 			"meta": 1
@@ -32,7 +38,7 @@
 		{
 			"id": "knowledge",
 			"size": 32,
-			"power": 500
+			"power": 425
 		},
 		{
 			"id": "star",

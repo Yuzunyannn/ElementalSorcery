@@ -1,7 +1,9 @@
 package yuzunyannn.elementalsorcery.tile.altar;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import javax.annotation.Nullable;
@@ -264,16 +266,24 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		if (ans.daEstacks == null) return null;
 		ans.daComplex = teInfo.complex();
 		if (!needRemian) return ans;
-		ItemStack[] remains = null;
-		int rest = 1;
-		do {
-			remains = teInfo.remain();
-			if (remains == null) break;
+		ItemStack[] firstRemains = teInfo.remain();
+		if (firstRemains == null) return ans;
+		LinkedList<ItemStack> remains = new LinkedList<>();
+		remains.addAll(Arrays.asList(firstRemains));
+		int rest = 2;
+		while (!remains.isEmpty()) {
 			if (rest <= 0) return null;
-			for (ItemStack remain : remains) ans.merge(teInfo = elementMap.toElement(remain));
-			if (teInfo == null) return null;
+			LinkedList<ItemStack> remainCache = new LinkedList<>();
+			for (ItemStack remain : remains) {
+				teInfo = elementMap.toElement(remain);
+				if (teInfo == null) return null;
+				ans.merge(teInfo);
+				ItemStack[] remainArray = teInfo.remain();
+				if (remainArray != null) remainCache.addAll(Arrays.asList(remainArray));
+			}
+			remains = remainCache;
 			rest--;
-		} while (true);
+		}
 		return ans;
 	}
 

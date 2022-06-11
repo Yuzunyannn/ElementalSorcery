@@ -16,6 +16,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -35,14 +36,11 @@ import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
-import yuzunyannn.elementalsorcery.grimoire.remote.FMantraBase;
-import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.parchment.Pages;
-import yuzunyannn.elementalsorcery.util.VariableSet;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectInstantConstituteCharge;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
-import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class CommandESDebug {
 
@@ -122,10 +120,10 @@ public class CommandESDebug {
 			}
 				return;
 			case "textTest": {
-				IFragmentMantraLauncher is = ESInit.MANTRAS.BLOCK_CRASH.getFragmentMantraLaunchers().get(0);
-				VariableSet content = new VariableSet();
-				content.set(FMantraBase.CHARGE, 99999.0);
-				is.cast(entity.world, pos, new WorldLocation(entity.world.provider.getDimension(), pos), content);
+//				IFragmentMantraLauncher is = ESInit.MANTRAS.BLOCK_CRASH.getFragmentMantraLaunchers().get(0);
+//				VariableSet content = new VariableSet();
+//				content.set(FMantraBase.CHARGE, 99999.0);
+//				is.cast(entity.world, pos, new WorldLocation(entity.world.provider.getDimension(), pos), content);
 
 //				World world = Minecraft.getMinecraft().world;
 //				Vec3d center = new Vec3d(pos).add(0.5, 4.5, 0.5);
@@ -142,6 +140,18 @@ public class CommandESDebug {
 //						Effect.addEffect(f);
 //					}
 //				});
+
+
+//				EffectBlockLine effect = new EffectBlockLine(Minecraft.getMinecraft().world,
+//						new Vec3d(pos).add(0.5, 1.5, 0.5));
+//				effect.color.setColor(0xffffff);
+//				effect.toFacing = EnumFacing.SOUTH;
+//				effect.flip = true;
+//				effect.width = 0.5;
+//				effect.distance = 2;
+//				effect.motion = 0.1;
+//				effect.maxLength = 0.5;
+//				Effect.addEffect(effect);
 
 //				EffectSphericalBlast effect = new EffectSphericalBlast(Minecraft.getMinecraft().world,
 //						new Vec3d(pos).add(0.5, 1.5, 0.5), 5);

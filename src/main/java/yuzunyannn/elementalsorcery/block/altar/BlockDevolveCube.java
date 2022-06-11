@@ -18,6 +18,8 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.block.container.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class BlockDevolveCube extends BlockContainerNormal {
 
@@ -42,6 +44,13 @@ public class BlockDevolveCube extends BlockContainerNormal {
 				pos.getZ());
 		return true;
 
+	}
+
+	@Override
+	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
+		TileDevolveCube tile = BlockHelper.getTileEntity(worldIn, pos, TileDevolveCube.class);
+		if (tile != null) ElementHelper.onElementFreeFromVoid(worldIn, pos, tile.getExchanger(), harvesters.get());
+		super.breakBlock(worldIn, pos, state);
 	}
 
 	@SideOnly(Side.CLIENT)

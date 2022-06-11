@@ -1,0 +1,60 @@
+{
+	"pattern": [
+		"LNL",
+		"GXG",
+		"GLG",
+		" OO ",
+		"OEEO",
+		"EOOE",
+		"QEEQ"
+	],
+	"key": {
+		"L": "elementalsorcery:estone_prism",
+		"N": {
+			"id": "elementalsorcery:mantra_gem",
+			"nbt": {
+				"mantraGemId": "elementalsorcery:launch_eco"
+			}
+		},
+		"X": "elementalsorcery:void_container",
+		"G": {
+			"type": "ore_dict",
+			"item": "blockGlass"
+		},
+		"O": "elementalsorcery:order_crystal",
+		"E": {
+			"item": "elementalsorcery:estone",
+			"meta": 0
+		},
+		"Q": {
+			"item": "elementalsorcery:estone",
+			"meta": 2
+		}
+	},
+	"element": [
+		{
+			"id": "wood",
+			"size": 90,
+			"power": 648
+		},
+		{
+			"id": "fire",
+			"size": 90,
+			"power": 600
+		},
+		{
+			"id": "knowledge",
+			"size": 60,
+			"power": 500
+		},
+		{
+			"id": "star",
+			"size": 30,
+			"power": 333
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:instant_constitute",
+		"count": 1
+	}
+}

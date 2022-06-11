@@ -187,6 +187,27 @@
                     "power": 444
                 }
             ]
+        },
+        {
+            "note": "傲慢羊毛",
+            "item": "elementalsorcery:arrogant_wool",
+            "element": [
+                {
+                    "id": "fire",
+                    "size": 7,
+                    "power": 777
+                },
+                {
+                    "id": "water",
+                    "size": 7,
+                    "power": 777
+                },
+                {
+                    "id": "star",
+                    "size": 1,
+                    "power": 666
+                }
+            ]
         }
     ]
 }

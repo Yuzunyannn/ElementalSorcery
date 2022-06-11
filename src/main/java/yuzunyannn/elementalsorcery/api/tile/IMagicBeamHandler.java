@@ -15,7 +15,9 @@ public interface IMagicBeamHandler extends IAliveStatusable {
 	/**
 	 * @retrun 真正能取出来的量
 	 */
-	public double extractMagicFragment(double count, boolean simulate);
+	default public double extractMagicFragment(double count, boolean simulate) {
+		return 0;
+	}
 
 	default public IWorldObject getWorldObject() {
 		if (this instanceof TileEntity) return new WorldObjectBlock((TileEntity) this);

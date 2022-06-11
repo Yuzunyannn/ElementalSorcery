@@ -322,7 +322,7 @@
             "element": [
                 {
                     "id": "ender",
-                    "size": 48,
+                    "size": 34,
                     "power": 666
                 }
             ]
@@ -404,12 +404,12 @@
             "element": [
                 {
                     "id": "fire",
-                    "size": 125,
+                    "size": 32,
                     "power": 828
                 },
                 {
                     "id": "water",
-                    "size": 20,
+                    "size": 16,
                     "power": 828
                 },
                 {

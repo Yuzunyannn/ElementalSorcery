@@ -1,7 +1,7 @@
 {
 	"pattern": [
 		"JGJ",
-		" P ",
+		"XPX",
 		"JGJ",
 		" GG ",
 		"GDDG",
@@ -9,6 +9,7 @@
 		" GG "
 	],
 	"key": {
+		"X": "elementalsorcery:void_container",
 		"J": "elementalsorcery:ice_rock_spar",
 		"G": {
 			"type": "ore_dict",
