@@ -7,6 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
+import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.init.EntityRegistries;
@@ -45,6 +46,7 @@ public class ESConfig {
 	private static void loadAll(IConfigGetter getter) {
 		load(ESConfig.class, getter);
 		load(ElfPostOffice.class, getter);
+		load(ElfChamberOfCommerce.class, getter);
 		load(WorldGeneratorES.class, getter);
 		load(EntityRegistries.class, getter);
 		load(BuildingLib.class, getter);

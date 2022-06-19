@@ -97,7 +97,8 @@ public class BlockSealStone extends Block implements Mapper {
 		return "s";
 	}
 
-	public ItemStack getAncientPaper(World worldIn, @Nullable EntityPlayer player, int fortune, boolean isSuperDrop) {
+	public static ItemStack getAncientPaper(World worldIn, @Nullable BlockPos dropPos, int fortune,
+			boolean isSuperDrop) {
 		Random rand = worldIn.rand;
 		ItemStack stack = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, ItemAncientPaper.EnumType.NORMAL.getMetadata());
 
@@ -107,8 +108,8 @@ public class BlockSealStone extends Block implements Mapper {
 		for (int i = 0; i < fortune + 1; i++)
 			isMantra = isMantra || rand.nextFloat() <= MANTRA_DROP_PROBABILITY_PER_LUCKY;
 		if (isSuperDrop) isMantra = isMantra || rand.nextBoolean();
-		// 只有玩家打碎的时候才会掉mantra
-		isMantra = isMantra && player != null;
+		// 只有传入pos的的时候才会掉mantra
+		isMantra = isMantra && dropPos != null;
 
 		float at = rand.nextFloat();
 		float length = rand.nextFloat() * 0.5f + 0.05f + Math.min(0.2f, fortune / 50.0f);
@@ -129,7 +130,7 @@ public class BlockSealStone extends Block implements Mapper {
 
 		// 如果是咒文
 		if (isMantra) {
-			BlockPos pos = player.getPosition();
+			BlockPos pos = dropPos;
 			RandomHelper.WeightRandom<Mantra> wMantras = new RandomHelper.WeightRandom();
 			for (Entry<ResourceLocation, Mantra> entry : Mantra.REGISTRY.getEntries()) {
 				Mantra mantra = entry.getValue();
@@ -180,7 +181,7 @@ public class BlockSealStone extends Block implements Mapper {
 		for (int i = 0; i < tryTime; i++) {
 			if (rand.nextFloat() > chance) continue;
 			chance = chance * 0.75f;
-			ItemStack stack = getAncientPaper(worldIn, player, fortune, isSuperDrop);
+			ItemStack stack = getAncientPaper(worldIn, player == null ? null : pos, fortune, isSuperDrop);
 			spawnAsEntity(worldIn, pos, stack);
 		}
 

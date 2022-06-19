@@ -22,6 +22,7 @@ public class Adventurer implements IAdventurer, INBTSerializable<NBTTagCompound>
 
 	protected List<Quest> tasks = new LinkedList<>();
 	protected float fame;
+	protected int debts;
 
 	@Override
 	public Quest getQuest(int index) {
@@ -70,7 +71,8 @@ public class Adventurer implements IAdventurer, INBTSerializable<NBTTagCompound>
 
 	@Override
 	public NBTTagCompound serializeNBT() {
-		return (NBTTagCompound) CapabilityProvider.AdventurerProvider.storage.writeNBT(ADVENTURER_CAPABILITY, this, null);
+		return (NBTTagCompound) CapabilityProvider.AdventurerProvider.storage.writeNBT(ADVENTURER_CAPABILITY, this,
+				null);
 	}
 
 	@Override
@@ -107,6 +109,16 @@ public class Adventurer implements IAdventurer, INBTSerializable<NBTTagCompound>
 			instance.setFame(nbt.getFloat("fame"));
 		}
 
+	}
+
+	@Override
+	public void incurDebts(int count) {
+		this.debts = Math.max(debts + count, 0);
+	}
+
+	@Override
+	public int getDebts() {
+		return debts;
 	}
 
 }

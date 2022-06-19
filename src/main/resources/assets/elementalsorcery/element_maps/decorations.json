@@ -90,6 +90,7 @@
         },
         {
             "note": "附魔台",
+            "complex": 7,
             "item": "minecraft:enchanting_table",
             "element": [
                 {
@@ -107,11 +108,11 @@
                     "size": 48,
                     "power": 95
                 }
-            ],
-            "complex": 8
+            ]
         },
         {
             "note": "末地传送门",
+            "complex": 12,
             "item": "minecraft:end_portal_frame",
             "element": [
                 {
@@ -124,8 +125,7 @@
                     "size": 32,
                     "power": 250
                 }
-            ],
-            "complex": 10
+            ]
         },
         {
             "note": "紫菘植物",
@@ -153,6 +153,7 @@
         },
         {
             "note": "潜影盒",
+            "complex": 6,
             "item": [
                 "minecraft:white_shulker_box",
                 "minecraft:orange_shulker_box",
@@ -182,8 +183,7 @@
                     "size": 28,
                     "power": 60
                 }
-            ],
-            "complex": 12
+            ]
         },
         {
             "note": "带釉陶瓦",
@@ -244,8 +244,8 @@
             "element": [
                 {
                     "id": "ender",
-                    "size": 750,
-                    "power": 1000
+                    "size": 550,
+                    "power": 850
                 },
                 {
                     "id": "wood",
@@ -256,6 +256,28 @@
                     "id": "metal",
                     "size": 50,
                     "power": 75
+                }
+            ]
+        },
+        {
+            "note": "龙蛋",
+            "complex": 12,
+            "item": "minecraft:dragon_egg",
+            "element": [
+                {
+                    "id": "ender",
+                    "size": 512,
+                    "power": 2048
+                },
+                {
+                    "id": "wood",
+                    "size": 512,
+                    "power": 1024
+                },
+                {
+                    "id": "water",
+                    "size": 128,
+                    "power": 512
                 }
             ]
         }

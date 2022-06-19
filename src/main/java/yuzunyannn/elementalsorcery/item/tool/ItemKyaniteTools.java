@@ -31,13 +31,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.crafting.IToElementItem;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.crafting.element.ToElementInfoStatic;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemKyaniteTools {
@@ -86,10 +87,18 @@ public class ItemKyaniteTools {
 	}
 
 	// 工具具有储存元素的能力
-	public static interface toolsCapability {
+	public static interface toolsCapability extends IToElementItem {
+
 		default void provide(ItemStack stack) {
 			IElementInventory inventory = new ElementInventory(6);
 			inventory.saveState(stack);
+		}
+
+		default IToElementInfo toElement(ItemStack stack) {
+			IElementInventory inventory = new ElementInventory(6);
+			if (!inventory.hasState(stack)) return null;
+			inventory.loadState(stack);
+			return ToElementInfoStatic.createWithElementContainer(stack.copy(), inventory);
 		}
 	}
 
@@ -158,7 +167,7 @@ public class ItemKyaniteTools {
 	}
 
 	// 锄头
-	public static class ItemKyaniteHoe extends ItemHoe implements toolsCapability {
+	public static class ItemKyaniteHoe extends ItemHoe implements toolsCapability, IToElementItem {
 		public ItemKyaniteHoe() {
 			super(KYANITE);
 			this.setTranslationKey("kyaniteHoe");
@@ -170,7 +179,7 @@ public class ItemKyaniteTools {
 				items.add(new ItemStack(this));
 				ItemStack stack = new ItemStack(this);
 				IElementInventory inventory = new ElementInventory();
-				inventory.insertElement(new ElementStack(ESInit.ELEMENTS.ENDER, 10000, 1000), false);
+				inventory.insertElement(new ElementStack(ESInit.ELEMENTS.ENDER, 128, 32), false);
 				inventory.saveState(stack);
 				items.add(stack);
 			}

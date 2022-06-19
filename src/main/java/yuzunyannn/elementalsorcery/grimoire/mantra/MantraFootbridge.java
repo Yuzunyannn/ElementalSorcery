@@ -23,13 +23,13 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFlyIsland;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.VariableSet;
-import yuzunyannn.elementalsorcery.util.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
 
 public class MantraFootbridge extends MantraCommon {
 
 	public static final Variable<LinkedList<BlockPos>> POS_LIST = new Variable<>("@posList",
-			VariableSet.BLOCK_POS_LIST_LINKED);
+			VariableSet.BLOCK_POS_LINKED_LIST);
 
 	public MantraFootbridge() {
 		this.setTranslationKey("footbridge");

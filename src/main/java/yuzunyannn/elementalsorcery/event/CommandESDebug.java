@@ -16,12 +16,12 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -35,10 +35,10 @@ import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
+import yuzunyannn.elementalsorcery.entity.EntityItemGoods;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.parchment.Pages;
-import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectInstantConstituteCharge;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -120,6 +120,16 @@ public class CommandESDebug {
 			}
 				return;
 			case "textTest": {
+
+				for (int i = 0; i < 32; i++) {
+					EntityItemGoods goods = new EntityItemGoods(entity.world,
+							new Vec3d(pos.up(5)).add(RandomHelper.rand.nextDouble() * 5, RandomHelper.rand.nextDouble(),
+									RandomHelper.rand.nextDouble() * 5),
+							new ItemStack(Item.REGISTRY.getRandomObject(RandomHelper.rand), 2));
+					goods.setPrice(RandomHelper.rand.nextInt(1000));
+					entity.world.spawnEntity(goods);
+				}
+
 //				IFragmentMantraLauncher is = ESInit.MANTRAS.BLOCK_CRASH.getFragmentMantraLaunchers().get(0);
 //				VariableSet content = new VariableSet();
 //				content.set(FMantraBase.CHARGE, 99999.0);
@@ -140,7 +150,6 @@ public class CommandESDebug {
 //						Effect.addEffect(f);
 //					}
 //				});
-
 
 //				EffectBlockLine effect = new EffectBlockLine(Minecraft.getMinecraft().world,
 //						new Vec3d(pos).add(0.5, 1.5, 0.5));

@@ -48,6 +48,7 @@ public class GuiElfTalk extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+		GlStateManager.color(1, 1, 1);
 		int offsetX = this.guiLeft, offsetY = this.guiTop;
 		TalkChapter.Iter iter = container.getChapterIter();
 		if (iter == null || iter.getType() == TalkType.SAY) {

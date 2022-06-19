@@ -2,169 +2,64 @@ package yuzunyannn.elementalsorcery.elf.pro;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
-import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionToGui;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.elf.trade.Trade;
-import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
 import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
-import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
-import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
-import yuzunyannn.elementalsorcery.util.NBTTag;
-import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
-import yuzunyannn.elementalsorcery.world.Juice;
+import yuzunyannn.elementalsorcery.util.var.VariableSet;
 
 public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
-		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.ELF_COIN));
 		if (elf.world.isRemote) return;
-		NBTTagCompound nbt = elf.getEntityData();
-		if (nbt.hasKey(TradeCount.Bind.TAG)) return;
-		this.randomGoods(elf);
-	}
+		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
+		elf.setDropChance(EntityEquipmentSlot.OFFHAND, 0);
 
-	/** 随机一些物品 */
-	public void randomGoods(EntityElfBase elf) {
-		ESObjects.Items ITEMS = ESInit.ITEMS;
-		ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
-		NBTTagCompound nbt = elf.getEntityData();
-		TradeCount trade = new TradeCount();
-		Random rand = elf.getRNG();
-		if (rand.nextFloat() <= 0.1) {
-			float r = RandomHelper.rand.nextFloat() * 0.4f + 0.1f;
-			int money = (int) (2500 + RandomHelper.rand.nextInt(5000) + 7500 * r);
-			trade.addCommodity(ItemAncientPaper.createPaper(ESInit.MANTRAS.LASER, r), money, 1);
-		}
-		if (rand.nextInt(2) == 0) addACommodity(trade, new ItemStack(BLOCKS.ELF_FRUIT, 1, 2), 5, 20, 1000);
-		if (rand.nextInt(3) == 0) addACommodity(trade, new ItemStack(ITEMS.RESONANT_CRYSTAL), 50, 8, 1000);
-		if (rand.nextInt(2) == 0) {
-			for (int i = 0; i < 3; i++) {
-				if (rand.nextFloat() < 0.25) break;
-				ItemStack cup = Juice.randomJuice(rand, false);
-				addACommodity(trade, cup, priceIt(cup), 3, 0);
-			}
-		}
-
-		switch (rand.nextInt(3)) {
-		case 2:
-			addACommodity(trade, new ItemStack(ITEMS.ELF_WATCH, 1, 0), 450, 1, 1000);
-		case 1:
-			addACommodity(trade, new ItemStack(ITEMS.RITE_MANUAL, 1, 0), 500, 1, 1000);
-		case 0:
-			addACommodity(trade, new ItemStack(ITEMS.NATURE_DUST, 1, 1), 150, 3, 1000);
-		}
-
-		if (rand.nextInt(8) == 0) addACommodity(trade, ItemBlessingJadePiece.createPiece(2), 1000, 1, 10000);
-
-		if (rand.nextInt(10) == 0) {
-			int c = (int) RandomHelper.randomRange(50, 150);
-			ItemStack letter = new ItemStack(ESInit.ITEMS.KEEPSAKE, 1,
-					ItemKeepsake.EnumType.UNDELIVERED_LETTER.getMeta());
-			trade.addCommodity(letter, c, 3, true);
-		}
-
-		for (int i = 0; i < 12 && trade.getTradeList().size() < 16; i++) {
-			ItemStack item = new ItemStack(Item.REGISTRY.getRandomObject(rand));
-			int price = priceIt(item);
-			if (price < 1) continue;
-			addACommodity(trade, item, price, Math.max(16 - (int) MathHelper.sqrt(price), 1), 125);
-		}
-		nbt.setTag(TradeCount.Bind.TAG, trade.serializeNBT());
-	}
-
-	/** 给一个物品定价 */
-	public static int priceIt(ItemStack item) {
-		float ret = priceIt(item, 0);
-		if (ret == -1) return -1;
-		return MathHelper.ceil(ret);
-	}
-
-	private static float priceIt(ItemStack item, int deep) {
-		if (deep > 5) return -1;
-		IToElementInfo info = ElementMap.instance.toElement(item);
-		if (info == null) return -1;
-		ElementStack[] estacks = info.element();
-		float n = 0;
-		for (ElementStack estack : estacks) {
-			float count = estack.getPower() / 10f * MathHelper.sqrt(estack.getCount());
-			if (estack.isMagic()) count = count / 4;
-			if (estack.getElement() == ESInit.ELEMENTS.STAR) count = count * 3;
-			n += count;
-		}
-		float count = (float) Math.pow(1.4, MathHelper.sqrt(info.complex()));
-		float money = n * count;
-		ItemStack[] remains = info.remain();
-		if (remains != null) {
-			for (ItemStack stack : remains) {
-				float ret = priceIt(stack, deep + 1);
-				if (ret == -1) return -1;
-				money = money + ret;
-			}
-		}
-		return money;
-	}
-
-	public static void addACommodity(TradeCount trade, ItemStack item, int price, int count, int checkPrice) {
-		int sellPrice = (int) (price + price * RandomHelper.rand.nextFloat() * 2);
-		int reclaimPrice = (int) (price - price * RandomHelper.rand.nextFloat() * 0.5f);
-
-		sellPrice = Math.max(1, sellPrice);
-		reclaimPrice = Math.max(1, reclaimPrice);
-
-		if (price < checkPrice) {
-			int c = (int) RandomHelper.randomRange(count * 0.5f, count * 1.5f);
-			c = Math.max(1, c);
-			trade.addCommodity(item, sellPrice, c);
-		}
-		count = (int) RandomHelper.randomRange(count * 0.5f, count * 1.5f) + 2;
-		trade.addCommodity(item, reclaimPrice, count, true);
+		VariableSet storage = elf.getProfessionStorage();
+		ElfMerchantType merchantType = storage.get(M_TYPE);
+		if (!merchantType.hasTrade(storage))
+			merchantType.renewTrade(elf.world, elf.getPosition(), elf.getRNG(), storage);
+		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, merchantType.getHoldItem(elf.world, storage));
+		elf.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(ESInit.ITEMS.ELF_COIN));
 	}
 
 	public static void setRemainTimeBeforeLeave(EntityElfBase elf, int tick) {
-		NBTTagCompound nbt = elf.getEntityData();
-		nbt.setInteger("tradeRemainTime", tick);
+		VariableSet storage = elf.getProfessionStorage();
+		storage.set(REMAIN_TICK, tick);
 	}
 
 	@Override
-	public void transferElf(EntityElfBase elf, ElfProfession next) {
-//		NBTTagCompound nbt = elf.getEntityData();
-//		nbt.removeTag(TradeCount.Bind.TAG);
-//		nbt.removeTag("tradeRemainTime");
+	public Float attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
+		if (elf instanceof EntityElfTravelling) return super.attackedFrom(elf, source, amount);
+		return amount;
 	}
 
 	@Override
@@ -189,6 +84,8 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 		if (elf.getTalker() != null) return;
 		if (elf.world.isRemote) return;
 
+		if (elf.getTalker() != null) return;
+
 		// 吃药
 		ItemStack potion = elf.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
 		if (potion.getItem() == Items.POTIONITEM) {
@@ -212,31 +109,31 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 					SoundCategory.HOSTILE, 1, 1);
 			return;
 		}
-		NBTTagCompound nbt = elf.getEntityData();
+
+		VariableSet storage = elf.getProfessionStorage();
+		ElfMerchantType merchantType = storage.get(M_TYPE);
 
 		// 如果有剩余时间，检查剩余时间
-		if (nbt.hasKey("tradeRemainTime", NBTTag.TAG_NUMBER)) {
-			int remainTick = nbt.getInteger("tradeRemainTime") - 100;// 因为100tick进入一次，不精准，但足够
+		if (storage.has(REMAIN_TICK)) {
+			int remainTick = storage.get(REMAIN_TICK) - 100;// 因为100tick进入一次，不精准，但足够
 			if (remainTick <= 0) {
 				this.setLeave(elf);
-				nbt.removeTag("tradeRemainTime");
+				storage.remove(REMAIN_TICK);
 				return;
 			}
-			nbt.setInteger("remainTime", remainTick);
+			storage.set(REMAIN_TICK, remainTick);
 		}
 
 		// 检查是否所有东西全卖出去了
-		if (nbt.hasKey(TradeCount.Bind.TAG)) {
-			TradeCount tradeCount = new TradeCount();
-			tradeCount.deserializeNBT(nbt.getCompoundTag(TradeCount.Bind.TAG));
-			int size = tradeCount.getTradeListSize();
+		Trade trade = merchantType.getTrade(storage);
+		if (trade != null) {
+			int size = trade.getTradeListSize();
 			for (int i = 0; i < size; i++) {
-				TradeList.TradeInfo info = tradeCount.getTradeInfo(i);
+				TradeList.TradeInfo info = trade.getTradeInfo(i);
 				if (info.isReclaim()) continue;
-				if (tradeCount.stock(i) > 0) return;
+				if (trade.stock(i) > 0) return;
 			}
 		}
-
 		// 是的情况下，离开
 		this.setLeave(elf);
 	}
@@ -262,16 +159,13 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TalkChapter chapter = new TalkChapter();
+		if (ElfProfessionReceptionist.isVeryDishonest(player))
+			return chapter.addScene(new TalkSceneSay("say.merchant.dishonest", Talker.OPPOSING));
 		TalkSceneSay scene = new TalkSceneSay();
 		chapter.addScene(scene);
 		scene.addString("say.merchant.good.goods", Talker.OPPOSING);
 		scene.addAction(new TalkActionToGui(ESGuiHandler.GUI_ELF_TRADE));
 		return chapter;
-	}
-
-	@Override
-	public Trade getTrade(EntityElfBase elf, EntityPlayer player, @Nullable NBTTagCompound shiftData) {
-		return new TradeCount.Bind(elf);
 	}
 
 	@SideOnly(Side.CLIENT)

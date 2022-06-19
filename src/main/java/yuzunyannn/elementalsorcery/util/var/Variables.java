@@ -1,10 +1,10 @@
-package yuzunyannn.elementalsorcery.util;
+package yuzunyannn.elementalsorcery.util.var;
 
 import java.util.UUID;
 
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.util.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
 
 public class Variables {
 

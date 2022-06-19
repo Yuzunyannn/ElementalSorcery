@@ -15,9 +15,9 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectScreenProgress;
-import yuzunyannn.elementalsorcery.util.VariableSet;
-import yuzunyannn.elementalsorcery.util.VariableSet.Variable;
-import yuzunyannn.elementalsorcery.util.Variables;
+import yuzunyannn.elementalsorcery.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.util.var.Variables;
+import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
 
 public class MantraDataCommon implements IMantraData {
 

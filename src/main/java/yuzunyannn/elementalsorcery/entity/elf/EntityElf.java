@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.entity.elf;
 
+import java.util.Random;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -14,6 +16,7 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.AutoName;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
+import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
 
@@ -22,27 +25,28 @@ public class EntityElf extends EntityElfBase {
 	protected IInventory inventory = new ItemStackHandlerInventory(16);
 	protected EntityAIBase aiStroll;
 
-	public EntityElf(World worldIn) {
+	public EntityElf(World worldIn, boolean autoRandom) {
 		super(worldIn);
-		if (world.isRemote) return;
 		this.setCustomNameTag(AutoName.getRandomName());
-
+		if (!autoRandom) return;
 		if (ElementalSorcery.isDevelop) {
+			Random merchantRandom = ElfProfession.getRandomFromName(getCustomNameTag());
+			getProfessionStorage().set(ElfProfession.M_TYPE, ElfMerchantType.getRandomMerchantType(merchantRandom));
 			this.setProfession(ElfProfession.MERCHANT);
 			return;
 		}
-
 		if (this.rand.nextInt(5) == 0) this.setProfession(ElfProfession.SCHOLAR);
 		else if (this.rand.nextInt(4) == 0) this.setProfession(ElfProfession.CRAZY);
 		else if (this.rand.nextInt(4) == 0) this.setProfession(ElfProfession.MERCHANT);
+	}
 
+	public EntityElf(World worldIn) {
+		this(worldIn, true);
 	}
 
 	public EntityElf(World worldIn, ElfProfession profession) {
-		super(worldIn);
-		if (world.isRemote) return;
+		this(worldIn, false);
 		this.setProfession(profession);
-		this.setCustomNameTag(AutoName.getRandomName());
 	}
 
 	@Override

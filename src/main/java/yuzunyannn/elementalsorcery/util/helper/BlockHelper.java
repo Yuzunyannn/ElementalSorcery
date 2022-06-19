@@ -11,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
@@ -216,7 +217,12 @@ public class BlockHelper {
 
 	public static boolean isPassableBlock(World world, BlockPos pos) {
 		if (world.isAirBlock(pos)) return true;
-		return isReplaceBlock(world, pos);
+		if (isReplaceBlock(world, pos)) return true;
+		IBlockState state = world.getBlockState(pos);
+		if (!state.getBlock().isCollidable()) return true;
+		AxisAlignedBB aabb = state.getCollisionBoundingBox(world, pos);
+		if (aabb == null) return true;
+		return aabb.maxY < 0.1;
 	}
 
 	public static boolean isFluid(World world, BlockPos pos) {

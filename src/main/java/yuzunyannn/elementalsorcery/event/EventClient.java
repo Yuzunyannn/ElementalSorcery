@@ -33,15 +33,15 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
+import yuzunyannn.elementalsorcery.element.ElementTransition;
+import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.ts.PocketWatchClient;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class EventClient {
@@ -232,29 +232,36 @@ public class EventClient {
 		if (player == null || !player.isCreative()) return;
 		IToElementInfo teInfo = ElementMap.instance.toElement(stack);
 		ElementStack[] estacks = teInfo == null ? null : teInfo.element();
-		if (estacks == null) return;
-		List<String> tooltip = event.getToolTip();
-		tooltip.add(TextFormatting.DARK_RED + I18n.format("info.itemCrystal.complex", teInfo.complex()));
-		for (ElementStack estack : estacks) {
-			if (estack.isEmpty()) continue;
-			ElementHelper.addElementInformation(estack, tooltip, -1);
+		if (estacks != null) {
+			List<String> tooltip = event.getToolTip();
+			tooltip.add(TextFormatting.DARK_RED + I18n.format("info.itemCrystal.complex", teInfo.complex()));
+			for (ElementStack estack : estacks) {
+				if (estack.isEmpty()) continue;
+				ElementHelper.addElementInformation(estack, tooltip, -1);
+			}
 		}
 
 		if (ElementalSorcery.isDevelop) {
+			List<String> tooltip = event.getToolTip();
 			tooltip.add(TextFormatting.GREEN + "Develop Info:");
-			tooltip.add(TextFormatting.GOLD + "" + ElfProfessionMerchant.priceIt(stack) + "$");
-			for (ElementStack estack : estacks) {
-				if (estack.isEmpty()) continue;
-				estack = estack.copy().onDeconstruct(Minecraft.getMinecraft().world, stack, teInfo.complex(),
-						Element.DP_ALTAR_SURPREME);
-				String str = I18n.format("info.elementCrystal.has", estack.getDisplayName(),
-						String.valueOf(estack.getCount()), estack.getPower());
-				tooltip.add(TextFormatting.AQUA + str);
+			if (estacks != null) {
+				double f = 0;
+				for (ElementStack estack : estacks) {
+					if (estack.isEmpty()) continue;
+					String str = String.format(TextFormatting.AQUA + "%sx%s" + TextFormatting.YELLOW + " P:%d",
+							estack.getDisplayName(), String.valueOf(estack.getCount()), estack.getPower());
+					double fr = ElementHelper.toFragment(estack);
+					tooltip.add(str + TextFormatting.LIGHT_PURPLE + " F:" + TextHelper.toAbbreviatedNumber(fr));
+					ElementTransition et = estack.getElement().getTransition();
+					if (et == null) f += fr;
+					else f += ElementHelper.transitionFrom(estack.getElement(), fr, et.getLevel());
+				}
+				tooltip.add(TextFormatting.LIGHT_PURPLE + "F:" + TextHelper.toAbbreviatedNumber(f));
 			}
+			int price = ElfChamberOfCommerce.priceIt(stack);
+			if (price > 0) tooltip.add(TextFormatting.GOLD + "" + price + "$");
 			int[] ids = OreDictionary.getOreIDs(stack);
-			for (int i : ids) {
-				tooltip.add(TextFormatting.BOLD + OreDictionary.getOreName(i));
-			}
+			for (int i : ids) tooltip.add(TextFormatting.BOLD + OreDictionary.getOreName(i));
 		}
 	}
 }

@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.entity.elf;
 
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -37,24 +38,34 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
+import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
+import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
+import yuzunyannn.elementalsorcery.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public abstract class EntityElfBase extends EntityCreature {
 
 	protected ElfProfession profession = ElfProfession.NONE;
 	/** nbt数据不同步 */
 	protected NBTTagCompound tempNBT;
+	/** 精灵数据 新版 */
+	protected VariableSet professionStorage = new VariableSet();
 	/** 职业数据更新 */
 	public static final DataParameter<Integer> PROFESSION_UPDATE = EntityDataManager.createKey(EntityElfBase.class,
 			DataSerializers.VARINT);
@@ -110,21 +121,23 @@ public abstract class EntityElfBase extends EntityCreature {
 	}
 
 	@Override
-	public void writeEntityToNBT(NBTTagCompound compound) {
-		super.writeEntityToNBT(compound);
+	public void writeEntityToNBT(NBTTagCompound nbt) {
+		super.writeEntityToNBT(nbt);
 		ResourceLocation name = this.getProfession().getRegistryName();
-		compound.setString("professionId", name.toString());
+		nbt.setString("professionId", name.toString());
 		BlockPos homePos = this.getHomePosition();
-		if (homePos != null && !homePos.equals(BlockPos.ORIGIN)) NBTHelper.setBlockPos(compound, "homePos", homePos);
+		if (homePos != null && !homePos.equals(BlockPos.ORIGIN)) NBTHelper.setBlockPos(nbt, "homePos", homePos);
+		nbt.setTag("storage", getProfessionStorage().serializeNBT());
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		super.readEntityFromNBT(compound);
 		String id = compound.getString("professionId");
-		this.setProfession(ElfProfession.REGISTRY.getValue(new ResourceLocation(id)));
+		setProfession(ElfProfession.REGISTRY.getValue(new ResourceLocation(id)));
 		if (NBTHelper.hasBlockPos(compound, "homePos"))
-			this.setHomePosAndDistance(NBTHelper.getBlockPos(compound, "homePos"), 2);
+			setHomePosAndDistance(NBTHelper.getBlockPos(compound, "homePos"), 2);
+		getProfessionStorage().deserializeNBT(compound.getCompoundTag("storage"));
 	}
 
 	/** 获取临时数据NBT，不会被保存，不会同步 */
@@ -253,10 +266,31 @@ public abstract class EntityElfBase extends EntityCreature {
 	@Override
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);
+		if (!this.dead) return;
 		this.getProfession().onDead(this);
-		// 记录
-		if (cause.getTrueSource() instanceof EntityPlayerMP)
-			ESCriteriaTriggers.PLAYER_KILLED_ELF.trigger((EntityPlayerMP) cause.getTrueSource(), this, cause);
+		if (cause.getTrueSource() instanceof EntityPlayerMP) {
+			EntityPlayerMP player = (EntityPlayerMP) cause.getTrueSource();
+			ESCriteriaTriggers.PLAYER_KILLED_ELF.trigger(player, this, cause);
+			IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+			if (adventurer != null) {
+				final int size = 16;
+				AxisAlignedBB aabb = WorldHelper.createAABB(player.getPosition(), size, size, size);
+				List<EntityElf> list = world.getEntitiesWithinAABB(EntityElf.class, aabb, (e) -> {
+					if (e.dead) return false;
+					if (!e.canEntityBeSeen(player)) return false;
+					Vec3d look = e.getLookVec();
+					Vec3d vec = player.getPositionEyes(0).subtract(e.getPositionEyes(0));
+					double cos = look.dotProduct(vec) / (look.length() * vec.length());
+					return cos > 0;
+				});
+				if (list.size() > 0) {
+					float point = 0.1f * list.size();
+					adventurer.fame(-point);
+					player.sendMessage(new TextComponentTranslation("info.fame.decline", String.valueOf(list.size()),
+							String.format("%.1f", point)).setStyle(new Style().setColor(TextFormatting.DARK_RED)));
+				}
+			}
+		}
 	}
 
 	/** 受到攻击，精灵的反应 */
@@ -370,6 +404,11 @@ public abstract class EntityElfBase extends EntityCreature {
 	@Nonnull
 	public ElfProfession getProfession() {
 		return profession;
+	}
+
+	@Nonnull
+	public VariableSet getProfessionStorage() {
+		return professionStorage;
 	}
 
 	/** 获取设置精灵 职业 */

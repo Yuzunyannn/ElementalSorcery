@@ -19,9 +19,9 @@ import yuzunyannn.elementalsorcery.api.element.IElemetJuice;
 import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
-import yuzunyannn.elementalsorcery.util.VariableSet;
-import yuzunyannn.elementalsorcery.util.Variables;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
+import yuzunyannn.elementalsorcery.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.util.var.Variables;
 import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 //简单的icon返回的元素
@@ -69,7 +69,7 @@ public abstract class ElementCommon extends Element
 		float coco = Optional.ofNullable(drinkMap.get(JuiceMaterial.COCO)).orElse(Float.valueOf(0));
 
 		float timeUp = 1 + MathHelper.sqrt(sugar) / 4;
-		float powerFactor = 0.75f + MathHelper.sqrt(coco) / 8;
+		float powerFactor = 1 + MathHelper.sqrt(coco) / 8;
 
 		float timeBaseFactor = fruit * (estack.getCount() + 50) / 175f;
 

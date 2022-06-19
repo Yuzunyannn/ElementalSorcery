@@ -1,13 +1,20 @@
 package yuzunyannn.elementalsorcery.container.gui.elf;
 
+import java.util.List;
+
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.TextFormatting;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ContainerElfTrade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeList;
+import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class GuiElfTrade extends GuiContainer {
 
@@ -39,6 +46,7 @@ public class GuiElfTrade extends GuiContainer {
 
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+		GlStateManager.color(1, 1, 1);
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
@@ -63,11 +71,28 @@ public class GuiElfTrade extends GuiContainer {
 			GlStateManager.pushMatrix();
 			final float scale = 0.5f;
 			GlStateManager.scale(scale, scale, 1);
-			String s = Integer.toString(cost);
+			String s = TextHelper.toAbbreviatedNumber(cost, 2);
 			this.fontRenderer.drawString(s, (int) ((xoff + 4) / scale), (int) ((yoff - 1) / scale + 1),
 					EnumDyeColor.BLACK.getColorValue());
 			GlStateManager.popMatrix();
 		}
+	}
+
+	@Override
+	public List<String> getItemToolTip(ItemStack itemStack) {
+		List<String> list = super.getItemToolTip(itemStack);
+		if (list.isEmpty()) return list;
+		for (int i = 0; i < container.trade.getTradeListSize(); i++) {
+			TradeList.TradeInfo info = container.trade.getTradeInfo(i);
+			if (ItemHelper.areItemsEqual(info.getCommodity(), itemStack)) {
+				String str = I18n.format("info.elf.goods.coin", info.getCost());
+				if (info.isReclaim()) str = TextFormatting.RED + str;
+				else str = TextFormatting.GREEN + str;
+				list.add(0, str);
+				break;
+			}
+		}
+		return list;
 	}
 
 }

@@ -17,8 +17,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
+import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
@@ -166,7 +166,7 @@ public class EFloorWorkshop extends ElfEdificeFloor {
 				default:
 					for (int tryTimes = 0; tryTimes < 5; tryTimes++) {
 						ItemStack item = new ItemStack(Item.REGISTRY.getRandomObject(rand));
-						int price = ElfProfessionMerchant.priceIt(item);
+						int price = ElfChamberOfCommerce.priceIt(item);
 						if (price < 2 || price > 100) continue;
 						stack = item;
 						break;

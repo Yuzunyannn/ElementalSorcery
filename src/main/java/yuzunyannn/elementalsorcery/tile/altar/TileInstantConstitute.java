@@ -47,7 +47,8 @@ public class TileInstantConstitute extends TileStaticMultiBlock implements ITick
 	public static final double ONE_ORDER_CRYSTAL_NEED_FRAGMENT = 1024;
 
 	public static int getOrderValUsed(IToElementInfo info) {
-		return info.complex() + 1;
+		int complex = info.complex();
+		return 1 + MathHelper.floor(complex + Math.pow(1.4, complex));
 	}
 
 	/** order crystal 的最高数量 */

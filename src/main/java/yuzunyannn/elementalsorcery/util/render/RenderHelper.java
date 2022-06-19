@@ -5,8 +5,10 @@ import java.util.function.Consumer;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockHopper;
 import net.minecraft.block.BlockLadder;
 import net.minecraft.block.BlockPane;
+import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
@@ -19,10 +21,12 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBed;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import yuzunyannn.elementalsorcery.block.BlockElfFruit;
 import yuzunyannn.elementalsorcery.block.BlockLifeFlower;
 import yuzunyannn.elementalsorcery.item.book.ItemGrimoire;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
@@ -130,14 +134,22 @@ public class RenderHelper {
 			GlStateManager.rotate(-90, 1, 0, 0);
 			GlStateManager.scale(0.75, 0.75, 0.75);
 		} else {
-			Block block = Block.getBlockFromItem(stack.getItem());
-			boolean canlay = block == Blocks.AIR;
-			canlay = canlay || block instanceof BlockPane;
-			canlay = canlay || block instanceof BlockLadder;
-			canlay = canlay || block instanceof net.minecraftforge.common.IPlantable;
-			canlay = canlay || block instanceof net.minecraftforge.common.IShearable;
-			canlay = canlay || block instanceof BlockTorch;
-			canlay = canlay || block instanceof BlockLifeFlower;
+			Block block = Block.getBlockFromItem(item);
+			boolean canlay = false;
+			if (block == Blocks.AIR) {
+				canlay = true;
+				canlay = canlay && (item != Items.SKULL);
+			} else if (!block.getDefaultState().isFullBlock()) {
+				canlay = canlay || block instanceof BlockPane;
+				canlay = canlay || block instanceof BlockLadder;
+				canlay = canlay || block instanceof net.minecraftforge.common.IPlantable;
+				canlay = canlay || block instanceof net.minecraftforge.common.IShearable;
+				canlay = canlay || block instanceof BlockTorch;
+				canlay = canlay || block instanceof BlockLifeFlower;
+				canlay = canlay || block instanceof BlockHopper;
+				canlay = canlay || block instanceof BlockRailBase;
+				canlay = canlay || block instanceof BlockElfFruit;
+			}
 			if (canlay) {
 				GlStateManager.translate(0, 0.4, 0.0);
 				GlStateManager.rotate(90, 1, 0, 0);

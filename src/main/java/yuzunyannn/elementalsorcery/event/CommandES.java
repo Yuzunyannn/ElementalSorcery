@@ -126,7 +126,7 @@ public class CommandES extends CommandBase {
 			return;
 		}
 		case "quest": {
-			if (args.length < 3) throw new CommandException("commands.es.quest.usage");
+			if (args.length < 2) throw new CommandException("commands.es.quest.usage");
 			this.cmdQuest(Arrays.copyOfRange(args, 1, args.length), server, sender);
 			return;
 		}
@@ -209,7 +209,7 @@ public class CommandES extends CommandBase {
 			case "quest": {
 				if (args.length > 3) return getListOfStringsMatchingLastWord(args, Quests.CREATOR.keySet());
 				if (args.length > 2) return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
-				return getListOfStringsMatchingLastWord(args, "clear", "give", "fame");
+				return getListOfStringsMatchingLastWord(args, "clear", "give", "fame", "debt");
 			}
 			case "mantra": {
 				if (args.length > 3) return getListOfStringsMatchingLastWord(args, Mantra.REGISTRY.getKeys());
@@ -391,10 +391,10 @@ public class CommandES extends CommandBase {
 
 	// =======================-------> 任务 <-------=======================
 	private void cmdQuest(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
-		EntityPlayer player = getPlayer(server, sender, args[1]);
 
 		switch (args[0]) {
 		case "clear": {
+			EntityPlayer player = getPlayer(server, sender, args[1]);
 			IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
 			if (adventurer != null) adventurer.removeAllQuest();
 			notifyCommandListener(sender, this, "commands.es.quest.clear", player.getName());
@@ -402,6 +402,7 @@ public class CommandES extends CommandBase {
 		}
 		case "give": {
 			if (args.length < 3) throw new WrongUsageException("commands.es.quest.give.usage");
+			EntityPlayer player = getPlayer(server, sender, args[1]);
 			ResourceLocation id = TextHelper.toESResourceLocation(args[2]);
 			Quest quest = Quests.createQuest(id, player);
 			if (quest == null) throw new CommandException("commands.es.notFound", id.toString());
@@ -410,6 +411,7 @@ public class CommandES extends CommandBase {
 		}
 		case "fame": {
 			if (args.length < 3) throw new WrongUsageException("commands.es.quest.fame.usage");
+			EntityPlayer player = getPlayer(server, sender, args[1]);
 			float d = 0;
 			try {
 				d = Float.parseFloat(args[2]);
@@ -421,6 +423,22 @@ public class CommandES extends CommandBase {
 			adventurer.fame(d);
 			notifyCommandListener(sender, this, "commands.es.quest.fame.change", player.getName(),
 					adventurer.getFame());
+			return;
+		}
+		case "debt": {
+			if (args.length < 3) throw new WrongUsageException("commands.es.quest.debt.usage");
+			EntityPlayer player = getPlayer(server, sender, args[1]);
+			int d = 0;
+			try {
+				d = Integer.parseInt(args[2]);
+			} catch (NumberFormatException e) {
+				throw new WrongUsageException("commands.es.quest.debt.usage");
+			}
+			IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+			if (adventurer == null) throw new CommandException("commands.es.notFound", "adventurer");
+			adventurer.incurDebts(d);
+			notifyCommandListener(sender, this, "commands.es.quest.debt.change", player.getName(),
+					adventurer.getDebts());
 			return;
 		}
 		default:

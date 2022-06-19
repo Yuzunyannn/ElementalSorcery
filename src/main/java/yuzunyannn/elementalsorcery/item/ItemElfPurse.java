@@ -72,6 +72,11 @@ public class ItemElfPurse extends Item {
 		return stack;
 	}
 
+	static public int getCoinFromPurse(ItemStack purse) {
+		NBTTagCompound tag = purse.getTagCompound();
+		return tag == null ? 0 : tag.getInteger("coin");
+	}
+
 	/**
 	 * 提取硬币
 	 * 
@@ -134,8 +139,7 @@ public class ItemElfPurse extends Item {
 				int in = Math.min(maxSize, count);
 				count -= in;
 				if (!simulate) {
-					if (stack.isEmpty())
-						inv.setInventorySlotContents(i, new ItemStack(ESInit.ITEMS.ELF_COIN, in));
+					if (stack.isEmpty()) inv.setInventorySlotContents(i, new ItemStack(ESInit.ITEMS.ELF_COIN, in));
 					else stack.grow(in);
 				}
 			}

@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
@@ -70,7 +69,8 @@ public class ItemVoidContainerElement extends Item implements EntityThrow.IItemT
 	public void onImpact(EntityThrow entity, RayTraceResult ray) {
 		if (entity.world.isRemote) return;
 		IElementInventory eInv = ElementHelper.getElementInventory(entity.getItemStack());
-		if (!ElementHelper.isEmpty(eInv)) ElementHelper.onElementFreeFromVoid(entity.world, entity.getPosition(), eInv, null);
+		if (!ElementHelper.isEmpty(eInv))
+			ElementHelper.onElementFreeFromVoid(entity.world, entity.getPosition(), eInv, null);
 		else Block.spawnAsEntity(entity.world, new BlockPos(ray.hitVec), entity.getItemStack());
 	}
 

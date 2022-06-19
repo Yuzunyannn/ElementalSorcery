@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
+import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionEnd;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionGoTo;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionToGui;
@@ -11,7 +12,6 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
-import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
@@ -20,6 +20,8 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
 
 public class ElfProfessionScholarAdv extends ElfProfessionScholar {
 
@@ -59,6 +61,8 @@ public class ElfProfessionScholarAdv extends ElfProfessionScholar {
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TileElfTreeCore core = elf.getEdificeCore();
 		if (core == null) return new TalkChapter().addScene(new TalkSceneSay("say.edifice.broken"));
+		if (ElfProfessionReceptionist.isSuperDishonest(player))
+			return new TalkChapter().addScene(new TalkSceneSay("say.dishonest.not.say"));
 		// 检查手上物品
 		ItemStack stack = player.getHeldItemMainhand();
 		Page page = Pages.itemToPage(stack);
@@ -91,21 +95,24 @@ public class ElfProfessionScholarAdv extends ElfProfessionScholar {
 		return chapter;
 	}
 
+	public static final Variable<Long> UT = new Variable("ut", VariableSet.LONG);
+
 	@Override
 	public void tick(EntityElfBase elf) {
 		if (elf.tick % 20 * 30 != 0) return;
 		if (elf.world.isRemote) return;
 		if (elf.getTalker() != null) return;
-		NBTTagCompound nbt = elf.getEntityData();
-		long ut = nbt.getLong("ut");
+		VariableSet storage = elf.getProfessionStorage();
+		long ut = storage.get(UT);
 		long now = elf.world.getWorldTime();
 		long dt = now - ut;
 		if (dt > 24000 / 2) {
-			nbt.setLong("ut", now);
-			nbt.setTag(TradeCount.Bind.TAG, randomSale(elf).serializeNBT());
-		} else if (dt < 0) {
-			nbt.setLong("ut", now); // 时间调整过重置下
-		}
+			storage.set(UT, now);
+			if (storage.has(M_TYPE)) {
+				ElfMerchantType merchantType = storage.get(M_TYPE);
+				merchantType.renewTrade(elf.world, elf.getPosition(), elf.getRNG(), storage);
+			}
+		} else if (dt < 0) storage.set(UT, now); // 时间调整过重置下
 	}
 
 }

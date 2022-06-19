@@ -84,7 +84,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 		return new CapabilityProvider.ElementInventoryUseProvider(stack, new MagicExchangeInventory() {
 			@Override
 			public int getMaxSizeInSlot(int slot) {
-				return -1;
+				return 1000000000;
 			}
 		});
 	}

@@ -130,6 +130,7 @@
         },
         {
             "note": "附魔金苹果",
+            "complex": 5,
             "item": {
                 "item": "minecraft:golden_apple",
                 "data": 1
@@ -147,7 +148,7 @@
                 },
                 {
                     "id": "magic",
-                    "size":  100,
+                    "size": 100,
                     "power": 300
                 },
                 {

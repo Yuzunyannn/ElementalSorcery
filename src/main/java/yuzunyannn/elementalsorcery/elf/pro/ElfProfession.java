@@ -23,15 +23,27 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
+import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.trade.Trade;
+import yuzunyannn.elementalsorcery.elf.trade.TradeList;
+import yuzunyannn.elementalsorcery.entity.EntityItemGoods;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESImplRegister;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
+import yuzunyannn.elementalsorcery.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
 
 public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
+
+	static public Random getRandomFromName(String str) {
+		return new Random(str.hashCode());
+	}
+
+	public static final Variable<Integer> REMAIN_TICK = new Variable("remainTick", VariableSet.INT);
+	public static final Variable<ElfMerchantType> M_TYPE = new Variable("mType", VariableSet.ELF_MERCHANT_TYPE);
 
 	public static final ESImplRegister<ElfProfession> REGISTRY = new ESImplRegister(ElfProfession.class);
 
@@ -81,7 +93,22 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 
 	/** 当死亡 */
 	public void onDead(EntityElfBase elf) {
-
+		if (elf.world.isRemote) return;
+		VariableSet storage = elf.getProfessionStorage();
+		if (!storage.has(M_TYPE)) return;
+		ElfMerchantType merchantType = storage.get(M_TYPE);
+		Trade trade = merchantType.getTrade(storage);
+		if (trade == null) return;
+		int size = trade.getTradeListSize();
+		for (int i = 0; i < size; i++) {
+			TradeList.TradeInfo info = trade.getTradeInfo(i);
+			if (info.isReclaim()) continue;
+			if (trade.stock(i) > 0) {
+				ItemStack stack = info.getCommodity();
+				EntityItemGoods.dropGoods(elf, stack, info.getCost(), false)
+						.setLife(20 * (30 + elf.getRNG().nextInt(30)));
+			}
+		}
 	}
 
 	/** 是否会自动删除 */
@@ -164,7 +191,10 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	/** 获得精灵交易的内容，仅在而elftrade时有效 */
 	@Nullable
 	public Trade getTrade(EntityElfBase elf, EntityPlayer player, @Nullable NBTTagCompound shiftData) {
-		return null;
+		VariableSet storage = elf.getProfessionStorage();
+		if (!storage.has(M_TYPE)) return null;
+		ElfMerchantType merchantType = storage.get(M_TYPE);
+		return merchantType.getTrade(storage);
 	}
 
 	/** 精灵职业tick */

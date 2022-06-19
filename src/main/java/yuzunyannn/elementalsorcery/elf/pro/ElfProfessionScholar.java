@@ -2,10 +2,7 @@ package yuzunyannn.elementalsorcery.elf.pro;
 
 import java.util.ArrayList;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
+import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionEnd;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionGoTo;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionToGui;
@@ -20,23 +18,19 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
-import yuzunyannn.elementalsorcery.elf.trade.Trade;
-import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
-import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Page;
 import yuzunyannn.elementalsorcery.parchment.PageEasy;
 import yuzunyannn.elementalsorcery.parchment.PageMult;
-import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
+import yuzunyannn.elementalsorcery.util.var.VariableSet;
 
 public class ElfProfessionScholar extends ElfProfessionUndetermined {
 
-	protected static final ArrayList<String> pages = new ArrayList<String>();
-	protected static final ArrayList<String> tips = new ArrayList<String>();
+	public static final ArrayList<String> pages = new ArrayList<String>();
+	public static final ArrayList<String> tips = new ArrayList<String>();
 
 	/** page的lev为-2时候，进行回调 */
 	public static void addScholarPage(Page page) {
@@ -70,50 +64,11 @@ public class ElfProfessionScholar extends ElfProfessionUndetermined {
 		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.MANUAL));
 		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
 		if (elf.world.isRemote) return;
-		// 如果存在标签，则表示是回复时初始化的，直接走人
-		NBTTagCompound nbt = elf.getEntityData();
-		if (nbt.hasKey(TradeCount.Bind.TAG)) return;
-		// 初始化交易信息
-		nbt.setTag(TradeCount.Bind.TAG, randomSale(elf).serializeNBT());
-	}
-
-	protected TradeCount randomSale(EntityElfBase elf) {
-		TradeCount trade = new TradeCount();
-		TradeList list = trade.getTradeList();
-		list.add(new ItemStack(ESInit.ITEMS.PARCHMENT), 1, true);
-		Object[] needPages = RandomHelper.randomSelect(5, pages.toArray());
-		for (int i = 0; i < needPages.length; i++) {
-			String id = needPages[i].toString();
-			list.add(ItemParchment.getParchment(id), 8, false);
-		}
-		for (int i = 0; i < 11 - needPages.length; i++) {
-			String id = Pages.getPage(RandomHelper.rand.nextInt(Pages.getCount() - 2) + 2).getId();
-			list.add(ItemParchment.getParchment(id), 8, false);
-		}
-		// 一些其余东西
-		if (RandomHelper.rand.nextInt(3) == 0) {
-			list.add(new ItemStack(ESInit.ITEMS.RESONANT_CRYSTAL), 80, false);
-			trade.setStock(list.size() - 1, RandomHelper.rand.nextInt(12) + 4);
-		} else {
-			list.add(new ItemStack(ESInit.BLOCKS.ELF_FRUIT, 1, 2), 1, false);
-			trade.setStock(list.size() - 1, 1000);
-		}
-		if (RandomHelper.rand.nextInt(2) == 0) {
-			list.add(new ItemStack(Items.BOOK), 16, false);
-			trade.setStock(list.size() - 1, RandomHelper.rand.nextInt(12) + 4);
-		}
-		if (RandomHelper.rand.nextInt(2) == 0) {
-			list.add(new ItemStack(Items.PAPER), 2, false);
-			trade.setStock(list.size() - 1, RandomHelper.rand.nextInt(16) + 8);
-		}
-		if (RandomHelper.rand.nextInt(4) == 0) list.add(new ItemStack(ESInit.ITEMS.RITE_MANUAL), 120, false);
-		return trade;
-	}
-
-	@Override
-	public void transferElf(EntityElfBase elf, ElfProfession next) {
-		NBTTagCompound nbt = elf.getEntityData();
-		nbt.removeTag(TradeCount.Bind.TAG);
+		// 如果存在标签，则表示是回复时初始化的，直接走人，反之初始化
+		VariableSet storage = elf.getProfessionStorage();
+		storage.set(M_TYPE, ElfMerchantType.SCHOLAR);
+		if (ElfMerchantType.SCHOLAR.hasTrade(storage)) return;
+		ElfMerchantType.SCHOLAR.renewTrade(elf.world, elf.getPosition(), elf.getRNG(), storage);
 	}
 
 	@Override
@@ -130,6 +85,8 @@ public class ElfProfessionScholar extends ElfProfessionUndetermined {
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TalkChapter chapter = new TalkChapter();
+		if (ElfProfessionReceptionist.isSuperDishonest(player))
+			return chapter.addScene(new TalkSceneSay("say.dishonest.not.say"));
 		TalkSceneSay scene = new TalkSceneSay();
 		chapter.addScene(scene);
 		String[] g = (String[]) RandomHelper.randomSelect(2, tips.toArray());
@@ -161,11 +118,6 @@ public class ElfProfessionScholar extends ElfProfessionUndetermined {
 		scene.addString("say.scholar.pretendKnow", Talker.OPPOSING);
 
 		return chapter;
-	}
-
-	@Override
-	public Trade getTrade(EntityElfBase elf, EntityPlayer player, @Nullable NBTTagCompound shiftData) {
-		return new TradeCount.Bind(elf);
 	}
 
 	@SideOnly(Side.CLIENT)

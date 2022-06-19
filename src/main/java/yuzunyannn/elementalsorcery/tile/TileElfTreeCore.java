@@ -128,6 +128,10 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		this.finishAllBuildTask();
 	}
 
+	public Random getRand() {
+		return rand;
+	}
+
 	public int tick = 0;
 
 	@Override

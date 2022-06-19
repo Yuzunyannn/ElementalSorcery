@@ -57,6 +57,16 @@ public class OreHelper {
 			if (list.isEmpty()) return ItemStack.EMPTY;
 			return list.get(0).copy();
 		}
+
+		public ItemStack createOre() {
+			NonNullList<ItemStack> ores = OreDictionary.getOres(oreDictName);
+			if (ores.isEmpty()) return ItemStack.EMPTY;
+			return ores.get(0).copy();
+		}
+	}
+
+	static public OreEnum[] getOreEnums() {
+		return OreEnum.values();
 	}
 
 	/** 根据名称获取矿物矿物信息，返回null表示不是矿物 */

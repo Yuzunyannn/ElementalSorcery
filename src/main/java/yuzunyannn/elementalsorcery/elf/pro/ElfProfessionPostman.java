@@ -48,6 +48,7 @@ public class ElfProfessionPostman extends ElfProfessionUndetermined {
 
 	@Override
 	public void onDead(EntityElfBase elf) {
+		super.onDead(elf);
 		if (elf.world.isRemote) {
 			this.onClientElfEffect(elf);
 			return;
@@ -79,6 +80,8 @@ public class ElfProfessionPostman extends ElfProfessionUndetermined {
 
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
+		if (ElfProfessionReceptionist.isSuperDishonest(player))
+			return new TalkChapter().addScene(new TalkSceneSay("say.dishonest.not.service"));
 		if (shiftData != null) return ElfProfessionPostReceptionist.getChapterForSendParcel(elf, player, shiftData);
 		TalkChapter chapter = new TalkChapter();
 		TalkSceneSay scene = new TalkSceneSay();

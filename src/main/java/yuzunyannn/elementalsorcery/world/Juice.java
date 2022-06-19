@@ -456,7 +456,7 @@ public class Juice implements IJuice, IToElementItem {
 			Float count = entry.getValue();
 			if (material.isMain) woodCount += 4 * count;
 			else woodCount += 2 * count;
-			complex++;
+			if (complex < 2) complex++;
 		}
 		woodCount = Math.round(woodCount);
 		if (woodCount > 0) list.add(new ElementStack(ESInit.ELEMENTS.WOOD, (int) woodCount, 8));
@@ -481,7 +481,7 @@ public class Juice implements IJuice, IToElementItem {
 		for (int i = 0; i < 3; i++) {
 			Element element = Element.REGISTRY.getRandomObject(rand);
 			if (element instanceof IElemetJuice) {
-				ElementStack estack = new ElementStack(element, 100 + rand.nextInt(700), 100 + rand.nextInt(400));
+				ElementStack estack = new ElementStack(element, 50 + rand.nextInt(700), 50 + rand.nextInt(400));
 				eInv.insertElement(estack, false);
 				break;
 			}

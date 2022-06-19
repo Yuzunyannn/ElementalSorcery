@@ -6,17 +6,17 @@
             "element": [
                 {
                     "id": "water",
-                    "size": 25,
+                    "size": 26,
                     "power": 450
                 },
                 {
                     "id": "fire",
-                    "size": 16,
+                    "size": 28,
                     "power": 300
                 },
                 {
                     "id": "air",
-                    "size": 12,
+                    "size": 24,
                     "power": 200
                 }
             ]
@@ -42,17 +42,40 @@
         },
         {
             "note": "烈焰粉",
+            "complex": 2,
             "item": "minecraft:blaze_powder",
             "element": [
                 {
                     "id": "fire",
-                    "size": 5,
+                    "size": 4,
                     "power": 404
                 },
                 {
                     "id": "earth",
                     "size": 1,
                     "power": 156
+                }
+            ]
+        },
+        {
+            "note": "岩浆膏",
+            "complex": 1,
+            "item": "minecraft:magma_cream",
+            "element": [
+                {
+                    "id": "fire",
+                    "size": 4,
+                    "power": 200
+                },
+                {
+                    "id": "water",
+                    "size": 1,
+                    "power": 200
+                },
+                {
+                    "id": "earth",
+                    "size": 1,
+                    "power": 125
                 }
             ]
         },

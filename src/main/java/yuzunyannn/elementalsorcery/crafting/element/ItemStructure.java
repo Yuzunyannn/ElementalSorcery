@@ -7,15 +7,18 @@ import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.util.ESEvent;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemStructure implements IItemStructure {
 
 	static public IItemStructure getItemStructure(ItemStack stack) {
-		if (stack.isEmpty()) return new ItemStructure(stack);
-		// 这里应当加入获取ItemStructure[事件]
-		return new ItemStructure(stack);
+		if (stack.isEmpty()) return new ItemStructure(ItemStack.EMPTY);
+		EventGetItemStructure event = ESEvent.post(new EventGetItemStructure(stack));
+		if (event.isCanceled()) return new ItemStructure(ItemStack.EMPTY);
+		IItemStructure itemStructure = event.getItemStructure();
+		return itemStructure == null ? new ItemStructure(stack) : itemStructure;
 	}
 
 	static public boolean canStorageItemStructure(ItemStack stack) {

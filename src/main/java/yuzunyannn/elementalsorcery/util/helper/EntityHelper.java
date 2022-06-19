@@ -1,8 +1,13 @@
 package yuzunyannn.elementalsorcery.util.helper;
 
+import java.io.IOException;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializer;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
@@ -10,6 +15,25 @@ import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class EntityHelper {
+
+	public static final DataSerializer<Integer> DS_INT = new DataSerializer<Integer>() {
+		
+		public void write(PacketBuffer buf, Integer value) {
+			buf.writeInt(value);
+		}
+
+		public Integer read(PacketBuffer buf) throws IOException {
+			return buf.readInt();
+		}
+
+		public DataParameter<Integer> createKey(int id) {
+			return new DataParameter<Integer>(id, this);
+		}
+
+		public Integer copyValue(Integer value) {
+			return value;
+		}
+	};
 
 	static public boolean isCreative(Entity entity) {
 		if (entity instanceof EntityPlayer) {

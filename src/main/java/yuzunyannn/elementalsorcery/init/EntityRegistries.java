@@ -12,8 +12,10 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.registries.DataSerializerEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.config.WorldGenAndSpawnConfig;
@@ -24,6 +26,7 @@ import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 import yuzunyannn.elementalsorcery.entity.EntityExploreDust;
 import yuzunyannn.elementalsorcery.entity.EntityFallingElfFruit;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
+import yuzunyannn.elementalsorcery.entity.EntityItemGoods;
 import yuzunyannn.elementalsorcery.entity.EntityMagicMelting;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.entity.EntityRotaryWindmillBlate;
@@ -46,17 +49,19 @@ import yuzunyannn.elementalsorcery.render.entity.RenderEntityExploreDust;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityFairyCube;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityFallingElfFruit;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityGrimoire;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityItemGoods;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityMagicMelting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortal;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityRotaryWindmillBlate;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityScapegoat;
-import yuzunyannn.elementalsorcery.render.entity.RenderThrow;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityThrow;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityArrogantSheep;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityDejectedSkeleton;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityDreadCube;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityRabidRabbit;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityRelicZombie;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
 public class EntityRegistries {
 
@@ -98,6 +103,7 @@ public class EntityRegistries {
 		register(40, "throw", EntityThrow.class, "Throw", 64, 1, true);
 		register(41, "falling_elf_fruit", EntityFallingElfFruit.class, "Falling", 64, 2, true);
 		register(42, "rotary_windmill_blate", EntityRotaryWindmillBlate.class, "WindmillBlate", 64, 2, false);
+		register(43, "item_goods", EntityItemGoods.class, "ItemGoods", 64, 2, true);
 
 		register(50, "block_effect", EntityBlockThrowEffect.class, "BlockEffect", 128, 1, true);
 		register(51, "block_move", EntityBlockMove.class, "EntityBlockMove", 128, 1, false);
@@ -107,6 +113,8 @@ public class EntityRegistries {
 		register(55, "entity_grimoire", EntityGrimoire.class, "EntityGrimoire", 128, 3, false);
 		register(56, "magic_melting", EntityMagicMelting.class, "EntityMagicMelting", 64, 20, false);
 
+		ForgeRegistries.DATA_SERIALIZERS
+				.register(new DataSerializerEntry(EntityHelper.DS_INT).setRegistryName(ElementalSorcery.MODID, "int"));
 	}
 
 	private static void register(int id, String registryName, Class<? extends Entity> entityClass, String name,
@@ -130,7 +138,7 @@ public class EntityRegistries {
 		registerRender(EntityBlockThrowEffect.class, RenderBlockThrowEffect.class);
 		registerRender(EntityCrafting.class, RenderEntityCrafting.class);
 		registerRender(EntityPortal.class, RenderEntityPortal.class);
-		registerRender(EntityThrow.class, RenderThrow.class);
+		registerRender(EntityThrow.class, RenderEntityThrow.class);
 		registerRender(EntityElf.class, RenderEntityElf.class);
 		registerRender(EntityRelicZombie.class, RenderEntityRelicZombie.class);
 		registerRender(EntityExploreDust.class, RenderEntityExploreDust.class);
@@ -146,6 +154,8 @@ public class EntityRegistries {
 		registerRender(EntityFallingElfFruit.class, RenderEntityFallingElfFruit.class);
 		registerRender(EntityRotaryWindmillBlate.class, RenderEntityRotaryWindmillBlate.class);
 		registerRender(EntityArrogantSheep.class, RenderEntityArrogantSheep.class);
+		registerRender(EntityItemGoods.class, RenderEntityItemGoods.class);
+
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -191,7 +191,7 @@
             ]
         },
         {
-            "note": "青金石",
+            "note": "青金石矿石",
             "item": {
                 "type": "ore_dict",
                 "item": "oreLapis"
@@ -199,7 +199,7 @@
             "element": [
                 {
                     "id": "metal",
-                    "size": 63,
+                    "size": 60,
                     "power": 575
                 },
                 {
@@ -276,7 +276,7 @@
             "element": [
                 {
                     "id": "metal",
-                    "size": 102,
+                    "size": 40,
                     "power": 104
                 },
                 {

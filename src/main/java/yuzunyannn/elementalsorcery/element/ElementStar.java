@@ -1,15 +1,19 @@
 package yuzunyannn.elementalsorcery.element;
 
+import java.util.Random;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,16 +23,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.element.explosion.EEStar;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.VariableSet;
-import yuzunyannn.elementalsorcery.util.Variables;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.util.var.Variables;
 import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ElementStar extends ElementCommon {
@@ -122,10 +127,24 @@ public class ElementStar extends ElementCommon {
 		}
 		if (stack.isEmpty()) return;
 		ItemStack newStack = stack.splitStack(1);
-		if (hand != null) ((EntityLivingBase) entity).setHeldItem(hand, stack);
-
 		newStack = doChangeItemCost(world, newStack, lastCost, content);
-		if (newStack.isEmpty()) return;
+		if (hand != null) {
+			if (stack.isEmpty()) {
+				((EntityLivingBase) entity).setHeldItem(hand, newStack);
+				return;
+			}
+			((EntityLivingBase) entity).setHeldItem(hand, stack);
+			if (entity instanceof EntityLiving) {
+				try {
+					float[] inventoryHandsDropChances = ObfuscationReflectionHelper.getPrivateValue(EntityLiving.class,
+							(EntityLiving) entity, "field_82174_bp");
+					float ratio = inventoryHandsDropChances[hand == EnumHand.MAIN_HAND
+							? EntityEquipmentSlot.MAINHAND.getIndex()
+							: EntityEquipmentSlot.OFFHAND.getIndex()];
+					if (ratio <= 0.00001f) return;
+				} catch (Exception e) {}
+			}
+		}
 		ItemHelper.dropItem(world, vec.add(0, 0.2, 0), newStack);
 	}
 
@@ -137,13 +156,10 @@ public class ElementStar extends ElementCommon {
 		if (item == Items.DYE) return 1;
 
 		content.remove(Variables.idI);
-		Enchantment enchantment = Enchantment.REGISTRY.getRandomObject(rand);
-		if (enchantment.canApply(stack)) {
-			NBTTagList nbttaglist = stack.getEnchantmentTagList();
-			if (nbttaglist.tagCount() < 3 && EnchantmentHelper.getEnchantmentLevel(enchantment, stack) == 0) {
-				content.set(Variables.idI, Enchantment.getEnchantmentID(enchantment));
-				return 75;
-			}
+		int id = tryRandomEnchantment(stack, rand);
+		if (id != -1) {
+			content.set(Variables.idI, id);
+			return 75;
 		}
 
 		return -1;
@@ -155,21 +171,34 @@ public class ElementStar extends ElementCommon {
 		if (item == ESInit.ITEMS.MATERIAL_DEBRIS) return new ItemStack(ESInit.ITEMS.MAGIC_PIECE);
 		if (item == Items.COAL && meta == 1) return new ItemStack(Items.COAL);
 		if (item == Items.DYE) return new ItemStack(Items.DYE, 1, (meta + 1) % EnumDyeColor.values().length);
-
 		if (content.has(Variables.idI)) {
-			Enchantment enchantment = Enchantment.getEnchantmentByID(content.get(Variables.idI));
+			int moreLev = 1;
+			if (star.getPower() > 1000) moreLev = 2;
+			tryAddEnchantment(stack, content.get(Variables.idI), star.getPower() / 500f, moreLev);
 			content.remove(Variables.idI);
-			if (enchantment == null) return stack;
-			if (enchantment.canApply(stack)) {
-				int minLev = enchantment.getMinLevel();
-				int maxLev = enchantment.getMaxLevel();
-				int moreLev = 1;
-				if (star.getPower() > 1000) moreLev = 2;
-				int lev = (int) (star.getPower() / 500f * (maxLev - minLev) + minLev);
-				stack.addEnchantment(enchantment, MathHelper.clamp(lev, minLev, maxLev + moreLev));
-			}
 		}
+		return stack;
+	}
 
+	public static int tryRandomEnchantment(ItemStack stack, Random rand) {
+		Enchantment enchantment = Enchantment.REGISTRY.getRandomObject(rand);
+		if (enchantment.canApply(stack)) {
+			NBTTagList nbttaglist = stack.getEnchantmentTagList();
+			if (nbttaglist.tagCount() < 3 && EnchantmentHelper.getEnchantmentLevel(enchantment, stack) == 0)
+				return Enchantment.getEnchantmentID(enchantment);
+		}
+		return -1;
+	}
+
+	public static ItemStack tryAddEnchantment(ItemStack stack, int id, float levRatio, int moreLev) {
+		Enchantment enchantment = Enchantment.getEnchantmentByID(id);
+		if (enchantment == null) return stack;
+		if (enchantment.canApply(stack)) {
+			int minLev = enchantment.getMinLevel();
+			int maxLev = enchantment.getMaxLevel();
+			int lev = (int) (levRatio * (maxLev - minLev) + minLev);
+			stack.addEnchantment(enchantment, MathHelper.clamp(lev, minLev, maxLev + moreLev));
+		}
 		return stack;
 	}
 }

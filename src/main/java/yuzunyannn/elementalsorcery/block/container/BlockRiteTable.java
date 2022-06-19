@@ -30,6 +30,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.ESCreativeTabs;
+import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
@@ -191,7 +192,7 @@ public class BlockRiteTable extends BlockContainerNormal {
 			if (stack.isEmpty()) continue;
 			if (stack.getItem() == ESInit.ITEMS.MERCHANT_INVITATION) merchantInvitation = stack;
 			else {
-				int p = ElfProfessionMerchant.priceIt(stack);
+				int p = ElfChamberOfCommerce.priceIt(stack);
 				if (p > 0) price += p;
 			}
 		}
@@ -210,7 +211,7 @@ public class BlockRiteTable extends BlockContainerNormal {
 		elf.setPosition(spawnPos.getX() + 0.5, spawnPos.getY() + 1, spawnPos.getZ() + 0.5);
 		if (!spawState.canEntitySpawn(elf)) return;
 
-		ElfProfessionMerchant.setRemainTimeBeforeLeave(elf, (int) (20 * 60 * 60 * (0.5f + random.nextFloat() * 4)));
+		ElfProfessionMerchant.setRemainTimeBeforeLeave(elf, (int) (20 * 60 * (2 + random.nextFloat() * 8)));
 		worldIn.spawnEntity(elf);
 
 	}

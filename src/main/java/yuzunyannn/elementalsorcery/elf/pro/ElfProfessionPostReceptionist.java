@@ -227,6 +227,8 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TileElfTreeCore core = elf.getEdificeCore();
 		if (core == null) return new TalkChapter().addScene(new TalkSceneSay("say.edifice.broken"));
+		if (ElfProfessionReceptionist.isSuperDishonest(player))
+			return new TalkChapter().addScene(new TalkSceneSay("say.dishonest.not.service"));
 		// 切换过来的时候
 		if (shiftData != null) {
 			boolean isApply = shiftData.getBoolean("apply");

@@ -16,6 +16,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
@@ -24,6 +25,7 @@ import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.LootRegister;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class EFloorHall extends ElfEdificeFloor {
@@ -291,16 +293,13 @@ public class EFloorHall extends ElfEdificeFloor {
 
 	/** 是否可以刷精灵 */
 	public static boolean canSpawnElf(World world, BlockPos pos) {
-		IBlockState state = world.getBlockState(pos);
-		if (state.isFullBlock()) return false;
-		state = world.getBlockState(pos.up());
-		if (state.isFullBlock()) return false;
+		if (!BlockHelper.isPassableBlock(world, pos)) return false;
+		if (!BlockHelper.isPassableBlock(world, pos.up())) return false;
 		return true;
 	}
 
-	/** 在某一层刷点精灵 */
 	@Nullable
-	public static EntityElf trySpawnElf(IBuilder builder, ElfProfession pro, int max) {
+	public static Vec3d trySpawnElfGetPos(IBuilder builder, int max) {
 		BlockPos pos = builder.getFloorBasicPos();
 		World world = builder.getWorld();
 		int treeSize = builder.getEdificeSize();
@@ -309,17 +308,26 @@ public class EFloorHall extends ElfEdificeFloor {
 		double z = pos.getZ() + 0.5;
 		List<EntityElfBase> elfs = getFloorElf(builder, null);
 		if (elfs.size() < max) {
-			EntityElf elf;
 			x = world.rand.nextInt(treeSize * 2) - treeSize + x;
 			z = world.rand.nextInt(treeSize * 2) - treeSize + z;
 			if (!EFloorHall.canSpawnElf(world, new BlockPos(x, y, z))) return null;
-			if (pro == null) elf = new EntityElf(world);
-			else elf = new EntityElf(world, pro);
-			elf.setPosition(x, y, z);
-			builder.spawn(elf);
-			return elf;
+			return new Vec3d(x, y, z);
 		}
 		return null;
+	}
+
+	/** 在某一层刷点精灵 */
+	@Nullable
+	public static EntityElf trySpawnElf(IBuilder builder, ElfProfession pro, int max) {
+		Vec3d vec = trySpawnElfGetPos(builder, max);
+		if (vec == null) return null;
+		EntityElf elf;
+		World world = builder.getWorld();
+		if (pro == null) elf = new EntityElf(world);
+		else elf = new EntityElf(world, pro);
+		elf.setPosition(vec.x, vec.y, vec.z);
+		builder.spawn(elf);
+		return elf;
 	}
 
 	/** 获取本层的所有精灵 */

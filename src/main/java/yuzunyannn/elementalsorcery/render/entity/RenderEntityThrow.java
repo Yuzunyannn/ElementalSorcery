@@ -10,11 +10,11 @@ import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.entity.EntityThrow;
 
-public class RenderThrow extends Render<EntityThrow> {
+public class RenderEntityThrow extends Render<EntityThrow> {
 
 	public final RenderItem itemRenderer = Minecraft.getMinecraft().getRenderItem();
 
-	public RenderThrow(RenderManager renderManager) {
+	public RenderEntityThrow(RenderManager renderManager) {
 		super(renderManager);
 	}
 

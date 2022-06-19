@@ -41,6 +41,7 @@ public class Researcher implements INBTSerializable<NBTTagCompound> {
 
 	public static void onAttackWithEntity(EntityPlayer player, Entity target) {
 		if (rand.nextFloat() > 0.01f) return;
+		if (!(target instanceof EntityLivingBase)) return;
 		researchSP(player, Topics.BIOLOGY);
 		if (target instanceof EntityEnderman) if (rand.nextBoolean()) researchSP(player, Topics.ENDER);
 		else if (target instanceof EntityDragon) researchSP(player, Topics.ENDER);

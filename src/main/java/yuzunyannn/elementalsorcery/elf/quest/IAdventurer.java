@@ -31,4 +31,9 @@ public interface IAdventurer extends Iterable<Quest> {
 	/** 增加或减少信誉 */
 	public void fame(float count);
 
+	/** 增减负债值，正为增 */
+	public void incurDebts(int count);
+
+	/** 获取负债值，最小为0 */
+	public int getDebts();
 }

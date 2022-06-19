@@ -61,10 +61,9 @@ public class ElfProfessionIronSmith extends ElfProfession {
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TileElfTreeCore core = elf.getEdificeCore();
 		TalkChapter chapter = new TalkChapter();
-		if (core == null) {
-			chapter.addScene(new TalkSceneSay("say.edifice.broken"));
-			return chapter;
-		}
+		if (core == null) return chapter.addScene(new TalkSceneSay("say.edifice.broken"));
+		if (ElfProfessionReceptionist.isVeryDishonest(player))
+			return chapter.addScene(new TalkSceneSay("say.dishonest.not.say"));
 		chapter.addScene(new TalkSceneSay("say.ironsmith.info"));
 		return chapter;
 	}

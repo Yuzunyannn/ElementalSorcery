@@ -57,7 +57,7 @@
             },
             "element": {
                 "id": "metal",
-                "size": 18,
+                "size": 16,
                 "power": 450
             }
         },
@@ -253,12 +253,12 @@
             "element": [
                 {
                     "id": "water",
-                    "size": 18,
+                    "size": 8,
                     "power": 333
                 },
                 {
                     "id": "air",
-                    "size": 7,
+                    "size": 6,
                     "power": 111
                 }
             ]
@@ -306,12 +306,12 @@
             "element": [
                 {
                     "id": "metal",
-                    "size": 10,
+                    "size": 9,
                     "power": 437
                 },
                 {
                     "id": "earth",
-                    "size": 9,
+                    "size": 8,
                     "power": 385
                 }
             ]
@@ -322,18 +322,19 @@
             "element": [
                 {
                     "id": "ender",
-                    "size": 34,
+                    "size": 28,
                     "power": 666
                 }
             ]
         },
         {
             "notes": "烈焰棒",
+            "complex": 2,
             "item": "minecraft:blaze_rod",
             "element": [
                 {
                     "id": "fire",
-                    "size": 10,
+                    "size": 8,
                     "power": 425
                 },
                 {
@@ -400,26 +401,27 @@
         },
         {
             "notes": "下界之星",
+            "complex": 8,
             "item": "minecraft:nether_star",
             "element": [
                 {
                     "id": "fire",
-                    "size": 32,
+                    "size": 64,
                     "power": 828
                 },
                 {
                     "id": "water",
-                    "size": 16,
+                    "size": 32,
                     "power": 828
                 },
                 {
                     "id": "knowledge",
-                    "size": 10,
+                    "size": 24,
                     "power": 628
                 },
                 {
                     "id": "star",
-                    "size": 8,
+                    "size": 16,
                     "power": 200
                 }
             ]

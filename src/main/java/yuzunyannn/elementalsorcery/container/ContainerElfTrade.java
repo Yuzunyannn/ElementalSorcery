@@ -99,9 +99,7 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 		@Override
 		public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
 			// 保持数据
-			ItemStack temp = stack.copy();
-			temp.setCount(1);
-			putStack(temp);
+			putStack(trade.commodity(slotIndex).copy());
 			// 处理花钱
 			int cost = trade.cost(slotIndex);
 			ItemElfPurse.extract(thePlayer.inventory, cost, false);

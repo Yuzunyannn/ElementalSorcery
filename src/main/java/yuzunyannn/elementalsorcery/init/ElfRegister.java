@@ -9,6 +9,7 @@ import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorLaboratory;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorLibrary;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorLivingRoom;
+import yuzunyannn.elementalsorcery.elf.edifice.EFloorMarket;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorPostOffice;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorRefinery;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorWorkshop;
@@ -32,6 +33,7 @@ public class ElfRegister {
 		register("post_office", new EFloorPostOffice());
 		register("laboratory", new EFloorLaboratory());
 		register("library", new EFloorLibrary());
+		register("market", new EFloorMarket());
 	}
 
 	public static void registerAllProfession() throws IllegalArgumentException, IllegalAccessException {

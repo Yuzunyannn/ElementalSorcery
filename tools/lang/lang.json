@@ -652,7 +652,7 @@
 			"en_US": "Void Container",
 			"ja_JP": "虚空のコンテナ"
 		},
-		"item.voidContainerElement.name":{
+		"item.voidContainerElement.name": {
 			"zh_CN": "虚空元素容器",
 			"en_US": "Element Void Container",
 			"ja_JP": "元素の虚空コンテナ"
@@ -1723,9 +1723,9 @@
 			"ja_JP": "存在しないページのid"
 		},
 		"commands.es.quest.usage": {
-			"zh_CN": "/es quest <clear|give|fame> <玩家> <数据>",
-			"en_US": "/es quest <clear|give|fame> <player> <quest>",
-			"ja_JP": "/es quest <clear|give|fame> <プレイヤー> <依頼>"
+			"zh_CN": "/es quest <clear|give|fame|debut> <玩家> <数据>",
+			"en_US": "/es quest <clear|give|fame|debut> <player> <quest>",
+			"ja_JP": "/es quest <clear|give|fame|debut> <プレイヤー> <依頼>"
 		},
 		"commands.es.quest.clear": {
 			"zh_CN": "已清空'%s'所有正在进行的任务",
@@ -1746,6 +1746,16 @@
 			"zh_CN": "变更信誉成功！%s的信誉目前为%s点",
 			"en_US": "Change Fame successfully! %s's Fame currently is %s points",
 			"ja_JP": "信用変更成功！%sの信用現在は%sです"
+		},
+		"commands.es.quest.debt.usage": {
+			"zh_CN": "/es quest debt <玩家> <变更点数>",
+			"en_US": "/es quest debt <player> <Change Points>",
+			"ja_JP": "/es quest debt <プレイヤー> <ポイント変更>"
+		},
+		"commands.es.quest.debt.change": {
+			"zh_CN": "变更负债成功！%s的负债目前为%s点",
+			"en_US": "Change Debts successfully! %s's Debts currently is %s points",
+			"ja_JP": "負債変更成功！%sの負債現在は%sです"
 		},
 		"commands.es.mantra.usage": {
 			"zh_CN": "/es mantra <give|add|remove> <玩家> <咒文>",
@@ -2231,6 +2241,11 @@
 			"en_US": "Have %d yuan",
 			"ja_JP": "%d元を持っている"
 		},
+		"info.elf.goods.coin": {
+			"zh_CN": "%d元",
+			"en_US": "%d yuan",
+			"ja_JP": "%d元"
+		},
 		"info.grimoire.element": {
 			"zh_CN": "魔典内蕴含的元素：",
 			"en_US": "Element in Grimoire:",
@@ -2425,6 +2440,11 @@
 			"zh_CN": "安装成功",
 			"en_US": "Installed Successfully",
 			"ja_JP": "インストール成功"
+		},
+		"info.fame.decline": {
+			"zh_CN": "你对精灵的暴行被%s个精灵看到了，信誉下降了%s",
+			"en_US": "Your atrocities against Elves were seen by %s elves, Fame decreased %s point",
+			"ja_JP": "精霊に対する暴行は%sの精霊に見られしまた、信用が%s下がった"
 		}
 	},
 	"lev": {
@@ -2705,6 +2725,16 @@
 			"zh_CN": "精灵历：%s",
 			"en_US": "Elf Calendar: %s",
 			"ja_JP": "精霊のカレンダー：%s"
+		},
+		"elf.red.label.merchant.not.notice": {
+			"zh_CN": "精灵商会似乎没有注意到你悄悄的拿走了商品",
+			"en_US": "It seems that the Elven chamber of Commerce didn't notice that you secretly took away the goods.",
+			"ja_JP": "精霊商会はあなたがこっそり商品を持って行ったことに気づかなかったようです。"
+		},
+		"elf.red.label.merchant.notice": {
+			"zh_CN": "精灵商会发现到你悄悄的拿走了商品，你的信誉降低了%s，负债上升%s元",
+			"en_US": "The Elven chamber of Commerce found that you secretly took away the goods, your fame was reduced by %s, and incur %s yuan debts",
+			"ja_JP": "精霊商会はあなたがこっそり商品を持って行ったことを発見して、あなたの信用は%sを下げました、%s元債務に増加しまた"
 		}
 	},
 	"say": {
@@ -2732,6 +2762,16 @@
 			"zh_CN": "我在考虑一下",
 			"en_US": "Let me think",
 			"ja_JP": "もう少し考えてみます"
+		},
+		"say.dishonest.not.service": {
+			"zh_CN": "您的信誉过低，无法为您提供服务",
+			"en_US": "Your Honest is too low to serve you.",
+			"ja_JP": "あなたの信用が低すぎて、サービスを提供できません"
+		},
+		"say.dishonest.not.say": {
+			"zh_CN": "我不想和没信誉的人说话",
+			"en_US": "I don't want to talk to people without honest.",
+			"ja_JP": "信用のない人とは話したくない"
 		},
 		"say.scholar.pretendKnow": {
 			"zh_CN": "就当你明白了",
@@ -2767,6 +2807,11 @@
 			"zh_CN": "快来看看吧，我这里全是好东西",
 			"en_US": "Come and have a look. I have a lot of good things here.",
 			"ja_JP": "いらっしゃいませ、ここは全部いいものです"
+		},
+		"say.merchant.dishonest": {
+			"zh_CN": "我无法和失信者交易",
+			"en_US": "I can't deal with dishonest people.",
+			"ja_JP": "信頼できない人と取引できません"
 		},
 		"say.builder.working": {
 			"zh_CN": "我正在工作...",
@@ -2887,6 +2932,11 @@
 			"zh_CN": "让我看看^_^_^_^_^_^_^_^_^您的信用记录是%s",
 			"en_US": "Let me see ^_^_^_^_^_^_^_^_^ Your Fame is %s",
 			"ja_JP": "ちょっと待ってください^_^_^_^_^_^_^_^_^あなたの信用記録は%sです。"
+		},
+		"say.fame.query.result.low": {
+			"zh_CN": "您已经进入失信状态了，如果信用过低的话，精灵们将不会提供您服务了",
+			"en_US": "You have entered a state of dishonest. If the Fame is too low, Elves will not provide services with you",
+			"ja_JP": "あなたはもう信用を失っています、信用が低すぎると、精霊たちはサービスを提供しません。"
 		},
 		"say.ironsmith.info": {
 			"zh_CN": "你把需要烧炼的矿物放到那边的箱子堆里，我会帮你烧炼，烧好了记得到炉子两边的箱子里去拿。\\n我可不是白烧的，一个矿2元，记得一起放到箱子里。",
@@ -3047,6 +3097,16 @@
 			"zh_CN": "离我远一点！傲慢震击！",
 			"en_US": "Stay away from me! Arrogant Shock!",
 			"ja_JP": "われから離れて！傲慢ショック！"
+		},
+		"say.i.red.label.pick.up": {
+			"zh_CN": "红标签是精灵商会标记的无主商品，我最好不要把它拿走",
+			"en_US": "The Red Label is an ownerless commodity marked by Elf chamber of Commerce, I'd better not take it away.",
+			"ja_JP": "赤いラベルは精霊商会がマークした主のない商品です。持って行かないほうがいいです。"
+		},
+		"say.i.green.label.no.money": {
+			"zh_CN": "我好像没带够钱，还差%s才能购买它",
+			"en_US": "I don't have enough money. I'm short by 10 yuan.",
+			"ja_JP": "お金を十分に持っていないようですが、まだ%s元足りないので購入できません。"
 		}
 	},
 	"floor": {
@@ -3084,6 +3144,11 @@
 			"zh_CN": "大图书馆",
 			"en_US": "Great Library",
 			"ja_JP": "大図書館"
+		},
+		"floor.market.name": {
+			"zh_CN": "市场",
+			"en_US": "Market",
+			"ja_JP": "市場"
 		}
 	},
 	"quest": {

@@ -80,7 +80,7 @@ public class ElementHelper {
 	@SideOnly(Side.CLIENT)
 	public static void addElementInformation(ElementStack estack, List<String> tooltip, int capacity) {
 		if (estack.isEmpty()) return;
-		String countString = String.valueOf(estack.getCount());
+		String countString = TextHelper.toAbbreviatedNumber(estack.getCount());
 		if (capacity > 0) countString = countString + "/" + TextHelper.toAbbreviatedNumber(capacity, 1);
 		String str = I18n.format("info.elementCrystal.has", estack.getDisplayName(), countString, estack.getPower());
 		tooltip.add(TextFormatting.RED + str);

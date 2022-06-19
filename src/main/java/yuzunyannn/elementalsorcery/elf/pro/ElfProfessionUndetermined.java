@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.elf.pro;
 
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
@@ -14,9 +15,12 @@ public abstract class ElfProfessionUndetermined extends ElfProfession {
 	public Float attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
 		if (elf.world.isRemote) return amount;
 		if (source.getTrueSource() instanceof EntityLivingBase == false) return amount;
-		if (elf.getRNG().nextFloat() < 0.005f) elf.setProfession(ElfProfession.MASTER);
-		else if (elf.getRNG().nextInt(4) == 0) elf.setProfession(ElfProfession.BERSERKER);
+		
+		Random rand = ElfProfession.getRandomFromName(elf.getCustomNameTag());
+		if (rand.nextFloat() < 0.005f) elf.setProfession(ElfProfession.MASTER);
+		else if (rand.nextInt(4) == 0) elf.setProfession(ElfProfession.BERSERKER);
 		else elf.setProfession(ElfProfession.WARRIOR);
+
 		// 吸怪
 		final int size = 16;
 		AxisAlignedBB aabb = new AxisAlignedBB(elf.posX - size, elf.posY - size, elf.posZ - size, elf.posX + size,

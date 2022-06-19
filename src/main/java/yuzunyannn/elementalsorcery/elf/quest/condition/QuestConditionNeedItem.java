@@ -20,7 +20,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
+import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.util.NBTTag;
@@ -181,7 +181,7 @@ public class QuestConditionNeedItem extends QuestCondition implements IQuestCond
 	public static int tryPriceItems(Random rand, List<ItemRec> needs) {
 		int coin = 0;
 		for (ItemRec rec : needs) {
-			int price = ElfProfessionMerchant.priceIt(rec.getItemStack());
+			int price = ElfChamberOfCommerce.priceIt(rec.getItemStack());
 			if (price <= 0) {
 				if (rec.getItemStack().getItem() instanceof ItemSpellbook) price = 200;
 			}

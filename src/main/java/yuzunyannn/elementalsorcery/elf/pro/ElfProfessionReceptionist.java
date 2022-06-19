@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.elf.pro;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -145,6 +146,7 @@ public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 			TalkSceneSay fameQuery = new TalkSceneSay().setLabel("fameQuery");
 			chapter.addScene(fameQuery);
 			fameQuery.addString("#say.fame.query.result?" + adventurer.getFame(), Talker.OPPOSING);
+			if (adventurer.getFame() < 0) fameQuery.addString("say.fame.query.result.low", Talker.OPPOSING);
 			fameQuery.addString("say.very.thank", Talker.PLAYER);
 			fameQuery.addAction(new TalkActionEnd());
 		}
@@ -155,6 +157,24 @@ public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 		howGS.addString("say.very.thank", Talker.PLAYER);
 		howGS.addAction(new TalkActionEnd());
 		return chapter;
+	}
+
+	public static float getPlayerFame(EntityLivingBase player) {
+		IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+		if (adventurer == null) return 1;
+		return adventurer.getFame();
+	}
+
+	public static boolean isDishonest(EntityLivingBase player) {
+		return getPlayerFame(player) < 0;
+	}
+
+	public static boolean isVeryDishonest(EntityLivingBase player) {
+		return getPlayerFame(player) < -8;
+	}
+
+	public static boolean isSuperDishonest(EntityLivingBase player) {
+		return getPlayerFame(player) < -16;
 	}
 
 	/** 确认接任务 */
