@@ -22,6 +22,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
+import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionToGui;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
@@ -159,7 +160,7 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TalkChapter chapter = new TalkChapter();
-		if (ElfProfessionReceptionist.isVeryDishonest(player))
+		if (ElfConfig.isVeryDishonest(player))
 			return chapter.addScene(new TalkSceneSay("say.merchant.dishonest", Talker.OPPOSING));
 		TalkSceneSay scene = new TalkSceneSay();
 		chapter.addScene(scene);

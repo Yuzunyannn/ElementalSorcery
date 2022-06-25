@@ -1,7 +1,5 @@
 package yuzunyannn.elementalsorcery.entity.elf;
 
-import java.util.Random;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -9,14 +7,12 @@ import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.AutoName;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
 
@@ -30,9 +26,10 @@ public class EntityElf extends EntityElfBase {
 		this.setCustomNameTag(AutoName.getRandomName());
 		if (!autoRandom) return;
 		if (ElementalSorcery.isDevelop) {
-			Random merchantRandom = ElfProfession.getRandomFromName(getCustomNameTag());
-			getProfessionStorage().set(ElfProfession.M_TYPE, ElfMerchantType.getRandomMerchantType(merchantRandom));
-			this.setProfession(ElfProfession.MERCHANT);
+//			Random merchantRandom = ElfProfession.getRandomFromName(getCustomNameTag());
+//			getProfessionStorage().set(ElfProfession.M_TYPE, ElfMerchantType.getRandomMerchantType(merchantRandom));
+//			this.setProfession(ElfProfession.MERCHANT);
+			this.setProfession(ElfProfession.DEBT_COLLECTOR);
 			return;
 		}
 		if (this.rand.nextInt(5) == 0) this.setProfession(ElfProfession.SCHOLAR);
@@ -62,11 +59,6 @@ public class EntityElf extends EntityElfBase {
 		this.tasks.addTask(10, new EntityAILookIdle(this));
 
 		// this.setFlyMode(true);
-	}
-
-	@Override
-	protected ItemStack pickupItem(ItemStack stack) {
-		return ItemStack.EMPTY;
 	}
 
 	@Override

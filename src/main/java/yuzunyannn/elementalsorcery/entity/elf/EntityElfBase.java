@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.entity.elf;
 
 import java.lang.ref.WeakReference;
 import java.util.Iterator;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -38,26 +37,17 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
-import yuzunyannn.elementalsorcery.block.BlockElfFruit;
-import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public abstract class EntityElfBase extends EntityCreature {
 
@@ -138,6 +128,10 @@ public abstract class EntityElfBase extends EntityCreature {
 		if (NBTHelper.hasBlockPos(compound, "homePos"))
 			setHomePosAndDistance(NBTHelper.getBlockPos(compound, "homePos"), 2);
 		getProfessionStorage().deserializeNBT(compound.getCompoundTag("storage"));
+	}
+
+	public void setExperienceValue(int experienceValue) {
+		this.experienceValue = experienceValue;
 	}
 
 	/** 获取临时数据NBT，不会被保存，不会同步 */
@@ -221,6 +215,7 @@ public abstract class EntityElfBase extends EntityCreature {
 		if (hand != EnumHand.MAIN_HAND) return EnumActionResult.PASS;
 		if (this.getHealth() <= 0) return EnumActionResult.FAIL;
 		if (this.getTalker() != null) return EnumActionResult.FAIL;
+		if (this.getAttackTarget() == player) return EnumActionResult.FAIL;
 		ElfProfession pro = this.getProfession();
 		return pro.interact(this, player) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
 	}
@@ -228,14 +223,7 @@ public abstract class EntityElfBase extends EntityCreature {
 	/** 掉落一些物品 */
 	@Override
 	protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
-		if (this.rand.nextInt(100) < 50) return;
-		int i = this.rand.nextInt(3);
-		if (lootingModifier > 0) i += this.rand.nextInt(lootingModifier + 1);
-		for (int j = 0; j < i; ++j) {
-			if (this.rand.nextInt(3) == 0)
-				this.entityDropItem(new ItemStack(ESInit.ITEMS.ELF_COIN, this.rand.nextInt(8) + 2), 0);
-			else this.entityDropItem(new ItemStack(ESInit.BLOCKS.ELF_FRUIT, 1, BlockElfFruit.MAX_STATE), 0);
-		}
+		this.getProfession().dropFewItems(this, wasRecentlyHit, lootingModifier);
 	}
 
 	/** 捡起物品 */
@@ -254,10 +242,11 @@ public abstract class EntityElfBase extends EntityCreature {
 		if (itemstack.isEmpty()) return;
 		if (this.getProfession().needPickup(this, itemstack)) {
 			int n = itemstack.getCount();
-			ItemStack remain = this.pickupItem(itemstack);
-			if (remain.getCount() < n) {
-				this.onItemPickup(itemEntity, n - remain.getCount());
-				if (remain.isEmpty()) itemEntity.setDead();
+			this.getProfession().onPickupItem(this, itemEntity);
+			itemstack = itemEntity.getItem();
+			if (itemstack.getCount() < n) {
+				this.onItemPickup(itemEntity, n - itemstack.getCount());
+				if (itemstack.isEmpty()) itemEntity.setDead();
 			}
 		}
 
@@ -271,26 +260,12 @@ public abstract class EntityElfBase extends EntityCreature {
 		if (cause.getTrueSource() instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP) cause.getTrueSource();
 			ESCriteriaTriggers.PLAYER_KILLED_ELF.trigger(player, this, cause);
-			IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
-			if (adventurer != null) {
-				final int size = 16;
-				AxisAlignedBB aabb = WorldHelper.createAABB(player.getPosition(), size, size, size);
-				List<EntityElf> list = world.getEntitiesWithinAABB(EntityElf.class, aabb, (e) -> {
-					if (e.dead) return false;
-					if (!e.canEntityBeSeen(player)) return false;
-					Vec3d look = e.getLookVec();
-					Vec3d vec = player.getPositionEyes(0).subtract(e.getPositionEyes(0));
-					double cos = look.dotProduct(vec) / (look.length() * vec.length());
-					return cos > 0;
-				});
-				if (list.size() > 0) {
-					float point = 0.1f * list.size();
-					adventurer.fame(-point);
-					player.sendMessage(new TextComponentTranslation("info.fame.decline", String.valueOf(list.size()),
-							String.format("%.1f", point)).setStyle(new Style().setColor(TextFormatting.DARK_RED)));
-				}
-			}
+			this.getProfession().onBeKilled(this, cause);
 		}
+	}
+
+	public boolean isDeading() {
+		return this.dead;
 	}
 
 	/** 受到攻击，精灵的反应 */
@@ -431,8 +406,6 @@ public abstract class EntityElfBase extends EntityCreature {
 			this.setProfession(profession);
 		}
 	}
-
-	abstract protected ItemStack pickupItem(ItemStack stack);
 
 	abstract public void tryHarvestBlock(BlockPos pos);
 

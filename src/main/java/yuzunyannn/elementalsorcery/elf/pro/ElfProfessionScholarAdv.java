@@ -4,6 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
+import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionEnd;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionGoTo;
@@ -61,7 +62,7 @@ public class ElfProfessionScholarAdv extends ElfProfessionScholar {
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TileElfTreeCore core = elf.getEdificeCore();
 		if (core == null) return new TalkChapter().addScene(new TalkSceneSay("say.edifice.broken"));
-		if (ElfProfessionReceptionist.isSuperDishonest(player))
+		if (ElfConfig.isSuperDishonest(player))
 			return new TalkChapter().addScene(new TalkSceneSay("say.dishonest.not.say"));
 		// 检查手上物品
 		ItemStack stack = player.getHeldItemMainhand();

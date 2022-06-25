@@ -13,7 +13,6 @@ public class EntityAINearestAttackTarget extends EntityAITarget {
 	protected final EntityElfBase elf;
 	protected final EntityAINearestAttackableTarget.Sorter sorter;
 	protected float chance = 0.25f;
-	protected EntityLivingBase target;
 
 	public EntityAINearestAttackTarget(EntityElfBase elf) {
 		super(elf, true, false);

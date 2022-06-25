@@ -16,7 +16,7 @@ public class VTVTArrayList<T> implements IVariableType<ArrayList<T>> {
 
 	@Override
 	public ArrayList<T> newInstance(NBTBase base) {
-		if (base.getId() == NBTTag.TAG_LIST) {
+		if (base != null && base.getId() == NBTTag.TAG_LIST) {
 			NBTTagList array = (NBTTagList) base;
 			ArrayList<T> list = new ArrayList<T>();
 			for (NBTBase b : array) list.add(type.newInstance(b));

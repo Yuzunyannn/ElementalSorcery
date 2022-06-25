@@ -570,6 +570,12 @@ public class EventServer {
 		}
 	}
 
+	@SubscribeEvent
+	public static void onPlayerTick(TickEvent.PlayerTickEvent evt) {
+		IAdventurer adventurer = evt.player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+		if (adventurer != null) adventurer.onUpdate(evt.player);
+	}
+
 	private static void onLivingDeadEnchantmentDeal(EntityLivingBase deader, DamageSource source) {
 		Entity s = source.getImmediateSource();
 		if (!(s instanceof EntityLivingBase)) return;

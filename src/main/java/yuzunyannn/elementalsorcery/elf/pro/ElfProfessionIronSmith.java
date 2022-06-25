@@ -19,6 +19,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
+import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.entity.EntityMagicMelting;
@@ -62,7 +63,7 @@ public class ElfProfessionIronSmith extends ElfProfession {
 		TileElfTreeCore core = elf.getEdificeCore();
 		TalkChapter chapter = new TalkChapter();
 		if (core == null) return chapter.addScene(new TalkSceneSay("say.edifice.broken"));
-		if (ElfProfessionReceptionist.isVeryDishonest(player))
+		if (ElfConfig.isVeryDishonest(player))
 			return chapter.addScene(new TalkSceneSay("say.dishonest.not.say"));
 		chapter.addScene(new TalkSceneSay("say.ironsmith.info"));
 		return chapter;

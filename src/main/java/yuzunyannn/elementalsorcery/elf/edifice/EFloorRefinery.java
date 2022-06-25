@@ -224,5 +224,6 @@ public class EFloorRefinery extends ElfEdificeFloor {
 				ironSmith.setFurnacePos(elf, furnacePos, standPos);
 			}
 		}
+		this.trySpawnQuest(builder, 24000 * 2 + world.rand.nextInt(24000 * 2));
 	}
 }

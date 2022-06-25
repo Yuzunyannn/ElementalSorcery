@@ -18,6 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
+import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
 import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionNeedFame;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
@@ -220,7 +221,7 @@ public class Quest implements INBTSerializable<NBTTagCompound> {
 							dec = dec + need / 10;
 						}
 					}
-					adventurer.fame(-dec);
+					ElfConfig.changeFame(entity, -dec);
 				}
 				iter.remove();
 			}

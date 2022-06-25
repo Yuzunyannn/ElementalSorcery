@@ -12,13 +12,27 @@
         }
     },
     "criteria": {
-        "craft_rite_table": {
+        "kill1": {
             "trigger": "minecraft:player_killed_entity",
             "conditions": {
                 "entity": {
                     "type": "elementalsorcery:elf"
                 }
             }
+        },
+        "kill2": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "elementalsorcery:elfTraveler"
+                }
+            }
         }
-    }
+    },
+    "requirements": [
+        [
+            "kill1",
+            "kill2"
+        ]
+    ]
 }

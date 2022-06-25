@@ -47,7 +47,7 @@ public class ElfMerchantTypeDefault extends ElfMerchantType {
 		ESObjects.Items ITEMS = ESInit.ITEMS;
 		ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
 		if (rand.nextInt(2) == 0) addACommodity(trade, new ItemStack(BLOCKS.ELF_FRUIT, 1, 2), 5, 20, 1000);
-		if (rand.nextInt(3) == 0) addACommodity(trade, new ItemStack(ITEMS.RESONANT_CRYSTAL), 50, 8, 1000);
+		if (rand.nextInt(3) == 0) addACommodity(trade, new ItemStack(ITEMS.RESONANT_CRYSTAL), 100, 3, 1000);
 		if (rand.nextInt(8) == 0) addACommodity(trade, ItemBlessingJadePiece.createPiece(2), 1000, 1, 10000);
 	}
 

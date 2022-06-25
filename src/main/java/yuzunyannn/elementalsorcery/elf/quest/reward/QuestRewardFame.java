@@ -8,6 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
+import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.loader.ParamObtain;
@@ -43,9 +44,7 @@ public class QuestRewardFame extends QuestReward {
 
 	@Override
 	public void onReward(Quest quest, EntityLivingBase player) {
-		IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
-		if (adventurer == null) return;
-		adventurer.fame(fame);
+		ElfConfig.changeFame(player, fame);
 	}
 
 	@Override

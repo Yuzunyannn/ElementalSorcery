@@ -43,6 +43,7 @@ public abstract class ContainerElf extends Container {
 		if (this.elf != null) this.elf.setTalker(player);
 		if (nbt.hasKey("shiftData", NBTTag.TAG_COMPOUND)) {
 			NBTTagCompound shiftData = nbt.getCompoundTag("shiftData");
+			nbt.removeTag("shiftData");
 			this.onShift(shiftData);
 		}
 	}

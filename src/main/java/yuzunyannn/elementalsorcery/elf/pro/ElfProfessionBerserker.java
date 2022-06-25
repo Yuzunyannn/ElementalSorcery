@@ -31,8 +31,8 @@ public class ElfProfessionBerserker extends ElfProfession {
 		return super.attackedFrom(elf, source, amount);
 	}
 
-	@SideOnly(Side.CLIENT)
 	@Override
+	@SideOnly(Side.CLIENT)
 	public ResourceLocation getTexture(EntityElfBase elf) {
 		return RenderEntityElf.TEXTURE_BERSERKER;
 	}

@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:elf/debtor",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:elf_purse"
+        },
+        "title": {
+            "translate": "es.adv.elfDeepInDebt.title"
+        },
+        "description": {
+            "translate": "es.adv.elfDeepInDebt.description"
+        }
+    },
+    "criteria": {
+        "string": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "elf:deepInDebt"
+            }
+        }
+    }
+}

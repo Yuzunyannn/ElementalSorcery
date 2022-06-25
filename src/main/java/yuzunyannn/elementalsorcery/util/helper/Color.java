@@ -103,4 +103,36 @@ public class Color {
 		}
 		return false;
 	}
+
+	public Vec3d toHSV() {
+		float max = Math.max(r, Math.max(g, b));
+		float min = Math.min(r, Math.min(g, b));
+		float V = max;
+		float S = (max - min) / max;
+		float H = 0;
+		if (r == max) H = (g - b) / (max - min);
+		else if (g == max) H = 2 + (b - r) / (max - min);
+		else if (b == max) H = 4 + (r - g) / (max - min);
+		H *= 60;
+		if (H < 0) H = H + 360;
+		return new Vec3d(H, S, V);
+	}
+
+	static public Color fromHSV(double h, double s, double v) {
+		Color color = new Color(v, v, v);
+		if (s == 0) return color;
+		h = h / 60.0;
+		int i = (int) h;
+		double f = h - i;
+		double a = v * (1.0 - s);
+		double b = v * (1.0 - s * f);
+		double c = v * (1.0 - s * (1.0 - f));
+		if (i == 0) color.setColor(v, c, a);
+		else if (i == 1) color.setColor(b, v, a);
+		else if (i == 2) color.setColor(a, v, c);
+		else if (i == 3) color.setColor(a, b, v);
+		else if (i == 4) color.setColor(c, a, v);
+		else color.setColor(v, a, b);
+		return color;
+	}
 }

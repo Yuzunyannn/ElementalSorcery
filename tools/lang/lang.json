@@ -1679,6 +1679,11 @@
 			"zh_CN": "研究员",
 			"en_US": "Researcher",
 			"ja_JP": "研究員"
+		},
+		"pro.debtCollector": {
+			"zh_CN": "讨债人",
+			"en_US": "Debt Collector",
+			"ja_JP": "借金取り"
 		}
 	},
 	"commands": {
@@ -2727,14 +2732,14 @@
 			"ja_JP": "精霊のカレンダー：%s"
 		},
 		"elf.red.label.merchant.not.notice": {
-			"zh_CN": "精灵商会似乎没有注意到你悄悄的拿走了商品",
-			"en_US": "It seems that the Elven chamber of Commerce didn't notice that you secretly took away the goods.",
-			"ja_JP": "精霊商会はあなたがこっそり商品を持って行ったことに気づかなかったようです。"
+			"zh_CN": "精灵商会似乎没有注意到你悄悄的拿走了%s",
+			"en_US": "It seems that the Elven chamber of Commerce didn't notice that you secretly took away %s.",
+			"ja_JP": "精霊商会はあなたがこっそり%sを持って行ったことに気づかなかったようです。"
 		},
 		"elf.red.label.merchant.notice": {
-			"zh_CN": "精灵商会发现到你悄悄的拿走了商品，你的信誉降低了%s，负债上升%s元",
-			"en_US": "The Elven chamber of Commerce found that you secretly took away the goods, your fame was reduced by %s, and incur %s yuan debts",
-			"ja_JP": "精霊商会はあなたがこっそり商品を持って行ったことを発見して、あなたの信用は%sを下げました、%s元債務に増加しまた"
+			"zh_CN": "精灵商会发现到你悄悄的拿走了%s，你的信誉降低了%s，负债上升%s元",
+			"en_US": "The Elven chamber of Commerce found that you secretly took away %s, your fame was reduced by %s, and incur %s yuan debts",
+			"ja_JP": "精霊商会はあなたがこっそり%sを持って行ったことを発見して、あなたの信用は%sを下げました、%s元債務に増加しまた"
 		}
 	},
 	"say": {
@@ -2938,10 +2943,35 @@
 			"en_US": "You have entered a state of dishonest. If the Fame is too low, Elves will not provide services with you",
 			"ja_JP": "あなたはもう信用を失っています、信用が低すぎると、精霊たちはサービスを提供しません。"
 		},
+		"say.debt.pay": {
+			"zh_CN": "还债",
+			"en_US": "Pay debt",
+			"ja_JP": "しゃっきんを返す"
+		},
+		"say.debt.pay.check": {
+			"zh_CN": "您已欠款%s元，请及时偿还",
+			"en_US": "You owe %s yuan, please repay it in time.",
+			"ja_JP": "あなた%s元の借金をして、直ちに返済してください"
+		},
+		"say.debt.pay.do": {
+			"zh_CN": "您已偿还%s元，还剩欠款%s元",
+			"en_US": "You have paid back %s yuan, leaving %s yuan in arrears.",
+			"ja_JP": "あなたは%s元を返済して、まだ%s元の借金が残っています"
+		},
 		"say.ironsmith.info": {
 			"zh_CN": "你把需要烧炼的矿物放到那边的箱子堆里，我会帮你烧炼，烧好了记得到炉子两边的箱子里去拿。\\n我可不是白烧的，一个矿2元，记得一起放到箱子里。",
 			"en_US": "Put the ore into the boxes over there. I'll help you smelt them. When work done, remember to take them from the boxes on both sides of the stove. \\N I don't work for nothing, a ore costs 2 yuan, remember to put it in the box together.",
 			"ja_JP": "製錬したい鉱物をあちらの箱の中に入れてください。製錬した後でストーブの両側の箱の中で取ってください。\\n無料ではないです。一つの鉱石は2元です。一緒に箱に入れてください。"
+		},
+		"say.pay.debt.drop.item": {
+			"zh_CN": "把你价值%s元的%s交出来抵债!",
+			"en_US": "Pay %s yuan debts with your %s!",
+			"ja_JP": "てめえの価値%s元の%sを債務返済に差し出す!"
+		},
+		"say.pay.debt.collect.over": {
+			"zh_CN": "你的债务已经还完了，我撤了",
+			"en_US": "Your debt has been paid off, I'm leaving.",
+			"ja_JP": "てめえの債務はすでに返済済みで、さようなら"
 		},
 		"say.send.parcel": {
 			"zh_CN": "寄送包裹",
@@ -3067,6 +3097,11 @@
 			"zh_CN": "欢迎来到我的黄金迷宫！",
 			"en_US": "Welcome To My Golden Maze!",
 			"ja_JP": "われの黄金迷宮にようこそ！"
+		},
+		"say.arrogantSheep.escape": {
+			"zh_CN": "太险了，差点掉下去，哈哈，溜了溜了...",
+			"en_US": "It was too close. Almost fell. Slip away, ha-ha",
+			"ja_JP": "危なかった、もう少しで落ちるところだった、逃げろ、ははは"
 		},
 		"say.arrogantSheep.uselessAttack": {
 			"zh_CN": "你的攻击对我的黄金毛来说是没有用的！",
@@ -5525,6 +5560,37 @@
 			"zh_CN": "拿着你的魔典，放在撰录方桌上！",
 			"en_US": "Put your Grimoire to Transcribe Square Table",
 			"ja_JP": "拿着你的魔典，放在撰录方桌上！"
+		},
+		"es.adv.elfDebtor.title":{
+			"zh_CN": "欠债人",
+			"en_US": "Debtor",
+			"ja_JP": "借金人"
+		},
+		"es.adv.elfDebtor.description":{
+			"zh_CN": "被商会发现了拿走的商人掉落商品",
+			"en_US": "Taking away Merchant's dropped goods were found by the Elven chamber of Commerce",
+			"ja_JP": "商会に商人の落とし物を持って行ったことが発見された"
+		},
+		"es.adv.elfDeepInDebt.title":{
+			"zh_CN": "债台高筑",
+			"en_US": "Deep In Debt",
+			"ja_JP": "借金が嵩む"
+		},
+		"es.adv.elfDeepInDebt.description":{
+			"zh_CN": "巨额欠债引来了追债人",
+			"en_US": "Huge debt, debt collectors coming",
+			"ja_JP": "多額の借金が借金取り人を引き付けてしまった"
+		},
+		"es.adv.elfDishonest.title":{
+			"zh_CN": "精灵的厌恶",
+			"en_US": "Elves's detestation",
+			"ja_JP": "精霊の嫌悪"
+		},
+		"es.adv.elfDishonest.description":{
+			"zh_CN": "做出较多减少信誉的事情",
+			"en_US": "Do many wicked things to elf",
+			"ja_JP": "信用を減らすことを多くする"
 		}
 	}
+
 }

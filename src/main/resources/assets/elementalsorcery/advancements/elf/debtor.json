@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:elf/kill_elf",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:elf_coin"
+        },
+        "title": {
+            "translate": "es.adv.elfDebtor.title"
+        },
+        "description": {
+            "translate": "es.adv.elfDebtor.description"
+        }
+    },
+    "criteria": {
+        "string": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "elf:debtor"
+            }
+        }
+    }
+}

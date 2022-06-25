@@ -19,7 +19,6 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
@@ -118,8 +117,7 @@ public class EFloorWorkshop extends ElfEdificeFloor {
 		}
 		// 一排灶台
 		IBlockState HEARTH = ESInit.BLOCKS.HEARTH.getDefaultState();
-		IBlockState SMELT_BOX = ESInit.BLOCKS.SMELT_BOX.getDefaultState().withProperty(BlockSmeltBox.FACING,
-				toward);
+		IBlockState SMELT_BOX = ESInit.BLOCKS.SMELT_BOX.getDefaultState().withProperty(BlockSmeltBox.FACING, toward);
 		{
 			int size = GenElfEdifice.getFakeCircleLen(treeSize, treeSize + 1, 2) - 1;
 			for (int i = -size; i <= size; i++) {
@@ -184,11 +182,8 @@ public class EFloorWorkshop extends ElfEdificeFloor {
 		BuilderHelper helper = new BuilderHelper(builder);
 		TileElfTreeCore core = helper.treeCore();
 		if (core == null) return;
-		World world = builder.getWorld();
 		EFloorHall.trySpawnElf(builder, ElfProfession.BUILDER, 2);
-		// 刷点任务
-		EntityBulletin bulletin = core.getBulletin();
-		if (bulletin == null || bulletin.getQuestCount() > core.getMaxQuestCount()) return;
-		Random rand = world.rand;
+		World world = core.getWorld();
+		this.trySpawnQuest(builder, 24000 * 2 + world.rand.nextInt(24000 * 2));
 	}
 }

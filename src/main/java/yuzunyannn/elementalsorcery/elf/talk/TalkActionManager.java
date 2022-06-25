@@ -9,9 +9,9 @@ import net.minecraftforge.fml.common.ModContainer;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
-public class TalkActionManage {
+public class TalkActionManager {
 
-	static public final TalkActionManage instance = new TalkActionManage();
+	static public final TalkActionManager instance = new TalkActionManager();
 
 	private Map<ResourceLocation, ActionFactory> map = new HashMap<>();
 

@@ -6,6 +6,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -24,7 +25,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ESData;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
+import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
@@ -188,22 +191,26 @@ public class EntityItemGoods extends Entity {
 
 	public boolean steal(EntityLivingBase player) {
 		int price = this.getPrice();
+		ItemStack stack = getItem();
 		if (price < 160) {
-			if (price / 160.0 < rand.nextDouble()) {
-				player.sendMessage(new TextComponentTranslation("elf.red.label.merchant.not.notice")
-						.setStyle(new Style().setColor(TextFormatting.GRAY)));
+			if (price == 0 || Math.max(0.2, price / 160.0) < rand.nextDouble()) {
+				player.sendMessage(
+						new TextComponentTranslation("elf.red.label.merchant.not.notice", stack.getDisplayName())
+								.setStyle(new Style().setColor(TextFormatting.GRAY)));
 				return true;
 			}
 		}
 		IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
 		if (adventurer == null) return false;
 		float fameDrop = (float) (Math.pow(price / 512.0, 1.1) + price / 1024.0);
-		adventurer.fame(-fameDrop);
+		if (fameDrop > 0.5f) fameDrop = 0.5f + fameDrop / 10f;
+		ElfConfig.changeFame(player, -fameDrop);
 		adventurer.incurDebts(price);
-		player.sendMessage(
-				new TextComponentTranslation("elf.red.label.merchant.notice", String.format("%.2f", fameDrop),
-						String.valueOf(price)).setStyle(new Style().setColor(TextFormatting.GRAY)));
-
+		player.sendMessage(new TextComponentTranslation("elf.red.label.merchant.notice", stack.getDisplayName(),
+				String.format("%.2f", fameDrop), String.valueOf(price))
+						.setStyle(new Style().setColor(TextFormatting.GRAY)));
+		if (player instanceof EntityPlayerMP)
+			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "elf:debtor");
 		return true;
 	}
 

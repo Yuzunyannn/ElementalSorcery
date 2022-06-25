@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.elf.quest;
 
+import net.minecraft.entity.EntityLivingBase;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 
 public interface IAdventurer extends Iterable<Quest> {
@@ -36,4 +37,10 @@ public interface IAdventurer extends Iterable<Quest> {
 
 	/** 获取负债值，最小为0 */
 	public int getDebts();
+
+	public void setDebts(int count);
+
+	default public void onUpdate(EntityLivingBase entity) {
+
+	}
 }

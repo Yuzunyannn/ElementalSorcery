@@ -10,6 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
+import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionEnd;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionGoTo;
@@ -85,7 +86,7 @@ public class ElfProfessionScholar extends ElfProfessionUndetermined {
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TalkChapter chapter = new TalkChapter();
-		if (ElfProfessionReceptionist.isSuperDishonest(player))
+		if (ElfConfig.isSuperDishonest(player))
 			return chapter.addScene(new TalkSceneSay("say.dishonest.not.say"));
 		TalkSceneSay scene = new TalkSceneSay();
 		chapter.addScene(scene);

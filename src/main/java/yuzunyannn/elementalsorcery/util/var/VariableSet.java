@@ -10,6 +10,7 @@ import java.util.function.BiFunction;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -76,18 +77,6 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		return (T) obj;
 	}
 
-	@Nullable
-	public Object ask(String name) {
-		return map.get(new Variable<Object>(name, null));
-	}
-
-	@Nullable
-	public Object ask(String name, Class<?> cls) {
-		Object obj = ask(name);
-		if (obj != null && cls.isAssignableFrom(obj.getClass())) return obj;
-		return null;
-	}
-
 	public boolean has(Variable<?> var) {
 		if (map.containsKey(var)) return true;
 		return nbt == null ? false : nbt.hasKey(var.name);
@@ -99,6 +88,18 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 			nbt.removeTag(var.name);
 			if (nbt.isEmpty()) nbt = null;
 		}
+	}
+
+	@Nullable
+	public Object ask(String name) {
+		return map.get(new Variable<Object>(name, null));
+	}
+
+	@Nullable
+	public Object ask(String name, Class<?> cls) {
+		Object obj = ask(name);
+		if (obj != null && cls.isAssignableFrom(obj.getClass())) return obj;
+		return null;
 	}
 
 	public boolean isEmpty() {
@@ -154,6 +155,10 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 	public final static IVariableType<LinkedList<ElementStack>> ELEMENT_LINKED_LIST = new VTVTLinkedList<>(ELEMENT);
 	public final static IVariableType<ArrayList<ElementStack>> ELEMENT_ARRAY_LIST = new VTVTArrayList<>(ELEMENT);
 
+	public final static IVariableType<ItemStack> ITEM = new VTItem();
+	public final static IVariableType<LinkedList<ItemStack>> ITEM_LINKED_LIST = new VTVTLinkedList<>(ITEM);
+	public final static IVariableType<ArrayList<ItemStack>> ITEM_ARRAY_LIST = new VTVTArrayList<>(ITEM);
+
 	public final static IVariableType<BlockPos> BLOCK_POS = new VTBlockPos();
 	public final static IVariableType<LinkedList<BlockPos>> BLOCK_POS_LINKED_LIST = new VTVTLinkedList<>(BLOCK_POS);
 	public final static IVariableType<ArrayList<BlockPos>> BLOCK_POS_ARRAY_LIST = new VTVTArrayList<>(BLOCK_POS);
@@ -165,4 +170,5 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 	public final static IVariableType<UUID> UUID = new VTUUID();
 	public final static IVariableType<TradeCount> TRADE_COUNT_OBJ = new VTTradeCount();
 	public final static IVariableType<ElfMerchantType> ELF_MERCHANT_TYPE = new VTElfMerchantType();
+
 }

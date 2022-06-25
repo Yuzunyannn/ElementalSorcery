@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.container.ContainerFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.FairyCubeModule;
 import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeModuleClient;
-import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
+import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 
@@ -176,9 +176,8 @@ public class GuiFairyCube extends GuiScreen {
 					nS = 0;
 					nV = 1;
 				} else {
-					int color = module.getStatusColor(status);
-					Vec3d c = ColorHelper.color(color);
-					Vec3d hsvColor = ColorHelper.rgbToHSV((float) c.x, (float) c.y, (float) c.z);
+					Color c = new Color(module.getStatusColor(status));
+					Vec3d hsvColor = c.toHSV();
 					nH = (float) hsvColor.x - 155.54347f;
 					nS = (float) hsvColor.y / 0.8598131f;
 					nV = (float) hsvColor.z / 0.8392157f;

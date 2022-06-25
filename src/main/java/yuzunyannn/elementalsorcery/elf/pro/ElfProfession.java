@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
@@ -17,13 +18,22 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.block.BlockElfFruit;
+import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
+import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
+import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeList;
@@ -35,6 +45,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 
@@ -61,6 +72,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	static public final ElfProfession POSTMAN = new ElfProfessionPostman();
 	static public final ElfProfession RESEARCHER = new ElfProfessionResearcher();
 	static public final ElfProfession SCHOLAR_ADV = new ElfProfessionScholarAdv();
+	static public final ElfProfession DEBT_COLLECTOR = new ElfProfessionDebtCollector();
 
 	protected String unlocalizedName;
 
@@ -111,6 +123,41 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 		}
 	}
 
+	public void dropFewItems(EntityElfBase elf, boolean wasRecentlyHit, int lootingModifier) {
+		Random rand = elf.getRNG();
+		if (rand.nextInt(100) < 50) return;
+		int i = rand.nextInt(3);
+		if (lootingModifier > 0) i += rand.nextInt(lootingModifier + 1);
+		for (int j = 0; j < i; ++j) {
+			if (rand.nextInt(3) == 0) elf.entityDropItem(new ItemStack(ESInit.ITEMS.ELF_COIN, rand.nextInt(8) + 2), 0);
+			else elf.entityDropItem(new ItemStack(ESInit.BLOCKS.ELF_FRUIT, 1, BlockElfFruit.MAX_STATE), 0);
+		}
+	}
+
+	/** 当被杀，onDead后调用，TrueSource一定是EntityLivingBase */
+	public void onBeKilled(EntityElfBase elf, DamageSource ds) {
+		EntityLivingBase player = (EntityLivingBase) ds.getTrueSource();
+		World world = elf.world;
+		IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+		if (adventurer == null) return;
+		final int size = 16;
+		AxisAlignedBB aabb = WorldHelper.createAABB(player.getPosition(), size, size, size);
+		List<EntityElf> list = world.getEntitiesWithinAABB(EntityElf.class, aabb, (e) -> {
+			if (e.isDeading()) return false;
+			if (!e.canEntityBeSeen(player)) return false;
+			Vec3d look = e.getLookVec();
+			Vec3d vec = player.getPositionEyes(0).subtract(e.getPositionEyes(0));
+			double cos = look.dotProduct(vec) / (look.length() * vec.length());
+			return cos > 0;
+		});
+		if (list.size() > 0) {
+			float point = 0.1f * list.size();
+			ElfConfig.changeFame(player, -point);
+			player.sendMessage(new TextComponentTranslation("info.fame.decline", String.valueOf(list.size()),
+					String.format("%.1f", point)).setStyle(new Style().setColor(TextFormatting.DARK_RED)));
+		}
+	}
+
 	/** 是否会自动删除 */
 	public boolean canDespawn(EntityElfBase elf) {
 		return false;
@@ -129,6 +176,10 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	public boolean needPickup(EntityElfBase elf, ItemStack stack) {
 		return stack.getItem() == Item.getItemFromBlock(ESInit.BLOCKS.ELF_FRUIT)
 				|| stack.getItem() == ESInit.ITEMS.ELF_COIN;
+	}
+
+	public void onPickupItem(EntityElfBase elf, EntityItem itemEntity) {
+
 	}
 
 	/** 获取攻击的目标 */

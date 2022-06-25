@@ -16,7 +16,7 @@ public class VTVTLinkedList<T> implements IVariableType<LinkedList<T>> {
 
 	@Override
 	public LinkedList<T> newInstance(NBTBase base) {
-		if (base.getId() == NBTTag.TAG_LIST) {
+		if (base != null && base.getId() == NBTTag.TAG_LIST) {
 			NBTTagList array = (NBTTagList) base;
 			LinkedList<T> list = new LinkedList<T>();
 			for (NBTBase b : array) list.add(type.newInstance(b));

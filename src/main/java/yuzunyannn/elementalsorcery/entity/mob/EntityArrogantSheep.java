@@ -52,6 +52,7 @@ import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -112,6 +113,16 @@ public class EntityArrogantSheep extends EntityMob {
 				if (getHealth() <= 0) BlockGoatGoldBrick.tryWitherGoatGoldBrickArea(world, this.getPosition(), true);
 				if (rand.nextFloat() < 0.25f) dyingSay();
 			}
+			return;
+		}
+
+		if (world.isAirBlock(new BlockPos(this.posX, this.posY - 0.2, this.posZ))) {
+			List<EntityPlayer> list = getPlayerInMaze(true);
+			for (EntityPlayer player : list) player.sendMessage(createSheepSay("say.arrogantSheep.escape"));
+			BlockGoatGoldBrick.tryWitherGoatGoldBrickArea(world, this.getPosition(), true);
+			NBTTagCompound nbt = FireworkEffect.fastNBT(10, 2, 0.1f, new int[] { 0xf8d302, 0xfff03d }, new int[] {});
+			Effects.spawnEffect(world, Effects.FIREWROK, this.getPositionVector().add(0, this.height / 2, 0), nbt);
+			this.setDead();
 			return;
 		}
 

@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.elf.pro;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
@@ -14,6 +13,7 @@ import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.QuestStatus;
 import yuzunyannn.elementalsorcery.elf.talk.ITalkAction;
+import yuzunyannn.elementalsorcery.elf.talk.TalkActionChapterTo;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionEnd;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionGoTo;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
@@ -24,6 +24,7 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
@@ -133,7 +134,11 @@ public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 		chapter.addScene(what);
 		what.addString("say.take.quest", new TalkActionGoTo("howTQ"));
 		if (core.getFloorCount() > 1) what.addString("say.want.go.upstair", new TalkActionGoTo("howGS"));
-		what.addString("say.fame.query", new TalkActionGoTo("fameQuery"));
+		if (adventurer != null) {
+			what.addString("say.fame.query", new TalkActionChapterTo(v -> this.createQueryFame(elf, player)));
+			if (adventurer.getDebts() > 0)
+				what.addString("say.debt.pay", new TalkActionChapterTo(v -> this.createPayDebtChapter(elf, player)));
+		}
 		what.addString("say.no", new TalkActionEnd());
 		// 接任务指导
 		TalkSceneSay howTQ = new TalkSceneSay().setLabel("howTQ");
@@ -141,15 +146,6 @@ public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 		howTQ.addString("say.how.take.quest", Talker.OPPOSING);
 		howTQ.addString("say.very.thank", Talker.PLAYER);
 		howTQ.addAction(new TalkActionEnd());
-		// 信用查询
-		if (adventurer != null) {
-			TalkSceneSay fameQuery = new TalkSceneSay().setLabel("fameQuery");
-			chapter.addScene(fameQuery);
-			fameQuery.addString("#say.fame.query.result?" + adventurer.getFame(), Talker.OPPOSING);
-			if (adventurer.getFame() < 0) fameQuery.addString("say.fame.query.result.low", Talker.OPPOSING);
-			fameQuery.addString("say.very.thank", Talker.PLAYER);
-			fameQuery.addAction(new TalkActionEnd());
-		}
 		// 电梯指导
 		TalkSceneSay howGS = new TalkSceneSay().setLabel("howGS");
 		chapter.addScene(howGS);
@@ -159,22 +155,41 @@ public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 		return chapter;
 	}
 
-	public static float getPlayerFame(EntityLivingBase player) {
+	public TalkChapter createQueryFame(EntityElfBase elf, EntityPlayer player) {
+		TalkChapter chapter = new TalkChapter();
+		TalkSceneSay fameQuery = new TalkSceneSay();
+		chapter.addScene(fameQuery);
 		IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
-		if (adventurer == null) return 1;
-		return adventurer.getFame();
+		if (adventurer != null) {
+			fameQuery.addString("#say.fame.query.result?" + adventurer.getFame(), Talker.OPPOSING);
+			if (adventurer.getFame() < 0) fameQuery.addString("say.fame.query.result.low", Talker.OPPOSING);
+		}
+		fameQuery.addString("say.very.thank", Talker.PLAYER);
+		fameQuery.addAction(new TalkActionEnd());
+		return chapter;
 	}
 
-	public static boolean isDishonest(EntityLivingBase player) {
-		return getPlayerFame(player) < 0;
-	}
-
-	public static boolean isVeryDishonest(EntityLivingBase player) {
-		return getPlayerFame(player) < -8;
-	}
-
-	public static boolean isSuperDishonest(EntityLivingBase player) {
-		return getPlayerFame(player) < -16;
+	public TalkChapter createPayDebtChapter(EntityElfBase elf, EntityPlayer player) {
+		TalkChapter chapter = new TalkChapter();
+		IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+		if (adventurer != null) {
+			chapter.addScene(new TalkSceneSay("#say.debt.pay.check?" + adventurer.getDebts(), Talker.OPPOSING));
+			TalkSceneSelect confirm = new TalkSceneSelect();
+			chapter.addScene(confirm);
+			confirm.addString("say.ok", new TalkActionChapterTo(v -> {
+				TalkChapter chapterPay = new TalkChapter();
+				int payDebts = adventurer.getDebts();
+				int pay = payDebts - ItemElfPurse.extract(player.inventory, payDebts, false);
+				if (pay > 0) {
+					adventurer.incurDebts(-pay);
+					payDebts = adventurer.getDebts();
+					chapterPay.addScene(new TalkSceneSay("#say.debt.pay.do?" + pay + "&" + payDebts));
+				} else chapterPay.addScene(new TalkSceneSay("say.nomoney"));
+				return chapterPay;
+			}));
+			confirm.addString("say.no", new TalkActionEnd());
+		}
+		return chapter;
 	}
 
 	/** 确认接任务 */

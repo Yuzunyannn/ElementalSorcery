@@ -20,6 +20,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
+import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionToGui;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
@@ -80,7 +81,7 @@ public class ElfProfessionPostman extends ElfProfessionUndetermined {
 
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
-		if (ElfProfessionReceptionist.isSuperDishonest(player))
+		if (ElfConfig.isSuperDishonest(player))
 			return new TalkChapter().addScene(new TalkSceneSay("say.dishonest.not.service"));
 		if (shiftData != null) return ElfProfessionPostReceptionist.getChapterForSendParcel(elf, player, shiftData);
 		TalkChapter chapter = new TalkChapter();

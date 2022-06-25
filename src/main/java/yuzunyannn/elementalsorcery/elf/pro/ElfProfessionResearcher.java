@@ -16,6 +16,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorLaboratory;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
@@ -69,7 +70,7 @@ public class ElfProfessionResearcher extends ElfProfession {
 		TileElfTreeCore core = elf.getEdificeCore();
 		TalkChapter chapter = new TalkChapter();
 		if (core == null) return chapter.addScene(new TalkSceneSay("say.edifice.broken"));
-		if (ElfProfessionReceptionist.isVeryDishonest(player))
+		if (ElfConfig.isVeryDishonest(player))
 			return chapter.addScene(new TalkSceneSay("say.dishonest.not.say"));
 		ItemStack stack = player.getHeldItemMainhand();
 		if (stack.getItem() == ESInit.ITEMS.ANCIENT_PAPER) {
