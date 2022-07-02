@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:elf/public_enemy",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:elf_diamond"
+        },
+        "title": {
+            "translate": "es.adv.restoreFame.title"
+        },
+        "description": {
+            "translate": "es.adv.restoreFame.description"
+        }
+    },
+    "criteria": {
+        "string": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "elf:restoreFame"
+            }
+        }
+    }
+}

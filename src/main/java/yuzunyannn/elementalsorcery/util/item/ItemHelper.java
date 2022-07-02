@@ -18,6 +18,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -117,6 +118,10 @@ public class ItemHelper {
 
 	static public void addItemStackToPlayer(EntityPlayer player, ItemStack stack) {
 		if (stack.isEmpty()) return;
+		if (player.getHeldItemMainhand().isEmpty()) {
+			player.setHeldItem(EnumHand.MAIN_HAND, stack);
+			return;
+		}
 		if (player.inventory.addItemStackToInventory(stack)) return;
 		player.dropItem(stack, false);
 	}

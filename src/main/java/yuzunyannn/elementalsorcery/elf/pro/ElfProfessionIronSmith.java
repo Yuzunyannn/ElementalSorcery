@@ -54,17 +54,19 @@ public class ElfProfessionIronSmith extends ElfProfession {
 
 	@Override
 	public boolean interact(EntityElfBase elf, EntityPlayer player) {
-		openTalkGui(player, elf);
+		elf.openTalkGui(player);
 		return true;
 	}
 
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
+		TalkChapter superChapter = super.getChapter(elf, player, shiftData);
+		if (superChapter != null) return superChapter;
+		
 		TileElfTreeCore core = elf.getEdificeCore();
 		TalkChapter chapter = new TalkChapter();
 		if (core == null) return chapter.addScene(new TalkSceneSay("say.edifice.broken"));
-		if (ElfConfig.isVeryDishonest(player))
-			return chapter.addScene(new TalkSceneSay("say.dishonest.not.say"));
+		if (ElfConfig.isVeryDishonest(player)) return chapter.addScene(new TalkSceneSay("say.dishonest.not.say"));
 		chapter.addScene(new TalkSceneSay("say.ironsmith.info"));
 		return chapter;
 	}

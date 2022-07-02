@@ -45,12 +45,15 @@ public class ElfProfessionReceptionist extends ElfProfessionNPCBase {
 
 	@Override
 	public boolean interact(EntityElfBase elf, EntityPlayer player) {
-		openTalkGui(player, elf);
+		elf.openTalkGui(player);
 		return true;
 	}
 
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
+		TalkChapter superChapter = super.getChapter(elf, player, shiftData);
+		if (superChapter != null) return superChapter;
+		
 		TileElfTreeCore core = elf.getEdificeCore();
 		TalkChapter chapter = new TalkChapter();
 

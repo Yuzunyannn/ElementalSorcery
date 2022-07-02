@@ -26,15 +26,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import yuzunyannn.elementalsorcery.ESData;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
-import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
+import yuzunyannn.elementalsorcery.elf.talk.TalkActionEnd;
+import yuzunyannn.elementalsorcery.elf.talk.TalkActionGoTo;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
+import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
+import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
+import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.entity.EntityItemGoods;
@@ -55,6 +57,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 
 	public static final Variable<Integer> REMAIN_TICK = new Variable("remainTick", VariableSet.INT);
 	public static final Variable<ElfMerchantType> M_TYPE = new Variable("mType", VariableSet.ELF_MERCHANT_TYPE);
+	public static final Variable<NBTTagCompound> MEET = new Variable("meet", VariableSet.NBT_TAG);
 
 	public static final ESImplRegister<ElfProfession> REGISTRY = new ESImplRegister(ElfProfession.class);
 
@@ -151,7 +154,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 			return cos > 0;
 		});
 		if (list.size() > 0) {
-			float point = 0.1f * list.size();
+			float point = 0.2f * list.size();
 			ElfConfig.changeFame(player, -point);
 			player.sendMessage(new TextComponentTranslation("info.fame.decline", String.valueOf(list.size()),
 					String.format("%.1f", point)).setStyle(new Style().setColor(TextFormatting.DARK_RED)));
@@ -226,6 +229,11 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	 * @return ture表示启动交互，false表示没有交互
 	 */
 	public boolean interact(EntityElfBase elf, EntityPlayer player) {
+		ItemStack stack = player.getHeldItemMainhand();
+		if (stack.getItem() == ESInit.ITEMS.ELF_DIAMOND) {
+			elf.openTalkGui(player);
+			return true;
+		}
 		return false;
 	}
 
@@ -236,6 +244,26 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	 */
 	@Nullable
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, @Nullable NBTTagCompound shiftData) {
+		if (shiftData != null) return null;
+		if (ElfConfig.isPublicEnemy(player)) {
+			TalkChapter chapter = new TalkChapter();
+			return chapter;
+		}
+		ItemStack stack = player.getHeldItemMainhand();
+		if (stack.getItem() == ESInit.ITEMS.ELF_DIAMOND) {
+			TalkChapter chapter = new TalkChapter();
+			chapter.addScene(new TalkSceneSay("say.elf.is.get.present", Talker.OPPOSING));
+			TalkSceneSelect select = new TalkSceneSelect();
+			select.addString("say.ok", (p, e, c, i, s, t) -> {
+				elf.givePresent(player, stack.splitStack(1));
+				TalkActionGoTo.goTo("thank", chapter, s, i);
+				return true;
+			});
+			select.addString("say.no", new TalkActionEnd());
+			chapter.addScene(select);
+			chapter.addScene(new TalkSceneSay("say.very.thank", Talker.OPPOSING).setLabel("thank"));
+			return chapter;
+		}
 		return null;
 	}
 
@@ -271,15 +299,6 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	@Nonnull
 	public ModelBase getModel(EntityElfBase elf) {
 		return RenderEntityElf.MODEL;
-	}
-
-	protected void openTalkGui(EntityPlayer player, EntityElfBase elf) {
-		if (player.world.isRemote) return;
-		NBTTagCompound nbt = ESData.getRuntimeData(player);
-		nbt.setInteger("elfId", elf.getEntityId());
-		nbt.removeTag("shiftData");
-		player.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_ELF_TALK, player.world, 0, 0, 0);
-		elf.getNavigator().clearPath();
 	}
 
 }

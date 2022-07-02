@@ -71,7 +71,7 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 				int stock = trade.stock(i);
 				if (stock <= 0) continue;
 				ItemStack c = trade.commodity(i);
-				if (ItemStack.areItemsEqual(c, stack)) {
+				if (ItemHelper.isItemMatch(c, stack)) {
 					int count = Math.min(stack.getCount(), stock);
 					trade.reclaim(i, count);
 					ItemElfPurse.insert(player, count * trade.cost(i));

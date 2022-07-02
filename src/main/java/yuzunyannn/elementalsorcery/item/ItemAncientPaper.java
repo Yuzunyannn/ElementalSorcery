@@ -210,8 +210,8 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		AncientPaper ap = new AncientPaper(stack);
+		if (ap.getProgress() < 1) tooltip.add(TextFormatting.DARK_AQUA + I18n.format("info.ancientPaper.unknow"));
 		if (ap.isLocked()) {
-			tooltip.add(TextFormatting.DARK_AQUA + I18n.format("info.ancientPaper.unknow"));
 			float rogress = ap.getProgress();
 			if (rogress > 0 || stack.getMetadata() == EnumType.UNSCRAMBLE.getMetadata())
 				tooltip.add(I18n.format("info.ancientPaper.progress", String.format("%.2f%%", rogress * 100)));
@@ -258,7 +258,6 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 			knowledge.setCount(count + (int) (count * 2 * (1 - ap.getProgress())));
 			estacks[0].grow(knowledge);
 		}
-
 		return ToElementInfoStatic.create(8, estacks);
 	}
 

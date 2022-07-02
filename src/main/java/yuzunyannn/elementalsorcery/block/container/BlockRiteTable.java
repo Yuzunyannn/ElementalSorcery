@@ -31,14 +31,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.ESCreativeTabs;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
-import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
-import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.ItemMerchantInvitation;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
-import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class BlockRiteTable extends BlockContainerNormal {
 
@@ -198,21 +194,8 @@ public class BlockRiteTable extends BlockContainerNormal {
 		}
 		if (merchantInvitation.isEmpty()) return;
 		if (price < random.nextInt(100) + 50);
-
-		AxisAlignedBB aabb = WorldHelper.createAABB(pos, 12, 4, 4);
-		List<EntityElfBase> merchants = WorldHelper.getElfWithAABB(worldIn, aabb, ElfProfession.MERCHANT);
-		if (merchants.size() >= 3) return;
-
-		BlockPos spawnPos = WorldHelper.tryFindPlaceToSpawn(worldIn, random, pos, 4);
-		if (spawnPos == null) return;
-		IBlockState spawState = worldIn.getBlockState(spawnPos);
-
-		EntityElfBase elf = new EntityElfTravelling(worldIn);
-		elf.setPosition(spawnPos.getX() + 0.5, spawnPos.getY() + 1, spawnPos.getZ() + 0.5);
-		if (!spawState.canEntitySpawn(elf)) return;
-
-		ElfProfessionMerchant.setRemainTimeBeforeLeave(elf, (int) (20 * 60 * (2 + random.nextFloat() * 8)));
-		worldIn.spawnEntity(elf);
+		((ItemMerchantInvitation) merchantInvitation.getItem()).tryGenMerchant(merchantInvitation, worldIn, pos,
+				random);
 
 	}
 }

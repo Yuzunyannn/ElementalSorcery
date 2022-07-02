@@ -35,6 +35,8 @@ import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 
+	public static final int UPGRADE_ADDRESS_PLATE_COST = 2000;
+
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
 		super.initElf(elf, origin);
@@ -49,7 +51,7 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 
 	@Override
 	public boolean interact(EntityElfBase elf, EntityPlayer player) {
-		openTalkGui(player, elf);
+		elf.openTalkGui(player);
 		return true;
 	}
 
@@ -70,7 +72,9 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 			chapter.addScene(new TalkSceneSay("say.submit.empty"));
 			return chapter;
 		}
-		int needMoney = 50 + items.size() * 20;
+		int _needMoney = 50 + items.size() * 20;
+		if (ElfConfig.isVeryHonest(player)) _needMoney = (int) (_needMoney * 0.5f);
+		int needMoney = _needMoney;
 		chapter.addScene(new TalkSceneSay("#say.send.mail.money?" + needMoney));
 		// 确认
 		TalkSceneSelect confirm = new TalkSceneSelect();
@@ -156,13 +160,15 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 
 	/** 创建升级地址牌 */
 	public static void addChapterForUpgradeAddressPlate(TalkChapter chapter, EntityElfBase elf, EntityPlayer player) {
+		int needMoney = (int) (ElfConfig.isVeryHonest(player) ? UPGRADE_ADDRESS_PLATE_COST * 0.5f
+				: UPGRADE_ADDRESS_PLATE_COST);
 		// 升级
-		chapter.addScene(new TalkSceneSay("#say.upgrade.help?1000").setLabel("upgrade"));
+		chapter.addScene(new TalkSceneSay("#say.upgrade.help?" + needMoney).setLabel("upgrade"));
 		// 确认
 		TalkSceneSelect confirm = new TalkSceneSelect();
 		chapter.addScene(confirm);
 		confirm.addString("say.ok", (p, e, c, i, s, t) -> {
-			int rest = ItemElfPurse.extract(player.inventory, 1000, true);
+			int rest = ItemElfPurse.extract(player.inventory, needMoney, true);
 			if (rest > 0) {
 				TalkActionGoTo.goTo("nomoney", chapter, s, i);
 				return false;
@@ -174,8 +180,8 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 			stack = stack.splitStack(1);
 			stack = postOffice.changeAddressPlate(player, stack);
 			ElfPostOffice.addAddressPlateServiceCount(stack, 10);
-			player.inventory.addItemStackToInventory(stack);
-			ItemElfPurse.extract(player.inventory, 1000, false);
+			ItemHelper.addItemStackToPlayer(player, stack);
+			ItemElfPurse.extract(player.inventory, needMoney, false);
 			TalkActionGoTo.goTo("applySuccess", c, s, i);
 			if (player instanceof EntityPlayerMP)
 				ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "post:upgrade");
@@ -226,6 +232,9 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
+		TalkChapter superChapter = super.getChapter(elf, player, shiftData);
+		if (superChapter != null) return superChapter;
+		
 		TileElfTreeCore core = elf.getEdificeCore();
 		if (core == null) return new TalkChapter().addScene(new TalkSceneSay("say.edifice.broken"));
 		if (ElfConfig.isSuperDishonest(player))

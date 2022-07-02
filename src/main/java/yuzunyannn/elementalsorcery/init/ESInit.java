@@ -222,6 +222,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemDejectedTear;
 import yuzunyannn.elementalsorcery.item.prop.ItemDreadGem;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementCrack;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementStone;
+import yuzunyannn.elementalsorcery.item.prop.ItemElfDiamond;
 import yuzunyannn.elementalsorcery.item.prop.ItemFairyCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemFusionCrystal;
 import yuzunyannn.elementalsorcery.item.prop.ItemIceRockChip;
@@ -384,8 +385,8 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.render.WorldScene;
 import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.var.Variables;
 import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.util.var.Variables;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 
 public class ESInit {
@@ -620,6 +621,7 @@ public class ESInit {
 		ITEMS.VOID_FRAGMENT = new ItemVoidFragment();
 		ITEMS.VOID_CONTAINER = new ItemVoidContainer();
 		ITEMS.VOID_CONTAINER_ELEMENT = new ItemVoidContainerElement();
+		ITEMS.ELF_DIAMOND = new ItemElfDiamond();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1077,7 +1079,8 @@ public class ESInit {
 		registerRender(ITEMS.VOID_FRAGMENT);
 		registerRender(ITEMS.VOID_CONTAINER);
 		registerRender(ITEMS.VOID_CONTAINER_ELEMENT);
-
+		registerRender(ITEMS.ELF_DIAMOND);
+		
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");
 		for (ItemKeepsake.EnumType keepsakeType : ItemKeepsake.EnumType.values())

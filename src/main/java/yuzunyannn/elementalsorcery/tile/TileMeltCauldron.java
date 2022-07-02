@@ -105,8 +105,8 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 		iceRockSpar.addResult(3.0f, new ItemStack(ESInit.ITEMS.ICE_ROCK_SPAR, 6));
 		iceRockSpar.addResult(10.0f, new ItemStack(ESInit.ITEMS.INVERT_GEM, 1));
 		recipes.add(iceRockSpar);
-		
-		MeltCauldronRecipe voidContainer  = new MeltCauldronRecipe();
+
+		MeltCauldronRecipe voidContainer = new MeltCauldronRecipe();
 		voidContainer.setMagicStoneCount(9);
 		voidContainer.add(new ItemStack(ESInit.ITEMS.VOID_FRAGMENT, 9));
 		voidContainer.add(new ItemStack(ESInit.ITEMS.JUMP_GEM, 6));
@@ -115,6 +115,13 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 		voidContainer.addResult(8.0f, new ItemStack(ESInit.ITEMS.VOID_FRAGMENT, 8));
 		recipes.add(voidContainer);
 
+		MeltCauldronRecipe elfDiamond = new MeltCauldronRecipe();
+		elfDiamond.setMagicStoneCount(2);
+		elfDiamond.add(new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 64));
+		elfDiamond.add(new ItemStack(Items.DIAMOND, 64));
+		elfDiamond.addResult(2.0f, new ItemStack(ESInit.ITEMS.ELF_DIAMOND, 1));
+		elfDiamond.addResult(12.0f, new ItemStack(Blocks.DIAMOND_BLOCK, 4));
+		recipes.add(elfDiamond);
 	}
 
 	static public boolean readJson(JsonObject json) {

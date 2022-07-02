@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:elf/dishonest",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:elf_fruit_bomb"
+        },
+        "title": {
+            "translate": "es.adv.elfPublicEnemy.title"
+        },
+        "description": {
+            "translate": "es.adv.elfPublicEnemy.description"
+        }
+    },
+    "criteria": {
+        "string": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "elf:publicEnemy"
+            }
+        }
+    }
+}

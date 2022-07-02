@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
@@ -14,13 +15,14 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.block.BlockElfFruit;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
@@ -33,10 +35,18 @@ import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.ItemMerchantInvitation;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper.WeightRandom;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.var.VariableSet;
 
 public class ElfProfessionMerchant extends ElfProfessionUndetermined {
+
+	public static final float MERCHANT_GIFT_CHANCE_WHEN_VH = 0.25f;
+	public static final int MERCHANT_GIFT_MAX_VALUE = 2500;
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
@@ -75,7 +85,7 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 
 	@Override
 	public boolean interact(EntityElfBase elf, EntityPlayer player) {
-		openTalkGui(player, elf);
+		elf.openTalkGui(player);
 		return true;
 	}
 
@@ -105,9 +115,7 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 		// 判断是否要离开
 		ItemStack stack = elf.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
 		if (stack.getItem() == ESInit.ITEMS.SPELLBOOK) {
-			elf.setDead();
-			elf.world.playSound(null, elf.posX, elf.posY, elf.posZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT,
-					SoundCategory.HOSTILE, 1, 1);
+			elf.leave();
 			return;
 		}
 
@@ -159,13 +167,84 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
-		TalkChapter chapter = new TalkChapter();
+		TalkChapter superChapter = super.getChapter(elf, player, shiftData);
+		if (superChapter != null) return superChapter;
+
 		if (ElfConfig.isVeryDishonest(player))
-			return chapter.addScene(new TalkSceneSay("say.merchant.dishonest", Talker.OPPOSING));
+			return new TalkChapter().addScene(new TalkSceneSay("say.merchant.dishonest", Talker.OPPOSING));
+		if (ElfConfig.isVeryHonest(player)) proceed: {
+			double n = EntityHelper.getChanceFrom2UUID(elf.getUniqueID(), player.getUniqueID());
+			if (n <= MERCHANT_GIFT_CHANCE_WHEN_VH) {
+				VariableSet storage = elf.getProfessionStorage();
+				NBTTagCompound meetNBT = storage.get(MEET);
+				if (meetNBT.hasKey(player.getName())) break proceed;
+				meetNBT.setBoolean(player.getName(), true);
+				ElfMerchantType merchantType = storage.get(M_TYPE);
+				Trade trade = merchantType.getTrade(storage);
+				if (trade != null) return getGiftChapter(elf, player, trade);
+			}
+		}
+		TalkChapter chapter = new TalkChapter();
 		TalkSceneSay scene = new TalkSceneSay();
 		chapter.addScene(scene);
 		scene.addString("say.merchant.good.goods", Talker.OPPOSING);
 		scene.addAction(new TalkActionToGui(ESGuiHandler.GUI_ELF_TRADE));
+		return chapter;
+	}
+
+	public TalkChapter getGiftChapter(EntityElfBase elf, EntityPlayer player, Trade trade) {
+		TalkChapter chapter = new TalkChapter();
+		TalkSceneSay scene = new TalkSceneSay();
+		chapter.addScene(scene);
+		scene.addString("say.merchant.give.gift", Talker.OPPOSING);
+		scene.addString("say.very.thank", Talker.PLAYER);
+		scene.addAction((p, e, c, i, s, t) -> {
+			int totalCost = 1;
+			int size = trade.getTradeListSize();
+			WeightRandom<Integer> wr = new WeightRandom();
+			for (int n = 0; n < size; n++) {
+				TradeList.TradeInfo info = trade.getTradeInfo(n);
+				if (info.isReclaim()) continue;
+				if (trade.stock(n) <= 0) continue;
+				if (info.getCost() > MERCHANT_GIFT_MAX_VALUE) continue;
+				totalCost += info.getCost();
+			}
+			for (int n = 0; n < size; n++) {
+				TradeList.TradeInfo info = trade.getTradeInfo(n);
+				if (info.isReclaim()) continue;
+				if (trade.stock(n) <= 0) continue;
+				if (info.getCost() > MERCHANT_GIFT_MAX_VALUE) continue;
+				wr.add(n, totalCost - info.getCost());
+			}
+			wr.add(-1, totalCost * 0.05);
+			wr.add(-2, totalCost * 0.05);
+			wr.add(-2, totalCost * 0.02);
+			int n = wr.get();
+			switch (n) {
+			case -1:
+				ItemHelper.addItemStackToPlayer(p, new ItemStack(ESInit.BLOCKS.ELF_FRUIT,
+						RandomHelper.rand.nextInt(8) + 8, BlockElfFruit.MAX_STATE));
+				break;
+			case -2:
+				ItemHelper.addItemStackToPlayer(p,
+						new ItemStack(ESInit.ITEMS.RESONANT_CRYSTAL, RandomHelper.rand.nextInt(4) + 2));
+				break;
+			case -3:
+				VariableSet storage = elf.getProfessionStorage();
+				ElfMerchantType merchantType = storage.get(M_TYPE);
+				ItemHelper.addItemStackToPlayer(p,
+						ItemMerchantInvitation.createInvitationWithMerchantType(merchantType));
+				break;
+			default:
+				TradeList.TradeInfo info = trade.getTradeInfo(n);
+				ItemHelper.addItemStackToPlayer(p, info.getCommodity().copy());
+				trade.sell(n, 1);
+				break;
+			}
+			if (player instanceof EntityPlayerMP)
+				ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "elf:gift");
+			return true;
+		});
 		return chapter;
 	}
 

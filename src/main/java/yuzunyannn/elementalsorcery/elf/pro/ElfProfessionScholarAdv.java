@@ -60,6 +60,9 @@ public class ElfProfessionScholarAdv extends ElfProfessionScholar {
 
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
+		TalkChapter superChapter = super.getChapter(elf, player, shiftData);
+		if (superChapter != null) return superChapter;
+		
 		TileElfTreeCore core = elf.getEdificeCore();
 		if (core == null) return new TalkChapter().addScene(new TalkSceneSay("say.edifice.broken"));
 		if (ElfConfig.isSuperDishonest(player))

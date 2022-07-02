@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.util.helper;
 
 import java.io.IOException;
+import java.util.UUID;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -17,7 +18,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 public class EntityHelper {
 
 	public static final DataSerializer<Integer> DS_INT = new DataSerializer<Integer>() {
-		
+
 		public void write(PacketBuffer buf, Integer value) {
 			buf.writeInt(value);
 		}
@@ -34,6 +35,15 @@ public class EntityHelper {
 			return value;
 		}
 	};
+
+	static public double getChanceFromUUID(UUID uuid) {
+		return (Math.abs(uuid.getLeastSignificantBits() * (uuid.getMostSignificantBits() + 37)) % 100000) / 100000.0;
+	}
+
+	static public double getChanceFrom2UUID(UUID uuid1, UUID uuid2) {
+		return (Math.abs(uuid1.getLeastSignificantBits() * (uuid2.getMostSignificantBits() + 25601)) % 100000)
+				/ 100000.0;
+	}
 
 	static public boolean isCreative(Entity entity) {
 		if (entity instanceof EntityPlayer) {

@@ -7,6 +7,7 @@ import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.item.prop.ItemElfDiamond;
 
 public class ESObjects {
 
@@ -123,6 +124,7 @@ public class ESObjects {
 		public Item VOID_FRAGMENT;
 		public Item VOID_CONTAINER;
 		public Item VOID_CONTAINER_ELEMENT;
+		public Item ELF_DIAMOND;
 	}
 
 	static public class Blocks {

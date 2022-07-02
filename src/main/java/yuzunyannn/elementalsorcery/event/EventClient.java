@@ -16,6 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.EntityViewRenderEvent.FogColors;
+import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderWorldLastEvent;
 import net.minecraftforge.client.event.sound.PlaySoundEvent;
@@ -215,6 +216,11 @@ public class EventClient {
 	static public void drawTooltip(ItemTooltipEvent event) {
 		ItemRiteManual.drawTooltip(event);
 		drawDebugTooltip(event);
+	}
+
+	@SubscribeEvent
+	static public void playerInputHandler(InputUpdateEvent evt) {
+		
 	}
 
 	static public void drawDebugTooltip(ItemTooltipEvent event) {

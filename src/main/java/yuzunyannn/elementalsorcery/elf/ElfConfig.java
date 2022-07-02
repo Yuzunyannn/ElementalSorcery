@@ -13,8 +13,18 @@ public class ElfConfig {
 		if (adventurer == null) return;
 		adventurer.fame(count);
 		if (player instanceof EntityPlayerMP) {
-			if (isVeryDishonest(player)) ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "elf:dishonest");
+			if (count < 0) {
+				if (isPublicEnemy(player)) ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "elf:publicEnemy");
+				else if (isVeryDishonest(player))
+					ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "elf:dishonest");
+			}
 		}
+	}
+
+	public static boolean isVeryHonest(EntityLivingBase player) {
+		IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+		if (adventurer == null) return false;
+		return adventurer.getFame() >= 100 && adventurer.getDebts() == 0;
 	}
 
 	public static boolean isDishonest(EntityLivingBase player) {
@@ -27,6 +37,10 @@ public class ElfConfig {
 
 	public static boolean isSuperDishonest(EntityLivingBase player) {
 		return ElfConfig.getPlayerFame(player) < -16;
+	}
+
+	public static boolean isPublicEnemy(EntityLivingBase player) {
+		return ElfConfig.getPlayerFame(player) <= -100;
 	}
 
 	public static float getPlayerFame(EntityLivingBase player) {

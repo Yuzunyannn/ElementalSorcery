@@ -81,7 +81,7 @@ public class EntityRegistries {
 			int add = 0;
 			if (num > 0) add = (int) MathHelper.sqrt(num) / 2;
 			Biome biome = entry.getKey();
-			registerEntitySpawn(EntityElfTravelling.class, 3 + num, 1, 1 + add, EnumCreatureType.CREATURE, biome);
+			registerEntitySpawn(EntityElfTravelling.class, 2 + num, 1, 1 + add, EnumCreatureType.CREATURE, biome);
 		}
 		register(2, "relicZombie", EntityRelicZombie.class, "RelicZombie", 64, 3, true);
 		registerEgg("relicZombie", 0x00a3a3, 0x529b3d);

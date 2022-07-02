@@ -17,6 +17,11 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public class DamageHelper {
 
+	public static boolean isRuleDamage(DamageSource ds) {
+		if (ds.canHarmInCreative()) return ds.getTrueSource() == null;
+		return false;
+	}
+
 	/** 通用的，魔法伤害 */
 	public static DamageSource getMagicDamageSource(@Nullable Entity source, @Nullable Entity directSource) {
 		if (directSource == null && source == null)

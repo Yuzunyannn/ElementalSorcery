@@ -656,6 +656,11 @@
 			"zh_CN": "虚空元素容器",
 			"en_US": "Element Void Container",
 			"ja_JP": "元素の虚空コンテナ"
+		},
+		"item.elfDiamond.name": {
+			"zh_CN": "精灵钻石",
+			"en_US": "Elf Diamond",
+			"ja_JP": "精霊ダイヤモンド"
 		}
 	},
 	"tile": {
@@ -2450,6 +2455,11 @@
 			"zh_CN": "你对精灵的暴行被%s个精灵看到了，信誉下降了%s",
 			"en_US": "Your atrocities against Elves were seen by %s elves, Fame decreased %s point",
 			"ja_JP": "精霊に対する暴行は%sの精霊に見られしまた、信用が%s下がった"
+		},
+		"info.elf.diamond" :{
+			"zh_CN": "非常昂贵的钻石，除此之外没有啥其他价值，精灵们会非常喜欢它",
+			"en_US": "A very expensive diamond has no other value. Elves love it very much",
+			"ja_JP": "非常に高価なダイヤモンドで、それ以外に価値はありません。精霊たちはそれが大好きそうです"
 		}
 	},
 	"lev": {
@@ -2759,7 +2769,7 @@
 			"ja_JP": "わからない"
 		},
 		"say.ok": {
-			"zh_CN": "好的",
+			"zh_CN": "嗯",
 			"en_US": "Ok",
 			"ja_JP": "はい"
 		},
@@ -2767,6 +2777,11 @@
 			"zh_CN": "我在考虑一下",
 			"en_US": "Let me think",
 			"ja_JP": "もう少し考えてみます"
+		},
+		"say.elf.is.get.present": {
+			"zh_CN": "这是给我的吗？真是太开心了！",
+			"en_US": "Is this for me? How happy!",
+			"ja_JP": "これは私にくれたのですか？本当に楽しかったです！"
 		},
 		"say.dishonest.not.service": {
 			"zh_CN": "您的信誉过低，无法为您提供服务",
@@ -2817,6 +2832,11 @@
 			"zh_CN": "我无法和失信者交易",
 			"en_US": "I can't deal with dishonest people.",
 			"ja_JP": "信頼できない人と取引できません"
+		},
+		"say.merchant.give.gift": {
+			"zh_CN": "很高兴见到你，这是我的一点心意希望你喜欢，日后合作愉快",
+			"en_US": "Nice to meet you. This is a small gift, I hope you like it. I look forward to a smooth cooperation.",
+			"ja_JP": "お会いできて嬉しいです。これ、つまらないものですが、よかったら受け取ってください、楽しい協力になるよう期待しております。"
 		},
 		"say.builder.working": {
 			"zh_CN": "我正在工作...",
@@ -5561,36 +5581,65 @@
 			"en_US": "Put your Grimoire to Transcribe Square Table",
 			"ja_JP": "拿着你的魔典，放在撰录方桌上！"
 		},
-		"es.adv.elfDebtor.title":{
+		"es.adv.elfDebtor.title": {
 			"zh_CN": "欠债人",
 			"en_US": "Debtor",
 			"ja_JP": "借金人"
 		},
-		"es.adv.elfDebtor.description":{
+		"es.adv.elfDebtor.description": {
 			"zh_CN": "被商会发现了拿走的商人掉落商品",
 			"en_US": "Taking away Merchant's dropped goods were found by the Elven chamber of Commerce",
 			"ja_JP": "商会に商人の落とし物を持って行ったことが発見された"
 		},
-		"es.adv.elfDeepInDebt.title":{
+		"es.adv.elfDeepInDebt.title": {
 			"zh_CN": "债台高筑",
 			"en_US": "Deep In Debt",
 			"ja_JP": "借金が嵩む"
 		},
-		"es.adv.elfDeepInDebt.description":{
+		"es.adv.elfDeepInDebt.description": {
 			"zh_CN": "巨额欠债引来了追债人",
 			"en_US": "Huge debt, debt collectors coming",
 			"ja_JP": "多額の借金が借金取り人を引き付けてしまった"
 		},
-		"es.adv.elfDishonest.title":{
+		"es.adv.elfDishonest.title": {
 			"zh_CN": "精灵的厌恶",
 			"en_US": "Elves's detestation",
 			"ja_JP": "精霊の嫌悪"
 		},
-		"es.adv.elfDishonest.description":{
+		"es.adv.elfDishonest.description": {
 			"zh_CN": "做出较多减少信誉的事情",
 			"en_US": "Do many wicked things to elf",
 			"ja_JP": "信用を減らすことを多くする"
+		},
+		"es.adv.elfFriend.title": {
+			"zh_CN": "精灵之友",
+			"en_US": "Friends of Elves",
+			"ja_JP": "精霊の友"
+		},
+		"es.adv.elfFriend.description": {
+			"zh_CN": "在很高的信誉和没有负债的条件下，受到精灵商人的礼物",
+			"en_US": "High Fame and no debt, receiving gift from Elf Merchant.",
+			"ja_JP": "高い信用と負債なしの条件下で、精霊商人から贈り物を受けた"
+		},
+		"es.adv.elfPublicEnemy.title": {
+			"zh_CN": "精灵公敌",
+			"en_US": "Public Enemy of Elves",
+			"ja_JP": "精霊の公敵"
+		},
+		"es.adv.elfPublicEnemy.description": {
+			"zh_CN": "我超勇的",
+			"en_US": "Very brave proposal",
+			"ja_JP": "いいでしょう"
+		},
+		"es.adv.restoreFame.title": {
+			"zh_CN": "还有机会？",
+			"en_US": "Is there still a chance?",
+			"ja_JP": "まだチャンスはありますか"
+		},
+		"es.adv.restoreFame.description": {
+			"zh_CN": "重获精灵的信任",
+			"en_US": "Regain Fame",
+			"ja_JP": "精霊の信頼を取り戻す"
 		}
 	}
-
 }

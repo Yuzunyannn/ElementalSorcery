@@ -53,12 +53,12 @@ public class ModelElf extends ModelBiped {
 		bipedRightLeg = new ModelRenderer(this);
 		bipedRightLeg.setRotationPoint(-2.5F, 13.5F, 0.0F);
 		bipedRightLeg.cubeList.add(new ModelBox(bipedRightLeg, 0, 52, -2.0F, -1.5F, -2.0F, 4, 12, 4, 0.0F, false));
-		bipedRightLeg.cubeList.add(new ModelBox(bipedRightLeg, 18, 54, -2.5F, 4.5F, -2.5F, 5, 6, 5, 0.0F, false));
+		bipedRightLeg.cubeList.add(new ModelBox(bipedRightLeg, 18, 54, -2.5F, 4.55F, -2.5F, 5, 6, 5, 0.0F, false));
 
 		bipedLeftLeg = new ModelRenderer(this);
 		bipedLeftLeg.setRotationPoint(2.5F, 13.5F, 0.0F);
 		bipedLeftLeg.cubeList.add(new ModelBox(bipedLeftLeg, 0, 52, -2.0F, -1.5F, -2.0F, 4, 12, 4, 0.0F, false));
-		bipedLeftLeg.cubeList.add(new ModelBox(bipedLeftLeg, 18, 54, -2.5F, 4.5F, -2.5F, 5, 6, 5, 0.0F, false));
+		bipedLeftLeg.cubeList.add(new ModelBox(bipedLeftLeg, 18, 54, -2.5F, 4.55F, -2.5F, 5, 6, 5, 0.0F, false));
 
 		bipedBody = new ModelRenderer(this);
 		bipedBody.setRotationPoint(0.0F, 7.5F, 0.0F);

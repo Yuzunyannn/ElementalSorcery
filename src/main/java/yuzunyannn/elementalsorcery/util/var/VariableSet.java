@@ -150,6 +150,9 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 	public final static IVariableType<Float> FLOAT = new VTPrimitive.VTFloat();
 	public final static IVariableType<Double> DOUBLE = new VTPrimitive.VTDouble();
 	public final static IVariableType<Boolean> BOOL = new VTBoolean();
+	public final static IVariableType<VariableSet> VAR_SET = new VTVariableSet();
+
+	public final static IVariableType<NBTTagCompound> NBT_TAG = new VTNBTTagCompound();
 
 	public final static IVariableType<ElementStack> ELEMENT = new VTElement();
 	public final static IVariableType<LinkedList<ElementStack>> ELEMENT_LINKED_LIST = new VTVTLinkedList<>(ELEMENT);

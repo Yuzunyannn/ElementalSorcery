@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:elf/elf_edifice",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:elf_star"
+        },
+        "title": {
+            "translate": "es.adv.elfFriend.title"
+        },
+        "description": {
+            "translate": "es.adv.elfFriend.description"
+        }
+    },
+    "criteria": {
+        "use": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "elf:gift"
+            }
+        }
+    }
+}

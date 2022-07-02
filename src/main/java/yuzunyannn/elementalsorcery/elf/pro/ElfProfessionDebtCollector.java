@@ -17,6 +17,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
@@ -35,6 +36,7 @@ import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.helper.Color;
+import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.var.VariableSet;
@@ -63,7 +65,8 @@ public class ElfProfessionDebtCollector extends ElfProfession {
 
 	@Override
 	public Float attackedFrom(EntityElfBase elf, DamageSource source, float amount) {
-		return super.attackedFrom(elf, source, amount);
+		if (DamageHelper.isRuleDamage(source)) return super.attackedFrom(elf, source, amount);
+		return super.attackedFrom(elf, source, MathHelper.sqrt(amount) / 8f);
 	}
 
 	@Override
@@ -157,7 +160,7 @@ public class ElfProfessionDebtCollector extends ElfProfession {
 			if (elf.getAttackTarget() != null)
 				elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(Items.FISHING_ROD));
 		}
-		if (hold.isEmpty()) elf.setDead();
+		if (hold.isEmpty()) elf.leave();
 		return true;
 	}
 

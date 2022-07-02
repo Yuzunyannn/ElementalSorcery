@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.block.BlockSealStone;
@@ -19,6 +20,13 @@ public class ElfMerchantTypeArchaeologist extends ElfMerchantTypeDefault {
 	public void renewTrade(World world, BlockPos pos, Random rand, VariableSet storage) {
 		TradeCount trade = new TradeCount();
 		addFavorite(trade, rand);
+
+		ItemStack stackAP = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, 0);
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setFloat("progress", 0);
+		stackAP.setTagCompound(nbt);
+		trade.addCommodity(stackAP, 1000, 16, true);
+
 		List<ItemStack> papers = new LinkedList<ItemStack>();
 		int totalPrice = 0;
 		for (int i = trade.getTradeListSize(); i < 18; i++) {

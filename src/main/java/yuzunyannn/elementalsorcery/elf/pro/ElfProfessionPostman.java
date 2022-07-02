@@ -75,12 +75,15 @@ public class ElfProfessionPostman extends ElfProfessionUndetermined {
 
 	@Override
 	public boolean interact(EntityElfBase elf, EntityPlayer player) {
-		openTalkGui(player, elf);
+		elf.openTalkGui(player);
 		return true;
 	}
 
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
+		TalkChapter superChapter = super.getChapter(elf, player, shiftData);
+		if (superChapter != null) return superChapter;
+		
 		if (ElfConfig.isSuperDishonest(player))
 			return new TalkChapter().addScene(new TalkSceneSay("say.dishonest.not.service"));
 		if (shiftData != null) return ElfProfessionPostReceptionist.getChapterForSendParcel(elf, player, shiftData);

@@ -14,6 +14,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
+import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.ai.EntityFlyHelper;
@@ -34,6 +35,7 @@ import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
@@ -41,9 +43,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.container.ESGuiHandler;
+import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -96,6 +105,8 @@ public abstract class EntityElfBase extends EntityCreature {
 		this.tasks.addTask(3, new EntityAIAttackElf(this));
 		this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false, new Class[0]));
 		this.targetTasks.addTask(3, new EntityAINearestAttackTarget(this));
+		this.targetTasks.addTask(5, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 10, true, false,
+				e -> ElfConfig.isPublicEnemy((EntityLivingBase) e)));
 	}
 
 	public void removeTask(Class<? extends EntityAIBase> cls) {
@@ -210,6 +221,15 @@ public abstract class EntityElfBase extends EntityCreature {
 		return this.getCustomNameTag();
 	}
 
+	public void openTalkGui(EntityPlayer player) {
+		if (player.world.isRemote) return;
+		NBTTagCompound nbt = ESData.getRuntimeData(player);
+		nbt.setInteger("elfId", this.getEntityId());
+		nbt.removeTag("shiftData");
+		player.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_ELF_TALK, player.world, 0, 0, 0);
+		this.getNavigator().clearPath();
+	}
+
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
 		if (hand != EnumHand.MAIN_HAND) return EnumActionResult.PASS;
@@ -218,6 +238,19 @@ public abstract class EntityElfBase extends EntityCreature {
 		if (this.getAttackTarget() == player) return EnumActionResult.FAIL;
 		ElfProfession pro = this.getProfession();
 		return pro.interact(this, player) ? EnumActionResult.SUCCESS : EnumActionResult.PASS;
+	}
+
+	public void givePresent(EntityLivingBase player, ItemStack stack) {
+		world.setEntityState(this, (byte) 18);
+		if (stack.getItem() == ESInit.ITEMS.ELF_DIAMOND) {
+			if (ElfConfig.isPublicEnemy(player)) {
+				ElfConfig.changeFame(player, -ElfConfig.getPlayerFame(player) / 2);
+				if (player instanceof EntityPlayerMP)
+					ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "elf:restoreFame");
+			} else if (ElfConfig.isDishonest(player)) ElfConfig.changeFame(player, 2f);
+			else ElfConfig.changeFame(player, 0.5f);
+			this.setAttackTarget(null);
+		}
 	}
 
 	/** 掉落一些物品 */
@@ -352,6 +385,12 @@ public abstract class EntityElfBase extends EntityCreature {
 		return flag;
 	}
 
+	public void leave() {
+		if (world.isRemote) return;
+		world.setEntityState(this, (byte) 19);
+		this.setDead();
+	}
+
 	@Override
 	public void onUpdate() {
 		try {
@@ -407,7 +446,25 @@ public abstract class EntityElfBase extends EntityCreature {
 		}
 	}
 
+	@SideOnly(Side.CLIENT)
+	public void handleStatusUpdate(byte id) {
+		if (id == 18) {
+			for (int i = 0; i < 7; ++i) {
+				double d0 = this.rand.nextGaussian() * 0.02D;
+				double d1 = this.rand.nextGaussian() * 0.02D;
+				double d2 = this.rand.nextGaussian() * 0.02D;
+				this.world.spawnParticle(EnumParticleTypes.HEART,
+						this.posX + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width,
+						this.posY + 0.5D + (double) (this.rand.nextFloat() * this.height),
+						this.posZ + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width, d0, d1,
+						d2);
+			}
+		} else if (id == 19) MantraEnderTeleport.addEffect(world, new Vec3d(posX, posY, posZ));
+		else super.handleStatusUpdate(id);
+	}
+
 	abstract public void tryHarvestBlock(BlockPos pos);
 
 	abstract public boolean tryPlaceBlock(BlockPos pos, IBlockState block);
+
 }

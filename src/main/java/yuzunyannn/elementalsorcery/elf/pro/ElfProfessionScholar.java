@@ -79,15 +79,17 @@ public class ElfProfessionScholar extends ElfProfessionUndetermined {
 
 	@Override
 	public boolean interact(EntityElfBase elf, EntityPlayer player) {
-		openTalkGui(player, elf);
+		elf.openTalkGui(player);
 		return true;
 	}
 
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
+		TalkChapter superChapter = super.getChapter(elf, player, shiftData);
+		if (superChapter != null) return superChapter;
+		
 		TalkChapter chapter = new TalkChapter();
-		if (ElfConfig.isSuperDishonest(player))
-			return chapter.addScene(new TalkSceneSay("say.dishonest.not.say"));
+		if (ElfConfig.isSuperDishonest(player)) return chapter.addScene(new TalkSceneSay("say.dishonest.not.say"));
 		TalkSceneSay scene = new TalkSceneSay();
 		chapter.addScene(scene);
 		String[] g = (String[]) RandomHelper.randomSelect(2, tips.toArray());

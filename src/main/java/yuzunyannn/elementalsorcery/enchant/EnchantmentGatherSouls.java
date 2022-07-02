@@ -1,7 +1,5 @@
 package yuzunyannn.elementalsorcery.enchant;
 
-import java.util.UUID;
-
 import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -45,9 +43,7 @@ public class EnchantmentGatherSouls extends EnchantmentES {
 		// 虚空碎片
 		if (living.world.provider.getDimensionType() == DimensionType.THE_END) {
 			if (EntityHelper.isEnder(living)) {
-				UUID uuid = living.getUniqueID();
-				long n = uuid.getLeastSignificantBits() * (uuid.getMostSignificantBits() + 37);
-				double a = Math.abs(n % 100000) / 100000.0;
+				double a = EntityHelper.getChanceFromUUID(living.getUniqueID());
 				if (a < 0.15 + 0.02 * level) {
 					living.dropItem(ESInit.ITEMS.VOID_FRAGMENT, 1);
 					return;

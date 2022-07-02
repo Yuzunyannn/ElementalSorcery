@@ -1,11 +1,14 @@
 package yuzunyannn.elementalsorcery.elf.pro;
 
 import net.minecraft.util.math.BlockPos;
+import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.entity.elf.EntityAIMoveToEntityItem;
 import yuzunyannn.elementalsorcery.entity.elf.EntityAIMoveToLookBlock;
 import yuzunyannn.elementalsorcery.entity.elf.EntityAIStrollAroundElfTree;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 /** 专指站着某个地点的npc */
 public class ElfProfessionNPCBase extends ElfProfession {
@@ -31,6 +34,20 @@ public class ElfProfessionNPCBase extends ElfProfession {
 			}
 			TileElfTreeCore core = elf.getEdificeCore();
 			if (core == null) elf.setDead();
+		}
+		if (elf.tick % 20 == 0) {
+			if (elf.getRevengeTarget() != null && ElfConfig.isPublicEnemy(elf.getRevengeTarget())) {
+				BlockPos pos = WorldHelper.tryFindPlaceToSpawn(elf.world, elf.getRNG(),
+						elf.getRevengeTarget().getPosition(), 2);
+				if (pos != null) {
+					EntityElfBase newElf = new EntityElf(elf.world);
+					newElf.setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
+					newElf.setRevengeTarget(elf.getRevengeTarget());
+					elf.world.spawnEntity(newElf);
+					elf.setRevengeTarget(null);
+					elf.leave();
+				}
+			}
 		}
 	}
 
