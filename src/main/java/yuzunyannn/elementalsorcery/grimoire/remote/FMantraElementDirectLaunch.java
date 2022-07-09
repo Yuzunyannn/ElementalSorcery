@@ -8,7 +8,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.util.WorldObjectBlock;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.element.ElementTransition;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.var.VariableSet;
@@ -29,9 +28,7 @@ public class FMantraElementDirectLaunch extends FMantraBase {
 		double fragment = 0;
 		int i = 0;
 		for (ElementStack estack : elements) {
-			double f = ElementHelper.toFragment(estack);
-			ElementTransition et = estack.getElement().getTransition();
-			if (et != null) f = ElementHelper.transitionFrom(estack.getElement(), f, et.getLevel());
+			double f = ElementHelper.toMagicFragment(estack);
 			this.proportionArray[i] = f;
 			this.elementArray[i] = estack.copy();
 			fragment = fragment + f;
@@ -65,6 +62,7 @@ public class FMantraElementDirectLaunch extends FMantraBase {
 			eStack.setPower((int) power);
 			parmas.set(Variables.getElementVar(eStack.getElement()), eStack);
 		}
+		parmas.set(MantraCommon.FRAGMENT, charge);
 		if (parmasGenerator != null) parmas = parmasGenerator.apply(charge, parmas);
 		if (parmas == null) return;
 		WorldObjectBlock wo = new WorldObjectBlock(world, pos);

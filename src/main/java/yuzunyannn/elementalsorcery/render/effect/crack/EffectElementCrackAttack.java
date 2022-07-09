@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.effect.grimoire;
+package yuzunyannn.elementalsorcery.render.effect.crack;
 
 import org.lwjgl.opengl.GL11;
 
@@ -12,7 +12,6 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectFacing;
 import yuzunyannn.elementalsorcery.render.item.RenderItemElementCrack;
 import yuzunyannn.elementalsorcery.util.helper.Color;
@@ -29,10 +28,9 @@ public class EffectElementCrackAttack extends Effect {
 	public static void endEffect(World world, Vec3d pos) {
 		final int[] COLORS = new int[] { 0xBFBFFF, 0xFFBFBF, 0xBFFFBF };
 		for (int i = 0; i < 256; i++) {
-			EffectElementMove effect = new EffectElementMove(world, pos);
+			EffectFragmentCrackMove effect = new EffectFragmentCrackMove(world, pos);
 			effect.lifeTime = 64;
-			effect.dalpha = 1f / effect.lifeTime;
-			effect.prevScale = effect.scale = 0.2f;
+			effect.prevScale = effect.scale = 0.1f;
 			int c = COLORS[i % COLORS.length];
 			effect.setColor(c);
 			float sin = MathHelper.sin(i * 3.1415926f / 64);
@@ -72,22 +70,16 @@ public class EffectElementCrackAttack extends Effect {
 
 	public EffectElementCrackAttack(World world, Vec3d pos) {
 		super(world, pos.x, pos.y, pos.z);
-		switch (rand.nextInt(3)) {
-		case 1:
-			color.setColor(0xBDBDFF);
-			break;
-		case 2:
-			color.setColor(0xFFBDBD);
-			break;
-		default:
-			color.setColor(0xBDFFBD);
-			break;
-		}
-
+		color.setColor(0xFFFFFF);
 		rotation = (float) (rand.nextGaussian() * 60);
 		prevVRate = vRate = 4;
 		prevAlpha = alpha = 1;
 		this.lifeTime = 20;
+	}
+
+	@Override
+	protected String myGroup() {
+		return EffectBlockConfusion.GROUP_CONFUSION;
 	}
 
 	@Override
@@ -116,38 +108,13 @@ public class EffectElementCrackAttack extends Effect {
 		double y = this.getRenderY(partialTicks);
 		double z = this.getRenderZ(partialTicks);
 
-		float a = RenderHelper.getPartialTicks(alpha, prevAlpha, partialTicks);
-
 		GlStateManager.disableBlend();
-		GlStateManager.color(1, 1, 1, 1);
-		RenderItemElementCrack.END_SKY_TEXTURE.bind();
+		net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
+
+		RenderItemElementCrack.bindCrackTexture();
 		GlStateManager.depthFunc(519);
-
-		GlStateManager.texGen(GlStateManager.TexGen.S, GL11.GL_EYE_LINEAR);
-		GlStateManager.texGen(GlStateManager.TexGen.T, GL11.GL_EYE_LINEAR);
-		GlStateManager.texGen(GlStateManager.TexGen.R, GL11.GL_EYE_LINEAR);
-
-		GlStateManager.texGen(GlStateManager.TexGen.S, GL11.GL_EYE_PLANE,
-				RenderItemElementCrack.getBuffer(1f, 0, 0, 0));
-		GlStateManager.texGen(GlStateManager.TexGen.T, GL11.GL_EYE_PLANE,
-				RenderItemElementCrack.getBuffer(0, 1f, 0, 0));
-		GlStateManager.texGen(GlStateManager.TexGen.R, GL11.GL_EYE_PLANE,
-				RenderItemElementCrack.getBuffer(0, 0, 1f, 0));
-
-		GlStateManager.enableTexGenCoord(GlStateManager.TexGen.S);
-		GlStateManager.enableTexGenCoord(GlStateManager.TexGen.T);
-		GlStateManager.enableTexGenCoord(GlStateManager.TexGen.R);
-
-		GlStateManager.getFloat(GL11.GL_MODELVIEW_MATRIX, RenderItemElementCrack.MODELVIEW);
-		GlStateManager.getFloat(GL11.GL_PROJECTION_MATRIX, RenderItemElementCrack.PROJECTION);
-
-		GlStateManager.matrixMode(GL11.GL_TEXTURE);
-		GlStateManager.pushMatrix();
-		GlStateManager.loadIdentity();
-		GlStateManager.scale(2, 2, 2);
-		GlStateManager.multMatrix(RenderItemElementCrack.PROJECTION);
-		GlStateManager.multMatrix(RenderItemElementCrack.MODELVIEW);
-
+		RenderItemElementCrack.startTexGen(2);
+		float a = RenderHelper.getPartialTicks(alpha, prevAlpha, partialTicks);
 		float v = RenderHelper.getPartialTicks(vRate, prevVRate, partialTicks);
 		float h = RenderHelper.getPartialTicks(hRate, prevHRate, partialTicks);
 
@@ -167,31 +134,18 @@ public class EffectElementCrackAttack extends Effect {
 		v3 = EffectFacing.rotate(v3, nor, rotation);
 		v4 = EffectFacing.rotate(v4, nor, rotation);
 
-		float r = color.r;
-		float g = color.g;
-		float b = color.b;
+		GlStateManager.color(1, 1, 1, a);
 
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
-		bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-		bufferbuilder.pos(x + v1.x, y + v1.y, z + v1.z).tex(0, 0);
-		bufferbuilder.color(r, g, b, a).endVertex();
-		bufferbuilder.pos(x + v2.x, y + v2.y, z + v2.z).tex(0, 1);
-		bufferbuilder.color(r, g, b, a).endVertex();
-		bufferbuilder.pos(x + v3.x, y + v3.y, z + v3.z).tex(1, 1);
-		bufferbuilder.color(r, g, b, a).endVertex();
-		bufferbuilder.pos(x + v4.x, y + v4.y, z + v4.z).tex(1, 0);
-		bufferbuilder.color(r, g, b, a).endVertex();
+		bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+		bufferbuilder.pos(x + v1.x, y + v1.y, z + v1.z).tex(0, 0).endVertex();
+		bufferbuilder.pos(x + v2.x, y + v2.y, z + v2.z).tex(0, 1).endVertex();
+		bufferbuilder.pos(x + v3.x, y + v3.y, z + v3.z).tex(1, 1).endVertex();
+		bufferbuilder.pos(x + v4.x, y + v4.y, z + v4.z).tex(1, 0).endVertex();
 		tessellator.draw();
-
-		GlStateManager.popMatrix();
-		GlStateManager.matrixMode(GL11.GL_MODELVIEW);
-
-		GlStateManager.disableTexGenCoord(GlStateManager.TexGen.S);
-		GlStateManager.disableTexGenCoord(GlStateManager.TexGen.T);
-		GlStateManager.disableTexGenCoord(GlStateManager.TexGen.R);
-
+		RenderItemElementCrack.endTexGen();
 		GlStateManager.depthFunc(515);
-		GlStateManager.enableBlend();
+
 	}
 }

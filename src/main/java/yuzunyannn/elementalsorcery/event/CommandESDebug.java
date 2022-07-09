@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -22,6 +21,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -36,7 +36,10 @@ import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
+import yuzunyannn.elementalsorcery.grimoire.mantra.crack.MantraCrackOpen;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.crack.EffectCylinderCrackBlast;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -51,7 +54,7 @@ public class CommandESDebug {
 		case "reloadShader": {
 			Minecraft.getMinecraft().addScheduledTask(() -> {
 				try {
-					Shaders.ErrorCode.reload();
+					Shaders.ElementSky.reload();
 				} catch (Exception e) {
 					ElementalSorcery.logger.warn(e);
 				}
@@ -119,6 +122,8 @@ public class CommandESDebug {
 				return;
 			case "textTest": {
 
+				MantraCrackOpen.attack(entity.world, pos, 48, entity, 0, true);
+
 //				for (int i = 0; i < 32; i++) {
 //					EntityItemGoods goods = new EntityItemGoods(entity.world,
 //							new Vec3d(pos.up(5)).add(RandomHelper.rand.nextDouble() * 5, RandomHelper.rand.nextDouble(),
@@ -127,14 +132,20 @@ public class CommandESDebug {
 //					goods.setPrice(RandomHelper.rand.nextInt(1000));
 //					entity.world.spawnEntity(goods);
 //				}
+//
+//				if (entity instanceof EntityPlayerMP) {
+//					EntityPlayerMP player = (EntityPlayerMP) entity;
+//					player.capabilities.allowFlying = true;
+//					player.capabilities.isFlying = false;
+//					player.sendPlayerAbilities();
+//					player.setElytraFlying();
+//				}
 
-				if (entity instanceof EntityPlayerMP) {
-					EntityPlayerMP player = (EntityPlayerMP) entity;
-					player.capabilities.allowFlying = true;
-					player.capabilities.isFlying = false;
-					player.sendPlayerAbilities();
-					player.setElytraFlying();
-				}
+//				EffectFragmentCrackMove.spawnBoom(Minecraft.getMinecraft().world, new Vec3d(pos.up()), 0xffffff, 2);
+
+				EffectCylinderCrackBlast effect = new EffectCylinderCrackBlast(Minecraft.getMinecraft().world,
+						new Vec3d(pos.up()));
+				Effect.addEffect(effect);
 
 //				IFragmentMantraLauncher is = ESInit.MANTRAS.BLOCK_CRASH.getFragmentMantraLaunchers().get(0);
 //				VariableSet content = new VariableSet();

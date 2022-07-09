@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.effect.grimoire;
+package yuzunyannn.elementalsorcery.render.effect.crack;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectListBufferConfusion;
+import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class EffectItemConfusion extends Effect {
@@ -19,11 +19,6 @@ public class EffectItemConfusion extends Effect {
 	public EntityItem entityItem;
 	public ItemStack stack = ItemStack.EMPTY;
 	public float scale = 1;
-
-	static {
-		@SuppressWarnings("unused")
-		EffectListBufferConfusion elist = EffectBlockConfusion.effectConfusion;
-	}
 
 	public EffectItemConfusion(World world, Vec3d pos, ItemStack stack) {
 		super(world, pos.x, pos.y, pos.z);
@@ -74,6 +69,9 @@ public class EffectItemConfusion extends Effect {
 		GlStateManager.scale(scale, scale, scale);
 		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
 		GlStateManager.popMatrix();
+
+		net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
+		RenderHelper.disableLightmap(true);
 	}
 
 }

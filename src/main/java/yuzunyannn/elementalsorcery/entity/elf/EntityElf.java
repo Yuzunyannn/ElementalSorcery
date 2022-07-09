@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.elf.AutoName;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
 
@@ -30,7 +29,7 @@ public class EntityElf extends EntityElfBase {
 //			Random merchantRandom = ElfProfession.getRandomFromName(getCustomNameTag());
 //			getProfessionStorage().set(ElfProfession.M_TYPE, ElfMerchantType.getRandomMerchantType(merchantRandom));
 //			this.getProfessionStorage().set(ElfProfession.M_TYPE, ElfMerchantType.getMerchantType("ancient"));
-//			this.setProfession(ElfProfession.MERCHANT);
+			this.setProfession(ElfProfession.MERCHANT);
 //			this.setProfession(ElfProfession.DEBT_COLLECTOR);
 			return;
 		}

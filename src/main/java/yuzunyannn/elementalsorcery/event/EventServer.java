@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -104,6 +105,8 @@ public class EventServer {
 
 	static private final List<ITickTask> tickList = new LinkedList<ITickTask>();
 	static private final Map<Integer, List<IWorldTickTask>> worldTickMapList = new HashMap<>();
+	static private final Map<Integer, List<IWorldTickTask>> worldTickMapListCache = new HashMap<>();
+	static private boolean isRunningWorldTick = false;
 
 	/** 添加一个服务端的tick任务 */
 	static public void addTickTask(ITickTask task) {
@@ -140,8 +143,9 @@ public class EventServer {
 	static public void addWorldTickTask(World world, IWorldTickTask task) {
 		if (task == null) return;
 		int id = world.provider.getDimension();
-		List<IWorldTickTask> tasks = worldTickMapList.get(id);
-		if (tasks == null) worldTickMapList.put(id, tasks = new LinkedList<>());
+		Map<Integer, List<IWorldTickTask>> toMap = isRunningWorldTick ? worldTickMapListCache : worldTickMapList;
+		List<IWorldTickTask> tasks = toMap.get(id);
+		if (tasks == null) toMap.put(id, tasks = new LinkedList<>());
 		tasks.add(task);
 	}
 
@@ -183,6 +187,7 @@ public class EventServer {
 		List<IWorldTickTask> tasks = worldTickMapList.get(id);
 
 		if (tasks != null) {
+			isRunningWorldTick = true;
 			Iterator<IWorldTickTask> iter = tasks.iterator();
 			while (iter.hasNext()) {
 				IWorldTickTask task = iter.next();
@@ -196,6 +201,15 @@ public class EventServer {
 				}
 			}
 			if (tasks.isEmpty()) worldTickMapList.remove(id);
+			isRunningWorldTick = false;
+			if (!worldTickMapListCache.isEmpty()) {
+				for (Entry<Integer, List<IWorldTickTask>> entry : worldTickMapListCache.entrySet()) {
+					List<IWorldTickTask> toList = worldTickMapList.get(entry.getKey());
+					if (toList == null) worldTickMapList.put(entry.getKey(), entry.getValue());
+					else toList.addAll(entry.getValue());
+				}
+				worldTickMapListCache.clear();
+			}
 		}
 	}
 

@@ -244,7 +244,11 @@ public class RenderHelper {
 	}
 
 	public static void renderOffscreenTexture128(Consumer<Void> render) {
-		getFrameBuff128().bindFrame(false);
+		renderOffscreenTexture128(render, getFrameBuff128());
+	}
+
+	public static void renderOffscreenTexture128(Consumer<Void> render, Framebuffer buffer) {
+		buffer.bindFrame(false);
 
 		net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
 
@@ -268,7 +272,7 @@ public class RenderHelper {
 		GlStateManager.popMatrix();
 
 		net.minecraft.client.renderer.RenderHelper.enableStandardItemLighting();
-		getFrameBuff128().unbindFrame();
+		buffer.unbindFrame();
 	}
 
 }

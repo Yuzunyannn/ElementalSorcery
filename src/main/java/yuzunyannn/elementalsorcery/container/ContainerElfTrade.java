@@ -82,6 +82,7 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 				}
 			}
 			super.putStack(stack);
+			detectAndSendChanges();
 		}
 
 	}

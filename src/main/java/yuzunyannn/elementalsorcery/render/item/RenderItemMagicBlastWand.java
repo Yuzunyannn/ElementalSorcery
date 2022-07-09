@@ -11,13 +11,20 @@ import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 public class RenderItemMagicBlastWand implements IRenderItem {
 
 	public static final ModelMagicBlastWand MODEL = new ModelMagicBlastWand();
-	public static final TextureBinder TEXTURE = new TextureBinder("textures/items/magic_blast_wand.png");
+	public static final TextureBinder TEXTURE_B = new TextureBinder("textures/items/magic_blast_wand.png");
+	public static final TextureBinder TEXTURE_C = new TextureBinder("textures/items/collapse_wand.png");
+
+	final TextureBinder texture;
+
+	public RenderItemMagicBlastWand(boolean iscollapse) {
+		texture = iscollapse ? TEXTURE_C : TEXTURE_B;
+	}
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 		GlStateManager.pushMatrix();
 		GlStateManager.disableCull();
-		TEXTURE.bind();
+		texture.bind();
 
 		if (IRenderItem.isGUI(stack)) {
 

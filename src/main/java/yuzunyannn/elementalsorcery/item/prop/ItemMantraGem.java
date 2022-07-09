@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.item.prop;
 
 import java.util.List;
 
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -42,7 +41,7 @@ public class ItemMantraGem extends Item {
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		Mantra mantra = getMantraFromMantraGem(stack);
 		if (mantra == null) return;
-		tooltip.add(TextFormatting.AQUA + I18n.format(mantra.getTranslationKey() + ".name"));
+		tooltip.add(TextFormatting.AQUA + mantra.getDisplayName());
 	}
 
 }

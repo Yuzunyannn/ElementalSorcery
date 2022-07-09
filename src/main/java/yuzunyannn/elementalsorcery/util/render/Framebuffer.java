@@ -20,6 +20,11 @@ public class Framebuffer {
 		this.useDepth = useDepth;
 	}
 
+	public Framebuffer(net.minecraft.client.shader.Framebuffer buffer) {
+		this.buffer = buffer;
+		this.useDepth = this.buffer.useDepth;
+	}
+
 	public void resize(int width, int height) {
 		if (buffer == null) buffer = new net.minecraft.client.shader.Framebuffer(width, height, useDepth);
 		else {

@@ -1,0 +1,50 @@
+{
+	"pattern": [
+		"ACA",
+		"RMR",
+		"AEA",
+		"    ",
+		" PP ",
+		" PP ",
+		"    "
+	],
+	"key": {
+		"M": "elementalsorcery:magic_blast_wand",
+		"C": "elementalsorcery:collapse",
+		"E": "elementalsorcery:element_stone",
+		"A": "elementalsorcery:azure_crystal",
+		"P": "minecraft:ender_pearl",
+		"R": {
+			"id": "elementalsorcery:mantra_gem",
+			"nbt": {
+				"mantraGemId": "elementalsorcery:launch_ede"
+			}
+		}
+	},
+	"element": [
+		{
+			"id": "ender",
+			"size": 2048,
+			"power": 600
+		},
+		{
+			"id": "fire",
+			"size": 128,
+			"power": 400
+		},
+		{
+			"id": "knowledge",
+			"size": 32,
+			"power": 425
+		},
+		{
+			"id": "star",
+			"size": 32,
+			"power": 333
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:collapse_wand",
+		"count": 1
+	}
+}

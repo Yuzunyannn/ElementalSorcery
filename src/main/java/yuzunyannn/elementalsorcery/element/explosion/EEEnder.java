@@ -23,8 +23,8 @@ public class EEEnder extends ElementExplosion {
 		IBlockState state = world.getBlockState(pos);
 		if (state.getMaterial() == Material.AIR) return;
 		float size = this.size * 1.5f;
-		BlockPos at = new BlockPos(new Vec3d(pos).add(size * rand.nextGaussian(), size * rand.nextGaussian(),
-				size * rand.nextGaussian()));
+		BlockPos at = new BlockPos(
+				new Vec3d(pos).add(size * rand.nextGaussian(), size * rand.nextGaussian(), size * rand.nextGaussian()));
 		if (world.isRemote) {
 			spawnEffectFromBlock(pos);
 			return;
@@ -57,7 +57,7 @@ public class EEEnder extends ElementExplosion {
 			EntityLivingBase living = (EntityLivingBase) entity;
 			if (power / 12 < living.getMaxHealth()) return;
 		} else if (entity instanceof EntityItem) {
-			
+			if (entity.getIsInvulnerable()) return;
 		} else return;
 
 		float size = this.size * 2f * sizeModifier;

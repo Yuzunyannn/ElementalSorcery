@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/supreme_table",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:disintegrate_stela"
+        },
+        "title": {
+            "translate": "es.adv.fastDisintegrate.title"
+        },
+        "description": {
+            "translate": "es.adv.fastDisintegrate.description"
+        }
+    },
+    "criteria": {
+        "use": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "use:disintegrate"
+            }
+        }
+    }
+}

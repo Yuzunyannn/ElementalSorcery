@@ -16,8 +16,8 @@ import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectScreenProgress;
 import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.var.Variables;
 import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.util.var.Variables;
 
 public class MantraDataCommon implements IMantraData {
 
@@ -148,11 +148,11 @@ public class MantraDataCommon implements IMantraData {
 		return progress;
 	}
 
-	public void setProgress(float progress) {
-		this.progress = progress;
+	public void setProgress(double progress) {
+		this.progress = (float) progress;
 	}
 
-	public void setProgress(float now, float total) {
+	public void setProgress(double now, double total) {
 		this.setProgress(Math.min(now / total, 1));
 	}
 

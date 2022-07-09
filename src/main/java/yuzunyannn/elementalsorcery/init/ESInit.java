@@ -174,6 +174,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSlowFall;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSprint;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraTimeHourglass;
+import yuzunyannn.elementalsorcery.grimoire.mantra.crack.MantraCrackOpen;
 import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemAppleCandy;
@@ -216,6 +217,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemArrogantWool;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJade;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.item.prop.ItemCalamityGem;
+import yuzunyannn.elementalsorcery.item.prop.ItemCollapse;
 import yuzunyannn.elementalsorcery.item.prop.ItemController;
 import yuzunyannn.elementalsorcery.item.prop.ItemCubeCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemDejectedTear;
@@ -246,6 +248,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemVoidContainerElement;
 import yuzunyannn.elementalsorcery.item.prop.ItemVoidFragment;
 import yuzunyannn.elementalsorcery.item.prop.ItemVortex;
 import yuzunyannn.elementalsorcery.item.prop.ItemWindmillBladeFrame;
+import yuzunyannn.elementalsorcery.item.tool.ItemCollapseWand;
 import yuzunyannn.elementalsorcery.item.tool.ItemCubeDemarcator;
 import yuzunyannn.elementalsorcery.item.tool.ItemDragonBreathPickaxe;
 import yuzunyannn.elementalsorcery.item.tool.ItemKyaniteTools;
@@ -622,6 +625,8 @@ public class ESInit {
 		ITEMS.VOID_CONTAINER = new ItemVoidContainer();
 		ITEMS.VOID_CONTAINER_ELEMENT = new ItemVoidContainerElement();
 		ITEMS.ELF_DIAMOND = new ItemElfDiamond();
+		ITEMS.COLLAPSE = new ItemCollapse();
+		ITEMS.COLLAPSE_WAND = new ItemCollapseWand();
 
 		ITEMS.GRIMOIRE = new ItemGrimoire();
 		ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -663,6 +668,8 @@ public class ESInit {
 		MANTRAS.TIME_HOURGLASS = new MantraTimeHourglass();
 		MANTRAS.ELEMENT_WHIRL = new MantraElementWhirl();
 		MANTRAS.LASER = new MantraLaser();
+
+		MANTRAS.ECRACK_OPEN = new MantraCrackOpen();
 
 		MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);
 		MANTRAS.LAUNCH_EDE = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT, 0xff4a1a);
@@ -1030,7 +1037,7 @@ public class ESInit {
 		registerRender(ITEMS.ELEMENT_STONE);
 		registerRender(ITEMS.LIFE_LEATHER, 0, "life_leather_incomplete");
 		registerRender(ITEMS.LIFE_LEATHER, 1, "life_leather");
-		registerRender(ITEMS.MAGIC_BLAST_WAND, new RenderItemMagicBlastWand());
+		registerRender(ITEMS.MAGIC_BLAST_WAND, new RenderItemMagicBlastWand(false));
 		registerRender(ITEMS.SOUL_KILLER_SWORD);
 		registerRender(ITEMS.SCAPEGOAT);
 		registerRender(ITEMS.MAGIC_CORE);
@@ -1080,7 +1087,9 @@ public class ESInit {
 		registerRender(ITEMS.VOID_CONTAINER);
 		registerRender(ITEMS.VOID_CONTAINER_ELEMENT);
 		registerRender(ITEMS.ELF_DIAMOND);
-		
+		registerRender(ITEMS.COLLAPSE);
+		registerRender(ITEMS.COLLAPSE_WAND, new RenderItemMagicBlastWand(true));
+
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");
 		for (ItemKeepsake.EnumType keepsakeType : ItemKeepsake.EnumType.values())

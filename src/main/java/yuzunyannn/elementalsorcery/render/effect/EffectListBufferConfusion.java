@@ -17,18 +17,15 @@ public class EffectListBufferConfusion extends EffectListBuffer {
 		GlStateManager.disableBlend();
 		GlStateManager.disableCull();
 		GlStateManager.enableAlpha();
-
-		RenderHelper.enableStandardItemLighting();
-		// yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(false);
 		super.renderCore(partialTicks);
 		GlStateManager.depthMask(false);
 		GlStateManager.enableBlend();
-		// yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
 	}
 
 	@Override
 	protected void renderFrame() {
 		RenderHelper.disableStandardItemLighting();
+		yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
 		buffer.bindTexture();
 
 		Shaders.ErrorCode.bind();

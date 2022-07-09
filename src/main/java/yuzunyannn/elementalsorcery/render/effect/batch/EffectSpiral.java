@@ -3,8 +3,6 @@ package yuzunyannn.elementalsorcery.render.effect.batch;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.render.effect.EffectBatchType;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public abstract class EffectSpiral extends EffectFacing {
@@ -32,12 +30,12 @@ public abstract class EffectSpiral extends EffectFacing {
 	}
 
 	@Override
-	protected EffectBatchType typeBatch() {
+	protected EffectBatchTypeNormal typeBatch() {
 		return BATCH_TYPE;
 	}
 
 	@Override
-	protected TextureBinder getTexture() {
-		return BATCH_TYPE.TEXTURE;
+	protected void bindTexture() {
+		typeBatch().bind();
 	}
 }

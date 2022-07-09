@@ -24,6 +24,7 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.element.ElementTransition;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
@@ -291,5 +292,20 @@ public class ElementHelper {
 
 	static public double transitionTo(Element element, double fragment, double level) {
 		return fragment / Math.pow(level, 1.125);
+	}
+
+	/** 转化到元素片元，包括transition */
+	static public double toMagicFragment(ElementStack estack) {
+		double fragment = ElementHelper.toFragment(estack);
+		ElementTransition et = estack.getElement().getTransition();
+		if (et == null) return fragment;
+		return ElementHelper.transitionFrom(estack.getElement(), fragment, et.getLevel());
+	}
+
+	static public double fromMagicFragmentByPower(Element element, double fragment, double power) {
+		ElementTransition et = element.getTransition();
+		if (et == null) return ElementHelper.fromFragmentByPower(element, fragment, power);
+		fragment = ElementHelper.transitionTo(element, fragment, et.getLevel());
+		return ElementHelper.fromFragmentByPower(element, fragment, power);
 	}
 }

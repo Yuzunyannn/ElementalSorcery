@@ -661,6 +661,16 @@
 			"zh_CN": "精灵钻石",
 			"en_US": "Elf Diamond",
 			"ja_JP": "精霊ダイヤモンド"
+		},
+		"item.collapse.name": {
+			"zh_CN": "塌陷",
+			"en_US": "Collapse",
+			"ja_JP": "崩れ"
+		},
+		"item.collapseWand.name": {
+			"zh_CN": "塌陷权杖",
+			"en_US": "Collapse Wand",
+			"ja_JP": "崩れ権杖"
 		}
 	},
 	"tile": {
@@ -1638,7 +1648,7 @@
 		"pro.master": {
 			"zh_CN": "魔法大师",
 			"en_US": "Magic Master",
-			"ja_JP": "魔法のマスター"
+			"ja_JP": "魔法マスター"
 		},
 		"pro.scholar": {
 			"zh_CN": "学者",
@@ -2456,7 +2466,7 @@
 			"en_US": "Your atrocities against Elves were seen by %s elves, Fame decreased %s point",
 			"ja_JP": "精霊に対する暴行は%sの精霊に見られしまた、信用が%s下がった"
 		},
-		"info.elf.diamond" :{
+		"info.elf.diamond": {
 			"zh_CN": "非常昂贵的钻石，除此之外没有啥其他价值，精灵们会非常喜欢它",
 			"en_US": "A very expensive diamond has no other value. Elves love it very much",
 			"ja_JP": "非常に高価なダイヤモンドで、それ以外に価値はありません。精霊たちはそれが大好きそうです"
@@ -2811,7 +2821,7 @@
 		"say.scholar.master": {
 			"zh_CN": "精灵魔法大师非常的强大，几乎无人是她的对手，我也想成为那样强大的法师。",
 			"en_US": "The Magic Master is very powerful, almost no one is her opponent, I also want to be such a powerful mage.",
-			"ja_JP": "魔法のマスターはとっても強い、彼の相手はほとんどいません、僕はその強くをなりたい"
+			"ja_JP": "魔法マスターはとっても強い、彼の相手はほとんどいません、僕はその強くをなりたい"
 		},
 		"say.scholar.more.floor": {
 			"zh_CN": "可以在巨大的精灵树上建立许多不同类型的层：商会、邮局等等，我好像要个大图书馆呀。（这些内容随更新加入）",
@@ -4930,9 +4940,9 @@
 			"ja_JP": "无论是瓦解祭坛还是元素方桌，他们瓦解物品的速度都过于缓慢，通过元素之石和大量的末影元素构建的崩解石碑，可以快速的将物品瓦解。只要将物品右键放入其中，便可立刻被瓦解成元素存入周围的元素容器之中。"
 		},
 		"page.disintegrateStela.ct.more": {
-			"zh_CN": "虽然瓦解祭坛拥有极快的分解速度，甚至可以链接漏斗进行自动分解，但它依然有着一些弊端。\\n首先，它的分解产出效率介于元素方桌和瓦解祭坛之间。其次，重复分解一系列的元素会让石碑超载，元素产物的效率会大幅度下降。\\n当超载突破界限后，会发生极为危险的的爆炸，或者危险并不来源于爆炸？\\n祝福之玉放到下方的平台上可以提供过载保护",
-			"en_US": "虽然瓦解祭坛拥有极快的分解速度，甚至可以链接漏斗进行自动分解，但它依然有着一些弊端。\\n首先，它的分解产出效率介于元素方桌和瓦解祭坛之间。其次，重复分解一系列的元素会让石碑超载，元素产物的效率会大幅度下降。\\n当超载突破界限后，会发生极为危险的的爆炸，或者危险并不来源于爆炸？\\n祝福之玉放到下方的平台上可以提供过载保护",
-			"ja_JP": "虽然瓦解祭坛拥有极快的分解速度，甚至可以链接漏斗进行自动分解，但它依然有着一些弊端。\\n首先，它的分解产出效率介于元素方桌和瓦解祭坛之间。其次，重复分解一系列的元素会让石碑超载，元素产物的效率会大幅度下降。\\n当超载突破界限后，会发生极为危险的的爆炸，或者危险并不来源于爆炸？\\n祝福之玉放到下方的平台上可以提供过载保护"
+			"zh_CN": "虽然瓦解祭坛拥有极快的分解速度，甚至可以链接漏斗进行自动分解，但它依然有着一些弊端。\\n首先，它的分解产出效率介于元素方桌和瓦解祭坛之间。其次，重复分解一系列的元素会让石碑超载，元素产物的效率会大幅度下降。\\n当超载突破界限后，会发生塌陷爆炸。\\n祝福之玉放到下方的平台上可以提供过载保护，灾害宝石则会起到反效果。",
+			"en_US": "虽然瓦解祭坛拥有极快的分解速度，甚至可以链接漏斗进行自动分解，但它依然有着一些弊端。\\n首先，它的分解产出效率介于元素方桌和瓦解祭坛之间。其次，重复分解一系列的元素会让石碑超载，元素产物的效率会大幅度下降。\\n当超载突破界限后，会发生塌陷爆炸。\\n祝福之玉放到下方的平台上可以提供过载保护，灾害宝石则会起到反效果。",
+			"ja_JP": "虽然瓦解祭坛拥有极快的分解速度，甚至可以链接漏斗进行自动分解，但它依然有着一些弊端。\\n首先，它的分解产出效率介于元素方桌和瓦解祭坛之间。其次，重复分解一系列的元素会让石碑超载，元素产物的效率会大幅度下降。\\n当超载突破界限后，会发生塌陷爆炸。\\n祝福之玉放到下方的平台上可以提供过载保护，灾害宝石则会起到反效果。"
 		},
 		"page.instantConstitute": {
 			"zh_CN": "瞬息构建",
@@ -5010,9 +5020,9 @@
 			"ja_JP": "星空転化"
 		},
 		"page.invert.ct": {
-			"zh_CN": "如果逆变反应可控，将元素转化到元素片元在转化到元素，理论上就可以自由的控制元素的数量和能量了。\\n通过时间力量控制的逆变反应核心就完成了。\\n完成的核心比预期的更加强大，不仅可以进行元素反应还可以作为强大的咒文发射平台，因此必须要更加强大的星空祭坛来支持。\\n星空祭坛必须暴露在露天下。",
-			"en_US": "如果逆变反应可控，将元素转化到元素片元在转化到元素，理论上就可以自由的控制元素的数量和能量了。\\n通过时间力量控制的逆变反应核心就完成了。\\n完成的核心比预期的更加强大，不仅可以进行元素反应还可以作为强大的咒文发射平台，因此必须要更加强大的星空祭坛来支持。\\n星空祭坛必须暴露在露天下。",
-			"ja_JP": "如果逆变反应可控，将元素转化到元素片元在转化到元素，理论上就可以自由的控制元素的数量和能量了。\\n通过时间力量控制的逆变反应核心就完成了。\\n完成的核心比预期的更加强大，不仅可以进行元素反应还可以作为强大的咒文发射平台，因此必须要更加强大的星空祭坛来支持。\\n星空祭坛必须暴露在露天下。"
+			"zh_CN": "如果逆变反应可控，将元素转化到元素片元在转化到元素，理论上就可以自由的控制元素的数量和能量了。\\n通过时间力量控制逆变反应，通过虚空无尽存储的核心就完成了。\\n完成的核心比预期的更加强大，不仅可以进行元素反应还可以作为强大的咒文发射平台，因此必须要更加强大的星空祭坛来支持。\\n星空祭坛必须暴露在露天下。",
+			"en_US": "如果逆变反应可控，将元素转化到元素片元在转化到元素，理论上就可以自由的控制元素的数量和能量了。\\n通过时间力量控制逆变反应，通过虚空无尽存储的核心就完成了。\\n完成的核心比预期的更加强大，不仅可以进行元素反应还可以作为强大的咒文发射平台，因此必须要更加强大的星空祭坛来支持。\\n星空祭坛必须暴露在露天下。",
+			"ja_JP": "如果逆变反应可控，将元素转化到元素片元在转化到元素，理论上就可以自由的控制元素的数量和能量了。\\n通过时间力量控制逆变反应，通过虚空无尽存储的核心就完成了。\\n完成的核心比预期的更加强大，不仅可以进行元素反应还可以作为强大的咒文发射平台，因此必须要更加强大的星空祭坛来支持。\\n星空祭坛必须暴露在露天下。"
 		},
 		"page.starryAltar": {
 			"zh_CN": "星空祭坛",
@@ -5028,6 +5038,26 @@
 			"zh_CN": "反应进行会顺序吸收或释放元素到周围的元素容器之中，并会消耗核心中的元素片元转为不稳定片元。及时调整正对着核心位置的水晶输入能量，可以将不稳定片元重新转为元素片元，在不存在不稳定片元的情况下，能量线的逐步增加，输出时的能量也会越来越高。\\n核心在吸收了与内部不同的元素等情况下稳定度会降低，稳定度越低会产生不明反应导致同样的元素片元会转化到更多的不稳定片元，不稳定片元超过容器容量后会释放出来，及时调整正对着核心位置的水晶输出能量，不稳定片元会转化到魔力片元输出。\\n祭坛周围可以放置咒文宝石，核心元素类型满足时，可以启动对应的咒文，身上携带的自然水晶可以进行位置标定。",
 			"en_US": "反应进行会顺序吸收或释放元素到周围的元素容器之中，并会消耗核心中的元素片元转为不稳定片元。及时调整正对着核心位置的水晶输入能量，可以将不稳定片元重新转为元素片元，在不存在不稳定片元的情况下，能量线的逐步增加，输出时的能量也会越来越高。\\n核心在吸收了与内部不同的元素等情况下稳定度会降低，稳定度越低会产生不明反应导致同样的元素片元会转化到更多的不稳定片元，不稳定片元超过容器容量后会释放出来，及时调整正对着核心位置的水晶输出能量，不稳定片元会转化到魔力片元输出。\\n祭坛周围可以放置咒文宝石，核心元素类型满足时，可以启动对应的咒文，身上携带的自然水晶可以进行位置标定。",
 			"ja_JP": "反应进行会顺序吸收或释放元素到周围的元素容器之中，并会消耗核心中的元素片元转为不稳定片元。及时调整正对着核心位置的水晶输入能量，可以将不稳定片元重新转为元素片元，在不存在不稳定片元的情况下，能量线的逐步增加，输出时的能量也会越来越高。\\n核心在吸收了与内部不同的元素等情况下稳定度会降低，稳定度越低会产生不明反应导致同样的元素片元会转化到更多的不稳定片元，不稳定片元超过容器容量后会释放出来，及时调整正对着核心位置的水晶输出能量，不稳定片元会转化到魔力片元输出。\\n祭坛周围可以放置咒文宝石，核心元素类型满足时，可以启动对应的咒文，身上携带的自然水晶可以进行位置标定。"
+		},
+		"page.collapse": {
+			"zh_CN": "塌陷",
+			"en_US": "Collapse",
+			"ja_JP": "崩れ"
+		},
+		"page.collapse.ct": {
+			"zh_CN": "崩解石碑爆炸后的产物，有着另物质塌陷的力量，但十分不稳定，会持续破坏周围方块。对生物似乎没有什么影响。",
+			"en_US": "崩解石碑爆炸后的产物，有着另物质塌陷的力量，但十分不稳定，会持续破坏周围方块。对生物似乎没有什么影响。",
+			"ja_JP": "崩解石碑爆炸后的产物，有着另物质塌陷的力量，但十分不稳定，会持续破坏周围方块。对生物似乎没有什么影响。"
+		},
+		"page.collapseWand": {
+			"zh_CN": "塌陷权杖",
+			"en_US": "Collapse Wand",
+			"ja_JP": "崩れ権杖"
+		},
+		"page.collapseWand.ct": {
+			"zh_CN": "将塌陷融合到魔爆权杖中，形成的塌陷权杖。可以将力量稳定有序的释放出来。表现是可以将世界中的方块直接分解成元素存入其中。",
+			"en_US": "将塌陷融合到魔爆权杖中，形成的塌陷权杖。可以将力量稳定有序的释放出来。表现是可以将世界中的方块直接分解成元素存入其中。",
+			"ja_JP": "将塌陷融合到魔爆权杖中，形成的塌陷权杖。可以将力量稳定有序的释放出来。表现是可以将世界中的方块直接分解成元素存入其中。"
 		}
 	},
 	"es.adv": {
@@ -5059,7 +5089,7 @@
 		"es.adv.rite0.description": {
 			"zh_CN": "制作一个0级的仪式桌，开始你的「映射仪式」吧，从而来获取教程吧",
 			"en_US": "Crafting a level 0 Rite Table, and start your 「Print Rite」, which can get more tutorial.",
-			"ja_JP": "レベル0の式場桌を作って、「映像儀式」を始めましょう"
+			"ja_JP": "レベル0の式場桌を作って、「映像儀式」を始めましょう、チュートリアルを取得しましょう"
 		},
 		"es.adv.lantern.title": {
 			"zh_CN": "回家的路",
@@ -5094,162 +5124,162 @@
 		"es.adv.elfTree.title": {
 			"zh_CN": "寻找精灵树",
 			"en_US": "Looking for a Elf Tree",
-			"ja_JP": "寻找精霊树"
+			"ja_JP": "精霊樹を探す"
 		},
 		"es.adv.elfTree.description": {
 			"zh_CN": "找到一颗精灵树，获取精灵木吧",
 			"en_US": "Find a Elf Tree and get Elf Log",
-			"ja_JP": "找到一颗精霊树、获取精霊木吧"
+			"ja_JP": "精霊樹を見つけて精霊木を手に入れよう"
 		},
 		"es.adv.elfKiller.title": {
 			"zh_CN": "精灵杀手",
 			"en_US": "Elf Killer",
-			"ja_JP": "精霊杀手"
+			"ja_JP": "精霊キラー"
 		},
 		"es.adv.elfKiller.description": {
 			"zh_CN": "杀死一只精灵。不过不推荐这么做...",
 			"en_US": "Kill a elf, but not suggest...",
-			"ja_JP": "杀死一只精霊。不过不推荐这么做..."
+			"ja_JP": "精霊を一匹殺す。でもそれはお勧めしません…"
 		},
 		"es.adv.killByElf.title": {
 			"zh_CN": "这不可能",
 			"en_US": "It's impossible!",
-			"ja_JP": "这不可能"
+			"ja_JP": "あり得ない"
 		},
 		"es.adv.killByElf.description": {
 			"zh_CN": "被精灵杀死",
 			"en_US": "Killed by Elf",
-			"ja_JP": "被精霊杀死"
+			"ja_JP": "精霊に殺される"
 		},
 		"es.adv.hurtByCrazy.title": {
 			"zh_CN": "讨厌的疯子",
 			"en_US": "A hateful Crazy",
-			"ja_JP": "讨厌的疯子"
+			"ja_JP": "いやな狂人"
 		},
 		"es.adv.hurtByCrazy.description": {
 			"zh_CN": "受到一只疯子精灵的攻击，你要反击吗？",
 			"en_US": "Hurt by a Crazy, would you want to revenge?",
-			"ja_JP": "受到一只疯子精霊的攻击、你要反击吗？"
+			"ja_JP": "精霊狂人の攻撃を受けて、あなたは反撃しますか？"
 		},
 		"es.adv.noCreative.title": {
-			"zh_CN": "公平的决斗?",
+			"zh_CN": "公平的决斗？",
 			"en_US": "A fair fight?",
-			"ja_JP": "公平的决斗?"
+			"ja_JP": "公平な決闘？"
 		},
 		"es.adv.noCreative.description": {
 			"zh_CN": "被精灵魔法大师强制转到生存模式",
 			"en_US": "Turn to Survival Mode by a Elf Matser",
-			"ja_JP": "被精霊魔法大师强制转到生存模式"
+			"ja_JP": "精霊魔法マスターにより強制的にサバイバルモードに切り替え"
 		},
 		"es.adv.elfMasterKiller.title": {
 			"zh_CN": "举世无双",
 			"en_US": "Peerless",
-			"ja_JP": "举世无双"
+			"ja_JP": "天下無双"
 		},
 		"es.adv.elfMasterKiller.description": {
 			"zh_CN": "杀死精灵魔法大师",
 			"en_US": "Kill the Elf Master",
-			"ja_JP": "杀死精霊魔法大师"
+			"ja_JP": "精霊魔法マスターを殺す"
 		},
 		"es.adv.eatElfFruit.title": {
 			"zh_CN": "好吃的精灵果",
 			"en_US": "Delicious Elf fruit",
-			"ja_JP": "好吃的精霊果"
+			"ja_JP": "おいしい精霊果"
 		},
 		"es.adv.eatElfFruit.description": {
 			"zh_CN": "连续吃8个精灵果",
 			"en_US": "Eat 8 Elf Fruit",
-			"ja_JP": "连续吃8个精霊果"
+			"ja_JP": "精霊果を8個食べ続ける"
 		},
 		"es.adv.elfEdifice.title": {
 			"zh_CN": "参天大树",
 			"en_US": "Towering trees",
-			"ja_JP": "参天大树"
+			"ja_JP": "天を突く樹"
 		},
 		"es.adv.elfEdifice.description": {
 			"zh_CN": "让一颗巨大精灵树生长起来",
 			"en_US": "Let a giant Elf tree grow",
-			"ja_JP": "让一颗巨大精灵树生长起来"
+			"ja_JP": "巨大な精霊の樹を成長させる"
 		},
 		"es.adv.elfAdventurer.title": {
 			"zh_CN": "冒险家",
 			"en_US": "Adventurer",
-			"ja_JP": "冒险家"
+			"ja_JP": "冒険家"
 		},
 		"es.adv.elfAdventurer.description": {
 			"zh_CN": "完成一个精灵的委托",
 			"en_US": "Finish a Elf Quest",
-			"ja_JP": "完成一个精灵的委托"
+			"ja_JP": "精霊の依頼を完了する"
 		},
 		"es.adv.rockCamera.title": {
 			"zh_CN": "自然学家",
 			"en_US": "Naturalist",
-			"ja_JP": "自然学家"
+			"ja_JP": "自然学者"
 		},
 		"es.adv.rockCamera.description": {
 			"zh_CN": "获取到岩石相机，并使用其对方块进行记录",
 			"en_US": "Record the blocks with Rock Camera",
-			"ja_JP": "获取到岩石相机，并使用其对方块进行记录"
+			"ja_JP": "岩石カメラを取得し、ブロックを記録する"
 		},
 		"es.adv.elfPost.title": {
 			"zh_CN": "忠实客户",
 			"en_US": "Loyal customers",
-			"ja_JP": "忠实客户"
+			"ja_JP": "忠実な顧客"
 		},
 		"es.adv.elfPost.description": {
 			"zh_CN": "全面使用精灵快递服务",
 			"en_US": "Full Use of Elf post service",
-			"ja_JP": "全面使用精灵快递服务"
+			"ja_JP": "精霊の配達サービスを全面的に利用"
 		},
 		"es.adv.rite1.title": {
 			"zh_CN": "升级仪式桌",
 			"en_US": "Upgrade your rite table",
-			"ja_JP": "升级儀式桌"
+			"ja_JP": "式場桌をアップグレード"
 		},
 		"es.adv.rite1.description": {
 			"zh_CN": "制作一个1级的仪式桌，从而来获取更多教程吧",
 			"en_US": "Crafting a level 1 rite table",
-			"ja_JP": "制作一个1级的儀式桌、从而来获取更多教程吧"
+			"ja_JP": "レベル1の式場桌をつくります、より多くのチュートリアルを取得しましょう"
 		},
 		"es.adv.meltCauldron.title": {
 			"zh_CN": "做好炼制的万全准备",
 			"en_US": "Complete preparation for refining",
-			"ja_JP": "做好炼制的万全准备"
+			"ja_JP": "精錬の万全の準備を整える"
 		},
 		"es.adv.meltCauldron.description": {
 			"zh_CN": "制作一个熔岩锅和灶台来炼制通魔石。",
 			"en_US": "Crafint a Melt Cauldron for smelting The Stone With Magic with Hearth",
-			"ja_JP": "制作一个熔岩锅和灶台来炼制通魔石。"
+			"ja_JP": "熔岩鍋と囲炉裏を作って通魔石を精製する。"
 		},
 		"es.adv.meltFire.title": {
 			"zh_CN": "好烫啊",
 			"en_US": "So hot!",
-			"ja_JP": "好烫啊"
+			"ja_JP": "熱い"
 		},
 		"es.adv.meltFire.description": {
 			"zh_CN": "跳进起火的熔岩锅",
 			"en_US": "Jump into Melt Cauldron",
-			"ja_JP": "跳进起火的熔岩锅"
+			"ja_JP": "火をつけた溶岩鍋に飛び込む"
 		},
 		"es.adv.fragmentedAstone.title": {
 			"zh_CN": "炼制学徒",
 			"en_US": "Refining Apprentice",
-			"ja_JP": "炼制学徒"
+			"ja_JP": "精錬の見習い"
 		},
 		"es.adv.fragmentedAstone.description": {
 			"zh_CN": "炼制过程中产生碎裂的通魔石",
 			"en_US": "Smelting out a Stone with Magic but Broken",
-			"ja_JP": "炼制过程中产生碎裂的通魔石"
+			"ja_JP": "精製の通魔石がこわれた"
 		},
 		"es.adv.astone.title": {
 			"zh_CN": "炼制专家",
 			"en_US": "Refining Expert",
-			"ja_JP": "炼制专家"
+			"ja_JP": "製錬の専門家"
 		},
 		"es.adv.astone.description": {
 			"zh_CN": "成功获取通魔石",
 			"en_US": "Smelting out The Stone with Magic successfully",
-			"ja_JP": "成功获取通魔石"
+			"ja_JP": "完全な通魔石を手に入れる"
 		},
 		"es.adv.rite2.title": {
 			"zh_CN": "再次升级仪式桌",
@@ -5482,9 +5512,9 @@
 			"ja_JP": "制作一个4级的儀式桌、从而来获取关于元素篇章下的教程吧"
 		},
 		"es.adv.deconstructAltar.title": {
-			"zh_CN": "物质崩坏",
+			"zh_CN": "物质塌陷",
 			"en_US": "Material Collapse",
-			"ja_JP": "物质崩坏"
+			"ja_JP": "物質崩れ"
 		},
 		"es.adv.deconstructAltar.description": {
 			"zh_CN": "搭建出一个物质瓦解小祭坛吧",
@@ -5492,9 +5522,9 @@
 			"ja_JP": "搭建出一个物质瓦解小祭壇吧"
 		},
 		"es.adv.deconstructAltarAdv.title": {
-			"zh_CN": "定向崩坏",
+			"zh_CN": "定向塌陷",
 			"en_US": "Directional Material Collapse",
-			"ja_JP": "定向崩坏"
+			"ja_JP": "定向崩れ"
 		},
 		"es.adv.deconstructAltarAdv.description": {
 			"zh_CN": "搭建出一个物质瓦解祭坛吧",
@@ -5564,22 +5594,22 @@
 		"es.adv.itemConstruct.title": {
 			"zh_CN": "物质重组",
 			"en_US": "Material Construct",
-			"ja_JP": "物质重组"
+			"ja_JP": "物質再構成"
 		},
 		"es.adv.itemConstruct.description": {
 			"zh_CN": "利用天空祭坛，进行物质构成吧！",
 			"en_US": "Construct something with Supreme Altar",
-			"ja_JP": "利用天空祭坛，进行物质构成吧！"
+			"ja_JP": "天空祭壇を利用して、物品を構造しましょう！"
 		},
 		"es.adv.magician.title": {
 			"zh_CN": "魔导士",
 			"en_US": "Sorcerer",
-			"ja_JP": "魔导士"
+			"ja_JP": "魔導士"
 		},
 		"es.adv.magician.description": {
 			"zh_CN": "拿着你的魔典，放在撰录方桌上！",
 			"en_US": "Put your Grimoire to Transcribe Square Table",
-			"ja_JP": "拿着你的魔典，放在撰录方桌上！"
+			"ja_JP": "魔典を持って、書き写し四角桌の上に置いて！"
 		},
 		"es.adv.elfDebtor.title": {
 			"zh_CN": "欠债人",
@@ -5640,6 +5670,76 @@
 			"zh_CN": "重获精灵的信任",
 			"en_US": "Regain Fame",
 			"ja_JP": "精霊の信頼を取り戻す"
+		},
+		"es.adv.invert.title": {
+			"zh_CN": "逆变",
+			"en_US": "Inverty",
+			"ja_JP": "逆変"
+		},
+		"es.adv.invert.description": {
+			"zh_CN": "这啥？",
+			"en_US": "What is this?",
+			"ja_JP": "これは何？"
+		},
+		"es.adv.iceRock.title": {
+			"zh_CN": "新种类的魔力",
+			"en_US": "New kinds of magic",
+			"ja_JP": "新種の魔力"
+		},
+		"es.adv.iceRock.description": {
+			"zh_CN": "准备好水晶塔的材料",
+			"en_US": "Prepare the materials of the Ice Rock Crystal Tower",
+			"ja_JP": "クリスタルタワーの材料を用意する"
+		},
+		"es.adv.elementReactor.title": {
+			"zh_CN": "迈向星空",
+			"en_US": "Towards the starry",
+			"ja_JP": "星空へ"
+		},
+		"es.adv.elementReactor.description": {
+			"zh_CN": "使用星空祭坛释放咒文",
+			"en_US": "Spelling any mantra with the Starry Altar",
+			"ja_JP": "星空祭壇を使って呪文を撃つ"
+		},
+		"es.adv.instantConstitute.title": {
+			"zh_CN": "完美构造",
+			"en_US": "Perfect Construct",
+			"ja_JP": "完璧な構造"
+		},
+		"es.adv.instantConstitute.description": {
+			"zh_CN": "使用瞬构祭坛构造物品",
+			"en_US": "Use The Instant Constitute Altar to construct item",
+			"ja_JP": "瞬構祭壇を用い、物品を構造する"
+		},
+		"es.adv.fastDisintegrate.title": {
+			"zh_CN": "好像不能自动化",
+			"en_US": "Seems unable to automate",
+			"ja_JP": "自動化はできないようです"
+		},
+		"es.adv.fastDisintegrate.description": {
+			"zh_CN": "使用崩解祭坛瓦解物品",
+			"en_US": "Use The Material Collapse Altar to disintegrate item",
+			"ja_JP": "崩解し祭壇を用い、物品を瓦解する"
+		},
+		"es.adv.collapse.title": {
+			"zh_CN": "塌陷",
+			"en_US": "Collapse",
+			"ja_JP": "崩れ"
+		},
+		"es.adv.collapse.description": {
+			"zh_CN": "错误的操作，意外的收获",
+			"en_US": "Wrong operation, unexpected thing",
+			"ja_JP": "誤った操作、予期せぬ収穫"
+		},
+		"es.adv.elementCrack.title": {
+			"zh_CN": "快跑！(结束)",
+			"en_US": "Run! (The End)",
+			"ja_JP": "走れ！(終わり)"
+		},
+		"es.adv.elementCrack.description": {
+			"zh_CN": "虚空塌陷，打开元素裂縫",
+			"en_US": "Void Collapse. Open Element Crack",
+			"ja_JP": "虚空の崩れ、元素ひび割れを開く"
 		}
 	}
 }

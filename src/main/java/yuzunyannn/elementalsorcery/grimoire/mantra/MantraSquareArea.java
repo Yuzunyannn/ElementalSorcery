@@ -25,7 +25,7 @@ public abstract class MantraSquareArea extends MantraCommon {
 	public static class SquareData extends MantraDataCommon {
 
 		public void setSize(int size) {
-			set(SIZE, size);
+			set(SIZEI, size);
 		}
 
 		public void setSize(float size) {
@@ -37,7 +37,7 @@ public abstract class MantraSquareArea extends MantraCommon {
 		}
 
 		public int getSize() {
-			return get(SIZE);
+			return get(SIZEI);
 		}
 
 		public int getDelay() {

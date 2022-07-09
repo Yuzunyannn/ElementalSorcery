@@ -1,22 +1,32 @@
 package yuzunyannn.elementalsorcery.render.effect;
 
 import java.util.ArrayDeque;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 
 public class EffectList extends EffectGroup {
 
 	final protected ArrayDeque<Effect> effects = new ArrayDeque<>();
+	final protected Set<EffectBatchType> batchs = new HashSet<>();
 
 	public void add(Effect effect) {
-		effects.add(effect);
+		if (effect.typeBatch() != null) add(effect.typeBatch(), effect);
+		else effects.add(effect);
 	}
 
-	public void update() {
+	public void add(EffectBatchType batchType, Effect effect) {
+		batchType.effects.add(effect);
+		batchs.add(batchType);
+	}
+
+	protected void update(ArrayDeque<Effect> effects) {
 		Iterator<Effect> iter = effects.iterator();
 		World world = Minecraft.getMinecraft().world;
 		while (iter.hasNext()) {
@@ -29,35 +39,58 @@ public class EffectList extends EffectGroup {
 		}
 	}
 
-	public void render(float partialTicks) {
-		Iterator<Effect> iter = effects.iterator();
+	public void update() {
+		update(effects);
+		Iterator<EffectBatchType> iter = batchs.iterator();
 		while (iter.hasNext()) {
-			try {
-				iter.next().doRender(partialTicks);
-			} catch (Exception e) {
-				iter.remove();
-				ElementalSorcery.logger.warn("Effect Render Error", e);
-			}
+			EffectBatchType batch = iter.next();
+			update(batch.effects);
+			if (batch.effects.isEmpty()) iter.remove();
 		}
+
 	}
 
-	public void render(BufferBuilder bufferbuilder, float partialTicks) {
-		Iterator<Effect> iter = effects.iterator();
-		while (iter.hasNext()) {
-			try {
-				iter.next().doRender(bufferbuilder, partialTicks);
-			} catch (Exception e) {
-				iter.remove();
-				ElementalSorcery.logger.warn("Effect Batch Render Error", e);
+	public void render(float partialTicks) {
+		if (!effects.isEmpty()) {
+			Iterator<Effect> iter = effects.iterator();
+			while (iter.hasNext()) {
+				try {
+					iter.next().doRender(partialTicks);
+				} catch (Exception e) {
+					iter.remove();
+					ElementalSorcery.logger.warn("Effect Render Error", e);
+				}
+			}
+		}
+		if (!batchs.isEmpty()) {
+			Tessellator tessellator = Tessellator.getInstance();
+			BufferBuilder bufferbuilder = tessellator.getBuffer();
+			Iterator<EffectBatchType> batchIter = batchs.iterator();
+			while (batchIter.hasNext()) {
+				EffectBatchType batch = batchIter.next();
+				batch.beginRender(tessellator, bufferbuilder);
+				Iterator<Effect> iter = batch.effects.iterator();
+				while (iter.hasNext()) {
+					try {
+						iter.next().doRender(bufferbuilder, partialTicks);
+					} catch (Exception e) {
+						iter.remove();
+						ElementalSorcery.logger.warn("Effect Batch Render Error", e);
+					}
+				}
+				batch.endRender(tessellator, bufferbuilder);
 			}
 		}
 	}
 
 	public void clear() {
 		effects.clear();
+		Iterator<EffectBatchType> iter = batchs.iterator();
+		while (iter.hasNext()) iter.next().effects.clear();
+		batchs.clear();
 	}
 
 	public boolean isEmpty() {
-		return effects.isEmpty();
+		return effects.isEmpty() && batchs.isEmpty();
 	}
 }

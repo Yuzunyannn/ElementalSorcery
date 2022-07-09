@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.util.item;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -24,6 +25,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -148,6 +150,21 @@ public class ItemHelper {
 	static public ItemStack toItemStack(IBlockState state) {
 		int meta = state.getBlock().damageDropped(state);
 		return new ItemStack(Item.getItemFromBlock(state.getBlock()), 1, meta);
+	}
+
+	static public List<ItemStack> getItemStackFromState(World world, BlockPos pos, IBlockState state) {
+		NonNullList<ItemStack> list = NonNullList.create();
+		Block block = state.getBlock();
+		try {
+			if (block.canSilkHarvest(world, pos, state, null)) {
+				Method getSilkTouchDrop = ObfuscationReflectionHelper.findMethod(Block.class, "func_180643_i",
+						ItemStack.class, IBlockState.class);
+				list.add((ItemStack) getSilkTouchDrop.invoke(block, state));
+			}
+		} catch (Exception e) {}
+		if (list.isEmpty()) block.getDrops(list, world, pos, state, 0);
+
+		return list;
 	}
 
 	static public boolean isEmpty(ItemStackHandler inventory) {

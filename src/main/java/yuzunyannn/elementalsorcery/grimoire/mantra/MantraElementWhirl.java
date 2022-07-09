@@ -31,7 +31,6 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraElementWhirl;
 import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectSphericalBlast;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
@@ -129,7 +128,7 @@ public class MantraElementWhirl extends MantraCommon {
 		if (world.isRemote) return true;
 		if (tick % 10 != 0) return true;
 		for (int x = -rx; x <= rx; x++) {
-			int rzy = MathHelper.ceil(Math.cos(x / (double) rx * Math.PI / 2f) * size);
+			int rzy = MathHelper.ceil(Math.cos(Math.asin(x / (double) rx)) * size);
 			for (int z = -rzy; z <= rzy; z++) {
 				for (int y = -rzy; y <= rzy; y++) {
 					BlockPos at = pos.add(x, y, z);

@@ -41,6 +41,7 @@ import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleIcon;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicEmit;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
 
@@ -50,11 +51,14 @@ public class MantraCommon extends Mantra {
 	public static final Variable<Vec3d> TOWARD = new Variable<>("toward", VariableSet.VEC3D);
 	public static final Variable<BlockPos> POS = new Variable<>("pos", VariableSet.BLOCK_POS);
 	public static final Variable<Short> LAYER = new Variable<>("layer", VariableSet.SHORT);
-	public static final Variable<Integer> SIZE = new Variable<>("size", VariableSet.INT);
+	public static final Variable<Integer> SIZEI = new Variable<>("size", VariableSet.INT);
+	public static final Variable<Float> SIZEF = new Variable<>("size", VariableSet.FLOAT);
+	public static final Variable<Double> SIZED = new Variable<>("size", VariableSet.DOUBLE);
 	public static final Variable<Integer> POWERI = new Variable<>("power", VariableSet.INT);
 	public static final Variable<Float> POWERF = new Variable<>("power", VariableSet.FLOAT);
 	public static final Variable<Float> POTENT_POWER = new Variable<>("potentPower", VariableSet.FLOAT);
 	public static final Variable<ElementStack> ELEMENT = new Variable<>("eStack", VariableSet.ELEMENT);
+	public static final Variable<Double> FRAGMENT = new Variable<>("fragment", VariableSet.DOUBLE);
 
 	protected int color = 0;
 	protected ResourceLocation icon;
@@ -313,6 +317,25 @@ public class MantraCommon extends Mantra {
 	public static ElementStack getElement(ICaster caster, Element element, int size, int power) {
 		ElementStack need = new ElementStack(element, size, power);
 		return caster.iWantSomeElement(need, true);
+	}
+
+	public void sendMantraDataToClient(World world, IMantraData data, ICaster caster) {
+		if (world.isRemote) return;
+		MantraDataCommon mdc = (MantraDataCommon) data;
+		NBTTagCompound nbt = mdc.serializeNBTForSend();
+		NBTHelper.setVec3d(nbt, "_e_vec_", caster.iWantDirectCaster().getPositionVector());
+		caster.sendToClient(nbt);
+	}
+
+	@Override
+	public void recvData(World world, IMantraData data, ICaster caster, NBTTagCompound recvData) {
+		MantraDataCommon mdc = (MantraDataCommon) data;
+		if (NBTHelper.hasVec3d(recvData, "_e_vec_")) {
+			Vec3d vec = NBTHelper.getVec3d(recvData, "_e_vec_");
+			caster.iWantDirectCaster().setPosition(vec.x, vec.y, vec.z);
+			recvData.removeTag("_e_vec_");
+		}
+		mdc.deserializeNBT(recvData);
 	}
 
 }

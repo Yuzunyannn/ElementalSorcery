@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:sup/item_construct",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:instant_constitute"
+        },
+        "title": {
+            "translate": "es.adv.instantConstitute.title"
+        },
+        "description": {
+            "translate": "es.adv.instantConstitute.description"
+        }
+    },
+    "criteria": {
+        "use": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "use:instantConstitute"
+            }
+        }
+    }
+}

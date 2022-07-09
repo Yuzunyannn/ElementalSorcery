@@ -27,7 +27,6 @@ public abstract class Effect {
 
 	public static final String GROUP_GUI = "gui";
 	public static final String GROUP_NORMAL = "normal";
-	public static final String GROUP_BATCH = "batch";
 
 	public static final Minecraft mc = Minecraft.getMinecraft();
 	public static int displayWidth = mc.displayWidth;
@@ -107,7 +106,7 @@ public abstract class Effect {
 	}
 
 	protected String myGroup() {
-		return typeBatch() == null ? GROUP_NORMAL : GROUP_BATCH;
+		return GROUP_NORMAL;
 	}
 
 	/** 获取批量渲染的类型，同一种类型获取的实例应该是 单例！ */
@@ -141,7 +140,6 @@ public abstract class Effect {
 
 	// ============-= 全局 =-============
 
-	static final protected EffectGroup effectBatch = new EffectBatchSet();
 	static final protected EffectGroup effectNormal = new EffectList();
 	static final protected EffectGroup effectGUI = new EffectListGUI();
 
@@ -149,7 +147,6 @@ public abstract class Effect {
 	static final private List<EffectGroup> worldGroupList = new ArrayList<>();
 	static final private List<EffectGroup> guiGroupList = new ArrayList<>();
 	static {
-		addEffectGroup(GROUP_BATCH, effectBatch);
 		addEffectGroup(GROUP_NORMAL, effectNormal);
 		addEffectGroup(GROUP_GUI, effectGUI);
 	}

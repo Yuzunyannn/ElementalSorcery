@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.container;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IContainerListener;
 import net.minecraft.nbt.NBTTagCompound;
@@ -12,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher;
 import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher.MLPair;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
@@ -60,7 +62,11 @@ public class ContainerElementReactor extends Container implements IContainerNetw
 		else if (nbt.getBoolean("S")) tileEntity.shutdown();
 		else if (nbt.hasKey("M")) {
 			MLPair launcher = IFragmentMantraLauncher.fromId(nbt.getString("M"));
-			if (launcher != null) tileEntity.launchMantra(launcher);
+			if (launcher != null) {
+				tileEntity.launchMantra(launcher);
+				if (player instanceof EntityPlayerMP)
+					ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "reactor:mantra");
+			}
 		} else if (nbt.getBoolean("SML")) {
 			WorldLocation location = new WorldLocation(nbt);
 			tileEntity.updateMapLocation(location, false);

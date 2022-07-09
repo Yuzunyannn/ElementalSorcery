@@ -27,7 +27,7 @@ public interface ICaster {
 	 *
 	 * @param seed 种子，继承ICaster的对象可以考虑使用
 	 * 
-	 * @return 只是元素的样本，及可以被消耗的元素，并不会真正的消耗元素，消耗元素的时候，依然使用iWantSomeElement进行获取
+	 * @return 只是元素的样本，及可以被消耗的元素，必须是新的副本，并不会真正的消耗元素，消耗元素的时候，依然使用iWantSomeElement进行获取
 	 * 
 	 */
 	@Nonnull

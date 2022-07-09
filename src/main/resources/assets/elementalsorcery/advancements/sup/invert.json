@@ -1,0 +1,26 @@
+{
+    "parent": "elementalsorcery:recipes/supreme_table",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:invert_gem"
+        },
+        "title": {
+            "translate": "es.adv.invert.title"
+        },
+        "description": {
+            "translate": "es.adv.invert.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:invert_gem"
+                    }
+                ]
+            }
+        }
+    }
+}

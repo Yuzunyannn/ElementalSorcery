@@ -13,6 +13,7 @@ import java.util.function.Function;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -43,11 +44,13 @@ import yuzunyannn.elementalsorcery.event.IWorldTickTask;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.LamdaReference;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.element.ElementAnalysisPacket;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHandlerAdapter;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class TileDisintegrateStela extends TileStaticMultiBlock implements ITickable, IGetItemStack {
 
@@ -80,7 +83,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 	public float prevOverload = 0;
 	/** 元素超载记录，不写入NBT储存了 */
 	protected Map<Element, Float> overloadMap = new HashMap<>();
-	/** 超载保护 0~1~Float.MAX_VALUE */
+	/** 超载保护 -Float.MAX_VALUE~1~Float.MAX_VALUE */
 	protected float overloadProtect = 0;
 	/** 使用的toElement */
 	protected ElementMap toElement = null;
@@ -173,6 +176,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 				world.setBlockToAir(pos);
 				doOverloadExplosion(world, pos);
 			}
+			updateCheckAndSendData();
 			return;
 		}
 
@@ -218,9 +222,11 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 
 		// 再过载大于1时，会强行降低overload数据
 		if (tick % 20 == 0) {
-			float olp = Math.max(overloadProtect, 0);
-			if (overload > 1) reduceOverloadMap(0.5f / (olp + 1), e -> false);
-			else if (olp > 0.25f) reduceOverloadMap(1 / (olp + 1), e -> false);
+			float olp = overloadProtect;
+			if (overload > 1) {
+				if (olp < 0) reduceOverloadMap(0.5f - Math.max(olp, -0.45f), e -> false);
+				else reduceOverloadMap(0.5f / (olp + 1), e -> false);
+			} else if (olp > 0.25f) reduceOverloadMap(1 / (olp + 1), e -> false);
 		}
 		// 更新发送数据
 		updateCheckAndSendData();
@@ -241,14 +247,20 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 				if (!world.isBlockLoaded(pos)) return ITickTask.END;
 				if ((this.tick++) % 5 != 0) return ITickTask.SUCCESS;
 				Element element = elements.get(this.index++);
+				if (element == ESInit.ELEMENTS.WATER) return ITickTask.SUCCESS;
+				if (element == ESInit.ELEMENTS.FIRE) return ITickTask.SUCCESS;
 				BlockPos at = pos.add(RandomHelper.rand.nextGaussian() * 4, RandomHelper.rand.nextGaussian() * 4,
 						RandomHelper.rand.nextGaussian() * 4);
 				ElementExplosion.doExplosion(world, at, new ElementStack(element, 5000, 5000), null);
 				return this.index >= elements.size() ? ITickTask.END : ITickTask.SUCCESS;
 			}
 		});
-		// ItemHelper.dropItem(world, pos, new
-		// ItemStack(ESInit.ITEMS.ELEMENT_CRACK)).setNoDespawn();
+
+		EntityItem item = ItemHelper.dropItem(world, new Vec3d(pos).add(0.5, 0.5, 0.5),
+				new ItemStack(ESInit.ITEMS.COLLAPSE));
+		item.setVelocity(0, 0, 0);
+		item.velocityChanged = true;
+		item.setNoDespawn();
 	}
 
 	public void ergodicMaigcPlatform(Function<BlockPos, Boolean> callback) {
@@ -266,7 +278,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 		toElement = null;
 		overloadProtect = 0;
 
-		Integer[] ppRef = new Integer[] { 0 };
+		LamdaReference<Integer> ppRef = LamdaReference.of(0);
 
 		ergodicMaigcPlatform(at -> {
 			IGetItemStack itemGetter = BlockHelper.getTileEntity(world, at, IGetItemStack.class);
@@ -274,7 +286,8 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 			ItemStack stack = itemGetter.getStack();
 			if (stack.isEmpty()) return false;
 
-			if (stack.getItem() == ESInit.ITEMS.BLESSING_JADE) ppRef[0] = ppRef[0] + 1;
+			if (stack.getItem() == ESInit.ITEMS.BLESSING_JADE) ppRef.set(ppRef.get() + 1);
+			if (stack.getItem() == ESInit.ITEMS.CALAMITY_GEM) ppRef.set(ppRef.get() - 1);
 
 			NBTTagCompound nbt = stack.getTagCompound();
 			if (nbt == null) return true;
@@ -285,13 +298,14 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 				toElement.add(itemStructure);
 			}
 
-			if (nbt.hasKey("_DSOP", NBTTag.TAG_NUMBER)) ppRef[0] = ppRef[0] + nbt.getInteger("_DSOP");
+			if (nbt.hasKey("_DSOP", NBTTag.TAG_NUMBER)) ppRef.set(ppRef.get() + nbt.getInteger("_DSOP"));
 
 			return true;
 		});
 
-		float protectPotin = ppRef[0];
+		float protectPotin = Math.abs(ppRef.get());
 		overloadProtect = (float) (Math.pow(0.001, 1 / protectPotin) * (-1 / (protectPotin + 1) + 1.4));
+		if (ppRef.get() < 0) overloadProtect = -overloadProtect;
 
 		if (toElement != null) toElement.add(ElementMap.instance);
 	}
@@ -439,7 +453,8 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 			wakeRate = Math.max(0, r * r);
 		}
 
-		overload = overload + (targetOverload - overload) * 0.075f;
+		if (targetOverload >= 2) overload = targetOverload;
+		else overload = overload + (targetOverload - overload) * 0.075f;
 
 		genActiveEffect();
 		if (overload > 1) genOverloadEffect();

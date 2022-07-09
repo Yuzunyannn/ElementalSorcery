@@ -68,6 +68,22 @@ public class ItemGrimoire extends Item {
 	}
 
 	@Override
+	public boolean onDroppedByPlayer(ItemStack item, EntityPlayer player) {
+		if (player.isHandActive()) return false;
+		return super.onDroppedByPlayer(item, player);
+	}
+
+	@Override
+	public boolean canContinueUsing(ItemStack oldStack, ItemStack newStack) {
+		return oldStack.getItem() == newStack.getItem();
+	}
+
+	@Override
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+		return oldStack.getItem() != newStack.getItem();
+	}
+
+	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		ItemStack stack = playerIn.getHeldItem(handIn);
 		// 没有能力的，可能是别的内容
@@ -140,7 +156,7 @@ public class ItemGrimoire extends Item {
 				Mantra m = info.getMantra();
 				if (m == null) tooltip.add(TextFormatting.AQUA + I18n.format("info.grimoire.error"));
 				else {
-					String name = I18n.format(m.getTranslationKey() + ".name");
+					String name = m.getDisplayName() + TextFormatting.RESET + TextFormatting.AQUA;
 					tooltip.add(TextFormatting.AQUA + I18n.format("info.grimoire.current", name));
 					info.getMantra().addInformation(stack, worldIn, tooltip, flagIn);
 				}

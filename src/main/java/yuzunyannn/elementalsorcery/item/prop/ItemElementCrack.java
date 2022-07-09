@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -29,8 +30,8 @@ import yuzunyannn.elementalsorcery.network.MessageBlockDisintegrate;
 import yuzunyannn.elementalsorcery.network.MessageBlockDisintegrate.DisintegratePackage;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
-import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectItemConfusion;
+import yuzunyannn.elementalsorcery.render.effect.crack.EffectFragmentCrackMove;
+import yuzunyannn.elementalsorcery.render.effect.crack.EffectItemConfusion;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
@@ -52,13 +53,14 @@ public class ItemElementCrack extends Item {
 		if (entityItem.motionX > 0.75) entityItem.motionX = 0.75;
 		if (entityItem.motionZ > 0.75) entityItem.motionZ = 0.75;
 		if (!world.isRemote) {
+			entityItem.setNoDespawn();
 			if (entityItem.ticksExisted % 3 == 0) disintegrateAround(world, entityItem.getPosition(), entityItem);
 			if (entityItem.ticksExisted % 10 == 0) disintegrateAroundEntity(world, entityItem.getPositionVector());
 			return super.onEntityItemUpdate(entityItem);
 		}
 		int tick = entityItem.ticksExisted;
 		Vec3d vec = entityItem.getPositionVector();
-		playTickEffect(world, vec, tick);
+		playTickEffect(entityItem, vec, tick);
 		if (entityItem.ticksExisted % 40 == 0 && RandomHelper.rand.nextFloat() < 0.5f) playEffect(world, entityItem);
 		return super.onEntityItemUpdate(entityItem);
 	}
@@ -176,18 +178,32 @@ public class ItemElementCrack extends Item {
 
 			Effects.spawnEffect(world, Effects.ELEMENT_CRACK_ATTACK,
 					living.getPositionVector().add(0, living.height / 2, 0), effectNBT);
+			return;
 		}
 
+		DamageSource ds = DamageHelper.getMagicDamageSource(source, null).setDamageAllowedInCreativeMode()
+				.setDamageIsAbsolute().setDamageBypassesArmor();
+		if (entity.attackEntityFrom(ds, Float.MAX_VALUE / 2)) {
+			Effects.spawnEffect(world, Effects.ELEMENT_CRACK_ATTACK,
+					entity.getPositionVector().add(0, entity.height / 2, 0), null);
+		}
 	}
 
 	final static int[] color = new int[] { 0xFFBFBF, 0xBFFFBF, 0xBFBFFF };
 
 	@SideOnly(Side.CLIENT)
-	public void playTickEffect(World world, Vec3d vec, int tick) {
+	public void playTickEffect(EntityItem entityItem, Vec3d vec, int tick) {
+		World world = entityItem.world;
+		float yoff = 0;
+		if (entityItem != null) {
+			yoff = MathHelper.sin((entityItem.getAge()) / 10.0F + entityItem.hoverStart) * 0.1F + 0.1F;
+			GlStateManager.translate(0, yoff, 0);
+		}
 		for (int i = 0; i < 3; i++) {
-			EffectElementMove effect = new EffectElementMove(world, vec.add(0, 0.3, 0));
+			EffectFragmentCrackMove effect = new EffectFragmentCrackMove(world, vec.add(0, 0.3 + yoff, 0));
 			effect.isGlow = true;
-			effect.prevScale = effect.scale = 0.12f;
+			effect.prevScale = effect.scale = effect.defaultScale = 0.025f;
+			effect.lifeTime = 30;
 			effect.setColor(color[i]);
 			float sin = MathHelper.sin(tick * 3.1415926f / 20 + i * 3.1415926f * 2 / 3);
 			float cos = MathHelper.cos(tick * 3.1415926f / 20 + i * 3.1415926f * 2 / 3);

@@ -162,6 +162,11 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 		return itextcomponent;
 	}
 
+	@SideOnly(Side.CLIENT)
+	public String getDisplayName() {
+		return I18n.format(this.getTranslationKey() + ".name");
+	}
+
 	@Nullable
 	static public Mantra getFromNBT(NBTTagCompound nbt) {
 		if (nbt == null) return null;

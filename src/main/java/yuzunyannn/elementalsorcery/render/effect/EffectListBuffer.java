@@ -21,7 +21,7 @@ public class EffectListBuffer extends EffectList {
 			if (lifeTick <= 0) buffer.dispose();
 			else lifeTick--;
 		}
-		if (effects.isEmpty()) return;
+		if (this.isEmpty()) return;
 		if (buffer.isDispose()) buffer.resize(Effect.displayWidth, Effect.displayHeight);
 		lifeTick = 20 * 60 * 1; // 一分钟没用buff就释放掉，不浪费资源
 		super.update();
@@ -46,7 +46,7 @@ public class EffectListBuffer extends EffectList {
 	@Override
 	public void render(float partialTicks) {
 
-		if (effects.isEmpty()) return;
+		if (this.isEmpty()) return;
 		if (buffer.isDispose()) return;
 
 		// 复制深度缓冲区

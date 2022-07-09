@@ -76,7 +76,7 @@ public class MantraLush extends MantraCommon {
 		int tick = caster.iWantKnowCastTick();
 		if (tick % 3 != 0) return true;
 		BlockPos pos = caster.iWantCaster().getPosition();
-		int size = data.get(SIZE);
+		int size = data.get(SIZEI);
 		float power = wood.getPower() * Math.max(0.2f, 1 - 0.05f * size);
 		wood.shrink(size + 1);
 		for (int x = -size; x <= size; x++) {
@@ -87,7 +87,7 @@ public class MantraLush extends MantraCommon {
 				magicAt(world, pos.add(x, 0, size), caster, power);
 			}
 		}
-		data.set(SIZE, size + 1);
+		data.set(SIZEI, size + 1);
 		return true;
 	}
 

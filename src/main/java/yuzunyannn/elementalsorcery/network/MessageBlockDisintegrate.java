@@ -22,7 +22,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectBlockDisintegrate;
+import yuzunyannn.elementalsorcery.render.effect.crack.EffectBlockDisintegrate;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -157,14 +157,6 @@ public class MessageBlockDisintegrate implements IMessage {
 			if (elements != null && elements.length > 0)
 				effect.color.setColor(elements[Effect.rand.nextInt(elements.length)].getColor());
 
-			Vec3d vec1 = null;
-			if (pkg.dstType == DisintegratePackage.DST_TYPE_ENTITY) {
-				Entity entity = world.getEntityByID(pkg.dstE);
-				if (entity != null) vec1 = entity.getPositionEyes(0).subtract(vec);
-			}
-
-			// 0 1 0
-			if (vec1 != null) effect.rotateVec = new Vec3d(vec1.z, 0, -vec1.x);
 			effect.startWaitingTick = Effect.rand.nextInt(10);
 			effect.tile = tile;
 			if (tile != null) tile.validate();
@@ -178,12 +170,9 @@ public class MessageBlockDisintegrate implements IMessage {
 		if (world.isRemote) return null;
 		if (BlockHelper.isBedrock(world, pos)) return null;
 		if (world.isAirBlock(pos)) return null;
-
 		world.setBlockState(pos, Blocks.AIR.getDefaultState(), 1);
-
 		DisintegratePackage pkg = new DisintegratePackage();
 		pkg.src = pos;
-
 		return pkg;
 	}
 }

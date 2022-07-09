@@ -26,6 +26,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 
 public class EntityScapegoat extends EntityLiving {
 
@@ -130,7 +131,7 @@ public class EntityScapegoat extends EntityLiving {
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (source == DamageSource.FALL) return false;
 		if (source == DamageSource.ANVIL) return super.attackEntityFrom(source, this.getHealth() * 2);
-		if (source.canHarmInCreative()) return super.attackEntityFrom(source, amount);
+		if (DamageHelper.isRuleDamage(source)) return super.attackEntityFrom(source, amount);
 		float finalDamage = amount;
 		Entity entity = source.getTrueSource();
 		if (entity == null) finalDamage = Math.min(1, amount);

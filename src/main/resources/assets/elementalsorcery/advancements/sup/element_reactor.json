@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:sup/invert",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:element_reactor"
+        },
+        "title": {
+            "translate": "es.adv.elementReactor.title"
+        },
+        "description": {
+            "translate": "es.adv.elementReactor.description"
+        }
+    },
+    "criteria": {
+        "build": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "reactor:mantra"
+            }
+        }
+    }
+}

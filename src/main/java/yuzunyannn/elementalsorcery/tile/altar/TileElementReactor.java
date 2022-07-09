@@ -35,6 +35,7 @@ import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.ElementTransition;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraElementWhirl;
+import yuzunyannn.elementalsorcery.grimoire.mantra.crack.MantraCrackOpen;
 import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
@@ -98,6 +99,8 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	public int waitSpellTick;
 	// 充能进度，实时计算
 	public float mantraChargeProgress;
+	// Crack!
+	protected boolean openCrackMark;
 
 	/** 记录上次的状态，用于数据同步 */
 	public Element lastReactorElement;
@@ -207,6 +210,15 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	@SideOnly(Side.CLIENT)
 	public void setStatus(ReactorStatus status) {
 		this.status = status;
+	}
+
+	public void setOpenCrackMark(boolean openCrackMark) {
+		this.openCrackMark = openCrackMark;
+	}
+
+	public boolean canOpenCrackStatus() {
+		ReactorStatus status = getStatus();
+		return status == ReactorStatus.RUNAWAY;
 	}
 
 	/**
@@ -658,8 +670,13 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	}
 
 	public void onBreak(@Nullable EntityLivingBase breaker) {
+		if (world.isRemote) return;
 		ReactorStatus status = getStatus();
 		if (!status.isRunning) return;
+		if (openCrackMark) {
+			MantraCrackOpen.attack(world, pos, 64, breaker, 0, true);
+			return;
+		}
 		setInstableRatio(getInstableRatio() * 0.5);
 		growInstableFragmentFromCore(core.getFragment());
 		doBlast(getInstableFragment(), true);

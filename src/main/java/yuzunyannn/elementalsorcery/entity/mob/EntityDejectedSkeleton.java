@@ -172,7 +172,7 @@ public class EntityDejectedSkeleton extends EntitySkeleton {
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source.canHarmInCreative()) return super.attackEntityFrom(source, amount);
+		if (DamageHelper.isRuleDamage(source)) return super.attackEntityFrom(source, amount);
 		State state = this.getState();
 
 		Entity entity = source.getTrueSource();

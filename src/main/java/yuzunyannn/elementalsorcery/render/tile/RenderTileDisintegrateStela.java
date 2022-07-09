@@ -54,6 +54,14 @@ public class RenderTileDisintegrateStela extends TileEntitySpecialRenderer<TileD
 		GlStateManager.enableCull();
 		RenderHelper.endRender();
 		RenderHelper.bindDestoryTextureEnd(destroyStage);
+
+		if (overLoadRate > 0.001 && this.rendererDispatcher.cameraHitResult != null
+				&& tile.getPos().equals(this.rendererDispatcher.cameraHitResult.getBlockPos())) {
+			this.setLightmapDisabled(true);
+			String str = overLoadRate >= 2 ? "----!----" : String.format("%.3f", overLoadRate);
+			this.drawNameplate(tile, str, x, y, z, 12);
+			this.setLightmapDisabled(false);
+		}
 	}
 
 	@Override

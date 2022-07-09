@@ -80,9 +80,14 @@ public class WorldHelper {
 		return getLookAtBlock(world, entity, distance, false, false, false);
 	}
 
-	/** 获取生物正在看的实体 */
 	static public <T extends Entity> RayTraceResult getLookAtEntity(World world, EntityLivingBase entity,
 			double distance, Class<T> entityType) {
+		return getLookAtEntity(world, entity, distance, e -> entityType.isAssignableFrom(e.getClass()));
+	}
+
+	/** 获取生物正在看的实体 */
+	static public <T extends Entity> RayTraceResult getLookAtEntity(World world, EntityLivingBase entity,
+			double distance, Predicate<? super Entity> predicate) {
 
 		Vec3d eye = entity.getPositionEyes(1.0f);
 		Vec3d look = entity.getLook(1.0F);
@@ -97,7 +102,7 @@ public class WorldHelper {
 				.expand(look.x * distance, look.y * distance, look.z * distance).grow(1.0D, 1.0D, 1.0D);
 		List<Entity> list = world.getEntitiesInAABBexcluding(entity, aabb, new Predicate<Entity>() {
 			public boolean apply(@Nullable Entity check) {
-				return check != null && check != entity && entityType.isAssignableFrom(check.getClass());
+				return check != null && check != entity && predicate.apply(check);
 			}
 		});
 		double minDistance = distance;

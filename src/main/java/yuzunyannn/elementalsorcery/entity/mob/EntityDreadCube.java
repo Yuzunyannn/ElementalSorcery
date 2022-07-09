@@ -49,6 +49,7 @@ import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipeMob;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 
 public class EntityDreadCube extends EntityMob {
 
@@ -271,7 +272,7 @@ public class EntityDreadCube extends EntityMob {
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source.canHarmInCreative()) return super.attackEntityFrom(source, amount);
+		if (DamageHelper.isRuleDamage(source)) return super.attackEntityFrom(source, amount);
 		if (!this.isActive()) return false;
 		if (this.activeRate < 1) return false;
 		Entity entity = source.getTrueSource();

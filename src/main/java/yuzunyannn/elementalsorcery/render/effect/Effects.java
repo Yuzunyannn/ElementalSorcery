@@ -15,11 +15,13 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.item.tool.ItemCollapseWand;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageEffect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementAbsorb;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectFragmentP2P;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectElementCrackAttack;
+import yuzunyannn.elementalsorcery.render.effect.crack.EffectBlockConfusion;
+import yuzunyannn.elementalsorcery.render.effect.crack.EffectElementCrackAttack;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectSummonEntity;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTreatEntity;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectEntitySoul;
@@ -28,6 +30,11 @@ import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class Effects {
+
+	static {
+		@SuppressWarnings("unused")
+		EffectListBufferConfusion elist = EffectBlockConfusion.effectConfusion;
+	}
 
 	public static final int FIREWROK = 1;
 	public static final int PARTICLE_EFFECT = 2;
@@ -38,6 +45,7 @@ public class Effects {
 	public static final int ELEMENT_CRACK_ATTACK = 7;
 	public static final int FRAGMENT_TO = 8;
 	public static final int REACTOR_MANREA = 9;
+	public static final int COLLAPSE = 10;
 
 	/** 生成特殊效果 */
 	public static void spawnEffect(World world, int id, Vec3d pos, NBTTagCompound nbt) {
@@ -112,7 +120,7 @@ public class Effects {
 		EffectMap.register(ELEMENT_CRACK_ATTACK, EffectElementCrackAttack::show);
 		EffectMap.register(FRAGMENT_TO, EffectFragmentP2P::show);
 		EffectMap.register(REACTOR_MANREA, EffectReactorMantraSpell::show);
-
+		EffectMap.register(COLLAPSE, ItemCollapseWand::show);
 	}
 
 	// 下面是通用的show

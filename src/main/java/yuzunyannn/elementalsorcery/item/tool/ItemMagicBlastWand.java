@@ -7,7 +7,6 @@ import javax.annotation.Nullable;
 
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -36,9 +35,9 @@ import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.MagicExchangeInventory;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
-import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -127,27 +126,36 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 	@Override
 	public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
 
-		RayTraceResult rt = WorldHelper.getLookAtEntity(worldIn, entityLiving, 32, EntityLivingBase.class);
-		if (rt == null) return;
-
-		EntityLiving entitiy = (EntityLiving) rt.entityHit;
-		if (EntityHelper.isSameTeam(entitiy, entityLiving)) return;
-
-		if (worldIn.isRemote) return;
-
 		int count = this.getMaxItemUseDuration(stack) - timeLeft;
 		if (count < 5) return;
 
+		if (worldIn.isRemote) return;
+
 		int collect = Math.min(count, 40);
 		float powerUp = 1 + MathHelper.clamp(count - 40, 0, 40) / 200f;
-
-		IElementInventory einv = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		einv.loadState(stack);
-		ElementStack magic = einv.extractElement(ElementStack.magic(collect * 20, 1), false);
+		IElementInventory eInv = ElementHelper.getElementInventory(stack);
+		ElementStack magic = eInv.extractElement(ElementStack.magic(collect * 20, 1), false);
 		if (magic.isEmpty()) return;
-		einv.saveState(stack);
 		magic.setPower(Math.round(magic.getPower() * powerUp));
-		blast(magic, entitiy, entityLiving, null);
+
+		RayTraceResult rt = WorldHelper.getLookAtEntity(worldIn, entityLiving, 32, EntityLivingBase.class);
+		if (rt != null) {
+			eInv.saveState(stack);
+			tryChange(worldIn, entityLiving, stack, rt.hitVec);
+			blast(magic, rt.entityHit, entityLiving, null);
+			return;
+		}
+		rt = WorldHelper.getLookAtBlock(worldIn, entityLiving, 32);
+		if (rt != null) {
+			eInv.saveState(stack);
+			tryChange(worldIn, entityLiving, stack, rt.hitVec);
+			blast(magic, worldIn, rt.hitVec, entityLiving, null);
+			return;
+		}
+	}
+
+	protected void tryChange(World worldIn, EntityLivingBase entityLiving, ItemStack stack, Vec3d vec) {
+
 	}
 
 	/** 通用的，魔力转伤害 */

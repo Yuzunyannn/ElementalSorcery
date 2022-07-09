@@ -1,0 +1,26 @@
+{
+    "parent": "elementalsorcery:sup/fast_disintegrate",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:collapse"
+        },
+        "title": {
+            "translate": "es.adv.collapse.title"
+        },
+        "description": {
+            "translate": "es.adv.collapse.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:collapse"
+                    }
+                ]
+            }
+        }
+    }
+}

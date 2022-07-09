@@ -1,0 +1,23 @@
+{
+    "parent": "elementalsorcery:sup/element_reactor",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:element_crack"
+        },
+        "title": {
+            "translate": "es.adv.elementCrack.title"
+        },
+        "description": {
+            "translate": "es.adv.elementCrack.description"
+        },
+        "frame": "challenge"
+    },
+    "criteria": {
+        "open": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "reactor:crack"
+            }
+        }
+    }
+}

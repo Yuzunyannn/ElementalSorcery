@@ -14,7 +14,6 @@ import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.element.ElementTransition;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionDebtCollector;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
@@ -53,12 +52,7 @@ public class ElfChamberOfCommerce extends WorldSavedData {
 		if (info == null) return -1;
 		ElementStack[] estacks = info.element();
 		double fragment = 0;
-		for (ElementStack estack : estacks) {
-			double fr = ElementHelper.toFragment(estack);
-			ElementTransition et = estack.getElement().getTransition();
-			if (et == null) fragment += fr;
-			else fragment += ElementHelper.transitionFrom(estack.getElement(), fr, et.getLevel());
-		}
+		for (ElementStack estack : estacks) fragment += ElementHelper.toMagicFragment(estack);
 		double count = Math.pow(TileInstantConstitute.getOrderValUsed(info), 0.5);
 		double money = Math.max(1, Math.pow(fragment, 0.8) / 50) * count;
 		ItemStack[] remains = info.remain();
@@ -75,8 +69,7 @@ public class ElfChamberOfCommerce extends WorldSavedData {
 	public static boolean isShouldDebtCollection(EntityLivingBase player) {
 		IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
 		if (adventurer == null) return false;
-		int limit = ElfConfig.isDishonest(player) ? COLLECT_DEBT_START_LIMIT_DISHONEST
-				: COLLECT_DEBT_START_LIMIT;
+		int limit = ElfConfig.isDishonest(player) ? COLLECT_DEBT_START_LIMIT_DISHONEST : COLLECT_DEBT_START_LIMIT;
 		return adventurer.getDebts() > limit;
 	}
 

@@ -12,7 +12,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.util.helper.Color;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public abstract class EffectFacing extends Effect {
 
@@ -50,7 +49,7 @@ public abstract class EffectFacing extends Effect {
 		this.prevScale = this.scale;
 	}
 
-	abstract protected TextureBinder getTexture();
+	abstract protected void bindTexture();
 
 	public double getRotate(float partialTicks) {
 		return 0;
@@ -77,7 +76,7 @@ public abstract class EffectFacing extends Effect {
 		float s = this.prevScale + (this.scale - this.prevScale) * partialTicks;
 		double rotate = this.getRotate(partialTicks);
 
-		getTexture().bind();
+		bindTexture();
 		float rX = ActiveRenderInfo.getRotationX();
 		float rZ = ActiveRenderInfo.getRotationZ();
 		float rYZ = ActiveRenderInfo.getRotationYZ();

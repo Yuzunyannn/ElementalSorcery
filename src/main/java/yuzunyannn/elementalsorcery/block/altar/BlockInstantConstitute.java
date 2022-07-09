@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -19,6 +20,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.block.container.BlockContainerNormal;
 import yuzunyannn.elementalsorcery.tile.altar.TileInstantConstitute;
 import yuzunyannn.elementalsorcery.util.TextHelper;
@@ -36,12 +38,19 @@ public class BlockInstantConstitute extends BlockContainerNormal {
 	}
 
 	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
-			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		ItemStack stack = playerIn.getHeldItem(hand);
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand,
+			EnumFacing facing, float hitX, float hitY, float hitZ) {
+		ItemStack stack = player.getHeldItem(hand);
 		TileInstantConstitute tile = BlockHelper.getTileEntity(worldIn, pos, TileInstantConstitute.class);
 		if (tile == null) return false;
-		return tile.doConstitute(stack);
+		if (tile.doConstitute(stack)) {
+			if (player instanceof EntityPlayerMP) {
+				ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "use:instantConstitute");
+				ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "construct:start");
+			}
+			return true;
+		}
+		return false;
 	}
 
 	@Override

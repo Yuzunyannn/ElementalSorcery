@@ -257,23 +257,32 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 			state = STATE_SPELLING;
 		} else {
 			if (state == STATE_SPELLING) {
-				if (!user.isHandActive() || user.isDead) {
-					if (world.isRemote) this.closeBook();
-					this.onEndSpelling();
-					state = STATE_AFTER_SPELLING;
-					return;
-				}
 				this.lockUser();
 				// 客户端开书
 				if (world.isRemote) {
 					RenderItemGrimoireInfo info = grimoire.getRenderInfo();
 					info.open();
 					info.update();
+				} else {
+					if (!user.isHandActive() || user.isDead) {
+						world.setEntityState(this, (byte) 44);
+						this.onEndSpelling();
+						state = STATE_AFTER_SPELLING;
+						return;
+					}
 				}
 				this.onSpelling();
-			} else {
-				this.onAfterSpelling();
-			}
+			} else this.onAfterSpelling();
+		}
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void handleStatusUpdate(byte id) {
+		if (id == 44) {
+			this.closeBook();
+			this.onEndSpelling();
+			state = STATE_AFTER_SPELLING;
 		}
 	}
 

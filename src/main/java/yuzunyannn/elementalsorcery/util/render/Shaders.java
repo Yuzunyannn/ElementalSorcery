@@ -14,6 +14,7 @@ public class Shaders {
 	public static Shader BlockMeltCauldron;
 	public static Shader RGBColorMapping;
 	public static Shader ErrorCode;
+	public static Shader ElementSky;
 
 	public static void init() throws IOException {
 		Minecraft mc = Minecraft.getMinecraft();
@@ -25,6 +26,7 @@ public class Shaders {
 		BlockMeltCauldron = new Shader("shaders/block_melt_cauldron.fsh");
 		RGBColorMapping = new Shader("shaders/rgb_color_mapping.fsh");
 		ErrorCode = new Shader("shaders/error_code.fsh");
+		ElementSky = new Shader("shaders/element_sky.fsh");
 	}
 
 }

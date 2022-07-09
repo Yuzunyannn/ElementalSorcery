@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.render.effect.grimoire;
+package yuzunyannn.elementalsorcery.render.effect.crack;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.GlStateManager;

@@ -16,6 +16,7 @@ import net.minecraft.client.particle.ParticleExplosionLarge;
 import net.minecraft.enchantment.EnchantmentProtection;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
@@ -207,7 +208,7 @@ public class ElementExplosion implements IExplosionExecutor {
 	@Override
 	public void doExplosionBlock() {
 		if (world.isRemote) doExplosionBlockEffect();
-		
+
 		if (passExplosionBlock) return;
 		doExplosionCheckBlock();
 		for (BlockPos pos : affectedBlockPositions) doExplosionBlockAt(pos);
@@ -301,6 +302,9 @@ public class ElementExplosion implements IExplosionExecutor {
 	}
 
 	protected void doExplosionEntityAt(Entity entity, Vec3d orient, double strength, double damage, double pound) {
+		if (entity instanceof EntityItem) {
+			if (entity.getIsInvulnerable()) return;
+		}
 		doDamageSource(entity, damage);
 		orient = orient.scale(pound);
 		entity.motionX += orient.x;
@@ -321,8 +325,7 @@ public class ElementExplosion implements IExplosionExecutor {
 		Vec3d at = new Vec3d(pos).add(0.5, 0.5, 0.5);
 		doExplosionEntityAtEfect(world, eStack.getColor(), at, at.subtract(position).normalize());
 
-		Vec3d randPos = new Vec3d(pos).add(world.rand.nextFloat(), world.rand.nextFloat(),
-				world.rand.nextFloat());
+		Vec3d randPos = new Vec3d(pos).add(world.rand.nextFloat(), world.rand.nextFloat(), world.rand.nextFloat());
 		Vec3d orient = randPos.subtract(position);
 		double length = orient.length();
 		orient = orient.normalize();

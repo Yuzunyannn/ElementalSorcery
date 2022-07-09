@@ -54,6 +54,7 @@ import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -319,7 +320,7 @@ public class EntityArrogantSheep extends EntityMob {
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
-		if (source.canHarmInCreative() || getSheared()) return super.attackEntityFrom(source, amount);
+		if (DamageHelper.isRuleDamage(source) || getSheared()) return super.attackEntityFrom(source, amount);
 		Entity entity = source.getTrueSource();
 		if (entity instanceof EntityPlayer) {
 			if (rand.nextDouble() < 0.2) entity.sendMessage(createSheepSay("say.arrogantSheep.uselessAttack"));

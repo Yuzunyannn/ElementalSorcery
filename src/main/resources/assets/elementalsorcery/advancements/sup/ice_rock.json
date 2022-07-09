@@ -1,0 +1,36 @@
+{
+    "parent": "elementalsorcery:sup/invert",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:ice_rock_crystal_block"
+        },
+        "title": {
+            "translate": "es.adv.iceRock.title"
+        },
+        "description": {
+            "translate": "es.adv.iceRock.description"
+        }
+    },
+    "criteria": {
+        "i1": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:ice_rock_crystal_block"
+                    }
+                ]
+            }
+        },
+        "i2": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "elementalsorcery:ice_rock_stand"
+                    }
+                ]
+            }
+        }
+    }
+}

@@ -6,7 +6,6 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class EffectElement extends EffectFacing {
@@ -42,8 +41,8 @@ public class EffectElement extends EffectFacing {
 	}
 
 	@Override
-	protected TextureBinder getTexture() {
-		return typeBatch().TEXTURE;
+	protected void bindTexture() {
+		typeBatch().bind();
 	}
 
 	public void setVelocity(Vec3d v) {

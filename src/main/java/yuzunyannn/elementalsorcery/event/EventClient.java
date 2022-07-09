@@ -39,6 +39,7 @@ import yuzunyannn.elementalsorcery.element.ElementTransition;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.item.RenderItemElementCrack;
 import yuzunyannn.elementalsorcery.ts.PocketWatchClient;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -124,6 +125,11 @@ public class EventClient {
 		// 更新所有ES粒子效果
 		Effect.updateAllEffects();
 		// 其他处理
+		if (RenderItemElementCrack.updateRenderTextureFlag) {
+			RenderItemElementCrack.updateRenderData();
+			RenderItemElementCrack.updateRenderTextureFlag = false;
+		}
+
 	}
 
 	/** 获取渲染旋转角度 */
@@ -176,6 +182,8 @@ public class EventClient {
 		renderIterate--;
 		Effect.renderAllEffects(partialTicks);
 		GlStateManager.popMatrix();
+
+		if (RenderItemElementCrack.updateRenderTextureFlag) RenderItemElementCrack.updateRenderTexture(partialTicks);
 	}
 
 	@SubscribeEvent
@@ -220,7 +228,7 @@ public class EventClient {
 
 	@SubscribeEvent
 	static public void playerInputHandler(InputUpdateEvent evt) {
-		
+
 	}
 
 	static public void drawDebugTooltip(ItemTooltipEvent event) {

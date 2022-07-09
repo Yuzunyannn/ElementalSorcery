@@ -39,7 +39,7 @@ public class EffectElementAbsorb extends EffectElementMove {
 	public EffectElementAbsorb(World world, Vec3d from, IBinder to) {
 		super(world, from);
 		this.binder = to;
-		startTick = rand.nextInt(20) + 20;
+		startTick = rand.nextInt(10) + 10;
 		randMotion(startTick / 80.0f);
 		this.dalpha = this.alpha = 0;
 		yDecay = xDecay = zDecay = 0.9;

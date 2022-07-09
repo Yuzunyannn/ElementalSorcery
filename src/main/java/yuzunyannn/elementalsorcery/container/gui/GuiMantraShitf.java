@@ -135,6 +135,7 @@ public class GuiMantraShitf extends GuiScreen {
 				fogScale -= 0.002f;
 				if (fogScale <= 1.7f) scaleUp = true;
 			}
+
 			fogRoate += 0.5f;
 		}
 

@@ -71,6 +71,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 			AncientPaper ap = new AncientPaper();
 			EnumType type = EnumType.NORMAL;
 			if (m instanceof MantraCommon) type = ((MantraCommon) m).getMantraSubItemType();
+			if (type == null) continue;
 			ItemStack stack = new ItemStack(this, 1, type.getMetadata());
 			ap.setMantra(m).setStart(0).setEnd(100);
 			ap.saveState(stack);
@@ -219,7 +220,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 		}
 		if (ap.hasMantra()) {
 			Mantra m = ap.getMantra();
-			String name = I18n.format(m.getTranslationKey() + ".name");
+			String name = m.getDisplayName() + TextFormatting.RESET + TextFormatting.YELLOW;
 			tooltip.add(TextFormatting.YELLOW + I18n.format("info.ancientPaper.mantra", name));
 		} else if (ap.hasType()) {
 			KnowledgeType type = ap.getType();

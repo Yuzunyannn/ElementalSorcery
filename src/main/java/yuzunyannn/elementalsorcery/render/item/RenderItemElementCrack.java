@@ -11,15 +11,34 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformType;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelGlassCup;
+import yuzunyannn.elementalsorcery.util.render.Framebuffer;
+import yuzunyannn.elementalsorcery.util.render.MCFramebufferModify;
+import yuzunyannn.elementalsorcery.util.render.RenderHelper;
+import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class RenderItemElementCrack implements IRenderItem {
 
+	static private Framebuffer frameBuff128 = null;
+
+	static public Framebuffer getFrameBuff() {
+		if (frameBuff128 == null) frameBuff128 = new Framebuffer(new MCFramebufferModify(128, 128));
+		return frameBuff128;
+	}
+
+	static public void bindCrackTexture() {
+		updateRenderTextureFlag = true;
+		getFrameBuff().bindTexture();
+	}
+
+	static public boolean updateRenderTextureFlag = false;
+
 	public static final ModelGlassCup MODEL = new ModelGlassCup();
-	public static final TextureBinder END_SKY_TEXTURE = new TextureBinder("textures/items/element_crack.png");
+	public static final TextureBinder ELEMENT_SKY_TEXTURE = new TextureBinder("textures/items/element_crack.png");
 
 	public static final FloatBuffer buffer = GLAllocation.createDirectFloatBuffer(16);
 	public static final FloatBuffer MODELVIEW = GLAllocation.createDirectFloatBuffer(16);
@@ -27,6 +46,7 @@ public class RenderItemElementCrack implements IRenderItem {
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
+		updateRenderTextureFlag = true;
 
 		GlStateManager.pushMatrix();
 		GlStateManager.disableCull();
@@ -62,31 +82,14 @@ public class RenderItemElementCrack implements IRenderItem {
 			}
 		}
 
-		END_SKY_TEXTURE.bind();
+		getFrameBuff().bindTexture();
+
 		GlStateManager.scale(25, 25, 25);
-
 		if (isInWorld) {
-			GlStateManager.texGen(GlStateManager.TexGen.S, GL11.GL_EYE_LINEAR);
-			GlStateManager.texGen(GlStateManager.TexGen.T, GL11.GL_EYE_LINEAR);
-			GlStateManager.texGen(GlStateManager.TexGen.R, GL11.GL_EYE_LINEAR);
-
-			GlStateManager.texGen(GlStateManager.TexGen.S, GL11.GL_EYE_PLANE, getBuffer(1f, 0, 0, 0));
-			GlStateManager.texGen(GlStateManager.TexGen.T, GL11.GL_EYE_PLANE, getBuffer(0, 1f, 0, 0));
-			GlStateManager.texGen(GlStateManager.TexGen.R, GL11.GL_EYE_PLANE, getBuffer(0, 0, 1f, 0));
-
-			GlStateManager.enableTexGenCoord(GlStateManager.TexGen.S);
-			GlStateManager.enableTexGenCoord(GlStateManager.TexGen.T);
-			GlStateManager.enableTexGenCoord(GlStateManager.TexGen.R);
-
-			GlStateManager.getFloat(GL11.GL_MODELVIEW_MATRIX, MODELVIEW);
-			GlStateManager.getFloat(GL11.GL_PROJECTION_MATRIX, PROJECTION);
-
-			GlStateManager.matrixMode(GL11.GL_TEXTURE);
-			GlStateManager.pushMatrix();
-			GlStateManager.loadIdentity();
-			GlStateManager.multMatrix(PROJECTION);
-			GlStateManager.multMatrix(MODELVIEW);
+			RenderItemElementCrack.startTexGen(1);
 			GlStateManager.scale(4, 4, 4);
+			RenderHelper.disableLightmap(true);
+			GlStateManager.disableLighting();
 		}
 
 		float r = 1, g = 1, b = 1, a = 1;
@@ -97,9 +100,17 @@ public class RenderItemElementCrack implements IRenderItem {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 
-		r = 0.75f;
-		g = 0.75f;
-		b = 1f;
+//		bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
+//		bufferbuilder.pos(0, 0, 0).tex(0, 0);
+//		bufferbuilder.color(r, g, b, a).endVertex();
+//		bufferbuilder.pos(0, 5, 0).tex(0, 1);
+//		bufferbuilder.color(r, g, b, a).endVertex();
+//		bufferbuilder.pos(5, 5, 0).tex(1, 1);
+//		bufferbuilder.color(r, g, b, a).endVertex();
+//		bufferbuilder.pos(5, 0, 0).tex(1, 0);
+//		bufferbuilder.color(r, g, b, a).endVertex();
+//		tessellator.draw();
+
 		bufferbuilder.begin(GL11.GL_TRIANGLES, DefaultVertexFormats.POSITION_TEX_COLOR);
 		bufferbuilder.pos(-0.5, 0, -cg3).tex(0, 0);
 		bufferbuilder.color(r, g, b, a).endVertex();
@@ -107,22 +118,12 @@ public class RenderItemElementCrack implements IRenderItem {
 		bufferbuilder.color(r, g, b, a).endVertex();
 		bufferbuilder.pos(0, g3, 0).tex(0.5, g3);
 		bufferbuilder.color(r, g, b, a).endVertex();
-		tessellator.draw();
-		r = 0.75f;
-		g = 1f;
-		b = 0.75f;
-		bufferbuilder.begin(GL11.GL_TRIANGLES, DefaultVertexFormats.POSITION_TEX_COLOR);
 		bufferbuilder.pos(-0.5, 0, -cg3).tex(0, 0);
 		bufferbuilder.color(r, g, b, a).endVertex();
 		bufferbuilder.pos(0, 0, g3 - cg3).tex(1, 0);
 		bufferbuilder.color(r, g, b, a).endVertex();
 		bufferbuilder.pos(0, g3, 0).tex(0.5, g3);
 		bufferbuilder.color(r, g, b, a).endVertex();
-		tessellator.draw();
-		r = 1f;
-		g = 0.75f;
-		b = 0.75f;
-		bufferbuilder.begin(GL11.GL_TRIANGLES, DefaultVertexFormats.POSITION_TEX_COLOR);
 		bufferbuilder.pos(0.5, 0, -cg3).tex(0, 0);
 		bufferbuilder.color(r, g, b, a).endVertex();
 		bufferbuilder.pos(0, 0, g3 - cg3).tex(1, 0);
@@ -132,12 +133,9 @@ public class RenderItemElementCrack implements IRenderItem {
 		tessellator.draw();
 
 		if (isInWorld) {
-			GlStateManager.popMatrix();
-			GlStateManager.matrixMode(GL11.GL_MODELVIEW);
-
-			GlStateManager.disableTexGenCoord(GlStateManager.TexGen.S);
-			GlStateManager.disableTexGenCoord(GlStateManager.TexGen.T);
-			GlStateManager.disableTexGenCoord(GlStateManager.TexGen.R);
+			RenderHelper.disableLightmap(false);
+			GlStateManager.enableLighting();
+			RenderItemElementCrack.endTexGen();
 		}
 
 //		GlStateManager.disableTexture2D();
@@ -166,5 +164,112 @@ public class RenderItemElementCrack implements IRenderItem {
 		buffer.put(x).put(y).put(z).put(w);
 		buffer.flip();
 		return buffer;
+	}
+
+	public static double h;
+	public static Vec3d move = Vec3d.ZERO;
+	public static Vec3d prevMove = Vec3d.ZERO;
+
+	public static void updateRenderData() {
+		h += 1;
+		double x = Math.cos(h / 180 * Math.PI) / 5;
+		double y = Math.sin(h / 180 * Math.PI) / 5;
+		prevMove = move;
+		move = move.add(x, y, 0);
+	}
+
+	public static void updateRenderTexture(float partialTicks) {
+		RenderHelper.renderOffscreenTexture128(v -> {
+			GlStateManager.clearColor(0, 0, 0, 1);
+			GlStateManager.clear(GL11.GL_COLOR_BUFFER_BIT);
+			GlStateManager.color(1, 1, 1, 1);
+			GlStateManager.enableNormalize();
+
+			float tick = EventClient.tickRender + partialTicks;
+			double x = RenderHelper.getPartialTicks(move.x, prevMove.x, partialTicks);
+			double y = RenderHelper.getPartialTicks(move.y, prevMove.y, partialTicks);
+			Shaders.ElementSky.bind();
+
+			ELEMENT_SKY_TEXTURE.bind();
+			Tessellator tessellator = Tessellator.getInstance();
+			BufferBuilder bufferbuilder = tessellator.getBuffer();
+
+			GlStateManager.scale(1.5, 1.5, 1.5);
+
+			Shaders.ElementSky.setUniform("c_ratio", tick / 30);
+			Shaders.ElementSky.setUniform("ratio", tick / 25);
+			Shaders.ElementSky.setUniform("move", Vec3d.ZERO);
+			bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+			bufferbuilder.pos(0, 0, 0).tex(0, 0).endVertex();
+			bufferbuilder.pos(0, 128, 0).tex(0, 1).endVertex();
+			bufferbuilder.pos(128, 128, 0).tex(1, 1).endVertex();
+			bufferbuilder.pos(128, 0, 0).tex(1, 0).endVertex();
+			tessellator.draw();
+
+			Shaders.ElementSky.setUniform("ratio", tick / 25 + 3.1415926);
+			Shaders.ElementSky.setUniform("move", new Vec3d(0.25, -0.25, 0));
+			bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+			bufferbuilder.pos(0, 0, 0).tex(0, 0).endVertex();
+			bufferbuilder.pos(0, 128, 0).tex(0, 1).endVertex();
+			bufferbuilder.pos(128, 128, 0).tex(1, 1).endVertex();
+			bufferbuilder.pos(128, 0, 0).tex(1, 0).endVertex();
+			tessellator.draw();
+
+			GlStateManager.scale(0.66666667, 0.66666667, 0.66666667);
+
+			Shaders.ElementSky.setUniform("c_ratio", tick / 10);
+			Shaders.ElementSky.setUniform("ratio", 3.1415926 + tick / 50);
+			Shaders.ElementSky.setUniform("move", new Vec3d(x, y, 0));
+			bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+			bufferbuilder.pos(0, 0, 0).tex(0, 0).endVertex();
+			bufferbuilder.pos(0, 128, 0).tex(0, 1).endVertex();
+			bufferbuilder.pos(128, 128, 0).tex(1, 1).endVertex();
+			bufferbuilder.pos(128, 0, 0).tex(1, 0).endVertex();
+			tessellator.draw();
+
+			Shaders.ElementSky.setUniform("ratio", 3.1415926 / 2 + tick / 50);
+			Shaders.ElementSky.setUniform("move", new Vec3d(-x, -y, 0));
+			bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
+			bufferbuilder.pos(0, 0, 0).tex(0, 0).endVertex();
+			bufferbuilder.pos(0, 128, 0).tex(0, 1).endVertex();
+			bufferbuilder.pos(128, 128, 0).tex(1, 1).endVertex();
+			bufferbuilder.pos(128, 0, 0).tex(1, 0).endVertex();
+			tessellator.draw();
+			Shaders.ElementSky.unbind();
+
+		}, getFrameBuff());
+	}
+
+	public static void startTexGen(double fScale) {
+		GlStateManager.texGen(GlStateManager.TexGen.S, GL11.GL_EYE_LINEAR);
+		GlStateManager.texGen(GlStateManager.TexGen.T, GL11.GL_EYE_LINEAR);
+		GlStateManager.texGen(GlStateManager.TexGen.R, GL11.GL_EYE_LINEAR);
+
+		GlStateManager.texGen(GlStateManager.TexGen.S, GL11.GL_EYE_PLANE, getBuffer(1f, 0, 0, 0));
+		GlStateManager.texGen(GlStateManager.TexGen.T, GL11.GL_EYE_PLANE, getBuffer(0, 1f, 0, 0));
+		GlStateManager.texGen(GlStateManager.TexGen.R, GL11.GL_EYE_PLANE, getBuffer(0, 0, 1f, 0));
+
+		GlStateManager.enableTexGenCoord(GlStateManager.TexGen.S);
+		GlStateManager.enableTexGenCoord(GlStateManager.TexGen.T);
+		GlStateManager.enableTexGenCoord(GlStateManager.TexGen.R);
+
+		GlStateManager.getFloat(GL11.GL_MODELVIEW_MATRIX, MODELVIEW);
+		GlStateManager.getFloat(GL11.GL_PROJECTION_MATRIX, PROJECTION);
+
+		GlStateManager.matrixMode(GL11.GL_TEXTURE);
+		GlStateManager.pushMatrix();
+		GlStateManager.loadIdentity();
+		if (fScale != 1) GlStateManager.scale(fScale, fScale, fScale);
+		GlStateManager.multMatrix(PROJECTION);
+		GlStateManager.multMatrix(MODELVIEW);
+	}
+
+	public static void endTexGen() {
+		GlStateManager.popMatrix();
+		GlStateManager.matrixMode(GL11.GL_MODELVIEW);
+
+		GlStateManager.disableTexGenCoord(GlStateManager.TexGen.S);
+		GlStateManager.disableTexGenCoord(GlStateManager.TexGen.T);
+		GlStateManager.disableTexGenCoord(GlStateManager.TexGen.R);
 	}
 }
