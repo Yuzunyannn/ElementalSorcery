@@ -93,9 +93,7 @@ public class ItemElementCrack extends Item {
 
 	public void disintegrateAroundEntity(World world, Vec3d vec) {
 		AxisAlignedBB aabb = WorldHelper.createAABB(vec, 1.5, 1.5, 1.5);
-		List<Entity> list = world.getEntitiesWithinAABB(Entity.class, aabb, e -> {
-			return e instanceof EntityLivingBase || e instanceof EntityItem;
-		});
+		List<Entity> list = world.getEntitiesWithinAABB(Entity.class, aabb);
 		for (Entity e : list) crackAttack(world, e, null);
 	}
 
@@ -159,7 +157,7 @@ public class ItemElementCrack extends Item {
 			} catch (Exception e) {}
 
 			int nextLevel = (effect == null ? -1 : effect.getAmplifier()) + 1;
-			int remainTick = (int) (20 * 10 + Math.pow(5, nextLevel));
+			int remainTick = (int) (20 * 30 + Math.pow(5, nextLevel));
 
 			effect = new PotionEffect(ESInit.POTIONS.ELEMENT_CRACK_ATTACK, remainTick, nextLevel);
 			living.addPotionEffect(effect);

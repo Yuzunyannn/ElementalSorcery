@@ -256,11 +256,11 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 			}
 		});
 
-		EntityItem item = ItemHelper.dropItem(world, new Vec3d(pos).add(0.5, 0.5, 0.5),
+		EntityItem entityitem = ItemHelper.dropItem(world, new Vec3d(pos).add(0.5, 0.5, 0.5),
 				new ItemStack(ESInit.ITEMS.COLLAPSE));
-		item.setVelocity(0, 0, 0);
-		item.velocityChanged = true;
-		item.setNoDespawn();
+		entityitem.motionX = entityitem.motionY = entityitem.motionZ = 0;
+		entityitem.velocityChanged = true;
+		entityitem.setNoDespawn();
 	}
 
 	public void ergodicMaigcPlatform(Function<BlockPos, Boolean> callback) {

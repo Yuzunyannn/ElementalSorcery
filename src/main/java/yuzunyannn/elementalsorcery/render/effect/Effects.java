@@ -27,13 +27,16 @@ import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTreatEntity;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectEntitySoul;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectReactorMantraSpell;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
+import yuzunyannn.elementalsorcery.util.helper.GameHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class Effects {
 
 	static {
-		@SuppressWarnings("unused")
-		EffectListBufferConfusion elist = EffectBlockConfusion.effectConfusion;
+		GameHelper.clientRun(() -> {
+			@SuppressWarnings("unused")
+			EffectListBufferConfusion elist = EffectBlockConfusion.effectConfusion;
+		});
 	}
 
 	public static final int FIREWROK = 1;

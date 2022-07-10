@@ -97,7 +97,7 @@ public class MantraCrackOpen extends MantraCrackCommon {
 					ItemStack elementCrack = new ItemStack(ESInit.ITEMS.ELEMENT_CRACK, 1);
 					EntityItem entityitem = ItemHelper.dropItem(world, caster.iWantDirectCaster().getPositionVector(),
 							elementCrack);
-					entityitem.setVelocity(0, 0, 0);
+					entityitem.motionX = entityitem.motionY = entityitem.motionZ = 0;
 					entityitem.velocityChanged = true;
 				}
 				return false;
@@ -135,7 +135,7 @@ public class MantraCrackOpen extends MantraCrackCommon {
 						world.setBlockState(at, Blocks.AIR.getDefaultState());
 					}
 					// 都20毫秒了，行吧，别算了，下次再算
-					if (System.currentTimeMillis() - startTime > 20) {
+					if (System.currentTimeMillis() - startTime > 16) {
 						NBTTagCompound dat = new NBTTagCompound();
 						dat.setInteger("s", size);
 						dat.setInteger("x", x);
