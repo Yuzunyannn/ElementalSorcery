@@ -1,0 +1,61 @@
+{
+    "mods": "ic2",
+    "maps": [
+        {
+            "note": "高压导线",
+            "item": {
+                "type": "ore_dict",
+                "item": "itemIronCable"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 1,
+                    "power": 285
+                }
+            ]
+        },
+        {
+            "note": "锡导线",
+            "item": {
+                "type": "ore_dict",
+                "item": "itemTinCable"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 1,
+                    "power": 250
+                }
+            ]
+        },
+        {
+            "note": "铜导线",
+            "item": {
+                "type": "ore_dict",
+                "item": "itemCopperCable"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 1,
+                    "power": 248
+                }
+            ]
+        },
+        {
+            "note": "金导线",
+            "item": {
+                "type": "ore_dict",
+                "item": "itemGoldCable"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 1,
+                    "power": 450
+                }
+            ]
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "mods": "appliedenergistics2",
+    "maps": [
+        {
+            "note": "线缆锚",
+            "complex": 1,
+            "item": {
+                "item": "appliedenergistics2:part",
+                "meta": 120
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 1,
+                    "power": 35
+                }
+            ]
+        }
+    ]
+}

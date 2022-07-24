@@ -21,7 +21,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -31,15 +30,15 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
-import yuzunyannn.elementalsorcery.grimoire.mantra.crack.MantraCrackOpen;
+import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.parchment.Pages;
-import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.crack.EffectCylinderCrackBlast;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -122,7 +121,29 @@ public class CommandESDebug {
 				return;
 			case "textTest": {
 
-				MantraCrackOpen.attack(entity.world, pos, 48, entity, 0, true);
+				int n = 0;
+				for (int i = 0; i < 100000; i++) {
+					ElementStack eStack1 = new ElementStack(ESInit.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000) ,
+							RandomHelper.rand.nextInt(10000));
+					ElementStack eStack2 = new ElementStack(ESInit.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000),
+							RandomHelper.rand.nextInt(10000));
+					ElementStack eStack3 = new ElementStack(ESInit.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000),
+							RandomHelper.rand.nextInt(10000));
+					
+					ElementStack old = eStack1.copy();
+					old.grow(eStack3);
+					
+					eStack1.grow(eStack2);
+					eStack1.grow(eStack3);
+					
+					eStack1.disgrow(eStack2);
+					if (old.getCount() != eStack1.getCount() || old.getPower() != eStack1.getPower()) {
+						n = n + old.getPower() - eStack1.getPower();
+					}
+				}
+				System.out.println(n / 100000.0);
+
+//				MantraCrackOpen.attack(entity.world, pos, 48, entity, 0, true);
 
 //				for (int i = 0; i < 32; i++) {
 //					EntityItemGoods goods = new EntityItemGoods(entity.world,
@@ -142,10 +163,10 @@ public class CommandESDebug {
 //				}
 
 //				EffectFragmentCrackMove.spawnBoom(Minecraft.getMinecraft().world, new Vec3d(pos.up()), 0xffffff, 2);
-
-				EffectCylinderCrackBlast effect = new EffectCylinderCrackBlast(Minecraft.getMinecraft().world,
-						new Vec3d(pos.up()));
-				Effect.addEffect(effect);
+//
+//				EffectCylinderCrackBlast effect = new EffectCylinderCrackBlast(Minecraft.getMinecraft().world,
+//						new Vec3d(pos.up()));
+//				Effect.addEffect(effect);
 
 //				IFragmentMantraLauncher is = ESInit.MANTRAS.BLOCK_CRASH.getFragmentMantraLaunchers().get(0);
 //				VariableSet content = new VariableSet();

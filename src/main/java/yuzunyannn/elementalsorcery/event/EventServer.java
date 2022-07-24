@@ -20,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
@@ -73,7 +74,7 @@ import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMAttack;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.IItemStronger;
-import yuzunyannn.elementalsorcery.item.ItemScroll;
+import yuzunyannn.elementalsorcery.item.ItemManual;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageSyncConfig;
@@ -234,19 +235,21 @@ public class EventServer {
 
 	@SubscribeEvent
 	public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
-		EntityPlayer player = event.player;
-		NBTTagCompound data = EventServer.getPlayerNBT(player);
-		if (!data.hasKey("esFirstJoin")) {
-			if (player.inventory == null) return;
-			data.setBoolean("esFirstJoin", true);
-			player.inventory.addItemStackToInventory(ItemScroll.getScroll("rite"));
-		}
-
 		if (event.player instanceof EntityPlayerMP) {
-			EntityPlayerMP playerMP = (EntityPlayerMP) event.player;
-			MinecraftServer mc = playerMP.getServer();
+			EntityPlayerMP player = (EntityPlayerMP) event.player;
+
+			NBTTagCompound data = EventServer.getPlayerNBT(player);
+			if (!data.hasKey("esFirstJoin")) {
+				if (player.inventory == null) return;
+				data.setBoolean("esFirstJoin", true);
+				NBTTagList list = new NBTTagList();
+				list.appendTag(new NBTTagString("rite"));
+				player.inventory.addItemStackToInventory(ItemManual.setIds(new ItemStack(ESInit.ITEMS.MANUAL), list));
+			}
+
+			MinecraftServer mc = player.getServer();
 			if (mc.isSinglePlayer()) ESConfig.restore();
-			else ESNetwork.instance.sendTo(new MessageSyncConfig(ESConfig.getter.getSyncData()), playerMP);
+			else ESNetwork.instance.sendTo(new MessageSyncConfig(ESConfig.getter.getSyncData()), player);
 		}
 	}
 

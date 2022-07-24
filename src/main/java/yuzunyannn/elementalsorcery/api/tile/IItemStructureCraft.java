@@ -6,7 +6,6 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.ForgeHooks;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 
 /** 物品结构合成，记录物品的结构 */
@@ -27,8 +26,8 @@ public interface IItemStructureCraft {
 	ItemStack getOutput();
 
 	/** 是否需要到解析到底 */
-	default boolean calcRemain(ItemStack input) {
-		return ForgeHooks.getContainerItem(input).isEmpty();
+	default Collection<ItemStack> getRemains() {
+		return null;
 	}
 
 }

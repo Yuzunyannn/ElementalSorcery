@@ -1,13 +1,12 @@
 package yuzunyannn.elementalsorcery.container.gui;
 
 import net.minecraft.client.renderer.GlStateManager;
-import yuzunyannn.elementalsorcery.container.ContainerItemStructureCraft;
+import yuzunyannn.elementalsorcery.container.ContainerItemStructureCraftNormal;
 
-public class GuiItemStructureCraft extends GuiNormal<ContainerItemStructureCraft> {
+public class GuiItemStructureCraftNormal extends GuiNormal<ContainerItemStructureCraftNormal> {
 
-	public GuiItemStructureCraft(ContainerItemStructureCraft inventorySlotsIn) {
+	public GuiItemStructureCraftNormal(ContainerItemStructureCraftNormal inventorySlotsIn) {
 		super(inventorySlotsIn, inventorySlotsIn.player.inventory);
-		container.tileEntity.initGui(this);
 	}
 
 	@Override

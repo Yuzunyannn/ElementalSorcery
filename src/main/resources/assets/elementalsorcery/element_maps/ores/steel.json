@@ -1,0 +1,138 @@
+{
+    "maps": [
+        {
+            "note": "钢锭",
+            "item": {
+                "type": "ore_dict",
+                "item": "ingotSteel"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 5,
+                    "power": 285
+                },
+                {
+                    "id": "wood",
+                    "size": 5,
+                    "power": 145
+                }
+            ]
+        },
+        {
+            "note": "钢粉",
+            "item": {
+                "type": "ore_dict",
+                "item": "dustSteel"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 5,
+                    "power": 285
+                },
+                {
+                    "id": "wood",
+                    "size": 5,
+                    "power": 145
+                }
+            ]
+        },
+        {
+            "note": "小钢粉",
+            "item": {
+                "type": "ore_dict",
+                "item": "dustTinySteel"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 1,
+                    "power": 178
+                },
+                {
+                    "id": "wood",
+                    "size": 1,
+                    "power": 91
+                }
+            ]
+        },
+        {
+            "note": "钢粒",
+            "item": {
+                "type": "ore_dict",
+                "item": "nuggetSteel"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 1,
+                    "power": 178
+                },
+                {
+                    "id": "wood",
+                    "size": 1,
+                    "power": 91
+                }
+            ]
+        },
+        {
+            "note": "钢板",
+            "item": {
+                "type": "ore_dict",
+                "item": "plateSteel"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 5,
+                    "power": 285
+                },
+                {
+                    "id": "wood",
+                    "size": 5,
+                    "power": 145
+                }
+            ]
+        },
+        {
+            "note": "厚钢板",
+            "item": {
+                "type": "ore_dict",
+                "item": "plateDenseSteel"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 24,
+                    "power": 285
+                },
+                {
+                    "id": "wood",
+                    "size": 24,
+                    "power": 145
+                }
+            ]
+        },
+        {
+            "note": "钢外壳",
+            "mods": "ic2",
+            "item": {
+                "item": "ic2:casing",
+                "meta": 5
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 2,
+                    "power": 285
+                },
+                {
+                    "id": "wood",
+                    "size": 2,
+                    "power": 145
+                }
+            ]
+        }
+    ]
+}

@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.container;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IContainerListener;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
@@ -44,7 +45,7 @@ public class ContainerAnalysisAltar extends ContainerNormal<TileAnalysisAltar> i
 	@Override
 	public void recvData(NBTTagCompound nbt, Side side) {
 		if (side != Side.CLIENT) return;
-		if (nbt.hasKey("error")) tileEntity.setCannotAnalysis();
+		if (nbt.hasKey("error")) tileEntity.setCannotAnalysisStack(new ItemStack(nbt.getCompoundTag("error")));
 		else if (nbt.hasKey("clear")) tileEntity.setAnalysisPacket(null);
 		else tileEntity.setAnalysisPacket(nbt);
 	}
@@ -75,7 +76,7 @@ public class ContainerAnalysisAltar extends ContainerNormal<TileAnalysisAltar> i
 			lastError = tileEntity.cannotAnalysis();
 			if (lastError) {
 				NBTTagCompound nbt = new NBTTagCompound();
-				nbt.setBoolean("error", true);
+				nbt.setTag("error", tileEntity.getCannotAnalysisStack().serializeNBT());
 				this.sendToClient(nbt, listeners);
 			}
 		}

@@ -66,44 +66,6 @@
             }
         },
         {
-            "note": "金矿石",
-            "item": {
-                "type": "ore_dict",
-                "item": "oreGold"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 54,
-                    "power": 475
-                },
-                {
-                    "id": "earth",
-                    "size": 5,
-                    "power": 30
-                }
-            ]
-        },
-        {
-            "note": "铁",
-            "item": {
-                "type": "ore_dict",
-                "item": "oreIron"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 21,
-                    "power": 325
-                },
-                {
-                    "id": "earth",
-                    "size": 5,
-                    "power": 30
-                }
-            ]
-        },
-        {
             "note": "煤",
             "item": {
                 "type": "ore_dict",
@@ -112,8 +74,8 @@
             "element": [
                 {
                     "id": "wood",
-                    "size": 15,
-                    "power": 185
+                    "size": 10,
+                    "power": 150
                 },
                 {
                     "id": "earth",
@@ -191,25 +153,6 @@
             ]
         },
         {
-            "note": "青金石矿石",
-            "item": {
-                "type": "ore_dict",
-                "item": "oreLapis"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 60,
-                    "power": 575
-                },
-                {
-                    "id": "earth",
-                    "size": 45,
-                    "power": 423
-                }
-            ]
-        },
-        {
             "note": "沙石",
             "item": {
                 "type": "ore_dict",
@@ -245,25 +188,6 @@
                     "id": "fire",
                     "size": 4,
                     "power": 24
-                }
-            ]
-        },
-        {
-            "note": "钻石",
-            "item": {
-                "type": "ore_dict",
-                "item": "oreDiamond"
-            },
-            "element": [
-                {
-                    "id": "wood",
-                    "size": 64,
-                    "power": 850
-                },
-                {
-                    "id": "earth",
-                    "size": 5,
-                    "power": 30
                 }
             ]
         },
@@ -398,25 +322,6 @@
                     "id": "wood",
                     "size": 1,
                     "power": 4
-                }
-            ]
-        },
-        {
-            "note": "绿宝石",
-            "item": {
-                "type": "ore_dict",
-                "item": "oreEmerald"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 68,
-                    "power": 782
-                },
-                {
-                    "id": "earth",
-                    "size": 57,
-                    "power": 698
                 }
             ]
         },

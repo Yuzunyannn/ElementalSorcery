@@ -25,43 +25,6 @@
             }
         },
         {
-            "note": "钻石",
-            "item": {
-                "type": "ore_dict",
-                "item": "gemDiamond"
-            },
-            "element": {
-                "id": "wood",
-                "size": 12,
-                "power": 625
-            },
-            "complex": 4
-        },
-        {
-            "note": "铁",
-            "item": {
-                "type": "ore_dict",
-                "item": "ingotIron"
-            },
-            "element": {
-                "id": "metal",
-                "size": 7,
-                "power": 285
-            }
-        },
-        {
-            "note": "金",
-            "item": {
-                "type": "ore_dict",
-                "item": "ingotGold"
-            },
-            "element": {
-                "id": "metal",
-                "size": 16,
-                "power": 450
-            }
-        },
-        {
             "note": "木棒",
             "item": "minecraft:stick",
             "element": {
@@ -298,25 +261,6 @@
             ]
         },
         {
-            "notes": "青金石",
-            "item": {
-                "item": "minecraft:dye",
-                "data": 4
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 9,
-                    "power": 437
-                },
-                {
-                    "id": "earth",
-                    "size": 8,
-                    "power": 385
-                }
-            ]
-        },
-        {
             "notes": "末影珍珠",
             "item": "minecraft:ender_pearl",
             "element": [
@@ -377,25 +321,6 @@
                     "id": "earth",
                     "size": 6,
                     "power": 10
-                }
-            ]
-        },
-        {
-            "notes": "绿宝石",
-            "item": {
-                "type": "ore_dict",
-                "item": "gemEmerald"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 14,
-                    "power": 702
-                },
-                {
-                    "id": "earth",
-                    "size": 12,
-                    "power": 613
                 }
             ]
         },
@@ -493,8 +418,8 @@
             "element": [
                 {
                     "id": "metal",
-                    "size": 90,
-                    "power": 450
+                    "size": 80,
+                    "power": 425
                 }
             ],
             "complex": 10
@@ -504,10 +429,15 @@
             "item": "minecraft:diamond_horse_armor",
             "element": [
                 {
-                    "id": "metal",
-                    "size": 60,
+                    "id": "wood",
+                    "size": 40,
                     "power": 625
-                }
+                },
+                {
+                    "id": "metal",
+                    "size": 30,
+                    "power": 275
+                } 
             ],
             "complex": 10
         },

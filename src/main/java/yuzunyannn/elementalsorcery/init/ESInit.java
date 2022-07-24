@@ -100,6 +100,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockHearth;
 import yuzunyannn.elementalsorcery.block.container.BlockIceRockCrystalBlock;
 import yuzunyannn.elementalsorcery.block.container.BlockIceRockNode;
 import yuzunyannn.elementalsorcery.block.container.BlockIceRockStand;
+import yuzunyannn.elementalsorcery.block.container.BlockItemStructureCraftCC;
 import yuzunyannn.elementalsorcery.block.container.BlockItemStructureCraftNormal;
 import yuzunyannn.elementalsorcery.block.container.BlockLantern;
 import yuzunyannn.elementalsorcery.block.container.BlockMagicPlatform;
@@ -313,6 +314,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileIceRockNode;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileIceRockSendRecv;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileIceRockStand;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileInstantConstitute;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileItemStructureCraftCC;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileLantern;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
@@ -344,6 +346,7 @@ import yuzunyannn.elementalsorcery.tile.TileElementPlatform;
 import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
+import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftCC;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftNormal;
 import yuzunyannn.elementalsorcery.tile.TileLantern;
 import yuzunyannn.elementalsorcery.tile.TileLifeDirt;
@@ -514,6 +517,7 @@ public class ESInit {
 		BLOCKS.ICE_ROCK_NODE = new BlockIceRockNode();
 		BLOCKS.ELEMENT_REACTOR = new BlockElementReactor();
 		BLOCKS.INSTANT_CONSTITUTE = new BlockInstantConstitute();
+		BLOCKS.IS_CRAFT_CC = new BlockItemStructureCraftCC();
 
 		// 初始化所有tab
 		Class<?> cls = BLOCKS.getClass();
@@ -956,6 +960,7 @@ public class ESInit {
 		register(TileEStoneMatrix.class, "EStoneMatrix");
 		register(TileInstantConstitute.class, "IConstitute");
 		register(TileEStoneCrock.class, "EStoneCrock");
+		register(TileItemStructureCraftCC.class, "ISCraftCC");
 	}
 
 	static void registerAllCapability() {
@@ -1215,6 +1220,7 @@ public class ESInit {
 		registerRender(BLOCKS.ICE_ROCK_NODE, TileIceRockNode.class, new RenderTileIceRockNode());
 		registerRender(BLOCKS.ELEMENT_REACTOR, TileElementReactor.class, new RenderTileElementReactor());
 		registerRender(BLOCKS.ESTONE_MATRIX, TileEStoneMatrix.class, new RenderTileEStoneMatrix());
+		registerRender(BLOCKS.IS_CRAFT_CC, TileItemStructureCraftCC.class, new RenderTileItemStructureCraftCC());
 		registerRender(BLOCKS.INSTANT_CONSTITUTE, TileInstantConstitute.class, new RenderTileInstantConstitute());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());

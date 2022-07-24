@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.util.element;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -139,6 +140,23 @@ public class ElementHelper {
 				}
 			}
 			if (!e2.isEmpty()) list.add(e2);
+		}
+		return (ElementStack[]) list.toArray(new ElementStack[list.size()]);
+	}
+
+	static public ElementStack[] demerge(ElementStack[] estacks1, ElementStack... estacks2) {
+		ArrayList<ElementStack> list = new ArrayList<ElementStack>();
+		for (ElementStack e1 : estacks1) list.add(e1);
+		for (ElementStack e2 : estacks2) {
+			Iterator<ElementStack> iter = list.iterator();
+			while (iter.hasNext()) {
+				ElementStack e1 = iter.next();
+				if (e1.areSameType(e2)) {
+					e1.disgrow(e2);
+					if (e1.isEmpty()) iter.remove();
+					break;
+				}
+			}
 		}
 		return (ElementStack[]) list.toArray(new ElementStack[list.size()]);
 	}

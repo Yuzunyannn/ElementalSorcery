@@ -88,12 +88,13 @@ public class CraftingCrafting implements ICraftingAltar {
 		this.tick++;
 		if (this.tick % 3 != 0) return;
 		// 寻找合成表
-		if (workingIrecipe == null) {
+		if (workingIrecipe == null) next: {
 			workingIrecipe = RecipeManagement.instance.findMatchingRecipe(workingInventory, tileMul.getWorld());
 			if (workingIrecipe == null) {
 				this.isOk = false;
 				return;
 			}
+			if (workingEInventory != null) break next;
 			List<ElementStack> needs = workingIrecipe.getNeedElements();
 			if (needs != null && !needs.isEmpty()) {
 				workingEInventory = new ElementInventory(needs.size());
@@ -125,6 +126,7 @@ public class CraftingCrafting implements ICraftingAltar {
 					this.isOk = false;
 					return;
 				}
+				tileMul.markDirty();
 				return;
 			}
 		}

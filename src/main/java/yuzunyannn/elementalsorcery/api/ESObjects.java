@@ -5,6 +5,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import yuzunyannn.elementalsorcery.block.container.BlockItemStructureCraftCC;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 
@@ -206,6 +207,7 @@ public class ESObjects {
 		public Block ESTONE_MATRIX;
 		public Block INSTANT_CONSTITUTE;
 		public Block ESTONE_CROCK;
+		public Block IS_CRAFT_CC;
 	}
 
 	static public class Elements {

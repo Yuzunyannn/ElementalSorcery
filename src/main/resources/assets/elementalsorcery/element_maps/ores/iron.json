@@ -1,0 +1,155 @@
+{
+    "maps": [
+        {
+            "note": "铁矿",
+            "item": {
+                "type": "ore_dict",
+                "item": "oreIron"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 24,
+                    "power": 325
+                },
+                {
+                    "id": "earth",
+                    "size": 5,
+                    "power": 30
+                }
+            ]
+        },
+        {
+            "note": "碎铁粉",
+            "item": {
+                "type": "ore_dict",
+                "item": "crushedIron"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 12,
+                    "power": 300
+                },
+                {
+                    "id": "earth",
+                    "size": 2,
+                    "power": 30
+                }
+            ]
+        },
+        {
+            "note": "纯碎铁粉",
+            "item": {
+                "type": "ore_dict",
+                "item": "crushedPurifiedIron"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 6,
+                    "power": 280
+                }
+            ]
+        },
+        {
+            "note": "铁锭",
+            "item": {
+                "type": "ore_dict",
+                "item": "ingotIron"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 5,
+                    "power": 285
+                }
+            ]
+        },
+        {
+            "note": "铁粉",
+            "item": {
+                "type": "ore_dict",
+                "item": "dustIron"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 5,
+                    "power": 285
+                }
+            ]
+        },
+        {
+            "note": "小铁粉",
+            "item": {
+                "type": "ore_dict",
+                "item": "dustTinyIron"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 1,
+                    "power": 178
+                }
+            ]
+        },
+        {
+            "note": "铁粒",
+            "item": {
+                "type": "ore_dict",
+                "item": "nuggetIron"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 1,
+                    "power": 178
+                }
+            ]
+        },
+        {
+            "note": "铁板",
+            "item": {
+                "type": "ore_dict",
+                "item": "plateIron"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 5,
+                    "power": 285
+                }
+            ]
+        },
+        {
+            "note": "厚铁板",
+            "item": {
+                "type": "ore_dict",
+                "item": "plateDenseIron"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 24,
+                    "power": 285
+                }
+            ]
+        },
+        {
+            "note": "铁外壳",
+            "mods": "ic2",
+            "item": {
+                "item": "ic2:casing",
+                "meta": 3
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 2,
+                    "power": 285
+                }
+            ]
+        }
+    ]
+}

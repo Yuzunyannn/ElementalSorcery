@@ -1,0 +1,155 @@
+{
+    "maps": [
+        {
+            "note": "青铜矿",
+            "item": {
+                "type": "ore_dict",
+                "item": "oreBronze"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 24,
+                    "power": 292
+                },
+                {
+                    "id": "earth",
+                    "size": 5,
+                    "power": 30
+                }
+            ]
+        },
+        {
+            "note": "碎青铜粉",
+            "item": {
+                "type": "ore_dict",
+                "item": "crushedBronze"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 12,
+                    "power": 277
+                },
+                {
+                    "id": "earth",
+                    "size": 2,
+                    "power": 30
+                }
+            ]
+        },
+        {
+            "note": "纯碎青铜粉",
+            "item": {
+                "type": "ore_dict",
+                "item": "crushedPurifiedBronze"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 6,
+                    "power": 267
+                }
+            ]
+        },
+        {
+            "note": "青铜锭",
+            "item": {
+                "type": "ore_dict",
+                "item": "ingotBronze"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 5,
+                    "power": 249
+                }
+            ]
+        },
+        {
+            "note": "青铜粉",
+            "item": {
+                "type": "ore_dict",
+                "item": "dustBronze"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 5,
+                    "power": 249
+                }
+            ]
+        },
+        {
+            "note": "小青铜粉",
+            "item": {
+                "type": "ore_dict",
+                "item": "dustTinyBronze"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 1,
+                    "power": 156
+                }
+            ]
+        },
+        {
+            "note": "青铜粒",
+            "item": {
+                "type": "ore_dict",
+                "item": "nuggetBronze"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 1,
+                    "power": 156
+                }
+            ]
+        },
+        {
+            "note": "青铜板",
+            "item": {
+                "type": "ore_dict",
+                "item": "plateBronze"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 5,
+                    "power": 249
+                }
+            ]
+        },
+        {
+            "note": "厚青铜板",
+            "item": {
+                "type": "ore_dict",
+                "item": "plateDenseBronze"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 24,
+                    "power": 249
+                }
+            ]
+        },
+        {
+            "note": "青铜外壳",
+            "mods": "ic2",
+            "item": {
+                "item": "ic2:casing",
+                "meta": 0
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 2,
+                    "power": 249
+                }
+            ]
+        }
+    ]
+}

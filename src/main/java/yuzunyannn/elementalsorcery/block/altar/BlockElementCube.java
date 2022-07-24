@@ -26,6 +26,7 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
@@ -139,6 +140,7 @@ public class BlockElementCube extends BlockElementContainer {
 		if (cube == null) return true;
 		if (worldIn.isRemote) {
 			if (cube.wake <= 0) cube.colorRate = 1;
+//			if (ElementalSorcery.isDevelop) cube.wake(0, pos);
 			return true;
 		}
 		return cube.getElementInventory().openTerminal(worldIn, pos, playerIn);

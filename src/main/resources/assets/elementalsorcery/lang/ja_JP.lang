@@ -225,6 +225,7 @@ tile.elementReactor.name=逆変炉
 tile.estoneMatrix.name=マトリックス石英プラットフォーム
 tile.instantConstitute.name=瞬構の四角台
 tile.estoneCrock.name=魔力石英のかめ
+tile.ISCraftCC.name=統合構造記録台
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -930,6 +931,7 @@ page.deconstructWindmill=瓦解风车
 page.deconstructWindmill.ct=如果把将物质瓦解的设备做成风车形式，获取可以自动的分解元素，与此，瓦解风车诞生了。\n通过「风车平台」搭建出瓦解祭坛，并将风轮放到平台上，在风力的驱动下，风车开始工作，将周围的物质转化为元素，并存入祭坛周边的元素容器之中。
 page.windmillBlade=风轮
 page.windmillBlade.ct=通过魔力材质制作的风轮放到「风车平台」上，便可在祭坛上方生成风车扇叶，风力越大，转动越快，分解效率也越高。\n随着时间的迁移，风轮会消耗耐久，直至销毁。不同材质的风轮的耐久不同，其特性也具有微弱的不同。\n此外，如果你具有某个具有足够的力量的Buff，没准可以把风轮投出去当作武器。
+page.cubeDemarcator=画定ターミナル
 page.cubeDemarcator.ct=通过立方体核心制作出的标定终端安装器，右键点击元素立方体给指定立方体安装标定终端。\n安装成功后，右键元素立方体启动终端，终端内可以设置接受元素能量的上限或这下限等参数，不满足标定的元素不如进入该立方体。
 page.voidContainer=虚空のコンテナ
 page.voidContainer.ct=「聚魂」附魔的武器在末地击杀末影生物有几率掉落虚空碎片，将魔石，虚空碎片，折光宝石，末影珍珠，以9:9:6:12的比例放入熔岩锅中，可熔炼出虚空容器。\n虚空容器似乎有着非常规的容量。

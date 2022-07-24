@@ -1,0 +1,60 @@
+{
+    "maps": [
+        {
+            "note": "橡胶",
+            "item": {
+                "type": "ore_dict",
+                "item": "itemRubber"
+            },
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 1,
+                    "power": 30
+                }
+            ]
+        },
+        {
+            "note": "粘性树脂",
+            "item": {
+                "type": "ore_dict",
+                "item": "itemResin"
+            },
+            "element": [
+                {
+                    "id": "wood",
+                    "size": 4,
+                    "power": 40
+                }
+            ]
+        },
+        {
+            "note": "硅",
+            "item": {
+                "type": "ore_dict",
+                "item": "itemSilicon"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 2,
+                    "power": 110
+                }
+            ]
+        },
+        {
+            "note": "石英粉",
+            "item": {
+                "type": "ore_dict",
+                "item": "dustQuartz"
+            },
+            "element": [
+                {
+                    "id": "earth",
+                    "size": 2,
+                    "power": 100
+                }
+            ]
+        }
+    ]
+}

@@ -120,6 +120,32 @@ public class ElementStackDouble implements INBTSerializable<NBTTagCompound> {
 		return true;
 	}
 
+	public void grow(double size) {
+		setCount(getCount() + size);
+	}
+
+	public void shrink(double size) {
+		this.grow(-size);
+	}
+
+	public void disgrow(ElementStack estack) {
+		if (estack.isEmpty()) return;
+		if (!this.areSameType(estack)) return;
+		this.grow(-estack.getCount());
+		if (this.isEmpty()) return;
+		double total = estack.getCount() + this.getCount();
+		this.setPower((this.getPower() * total - estack.getPower() * estack.getCount()) / this.getCount());
+	}
+
+	public void grow(ElementStack estack) {
+		if (estack.isEmpty()) return;
+		if (!this.areSameType(estack)) return;
+		double total = estack.getCount() + this.getCount();
+		total = total == 0 ? 1 : total;
+		this.setPower((estack.getPower() * estack.getCount() + this.getPower() * this.getCount()) / total);
+		this.grow(estack.getCount());
+	}
+
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
@@ -141,6 +167,11 @@ public class ElementStackDouble implements INBTSerializable<NBTTagCompound> {
 		nbt.setString("id", resourcelocation == null ? "" : resourcelocation.toString());
 		nbt.setDouble("size", stackSize);
 		nbt.setDouble("power", power);
+	}
+
+	public boolean areSameType(ElementStack estack) {
+		if (getElement() != estack.getElement()) return false;
+		return true;
 	}
 
 	public ElementStack toElementStack() {
@@ -185,6 +216,21 @@ public class ElementStackDouble implements INBTSerializable<NBTTagCompound> {
 		@Override
 		public boolean isEmpty() {
 			return ElementStackDouble.this.isEmpty();
+		}
+
+		@Override
+		public void grow(int count) {
+			ElementStackDouble.this.grow(count);
+		}
+
+		@Override
+		public void grow(ElementStack estack) {
+			ElementStackDouble.this.grow(estack);
+		}
+
+		@Override
+		public void disgrow(ElementStack estack) {
+			ElementStackDouble.this.disgrow(estack);
 		}
 	}
 

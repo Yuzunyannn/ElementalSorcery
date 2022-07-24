@@ -185,12 +185,18 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	// 默认旋转角度，每tick
 	public static final float SOTATE_PRE_TICK = (float) (Math.PI / 4) / 20.0f;
 	// 默认站立来的比率增加量
-	public static final float WAKE_UP_RARE = 0.025f;
+	public static final float WAKE_UP_RARE = 0.02f;
 	// 站起来的状态剩余tick
 	public int wake = 0;
 	// 站立来的比率0-1
-	public float wakeRate = 0.0f;
-	public float preWakeRate = 0.0f;
+	@SideOnly(Side.CLIENT)
+	public float wakeRate;
+	@SideOnly(Side.CLIENT)
+	public float preWakeRate;
+	@SideOnly(Side.CLIENT)
+	public float rotationRate;
+	@SideOnly(Side.CLIENT)
+	public float preRotationRate;
 
 	public Vec3d color = Vec3d.ZERO;
 	public float colorRate = 0.0f;
@@ -200,9 +206,16 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 	public void tick() {
 		if (color == Vec3d.ZERO) changeColor();
 		preWakeRate = wakeRate;
+		preRotationRate = rotationRate;
 		if (wake > 0) {
 			// 站起来的比率
 			wakeRate = MathHelper.clamp(wakeRate + WAKE_UP_RARE, 0, 1);
+			// 旋转
+			rotationRate = rotationRate + 1;
+			if (rotationRate > 360) {
+				rotationRate -= 360;
+				preRotationRate -= 360;
+			}
 			// 颜色转变
 			colorRate += detlaCr;
 			if (colorRate >= 1.0f || colorRate <= 0.0f) {
@@ -211,8 +224,18 @@ public class TileElementalCube extends TileEntityNetwork implements ITickable, I
 			}
 			wake--;
 		} else {
-			wakeRate = MathHelper.clamp(wakeRate - WAKE_UP_RARE, 0, 1);
-			colorRate = colorRate - colorRate * 0.05f;
+			if (rotationRate > 0) {
+				rotationRate = rotationRate + 1;
+				if (rotationRate > 360) preRotationRate = rotationRate = 0;
+				colorRate += detlaCr;
+				if (colorRate >= 1.0f || colorRate <= 0.0f) {
+					detlaCr = -detlaCr;
+					if (colorRate <= 0.0f) changeColor();
+				}
+			} else {
+				wakeRate = MathHelper.clamp(wakeRate - WAKE_UP_RARE, 0, 1);
+				colorRate = colorRate - colorRate * 0.05f;
+			}
 		}
 	}
 

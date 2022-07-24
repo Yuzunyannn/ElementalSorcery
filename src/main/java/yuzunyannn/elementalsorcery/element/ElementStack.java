@@ -167,15 +167,28 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 		return estack;
 	}
 
-	/** 增长一个 estack */
+	/**
+	 * grow(ElementStack estack) 的反函数
+	 */
+	public void disgrow(ElementStack estack) {
+		if (estack.isEmpty()) return;
+		if (!this.areSameType(estack)) return;
+		this.grow(-estack.getCount());
+		if (this.isEmpty()) return;
+		int total = estack.getCount() + this.getCount();
+		this.setPower((this.getPower() * total - estack.getPower() * estack.getCount()) / this.getCount());
+	}
+
+	/**
+	 * 增长一个 estack 能量使用加权平均的能量
+	 */
 	public void grow(ElementStack estack) {
 		if (estack.isEmpty()) return;
 		if (!this.areSameType(estack)) return;
-		this.grow(estack.getCount());
-		// 加权平均的能量
 		int total = estack.getCount() + this.getCount();
 		total = total == 0 ? 1 : total;
 		this.setPower((estack.getPower() * estack.getCount() + this.getPower() * this.getCount()) / total);
+		this.grow(estack.getCount());
 	}
 
 	/** 增长或成为一个 estack */

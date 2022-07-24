@@ -16,28 +16,28 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
-import yuzunyannn.elementalsorcery.tile.TileItemStructureCraft;
+import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftNormal;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
-public class ContainerItemStructureCraft extends Container {
+public class ContainerItemStructureCraftNormal extends Container {
 
-	final public TileItemStructureCraft tileEntity;
+	final public TileItemStructureCraftNormal tileEntity;
 	final public BlockPos pos;
 	final public EntityPlayer player;
 
-	public static ContainerItemStructureCraft vest() {
-		return new ContainerItemStructureCraft();
+	public static ContainerItemStructureCraftNormal vest() {
+		return new ContainerItemStructureCraftNormal();
 	}
 
-	public ContainerItemStructureCraft(EntityPlayer player, TileEntity tileEntity) {
-		this.tileEntity = (TileItemStructureCraft) tileEntity;
+	public ContainerItemStructureCraftNormal(EntityPlayer player, TileEntity tileEntity) {
+		this.tileEntity = (TileItemStructureCraftNormal) tileEntity;
 		this.player = player;
 		this.pos = tileEntity.getPos();
 		this.tileEntity.initGui(this);
 	}
 
-	protected ContainerItemStructureCraft() {
+	protected ContainerItemStructureCraftNormal() {
 		this.player = null;
 		this.tileEntity = null;
 		this.pos = null;
@@ -84,7 +84,7 @@ public class ContainerItemStructureCraft extends Container {
 		@Override
 		public void putStack(ItemStack stack) {
 			super.putStack(stack);
-			tileEntity.onSlotChange(ContainerItemStructureCraft.this);
+			tileEntity.onSlotChange(ContainerItemStructureCraftNormal.this);
 		}
 
 	}

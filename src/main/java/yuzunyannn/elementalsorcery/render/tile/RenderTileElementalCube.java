@@ -37,26 +37,27 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 	public void render(TileElementalCube tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
-		RenderHelper.startRender(x + 0.5, y + 0.3, z + 0.5, 0.5, alpha);
+		RenderHelper.startRender(x + 0.5, y + 0.3225, z + 0.5, 0.5, alpha);
 		GlStateManager.scale(0.04, 0.04, 0.04);
 
 		Vec3d color = tile.getBaseColor();
 		Vec3d coverColor = tile.getCoverColor();
-		
+
 		float wake = RenderHelper.getPartialTicks(tile.wakeRate, tile.preWakeRate, partialTicks);
+		float rotation = RenderHelper.getPartialTicks(tile.rotationRate, tile.preRotationRate, partialTicks);
 
 		GlStateManager.color((float) color.x, (float) color.y, (float) color.z);
 		TEXTURE.bind();
-		MODEL.render(null, wake, EventClient.tickRender + partialTicks, 0, 0, 0, 1);
-		
+		MODEL.render(null, wake, rotation, 0, 0, 0, 1);
+
 		RenderHelper.disableLightmap(true);
 		GlStateManager.color((float) (tile.color.x * tile.colorRate + (1.0F - tile.colorRate) * coverColor.x),
 				(float) (tile.color.y * tile.colorRate + (1.0F - tile.colorRate) * coverColor.y),
 				(float) (tile.color.z * tile.colorRate + (1.0F - tile.colorRate) * coverColor.z));
 		TEXTURE_COVER.bind();
-		MODEL.render(null, wake, EventClient.tickRender + partialTicks, 0, 0, 0, 1);
+		MODEL.render(null, wake, rotation, 0, 0, 0, 1);
 		RenderHelper.disableLightmap(false);
-		
+
 		RenderHelper.endRender();
 	}
 

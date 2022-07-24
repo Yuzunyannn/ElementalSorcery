@@ -16,7 +16,8 @@ import yuzunyannn.elementalsorcery.container.gui.GuiElementTranslocator;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementWorkbench;
 import yuzunyannn.elementalsorcery.container.gui.GuiFairyCube;
 import yuzunyannn.elementalsorcery.container.gui.GuiHearth;
-import yuzunyannn.elementalsorcery.container.gui.GuiItemStructureCraft;
+import yuzunyannn.elementalsorcery.container.gui.GuiItemStructureCraftCC;
+import yuzunyannn.elementalsorcery.container.gui.GuiItemStructureCraftNormal;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDAbsorbBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDDeconstructBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDHearth;
@@ -56,7 +57,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_SUPREME_TABLE = 9;
 	public static final int GUI_INVENTORY_WORKBENCH = 10;
 	public static final int GUI_RITE_MANUAL = 11;
-	public static final int GUI_ITEM_STRUCTURE_CRAFT = 12;
+	public static final int GUI_IS_CRAFT_NORMAL = 12;
 	public static final int GUI_TRANSCRIBE_INJECTION = 13;
 	public static final int GUI_RESEARCHER = 14;
 	public static final int GUI_ELEMENT_BOARD = 15;
@@ -64,6 +65,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_DEVOLVE_CUBE = 17;
 	public static final int GUI_ELEMENT_INVENTORY_STRONGER = 18;
 	public static final int GUI_ELEMENT_REACTOR = 19;
+	public static final int GUI_IS_CRAFT_CC = 20;
 
 	public static final int GUI_MD_MAGIC_GEN = 21;
 	public static final int GUI_MD_HEARTH = 22;
@@ -109,8 +111,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new ContainerWorkbenchWithInventory(player, tileEntity);
 			case GUI_RITE_MANUAL:
 				return new ContainerRiteManual(player);
-			case GUI_ITEM_STRUCTURE_CRAFT:
-				return new ContainerItemStructureCraft(player, tileEntity);
+			case GUI_IS_CRAFT_NORMAL:
+				return new ContainerItemStructureCraftNormal(player, tileEntity);
 			case GUI_TRANSCRIBE_INJECTION:
 				return new ContainerTranscribeInjection(player, tileEntity);
 			case GUI_RESEARCHER:
@@ -125,6 +127,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new ContainerElementInventoryStronger(player, tileEntity);
 			case GUI_ELEMENT_REACTOR:
 				return new ContainerElementReactor(player, tileEntity);
+			case GUI_IS_CRAFT_CC:
+				return new ContainerItemStructureCraftCC(player, tileEntity);
 
 			case GUI_MD_MAGIC_GEN:
 				return new ContainerMDMagicGen(player, tileEntity);
@@ -190,8 +194,8 @@ public class ESGuiHandler implements IGuiHandler {
 						"tile.supremeTable.name", TEXTURE_CRAFTING_TABLE, 0x1a1a45);
 			case GUI_RITE_MANUAL:
 				return new GuiRiteManual(new ContainerRiteManual(player));
-			case GUI_ITEM_STRUCTURE_CRAFT:
-				return new GuiItemStructureCraft(new ContainerItemStructureCraft(player, tileEntity));
+			case GUI_IS_CRAFT_NORMAL:
+				return new GuiItemStructureCraftNormal(new ContainerItemStructureCraftNormal(player, tileEntity));
 			case GUI_TRANSCRIBE_INJECTION:
 				return new GuiTranscribeInjection(new ContainerTranscribeInjection(player, tileEntity));
 			case GUI_RESEARCHER:
@@ -206,6 +210,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiElementInventoryStronger(new ContainerElementInventoryStronger(player, tileEntity));
 			case GUI_ELEMENT_REACTOR:
 				return new GuiElementReactor(new ContainerElementReactor(player, tileEntity));
+			case GUI_IS_CRAFT_CC:
+				return new GuiItemStructureCraftCC(new ContainerItemStructureCraftCC(player, tileEntity));
 
 			case GUI_MD_MAGIC_GEN:
 				return new GuiMDMagicGen(new ContainerMDMagicGen(player, tileEntity), player.inventory);

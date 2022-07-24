@@ -24,6 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
@@ -91,7 +92,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 
 	protected IItemStructureCraft structureCraft = null;
 	protected ElementAnalysisPacket ans = null;
-	protected boolean cannotAnalysis = false;
+	protected ItemStack cannotAnalysisStack = ItemStack.EMPTY;
 
 	public ElementAnalysisPacket getAnalysisPacket() {
 		return ans;
@@ -117,13 +118,18 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 	}
 
 	public boolean cannotAnalysis() {
-		return cannotAnalysis;
+		return !cannotAnalysisStack.isEmpty();
+	}
+
+	public ItemStack getCannotAnalysisStack() {
+		return cannotAnalysisStack;
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void setCannotAnalysis() {
+	public void setCannotAnalysisStack(ItemStack stack) {
+		if (stack.isEmpty()) return;
 		this.ans = new ElementAnalysisPacket();
-		this.ans.daStack = this.getStackToAnalysis();
+		this.ans.daStack = stack;
 		this.ans.daEstacks = new ElementStack[0];
 	}
 
@@ -150,14 +156,14 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 				if (!ItemHelper.areItemsEqual(stack, this.getDAStack())) {
 					this.stateClear();
 					if (stack.isEmpty()) {
-						cannotAnalysis = false;
+						cannotAnalysisStack = ItemStack.EMPTY;
 						return;
 					}
 					// 试图直接解析
 					this.ans = analysisItem(stack, ElementMap.instance, true);
 					// 没法直接解析？进行递归搜索
 					if (this.ans == null) this.updateItemStructure();
-					cannotAnalysis = this.ans == null;
+					cannotAnalysisStack = this.ans == null ? stack : ItemStack.EMPTY;
 				}
 			} else {
 				// 检查物品是否存在，更换
@@ -165,7 +171,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 				if (stack != this.getDAStack()) {
 					this.stateClear();
 					this.ans = analysisItem(stack, ElementMap.instance, true);
-					cannotAnalysis = this.ans == null;
+					cannotAnalysisStack = this.ans == null ? stack : ItemStack.EMPTY;
 				}
 			}
 		}
@@ -191,7 +197,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 
 		for (ItemStack input : inputs) {
 			if (input.isEmpty()) continue;
-			ElementAnalysisPacket ans = analysisItem(input, elementMap, structureCraft.calcRemain(input));
+			ElementAnalysisPacket ans = analysisItem(input, elementMap, true);
 			if (ans == null) return null;
 
 			itemTyps.add(input.getItem());
@@ -202,6 +208,19 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 
 		if (ret == null) return null;
 
+		//处理remain
+		Collection<ItemStack> remains = structureCraft.getRemains();
+		if (remains != null) {
+			ElementAnalysisPacket ranst = null;
+			for (ItemStack remain : remains) {
+				ElementAnalysisPacket rans = analysisItem(remain, elementMap, true);
+				if (rans == null) return null;
+				if (ranst == null) ranst = rans;
+				else ranst.merge(rans);
+			}
+			if (ranst != null) ret.demerge(ranst);
+		}
+
 		// 重置真正的物品
 		ret.daStack = output.copy();
 		int n = ret.daStack.getCount();
@@ -209,8 +228,14 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		if (n > 1) {
 			ret.daStack.setCount(1);
 			for (ElementStack estack : ret.daEstacks) {
-				int count = estack.getCount() / n;
-				estack.setCount(Math.max(count, 1));
+				double count = estack.getCount() / n;
+				if (count > 1) estack.setCount((int) count);
+				else {
+					double fragment = ElementHelper.toFragment(estack) / n;
+					double power = ElementHelper.fromFragmentByCount(estack.getElement(), fragment, 1);
+					estack.setCount(1);
+					estack.setPower((int) Math.max(1, power));
+				}
 			}
 		}
 		// 强制附加元素
@@ -309,6 +334,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		BlockPos pos = this.pos.down(3);
 		TileEntity tile = this.world.getTileEntity(pos);
 		if (tile instanceof IItemStructureCraft) return (IItemStructureCraft) tile;
+
 		return null;
 	}
 
@@ -344,7 +370,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 	}
 
 	public int getTotalPowerTime() {
-		return 20 * 30;
+		return ElementalSorcery.isDevelop ? 20 : 20 * 30;
 	}
 
 }

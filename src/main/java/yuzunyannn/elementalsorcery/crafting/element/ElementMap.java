@@ -17,6 +17,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
@@ -181,6 +182,7 @@ public class ElementMap implements IToElement {
 		for (int i = 0; i < jarray.size(); i++) {
 			try {
 				JsonObject jobj = jarray.needObject(i);
+				if (!checkModDemands(jobj)) continue;
 				List<ElementStack> estacks = jobj.needElements("element");
 				ElementStack[] es = estacks.toArray(new ElementStack[estacks.size()]);
 				int complex = jobj.hasNumber("complex") ? jobj.getNumber("complex").intValue() : -1;
@@ -215,16 +217,24 @@ public class ElementMap implements IToElement {
 
 	private static boolean doAnalysis(DefaultToElement newMap, ItemStack output, NonNullList<Ingredient> inputs) {
 
+		List<ItemStack> list = new ArrayList<>(inputs.size());
+		for (Ingredient ingredient : inputs) {
+			ItemStack[] s = ingredient.getMatchingStacks();
+			if (s == null || s.length == 0) continue;
+			list.add(s[0]);
+		}
+
+		List<ItemStack> remains = new ArrayList<>();
+		for (ItemStack stack : list) {
+			stack = ForgeHooks.getContainerItem(stack);
+			if (stack.isEmpty()) continue;
+			remains.add(stack.copy());
+		}
+
 		ElementAnalysisPacket ans = TileAnalysisAltar.analysisItems(new IItemStructureCraft() {
 
 			@Override
 			public Collection<ItemStack> getInputs() {
-				List<ItemStack> list = new ArrayList<>(inputs.size());
-				for (Ingredient ingredient : inputs) {
-					ItemStack[] s = ingredient.getMatchingStacks();
-					if (s == null || s.length == 0) continue;
-					list.add(s[0]);
-				}
 				return list;
 			}
 
@@ -232,14 +242,18 @@ public class ElementMap implements IToElement {
 			public ItemStack getOutput() {
 				return output;
 			}
+			
+			@Override
+			public Collection<ItemStack> getRemains() {
+				return remains;
+			}
 
 		}, instance);
 
 		if (ans == null) return false;
 
-		ItemStack[] remains = null;
-		if (output.getHasSubtypes()) newMap.add(output, ans.daComplex, remains, ans.daEstacks);
-		else newMap.add(output.getItem(), ans.daComplex, remains, ans.daEstacks);
+		if (output.getHasSubtypes()) newMap.add(output, ans.daComplex, null, ans.daEstacks);
+		else newMap.add(output.getItem(), ans.daComplex, null, ans.daEstacks);
 
 		return true;
 	}

@@ -275,4 +275,9 @@ public class RenderHelper {
 		buffer.unbindFrame();
 	}
 
+	public static void enableGUIStandardItemLighting() {
+		net.minecraft.client.renderer.RenderHelper.enableGUIStandardItemLighting();
+
+	}
+
 }

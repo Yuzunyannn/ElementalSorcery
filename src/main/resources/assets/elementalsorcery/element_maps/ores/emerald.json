@@ -1,0 +1,137 @@
+{
+    "maps": [
+        {
+            "note": "绿宝石矿",
+            "item": {
+                "type": "ore_dict",
+                "item": "oreEmerald"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 68,
+                    "power": 782
+                },
+                {
+                    "id": "earth",
+                    "size": 57,
+                    "power": 698
+                }
+            ]
+        },
+        {
+            "notes": "绿宝石",
+            "item": {
+                "type": "ore_dict",
+                "item": "gemEmerald"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 14,
+                    "power": 702
+                },
+                {
+                    "id": "earth",
+                    "size": 12,
+                    "power": 613
+                }
+            ]
+        },
+        {
+            "note": "绿宝石粉",
+            "item": {
+                "type": "ore_dict",
+                "item": "dustEmerald"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 14,
+                    "power": 702
+                },
+                {
+                    "id": "earth",
+                    "size": 12,
+                    "power": 613
+                }
+            ]
+        },
+        {
+            "note": "小绿宝石粉",
+            "item": {
+                "type": "ore_dict",
+                "item": "dustTinyEmerald"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 2,
+                    "power": 575
+                },
+                {
+                    "id": "earth",
+                    "size": 2,
+                    "power": 444
+                }
+            ]
+        },
+        {
+            "note": "绿宝石粒",
+            "item": {
+                "type": "ore_dict",
+                "item": "nuggetEmerald"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 2,
+                    "power": 575
+                },
+                {
+                    "id": "earth",
+                    "size": 2,
+                    "power": 444
+                }
+            ]
+        },
+        {
+            "note": "绿宝石板",
+            "item": {
+                "type": "ore_dict",
+                "item": "plateEmerald"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 14,
+                    "power": 702
+                },
+                {
+                    "id": "earth",
+                    "size": 12,
+                    "power": 613
+                }
+            ]
+        },
+        {
+            "note": "厚绿宝石板",
+            "item": {
+                "type": "ore_dict",
+                "item": "plateDenseEmerald"
+            },
+            "element": [
+                {
+                    "id": "metal",
+                    "size": 68,
+                    "power": 702
+                },
+                {
+                    "id": "earth",
+                    "size": 58,
+                    "power": 613
+                }
+            ]
+        }
+    ]
+}

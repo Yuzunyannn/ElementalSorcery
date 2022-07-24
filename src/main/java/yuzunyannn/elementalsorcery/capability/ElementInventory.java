@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
@@ -14,10 +15,13 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
+import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.util.ContainerArrayDetecter;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 
-public class ElementInventory implements IElementInventoryModifiable, INBTSerializable<NBTTagCompound> {
+public class ElementInventory implements IElementInventoryModifiable, INBTSerializable<NBTTagCompound>,
+		ContainerArrayDetecter.ICanArrayDetected<ElementStack, NBTTagIntArray> {
 
 	@CapabilityInject(IElementInventory.class)
 	public static Capability<IElementInventory> ELEMENTINVENTORY_CAPABILITY;
@@ -132,6 +136,44 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 	public void deserializeNBT(NBTTagCompound nbt) {
 		Provider.storage.readNBT(ELEMENTINVENTORY_CAPABILITY, this, null, nbt);
 	}
+
+	// ICanArrayDetected
+
+	@Override
+	public int getSize() {
+		return getSlots();
+	}
+
+	@Override
+	public void setSize(int size) {
+		setSlots(size);
+	}
+
+	@Override
+	public boolean hasChange(int index, ElementStack oldValue) {
+		ElementStack eStack = this.getStackInSlot(index);
+		return !eStack.areSameEqual(oldValue);
+	}
+
+	@Override
+	public ElementStack copyCurrValue(int index) {
+		return this.getStackInSlot(index).copy();
+	}
+
+	@Override
+	public NBTTagIntArray serializeCurrValueToSend(int index) {
+		ElementStack eStack = this.getStackInSlot(index);
+		return new NBTTagIntArray(
+				new int[] { Element.getIdFromElement(eStack.getElement()), eStack.getCount(), eStack.getPower() });
+	}
+
+	@Override
+	public void deserializeCurrValueFromSend(int index, NBTTagIntArray nbtData) {
+		int[] datas = nbtData.getIntArray();
+		this.setStackInSlot(index, new ElementStack(Element.getElementFromId(datas[0]), datas[1], datas[2]));
+	}
+
+	// Stroage
 
 	// 能力保存
 	public static class Storage implements Capability.IStorage<IElementInventory> {

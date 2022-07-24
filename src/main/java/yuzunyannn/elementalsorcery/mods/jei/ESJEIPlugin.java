@@ -25,6 +25,7 @@ import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
 import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDCategory;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDInfusionRW;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDMagicSolidifyRW;
@@ -147,6 +148,10 @@ public class ESJEIPlugin implements IModPlugin {
 		describes.add(new DescribeRecipeWrapper.Describe("page.mantraPaper", "page.mantraPaper.ct",
 				new ItemStack(ITEMS.MAGIC_PAPER, 1, 3), ItemHelper.toList(ITEMS.MAGIC_PAPER, 1, 2),
 				ItemHelper.toList(ITEMS.MAGIC_PAPER, 1, 3)));
+		List<ItemStack> blessingJadePieces = new ArrayList<>();
+		for (int i = 0; i < 8; i++) blessingJadePieces.add(ItemBlessingJadePiece.createPiece(i));
+		describes.add(new DescribeRecipeWrapper.Describe("page.blessingJade", "page.blessingJade.ct.sec",
+				new ItemStack(ITEMS.BLESSING_JADE), blessingJadePieces, blessingJadePieces));
 
 		return describes;
 	}

@@ -26,6 +26,18 @@ public class ElementAnalysisPacket implements INBTSerializable<NBTTagCompound>, 
 		this.deserializeNBT(nbt);
 	}
 
+	public void demerge(IToElementInfo other) {
+		if (other == null) return;
+		ElementStack[] otherEstacks = ElementHelper.copy(other.element());
+		if (otherEstacks == null || otherEstacks.length == 0) return;
+		this.daEstacks = ElementHelper.demerge(this.daEstacks, otherEstacks);
+		this.daComplex = Math.max(this.daComplex, other.complex());
+	}
+
+	public void demerge(ElementStack... estacks2) {
+		this.daEstacks = ElementHelper.demerge(this.daEstacks, estacks2);
+	}
+
 	public void merge(IToElementInfo other) {
 		if (other == null) return;
 		ElementStack[] otherEstacks = ElementHelper.copy(other.element());
