@@ -1,0 +1,32 @@
+{
+	"pattern": [
+		"RGR",
+		" I ",
+		" E "
+	],
+	"key": {
+		"G": {
+			"type": "ore_dict",
+			"item": "blockGold"
+		},
+		"R": "minecraft:redstone",
+		"I": "elementalsorcery:is_craft_normal",
+		"E": "elementalsorcery:estone"
+	},
+	"element": [
+		{
+			"id": "metal",
+			"size": 500,
+			"power": 120
+		},
+		{
+			"id": "star",
+			"size": 200,
+			"power": 50 
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:is_craft_cc",
+		"count": 1
+	}
+}

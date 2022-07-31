@@ -8,6 +8,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,13 +27,16 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.particle.ESParticleDigging;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryStronger;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
@@ -144,6 +148,31 @@ public class BlockElementCube extends BlockElementContainer {
 			return true;
 		}
 		return cube.getElementInventory().openTerminal(worldIn, pos, playerIn);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean addDestroyEffects(World world, BlockPos pos, ParticleManager manager) {
+		TileElementalCube tile = BlockHelper.getTileEntity(world, pos, TileElementalCube.class);
+		Vec3d color = tile.getBaseColor();
+		IBlockState state = world.getBlockState(pos);
+		for (int j = 0; j < 4; ++j) {
+			for (int k = 0; k < 4; ++k) {
+				for (int l = 0; l < 4; ++l) {
+					double d0 = ((double) j + 0.5D) / 4.0D;
+					double d1 = ((double) k + 0.5D) / 4.0D;
+					double d2 = ((double) l + 0.5D) / 4.0D;
+					ESParticleDigging effect = new ESParticleDigging(world, pos.getX() + d0, pos.getY() + d1,
+							pos.getZ() + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D, state);
+					effect.setBlockPos(pos);
+					if (Effect.rand.nextInt(10) == 1 && tile.color != Vec3d.ZERO)
+						effect.setRBGColorF((float) tile.color.x, (float) tile.color.y, (float) tile.color.z);
+					else effect.setRBGColorF((float) color.x, (float) color.y, (float) color.z);
+					manager.addEffect(effect);
+				}
+			}
+		}
+		return true;
 	}
 
 	@Override

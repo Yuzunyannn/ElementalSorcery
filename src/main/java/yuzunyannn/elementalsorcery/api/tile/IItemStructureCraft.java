@@ -21,6 +21,11 @@ public interface IItemStructureCraft {
 		return null;
 	}
 
+	/** 强制提升的复杂度 */
+	default int getComplexIncr() {
+		return 0;
+	}
+
 	/** 获取输出，输出仅允许有一个 */
 	@Nonnull
 	ItemStack getOutput();

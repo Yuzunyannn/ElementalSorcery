@@ -258,6 +258,7 @@ public class EventClient {
 		if (ElementalSorcery.isDevelop) {
 			List<String> tooltip = event.getToolTip();
 			tooltip.add(TextFormatting.GREEN + "Develop Info:");
+			tooltip.add(TextFormatting.GRAY + "isReplairable: " + stack.getItem().isRepairable());
 			if (estacks != null) {
 				double f = 0;
 				for (ElementStack estack : estacks) {

@@ -11,13 +11,12 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
-import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftCC;
+import yuzunyannn.elementalsorcery.tile.TileItemStructureCraft;
 import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
-public class ContainerItemStructureCraftCC extends ContainerNormal<TileItemStructureCraftCC>
-		implements IContainerNetwork {
+public class ContainerItemStructureCraft extends ContainerNormal<TileItemStructureCraft> implements IContainerNetwork {
 
 	public static final byte OP_REMOVE_SAME = 0;
 	public static final byte OP_REMOVE = 1;
@@ -29,8 +28,12 @@ public class ContainerItemStructureCraftCC extends ContainerNormal<TileItemStruc
 	public static final byte SP_OUTPUT = 1;
 	public static final byte SP_TYPE_STACK = 2;
 
-	public ContainerItemStructureCraftCC(EntityPlayer player, TileEntity tileEntity) {
-		super(player, (TileItemStructureCraftCC) tileEntity, 36, 159);
+	public ContainerItemStructureCraft(EntityPlayer player, TileEntity tileEntity) {
+		super(player, (TileItemStructureCraft) tileEntity, 8, 84);
+	}
+
+	public ContainerItemStructureCraft(EntityPlayer player, TileEntity tileEntity, int xoff, int yoff) {
+		super(player, (TileItemStructureCraft) tileEntity, xoff, yoff);
 	}
 
 	@Override
@@ -93,7 +96,7 @@ public class ContainerItemStructureCraftCC extends ContainerNormal<TileItemStruc
 		}
 		case OP_ADD_HALF:
 		case OP_ADD: {
-			ItemStack playerHold = TileItemStructureCraftCC.getRealItemStack(player.inventory.getItemStack()).copy();
+			ItemStack playerHold = TileItemStructureCraft.getRealItemStack(player.inventory.getItemStack()).copy();
 			if (playerHold.isEmpty()) return;
 			if (op == OP_ADD_HALF) playerHold.setCount(Math.max(1, playerHold.getCount() / 2));
 			ItemStack itemStack = tileEntity.getSlotItemStack(slotIndex);
@@ -118,7 +121,7 @@ public class ContainerItemStructureCraftCC extends ContainerNormal<TileItemStruc
 	public String lastSlotMapName = "";
 	public Map<Integer, ItemStack> slotMapChange = new HashMap<>();
 	public ItemStack outputChange = ItemStack.EMPTY;
-	public ItemStack typeStackChange = TileItemStructureCraftCC.defaultTypeStack;
+	public ItemStack typeStackChange = TileItemStructureCraft.defaultTypeStack;
 
 	@Override
 	public void detectAndSendChanges() {

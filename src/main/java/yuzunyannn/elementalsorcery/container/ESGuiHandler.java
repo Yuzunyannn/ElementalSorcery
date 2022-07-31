@@ -112,7 +112,7 @@ public class ESGuiHandler implements IGuiHandler {
 			case GUI_RITE_MANUAL:
 				return new ContainerRiteManual(player);
 			case GUI_IS_CRAFT_NORMAL:
-				return new ContainerItemStructureCraftNormal(player, tileEntity);
+				return new ContainerItemStructureCraft(player, tileEntity);
 			case GUI_TRANSCRIBE_INJECTION:
 				return new ContainerTranscribeInjection(player, tileEntity);
 			case GUI_RESEARCHER:
@@ -128,7 +128,7 @@ public class ESGuiHandler implements IGuiHandler {
 			case GUI_ELEMENT_REACTOR:
 				return new ContainerElementReactor(player, tileEntity);
 			case GUI_IS_CRAFT_CC:
-				return new ContainerItemStructureCraftCC(player, tileEntity);
+				return new ContainerItemStructureCraft(player, tileEntity, 36, 159);
 
 			case GUI_MD_MAGIC_GEN:
 				return new ContainerMDMagicGen(player, tileEntity);
@@ -195,7 +195,7 @@ public class ESGuiHandler implements IGuiHandler {
 			case GUI_RITE_MANUAL:
 				return new GuiRiteManual(new ContainerRiteManual(player));
 			case GUI_IS_CRAFT_NORMAL:
-				return new GuiItemStructureCraftNormal(new ContainerItemStructureCraftNormal(player, tileEntity));
+				return new GuiItemStructureCraftNormal(new ContainerItemStructureCraft(player, tileEntity));
 			case GUI_TRANSCRIBE_INJECTION:
 				return new GuiTranscribeInjection(new ContainerTranscribeInjection(player, tileEntity));
 			case GUI_RESEARCHER:
@@ -211,7 +211,7 @@ public class ESGuiHandler implements IGuiHandler {
 			case GUI_ELEMENT_REACTOR:
 				return new GuiElementReactor(new ContainerElementReactor(player, tileEntity));
 			case GUI_IS_CRAFT_CC:
-				return new GuiItemStructureCraftCC(new ContainerItemStructureCraftCC(player, tileEntity));
+				return new GuiItemStructureCraftCC(new ContainerItemStructureCraft(player, tileEntity, 36, 159));
 
 			case GUI_MD_MAGIC_GEN:
 				return new GuiMDMagicGen(new ContainerMDMagicGen(player, tileEntity), player.inventory);

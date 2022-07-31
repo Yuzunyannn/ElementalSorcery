@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         jcenter()
-        maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = "https://files.minecraftforge.net/maven/" }
         maven { url = "https://plugins.gradle.org/m2/" }
     }
     dependencies {
@@ -35,6 +35,16 @@ minecraft {
 }
 
 repositories {
+    maven { 
+       name 'modmaven'
+       url "https://modmaven.dev/"
+    }
+
+    maven { 
+       name 'minecraftforge'
+       url "https://maven.minecraftforge.net"
+    }
+
     maven {
         name 'jei'
         url = "http://dvs1.progwml6.com/files/maven"
@@ -58,15 +68,18 @@ dependencies {
     def jei_version = "4.8.5.151"
     //ic2
     def ic2_version = "2.8.170-ex112"
+    //ae2
+    def ae2_version = "rv6-stable-7"
 
     //api
     deobfCompile "mezz.jei:jei_1.12.2:${jei_version}"
     compileOnly "net.industrial-craft:industrialcraft-2:${ic2_version}:api"
+    deobfCompile "appeng:appliedenergistics2:${ae2_version}:api"
 
     //-------- runtime for test （#￣▽￣#）-------- 
 
     //ae2 test
-    // deobfCompile "appeng:appliedenergistics2:rv6-stable-7"
+    // deobfCompile "appeng:appliedenergistics2:${ae2_version}"
 
     //ic2 test
     // deobfCompile "net.industrial-craft:industrialcraft-2:${ic2_version}"

@@ -200,6 +200,10 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 			ElementAnalysisPacket ans = analysisItem(input, elementMap, true);
 			if (ans == null) return null;
 
+			if (input.getCount() > 1) {
+				for (ElementStack eStack : ans.daEstacks) eStack.setCount(eStack.getCount() * input.getCount());
+			}
+
 			itemTyps.add(input.getItem());
 
 			if (ret == null) ret = ans;
@@ -208,7 +212,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 
 		if (ret == null) return null;
 
-		//处理remain
+		// 处理remain
 		Collection<ItemStack> remains = structureCraft.getRemains();
 		if (remains != null) {
 			ElementAnalysisPacket ranst = null;
@@ -244,7 +248,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		// 排序元素
 		ElementHelper.sort(ret.daEstacks);
 		// 重置复杂度
-		ret.daComplex = MathHelper.floor((itemTyps.size() / 4f + 1) * ret.daComplex);
+		ret.daComplex = MathHelper.floor((itemTyps.size() / 4f + 1) * ret.daComplex) + structureCraft.getComplexIncr();
 
 		return ret;
 	}
@@ -290,7 +294,10 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		ans.daEstacks = ElementHelper.copy(teInfo.element());
 		if (ans.daEstacks == null) return null;
 		ans.daComplex = teInfo.complex();
-		if (!needRemian) return ans;
+		if (!needRemian) {
+			ans.remains = teInfo.remain();
+			return ans;
+		}
 		ItemStack[] firstRemains = teInfo.remain();
 		if (firstRemains == null) return ans;
 		LinkedList<ItemStack> remains = new LinkedList<>();

@@ -30,10 +30,12 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 		implements IEnergySink, IEnergySource, IAcceptMagic, IProvideMagic {
 
 	// 1 UE = 4 FRAGMENT
+	// 1 AE = 2 FRAGMENT
 	// 1 RF = 1 FRAGMENT
 
-	static final double FRAGMENT_UE = 4;
-	static final double FRAGMENT_RF = 1;
+	static public final double FRAGMENT_UE = 4;
+	static public final double FRAGMENT_AE = 2;
+	static public final double FRAGMENT_RF = 1;
 
 	public TileIceRockEnergy() {
 		if (Mods.isLoaded(Mods.IC2)) this.initIC2();

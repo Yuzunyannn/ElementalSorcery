@@ -170,6 +170,21 @@ public class ElementHelper {
 		}
 	}
 
+	public static ElementStack[] dropElements(ElementStack[] elements, float rate) {
+		if (rate >= 1) return elements;
+		ArrayList<ElementStack> list = new ArrayList<ElementStack>(elements.length);
+		for (ElementStack eStack : elements) {
+			double fragment = toFragment(eStack) * rate;
+			double count = fromFragmentByPower(eStack.getElement(), fragment, eStack.getPower());
+			if (count > 1) list.add(new ElementStack(eStack.getElement(), (int) count, eStack.getPower()));
+			else {
+				double power = fromFragmentByCount(eStack.getElement(), fragment, count);
+				if (power > 1) list.add(new ElementStack(eStack.getElement(), 1, (int) power));
+			}
+		}
+		return (ElementStack[]) list.toArray(new ElementStack[list.size()]);
+	}
+
 	/** 转颜色 */
 	static public int[] toColor(Collection<ElementStack> estacks) {
 		if (estacks == null) return null;

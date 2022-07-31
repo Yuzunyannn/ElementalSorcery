@@ -109,10 +109,16 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 		structure.addSpecialBlock(new BlockPos(-10, 1, 10));
 		structure.addSpecialBlock(new BlockPos(-10, 1, -10));
 		structure.addSpecialBlock(new BlockPos(10, 1, -10));
+		
 		structure.addSpecialBlock(new BlockPos(10, 1, 0));
 		structure.addSpecialBlock(new BlockPos(0, 1, 10));
 		structure.addSpecialBlock(new BlockPos(-10, 1, 0));
 		structure.addSpecialBlock(new BlockPos(0, 1, -10));
+		
+		structure.addSpecialBlock(new BlockPos(0, 1, 10));
+		structure.addSpecialBlock(new BlockPos(10, 1, 0));
+		structure.addSpecialBlock(new BlockPos(0, 1, -10));
+		structure.addSpecialBlock(new BlockPos(-10, 1, 0));
 	}
 
 	@Override
@@ -151,10 +157,14 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 		if (world.isRemote) return true;
 		if (overloadExplosionTick > 0) return false;
 		if (toElement == null) toElement = ElementMap.instance;
-		ElementAnalysisPacket packet = TileAnalysisAltar.analysisItem(stack, toElement, true);
+		ElementAnalysisPacket packet = TileAnalysisAltar.analysisItem(stack, toElement, false);
 		if (packet == null) return false;
 		if (simulate) return true;
 		eaPacketStack.addLast(packet);
+		ItemStack[] remains = packet.remain();
+		if (remains != null && remains.length > 0) {
+			for (ItemStack itemStack : remains) ItemHelper.dropItem(world, pos, itemStack.copy());
+		}
 		return true;
 	}
 
@@ -332,6 +342,8 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 
 	/** 处理过载 */
 	protected Element doIncrOverload(ElementStack estack) {
+
+		if (estack.isMagic()) return estack.getElement();
 
 		float drop = 1 - overloadProtect;
 		final float dropDivide = 0.25f;

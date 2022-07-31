@@ -1,7 +1,7 @@
 package yuzunyannn.elementalsorcery.crafting.element;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -12,13 +12,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 //默认的实例化
 public class DefaultToElement implements IToElement {
 
-	public List<ElementInfo> stackToElementMap = new ArrayList<ElementInfo>();
-	public Map<Item, ElementInfo> itemToElementMap = new HashMap<Item, ElementInfo>();
+	public Map<Item, List<ElementInfo>> stackToElementMap = new IdentityHashMap<Item, List<ElementInfo>>();
+	public Map<Item, ElementInfo> itemToElementMap = new IdentityHashMap<Item, ElementInfo>();
 
 	public void add(ItemStack stack, int complex, ItemStack[] remains, ElementStack... estacks) {
 		boolean checkNBT = false;
@@ -30,19 +31,21 @@ public class DefaultToElement implements IToElement {
 				nbt.removeTag("checkNBTTag");
 			}
 		}
+		List<ElementInfo> infoList = stackToElementMap.get(stack.getItem());
+		if (infoList == null) stackToElementMap.put(stack.getItem(), infoList = new ArrayList<ElementInfo>());
 		// 检查是否存在
-		for (int i = 0; i < stackToElementMap.size(); i++) {
-			ElementInfo info = stackToElementMap.get(i);
+		for (int i = 0; i < infoList.size(); i++) {
+			ElementInfo info = infoList.get(i);
 			// 有相同的就替换
 			if (ItemStack.areItemsEqual(info.stack, stack)) {
 				if (checkNBT && !ItemStack.areItemStackTagsEqual(info.stack, stack)) continue;
-				stackToElementMap.set(i, new ElementInfo(stack, estacks, complex));
+				infoList.set(i, new ElementInfo(stack, estacks, complex));
 				return;
 			}
 		}
 		boolean hasNoRemains = remains == null || remains.length <= 0;
-		if (hasNoRemains) stackToElementMap.add(new ElementInfo(stack, estacks, complex));
-		else stackToElementMap.add(new ElementInfoRemain(stack, estacks, complex, remains));
+		if (hasNoRemains) infoList.add(new ElementInfo(stack, estacks, complex));
+		else infoList.add(new ElementInfoRemain(stack, estacks, complex, remains));
 	}
 
 	public void add(Item item, int complex, ItemStack[] remains, ElementStack... estacks) {
@@ -53,8 +56,26 @@ public class DefaultToElement implements IToElement {
 
 	@Override
 	public IToElementInfo toElement(ItemStack stack) {
-		for (ElementInfo info : this.stackToElementMap) {
-			if (this.compareItemStacks(stack, info.stack)) return info;
+		IToElementInfo toElement = _toElement(stack);
+		if (toElement == null) return null;
+		if (stack.isItemDamaged() && stack.getItem().isRepairable()) {
+			int maxDamage = stack.getMaxDamage();
+			int damage = stack.getItemDamage();
+			if (damage == 0) return toElement;
+			float r = (maxDamage - damage) / (float) maxDamage;
+			ElementStack[] elements = ElementHelper.dropElements(toElement.element(), r);
+			if (elements == null || elements.length == 0) return null;
+			return ToElementInfoStatic.create(toElement.complex(), toElement.remain(), elements);
+		}
+		return toElement;
+	}
+
+	private IToElementInfo _toElement(ItemStack stack) {
+		List<ElementInfo> itemList = stackToElementMap.get(stack.getItem());
+		if (itemList != null) {
+			for (ElementInfo info : itemList) {
+				if (ItemHelper.areItemsEqual(info.stack, stack)) return info;
+			}
 		}
 		return this.toElement(stack.getItem());
 	}
@@ -64,18 +85,19 @@ public class DefaultToElement implements IToElement {
 		return null;
 	}
 
-	private boolean compareItemStacks(ItemStack stack1, ItemStack stack2) {
-		return ItemHelper.areItemsEqual(stack1, stack2);
-	}
-
 	protected void merge(DefaultToElement other) {
 		for (Entry<Item, ElementInfo> entry : other.itemToElementMap.entrySet()) {
 			if (this.itemToElementMap.containsKey(entry.getKey())) continue;
 			this.itemToElementMap.put(entry.getKey(), entry.getValue());
 		}
-		for (ElementInfo info : other.stackToElementMap) {
-			if (this.toElement(info.stack) != null) continue;
-			this.stackToElementMap.add(info);
+		for (Entry<Item, List<ElementInfo>> entry : other.stackToElementMap.entrySet()) {
+			List<ElementInfo> otherInfoList = entry.getValue();
+			List<ElementInfo> infoList = this.stackToElementMap.get(entry.getKey());
+			if (infoList == null) this.stackToElementMap.put(entry.getKey(), infoList = new ArrayList<ElementInfo>());
+			for (ElementInfo info : otherInfoList) {
+				if (this.toElement(info.stack) != null) continue;
+				infoList.add(info);
+			}
 		}
 	}
 

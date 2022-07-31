@@ -45,6 +45,7 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ESCreativeTabs;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
@@ -261,6 +262,9 @@ import yuzunyannn.elementalsorcery.item.tool.ItemRockCamera;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulKillerSword;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.item.tool.ItemStarBell;
+import yuzunyannn.elementalsorcery.mods.Mods;
+import yuzunyannn.elementalsorcery.mods.ae2.ESAE2Core;
+import yuzunyannn.elementalsorcery.mods.ic2.ESIC2Core;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.potion.PotionBlessing;
@@ -793,6 +797,8 @@ public class ESInit {
 		ESNetwork.registerAll();
 		// 注册事件
 		MinecraftForge.EVENT_BUS.register(EventServer.class);
+		// 其他mod
+		preInitObjectForOtherMod();
 	}
 
 	public final static void init(FMLInitializationEvent event) throws Throwable {
@@ -813,6 +819,8 @@ public class ESInit {
 	public final static void postInit(FMLPostInitializationEvent event) throws Throwable {
 		// 通过查找注册元素映射
 		ElementMap.findAndRegisterCraft();
+		// 其他mod
+		postInitObjectForOtherMod();
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -836,10 +844,12 @@ public class ESInit {
 		if (ESConfig.PORTAL_RENDER_TYPE == 2) WorldScene.init();
 		// 所有shader
 		Shaders.init();
+		// 其他mode
+		preInitObjectForOtherModClient();
 	}
 
 	@SideOnly(Side.CLIENT)
-	public final static void initClinet(FMLInitializationEvent event) {
+	public final static void initClinet(FMLInitializationEvent event) throws Throwable {
 		// 注册按键绑定
 		KeyBoard.registerAll();
 	}
@@ -1281,7 +1291,7 @@ public class ESInit {
 	}
 
 	@SideOnly(Side.CLIENT)
-	private static void registerRender(Item item) {
+	public static void registerRender(Item item) {
 		registerRender(item, 0);
 	}
 
@@ -1384,6 +1394,43 @@ public class ESInit {
 			Block block, Class<T> tile, R render_instance) {
 		registerRender(tile, render_instance);
 		registerRender(ItemBlock.getItemFromBlock(block), render_instance);
+	}
+
+	public static final void initModsObject(Class<?> cls) throws Throwable {
+		Field[] fields = cls.getDeclaredFields();
+		for (Field field : fields) {
+			Object obj = field.get(cls);
+			if (obj instanceof IForgeRegistryEntry) {
+				((IForgeRegistryEntry) obj)
+						.setRegistryName(new ResourceLocation(ElementalSorcery.MODID, field.getName().toLowerCase()));
+			}
+			if (obj instanceof Item) {
+				((Item) obj).setCreativeTab(tab);
+			} else if (obj instanceof Block) {
+				((Block) obj).setCreativeTab(tab);
+			}
+		}
+	}
+
+	public static final void registerModsObject(Class<?> cls) throws Throwable {
+		Field[] fields = cls.getDeclaredFields();
+		for (Field field : fields) {
+			Object obj = field.get(cls);
+			if (obj instanceof Item) register((Item) obj);
+			else if (obj instanceof Block) register((Block) obj);
+		}
+	}
+
+	private final static void preInitObjectForOtherMod() throws Throwable {
+	}
+
+	private final static void postInitObjectForOtherMod() throws Throwable {
+		if (Mods.isLoaded(Mods.IC2)) ESIC2Core.postInit();
+		if (Mods.isLoaded(Mods.AE2)) ESAE2Core.postInit();
+	}
+
+	@SideOnly(Side.CLIENT)
+	private final static void preInitObjectForOtherModClient() throws Throwable {
 	}
 
 }

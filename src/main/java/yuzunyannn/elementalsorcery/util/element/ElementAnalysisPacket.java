@@ -12,6 +12,7 @@ public class ElementAnalysisPacket implements INBTSerializable<NBTTagCompound>, 
 	public ElementStack[] daEstacks = null;
 	public ItemStack daStack = ItemStack.EMPTY;
 	public int daComplex = 0;
+	public ItemStack[] remains;
 
 	public ElementAnalysisPacket() {
 
@@ -74,5 +75,10 @@ public class ElementAnalysisPacket implements INBTSerializable<NBTTagCompound>, 
 	@Override
 	public int complex() {
 		return daComplex;
+	}
+
+	@Override
+	public ItemStack[] remain() {
+		return remains;
 	}
 }

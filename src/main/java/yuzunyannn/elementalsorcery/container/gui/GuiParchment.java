@@ -365,8 +365,6 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 	public void drawBuilding(Building building, int x, int y, float roateX, float roateY, float roateZ, float scale) {
 		try {
 			GlStateManager.pushMatrix();
-//			yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
-			RenderHelper.disableStandardItemLighting();
 			// 移动到位置
 			GlStateManager.translate(x, y, 512);
 			// 绑定逻辑材质
@@ -386,6 +384,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			BuildingBlocks iter = building.getBuildingIterator();
 			// 开始
 			while (iter.next()) {
+				yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
 				BlockPos blockpos = iter.getPos();
 				blockpos = new BlockPos(blockpos.getX(), blockpos.getY(), blockpos.getZ());
 				IBlockState iblockstate = iter.getState();
@@ -410,13 +409,13 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 					tessellator.draw();
 				}
 			}
-			RenderHelper.enableStandardItemLighting();
 			GlStateManager.popMatrix();
 		} catch (Exception e) {
 			String id = this.page == null ? "null" : this.page.getId();
 			ElementalSorcery.logger.warn("羊皮卷(" + id + ")gui:drawBuilding异常", e);
 			this.toPage = Pages.getErrorPage();
 		}
+		yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
 	}
 
 }

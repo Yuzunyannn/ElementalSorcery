@@ -70,6 +70,12 @@ public class ElementMap implements IToElement {
 		toList.add(toElement);
 	}
 
+	public void addFront(IToElement toElement) {
+		if (toElement == null) return;
+		if (toList.contains(toElement)) return;
+		toList.add(1, toElement);
+	}
+
 	public void add(ItemStack stack, ItemStack[] remain, ElementStack[] estacks) {
 		this.add(stack, ElementHelper.getComplexFromElements(stack, estacks), remain, estacks);
 	}
@@ -130,6 +136,7 @@ public class ElementMap implements IToElement {
 
 	static public void registerAll() throws IOException {
 		instance.add(new DefaultInterfaceToElement());
+		instance.add(new DefaultEnergyToElement());
 		instance.add(new DefaultEnchanmentToElement());
 		instance.add(new DefaultPotionToElement());
 		instance.add(new DefaultElementToElement());
@@ -242,7 +249,7 @@ public class ElementMap implements IToElement {
 			public ItemStack getOutput() {
 				return output;
 			}
-			
+
 			@Override
 			public Collection<ItemStack> getRemains() {
 				return remains;
