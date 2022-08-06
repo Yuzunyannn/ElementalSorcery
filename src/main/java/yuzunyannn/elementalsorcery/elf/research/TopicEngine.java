@@ -4,8 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class TopicEngine extends Topic {
@@ -34,19 +34,19 @@ public class TopicEngine extends Topic {
 
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(rotate, 0, 0, 1);
-		RenderHelper.drawTexturedRectInCenter(0, 0, 32, 32, 32, 0, 23, 23, 128, 128);
+		RenderFriend.drawTexturedRectInCenter(0, 0, 32, 32, 32, 0, 23, 23, 128, 128);
 		GlStateManager.popMatrix();
 
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(22, 0, 0);
 		GlStateManager.rotate(-(rotate + 20), 0, 0, 1);
-		RenderHelper.drawTexturedRectInCenter(0, 0, 16, 16, 32, 0, 23, 23, 128, 128);
+		RenderFriend.drawTexturedRectInCenter(0, 0, 16, 16, 32, 0, 23, 23, 128, 128);
 		GlStateManager.popMatrix();
 
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(-18, 18, 0);
 		GlStateManager.rotate(-(rotate + 20), 0, 0, 1);
-		RenderHelper.drawTexturedRectInCenter(0, 0, 20, 20, 32, 0, 23, 23, 128, 128);
+		RenderFriend.drawTexturedRectInCenter(0, 0, 20, 20, 32, 0, 23, 23, 128, 128);
 		GlStateManager.popMatrix();
 
 		GlStateManager.popMatrix();

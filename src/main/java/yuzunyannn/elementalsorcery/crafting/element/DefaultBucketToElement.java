@@ -10,7 +10,7 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 
 //默认水桶到元素
 public class DefaultBucketToElement implements IToElement {

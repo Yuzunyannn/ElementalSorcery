@@ -8,9 +8,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.item.IWindmillBlade;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.entity.EntityRotaryWindmillBlate;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructWindmill;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class RenderEntityRotaryWindmillBlate extends Render<EntityRotaryWindmillBlate> {
@@ -26,8 +26,8 @@ public class RenderEntityRotaryWindmillBlate extends Render<EntityRotaryWindmill
 		GlStateManager.translate(x, y + entity.height / 2, z);
 		GlStateManager.disableLighting();
 
-		float rotate = RenderHelper.getPartialTicks(entity.bladeRotate, entity.prevBladeRotate, partialTicks);
-		float scale = RenderHelper.getPartialTicks(entity.bladeScale, entity.prevBladeScale, partialTicks);
+		float rotate = RenderFriend.getPartialTicks(entity.bladeRotate, entity.prevBladeRotate, partialTicks);
+		float scale = RenderFriend.getPartialTicks(entity.bladeScale, entity.prevBladeScale, partialTicks);
 
 		scale = scale * 0.05f;
 

@@ -10,19 +10,19 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectSummonRender;
 import yuzunyannn.elementalsorcery.summon.Summon;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class MantraSummon extends MantraCommon {
@@ -30,7 +30,7 @@ public class MantraSummon extends MantraCommon {
 	static public void summon(World world, BlockPos pos, EntityLivingBase summoner, ItemStack keepsake,
 			SummonRecipe summonRecipe) {
 		if (world.isRemote) return;
-		EntityGrimoire grimoire = new EntityGrimoire(world, summoner, ESInit.MANTRAS.SUMMON, null,
+		EntityGrimoire grimoire = new EntityGrimoire(world, summoner, ESObjects.MANTRAS.SUMMON, null,
 				EntityGrimoire.STATE_AFTER_SPELLING);
 		Data data = (Data) grimoire.getMantraData();
 		data.keepsake = keepsake;
@@ -155,7 +155,7 @@ public class MantraSummon extends MantraCommon {
 		// 收集能量
 		if (!data.isMarkContinue()) return;
 		if (data.power < 100) {
-			ElementStack need = new ElementStack(ESInit.ELEMENTS.MAGIC, 1, 50);
+			ElementStack need = new ElementStack(ESObjects.ELEMENTS.MAGIC, 1, 50);
 			ElementStack get = caster.iWantSomeElement(need, true);
 			if (get.isEmpty()) return;
 			data.power++;
@@ -170,7 +170,7 @@ public class MantraSummon extends MantraCommon {
 		WorldTarget wr = caster.iWantBlockTarget();
 		data.pos = wr.getPos();
 		if (data.pos == null) return;
-		if (world.getBlockState(data.pos).getBlock() == ESInit.BLOCKS.RITE_TABLE) data.pos = data.pos.down();
+		if (world.getBlockState(data.pos).getBlock() == ESObjects.BLOCKS.RITE_TABLE) data.pos = data.pos.down();
 		else data.pos = data.pos.up();
 		if (data.summonRecipe != null)
 			data.summon = data.summonRecipe.createSummon(data.keepsake, data.world, data.pos);

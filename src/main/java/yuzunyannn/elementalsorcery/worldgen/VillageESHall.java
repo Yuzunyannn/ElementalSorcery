@@ -27,7 +27,7 @@ import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
 import net.minecraft.world.gen.structure.StructureVillagePieces.Village;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import net.minecraftforge.fml.common.registry.VillagerRegistry.VillagerProfession;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.init.LootRegister;
 
 public class VillageESHall extends Village {
@@ -215,22 +215,22 @@ public class VillageESHall extends Village {
 		armorStand.setItemStackToSlot(EntityEquipmentSlot.CHEST, new ItemStack(Items.LEATHER_CHESTPLATE));
 		armorStand.setItemStackToSlot(EntityEquipmentSlot.LEGS, new ItemStack(Items.LEATHER_LEGGINGS));
 		armorStand.setItemStackToSlot(EntityEquipmentSlot.FEET, new ItemStack(Items.LEATHER_BOOTS));
-		armorStand.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(ESInit.BLOCKS.ESTONE));
+		armorStand.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(ESObjects.BLOCKS.ESTONE));
 		float rate = random.nextFloat();
 		ItemStack mainHand = ItemStack.EMPTY;
-		if (rate < 0.01) mainHand = new ItemStack(ESInit.ITEMS.SPELLBOOK);
-		else if (rate < 0.03) mainHand = new ItemStack(ESInit.BLOCKS.ELEMENTAL_CUBE);
-		else if (rate < 0.075) mainHand = new ItemStack(ESInit.ITEMS.ELEMENT_CRYSTAL);
-		else if (rate < 0.125) mainHand = new ItemStack(ESInit.BLOCKS.MD_INFUSION);
-		else if (rate < 0.3) mainHand = new ItemStack(ESInit.ITEMS.PARCHMENT, 8);
-		else if (rate < 0.5) mainHand = new ItemStack(ESInit.BLOCKS.KYANITE_BLOCK, 2);
-		else mainHand = new ItemStack(ESInit.ITEMS.KYANITE_SWORD);
+		if (rate < 0.01) mainHand = new ItemStack(ESObjects.ITEMS.SPELLBOOK);
+		else if (rate < 0.03) mainHand = new ItemStack(ESObjects.BLOCKS.ELEMENTAL_CUBE);
+		else if (rate < 0.075) mainHand = new ItemStack(ESObjects.ITEMS.ELEMENT_CRYSTAL);
+		else if (rate < 0.125) mainHand = new ItemStack(ESObjects.BLOCKS.MD_INFUSION);
+		else if (rate < 0.3) mainHand = new ItemStack(ESObjects.ITEMS.PARCHMENT, 8);
+		else if (rate < 0.5) mainHand = new ItemStack(ESObjects.BLOCKS.KYANITE_BLOCK, 2);
+		else mainHand = new ItemStack(ESObjects.ITEMS.KYANITE_SWORD);
 		armorStand.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, mainHand);
 	}
 
 	@Override
 	protected VillagerProfession chooseForgeProfession(int count, VillagerProfession prof) {
-		return ESInit.VILLAGE.ES_VILLEGER;
+		return ESObjects.VILLAGE.ES_VILLEGER;
 	}
 
 	// 注册句柄

@@ -7,13 +7,13 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyannn.elementalsorcery.render.model.ModelMagicDesk;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk> implements IRenderItem {
@@ -24,11 +24,11 @@ public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk
 	@Override
 	public void render(TileMagicDesk tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
-		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y + 1.2, z + 0.5, 0.1, alpha);
+		RenderFriend.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y + 1.2, z + 0.5, 0.1, alpha);
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
 		ItemStack book = tile.getBook();
 		if (!book.isEmpty()) {
@@ -44,7 +44,7 @@ public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk
 		Spellbook spellbook = book.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 		if (spellbook == null) {
 			GlStateManager.translate(0, 0, 0.1);
-			RenderHelper.layItemPositionFix(book);
+			RenderFriend.layItemPositionFix(book);
 			Minecraft.getMinecraft().getRenderItem().renderItem(book, ItemCameraTransforms.TransformType.FIXED);
 			return;
 		}
@@ -62,6 +62,6 @@ public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk
 			GlStateManager.translate(0.5, 0.85, 0.5);
 			GlStateManager.scale(0.025 * 2, 0.025 * 2, 0.025 * 2);
 			MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		} else RenderHelper.render(stack, TEXTURE, MODEL, true, 0.05, 0.025, 0.46, 0.3);
+		} else RenderFriend.renderSpecialItem(stack, TEXTURE, MODEL, true, 0.05, 0.025, 0.46, 0.3);
 	}
 }

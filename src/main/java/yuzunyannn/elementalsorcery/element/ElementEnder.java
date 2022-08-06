@@ -20,17 +20,18 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.element.explosion.EEEnder;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
-import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ElementEnder extends ElementCommon {
 
@@ -95,10 +96,10 @@ public class ElementEnder extends ElementCommon {
 		helper.preparatory(MobEffects.LEVITATION, 10, 0);
 		helper.check(JuiceMaterial.APPLE, 100).checkRatio(JuiceMaterial.MELON, 0.75f, 1.25f).join();
 
-		helper.preparatory(ESInit.POTIONS.ENDERIZATION, 20, 75);
+		helper.preparatory(ESObjects.POTIONS.ENDERIZATION, 20, 75);
 		helper.check(JuiceMaterial.APPLE, 125).join();
 
-		helper.preparatory(ESInit.POTIONS.ENDERCORPS, 16, 150);
+		helper.preparatory(ESObjects.POTIONS.ENDERCORPS, 16, 150);
 		helper.check(JuiceMaterial.MELON, 125).join();
 
 	}

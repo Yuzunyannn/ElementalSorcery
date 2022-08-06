@@ -1,7 +1,5 @@
 package yuzunyannn.elementalsorcery.parchment;
 
-import static yuzunyannn.elementalsorcery.ElementalSorcery.logger;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -16,11 +14,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
@@ -30,7 +29,7 @@ import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class JsonParser {
 
-	public static final ItemStack defaultIcon = new ItemStack(ESInit.ITEMS.SPELLBOOK);
+	public static final ItemStack defaultIcon = new ItemStack(ESObjects.ITEMS.SPELLBOOK);
 
 	public static class Packet {
 		Page page;
@@ -130,7 +129,7 @@ public class JsonParser {
 			if ("inherit".equals(id)) background = icon;
 			else {
 				Item item = Item.getByNameOrId(id);
-				if (item == null) logger.warn("找不到背景：" + id);
+				if (item == null) ESAPI.logger.warn("找不到背景：" + id);
 				else background = new ItemStack(item);
 			}
 		} else if (json.hasObject("background")) {
@@ -175,7 +174,7 @@ public class JsonParser {
 					ItemStack.EMPTY, null, id);
 		case PageTransform.RITE:
 			if (list.size() < 2) throw new JsonParseException("仪式item字段需要两个");
-			ItemStack p = new ItemStack(ESInit.ITEMS.PARCHMENT);
+			ItemStack p = new ItemStack(ESObjects.ITEMS.PARCHMENT);
 			RecipeRiteWrite.setInnerStack(p, list.get(0));
 			return new PageTransformSimple(page.getTitle(), page.getContext(), p, list.get(1), list.get(0), null, id);
 		case PageTransform.SEPARATE:

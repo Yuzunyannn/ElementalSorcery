@@ -1,8 +1,12 @@
 package yuzunyannn.elementalsorcery.util.element;
 
+import java.util.List;
+
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public class ElementInventoryAdapter implements IElementInventory {
 
@@ -47,6 +51,11 @@ public class ElementInventoryAdapter implements IElementInventory {
 	@Override
 	public ElementStack extractElement(int slot, ElementStack estack, boolean simulate) {
 		return ElementStack.EMPTY;
+	}
+
+	@Override
+	public void addInformation(World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		ElementHelper.addElementInformation(this, worldIn, tooltip, flagIn);
 	}
 
 }

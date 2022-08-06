@@ -10,12 +10,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderDeconstruct;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -51,7 +51,7 @@ public class CraftingDeconstruct implements ICraftingAltar {
 
 	public CraftingDeconstruct(NBTTagCompound nbt) {
 		if (nbt == null) {
-			ElementalSorcery.logger.warn("CraftingDeconstruct恢复的时候，nbt为NULL！");
+			ESAPI.logger.warn("CraftingDeconstruct恢复的时候，nbt为NULL！");
 			nbt = new NBTTagCompound();
 		}
 		this.deserializeNBT(nbt);

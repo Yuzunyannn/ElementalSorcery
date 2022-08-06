@@ -10,13 +10,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
-import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemSoulFragment extends Item {
 
@@ -46,8 +44,8 @@ public class ItemSoulFragment extends Item {
 			ItemStack stack = ei.getItem();
 			if (stack.getItem() == Items.WOODEN_SWORD) woodSword = ei;
 			else if (stack.getItem() == Items.LEATHER) woodSword = ei;
-			else if (stack.getItem() == ESInit.ITEMS.SOUL_WOOD_SWORD) soulWoodSword = ei;
-			else if (stack.getItem() == ESInit.ITEMS.LIFE_LEATHER && stack.getMetadata() == 0) soulWoodSword = ei;
+			else if (stack.getItem() == ESObjects.ITEMS.SOUL_WOOD_SWORD) soulWoodSword = ei;
+			else if (stack.getItem() == ESObjects.ITEMS.LIFE_LEATHER && stack.getMetadata() == 0) soulWoodSword = ei;
 			if (soulWoodSword != null) break;
 		}
 		int count = entityItem.getItem().getCount();
@@ -62,8 +60,8 @@ public class ItemSoulFragment extends Item {
 		} else if (woodSword != null) {
 			entityItem.setDead();
 			ItemStack swSword;
-			if (woodSword.getItem().getItem() == Items.LEATHER) swSword = new ItemStack(ESInit.ITEMS.LIFE_LEATHER);
-			else swSword = new ItemStack(ESInit.ITEMS.SOUL_WOOD_SWORD);
+			if (woodSword.getItem().getItem() == Items.LEATHER) swSword = new ItemStack(ESObjects.ITEMS.LIFE_LEATHER);
+			else swSword = new ItemStack(ESObjects.ITEMS.SOUL_WOOD_SWORD);
 			swSword.setItemDamage(woodSword.getItem().getItemDamage());
 			swSword.setTagCompound(woodSword.getItem().getTagCompound());
 			addSoul(swSword, count);
@@ -79,6 +77,6 @@ public class ItemSoulFragment extends Item {
 
 	public static void addSoul(ItemStack sword, int count) {
 		ItemSoulWoodSword.addSoul(sword, count);
-		if (sword.getItem() == ESInit.ITEMS.LIFE_LEATHER) ItemLifeLeather.transform(sword);
+		if (sword.getItem() == ESObjects.ITEMS.LIFE_LEATHER) ItemLifeLeather.transform(sword);
 	}
 }

@@ -13,16 +13,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.element.explosion.EEEarth;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ElementEarth extends ElementCommon {
 
@@ -34,7 +35,7 @@ public class ElementEarth extends ElementCommon {
 
 	@Override
 	public int complexWith(ItemStack stack, ElementStack estack, ElementStack other) {
-		if (other.getElement() == ESInit.ELEMENTS.METAL) return 2;
+		if (other.getElement() == ESObjects.ELEMENTS.METAL) return 2;
 		return super.complexWith(stack, estack, other);
 	}
 
@@ -74,7 +75,7 @@ public class ElementEarth extends ElementCommon {
 	@Override
 	protected void addDrinkJuiceEffect(DrinkJuiceEffectAdder helper) {
 
-		helper.preparatory(ESInit.POTIONS.POWER_PITCHER, 25, 100);
+		helper.preparatory(ESObjects.POTIONS.POWER_PITCHER, 25, 100);
 		helper.check(JuiceMaterial.APPLE, 150).checkRatio(JuiceMaterial.ELF_FRUIT, 0.4f, 0.6f).join();
 		helper.descend(JuiceMaterial.ELF_FRUIT, 50, 0.8f);
 
@@ -86,7 +87,7 @@ public class ElementEarth extends ElementCommon {
 		helper.check(JuiceMaterial.ELF_FRUIT, 50).join();
 		helper.descend(JuiceMaterial.ELF_FRUIT, 10, 0.9f);
 
-		helper.preparatory(ESInit.POTIONS.POUND_WALKER, 32, 85);
+		helper.preparatory(ESObjects.POTIONS.POUND_WALKER, 32, 85);
 		helper.check(JuiceMaterial.MELON, 75).join();
 
 	}

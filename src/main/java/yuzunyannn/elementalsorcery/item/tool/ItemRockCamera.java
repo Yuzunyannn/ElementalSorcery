@@ -16,10 +16,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.explore.ExploreManagement;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemNatureDust;
-import yuzunyannn.elementalsorcery.item.ItemNatureDust.EnumType;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectFlash;
@@ -55,7 +54,7 @@ public class ItemRockCamera extends Item {
 			this.showFlashEffect(player);
 			return;
 		}
-		ItemStack crystal = new ItemStack(ESInit.ITEMS.NATURE_CRYSTAL);
+		ItemStack crystal = new ItemStack(ESObjects.ITEMS.NATURE_CRYSTAL);
 		NBTTagCompound data = ItemNatureCrystal.getOrCreateData(crystal);
 		IBlockState state = world.getBlockState(at);
 		for (int i = 0; i < 256; i++) {
@@ -69,14 +68,14 @@ public class ItemRockCamera extends Item {
 		// 优先反手
 		EnumHand hand = handIn == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
 		ItemStack item = player.getHeldItem(hand);
-		if (item.getItem() == ESInit.ITEMS.NATURE_DUST
+		if (item.getItem() == ESObjects.ITEMS.NATURE_DUST
 				&& item.getMetadata() != ItemNatureDust.EnumType.NATURE.getMetadata())
 			return item;
 		// 否则从包里找
 		for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
 			item = player.inventory.getStackInSlot(i);
 			if (item.isEmpty()) continue;
-			if (item.getItem() == ESInit.ITEMS.NATURE_DUST
+			if (item.getItem() == ESObjects.ITEMS.NATURE_DUST
 					&& item.getMetadata() != ItemNatureDust.EnumType.NATURE.getMetadata())
 				return item;
 		}

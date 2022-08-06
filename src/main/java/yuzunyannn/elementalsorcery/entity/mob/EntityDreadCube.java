@@ -40,8 +40,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.init.LootRegister;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
@@ -177,7 +177,7 @@ public class EntityDreadCube extends EntityMob {
 				int soulCount = MathHelper.floor(soul);
 				if (soulCount > 0) {
 					int dropCount = rand.nextInt(soulCount) + 1;
-					this.dropItem(ESInit.ITEMS.SOUL_FRAGMENT, dropCount);
+					this.dropItem(ESObjects.ITEMS.SOUL_FRAGMENT, dropCount);
 					soul -= dropCount;
 				}
 			}

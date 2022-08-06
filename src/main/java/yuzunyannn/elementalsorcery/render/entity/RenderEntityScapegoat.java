@@ -13,7 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.entity.EntityScapegoat;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.model.ModelScapegoat;
@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.render.model.ModelScapegoat;
 @SideOnly(Side.CLIENT)
 public class RenderEntityScapegoat extends Render<EntityScapegoat> {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/scapegoat.png");
 
 	public static final ModelScapegoat MODEL = new ModelScapegoat();

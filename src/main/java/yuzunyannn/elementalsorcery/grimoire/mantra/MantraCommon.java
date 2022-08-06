@@ -20,16 +20,19 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraElementDirectLaunch;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -42,8 +45,6 @@ import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicEmit;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
 
 public class MantraCommon extends Mantra {
 
@@ -303,7 +304,7 @@ public class MantraCommon extends Mantra {
 	}
 
 	public void setIcon(String name) {
-		this.icon = new ResourceLocation(ElementalSorcery.MODID, "textures/mantras/" + name + ".png");
+		this.icon = new ResourceLocation(ESAPI.MODID, "textures/mantras/" + name + ".png");
 	}
 
 	public ItemAncientPaper.EnumType getMantraSubItemType() {

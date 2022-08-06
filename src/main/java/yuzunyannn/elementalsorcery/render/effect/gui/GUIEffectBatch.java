@@ -5,9 +5,9 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElement;
 import yuzunyannn.elementalsorcery.util.helper.Color;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public abstract class GUIEffectBatch {
 
@@ -51,10 +51,10 @@ public abstract class GUIEffectBatch {
 	}
 
 	public void render(float partialTicks, BufferBuilder bufferbuilder) {
-		float size = drawSize * RenderHelper.getPartialTicks(scale, prevScale, partialTicks);
-		float a = RenderHelper.getPartialTicks(alpha, prevAlpha, partialTicks);
-		float x = RenderHelper.getPartialTicks(this.x, this.prevX, partialTicks);
-		float y = RenderHelper.getPartialTicks(this.y, this.prevY, partialTicks);
+		float size = drawSize * RenderFriend.getPartialTicks(scale, prevScale, partialTicks);
+		float a = RenderFriend.getPartialTicks(alpha, prevAlpha, partialTicks);
+		float x = RenderFriend.getPartialTicks(this.x, this.prevX, partialTicks);
+		float y = RenderFriend.getPartialTicks(this.y, this.prevY, partialTicks);
 		bufferbuilder.pos(x - size, y - size, 0).tex(0, 1).color(color.r, color.g, color.b, a).endVertex();
 		bufferbuilder.pos(x - size, y + size, 0).tex(0, 0).color(color.r, color.g, color.b, a).endVertex();
 		bufferbuilder.pos(x + size, y + size, 0).tex(1, 0).color(color.r, color.g, color.b, a).endVertex();

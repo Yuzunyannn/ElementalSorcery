@@ -7,10 +7,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.item.RenderItemElementCrack;
 import yuzunyannn.elementalsorcery.util.render.ModelCylinder;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class EffectCylinderCrackBlast extends Effect {
@@ -61,15 +61,15 @@ public class EffectCylinderCrackBlast extends Effect {
 		double x = this.getRenderX(partialTicks);
 		double y = this.getRenderY(partialTicks);
 		double z = this.getRenderZ(partialTicks);
-		double hScale = RenderHelper.getPartialTicks(scale, prevScale, partialTicks);
+		double hScale = RenderFriend.getPartialTicks(scale, prevScale, partialTicks);
 
 		Entity viewEntity = mc.getRenderViewEntity();
 		double texGenScale = 5;
 		double yScale = 256;
 		if (viewEntity != null) {
-			double ex = RenderHelper.getPartialTicks(viewEntity.posX, viewEntity.prevPosX, partialTicks);
-			double ey = RenderHelper.getPartialTicks(viewEntity.posY, viewEntity.prevPosY, partialTicks);
-			double ez = RenderHelper.getPartialTicks(viewEntity.posZ, viewEntity.prevPosZ, partialTicks);
+			double ex = RenderFriend.getPartialTicks(viewEntity.posX, viewEntity.prevPosX, partialTicks);
+			double ey = RenderFriend.getPartialTicks(viewEntity.posY, viewEntity.prevPosY, partialTicks);
+			double ez = RenderFriend.getPartialTicks(viewEntity.posZ, viewEntity.prevPosZ, partialTicks);
 			Vec3d tar = new Vec3d(ex - x, ey - y, ez - z);
 			texGenScale = Math.max(0.1, MathHelper.sqrt(tar.length()));
 			yScale = Math.abs(tar.y) * 2 + 256;

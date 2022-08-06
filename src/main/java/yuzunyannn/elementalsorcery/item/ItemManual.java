@@ -20,9 +20,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.parchment.Page;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 
@@ -105,7 +105,7 @@ public class ItemManual extends Item {
 		NBTTagList idsList = ItemManual.getIds(stack);
 		for (int i = 0; i < player.inventory.getSizeInventory(); ++i) {
 			ItemStack itemstack = player.inventory.getStackInSlot(i);
-			if (itemstack.getItem() != ESInit.ITEMS.PARCHMENT) continue;
+			if (itemstack.getItem() != ESObjects.ITEMS.PARCHMENT) continue;
 			Page page = Pages.getPage(itemstack);
 			if (Pages.ERROR.equals(page.getId())) continue;
 			boolean has = false;

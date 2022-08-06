@@ -9,7 +9,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class PotionEndercorps extends PotionCommon {
@@ -21,7 +21,7 @@ public class PotionEndercorps extends PotionCommon {
 
 	public static boolean tryAttackEntityFrom(EntityLivingBase target, EntityLivingBase attacker, DamageSource source,
 			float amount) {
-		if (!attacker.isPotionActive(ESInit.POTIONS.ENDERCORPS)) return false;
+		if (!attacker.isPotionActive(ESObjects.POTIONS.ENDERCORPS)) return false;
 		if (target instanceof EntityEnderman) return true;
 		if (attacker.getRNG().nextFloat() >= 0.25f) return false;
 
@@ -30,7 +30,7 @@ public class PotionEndercorps extends PotionCommon {
 		if (isEnd(world)) return false;
 		if (world.isRaining()) return false;
 
-		int amplifier = attacker.getActivePotionEffect(ESInit.POTIONS.ENDERCORPS).getAmplifier();
+		int amplifier = attacker.getActivePotionEffect(ESObjects.POTIONS.ENDERCORPS).getAmplifier();
 		float length = Math.min(6 + amplifier * 3, 16);
 		List<EntityEnderman> endermans = getEnderman(attacker, length);
 		int n = amplifier + 1;

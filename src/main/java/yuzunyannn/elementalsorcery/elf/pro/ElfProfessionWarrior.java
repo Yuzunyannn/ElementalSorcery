@@ -10,8 +10,8 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -20,13 +20,13 @@ public class ElfProfessionWarrior extends ElfProfession {
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
 		if (origin == ElfProfession.MERCHANT) {
-			ItemStack sword = new ItemStack(ESInit.ITEMS.KYANITE_SWORD);
+			ItemStack sword = new ItemStack(ESObjects.ITEMS.KYANITE_SWORD);
 			ItemHelper.addEnchantment(sword, Enchantments.LOOTING, 1);
 			ItemHelper.addEnchantment(sword, Enchantments.POWER, 3);
 			elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, sword);
 			elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0.005f);
 		} else {
-			elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.KYANITE_SWORD));
+			elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESObjects.ITEMS.KYANITE_SWORD));
 			elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0.02f);
 		}
 		elf.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(Items.SHIELD));

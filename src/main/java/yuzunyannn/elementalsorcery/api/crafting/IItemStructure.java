@@ -1,8 +1,7 @@
 package yuzunyannn.elementalsorcery.api.crafting;
 
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 
 public interface IItemStructure extends IToElement, IItemCapbiltitySyn {
 
@@ -23,12 +22,7 @@ public interface IItemStructure extends IToElement, IItemCapbiltitySyn {
 	 */
 	ItemStack getStructureItem(int index);
 
-	default boolean hasItem(ItemStack stack) {
-		if (stack.isEmpty()) return false;
-		for (int i = 0; i < this.getItemCount(); i++)
-			if (ItemHelper.areItemsEqual(this.getStructureItem(i), stack)) return true;
-		return false;
-	}
+	boolean hasItem(ItemStack stack);
 
 	default int getVacancy() {
 		for (int i = 0; i < this.getItemMaxCount(); i++) if (this.getStructureItem(i).isEmpty()) return i;

@@ -4,11 +4,11 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatch;
 import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatchList;
 import yuzunyannn.elementalsorcery.util.helper.Color;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class EffectScreenProgress extends EffectScreen {
@@ -76,10 +76,10 @@ public class EffectScreenProgress extends EffectScreen {
 		if (mc.gameSettings.thirdPersonView != 0) return;
 		TEXTURE.bind();
 		GlStateManager.depthMask(false);
-		float alpha = RenderHelper.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
-		float progress = RenderHelper.getPartialTicks(this.progress, this.preProgress, partialTicks);
+		float alpha = RenderFriend.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
+		float progress = RenderFriend.getPartialTicks(this.progress, this.preProgress, partialTicks);
 		GlStateManager.color(r, g, b, alpha);
-		RenderHelper.drawTexturedModalRect(width / 2 - 256 / 2, height - 50, 0, 0, 5 + 251 * progress, 13, 256, 256);
+		RenderFriend.drawTexturedModalRect(width / 2 - 256 / 2, height - 50, 0, 0, 5 + 251 * progress, 13, 256, 256);
 		GlStateManager.translate(0, 0, 1);
 		guiEffectList.render(partialTicks);
 		GlStateManager.depthMask(true);

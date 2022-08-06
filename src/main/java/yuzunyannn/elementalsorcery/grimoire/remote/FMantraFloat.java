@@ -5,15 +5,15 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
-import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class FMantraFloat extends FMantraEntityExecute {
 
 	public FMantraFloat(MantraCommon mantra) {
-		addCanUseElementWithSameLevel(ESInit.ELEMENTS.AIR);
-		setMaxCharge(new ElementStack(ESInit.ELEMENTS.AIR, 10, 20));
+		addCanUseElementWithSameLevel(ESObjects.ELEMENTS.AIR);
+		setMaxCharge(new ElementStack(ESObjects.ELEMENTS.AIR, 10, 20));
 		setMaxRangeWithMaxFragment(8);
 		setChargeSpeedRatio(0.01);
 		setIconRes(mantra.getIconResource());

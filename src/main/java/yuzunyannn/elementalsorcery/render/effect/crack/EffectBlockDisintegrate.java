@@ -11,15 +11,14 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectListBufferConfusion;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityBlockMove;
 import yuzunyannn.elementalsorcery.render.item.RenderItemElementCrack;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class EffectBlockDisintegrate extends Effect {
@@ -99,11 +98,11 @@ public class EffectBlockDisintegrate extends Effect {
 		double z = getRenderZ(partialTicks);
 		GlStateManager.translate(x, y - 0.5f, z);
 
-		float rate = RenderHelper.getPartialTicks(this.rate, this.prevRate, partialTicks);
+		float rate = RenderFriend.getPartialTicks(this.rate, this.prevRate, partialTicks);
 		int aIndex = Math.min(MathHelper.floor(rate), MASKS.length - 1);
 		int bIndex = Math.min(aIndex + 1, MASKS.length - 1);
 
-		float sRate = RenderHelper.getPartialTicks(this.sRate, this.prevSRate, partialTicks);
+		float sRate = RenderFriend.getPartialTicks(this.sRate, this.prevSRate, partialTicks);
 		GlStateManager.translate(0, 0.5f, 0);
 		GlStateManager.scale(1 + sRate * axis.x, 1 + sRate * axis.y, 1 + sRate * axis.z);
 		GlStateManager.translate(0, -0.5f, 0);
@@ -138,7 +137,7 @@ public class EffectBlockDisintegrate extends Effect {
 		GlStateManager.enableTexture2D();
 
 		net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
-		RenderHelper.disableLightmap(true);
+		RenderFriend.disableLightmap(true);
 
 		GlStateManager.popMatrix();
 	}

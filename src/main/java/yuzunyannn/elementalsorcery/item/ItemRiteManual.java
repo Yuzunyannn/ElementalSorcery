@@ -20,11 +20,11 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.container.gui.GuiRiteManual;
-import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 
 public class ItemRiteManual extends Item {
@@ -94,9 +94,9 @@ public class ItemRiteManual extends Item {
 
 	static public ItemStack findRiteManual(EntityPlayer player) {
 		ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
-		if (stack.getItem() == ESInit.ITEMS.RITE_MANUAL) return stack;
+		if (stack.getItem() == ESObjects.ITEMS.RITE_MANUAL) return stack;
 		stack = player.getHeldItem(EnumHand.OFF_HAND);
-		if (stack.getItem() == ESInit.ITEMS.RITE_MANUAL) return stack;
+		if (stack.getItem() == ESObjects.ITEMS.RITE_MANUAL) return stack;
 		return ItemStack.EMPTY;
 	}
 

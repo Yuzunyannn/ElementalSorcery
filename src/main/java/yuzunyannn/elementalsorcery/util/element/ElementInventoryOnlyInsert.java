@@ -2,8 +2,8 @@ package yuzunyannn.elementalsorcery.util.element;
 
 import javax.annotation.Nonnull;
 
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public class ElementInventoryOnlyInsert extends ElementInventory {
 

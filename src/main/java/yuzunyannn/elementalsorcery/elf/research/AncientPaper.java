@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
 import yuzunyannn.elementalsorcery.api.crafting.IItemCapbiltitySyn;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 
 public class AncientPaper implements IItemCapbiltitySyn {
 

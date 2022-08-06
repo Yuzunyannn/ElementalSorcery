@@ -15,10 +15,10 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.item.IPlatformTickable;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.entity.EntityThrow;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 
 public class ItemBlessingJade extends Item implements IPlatformTickable, EntityThrow.IItemThrowAction {
@@ -52,12 +52,12 @@ public class ItemBlessingJade extends Item implements IPlatformTickable, EntityT
 			if (hand == null) return;
 
 			EntityLivingBase living = (EntityLivingBase) entityIn;
-			living.addPotionEffect(new PotionEffect(ESInit.POTIONS.BLESSING, 120, 0));
+			living.addPotionEffect(new PotionEffect(ESObjects.POTIONS.BLESSING, 120, 0));
 		}
 	}
 
 	public void blessingEntity(EntityLivingBase living) {
-		PotionEffect effect = living.getActivePotionEffect(ESInit.POTIONS.BLESSING);
+		PotionEffect effect = living.getActivePotionEffect(ESObjects.POTIONS.BLESSING);
 		int originDuration = effect == null ? 0 : effect.getDuration();
 		int originAmplifier = effect == null ? 0 : effect.getAmplifier();
 
@@ -73,7 +73,7 @@ public class ItemBlessingJade extends Item implements IPlatformTickable, EntityT
 			}
 		}
 
-		living.addPotionEffect(new PotionEffect(ESInit.POTIONS.BLESSING, time, amplifier));
+		living.addPotionEffect(new PotionEffect(ESObjects.POTIONS.BLESSING, time, amplifier));
 	}
 
 	@Override

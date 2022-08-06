@@ -2,7 +2,7 @@ package yuzunyannn.elementalsorcery.render.item;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileSupremeTable;
 
 public class RenderItemSupremeTable implements IRenderItem {

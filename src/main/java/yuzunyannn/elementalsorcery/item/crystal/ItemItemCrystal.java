@@ -13,12 +13,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemItemCrystal extends ItemCrystal {
@@ -53,7 +53,7 @@ public class ItemItemCrystal extends ItemCrystal {
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (!player.isCreative()) return EnumActionResult.PASS;
 		if (!player.isSneaking()) return EnumActionResult.PASS;
-		if (!ElementalSorcery.isDevelop) return EnumActionResult.PASS;
+		if (!ESAPI.isDevelop) return EnumActionResult.PASS;
 		if (worldIn.isRemote) return EnumActionResult.SUCCESS;
 
 		ItemStack targetItem = ItemHelper.toItemStack(worldIn.getBlockState(pos));

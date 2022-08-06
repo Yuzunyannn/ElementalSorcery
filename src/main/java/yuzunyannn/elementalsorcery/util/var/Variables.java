@@ -2,12 +2,13 @@ package yuzunyannn.elementalsorcery.util.var;
 
 import java.util.UUID;
 
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
+
 
 public class Variables {
-
 	public static final Variable<ElementStack> STORAGE_ELEMENT = new Variable<>("stESk", VariableSet.ELEMENT);
 	public static final Variable<UUID> sUUID = new Variable<>("@uuid", VariableSet.UUID);
 	public static final Variable<Integer> idI = new Variable<>("id", VariableSet.INT);

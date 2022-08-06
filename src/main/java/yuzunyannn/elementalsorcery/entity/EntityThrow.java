@@ -26,7 +26,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.util.ESFakePlayer;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
@@ -91,7 +91,7 @@ public class EntityThrow extends EntityThrowable implements IEntityAdditionalSpa
 			Item item = this.stack.getItem();
 			if (item instanceof IItemThrowAction) ((IItemThrowAction) item).handleStatusUpdate(this, id);
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("客户端处理实体状态异常", e);
+			ESAPI.logger.warn("客户端处理实体状态异常", e);
 		}
 	}
 
@@ -102,7 +102,7 @@ public class EntityThrow extends EntityThrowable implements IEntityAdditionalSpa
 			if (item instanceof IItemThrowAction) ((IItemThrowAction) item).onImpact(this, result);
 			else onImpact(world, getThrower(), result, stack, flag);
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("投掷物品出现异常", e);
+			ESAPI.logger.warn("投掷物品出现异常", e);
 		}
 		if (!this.world.isRemote) this.setDead();
 	}

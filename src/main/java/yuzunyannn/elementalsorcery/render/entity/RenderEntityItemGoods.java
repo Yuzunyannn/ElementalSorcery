@@ -16,15 +16,15 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.RayTraceResult;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.entity.EntityItemGoods;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class RenderEntityItemGoods extends Render<EntityItemGoods> {
 
-	public static final ResourceLocation TEXTURE_GREEN = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_GREEN = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/item_goods_label_green.png");
-	public static final ResourceLocation TEXTURE_RED = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_RED = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/item_goods_label_red.png");
 
 	public final RenderItem itemRenderer = Minecraft.getMinecraft().getRenderItem();
@@ -51,7 +51,7 @@ public class RenderEntityItemGoods extends Render<EntityItemGoods> {
 		ItemStack itemStack = entity.getItem();
 		GlStateManager.translate(0, -0.385, 0);
 		GlStateManager.rotate(entity.rotationYaw, 0, 1, 0);
-		RenderHelper.layItemPositionFix(itemStack);
+		RenderFriend.layItemPositionFix(itemStack);
 		this.itemRenderer.renderItem(itemStack, ItemCameraTransforms.TransformType.FIXED);
 
 		if (this.renderOutlines) {

@@ -27,9 +27,9 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -72,7 +72,7 @@ public class EntityFallingElfFruit extends Entity implements IEntityAdditionalSp
 		try {
 			fallTile = Block.getStateById(buffer.readInt());
 		} catch (Exception e) {
-			fallTile = ESInit.BLOCKS.ELF_FRUIT.getDefaultState();
+			fallTile = ESObjects.BLOCKS.ELF_FRUIT.getDefaultState();
 		}
 		setOrigin(new BlockPos(buffer.readInt(), buffer.readInt(), buffer.readInt()));
 	}
@@ -113,7 +113,7 @@ public class EntityFallingElfFruit extends Entity implements IEntityAdditionalSp
 	public void onFallingUpdate() {
 		Block block = this.fallTile.getBlock();
 
-		if (block != ESInit.BLOCKS.ELF_FRUIT) {
+		if (block != ESObjects.BLOCKS.ELF_FRUIT) {
 			this.setDead();
 			return;
 		}
@@ -263,7 +263,7 @@ public class EntityFallingElfFruit extends Entity implements IEntityAdditionalSp
 		Block block = fallTile.getBlock();
 
 		if (block == null || block.getDefaultState().getMaterial() == Material.AIR)
-			this.fallTile = ESInit.BLOCKS.ELF_FRUIT.getDefaultState();
+			this.fallTile = ESObjects.BLOCKS.ELF_FRUIT.getDefaultState();
 
 		originPos = NBTHelper.getBlockPos(nbt, "origin");
 	}

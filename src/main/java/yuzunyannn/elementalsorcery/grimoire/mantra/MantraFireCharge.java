@@ -12,11 +12,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class MantraFireCharge extends MantraCommon {
 
@@ -31,7 +31,7 @@ public class MantraFireCharge extends MantraCommon {
 	@Override
 	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
 		super.potentAttack(world, grimoire, caster, target);
-		ElementStack stack = getElement(caster, ESInit.ELEMENTS.FIRE, 1, 20);
+		ElementStack stack = getElement(caster, ESObjects.ELEMENTS.FIRE, 1, 20);
 		if (stack.isEmpty()) return;
 		if (world.isRemote) return;
 		world.createExplosion(null, target.posX, target.posY + target.height / 2, target.posZ, 0.5f, false);
@@ -54,7 +54,7 @@ public class MantraFireCharge extends MantraCommon {
 		}
 
 		((MantraDataCommon) data).markContinue(true);
-		ElementStack get = getElement(caster, ESInit.ELEMENTS.FIRE, isPotent ? 1 : 4, 20);
+		ElementStack get = getElement(caster, ESObjects.ELEMENTS.FIRE, isPotent ? 1 : 4, 20);
 		if (get.isEmpty()) return;
 
 		if (world.isRemote) {

@@ -1,24 +1,31 @@
 package yuzunyannn.elementalsorcery.capability;
 
+import java.util.List;
+
 import javax.annotation.Nonnull;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.ContainerArrayDetecter;
-import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ElementInventory implements IElementInventoryModifiable, INBTSerializable<NBTTagCompound>,
 		ContainerArrayDetecter.ICanArrayDetected<ElementStack, NBTTagIntArray> {
@@ -171,6 +178,12 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 	public void deserializeCurrValueFromSend(int index, NBTTagIntArray nbtData) {
 		int[] datas = nbtData.getIntArray();
 		this.setStackInSlot(index, new ElementStack(Element.getElementFromId(datas[0]), datas[1], datas[2]));
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		ElementHelper.addElementInformation(this, worldIn, tooltip, flagIn);
 	}
 
 	// Stroage

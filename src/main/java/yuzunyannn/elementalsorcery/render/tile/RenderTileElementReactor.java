@@ -14,16 +14,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.container.gui.reactor.GuiElementReactor;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.IRenderClient;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor.ReactorStatus;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.render.ModelSphere;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElementReactor> implements IRenderItem {
@@ -49,8 +49,8 @@ public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElem
 		tile.isInRender = true;
 
 		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
-		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y + 0.5, z + 0.5, 0.5f, alpha);
+		RenderFriend.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y + 0.5, z + 0.5, 0.5f, alpha);
 
 		GlStateManager.disableCull();
 
@@ -63,8 +63,8 @@ public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElem
 
 		GlStateManager.enableCull();
 
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
 		if (destroyStage > 0) return;
 		if (status == ReactorStatus.OFF) return;
@@ -77,13 +77,13 @@ public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElem
 			GlStateManager.enableBlend();
 			GlStateManager.depthMask(false);
 			GlStateManager.disableLighting();
-			RenderHelper.disableLightmap(true);
+			RenderFriend.disableLightmap(true);
 
 			if (status.isRunning) renderEffectOn(tile, xoff, yoff, zoff, partialTicks);
 			else if (status == ReactorStatus.STANDBY) renderEffectStandby(tile, xoff, yoff, zoff, partialTicks);
 
 			GlStateManager.enableLighting();
-			RenderHelper.disableLightmap(false);
+			RenderFriend.disableLightmap(false);
 			GlStateManager.enableCull();
 			GlStateManager.enableAlpha();
 			GlStateManager.disableBlend();
@@ -97,7 +97,7 @@ public class RenderTileElementReactor extends TileEntitySpecialRenderer<TileElem
 	public void render(ItemStack stack, float partialTicks) {
 		GlStateManager.disableCull();
 		GlStateManager.color(0.691f, 0.980f, 0.992f);
-		RenderHelper.render(stack, TEXTURE, MODEL, true, 0.4, 0.175, 0.3, 0.15);
+		RenderFriend.renderSpecialItem(stack, TEXTURE, MODEL, true, 0.4, 0.175, 0.3, 0.15);
 		GlStateManager.enableCull();
 	}
 

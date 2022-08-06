@@ -5,16 +5,16 @@ import java.util.Random;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.element.IElemetJuice;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.world.Juice;
 
 public class ElfMerchantTypeJuice extends ElfMerchantTypeDefault {
@@ -49,7 +49,7 @@ public class ElfMerchantTypeJuice extends ElfMerchantTypeDefault {
 
 	@Override
 	public ItemStack getHoldItem(World world, VariableSet storage) {
-		return new ItemStack(ESInit.ITEMS.GLASS_CUP);
+		return new ItemStack(ESObjects.ITEMS.GLASS_CUP);
 	}
 
 }

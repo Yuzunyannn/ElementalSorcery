@@ -4,8 +4,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public class ElementAnalysisPacket implements INBTSerializable<NBTTagCompound>, IToElementInfo {
 
@@ -29,7 +29,7 @@ public class ElementAnalysisPacket implements INBTSerializable<NBTTagCompound>, 
 
 	public void demerge(IToElementInfo other) {
 		if (other == null) return;
-		ElementStack[] otherEstacks = ElementHelper.copy(other.element());
+		ElementStack[] otherEstacks = ElementStack.copy(other.element());
 		if (otherEstacks == null || otherEstacks.length == 0) return;
 		this.daEstacks = ElementHelper.demerge(this.daEstacks, otherEstacks);
 		this.daComplex = Math.max(this.daComplex, other.complex());
@@ -41,7 +41,7 @@ public class ElementAnalysisPacket implements INBTSerializable<NBTTagCompound>, 
 
 	public void merge(IToElementInfo other) {
 		if (other == null) return;
-		ElementStack[] otherEstacks = ElementHelper.copy(other.element());
+		ElementStack[] otherEstacks = ElementStack.copy(other.element());
 		if (otherEstacks == null || otherEstacks.length == 0) return;
 		this.daEstacks = ElementHelper.merge(this.daEstacks, otherEstacks);
 		this.daComplex = Math.max(this.daComplex, other.complex());

@@ -3,7 +3,7 @@ package yuzunyannn.elementalsorcery.render.effect.batch;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 
 public class EffectBatchTypeGlow extends EffectBatchTypeNormal {
 

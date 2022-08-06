@@ -11,13 +11,13 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 
 public class ItemMantraGem extends Item {
 
 	static public boolean isMantraGem(ItemStack stack) {
-		return stack.getItem() == ESInit.ITEMS.MANTRA_GEM;
+		return stack.getItem() == ESObjects.ITEMS.MANTRA_GEM;
 	}
 
 	static public Mantra getMantraFromMantraGem(ItemStack stack) {

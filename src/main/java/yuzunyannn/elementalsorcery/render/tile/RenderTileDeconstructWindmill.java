@@ -11,14 +11,14 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.item.IWindmillBlade;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelDeconstructWindmill;
 import yuzunyannn.elementalsorcery.render.model.ModelDeconstructWindmillBlade;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructWindmill;
 import yuzunyannn.elementalsorcery.util.TextHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileDeconstructWindmill extends TileEntitySpecialRenderer<TileDeconstructWindmill>
@@ -38,22 +38,22 @@ public class RenderTileDeconstructWindmill extends TileEntitySpecialRenderer<Til
 	@Override
 	public void render(TileDeconstructWindmill tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
-		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
+		RenderFriend.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
 
 		float rotate = EventClient.getGlobalRotateInRender(partialTicks) / 180 * 3.14f;
 		float high = (MathHelper.sin(rotate) + 1) * 2;
 
 		MODEL.render(null, high, 0, 0, 0, 0, 1.0f);
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
 		ItemStack blade = tile.getStack();
 		if (!blade.isEmpty()) {
 			GlStateManager.pushMatrix();
 
 			GlStateManager.translate(x + 0.5, y + 0.105 + high / 16, z + 0.5);
-			yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(blade);
+			yuzunyannn.elementalsorcery.api.util.client.RenderFriend.layItemPositionFix(blade);
 			Minecraft.getMinecraft().getRenderItem().renderItem(blade, ItemCameraTransforms.TransformType.FIXED);
 
 			GlStateManager.popMatrix();
@@ -62,8 +62,8 @@ public class RenderTileDeconstructWindmill extends TileEntitySpecialRenderer<Til
 		// 风车叶片部分
 		EnumFacing facing = tile.getOrientation();
 
-		rotate = RenderHelper.getPartialTicks(tile.bladeRotate, tile.prevBladeRotate, partialTicks);
-		float bladeShiftRate = RenderHelper.getPartialTicks(tile.bladeShiftRate, tile.prevBladeShiftRate, partialTicks);
+		rotate = RenderFriend.getPartialTicks(tile.bladeRotate, tile.prevBladeRotate, partialTicks);
+		float bladeShiftRate = RenderFriend.getPartialTicks(tile.bladeShiftRate, tile.prevBladeShiftRate, partialTicks);
 
 		if (bladeShiftRate < 0.001f) return;
 		if (bladeShiftRate < 0.999f) {
@@ -107,7 +107,7 @@ public class RenderTileDeconstructWindmill extends TileEntitySpecialRenderer<Til
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		RenderHelper.render(stack, TEXTURE, MODEL, true);
+		RenderFriend.renderSpecialItem(stack, TEXTURE, MODEL, true);
 	}
 
 }

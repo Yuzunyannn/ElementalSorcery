@@ -27,22 +27,22 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.element.ElementKnowledge;
 import yuzunyannn.elementalsorcery.element.ElementMetal;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFireBall;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.var.Variables;
 
 public class MantraFireBall extends MantraCommon {
@@ -58,8 +58,8 @@ public class MantraFireBall extends MantraCommon {
 		set.set(POWERI, power);
 		set.set(VEC, pos);
 		set.set(TOWARD, orient);
-		if (needKnowledge) set.set(Variables.KNOWLEDGE, new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 20, 150));
-		MantraCommon.fireMantra(world, ESInit.MANTRAS.FIRE_BALL, spller, set);
+		if (needKnowledge) set.set(Variables.KNOWLEDGE, new ElementStack(ESObjects.ELEMENTS.KNOWLEDGE, 20, 150));
+		MantraCommon.fireMantra(world, ESObjects.MANTRAS.FIRE_BALL, spller, set);
 	}
 
 	protected static class Data extends MantraDataCommon {
@@ -80,9 +80,9 @@ public class MantraFireBall extends MantraCommon {
 	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
 		super.potentAttack(world, grimoire, caster, target);
 		if (world.rand.nextInt(5) != 0) return;
-		ElementStack stack = getElement(caster, ESInit.ELEMENTS.FIRE, 10, 50);
+		ElementStack stack = getElement(caster, ESObjects.ELEMENTS.FIRE, 10, 50);
 		if (stack.isEmpty()) return;
-		ElementStack knowledge = getElement(caster, ESInit.ELEMENTS.KNOWLEDGE, 2, 50);
+		ElementStack knowledge = getElement(caster, ESObjects.ELEMENTS.KNOWLEDGE, 2, 50);
 
 		int power = 3 + Math.min(stack.getPower() / 200, 4);
 		MantraFireBall.fire(world, caster.iWantCaster().asEntityLivingBase(), power, !knowledge.isEmpty());
@@ -117,7 +117,7 @@ public class MantraFireBall extends MantraCommon {
 		float power = data.get(POWERF);
 		if (power >= 32) return;
 		// 每tick两点消耗，积攒火球，火元素是必须的，否则没法积攒其他元素
-		ElementStack need = new ElementStack(ESInit.ELEMENTS.FIRE, 2, 50);
+		ElementStack need = new ElementStack(ESObjects.ELEMENTS.FIRE, 2, 50);
 		ElementStack stack = caster.iWantSomeElement(need, true);
 		if (stack.isEmpty()) return;
 		data.set(POWERF, power = power + 0.2f + Math.min(stack.getPower() / 1000f, 0.4f));
@@ -125,12 +125,12 @@ public class MantraFireBall extends MantraCommon {
 		data.setProgress(power, 32);
 		// 获取金
 
-		if (!data.tryCollect(caster, ESInit.ELEMENTS.METAL, 1, 100, 40).get.isEmpty()) {
+		if (!data.tryCollect(caster, ESObjects.ELEMENTS.METAL, 1, 100, 40).get.isEmpty()) {
 			if (world.isRemote) if (world.rand.nextInt(4) == 0) data.color = ElementMetal.COLOR;
 			else data.color = 0;
 		}
 		// 获取知识
-		if (!data.tryCollect(caster, ESInit.ELEMENTS.KNOWLEDGE, 1, 100, 20).get.isEmpty()) {
+		if (!data.tryCollect(caster, ESObjects.ELEMENTS.KNOWLEDGE, 1, 100, 20).get.isEmpty()) {
 			if (world.isRemote) if (world.rand.nextInt(5) == 0) data.color = ElementKnowledge.COLOR;
 			else data.color = 0;
 		}

@@ -6,7 +6,7 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.entity.mob.EntityArrogantSheep;
 import yuzunyannn.elementalsorcery.render.model.living.ModelArrogantSheep;
 import yuzunyannn.elementalsorcery.render.model.living.ModelArrogantSheepBig;
@@ -15,7 +15,7 @@ import yuzunyannn.elementalsorcery.render.model.living.ModelArrogantSheepBig;
 public class RenderEntityArrogantSheep extends RenderLiving<EntityArrogantSheep> {
 
 	public static final ResourceLocation TEXTURES_SHEEP = new ResourceLocation("textures/entity/sheep/sheep.png");
-	public static final ResourceLocation TEXTURE_FUR = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_FUR = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/arrogant_sheep_fur.png");
 
 	public RenderEntityArrogantSheep(RenderManager mgr) {

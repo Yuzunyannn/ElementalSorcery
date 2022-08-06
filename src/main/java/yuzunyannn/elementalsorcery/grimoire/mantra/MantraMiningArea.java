@@ -13,10 +13,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
@@ -28,8 +28,8 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 		this.setIcon("auto_mining");
 		this.setRarity(25);
 		this.setOccupation(10);
-		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.EARTH, 2, 75), 400, 32);
-		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.METAL, 3, 50), -1, 32);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.EARTH, 2, 75), 400, 32);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.METAL, 3, 50), -1, 32);
 		this.initAndAddDefaultMantraLauncher(0.0005);
 	}
 
@@ -46,7 +46,7 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 
 	@Override
 	public void init(World world, SquareData data, ICaster caster, BlockPos pos) {
-		ElementStack earth = data.get(ESInit.ELEMENTS.EARTH);
+		ElementStack earth = data.get(ESObjects.ELEMENTS.EARTH);
 		float rate = 1f * caster.iWantBePotent(2f, false) + 1;
 		data.setSize(Math.min(earth.getPower() / 200, 4) * 2 * rate + 8);
 		data.set(LAYER, (short) (pos.getY() - 1));
@@ -56,8 +56,8 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 	public boolean tick(World world, SquareData data, ICaster caster, BlockPos originPos) {
 		if (world.isRemote) return true;
 		int tick = caster.iWantKnowCastTick();
-		ElementStack earth = data.get(ESInit.ELEMENTS.EARTH);
-		ElementStack metal = data.get(ESInit.ELEMENTS.METAL);
+		ElementStack earth = data.get(ESObjects.ELEMENTS.EARTH);
+		ElementStack metal = data.get(ESObjects.ELEMENTS.METAL);
 		if (earth.isEmpty() || metal.isEmpty()) return false;
 		short layer = data.get(LAYER);
 		if (layer < 0) return false;
@@ -110,7 +110,7 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 	}
 
 	public boolean canGet(World world, BlockPos pos, IBlockState state, SquareData data) {
-		return state.getBlock() == ESInit.BLOCKS.SEAL_STONE || OreHelper.isOre(state);
+		return state.getBlock() == ESObjects.BLOCKS.SEAL_STONE || OreHelper.isOre(state);
 	}
 
 }

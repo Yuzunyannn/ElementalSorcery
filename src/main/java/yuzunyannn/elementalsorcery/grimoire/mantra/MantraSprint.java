@@ -13,12 +13,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraSprint;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectResonance;
 
@@ -34,7 +34,7 @@ public class MantraSprint extends MantraCommon {
 
 	@Override
 	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
-		ElementStack stack = getElement(caster, ESInit.ELEMENTS.AIR, 2, 25);
+		ElementStack stack = getElement(caster, ESObjects.ELEMENTS.AIR, 2, 25);
 		if (stack.isEmpty()) return;
 
 		float potent = caster.iWantBePotent(0.2f, false);
@@ -55,7 +55,7 @@ public class MantraSprint extends MantraCommon {
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataCommon = (MantraDataCommon) data;
-		ElementStack need = new ElementStack(ESInit.ELEMENTS.AIR, 4, 30);
+		ElementStack need = new ElementStack(ESObjects.ELEMENTS.AIR, 4, 30);
 		ElementStack get = caster.iWantSomeElement(need, true);
 		if (get.isEmpty()) return;
 		Entity entity = caster.iWantCaster().asEntity();

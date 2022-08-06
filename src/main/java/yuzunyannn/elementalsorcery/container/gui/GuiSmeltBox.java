@@ -2,12 +2,12 @@ package yuzunyannn.elementalsorcery.container.gui;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.container.ContainerSmeltBox;
 import yuzunyannn.elementalsorcery.tile.TileSmeltBox;
 
 public class GuiSmeltBox extends GuiNormal {
-	private static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	private static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/container/smelt_box.png");
 	protected ContainerSmeltBox inventory;
 

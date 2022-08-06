@@ -12,7 +12,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidBase;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -55,9 +55,9 @@ public class PotionWaterCalamity extends PotionCommon {
 
 		AxisAlignedBB aabb = WorldHelper.createAABB(pos, Math.min(6 + amplifier * 2, 16), 2, 3);
 		List<EntityLivingBase> list = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
-		PotionEffect effect = owner.getActivePotionEffect(ESInit.POTIONS.WATER_CALAMITY);
+		PotionEffect effect = owner.getActivePotionEffect(ESObjects.POTIONS.WATER_CALAMITY);
 		for (EntityLivingBase entity : list) {
-			if (entity.isPotionActive(ESInit.POTIONS.WATER_CALAMITY)) continue;
+			if (entity.isPotionActive(ESObjects.POTIONS.WATER_CALAMITY)) continue;
 			if (EntityHelper.isCreative(entity)) continue;
 			entity.addPotionEffect(new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier()));
 		}

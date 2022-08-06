@@ -15,29 +15,26 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.KeyBoard;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageMantraShift;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class GuiMantraShitf extends GuiScreen {
 
 	// base
-	public static final ResourceLocation RING = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation RING = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/mantra_shitf/ring.png");
-	public static final ResourceLocation SELECT = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation SELECT = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/mantra_shitf/select.png");
-	public static final ResourceLocation FOG = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation FOG = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/mantra_shitf/fog.png");
-	// more
-	public static final ResourceLocation CIRCLE = new ResourceLocation(ElementalSorcery.MODID,
-			"textures/gui/mantra_shitf/circle.png");
-
+	
 	public GuiMantraShitf(EntityPlayer player) {
 		ItemStack stack = player.getHeldItemMainhand();
 		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
@@ -337,7 +334,7 @@ public class GuiMantraShitf extends GuiScreen {
 	}
 
 	public void draw(float x, float y, float width, float height, float u, float v, float texWidth, float texHeight) {
-		RenderHelper.drawTexturedRectInCenter(x, y, width, height, u, v, texWidth, texHeight, textureWidth,
+		RenderFriend.drawTexturedRectInCenter(x, y, width, height, u, v, texWidth, texHeight, textureWidth,
 				textureHeight);
 	}
 

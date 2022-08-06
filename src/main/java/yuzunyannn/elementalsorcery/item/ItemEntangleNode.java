@@ -21,9 +21,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.container.BlockIceRockNode;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
@@ -33,7 +32,7 @@ import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 public class ItemEntangleNode extends Item {
 
 	public static ItemStack create(BlockPos pos) {
-		ItemStack stack = new ItemStack(ESInit.ITEMS.ENTANGLE_NODE);
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.ENTANGLE_NODE);
 		setBlockPos(stack, pos);
 		return stack;
 	}
@@ -58,7 +57,7 @@ public class ItemEntangleNode extends Item {
 
 	@Override
 	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
-		
+
 	}
 
 	@Override

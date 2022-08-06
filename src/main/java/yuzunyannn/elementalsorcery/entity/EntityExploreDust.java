@@ -10,9 +10,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.explore.ExploreManagement;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
 public class EntityExploreDust extends Entity implements IEntityAdditionalSpawnData {
 
 	protected int level;
-	protected ItemStack stack = new ItemStack(ESInit.ITEMS.NATURE_CRYSTAL);
+	protected ItemStack stack = new ItemStack(ESObjects.ITEMS.NATURE_CRYSTAL);
 	/** 当前处理记录的数据 */
 	protected NBTTagCompound data = new NBTTagCompound();
 

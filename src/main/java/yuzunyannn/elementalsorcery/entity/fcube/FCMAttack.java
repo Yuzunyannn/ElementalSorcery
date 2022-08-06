@@ -18,10 +18,15 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.entity.Behavior;
+import yuzunyannn.elementalsorcery.api.entity.BehaviorAttack;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModuleRecipe;
+import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -40,15 +45,15 @@ public class FCMAttack extends FairyCubeModule {
 		if (biome.getRegistryName().getPath().indexOf("desert") == -1) return false;
 		if (!time.at(ElfTime.Period.DAY)) return false;
 
-		return matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.BLAZE_POWDER, 12),
-				ElementHelper.toList(ESInit.ELEMENTS.FIRE, 150, 50));
+		return FairyCubeModuleInGame.matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.BLAZE_POWDER, 12),
+				ElementHelper.toList(ESObjects.ELEMENTS.FIRE, 150, 50));
 	}
 
 	public FCMAttack(EntityFairyCube fairyCube) {
 		super(fairyCube);
 		this.setPriority(PriorityType.EXECUTER);
 		this.setStatusCount(2);
-		this.setElementNeedPerExp(new ElementStack(ESInit.ELEMENTS.FIRE, 12, 75), 16);
+		this.setElementNeedPerExp(new ElementStack(ESObjects.ELEMENTS.FIRE, 12, 75), 16);
 	}
 
 	public EntityLivingBase executeEntity;
@@ -74,12 +79,12 @@ public class FCMAttack extends FairyCubeModule {
 		fairyCube.doExecute(status == 2 ? 100 : 20);
 	}
 
-	public static float getPlunder(EntityFairyCube fairyCube) {
-		float plunder = fairyCube.getAttribute("plunder");
+	public static double getPlunder(EntityFairyCube fairyCube) {
+		double plunder = fairyCube.getAttribute("plunder");
 		return plunder;
 	}
 
-	public List<EntityLivingBase> getTargets(EntityLivingBase master, Entity target, float range) {
+	public List<EntityLivingBase> getTargets(EntityLivingBase master, Entity target, double range) {
 		World world = target.world;
 		AxisAlignedBB aabb = WorldHelper.createAABB(target.getPositionVector(), range, 4, 2);
 		return world.getEntitiesWithinAABB(EntityLivingBase.class, aabb, e -> {
@@ -102,9 +107,9 @@ public class FCMAttack extends FairyCubeModule {
 		float damage = 1 + (float) Math.pow(level * 0.75, 1.2);
 
 		if (status == 2) damage = damage * 3;
-		DamageSource ds = DamageHelper.getMagicDamageSource(master, fairyCube);
-		damage = fairyCube.getAttribute("attack:damage", damage);
-		float range = fairyCube.getAttribute("attack:range");
+		DamageSource ds = DamageHelper.getMagicDamageSource(master, fairyCube.asEntity());
+		damage = (float) fairyCube.getAttribute("attack:damage", damage);
+		double range = fairyCube.getAttribute("attack:range");
 
 		living.attackEntityFrom(ds, damage);
 		if (range >= 1) {
@@ -118,7 +123,7 @@ public class FCMAttack extends FairyCubeModule {
 
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setByte("D", (byte) (status == 2 ? 100 : 20));
-		nbt.setFloat("R", range);
+		nbt.setFloat("R", (float) range);
 		nbt.setInteger("E", living.getEntityId());
 		this.sendToClient(nbt);
 	}
@@ -132,10 +137,10 @@ public class FCMAttack extends FairyCubeModule {
 	public void onRecv(NBTTagCompound nbt) {
 		int[] colors = new int[] { 0xb5f4de, 0xea421c, 0xea861c, 0x5a1717 };
 		fairyCube.doClientSwingArm(nbt.getInteger("D"), colors);
-		Entity entity = fairyCube.world.getEntityByID(nbt.getInteger("E"));
+		Entity entity = fairyCube.getWorld().getEntityByID(nbt.getInteger("E"));
 		if (entity == null) return;
 		float range = nbt.getFloat("R");
-		if (range < 1) fairyCube.doClientEntityEffect(entity, colors);
+		if (range < 1) fairyCube.doClientAttackEffect(entity, colors);
 		else {
 			Vec3d center = entity.getPositionVector().add(0, entity.height / 3 * 2, 0);
 			Random rand = fairyCube.getRNG();
@@ -154,7 +159,7 @@ public class FCMAttack extends FairyCubeModule {
 			EntityLivingBase master = fairyCube.getMaster();
 			if (master == null) return;
 			List<EntityLivingBase> targets = this.getTargets(master, entity, range);
-			for (EntityLivingBase target : targets) fairyCube.doClientEntityEffect(target, colors);
+			for (EntityLivingBase target : targets) fairyCube.doClientAttackEffect(target, colors);
 		}
 	}
 

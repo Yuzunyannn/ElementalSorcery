@@ -4,13 +4,14 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderObjects {
 
-	static final public ItemStack MAGIC_STONE = new ItemStack(ESInit.ITEMS.MAGIC_STONE);
+	static final public ItemStack MAGIC_STONE = new ItemStack(ESObjects.ITEMS.MAGIC_STONE);
 
 	static final public ResourceLocation CRAFTING_TABLE = MCRes("textures/gui/container/crafting_table.png");
 	static final public ResourceLocation STONE = MCRes("textures/blocks/stone.png");
@@ -21,15 +22,13 @@ public class RenderObjects {
 	static final public ResourceLocation ASTONE = ESRes("textures/blocks/astone.png");
 	static final public ResourceLocation ASTONE_FRAGMENTED = ESRes("textures/blocks/astone_fragmented.png");
 
-	static final public ResourceLocation MANTRA_VOID = ESRes("textures/mantras/void.png");
-
 	static final public ResourceLocation MAGIC_CIRCLE_SUMMON = ESRes("textures/magic_circles/summon.png");
 	static final public ResourceLocation MAGIC_CIRCLE_PICKAXE = ESRes("textures/magic_circles/pickaxe.png");
 
 	public static final TextureBinder EFFECT_BUFF = new TextureBinder("textures/gui/effect_buff.png");
 
 	static public ResourceLocation ESRes(String path) {
-		return new ResourceLocation(ElementalSorcery.MODID, path);
+		return new ResourceLocation(ESAPI.MODID, path);
 	}
 
 	static public ResourceLocation MCRes(String path) {

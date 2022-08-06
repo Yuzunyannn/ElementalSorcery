@@ -15,6 +15,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
 import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
@@ -22,9 +24,7 @@ import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.entity.EntityItemGoods;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 
 public class EFloorMarket extends ElfEdificeFloor {
 
@@ -92,7 +92,7 @@ public class EFloorMarket extends ElfEdificeFloor {
 		}
 		// 后面一排树叶
 		{
-			IBlockState LEAF = ESInit.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
+			IBlockState LEAF = ESObjects.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
 			IBlockState LAMP = Blocks.LIT_REDSTONE_LAMP.getDefaultState();
 			IBlockState REDSTONE = Blocks.REDSTONE_BLOCK.getDefaultState();
 			int size = treeSize;

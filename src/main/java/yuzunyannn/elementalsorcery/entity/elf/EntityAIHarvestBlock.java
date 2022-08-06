@@ -2,7 +2,7 @@ package yuzunyannn.elementalsorcery.entity.elf;
 
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.math.BlockPos;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class EntityAIHarvestBlock extends EntityAIBase {
 
@@ -39,7 +39,7 @@ public class EntityAIHarvestBlock extends EntityAIBase {
 
 	protected boolean canHarvest(BlockPos pos) {
 		if (pos == null) return false;
-		if (elf.world.getBlockState(pos).getBlock() == ESInit.BLOCKS.ELF_FRUIT) return true;
+		if (elf.world.getBlockState(pos).getBlock() == ESObjects.BLOCKS.ELF_FRUIT) return true;
 		return false;
 	}
 }

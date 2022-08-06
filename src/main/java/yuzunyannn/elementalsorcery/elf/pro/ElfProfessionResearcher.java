@@ -15,7 +15,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorLaboratory;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
@@ -29,7 +30,6 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
@@ -39,7 +39,7 @@ public class ElfProfessionResearcher extends ElfProfession {
 
 	@Override
 	public void initElf(EntityElfBase elf, ElfProfession origin) {
-		elf.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, 1));
+		elf.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, 1));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -76,7 +76,7 @@ public class ElfProfessionResearcher extends ElfProfession {
 		if (ElfConfig.isVeryDishonest(player))
 			return chapter.addScene(new TalkSceneSay("say.dishonest.not.say"));
 		ItemStack stack = player.getHeldItemMainhand();
-		if (stack.getItem() == ESInit.ITEMS.ANCIENT_PAPER) {
+		if (stack.getItem() == ESObjects.ITEMS.ANCIENT_PAPER) {
 			AncientPaper ap = new AncientPaper(stack);
 			if (ap.isLocked() && ap.getProgress() <= 0) {
 				chapter.addScene(new TalkSceneSay("say.want.paper"));
@@ -115,7 +115,7 @@ public class ElfProfessionResearcher extends ElfProfession {
 		else {
 			FloorInfo info = core.getFloor(EFloorLaboratory.class);
 			if (info == null) {
-				ElementalSorcery.logger.warn("精灵研究者找不到研究室了！");
+				ESAPI.logger.warn("精灵研究者找不到研究室了！");
 				elf.setProfession(ElfProfession.NONE);
 				return;
 			}
@@ -124,10 +124,10 @@ public class ElfProfessionResearcher extends ElfProfession {
 			NBTHelper.setBlockPos(nbt, "sTable", table);
 		}
 		IBlockState state = elf.world.getBlockState(table);
-		if (state.getBlock() != ESInit.BLOCKS.RESEARCHER) {
+		if (state.getBlock() != ESObjects.BLOCKS.RESEARCHER) {
 			if (table.distanceSq(elf.getPosition()) <= 3 * 3) {
 				elf.tryHarvestBlock(table);
-				elf.tryPlaceBlock(table, ESInit.BLOCKS.RESEARCHER.getDefaultState());
+				elf.tryPlaceBlock(table, ESObjects.BLOCKS.RESEARCHER.getDefaultState());
 			}
 		}
 		if (!elf.getNavigator().noPath()) return;

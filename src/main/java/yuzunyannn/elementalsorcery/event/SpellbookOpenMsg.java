@@ -4,7 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 
@@ -45,7 +45,7 @@ public class SpellbookOpenMsg implements ITickTask {
 			Item item = stack.getItem();
 			if (item instanceof ItemSpellbook) {
 				((ItemSpellbook) item).spellBegin(entity.getEntityWorld(), entity, stack, book);
-			} else ElementalSorcery.logger.warn("客户端传入的spellbook的打开消息的物品有误！传入物品：" + item);
+			} else ESAPI.logger.warn("客户端传入的spellbook的打开消息的物品有误！传入物品：" + item);
 		}
 	}
 }

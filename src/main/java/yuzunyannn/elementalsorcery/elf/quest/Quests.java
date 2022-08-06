@@ -12,7 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
 import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionNeedItem;
@@ -87,9 +87,9 @@ public class Quests {
 			QuestType questType = creator.createQuest(context);
 			return new Quest(questType);
 		} catch (QuestCreateFailException e) {
-			ElementalSorcery.logger.warn("创建任务失败", e);
+			ESAPI.logger.warn("创建任务失败", e);
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("创建任务发生未知异常", e);
+			ESAPI.logger.warn("创建任务发生未知异常", e);
 		}
 		return null;
 	}

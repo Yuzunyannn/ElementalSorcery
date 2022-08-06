@@ -12,18 +12,18 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.tile.TileMeltCauldron.MeltCauldronRecipe;
 
 public class MeltCauldronCategory implements IRecipeCategory<MeltCauldronRecipeWrapper> {
 
-	public static final String UID = ElementalSorcery.MODID + "." + "meltCauldron";
+	public static final String UID = ESAPI.MODID + "." + "meltCauldron";
 	private final IDrawable background;
 
 	public MeltCauldronCategory() {
 		background = ESJEIPlugin.guiHelper.createDrawable(
-				new ResourceLocation(ElementalSorcery.MODID, "textures/gui/jei/melt_cauldron_jei.png"), 0, 0, 162, 88);
+				new ResourceLocation(ESAPI.MODID, "textures/gui/jei/melt_cauldron_jei.png"), 0, 0, 162, 88);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class MeltCauldronCategory implements IRecipeCategory<MeltCauldronRecipeW
 
 	@Override
 	public String getModName() {
-		return ElementalSorcery.MODID;
+		return ESAPI.MODID;
 	}
 
 	@Override
@@ -60,7 +60,7 @@ public class MeltCauldronCategory implements IRecipeCategory<MeltCauldronRecipeW
 		}
 
 		group.init(i, true, 72, 22);
-		group.set(i, new ItemStack(ESInit.ITEMS.MAGIC_STONE, r.getMagicStoneCount()));
+		group.set(i, new ItemStack(ESObjects.ITEMS.MAGIC_STONE, r.getMagicStoneCount()));
 		i++;
 
 		group.init(i, false, 72, 53);

@@ -17,21 +17,22 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.explosion.EEMetal;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper.OreEnum;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ElementMetal extends ElementCommon {
 
@@ -101,13 +102,13 @@ public class ElementMetal extends ElementCommon {
 		helper.preparatory(MobEffects.BLINDNESS, 8, 0);
 		helper.check(JuiceMaterial.ELF_FRUIT, 375).join();
 
-		helper.preparatory(ESInit.POTIONS.FLUORESCE_WALKER, 30, 75);
+		helper.preparatory(ESObjects.POTIONS.FLUORESCE_WALKER, 30, 75);
 		helper.check(JuiceMaterial.APPLE, 75).checkRatio(JuiceMaterial.MELON, 0.1f, 0.5f).join();
 
 		helper.preparatory(MobEffects.NIGHT_VISION, 35, 0);
 		helper.check(JuiceMaterial.ELF_FRUIT, 100).checkRatio(JuiceMaterial.APPLE, 0.2f, 1.2f).join();
 
-		helper.preparatory(ESInit.POTIONS.GOLDEN_EYE, 35, 100);
+		helper.preparatory(ESObjects.POTIONS.GOLDEN_EYE, 35, 100);
 		helper.check(JuiceMaterial.ELF_FRUIT, 100).checkRatio(JuiceMaterial.MELON, 0.2f, 1.2f).join();
 
 	}
@@ -155,8 +156,8 @@ public class ElementMetal extends ElementCommon {
 
 		storage = storage.copy();
 		storage.setCount(1);
-		double storageFragment = ElementHelper.toFragment(storage);
-		double targetFragment = ElementHelper.toFragment(eStack);
+		double storageFragment = ElementTransition.toFragment(storage);
+		double targetFragment = ElementTransition.toFragment(eStack);
 		double ratio = Math.min(1.4, storageFragment / targetFragment);
 		if (ratio > 0.5) ratio = 0.5 + (ratio - 0.5) * 0.5f;
 		if (rand.nextDouble() < ratio) ItemHelper.dropItem(world, pos, stack);

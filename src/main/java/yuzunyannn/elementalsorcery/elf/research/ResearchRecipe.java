@@ -10,6 +10,7 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
+import yuzunyannn.elementalsorcery.api.crafting.IResearcher;
 
 public class ResearchRecipe implements IResearchRecipe {
 
@@ -51,7 +52,7 @@ public class ResearchRecipe implements IResearchRecipe {
 	}
 
 	@Override
-	public boolean matches(Researcher researcher, World worldIn) {
+	public boolean matches(IResearcher researcher, World worldIn) {
 		if (needs.isEmpty()) return false;
 		for (Entry<String, Integer> entry : needs) {
 			int count = researcher.get(entry.getKey());
@@ -62,7 +63,7 @@ public class ResearchRecipe implements IResearchRecipe {
 	}
 
 	@Override
-	public float getMatchWeight(Researcher researcher, List<IResearchRecipe> qualified, World worldIn) {
+	public float getMatchWeight(IResearcher researcher, List<IResearchRecipe> qualified, World worldIn) {
 		int n = 0;
 		for (Entry<String, Integer> entry : needs) {
 			int count = researcher.get(entry.getKey());

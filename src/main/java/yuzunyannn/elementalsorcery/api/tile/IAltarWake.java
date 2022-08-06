@@ -7,7 +7,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 
 /** 只有继承这个接口的TileEntity并且拥有仓库，才能被祭坛所使用 */
 public interface IAltarWake extends IElementInventoryPromote {

@@ -7,13 +7,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
 import yuzunyannn.elementalsorcery.render.effect.IBinder;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class EffectTimeHourglass extends EffectCondition {
@@ -115,13 +115,13 @@ public class EffectTimeHourglass extends EffectCondition {
 	protected void doRender(float partialTicks) {
 		GlStateManager.pushMatrix();
 
-		double posX = RenderHelper.getPartialTicks(this.posX, this.prevPosX, partialTicks);
-		double posY = RenderHelper.getPartialTicks(this.posY, this.prevPosY, partialTicks);
-		double posZ = RenderHelper.getPartialTicks(this.posZ, this.prevPosZ, partialTicks);
-		float scale = RenderHelper.getPartialTicks(this.scale, this.preScale, partialTicks);
-		float alpha = RenderHelper.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
-		float rotate = RenderHelper.getPartialTicks(this.rotate, this.preRotate, partialTicks);
-		float point = RenderHelper.getPartialTicks(this.potinerRate, this.prePotinerRate, partialTicks);
+		double posX = RenderFriend.getPartialTicks(this.posX, this.prevPosX, partialTicks);
+		double posY = RenderFriend.getPartialTicks(this.posY, this.prevPosY, partialTicks);
+		double posZ = RenderFriend.getPartialTicks(this.posZ, this.prevPosZ, partialTicks);
+		float scale = RenderFriend.getPartialTicks(this.scale, this.preScale, partialTicks);
+		float alpha = RenderFriend.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
+		float rotate = RenderFriend.getPartialTicks(this.rotate, this.preRotate, partialTicks);
+		float point = RenderFriend.getPartialTicks(this.potinerRate, this.prePotinerRate, partialTicks);
 
 		GlStateManager.translate(posX, posY + 0.1f, posZ);
 		GlStateManager.rotate(90, 1, 0, 0);

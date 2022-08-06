@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 
 public class BuildingSaveData implements INBTSerializable<NBTTagCompound> {
 
@@ -85,7 +86,7 @@ public class BuildingSaveData implements INBTSerializable<NBTTagCompound> {
 			try {
 				this.writeDataToFile();
 			} catch (IOException e) {
-				ElementalSorcery.logger.warn("建筑记录保存失败！" + file.getName());
+				ESAPI.logger.warn("建筑记录保存失败！" + file.getName());
 				return false;
 			}
 			return true;

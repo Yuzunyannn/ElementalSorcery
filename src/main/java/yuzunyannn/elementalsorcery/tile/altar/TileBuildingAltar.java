@@ -13,6 +13,8 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
@@ -24,8 +26,6 @@ import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingBuildingRecord;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderBuildingRecord;
 
@@ -141,7 +141,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 		return new CraftingBuildingRecord(nbt).setTile(this).setColor(c.getColorValue());
 	}
 
-	public static final ElementStack ENEED1 = new ElementStack(ESInit.ELEMENTS.EARTH, 1, 25);
+	public static final ElementStack ENEED1 = new ElementStack(ESObjects.ELEMENTS.EARTH, 1, 25);
 
 	@Override
 	public void craftingUpdate(ICraftingCommit commit) {
@@ -221,7 +221,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 
 	@Override
 	public boolean canSetStack(ItemStack stack) {
-		return (stack.getItem() == ESInit.ITEMS.ARCHITECTURE_CRYSTAL || stack.getSubCompound("building") != null)
+		return (stack.getItem() == ESObjects.ITEMS.ARCHITECTURE_CRYSTAL || stack.getSubCompound("building") != null)
 				&& !ArcInfo.isArc(stack);
 	}
 

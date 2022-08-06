@@ -14,15 +14,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.BlockFluidBase;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.element.explosion.EEWater;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ElementWater extends ElementCommon {
 
@@ -98,11 +99,11 @@ public class ElementWater extends ElementCommon {
 		helper.preparatory(MobEffects.FIRE_RESISTANCE, 30, 0);
 		helper.check(JuiceMaterial.MELON, 90).join();
 
-		helper.preparatory(ESInit.POTIONS.TIDE_WALKER, 40, 100);
+		helper.preparatory(ESObjects.POTIONS.TIDE_WALKER, 40, 100);
 		helper.check(JuiceMaterial.MELON, 100).checkRatio(JuiceMaterial.APPLE, 1.25f, 2).join();
 		helper.descend(JuiceMaterial.APPLE, 50, 0.8f).descend(JuiceMaterial.MELON, 40, 0.8f);
 
-		helper.preparatory(ESInit.POTIONS.WATER_CALAMITY, 30, 80);
+		helper.preparatory(ESObjects.POTIONS.WATER_CALAMITY, 30, 80);
 		helper.check(JuiceMaterial.MELON, 120).checkRatio(JuiceMaterial.APPLE, 0.5f, 1.5f).join();
 
 	}

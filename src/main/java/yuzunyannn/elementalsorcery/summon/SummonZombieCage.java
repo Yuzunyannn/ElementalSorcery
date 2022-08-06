@@ -21,7 +21,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 
 public class SummonZombieCage extends SummonCommon {
@@ -124,7 +124,7 @@ public class SummonZombieCage extends SummonCommon {
 					.getConstructor(World.class);
 			entity = constructor.newInstance(world);
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("召唤仪式僵尸牢笼反射异常", e);
+			ESAPI.logger.warn("召唤仪式僵尸牢笼反射异常", e);
 			entity = new EntityZombie(world);
 		}
 		ElfTime time = new ElfTime(world);

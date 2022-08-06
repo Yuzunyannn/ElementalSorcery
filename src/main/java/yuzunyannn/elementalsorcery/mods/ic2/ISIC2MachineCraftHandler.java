@@ -11,10 +11,10 @@ import ic2.api.recipe.MachineRecipeResult;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.element.IISCraftHanlder;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraft;
-import yuzunyannn.elementalsorcery.tile.TileItemStructureCraft.IISCCCraftHanlder;
 
-public abstract class ISIC2MachineCraftHandler implements IISCCCraftHanlder {
+public abstract class ISIC2MachineCraftHandler implements IISCraftHanlder {
 
 	@Override
 	public abstract boolean isKeyItem(ItemStack stack);
@@ -31,7 +31,7 @@ public abstract class ISIC2MachineCraftHandler implements IISCCCraftHanlder {
 	@Override
 	public ItemStack match(World world, BlockPos pos, Map<Integer, ItemStack> slotMap, List<ItemStack> inputs,
 			List<ItemStack> remains) {
-		ItemStack input = IISCCCraftHanlder.getInput(slotMap, 0, 0);
+		ItemStack input = TileItemStructureCraft.getInput(slotMap, 0, 0);
 		if (input.isEmpty()) return input;
 		input = input.copy();
 		MachineRecipeResult<IRecipeInput, Collection<ItemStack>, ItemStack> mrResult = getRecipeManager().apply(input,

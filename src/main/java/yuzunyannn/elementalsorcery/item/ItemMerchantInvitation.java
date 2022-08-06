@@ -15,12 +15,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionMerchant;
 import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemMerchantInvitation extends Item {
@@ -37,7 +37,7 @@ public class ItemMerchantInvitation extends Item {
 	}
 
 	public static ItemStack createInvitationWithMerchantType(ElfMerchantType mType) {
-		ItemStack stack = new ItemStack(ESInit.ITEMS.MERCHANT_INVITATION);
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.MERCHANT_INVITATION);
 		NBTTagCompound nbt = new NBTTagCompound();
 		stack.setTagCompound(nbt);
 		nbt.setString("inviteHim", mType.getRegistryName());

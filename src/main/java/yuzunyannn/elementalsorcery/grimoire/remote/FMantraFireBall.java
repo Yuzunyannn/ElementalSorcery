@@ -5,19 +5,19 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.WorldLocation;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.element.ElementFire;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectSphericalBlast;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class FMantraFireBall extends FMantraBase {
 
 	public FMantraFireBall() {
-		addCanUseElementWithSameLevel(ESInit.ELEMENTS.FIRE);
+		addCanUseElementWithSameLevel(ESObjects.ELEMENTS.FIRE);
 		setMaxCharge(3000);
 		setChargeSpeedRatio(2f / 3000f);
 		setIconRes("textures/mantras/fire_ball_f.png");
@@ -27,7 +27,7 @@ public class FMantraFireBall extends FMantraBase {
 	public void cast(World world, BlockPos pos, WorldLocation to, VariableSet content) {
 		if (world.isRemote) return;
 		double chager = content.get(CHARGE);
-		ElementStack estack = new ElementStack(ESInit.ELEMENTS.FIRE, (int) chager, (int) chager);
+		ElementStack estack = new ElementStack(ESObjects.ELEMENTS.FIRE, (int) chager, (int) chager);
 		ElementExplosion.doExplosion(world, to.getPos(), estack, null);
 	}
 

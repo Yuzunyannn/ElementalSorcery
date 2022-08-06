@@ -7,12 +7,12 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelElfBeacon;
 import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileElfBeacon extends TileEntitySpecialRenderer<TileElfBeacon> implements IRenderItem {
@@ -25,13 +25,13 @@ public class RenderTileElfBeacon extends TileEntitySpecialRenderer<TileElfBeacon
 			float alpha) {
 		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
 
-		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y + 0.0625, z + 0.5, 0.03125, alpha);
-		float rate = RenderHelper.getPartialTicks(tile.animeRate, tile.prevAnimeRate, partialTicks);
+		RenderFriend.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y + 0.0625, z + 0.5, 0.03125, alpha);
+		float rate = RenderFriend.getPartialTicks(tile.animeRate, tile.prevAnimeRate, partialTicks);
 		float rotate = EventClient.getGlobalRotateInRender(partialTicks);
 		MODEL.render(null, rate, rotate / 180 * 3.14f, 0, 0, 0, 1.0f);
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
 		ItemStack stack = tile.getStack();
 		if (stack.isEmpty()) return;
@@ -44,7 +44,7 @@ public class RenderTileElfBeacon extends TileEntitySpecialRenderer<TileElfBeacon
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		RenderHelper.render(stack, TEXTURE, MODEL, true, 0.0175, 0.0125, 0, 0);
+		RenderFriend.renderSpecialItem(stack, TEXTURE, MODEL, true, 0.0175, 0.0125, 0, 0);
 	}
 
 }

@@ -19,10 +19,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.IWorldTickTask;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
@@ -66,7 +66,7 @@ public class PotionEnderization extends PotionCommon {
 	}
 
 	public static boolean tryAttackEntityFrom(EntityLivingBase owner, DamageSource source, float amount) {
-		if (!owner.isPotionActive(ESInit.POTIONS.ENDERIZATION)) return false;
+		if (!owner.isPotionActive(ESObjects.POTIONS.ENDERIZATION)) return false;
 		if (EntityHelper.isCreative(owner)) return false;
 		if (source instanceof EntityDamageSourceIndirect) {
 			for (int i = 0; i < 64; ++i) if (teleportRandomly(owner)) return true;

@@ -13,7 +13,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.tile.TileLifeDirt;
 
 public class RecipeLifeDirt extends IForgeRegistryEntry.Impl<IRecipe> implements IRecipe {
@@ -22,7 +22,7 @@ public class RecipeLifeDirt extends IForgeRegistryEntry.Impl<IRecipe> implements
 		Item item = stack.getItem();
 		Block block = Block.getBlockFromItem(item);
 		if (item instanceof IPlantable) return true;
-		if (block == ESInit.BLOCKS.CRYSTAL_FLOWER) return false;
+		if (block == ESObjects.BLOCKS.CRYSTAL_FLOWER) return false;
 		if (block instanceof BlockSapling) return false;
 		if (stack.getItem() == Items.REEDS || block == Blocks.CACTUS) return true;
 		if (block instanceof BlockBush) return true;
@@ -37,7 +37,7 @@ public class RecipeLifeDirt extends IForgeRegistryEntry.Impl<IRecipe> implements
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
-			if (Block.getBlockFromItem(stack.getItem()) == ESInit.BLOCKS.LIFE_DIRT) {
+			if (Block.getBlockFromItem(stack.getItem()) == ESObjects.BLOCKS.LIFE_DIRT) {
 				if (lifeDirt.isEmpty()) lifeDirt = stack;
 				else return false;
 			} else if (this.canCraft(stack)) {
@@ -55,7 +55,7 @@ public class RecipeLifeDirt extends IForgeRegistryEntry.Impl<IRecipe> implements
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
-			if (Block.getBlockFromItem(stack.getItem()) == ESInit.BLOCKS.LIFE_DIRT) lifeDirt = stack;
+			if (Block.getBlockFromItem(stack.getItem()) == ESObjects.BLOCKS.LIFE_DIRT) lifeDirt = stack;
 			else other = stack;
 		}
 		lifeDirt = lifeDirt.copy();
@@ -76,7 +76,7 @@ public class RecipeLifeDirt extends IForgeRegistryEntry.Impl<IRecipe> implements
 
 	@Override
 	public ItemStack getRecipeOutput() {
-		return new ItemStack(ESInit.BLOCKS.LIFE_DIRT);
+		return new ItemStack(ESObjects.BLOCKS.LIFE_DIRT);
 	}
 
 }

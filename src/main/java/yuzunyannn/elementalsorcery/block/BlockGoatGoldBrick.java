@@ -28,8 +28,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.tile.IBlockJumpModify;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
@@ -117,7 +117,7 @@ public class BlockGoatGoldBrick extends Block implements Mapper, IBlockJumpModif
 		if (eItem.ticksExisted % 100 != 0) return;
 		BlockPos pos = new BlockPos(eItem.posX, eItem.posY - 0.2, eItem.posZ);
 		IBlockState state = eItem.world.getBlockState(pos);
-		if (state.getBlock() != ESInit.BLOCKS.GOAT_GOLD_BRICK) return;
+		if (state.getBlock() != ESObjects.BLOCKS.GOAT_GOLD_BRICK) return;
 		EnumType type = state.getValue(VARIANT);
 		if (type != EnumType.NORMAL) {
 			eItem.motionY = 0.2;
@@ -130,7 +130,7 @@ public class BlockGoatGoldBrick extends Block implements Mapper, IBlockJumpModif
 			for (int z = -1; z <= 1; z++) {
 				BlockPos at = pos.add(x, 0, z);
 				state = eItem.world.getBlockState(at);
-				if (state.getBlock() != ESInit.BLOCKS.GOAT_GOLD_BRICK) continue;
+				if (state.getBlock() != ESObjects.BLOCKS.GOAT_GOLD_BRICK) continue;
 				type = state.getValue(VARIANT);
 				if (type == EnumType.NORMAL && x == 0 && z == 0) {
 					FireworkEffect.spawn(eItem.world, at.up(), 0, 1, 0.1f, new int[] { 0x760e05, 0xd4584d },
@@ -148,7 +148,7 @@ public class BlockGoatGoldBrick extends Block implements Mapper, IBlockJumpModif
 
 	public static boolean tryWitherGoatGoldBrick(World worldIn, BlockPos at) {
 		IBlockState state = worldIn.getBlockState(at);
-		if (state.getBlock() != ESInit.BLOCKS.GOAT_GOLD_BRICK) return false;
+		if (state.getBlock() != ESObjects.BLOCKS.GOAT_GOLD_BRICK) return false;
 		EnumType type = state.getValue(VARIANT);
 		if (type == EnumType.WITHER) return true;
 		worldIn.setBlockState(at, state.withProperty(VARIANT, EnumType.WITHER));

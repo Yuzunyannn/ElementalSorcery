@@ -12,14 +12,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.container.ContainerElfSendParcel;
 import yuzunyannn.elementalsorcery.container.gui.GuiNormal;
 
 @SideOnly(Side.CLIENT)
 public class GuiElfSendParcel extends GuiNormal<ContainerElfSendParcel> {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/elf/send_parcel.png");
 
 	protected GuiTextField address;

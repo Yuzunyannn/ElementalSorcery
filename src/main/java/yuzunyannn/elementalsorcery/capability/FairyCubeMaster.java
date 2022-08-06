@@ -9,14 +9,14 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.util.INBTSerializable;
-import yuzunyannn.elementalsorcery.entity.fcube.Behavior;
-import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
-import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeMaster;
+import yuzunyannn.elementalsorcery.api.entity.Behavior;
+import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
+import yuzunyannn.elementalsorcery.api.entity.IFairyCubeObject;
 
 public class FairyCubeMaster implements IFairyCubeMaster, INBTSerializable<NBTTagCompound> {
 
 	protected Behavior behavior = null;
-	protected WeakReference<EntityFairyCube> servant = null;
+	protected WeakReference<IFairyCubeObject> servant = null;
 	protected int tick = 0;
 
 	@Override
@@ -35,20 +35,20 @@ public class FairyCubeMaster implements IFairyCubeMaster, INBTSerializable<NBTTa
 	}
 
 	@Override
-	public boolean isMyServant(EntityFairyCube fairyCube) {
-		EntityFairyCube servant = this.getLastMarkLivingServant();
+	public boolean isMyServant(IFairyCubeObject fairyCube) {
+		IFairyCubeObject servant = this.getLastMarkLivingServant();
 		if (servant != null && servant != fairyCube) return false;
 		if (servant == null) this.markServant(fairyCube);
 		return true;
 	}
 
-	public void markServant(EntityFairyCube fairyCube) {
+	public void markServant(IFairyCubeObject fairyCube) {
 		servant = new WeakReference<>(fairyCube);
 	}
 
-	protected EntityFairyCube getLastMarkLivingServant() {
-		EntityFairyCube fairyCube = servant == null ? null : servant.get();
-		if (fairyCube != null && fairyCube.isDead) {
+	protected IFairyCubeObject getLastMarkLivingServant() {
+		IFairyCubeObject fairyCube = servant == null ? null : servant.get();
+		if (fairyCube != null && fairyCube.asEntity().isDead) {
 			servant = null;
 			fairyCube = null;
 		}

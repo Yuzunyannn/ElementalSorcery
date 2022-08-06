@@ -21,27 +21,26 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
-import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingConstruct;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingCrafting;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingDeconstruct;
 import yuzunyannn.elementalsorcery.crafting.altar.ICraftingAltar;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.model.ModelSupremeTable;
 import yuzunyannn.elementalsorcery.util.TickOut;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
@@ -158,7 +157,7 @@ public class TileSupremeTable extends TileStaticMultiBlock
 		default:
 			craftingAltar = null;
 			String msg = "在SupremeTable开始合成时，出现了不存在的类型！" + type;
-			ElementalSorcery.logger.warn(msg);
+			ESAPI.logger.warn(msg);
 			ExceptionHelper.warnSend(world, msg);
 			break;
 		}
@@ -182,7 +181,7 @@ public class TileSupremeTable extends TileStaticMultiBlock
 			return new CraftingConstruct(nbt);
 		default:
 			String msg = "在SupremeTable恢复合成时，出现了不存在的类型：" + type;
-			ElementalSorcery.logger.warn(msg);
+			ESAPI.logger.warn(msg);
 			ExceptionHelper.warnSend(world, msg);
 			break;
 		}
@@ -235,7 +234,7 @@ public class TileSupremeTable extends TileStaticMultiBlock
 		ItemStack platformItem = this.getPlatformItem();
 		if (platformItem.isEmpty()) {
 			// 检测是否合成
-			IElementRecipe irecipe = RecipeManagement.instance.findMatchingRecipe(this, world);
+			IElementRecipe irecipe = ESAPI.recipeMgr.findMatchingRecipe(this, world);
 			if (irecipe != null) {
 				output = irecipe.getCraftingResult(this).copy();
 				outEStacks = irecipe.getNeedElements();
@@ -287,19 +286,19 @@ public class TileSupremeTable extends TileStaticMultiBlock
 	private int getOrderCrtstalGroupCount() {
 		int min = 64;
 		ItemStack stack = this.getStackInSlot(0);
-		if (stack.getItem() == ESInit.ITEMS.ORDER_CRYSTAL) {
+		if (stack.getItem() == ESObjects.ITEMS.ORDER_CRYSTAL) {
 			min = Math.min(min, stack.getCount());
 		} else return 0;
 		stack = this.getStackInSlot(2);
-		if (stack.getItem() == ESInit.ITEMS.ORDER_CRYSTAL) {
+		if (stack.getItem() == ESObjects.ITEMS.ORDER_CRYSTAL) {
 			min = Math.min(min, stack.getCount());
 		} else return 0;
 		stack = this.getStackInSlot(6);
-		if (stack.getItem() == ESInit.ITEMS.ORDER_CRYSTAL) {
+		if (stack.getItem() == ESObjects.ITEMS.ORDER_CRYSTAL) {
 			min = Math.min(min, stack.getCount());
 		} else return 0;
 		stack = this.getStackInSlot(8);
-		if (stack.getItem() == ESInit.ITEMS.ORDER_CRYSTAL) {
+		if (stack.getItem() == ESObjects.ITEMS.ORDER_CRYSTAL) {
 			min = Math.min(min, stack.getCount());
 		} else return 0;
 		return min;

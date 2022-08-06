@@ -18,6 +18,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.BlockElfLog;
 import yuzunyannn.elementalsorcery.elf.edifice.BuildProgress;
 import yuzunyannn.elementalsorcery.elf.talk.ITalkAction;
@@ -31,7 +32,6 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -51,7 +51,7 @@ public class ElfProfessionBuilder extends ElfProfessionUndetermined {
 	public boolean needPickup(EntityElfBase elf, ItemStack stack) {
 		Item item = stack.getItem();
 		Block block = Block.getBlockFromItem(item);
-		return item == Item.getItemFromBlock(ESInit.BLOCKS.ELF_FRUIT) || item == ESInit.ITEMS.ELF_COIN
+		return item == Item.getItemFromBlock(ESObjects.BLOCKS.ELF_FRUIT) || item == ESObjects.ITEMS.ELF_COIN
 				|| block instanceof BlockElfLog;
 	}
 
@@ -223,11 +223,11 @@ public class ElfProfessionBuilder extends ElfProfessionUndetermined {
 					r = rand.nextInt(20);
 					if (r == 0) {
 						elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND,
-								new ItemStack(ESInit.ITEMS.SPELLBOOK_ELEMENT));
+								new ItemStack(ESObjects.ITEMS.SPELLBOOK_ELEMENT));
 						elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
 					}
 					ItemStack hold = elf.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-					if (hold.getItem() == ESInit.ITEMS.SPELLBOOK_ELEMENT) {
+					if (hold.getItem() == ESObjects.ITEMS.SPELLBOOK_ELEMENT) {
 						r = rand.nextInt(50);
 						if (r == 0) {
 							pos = pos.add(rand.nextInt(4) - 2, 0, rand.nextInt(4) - 2);

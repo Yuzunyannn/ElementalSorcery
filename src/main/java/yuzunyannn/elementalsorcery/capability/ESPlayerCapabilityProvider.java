@@ -4,8 +4,8 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
-import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeMaster;
 
 public class ESPlayerCapabilityProvider implements ICapabilitySerializable<NBTTagCompound> {
 

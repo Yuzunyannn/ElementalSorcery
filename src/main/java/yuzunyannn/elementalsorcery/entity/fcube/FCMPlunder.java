@@ -7,10 +7,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModuleRecipe;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -20,9 +22,9 @@ public class FCMPlunder extends FairyCubeModule {
 	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
 		ElfTime time = new ElfTime(world);
 		if (!time.at(ElfTime.Period.DUSK)) return false;
-		return matchAndConsumeForCraft(world, pos, inv,
+		return FairyCubeModuleInGame.matchAndConsumeForCraft(world, pos, inv,
 				ItemHelper.toList(Items.ROTTEN_FLESH, 64, Items.BONE, 64, Items.GUNPOWDER, 64),
-				ElementHelper.toList(ESInit.ELEMENTS.WATER, 50, 200, ESInit.ELEMENTS.METAL, 100, 300));
+				ElementHelper.toList(ESObjects.ELEMENTS.WATER, 50, 200, ESObjects.ELEMENTS.METAL, 100, 300));
 	}
 
 	protected float absorbRate = 0;
@@ -30,7 +32,7 @@ public class FCMPlunder extends FairyCubeModule {
 	public FCMPlunder(EntityFairyCube fairyCube) {
 		super(fairyCube);
 		this.setPriority(PriorityType.MODIFY_ADD);
-		this.expExample = new ElementStack(ESInit.ELEMENTS.STAR, 4, 300);
+		this.expExample = new ElementStack(ESObjects.ELEMENTS.STAR, 4, 300);
 	}
 
 	public int getPlunderLevel() {
@@ -40,7 +42,7 @@ public class FCMPlunder extends FairyCubeModule {
 	}
 
 	@Override
-	public float modifyAttribute(String attribute, float value) {
+	public double modifyAttribute(String attribute, double value) {
 		if ("plunder".equals(attribute)) return value + this.getPlunderLevel();
 		return value;
 	}
@@ -49,23 +51,23 @@ public class FCMPlunder extends FairyCubeModule {
 	public boolean absorbElements(IElementInventory einv) {
 		int dCount = (int) (10 * (1 + Math.abs(absorbRate)));
 		if (absorbRate > 0) {
-			ElementStack metal = new ElementStack(ESInit.ELEMENTS.METAL, dCount, 125);
+			ElementStack metal = new ElementStack(ESObjects.ELEMENTS.METAL, dCount, 125);
 			if (absorbElementToExp(metal, einv, onceExpGetMax)) {
 				absorbRate -= 0.5f;
 				return true;
 			}
-			ElementStack wood = new ElementStack(ESInit.ELEMENTS.WATER, dCount, 125);
+			ElementStack wood = new ElementStack(ESObjects.ELEMENTS.WATER, dCount, 125);
 			if (absorbElementToExp(wood, einv, onceExpGetMax)) {
 				absorbRate += 0.5f;
 				return true;
 			}
 		} else {
-			ElementStack wood = new ElementStack(ESInit.ELEMENTS.WATER, dCount, 125);
+			ElementStack wood = new ElementStack(ESObjects.ELEMENTS.WATER, dCount, 125);
 			if (absorbElementToExp(wood, einv, onceExpGetMax)) {
 				absorbRate += 0.5f;
 				return true;
 			}
-			ElementStack metal = new ElementStack(ESInit.ELEMENTS.METAL, dCount, 125);
+			ElementStack metal = new ElementStack(ESObjects.ELEMENTS.METAL, dCount, 125);
 			if (absorbElementToExp(metal, einv, onceExpGetMax)) {
 				absorbRate -= 0.5f;
 				return true;

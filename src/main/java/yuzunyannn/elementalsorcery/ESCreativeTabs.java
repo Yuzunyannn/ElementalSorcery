@@ -2,7 +2,7 @@ package yuzunyannn.elementalsorcery;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class ESCreativeTabs extends CreativeTabs {
 
@@ -14,6 +14,6 @@ public class ESCreativeTabs extends CreativeTabs {
 
 	@Override
 	public ItemStack createIcon() {
-		return new ItemStack(ESInit.ITEMS.MANUAL);
+		return new ItemStack(ESObjects.ITEMS.MANUAL);
 	}
 }

@@ -10,7 +10,7 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.elf.AutoName;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -25,7 +25,7 @@ public class EntityElf extends EntityElfBase {
 		super(worldIn);
 		this.setCustomNameTag(AutoName.getRandomName());
 		if (!autoRandom) return;
-		if (ElementalSorcery.isDevelop) {
+		if (ESAPI.isDevelop) {
 //			Random merchantRandom = ElfProfession.getRandomFromName(getCustomNameTag());
 //			getProfessionStorage().set(ElfProfession.M_TYPE, ElfMerchantType.getRandomMerchantType(merchantRandom));
 //			this.getProfessionStorage().set(ElfProfession.M_TYPE, ElfMerchantType.getMerchantType("ancient"));

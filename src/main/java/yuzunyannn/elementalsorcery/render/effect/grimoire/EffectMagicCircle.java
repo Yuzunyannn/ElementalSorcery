@@ -7,13 +7,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
 import yuzunyannn.elementalsorcery.render.effect.IBinder;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class EffectMagicCircle extends EffectCondition {
@@ -97,15 +97,15 @@ public class EffectMagicCircle extends EffectCondition {
 	@Override
 	protected void doRender(float partialTicks) {
 		GlStateManager.pushMatrix();
-		double posX = RenderHelper.getPartialTicks(this.posX, this.prevPosX, partialTicks);
-		double posY = RenderHelper.getPartialTicks(this.posY, this.prevPosY, partialTicks);
-		double posZ = RenderHelper.getPartialTicks(this.posZ, this.prevPosZ, partialTicks);
+		double posX = RenderFriend.getPartialTicks(this.posX, this.prevPosX, partialTicks);
+		double posY = RenderFriend.getPartialTicks(this.posY, this.prevPosY, partialTicks);
+		double posZ = RenderFriend.getPartialTicks(this.posZ, this.prevPosZ, partialTicks);
 		GlStateManager.translate(posX, posY + 0.1f, posZ);
 		GlStateManager.rotate(90, 1, 0, 0);
-		float rotate = RenderHelper.getPartialTicks(this.rotate, this.preRotate, partialTicks);
+		float rotate = RenderFriend.getPartialTicks(this.rotate, this.preRotate, partialTicks);
 		GlStateManager.rotate(rotate, 0, 0, 1);
-		float scale = RenderHelper.getPartialTicks(this.scale, this.preScale, partialTicks);
-		float alpha = RenderHelper.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
+		float scale = RenderFriend.getPartialTicks(this.scale, this.preScale, partialTicks);
+		float alpha = RenderFriend.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
 		GlStateManager.scale(scale, scale, scale);
 		this.bindCircleIcon();
 		this.renderTexRectInCenter(0, 0, 32, 32, r, g, b, alpha);

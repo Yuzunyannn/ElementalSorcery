@@ -12,6 +12,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.building.BlockItemTypeInfo;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
@@ -64,7 +65,7 @@ public class DevelopStatistics {
 					x = -size;
 					z = z + 1;
 					if (z > size) {
-						ElementalSorcery.logger.info("记录完成");
+						ESAPI.logger.info("记录完成");
 						DevelopStatistics.saveAll();
 						DevelopStatistics.handleResult();
 //						synchronized (this) {
@@ -75,7 +76,7 @@ public class DevelopStatistics {
 				}
 			}
 			long endTime = System.currentTimeMillis();
-			ElementalSorcery.logger.info((100 * at / (float) total) + "%" + "统计进度，耗时" + (endTime - startTime) + "ms");
+			ESAPI.logger.info((100 * at / (float) total) + "%" + "统计进度，耗时" + (endTime - startTime) + "ms");
 			return ITickTask.SUCCESS;
 		}
 
@@ -173,7 +174,7 @@ public class DevelopStatistics {
 		JsonObject filterWorld = new JsonObject();
 		JsonObject filterBiome = new JsonObject();
 
-		String maxItem;
+		String maxItem = null;
 		long max = 0;
 
 		for (String world : data) {
@@ -197,6 +198,10 @@ public class DevelopStatistics {
 			}
 		}
 
+		if (maxItem != null) {
+
+		}
+		
 		for (String item : filterAll) {
 			long count = filterAll.getNumber(item, 0).longValue();
 			if (count == 0) continue;
@@ -208,6 +213,7 @@ public class DevelopStatistics {
 		saveFile(FILE_FILTER_ALL, filterAll);
 		saveFile(FILE_FILTER_WORTH, filterWorth);
 
+	
 	}
 
 }

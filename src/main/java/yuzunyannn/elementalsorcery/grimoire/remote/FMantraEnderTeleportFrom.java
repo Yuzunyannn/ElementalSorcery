@@ -10,9 +10,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.util.WorldLocation;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
-import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class FMantraEnderTeleportFrom extends FMantraEnderTeleportTo {
 

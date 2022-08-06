@@ -15,24 +15,24 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.element.ElementTransitionReactor;
+import yuzunyannn.elementalsorcery.api.mantra.IFragmentMantraLauncher;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.api.util.WorldLocation;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
 import yuzunyannn.elementalsorcery.container.gui.GuiNormal;
 import yuzunyannn.elementalsorcery.container.gui.reactor.GuiElementReactor.Part;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.element.ElementTransition;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor.ReactorStatus;
 import yuzunyannn.elementalsorcery.util.TextHelper;
-import yuzunyannn.elementalsorcery.util.element.ElementTransitionReactor;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
-import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class GERRunningState extends GERActionState {
 
@@ -423,13 +423,13 @@ public class GERRunningState extends GERActionState {
 		int cX = gui.width / 2, cY = gui.height / 2;
 		GlStateManager.translate(cX, cY, 0);
 		// 计算
-		float startRatio = RenderHelper.getPartialTicks(this.startRatio, this.prevStartRatio, partialTicks);
-		float rotation = RenderHelper.getPartialTicks(this.rotation, this.prevRotation, partialTicks);
-		float transRatio = RenderHelper.getPartialTicks(this.transitionRation, this.prevTransitionRation, partialTicks);
-		float toolRatio = RenderHelper.getPartialTicks(this.toolRatio, this.prevToolRatio, partialTicks);
-		float mantraRatio = RenderHelper.getPartialTicks(this.mantraSelectRatio, this.prevMantraSelectRatio,
+		float startRatio = RenderFriend.getPartialTicks(this.startRatio, this.prevStartRatio, partialTicks);
+		float rotation = RenderFriend.getPartialTicks(this.rotation, this.prevRotation, partialTicks);
+		float transRatio = RenderFriend.getPartialTicks(this.transitionRation, this.prevTransitionRation, partialTicks);
+		float toolRatio = RenderFriend.getPartialTicks(this.toolRatio, this.prevToolRatio, partialTicks);
+		float mantraRatio = RenderFriend.getPartialTicks(this.mantraSelectRatio, this.prevMantraSelectRatio,
 				partialTicks);
-		float toReadyRatio = RenderHelper.getPartialTicks(this.toReadyRatio, this.prevToReadyRatio, partialTicks);
+		float toReadyRatio = RenderFriend.getPartialTicks(this.toReadyRatio, this.prevToReadyRatio, partialTicks);
 		float rScale = 1;
 		float aH = Math.min(MathHelper.sin(rotation / 180 * 60) * 0.25f + 1, 1), aR = 1;
 		if (startRatio < 1) {
@@ -463,7 +463,7 @@ public class GERRunningState extends GERActionState {
 				final int useLen = totalLen / 2;
 				float tRate = (tick + partialTicks) / 100;
 				GlStateManager.scale(2.5, 2.5, 1);
-				RenderHelper.drawTexturedModalRect(-useLen / 2, -2.5f, (useLen - (useLen * tRate) % useLen), 54, useLen,
+				RenderFriend.drawTexturedModalRect(-useLen / 2, -2.5f, (useLen - (useLen * tRate) % useLen), 54, useLen,
 						5, 256, 256);
 				GlStateManager.scale(1 / 2.5, 1 / 2.5, 1);
 			} else if (toReadyRatio >= 1) {
@@ -513,7 +513,7 @@ public class GERRunningState extends GERActionState {
 		}
 		GlStateManager.color(fogColor.r, fogColor.g, fogColor.b, startRatio);
 		TextureBinder.bindTexture(GuiMantraShitf.FOG);
-		RenderHelper.drawTexturedRectInCenter(0, 0, 80, 80);
+		RenderFriend.drawTexturedRectInCenter(0, 0, 80, 80);
 		// 切换状态
 		GlStateManager.rotate(tick / 2, 0, 0, 1);
 		if (startRatio < 1) {
@@ -533,7 +533,7 @@ public class GERRunningState extends GERActionState {
 			GlStateManager.scale(iconScale, iconScale, iconScale);
 			GuiElementReactor.COMS.bind();
 			GlStateManager.color(color.r, color.g, color.b, 1);
-			RenderHelper.drawTexturedRectInCenter(0, 0, 16, 16, 44, 0, 20, 20, 256, 256);
+			RenderFriend.drawTexturedRectInCenter(0, 0, 16, 16, 44, 0, 20, 20, 256, 256);
 			iconScale = 1 / iconScale;
 			GlStateManager.scale(iconScale, iconScale, iconScale);
 		}
@@ -545,7 +545,7 @@ public class GERRunningState extends GERActionState {
 			final int useLen = totalLen / 2;
 			float progress = reactor.mantraChargeProgress;
 			float tRate = (tick + partialTicks) / 100;
-			RenderHelper.drawTexturedModalRect(-useLen / 2, -37, (useLen - (useLen * tRate) % useLen), 54,
+			RenderFriend.drawTexturedModalRect(-useLen / 2, -37, (useLen - (useLen * tRate) % useLen), 54,
 					useLen * progress, 5, 256, 256);
 		}
 		// mantra sub
@@ -646,7 +646,7 @@ public class GERRunningState extends GERActionState {
 
 		GlStateManager.rotate(-rotation * 2, 0, 0, 1);
 		TextureBinder.bindTexture(GuiMantraShitf.FOG);
-		RenderHelper.drawTexturedRectInCenter(0, 0, 80, 80);
+		RenderFriend.drawTexturedRectInCenter(0, 0, 80, 80);
 		GlStateManager.rotate(rotation * 2, 0, 0, 1);
 	}
 
@@ -694,11 +694,11 @@ public class GERRunningState extends GERActionState {
 	public void renderBackGround(float aH, float aR) {
 		GlStateManager.color(colorLight.r, colorLight.g, colorLight.b, aH);
 		GuiElementReactor.HALO.bind();
-		RenderHelper.drawTexturedRectInCenter(0, 0, 256, 256, 0, 0, 256, 256, 256, 256);
+		RenderFriend.drawTexturedRectInCenter(0, 0, 256, 256, 0, 0, 256, 256, 256, 256);
 
 		GlStateManager.color(color.r, color.g, color.b, aR);
 		GuiElementReactor.RING.bind();
-		RenderHelper.drawTexturedRectInCenter(0, 0, 256, 256, 0, 0, 256, 256, 256, 256);
+		RenderFriend.drawTexturedRectInCenter(0, 0, 256, 256, 0, 0, 256, 256, 256, 256);
 	}
 
 	// 画转化图
@@ -729,7 +729,7 @@ public class GERRunningState extends GERActionState {
 		float step = met.getStep() - 0.05f;
 		float xoff = MathHelper.cos(angle) * step * levelToRange;
 		float yoff = MathHelper.sin(angle) * step * levelToRange;
-		RenderHelper.drawTexturedRectInCenter(xoff, yoff, 6, 6, 38, 0, 6, 6, 256, 256);
+		RenderFriend.drawTexturedRectInCenter(xoff, yoff, 6, 6, 38, 0, 6, 6, 256, 256);
 	}
 
 	@Override

@@ -13,12 +13,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.IBinder;
-import yuzunyannn.elementalsorcery.render.effect.IBinder.EntityBinder;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class EffectEntitySoul extends Effect {
@@ -100,7 +99,7 @@ public class EffectEntitySoul extends Effect {
 		double x = this.getRenderX(partialTicks);
 		double y = this.getRenderY(partialTicks);
 		double z = this.getRenderZ(partialTicks);
-		float alpha = RenderHelper.getPartialTicks(this.alpha, this.prevAlpha, partialTicks);
+		float alpha = RenderFriend.getPartialTicks(this.alpha, this.prevAlpha, partialTicks);
 		GlStateManager.color(1, 1, 1, 0.5f * alpha);
 		GlStateManager.translate(x, y, z);
 

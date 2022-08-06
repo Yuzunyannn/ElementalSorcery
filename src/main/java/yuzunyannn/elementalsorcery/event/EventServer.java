@@ -56,8 +56,14 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import yuzunyannn.elementalsorcery.ESData;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.entity.BehaviorAttack;
+import yuzunyannn.elementalsorcery.api.entity.BehaviorBlock;
+import yuzunyannn.elementalsorcery.api.entity.BehaviorClick;
+import yuzunyannn.elementalsorcery.api.entity.BehaviorInteract;
 import yuzunyannn.elementalsorcery.api.tile.IBlockJumpModify;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.capability.ESPlayerCapabilityProvider;
@@ -66,13 +72,8 @@ import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.enchant.EnchantmentES;
-import yuzunyannn.elementalsorcery.entity.fcube.BehaviorAttack;
-import yuzunyannn.elementalsorcery.entity.fcube.BehaviorBlock;
-import yuzunyannn.elementalsorcery.entity.fcube.BehaviorClick;
-import yuzunyannn.elementalsorcery.entity.fcube.BehaviorInteract;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMAttack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.item.ItemManual;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
@@ -90,7 +91,6 @@ import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
 import yuzunyannn.elementalsorcery.potion.PotionWindShield;
 import yuzunyannn.elementalsorcery.ts.PocketWatch;
 import yuzunyannn.elementalsorcery.ts.PocketWatchClient;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 
@@ -169,7 +169,7 @@ public class EventServer {
 				int flags = task.onTick();
 				if (flags == ITickTask.END) iter.remove();
 			} catch (Exception e) {
-				ElementalSorcery.logger.warn("Server Tick Error", e);
+				ESAPI.logger.warn("Server Tick Error", e);
 				iter.remove();
 			}
 		}
@@ -196,7 +196,7 @@ public class EventServer {
 					int flags = task.onTick(world);
 					if (flags == ITickTask.END) iter.remove();
 				} catch (Exception e) {
-					ElementalSorcery.logger.warn("Server World Tick Error", e);
+					ESAPI.logger.warn("Server World Tick Error", e);
 					ExceptionHelper.warnSend(world, "Server World Tick Error");
 					iter.remove();
 				}
@@ -244,7 +244,7 @@ public class EventServer {
 				data.setBoolean("esFirstJoin", true);
 				NBTTagList list = new NBTTagList();
 				list.appendTag(new NBTTagString("rite"));
-				player.inventory.addItemStackToInventory(ItemManual.setIds(new ItemStack(ESInit.ITEMS.MANUAL), list));
+				player.inventory.addItemStackToInventory(ItemManual.setIds(new ItemStack(ESObjects.ITEMS.MANUAL), list));
 			}
 
 			MinecraftServer mc = player.getServer();
@@ -262,7 +262,7 @@ public class EventServer {
 	@SubscribeEvent
 	public static void attachCapabilities(AttachCapabilitiesEvent<Entity> event) {
 		if (event.getObject() instanceof EntityPlayer) {
-			event.addCapability(new ResourceLocation(ElementalSorcery.MODID, "capability"),
+			event.addCapability(new ResourceLocation(ESAPI.MODID, "capability"),
 					new ESPlayerCapabilityProvider());
 		}
 	}
@@ -363,8 +363,8 @@ public class EventServer {
 		if (event.isCanceled()) return;
 
 		ItemStack stack = event.getItemStack();
-		if (player.isPotionActive(ESInit.POTIONS.POWER_PITCHER)) {
-			int amplifier = player.getActivePotionEffect(ESInit.POTIONS.POWER_PITCHER).getAmplifier();
+		if (player.isPotionActive(ESObjects.POTIONS.POWER_PITCHER)) {
+			int amplifier = player.getActivePotionEffect(ESObjects.POTIONS.POWER_PITCHER).getAmplifier();
 			EnumActionResult result = PotionPowerPitcher.doPowerPitch(player, event.getHand(), stack, amplifier);
 			if (result != EnumActionResult.PASS) {
 				event.setCanceled(true);
@@ -382,7 +382,7 @@ public class EventServer {
 	public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
 		BlockPos pos = event.getPos();
 		World world = event.getWorld();
-		if (world.getBlockState(pos).getBlock() == ESInit.BLOCKS.GOAT_GOLD_BRICK) {
+		if (world.getBlockState(pos).getBlock() == ESObjects.BLOCKS.GOAT_GOLD_BRICK) {
 			if (!EntityHelper.isCreative(event.getEntityPlayer())) {
 //			ItemStack holdItem = event.getItemStack();
 				event.setCanceled(true);
@@ -406,7 +406,7 @@ public class EventServer {
 		DamageSource ds = event.getDamageSource();
 		Entity entity = ds.getImmediateSource();
 		if (entity instanceof EntityFairyCube) {
-			float plunder = FCMAttack.getPlunder((EntityFairyCube) entity);
+			double plunder = FCMAttack.getPlunder((EntityFairyCube) entity);
 			event.setLootingLevel(Math.max((int) plunder, event.getLootingLevel()));
 		}
 	}
@@ -418,13 +418,13 @@ public class EventServer {
 		EntityPlayer player = event.getHarvester();
 		if (player == null) return;
 
-		if (player.isPotionActive(ESInit.POTIONS.BLESSING)) {
-			int amplifier = player.getActivePotionEffect(ESInit.POTIONS.BLESSING).getAmplifier();
+		if (player.isPotionActive(ESObjects.POTIONS.BLESSING)) {
+			int amplifier = player.getActivePotionEffect(ESObjects.POTIONS.BLESSING).getAmplifier();
 			PotionBlessing.addOres(amplifier, event.getDropChance(), event.getDrops(), player.getRNG());
 		}
 
-		if (player.isPotionActive(ESInit.POTIONS.CALAMITY)) {
-			int amplifier = player.getActivePotionEffect(ESInit.POTIONS.CALAMITY).getAmplifier();
+		if (player.isPotionActive(ESObjects.POTIONS.CALAMITY)) {
+			int amplifier = player.getActivePotionEffect(ESObjects.POTIONS.CALAMITY).getAmplifier();
 			PotionCalamity.eliminateOres(amplifier, event.getDrops(), player.getRNG());
 		}
 
@@ -438,8 +438,8 @@ public class EventServer {
 		if (target == null) return;
 		// 末影化和军团后看末影人不会攻击你
 		if (living instanceof EntityEnderman) {
-			if (target.isPotionActive(ESInit.POTIONS.ENDERIZATION)) ((EntityEnderman) living).setAttackTarget(null);
-			if (target.isPotionActive(ESInit.POTIONS.ENDERCORPS) && !PotionEndercorps.isEnd(target.world))
+			if (target.isPotionActive(ESObjects.POTIONS.ENDERIZATION)) ((EntityEnderman) living).setAttackTarget(null);
+			if (target.isPotionActive(ESObjects.POTIONS.ENDERCORPS) && !PotionEndercorps.isEnd(target.world))
 				((EntityEnderman) living).setAttackTarget(null);
 		}
 	}
@@ -528,7 +528,7 @@ public class EventServer {
 			EntityLivingBase attacker = (EntityLivingBase) attackerEntity;
 			PotionHealthBalance.tryBalance(entity, attacker, source, amount);
 
-			PotionEffect effect = entity.getActivePotionEffect(ESInit.POTIONS.ELEMENT_CRACK_ATTACK);
+			PotionEffect effect = entity.getActivePotionEffect(ESObjects.POTIONS.ELEMENT_CRACK_ATTACK);
 			if (effect != null) event.setAmount(amount * (1 + effect.getAmplifier() * effect.getAmplifier() * 0.1f));
 		}
 	}
@@ -542,12 +542,12 @@ public class EventServer {
 
 		Potion potion = effect.getPotion();
 		float factor = 0;
-		if (entity.isPotionActive(ESInit.POTIONS.CALAMITY)) {
-			int amplifier = entity.getActivePotionEffect(ESInit.POTIONS.CALAMITY).getAmplifier() + 1;
+		if (entity.isPotionActive(ESObjects.POTIONS.CALAMITY)) {
+			int amplifier = entity.getActivePotionEffect(ESObjects.POTIONS.CALAMITY).getAmplifier() + 1;
 			factor = factor + (potion.isBadEffect() ? (0.4f * amplifier) : (-0.15f * amplifier));
 		}
-		if (entity.isPotionActive(ESInit.POTIONS.BLESSING) && potion != ESInit.POTIONS.BLESSING) {
-			int amplifier = entity.getActivePotionEffect(ESInit.POTIONS.BLESSING).getAmplifier() + 1;
+		if (entity.isPotionActive(ESObjects.POTIONS.BLESSING) && potion != ESObjects.POTIONS.BLESSING) {
+			int amplifier = entity.getActivePotionEffect(ESObjects.POTIONS.BLESSING).getAmplifier() + 1;
 			factor = factor + (potion.isBadEffect() ? (-0.075f * amplifier) : (0.125f * amplifier));
 		}
 		if (factor != 0) {

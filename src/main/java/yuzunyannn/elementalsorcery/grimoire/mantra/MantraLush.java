@@ -17,13 +17,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
@@ -35,12 +35,12 @@ public class MantraLush extends MantraCommon {
 		this.setColor(0x32CD32);
 		this.setIcon("lush");
 		this.setRarity(75);
-		this.setDirectLaunchFragmentMantraLauncher(new ElementStack(ESInit.ELEMENTS.WOOD, 125, 50), 2, 0.0075, null);
+		this.setDirectLaunchFragmentMantraLauncher(new ElementStack(ESObjects.ELEMENTS.WOOD, 125, 50), 2, 0.0075, null);
 	}
 
 	@Override
 	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
-		ElementStack stack = getElement(caster, ESInit.ELEMENTS.WOOD, 1, 10);
+		ElementStack stack = getElement(caster, ESObjects.ELEMENTS.WOOD, 1, 10);
 		if (stack.isEmpty()) return;
 
 		float potent = caster.iWantBePotent(0.2f, false);
@@ -64,14 +64,14 @@ public class MantraLush extends MantraCommon {
 	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
 		if (beforeGeneralStartTime(caster)) return;
 		MantraDataCommon mData = (MantraDataCommon) data;
-		CollectResult cr = mData.tryCollect(caster, ESInit.ELEMENTS.WOOD, 1, 50, 125);
+		CollectResult cr = mData.tryCollect(caster, ESObjects.ELEMENTS.WOOD, 1, 50, 125);
 		mData.setProgress(cr.getStackCount(), 200);
 	}
 
 	@Override
 	public boolean afterSpelling(World world, IMantraData mData, ICaster caster) {
 		MantraDataCommon data = (MantraDataCommon) mData;
-		ElementStack wood = data.get(ESInit.ELEMENTS.WOOD);
+		ElementStack wood = data.get(ESObjects.ELEMENTS.WOOD);
 		if (wood.isEmpty()) return false;
 		int tick = caster.iWantKnowCastTick();
 		if (tick % 3 != 0) return true;
@@ -158,11 +158,11 @@ public class MantraLush extends MantraCommon {
 		// 可生长的植物
 		if (state.isFullBlock()) return;
 		// 生命之花
-		if (block == ESInit.BLOCKS.LIFE_FLOWER) {
+		if (block == ESObjects.BLOCKS.LIFE_FLOWER) {
 			world.scheduleUpdate(pos, state.getBlock(), 0);
 			return;
 		}
-		if (block == ESInit.BLOCKS.ELF_SAPLING && power > 600) {
+		if (block == ESObjects.BLOCKS.ELF_SAPLING && power > 600) {
 			if (rand.nextFloat() < dP * 0.05) {
 				EntityPlayer player = null;
 				if (entity instanceof EntityPlayer) player = (EntityPlayer) entity;

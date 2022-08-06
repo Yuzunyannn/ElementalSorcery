@@ -10,11 +10,11 @@ import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDBase;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDRubbleRepair;
 import yuzunyannn.elementalsorcery.container.gui.GuiNormal;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class MDRubbleRepairRW implements MDRecipeWrapper {
 	final TileMDRubbleRepair.Recipe recipe;
@@ -49,7 +49,7 @@ public class MDRubbleRepairRW implements MDRecipeWrapper {
 		offsetY = 21;
 		draw.drawSolt(offsetX + x - 18 - 12, offsetY);
 		draw.drawSolt(offsetX + x + 12, offsetY);
-		RenderHelper.drawTexturedModalRect(offsetX + x - 11, offsetY + 2, 25, 83, 22, 15, 256, 256);
+		RenderFriend.drawTexturedModalRect(offsetX + x - 11, offsetY + 2, 25, 83, 22, 15, 256, 256);
 	}
 
 	@Override

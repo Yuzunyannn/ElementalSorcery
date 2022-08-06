@@ -27,7 +27,11 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
@@ -37,8 +41,6 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.edifice.BuilderWithInfo;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
@@ -51,8 +53,6 @@ import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.elf.research.Topics;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper.EnumType;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
@@ -62,6 +62,7 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.ts.PocketWatch;
 import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.GameHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -120,7 +121,7 @@ public class CommandES extends CommandBase {
 			if (entity instanceof EntityPlayer) {
 				EntityPlayer player = (EntityPlayer) entity;
 				if (Pages.BOOK.equals(idStr))
-					player.inventory.addItemStackToInventory(new ItemStack(ESInit.ITEMS.MANUAL));
+					player.inventory.addItemStackToInventory(new ItemStack(ESObjects.ITEMS.MANUAL));
 				else player.inventory.addItemStackToInventory(ItemParchment.getParchment(idStr));
 			}
 			return;
@@ -159,7 +160,7 @@ public class CommandES extends CommandBase {
 		case "debug":
 		// debug
 		{
-			if (!ElementalSorcery.isDevelop) throw new CommandException("Dubug Command only can be used in Develop!");
+			if (!ESAPI.isDevelop) throw new CommandException("Dubug Command only can be used in Develop!");
 			if (args.length == 1) throw new CommandException("Dubug command error");
 			CommandESDebug.execute(server, sender, Arrays.copyOfRange(args, 1, args.length));
 			return;
@@ -261,7 +262,7 @@ public class CommandES extends CommandBase {
 		switch (args[0]) {
 		case "give":
 			AncientPaper ap = new AncientPaper();
-			grimoireStack = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, EnumType.NEW_WRITTEN.getMetadata());
+			grimoireStack = new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, EnumType.NEW_WRITTEN.getMetadata());
 			ap.setMantra(mantra).setStart(0).setEnd(100);
 			ap.saveState(grimoireStack);
 			ItemHelper.addItemStackToPlayer(player, grimoireStack);
@@ -317,8 +318,8 @@ public class CommandES extends CommandBase {
 
 		switch (args[0]) {
 		case "give": {
-			ItemStack elementCrystal = new ItemStack(ESInit.ITEMS.ELEMENT_CRYSTAL);
-			IElementInventory inv = elementCrystal.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+			ItemStack elementCrystal = new ItemStack(ESObjects.ITEMS.ELEMENT_CRYSTAL);
+			IElementInventory inv = ElementHelper.getElementInventory(elementCrystal);
 			inv.insertElement(estack, false);
 			inv.saveState(elementCrystal);
 			ItemHelper.addItemStackToPlayer(player, elementCrystal);
@@ -520,7 +521,7 @@ public class CommandES extends CommandBase {
 			building.setAuthor(executer.getName());
 			building.setName(executer.getName() + "'s building!");
 			if ("test".equals(args[0])) {
-				if (ElementalSorcery.isDevelop) CommandESDebug.printBuildingPos(building);
+				if (ESAPI.isDevelop) CommandESDebug.printBuildingPos(building);
 				break;
 			}
 			if ("recordNBT".equals(args[0])) BuildingLib.instance.addBuilding(building, true);
@@ -558,7 +559,7 @@ public class CommandES extends CommandBase {
 		case "store": {
 			TileElfTreeCore core = findElfTreeCore(world, ePos);
 			String data = core.store();
-			ElementalSorcery.logger.info("Edifice Store Data:" + data);
+			ESAPI.logger.info("Edifice Store Data:" + data);
 			GameHelper.clientRun(() -> {
 				Clipboard clip = Toolkit.getDefaultToolkit().getSystemClipboard();
 				clip.setContents(new StringSelection(data), null);

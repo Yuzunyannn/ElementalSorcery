@@ -8,7 +8,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 
 @SideOnly(Side.CLIENT)
 public abstract class EffectCondition extends Effect {
@@ -74,20 +74,20 @@ public abstract class EffectCondition extends Effect {
 	protected void renderTexRect(float x, float y, float width, float height, float u, float v, float texWidth,
 			float texHeight, float textureWidth, float textureHeight, float r, float g, float b, float a, float anchorX,
 			float anchorY) {
-		RenderHelper.drawTexturedRectInCenter(x, y, width, height, u, v, texWidth, texHeight, textureWidth,
+		RenderFriend.drawTexturedRectInCenter(x, y, width, height, u, v, texWidth, texHeight, textureWidth,
 				textureHeight, r, g, b, a, anchorX, anchorY);
 	}
 
 	protected void drawTexturedRectInCenter(float x, float y, float width, float height, float u, float v,
 			float texWidth, float texHeight, float textureWidth, float textureHeight, float r, float g, float b,
 			float a) {
-		RenderHelper.drawTexturedRectInCenter(x, y, width, height, u, v, texWidth, texHeight, textureWidth,
+		RenderFriend.drawTexturedRectInCenter(x, y, width, height, u, v, texWidth, texHeight, textureWidth,
 				textureHeight, r, g, b, a, 0.5f, 0.5f);
 	}
 
 	protected void renderTexRectInCenter(float x, float y, float width, float height, float r, float g, float b,
 			float a) {
-		RenderHelper.drawTexturedRectInCenter(x, y, width, height, 0, 0, 1, 1, 1, 1, r, g, b, a, 0.5f, 0.5f);
+		RenderFriend.drawTexturedRectInCenter(x, y, width, height, 0, 0, 1, 1, 1, 1, r, g, b, a, 0.5f, 0.5f);
 	}
 
 }

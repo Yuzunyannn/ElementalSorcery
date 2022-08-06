@@ -7,7 +7,8 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 
 @SideOnly(Side.CLIENT)
 public interface IFairyCubeModuleClient {
@@ -40,12 +41,12 @@ public interface IFairyCubeModuleClient {
 
 		@Override
 		public void doRenderGUIIcon(FairyCubeModule module) {
-			RenderHelper.drawTexturedRectInCenter(0, -6, 32, 32, xoff, yoff, 32, 32, 256, 256);
+			RenderFriend.drawTexturedRectInCenter(0, -6, 32, 32, xoff, yoff, 32, 32, 256, 256);
 		}
 
 		@Override
 		public void doRenderIcon() {
-			RenderHelper.drawTexturedRectInCenter(0, -6, 32, 32, xoff, yoff, 32, 32, 256, 256);
+			RenderFriend.drawTexturedRectInCenter(0, -6, 32, 32, xoff, yoff, 32, 32, 256, 256);
 		}
 
 		@Override

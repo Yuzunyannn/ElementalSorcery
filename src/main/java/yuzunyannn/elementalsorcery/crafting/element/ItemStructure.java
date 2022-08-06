@@ -3,11 +3,12 @@ package yuzunyannn.elementalsorcery.crafting.element;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.ESEvent;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.event.ESEvent;
+import yuzunyannn.elementalsorcery.api.event.EventGetItemStructure;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -22,7 +23,7 @@ public class ItemStructure implements IItemStructure {
 	}
 
 	static public boolean canStorageItemStructure(ItemStack stack) {
-		return stack.getItem() == ESInit.ITEMS.ITEM_CRYSTAL || stack.getSubCompound("istru") != null;
+		return stack.getItem() == ESObjects.ITEMS.ITEM_CRYSTAL || stack.getSubCompound("istru") != null;
 	}
 
 	ItemStack stack = ItemStack.EMPTY;
@@ -115,6 +116,7 @@ public class ItemStructure implements IItemStructure {
 
 	@Override
 	public boolean hasItem(ItemStack stack) {
+		if (stack.isEmpty()) return false;
 		return ItemHelper.areItemsEqual(this.stack, stack);
 	}
 

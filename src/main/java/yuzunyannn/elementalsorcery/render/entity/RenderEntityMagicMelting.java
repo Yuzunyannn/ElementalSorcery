@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.entity.EntityMagicMelting;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class RenderEntityMagicMelting extends Render<EntityMagicMelting> {
@@ -24,9 +24,9 @@ public class RenderEntityMagicMelting extends Render<EntityMagicMelting> {
 		ItemStack stack = entity.getItem();
 		if (stack.isEmpty()) return;
 		GlStateManager.pushMatrix();
-		float progress = RenderHelper.getPartialTicks(entity.getProgress(), entity.getProgress() - 1, partialTicks)
+		float progress = RenderFriend.getPartialTicks(entity.getProgress(), entity.getProgress() - 1, partialTicks)
 				/ (float) entity.getMaxProgress();
-		float drift = RenderHelper.getPartialTicks(entity.drift, entity.prevDrift, partialTicks);
+		float drift = RenderFriend.getPartialTicks(entity.drift, entity.prevDrift, partialTicks);
 		GlStateManager.translate(x, y + 0.85 - 0.3 * progress + Math.sin(drift) * 0.03, z);
 		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.GROUND);
 		if (stack.getCount() > 16) {

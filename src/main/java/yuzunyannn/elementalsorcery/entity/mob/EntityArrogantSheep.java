@@ -47,8 +47,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.BlockGoatGoldBrick;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
@@ -432,7 +432,7 @@ public class EntityArrogantSheep extends EntityMob {
 
 		float luck = player.getLuck();
 
-		ItemStack wool = new ItemStack(ESInit.ITEMS.ARROGANT_WOOL, 1 + MathHelper.floor(rand.nextFloat() * luck / 2));
+		ItemStack wool = new ItemStack(ESObjects.ITEMS.ARROGANT_WOOL, 1 + MathHelper.floor(rand.nextFloat() * luck / 2));
 		ItemHelper.dropItem(world, this.getPosition(), wool);
 
 		return true;

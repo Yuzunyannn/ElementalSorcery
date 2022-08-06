@@ -32,15 +32,15 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.tile.IStarPray;
-import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.explore.StarPrays;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.tile.TileStarFlower;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class BlockStarFlower extends BlockBush implements IGrowable, Mapper, ITileEntityProvider {
 
@@ -75,7 +75,7 @@ public class BlockStarFlower extends BlockBush implements IGrowable, Mapper, ITi
 	@Override
 	public boolean canSustainBush(IBlockState state) {
 		return super.canSustainBush(state) || state.getBlock() == Blocks.SAND
-				|| state.getBlock() == ESInit.BLOCKS.STAR_SAND;
+				|| state.getBlock() == ESObjects.BLOCKS.STAR_SAND;
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public class BlockStarFlower extends BlockBush implements IGrowable, Mapper, ITi
 			if (playerIn.getHeldItemMainhand().isEmpty()) {
 				int n = 1;
 				if (worldIn.rand.nextFloat() < 0.01) n = 2;
-				playerIn.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ESInit.BLOCKS.STAR_FLOWER, n));
+				playerIn.setHeldItem(EnumHand.MAIN_HAND, new ItemStack(ESObjects.BLOCKS.STAR_FLOWER, n));
 				return true;
 			}
 		}
@@ -164,7 +164,7 @@ public class BlockStarFlower extends BlockBush implements IGrowable, Mapper, ITi
 		if (stage != MAX_STAGE) return;
 		if (entityIn instanceof EntityItem) {
 			ItemStack stack = ((EntityItem) entityIn).getItem();
-			if (stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null) != null) {
+			if (ElementHelper.hasElementInventory(stack)) {
 				stack.shrink(1);
 				ElfTime time = new ElfTime(worldIn);
 				if (worldIn.rand.nextFloat() < 0.75 && time.at(ElfTime.Period.MIDNIGHT))
@@ -179,7 +179,7 @@ public class BlockStarFlower extends BlockBush implements IGrowable, Mapper, ITi
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,
 			int fortune) {
 		int stage = state.getValue(STAGE);
-		if (stage == STAGE_ELEMENT) drops.add(new ItemStack(ESInit.BLOCKS.STAR_FLOWER));
+		if (stage == STAGE_ELEMENT) drops.add(new ItemStack(ESObjects.BLOCKS.STAR_FLOWER));
 	}
 
 	@Override

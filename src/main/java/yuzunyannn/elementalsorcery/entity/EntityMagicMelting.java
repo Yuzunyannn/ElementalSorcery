@@ -18,8 +18,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
@@ -165,7 +165,7 @@ public class EntityMagicMelting extends Entity implements IEntityAdditionalSpawn
 				.add(rand.nextDouble() * 0.25 - 0.125, 0.8, rand.nextDouble() * 0.25 - 0.125));
 		effect.yAccelerate = -0.001;
 		effect.motionY = 0.03 * rand.nextDouble() + 0.01;
-		effect.setColor(ESInit.ELEMENTS.FIRE.getColor(ElementStack.EMPTY));
+		effect.setColor(ESObjects.ELEMENTS.FIRE.getColor(ElementStack.EMPTY));
 		Effect.addEffect(effect);
 	}
 

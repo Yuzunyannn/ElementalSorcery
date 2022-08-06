@@ -2,12 +2,12 @@ package yuzunyannn.elementalsorcery.container.gui;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.container.ContainerTranscribeInjection;
 
 public class GuiTranscribeInjection extends GuiNormal {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/container/transcribe_injection.png");
 	protected ContainerTranscribeInjection inventory;
 

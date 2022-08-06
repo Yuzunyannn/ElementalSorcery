@@ -10,9 +10,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModuleRecipe;
+import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -21,14 +24,14 @@ public class FCMLightweight extends FairyCubeModule {
 	@FairyCubeModuleRecipe
 	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
 		if (pos.getY() < 175)return false;
-		return matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.FEATHER, 64, Items.RABBIT_FOOT, 32),
-				ElementHelper.toList(ESInit.ELEMENTS.AIR, 32, 50));
+		return FairyCubeModuleInGame.matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.FEATHER, 64, Items.RABBIT_FOOT, 32),
+				ElementHelper.toList(ESObjects.ELEMENTS.AIR, 32, 50));
 	}
 
 	public FCMLightweight(EntityFairyCube fairyCube) {
 		super(fairyCube);
 		this.setPriority(PriorityType.EXECUTER);
-		this.setElementNeedPerExp(new ElementStack(ESInit.ELEMENTS.AIR, 10, 50), 16);
+		this.setElementNeedPerExp(new ElementStack(ESObjects.ELEMENTS.AIR, 10, 50), 16);
 	}
 
 	protected int countdown = 0;
@@ -72,9 +75,9 @@ public class FCMLightweight extends FairyCubeModule {
 	public void onRecv(NBTTagCompound nbt) {
 		int[] colors = new int[] { 0xc0fffa, 0xe5ffff, 0x77eaff };
 		fairyCube.doClientSwingArm(40, colors);
-		Entity entity = fairyCube.world.getEntityByID(nbt.getInteger("E"));
+		Entity entity = fairyCube.getWorld().getEntityByID(nbt.getInteger("E"));
 		if (entity == null) return;
-		fairyCube.doClientCastingEntity(entity, colors);
+		fairyCube.doClientCastingEffect(entity, colors);
 	}
 
 	@Override

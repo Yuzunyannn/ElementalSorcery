@@ -12,17 +12,19 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.IElementExplosion;
 import yuzunyannn.elementalsorcery.api.element.IElementLaser;
 import yuzunyannn.elementalsorcery.api.element.IElemetJuice;
 import yuzunyannn.elementalsorcery.api.element.IStarFlowerCast;
+import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.var.Variables;
-import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 //简单的icon返回的元素
 public abstract class ElementCommon extends Element
@@ -33,7 +35,7 @@ public abstract class ElementCommon extends Element
 
 	public ElementCommon(int color, String resName) {
 		super(color);
-		TEXTURE = new ResourceLocation(ElementalSorcery.MODID, "textures/elements/" + resName + ".png");
+		TEXTURE = new ResourceLocation(ESAPI.MODID, "textures/elements/" + resName + ".png");
 		this.setTranslationKey(resName);
 	}
 

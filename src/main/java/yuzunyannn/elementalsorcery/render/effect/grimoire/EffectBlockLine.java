@@ -11,10 +11,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.util.helper.Color;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class EffectBlockLine extends Effect {
@@ -60,7 +60,7 @@ public class EffectBlockLine extends Effect {
 		if (flip) w = 0;
 		else fw = 0;
 
-		double progress = RenderHelper.getPartialTicks(this.progress, this.prevProgress, partialTicks);
+		double progress = RenderFriend.getPartialTicks(this.progress, this.prevProgress, partialTicks);
 		double distance = this.distance + this.maxLength;
 		double ml = this.maxLength;
 

@@ -22,8 +22,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemHandlerHelper;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class TileStoneMill extends TileEntityNetwork implements ITickable {
@@ -45,7 +45,7 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 		@Override
 		@Nonnull
 		public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-			if (Block.getBlockFromItem(stack.getItem()) != ESInit.BLOCKS.STAR_STONE) return stack;
+			if (Block.getBlockFromItem(stack.getItem()) != ESObjects.BLOCKS.STAR_STONE) return stack;
 			if (slot < 0 || slot >= this.getSlots()) return stack;
 			if (millList.size() >= this.getSlots()) return stack;
 			// 不同的物品不能同时放入
@@ -162,7 +162,7 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 
 	/** 获取产物 */
 	public ItemStack getResult(ItemStack stack) {
-		return new ItemStack(ESInit.BLOCKS.STAR_SAND);
+		return new ItemStack(ESObjects.BLOCKS.STAR_SAND);
 	}
 
 	/** 获取产物消耗的粉尘数 */
@@ -273,7 +273,7 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 		}
 	}
 
-	static final public ResourceLocation TEX_STAR_SAND = new ResourceLocation(ElementalSorcery.MODID,
+	static final public ResourceLocation TEX_STAR_SAND = new ResourceLocation(ESAPI.MODID,
 			"textures/blocks/star_sand.png");
 
 	@SideOnly(Side.CLIENT)

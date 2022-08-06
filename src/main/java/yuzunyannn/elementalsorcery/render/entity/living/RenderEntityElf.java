@@ -6,40 +6,40 @@ import net.minecraft.client.renderer.entity.layers.LayerHeldItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.render.model.living.ModelElf;
 
 @SideOnly(Side.CLIENT)
 public class RenderEntityElf extends RenderLiving<EntityElf> {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/normal.png");
-	public static final ResourceLocation TEXTURE_MASTER = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_MASTER = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/master.png");
-	public static final ResourceLocation TEXTURE_SCHOLAR = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_SCHOLAR = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/scholar.png");
-	public static final ResourceLocation TEXTURE_BERSERKER = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_BERSERKER = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/berserker.png");
-	public static final ResourceLocation TEXTURE_WARRIOR = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_WARRIOR = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/warrior.png");
-	public static final ResourceLocation TEXTURE_CRAZY = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_CRAZY = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/crazy.png");
-	public static final ResourceLocation TEXTURE_MERCHANT = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_MERCHANT = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/merchant.png");
-	public static final ResourceLocation TEXTURE_BUILDER = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_BUILDER = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/builder.png");
-	public static final ResourceLocation TEXTURE_RECEPTIONIST = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_RECEPTIONIST = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/receptionist.png");
-	public static final ResourceLocation TEXTURE_IRONSMITH = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_IRONSMITH = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/ironsmith.png");
-	public static final ResourceLocation TEXTURE_POSTMAN = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_POSTMAN = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/postman.png"); 
-	public static final ResourceLocation TEXTURE_RESEARCHER = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_RESEARCHER = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/researcher.png");
-	public static final ResourceLocation TEXTURE_DEBT_COLLECTOR = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_DEBT_COLLECTOR = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/debt_collector.png");
-	public static final ResourceLocation TEXTURE_TEST = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_TEST = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/what.png");
 
 	public static final ModelElf MODEL = new ModelElf();

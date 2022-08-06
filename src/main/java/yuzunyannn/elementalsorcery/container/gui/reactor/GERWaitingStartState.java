@@ -5,11 +5,11 @@ import java.util.Random;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.gui.reactor.GuiElementReactor.Part;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor.ReactorStatus;
 import yuzunyannn.elementalsorcery.util.helper.Color;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class GERWaitingStartState extends GERActionState {
 
@@ -101,10 +101,10 @@ public class GERWaitingStartState extends GERActionState {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(cX, cY, 0);
 
-		float r = RenderHelper.getPartialTicks(rotation, prevRotation, partialTicks);
-		float s = RenderHelper.getPartialTicks(startRatio, prevStartRatio, partialTicks);
-		float h = RenderHelper.getPartialTicks(hoverRatio, prevHoverRatio, partialTicks);
-		float e = RenderHelper.getPartialTicks(endRation, prevEndRation, partialTicks);
+		float r = RenderFriend.getPartialTicks(rotation, prevRotation, partialTicks);
+		float s = RenderFriend.getPartialTicks(startRatio, prevStartRatio, partialTicks);
+		float h = RenderFriend.getPartialTicks(hoverRatio, prevHoverRatio, partialTicks);
+		float e = RenderFriend.getPartialTicks(endRation, prevEndRation, partialTicks);
 		GlStateManager.rotate(r, 0, 0, 1);
 		float a = 1;
 
@@ -119,7 +119,7 @@ public class GERWaitingStartState extends GERActionState {
 			GlStateManager.rotate(90 * s, 0, 0, 1);
 			float offset = MathHelper.sin(r / 180 * 5) * 2 + e * Math.max(gui.width, gui.height);
 			GlStateManager.translate(-19, -54 - offset, 0);
-			RenderHelper.drawTexturedModalRect(0, 0, 0, 0, 38, 54, 256, 256);
+			RenderFriend.drawTexturedModalRect(0, 0, 0, 0, 38, 54, 256, 256);
 			GlStateManager.translate(19, 54 + offset, 0);
 		}
 

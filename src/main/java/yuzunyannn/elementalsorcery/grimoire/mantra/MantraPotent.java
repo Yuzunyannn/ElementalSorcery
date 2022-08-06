@@ -14,22 +14,22 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
-import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
+import yuzunyannn.elementalsorcery.api.util.client.ESResources;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementScrew;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectSpiralMove;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class MantraPotent extends MantraCommon {
 
@@ -93,7 +93,7 @@ public class MantraPotent extends MantraCommon {
 		for (int i = 0; i < times; i++) {
 			float progress = mdc.getProgress();
 			if (progress >= 1) break;
-			CollectResult cr = mdc.tryCollect(caster, ESInit.ELEMENTS.MAGIC, 8, 65, 3000);
+			CollectResult cr = mdc.tryCollect(caster, ESObjects.ELEMENTS.MAGIC, 8, 65, 3000);
 			ElementStack magic = cr.getElementStackGetted();
 			if (!magic.isEmpty() && progress > 0.2f) {
 				caster.iWantGivePotent(MathHelper.clamp(magic.getPower() / 950f, 0, 0.4f) * progress, 0.005f);
@@ -108,7 +108,7 @@ public class MantraPotent extends MantraCommon {
 		if (!mdc.isMarkContinue()) return;
 		if (mdc.getProgress() < 1) return;
 
-		ElementStack magic = mdc.get(ESInit.ELEMENTS.MAGIC);
+		ElementStack magic = mdc.get(ESObjects.ELEMENTS.MAGIC);
 		int count = magic.getCount();
 		int power = magic.getPower();
 
@@ -127,7 +127,7 @@ public class MantraPotent extends MantraCommon {
 		super.onSpellingEffect(world, data, caster);
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		if (mdc.getProgress() < 0.5f) return;
-		if (mdc.get(ESInit.ELEMENTS.MAGIC).getCount() < 320) return;
+		if (mdc.get(ESObjects.ELEMENTS.MAGIC).getCount() < 320) return;
 
 		Random rand = world.rand;
 		Vec3d vec = caster.iWantCaster().getEyePosition();
@@ -165,12 +165,12 @@ public class MantraPotent extends MantraCommon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void renderShiftIcon(NBTTagCompound mantraData, float suggestSize, float suggestAlpha, float partialTicks) {
-		TextureBinder.bindTexture(GuiMantraShitf.CIRCLE);
-		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		ESResources.MANTRA_COMMON_CIRCLE.bind();
+		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 		GlStateManager.color(1, 1, 1);
 		TextureBinder.bindTexture(this.icon);
 		suggestSize = suggestSize * 0.5f;
-		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 	}
 
 }

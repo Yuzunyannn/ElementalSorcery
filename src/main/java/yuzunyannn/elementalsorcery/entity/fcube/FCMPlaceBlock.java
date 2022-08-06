@@ -20,9 +20,14 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.entity.Behavior;
+import yuzunyannn.elementalsorcery.api.entity.BehaviorClick;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModuleRecipe;
+import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.ESFakePlayer;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -35,15 +40,15 @@ public class FCMPlaceBlock extends FairyCubeModule {
 	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
 		Biome biome = world.getBiome(pos);
 		if (biome != Biomes.PLAINS) return false;
-		return matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Blocks.DIRT, 256, Items.ENDER_PEARL, 8),
-				ElementHelper.toList(ESInit.ELEMENTS.ENDER, 128, 400, ESInit.ELEMENTS.AIR, 64, 10));
+		return FairyCubeModuleInGame.matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Blocks.DIRT, 256, Items.ENDER_PEARL, 8),
+				ElementHelper.toList(ESObjects.ELEMENTS.ENDER, 128, 400, ESObjects.ELEMENTS.AIR, 64, 10));
 	}
 
 	public FCMPlaceBlock(EntityFairyCube fairyCube) {
 		super(fairyCube);
 		this.setPriority(PriorityType.EXECUTER);
 		this.setStatusCount(2);
-		this.setElementNeedPerExp(new ElementStack(ESInit.ELEMENTS.ENDER, 8, 100), 16);
+		this.setElementNeedPerExp(new ElementStack(ESObjects.ELEMENTS.ENDER, 8, 100), 16);
 	}
 
 	public RayTraceResult executeRay;
@@ -144,7 +149,7 @@ public class FCMPlaceBlock extends FairyCubeModule {
 		int[] colors = new int[] { 0xb5f4de, 0xcc00fa, 0x74008e };
 		fairyCube.doClientSwingArm(duration, colors);
 		List<BlockPos> list = NBTHelper.getBlockPosList(nbt, "P");
-		fairyCube.doClientCastingBlock(list, colors);
+		fairyCube.doClientCastingEffect(list, colors);
 	}
 
 	@Override

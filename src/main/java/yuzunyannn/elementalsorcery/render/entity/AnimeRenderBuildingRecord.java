@@ -19,6 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingBuildingRecord;
@@ -26,7 +27,6 @@ import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.IRenderClient;
 import yuzunyannn.elementalsorcery.render.RenderRulerSelectRegion;
 import yuzunyannn.elementalsorcery.render.model.ModelBuildingAltar;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderClient {
 
@@ -89,7 +89,7 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 			xoff = rate * xoff;
 		}
 		GlStateManager.translate((float) x + xoff, (float) y - 0.25f + high, (float) z);
-		yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
+		yuzunyannn.elementalsorcery.api.util.client.RenderFriend.layItemPositionFix(stack);
 		GlStateManager.rotate(xr, 1, 0, 0);
 		GlStateManager.rotate(theta + partialTicks, 0, 1, 0);
 		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
@@ -193,10 +193,10 @@ public class AnimeRenderBuildingRecord implements ICraftingLaunchAnime, IRenderC
 
 		public int onRender(float partialTicks) {
 			if (this.endTime < 0) return 0;
-			double x = RenderHelper.getPartialTicks(this.x, preX, partialTicks);
-			double y = RenderHelper.getPartialTicks(this.y, preY, partialTicks);
-			double z = RenderHelper.getPartialTicks(this.z, preZ, partialTicks);
-			float scale = RenderHelper.getPartialTicks(this.scale, preScale, partialTicks);
+			double x = RenderFriend.getPartialTicks(this.x, preX, partialTicks);
+			double y = RenderFriend.getPartialTicks(this.y, preY, partialTicks);
+			double z = RenderFriend.getPartialTicks(this.z, preZ, partialTicks);
+			float scale = RenderFriend.getPartialTicks(this.scale, preScale, partialTicks);
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(x, y, z);
 			GlStateManager.scale(scale * 0.175, scale * 0.175, scale * 0.175);

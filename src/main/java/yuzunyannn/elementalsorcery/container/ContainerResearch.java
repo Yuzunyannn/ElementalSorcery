@@ -9,11 +9,12 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
+import yuzunyannn.elementalsorcery.api.util.MatchHelper;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.event.EventServer;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
@@ -47,7 +48,7 @@ public class ContainerResearch extends Container implements IContainerNetwork {
 	@Override
 	public boolean canInteractWith(EntityPlayer player) {
 		if (isEnd) return false;
-		if (player.world.getBlockState(this.pos).getBlock() != ESInit.BLOCKS.RESEARCHER) return false;
+		if (player.world.getBlockState(this.pos).getBlock() != ESObjects.BLOCKS.RESEARCHER) return false;
 		else return player.getDistanceSq(this.pos.getX() + 0.5, this.pos.getY() + 0.5, this.pos.getZ() + 0.5) <= 64;
 	}
 
@@ -70,7 +71,7 @@ public class ContainerResearch extends Container implements IContainerNetwork {
 	public void doCrafting(Researcher costReasearher) {
 		if (!player.isCreative()) {
 			// 检查是否合法，创造模式不检查
-			for (String key : costReasearher.keySet()) {
+			for (String key : costReasearher.getTopics()) {
 				int point = reasearher.get(key);
 				if (point < costReasearher.get(key)) {
 					this.onFailEnd();
@@ -87,7 +88,7 @@ public class ContainerResearch extends Container implements IContainerNetwork {
 		double minWeight = 0;
 		RandomHelper.WeightRandom<IResearchRecipe> wr = new RandomHelper.WeightRandom();
 		for (IResearchRecipe recipe : recipes) {
-			if (!ItemHelper.unorderMatch(recipe.getIngredients(), player.inventory, false)) continue;
+			if (!MatchHelper.unorderMatch(recipe.getIngredients(), player.inventory).isSuccess()) continue;
 			// 满足要求，添加
 			double weight = recipe.getMatchWeight(costReasearher, recipes, player.world);
 			if (weight < minWeight) minWeight = weight;
@@ -103,9 +104,10 @@ public class ContainerResearch extends Container implements IContainerNetwork {
 		ItemHelper.addItemStackToPlayer(player, stack.copy());
 		// 减少数据，创造模式不减少
 		if (!player.isCreative()) {
-//			for (String key : costReasearher.keySet()) reasearher.shrink(key, costReasearher.get(key));
-//			reasearher.save(player);
-			ItemHelper.unorderMatch(recipe.getIngredients(), player.inventory, true);
+			// for (String key : costReasearher.keySet()) reasearher.shrink(key,
+			// costReasearher.get(key));
+			// reasearher.save(player);
+			MatchHelper.unorderMatch(recipe.getIngredients(), player.inventory).doShrink();
 		}
 		// 特效
 		NBTTagCompound nbt = FireworkEffect.fastNBT(0, 1, 0.05f, new int[] { 0x096b18 }, new int[] { 0x5ac37b });

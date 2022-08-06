@@ -6,7 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class ArcInfo {
@@ -67,7 +67,7 @@ public class ArcInfo {
 	}
 
 	static public ItemStack createArcInfoItem(String key) {
-		ItemStack ar = new ItemStack(ESInit.ITEMS.ARCHITECTURE_CRYSTAL);
+		ItemStack ar = new ItemStack(ESObjects.ITEMS.ARCHITECTURE_CRYSTAL);
 		ArcInfo.initArcInfoToItem(ar, key);
 		return ar;
 	}

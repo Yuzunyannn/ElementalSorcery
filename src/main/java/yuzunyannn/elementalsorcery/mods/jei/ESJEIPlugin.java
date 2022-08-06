@@ -18,13 +18,11 @@ import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
-import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDCategory;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDInfusionRW;
@@ -45,9 +43,9 @@ public class ESJEIPlugin implements IModPlugin {
 	public static IStackHelper stackHelper;
 	public static IGuiHelper guiHelper;
 
-	public static final String UID_MDRUBBLEREPAIR = ElementalSorcery.MODID + "." + "MDRubbleRepair";
-	public static final String UID_MDMAGICSOLIDIFY = ElementalSorcery.MODID + "." + "MDMagicSolidify";
-	public static final String UID_MDINFUSION = ElementalSorcery.MODID + "." + "MDInfusion";
+	public static final String UID_MDRUBBLEREPAIR = ESAPI.MODID + "." + "MDRubbleRepair";
+	public static final String UID_MDMAGICSOLIDIFY = ESAPI.MODID + "." + "MDMagicSolidify";
+	public static final String UID_MDINFUSION = ESAPI.MODID + "." + "MDInfusion";
 
 	@Override
 	public void registerCategories(IRecipeCategoryRegistration registry) {
@@ -70,7 +68,7 @@ public class ESJEIPlugin implements IModPlugin {
 		jeiHelpers = registry.getJeiHelpers();
 		stackHelper = jeiHelpers.getStackHelper();
 		guiHelper = jeiHelpers.getGuiHelper();
-		final ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
+		final ESObjects.Blocks BLOCKS = ESObjects.BLOCKS;
 		// 注册工厂
 		registry.handleRecipes(DescribeRecipeWrapper.Describe.class, DescribeRecipeWrapper::new, DescribeCategory.UID);
 		registry.handleRecipes(TileRiteTable.Recipe.class, RiteRecipeWrapper::new, RiteCategory.UID);
@@ -95,7 +93,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_MAGIC_SOLIDIFY), UID_MDMAGICSOLIDIFY);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_INFUSION), UID_MDINFUSION);
 		// 添加所合成表
-		registry.addRecipes(RecipeManagement.instance.getValues(), ElementCraftingCategory.UID);
+		registry.addRecipes(ESAPI.recipeMgr.getValues(), ElementCraftingCategory.UID);
 		registry.addRecipes(TileRiteTable.getRecipes(), RiteCategory.UID);
 		registry.addRecipes(TileMagicDesk.getRecipes(), MagicDeskCategory.UID);
 		registry.addRecipes(ResearchRecipeManagement.instance.getRecipes().values(), ResearchCategory.UID);
@@ -112,7 +110,7 @@ public class ESJEIPlugin implements IModPlugin {
 		IVanillaRecipeFactory vrf = jeiHelpers.getVanillaRecipeFactory();
 		// === 修理 ===
 		// 替罪羊
-		ItemStack stack = new ItemStack(ESInit.ITEMS.SCAPEGOAT);
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.SCAPEGOAT);
 		stack.setItemDamage(stack.getMaxDamage() / 4 * 3);
 		ItemStack stack1 = stack.copy();
 		stack1.setItemDamage(stack.getMaxDamage());
@@ -123,8 +121,8 @@ public class ESJEIPlugin implements IModPlugin {
 	}
 
 	private List<DescribeRecipeWrapper.Describe> initDescribe() {
-		final ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
-		final ESObjects.Items ITEMS = ESInit.ITEMS;
+		final ESObjects.Blocks BLOCKS = ESObjects.BLOCKS;
+		final ESObjects.Items ITEMS = ESObjects.ITEMS;
 		List<DescribeRecipeWrapper.Describe> describes = new ArrayList<>();
 		describes.add(new DescribeRecipeWrapper.Describe("page.starSand", "page.starSand.ct", BLOCKS.STAR_SAND,
 				BLOCKS.STAR_STONE, BLOCKS.STAR_SAND));

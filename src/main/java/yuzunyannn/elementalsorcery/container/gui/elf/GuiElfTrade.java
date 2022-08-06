@@ -10,7 +10,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.container.ContainerElfTrade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.util.TextHelper;
@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class GuiElfTrade extends GuiContainer {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/elf/elf_trade.png");
 
 	public final ContainerElfTrade container;

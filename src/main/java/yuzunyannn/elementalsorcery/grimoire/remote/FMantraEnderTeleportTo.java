@@ -12,17 +12,17 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.WorldLocation;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
-import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class FMantraEnderTeleportTo extends FMantraBase {
 
 	public FMantraEnderTeleportTo() {
-		addCanUseElementWithSameLevel(ESInit.ELEMENTS.ENDER);
+		addCanUseElementWithSameLevel(ESObjects.ELEMENTS.ENDER);
 		setMaxCharge(10000);
 		setChargeSpeedRatio(10f / 10000f);
 		setMinChargeRatio(1);

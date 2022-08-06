@@ -5,18 +5,19 @@ import java.util.Set;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.element.ElementTransition;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.element.ElementTransitionReactor;
+import yuzunyannn.elementalsorcery.api.mantra.IFragmentMantraLauncher;
+import yuzunyannn.elementalsorcery.api.util.client.ESResources;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.util.TextHelper;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
-import yuzunyannn.elementalsorcery.util.element.ElementTransitionReactor;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderObjects;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
 
 public abstract class FMantraBase implements IFragmentMantraLauncher {
 
@@ -47,7 +48,7 @@ public abstract class FMantraBase implements IFragmentMantraLauncher {
 	}
 
 	public void setMaxCharge(ElementStack eStack) {
-		this.maxCharge = ElementHelper.toFragment(eStack);
+		this.maxCharge = ElementTransition.toFragment(eStack);
 	}
 
 	public double getMaxCharge(World world, ElementTransitionReactor core) {
@@ -113,14 +114,14 @@ public abstract class FMantraBase implements IFragmentMantraLauncher {
 	protected double chargeWithLevel(ElementTransitionReactor core, double needCharge, float lev) {
 		double fragment;
 		Element element = core.getElement();
-		if (lev > 1) needCharge = ElementHelper.transitionFrom(element, needCharge, lev);
+		if (lev > 1) needCharge = ElementTransition.transitionFrom(element, needCharge, lev);
 		ElementTransition et = element.getTransition();
 		if (et != null) {
-			needCharge = ElementHelper.transitionTo(element, needCharge, et.getLevel());
+			needCharge = ElementTransition.transitionTo(element, needCharge, et.getLevel());
 			fragment = core.shrink(needCharge);
-			fragment = ElementHelper.transitionFrom(element, fragment, et.getLevel());
+			fragment = ElementTransition.transitionFrom(element, fragment, et.getLevel());
 		} else fragment = core.shrink(needCharge);
-		if (lev > 1) fragment = ElementHelper.transitionTo(element, needCharge, lev);
+		if (lev > 1) fragment = ElementTransition.transitionTo(element, needCharge, lev);
 		return fragment;
 	}
 
@@ -136,21 +137,22 @@ public abstract class FMantraBase implements IFragmentMantraLauncher {
 		if (tLev >= 1) {
 			Element element = core.getElement();
 			ElementTransition et = element.getTransition();
-			if (et != null) fragment = ElementHelper.transitionFrom(element, fragment, et.getLevel());
-			if (tLev > 1) fragment = ElementHelper.transitionTo(element, fragment, tLev);
+			if (et != null) fragment = ElementTransition.transitionFrom(element, fragment, et.getLevel());
+			if (tLev > 1) fragment = ElementTransition.transitionTo(element, fragment, tLev);
 		}
 		return fragment < getMaxCharge(world, core);
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void renderIcon(float suggestSize, float alpha, float partialTicks) {
 		ResourceLocation res = getIconRes();
-		if (res == null) res = RenderObjects.MANTRA_VOID;
-		TextureBinder.bindTexture(GuiMantraShitf.CIRCLE);
-		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		if (res == null) res = ESResources.MANTRA_VOID.getResource();
+		ESResources.MANTRA_COMMON_CIRCLE.bind();
+		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 		TextureBinder.bindTexture(res);
 		suggestSize = suggestSize * 0.5f;
-		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 	}
 
 }

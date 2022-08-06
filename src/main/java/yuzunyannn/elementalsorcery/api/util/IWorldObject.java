@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.api.util;
 
+import java.util.Random;
+
 import javax.annotation.Nullable;
 
 import io.netty.buffer.ByteBuf;
@@ -25,6 +27,12 @@ public interface IWorldObject extends ICapabilityProvider {
 	TileEntity asTileEntity();
 
 	Entity asEntity();
+
+	default Random getRNG() {
+		EntityLivingBase living = asEntityLivingBase();
+		if (living != null) return living.getRNG();
+		return new Random(getWorld().getWorldTime() * getPositionVector().hashCode());
+	}
 
 	default IBlockState asBlockState() {
 		return getWorld().getBlockState(getPosition());

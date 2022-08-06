@@ -9,14 +9,15 @@ import javax.annotation.Nonnull;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.util.var.VariableTypes;
 
 public class ElfMerchantType {
 
-	public static final Variable<TradeCount> TRADE = new Variable("trade", VariableSet.TRADE_COUNT_OBJ);
+	public static final Variable<TradeCount> TRADE = new Variable("trade", VariableTypes.TRADE_COUNT_OBJ);
 
 	public static final ElfMerchantType DEFAULT = new ElfMerchantTypeDefault();
 	public static final ElfMerchantType SCHOLAR = new ElfMerchantTypeScholar();

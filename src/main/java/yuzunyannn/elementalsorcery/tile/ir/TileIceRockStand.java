@@ -18,8 +18,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.container.BlockIceRockStand;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockSendRecv.FaceStatus;
 import yuzunyannn.elementalsorcery.util.LamdaReference;
@@ -320,7 +320,7 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 		if (pos == null) return null;
 		if (world.isRemote) return null;
 		subNodes.add(pos);
-		if (!world.setBlockState(pos, ESInit.BLOCKS.ICE_ROCK_NODE.getDefaultState())) return null;
+		if (!world.setBlockState(pos, ESObjects.BLOCKS.ICE_ROCK_NODE.getDefaultState())) return null;
 		TileIceRockNode node = BlockHelper.getTileEntity(world, pos, TileIceRockNode.class);
 		for (EnumFacing facing : EnumFacing.VALUES) node.setFaceStatus(facing, FaceStatus.OUT);
 		node.link(this.pos);

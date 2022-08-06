@@ -26,17 +26,17 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
@@ -55,7 +55,7 @@ public class CommandESDebug {
 				try {
 					Shaders.ElementSky.reload();
 				} catch (Exception e) {
-					ElementalSorcery.logger.warn(e);
+					ESAPI.logger.warn(e);
 				}
 			});
 			return;
@@ -63,7 +63,7 @@ public class CommandESDebug {
 		// 重新加载材质
 		case "reloadeTexture": {
 			String path = args[1];
-			if (path.indexOf(':') == -1) reloadTexture(new ResourceLocation(ElementalSorcery.MODID, path));
+			if (path.indexOf(':') == -1) reloadTexture(new ResourceLocation(ESAPI.MODID, path));
 			else reloadTexture(new ResourceLocation(path));
 			sender.sendMessage(new TextComponentString("这条是方便的测试指令，小心线程出问题呀"));
 		}
@@ -86,7 +86,7 @@ public class CommandESDebug {
 				Quests.loadAll();
 				sender.sendMessage(new TextComponentString("任务刷新成功!"));
 			} catch (Exception e) {
-				ElementalSorcery.logger.warn("刷新数据出现异常！", e);
+				ESAPI.logger.warn("刷新数据出现异常！", e);
 				sender.sendMessage(new TextComponentString("刷新数据出现异常！Refresh data exception!"));
 			}
 		}
@@ -123,11 +123,11 @@ public class CommandESDebug {
 
 				int n = 0;
 				for (int i = 0; i < 100000; i++) {
-					ElementStack eStack1 = new ElementStack(ESInit.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000) ,
+					ElementStack eStack1 = new ElementStack(ESObjects.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000) ,
 							RandomHelper.rand.nextInt(10000));
-					ElementStack eStack2 = new ElementStack(ESInit.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000),
+					ElementStack eStack2 = new ElementStack(ESObjects.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000),
 							RandomHelper.rand.nextInt(10000));
-					ElementStack eStack3 = new ElementStack(ESInit.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000),
+					ElementStack eStack3 = new ElementStack(ESObjects.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000),
 							RandomHelper.rand.nextInt(10000));
 					
 					ElementStack old = eStack1.copy();

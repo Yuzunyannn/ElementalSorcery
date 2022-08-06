@@ -4,11 +4,11 @@ import mezz.jei.api.gui.IDrawable;
 import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 
 public class DescribeCategory implements IRecipeCategory<DescribeRecipeWrapper> {
 
-	public static final String UID = ElementalSorcery.MODID + "." + "describe";
+	public static final String UID = ESAPI.MODID + "." + "describe";
 	private final DescribeDraw background = new DescribeDraw();
 
 	@Override
@@ -23,7 +23,7 @@ public class DescribeCategory implements IRecipeCategory<DescribeRecipeWrapper> 
 
 	@Override
 	public String getModName() {
-		return ElementalSorcery.MODID;
+		return ESAPI.MODID;
 	}
 
 	@Override

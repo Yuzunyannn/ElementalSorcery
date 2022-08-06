@@ -9,7 +9,7 @@ import net.minecraft.item.ItemHoe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemTool;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 
 public class ElfMerchantTypeTool extends ElfMerchantTypeEquipment {
 

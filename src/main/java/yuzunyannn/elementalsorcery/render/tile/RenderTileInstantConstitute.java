@@ -10,15 +10,15 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGlassCup;
 import yuzunyannn.elementalsorcery.render.model.ModelInstantConstituteStela;
 import yuzunyannn.elementalsorcery.tile.altar.TileInstantConstitute;
 import yuzunyannn.elementalsorcery.util.TextHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileInstantConstitute extends TileEntitySpecialRenderer<TileInstantConstitute>
@@ -36,15 +36,15 @@ public class RenderTileInstantConstitute extends TileEntitySpecialRenderer<TileI
 	@Override
 	public void render(TileInstantConstitute tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
-		RenderHelper.bindDestoryTexture(TEXTUREL, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y + 0.5, z + 0.5, -0.0625, alpha);
+		RenderFriend.bindDestoryTexture(TEXTUREL, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y + 0.5, z + 0.5, -0.0625, alpha);
 		GlStateManager.disableCull();
 
 		MODEL.render(null, 0, 0, 0, 0, 0, 1);
 
 		float ratio = tile.getOderValRationForShow(partialTicks);
 		if (ratio > 0 && destroyStage < 0) {
-			RenderHelper.disableLightmap(true);
+			RenderFriend.disableLightmap(true);
 
 			GlStateManager.translate(0, -0.001, 0);
 			TEXTUREL_SHINE.bind();
@@ -58,11 +58,11 @@ public class RenderTileInstantConstitute extends TileEntitySpecialRenderer<TileI
 			int frame = (int) ((EventClient.tickRender + partialTicks) / 3);
 			RenderItemGlassCup.drawJuiceInCup(0.42f * ratio, -frame);
 
-			RenderHelper.disableLightmap(false);
+			RenderFriend.disableLightmap(false);
 		}
 		GlStateManager.enableCull();
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
 		if (destroyStage >= 0) return;
 		if (this.rendererDispatcher.cameraHitResult != null
@@ -95,7 +95,7 @@ public class RenderTileInstantConstitute extends TileEntitySpecialRenderer<TileI
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 		GlStateManager.disableCull();
-		RenderHelper.render(stack, TEXTUREL, MODEL, true, -0.038, -0.0175, 0.35, 0.1);
+		RenderFriend.renderSpecialItem(stack, TEXTUREL, MODEL, true, -0.038, -0.0175, 0.35, 0.1);
 		GlStateManager.enableCull();
 	}
 

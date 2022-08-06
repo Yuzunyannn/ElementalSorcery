@@ -6,9 +6,9 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class TopicDefault extends Topic {
@@ -43,12 +43,12 @@ public class TopicDefault extends Topic {
 		GlStateManager.color(r, g, b, alpha);
 		GlStateManager.pushMatrix();
 		GlStateManager.scale(size / 64, size / 64, size / 32);
-		RenderHelper.drawTexturedRectInCenter(0, 0, 64, 64, 0, 0, 32, 32, 128, 128);
-		float tick = RenderHelper.getPartialTicks(this.tick, prevTick, partialTicks);
+		RenderFriend.drawTexturedRectInCenter(0, 0, 64, 64, 0, 0, 32, 32, 128, 128);
+		float tick = RenderFriend.getPartialTicks(this.tick, prevTick, partialTicks);
 		GlStateManager.color(r, g, b, alpha * tick / 5);
 		final int FONT_HEIGHT = mc.fontRenderer.FONT_HEIGHT;
-		RenderHelper.drawTexturedRectInCenter(tick * 4 - 20, -FONT_HEIGHT + 1, 54, 8, 0, 32, 27, 4, 128, 128);
-		RenderHelper.drawTexturedRectInCenter(20 - tick * 4, FONT_HEIGHT, 54, 8, 0, 35, 27, 4, 128, 128);
+		RenderFriend.drawTexturedRectInCenter(tick * 4 - 20, -FONT_HEIGHT + 1, 54, 8, 0, 32, 27, 4, 128, 128);
+		RenderFriend.drawTexturedRectInCenter(20 - tick * 4, FONT_HEIGHT, 54, 8, 0, 35, 27, 4, 128, 128);
 		String str = this.getTranslationKey() + ".name";
 		if (I18n.hasKey(str)) str = I18n.format(str);
 		else str = this.type;

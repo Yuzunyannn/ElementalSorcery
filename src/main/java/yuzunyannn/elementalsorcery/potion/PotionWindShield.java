@@ -13,7 +13,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -73,8 +73,8 @@ public class PotionWindShield extends PotionCommon {
 
 	public static void tryAttackEntityFrom(EntityLivingBase target, EntityLivingBase attacker, DamageSource source,
 			float amount) {
-		if (!target.isPotionActive(ESInit.POTIONS.WIND_SHIELD)) return;
-		int amplifier = target.getActivePotionEffect(ESInit.POTIONS.WIND_SHIELD).getAmplifier();
+		if (!target.isPotionActive(ESObjects.POTIONS.WIND_SHIELD)) return;
+		int amplifier = target.getActivePotionEffect(ESObjects.POTIONS.WIND_SHIELD).getAmplifier();
 		float power = Math.min(0.5f + amplifier * 0.25f, 2);
 
 		Vec3d targetAt = new Vec3d(target.posX, target.posY + target.height / 2, target.posZ);

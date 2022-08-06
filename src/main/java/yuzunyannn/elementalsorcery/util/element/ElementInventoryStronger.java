@@ -10,10 +10,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public class ElementInventoryStronger extends ElementInventory {
 
@@ -84,7 +84,7 @@ public class ElementInventoryStronger extends ElementInventory {
 		if (getTerminal() != 0) tooltip.add(TextFormatting.YELLOW + I18n.format("info.elementCube.terminal"));
 		if (getUpperLimit() > 0) tooltip.add(c + I18n.format("info.elementCube.limit.upper", getUpperLimit()));
 		if (getLowerLimit() > 0) tooltip.add(c + I18n.format("info.elementCube.limit.lower", getLowerLimit()));
-		super.addInformation(worldIn, tooltip, flagIn);
+		ElementHelper.addElementInformation(this, worldIn, tooltip, flagIn);
 	}
 
 	public boolean openTerminal(World world, BlockPos pos, EntityPlayer player) {

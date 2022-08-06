@@ -87,7 +87,6 @@ public class PocketWatch {
 		WorldData data = map.get(world.provider.getDimension());
 		if (data == null) return;
 
-		int wordId = world.provider.getDimension();
 		ESNetwork.instance.sendTo(new MessagePocketWatch(world, data.remain), (EntityPlayerMP) player);
 	}
 

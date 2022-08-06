@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 
 public interface IAcceptMagic {
 	/**

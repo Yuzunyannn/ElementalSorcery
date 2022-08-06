@@ -11,10 +11,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 public class SummonCommon extends Summon {
@@ -145,15 +145,15 @@ public class SummonCommon extends Summon {
 
 		public void render(float partialTicks, float alpha) {
 			GlStateManager.pushMatrix();
-			float rotate = RenderHelper.getPartialTicks(this.rotate, this.preRotate, partialTicks);
-			float scale = RenderHelper.getPartialTicks(this.scale, this.preScale, partialTicks);
-			alpha = RenderHelper.getPartialTicks(this.alpha, this.preAlpha, partialTicks) * alpha;
-			float y = RenderHelper.getPartialTicks(this.y, this.preY, partialTicks);
+			float rotate = RenderFriend.getPartialTicks(this.rotate, this.preRotate, partialTicks);
+			float scale = RenderFriend.getPartialTicks(this.scale, this.preScale, partialTicks);
+			alpha = RenderFriend.getPartialTicks(this.alpha, this.preAlpha, partialTicks) * alpha;
+			float y = RenderFriend.getPartialTicks(this.y, this.preY, partialTicks);
 			GlStateManager.translate(0, 0, -y / size);
 			GlStateManager.rotate(rotate, 0, 0, 1);
 			GlStateManager.color(r, g, b, alpha);
 			GlStateManager.scale(scale, scale, scale);
-			RenderHelper.drawTexturedRectInCenter(0, 0, 1, 1);
+			RenderFriend.drawTexturedRectInCenter(0, 0, 1, 1);
 			GlStateManager.popMatrix();
 		}
 	}
@@ -187,7 +187,7 @@ public class SummonCommon extends Summon {
 		GlStateManager.rotate(90, 1, 0, 0);
 		GlStateManager.scale(size, size, size);
 		mc.getTextureManager().bindTexture(RenderObjects.MAGIC_CIRCLE_SUMMON);
-		float alpha = RenderHelper.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
+		float alpha = RenderFriend.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
 		for (RenderObject obj : renders) obj.render(partialTicks, alpha);
 		GlStateManager.popMatrix();
 	}

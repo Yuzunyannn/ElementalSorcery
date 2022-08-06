@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.DataSerializerEntry;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.config.WorldGenAndSpawnConfig;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
@@ -114,17 +115,17 @@ public class EntityRegistries {
 		register(56, "magic_melting", EntityMagicMelting.class, "EntityMagicMelting", 64, 20, false);
 
 		ForgeRegistries.DATA_SERIALIZERS
-				.register(new DataSerializerEntry(EntityHelper.DS_INT).setRegistryName(ElementalSorcery.MODID, "int"));
+				.register(new DataSerializerEntry(EntityHelper.DS_INT).setRegistryName(ESAPI.MODID, "int"));
 	}
 
 	private static void register(int id, String registryName, Class<? extends Entity> entityClass, String name,
 			int trackingRange, int updateFrequency, boolean sendsVelocityUpdates) {
-		EntityRegistry.registerModEntity(new ResourceLocation(ElementalSorcery.MODID, registryName), entityClass, name,
+		EntityRegistry.registerModEntity(new ResourceLocation(ESAPI.MODID, registryName), entityClass, name,
 				id, ElementalSorcery.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
 	}
 
 	private static void registerEgg(String registryName, int eggPrimary, int eggSecondary) {
-		EntityRegistry.registerEgg(new ResourceLocation(ElementalSorcery.MODID, registryName), eggPrimary,
+		EntityRegistry.registerEgg(new ResourceLocation(ESAPI.MODID, registryName), eggPrimary,
 				eggSecondary);
 	}
 

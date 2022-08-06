@@ -7,13 +7,13 @@ import com.google.gson.JsonDeserializationContext;
 import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class ESStringTrigger extends CriterionTriggerAdapter<ESStringTrigger.Instance> {
 
 	public ESStringTrigger(String id) {
-		super(new ResourceLocation(ElementalSorcery.MODID, id));
+		super(new ResourceLocation(ESAPI.MODID, id));
 	}
 
 	@Override

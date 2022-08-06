@@ -7,12 +7,12 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelBuildingAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileBuildingAltar;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileBuildingAltar extends TileEntitySpecialRenderer<TileBuildingAltar> implements IRenderItem {
@@ -23,11 +23,11 @@ public class RenderTileBuildingAltar extends TileEntitySpecialRenderer<TileBuild
 	@Override
 	public void render(TileBuildingAltar tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
-		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
+		RenderFriend.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
 		MODEL.render(null, EventClient.getGlobalRotateInRender(partialTicks), 0, 0, 0, 0, 1.0f);
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
 		if (tile.isWorking())
 			return;
@@ -36,14 +36,14 @@ public class RenderTileBuildingAltar extends TileEntitySpecialRenderer<TileBuild
 			return;
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y - 0.25, z + 0.5);
-		yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
+		yuzunyannn.elementalsorcery.api.util.client.RenderFriend.layItemPositionFix(stack);
 		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
 		GlStateManager.popMatrix();
 	}
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		RenderHelper.render(stack, TEXTURE, MODEL, true);
+		RenderFriend.renderSpecialItem(stack, TEXTURE, MODEL, true);
 	}
 
 }

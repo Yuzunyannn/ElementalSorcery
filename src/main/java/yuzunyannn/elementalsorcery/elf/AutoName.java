@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.util.helper.IOHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
@@ -99,7 +100,7 @@ public class AutoName {
 				JsonObject jobj = new JsonObject(new InputStreamReader(inputStream, "utf-8"));
 				register(new AutoName(jobj));
 			} catch (Exception e) {
-				ElementalSorcery.logger.warn("读取自动名称出现异常！", e);
+				ESAPI.logger.warn("读取自动名称出现异常！", e);
 			} finally {
 				IOHelper.closeQuietly(inputStream);
 			}

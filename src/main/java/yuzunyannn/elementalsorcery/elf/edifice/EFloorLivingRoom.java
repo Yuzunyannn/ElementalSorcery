@@ -16,7 +16,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
@@ -115,7 +115,7 @@ public class EFloorLivingRoom extends ElfEdificeFloor {
 
 	public static void setChestLoot(TileEntityChest chest, Random rand) {
 		if (chest == null) return;
-		ResourceLocation loot = new ResourceLocation(ElementalSorcery.MODID, "hall/ingot_some");
+		ResourceLocation loot = new ResourceLocation(ESAPI.MODID, "hall/ingot_some");
 		chest.setLootTable(loot, rand.nextLong());
 	}
 

@@ -13,7 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 
 public class ElfMerchantTypeWeapon extends ElfMerchantTypeEquipment {
 

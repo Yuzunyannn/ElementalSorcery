@@ -20,7 +20,7 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
@@ -69,7 +69,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 	private void nullCommitException() {
 		this.setDead();
 		String msg = "EntityCrafting的commit为null，发生于:" + this.pos + "合成类型：" + this.type;
-		ElementalSorcery.logger.warn(msg);
+		ESAPI.logger.warn(msg);
 		ExceptionHelper.warnSend(world, msg);
 	}
 
@@ -151,7 +151,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			}
 		}
 		String msg = "EntityCrafting的客户端没有收到正确的位置";
-		ElementalSorcery.logger.warn(msg);
+		ESAPI.logger.warn(msg);
 		ExceptionHelper.warnSend(world, msg);
 		return false;
 	}
@@ -168,7 +168,7 @@ public class EntityCrafting extends Entity implements IEntityAdditionalSpawnData
 			report += "commit:" + this.crafting + "\n";
 			report += "pos:" + this.pos + "\n";
 			String msg = "EntityCrafting在运行的时候出现异常！报告如下：\n" + report;
-			ElementalSorcery.logger.warn(msg, e);
+			ESAPI.logger.warn(msg, e);
 			ExceptionHelper.warnSend(world, msg);
 			this.setDead();
 		}

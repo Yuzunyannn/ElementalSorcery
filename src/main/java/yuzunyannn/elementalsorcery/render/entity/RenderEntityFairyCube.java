@@ -6,10 +6,10 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.render.model.ModelFairyCube;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderEntityFairyCube extends Render<EntityFairyCube> {
@@ -48,7 +48,7 @@ public class RenderEntityFairyCube extends Render<EntityFairyCube> {
 
 		float yaw = -this.interpolateRotation(entity.prevRotationYaw, entity.rotationYaw, partialTicks);
 		float pitch = this.interpolateRotation(entity.prevRotationPitch, entity.rotationPitch, partialTicks);
-		float swing = RenderHelper.getPartialTicks(entity.swingProgress, entity.prevSwingProgress, partialTicks);
+		float swing = RenderFriend.getPartialTicks(entity.swingProgress, entity.prevSwingProgress, partialTicks);
 
 		TEXTURE.bind();
 		MODEL.render(entity, swing, 0, entity.ticksExisted + partialTicks, yaw, pitch, 1);

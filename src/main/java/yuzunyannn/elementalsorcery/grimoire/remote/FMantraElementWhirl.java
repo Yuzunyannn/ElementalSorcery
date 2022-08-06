@@ -5,17 +5,18 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.util.WorldLocation;
+import yuzunyannn.elementalsorcery.api.util.client.ESResources;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraElementWhirl;
-import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderObjects;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class FMantraElementWhirl extends FMantraBase {
 
@@ -30,21 +31,22 @@ public class FMantraElementWhirl extends FMantraBase {
 	public void cast(World world, BlockPos pos, WorldLocation to, VariableSet content) {
 		double charge = content.get(CHARGE);
 		MantraElementWhirl.booom(to.getWorld(world), new Vec3d(to.getPos()).add(0.5, 0.5, 0.5),
-				ElementStack.magic((int) ElementHelper.fromFragmentByPower(ESInit.ELEMENTS.MAGIC, charge, 100), 100),
+				ElementStack.magic((int) ElementTransition.fromFragmentByPower(ESObjects.ELEMENTS.MAGIC, charge, 100), 100),
 				null);
 
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void renderIcon(float suggestSize, float alpha, float partialTicks) {
 		ResourceLocation res = getIconRes();
-		if (res == null) res = RenderObjects.MANTRA_VOID;
-		TextureBinder.bindTexture(GuiMantraShitf.CIRCLE);
-		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		if (res == null) res = ESResources.MANTRA_VOID.getResource();
+		ESResources.MANTRA_COMMON_CIRCLE.bind();
+		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 		GlStateManager.color(1, 1, 1, alpha);
 		TextureBinder.bindTexture(res);
 		suggestSize = suggestSize * 0.5f;
-		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 	}
 
 }

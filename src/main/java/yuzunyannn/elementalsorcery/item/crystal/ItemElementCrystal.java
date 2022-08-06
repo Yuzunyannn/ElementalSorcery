@@ -14,6 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ItemElementCrystal extends ItemCrystal {
 
@@ -36,8 +37,7 @@ public class ItemElementCrystal extends ItemCrystal {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		inventory.loadState(stack);
+		IElementInventory inventory = ElementHelper.getElementInventory(stack);
 		inventory.addInformation(worldIn, tooltip, flagIn);
 	}
 }

@@ -42,7 +42,7 @@ public class AnimeRenderDeconstruct implements ICraftingLaunchAnime {
 		float roate = this.preRoate + (this.roate - this.preRoate) * partialTicks;
 		GlStateManager.pushMatrix();
 		GlStateManager.translate((float) x, (float) y + 0.5 + high, (float) z);
-		yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
+		yuzunyannn.elementalsorcery.api.util.client.RenderFriend.layItemPositionFix(stack);
 		GlStateManager.rotate(roate, 0, 1, 0);
 
 		int count = stack.getCount() / 14 + 1;

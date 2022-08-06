@@ -23,9 +23,15 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.entity.Behavior;
+import yuzunyannn.elementalsorcery.api.entity.BehaviorBlock;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModuleRecipe;
+import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
+import yuzunyannn.elementalsorcery.api.entity.IFairyCubeObject;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.ESFakePlayer;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -37,15 +43,15 @@ public class FCMDestoryBlock extends FairyCubeModule {
 	@FairyCubeModuleRecipe
 	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
 		if (pos.getY() > 32) return false;
-		return matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Blocks.STONE, 32),
-				ElementHelper.toList(ESInit.ELEMENTS.EARTH, 100, 25));
+		return FairyCubeModuleInGame.matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Blocks.STONE, 32),
+				ElementHelper.toList(ESObjects.ELEMENTS.EARTH, 100, 25));
 	}
 
 	public FCMDestoryBlock(EntityFairyCube fairyCube) {
 		super(fairyCube);
 		this.setPriority(PriorityType.EXECUTER);
 		this.setStatusCount(2);
-		this.setElementNeedPerExp(new ElementStack(ESInit.ELEMENTS.EARTH, 10, 75), 16);
+		this.setElementNeedPerExp(new ElementStack(ESObjects.ELEMENTS.EARTH, 10, 75), 16);
 	}
 
 	public List<BlockPos> executeList;
@@ -85,7 +91,7 @@ public class FCMDestoryBlock extends FairyCubeModule {
 
 	@Override
 	public void onStartExecute(EntityLivingBase master) {
-		World world = fairyCube.world;
+		World world = fairyCube.getWorld();
 		List<BlockPos> list = executeList;
 		executeList = null;
 
@@ -120,7 +126,7 @@ public class FCMDestoryBlock extends FairyCubeModule {
 		int[] colors = new int[] { 0xb5f4de, 0x785439, 0x133435 };
 		fairyCube.doClientSwingArm(20, colors);
 		List<BlockPos> list = NBTHelper.getBlockPosList(nbt, "P");
-		fairyCube.doClientCastingBlock(list, colors);
+		fairyCube.doClientCastingEffect(list, colors);
 	}
 
 	public RayTraceResult getOrient(BlockPos pos, EntityLivingBase master) {
@@ -130,9 +136,9 @@ public class FCMDestoryBlock extends FairyCubeModule {
 		return aabb.calculateIntercept(vs, ve);
 	}
 
-	public List<BlockPos> findBlockAroundRandom(EntityFairyCube fairyCube, int maxCount, IBlockState state,
+	public List<BlockPos> findBlockAroundRandom(IFairyCubeObject fairyCube, int maxCount, IBlockState state,
 			BlockPos center, BlockPos masterFoot) {
-		World world = fairyCube.world;
+		World world = fairyCube.getWorld();
 		List<BlockPos> list = new ArrayList<>();
 		int range = (int) (Math.pow(maxCount, 1 / 3f) / 2.f) + 1;
 		int total = (range * 2) + 1;
@@ -152,9 +158,9 @@ public class FCMDestoryBlock extends FairyCubeModule {
 		return Arrays.asList(data);
 	}
 
-	public List<BlockPos> findBlockDirect(EntityFairyCube fairyCube, int maxCount, IBlockState state, BlockPos center,
+	public List<BlockPos> findBlockDirect(IFairyCubeObject fairyCube, int maxCount, IBlockState state, BlockPos center,
 			EnumFacing facing) {
-		World world = fairyCube.world;
+		World world = fairyCube.getWorld();
 		List<BlockPos> list = new ArrayList<>();
 		int length = (int) (maxCount / 9f) + 1;
 		Function<BlockPos, Boolean> add = p -> {

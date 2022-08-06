@@ -8,12 +8,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelEStoneMatrix;
 import yuzunyannn.elementalsorcery.tile.TileEStoneMatrix;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileEStoneMatrix extends TileEntitySpecialRenderer<TileEStoneMatrix> implements IRenderItem {
@@ -24,16 +24,16 @@ public class RenderTileEStoneMatrix extends TileEntitySpecialRenderer<TileEStone
 	@Override
 	public void render(TileEStoneMatrix tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
-		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y + 0.5, z + 0.5, 0.0625, alpha);
+		RenderFriend.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y + 0.5, z + 0.5, 0.0625, alpha);
 		float ageTick = EventClient.tickRender + partialTicks;
 		MODEL.render(null, 0, 0, ageTick, 0, 0, 1.0f);
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
 		ItemStack stack = tile.getStack();
 		if (stack.isEmpty()) return;
-		RenderHelper.disableLightmap(true);
+		RenderFriend.disableLightmap(true);
 		float dh = MathHelper.sin(ageTick / 100f) * 0.05f;
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y + 0.5 + dh, z + 0.5);
@@ -41,11 +41,11 @@ public class RenderTileEStoneMatrix extends TileEntitySpecialRenderer<TileEStone
 		GlStateManager.rotate(ageTick, 0, 1, 0);
 		Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
 		GlStateManager.popMatrix();
-		RenderHelper.disableLightmap(false);
+		RenderFriend.disableLightmap(false);
 	}
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		RenderHelper.render(stack, TEXTURE, MODEL, true, 0.038, 0.0175, 0.3, 0);
+		RenderFriend.renderSpecialItem(stack, TEXTURE, MODEL, true, 0.038, 0.0175, 0.3, 0);
 	}
 }

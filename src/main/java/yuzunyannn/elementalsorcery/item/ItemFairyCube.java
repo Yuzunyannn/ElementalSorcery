@@ -16,9 +16,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
-import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemFairyCube extends Item {
@@ -85,7 +85,7 @@ public class ItemFairyCube extends Item {
 	}
 
 	public static ItemStack createStackWithEntity(EntityFairyCube fairyCube) {
-		ItemStack stack = new ItemStack(ESInit.ITEMS.FAIRY_CUBE);
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.FAIRY_CUBE);
 		NBTTagCompound nbt = stack.getOrCreateSubCompound("fairyCube");
 		fairyCube.writeFairyCubeToNBT(nbt);
 		return stack;

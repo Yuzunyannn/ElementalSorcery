@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.item.book;
 
 import java.util.List;
 
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
@@ -20,17 +21,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderLayoutFix;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.AttackCaster;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 
-public class ItemGrimoire extends Item {
+public class ItemGrimoire extends Item implements IRenderLayoutFix {
 
 	public ItemGrimoire() {
 		this.setTranslationKey("grimoire");
@@ -124,7 +126,7 @@ public class ItemGrimoire extends Item {
 			if (!player.world.isRemote) grimoire.saveState(stack);
 			player.resetCooldown();
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("强效攻击出现异常", e);
+			ESAPI.logger.warn("强效攻击出现异常", e);
 			ExceptionHelper.warnSend(player.world, "强效攻击出现异常");
 			return false;
 		}
@@ -169,9 +171,17 @@ public class ItemGrimoire extends Item {
 		boolean has = ElementHelper.addElementInformation(inventory, worldIn, tooltip, flagIn);
 		if (!has) tooltip.add(I18n.format("info.none"));
 
-		if (ElementalSorcery.isDevelop) {
+		if (ESAPI.isDevelop) {
 			tooltip.add("Power: " + grimoire.getPotent() + " - " + grimoire.potentPoint);
 		}
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void fixLauout(ItemStack stack) {
+		GlStateManager.translate(-0.15, 0.45, 0);
+		GlStateManager.rotate(-90, 1, 0, 0);
+		GlStateManager.scale(0.75, 0.75, 0.75);
 	}
 
 }

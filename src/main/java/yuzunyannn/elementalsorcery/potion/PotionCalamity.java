@@ -26,7 +26,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -79,7 +79,7 @@ public class PotionCalamity extends PotionCommon {
 						int index = rand.nextInt(size);
 						ItemStack stack = player.inventory.getStackInSlot(index);
 						if (stack.isEmpty()) continue;
-						if (stack.getItem() == ESInit.ITEMS.CALAMITY_GEM) continue;
+						if (stack.getItem() == ESObjects.ITEMS.CALAMITY_GEM) continue;
 						player.inventory.setInventorySlotContents(index, ItemStack.EMPTY);
 						entity.entityDropItem(stack, entity.getEyeHeight());
 						if (rand.nextInt() < 0.75f) break;
@@ -87,7 +87,7 @@ public class PotionCalamity extends PotionCommon {
 				}
 			} else {
 				ItemStack stack = entity.getHeldItem(EnumHand.MAIN_HAND);
-				if (!stack.isEmpty() && stack.getItem() != ESInit.ITEMS.CALAMITY_GEM) {
+				if (!stack.isEmpty() && stack.getItem() != ESObjects.ITEMS.CALAMITY_GEM) {
 					entity.setHeldItem(EnumHand.MAIN_HAND, ItemStack.EMPTY);
 					entity.entityDropItem(stack, entity.getEyeHeight());
 				}

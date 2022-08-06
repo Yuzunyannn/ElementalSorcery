@@ -12,11 +12,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionIronSmith;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 
 public class EFloorRefinery extends ElfEdificeFloor {
@@ -56,7 +56,7 @@ public class EFloorRefinery extends ElfEdificeFloor {
 		helper.genCarpet(EnumDyeColor.RED);
 		IBlockState STONE = helper.blockStone(0);
 		IBlockState STONE2 = helper.blockStone(10);
-		IBlockState STAR_SAND = ESInit.BLOCKS.STAR_SAND.getDefaultState();
+		IBlockState STAR_SAND = ESObjects.BLOCKS.STAR_SAND.getDefaultState();
 		IBlockState HOPPER = Blocks.HOPPER.getDefaultState();
 		IBlockState CHEST = Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, toward.getOpposite());
 		IBlockState IRON_BARS = Blocks.IRON_BARS.getDefaultState();
@@ -114,14 +114,14 @@ public class EFloorRefinery extends ElfEdificeFloor {
 		}
 		// 一些东西
 		IBlockState NETHERRACK = Blocks.NETHERRACK.getDefaultState();
-		IBlockState ASTONE = ESInit.BLOCKS.ASTONE.getDefaultState();
-		IBlockState MELT_CAULDRON = ESInit.BLOCKS.MELT_CAULDRON.getDefaultState();
+		IBlockState ASTONE = ESObjects.BLOCKS.ASTONE.getDefaultState();
+		IBlockState MELT_CAULDRON = ESObjects.BLOCKS.MELT_CAULDRON.getDefaultState();
 		IBlockState IRON_ORE = Blocks.IRON_ORE.getDefaultState();
 		IBlockState GOLD_ORE = Blocks.GOLD_ORE.getDefaultState();
-		IBlockState KYANITE_ORE = ESInit.BLOCKS.KYANITE_ORE.getDefaultState();
-		IBlockState HEARTH = ESInit.BLOCKS.HEARTH.getDefaultState();
-		IBlockState SMELT_BOX = ESInit.BLOCKS.SMELT_BOX.getDefaultState();
-		IBlockState STONE_MILL = ESInit.BLOCKS.STONE_MILL.getDefaultState();
+		IBlockState KYANITE_ORE = ESObjects.BLOCKS.KYANITE_ORE.getDefaultState();
+		IBlockState HEARTH = ESObjects.BLOCKS.HEARTH.getDefaultState();
+		IBlockState SMELT_BOX = ESObjects.BLOCKS.SMELT_BOX.getDefaultState();
+		IBlockState STONE_MILL = ESObjects.BLOCKS.STONE_MILL.getDefaultState();
 		{
 			int size = GenElfEdifice.getFakeCircleLen(treeSize, 0, 2);
 			BlockPos aPos = pos.offset(towardRY, size - 4).offset(toward, -size / 3);

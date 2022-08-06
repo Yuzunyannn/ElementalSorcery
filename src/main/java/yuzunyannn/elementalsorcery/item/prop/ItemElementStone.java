@@ -27,12 +27,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -56,8 +56,7 @@ public class ItemElementStone extends Item {
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		inventory.loadState(stack);
+		IElementInventory inventory = ElementHelper.getElementInventory(stack);
 		inventory.addInformation(worldIn, tooltip, flagIn);
 	}
 
@@ -69,9 +68,9 @@ public class ItemElementStone extends Item {
 			BlockPos pos = ray.getBlockPos();
 			// 强制挖矿
 			if (OreHelper.isOre(world.getBlockState(pos))
-					&& this.consumeElement(ESInit.ELEMENTS.METAL, stack, player, true)) {
+					&& this.consumeElement(ESObjects.ELEMENTS.METAL, stack, player, true)) {
 				world.destroyBlock(pos, true);
-				if (world.isRemote) this.showEffect(player, new ElementStack(ESInit.ELEMENTS.METAL), pos);
+				if (world.isRemote) this.showEffect(player, new ElementStack(ESObjects.ELEMENTS.METAL), pos);
 				return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 			}
 		}
@@ -81,7 +80,7 @@ public class ItemElementStone extends Item {
 			BlockPos pos = player.getPosition();
 			pos = pos.up(8);
 
-			if (world.isAirBlock(pos) && this.consumeElement(ESInit.ELEMENTS.ENDER, stack, player, true)) {
+			if (world.isAirBlock(pos) && this.consumeElement(ESObjects.ELEMENTS.ENDER, stack, player, true)) {
 
 				if (world.isRemote) {
 					for (int i = 0; i < 32; ++i) {
@@ -110,21 +109,21 @@ public class ItemElementStone extends Item {
 		if (entity.isInWater()) {
 
 			// 水中氧气
-			if (entity.getAir() < 280 && this.consumeElement(ESInit.ELEMENTS.WATER, stack, entity)) {
+			if (entity.getAir() < 280 && this.consumeElement(ESObjects.ELEMENTS.WATER, stack, entity)) {
 				entity.setAir(280);
 			}
 
 		} else if (entity.isBurning() || entity.isInLava()) {
 
 			// 火中抗火
-			if (this.consumeElement(ESInit.ELEMENTS.FIRE, stack, entity)) {
+			if (this.consumeElement(ESObjects.ELEMENTS.FIRE, stack, entity)) {
 				entity.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 20, 3));
 			}
 
 		} else {
 
 			// 下落减速
-			if (entity.motionY < -0.5 && this.consumeElement(ESInit.ELEMENTS.AIR, stack, entity)) {
+			if (entity.motionY < -0.5 && this.consumeElement(ESObjects.ELEMENTS.AIR, stack, entity)) {
 				entity.fallDistance *= 0.8;
 				entity.motionY *= 0.8;
 			}
@@ -133,12 +132,12 @@ public class ItemElementStone extends Item {
 			if (entity.onGround) {
 				boolean hasCost = false;
 				boolean needFast = Math.abs(entity.motionX) > 0.1 && Math.abs(entity.motionX) < 1.5;
-				if (needFast && this.consumeElement(ESInit.ELEMENTS.EARTH, stack, entity)) {
+				if (needFast && this.consumeElement(ESObjects.ELEMENTS.EARTH, stack, entity)) {
 					entity.motionX *= 1.5;
 					hasCost = true;
 				}
 				needFast = Math.abs(entity.motionZ) > 0.1 && Math.abs(entity.motionZ) < 1.5;
-				if (needFast && (hasCost || this.consumeElement(ESInit.ELEMENTS.EARTH, stack, entity))) {
+				if (needFast && (hasCost || this.consumeElement(ESObjects.ELEMENTS.EARTH, stack, entity))) {
 					entity.motionZ *= 1.5;
 				}
 			}
@@ -150,7 +149,7 @@ public class ItemElementStone extends Item {
 			// 食物
 			FoodStats fs = player.getFoodStats();
 			if (fs.needFood() && entity.ticksExisted % 10 == 0
-					&& this.consumeElement(ESInit.ELEMENTS.WOOD, stack, entity)) {
+					&& this.consumeElement(ESObjects.ELEMENTS.WOOD, stack, entity)) {
 				fs.addStats(1, 0.5f);
 			}
 		}

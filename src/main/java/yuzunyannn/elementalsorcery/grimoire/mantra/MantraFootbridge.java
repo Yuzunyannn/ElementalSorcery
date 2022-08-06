@@ -13,18 +13,18 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFlyIsland;
-import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
 
 public class MantraFootbridge extends MantraCommon {
 
@@ -59,7 +59,7 @@ public class MantraFootbridge extends MantraCommon {
 			double dis = co.getPositionVector().distanceTo(pos);
 			max = MathHelper.ceil(Math.min(96, 3 * dis));
 		}
-		CollectResult cr = mData.tryCollect(caster, ESInit.ELEMENTS.EARTH, 1, 25, max);
+		CollectResult cr = mData.tryCollect(caster, ESObjects.ELEMENTS.EARTH, 1, 25, max);
 		mData.setProgress(cr.getStackCount(), max);
 		if (!cr.getElementStack().isEmpty()) mData.markContinue(true);
 	}
@@ -82,7 +82,7 @@ public class MantraFootbridge extends MantraCommon {
 
 		Set<BlockPos> posSet = new HashSet<BlockPos>();
 		LinkedList<BlockPos> posList = new LinkedList<BlockPos>();
-		ElementStack estack = mData.get(ESInit.ELEMENTS.EARTH);
+		ElementStack estack = mData.get(ESObjects.ELEMENTS.EARTH);
 		int power = estack.getPower();
 		Vec3d start = new Vec3d(pos1);
 		Vec3d end = new Vec3d(pos2);

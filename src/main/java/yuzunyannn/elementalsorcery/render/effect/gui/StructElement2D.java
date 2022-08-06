@@ -4,9 +4,9 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElement;
 import yuzunyannn.elementalsorcery.util.helper.Color;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class StructElement2D {
 
@@ -46,9 +46,9 @@ public class StructElement2D {
 
 	public void render(float partialTicks, BufferBuilder bufferbuilder, Tessellator tessellator) {
 		GlStateManager.pushMatrix();
-		float x = RenderHelper.getPartialTicks(this.x, preX, partialTicks);
-		float y = RenderHelper.getPartialTicks(this.y, preY, partialTicks);
-		float alpha = RenderHelper.getPartialTicks(this.alpha, preAlpha, partialTicks);
+		float x = RenderFriend.getPartialTicks(this.x, preX, partialTicks);
+		float y = RenderFriend.getPartialTicks(this.y, preY, partialTicks);
+		float alpha = RenderFriend.getPartialTicks(this.alpha, preAlpha, partialTicks);
 		GlStateManager.color(color.r, color.g, color.b, alpha);
 		GlStateManager.translate(x, y, -0.001f);
 		GlStateManager.scale(scale, scale, scale);

@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.util.var;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import yuzunyannn.elementalsorcery.api.util.var.IVariableType;
 import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
 
 public class VTTradeCount implements IVariableType<TradeCount> {

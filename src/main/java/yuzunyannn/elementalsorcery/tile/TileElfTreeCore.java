@@ -29,6 +29,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.edifice.BuildProgress;
 import yuzunyannn.elementalsorcery.elf.edifice.BuilderWithInfo;
@@ -43,8 +46,6 @@ import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
-import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.helper.IOHelper;
@@ -141,8 +142,8 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		try {
 			tick();
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("精灵大厦核心出现异常！", e);
-			ElementalSorcery.logger.info("核心数据：" + this.store());
+			ESAPI.logger.warn("精灵大厦核心出现异常！", e);
+			ESAPI.logger.info("核心数据：" + this.store());
 			EventServer.addTask(() -> {
 				world.setBlockToAir(pos);
 			});
@@ -432,7 +433,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 			for (int x = -2; x <= 2; x++) {
 				for (int z = -2; z <= 2; z++) {
 					IBlockState state = world.getBlockState(pos.add(x, y, z));
-					if (state.getBlock() == ESInit.BLOCKS.ELF_TREE_CORE) return pos.add(x, y, z);
+					if (state.getBlock() == ESObjects.BLOCKS.ELF_TREE_CORE) return pos.add(x, y, z);
 				}
 			}
 		}

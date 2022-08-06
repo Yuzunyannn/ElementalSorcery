@@ -5,18 +5,18 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
-import yuzunyannn.elementalsorcery.block.container.BlockItemStructureCraftCC;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 
 public class ESObjects {
 
-	public static Items ITEMS;
-	public static Blocks BLOCKS;
-	public static Elements ELEMENTS;
-	public static Mantras MANTRAS;
-	public static Potions POTIONS;
-	public static Village VILLAGE;
+	public static final Items ITEMS = new Items();
+	public static final Blocks BLOCKS = new Blocks();
+	public static final Elements ELEMENTS = new Elements();
+	public static final Mantras MANTRAS = new Mantras();
+	public static final Potions POTIONS = new Potions();
+	public static final Village VILLAGE = new Village();
+
 	public static CreativeTabs CREATIVE_TABS;
 
 	static public class Items {
@@ -231,7 +231,7 @@ public class ESObjects {
 		public Mantra LAUNCH_EDE;
 		public Mantra LAUNCH_ECO;
 		public Mantra LAUNCH_BRC;
-		
+
 		public Mantra ECRACK_OPEN;
 
 		public Mantra ENDER_TELEPORT;
@@ -284,4 +284,5 @@ public class ESObjects {
 	static public class Village {
 		public VillagerRegistry.VillagerProfession ES_VILLEGER;
 	}
+
 }

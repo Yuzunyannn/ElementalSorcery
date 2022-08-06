@@ -11,11 +11,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.util.helper.Color;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class EffectLaser extends Effect {
@@ -95,7 +95,7 @@ public class EffectLaser extends Effect {
 
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
-		float a = RenderHelper.getPartialTicks(alpha, prevAlpha, partialTicks);
+		float a = RenderFriend.getPartialTicks(alpha, prevAlpha, partialTicks);
 
 		GlStateManager.rotate(yR, 0, 1, 0);
 		GlStateManager.rotate(xR - 90, 1, 0, 0);

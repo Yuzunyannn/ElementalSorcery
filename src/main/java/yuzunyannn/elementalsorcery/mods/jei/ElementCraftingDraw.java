@@ -6,14 +6,14 @@ import mezz.jei.api.gui.IDrawable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.container.gui.GuiSupremeTable;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 
 public class ElementCraftingDraw implements IDrawable {
 
-	static final public ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	static final public ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/jei/element_crafting_table.png");
 
 	@Override

@@ -24,11 +24,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.element.ElementKnowledge;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
@@ -42,8 +42,8 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 		this.setIcon("fire_area");
 		this.setRarity(60);
 		this.setOccupation(3);
-		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.FIRE, 2, 40), 80, 20);
-		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 1, 100), 20, -1);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.FIRE, 2, 40), 80, 20);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.KNOWLEDGE, 1, 100), 20, -1);
 		this.setPotentPowerCollect(0.1f, 2);
 		this.initAndAddDefaultMantraLauncher(0.002);
 	}
@@ -56,7 +56,7 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 
 	@Override
 	public void init(World world, SquareData data, ICaster caster, BlockPos pos) {
-		ElementStack fire = data.get(ESInit.ELEMENTS.FIRE);
+		ElementStack fire = data.get(ESObjects.ELEMENTS.FIRE);
 		float rate = 0.6f * caster.iWantBePotent(0.75f, false) + 1;
 		data.setSize(Math.min(fire.getPower() / 80, 12) * rate + 6);
 	}
@@ -73,20 +73,20 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 		ems.setIcon(this.getMagicCircleIcon());
 		List<Vec3d> vec = new ArrayList<>();
 		vec.add(ColorHelper.color(getColor(data)));
-		if (data.get(ESInit.ELEMENTS.KNOWLEDGE).getCount() >= 20) vec.add(ColorHelper.color(ElementKnowledge.COLOR));
+		if (data.get(ESObjects.ELEMENTS.KNOWLEDGE).getCount() >= 20) vec.add(ColorHelper.color(ElementKnowledge.COLOR));
 		ems.effectColors = vec.toArray(new Vec3d[vec.size()]);
 	}
 
 	@Override
 	public boolean tick(World world, SquareData data, ICaster caster, BlockPos originPos) {
 		int tick = caster.iWantKnowCastTick();
-		ElementStack fire = data.get(ESInit.ELEMENTS.FIRE);
+		ElementStack fire = data.get(ESObjects.ELEMENTS.FIRE);
 		if (fire.isEmpty()) return false;
 		if (tick % 20 != 0) return true;
 
 		float pp = data.get(POTENT_POWER);
 
-		ElementStack knowledge = data.get(ESInit.ELEMENTS.KNOWLEDGE);
+		ElementStack knowledge = data.get(ESObjects.ELEMENTS.KNOWLEDGE);
 		Random rand = world.rand;
 		fire.shrink(8);
 

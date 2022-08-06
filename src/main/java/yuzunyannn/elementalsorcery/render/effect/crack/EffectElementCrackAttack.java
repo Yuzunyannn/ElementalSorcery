@@ -11,11 +11,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectFacing;
 import yuzunyannn.elementalsorcery.render.item.RenderItemElementCrack;
 import yuzunyannn.elementalsorcery.util.helper.Color;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class EffectElementCrackAttack extends Effect {
 
@@ -114,9 +114,9 @@ public class EffectElementCrackAttack extends Effect {
 		RenderItemElementCrack.bindCrackTexture();
 		GlStateManager.depthFunc(519);
 		RenderItemElementCrack.startTexGen(2);
-		float a = RenderHelper.getPartialTicks(alpha, prevAlpha, partialTicks);
-		float v = RenderHelper.getPartialTicks(vRate, prevVRate, partialTicks);
-		float h = RenderHelper.getPartialTicks(hRate, prevHRate, partialTicks);
+		float a = RenderFriend.getPartialTicks(alpha, prevAlpha, partialTicks);
+		float v = RenderFriend.getPartialTicks(vRate, prevVRate, partialTicks);
+		float h = RenderFriend.getPartialTicks(hRate, prevHRate, partialTicks);
 
 		float rX = ActiveRenderInfo.getRotationX();
 		float rZ = ActiveRenderInfo.getRotationZ();

@@ -12,16 +12,15 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.element.ElementStar;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.world.Juice;
 
 public class ElfMerchantTypeDefault extends ElfMerchantType {
@@ -44,8 +43,8 @@ public class ElfMerchantTypeDefault extends ElfMerchantType {
 	}
 
 	protected void addFavorite(TradeCount trade, Random rand) {
-		ESObjects.Items ITEMS = ESInit.ITEMS;
-		ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
+		ESObjects.Items ITEMS = ESObjects.ITEMS;
+		ESObjects.Blocks BLOCKS = ESObjects.BLOCKS;
 		if (rand.nextInt(2) == 0) addACommodity(trade, new ItemStack(BLOCKS.ELF_FRUIT, 1, 2), 5, 20, 1000);
 		if (rand.nextInt(3) == 0) addACommodity(trade, new ItemStack(ITEMS.RESONANT_CRYSTAL), 100, 3, 1000);
 		if (rand.nextInt(8) == 0) addACommodity(trade, ItemBlessingJadePiece.createPiece(2), 1000, 1, 10000);
@@ -53,13 +52,13 @@ public class ElfMerchantTypeDefault extends ElfMerchantType {
 
 	@Override
 	public void renewTrade(World world, BlockPos pos, Random rand, VariableSet storage) {
-		ESObjects.Items ITEMS = ESInit.ITEMS;
+		ESObjects.Items ITEMS = ESObjects.ITEMS;
 		TradeCount trade = new TradeCount();
 		addFavorite(trade, rand);
 		if (rand.nextFloat() <= 0.1) {
 			float r = rand.nextFloat() * 0.4f + 0.1f;
 			int money = (int) (2500 + RandomHelper.rand.nextInt(5000) + 7500 * r);
-			trade.addCommodity(ItemAncientPaper.createPaper(ESInit.MANTRAS.LASER, r), money, 1);
+			trade.addCommodity(ItemAncientPaper.createPaper(ESObjects.MANTRAS.LASER, r), money, 1);
 		}
 		if (rand.nextInt(2) == 0) {
 			for (int i = 0; i < 3; i++) {
@@ -80,7 +79,7 @@ public class ElfMerchantTypeDefault extends ElfMerchantType {
 
 		if (rand.nextInt(10) == 0) {
 			int c = (int) RandomHelper.randomRange(50, 150);
-			ItemStack letter = new ItemStack(ESInit.ITEMS.KEEPSAKE, 1,
+			ItemStack letter = new ItemStack(ESObjects.ITEMS.KEEPSAKE, 1,
 					ItemKeepsake.EnumType.UNDELIVERED_LETTER.getMeta());
 			trade.addCommodity(letter, c, 3, true);
 		}

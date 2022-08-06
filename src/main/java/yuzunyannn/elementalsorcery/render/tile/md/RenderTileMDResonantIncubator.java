@@ -6,11 +6,11 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.model.md.ModelMDResonantIncubator;
 import yuzunyannn.elementalsorcery.tile.md.TileMDResonantIncubator;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class RenderTileMDResonantIncubator extends RenderTileMDBase<TileMDResonantIncubator> {
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/md_resonant_incubator.png");
@@ -25,11 +25,11 @@ public class RenderTileMDResonantIncubator extends RenderTileMDBase<TileMDResona
 		float zz = rate == 0 ? 0 : MathHelper.sin(EventClient.globalRotate * 3.14f) * rate;
 
 		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
-		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
+		RenderFriend.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
 		MODEL.render(null, zx, zz, 0, 0, 0, 1.0f);
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
 		ItemStack stack = tile.getStack();
 		if (stack.isEmpty()) return;
@@ -44,6 +44,6 @@ public class RenderTileMDResonantIncubator extends RenderTileMDBase<TileMDResona
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 		super.render(stack, partialTicks);
-		RenderHelper.render(stack, TEXTURE, MODEL, false);
+		RenderFriend.renderSpecialItem(stack, TEXTURE, MODEL, false);
 	}
 }

@@ -22,23 +22,23 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
-import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.network.MessageEntitySync;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
@@ -129,7 +129,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		state = nbt.getByte("state");
 		mantra = Mantra.REGISTRY.getValue(new ResourceLocation(nbt.getString("mantra")));
 		if (mantra == null) {
-			ElementalSorcery.logger.warn("EntityGrimoire恢复数据时出现了找不到mantra的异常！");
+			ESAPI.logger.warn("EntityGrimoire恢复数据时出现了找不到mantra的异常！");
 			return;
 		}
 		this.initMantraData();
@@ -204,7 +204,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 			this.restoreUser();
 			if (user == null) canNoUser: {
 				if (state == STATE_AFTER_SPELLING && !mantra.mustUser()) break canNoUser;
-				ElementalSorcery.logger.warn("魔导书还原使用者出现异常！", userUUID);
+				ESAPI.logger.warn("魔导书还原使用者出现异常！", userUUID);
 				return false;
 			}
 		}
@@ -212,7 +212,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 		if (grimoire == null) {
 			restoreGrimoire();
 			if (grimoire == null) {
-				ElementalSorcery.logger.warn("魔导书还原使grimoire出现异常！", userUUID);
+				ESAPI.logger.warn("魔导书还原使grimoire出现异常！", userUUID);
 				return false;
 			}
 		}
@@ -233,7 +233,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 			this.onEntityUpdate();
 		} catch (Exception e) {
 			String msg = "魔导书使用过程中出现异常！";
-			ElementalSorcery.logger.warn("魔导书使用过程中出现异常！", e);
+			ESAPI.logger.warn("魔导书使用过程中出现异常！", e);
 			ExceptionHelper.warnSend(world, msg);
 			super.setDead();
 		}

@@ -5,7 +5,8 @@ import java.util.List;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
@@ -53,10 +54,10 @@ public class ESConfig {
 		load(TileMDBase.class, getter);
 		load(TileEntityNetwork.class, getter);
 		loadList(ESInit.ES_TILE_ENTITY, getter);
-		loadRegs(ESInit.ITEMS, getter);
-		loadRegs(ESInit.BLOCKS, getter);
-		loadRegs(ESInit.ELEMENTS, getter);
-		loadRegs(ESInit.MANTRAS, getter);
+		loadRegs(ESObjects.ITEMS, getter);
+		loadRegs(ESObjects.BLOCKS, getter);
+		loadRegs(ESObjects.ELEMENTS, getter);
+		loadRegs(ESObjects.MANTRAS, getter);
 	}
 
 	private static void load(Object obj, IConfigGetter getter) {
@@ -75,7 +76,7 @@ public class ESConfig {
 				IForgeRegistryEntry reg = ((IForgeRegistryEntry<?>) field.get(esObject));
 				ConfigLoader.instance.load(reg, getter, false);
 			} catch (Exception e) {
-				ElementalSorcery.logger.warn("注入注册对象配置时出现异常", e);
+				ESAPI.logger.warn("注入注册对象配置时出现异常", e);
 			}
 		}
 	}

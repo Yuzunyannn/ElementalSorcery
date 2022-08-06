@@ -6,7 +6,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.container.gui.GuiAnalysisAltar;
 import yuzunyannn.elementalsorcery.container.gui.GuiDevolveCube;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementBoard;
@@ -162,7 +162,7 @@ public class ESGuiHandler implements IGuiHandler {
 				return null;
 			}
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("ui创建出现异常", e);
+			ESAPI.logger.warn("ui创建出现异常", e);
 			return null;
 		}
 	}
@@ -249,7 +249,7 @@ public class ESGuiHandler implements IGuiHandler {
 				return null;
 			}
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("ui创建出现异常", e);
+			ESAPI.logger.warn("ui创建出现异常", e);
 			return null;
 		}
 	}

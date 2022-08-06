@@ -9,8 +9,8 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.BlockSealStone;
-import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class WorldGenSealStone extends WorldGenerator {
 
@@ -29,7 +29,7 @@ public class WorldGenSealStone extends WorldGenerator {
 			}
 			BlockPos blockpos = new BlockPos(posX, posY, posZ);
 			IBlockState state = worldIn.getBlockState(blockpos);
-			IBlockState toState = ESInit.BLOCKS.SEAL_STONE.getDefaultState();
+			IBlockState toState = ESObjects.BLOCKS.SEAL_STONE.getDefaultState();
 			if (state == Blocks.STONE.getDefaultState()) worldIn.setBlockState(blockpos, toState, 2);
 			else if (state == Blocks.NETHERRACK.getDefaultState()) {
 				toState = toState.withProperty(BlockSealStone.VARIANT, BlockSealStone.EnumType.NETHERRACK);

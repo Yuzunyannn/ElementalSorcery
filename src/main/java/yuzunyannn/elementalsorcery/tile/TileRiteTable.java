@@ -38,13 +38,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityScapegoat;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
@@ -257,7 +256,7 @@ public class TileRiteTable extends TileEntityNetwork {
 		for (int i = 0; i < inventory.getSlots(); i++) {
 			ItemStack stack = inventory.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
-			if (stack.getItem() == ESInit.ITEMS.PARCHMENT) {
+			if (stack.getItem() == ESObjects.ITEMS.PARCHMENT) {
 				ItemStack s = RecipeRiteWrite.getInnerStack(stack);
 				TileRiteTable.Recipe recipe = findRecipe(s);
 				if (recipe != null) return MultiRets.ret(stack, recipe);
@@ -517,8 +516,8 @@ public class TileRiteTable extends TileEntityNetwork {
 		sacrifice.addSacrificeHandle(ItemSacrificeHandle.instance);
 		sacrifice.addSacrificeHandle(new ElementSacrificeHandle());
 
-		ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
-		ESObjects.Items ITEMS = ESInit.ITEMS;
+		ESObjects.Blocks BLOCKS = ESObjects.BLOCKS;
+		ESObjects.Items ITEMS = ESObjects.ITEMS;
 		addSacrifice(ITEMS.RESONANT_CRYSTAL, 100, 0, "resonant_crystal");
 		addSacrifice(Blocks.COBBLESTONE, -10, 0, "hearth", "smelt_box");
 		addSacrifice(Blocks.DIRT, -5, 0);
@@ -650,13 +649,13 @@ public class TileRiteTable extends TileEntityNetwork {
 	}
 
 	public static void initRecipe() {
-		addRecipe(new ItemStack(Blocks.TORCH), new ItemStack(ESInit.BLOCKS.LANTERN), 70, 0, (power, entity) -> {
+		addRecipe(new ItemStack(Blocks.TORCH), new ItemStack(ESObjects.BLOCKS.LANTERN), 70, 0, (power, entity) -> {
 			int x = power - 80;
 			if (x > 0) return Math.max(1, x / 12);
 			return 1;
 		});
-		addRecipe(new ItemStack(ESInit.ITEMS.ELF_COIN), new ItemStack(ESInit.ITEMS.ELF_PURSE), 120, 0);
-		addRecipe(new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, 1), new ItemStack(ESInit.ITEMS.UNSCRAMBLE_NOTE), 120, 2);
+		addRecipe(new ItemStack(ESObjects.ITEMS.ELF_COIN), new ItemStack(ESObjects.ITEMS.ELF_PURSE), 120, 0);
+		addRecipe(new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, 1), new ItemStack(ESObjects.ITEMS.UNSCRAMBLE_NOTE), 120, 2);
 		addRecipe(new ItemStack(Blocks.RAIL), new ItemStack(Items.MINECART), 80, 0);
 	}
 }

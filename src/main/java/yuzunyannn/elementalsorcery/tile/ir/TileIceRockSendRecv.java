@@ -14,19 +14,19 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IMagicBeamHandler;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLaser;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLaserMagicTransfer;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAltarWake {
 
@@ -465,7 +465,7 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 		try {
 			if (!hasUpDownFace() && facing.getHorizontalIndex() < 0) return 0;
 			FaceAnimeData dat = faceAnimeData[facing.getIndex()];
-			return RenderHelper.getPartialTicks(dat.r, dat.prevR, partialTicks);
+			return RenderFriend.getPartialTicks(dat.r, dat.prevR, partialTicks);
 		} catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
 			return 0;
 		}

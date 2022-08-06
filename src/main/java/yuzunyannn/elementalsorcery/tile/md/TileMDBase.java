@@ -18,7 +18,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptMagic;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptMagicPesky;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryPromote;
@@ -26,9 +28,7 @@ import yuzunyannn.elementalsorcery.api.tile.IProvideMagic;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.config.Config;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
 import yuzunyannn.elementalsorcery.util.IField;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryAdapter;
@@ -104,7 +104,7 @@ public abstract class TileMDBase extends TileEntity
 	/** 给予魔力的目标 */
 	protected TargetInfo[] targets = new TargetInfo[6];
 	/** 魔力仓库使用 */
-	protected ElementStack magic = new ElementStack(ESInit.ELEMENTS.MAGIC, 0, 25);
+	protected ElementStack magic = new ElementStack(ESObjects.ELEMENTS.MAGIC, 0, 25);
 	/** 需求的仓库 */
 	protected ItemStackHandler inventory = this.initItemStackHandler();
 	/** 元素仓库马甲 */
@@ -141,7 +141,7 @@ public abstract class TileMDBase extends TileEntity
 			this.inventory.deserializeNBT(nbt.getCompoundTag("Inv"));
 			// 扩容未保存上的情况
 			if (slot > this.inventory.getSlots()) {
-				ElementalSorcery.logger.warn(this.getClass() + "的inventory出现扩容现象！");
+				ESAPI.logger.warn(this.getClass() + "的inventory出现扩容现象！");
 				this.inventory = this.initItemStackHandler();
 			}
 		}
@@ -496,7 +496,7 @@ public abstract class TileMDBase extends TileEntity
 	/** 判断制定方向是否有torch */
 	public static boolean hasTorch(World world, BlockPos pos, EnumFacing facing) {
 		IBlockState state = world.getBlockState(pos.offset(facing));
-		return state.getBlock() == ESInit.BLOCKS.MAGIC_TORCH && state.getValue(BlockMagicTorch.FACING) == facing;
+		return state.getBlock() == ESObjects.BLOCKS.MAGIC_TORCH && state.getValue(BlockMagicTorch.FACING) == facing;
 	}
 
 	/** 设置火把开关 */

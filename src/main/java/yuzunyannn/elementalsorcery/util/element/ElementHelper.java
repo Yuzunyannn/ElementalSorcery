@@ -20,12 +20,12 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.element.ElementTransition;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
@@ -58,10 +58,7 @@ public class ElementHelper {
 	// 元素仓库为空
 	public static boolean isEmpty(IElementInventory inventory) {
 		if (inventory == null) return true;
-		for (int i = 0; i < inventory.getSlots(); i++) {
-			if (!inventory.getStackInSlot(i).isEmpty()) return false;
-		}
-		return true;
+		return inventory.isEmpty();
 	}
 
 	// 添加元素的信息
@@ -103,7 +100,7 @@ public class ElementHelper {
 		if (stack.isEmpty()) return null;
 		if (!stack.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null)) return null;
 		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		inventory.loadState(stack);
+		if (inventory.hasState(stack)) inventory.loadState(stack);
 		return inventory;
 	}
 
@@ -111,6 +108,12 @@ public class ElementHelper {
 	static public IElementInventory getElementInventory(ICapabilityProvider provider) {
 		if (!provider.hasCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null)) return null;
 		return provider.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+	}
+
+	@Nullable
+	static public boolean hasElementInventory(ItemStack stack) {
+		if (stack.isEmpty()) return false;
+		return stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null) != null;
 	}
 
 	/** 获取一组元素的默认复杂度 */
@@ -174,11 +177,11 @@ public class ElementHelper {
 		if (rate >= 1) return elements;
 		ArrayList<ElementStack> list = new ArrayList<ElementStack>(elements.length);
 		for (ElementStack eStack : elements) {
-			double fragment = toFragment(eStack) * rate;
-			double count = fromFragmentByPower(eStack.getElement(), fragment, eStack.getPower());
+			double fragment = ElementTransition.toFragment(eStack) * rate;
+			double count = ElementTransition.fromFragmentByPower(eStack.getElement(), fragment, eStack.getPower());
 			if (count > 1) list.add(new ElementStack(eStack.getElement(), (int) count, eStack.getPower()));
 			else {
-				double power = fromFragmentByCount(eStack.getElement(), fragment, count);
+				double power = ElementTransition.fromFragmentByCount(eStack.getElement(), fragment, count);
 				if (power > 1) list.add(new ElementStack(eStack.getElement(), 1, (int) power));
 			}
 		}
@@ -255,14 +258,6 @@ public class ElementHelper {
 		return list;
 	}
 
-	/** 复制 */
-	static public ElementStack[] copy(ElementStack[] estacks) {
-		if (estacks == null) return null;
-		ElementStack[] newEStacks = new ElementStack[estacks.length];
-		for (int i = 0; i < estacks.length; i++) newEStacks[i] = estacks[i].copy();
-		return newEStacks;
-	}
-
 	public static void onElementFreeFromVoid(World worldIn, BlockPos pos, IElementInventory eInv,
 			@Nullable EntityLivingBase trigger) {
 		if (eInv == null) return;
@@ -275,70 +270,5 @@ public class ElementHelper {
 	public static void onElementFreeFromVoid(World worldIn, BlockPos pos, ElementStack estack,
 			@Nullable EntityLivingBase trigger) {
 		ElementExplosion.doExplosion(worldIn, pos, estack, trigger);
-	}
-
-	static final double ln2 = Math.log(2);
-	static final double ln2_4 = Math.log(2.4);
-
-	/**
-	 * @return fragment unit
-	 */
-	static public double toFragmentUnit(Element element, double power) {
-		return Math.pow(2.4, Math.log(power) / ln2);
-	}
-
-	/**
-	 * @return power
-	 */
-	static public double fromFragmentUnit(Element element, double fragment) {
-		return Math.pow(Math.E, Math.log(fragment) * ln2 / ln2_4);
-	}
-
-	/**
-	 * @return fragment
-	 */
-	static public double toFragment(Element element, double count, double power) {
-		return toFragmentUnit(element, power) * count;
-	}
-
-	static public double toFragment(ElementStack estack) {
-		return toFragmentUnit(estack.getElement(), estack.getPower()) * estack.getCount();
-	}
-
-	/**
-	 * @return count
-	 */
-	static public double fromFragmentByPower(Element element, double fragment, double targetPower) {
-		return fragment / toFragmentUnit(element, targetPower);
-	}
-
-	/**
-	 * @return power
-	 */
-	static public double fromFragmentByCount(Element element, double fragment, double count) {
-		return ElementHelper.fromFragmentUnit(element, fragment / count);
-	}
-
-	static public double transitionFrom(Element element, double fragment, double level) {
-		return fragment * Math.pow(level, 1.125);
-	}
-
-	static public double transitionTo(Element element, double fragment, double level) {
-		return fragment / Math.pow(level, 1.125);
-	}
-
-	/** 转化到元素片元，包括transition */
-	static public double toMagicFragment(ElementStack estack) {
-		double fragment = ElementHelper.toFragment(estack);
-		ElementTransition et = estack.getElement().getTransition();
-		if (et == null) return fragment;
-		return ElementHelper.transitionFrom(estack.getElement(), fragment, et.getLevel());
-	}
-
-	static public double fromMagicFragmentByPower(Element element, double fragment, double power) {
-		ElementTransition et = element.getTransition();
-		if (et == null) return ElementHelper.fromFragmentByPower(element, fragment, power);
-		fragment = ElementHelper.transitionTo(element, fragment, et.getLevel());
-		return ElementHelper.fromFragmentByPower(element, fragment, power);
 	}
 }

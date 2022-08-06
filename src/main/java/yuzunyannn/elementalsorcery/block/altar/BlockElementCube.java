@@ -29,15 +29,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
-import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.particle.ESParticleDigging;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryStronger;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
@@ -121,7 +121,7 @@ public class BlockElementCube extends BlockElementContainer {
 	public void getSubBlocks(CreativeTabs itemIn, NonNullList<ItemStack> items) {
 		List<Element> list = Element.REGISTRY.getValues();
 		for (Element e : list) {
-			if (e == ESInit.ELEMENTS.VOID) {
+			if (e == ESObjects.ELEMENTS.VOID) {
 				for (EnumDyeColor dye : EnumDyeColor.values()) {
 					ItemStack stack = new ItemStack(this);
 					items.add(setDyeColor(stack, dye));
@@ -129,7 +129,7 @@ public class BlockElementCube extends BlockElementContainer {
 			}
 			ItemStack stack = new ItemStack(this);
 			ElementStack estack = new ElementStack(e, 10000, 1000);
-			IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+			IElementInventory inventory = ElementHelper.getElementInventory(stack);
 			inventory.setStackInSlot(0, estack);
 			inventory.saveState(stack);
 			items.add(stack);

@@ -13,13 +13,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
-import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.entity.AnimeRenderCrafting;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -59,7 +58,7 @@ public class CraftingCrafting implements ICraftingAltar {
 
 	public CraftingCrafting(NBTTagCompound nbt) {
 		if (nbt == null) {
-			ElementalSorcery.logger.warn("CraftingCrafting恢复的时候，nbt为NULL！");
+			ESAPI.logger.warn("CraftingCrafting恢复的时候，nbt为NULL！");
 			nbt = new NBTTagCompound();
 		}
 		this.deserializeNBT(nbt);
@@ -71,7 +70,7 @@ public class CraftingCrafting implements ICraftingAltar {
 	}
 
 	public ItemStack getResult(World world) {
-		IElementRecipe irecipe = RecipeManagement.instance.findMatchingRecipe(workingInventory, world);
+		IElementRecipe irecipe = ESAPI.recipeMgr.findMatchingRecipe(workingInventory, world);
 		if (irecipe != null) return irecipe.getCraftingResult(workingInventory).copy();
 		return ItemStack.EMPTY;
 	}
@@ -89,7 +88,7 @@ public class CraftingCrafting implements ICraftingAltar {
 		if (this.tick % 3 != 0) return;
 		// 寻找合成表
 		if (workingIrecipe == null) next: {
-			workingIrecipe = RecipeManagement.instance.findMatchingRecipe(workingInventory, tileMul.getWorld());
+			workingIrecipe = ESAPI.recipeMgr.findMatchingRecipe(workingInventory, tileMul.getWorld());
 			if (workingIrecipe == null) {
 				this.isOk = false;
 				return;
@@ -104,7 +103,8 @@ public class CraftingCrafting implements ICraftingAltar {
 		// 如果有需要的元素
 		if (workingEInventory != null) {
 			// 寻找一个所需元素
-			ElementStack need = workingEInventory.getStackInSlot(tileMul.rand.nextInt(workingEInventory.getSlots()));
+			ElementStack need = workingEInventory
+					.getStackInSlot(TileStaticMultiBlock.rand.nextInt(workingEInventory.getSlots()));
 			if (need.isEmpty()) {
 				if (!ElementHelper.isEmpty(workingEInventory)) {
 					for (int i = 0; i < workingEInventory.getSlots(); i++) {
@@ -146,7 +146,7 @@ public class CraftingCrafting implements ICraftingAltar {
 			try {
 				out.getItem().onCreated(out, tileMul.getWorld(), null);
 			} catch (NullPointerException e) {
-				ElementalSorcery.logger.warn("合祭坛合成时，onCreated出现空指针异常，这是一个非常不期望的结果", e);
+				ESAPI.logger.warn("合祭坛合成时，onCreated出现空指针异常，这是一个非常不期望的结果", e);
 			}
 		}
 		if (player instanceof EntityPlayerMP)

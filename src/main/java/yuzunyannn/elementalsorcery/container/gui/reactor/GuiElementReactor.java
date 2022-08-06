@@ -25,8 +25,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementTransitionReactor;
+import yuzunyannn.elementalsorcery.api.util.WorldLocation;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.container.ContainerElementReactor;
-import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.explore.Explores;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -34,12 +38,8 @@ import yuzunyannn.elementalsorcery.render.effect.batch.EffectFragment;
 import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatch;
 import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatchList;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor;
-import yuzunyannn.elementalsorcery.util.element.ElementTransitionReactor;
 import yuzunyannn.elementalsorcery.util.helper.Color;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 import yuzunyannn.elementalsorcery.util.world.MapHelper;
-import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 @SideOnly(Side.CLIENT)
 public class GuiElementReactor extends GuiScreen {
@@ -198,7 +198,7 @@ public class GuiElementReactor extends GuiScreen {
 		BlockPos pos = reactor.getWorldMap().getPos();
 		List<MapHelper.EntityData> list = reactor.getWorldMap().getEntityList();
 		GlStateManager.color(1, 1, 1, alpha);
-		RenderHelper.drawTexturedRectInCenter(0, 0, MAP_DRAW_SIZE, MAP_DRAW_SIZE, 0, 0, 1, 1, 1, 1);
+		RenderFriend.drawTexturedRectInCenter(0, 0, MAP_DRAW_SIZE, MAP_DRAW_SIZE, 0, 0, 1, 1, 1, 1);
 
 		COMS.bind();
 		Tessellator tessellator = Tessellator.getInstance();

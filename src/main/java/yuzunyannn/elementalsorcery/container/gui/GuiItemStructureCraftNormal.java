@@ -2,13 +2,13 @@ package yuzunyannn.elementalsorcery.container.gui;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerItemStructureCraft;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class GuiItemStructureCraftNormal extends GuiItemStructureCraft {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/container/is_craft_normal.png");
 
 	public GuiItemStructureCraftNormal(ContainerItemStructureCraft inventorySlotsIn) {
@@ -37,8 +37,8 @@ public class GuiItemStructureCraftNormal extends GuiItemStructureCraft {
 
 	@Override
 	protected void drawSlot(boolean hasSelect) {
-		RenderHelper.drawTexturedRectInCenter(0, 0, 18, 18, 176, 0, 18, 18, 256, 256);
-		if (hasSelect) RenderHelper.drawTexturedRectInCenter(0, 0, 18, 18, 176, 18, 18, 18, 256, 256);
+		RenderFriend.drawTexturedRectInCenter(0, 0, 18, 18, 176, 0, 18, 18, 256, 256);
+		if (hasSelect) RenderFriend.drawTexturedRectInCenter(0, 0, 18, 18, 176, 18, 18, 18, 256, 256);
 	}
 
 	@Override

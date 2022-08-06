@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 
 public class MessageSyncContainer implements IMessage {
 
@@ -103,7 +103,7 @@ public class MessageSyncContainer implements IMessage {
 			if (gui != null && gui instanceof IContainerNetwork && gui.windowId == msg.nbt.getInteger("_gui")) {
 				msg.nbt.removeTag("_gui");
 				((IContainerNetwork) gui).recvData(msg.nbt, Side.CLIENT);
-			} else ElementalSorcery.logger.warn("gui不吻合");
+			} else ESAPI.logger.warn("gui不吻合");
 		}
 
 		public void requestFromClient(MessageSyncContainer msg, EntityPlayerMP player) {
@@ -111,7 +111,7 @@ public class MessageSyncContainer implements IMessage {
 			if (gui != null && gui instanceof IContainerNetwork && gui.windowId == msg.nbt.getInteger("_gui")) {
 				msg.nbt.removeTag("_gui");
 				((IContainerNetwork) gui).recvData(msg.nbt, Side.SERVER);
-			} else ElementalSorcery.logger.warn("gui不吻合");
+			} else ESAPI.logger.warn("gui不吻合");
 		}
 
 	}

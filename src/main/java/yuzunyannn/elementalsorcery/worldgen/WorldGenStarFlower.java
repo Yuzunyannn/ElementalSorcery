@@ -8,8 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.BlockStarFlower;
-import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class WorldGenStarFlower extends WorldGenerator {
 
@@ -22,7 +22,7 @@ public class WorldGenStarFlower extends WorldGenerator {
 
 		int tryTime = 1 + (int) expect / 8;
 		BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos();
-		BlockStarFlower starFlower = (BlockStarFlower) ESInit.BLOCKS.STAR_FLOWER;
+		BlockStarFlower starFlower = (BlockStarFlower) ESObjects.BLOCKS.STAR_FLOWER;
 		for (int i = 0; i < tryTime; i++) {
 
 			pos.setPos(postion.getX() + rand.nextInt(16), 125 + rand.nextInt(50), postion.getZ() + rand.nextInt(16));
@@ -32,8 +32,8 @@ public class WorldGenStarFlower extends WorldGenerator {
 			if (!starFlower.canSustainBush(state)) continue;
 
 			if (state.getBlock() == Blocks.SAND && rand.nextFloat() < 0.75f)
-				worldIn.setBlockState(pos, ESInit.BLOCKS.STAR_SAND.getDefaultState(), 2);
-			worldIn.setBlockState(pos.up(), ESInit.BLOCKS.STAR_FLOWER.getDefaultState(), 2);
+				worldIn.setBlockState(pos, ESObjects.BLOCKS.STAR_SAND.getDefaultState(), 2);
+			worldIn.setBlockState(pos.up(), ESObjects.BLOCKS.STAR_FLOWER.getDefaultState(), 2);
 		}
 
 		return true;

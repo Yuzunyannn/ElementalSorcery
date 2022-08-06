@@ -10,12 +10,12 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGlassCup;
 import yuzunyannn.elementalsorcery.render.model.md.ModelMDLiquidizer;
 import yuzunyannn.elementalsorcery.tile.md.TileMDLiquidizer;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class RenderTileMDLiquidizer extends RenderTileMDBase<TileMDLiquidizer> {
 
@@ -26,12 +26,12 @@ public class RenderTileMDLiquidizer extends RenderTileMDBase<TileMDLiquidizer> {
 	public void render(TileMDLiquidizer tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
-		RenderHelper.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
-		float roate = RenderHelper.getPartialTicks(tile.rotate, tile.prevRotate, partialTicks);
+		RenderFriend.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
+		float roate = RenderFriend.getPartialTicks(tile.rotate, tile.prevRotate, partialTicks);
 		MODEL.render(null, roate, 0, 0, 0, 0, 1.0f);
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(x + 0.5, y + 0.5, z + 0.5);
@@ -88,6 +88,6 @@ public class RenderTileMDLiquidizer extends RenderTileMDBase<TileMDLiquidizer> {
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 		super.render(stack, partialTicks);
-		RenderHelper.render(stack, TEXTURE, MODEL, false);
+		RenderFriend.renderSpecialItem(stack, TEXTURE, MODEL, false);
 	}
 }

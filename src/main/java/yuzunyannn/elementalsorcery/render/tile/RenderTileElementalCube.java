@@ -7,17 +7,16 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementCube;
-import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelElementCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileElementalCube> implements IRenderItem {
@@ -37,28 +36,28 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 	public void render(TileElementalCube tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
-		RenderHelper.startRender(x + 0.5, y + 0.3225, z + 0.5, 0.5, alpha);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y + 0.3225, z + 0.5, 0.5, alpha);
 		GlStateManager.scale(0.04, 0.04, 0.04);
 
 		Vec3d color = tile.getBaseColor();
 		Vec3d coverColor = tile.getCoverColor();
 
-		float wake = RenderHelper.getPartialTicks(tile.wakeRate, tile.preWakeRate, partialTicks);
-		float rotation = RenderHelper.getPartialTicks(tile.rotationRate, tile.preRotationRate, partialTicks);
+		float wake = RenderFriend.getPartialTicks(tile.wakeRate, tile.preWakeRate, partialTicks);
+		float rotation = RenderFriend.getPartialTicks(tile.rotationRate, tile.preRotationRate, partialTicks);
 
 		GlStateManager.color((float) color.x, (float) color.y, (float) color.z);
 		TEXTURE.bind();
 		MODEL.render(null, wake, rotation, 0, 0, 0, 1);
 
-		RenderHelper.disableLightmap(true);
+		RenderFriend.disableLightmap(true);
 		GlStateManager.color((float) (tile.color.x * tile.colorRate + (1.0F - tile.colorRate) * coverColor.x),
 				(float) (tile.color.y * tile.colorRate + (1.0F - tile.colorRate) * coverColor.y),
 				(float) (tile.color.z * tile.colorRate + (1.0F - tile.colorRate) * coverColor.z));
 		TEXTURE_COVER.bind();
 		MODEL.render(null, wake, rotation, 0, 0, 0, 1);
-		RenderHelper.disableLightmap(false);
+		RenderFriend.disableLightmap(false);
 
-		RenderHelper.endRender();
+		RenderFriend.endTileEntitySpecialRender();
 	}
 
 	@Override
@@ -83,9 +82,8 @@ public class RenderTileElementalCube extends TileEntitySpecialRenderer<TileEleme
 		BlockElementCube.Color colorType = BlockElementCube.toColorType(BlockElementCube.getDyeColor(stack));
 		Vec3d color = colorType.getBaseColor();
 		Vec3d coverColor = colorType.getCoverColor();
-		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
+		IElementInventory inventory = ElementHelper.getElementInventory(stack);
 		if (inventory != null) {
-			inventory.loadState(stack);
 			ElementStack estack = inventory.getStackInSlot(0);
 			if (!estack.isEmpty()) coverColor = ColorHelper.color(estack.getColor());
 		}

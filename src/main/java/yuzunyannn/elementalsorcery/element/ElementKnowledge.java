@@ -20,20 +20,21 @@ import net.minecraft.world.IInteractionObject;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.element.explosion.EEKnowledge;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.var.Variables;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
-import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ElementKnowledge extends ElementCommon {
 
@@ -66,10 +67,10 @@ public class ElementKnowledge extends ElementCommon {
 
 	@Override
 	protected void addDrinkJuiceEffect(DrinkJuiceEffectAdder helper) {
-		helper.preparatory(ESInit.POTIONS.COMBAT_SKILL, 30, 125);
+		helper.preparatory(ESObjects.POTIONS.COMBAT_SKILL, 30, 125);
 		helper.check(JuiceMaterial.APPLE, 125).join();
 
-		helper.preparatory(ESInit.POTIONS.DEFENSE_SKILL, 30, 150);
+		helper.preparatory(ESObjects.POTIONS.DEFENSE_SKILL, 30, 150);
 		helper.check(JuiceMaterial.MELON, 125).join();
 	}
 

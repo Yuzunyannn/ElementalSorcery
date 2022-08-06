@@ -3,7 +3,7 @@ package yuzunyannn.elementalsorcery.api.crafting;
 import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 
 public interface IToElement {
 

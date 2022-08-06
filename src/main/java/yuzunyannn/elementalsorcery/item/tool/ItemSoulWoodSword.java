@@ -17,7 +17,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class ItemSoulWoodSword extends ItemSword {
 
@@ -55,7 +55,7 @@ public class ItemSoulWoodSword extends ItemSword {
 		for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
 			ItemStack item = player.inventory.getStackInSlot(i);
 			if (item.isEmpty()) continue;
-			if (item.getItem() == ESInit.ITEMS.SOUL_FRAGMENT) {
+			if (item.getItem() == ESObjects.ITEMS.SOUL_FRAGMENT) {
 				int count = item.getCount();
 				item.shrink(count);
 				addSoul(stack, count);

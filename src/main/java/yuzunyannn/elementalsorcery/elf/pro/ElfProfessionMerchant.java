@@ -22,6 +22,8 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.ElfConfig;
@@ -34,14 +36,12 @@ import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemMerchantInvitation;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper.WeightRandom;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 
 public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 
@@ -59,7 +59,7 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 		if (!merchantType.hasTrade(storage))
 			merchantType.renewTrade(elf.world, elf.getPosition(), elf.getRNG(), storage);
 		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, merchantType.getHoldItem(elf.world, storage));
-		elf.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(ESInit.ITEMS.ELF_COIN));
+		elf.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(ESObjects.ITEMS.ELF_COIN));
 	}
 
 	public static void setRemainTimeBeforeLeave(EntityElfBase elf, int tick) {
@@ -114,7 +114,7 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 
 		// 判断是否要离开
 		ItemStack stack = elf.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-		if (stack.getItem() == ESInit.ITEMS.SPELLBOOK) {
+		if (stack.getItem() == ESObjects.ITEMS.SPELLBOOK) {
 			elf.leave();
 			return;
 		}
@@ -149,9 +149,9 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 
 	protected void setLeave(EntityElfBase elf) {
 		ItemStack stack = elf.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-		if (stack.getItem() == ESInit.ITEMS.SPELLBOOK) return;
+		if (stack.getItem() == ESObjects.ITEMS.SPELLBOOK) return;
 
-		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.SPELLBOOK));
+		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESObjects.ITEMS.SPELLBOOK));
 		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
 		float size = 6;
 		AxisAlignedBB aabb = new AxisAlignedBB(elf.posX - size, elf.posY - size, elf.posZ - size, elf.posX + size,
@@ -222,12 +222,12 @@ public class ElfProfessionMerchant extends ElfProfessionUndetermined {
 			int n = wr.get();
 			switch (n) {
 			case -1:
-				ItemHelper.addItemStackToPlayer(p, new ItemStack(ESInit.BLOCKS.ELF_FRUIT,
+				ItemHelper.addItemStackToPlayer(p, new ItemStack(ESObjects.BLOCKS.ELF_FRUIT,
 						RandomHelper.rand.nextInt(8) + 8, BlockElfFruit.MAX_STATE));
 				break;
 			case -2:
 				ItemHelper.addItemStackToPlayer(p,
-						new ItemStack(ESInit.ITEMS.RESONANT_CRYSTAL, RandomHelper.rand.nextInt(4) + 2));
+						new ItemStack(ESObjects.ITEMS.RESONANT_CRYSTAL, RandomHelper.rand.nextInt(4) + 2));
 				break;
 			case -3:
 				VariableSet storage = elf.getProfessionStorage();

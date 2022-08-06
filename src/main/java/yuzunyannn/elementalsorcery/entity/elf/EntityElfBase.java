@@ -48,15 +48,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 
 public abstract class EntityElfBase extends EntityCreature {
 
@@ -242,7 +243,7 @@ public abstract class EntityElfBase extends EntityCreature {
 
 	public void givePresent(EntityLivingBase player, ItemStack stack) {
 		world.setEntityState(this, (byte) 18);
-		if (stack.getItem() == ESInit.ITEMS.ELF_DIAMOND) {
+		if (stack.getItem() == ESObjects.ITEMS.ELF_DIAMOND) {
 			if (ElfConfig.isPublicEnemy(player)) {
 				ElfConfig.changeFame(player, -ElfConfig.getPlayerFame(player) / 2);
 				if (player instanceof EntityPlayerMP)
@@ -396,7 +397,7 @@ public abstract class EntityElfBase extends EntityCreature {
 		try {
 			super.onUpdate();
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("这只精灵出现了异常！" + this, e);
+			ESAPI.logger.warn("这只精灵出现了异常！" + this, e);
 			this.setDead();
 		}
 	}

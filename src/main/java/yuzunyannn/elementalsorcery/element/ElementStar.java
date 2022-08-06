@@ -24,17 +24,18 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.element.explosion.EEStar;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.var.Variables;
-import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ElementStar extends ElementCommon {
 
@@ -56,7 +57,7 @@ public class ElementStar extends ElementCommon {
 		if (world.rand.nextFloat() < 0.05f) {
 			if (estack.getCount() > 50) {
 				estack.shrink(40);
-				ItemStack star = new ItemStack(ESInit.BLOCKS.STAR_FLOWER, 1);
+				ItemStack star = new ItemStack(ESObjects.BLOCKS.STAR_FLOWER, 1);
 				ItemHelper.dropItem(world, pos, star);
 			}
 		}
@@ -71,7 +72,7 @@ public class ElementStar extends ElementCommon {
 		if (at == null) return estack;
 
 		estack.shrink(10);
-		world.setBlockState(at, ESInit.BLOCKS.STAR_SAND.getDefaultState());
+		world.setBlockState(at, ESObjects.BLOCKS.STAR_SAND.getDefaultState());
 		world.playEvent(2001, at, Block.getStateId(world.getBlockState(at)));
 
 		return estack;
@@ -84,7 +85,7 @@ public class ElementStar extends ElementCommon {
 
 	@Override
 	protected void addDrinkJuiceEffect(DrinkJuiceEffectAdder helper) {
-		helper.preparatory(ESInit.POTIONS.STAR, 32, 256);
+		helper.preparatory(ESObjects.POTIONS.STAR, 32, 256);
 		helper.check(JuiceMaterial.APPLE, 512).checkRatio(JuiceMaterial.MELON, 0.95f, 1.05f).join();
 
 		helper.preparatory(MobEffects.LUCK, 32, 128);
@@ -151,7 +152,7 @@ public class ElementStar extends ElementCommon {
 	public int getChangeItemCost(World world, ItemStack stack, VariableSet content) {
 		Item item = stack.getItem();
 		int meta = stack.getMetadata();
-		if (item == ESInit.ITEMS.MATERIAL_DEBRIS) return 2;
+		if (item == ESObjects.ITEMS.MATERIAL_DEBRIS) return 2;
 		if (item == Items.COAL && meta == 1) return 1;
 		if (item == Items.DYE) return 1;
 
@@ -168,7 +169,7 @@ public class ElementStar extends ElementCommon {
 	public ItemStack doChangeItemCost(World world, ItemStack stack, ElementStack star, VariableSet content) {
 		Item item = stack.getItem();
 		int meta = stack.getMetadata();
-		if (item == ESInit.ITEMS.MATERIAL_DEBRIS) return new ItemStack(ESInit.ITEMS.MAGIC_PIECE);
+		if (item == ESObjects.ITEMS.MATERIAL_DEBRIS) return new ItemStack(ESObjects.ITEMS.MAGIC_PIECE);
 		if (item == Items.COAL && meta == 1) return new ItemStack(Items.COAL);
 		if (item == Items.DYE) return new ItemStack(Items.DYE, 1, (meta + 1) % EnumDyeColor.values().length);
 		if (content.has(Variables.idI)) {

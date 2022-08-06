@@ -5,8 +5,7 @@ import javax.annotation.Nonnull;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 
 public interface IElementLaser {
 

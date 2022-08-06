@@ -20,6 +20,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -37,7 +38,13 @@ import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.entity.Behavior;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
+import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
+import yuzunyannn.elementalsorcery.api.entity.IFairyCubeObject;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.capability.FairyCubeMaster;
 import yuzunyannn.elementalsorcery.container.ContainerFairyCube;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
@@ -48,12 +55,12 @@ import yuzunyannn.elementalsorcery.network.MessageEntitySync;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTreatEntity;
-import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class EntityFairyCube extends EntityLivingBase
-		implements MessageEntitySync.IRecvData, IEntityAdditionalSpawnData {
+		implements MessageEntitySync.IRecvData, IEntityAdditionalSpawnData, IFairyCubeObject {
 
 	/** 吃一次食物，直接增加经验的cd */
 	public static final int FOOD_EXP_CD = 20 * 20;
@@ -70,7 +77,7 @@ public class EntityFairyCube extends EntityLivingBase
 	/** 所有模块 */
 	protected List<FairyCubeModule> modules = new ArrayList<>();
 	/** 立方体等级 */
-	protected float level;
+	protected double level;
 	/** 立方体体力 */
 	protected float physicalStrength;
 	/** 执行tick */
@@ -122,7 +129,7 @@ public class EntityFairyCube extends EntityLivingBase
 	}
 
 	public void writeFairyCubeToNBT(NBTTagCompound compound) {
-		compound.setFloat("level", level);
+		compound.setDouble("level", level);
 		compound.setFloat("p.s.", physicalStrength);
 		if (playerUUID != null) compound.setUniqueId("master", playerUUID);
 		NBTTagList list = new NBTTagList();
@@ -131,7 +138,7 @@ public class EntityFairyCube extends EntityLivingBase
 	}
 
 	public void readFairyCubeFromNBT(NBTTagCompound compound) {
-		level = compound.getFloat("level");
+		level = compound.getDouble("level");
 		physicalStrength = compound.getFloat("p.s.");
 		if (compound.hasKey("masterMost")) playerUUID = compound.getUniqueId("master");
 		NBTTagList list = compound.getTagList("modules", NBTTag.TAG_COMPOUND);
@@ -139,7 +146,7 @@ public class EntityFairyCube extends EntityLivingBase
 		for (int i = 0; i < list.tagCount(); i++) {
 			NBTTagCompound nbt = list.getCompoundTagAt(i);
 			String id = nbt.getString("id");
-			FairyCubeModule module = FairyCubeModule.REGISTRY.newInstance(id, this);
+			FairyCubeModule module = FairyCubeModule.REGISTRY.newInstance(TextHelper.toESResourceLocation(id), this);
 			if (module == null) continue;
 			module.deserializeNBT(nbt);
 			module.onLoaded();
@@ -272,7 +279,7 @@ public class EntityFairyCube extends EntityLivingBase
 		try {
 			this.updateModule(player);
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("Fairy Cube 執行模块异常", e);
+			ESAPI.logger.warn("Fairy Cube 執行模块异常", e);
 			this.setToDrop();
 		}
 
@@ -349,14 +356,6 @@ public class EntityFairyCube extends EntityLivingBase
 		this.rotationPitch = (float) (-dir.y * 90);
 	}
 
-	public void setLookAt(BlockPos pos) {
-		this.setLookAt(new Vec3d(pos).add(0.5, 0.5, 0.5));
-	}
-
-	public void setLookAt(Entity entity) {
-		this.setLookAt(entity.getPositionEyes(1));
-	}
-
 	static public void addBehavior(EntityLivingBase master, Behavior behavior) {
 		IFairyCubeMaster myMaster = master.getCapability(FairyCubeMaster.FAIRY_CUBE_MASTER_CAPABILITY, null);
 		if (myMaster == null) return;
@@ -425,14 +424,17 @@ public class EntityFairyCube extends EntityLivingBase
 		swingProgressInt = duration <= 0 ? 1 : duration;
 	}
 
+	@Override
 	public boolean isExecuting() {
 		return execute > 0;
 	}
 
+	@Override
 	public void doExecute(int duration) {
 		this.execute = duration;
 	}
 
+	@Override
 	public void stopExecute() {
 		this.execute = -1;
 	}
@@ -467,39 +469,44 @@ public class EntityFairyCube extends EntityLivingBase
 		return true;
 	}
 
-	public void addExp(float count) {
+	@Override
+	public void addExp(double count) {
 		count = this.getAttribute("experience:cube", count);
 		while (true) {
-			int lev = Math.max(MathHelper.ceil(this.getLevel()), 1);
-			float decay = (float) Math.pow(lev, 3.2f) * 32;
-			float need = 1 - this.getLevelUpgradeProgress();
+			double decay = this.getExpToNextLevel();
+			double need = 1 - this.getLevelUpgradeProgress();
 			if (count / decay < need) {
 				level += count / decay;
 				return;
 			}
 			count = count - need * decay;
-			level += need;
+			level += need + 0.0001;
 		}
 	}
 
-	public float getLevel() {
+	@Override
+	public double getExpToNextLevel() {
+		int lev = Math.max(MathHelper.ceil(this.getLevel()), 1);
+		double decay = Math.pow(lev, 3.2) * 32;
+		return decay;
+	}
+
+	public double getLevel() {
 		return level;
 	}
 
-	public float getLevelUpgradeProgress() {
+	public double getLevelUpgradeProgress() {
 		return level - MathHelper.floor(level);
 	}
 
-	public float getAttributeDefault(String name) {
+	@Override
+	public double getAttributeDefault(String name) {
 		if ("level".equals(name)) return this.getLevel();
 		return 0;
 	}
 
-	public float getAttribute(String name) {
-		return getAttribute(name, getAttributeDefault(name));
-	}
-
-	public float getAttribute(String name, float attribute) {
+	@Override
+	public double getAttribute(String name, double attribute) {
 		for (FairyCubeModule module : modules) {
 			if (!module.isClose()) attribute = module.modifyAttribute(name, attribute);
 		}
@@ -544,7 +551,7 @@ public class EntityFairyCube extends EntityLivingBase
 
 	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
-		if (ElementalSorcery.isDevelop) {
+		if (ESAPI.isDevelop) {
 			if (player.isSneaking() && player.isCreative()) {
 				this.setToDrop();
 				return EnumActionResult.SUCCESS;
@@ -577,6 +584,11 @@ public class EntityFairyCube extends EntityLivingBase
 		ContainerFairyCube.setFairyCubeContext(this);
 		player.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_FAIRY_CUBE, world, 0, 0, 0);
 		return EnumActionResult.SUCCESS;
+	}
+
+	@Override
+	public void addAbsorbColor(int color) {
+		absorbColors.add(color);
 	}
 
 	protected boolean applyPlayerInteractionItemStack(EntityPlayer player, Vec3d vec, ItemStack stack) {
@@ -760,7 +772,7 @@ public class EntityFairyCube extends EntityLivingBase
 	@SideOnly(Side.CLIENT)
 	public void doClientHappy(int kind) {
 		if (kind == 3) {
-			this.doClientCastingEntity(this, new int[] { 0xb6f3e0, 0x408982, 0x00d081 });
+			this.doClientCastingEffect(this, new int[] { 0xb6f3e0, 0x408982, 0x00d081 });
 			return;
 		}
 		boolean canShift = true;
@@ -805,8 +817,9 @@ public class EntityFairyCube extends EntityLivingBase
 		}
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
-	public void doClientCastingBlock(List<BlockPos> list, int[] colors) {
+	public void doClientCastingEffect(List<BlockPos> list, int[] colors) {
 		for (BlockPos pos : list) {
 			Vec3d vec = new Vec3d(pos).add(0.5, 0.5, 0.5);
 			for (int k = 0; k < 5; ++k) {
@@ -831,8 +844,9 @@ public class EntityFairyCube extends EntityLivingBase
 		}
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
-	public void doClientEntityEffect(Entity entity, int[] colors) {
+	public void doClientAttackEffect(Entity entity, int[] colors) {
 		Vec3d vec = entity.getPositionVector().add(0, entity.height / 3 * 2, 0);
 		for (int i = 0; i < 10; i++) {
 			EffectElementMove em = new EffectElementMove(entity.world, vec);
@@ -846,11 +860,27 @@ public class EntityFairyCube extends EntityLivingBase
 		}
 	}
 
+	@Override
 	@SideOnly(Side.CLIENT)
-	public void doClientCastingEntity(Entity entity, int[] colors) {
+	public void doClientCastingEffect(Entity entity, int[] colors) {
 		Vec3d vec = entity.getPositionVector().add(0, entity.height / 2, 0);
 		EffectTreatEntity te = new EffectTreatEntity(world, vec);
 		te.bindEntity(entity).setColors(colors);
 		Effect.addEffect(te);
+	}
+
+	@Override
+	public World getWorld() {
+		return world;
+	}
+
+	@Override
+	public TileEntity asTileEntity() {
+		return null;
+	}
+
+	@Override
+	public Entity asEntity() {
+		return this;
 	}
 }

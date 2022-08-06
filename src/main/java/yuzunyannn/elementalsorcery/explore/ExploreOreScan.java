@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -65,7 +65,7 @@ public class ExploreOreScan implements IExploreHandle {
 
 	/** 檢測是否是特定的方塊，不走礦物詞典 */
 	public static boolean isSpecialBlock(IBlockState state) {
-		if (state.getBlock() == ESInit.BLOCKS.SEAL_STONE) return true;
+		if (state.getBlock() == ESObjects.BLOCKS.SEAL_STONE) return true;
 		return false;
 	}
 

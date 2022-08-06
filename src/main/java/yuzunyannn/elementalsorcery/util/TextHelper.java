@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 
 public class TextHelper {
 
@@ -86,7 +86,7 @@ public class TextHelper {
 	}
 
 	static public ResourceLocation toESResourceLocation(String id) {
-		return toResourceLocation(id, ElementalSorcery.MODID);
+		return toResourceLocation(id, ESAPI.MODID);
 	}
 
 	static public ResourceLocation toMCResourceLocation(String id) {

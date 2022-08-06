@@ -4,7 +4,6 @@ import javax.annotation.Nonnull;
 
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public interface IStarFlowerCast {
 

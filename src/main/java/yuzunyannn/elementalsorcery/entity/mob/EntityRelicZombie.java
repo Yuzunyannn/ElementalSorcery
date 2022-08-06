@@ -44,8 +44,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireBall;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
@@ -76,7 +76,7 @@ public class EntityRelicZombie extends EntityMob {
 			setHeldItem(Items.LINGERING_POTION);
 			break;
 		case WIZARD:
-			setHeldItem(ESInit.ITEMS.SPELLBOOK);
+			setHeldItem(ESObjects.ITEMS.SPELLBOOK);
 			break;
 		}
 		this.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
@@ -169,7 +169,7 @@ public class EntityRelicZombie extends EntityMob {
 			int n = 1 + this.rand.nextInt(lootingModifier / 2 + 1);
 			for (int i = 0; i < n; i++) {
 				if (this.rand.nextFloat() >= 0.85f) break;
-				this.dropItem(ESInit.ITEMS.RELIC_GEM, 1);
+				this.dropItem(ESObjects.ITEMS.RELIC_GEM, 1);
 			}
 		}
 
@@ -177,7 +177,7 @@ public class EntityRelicZombie extends EntityMob {
 		if (lootingModifier > 0) n += this.rand.nextInt(lootingModifier + 1);
 		RandomHelper.WeightRandom<Item> wr = new RandomHelper.WeightRandom<>();
 		wr.add(Items.ROTTEN_FLESH, 50);
-		wr.add(ESInit.ITEMS.MAGIC_CRYSTAL, 20);
+		wr.add(ESObjects.ITEMS.MAGIC_CRYSTAL, 20);
 		wr.add(Items.IRON_INGOT, 5);
 		for (int i = 0; i < n; i++) this.dropItem(wr.get(), 1);
 	}
@@ -321,7 +321,7 @@ public class EntityRelicZombie extends EntityMob {
 		skillType = rand.nextInt(3);
 		switch (skillType) {
 		default:
-			this.setHeldItem(ESInit.ITEMS.ORDER_CRYSTAL);
+			this.setHeldItem(ESObjects.ITEMS.ORDER_CRYSTAL);
 			break;
 		case 1:
 			this.setHeldItem(Item.getItemFromBlock(Blocks.TORCH));
@@ -365,7 +365,7 @@ public class EntityRelicZombie extends EntityMob {
 				this.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE, 20 * 10, 3));
 				this.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 20 * 10, 1));
 				this.addPotionEffect(new PotionEffect(MobEffects.HASTE, 20 * 10, 1));
-				this.setHeldItem(ESInit.ITEMS.MAGIC_GOLD_SWORD);
+				this.setHeldItem(ESObjects.ITEMS.MAGIC_GOLD_SWORD);
 			} else if (rate < 0.6) this.setHeldItem(Items.DIAMOND_SWORD);
 			else if (rate < 0.8) this.setHeldItem(Items.IRON_SWORD);
 		}

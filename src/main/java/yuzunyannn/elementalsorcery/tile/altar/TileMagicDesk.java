@@ -27,19 +27,18 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -66,9 +65,9 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 			ItemSpellbook.renderStart(spellbook);
 			return;
 		}
-		if (book.getItem() == ESInit.ITEMS.ANCIENT_PAPER) return;
+		if (book.getItem() == ESObjects.ITEMS.ANCIENT_PAPER) return;
 
-		ElementalSorcery.logger.warn("魔法书桌上不应该放入除spellbook和ancient_paper以外的物品");
+		ESAPI.logger.warn("魔法书桌上不应该放入除spellbook和ancient_paper以外的物品");
 	}
 
 	@Override
@@ -85,7 +84,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 	@Override
 	public boolean canSetStack(ItemStack stack) {
 		return stack.getItem() instanceof ItemSpellbook
-				|| (stack.getItem() == ESInit.ITEMS.ANCIENT_PAPER && stack.getMetadata() == 2);
+				|| (stack.getItem() == ESObjects.ITEMS.ANCIENT_PAPER && stack.getMetadata() == 2);
 	}
 
 	@Override
@@ -357,8 +356,8 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 	}
 
 	static public void addRecipeFromMantra(Mantra mantra, ItemStack... stacks) {
-		ItemStack input = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, 2);
-		ItemStack output = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, 3);
+		ItemStack input = new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, 2);
+		ItemStack output = new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, 3);
 
 		AncientPaper ap = new AncientPaper();
 		ap.setMantra(mantra).setStart(0).setEnd(100);
@@ -376,33 +375,33 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 
 	// 各种合成表
 	public static void init() {
-		ESObjects.Items ITEMS = ESInit.ITEMS;
+		ESObjects.Items ITEMS = ESObjects.ITEMS;
 		// launch
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_LAUNCH),
-				new ItemStack(ESInit.ITEMS.QUILL, 1, 1), new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 3),
-				new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 10), new ItemStack(Blocks.CRAFTING_TABLE, 2),
-				new ItemStack(ESInit.ITEMS.PARCHMENT, 16));
+				new ItemStack(ESObjects.ITEMS.QUILL, 1, 1), new ItemStack(ESObjects.ITEMS.MAGIC_CRYSTAL, 3),
+				new ItemStack(ESObjects.ITEMS.ELF_CRYSTAL, 10), new ItemStack(Blocks.CRAFTING_TABLE, 2),
+				new ItemStack(ESObjects.ITEMS.PARCHMENT, 16));
 		// element
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ELEMENT),
-				new ItemStack(ESInit.ITEMS.QUILL, 1, 1), new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 10),
-				new ItemStack(ESInit.ITEMS.MAGICAL_ENDER_EYE, 1), new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 32),
+				new ItemStack(ESObjects.ITEMS.QUILL, 1, 1), new ItemStack(ESObjects.ITEMS.MAGIC_CRYSTAL, 10),
+				new ItemStack(ESObjects.ITEMS.MAGICAL_ENDER_EYE, 1), new ItemStack(ESObjects.ITEMS.ELF_CRYSTAL, 32),
 				new ItemStack(Blocks.RED_FLOWER, 6), new ItemStack(Items.GOLD_INGOT, 3), new ItemStack(Items.COAL, 7),
 				new ItemStack(Blocks.OBSIDIAN, 2));
 		// building
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ARCHITECTURE),
-				new ItemStack(ESInit.ITEMS.QUILL, 1, 1), new ItemStack(ESInit.BLOCKS.ESTONE, 16),
-				new ItemStack(ESInit.ITEMS.ARCHITECTURE_CRYSTAL, 1), new ItemStack(ESInit.BLOCKS.KYANITE_BLOCK, 2),
+				new ItemStack(ESObjects.ITEMS.QUILL, 1, 1), new ItemStack(ESObjects.BLOCKS.ESTONE, 16),
+				new ItemStack(ESObjects.ITEMS.ARCHITECTURE_CRYSTAL, 1), new ItemStack(ESObjects.BLOCKS.KYANITE_BLOCK, 2),
 				new ItemStack(Blocks.STONE, 16), new ItemStack(Blocks.IRON_BLOCK, 1),
 				new ItemStack(Blocks.GOLD_BLOCK, 1), new ItemStack(Blocks.REDSTONE_BLOCK, 1),
 				new ItemStack(Blocks.OBSIDIAN, 1), new ItemStack(Blocks.BRICK_BLOCK, 2));
 		// 咒文
-		addRecipeFromMantra(ESInit.MANTRAS.LAUNCH_ECR,
+		addRecipeFromMantra(ESObjects.MANTRAS.LAUNCH_ECR,
 				ItemHelper.toArray(ITEMS.QUILL, 1, 1, Blocks.CRAFTING_TABLE, 2, ITEMS.QUILL, 1, 1));
-		addRecipeFromMantra(ESInit.MANTRAS.LAUNCH_EDE,
+		addRecipeFromMantra(ESObjects.MANTRAS.LAUNCH_EDE,
 				ItemHelper.toArray(ITEMS.QUILL, 1, 1, ITEMS.AZURE_CRYSTAL, 5, ITEMS.QUILL, 1, 1));
-		addRecipeFromMantra(ESInit.MANTRAS.LAUNCH_ECO,
+		addRecipeFromMantra(ESObjects.MANTRAS.LAUNCH_ECO,
 				ItemHelper.toArray(ITEMS.QUILL, 1, 1, ITEMS.ORDER_CRYSTAL, 5, ITEMS.QUILL, 1, 1));
-		addRecipeFromMantra(ESInit.MANTRAS.LAUNCH_BRC,
+		addRecipeFromMantra(ESObjects.MANTRAS.LAUNCH_BRC,
 				ItemHelper.toArray(ITEMS.QUILL, 1, 1, ITEMS.ARCHITECTURE_CRYSTAL, 3, ITEMS.QUILL, 1, 1));
 	}
 

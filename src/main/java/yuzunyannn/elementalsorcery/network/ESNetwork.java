@@ -9,12 +9,12 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import net.minecraftforge.fml.relauncher.Side;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 
 public class ESNetwork {
 
 	public final static SimpleNetworkWrapper instance = NetworkRegistry.INSTANCE
-			.newSimpleChannel(ElementalSorcery.MODID);
+			.newSimpleChannel(ESAPI.MODID);
 	private static int nextID = 0;
 
 	public static void registerAll() {

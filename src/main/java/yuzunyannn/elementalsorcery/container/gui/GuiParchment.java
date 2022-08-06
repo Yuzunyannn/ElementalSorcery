@@ -27,7 +27,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.container.ContainerParchment;
@@ -37,9 +37,9 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 
 public class GuiParchment extends GuiContainer implements IPageManager {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/parchment.png");
-	public static final ResourceLocation TEXTURE_EXTRA = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_EXTRA = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/parchment_book.png");
 	protected final ContainerParchment container;
 	/** 物品槽按钮计数 */
@@ -95,7 +95,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			GlStateManager.popMatrix();
 		} catch (Exception e) {
 			String id = this.page == null ? "null" : this.page.getId();
-			ElementalSorcery.logger.warn("羊皮卷(" + id + ")gui:drawGuiContainerBackgroundLayer异常", e);
+			ESAPI.logger.warn("羊皮卷(" + id + ")gui:drawGuiContainerBackgroundLayer异常", e);
 			this.toPage = Pages.getErrorPage();
 		}
 	}
@@ -116,7 +116,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			}
 		} catch (Exception e) {
 			String id = this.page == null ? "null" : this.page.getId();
-			ElementalSorcery.logger.warn("羊皮卷(" + id + ")gui:actionPerformed异常", e);
+			ESAPI.logger.warn("羊皮卷(" + id + ")gui:actionPerformed异常", e);
 			this.toPage = Pages.getErrorPage();
 		}
 	}
@@ -151,7 +151,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			this.page.update(this);
 		} catch (Exception e) {
 			String id = this.page == null ? "null" : this.page.getId();
-			ElementalSorcery.logger.warn("羊皮卷(" + id + ")gui:update异常", e);
+			ESAPI.logger.warn("羊皮卷(" + id + ")gui:update异常", e);
 			this.toPage = Pages.getErrorPage();
 		}
 	}
@@ -384,7 +384,7 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			BuildingBlocks iter = building.getBuildingIterator();
 			// 开始
 			while (iter.next()) {
-				yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
+				yuzunyannn.elementalsorcery.api.util.client.RenderFriend.disableLightmap(true);
 				BlockPos blockpos = iter.getPos();
 				blockpos = new BlockPos(blockpos.getX(), blockpos.getY(), blockpos.getZ());
 				IBlockState iblockstate = iter.getState();
@@ -412,10 +412,10 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			GlStateManager.popMatrix();
 		} catch (Exception e) {
 			String id = this.page == null ? "null" : this.page.getId();
-			ElementalSorcery.logger.warn("羊皮卷(" + id + ")gui:drawBuilding异常", e);
+			ESAPI.logger.warn("羊皮卷(" + id + ")gui:drawBuilding异常", e);
 			this.toPage = Pages.getErrorPage();
 		}
-		yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
+		yuzunyannn.elementalsorcery.api.util.client.RenderFriend.disableLightmap(true);
 	}
 
 }

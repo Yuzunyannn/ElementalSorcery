@@ -6,12 +6,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.container.gui.GuiFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeModuleClient;
 import yuzunyannn.elementalsorcery.item.ItemFairyCubeModule;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelFairyCubeModule;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderItemFairyCubeModule implements IRenderItem {

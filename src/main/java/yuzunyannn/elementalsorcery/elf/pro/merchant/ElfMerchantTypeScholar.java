@@ -6,15 +6,15 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionScholar;
 import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
 import yuzunyannn.elementalsorcery.elf.trade.TradeList;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 
 public class ElfMerchantTypeScholar extends ElfMerchantType {
 
@@ -28,7 +28,7 @@ public class ElfMerchantTypeScholar extends ElfMerchantType {
 	public void renewTrade(World world, BlockPos pos, Random rand, VariableSet storage) {
 		TradeCount trade = new TradeCount();
 		TradeList list = trade.getTradeList();
-		list.add(new ItemStack(ESInit.ITEMS.PARCHMENT), 1, true);
+		list.add(new ItemStack(ESObjects.ITEMS.PARCHMENT), 1, true);
 		Object[] needPages = RandomHelper.randomSelect(5, ElfProfessionScholar.pages.toArray());
 		for (int i = 0; i < needPages.length; i++) {
 			String id = needPages[i].toString();
@@ -40,10 +40,10 @@ public class ElfMerchantTypeScholar extends ElfMerchantType {
 		}
 		// 一些其余东西
 		if (RandomHelper.rand.nextInt(3) == 0) {
-			list.add(new ItemStack(ESInit.ITEMS.RESONANT_CRYSTAL), 80, false);
+			list.add(new ItemStack(ESObjects.ITEMS.RESONANT_CRYSTAL), 80, false);
 			trade.setStock(list.size() - 1, rand.nextInt(12) + 4);
 		} else {
-			list.add(new ItemStack(ESInit.BLOCKS.ELF_FRUIT, 1, 2), 1, false);
+			list.add(new ItemStack(ESObjects.BLOCKS.ELF_FRUIT, 1, 2), 1, false);
 			trade.setStock(list.size() - 1, 1000);
 		}
 		if (rand.nextInt(2) == 0) {
@@ -54,13 +54,13 @@ public class ElfMerchantTypeScholar extends ElfMerchantType {
 			list.add(new ItemStack(Items.PAPER), 2, false);
 			trade.setStock(list.size() - 1, rand.nextInt(16) + 8);
 		}
-		if (rand.nextInt(4) == 0) list.add(new ItemStack(ESInit.ITEMS.RITE_MANUAL), 120, false);
+		if (rand.nextInt(4) == 0) list.add(new ItemStack(ESObjects.ITEMS.RITE_MANUAL), 120, false);
 		storage.set(TRADE, trade);
 	}
 
 	@Override
 	public ItemStack getHoldItem(World world, VariableSet storage) {
-		return new ItemStack(ESInit.ITEMS.MANUAL);
+		return new ItemStack(ESObjects.ITEMS.MANUAL);
 	}
 
 }

@@ -1,9 +1,8 @@
 package yuzunyannn.elementalsorcery;
 
-import java.lang.management.ManagementFactory;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.util.List;
-
-import org.apache.logging.log4j.Logger;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.crash.CrashReport;
@@ -18,34 +17,18 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.relauncher.Side;
+import yuzunyannn.elementalsorcery.api.APIObject;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 
-@Mod(modid = ElementalSorcery.MODID, name = ElementalSorcery.NAME, version = ElementalSorcery.VERSION)
+@Mod(modid = ESAPI.MODID, name = ESAPI.NAME, version = ElementalSorcery.VERSION)
 public class ElementalSorcery {
 
-	public static final String MODID = "elementalsorcery";
-	public static final String NAME = "Elemental Sorcery";
-	public static final String VERSION = "0.13.0";
-	public static final boolean isDevelop;
+	public static final String VERSION = "0.14.0";
 
-	static {
-		boolean debugOpen = false;
-		try {
-			List<String> args = ManagementFactory.getRuntimeMXBean().getInputArguments();
-			for (String arg : args) {
-				if (arg.startsWith("-agentlib:jdwp")) {
-					debugOpen = true;
-					break;
-				}
-			}
-		} catch (Throwable e) {}
-		isDevelop = debugOpen;
-	}
-
-	public static Logger logger;
 	public static Side side;
 	public static ESData data;
 
-	@Instance(ElementalSorcery.MODID)
+	@Instance(ESAPI.MODID)
 	public static ElementalSorcery instance;
 
 	@SidedProxy(clientSide = "yuzunyannn.elementalsorcery.ClientProxy", serverSide = "yuzunyannn.elementalsorcery.CommonProxy")
@@ -60,7 +43,7 @@ public class ElementalSorcery {
 //			classLoader.loadClass("yuzunyannn.elementalsorcery.mods.LambdaGatherer");
 //			classLoader.registerTransformer("yuzunyannn.elementalsorcery.mods.ModCheckClassTransformer");
 
-			logger = event.getModLog();
+			ESAPI.logger = event.getModLog();
 			side = event.getSide();
 			data = new ESData(event);
 			proxy.preInit(event);
@@ -94,8 +77,31 @@ public class ElementalSorcery {
 
 	public static ModContainer getModeContainer() {
 		List<ModContainer> mods = Loader.instance().getModList();
-		for (ModContainer mod : mods) if (mod.getModId().equals(MODID)) return mod;
+		for (ModContainer mod : mods) if (mod.getModId().equals(ESAPI.MODID)) return mod;
 		return null;
+	}
+
+	public static void setAPIField(Object obj) {
+		try {
+			Class<ESAPI> cls = ESAPI.class;
+			Field modifiers = Field.class.getDeclaredField("modifiers");
+			modifiers.setAccessible(true);
+			Field fields[] = cls.getDeclaredFields();
+			for (Field field : fields) {
+				APIObject apiObj = field.getAnnotation(APIObject.class);
+				if (apiObj == null) continue;
+				Class<?> type = field.getType();
+				if (type.isAssignableFrom(obj.getClass())) {
+					modifiers.setInt(field, field.getModifiers() & ~Modifier.FINAL);
+					field.set(cls, obj);
+					modifiers.setAccessible(false);
+					return;
+				}
+			}
+			throw new RuntimeException("Cannot find field of " + obj.getClass());
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }

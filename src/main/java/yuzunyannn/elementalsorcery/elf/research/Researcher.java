@@ -1,7 +1,7 @@
 package yuzunyannn.elementalsorcery.elf.research;
 
+import java.util.Collection;
 import java.util.Random;
-import java.util.Set;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
@@ -18,12 +18,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
 import net.minecraftforge.common.IShearable;
-import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.crafting.IResearcher;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 
-public class Researcher implements INBTSerializable<NBTTagCompound> {
+public class Researcher implements IResearcher {
 
 	public static final Random rand = new Random();
 
@@ -98,19 +98,19 @@ public class Researcher implements INBTSerializable<NBTTagCompound> {
 		this.deserializeNBT(nbt);
 	}
 
-	public int get(String key) {
-		return map.getInteger(key);
+	@Override
+	public int get(String topic) {
+		return map.getInteger(topic);
 	}
 
-	public void shrink(String key, int point) {
-		map.setInteger(key, Math.max(this.get(key) - point, 0));
+	@Override
+	public void set(String topic, int count) {
+		if (count <= 0) map.removeTag(topic);
+		else map.setInteger(topic, count);
 	}
 
-	public void grow(String key, int point) {
-		map.setInteger(key, this.get(key) + point);
-	}
-
-	public Set<String> keySet() {
+	@Override
+	public Collection<String> getTopics() {
 		return map.getKeySet();
 	}
 

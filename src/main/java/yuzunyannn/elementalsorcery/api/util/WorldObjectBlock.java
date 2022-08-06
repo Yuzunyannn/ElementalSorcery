@@ -10,9 +10,9 @@ import net.minecraftforge.common.capabilities.Capability;
 
 public class WorldObjectBlock implements IWorldObject {
 
-	public final BlockPos pos;
-	public final World world;
-	public final TileEntity tile;
+	private final BlockPos pos;
+	private final World world;
+	private final TileEntity tile;
 
 	public WorldObjectBlock(World world, BlockPos pos) {
 		this.pos = pos;
@@ -38,17 +38,17 @@ public class WorldObjectBlock implements IWorldObject {
 
 	@Override
 	public Vec3d getPositionVector() {
-		return new Vec3d(pos).add(0.5, 0, 0.5);
+		return new Vec3d(getPosition()).add(0.5, 0, 0.5);
 	}
 
 	@Override
 	public BlockPos getPosition() {
-		return pos;
+		return tile != null ? tile.getPos() : pos;
 	}
 
 	@Override
 	public World getWorld() {
-		return world;
+		return tile != null ? tile.getWorld() : world;
 	}
 
 	@Override
@@ -68,7 +68,7 @@ public class WorldObjectBlock implements IWorldObject {
 		if (this == obj) return true;
 		if (obj instanceof WorldObjectBlock) {
 			WorldObjectBlock other = (WorldObjectBlock) obj;
-			return other.pos.equals(this.pos) && other.world == world;
+			return other.getPosition().equals(this.getPosition()) && other.getWorld() == this.getWorld();
 		}
 		return false;
 	}

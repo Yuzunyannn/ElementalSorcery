@@ -11,13 +11,13 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.container.ContainerSupremeTable;
 
 public class ElementCraftingCategory implements IRecipeCategory<ElementCraftingRecipeWrapper> {
 
-	public static final String UID = ElementalSorcery.MODID + "." + "crafting";
+	public static final String UID = ESAPI.MODID + "." + "crafting";
 	private final ElementCraftingDraw background = new ElementCraftingDraw();
 
 	@Override
@@ -32,7 +32,7 @@ public class ElementCraftingCategory implements IRecipeCategory<ElementCraftingR
 
 	@Override
 	public String getModName() {
-		return ElementalSorcery.MODID;
+		return ESAPI.MODID;
 	}
 
 	@Override

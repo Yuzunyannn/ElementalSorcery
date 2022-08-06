@@ -6,12 +6,12 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFloat;
-import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class MantraFloat extends MantraCommon {
 
@@ -28,7 +28,7 @@ public class MantraFloat extends MantraCommon {
 	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
 		super.potentAttack(world, grimoire, caster, target);
 
-		ElementStack stack = getElement(caster, ESInit.ELEMENTS.AIR, 1, 10);
+		ElementStack stack = getElement(caster, ESObjects.ELEMENTS.AIR, 1, 10);
 		if (stack.isEmpty()) return;
 		if (target instanceof EntityLivingBase) {
 			((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 80, 1));
@@ -48,7 +48,7 @@ public class MantraFloat extends MantraCommon {
 		else {
 			if (caster.iWantKnowCastTick() % 20 == 0 || !dataEffect.isMarkContinue()) {
 				dataEffect.markContinue(false);
-				ElementStack get = getElement(caster, ESInit.ELEMENTS.AIR, 1, 20);
+				ElementStack get = getElement(caster, ESObjects.ELEMENTS.AIR, 1, 20);
 				if (get.isEmpty()) return;
 			}
 		}

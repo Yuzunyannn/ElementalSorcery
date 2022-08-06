@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
@@ -74,7 +74,7 @@ public class ResearchRecipeManagement {
 
 	public static void loadCustomRecipes() {
 		Json.ergodicFile("recipes/research", (file, json) -> {
-			ResourceLocation id = new ResourceLocation(ElementalSorcery.MODID, Json.fileToId(file, "/research"));
+			ResourceLocation id = new ResourceLocation(ESAPI.MODID, Json.fileToId(file, "/research"));
 			return loadRecipe(id, json);
 		});
 	}

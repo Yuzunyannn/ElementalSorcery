@@ -1,7 +1,7 @@
 package yuzunyannn.elementalsorcery.util.element;
 
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 
 public class MagicExchangeInventory extends ElementInventory {
 

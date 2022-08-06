@@ -32,9 +32,10 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptBurnPower;
+import yuzunyannn.elementalsorcery.api.util.MatchHelper;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -44,7 +45,7 @@ import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
+import yuzunyannn.elementalsorcery.util.render.FrameHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 
 public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPower, ITickable {
@@ -54,8 +55,8 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 
 	public static void initVolumeMap() {
 		volumeMap.clear();
-		volumeMap.put(ESInit.ITEMS.KYANITE, 20);
-		volumeMap.put(ESInit.ITEMS.MAGIC_STONE, 16);
+		volumeMap.put(ESObjects.ITEMS.KYANITE, 20);
+		volumeMap.put(ESObjects.ITEMS.MAGIC_STONE, 16);
 		volumeMap.put(Item.getItemFromBlock(Blocks.GLASS), 4);
 
 		// 自定义
@@ -68,26 +69,26 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 		MeltCauldronRecipe astone = new MeltCauldronRecipe();
 		astone.setMagicStoneCount(1);
 		astone.add(new ItemStack(Blocks.STONE, 8), new ItemStack(Blocks.COBBLESTONE, 8));
-		astone.add(new ItemStack(ESInit.ITEMS.KYANITE, 4));
-		astone.addResult(2f, new ItemStack(ESInit.BLOCKS.ASTONE, 8, 0));
-		astone.addResult(2048f, new ItemStack(ESInit.BLOCKS.ASTONE, 8, 1));
+		astone.add(new ItemStack(ESObjects.ITEMS.KYANITE, 4));
+		astone.addResult(2f, new ItemStack(ESObjects.BLOCKS.ASTONE, 8, 0));
+		astone.addResult(2048f, new ItemStack(ESObjects.BLOCKS.ASTONE, 8, 1));
 		recipes.add(astone);
 
 		MeltCauldronRecipe magicCore = new MeltCauldronRecipe();
 		magicCore.setMagicStoneCount(4);
-		magicCore.add(new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 4));
+		magicCore.add(new ItemStack(ESObjects.ITEMS.ELF_CRYSTAL, 4));
 		magicCore.add(new ItemStack(Items.GOLD_INGOT, 4));
 		magicCore.add(new ItemStack(Items.ENDER_EYE));
-		magicCore.addResult(2f, new ItemStack(ESInit.ITEMS.MAGIC_CORE, 4));
-		magicCore.addResult(8f, new ItemStack(ESInit.ITEMS.MAGICAL_ENDER_EYE));
-		magicCore.addResult(16f, new ItemStack(ESInit.ITEMS.MAGIC_STONE, 4));
+		magicCore.addResult(2f, new ItemStack(ESObjects.ITEMS.MAGIC_CORE, 4));
+		magicCore.addResult(8f, new ItemStack(ESObjects.ITEMS.MAGICAL_ENDER_EYE));
+		magicCore.addResult(16f, new ItemStack(ESObjects.ITEMS.MAGIC_STONE, 4));
 		recipes.add(magicCore);
 
 		MeltCauldronRecipe blessingJadePiece = new MeltCauldronRecipe();
 		blessingJadePiece.setMagicStoneCount(4);
-		blessingJadePiece.add(new ItemStack(ESInit.ITEMS.ORDER_CRYSTAL, 32));
-		blessingJadePiece.add(new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 12));
-		blessingJadePiece.add(new ItemStack(ESInit.BLOCKS.STAR_SAND, 4));
+		blessingJadePiece.add(new ItemStack(ESObjects.ITEMS.ORDER_CRYSTAL, 32));
+		blessingJadePiece.add(new ItemStack(ESObjects.ITEMS.MAGIC_CRYSTAL, 12));
+		blessingJadePiece.add(new ItemStack(ESObjects.BLOCKS.STAR_SAND, 4));
 		blessingJadePiece.add(new ItemStack(Blocks.SEA_LANTERN, 5));
 		blessingJadePiece.add(new ItemStack(Blocks.PURPUR_BLOCK, 16));
 		blessingJadePiece.add(new ItemStack(Blocks.DIAMOND_BLOCK, 2));
@@ -97,29 +98,29 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 
 		MeltCauldronRecipe iceRockSpar = new MeltCauldronRecipe();
 		iceRockSpar.setMagicStoneCount(2);
-		iceRockSpar.add(new ItemStack(ESInit.ITEMS.ICE_ROCK_CHIP, 8));
-		iceRockSpar.add(new ItemStack(ESInit.ITEMS.INVERT_GEM, 1));
-		iceRockSpar.add(new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL, 16));
+		iceRockSpar.add(new ItemStack(ESObjects.ITEMS.ICE_ROCK_CHIP, 8));
+		iceRockSpar.add(new ItemStack(ESObjects.ITEMS.INVERT_GEM, 1));
+		iceRockSpar.add(new ItemStack(ESObjects.ITEMS.MAGIC_CRYSTAL, 16));
 		iceRockSpar.add(new ItemStack(Items.ENDER_PEARL, 16));
-		iceRockSpar.addResult(0.5f, new ItemStack(ESInit.ITEMS.ICE_ROCK_SPAR, 12));
-		iceRockSpar.addResult(3.0f, new ItemStack(ESInit.ITEMS.ICE_ROCK_SPAR, 6));
-		iceRockSpar.addResult(10.0f, new ItemStack(ESInit.ITEMS.INVERT_GEM, 1));
+		iceRockSpar.addResult(0.5f, new ItemStack(ESObjects.ITEMS.ICE_ROCK_SPAR, 12));
+		iceRockSpar.addResult(3.0f, new ItemStack(ESObjects.ITEMS.ICE_ROCK_SPAR, 6));
+		iceRockSpar.addResult(10.0f, new ItemStack(ESObjects.ITEMS.INVERT_GEM, 1));
 		recipes.add(iceRockSpar);
 
 		MeltCauldronRecipe voidContainer = new MeltCauldronRecipe();
 		voidContainer.setMagicStoneCount(9);
-		voidContainer.add(new ItemStack(ESInit.ITEMS.VOID_FRAGMENT, 9));
-		voidContainer.add(new ItemStack(ESInit.ITEMS.JUMP_GEM, 6));
+		voidContainer.add(new ItemStack(ESObjects.ITEMS.VOID_FRAGMENT, 9));
+		voidContainer.add(new ItemStack(ESObjects.ITEMS.JUMP_GEM, 6));
 		voidContainer.add(new ItemStack(Items.ENDER_PEARL, 12));
-		voidContainer.addResult(0.5f, new ItemStack(ESInit.ITEMS.VOID_CONTAINER, 1));
-		voidContainer.addResult(8.0f, new ItemStack(ESInit.ITEMS.VOID_FRAGMENT, 8));
+		voidContainer.addResult(0.5f, new ItemStack(ESObjects.ITEMS.VOID_CONTAINER, 1));
+		voidContainer.addResult(8.0f, new ItemStack(ESObjects.ITEMS.VOID_FRAGMENT, 8));
 		recipes.add(voidContainer);
 
 		MeltCauldronRecipe elfDiamond = new MeltCauldronRecipe();
 		elfDiamond.setMagicStoneCount(2);
-		elfDiamond.add(new ItemStack(ESInit.ITEMS.ELF_CRYSTAL, 64));
+		elfDiamond.add(new ItemStack(ESObjects.ITEMS.ELF_CRYSTAL, 64));
 		elfDiamond.add(new ItemStack(Items.DIAMOND, 64));
-		elfDiamond.addResult(2.0f, new ItemStack(ESInit.ITEMS.ELF_DIAMOND, 1));
+		elfDiamond.addResult(2.0f, new ItemStack(ESObjects.ITEMS.ELF_DIAMOND, 1));
 		elfDiamond.addResult(12.0f, new ItemStack(Blocks.DIAMOND_BLOCK, 4));
 		recipes.add(elfDiamond);
 	}
@@ -197,7 +198,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 				boolean hasMatch = false;
 				for (Ingredient ingredient : list) {
 					for (ItemStack src : ingredient.getMatchingStacks()) {
-						if (ItemHelper.isItemMatch(src, act)) {
+						if (MatchHelper.isItemMatch(src, act)) {
 							hasMatch = true;
 							break;
 						}
@@ -302,7 +303,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 		if (temperature < START_TEMPERATURE + 50) return;
 		if (item.isDead) return;
 		ItemStack stack = item.getItem();
-		if (magicCount <= 0 && stack.getItem() != ESInit.ITEMS.MAGIC_STONE) {
+		if (magicCount <= 0 && stack.getItem() != ESObjects.ITEMS.MAGIC_STONE) {
 			item.setFire(60);
 			return;
 		}
@@ -319,7 +320,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 	}
 
 	protected boolean eatOnce(ItemStack stack) {
-		if (stack.getItem() == ESInit.ITEMS.MAGIC_STONE) {
+		if (stack.getItem() == ESObjects.ITEMS.MAGIC_STONE) {
 			if (onEatItem(stack)) {
 				magicCount++;
 				return true;
@@ -384,7 +385,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 	public void drop() {
 		if (this.world.isRemote) return;
 		if (this.getVolume() <= 0) {
-			Block.spawnAsEntity(world, pos, new ItemStack(ESInit.BLOCKS.MELT_CAULDRON));
+			Block.spawnAsEntity(world, pos, new ItemStack(ESObjects.BLOCKS.MELT_CAULDRON));
 			return;
 		}
 		// 必须有结果和温度低于一定程度才可以掉落物品
@@ -502,7 +503,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 			return;
 		}
 
-		RenderHelper.renderOffscreenTexture128(v -> {
+		FrameHelper.renderOffscreenTexture128(v -> {
 			GlStateManager.color(1, 1, 1, 1);
 
 			Shaders.JCOLOR.bind();
@@ -533,7 +534,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 			RenderTileMeltCauldron.TEXTURE_FLUID_BLOCK.unbindAtive(3);
 			Shaders.BlockMeltCauldron.unbind();
 		});
-		RenderHelper.bindOffscreenTexture128();
+		FrameHelper.bindOffscreenTexture128();
 	}
 
 }

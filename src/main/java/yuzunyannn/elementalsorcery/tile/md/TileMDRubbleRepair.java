@@ -13,9 +13,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
 import yuzunyannn.elementalsorcery.util.helper.GameHelper;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
@@ -69,10 +69,10 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 
 	static public void init() {
 		addRecipe(Blocks.COBBLESTONE, Blocks.STONE, 1);
-		addRecipe(new ItemStack(ESInit.BLOCKS.ASTONE, 1, BlockAStone.EnumType.FRAGMENTED.ordinal()),
-				new ItemStack(ESInit.BLOCKS.ASTONE), 10);
+		addRecipe(new ItemStack(ESObjects.BLOCKS.ASTONE, 1, BlockAStone.EnumType.FRAGMENTED.ordinal()),
+				new ItemStack(ESObjects.BLOCKS.ASTONE), 10);
 		addRecipe(new ItemStack(Blocks.STONEBRICK, 1, 2), new ItemStack(Blocks.STONEBRICK), 1);
-		addRecipe(new ItemStack(ESInit.BLOCKS.CRUDE_QUARTZ), new ItemStack(Blocks.QUARTZ_BLOCK), 6);
+		addRecipe(new ItemStack(ESObjects.BLOCKS.CRUDE_QUARTZ), new ItemStack(Blocks.QUARTZ_BLOCK), 6);
 
 		// 自定义
 		Json.ergodicFile("recipes/stone_repairer", (file, json) -> {
@@ -92,13 +92,13 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 				addRecipe(input, output, magic);
 				return null;
 			};
-			addRepair.apply(ESInit.ITEMS.MAGIC_GOLD_AXE, 10);
-			addRepair.apply(ESInit.ITEMS.MAGIC_GOLD_PICKAXE, 10);
-			addRepair.apply(ESInit.ITEMS.MAGIC_GOLD_HOE, 10);
-			addRepair.apply(ESInit.ITEMS.MAGIC_GOLD_SPADE, 10);
-			addRepair.apply(ESInit.ITEMS.MAGIC_GOLD_SWORD, 10);
-			addRepair.apply(ESInit.ITEMS.SCAPEGOAT, 5);
-			addRepair.apply(ESInit.ITEMS.CUBE_DEMARCATOR, 20);
+			addRepair.apply(ESObjects.ITEMS.MAGIC_GOLD_AXE, 10);
+			addRepair.apply(ESObjects.ITEMS.MAGIC_GOLD_PICKAXE, 10);
+			addRepair.apply(ESObjects.ITEMS.MAGIC_GOLD_HOE, 10);
+			addRepair.apply(ESObjects.ITEMS.MAGIC_GOLD_SPADE, 10);
+			addRepair.apply(ESObjects.ITEMS.MAGIC_GOLD_SWORD, 10);
+			addRepair.apply(ESObjects.ITEMS.SCAPEGOAT, 5);
+			addRepair.apply(ESObjects.ITEMS.CUBE_DEMARCATOR, 20);
 		});
 	}
 

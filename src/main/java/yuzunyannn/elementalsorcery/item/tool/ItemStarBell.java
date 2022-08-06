@@ -27,9 +27,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
 import yuzunyannn.elementalsorcery.explore.ExploreSlimeChunk;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemStarBell extends Item {
@@ -109,8 +109,8 @@ public class ItemStarBell extends Item {
 						BlockPos at = pos.add(x, y, z);
 						IBlockState state = world.getBlockState(at);
 						Block block = state.getBlock();
-						boolean ok = block == ESInit.BLOCKS.SEAL_STONE || block == Blocks.DIAMOND_ORE
-								|| block == Blocks.EMERALD_ORE || block == ESInit.BLOCKS.SCARLET_CRYSTAL_ORE;
+						boolean ok = block == ESObjects.BLOCKS.SEAL_STONE || block == Blocks.DIAMOND_ORE
+								|| block == Blocks.EMERALD_ORE || block == ESObjects.BLOCKS.SCARLET_CRYSTAL_ORE;
 						if (ok) {
 							ITextComponent sound = new TextComponentTranslation("info.sound.long");
 							text.appendSibling(new TextComponentTranslation("info.star.bell", sound));

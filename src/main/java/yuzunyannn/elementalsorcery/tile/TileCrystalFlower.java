@@ -12,8 +12,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.BlockCrystalFlower;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -80,7 +80,7 @@ public class TileCrystalFlower extends TileEntityNetwork {
 
 	@SideOnly(Side.CLIENT)
 	public boolean needDraw() {
-		return this.world.getBlockState(pos) == ESInit.BLOCKS.CRYSTAL_FLOWER.getDefaultState()
+		return this.world.getBlockState(pos) == ESObjects.BLOCKS.CRYSTAL_FLOWER.getDefaultState()
 				.withProperty(BlockCrystalFlower.STAGE, 4);
 	}
 

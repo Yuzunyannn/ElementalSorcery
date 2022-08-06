@@ -24,20 +24,24 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.element.ElementTransitionReactor;
+import yuzunyannn.elementalsorcery.api.mantra.IFragmentMantraLauncher;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.tile.IMagicBeamHandler;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.WorldLocation;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.element.ElementTransition;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraElementWhirl;
 import yuzunyannn.elementalsorcery.grimoire.mantra.crack.MantraCrackOpen;
-import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
@@ -46,15 +50,11 @@ import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectReactorMantraSpel
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockCrystalBlock;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockSendRecv;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
-import yuzunyannn.elementalsorcery.util.element.ElementTransitionReactor;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.world.MapHelper;
-import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class TileElementReactor extends TileStaticMultiBlock implements ITickable, IMagicBeamHandler {
 
@@ -308,7 +308,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		double ratio = getInstableFragmentRatio();
 		double fragment = core.shrink(count);
 		ElementTransition et = core.getElement().getTransition();
-		if (et != null) fragment = ElementHelper.transitionFrom(core.getElement(), fragment, et.getLevel());
+		if (et != null) fragment = ElementTransition.transitionFrom(core.getElement(), fragment, et.getLevel());
 		this.instableFragment = this.instableFragment + fragment * ratio;
 	}
 
@@ -320,7 +320,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		this.instableFragment = this.instableFragment - count;
 		double fragment = count;
 		ElementTransition et = core.getElement().getTransition();
-		if (et != null) fragment = ElementHelper.transitionTo(core.getElement(), fragment, et.getLevel());
+		if (et != null) fragment = ElementTransition.transitionTo(core.getElement(), fragment, et.getLevel());
 		core.insert(core.getElement(), fragment);
 	}
 
@@ -696,7 +696,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		}
 
 		int power = MathHelper.ceil(Math.pow(POWER_LINE_COEFFICIENT, this.powerLevelLine + 1));
-		double count = ElementHelper.fromFragmentByPower(ESInit.ELEMENTS.MAGIC, instableFragment, power);
+		double count = ElementTransition.fromFragmentByPower(ESObjects.ELEMENTS.MAGIC, instableFragment, power);
 
 		MantraElementWhirl.booom(world, at, ElementStack.magic(MathHelper.ceil(count), power), null);
 
@@ -837,7 +837,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 			ElementStack getStack = eInv.extractElement(i, extract, false);
 			if (getStack.isEmpty()) continue;
 			changeFlag = 1;
-			core.insert(getStack.getElement(), ElementHelper.toFragment(getStack));
+			core.insert(getStack.getElement(), ElementTransition.toFragment(getStack));
 			if (core.lastElementDiff) {
 				double f = Math.abs(core.lastDetaAngle / 180) + Math.abs(core.lastDetaStep);
 				this.instable(ReactorInstableSection.DIFF_ELEMENT, f);

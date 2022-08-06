@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
@@ -60,7 +60,7 @@ public class ItemMagicalCrystal extends ItemCrystal {
 		lapis.getItem().shrink(1);
 		if (lava != null) magicalCrystal.world.setBlockToAir(lava);
 		Block.spawnAsEntity(magicalCrystal.world, magicalCrystal.getPosition(),
-				new ItemStack(ESInit.ITEMS.AZURE_CRYSTAL));
+				new ItemStack(ESObjects.ITEMS.AZURE_CRYSTAL));
 		return true;
 	}
 }

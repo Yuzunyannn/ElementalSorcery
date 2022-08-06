@@ -8,15 +8,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.mantra.IFragmentMantraLauncher;
+import yuzunyannn.elementalsorcery.api.mantra.IFragmentMantraLauncher.MLPair;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher;
-import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher.MLPair;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectFragmentMove;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLaser;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementReactor;
 import yuzunyannn.elementalsorcery.util.helper.Color;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class EffectReactorMantraSpell extends EffectLaser {
@@ -106,7 +106,7 @@ public class EffectReactorMantraSpell extends EffectLaser {
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(90, 1, 0, 0);
 
-		float progress = RenderHelper.getPartialTicks(this.progress, this.prevProgress, partialTicks);
+		float progress = RenderFriend.getPartialTicks(this.progress, this.prevProgress, partialTicks);
 		float rotation = EventClient.getGlobalRotateInRender(partialTicks);
 
 		boolean fb = false;
@@ -143,7 +143,7 @@ public class EffectReactorMantraSpell extends EffectLaser {
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(90, 1, 0, 0);
 
-		float progress = RenderHelper.getPartialTicks(this.progress, this.prevProgress, partialTicks);
+		float progress = RenderFriend.getPartialTicks(this.progress, this.prevProgress, partialTicks);
 
 		float aplha = Math.min(1, this.lifeTime / 20.0f);
 
@@ -156,7 +156,7 @@ public class EffectReactorMantraSpell extends EffectLaser {
 		float endPorgress = 0;
 
 		if (upEndProgress >= 0) {
-			endPorgress = RenderHelper.getPartialTicks(this.upEndProgress, this.prevUpEndProgress, partialTicks);
+			endPorgress = RenderFriend.getPartialTicks(this.upEndProgress, this.prevUpEndProgress, partialTicks);
 			defaultYMove = (float) (endPorgress * len);
 			progress = Math.max(progress, endPorgress);
 		}

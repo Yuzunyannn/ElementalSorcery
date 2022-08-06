@@ -6,14 +6,14 @@ import java.util.List;
 import mezz.jei.api.gui.IDrawable;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 
 public class MDDraw implements IDrawable {
 
-	public static final ResourceLocation TEXTURE1 = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE1 = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/container/md_jei1.png");
-	public static final ResourceLocation TEXTURE2 = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE2 = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/container/md_jei2.png");
 
 	public MDDraw() {
@@ -34,7 +34,7 @@ public class MDDraw implements IDrawable {
 		if (mdRW == null) return;
 		mdRW.drawBackground(minecraft, this, xOffset, yOffset);
 		minecraft.getTextureManager().bindTexture(TEXTURE2);
-		RenderHelper.drawTexturedModalRect(xOffset, yOffset + 70, 0, 70, 175, 29, 256, 256);
+		RenderFriend.drawTexturedModalRect(xOffset, yOffset + 70, 0, 70, 175, 29, 256, 256);
 	}
 
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
@@ -48,7 +48,7 @@ public class MDDraw implements IDrawable {
 	}
 
 	public void drawSolt(int x, int y) {
-		RenderHelper.drawTexturedModalRect(x, y, 7, 83, 18, 18, 256, 256);
+		RenderFriend.drawTexturedModalRect(x, y, 7, 83, 18, 18, 256, 256);
 	}
 
 }

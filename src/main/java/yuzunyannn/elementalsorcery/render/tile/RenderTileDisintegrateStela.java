@@ -8,12 +8,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelDisintegrateStela;
 import yuzunyannn.elementalsorcery.tile.altar.TileDisintegrateStela;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileDisintegrateStela extends TileEntitySpecialRenderer<TileDisintegrateStela>
@@ -30,16 +30,16 @@ public class RenderTileDisintegrateStela extends TileEntitySpecialRenderer<TileD
 	@Override
 	public void render(TileDisintegrateStela tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
-		RenderHelper.bindDestoryTexture(TEXTUREL, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y, z + 0.5, -0.0625, alpha);
+		RenderFriend.bindDestoryTexture(TEXTUREL, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y, z + 0.5, -0.0625, alpha);
 		GlStateManager.disableCull();
 
-		float wakeRate = RenderHelper.getPartialTicks(tile.wakeRate, tile.prevWakeRate, partialTicks);
+		float wakeRate = RenderFriend.getPartialTicks(tile.wakeRate, tile.prevWakeRate, partialTicks);
 		float shakeRotate = 0;
-		float overLoadRate = RenderHelper.getPartialTicks(tile.getOverloadRate(), tile.prevOverload, partialTicks);
+		float overLoadRate = RenderFriend.getPartialTicks(tile.getOverloadRate(), tile.prevOverload, partialTicks);
 		if (overLoadRate > 1) shakeRotate = MathHelper.clamp(overLoadRate, 1, 2) - 1;
 
-		float roate = RenderHelper.getPartialTicks(tile.roate, tile.prevRoate, partialTicks);
+		float roate = RenderFriend.getPartialTicks(tile.roate, tile.prevRoate, partialTicks);
 		MODEL.render(null, shakeRotate, roate, EventClient.tickRender + partialTicks, wakeRate, 0, 1.0f);
 		if (destroyStage < 0 && overLoadRate > 0.00001f) {
 			GlStateManager.blendFunc(SourceFactor.SRC_ALPHA, DestFactor.ONE_MINUS_SRC_ALPHA);
@@ -52,8 +52,8 @@ public class RenderTileDisintegrateStela extends TileEntitySpecialRenderer<TileD
 			GlStateManager.disableBlend();
 		}
 		GlStateManager.enableCull();
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
 		if (overLoadRate > 0.001 && this.rendererDispatcher.cameraHitResult != null
 				&& tile.getPos().equals(this.rendererDispatcher.cameraHitResult.getBlockPos())) {
@@ -67,7 +67,7 @@ public class RenderTileDisintegrateStela extends TileEntitySpecialRenderer<TileD
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 		GlStateManager.disableCull();
-		RenderHelper.render(stack, TEXTUREL, MODEL, true, -0.038, -0.0175, 0, 0);
+		RenderFriend.renderSpecialItem(stack, TEXTUREL, MODEL, true, -0.038, -0.0175, 0, 0);
 		GlStateManager.enableCull();
 	}
 

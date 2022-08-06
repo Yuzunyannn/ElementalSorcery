@@ -12,9 +12,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 
 public class MantraLightningArea extends MantraSquareAreaAdv {
 
@@ -24,8 +24,8 @@ public class MantraLightningArea extends MantraSquareAreaAdv {
 		this.setIcon("lightning");
 		this.setRarity(50);
 		this.setOccupation(3);
-		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.AIR, 2, 50), 80, 20);
-		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.FIRE, 2, 40), -1, 20);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.AIR, 2, 50), 80, 20);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.FIRE, 2, 40), -1, 20);
 		this.setPotentPowerCollect(0.1f, 2);
 		this.initAndAddDefaultMantraLauncher(0.002);
 	}
@@ -35,7 +35,7 @@ public class MantraLightningArea extends MantraSquareAreaAdv {
 		super.potentAttack(world, grimoire, caster, target);
 		if (world.rand.nextInt(3) != 0) return;
 
-		ElementStack stack = getElement(caster, ESInit.ELEMENTS.AIR, 4, 40);
+		ElementStack stack = getElement(caster, ESObjects.ELEMENTS.AIR, 4, 40);
 		if (stack.isEmpty()) return;
 
 		if (world.isRemote) return;
@@ -45,7 +45,7 @@ public class MantraLightningArea extends MantraSquareAreaAdv {
 
 	@Override
 	public void init(World world, SquareData data, ICaster caster, BlockPos pos) {
-		ElementStack air = data.get(ESInit.ELEMENTS.AIR);
+		ElementStack air = data.get(ESObjects.ELEMENTS.AIR);
 		float rate = 0.6f * caster.iWantBePotent(0.75f, false) + 1;
 		data.setSize(Math.min(air.getPower() / 80, 12) * rate + 6);
 	}
@@ -56,12 +56,12 @@ public class MantraLightningArea extends MantraSquareAreaAdv {
 		float pp = data.get(POTENT_POWER);
 
 		int tick = caster.iWantKnowCastTick();
-		ElementStack air = data.get(ESInit.ELEMENTS.AIR);
+		ElementStack air = data.get(ESObjects.ELEMENTS.AIR);
 		if (air.isEmpty()) return false;
 		if (tick % 20 != 0) return true;
 		Random rand = world.rand;
 		air.shrink(8);
-		ElementStack fire = data.get(ESInit.ELEMENTS.FIRE);
+		ElementStack fire = data.get(ESObjects.ELEMENTS.FIRE);
 		int maxCount = MathHelper.ceil(fire.getCount() / 16 * (1 + pp));
 		final float size = data.getSize() / 2;
 		AxisAlignedBB aabb = new AxisAlignedBB(originPos.getX() - size, originPos.getY(), originPos.getZ() - size,

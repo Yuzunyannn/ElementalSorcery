@@ -10,7 +10,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 
 public class ElfMerchantTypeArmor extends ElfMerchantTypeEquipment {
 

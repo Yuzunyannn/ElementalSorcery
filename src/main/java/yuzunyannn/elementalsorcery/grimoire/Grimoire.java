@@ -18,10 +18,10 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.crafting.IItemCapbiltitySyn;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 
 /** 该能力仅仅是跟随物品，作为上下文数据使用 */
 public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagCompound> {

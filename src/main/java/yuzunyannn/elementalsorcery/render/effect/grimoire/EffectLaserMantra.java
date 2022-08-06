@@ -5,13 +5,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectFragmentMove;
 import yuzunyannn.elementalsorcery.util.MathSupporter;
 import yuzunyannn.elementalsorcery.util.helper.Color;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class EffectLaserMantra extends EffectLaser {
@@ -66,10 +66,10 @@ public class EffectLaserMantra extends EffectLaser {
 		GlStateManager.rotate(r, 0, 0, 1);
 
 		EffectMagicEmit.TEXTURE.bind();
-		RenderHelper.drawTexturedRectInCenter(0, 0, 1, 1);
+		RenderFriend.drawTexturedRectInCenter(0, 0, 1, 1);
 		TextureBinder.bindTexture(RenderObjects.MAGIC_CIRCLE_SUMMON);
 		GlStateManager.rotate(-r * 2, 0, 0, 1);
-		RenderHelper.drawTexturedRectInCenter(0, 0, 0.4f, 0.4f);
+		RenderFriend.drawTexturedRectInCenter(0, 0, 0.4f, 0.4f);
 
 		scale = 1 / scale;
 		GlStateManager.scale(scale, scale, 1);

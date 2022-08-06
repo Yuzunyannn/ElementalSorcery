@@ -11,9 +11,9 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 
 public class EFloorPostOffice extends ElfEdificeFloor {
@@ -81,7 +81,7 @@ public class EFloorPostOffice extends ElfEdificeFloor {
 		}
 		// 后面一排树叶
 		{
-			IBlockState LEAF = ESInit.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
+			IBlockState LEAF = ESObjects.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
 			IBlockState GLOWSTONE = Blocks.GLOWSTONE.getDefaultState();
 			int size = treeSize;
 			for (int y = 0; y < 1; y++) {

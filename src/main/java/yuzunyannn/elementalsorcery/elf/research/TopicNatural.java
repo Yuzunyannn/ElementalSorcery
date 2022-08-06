@@ -4,8 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class TopicNatural extends Topic {
@@ -32,11 +32,11 @@ public class TopicNatural extends Topic {
 		
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(tick + partialTicks, 0, 0, 1);
-		RenderHelper.drawTexturedRectInCenter(-30, 0, 12, 12, 58, 3, 4, 4, 128, 128);
-		RenderHelper.drawTexturedRectInCenter(30, 0, 12, 12, 62, 3, 4, 4, 128, 128);
+		RenderFriend.drawTexturedRectInCenter(-30, 0, 12, 12, 58, 3, 4, 4, 128, 128);
+		RenderFriend.drawTexturedRectInCenter(30, 0, 12, 12, 62, 3, 4, 4, 128, 128);
 		GlStateManager.popMatrix();
 
-		RenderHelper.drawTexturedRectInCenter(0, 0, 60, 39, 60, 9, 20, 13, 128, 128);
+		RenderFriend.drawTexturedRectInCenter(0, 0, 60, 39, 60, 9, 20, 13, 128, 128);
 		
 		GlStateManager.popMatrix();
 	}

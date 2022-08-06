@@ -12,8 +12,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.summon.Summon;
 import yuzunyannn.elementalsorcery.summon.SummonDejectedSkeleton;
@@ -83,7 +83,7 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 						BlockPos.class);
 				return constructor.newInstance(world, pos);
 			} catch (Exception e) {
-				ElementalSorcery.logger.warn("创建召唤任务异常", e);
+				ESAPI.logger.warn("创建召唤任务异常", e);
 				return new Summon(world, pos);
 			}
 		};
@@ -141,13 +141,13 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 				ItemKeepsake.create(ItemKeepsake.EnumType.DREAD_FRAGMENT, 1));
 		reg("dejected_skeleton", SummonDejectedSkeleton.class, 125, 0x757575,
 				ItemKeepsake.create(ItemKeepsake.EnumType.UNDELIVERED_LETTER, 1));
-		reg("maze", SummonMaze.class, 200, 0x3f9e15, new ItemStack(ESInit.BLOCKS.ELF_LEAF)).setBuildHeight(3);
+		reg("maze", SummonMaze.class, 200, 0x3f9e15, new ItemStack(ESObjects.BLOCKS.ELF_LEAF)).setBuildHeight(3);
 		reg("arrogant_sheep", new SummonRecipeArrogantSheep());
 
 	}
 
 	private static SummonRecipe reg(String name, SummonRecipe m) {
-		register(m.setRegistryName(new ResourceLocation(ElementalSorcery.MODID, name)));
+		register(m.setRegistryName(new ResourceLocation(ESAPI.MODID, name)));
 		return m;
 	}
 

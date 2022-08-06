@@ -12,14 +12,15 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformT
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelGlassCup;
+import yuzunyannn.elementalsorcery.util.render.FrameHelper;
 import yuzunyannn.elementalsorcery.util.render.Framebuffer;
 import yuzunyannn.elementalsorcery.util.render.MCFramebufferModify;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class RenderItemElementCrack implements IRenderItem {
 
@@ -88,7 +89,7 @@ public class RenderItemElementCrack implements IRenderItem {
 		if (isInWorld) {
 			RenderItemElementCrack.startTexGen(1);
 			GlStateManager.scale(4, 4, 4);
-			RenderHelper.disableLightmap(true);
+			RenderFriend.disableLightmap(true);
 			GlStateManager.disableLighting();
 		}
 
@@ -133,7 +134,7 @@ public class RenderItemElementCrack implements IRenderItem {
 		tessellator.draw();
 
 		if (isInWorld) {
-			RenderHelper.disableLightmap(false);
+			RenderFriend.disableLightmap(false);
 			GlStateManager.enableLighting();
 			RenderItemElementCrack.endTexGen();
 		}
@@ -179,15 +180,15 @@ public class RenderItemElementCrack implements IRenderItem {
 	}
 
 	public static void updateRenderTexture(float partialTicks) {
-		RenderHelper.renderOffscreenTexture128(v -> {
+		FrameHelper.renderOffscreenTexture128(v -> {
 			GlStateManager.clearColor(0, 0, 0, 1);
 			GlStateManager.clear(GL11.GL_COLOR_BUFFER_BIT);
 			GlStateManager.color(1, 1, 1, 1);
 			GlStateManager.enableNormalize();
 
 			float tick = EventClient.tickRender + partialTicks;
-			double x = RenderHelper.getPartialTicks(move.x, prevMove.x, partialTicks);
-			double y = RenderHelper.getPartialTicks(move.y, prevMove.y, partialTicks);
+			double x = RenderFriend.getPartialTicks(move.x, prevMove.x, partialTicks);
+			double y = RenderFriend.getPartialTicks(move.y, prevMove.y, partialTicks);
 			Shaders.ElementSky.bind();
 
 			ELEMENT_SKY_TEXTURE.bind();

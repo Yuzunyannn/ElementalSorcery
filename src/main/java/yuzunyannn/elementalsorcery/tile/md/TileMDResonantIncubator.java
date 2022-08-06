@@ -21,6 +21,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.ESData;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -28,7 +29,6 @@ import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.ITickTask;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
 import yuzunyannn.elementalsorcery.item.crystal.ItemScarletCrystal;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -105,7 +105,7 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 		this.autoTransfer();
 		if (world.isRemote) return;
 		ItemStack liftDirt = inventory.getStackInSlot(0);
-		if (liftDirt.isEmpty() || Block.getBlockFromItem(liftDirt.getItem()) != ESInit.BLOCKS.LIFE_DIRT
+		if (liftDirt.isEmpty() || Block.getBlockFromItem(liftDirt.getItem()) != ESObjects.BLOCKS.LIFE_DIRT
 				|| TileLifeDirt.hasPlant(liftDirt)) {
 			this.reset();
 			return;
@@ -188,7 +188,7 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 	public void resonance(float fre) {
 		if (world.isRemote) return;
 		ItemStack liftDirt = inventory.getStackInSlot(0);
-		if (liftDirt.isEmpty() || Block.getBlockFromItem(liftDirt.getItem()) != ESInit.BLOCKS.LIFE_DIRT
+		if (liftDirt.isEmpty() || Block.getBlockFromItem(liftDirt.getItem()) != ESObjects.BLOCKS.LIFE_DIRT
 				|| TileLifeDirt.hasPlant(liftDirt)) {
 			this.reset();
 			return;
@@ -205,7 +205,7 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 		float minFreDiff = Float.MAX_VALUE;
 		ItemStack minCry = ItemStack.EMPTY;
 		for (ItemCrystal crystal : allCrystal) {
-			if (crystal == ESInit.ITEMS.SCARLET_CRYSTAL) {
+			if (crystal == ESObjects.ITEMS.SCARLET_CRYSTAL) {
 				float fre = 50;
 				ElfTime time = new ElfTime(world);
 				int hour = time.getHour();
@@ -247,7 +247,7 @@ public class TileMDResonantIncubator extends TileMDBase implements ITickable, IG
 
 	@Override
 	public boolean canSetStack(ItemStack stack) {
-		if (Block.getBlockFromItem(stack.getItem()) != ESInit.BLOCKS.LIFE_DIRT) return false;
+		if (Block.getBlockFromItem(stack.getItem()) != ESObjects.BLOCKS.LIFE_DIRT) return false;
 		return !TileLifeDirt.hasPlant(stack);
 	}
 

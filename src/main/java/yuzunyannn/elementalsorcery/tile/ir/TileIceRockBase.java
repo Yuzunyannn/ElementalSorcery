@@ -3,13 +3,13 @@ package yuzunyannn.elementalsorcery.tile.ir;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.common.capabilities.Capability;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryPromote;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryAdapter;
 
 public abstract class TileIceRockBase extends TileEntityNetwork implements IElementInventoryPromote {
@@ -66,7 +66,7 @@ public abstract class TileIceRockBase extends TileEntityNetwork implements IElem
 		public ElementStack getStackInSlot(int slot) {
 			int power = getPowerFromSlot(slot);
 			if (power <= 0) return ElementStack.EMPTY;
-			int count = MathHelper.floor(ElementHelper.fromFragmentByPower(ESInit.ELEMENTS.MAGIC, getMagicFragment(), power));
+			int count = MathHelper.floor(ElementTransition.fromFragmentByPower(ESObjects.ELEMENTS.MAGIC, getMagicFragment(), power));
 			if (count <= 0) return ElementStack.EMPTY;
 			return ElementStack.magic(count, power);
 		};
@@ -74,7 +74,7 @@ public abstract class TileIceRockBase extends TileEntityNetwork implements IElem
 		@Override
 		public ElementStack setStackInSlot(int slot, ElementStack estack) {
 			ElementStack origin = getStackInSlot(slot);
-			setMagicFragment(ElementHelper.toFragment(estack.toMagic(world)));
+			setMagicFragment(ElementTransition.toFragment(estack.toMagic(world)));
 			return origin;
 		};
 
@@ -82,7 +82,7 @@ public abstract class TileIceRockBase extends TileEntityNetwork implements IElem
 		public boolean insertElement(int slot, ElementStack estack, boolean simulate) {
 			if (estack.isEmpty()) return true;
 			if (!estack.isMagic()) estack = estack.toMagic(world);
-			double fragment = ElementHelper.toFragment(estack);
+			double fragment = ElementTransition.toFragment(estack);
 			double rest = insertMagicFragment(fragment, simulate);
 			if (rest == fragment) return false;
 			if (!simulate) onFromOrToFragmentChange(rest);
@@ -93,11 +93,11 @@ public abstract class TileIceRockBase extends TileEntityNetwork implements IElem
 		public ElementStack extractElement(int slot, ElementStack estack, boolean simulate) {
 			if (!estack.isMagic()) return ElementStack.EMPTY;
 			int power = estack.getPower();
-			double fragment = extractMagicFragment(ElementHelper.toFragment(estack), simulate);
-			double dcount = ElementHelper.fromFragmentByPower(ESInit.ELEMENTS.MAGIC, fragment, power);
+			double fragment = extractMagicFragment(ElementTransition.toFragment(estack), simulate);
+			double dcount = ElementTransition.fromFragmentByPower(ESObjects.ELEMENTS.MAGIC, fragment, power);
 			int count = MathHelper.floor(dcount);
 			if (!simulate)
-				onFromOrToFragmentChange(ElementHelper.toFragment(ESInit.ELEMENTS.MAGIC, dcount - count, power));
+				onFromOrToFragmentChange(ElementTransition.toFragment(ESObjects.ELEMENTS.MAGIC, dcount - count, power));
 			return ElementStack.magic(count, power);
 		};
 

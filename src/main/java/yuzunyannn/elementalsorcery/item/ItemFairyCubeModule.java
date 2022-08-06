@@ -15,12 +15,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
 import yuzunyannn.elementalsorcery.api.item.IPlatformTickable;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
-import yuzunyannn.elementalsorcery.entity.fcube.FairyCubeModule;
 import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeModuleClient;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
@@ -55,7 +55,7 @@ public class ItemFairyCubeModule extends Item implements IPlatformTickable {
 	}
 
 	public static ItemStack getFairyCubeModule(ResourceLocation id) {
-		ItemStack stack = new ItemStack(ESInit.ITEMS.FAIRY_CUBE_MODULE);
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.FAIRY_CUBE_MODULE);
 		setFairyCubeModule(stack, id);
 		return stack;
 	}

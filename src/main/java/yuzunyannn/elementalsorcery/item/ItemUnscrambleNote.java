@@ -12,7 +12,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class ItemUnscrambleNote extends Item {
 
@@ -47,7 +47,7 @@ public class ItemUnscrambleNote extends Item {
 
 	static public void growNoteEnergy(ItemStack researchNote, EntityPlayer player, int count, boolean force) {
 		if (researchNote.isEmpty()) return;
-		if (!force && researchNote.getItem() != ESInit.ITEMS.UNSCRAMBLE_NOTE) return;
+		if (!force && researchNote.getItem() != ESObjects.ITEMS.UNSCRAMBLE_NOTE) return;
 		NBTTagCompound nbt = researchNote.getTagCompound();
 		if (nbt == null) researchNote.setTagCompound(nbt = new NBTTagCompound());
 		// 判断是否到容量了

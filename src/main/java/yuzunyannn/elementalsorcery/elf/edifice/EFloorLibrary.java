@@ -21,8 +21,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
@@ -219,17 +219,17 @@ public class EFloorLibrary extends ElfEdificeFloor {
 		wr.add(new ItemStack(Items.KNOWLEDGE_BOOK), 500);
 		wr.add(new ItemStack(Items.WRITABLE_BOOK), 50);
 		wr.add(new ItemStack(Items.ENCHANTED_BOOK), 200);
-		wr.add(new ItemStack(ESInit.ITEMS.MANUAL), 50);
-		wr.add(new ItemStack(ESInit.ITEMS.RITE_MANUAL), 100);
-		wr.add(new ItemStack(ESInit.ITEMS.UNSCRAMBLE_NOTE), 200);
-		wr.add(new ItemStack(ESInit.ITEMS.SPELLBOOK_ENCHANTMENT), 20);
-		wr.add(new ItemStack(ESInit.ITEMS.SPELLBOOK_ARCHITECTURE), 10);
-		wr.add(new ItemStack(ESInit.ITEMS.SPELLBOOK_LAUNCH), 10);
-		wr.add(new ItemStack(ESInit.ITEMS.SPELLBOOK_ELEMENT), 10);
+		wr.add(new ItemStack(ESObjects.ITEMS.MANUAL), 50);
+		wr.add(new ItemStack(ESObjects.ITEMS.RITE_MANUAL), 100);
+		wr.add(new ItemStack(ESObjects.ITEMS.UNSCRAMBLE_NOTE), 200);
+		wr.add(new ItemStack(ESObjects.ITEMS.SPELLBOOK_ENCHANTMENT), 20);
+		wr.add(new ItemStack(ESObjects.ITEMS.SPELLBOOK_ARCHITECTURE), 10);
+		wr.add(new ItemStack(ESObjects.ITEMS.SPELLBOOK_LAUNCH), 10);
+		wr.add(new ItemStack(ESObjects.ITEMS.SPELLBOOK_ELEMENT), 10);
 		{
 			// 没啥用的彩蛋
 			int y = pos.getY();
-			if (y > 130 - high / 2 && y <= 130 + high / 2) wr.add(new ItemStack(ESInit.ITEMS.GRIMOIRE), 1);
+			if (y > 130 - high / 2 && y <= 130 + high / 2) wr.add(new ItemStack(ESObjects.ITEMS.GRIMOIRE), 1);
 		}
 		for (int y = 1; y < high; y++) for (EnumFacing face : EnumFacing.HORIZONTALS) {
 			BlockPos at = pos.offset(face, n).offset(face.rotateY(), n).up(y);

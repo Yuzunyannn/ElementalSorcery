@@ -16,11 +16,11 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.elf.quest.QuestTriggerDataSendParcel;
 import yuzunyannn.elementalsorcery.elf.quest.QuestTriggers;
-import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 /** 精灵邮局 */
@@ -81,7 +81,7 @@ public class ElfPostOffice extends WorldSavedData {
 	}
 
 	public static boolean isAddressPlate(ItemStack stack) {
-		if (stack.getItem() != ESInit.ITEMS.ADDRESS_PLATE) return false;
+		if (stack.getItem() != ESObjects.ITEMS.ADDRESS_PLATE) return false;
 		return !ElfPostOffice.getAddress(stack).isEmpty();
 	}
 
@@ -98,7 +98,7 @@ public class ElfPostOffice extends WorldSavedData {
 	}
 
 	public static boolean isVIPAddressPlate(ItemStack addressPlate) {
-		return addressPlate.getItem() == ESInit.ITEMS.ADDRESS_PLATE && addressPlate.getMetadata() == 1;
+		return addressPlate.getItem() == ESObjects.ITEMS.ADDRESS_PLATE && addressPlate.getMetadata() == 1;
 	}
 
 	/** 快递包裹信息 */
@@ -152,7 +152,7 @@ public class ElfPostOffice extends WorldSavedData {
 		if (list == null || list.isEmpty()) return ItemStack.EMPTY;
 		NBTTagCompound nbt = list.getFirst();
 		list.removeFirst();
-		ItemStack parcel = new ItemStack(ESInit.ITEMS.PARCEL);
+		ItemStack parcel = new ItemStack(ESObjects.ITEMS.PARCEL);
 		parcel.setTagCompound(nbt);
 		nbt.removeTag("checkTime");
 		this.markDirty();
@@ -183,7 +183,7 @@ public class ElfPostOffice extends WorldSavedData {
 
 	/** 创建一个新的地址牌 */
 	public ItemStack createAddressPlate(EntityLivingBase owner, String address) {
-		ItemStack stack = new ItemStack(ESInit.ITEMS.ADDRESS_PLATE);
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.ADDRESS_PLATE);
 		this.setAddressPlateNBT(stack, owner, address);
 		return stack;
 	}
@@ -192,7 +192,7 @@ public class ElfPostOffice extends WorldSavedData {
 	public ItemStack changeAddressPlate(EntityLivingBase owner, ItemStack addressPlate) {
 		String address = ElfPostOffice.getAddress(addressPlate);
 		if (address.isEmpty()) return ItemStack.EMPTY;
-		ItemStack stack = new ItemStack(ESInit.ITEMS.ADDRESS_PLATE, 1, 1);
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.ADDRESS_PLATE, 1, 1);
 		this.setAddressPlateNBT(stack, owner, address);
 		return stack;
 	}

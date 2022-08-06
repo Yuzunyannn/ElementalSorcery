@@ -17,9 +17,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.item.IPlatformTickable;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
@@ -44,11 +44,11 @@ public class ItemCalamityGem extends Item implements IPlatformTickable {
 	}
 
 	public void calamityEntity(EntityLivingBase living, int tick) {
-		PotionEffect effect = living.getActivePotionEffect(ESInit.POTIONS.CALAMITY);
+		PotionEffect effect = living.getActivePotionEffect(ESObjects.POTIONS.CALAMITY);
 		int amplifier = Math.min(effect == null ? 0 : (effect.getAmplifier() + 1), 3);
 		int lTime = (int) ((tick + 20 + (effect == null ? 0 : effect.getDuration())) * (1 + amplifier * 0.1f));
 		int time = (int) Math.min(Short.MAX_VALUE, lTime);
-		living.addPotionEffect(new PotionEffect(ESInit.POTIONS.CALAMITY, time, amplifier));
+		living.addPotionEffect(new PotionEffect(ESObjects.POTIONS.CALAMITY, time, amplifier));
 	}
 
 	@Override

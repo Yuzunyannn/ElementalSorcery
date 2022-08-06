@@ -6,7 +6,7 @@ import net.minecraft.entity.EnumCreatureAttribute;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.DimensionType;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
@@ -45,14 +45,14 @@ public class EnchantmentGatherSouls extends EnchantmentES {
 			if (EntityHelper.isEnder(living)) {
 				double a = EntityHelper.getChanceFromUUID(living.getUniqueID());
 				if (a < 0.15 + 0.02 * level) {
-					living.dropItem(ESInit.ITEMS.VOID_FRAGMENT, 1);
+					living.dropItem(ESObjects.ITEMS.VOID_FRAGMENT, 1);
 					return;
 				}
 			}
 		}
 		// 灵魂
 		int size = 1 + living.world.rand.nextInt(level);
-		living.dropItem(ESInit.ITEMS.SOUL_FRAGMENT, Math.min(8, size));
+		living.dropItem(ESObjects.ITEMS.SOUL_FRAGMENT, Math.min(8, size));
 		if (living.getRNG().nextFloat() <= (0.004f * level))
 			living.entityDropItem(ItemBlessingJadePiece.createPiece(1), living.getEyeHeight());
 	}

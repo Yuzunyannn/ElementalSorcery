@@ -18,12 +18,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.ESFakePlayer;
@@ -52,7 +52,7 @@ public class MantraArrow extends MantraCommon {
 		int preTick = Math.max(mData.get(POWERI), 1);
 
 		if ((tick - 2) % preTick == 0) {
-			ElementStack need = new ElementStack(ESInit.ELEMENTS.AIR, 1, 3);
+			ElementStack need = new ElementStack(ESObjects.ELEMENTS.AIR, 1, 3);
 			ElementStack get = caster.iWantSomeElement(need, true);
 			mData.markContinue(!get.isEmpty());
 		}
@@ -113,8 +113,8 @@ public class MantraArrow extends MantraCommon {
 		}
 
 		if (arrow.isEmpty()) {
-			ElementStack earth = new ElementStack(ESInit.ELEMENTS.EARTH, 1, 4);
-			ElementStack wood = new ElementStack(ESInit.ELEMENTS.WOOD, 1, 3);
+			ElementStack earth = new ElementStack(ESObjects.ELEMENTS.EARTH, 1, 4);
+			ElementStack wood = new ElementStack(ESObjects.ELEMENTS.WOOD, 1, 3);
 			if (caster.iWantSomeElement(earth, false).isEmpty()) return;
 			if (caster.iWantSomeElement(wood, false).isEmpty()) return;
 			caster.iWantSomeElement(earth, true);
@@ -125,14 +125,14 @@ public class MantraArrow extends MantraCommon {
 		boolean fire = false;
 		float power = 0;
 		{
-			ElementStack fireNeed = new ElementStack(ESInit.ELEMENTS.FIRE, 1, 8);
+			ElementStack fireNeed = new ElementStack(ESObjects.ELEMENTS.FIRE, 1, 8);
 			ElementStack fireGet = caster.iWantSomeElement(fireNeed, true);
 			fire = !fireGet.isEmpty();
 			if (fire) power = MathHelper.sqrt(fireGet.getPower()) / 20f;
 		}
 		int punch = 0;
 		{
-			ElementStack earthNeed = new ElementStack(ESInit.ELEMENTS.EARTH, 1, 20);
+			ElementStack earthNeed = new ElementStack(ESObjects.ELEMENTS.EARTH, 1, 20);
 			ElementStack earthGet = caster.iWantSomeElement(earthNeed, true);
 			if (!earthGet.isEmpty()) punch = (int) (MathHelper.sqrt(earthGet.getPower()) / 10f);
 		}

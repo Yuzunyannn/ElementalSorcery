@@ -2,7 +2,7 @@ package yuzunyannn.elementalsorcery.potion;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class PotionHealthBalance extends PotionCommon {
 
@@ -18,8 +18,8 @@ public class PotionHealthBalance extends PotionCommon {
 
 	public static void tryBalance(EntityLivingBase target, EntityLivingBase attacker, DamageSource source,
 			float amount) {
-		if (!attacker.isPotionActive(ESInit.POTIONS.HEALTH_BALANCE)) return;
-		int amplifier = attacker.getActivePotionEffect(ESInit.POTIONS.HEALTH_BALANCE).getAmplifier();
+		if (!attacker.isPotionActive(ESObjects.POTIONS.HEALTH_BALANCE)) return;
+		int amplifier = attacker.getActivePotionEffect(ESObjects.POTIONS.HEALTH_BALANCE).getAmplifier();
 		
 		float attackerHP = attacker.getHealth();
 		float targetHP = target.getHealth();

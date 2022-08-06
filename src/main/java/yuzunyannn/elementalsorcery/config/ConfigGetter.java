@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTTagString;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 
 public class ConfigGetter implements IConfigGetter {
 

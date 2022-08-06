@@ -19,18 +19,22 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.api.util.client.ESResources;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementContainer;
-import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraElementWhirl;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectSphericalBlast;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
@@ -40,9 +44,6 @@ import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.var.Variables;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -53,7 +54,7 @@ public class MantraElementWhirl extends MantraCommon {
 		set.set(Variables.MAGIC, magic);
 		set.set(Variables.TICK, 80);
 		set.set(VEC, at);
-		MantraCommon.fireMantra(world, ESInit.MANTRAS.ELEMENT_WHIRL, caster, set);
+		MantraCommon.fireMantra(world, ESObjects.MANTRAS.ELEMENT_WHIRL, caster, set);
 	}
 
 	public MantraElementWhirl() {
@@ -85,14 +86,14 @@ public class MantraElementWhirl extends MantraCommon {
 	@Override
 	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
 		MantraDataCommon mData = (MantraDataCommon) data;
-		CollectResult cr = mData.tryCollect(caster, ESInit.ELEMENTS.MAGIC, 10, 50, 2000);
+		CollectResult cr = mData.tryCollect(caster, ESObjects.ELEMENTS.MAGIC, 10, 50, 2000);
 		mData.setProgress(cr.getStackCount(), 2000);
 	}
 
 	@Override
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon mData = (MantraDataCommon) data;
-		ElementStack estack = mData.get(ESInit.ELEMENTS.MAGIC);
+		ElementStack estack = mData.get(ESObjects.ELEMENTS.MAGIC);
 		if (estack.getCount() < 500) return;
 		WorldTarget wr = caster.iWantBlockTarget();
 		BlockPos pos = wr.getPos();
@@ -106,13 +107,13 @@ public class MantraElementWhirl extends MantraCommon {
 	@Override
 	public boolean afterSpelling(World world, IMantraData mData, ICaster caster) {
 		MantraDataCommon data = (MantraDataCommon) mData;
-		ElementStack eStack = data.get(ESInit.ELEMENTS.MAGIC);
+		ElementStack eStack = data.get(ESObjects.ELEMENTS.MAGIC);
 		if (eStack.isEmpty()) return false;
 		int tick = Math.min(data.get(Variables.TICK), 80);
 		data.set(Variables.TICK, tick - 1);
 		if (tick <= 0) return false;
 
-		double fragment = ElementHelper.toFragment(eStack);
+		double fragment = ElementTransition.toFragment(eStack);
 		double size = Math.floor(MathHelper.clamp(Math.sqrt(fragment) / 2048, 1, 8));
 		if (world.isRemote) addAfterEffect(data, caster, tick, size);
 
@@ -154,14 +155,14 @@ public class MantraElementWhirl extends MantraCommon {
 	public static void affect(World world, ICaster caster, BlockPos at, double fragment) {
 		IBlockState state = world.getBlockState(at);
 		Block block = state.getBlock();
-		if (block == ESInit.BLOCKS.ELEMENT_REACTOR) return;
-		if (block == ESInit.BLOCKS.ESTONE_PRISM) return;
+		if (block == ESObjects.BLOCKS.ELEMENT_REACTOR) return;
+		if (block == ESObjects.BLOCKS.ESTONE_PRISM) return;
 		if (block instanceof BlockElementContainer) {
 			IElementInventory eInv = BlockHelper.getElementInventory(world, at, null);
 			world.destroyBlock(at, false);
 			BlockElementContainer.doExploded(world, at, eInv, caster.iWantCaster().asEntityLivingBase());
 		}
-		if (world.rand.nextFloat() < 0.25) ItemHelper.dropItem(world, at, new ItemStack(ESInit.ITEMS.MATERIAL_DEBRIS));
+		if (world.rand.nextFloat() < 0.25) ItemHelper.dropItem(world, at, new ItemStack(ESObjects.ITEMS.MATERIAL_DEBRIS));
 		world.destroyBlock(at, false);
 	}
 
@@ -189,8 +190,8 @@ public class MantraElementWhirl extends MantraCommon {
 		if (entityItem.getIsInvulnerable()) return;
 		ItemStack stack = entityItem.getItem();
 		Item item = stack.getItem();
-		if (item == ESInit.ITEMS.ELEMENT_CRACK) return;
-		if (item == ESInit.ITEMS.MATERIAL_DEBRIS) return;
+		if (item == ESObjects.ITEMS.ELEMENT_CRACK) return;
+		if (item == ESObjects.ITEMS.MATERIAL_DEBRIS) return;
 		IElementInventory eInv = ElementHelper.getElementInventory(stack);
 		BlockElementContainer.doExploded(world, entityItem.getPosition(), eInv,
 				caster.iWantCaster().asEntityLivingBase());
@@ -211,12 +212,12 @@ public class MantraElementWhirl extends MantraCommon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void renderShiftIcon(NBTTagCompound mantraData, float suggestSize, float suggestAlpha, float partialTicks) {
-		TextureBinder.bindTexture(GuiMantraShitf.CIRCLE);
-		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		ESResources.MANTRA_COMMON_CIRCLE.bind();
+		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 		GlStateManager.color(1, 1, 1);
 		TextureBinder.bindTexture(this.icon);
 		suggestSize = suggestSize * 0.5f;
-		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 	}
 
 }

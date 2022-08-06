@@ -18,16 +18,18 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IMagicBeamHandler;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectInstantConstituteCharge;
@@ -35,12 +37,10 @@ import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
 import yuzunyannn.elementalsorcery.tile.TileEStoneCrock;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockCrystalBlock;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class TileInstantConstitute extends TileStaticMultiBlock implements ITickable {
 
@@ -280,7 +280,7 @@ public class TileInstantConstitute extends TileStaticMultiBlock implements ITick
 
 		@Override
 		public double getCraftCost(World world, BlockPos pos, ItemStack stack) {
-			if (stack.getItem() == ESInit.ITEMS.ORDER_CRYSTAL) return ONE_ORDER_CRYSTAL_NEED_FRAGMENT;
+			if (stack.getItem() == ESObjects.ITEMS.ORDER_CRYSTAL) return ONE_ORDER_CRYSTAL_NEED_FRAGMENT;
 			return -1;
 		}
 
@@ -391,7 +391,7 @@ public class TileInstantConstitute extends TileStaticMultiBlock implements ITick
 	@SideOnly(Side.CLIENT)
 	public float getOderValRationForShow(float partialTicks) {
 		if (targetOrderVal == 0 && prevOrderVal == 0) return 0;
-		float r = RenderHelper.getPartialTicks(targetOrderVal, prevOrderVal, partialTicks) / (float) getMaxOrderVal();
+		float r = RenderFriend.getPartialTicks(targetOrderVal, prevOrderVal, partialTicks) / (float) getMaxOrderVal();
 		if (r < 0.1) r = MathHelper.sqrt(r) / 0.316228f * 0.1f;
 		return Math.min(r, 1);
 	}

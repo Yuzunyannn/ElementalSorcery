@@ -15,16 +15,16 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
+import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleWaterBubble;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerAdapter;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.world.Juice;
-import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class TileMDLiquidizer extends TileMDBase implements ITickable {
 
@@ -236,7 +236,7 @@ public class TileMDLiquidizer extends TileMDBase implements ITickable {
 
 	@SideOnly(Side.CLIENT)
 	public float getJuiceRate(float partialTicks) {
-		return RenderHelper.getPartialTicks(water, prevWater, partialTicks) / juice.getMaxJuiceCount();
+		return RenderFriend.getPartialTicks(water, prevWater, partialTicks) / juice.getMaxJuiceCount();
 	}
 
 	@SideOnly(Side.CLIENT)

@@ -11,18 +11,18 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.block.BlockElfLeaf;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.MazeCreator;
 import yuzunyannn.elementalsorcery.util.MazeCreator.Grid;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class SummonMaze extends SummonCommon {
 
-	public IBlockState defaultBuildBlockState = ESInit.BLOCKS.ELF_LEAF.getDefaultState()
+	public IBlockState defaultBuildBlockState = ESObjects.BLOCKS.ELF_LEAF.getDefaultState()
 			.withProperty(BlockElfLeaf.DECAYABLE, false);
 
 	protected int mazeSize;
@@ -109,7 +109,7 @@ public class SummonMaze extends SummonCommon {
 	public boolean update() {
 		if (world.isRemote) return true;
 		tick++;
-		if (ElementalSorcery.isDevelop) {
+		if (ESAPI.isDevelop) {
 			for (int i = 0; i < 12; i++) updateBuild();
 		}
 		return updateBuild() ? updateBuild() : false;

@@ -11,11 +11,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.element.IISCraftHanlder;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
-import yuzunyannn.elementalsorcery.tile.TileItemStructureCraft.IISCCCraftHanlder;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftCC;
 
-public class ISSmeltCraftHandler implements IISCCCraftHanlder {
+public class ISSmeltCraftHandler implements IISCraftHanlder {
 
 	@Override
 	public boolean isKeyItem(ItemStack stack) {

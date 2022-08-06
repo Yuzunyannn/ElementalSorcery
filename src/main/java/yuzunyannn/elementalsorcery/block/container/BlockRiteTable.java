@@ -30,8 +30,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.ESCreativeTabs;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemMerchantInvitation;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
@@ -127,7 +127,7 @@ public class BlockRiteTable extends BlockContainerNormal {
 				if (!playerIn.isCreative()) stack.setItemDamage(stack.getItemDamage() + 2);
 				playerIn.setHeldItem(hand, stack);
 			} else return false;
-		} else if (stack.getItem() == ESInit.ITEMS.SOUL_WOOD_SWORD) {
+		} else if (stack.getItem() == ESObjects.ITEMS.SOUL_WOOD_SWORD) {
 			if (trt.rite(playerIn, stack)) {
 				if (!playerIn.isCreative()) stack.damageItem(1, playerIn);
 				playerIn.setHeldItem(hand, stack);
@@ -186,7 +186,7 @@ public class BlockRiteTable extends BlockContainerNormal {
 		for (int i = 0; i < handler.getSlots(); i++) {
 			ItemStack stack = handler.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
-			if (stack.getItem() == ESInit.ITEMS.MERCHANT_INVITATION) merchantInvitation = stack;
+			if (stack.getItem() == ESObjects.ITEMS.MERCHANT_INVITATION) merchantInvitation = stack;
 			else {
 				int p = ElfChamberOfCommerce.priceIt(stack);
 				if (p > 0) price += p;

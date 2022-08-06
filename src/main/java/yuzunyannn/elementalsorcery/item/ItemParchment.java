@@ -19,9 +19,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.parchment.Page;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
@@ -30,8 +30,8 @@ public class ItemParchment extends Item {
 
 	/** 获取页面羊皮卷 */
 	public static ItemStack getParchment(String id) {
-		if (id == null || id.isEmpty()) return new ItemStack(ESInit.ITEMS.PARCHMENT);
-		return Pages.setPage(id, new ItemStack(ESInit.ITEMS.PARCHMENT));
+		if (id == null || id.isEmpty()) return new ItemStack(ESObjects.ITEMS.PARCHMENT);
+		return Pages.setPage(id, new ItemStack(ESObjects.ITEMS.PARCHMENT));
 	}
 
 	public ItemParchment() {

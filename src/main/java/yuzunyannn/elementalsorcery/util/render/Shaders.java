@@ -2,8 +2,6 @@ package yuzunyannn.elementalsorcery.util.render;
 
 import java.io.IOException;
 
-import net.minecraft.client.Minecraft;
-
 public class Shaders {
 
 	public static Shader JCOLOR;
@@ -17,7 +15,7 @@ public class Shaders {
 	public static Shader ElementSky;
 
 	public static void init() throws IOException {
-		Minecraft mc = Minecraft.getMinecraft();
+//		Minecraft mc = Minecraft.getMinecraft();
 		JCOLOR = new Shader("shaders/just_color.fsh");
 		HSV = new Shader("shaders/hsv.fsh");
 		GRAY = new Shader("shaders/gray.fsh");

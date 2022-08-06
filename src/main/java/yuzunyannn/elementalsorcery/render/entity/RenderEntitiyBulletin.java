@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.container.gui.GuiQuest;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.render.model.ModelBulletin;
 @SideOnly(Side.CLIENT)
 public class RenderEntitiyBulletin extends Render<EntityBulletin> {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/bulletin.png");
 
 	public static final ModelBulletin MODEL = new ModelBulletin();

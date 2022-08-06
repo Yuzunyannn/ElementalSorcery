@@ -7,19 +7,19 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.entity.mob.EntityDreadCube;
 import yuzunyannn.elementalsorcery.render.model.living.ModelDreadCube;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderEntityDreadCube extends RenderLiving<EntityDreadCube> {
 
 	public static final ModelDreadCube MODEL = new ModelDreadCube();
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/dread_cube.png");
-	public static final ResourceLocation TEXTURE_COVER = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_COVER = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/dread_cube_lines.png");
 
 	public RenderEntityDreadCube(RenderManager rendermanagerIn) {
@@ -40,7 +40,7 @@ public class RenderEntityDreadCube extends RenderLiving<EntityDreadCube> {
 		if (flag || flag1) {
 			if (flag1) GlStateManager.enableBlendProfile(GlStateManager.Profile.TRANSPARENT_MODEL);
 
-			float activeRate = RenderHelper.getPartialTicks(entity.activeRate, entity.prevActiveRate,
+			float activeRate = RenderFriend.getPartialTicks(entity.activeRate, entity.prevActiveRate,
 					TextureBinder.mc.getRenderPartialTicks());
 
 			this.bindTexture(TEXTURE);

@@ -1,10 +1,10 @@
 package yuzunyannn.elementalsorcery.render.tile.md;
 
 import net.minecraft.item.ItemStack;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.model.md.ModelMDHearth;
 import yuzunyannn.elementalsorcery.tile.md.TileMDHearth;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class RenderTileMDHearth extends RenderTileMDBase<TileMDHearth> {
 	public static final TextureBinder TEXTURE_OFF = new TextureBinder("textures/blocks/md_hearth_off.png");
@@ -16,17 +16,17 @@ public class RenderTileMDHearth extends RenderTileMDBase<TileMDHearth> {
 			float alpha) {
 		super.render(tile, x, y, z, partialTicks, destroyStage, alpha);
 		if (tile.isFire())
-			RenderHelper.bindDestoryTexture(TEXTURE_ON, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		else RenderHelper.bindDestoryTexture(TEXTURE_OFF, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
+			RenderFriend.bindDestoryTexture(TEXTURE_ON, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		else RenderFriend.bindDestoryTexture(TEXTURE_OFF, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 	}
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 		super.render(stack, partialTicks);
-		RenderHelper.render(stack, TEXTURE_OFF, MODEL, false);
+		RenderFriend.renderSpecialItem(stack, TEXTURE_OFF, MODEL, false);
 	}
 }

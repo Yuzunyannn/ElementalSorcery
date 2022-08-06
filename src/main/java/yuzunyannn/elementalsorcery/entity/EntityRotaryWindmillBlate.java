@@ -4,12 +4,14 @@ import javax.annotation.Nullable;
 
 import io.netty.buffer.ByteBuf;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -17,14 +19,16 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.item.IWindmillBlade;
+import yuzunyannn.elementalsorcery.api.item.IWindmillBladeController;
 import yuzunyannn.elementalsorcery.util.MasterBinder;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
-public class EntityRotaryWindmillBlate extends EntityObject implements IEntityAdditionalSpawnData {
+public class EntityRotaryWindmillBlate extends EntityObject
+		implements IEntityAdditionalSpawnData, IWindmillBladeController {
 
 	// 只回复重要的两个数据，其他数据如果重启了，就直接结束旋转吧
 	protected ItemStack blate = ItemStack.EMPTY;
@@ -34,8 +38,6 @@ public class EntityRotaryWindmillBlate extends EntityObject implements IEntityAd
 	protected Vec3d targetVec;
 	protected int remainTick = 0;
 	protected int endTick = -1;
-
-	public int tick;
 
 	public EntityRotaryWindmillBlate(World worldIn) {
 		super(worldIn);
@@ -116,6 +118,11 @@ public class EntityRotaryWindmillBlate extends EntityObject implements IEntityAd
 	}
 
 	@Override
+	public int getTick() {
+		return this.ticksExisted;
+	}
+
+	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
 
@@ -192,19 +199,18 @@ public class EntityRotaryWindmillBlate extends EntityObject implements IEntityAd
 
 	public void doBlateAttack() {
 		try {
-			tick++;
 			IWindmillBlade blade = getWindmillBlade();
 			if (blade == null) return;
 			Vec3d thisVec = new Vec3d(this.posX, this.posY + this.height / 2, this.posZ);
 			blade.bladePitch(world, thisVec, blate, this);
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("旋转风轮出现异常", e);
+			ESAPI.logger.warn("旋转风轮出现异常", e);
 			ExceptionHelper.warnSend(world, "旋转风轮出现异常");
 			this.setDead();
 		}
 	}
 
-	// ------ client ------ 
+	// ------ client ------
 	public float bladeRotate;
 	public float prevBladeRotate;
 	public float bladeScale = 0;
@@ -228,6 +234,21 @@ public class EntityRotaryWindmillBlate extends EntityObject implements IEntityAd
 		} else bladeScale = bladeScale + (1 - bladeScale) * 0.2f;
 
 		this.bladeRotate = bladeRotate + bladeScale * 0.35f;
+	}
+
+	@Override
+	public World getWorld() {
+		return world;
+	}
+
+	@Override
+	public TileEntity asTileEntity() {
+		return null;
+	}
+
+	@Override
+	public Entity asEntity() {
+		return this;
 	}
 
 }

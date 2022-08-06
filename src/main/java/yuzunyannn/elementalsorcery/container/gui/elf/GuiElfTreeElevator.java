@@ -12,19 +12,19 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
 import yuzunyannn.elementalsorcery.event.KeyBoard;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageElfTreeElevator;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class GuiElfTreeElevator extends GuiScreen {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/elf/tree_elevator.png");
 
 	final public TileElfTreeCore core;
@@ -102,7 +102,7 @@ public class GuiElfTreeElevator extends GuiScreen {
 		int floors = core.getFloorCount();
 		int high = 0;
 		GlStateManager.enableBlend();
-		float a = RenderHelper.getPartialTicks(this.a, this.prevA, partialTicks);
+		float a = RenderFriend.getPartialTicks(this.a, this.prevA, partialTicks);
 		for (int i = 0; i < floors; i++) {
 			mc.getTextureManager().bindTexture(TEXTURE);
 			if (selected == i) GlStateManager.color(0.5f, 0.5f, 0.5f, a);
@@ -113,12 +113,12 @@ public class GuiElfTreeElevator extends GuiScreen {
 			float yoff = high / (float) core.getTreeHigh() * 200;
 			ccigh = ccigh / (float) core.getTreeHigh() * 200;
 			yoff = cY + 109f - yoff + ccigh / 2;
-			RenderHelper.drawTexturedRectInCenter(cX + 0.5f, yoff, 84, ccigh, 153, 25, 84, ccigh, 256, 256);
+			RenderFriend.drawTexturedRectInCenter(cX + 0.5f, yoff, 84, ccigh, 153, 25, 84, ccigh, 256, 256);
 			fontRenderer.drawStringWithShadow(Integer.toString(i + 1), cX - 40, (int) (yoff - ccigh / 2) + 2, 0x844700);
 		}
 		GlStateManager.color(1, 1, 1, a);
 		mc.getTextureManager().bindTexture(TEXTURE);
-		RenderHelper.drawTexturedRectInCenter(cX, cY, 153, 232, 0, 0, 153, 232, 256, 256);
+		RenderFriend.drawTexturedRectInCenter(cX, cY, 153, 232, 0, 0, 153, 232, 256, 256);
 		GlStateManager.disableBlend();
 	}
 

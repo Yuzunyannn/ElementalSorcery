@@ -3,8 +3,8 @@ package yuzunyannn.elementalsorcery.tile.ir;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.container.BlockIceRockCrystalBlock;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube;
 
 public class TileIceRockCrystalBlock extends TileIceRockEnergy {
@@ -47,7 +47,7 @@ public class TileIceRockCrystalBlock extends TileIceRockEnergy {
 	public void unlink() {
 		changeState: {
 			IBlockState state = world.getBlockState(pos);
-			if (state.getBlock() != ESInit.BLOCKS.ICE_ROCK_CRYSTAL_BLOCK) break changeState;
+			if (state.getBlock() != ESObjects.BLOCKS.ICE_ROCK_CRYSTAL_BLOCK) break changeState;
 			IBlockState newState = state.withProperty(BlockIceRockCrystalBlock.STATUS,
 					BlockIceRockCrystalBlock.EnumStatus.NORMAL);
 			if (newState == state) break changeState;

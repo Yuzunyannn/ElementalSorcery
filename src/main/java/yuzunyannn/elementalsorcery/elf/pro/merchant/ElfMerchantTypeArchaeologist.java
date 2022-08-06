@@ -8,11 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.block.BlockSealStone;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
-import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 
 public class ElfMerchantTypeArchaeologist extends ElfMerchantTypeDefault {
 
@@ -21,7 +21,7 @@ public class ElfMerchantTypeArchaeologist extends ElfMerchantTypeDefault {
 		TradeCount trade = new TradeCount();
 		addFavorite(trade, rand);
 
-		ItemStack stackAP = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, 0);
+		ItemStack stackAP = new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, 0);
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setFloat("progress", 0);
 		stackAP.setTagCompound(nbt);
@@ -41,7 +41,7 @@ public class ElfMerchantTypeArchaeologist extends ElfMerchantTypeDefault {
 
 	@Override
 	public ItemStack getHoldItem(World world, VariableSet storage) {
-		return new ItemStack(ESInit.ITEMS.ANCIENT_PAPER);
+		return new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER);
 	}
 
 }

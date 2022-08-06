@@ -9,14 +9,14 @@ import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
 import yuzunyannn.elementalsorcery.render.model.living.ModelRelicZombie;
 
 @SideOnly(Side.CLIENT)
 public class RenderEntityRelicZombie extends RenderLiving<EntityRelicZombie> {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/relic_zombie.png");
 	public static final ModelRelicZombie MODEL = new ModelRelicZombie();
 

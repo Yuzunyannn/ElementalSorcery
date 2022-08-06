@@ -15,7 +15,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemElfPurse extends Item {
@@ -31,7 +31,7 @@ public class ItemElfPurse extends Item {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
-			if (stack.getItem() != ESInit.ITEMS.ELF_COIN) continue;
+			if (stack.getItem() != ESObjects.ITEMS.ELF_COIN) continue;
 			n += stack.getCount();
 			inv.setInventorySlotContents(i, ItemStack.EMPTY);
 		}
@@ -66,7 +66,7 @@ public class ItemElfPurse extends Item {
 	}
 
 	static public ItemStack getPurse(int coin) {
-		ItemStack stack = new ItemStack(ESInit.ITEMS.ELF_PURSE);
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.ELF_PURSE);
 		stack.setTagCompound(new NBTTagCompound());
 		stack.getTagCompound().setInteger("coin", coin);
 		return stack;
@@ -86,11 +86,11 @@ public class ItemElfPurse extends Item {
 		for (int i = 0; i < inv.getSizeInventory() && need > 0; i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
-			if (stack.getItem() == ESInit.ITEMS.ELF_COIN) {
+			if (stack.getItem() == ESObjects.ITEMS.ELF_COIN) {
 				int ex = Math.min(need, stack.getCount());
 				need -= ex;
 				if (!simulate) stack.splitStack(ex);
-			} else if (stack.getItem() == ESInit.ITEMS.ELF_PURSE) {
+			} else if (stack.getItem() == ESObjects.ITEMS.ELF_PURSE) {
 				NBTTagCompound nbt = stack.getTagCompound();
 				if (nbt == null) continue;
 				int coin = nbt.getInteger("coin");
@@ -115,7 +115,7 @@ public class ItemElfPurse extends Item {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
-			if (stack.getItem() == ESInit.ITEMS.ELF_PURSE) {
+			if (stack.getItem() == ESObjects.ITEMS.ELF_PURSE) {
 				purse = stack;
 				break;
 			}
@@ -133,13 +133,13 @@ public class ItemElfPurse extends Item {
 		// 没钱袋的情况
 		for (int i = 0; i < inv.getSizeInventory() && count > 0; i++) {
 			ItemStack stack = inv.getStackInSlot(i);
-			if (stack.isEmpty() || stack.getItem() == ESInit.ITEMS.ELF_COIN) {
-				int maxSize = ESInit.ITEMS.ELF_COIN.getItemStackLimit(stack);
+			if (stack.isEmpty() || stack.getItem() == ESObjects.ITEMS.ELF_COIN) {
+				int maxSize = ESObjects.ITEMS.ELF_COIN.getItemStackLimit(stack);
 				maxSize -= stack.getCount();
 				int in = Math.min(maxSize, count);
 				count -= in;
 				if (!simulate) {
-					if (stack.isEmpty()) inv.setInventorySlotContents(i, new ItemStack(ESInit.ITEMS.ELF_COIN, in));
+					if (stack.isEmpty()) inv.setInventorySlotContents(i, new ItemStack(ESObjects.ITEMS.ELF_COIN, in));
 					else stack.grow(in);
 				}
 			}
@@ -155,7 +155,7 @@ public class ItemElfPurse extends Item {
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack stack = inv.getStackInSlot(i);
 			if (stack.isEmpty()) continue;
-			if (stack.getItem() == ESInit.ITEMS.ELF_PURSE) {
+			if (stack.getItem() == ESObjects.ITEMS.ELF_PURSE) {
 				purse = stack;
 				break;
 			}
@@ -168,6 +168,6 @@ public class ItemElfPurse extends Item {
 			nbt.setInteger("coin", coin + count);
 			return;
 		}
-		ItemHelper.addItemStackToPlayer(player, new ItemStack(ESInit.ITEMS.ELF_COIN, count));
+		ItemHelper.addItemStackToPlayer(player, new ItemStack(ESObjects.ITEMS.ELF_COIN, count));
 	}
 }

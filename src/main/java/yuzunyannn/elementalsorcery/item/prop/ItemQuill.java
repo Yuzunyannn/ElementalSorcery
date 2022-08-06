@@ -20,9 +20,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -251,8 +251,8 @@ public class ItemQuill extends Item {
 	public void explode(World world, EntityPlayer player, BlockPos pos) {
 		if (world.isRemote) return;
 		Vec3d at = new Vec3d(pos).add(0.5, 0.5, 0.5);
-		ElementExplosion.doExplosion(world, at, new ElementStack(ESInit.ELEMENTS.FIRE, 200, 1000), player);
-		ElementExplosion.doExplosion(world, at, new ElementStack(ESInit.ELEMENTS.WATER, 200, 1000), player);
+		ElementExplosion.doExplosion(world, at, new ElementStack(ESObjects.ELEMENTS.FIRE, 200, 1000), player);
+		ElementExplosion.doExplosion(world, at, new ElementStack(ESObjects.ELEMENTS.WATER, 200, 1000), player);
 
 //		Vec3d at = new Vec3d(pos).add(0.5, 0.5, 0.5);
 //		Random rand = world.rand;

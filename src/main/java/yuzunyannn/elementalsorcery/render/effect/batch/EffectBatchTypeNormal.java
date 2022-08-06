@@ -5,8 +5,8 @@ import org.lwjgl.opengl.GL11;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.EffectBatchType;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 public class EffectBatchTypeNormal extends EffectBatchType {
 

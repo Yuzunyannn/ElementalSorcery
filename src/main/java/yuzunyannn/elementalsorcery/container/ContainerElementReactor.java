@@ -14,15 +14,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
-import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher;
-import yuzunyannn.elementalsorcery.grimoire.remote.IFragmentMantraLauncher.MLPair;
+import yuzunyannn.elementalsorcery.api.element.ElementTransitionReactor;
+import yuzunyannn.elementalsorcery.api.mantra.IFragmentMantraLauncher;
+import yuzunyannn.elementalsorcery.api.mantra.IFragmentMantraLauncher.MLPair;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.WorldLocation;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor.ReactorStatus;
-import yuzunyannn.elementalsorcery.util.NBTTag;
-import yuzunyannn.elementalsorcery.util.element.ElementTransitionReactor;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
-import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class ContainerElementReactor extends Container implements IContainerNetwork {
 

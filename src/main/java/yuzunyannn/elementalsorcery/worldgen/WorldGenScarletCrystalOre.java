@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class WorldGenScarletCrystalOre extends WorldGenerator {
 
@@ -28,7 +28,7 @@ public class WorldGenScarletCrystalOre extends WorldGenerator {
 		return false;
 	};
 
-	private final IBlockState ore = ESInit.BLOCKS.SCARLET_CRYSTAL_ORE.getDefaultState();
+	private final IBlockState ore = ESObjects.BLOCKS.SCARLET_CRYSTAL_ORE.getDefaultState();
 
 	public WorldGenScarletCrystalOre() {
 	}

@@ -10,20 +10,20 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 
 public class RiteCategory implements IRecipeCategory<RiteRecipeWrapper> {
 
-	public static final String UID = ElementalSorcery.MODID + "." + "rite";
+	public static final String UID = ESAPI.MODID + "." + "rite";
 	private final IDrawable background;
 	private final RiteIcon iconDraw = new RiteIcon();
 
 	public RiteCategory() {
 		background = ESJEIPlugin.guiHelper.createDrawable(
-				new ResourceLocation(ElementalSorcery.MODID, "textures/gui/jei/rite_craft.png"), 0, 0, 148, 60);
+				new ResourceLocation(ESAPI.MODID, "textures/gui/jei/rite_craft.png"), 0, 0, 148, 60);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public class RiteCategory implements IRecipeCategory<RiteRecipeWrapper> {
 
 	@Override
 	public String getModName() {
-		return ElementalSorcery.MODID;
+		return ESAPI.MODID;
 	}
 
 	@Override
@@ -60,11 +60,11 @@ public class RiteCategory implements IRecipeCategory<RiteRecipeWrapper> {
 		group.init(1, true, 4 + 18, 3);
 		group.set(1, new ItemStack(Items.DYE));
 		group.init(2, true, 4, 3 + 18);
-		group.set(2, new ItemStack(ESInit.ITEMS.PARCHMENT));
+		group.set(2, new ItemStack(ESObjects.ITEMS.PARCHMENT));
 		group.init(3, true, 4 + 18, 3 + 18);
 		group.set(3, r.parchmentInput());
 
-		ItemStack stack = new ItemStack(ESInit.ITEMS.PARCHMENT);
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.PARCHMENT);
 		RecipeRiteWrite.setInnerStack(stack, r.parchmentInput());
 		group.init(4, true, 4 + 18 + 18 + 42, 3 + 18);
 		group.set(4, stack);

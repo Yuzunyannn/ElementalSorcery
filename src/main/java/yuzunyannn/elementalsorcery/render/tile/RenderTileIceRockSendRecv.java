@@ -12,11 +12,11 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.IRenderClient;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockSendRecv;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockSendRecv.FaceStatus;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileIceRockSendRecv<T extends TileIceRockSendRecv> extends TileEntitySpecialRenderer<T> {
@@ -50,7 +50,7 @@ public class RenderTileIceRockSendRecv<T extends TileIceRockSendRecv> extends Ti
 		GlStateManager.depthMask(false);
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		RenderHelper.disableStandardItemLighting();
-		yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
+		yuzunyannn.elementalsorcery.api.util.client.RenderFriend.disableLightmap(true);
 
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			float r = tile.getFaceAnimeRatio(facing, partialTicks);

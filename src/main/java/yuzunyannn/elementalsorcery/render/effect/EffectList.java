@@ -9,7 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 
 public class EffectList extends EffectGroup {
 
@@ -58,7 +58,7 @@ public class EffectList extends EffectGroup {
 					iter.next().doRender(partialTicks);
 				} catch (Exception e) {
 					iter.remove();
-					ElementalSorcery.logger.warn("Effect Render Error", e);
+					ESAPI.logger.warn("Effect Render Error", e);
 				}
 			}
 		}
@@ -75,7 +75,7 @@ public class EffectList extends EffectGroup {
 						iter.next().doRender(bufferbuilder, partialTicks);
 					} catch (Exception e) {
 						iter.remove();
-						ElementalSorcery.logger.warn("Effect Batch Render Error", e);
+						ESAPI.logger.warn("Effect Batch Render Error", e);
 					}
 				}
 				batch.endRender(tessellator, bufferbuilder);

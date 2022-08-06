@@ -21,13 +21,12 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
 
@@ -169,9 +168,9 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 		}
 	}
 
-	public final static ElementStack MAGIC1 = new ElementStack.Unchangeable(ESInit.ELEMENTS.MAGIC, 20, 25);
-	public final static ElementStack MAGIC2 = new ElementStack.Unchangeable(ESInit.ELEMENTS.MAGIC, 40, 100);
-	public final static ElementStack MAGIC3 = new ElementStack.Unchangeable(ESInit.ELEMENTS.MAGIC, 100, 200);
+	public final static ElementStack MAGIC1 = new ElementStack.Unchangeable(ESObjects.ELEMENTS.MAGIC, 20, 25);
+	public final static ElementStack MAGIC2 = new ElementStack.Unchangeable(ESObjects.ELEMENTS.MAGIC, 40, 100);
+	public final static ElementStack MAGIC3 = new ElementStack.Unchangeable(ESObjects.ELEMENTS.MAGIC, 100, 200);
 
 	public static ElementStack getMaxOfferMagic(int index) {
 		switch (index) {
@@ -301,7 +300,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 
 	static public void init() {
 		recipes.clear();
-		final ESObjects.Items ITEMS = ESInit.ITEMS;
+		final ESObjects.Items ITEMS = ESObjects.ITEMS;
 		Recipe.ITest awalysTrue = (world, pos) -> {
 			return true;
 		};
@@ -309,20 +308,20 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 				awalysTrue);
 		addRecipe(Items.REEDS, ITEMS.NATURE_CRYSTAL, 20, 20, awalysTrue);
 		addRecipe(Items.GOLD_INGOT, ITEMS.MAGIC_GOLD, 40, 20, awalysTrue);
-		addRecipe(ITEMS.MAGIC_CRYSTAL, ESInit.ITEMS.ELEMENT_CRYSTAL, 100, 20, (world, pos) -> {
+		addRecipe(ITEMS.MAGIC_CRYSTAL, ESObjects.ITEMS.ELEMENT_CRYSTAL, 100, 20, (world, pos) -> {
 			Biome biome = world.getBiome(pos);
 			ElfTime time = new ElfTime(world);
 			if (biome != Biomes.PLAINS) return false;
 			if (time.at(ElfTime.Period.DAWN) || time.at(ElfTime.Period.DUSK)) return true;
 			return false;
 		});
-		addRecipe(ESInit.ITEMS.KYANITE, ESInit.ITEMS.MAGIC_CRYSTAL, 20, 10, (world, pos) -> {
+		addRecipe(ESObjects.ITEMS.KYANITE, ESObjects.ITEMS.MAGIC_CRYSTAL, 20, 10, (world, pos) -> {
 			Biome biome = world.getBiome(pos);
 			ElfTime time = new ElfTime(world);
 			if (time.at(ElfTime.Period.DAY)) return biome.getRainfall() <= 0.5f && !world.isRaining();
 			return false;
 		});
-		addRecipe(ESInit.ITEMS.MAGIC_CRYSTAL, ESInit.ITEMS.SPELL_CRYSTAL, 40, 20, (world, pos) -> {
+		addRecipe(ESObjects.ITEMS.MAGIC_CRYSTAL, ESObjects.ITEMS.SPELL_CRYSTAL, 40, 20, (world, pos) -> {
 			ElfTime time = new ElfTime(world);
 			if (!time.at(ElfTime.Period.MIDNIGHT)) return false;
 			int count = 0;
@@ -342,7 +341,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 			}
 			return count >= 14;
 		});
-		addRecipe(ESInit.ITEMS.ELF_CRYSTAL, ESInit.ITEMS.ARCHITECTURE_CRYSTAL, 40, 20, (world, pos) -> {
+		addRecipe(ESObjects.ITEMS.ELF_CRYSTAL, ESObjects.ITEMS.ARCHITECTURE_CRYSTAL, 40, 20, (world, pos) -> {
 			Biome biome = world.getBiome(pos);
 			if (biome != Biomes.DESERT && biome != Biomes.DESERT_HILLS && biome != Biomes.MUTATED_DESERT) return false;
 			final int size = 4;

@@ -1,13 +1,16 @@
 package yuzunyannn.elementalsorcery.entity.fcube;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryEnderChest;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModuleRecipe;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.container.ContainerFairyCube;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -17,8 +20,8 @@ public class FCMEnderChest extends FairyCubeModule {
 	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
 		if (world.provider.getDimension() != 1) return false;
 
-		return matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.ENDER_EYE, 1),
-				ElementHelper.toList(ESInit.ELEMENTS.ENDER, 50, 150));
+		return FairyCubeModuleInGame.matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.ENDER_EYE, 1),
+				ElementHelper.toList(ESObjects.ELEMENTS.ENDER, 50, 150));
 	}
 
 	public FCMEnderChest(EntityFairyCube fairyCube) {
@@ -33,12 +36,14 @@ public class FCMEnderChest extends FairyCubeModule {
 	}
 
 	@Override
-	public void onClickOnGUI(int type, ContainerFairyCube container) {
-		container.closeContainer();
-		InventoryEnderChest inventoryenderchest = container.player.getInventoryEnderChest();
+	public void onClickOnGUI(int type, EntityPlayer player) {
+		Container container = player.openContainer;
+		if (container == null) return;
+		player.closeScreen();
+		InventoryEnderChest inventoryenderchest = player.getInventoryEnderChest();
 		inventoryenderchest.setChestTileEntity(null);
-		container.player.displayGUIChest(inventoryenderchest);
-		container.player.addStat(StatList.ENDERCHEST_OPENED);
+		player.displayGUIChest(inventoryenderchest);
+		player.addStat(StatList.ENDERCHEST_OPENED);
 	}
 
 }

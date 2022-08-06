@@ -28,10 +28,16 @@ import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.common.IShearable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.entity.Behavior;
+import yuzunyannn.elementalsorcery.api.entity.BehaviorBlock;
+import yuzunyannn.elementalsorcery.api.entity.BehaviorInteract;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModuleRecipe;
+import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.ESFakePlayer;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -44,16 +50,16 @@ public class FCMFarm extends FairyCubeModule {
 	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
 		ElfTime time = new ElfTime(world);
 		if (!time.at(ElfTime.Period.DAWN)) return false;
-		return matchAndConsumeForCraft(world, pos, inv,
+		return FairyCubeModuleInGame.matchAndConsumeForCraft(world, pos, inv,
 				ItemHelper.toList(Items.WHEAT, 32, Items.CARROT, 32, Items.POTATO, 32),
-				ElementHelper.toList(ESInit.ELEMENTS.WOOD, 75, 20));
+				ElementHelper.toList(ESObjects.ELEMENTS.WOOD, 75, 20));
 	}
 
 	public FCMFarm(EntityFairyCube fairyCube) {
 		super(fairyCube);
 		this.setPriority(PriorityType.EXECUTER);
 		this.setStatusCount(2);
-		this.setElementNeedPerExp(new ElementStack(ESInit.ELEMENTS.WOOD, 8, 50), 16);
+		this.setElementNeedPerExp(new ElementStack(ESObjects.ELEMENTS.WOOD, 8, 50), 16);
 	}
 
 	int executeMode = 0;
@@ -198,7 +204,7 @@ public class FCMFarm extends FairyCubeModule {
 
 		if (executeMode == 0x01) {
 			List<EntityLivingBase> shearables = this.getTargets(master, range, stack, target);
-			float luck = this.getLuck();
+			double luck = this.getLuck();
 			for (EntityLivingBase living : shearables) {
 				if (!canShear(living, stack, world, living.getPosition())) continue;
 				List<ItemStack> drops = ((IShearable) living).onSheared(stack.copy(), world, living.getPosition(),
@@ -289,10 +295,10 @@ public class FCMFarm extends FairyCubeModule {
 		if (master != null) stack = master.getHeldItem(EnumHand.MAIN_HAND);
 
 		if (executeMode < 0x10) {
-			Entity target = fairyCube.world.getEntityByID(nbt.getInteger("E"));
+			Entity target = fairyCube.getWorld().getEntityByID(nbt.getInteger("E"));
 			if (target == null) return;
 			List<EntityLivingBase> entities = this.getTargets(master, range, stack, target);
-			for (EntityLivingBase living : entities) fairyCube.doClientEntityEffect(living, colors);
+			for (EntityLivingBase living : entities) fairyCube.doClientAttackEffect(living, colors);
 		} else {
 			int size = Math.max(1, (int) range / 2);
 			BlockPos pos = NBTHelper.getBlockPos(nbt, "P");
@@ -303,14 +309,14 @@ public class FCMFarm extends FairyCubeModule {
 					BlockPos at;
 					if (executeMode == 0x11) {
 						at = pos.add(x, 0, z);
-						if (!fairyCube.world.isAirBlock(at.up())) continue;
-						if (fairyCube.world.isAirBlock(at)) continue;
-					} else at = findAPlace(fairyCube.world, stack, pos.add(x, 0, z));
+						if (!fairyCube.getWorld().isAirBlock(at.up())) continue;
+						if (fairyCube.getWorld().isAirBlock(at)) continue;
+					} else at = findAPlace(fairyCube.getWorld(), stack, pos.add(x, 0, z));
 					if (at == null) continue;
 					list.add(at.up());
 				}
 			}
-			fairyCube.doClientCastingBlock(list, colors);
+			fairyCube.doClientCastingEffect(list, colors);
 		}
 	}
 

@@ -18,11 +18,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.container.ContainerElementTranslocator;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -30,7 +30,7 @@ import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 @SideOnly(Side.CLIENT)
 public class GuiElementTranslocator extends GuiNormal<ContainerElementTranslocator> {
 
-	private static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	private static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/container/element_translocator.png");
 
 	protected GuiTextField[] counts = new GuiTextField[2];

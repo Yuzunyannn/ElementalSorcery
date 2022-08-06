@@ -7,7 +7,7 @@ import mezz.jei.api.gui.IRecipeLayout;
 import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 
 public class MDCategory<T extends MDRecipeWrapper> implements IRecipeCategory<T> {
 
@@ -34,7 +34,7 @@ public class MDCategory<T extends MDRecipeWrapper> implements IRecipeCategory<T>
 
 	@Override
 	public String getModName() {
-		return ElementalSorcery.MODID;
+		return ESAPI.MODID;
 	}
 
 	@Override

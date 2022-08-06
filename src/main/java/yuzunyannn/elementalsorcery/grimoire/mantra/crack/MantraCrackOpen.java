@@ -17,28 +17,28 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementCrack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.crack.EffectCylinderCrackBlast;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class MantraCrackOpen extends MantraCrackCommon {
 
 	public static void attack(World world, BlockPos at, double size, Entity caster, double startCost,
 			boolean dropCrack) {
-		MantraCrackCommon mantra = (MantraCrackCommon) ESInit.MANTRAS.ECRACK_OPEN;
+		MantraCrackCommon mantra = (MantraCrackCommon) ESObjects.MANTRAS.ECRACK_OPEN;
 		VariableSet set = new VariableSet();
 		set.set(FRAGMENT, size / 6 * mantra.getMaxFragment());
 		set.set(VEC, new Vec3d(at).add(0.5, 0.5, 0.5));
@@ -54,7 +54,7 @@ public class MantraCrackOpen extends MantraCrackCommon {
 	public MantraCrackOpen() {
 		this.setTranslationKey("eCrackOpen");
 		this.setRarity(-1);
-		this.setMaxFragment(ElementHelper.toMagicFragment(new ElementStack(ESInit.ELEMENTS.STAR, 400, 500)));
+		this.setMaxFragment(ElementTransition.toMagicFragment(new ElementStack(ESObjects.ELEMENTS.STAR, 400, 500)));
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class MantraCrackOpen extends MantraCrackCommon {
 			}
 			if (sld == null) {
 				if (mdc.get(DROP_CRACK)) {
-					ItemStack elementCrack = new ItemStack(ESInit.ITEMS.ELEMENT_CRACK, 1);
+					ItemStack elementCrack = new ItemStack(ESObjects.ITEMS.ELEMENT_CRACK, 1);
 					EntityItem entityitem = ItemHelper.dropItem(world, caster.iWantDirectCaster().getPositionVector(),
 							elementCrack);
 					entityitem.motionX = entityitem.motionY = entityitem.motionZ = 0;

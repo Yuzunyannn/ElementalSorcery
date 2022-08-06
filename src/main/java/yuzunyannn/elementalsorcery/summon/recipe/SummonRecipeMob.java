@@ -13,17 +13,17 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.summon.Summon;
 import yuzunyannn.elementalsorcery.summon.SummonMob;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public class SummonRecipeMob extends SummonRecipe {
 
 	public static ItemStack createKeepsake(Class<? extends EntityLivingBase> clazz, int count, @Nullable Entity target,
 			boolean isChild) {
-		ItemStack keepsake = new ItemStack(ESInit.ITEMS.KYANITE);
+		ItemStack keepsake = new ItemStack(ESObjects.ITEMS.KYANITE);
 		NBTTagCompound nbt = keepsake.getOrCreateSubCompound("SummonMob");
 		ResourceLocation id = EntityList.getKey(clazz);
 		if (id != null) nbt.setString("id", id.toString());

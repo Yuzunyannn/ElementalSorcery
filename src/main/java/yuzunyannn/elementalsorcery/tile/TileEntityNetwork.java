@@ -18,10 +18,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.tile.IAliveStatusable;
 import yuzunyannn.elementalsorcery.api.tile.ICanSync;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.config.Config;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveStatusable {
 
@@ -96,7 +96,7 @@ public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveSta
 	public double getMaxRenderDistanceSquared() {
 		if (TILE_ENTITY_RENDER_DISTANCE > 0) return TILE_ENTITY_RENDER_DISTANCE * TILE_ENTITY_RENDER_DISTANCE;
 		if (TILE_ENTITY_RENDER_DISTANCE == -1) {
-			int distance = RenderHelper.getRenderDistanceChunks() * 16;
+			int distance = RenderFriend.getRenderDistanceChunks() * 16;
 			return distance * distance;
 		}
 		return 128 * 128;

@@ -4,8 +4,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 
 public interface IToElementInfo {
 
@@ -13,7 +12,7 @@ public interface IToElementInfo {
 	 * 获取本转化信息中的元素
 	 * 
 	 * @return 返回的数组下标越小表明这元素会被优先获取（部分地方可能只会获取0位置的元素）<br>
-	 *         非特殊情况请不要修改返回值!!!!!!入要修改，请使用{@link ElementHelper#copy}
+	 *         非特殊情况请不要修改返回值!!!!!!入要修改，请使用{@link ElementStack#copy}
 	 */
 	@Nonnull
 	ElementStack[] element();

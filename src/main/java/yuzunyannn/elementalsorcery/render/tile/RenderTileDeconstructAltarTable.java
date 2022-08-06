@@ -8,11 +8,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.model.ModelDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructAltarTable;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileDeconstructAltarTable extends TileEntitySpecialRenderer<TileDeconstructAltarTable>
@@ -33,11 +33,11 @@ public class RenderTileDeconstructAltarTable extends TileEntitySpecialRenderer<T
 	@Override
 	public void render(TileDeconstructAltarTable tile, double x, double y, double z, float partialTicks,
 			int destroyStage, float alpha) {
-		RenderHelper.bindDestoryTexture(texture, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
+		RenderFriend.bindDestoryTexture(texture, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
 		ItemStack stack = tile.getStack();
 		if (stack.isEmpty()) return;
@@ -46,7 +46,7 @@ public class RenderTileDeconstructAltarTable extends TileEntitySpecialRenderer<T
 		int n = MathHelper.ceil(MathHelper.sqrt(stack.getCount()) / 2);
 
 		GlStateManager.translate(x + 0.5 - n * 0.0125, y + 0.5, z + 0.5 - n * 0.0125);
-		yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
+		yuzunyannn.elementalsorcery.api.util.client.RenderFriend.layItemPositionFix(stack);
 
 		for (int i = 0; i < n; i++) {
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
@@ -58,7 +58,7 @@ public class RenderTileDeconstructAltarTable extends TileEntitySpecialRenderer<T
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
-		RenderHelper.render(stack, texture, MODEL, true);
+		RenderFriend.renderSpecialItem(stack, texture, MODEL, true);
 	}
 
 }

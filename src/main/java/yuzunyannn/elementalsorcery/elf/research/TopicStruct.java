@@ -4,8 +4,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class TopicStruct extends Topic {
@@ -37,10 +37,10 @@ public class TopicStruct extends Topic {
 			GlStateManager.rotate(18f * d, 0, 0, 1);
 		} else d = 20 - tick;
 
-		RenderHelper.drawTexturedRectInCenter(7, -7 - d, 3, 25, 55, 0, 3, 25, 128, 128);
-		RenderHelper.drawTexturedRectInCenter(-7, 7 + d, 3, 25, 55, 0, 3, 25, 128, 128);
-		RenderHelper.drawTexturedRectInCenter(7 + d, 7, 25, 3, 55, 0, 25, 3, 128, 128);
-		RenderHelper.drawTexturedRectInCenter(-7 - d, -7, 25, 3, 55, 0, 25, 3, 128, 128);
+		RenderFriend.drawTexturedRectInCenter(7, -7 - d, 3, 25, 55, 0, 3, 25, 128, 128);
+		RenderFriend.drawTexturedRectInCenter(-7, 7 + d, 3, 25, 55, 0, 3, 25, 128, 128);
+		RenderFriend.drawTexturedRectInCenter(7 + d, 7, 25, 3, 55, 0, 25, 3, 128, 128);
+		RenderFriend.drawTexturedRectInCenter(-7 - d, -7, 25, 3, 55, 0, 25, 3, 128, 128);
 
 		GlStateManager.popMatrix();
 	}

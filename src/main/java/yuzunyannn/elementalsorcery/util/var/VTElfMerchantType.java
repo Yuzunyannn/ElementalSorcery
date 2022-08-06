@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.util.var;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagString;
+import yuzunyannn.elementalsorcery.api.util.var.IVariableType;
 import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 
 public class VTElfMerchantType implements IVariableType<ElfMerchantType> {

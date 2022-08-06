@@ -10,11 +10,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.model.ModelRiteTable;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileRiteTable extends TileEntitySpecialRenderer<TileRiteTable> implements IRenderItem {
@@ -33,11 +33,11 @@ public class RenderTileRiteTable extends TileEntitySpecialRenderer<TileRiteTable
 		int lev = tile.getLevel();
 		lev = TileRiteTable.pLevel(lev);
 		if (lev >= TEXTURE.length) lev = TEXTURE.length - 1;
-		RenderHelper.bindDestoryTexture(TEXTURE[lev], destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
+		RenderFriend.bindDestoryTexture(TEXTURE[lev], destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
 		ItemStackHandler inv = tile.getInventory();
 		for (int i = 0; i < inv.getSlots(); i++) {
@@ -50,7 +50,7 @@ public class RenderTileRiteTable extends TileEntitySpecialRenderer<TileRiteTable
 			ox = MathHelper.cos(i * 1.92f) * 0.6f;
 			oy = MathHelper.sin(i * 2.8f) * 0.6f;
 			GlStateManager.translate(ox, 0.67f, oy);
-			yuzunyannn.elementalsorcery.util.render.RenderHelper.layItemPositionFix(stack);
+			yuzunyannn.elementalsorcery.api.util.client.RenderFriend.layItemPositionFix(stack);
 			Minecraft.getMinecraft().getRenderItem().renderItem(stack, ItemCameraTransforms.TransformType.FIXED);
 			GlStateManager.popMatrix();
 		}
@@ -65,7 +65,7 @@ public class RenderTileRiteTable extends TileEntitySpecialRenderer<TileRiteTable
 			lev = TileRiteTable.pLevel(lev);
 			if (lev >= TEXTURE.length) lev = TEXTURE.length - 1;
 		}
-		RenderHelper.render(stack, TEXTURE[lev], MODEL, true, 0.038, 0.0175, 0.2f, 0);
+		RenderFriend.renderSpecialItem(stack, TEXTURE[lev], MODEL, true, 0.038, 0.0175, 0.2f, 0);
 	}
 
 }

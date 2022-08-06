@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorLaboratory;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorLibrary;
@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.util.TextHelper;
 public class ElfRegister {
 
 	private static void register(String id, ElfEdificeFloor floor) {
-		floor = floor.setRegistryName(new ResourceLocation(ElementalSorcery.MODID, id));
+		floor = floor.setRegistryName(new ResourceLocation(ESAPI.MODID, id));
 		if (floor.getTranslationKey() == null) floor = floor.setTranslationKey(TextHelper.castToCamel(id));
 		ElfEdificeFloor.REGISTRY.register(floor);
 	}
@@ -43,7 +43,7 @@ public class ElfRegister {
 			if (!ElfProfession.class.isAssignableFrom(field.getType())) continue;
 			ElfProfession elfPro = (ElfProfession) field.get(ElfProfession.class);
 			String id = field.getName().toLowerCase();
-			elfPro.setRegistryName(new ResourceLocation(ElementalSorcery.MODID, id));
+			elfPro.setRegistryName(new ResourceLocation(ESAPI.MODID, id));
 			if (elfPro.getTranslationKey() == null) elfPro.setTranslationKey(TextHelper.castToCamel(id));
 			ElfProfession.REGISTRY.register(elfPro);
 		}

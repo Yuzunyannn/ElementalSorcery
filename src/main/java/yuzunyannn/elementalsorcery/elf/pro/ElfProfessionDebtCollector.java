@@ -26,12 +26,14 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.entity.EntityItemGoods;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
@@ -39,8 +41,6 @@ import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ElfProfessionDebtCollector extends ElfProfession {
@@ -54,7 +54,7 @@ public class ElfProfessionDebtCollector extends ElfProfession {
 		elf.setExperienceValue(0);
 		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(Items.FISHING_ROD));
 		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0.02f);
-		elf.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(ESInit.ITEMS.ELF_COIN));
+		elf.setItemStackToSlot(EntityEquipmentSlot.OFFHAND, new ItemStack(ESObjects.ITEMS.ELF_COIN));
 		elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0.02f);
 	}
 
@@ -150,7 +150,7 @@ public class ElfProfessionDebtCollector extends ElfProfession {
 
 	public boolean isAndDealBack(EntityElfBase elf) {
 		ItemStack hold = elf.getHeldItemMainhand();
-		if (hold.getItem() != ESInit.ITEMS.ELF_COIN) return false;
+		if (hold.getItem() != ESObjects.ITEMS.ELF_COIN) return false;
 		if (elf.world.isRemote) {
 			showBackEffect(elf);
 			return true;
@@ -175,7 +175,7 @@ public class ElfProfessionDebtCollector extends ElfProfession {
 	}
 
 	public void back(EntityElfBase elf) {
-		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESInit.ITEMS.ELF_COIN, 64, 0));
+		elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESObjects.ITEMS.ELF_COIN, 64, 0));
 	}
 
 	public void onOnbodyToDebtColltion(EntityElfBase elf) {

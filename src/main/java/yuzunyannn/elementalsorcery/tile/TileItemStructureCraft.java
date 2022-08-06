@@ -12,46 +12,37 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.play.server.SPacketUpdateTileEntity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
+import yuzunyannn.elementalsorcery.api.element.IISCraftHanlder;
+import yuzunyannn.elementalsorcery.api.element.IISCraftHanlderMap;
 import yuzunyannn.elementalsorcery.api.tile.IItemStructureCraft;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.crafting.ISMCCraftHandler;
-import yuzunyannn.elementalsorcery.crafting.ISSmeltCraftHandler;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public abstract class TileItemStructureCraft extends TileEntityNetwork implements IItemStructureCraft {
 
-	public interface IISCCCraftHanlder {
-		public List<Integer> getSlotIndexMap();
+	public static final Map<String, IISCraftHanlder> handlerMap = new HashMap<String, IISCraftHanlder>();
 
-		public ItemStack match(World world, BlockPos pos, Map<Integer, ItemStack> slotMap, List<ItemStack> inputs,
-				List<ItemStack> remains);
+	public static void init() {
+		ElementalSorcery.setAPIField(new IISCraftHanlderMap() {
+			@Override
+			public void put(String id, IISCraftHanlder handler) {
+				handlerMap.put(id, handler);
+			}
 
-		public default int complexIncr() {
-			return 0;
-		};
-
-		public boolean isKeyItem(ItemStack stack);
-
-		static public ItemStack getInput(Map<Integer, ItemStack> slotMap, int x, int y) {
-			ItemStack input = slotMap.get(TileItemStructureCraft.getSlotIndex(x, y));
-			input = input == null ? ItemStack.EMPTY : input;
-			return input;
-		};
-	}
-
-	public static final Map<String, IISCCCraftHanlder> handlerMap = new HashMap<String, IISCCCraftHanlder>();
-
-	static {
-		handlerMap.put("mc", new ISMCCraftHandler());
-		handlerMap.put("smelt", new ISSmeltCraftHandler());
-
+			@Override
+			public IISCraftHanlder get(String id) {
+				return handlerMap.get(id);
+			}
+		});
+		ESAPI.ISCraftMap.put("mc", new ISMCCraftHandler());
+//		ESAPI.ISCraftMap.put("smelt", new ISSmeltCraftHandler());
 	}
 
 	public static final ItemStack defaultTypeStack = new ItemStack(Blocks.CRAFTING_TABLE);
@@ -92,6 +83,12 @@ public abstract class TileItemStructureCraft extends TileEntityNetwork implement
 
 	public static int getSlotIndex(int x, int y) {
 		return x << 16 | y;
+	}
+
+	static public ItemStack getInput(Map<Integer, ItemStack> slotMap, int x, int y) {
+		ItemStack input = slotMap.get(getSlotIndex(x, y));
+		input = input == null ? ItemStack.EMPTY : input;
+		return input;
 	}
 
 	public static ItemStack getRealItemStack(ItemStack itemStack) {
@@ -153,8 +150,8 @@ public abstract class TileItemStructureCraft extends TileEntityNetwork implement
 				setCraftTypeName("mc");
 				return;
 			}
-			for (Entry<String, IISCCCraftHanlder> entry : handlerMap.entrySet()) {
-				IISCCCraftHanlder handler = entry.getValue();
+			for (Entry<String, IISCraftHanlder> entry : handlerMap.entrySet()) {
+				IISCraftHanlder handler = entry.getValue();
 				if (handler.isKeyItem(itemStack)) {
 					setTypeStack(itemStack);
 					setCraftTypeName(entry.getKey());
@@ -162,7 +159,7 @@ public abstract class TileItemStructureCraft extends TileEntityNetwork implement
 				}
 			}
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("选择处理器出现异常！", e);
+			ESAPI.logger.warn("选择处理器出现异常！", e);
 			setTypeStack(itemStack);
 			setCraftTypeName("mc");
 		}
@@ -177,9 +174,9 @@ public abstract class TileItemStructureCraft extends TileEntityNetwork implement
 		} else updateOutput();
 	}
 
-	public IISCCCraftHanlder getCraftHandler() {
+	public IISCraftHanlder getCraftHandler() {
 		String typeName = getTypeName();
-		IISCCCraftHanlder handler = handlerMap.get(typeName);
+		IISCraftHanlder handler = handlerMap.get(typeName);
 		return handler == null ? handlerMap.get("mc") : handler;
 	}
 
@@ -191,7 +188,7 @@ public abstract class TileItemStructureCraft extends TileEntityNetwork implement
 
 	public void refreshSlotMap() {
 		this.resetSlotMap();
-		IISCCCraftHanlder craftHanlder = this.getCraftHandler();
+		IISCraftHanlder craftHanlder = this.getCraftHandler();
 		if (craftHanlder == null) return;
 		List<Integer> list = craftHanlder.getSlotIndexMap();
 		for (int index : list) addSlot(index);
@@ -202,7 +199,7 @@ public abstract class TileItemStructureCraft extends TileEntityNetwork implement
 	public void updateOutput() {
 		this.output = ItemStack.EMPTY;
 		this.remains = this.inputs = null;
-		IISCCCraftHanlder craftHanlder = this.getCraftHandler();
+		IISCraftHanlder craftHanlder = this.getCraftHandler();
 		if (craftHanlder == null) return;
 		try {
 			List<ItemStack> inputs = new ArrayList<>();
@@ -215,7 +212,7 @@ public abstract class TileItemStructureCraft extends TileEntityNetwork implement
 			this.complexInrc = craftHanlder.complexIncr();
 			this.markDirty();
 		} catch (Throwable e) {
-			ElementalSorcery.logger.warn("处理合成出现异常！", e);
+			ESAPI.logger.warn("处理合成出现异常！", e);
 		}
 	}
 

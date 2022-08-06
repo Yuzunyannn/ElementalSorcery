@@ -11,10 +11,10 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectBatchType;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class EffectTreat extends Effect {
@@ -91,7 +91,7 @@ public class EffectTreat extends Effect {
 
 	protected void doRender(BufferBuilder bufferbuilder, double x, double y, double z, float partialTicks) {
 		float a = this.prevAlpha + (this.alpha - this.prevAlpha) * partialTicks;
-		float sh = RenderHelper.getPartialTicks(scaleHeight, prevScaleHeight, partialTicks);
+		float sh = RenderFriend.getPartialTicks(scaleHeight, prevScaleHeight, partialTicks);
 
 		float rX = ActiveRenderInfo.getRotationX();
 		float rZ = ActiveRenderInfo.getRotationZ();

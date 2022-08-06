@@ -9,8 +9,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class EffectFlash extends Effect {
@@ -39,7 +39,7 @@ public class EffectFlash extends Effect {
 		Minecraft mc = Minecraft.getMinecraft();
 		float w = mc.displayWidth;
 		float h = mc.displayHeight;
-		float a = RenderHelper.getPartialTicks(alpha, prevAlpha, partialTicks);
+		float a = RenderFriend.getPartialTicks(alpha, prevAlpha, partialTicks);
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0, 0, -100);
 		GlStateManager.disableTexture2D();

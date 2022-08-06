@@ -28,24 +28,24 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.event.IWorldTickTask;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.LamdaReference;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.element.ElementAnalysisPacket;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
@@ -257,8 +257,8 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 				if (!world.isBlockLoaded(pos)) return ITickTask.END;
 				if ((this.tick++) % 5 != 0) return ITickTask.SUCCESS;
 				Element element = elements.get(this.index++);
-				if (element == ESInit.ELEMENTS.WATER) return ITickTask.SUCCESS;
-				if (element == ESInit.ELEMENTS.FIRE) return ITickTask.SUCCESS;
+				if (element == ESObjects.ELEMENTS.WATER) return ITickTask.SUCCESS;
+				if (element == ESObjects.ELEMENTS.FIRE) return ITickTask.SUCCESS;
 				BlockPos at = pos.add(RandomHelper.rand.nextGaussian() * 4, RandomHelper.rand.nextGaussian() * 4,
 						RandomHelper.rand.nextGaussian() * 4);
 				ElementExplosion.doExplosion(world, at, new ElementStack(element, 5000, 5000), null);
@@ -267,7 +267,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 		});
 
 		EntityItem entityitem = ItemHelper.dropItem(world, new Vec3d(pos).add(0.5, 0.5, 0.5),
-				new ItemStack(ESInit.ITEMS.COLLAPSE));
+				new ItemStack(ESObjects.ITEMS.COLLAPSE));
 		entityitem.motionX = entityitem.motionY = entityitem.motionZ = 0;
 		entityitem.velocityChanged = true;
 		entityitem.setNoDespawn();
@@ -296,8 +296,8 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 			ItemStack stack = itemGetter.getStack();
 			if (stack.isEmpty()) return false;
 
-			if (stack.getItem() == ESInit.ITEMS.BLESSING_JADE) ppRef.set(ppRef.get() + 1);
-			if (stack.getItem() == ESInit.ITEMS.CALAMITY_GEM) ppRef.set(ppRef.get() - 1);
+			if (stack.getItem() == ESObjects.ITEMS.BLESSING_JADE) ppRef.set(ppRef.get() + 1);
+			if (stack.getItem() == ESObjects.ITEMS.CALAMITY_GEM) ppRef.set(ppRef.get() - 1);
 
 			NBTTagCompound nbt = stack.getTagCompound();
 			if (nbt == null) return true;

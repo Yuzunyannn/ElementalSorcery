@@ -6,14 +6,14 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.container.ContainerRiteManual;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 
 @SideOnly(Side.CLIENT)
 public class GuiRiteManual extends GuiContainer {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/rite_manual.png");
 	final ContainerRiteManual container;
 

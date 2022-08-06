@@ -10,14 +10,14 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
-import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTimeHourglass;
 import yuzunyannn.elementalsorcery.ts.PocketWatch;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
@@ -42,14 +42,14 @@ public class MantraTimeHourglass extends MantraCommon {
 
 	@Override
 	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
-		ElementStack stack = getElement(caster, ESInit.ELEMENTS.STAR, 1, 2);
+		ElementStack stack = getElement(caster, ESObjects.ELEMENTS.STAR, 1, 2);
 		if (stack.isEmpty()) return;
 
 		if (target instanceof EntityLivingBase) {
 			float potent = caster.iWantBePotent(0.3f, false);
 			if (!world.isRemote) {
 				int time = (int) ((1 + potent) * stack.getPower());
-				((EntityLivingBase) target).addPotionEffect(new PotionEffect(ESInit.POTIONS.TIME_SLOW, time, 3));
+				((EntityLivingBase) target).addPotionEffect(new PotionEffect(ESObjects.POTIONS.TIME_SLOW, time, 3));
 			}
 		}
 
@@ -75,7 +75,7 @@ public class MantraTimeHourglass extends MantraCommon {
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		if (!mdc.isMarkContinue()) return;
 		super.onSpellingEffect(world, data, caster);
-		ElementStack star = mdc.get(ESInit.ELEMENTS.STAR);
+		ElementStack star = mdc.get(ESObjects.ELEMENTS.STAR);
 		if (star.getCount() > 50 && hasEffectFlags(world, data, caster, MantraEffectFlags.MAGIC_CIRCLE)) out: {
 			IWorldObject co = caster.iWantCaster();
 			EntityLivingBase eb = co.asEntityLivingBase();
@@ -98,10 +98,10 @@ public class MantraTimeHourglass extends MantraCommon {
 		float potent = mdc.get(POTENT_POWER);
 		if (potent >= TIME_STOP_MIN_POTENT) {
 			if (speedTick % 30 != 0) return;
-			CollectResult cr = mdc.tryCollect(caster, ESInit.ELEMENTS.STAR, 1, 160, 200);
+			CollectResult cr = mdc.tryCollect(caster, ESObjects.ELEMENTS.STAR, 1, 160, 200);
 			mdc.setProgress(cr.getStackCount(), 200);
 		} else {
-			CollectResult cr = mdc.tryCollect(caster, ESInit.ELEMENTS.STAR, 1, 5, 50);
+			CollectResult cr = mdc.tryCollect(caster, ESObjects.ELEMENTS.STAR, 1, 5, 50);
 			mdc.setProgress(cr.getStackCount(), 50);
 		}
 	}
@@ -110,7 +110,7 @@ public class MantraTimeHourglass extends MantraCommon {
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon mdc = (MantraDataCommon) data;
 
-		ElementStack star = mdc.get(ESInit.ELEMENTS.STAR);
+		ElementStack star = mdc.get(ESObjects.ELEMENTS.STAR);
 		if (star.isEmpty()) return;
 		float potent = mdc.get(POTENT_POWER);
 
@@ -138,7 +138,7 @@ public class MantraTimeHourglass extends MantraCommon {
 				if (EntityHelper.isSameTeam(self, entity)) continue;
 			}
 			if (world.isRemote) MantraBlockCrash.addBlockElementEffect(entity.getPositionEyes(0), getColor(data));
-			else entity.addPotionEffect(new PotionEffect(ESInit.POTIONS.TIME_SLOW, time, 3));
+			else entity.addPotionEffect(new PotionEffect(ESObjects.POTIONS.TIME_SLOW, time, 3));
 			if (--count <= 0) break;
 		}
 	}

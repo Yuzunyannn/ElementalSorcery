@@ -8,17 +8,17 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3i;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerElementBoard;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class GuiElementBoard extends GuiContainer {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/element_board.png");
 	final ContainerElementBoard container;
 
@@ -47,7 +47,7 @@ public class GuiElementBoard extends GuiContainer {
 		ElementStack sample = container.sample;
 
 		Vec3d c = ColorHelper.color(sample.getColor());
-		float rate = RenderHelper.getPartialTicks(this.rate, this.prevRate, partialTicks);
+		float rate = RenderFriend.getPartialTicks(this.rate, this.prevRate, partialTicks);
 		float progress = Math.min(1, rate);
 
 		GlStateManager.pushMatrix();

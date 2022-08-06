@@ -31,14 +31,14 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ESData;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptMagic;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
 import yuzunyannn.elementalsorcery.block.BlockLifeFlower;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityThrow;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
@@ -119,7 +119,7 @@ public class ItemResonantCrystal extends ItemCrystal implements EntityThrow.IIte
 			if (pos == null) break sp;
 			IBlockState state = world.getBlockState(pos);
 			Block block = state.getBlock();
-			if (block == ESInit.BLOCKS.LIFE_FLOWER) {
+			if (block == ESObjects.BLOCKS.LIFE_FLOWER) {
 				// 植物花
 				((BlockLifeFlower) block).tryGrowAll(world, pos);
 				return 5;
@@ -133,7 +133,7 @@ public class ItemResonantCrystal extends ItemCrystal implements EntityThrow.IIte
 					((IGrowable) block).grow(world, rand, pos, state);
 					return 5;
 				}
-			} else if (block == ESInit.BLOCKS.ASTONE) {
+			} else if (block == ESObjects.BLOCKS.ASTONE) {
 				if (state == block.getDefaultState().withProperty(BlockAStone.VARIANT,
 						BlockAStone.EnumType.FRAGMENTED)) {
 					world.setBlockState(pos, state.withProperty(BlockAStone.VARIANT, BlockAStone.EnumType.STONE));

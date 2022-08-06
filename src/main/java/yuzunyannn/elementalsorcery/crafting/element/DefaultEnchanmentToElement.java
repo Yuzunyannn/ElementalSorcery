@@ -6,11 +6,11 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.math.MathHelper;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 
 public class DefaultEnchanmentToElement implements IToElement {
 
@@ -24,8 +24,8 @@ public class DefaultEnchanmentToElement implements IToElement {
 		else if (nbt.hasKey("ench", NBTTag.TAG_LIST)) list = nbt.getTagList("ench", NBTTag.TAG_COMPOUND);
 		if (list == null || list.isEmpty()) return null;
 
-		ElementStack knowledge = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 0, 50);
-		ElementStack magic = new ElementStack(ESInit.ELEMENTS.MAGIC, 0, 20);
+		ElementStack knowledge = new ElementStack(ESObjects.ELEMENTS.KNOWLEDGE, 0, 50);
+		ElementStack magic = new ElementStack(ESObjects.ELEMENTS.MAGIC, 0, 20);
 		float complex = 1;
 		int treasure = 0;
 		for (NBTBase base : list) {

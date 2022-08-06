@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class TopicBiology extends Topic {
@@ -36,28 +36,28 @@ public class TopicBiology extends Topic {
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(-move, -move, 0);
 			GlStateManager.rotate(MathHelper.cos(tick * 0.5f + partialTicks) * 20, 0, 0, 1);
-			RenderHelper.drawTexturedRectInCenter(0, 0, 16, 16, 55 + 0, 25 + 0, 8, 8, 128, 128);
+			RenderFriend.drawTexturedRectInCenter(0, 0, 16, 16, 55 + 0, 25 + 0, 8, 8, 128, 128);
 			GlStateManager.popMatrix();
 		}
 		{
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(move, -move, 0);
 			GlStateManager.rotate(MathHelper.sin(tick * 0.5f + partialTicks) * 20, 0, 0, 1);
-			RenderHelper.drawTexturedRectInCenter(0, 0, 16, 16, 55 + 8, 25 + 8, 8, 8, 128, 128);
+			RenderFriend.drawTexturedRectInCenter(0, 0, 16, 16, 55 + 8, 25 + 8, 8, 8, 128, 128);
 			GlStateManager.popMatrix();
 		}
 		{
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(move, move, 0);
 			GlStateManager.rotate(MathHelper.cos(tick * 0.5f + 3.14f / 4 + partialTicks) * 20, 0, 0, 1);
-			RenderHelper.drawTexturedRectInCenter(0, 0, 16, 16, 55 + 0, 25 + 8, 8, 8, 128, 128);
+			RenderFriend.drawTexturedRectInCenter(0, 0, 16, 16, 55 + 0, 25 + 8, 8, 8, 128, 128);
 			GlStateManager.popMatrix();
 		}
 		{
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(-move, move, 0);
 			GlStateManager.rotate(MathHelper.sin(tick * 0.5f + 3.14f / 4 + partialTicks) * 20, 0, 0, 1);
-			RenderHelper.drawTexturedRectInCenter(0, 0, 16, 16, 55 + 8, 25 + 0, 8, 8, 128, 128);
+			RenderFriend.drawTexturedRectInCenter(0, 0, 16, 16, 55 + 8, 25 + 0, 8, 8, 128, 128);
 			GlStateManager.popMatrix();
 		}
 

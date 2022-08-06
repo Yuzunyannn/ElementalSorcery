@@ -17,11 +17,11 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.block.container.BlockHearth;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.item.tool.ItemKyaniteTools;
 import yuzunyannn.elementalsorcery.util.IField;
@@ -135,11 +135,11 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 		// 特殊
 		if (!extra.isEmpty()) {
 			// 如果额外物品是魔法末影之眼
-			if (extra.getItem() == ESInit.ITEMS.MAGICAL_ENDER_EYE) {
+			if (extra.getItem() == ESObjects.ITEMS.MAGICAL_ENDER_EYE) {
 				int power = extra.getCount();
 				// 如果有8个以上的魔法末影之眼，就可以直接把珍珠或者眼睛烧成带有魔力的末影之眼
 				if ((stack.getItem() == Items.ENDER_EYE || stack.getItem() == Items.ENDER_PEARL) && power >= 8) {
-					return new ItemStack(ESInit.ITEMS.MAGICAL_ENDER_EYE, 1);
+					return new ItemStack(ESObjects.ITEMS.MAGICAL_ENDER_EYE, 1);
 				}
 				// 如果有1个以上的魔法末影之眼，可以将蓝晶石工具变成可以吸收元素的工具
 				if (power >= 1 && stack.getItem() instanceof ItemKyaniteTools.toolsCapability
@@ -181,24 +181,24 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 		// 额外物品是末影之眼+概率
 		float add = 0.0f;
 		if (extra.getItem() == Items.ENDER_EYE) add = 0.25f;
-		if (extra.getItem() == ESInit.ITEMS.MAGICAL_ENDER_EYE) add = 0.5f;
+		if (extra.getItem() == ESObjects.ITEMS.MAGICAL_ENDER_EYE) add = 0.5f;
 
 		if (OreHelper.isOre(stackOld) && Math.random() < 0.01f + add / 16)
 			return ItemBlessingJadePiece.createPiece(6);
 
-		if (stackNew.getItem() == ESInit.ITEMS.KYANITE) {
+		if (stackNew.getItem() == ESObjects.ITEMS.KYANITE) {
 			switch (material()) {
 			case IRON:
-				if (Math.random() < 0.10f + add) return new ItemStack(ESInit.ITEMS.MAGIC_PIECE);
+				if (Math.random() < 0.10f + add) return new ItemStack(ESObjects.ITEMS.MAGIC_PIECE);
 				break;
 			case KYANITE:
 				if (Math.random() < 0.50f + add)
-					return new ItemStack(ESInit.ITEMS.MAGIC_PIECE, RandomHelper.randomRange(1, 3));
+					return new ItemStack(ESObjects.ITEMS.MAGIC_PIECE, RandomHelper.randomRange(1, 3));
 				break;
 			default:
 				break;
 			}
-		} else if (extra.getItem() == ESInit.ITEMS.MAGICAL_ENDER_EYE) {
+		} else if (extra.getItem() == ESObjects.ITEMS.MAGICAL_ENDER_EYE) {
 
 		}
 		// 有一定概率会出小颗粒， 蓝晶石箱子一定会出
@@ -216,7 +216,7 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 	 */
 	public void finishOnceSmelt(@Nonnull ItemStack extra) {
 		if (extra.isEmpty()) return;
-		if (extra.getItem() == ESInit.ITEMS.MAGICAL_ENDER_EYE) {
+		if (extra.getItem() == ESObjects.ITEMS.MAGICAL_ENDER_EYE) {
 			if (extra.attemptDamageItem(1, world.rand, null)) {
 				extra.shrink(1);
 			}
@@ -244,7 +244,7 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 		if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
 			IBlockState state = world.getBlockState(pos);
 			EnumFacing backFace;
-			if (state.getBlock() == ESInit.BLOCKS.SMELT_BOX)
+			if (state.getBlock() == ESObjects.BLOCKS.SMELT_BOX)
 				backFace = state.getValue(BlockSmeltBox.FACING).getOpposite();
 			else backFace = EnumFacing.DOWN;
 			if (facing == EnumFacing.DOWN || facing == backFace) return (T) inventoryResult;
@@ -333,7 +333,7 @@ public class TileSmeltBox extends TileEntity implements IAcceptBurnPower, ITicka
 		}
 		// 检查是否有带有魔力的末影之眼
 		ItemStack extra = inventoryExtra.getStackInSlot(0);
-		if (!extra.isEmpty() && extra.getItem() == ESInit.ITEMS.MAGICAL_ENDER_EYE)
+		if (!extra.isEmpty() && extra.getItem() == ESObjects.ITEMS.MAGICAL_ENDER_EYE)
 			hasMagicalEnderEye = extra.getCount();
 	}
 

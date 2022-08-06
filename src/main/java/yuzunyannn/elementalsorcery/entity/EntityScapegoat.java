@@ -24,8 +24,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 
 public class EntityScapegoat extends EntityLiving {
@@ -102,7 +102,7 @@ public class EntityScapegoat extends EntityLiving {
 		float f = this.getMaxHealth() - h;
 
 		this.playSound(this.getDeathSound(), 1.0F, 1.0F);
-		ItemStack stack = new ItemStack(ESInit.ITEMS.SCAPEGOAT, 1, MathHelper.clamp((int) f, 0, 64));
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.SCAPEGOAT, 1, MathHelper.clamp((int) f, 0, 64));
 		if (itemNBT != null) stack.setTagCompound(itemNBT);
 		this.entityDropItem(stack, 0);
 		this.setDead();

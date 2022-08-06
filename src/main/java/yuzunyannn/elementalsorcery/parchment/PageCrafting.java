@@ -13,9 +13,9 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.container.ContainerSupremeTable;
-import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -71,7 +71,7 @@ public class PageCrafting extends PageEasy {
 	// 添加es合成表
 	private boolean addESRecipe(ItemStack stack) {
 		yuzunyannn.elementalsorcery.api.crafting.IElementRecipe irecipe = null;
-		List<yuzunyannn.elementalsorcery.api.crafting.IElementRecipe> lsit = RecipeManagement.instance.getValues();
+		List<yuzunyannn.elementalsorcery.api.crafting.IElementRecipe> lsit = ESAPI.recipeMgr.getValues();
 		for (yuzunyannn.elementalsorcery.api.crafting.IElementRecipe ire : lsit) {
 			if (ItemHelper.areItemsEqual(ire.getRecipeOutput(), stack)) {
 				irecipe = ire;

@@ -11,7 +11,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 
@@ -24,13 +24,13 @@ public class PotionRebirthFromFire extends PotionCommon {
 	}
 
 	public static boolean needRebirth(EntityLivingBase entity, DamageSource source) {
-		return entity.isPotionActive(ESInit.POTIONS.REBIRTH_FROM_FIRE) && entity.isBurning() && source.isFireDamage();
+		return entity.isPotionActive(ESObjects.POTIONS.REBIRTH_FROM_FIRE) && entity.isBurning() && source.isFireDamage();
 	}
 
 	public static void doRebirth(EntityLivingBase entity) {
 		if (entity.world.isRemote) return;
 
-		PotionEffect effect = entity.getActivePotionEffect(ESInit.POTIONS.REBIRTH_FROM_FIRE);
+		PotionEffect effect = entity.getActivePotionEffect(ESObjects.POTIONS.REBIRTH_FROM_FIRE);
 		int amplifier = effect.getAmplifier();
 		entity.setHealth(0.5f);
 

@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.ts.PocketWatch.WorldData;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 
@@ -68,9 +68,9 @@ public class PocketWatchClient {
 	}
 
 	static public void bindGray() {
-		if (ElementalSorcery.isDevelop) {
+		if (ESAPI.isDevelop) {
 			if (!isActive()) {
-				ElementalSorcery.logger.warn("颜色测试异常");
+				ESAPI.logger.warn("颜色测试异常");
 			}
 		}
 		if (!Shaders.GRAY.isActive()) Shaders.GRAY.bind();

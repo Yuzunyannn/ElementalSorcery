@@ -13,7 +13,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -144,7 +144,7 @@ public class BuilderHelper {
 	// 树叶灯
 	public void genLeafLamp(BlockPos at) {
 		IBlockState GLOWSTONE = Blocks.GLOWSTONE.getDefaultState();
-		IBlockState LEAF = ESInit.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
+		IBlockState LEAF = ESObjects.BLOCKS.ELF_LEAF.getDefaultState().withProperty(BlockLeaves.DECAYABLE, false);
 		builder.setBlockState(at, GLOWSTONE);
 		for (EnumFacing h : EnumFacing.VALUES) builder.trySetBlockState(at.offset(h, 1), LEAF);
 	}

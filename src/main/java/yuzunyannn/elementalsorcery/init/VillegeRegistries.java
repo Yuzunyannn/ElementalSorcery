@@ -12,6 +12,7 @@ import net.minecraft.village.MerchantRecipeList;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.worldgen.VillageESHall;
@@ -20,8 +21,8 @@ public class VillegeRegistries {
 
 	public static void registerAll() {
 		// 新的职业
-		ForgeRegistries.VILLAGER_PROFESSIONS.register(ESInit.VILLAGE.ES_VILLEGER);
-		initPro(ESInit.VILLAGE.ES_VILLEGER);
+		ForgeRegistries.VILLAGER_PROFESSIONS.register(ESObjects.VILLAGE.ES_VILLEGER);
+		initPro(ESObjects.VILLAGE.ES_VILLEGER);
 		// 新的村庄建筑
 		MapGenStructureIO.registerStructureComponent(VillageESHall.class, "VESuvs");
 		VillagerRegistry.instance().registerVillageCreationHandler(new VillageESHall.VillageCreationHandler());
@@ -32,9 +33,9 @@ public class VillegeRegistries {
 		// 卖纸商
 		VillagerRegistry.VillagerCareer paperman = new VillagerRegistry.VillagerCareer(pro, "paperman");
 		paperman.addTrade(1,
-				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInit.ITEMS.PARCHMENT),
+				new EntityVillager.ListItemForEmeralds(new ItemStack(ESObjects.ITEMS.PARCHMENT),
 						new PriceInfo(8, 12)),
-				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInit.ITEMS.SCROLL),
+				new EntityVillager.ListItemForEmeralds(new ItemStack(ESObjects.ITEMS.SCROLL),
 						new PriceInfo(24, 32)));
 		// 元素知识提供者
 		VillagerRegistry.VillagerCareer eslearner = new VillagerRegistry.VillagerCareer(pro, "eslearner");
@@ -42,9 +43,9 @@ public class VillegeRegistries {
 		// 元素魔法商
 		VillagerRegistry.VillagerCareer magicallearner = new VillagerRegistry.VillagerCareer(pro, "magicallearner");
 		magicallearner.addTrade(1,
-				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInit.ITEMS.MAGIC_PIECE),
+				new EntityVillager.ListItemForEmeralds(new ItemStack(ESObjects.ITEMS.MAGIC_PIECE),
 						new PriceInfo(16, 32)),
-				new EntityVillager.ListItemForEmeralds(new ItemStack(ESInit.ITEMS.MAGIC_STONE),
+				new EntityVillager.ListItemForEmeralds(new ItemStack(ESObjects.ITEMS.MAGIC_STONE),
 						new PriceInfo(64, 64)));
 	}
 
@@ -65,7 +66,7 @@ public class VillegeRegistries {
 			recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 5),
 					ItemParchment.getParchment(Pages.getPage(id).getId())));
 			if (random.nextFloat() < 0.5) recipeList.add(new MerchantRecipe(new ItemStack(Items.EMERALD, 16),
-					new ItemStack(ESInit.ITEMS.RITE_MANUAL)));
+					new ItemStack(ESObjects.ITEMS.RITE_MANUAL)));
 		}
 
 	}

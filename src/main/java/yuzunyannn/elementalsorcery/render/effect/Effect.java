@@ -210,7 +210,7 @@ public abstract class Effect {
 		GlStateManager.depthMask(false);
 		GlStateManager.enableNormalize();
 		RenderHelper.disableStandardItemLighting();
-		yuzunyannn.elementalsorcery.util.render.RenderHelper.disableLightmap(true);
+		yuzunyannn.elementalsorcery.api.util.client.RenderFriend.disableLightmap(true);
 		for (EffectGroup group : worldGroupList) group.render(partialTicks);
 		GlStateManager.depthMask(true);
 		GlStateManager.enableCull();

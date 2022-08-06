@@ -1,7 +1,7 @@
 package yuzunyannn.elementalsorcery.init;
 
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
 import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionDelegate;
 import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionNeedExplore;
@@ -23,11 +23,11 @@ import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardTopic;
 public class QuestRegister {
 
 	private static void register(String id, Class<? extends QuestCondition> cls) {
-		QuestCondition.REGISTRY.register(new ResourceLocation(ElementalSorcery.MODID, id), cls);
+		QuestCondition.REGISTRY.register(new ResourceLocation(ESAPI.MODID, id), cls);
 	}
 
 	private static void registerReward(String id, Class<? extends QuestReward> cls) {
-		QuestReward.REGISTRY.register(new ResourceLocation(ElementalSorcery.MODID, id), cls);
+		QuestReward.REGISTRY.register(new ResourceLocation(ESAPI.MODID, id), cls);
 	}
 
 	static public void registerAll() {

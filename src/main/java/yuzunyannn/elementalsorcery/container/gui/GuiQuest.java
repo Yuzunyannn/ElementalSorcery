@@ -16,7 +16,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerQuest;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
@@ -25,12 +26,11 @@ import yuzunyannn.elementalsorcery.elf.quest.QuestStatus;
 import yuzunyannn.elementalsorcery.elf.quest.QuestType;
 import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
 import yuzunyannn.elementalsorcery.elf.quest.reward.QuestReward;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class GuiQuest extends GuiContainer {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/elf/quest.png");
 
 	protected final ContainerQuest container;
@@ -71,7 +71,7 @@ public class GuiQuest extends GuiContainer {
 		int color = 0x4b2811;
 		final int width = 207;
 		final int height = 219;
-		RenderHelper.drawTexturedModalRect(0, 0, 0, 0, width, height, 256, 256);
+		RenderFriend.drawTexturedModalRect(0, 0, 0, 0, width, height, 256, 256);
 		QuestType type = quest.getType();
 		QuestDescribe describe = type.getDescribe();
 		ArrayList<QuestCondition> preConditions = type.getPreconditions();
@@ -138,7 +138,7 @@ public class GuiQuest extends GuiContainer {
 			GlStateManager.translate(x, y, 10);
 			GlStateManager.rotate(20, 0, 0, 1);
 			GlStateManager.scale(3, 3, 3);
-			RenderHelper.drawTexturedModalRect(0, 0, 208, 0, 48, 20, 256, 256);
+			RenderFriend.drawTexturedModalRect(0, 0, 208, 0, 48, 20, 256, 256);
 			GlStateManager.popMatrix();
 		}
 	}

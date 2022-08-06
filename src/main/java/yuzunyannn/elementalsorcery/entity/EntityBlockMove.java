@@ -44,17 +44,17 @@ import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.building.BlockItemTypeInfo;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.ESFakePlayer;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnData {
 
@@ -307,7 +307,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			try {
 				this.doFinish();
 			} catch (Exception e) {
-				ElementalSorcery.logger.warn("EntityBlockMove放置物品时出现异常！", e);
+				ESAPI.logger.warn("EntityBlockMove放置物品时出现异常！", e);
 				ExceptionHelper.warnSend(world, "EntityBlockMove放置物品时出现异常！");
 			}
 			this.setDead();
@@ -401,7 +401,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 
 		ResourceLocation id = TileEntity.getKey(tile.getClass());
 		if (id == null) {
-			ElementalSorcery.logger.warn("回复tile数据时，找不到tile:" + tile.getClass());
+			ESAPI.logger.warn("回复tile数据时，找不到tile:" + tile.getClass());
 			return new NBTTagCompound();
 		}
 		tileSave.setString("id", id.toString());
@@ -543,10 +543,10 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 	@SideOnly(Side.CLIENT)
 	public float getScale(float partialTicks) {
 		if (rate < 0) {
-			float r = 1 + RenderHelper.getPartialTicks(rate, rate - 0.1f, partialTicks);
+			float r = 1 + RenderFriend.getPartialTicks(rate, rate - 0.1f, partialTicks);
 			return MathHelper.sin(r * 3.1415926f / 4 * 3) / 0.7071f;
 		}
-		return RenderHelper.getPartialTicks(scale, lastTickSacle, partialTicks);
+		return RenderFriend.getPartialTicks(scale, lastTickSacle, partialTicks);
 	}
 
 	@SideOnly(Side.CLIENT)

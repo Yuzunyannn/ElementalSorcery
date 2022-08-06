@@ -19,7 +19,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
@@ -104,7 +104,7 @@ public class SummonMob extends SummonCommon {
 					.getConstructor(World.class);
 			entity = constructor.newInstance(world);
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("召唤仪式mob反射异常", e);
+			ESAPI.logger.warn("召唤仪式mob反射异常", e);
 			entity = new EntityZombie(world);
 		}
 		if (isChild) {

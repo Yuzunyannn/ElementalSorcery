@@ -17,12 +17,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.potion.PotionPoundWalker;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
@@ -35,14 +35,14 @@ public class MantraBlockCrash extends MantraCommon {
 		this.setColor(0x785439);
 		this.setIcon("block_crash");
 		this.setRarity(110);
-		this.setDirectLaunchFragmentMantraLauncher(new ElementStack(ESInit.ELEMENTS.EARTH, 20, 25), 2, 0.0075, null);
+		this.setDirectLaunchFragmentMantraLauncher(new ElementStack(ESObjects.ELEMENTS.EARTH, 20, 25), 2, 0.0075, null);
 	}
 
 	@Override
 	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
 		super.potentAttack(world, grimoire, caster, target);
 
-		ElementStack stack = getElement(caster, ESInit.ELEMENTS.EARTH, 2, 25);
+		ElementStack stack = getElement(caster, ESObjects.ELEMENTS.EARTH, 2, 25);
 		if (stack.isEmpty()) return;
 
 		Vec3d dir = caster.iWantDirection();
@@ -58,7 +58,7 @@ public class MantraBlockCrash extends MantraCommon {
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		ElementStack need = new ElementStack(ESInit.ELEMENTS.EARTH, 5, 25);
+		ElementStack need = new ElementStack(ESObjects.ELEMENTS.EARTH, 5, 25);
 		ElementStack get = caster.iWantSomeElement(need, false);
 		dataEffect.markContinue(!get.isEmpty());
 	}
@@ -105,7 +105,7 @@ public class MantraBlockCrash extends MantraCommon {
 	public boolean afterSpelling(World world, IMantraData data, ICaster caster) {
 		if (world.isRemote) return false;
 		MantraDataCommon mdc = (MantraDataCommon) data;
-		ElementStack eStack = mdc.get(ESInit.ELEMENTS.EARTH);
+		ElementStack eStack = mdc.get(ESObjects.ELEMENTS.EARTH);
 		if (eStack.isEmpty()) return false;
 		float count = eStack.getCount();
 		if (caster.iWantKnowCastTick() % 5 == 0) eStack.shrink(1);
@@ -133,7 +133,7 @@ public class MantraBlockCrash extends MantraCommon {
 		if (!BlockHelper.isReplaceBlock(world, pos.up())) return;
 		if (!BlockHelper.isHardnessLower(world, pos, 75)) return;
 
-		ElementStack stack = getElement(caster, ESInit.ELEMENTS.EARTH, needElementPoint, 25);
+		ElementStack stack = getElement(caster, ESObjects.ELEMENTS.EARTH, needElementPoint, 25);
 		if (stack.isEmpty()) return;
 
 		float speed = MathHelper.clamp(MathHelper.sqrt(stack.getPower() / 10) / 4, 1, 5);

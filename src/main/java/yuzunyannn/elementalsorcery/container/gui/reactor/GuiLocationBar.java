@@ -5,9 +5,9 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.math.BlockPos;
+import yuzunyannn.elementalsorcery.api.util.WorldLocation;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.util.helper.Color;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class GuiLocationBar {
 
@@ -58,7 +58,7 @@ public class GuiLocationBar {
 		GlStateManager.translate(x, y, 0);
 		GuiElementReactor.COMS.bind();
 
-		float myAlpha = RenderHelper.getPartialTicks(this.alpha, this.prevAlpha, partialTicks);
+		float myAlpha = RenderFriend.getPartialTicks(this.alpha, this.prevAlpha, partialTicks);
 		alpha = alpha * myAlpha;
 		int ialpha = Math.max((int) (alpha * 255), 0x04);
 		int iColor = color.toInt() | (ialpha << 24);
@@ -72,13 +72,13 @@ public class GuiLocationBar {
 		float dwScale = 1;
 		if (dw > 11) dwScale = 11 / (float) dw;
 		{
-			RenderHelper.drawTexturedRectInCenter(-xoff + offset, 0, 11, 10, 44, 20, 11, 10, 256, 256);
-			RenderHelper.drawTexturedRectInCenter(xoff + offset, 0, 11, 10, 79, 20, 11, 10, 256, 256);
-			RenderHelper.drawTexturedRectInCenter(offset, 0, barWidth - 22, 10, 55, 20, 24, 10, 256, 256);
+			RenderFriend.drawTexturedRectInCenter(-xoff + offset, 0, 11, 10, 44, 20, 11, 10, 256, 256);
+			RenderFriend.drawTexturedRectInCenter(xoff + offset, 0, 11, 10, 79, 20, 11, 10, 256, 256);
+			RenderFriend.drawTexturedRectInCenter(offset, 0, barWidth - 22, 10, 55, 20, 24, 10, 256, 256);
 		}
 		if (isLeft) {
-			RenderHelper.drawTexturedRectInCenter(xoff + offset, 0, -11, -10, 44, 30, 11, 10, 256, 256);
-			RenderHelper.drawTexturedRectInCenter(-xoff + offset, 0, -11, -10, 79, 30, 11, 10, 256, 256);
+			RenderFriend.drawTexturedRectInCenter(xoff + offset, 0, -11, -10, 44, 30, 11, 10, 256, 256);
+			RenderFriend.drawTexturedRectInCenter(-xoff + offset, 0, -11, -10, 79, 30, 11, 10, 256, 256);
 			GlStateManager.translate(-w / 2.0f + offset, -4.5, 0);
 			fontRenderer.drawString(string, 0, 0, iColor);
 			GlStateManager.translate(w / 2.0f - offset, 4.5, 0);
@@ -92,8 +92,8 @@ public class GuiLocationBar {
 			}
 			GlStateManager.translate(-offset + barWidth / 2 + (dw / 2.0f - 5.5f) * dwScale, 4.5 * dwScale, 0);
 		} else {
-			RenderHelper.drawTexturedRectInCenter(-xoff + offset, 0, 11, 10, 44, 30, 11, 10, 256, 256);
-			RenderHelper.drawTexturedRectInCenter(xoff + offset, 0, 11, 10, 79, 30, 11, 10, 256, 256);
+			RenderFriend.drawTexturedRectInCenter(-xoff + offset, 0, 11, 10, 44, 30, 11, 10, 256, 256);
+			RenderFriend.drawTexturedRectInCenter(xoff + offset, 0, 11, 10, 79, 30, 11, 10, 256, 256);
 			GlStateManager.translate(-w / 2.0f + offset, -4.5, 0);
 			fontRenderer.drawString(string, 0, 0, iColor);
 			GlStateManager.translate(w / 2.0f - offset, 4.5, 0);

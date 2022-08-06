@@ -6,12 +6,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenMinable;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class WorldGenKyaniteOre extends WorldGenMinable {
 
 	public WorldGenKyaniteOre() {
-		super(ESInit.BLOCKS.KYANITE_ORE.getDefaultState(), 14);
+		super(ESObjects.BLOCKS.KYANITE_ORE.getDefaultState(), 14);
 	}
 
 	@Override

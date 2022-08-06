@@ -9,15 +9,16 @@ import java.util.Map.Entry;
 
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextFormatting;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerItemStructureCraft;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftCC;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public abstract class GuiItemStructureCraft extends GuiContainer {
 
@@ -45,16 +46,16 @@ public abstract class GuiItemStructureCraft extends GuiContainer {
 		}
 
 		public float getX(float partialTicks) {
-			return hasAnime ? RenderHelper.getPartialTicks(x, prevX, partialTicks) : x;
+			return hasAnime ? RenderFriend.getPartialTicks(x, prevX, partialTicks) : x;
 		}
 
 		public float getY(float partialTicks) {
-			return hasAnime ? RenderHelper.getPartialTicks(y, prevY, partialTicks) : y;
+			return hasAnime ? RenderFriend.getPartialTicks(y, prevY, partialTicks) : y;
 		}
 
 		public float getScale(float partialTicks) {
 			if (!hasAnime) return 1;
-			float scale = RenderHelper.getPartialTicks(this.scale, prevScale, partialTicks);
+			float scale = RenderFriend.getPartialTicks(this.scale, prevScale, partialTicks);
 			return scale == 0 ? 0.00001f : scale;
 		}
 
@@ -114,11 +115,11 @@ public abstract class GuiItemStructureCraft extends GuiContainer {
 	}
 
 	protected void drawBackground() {
-		
+
 	}
 
 	protected void drawSlot(boolean hasSelect) {
-		
+
 	}
 
 	protected void drawSlotMap(float partialTicks, int mouseX, int mouseY) {
@@ -167,8 +168,8 @@ public abstract class GuiItemStructureCraft extends GuiContainer {
 		for (SlotView view : slotViewList) {
 			ItemStack stack = view.getItemStack();
 			if (stack.isEmpty()) continue;
-			float dx = RenderHelper.getPartialTicks(view.x, view.prevX, partialTicks);
-			float dy = RenderHelper.getPartialTicks(view.y, view.prevY, partialTicks);
+			float dx = RenderFriend.getPartialTicks(view.x, view.prevX, partialTicks);
+			float dy = RenderFriend.getPartialTicks(view.y, view.prevY, partialTicks);
 			if (GuiNormal.isMouseIn(mouseX, mouseY, dx, dy, 18, 18)) {
 				this.renderToolTip(stack, mouseX, mouseY);
 			}

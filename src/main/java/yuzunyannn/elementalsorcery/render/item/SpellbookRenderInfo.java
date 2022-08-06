@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.render.item;
 
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 
 public class SpellbookRenderInfo {
 

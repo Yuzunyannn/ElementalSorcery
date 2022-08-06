@@ -10,14 +10,15 @@ import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.model.ModelIceRockStand;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
 import yuzunyannn.elementalsorcery.util.TextHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
+import yuzunyannn.elementalsorcery.util.render.FrameHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRockStand> implements IRenderItem {
@@ -39,11 +40,11 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 	public void render(TileIceRockStand tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 
-		RenderHelper.bindDestoryTexture(TEXTUREL, destroyStage, rendererDispatcher, DESTROY_STAGES);
-		RenderHelper.startRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
+		RenderFriend.bindDestoryTexture(TEXTUREL, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.startTileEntitySpecialRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		RenderHelper.endRender();
-		RenderHelper.bindDestoryTextureEnd(destroyStage);
+		RenderFriend.endTileEntitySpecialRender();
+		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
 		int count = tile.getLinkCount();
 		if (count > 0 && destroyStage < 0) {
@@ -59,7 +60,7 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 			if (fragment < 100000) ratio = fragment / 100000 * 0.15;
 			else ratio = 0.15 + 0.85 * (fragment - 100000) / (fragmentCapacity - 100000);
 			renderCrystalTexture(Math.min(ratio, 1), rotation / 20);
-			RenderHelper.bindOffscreenTexture128();
+			FrameHelper.bindOffscreenTexture128();
 			renderCrystal(count + 1);
 			GlStateManager.popMatrix();
 
@@ -76,12 +77,12 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 		GlStateManager.disableCull();
-		RenderHelper.render(stack, TEXTUREL, MODEL, true, 0.038, 0.0175, 0, 0);
+		RenderFriend.renderSpecialItem(stack, TEXTUREL, MODEL, true, 0.038, 0.0175, 0, 0);
 		GlStateManager.enableCull();
 	}
 
 	public static void renderCrystalTexture(double ratio, float offset) {
-		RenderHelper.renderOffscreenTexture128(e -> {
+		FrameHelper.renderOffscreenTexture128(e -> {
 			Tessellator tessellator = Tessellator.getInstance();
 			BufferBuilder bufferbuilder = tessellator.getBuffer();
 

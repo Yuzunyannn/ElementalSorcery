@@ -14,25 +14,25 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerElementInventoryStronger;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementTranslocator.GuiTextFieldOnlyNumber;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatch;
 import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatchList;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryStronger;
 import yuzunyannn.elementalsorcery.util.helper.Color;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 
 @SideOnly(Side.CLIENT)
 public class GuiElementInventoryStronger extends GuiContainer {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/element_inventory_stronger.png");
 	protected final ContainerElementInventoryStronger container;
 
@@ -135,19 +135,19 @@ public class GuiElementInventoryStronger extends GuiContainer {
 		Shaders.RGBColorMapping.setUniform("color", color);
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
 
-		float pratio = RenderHelper.getPartialTicks(capacityRatio, prevCapacityRatio, partialTicks);
-		RenderHelper.drawTexturedModalRect(guiLeft + 24, guiTop + 86, 0, 160, 112 * pratio, 2, 256, 256);
+		float pratio = RenderFriend.getPartialTicks(capacityRatio, prevCapacityRatio, partialTicks);
+		RenderFriend.drawTexturedModalRect(guiLeft + 24, guiTop + 86, 0, 160, 112 * pratio, 2, 256, 256);
 
 		if (mouseX >= guiLeft + 70 && mouseX <= guiLeft + 89 && mouseY >= guiTop + 146 && mouseY <= guiTop + 154)
 			this.drawTexturedModalRect(guiLeft + 71, guiTop + 147, 0, 162, 18, 6);
 
 		{
-			float cr = RenderHelper.getPartialTicks(centerRatio, prevCenterRatio, partialTicks);
+			float cr = RenderFriend.getPartialTicks(centerRatio, prevCenterRatio, partialTicks);
 			float x = offsetX + 46 + 33, y = offsetY + 12 + 33;
 			GlStateManager.translate(x, y, 0);
 			float rotation = MathHelper.sin(cr / 20) * 180;
 			GlStateManager.rotate(rotation, 0, 0, 1);
-			RenderHelper.drawTexturedRectInCenter(0, 0, 66, 66, 160, 0, 66, 66, 256, 256);
+			RenderFriend.drawTexturedRectInCenter(0, 0, 66, 66, 160, 0, 66, 66, 256, 256);
 			GlStateManager.rotate(-rotation, 0, 0, 1);
 			GlStateManager.translate(-x, -y, 0);
 		}
@@ -180,7 +180,7 @@ public class GuiElementInventoryStronger extends GuiContainer {
 
 		for (GuiTextField field : fields) field.drawTextBox();
 
-		float fR = RenderHelper.getPartialTicks(updateRatio, prevUpdateRatio, partialTicks);
+		float fR = RenderFriend.getPartialTicks(updateRatio, prevUpdateRatio, partialTicks);
 		if (fR > 0.0001f) {
 			fR = 1 - fR;
 			fR = fR * fR * fR;

@@ -17,22 +17,22 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerDevolveCube;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementTranslocator.GuiTextFieldOnlyNumber;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube.DevolveData;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementStackDoubleExchanger;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class GuiDevolveCube extends GuiContainer {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/devolve_cube.png");
 
 	// 动态材质，全局就一个
@@ -97,7 +97,7 @@ public class GuiDevolveCube extends GuiContainer {
 
 		DynamicTexture texture = getDynamicTexture();
 		GlStateManager.bindTexture(texture.getGlTextureId());
-		RenderHelper.drawTexturedRectInCenter(centerX, centerY, this.xSize - 6, this.ySize - 6, 0, 0, 1, 1, 1, -1);
+		RenderFriend.drawTexturedRectInCenter(centerX, centerY, this.xSize - 6, this.ySize - 6, 0, 0, 1, 1, 1, -1);
 
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		final int onePixel = 6;
@@ -130,7 +130,7 @@ public class GuiDevolveCube extends GuiContainer {
 					GlStateManager.translate(xf, yf, 0);
 					GlStateManager.rotate(roate, 0, 0, 1);
 					GlStateManager.scale(scale, scale, 1);
-					RenderHelper.drawTexturedRectInCenter(0, 0, 4, 4, 198, 0, 4, 4, 256, 256);
+					RenderFriend.drawTexturedRectInCenter(0, 0, 4, 4, 198, 0, 4, 4, 256, 256);
 					GlStateManager.scale(1 / scale, 1 / scale, 1);
 					GlStateManager.rotate(-roate, 0, 0, 1);
 					GlStateManager.translate(-xf, -yf, 0);
@@ -141,7 +141,7 @@ public class GuiDevolveCube extends GuiContainer {
 				if (dat.inEnable) GlStateManager.color(255 / 255f, 162 / 255f, 171 / 255f);
 				else if (dat.outEnable) GlStateManager.color(168 / 255f, 178 / 255f, 255 / 255f);
 				else GlStateManager.color(1f, 1f, 1f);
-				RenderHelper.drawTexturedRectInCenter(0, 0, 4, 4, 198, 0, 4, 4, 256, 256);
+				RenderFriend.drawTexturedRectInCenter(0, 0, 4, 4, 198, 0, 4, 4, 256, 256);
 				GlStateManager.rotate(-roate, 0, 0, 1);
 			}
 
@@ -149,7 +149,7 @@ public class GuiDevolveCube extends GuiContainer {
 
 			if (isSelect && !pos.equals(selected)) {
 				GlStateManager.color(0.5f, 1f, 1f, 0.8f);
-				RenderHelper.drawTexturedRectInCenter(0, 0, 8, 8, 198, 4, 8, 8, 256, 256);
+				RenderFriend.drawTexturedRectInCenter(0, 0, 8, 8, 198, 4, 8, 8, 256, 256);
 				GlStateManager.color(1f, 1f, 1f, 1f);
 			}
 
@@ -179,7 +179,7 @@ public class GuiDevolveCube extends GuiContainer {
 			float y = selected.getZ() - tilePos.getZ();
 			float xoff = centerX + x * onePixel + hPixel;
 			float yoff = centerY - (y + 1) * onePixel + hPixel;
-			RenderHelper.drawTexturedRectInCenter(xoff, yoff, 8, 8, 198, 4, 8, 8, 256, 256);
+			RenderFriend.drawTexturedRectInCenter(xoff, yoff, 8, 8, 198, 4, 8, 8, 256, 256);
 
 			List<Entry<BlockPos, DevolveData>> cList = classifyDevolveMap.get(selected);
 			if (cList == null || cList.isEmpty()) {

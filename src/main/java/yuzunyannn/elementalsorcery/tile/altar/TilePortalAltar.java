@@ -8,14 +8,14 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.explore.Explores;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementScrew;
@@ -45,7 +45,7 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 		return super.writeToNBT(compound);
 	}
 
-	public static final ElementStack NEED = new ElementStack(ESInit.ELEMENTS.ENDER, 1, 100);
+	public static final ElementStack NEED = new ElementStack(ESObjects.ELEMENTS.ENDER, 1, 100);
 	private ItemStack stack = ItemStack.EMPTY;
 	protected int enderPower = 0;
 
@@ -64,7 +64,7 @@ public class TilePortalAltar extends TileStaticMultiBlock implements IGetItemSta
 
 	@Override
 	public boolean canSetStack(ItemStack stack) {
-		return stack.getItem() == ESInit.ITEMS.NATURE_CRYSTAL;
+		return stack.getItem() == ESObjects.ITEMS.NATURE_CRYSTAL;
 	}
 
 	@Override

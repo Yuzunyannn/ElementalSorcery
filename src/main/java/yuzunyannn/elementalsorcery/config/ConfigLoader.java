@@ -9,9 +9,9 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.registries.IForgeRegistryEntry;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class ConfigLoader {
@@ -101,7 +101,7 @@ public class ConfigLoader {
 				getter.end();
 			}
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("注入配置出现异常" + name, e);
+			ESAPI.logger.warn("注入配置出现异常" + name, e);
 		}
 
 	}
@@ -124,7 +124,7 @@ public class ConfigLoader {
 	private String handleNote(String kind, String group, String name, String note) {
 		if (ConfigTranslate.isClose()) return note;
 		String key = note.isEmpty() ? kind + "." + group + "." + name : note;
-		if (ElementalSorcery.isDevelop) ConfigTranslate.keyStatistics(key);
+		if (ESAPI.isDevelop) ConfigTranslate.keyStatistics(key);
 		note = translateNote(key);
 		return note;
 	}

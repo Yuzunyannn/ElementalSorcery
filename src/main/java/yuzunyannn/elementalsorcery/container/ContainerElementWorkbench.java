@@ -16,10 +16,10 @@ import net.minecraft.network.play.server.SPacketSetSlot;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ContainerElementWorkbench extends Container {
@@ -90,7 +90,7 @@ public class ContainerElementWorkbench extends Container {
 
 	@Override
 	public boolean canInteractWith(EntityPlayer playerIn) {
-		if (this.world.getBlockState(this.pos).getBlock() != ESInit.BLOCKS.ELEMENT_WORKBENCH) return false;
+		if (this.world.getBlockState(this.pos).getBlock() != ESObjects.BLOCKS.ELEMENT_WORKBENCH) return false;
 		else return playerIn.getDistanceSq((double) this.pos.getX() + 0.5D, (double) this.pos.getY() + 0.5D,
 				(double) this.pos.getZ() + 0.5D) <= 64.0D;
 	}
@@ -111,7 +111,7 @@ public class ContainerElementWorkbench extends Container {
 
 	private ItemStack doElementCrafting() {
 		ItemStack itemstack = ItemStack.EMPTY;
-		irecipe = RecipeManagement.instance.findMatchingRecipe(craftMatrix, this.world);
+		irecipe = ESAPI.recipeMgr.findMatchingRecipe(craftMatrix, this.world);
 		if (irecipe == null) return ItemStack.EMPTY;
 		List<ElementStack> elist = irecipe.getNeedElements();
 		if (elist != null && !elist.isEmpty()) {
@@ -119,8 +119,8 @@ public class ContainerElementWorkbench extends Container {
 			IElementInventory inventory = ElementHelper.getElementInventory(stack);
 			if (!ElementHelper.canExtract(inventory)) return ItemStack.EMPTY;
 			for (ElementStack estack : elist) {
-				ElementStack get_stack = inventory.extractElement(estack, true);
-				if (!get_stack.arePowerfulAndMoreThan(estack)) return ItemStack.EMPTY;
+				ElementStack getStack = inventory.extractElement(estack, true);
+				if (!getStack.arePowerfulAndMoreThan(estack)) return ItemStack.EMPTY;
 			}
 		}
 		itemstack = irecipe.getCraftingResult(this.craftMatrix).copy();

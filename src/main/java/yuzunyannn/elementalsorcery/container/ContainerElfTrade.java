@@ -8,13 +8,14 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.MatchHelper;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeClient;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
 
@@ -71,7 +72,7 @@ public class ContainerElfTrade extends ContainerElf implements IContainerNetwork
 				int stock = trade.stock(i);
 				if (stock <= 0) continue;
 				ItemStack c = trade.commodity(i);
-				if (ItemHelper.isItemMatch(c, stack)) {
+				if (MatchHelper.isItemMatch(c, stack)) {
 					int count = Math.min(stack.getCount(), stock);
 					trade.reclaim(i, count);
 					ItemElfPurse.insert(player, count * trade.cost(i));

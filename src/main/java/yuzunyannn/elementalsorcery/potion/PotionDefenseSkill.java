@@ -3,7 +3,7 @@ package yuzunyannn.elementalsorcery.potion;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.DamageSource;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class PotionDefenseSkill extends PotionCommon {
 
@@ -15,12 +15,12 @@ public class PotionDefenseSkill extends PotionCommon {
 
 	public static boolean canSkill(EntityLivingBase target, EntityLivingBase attacker, DamageSource source,
 			float amount) {
-		return target.isPotionActive(ESInit.POTIONS.DEFENSE_SKILL)
+		return target.isPotionActive(ESObjects.POTIONS.DEFENSE_SKILL)
 				&& !(source.isFireDamage() || source.isMagicDamage() || source.canHarmInCreative());
 	}
 
 	public static float doSkill(EntityLivingBase target, EntityLivingBase attacker, DamageSource source, float amount) {
-		int amplifier = target.getActivePotionEffect(ESInit.POTIONS.DEFENSE_SKILL).getAmplifier();
+		int amplifier = target.getActivePotionEffect(ESObjects.POTIONS.DEFENSE_SKILL).getAmplifier();
 		float level = 0;
 		if (target instanceof EntityPlayer) level = ((EntityPlayer) target).experienceLevel;
 		else level = target.getMaxHealth();

@@ -27,23 +27,23 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementItem;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.crafting.element.ToElementInfoStatic;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
 import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.event.EventServer;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class ItemAncientPaper extends Item implements IToElementItem {
 
 	static public ItemStack createPaper(Mantra mantra, float progress) {
-		ItemStack stack = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, 0);
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, 0);
 		AncientPaper ap = new AncientPaper();
 		ap.setMantra(mantra);
 		if (progress >= 1) ap.setStart(0).setEnd(100);
@@ -178,7 +178,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 	protected boolean startUnscramble(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		EnumHand hand = handIn == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
 		ItemStack feather = playerIn.getHeldItem(hand);
-		if (feather.getItem() != ESInit.ITEMS.QUILL) return false;
+		if (feather.getItem() != ESObjects.ITEMS.QUILL) return false;
 		feather.shrink(1);
 		return true;
 	}
@@ -237,8 +237,8 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 	@Override
 	public IToElementInfo toElement(ItemStack stack) {
 		ElementStack[] estacks = new ElementStack[2];
-		estacks[1] = new ElementStack(ESInit.ELEMENTS.WOOD, 8, 20);
-		estacks[0] = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 4, 28);
+		estacks[1] = new ElementStack(ESObjects.ELEMENTS.WOOD, 8, 20);
+		estacks[0] = new ElementStack(ESObjects.ELEMENTS.KNOWLEDGE, 4, 28);
 
 		AncientPaper ap = new AncientPaper(stack);
 		if (ap.hasType()) {
@@ -252,7 +252,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 			int rarity = mantra.getRarity(null, null);
 			if (rarity < 0) break mantra;
 			rarity = MathHelper.clamp(rarity, 10, 200);
-			ElementStack knowledge = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE);
+			ElementStack knowledge = new ElementStack(ESObjects.ELEMENTS.KNOWLEDGE);
 			double power = 28 - MathHelper.sqrt(rarity * 1.45);
 			knowledge.setPower(MathHelper.floor(power * power) + 10);
 			int count = (110 - rarity / 2) / 3;

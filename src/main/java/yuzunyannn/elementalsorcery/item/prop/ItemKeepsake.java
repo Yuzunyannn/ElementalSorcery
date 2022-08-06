@@ -4,12 +4,12 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class ItemKeepsake extends Item {
 
 	public static ItemStack create(ItemKeepsake.EnumType type, int n) {
-		return new ItemStack(ESInit.ITEMS.KEEPSAKE, n, type.getMeta());
+		return new ItemStack(ESObjects.ITEMS.KEEPSAKE, n, type.getMeta());
 	}
 
 	public ItemKeepsake() {

@@ -10,20 +10,20 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionDebtCollector;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileInstantConstitute;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ElfChamberOfCommerce extends WorldSavedData {
@@ -46,13 +46,13 @@ public class ElfChamberOfCommerce extends WorldSavedData {
 
 	public static double priceIt(ItemStack item, int deep) {
 		if (deep > 5) return -1;
-		if (item.getItem() == ESInit.ITEMS.ELF_COIN) return 1;
-		if (item.getItem() == ESInit.ITEMS.ELF_PURSE) return ItemElfPurse.getCoinFromPurse(item) + 100;
+		if (item.getItem() == ESObjects.ITEMS.ELF_COIN) return 1;
+		if (item.getItem() == ESObjects.ITEMS.ELF_PURSE) return ItemElfPurse.getCoinFromPurse(item) + 100;
 		IToElementInfo info = TileAnalysisAltar.analysisItem(item, ElementMap.instance, true);
 		if (info == null) return -1;
 		ElementStack[] estacks = info.element();
 		double fragment = 0;
-		for (ElementStack estack : estacks) fragment += ElementHelper.toMagicFragment(estack);
+		for (ElementStack estack : estacks) fragment += ElementTransition.toMagicFragment(estack);
 		double count = Math.pow(TileInstantConstitute.getOrderValUsed(info), 0.5);
 		double money = Math.max(1, Math.pow(fragment, 0.8) / 50) * count;
 		ItemStack[] remains = info.remain();

@@ -9,9 +9,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.ESImpClassRegister;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.loader.QuestCreateFailException;
-import yuzunyannn.elementalsorcery.init.ESImpClassRegister;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class QuestReward extends ESImpClassRegister.EasyImp<QuestReward> implements INBTSerializable<NBTTagCompound> {

@@ -6,9 +6,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModuleRecipe;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -17,14 +19,14 @@ public class FCMAttackRange extends FairyCubeModule {
 	@FairyCubeModuleRecipe
 	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
 		if (!world.isRaining()) return false;
-		return matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.GLOWSTONE_DUST, 16),
-				ElementHelper.toList(ESInit.ELEMENTS.WATER, 300, 25));
+		return FairyCubeModuleInGame.matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.GLOWSTONE_DUST, 16),
+				ElementHelper.toList(ESObjects.ELEMENTS.WATER, 300, 25));
 	}
 
 	public FCMAttackRange(EntityFairyCube fairyCube) {
 		super(fairyCube);
 		this.setPriority(PriorityType.MODIFY_ADD);
-		this.setElementNeedPerExp(new ElementStack(ESInit.ELEMENTS.WATER, 9, 111), 16);
+		this.setElementNeedPerExp(new ElementStack(ESObjects.ELEMENTS.WATER, 9, 111), 16);
 	}
 
 	public static float commonRange(int level) {
@@ -38,7 +40,7 @@ public class FCMAttackRange extends FairyCubeModule {
 	}
 
 	@Override
-	public float modifyAttribute(String attribute, float value) {
+	public double modifyAttribute(String attribute, double value) {
 		if ("attack:range".equals(attribute)) return value + this.getRange();
 		return value;
 	}

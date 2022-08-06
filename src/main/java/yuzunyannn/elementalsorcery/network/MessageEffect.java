@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
@@ -50,7 +50,7 @@ public class MessageEffect implements IMessage {
 				try {
 					clientUpdate(nbt);
 				} catch (Exception e) {
-					ElementalSorcery.logger.warn("effect客户端创建出现问题", e);
+					ESAPI.logger.warn("effect客户端创建出现问题", e);
 				}
 
 			});

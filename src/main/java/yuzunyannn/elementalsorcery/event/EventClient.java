@@ -30,12 +30,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.element.ElementTransition;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -177,7 +177,7 @@ public class EventClient {
 				if (flags == IRenderClient.END) iter.remove();
 			}
 		} catch (Exception exce) {
-			ElementalSorcery.logger.warn("post渲染异常！", exce);
+			ESAPI.logger.warn("post渲染异常！", exce);
 		}
 		renderIterate--;
 		Effect.renderAllEffects(partialTicks);
@@ -255,7 +255,7 @@ public class EventClient {
 			}
 		}
 
-		if (ElementalSorcery.isDevelop) {
+		if (ESAPI.isDevelop) {
 			List<String> tooltip = event.getToolTip();
 			tooltip.add(TextFormatting.GREEN + "Develop Info:");
 			tooltip.add(TextFormatting.GRAY + "isReplairable: " + stack.getItem().isRepairable());
@@ -265,11 +265,11 @@ public class EventClient {
 					if (estack.isEmpty()) continue;
 					String str = String.format(TextFormatting.AQUA + "%sx%s" + TextFormatting.YELLOW + " P:%d",
 							estack.getDisplayName(), String.valueOf(estack.getCount()), estack.getPower());
-					double fr = ElementHelper.toFragment(estack);
+					double fr = ElementTransition.toFragment(estack);
 					tooltip.add(str + TextFormatting.LIGHT_PURPLE + " F:" + TextHelper.toAbbreviatedNumber(fr));
 					ElementTransition et = estack.getElement().getTransition();
 					if (et == null) f += fr;
-					else f += ElementHelper.transitionFrom(estack.getElement(), fr, et.getLevel());
+					else f += ElementTransition.transitionFrom(estack.getElement(), fr, et.getLevel());
 				}
 				tooltip.add(TextFormatting.LIGHT_PURPLE + "F:" + TextHelper.toAbbreviatedNumber(f));
 			}

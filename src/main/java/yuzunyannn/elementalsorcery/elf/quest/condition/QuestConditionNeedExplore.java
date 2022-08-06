@@ -13,11 +13,11 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.loader.ParamObtain;
 import yuzunyannn.elementalsorcery.explore.Explores;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class QuestConditionNeedExplore extends QuestCondition {

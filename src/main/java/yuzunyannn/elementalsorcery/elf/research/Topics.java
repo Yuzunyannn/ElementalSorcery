@@ -3,7 +3,7 @@ package yuzunyannn.elementalsorcery.elf.research;
 import java.util.Set;
 import java.util.TreeSet;
 
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 
 public class Topics {
 
@@ -21,7 +21,7 @@ public class Topics {
 		all.add("Natural");
 		all.add("Ender");
 		all.add("Struct");
-		if (ElementalSorcery.isDevelop) all.add("Biology");
+		if (ESAPI.isDevelop) all.add("Biology");
 		return all;
 	}
 

@@ -12,9 +12,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.ICustomModelLoader;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ModelLoader;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.ItemRendererModel;
 import yuzunyannn.elementalsorcery.render.ESTileEntityItemStackRenderer;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
-import yuzunyannn.elementalsorcery.render.ItemRendererModel;
 
 public class TileItemRenderRegistries implements ICustomModelLoader {
 

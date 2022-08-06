@@ -11,14 +11,14 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenMegaJungle;
 import net.minecraft.world.gen.feature.WorldGenTrees;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class WorldGenElfTree extends WorldGenAbstractTree {
 
 	protected final boolean doBlockNotify;
 	protected int type;
-	public static final IBlockState WOOD = ESInit.BLOCKS.ELF_LOG.getDefaultState();
-	public static final IBlockState LEAVE = ESInit.BLOCKS.ELF_LEAF.getDefaultState();
+	public static final IBlockState WOOD = ESObjects.BLOCKS.ELF_LOG.getDefaultState();
+	public static final IBlockState LEAVE = ESObjects.BLOCKS.ELF_LEAF.getDefaultState();
 
 	/** 获取对应的树样子 */
 	static public WorldGenElfTree getGenTreeFromBiome(boolean notify, Biome biome) {
@@ -59,7 +59,7 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 		}
 		if (!isGen) return false;
 
-		IBlockState FRUIT = ESInit.BLOCKS.ELF_FRUIT.getDefaultState();
+		IBlockState FRUIT = ESObjects.BLOCKS.ELF_FRUIT.getDefaultState();
 		BlockPos pos = position.offset(EnumFacing.UP, treeSize);
 		int n = rand.nextInt(3) + type == 1 ? 1 : 0;
 		int count = 0;
@@ -69,7 +69,7 @@ public class WorldGenElfTree extends WorldGenAbstractTree {
 			BlockPos at = pos.add(rand.nextInt(xzCheck * 2 + 1) - xzCheck, rand.nextInt(yCheck * 2 + 1) - yCheck,
 					rand.nextInt(xzCheck * 2 + 1) - xzCheck);
 			IBlockState state = worldIn.getBlockState(at);
-			if (state.getBlock() != ESInit.BLOCKS.ELF_LEAF) continue;
+			if (state.getBlock() != ESObjects.BLOCKS.ELF_LEAF) continue;
 			for (int j = 0; j < 5; j++) {
 				at = at.down();
 				if (worldIn.isAirBlock(at)) {

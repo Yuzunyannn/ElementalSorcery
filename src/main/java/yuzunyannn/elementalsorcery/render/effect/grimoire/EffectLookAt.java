@@ -8,12 +8,12 @@ import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
 
 @SideOnly(Side.CLIENT)
 public class EffectLookAt extends EffectCondition {
@@ -77,17 +77,17 @@ public class EffectLookAt extends EffectCondition {
 	protected void doRender(float partialTicks) {
 		EnumFacing facing = this.facing == null ? EnumFacing.UP : this.facing;
 		GlStateManager.pushMatrix();
-		double posX = RenderHelper.getPartialTicks(this.posX, this.prevPosX, partialTicks);
-		double posY = RenderHelper.getPartialTicks(this.posY, this.prevPosY, partialTicks);
-		double posZ = RenderHelper.getPartialTicks(this.posZ, this.prevPosZ, partialTicks);
+		double posX = RenderFriend.getPartialTicks(this.posX, this.prevPosX, partialTicks);
+		double posY = RenderFriend.getPartialTicks(this.posY, this.prevPosY, partialTicks);
+		double posZ = RenderFriend.getPartialTicks(this.posZ, this.prevPosZ, partialTicks);
 		GlStateManager.translate(posX, posY, posZ);
 
 		Vec3i dv = facing.getDirectionVec();
 		GlStateManager.rotate(90, dv.getY(), dv.getX(), dv.getZ());
 
-		float alpha = RenderHelper.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
-		float rotate = RenderHelper.getPartialTicks(this.rotate, this.preRotate, partialTicks);
-		float scale = RenderHelper.getPartialTicks(this.scale, this.preScale, partialTicks);
+		float alpha = RenderFriend.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
+		float rotate = RenderFriend.getPartialTicks(this.rotate, this.preRotate, partialTicks);
+		float scale = RenderFriend.getPartialTicks(this.scale, this.preScale, partialTicks);
 		TEXTURE.bind();
 
 		int l = (Math.abs(dv.getX()) + dv.getZ() - Math.abs(dv.getY()));

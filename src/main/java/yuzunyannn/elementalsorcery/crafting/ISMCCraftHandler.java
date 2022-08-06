@@ -10,12 +10,12 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.tile.TileItemStructureCraft.IISCCCraftHanlder;
+import yuzunyannn.elementalsorcery.api.element.IISCraftHanlder;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftCC;
 import yuzunyannn.elementalsorcery.util.item.InventoryCraftingUseInventory;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
 
-public class ISMCCraftHandler implements IISCCCraftHanlder {
+public class ISMCCraftHandler implements IISCraftHanlder {
 
 	@Override
 	public boolean isKeyItem(ItemStack stack) {

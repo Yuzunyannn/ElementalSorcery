@@ -20,21 +20,21 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.item.IWindmillBlade;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementAbsorb;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.TileEntityGetter;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGetItemStack, ITickable {
@@ -162,7 +162,7 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 			if (needUpdate) updateToClient();
 			updateElementProduce();
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("风车旋转出现异常", e);
+			ESAPI.logger.warn("风车旋转出现异常", e);
 			setStack(ItemStack.EMPTY);
 		}
 	}
@@ -256,7 +256,7 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 	@SideOnly(Side.CLIENT)
 	public double getMaxRenderDistanceSquared() {
 		if (TILE_ENTITY_RENDER_DISTANCE > 0) return TILE_ENTITY_RENDER_DISTANCE * TILE_ENTITY_RENDER_DISTANCE;
-		int distance = RenderHelper.getRenderDistanceChunks() * 16;
+		int distance = RenderFriend.getRenderDistanceChunks() * 16;
 		return distance * distance;
 	}
 

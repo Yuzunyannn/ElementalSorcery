@@ -17,19 +17,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
 import yuzunyannn.elementalsorcery.parchment.Page;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectResonance;
-import yuzunyannn.elementalsorcery.util.NBTTag;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class TileMDFrequencyMapping extends TileMDBase implements ITickable, IGetItemStack {
 
@@ -149,15 +149,15 @@ public class TileMDFrequencyMapping extends TileMDBase implements ITickable, IGe
 
 	protected boolean canMapping(ItemStack stack) {
 		Item item = stack.getItem();
-		if (item == ESInit.ITEMS.PARCHMENT) return !Pages.isVaild(stack);
-		else if (item == ESInit.ITEMS.ARCHITECTURE_CRYSTAL) return !ArcInfo.isArc(stack);
+		if (item == ESObjects.ITEMS.PARCHMENT) return !Pages.isVaild(stack);
+		else if (item == ESObjects.ITEMS.ARCHITECTURE_CRYSTAL) return !ArcInfo.isArc(stack);
 		return false;
 	}
 
 	protected IFrequencyMatcher getMappingMatcher(ItemStack stack) {
 		Item item = stack.getItem();
-		if (item == ESInit.ITEMS.PARCHMENT) return new ParchmentMather();
-		else if (item == ESInit.ITEMS.ARCHITECTURE_CRYSTAL) return new BuildingMather();
+		if (item == ESObjects.ITEMS.PARCHMENT) return new ParchmentMather();
+		else if (item == ESObjects.ITEMS.ARCHITECTURE_CRYSTAL) return new BuildingMather();
 		return null;
 	}
 
@@ -213,7 +213,7 @@ public class TileMDFrequencyMapping extends TileMDBase implements ITickable, IGe
 	@SideOnly(Side.CLIENT)
 	public float getHigh(float partialTicks) {
 		if (lastSize == 0 || !isWorking) return 0;
-		return RenderHelper.getPartialTicks(lastA, preLastA, partialTicks) / lastSize;
+		return RenderFriend.getPartialTicks(lastA, preLastA, partialTicks) / lastSize;
 	}
 
 	@SideOnly(Side.CLIENT)

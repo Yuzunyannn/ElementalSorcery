@@ -25,22 +25,22 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementItem;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
 import yuzunyannn.elementalsorcery.api.item.IJuice;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.crafting.element.ToElementInfoStatic;
-import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementCommon;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.MultiRets;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 import yuzunyannn.elementalsorcery.world.Juice;
-import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ItemGlassCup extends Item implements IToElementItem {
 
@@ -71,7 +71,7 @@ public class ItemGlassCup extends Item implements IToElementItem {
 			IElementInventory eInv = ElementHelper.getElementInventory(stack);
 			ElementHelper.addElementInformation(eInv, worldIn, tooltip, flagIn);
 
-			if (ElementalSorcery.isDevelop) addDevelopInfo(worldIn, juice, eInv, tooltip);
+			if (ESAPI.isDevelop) addDevelopInfo(worldIn, juice, eInv, tooltip);
 		}
 	}
 
@@ -160,7 +160,7 @@ public class ItemGlassCup extends Item implements IToElementItem {
 	}
 
 	private IToElementInfo cupToElement() {
-		return ToElementInfoStatic.create(2, new ElementStack(ESInit.ELEMENTS.EARTH, 12, 45));
+		return ToElementInfoStatic.create(2, new ElementStack(ESObjects.ELEMENTS.EARTH, 12, 45));
 	}
 
 }

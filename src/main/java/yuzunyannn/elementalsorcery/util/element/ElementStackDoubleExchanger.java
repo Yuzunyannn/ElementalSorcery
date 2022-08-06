@@ -1,14 +1,18 @@
 package yuzunyannn.elementalsorcery.util.element;
 
+import java.util.List;
+
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.ContainerArrayDetecter.ICanArrayDetected;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 
 public class ElementStackDoubleExchanger implements INBTSerializable<NBTTagCompound>, IElementInventoryModifiable,
 		ICanArrayDetected<ElementStackDouble, NBTTagCompound> {
@@ -145,6 +149,12 @@ public class ElementStackDoubleExchanger implements INBTSerializable<NBTTagCompo
 	@SideOnly(Side.CLIENT)
 	public void deserializeCurrValueFromSend(int index, NBTTagCompound nbtData) {
 		getStackDoubleInSlot(index).deserializeNBT(nbtData);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		ElementHelper.addElementInformation(this, worldIn, tooltip, flagIn);
 	}
 
 }

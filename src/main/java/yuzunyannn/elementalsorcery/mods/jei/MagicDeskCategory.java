@@ -10,17 +10,17 @@ import mezz.jei.api.recipe.IRecipeCategory;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 
 public class MagicDeskCategory implements IRecipeCategory<MagicDeskRecipeWrapper> {
 
-	public static final String UID = ElementalSorcery.MODID + "." + "desk";
+	public static final String UID = ESAPI.MODID + "." + "desk";
 	private final IDrawable background;
 
 	public MagicDeskCategory() {
 		background = ESJEIPlugin.guiHelper.createDrawable(
-				new ResourceLocation(ElementalSorcery.MODID, "textures/gui/jei/magic_desk_jei.png"), 18, 18, 122, 106);
+				new ResourceLocation(ESAPI.MODID, "textures/gui/jei/magic_desk_jei.png"), 18, 18, 122, 106);
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class MagicDeskCategory implements IRecipeCategory<MagicDeskRecipeWrapper
 
 	@Override
 	public String getModName() {
-		return ElementalSorcery.MODID;
+		return ESAPI.MODID;
 	}
 
 	@Override

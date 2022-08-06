@@ -17,15 +17,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
@@ -219,13 +219,13 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 			ElementStack need = ElementStack.EMPTY;
 			switch (transcribeProgress % 4) {
 			case 1:
-				need = new ElementStack(ESInit.ELEMENTS.FIRE, 1, 100);
+				need = new ElementStack(ESObjects.ELEMENTS.FIRE, 1, 100);
 				break;
 			case 2:
-				need = new ElementStack(ESInit.ELEMENTS.WATER, 1, 100);
+				need = new ElementStack(ESObjects.ELEMENTS.WATER, 1, 100);
 				break;
 			default:
-				need = new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, 1, 100);
+				need = new ElementStack(ESObjects.ELEMENTS.KNOWLEDGE, 1, 100);
 				break;
 			}
 			transcribeProgress--;

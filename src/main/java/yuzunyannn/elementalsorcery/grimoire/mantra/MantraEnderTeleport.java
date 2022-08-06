@@ -16,17 +16,17 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
-import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportFrom;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportTo;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectPlayerAt;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
@@ -52,7 +52,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		BlockPos pos = caster.iWantFoothold();
 		if (pos == null) return;
 
-		ElementStack stack = getElement(caster, ESInit.ELEMENTS.ENDER, 10, 40);
+		ElementStack stack = getElement(caster, ESObjects.ELEMENTS.ENDER, 10, 40);
 		if (stack.isEmpty()) return;
 
 		doEnderTeleportWithDrown(world, target, new Vec3d(pos).add(0.5, 0, 0.5));
@@ -64,7 +64,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		if (entity == null) return;
 
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		ElementStack need = new ElementStack(ESInit.ELEMENTS.ENDER, 10, 50);
+		ElementStack need = new ElementStack(ESObjects.ELEMENTS.ENDER, 10, 50);
 		ElementStack stack = caster.iWantSomeElement(need, false);
 		dataEffect.markContinue(!stack.isEmpty());
 	}
@@ -89,7 +89,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		BlockPos pos = findFoothold(world, caster, needSuper);
 		if (pos == null) return;
 
-		ElementStack stack = getElement(caster, ESInit.ELEMENTS.ENDER, 10, 50);
+		ElementStack stack = getElement(caster, ESObjects.ELEMENTS.ENDER, 10, 50);
 		if (stack.isEmpty()) return;
 
 		if (needSuper) caster.iWantBePotent(0.75f, false);

@@ -20,13 +20,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.block.BlockFluorspar;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class MantraFluorspar extends MantraCommon {
 
@@ -36,7 +36,7 @@ public class MantraFluorspar extends MantraCommon {
 		this.setIcon("fluorspar");
 		this.setRarity(95);
 		this.setOccupation(2);
-		this.setDirectLaunchFragmentMantraLauncher(new ElementStack(ESInit.ELEMENTS.METAL, 20, 40), 2, 0.005, null);
+		this.setDirectLaunchFragmentMantraLauncher(new ElementStack(ESObjects.ELEMENTS.METAL, 20, 40), 2, 0.005, null);
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class MantraFluorspar extends MantraCommon {
 		if (!target.isNonBoss()) return;
 
 		if (target instanceof EntityLivingBase) {
-			ElementStack stack = getElement(caster, ESInit.ELEMENTS.METAL, 3, 30);
+			ElementStack stack = getElement(caster, ESObjects.ELEMENTS.METAL, 3, 30);
 			if (stack.isEmpty()) return;
 			int time = 20 * stack.getPower() / 8 + 20 * 3;
 			((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.GLOWING, time));
@@ -56,7 +56,7 @@ public class MantraFluorspar extends MantraCommon {
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		ElementStack need = new ElementStack(ESInit.ELEMENTS.METAL, 2, 40);
+		ElementStack need = new ElementStack(ESObjects.ELEMENTS.METAL, 2, 40);
 		ElementStack stack = caster.iWantSomeElement(need, false);
 		dataEffect.markContinue(!stack.isEmpty());
 	}
@@ -84,13 +84,13 @@ public class MantraFluorspar extends MantraCommon {
 		ElementStack stack = ElementStack.EMPTY;
 		boolean superSpell = false;
 		if (potent >= 0.5f && facing != null) {
-			stack = getElement(caster, ESInit.ELEMENTS.METAL, 8, 40);
+			stack = getElement(caster, ESObjects.ELEMENTS.METAL, 8, 40);
 			if (!stack.isEmpty()) {
 				superSpell = true;
 				caster.iWantBePotent(0.5f, false);
 			}
 		}
-		if (stack.isEmpty()) stack = getElement(caster, ESInit.ELEMENTS.METAL, 2, 40);
+		if (stack.isEmpty()) stack = getElement(caster, ESObjects.ELEMENTS.METAL, 2, 40);
 		if (stack.isEmpty()) return;
 
 		doFluorsparChange(world, pos);
@@ -103,7 +103,7 @@ public class MantraFluorspar extends MantraCommon {
 	public boolean afterSpelling(World world, IMantraData data, ICaster caster) {
 		if (world.isRemote) return false;
 		MantraDataCommon mdc = (MantraDataCommon) data;
-		ElementStack eStack = mdc.get(ESInit.ELEMENTS.METAL);
+		ElementStack eStack = mdc.get(ESObjects.ELEMENTS.METAL);
 		if (eStack.isEmpty()) return false;
 		BlockPos pos = caster.iWantDirectCaster().getPosition();
 		doFluorsparChangeSuper(world, pos, EnumFacing.UP,
@@ -113,7 +113,7 @@ public class MantraFluorspar extends MantraCommon {
 
 	@Nullable
 	public static IBlockState getChange(IBlockState state) {
-		IBlockState fluorsparState = ESInit.BLOCKS.FLUORSPAR.getDefaultState();
+		IBlockState fluorsparState = ESObjects.BLOCKS.FLUORSPAR.getDefaultState();
 		Block block = state.getBlock();
 		if (block == Blocks.STONE) {
 			switch (state.getValue(BlockStone.VARIANT)) {

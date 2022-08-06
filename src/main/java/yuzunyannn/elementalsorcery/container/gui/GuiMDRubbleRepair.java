@@ -1,8 +1,8 @@
 package yuzunyannn.elementalsorcery.container.gui;
 
 import net.minecraft.entity.player.InventoryPlayer;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerMDRubbleRepair;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class GuiMDRubbleRepair extends GuiMDBase<ContainerMDRubbleRepair> {
 
@@ -40,10 +40,10 @@ public class GuiMDRubbleRepair extends GuiMDBase<ContainerMDRubbleRepair> {
 	}
 
 	public static void drawMagicSign(int xoff, int yoff, int texY, int texH) {
-		RenderHelper.drawTexturedModalRect(xoff, yoff, 176, texY, 43, texH, 256, 256);
-		RenderHelper.drawTexturedModalRect(xoff + 40, yoff, 176, texY, 43, texH, 256, 256);
-		RenderHelper.drawTexturedModalRect(xoff + 80, yoff, 176, texY, 43, texH, 256, 256);
-		RenderHelper.drawTexturedModalRect(xoff + 120, yoff, 176, texY, 43, texH, 256, 256);
+		RenderFriend.drawTexturedModalRect(xoff, yoff, 176, texY, 43, texH, 256, 256);
+		RenderFriend.drawTexturedModalRect(xoff + 40, yoff, 176, texY, 43, texH, 256, 256);
+		RenderFriend.drawTexturedModalRect(xoff + 80, yoff, 176, texY, 43, texH, 256, 256);
+		RenderFriend.drawTexturedModalRect(xoff + 120, yoff, 176, texY, 43, texH, 256, 256);
 	}
 
 }

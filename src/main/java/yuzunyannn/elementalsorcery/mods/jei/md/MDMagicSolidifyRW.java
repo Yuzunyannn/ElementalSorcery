@@ -10,10 +10,10 @@ import mezz.jei.api.ingredients.IIngredients;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.gui.GuiMDBase;
 import yuzunyannn.elementalsorcery.container.gui.GuiNormal;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagicSolidify;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class MDMagicSolidifyRW implements MDRecipeWrapper {
 
@@ -51,7 +51,7 @@ public class MDMagicSolidifyRW implements MDRecipeWrapper {
 				mc.getRenderPartialTicks(), MDDraw.TEXTURE1, MDDraw.TEXTURE2);
 		int x = draw.getWidth() / 2;
 		offsetY = 31;
-		RenderHelper.drawTexturedModalRect(offsetX + x - 9 - 11, offsetY - 7, 0, 216, 39, 34, 256, 256);
+		RenderFriend.drawTexturedModalRect(offsetX + x - 9 - 11, offsetY - 7, 0, 216, 39, 34, 256, 256);
 		draw.drawSolt(offsetX + x - 9, offsetY);
 	}
 

@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 
@@ -59,7 +59,7 @@ public class MessageSpellbook implements IMessage {
 				public void run() {
 					EntityPlayer player = Minecraft.getMinecraft().world.getPlayerEntityByUUID(uuid);
 					if (player == null) {
-						ElementalSorcery.logger.warn("MessageSpellbook的包接受时候出现问题：clinet寻找不到对应的玩家！难道是僵尸？！");
+						ESAPI.logger.warn("MessageSpellbook的包接受时候出现问题：clinet寻找不到对应的玩家！难道是僵尸？！");
 						return;
 					}
 					ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);

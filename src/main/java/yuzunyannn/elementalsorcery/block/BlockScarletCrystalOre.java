@@ -15,7 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class BlockScarletCrystalOre extends Block {
@@ -35,7 +35,7 @@ public class BlockScarletCrystalOre extends Block {
 
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return ESInit.ITEMS.SCARLET_CRYSTAL;
+		return ESObjects.ITEMS.SCARLET_CRYSTAL;
 	}
 
 	@Override

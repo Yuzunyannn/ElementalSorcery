@@ -9,8 +9,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
-import yuzunyannn.elementalsorcery.entity.fcube.FairyCubeModule;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 
@@ -93,7 +93,7 @@ public class ContainerFairyCube extends Container implements IContainerNetwork {
 				int index = nbt.getInteger("I");
 				FairyCubeModule module = fairyCube.getModules().get(index);
 				int status = module.getCurrStatus();
-				module.onClickOnGUI(nbt.getByte("K"), this);
+				module.onClickOnGUI(nbt.getByte("K"), this.player);
 				if (module.getCurrStatus() != status) {
 					NBTTagCompound data = new NBTTagCompound();
 					data.setByte("S", (byte) module.getCurrStatus());

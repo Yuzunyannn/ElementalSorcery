@@ -21,7 +21,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
 
 public class BlockCrystalFlower extends BlockBush implements ITileEntityProvider, IGrowable {
@@ -55,7 +55,7 @@ public class BlockCrystalFlower extends BlockBush implements ITileEntityProvider
 
 	@Override
 	protected boolean canSustainBush(IBlockState state) {
-		return state.getBlock() == ESInit.BLOCKS.LIFE_DIRT;
+		return state.getBlock() == ESObjects.BLOCKS.LIFE_DIRT;
 	}
 
 	@Override

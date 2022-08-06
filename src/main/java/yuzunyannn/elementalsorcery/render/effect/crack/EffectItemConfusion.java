@@ -10,8 +10,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class EffectItemConfusion extends Effect {
@@ -71,7 +71,7 @@ public class EffectItemConfusion extends Effect {
 		GlStateManager.popMatrix();
 
 		net.minecraft.client.renderer.RenderHelper.disableStandardItemLighting();
-		RenderHelper.disableLightmap(true);
+		RenderFriend.disableLightmap(true);
 	}
 
 }

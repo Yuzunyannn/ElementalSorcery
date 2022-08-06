@@ -43,8 +43,7 @@ public class ItemVoidContainerElement extends Item implements EntityThrow.IItemT
 	@SideOnly(Side.CLIENT)
 	public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		super.addInformation(stack, worldIn, tooltip, flagIn);
-		IElementInventory inventory = stack.getCapability(ElementInventory.ELEMENTINVENTORY_CAPABILITY, null);
-		inventory.loadState(stack);
+		IElementInventory inventory = ElementHelper.getElementInventory(stack);
 		inventory.addInformation(worldIn, tooltip, flagIn);
 	}
 

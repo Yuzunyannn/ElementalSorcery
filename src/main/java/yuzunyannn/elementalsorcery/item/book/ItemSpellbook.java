@@ -6,6 +6,7 @@ import java.util.Random;
 import javax.annotation.Nullable;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -24,19 +25,19 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderLayoutFix;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.SpellbookOpenMsg;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellbook;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellbookSelect;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellbookTo;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
 
-public class ItemSpellbook extends Item implements IItemUseClientUpdate {
+public class ItemSpellbook extends Item implements IItemUseClientUpdate, IRenderLayoutFix {
 
 	static public final Random rand = new Random();
 
@@ -332,5 +333,13 @@ public class ItemSpellbook extends Item implements IItemUseClientUpdate {
 		ParticleSpellbook effect = new ParticleSpellbook(world, from, speed, player);
 		effect.setColor(color);
 		Minecraft.getMinecraft().effectRenderer.addEffect(effect);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void fixLauout(ItemStack stack) {
+		GlStateManager.translate(0, 0.35, 0.2);
+		GlStateManager.scale(0.8, 0.8, 0.8);
+		GlStateManager.rotate(-90, 1, 0, 0);
 	}
 }

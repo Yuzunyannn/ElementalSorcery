@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageBlockDisintegrate;
 import yuzunyannn.elementalsorcery.network.MessageBlockDisintegrate.DisintegratePackage;
@@ -144,12 +144,12 @@ public class ItemElementCrack extends Item {
 
 			NBTTagCompound effectNBT = new NBTTagCompound();
 
-			PotionEffect effect = living.getActivePotionEffect(ESInit.POTIONS.ELEMENT_CRACK_ATTACK);
+			PotionEffect effect = living.getActivePotionEffect(ESObjects.POTIONS.ELEMENT_CRACK_ATTACK);
 			Map<Potion, PotionEffect> activePotionsMap = null;
 			try {
 				activePotionsMap = ObfuscationReflectionHelper.getPrivateValue(EntityLivingBase.class, living,
 						"field_70713_bf");
-				PotionEffect inner = activePotionsMap.get(ESInit.POTIONS.ELEMENT_CRACK_ATTACK);
+				PotionEffect inner = activePotionsMap.get(ESObjects.POTIONS.ELEMENT_CRACK_ATTACK);
 				if (effect == null) effect = inner;
 				else if (inner != null) {
 					if (effect.getAmplifier() < inner.getAmplifier()) effect = inner;
@@ -159,7 +159,7 @@ public class ItemElementCrack extends Item {
 			int nextLevel = (effect == null ? -1 : effect.getAmplifier()) + 1;
 			int remainTick = (int) (20 * 30 + Math.pow(5, nextLevel));
 
-			effect = new PotionEffect(ESInit.POTIONS.ELEMENT_CRACK_ATTACK, remainTick, nextLevel);
+			effect = new PotionEffect(ESObjects.POTIONS.ELEMENT_CRACK_ATTACK, remainTick, nextLevel);
 			living.addPotionEffect(effect);
 			// 部分生物無法添加的藥水效果，但这个物品一定要记录！
 			if (activePotionsMap != null) {

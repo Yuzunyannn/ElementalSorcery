@@ -11,12 +11,12 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
 
 public class ResearchCategory implements IRecipeCategory<ResearchRecipeWrapper> {
 
-	public static final String UID = ElementalSorcery.MODID + "." + "research";
+	public static final String UID = ESAPI.MODID + "." + "research";
 	private final ResearchDraw background = new ResearchDraw();
 
 	@Override
@@ -31,7 +31,7 @@ public class ResearchCategory implements IRecipeCategory<ResearchRecipeWrapper> 
 
 	@Override
 	public String getModName() {
-		return ElementalSorcery.MODID;
+		return ESAPI.MODID;
 	}
 
 	@Override

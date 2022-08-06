@@ -26,6 +26,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistryEntry;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.ESImplRegister;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.ElfConfig;
@@ -42,11 +46,8 @@ import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.entity.EntityItemGoods;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.init.ESImplRegister;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.util.var.VariableTypes;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
@@ -54,10 +55,6 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	static public Random getRandomFromName(String str) {
 		return new Random(str.hashCode());
 	}
-
-	public static final Variable<Integer> REMAIN_TICK = new Variable("remainTick", VariableSet.INT);
-	public static final Variable<ElfMerchantType> M_TYPE = new Variable("mType", VariableSet.ELF_MERCHANT_TYPE);
-	public static final Variable<NBTTagCompound> MEET = new Variable("meet", VariableSet.NBT_TAG);
 
 	public static final ESImplRegister<ElfProfession> REGISTRY = new ESImplRegister(ElfProfession.class);
 
@@ -76,6 +73,10 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	static public final ElfProfession RESEARCHER = new ElfProfessionResearcher();
 	static public final ElfProfession SCHOLAR_ADV = new ElfProfessionScholarAdv();
 	static public final ElfProfession DEBT_COLLECTOR = new ElfProfessionDebtCollector();
+
+	public static final Variable<Integer> REMAIN_TICK = new Variable("remainTick", VariableSet.INT);
+	public static final Variable<ElfMerchantType> M_TYPE = new Variable("mType", VariableTypes.ELF_MERCHANT_TYPE);
+	public static final Variable<NBTTagCompound> MEET = new Variable("meet", VariableSet.NBT_TAG);
 
 	protected String unlocalizedName;
 
@@ -132,8 +133,8 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 		int i = rand.nextInt(3);
 		if (lootingModifier > 0) i += rand.nextInt(lootingModifier + 1);
 		for (int j = 0; j < i; ++j) {
-			if (rand.nextInt(3) == 0) elf.entityDropItem(new ItemStack(ESInit.ITEMS.ELF_COIN, rand.nextInt(8) + 2), 0);
-			else elf.entityDropItem(new ItemStack(ESInit.BLOCKS.ELF_FRUIT, 1, BlockElfFruit.MAX_STATE), 0);
+			if (rand.nextInt(3) == 0) elf.entityDropItem(new ItemStack(ESObjects.ITEMS.ELF_COIN, rand.nextInt(8) + 2), 0);
+			else elf.entityDropItem(new ItemStack(ESObjects.BLOCKS.ELF_FRUIT, 1, BlockElfFruit.MAX_STATE), 0);
 		}
 	}
 
@@ -177,8 +178,8 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	 * @return true表示要建起来，false表示不要建起来
 	 */
 	public boolean needPickup(EntityElfBase elf, ItemStack stack) {
-		return stack.getItem() == Item.getItemFromBlock(ESInit.BLOCKS.ELF_FRUIT)
-				|| stack.getItem() == ESInit.ITEMS.ELF_COIN;
+		return stack.getItem() == Item.getItemFromBlock(ESObjects.BLOCKS.ELF_FRUIT)
+				|| stack.getItem() == ESObjects.ITEMS.ELF_COIN;
 	}
 
 	public void onPickupItem(EntityElfBase elf, EntityItem itemEntity) {
@@ -230,7 +231,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	 */
 	public boolean interact(EntityElfBase elf, EntityPlayer player) {
 		ItemStack stack = player.getHeldItemMainhand();
-		if (stack.getItem() == ESInit.ITEMS.ELF_DIAMOND) {
+		if (stack.getItem() == ESObjects.ITEMS.ELF_DIAMOND) {
 			elf.openTalkGui(player);
 			return true;
 		}
@@ -250,7 +251,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 			return chapter;
 		}
 		ItemStack stack = player.getHeldItemMainhand();
-		if (stack.getItem() == ESInit.ITEMS.ELF_DIAMOND) {
+		if (stack.getItem() == ESObjects.ITEMS.ELF_DIAMOND) {
 			TalkChapter chapter = new TalkChapter();
 			chapter.addScene(new TalkSceneSay("say.elf.is.get.present", Talker.OPPOSING));
 			TalkSceneSelect select = new TalkSceneSelect();

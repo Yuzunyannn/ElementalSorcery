@@ -9,24 +9,25 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.container.gui.GuiMantraShitf;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.util.WorldLocation;
+import yuzunyannn.elementalsorcery.api.util.client.ESResources;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFootbridge;
-import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderObjects;
-import yuzunyannn.elementalsorcery.util.render.TextureBinder;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class FMantraFlyIsland extends FMantraBase {
 
 	public FMantraFlyIsland() {
-		addCanUseElementWithSameLevel(ESInit.ELEMENTS.EARTH);
-		setMaxCharge(new ElementStack(ESInit.ELEMENTS.EARTH, 600, 400));
+		addCanUseElementWithSameLevel(ESObjects.ELEMENTS.EARTH);
+		setMaxCharge(new ElementStack(ESObjects.ELEMENTS.EARTH, 600, 400));
 		setMinChargeRatio(0.75);
 		setChargeSpeedRatio(0.002);
 		setIconRes("textures/mantras/f_fly_island.png");
@@ -64,21 +65,22 @@ public class FMantraFlyIsland extends FMantraBase {
 		VariableSet parmas = new VariableSet();
 		parmas.set(MantraCommon.LAYER, (short) 175);
 		parmas.set(MantraCommon.POTENT_POWER, 0.5f);
-		parmas.set(MantraCommon.POWERI, (int) ElementHelper.fromFragmentByCount(ESInit.ELEMENTS.EARTH, charge, 500));
+		parmas.set(MantraCommon.POWERI, (int) ElementTransition.fromFragmentByCount(ESObjects.ELEMENTS.EARTH, charge, 500));
 		parmas.set(MantraFootbridge.POS_LIST, posList);
 		parmas.set(MantraCommon.POS, toPos);
-		MantraCommon.fireMantra(toWorld, ESInit.MANTRAS.FOOTBRIDGE, null, parmas);
+		MantraCommon.fireMantra(toWorld, ESObjects.MANTRAS.FOOTBRIDGE, null, parmas);
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void renderIcon(float suggestSize, float alpha, float partialTicks) {
 		ResourceLocation res = getIconRes();
-		if (res == null) res = RenderObjects.MANTRA_VOID;
-		TextureBinder.bindTexture(GuiMantraShitf.CIRCLE);
-		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		if (res == null) res = ESResources.MANTRA_VOID.getResource();
+		ESResources.MANTRA_COMMON_CIRCLE.bind();
+		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 		GlStateManager.color(1, 1, 1, alpha);
 		TextureBinder.bindTexture(res);
 		suggestSize = suggestSize * 0.5f;
-		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
 	}
 }

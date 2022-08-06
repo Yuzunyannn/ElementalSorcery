@@ -23,11 +23,13 @@ import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.IElementMap;
 import yuzunyannn.elementalsorcery.api.tile.IItemStructureCraft;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
 import yuzunyannn.elementalsorcery.util.element.ElementAnalysisPacket;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -37,9 +39,13 @@ import yuzunyannn.elementalsorcery.util.json.Json.ParseExceptionCode;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
-public class ElementMap implements IToElement {
+public class ElementMap implements IElementMap {
 
 	public final static ElementMap instance = new ElementMap();
+
+	static {
+		ElementalSorcery.setAPIField(instance);
+	}
 
 	public final static DefaultToElement defaultToElementMap = new DefaultToElement();
 	public final static DefaultBucketToElement defaultBucketToElement = new DefaultBucketToElement();
@@ -61,19 +67,26 @@ public class ElementMap implements IToElement {
 		}
 		return null;
 	}
+	
+	@Override
+	public Collection<IToElement> getToElements() {
+		return toList;
+	}
 
 	// ---------------------------------ADD----------------------------------------
 
+	@Override
 	public void add(IToElement toElement) {
 		if (toElement == null) return;
 		if (toList.contains(toElement)) return;
 		toList.add(toElement);
 	}
 
-	public void addFront(IToElement toElement) {
+	@Override
+	public void add(int index, IToElement toElement) {
 		if (toElement == null) return;
 		if (toList.contains(toElement)) return;
-		toList.add(1, toElement);
+		toList.add(index, toElement);
 	}
 
 	public void add(ItemStack stack, ItemStack[] remain, ElementStack[] estacks) {
@@ -217,7 +230,7 @@ public class ElementMap implements IToElement {
 				}
 
 			} catch (JsonParseException e) {
-				ElementalSorcery.logger.warn("解析json出现异常：" + fileName, e);
+				ESAPI.logger.warn("解析json出现异常：" + fileName, e);
 			}
 		}
 	}
@@ -269,7 +282,7 @@ public class ElementMap implements IToElement {
 		DefaultToElement newMap = new DefaultToElement();
 		Set<String> dealSet = new HashSet<>();
 		dealSet.add("minecraft");
-		dealSet.add(ElementalSorcery.MODID);
+		dealSet.add(ESAPI.MODID);
 		// 检测所有物品
 		for (Item item : Item.REGISTRY) {
 			String modId = item.getRegistryName().getNamespace();

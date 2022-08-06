@@ -12,11 +12,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.block.BlockAStone.EnumType;
 import yuzunyannn.elementalsorcery.block.BlockStarFlower;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class EEStar extends ElementExplosion {
 
@@ -54,14 +54,14 @@ public class EEStar extends ElementExplosion {
 		if (block == Blocks.COBBLESTONE) {
 			if (rand.nextFloat() < power / 100) return Blocks.STONE.getDefaultState();
 		}
-		if (block == ESInit.BLOCKS.ASTONE && state.getValue(BlockAStone.VARIANT) == EnumType.FRAGMENTED) {
-			if (rand.nextFloat() < power / 600) return ESInit.BLOCKS.ASTONE.getDefaultState();
+		if (block == ESObjects.BLOCKS.ASTONE && state.getValue(BlockAStone.VARIANT) == EnumType.FRAGMENTED) {
+			if (rand.nextFloat() < power / 600) return ESObjects.BLOCKS.ASTONE.getDefaultState();
 		}
 		if (block == Blocks.SAND) {
-			if (rand.nextFloat() < power / 1000) return ESInit.BLOCKS.STAR_SAND.getDefaultState();
+			if (rand.nextFloat() < power / 1000) return ESObjects.BLOCKS.STAR_SAND.getDefaultState();
 		}
-		if (block == ESInit.BLOCKS.KYANITE_ORE) {
-			if (rand.nextFloat() < power / 4000) return ESInit.BLOCKS.KYANITE_BLOCK.getDefaultState();
+		if (block == ESObjects.BLOCKS.KYANITE_ORE) {
+			if (rand.nextFloat() < power / 4000) return ESObjects.BLOCKS.KYANITE_BLOCK.getDefaultState();
 		}
 		if (block == Blocks.GOLD_ORE) {
 			if (rand.nextFloat() < power / 2500) return Blocks.GOLD_BLOCK.getDefaultState();

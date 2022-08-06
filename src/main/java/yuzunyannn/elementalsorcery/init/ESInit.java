@@ -49,8 +49,16 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.ESCreativeTabs;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.block.BlockCrudeQuartz;
 import yuzunyannn.elementalsorcery.block.BlockCrystalFlower;
@@ -130,7 +138,6 @@ import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.element.Element;
 import yuzunyannn.elementalsorcery.element.ElementAir;
 import yuzunyannn.elementalsorcery.element.ElementEarth;
 import yuzunyannn.elementalsorcery.element.ElementEnder;
@@ -138,7 +145,6 @@ import yuzunyannn.elementalsorcery.element.ElementFire;
 import yuzunyannn.elementalsorcery.element.ElementKnowledge;
 import yuzunyannn.elementalsorcery.element.ElementMagic;
 import yuzunyannn.elementalsorcery.element.ElementMetal;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.element.ElementStar;
 import yuzunyannn.elementalsorcery.element.ElementWater;
 import yuzunyannn.elementalsorcery.element.ElementWood;
@@ -147,13 +153,12 @@ import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
-import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeMaster;
+import yuzunyannn.elementalsorcery.entity.fcube.FairyCubeModuleInGame;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.KeyBoard;
 import yuzunyannn.elementalsorcery.explore.ExploreManagement;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraArrow;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraBlockCrash;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraElementWhirl;
@@ -288,7 +293,6 @@ import yuzunyannn.elementalsorcery.potion.PotionVerdantWalker;
 import yuzunyannn.elementalsorcery.potion.PotionWaterCalamity;
 import yuzunyannn.elementalsorcery.potion.PotionWindShield;
 import yuzunyannn.elementalsorcery.potion.PotionWindWalker;
-import yuzunyannn.elementalsorcery.render.IRenderItem;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.item.RenderItemElementCrack;
 import yuzunyannn.elementalsorcery.render.item.RenderItemFairyCube;
@@ -394,8 +398,6 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.render.WorldScene;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.util.var.Variables;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 
@@ -403,28 +405,15 @@ public class ESInit {
 
 	public static final List<Class<? extends TileEntity>> ES_TILE_ENTITY = new ArrayList<>();
 
-	public static final ESObjects.Items ITEMS = new ESObjects.Items();
-	public static final ESObjects.Blocks BLOCKS = new ESObjects.Blocks();
-	public static final ESObjects.Elements ELEMENTS = new ESObjects.Elements();
-	public static final ESObjects.Mantras MANTRAS = new ESObjects.Mantras();
-	public static final ESObjects.Potions POTIONS = new ESObjects.Potions();
-	public static final ESObjects.Village VILLAGE = new ESObjects.Village();
 	public static final ESCreativeTabs tab = ESCreativeTabs.TAB;
 
 	public static final void instance() throws ReflectiveOperationException {
-		// 实例句柄集
-		ESObjects.ITEMS = ITEMS;
-		ESObjects.BLOCKS = BLOCKS;
-		ESObjects.ELEMENTS = ELEMENTS;
-		ESObjects.MANTRAS = MANTRAS;
-		ESObjects.POTIONS = POTIONS;
-		ESObjects.VILLAGE = VILLAGE;
 		// 创造物品栏
 		ESObjects.CREATIVE_TABS = tab;
 		// 初始化虚空元素
-		ELEMENTS.VOID = new Element(Element.rgb(0, 0, 0)).setRegistryName("void").setTranslationKey("void");
+		ESObjects.ELEMENTS.VOID = new Element(Element.rgb(0, 0, 0)).setRegistryName("void").setTranslationKey("void");
 		// 初始化魔力元素
-		ELEMENTS.MAGIC = new ElementMagic().setRegistryName("magic").setTranslationKey("magic");
+		ESObjects.ELEMENTS.MAGIC = new ElementMagic().setRegistryName("magic").setTranslationKey("magic");
 		initVoidElement();
 		// 实例化方块和物品等
 		instanceBlocks();
@@ -440,214 +429,214 @@ public class ESInit {
 	private static void initVoidElement() throws ReflectiveOperationException {
 		Field field = ElementStack.class.getDeclaredField("element");
 		field.setAccessible(true);
-		field.set(ElementStack.EMPTY, ELEMENTS.VOID);
+		field.set(ElementStack.EMPTY, ESObjects.ELEMENTS.VOID);
 	}
 
 	private static final void instanceBlocks() throws ReflectiveOperationException {
 
-		BLOCKS.ASTONE = new BlockAStone();
-		BLOCKS.ESTONE = new BlocksEStone.EStone();
-		BLOCKS.ESTONE_SLAB = new BlocksEStone.EStoneSlab();
-		BLOCKS.ESTONE_STAIRS = new BlocksEStone.EStoneStairs();
-		BLOCKS.ESTONE_PRISM = new BlocksEStone.EStonePrism();
-		BLOCKS.ESTONE_MATRIX = new BlockEStoneMatrix();
-		BLOCKS.ESTONE_CROCK = new BlockEStoneCrock();
+		ESObjects.BLOCKS.ASTONE = new BlockAStone();
+		ESObjects.BLOCKS.ESTONE = new BlocksEStone.EStone();
+		ESObjects.BLOCKS.ESTONE_SLAB = new BlocksEStone.EStoneSlab();
+		ESObjects.BLOCKS.ESTONE_STAIRS = new BlocksEStone.EStoneStairs();
+		ESObjects.BLOCKS.ESTONE_PRISM = new BlocksEStone.EStonePrism();
+		ESObjects.BLOCKS.ESTONE_MATRIX = new BlockEStoneMatrix();
+		ESObjects.BLOCKS.ESTONE_CROCK = new BlockEStoneCrock();
 
-		BLOCKS.ELEMENTAL_CUBE = new BlockElementCube();
-		BLOCKS.HEARTH = new BlockHearth();
-		BLOCKS.SMELT_BOX = new BlockSmeltBox(BlockHearth.EnumMaterial.COBBLESTONE);
-		BLOCKS.SMELT_BOX_IRON = new BlockSmeltBox(BlockHearth.EnumMaterial.IRON);
-		BLOCKS.SMELT_BOX_KYANITE = new BlockSmeltBox(BlockHearth.EnumMaterial.KYANITE);
-		BLOCKS.KYANITE_BLOCK = new BlockKyanite();
-		BLOCKS.KYANITE_ORE = new BlockKyanite.BlockKyaniteOre();
-		BLOCKS.MAGIC_PLATFORM = new BlockMagicPlatform();
-		BLOCKS.INVALID_ENCHANTMENT_TABLE = new BlockInvalidEnchantmentTable();
-		BLOCKS.ELEMENT_WORKBENCH = new BlockElementWorkbench();
-		BLOCKS.MAGIC_DESK = new BlockMagicDesk();
-		BLOCKS.ELEMENT_CRAFTING_TABLE = new BlockElementCraftingTable();
-		BLOCKS.DECONSTRUCT_ALTAR_TABLE = new BlockDeconstructAltarTable();
-		BLOCKS.DECONSTRUCT_ALTAR_TABLE_ADV = new BlockDeconstructAltarTableAdv();
-		BLOCKS.RITE_TABLE = new BlockRiteTable();
-		BLOCKS.LANTERN = new BlockLantern();
-		BLOCKS.BUILDING_ALTAR = new BlockBuildingAltar();
-		BLOCKS.ANALYSIS_ALTAR = new BlockAnalysisAltar();
-		BLOCKS.SUPREME_TABLE = new BlockSupremeTable();
-		BLOCKS.MAGIC_TORCH = new BlockMagicTorch();
-		BLOCKS.STAR_STONE = new BlockStarStone();
-		BLOCKS.STAR_SAND = new BlockStarSand();
-		BLOCKS.STONE_MILL = new BlockStoneMill();
-		BLOCKS.MELT_CAULDRON = new BlockMeltCauldron();
-		BLOCKS.ELF_LOG = new BlockElfLog();
-		BLOCKS.ELF_LEAF = new BlockElfLeaf();
-		BLOCKS.ELF_PLANK = new BlockElfPlank();
-		BLOCKS.ELF_SAPLING = new BlockElfSapling();
-		BLOCKS.ELF_FRUIT = new BlockElfFruit();
-		BLOCKS.MD_MAGIC_GEN = new BlockMDMagicGen();
-		BLOCKS.MD_HEARTH = new BlockMDHearth();
-		BLOCKS.MD_RUBBLE_REPAIR = new BlockMDRubbleRepair();
-		BLOCKS.MD_INFUSION = new BlockMDInfusion();
-		BLOCKS.MD_TRANSFER = new BlockMDTransfer();
-		BLOCKS.MD_MAGIC_SOLIDIFY = new BlockMDMagicSolidify();
-		BLOCKS.MD_ABSORB_BOX = new BlockMDAbsorbBox();
-		BLOCKS.MD_MAGICLIZATION = new BlockMDMagiclization();
-		BLOCKS.MD_DECONSTRUCT_BOX = new BlockMDDeconstructBox();
-		BLOCKS.MD_RESONANT_INCUBATOR = new BlockMDResonantIncubator();
-		BLOCKS.MD_FREQUENCY_MAPPING = new BlockMDFrequencyMapping();
-		BLOCKS.MD_LIQUIDIZER = new BlockMDLiquidizer();
-		BLOCKS.LIFE_FLOWER = new BlockLifeFlower();
-		BLOCKS.MAGIC_POT = new BlockMagicPot();
-		BLOCKS.LIFE_DIRT = new BlockLifeDirt();
-		BLOCKS.CRYSTAL_FLOWER = new BlockCrystalFlower();
-		BLOCKS.IS_CRAFT_NORMAL = new BlockItemStructureCraftNormal();
-		BLOCKS.PORTAL_ALTAR = new BlockPortalAltar();
-		BLOCKS.TRANSCRIBE_TABLE = new BlockTranscribeTable();
-		BLOCKS.TRANSCRIBE_INJECTION = new BlockTranscribeInjection();
-		BLOCKS.ELF_TREE_CORE = new BlockElfTreeCore();
-		BLOCKS.ELF_BEACON = new BlockElfBeacon();
-		BLOCKS.RESEARCHER = new BlockResearcher();
-		BLOCKS.SEAL_STONE = new BlockSealStone();
-		BLOCKS.SCARLET_CRYSTAL_ORE = new BlockScarletCrystalOre();
-		BLOCKS.STAR_FLOWER = new BlockStarFlower();
-		BLOCKS.CRUDE_QUARTZ = new BlockCrudeQuartz();
-		BLOCKS.ELEMENT_PLATFORM = new BlockElementPlatform();
-		BLOCKS.FLUORSPAR = new BlockFluorspar();
-		BLOCKS.DECONSTRUCT_WINDMILL = new BlockDeconstructWindmill();
-		BLOCKS.ELEMENT_TRANSLOCATOR = new BlockElementTranslocator();
-		BLOCKS.GOAT_GOLD_BRICK = new BlockGoatGoldBrick();
-		BLOCKS.DEVOLVE_CUBE = new BlockDevolveCube();
-		BLOCKS.DISINTEGRATE_STELA = new BlockDisintegrateStela();
-		BLOCKS.ICE_ROCK_STAND = new BlockIceRockStand();
-		BLOCKS.ICE_ROCK_CRYSTAL_BLOCK = new BlockIceRockCrystalBlock();
-		BLOCKS.ICE_ROCK_NODE = new BlockIceRockNode();
-		BLOCKS.ELEMENT_REACTOR = new BlockElementReactor();
-		BLOCKS.INSTANT_CONSTITUTE = new BlockInstantConstitute();
-		BLOCKS.IS_CRAFT_CC = new BlockItemStructureCraftCC();
+		ESObjects.BLOCKS.ELEMENTAL_CUBE = new BlockElementCube();
+		ESObjects.BLOCKS.HEARTH = new BlockHearth();
+		ESObjects.BLOCKS.SMELT_BOX = new BlockSmeltBox(BlockHearth.EnumMaterial.COBBLESTONE);
+		ESObjects.BLOCKS.SMELT_BOX_IRON = new BlockSmeltBox(BlockHearth.EnumMaterial.IRON);
+		ESObjects.BLOCKS.SMELT_BOX_KYANITE = new BlockSmeltBox(BlockHearth.EnumMaterial.KYANITE);
+		ESObjects.BLOCKS.KYANITE_BLOCK = new BlockKyanite();
+		ESObjects.BLOCKS.KYANITE_ORE = new BlockKyanite.BlockKyaniteOre();
+		ESObjects.BLOCKS.MAGIC_PLATFORM = new BlockMagicPlatform();
+		ESObjects.BLOCKS.INVALID_ENCHANTMENT_TABLE = new BlockInvalidEnchantmentTable();
+		ESObjects.BLOCKS.ELEMENT_WORKBENCH = new BlockElementWorkbench();
+		ESObjects.BLOCKS.MAGIC_DESK = new BlockMagicDesk();
+		ESObjects.BLOCKS.ELEMENT_CRAFTING_TABLE = new BlockElementCraftingTable();
+		ESObjects.BLOCKS.DECONSTRUCT_ALTAR_TABLE = new BlockDeconstructAltarTable();
+		ESObjects.BLOCKS.DECONSTRUCT_ALTAR_TABLE_ADV = new BlockDeconstructAltarTableAdv();
+		ESObjects.BLOCKS.RITE_TABLE = new BlockRiteTable();
+		ESObjects.BLOCKS.LANTERN = new BlockLantern();
+		ESObjects.BLOCKS.BUILDING_ALTAR = new BlockBuildingAltar();
+		ESObjects.BLOCKS.ANALYSIS_ALTAR = new BlockAnalysisAltar();
+		ESObjects.BLOCKS.SUPREME_TABLE = new BlockSupremeTable();
+		ESObjects.BLOCKS.MAGIC_TORCH = new BlockMagicTorch();
+		ESObjects.BLOCKS.STAR_STONE = new BlockStarStone();
+		ESObjects.BLOCKS.STAR_SAND = new BlockStarSand();
+		ESObjects.BLOCKS.STONE_MILL = new BlockStoneMill();
+		ESObjects.BLOCKS.MELT_CAULDRON = new BlockMeltCauldron();
+		ESObjects.BLOCKS.ELF_LOG = new BlockElfLog();
+		ESObjects.BLOCKS.ELF_LEAF = new BlockElfLeaf();
+		ESObjects.BLOCKS.ELF_PLANK = new BlockElfPlank();
+		ESObjects.BLOCKS.ELF_SAPLING = new BlockElfSapling();
+		ESObjects.BLOCKS.ELF_FRUIT = new BlockElfFruit();
+		ESObjects.BLOCKS.MD_MAGIC_GEN = new BlockMDMagicGen();
+		ESObjects.BLOCKS.MD_HEARTH = new BlockMDHearth();
+		ESObjects.BLOCKS.MD_RUBBLE_REPAIR = new BlockMDRubbleRepair();
+		ESObjects.BLOCKS.MD_INFUSION = new BlockMDInfusion();
+		ESObjects.BLOCKS.MD_TRANSFER = new BlockMDTransfer();
+		ESObjects.BLOCKS.MD_MAGIC_SOLIDIFY = new BlockMDMagicSolidify();
+		ESObjects.BLOCKS.MD_ABSORB_BOX = new BlockMDAbsorbBox();
+		ESObjects.BLOCKS.MD_MAGICLIZATION = new BlockMDMagiclization();
+		ESObjects.BLOCKS.MD_DECONSTRUCT_BOX = new BlockMDDeconstructBox();
+		ESObjects.BLOCKS.MD_RESONANT_INCUBATOR = new BlockMDResonantIncubator();
+		ESObjects.BLOCKS.MD_FREQUENCY_MAPPING = new BlockMDFrequencyMapping();
+		ESObjects.BLOCKS.MD_LIQUIDIZER = new BlockMDLiquidizer();
+		ESObjects.BLOCKS.LIFE_FLOWER = new BlockLifeFlower();
+		ESObjects.BLOCKS.MAGIC_POT = new BlockMagicPot();
+		ESObjects.BLOCKS.LIFE_DIRT = new BlockLifeDirt();
+		ESObjects.BLOCKS.CRYSTAL_FLOWER = new BlockCrystalFlower();
+		ESObjects.BLOCKS.IS_CRAFT_NORMAL = new BlockItemStructureCraftNormal();
+		ESObjects.BLOCKS.PORTAL_ALTAR = new BlockPortalAltar();
+		ESObjects.BLOCKS.TRANSCRIBE_TABLE = new BlockTranscribeTable();
+		ESObjects.BLOCKS.TRANSCRIBE_INJECTION = new BlockTranscribeInjection();
+		ESObjects.BLOCKS.ELF_TREE_CORE = new BlockElfTreeCore();
+		ESObjects.BLOCKS.ELF_BEACON = new BlockElfBeacon();
+		ESObjects.BLOCKS.RESEARCHER = new BlockResearcher();
+		ESObjects.BLOCKS.SEAL_STONE = new BlockSealStone();
+		ESObjects.BLOCKS.SCARLET_CRYSTAL_ORE = new BlockScarletCrystalOre();
+		ESObjects.BLOCKS.STAR_FLOWER = new BlockStarFlower();
+		ESObjects.BLOCKS.CRUDE_QUARTZ = new BlockCrudeQuartz();
+		ESObjects.BLOCKS.ELEMENT_PLATFORM = new BlockElementPlatform();
+		ESObjects.BLOCKS.FLUORSPAR = new BlockFluorspar();
+		ESObjects.BLOCKS.DECONSTRUCT_WINDMILL = new BlockDeconstructWindmill();
+		ESObjects.BLOCKS.ELEMENT_TRANSLOCATOR = new BlockElementTranslocator();
+		ESObjects.BLOCKS.GOAT_GOLD_BRICK = new BlockGoatGoldBrick();
+		ESObjects.BLOCKS.DEVOLVE_CUBE = new BlockDevolveCube();
+		ESObjects.BLOCKS.DISINTEGRATE_STELA = new BlockDisintegrateStela();
+		ESObjects.BLOCKS.ICE_ROCK_STAND = new BlockIceRockStand();
+		ESObjects.BLOCKS.ICE_ROCK_CRYSTAL_BLOCK = new BlockIceRockCrystalBlock();
+		ESObjects.BLOCKS.ICE_ROCK_NODE = new BlockIceRockNode();
+		ESObjects.BLOCKS.ELEMENT_REACTOR = new BlockElementReactor();
+		ESObjects.BLOCKS.INSTANT_CONSTITUTE = new BlockInstantConstitute();
+		ESObjects.BLOCKS.IS_CRAFT_CC = new BlockItemStructureCraftCC();
 
 		// 初始化所有tab
-		Class<?> cls = BLOCKS.getClass();
+		Class<?> cls = ESObjects.BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
-			Block block = ((Block) field.get(BLOCKS));
+			Block block = ((Block) field.get(ESObjects.BLOCKS));
 			block.setCreativeTab(tab);
 			block.setRegistryName(field.getName().toLowerCase());
 		}
 	}
 
 	private static final void instanceItems() throws ReflectiveOperationException {
-		ITEMS.KYANITE = ItemSome.newKyanite();
-		ITEMS.MAGIC_PIECE = ItemSome.newMagicalPiece();
-		ITEMS.MAGICAL_ENDER_EYE = ItemSome.newMagicalEnderEye();
-		ITEMS.MAGIC_CRYSTAL = new ItemMagicalCrystal();
-		ITEMS.TINY_KNIFE = ItemSome.newTinyKnife();
-		ITEMS.MAGIC_PAPER = new ItemMagicPaper();
-		ITEMS.SPELL_CRYSTAL = ItemCrystal.newSpellCrystal();
-		ITEMS.MAGIC_STONE = ItemSome.newMagicStone();
-		ITEMS.KYANITE_PICKAXE = new ItemKyaniteTools.ItemKyanitePickaxe();
-		ITEMS.KYANITE_AXE = new ItemKyaniteTools.ItemKyaniteAxe();
-		ITEMS.KYANITE_SPADE = new ItemKyaniteTools.ItemKyaniteSpade();
-		ITEMS.KYANITE_HOE = new ItemKyaniteTools.ItemKyaniteHoe();
-		ITEMS.KYANITE_SWORD = new ItemKyaniteTools.ItemKyaniteSword();
-		ITEMS.ARCHITECTURE_CRYSTAL = new ItemArchitectureCrystal();
-		ITEMS.ELEMENT_CRYSTAL = new ItemElementCrystal();
-		ITEMS.PARCHMENT = new ItemParchment();
-		ITEMS.SPELLBOOK_COVER = new ItemSpellbookCover();
-		ITEMS.SCROLL = new ItemScroll();
-		ITEMS.MANUAL = new ItemManual();
-		ITEMS.MAGIC_RULER = new ItemMagicRuler();
-		ITEMS.ITEM_CRYSTAL = new ItemItemCrystal();
-		ITEMS.ORDER_CRYSTAL = new ItemOrderCrystal();
-		ITEMS.MD_BASE = ItemSome.newMDBase();
-		ITEMS.RITE_MANUAL = new ItemRiteManual();
-		ITEMS.RED_HANDSET = new ItemRedHandset();
-		ITEMS.AZURE_CRYSTAL = ItemCrystal.newAzureCrystal();
-		ITEMS.RESONANT_CRYSTAL = new ItemResonantCrystal();
-		ITEMS.ELF_CRYSTAL = ItemCrystal.newElfCrystal();
-		ITEMS.SUPREME_TABLE_COMPONENT = new ItemSupremeTableComponent();
-		ITEMS.ELF_COIN = ItemSome.newElfCoin();
-		ITEMS.ELF_PURSE = new ItemElfPurse();
-		ITEMS.NATURE_CRYSTAL = new ItemNatureCrystal();
-		ITEMS.NATURE_DUST = new ItemNatureDust();
-		ITEMS.ANCIENT_PAPER = new ItemAncientPaper();
-		ITEMS.QUEST = new ItemQuest();
-		ITEMS.ELF_WATCH = new ItemElfWatch();
-		ITEMS.MAGIC_GOLD = ItemSome.newMagicGold();
-		ITEMS.MAGIC_GOLD_PICKAXE = new ItemMagicGoldTools.ItemMagicGoldPickaxe();
-		ITEMS.MAGIC_GOLD_AXE = new ItemMagicGoldTools.ItemMagicGoldAxe();
-		ITEMS.MAGIC_GOLD_SPADE = new ItemMagicGoldTools.ItemMagicGoldSpade();
-		ITEMS.MAGIC_GOLD_HOE = new ItemMagicGoldTools.ItemMagicGoldHoe();
-		ITEMS.MAGIC_GOLD_SWORD = new ItemMagicGoldTools.ItemMagicGoldSword();
-		ITEMS.PARCEL = new ItemParcel();
-		ITEMS.ADDRESS_PLATE = new ItemAddressPlate();
-		ITEMS.ELF_STAR = ItemSome.newElfStar();
-		ITEMS.JUMP_GEM = ItemSome.newJumpGem();
-		ITEMS.UNSCRAMBLE_NOTE = new ItemUnscrambleNote();
-		ITEMS.SOUL_FRAGMENT = new ItemSoulFragment();
-		ITEMS.SOUL_WOOD_SWORD = new ItemSoulWoodSword();
-		ITEMS.RELIC_GEM = ItemSome.newRelicGem();
-		ITEMS.ROCK_CAMERA = new ItemRockCamera();
-		ITEMS.KEEPSAKE = new ItemKeepsake();
-		ITEMS.QUILL = new ItemQuill();
-		ITEMS.FUSION_CRYSTAL = new ItemFusionCrystal();
-		ITEMS.VORTEX = new ItemVortex();
-		ITEMS.ELEMENT_STONE = new ItemElementStone();
-		ITEMS.LIFE_LEATHER = new ItemLifeLeather();
-		ITEMS.MAGIC_BLAST_WAND = new ItemMagicBlastWand();
-		ITEMS.SOUL_KILLER_SWORD = new ItemSoulKillerSword();
-		ITEMS.SCAPEGOAT = new ItemScapegoat();
-		ITEMS.MAGIC_CORE = new ItemMagicCore();
-		ITEMS.SCARLET_CRYSTAL = new ItemScarletCrystal();
-		ITEMS.STAR_BELL = new ItemStarBell();
-		ITEMS.APPLE_CANDY = new ItemAppleCandy();
-		ITEMS.FAIRY_CUBE = new ItemFairyCube();
-		ITEMS.FAIRY_CUBE_MODULE = new ItemFairyCubeModule();
-		ITEMS.RABID_LEATHER = new ItemRabidLeather();
-		ITEMS.CUBE_CORE = new ItemCubeCore();
-		ITEMS.DREAD_GEM = new ItemDreadGem();
-		ITEMS.DEJECTED_TEAR = new ItemDejectedTear();
-		ITEMS.MERCHANT_INVITATION = new ItemMerchantInvitation();
-		ITEMS.ELEMENT_BOARD = new ItemElementBoard();
-		ITEMS.CUBE_DEMARCATOR = new ItemCubeDemarcator();
-		ITEMS.WINDMILL_BLADE_FRAME = new ItemWindmillBladeFrame();
-		ITEMS.WINDMILL_BLADE = new ItemWindmillBlade();
-		ITEMS.WINDMILL_BLADE_ASTONE = new ItemWindmillBlades.AStone();
-		ITEMS.WINDMILL_BLADE_WOOD = new ItemWindmillBlades.WOOD();
-		ITEMS.WINDMILL_BLADE_CRYSTAL = new ItemWindmillBlades.CRYSTAL();
-		ITEMS.ELF_FRUIT_BOMB = new ItemElfFruitBomb();
-		ITEMS.GLASS_CUP = new ItemGlassCup();
-		ITEMS.CALAMITY_GEM = new ItemCalamityGem();
-		ITEMS.BLESSING_JADE = new ItemBlessingJade();
-		ITEMS.ARROGANT_WOOL = new ItemArrogantWool();
-		ITEMS.BLESSING_JADE_PIECE = new ItemBlessingJadePiece();
-		ITEMS.ELEMENT_CRACK = new ItemElementCrack();
-		ITEMS.ENTANGLE_NODE = new ItemEntangleNode();
-		ITEMS.DRAGON_BREATH_PICKAXE = new ItemDragonBreathPickaxe();
-		ITEMS.INVERT_GEM = new ItemInvertGem();
-		ITEMS.ICE_ROCK_CHIP = new ItemIceRockChip();
-		ITEMS.ICE_ROCK_SPAR = new ItemIceRockSpar();
-		ITEMS.FAIRY_CORE = new ItemFairyCore();
-		ITEMS.MATERIAL_DEBRIS = new ItemMaterialDebris();
-		ITEMS.MANTRA_GEM = new ItemMantraGem();
-		ITEMS.CONTROLLER = new ItemController();
-		ITEMS.MAGIC_TERMINAL = new ItemMagicTerminal();
-		ITEMS.VOID_FRAGMENT = new ItemVoidFragment();
-		ITEMS.VOID_CONTAINER = new ItemVoidContainer();
-		ITEMS.VOID_CONTAINER_ELEMENT = new ItemVoidContainerElement();
-		ITEMS.ELF_DIAMOND = new ItemElfDiamond();
-		ITEMS.COLLAPSE = new ItemCollapse();
-		ITEMS.COLLAPSE_WAND = new ItemCollapseWand();
+		ESObjects.ITEMS.KYANITE = ItemSome.newKyanite();
+		ESObjects.ITEMS.MAGIC_PIECE = ItemSome.newMagicalPiece();
+		ESObjects.ITEMS.MAGICAL_ENDER_EYE = ItemSome.newMagicalEnderEye();
+		ESObjects.ITEMS.MAGIC_CRYSTAL = new ItemMagicalCrystal();
+		ESObjects.ITEMS.TINY_KNIFE = ItemSome.newTinyKnife();
+		ESObjects.ITEMS.MAGIC_PAPER = new ItemMagicPaper();
+		ESObjects.ITEMS.SPELL_CRYSTAL = ItemCrystal.newSpellCrystal();
+		ESObjects.ITEMS.MAGIC_STONE = ItemSome.newMagicStone();
+		ESObjects.ITEMS.KYANITE_PICKAXE = new ItemKyaniteTools.ItemKyanitePickaxe();
+		ESObjects.ITEMS.KYANITE_AXE = new ItemKyaniteTools.ItemKyaniteAxe();
+		ESObjects.ITEMS.KYANITE_SPADE = new ItemKyaniteTools.ItemKyaniteSpade();
+		ESObjects.ITEMS.KYANITE_HOE = new ItemKyaniteTools.ItemKyaniteHoe();
+		ESObjects.ITEMS.KYANITE_SWORD = new ItemKyaniteTools.ItemKyaniteSword();
+		ESObjects.ITEMS.ARCHITECTURE_CRYSTAL = new ItemArchitectureCrystal();
+		ESObjects.ITEMS.ELEMENT_CRYSTAL = new ItemElementCrystal();
+		ESObjects.ITEMS.PARCHMENT = new ItemParchment();
+		ESObjects.ITEMS.SPELLBOOK_COVER = new ItemSpellbookCover();
+		ESObjects.ITEMS.SCROLL = new ItemScroll();
+		ESObjects.ITEMS.MANUAL = new ItemManual();
+		ESObjects.ITEMS.MAGIC_RULER = new ItemMagicRuler();
+		ESObjects.ITEMS.ITEM_CRYSTAL = new ItemItemCrystal();
+		ESObjects.ITEMS.ORDER_CRYSTAL = new ItemOrderCrystal();
+		ESObjects.ITEMS.MD_BASE = ItemSome.newMDBase();
+		ESObjects.ITEMS.RITE_MANUAL = new ItemRiteManual();
+		ESObjects.ITEMS.RED_HANDSET = new ItemRedHandset();
+		ESObjects.ITEMS.AZURE_CRYSTAL = ItemCrystal.newAzureCrystal();
+		ESObjects.ITEMS.RESONANT_CRYSTAL = new ItemResonantCrystal();
+		ESObjects.ITEMS.ELF_CRYSTAL = ItemCrystal.newElfCrystal();
+		ESObjects.ITEMS.SUPREME_TABLE_COMPONENT = new ItemSupremeTableComponent();
+		ESObjects.ITEMS.ELF_COIN = ItemSome.newElfCoin();
+		ESObjects.ITEMS.ELF_PURSE = new ItemElfPurse();
+		ESObjects.ITEMS.NATURE_CRYSTAL = new ItemNatureCrystal();
+		ESObjects.ITEMS.NATURE_DUST = new ItemNatureDust();
+		ESObjects.ITEMS.ANCIENT_PAPER = new ItemAncientPaper();
+		ESObjects.ITEMS.QUEST = new ItemQuest();
+		ESObjects.ITEMS.ELF_WATCH = new ItemElfWatch();
+		ESObjects.ITEMS.MAGIC_GOLD = ItemSome.newMagicGold();
+		ESObjects.ITEMS.MAGIC_GOLD_PICKAXE = new ItemMagicGoldTools.ItemMagicGoldPickaxe();
+		ESObjects.ITEMS.MAGIC_GOLD_AXE = new ItemMagicGoldTools.ItemMagicGoldAxe();
+		ESObjects.ITEMS.MAGIC_GOLD_SPADE = new ItemMagicGoldTools.ItemMagicGoldSpade();
+		ESObjects.ITEMS.MAGIC_GOLD_HOE = new ItemMagicGoldTools.ItemMagicGoldHoe();
+		ESObjects.ITEMS.MAGIC_GOLD_SWORD = new ItemMagicGoldTools.ItemMagicGoldSword();
+		ESObjects.ITEMS.PARCEL = new ItemParcel();
+		ESObjects.ITEMS.ADDRESS_PLATE = new ItemAddressPlate();
+		ESObjects.ITEMS.ELF_STAR = ItemSome.newElfStar();
+		ESObjects.ITEMS.JUMP_GEM = ItemSome.newJumpGem();
+		ESObjects.ITEMS.UNSCRAMBLE_NOTE = new ItemUnscrambleNote();
+		ESObjects.ITEMS.SOUL_FRAGMENT = new ItemSoulFragment();
+		ESObjects.ITEMS.SOUL_WOOD_SWORD = new ItemSoulWoodSword();
+		ESObjects.ITEMS.RELIC_GEM = ItemSome.newRelicGem();
+		ESObjects.ITEMS.ROCK_CAMERA = new ItemRockCamera();
+		ESObjects.ITEMS.KEEPSAKE = new ItemKeepsake();
+		ESObjects.ITEMS.QUILL = new ItemQuill();
+		ESObjects.ITEMS.FUSION_CRYSTAL = new ItemFusionCrystal();
+		ESObjects.ITEMS.VORTEX = new ItemVortex();
+		ESObjects.ITEMS.ELEMENT_STONE = new ItemElementStone();
+		ESObjects.ITEMS.LIFE_LEATHER = new ItemLifeLeather();
+		ESObjects.ITEMS.MAGIC_BLAST_WAND = new ItemMagicBlastWand();
+		ESObjects.ITEMS.SOUL_KILLER_SWORD = new ItemSoulKillerSword();
+		ESObjects.ITEMS.SCAPEGOAT = new ItemScapegoat();
+		ESObjects.ITEMS.MAGIC_CORE = new ItemMagicCore();
+		ESObjects.ITEMS.SCARLET_CRYSTAL = new ItemScarletCrystal();
+		ESObjects.ITEMS.STAR_BELL = new ItemStarBell();
+		ESObjects.ITEMS.APPLE_CANDY = new ItemAppleCandy();
+		ESObjects.ITEMS.FAIRY_CUBE = new ItemFairyCube();
+		ESObjects.ITEMS.FAIRY_CUBE_MODULE = new ItemFairyCubeModule();
+		ESObjects.ITEMS.RABID_LEATHER = new ItemRabidLeather();
+		ESObjects.ITEMS.CUBE_CORE = new ItemCubeCore();
+		ESObjects.ITEMS.DREAD_GEM = new ItemDreadGem();
+		ESObjects.ITEMS.DEJECTED_TEAR = new ItemDejectedTear();
+		ESObjects.ITEMS.MERCHANT_INVITATION = new ItemMerchantInvitation();
+		ESObjects.ITEMS.ELEMENT_BOARD = new ItemElementBoard();
+		ESObjects.ITEMS.CUBE_DEMARCATOR = new ItemCubeDemarcator();
+		ESObjects.ITEMS.WINDMILL_BLADE_FRAME = new ItemWindmillBladeFrame();
+		ESObjects.ITEMS.WINDMILL_BLADE = new ItemWindmillBlade();
+		ESObjects.ITEMS.WINDMILL_BLADE_ASTONE = new ItemWindmillBlades.AStone();
+		ESObjects.ITEMS.WINDMILL_BLADE_WOOD = new ItemWindmillBlades.WOOD();
+		ESObjects.ITEMS.WINDMILL_BLADE_CRYSTAL = new ItemWindmillBlades.CRYSTAL();
+		ESObjects.ITEMS.ELF_FRUIT_BOMB = new ItemElfFruitBomb();
+		ESObjects.ITEMS.GLASS_CUP = new ItemGlassCup();
+		ESObjects.ITEMS.CALAMITY_GEM = new ItemCalamityGem();
+		ESObjects.ITEMS.BLESSING_JADE = new ItemBlessingJade();
+		ESObjects.ITEMS.ARROGANT_WOOL = new ItemArrogantWool();
+		ESObjects.ITEMS.BLESSING_JADE_PIECE = new ItemBlessingJadePiece();
+		ESObjects.ITEMS.ELEMENT_CRACK = new ItemElementCrack();
+		ESObjects.ITEMS.ENTANGLE_NODE = new ItemEntangleNode();
+		ESObjects.ITEMS.DRAGON_BREATH_PICKAXE = new ItemDragonBreathPickaxe();
+		ESObjects.ITEMS.INVERT_GEM = new ItemInvertGem();
+		ESObjects.ITEMS.ICE_ROCK_CHIP = new ItemIceRockChip();
+		ESObjects.ITEMS.ICE_ROCK_SPAR = new ItemIceRockSpar();
+		ESObjects.ITEMS.FAIRY_CORE = new ItemFairyCore();
+		ESObjects.ITEMS.MATERIAL_DEBRIS = new ItemMaterialDebris();
+		ESObjects.ITEMS.MANTRA_GEM = new ItemMantraGem();
+		ESObjects.ITEMS.CONTROLLER = new ItemController();
+		ESObjects.ITEMS.MAGIC_TERMINAL = new ItemMagicTerminal();
+		ESObjects.ITEMS.VOID_FRAGMENT = new ItemVoidFragment();
+		ESObjects.ITEMS.VOID_CONTAINER = new ItemVoidContainer();
+		ESObjects.ITEMS.VOID_CONTAINER_ELEMENT = new ItemVoidContainerElement();
+		ESObjects.ITEMS.ELF_DIAMOND = new ItemElfDiamond();
+		ESObjects.ITEMS.COLLAPSE = new ItemCollapse();
+		ESObjects.ITEMS.COLLAPSE_WAND = new ItemCollapseWand();
 
-		ITEMS.GRIMOIRE = new ItemGrimoire();
-		ITEMS.SPELLBOOK = new ItemSpellbook();
-		ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture();
-		ITEMS.SPELLBOOK_ENCHANTMENT = new ItemSpellbookEnchantment();
-		ITEMS.SPELLBOOK_LAUNCH = new ItemSpellbookLaunch();
-		ITEMS.SPELLBOOK_ELEMENT = new ItemSpellbookElement();
+		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
+		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
+		ESObjects.ITEMS.SPELLBOOK_ARCHITECTURE = new ItemSpellbookArchitecture();
+		ESObjects.ITEMS.SPELLBOOK_ENCHANTMENT = new ItemSpellbookEnchantment();
+		ESObjects.ITEMS.SPELLBOOK_LAUNCH = new ItemSpellbookLaunch();
+		ESObjects.ITEMS.SPELLBOOK_ELEMENT = new ItemSpellbookElement();
 
 		// 初始化所有tab
-		Class<?> cls = ITEMS.getClass();
+		Class<?> cls = ESObjects.ITEMS.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
-			Item item = ((Item) field.get(ITEMS));
+			Item item = ((Item) field.get(ESObjects.ITEMS));
 			item.setCreativeTab(tab);
 			item.setRegistryName(field.getName().toLowerCase());
 		}
@@ -655,89 +644,89 @@ public class ESInit {
 
 	private static final void instanceMantras() throws ReflectiveOperationException {
 
-		MANTRAS.ENDER_TELEPORT = new MantraEnderTeleport();
-		MANTRAS.FLOAT = new MantraFloat();
-		MANTRAS.SPRINT = new MantraSprint();
-		MANTRAS.FIRE_BALL = new MantraFireBall();
-		MANTRAS.LUSH = new MantraLush();
-		MANTRAS.BLOCK_CRASH = new MantraBlockCrash();
-		MANTRAS.MINING_AREA = new MantraMiningArea();
-		MANTRAS.LIGHTNING_AREA = new MantraLightningArea();
-		MANTRAS.SUMMON = new MantraSummon();
-		MANTRAS.SLOW_FALL = new MantraSlowFall();
-		MANTRAS.FOOTBRIDGE = new MantraFootbridge();
-		MANTRAS.FIRE_AREA = new MantraFireArea();
-		MANTRAS.MAGIC_STRAFE = new MantraMagicStrafe();
-		MANTRAS.FLOAT_AREA = new MantraFloatArea();
-		MANTRAS.FIRE_CHARGE = new MantraFireCharge();
-		MANTRAS.ARROW = new MantraArrow();
-		MANTRAS.POTENT = new MantraPotent();
-		MANTRAS.FLUORSPAR = new MantraFluorspar();
-		MANTRAS.TIME_HOURGLASS = new MantraTimeHourglass();
-		MANTRAS.ELEMENT_WHIRL = new MantraElementWhirl();
-		MANTRAS.LASER = new MantraLaser();
+		ESObjects.MANTRAS.ENDER_TELEPORT = new MantraEnderTeleport();
+		ESObjects.MANTRAS.FLOAT = new MantraFloat();
+		ESObjects.MANTRAS.SPRINT = new MantraSprint();
+		ESObjects.MANTRAS.FIRE_BALL = new MantraFireBall();
+		ESObjects.MANTRAS.LUSH = new MantraLush();
+		ESObjects.MANTRAS.BLOCK_CRASH = new MantraBlockCrash();
+		ESObjects.MANTRAS.MINING_AREA = new MantraMiningArea();
+		ESObjects.MANTRAS.LIGHTNING_AREA = new MantraLightningArea();
+		ESObjects.MANTRAS.SUMMON = new MantraSummon();
+		ESObjects.MANTRAS.SLOW_FALL = new MantraSlowFall();
+		ESObjects.MANTRAS.FOOTBRIDGE = new MantraFootbridge();
+		ESObjects.MANTRAS.FIRE_AREA = new MantraFireArea();
+		ESObjects.MANTRAS.MAGIC_STRAFE = new MantraMagicStrafe();
+		ESObjects.MANTRAS.FLOAT_AREA = new MantraFloatArea();
+		ESObjects.MANTRAS.FIRE_CHARGE = new MantraFireCharge();
+		ESObjects.MANTRAS.ARROW = new MantraArrow();
+		ESObjects.MANTRAS.POTENT = new MantraPotent();
+		ESObjects.MANTRAS.FLUORSPAR = new MantraFluorspar();
+		ESObjects.MANTRAS.TIME_HOURGLASS = new MantraTimeHourglass();
+		ESObjects.MANTRAS.ELEMENT_WHIRL = new MantraElementWhirl();
+		ESObjects.MANTRAS.LASER = new MantraLaser();
 
-		MANTRAS.ECRACK_OPEN = new MantraCrackOpen();
+		ESObjects.MANTRAS.ECRACK_OPEN = new MantraCrackOpen();
 
-		MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);
-		MANTRAS.LAUNCH_EDE = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT, 0xff4a1a);
-		MANTRAS.LAUNCH_ECO = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT, 0x00b5e5);
-		MANTRAS.LAUNCH_BRC = new MantraLaunch(ICraftingLaunch.TYPE_BUILING_RECORD, 0x18632b);
+		ESObjects.MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);
+		ESObjects.MANTRAS.LAUNCH_EDE = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_DECONSTRUCT, 0xff4a1a);
+		ESObjects.MANTRAS.LAUNCH_ECO = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CONSTRUCT, 0x00b5e5);
+		ESObjects.MANTRAS.LAUNCH_BRC = new MantraLaunch(ICraftingLaunch.TYPE_BUILING_RECORD, 0x18632b);
 
 		// 初始化所有
-		Class<?> cls = MANTRAS.getClass();
+		Class<?> cls = ESObjects.MANTRAS.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
-			Mantra mantra = ((Mantra) field.get(MANTRAS));
+			Mantra mantra = ((Mantra) field.get(ESObjects.MANTRAS));
 			mantra.setRegistryName(field.getName().toLowerCase());
 		}
 	}
 
 	private static final void instanceElements() {
-		ELEMENTS.FIRE = new ElementFire().setRegistryName("fire");
-		ELEMENTS.ENDER = new ElementEnder().setRegistryName("ender");
-		ELEMENTS.WATER = new ElementWater().setRegistryName("water");
-		ELEMENTS.AIR = new ElementAir().setRegistryName("air");
-		ELEMENTS.EARTH = new ElementEarth().setRegistryName("earth");
-		ELEMENTS.WOOD = new ElementWood().setRegistryName("wood");
-		ELEMENTS.METAL = new ElementMetal().setRegistryName("metal");
-		ELEMENTS.KNOWLEDGE = new ElementKnowledge().setRegistryName("knowledge");
-		ELEMENTS.STAR = new ElementStar().setRegistryName("star");
+		ESObjects.ELEMENTS.FIRE = new ElementFire().setRegistryName("fire");
+		ESObjects.ELEMENTS.ENDER = new ElementEnder().setRegistryName("ender");
+		ESObjects.ELEMENTS.WATER = new ElementWater().setRegistryName("water");
+		ESObjects.ELEMENTS.AIR = new ElementAir().setRegistryName("air");
+		ESObjects.ELEMENTS.EARTH = new ElementEarth().setRegistryName("earth");
+		ESObjects.ELEMENTS.WOOD = new ElementWood().setRegistryName("wood");
+		ESObjects.ELEMENTS.METAL = new ElementMetal().setRegistryName("metal");
+		ESObjects.ELEMENTS.KNOWLEDGE = new ElementKnowledge().setRegistryName("knowledge");
+		ESObjects.ELEMENTS.STAR = new ElementStar().setRegistryName("star");
 	}
 
 	private static final void instancePotions() throws ReflectiveOperationException {
-		POTIONS.TIME_SLOW = new PotionTimeSlow();
-		POTIONS.FIRE_WALKER = new PotionFireWalker();
-		POTIONS.TIDE_WALKER = new PotionTideWalker();
-		POTIONS.WIND_WALKER = new PotionWindWalker();
-		POTIONS.FLUORESCE_WALKER = new PotionFluoresceWalker();
-		POTIONS.POUND_WALKER = new PotionPoundWalker();
-		POTIONS.VERDANT_WALKER = new PotionVerdantWalker();
-		POTIONS.REBIRTH_FROM_FIRE = new PotionRebirthFromFire();
-		POTIONS.WATER_CALAMITY = new PotionWaterCalamity();
-		POTIONS.ENDERIZATION = new PotionEnderization();
-		POTIONS.ENDERCORPS = new PotionEndercorps();
-		POTIONS.WIND_SHIELD = new PotionWindShield();
-		POTIONS.GOLDEN_EYE = new PotionGoldenEye();
-		POTIONS.POWER_PITCHER = new PotionPowerPitcher();
-		POTIONS.HEALTH_BALANCE = new PotionHealthBalance();
-		POTIONS.COMBAT_SKILL = new PotionCombatSkill();
-		POTIONS.DEFENSE_SKILL = new PotionDefenseSkill();
-		POTIONS.STAR = new PotionStar();
-		POTIONS.CALAMITY = new PotionCalamity();
-		POTIONS.BLESSING = new PotionBlessing();
-		POTIONS.ELEMENT_CRACK_ATTACK = new PotionElementCrackAttack();
+		ESObjects.POTIONS.TIME_SLOW = new PotionTimeSlow();
+		ESObjects.POTIONS.FIRE_WALKER = new PotionFireWalker();
+		ESObjects.POTIONS.TIDE_WALKER = new PotionTideWalker();
+		ESObjects.POTIONS.WIND_WALKER = new PotionWindWalker();
+		ESObjects.POTIONS.FLUORESCE_WALKER = new PotionFluoresceWalker();
+		ESObjects.POTIONS.POUND_WALKER = new PotionPoundWalker();
+		ESObjects.POTIONS.VERDANT_WALKER = new PotionVerdantWalker();
+		ESObjects.POTIONS.REBIRTH_FROM_FIRE = new PotionRebirthFromFire();
+		ESObjects.POTIONS.WATER_CALAMITY = new PotionWaterCalamity();
+		ESObjects.POTIONS.ENDERIZATION = new PotionEnderization();
+		ESObjects.POTIONS.ENDERCORPS = new PotionEndercorps();
+		ESObjects.POTIONS.WIND_SHIELD = new PotionWindShield();
+		ESObjects.POTIONS.GOLDEN_EYE = new PotionGoldenEye();
+		ESObjects.POTIONS.POWER_PITCHER = new PotionPowerPitcher();
+		ESObjects.POTIONS.HEALTH_BALANCE = new PotionHealthBalance();
+		ESObjects.POTIONS.COMBAT_SKILL = new PotionCombatSkill();
+		ESObjects.POTIONS.DEFENSE_SKILL = new PotionDefenseSkill();
+		ESObjects.POTIONS.STAR = new PotionStar();
+		ESObjects.POTIONS.CALAMITY = new PotionCalamity();
+		ESObjects.POTIONS.BLESSING = new PotionBlessing();
+		ESObjects.POTIONS.ELEMENT_CRACK_ATTACK = new PotionElementCrackAttack();
 
-		Class<?> cls = POTIONS.getClass();
+		Class<?> cls = ESObjects.POTIONS.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
-			Potion potion = ((Potion) field.get(POTIONS));
+			Potion potion = ((Potion) field.get(ESObjects.POTIONS));
 			potion.setRegistryName(field.getName().toLowerCase());
 		}
 	}
 
 	private static final void instanceVillage() {
-		ESInit.VILLAGE.ES_VILLEGER = new VillagerRegistry.VillagerProfession("elementalsorcery:antique_dealer",
+		ESObjects.VILLAGE.ES_VILLEGER = new VillagerRegistry.VillagerProfession("elementalsorcery:antique_dealer",
 				"elementalsorcery:textures/entity/villager/es_studier.png",
 				"elementalsorcery:textures/entity/zombie_villager/es_studier.png");
 	}
@@ -780,7 +769,7 @@ public class ESInit {
 		// bufff
 		registerAllPotions();
 		// 精灵立方体模块注册
-		FairyCubeModuleRegister.registerAll();
+		FairyCubeModuleInGame.registerAll();
 		// 测试村庄相关
 		VillegeRegistries.registerAll();
 		// 注册战利品
@@ -837,7 +826,7 @@ public class ESInit {
 		// 所有需要网传的特效
 		Effects.registerAll();
 		// 精灵立方体图标注册
-		FairyCubeModuleRegister.registerAllRender();
+		FairyCubeModuleInGame.registerAllRender();
 		// 客户端事件
 		MinecraftForge.EVENT_BUS.register(EventClient.class);
 		// 世界离屏渲染
@@ -862,19 +851,19 @@ public class ESInit {
 
 	static void registerAllItems() throws IllegalArgumentException, IllegalAccessException {
 		// 遍历所有，将所有内容注册
-		Class<?> cls = ESInit.ITEMS.getClass();
+		Class<?> cls = ESObjects.ITEMS.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
-			register((Item) field.get(ESInit.ITEMS));
+			register((Item) field.get(ESObjects.ITEMS));
 		}
 	}
 
 	static void registerAllBlocks() throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		// 遍历所有，将所有内容注册
-		Class<?> cls = ESInit.BLOCKS.getClass();
+		Class<?> cls = ESObjects.BLOCKS.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
-			Block block = (Block) field.get(ESInit.BLOCKS);
+			Block block = (Block) field.get(ESObjects.BLOCKS);
 			try {
 				Method method = block.getClass().getDeclaredMethod("getItemBlock");
 				register(block, (ItemBlock) method.invoke(block));
@@ -885,14 +874,11 @@ public class ESInit {
 	}
 
 	static public void registerAllElements() throws ReflectiveOperationException {
-		Class<?> cls = ESInit.ELEMENTS.getClass();
-		Field idField = Element.class.getDeclaredField("registryId");
-		idField.setAccessible(true);
+		Class<?> cls = ESObjects.ELEMENTS.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
-			Element element = ((Element) field.get(ESInit.ELEMENTS));
+			Element element = ((Element) field.get(ESObjects.ELEMENTS));
 			Element.REGISTRY.register(element);
-			idField.set(element, Element.getIdFromElement(element));
 			try {
 				Field mantraElementMarkField = Variables.class.getDeclaredField(field.getName());
 				mantraElementMarkField.setAccessible(true);
@@ -906,18 +892,18 @@ public class ESInit {
 
 	static void registerAllMantras() throws IllegalArgumentException, IllegalAccessException {
 		// 遍历所有，将所有内容注册
-		Class<?> cls = ESInit.MANTRAS.getClass();
+		Class<?> cls = ESObjects.MANTRAS.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
-			register((Mantra) field.get(ESInit.MANTRAS));
+			register((Mantra) field.get(ESObjects.MANTRAS));
 		}
 	}
 
 	static void registerAllPotions() throws IllegalArgumentException, IllegalAccessException {
-		Class<?> cls = ESInit.POTIONS.getClass();
+		Class<?> cls = ESObjects.POTIONS.getClass();
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
-			register((Potion) field.get(ESInit.POTIONS));
+			register((Potion) field.get(ESObjects.POTIONS));
 		}
 	}
 
@@ -983,8 +969,8 @@ public class ESInit {
 
 	@SideOnly(Side.CLIENT)
 	static void registerAllRender() {
-		final ESObjects.Blocks BLOCKS = ESInit.BLOCKS;
-		final ESObjects.Items ITEMS = ESInit.ITEMS;
+		final ESObjects.Blocks BLOCKS = ESObjects.BLOCKS;
+		final ESObjects.Items ITEMS = ESObjects.ITEMS;
 		// 初始化句柄
 		SpellbookRenderInfo.renderInstance = RenderItemSpellbook.instance;
 
@@ -1243,8 +1229,8 @@ public class ESInit {
 
 	@SideOnly(Side.CLIENT)
 	static void registerAllRenderPost() {
-		registerRenderColor(ESInit.BLOCKS.ELF_LEAF, ((BlockElfLeaf) ESInit.BLOCKS.ELF_LEAF).getBlockColor());
-		registerRenderColor(ESInit.BLOCKS.ELF_FRUIT, ((BlockElfFruit) ESInit.BLOCKS.ELF_FRUIT).getBlockColor());
+		registerRenderColor(ESObjects.BLOCKS.ELF_LEAF, ((BlockElfLeaf) ESObjects.BLOCKS.ELF_LEAF).getBlockColor());
+		registerRenderColor(ESObjects.BLOCKS.ELF_FRUIT, ((BlockElfFruit) ESObjects.BLOCKS.ELF_FRUIT).getBlockColor());
 	}
 
 	// 分离的注册函数
@@ -1282,7 +1268,7 @@ public class ESInit {
 	}
 
 	private static void register(Class<? extends TileEntity> tileEntityClass, String id) {
-		GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation(ElementalSorcery.MODID, id));
+		GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation(ESAPI.MODID, id));
 		ES_TILE_ENTITY.add(tileEntityClass);
 	}
 
@@ -1373,7 +1359,7 @@ public class ESInit {
 
 	@SideOnly(Side.CLIENT)
 	private static void registerRender(Block block, int meta, String id) {
-		ModelResourceLocation model = new ModelResourceLocation(ElementalSorcery.MODID + ":" + id, "inventory");
+		ModelResourceLocation model = new ModelResourceLocation(ESAPI.MODID + ":" + id, "inventory");
 		ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, model);
 	}
 
@@ -1402,7 +1388,7 @@ public class ESInit {
 			Object obj = field.get(cls);
 			if (obj instanceof IForgeRegistryEntry) {
 				((IForgeRegistryEntry) obj)
-						.setRegistryName(new ResourceLocation(ElementalSorcery.MODID, field.getName().toLowerCase()));
+						.setRegistryName(new ResourceLocation(ESAPI.MODID, field.getName().toLowerCase()));
 			}
 			if (obj instanceof Item) {
 				((Item) obj).setCreativeTab(tab);

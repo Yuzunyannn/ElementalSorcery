@@ -12,8 +12,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
 
@@ -39,7 +39,7 @@ public class ItemSpellbookEnchantment extends ItemSpellbook {
 	public EnumActionResult onItemUse(EntityPlayer player, World worldIn, BlockPos pos, EnumHand hand,
 			EnumFacing facing, float hitX, float hitY, float hitZ) {
 		IBlockState state = worldIn.getBlockState(pos);
-		if (state.getBlock() != ESInit.BLOCKS.INVALID_ENCHANTMENT_TABLE)
+		if (state.getBlock() != ESObjects.BLOCKS.INVALID_ENCHANTMENT_TABLE)
 			return super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 		worldIn.setBlockState(pos, Blocks.ENCHANTING_TABLE.getDefaultState());
 		if (!player.isCreative()) {

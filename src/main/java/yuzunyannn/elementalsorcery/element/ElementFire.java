@@ -23,22 +23,23 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementContainer;
 import yuzunyannn.elementalsorcery.element.explosion.EEFire;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireArea;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
-import yuzunyannn.elementalsorcery.world.JuiceMaterial;
 
 public class ElementFire extends ElementCommon {
 
@@ -81,11 +82,11 @@ public class ElementFire extends ElementCommon {
 		helper.check(JuiceMaterial.APPLE, 100).join();
 		helper.descend(JuiceMaterial.APPLE, 40, 0.9f);
 
-		helper.preparatory(ESInit.POTIONS.REBIRTH_FROM_FIRE, 45, 100);
+		helper.preparatory(ESObjects.POTIONS.REBIRTH_FROM_FIRE, 45, 100);
 		helper.check(JuiceMaterial.APPLE, 240).checkRatio(JuiceMaterial.MELON, 0.25f, 0.5f).join();
 		helper.descend(JuiceMaterial.MELON, 30, 1);
 
-		helper.preparatory(ESInit.POTIONS.FIRE_WALKER, 20, 60);
+		helper.preparatory(ESObjects.POTIONS.FIRE_WALKER, 20, 60);
 		helper.check(JuiceMaterial.MELON, 60).join();
 		helper.descend(JuiceMaterial.MELON, 10, 0.9f);
 	}

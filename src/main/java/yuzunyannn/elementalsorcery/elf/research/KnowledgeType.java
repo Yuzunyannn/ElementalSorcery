@@ -9,8 +9,8 @@ import java.util.Map.Entry;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public class KnowledgeType {
@@ -45,7 +45,7 @@ public class KnowledgeType {
 	}
 
 	private static ElementStack knowledge(int count, int power) {
-		return new ElementStack(ESInit.ELEMENTS.KNOWLEDGE, count, power);
+		return new ElementStack(ESObjects.ELEMENTS.KNOWLEDGE, count, power);
 	}
 
 	public static void registerAll() {

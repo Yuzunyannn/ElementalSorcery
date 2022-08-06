@@ -16,9 +16,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 
@@ -30,7 +30,7 @@ public class MantraFloatArea extends MantraSquareAreaAdv {
 		this.setIcon("float_area");
 		this.setRarity(80);
 		this.setOccupation(4);
-		this.addElementCollect(new ElementStack(ESInit.ELEMENTS.AIR, 2, 25), 60, 10);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.AIR, 2, 25), 60, 10);
 		this.initAndAddDefaultMantraLauncher(0.0075);
 	}
 
@@ -38,7 +38,7 @@ public class MantraFloatArea extends MantraSquareAreaAdv {
 	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
 		super.potentAttack(world, grimoire, caster, target);
 
-		ElementStack stack = getElement(caster, ESInit.ELEMENTS.AIR, 2, 20);
+		ElementStack stack = getElement(caster, ESObjects.ELEMENTS.AIR, 2, 20);
 		if (stack.isEmpty()) return;
 		target.motionY += 1;
 		if (target instanceof EntityLivingBase) {
@@ -48,7 +48,7 @@ public class MantraFloatArea extends MantraSquareAreaAdv {
 
 	@Override
 	public void init(World world, SquareData data, ICaster caster, BlockPos pos) {
-		ElementStack air = data.get(ESInit.ELEMENTS.AIR);
+		ElementStack air = data.get(ESObjects.ELEMENTS.AIR);
 		float rate = 0.6f * caster.iWantBePotent(0.5f, false) + 1;
 		data.setSize(Math.min(air.getPower() / 80, 12) * rate + 6);
 	}
@@ -75,7 +75,7 @@ public class MantraFloatArea extends MantraSquareAreaAdv {
 	@Override
 	public boolean tick(World world, SquareData data, ICaster caster, BlockPos originPos) {
 		int tick = caster.iWantKnowCastTick();
-		ElementStack air = data.get(ESInit.ELEMENTS.AIR);
+		ElementStack air = data.get(ESObjects.ELEMENTS.AIR);
 		if (air.isEmpty()) return false;
 		if (tick % 10 == 0) air.shrink(1);
 

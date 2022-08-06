@@ -22,20 +22,20 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerResearch;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.elf.research.Topics;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 @SideOnly(Side.CLIENT)
 public class GuiResearch extends GuiContainer {
 
-	public static final ResourceLocation BUTTON = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation BUTTON = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/researcher/button.png");
-	public static final ResourceLocation TEXTURE_01 = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE_01 = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/researcher/researcher_01.png");
 
 	public final ContainerResearch container;
@@ -50,7 +50,7 @@ public class GuiResearch extends GuiContainer {
 	public void refresh() {
 		topics.clear();
 		Set<String> all = Topics.getDefaultTopics();
-		for (String key : container.reasearher.keySet()) {
+		for (String key : container.reasearher.getTopics()) {
 			this.addTopics(key);
 			all.remove(key);
 		}
@@ -112,8 +112,8 @@ public class GuiResearch extends GuiContainer {
 		}
 
 		public void draw(float partialTicks) {
-			float scale = RenderHelper.getPartialTicks(this.scale, this.prevScale, partialTicks);
-			float a = RenderHelper.getPartialTicks(this.a, this.prevA, partialTicks);
+			float scale = RenderFriend.getPartialTicks(this.scale, this.prevScale, partialTicks);
+			float a = RenderFriend.getPartialTicks(this.a, this.prevA, partialTicks);
 			float size = topicSize * scale;
 			topic.render(mc, size, a, partialTicks);
 		}
@@ -203,16 +203,16 @@ public class GuiResearch extends GuiContainer {
 	@Override
 	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
 		// 中心按钮
-		float fogRotate = RenderHelper.getPartialTicks(this.fogRotate, this.fogPrevRotate, partialTicks);
-		float fogAlpha = RenderHelper.getPartialTicks(this.fogAlpha, this.fogPrevAlpha, partialTicks);
+		float fogRotate = RenderFriend.getPartialTicks(this.fogRotate, this.fogPrevRotate, partialTicks);
+		float fogAlpha = RenderFriend.getPartialTicks(this.fogAlpha, this.fogPrevAlpha, partialTicks);
 		GlStateManager.color(mapR, mapG, mapB, fogAlpha);
 		mc.getTextureManager().bindTexture(GuiMantraShitf.FOG);
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(fogRotate, 0, 0, 1);
-		RenderHelper.drawTexturedRectInCenter(0, 2, 60, 60);
+		RenderFriend.drawTexturedRectInCenter(0, 2, 60, 60);
 		GlStateManager.popMatrix();
 		mc.getTextureManager().bindTexture(BUTTON);
-		RenderHelper.drawTexturedRectInCenter(0, 0, 40, 40);
+		RenderFriend.drawTexturedRectInCenter(0, 0, 40, 40);
 
 		final float mapRadius = this.mapRadius - 40;
 		int size = topics.size();
@@ -222,7 +222,7 @@ public class GuiResearch extends GuiContainer {
 			float roate = n * dR;
 			GlStateManager.rotate(roate, 0, 0, 1);
 			TopicInfo topic = topics.get(n);
-			float r2 = RenderHelper.getPartialTicks(mapVertex.get(n % size), mapPrevVertex.get(n % size), partialTicks);
+			float r2 = RenderFriend.getPartialTicks(mapVertex.get(n % size), mapPrevVertex.get(n % size), partialTicks);
 			float l2 = r2 * mapRadius + 40;
 			String numStr = Integer.toString(topic.power) + "/" + topic.getMaxPower();
 			this.fontRenderer.drawString(numStr, -fontRenderer.getStringWidth(numStr) / 2, -(int) l2 - 10, mapStrColor);
@@ -232,16 +232,16 @@ public class GuiResearch extends GuiContainer {
 		}
 		// 画线
 		GlStateManager.color(1, 1, 1, 1);
-		float mapA = RenderHelper.getPartialTicks(mapAlpha, mapPrevAlpha, partialTicks);
+		float mapA = RenderFriend.getPartialTicks(mapAlpha, mapPrevAlpha, partialTicks);
 		dR = dR / 180.0f * 3.1415926f;
 		GlStateManager.disableTexture2D();
 		for (int n = 1; n <= size; n++) {
 			float roate = n * dR;
-			float r1 = RenderHelper.getPartialTicks(mapVertex.get(n - 1), mapPrevVertex.get(n - 1), partialTicks);
+			float r1 = RenderFriend.getPartialTicks(mapVertex.get(n - 1), mapPrevVertex.get(n - 1), partialTicks);
 			float l1 = r1 * mapRadius + 40;
 			float x1 = MathHelper.sin(roate - dR) * l1;
 			float y1 = -MathHelper.cos(roate - dR) * l1;
-			float r2 = RenderHelper.getPartialTicks(mapVertex.get(n % size), mapPrevVertex.get(n % size), partialTicks);
+			float r2 = RenderFriend.getPartialTicks(mapVertex.get(n % size), mapPrevVertex.get(n % size), partialTicks);
 			float l2 = r2 * mapRadius + 40;
 			float x2 = MathHelper.sin(roate) * l2;
 			float y2 = -MathHelper.cos(roate) * l2;

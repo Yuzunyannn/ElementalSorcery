@@ -10,11 +10,11 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.math.MathHelper;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
-import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 
 public class DefaultPotionToElement implements IToElement {
 
@@ -52,13 +52,13 @@ public class DefaultPotionToElement implements IToElement {
 		Potion potion = effect.getPotion();
 		if (potion == MobEffects.SPEED || potion == MobEffects.SLOWNESS || potion == MobEffects.JUMP_BOOST
 				|| potion == MobEffects.WATER_BREATHING) {
-			estack = new ElementStack(ESInit.ELEMENTS.AIR, 6, 25 * (1 + effect.getAmplifier()));
+			estack = new ElementStack(ESObjects.ELEMENTS.AIR, 6, 25 * (1 + effect.getAmplifier()));
 		} else if (potion == MobEffects.FIRE_RESISTANCE) {
-			estack = new ElementStack(ESInit.ELEMENTS.WATER, 2, 10 * (1 + effect.getAmplifier()));
+			estack = new ElementStack(ESObjects.ELEMENTS.WATER, 2, 10 * (1 + effect.getAmplifier()));
 		} else if (potion == MobEffects.INSTANT_HEALTH || potion == MobEffects.REGENERATION) {
-			estack = new ElementStack(ESInit.ELEMENTS.WOOD, 8, 30 * (1 + effect.getAmplifier()));
+			estack = new ElementStack(ESObjects.ELEMENTS.WOOD, 8, 30 * (1 + effect.getAmplifier()));
 		} else if (potion == MobEffects.INSTANT_DAMAGE || potion == MobEffects.STRENGTH) {
-			estack = new ElementStack(ESInit.ELEMENTS.FIRE, 7, 16 * (1 + effect.getAmplifier()));
+			estack = new ElementStack(ESObjects.ELEMENTS.FIRE, 7, 16 * (1 + effect.getAmplifier()));
 		}
 
 		if (estack.isEmpty()) return;

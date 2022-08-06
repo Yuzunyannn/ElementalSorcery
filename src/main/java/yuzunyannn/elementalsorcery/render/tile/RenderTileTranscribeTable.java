@@ -6,11 +6,11 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeTable;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
 
 public class RenderTileTranscribeTable extends TileEntitySpecialRenderer<TileTranscribeTable> {
 
@@ -24,7 +24,7 @@ public class RenderTileTranscribeTable extends TileEntitySpecialRenderer<TileTra
 		if (grimoire == null) {
 			double f = MathHelper.sin((EventClient.tickRender + partialTicks) / 20f) * 0.025 + 0.1;
 			GlStateManager.translate(x + 0.5, y + 0.2 + f, z + 0.5);
-			RenderHelper.layItemPositionFix(stack);
+			RenderFriend.layItemPositionFix(stack);
 		} else {
 			RenderItemGrimoireInfo info = grimoire.getRenderInfo();
 			info.bookSpreadPrev = info.bookSpread = 1;

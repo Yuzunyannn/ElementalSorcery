@@ -5,15 +5,14 @@ import com.google.gson.JsonDeserializationContext;
 import net.minecraft.advancements.critereon.AbstractCriterionInstance;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
-import yuzunyannn.elementalsorcery.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class ElementCraft extends CriterionTriggerAdapter<ElementCraft.Instance> {
 
 	public ElementCraft(String id) {
-		super(new ResourceLocation(ElementalSorcery.MODID, id));
+		super(new ResourceLocation(ESAPI.MODID, id));
 	}
 
 	@Override
@@ -33,7 +32,7 @@ public class ElementCraft extends CriterionTriggerAdapter<ElementCraft.Instance>
 
 		public Instance(ResourceLocation criterionIn, String id) {
 			super(criterionIn);
-			this.recipe = RecipeManagement.instance.getValue(new ResourceLocation(id));
+			this.recipe = ESAPI.recipeMgr.getValue(new ResourceLocation(id));
 		}
 
 		public boolean test(EntityPlayerMP player, IElementRecipe recipeIn) {

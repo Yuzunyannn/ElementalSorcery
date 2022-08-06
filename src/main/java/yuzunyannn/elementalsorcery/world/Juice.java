@@ -30,16 +30,17 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementItem;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.IElemetJuice;
+import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
 import yuzunyannn.elementalsorcery.api.item.IJuice;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.crafting.element.ToElementInfoStatic;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemGlassCup;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGlassCup;
 import yuzunyannn.elementalsorcery.tile.md.TileMDLiquidizer;
@@ -350,7 +351,7 @@ public class Juice implements IJuice, IToElementItem {
 				glassCup.shrink(1);
 				return true;
 			}
-		} else if (state.getBlock() == ESInit.BLOCKS.MD_LIQUIDIZER) {
+		} else if (state.getBlock() == ESObjects.BLOCKS.MD_LIQUIDIZER) {
 			TileMDLiquidizer tile = BlockHelper.getTileEntity(world, pos, TileMDLiquidizer.class);
 			if (tile == null) return false;
 			if (world.isRemote) return true;
@@ -446,7 +447,7 @@ public class Juice implements IJuice, IToElementItem {
 		int complex = 1;
 
 		List<ElementStack> list = new ArrayList<>();
-		list.add(new ElementStack(ESInit.ELEMENTS.WATER, Math.max(1, (int) (20 * water / 1000)), 100));
+		list.add(new ElementStack(ESObjects.ELEMENTS.WATER, Math.max(1, (int) (20 * water / 1000)), 100));
 
 		MultiRets rets = drink(water, true);
 		Map<JuiceMaterial, Float> drinkMap = rets.get(0, Map.class);
@@ -459,7 +460,7 @@ public class Juice implements IJuice, IToElementItem {
 			if (complex < 2) complex++;
 		}
 		woodCount = Math.round(woodCount);
-		if (woodCount > 0) list.add(new ElementStack(ESInit.ELEMENTS.WOOD, (int) woodCount, 8));
+		if (woodCount > 0) list.add(new ElementStack(ESObjects.ELEMENTS.WOOD, (int) woodCount, 8));
 
 		ItemStack remain = stack.copy();
 		remain.getTagCompound().removeTag("juice");
@@ -468,7 +469,7 @@ public class Juice implements IJuice, IToElementItem {
 	}
 
 	static public ItemStack randomJuice(Random rand, boolean needElement) {
-		ItemStack cup = new ItemStack(ESInit.ITEMS.GLASS_CUP);
+		ItemStack cup = new ItemStack(ESObjects.ITEMS.GLASS_CUP);
 		Juice juice = new Juice(cup);
 		JuiceMaterial[] materials = JuiceMaterial.values();
 		while (juice.getJuiceCount() < juice.getMaxJuiceCount()) {

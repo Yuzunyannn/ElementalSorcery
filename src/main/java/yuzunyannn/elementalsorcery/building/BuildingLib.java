@@ -14,6 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageGetBuilingInfo;
@@ -54,7 +55,7 @@ public class BuildingLib {
 	private void addBuilding(BuildingSaveData data) {
 		String key = data.building.getKeyName();
 		if (mapSave.containsKey(key)) {
-			ElementalSorcery.logger.warn("The key(" + key + ") has already exist!");
+			ESAPI.logger.warn("The key(" + key + ") has already exist!");
 			return;
 		}
 		mapSave.put(key, data);
@@ -110,7 +111,7 @@ public class BuildingLib {
 	}
 
 	public static void registerAll() throws IOException {
-		final String MODID = ElementalSorcery.MODID;
+		final String MODID = ESAPI.MODID;
 		String[] mapJsonNames = IOHelper.getFilesFromResource(new ResourceLocation(MODID, "structures"));
 		for (String path : mapJsonNames) {
 			if (!path.endsWith(".nbt")) continue;

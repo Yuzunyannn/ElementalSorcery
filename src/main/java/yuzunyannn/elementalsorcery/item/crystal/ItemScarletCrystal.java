@@ -3,11 +3,11 @@ package yuzunyannn.elementalsorcery.item.crystal;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.block.BlockGoatGoldBrick;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
-import yuzunyannn.elementalsorcery.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class ItemScarletCrystal extends ItemCrystal {
@@ -31,8 +31,8 @@ public class ItemScarletCrystal extends ItemCrystal {
 			return false;
 		}
 		int count = entityItem.getItem().getCount();
-		entityItem.dropItem(ESInit.ITEMS.MAGIC_STONE, RandomHelper.randomRange(1 * count, 3 * count));
-		entityItem.dropItem(ESInit.ITEMS.MAGIC_PIECE, RandomHelper.randomRange(2 * count, 8 * count));
+		entityItem.dropItem(ESObjects.ITEMS.MAGIC_STONE, RandomHelper.randomRange(1 * count, 3 * count));
+		entityItem.dropItem(ESObjects.ITEMS.MAGIC_PIECE, RandomHelper.randomRange(2 * count, 8 * count));
 		entityItem.setDead();
 		// 特效
 		FireworkEffect.spawn(entityItem.world, entityItem.getPositionVector().add(0, entityItem.height, 0), 0, 1,
@@ -43,7 +43,7 @@ public class ItemScarletCrystal extends ItemCrystal {
 	public static ItemStack create(float fre) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setFloat("fre", fre);
-		ItemStack stack = new ItemStack(ESInit.ITEMS.SCARLET_CRYSTAL);
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.SCARLET_CRYSTAL);
 		stack.setTagCompound(nbt);
 		return stack;
 	}

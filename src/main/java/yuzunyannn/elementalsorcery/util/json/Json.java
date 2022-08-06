@@ -24,8 +24,9 @@ import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper.WeightRandom;
 
@@ -81,7 +82,7 @@ public abstract class Json {
 			if (type != null) {
 				if ("ore_dict".equals(type)) {
 					NonNullList<ItemStack> oreList = OreDictionary.getOres(id);
-					if (oreList.isEmpty()) ElementalSorcery.logger.warn("矿物词典：" + id + "中未包含任何内容");
+					if (oreList.isEmpty()) ESAPI.logger.warn("矿物词典：" + id + "中未包含任何内容");
 					for (ItemStack stack : oreList) {
 						if (stack.getHasSubtypes()) {
 							if (stack.getMetadata() == OreDictionary.WILDCARD_VALUE)
@@ -219,13 +220,13 @@ public abstract class Json {
 				func.apply(file, new JsonObject(file));
 				return true;
 			} catch (IOException e) {
-				ElementalSorcery.logger.warn("读取json文件过程中出现IO异常：" + file, e);
+				ESAPI.logger.warn("读取json文件过程中出现IO异常：" + file, e);
 				return false;
 			} catch (JsonSyntaxException e1) {
-				ElementalSorcery.logger.warn("读取json文件的内容出现异常：" + file, e1);
+				ESAPI.logger.warn("读取json文件的内容出现异常：" + file, e1);
 				return false;
 			} catch (JsonParseException e2) {
-				ElementalSorcery.logger.warn("解析json出现异常：" + file, e2);
+				ESAPI.logger.warn("解析json出现异常：" + file, e2);
 				return false;
 			}
 		}, true, true);
@@ -247,11 +248,11 @@ public abstract class Json {
 				JsonObject json = new JsonObject(file);
 				func.apply(file, json);
 			} catch (IOException e) {
-				ElementalSorcery.logger.warn("自定义json数据读取失败:" + file);
+				ESAPI.logger.warn("自定义json数据读取失败:" + file);
 			} catch (JsonSyntaxException e1) {
-				ElementalSorcery.logger.warn("读取json文件的内容出现异常：" + file, e1);
+				ESAPI.logger.warn("读取json文件的内容出现异常：" + file, e1);
 			} catch (JsonParseException e2) {
-				ElementalSorcery.logger.warn("解析json出现异常：" + file, e2);
+				ESAPI.logger.warn("解析json出现异常：" + file, e2);
 
 			}
 		}
@@ -261,9 +262,9 @@ public abstract class Json {
 		try {
 			run.run();
 		} catch (JsonSyntaxException e1) {
-			ElementalSorcery.logger.warn("读取json文件的内容出现异常：" + filePath, e1);
+			ESAPI.logger.warn("读取json文件的内容出现异常：" + filePath, e1);
 		} catch (JsonParseException e2) {
-			ElementalSorcery.logger.warn("解析json出现异常：" + filePath, e2);
+			ESAPI.logger.warn("解析json出现异常：" + filePath, e2);
 		}
 	}
 
@@ -320,7 +321,7 @@ public abstract class Json {
 	static public String dealId(String id) {
 		if (id.indexOf(':') == -1) {
 			ModContainer mod = Loader.instance().activeModContainer();
-			if (mod == null) id = ElementalSorcery.MODID + ":" + id;
+			if (mod == null) id = ESAPI.MODID + ":" + id;
 			else id = mod.getModId() + ":" + id;
 		}
 		return id;

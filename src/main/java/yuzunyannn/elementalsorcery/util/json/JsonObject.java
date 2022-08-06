@@ -30,9 +30,9 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 
 public class JsonObject extends Json implements Iterable<String> {
 
@@ -263,7 +263,7 @@ public class JsonObject extends Json implements Iterable<String> {
 			if (useIndent) jsonWriter.setIndent("  ");
 			Streams.write(getGoogleJson(), jsonWriter);
 		} catch (Exception e) {
-			ElementalSorcery.logger.warn("json数据保存失败", e);
+			ESAPI.logger.warn("json数据保存失败", e);
 		}
 	}
 

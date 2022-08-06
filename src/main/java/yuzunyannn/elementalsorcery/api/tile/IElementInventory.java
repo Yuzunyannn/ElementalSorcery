@@ -6,14 +6,14 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.crafting.IItemCapbiltitySyn;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 
-public interface IElementInventory extends IItemCapbiltitySyn, ICustomNBTSerialize {
+public interface IElementInventory extends IItemCapbiltitySyn {
 
 	/**
 	 * 获取最多有多少个槽位，每个槽位只能存放一种ElementStack
@@ -108,9 +108,24 @@ public interface IElementInventory extends IItemCapbiltitySyn, ICustomNBTSeriali
 	@Nonnull
 	ElementStack extractElement(int slot, @Nonnull ElementStack estack, boolean simulate);
 
+	default public boolean isEmpty() {
+		for (int i = 0; i < getSlots(); i++) {
+			if (!getStackInSlot(i).isEmpty()) return false;
+		}
+		return true;
+	}
+
 	@SideOnly(Side.CLIENT)
-	default void addInformation(@Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-		ElementHelper.addElementInformation(this, worldIn, tooltip, flagIn);
+	void addInformation(@Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn);
+
+	/** 读取自定义字段 */
+	default void readCustomDataFromNBT(NBTTagCompound nbt) {
+
+	}
+
+	/** 写入自定义字段 */
+	default void writeCustomDataToNBT(NBTTagCompound nbt) {
+
 	}
 
 }

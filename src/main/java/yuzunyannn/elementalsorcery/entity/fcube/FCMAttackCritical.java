@@ -4,10 +4,12 @@ import net.minecraft.init.Items;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
+import yuzunyannn.elementalsorcery.api.entity.FairyCubeModuleRecipe;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -18,8 +20,8 @@ public class FCMAttackCritical extends FairyCubeModule {
 		ElfTime time = new ElfTime(world);
 		if (!time.at(ElfTime.Period.NIGHT)) return false;
 
-		return matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.DIAMOND_AXE, 1),
-				ElementHelper.toList(ESInit.ELEMENTS.FIRE, 75, 50));
+		return FairyCubeModuleInGame.matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Items.DIAMOND_AXE, 1),
+				ElementHelper.toList(ESObjects.ELEMENTS.FIRE, 75, 50));
 	}
 
 	protected float absorbRate = 0;
@@ -36,11 +38,11 @@ public class FCMAttackCritical extends FairyCubeModule {
 	}
 
 	@Override
-	public float modifyAttribute(String attribute, float value) {
+	public double modifyAttribute(String attribute, double value) {
 		if ("attack:damage".equals(attribute)) {
 			int status = this.getCurrStatus();
-			float incr = this.getIncreased();
-			float chance = 1;
+			double incr = this.getIncreased();
+			double chance = 1;
 			if (status == 3) chance = 0.04f;
 			else if (status == 2) chance = 0.33f;
 			else chance = 0.75f;
@@ -54,23 +56,23 @@ public class FCMAttackCritical extends FairyCubeModule {
 	public boolean absorbElements(IElementInventory einv) {
 		int dCount = (int) (8 * (1 + Math.abs(absorbRate)));
 		if (absorbRate > 0) {
-			ElementStack metal = new ElementStack(ESInit.ELEMENTS.FIRE, dCount, 100);
+			ElementStack metal = new ElementStack(ESObjects.ELEMENTS.FIRE, dCount, 100);
 			if (absorbElementToExp(metal, einv, onceExpGetMax)) {
 				absorbRate -= 0.5f;
 				return true;
 			}
-			ElementStack wood = new ElementStack(ESInit.ELEMENTS.METAL, dCount, 100);
+			ElementStack wood = new ElementStack(ESObjects.ELEMENTS.METAL, dCount, 100);
 			if (absorbElementToExp(wood, einv, onceExpGetMax)) {
 				absorbRate += 0.5f;
 				return true;
 			}
 		} else {
-			ElementStack wood = new ElementStack(ESInit.ELEMENTS.METAL, dCount, 100);
+			ElementStack wood = new ElementStack(ESObjects.ELEMENTS.METAL, dCount, 100);
 			if (absorbElementToExp(wood, einv, onceExpGetMax)) {
 				absorbRate += 0.5f;
 				return true;
 			}
-			ElementStack metal = new ElementStack(ESInit.ELEMENTS.FIRE, dCount, 125);
+			ElementStack metal = new ElementStack(ESObjects.ELEMENTS.FIRE, dCount, 125);
 			if (absorbElementToExp(metal, einv, onceExpGetMax)) {
 				absorbRate -= 0.5f;
 				return true;

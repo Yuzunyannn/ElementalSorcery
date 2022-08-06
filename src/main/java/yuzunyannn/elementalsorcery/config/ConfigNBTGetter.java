@@ -2,7 +2,7 @@ package yuzunyannn.elementalsorcery.config;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import yuzunyannn.elementalsorcery.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 
 public class ConfigNBTGetter implements IConfigGetter {
 

@@ -15,12 +15,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.QuestDescribe;
 import yuzunyannn.elementalsorcery.elf.quest.QuestStatus;
 import yuzunyannn.elementalsorcery.elf.quest.QuestType;
-import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class ItemQuest extends Item {
 
@@ -54,7 +54,7 @@ public class ItemQuest extends Item {
 	}
 
 	public static ItemStack createQuest(Quest quest) {
-		ItemStack stack = new ItemStack(ESInit.ITEMS.QUEST);
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.QUEST);
 		stack.setTagCompound(quest.serializeNBT());
 		return stack;
 	}

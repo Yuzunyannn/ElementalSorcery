@@ -22,11 +22,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
 import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
-import yuzunyannn.elementalsorcery.grimoire.mantra.Mantra;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
@@ -100,7 +100,7 @@ public class BlockSealStone extends Block implements Mapper {
 	public static ItemStack getAncientPaper(World worldIn, @Nullable BlockPos dropPos, int fortune,
 			boolean isSuperDrop) {
 		Random rand = worldIn.rand;
-		ItemStack stack = new ItemStack(ESInit.ITEMS.ANCIENT_PAPER, 1, ItemAncientPaper.EnumType.NORMAL.getMetadata());
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, ItemAncientPaper.EnumType.NORMAL.getMetadata());
 
 		AncientPaper ap = new AncientPaper();
 
@@ -169,7 +169,7 @@ public class BlockSealStone extends Block implements Mapper {
 		if (player != null) {
 			fortune = (int) (fortune * (1 + player.getLuck() / 32f));
 			ItemStack stack = player.getHeldItemMainhand();
-			if (stack.getItem() == ESInit.ITEMS.DRAGON_BREATH_PICKAXE) {
+			if (stack.getItem() == ESObjects.ITEMS.DRAGON_BREATH_PICKAXE) {
 				isSuperDrop = true;
 				fortune = fortune + 1;
 			}
@@ -187,14 +187,14 @@ public class BlockSealStone extends Block implements Mapper {
 
 		// 一些其他东西
 		RandomHelper.WeightRandom<ItemStack> wr = new RandomHelper.WeightRandom();
-		wr.add(new ItemStack(ESInit.ITEMS.ELEMENT_CRYSTAL), 1);
+		wr.add(new ItemStack(ESObjects.ITEMS.ELEMENT_CRYSTAL), 1);
 		wr.add(ItemBlessingJadePiece.createPiece(0), 2);
-		wr.add(new ItemStack(ESInit.ITEMS.KEEPSAKE, 1, ItemKeepsake.EnumType.UNDELIVERED_LETTER.getMeta()), 4);
-		wr.add(new ItemStack(ESInit.ITEMS.ORDER_CRYSTAL), 4);
-		wr.add(new ItemStack(ESInit.ITEMS.MAGIC_CRYSTAL), 10);
-		wr.add(new ItemStack(ESInit.ITEMS.RESONANT_CRYSTAL), 16);
-		wr.add(new ItemStack(ESInit.ITEMS.MAGIC_STONE, 3), 40);
-		wr.add(new ItemStack(ESInit.ITEMS.MAGIC_PIECE, 4 + rand.nextInt(4)), 80);
+		wr.add(new ItemStack(ESObjects.ITEMS.KEEPSAKE, 1, ItemKeepsake.EnumType.UNDELIVERED_LETTER.getMeta()), 4);
+		wr.add(new ItemStack(ESObjects.ITEMS.ORDER_CRYSTAL), 4);
+		wr.add(new ItemStack(ESObjects.ITEMS.MAGIC_CRYSTAL), 10);
+		wr.add(new ItemStack(ESObjects.ITEMS.RESONANT_CRYSTAL), 16);
+		wr.add(new ItemStack(ESObjects.ITEMS.MAGIC_STONE, 3), 40);
+		wr.add(new ItemStack(ESObjects.ITEMS.MAGIC_PIECE, 4 + rand.nextInt(4)), 80);
 
 		tryTime = rand.nextInt(fortune + 5) + 2;
 		for (int i = 0; i < tryTime; i++) spawnAsEntity(worldIn, pos, wr.get());

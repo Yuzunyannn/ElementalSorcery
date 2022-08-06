@@ -14,9 +14,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
-import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class BlockMagicPot extends Block {
 
@@ -57,7 +57,7 @@ public class BlockMagicPot extends Block {
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack stack = playerIn.getHeldItem(hand);
-		if (stack.getItem() == ESInit.ITEMS.MAGIC_STONE) {
+		if (stack.getItem() == ESObjects.ITEMS.MAGIC_STONE) {
 			int magic = state.getValue(MAGIC);
 			if (magic == 0) {
 				if (!playerIn.isCreative()) stack.shrink(1);

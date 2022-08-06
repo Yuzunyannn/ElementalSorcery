@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
 
 @SideOnly(Side.CLIENT)
 public class ESTileEntityItemStackRenderer extends TileEntityItemStackRenderer {

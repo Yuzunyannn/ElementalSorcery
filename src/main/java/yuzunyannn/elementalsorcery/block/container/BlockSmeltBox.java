@@ -27,8 +27,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.TileSmeltBox;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
@@ -179,7 +179,7 @@ public class BlockSmeltBox extends BlockContainer {
 				ItemStack stack = box.getExtraItemStackHandler().getStackInSlot(0);
 				if (stack.isEmpty()) return;
 				Item item = stack.getItem();
-				if (item == Items.ENDER_EYE || item == ESInit.ITEMS.MAGICAL_ENDER_EYE) {
+				if (item == Items.ENDER_EYE || item == ESObjects.ITEMS.MAGICAL_ENDER_EYE) {
 					for (int i = 0; i < 3; ++i) {
 						int j = rand.nextInt(2) * 2 - 1;
 						int k = rand.nextInt(2) * 2 - 1;

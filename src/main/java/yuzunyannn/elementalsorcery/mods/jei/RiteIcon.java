@@ -6,12 +6,12 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class RiteIcon implements IDrawable {
 
 	public ItemStack iconStack = ItemStack.EMPTY;
-	public ItemStack defaultIconStack = new ItemStack(ESInit.BLOCKS.RITE_TABLE);
+	public ItemStack defaultIconStack = new ItemStack(ESObjects.BLOCKS.RITE_TABLE);
 
 	@Override
 	public int getWidth() {

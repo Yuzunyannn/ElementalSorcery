@@ -16,10 +16,10 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
@@ -116,8 +116,8 @@ public class EFloorWorkshop extends ElfEdificeFloor {
 			}
 		}
 		// 一排灶台
-		IBlockState HEARTH = ESInit.BLOCKS.HEARTH.getDefaultState();
-		IBlockState SMELT_BOX = ESInit.BLOCKS.SMELT_BOX.getDefaultState().withProperty(BlockSmeltBox.FACING, toward);
+		IBlockState HEARTH = ESObjects.BLOCKS.HEARTH.getDefaultState();
+		IBlockState SMELT_BOX = ESObjects.BLOCKS.SMELT_BOX.getDefaultState().withProperty(BlockSmeltBox.FACING, toward);
 		{
 			int size = GenElfEdifice.getFakeCircleLen(treeSize, treeSize + 1, 2) - 1;
 			for (int i = -size; i <= size; i++) {
@@ -149,10 +149,10 @@ public class EFloorWorkshop extends ElfEdificeFloor {
 				ItemStack stack = ItemStack.EMPTY;
 				switch (rand.nextInt(10)) {
 				case 0:
-					stack = new ItemStack(ESInit.ITEMS.KYANITE_PICKAXE);
+					stack = new ItemStack(ESObjects.ITEMS.KYANITE_PICKAXE);
 					break;
 				case 1:
-					stack = new ItemStack(ESInit.ITEMS.MANUAL);
+					stack = new ItemStack(ESObjects.ITEMS.MANUAL);
 					break;
 				case 2:
 				case 3:

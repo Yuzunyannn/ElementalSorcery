@@ -21,11 +21,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.item.IWindmillBlade;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.item.IWindmillBladeController;
 import yuzunyannn.elementalsorcery.entity.EntityRotaryWindmillBlate;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.potion.PotionPowerPitcher;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructWindmill;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
@@ -107,36 +108,36 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 			if (rate <= 0.001f) break outWater;
 			if (!world.isRainingAt(pos)) break outWater;
 			float power = Math.max(1, MAX_ELEMENT_POWER * rate);
-			return new ElementStack(ESInit.ELEMENTS.WATER, 1, (int) power);
+			return new ElementStack(ESObjects.ELEMENTS.WATER, 1, (int) power);
 		}
 
 		if (dimension == 1) outEnder: {
 			if (tally % 2 == 1) break outEnder;
 			float rate = randRate * randRate * Math.min(1, speedRate + 0.5f);
 			float power = Math.max(1, MAX_ELEMENT_POWER * rate * rate);
-			return new ElementStack(ESInit.ELEMENTS.ENDER, 1, (int) power);
+			return new ElementStack(ESObjects.ELEMENTS.ENDER, 1, (int) power);
 		}
 
 		if (dimension == -1) outFire: {
 			if (tally % 2 == 1) break outFire;
 			float rate = highRate * speedRate * randRate;
 			float power = Math.max(1, MAX_ELEMENT_POWER * rate);
-			return new ElementStack(ESInit.ELEMENTS.FIRE, 1, (int) power);
+			return new ElementStack(ESObjects.ELEMENTS.FIRE, 1, (int) power);
 		}
 
 		if (tally % 16 == 0) outOther: {
 			float rate = highRate * speedRate * randRate;
 			if (rate < 0.05f) break outOther;
 			float power = Math.max(1, MAX_ELEMENT_POWER * rate);
-			Element element = ESInit.ELEMENTS.WOOD;
-			if (rand.nextBoolean()) element = ESInit.ELEMENTS.EARTH;
+			Element element = ESObjects.ELEMENTS.WOOD;
+			if (rand.nextBoolean()) element = ESObjects.ELEMENTS.EARTH;
 			return new ElementStack(element, 1, (int) power);
 		}
 
 		if (tally % 2 == 1) {
 			float rate = highRate * speedRate * randRate;
 			float power = Math.max(1, MAX_ELEMENT_POWER * rate);
-			return new ElementStack(ESInit.ELEMENTS.AIR, 1, (int) power);
+			return new ElementStack(ESObjects.ELEMENTS.AIR, 1, (int) power);
 		}
 
 		return ElementStack.EMPTY;
@@ -219,7 +220,7 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 		return pos;
 	}
 
-	protected void pitchDestoryBlock(World world, BlockPos pos, int size, EntityRotaryWindmillBlate eBlate) {
+	protected void pitchDestoryBlock(World world, BlockPos pos, int size, IWindmillBladeController eBlate) {
 		for (int x = -size; x <= size; x++) {
 			for (int z = -size; z <= size; z++) {
 				BlockPos at = pos.add(x, 0, z);
@@ -240,13 +241,13 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 		}
 	}
 
-	protected void pitchAttackEntity(World world, Vec3d vec, int size, EntityRotaryWindmillBlate eBlate) {
+	protected void pitchAttackEntity(World world, Vec3d vec, int size, IWindmillBladeController eBlate) {
 		EntityLivingBase attacker = eBlate.getMaster();
 		AxisAlignedBB aabb = WorldHelper.createAABB(vec, size + 1, 0.5, 0.5);
 		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
 		for (EntityLivingBase entity : entities) {
 			if (attacker != null && EntityHelper.isSameTeam(attacker, entity)) continue;
-			DamageSource ds = DamageSource.causeThrownDamage(eBlate, attacker);
+			DamageSource ds = DamageSource.causeThrownDamage(eBlate.asEntity(), attacker);
 			pitchDoAttackEntity(entity, vec, ds, bladeDamage * (1 + eBlate.getAmplifier() * 0.1f));
 		}
 	}
@@ -256,7 +257,7 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 		target.attackEntityFrom(ds, damage);
 	}
 
-	protected void pitchMoveNextTarget(World world, Vec3d vec, int size, EntityRotaryWindmillBlate eBlate) {
+	protected void pitchMoveNextTarget(World world, Vec3d vec, int size, IWindmillBladeController eBlate) {
 		EntityLivingBase master = eBlate.getMaster();
 		Vec3d pos = findAttackPosition(world, master, vec, size);
 		int remainTick = eBlate.getRemainTick();
@@ -264,10 +265,10 @@ public class ItemWindmillBlade extends Item implements IWindmillBlade, PotionPow
 	}
 
 	@Override
-	public void bladePitch(World world, Vec3d vec, ItemStack stack, EntityRotaryWindmillBlate eBlate) {
+	public void bladePitch(World world, Vec3d vec, ItemStack stack, IWindmillBladeController eBlate) {
 		final int size = 2;
-		if (eBlate.tick % 10 == 0) pitchAttackEntity(world, vec, size, eBlate);
+		if (eBlate.getTick() % 10 == 0) pitchAttackEntity(world, vec, size, eBlate);
 		if (world.isRemote) return;
-		if (eBlate.tick % 3 == 0) pitchDestoryBlock(world, new BlockPos(vec), size, eBlate);
+		if (eBlate.getTick() % 3 == 0) pitchDestoryBlock(world, new BlockPos(vec), size, eBlate);
 	}
 }

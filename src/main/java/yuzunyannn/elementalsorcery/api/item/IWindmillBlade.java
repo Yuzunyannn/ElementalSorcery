@@ -11,8 +11,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.entity.EntityRotaryWindmillBlate;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 
 public interface IWindmillBlade {
 
@@ -25,7 +24,7 @@ public interface IWindmillBlade {
 
 	boolean canTwirl(World world, BlockPos pos, ItemStack stack);
 
-	void bladePitch(World world, Vec3d pos, ItemStack stack, EntityRotaryWindmillBlate blate);
+	void bladePitch(World world, Vec3d pos, ItemStack stack, IWindmillBladeController blate);
 
 	@Nullable
 	@SideOnly(Side.CLIENT)

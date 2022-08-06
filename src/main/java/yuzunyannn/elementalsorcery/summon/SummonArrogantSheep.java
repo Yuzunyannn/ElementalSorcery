@@ -12,10 +12,10 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.BlockGoatGoldBrick;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.entity.mob.EntityArrogantSheep;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.util.MazeCreator;
 import yuzunyannn.elementalsorcery.util.MazeCreator.Grid;
 
@@ -36,7 +36,7 @@ public class SummonArrogantSheep extends SummonMaze {
 		roofSize = maxSize + 1;
 		xRoof = -roofSize;
 		zRoof = -roofSize;
-		defaultBuildBlockState = ESInit.BLOCKS.GOAT_GOLD_BRICK.getDefaultState();
+		defaultBuildBlockState = ESObjects.BLOCKS.GOAT_GOLD_BRICK.getDefaultState();
 		this.initElevatorGrid(world.rand);
 	}
 

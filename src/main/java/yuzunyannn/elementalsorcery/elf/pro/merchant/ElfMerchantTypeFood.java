@@ -9,9 +9,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 
 public class ElfMerchantTypeFood extends ElfMerchantTypeDefault {
 

@@ -40,17 +40,17 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.element.Element;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.event.IWorldTickTask;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementAbsorb;
@@ -225,9 +225,9 @@ public class ItemCollapseWand extends Item implements IItemUseClientUpdate {
 		protected void doDisintegrat(World world) {
 			if (player == null) return;
 			ItemStack wand = player.getHeldItem(EnumHand.MAIN_HAND);
-			if (wand.getItem() != ESInit.ITEMS.COLLAPSE_WAND) {
+			if (wand.getItem() != ESObjects.ITEMS.COLLAPSE_WAND) {
 				wand = player.getHeldItem(EnumHand.OFF_HAND);
-				if (wand.getItem() != ESInit.ITEMS.COLLAPSE_WAND) wand = ItemStack.EMPTY;
+				if (wand.getItem() != ESObjects.ITEMS.COLLAPSE_WAND) wand = ItemStack.EMPTY;
 			}
 			if (BlockHelper.isBedrock(world, pos)) return;
 			IBlockState state = world.getBlockState(pos);

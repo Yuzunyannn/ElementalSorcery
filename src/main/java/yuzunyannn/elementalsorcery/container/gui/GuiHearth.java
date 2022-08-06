@@ -2,13 +2,13 @@ package yuzunyannn.elementalsorcery.container.gui;
 
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.container.ContainerHearth;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
 
 public class GuiHearth extends GuiNormal {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ElementalSorcery.MODID,
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/container/hearth.png");
 	protected ContainerHearth inventory;
 

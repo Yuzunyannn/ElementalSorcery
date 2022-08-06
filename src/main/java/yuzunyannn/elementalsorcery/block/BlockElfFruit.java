@@ -40,11 +40,11 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.entity.EntityFallingElfFruit;
 import yuzunyannn.elementalsorcery.event.EventServer;
-import yuzunyannn.elementalsorcery.init.ESInit;
 
 public class BlockElfFruit extends Block implements Mapper {
 
@@ -233,7 +233,7 @@ public class BlockElfFruit extends Block implements Mapper {
 		int growState = state.getValue(STAGE);
 		if (growState < MAX_STATE) {
 			// 检测上面是否为树叶
-			if (worldIn.getBlockState(pos.up()).getBlock() != ESInit.BLOCKS.ELF_LEAF) return;
+			if (worldIn.getBlockState(pos.up()).getBlock() != ESObjects.BLOCKS.ELF_LEAF) return;
 			// if (!worldIn.getBlockState(pos.up()).getValue(BlockElfLeaf.DECAYABLE))
 			// return;
 			if (rand.nextFloat() < 0.5f) return;

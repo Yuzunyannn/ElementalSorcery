@@ -18,8 +18,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.container.BlockContainerNormal;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeTable;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
@@ -57,7 +57,7 @@ public class BlockTranscribeTable extends BlockContainerNormal {
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		ItemStack stack = playerIn.getHeldItem(hand);
-		boolean isGrimire = stack.getItem() == ESInit.ITEMS.GRIMOIRE;
+		boolean isGrimire = stack.getItem() == ESObjects.ITEMS.GRIMOIRE;
 		boolean flag = BlockHelper.onBlockActivatedWithIGetItemStack(worldIn, pos, state, playerIn, hand, true);
 		if (isGrimire && flag) {
 			if (playerIn instanceof EntityPlayerMP)

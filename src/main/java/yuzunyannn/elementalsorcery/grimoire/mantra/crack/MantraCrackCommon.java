@@ -8,18 +8,18 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementCrack;
 import yuzunyannn.elementalsorcery.render.item.RenderItemElementCrack;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
-import yuzunyannn.elementalsorcery.util.render.RenderHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 
 public abstract class MantraCrackCommon extends MantraCommon {
 
@@ -53,9 +53,9 @@ public abstract class MantraCrackCommon extends MantraCommon {
 		super.renderShiftIcon(mantraData, suggestSize, suggestAlpha, partialTicks);
 		GlStateManager.color(1, 1, 1);
 		RenderItemElementCrack.bindCrackTexture();
-		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize / 2, suggestSize / 2);
+		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize / 2, suggestSize / 2);
 		GlStateManager.rotate(45, 0, 0, 1);
-		RenderHelper.drawTexturedRectInCenter(0, 0, suggestSize / 2, suggestSize / 2);
+		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize / 2, suggestSize / 2);
 		GlStateManager.rotate(-45, 0, 0, 1);
 	}
 
@@ -72,11 +72,11 @@ public abstract class MantraCrackCommon extends MantraCommon {
 		ElementStack eStack = caster.iWantAnyElementSample(speedTick);
 		if (eStack.isEmpty()) return;
 		double fragment = maxFragment / maxUseTick;
-		double count = ElementHelper.fromMagicFragmentByPower(eStack.getElement(), fragment, eStack.getPower());
+		double count = ElementTransition.fromMagicFragmentByPower(eStack.getElement(), fragment, eStack.getPower());
 		eStack.setCount((int) Math.max(count, 1));
 		ElementStack get = caster.iWantSomeElement(eStack, true);
 		if (get.isEmpty()) return;
-		fragment = mdc.get(FRAGMENT) + ElementHelper.toMagicFragment(eStack);
+		fragment = mdc.get(FRAGMENT) + ElementTransition.toMagicFragment(eStack);
 		mdc.set(FRAGMENT, fragment);
 		mdc.setProgress(fragment, maxFragment);
 	}

@@ -28,7 +28,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class BlocksEStone {
 
@@ -219,7 +219,7 @@ public class BlocksEStone {
 	public static class EStoneStairs extends BlockStairs {
 
 		public EStoneStairs() {
-			super(ESInit.BLOCKS.ESTONE.getDefaultState());
+			super(ESObjects.BLOCKS.ESTONE.getDefaultState());
 			this.setTranslationKey("estoneStairs");
 
 			this.setHarvestLevel("pickaxe", 1);

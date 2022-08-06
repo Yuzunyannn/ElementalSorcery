@@ -24,17 +24,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
-import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.crafting.IItemStructure;
 import yuzunyannn.elementalsorcery.api.crafting.IToElement;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.api.tile.IItemStructureCraft;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
-import yuzunyannn.elementalsorcery.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.element.ElementAnalysisPacket;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
@@ -235,8 +236,8 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 				double count = estack.getCount() / n;
 				if (count > 1) estack.setCount((int) count);
 				else {
-					double fragment = ElementHelper.toFragment(estack) / n;
-					double power = ElementHelper.fromFragmentByCount(estack.getElement(), fragment, 1);
+					double fragment = ElementTransition.toFragment(estack) / n;
+					double power = ElementTransition.fromFragmentByCount(estack.getElement(), fragment, 1);
 					estack.setCount(1);
 					estack.setPower((int) Math.max(1, power));
 				}
@@ -291,7 +292,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 		// 解析元素
 		IToElementInfo teInfo = elementMap.toElement(stack);
 		if (teInfo == null) return null;
-		ans.daEstacks = ElementHelper.copy(teInfo.element());
+		ans.daEstacks = ElementStack.copy(teInfo.element());
 		if (ans.daEstacks == null) return null;
 		ans.daComplex = teInfo.complex();
 		if (!needRemian) {
@@ -377,7 +378,7 @@ public class TileAnalysisAltar extends TileStaticMultiBlock implements ITickable
 	}
 
 	public int getTotalPowerTime() {
-		return ElementalSorcery.isDevelop ? 20 : 20 * 30;
+		return ESAPI.isDevelop ? 20 : 20 * 30;
 	}
 
 }

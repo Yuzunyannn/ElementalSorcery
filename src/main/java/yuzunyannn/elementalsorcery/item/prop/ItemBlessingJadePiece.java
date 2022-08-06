@@ -9,7 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class ItemBlessingJadePiece extends Item {
 	/**
@@ -24,7 +24,7 @@ public class ItemBlessingJadePiece extends Item {
 	 * 7 任务 <br>
 	 */
 	public static ItemStack createPiece(int n) {
-		return new ItemStack(ESInit.ITEMS.BLESSING_JADE_PIECE, 1, n % 8);
+		return new ItemStack(ESObjects.ITEMS.BLESSING_JADE_PIECE, 1, n % 8);
 	}
 
 	public ItemBlessingJadePiece() {

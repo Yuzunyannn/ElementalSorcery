@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
@@ -81,9 +81,9 @@ public class ContainerRiteManual extends Container {
 
 	protected ItemStack findQuill() {
 		ItemStack stack = this.player.getHeldItem(EnumHand.OFF_HAND);
-		if (stack.getItem() == ESInit.ITEMS.QUILL) return stack;
+		if (stack.getItem() == ESObjects.ITEMS.QUILL) return stack;
 		stack = this.player.getHeldItem(EnumHand.MAIN_HAND);
-		if (stack.getItem() == ESInit.ITEMS.QUILL) return stack;
+		if (stack.getItem() == ESObjects.ITEMS.QUILL) return stack;
 		return ItemStack.EMPTY;
 	}
 

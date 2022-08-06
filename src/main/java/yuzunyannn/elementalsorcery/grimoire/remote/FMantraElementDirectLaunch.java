@@ -6,13 +6,13 @@ import java.util.function.BiFunction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.util.WorldLocation;
 import yuzunyannn.elementalsorcery.api.util.WorldObjectBlock;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
-import yuzunyannn.elementalsorcery.util.element.ElementHelper;
-import yuzunyannn.elementalsorcery.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.util.var.Variables;
-import yuzunyannn.elementalsorcery.util.world.WorldLocation;
 
 public class FMantraElementDirectLaunch extends FMantraBase {
 
@@ -28,7 +28,7 @@ public class FMantraElementDirectLaunch extends FMantraBase {
 		double fragment = 0;
 		int i = 0;
 		for (ElementStack estack : elements) {
-			double f = ElementHelper.toMagicFragment(estack);
+			double f = ElementTransition.toMagicFragment(estack);
 			this.proportionArray[i] = f;
 			this.elementArray[i] = estack.copy();
 			fragment = fragment + f;
@@ -57,7 +57,7 @@ public class FMantraElementDirectLaunch extends FMantraBase {
 		for (int i = 0; i < this.proportionArray.length; i++) {
 			ElementStack eStack = this.elementArray[i];
 			double fragment = charge * this.proportionArray[i];
-			double power = ElementHelper.fromFragmentByCount(eStack.getElement(), fragment, eStack.getCount());
+			double power = ElementTransition.fromFragmentByCount(eStack.getElement(), fragment, eStack.getCount());
 			eStack = eStack.copy();
 			eStack.setPower((int) power);
 			parmas.set(Variables.getElementVar(eStack.getElement()), eStack);

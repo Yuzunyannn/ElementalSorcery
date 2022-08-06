@@ -8,13 +8,13 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.grimoire.ICaster;
-import yuzunyannn.elementalsorcery.grimoire.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.MantraEffectFlags;
-import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 
@@ -38,7 +38,7 @@ public class MantraSlowFall extends MantraCommon {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (caster.iWantKnowCastTick() % 100 == 0 || !dataEffect.isMarkContinue()) {
 			dataEffect.markContinue(false);
-			ElementStack need = new ElementStack(ESInit.ELEMENTS.AIR, 1, 10);
+			ElementStack need = new ElementStack(ESObjects.ELEMENTS.AIR, 1, 10);
 			ElementStack get = caster.iWantSomeElement(need, true);
 			if (get.isEmpty()) return;
 		}

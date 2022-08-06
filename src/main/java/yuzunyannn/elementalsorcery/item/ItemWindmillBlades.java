@@ -13,9 +13,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.element.ElementStack;
-import yuzunyannn.elementalsorcery.entity.EntityRotaryWindmillBlate;
-import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.item.IWindmillBladeController;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public class ItemWindmillBlades {
@@ -53,10 +53,10 @@ public class ItemWindmillBlades {
 		}
 
 		@Override
-		public void bladePitch(World world, Vec3d vec, ItemStack stack, EntityRotaryWindmillBlate eBlate) {
+		public void bladePitch(World world, Vec3d vec, ItemStack stack, IWindmillBladeController eBlate) {
 			if (world.isRemote) return;
 			super.bladePitch(world, vec, stack, eBlate);
-			if (eBlate.tick % 40 == 0) pitchMoveNextTarget(world, vec, 8, eBlate);
+			if (eBlate.getTick() % 40 == 0) pitchMoveNextTarget(world, vec, 8, eBlate);
 		}
 
 	}
@@ -82,8 +82,8 @@ public class ItemWindmillBlades {
 		public ElementStack updateOnce(World world, BlockPos pos, ItemStack stack, float speed, int tally) {
 			ElementStack estack = super.updateOnce(world, pos, stack, speed, tally);
 			if (estack.isEmpty()) return estack;
-			if (estack.getElement() == ESInit.ELEMENTS.WATER || estack.getElement() == ESInit.ELEMENTS.AIR
-					|| estack.getElement() == ESInit.ELEMENTS.FIRE) {
+			if (estack.getElement() == ESObjects.ELEMENTS.WATER || estack.getElement() == ESObjects.ELEMENTS.AIR
+					|| estack.getElement() == ESObjects.ELEMENTS.FIRE) {
 				estack.weaken(0.5f);
 				return estack;
 			}
