@@ -26,12 +26,12 @@ public interface IPageManager {
 
 	/** 获取物品槽物品 */
 	public ItemStack getSlot(int slot);
-	
-	/**获取物品曹数量*/
+
+	/** 获取物品曹数量 */
 	public int getSlots();
-	
-	/**设置物品槽状态*/
-	public void setSlotState(int slot,boolean visible);
+
+	/** 设置物品槽状态 */
+	public void setSlotState(int slot, boolean visible);
 
 	/** 更换页面 */
 	public void toPage(Page page);
@@ -44,6 +44,12 @@ public interface IPageManager {
 
 	/** 获取字体高度 */
 	public int getFontHeight();
+
+	/** 启动裁剪 */
+	public void enableScissor(float x, float y, float width, float height);
+
+	/** 关闭裁剪 */
+	public void disableScissor();
 
 	/** 画字符串 */
 	public void drawString(String str, int x, int y, int color);

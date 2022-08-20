@@ -3,7 +3,7 @@ package yuzunyannn.elementalsorcery.util.json;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -19,8 +19,6 @@ import java.util.Set;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
-import com.google.gson.internal.Streams;
-import com.google.gson.stream.JsonWriter;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
@@ -258,10 +256,8 @@ public class JsonObject extends Json implements Iterable<String> {
 	}
 
 	public void save(File file, boolean useIndent) {
-		try (FileWriter fileWriter = new FileWriter(file)) {
-			JsonWriter jsonWriter = new JsonWriter(fileWriter);
-			if (useIndent) jsonWriter.setIndent("  ");
-			Streams.write(getGoogleJson(), jsonWriter);
+		try (FileOutputStream fileWriter = new FileOutputStream(file)) {
+			fileWriter.write(getGoogleJson().toString().getBytes("UTF-8"));
 		} catch (Exception e) {
 			ESAPI.logger.warn("json数据保存失败", e);
 		}

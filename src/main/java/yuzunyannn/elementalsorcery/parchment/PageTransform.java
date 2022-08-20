@@ -63,6 +63,7 @@ public class PageTransform extends PageEasy {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void init(IPageManager pageManager) {
+		super.init(pageManager);
 		int cX = this.getCX() + 1;
 		int cY = this.getCY() + 1;
 		pageManager.addSlot(cX, cY, this.getOrigin());

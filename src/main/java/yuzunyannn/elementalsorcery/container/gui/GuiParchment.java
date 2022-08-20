@@ -3,6 +3,8 @@ package yuzunyannn.elementalsorcery.container.gui;
 import java.io.IOException;
 import java.util.List;
 
+import org.lwjgl.opengl.GL11;
+
 import com.google.common.collect.Lists;
 
 import net.minecraft.block.BlockContainer;
@@ -37,8 +39,7 @@ import yuzunyannn.elementalsorcery.parchment.Pages;
 
 public class GuiParchment extends GuiContainer implements IPageManager {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
-			"textures/gui/parchment.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID, "textures/gui/parchment.png");
 	public static final ResourceLocation TEXTURE_EXTRA = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/parchment_book.png");
 	protected final ContainerParchment container;
@@ -86,11 +87,14 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			this.mc.getTextureManager().bindTexture(TEXTURE);
 			int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 			this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
+			scissorOffsetX = scissorOffsetY = 0;
 			this.page.drawBackground(offsetX, offsetY, this);
 			for (SlotButton slot : this.slotButtonList) if (!slot.stack.isEmpty()) drawItem(slot.stack, slot.x, slot.y);
 			// 文字
 			GlStateManager.pushMatrix();
 			GlStateManager.translate(offsetX, offsetY, 10);
+			scissorOffsetX = offsetX;
+			scissorOffsetY = offsetY;
 			this.page.drawValue(this);
 			GlStateManager.popMatrix();
 		} catch (Exception e) {
@@ -98,6 +102,25 @@ public class GuiParchment extends GuiContainer implements IPageManager {
 			ESAPI.logger.warn("羊皮卷(" + id + ")gui:drawGuiContainerBackgroundLayer异常", e);
 			this.toPage = Pages.getErrorPage();
 		}
+	}
+
+	public float scissorOffsetX, scissorOffsetY;
+
+	@Override
+	public void enableScissor(float x, float y, float width, float height) {
+		GL11.glEnable(GL11.GL_SCISSOR_TEST);
+		float xScale = mc.displayWidth / (float) this.width;
+		float yScale = mc.displayHeight / (float) this.height;
+		int rx = (int) (xScale * (x + scissorOffsetX));
+		int ry = (int) (yScale * (this.height - (y + scissorOffsetY) - height));
+		int rw = (int) (xScale * width);
+		int rh = (int) (yScale * height);
+		GL11.glScissor(rx, ry, rw, rh);
+	}
+
+	@Override
+	public void disableScissor() {
+		GL11.glDisable(GL11.GL_SCISSOR_TEST);
 	}
 
 	@Override

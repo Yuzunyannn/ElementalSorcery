@@ -4,6 +4,7 @@
     "global.general.enable_item_element_tooltip_show": "Show element infomation when the mouse moves over the item [only creative mode]",
     "global.general.max_life_time_of_parcel": "Max hour of Parcel be hold in post office, it will be remove if overdue [-1 is never overdue]",
     "global.general.building_max_remain_times": "The max second limit of inactive temporary buildings in memory, it will be wrote to file and remove from memory if overdue, and read from file when used [0 is never remove from memory]",
+    "global.general.max_size_element_in_inventory" : "Capacity of element inventory",
 
     "item.elementalsorcery_manual.manual_max_pages": "Capacity limit of Manual",
     "item.elementalsorcery_rite_manual.max_record": "Record limt of Rite Manual",
@@ -31,6 +32,14 @@
     "tile.elementalsorcery_ritetable.normal_rite_always_success": "Print Rite is Always Success",
     "tile.elementalsorcery_devolvecube.max_auto_transfer_count": "The max limit of Auto Element Transfers that one Devolve Cube can manage",
     "tile.elementalsorcery_devolvecube.max_auto_transfer_volume_per_sec": "The max limit per sec for Devolve Cube auto transfer Element",
+    "tile.elementalsorcery_elementreactor.instable_fragment_base_capacity": "Default capacity of Instable Fragment(iF)",
+    "tile.elementalsorcery_elementreactor.once_extract_ratio": "Ratio of elements extracted each time",
+    "tile.elementalsorcery_elementreactor.once_extract_ratio_in_mantra": "When mantra charging, ratio of elements taken out each time",
+    "tile.elementalsorcery_elementreactor.once_insert_ratio": "Ratio of elements inserted each time",
+    "tile.elementalsorcery_elementreactor.power_line_base": "Curr Power = This Value ^ (Power Line + 1)",
+    "tile.elementalsorcery_elementreactor.max_ifratio_of_upper_power_line": "When iF / Capacity Of iF > This Value, power are not grow",
+    "tile.elementalsorcery_elementreactor.iftransmission_count_exponential_relative_power_line": "iF transmission rate coefficient's exponential  (Power Line / 10.0 + 1) ^ This Value",    
+    "tile.elementalsorcery_elementreactor.working_cost_magic_fragment_coefficient": "magic fragment's coefficient in working, This Value * Power Line",
 
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "The worlds can spawn [Invalid for Entity]",
     "spawn_and_gen.world_gen_and_spawn_config.biomes": "The biomes can spawn",

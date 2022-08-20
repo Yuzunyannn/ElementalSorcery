@@ -33,7 +33,7 @@ public class PageBook extends Page {
 
 	@Override
 	public void open(IPageManager pageManager) {
-		//pageAt = 0;
+		// pageAt = 0;
 	}
 
 	@Override
@@ -152,10 +152,12 @@ public class PageBook extends Page {
 		}
 		int xoff = CATALOG_LOCAL_X;
 		int yoff = CATALOG_LOCAL_Y;
+		pageManager.enableScissor(xoff + 18, yoff, 77, 120);
 		for (Page page : showPage) {
 			if (page == null) break;
 			page.drawString(xoff, yoff, pageManager);
 			yoff += CATALOG_LOCAL_INTERVAL;
 		}
+		pageManager.disableScissor();
 	}
 }

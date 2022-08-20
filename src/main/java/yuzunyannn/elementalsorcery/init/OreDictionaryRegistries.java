@@ -17,5 +17,6 @@ public class OreDictionaryRegistries {
 		OreDictionary.registerOre("oreScarletCrystal", BLOCKS.SCARLET_CRYSTAL_ORE);
 		OreDictionary.registerOre("scarletCrystal", ESObjects.ITEMS.SCARLET_CRYSTAL);
 		OreDictionary.registerOre("chipIceRock", ESObjects.ITEMS.ICE_ROCK_CHIP);
+		OreDictionary.registerOre("sand", BLOCKS.STAR_SAND);
 	}
 }

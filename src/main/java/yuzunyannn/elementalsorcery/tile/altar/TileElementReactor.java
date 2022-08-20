@@ -40,6 +40,7 @@ import yuzunyannn.elementalsorcery.api.util.WorldLocation;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraElementWhirl;
 import yuzunyannn.elementalsorcery.grimoire.mantra.crack.MantraCrackOpen;
 import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
@@ -61,19 +62,36 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	static public final int SELECT_MAP_SIZE = 32;
 
 	/** 不稳定片元的默认容量 */
-	static public final double INSTABLE_FRAGMENT_BASE_CAPACITY = 1000000;
+	@Config(sync = true)
+	static public double INSTABLE_FRAGMENT_BASE_CAPACITY = 1000000;
+
 	/** 每次取出元素的比例 */
-	static public final double ONCE_EXTRACT_RATIO = 0.5;
+	@Config(sync = true)
+	static public double ONCE_EXTRACT_RATIO = 0.5;
+
 	/** 在释放咒文的时候，每次取出来的量，释放咒文的时候，不会存入只会取出 */
-	static public final double ONCE_EXTRACT_RATIO_IN_MANTRA = 0.01;
+	@Config(sync = true)
+	static public double ONCE_EXTRACT_RATIO_IN_MANTRA = 0.01;
+
 	/** 每次放入元素的比例 */
-	static public final double ONCE_INSERT_RATIO = 0.5;
-	/** 能连线的底数 POWER_LINE_COEFFICIENT^n */
-	static public final double POWER_LINE_COEFFICIENT = 1.2;
+	@Config(sync = true)
+	static public double ONCE_INSERT_RATIO = 0.5;
+
+	/** 能连线的底数 POWER_LINE_BASE^n */
+	@Config(sync = true)
+	static public double POWER_LINE_BASE = 1.2;
+
 	/** 不稳定片元达到容量的某个百分比后，停止能连线的上升 */
-	static public final double MAX_IF_RATIO_OF_UPPER_POWER_LINE = 0.01;
+	@Config(sync = true)
+	static public double MAX_IFRATIO_OF_UPPER_POWER_LINE = 0.01;
+
+	/** 根据能量线的指数，对应输入输出元素元素片元的最大值 */
+	@Config()
+	static public double IFTRANSMISSION_COUNT_EXPONENTIAL_RELATIVE_POWER_LINE = 1.5;
+
 	/** 默认运行消耗片元个数基数，实际消耗 基数*能量线 */
-	static public final double WORKING_COST_MAGIC_FRAGMENT_BASE = 64;
+	@Config()
+	static public double WORKING_COST_MAGIC_FRAGMENT_COEFFICIENT = 64;
 
 	protected ReactorStatus status = ReactorStatus.OFF;
 	protected ElementTransitionReactor core = new ElementTransitionReactor(this);
@@ -475,7 +493,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	/** 不稳定片元的每次的最大传输率，因为可以放置4个塔，所以实际最快是单个的4倍 */
 	public double getInstableFragmentMaxTransmissionCount() {
 		double capacity = getInstableFragmentCapacity();
-		return capacity / 160 * Math.pow(powerLevelLine / 10.0 + 1, 1.5);
+		return capacity / 160 * Math.pow(powerLevelLine / 10.0 + 1, IFTRANSMISSION_COUNT_EXPONENTIAL_RELATIVE_POWER_LINE);
 	}
 
 	// 接受片元，抵消不稳定片元，重新变成当前元素的元素片元，并提升稳定度
@@ -483,7 +501,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	public double insertMagicFragment(double getCount, boolean simulate) {
 		ReactorStatus status = getStatus();
 		if (status != ReactorStatus.RUNNING) return getCount;
-		double mustCost = WORKING_COST_MAGIC_FRAGMENT_BASE * powerLevelLine;
+		double mustCost = WORKING_COST_MAGIC_FRAGMENT_COEFFICIENT * powerLevelLine;
 		if (getCount < mustCost) return getCount;
 
 		double instableFragment = getInstableFragment();
@@ -509,7 +527,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		if (status == ReactorStatus.RUNAWAY) return 0;
 		double capacity = getInstableFragmentCapacity();
 		double instableFragment = getInstableFragment();
-		double minRatio = Math.max(MAX_IF_RATIO_OF_UPPER_POWER_LINE + 0.01, getInstableRatio() * 0.75f);
+		double minRatio = Math.max(MAX_IFRATIO_OF_UPPER_POWER_LINE + 0.01, getInstableRatio() * 0.75f);
 		// 如果没到不稳定魔力片元存储的输出比例，不会进行输出
 		if (instableFragment / capacity < minRatio && getStatus() != ReactorStatus.CLOSING) return 0;
 		// 进行输出多余的魔力片元
@@ -695,7 +713,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 			at = new Vec3d(this.pos).add(tar);
 		}
 
-		int power = MathHelper.ceil(Math.pow(POWER_LINE_COEFFICIENT, this.powerLevelLine + 1));
+		int power = MathHelper.ceil(Math.pow(POWER_LINE_BASE, this.powerLevelLine + 1));
 		double count = ElementTransition.fromFragmentByPower(ESObjects.ELEMENTS.MAGIC, instableFragment, power);
 
 		MantraElementWhirl.booom(world, at, ElementStack.magic(MathHelper.ceil(count), power), null);
@@ -777,7 +795,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	 */
 	protected int transferToElementInventory(IElementInventory eInv, int i, int currPowerLine, double insertRatio) {
 		ElementStack eStack = eInv.getStackInSlot(i);
-		int power = MathHelper.ceil(Math.pow(POWER_LINE_COEFFICIENT, currPowerLine));
+		int power = MathHelper.ceil(Math.pow(POWER_LINE_BASE, currPowerLine));
 		int maxSize = eInv.getMaxSizeInSlot(i);
 		if (maxSize > 0) {
 			// 有容量上限的情况下，计算还能插入多少
@@ -810,15 +828,15 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 			} else if (eStack.isEmpty()) isInsert = true;
 			else {
 				echoElementContentList.add(eStack.getElement());
-				int powerLine = (int) (Math.log(eStack.getPower()) / Math.log(POWER_LINE_COEFFICIENT) + 0.01f);
+				int powerLine = (int) (Math.log(eStack.getPower()) / Math.log(POWER_LINE_BASE) + 0.01f);
 				if (core.getElement() == ElementStack.EMPTY.getElement()) this.powerLevelLine = powerLine;
 				else {
 					double instableFragmentRatio = getInstableFragment() / getInstableFragmentCapacity();
 					this.powerLevelLine = Math.min(powerLine, this.powerLevelLine);
 					// 不稳片元率存储必须小于1%(MAX_IF_RATIO_OF_UPPER_POWER_LINE)才能进阶
-					if (instableFragmentRatio < MAX_IF_RATIO_OF_UPPER_POWER_LINE)
+					if (instableFragmentRatio < MAX_IFRATIO_OF_UPPER_POWER_LINE)
 						this.powerLevelLine = this.powerLevelLine + 1;
-					isInsert = eStack.getPower() == MathHelper.ceil(Math.pow(POWER_LINE_COEFFICIENT, currPowerLine));
+					isInsert = eStack.getPower() == MathHelper.ceil(Math.pow(POWER_LINE_BASE, currPowerLine));
 				}
 			}
 

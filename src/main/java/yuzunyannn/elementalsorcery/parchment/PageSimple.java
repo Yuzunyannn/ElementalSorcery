@@ -12,6 +12,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
+import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.container.gui.GuiParchment;
 
 public class PageSimple extends PageEasy {
 	protected final String title;
@@ -91,5 +94,13 @@ public class PageSimple extends PageEasy {
 		textureManager.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 		textureManager.getTexture(TextureMap.LOCATION_BLOCKS_TEXTURE).restoreLastBlurMipmap();
 		GlStateManager.popMatrix();
+
+		TextureBinder.bindTexture(GuiParchment.TEXTURE);
+		GlStateManager.pushMatrix();
+		GlStateManager.translate(0, 0, 5);
+		GlStateManager.color(1, 1, 1, 0.5f);
+		RenderFriend.drawTexturedModalRect(xoff + 145, yoff + 81, 145, 81, 75, 75, 256, 256);
+		GlStateManager.popMatrix();
+
 	}
 }

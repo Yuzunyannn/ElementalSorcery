@@ -6,9 +6,13 @@ import java.util.List;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.math.MathHelper;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public class PageEasy extends Page {
+
+	public int valueYOffset;
+	public int maxValueHeight;
 
 	@Override
 	public String getName() {
@@ -56,6 +60,12 @@ public class PageEasy extends Page {
 	}
 
 	@Override
+	public void init(IPageManager pageManager) {
+		super.init(pageManager);
+		this.valueYOffset = 0;
+	}
+
+	@Override
 	public void drawValue(IPageManager pageManager) {
 		GlStateManager.disableLighting();
 		int width = this.getWidthSize(pageManager);
@@ -65,7 +75,32 @@ public class PageEasy extends Page {
 		int xoff = width / 10;
 		LinkedList<String> list = new LinkedList<String>();
 		this.addContexts(list);
+
+		pageManager.enableScissor(xoff, yoff - 5, width, 138);
+		yoff -= valueYOffset;
 		for (String s : list) yoff = pageManager.drawString(s, xoff, yoff, xoff * 8, 4210752);
+		pageManager.disableScissor();
+		maxValueHeight = Math.max(maxValueHeight, yoff + valueYOffset);
+	}
+
+	int lMouseY = 0;
+
+	@Override
+	public void mouseClick(int mouseX, int mouseY, int mouseButton, IPageManager pageManager) {
+		lMouseY = mouseY;
+	}
+
+	@Override
+	public void mouseClickMove(int mouseX, int mouseY, int clickedMouseButton, long timeSinceLastClick,
+			IPageManager pageManager) {
+		int dy = mouseY - lMouseY;
+		lMouseY = mouseY;
+		if (maxValueHeight - 153 < 0) {
+			valueYOffset = 0;
+			return;
+		}
+		valueYOffset -= dy;
+		valueYOffset = MathHelper.clamp(valueYOffset, 0, maxValueHeight - 153);
 	}
 
 	@Override

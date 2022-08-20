@@ -24,6 +24,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.util.ContainerArrayDetecter;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
@@ -32,6 +33,9 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 
 	@CapabilityInject(IElementInventory.class)
 	public static Capability<IElementInventory> ELEMENTINVENTORY_CAPABILITY;
+
+	@Config(sync = true)
+	public static int MAX_SIZE_ELEMENT_IN_INVENTORY = 10000;
 
 	private ElementStack[] estacks;
 
@@ -79,7 +83,7 @@ public class ElementInventory implements IElementInventoryModifiable, INBTSerial
 
 	@Override
 	public int getMaxSizeInSlot(int slot) {
-		return 10000;
+		return MAX_SIZE_ELEMENT_IN_INVENTORY;
 	}
 
 	@Override

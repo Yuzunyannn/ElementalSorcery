@@ -124,6 +124,7 @@ public class PageCrafting extends PageEasy {
 
 	@Override
 	public void init(IPageManager pageManager) {
+		super.init(pageManager);
 		if (itemList.isEmpty()) return;
 		size = this.getMaxSize() > 9 ? 25 : 9;
 		int cX = this.getCX();

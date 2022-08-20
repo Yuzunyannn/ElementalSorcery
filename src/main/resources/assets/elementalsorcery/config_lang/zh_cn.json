@@ -4,6 +4,7 @@
     "global.general.enable_item_element_tooltip_show": "鼠标移动到物品上，显示其默认具有的元素[仅在创造模式生效]",
     "global.general.max_life_time_of_parcel": "邮局储存包裹的最长保持时间，超过时间就会被清除，单位小时，如果为-1表示用不清除",
     "global.general.building_max_remain_times": "临时建筑保非活动停留最长，单位分钟，超时后将移除内存，使用时会强制加载[0表示不自动清除]",
+    "global.general.max_size_element_in_inventory" : "元素仓库的容量",
 
     "item.elementalsorcery_manual.manual_max_pages": "元素手册页数上限",
     "item.elementalsorcery_rite_manual.max_record": "祭品研究手册可以记录的最大个数",
@@ -32,6 +33,14 @@
     "tile.elementalsorcery_ritetable.normal_rite_always_success": "映像仪式不会失败",
     "tile.elementalsorcery_devolvecube.max_auto_transfer_count": "协调立方体可管理的自动元素转移的最大数目",
     "tile.elementalsorcery_devolvecube.max_auto_transfer_volume_per_sec": "协调立方体自动传输元素每秒的最大限流",
+    "tile.elementalsorcery_elementreactor.instable_fragment_base_capacity": "不稳定片元的默认容量",
+    "tile.elementalsorcery_elementreactor.once_extract_ratio": "每次取出元素的比例",
+    "tile.elementalsorcery_elementreactor.once_extract_ratio_in_mantra": "在释放咒文的时候，每次取出来的量，释放咒文的时候，不会存入只会取出",
+    "tile.elementalsorcery_elementreactor.once_insert_ratio": "每次放入元素的比例",
+    "tile.elementalsorcery_elementreactor.power_line_base": "当前能量=该值^(能量线 + 1)",
+    "tile.elementalsorcery_elementreactor.max_ifratio_of_upper_power_line": "不稳定片元/不稳定片元总容量>该值时能量不会上涨",
+    "tile.elementalsorcery_elementreactor.iftransmission_count_exponential_relative_power_line": "片元传输率系数的指数(能连线 / 10.0 + 1)^该值",
+    "tile.elementalsorcery_elementreactor.working_cost_magic_fragment_coefficient": "工作需要的魔力片元系数，该值*能量线",
 
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "[会生成的世界][对生物类型无效]",
     "spawn_and_gen.world_gen_and_spawn_config.biomes": "[会生成的生物群系]",

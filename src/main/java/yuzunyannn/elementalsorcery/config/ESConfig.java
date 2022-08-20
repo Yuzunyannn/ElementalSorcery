@@ -8,6 +8,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
+import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.init.ESInit;
@@ -53,6 +54,7 @@ public class ESConfig {
 		load(BuildingLib.class, getter);
 		load(TileMDBase.class, getter);
 		load(TileEntityNetwork.class, getter);
+		load(ElementInventory.class, getter);
 		loadList(ESInit.ES_TILE_ENTITY, getter);
 		loadRegs(ESObjects.ITEMS, getter);
 		loadRegs(ESObjects.BLOCKS, getter);
