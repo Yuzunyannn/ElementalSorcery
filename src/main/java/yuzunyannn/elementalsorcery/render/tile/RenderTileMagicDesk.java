@@ -62,6 +62,15 @@ public class RenderTileMagicDesk extends TileEntitySpecialRenderer<TileMagicDesk
 			GlStateManager.translate(0.5, 0.85, 0.5);
 			GlStateManager.scale(0.025 * 2, 0.025 * 2, 0.025 * 2);
 			MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
-		} else RenderFriend.renderSpecialItem(stack, TEXTURE, MODEL, true, 0.05, 0.025, 0.46, 0.3);
+		} else
+			if (IRenderItem.isTransform(stack, ItemCameraTransforms.TransformType.GROUND) || IRenderItem.isGUI(stack)) {
+				RenderFriend.renderSpecialItem(stack, TEXTURE, MODEL, true, 0.05, 0.025, 0.46, 0.3);
+			} else {
+				TEXTURE.bind();
+				GlStateManager.translate(0.5, 0.7, 0.75);
+				GlStateManager.rotate(30, 1, 0, 0);
+				GlStateManager.scale(0.025, 0.025, 0.025);
+				MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
+			}
 	}
 }

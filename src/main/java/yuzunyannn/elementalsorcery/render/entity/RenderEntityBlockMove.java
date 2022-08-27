@@ -51,9 +51,10 @@ public class RenderEntityBlockMove extends Render<EntityBlockMove> {
 		GlStateManager.translate(x, y, z);
 		GlStateManager.scale(scale, scale, scale);
 		GlStateManager.rotate(entity.getRoate(), 0, 1, 0);
+		GlStateManager.disableLighting();
 		doRenderBlock(entity.getBlockState(), entity.getRenderItem(), partialTicks, entity.world,
 				new BlockPos(entity.getTrace().getFrom()), null);
-
+		GlStateManager.enableLighting();
 		GlStateManager.popMatrix();
 	}
 

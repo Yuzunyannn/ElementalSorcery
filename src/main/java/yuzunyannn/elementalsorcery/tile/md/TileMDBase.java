@@ -261,7 +261,7 @@ public abstract class TileMDBase extends TileEntity
 		for (int i = 0; i < distance; i++) {
 			pos = pos.offset(facing);
 			IBlockState state = world.getBlockState(pos);
-			if (state.isOpaqueCube()) return null;
+			if (!state.getBlock().hasTileEntity(state) && state.isOpaqueCube()) return null;
 			TileEntity tile = world.getTileEntity(pos);
 			if (tile == null) continue;
 			if (tile instanceof IAcceptMagic) return (T) tile;

@@ -26,6 +26,8 @@ import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class EFloorWorkshop extends ElfEdificeFloor {
 
+	public static final EFloorWorkshop instance = new EFloorWorkshop();
+
 	@Override
 	public int getInvestWeight() {
 		return 20;

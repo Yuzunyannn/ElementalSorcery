@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.elf.pro;
 
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.Random;
 
@@ -21,6 +22,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.BlockElfLog;
 import yuzunyannn.elementalsorcery.elf.edifice.BuildProgress;
+import yuzunyannn.elementalsorcery.elf.edifice.EFloorWorkshop;
+import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
 import yuzunyannn.elementalsorcery.elf.talk.ITalkAction;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionCoin;
 import yuzunyannn.elementalsorcery.elf.talk.TalkActionEnd;
@@ -70,7 +73,7 @@ public class ElfProfessionBuilder extends ElfProfessionUndetermined {
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TalkChapter superChapter = super.getChapter(elf, player, shiftData);
 		if (superChapter != null) return superChapter;
-		
+
 		// 没有核心
 		if (elf.getEdificeCore() == null) {
 			TalkChapter chapter = new TalkChapter();
@@ -151,8 +154,39 @@ public class ElfProfessionBuilder extends ElfProfessionUndetermined {
 		flags &= ~FLAG_HOPE;
 		data.setInteger("flags", flags);
 		int task = core.applyBuildTask(true);
-		if (task == -1) return;
+		if (task == -1) {
+			goDownstairs(elf, core);
+			return;
+		}
 		data.setInteger("flags", flags | FLAG_WORKING);
+	}
+
+	private void goDownstairs(EntityElfBase elf, TileElfTreeCore core) {
+		List<FloorInfo> list = core.getFloors();
+		if (list.size() < 2) return;
+
+		int floor = 0;
+		for (int i = 0; i < list.size(); i++) {
+			FloorInfo info = list.get(i);
+			if (info.getType() == EFloorWorkshop.instance) {
+				floor = i;
+				break;
+			}
+		}
+		int high = floor == 0 ? 1 : core.getFloorHigh(floor);
+		BlockPos to = core.getTreeBasicPos().add(0, high, 0);
+
+		if (Math.abs(to.getY() - elf.posY) <= 2) return;
+		if (elf.posY < core.getTreeBasicPos().getY() + list.get(0).getHigh() - 1) return;
+
+		ItemStack hold = elf.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
+		if (hold.getItem() == ESObjects.ITEMS.SPELLBOOK_ELEMENT) {
+			elf.setPosition(to.getX() + 0.5, to.getY(), to.getZ() + 0.5);
+			elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, ItemStack.EMPTY);
+		} else {
+			elf.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(ESObjects.ITEMS.SPELLBOOK_ELEMENT));
+			elf.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
+		}
 	}
 
 	/** 清除工作标签 */

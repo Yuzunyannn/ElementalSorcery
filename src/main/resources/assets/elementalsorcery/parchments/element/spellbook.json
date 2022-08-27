@@ -1,7 +1,7 @@
 {
     "lev": 3,
     "need": [
-        "element/spell_paper",
+        "element/magic_paper",
         "element/book_cover",
         "element/spell_crystal"
     ],

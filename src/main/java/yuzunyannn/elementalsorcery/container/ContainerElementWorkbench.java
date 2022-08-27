@@ -18,13 +18,14 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ContainerElementWorkbench extends Container {
 
-	private yuzunyannn.elementalsorcery.api.crafting.IElementRecipe irecipe = null;
+	private IElementRecipe irecipe = null;
 	public InventoryCrafting craftMatrix = new InventoryCrafting(this, 3, 3);
 	public InventoryCrafting craftElement = new InventoryCrafting(this, 1, 1);
 	public InventoryCraftResult craftResult = new InventoryCraftResult();
@@ -44,7 +45,8 @@ public class ContainerElementWorkbench extends Container {
 					public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
 						if (irecipe == null) return super.onTake(thePlayer, stack);
 						this.onCrafting(stack);
-						boolean last_have = irecipe != null;
+						IElementRecipe hIrecipe = irecipe;
+						boolean lastHave = irecipe != null;
 						// 减少元素，减少物品
 						ItemStack stack_ = craftElement.getStackInSlot(0);
 						IElementInventory inventory = ElementHelper.getElementInventory(stack_);
@@ -53,9 +55,9 @@ public class ContainerElementWorkbench extends Container {
 						inventory.saveState(stack_);
 						irecipe.shrink(craftMatrix);
 						craftElement.setInventorySlotContents(0, stack_);
-						if (!world.isRemote && last_have) detectAndSendChanges();
+						if (!world.isRemote && lastHave) detectAndSendChanges();
 						if (thePlayer instanceof EntityPlayerMP)
-							ESCriteriaTriggers.ELEMENT_CRAFT.trigger((EntityPlayerMP) thePlayer, irecipe);
+							ESCriteriaTriggers.ELEMENT_CRAFT.trigger((EntityPlayerMP) thePlayer, hIrecipe);
 						return stack;
 					}
 				});

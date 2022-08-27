@@ -3702,7 +3702,17 @@
 		"es.adv.MDLiquidizer.description": {
 			"zh_CN": "制作出榨汁机，制作调和果汁",
 			"en_US": "Crafting a Magic Drive Liquidize, you can craft your mix juice!",
-			"ja_JP": "ジューサーを作って、ジュースを作ります"
+			"ja_JP": "ジューサーを作って、ジュースを作りましょう"
+		},
+		"es.adv.MDAbsorbBox.title": {
+			"zh_CN": "强制转移",
+			"en_US": "Forced Transfer",
+			"ja_JP": "強制転移"
+		},
+		"es.adv.MDAbsorbBox.description": {
+			"zh_CN": "制作出元素吸收箱",
+			"en_US": "Crafting a Magic Drive Element Absorber",
+			"ja_JP": "元素吸収箱を作り"
 		},
 		"es.adv.infusionMagicCrystal.title": {
 			"zh_CN": "白日的馈赠",
@@ -4327,7 +4337,7 @@
 			"ja_JP": "必要な元素："
 		},
 		"page.crafting.show": {
-			"zh_CN": "%s需要%d，强度下限 %d ",
+			"zh_CN": "%s需要%d，强度下限%d ",
 			"en_US": "%s requires %d lower limit %d ",
 			"ja_JP": "%sは %d点を必要、パワーの最低限度は%d "
 		},
@@ -5302,7 +5312,7 @@
 			"ja_JP": "魔力植木鉢"
 		},
 		"page.magicPot.ct": {
-			"zh_CN": "具有魔力的花盆，生命之花只能放到魔力花盆的上面。\\n手拿着魔石，右键花盆，可以给土壤补充魔力。只有在花盆有魔力的时候，生命之花才能正常工作。\\n生命之花每次为周围提供能量，有2%的概率消耗花盆中的魔力。",
+			"zh_CN": "具有魔力的花盆，生命之花只能放到魔力花盆的上面。\\n手拿着魔石，右键花盆，可以给土壤补充魔力。只有在花盆有魔力的时候，生命之花才能正常工作。\\n生命之花每次为周围提供能量，有2%%的概率消耗花盆中的魔力。",
 			"en_US": "具有魔力的花盆，生命之花只能放到魔力花盆的上面。",
 			"ja_JP": "具有魔力的花盆、生命之花只能放到魔力花盆的上面。"
 		},

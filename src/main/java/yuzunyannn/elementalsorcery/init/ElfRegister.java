@@ -28,7 +28,7 @@ public class ElfRegister {
 	static public void registerAllFloor() {
 		register("hall", EFloorHall.instance);
 		register("living_room", new EFloorLivingRoom());
-		register("workshop", new EFloorWorkshop());
+		register("workshop", EFloorWorkshop.instance);
 		register("refinery", new EFloorRefinery());
 		register("post_office", new EFloorPostOffice());
 		register("laboratory", new EFloorLaboratory());

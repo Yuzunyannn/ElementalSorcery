@@ -33,7 +33,7 @@ import yuzunyannn.elementalsorcery.util.json.Json;
 public class TileMDInfusion extends TileMDBase implements ITickable {
 
 	@Config
-	static private int GEN_MAX_MAIGC_PER_SEC = 30;
+	static private int GEN_MAX_MAIGC_PER_SEC = 10;
 
 	@Config(sync = true)
 	static private int MAX_CAPACITY = 1000;
@@ -87,7 +87,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 		ElfTime time = new ElfTime(world);
 		if (time.at(ElfTime.Period.DAY)) return;
 
-		if (!world.canBlockSeeSky(pos)) return;
+		if (!world.canBlockSeeSky(pos.up())) return;
 
 		int midNight = ElfTime.Period.MIDNIGHT.center();
 		int diff = Math.abs(midNight - time.getTime());

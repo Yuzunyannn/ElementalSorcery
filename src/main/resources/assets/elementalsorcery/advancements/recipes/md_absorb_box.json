@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:recipes/astone",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:md_absorb_box"
+        },
+        "title": {
+            "translate": "es.adv.MDAbsorbBox.title"
+        },
+        "description": {
+            "translate": "es.adv.MDAbsorbBox.description"
+        }
+    },
+    "criteria": {
+        "craft": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "elementalsorcery:md/md_absorb_box"
+            }
+        }
+    }
+}

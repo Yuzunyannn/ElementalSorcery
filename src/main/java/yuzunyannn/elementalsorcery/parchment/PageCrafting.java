@@ -43,8 +43,7 @@ public class PageCrafting extends PageEasy {
 	}
 
 	public void addNewRecipe(ItemStack stack) {
-		// 寻找元素合成表
-		if (this.addESRecipe(stack)) return;
+		this.addESRecipe(stack);
 		// 根据stack寻找合成表
 		List<IRecipe> allRecipe = new LinkedList();
 		for (IRecipe ire : CraftingManager.REGISTRY) {
@@ -62,6 +61,8 @@ public class PageCrafting extends PageEasy {
 				ingLIst = irecipe.getIngredients();
 				output = irecipe.getRecipeOutput();
 			}
+			if (ingLIst.isEmpty()) continue;
+			if (output.isEmpty()) continue;
 			itemList.add(ingLIst);
 			itemOut.add(output);
 			elementNeed.add(null);
