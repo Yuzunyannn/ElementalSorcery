@@ -55,7 +55,7 @@
                     "condition": "killed_by_player"
                 }
             ],
-            "rolls": 2,
+            "rolls": 1,
             "entries": [
                 {
                     "type": "item",
@@ -66,6 +66,31 @@
                             "function": "set_count",
                             "count": {
                                 "min": 0,
+                                "max": 1
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "es_dejected_skeleton_valuable_2",
+            "conditions": [
+                {
+                    "condition": "killed_by_player"
+                }
+            ],
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:dejected_tear",
+                    "weight": 1,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
                                 "max": 1
                             }
                         }

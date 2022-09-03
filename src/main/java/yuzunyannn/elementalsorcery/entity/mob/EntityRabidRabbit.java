@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityAgeable;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.INpc;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -28,6 +29,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.init.LootRegister;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class EntityRabidRabbit extends EntityRabbit implements IMob {
@@ -117,9 +119,10 @@ public class EntityRabidRabbit extends EntityRabbit implements IMob {
 
 	public static int getAttackPriority(EntityLivingBase living) {
 		if (living instanceof EntityRabbit) return -1;
-		if (living instanceof EntityPlayer) return ((EntityPlayer) living).isCreative() ? -1 : 10;
+		if (living instanceof EntityPlayer) return EntityHelper.isCreative(living) ? -1 : 10;
 		if (living instanceof INpc) return 8;
 		if (living instanceof EntityAnimal) return 5;
+		if (living instanceof EntityCreature) return 3;
 		if (living instanceof IMob) {
 			if (living instanceof EntityDreadCube) return -1;
 			return 2;
@@ -164,6 +167,11 @@ public class EntityRabidRabbit extends EntityRabbit implements IMob {
 		if (source.isExplosion()) amount = amount * 0.1f;
 		if (!this.isChild()) amount = amount * 0.5f;
 		return super.attackEntityFrom(source, amount);
+	}
+
+	@Override
+	protected boolean canDespawn() {
+		return true;
 	}
 
 }

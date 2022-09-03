@@ -68,7 +68,7 @@ public class Researcher implements IResearcher {
 
 	private static void researchSP(EntityLivingBase player, String topic) {
 		Researcher researcher = new Researcher(player);
-		int point = researcher.get(topic);
+		float point = researcher.get(topic);
 		if (point > 50) {
 			if (rand.nextFloat() > 2f / point) return;
 		} else if (rand.nextFloat() > 10f / point) return;
@@ -79,7 +79,7 @@ public class Researcher implements IResearcher {
 
 	public static void research(EntityLivingBase player, String topic, int count) {
 		Researcher researcher = new Researcher(player);
-		researcher.grow(topic, count);
+		researcher.grow(topic, count * ItemAncientPaper.RESEARCH_TOPIC_GROW_COEFFICIENT);
 		researcher.save(player);
 		if (player instanceof EntityPlayerMP) ItemAncientPaper.sendTopicGrowMessage((EntityPlayerMP) player, topic);
 	}
@@ -99,14 +99,14 @@ public class Researcher implements IResearcher {
 	}
 
 	@Override
-	public int get(String topic) {
-		return map.getInteger(topic);
+	public float get(String topic) {
+		return map.getFloat(topic);
 	}
 
 	@Override
-	public void set(String topic, int count) {
+	public void set(String topic, float count) {
 		if (count <= 0) map.removeTag(topic);
-		else map.setInteger(topic, count);
+		else map.setFloat(topic, count);
 	}
 
 	@Override

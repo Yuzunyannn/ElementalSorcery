@@ -96,6 +96,8 @@ public class PageSimple extends PageEasy {
 		GlStateManager.popMatrix();
 
 		TextureBinder.bindTexture(GuiParchment.TEXTURE);
+		GlStateManager.enableBlend();
+		GlStateManager.disableLighting();
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0, 0, 5);
 		GlStateManager.color(1, 1, 1, 0.5f);

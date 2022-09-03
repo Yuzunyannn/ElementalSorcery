@@ -72,8 +72,8 @@ public class ContainerResearch extends Container implements IContainerNetwork {
 		if (!player.isCreative()) {
 			// 检查是否合法，创造模式不检查
 			for (String key : costReasearher.getTopics()) {
-				int point = reasearher.get(key);
-				if (point < costReasearher.get(key)) {
+				int point = reasearher.getPoint(key);
+				if (point < costReasearher.getPoint(key)) {
 					this.onFailEnd();
 					return;
 				}

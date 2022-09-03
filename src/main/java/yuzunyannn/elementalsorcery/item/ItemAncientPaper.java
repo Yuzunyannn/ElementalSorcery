@@ -32,6 +32,7 @@ import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementItem;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.crafting.element.ToElementInfoStatic;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
 import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
@@ -41,6 +42,14 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class ItemAncientPaper extends Item implements IToElementItem {
+
+	@Config
+	static public float UNSCRAMBLE_COEFFICIENT = 1;
+	@Config
+	static public float TIRED_BASIC_PROBABILITY = 0.5f;
+	@Config
+	static public float RESEARCH_TOPIC_GROW_COEFFICIENT  = 1f;
+	
 
 	static public ItemStack createPaper(Mantra mantra, float progress) {
 		ItemStack stack = new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, 0);
@@ -141,13 +150,14 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 		EnumHand offHand = handIn == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
 		int noteEnergy = ItemUnscrambleNote.getNoteEnergy(player.getHeldItem(offHand), player);
 		float energy = Math.max(playerData.getFloat("unsEnergy"), 1);
-		boolean setTired = rand.nextFloat() < 0.5f / energy;
+		boolean setTired = rand.nextFloat() < TIRED_BASIC_PROBABILITY / energy;
 		if (setTired) playerData.setLong("unsNext", world.getWorldTime() + 12000);
 		playerData.setFloat("unsEnergy", Math.min(energy + 0.1f, 3)); // 增加研究力
 		ItemUnscrambleNote.growNoteEnergy(player.getHeldItem(offHand), player, rand.nextInt(3), false);
 		// 增加进度
 		float originProgress = ap.getProgress();
 		float grow = rand.nextFloat() * 0.04f + 0.01f + rand.nextFloat() * noteEnergy / 1000;
+		grow = grow * UNSCRAMBLE_COEFFICIENT;
 		ap.setProgress(originProgress + grow);
 		if (player instanceof EntityPlayerMP)
 			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "unscramble:once");

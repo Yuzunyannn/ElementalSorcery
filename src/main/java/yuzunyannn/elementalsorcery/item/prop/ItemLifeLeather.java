@@ -22,10 +22,17 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class ItemLifeLeather extends Item {
+
+	@Config
+	static public int UPGRADE_BASIC_SOUL_COUNT = 64;
+
+	@Config
+	static public int UPGRADE_UPPER_LIMIT_SOUL_COUNT = 256;
 
 	public ItemLifeLeather() {
 		this.setTranslationKey("lifeLeather");
@@ -116,7 +123,8 @@ public class ItemLifeLeather extends Item {
 
 	public static void transform(ItemStack leather) {
 		int count = ItemSoulWoodSword.getSoul(leather);
-		if (count >= 64 && RandomHelper.rand.nextFloat() * 256 < count) {
+		if (count >= UPGRADE_BASIC_SOUL_COUNT
+				&& RandomHelper.rand.nextFloat() * UPGRADE_UPPER_LIMIT_SOUL_COUNT < count) {
 			leather.setItemDamage(1);
 			leather.setTagCompound(null);
 		}

@@ -53,7 +53,7 @@ public class EnchantmentGatherSouls extends EnchantmentES {
 		// 灵魂
 		int size = 1 + living.world.rand.nextInt(level);
 		living.dropItem(ESObjects.ITEMS.SOUL_FRAGMENT, Math.min(8, size));
-		if (living.getRNG().nextFloat() <= (0.004f * level))
+		if (living.getRNG().nextFloat() <= (0.008f * level))
 			living.entityDropItem(ItemBlessingJadePiece.createPiece(1), living.getEyeHeight());
 	}
 }

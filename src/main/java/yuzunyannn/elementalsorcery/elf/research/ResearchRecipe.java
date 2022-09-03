@@ -55,7 +55,7 @@ public class ResearchRecipe implements IResearchRecipe {
 	public boolean matches(IResearcher researcher, World worldIn) {
 		if (needs.isEmpty()) return false;
 		for (Entry<String, Integer> entry : needs) {
-			int count = researcher.get(entry.getKey());
+			int count = researcher.getPoint(entry.getKey());
 			// 任何知识不够，不能满足
 			if (count < entry.getValue()) return false;
 		}
@@ -66,7 +66,7 @@ public class ResearchRecipe implements IResearchRecipe {
 	public float getMatchWeight(IResearcher researcher, List<IResearchRecipe> qualified, World worldIn) {
 		int n = 0;
 		for (Entry<String, Integer> entry : needs) {
-			int count = researcher.get(entry.getKey());
+			int count = researcher.getPoint(entry.getKey());
 			n = n + count - entry.getValue();
 		}
 		return -n;

@@ -51,10 +51,7 @@
         {
             "note": "沙子",
             "item": [
-                {
-                    "type": "ore_dict",
-                    "item": "sand"
-                },
+                "minecraft:sand",
                 "minecraft:gravel",
                 "minecraft:concrete",
                 "minecraft:concrete_powder"

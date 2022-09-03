@@ -341,7 +341,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 			}
 			return count >= 14;
 		});
-		addRecipe(ESObjects.ITEMS.ELF_CRYSTAL, ESObjects.ITEMS.ARCHITECTURE_CRYSTAL, 40, 20, (world, pos) -> {
+		addRecipe(Items.EMERALD, ESObjects.ITEMS.ARCHITECTURE_CRYSTAL, 40, 20, (world, pos) -> {
 			Biome biome = world.getBiome(pos);
 			if (biome != Biomes.DESERT && biome != Biomes.DESERT_HILLS && biome != Biomes.MUTATED_DESERT) return false;
 			final int size = 4;

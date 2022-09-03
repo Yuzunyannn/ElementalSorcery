@@ -343,29 +343,34 @@ public class TileTranscribeInjection extends TileStaticMultiBlock implements ITi
 			smaple = this.getElementFromSpPlace(smaple, pos.up(2));
 			if (smaple.isEmpty()) return;
 			if (world.isRemote) updateChargeEffect(smaple);
-			eInv.insertElement(smaple, false);
-			eInv.saveState(grimoire);
-		} else {
-			// 没有元素，开始寻找
-			int size = structure.getSpecialBlockCount();
-			for (int i = 0; i < 4; i++) {
-				nextFindPlace = (nextFindPlace + 1) % size;
-				TileEntity tile = structure.getSpecialTileEntity(nextFindPlace);
-				IAltarWake altarWake = getAlterWake(tile);
-				if (altarWake == null) continue;
-				IElementInventory cubInv = ElementHelper.getElementInventory(tile);
-				if (cubInv == null) continue;
-				for (int j = 0; j < cubInv.getSlots(); j++) {
-					ElementStack find = cubInv.getStackInSlot(j);
-					if (find.isEmpty()) continue;
-					find = find.copy();
-					find.setCount(10);
-					smaple = cubInv.extractElement(find, false);
-					if (world.isRemote) updateChargeEffect(smaple);
+			else {
+				eInv.insertElement(smaple, false);
+				eInv.saveState(grimoire);
+			}
+			return;
+		}
+		// 没有元素，开始寻找
+		int size = structure.getSpecialBlockCount();
+		for (int i = 0; i < 4; i++) {
+			nextFindPlace = (nextFindPlace + 1) % size;
+			TileEntity tile = structure.getSpecialTileEntity(nextFindPlace);
+			IAltarWake altarWake = getAlterWake(tile);
+			if (altarWake == null) continue;
+			IElementInventory cubInv = ElementHelper.getElementInventory(tile);
+			if (cubInv == null) continue;
+			for (int j = 0; j < cubInv.getSlots(); j++) {
+				ElementStack find = cubInv.getStackInSlot(j);
+				if (find.isEmpty()) continue;
+				find = find.copy();
+				find.setCount(10);
+				smaple = cubInv.extractElement(find, false);
+				if (smaple.isEmpty()) continue;
+				if (world.isRemote) updateChargeEffect(smaple);
+				else {
 					eInv.insertElement(smaple, false);
 					eInv.saveState(grimoire);
-					return;
 				}
+				return;
 			}
 		}
 	}

@@ -30,8 +30,7 @@ import yuzunyannn.elementalsorcery.elf.quest.reward.QuestReward;
 @SideOnly(Side.CLIENT)
 public class GuiQuest extends GuiContainer {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
-			"textures/gui/elf/quest.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID, "textures/gui/elf/quest.png");
 
 	protected final ContainerQuest container;
 	protected boolean dynamic;
@@ -101,7 +100,7 @@ public class GuiQuest extends GuiContainer {
 			yoff += fontRenderer.FONT_HEIGHT;
 		}
 		for (QuestCondition con : preConditions) {
-			String value = con.getDescribe(quest, player, status == QuestStatus.NONE);
+			String value = con.getDescribe(quest, player, player != null && status == QuestStatus.NONE);
 			for (String s : fontRenderer.listFormattedStringToWidth(value, width - 20)) {
 				fontRenderer.drawString(s, 10, yoff, color);
 				yoff += fontRenderer.FONT_HEIGHT;

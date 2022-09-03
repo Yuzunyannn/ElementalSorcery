@@ -23,6 +23,7 @@ import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectSummonRender;
 import yuzunyannn.elementalsorcery.summon.Summon;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class MantraSummon extends MantraCommon {
@@ -126,7 +127,7 @@ public class MantraSummon extends MantraCommon {
 			}
 		}
 		if (data.isMarkContinue()) {
-			if (entity instanceof EntityPlayer && !((EntityPlayer) entity).isCreative()) {
+			if (entity instanceof EntityPlayer && !EntityHelper.isCreative(entity)) {
 				int cost = data.summonRecipe.getSoulCost(data.keepsake, world, entity.getPosition());
 				ItemStack stack = findSoulTool((EntityPlayer) entity, cost);
 				if (stack.isEmpty()) data.markContinue(false);

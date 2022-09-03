@@ -17,8 +17,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
@@ -26,6 +28,9 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ItemMagicPaper extends Item {
+
+	@Config
+	static public double UPGRADE_MAGIC_FRAGMENT_NEED = 320000;
 
 	public ItemMagicPaper() {
 		this.setHasSubtypes(true);
@@ -107,7 +112,7 @@ public class ItemMagicPaper extends Item {
 	public boolean onEntityItemUpdate(EntityItem entityItem) {
 		ItemStack stack = entityItem.getItem();
 		if (stack.getMetadata() != EnumType.WRITTEN.getMeta()) return false;
-		entityItem.setNoDespawn();
+		if (!entityItem.world.isRemote) entityItem.setNoDespawn();
 		if (entityItem.ticksExisted % 20 != 0) return false;
 		int size = 6;
 		World world = entityItem.world;
@@ -141,15 +146,14 @@ public class ItemMagicPaper extends Item {
 					}
 				}
 
-				estack = estack.becomeMagic(world);
-				float point = estack.getCount() * (float) Math.sqrt(estack.getPower());
-				growMagicContain(stack, point / stack.getCount());
+				double point = ElementTransition.toMagicFragment(estack);
+				growMagicContain(stack, (float) point / stack.getCount());
 			}
 		}
 
 		if (world.isRemote) return false;
 		float point = getMagicContain(stack);
-		if (point >= 16000) {
+		if (point >= UPGRADE_MAGIC_FRAGMENT_NEED) {
 			stack.setItemDamage(EnumType.MANTRA.getMeta());
 			stack.setTagCompound(null);
 			entityItem.setItem(stack);

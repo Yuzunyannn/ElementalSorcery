@@ -18,8 +18,7 @@ import yuzunyannn.elementalsorcery.render.model.ModelBulletin;
 @SideOnly(Side.CLIENT)
 public class RenderEntitiyBulletin extends Render<EntityBulletin> {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
-			"textures/entity/bulletin.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID, "textures/entity/bulletin.png");
 
 	public static final ModelBulletin MODEL = new ModelBulletin();
 

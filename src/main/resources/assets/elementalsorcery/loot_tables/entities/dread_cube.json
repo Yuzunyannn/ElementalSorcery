@@ -62,22 +62,33 @@
                     "condition": "killed_by_player"
                 }
             ],
-            "rolls": 2,
+            "rolls": 1,
             "entries": [
                 {
                     "type": "item",
                     "name": "elementalsorcery:dread_gem",
-                    "weight": 2,
+                    "weight": 1,
                     "functions": [
                         {
                             "function": "set_count",
                             "count": {
-                                "min": 0,
+                                "min": 1,
                                 "max": 1
                             }
                         }
                     ]
-                },
+                }
+            ]
+        },
+        {
+            "name": "es_dread_cube_valuable",
+            "conditions": [
+                {
+                    "condition": "killed_by_player"
+                }
+            ],
+            "rolls": 1,
+            "entries": [
                 {
                     "type": "item",
                     "name": "elementalsorcery:cube_core",
@@ -86,8 +97,8 @@
                         {
                             "function": "set_count",
                             "count": {
-                                "min": 1,
-                                "max": 1
+                                "min": 0,
+                                "max": 5
                             }
                         }
                     ]

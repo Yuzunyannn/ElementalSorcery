@@ -18,7 +18,7 @@ public class WorldGenSealStone extends WorldGenerator {
 	public boolean generate(World worldIn, Random rand, BlockPos pos) {
 		Biome biome = worldIn.getBiome(pos);
 		int expect = WorldGeneratorES.CONFIG_SEAL_STONE.getSpawnPoint(worldIn, biome);
-		int tryTime = 3 + rand.nextInt(3) + expect;
+		int tryTime = 3 + rand.nextInt(6) + expect;
 		for (int i = 0; i < tryTime; i++) {
 			int posX = pos.getX() + rand.nextInt(16);
 			int posY = 2 + rand.nextInt(22);

@@ -49,10 +49,10 @@ public class KnowledgeType {
 	}
 
 	public static void registerAll() {
-		register("magic_device", knowledge(10, 70), "Engine", 10, "Natural", 2, "Struct", 8);
+		register("magic_device", knowledge(10, 70), "Engine", 12, "Natural", 2, "Struct", 8);
 		register("architecture", knowledge(40, 10), "Engine", 10, "Natural", 10, "Struct", 2, "Ender", 3);
 		register("ender_boat", knowledge(5, 100), "Natural", 5, "Ender", 12);
-		register("monster", knowledge(10, 80), Topics.BIOLOGY, 110, Topics.NATURAL, 5);
+		register("monster", knowledge(10, 80), Topics.BIOLOGY, 11, Topics.NATURAL, 5);
 		// 第一个为Mantra可以用作咒文
 		register("library", knowledge(20, 50), Topics.MANTRA, 5, Topics.STRUCT, 5, "Engine", 5);
 		register("mantra", knowledge(20, 50), Topics.MANTRA, 10, Topics.STRUCT, 5, Topics.BIOLOGY, 4);

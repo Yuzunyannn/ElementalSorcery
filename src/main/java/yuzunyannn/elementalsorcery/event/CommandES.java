@@ -382,7 +382,7 @@ public class CommandES extends CommandBase {
 		}
 
 		Researcher researcher = new Researcher(player);
-		if (count < 0) count = -Math.min(-count, researcher.get(topic));
+		if (count < 0) count = -Math.min(-count, researcher.getPoint(topic));
 		researcher.grow(topic, count);
 		researcher.save(player);
 		notifyCommandListener(sender, this, "commands.es.research.add", player.getName(), Integer.toString(count),

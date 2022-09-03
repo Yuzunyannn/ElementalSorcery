@@ -100,7 +100,7 @@ public class PageResearch extends PageTransform {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void init(IPageManager pageManager) {
-		super.init(pageManager);
+		this.valueYOffset = 0;
 		int cX = this.getCX() + 1;
 		int cY = this.getCY() + 1;
 		pageManager.addSlot(cX + 23, cY, this.getOutput());

@@ -46,6 +46,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireBall;
+import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
@@ -180,6 +181,7 @@ public class EntityRelicZombie extends EntityMob {
 		wr.add(ESObjects.ITEMS.MAGIC_CRYSTAL, 20);
 		wr.add(Items.IRON_INGOT, 5);
 		for (int i = 0; i < n; i++) this.dropItem(wr.get(), 1);
+		this.entityDropItem(ItemKeepsake.create(ItemKeepsake.EnumType.RELIC_FRAGMENT, 1), 0);
 	}
 
 	// 效果的cd时间，防止播放太多
@@ -269,7 +271,7 @@ public class EntityRelicZombie extends EntityMob {
 			if (src != null && src.getClass() == EntityRelicZombie.class) return false;
 		}
 		if (DamageHelper.isRuleDamage(source)) return super.attackEntityFrom(source, amount);
-		
+
 		switch (this.getType()) {
 		case WARRIOR:
 			return this.attackEntityFromWarrior(source, amount);

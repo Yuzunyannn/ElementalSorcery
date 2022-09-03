@@ -17,7 +17,7 @@ public class WorldGenStarFlower extends WorldGenerator {
 	public boolean generate(World worldIn, Random rand, BlockPos postion) {
 		Biome biome = worldIn.getBiome(postion);
 		int expect = WorldGeneratorES.CONFIG_START_FLOWER.getSpawnPoint(worldIn, biome);
-		double r = 0.03 + expect * 0.005;
+		double r = 0.04 + expect * 0.005;
 		if (r < rand.nextDouble()) return true;
 
 		int tryTime = 1 + (int) expect / 8;

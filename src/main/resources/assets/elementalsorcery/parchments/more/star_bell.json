@@ -11,7 +11,7 @@
             "type": "craft",
             "name": "bell",
             "item": "elementalsorcery:star_bell",
-            "background": "elementalsorcery:star_sand"
+            "background": "elementalsorcery:star_bell"
         },
         {
             "type": "normal",

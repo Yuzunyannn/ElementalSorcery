@@ -266,12 +266,13 @@ public class EventClient {
 					String str = String.format(TextFormatting.AQUA + "%sx%s" + TextFormatting.YELLOW + " P:%d",
 							estack.getDisplayName(), String.valueOf(estack.getCount()), estack.getPower());
 					double fr = ElementTransition.toFragment(estack);
-					tooltip.add(str + TextFormatting.LIGHT_PURPLE + " F:" + TextHelper.toAbbreviatedNumber(fr));
+					tooltip.add(str + TextFormatting.LIGHT_PURPLE + " EF:" + TextHelper.toAbbreviatedNumber(fr));
 					ElementTransition et = estack.getElement().getTransition();
-					if (et == null) f += fr;
-					else f += ElementTransition.transitionFrom(estack.getElement(), fr, et.getLevel());
+					if (et == null) {
+						if (!estack.isMagic()) f += fr;
+					} else f += ElementTransition.transitionFrom(estack.getElement(), fr, et.getLevel());
 				}
-				tooltip.add(TextFormatting.LIGHT_PURPLE + "F:" + TextHelper.toAbbreviatedNumber(f));
+				tooltip.add(TextFormatting.LIGHT_PURPLE + "MFEM:" + TextHelper.toAbbreviatedNumber(f));
 			}
 			int price = ElfChamberOfCommerce.priceIt(stack);
 			if (price > 0) tooltip.add(TextFormatting.GOLD + "" + price + "$");

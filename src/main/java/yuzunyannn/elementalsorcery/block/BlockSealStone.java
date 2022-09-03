@@ -35,7 +35,7 @@ import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 public class BlockSealStone extends Block implements Mapper {
 
 	@Config
-	private static float MANTRA_DROP_PROBABILITY_PER_LUCKY = 0.075f;
+	private static float MANTRA_DROP_PROBABILITY_PER_LUCKY = 0.08f;
 
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 
@@ -100,7 +100,8 @@ public class BlockSealStone extends Block implements Mapper {
 	public static ItemStack getAncientPaper(World worldIn, @Nullable BlockPos dropPos, int fortune,
 			boolean isSuperDrop) {
 		Random rand = worldIn.rand;
-		ItemStack stack = new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, ItemAncientPaper.EnumType.NORMAL.getMetadata());
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1,
+				ItemAncientPaper.EnumType.NORMAL.getMetadata());
 
 		AncientPaper ap = new AncientPaper();
 
@@ -111,12 +112,12 @@ public class BlockSealStone extends Block implements Mapper {
 		// 只有传入pos的的时候才会掉mantra
 		isMantra = isMantra && dropPos != null;
 
-		float at = rand.nextFloat();
-		float length = rand.nextFloat() * 0.5f + 0.05f + Math.min(0.2f, fortune / 50.0f);
-		if (isSuperDrop) length += rand.nextFloat() * 0.1f + 0.1f;
+		double at = rand.nextFloat();
+		double length = rand.nextFloat() * 0.5 + 0.05 + Math.min(0.2, fortune / 50.0);
+		if (isSuperDrop) length += rand.nextFloat() * 0.1 + 0.1;
 		at = findRangeStart(length, at);
 		int start = MathHelper.floor(at * 100);
-		ap.setStart(start).setEnd(start + MathHelper.floor(length * 100));
+		ap.setStart(start).setEnd(Math.min(100, start + MathHelper.ceil(length * 100)));
 		ap.setProgress(0);
 
 		RandomHelper.WeightRandom<KnowledgeType> wr = new RandomHelper.WeightRandom();
@@ -155,6 +156,10 @@ public class BlockSealStone extends Block implements Mapper {
 			}
 			ap.setMantra(mantra);
 		}
+
+//		if (ESAPI.isDevelop) {
+//			ap.setProgress(1);
+//		}
 
 		ap.saveState(stack);
 		return stack;
@@ -200,8 +205,8 @@ public class BlockSealStone extends Block implements Mapper {
 		for (int i = 0; i < tryTime; i++) spawnAsEntity(worldIn, pos, wr.get());
 	}
 
-	public static float findRangeStart(float length, float at) {
-		float h = length / 2;
+	public static double findRangeStart(double length, double at) {
+		double h = length / 2;
 		if (at - h < 0) return 0;
 		if (at + h > 1) return 1 - length;
 		return at - h;

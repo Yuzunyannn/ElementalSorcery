@@ -1,6 +1,6 @@
 {
     "lev": 3,
-    "link": "elementalsorcery:life_leather",
+    "linked": "elementalsorcery:life_leather",
     "need": [
         "element/rite_summon"
     ],

@@ -93,11 +93,11 @@ public class ElementTransition {
 	}
 
 	static public double transitionTo(Element element, double fragment, double level) {
-		return fragment / Math.pow(level, 1.125);
+		return fragment / Math.pow(level, 1.25);
 	}
 
 	static public double transitionFrom(Element element, double fragment, double level) {
-		return fragment * Math.pow(level, 1.125);
+		return fragment * Math.pow(level, 1.25);
 	}
 
 }

@@ -160,7 +160,7 @@ public class ItemElementStone extends Item {
 	}
 
 	public boolean consumeElement(Element ele, ItemStack stack, EntityLivingBase entity, boolean force) {
-		ElementStack estack = new ElementStack(ele, 1, 25);
+		ElementStack estack = new ElementStack(ele, 1, 10);
 		if (entity instanceof EntityPlayer && ((EntityPlayer) entity).isCreative()) {
 			if (entity.world.isRemote) this.showEffect(entity, estack);
 			return true;
@@ -168,7 +168,7 @@ public class ItemElementStone extends Item {
 		IElementInventory einv = ElementHelper.getElementInventory(stack);
 		if (einv == null) return false;
 		einv.loadState(stack);
-		if (force || entity.ticksExisted % 20 == 0) {
+		if (force || entity.ticksExisted % 40 == 0) {
 			estack = einv.extractElement(estack, false);
 			if (estack.isEmpty()) return false;
 			einv.saveState(stack);
@@ -200,6 +200,11 @@ public class ItemElementStone extends Item {
 			em.setColor(element.getColor());
 			Effect.addEffect(em);
 		}
+	}
+
+	@Override
+	public boolean shouldCauseReequipAnimation(ItemStack oldStack, ItemStack newStack, boolean slotChanged) {
+		return oldStack.getItem() != newStack.getItem();
 	}
 
 }

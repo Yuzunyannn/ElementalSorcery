@@ -17,12 +17,12 @@
 	"element": [
 		{
 			"id": "water",
-			"size": 150,
+			"size": 75,
 			"power": 25
 		},
 		{
 			"id": "fire",
-			"size": 150,
+			"size": 75,
 			"power": 25
 		}
 	],
