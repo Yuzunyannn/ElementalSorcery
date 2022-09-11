@@ -44,6 +44,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
@@ -146,6 +147,8 @@ public class ItemCollapseWand extends Item implements IItemUseClientUpdate {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		ItemStack stack = playerIn.getHeldItem(handIn);
+		if (EntityHelper.checkSilent(playerIn, SilentLevel.RELEASE))
+			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		playerIn.setActiveHand(handIn);
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}

@@ -1230,6 +1230,33 @@
 			"zh_CN": "元素裂縫",
 			"en_US": "Element Crack",
 			"ja_JP": "元素ひび割れ"
+		},
+		"es.effect.enthusiasticStudy": {
+			"zh_CN": "学力爆发",
+			"en_US": "Enthusiastic Unscrambling",
+			"ja_JP": "熱狂的に解読"
+		},
+		"es.effect.silent": {
+			"zh_CN": "沉默",
+			"en_US": "Silent",
+			"ja_JP": "サイレント"
+		}
+	},
+	"es.effect.type":{
+		"es.potion.effect.silent":{
+			"zh_CN": "禁言药水",
+			"en_US": "Potion of Silence",
+			"ja_JP": "沈黙のポーション"
+		},
+		"es.splash_potion.effect.silent":{
+			"zh_CN": "喷溅型禁言药水",
+			"en_US": "Splash Potion of Silence ",
+			"ja_JP": "沈黙のスプラッシュポーション"
+		},
+		"es.lingering_potion.effect.silent":{
+			"zh_CN": "滞留型禁言药水",
+			"en_US": "Lingering Potion of Silence",
+			"ja_JP": "沈黙の残留ポーション"
 		}
 	},
 	"enchantment": {
@@ -2331,10 +2358,15 @@
 			"en_US": "Are you more interested in 「%s」",
 			"ja_JP": "あなたは「%s」にもっと興味があります。"
 		},
-		"info.want.not.unscramble": {
+		"info.can.not.unscramble": {
 			"zh_CN": "你疲倦了，不想在继续解读了",
 			"en_US": "You're too tired to read any more",
 			"ja_JP": "あなたは疲れました、読み続けたくない"
+		},
+		"info.want.not.unscramble": {
+			"zh_CN": "你有点累了，但是这并不要紧。",
+			"en_US": "You're a little tired, but it doesn't matter",
+			"ja_JP": "あなたは少し疲れて、だけどそれは大丈夫"
 		},
 		"info.not.atigue": {
 			"zh_CN": "你不再疲倦了",

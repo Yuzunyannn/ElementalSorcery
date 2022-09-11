@@ -12,6 +12,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -48,8 +49,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 	@Config
 	static public float TIRED_BASIC_PROBABILITY = 0.5f;
 	@Config
-	static public float RESEARCH_TOPIC_GROW_COEFFICIENT  = 1f;
-	
+	static public float RESEARCH_TOPIC_GROW_COEFFICIENT = 1f;
 
 	static public ItemStack createPaper(Mantra mantra, float progress) {
 		ItemStack stack = new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, 0);
@@ -138,10 +138,13 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 	protected void doUnscramble(AncientPaper ap, World world, EntityPlayer player, EnumHand handIn) {
 		if (world.isRemote) return;
 		NBTTagCompound playerData = EventServer.getPlayerNBT(player);
+		// 获取增益
+		PotionEffect effect = player.getActivePotionEffect(ESObjects.POTIONS.ENTHUSIASTIC_STUDY);
+		int amplifier = effect == null ? 0 : (effect.getAmplifier() + 1);
 		// 上次的时间
 		long nextTime = playerData.getLong("unsNext");
-		if (nextTime > world.getWorldTime() && !player.isCreative()) {
-			player.sendMessage(new TextComponentTranslation("info.want.not.unscramble")
+		if (nextTime > world.getWorldTime() && !player.isCreative() && amplifier == 0) {
+			player.sendMessage(new TextComponentTranslation("info.can.not.unscramble")
 					.setStyle(new Style().setColor(TextFormatting.GRAY).setBold(true)));
 			return;
 		}
@@ -151,13 +154,18 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 		int noteEnergy = ItemUnscrambleNote.getNoteEnergy(player.getHeldItem(offHand), player);
 		float energy = Math.max(playerData.getFloat("unsEnergy"), 1);
 		boolean setTired = rand.nextFloat() < TIRED_BASIC_PROBABILITY / energy;
-		if (setTired) playerData.setLong("unsNext", world.getWorldTime() + 12000);
-		playerData.setFloat("unsEnergy", Math.min(energy + 0.1f, 3)); // 增加研究力
-		ItemUnscrambleNote.growNoteEnergy(player.getHeldItem(offHand), player, rand.nextInt(3), false);
+		if (setTired) {
+			if (amplifier == 0) playerData.setLong("unsNext", world.getWorldTime() + 12000);
+			else player.sendMessage(new TextComponentTranslation("info.want.not.unscramble")
+					.setStyle(new Style().setColor(TextFormatting.GRAY)));
+		}
+		// 增加研究力
+		playerData.setFloat("unsEnergy", Math.min(energy + 0.1f * (1 + amplifier / 2), 3));
+		ItemUnscrambleNote.growNoteEnergy(player.getHeldItem(offHand), player, rand.nextInt(3) + amplifier, false);
 		// 增加进度
 		float originProgress = ap.getProgress();
 		float grow = rand.nextFloat() * 0.04f + 0.01f + rand.nextFloat() * noteEnergy / 1000;
-		grow = grow * UNSCRAMBLE_COEFFICIENT;
+		grow = grow * UNSCRAMBLE_COEFFICIENT * (1 + amplifier / 5);
 		ap.setProgress(originProgress + grow);
 		if (player instanceof EntityPlayerMP)
 			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "unscramble:once");

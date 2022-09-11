@@ -7,12 +7,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
+import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
+import yuzunyannn.elementalsorcery.util.helper.SilentWorld;
 
 public class ContainerElfTalk extends ContainerElf implements IContainerNetwork {
 
@@ -36,7 +39,10 @@ public class ContainerElfTalk extends ContainerElf implements IContainerNetwork 
 
 	private void initChapter() {
 		try {
-			TalkChapter chapter = this.elf.getProfession().getChapter(this.elf, player, shiftData);
+			TalkChapter chapter;
+			if (ESAPI.silent.isSilent(player, SilentLevel.SPELL)) chapter = getSilentChapter(true);
+			else if (ESAPI.silent.isSilent(elf, SilentLevel.SPELL)) chapter = getSilentChapter(false);
+			else chapter = this.elf.getProfession().getChapter(this.elf, player, shiftData);
 			this.setChapter(chapter);
 		} catch (Exception e) {
 			String msg = "精灵对话出现异常！";
@@ -47,6 +53,18 @@ public class ContainerElfTalk extends ContainerElf implements IContainerNetwork 
 			chapter.addScene(new TalkSceneSay(msg));
 			this.setChapter(chapter);
 		}
+	}
+
+	public TalkChapter getSilentChapter(boolean isPlayerClient) {
+		TalkChapter chapter = new TalkChapter();
+		if (isPlayerClient) {
+			chapter.addScene(new TalkSceneSay(SilentWorld.getSilentTalk(player).replace("%", "%%"), Talker.PLAYER));
+			chapter.addScene(new TalkSceneSay("??????", Talker.OPPOSING));
+		} else {
+			chapter.addScene(new TalkSceneSay(SilentWorld.getSilentTalk(player).replace("%", "%%"), Talker.OPPOSING));
+			chapter.addScene(new TalkSceneSay("??????", Talker.PLAYER));
+		}
+		return chapter;
 	}
 
 	@Override

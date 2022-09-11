@@ -27,7 +27,9 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
 import yuzunyannn.elementalsorcery.explore.ExploreSlimeChunk;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -82,6 +84,7 @@ public class ItemStarBell extends Item {
 
 	public static void starBellRing(World world, EntityPlayer player) {
 		if (world.isRemote) return;
+		if (ESAPI.silent.isSilent(player, SilentLevel.RELEASE)) return;
 
 		if (customHandle != null && customHandle.apply(world, player)) return;
 

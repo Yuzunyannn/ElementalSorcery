@@ -15,7 +15,11 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBucketMilk;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -34,9 +38,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
@@ -51,6 +57,7 @@ import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
 import net.minecraftforge.event.world.ChunkDataEvent;
 import net.minecraftforge.event.world.ChunkEvent;
 import net.minecraftforge.event.world.WorldEvent;
+import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
@@ -62,6 +69,7 @@ import yuzunyannn.elementalsorcery.api.entity.BehaviorAttack;
 import yuzunyannn.elementalsorcery.api.entity.BehaviorBlock;
 import yuzunyannn.elementalsorcery.api.entity.BehaviorClick;
 import yuzunyannn.elementalsorcery.api.entity.BehaviorInteract;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.tile.IBlockJumpModify;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
@@ -93,6 +101,7 @@ import yuzunyannn.elementalsorcery.ts.PocketWatch;
 import yuzunyannn.elementalsorcery.ts.PocketWatchClient;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
+import yuzunyannn.elementalsorcery.util.helper.SilentWorld;
 
 public class EventServer {
 
@@ -244,7 +253,8 @@ public class EventServer {
 				data.setBoolean("esFirstJoin", true);
 				NBTTagList list = new NBTTagList();
 				list.appendTag(new NBTTagString("rite"));
-				player.inventory.addItemStackToInventory(ItemManual.setIds(new ItemStack(ESObjects.ITEMS.MANUAL), list));
+				player.inventory
+						.addItemStackToInventory(ItemManual.setIds(new ItemStack(ESObjects.ITEMS.MANUAL), list));
 			}
 
 			MinecraftServer mc = player.getServer();
@@ -262,8 +272,7 @@ public class EventServer {
 	@SubscribeEvent
 	public static void attachCapabilities(AttachCapabilitiesEvent<Entity> event) {
 		if (event.getObject() instanceof EntityPlayer) {
-			event.addCapability(new ResourceLocation(ESAPI.MODID, "capability"),
-					new ESPlayerCapabilityProvider());
+			event.addCapability(new ResourceLocation(ESAPI.MODID, "capability"), new ESPlayerCapabilityProvider());
 		}
 	}
 
@@ -369,6 +378,16 @@ public class EventServer {
 			if (result != EnumActionResult.PASS) {
 				event.setCanceled(true);
 				event.setCancellationResult(result);
+				return;
+			}
+		}
+
+		if (ESAPI.silent.isSilent(player, SilentLevel.SPELL)) {
+			Item item = stack.getItem();
+			if (item instanceof ItemFood || item == Items.POTIONITEM || item instanceof ItemBucketMilk) {
+				SilentWorld.sendSilentMessage(player, SilentLevel.SPELL);
+				event.setCanceled(true);
+				event.setCancellationResult(EnumActionResult.FAIL);
 				return;
 			}
 		}
@@ -604,6 +623,28 @@ public class EventServer {
 			int lvl = nbttaglist.getCompoundTagAt(i).getShort("lvl");
 			Enchantment enchantment = Enchantment.getEnchantmentByID(id);
 			if (enchantment instanceof EnchantmentES) ((EnchantmentES) enchantment).onLivingDead(deader, source, lvl);
+		}
+	}
+
+	@SubscribeEvent
+	public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
+		EntityLivingBase living = event.getEntityLiving();
+		if (ESAPI.silent.isSilent(living, SilentLevel.PHENOMENON)) {
+			for (EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
+				ItemStack stack = living.getItemStackFromSlot(slot);
+				if (!stack.isEmpty() && stack.getTagCompound() != null) stack.getTagCompound().removeTag("ench");
+			}
+
+		}
+	}
+
+	@SubscribeEvent
+	public static void onEnderTeleport(EnderTeleportEvent event) {
+		Entity entity = event.getEntity();
+		if (ESAPI.silent.isSilent(entity, SilentLevel.RELEASE)) {
+			event.setResult(Result.DENY);
+			event.setCanceled(true);
+			return;
 		}
 	}
 

@@ -23,6 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderLayoutFix;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
@@ -30,6 +31,7 @@ import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.AttackCaster;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 
 public class ItemGrimoire extends Item implements IRenderLayoutFix {
@@ -93,6 +95,9 @@ public class ItemGrimoire extends Item implements IRenderLayoutFix {
 			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		// 必须主手
 		if (handIn != EnumHand.MAIN_HAND) return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
+		// 是否沉默
+		if (EntityHelper.checkSilent(playerIn, SilentLevel.SPELL))
+			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
 		// 开始释放！
 		grimoire.tryLoadState(stack);
@@ -113,6 +118,9 @@ public class ItemGrimoire extends Item implements IRenderLayoutFix {
 
 		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
 		if (grimoire == null) return false;
+
+		if (ESAPI.silent.isSilent(player, SilentLevel.RELEASE)) return false;
+
 		grimoire.loadState(stack);
 		Grimoire.Info info = grimoire.getInfo(grimoire.getSelected());
 		if (info == null) return false;

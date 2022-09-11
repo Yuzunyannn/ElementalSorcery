@@ -4,6 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
@@ -15,6 +16,7 @@ public class ESObjects {
 	public static final Elements ELEMENTS = new Elements();
 	public static final Mantras MANTRAS = new Mantras();
 	public static final Potions POTIONS = new Potions();
+	public static final PotionTypes POTION_TYPES = new PotionTypes();
 	public static final Village VILLAGE = new Village();
 
 	public static CreativeTabs CREATIVE_TABS;
@@ -279,6 +281,12 @@ public class ESObjects {
 		public Potion CALAMITY;
 		public Potion BLESSING;
 		public Potion ELEMENT_CRACK_ATTACK;
+		public Potion ENTHUSIASTIC_STUDY;
+		public Potion SILENT;
+	}
+
+	static public class PotionTypes {
+		public PotionType SILENT;
 	}
 
 	static public class Village {

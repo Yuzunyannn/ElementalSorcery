@@ -27,6 +27,7 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
@@ -38,6 +39,7 @@ import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.MagicExchangeInventory;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -90,6 +92,8 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
 		ItemStack stack = playerIn.getHeldItem(handIn);
+		if (EntityHelper.checkSilent(playerIn, SilentLevel.RELEASE))
+			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		playerIn.setActiveHand(handIn);
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}

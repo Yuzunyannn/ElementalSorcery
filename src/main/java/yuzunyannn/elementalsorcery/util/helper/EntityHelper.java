@@ -14,6 +14,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 
 public class EntityHelper {
 
@@ -72,6 +74,14 @@ public class EntityHelper {
 		EntityEntry entry = EntityRegistry.getEntry(living.getClass());
 		if (entry == null) return false;
 		return entry.getRegistryName().getPath().toLowerCase().indexOf("ender") != -1;
+	}
+
+	public static boolean checkSilent(EntityPlayer playerIn, SilentLevel level) {
+		if (ESAPI.silent.isSilent(playerIn, level)) {
+			if (playerIn.world.isRemote) SilentWorld.sendSilentMessage(playerIn, level);
+			return true;
+		}
+		return false;
 	}
 
 }

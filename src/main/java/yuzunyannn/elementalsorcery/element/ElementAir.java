@@ -11,13 +11,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.element.explosion.EEAir;
+import yuzunyannn.elementalsorcery.element.explosion.EEOnSilent;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
 import yuzunyannn.elementalsorcery.util.var.Variables;
@@ -51,6 +54,8 @@ public class ElementAir extends ElementCommon {
 
 	@Override
 	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
+		if (ESAPI.silent.isSilent(world, pos, SilentLevel.PHENOMENON))
+			return new EEOnSilent(world, pos, ElementExplosion.getStrength(eStack), eStack);
 		return new EEAir(world, pos, ElementExplosion.getStrength(eStack), eStack);
 	}
 

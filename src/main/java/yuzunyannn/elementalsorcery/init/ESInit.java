@@ -25,6 +25,8 @@ import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemMultiTexture.Mapper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.ResourceLocation;
@@ -279,6 +281,7 @@ import yuzunyannn.elementalsorcery.potion.PotionDefenseSkill;
 import yuzunyannn.elementalsorcery.potion.PotionElementCrackAttack;
 import yuzunyannn.elementalsorcery.potion.PotionEndercorps;
 import yuzunyannn.elementalsorcery.potion.PotionEnderization;
+import yuzunyannn.elementalsorcery.potion.PotionEnthusiasticStudy;
 import yuzunyannn.elementalsorcery.potion.PotionFireWalker;
 import yuzunyannn.elementalsorcery.potion.PotionFluoresceWalker;
 import yuzunyannn.elementalsorcery.potion.PotionGoldenEye;
@@ -286,9 +289,11 @@ import yuzunyannn.elementalsorcery.potion.PotionHealthBalance;
 import yuzunyannn.elementalsorcery.potion.PotionPoundWalker;
 import yuzunyannn.elementalsorcery.potion.PotionPowerPitcher;
 import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
+import yuzunyannn.elementalsorcery.potion.PotionSilent;
 import yuzunyannn.elementalsorcery.potion.PotionStar;
 import yuzunyannn.elementalsorcery.potion.PotionTideWalker;
 import yuzunyannn.elementalsorcery.potion.PotionTimeSlow;
+import yuzunyannn.elementalsorcery.potion.PotionTypeES;
 import yuzunyannn.elementalsorcery.potion.PotionVerdantWalker;
 import yuzunyannn.elementalsorcery.potion.PotionWaterCalamity;
 import yuzunyannn.elementalsorcery.potion.PotionWindShield;
@@ -396,6 +401,7 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDMagiclization;
 import yuzunyannn.elementalsorcery.tile.md.TileMDResonantIncubator;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
+import yuzunyannn.elementalsorcery.util.helper.SilentWorld;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.render.WorldScene;
 import yuzunyannn.elementalsorcery.util.var.Variables;
@@ -424,6 +430,7 @@ public class ESInit {
 		instanceVillage();
 		// 其他位置句柄获取
 		ItemCrystal.init();
+		ElementalSorcery.setAPIField(new SilentWorld());
 	}
 
 	private static void initVoidElement() throws ReflectiveOperationException {
@@ -716,12 +723,28 @@ public class ESInit {
 		ESObjects.POTIONS.CALAMITY = new PotionCalamity();
 		ESObjects.POTIONS.BLESSING = new PotionBlessing();
 		ESObjects.POTIONS.ELEMENT_CRACK_ATTACK = new PotionElementCrackAttack();
+		ESObjects.POTIONS.ENTHUSIASTIC_STUDY = new PotionEnthusiasticStudy();
+		ESObjects.POTIONS.SILENT = new PotionSilent();
 
-		Class<?> cls = ESObjects.POTIONS.getClass();
-		Field[] fields = cls.getDeclaredFields();
-		for (Field field : fields) {
-			Potion potion = ((Potion) field.get(ESObjects.POTIONS));
-			potion.setRegistryName(field.getName().toLowerCase());
+		ESObjects.POTION_TYPES.SILENT = PotionTypeES.create("silent",
+				new PotionEffect(ESObjects.POTIONS.SILENT, 20 * 16));
+
+		{
+			Class<?> cls = ESObjects.POTIONS.getClass();
+			Field[] fields = cls.getDeclaredFields();
+			for (Field field : fields) {
+				Potion potion = ((Potion) field.get(ESObjects.POTIONS));
+				potion.setRegistryName(field.getName().toLowerCase());
+			}
+		}
+		{
+
+			Class<?> cls = ESObjects.POTION_TYPES.getClass();
+			Field[] fields = cls.getDeclaredFields();
+			for (Field field : fields) {
+				PotionType potion = ((PotionType) field.get(ESObjects.POTION_TYPES));
+				potion.setRegistryName(field.getName().toLowerCase());
+			}
 		}
 	}
 
@@ -768,6 +791,8 @@ public class ESInit {
 		EnchantmentRegister.registerAll();
 		// bufff
 		registerAllPotions();
+		// 药水
+		registerAllPotionTypes();
 		// 精灵立方体模块注册
 		FairyCubeModuleInGame.registerAll();
 		// 测试村庄相关
@@ -904,6 +929,14 @@ public class ESInit {
 		Field[] fields = cls.getDeclaredFields();
 		for (Field field : fields) {
 			register((Potion) field.get(ESObjects.POTIONS));
+		}
+	}
+
+	static void registerAllPotionTypes() throws IllegalArgumentException, IllegalAccessException {
+		Class<?> cls = ESObjects.POTION_TYPES.getClass();
+		Field[] fields = cls.getDeclaredFields();
+		for (Field field : fields) {
+			register((PotionType) field.get(ESObjects.POTION_TYPES));
 		}
 	}
 
@@ -1275,6 +1308,16 @@ public class ESInit {
 	private static void register(Potion potion) {
 		ForgeRegistries.POTIONS.register(potion);
 	}
+
+	private static void register(PotionType portionType) {
+		ForgeRegistries.POTION_TYPES.register(portionType);
+	}
+//	
+//	private static void register(String id, PotionEffect... effects) {
+//		PotionType type = new PotionTypeES(TextHelper.castToCamel(id), effects)
+//				.setRegistryName(new ResourceLocation(ESAPI.MODID, id));
+//		ForgeRegistries.POTION_TYPES.register(type);
+//	}
 
 	@SideOnly(Side.CLIENT)
 	public static void registerRender(Item item) {

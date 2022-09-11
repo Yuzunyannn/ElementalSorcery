@@ -17,13 +17,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.block.BlockLifeFlower;
+import yuzunyannn.elementalsorcery.element.explosion.EEOnSilent;
 import yuzunyannn.elementalsorcery.element.explosion.EEWood;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.element.DrinkJuiceEffectAdder;
@@ -73,6 +76,8 @@ public class ElementWood extends ElementCommon {
 
 	@Override
 	public ElementExplosion newExplosion(World world, Vec3d pos, ElementStack eStack, EntityLivingBase attacker) {
+		if (ESAPI.silent.isSilent(world, pos, SilentLevel.PHENOMENON))
+			return new EEOnSilent(world, pos, ElementExplosion.getStrength(eStack), eStack);
 		return new EEWood(world, pos, ElementExplosion.getStrength(eStack) * 1.05f, eStack);
 	}
 

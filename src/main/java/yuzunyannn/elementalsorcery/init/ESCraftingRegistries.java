@@ -1,8 +1,10 @@
 package yuzunyannn.elementalsorcery.init;
 
 import net.minecraft.init.Items;
+import net.minecraft.init.PotionTypes;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.potion.PotionHelper;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
@@ -33,6 +35,8 @@ public class ESCraftingRegistries {
 		RECIPES.register(new RecipeColorful(new ItemStack(ESObjects.BLOCKS.ELEMENTAL_CUBE))
 				.colorSetter((stack, color) -> BlockElementCube.setDyeColor(stack, color))
 				.setRegistryName("colorElementCube"));
+		// 药水
+		PotionHelper.addMix(PotionTypes.POISON, Items.PRISMARINE_CRYSTALS, ESObjects.POTION_TYPES.SILENT);
 	}
 
 	private static void registerAllSmelting() {

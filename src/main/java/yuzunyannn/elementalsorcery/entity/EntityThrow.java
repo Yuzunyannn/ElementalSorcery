@@ -172,4 +172,9 @@ public class EntityThrow extends EntityThrowable implements IEntityAdditionalSpa
 
 	}
 
+	public void dropAsItem(Vec3d hitVec) {
+		if (world.isRemote) return;
+		Block.spawnAsEntity(world, new BlockPos(hitVec), getItemStack());
+	}
+
 }

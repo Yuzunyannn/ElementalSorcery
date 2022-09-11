@@ -8,6 +8,7 @@ import org.apache.logging.log4j.Logger;
 import yuzunyannn.elementalsorcery.api.crafting.RecipeManagement;
 import yuzunyannn.elementalsorcery.api.element.IElementMap;
 import yuzunyannn.elementalsorcery.api.element.IISCraftHanlderMap;
+import yuzunyannn.elementalsorcery.api.mantra.ISilentWorld;
 
 public class ESAPI {
 
@@ -36,5 +37,7 @@ public class ESAPI {
 	public final static IISCraftHanlderMap ISCraftMap = null;
 	@APIObject
 	public final static RecipeManagement recipeMgr = null;
+	@APIObject
+	public final static ISilentWorld silent = null;
 
 }

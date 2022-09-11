@@ -26,6 +26,7 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderLayoutFix;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
@@ -35,6 +36,7 @@ import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellbook;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellbookSelect;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellbookTo;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.item.IItemUseClientUpdate;
 
 public class ItemSpellbook extends Item implements IItemUseClientUpdate, IRenderLayoutFix {
@@ -147,6 +149,9 @@ public class ItemSpellbook extends Item implements IItemUseClientUpdate, IRender
 			this.swap(worldIn, playerIn, stack, spellbook);
 			return new ActionResult<ItemStack>(EnumActionResult.PASS, stack);
 		}
+		// 是否沉默
+		if (EntityHelper.checkSilent(playerIn, SilentLevel.SPELL))
+			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		// 开始释放！
 		spellbook.initSpelling(worldIn, stack, playerIn, handIn);
 		if (!this.spellBegin(worldIn, playerIn, stack, spellbook))

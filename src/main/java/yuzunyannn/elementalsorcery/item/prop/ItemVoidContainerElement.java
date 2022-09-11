@@ -4,13 +4,11 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -70,7 +68,7 @@ public class ItemVoidContainerElement extends Item implements EntityThrow.IItemT
 		IElementInventory eInv = ElementHelper.getElementInventory(entity.getItemStack());
 		if (!ElementHelper.isEmpty(eInv))
 			ElementHelper.onElementFreeFromVoid(entity.world, entity.getPosition(), eInv, null);
-		else Block.spawnAsEntity(entity.world, new BlockPos(ray.hitVec), entity.getItemStack());
+		else entity.dropAsItem(ray.hitVec);
 	}
 
 }

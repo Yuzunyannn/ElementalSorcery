@@ -248,6 +248,12 @@ es.effect.star=Star
 es.effect.calamity=Calamity
 es.effect.blessing=Blessing
 es.effect.elementCrackAttack=Element Crack
+es.effect.enthusiasticStudy=Enthusiastic Unscrambling
+es.effect.silent=Silent
+
+es.potion.effect.silent=Potion of Silence
+es.splash_potion.effect.silent=Splash Potion of Silence 
+es.lingering_potion.effect.silent=Lingering Potion of Silence
 
 enchantment.gatherSouls=Gather Souls
 
@@ -474,7 +480,8 @@ info.ancientPaper.record=The only readable part of this paper seems to be %d%% ~
 info.ancientPaper.unknow=I can't understand what is recorded in this Ancient Paper
 info.ancientPaper.progress=Progress of unscrambling %s
 info.research.increase=Are you more interested in 「%s」
-info.want.not.unscramble=You're too tired to read any more
+info.can.not.unscramble=You're too tired to read any more
+info.want.not.unscramble=You're a little tired, but it doesn't matter
 info.not.atigue=You're no longer tired
 info.underway=underway
 info.complete=complete

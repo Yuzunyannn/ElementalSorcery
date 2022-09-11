@@ -27,15 +27,18 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -62,6 +65,9 @@ public class ItemElementStone extends Item {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand handIn) {
+		if (EntityHelper.checkSilent(player, SilentLevel.RELEASE))
+			return new ActionResult<ItemStack>(EnumActionResult.FAIL, player.getHeldItem(handIn));
+
 		ItemStack stack = player.getHeldItem(handIn);
 		RayTraceResult ray = WorldHelper.getLookAtBlock(world, player, 8);
 		if (ray != null) {
@@ -105,6 +111,8 @@ public class ItemElementStone extends Item {
 		EnumHand hand = ItemVortex.inEntityHand(entityIn, stack, itemSlot, isSelected);
 		if (hand == null) return;
 		EntityLivingBase entity = (EntityLivingBase) entityIn;
+
+		if (ESAPI.silent.isSilent(entity, SilentLevel.RELEASE)) return;
 
 		if (entity.isInWater()) {
 

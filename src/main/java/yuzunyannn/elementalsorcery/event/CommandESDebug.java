@@ -37,6 +37,7 @@ import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
+import yuzunyannn.elementalsorcery.grimoire.mantra.crack.MantraCrackOpen;
 import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
@@ -121,29 +122,29 @@ public class CommandESDebug {
 				return;
 			case "textTest": {
 
-				int n = 0;
-				for (int i = 0; i < 100000; i++) {
-					ElementStack eStack1 = new ElementStack(ESObjects.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000) ,
-							RandomHelper.rand.nextInt(10000));
-					ElementStack eStack2 = new ElementStack(ESObjects.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000),
-							RandomHelper.rand.nextInt(10000));
-					ElementStack eStack3 = new ElementStack(ESObjects.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000),
-							RandomHelper.rand.nextInt(10000));
-					
-					ElementStack old = eStack1.copy();
-					old.grow(eStack3);
-					
-					eStack1.grow(eStack2);
-					eStack1.grow(eStack3);
-					
-					eStack1.disgrow(eStack2);
-					if (old.getCount() != eStack1.getCount() || old.getPower() != eStack1.getPower()) {
-						n = n + old.getPower() - eStack1.getPower();
-					}
-				}
-				System.out.println(n / 100000.0);
+//				int n = 0;
+//				for (int i = 0; i < 100000; i++) {
+//					ElementStack eStack1 = new ElementStack(ESObjects.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000),
+//							RandomHelper.rand.nextInt(10000));
+//					ElementStack eStack2 = new ElementStack(ESObjects.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000),
+//							RandomHelper.rand.nextInt(10000));
+//					ElementStack eStack3 = new ElementStack(ESObjects.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000),
+//							RandomHelper.rand.nextInt(10000));
+//
+//					ElementStack old = eStack1.copy();
+//					old.grow(eStack3);
+//
+//					eStack1.grow(eStack2);
+//					eStack1.grow(eStack3);
+//
+//					eStack1.disgrow(eStack2);
+//					if (old.getCount() != eStack1.getCount() || old.getPower() != eStack1.getPower()) {
+//						n = n + old.getPower() - eStack1.getPower();
+//					}
+//				}
+//				System.out.println(n / 100000.0);
 
-//				MantraCrackOpen.attack(entity.world, pos, 48, entity, 0, true);
+				MantraCrackOpen.attack(entity.world, pos, 16, entity, 0, true);
 
 //				for (int i = 0; i < 32; i++) {
 //					EntityItemGoods goods = new EntityItemGoods(entity.world,

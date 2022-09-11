@@ -72,6 +72,9 @@ public class ElementKnowledge extends ElementCommon {
 
 		helper.preparatory(ESObjects.POTIONS.DEFENSE_SKILL, 30, 150);
 		helper.check(JuiceMaterial.MELON, 125).join();
+		
+		helper.preparatory(ESObjects.POTIONS.ENTHUSIASTIC_STUDY, 20, 150);
+		helper.check(JuiceMaterial.ELF_FRUIT, 50).join();
 	}
 
 //	@Override

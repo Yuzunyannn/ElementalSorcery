@@ -16,6 +16,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.entity.EntityThrow;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
@@ -26,7 +28,8 @@ public class ItemVortex extends Item implements EntityThrow.IItemThrowAction {
 		this.setTranslationKey("vortex");
 	}
 
-	private void absorb(World world, Vec3d center) {
+	private boolean absorb(World world, Vec3d center) {
+		if (ESAPI.silent.isSilent(world, center, SilentLevel.PHENOMENON)) return false;
 		int size = 12;
 		AxisAlignedBB aabb = new AxisAlignedBB(center.x - size, center.y - size, center.z - size, center.x + size,
 				center.y + size, center.z + size);
@@ -41,15 +44,15 @@ public class ItemVortex extends Item implements EntityThrow.IItemThrowAction {
 					new int[] { 0xb1f0ff });
 			Effects.spawnEffect(world, Effects.FIREWROK, center, nbt);
 		}
+		return true;
 	}
 
 	@Override
 	public boolean onEntityItemUpdate(EntityItem entityItem) {
 		if (entityItem.onGround) {
 			World world = entityItem.world;
-			entityItem.setDead();
 			Vec3d center = entityItem.getPositionVector().add(0.5, 0.5, 0.5);
-			absorb(world, center);
+			if (absorb(world, center)) entityItem.setDead();
 		}
 		return super.onEntityItemUpdate(entityItem);
 	}
@@ -66,6 +69,7 @@ public class ItemVortex extends Item implements EntityThrow.IItemThrowAction {
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		EnumHand hand = ItemVortex.inEntityHand(entityIn, stack, itemSlot, isSelected);
 		if (hand == null) return;
+		if (ESAPI.silent.isSilent(entityIn, SilentLevel.PHENOMENON)) return;
 
 		if (entityIn instanceof EntityPlayer) {
 			if (((EntityPlayer) entityIn).isCreative()) return;
@@ -88,6 +92,6 @@ public class ItemVortex extends Item implements EntityThrow.IItemThrowAction {
 		Vec3d vec = result.hitVec;
 		if (vec == null) return;
 		if (result.entityHit != null) vec = vec.add(0, result.entityHit.height / 2, 0);
-		absorb(entity.world, vec);
+		if (!absorb(entity.world, vec)) entity.dropAsItem(result.hitVec);
 	}
 }

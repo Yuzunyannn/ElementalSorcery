@@ -248,6 +248,12 @@ es.effect.star=星
 es.effect.calamity=災害
 es.effect.blessing=祝福
 es.effect.elementCrackAttack=元素ひび割れ
+es.effect.enthusiasticStudy=熱狂的に解読
+es.effect.silent=サイレント
+
+es.potion.effect.silent=沈黙のポーション
+es.splash_potion.effect.silent=沈黙のスプラッシュポーション
+es.lingering_potion.effect.silent=沈黙の残留ポーション
 
 enchantment.gatherSouls=集魂
 
@@ -474,7 +480,8 @@ info.ancientPaper.record=この上の内容は読める部分が%d%%~%d%%だけ�
 info.ancientPaper.unknow=この古巻に記載されている内容が分かりません。
 info.ancientPaper.progress=解読進捗%s
 info.research.increase=あなたは「%s」にもっと興味があります。
-info.want.not.unscramble=あなたは疲れました、読み続けたくない
+info.can.not.unscramble=あなたは疲れました、読み続けたくない
+info.want.not.unscramble=あなたは少し疲れて、だけどそれは大丈夫
 info.not.atigue=あなたもう疲れません
 info.underway=進行中
 info.complete=完了

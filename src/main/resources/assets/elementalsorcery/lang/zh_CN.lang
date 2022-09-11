@@ -248,6 +248,12 @@ es.effect.star=星
 es.effect.calamity=灾害
 es.effect.blessing=祝福
 es.effect.elementCrackAttack=元素裂縫
+es.effect.enthusiasticStudy=学力爆发
+es.effect.silent=沉默
+
+es.potion.effect.silent=禁言药水
+es.splash_potion.effect.silent=喷溅型禁言药水
+es.lingering_potion.effect.silent=滞留型禁言药水
 
 enchantment.gatherSouls=聚魂
 
@@ -474,7 +480,8 @@ info.ancientPaper.record=这上面可阅读的部分似乎只有%d%%~%d%%
 info.ancientPaper.unknow=我看不懂这张古卷上记载的内容
 info.ancientPaper.progress=解读进度%s
 info.research.increase=你对「%s」更加感兴趣了
-info.want.not.unscramble=你疲倦了，不想在继续解读了
+info.can.not.unscramble=你疲倦了，不想在继续解读了
+info.want.not.unscramble=你有点累了，但是这并不要紧。
 info.not.atigue=你不再疲倦了
 info.underway=正在进行
 info.complete=完成

@@ -28,6 +28,8 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
@@ -82,6 +84,8 @@ public class ItemMagicGoldTools {
 		public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos,
 				EntityLivingBase entityLiving) {
 			if (!"pickaxe".equals(state.getBlock().getHarvestTool(state)))
+				return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+			if (ESAPI.silent.isSilent(entityLiving, SilentLevel.RELEASE))
 				return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
 			int size = 1;
 			Vec3d forward = entityLiving.getForward();
@@ -138,6 +142,8 @@ public class ItemMagicGoldTools {
 		@Override
 		public boolean onBlockDestroyed(ItemStack stack, World worldIn, IBlockState state, BlockPos pos,
 				EntityLivingBase entityLiving) {
+			if (ESAPI.silent.isSilent(entityLiving, SilentLevel.RELEASE))
+				super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
 			Block block = state.getBlock();
 			if (block instanceof BlockLog) {
 				for (int y = 0; y < 10; y++) {
@@ -177,6 +183,8 @@ public class ItemMagicGoldTools {
 				EntityLivingBase entityLiving) {
 			if (!"shovel".equals(state.getBlock().getHarvestTool(state)))
 				return super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
+			if (ESAPI.silent.isSilent(entityLiving, SilentLevel.RELEASE))
+				super.onBlockDestroyed(stack, worldIn, state, pos, entityLiving);
 			int size = 2;
 			Vec3d forward = entityLiving.getForward();
 			EnumFacing facing = EnumFacing.getFacingFromVector((float) forward.x, (float) forward.y, (float) forward.z);
@@ -232,6 +240,7 @@ public class ItemMagicGoldTools {
 				EnumFacing facing, float hitX, float hitY, float hitZ) {
 			EnumActionResult result = super.onItemUse(player, worldIn, pos, hand, facing, hitX, hitY, hitZ);
 			if (result == EnumActionResult.SUCCESS) {
+				if (ESAPI.silent.isSilent(player, SilentLevel.RELEASE)) return EnumActionResult.SUCCESS;
 				ItemStack itemstack = player.getHeldItem(hand);
 				int originDmg = itemstack.getItemDamage();
 				int size = 2;
@@ -268,6 +277,7 @@ public class ItemMagicGoldTools {
 
 		@Override
 		public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
+			if (ESAPI.silent.isSilent(attacker, SilentLevel.RELEASE)) return super.hitEntity(stack, target, attacker);
 			Vec3d pos = target.getPositionVector().add(0, attacker.getEyeHeight(), 0);
 			int size = 5;
 			AxisAlignedBB aabb = new AxisAlignedBB(pos.x - size, pos.y - size, pos.z - size, pos.x + size, pos.y + size,

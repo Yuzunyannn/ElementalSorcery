@@ -20,10 +20,13 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -90,6 +93,10 @@ public class ItemQuill extends Item {
 
 	@Override
 	public boolean onEntityItemUpdate(EntityItem entityItem) {
+		if (ESAPI.silent.isSilent(entityItem, SilentLevel.PHENOMENON)) {
+			entityItem.setEntityInvulnerable(false);
+			return false;
+		}
 		ItemStack stack = entityItem.getItem();
 		World world = entityItem.world;
 		BlockPos pos = entityItem.getPosition();
@@ -225,6 +232,8 @@ public class ItemQuill extends Item {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		ItemStack stack = player.getHeldItem(hand);
+		if (EntityHelper.checkSilent(player, SilentLevel.RELEASE))
+			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 		switch (stack.getMetadata()) {
 		case 2:
 			if (onPutBlock(player, Blocks.FLOWING_LAVA.getDefaultState())) {

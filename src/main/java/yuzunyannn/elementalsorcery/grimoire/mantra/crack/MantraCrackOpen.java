@@ -17,6 +17,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
@@ -31,6 +32,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemElementCrack;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.crack.EffectCylinderCrackBlast;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -106,7 +108,7 @@ public class MantraCrackOpen extends MantraCrackCommon {
 		cost = mdc.get(FRAGMENT) - fragment;
 		mdc.set(FRAGMENT, fragment);
 		double lastSize = mdc.get(SIZED);
-		mdc.set(SIZED, lastSize + cost / 750000);
+		mdc.set(SIZED, Math.min(lastSize + cost / 750000, 128));
 		if (world.isRemote) {
 			addAndUpdateEffectCrackOpen(world, data, caster);
 			return true;
@@ -158,17 +160,20 @@ public class MantraCrackOpen extends MantraCrackCommon {
 			});
 			for (Entity entity : entities) {
 				ItemElementCrack.crackAttack(world, entity, caster.iWantCaster().asEntity());
-				Vec3d target = new Vec3d(center).subtract(entity.getPositionVector()).normalize();
-				entity.motionX += target.x;
-				entity.motionZ += target.z;
-				entity.velocityChanged = true;
-				if (entity instanceof EntityLivingBase) {
+				if (!EntityHelper.isCreative(entity)) {
+					Vec3d target = new Vec3d(center).subtract(entity.getPositionVector()).normalize();
+					entity.motionX += target.x;
+					entity.motionZ += target.z;
+					entity.velocityChanged = true;
+				}
+				if (entity instanceof EntityLivingBase && !ESAPI.isDevelop) {
 					((EntityLivingBase) entity).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100));
 				}
 			}
 		}
 
 		return true;
+
 	}
 
 	@SideOnly(Side.CLIENT)

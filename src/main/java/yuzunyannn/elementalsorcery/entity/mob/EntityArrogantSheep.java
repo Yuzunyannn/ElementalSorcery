@@ -56,6 +56,7 @@ import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
+import yuzunyannn.elementalsorcery.util.helper.SilentWorld;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class EntityArrogantSheep extends EntityMob {
@@ -432,7 +433,8 @@ public class EntityArrogantSheep extends EntityMob {
 
 		float luck = player.getLuck();
 
-		ItemStack wool = new ItemStack(ESObjects.ITEMS.ARROGANT_WOOL, 1 + MathHelper.floor(rand.nextFloat() * luck / 2));
+		ItemStack wool = new ItemStack(ESObjects.ITEMS.ARROGANT_WOOL,
+				1 + MathHelper.floor(rand.nextFloat() * luck / 2));
 		ItemHelper.dropItem(world, this.getPosition(), wool);
 
 		return true;
@@ -463,7 +465,7 @@ public class EntityArrogantSheep extends EntityMob {
 			double dis = player.getDistance(this);
 			showLineEffect(thisVec, tar, dis);
 			player.sendMessage(createSheepSay("say.arrogantSheep.stayAway"));
-		}
+		} else SilentWorld.shutup(player, 30);
 	}
 
 	@SideOnly(Side.CLIENT)

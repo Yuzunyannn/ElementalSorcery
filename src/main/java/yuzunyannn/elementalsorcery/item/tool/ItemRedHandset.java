@@ -19,6 +19,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemRedHandset extends Item {
@@ -28,6 +30,8 @@ public class ItemRedHandset extends Item {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+		if (EntityHelper.checkSilent(playerIn, SilentLevel.RELEASE))
+			return super.onItemRightClick(worldIn, playerIn, handIn);
 		RayTraceResult result = WorldHelper.getLookAtBlock(worldIn, playerIn, 64, false, false, true);
 		if (result == null) return super.onItemRightClick(worldIn, playerIn, handIn);
 		BlockPos pos = result.getBlockPos();

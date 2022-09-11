@@ -26,6 +26,8 @@ public class RenderObjects {
 	static final public ResourceLocation MAGIC_CIRCLE_PICKAXE = ESRes("textures/magic_circles/pickaxe.png");
 
 	public static final TextureBinder EFFECT_BUFF = new TextureBinder("textures/gui/effect_buff.png");
+	
+	public static final TextureBinder NUMBER_1 = new TextureBinder("textures/text/number_type_1.png");
 
 	static public ResourceLocation ESRes(String path) {
 		return new ResourceLocation(ESAPI.MODID, path);

@@ -25,9 +25,12 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ItemSoulKillerSword extends ItemSword implements IItemStronger {
@@ -58,6 +61,9 @@ public class ItemSoulKillerSword extends ItemSword implements IItemStronger {
 
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+		if (EntityHelper.checkSilent(playerIn, SilentLevel.RELEASE))
+			return super.onItemRightClick(worldIn, playerIn, handIn);
+
 		ItemStack stack = playerIn.getHeldItem(handIn);
 		NBTTagCompound map = stack.getOrCreateSubCompound("soulMap");
 		int count = 0;
@@ -83,6 +89,9 @@ public class ItemSoulKillerSword extends ItemSword implements IItemStronger {
 
 	@Override
 	public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity targetEntity) {
+		if (ESAPI.silent.isSilent(player, SilentLevel.RELEASE))
+			return super.onLeftClickEntity(stack, player, targetEntity);
+
 		if (player.world.isRemote) return false;
 //		if (!targetEntity.canBeAttackedWithItem()) return false;
 //		if (targetEntity.hitByEntity(player)) return false;

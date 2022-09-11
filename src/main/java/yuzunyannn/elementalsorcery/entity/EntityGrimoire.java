@@ -29,6 +29,7 @@ import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.mantra.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
@@ -264,7 +265,7 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 					info.open();
 					info.update();
 				} else {
-					if (!user.isHandActive() || user.isDead) {
+					if (!canContinueSpelling()) {
 						world.setEntityState(this, (byte) 44);
 						this.onEndSpelling();
 						state = STATE_AFTER_SPELLING;
@@ -274,6 +275,10 @@ public class EntityGrimoire extends Entity implements IEntityAdditionalSpawnData
 				this.onSpelling();
 			} else this.onAfterSpelling();
 		}
+	}
+
+	public boolean canContinueSpelling() {
+		return !(user == null || !user.isHandActive() || user.isDead || ESAPI.silent.isSilent(user, SilentLevel.SPELL));
 	}
 
 	@Override

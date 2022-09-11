@@ -493,7 +493,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	/** 不稳定片元的每次的最大传输率，因为可以放置4个塔，所以实际最快是单个的4倍 */
 	public double getInstableFragmentMaxTransmissionCount() {
 		double capacity = getInstableFragmentCapacity();
-		return capacity / 160 * Math.pow(powerLevelLine / 10.0 + 1, IFTRANSMISSION_COUNT_EXPONENTIAL_RELATIVE_POWER_LINE);
+		return capacity / 240 * Math.pow(powerLevelLine / 10.0 + 1, IFTRANSMISSION_COUNT_EXPONENTIAL_RELATIVE_POWER_LINE);
 	}
 
 	// 接受片元，抵消不稳定片元，重新变成当前元素的元素片元，并提升稳定度
