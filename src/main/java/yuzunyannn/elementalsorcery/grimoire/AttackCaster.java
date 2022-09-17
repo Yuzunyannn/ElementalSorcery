@@ -3,21 +3,28 @@ package yuzunyannn.elementalsorcery.grimoire;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
-import yuzunyannn.elementalsorcery.api.mantra.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.CasterHelper;
 
-public class AttackCaster implements ICaster {
+public class AttackCaster implements ICaster, ICasterObject {
 
 	public final EntityLivingBase attacker;
 	public final Grimoire grimoire;
@@ -30,6 +37,11 @@ public class AttackCaster implements ICaster {
 	@Override
 	public void sendToClient(NBTTagCompound nbt) {
 		ESAPI.logger.warn("直接的Caster不支持发送数据");
+	}
+
+	@Override
+	public CastStatus getCastStatus() {
+		return CastStatus.ATTACK;
 	}
 
 	@Override
@@ -102,13 +114,13 @@ public class AttackCaster implements ICaster {
 	}
 
 	@Override
-	public Entity iWantDirectCaster() {
-		return attacker;
+	public ICasterObject iWantDirectCaster() {
+		return this;
 	}
 
 	@Override
-	public boolean hasEffectFlags(MantraEffectFlags flag) {
-		return true;
+	public DamageSource iWantDamageSource(Element element) {
+		return DamageHelper.getMagicDamageSource(attacker, this.asEntity());
 	}
 
 	@Override
@@ -123,6 +135,40 @@ public class AttackCaster implements ICaster {
 	@Override
 	public void iWantGivePotent(float potent, float point) {
 		grimoire.addPotent(potent, point);
+	}
+
+	@Override
+	public Vec3d getPositionVector() {
+		return Vec3d.ZERO;
+	}
+
+	@Override
+	public World getWorld() {
+		return attacker.world;
+	}
+
+	@Override
+	public TileEntity asTileEntity() {
+		return null;
+	}
+
+	@Override
+	public Entity asEntity() {
+		return null;
+	}
+
+	@Override
+	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+		return false;
+	}
+
+	@Override
+	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+		return null;
+	}
+
+	@Override
+	public void setPositionVector(Vec3d pos, boolean force) {
 	}
 
 }

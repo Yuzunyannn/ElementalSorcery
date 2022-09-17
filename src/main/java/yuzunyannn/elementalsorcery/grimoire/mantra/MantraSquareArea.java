@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -8,15 +7,17 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
+import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
-import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
 public abstract class MantraSquareArea extends MantraCommon {
 
@@ -74,7 +75,7 @@ public abstract class MantraSquareArea extends MantraCommon {
 		BlockPos pos = wr.getPos();
 		if (pos == null) return;
 		if (wr.getFace() == EnumFacing.UP) pos = pos.up();
-		EntityHelper.setPositionAndUpdate(caster.iWantDirectCaster(), new Vec3d(pos));
+		caster.iWantDirectCaster().setPositionVector(new Vec3d(pos));
 		this.onAfterSpellingInit(world, data, caster, pos);
 	}
 
@@ -108,11 +109,12 @@ public abstract class MantraSquareArea extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public void addAfterEffect(SquareData data, ICaster caster, int size) {
 		if (size <= 0) return;
-		if (data.hasMarkEffect(1000)) return;
-		Entity entity = caster.iWantDirectCaster();
-		EffectMagicSquare ems = new EffectMagicSquare(entity.world, entity, size, this.getColor(data));
-		ems.setCondition(new ConditionEffect(entity, data, 1000, false));
-		data.addConditionEffect(caster, ems, 1000);
+		if (data.getEffectMap().hasMark(MantraEffectType.MANTRA_EFFECT_1)) return;
+		ICasterObject casterObject = caster.iWantDirectCaster();
+		EffectMagicSquare ems = new EffectMagicSquare(casterObject.getWorld(), casterObject.asEntity(), size,
+				this.getColor(data));
+		ems.setCondition(MantraEffectMap.condition(caster, data, CastStatus.AFTER_SPELLING));
+		data.getEffectMap().addAndMark(MantraEffectType.MANTRA_EFFECT_1, ems);
 		ems.setIcon(this.getMagicCircleIcon());
 	}
 

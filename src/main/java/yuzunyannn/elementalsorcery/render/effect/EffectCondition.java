@@ -2,8 +2,6 @@ package yuzunyannn.elementalsorcery.render.effect;
 
 import java.util.function.Function;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -11,7 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 
 @SideOnly(Side.CLIENT)
-public abstract class EffectCondition extends Effect {
+public abstract class EffectCondition extends Effect implements IConditionEffect {
 
 	public Function<Void, Boolean> condition;
 
@@ -32,10 +30,12 @@ public abstract class EffectCondition extends Effect {
 		this(world, new Vec3d(0, 0, 0));
 	}
 
+	@Override
 	public void setCondition(Function<Void, Boolean> condition) {
 		this.condition = condition;
 	}
 
+	@Override
 	public Function<Void, Boolean> getCondition() {
 		return condition;
 	}
@@ -52,23 +52,6 @@ public abstract class EffectCondition extends Effect {
 	@Override
 	public void onUpdate() {
 
-	}
-
-	public static class ConditionEntityAction implements Function<Void, Boolean> {
-		public final Entity entity;
-		public boolean isFinish = false;
-
-		public ConditionEntityAction(Entity entity) {
-			this.entity = entity;
-		}
-
-		@Override
-		public Boolean apply(Void t) {
-			if (isFinish) return false;
-			if (this.entity instanceof EntityLivingBase)
-				return !(isFinish = !((EntityLivingBase) entity).isHandActive());
-			else return !(isFinish = entity.isDead);
-		}
 	}
 
 	protected void renderTexRect(float x, float y, float width, float height, float u, float v, float texWidth,

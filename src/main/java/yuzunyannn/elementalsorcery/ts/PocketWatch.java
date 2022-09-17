@@ -18,6 +18,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessagePocketWatch;
@@ -154,7 +155,8 @@ public class PocketWatch {
 			boolean notBlock = entity instanceof EntityPlayer;
 			if (!notBlock && entity instanceof EntityGrimoire) {
 				EntityGrimoire grimoire = (EntityGrimoire) entity;
-				notBlock = grimoire.getState() != EntityGrimoire.STATE_AFTER_SPELLING;
+				notBlock = grimoire.getCastStatus() != CastStatus.AFTER_SPELLING
+						&& grimoire.getCastStatus() != CastStatus.END;
 			}
 
 			EntityStopData stopData;

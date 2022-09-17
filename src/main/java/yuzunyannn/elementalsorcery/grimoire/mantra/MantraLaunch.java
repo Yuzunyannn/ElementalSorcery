@@ -9,7 +9,6 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
-import yuzunyannn.elementalsorcery.api.mantra.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
@@ -105,7 +104,7 @@ public class MantraLaunch extends MantraCommon {
 		if (tile == null || tile.isWorking()) return;
 
 		if (world.isRemote) return;
-		
+
 		EntityPlayer player = caster.iWantCaster().asPlayer();
 
 		if (!tile.canCrafting(type, player)) {
@@ -126,13 +125,6 @@ public class MantraLaunch extends MantraCommon {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		super.onSpellingEffect(world, data, caster);
-		if (!hasEffectFlags(world, data, caster, MantraEffectFlags.DECORATE)) return;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
 	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity, IMantraData data) {
 		MantraDataCommon mData = (MantraDataCommon) data;
 		BlockPos pos = mData.get(POS);
@@ -140,7 +132,7 @@ public class MantraLaunch extends MantraCommon {
 		emc.setColor(this.getColor(mData));
 		return emc;
 	}
-	
+
 	@Override
 	public EnumType getMantraSubItemType() {
 		return ItemAncientPaper.EnumType.NEW_WRITTEN;

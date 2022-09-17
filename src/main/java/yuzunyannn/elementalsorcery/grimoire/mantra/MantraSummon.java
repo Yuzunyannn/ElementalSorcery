@@ -7,18 +7,22 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
+import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectSummonRender;
 import yuzunyannn.elementalsorcery.summon.Summon;
@@ -32,7 +36,7 @@ public class MantraSummon extends MantraCommon {
 			SummonRecipe summonRecipe) {
 		if (world.isRemote) return;
 		EntityGrimoire grimoire = new EntityGrimoire(world, summoner, ESObjects.MANTRAS.SUMMON, null,
-				EntityGrimoire.STATE_AFTER_SPELLING);
+				CastStatus.AFTER_SPELLING);
 		Data data = (Data) grimoire.getMantraData();
 		data.keepsake = keepsake;
 		data.summonRecipe = summonRecipe;
@@ -176,8 +180,7 @@ public class MantraSummon extends MantraCommon {
 		if (data.summonRecipe != null)
 			data.summon = data.summonRecipe.createSummon(data.keepsake, data.world, data.pos);
 		// 重置位置
-		Entity entityCaster = caster.iWantDirectCaster();
-		entityCaster.setPosition(data.pos.getX(), data.pos.getY(), data.pos.getZ());
+		caster.iWantDirectCaster().setPositionVector(new Vec3d(data.pos));
 		// 消耗灵魂
 		Entity entity = caster.iWantCaster().asEntity();
 		if (entity instanceof EntityPlayer && !((EntityPlayer) entity).isCreative()) {
@@ -198,11 +201,11 @@ public class MantraSummon extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public void afterSpellingEffect(World world, IMantraData mData, ICaster caster) {
 		Data data = (Data) mData;
-		if (data.hasMarkEffect(1000)) return;
-		Entity entity = caster.iWantDirectCaster();
-		EffectSummonRender ems = new EffectSummonRender(entity.world, data);
-		ems.setCondition(new ConditionEffect(entity, data, 1000, false));
-		data.addConditionEffect(caster, ems, 1000);
+		if (data.getEffectMap().hasMark(MantraEffectType.MANTRA_EFFECT_1)) return;
+		ICasterObject casterObject = caster.iWantDirectCaster();
+		EffectSummonRender ems = new EffectSummonRender(casterObject.getWorld(), data);
+		ems.setCondition(MantraEffectMap.condition(caster, data, CastStatus.AFTER_SPELLING));
+		data.getEffectMap().addAndMark(MantraEffectType.MANTRA_EFFECT_1, ems);
 	}
 
 	@Override

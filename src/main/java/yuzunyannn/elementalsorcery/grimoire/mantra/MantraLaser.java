@@ -13,9 +13,10 @@ import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.IElementLaser;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
-import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
@@ -132,15 +133,6 @@ public class MantraLaser extends MantraCommon {
 		return ElementStack.EMPTY;
 	}
 
-	@Override
-	public void startSpelling(World world, IMantraData data, ICaster caster) {
-		MantraDataCommon mData = (MantraDataCommon) data;
-		ElementStack stack = findAnyElementCanUse(caster);
-		if (stack.isEmpty()) return;
-		mData.set(ELEMENT, stack);
-		mData.markContinue(true);
-	}
-
 	protected boolean updateLaser(World world, MantraDataLaser mData, ICaster caster, boolean isAfter) {
 		ElementStack eStack = mData.get(ELEMENT);
 		if (eStack.isEmpty()) return false;
@@ -153,7 +145,7 @@ public class MantraLaser extends MantraCommon {
 		ElementStack cost = ElementStack.EMPTY;
 		IElementLaser laser = (IElementLaser) element;
 
-		Entity casterEntity = caster.iWantDirectCaster();
+		ICasterObject directObject = caster.iWantDirectCaster();
 		IWorldObject casterObject = caster.iWantCaster();
 		WorldTarget target = null;
 
@@ -172,9 +164,7 @@ public class MantraLaser extends MantraCommon {
 			EntityLivingBase living = mData.afterTarget.tryGetMaster(world);
 			if (living == null) return false;
 			if (living.isDead) return false;
-			casterEntity.posX = living.posX;
-			casterEntity.posY = living.posY + living.height + 1;
-			casterEntity.posZ = living.posZ;
+			directObject.setPositionVector(new Vec3d(living.posX, living.posY + living.height + 1, living.posZ), false);
 			Vec3d vec = living.getPositionVector().add(0, living.height / 2, 0);
 			target = new WorldTarget(living, vec);
 			cost = laser.onLaserUpdate(world, casterObject, target, eStack, mData.getExtra());
@@ -200,6 +190,15 @@ public class MantraLaser extends MantraCommon {
 	}
 
 	@Override
+	public void startSpelling(World world, IMantraData data, ICaster caster) {
+		MantraDataCommon mData = (MantraDataCommon) data;
+		ElementStack stack = findAnyElementCanUse(caster);
+		if (stack.isEmpty()) return;
+		mData.set(ELEMENT, stack);
+		mData.markContinue(true);
+	}
+
+	@Override
 	public void onSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataLaser mData = (MantraDataLaser) data;
 		updateLaser(world, mData, caster, false);
@@ -219,16 +218,16 @@ public class MantraLaser extends MantraCommon {
 		addEffectMagicCircle(world, mData, caster);
 		Vec3d at = target.getHitVec();
 
-		IWorldObject wo = isAfter ? new WorldObjectEntity(caster.iWantDirectCaster()) : caster.iWantCaster();
+		IWorldObject wo = isAfter ? caster.iWantDirectCaster() : caster.iWantCaster();
 		if (at == Vec3d.ZERO) at = wo.getEyePosition().add(caster.iWantDirection().scale(128));
-		EffectLaserMantra effect = mData.getMarkEffect(1, EffectLaserMantra.class);
+		EffectLaserMantra effect = mData.getEffectMap().getMark(MantraEffectType.MANTRA_EFFECT_1,
+				EffectLaserMantra.class);
 
 		if (effect == null || effect.isDead()) {
 			effect = new EffectLaserMantra(world, wo.getEyePosition(), at);
-			mData.markEffect(1, effect);
+			mData.getEffectMap().addAndMark(MantraEffectType.MANTRA_EFFECT_1, effect);
 			effect.magicCircleColor.setColor(getColor(mData));
 			effect.color.setColor(getColor(mData)).weight(new Color(0xffffff), 0.75f);
-			Effect.addEffect(effect);
 		}
 
 		int tick = caster.iWantKnowCastTick();

@@ -23,9 +23,10 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.api.util.client.ESResources;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
@@ -41,7 +42,6 @@ import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
 import yuzunyannn.elementalsorcery.util.MathSupporter;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
-import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.var.Variables;
@@ -101,7 +101,7 @@ public class MantraElementWhirl extends MantraCommon {
 		mData.set(Variables.TICK, 80);
 		float p = caster.iWantBePotent(2, false) + 1;
 		estack.setPower((int) (estack.getPower() * (p * p)));
-		EntityHelper.setPositionAndUpdate(caster.iWantDirectCaster(), new Vec3d(pos).add(0.5, 0.5, 0.5));
+		caster.iWantDirectCaster().setPositionVector(new Vec3d(pos).add(0.5, 0.5, 0.5));
 	}
 
 	@Override
@@ -121,8 +121,7 @@ public class MantraElementWhirl extends MantraCommon {
 		if (ratio <= 0.4) size *= MathSupporter.easeInOutElastic(ratio / 0.4f);
 		else if (ratio >= 0.9) size *= MathSupporter.easeOutBack((1 - ratio) / 0.1f);
 
-		Entity casterEntity = caster.iWantDirectCaster();
-		Vec3d vec = casterEntity.getPositionVector();
+		Vec3d vec = caster.iWantDirectCaster().getPositionVector();
 		BlockPos pos = new BlockPos(vec);
 
 		int rx = MathHelper.ceil(size);
@@ -162,16 +161,16 @@ public class MantraElementWhirl extends MantraCommon {
 			world.destroyBlock(at, false);
 			BlockElementContainer.doExploded(world, at, eInv, caster.iWantCaster().asEntityLivingBase());
 		}
-		if (world.rand.nextFloat() < 0.25) ItemHelper.dropItem(world, at, new ItemStack(ESObjects.ITEMS.MATERIAL_DEBRIS));
+		if (world.rand.nextFloat() < 0.25)
+			ItemHelper.dropItem(world, at, new ItemStack(ESObjects.ITEMS.MATERIAL_DEBRIS));
 		world.destroyBlock(at, false);
 	}
 
 	public static void affect(World world, ICaster caster, EntityLivingBase entity, double fragment) {
 		if (EntityHelper.isCreative(entity)) return;
 
-		IWorldObject worldObj = caster.iWantCaster();
 		double dmg = TileIceRockStand.getDamageWithFragment(fragment) / 4;
-		DamageSource ds = DamageHelper.getMagicDamageSource(worldObj.asEntity(), caster.iWantDirectCaster());
+		DamageSource ds = caster.iWantDamageSource(ESObjects.ELEMENTS.MAGIC);
 		ds.setDamageBypassesArmor();
 		entity.attackEntityFrom(ds, (float) dmg);
 
@@ -200,13 +199,13 @@ public class MantraElementWhirl extends MantraCommon {
 
 	@SideOnly(Side.CLIENT)
 	public void addAfterEffect(MantraDataCommon data, ICaster caster, int tick, double size) {
-		if (data.hasMarkEffect(1000)) return;
-		Entity entity = caster.iWantDirectCaster();
-		EffectSphericalBlast effect = new EffectSphericalBlast(entity.world, entity.getPositionVector(), (float) size);
+		if (data.getEffectMap().hasMark(MantraEffectType.MANTRA_EFFECT_1)) return;
+		ICasterObject casterObject = caster.iWantDirectCaster();
+		EffectSphericalBlast effect = new EffectSphericalBlast(casterObject.getWorld(),
+				casterObject.getPositionVector(), (float) size);
 		effect.lifeTime = tick;
 		effect.color.setColor(0xb736ff);
-		Effect.addEffect(effect);
-		data.markEffect(1000, effect);
+		data.getEffectMap().addAndMark(MantraEffectType.MANTRA_EFFECT_1, effect);
 	}
 
 	@Override

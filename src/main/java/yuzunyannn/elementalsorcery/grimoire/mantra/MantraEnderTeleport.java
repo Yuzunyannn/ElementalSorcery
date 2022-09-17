@@ -20,11 +20,11 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
-import yuzunyannn.elementalsorcery.api.mantra.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
+import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportFrom;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportTo;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
@@ -123,11 +123,15 @@ public class MantraEnderTeleport extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		super.onSpellingEffect(world, data, caster);
-		if (!hasEffectFlags(world, data, caster, MantraEffectFlags.INDICATOR)) return;
+		if (!hasEffectFlags(world, data, caster, MantraEffectType.INDICATOR)) return;
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		IWorldObject casterObject = caster.iWantCaster();
 		if (casterObject.isClientPlayer()) {
-			if (!mdc.hasMarkEffect(1)) mdc.addConditionEffect(caster, new EffectPlayerAt(world, caster), 1);
+			if (!mdc.getEffectMap().hasMark(MantraEffectType.INDICATOR)) {
+				EffectPlayerAt effect = new EffectPlayerAt(world, caster);
+				effect.setCondition(MantraEffectMap.condition(caster, mdc).setCheckContinue(true));
+				mdc.getEffectMap().addAndMark(MantraEffectType.INDICATOR, effect);
+			}
 		}
 
 		Entity entity = caster.iWantCaster().asEntity();
@@ -137,25 +141,25 @@ public class MantraEnderTeleport extends MantraCommon {
 
 		// super模式下 添加指针
 		if (needSuper && casterObject.isClientPlayer()) {
-			if (!mdc.hasMarkEffect(4)) {
+			if (!mdc.getEffectMap().hasMark(MantraEffectType.INDICATOR)) {
 				EffectLookAt lookAt = new EffectLookAt(world, caster, getColor(mdc));
-				lookAt.setCondition(new ConditionEffect(caster.iWantCaster().asEntity(), mdc, 4, true) {
+				lookAt.setCondition(new MantraEffectMap.MantraCondition(caster, mdc) {
 					@Override
 					public Boolean apply(Void t) {
 						if (!super.apply(t)) return false;
 						isFinish = !checkCanBeSuper(caster, entity);
 						if (isFinish) {
-							data.unmarkEffect(unmark);
+							data.getEffectMap().unmark(unmark);
 							return false;
 						}
 						return true;
 					}
-				});
-				mdc.addConditionEffect(caster, lookAt, 4);
+				}.setCheckContinue(true));
+				mdc.getEffectMap().addAndMark(MantraEffectType.INDICATOR, lookAt);
 			}
 		}
 
-		EffectPlayerAt effectPlayAt = mdc.getMarkEffect(1, EffectPlayerAt.class);
+		EffectPlayerAt effectPlayAt = mdc.getEffectMap().getMark(MantraEffectType.INDICATOR, EffectPlayerAt.class);
 		if (effectPlayAt == null) return;
 
 		effectPlayAt.isGlow = needSuper;

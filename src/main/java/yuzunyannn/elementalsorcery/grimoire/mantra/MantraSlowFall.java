@@ -12,7 +12,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
-import yuzunyannn.elementalsorcery.api.mantra.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -76,7 +76,7 @@ public class MantraSlowFall extends MantraCommon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		if (!hasEffectFlags(world, data, caster, MantraEffectFlags.DECORATE)) return;
+		if (!hasEffectFlags(world, data, caster, MantraEffectType.DECORATE)) return;
 		Random rand = world.rand;
 		Vec3d pos = caster.iWantCaster().getPositionVector();
 		float r = 0.5f;

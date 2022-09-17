@@ -44,7 +44,9 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFireBall;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -286,6 +288,7 @@ public class EntityRelicZombie extends EntityMob {
 	// 巫师攻击
 	protected boolean attackEntityAsMobWizard(Entity entityIn) {
 		if (this.isHandActive()) {
+			if (ESAPI.silent.isSilent(this, SilentLevel.SPELL)) return false;
 			int count = 20 * 60 - this.activeItemStackUseCount;
 			if (count % 10 == 0) {
 				Entity target = this.getAttackTarget();

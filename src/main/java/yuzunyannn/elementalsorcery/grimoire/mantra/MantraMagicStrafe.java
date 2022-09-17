@@ -12,17 +12,16 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
-import yuzunyannn.elementalsorcery.api.mantra.MantraEffectFlags;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleMagicFall;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
-import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 
 public class MantraMagicStrafe extends MantraCommon {
 
@@ -65,8 +64,7 @@ public class MantraMagicStrafe extends MantraCommon {
 		get.grow(36);
 		get.weaken(Math.min(tick / 4, 60) / 20f);
 		float dmg = Math.max(ItemMagicBlastWand.getDamage(get), 0.25f) * (1 + potent * 0.5f);
-		DamageSource ds = DamageHelper.getMagicDamageSource(caster.iWantCaster().asEntity(),
-				caster.iWantDirectCaster());
+		DamageSource ds = caster.iWantDamageSource(ESObjects.ELEMENTS.MAGIC);
 		target.attackEntityFrom(ds, dmg);
 		target.hurtResistantTime = 0;
 	}
@@ -100,7 +98,6 @@ public class MantraMagicStrafe extends MantraCommon {
 	public void onAttackEffect(World world, Vec3d vec, IMantraData data, ICaster caster) {
 		world.playSound(vec.x, vec.y, vec.z, SoundEvents.ENTITY_FIREWORK_SHOOT, SoundCategory.PLAYERS, 1.5F,
 				0.95F + world.rand.nextFloat() * 0.1F, true);
-		if (!this.hasEffectFlags(world, data, caster, MantraEffectFlags.DECORATE)) return;
 		for (int i = 0; i < 16; i++) {
 			ParticleMagicFall p = new ParticleMagicFall(world, vec);
 			p.setColor(TileMDBase.PARTICLE_COLOR[0]);

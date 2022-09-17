@@ -23,16 +23,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
-import yuzunyannn.elementalsorcery.api.mantra.MantraEffectFlags;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
+import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraElementDirectLaunch;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
@@ -82,7 +84,7 @@ public class MantraCommon extends Mantra {
 	public Entity directLaunchMantra(World world, Vec3d vec, @Nullable IWorldObject caster, VariableSet params,
 			NBTTagCompound meta) {
 		EntityGrimoire grimoire = new EntityGrimoire(world, caster == null ? null : caster.asEntityLivingBase(), this,
-				meta, EntityGrimoire.STATE_AFTER_SPELLING);
+				meta, CastStatus.AFTER_SPELLING);
 		IMantraData mantraData = grimoire.getMantraData();
 		try {
 			MantraDataCommon mc = (MantraDataCommon) mantraData;
@@ -229,51 +231,53 @@ public class MantraCommon extends Mantra {
 
 	@SideOnly(Side.CLIENT)
 	public void addEffectMagicCircle(World world, IMantraData data, ICaster caster) {
-		if (hasEffectFlags(world, data, caster, MantraEffectFlags.MAGIC_CIRCLE)) out: {
-			IWorldObject co = caster.iWantCaster();
-			EntityLivingBase eb = co.asEntityLivingBase();
-			if (eb == null) break out;
-			MantraDataCommon dataEffect = (MantraDataCommon) data;
-			if (!dataEffect.hasMarkEffect(0))
-				dataEffect.addConditionEffect(caster, this.getEffectMagicCircle(world, eb, data), 0);
-		}
+		if (!hasEffectFlags(world, data, caster, MantraEffectType.MAGIC_CIRCLE)) return;
+		IWorldObject co = caster.iWantCaster();
+		EntityLivingBase eb = co.asEntityLivingBase();
+		if (eb == null) return;
+		MantraDataCommon dataEffect = (MantraDataCommon) data;
+		if (dataEffect.getEffectMap().hasMark(MantraEffectType.MAGIC_CIRCLE)) return;
+		EffectMagicCircle emc = this.getEffectMagicCircle(world, eb, data);
+		emc.setCondition(MantraEffectMap.condition(caster, dataEffect).setCheckContinue(true));
+		dataEffect.getEffectMap().addAndMark(MantraEffectType.MAGIC_CIRCLE, emc);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void addEffectProgress(World world, IMantraData data, ICaster caster) {
-		if (hasEffectFlags(world, data, caster, MantraEffectFlags.PROGRESS)) out: {
-			float r = this.getProgressRate(world, data, caster);
-			if (r <= 0) break out;
-			MantraDataCommon dataEffect = (MantraDataCommon) data;
-			dataEffect.showProgress(r, this.getColor(data), world, caster);
-		}
+		if (!hasEffectFlags(world, data, caster, MantraEffectType.PLAYER_PROGRESS)) return;
+		float r = this.getProgressRate(world, data, caster);
+		if (r <= 0) return;
+		MantraDataCommon dataEffect = (MantraDataCommon) data;
+		dataEffect.showProgress(r, this.getColor(data), world, caster);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void addEffectIndicatorEffect(World world, IMantraData data, ICaster caster) {
-		if (this.hasEffectFlags(world, data, caster, MantraEffectFlags.INDICATOR)) {
-			MantraDataCommon dataEffect = (MantraDataCommon) data;
-			if (!caster.iWantCaster().isClientPlayer() || dataEffect.hasMarkEffect(1)) return;
-			dataEffect.addConditionEffect(caster, new EffectLookAt(world, caster, this.getColor(dataEffect)), 1);
-		}
+		if (!hasEffectFlags(world, data, caster, MantraEffectType.INDICATOR)) return;
+		MantraDataCommon dataEffect = (MantraDataCommon) data;
+		if (!caster.iWantCaster().isClientPlayer()) return;
+		if (dataEffect.getEffectMap().hasMark(MantraEffectType.INDICATOR)) return;
+		EffectLookAt lookAt = new EffectLookAt(world, caster, this.getColor(dataEffect));
+		lookAt.setCondition(MantraEffectMap.condition(caster, dataEffect).setCheckContinue(true));
+		dataEffect.getEffectMap().addAndMark(MantraEffectType.INDICATOR, lookAt);
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void addEffectEmitEffect(World world, IMantraData data, ICaster caster) {
-		if (this.hasEffectFlags(world, data, caster, MantraEffectFlags.DECORATE)) {
-			Entity entity = caster.iWantCaster().asEntity();
-			if (entity == null) return;
-			MantraDataCommon dataEffect = (MantraDataCommon) data;
-			if (dataEffect.hasMarkEffect(4)) return;
-			EffectMagicEmit emit = new EffectMagicEmit(world, entity);
-			emit.setColor(this.getColor(data));
-			dataEffect.addConditionEffect(caster, emit, 4);
-		}
+		if (!hasEffectFlags(world, data, caster, MantraEffectType.EMIT)) return;
+		Entity entity = caster.iWantCaster().asEntity();
+		if (entity == null) return;
+		MantraDataCommon dataEffect = (MantraDataCommon) data;
+		if (dataEffect.getEffectMap().hasMark(MantraEffectType.EMIT)) return;
+		EffectMagicEmit emit = new EffectMagicEmit(world, entity);
+		emit.setColor(this.getColor(data));
+		emit.setCondition(MantraEffectMap.condition(caster, dataEffect).setCheckContinue(true));
+		dataEffect.getEffectMap().addAndMark(MantraEffectType.EMIT, emit);
 	}
 
 	@SideOnly(Side.CLIENT)
-	public boolean hasEffectFlags(World world, IMantraData data, ICaster caster, MantraEffectFlags flags) {
-		return caster.hasEffectFlags(flags);
+	public boolean hasEffectFlags(World world, IMantraData data, ICaster caster, int mantraType) {
+		return true;
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -333,7 +337,7 @@ public class MantraCommon extends Mantra {
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		if (NBTHelper.hasVec3d(recvData, "_e_vec_")) {
 			Vec3d vec = NBTHelper.getVec3d(recvData, "_e_vec_");
-			caster.iWantDirectCaster().setPosition(vec.x, vec.y, vec.z);
+			caster.iWantDirectCaster().setPositionVector(vec);
 			recvData.removeTag("_e_vec_");
 		}
 		mdc.deserializeNBT(recvData);

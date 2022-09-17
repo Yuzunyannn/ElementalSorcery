@@ -1,10 +1,5 @@
 package yuzunyannn.elementalsorcery.grimoire;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
-
-import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -13,11 +8,9 @@ import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
-import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectScreenProgress;
 import yuzunyannn.elementalsorcery.util.var.Variables;
 
@@ -25,7 +18,7 @@ public class MantraDataCommon implements IMantraData {
 
 	// ---动态数据----
 
-	public final Map<Short, Effect> effectMap = new HashMap<>();
+	private final MantraEffectMap effectMap = new MantraEffectMap();
 
 	public int speedTick;
 	protected boolean markContinue;
@@ -51,97 +44,9 @@ public class MantraDataCommon implements IMantraData {
 	}
 
 	// effect
-
 	@SideOnly(Side.CLIENT)
-	public void markEffect(int id, Effect effect) {
-		effectMap.put((short) id, effect);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void unmarkEffect(int id) {
-		effectMap.remove((short) id);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public boolean hasMarkEffect(int id) {
-		return effectMap.containsKey((short) id);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public Effect getMarkEffect(int id) {
-		return effectMap.get((short) id);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public <T extends Effect> T getMarkEffect(int id, Class<T> cls) {
-		Effect effect = getMarkEffect(id);
-		if (effect == null) return null;
-		if (cls.isAssignableFrom(effect.getClass())) return (T) effect;
-		return null;
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void removeMarkEffect(int id) {
-		Effect effect = effectMap.get((short) id);
-		if (effect instanceof EffectCondition) {
-			Function<Void, Boolean> cond = ((EffectCondition) effect).getCondition();
-			if (cond instanceof EffectCondition.ConditionEntityAction)
-				((EffectCondition.ConditionEntityAction) cond).isFinish = true;
-		}
-		this.unmarkEffect(id);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void addConditionEffect(ICaster caster, EffectCondition effect, int markId, boolean checkContinue) {
-		if (effect instanceof EffectCondition) {
-			EffectCondition eCondition = (EffectCondition) effect;
-			if (eCondition.getCondition() == null) {
-				IWorldObject co = caster.iWantCaster();
-				if (co.asEntity() == null) return;
-				eCondition.setCondition(new ConditionEffect(co.asEntity(), this, markId, checkContinue));
-			}
-		}
-		markEffect(markId, effect);
-		Effect.addEffect(effect);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void addConditionEffect(ICaster caster, EffectCondition effect, int markId) {
-		addConditionEffect(caster, effect, markId, true);
-	}
-
-	/** 通用性的条件 */
-	@SideOnly(Side.CLIENT)
-	public static class ConditionEffect extends EffectCondition.ConditionEntityAction {
-
-		public final MantraDataCommon data;
-		public final short unmark; // 标记
-		public final boolean checkContinue;
-
-		public ConditionEffect(Entity entity, MantraDataCommon data, int unmark, boolean checkContinue) {
-			super(entity);
-			this.data = data;
-			this.unmark = (short) unmark;
-			this.checkContinue = checkContinue;
-		}
-
-		@Override
-		public Boolean apply(Void t) {
-			if (isFinish) return false;
-			if (checkContinue) {
-				isFinish = !data.isMarkContinue();
-				if (isFinish) {
-					data.unmarkEffect(unmark);
-					return false;
-				}
-			}
-			super.apply(t);
-			if (isFinish) {
-				data.unmarkEffect(unmark);
-				return false;
-			}
-			return true;
-		}
+	public MantraEffectMap getEffectMap() {
+		return effectMap;
 	}
 
 	// ---进度数据----
@@ -161,10 +66,11 @@ public class MantraDataCommon implements IMantraData {
 	@SideOnly(Side.CLIENT)
 	public void showProgress(float pro, int color, World world, ICaster caster) {
 		if (!caster.iWantCaster().isClientPlayer()) return;
-		if (!this.hasMarkEffect(2)) {
+		if (!this.effectMap.hasMark(MantraEffectType.PLAYER_PROGRESS)) {
 			effectProgress = new EffectScreenProgress(world);
 			effectProgress.setColor(color);
-			this.addConditionEffect(caster, effectProgress, 2, false);
+			effectProgress.setCondition(MantraEffectMap.condition(caster, this));
+			getEffectMap().addAndMark(MantraEffectType.PLAYER_PROGRESS, effectProgress);
 		} else {
 			if (effectProgress == null) return;
 			effectProgress.setProgress(pro);

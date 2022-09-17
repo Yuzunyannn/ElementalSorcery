@@ -5,10 +5,10 @@ import javax.annotation.Nullable;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
@@ -17,6 +17,9 @@ public interface ICaster {
 
 	/** 调用者希望将一个数据发送到客户端，由{@link Mantra#recvData} 接受 */
 	public void sendToClient(NBTTagCompound nbt);
+
+	/** 获取当前示范状态 */
+	public CastStatus getCastStatus();
 
 	/** 停止释放 */
 	public void stopCaster();
@@ -102,16 +105,16 @@ public interface ICaster {
 	@Nonnull
 	public Vec3d iWantDirection();
 
+	/** 申请一个元素伤害 */
+	@Nonnull
+	public DamageSource iWantDamageSource(@Nonnull Element element);
+
 	/** 获取施法者 ，施法者在某些情况下不一定是entitylivingbase */
 	@Nonnull
 	public IWorldObject iWantCaster();
 
 	/** 获取直接施法者 ，直接释放者是马甲实体，或直接使用FakePlayer(最好不要用，因为实体的生命意味着某些动画是否结束) */
 	@Nonnull
-	public Entity iWantDirectCaster();
-
-	/** 是否有特效标记，用于动画检测 */
-	@SideOnly(Side.CLIENT)
-	public boolean hasEffectFlags(MantraEffectFlags flag);
+	public ICasterObject iWantDirectCaster();
 
 }

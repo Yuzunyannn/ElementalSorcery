@@ -39,7 +39,6 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFireBall;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
-import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -188,11 +187,10 @@ public class MantraFireBall extends MantraCommon {
 			if (living == entity) return false;
 			return true;
 		});
-
 		boolean passTeam = data.get(Variables.KNOWLEDGE).getCount() >= 12;
 		for (EntityLivingBase living : entities) {
 			if (passTeam && EntityHelper.isSameTeam(entity, living)) continue;
-			DamageSource ds = DamageHelper.getMagicDamageSource(entity, caster.iWantDirectCaster());
+			DamageSource ds = caster.iWantDamageSource(ESObjects.ELEMENTS.FIRE);
 			float dmg = power * power / 32;
 			if (living.attackEntityFrom(ds, dmg)) living.setFire((int) (power * 2));
 		}

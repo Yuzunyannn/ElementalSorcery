@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.api.util;
 
 import java.util.Random;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import io.netty.buffer.ByteBuf;
@@ -20,12 +21,16 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IWorldObject extends ICapabilityProvider {
 
+	@Nonnull
 	Vec3d getPositionVector();
 
+	@Nonnull
 	World getWorld();
 
+	@Nullable
 	TileEntity asTileEntity();
 
+	@Nullable
 	Entity asEntity();
 
 	default Random getRNG() {

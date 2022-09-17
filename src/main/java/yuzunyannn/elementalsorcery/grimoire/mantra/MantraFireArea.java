@@ -26,9 +26,12 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
+import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.element.ElementKnowledge;
-import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.ConditionEffect;
+import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
@@ -65,11 +68,12 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 	@SideOnly(Side.CLIENT)
 	public void addAfterEffect(SquareData data, ICaster caster, int size) {
 		if (size <= 0) return;
-		if (data.hasMarkEffect(1000)) return;
-		Entity entity = caster.iWantDirectCaster();
-		EffectMagicSquare ems = new EffectMagicSquare(entity.world, entity, size, this.getColor(data));
-		ems.setCondition(new ConditionEffect(entity, data, 1000, false));
-		data.addConditionEffect(caster, ems, 1000);
+		if (data.getEffectMap().hasMark(MantraEffectType.MANTRA_EFFECT_1)) return;
+		ICasterObject casterObject = caster.iWantDirectCaster();
+		EffectMagicSquare ems = new EffectMagicSquare(casterObject.getWorld(), casterObject.asEntity(), size,
+				this.getColor(data));
+		ems.setCondition(MantraEffectMap.condition(caster, data, CastStatus.AFTER_SPELLING));
+		data.getEffectMap().addAndMark(MantraEffectType.MANTRA_EFFECT_1, ems);
 		ems.setIcon(this.getMagicCircleIcon());
 		List<Vec3d> vec = new ArrayList<>();
 		vec.add(ColorHelper.color(getColor(data)));

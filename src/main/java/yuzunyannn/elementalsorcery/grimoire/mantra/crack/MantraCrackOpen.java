@@ -23,6 +23,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
@@ -75,7 +76,7 @@ public class MantraCrackOpen extends MantraCrackCommon {
 			return;
 		}
 		Vec3d vec = new Vec3d(wTarget.getPos()).add(0.5, 0.5, 0.5);
-		caster.iWantDirectCaster().setPosition(vec.x, vec.y, vec.z);
+		caster.iWantDirectCaster().setPositionVector(vec);
 		sendMantraDataToClient(world, data, caster);
 	}
 
@@ -179,16 +180,15 @@ public class MantraCrackOpen extends MantraCrackCommon {
 	@SideOnly(Side.CLIENT)
 	public void addAndUpdateEffectCrackOpen(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon mdc = (MantraDataCommon) data;
-		Effect effect = mdc.getMarkEffect(1000);
-		if (effect instanceof EffectCylinderCrackBlast) {
-			EffectCylinderCrackBlast eccb = ((EffectCylinderCrackBlast) effect);
-			eccb.hold();
-			eccb.targetScale = mdc.get(SIZED);
+		EffectCylinderCrackBlast effect = mdc.getEffectMap().getMark(MantraEffectType.MANTRA_EFFECT_1,
+				EffectCylinderCrackBlast.class);
+		if (effect != null) {
+			effect.hold();
+			effect.targetScale = mdc.get(SIZED);
 			return;
 		}
 		effect = new EffectCylinderCrackBlast(world, caster.iWantDirectCaster().getPositionVector());
-		Effect.addEffect(effect);
-		mdc.markEffect(1000, effect);
+		mdc.getEffectMap().addAndMark(MantraEffectType.MANTRA_EFFECT_1, effect);
 	}
 
 }
