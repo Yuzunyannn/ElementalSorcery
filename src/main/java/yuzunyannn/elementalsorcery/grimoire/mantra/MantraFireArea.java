@@ -26,12 +26,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
-import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
 import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.element.ElementKnowledge;
-import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
@@ -67,14 +64,9 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addAfterEffect(SquareData data, ICaster caster, int size) {
-		if (size <= 0) return;
-		if (data.getEffectMap().hasMark(MantraEffectType.MANTRA_EFFECT_1)) return;
-		ICasterObject casterObject = caster.iWantDirectCaster();
-		EffectMagicSquare ems = new EffectMagicSquare(casterObject.getWorld(), casterObject.asEntity(), size,
-				this.getColor(data));
-		ems.setCondition(MantraEffectMap.condition(caster, data, CastStatus.AFTER_SPELLING));
-		data.getEffectMap().addAndMark(MantraEffectType.MANTRA_EFFECT_1, ems);
-		ems.setIcon(this.getMagicCircleIcon());
+		super.addAfterEffect(data, caster, size);
+		EffectMagicSquare ems = data.getEffectMap().getMark(MantraEffectType.MANTRA_EFFECT_1, EffectMagicSquare.class);
+		if (ems == null) return;
 		List<Vec3d> vec = new ArrayList<>();
 		vec.add(ColorHelper.color(getColor(data)));
 		if (data.get(ESObjects.ELEMENTS.KNOWLEDGE).getCount() >= 20) vec.add(ColorHelper.color(ElementKnowledge.COLOR));
@@ -86,9 +78,10 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 		int tick = caster.iWantKnowCastTick();
 		ElementStack fire = data.get(ESObjects.ELEMENTS.FIRE);
 		if (fire.isEmpty()) return false;
-		if (tick % 20 != 0) return true;
 
 		float pp = data.get(POTENT_POWER);
+		int preTick = pp >= 1 ? 20 : 30;
+		if (tick % preTick != 0) return true;
 
 		ElementStack knowledge = data.get(ESObjects.ELEMENTS.KNOWLEDGE);
 		Random rand = world.rand;

@@ -1240,6 +1240,11 @@
 			"zh_CN": "沉默",
 			"en_US": "Silent",
 			"ja_JP": "サイレント"
+		},
+		"es.effect.frozen": {
+			"zh_CN": "冻结",
+			"en_US": "Frozen",
+			"ja_JP": "とうけつ"
 		}
 	},
 	"es.effect.type":{
@@ -1553,6 +1558,26 @@
 			"zh_CN": "让元素集中在一起并以光线射出的咒文，不同元素可能会产生不同的效果",
 			"en_US": "Element be brought together to emit laser, different Element may have different effects",
 			"ja_JP": "元素を集めて光を放つ呪文は、元素によって効果が異なる場合がある"
+		},
+		"mantra.sturdyArea.name": {
+			"zh_CN": "坚固领域",
+			"en_US": "Sturdy Area",
+			"ja_JP": "堅牢な領域"
+		},
+		"mantra.sturdyArea.describe": {
+			"zh_CN": "借助土元素，形成一个无法进入的区域",
+			"en_US": "With the Earth, construct an inaccessible area",
+			"ja_JP": "土元素で立ち入ることのできない領域を形成する"
+		},
+		"mantra.frozen.name": {
+			"zh_CN": "寒风凛冽",
+			"en_US": "Piercing Cold Wind",
+			"ja_JP": "寒風"
+		},
+		"mantra.frozen.describe": {
+			"zh_CN": "借助水、气元素，产生寒冷的风雪，让敌人发生冻结",
+			"en_US": "With the Water and Air, wind cold snow to freeze the enemy",
+			"ja_JP": "水と気元素で冷たい風雪が吹き、敵を凍らせる"
 		}
 	},
 	"key": {

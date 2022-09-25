@@ -250,6 +250,7 @@ es.effect.blessing=祝福
 es.effect.elementCrackAttack=元素ひび割れ
 es.effect.enthusiasticStudy=熱狂的に解読
 es.effect.silent=サイレント
+es.effect.frozen=とうけつ
 
 es.potion.effect.silent=沈黙のポーション
 es.splash_potion.effect.silent=沈黙のスプラッシュポーション
@@ -315,6 +316,10 @@ mantra.elementWhirl.name=元素旋回
 mantra.elementWhirl.describe=元素を高速で旋回させる呪文
 mantra.laser.name=元素クラスター
 mantra.laser.describe=元素を集めて光を放つ呪文は、元素によって効果が異なる場合がある
+mantra.sturdyArea.name=堅牢な領域
+mantra.sturdyArea.describe=土元素で立ち入ることのできない領域を形成する
+mantra.frozen.name=寒風
+mantra.frozen.describe=水と気元素で冷たい風雪が吹き、敵を凍らせる
 
 key.es.func=機能キー
 

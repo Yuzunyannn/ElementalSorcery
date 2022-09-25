@@ -9,8 +9,8 @@ import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectFragmentMove;
-import yuzunyannn.elementalsorcery.util.MathSupporter;
 import yuzunyannn.elementalsorcery.util.helper.Color;
+import yuzunyannn.elementalsorcery.util.math.MathSupporter;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 @SideOnly(Side.CLIENT)

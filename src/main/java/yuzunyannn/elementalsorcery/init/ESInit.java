@@ -172,6 +172,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloat;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloatArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFluorspar;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFootbridge;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFrozen;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLaser;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLaunch;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLightningArea;
@@ -181,6 +182,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraMiningArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraPotent;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSlowFall;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSprint;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSturdyArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraTimeHourglass;
 import yuzunyannn.elementalsorcery.grimoire.mantra.crack.MantraCrackOpen;
@@ -284,6 +286,7 @@ import yuzunyannn.elementalsorcery.potion.PotionEnderization;
 import yuzunyannn.elementalsorcery.potion.PotionEnthusiasticStudy;
 import yuzunyannn.elementalsorcery.potion.PotionFireWalker;
 import yuzunyannn.elementalsorcery.potion.PotionFluoresceWalker;
+import yuzunyannn.elementalsorcery.potion.PotionFrozen;
 import yuzunyannn.elementalsorcery.potion.PotionGoldenEye;
 import yuzunyannn.elementalsorcery.potion.PotionHealthBalance;
 import yuzunyannn.elementalsorcery.potion.PotionPoundWalker;
@@ -672,6 +675,8 @@ public class ESInit {
 		ESObjects.MANTRAS.TIME_HOURGLASS = new MantraTimeHourglass();
 		ESObjects.MANTRAS.ELEMENT_WHIRL = new MantraElementWhirl();
 		ESObjects.MANTRAS.LASER = new MantraLaser();
+		ESObjects.MANTRAS.STURDY_AREA = new MantraSturdyArea();
+		ESObjects.MANTRAS.FROZEN = new MantraFrozen();
 
 		ESObjects.MANTRAS.ECRACK_OPEN = new MantraCrackOpen();
 
@@ -725,6 +730,7 @@ public class ESInit {
 		ESObjects.POTIONS.ELEMENT_CRACK_ATTACK = new PotionElementCrackAttack();
 		ESObjects.POTIONS.ENTHUSIASTIC_STUDY = new PotionEnthusiasticStudy();
 		ESObjects.POTIONS.SILENT = new PotionSilent();
+		ESObjects.POTIONS.FROZEN = new PotionFrozen();
 
 		ESObjects.POTION_TYPES.SILENT = PotionTypeES.create("silent",
 				new PotionEffect(ESObjects.POTIONS.SILENT, 20 * 16));

@@ -53,12 +53,14 @@ public class MantraLightningArea extends MantraSquareAreaAdv {
 	@Override
 	public boolean tick(World world, SquareData data, ICaster caster, BlockPos originPos) {
 		if (world.isRemote) return true;
-		float pp = data.get(POTENT_POWER);
-
 		int tick = caster.iWantKnowCastTick();
 		ElementStack air = data.get(ESObjects.ELEMENTS.AIR);
 		if (air.isEmpty()) return false;
-		if (tick % 20 != 0) return true;
+		
+		float pp = data.get(POTENT_POWER);
+		int preTick = pp >= 1 ? 20 : 30;
+		if (tick % preTick != 0) return true;
+		
 		Random rand = world.rand;
 		air.shrink(8);
 		ElementStack fire = data.get(ESObjects.ELEMENTS.FIRE);

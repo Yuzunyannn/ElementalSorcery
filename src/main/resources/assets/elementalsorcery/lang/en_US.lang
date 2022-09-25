@@ -250,6 +250,7 @@ es.effect.blessing=Blessing
 es.effect.elementCrackAttack=Element Crack
 es.effect.enthusiasticStudy=Enthusiastic Unscrambling
 es.effect.silent=Silent
+es.effect.frozen=Frozen
 
 es.potion.effect.silent=Potion of Silence
 es.splash_potion.effect.silent=Splash Potion of Silence 
@@ -315,6 +316,10 @@ mantra.elementWhirl.name=Element Whirl
 mantra.elementWhirl.describe=spin Element at high speed
 mantra.laser.name=Element Cluster
 mantra.laser.describe=Element be brought together to emit laser, different Element may have different effects
+mantra.sturdyArea.name=Sturdy Area
+mantra.sturdyArea.describe=With the Earth, construct an inaccessible area
+mantra.frozen.name=Piercing Cold Wind
+mantra.frozen.describe=With the Water and Air, wind cold snow to freeze the enemy
 
 key.es.func=Function key
 

@@ -39,11 +39,11 @@ import yuzunyannn.elementalsorcery.grimoire.remote.FMantraElementWhirl;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectSphericalBlast;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
-import yuzunyannn.elementalsorcery.util.MathSupporter;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.util.math.MathSupporter;
 import yuzunyannn.elementalsorcery.util.var.Variables;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 

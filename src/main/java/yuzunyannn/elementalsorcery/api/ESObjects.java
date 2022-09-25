@@ -8,6 +8,9 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFrozen;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSturdyArea;
+import yuzunyannn.elementalsorcery.potion.PotionFrozen;
 
 public class ESObjects {
 
@@ -257,6 +260,8 @@ public class ESObjects {
 		public Mantra TIME_HOURGLASS;
 		public Mantra ELEMENT_WHIRL;
 		public Mantra LASER;
+		public Mantra STURDY_AREA;
+		public Mantra FROZEN;
 	}
 
 	static public class Potions {
@@ -283,6 +288,7 @@ public class ESObjects {
 		public Potion ELEMENT_CRACK_ATTACK;
 		public Potion ENTHUSIASTIC_STUDY;
 		public Potion SILENT;
+		public Potion FROZEN;
 	}
 
 	static public class PotionTypes {

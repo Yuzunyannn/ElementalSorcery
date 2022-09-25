@@ -26,6 +26,8 @@ public class EffectMagicSquare extends EffectCondition {
 	public float g = 0;
 	public float b = 0;
 
+	public boolean enableElementEffect = true;
+
 	public float size = 8;
 
 	public Vec3d[] effectColors = null;
@@ -105,7 +107,7 @@ public class EffectMagicSquare extends EffectCondition {
 				eScale = eScale + 0.0075f;
 			}
 
-			int times = (int) (size / 16 + 1);
+			int times = enableElementEffect ? (int) (size / 16 + 1) : 0;
 			for (int i = 0; i < times; i++) {
 				float r = this.r, g = this.g, b = this.b;
 				if (effectColors != null && effectColors.length > 0) {

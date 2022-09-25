@@ -21,14 +21,13 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
@@ -37,9 +36,10 @@ import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
-import yuzunyannn.elementalsorcery.grimoire.mantra.crack.MantraCrackOpen;
 import yuzunyannn.elementalsorcery.parchment.Pages;
-import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectSnow;
+import yuzunyannn.elementalsorcery.util.LamdaReference;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -122,6 +122,23 @@ public class CommandESDebug {
 				return;
 			case "textTest": {
 
+				final Vec3d at = new Vec3d(pos);
+				Minecraft.getMinecraft().addScheduledTask(() -> {
+					LamdaReference<Integer> ref = LamdaReference.of(0);
+					EventClient.addTickTask(() -> {
+						ref.set(ref.get() + 1);
+						if (ref.get() > 100) return ITickTask.END;
+						for (int i = 0; i < 10; i++) {
+							EffectSnow snow = new EffectSnow(Minecraft.getMinecraft().world,
+									at.add(Effect.rand.nextGaussian(), Effect.rand.nextGaussian() + 1, Effect.rand.nextGaussian()));
+							snow.xAccelerate = 0.1f;
+							snow.setDecay(Effect.rand.nextFloat() * 0.2 + 0.5);
+							Effect.addEffect(snow);
+						}
+						return ITickTask.SUCCESS;
+					});
+				});
+
 //				int n = 0;
 //				for (int i = 0; i < 100000; i++) {
 //					ElementStack eStack1 = new ElementStack(ESObjects.ELEMENTS.FIRE, RandomHelper.rand.nextInt(10000),
@@ -144,7 +161,7 @@ public class CommandESDebug {
 //				}
 //				System.out.println(n / 100000.0);
 
-				MantraCrackOpen.attack(entity.world, pos, 16, entity, 0, true);
+//				MantraCrackOpen.attack(entity.world, pos, 16, entity, 0, true);
 
 //				for (int i = 0; i < 32; i++) {
 //					EntityItemGoods goods = new EntityItemGoods(entity.world,

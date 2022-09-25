@@ -44,6 +44,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
+import net.minecraftforge.event.entity.living.LivingHealEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingSetAttackTargetEvent;
 import net.minecraftforge.event.entity.living.LootingLevelEvent;
@@ -93,6 +94,7 @@ import yuzunyannn.elementalsorcery.potion.PotionCombatSkill;
 import yuzunyannn.elementalsorcery.potion.PotionDefenseSkill;
 import yuzunyannn.elementalsorcery.potion.PotionEndercorps;
 import yuzunyannn.elementalsorcery.potion.PotionEnderization;
+import yuzunyannn.elementalsorcery.potion.PotionFrozen;
 import yuzunyannn.elementalsorcery.potion.PotionHealthBalance;
 import yuzunyannn.elementalsorcery.potion.PotionPowerPitcher;
 import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
@@ -629,12 +631,12 @@ public class EventServer {
 	@SubscribeEvent
 	public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
 		EntityLivingBase living = event.getEntityLiving();
+		World world = living.world;
 		if (ESAPI.silent.isSilent(living, SilentLevel.PHENOMENON)) {
 			for (EntityEquipmentSlot slot : EntityEquipmentSlot.values()) {
 				ItemStack stack = living.getItemStackFromSlot(slot);
 				if (!stack.isEmpty() && stack.getTagCompound() != null) stack.getTagCompound().removeTag("ench");
 			}
-
 		}
 	}
 
@@ -645,6 +647,16 @@ public class EventServer {
 			event.setResult(Result.DENY);
 			event.setCanceled(true);
 			return;
+		}
+	}
+
+	@SubscribeEvent
+	public static void onLivingHeal(LivingHealEvent event) {
+		EntityLivingBase entity = event.getEntityLiving();
+		PotionEffect frozen = entity.getActivePotionEffect(ESObjects.POTIONS.FROZEN);
+		if (frozen != null) {
+			int amplifier = frozen.getAmplifier();
+			event.setAmount(Math.max(0, event.getAmount() * (1 + (amplifier + 1) * PotionFrozen.FACTOR)));
 		}
 	}
 

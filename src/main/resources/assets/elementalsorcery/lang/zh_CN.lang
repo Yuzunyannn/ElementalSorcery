@@ -250,6 +250,7 @@ es.effect.blessing=祝福
 es.effect.elementCrackAttack=元素裂縫
 es.effect.enthusiasticStudy=学力爆发
 es.effect.silent=沉默
+es.effect.frozen=冻结
 
 es.potion.effect.silent=禁言药水
 es.splash_potion.effect.silent=喷溅型禁言药水
@@ -315,6 +316,10 @@ mantra.elementWhirl.name=元素回旋
 mantra.elementWhirl.describe=让元素高速回旋的咒文
 mantra.laser.name=元素集束
 mantra.laser.describe=让元素集中在一起并以光线射出的咒文，不同元素可能会产生不同的效果
+mantra.sturdyArea.name=坚固领域
+mantra.sturdyArea.describe=借助土元素，形成一个无法进入的区域
+mantra.frozen.name=寒风凛冽
+mantra.frozen.describe=借助水、气元素，产生寒冷的风雪，让敌人发生冻结
 
 key.es.func=功能键
 
