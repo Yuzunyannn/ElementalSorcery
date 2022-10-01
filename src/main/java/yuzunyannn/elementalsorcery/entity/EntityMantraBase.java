@@ -377,6 +377,16 @@ public abstract class EntityMantraBase extends Entity
 	public ICasterObject iWantDirectCaster() {
 		return this;
 	}
+	
+	@Override
+	public Mantra iWantMantra() {
+		return this.mantra;
+	}
+	
+	@Override
+	public IMantraData iWantMantraData() {
+		return this.mantraData;
+	}
 
 	@Override
 	public World getWorld() {

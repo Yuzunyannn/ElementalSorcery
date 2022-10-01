@@ -173,6 +173,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFloatArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFluorspar;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFootbridge;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFrozen;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraIceCrystalBomb;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLaser;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLaunch;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLightningArea;
@@ -677,6 +678,7 @@ public class ESInit {
 		ESObjects.MANTRAS.LASER = new MantraLaser();
 		ESObjects.MANTRAS.STURDY_AREA = new MantraSturdyArea();
 		ESObjects.MANTRAS.FROZEN = new MantraFrozen();
+		ESObjects.MANTRAS.ICE_CRYSTAL_BOMB = new MantraIceCrystalBomb();
 
 		ESObjects.MANTRAS.ECRACK_OPEN = new MantraCrackOpen();
 

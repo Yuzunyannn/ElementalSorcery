@@ -32,7 +32,6 @@ import yuzunyannn.elementalsorcery.element.ElementKnowledge;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
-import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
 public class MantraFireArea extends MantraSquareAreaAdv {
 
@@ -87,8 +86,6 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 		Random rand = world.rand;
 		fire.shrink(8);
 
-		Entity entityCaster = caster.iWantCaster().asEntity();
-
 		final float size = data.getSize() / 2;
 		AxisAlignedBB aabb = new AxisAlignedBB(originPos.getX() - size, originPos.getY(), originPos.getZ() - size,
 				originPos.getX() + size, originPos.getY() + 3, originPos.getZ() + size);
@@ -96,7 +93,7 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 		for (Entity entity : entities) {
 			if (!(entity instanceof EntityLivingBase) && !(entity instanceof EntityItem)) continue;
 			if (knowledge.getCount() >= 20) {
-				if (EntityHelper.isSameTeam(entityCaster, entity)) continue;
+				if (isCasterFriend(caster, entity)) continue;
 				if (entity instanceof EntityItem) continue;
 			}
 			entity.setFire(5);

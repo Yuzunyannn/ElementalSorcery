@@ -53,6 +53,7 @@ public class DamageHelper {
 	}
 
 	public static float getNormalAttackDamage(EntityLivingBase player, Entity target) {
+		if (player == null) return 0;
 		// 伤害获取
 		float damage = (float) player.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
 		EnumCreatureAttribute spAttribute = EnumCreatureAttribute.UNDEFINED;

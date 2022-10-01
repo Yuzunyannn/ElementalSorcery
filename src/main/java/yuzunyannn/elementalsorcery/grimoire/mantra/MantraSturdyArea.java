@@ -26,7 +26,6 @@ import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquareNoEntry;
-import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
 public class MantraSturdyArea extends MantraSquareAreaAdv {
 
@@ -79,8 +78,6 @@ public class MantraSturdyArea extends MantraSquareAreaAdv {
 		if (earth.isEmpty()) return false;
 		if (tick % 20 == 0) earth.shrink(1);
 
-		Entity entityCaster = caster.iWantCaster().asEntity();
-
 		final float size = data.getSize() / 2;
 		final float hight = Math.max(3, data.getSize() / 3);
 		AxisAlignedBB aabb = new AxisAlignedBB(originPos.getX() - size, originPos.getY() - hight,
@@ -88,7 +85,7 @@ public class MantraSturdyArea extends MantraSquareAreaAdv {
 
 		List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, aabb);
 		for (Entity entity : entities) {
-			if (EntityHelper.isSameTeam(entityCaster, entity)) continue;
+			if (isCasterFriend(caster, entity)) continue;
 			if (entity instanceof EntityLivingBase || entity instanceof EntityItem || entity instanceof IProjectile
 					|| entity instanceof EntityFireball) {
 				Vec3d speed = new Vec3d(entity.motionX, 0, entity.motionZ);

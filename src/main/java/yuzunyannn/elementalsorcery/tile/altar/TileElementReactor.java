@@ -63,7 +63,7 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 
 	/** 不稳定片元的默认容量 */
 	@Config(sync = true)
-	static public double INSTABLE_FRAGMENT_BASE_CAPACITY = 1000000;
+	static public double INSTABLE_FRAGMENT_BASE_CAPACITY = 3200000;
 
 	/** 每次取出元素的比例 */
 	@Config(sync = true)

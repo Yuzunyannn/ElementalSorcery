@@ -4,13 +4,12 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectIceCrystalBomb;
 
 @SideOnly(Side.CLIENT)
-public class EffectSnow extends EffectFacing {
+public class EffectIceFragment extends EffectFacing {
 
-	public final static EffectBatchTypeNormal BATCH_TYPE = new EffectBatchTypeNormal(
-			new TextureBinder("minecraft", "textures/environment/snow.png"));
+	public final static EffectBatchTypeNormal BATCH_TYPE = new EffectBatchTypeNormal(EffectIceCrystalBomb.TEXTURE);
 
 	public float rotate, prevRotate;
 	public float dRotate;
@@ -23,15 +22,20 @@ public class EffectSnow extends EffectFacing {
 	public double yAccelerate = 0;
 	public double zAccelerate = 0;
 
-	public EffectSnow(World worldIn, Vec3d vec) {
+	public EffectIceFragment(World worldIn, Vec3d vec) {
 		super(worldIn, vec.x, vec.y, vec.z);
 		this.color.setColor(0xffffff);
 		this.asParticle = true;
 		this.prevAlpha = this.alpha = 0;
-		this.prevScale = this.scale = rand.nextFloat() * 0.4f + 0.3f;
-		this.texY = rand.nextFloat() * 0.75f;
-		this.texH = 0.25f;
+		this.prevScale = this.scale = rand.nextFloat() * 0.01f + 0.005f;
 		this.dRotate = rand.nextFloat() * 3;
+		randomUV(rand.nextFloat() * 0.1f + 0.1f);
+	}
+
+	public void randomUV(float size) {
+		this.texX = rand.nextFloat() * (1 - size);
+		this.texY = rand.nextFloat() * (1 - size);
+		this.texW = this.texH = size;
 	}
 
 	@Override

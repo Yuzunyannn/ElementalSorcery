@@ -3,8 +3,6 @@ package yuzunyannn.elementalsorcery.util.render;
 import org.lwjgl.opengl.GL11;
 
 import net.minecraft.client.renderer.BufferBuilder;
-import net.minecraft.client.renderer.GLAllocation;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.math.MathHelper;
@@ -13,12 +11,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class ModelSphere {
+public class ModelSphere extends DisplayList {
 
 	static public final float PI = (float) Math.PI;
-
-	private int displayList;
-	private boolean compiled;
 
 	public int uStepNum = 100;
 	public int vStepNum = 100;
@@ -28,11 +23,6 @@ public class ModelSphere {
 		double z = MathHelper.sin(PI * v) * MathHelper.sin(2 * PI * u);
 		double y = MathHelper.cos(PI * v);
 		return new Vec3d(x, y, z);
-	}
-
-	public void render() {
-		if (!compiled) compileDisplayList();
-		GlStateManager.callList(this.displayList);
 	}
 
 	private void add(BufferBuilder bufferbuilder, Vec3d[] coords, Vec3d[] points, int n) {
@@ -86,17 +76,13 @@ public class ModelSphere {
 		}
 	}
 
-	private void compileDisplayList() {
-		this.displayList = GLAllocation.generateDisplayLists(1);
-		GlStateManager.glNewList(this.displayList, 4864);
-
+	@Override
+	protected void doRender() {
 		Tessellator tessellator = Tessellator.getInstance();
 		BufferBuilder bufferbuilder = tessellator.getBuffer();
 		bufferbuilder.begin(GL11.GL_TRIANGLES, DefaultVertexFormats.OLDMODEL_POSITION_TEX_NORMAL);
 		buildBuff(bufferbuilder);
 		tessellator.draw();
-
-		GlStateManager.glEndList();
-		this.compiled = true;
 	}
+
 }

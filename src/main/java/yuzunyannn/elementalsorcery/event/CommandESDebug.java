@@ -37,9 +37,7 @@ import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.parchment.Pages;
-import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.batch.EffectSnow;
-import yuzunyannn.elementalsorcery.util.LamdaReference;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectIceCrystalBomb;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -124,19 +122,23 @@ public class CommandESDebug {
 
 				final Vec3d at = new Vec3d(pos);
 				Minecraft.getMinecraft().addScheduledTask(() -> {
-					LamdaReference<Integer> ref = LamdaReference.of(0);
-					EventClient.addTickTask(() -> {
-						ref.set(ref.get() + 1);
-						if (ref.get() > 100) return ITickTask.END;
-						for (int i = 0; i < 10; i++) {
-							EffectSnow snow = new EffectSnow(Minecraft.getMinecraft().world,
-									at.add(Effect.rand.nextGaussian(), Effect.rand.nextGaussian() + 1, Effect.rand.nextGaussian()));
-							snow.xAccelerate = 0.1f;
-							snow.setDecay(Effect.rand.nextFloat() * 0.2 + 0.5);
-							Effect.addEffect(snow);
-						}
-						return ITickTask.SUCCESS;
-					});
+//					LamdaReference<Integer> ref = LamdaReference.of(0);
+//					EventClient.addTickTask(() -> {
+//						ref.set(ref.get() + 1);
+//						if (ref.get() > 100) return ITickTask.END;
+//						for (int i = 0; i < 10; i++) {
+//							EffectSnow snow = new EffectSnow(Minecraft.getMinecraft().world,
+//									at.add(Effect.rand.nextGaussian(), Effect.rand.nextGaussian() + 1, Effect.rand.nextGaussian()));
+//							snow.xAccelerate = 0.1f;
+//							snow.setDecay(Effect.rand.nextFloat() * 0.2 + 0.5);
+//							Effect.addEffect(snow);
+//						}
+//						return ITickTask.SUCCESS;
+//					});
+//					EffectIceCrystalBomb effect = new EffectIceCrystalBomb(Minecraft.getMinecraft().world, at);
+//					effect.setCondition(e -> true);
+//					Effect.addEffect(effect);
+					EffectIceCrystalBomb.playEndBlastEffect(Minecraft.getMinecraft().world, at.add(0, 1, 0), true);
 				});
 
 //				int n = 0;

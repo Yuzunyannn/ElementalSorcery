@@ -110,6 +110,12 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		map.clear();
 	}
 
+	public VariableSet copy() {
+		VariableSet set = new VariableSet();
+		set.deserializeNBT(this.serializeNBT());
+		return set;
+	}
+
 	@Override
 	public NBTTagCompound serializeNBT() {
 		return serializeNBT((key, obj) -> true);

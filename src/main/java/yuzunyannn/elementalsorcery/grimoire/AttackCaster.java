@@ -16,6 +16,8 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
@@ -46,6 +48,17 @@ public class AttackCaster implements ICaster, ICasterObject {
 
 	@Override
 	public void stopCaster() {
+	}
+
+	@Override
+	public Mantra iWantMantra() {
+		Grimoire.Info info = grimoire.getInfo(grimoire.getSelected());
+		return info.mantra;
+	}
+	
+	@Override
+	public IMantraData iWantMantraData() {
+		return null;
 	}
 
 	@Override

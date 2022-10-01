@@ -39,7 +39,6 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFireBall;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
-import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.var.Variables;
@@ -181,15 +180,16 @@ public class MantraFireBall extends MantraCommon {
 		double x = bPos.getX() + 0.5;
 		double y = bPos.getY() + 0.5;
 		double z = bPos.getZ() + 0.5;
-		Entity entity = caster.iWantCaster().asEntity();
+		Entity casterEntity = caster.iWantCaster().asEntity();
+
 		AxisAlignedBB aabb = new AxisAlignedBB(x - size, y - size, z - size, x + size, y + size, z + size);
 		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb, (living) -> {
-			if (living == entity) return false;
+			if (living == casterEntity) return false;
 			return true;
 		});
 		boolean passTeam = data.get(Variables.KNOWLEDGE).getCount() >= 12;
 		for (EntityLivingBase living : entities) {
-			if (passTeam && EntityHelper.isSameTeam(entity, living)) continue;
+			if (passTeam && isCasterFriend(caster, living)) continue;
 			DamageSource ds = caster.iWantDamageSource(ESObjects.ELEMENTS.FIRE);
 			float dmg = power * power / 32;
 			if (living.attackEntityFrom(ds, dmg)) living.setFire((int) (power * 2));

@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFrozen;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraIceCrystalBomb;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSturdyArea;
 import yuzunyannn.elementalsorcery.potion.PotionFrozen;
 
@@ -262,6 +263,7 @@ public class ESObjects {
 		public Mantra LASER;
 		public Mantra STURDY_AREA;
 		public Mantra FROZEN;
+		public Mantra ICE_CRYSTAL_BOMB;
 	}
 
 	static public class Potions {

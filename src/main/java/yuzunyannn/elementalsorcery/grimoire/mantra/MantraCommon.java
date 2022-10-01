@@ -46,6 +46,7 @@ import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleIcon;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicEmit;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class MantraCommon extends Mantra {
@@ -62,6 +63,7 @@ public class MantraCommon extends Mantra {
 	public static final Variable<Float> POTENT_POWER = new Variable<>("potentPower", VariableSet.FLOAT);
 	public static final Variable<ElementStack> ELEMENT = new Variable<>("eStack", VariableSet.ELEMENT);
 	public static final Variable<Double> FRAGMENT = new Variable<>("fragment", VariableSet.DOUBLE);
+	public static final Variable<Integer> TICK = new Variable<>("tick", VariableSet.INT);
 
 	protected int color = 0;
 	protected ResourceLocation icon;
@@ -317,6 +319,11 @@ public class MantraCommon extends Mantra {
 
 	public static boolean beforeGeneralStartTime(ICaster caster) {
 		return caster.iWantKnowCastTick() < 20;
+	}
+
+	public boolean isCasterFriend(ICaster caster, Entity entity) {
+		IWorldObject wo = caster.iWantCaster();
+		return EntityHelper.isSameTeam(wo.asEntity(), entity);
 	}
 
 	public static ElementStack getElement(ICaster caster, Element element, int size, int power) {

@@ -549,4 +549,14 @@ public class EntityGrimoireOld extends Entity
 		return this;
 	}
 
+	@Override
+	public Mantra iWantMantra() {
+		return this.mantra;
+	}
+
+	@Override
+	public IMantraData iWantMantraData() {
+		return this.mantraData;
+	}
+
 }

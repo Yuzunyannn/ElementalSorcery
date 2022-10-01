@@ -320,6 +320,8 @@ mantra.sturdyArea.name=Sturdy Area
 mantra.sturdyArea.describe=With the Earth, construct an inaccessible area
 mantra.frozen.name=Piercing Cold Wind
 mantra.frozen.describe=With the Water and Air, wind cold snow to freeze the enemy
+mantra.iceCrystalBomb.name=Ice Crystal Bomb
+mantra.iceCrystalBomb.describe=With the Water, Ice Crystal is built and will explode when creatures approach
 
 key.es.func=Function key
 

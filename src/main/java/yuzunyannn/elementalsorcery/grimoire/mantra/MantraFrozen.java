@@ -5,8 +5,11 @@ import java.util.Random;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -19,19 +22,34 @@ import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectSnow;
-import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
+import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.math.Line3d;
 import yuzunyannn.elementalsorcery.util.math.Plane3d;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class MantraFrozen extends MantraCommon {
 
+	final public static float SUPER_POTENT_POWER = 0.5f;
+
 	public MantraFrozen() {
 		this.setTranslationKey("frozen");
 		this.setColor(0x66b8e7);
 		this.setIcon("frozen");
-		this.setRarity(75);
-		this.setOccupation(1);
+		this.setRarity(60);
+		this.setOccupation(3);
+		this.setDirectLaunchFragmentMantraLauncher(
+				ElementHelper.toList(new ElementStack(ESObjects.ELEMENTS.WATER, 60, 60),
+						new ElementStack(ESObjects.ELEMENTS.AIR, 60, 160)),
+				2.5, 0.002, null);
+	}
+
+	@Override
+	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
+		super.potentAttack(world, grimoire, caster, target);
+		float potent = caster.iWantBePotent(0.2f, false);
+		if (target instanceof EntityLivingBase)
+			growFrozen((EntityLivingBase) target, (int) (80 * (1 + potent)), potent >= SUPER_POTENT_POWER ? 8 : 3);
 	}
 
 	@Override
@@ -42,7 +60,7 @@ public class MantraFrozen extends MantraCommon {
 		if (tick % 5 == 0 || !mData.isMarkContinue()) {
 			ElementStack needWater = new ElementStack(ESObjects.ELEMENTS.WATER, 1, 30);
 			ElementStack getWater = caster.iWantSomeElement(needWater, false);
-			ElementStack needAir = new ElementStack(ESObjects.ELEMENTS.AIR, 1, 3);
+			ElementStack needAir = new ElementStack(ESObjects.ELEMENTS.AIR, 1, 5);
 			ElementStack getAir = caster.iWantSomeElement(needAir, false);
 			if (getWater.isEmpty() || getAir.isEmpty()) mData.markContinue(false);
 			else {
@@ -66,8 +84,8 @@ public class MantraFrozen extends MantraCommon {
 		int frozenTime = MathHelper.ceil((waterPower / 50.0f) * 20 + 80);
 		int frozenSize = Math.min(airPower / 75 + 1, 8) + 1;
 		boolean isSuperFrozen = false;
-		if (caster.iWantBePotent(0.005f, true) > 0.5f) {
-			caster.iWantBePotent(0.005f, false);
+		if (caster.iWantBePotent(0.0075f, true) >= SUPER_POTENT_POWER) {
+			caster.iWantBePotent(0.0075f, false);
 			isSuperFrozen = true;
 			frozenSize *= 1.5f;
 		}
@@ -78,20 +96,86 @@ public class MantraFrozen extends MantraCommon {
 			return;
 		}
 
+		updateOnce(world, caster, vec, dir, frozenTime, frozenSize, isSuperFrozen);
+	}
+
+	@Override
+	public boolean afterSpelling(World world, IMantraData data, ICaster caster) {
+		int tick = caster.iWantKnowCastTick();
+		MantraDataCommon mData = (MantraDataCommon) data;
+
+		ElementStack eStackWater = mData.get(ESObjects.ELEMENTS.WATER);
+		ElementStack eStackAir = mData.get(ESObjects.ELEMENTS.AIR);
+
+		if (tick % 5 == 0) {
+			eStackWater.shrink(1);
+			eStackAir.shrink(1);
+		}
+
+		if (eStackWater.isEmpty() || eStackAir.isEmpty()) return false;
+
+		Vec3d dir = caster.iWantDirection().normalize();
+		Vec3d vec = caster.iWantCaster().getEyePosition().add(0, 0.5, 0);
+		int frozenTime = MathHelper.ceil((eStackWater.getPower() / 50.0f) * 20 + 80);
+		int frozenSize = Math.min(eStackAir.getPower() / 75 + 1, 8) + 1;
+		boolean isSuperFrozen = true;
+
+		if (world.isRemote) {
+			playEffect(world, vec, dir, frozenSize, isSuperFrozen);
+			return true;
+		}
+
+		updateOnce(world, caster, vec, dir, frozenTime, frozenSize, isSuperFrozen);
+
+		return true;
+	}
+
+	protected BlockPos findSnowPos(World world, ICaster caster, Vec3d vec, int frozenSize, boolean isSuperFrozen) {
+		Random rand = world.rand;
+		if (isSuperFrozen) {
+			BlockPos selectPos = new BlockPos(
+					vec.add(rand.nextGaussian() * frozenSize, 0, rand.nextGaussian() * frozenSize));
+			for (int i = 0; i < 8; i++) {
+				BlockPos check = selectPos.add(0, i % 2 == 0 ? (i / 2 + 1) : (-i / 2 - 1), 0);
+				if (BlockHelper.isSolidBlock(world, check) && BlockHelper.isReplaceBlock(world, check.up()))
+					return check;
+			}
+		} else {
+			BlockPos snowCoverPos = caster.iWantBlockTarget().getPos();
+			if (snowCoverPos == null) return null;
+			double dis = vec.distanceTo(new Vec3d(snowCoverPos));
+			if (dis / (frozenSize * 1.05) > rand.nextFloat()) return null;
+			if (!BlockHelper.isSolidBlock(world, snowCoverPos) || !BlockHelper.isReplaceBlock(world, snowCoverPos.up()))
+				return null;
+			return snowCoverPos;
+		}
+		return null;
+	}
+
+	protected void updateOnce(World world, ICaster caster, Vec3d vec, Vec3d dir, int frozenTime, int frozenSize,
+			boolean isSuperFrozen) {
+		int tick = caster.iWantKnowCastTick();
 		float checkSize = frozenSize + 0.25f;
+
+		BlockPos snowCoverPos = findSnowPos(world, caster, vec, frozenSize, isSuperFrozen);
+		if (snowCoverPos != null) {
+			snowCoverPos = snowCoverPos.up();
+			if (BlockHelper.isFluid(world, snowCoverPos)) {
+
+			} else world.setBlockState(snowCoverPos, Blocks.SNOW_LAYER.getDefaultState());
+		}
+
 		AxisAlignedBB nAABB = WorldHelper.createAABB(vec.add(dir.scale(0.5)), checkSize / 2, checkSize / 2,
 				checkSize / 2);
 		AxisAlignedBB sAABB = WorldHelper.createAABB(vec, checkSize, checkSize, checkSize);
 		AxisAlignedBB useAABB = isSuperFrozen ? nAABB : sAABB;
 
-		Entity entityCaster = caster.iWantCaster().asEntity();
 		List<EntityLivingBase> livings = world.getEntitiesWithinAABB(EntityLivingBase.class, useAABB);
-
 		int maxFrozenLevel = isSuperFrozen ? 8 : 3;
 
 		Line3d line = Line3d.ofPointDirection(vec, dir);
 		for (EntityLivingBase entity : livings) {
-			if (EntityHelper.isSameTeam(entityCaster, entity)) continue;
+			if (isCasterFriend(caster, entity)) continue;
 			double power = 0;
 			Vec3d at = entity.getPositionVector().add(0, entity.height / 2, 0);
 			double dis = line.lengthOfPoionToLine(at);
@@ -111,26 +195,36 @@ public class MantraFrozen extends MantraCommon {
 			PotionEffect effect = entity.getActivePotionEffect(ESObjects.POTIONS.FROZEN);
 			int amplifier = effect == null ? 0 : effect.getAmplifier() + 1;
 			Vec3d speedUp = dir.scale(sqPower).scale(0.075 + Math.min(0.025 * amplifier, 0.1));
-			if (!entity.onGround) speedUp = speedUp.scale(0.25);
+			if (!entity.onGround) speedUp = speedUp.scale(0.2);
 			entity.motionX += speedUp.x;
 			entity.motionY += speedUp.y / 2;
 			entity.motionZ += speedUp.z;
 			entity.velocityChanged = true;
 
-			if (tick % 20 == 0) {
-				int newFrozenTime = (int) (frozenTime * sqPower);
-				int duration = effect == null ? 0 : effect.getDuration();
-				duration = duration + newFrozenTime;
-				if (amplifier < maxFrozenLevel) {
-					float needTime = (float) (Math.pow(amplifier, 1.75) * 20 * 60);
-					if (duration > needTime) {
-						duration = duration / 2;
-						amplifier++;
-					}
-				}
-				entity.addPotionEffect(new PotionEffect(ESObjects.POTIONS.FROZEN, duration, amplifier - 1));
+			if (tick % 20 == 0) growFrozen(entity, (int) (frozenTime * sqPower), maxFrozenLevel);
+		}
+	}
+
+	static public void growFrozen(EntityLivingBase entity, int frozenTime, int maxFrozenLevel) {
+		BlockPos pos = entity.getPosition();
+		float temperature = entity.world.getBiome(pos).getTemperature(pos);
+		if (temperature < 0.25f) maxFrozenLevel++;
+		else if (temperature > 1.75f) maxFrozenLevel--;
+		if (temperature < 0.75f) frozenTime = (int) (frozenTime * (1 + 1 - temperature / 0.75f));
+		else if (temperature > 1.25f) frozenTime = (int) (frozenTime / Math.min(2, temperature - 0.25f));
+
+		PotionEffect effect = entity.getActivePotionEffect(ESObjects.POTIONS.FROZEN);
+		int amplifier = effect == null ? 0 : effect.getAmplifier() + 1;
+		int duration = effect == null ? 0 : effect.getDuration();
+		duration = duration + frozenTime;
+		if (amplifier < maxFrozenLevel) {
+			float needTime = (float) (Math.pow(amplifier, 1.75) * 20 * 60);
+			if (duration > needTime) {
+				duration = duration / 2;
+				amplifier++;
 			}
 		}
+		entity.addPotionEffect(new PotionEffect(ESObjects.POTIONS.FROZEN, duration, amplifier - 1));
 	}
 
 	@SideOnly(Side.CLIENT)

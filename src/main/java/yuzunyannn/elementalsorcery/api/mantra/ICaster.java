@@ -117,4 +117,12 @@ public interface ICaster {
 	@Nonnull
 	public ICasterObject iWantDirectCaster();
 
+	/** 正在运行的咒文 */
+	@Nonnull
+	public Mantra iWantMantra();
+
+	/** 正在运行的咒文数据 */
+	@Nullable
+	public IMantraData iWantMantraData();
+
 }

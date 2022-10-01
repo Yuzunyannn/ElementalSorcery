@@ -35,7 +35,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.particle.ESParticleDigging;
+import yuzunyannn.elementalsorcery.render.effect.particle.ParticleDiggingEffect;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryStronger;
@@ -162,7 +162,7 @@ public class BlockElementCube extends BlockElementContainer {
 					double d0 = ((double) j + 0.5D) / 4.0D;
 					double d1 = ((double) k + 0.5D) / 4.0D;
 					double d2 = ((double) l + 0.5D) / 4.0D;
-					ESParticleDigging effect = new ESParticleDigging(world, pos.getX() + d0, pos.getY() + d1,
+					ParticleDiggingEffect effect = new ParticleDiggingEffect(world, pos.getX() + d0, pos.getY() + d1,
 							pos.getZ() + d2, d0 - 0.5D, d1 - 0.5D, d2 - 0.5D, state);
 					effect.setBlockPos(pos);
 					if (Effect.rand.nextInt(10) == 1 && tile.color != Vec3d.ZERO)

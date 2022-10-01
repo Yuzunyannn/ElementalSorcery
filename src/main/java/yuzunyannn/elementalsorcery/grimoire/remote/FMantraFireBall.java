@@ -18,8 +18,8 @@ public class FMantraFireBall extends FMantraBase {
 
 	public FMantraFireBall() {
 		addCanUseElementWithSameLevel(ESObjects.ELEMENTS.FIRE);
-		setMaxCharge(3000);
-		setChargeSpeedRatio(2f / 3000f);
+		setMaxCharge(new ElementStack(ESObjects.ELEMENTS.FIRE, 150, 40));
+		setChargeSpeedRatio(4f / 10000f);
 		setIconRes("textures/mantras/fire_ball_f.png");
 	}
 

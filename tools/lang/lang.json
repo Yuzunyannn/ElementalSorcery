@@ -1578,6 +1578,16 @@
 			"zh_CN": "借助水、气元素，产生寒冷的风雪，让敌人发生冻结",
 			"en_US": "With the Water and Air, wind cold snow to freeze the enemy",
 			"ja_JP": "水と気元素で冷たい風雪が吹き、敵を凍らせる"
+		},
+		"mantra.iceCrystalBomb.name": {
+			"zh_CN": "冰晶炸弹",
+			"en_US": "Ice Crystal Bomb",
+			"ja_JP": "氷晶ばくだん"
+		},
+		"mantra.iceCrystalBomb.describe": {
+			"zh_CN": "通过水构造冰晶，当生物接近的时候会发生爆炸",
+			"en_US": "With the Water, Ice Crystal is built and will explode when creatures approach",
+			"ja_JP": "水元素で構造の氷晶は、生物が近づくと爆発する"
 		}
 	},
 	"key": {

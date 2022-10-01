@@ -23,8 +23,8 @@ public class FMantraEnderTeleportTo extends FMantraBase {
 
 	public FMantraEnderTeleportTo() {
 		addCanUseElementWithSameLevel(ESObjects.ELEMENTS.ENDER);
-		setMaxCharge(10000);
-		setChargeSpeedRatio(10f / 10000f);
+		setMaxCharge(50000);
+		setChargeSpeedRatio(50f / 50000f);
 		setMinChargeRatio(1);
 		setIconRes(initTexturePath());
 	}
