@@ -251,6 +251,7 @@ es.effect.elementCrackAttack=Element Crack
 es.effect.enthusiasticStudy=Enthusiastic Unscrambling
 es.effect.silent=Silent
 es.effect.frozen=Frozen
+es.effect.naturalMedal=Natural Medal
 
 es.potion.effect.silent=Potion of Silence
 es.splash_potion.effect.silent=Splash Potion of Silence 
@@ -322,6 +323,10 @@ mantra.frozen.name=Piercing Cold Wind
 mantra.frozen.describe=With the Water and Air, wind cold snow to freeze the enemy
 mantra.iceCrystalBomb.name=Ice Crystal Bomb
 mantra.iceCrystalBomb.describe=With the Water, Ice Crystal is built and will explode when creatures approach
+mantra.naturalMedal.name=Natural Medal
+mantra.naturalMedal.describe=With the Wood, Natural Medal is built and give it to the target, kill enemy can Upgrade Medal
+mantra.puppetArea.name=Kodama Area
+mantra.puppetArea.describe=With the Wood, Summon Kodama Area which will periodically generate Kodamas to attack enemies. The Kodama's damage is base on percentage of the enemy's max hp.
 
 key.es.func=Function key
 
@@ -345,6 +350,7 @@ entity.DreadCube.name=Dread Cube
 entity.DejectedSkeleton.name=Dejected Skeleton
 entity.ArrogantSheep.name=Arrogant Sheep
 entity.EntityGrimoire.name=Mantra
+entity.Puppet.name=Kodama
 
 pro.none=Idle
 pro.warrior=Warrior

@@ -27,7 +27,7 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportFrom;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportTo;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAtBlock;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectPlayerAt;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.world.CasterHelper;
@@ -142,7 +142,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		// super模式下 添加指针
 		if (needSuper && casterObject.isClientPlayer()) {
 			if (!mdc.getEffectMap().hasMark(MantraEffectType.INDICATOR)) {
-				EffectLookAt lookAt = new EffectLookAt(world, caster, getColor(mdc));
+				EffectLookAtBlock lookAt = new EffectLookAtBlock(world, caster, getColor(mdc));
 				lookAt.setCondition(new MantraEffectMap.MantraCondition(caster, mdc) {
 					@Override
 					public Boolean apply(Void t) {

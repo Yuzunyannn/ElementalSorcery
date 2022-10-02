@@ -103,7 +103,7 @@ public abstract class MantraSquareArea extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		super.onSpellingEffect(world, data, caster);
-		this.addEffectIndicatorEffect(world, data, caster);
+		this.addEffectBlockIndicatorEffect(world, data, caster);
 	}
 
 	@SideOnly(Side.CLIENT)

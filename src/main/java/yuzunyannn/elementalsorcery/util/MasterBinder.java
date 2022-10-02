@@ -22,6 +22,8 @@ public class MasterBinder {
 	protected int masterFindFailTimes = 0;
 	protected int maxMasterFindFailTimes = Integer.MAX_VALUE;
 
+	protected String dataKey = "master";
+
 	public MasterBinder(EntityLivingBase master) {
 		this.master = new WeakReference<>(master);
 		this.uuid = master.getUniqueID();
@@ -33,6 +35,11 @@ public class MasterBinder {
 
 	public MasterBinder() {
 
+	}
+
+	public MasterBinder setDataKey(String dataName) {
+		this.dataKey = dataName;
+		return this;
 	}
 
 	public boolean isOwnerless() {
@@ -49,7 +56,10 @@ public class MasterBinder {
 	}
 
 	public void setMaster(EntityLivingBase master) {
-		if (master == null) return;
+		if (master == null) {
+			this.master = null;
+			return;
+		}
 		this.master = new WeakReference<>(master);
 		this.uuid = master.getUniqueID();
 		masterFindFailCD = 0;
@@ -87,11 +97,11 @@ public class MasterBinder {
 	}
 
 	public void writeEntityToNBT(NBTTagCompound compound) {
-		if (uuid != null) compound.setUniqueId("master", uuid);
+		if (uuid != null) compound.setUniqueId(this.dataKey, uuid);
 	}
 
 	public void readEntityFromNBT(NBTTagCompound compound) {
-		if (compound.hasKey("masterMost")) uuid = compound.getUniqueId("master");
+		if (compound.hasKey(this.dataKey + "Most")) uuid = compound.getUniqueId(this.dataKey);
 	}
 
 	public void writeSpawnData(ByteBuf buffer) {

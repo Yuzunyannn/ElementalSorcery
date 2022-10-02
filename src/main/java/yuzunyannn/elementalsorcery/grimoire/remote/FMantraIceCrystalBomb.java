@@ -29,7 +29,7 @@ public class FMantraIceCrystalBomb extends FMantraBase {
 		double eCount = ElementTransition.fromFragmentByPower(ESObjects.ELEMENTS.WATER, chager, 50);
 		int count = MathHelper.ceil(eCount / 100 * 1.5f);
 		World targetWorld = to.getWorld(world);
-		content.set(Variables.WATER, new ElementStack(ESObjects.ELEMENTS.WATER, 100, 50));
+		content.set(Variables.WATER, new ElementStack(ESObjects.ELEMENTS.WATER, 100, 200));
 		content.set(MantraCommon.POWERF, 0.5f);
 
 		BlockPos center = to.getPos();

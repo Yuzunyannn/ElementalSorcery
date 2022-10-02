@@ -96,6 +96,7 @@ import yuzunyannn.elementalsorcery.potion.PotionEndercorps;
 import yuzunyannn.elementalsorcery.potion.PotionEnderization;
 import yuzunyannn.elementalsorcery.potion.PotionFrozen;
 import yuzunyannn.elementalsorcery.potion.PotionHealthBalance;
+import yuzunyannn.elementalsorcery.potion.PotionNaturalMedal;
 import yuzunyannn.elementalsorcery.potion.PotionPowerPitcher;
 import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
 import yuzunyannn.elementalsorcery.potion.PotionWindShield;
@@ -481,10 +482,12 @@ public class EventServer {
 
 		Entity trueSource = source.getTrueSource();
 		if (trueSource instanceof EntityLivingBase) {
-			ItemStack held = ((EntityLivingBase) trueSource).getHeldItemMainhand();
+			EntityLivingBase living = ((EntityLivingBase) trueSource);
+			ItemStack held = living.getHeldItemMainhand();
 			Item item = held.getItem();
 			if (item instanceof IItemStronger) ((IItemStronger) item).onKillEntity(trueSource.world, held, deader,
 					(EntityLivingBase) trueSource, source);
+			if (living.isPotionActive(ESObjects.POTIONS.NATURAL_MEDAL)) PotionNaturalMedal.growMedal(living);
 		}
 	}
 

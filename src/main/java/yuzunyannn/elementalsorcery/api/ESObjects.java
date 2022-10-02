@@ -8,10 +8,8 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
-import yuzunyannn.elementalsorcery.grimoire.mantra.MantraFrozen;
-import yuzunyannn.elementalsorcery.grimoire.mantra.MantraIceCrystalBomb;
-import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSturdyArea;
-import yuzunyannn.elementalsorcery.potion.PotionFrozen;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraNaturalMedal;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraPuppetArea;
 
 public class ESObjects {
 
@@ -264,6 +262,8 @@ public class ESObjects {
 		public Mantra STURDY_AREA;
 		public Mantra FROZEN;
 		public Mantra ICE_CRYSTAL_BOMB;
+		public Mantra NATURAL_MEDAL;
+		public Mantra PUPPET_AREA;
 	}
 
 	static public class Potions {
@@ -291,6 +291,7 @@ public class ESObjects {
 		public Potion ENTHUSIASTIC_STUDY;
 		public Potion SILENT;
 		public Potion FROZEN;
+		public Potion NATURAL_MEDAL;
 	}
 
 	static public class PotionTypes {

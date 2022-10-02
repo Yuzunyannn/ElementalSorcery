@@ -40,7 +40,8 @@ import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectSpiralMove;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAt;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAtBlock;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAtEntity;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleIcon;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicEmit;
@@ -254,17 +255,6 @@ public class MantraCommon extends Mantra {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void addEffectIndicatorEffect(World world, IMantraData data, ICaster caster) {
-		if (!hasEffectFlags(world, data, caster, MantraEffectType.INDICATOR)) return;
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		if (!caster.iWantCaster().isClientPlayer()) return;
-		if (dataEffect.getEffectMap().hasMark(MantraEffectType.INDICATOR)) return;
-		EffectLookAt lookAt = new EffectLookAt(world, caster, this.getColor(dataEffect));
-		lookAt.setCondition(MantraEffectMap.condition(caster, dataEffect).setCheckContinue(true));
-		dataEffect.getEffectMap().addAndMark(MantraEffectType.INDICATOR, lookAt);
-	}
-
-	@SideOnly(Side.CLIENT)
 	public void addEffectEmitEffect(World world, IMantraData data, ICaster caster) {
 		if (!hasEffectFlags(world, data, caster, MantraEffectType.EMIT)) return;
 		Entity entity = caster.iWantCaster().asEntity();
@@ -275,6 +265,28 @@ public class MantraCommon extends Mantra {
 		emit.setColor(this.getColor(data));
 		emit.setCondition(MantraEffectMap.condition(caster, dataEffect).setCheckContinue(true));
 		dataEffect.getEffectMap().addAndMark(MantraEffectType.EMIT, emit);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void addEffectBlockIndicatorEffect(World world, IMantraData data, ICaster caster) {
+		if (!hasEffectFlags(world, data, caster, MantraEffectType.INDICATOR)) return;
+		MantraDataCommon dataEffect = (MantraDataCommon) data;
+		if (!caster.iWantCaster().isClientPlayer()) return;
+		if (dataEffect.getEffectMap().hasMark(MantraEffectType.INDICATOR)) return;
+		EffectLookAtBlock lookAt = new EffectLookAtBlock(world, caster, this.getColor(dataEffect));
+		lookAt.setCondition(MantraEffectMap.condition(caster, dataEffect).setCheckContinue(true));
+		dataEffect.getEffectMap().addAndMark(MantraEffectType.INDICATOR, lookAt);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void addEffectEntityIndicatorEffect(World world, IMantraData data, ICaster caster) {
+		if (!hasEffectFlags(world, data, caster, MantraEffectType.INDICATOR)) return;
+		MantraDataCommon dataEffect = (MantraDataCommon) data;
+		if (!caster.iWantCaster().isClientPlayer()) return;
+		if (dataEffect.getEffectMap().hasMark(MantraEffectType.INDICATOR)) return;
+		EffectLookAtEntity lookAt = new EffectLookAtEntity(world, caster, this.getColor(dataEffect));
+		lookAt.setCondition(MantraEffectMap.condition(caster, dataEffect).setCheckContinue(true));
+		dataEffect.getEffectMap().addAndMark(MantraEffectType.INDICATOR, lookAt);
 	}
 
 	@SideOnly(Side.CLIENT)

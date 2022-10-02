@@ -80,7 +80,7 @@ public class MantraElementWhirl extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		super.onSpellingEffect(world, data, caster);
-		addEffectIndicatorEffect(world, data, caster);
+		addEffectBlockIndicatorEffect(world, data, caster);
 	}
 
 	@Override

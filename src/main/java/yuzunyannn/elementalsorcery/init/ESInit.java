@@ -180,7 +180,9 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLightningArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraLush;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraMagicStrafe;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraMiningArea;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraNaturalMedal;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraPotent;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraPuppetArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSlowFall;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSprint;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSturdyArea;
@@ -290,6 +292,7 @@ import yuzunyannn.elementalsorcery.potion.PotionFluoresceWalker;
 import yuzunyannn.elementalsorcery.potion.PotionFrozen;
 import yuzunyannn.elementalsorcery.potion.PotionGoldenEye;
 import yuzunyannn.elementalsorcery.potion.PotionHealthBalance;
+import yuzunyannn.elementalsorcery.potion.PotionNaturalMedal;
 import yuzunyannn.elementalsorcery.potion.PotionPoundWalker;
 import yuzunyannn.elementalsorcery.potion.PotionPowerPitcher;
 import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
@@ -679,6 +682,8 @@ public class ESInit {
 		ESObjects.MANTRAS.STURDY_AREA = new MantraSturdyArea();
 		ESObjects.MANTRAS.FROZEN = new MantraFrozen();
 		ESObjects.MANTRAS.ICE_CRYSTAL_BOMB = new MantraIceCrystalBomb();
+		ESObjects.MANTRAS.NATURAL_MEDAL = new MantraNaturalMedal();
+		ESObjects.MANTRAS.PUPPET_AREA = new MantraPuppetArea();
 
 		ESObjects.MANTRAS.ECRACK_OPEN = new MantraCrackOpen();
 
@@ -733,6 +738,7 @@ public class ESInit {
 		ESObjects.POTIONS.ENTHUSIASTIC_STUDY = new PotionEnthusiasticStudy();
 		ESObjects.POTIONS.SILENT = new PotionSilent();
 		ESObjects.POTIONS.FROZEN = new PotionFrozen();
+		ESObjects.POTIONS.NATURAL_MEDAL = new PotionNaturalMedal();
 
 		ESObjects.POTION_TYPES.SILENT = PotionTypeES.create("silent",
 				new PotionEffect(ESObjects.POTIONS.SILENT, 20 * 16));

@@ -251,6 +251,7 @@ es.effect.elementCrackAttack=元素ひび割れ
 es.effect.enthusiasticStudy=熱狂的に解読
 es.effect.silent=サイレント
 es.effect.frozen=とうけつ
+es.effect.naturalMedal=自然勲章
 
 es.potion.effect.silent=沈黙のポーション
 es.splash_potion.effect.silent=沈黙のスプラッシュポーション
@@ -322,6 +323,10 @@ mantra.frozen.name=寒風
 mantra.frozen.describe=水と気元素で冷たい風雪が吹き、敵を凍らせる
 mantra.iceCrystalBomb.name=氷晶ばくだん
 mantra.iceCrystalBomb.describe=水元素で構造の氷晶は、生物が近づくと爆発する
+mantra.naturalMedal.name=自然勲章
+mantra.naturalMedal.describe=木元素で自然勲章を作り生物を授け、敵を倒し勲章を昇格し
+mantra.puppetArea.name=木霊領域
+mantra.puppetArea.describe=木元素で木霊領域を召喚し、領域内で周期的に木霊を生み、敵を攻撃して、敵のHPの最大のパーセントによってダメージを与える
 
 key.es.func=機能キー
 
@@ -345,6 +350,7 @@ entity.DreadCube.name=恐怖立方体
 entity.DejectedSkeleton.name=憂鬱スカル
 entity.ArrogantSheep.name=傲慢なヒツジ
 entity.EntityGrimoire.name=呪文
+entity.Puppet.name=木霊
 
 pro.none=アイドル
 pro.warrior=戦士

@@ -1245,20 +1245,25 @@
 			"zh_CN": "冻结",
 			"en_US": "Frozen",
 			"ja_JP": "とうけつ"
+		},
+		"es.effect.naturalMedal": {
+			"zh_CN": "自然勋章",
+			"en_US": "Natural Medal",
+			"ja_JP": "自然勲章"
 		}
 	},
-	"es.effect.type":{
-		"es.potion.effect.silent":{
+	"es.effect.type": {
+		"es.potion.effect.silent": {
 			"zh_CN": "禁言药水",
 			"en_US": "Potion of Silence",
 			"ja_JP": "沈黙のポーション"
 		},
-		"es.splash_potion.effect.silent":{
+		"es.splash_potion.effect.silent": {
 			"zh_CN": "喷溅型禁言药水",
 			"en_US": "Splash Potion of Silence ",
 			"ja_JP": "沈黙のスプラッシュポーション"
 		},
-		"es.lingering_potion.effect.silent":{
+		"es.lingering_potion.effect.silent": {
 			"zh_CN": "滞留型禁言药水",
 			"en_US": "Lingering Potion of Silence",
 			"ja_JP": "沈黙の残留ポーション"
@@ -1588,6 +1593,26 @@
 			"zh_CN": "通过水构造冰晶，当生物接近的时候会发生爆炸",
 			"en_US": "With the Water, Ice Crystal is built and will explode when creatures approach",
 			"ja_JP": "水元素で構造の氷晶は、生物が近づくと爆発する"
+		},
+		"mantra.naturalMedal.name": {
+			"zh_CN": "自然勋章",
+			"en_US": "Natural Medal",
+			"ja_JP": "自然勲章"
+		},
+		"mantra.naturalMedal.describe": {
+			"zh_CN": "通过木元素构造出自然勋章并授予生物，击杀敌人可以升级勋章",
+			"en_US": "With the Wood, Natural Medal is built and give it to the target, kill enemy can Upgrade Medal",
+			"ja_JP": "木元素で自然勲章を作り生物を授け、敵を倒し勲章を昇格し"
+		},
+		"mantra.puppetArea.name": {
+			"zh_CN": "木灵领域",
+			"en_US": "Kodama Area",
+			"ja_JP": "木霊領域"
+		},
+		"mantra.puppetArea.describe": {
+			"zh_CN": "借助木元素，召唤木灵领域，领域内会周期性的产生木灵来攻击区域内的敌人，木灵的攻击会根据敌人生命的最大值百分比造成伤害",
+			"en_US": "With the Wood, Summon Kodama Area which will periodically generate Kodamas to attack enemies. The Kodama's damage is base on percentage of the enemy's max hp.",
+			"ja_JP": "木元素で木霊領域を召喚し、領域内で周期的に木霊を生み、敵を攻撃して、敵のHPの最大のパーセントによってダメージを与える"
 		}
 	},
 	"key": {
@@ -1694,6 +1719,11 @@
 			"zh_CN": "咒文",
 			"en_US": "Mantra",
 			"ja_JP": "呪文"
+		},
+		"entity.Puppet.name": {
+			"zh_CN": "木灵",
+			"en_US": "Kodama",
+			"ja_JP": "木霊"
 		}
 	},
 	"pro": {

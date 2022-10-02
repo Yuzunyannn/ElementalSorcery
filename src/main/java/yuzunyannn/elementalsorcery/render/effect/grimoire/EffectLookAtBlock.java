@@ -16,7 +16,7 @@ import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 
 @SideOnly(Side.CLIENT)
-public class EffectLookAt extends EffectCondition {
+public class EffectLookAtBlock extends EffectCondition {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/magic_circles/triangle.png");
 
@@ -32,7 +32,7 @@ public class EffectLookAt extends EffectCondition {
 	public float preAlpha = alpha;
 	public EnumFacing facing = EnumFacing.UP;
 
-	public EffectLookAt(World world, ICaster caster, int color) {
+	public EffectLookAtBlock(World world, ICaster caster, int color) {
 		super(world);
 		this.lifeTime = 1;
 		this.caster = caster;

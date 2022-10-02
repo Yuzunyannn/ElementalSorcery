@@ -212,7 +212,7 @@ public class MantraSummon extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData mData, ICaster caster) {
 		super.onSpellingEffect(world, mData, caster);
-		this.addEffectIndicatorEffect(world, mData, caster);
+		this.addEffectBlockIndicatorEffect(world, mData, caster);
 	}
 
 	@Override

@@ -189,6 +189,9 @@ public class MantraIceCrystalBomb extends MantraCommon {
 			power = 1 - (power * power);
 			if (power < 0) continue;
 			double powerCount = ElementTransition.toFragment(water) * power * (1 + potent / 2);
+			entity.motionX = 0;
+			entity.motionZ = 0;
+			entity.velocityChanged = true;
 			bombEntity(entity, caster, powerCount,
 					(float) Math.min(6, MathHelper.sqrt(water.getPower()) / 5f * power) * (1 + potent / 2));
 		}
@@ -220,7 +223,7 @@ public class MantraIceCrystalBomb extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		super.onSpellingEffect(world, data, caster);
-		addEffectIndicatorEffect(world, data, caster);
+		addEffectBlockIndicatorEffect(world, data, caster);
 	}
 
 	@SideOnly(Side.CLIENT)

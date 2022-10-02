@@ -251,6 +251,7 @@ es.effect.elementCrackAttack=元素裂縫
 es.effect.enthusiasticStudy=学力爆发
 es.effect.silent=沉默
 es.effect.frozen=冻结
+es.effect.naturalMedal=自然勋章
 
 es.potion.effect.silent=禁言药水
 es.splash_potion.effect.silent=喷溅型禁言药水
@@ -322,6 +323,10 @@ mantra.frozen.name=寒风凛冽
 mantra.frozen.describe=借助水、气元素，产生寒冷的风雪，让敌人发生冻结
 mantra.iceCrystalBomb.name=冰晶炸弹
 mantra.iceCrystalBomb.describe=通过水构造冰晶，当生物接近的时候会发生爆炸
+mantra.naturalMedal.name=自然勋章
+mantra.naturalMedal.describe=通过木元素构造出自然勋章并授予生物，击杀敌人可以升级勋章
+mantra.puppetArea.name=木灵领域
+mantra.puppetArea.describe=借助木元素，召唤木灵领域，领域内会周期性的产生木灵来攻击区域内的敌人，木灵的攻击会根据敌人生命的最大值百分比造成伤害
 
 key.es.func=功能键
 
@@ -345,6 +350,7 @@ entity.DreadCube.name=恐惧立方体
 entity.DejectedSkeleton.name=忧郁骷髅
 entity.ArrogantSheep.name=傲慢的绵羊
 entity.EntityGrimoire.name=咒文
+entity.Puppet.name=木灵
 
 pro.none=闲人
 pro.warrior=战士

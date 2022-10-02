@@ -39,6 +39,7 @@ import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.entity.mob.EntityArrogantSheep;
 import yuzunyannn.elementalsorcery.entity.mob.EntityDejectedSkeleton;
 import yuzunyannn.elementalsorcery.entity.mob.EntityDreadCube;
+import yuzunyannn.elementalsorcery.entity.mob.EntityPuppet;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRabidRabbit;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
 import yuzunyannn.elementalsorcery.render.entity.EntityRenderFactory;
@@ -60,6 +61,7 @@ import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityArrogantShee
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityDejectedSkeleton;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityDreadCube;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
+import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityPuppet;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityRabidRabbit;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityRelicZombie;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
@@ -94,6 +96,8 @@ public class EntityRegistries {
 		registerEgg("dejectedSkeleton", 0xe8e8e8, 0x9c9c9c);
 		register(6, "arrogantSheep", EntityArrogantSheep.class, "ArrogantSheep", 64, 3, true);
 		registerEgg("arrogantSheep", 0xfedf0d, 0xea8900);
+		register(7, "puppet", EntityPuppet.class, "Puppet", 64, 3, true);
+//		registerEgg("puppet", 0x4fb037, 0x146700);
 
 		// 实体方块
 		register(20, "bulletin", EntityBulletin.class, "Bulletin", 64, 20, false);
@@ -120,13 +124,12 @@ public class EntityRegistries {
 
 	private static void register(int id, String registryName, Class<? extends Entity> entityClass, String name,
 			int trackingRange, int updateFrequency, boolean sendsVelocityUpdates) {
-		EntityRegistry.registerModEntity(new ResourceLocation(ESAPI.MODID, registryName), entityClass, name,
-				id, ElementalSorcery.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
+		EntityRegistry.registerModEntity(new ResourceLocation(ESAPI.MODID, registryName), entityClass, name, id,
+				ElementalSorcery.instance, trackingRange, updateFrequency, sendsVelocityUpdates);
 	}
 
 	private static void registerEgg(String registryName, int eggPrimary, int eggSecondary) {
-		EntityRegistry.registerEgg(new ResourceLocation(ESAPI.MODID, registryName), eggPrimary,
-				eggSecondary);
+		EntityRegistry.registerEgg(new ResourceLocation(ESAPI.MODID, registryName), eggPrimary, eggSecondary);
 	}
 
 	private static void registerEntitySpawn(Class<? extends EntityLiving> entityClass, int spawnWeight, int min,
@@ -142,6 +145,7 @@ public class EntityRegistries {
 		registerRender(EntityThrow.class, RenderEntityThrow.class);
 		registerRender(EntityElf.class, RenderEntityElf.class);
 		registerRender(EntityRelicZombie.class, RenderEntityRelicZombie.class);
+		registerRender(EntityPuppet.class, RenderEntityPuppet.class);
 		registerRender(EntityExploreDust.class, RenderEntityExploreDust.class);
 		registerRender(EntityGrimoire.class, RenderEntityGrimoire.class);
 		registerRender(EntityBulletin.class, RenderEntitiyBulletin.class);

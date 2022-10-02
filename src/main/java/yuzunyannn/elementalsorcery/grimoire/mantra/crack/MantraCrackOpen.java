@@ -64,7 +64,7 @@ public class MantraCrackOpen extends MantraCrackCommon {
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		addEffectProgress(world, data, caster);
-		addEffectIndicatorEffect(world, data, caster);
+		addEffectBlockIndicatorEffect(world, data, caster);
 	}
 
 	@Override
