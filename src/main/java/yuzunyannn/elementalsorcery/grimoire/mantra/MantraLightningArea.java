@@ -16,7 +16,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 
-public class MantraLightningArea extends MantraSquareAreaAdv {
+public class MantraLightningArea extends MantraTypeSquareArea {
 
 	public MantraLightningArea() {
 		this.setTranslationKey("lightningArea");
@@ -56,11 +56,11 @@ public class MantraLightningArea extends MantraSquareAreaAdv {
 		int tick = caster.iWantKnowCastTick();
 		ElementStack air = data.get(ESObjects.ELEMENTS.AIR);
 		if (air.isEmpty()) return false;
-		
+
 		float pp = data.get(POTENT_POWER);
 		int preTick = pp >= 1 ? 20 : 30;
 		if (tick % preTick != 0) return true;
-		
+
 		Random rand = world.rand;
 		air.shrink(8);
 		ElementStack fire = data.get(ESObjects.ELEMENTS.FIRE);

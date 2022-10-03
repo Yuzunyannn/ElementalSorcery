@@ -32,7 +32,7 @@ import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectPlayerAt;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.world.CasterHelper;
 
-public class MantraEnderTeleport extends MantraCommon {
+public class MantraEnderTeleport extends MantraTypeAccumulative {
 
 	public MantraEnderTeleport() {
 		this.setTranslationKey("enderTeleport");
@@ -40,6 +40,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		this.setIcon("teleport");
 		this.setRarity(40);
 		this.setOccupation(5);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.ENDER, 2, 50), 10, 10);
 		this.addFragmentMantraLauncher(new FMantraEnderTeleportTo());
 		this.addFragmentMantraLauncher(new FMantraEnderTeleportFrom());
 	}
@@ -59,24 +60,6 @@ public class MantraEnderTeleport extends MantraCommon {
 	}
 
 	@Override
-	public void startSpelling(World world, IMantraData data, ICaster caster) {
-		Entity entity = caster.iWantCaster().asEntity();
-		if (entity == null) return;
-
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		ElementStack need = new ElementStack(ESObjects.ELEMENTS.ENDER, 10, 50);
-		ElementStack stack = caster.iWantSomeElement(need, false);
-		dataEffect.markContinue(!stack.isEmpty());
-	}
-
-	@Override
-	public void onSpelling(World world, IMantraData data, ICaster caster) {
-		MantraDataCommon mdc = (MantraDataCommon) data;
-		mdc.setProgress(caster.iWantKnowCastTick(), 5);
-		super.onSpelling(world, data, caster);
-	}
-
-	@Override
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		if (mdc.getProgress() < 1) return;
@@ -89,7 +72,7 @@ public class MantraEnderTeleport extends MantraCommon {
 		BlockPos pos = findFoothold(world, caster, needSuper);
 		if (pos == null) return;
 
-		ElementStack stack = getElement(caster, ESObjects.ELEMENTS.ENDER, 10, 50);
+		ElementStack stack = mdc.get(ESObjects.ELEMENTS.ENDER);
 		if (stack.isEmpty()) return;
 
 		if (needSuper) caster.iWantBePotent(0.75f, false);

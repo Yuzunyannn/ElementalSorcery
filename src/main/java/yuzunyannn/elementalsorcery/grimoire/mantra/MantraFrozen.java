@@ -28,7 +28,7 @@ import yuzunyannn.elementalsorcery.util.math.Line3d;
 import yuzunyannn.elementalsorcery.util.math.Plane3d;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class MantraFrozen extends MantraCommon {
+public class MantraFrozen extends MantraTypePersistent {
 
 	final public static float SUPER_POTENT_POWER = 0.5f;
 
@@ -38,6 +38,9 @@ public class MantraFrozen extends MantraCommon {
 		this.setIcon("frozen");
 		this.setRarity(60);
 		this.setOccupation(3);
+		this.setInterval(5);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.WATER, 1, 30), true);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.AIR, 1, 5), true);
 		this.setDirectLaunchFragmentMantraLauncher(
 				ElementHelper.toList(new ElementStack(ESObjects.ELEMENTS.WATER, 60, 60),
 						new ElementStack(ESObjects.ELEMENTS.AIR, 60, 160)),
@@ -53,28 +56,8 @@ public class MantraFrozen extends MantraCommon {
 	}
 
 	@Override
-	public void onSpelling(World world, IMantraData data, ICaster caster) {
-		int tick = caster.iWantKnowCastTick();
+	protected void onUpdate(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon mData = (MantraDataCommon) data;
-
-		if (tick % 5 == 0 || !mData.isMarkContinue()) {
-			ElementStack needWater = new ElementStack(ESObjects.ELEMENTS.WATER, 1, 30);
-			ElementStack getWater = caster.iWantSomeElement(needWater, false);
-			ElementStack needAir = new ElementStack(ESObjects.ELEMENTS.AIR, 1, 5);
-			ElementStack getAir = caster.iWantSomeElement(needAir, false);
-			if (getWater.isEmpty() || getAir.isEmpty()) mData.markContinue(false);
-			else {
-				mData.markContinue(true);
-				caster.iWantSomeElement(needWater, true);
-				caster.iWantSomeElement(needAir, true);
-				mData.remove(ESObjects.ELEMENTS.WATER);
-				mData.remove(ESObjects.ELEMENTS.AIR);
-				mData.add(getWater);
-				mData.add(getAir);
-			}
-		}
-
-		if (!mData.isMarkContinue()) return;
 
 		int waterPower = mData.get(ESObjects.ELEMENTS.WATER).getPower();
 		int airPower = mData.get(ESObjects.ELEMENTS.AIR).getPower();

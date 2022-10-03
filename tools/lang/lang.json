@@ -2393,6 +2393,26 @@
 			"en_US": "There are %d blank pages left in the book.",
 			"ja_JP": "本の中にまだ%d空白ページがある"
 		},
+		"info.grimoire.collect.sub1": {
+			"zh_CN": "%s 能量下限:%s 消耗速率:%s/s 最低量:%s 最高量:%s",
+			"en_US": "%s, power lower limit: %s, consumption: %s/s, min count: %s, max count: %s",
+			"ja_JP": "%s パワー下限:%s しょうひ率:%s/s 最低量:%s 最高量:%s"
+		},
+		"info.grimoire.collect.sub2": {
+			"zh_CN": "%s 能量下限:%s 消耗速率:%s/s 需求量:%s",
+			"en_US": "%s, power lower limit: %s/s, consumption: %s, need count: %s",
+			"ja_JP": "%s パワー下限:%s しょうひ率:%s/s 需要量:%s"
+		},
+		"info.grimoire.collect.sub3": {
+			"zh_CN": "%s 能量下限:%s 消耗速率:%s/s",
+			"en_US": "%s, power lower limit: %s/s, consumption: %s",
+			"ja_JP": "%s パワー下限:%s しょうひ率:%s/s"
+		},
+		"info.grimoire.collect.sub4": {
+			"zh_CN": "%s 能量下限:%s 需求量:%s",
+			"en_US": "%s, power lower limit: %s/s, need count: %s",
+			"ja_JP": "%s パワー下限:%s 需要量:%s"
+		},
 		"info.ancientPaper.mantra": {
 			"zh_CN": "这上面记录着被称作「%s」的咒文",
 			"en_US": "This paper records the Mantra called 「%s」",

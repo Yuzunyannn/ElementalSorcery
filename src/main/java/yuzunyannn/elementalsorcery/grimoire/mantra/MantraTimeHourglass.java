@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import java.util.List;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -16,22 +17,27 @@ import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTimeHourglass;
 import yuzunyannn.elementalsorcery.ts.PocketWatch;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class MantraTimeHourglass extends MantraCommon {
+public class MantraTimeHourglass extends MantraTypeAccumulative {
 
 	public static final float TIME_STOP_MIN_POTENT = 0.9f;
+
+	protected CollectRule superRule = new CollectRule();
 
 	public MantraTimeHourglass() {
 		this.setTranslationKey("timeHourglass");
 		this.setColor(0xe0e0e0);
 		this.setIcon("time_hourglass");
 		this.setRarity(30);
+		superRule.addElementCollect(new ElementStack(ESObjects.ELEMENTS.STAR, 1, 160), 200, 200);
+		superRule.accumulatePreTick = 20;
+		mainRule.addElementCollect(new ElementStack(ESObjects.ELEMENTS.STAR, 1, 5), 50, 10);
 	}
 
 	@Override
@@ -69,9 +75,15 @@ public class MantraTimeHourglass extends MantraCommon {
 	}
 
 	@Override
+	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
+		MantraDataCommon mData = (MantraDataCommon) data;
+		if (!mData.isMarkContinue()) return;
+		super.onCollectElement(world, data, caster, speedTick);
+	}
+
+	@Override
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		if (beforeGeneralStartTime(caster)) return;
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		if (!mdc.isMarkContinue()) return;
 		super.onSpellingEffect(world, data, caster);
@@ -94,18 +106,19 @@ public class MantraTimeHourglass extends MantraCommon {
 	}
 
 	@Override
-	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
-		if (beforeGeneralStartTime(caster)) return;
-		MantraDataCommon mdc = (MantraDataCommon) data;
-		float potent = mdc.get(POTENT_POWER);
-		if (potent >= TIME_STOP_MIN_POTENT) {
-			if (speedTick % 30 != 0) return;
-			CollectResult cr = mdc.tryCollect(caster, ESObjects.ELEMENTS.STAR, 1, 160, 200);
-			mdc.setProgress(cr.getStackCount(), 200);
-		} else {
-			CollectResult cr = mdc.tryCollect(caster, ESObjects.ELEMENTS.STAR, 1, 5, 50);
-			mdc.setProgress(cr.getStackCount(), 50);
-		}
+	protected CollectRule getCurrCollectRule(World world, MantraDataCommon mData, ICaster caster) {
+		float potent = mData.get(POTENT_POWER);
+		if (potent >= TIME_STOP_MIN_POTENT) return superRule;
+		return mainRule;
+	}
+
+	@Override
+	protected void addRuleInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		Grimoire grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+		boolean isTheWorld = grimoire == null ? false
+				: (grimoire.potentPoint >= 10 && grimoire.getPotent() > TIME_STOP_MIN_POTENT);
+		if (isTheWorld) superRule.addInformation(stack, worldIn, tooltip, flagIn);
+		else mainRule.addInformation(stack, worldIn, tooltip, flagIn);
 	}
 
 	@Override
@@ -114,6 +127,9 @@ public class MantraTimeHourglass extends MantraCommon {
 
 		ElementStack star = mdc.get(ESObjects.ELEMENTS.STAR);
 		if (star.isEmpty()) return;
+
+		if (star.getCount() < 10) return;
+
 		float potent = mdc.get(POTENT_POWER);
 
 		// time stop

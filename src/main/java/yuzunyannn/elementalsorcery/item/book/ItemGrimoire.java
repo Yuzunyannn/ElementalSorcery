@@ -49,6 +49,14 @@ public class ItemGrimoire extends Item implements IRenderLayoutFix {
 			grimoire.setCapacityMax(Short.MAX_VALUE);
 			grimoire.saveState(stack);
 			items.add(stack);
+			if (ESAPI.isDevelop) {
+				stack = new ItemStack(this);
+				grimoire = stack.getCapability(Grimoire.GRIMOIRE_CAPABILITY, null);
+				grimoire.setCapacityMax(Short.MAX_VALUE);
+				for (Mantra mantra : Mantra.REGISTRY.getValues()) grimoire.add(mantra);
+				grimoire.saveState(stack);
+				items.add(stack);
+			}
 		}
 	}
 

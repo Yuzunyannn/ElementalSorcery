@@ -15,11 +15,13 @@ import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
 
-public abstract class MantraSquareArea extends MantraCommon {
+/** 区域类型 */
+public abstract class MantraTypeSquareArea extends MantraTypeAccumulative {
 
 	public static final Variable<Integer> DELAY = new Variable<>("@delay", VariableSet.INT);
 
@@ -47,15 +49,13 @@ public abstract class MantraSquareArea extends MantraCommon {
 
 	}
 
-	@Override
-	public final IMantraData getData(NBTTagCompound origin, World world, ICaster caster) {
-		return new SquareData();
+	public MantraTypeSquareArea() {
+		setAccumulatePreTick(4);
 	}
 
 	@Override
-	public void startSpelling(World world, IMantraData data, ICaster caster) {
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		dataEffect.markContinue(true);
+	public final IMantraData getData(NBTTagCompound origin, World world, ICaster caster) {
+		return new SquareData();
 	}
 
 	@Override
@@ -76,7 +76,9 @@ public abstract class MantraSquareArea extends MantraCommon {
 		if (pos == null) return;
 		if (wr.getFace() == EnumFacing.UP) pos = pos.up();
 		caster.iWantDirectCaster().setPositionVector(new Vec3d(pos));
-		this.onAfterSpellingInit(world, data, caster, pos);
+		if (!this.isAllElementMeetMinNeed(mData)) return;
+		this.init(world, (SquareData) mData, caster, pos);
+		this.sendMantraDataToClient(world, data, caster);
 	}
 
 	@Override
@@ -90,13 +92,20 @@ public abstract class MantraSquareArea extends MantraCommon {
 			return true;
 		}
 		if (world.isRemote) this.addAfterEffect(data, caster, size);
-		if (!this.onAfterSpellingTick(world, data, caster)) {
+		if (!this.tick(world, data, caster, caster.iWantDirectCaster().getPosition())) {
 			if (world.isRemote) return true;
 			if (delay <= 0) return false;
 			data.setDelay(delay - 1);
 			return true;
 		}
 		return true;
+	}
+
+	@Override
+	protected void initDirectLaunchMantraGrimoire(EntityGrimoire grimoire, VariableSet params) {
+		grimoire.setPosition(grimoire.posX, grimoire.posY + 1, grimoire.posZ);
+		SquareData squareData = (SquareData) grimoire.getMantraData();
+		this.init(grimoire.world, squareData, grimoire, grimoire.getPosition());
 	}
 
 	@Override
@@ -118,8 +127,7 @@ public abstract class MantraSquareArea extends MantraCommon {
 		ems.setIcon(this.getMagicCircleIcon());
 	}
 
-	public abstract void onAfterSpellingInit(World world, SquareData mData, ICaster caster, BlockPos pos);
+	public abstract void init(World world, SquareData mData, ICaster caster, BlockPos pos);
 
-	public abstract boolean onAfterSpellingTick(World world, SquareData mData, ICaster caster);
-
+	public abstract boolean tick(World world, SquareData mData, ICaster caster, BlockPos pos);
 }

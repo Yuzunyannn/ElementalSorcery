@@ -20,7 +20,7 @@ import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
-public class MantraMiningArea extends MantraSquareAreaAdv {
+public class MantraMiningArea extends MantraTypeSquareArea {
 
 	public MantraMiningArea() {
 		this.setTranslationKey("miningArea");
@@ -28,14 +28,10 @@ public class MantraMiningArea extends MantraSquareAreaAdv {
 		this.setIcon("auto_mining");
 		this.setRarity(25);
 		this.setOccupation(10);
+		this.setAccumulatePreTick(10);
 		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.EARTH, 2, 75), 400, 32);
 		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.METAL, 3, 50), -1, 32);
 		this.initAndAddDefaultMantraLauncher(0.0005);
-	}
-
-	@Override
-	public int getAccumulatePreTick() {
-		return 10;
 	}
 
 	@Override

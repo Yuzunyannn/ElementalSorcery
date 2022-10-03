@@ -65,6 +65,7 @@ public class MantraCommon extends Mantra {
 	public static final Variable<ElementStack> ELEMENT = new Variable<>("eStack", VariableSet.ELEMENT);
 	public static final Variable<Double> FRAGMENT = new Variable<>("fragment", VariableSet.DOUBLE);
 	public static final Variable<Integer> TICK = new Variable<>("tick", VariableSet.INT);
+	public static final Variable<Integer> INTERVAL = new Variable<>("Interval", VariableSet.INT);
 
 	protected int color = 0;
 	protected ResourceLocation icon;

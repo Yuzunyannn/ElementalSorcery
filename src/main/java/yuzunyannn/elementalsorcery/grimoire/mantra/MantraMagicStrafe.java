@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.render.effect.particle.ParticleMagicFall;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 
-public class MantraMagicStrafe extends MantraCommon {
+public class MantraMagicStrafe extends MantraTypePersistent {
 
 	public MantraMagicStrafe() {
 		this.setTranslationKey("magicStrafe");
@@ -31,20 +31,17 @@ public class MantraMagicStrafe extends MantraCommon {
 		this.setIcon("magic_strafe");
 		this.setRarity(100);
 		this.setOccupation(4);
+		this.addElementCollect(ElementStack.magic(5, 10), true);
+		this.setInterval(3);
 	}
 
 	@Override
-	public void onSpelling(World world, IMantraData data, ICaster caster) {
+	protected void onUpdate(World world, IMantraData data, ICaster caster) {
 		int tick = caster.iWantKnowCastTick();
-		if (tick < 20) return;
 		if (tick % 3 != 0) return;
-
-		((MantraDataCommon) data).markContinue(true);
-		ElementStack need = ElementStack.magic(5, 10);
-		ElementStack get = caster.iWantSomeElement(need, true);
-		if (get.isEmpty()) return;
-
-		if (world.isRemote) this.onSpellingEffect(world, data, caster);
+		MantraDataCommon mData = (MantraDataCommon) data;
+		ElementStack magic = mData.get(ESObjects.ELEMENTS.MAGIC);
+		if (magic.isEmpty()) return;
 
 		WorldTarget result = caster.iWantEntityTarget(EntityLivingBase.class);
 		EntityLivingBase target = (EntityLivingBase) result.getEntity();
@@ -61,9 +58,9 @@ public class MantraMagicStrafe extends MantraCommon {
 
 		float potent = caster.iWantBePotent(0.05f, false);
 
-		get.grow(36);
-		get.weaken(Math.min(tick / 4, 60) / 20f);
-		float dmg = Math.max(ItemMagicBlastWand.getDamage(get), 0.25f) * (1 + potent * 0.5f);
+		magic.grow(36);
+		magic.weaken(Math.min(tick / 4, 60) / 20f);
+		float dmg = Math.max(ItemMagicBlastWand.getDamage(magic), 0.25f) * (1 + potent * 0.5f);
 		DamageSource ds = caster.iWantDamageSource(ESObjects.ELEMENTS.MAGIC);
 		target.attackEntityFrom(ds, dmg);
 		target.hurtResistantTime = 0;

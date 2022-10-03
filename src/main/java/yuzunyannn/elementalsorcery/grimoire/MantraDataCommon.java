@@ -56,7 +56,7 @@ public class MantraDataCommon implements IMantraData {
 	}
 
 	public void setProgress(double progress) {
-		this.progress = (float) progress;
+		this.progress = (float) Math.min(1, progress);
 	}
 
 	public void setProgress(double now, double total) {

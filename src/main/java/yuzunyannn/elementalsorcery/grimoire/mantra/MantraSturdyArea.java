@@ -27,7 +27,7 @@ import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquareNoEntry;
 
-public class MantraSturdyArea extends MantraSquareAreaAdv {
+public class MantraSturdyArea extends MantraTypeSquareArea {
 
 	public MantraSturdyArea() {
 		this.setTranslationKey("sturdyArea");

@@ -1,5 +1,9 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
+import java.util.List;
+
+import net.minecraft.client.resources.I18n;
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,6 +14,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -76,6 +81,11 @@ public class MantraSprint extends MantraCommon {
 	}
 
 	@Override
+	public void onSpelling(World world, IMantraData data, ICaster caster) {
+		if (world.isRemote) onSpellingEffect(world, data, caster);
+	}
+
+	@Override
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataCommon = (MantraDataCommon) data;
 		if (!dataCommon.isMarkContinue()) return;
@@ -91,6 +101,18 @@ public class MantraSprint extends MantraCommon {
 		EffectResonance effect = new EffectResonance(world, entity.posX, entity.posY + 1, entity.posZ);
 		effect.setColor(0xffffff);
 		Effect.addEffect(effect);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		super.addInformation(stack, worldIn, tooltip, flagIn);
+
+		ElementStack eStack = new ElementStack(ESObjects.ELEMENTS.AIR, 4, 30);
+		String eName = eStack.getDisplayName();
+		String power = String.valueOf(eStack.getPower());
+		String count = String.valueOf(eStack.getCount());
+		tooltip.add(TextFormatting.LIGHT_PURPLE + I18n.format("info.grimoire.collect.sub4", eName, power, count));
 	}
 
 }

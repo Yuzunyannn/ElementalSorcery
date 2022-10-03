@@ -23,13 +23,30 @@ import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFlyIsland;
 
-public class MantraFootbridge extends MantraCommon {
+public class MantraFootbridge extends MantraTypeAccumulative {
 
 	public static final Variable<LinkedList<BlockPos>> POS_LIST = new Variable<>("@posList",
 			VariableSet.BLOCK_POS_LINKED_LIST);
+
+	protected class MyCollectRule extends CollectRule {
+		@Override
+		public float calcRealCollectProgress(World world, MantraDataCommon mData, ICaster caster) {
+			if (collectList.isEmpty()) return 0;
+			CollectInfo info = collectList.get(0);
+			ElementStack eStack = mData.get(info.eStack.getElement());
+			float max = info.minNeed;
+			WorldTarget wr = caster.iWantBlockTarget();
+			Vec3d pos = wr.getHitVec();
+			if (pos != null) {
+				IWorldObject co = caster.iWantCaster();
+				double dis = co.getPositionVector().distanceTo(pos);
+				max = MathHelper.ceil(Math.min(96, 3 * dis));
+			}
+			return eStack.getCount() / max;
+		}
+	}
 
 	public MantraFootbridge() {
 		this.setTranslationKey("footbridge");
@@ -37,6 +54,8 @@ public class MantraFootbridge extends MantraCommon {
 		this.setIcon("footbridge");
 		this.setRarity(80);
 		this.setOccupation(3);
+		this.setMainRule(new MyCollectRule());
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.EARTH, 1, 25), Integer.MAX_VALUE, 96);
 		this.addFragmentMantraLauncher(new FMantraFlyIsland());
 	}
 
@@ -45,23 +64,6 @@ public class MantraFootbridge extends MantraCommon {
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		super.onSpellingEffect(world, data, caster);
 		addEffectBlockIndicatorEffect(world, data, caster);
-	}
-
-	@Override
-	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
-		if (beforeGeneralStartTime(caster)) return;
-		MantraDataCommon mData = (MantraDataCommon) data;
-		WorldTarget wr = caster.iWantBlockTarget();
-		int max = 96;
-		Vec3d pos = wr.getHitVec();
-		if (pos != null) {
-			IWorldObject co = caster.iWantCaster();
-			double dis = co.getPositionVector().distanceTo(pos);
-			max = MathHelper.ceil(Math.min(96, 3 * dis));
-		}
-		CollectResult cr = mData.tryCollect(caster, ESObjects.ELEMENTS.EARTH, 1, 25, max);
-		mData.setProgress(cr.getStackCount(), max);
-		if (!cr.getElementStack().isEmpty()) mData.markContinue(true);
 	}
 
 	@Override

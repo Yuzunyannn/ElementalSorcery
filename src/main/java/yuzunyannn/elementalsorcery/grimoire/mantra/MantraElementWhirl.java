@@ -34,9 +34,7 @@ import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.block.altar.BlockElementContainer;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraElementWhirl;
-import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectSphericalBlast;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
@@ -47,7 +45,7 @@ import yuzunyannn.elementalsorcery.util.math.MathSupporter;
 import yuzunyannn.elementalsorcery.util.var.Variables;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class MantraElementWhirl extends MantraCommon {
+public class MantraElementWhirl extends MantraTypeAccumulative {
 
 	public static void booom(World world, Vec3d at, ElementStack magic, Entity caster) {
 		VariableSet set = new VariableSet();
@@ -63,12 +61,8 @@ public class MantraElementWhirl extends MantraCommon {
 		this.setIcon("element_whirl");
 		this.setRarity(45);
 		this.setOccupation(3);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.MAGIC, 10, 50), 2000, 500);
 		this.addFragmentMantraLauncher(new FMantraElementWhirl(this));
-	}
-
-	@Override
-	public void potentAttack(World world, ItemStack grimoire, ICaster caster, Entity target) {
-		super.potentAttack(world, grimoire, caster, target);
 	}
 
 	@Override
@@ -84,17 +78,10 @@ public class MantraElementWhirl extends MantraCommon {
 	}
 
 	@Override
-	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
-		MantraDataCommon mData = (MantraDataCommon) data;
-		CollectResult cr = mData.tryCollect(caster, ESObjects.ELEMENTS.MAGIC, 10, 50, 2000);
-		mData.setProgress(cr.getStackCount(), 2000);
-	}
-
-	@Override
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon mData = (MantraDataCommon) data;
+		if (!isAllElementMeetMinNeed(mData)) return;
 		ElementStack estack = mData.get(ESObjects.ELEMENTS.MAGIC);
-		if (estack.getCount() < 500) return;
 		WorldTarget wr = caster.iWantBlockTarget();
 		BlockPos pos = wr.getPos();
 		if (pos == null) return;

@@ -13,7 +13,7 @@ import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraFloat;
 
-public class MantraFloat extends MantraCommon {
+public class MantraFloat extends MantraTypePersistent {
 
 	public MantraFloat() {
 		this.setTranslationKey("float");
@@ -21,6 +21,8 @@ public class MantraFloat extends MantraCommon {
 		this.setIcon("float");
 		this.setRarity(125);
 		this.setOccupation(1);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.AIR, 1, 20), true);
+		this.setInterval(20);
 		this.addFragmentMantraLauncher(new FMantraFloat(this));
 	}
 
@@ -41,23 +43,23 @@ public class MantraFloat extends MantraCommon {
 	}
 
 	@Override
-	public void onSpelling(World world, IMantraData data, ICaster caster) {
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		float potent = caster.iWantBePotent(0.0005f, true);
-		if (potent > 0.2f) caster.iWantBePotent(0.0005f, false);
-		else {
-			if (caster.iWantKnowCastTick() % 20 == 0 || !dataEffect.isMarkContinue()) {
-				dataEffect.markContinue(false);
-				ElementStack get = getElement(caster, ESObjects.ELEMENTS.AIR, 1, 20);
-				if (get.isEmpty()) return;
-			}
-		}
+	protected void onUpdate(World world, IMantraData data, ICaster caster) {
 		Entity entity = caster.iWantCaster().asEntity();
 		if (entity == null) return;
-		dataEffect.markContinue(true);
 		entity.motionY = 0.15;
 		entity.fallDistance = 0;
-		if (world.isRemote) onSpellingEffect(world, data, caster);
+	}
+
+	@Override
+	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
+		float potent = caster.iWantBePotent(0.0005f, true);
+		if (potent > 0.2f) {
+			MantraDataCommon mData = (MantraDataCommon) data;
+			caster.iWantBePotent(0.0005f, false);
+			mData.markContinue(true);
+			return;
+		}
+		super.onCollectElement(world, data, caster, speedTick);
 	}
 
 }

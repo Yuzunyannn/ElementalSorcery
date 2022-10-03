@@ -14,11 +14,10 @@ import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 
-public class MantraSlowFall extends MantraCommon {
+public class MantraSlowFall extends MantraTypePersistent {
 
 	public MantraSlowFall() {
 		this.setTranslationKey("slowFall");
@@ -26,31 +25,20 @@ public class MantraSlowFall extends MantraCommon {
 		this.setIcon("slow_fall");
 		this.setRarity(125);
 		this.setOccupation(1);
+		this.setInterval(100);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.AIR, 1, 10), true);
 	}
 
 	@Override
-	public void startSpelling(World world, IMantraData data, ICaster caster) {
-		onSpelling(world, data, caster);
-	}
-
-	@Override
-	public void onSpelling(World world, IMantraData data, ICaster caster) {
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		if (caster.iWantKnowCastTick() % 100 == 0 || !dataEffect.isMarkContinue()) {
-			dataEffect.markContinue(false);
-			ElementStack need = new ElementStack(ESObjects.ELEMENTS.AIR, 1, 10);
-			ElementStack get = caster.iWantSomeElement(need, true);
-			if (get.isEmpty()) return;
-		}
+	protected void onUpdate(World world, IMantraData data, ICaster caster) {
 		Entity entity = caster.iWantCaster().asEntity();
 		if (entity == null) return;
-		dataEffect.markContinue(true);
 
-		float potent = caster.iWantBePotent(0.05f, true);
+		float potent = caster.iWantBePotent(0.025f, true);
 		Vec3d look = entity.getLookVec();
 
 		if (potent >= 0.75f) {
-			caster.iWantBePotent(0.05f, false);
+			caster.iWantBePotent(0.025f, false);
 			look = look.scale(0.05 * (1 + potent));
 			if (entity.motionY < 0) {
 				entity.fallDistance *= 0.7;
@@ -69,8 +57,6 @@ public class MantraSlowFall extends MantraCommon {
 				entity.motionZ += look.z;
 			}
 		}
-
-		if (world.isRemote) onSpellingEffect(world, data, caster);
 	}
 
 	@Override

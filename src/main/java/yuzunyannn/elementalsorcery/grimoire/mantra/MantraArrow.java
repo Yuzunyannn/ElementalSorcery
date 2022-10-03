@@ -1,7 +1,9 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
+import java.util.List;
 import java.util.Random;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
@@ -14,6 +16,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
@@ -28,7 +31,7 @@ import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.ESFakePlayer;
 
-public class MantraArrow extends MantraCommon {
+public class MantraArrow extends MantraTypeAccumulative {
 
 	public MantraArrow() {
 		this.setTranslationKey("arrow");
@@ -36,46 +39,40 @@ public class MantraArrow extends MantraCommon {
 		this.setIcon("arrow");
 		this.setRarity(95);
 		this.setOccupation(3);
+		CollectRuleRepeated rule = new CollectRuleRepeated();
+		rule.setInterval(26);
+		rule.addElementCollect(new ElementStack(ESObjects.ELEMENTS.AIR, 1, 3), 1, 1);
+		this.setMainRule(rule);
 	}
 
 	@Override
 	public void startSpelling(World world, IMantraData data, ICaster caster) {
+		super.startSpelling(world, data, caster);
 		MantraDataCommon mData = (MantraDataCommon) data;
-		mData.set(POWERI, 26);
+		mData.set(INTERVAL, ((CollectRuleRepeated) this.mainRule).interval);
 	}
 
 	@Override
-	public void onSpelling(World world, IMantraData data, ICaster caster) {
-		int tick = caster.iWantKnowCastTick();
-
-		MantraDataCommon mData = (MantraDataCommon) data;
-		int preTick = Math.max(mData.get(POWERI), 1);
-
-		if ((tick - 2) % preTick == 0) {
-			ElementStack need = new ElementStack(ESObjects.ELEMENTS.AIR, 1, 3);
-			ElementStack get = caster.iWantSomeElement(need, true);
-			mData.markContinue(!get.isEmpty());
-		}
-
-		if (!mData.isMarkContinue()) return;
-		if (world.isRemote) this.onSpellingEffect(world, data, caster);
-		if (tick % preTick != 0) return;
+	protected boolean onCollectFinish(World world, MantraDataCommon mData, ICaster caster) {
 
 		tryShoot(world, mData, caster, 20);
 
+		int preTick = Math.max(mData.get(INTERVAL), 1);
 		if (preTick > 8) {
 			float potent = caster.iWantBePotent(0.1f, false);
-			mData.set(POWERI, preTick - 1 - (int) (potent * 5));
+			mData.set(INTERVAL, preTick - 1 - (int) (potent * 5));
 		} else if (preTick > 1) {
 			float potent = caster.iWantBePotent(0.05f, true);
 			if (potent >= 0.5f) {
 				caster.iWantBePotent(0.05f, false);
-				mData.set(POWERI, preTick - (int) (potent * 2));
-			} else mData.set(POWERI, 8);
+				mData.set(INTERVAL, preTick - (int) (potent * 2));
+			} else mData.set(INTERVAL, 8);
 		} else {
 			float potent = caster.iWantBePotent(0.05f, false);
-			if (potent < 0.5f) mData.set(POWERI, 8);
+			if (potent < 0.5f) mData.set(INTERVAL, 8);
 		}
+
+		return true;
 	}
 
 	@Override
@@ -85,6 +82,18 @@ public class MantraArrow extends MantraCommon {
 		int tick = caster.iWantKnowCastTick();
 		if (tick > 20) return;
 		tryShoot(world, mData, caster, tick);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	protected void addRuleInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		super.addRuleInformation(stack, worldIn, tooltip, flagIn);
+		float i = ((CollectRuleRepeated) this.mainRule).interval;
+		float r = this.mainRule.collectList.get(0).eStack.getCount() / i;
+		tooltip.add(TextFormatting.DARK_PURPLE + "⚪" + createCollectInfomation(
+				CollectInfo.create(new ElementStack(ESObjects.ELEMENTS.EARTH, 1, 4), 1, 1), r));
+		tooltip.add(TextFormatting.DARK_PURPLE + "⚪" + createCollectInfomation(
+				CollectInfo.create(new ElementStack(ESObjects.ELEMENTS.WOOD, 1, 3), 1, 1), r));
 	}
 
 	public void tryShoot(World world, IMantraData data, ICaster caster, int count) {
@@ -196,17 +205,6 @@ public class MantraArrow extends MantraCommon {
 			effect.setColor(color);
 			Effect.addEffect(effect);
 		}
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public float getProgressRate(World world, IMantraData data, ICaster caster) {
-		int tick = caster.iWantKnowCastTick();
-		MantraDataCommon mData = (MantraDataCommon) data;
-		int preTick = Math.max(mData.get(POWERI), 1);
-
-		int count = tick % preTick + 1;
-		return count / (float) preTick;
 	}
 
 	@Override

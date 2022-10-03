@@ -12,7 +12,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.entity.mob.EntityPuppet;
 
-public class MantraPuppetArea extends MantraSquareAreaAdv {
+public class MantraPuppetArea extends MantraTypeSquareArea {
 
 	public MantraPuppetArea() {
 		this.setTranslationKey("puppetArea");
@@ -21,16 +21,15 @@ public class MantraPuppetArea extends MantraSquareAreaAdv {
 		this.setRarity(40);
 		this.setOccupation(5);
 		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.WOOD, 2, 100), 500, 100);
+		this.setPotentPowerCollect(0.1f, 2);
 		this.initAndAddDefaultMantraLauncher(0.01);
 	}
 
 	@Override
 	public void init(World world, SquareData data, ICaster caster, BlockPos pos) {
 		ElementStack earth = data.get(ESObjects.ELEMENTS.WOOD);
-		float potent = caster.iWantBePotent(0.75f, false);
-		float rate = 0.5f * potent + 1;
+		float rate = 0.5f * caster.iWantBePotent(0.75f, false) + 1;
 		data.setSize(Math.min(earth.getPower() / 125, 8) * rate + 4);
-		data.set(POWERF, potent);
 	}
 
 	@Override
@@ -51,8 +50,8 @@ public class MantraPuppetArea extends MantraSquareAreaAdv {
 
 		EntityLivingBase casterEntity = caster.iWantCaster().asEntityLivingBase();
 
-		float potent = data.get(POWERF);
-		float pDamage = Math.min(0.05f, 0.01f + potent / 50);
+		float potent = data.get(POTENT_POWER);
+		float pDamage = 0.01f + potent / 50f;
 		float nDamage = Math.min(3, wood.getPower() / 200f);
 
 		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);

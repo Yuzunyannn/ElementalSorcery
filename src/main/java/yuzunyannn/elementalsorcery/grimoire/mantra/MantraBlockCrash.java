@@ -28,13 +28,15 @@ import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
-public class MantraBlockCrash extends MantraCommon {
+public class MantraBlockCrash extends MantraTypeAccumulative {
 
 	public MantraBlockCrash() {
 		this.setTranslationKey("blockCrash");
 		this.setColor(0x785439);
 		this.setIcon("block_crash");
 		this.setRarity(110);
+		this.setAccumulatePreTick(4);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.EARTH, 1, 25), 5, 5);
 		this.setDirectLaunchFragmentMantraLauncher(new ElementStack(ESObjects.ELEMENTS.EARTH, 20, 25), 2, 0.0075, null);
 	}
 
@@ -56,29 +58,8 @@ public class MantraBlockCrash extends MantraCommon {
 	}
 
 	@Override
-	public void startSpelling(World world, IMantraData data, ICaster caster) {
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		ElementStack need = new ElementStack(ESObjects.ELEMENTS.EARTH, 5, 25);
-		ElementStack get = caster.iWantSomeElement(need, false);
-		dataEffect.markContinue(!get.isEmpty());
-	}
-
-	@Override
-	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
-		MantraDataCommon mdc = (MantraDataCommon) data;
-		mdc.setProgress(caster.iWantKnowCastTick(), 20.0f);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		super.onSpellingEffect(world, data, caster);
-		// addEffectIndicatorEffect(world, data, caster);
-	}
-
-	@Override
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
-		if (caster.iWantKnowCastTick() < 20) return;
+		if (!isAllElementMeetMinNeed(data)) return;
 		BlockPos pos = null;
 		WorldTarget wr = caster.iWantEntityTarget(EntityLivingBase.class);
 		EntityLivingBase living = (EntityLivingBase) wr.getEntity();

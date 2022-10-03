@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 
-public class MantraFloatArea extends MantraSquareAreaAdv {
+public class MantraFloatArea extends MantraTypeSquareArea {
 
 	public MantraFloatArea() {
 		this.setTranslationKey("floatArea");

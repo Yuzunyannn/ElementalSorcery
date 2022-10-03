@@ -27,14 +27,13 @@ import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraIceCrystalBomb;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectIceCrystalBomb;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class MantraIceCrystalBomb extends MantraCommon {
+public class MantraIceCrystalBomb extends MantraTypeAccumulative {
 
 	public static final Variable<Integer> TRIGGER_TICK = new Variable<>("triggerTick", VariableSet.INT);
 
@@ -43,8 +42,8 @@ public class MantraIceCrystalBomb extends MantraCommon {
 		this.setColor(0xa2c0f4);
 		this.setIcon("ice_crystal_bomb");
 		this.setRarity(50);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.WATER, 5, 50), 100, 33);
 		this.addFragmentMantraLauncher(new FMantraIceCrystalBomb());
-//		this.setDirectLaunchFragmentMantraLauncher(new ElementStack(ESObjects.ELEMENTS.WOOD, 125, 50), 2, 0.0075, null);
 	}
 
 	@Override
@@ -74,23 +73,11 @@ public class MantraIceCrystalBomb extends MantraCommon {
 	}
 
 	@Override
-	public void startSpelling(World world, IMantraData data, ICaster caster) {
-		((MantraDataCommon) data).markContinue(true);
-	}
-
-	@Override
-	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
-		MantraDataCommon mData = (MantraDataCommon) data;
-		CollectResult cr = mData.tryCollect(caster, ESObjects.ELEMENTS.WATER, 5, 50, 100);
-		mData.setProgress(cr.getStackCount(), 100);
-	}
-
-	@Override
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
 		WorldTarget wt = caster.iWantBlockTarget();
 		BlockPos pos = wt.getPos();
 		MantraDataCommon mData = (MantraDataCommon) data;
-		if (pos == null) {
+		if (pos == null || !isAllElementMeetMinNeed(mData)) {
 			mData.remove(ESObjects.ELEMENTS.WATER);
 			return;
 		}

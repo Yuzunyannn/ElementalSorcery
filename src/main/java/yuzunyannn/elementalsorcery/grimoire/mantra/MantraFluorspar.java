@@ -28,7 +28,7 @@ import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.block.BlockFluorspar;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 
-public class MantraFluorspar extends MantraCommon {
+public class MantraFluorspar extends MantraTypeAccumulative {
 
 	public MantraFluorspar() {
 		this.setTranslationKey("fluorspar");
@@ -36,6 +36,7 @@ public class MantraFluorspar extends MantraCommon {
 		this.setIcon("fluorspar");
 		this.setRarity(95);
 		this.setOccupation(2);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.METAL, 2, 40), 2, 2);
 		this.setDirectLaunchFragmentMantraLauncher(new ElementStack(ESObjects.ELEMENTS.METAL, 20, 40), 2, 0.005, null);
 	}
 
@@ -54,49 +55,36 @@ public class MantraFluorspar extends MantraCommon {
 	}
 
 	@Override
-	public void startSpelling(World world, IMantraData data, ICaster caster) {
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		ElementStack need = new ElementStack(ESObjects.ELEMENTS.METAL, 2, 40);
-		ElementStack stack = caster.iWantSomeElement(need, false);
-		dataEffect.markContinue(!stack.isEmpty());
-	}
-
-	@Override
-	public void onSpelling(World world, IMantraData data, ICaster caster) {
-		MantraDataCommon mdc = (MantraDataCommon) data;
-		int maxTick = caster.iWantBePotent(0.1f, true) > 0.2f ? 5 : 20;
-		mdc.setProgress(caster.iWantKnowCastTick(), maxTick);
-		super.onSpelling(world, data, caster);
-	}
-
-	@Override
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon mdc = (MantraDataCommon) data;
+		ElementStack stack = mdc.get(ESObjects.ELEMENTS.METAL);
+		mdc.remove(ESObjects.ELEMENTS.METAL);
+	
 		if (mdc.getProgress() < 1) return;
+		if (stack.isEmpty()) return;
+		
 		WorldTarget result = caster.iWantBlockTarget();
 		if (result.getPos() == null) return;
+		
 		BlockPos pos = result.getPos();
 		IBlockState originState = world.getBlockState(pos);
 		if (getChange(originState) == null) return;
 
 		EnumFacing facing = result.getFace();
 		float potent = caster.iWantBePotent(0.5f, true);
-		ElementStack stack = ElementStack.EMPTY;
 		boolean superSpell = false;
 		if (potent >= 0.5f && facing != null) {
-			stack = getElement(caster, ESObjects.ELEMENTS.METAL, 8, 40);
-			if (!stack.isEmpty()) {
+			ElementStack moreStack = getElement(caster, ESObjects.ELEMENTS.METAL, 8, 40);
+			if (!moreStack.isEmpty()) {
 				superSpell = true;
 				caster.iWantBePotent(0.5f, false);
+				stack.grow(moreStack);
 			}
 		}
-		if (stack.isEmpty()) stack = getElement(caster, ESObjects.ELEMENTS.METAL, 2, 40);
-		if (stack.isEmpty()) return;
 
 		doFluorsparChange(world, pos);
 
 		if (superSpell) doFluorsparChangeSuper(world, pos, facing, 30);
-
 	}
 
 	@Override

@@ -23,19 +23,19 @@ import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
-public class MantraLush extends MantraCommon {
+public class MantraLush extends MantraTypeAccumulative {
 
 	public MantraLush() {
 		this.setTranslationKey("lush");
 		this.setColor(0x32CD32);
 		this.setIcon("lush");
 		this.setRarity(75);
-		this.setDirectLaunchFragmentMantraLauncher(new ElementStack(ESObjects.ELEMENTS.WOOD, 125, 50), 2, 0.0075, null);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.WOOD, 1, 50), 125, 50);
+		this.initAndAddDefaultMantraLauncher(0.0075);
 	}
 
 	@Override
@@ -46,26 +46,6 @@ public class MantraLush extends MantraCommon {
 		float potent = caster.iWantBePotent(0.2f, false);
 		doPotentAttackEffect(world, caster, target);
 		magicAt(world, target.getPosition(), caster, stack.getPower() * (1 + potent));
-	}
-
-	@Override
-	public void startSpelling(World world, IMantraData data, ICaster caster) {
-		((MantraDataCommon) data).markContinue(true);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		if (beforeGeneralStartTime(caster)) return;
-		super.onSpellingEffect(world, data, caster);
-	}
-
-	@Override
-	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
-		if (beforeGeneralStartTime(caster)) return;
-		MantraDataCommon mData = (MantraDataCommon) data;
-		CollectResult cr = mData.tryCollect(caster, ESObjects.ELEMENTS.WOOD, 1, 50, 125);
-		mData.setProgress(cr.getStackCount(), 200);
 	}
 
 	@Override

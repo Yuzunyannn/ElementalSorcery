@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -8,7 +7,6 @@ import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -27,13 +25,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
-import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
-import yuzunyannn.elementalsorcery.element.ElementKnowledge;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
-import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 
-public class MantraFireArea extends MantraSquareAreaAdv {
+public class MantraFireArea extends MantraTypeSquareArea {
 
 	public MantraFireArea() {
 		this.setTranslationKey("fireArea");
@@ -42,7 +36,6 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 		this.setRarity(60);
 		this.setOccupation(3);
 		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.FIRE, 2, 40), 80, 20);
-		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.KNOWLEDGE, 1, 100), 20, -1);
 		this.setPotentPowerCollect(0.1f, 2);
 		this.initAndAddDefaultMantraLauncher(0.002);
 	}
@@ -61,18 +54,6 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void addAfterEffect(SquareData data, ICaster caster, int size) {
-		super.addAfterEffect(data, caster, size);
-		EffectMagicSquare ems = data.getEffectMap().getMark(MantraEffectType.MANTRA_EFFECT_1, EffectMagicSquare.class);
-		if (ems == null) return;
-		List<Vec3d> vec = new ArrayList<>();
-		vec.add(ColorHelper.color(getColor(data)));
-		if (data.get(ESObjects.ELEMENTS.KNOWLEDGE).getCount() >= 20) vec.add(ColorHelper.color(ElementKnowledge.COLOR));
-		ems.effectColors = vec.toArray(new Vec3d[vec.size()]);
-	}
-
-	@Override
 	public boolean tick(World world, SquareData data, ICaster caster, BlockPos originPos) {
 		int tick = caster.iWantKnowCastTick();
 		ElementStack fire = data.get(ESObjects.ELEMENTS.FIRE);
@@ -82,20 +63,15 @@ public class MantraFireArea extends MantraSquareAreaAdv {
 		int preTick = pp >= 1 ? 20 : 30;
 		if (tick % preTick != 0) return true;
 
-		ElementStack knowledge = data.get(ESObjects.ELEMENTS.KNOWLEDGE);
 		Random rand = world.rand;
 		fire.shrink(8);
 
 		final float size = data.getSize() / 2;
 		AxisAlignedBB aabb = new AxisAlignedBB(originPos.getX() - size, originPos.getY(), originPos.getZ() - size,
 				originPos.getX() + size, originPos.getY() + 3, originPos.getZ() + size);
-		List<Entity> entities = world.getEntitiesWithinAABB(Entity.class, aabb);
-		for (Entity entity : entities) {
-			if (!(entity instanceof EntityLivingBase) && !(entity instanceof EntityItem)) continue;
-			if (knowledge.getCount() >= 20) {
-				if (isCasterFriend(caster, entity)) continue;
-				if (entity instanceof EntityItem) continue;
-			}
+		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
+		for (EntityLivingBase entity : entities) {
+			if (isCasterFriend(caster, entity)) continue;
 			entity.setFire(5);
 			if (world.isRemote) addEffect(world, entity.getPositionVector().add(0, entity.height / 2, 0));
 			if (fire.getPower() > 50) {

@@ -15,7 +15,6 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -43,7 +42,7 @@ import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.var.Variables;
 
-public class MantraFireBall extends MantraCommon {
+public class MantraFireBall extends MantraTypeAccumulative {
 
 	static public void fire(World world, EntityLivingBase spller, int power, boolean needKnowledge) {
 		fire(world, spller, spller.getLookVec(), power, needKnowledge);
@@ -60,9 +59,13 @@ public class MantraFireBall extends MantraCommon {
 		MantraCommon.fireMantra(world, ESObjects.MANTRAS.FIRE_BALL, spller, set);
 	}
 
-	protected static class Data extends MantraDataCommon {
-		protected int color = 0;
-		protected boolean powerUp = false;
+	protected class MyCollectRule extends CollectRule {
+		@Override
+		public float calcRealCollectProgress(World world, MantraDataCommon mData, ICaster caster) {
+			ElementStack fire = mData.get(ESObjects.ELEMENTS.FIRE);
+			float f = super.calcRealCollectProgress(world, mData, caster);
+			return Math.max(f, getPower(fire) / 32f);
+		}
 	}
 
 	public MantraFireBall() {
@@ -71,6 +74,10 @@ public class MantraFireBall extends MantraCommon {
 		this.setIcon("fire_ball");
 		this.setRarity(50);
 		this.setOccupation(3);
+		this.setMainRule(new MyCollectRule());
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.FIRE, 2, 50), 500, 25);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.METAL, 1, 100), 40, 0);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.KNOWLEDGE, 1, 100), 20, 0);
 		this.addFragmentMantraLauncher(new FMantraFireBall());
 	}
 
@@ -87,68 +94,31 @@ public class MantraFireBall extends MantraCommon {
 	}
 
 	@Override
-	public IMantraData getData(NBTTagCompound origin, World world, ICaster caster) {
-		return new Data();
-	}
-
-	@Override
-	public void startSpelling(World world, IMantraData data, ICaster caster) {
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		dataEffect.markContinue(true);
-	}
-
-	@Override
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData mData, ICaster caster) {
-		int tick = caster.iWantKnowCastTick();
-		if (tick < 20) return;
 		super.onSpellingEffect(world, mData, caster);
 		this.addEffectEmitEffect(world, mData, caster);
 	}
 
-	@Override
-	public void onCollectElement(World world, IMantraData mData, ICaster caster, int speedTick) {
-		int tick = caster.iWantKnowCastTick();
-		if (tick < 20) return;
-		Data data = (Data) mData;
-		data.powerUp = false;
-		float power = data.get(POWERF);
-		if (power >= 32) return;
-		// 每tick两点消耗，积攒火球，火元素是必须的，否则没法积攒其他元素
-		ElementStack need = new ElementStack(ESObjects.ELEMENTS.FIRE, 2, 50);
-		ElementStack stack = caster.iWantSomeElement(need, true);
-		if (stack.isEmpty()) return;
-		data.set(POWERF, power = power + 0.2f + Math.min(stack.getPower() / 1000f, 0.4f));
-		data.powerUp = true;
-		data.setProgress(power, 32);
-		// 获取金
-
-		if (!data.tryCollect(caster, ESObjects.ELEMENTS.METAL, 1, 100, 40).get.isEmpty()) {
-			if (world.isRemote) if (world.rand.nextInt(4) == 0) data.color = ElementMetal.COLOR;
-			else data.color = 0;
-		}
-		// 获取知识
-		if (!data.tryCollect(caster, ESObjects.ELEMENTS.KNOWLEDGE, 1, 100, 20).get.isEmpty()) {
-			if (world.isRemote) if (world.rand.nextInt(5) == 0) data.color = ElementKnowledge.COLOR;
-			else data.color = 0;
-		}
+	protected float getPower(ElementStack fire) {
+		return fire.getCount() / 2 * (0.1f + Math.min(fire.getPower() / 1000f, 0.4f));
 	}
 
 	@Override
-	public void endSpelling(World world, IMantraData mData, ICaster caster) {
-		int tick = caster.iWantKnowCastTick();
-		if (tick < 20) return;
-		Data data = (Data) mData;
+	public void endSpelling(World world, IMantraData data, ICaster caster) {
+		if (!isAllElementMeetMinNeed(data)) return;
+		MantraDataCommon mData = (MantraDataCommon) data;
+
 		IWorldObject co = caster.iWantCaster();
-		data.set(TOWARD, caster.iWantDirection());
-		data.set(VEC, co.getEyePosition().add(data.get(TOWARD).scale(2)));
+		mData.set(TOWARD, caster.iWantDirection());
+		mData.set(VEC, co.getEyePosition().add(mData.get(TOWARD).scale(2)));
 		float potent = caster.iWantBePotent(5, false);
-		data.set(POWERF, Math.min(data.get(POWERF), 32) * (1 + potent * 0.25f));
+		mData.set(POWERF, Math.min(getPower(mData.get(ESObjects.ELEMENTS.FIRE)), 32) * (1 + potent * 0.25f));
 	}
 
 	@Override
 	public boolean afterSpelling(World world, IMantraData mData, ICaster caster) {
-		Data data = (Data) mData;
+		MantraDataCommon data = (MantraDataCommon) mData;
 		float power = data.get(POWERF);
 		if (power <= 0) return false;
 		data.set(POWERF, --power);
@@ -264,7 +234,7 @@ public class MantraFireBall extends MantraCommon {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public int getRandomEffectColorFromData(World world, Data data) {
+	public int getRandomEffectColorFromData(World world, MantraDataCommon data) {
 		int color = getColor(data);
 		switch (world.rand.nextInt(6)) {
 		case 0:
