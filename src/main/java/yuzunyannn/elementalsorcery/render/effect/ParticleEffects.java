@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
+import yuzunyannn.elementalsorcery.render.effect.batch.EffectGoldShieldAttack;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleMagicFall;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FirewrokShap;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
@@ -25,6 +26,9 @@ public class ParticleEffects {
 			break;
 		case 1:
 			PotionRebirthFromFire.doEffect(world, pos, nbt);
+			break;
+		case 2:
+			EffectGoldShieldAttack.doEffect(world, pos, nbt);
 			break;
 		}
 	}

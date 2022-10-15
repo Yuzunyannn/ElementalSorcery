@@ -22,7 +22,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.container.BlockIceRockStand;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockSendRecv.FaceStatus;
-import yuzunyannn.elementalsorcery.util.LamdaReference;
+import yuzunyannn.elementalsorcery.util.LambdaReference;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
@@ -360,8 +360,8 @@ public class TileIceRockStand extends TileIceRockBase implements ITickable {
 		}
 
 		// 寻找最近的
-		LamdaReference<Double> minDistance = LamdaReference.of(Double.MAX_VALUE);
-		LamdaReference<TileIceRockNode> findedNode = LamdaReference.of(null);
+		LambdaReference<Double> minDistance = LambdaReference.of(Double.MAX_VALUE);
+		LambdaReference<TileIceRockNode> findedNode = LambdaReference.of(null);
 		ergodicSubNodes(node -> {
 			double dis = at.distanceSq(node.getPos());
 			if (minDistance.get() > dis) {

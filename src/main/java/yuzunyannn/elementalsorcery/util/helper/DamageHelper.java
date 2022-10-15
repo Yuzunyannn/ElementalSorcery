@@ -10,6 +10,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
@@ -24,9 +25,17 @@ public class DamageHelper {
 
 	/** 通用的，魔法伤害 */
 	public static DamageSource getMagicDamageSource(@Nullable Entity source, @Nullable Entity directSource) {
-		if (directSource == null && source == null)
-			return new DamageSource("magic").setDamageBypassesArmor().setMagicDamage();
-		else return DamageSource.causeIndirectMagicDamage(directSource, source);
+		EntityDamageSource ds;
+		if (directSource == null && source == null) ds = new EntityDamageSource("magic", source);
+		else ds = new EntityDamageSourceIndirect("indirectMagic", directSource, source);
+		return ds.setDamageBypassesArmor().setMagicDamage();
+	}
+
+	public static DamageSource getMagicButNotDamageSource(@Nullable Entity source, @Nullable Entity directSource) {
+		EntityDamageSource ds;
+		if (directSource == null && source == null) ds = new EntityDamageSource("magic", source);
+		else ds = new EntityDamageSourceIndirect("indirectMagic", directSource, source);
+		return ds.setIsThornsDamage().setDamageBypassesArmor();
 	}
 
 	public static DamageSource getDamageSource(ElementStack estack, @Nullable Entity source,

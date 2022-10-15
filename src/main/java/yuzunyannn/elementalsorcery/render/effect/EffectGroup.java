@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.render.effect;
 
-public abstract class EffectGroup {
+public abstract class EffectGroup implements Iterable<Effect> {
 
 	abstract public void update();
 

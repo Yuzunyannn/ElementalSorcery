@@ -1,9 +1,9 @@
 package yuzunyannn.elementalsorcery.util;
 
-public class LamdaReference<T> {
+public class LambdaReference<T> {
 
-	static public <T> LamdaReference of(T obj) {
-		LamdaReference ref = new LamdaReference();
+	static public <T> LambdaReference of(T obj) {
+		LambdaReference ref = new LambdaReference();
 		ref.obj = obj;
 		return ref;
 	}

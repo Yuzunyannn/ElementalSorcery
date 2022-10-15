@@ -1250,6 +1250,11 @@
 			"zh_CN": "自然勋章",
 			"en_US": "Natural Medal",
 			"ja_JP": "自然勲章"
+		},
+		"es.effect.goldShield": {
+			"zh_CN": "黄金盾",
+			"en_US": "Gold Shield",
+			"ja_JP": "黄金盾"
 		}
 	},
 	"es.effect.type": {
@@ -1613,6 +1618,16 @@
 			"zh_CN": "借助木元素，召唤木灵领域，领域内会周期性的产生木灵来攻击区域内的敌人，木灵的攻击会根据敌人生命的最大值百分比造成伤害",
 			"en_US": "With the Wood, Summon Kodama Area which will periodically generate Kodamas to attack enemies. The Kodama's damage is base on percentage of the enemy's max hp.",
 			"ja_JP": "木元素で木霊領域を召喚し、領域内で周期的に木霊を生み、敵を攻撃して、敵のHPの最大のパーセントによってダメージを与える"
+		},
+		"mantra.goldShield.name": {
+			"zh_CN": "黄金盾",
+			"en_US": "Gold Shield",
+			"ja_JP": "黄金盾"
+		},
+		"mantra.goldShield.describe": {
+			"zh_CN": "借助金元素，生成价值之盾，消耗可估算的价值来抵挡任何伤害，超出的价值将作为伤害反射给敌人",
+			"en_US": "With the Metal, create the Shield of Value. Consume estimated value to resist any damage. Excess value will be reflected to the enemy as damage",
+			"ja_JP": "金元素で価値の盾を生成し、推定可能な価値を消費していかなるダメージにも抵抗し、超えた価値はダメージとして敵に反射する"
 		}
 	},
 	"key": {

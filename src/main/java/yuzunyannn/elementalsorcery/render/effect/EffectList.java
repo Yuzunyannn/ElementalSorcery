@@ -93,4 +93,42 @@ public class EffectList extends EffectGroup {
 	public boolean isEmpty() {
 		return effects.isEmpty() && batchs.isEmpty();
 	}
+
+	@Override
+	public Iterator<Effect> iterator() {
+		return new MyIterator();
+	}
+
+	class MyIterator implements Iterator<Effect> {
+
+		Iterator<Effect> effectIter;
+		Iterator<EffectBatchType> batchIter;
+
+		@Override
+		public boolean hasNext() {
+			if (effectIter == null) effectIter = effects.iterator();
+			boolean hasNext = effectIter.hasNext();
+			if (hasNext) return true;
+			if (batchIter == null) batchIter = batchs.iterator();
+			if (batchIter.hasNext()) {
+				effectIter = batchIter.next().effects.iterator();
+				return this.hasNext();
+			} else {
+				effectIter = null;
+				effectIter = null;
+				return false;
+			}
+		}
+
+		@Override
+		public Effect next() {
+			return effectIter.next();
+		}
+
+		@Override
+		public void remove() {
+			effectIter.remove();
+		}
+
+	}
 }

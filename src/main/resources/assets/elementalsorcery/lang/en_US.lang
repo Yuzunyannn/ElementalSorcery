@@ -252,6 +252,7 @@ es.effect.enthusiasticStudy=Enthusiastic Unscrambling
 es.effect.silent=Silent
 es.effect.frozen=Frozen
 es.effect.naturalMedal=Natural Medal
+es.effect.goldShield=Gold Shield
 
 es.potion.effect.silent=Potion of Silence
 es.splash_potion.effect.silent=Splash Potion of Silence 
@@ -327,6 +328,8 @@ mantra.naturalMedal.name=Natural Medal
 mantra.naturalMedal.describe=With the Wood, Natural Medal is built and give it to the target, kill enemy can Upgrade Medal
 mantra.puppetArea.name=Kodama Area
 mantra.puppetArea.describe=With the Wood, Summon Kodama Area which will periodically generate Kodamas to attack enemies. The Kodama's damage is base on percentage of the enemy's max hp.
+mantra.goldShield.name=Gold Shield
+mantra.goldShield.describe=With the Metal, create the Shield of Value. Consume estimated value to resist any damage. Excess value will be reflected to the enemy as damage
 
 key.es.func=Function key
 

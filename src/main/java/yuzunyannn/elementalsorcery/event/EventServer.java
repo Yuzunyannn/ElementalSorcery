@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBucketMilk;
 import net.minecraft.item.ItemFood;
@@ -83,6 +84,7 @@ import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.enchant.EnchantmentES;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMAttack;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraGoldShield;
 import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.item.ItemManual;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
@@ -515,6 +517,20 @@ public class EventServer {
 			PotionWindShield.tryAttackEntityFrom(entity, attacker, source, amount);
 		}
 
+		if (entity.isPotionActive(ESObjects.POTIONS.GOLD_SHIELD) && amount > 0) {
+			int amplifier = entity.getActivePotionEffect(ESObjects.POTIONS.GOLD_SHIELD).getAmplifier() + 1;
+			IInventory inv = null;
+			if (entity instanceof EntityPlayer) inv = ((EntityPlayer) entity).inventory;
+			double coefficient = MantraGoldShield.getValueCoefficient(amplifier);
+			double sDmg = MantraGoldShield.findValue(coefficient, amount, inv, false);
+			if (amount < sDmg) {
+				event.setCanceled(true);
+				double remain = sDmg - amount;
+				if (remain > 0.1) MantraGoldShield.setReflect(attackerEntity, entity, remain / 2);
+				MantraGoldShield.findValue(coefficient, amount, inv, true);
+				return;
+			}
+		}
 	}
 
 	// 受到伤害，修改amount

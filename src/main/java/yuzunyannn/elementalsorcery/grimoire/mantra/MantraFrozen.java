@@ -74,7 +74,6 @@ public class MantraFrozen extends MantraTypePersistent {
 		}
 
 		if (world.isRemote) {
-			this.onSpellingEffect(world, mData, caster);
 			playEffect(world, vec, dir, frozenSize, isSuperFrozen);
 			return;
 		}

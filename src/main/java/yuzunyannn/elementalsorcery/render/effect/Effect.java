@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
@@ -156,6 +157,16 @@ public abstract class Effect {
 		groupMap.put(id, group);
 		if (group.isGUI()) guiGroupList.add(group);
 		else worldGroupList.add(group);
+	}
+
+	static public void foreach(Function<Effect, Boolean> checker) {
+		for (EffectGroup group : groupMap.values()) {
+			for (Effect effect : group) {
+				if (effect.isDead()) continue;
+				Boolean bool = checker.apply(effect);
+				if (bool != Boolean.TRUE) return;
+			}
+		}
 	}
 
 	/** 運行effect時添加effect的容器 */

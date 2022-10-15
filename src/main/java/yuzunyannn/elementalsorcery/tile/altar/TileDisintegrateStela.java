@@ -45,7 +45,7 @@ import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.event.IWorldTickTask;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
-import yuzunyannn.elementalsorcery.util.LamdaReference;
+import yuzunyannn.elementalsorcery.util.LambdaReference;
 import yuzunyannn.elementalsorcery.util.element.ElementAnalysisPacket;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
@@ -288,7 +288,7 @@ public class TileDisintegrateStela extends TileStaticMultiBlock implements ITick
 		toElement = null;
 		overloadProtect = 0;
 
-		LamdaReference<Integer> ppRef = LamdaReference.of(0);
+		LambdaReference<Integer> ppRef = LambdaReference.of(0);
 
 		ergodicMaigcPlatform(at -> {
 			IGetItemStack itemGetter = BlockHelper.getTileEntity(world, at, IGetItemStack.class);

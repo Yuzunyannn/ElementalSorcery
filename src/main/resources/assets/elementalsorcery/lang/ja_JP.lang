@@ -252,6 +252,7 @@ es.effect.enthusiasticStudy=熱狂的に解読
 es.effect.silent=サイレント
 es.effect.frozen=とうけつ
 es.effect.naturalMedal=自然勲章
+es.effect.goldShield=黄金盾
 
 es.potion.effect.silent=沈黙のポーション
 es.splash_potion.effect.silent=沈黙のスプラッシュポーション
@@ -327,6 +328,8 @@ mantra.naturalMedal.name=自然勲章
 mantra.naturalMedal.describe=木元素で自然勲章を作り生物を授け、敵を倒し勲章を昇格し
 mantra.puppetArea.name=木霊領域
 mantra.puppetArea.describe=木元素で木霊領域を召喚し、領域内で周期的に木霊を生み、敵を攻撃して、敵のHPの最大のパーセントによってダメージを与える
+mantra.goldShield.name=黄金盾
+mantra.goldShield.describe=金元素で価値の盾を生成し、推定可能な価値を消費していかなるダメージにも抵抗し、超えた価値はダメージとして敵に反射する
 
 key.es.func=機能キー
 

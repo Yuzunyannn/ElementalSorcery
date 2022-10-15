@@ -131,7 +131,7 @@ public class Effects {
 	public static void spawnTypeEffect(World world, Vec3d pos, int type, int level) {
 		NBTTagCompound effect = new NBTTagCompound();
 		effect.setByte("lev", (byte) level);
-		effect.setByte("type", (byte) 0);
+		effect.setByte("type", (byte) type);
 		Effects.spawnEffect(world, Effects.PARTICLE_EFFECT, pos, effect);
 	}
 
