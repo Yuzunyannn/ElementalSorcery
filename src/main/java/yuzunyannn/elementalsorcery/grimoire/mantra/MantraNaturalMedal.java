@@ -13,11 +13,10 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon.CollectResult;
 import yuzunyannn.elementalsorcery.potion.PotionNaturalMedal;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 
-public class MantraNaturalMedal extends MantraCommon {
+public class MantraNaturalMedal extends MantraTypeAccumulative {
 
 	public MantraNaturalMedal() {
 		this.setTranslationKey("naturalMedal");
@@ -25,6 +24,7 @@ public class MantraNaturalMedal extends MantraCommon {
 		this.setIcon("natural_medal");
 		this.setRarity(35);
 		this.setOccupation(4);
+		this.addElementCollect(new ElementStack(ESObjects.ELEMENTS.WOOD, 1, 128), 300, 300);
 	}
 
 	@Override
@@ -37,22 +37,9 @@ public class MantraNaturalMedal extends MantraCommon {
 	}
 
 	@Override
-	public void startSpelling(World world, IMantraData data, ICaster caster) {
-		MantraDataCommon mData = (MantraDataCommon) data;
-		mData.markContinue(true);
-	}
-
-	@Override
-	public void onCollectElement(World world, IMantraData data, ICaster caster, int speedTick) {
-		MantraDataCommon mData = (MantraDataCommon) data;
-		CollectResult cr = mData.tryCollect(caster, ESObjects.ELEMENTS.WOOD, 1, 128, 300);
-		mData.setProgress(cr.getStackCount(), 300);
-	}
-
-	@Override
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
+		if (!isAllElementMeetMinNeed(data)) return;
 		MantraDataCommon mData = (MantraDataCommon) data;
-		if (mData.getProgress() < 0.999f) return;
 		ElementStack eStack = mData.get(ESObjects.ELEMENTS.WOOD);
 		EntityLivingBase entity = (EntityLivingBase) caster.iWantEntityTarget(EntityLivingBase.class).getEntity();
 		if (entity == null) entity = caster.iWantCaster().asEntityLivingBase();

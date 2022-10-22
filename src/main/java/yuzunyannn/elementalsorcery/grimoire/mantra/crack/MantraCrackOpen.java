@@ -98,7 +98,7 @@ public class MantraCrackOpen extends MantraCrackCommon {
 			if (sld == null) {
 				if (mdc.get(DROP_CRACK)) {
 					ItemStack elementCrack = new ItemStack(ESObjects.ITEMS.ELEMENT_CRACK, 1);
-					EntityItem entityitem = ItemHelper.dropItem(world, caster.iWantDirectCaster().getPositionVector(),
+					EntityItem entityitem = ItemHelper.dropItem(world, caster.iWantDirectCaster().getObjectPosition(),
 							elementCrack);
 					entityitem.motionX = entityitem.motionY = entityitem.motionZ = 0;
 					entityitem.velocityChanged = true;
@@ -187,7 +187,7 @@ public class MantraCrackOpen extends MantraCrackCommon {
 			effect.targetScale = mdc.get(SIZED);
 			return;
 		}
-		effect = new EffectCylinderCrackBlast(world, caster.iWantDirectCaster().getPositionVector());
+		effect = new EffectCylinderCrackBlast(world, caster.iWantDirectCaster().getObjectPosition());
 		mdc.getEffectMap().addAndMark(MantraEffectType.MANTRA_EFFECT_1, effect);
 	}
 

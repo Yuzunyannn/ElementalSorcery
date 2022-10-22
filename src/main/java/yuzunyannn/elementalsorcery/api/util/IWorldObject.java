@@ -22,35 +22,38 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public interface IWorldObject extends ICapabilityProvider {
 
 	@Nonnull
-	Vec3d getPositionVector();
+	Vec3d getObjectPosition();
 
 	@Nonnull
 	World getWorld();
 
+	/** as Tile */
 	@Nullable
 	TileEntity asTileEntity();
 
+	/** as Entity */
 	@Nullable
 	Entity asEntity();
 
-	default Random getRNG() {
-		EntityLivingBase living = asEntityLivingBase();
-		if (living != null) return living.getRNG();
-		return new Random(getWorld().getWorldTime() * getPositionVector().hashCode());
-	}
-
+	/** as BlockState */
 	default IBlockState asBlockState() {
 		return getWorld().getBlockState(getPosition());
 	}
 
+	default Random getRNG() {
+		EntityLivingBase living = asEntityLivingBase();
+		if (living != null) return living.getRNG();
+		return new Random(getWorld().getWorldTime() * getObjectPosition().hashCode());
+	}
+
 	default Vec3d getEyePosition() {
 		Entity entity = asEntity();
-		if (entity == null) return getPositionVector().add(0.5, 0.5, 0.5);
+		if (entity == null) return getObjectPosition().add(0.5, 0.5, 0.5);
 		else return entity.getPositionVector().add(0, entity.getEyeHeight(), 0);
 	}
 
 	default BlockPos getPosition() {
-		return new BlockPos(getPositionVector());
+		return new BlockPos(getObjectPosition());
 	}
 
 	default EntityLivingBase asEntityLivingBase() {

@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import java.util.List;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -22,19 +21,13 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
-import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.client.ESResources;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
-import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
-import yuzunyannn.elementalsorcery.render.effect.IBinder;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectGoldShield;
-import yuzunyannn.elementalsorcery.util.LambdaReference;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -96,51 +89,6 @@ public class MantraGoldShield extends MantraTypePersistent {
 		MantraDataCommon mData = (MantraDataCommon) data;
 		int lev = getLevelWithElement(mData.get(ESObjects.ELEMENTS.METAL));
 		setGoldShild(entity, lev, (int) (320 * (1 + potent) * r));
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		super.onSpellingEffect(world, data, caster);
-
-		MantraDataCommon mData = (MantraDataCommon) data;
-		EffectGoldShield effect = mData.getEffectMap().getMark(MantraEffectType.MANTRA_EFFECT_1, EffectGoldShield.class);
-
-		if (effect == null || effect.isDead()) {
-			IWorldObject obj = caster.iWantCaster();
-			EntityLivingBase entity = obj.asEntityLivingBase();
-			if (entity == null) return;
-			if (!entity.isPotionActive(ESObjects.POTIONS.GOLD_SHIELD)) return;
-			// 寻找旧有的，放置创建重复
-			LambdaReference<Effect> findEffect = LambdaReference.of(null);
-			Effect.foreach((e) -> {
-				if (e instanceof EffectGoldShield) {
-					IBinder binder = ((EffectGoldShield) e).binder;
-					if (binder instanceof IBinder.EntityBinder) {
-						if (((IBinder.EntityBinder) binder).binder == entity) {
-							findEffect.set(e);
-							return false;
-						}
-					}
-				}
-				return true;
-			});
-			if (findEffect.get() != null) {
-				mData.getEffectMap().mark(MantraEffectType.MANTRA_EFFECT_1, findEffect.get());
-				return;
-			}
-			// 创建新的
-			float height = entity.height;
-			effect = new EffectGoldShield(world, new IBinder.EntityBinder(entity, height / 2f));
-			effect.defaultScale = height / 1.75f + 0.25f;
-			effect.isClientUser = entity == Minecraft.getMinecraft().getRenderViewEntity();
-			effect.setCondition(v -> {
-				if (entity.isDead) return false;
-				return entity.isPotionActive(ESObjects.POTIONS.GOLD_SHIELD);
-			});
-			mData.getEffectMap().addAndMark(MantraEffectType.MANTRA_EFFECT_1, effect);
-		}
-
 	}
 
 	@Override

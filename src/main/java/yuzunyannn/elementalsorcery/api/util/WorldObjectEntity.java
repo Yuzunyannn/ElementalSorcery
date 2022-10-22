@@ -17,7 +17,7 @@ public class WorldObjectEntity implements IWorldObject {
 	}
 
 	@Override
-	public Vec3d getPositionVector() {
+	public Vec3d getObjectPosition() {
 		return entity.getPositionVector();
 	}
 

@@ -348,7 +348,7 @@ public class MantraCommon extends Mantra {
 		if (world.isRemote) return;
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		NBTTagCompound nbt = mdc.serializeNBTForSend();
-		NBTHelper.setVec3d(nbt, "_e_vec_", caster.iWantDirectCaster().getPositionVector());
+		NBTHelper.setVec3d(nbt, "_e_vec_", caster.iWantDirectCaster().getObjectPosition());
 		caster.sendToClient(nbt);
 	}
 

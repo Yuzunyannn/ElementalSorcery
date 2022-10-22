@@ -103,7 +103,7 @@ public class MantraIceCrystalBomb extends MantraTypeAccumulative {
 			int triggerTick = mData.get(TRIGGER_TICK);
 			mData.set(TRIGGER_TICK, triggerTick - 1);
 			if (triggerTick <= 0) {
-				onBomb(world, mData, caster, caster.iWantDirectCaster().getPositionVector());
+				onBomb(world, mData, caster, caster.iWantDirectCaster().getObjectPosition());
 				return false;
 			}
 			return true;
@@ -118,7 +118,7 @@ public class MantraIceCrystalBomb extends MantraTypeAccumulative {
 		}
 
 		if (tick % 5 == 0) {
-			Vec3d vec = caster.iWantDirectCaster().getPositionVector();
+			Vec3d vec = caster.iWantDirectCaster().getObjectPosition();
 			double size = isSuper ? 4 : 1;
 
 			AxisAlignedBB nAABB = WorldHelper.createAABB(vec, size, size, size);

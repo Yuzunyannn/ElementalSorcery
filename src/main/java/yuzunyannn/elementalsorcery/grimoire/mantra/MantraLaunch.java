@@ -71,7 +71,7 @@ public class MantraLaunch extends MantraCommon {
 		}
 
 		IWorldObject co = caster.iWantCaster();
-		if (co.getPositionVector().squareDistanceTo(new Vec3d(pos)) > 16 * 16) {
+		if (co.getObjectPosition().squareDistanceTo(new Vec3d(pos)) > 16 * 16) {
 			mData.markContinue(false);
 			return;
 		}

@@ -108,7 +108,7 @@ public class MantraElementWhirl extends MantraTypeAccumulative {
 		if (ratio <= 0.4) size *= MathSupporter.easeInOutElastic(ratio / 0.4f);
 		else if (ratio >= 0.9) size *= MathSupporter.easeOutBack((1 - ratio) / 0.1f);
 
-		Vec3d vec = caster.iWantDirectCaster().getPositionVector();
+		Vec3d vec = caster.iWantDirectCaster().getObjectPosition();
 		BlockPos pos = new BlockPos(vec);
 
 		int rx = MathHelper.ceil(size);
@@ -161,7 +161,7 @@ public class MantraElementWhirl extends MantraTypeAccumulative {
 		ds.setDamageBypassesArmor();
 		entity.attackEntityFrom(ds, (float) dmg);
 
-		Vec3d vec = caster.iWantDirectCaster().getPositionVector();
+		Vec3d vec = caster.iWantDirectCaster().getObjectPosition();
 		Vec3d eVec = entity.getPositionVector().add(0, entity.height / 2, 0);
 		Vec3d tar = eVec.subtract(vec);
 		double len = tar.length();
@@ -189,7 +189,7 @@ public class MantraElementWhirl extends MantraTypeAccumulative {
 		if (data.getEffectMap().hasMark(MantraEffectType.MANTRA_EFFECT_1)) return;
 		ICasterObject casterObject = caster.iWantDirectCaster();
 		EffectSphericalBlast effect = new EffectSphericalBlast(casterObject.getWorld(),
-				casterObject.getPositionVector(), (float) size);
+				casterObject.getObjectPosition(), (float) size);
 		effect.lifeTime = tick;
 		effect.color.setColor(0xb736ff);
 		data.getEffectMap().addAndMark(MantraEffectType.MANTRA_EFFECT_1, effect);

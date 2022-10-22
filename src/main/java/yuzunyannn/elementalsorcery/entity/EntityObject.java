@@ -1,12 +1,15 @@
 package yuzunyannn.elementalsorcery.entity;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 
-public abstract class EntityObject extends Entity {
+public abstract class EntityObject extends Entity implements IWorldObject {
 
 	protected int newPosRotationIncrements;
 	protected double interpTargetX;
@@ -56,6 +59,26 @@ public abstract class EntityObject extends Entity {
 		this.interpTargetYaw = (double) yaw;
 		this.interpTargetPitch = (double) pitch;
 		this.newPosRotationIncrements = posRotationIncrements;
+	}
+
+	@Override
+	public World getWorld() {
+		return world;
+	}
+
+	@Override
+	public TileEntity asTileEntity() {
+		return null;
+	}
+
+	@Override
+	public Entity asEntity() {
+		return this;
+	}
+
+	@Override
+	public Vec3d getObjectPosition() {
+		return this.getPositionVector();
 	}
 
 }

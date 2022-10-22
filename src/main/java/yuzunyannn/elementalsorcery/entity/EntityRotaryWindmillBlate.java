@@ -183,7 +183,7 @@ public class EntityRotaryWindmillBlate extends EntityObject
 			return;
 		}
 		Vec3d masterVec = new Vec3d(master.posX, master.posY + master.height / 2, master.posZ);
-		Vec3d thisVec = this.getPositionVector();
+		Vec3d thisVec = this.getObjectPosition();
 		if (thisVec.squareDistanceTo(masterVec) <= 1.25) {
 			if (master instanceof EntityPlayer) {
 				ItemHelper.addItemStackToPlayer((EntityPlayer) master, blate);
@@ -234,21 +234,6 @@ public class EntityRotaryWindmillBlate extends EntityObject
 		} else bladeScale = bladeScale + (1 - bladeScale) * 0.2f;
 
 		this.bladeRotate = bladeRotate + bladeScale * 0.35f;
-	}
-
-	@Override
-	public World getWorld() {
-		return world;
-	}
-
-	@Override
-	public TileEntity asTileEntity() {
-		return null;
-	}
-
-	@Override
-	public Entity asEntity() {
-		return this;
 	}
 
 }

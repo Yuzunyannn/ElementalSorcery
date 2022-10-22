@@ -151,7 +151,7 @@ public class AttackCaster implements ICaster, ICasterObject {
 	}
 
 	@Override
-	public Vec3d getPositionVector() {
+	public Vec3d getObjectPosition() {
 		return Vec3d.ZERO;
 	}
 

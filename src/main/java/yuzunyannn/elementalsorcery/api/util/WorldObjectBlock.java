@@ -37,7 +37,7 @@ public class WorldObjectBlock implements IWorldObject {
 	}
 
 	@Override
-	public Vec3d getPositionVector() {
+	public Vec3d getObjectPosition() {
 		return new Vec3d(getPosition()).add(0.5, 0, 0.5);
 	}
 

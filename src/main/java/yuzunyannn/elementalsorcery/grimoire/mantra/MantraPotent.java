@@ -141,7 +141,7 @@ public class MantraPotent extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public void onEndEffect(World world, IMantraData mData, ICaster caster) {
 		IWorldObject ico = caster.iWantCaster();
-		Vec3d vec = ico.getPositionVector();
+		Vec3d vec = ico.getObjectPosition();
 		Random rand = world.rand;
 		for (int i = 0; i < 125; i++) {
 			Vec3d at = vec.add(rand.nextGaussian() * 3, rand.nextDouble() * 2 + 0.5f, rand.nextGaussian() * 3);

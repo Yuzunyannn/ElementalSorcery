@@ -291,7 +291,7 @@ public class ESObjects {
 		public Potion SILENT;
 		public Potion FROZEN;
 		public Potion NATURAL_MEDAL;
-		public Potion GOLD_SHIELD;
+		public Potion GOLD_SHIELD; 
 	}
 
 	static public class PotionTypes {

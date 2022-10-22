@@ -64,7 +64,7 @@ public class MantraFloatArea extends MantraTypeSquareArea {
 		int times = (int) (size / 16 + 1);
 		for (int i = 0; i < times; i++) {
 			float hSize = size / 2;
-			Vec3d pos = casterObj.getPositionVector().add(rand.nextDouble() * size - hSize, 0.1,
+			Vec3d pos = casterObj.getObjectPosition().add(rand.nextDouble() * size - hSize, 0.1,
 					rand.nextDouble() * size - hSize);
 			EffectElementMove effect = new EffectElementMove(world, pos);
 			effect.setVelocity(0, rand.nextDouble() * 0.5 + 0.5, 0);

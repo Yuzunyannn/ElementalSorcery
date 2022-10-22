@@ -412,6 +412,11 @@ public abstract class EntityMantraBase extends Entity
 	public Entity asEntity() {
 		return this;
 	}
+	
+	@Override
+	public Vec3d getObjectPosition() {
+		return this.getPositionVector();
+	}
 
 	/** 当死亡 */
 	protected void onDead() {

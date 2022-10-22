@@ -41,7 +41,7 @@ public class MantraFootbridge extends MantraTypeAccumulative {
 			Vec3d pos = wr.getHitVec();
 			if (pos != null) {
 				IWorldObject co = caster.iWantCaster();
-				double dis = co.getPositionVector().distanceTo(pos);
+				double dis = co.getObjectPosition().distanceTo(pos);
 				max = MathHelper.ceil(Math.min(96, 3 * dis));
 			}
 			return eStack.getCount() / max;

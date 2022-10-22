@@ -64,7 +64,7 @@ public class MantraSlowFall extends MantraTypePersistent {
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		if (!hasEffectFlags(world, data, caster, MantraEffectType.DECORATE)) return;
 		Random rand = world.rand;
-		Vec3d pos = caster.iWantCaster().getPositionVector();
+		Vec3d pos = caster.iWantCaster().getObjectPosition();
 		float r = 0.5f;
 		float theta = EventClient.globalRotate / 180 * 3.14f * 10;
 		Vec3d at = pos.add(MathHelper.sin(theta) * r, 1, MathHelper.cos(theta) * r);

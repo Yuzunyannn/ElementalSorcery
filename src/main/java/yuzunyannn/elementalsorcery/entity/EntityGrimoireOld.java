@@ -558,5 +558,10 @@ public class EntityGrimoireOld extends Entity
 	public IMantraData iWantMantraData() {
 		return this.mantraData;
 	}
+	
+	@Override
+	public Vec3d getObjectPosition() {
+		return this.getPositionVector();
+	}
 
 }

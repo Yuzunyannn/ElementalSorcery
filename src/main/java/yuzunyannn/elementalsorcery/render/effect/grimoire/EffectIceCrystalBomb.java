@@ -37,7 +37,7 @@ public class EffectIceCrystalBomb extends EffectCondition {
 	public EffectIceCrystalBomb(World world, IWorldObject obj) {
 		super(world);
 		this.binder = new IBinder.WorldObjectBinder(obj,
-				(float) obj.getEyePosition().subtract(obj.getPositionVector()).y);
+				(float) obj.getEyePosition().subtract(obj.getObjectPosition()).y);
 		this.init();
 	}
 

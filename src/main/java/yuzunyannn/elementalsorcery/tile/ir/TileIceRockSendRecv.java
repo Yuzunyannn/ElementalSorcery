@@ -376,7 +376,7 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 		if (faceBeamHandlerSites[index] != null && faceBeamActiveTicks[index] > 0) {
 			if (fad.effectLaser == null) {
 				EffectLaserMagicTransfer laser = new EffectLaserMagicTransfer(world, this, facing, new Vec3d(this.pos),
-						faceBeamHandlerSites[index].getPositionVector());
+						faceBeamHandlerSites[index].getObjectPosition());
 				laser.color.setColor(0x7cd0d3).weight(new Color(0xffffff), 0.75f);
 				laser.magicColor.setColor(0x9956d0).weight(laser.color, 0.5f);
 				fad.effectLaser = laser;
@@ -406,7 +406,7 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 			}
 		} else if (wobj.asEntity() != null) {
 			Vec3d myPos = new Vec3d(getPos()).add(0.5, 0.5, 0.5);
-			Vec3d targetPos = wobj.getPositionVector();
+			Vec3d targetPos = wobj.getObjectPosition();
 			Vec3d tar = targetPos.subtract(myPos).normalize();
 			myPos = myPos.add(tar.scale(0.6));
 			fad.effectLaser.setPosition(myPos);

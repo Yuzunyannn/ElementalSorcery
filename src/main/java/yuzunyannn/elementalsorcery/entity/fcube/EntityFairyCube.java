@@ -180,7 +180,7 @@ public class EntityFairyCube extends EntityLivingBase
 
 	@SideOnly(Side.CLIENT)
 	public void dispearEffect() {
-		Vec3d pos = this.getPositionVector();
+		Vec3d pos = this.getObjectPosition();
 		for (int k = 0; k < 20; ++k) {
 			EffectElementMove em = new EffectElementMove(world, pos.add(0, 0.5, 0));
 			double d2 = this.rand.nextGaussian() * 0.125;
@@ -804,7 +804,7 @@ public class EntityFairyCube extends EntityLivingBase
 	@SideOnly(Side.CLIENT)
 	public void doClientSwingArm(int duration, int[] colors) {
 		this.swingArm(duration);
-		Vec3d vec = this.getPositionVector().add(0, 0.5, 0);
+		Vec3d vec = this.getObjectPosition().add(0, 0.5, 0);
 		for (int k = 0; k < 20; ++k) {
 			EffectElementMove em = new EffectElementMove(world, vec);
 			double d2 = this.rand.nextGaussian() * 0.2;
@@ -882,5 +882,10 @@ public class EntityFairyCube extends EntityLivingBase
 	@Override
 	public Entity asEntity() {
 		return this;
+	}
+
+	@Override
+	public Vec3d getObjectPosition() {
+		return getPositionVector();
 	}
 }

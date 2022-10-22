@@ -22,7 +22,7 @@ public interface IBinder {
 
 		@Override
 		public Vec3d getPosition() {
-			return this.wo.getPositionVector().add(0, yoff, 0);
+			return this.wo.getObjectPosition().add(0, yoff, 0);
 		}
 
 		@Override

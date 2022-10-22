@@ -89,7 +89,7 @@ public class ItemFairyCubeModule extends Item implements IPlatformTickable {
 			if (FairyCubeModule.tryMatchAndConsumeForCraft(cls, world, caster.getPosition(), srcInv)) {
 				ResourceLocation id = FairyCubeModule.REGISTRY.getKey(cls);
 				setFairyCubeModule(stack, id);
-				FireworkEffect.spawn(world, caster.getPositionVector().add(0, 0.8, 0), 10, 1, 0.1f,
+				FireworkEffect.spawn(world, caster.getObjectPosition().add(0, 0.8, 0), 10, 1, 0.1f,
 						new int[] { 0x173839, 0x198663, 0x2ee715 }, new int[] { 0x9cef91 });
 				return true;
 			}
