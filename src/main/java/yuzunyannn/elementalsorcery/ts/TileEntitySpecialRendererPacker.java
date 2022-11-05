@@ -4,8 +4,13 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 
 public class TileEntitySpecialRendererPacker<T extends TileEntity> extends TileEntitySpecialRenderer<T> {
+
+	public static ResourceLocation[] getDestroyStages() {
+		return DESTROY_STAGES;
+	}
 
 	final public TileEntitySpecialRenderer<T> parent;
 

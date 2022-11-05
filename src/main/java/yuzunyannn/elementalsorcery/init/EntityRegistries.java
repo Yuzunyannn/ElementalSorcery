@@ -41,6 +41,7 @@ import yuzunyannn.elementalsorcery.entity.mob.EntityDejectedSkeleton;
 import yuzunyannn.elementalsorcery.entity.mob.EntityDreadCube;
 import yuzunyannn.elementalsorcery.entity.mob.EntityPuppet;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRabidRabbit;
+import yuzunyannn.elementalsorcery.entity.mob.EntityRelicGuard;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
 import yuzunyannn.elementalsorcery.render.entity.EntityRenderFactory;
 import yuzunyannn.elementalsorcery.render.entity.RenderBlockThrowEffect;
@@ -63,6 +64,7 @@ import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityDreadCube;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityPuppet;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityRabidRabbit;
+import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityRelicGuard;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityRelicZombie;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
@@ -98,6 +100,8 @@ public class EntityRegistries {
 		registerEgg("arrogantSheep", 0xfedf0d, 0xea8900);
 		register(7, "puppet", EntityPuppet.class, "Puppet", 64, 3, true);
 //		registerEgg("puppet", 0x4fb037, 0x146700);
+		register(8, "relicGuard", EntityRelicGuard.class, "RelicGuard", 64, 3, true);
+		registerEgg("relicGuard", 0xcbccef, 0x865334);
 
 		// 实体方块
 		register(20, "bulletin", EntityBulletin.class, "Bulletin", 64, 20, false);
@@ -160,6 +164,7 @@ public class EntityRegistries {
 		registerRender(EntityRotaryWindmillBlate.class, RenderEntityRotaryWindmillBlate.class);
 		registerRender(EntityArrogantSheep.class, RenderEntityArrogantSheep.class);
 		registerRender(EntityItemGoods.class, RenderEntityItemGoods.class);
+		registerRender(EntityRelicGuard.class, RenderEntityRelicGuard.class);
 
 	}
 

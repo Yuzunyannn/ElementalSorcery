@@ -208,6 +208,11 @@ public class EntityFairyCube extends EntityLivingBase
 		this.restoreMaster();
 		return master == null ? null : master.get();
 	}
+	
+	@Override
+	public boolean isOwnerless() {
+		return false;
+	}
 
 	protected void restoreMaster() {
 		if (playerUUID == null) return;

@@ -254,6 +254,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
 import yuzunyannn.elementalsorcery.item.prop.ItemMaterialDebris;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.item.prop.ItemRabidLeather;
+import yuzunyannn.elementalsorcery.item.prop.ItemRelicGuardCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemSome;
 import yuzunyannn.elementalsorcery.item.prop.ItemSoulFragment;
 import yuzunyannn.elementalsorcery.item.prop.ItemSpellbookCover;
@@ -313,6 +314,7 @@ import yuzunyannn.elementalsorcery.render.item.RenderItemFairyCube;
 import yuzunyannn.elementalsorcery.render.item.RenderItemFairyCubeModule;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGlassCup;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoire;
+import yuzunyannn.elementalsorcery.render.item.RenderItemGuardCore;
 import yuzunyannn.elementalsorcery.render.item.RenderItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSupremeTable;
@@ -640,6 +642,7 @@ public class ESInit {
 		ESObjects.ITEMS.ELF_DIAMOND = new ItemElfDiamond();
 		ESObjects.ITEMS.COLLAPSE = new ItemCollapse();
 		ESObjects.ITEMS.COLLAPSE_WAND = new ItemCollapseWand();
+		ESObjects.ITEMS.RELIC_GUARD_CORE = new ItemRelicGuardCore();
 
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1141,6 +1144,7 @@ public class ESInit {
 		registerRender(ITEMS.ELF_DIAMOND);
 		registerRender(ITEMS.COLLAPSE);
 		registerRender(ITEMS.COLLAPSE_WAND, new RenderItemMagicBlastWand(true));
+		registerRender(ITEMS.RELIC_GUARD_CORE, new RenderItemGuardCore());
 
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");

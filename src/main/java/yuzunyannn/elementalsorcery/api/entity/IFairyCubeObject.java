@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 
-public interface IFairyCubeObject extends IWorldObject {
+public interface IFairyCubeObject extends IWorldObject, IHasMaster {
 
 	@Nonnull
 	@Override

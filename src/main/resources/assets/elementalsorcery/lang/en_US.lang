@@ -135,6 +135,7 @@ item.voidContainerElement.name=Element Void Container
 item.elfDiamond.name=Elf Diamond
 item.collapse.name=Collapse
 item.collapseWand.name=Collapse Wand
+item.relicGuardCore.name=Relic Guard Core
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -354,6 +355,7 @@ entity.DejectedSkeleton.name=Dejected Skeleton
 entity.ArrogantSheep.name=Arrogant Sheep
 entity.EntityGrimoire.name=Mantra
 entity.Puppet.name=Kodama
+entity.RelicGuard.name=Relic Guard
 
 pro.none=Idle
 pro.warrior=Warrior

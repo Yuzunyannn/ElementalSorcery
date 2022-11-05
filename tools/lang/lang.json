@@ -671,6 +671,11 @@
 			"zh_CN": "塌陷权杖",
 			"en_US": "Collapse Wand",
 			"ja_JP": "崩れ権杖"
+		},
+		"item.relicGuardCore.name": {
+			"zh_CN": "守卫核心",
+			"en_US": "Relic Guard Core",
+			"ja_JP": "ガードのコア"
 		}
 	},
 	"tile": {
@@ -1739,6 +1744,11 @@
 			"zh_CN": "木灵",
 			"en_US": "Kodama",
 			"ja_JP": "木霊"
+		},
+		"entity.RelicGuard.name": {
+			"zh_CN": "遗迹守卫",
+			"en_US": "Relic Guard",
+			"ja_JP": "遺跡ガード"
 		}
 	},
 	"pro": {

@@ -135,6 +135,7 @@ item.voidContainerElement.name=元素の虚空コンテナ
 item.elfDiamond.name=精霊ダイヤモンド
 item.collapse.name=崩れ
 item.collapseWand.name=崩れ権杖
+item.relicGuardCore.name=ガードのコア
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -354,6 +355,7 @@ entity.DejectedSkeleton.name=憂鬱スカル
 entity.ArrogantSheep.name=傲慢なヒツジ
 entity.EntityGrimoire.name=呪文
 entity.Puppet.name=木霊
+entity.RelicGuard.name=遺跡ガード
 
 pro.none=アイドル
 pro.warrior=戦士

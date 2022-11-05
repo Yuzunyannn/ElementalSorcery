@@ -129,6 +129,7 @@ public class ESObjects {
 		public Item ELF_DIAMOND;
 		public Item COLLAPSE;
 		public Item COLLAPSE_WAND;
+		public Item RELIC_GUARD_CORE;
 	}
 
 	static public class Blocks {
@@ -291,7 +292,7 @@ public class ESObjects {
 		public Potion SILENT;
 		public Potion FROZEN;
 		public Potion NATURAL_MEDAL;
-		public Potion GOLD_SHIELD; 
+		public Potion GOLD_SHIELD;
 	}
 
 	static public class PotionTypes {
