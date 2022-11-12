@@ -1,8 +1,6 @@
 package yuzunyannn.elementalsorcery.render.effect.grimoire;
 
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -11,7 +9,7 @@ import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
-import yuzunyannn.elementalsorcery.render.effect.IBinder;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 
@@ -24,27 +22,20 @@ public class EffectTimeHourglass extends EffectCondition {
 	public static final TextureBinder TEXTURE_POINTER = new TextureBinder(
 			"textures/magic_circles/time_hourglass_pointer.png");
 
-	public IBinder binder;
+	public IEffectBinder binder;
 
 	public float r = 0;
 	public float g = 0;
 	public float b = 0;
 
-	public EffectTimeHourglass(World world, Entity binder) {
+	public EffectTimeHourglass(World world, IEffectBinder binder) {
 		super(world);
 		this.lifeTime = 1;
-		this.binder = new IBinder.EntityBinder(binder, 0);
+		this.binder = binder;
 		this.setPosition(this.binder);
 	}
 
-	public EffectTimeHourglass(World world, BlockPos pos) {
-		super(world);
-		this.lifeTime = 1;
-		this.binder = new IBinder.VecBinder(new Vec3d(pos).add(0.5, 0, 0.5));
-		this.setPosition(this.binder);
-	}
-
-	public void setPosition(IBinder binder) {
+	public void setPosition(IEffectBinder binder) {
 		this.setPosition(binder.getPosition());
 	}
 

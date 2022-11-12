@@ -106,7 +106,7 @@ public class MantraEnderTeleport extends MantraTypeAccumulative {
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
 		super.onSpellingEffect(world, data, caster);
-		if (!hasEffectFlags(world, data, caster, MantraEffectType.INDICATOR)) return;
+		if (addCustomEffectHandle(world, data, caster, MantraEffectType.INDICATOR)) return;
 		MantraDataCommon mdc = (MantraDataCommon) data;
 		IWorldObject casterObject = caster.iWantCaster();
 		if (casterObject.isClientPlayer()) {

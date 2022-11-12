@@ -38,6 +38,8 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 			DataSerializers.BYTE);
 	protected static final DataParameter<Byte> TYPE = EntityDataManager.<Byte>createKey(EntityRelicGuard.class,
 			DataSerializers.BYTE);
+	protected static final DataParameter<Boolean> IS_SPELLING = EntityDataManager
+			.<Boolean>createKey(EntityRelicGuard.class, DataSerializers.BOOLEAN);
 
 	protected MasterBinder master = new MasterBinder();
 
@@ -58,6 +60,7 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 		super.entityInit();
 		this.dataManager.register(STATUS, (byte) 0);
 		this.dataManager.register(TYPE, (byte) 0);
+		this.dataManager.register(IS_SPELLING, false);
 	}
 
 	@Override
@@ -131,6 +134,14 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 		this.dataManager.set(TYPE, (byte) status);
 	}
 
+	public boolean isSpelling() {
+		return this.dataManager.get(IS_SPELLING);
+	}
+
+	public void setSpelling(boolean spelling) {
+		this.dataManager.set(IS_SPELLING, spelling);
+	}
+
 	public boolean hasCore() {
 		return true;
 	}
@@ -175,8 +186,9 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 	@Override
 	public void attackEntityWithRangedAttack(EntityLivingBase target, float distanceFactor) {
 		this.setLastAttackedEntity(target);
+//		this.setSpelling(false);
 		this.swingArm(EnumHand.MAIN_HAND);
-		target.attackEntityFrom(DamageHelper.getMagicButNotDamageSource(this, null), 1);
+		target.attackEntityFrom(DamageHelper.getMagicButNotDamageSource(this, null), 10);
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
@@ -18,6 +19,8 @@ import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
 
 /** 区域类型 */
@@ -91,7 +94,7 @@ public abstract class MantraTypeSquareArea extends MantraTypeAccumulative {
 			data.setDelay(delay - 1);
 			return true;
 		}
-		if (world.isRemote) this.addAfterEffect(data, caster, size);
+		if (world.isRemote) addSquareEffect(world, mData, caster, size);
 		if (!this.tick(world, data, caster, caster.iWantDirectCaster().getPosition())) {
 			if (world.isRemote) return true;
 			if (delay <= 0) return false;
@@ -116,15 +119,29 @@ public abstract class MantraTypeSquareArea extends MantraTypeAccumulative {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void addAfterEffect(SquareData data, ICaster caster, int size) {
-		if (size <= 0) return;
-		if (data.getEffectMap().hasMark(MantraEffectType.MANTRA_EFFECT_1)) return;
+	protected void addSquareEffect(World world, IMantraData mData, ICaster caster, int size) {
+		addSpellingEffect(world, mData, caster, MantraEffectType.MANTRA_EFFECT_1);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static Effect createEffectMagicSquare(World world, Mantra mantra, IMantraData mData, ICaster caster,
+			IEffectBinder effectBinder) {
+		SquareData data = (SquareData) mData;
+		int size = data.getSize();
+		if (size <= 0) return null;
 		ICasterObject casterObject = caster.iWantDirectCaster();
-		EffectMagicSquare ems = new EffectMagicSquare(casterObject.getWorld(), casterObject.asEntity(), size,
-				this.getColor(data));
-		ems.setCondition(MantraEffectMap.condition(caster, data, CastStatus.AFTER_SPELLING));
-		data.getEffectMap().addAndMark(MantraEffectType.MANTRA_EFFECT_1, ems);
-		ems.setIcon(this.getMagicCircleIcon());
+		EffectMagicSquare effect = new EffectMagicSquare(world, IEffectBinder.asBinder(casterObject), size,
+				mantra.getColor(data));
+		effect.setCondition(MantraEffectMap.condition(caster, data, CastStatus.AFTER_SPELLING));
+		effect.setIcon(((MantraCommon) mantra).getMagicCircleIcon());
+		return effect;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void initEffectCreator() {
+		super.initEffectCreator();
+		setEffectCreator(MantraEffectType.MANTRA_EFFECT_1, MantraTypeSquareArea::createEffectMagicSquare, null);
 	}
 
 	public abstract void init(World world, SquareData mData, ICaster caster, BlockPos pos);

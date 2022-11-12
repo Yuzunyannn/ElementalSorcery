@@ -20,6 +20,7 @@ import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTimeHourglass;
 import yuzunyannn.elementalsorcery.ts.PocketWatch;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -82,30 +83,6 @@ public class MantraTimeHourglass extends MantraTypeAccumulative {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		MantraDataCommon mdc = (MantraDataCommon) data;
-		if (!mdc.isMarkContinue()) return;
-		super.onSpellingEffect(world, data, caster);
-		ElementStack star = mdc.get(ESObjects.ELEMENTS.STAR);
-		if (star.getCount() > 50 && hasEffectFlags(world, data, caster, MantraEffectType.MAGIC_CIRCLE)) out: {
-			IWorldObject co = caster.iWantCaster();
-			EntityLivingBase eb = co.asEntityLivingBase();
-			if (eb == null) break out;
-			EffectTimeHourglass eth = mdc.getEffectMap().getMark(MantraEffectType.MAGIC_CIRCLE,
-					EffectTimeHourglass.class);
-			if (eth == null) {
-				mdc.getEffectMap().removeMark(MantraEffectType.MAGIC_CIRCLE);
-				eth = new EffectTimeHourglass(world, eb);
-				eth.setColor(getColor(mdc));
-				eth.setCondition(MantraEffectMap.condition(caster, mdc));
-				mdc.getEffectMap().addAndMark(MantraEffectType.MAGIC_CIRCLE, eth);
-			}
-			eth.nextPotinerRate = mdc.getProgress();
-		}
-	}
-
-	@Override
 	protected CollectRule getCurrCollectRule(World world, MantraDataCommon mData, ICaster caster) {
 		float potent = mData.get(POTENT_POWER);
 		if (potent >= TIME_STOP_MIN_POTENT) return superRule;
@@ -157,4 +134,31 @@ public class MantraTimeHourglass extends MantraTypeAccumulative {
 		}
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
+		MantraDataCommon mdc = (MantraDataCommon) data;
+		if (!mdc.isMarkContinue()) return;
+		super.onSpellingEffect(world, data, caster);
+	}
+
+	@Override
+	public void initEffectCreator() {
+		super.initEffectCreator();
+		setEffectCreator(MantraEffectType.MAGIC_CIRCLE, MantraCommon::createEffectMagicCircle,
+				(world, mantra, mData, caster, effect) -> {
+					MantraDataCommon mdc = (MantraDataCommon) mData;
+					ElementStack star = mdc.get(ESObjects.ELEMENTS.STAR);
+					if (star.getCount() < 50) return;
+					IWorldObject co = caster.iWantCaster();
+					if (!(effect instanceof EffectTimeHourglass)) {
+						mdc.getEffectMap().removeMark(MantraEffectType.MAGIC_CIRCLE);
+						EffectTimeHourglass eth = new EffectTimeHourglass(world, IEffectBinder.asBinder(co));
+						eth.setColor(getColor(mdc));
+						eth.setCondition(MantraEffectMap.condition(caster, mdc));
+						mdc.getEffectMap().addAndMark(MantraEffectType.MAGIC_CIRCLE, effect = eth);
+					}
+					((EffectTimeHourglass) effect).nextPotinerRate = (float) mdc.getProgress();
+				});
+	}
 }

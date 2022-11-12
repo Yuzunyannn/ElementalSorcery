@@ -10,6 +10,7 @@ import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.entity.mob.EntityRelicGuard;
 
 @SideOnly(Side.CLIENT)
 public class ModelRelicGuard extends ModelBase {
@@ -188,8 +189,19 @@ public class ModelRelicGuard extends ModelBase {
 		rightArm.rotateAngleY = 0.0F;
 		leftArm.rotateAngleY = 0.0F;
 
-		if (entity instanceof EntityLivingBase && ((EntityLivingBase) entity).isHandActive()) {
-			rightArm.rotateAngleX = ageInTicks * 0.25f * 3.14f;
+		if (entity instanceof EntityRelicGuard && ((EntityRelicGuard) entity).isSpelling()) {
+			float sw = 0.5f + MathHelper.sin(ageInTicks) * 0.1f;
+			float f1 = sw;
+			f1 = 1.0F - sw;
+			f1 = f1 * f1;
+			f1 = f1 * f1;
+			f1 = 1.0F - f1;
+			float f2 = MathHelper.sin(f1 * (float) Math.PI);
+			float f3 = MathHelper.sin(sw * (float) Math.PI) * 2.5f;
+			rightArm.rotateAngleX = rightArm.rotateAngleX - (f2 * 1.2f + f3);
+			rightArm.rotateAngleZ += MathHelper.sin(sw * (float) Math.PI) * -0.75F;
+			leftArm.rotateAngleX = leftArm.rotateAngleX - (f2 * 1.2f + f3);
+			leftArm.rotateAngleZ += MathHelper.sin(sw * (float) Math.PI) * 0.75F;
 		} else if (this.swingProgress > 0.0F) {
 			float f1 = this.swingProgress;
 			f1 = 1.0F - this.swingProgress;

@@ -15,6 +15,7 @@ import yuzunyannn.elementalsorcery.api.element.IElementLaser;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.MantraCasterFlags;
 import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
@@ -24,8 +25,8 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLaserMantra;
 import yuzunyannn.elementalsorcery.util.MasterBinder;
 import yuzunyannn.elementalsorcery.util.helper.Color;
+import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 import yuzunyannn.elementalsorcery.util.var.Variables;
-import yuzunyannn.elementalsorcery.util.world.CasterHelper;
 
 public class MantraLaser extends MantraCommon {
 
@@ -153,9 +154,7 @@ public class MantraLaser extends MantraCommon {
 			if (target.getEntity() != null)
 				cost = laser.onLaserUpdate(world, casterObject, target, eStack, mData.getExtra());
 			else {
-				EntityLivingBase user = casterObject.asEntityLivingBase();
-				if (user != null) target = CasterHelper.findLookBlockResult(user, 128, true);
-				else target = caster.iWantBlockTarget();
+				target = caster.iWantBlockTarget();
 				if (target.getPos() != null)
 					cost = laser.onLaserUpdate(world, casterObject, target, eStack, mData.getExtra());
 			}
@@ -214,7 +213,8 @@ public class MantraLaser extends MantraCommon {
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, MantraDataLaser mData, ICaster caster, boolean isAfter,
 			WorldTarget target) {
-		addEffectMagicCircle(world, mData, caster);
+		addSpellingEffect(world, mData, caster, MantraEffectType.MAGIC_CIRCLE);
+
 		Vec3d at = target.getHitVec();
 
 		IWorldObject wo = isAfter ? caster.iWantDirectCaster() : caster.iWantCaster();
@@ -236,10 +236,12 @@ public class MantraLaser extends MantraCommon {
 			double dz = MathHelper.cos(tick / 10f) * 1.25;
 			from = from.add(dx, 0, dz);
 		} else {
+			double yUp = 0;
+			if (!JavaHelper.isTrue(caster.getCasterFlag(MantraCasterFlags.AUTO_MODE))) yUp = 0.75;
 			double dx = MathHelper.sin(tick / 10f) * 0.05;
 			double dy = MathHelper.cos(tick / 10f) * 0.05;
 			Vec3d tar = at.subtract(from).normalize();
-			from = from.add(tar.scale(1.25)).add(dx, 0.75 + dy, dx);
+			from = from.add(tar.scale(1.25)).add(dx, yUp + dy, dx);
 		}
 
 		effect.hold(20);
@@ -247,4 +249,12 @@ public class MantraLaser extends MantraCommon {
 		effect.toPos = from;
 	}
 
+	@Override
+	public void initEffectCreator() {
+		super.initEffectCreator();
+		setEffectCreator(MantraEffectType.MAGIC_CIRCLE, (world, mantra, mData, caster, effectBinder) -> {
+			if (JavaHelper.isTrue(caster.getCasterFlag(MantraCasterFlags.AUTO_MODE))) return null;
+			return createEffectMagicCircle(world, mantra, mData, caster, effectBinder);
+		}, null);
+	}
 }

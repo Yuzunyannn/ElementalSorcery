@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.event;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
+import java.util.Random;
 import java.util.function.Function;
 
 import net.minecraft.block.Block;
@@ -28,16 +29,21 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.Element;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
+import yuzunyannn.elementalsorcery.entity.EntityAutoMantra;
+import yuzunyannn.elementalsorcery.entity.EntityAutoMantra.AutoMantraConfig;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.parchment.Pages;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectIceCrystalBomb;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -121,6 +127,30 @@ public class CommandESDebug {
 			case "textTest": {
 
 				final Vec3d at = new Vec3d(pos);
+				Random rand = entity.getRNG();
+
+				Vec3d look = entity.getLookVec();
+				for (int i = 0; i < 3; i++) {
+					AutoMantraConfig config = new EntityAutoMantra.AutoMantraConfig();
+//					config.setMoveVec(new Vec3d(look.x, 0, look.z).normalize().scale(0.01));
+//					config.setMoveVec(Vec3d.ZERO);
+//					config.blockTrack = AutoMantraConfig.BLOCKTRACK_DIRECT_REVERSE;
+					config.setTarget(entity, 0.01);
+//					config.excludeUser = false;
+					EntityAutoMantra mantra = new EntityAutoMantra(entity.world, config, entity,
+							ESObjects.MANTRAS.FROZEN, null);
+					mantra.setPosition(entity.posX + rand.nextGaussian() * 2, entity.posY + 3,
+							entity.posZ + rand.nextGaussian() * 2);
+					mantra.setSpellingTick(20 * 3);
+					mantra.setOrient(new Vec3d(0, -1, 0));
+					IElementInventory elementInv = mantra.getElementInventory();
+					elementInv.insertElement(new ElementStack(Element.REGISTRY.getRandomObject(rand), 9999, 20), false);
+					elementInv.insertElement(new ElementStack(ESObjects.ELEMENTS.FIRE, 9999, 20), false);
+					elementInv.insertElement(new ElementStack(ESObjects.ELEMENTS.WATER, 9999, 20), false);
+					elementInv.insertElement(new ElementStack(ESObjects.ELEMENTS.AIR, 9999, 20), false);
+					entity.world.spawnEntity(mantra);
+				}
+
 				Minecraft.getMinecraft().addScheduledTask(() -> {
 //					LamdaReference<Integer> ref = LamdaReference.of(0);
 //					EventClient.addTickTask(() -> {
@@ -138,7 +168,7 @@ public class CommandESDebug {
 //					EffectIceCrystalBomb effect = new EffectIceCrystalBomb(Minecraft.getMinecraft().world, at);
 //					effect.setCondition(e -> true);
 //					Effect.addEffect(effect);
-					EffectIceCrystalBomb.playEndBlastEffect(Minecraft.getMinecraft().world, at.add(0, 1, 0), true);
+//					EffectIceCrystalBomb.playEndBlastEffect(Minecraft.getMinecraft().world, at.add(0, 1, 0), true);
 				});
 
 //				int n = 0;

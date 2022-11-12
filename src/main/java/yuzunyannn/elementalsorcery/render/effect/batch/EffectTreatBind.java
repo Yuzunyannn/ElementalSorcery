@@ -2,11 +2,11 @@ package yuzunyannn.elementalsorcery.render.effect.batch;
 
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.render.effect.IBinder;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 
 public class EffectTreatBind extends EffectTreat {
 
-	public IBinder binder;
+	public IEffectBinder binder;
 
 	public double rise;
 	public double motionY = 0.04;
@@ -19,7 +19,7 @@ public class EffectTreatBind extends EffectTreat {
 		super(world, pos.x, pos.y, pos.z);
 	}
 
-	public void setBinder(IBinder binder) {
+	public void setBinder(IEffectBinder binder) {
 		this.binder = binder;
 	}
 
@@ -42,7 +42,7 @@ public class EffectTreatBind extends EffectTreat {
 			motionY = motionY * 0.92;
 
 		} else {
-			this.binder = new IBinder.VecBinder(this.getPositionVector());
+			this.binder = new IEffectBinder.VecBinder(this.getPositionVector());
 		}
 	}
 

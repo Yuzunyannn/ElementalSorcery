@@ -1,15 +1,14 @@
 package yuzunyannn.elementalsorcery.render.effect.grimoire;
 
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellScrew;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
@@ -18,17 +17,14 @@ public class EffectMagicCircleMantra extends EffectMagicCircleIcon {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/magic_circles/launch.png");
 
-	public EffectMagicCircleMantra(World world, Entity entiy, ResourceLocation icon) {
-		super(world, entiy, icon);
-	}
-
-	public EffectMagicCircleMantra(World world, BlockPos pos, ResourceLocation icon) {
-		super(world, pos, icon);
+	public EffectMagicCircleMantra(World world, IEffectBinder binder, ResourceLocation icon) {
+		super(world, binder, icon);
 	}
 
 	@Override
-	protected void bindCircleIcon() {
+	protected void renderCircle(float partialTicks, float alpha) {
 		TEXTURE.bind();
+		this.renderTexRectInCenter(0, 0, 32, 32, r, g, b, alpha);
 	}
 
 	@Override

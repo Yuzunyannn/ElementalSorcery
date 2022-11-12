@@ -22,8 +22,12 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquare;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicSquareNoEntry;
 
@@ -51,24 +55,6 @@ public class MantraSturdyArea extends MantraTypeSquareArea {
 		ElementStack earth = data.get(ESObjects.ELEMENTS.EARTH);
 		float rate = 0.75f * caster.iWantBePotent(0.5f, false) + 1;
 		data.setSize(Math.min(earth.getPower() / 80, 12) * rate + 6);
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void addAfterEffect(SquareData data, ICaster caster, int size) {
-		super.addAfterEffect(data, caster, size);
-
-		EffectMagicSquare ems = data.getEffectMap().getMark(MantraEffectType.MANTRA_EFFECT_1, EffectMagicSquare.class);
-		if (ems == null) return;
-		ems.enableElementEffect = false;
-
-		if (data.getEffectMap().hasMark(MantraEffectType.MANTRA_EFFECT_2)) return;
-		ICasterObject casterObject = caster.iWantDirectCaster();
-		EffectMagicSquareNoEntry emse = new EffectMagicSquareNoEntry(casterObject.getWorld(), casterObject.asEntity(),
-				size - 0.5f, this.getColor(data));
-		emse.setCondition(MantraEffectMap.condition(caster, data, CastStatus.AFTER_SPELLING));
-		data.getEffectMap().addAndMark(MantraEffectType.MANTRA_EFFECT_2, emse);
-		emse.hight = Math.max(3, size / 3);
 	}
 
 	@Override
@@ -105,4 +91,38 @@ public class MantraSturdyArea extends MantraTypeSquareArea {
 
 		return true;
 	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	protected void addSquareEffect(World world, IMantraData mData, ICaster caster, int size) {
+		super.addSquareEffect(world, mData, caster, size);
+		addSpellingEffect(world, mData, caster, MantraEffectType.MANTRA_EFFECT_2);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void initEffectCreator() {
+		super.initEffectCreator();
+		setEffectCreator(MantraEffectType.MANTRA_EFFECT_2, MantraSturdyArea::createEffectMagicBlock, null);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static Effect createEffectMagicBlock(World world, Mantra mantra, IMantraData mData, ICaster caster,
+			IEffectBinder effectBinder) {
+		SquareData data = (SquareData) mData;
+		int size = data.getSize();
+
+		EffectMagicSquare effect = data.getEffectMap().getMark(MantraEffectType.MANTRA_EFFECT_1,
+				EffectMagicSquare.class);
+		if (effect == null) return null;
+		effect.enableElementEffect = false;
+
+		ICasterObject casterObject = caster.iWantDirectCaster();
+		EffectMagicSquareNoEntry emse = new EffectMagicSquareNoEntry(world, IEffectBinder.asBinder(casterObject),
+				size - 0.5f, mantra.getColor(data));
+		emse.setCondition(MantraEffectMap.condition(caster, data, CastStatus.AFTER_SPELLING));
+		emse.hight = Math.max(3, size / 3);
+		return emse;
+	}
+
 }

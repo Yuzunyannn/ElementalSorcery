@@ -14,7 +14,7 @@ import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
-import yuzunyannn.elementalsorcery.render.effect.IBinder;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectIceFragment;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileIceRockStand;
 import yuzunyannn.elementalsorcery.util.render.DisplayList;
@@ -31,19 +31,18 @@ public class EffectIceCrystalBomb extends EffectCondition {
 		};
 	};
 
-	public IBinder binder;
+	public IEffectBinder binder;
 	public UUID passHidePlayer;
 
 	public EffectIceCrystalBomb(World world, IWorldObject obj) {
 		super(world);
-		this.binder = new IBinder.WorldObjectBinder(obj,
-				(float) obj.getEyePosition().subtract(obj.getObjectPosition()).y);
+		this.binder = IEffectBinder.asBinder(obj).fixToSpell();
 		this.init();
 	}
 
 	public EffectIceCrystalBomb(World world, Vec3d pos) {
 		super(world);
-		this.binder = new IBinder.VecBinder(pos);
+		this.binder = new IEffectBinder.VecBinder(pos);
 		this.init();
 	}
 
@@ -54,7 +53,7 @@ public class EffectIceCrystalBomb extends EffectCondition {
 		randomStyleRoate = rand.nextFloat() * 60 + 60;
 	}
 
-	public void setPosition(IBinder binder) {
+	public void setPosition(IEffectBinder binder) {
 		this.setPosition(binder.getPosition());
 	}
 

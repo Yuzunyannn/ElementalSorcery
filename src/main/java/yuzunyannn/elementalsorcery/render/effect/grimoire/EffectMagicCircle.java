@@ -1,8 +1,6 @@
 package yuzunyannn.elementalsorcery.render.effect.grimoire;
 
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -11,7 +9,7 @@ import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
-import yuzunyannn.elementalsorcery.render.effect.IBinder;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 
@@ -19,27 +17,20 @@ import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 public class EffectMagicCircle extends EffectCondition {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/magic_circles/element.png");
-	public IBinder binder;
+	public IEffectBinder binder;
 
 	public float r = 0;
 	public float g = 0;
 	public float b = 0;
 
-	public EffectMagicCircle(World world, Entity binder) {
+	public EffectMagicCircle(World world, IEffectBinder binder) {
 		super(world);
 		this.lifeTime = 1;
-		this.binder = new IBinder.EntityBinder(binder, 0);
+		this.binder = binder;
 		this.setPosition(this.binder);
 	}
 
-	public EffectMagicCircle(World world, BlockPos pos) {
-		super(world);
-		this.lifeTime = 1;
-		this.binder = new IBinder.VecBinder(new Vec3d(pos).add(0.5, 0, 0.5));
-		this.setPosition(this.binder);
-	}
-
-	public void setPosition(IBinder binder) {
+	public void setPosition(IEffectBinder binder) {
 		this.setPosition(binder.getPosition());
 	}
 
@@ -56,6 +47,11 @@ public class EffectMagicCircle extends EffectCondition {
 	float preScale = scale;
 	float alpha = 1;
 	float preAlpha = alpha;
+
+	@Override
+	public boolean isDead() {
+		return this.lifeTime <= 0;
+	}
 
 	@Override
 	public void onUpdate() {
@@ -101,20 +97,24 @@ public class EffectMagicCircle extends EffectCondition {
 		double posY = RenderFriend.getPartialTicks(this.posY, this.prevPosY, partialTicks);
 		double posZ = RenderFriend.getPartialTicks(this.posZ, this.prevPosZ, partialTicks);
 		GlStateManager.translate(posX, posY + 0.1f, posZ);
-		GlStateManager.rotate(90, 1, 0, 0);
-		float rotate = RenderFriend.getPartialTicks(this.rotate, this.preRotate, partialTicks);
-		GlStateManager.rotate(rotate, 0, 0, 1);
+		this.doRotate(partialTicks);
 		float scale = RenderFriend.getPartialTicks(this.scale, this.preScale, partialTicks);
 		float alpha = RenderFriend.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
 		GlStateManager.scale(scale, scale, scale);
-		this.bindCircleIcon();
-		this.renderTexRectInCenter(0, 0, 32, 32, r, g, b, alpha);
+		this.renderCircle(partialTicks, alpha);
 		this.renderCenterIcon(partialTicks, alpha);
 		GlStateManager.popMatrix();
 	}
 
-	protected void bindCircleIcon() {
+	protected void doRotate(float partialTicks) {
+		GlStateManager.rotate(90, 1, 0, 0);
+		float rotate = RenderFriend.getPartialTicks(this.rotate, this.preRotate, partialTicks);
+		GlStateManager.rotate(rotate, 0, 0, 1);
+	}
+
+	protected void renderCircle(float partialTicks, float alpha) {
 		TEXTURE.bind();
+		this.renderTexRectInCenter(0, 0, 32, 32, r, g, b, alpha);
 	}
 
 	protected void renderCenterIcon(float partialTicks, float alpha) {

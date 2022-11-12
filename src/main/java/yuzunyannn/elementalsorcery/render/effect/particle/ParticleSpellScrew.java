@@ -40,4 +40,9 @@ public class ParticleSpellScrew extends Particle {
 		this.particleAngle += 3.14f / 100;
 		if (this.particleScale <= 0) this.setExpired();
 	}
+
+	public int getBrightnessForRender(float partialTick) {
+		return 15728640;
+	}
+
 }

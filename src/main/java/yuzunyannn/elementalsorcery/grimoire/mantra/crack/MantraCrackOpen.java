@@ -30,7 +30,6 @@ import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementCrack;
-import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.crack.EffectCylinderCrackBlast;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
@@ -63,7 +62,7 @@ public class MantraCrackOpen extends MantraCrackCommon {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		addEffectProgress(world, data, caster);
+		addSpellingEffect(world, data, caster, MantraEffectType.PLAYER_PROGRESS);
 		addEffectBlockIndicatorEffect(world, data, caster);
 	}
 

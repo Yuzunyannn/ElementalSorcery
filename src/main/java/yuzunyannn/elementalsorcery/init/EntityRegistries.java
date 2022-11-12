@@ -20,6 +20,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.config.WorldGenAndSpawnConfig;
+import yuzunyannn.elementalsorcery.entity.EntityAutoMantra;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityBlockThrowEffect;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
@@ -51,9 +52,9 @@ import yuzunyannn.elementalsorcery.render.entity.RenderEntityCrafting;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityExploreDust;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityFairyCube;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityFallingElfFruit;
-import yuzunyannn.elementalsorcery.render.entity.RenderEntityGrimoire;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityItemGoods;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityMagicMelting;
+import yuzunyannn.elementalsorcery.render.entity.RenderEntityNothing;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityPortal;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityRotaryWindmillBlate;
 import yuzunyannn.elementalsorcery.render.entity.RenderEntityScapegoat;
@@ -121,6 +122,7 @@ public class EntityRegistries {
 		register(54, "explore_dust", EntityExploreDust.class, "ExploreDust", 64, 20, false);
 		register(55, "entity_grimoire", EntityGrimoire.class, "EntityGrimoire", 128, 3, false);
 		register(56, "magic_melting", EntityMagicMelting.class, "EntityMagicMelting", 64, 20, false);
+		register(57, "auto_mantra", EntityAutoMantra.class, "AutoMantra", 128, 3, false);
 
 		ForgeRegistries.DATA_SERIALIZERS
 				.register(new DataSerializerEntry(EntityHelper.DS_INT).setRegistryName(ESAPI.MODID, "int"));
@@ -151,7 +153,8 @@ public class EntityRegistries {
 		registerRender(EntityRelicZombie.class, RenderEntityRelicZombie.class);
 		registerRender(EntityPuppet.class, RenderEntityPuppet.class);
 		registerRender(EntityExploreDust.class, RenderEntityExploreDust.class);
-		registerRender(EntityGrimoire.class, RenderEntityGrimoire.class);
+		registerRender(EntityGrimoire.class, RenderEntityNothing.class);
+		registerRender(EntityAutoMantra.class, RenderEntityNothing.class);
 		registerRender(EntityBulletin.class, RenderEntitiyBulletin.class);
 		registerRender(EntityMagicMelting.class, RenderEntityMagicMelting.class);
 		registerRender(EntityBlockMove.class, RenderEntityBlockMove.class);

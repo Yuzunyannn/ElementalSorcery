@@ -16,6 +16,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 
 public class MantraFireCharge extends MantraTypeAccumulative {
@@ -81,7 +82,7 @@ public class MantraFireCharge extends MantraTypeAccumulative {
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData mData, ICaster caster) {
 		super.onSpellingEffect(world, mData, caster);
-		this.addEffectEmitEffect(world, mData, caster);
+		addSpellingEffect(world, mData, caster, MantraEffectType.EMIT);
 	}
 
 }

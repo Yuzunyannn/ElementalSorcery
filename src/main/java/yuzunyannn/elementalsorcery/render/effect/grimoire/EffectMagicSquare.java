@@ -1,7 +1,6 @@
 package yuzunyannn.elementalsorcery.render.effect.grimoire;
 
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -11,7 +10,7 @@ import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
-import yuzunyannn.elementalsorcery.render.effect.IBinder;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 
@@ -19,7 +18,7 @@ import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 public class EffectMagicSquare extends EffectCondition {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/magic_circles/square.png");
-	public IBinder binder;
+	public IEffectBinder binder;
 	public ResourceLocation icon;
 
 	public float r = 0;
@@ -32,15 +31,7 @@ public class EffectMagicSquare extends EffectCondition {
 
 	public Vec3d[] effectColors = null;
 
-	public EffectMagicSquare(World world, Entity binder, float size, int color) {
-		this(world, new IBinder.EntityBinder(binder, 0), size, color);
-	}
-
-	public EffectMagicSquare(World world, Vec3d binder, float size, int color) {
-		this(world, new IBinder.VecBinder(binder), size, color);
-	}
-
-	public EffectMagicSquare(World world, IBinder binder, float size, int color) {
+	public EffectMagicSquare(World world, IEffectBinder binder, float size, int color) {
 		super(world);
 		this.lifeTime = 1;
 		this.binder = binder;

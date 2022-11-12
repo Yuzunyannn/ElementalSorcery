@@ -10,11 +10,13 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializer;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.fml.common.registry.EntityEntry;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.entity.IHasMaster;
 import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 
 public class EntityHelper {
@@ -56,8 +58,19 @@ public class EntityHelper {
 	}
 
 	static public boolean isSameTeam(Entity entity1, Entity entity2) {
+		return isSameTeam(entity1, entity2, 0);
+	}
+
+	static public boolean isSameTeam(Entity entity1, Entity entity2, int deep) {
+		if (deep > 4) return false;
 		if (entity1 == entity2) return true;
 		if (entity1 == null) return false;
+		if (entity1 instanceof IHasMaster) {
+			if (isSameTeam(((IHasMaster) entity1).getMaster(), entity2, deep + 1)) return true;
+		}
+		if (entity2 instanceof IHasMaster) {
+			if (isSameTeam(entity1, ((IHasMaster) entity2).getMaster(), deep + 1)) return true;
+		}
 		return entity1.isOnSameTeam(entity2);
 	}
 
@@ -83,6 +96,12 @@ public class EntityHelper {
 			return true;
 		}
 		return false;
+	}
+
+	public static void setLookOrient(Entity entity, Vec3d dir) {
+		float raw = (float) MathHelper.atan2(dir.z, dir.x) / 3.1415926f * 180 - 90;
+		entity.rotationYaw = raw;
+		entity.rotationPitch = (float) (-dir.y * 90);
 	}
 
 }

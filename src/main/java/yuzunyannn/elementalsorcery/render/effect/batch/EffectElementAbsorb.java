@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.IBinder;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 @SideOnly(Side.CLIENT)
@@ -32,11 +32,11 @@ public class EffectElementAbsorb extends EffectElementMove {
 	}
 
 	/** 位置 */
-	public IBinder binder = null;
+	public IEffectBinder binder = null;
 	/** 静止到飞行时间 */
 	public int startTick = 0;
 
-	public EffectElementAbsorb(World world, Vec3d from, IBinder to) {
+	public EffectElementAbsorb(World world, Vec3d from, IEffectBinder to) {
 		super(world, from);
 		this.binder = to;
 		startTick = rand.nextInt(10) + 10;
@@ -46,11 +46,11 @@ public class EffectElementAbsorb extends EffectElementMove {
 	}
 
 	public EffectElementAbsorb(World world, Vec3d from, Vec3d to) {
-		this(world, from, new IBinder.VecBinder(to));
+		this(world, from, new IEffectBinder.VecBinder(to));
 	}
 
 	public EffectElementAbsorb(World world, Vec3d from, Entity to) {
-		this(world, from, new IBinder.EntityBinder(to, 0));
+		this(world, from, new IEffectBinder.EntityBinder(to, 0));
 	}
 
 	public void randMotion(double scale) {

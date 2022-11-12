@@ -8,7 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectEntityMapping;
-import yuzunyannn.elementalsorcery.render.effect.IBinder;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectGoldShield;
 
 public class PotionGoldShield extends PotionCommon {
@@ -36,7 +36,7 @@ public class PotionGoldShield extends PotionCommon {
 		EffectGoldShield effect = EffectEntityMapping.getEffect(entity, "goldShield", EffectGoldShield.class);
 		if (effect != null) return;
 		float height = entity.height;
-		effect = new EffectGoldShield(entity.world, new IBinder.EntityBinder(entity, height / 2f));
+		effect = new EffectGoldShield(entity.world, new IEffectBinder.EntityBinder(entity, height / 2f));
 		effect.defaultScale = height / 1.75f + 0.25f;
 		effect.isClientUser = entity == Minecraft.getMinecraft().getRenderViewEntity();
 		effect.setCondition(v -> {

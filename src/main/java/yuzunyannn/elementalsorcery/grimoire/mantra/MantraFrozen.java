@@ -19,6 +19,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectSnow;
@@ -252,7 +253,7 @@ public class MantraFrozen extends MantraTypePersistent {
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData mData, ICaster caster) {
 		super.onSpellingEffect(world, mData, caster);
-		this.addEffectEmitEffect(world, mData, caster);
+		addSpellingEffect(world, mData, caster, MantraEffectType.EMIT);
 	}
 
 }

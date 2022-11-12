@@ -66,8 +66,8 @@ public class WorldHelper {
 
 	/** 获取生物正在看的方块 */
 	@Nullable
-	static public RayTraceResult getLookAtBlock(World world, EntityLivingBase entity, float distance,
-			boolean stopOnLiquid, boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
+	static public RayTraceResult getLookAtBlock(World world, Entity entity, float distance, boolean stopOnLiquid,
+			boolean ignoreBlockWithoutBoundingBox, boolean returnLastUncollidableBlock) {
 		Vec3d vstart = entity.getPositionEyes(1.0F);
 		Vec3d vend = entity.getLookVec().scale(distance).add(vstart);
 		RayTraceResult reulst = world.rayTraceBlocks(vstart, vend, stopOnLiquid, ignoreBlockWithoutBoundingBox,
@@ -76,18 +76,18 @@ public class WorldHelper {
 		return reulst;
 	}
 
-	static public RayTraceResult getLookAtBlock(World world, EntityLivingBase entity, float distance) {
+	static public RayTraceResult getLookAtBlock(World world, Entity entity, float distance) {
 		return getLookAtBlock(world, entity, distance, false, false, false);
 	}
 
-	static public <T extends Entity> RayTraceResult getLookAtEntity(World world, EntityLivingBase entity,
-			double distance, Class<T> entityType) {
+	static public <T extends Entity> RayTraceResult getLookAtEntity(World world, Entity entity, double distance,
+			Class<T> entityType) {
 		return getLookAtEntity(world, entity, distance, e -> entityType.isAssignableFrom(e.getClass()));
 	}
 
 	/** 获取生物正在看的实体 */
-	static public <T extends Entity> RayTraceResult getLookAtEntity(World world, EntityLivingBase entity,
-			double distance, Predicate<? super Entity> predicate) {
+	static public RayTraceResult getLookAtEntity(World world, Entity entity, double distance,
+			Predicate<? super Entity> predicate) {
 
 		Vec3d eye = entity.getPositionEyes(1.0f);
 		Vec3d look = entity.getLook(1.0F);
@@ -158,7 +158,7 @@ public class WorldHelper {
 		}
 	}
 
-	static public void createExpBall(EntityLivingBase player, int exp) {
+	static public void createExpBall(Entity player, int exp) {
 		createExpBall(player.world, player.getPositionVector(), exp);
 	}
 

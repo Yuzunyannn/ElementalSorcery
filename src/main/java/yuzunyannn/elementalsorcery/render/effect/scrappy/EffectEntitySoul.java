@@ -17,7 +17,7 @@ import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.IBinder;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 
 @SideOnly(Side.CLIENT)
 public class EffectEntitySoul extends Effect {
@@ -34,7 +34,7 @@ public class EffectEntitySoul extends Effect {
 		}
 	}
 
-	public IBinder binder;
+	public IEffectBinder binder;
 	public ModelBase model;
 	public EntityLivingBase entity;
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/entity/soul_tex.png");
@@ -57,7 +57,7 @@ public class EffectEntitySoul extends Effect {
 	}
 
 	public void setBinder(Entity entity) {
-		binder = new IBinder.EntityBinder(entity, entity.height / 2);
+		binder = new IEffectBinder.EntityBinder(entity, entity.height / 2);
 	}
 
 	public boolean isCanRender() {

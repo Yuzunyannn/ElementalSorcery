@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.util.world;
 
+import com.google.common.base.Predicate;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -29,16 +31,22 @@ public class CasterHelper {
 		return null;
 	}
 
-	public static WorldTarget findLookBlockResult(EntityLivingBase entity, float dis, boolean stopOnLiquid) {
+	public static WorldTarget findLookBlockResult(Entity entity, float dis, boolean stopOnLiquid) {
 		RayTraceResult rt = WorldHelper.getLookAtBlock(entity.world, entity, dis, stopOnLiquid, false, false);
 		if (rt == null) return WorldTarget.EMPTY;
 		if (rt.getBlockPos() == null) return WorldTarget.EMPTY;
 		return new WorldTarget(rt.getBlockPos(), rt.sideHit, rt.hitVec);
 	}
 
-	public static <T extends Entity> WorldTarget findLookTargetResult(Class<T> cls, EntityLivingBase entity,
-			float dis) {
+	public static <T extends Entity> WorldTarget findLookTargetResult(Class<T> cls, Entity entity, float dis) {
 		RayTraceResult rt = WorldHelper.getLookAtEntity(entity.world, entity, 64, cls);
+		if (rt == null) return WorldTarget.EMPTY;
+		return new WorldTarget(rt.entityHit, rt.hitVec);
+	}
+
+	public static <T extends Entity> WorldTarget findLookTargetResult(Predicate<? super Entity> predicate,
+			Entity entity, float dis) {
+		RayTraceResult rt = WorldHelper.getLookAtEntity(entity.world, entity, 64, predicate);
 		if (rt == null) return WorldTarget.EMPTY;
 		return new WorldTarget(rt.entityHit, rt.hitVec);
 	}

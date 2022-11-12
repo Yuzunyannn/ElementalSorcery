@@ -50,7 +50,7 @@ public abstract class EntityMantraBase extends Entity
 	protected IMantraData mantraData;
 	/** 原始数据 */
 	protected NBTTagCompound metaData;
-
+	
 	public EntityMantraBase(World worldIn) {
 		super(worldIn);
 	}
@@ -76,7 +76,8 @@ public abstract class EntityMantraBase extends Entity
 
 	@Override
 	protected void entityInit() {
-		this.setSize(0.1f, 0.1f);
+		this.setSize(0.05f, 0.05f);
+		this.height = 0.05f;
 	}
 
 	public IMantraData getMantraData() {
@@ -377,12 +378,12 @@ public abstract class EntityMantraBase extends Entity
 	public ICasterObject iWantDirectCaster() {
 		return this;
 	}
-	
+
 	@Override
 	public Mantra iWantMantra() {
 		return this.mantra;
 	}
-	
+
 	@Override
 	public IMantraData iWantMantraData() {
 		return this.mantraData;
@@ -412,7 +413,7 @@ public abstract class EntityMantraBase extends Entity
 	public Entity asEntity() {
 		return this;
 	}
-	
+
 	@Override
 	public Vec3d getObjectPosition() {
 		return this.getPositionVector();

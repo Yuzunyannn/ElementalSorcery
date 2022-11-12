@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -14,29 +13,21 @@ import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
-import yuzunyannn.elementalsorcery.render.effect.IBinder;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 
 @SideOnly(Side.CLIENT)
 public class EffectMagicSquareNoEntry extends EffectCondition {
 
-	public IBinder binder;
+	public IEffectBinder binder;
 
 	public final Color color = new Color();
 
 	public float size = 8;
 	public float hight = 3;
 
-	public EffectMagicSquareNoEntry(World world, Entity binder, float size, int color) {
-		this(world, new IBinder.EntityBinder(binder, 0), size, color);
-	}
-
-	public EffectMagicSquareNoEntry(World world, Vec3d binder, float size, int color) {
-		this(world, new IBinder.VecBinder(binder), size, color);
-	}
-
-	public EffectMagicSquareNoEntry(World world, IBinder binder, float size, int color) {
+	public EffectMagicSquareNoEntry(World world, IEffectBinder binder, float size, int color) {
 		super(world);
 		this.lifeTime = 1;
 		this.binder = binder;

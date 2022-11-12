@@ -2,7 +2,9 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.function.BiFunction;
 
@@ -26,7 +28,9 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.IProgressable;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.api.mantra.MantraCasterFlags;
 import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
@@ -38,16 +42,21 @@ import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraElementDirectLaunch;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectSpiralMove;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAtBlock;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAtEntity;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleAuto;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleIcon;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicEmit;
+import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectScreenProgress;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
+import yuzunyannn.elementalsorcery.util.helper.GameHelper;
+import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class MantraCommon extends Mantra {
@@ -67,8 +76,44 @@ public class MantraCommon extends Mantra {
 	public static final Variable<Integer> TICK = new Variable<>("tick", VariableSet.INT);
 	public static final Variable<Integer> INTERVAL = new Variable<>("Interval", VariableSet.INT);
 
+	@SideOnly(Side.CLIENT)
+	public static interface IEffectCreator {
+		Effect create(World world, Mantra mantra, IMantraData mData, ICaster caster, IEffectBinder effectBinder);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static interface IEffectUpdater {
+		void update(World world, Mantra mantra, IMantraData mData, ICaster caster, Effect effect);
+	}
+
 	protected int color = 0;
 	protected ResourceLocation icon;
+	@SideOnly(Side.CLIENT)
+	protected Map<Integer, IEffectCreator> effectCreatorMap;
+	@SideOnly(Side.CLIENT)
+	protected Map<Integer, IEffectUpdater> effectUpdateMap;
+
+	public MantraCommon() {
+		GameHelper.clientRun(() -> {
+			effectCreatorMap = new HashMap<Integer, IEffectCreator>();
+			effectUpdateMap = new HashMap<Integer, IEffectUpdater>();
+			this.initEffectCreator();
+		});
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void initEffectCreator() {
+		setEffectCreator(MantraEffectType.MAGIC_CIRCLE, MantraCommon::createEffectMagicCircle, null);
+		setEffectCreator(MantraEffectType.PLAYER_PROGRESS, MantraCommon::createEffectProgress,
+				MantraCommon::updateEffectProgress);
+		setEffectCreator(MantraEffectType.EMIT, MantraCommon::createEffectEmitEffect, null);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void setEffectCreator(int effectType, IEffectCreator creator, IEffectUpdater updater) {
+		effectCreatorMap.put(effectType, creator);
+		if (updater != null) effectUpdateMap.put(effectType, updater);
+	}
 
 	public void setColor(int color) {
 		this.color = color;
@@ -229,48 +274,102 @@ public class MantraCommon extends Mantra {
 
 	@SideOnly(Side.CLIENT)
 	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
-		addEffectMagicCircle(world, data, caster);
-		addEffectProgress(world, data, caster);
+		addSpellingEffect(world, data, caster, MantraEffectType.MAGIC_CIRCLE);
+		addSpellingEffect(world, data, caster, MantraEffectType.PLAYER_PROGRESS);
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void addEffectMagicCircle(World world, IMantraData data, ICaster caster) {
-		if (!hasEffectFlags(world, data, caster, MantraEffectType.MAGIC_CIRCLE)) return;
-		IWorldObject co = caster.iWantCaster();
-		EntityLivingBase eb = co.asEntityLivingBase();
-		if (eb == null) return;
+	public void addSpellingEffect(World world, IMantraData data, ICaster caster, int effectType) {
+		if (addCustomEffectHandle(world, data, caster, effectType)) return;
+
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		if (dataEffect.getEffectMap().hasMark(MantraEffectType.MAGIC_CIRCLE)) return;
-		EffectMagicCircle emc = this.getEffectMagicCircle(world, eb, data);
-		emc.setCondition(MantraEffectMap.condition(caster, dataEffect).setCheckContinue(true));
-		dataEffect.getEffectMap().addAndMark(MantraEffectType.MAGIC_CIRCLE, emc);
+		Effect effect = dataEffect.getEffectMap().getMark(effectType);
+		if (effect != null) {
+			IEffectUpdater updater = this.effectUpdateMap.get(effectType);
+			if (updater != null) updater.update(world, this, dataEffect, caster, effect);
+			return;
+		}
+
+		effect = this.createEffect(world, dataEffect, caster, effectType);
+		if (effect == null) return;
+
+		dataEffect.getEffectMap().addAndMark(effectType, effect);
+
+		IEffectUpdater updater = this.effectUpdateMap.get(effectType);
+		if (updater != null) updater.update(world, this, dataEffect, caster, effect);
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void addEffectProgress(World world, IMantraData data, ICaster caster) {
-		if (!hasEffectFlags(world, data, caster, MantraEffectType.PLAYER_PROGRESS)) return;
-		float r = this.getProgressRate(world, data, caster);
-		if (r <= 0) return;
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		dataEffect.showProgress(r, this.getColor(data), world, caster);
+	public Effect createEffect(World world, IMantraData data, ICaster caster, int effectType) {
+
+		Effect effect = this.createCustomEffectHandle(world, data, caster, effectType);
+		if (effect != null) return null;
+
+		IWorldObject co = JavaHelper.isTrue(caster.getCasterFlag(MantraCasterFlags.AUTO_MODE))
+				? caster.iWantDirectCaster()
+				: caster.iWantCaster();
+
+		IEffectCreator creator = effectCreatorMap.get(effectType);
+		if (creator == null) return null;
+
+		effect = creator.create(world, this, (MantraDataCommon) data, caster, IEffectBinder.asBinder(co));
+
+		return effect;
 	}
 
 	@SideOnly(Side.CLIENT)
-	public void addEffectEmitEffect(World world, IMantraData data, ICaster caster) {
-		if (!hasEffectFlags(world, data, caster, MantraEffectType.EMIT)) return;
-		Entity entity = caster.iWantCaster().asEntity();
-		if (entity == null) return;
-		MantraDataCommon dataEffect = (MantraDataCommon) data;
-		if (dataEffect.getEffectMap().hasMark(MantraEffectType.EMIT)) return;
-		EffectMagicEmit emit = new EffectMagicEmit(world, entity);
-		emit.setColor(this.getColor(data));
-		emit.setCondition(MantraEffectMap.condition(caster, dataEffect).setCheckContinue(true));
-		dataEffect.getEffectMap().addAndMark(MantraEffectType.EMIT, emit);
+	public static Effect createEffectMagicCircle(World world, Mantra mantra, IMantraData mData, ICaster caster,
+			IEffectBinder binder) {
+		MantraCommon mCommont = (MantraCommon) mantra;
+		if (JavaHelper.isTrue(caster.getCasterFlag(MantraCasterFlags.AUTO_MODE))) {
+			EffectMagicCircleAuto effect = new EffectMagicCircleAuto(world, binder, mCommont.getMagicCircleIcon());
+			effect.setColor(mantra.getColor(mData));
+			effect.setCondition(MantraEffectMap.condition(caster, (MantraDataCommon) mData).setCheckContinue(true));
+			return effect;
+		}
+		EffectMagicCircle effect = new EffectMagicCircleIcon(world, binder, mCommont.getMagicCircleIcon());
+		effect.setColor(mantra.getColor(mData));
+		effect.setCondition(MantraEffectMap.condition(caster, (MantraDataCommon) mData).setCheckContinue(true));
+		return effect;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static Effect createEffectProgress(World world, Mantra mantra, IMantraData mData, ICaster caster,
+			IEffectBinder binder) {
+		if (JavaHelper.isTrue(caster.getCasterFlag(MantraCasterFlags.AUTO_MODE))) return null;
+		if (!caster.iWantCaster().isClientPlayer()) return null;
+		MantraCommon mCommont = (MantraCommon) mantra;
+		double r = mCommont.getProgressRate(world, mData, caster);
+		if (r <= 0) return null;
+		MantraDataCommon dataEffect = (MantraDataCommon) mData;
+		EffectScreenProgress effectProgress = new EffectScreenProgress(world);
+		effectProgress.setColor(mCommont.getColor(dataEffect));
+		effectProgress.setCondition(MantraEffectMap.condition(caster, dataEffect));
+		return effectProgress;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static void updateEffectProgress(World world, Mantra mantra, IMantraData mData, ICaster caster,
+			Effect effect) {
+		if (effect instanceof IProgressable)
+			((IProgressable) effect).setProgress(((MantraCommon) mantra).getProgressRate(world, mData, caster));
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static Effect createEffectEmitEffect(World world, Mantra mantra, IMantraData mData, ICaster caster,
+			IEffectBinder binder) {
+		if (JavaHelper.isTrue(caster.getCasterFlag(MantraCasterFlags.AUTO_MODE))) return null;
+		MantraDataCommon dataEffect = (MantraDataCommon) mData;
+		EffectMagicEmit effect = new EffectMagicEmit(world, binder.fixToSpell());
+		effect.setColor(mantra.getColor(dataEffect));
+		effect.setCondition(MantraEffectMap.condition(caster, dataEffect).setCheckContinue(true));
+		return effect;
 	}
 
 	@SideOnly(Side.CLIENT)
 	public void addEffectBlockIndicatorEffect(World world, IMantraData data, ICaster caster) {
-		if (!hasEffectFlags(world, data, caster, MantraEffectType.INDICATOR)) return;
+		if (JavaHelper.isTrue(caster.getCasterFlag(MantraCasterFlags.AUTO_MODE))) return;
+		if (addCustomEffectHandle(world, data, caster, MantraEffectType.INDICATOR)) return;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (!caster.iWantCaster().isClientPlayer()) return;
 		if (dataEffect.getEffectMap().hasMark(MantraEffectType.INDICATOR)) return;
@@ -281,7 +380,8 @@ public class MantraCommon extends Mantra {
 
 	@SideOnly(Side.CLIENT)
 	public void addEffectEntityIndicatorEffect(World world, IMantraData data, ICaster caster) {
-		if (!hasEffectFlags(world, data, caster, MantraEffectType.INDICATOR)) return;
+		if (JavaHelper.isTrue(caster.getCasterFlag(MantraCasterFlags.AUTO_MODE))) return;
+		if (addCustomEffectHandle(world, data, caster, MantraEffectType.INDICATOR)) return;
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		if (!caster.iWantCaster().isClientPlayer()) return;
 		if (dataEffect.getEffectMap().hasMark(MantraEffectType.INDICATOR)) return;
@@ -291,21 +391,19 @@ public class MantraCommon extends Mantra {
 	}
 
 	@SideOnly(Side.CLIENT)
-	public boolean hasEffectFlags(World world, IMantraData data, ICaster caster, int mantraType) {
-		return true;
+	public boolean addCustomEffectHandle(World world, IMantraData data, ICaster caster, int mantraType) {
+		return false;
 	}
 
 	@SideOnly(Side.CLIENT)
-	public float getProgressRate(World world, IMantraData data, ICaster caster) {
+	public Effect createCustomEffectHandle(World world, IMantraData data, ICaster caster, int mantraType) {
+		return null;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public double getProgressRate(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon dataEffect = (MantraDataCommon) data;
 		return dataEffect.getProgress();
-	}
-
-	@SideOnly(Side.CLIENT)
-	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity, IMantraData mData) {
-		EffectMagicCircle emc = new EffectMagicCircleIcon(world, entity, this.getMagicCircleIcon());
-		emc.setColor(this.getColor(mData));
-		return emc;
 	}
 
 	@Override

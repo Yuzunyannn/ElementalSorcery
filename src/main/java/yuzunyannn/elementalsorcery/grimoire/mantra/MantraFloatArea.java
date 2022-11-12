@@ -20,6 +20,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
+import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 
@@ -56,10 +57,9 @@ public class MantraFloatArea extends MantraTypeSquareArea {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void addAfterEffect(SquareData data, ICaster caster, int size) {
-		super.addAfterEffect(data, caster, size);
+	protected void addSquareEffect(World world, IMantraData mData, ICaster caster, int size) {
+		super.addSquareEffect(world, mData, caster, size);
 		ICasterObject casterObj = caster.iWantDirectCaster();
-		World world = casterObj.getWorld();
 		Random rand = world.rand;
 		int times = (int) (size / 16 + 1);
 		for (int i = 0; i < times; i++) {
@@ -68,7 +68,7 @@ public class MantraFloatArea extends MantraTypeSquareArea {
 					rand.nextDouble() * size - hSize);
 			EffectElementMove effect = new EffectElementMove(world, pos);
 			effect.setVelocity(0, rand.nextDouble() * 0.5 + 0.5, 0);
-			effect.setColor(getColor(data));
+			effect.setColor(getColor(mData));
 			Effect.addEffect(effect);
 		}
 	}

@@ -22,11 +22,16 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBed;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class RenderFriend {
 
 	public static final Minecraft mc = Minecraft.getMinecraft();
+
+	static public Vec3d getPartialTicks(Vec3d n, Vec3d prevN, float partialTicks) {
+		return prevN.add(n.subtract(prevN).scale(partialTicks));
+	}
 
 	static public double getPartialTicks(double n, double prevN, float partialTicks) {
 		return prevN + (n - prevN) * partialTicks;

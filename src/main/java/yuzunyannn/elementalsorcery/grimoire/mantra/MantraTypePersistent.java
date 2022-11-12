@@ -139,6 +139,14 @@ public abstract class MantraTypePersistent extends MantraCommon {
 		for (CollectInfo info : rule.collectList) mData.add(caster.iWantSomeElement(info.eStack, true));
 	}
 
+	@Override
+	public void endSpelling(World world, IMantraData data, ICaster caster) {
+		MantraDataCommon mData = (MantraDataCommon) data;
+		CollectRule rule = this.getCurrCollectRule(world, mData, caster);
+		mData.markContinue(false);
+		for (CollectInfo info : rule.collectList) mData.remove(info.eStack.getElement());
+	}
+
 	protected void onUpdate(World world, IMantraData data, ICaster caster) {
 
 	}

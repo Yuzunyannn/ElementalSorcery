@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.mantra.IProgressable;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatch;
@@ -11,7 +12,7 @@ import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatchList;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 
 @SideOnly(Side.CLIENT)
-public class EffectScreenProgress extends EffectScreen {
+public class EffectScreenProgress extends EffectScreen implements IProgressable {
 
 	public static final TextureBinder TEXTURE = new TextureBinder("textures/gui/mantra/component.png");
 
@@ -36,12 +37,18 @@ public class EffectScreenProgress extends EffectScreen {
 		b = ((c >> 0) & 0xff) / 255f;
 	}
 
-	public void setProgress(float progress) {
+	@Override
+	public void setProgress(double progress) {
 		setProgressInTick = true;
 		preProgress = this.progress;
-		this.progress = Math.min(1, progress);
+		this.progress = (float) Math.min(1, progress);
 		if (this.progress >= 1) this.isShow = false;
 		else this.isShow = true;
+	}
+
+	@Override
+	public double getProgress() {
+		return this.progress;
 	}
 
 	@Override

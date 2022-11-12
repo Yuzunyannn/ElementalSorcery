@@ -10,8 +10,6 @@ public class MantraEffectType {
 
 	public final static int EMIT = 4;
 
-	public final static int DECORATE = 5;
-
 	public final static int MANTRA_EFFECT_1 = 100;
 	public final static int MANTRA_EFFECT_2 = 101;
 }

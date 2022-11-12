@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
-import yuzunyannn.elementalsorcery.render.effect.IBinder;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectTreatBind;
 
@@ -37,7 +37,7 @@ public class EffectTreatEntity extends Effect {
 
 	public int[] colors;
 	public float width = 0.5f;
-	public IBinder binder;
+	public IEffectBinder binder;
 
 	public EffectTreatEntity(World world, Vec3d vec) {
 		super(world, vec.x, vec.y, vec.z);
@@ -54,7 +54,7 @@ public class EffectTreatEntity extends Effect {
 	}
 
 	public EffectTreatEntity bindEntity(Entity entity) {
-		binder = new IBinder.EntityBinder(entity, entity.height / 2f * 1.25f);
+		binder = new IEffectBinder.EntityBinder(entity, entity.height / 2f * 1.25f);
 		this.setWidth(entity.width / 2f);
 		return this;
 	}

@@ -61,9 +61,8 @@ public class MantraPotent extends MantraCommon {
 			float hp = ((EntityLiving) target).getHealth();
 			if (hp < potent * 30) {
 				damage = hp;
-				if (world.isRemote)
-					FirewrokShap.createECircleDispersed(world, target.getPositionVector().add(0, target.height / 2, 0),
-							1f, 4, new int[] { getColor(null) });
+				if (world.isRemote) FirewrokShap.createECircleDispersed(world,
+						target.getPositionVector().add(0, target.height / 2, 0), 1f, 4, new int[] { getColor(null) });
 			}
 		}
 		// 超级强效攻击
@@ -91,12 +90,12 @@ public class MantraPotent extends MantraCommon {
 
 		mdc.setProgress(tick, 20 * 20 / times);
 		for (int i = 0; i < times; i++) {
-			float progress = mdc.getProgress();
+			double progress = mdc.getProgress();
 			if (progress >= 1) break;
 			CollectResult cr = mdc.tryCollect(caster, ESObjects.ELEMENTS.MAGIC, 8, 65, 3000);
 			ElementStack magic = cr.getElementStackGetted();
 			if (!magic.isEmpty() && progress > 0.2f) {
-				caster.iWantGivePotent(MathHelper.clamp(magic.getPower() / 950f, 0, 0.4f) * progress, 0.005f);
+				caster.iWantGivePotent((float) (MathHelper.clamp(magic.getPower() / 950f, 0, 0.4f) * progress), 0.005f);
 			}
 		}
 		if (world.isRemote) onSpellingEffect(world, data, caster);

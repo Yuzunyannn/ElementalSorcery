@@ -1,20 +1,18 @@
 package yuzunyannn.elementalsorcery.grimoire;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
-import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
+import yuzunyannn.elementalsorcery.api.mantra.IProgressable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectScreenProgress;
 import yuzunyannn.elementalsorcery.util.var.Variables;
 
-public class MantraDataCommon implements IMantraData {
+public class MantraDataCommon implements IMantraData, IProgressable {
 
 	// ---动态数据----
 
@@ -24,8 +22,6 @@ public class MantraDataCommon implements IMantraData {
 	protected boolean markContinue;
 	/** 当前进度数据 */
 	protected float progress = -1;
-	/** 客户端的进度条 */
-	public EffectScreenProgress effectProgress;
 
 	// ---持久数据----
 
@@ -51,30 +47,18 @@ public class MantraDataCommon implements IMantraData {
 
 	// ---进度数据----
 
-	public float getProgress() {
+	@Override
+	public double getProgress() {
 		return progress;
 	}
 
+	@Override
 	public void setProgress(double progress) {
 		this.progress = (float) Math.min(1, progress);
 	}
 
 	public void setProgress(double now, double total) {
 		this.setProgress(Math.min(now / total, 1));
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void showProgress(float pro, int color, World world, ICaster caster) {
-		if (!caster.iWantCaster().isClientPlayer()) return;
-		if (!this.effectMap.hasMark(MantraEffectType.PLAYER_PROGRESS)) {
-			effectProgress = new EffectScreenProgress(world);
-			effectProgress.setColor(color);
-			effectProgress.setCondition(MantraEffectMap.condition(caster, this));
-			getEffectMap().addAndMark(MantraEffectType.PLAYER_PROGRESS, effectProgress);
-		} else {
-			if (effectProgress == null) return;
-			effectProgress.setProgress(pro);
-		}
 	}
 
 	// ---元素收集部分----
@@ -158,7 +142,9 @@ public class MantraDataCommon implements IMantraData {
 
 	@Override
 	public NBTTagCompound serializeNBT() {
-		return extra.serializeNBT();
+		NBTTagCompound nbt = extra.serializeNBT();
+		nbt.setBoolean("_mConti", markContinue);
+		return nbt;
 	}
 
 	@Override
@@ -170,6 +156,7 @@ public class MantraDataCommon implements IMantraData {
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
 		extra.deserializeNBT(nbt);
+		markContinue = nbt.getBoolean("_mConti");
 	}
 
 }

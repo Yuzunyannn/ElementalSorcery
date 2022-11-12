@@ -1,22 +1,24 @@
 package yuzunyannn.elementalsorcery.grimoire.mantra;
 
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
+import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.entity.EntityCrafting;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
+import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper.EnumType;
-import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircle;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectMagicCircleMantra;
 import yuzunyannn.elementalsorcery.tile.altar.TileStaticMultiBlock;
 import yuzunyannn.elementalsorcery.util.TextHelper;
@@ -117,25 +119,37 @@ public class MantraLaunch extends MantraCommon {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public float getProgressRate(World world, IMantraData data, ICaster caster) {
-		int tick = Math.min(caster.iWantKnowCastTick(), spellTick);
-		return tick / (float) spellTick;
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
-	public EffectMagicCircle getEffectMagicCircle(World world, EntityLivingBase entity, IMantraData data) {
-		MantraDataCommon mData = (MantraDataCommon) data;
-		BlockPos pos = mData.get(POS);
-		EffectMagicCircleMantra emc = new EffectMagicCircleMantra(world, pos, this.getIconResource());
-		emc.setColor(this.getColor(mData));
-		return emc;
-	}
-
-	@Override
 	public EnumType getMantraSubItemType() {
 		return ItemAncientPaper.EnumType.NEW_WRITTEN;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public double getProgressRate(World world, IMantraData data, ICaster caster) {
+		int tick = Math.min(caster.iWantKnowCastTick(), spellTick);
+		return tick / (double) spellTick;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void onSpellingEffect(World world, IMantraData data, ICaster caster) {
+		addSpellingEffect(world, data, caster, MantraEffectType.PLAYER_PROGRESS);
+		addSpellingEffect(world, data, caster, MantraEffectType.MANTRA_EFFECT_1);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void initEffectCreator() {
+		super.initEffectCreator();
+		setEffectCreator(MantraEffectType.MANTRA_EFFECT_1, (world, mantra, mData, caster, effectBinder) -> {
+			MantraDataCommon dataEffect = (MantraDataCommon) mData;
+			BlockPos pos = dataEffect.get(POS);
+			EffectMagicCircleMantra effect = new EffectMagicCircleMantra(world, IEffectBinder.asBinder(pos),
+					mantra.getIconResource());
+			effect.setCondition(MantraEffectMap.condition(caster, dataEffect, CastStatus.SPELLING));
+			effect.setColor(mantra.getColor(mData));
+			return effect;
+		}, null);
 	}
 
 }

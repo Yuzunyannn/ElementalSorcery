@@ -9,7 +9,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
-import yuzunyannn.elementalsorcery.render.effect.IBinder;
+import yuzunyannn.elementalsorcery.render.effect.IEffectBinder;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementReactor;
 
 @SideOnly(Side.CLIENT)
@@ -24,10 +24,10 @@ public class EffectGoldShield extends EffectCondition {
 	public float alpha = 0;
 	public float preAlpha = alpha;
 	public float defaultScale = 1;
-	public IBinder binder;
+	public IEffectBinder binder;
 	public boolean isClientUser;
 
-	public EffectGoldShield(World world, IBinder binder) {
+	public EffectGoldShield(World world, IEffectBinder binder) {
 		super(world);
 		this.lifeTime = 1;
 		this.binder = binder;

@@ -46,6 +46,10 @@ public class MasterBinder {
 		return this.uuid == null;
 	}
 
+	public UUID getUUID() {
+		return uuid;
+	}
+
 	@Nullable
 	public EntityLivingBase getMaster() {
 		return master == null ? null : master.get();

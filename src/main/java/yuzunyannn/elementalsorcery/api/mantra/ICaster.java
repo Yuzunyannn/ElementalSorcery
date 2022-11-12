@@ -125,4 +125,15 @@ public interface ICaster {
 	@Nullable
 	public IMantraData iWantMantraData();
 
+	/**
+	 * 获取状态
+	 * 
+	 * @param flagType 描述符{@link MantraCasterFlags}
+	 * 
+	 * @return 任何内容，通常是boolean
+	 */
+	default public Object getCasterFlag(int flagType) {
+		return null;
+	}
+
 }
