@@ -8,6 +8,7 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.item.tool.ItemShockWand;
 
 public class ESObjects {
 
@@ -130,6 +131,7 @@ public class ESObjects {
 		public Item COLLAPSE;
 		public Item COLLAPSE_WAND;
 		public Item RELIC_GUARD_CORE;
+		public Item SHOCK_WAND;
 	}
 
 	static public class Blocks {

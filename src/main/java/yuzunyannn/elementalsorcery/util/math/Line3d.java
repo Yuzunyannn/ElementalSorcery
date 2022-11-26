@@ -8,6 +8,7 @@ public class Line3d {
 	/*
 	 * (x-a)/m = (y-b)/n = (z-c)/p
 	 */
+
 	public final double a, b, c;
 	public final double m, n, p;
 
@@ -39,9 +40,26 @@ public class Line3d {
 		return (this.m * other.m + this.n * other.n + this.p * other.p) / _l;
 	}
 
+	public Vec3d getRandomPointInLine(double seed) {
+		if (m == 0) {
+			if (n == 0) return new Vec3d(0, 0, seed);
+			if (p == 0) return new Vec3d(0, seed, 0);
+			return new Vec3d(0, seed, (seed - b) / n * p + c);
+		} else if (n == 0) {
+			if (m == 0) return new Vec3d(0, 0, seed);
+			if (p == 0) return new Vec3d(seed, 0, 0);
+			return new Vec3d(seed, 0, (seed - a) / m * p + c);
+		} else if (p == 0) {
+			if (m == 0) return new Vec3d(0, seed, 0);
+			if (n == 0) return new Vec3d(seed, 0, 0);
+			return new Vec3d(seed, (seed - a) / m * n + b, 0);
+		}
+		return new Vec3d(seed, (seed - a) / m * n + b, (seed - a) / m * p + c);
+	}
+
 	public double lengthOfPoionToLine(Vec3d point) {
-		Vec3d p1 = new Vec3d(1, (1 - a) * n / m + b, (1 - a) * p / m + c);
-		Vec3d p2 = new Vec3d(2, (2 - a) * n / m + b, (2 - a) * p / m + c);
+		Vec3d p1 = getRandomPointInLine(1);
+		Vec3d p2 = getRandomPointInLine(2);
 		Vec3d p01 = point.subtract(p1);
 		Vec3d p02 = point.subtract(p2);
 		return p01.crossProduct(p02).length() / p2.subtract(p1).length();

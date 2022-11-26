@@ -136,6 +136,7 @@ item.elfDiamond.name=Elf Diamond
 item.collapse.name=Collapse
 item.collapseWand.name=Collapse Wand
 item.relicGuardCore.name=Relic Guard Core
+item.shockWand.name=Shock Wand
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box

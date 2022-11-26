@@ -136,6 +136,7 @@ item.elfDiamond.name=精灵钻石
 item.collapse.name=塌陷
 item.collapseWand.name=塌陷权杖
 item.relicGuardCore.name=守卫核心
+item.shockWand.name=冲击权杖
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱

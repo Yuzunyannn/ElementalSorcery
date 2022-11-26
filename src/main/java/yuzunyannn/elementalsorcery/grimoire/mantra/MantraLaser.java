@@ -146,7 +146,7 @@ public class MantraLaser extends MantraCommon {
 		IElementLaser laser = (IElementLaser) element;
 
 		ICasterObject directObject = caster.iWantDirectCaster();
-		IWorldObject casterObject = caster.iWantCaster();
+		IWorldObject casterObject = caster.iWantRealCaster();
 		WorldTarget target = null;
 
 		if (mData.afterTarget.isOwnerless()) {

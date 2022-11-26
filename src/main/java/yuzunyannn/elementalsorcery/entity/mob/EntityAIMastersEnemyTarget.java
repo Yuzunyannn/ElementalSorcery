@@ -6,7 +6,6 @@ import java.util.List;
 import com.google.common.base.Predicate;
 
 import net.minecraft.entity.EntityCreature;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAITarget;
@@ -26,7 +25,7 @@ public class EntityAIMastersEnemyTarget<T extends EntityCreature & IHasMaster> e
 		if (e instanceof EntityCreature) {
 			if (((EntityCreature) e).getAttackTarget() != null) return true;
 		}
-		if (e instanceof EntityLiving) {
+		if (e instanceof EntityLivingBase) {
 			int time = e.ticksExisted - e.getLastAttackedEntityTime();
 			return e.getLastAttackedEntity() != null && time < 20 * 30;
 		}
@@ -39,7 +38,7 @@ public class EntityAIMastersEnemyTarget<T extends EntityCreature & IHasMaster> e
 		if (e instanceof EntityCreature) {
 			if (((EntityCreature) e).getAttackTarget() == master) return true;
 		}
-		if (e instanceof EntityLiving) {
+		if (e instanceof EntityLivingBase) {
 			if (e.getAttackingEntity() == master) return true;
 		}
 		return false;

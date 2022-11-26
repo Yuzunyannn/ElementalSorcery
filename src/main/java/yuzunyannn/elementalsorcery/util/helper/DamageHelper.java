@@ -25,17 +25,12 @@ public class DamageHelper {
 
 	/** 通用的，魔法伤害 */
 	public static DamageSource getMagicDamageSource(@Nullable Entity source, @Nullable Entity directSource) {
-		EntityDamageSource ds;
-		if (directSource == null && source == null) ds = new EntityDamageSource("magic", source);
+		DamageSource ds;
+		if (directSource == null && source == null) ds = new DamageSource("magic");
+		else if (directSource == null) ds = new EntityDamageSource("magic", source);
 		else ds = new EntityDamageSourceIndirect("indirectMagic", directSource, source);
+		if (ds instanceof EntityDamageSource) ((EntityDamageSource) ds).setIsThornsDamage();
 		return ds.setDamageBypassesArmor().setMagicDamage();
-	}
-
-	public static DamageSource getMagicButNotDamageSource(@Nullable Entity source, @Nullable Entity directSource) {
-		EntityDamageSource ds;
-		if (directSource == null && source == null) ds = new EntityDamageSource("magic", source);
-		else ds = new EntityDamageSourceIndirect("indirectMagic", directSource, source);
-		return ds.setIsThornsDamage().setDamageBypassesArmor();
 	}
 
 	public static DamageSource getDamageSource(ElementStack estack, @Nullable Entity source,

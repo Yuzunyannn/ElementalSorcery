@@ -109,6 +109,12 @@ public interface ICaster {
 	@Nonnull
 	public DamageSource iWantDamageSource(@Nonnull Element element);
 
+	/** 获取真是施法者，大部分情况下和iWantCaster一样 */
+	@Nonnull
+	default public IWorldObject iWantRealCaster() {
+		return this.iWantRealCaster();
+	}
+
 	/** 获取施法者 ，施法者在某些情况下不一定是entitylivingbase */
 	@Nonnull
 	public IWorldObject iWantCaster();

@@ -11,6 +11,7 @@ public class EEAir extends ElementExplosion {
 
 	public EEAir(World world, Vec3d position, float strength, ElementStack estack) {
 		super(world, position, strength, estack);
+		this.passExplosionBlock = true;
 	}
 
 	@Override

@@ -134,7 +134,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 
 		if (worldIn.isRemote) return;
 
-		int collect = Math.min(count, 40);
+		int collect = Math.min(count, 80);
 		float powerUp = 1 + MathHelper.clamp(count - 40, 0, 40) / 200f;
 		IElementInventory eInv = ElementHelper.getElementInventory(stack);
 		ElementStack magic = eInv.extractElement(ElementStack.magic(collect * 20, 1), false);

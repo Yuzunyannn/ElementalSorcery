@@ -1,5 +1,8 @@
 package yuzunyannn.elementalsorcery.util.math;
 
+import java.util.List;
+import java.util.function.Function;
+
 public class MathSupporter {
 
 	static public double easeInOutElastic(double x) {
@@ -14,5 +17,25 @@ public class MathSupporter {
 		double rx = x - 1;
 		double dx = rx * rx;
 		return 1 + 2.70158 * dx * rx + 1.70158 * dx;
+	}
+
+	static public <T> int binarySearch(List<T> list, Function<T, Double> checker) {
+		if (list.isEmpty()) return -1;
+		int i = 0;
+		int j = list.size() - 1;
+		while (true) {
+			int n = (i + j) / 2;
+			T obj = list.get(n);
+			double ret = checker.apply(obj);
+			if (ret == 0) return n;
+
+			if (ret > 0) {
+				i = n + 1;
+				if (i > j) return -i - 1;
+			} else {
+				j = n - 1;
+				if (i > j) return -i - 1;
+			}
+		}
 	}
 }

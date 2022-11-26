@@ -76,7 +76,8 @@ public class MantraFireArea extends MantraTypeSquareArea {
 			if (world.isRemote) addEffect(world, entity.getPositionVector().add(0, entity.height / 2, 0));
 			if (fire.getPower() > 50) {
 				float addDamage = MathHelper.sqrt((fire.getPower() - 50) / 25) * (1 + pp * 0.5f);
-				entity.attackEntityFrom(DamageSource.IN_FIRE, addDamage);
+				DamageSource ds = caster.iWantDamageSource(ESObjects.ELEMENTS.FIRE);
+				entity.attackEntityFrom(ds, addDamage);
 			}
 		}
 

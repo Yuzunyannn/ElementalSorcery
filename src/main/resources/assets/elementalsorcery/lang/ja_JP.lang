@@ -136,6 +136,7 @@ item.elfDiamond.name=精霊ダイヤモンド
 item.collapse.name=崩れ
 item.collapseWand.name=崩れ権杖
 item.relicGuardCore.name=ガードのコア
+item.shockWand.name=冲撃権杖
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱

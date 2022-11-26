@@ -89,38 +89,40 @@ public class RenderEntityRelicGuard extends RenderLiving<EntityRelicGuard> {
 			float alphaDrop = 1;
 			if (entity.hurtTime > 0) alphaDrop = (float) (Math.random());
 
-			GlStateManager.pushMatrix();
-			float activeRate = MODEL.isActive ? 1 : MODEL.activeRate;
-			float cos2 = MathHelper.cos(MODEL.activeTick * 0.04F);
-			GlStateManager.translate(0, 0.98 - 0.65 * activeRate + 0.25 / 16 * cos2, 0);
-			if (entity.getStatus() == EntityRelicGuard.STATUS_WORN) {
-				float hp = entity.getHealth();
-				if (hp < 10) {
-					float r = hp / 10;
-					GlStateManager.color(Math.min(1, r * 5), r, r);
+			if (entity.hasCore()) {
+				GlStateManager.pushMatrix();
+				float activeRate = MODEL.isActive ? 1 : MODEL.activeRate;
+				float cos2 = MathHelper.cos(MODEL.activeTick * 0.04F);
+				GlStateManager.translate(0, 0.98 - 0.65 * activeRate + 0.25 / 16 * cos2, 0);
+				if (entity.getStatus() == EntityRelicGuard.STATUS_WORN) {
+					float hp = entity.getHealth();
+					if (hp < 10) {
+						float r = hp / 10;
+						GlStateManager.color(Math.min(1, r * 5), r, r);
+					}
+					GlStateManager.translate(Effect.rand.nextGaussian() * 0.01, 0, Effect.rand.nextGaussian() * 0.01);
 				}
-				GlStateManager.translate(Effect.rand.nextGaussian() * 0.01, 0, Effect.rand.nextGaussian() * 0.01);
-			}
-			GlStateManager.rotate(ageInTicks * 5, 0, 1, 0);
-			GlStateManager.scale(-0.175, -0.175, -0.175);
-			TextureBinder.bindTexture(TEXTURE_CORE);
-			RenderTileElementReactor.MODEL_SPHERE.render();
-			if (needDrawMask) {
-				GlStateManager.doPolygonOffset(-0.01F, -10.0F);
-				GlStateManager.enablePolygonOffset();
-				RenderFriend.disableLightmap(true);
-				GlStateManager.enableBlend();
-
-				this.bindTexture(TEXTURE_CORE_MASK);
-				GlStateManager.color(color.r, color.g, color.b, MODEL.activeRate * alphaDrop);
+				GlStateManager.rotate(ageInTicks * 5, 0, 1, 0);
+				GlStateManager.scale(-0.175, -0.175, -0.175);
+				TextureBinder.bindTexture(TEXTURE_CORE);
 				RenderTileElementReactor.MODEL_SPHERE.render();
+				if (needDrawMask) {
+					GlStateManager.doPolygonOffset(-0.01F, -10.0F);
+					GlStateManager.enablePolygonOffset();
+					RenderFriend.disableLightmap(true);
+					GlStateManager.enableBlend();
 
-				GlStateManager.disableBlend();
-				RenderFriend.disableLightmap(false);
-				GlStateManager.doPolygonOffset(0.0F, 0.0F);
-				GlStateManager.disablePolygonOffset();
+					this.bindTexture(TEXTURE_CORE_MASK);
+					GlStateManager.color(color.r, color.g, color.b, MODEL.activeRate * alphaDrop);
+					RenderTileElementReactor.MODEL_SPHERE.render();
+
+					GlStateManager.disableBlend();
+					RenderFriend.disableLightmap(false);
+					GlStateManager.doPolygonOffset(0.0F, 0.0F);
+					GlStateManager.disablePolygonOffset();
+				}
+				GlStateManager.popMatrix();
 			}
-			GlStateManager.popMatrix();
 
 			if (needDrawMask) {
 				GlStateManager.doPolygonOffset(-0.01F, -10.0F);

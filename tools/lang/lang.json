@@ -676,6 +676,11 @@
 			"zh_CN": "守卫核心",
 			"en_US": "Relic Guard Core",
 			"ja_JP": "ガードのコア"
+		},
+		"item.shockWand.name": {
+			"zh_CN": "冲击权杖",
+			"en_US": "Shock Wand",
+			"ja_JP": "冲撃権杖"
 		}
 	},
 	"tile": {

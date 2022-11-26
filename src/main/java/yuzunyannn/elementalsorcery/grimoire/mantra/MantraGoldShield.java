@@ -54,7 +54,7 @@ public class MantraGoldShield extends MantraTypePersistent {
 	@Override
 	protected void onUpdate(World world, IMantraData data, ICaster caster) {
 		MantraDataCommon mData = (MantraDataCommon) data;
-		EntityLivingBase entity = caster.iWantCaster().asEntityLivingBase();
+		EntityLivingBase entity = caster.iWantRealCaster().asEntityLivingBase();
 		if (entity == null) return;
 
 		PotionEffect effct = entity.getActivePotionEffect(ESObjects.POTIONS.GOLD_SHIELD);
@@ -77,7 +77,7 @@ public class MantraGoldShield extends MantraTypePersistent {
 
 	@Override
 	public void endSpelling(World world, IMantraData data, ICaster caster) {
-		EntityLivingBase entity = caster.iWantCaster().asEntityLivingBase();
+		EntityLivingBase entity = caster.iWantRealCaster().asEntityLivingBase();
 		if (entity == null) return;
 		float r = Math.min(1, caster.iWantKnowCastTick() / 160f);
 		float potent = caster.iWantBePotent(1, true);
@@ -138,7 +138,7 @@ public class MantraGoldShield extends MantraTypePersistent {
 		}
 		if (attacker.world.isRemote) return;
 		EventServer.addWorldTask(attacker.world, (w) -> {
-			DamageSource ds = DamageHelper.getMagicButNotDamageSource(src, null);
+			DamageSource ds = DamageHelper.getMagicDamageSource(src, null);
 			ds.setDamageAllowedInCreativeMode();
 			if (attacker.attackEntityFrom(ds, (float) dmg)) {
 				Effects.spawnTypeEffect(w, attacker.getPositionVector().add(0, attacker.height / 2, 0), 2,
@@ -154,7 +154,7 @@ public class MantraGoldShield extends MantraTypePersistent {
 		if (src == null) return;
 		if (src.world.isRemote) return;
 		EventServer.addWorldTask(src.world, (w) -> {
-			DamageSource ds = DamageHelper.getMagicButNotDamageSource(src, null);
+			DamageSource ds = DamageHelper.getMagicDamageSource(src, null);
 			ds.setDamageAllowedInCreativeMode();
 			AxisAlignedBB aabb = WorldHelper.createAABB(vec, 3, 1.5, 2.5);
 			List<EntityLivingBase> entities = w.getEntitiesWithinAABB(EntityLivingBase.class, aabb, e -> {

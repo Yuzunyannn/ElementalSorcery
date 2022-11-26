@@ -133,12 +133,12 @@ public class CommandESDebug {
 				for (int i = 0; i < 3; i++) {
 					AutoMantraConfig config = new EntityAutoMantra.AutoMantraConfig();
 //					config.setMoveVec(new Vec3d(look.x, 0, look.z).normalize().scale(0.01));
-//					config.setMoveVec(Vec3d.ZERO);
+					config.setMoveVec(Vec3d.ZERO);
 //					config.blockTrack = AutoMantraConfig.BLOCKTRACK_DIRECT_REVERSE;
-					config.setTarget(entity, 0.01);
+//					config.setTarget(entity, 0.01);
 //					config.excludeUser = false;
 					EntityAutoMantra mantra = new EntityAutoMantra(entity.world, config, entity,
-							ESObjects.MANTRAS.FROZEN, null);
+							ESObjects.MANTRAS.LASER, null);
 					mantra.setPosition(entity.posX + rand.nextGaussian() * 2, entity.posY + 3,
 							entity.posZ + rand.nextGaussian() * 2);
 					mantra.setSpellingTick(20 * 3);

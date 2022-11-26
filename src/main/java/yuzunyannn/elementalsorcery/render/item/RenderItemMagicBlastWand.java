@@ -13,11 +13,14 @@ public class RenderItemMagicBlastWand implements IRenderItem {
 	public static final ModelMagicBlastWand MODEL = new ModelMagicBlastWand();
 	public static final TextureBinder TEXTURE_B = new TextureBinder("textures/items/magic_blast_wand.png");
 	public static final TextureBinder TEXTURE_C = new TextureBinder("textures/items/collapse_wand.png");
+	public static final TextureBinder TEXTURE_D = new TextureBinder("textures/items/shock_wand.png");
 
 	final TextureBinder texture;
 
-	public RenderItemMagicBlastWand(boolean iscollapse) {
-		texture = iscollapse ? TEXTURE_C : TEXTURE_B;
+	public RenderItemMagicBlastWand(int wandType) {
+		if (wandType == 1) texture = TEXTURE_C;
+		else if (wandType == 2) texture = TEXTURE_D;
+		else texture = TEXTURE_B;
 	}
 
 	@Override

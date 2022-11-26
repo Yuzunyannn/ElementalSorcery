@@ -8,6 +8,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.item.tool.ItemShockWand;
 import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectGoldShieldAttack;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleMagicFall;
@@ -29,6 +30,9 @@ public class ParticleEffects {
 			break;
 		case 2:
 			EffectGoldShieldAttack.doEffect(world, pos, nbt);
+			break;
+		case 3:
+			ItemShockWand.doEffect(world, pos, nbt);
 			break;
 		}
 	}

@@ -135,6 +135,13 @@ public class Effects {
 		Effects.spawnEffect(world, Effects.PARTICLE_EFFECT, pos, effect);
 	}
 
+	public static void spawnTypeEffect(World world, Vec3d pos, int type, Vec3d vec) {
+		NBTTagCompound effect = new NBTTagCompound();
+		NBTHelper.setVec3d(effect, "vec", vec);
+		effect.setByte("type", (byte) type);
+		Effects.spawnEffect(world, Effects.PARTICLE_EFFECT, pos, effect);
+	}
+
 	public static void spawnSummonEntity(Entity entity, int[] colors) {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setInteger("target", entity.getEntityId());

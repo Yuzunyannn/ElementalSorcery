@@ -176,6 +176,9 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
+
+		if (state != CastStatus.SPELLING) return;
+
 		if (this.spellingTick > 0) this.spellingTick--;
 
 		if (this.config.directTrack == AutoMantraConfig.DIRECTTRACK_MOVE)
@@ -184,7 +187,7 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 			if (moveScale == 0) moveScale = this.config.moveVec.length();
 			EntityLivingBase target = this.config.target.tryGetMaster(world);
 			if (target != null) {
-				Vec3d t = target.getPositionEyes(0).subtract(this.getPositionVector());
+				Vec3d t = target.getPositionVector().add(0, target.height * 0.85, 0).subtract(this.getPositionVector());
 				Vec3d dt = t.subtract(orient).scale(moveScale);
 				this.orient = this.orient.add(dt).normalize();
 			}
@@ -202,8 +205,7 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 		return this.elementInv;
 	}
 
-	@Override
-	public void iWantGivePotent(float potent, float point) {
+	public void addPotentPoint(float point) {
 		this.potentPoint = this.potentPoint + point;
 		if (this.potentPoint <= 0) {
 			this.potentPoint = 0;
@@ -212,12 +214,19 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 	}
 
 	@Override
+	public void iWantGivePotent(float potent, float point) {
+		if (this.potent == 0) potentPoint = 0;
+		this.potent = (potent * point + this.potent * potentPoint) / (point + potentPoint);
+		addPotentPoint(point);
+	}
+
+	@Override
 	public float iWantBePotent(float point, boolean justTry) {
 		float rPoint = Math.min(potentPoint, point);
 		if (potentPoint <= 0) return 0;
 		float potent = this.potent * (rPoint / point);
 		if (justTry) return potent;
-		iWantGivePotent(potent, -rPoint);
+		addPotentPoint(-rPoint);
 		return potent;
 	}
 
@@ -254,6 +263,12 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 	@Override
 	public IWorldObject iWantCaster() {
 		return this;
+	}
+
+	@Override
+	public IWorldObject iWantRealCaster() {
+		IWorldObject user = this.getUser();
+		return user == null ? this : user;
 	}
 
 	@Override
