@@ -55,12 +55,14 @@
                 {
                     "weight": 50,
                     "type": "NextQuest",
-                    "value": "elementalsorcery:laboratory_ore_survey_adv_2"
+                    "value": "elementalsorcery:laboratory_ore_survey_adv_2",
+                    "delegate" : true
                 },
                 {
                     "weight": 50,
                     "type": "NextQuest",
-                    "value": "elementalsorcery:laboratory_dragon_breath_pickaxe"
+                    "value": "elementalsorcery:laboratory_dragon_breath_pickaxe",
+                    "delegate" : true
                 }
             ]
         }

@@ -13,6 +13,7 @@ import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.QuestType;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
+import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionDelegate;
 import yuzunyannn.elementalsorcery.elf.quest.loader.ParamObtain;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
@@ -23,6 +24,8 @@ public class QuestRewardNextQuest extends QuestReward {
 
 	protected ResourceLocation nextId;
 
+	protected boolean isDelegate;
+
 	public QuestRewardNextQuest quest(ResourceLocation id) {
 		this.nextId = id;
 		return this;
@@ -31,17 +34,20 @@ public class QuestRewardNextQuest extends QuestReward {
 	@Override
 	public void initWithConfig(JsonObject json, Map<String, Object> context) {
 		String id = ParamObtain.parser(json.needString("id", "next", "value"), context).toString();
+		if (json.hasBoolean("delegate")) isDelegate = json.getBoolean("delegate");
 		quest(TextHelper.toESResourceLocation(id));
 	}
 
 	@Override
 	public void writeToNBT(NBTTagCompound nbt) {
 		nbt.setString("next", nextId.toString());
+		if (isDelegate) nbt.setBoolean("delegate", isDelegate);
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		nextId = new ResourceLocation(nbt.getString("next"));
+		isDelegate = nbt.getBoolean("delegate");
 	}
 
 	@Override
@@ -53,6 +59,8 @@ public class QuestRewardNextQuest extends QuestReward {
 		QuestType type = nextQuest.getType();
 		if (type.sustain > 0) nextQuest.setEndTime(player.world.getWorldTime() + type.sustain);
 		else nextQuest.setEndTime(player.world.getWorldTime() + 24000 + player.world.rand.nextInt(8) * 24000);
+
+		if (isDelegate) type.addPrecondition(QuestConditionDelegate.create(player));
 
 		ElfPostOffice postOffice = ElfPostOffice.getPostOffice(player.world);
 		EntityLivingBase fakeSender = new EntityElf(player.world);

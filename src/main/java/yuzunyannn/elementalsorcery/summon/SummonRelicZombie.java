@@ -26,6 +26,12 @@ public class SummonRelicZombie extends SummonCommon {
 		this.initBuilding();
 	}
 
+	public SummonRelicZombie(World world, BlockPos pos, int color) {
+		super(world, pos, color);
+		this.build = new ArrayList<>();
+		this.initBuilding();
+	}
+
 	@Override
 	public void initData() {
 		this.size = 4;
@@ -33,7 +39,7 @@ public class SummonRelicZombie extends SummonCommon {
 		this.index = 0;
 	}
 
-	private void initBuilding() {
+	protected void initBuilding() {
 		IBlockState state = Blocks.SANDSTONE.getDefaultState();
 
 		for (int x = -2; x <= 2; x++) {
@@ -97,7 +103,7 @@ public class SummonRelicZombie extends SummonCommon {
 		}
 	}
 
-	private void finish() {
+	protected void finish() {
 		if (world.isRemote) return;
 		RelicZombieType[] types = RelicZombieType.values();
 		for (int i = 0; i < types.length; i++) {

@@ -681,6 +681,11 @@
 			"zh_CN": "冲击权杖",
 			"en_US": "Shock Wand",
 			"ja_JP": "冲撃権杖"
+		},
+		"item.relicDisc.name": {
+			"zh_CN": "遗迹轮盘",
+			"en_US": "Relic Disc",
+			"ja_JP": "遺跡ディスク"
 		}
 	},
 	"tile": {
@@ -2622,6 +2627,23 @@
 			"zh_CN": "非常昂贵的钻石，除此之外没有啥其他价值，精灵们会非常喜欢它",
 			"en_US": "A very expensive diamond has no other value. Elves love it very much",
 			"ja_JP": "非常に高価なダイヤモンドで、それ以外に価値はありません。精霊たちはそれが大好きそうです"
+		},
+		"info.my.master": {
+			"zh_CN": "主人：%s",
+			"en_US": "Master: %s",
+			"ja_JP": "マスター：%s"
+		},
+		"info.relic.bind.master": {
+			"zh_CN": "设置了主人为：%s",
+			"en_US": "The master is set as: %s",
+			"ja_JP": "マスター設定：%s"
+		}
+	},
+	"info.mc": {
+		"info.mc.archi.Temple.name": {
+			"zh_CN": "沙漠神殿",
+			"en_US": "Desert Pyramid",
+			"ja_JP": "砂漠のピラミッド"
 		}
 	},
 	"lev": {
@@ -3454,6 +3476,56 @@
 			"en_US": "Survey Collect",
 			"ja_JP": "調査収集"
 		},
+		"quest.relic.research": {
+			"zh_CN": "遗迹研究",
+			"en_US": "Relic Research",
+			"ja_JP": "遺跡研究"
+		},
+		"quest.end.polite.1": {
+			"zh_CN": "如果可以帮我的话，我会给予一些报酬的。",
+			"en_US": "If you can help me, I will give you some reward.",
+			"ja_JP": "助けてくれるなら、何らかの報酬を与えます。"
+		},
+		"quest.end.polite.2": {
+			"zh_CN": "非常感谢你的帮助！",
+			"en_US": "Very Think for your Help.",
+			"ja_JP": "助けてくれてありがとうございます。"
+		},
+		"quest.end.polite.3": {
+			"zh_CN": "有了你的帮助，我们会发展的更好。",
+			"en_US": "With your help, we will develop better.",
+			"ja_JP": "あなたの助けがあって、私たちはもっと発展します。"
+		},
+		"quest.next.polite.1": {
+			"zh_CN": "上一个委托你完成的很好，如果可以的话，也请接下这个委托吧：",
+			"en_US": "You have done a good job in the last Quest. If you can, please accept this Quest:",
+			"ja_JP": "前の依頼はよくできました。できれば、この依頼を受けてください："
+		},
+		"quest.next.polite.2": {
+			"zh_CN": "非常感谢你之前的帮助，有空的话，可以看下这个委托吗：",
+			"en_US": "Thank you very much for your help. If you are free, can you take a look at this Quest:",
+			"ja_JP": "前の助けに感謝します。暇があれば、この依頼を見てもいいですか："
+		},
+		"quest.explore.1": {
+			"zh_CN": "%s地区的数据",
+			"en_US": "data of %s Biome",
+			"ja_JP": "%s地区のデータ"
+		},
+		"quest.explore.2": {
+			"zh_CN": "%s地区里%s的数据",
+			"en_US": "data of in %s Biome %s",
+			"ja_JP": "%s地区で%sのデータ"
+		},
+		"quest.explore.3": {
+			"zh_CN": "%s地区里%s中「%s」的数据",
+			"en_US": "data of in %s Biome %s's　「%s」",
+			"ja_JP": "%s地区で%s中「%s」のデータ"
+		},
+		"quest.explore.4": {
+			"zh_CN": "%s中「%s」的数据",
+			"en_US": "data of %s's 「%s」",
+			"ja_JP": "%s中「%s」のデータ"
+		},
 		"quest.broken.house": {
 			"zh_CN": "我门的房子坏了，需要$0，来进行修理，",
 			"en_US": "My house is broken, $0 is needed to repair,  ",
@@ -3524,50 +3596,20 @@
 			"en_US": "The laboratory found that the Scarlet Crystal Ore contains very important minerals. Can bring us $0 of raw ore?",
 			"ja_JP": "研究室は、緋色の水晶鉱には重要な材料が含まれていることを発見し、$0の原鉱をもたらすことができますか?"
 		},
-		"quest.end.polite.1": {
-			"zh_CN": "如果可以帮我的话，我会给予一些报酬的。",
-			"en_US": "If you can help me, I will give you some reward.",
-			"ja_JP": "助けてくれるなら、何らかの報酬を与えます。"
+		"quest.relic.research.1": {
+			"zh_CN": "研究室开展专项遗迹研究，需要包含$0的自然水晶，作为报酬我们会给你遗迹的信物。这个信物可以召唤出特殊的僵尸，消灭它后掉落的稀有材料可能会对你有所帮助。",
+			"en_US": "The Laboratory needs Natural Crystal containing $0 to carry out special relic research. As a reward, we will give you the Relic Keepsake that can summon special zombies. Rare materials dropped when kill them, may help you.",
+			"ja_JP": "研究室は特定の遺跡の研究を展開して、$0を含む自然水晶が必要です、報酬として遺跡のキープセイクをあげます。このキープセイクは特殊なゾンビを召喚することができ、退治したら落ちた珍しい材料があなたの役に立つかもしれません。"
 		},
-		"quest.end.polite.2": {
-			"zh_CN": "非常感谢你的帮助！",
-			"en_US": "Very Think for your Help.",
-			"ja_JP": "助けてくれてありがとうございます。"
+		"quest.relic.research.2": {
+			"zh_CN": "非常感谢你之前的协助。目前，我们想拿到僵尸的核心$0进行继续的研究，但是它们太强了，如果条件允许的话，希望你能接受讨伐它们的委托，并带回来它们的核心。",
+			"en_US": "Thank you very much for your previous help. At present, we want to get the core named $0 of those zombies for further research, but they are too strong. If conditions permit, please accept this Quest to defeat them and bring back their core.",
+			"ja_JP": "あなたのこれまでの協力に感謝します。今のところ、ゾンビの$0と呼ばれるコアを手に入れて研究を続けたいと思っていますが、それらは強すぎて。もし条件が許すならば、それらを討伐する依頼を受けて、コアを持ち帰ってことをお願いします。"
 		},
-		"quest.end.polite.3": {
-			"zh_CN": "有了你的帮助，我们会发展的更好。",
-			"en_US": "With your help, we will develop better.",
-			"ja_JP": "あなたの助けがあって、私たちはもっと発展します。"
-		},
-		"quest.next.polite.1": {
-			"zh_CN": "上一个委托你完成的很好，如果可以的话，也请接下这个委托吧：",
-			"en_US": "You have done a good job in the last Quest. If you can, please accept this Quest:",
-			"ja_JP": "前の依頼はよくできました。できれば、この依頼を受けてください："
-		},
-		"quest.next.polite.2": {
-			"zh_CN": "非常感谢你之前的帮助，有空的话，可以看下这个委托吗：",
-			"en_US": "Thank you very much for your help. If you are free, can you take a look at this Quest:",
-			"ja_JP": "前の助けに感謝します。暇があれば、この依頼を見てもいいですか："
-		},
-		"quest.explore.1": {
-			"zh_CN": "%s地区的数据",
-			"en_US": "data of %s Biome",
-			"ja_JP": "%s地区のデータ"
-		},
-		"quest.explore.2": {
-			"zh_CN": "%s地区里%s的数据",
-			"en_US": "data of in %s Biome %s",
-			"ja_JP": "%s地区で%sのデータ"
-		},
-		"quest.explore.3": {
-			"zh_CN": "%s地区里%s中「%s」的数据",
-			"en_US": "data of in %s Biome %s's　「%s」",
-			"ja_JP": "%s地区で%s中「%s」のデータ"
-		},
-		"quest.explore.4": {
-			"zh_CN": "%s中「%s」的数据",
-			"en_US": "data of %s's 「%s」",
-			"ja_JP": "%s中「%s」のデータ"
+		"quest.relic.research.3": {
+			"zh_CN": "研究发现通过遗迹宝石可以更深一层的召唤出某种东西，似乎是一种守卫？我们并没有这种守卫的文献。这种守卫十分强大，能够熟练的使用多种魔法。不过好在它只会攻击有攻击意图的生物。它的核心$0能让我们的研究更近一步，所以请求你的帮助。",
+			"en_US": "Research has found that something can be summoned deeper through the Relic Gem. It seems to be a guard? We have no literature on such guard. This kind of guard is very powerful and can use a variety of magic. Fortunately, it will only attack creatures with intent to attack. It's core named $0 can bring our research a step closer, so we ask for your help.",
+			"ja_JP": "研究によると、遺跡宝石を通じてより深くの何かを召喚することができることが発見された。ガードのようなものだろうか。私たちにはこのようなガードの文献はありません。このガードは非常に強力で、多くの魔法を使いことができます。幸いにも攻撃意図のある生物しか攻撃しない。その$0と呼ばれるコアは研究をより一歩近づけることができるので、あなたの助けをお願いします。"
 		}
 	},
 	"es.adv": {
@@ -4478,6 +4520,16 @@
 			"en_US": "Use Yellow Wool as Keepsake can summon Arrogant Maze(Away from the summon point, the maze will begin to be built).\\nThe maze is composed of special gold bricks that can hardly be destroyed, It is divided into two layers, Arrogant Sheep is on the second floor.\\nTo defeat it, scissor and Scarlet Crystal is necessary.\\nThe Arrogant Wool obtained from it is a very valuable material, and put it on Element Platform can produce Gold Ingot, however, every time a Gold Ingot is produced, the wool may disappear.",
 			"ja_JP": "使用黄色羊毛作为信物，再加上大量的灵魂可以召唤出傲慢绵羊的迷宫（远离召唤点巨大的迷宫便会开始建造）。\\n迷宫的由几乎无法被破坏的特殊金砖构成，一共分为两层，傲慢的绵羊便位于第二层。\\n要战胜它，剪刀和绯红水晶是不可缺少的东西。\\n从它身上获取到的傲慢的羊毛是一种十分贵重的材料，不仅如此，将它放到「元素平台」上会产生金锭，不过每产生一个金锭羊毛都有可能会消失。"
 		},
+		"page.relicGuardReport": {
+			"zh_CN": "守卫研究报告",
+			"en_US": "Guard Research Report",
+			"ja_JP": "ガード研究報告"
+		},
+		"page.relicGuardReport.ct": {
+			"zh_CN": "遗迹守卫似乎是过去制造的一种兵器，目的未知，每次释放技能都会消耗HP，当HP低于一定程度会成为损坏态，核心会变得十分不稳定，并发生爆炸，此时可以同通过冲击权杖将核心取出来，其核心决定着遗迹守卫的元素类型，并且可以登陆核心主人。\\n至此精灵工匠分析核心制作出了遗迹轮盘，可以修复损坏的损坏态的遗迹守卫，可以标定为核心标定核心主人(拿着核心和轮盘右键)。",
+			"en_US": "It seems that the Relic Guard is a weapon made in ancient. The purpose is unknown. Each time it spell a skill, HP will be consumed. When HP is lower than a certain level, it will become damaged, and the core will become very unstable and explode. At this time, the core can be taken out through the Shock Wand. The Core determines the element type of the Relic Guard and creature can login as master in The Core.\\nSo, the Elf craftsman has analyzed the core and made the Relic Wheel, which can repair the damaged Relic Guard, and can login in The Core ( hold core and wheel, right click).",
+			"ja_JP": "遗迹守卫似乎是过去制造的一种兵器，目的未知，每次释放技能都会消耗HP，当HP低于一定程度会成为损坏态，核心会变得十分不稳定，并发生爆炸，此时可以同通过冲击权杖将核心取出来，其核心决定着遗迹守卫的元素类型，并且可以登陆核心主人。\\n至此精灵工匠分析核心制作出了遗迹轮盘，可以修复损坏的损坏态的遗迹守卫，可以标定为核心标定核心主人(拿着核心和轮盘右键)。"
+		},
 		"page.crafting.need": {
 			"zh_CN": "需要元素参与合成：",
 			"en_US": "Elements are required to craft: ",
@@ -4520,7 +4572,7 @@
 		},
 		"page.stela": {
 			"zh_CN": "知识映像(弃用)",
-			"en_US": "知识映像(弃用)",
+			"en_US": "知识映像(Abandon)",
 			"ja_JP": "知識映像(弃用)"
 		},
 		"page.stela.ct": {
@@ -4655,7 +4707,7 @@
 		},
 		"page.kyanite.ct": {
 			"zh_CN": "蓝晶石是生成在地下的一种带有魔力的矿物，19层以下可能更容易找到它。\\n蓝晶石矿可以经过烧制形成蓝晶石。\\n在烧制蓝晶石矿的时候，通过“末影之眼”的辅助，可以将存在于蓝晶石矿物中的魔力碎片取出。\\n蓝晶石可以制作工具，与铁的挖掘等级相同，不过有更好的耐久性。\\n使用该物品可以做1级仪了",
-			"en_US": "Kyanite is a kind of magic mineral that steve can find it's ore under y 19.\\nBurning kyanite ore whit Extra Item Eye of Ender can take out Magic Fragment from it.\\nKyanite can be used to make tools, which is the same harvestLevel as iron's, but has better durability.\\nLv1 Ritual Table can be crafted with this item.",
+			"en_US": "Kyanite is a kind of magic mineral that steve can find it's ore under y 19.\\nBurning kyanite ore whit Extra Item Eye of Ender can take out Magic Fragment from it.\\nKyanite can be used to make tools, which is the same harvestLevel as iron's, but has better durability.\\n[Lv1 Ritual Table can be crafted with this item.]",
 			"ja_JP": "蓝晶石是生成在地下的一种带有魔力的矿物，19层以下可能更容易找到它。\\n蓝晶石矿可以经过烧制形成蓝晶石。\\n在烧制蓝晶石矿的时候，通过“末影之眼”的辅助，可以将存在于蓝晶石矿物中的魔力碎片取出。\\n蓝晶石可以制作工具，与铁的挖掘等级相同，不过有更好的耐久性。\\n使用该物品可以做1级仪了"
 		},
 		"page.mgicalPiece": {
@@ -4724,9 +4776,9 @@
 			"ja_JP": "熔岩锅"
 		},
 		"page.meltCauldron.ct": {
-			"zh_CN": "熔岩锅，借助灶台，可以将原始等材料等熔炼成其他物品。\\n不过，熔岩锅只能使用一次，一旦灶台起火加入材料，在本次熔炼结束后，该锅就无法再次使用了。带熔浆冷却后，将锅打碎，取出熔炼后的物品。\\n加热温度升高，到一定温度后，需要先加入魔石融化成溶剂，才能开始熔化其他材料\\n材料必须按照比率放，偏离比例会提升标准差。",
-			"en_US": "Heating Melt Cauldron through The Hearth, raw materials can be melted into other items.\\nHowever, the Melt Cauldron can only be used once. Once the Melt Cauldron fires and materials are added, the Melt Cauldron cannot be used again after this smelting. After the Melt Cauldron is cooled, break it and items drop.\\nWhen the temperature rises to a certain, the Dimensity needs to be added to melt into a solvent before add other materials.\\nMaterials must be placed according to the ratio, and deviation from the ratio will increase the standard deviation.",
-			"ja_JP": "熔岩锅、借助灶台、可以将原始等材料等熔炼成其他物品。\\n不过、熔岩锅只能使用一次、一旦灶台起火加入材料、在本次熔炼结束后、该锅就无法再次使用了。带熔浆冷却后、将锅打碎、取出熔炼后的物品。\\n加热温度升高、到一定温度后，需要先加入魔石融化成溶剂，才能开始熔化其他材料\\n材料必须按照比率放，偏离比例会提升标准差。"
+			"zh_CN": "熔岩锅，借助灶台，可以将原始等材料等熔炼成其他物品。\\n不过，熔岩锅只能使用一次，一旦灶台起火加入材料，在本次熔炼结束后，该锅就无法再次使用了。带熔浆冷却后，将锅打碎，取出熔炼后的物品。\\n加热温度升高，到一定温度后，需要先扔入魔石融化成溶剂，才能开始熔化其他材料\\n材料必须按照比率放，偏离比例会提升标准差。",
+			"en_US": "Heating Melt Cauldron through The Hearth, raw materials can be melted into other items.\\nHowever, the Melt Cauldron can only be used once. Once the Melt Cauldron fires and materials are added, the Melt Cauldron cannot be used again after this smelting. After the Melt Cauldron is cooled, break it and items drop.\\nWhen the temperature rises to a certain, the Dimensity needs to be thrown in to melt into a solvent before add other materials.\\nMaterials must be placed according to the ratio, and deviation from the ratio will increase the standard deviation.",
+			"ja_JP": "熔岩锅、借助灶台、可以将原始等材料等熔炼成其他物品。\\n不过、熔岩锅只能使用一次、一旦灶台起火加入材料、在本次熔炼结束后、该锅就无法再次使用了。带熔浆冷却后、将锅打碎、取出熔炼后的物品。\\n加热温度升高、到一定温度后，需要先扔入魔石融化成溶剂，才能开始熔化其他材料\\n材料必须按照比率放，偏离比例会提升标准差。"
 		},
 		"page.magicalEndereye": {
 			"zh_CN": "带魔力的末影之眼",
@@ -4754,63 +4806,63 @@
 			"ja_JP": "古卷"
 		},
 		"page.ancientPaper.ct": {
-			"zh_CN": "古代的文献，在上面记载着许多的内容，但通常是无法直接看懂的，需要进行解读。一手拿着羽毛笔，一手拿着古卷，右键点击即可开始进行解读。\\n如果解读疲倦的话，过半天之后在进行解读吧，随着解读次数的增多，越不容易疲倦。\\n如果你疲倦了，吃一点苹果糖来消除疲劳。\\n此外，在解读过程中，可能还会增加某些点数，在将来可以用到。",
-			"en_US": "古代的文献，在上面记载着许多的内容，但通常是无法直接看懂的，需要进行解读。一手拿着羽毛笔，一手拿着古卷，右键点击即可开始进行解读。\\n如果解读疲倦的话，过半天之后在进行解读吧，随着解读次数的增多，越不容易疲倦。\\n如果你疲倦了，吃一点苹果糖来消除疲劳。\\n此外，在解读过程中，可能还会增加某些点数，在将来可以用到。",
-			"ja_JP": "古代的文献，在上面记载着许多的内容，但通常是无法直接看懂的，需要进行解读。一手拿着羽毛笔，一手拿着古卷，右键点击即可开始进行解读。\\n如果解读疲倦的话，过半天之后在进行解读吧，随着解读次数的增多，越不容易疲倦。\\n如果你疲倦了，吃一点苹果糖来消除疲劳。\\n此外，在解读过程中，可能还会增加某些点数，在将来可以用到。"
+			"zh_CN": "古代的文献，在上面记载着许多的内容，但通常是无法直接看懂的，需要进行解读。一手拿着羽毛笔，一手拿着古卷，右键点击即可开始进行解读。\\n如果解读疲倦的话，过半天之后在进行解读吧，随着解读次数的增多，越不容易疲倦。\\n如果你疲倦了，吃一点苹果糖来消除疲劳。",
+			"en_US": "Ancient Paper, on which many things are recorded, can unscramble it to understand. With a Quill in one hand and an Ancient Paper in the other, right click to start unscramble.\\nIf you feel tried, let's unscramble after a while or eat some Apple Candy. The more unscrambling you do, the less tired you will get.",
+			"ja_JP": "古代的文献，在上面记载着许多的内容，但通常是无法直接看懂的，需要进行解读。一手拿着羽毛笔，一手拿着古卷，右键点击即可开始进行解读。\\n如果解读疲倦的话，过半天之后在进行解读吧，随着解读次数的增多，越不容易疲倦。\\n如果你疲倦了，吃一点苹果糖来消除疲劳。"
 		},
 		"page.scarletCrystal": {
 			"zh_CN": "绯红水晶",
-			"en_US": "绯红水晶",
+			"en_US": "Scarlet Crystal",
 			"ja_JP": "绯红水晶"
 		},
 		"page.scarletCrystal.ct": {
 			"zh_CN": "一种奇异的红色水晶，在地下的岩浆之下，可能会发现绯红水晶矿的身影。\\n所有水晶拥有频率这一属性，绯红水晶也不例外，但是它是少数频率可以变化的水晶。\\n绯红水晶遇水会产生变化，碎裂并分解成魔石与碎片。",
-			"en_US": "一种奇异的红色水晶，在地下的岩浆之下，可能会发现绯红水晶矿的身影。\\n所有水晶拥有频率这一属性，绯红水晶也不例外，但是它是少数频率可以变化的水晶。\\n绯红水晶遇水会产生变化，碎裂并分解成魔石与碎片。",
+			"en_US": "A strange red crystal may be found under the underground magma.\\nAll kind of crystals have the attribute of frequency, and The Scarlet Crystal is no exception, but it is one of the few kind which frequency can be changed.\\nThe Scarlet Crystal will decompose to Dimensity and Magic Fragment when it wet.",
 			"ja_JP": "一种奇异的红色水晶，在地下的岩浆之下，可能会发现绯红水晶矿的身影。\\n所有水晶拥有频率这一属性，绯红水晶也不例外，但是它是少数频率可以变化的水晶。\\n绯红水晶遇水会产生变化，碎裂并分解成魔石与碎片。"
 		},
 		"page.bell": {
 			"zh_CN": "叮铃铃",
-			"en_US": "叮铃铃",
+			"en_US": "Ring Ring",
 			"ja_JP": "叮铃铃"
 		},
 		"page.bell.ct": {
 			"zh_CN": "用金制作出一个铃铛，摇一摇，叮铃铃~吸引周围的动物，同时也会吸引怪物的攻击。",
-			"en_US": "用金制作出一个铃铛，摇一摇，叮铃铃~吸引周围的动物，同时也会吸引怪物的攻击。",
+			"en_US": "A bell made with Gold. Ring Ring~ Attract the surrounding animals, and also attract monster's attack.",
 			"ja_JP": "用金制作出一个铃铛，摇一摇，叮铃铃~吸引周围的动物，同时也会吸引怪物的攻击。"
 		},
 		"page.starBell": {
 			"zh_CN": "星之铃",
-			"en_US": "星之铃",
+			"en_US": "Star Bell",
 			"ja_JP": "星之铃"
 		},
 		"page.starBell.ct": {
 			"zh_CN": "手持铃铛，向星之花许愿，星之花会将星元素与铃铛共鸣，形成蓝白色的星之铃。\\n星之铃在摇动的时候，会因周围的环境发出不同特性的声音。\\n脚下有岩浆会发出清脆的声音、周围有高价值方块会发出悠长的声音、周围具有精灵力或者是史莱姆区块会发出深沉的声音。",
-			"en_US": "手持铃铛，向星之花许愿，星之花会将星元素与铃铛共鸣，形成蓝白色的星之铃。\\n星之铃在摇动的时候，会因周围的环境发出不同特性的声音。\\n脚下有岩浆会发出清脆的声音、周围有高价值方块会发出悠长的声音、周围具有精灵力或者是史莱姆区块会发出深沉的声音。",
+			"en_US": "Hold a bell and make a wish to the Star flower. Resonating the Element of Star with bell to form a light blue Star Bell。\\nShaking the Star Bell, it will make different sounds according to the surrounding.\\nA Crisp sound when lava under your feet, a Long sound when high value Block around you, a Deep sound when you are in Slim Chunk or Elf Power Chunk.",
 			"ja_JP": "手持铃铛，向星之花许愿，星之花会将星元素与铃铛共鸣，形成蓝白色的星之铃。\\n星之铃在摇动的时候，会因周围的环境发出不同特性的声音。\\n脚下有岩浆会发出清脆的声音、周围有高价值方块会发出悠长的声音、周围具有精灵力或者是史莱姆区块会发出深沉的声音。"
 		},
 		"page.astone": {
 			"zh_CN": "通魔石",
-			"en_US": "通魔石",
+			"en_US": "The Stone with Magic",
 			"ja_JP": "通魔石"
 		},
 		"page.astone.ct.fir": {
-			"zh_CN": "由蓝晶石、石头、魔石等混合而成的石头，具有非常好的魔力适应性，可以制作各种魔法装置，乃至祭坛。\\n[使用该物品可以做2级仪了]",
-			"en_US": "由蓝晶石、石头、魔石等混合而成的石头，具有非常好的魔力适应性，可以制作各种魔法装置，乃至祭坛。\\n[使用该物品可以做2级仪了]",
+			"zh_CN": "由蓝晶石、石头、魔石混合而成的石头，具有非常好的魔力适应性，可以制作各种魔法装置，乃至祭坛。\\n[使用该物品可以做2级仪了]",
+			"en_US": "A stone made of kyanite, stone and Dimensity, is good magic material for crafting various magic devices, even altars.\\n[Lv2 Ritual Table can be crafted with this item.]",
 			"ja_JP": "由カイヤナイト、石头、魔石等混合而成的石头、具有非常好的魔力适应性、可以制作各种魔法装置、乃至祭壇。\\n[使用该物品可以做2级仪了]"
 		},
 		"page.astone.ct.sec": {
 			"zh_CN": "将魔石，石头，蓝晶石以1:8:4的比例放入熔岩锅中，熔化，冷却即可获得通魔石。比例请注意，不合适的话，很有可能出现不期望的结果。\\n熔岩锅加满后，物品就不能再加入了。",
-			"en_US": "将魔石，石头，蓝晶石以1:8:4的比例放入熔岩锅中，熔化，冷却即可获得通魔石。比例请注意，不合适的话，很有可能出现不期望的结果。\\n熔岩锅加满后，物品就不能再加入了。",
+			"en_US": "Throw the Dimensity, stone and kyanite into the Melt Cauldron in a ratio of 1:8:4. Melting and cooling to obtain the The Stone with Magic. Please pay attention to the ratio. If it is not appropriate, unexpected results may occur.\\nWhen the Melt Cauldron is full, items can no longer be added.",
 			"ja_JP": "将魔石、石头、カイヤナイト以1:8:4的比例放入熔岩锅中、熔化、冷却即可获得通魔石。比例请注意、不合适的话、很有可能出现不期望的结果。\\n熔岩锅加满后、物品就不能再加入了。"
 		},
 		"page.astone.ct.thi": {
-			"zh_CN": "蓝晶石为抗火材料，再者灶台的温度也并不很高，因此在熔化之前，先放入魔石，形成魔石溶液，使其他石头在魔石溶液中熔解。\\n另外需要使用高级的灶台加热，不然温度很有可能无法达到预期。",
-			"en_US": "蓝晶石为抗火材料，再者灶台的温度也并不很高，因此在熔化之前，先放入魔石，形成魔石溶液，使其他石头在魔石溶液中熔解。\\n另外需要使用高级的灶台加热，不然温度很有可能无法达到预期。",
-			"ja_JP": "カイヤナイト为抗火材料、再者灶台的温度也并不很高、因此在熔化之前、先放入魔石、形成魔石溶液、使其他石头在魔石溶液中熔解。\\n另外需要使用高级的灶台加热、不然温度很有可能无法达到预期。"
+			"zh_CN": "先投入魔石，形成魔石溶液，使其他石头在魔石溶液中熔解。\\n另外需要使用高级的灶台加热，不然温度很有可能无法达到预期。",
+			"en_US": "First, throw in the Dimensity to form a magic solution, so that other materials can be melted in the magic solution.\\nIn addition, it is necessary to use an advanced Hearth for heating, otherwise the temperature may not meet the expectations.",
+			"ja_JP": "先投入魔石、形成魔石溶液、使其他石头在魔石溶液中熔解。\\n另外需要使用高级的灶台加热、不然温度很有可能无法达到预期。"
 		},
 		"page.astoneCrafting": {
 			"zh_CN": "更多通魔石",
-			"en_US": "更多通魔石",
+			"en_US": "More The Stone with Magic",
 			"ja_JP": "更多通魔石"
 		},
 		"page.astoneCrafting.ct": {
@@ -5180,7 +5232,7 @@
 		},
 		"page.magicBlastWand": {
 			"zh_CN": "魔爆权杖",
-			"en_US": "魔爆权杖",
+			"en_US": "Magic Blast Wand",
 			"ja_JP": "魔爆权杖"
 		},
 		"page.magicBlastWand.ct": {
@@ -5367,6 +5419,16 @@
 			"zh_CN": "一个用魔力构造的花园，可以种植各种作物乃至水晶。一个花园里最核心的就是借助星之种制作而成的「生命之花」，生命之花会为周围土地生长提供能量。",
 			"en_US": "一个用魔力构造的花园，可以种植各种作物乃至水晶。一个花园里最核心的就是「生命之花」，生命之花会为周围土地生长提供能量。",
 			"ja_JP": "一个用魔力构造的花园、可以种植各种作物乃至水晶。一个花园里最核心的就是「生命之花」、生命之花会为周围土地生长提供パワー。"
+		},
+		"page.shockWand": {
+			"zh_CN": "冲击魔法",
+			"en_US": "Shock Magic",
+			"ja_JP": "冲击魔法"
+		},
+		"page.shockWand.ct": {
+			"zh_CN": "通过魔爆权杖升级到的冲击权杖，可以借助周围的气，冲击并推动生物(无伤害)或方块，因此不会任何的消耗。\\n冲击还可以将一些不稳定的结构取出，或许这在将来会有用。",
+			"en_US": "The Shock Wand upgraded from the Magic Blast Wand can use surrounding Air to impact and push creature (no damage) or block , so it will not consume anything. Shock can also remove some unstable things, which may be useful in the future.",
+			"ja_JP": "通过魔爆权杖升级到的冲击权杖，可以借助周围的气，冲击并推动生物或方块（无伤害），因此不会任何的消耗。"
 		},
 		"page.fairyCube": {
 			"zh_CN": "精灵立方体",

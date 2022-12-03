@@ -40,7 +40,8 @@
         {
             "chance": 0.75,
             "type": "NextQuest",
-            "value": "elementalsorcery:newbie_rock_camera"
+            "value": "elementalsorcery:newbie_rock_camera",
+            "delegate" : true
         }
     ]
 }

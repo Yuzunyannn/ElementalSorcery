@@ -1,0 +1,60 @@
+{
+    "name": "relic",
+    "site": "elementalsorcery:laboratory",
+    "title": "quest.relic.research",
+    "describe": [
+        "quest.relic.research.1"
+    ],
+    "condition": [
+        {
+            "type": "NeedExplore",
+            "structure": "Temple",
+            "block": "minecraft:sandstone"
+        }
+    ],
+    "precondition": [
+        {
+            "type": "NeedFame",
+            "value": 30
+        }
+    ],
+    "reward": [
+        {
+            "type": "Coin",
+            "value": "{prandom#75~100}"
+        },
+        {
+            "type": "Exp",
+            "value": "{random#100~150}"
+        },
+        {
+            "type": "Fame",
+            "value": 1
+        },
+        {
+            "type": "ItemParcel",
+            "value": {
+                "item": "elementalsorcery:keepsake",
+                "count": "{random#2~4}",
+                "data": 0
+            }
+        },
+        {
+            "type": "Topic",
+            "chance": 0.25,
+            "value": "{random#1~1}",
+            "topic": "Engine"
+        },
+        {
+            "type": "Topic",
+            "chance": 0.5,
+            "value": "{random#1~1}",
+            "topic": "Struct"
+        },
+        {
+            "chance": 0.75,
+            "type": "NextQuest",
+            "value": "elementalsorcery:laboratory_relic_2"
+        }
+    ]
+}

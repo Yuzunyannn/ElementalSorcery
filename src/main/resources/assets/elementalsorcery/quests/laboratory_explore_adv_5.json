@@ -60,9 +60,8 @@
             "type": "ItemParcel",
             "value": [
                 {
-                    "item": "elementalsorcery:keepsake",
-                    "count": "{random#1~4}",
-                    "data": 0
+                    "item": "minecraft:diamond",
+                    "count": "{random#1~4}"
                 },
                 {
                     "item": "elementalsorcery:magic_gold",
@@ -88,12 +87,14 @@
                 {
                     "weight": 60,
                     "type": "NextQuest",
-                    "value": "elementalsorcery:laboratory_explore_adv_6"
+                    "value": "elementalsorcery:laboratory_explore_adv_6",
+                    "delegate" : true
                 },
                 {
                     "weight": 40,
                     "type": "NextQuest",
-                    "value": "elementalsorcery:laboratory_explore_adv_5"
+                    "value": "elementalsorcery:laboratory_explore_adv_5",
+                    "delegate" : true
                 }
             ]
         }

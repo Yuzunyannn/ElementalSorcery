@@ -95,12 +95,14 @@
                 {
                     "weight": 75,
                     "type": "NextQuest",
-                    "value": "elementalsorcery:laboratory_explore_adv_2"
+                    "value": "elementalsorcery:laboratory_explore_adv_2",
+                    "delegate" : true
                 },
                 {
                     "weight": 25,
                     "type": "NextQuest",
-                    "value": "elementalsorcery:laboratory_explore_adv_1"
+                    "value": "elementalsorcery:laboratory_explore_adv_1",
+                    "delegate" : true
                 }
             ]
         }

@@ -11,9 +11,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.loader.ParamObtain;
+import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardExp;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class QuestConditionDelegate extends QuestCondition {
+
+	public static QuestConditionDelegate create(EntityLivingBase player) {
+		return REGISTRY.newInstance(QuestConditionDelegate.class).delegate(player);
+	}
 
 	protected String name = "";
 

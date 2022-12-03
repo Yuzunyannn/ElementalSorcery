@@ -1,0 +1,11 @@
+{
+    "lev": 4,
+    "need": [
+        "element/element_workbench",
+        "elf/rabid_rabbit"
+    ],
+    "linked": "elementalsorcery:shock_wand",
+    "type": "craft",
+    "name": "shockWand",
+    "item": "elementalsorcery:shock_wand"
+}

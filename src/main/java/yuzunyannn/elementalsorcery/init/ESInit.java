@@ -272,6 +272,7 @@ import yuzunyannn.elementalsorcery.item.tool.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicGoldTools;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.item.tool.ItemRedHandset;
+import yuzunyannn.elementalsorcery.item.tool.ItemRelicDisc;
 import yuzunyannn.elementalsorcery.item.tool.ItemRockCamera;
 import yuzunyannn.elementalsorcery.item.tool.ItemShockWand;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulKillerSword;
@@ -645,6 +646,7 @@ public class ESInit {
 		ESObjects.ITEMS.COLLAPSE_WAND = new ItemCollapseWand();
 		ESObjects.ITEMS.RELIC_GUARD_CORE = new ItemRelicGuardCore();
 		ESObjects.ITEMS.SHOCK_WAND = new ItemShockWand();
+		ESObjects.ITEMS.RELIC_DISC = new ItemRelicDisc();
 
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1148,6 +1150,7 @@ public class ESInit {
 		registerRender(ITEMS.COLLAPSE_WAND, new RenderItemMagicBlastWand(1));
 		registerRender(ITEMS.RELIC_GUARD_CORE, new RenderItemGuardCore());
 		registerRender(ITEMS.SHOCK_WAND, new RenderItemMagicBlastWand(2));
+		registerRender(ITEMS.RELIC_DISC);
 
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");

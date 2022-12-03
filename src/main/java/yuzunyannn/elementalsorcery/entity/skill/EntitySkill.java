@@ -16,6 +16,7 @@ public class EntitySkill {
 	protected World world;
 	protected Entity entity;
 	protected int nextUseTick;
+	protected int lastUseTick;
 	protected int tick;
 	protected int cd;
 	protected int priority;
@@ -65,7 +66,8 @@ public class EntitySkill {
 	}
 
 	public void onUse() {
-		this.nextUseTick = tick + this.cd;
+		this.lastUseTick = tick;
+		this.nextUseTick = tick + cd;
 	}
 
 	public int doSkill() {

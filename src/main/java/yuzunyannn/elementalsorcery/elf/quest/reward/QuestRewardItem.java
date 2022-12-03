@@ -13,7 +13,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
+import yuzunyannn.elementalsorcery.parchment.Page;
+import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
@@ -61,9 +64,18 @@ public class QuestRewardItem extends QuestReward {
 			int count = stack.getCount();
 			String c = Integer.toString(count);
 			builder.append(I18n.format("quest.unit", c));
-			builder.append(stack.getDisplayName());
+			builder.append(getDetailDisplayName(stack));
 			if (i < size - 1) builder.append("、");
 		}
 		return builder.toString();
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static String getDetailDisplayName(ItemStack stack) {
+		if (stack.getItem() == ESObjects.ITEMS.PARCHMENT && Pages.isVaild(stack)) {
+			Page page = Pages.getPage(stack);
+			if (I18n.hasKey(page.getName())) return I18n.format(page.getName());
+		}
+		return stack.getDisplayName();
 	}
 }

@@ -16,6 +16,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.loader.ParamObtain;
+import yuzunyannn.elementalsorcery.explore.ExploreStructureFind;
 import yuzunyannn.elementalsorcery.explore.Explores;
 import yuzunyannn.elementalsorcery.item.crystal.ItemNatureCrystal;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
@@ -151,7 +152,8 @@ public class QuestConditionNeedExplore extends QuestCondition {
 
 		if (this.biome == null) {
 			String blockName = block.getDisplayName();
-			builder.append(I18n.format("quest.explore.4", structure, blockName));
+			String structureName = ExploreStructureFind.getStructureI18nName(structure);
+			builder.append(I18n.format("quest.explore.4", structureName, blockName));
 		} else {
 			ResourceLocation biomeId = new ResourceLocation(biome);
 			String biomeName = biomeId.getPath();
@@ -160,8 +162,10 @@ public class QuestConditionNeedExplore extends QuestCondition {
 				builder.append(I18n.format("quest.explore.1", biomeName));
 			} else {
 				String blockName = block.getDisplayName();
-				if (structure != null) builder.append(I18n.format("quest.explore.3", biomeName, structure, blockName));
-				else builder.append(I18n.format("quest.explore.2", biomeName, blockName));
+				if (structure != null) {
+					String structureName = ExploreStructureFind.getStructureI18nName(structure);
+					builder.append(I18n.format("quest.explore.3", biomeName, structureName, blockName));
+				} else builder.append(I18n.format("quest.explore.2", biomeName, blockName));
 			}
 		}
 		if (dynamic) builder.append(TextFormatting.RESET.toString());

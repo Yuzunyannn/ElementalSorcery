@@ -1,0 +1,23 @@
+{
+	"pattern": [
+		" Z ",
+		"XCX",
+		" Z "
+	],
+	"key": {
+		"C": "elementalsorcery:magic_blast_wand",
+		"X": "elementalsorcery:rabid_leather",
+		"Z": "elementalsorcery:star_sand"
+	},
+	"element": [
+		{
+			"id": "air",
+			"size": 150,
+			"power": 200
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:shock_wand",
+		"count": 1
+	}
+}

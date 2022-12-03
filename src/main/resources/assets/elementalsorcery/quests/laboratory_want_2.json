@@ -127,13 +127,15 @@
                     "chance": 0.75,
                     "weight": 50,
                     "type": "NextQuest",
-                    "value": "elementalsorcery:laboratory_want_1"
+                    "value": "elementalsorcery:laboratory_want_1",
+                    "delegate" : true
                 },
                 {
                     "chance": 0.75,
                     "weight": 40,
                     "type": "NextQuest",
-                    "value": "elementalsorcery:laboratory_want_3"
+                    "value": "elementalsorcery:laboratory_want_3",
+                    "delegate" : true
                 }
             ]
         }

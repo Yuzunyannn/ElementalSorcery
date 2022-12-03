@@ -1,0 +1,29 @@
+{
+	"topics": {
+		"Engine": 75,
+		"Struct": 125,
+		"Mantra": 50
+	},
+	"items": [
+		{
+			"item": "elementalsorcery:elf_star",
+			"count": 1
+		},
+		{
+			"item": "elementalsorcery:relic_gem",
+			"count": 1
+		},
+		{
+			"item": "elementalsorcery:elf_crystal",
+			"count": 64
+		},
+		{
+			"item": "minecraft:redstone",
+			"count": 26
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:relic_disc",
+		"count": 1
+	}
+}

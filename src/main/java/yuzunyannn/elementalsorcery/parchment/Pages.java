@@ -9,6 +9,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import javax.annotation.Nonnull;
+
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,6 +22,7 @@ import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionScholar;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
 
@@ -85,6 +88,7 @@ public class Pages {
 	}
 
 	/** 获取page */
+	@Nonnull
 	public static Page getPage(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) return getErrorPage();
@@ -105,11 +109,7 @@ public class Pages {
 	/** 设置page */
 	public static ItemStack setPage(String id, ItemStack stack) {
 		if (id == null) id = "error";
-		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt == null) {
-			nbt = new NBTTagCompound();
-			stack.setTagCompound(nbt);
-		}
+		NBTTagCompound nbt = ItemHelper.getOrCreateTagCompound(stack);
 		nbt.setString("pId", id);
 		return stack;
 	}

@@ -1,0 +1,66 @@
+{
+    "name": "relic",
+    "title": "quest.relic.research",
+    "describe": [
+        "quest.relic.research.3"
+    ],
+    "condition": [
+        {
+            "type": "NeedItem",
+            "value": {
+                "item": "elementalsorcery:relic_guard_core"
+            }
+        }
+    ],
+    "precondition": [
+        {
+            "type": "NeedFame",
+            "value": 35
+        }
+    ],
+    "reward": [
+        {
+            "type": "Coin",
+            "value": "{prandom#3000~5000}"
+        },
+        {
+            "type": "Exp",
+            "value": "{random#500~750}"
+        },
+        {
+            "type": "Fame",
+            "value": 5
+        },
+        {
+            "type": "ItemParcel",
+            "value": [
+                {
+                    "item": "elementalsorcery:parchment",
+                    "nbt": {
+                        "pId": "relic_guard_report"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "Topic",
+            "value": "{random#1~2}",
+            "topic": "Engine"
+        },
+        {
+            "type": "Topic",
+            "value": "{random#1~2}",
+            "topic": "Struct"
+        },
+        {
+            "type": "Topic",
+            "value": "{random#1~2}",
+            "topic": "Biology"
+        },
+        {
+            "type": "Topic",
+            "value": "{random#1~2}",
+            "topic": "Mantra"
+        }
+    ]
+}

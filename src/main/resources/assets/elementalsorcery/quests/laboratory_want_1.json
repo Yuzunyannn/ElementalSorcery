@@ -85,7 +85,7 @@
                     ]
                 },
                 {
-                    "weight": 10,
+                    "weight": 20,
                     "type": "ItemParcel",
                     "value": {
                         "item": "elementalsorcery:blessing_jade_piece",

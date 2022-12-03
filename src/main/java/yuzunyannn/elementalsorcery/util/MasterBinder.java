@@ -79,7 +79,7 @@ public class MasterBinder {
 	@Nullable
 	public EntityLivingBase tryGetMaster(World world) {
 		EntityLivingBase master = this.getMaster();
-		if (master != null) return master;
+		if (master != null && !master.isDead) return master;
 		if (masterFindFailTimes >= maxMasterFindFailTimes) return null;
 		long now = System.currentTimeMillis();
 		int cdTime = 1000;

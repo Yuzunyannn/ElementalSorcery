@@ -20,6 +20,7 @@ import yuzunyannn.elementalsorcery.summon.SummonDejectedSkeleton;
 import yuzunyannn.elementalsorcery.summon.SummonDreadCube;
 import yuzunyannn.elementalsorcery.summon.SummonMaze;
 import yuzunyannn.elementalsorcery.summon.SummonRabidRabbit;
+import yuzunyannn.elementalsorcery.summon.SummonRelicGuard;
 import yuzunyannn.elementalsorcery.summon.SummonRelicZombie;
 import yuzunyannn.elementalsorcery.summon.SummonSilverfishSpring;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -130,19 +131,20 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 	}
 
 	public static void registerAll() {
-		reg("silverfish_spring", SummonSilverfishSpring.class, 96, 0x109e41, new ItemStack(Items.EXPERIENCE_BOTTLE));
+		reg("silverfish_spring", SummonSilverfishSpring.class, 85, 0x109e41, new ItemStack(Items.EXPERIENCE_BOTTLE));
 		reg("zombie_cage", new SummonRecipeZombieCage());
-		reg("rabid_rabbit_spring", SummonRabidRabbit.class, 128, 0xf2e9ea,
+		reg("rabid_rabbit_spring", SummonRabidRabbit.class, 100, 0xf2e9ea,
 				ItemHelper.toArray(Items.RABBIT_FOOT, Items.RABBIT_HIDE));
 		reg("mob_create", new SummonRecipeMob());
-		reg("relic_zombie", SummonRelicZombie.class, 192, 0x285f57,
+		reg("relic_zombie", SummonRelicZombie.class, 130, 0x285f57,
 				ItemKeepsake.create(ItemKeepsake.EnumType.RELIC_FRAGMENT, 1));
-		reg("dread_cube", SummonDreadCube.class, 256, 0x671111,
+		reg("dread_cube", SummonDreadCube.class, 190, 0x671111,
 				ItemKeepsake.create(ItemKeepsake.EnumType.DREAD_FRAGMENT, 1));
 		reg("dejected_skeleton", SummonDejectedSkeleton.class, 125, 0x757575,
 				ItemKeepsake.create(ItemKeepsake.EnumType.UNDELIVERED_LETTER, 1));
 		reg("maze", SummonMaze.class, 200, 0x3f9e15, new ItemStack(ESObjects.BLOCKS.ELF_LEAF)).setBuildHeight(3);
 		reg("arrogant_sheep", new SummonRecipeArrogantSheep());
+		reg("relic_guard", SummonRelicGuard.class, 128, 0xfdffce, new ItemStack(ESObjects.ITEMS.RELIC_GEM));
 
 	}
 

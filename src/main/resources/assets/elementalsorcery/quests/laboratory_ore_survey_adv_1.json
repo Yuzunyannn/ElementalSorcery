@@ -75,7 +75,8 @@
         {
             "chance": 0.75,
             "type": "NextQuest",
-            "value": "elementalsorcery:laboratory_ore_survey_adv_2"
+            "value": "elementalsorcery:laboratory_ore_survey_adv_2",
+            "delegate" : true
         }
     ]
 }

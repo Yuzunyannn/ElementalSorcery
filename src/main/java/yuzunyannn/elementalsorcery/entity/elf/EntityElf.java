@@ -29,9 +29,9 @@ public class EntityElf extends EntityElfBase {
 //			Random merchantRandom = ElfProfession.getRandomFromName(getCustomNameTag());
 //			getProfessionStorage().set(ElfProfession.M_TYPE, ElfMerchantType.getRandomMerchantType(merchantRandom));
 //			this.getProfessionStorage().set(ElfProfession.M_TYPE, ElfMerchantType.getMerchantType("ancient"));
-			this.setProfession(ElfProfession.MERCHANT);
-//			this.setProfession(ElfProfession.DEBT_COLLECTOR);
-			return;
+//			this.setProfession(ElfProfession.MERCHANT);
+//			this.setProfession(ElfProfession.MASTER);
+//			return;
 		}
 		if (this.rand.nextInt(5) == 0) this.setProfession(ElfProfession.SCHOLAR);
 		else if (this.rand.nextInt(4) == 0) this.setProfession(ElfProfession.CRAZY);

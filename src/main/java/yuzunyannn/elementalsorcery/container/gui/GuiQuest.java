@@ -90,8 +90,8 @@ public class GuiQuest extends GuiContainer {
 			yoff += fontRenderer.FONT_HEIGHT;
 		}
 		// 接受条件
-		fontRenderer.drawString(TextFormatting.BOLD + I18n.format("quest.pre.condition"), 5, 81, color);
-		yoff = 92;
+		fontRenderer.drawString(TextFormatting.BOLD + I18n.format("quest.pre.condition"), 5, 90, color);
+		yoff = 101;
 		if (quest.getEndTime() > 0) {
 			String endTime = new ElfTime(quest.getEndTime()).getDate();
 			if (overdue && status != QuestStatus.FINISH)
@@ -106,11 +106,11 @@ public class GuiQuest extends GuiContainer {
 				yoff += fontRenderer.FONT_HEIGHT;
 			}
 		}
-		if (yoff == 92) fontRenderer.drawString(I18n.format("info.none"), 10, yoff, color);
+		if (yoff == 101) fontRenderer.drawString(I18n.format("info.none"), 10, yoff, color);
 		// 奖励
 		String reward = I18n.format("quest.reward");
-		fontRenderer.drawString(TextFormatting.BOLD + reward, 5, 137, color);
-		yoff = 148;
+		fontRenderer.drawString(TextFormatting.BOLD + reward, 5, 146, color);
+		yoff = 157;
 		List<QuestReward> rewards = type.getRewards();
 		for (QuestReward rew : rewards) {
 			String str = rew.getDescribe(quest, player);

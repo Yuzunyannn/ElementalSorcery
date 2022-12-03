@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.google.common.base.Predicate;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
@@ -61,6 +62,15 @@ public class EntityAIMastersEnemyTarget<T extends EntityCreature & IHasMaster> e
 	@Override
 	public boolean shouldExecute() {
 		if (this.targetChance > 0 && this.taskOwner.getRNG().nextInt(this.targetChance) != 0) return false;
+
+		double distance = this.getTargetDistance();
+
+		Entity target = this.taskOwner.getAttackTarget();
+		if (target != null) next: {
+			if (target.isDead) break next;
+			if (this.taskOwner.getEntitySenses().canSee(target)) return false;
+		}
+
 		Predicate<EntityLivingBase> filter;
 
 		if (binder.isOwnerless()) filter = filterOwnerless;
@@ -70,7 +80,7 @@ public class EntityAIMastersEnemyTarget<T extends EntityCreature & IHasMaster> e
 			filter = filterMasterEnemy;
 		}
 		List<EntityLivingBase> list = this.taskOwner.world.getEntitiesWithinAABB(EntityLivingBase.class,
-				this.getTargetableArea(this.getTargetDistance()), filter);
+				this.getTargetableArea(distance), filter);
 		if (list.isEmpty()) return false;
 		Collections.sort(list, this.sorter);
 		this.targetEntity = list.get(0);

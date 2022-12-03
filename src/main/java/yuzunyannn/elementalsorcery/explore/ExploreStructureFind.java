@@ -106,7 +106,10 @@ public class ExploreStructureFind implements IExploreHandle {
 	public void addExploreInfo(NBTTagCompound data, List<String> tooltip) {
 		String archi = data.getString("archi");
 		if (archi == null) return;
-		if (!archi.isEmpty()) tooltip.add(TextFormatting.GREEN + I18n.format("info.around.have", archi));
+		if (!archi.isEmpty()) {
+			archi = ExploreStructureFind.getStructureI18nName(archi);
+			tooltip.add(TextFormatting.GREEN + I18n.format("info.around.have", archi));
+		}
 	}
 
 	@Override
@@ -116,6 +119,13 @@ public class ExploreStructureFind implements IExploreHandle {
 
 	public String getStructure(NBTTagCompound data) {
 		return data.getString("archi");
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static String getStructureI18nName(String key) {
+		key = String.format("info.mc.archi.%s.name", key);
+		if (I18n.hasKey(key)) return I18n.format(key);
+		return key;
 	}
 
 }

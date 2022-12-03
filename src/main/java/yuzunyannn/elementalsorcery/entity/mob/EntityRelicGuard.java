@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.entity.mob;
 
+import java.util.UUID;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
@@ -12,17 +14,24 @@ import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.entity.IHasMaster;
@@ -45,6 +54,7 @@ import yuzunyannn.elementalsorcery.entity.skill.EntitySkillJump;
 import yuzunyannn.elementalsorcery.entity.skill.EntitySkillPotion;
 import yuzunyannn.elementalsorcery.entity.skill.EntitySkillPotionRain;
 import yuzunyannn.elementalsorcery.entity.skill.EntitySkillSet;
+import yuzunyannn.elementalsorcery.item.prop.ItemRelicGuardCore;
 import yuzunyannn.elementalsorcery.util.MasterBinder;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
@@ -57,6 +67,8 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 
 	public static final int TYPE_FIRE = 0;
 	public static final int TYPE_WATER = 1;
+
+	public static final int WORN_LOW_HP = 10;
 
 	protected static final DataParameter<Byte> STATUS = EntityDataManager.<Byte>createKey(EntityRelicGuard.class,
 			DataSerializers.BYTE);
@@ -205,14 +217,59 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 			if (hasCore()) {
 				if (world.isRemote) return;
 				this.setCore(false);
-				this.dropItem(ESObjects.ITEMS.RELIC_GUARD_CORE, 1);
+				ItemStack stack = new ItemStack(ESObjects.ITEMS.RELIC_GUARD_CORE);
+				if (!master.isOwnerless()) ItemRelicGuardCore.setCoreMaster(stack, master.getMaster());
+				ItemRelicGuardCore.setCoreType(stack, this.getType());
+				this.entityDropItem(stack, 1);
 			}
 		}
 	}
 
 	@Override
+	protected boolean canDespawn() {
+		return false;
+	}
+
+	@Override
 	public EnumActionResult applyPlayerInteraction(EntityPlayer player, Vec3d vec, EnumHand hand) {
-		return super.applyPlayerInteraction(player, vec, hand);
+		ItemStack stack = player.getHeldItem(hand);
+		if (stack.getItem() == ESObjects.ITEMS.RELIC_DISC) {
+
+			if (ESAPI.isDevelop && player.isSneaking() && player.isCreative()) {
+				this.setHealth(WORN_LOW_HP);
+				this.setStatus(STATUS_WORN);
+				return EnumActionResult.SUCCESS;
+			}
+
+			int point = (int) Math.min(stack.getMaxDamage() - stack.getItemDamage(),
+					this.getMaxHealth() - this.getHealth());
+			if (point <= 0) return EnumActionResult.FAIL;
+			if (world.isRemote) {
+				for (int i = -1; i < Math.min(8, point / 10); i++) {
+					world.spawnParticle(EnumParticleTypes.HEART, posX + rand.nextGaussian() * 0.25,
+							posY + 1 + rand.nextGaussian() * 0.25, posZ + rand.nextGaussian() * 0.25, 0, 0.5, 0);
+				}
+				return EnumActionResult.SUCCESS;
+			}
+			this.heal(point);
+			stack.damageItem(point, player);
+			return EnumActionResult.SUCCESS;
+		}
+
+		int status = getStatus();
+		if (status == STATUS_WORN) return EnumActionResult.PASS;
+		if (hasCore()) return EnumActionResult.PASS;
+
+		UUID uuid = ItemRelicGuardCore.getCoreMaster(stack);
+		if (uuid == null) return EnumActionResult.PASS;
+		if (world.isRemote) return EnumActionResult.SUCCESS;
+		this.setAttackTarget(null);
+		int type = ItemRelicGuardCore.getCoreType(stack);
+		if (type >= 0) this.setType(type);
+		this.setCore(true);
+		this.setMaster(uuid);
+		stack.shrink(1);
+		return EnumActionResult.SUCCESS;
 	}
 
 	public boolean hasCore() {
@@ -221,6 +278,10 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 
 	public void setCore(boolean core) {
 		this.dataManager.set(CORE, core);
+	}
+
+	public void setMaster(UUID uuid) {
+		this.master.setMaster(uuid);
 	}
 
 	@Override
@@ -234,6 +295,13 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 	}
 
 	@Override
+	public void heal(float healAmount) {
+		super.heal(healAmount);
+		int status = getStatus();
+		if (status == STATUS_WORN && this.getHealth() > WORN_LOW_HP) this.setStatus(STATUS_DORMANCY);
+	}
+
+	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
 		if (DamageHelper.isRuleDamage(source)) return super.attackEntityFrom(source, amount);
 		if (source.isFireDamage()) return false;
@@ -241,14 +309,17 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 		if (source == DamageSource.FALL) return false;
 		if (master.isOwnerless() && source.getTrueSource() instanceof EntityPlayer)
 			this.setAttackTarget((EntityLivingBase) source.getTrueSource());
-		return super.attackEntityFrom(source, Math.min(amount, 4));
+		if (source instanceof EntityDamageSourceIndirect && !DamageHelper.isMagicalDamage(source))
+			amount = Math.min(amount, 2);
+		else amount = Math.min(amount, 4);
+		return super.attackEntityFrom(source, amount);
 	}
 
 	@Override
 	protected void damageEntity(DamageSource damageSrc, float damageAmount) {
 		super.damageEntity(damageSrc, damageAmount);
 		if (getStatus() == STATUS_WORN) return;
-		if (this.getHealth() <= 10) this.setStatus(STATUS_WORN);
+		if (this.getHealth() <= WORN_LOW_HP) this.setStatus(STATUS_WORN);
 	}
 
 	@Override
@@ -278,6 +349,8 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 		magician.usePrepareSkill();
 		if (magician.getUsingSkill() != null) this.setSpelling(true);
 		else this.swingArm(EnumHand.MAIN_HAND);
+
+		this.setHealth(getHealth() - getMaxHealth() * 0.0025f);
 	}
 
 	@Override
@@ -311,6 +384,19 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 	}
 
 	@Override
+	public boolean isOnSameTeam(Entity entityIn) {
+		if (this.getMaster() == entityIn) return true;
+		return super.isOnSameTeam(entityIn);
+	}
+
+	@Override
+	public boolean isPotionApplicable(PotionEffect potioneffectIn) {
+		Potion potion = potioneffectIn.getPotion();
+		if (potion == MobEffects.POISON || potion == MobEffects.WITHER) return false;
+		return super.isPotionApplicable(potioneffectIn);
+	}
+
+	@Override
 	public void onEntityUpdate() {
 		super.onEntityUpdate();
 		updateArmSwingProgress();
@@ -324,7 +410,9 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 		if (this.isAIDisabled()) {
 			if (!this.hasNoGravity()) {
 				this.motionY -= 0.08D;
-				this.move(MoverType.SELF, 0, this.motionY, 0);
+				this.motionX *= 0.8;
+				this.motionZ *= 0.8;
+				this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
 			}
 		}
 
@@ -334,6 +422,8 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 			if (hasCore()) this.setHealth(this.getHealth() - 0.05f);
 			return;
 		}
+
+		if (!master.isOwnerless()) master.tryGetMaster(world);
 
 		if (status == STATUS_DORMANCY) {
 			if (this.isSpelling()) this.setSpelling(false);

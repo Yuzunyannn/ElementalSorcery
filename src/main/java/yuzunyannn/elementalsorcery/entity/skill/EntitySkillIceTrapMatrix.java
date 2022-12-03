@@ -10,7 +10,7 @@ public class EntitySkillIceTrapMatrix extends EntitySkillTarget {
 
 	public EntitySkillIceTrapMatrix(EntityLivingBase entity) {
 		super(entity);
-		this.setCD(20 * 90);
+		this.setCD(20 * 80);
 	}
 
 	@Override
@@ -23,8 +23,8 @@ public class EntitySkillIceTrapMatrix extends EntitySkillTarget {
 		super.doSkill();
 		Vec3d vec = this.getTargetForecastVec(0).add(0, 6, 0);
 
-		for (int dx = -3; dx <= 3; dx++) {
-			for (int dz = -3; dz <= 3; dz++) {
+		for (int dx = -2; dx <= 2; dx++) {
+			for (int dz = -2; dz <= 2; dz++) {
 				BlockPos pos = new BlockPos(vec.add(dx * 7, 0, dz * 7));
 				Vec3d at = new Vec3d(pos);
 				this.fireArea(at, false, 20 * 2, 0.75, ESObjects.MANTRAS.ICE_CRYSTAL_BOMB, ESObjects.ELEMENTS.WATER,
