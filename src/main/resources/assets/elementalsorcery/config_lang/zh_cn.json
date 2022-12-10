@@ -5,6 +5,7 @@
     "global.general.max_life_time_of_parcel": "邮局储存包裹的最长保持时间，超过时间就会被清除，单位小时，如果为-1表示用不清除",
     "global.general.building_max_remain_times": "临时建筑保非活动停留最长，单位分钟，超时后将移除内存，使用时会强制加载[0表示不自动清除]",
     "global.general.max_size_element_in_inventory" : "元素仓库的容量",
+    "global.general.research_point_tips_show_mode": "研究点数提示模式：0.永远不提示 1.任何变更时提示 2.最高位变更提示",
 
     "item.elementalsorcery_manual.manual_max_pages": "元素手册页数上限",
     "item.elementalsorcery_rite_manual.max_record": "祭品研究手册可以记录的最大个数",

@@ -60,7 +60,10 @@ public class EntityRelicZombie extends EntityMob {
 
 	protected static final DataParameter<Byte> TYPE = EntityDataManager.<Byte>createKey(EntityRelicZombie.class,
 			DataSerializers.BYTE);
+
 	protected int skillType;
+
+	public boolean hasCore = true;
 
 	public EntityRelicZombie(World worldIn) {
 		this(worldIn, RelicZombieType.randomType(worldIn.rand));
@@ -118,12 +121,14 @@ public class EntityRelicZombie extends EntityMob {
 	public void writeEntityToNBT(NBTTagCompound compound) {
 		super.writeEntityToNBT(compound);
 		compound.setByte("rzType", this.dataManager.get(TYPE).byteValue());
+		if (!hasCore) compound.setBoolean("noCore", true);
 	}
 
 	@Override
 	public void readEntityFromNBT(NBTTagCompound compound) {
 		super.readEntityFromNBT(compound);
 		this.dataManager.set(TYPE, compound.getByte("rzType"));
+		hasCore = !compound.getBoolean("noCore");
 	}
 
 	protected void setHeldItem(Item item) {
@@ -167,7 +172,7 @@ public class EntityRelicZombie extends EntityMob {
 	@Override
 	protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
 		DamageSource ds = this.getLastDamageSource();
-		if (ds != null && "player".equals(ds.damageType)) {
+		if (ds != null && "player".equals(ds.damageType) && hasCore) {
 			// 遗迹水晶
 			int n = 1 + this.rand.nextInt(lootingModifier / 2 + 1);
 			for (int i = 0; i < n; i++) {
@@ -184,6 +189,25 @@ public class EntityRelicZombie extends EntityMob {
 		wr.add(Items.IRON_INGOT, 5);
 		for (int i = 0; i < n; i++) this.dropItem(wr.get(), 1);
 		this.entityDropItem(ItemKeepsake.create(ItemKeepsake.EnumType.RELIC_FRAGMENT, 1), 0);
+	}
+
+	public void onShock() {
+		if (!hasCore) return;
+		if (world.isRemote) return;
+		float hpRate = this.getHealth() / this.getMaxHealth();
+		if (hpRate > 0.5) return;
+		if (hpRate < 0.1 || 0.2 / Math.max(this.getHealth(), 0.0001f) > this.rand.nextDouble()) {
+			hasCore = false;
+			world.setEntityState(this, (byte) 44);
+			this.setHealth(0);
+			this.dropItem(ESObjects.ITEMS.RELIC_GEM, 1);
+		}
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void handleStatusUpdate(byte id) {
+		if (id == 44) hasCore = false;
 	}
 
 	// 效果的cd时间，防止播放太多

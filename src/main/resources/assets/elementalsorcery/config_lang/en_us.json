@@ -5,6 +5,7 @@
     "global.general.max_life_time_of_parcel": "Max hour of Parcel be hold in post office, it will be remove if overdue [-1 is never overdue]",
     "global.general.building_max_remain_times": "The max second limit of inactive temporary buildings in memory, it will be wrote to file and remove from memory if overdue, and read from file when used [0 is never remove from memory]",
     "global.general.max_size_element_in_inventory" : "Capacity of element inventory",
+    "global.general.research_point_tips_show_mode": "Research point tips show mode：0.Never 1.Always 2.When highest digit change",
 
     "item.elementalsorcery_manual.manual_max_pages": "Capacity limit of Manual",
     "item.elementalsorcery_rite_manual.max_record": "Record limt of Rite Manual",

@@ -55,7 +55,7 @@ public class AttackCaster implements ICaster, ICasterObject {
 		Grimoire.Info info = grimoire.getInfo(grimoire.getSelected());
 		return info.mantra;
 	}
-	
+
 	@Override
 	public IMantraData iWantMantraData() {
 		return null;
@@ -132,8 +132,8 @@ public class AttackCaster implements ICaster, ICasterObject {
 	}
 
 	@Override
-	public DamageSource iWantDamageSource(Element element) {
-		return DamageHelper.getMagicDamageSource(attacker, this.asEntity());
+	public DamageSource iWantDamageSource(ElementStack element) {
+		return DamageHelper.getDamageSource(element, attacker, this.asEntity());
 	}
 
 	@Override

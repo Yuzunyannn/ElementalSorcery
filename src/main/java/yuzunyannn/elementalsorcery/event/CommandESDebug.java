@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.event;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
-import java.util.Random;
 import java.util.function.Function;
 
 import net.minecraft.block.Block;
@@ -12,6 +11,8 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -22,7 +23,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -30,20 +30,18 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
-import yuzunyannn.elementalsorcery.entity.EntityAutoMantra;
-import yuzunyannn.elementalsorcery.entity.EntityAutoMantra.AutoMantraConfig;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.util.ESFakePlayer;
+import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -126,30 +124,37 @@ public class CommandESDebug {
 				return;
 			case "textTest": {
 
-				final Vec3d at = new Vec3d(pos);
-				Random rand = entity.getRNG();
+				EntityPlayerMP player = (EntityPlayerMP) entity;
+				EntityPlayer fakePlayer = ESFakePlayer.get(player.getServerWorld());
+				player.attackEntityFrom(
+						DamageHelper.getDamageSource(new ElementStack(ESObjects.ELEMENTS.MAGIC), fakePlayer, null)
+								.setDamageAllowedInCreativeMode(),
+						999999);
 
-				Vec3d look = entity.getLookVec();
-				for (int i = 0; i < 3; i++) {
-					AutoMantraConfig config = new EntityAutoMantra.AutoMantraConfig();
-//					config.setMoveVec(new Vec3d(look.x, 0, look.z).normalize().scale(0.01));
-					config.setMoveVec(Vec3d.ZERO);
-//					config.blockTrack = AutoMantraConfig.BLOCKTRACK_DIRECT_REVERSE;
-//					config.setTarget(entity, 0.01);
-//					config.excludeUser = false;
-					EntityAutoMantra mantra = new EntityAutoMantra(entity.world, config, entity,
-							ESObjects.MANTRAS.LASER, null);
-					mantra.setPosition(entity.posX + rand.nextGaussian() * 2, entity.posY + 3,
-							entity.posZ + rand.nextGaussian() * 2);
-					mantra.setSpellingTick(20 * 3);
-					mantra.setOrient(new Vec3d(0, -1, 0));
-					IElementInventory elementInv = mantra.getElementInventory();
-					elementInv.insertElement(new ElementStack(Element.REGISTRY.getRandomObject(rand), 9999, 20), false);
-					elementInv.insertElement(new ElementStack(ESObjects.ELEMENTS.FIRE, 9999, 20), false);
-					elementInv.insertElement(new ElementStack(ESObjects.ELEMENTS.WATER, 9999, 20), false);
-					elementInv.insertElement(new ElementStack(ESObjects.ELEMENTS.AIR, 9999, 20), false);
-					entity.world.spawnEntity(mantra);
-				}
+//				final Vec3d at = new Vec3d(pos);
+//				Random rand = entity.getRNG();
+
+//				Vec3d look = entity.getLookVec();
+//				for (int i = 0; i < 3; i++) {
+//					AutoMantraConfig config = new EntityAutoMantra.AutoMantraConfig();
+////					config.setMoveVec(new Vec3d(look.x, 0, look.z).normalize().scale(0.01));
+//					config.setMoveVec(Vec3d.ZERO);
+////					config.blockTrack = AutoMantraConfig.BLOCKTRACK_DIRECT_REVERSE;
+////					config.setTarget(entity, 0.01);
+////					config.excludeUser = false;
+//					EntityAutoMantra mantra = new EntityAutoMantra(entity.world, config, entity,
+//							ESObjects.MANTRAS.LASER, null);
+//					mantra.setPosition(entity.posX + rand.nextGaussian() * 2, entity.posY + 3,
+//							entity.posZ + rand.nextGaussian() * 2);
+//					mantra.setSpellingTick(20 * 3);
+//					mantra.setOrient(new Vec3d(0, -1, 0));
+//					IElementInventory elementInv = mantra.getElementInventory();
+//					elementInv.insertElement(new ElementStack(Element.REGISTRY.getRandomObject(rand), 9999, 20), false);
+//					elementInv.insertElement(new ElementStack(ESObjects.ELEMENTS.FIRE, 9999, 20), false);
+//					elementInv.insertElement(new ElementStack(ESObjects.ELEMENTS.WATER, 9999, 20), false);
+//					elementInv.insertElement(new ElementStack(ESObjects.ELEMENTS.AIR, 9999, 20), false);
+//					entity.world.spawnEntity(mantra);
+//				}
 
 				Minecraft.getMinecraft().addScheduledTask(() -> {
 //					LamdaReference<Integer> ref = LamdaReference.of(0);

@@ -8,7 +8,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -275,10 +274,7 @@ public class ElementStack implements INBTSerializable<NBTTagCompound> {
 	}
 
 	public ITextComponent getTextComponent() {
-		ITextComponent itextcomponent = new TextComponentString("[");
-		itextcomponent.appendSibling(new TextComponentTranslation(getElement().getTranslationKey(this) + ".name"));
-		itextcomponent.appendSibling(new TextComponentString("]"));
-		return itextcomponent;
+		return new TextComponentTranslation(getElement().getTranslationKey(this) + ".name");
 	}
 
 	@Override

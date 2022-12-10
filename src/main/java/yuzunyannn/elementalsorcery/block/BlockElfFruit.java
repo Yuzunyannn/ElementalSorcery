@@ -39,12 +39,12 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.elf.ElfTime;
 import yuzunyannn.elementalsorcery.entity.EntityFallingElfFruit;
-import yuzunyannn.elementalsorcery.event.EventServer;
 
 public class BlockElfFruit extends Block implements Mapper {
 
@@ -96,7 +96,7 @@ public class BlockElfFruit extends Block implements Mapper {
 
 			protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
 				if (player.world.isRemote) return;
-				NBTTagCompound nbt = EventServer.getPlayerNBT(player);
+				NBTTagCompound nbt = ESData.getPlayerNBT(player);
 				if (!nbt.hasKey("elfFruit", 10)) nbt.setTag("elfFruit", new NBTTagCompound());
 				nbt = nbt.getCompoundTag("elfFruit");
 				int count = Math.max(nbt.getInteger("times"), 1);

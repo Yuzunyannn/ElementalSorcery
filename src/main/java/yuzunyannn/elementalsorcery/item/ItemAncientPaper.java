@@ -27,6 +27,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
@@ -38,7 +39,6 @@ import yuzunyannn.elementalsorcery.crafting.element.ToElementInfoStatic;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
 import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
-import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
@@ -126,7 +126,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 	}
 
 	public static void eliminateFatigue(EntityPlayer player, boolean showInfo) {
-		NBTTagCompound playerData = EventServer.getPlayerNBT(player);
+		NBTTagCompound playerData = ESData.getPlayerNBT(player);
 		if (!playerData.hasKey("unsNext")) return;
 		playerData.removeTag("unsNext");
 		if (showInfo) player.sendMessage(new TextComponentTranslation("info.not.atigue")
@@ -137,7 +137,7 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 	/** 进行一次解读 */
 	protected void doUnscramble(AncientPaper ap, World world, EntityPlayer player, EnumHand handIn) {
 		if (world.isRemote) return;
-		NBTTagCompound playerData = EventServer.getPlayerNBT(player);
+		NBTTagCompound playerData = ESData.getPlayerNBT(player);
 		// 获取增益
 		PotionEffect effect = player.getActivePotionEffect(ESObjects.POTIONS.ENTHUSIASTIC_STUDY);
 		int amplifier = effect == null ? 0 : (effect.getAmplifier() + 1);
@@ -182,15 +182,6 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 		if (count > 0) Researcher.research(player, topic.getKey(), count);
 	}
 
-	public static void sendTopicGrowMessage(EntityPlayer player, String type) {
-		String tKey = "topic." + type + ".name";
-		ITextComponent typeName;
-		if (net.minecraft.util.text.translation.I18n.canTranslate(tKey))
-			typeName = new TextComponentTranslation("topic." + type + ".name");
-		else typeName = new TextComponentString(type);
-		player.sendMessage(new TextComponentTranslation("info.research.increase", typeName)
-				.setStyle(new Style().setColor(TextFormatting.YELLOW).setBold(true)));
-	}
 
 	/** 开始解读 @return true表示可以 */
 	protected boolean startUnscramble(World worldIn, EntityPlayer playerIn, EnumHand handIn) {

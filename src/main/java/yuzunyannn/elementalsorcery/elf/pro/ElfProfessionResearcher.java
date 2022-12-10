@@ -11,7 +11,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -30,7 +29,6 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -57,25 +55,35 @@ public class ElfProfessionResearcher extends ElfProfession {
 	public void giveTopicPoint(EntityPlayer player, KnowledgeType type, float rate) {
 		rate = rate * (player.world.rand.nextFloat() * 0.5f + 1);
 		List<Entry<String, Integer>> entries = type.getTopics();
-		Researcher researcher = new Researcher(player);
-		for (Entry<String, Integer> entry : entries) {
-			researcher.grow(entry.getKey(), MathHelper.ceil(rate * entry.getValue()));
-			ItemAncientPaper.sendTopicGrowMessage(player, entry.getKey());
-		}
-		researcher.save(player);
+		for (Entry<String, Integer> entry : entries)
+			Researcher.research(player, entry.getKey(), rate * entry.getValue());
 	}
 
 	@Override
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TalkChapter superChapter = super.getChapter(elf, player, shiftData);
 		if (superChapter != null) return superChapter;
-		
+
 		TileElfTreeCore core = elf.getEdificeCore();
 		TalkChapter chapter = new TalkChapter();
 		if (core == null) return chapter.addScene(new TalkSceneSay("say.edifice.broken"));
-		if (ElfConfig.isVeryDishonest(player))
-			return chapter.addScene(new TalkSceneSay("say.dishonest.not.say"));
+		if (ElfConfig.isVeryDishonest(player)) return chapter.addScene(new TalkSceneSay("say.dishonest.not.say"));
+
+		// 第一次
+		if (!Researcher.isPlayerResearchable(player)) {
+			chapter.addScene(new TalkSceneSay("say.how.research.first"));
+			chapter.addScene(new TalkSceneSay("say.how.research.1"));
+			TalkSceneSay finScene = new TalkSceneSay("say.how.research.point.reget");
+			chapter.addScene(finScene);
+			finScene.addAction((p, e, c, i, s, t) -> {
+				Researcher.letPlayerResearchable(player);
+				return true;
+			});
+			return chapter;
+		}
+
 		ItemStack stack = player.getHeldItemMainhand();
+
 		if (stack.getItem() == ESObjects.ITEMS.ANCIENT_PAPER) {
 			AncientPaper ap = new AncientPaper(stack);
 			if (ap.isLocked() && ap.getProgress() <= 0) {
@@ -99,7 +107,8 @@ public class ElfProfessionResearcher extends ElfProfession {
 				return chapter;
 			}
 		}
-		chapter.addScene(new TalkSceneSay("say.how.research"));
+
+		chapter.addScene(new TalkSceneSay("say.how.research.1"));
 		return chapter;
 	}
 

@@ -104,6 +104,10 @@ public class ModelRelicZombie extends ModelBase {
 		rightArmC.cubeList.add(new ModelBox(rightArmC, 48, 8, -1.0F, -1.0F, -1.0F, 2, 2, 2, 0.0F, false));
 	}
 
+	public void setHasCore(boolean hasCore) {
+		bodyCore.isHidden = !hasCore;
+	}
+
 	@Override
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 		head.render(f5);

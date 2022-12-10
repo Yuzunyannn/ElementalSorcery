@@ -504,8 +504,8 @@ public class EntityGrimoireOld extends Entity
 	}
 
 	@Override
-	public DamageSource iWantDamageSource(Element element) {
-		return DamageHelper.getMagicDamageSource(user == null ? this : user, this);
+	public DamageSource iWantDamageSource(ElementStack element) {
+		return DamageHelper.getDamageSource(element, user == null ? this : user, this);
 	}
 
 	@Override
@@ -558,7 +558,7 @@ public class EntityGrimoireOld extends Entity
 	public IMantraData iWantMantraData() {
 		return this.mantraData;
 	}
-	
+
 	@Override
 	public Vec3d getObjectPosition() {
 		return this.getPositionVector();

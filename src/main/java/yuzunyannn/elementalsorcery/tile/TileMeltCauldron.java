@@ -39,12 +39,12 @@ import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
-import yuzunyannn.elementalsorcery.util.helper.NumberHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
+import yuzunyannn.elementalsorcery.util.math.MathSupporter;
 import yuzunyannn.elementalsorcery.util.render.FrameHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 
@@ -193,7 +193,7 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 				if (act < src) return Float.MAX_VALUE;
 				nums[i + 1] = act / src;
 			}
-			float variance = NumberHelper.variance(nums);
+			float variance = MathSupporter.variance(nums);
 			for (ItemStack act : materials) {
 				boolean hasMatch = false;
 				for (Ingredient ingredient : list) {

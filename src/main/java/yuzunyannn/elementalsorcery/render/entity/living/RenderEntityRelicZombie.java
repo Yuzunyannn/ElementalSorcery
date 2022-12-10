@@ -48,6 +48,7 @@ public class RenderEntityRelicZombie extends RenderLiving<EntityRelicZombie> {
 
 	@Override
 	public void doRender(EntityRelicZombie entity, double x, double y, double z, float entityYaw, float partialTicks) {
+		MODEL.setHasCore(entity.hasCore);
 		super.doRender(entity, x, y, z, entityYaw, partialTicks);
 	}
 

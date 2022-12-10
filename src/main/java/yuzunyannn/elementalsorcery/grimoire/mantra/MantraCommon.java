@@ -23,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.CastStatus;
@@ -228,7 +229,7 @@ public class MantraCommon extends Mantra {
 
 		damage = damage * (1 + potent / 2);
 		// 造成傷害
-		target.attackEntityFrom(DamageHelper.getMagicDamageSource(player, player), damage);
+		target.attackEntityFrom(caster.iWantDamageSource(ESObjects.ELEMENTS.MAGIC), damage);
 	}
 
 	public void doPotentAttackEffect(World world, ICaster caster, Entity target) {

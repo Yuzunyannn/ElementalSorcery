@@ -50,7 +50,7 @@ public abstract class EntityMantraBase extends Entity
 	protected IMantraData mantraData;
 	/** 原始数据 */
 	protected NBTTagCompound metaData;
-	
+
 	public EntityMantraBase(World worldIn) {
 		super(worldIn);
 	}
@@ -362,10 +362,10 @@ public abstract class EntityMantraBase extends Entity
 	}
 
 	@Override
-	public DamageSource iWantDamageSource(Element element) {
+	public DamageSource iWantDamageSource(ElementStack eStack) {
 		IWorldObject user = this.getUser();
 		EntityLivingBase src = user == null ? null : user.asEntityLivingBase();
-		return DamageHelper.getMagicDamageSource(src == null ? this : src, this);
+		return DamageHelper.getDamageSource(eStack, src == null ? this : src, this);
 	}
 
 	@Override

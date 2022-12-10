@@ -107,7 +107,11 @@ public interface ICaster {
 
 	/** 申请一个元素伤害 */
 	@Nonnull
-	public DamageSource iWantDamageSource(@Nonnull Element element);
+	public DamageSource iWantDamageSource(@Nonnull ElementStack element);
+
+	default public DamageSource iWantDamageSource(@Nonnull Element element) {
+		return iWantDamageSource(new ElementStack(element));
+	}
 
 	/** 获取真是施法者，大部分情况下和iWantCaster一样 */
 	@Nonnull

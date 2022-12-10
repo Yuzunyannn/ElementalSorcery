@@ -23,6 +23,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicGuard;
+import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
@@ -100,9 +101,12 @@ public class ItemShockWand extends Item implements IItemUseClientUpdate {
 			target.motionZ += orient.z * rate;
 			target.velocityChanged = true;
 			if (target instanceof EntityRelicGuard) ((EntityRelicGuard) target).onShock();
+			if (target instanceof EntityRelicZombie) ((EntityRelicZombie) target).onShock();
 			if (target instanceof EntityLivingBase) {
-				((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 160, 2));
-				((EntityLivingBase) target).addPotionEffect(new PotionEffect(MobEffects.NAUSEA, 160));
+				EntityLivingBase living = ((EntityLivingBase) target);
+				living.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, (int) Math.max(20, 160 * rate), 1));
+				living.addPotionEffect(new PotionEffect(MobEffects.NAUSEA, (int) Math.max(20, 160 * rate)));
+				if (living.getRevengeTarget() == null) living.setRevengeTarget(entityLiving);
 			}
 			shockEffect(worldIn, rt.hitVec, orient.scale(-1));
 			return;

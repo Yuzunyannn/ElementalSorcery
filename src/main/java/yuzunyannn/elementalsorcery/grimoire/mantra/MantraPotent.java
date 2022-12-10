@@ -68,7 +68,7 @@ public class MantraPotent extends MantraCommon {
 		// 超级强效攻击
 		potent = (float) Math.pow(potent + 0.5, 1.2) * 1.25f;
 		damage = damage * (1 + potent);
-		DamageSource ds = DamageHelper.getMagicDamageSource(player, player);
+		DamageSource ds = caster.iWantDamageSource(ESObjects.ELEMENTS.MAGIC);
 		target.attackEntityFrom(ds, damage);
 	}
 

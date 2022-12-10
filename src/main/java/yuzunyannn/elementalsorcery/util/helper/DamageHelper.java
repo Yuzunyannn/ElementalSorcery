@@ -10,32 +10,33 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EntityDamageSource;
 import net.minecraft.util.EntityDamageSourceIndirect;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.player.CriticalHitEvent;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.util.world.ElementDamageSource;
 
 public class DamageHelper {
+
+	/** 通用的，魔法伤害 */
+	public static DamageSource getMagicDamageSource(@Nullable Entity source, @Nullable Entity directSource) {
+		return getDamageSource(ElementStack.magic(1, 1), source, directSource);
+	}
+
+	public static DamageSource getVoidDamageSource(@Nullable Entity source, @Nullable Entity directSource) {
+		return getDamageSource(ElementStack.EMPTY, source, directSource).setDamageIsAbsolute().setDamageAllowedInCreativeMode();
+	}
+
+	/** 元素伤害 */
+	public static DamageSource getDamageSource(ElementStack estack, @Nullable Entity source,
+			@Nullable Entity directSource) {
+		return new ElementDamageSource(estack, source, directSource).setIsThornsDamage().setDamageBypassesArmor()
+				.setMagicDamage();
+	}
 
 	public static boolean isRuleDamage(DamageSource ds) {
 		if (ds.canHarmInCreative()) return ds.getTrueSource() == null;
 		return false;
-	}
-
-	/** 通用的，魔法伤害 */
-	public static DamageSource getMagicDamageSource(@Nullable Entity source, @Nullable Entity directSource) {
-		DamageSource ds;
-		if (directSource == null && source == null) ds = new DamageSource("magic");
-		else if (directSource == null) ds = new EntityDamageSource("magic", source);
-		else ds = new EntityDamageSourceIndirect("indirectMagic", directSource, source);
-		if (ds instanceof EntityDamageSource) ((EntityDamageSource) ds).setIsThornsDamage();
-		return ds.setDamageBypassesArmor().setMagicDamage();
-	}
-
-	public static DamageSource getDamageSource(ElementStack estack, @Nullable Entity source,
-			@Nullable Entity directSource) {
-		return getMagicDamageSource(source, directSource);
 	}
 
 	public static boolean isNormalAttackDamage(DamageSource ds) {

@@ -11,6 +11,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ESData {
 
+	public static final String PLAYER_RESEARCHABLE = "cResearch";
+
 	private File file;
 
 	public ESData(FMLPreInitializationEvent event) {
@@ -28,6 +30,15 @@ public class ESData {
 		File file = new File(this.file.getPath() + "/" + filepath);
 		file.mkdirs();
 		return new File(file.getPath() + "/" + filename);
+	}
+
+	/** 获取玩家数据集 */
+	public static NBTTagCompound getPlayerNBT(EntityLivingBase player) {
+		NBTTagCompound data = player.getEntityData();
+		if (data.hasKey("ESData", 10)) return data.getCompoundTag("ESData");
+		NBTTagCompound nbt = new NBTTagCompound();
+		data.setTag("ESData", nbt);
+		return nbt;
 	}
 
 	/** 记录ES玩家动态数据 */

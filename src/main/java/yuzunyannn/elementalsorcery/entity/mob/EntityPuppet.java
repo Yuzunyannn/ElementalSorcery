@@ -22,6 +22,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.util.MasterBinder;
 import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.math.MathSupporter;
@@ -70,11 +72,11 @@ public class EntityPuppet extends EntityCreature {
 		this.setSize(0.5f, 0.5f);
 		this.setNoGravity(true);
 	}
-	
+
 	protected void initSelf() {
 		this.moveHelper = new EntityFlyHelper(this);
 	}
-	
+
 	@Override
 	protected PathNavigate createNavigator(World worldIn) {
 		return new PathNavigateFlying(this, this.world);
@@ -181,7 +183,8 @@ public class EntityPuppet extends EntityCreature {
 		this.swingArm(EnumHand.MAIN_HAND);
 
 		EntityLivingBase master = myMaster.tryGetMaster(world);
-		DamageSource ds = DamageHelper.getMagicDamageSource(master == null ? this : master, this);
+		DamageSource ds = DamageHelper.getDamageSource(new ElementStack(ESObjects.ELEMENTS.WOOD),
+				master == null ? this : master, this);
 		float amount = nDamage;
 		if (entityIn instanceof EntityLivingBase) {
 			float maxHP = ((EntityLivingBase) entityIn).getMaxHealth();

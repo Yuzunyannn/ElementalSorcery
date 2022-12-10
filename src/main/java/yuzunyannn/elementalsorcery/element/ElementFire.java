@@ -105,7 +105,7 @@ public class ElementFire extends ElementCommon {
 			if (world.isRemote) return;
 			entity.setFire((int) (20 * MathHelper.sqrt(storage.getPower())));
 			float dmg = MathHelper.sqrt(storage.getPower()) / 4;
-			DamageSource ds = DamageHelper.getMagicDamageSource(caster.asEntityLivingBase(), null);
+			DamageSource ds = DamageHelper.getDamageSource(storage, caster.asEntityLivingBase(), null);
 			entity.attackEntityFrom(ds, dmg);
 			return;
 		}

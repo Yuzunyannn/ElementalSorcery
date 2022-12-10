@@ -110,14 +110,6 @@ import yuzunyannn.elementalsorcery.util.helper.SilentWorld;
 
 public class EventServer {
 
-	public static NBTTagCompound getPlayerNBT(EntityLivingBase player) {
-		NBTTagCompound data = player.getEntityData();
-		if (data.hasKey("ESData", 10)) return data.getCompoundTag("ESData");
-		NBTTagCompound nbt = new NBTTagCompound();
-		data.setTag("ESData", nbt);
-		return nbt;
-	}
-
 	static private final List<ITickTask> tickList = new LinkedList<ITickTask>();
 	static private final Map<Integer, List<IWorldTickTask>> worldTickMapList = new HashMap<>();
 	static private final Map<Integer, List<IWorldTickTask>> worldTickMapListCache = new HashMap<>();
@@ -252,7 +244,7 @@ public class EventServer {
 		if (event.player instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP) event.player;
 
-			NBTTagCompound data = EventServer.getPlayerNBT(player);
+			NBTTagCompound data = ESData.getPlayerNBT(player);
 			if (!data.hasKey("esFirstJoin")) {
 				if (player.inventory == null) return;
 				data.setBoolean("esFirstJoin", true);

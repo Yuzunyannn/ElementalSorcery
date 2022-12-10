@@ -2474,9 +2474,9 @@
 			"ja_JP": "解読進捗%s"
 		},
 		"info.research.increase": {
-			"zh_CN": "你对「%s」更加感兴趣了",
-			"en_US": "Are you more interested in 「%s」",
-			"ja_JP": "あなたは「%s」にもっと興味があります。"
+			"zh_CN": "研究：你对「%s」更加感兴趣了",
+			"en_US": "Research: Are you more interested in 「%s」",
+			"ja_JP": "研究：あなたは「%s」にもっと興味があります。"
 		},
 		"info.can.not.unscramble": {
 			"zh_CN": "你疲倦了，不想在继续解读了",
@@ -2676,6 +2676,38 @@
 			"zh_CN": "传说",
 			"en_US": "legend",
 			"ja_JP": "伝说"
+		}
+	},
+	"death.es": {
+		"eath.es.killed.by.entity.element": {
+			"zh_CN": "在%s的%s之力下，%s化作尘埃",
+			"en_US": "Under %s's power of The %s, %s turns into dust",
+			"ja_JP": "%sの%sの力で%sは塵と化す"
+		},
+		"eath.es.killed.by.element": {
+			"zh_CN": "%s在%s之中永远眠",
+			"en_US": "%s sleeps forever in The %s",
+			"ja_JP": "%sは%sの中で永遠に眠た"
+		},
+		"eath.es.killed.by.self.element": {
+			"zh_CN": "%s的%s之力控制不当，死于了自己的魔法之中",
+			"en_US": "%s's power of The %s is out of control, and died in own power",
+			"ja_JP": "%sは%sの力をコントロールできない、自分の魔法の中で死んだ"
+		},
+		"eath.es.killed.by.entity.magic": {
+			"zh_CN": "在%s强大的魔法面前%s无能为力",
+			"en_US": "In %s's powerful magic, %s can do nothing",
+			"ja_JP": "%sの強力な魔法の前に%sは何もできない"
+		},
+		"eath.es.killed.by.magic": {
+			"zh_CN": "%s在魔力之中永远眠",
+			"en_US": "%s sleeps forever in magic",
+			"ja_JP": "%sは魔力の中で永遠に眠た"
+		},
+		"eath.es.killed.by.self.magic": {
+			"zh_CN": "%s死于自己失控的魔力之中",
+			"en_US": "%s died in own uncontrollable magic",
+			"ja_JP": "%sは自分の暴走する魔力の中で死んだ"
 		}
 	},
 	"fairy": {
@@ -3267,10 +3299,20 @@
 			"en_US": "You are the first time to use our express service, we hereby allow you a novice Quest, please accept it.",
 			"ja_JP": "初めての宅急便サービスです。そこで初心者の依頼を用意しました。受け取ってください。"
 		},
-		"say.how.research": {
-			"zh_CN": "你可以去那边的方桌上进行研究，花费研究点数在不同的题目上，没准可以研究出你想要的东西出来。",
-			"en_US": "You can go to the square table over there and spend research points on different topics. Maybe you can find out what you want.",
-			"ja_JP": "そちら四角桌に行って研究してもいいです。違ったテーマに研究点数を使って、あなたの欲しいものが手に入るかもしれない。"
+		"say.how.research.first": {
+			"zh_CN": "欢迎来到实验室，你是第一次来吧，让我来说明一下。",
+			"en_US": "Welcome to the laboratory. This is your first time. Let me explain.",
+			"ja_JP": "実験室へようこそ、初めてですね、説明させていただきます。"
+		},
+		"say.how.research.1": {
+			"zh_CN": "你可以去那边的方桌上进行研究，花费研究点数在不同的题目上，没准可以研究出你想要的东西出来。研究点数可以在做某些事情的时候获取。",
+			"en_US": "You can go to the square table over there and spend research points on different topics. Maybe you can find out what you want. Research points can be obtained when doing certain things.",
+			"ja_JP": "そちら四角桌に行って研究してもいいです。違ったテーマに研究点数を使って、あなたの欲しいものが手に入るかもしれない。研究点数は何かをするときに取得することができます。"
+		},
+		"say.how.research.point.reget": {
+			"zh_CN": "想必你已经拥有一些了吧，当增长时，你可以看到一些提示（配置里可以修改提示模式）。",
+			"en_US": "You presumably have some, as it grow, you can see some tips(tip mode can be modify in Configuration).",
+			"ja_JP": "あなたはすでにいくつか持っているでしょう、増加するといくつかのヒントが見られます（構成でヒントのモードを変更できる）。"
 		},
 		"say.want.paper": {
 			"zh_CN": "可以把你手上的古卷送给我吗？作为报酬，我会教你一些东西的。",
@@ -3346,6 +3388,11 @@
 			"zh_CN": "我好像没带够钱，还差%s才能购买它",
 			"en_US": "I don't have enough money. I'm short by 10 yuan.",
 			"ja_JP": "お金を十分に持っていないようですが、まだ%s元足りないので購入できません。"
+		},
+		"say.i.not.understand.ask.around": {
+			"zh_CN": "我不太了解它的使用方法，问问周围的人吧",
+			"en_US": "I don't know how to use it. Try to ask the people around me.",
+			"ja_JP": "使い方がよくわからないので、周りの人に聞いてみましょう"
 		}
 	},
 	"floor": {

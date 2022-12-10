@@ -38,4 +38,27 @@ public class MathSupporter {
 			}
 		}
 	}
+
+	// 方差
+	public static float variance(float[] nums) {
+		float average = 0;
+		for (float n : nums) average += n;
+		average = average / nums.length;
+
+		float variance = 0;
+		for (float n : nums) variance += (n - average) * (n - average);
+		variance = variance / nums.length;
+
+		return variance;
+	}
+
+	public static int digit(float num) {
+		int n = 0;
+		while (num >= 1) {
+			num /= 10;
+			n++;
+		}
+		return n;
+	}
+
 }

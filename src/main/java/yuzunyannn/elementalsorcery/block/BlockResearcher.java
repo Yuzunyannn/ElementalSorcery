@@ -16,6 +16,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -23,6 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
+import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.EffectTopic;
 
@@ -68,6 +72,11 @@ public class BlockResearcher extends Block {
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (worldIn.isRemote) return true;
+		if (!Researcher.isPlayerResearchable(playerIn)) {
+			playerIn.sendMessage(new TextComponentTranslation("say.i.not.understand.ask.around")
+					.setStyle(new Style().setColor(TextFormatting.YELLOW).setBold(true)));
+			return false;
+		}
 		playerIn.openGui(ElementalSorcery.instance, ESGuiHandler.GUI_RESEARCHER, worldIn, pos.getX(), pos.getY(),
 				pos.getZ());
 		return true;

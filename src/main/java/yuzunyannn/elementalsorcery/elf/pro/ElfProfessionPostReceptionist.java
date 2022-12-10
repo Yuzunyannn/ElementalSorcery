@@ -11,6 +11,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
@@ -25,7 +26,6 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSelect;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
@@ -66,7 +66,7 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 			return chapter;
 		}
 		// 设置返还信息
-		NBTTagCompound playerData = EventServer.getPlayerNBT(player);
+		NBTTagCompound playerData = ESData.getPlayerNBT(player);
 		NBTHelper.setItemList(playerData, "elfGuiItemBack", items);
 		if (address.isEmpty()) {
 			chapter.addScene(new TalkSceneSay("say.submit.empty"));
@@ -145,7 +145,7 @@ public class ElfProfessionPostReceptionist extends ElfProfessionNPCBase {
 		if (player instanceof EntityPlayerMP)
 			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) player, "post:apply");
 		// 首次
-		NBTTagCompound playerData = EventServer.getPlayerNBT(player);
+		NBTTagCompound playerData = ESData.getPlayerNBT(player);
 		if (!playerData.getBoolean("HPFW")) {
 			playerData.setBoolean("HPFW", true);
 			chapter.addScene(new TalkSceneSay("say.post.first.welfare"));

@@ -126,8 +126,7 @@ public class ItemElementCrack extends Item {
 			if (living.getHealth() <= 0) return;
 			if (EntityHelper.isCreative(living)) return;
 
-			DamageSource ds = DamageHelper.getMagicDamageSource(source, null).setDamageAllowedInCreativeMode()
-					.setDamageIsAbsolute().setDamageBypassesArmor();
+			DamageSource ds = DamageHelper.getVoidDamageSource(source, null);
 			living.setHealth(living.getHealth() * 0.95f);
 			living.attackEntityFrom(ds, 20f + living.getHealth() * 0.05f);
 

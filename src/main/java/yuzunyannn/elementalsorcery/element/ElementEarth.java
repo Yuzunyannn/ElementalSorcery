@@ -106,7 +106,7 @@ public class ElementEarth extends ElementCommon {
 		BlockPos pos;
 		if (entity != null) {
 			float dmg = MathHelper.sqrt(storage.getPower()) / 16;
-			DamageSource ds = DamageHelper.getMagicDamageSource(caster.asEntityLivingBase(), null);
+			DamageSource ds = DamageHelper.getDamageSource(storage, caster.asEntityLivingBase(), null);
 			entity.attackEntityFrom(ds, dmg);
 			pos = new BlockPos(entity.posX, entity.posY - 0.5, entity.posZ);
 		} else pos = target.getPos();

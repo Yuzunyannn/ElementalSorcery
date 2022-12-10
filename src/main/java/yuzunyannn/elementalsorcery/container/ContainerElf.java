@@ -15,7 +15,6 @@ import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
@@ -52,7 +51,7 @@ public abstract class ContainerElf extends Container {
 	public void onContainerClosed(EntityPlayer playerIn) {
 		super.onContainerClosed(playerIn);
 		if (this.elf != null) this.elf.setTalker(null);
-		NBTTagCompound playerData = EventServer.getPlayerNBT(player);
+		NBTTagCompound playerData = ESData.getPlayerNBT(player);
 		if (playerData.hasKey("elfGuiItemBack", NBTTag.TAG_LIST)) {
 			LinkedList<ItemStack> items = NBTHelper.getItemList(playerData, "elfGuiItemBack");
 			playerData.removeTag("elfGuiItemBack");
