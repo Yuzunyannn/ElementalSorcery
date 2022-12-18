@@ -28,10 +28,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.tile.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.api.util.MatchHelper;
@@ -61,7 +63,6 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 
 		// 自定义
 		Json.ergodicFile("recipes/melt_cauldron", (file, json) -> {
-			if (!ElementMap.checkModDemands(json)) return false;
 			return readJson(json);
 		});
 
@@ -126,9 +127,13 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 	}
 
 	static public boolean readJson(JsonObject json) {
+		ResourceLocation typePair = ElementMap.getType(json);
+		if (typePair == null) return false;
+		if (!ESAPI.MODID.equals(typePair.getNamespace())) return false;
+		if (!ElementMap.checkModDemands(json)) return false;
 
-		String type = json.hasString("type") ? json.getString("type") : "";
-		if ("volume".equals(type)) {
+		String type = typePair.getPath();
+		if ("melt_volume".equals(type)) {
 			JsonArray array = json.needArray("list", "volumes");
 			for (int i = 0; i < array.size(); i++) {
 				List<ItemRecord> items = array.needItems(i);
@@ -138,21 +143,22 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 				}
 			}
 			return true;
+		} else if ("melt".equals(type)) {
+			MeltCauldronRecipe recipe = new MeltCauldronRecipe();
+			JsonArray list = json.needArray("list", "items");
+			for (int i = 0; i < list.size(); i++) recipe.add(ItemRecord.asIngredient(list.needItems(i)));
+			recipe.setMagicStoneCount(json.needNumber("magicStoneCount", "magic").intValue());
+			JsonArray result = json.needArray("result");
+			for (int i = 0; i < list.size(); i++) {
+				JsonObject dat = result.needObject(i);
+				ItemRecord ir = dat.needItem("item");
+				recipe.addResult(dat.needNumber("deviation").floatValue(), ir.getStack());
+			}
+			recipes.add(recipe);
+			return true;
 		}
 
-		MeltCauldronRecipe recipe = new MeltCauldronRecipe();
-		JsonArray list = json.needArray("list", "items");
-		for (int i = 0; i < list.size(); i++) recipe.add(ItemRecord.asIngredient(list.needItems(i)));
-		recipe.setMagicStoneCount(json.needNumber("magicStoneCount", "magic").intValue());
-		JsonArray result = json.needArray("result");
-		for (int i = 0; i < list.size(); i++) {
-			JsonObject dat = result.needObject(i);
-			ItemRecord ir = dat.needItem("item");
-			recipe.addResult(dat.needNumber("deviation").floatValue(), ir.getStack());
-		}
-		recipes.add(recipe);
-
-		return true;
+		return false;
 	}
 
 	static public int getVolume(Item item) {

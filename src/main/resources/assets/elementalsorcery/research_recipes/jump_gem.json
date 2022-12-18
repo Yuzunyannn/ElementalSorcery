@@ -1,4 +1,5 @@
 {
+	"type": "elementalsorcery:research",
 	"topics": {
 		"Ender": 100,
 		"Natural": 60,

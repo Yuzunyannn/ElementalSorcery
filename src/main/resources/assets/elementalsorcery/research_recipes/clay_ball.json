@@ -1,7 +1,8 @@
 {
+	"type": "elementalsorcery:research",
 	"topics": {
 		"Natural": 15,
-		"Struct" : 5
+		"Struct": 5
 	},
 	"items": [
 		{

@@ -1,4 +1,5 @@
 {
+	"type": "elementalsorcery:research",
 	"topics": {
 		"Mantra": 120,
 		"Struct": 160,

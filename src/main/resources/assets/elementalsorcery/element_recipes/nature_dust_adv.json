@@ -1,4 +1,5 @@
 {
+	"type": "elementalsorcery:craft",
 	"pattern": [
 		"M#M",
 		"#W#",
@@ -16,8 +17,8 @@
 		},
 		"M": "elementalsorcery:star_sand",
 		"G": {
-			"type":"ore_dict",
-			"id":"ingotGold"
+			"type": "ore_dict",
+			"id": "ingotGold"
 		}
 	},
 	"element": [

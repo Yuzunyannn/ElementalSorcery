@@ -1,21 +1,22 @@
 {
-    "maps": [
-        {
-            "note": "命名牌",
-            "complex": 8,
-            "item": "minecraft:name_tag",
-            "element": [
-                {
-                    "id": "knowledge",
-                    "size": 22,
-                    "power": 153
-                },
-                {
-                    "id": "wood",
-                    "size": 12,
-                    "power": 88
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "命名牌",
+			"complex": 8,
+			"item": "minecraft:name_tag",
+			"element": [
+				{
+					"id": "knowledge",
+					"size": 22,
+					"power": 153
+				},
+				{
+					"id": "wood",
+					"size": 12,
+					"power": 88
+				}
+			]
+		}
+	]
 }

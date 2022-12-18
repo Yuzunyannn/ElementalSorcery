@@ -1,4 +1,5 @@
 {
+	"type": "elementalsorcery:research",
 	"topics": {
 		"Engine": 75,
 		"Struct": 125,

@@ -1,4 +1,5 @@
 {
+	"type": "elementalsorcery:craft",
 	"pattern": [
 		"GEG",
 		"EGE",
@@ -6,7 +7,7 @@
 	],
 	"key": {
 		"G": {
-			"type":"ore_dict",
+			"type": "ore_dict",
 			"id": "blockGlass"
 		},
 		"E": {

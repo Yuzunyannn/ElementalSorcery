@@ -1,11 +1,12 @@
 {
+	"type": "elementalsorcery:craft",
 	"pattern": [
 		"E E",
 		" C ",
 		"E E"
 	],
 	"key": {
-		"C":"elementalsorcery:deconstruct_altar_table",
+		"C": "elementalsorcery:deconstruct_altar_table",
 		"E": "elementalsorcery:estone"
 	},
 	"element": [

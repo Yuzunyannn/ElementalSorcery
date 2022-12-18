@@ -1,155 +1,156 @@
 {
-    "maps": [
-        {
-            "note": "锡矿",
-            "item": {
-                "type": "ore_dict",
-                "item": "oreTin"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 24,
-                    "power": 295
-                },
-                {
-                    "id": "earth",
-                    "size": 5,
-                    "power": 30
-                }
-            ]
-        },
-        {
-            "note": "碎锡粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "crushedTin"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 12,
-                    "power": 280
-                },
-                {
-                    "id": "earth",
-                    "size": 2,
-                    "power": 30
-                }
-            ]
-        },
-        {
-            "note": "纯碎锡粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "crushedPurifiedTin"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 6,
-                    "power": 270
-                }
-            ]
-        },
-        {
-            "note": "锡锭",
-            "item": {
-                "type": "ore_dict",
-                "item": "ingotTin"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 250
-                }
-            ]
-        },
-        {
-            "note": "锡粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "dustTin"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 250
-                }
-            ]
-        },
-        {
-            "note": "小锡粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "dustTinyTin"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 1,
-                    "power": 156
-                }
-            ]
-        },
-        {
-            "note": "锡粒",
-            "item": {
-                "type": "ore_dict",
-                "item": "nuggetTin"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 1,
-                    "power": 156
-                }
-            ]
-        },
-        {
-            "note": "锡板",
-            "item": {
-                "type": "ore_dict",
-                "item": "plateTin"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 250
-                }
-            ]
-        },
-        {
-            "note": "厚锡板",
-            "item": {
-                "type": "ore_dict",
-                "item": "plateDenseTin"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 24,
-                    "power": 250
-                }
-            ]
-        },
-        {
-            "note": "锡外壳",
-            "mods": "ic2",
-            "item": {
-                "item": "ic2:casing",
-                "meta": 6
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 2,
-                    "power": 250
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "锡矿",
+			"item": {
+				"type": "ore_dict",
+				"item": "oreTin"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 24,
+					"power": 295
+				},
+				{
+					"id": "earth",
+					"size": 5,
+					"power": 30
+				}
+			]
+		},
+		{
+			"note": "碎锡粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "crushedTin"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 12,
+					"power": 280
+				},
+				{
+					"id": "earth",
+					"size": 2,
+					"power": 30
+				}
+			]
+		},
+		{
+			"note": "纯碎锡粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "crushedPurifiedTin"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 6,
+					"power": 270
+				}
+			]
+		},
+		{
+			"note": "锡锭",
+			"item": {
+				"type": "ore_dict",
+				"item": "ingotTin"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 250
+				}
+			]
+		},
+		{
+			"note": "锡粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "dustTin"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 250
+				}
+			]
+		},
+		{
+			"note": "小锡粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "dustTinyTin"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 1,
+					"power": 156
+				}
+			]
+		},
+		{
+			"note": "锡粒",
+			"item": {
+				"type": "ore_dict",
+				"item": "nuggetTin"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 1,
+					"power": 156
+				}
+			]
+		},
+		{
+			"note": "锡板",
+			"item": {
+				"type": "ore_dict",
+				"item": "plateTin"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 250
+				}
+			]
+		},
+		{
+			"note": "厚锡板",
+			"item": {
+				"type": "ore_dict",
+				"item": "plateDenseTin"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 24,
+					"power": 250
+				}
+			]
+		},
+		{
+			"note": "锡外壳",
+			"mods": "ic2",
+			"item": {
+				"item": "ic2:casing",
+				"meta": 6
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 2,
+					"power": 250
+				}
+			]
+		}
+	]
 }

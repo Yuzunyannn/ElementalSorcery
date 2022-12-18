@@ -1,155 +1,156 @@
 {
-    "maps": [
-        {
-            "note": "铅矿",
-            "item": {
-                "type": "ore_dict",
-                "item": "oreLead"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 24,
-                    "power": 612
-                },
-                {
-                    "id": "earth",
-                    "size": 5,
-                    "power": 30
-                }
-            ]
-        },
-        {
-            "note": "碎铅粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "crushedLead"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 12,
-                    "power": 600
-                },
-                {
-                    "id": "earth",
-                    "size": 2,
-                    "power": 30
-                }
-            ]
-        },
-        {
-            "note": "纯碎铅粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "crushedPurifiedLead"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 6,
-                    "power": 585
-                }
-            ]
-        },
-        {
-            "note": "铅锭",
-            "item": {
-                "type": "ore_dict",
-                "item": "ingotLead"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 580
-                }
-            ]
-        },
-        {
-            "note": "铅粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "dustLead"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 580
-                }
-            ]
-        },
-        {
-            "note": "小铅粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "dustTinyLead"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 1,
-                    "power": 364
-                }
-            ]
-        },
-        {
-            "note": "铅粒",
-            "item": {
-                "type": "ore_dict",
-                "item": "nuggetLead"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 1,
-                    "power": 364
-                }
-            ]
-        },
-        {
-            "note": "铅板",
-            "item": {
-                "type": "ore_dict",
-                "item": "plateLead"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 580
-                }
-            ]
-        },
-        {
-            "note": "厚铅板",
-            "item": {
-                "type": "ore_dict",
-                "item": "plateDenseLead"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 24,
-                    "power": 580
-                }
-            ]
-        },
-        {
-            "note": "铅外壳",
-            "mods": "ic2",
-            "item": {
-                "item": "ic2:casing",
-                "meta": 4
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 2,
-                    "power": 580
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "铅矿",
+			"item": {
+				"type": "ore_dict",
+				"item": "oreLead"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 24,
+					"power": 612
+				},
+				{
+					"id": "earth",
+					"size": 5,
+					"power": 30
+				}
+			]
+		},
+		{
+			"note": "碎铅粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "crushedLead"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 12,
+					"power": 600
+				},
+				{
+					"id": "earth",
+					"size": 2,
+					"power": 30
+				}
+			]
+		},
+		{
+			"note": "纯碎铅粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "crushedPurifiedLead"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 6,
+					"power": 585
+				}
+			]
+		},
+		{
+			"note": "铅锭",
+			"item": {
+				"type": "ore_dict",
+				"item": "ingotLead"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 580
+				}
+			]
+		},
+		{
+			"note": "铅粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "dustLead"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 580
+				}
+			]
+		},
+		{
+			"note": "小铅粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "dustTinyLead"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 1,
+					"power": 364
+				}
+			]
+		},
+		{
+			"note": "铅粒",
+			"item": {
+				"type": "ore_dict",
+				"item": "nuggetLead"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 1,
+					"power": 364
+				}
+			]
+		},
+		{
+			"note": "铅板",
+			"item": {
+				"type": "ore_dict",
+				"item": "plateLead"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 580
+				}
+			]
+		},
+		{
+			"note": "厚铅板",
+			"item": {
+				"type": "ore_dict",
+				"item": "plateDenseLead"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 24,
+					"power": 580
+				}
+			]
+		},
+		{
+			"note": "铅外壳",
+			"mods": "ic2",
+			"item": {
+				"item": "ic2:casing",
+				"meta": 4
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 2,
+					"power": 580
+				}
+			]
+		}
+	]
 }

@@ -17,6 +17,7 @@ import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
@@ -31,6 +32,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.IElementMap;
 import yuzunyannn.elementalsorcery.api.tile.IItemStructureCraft;
 import yuzunyannn.elementalsorcery.tile.altar.TileAnalysisAltar;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementAnalysisPacket;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
@@ -67,7 +69,7 @@ public class ElementMap implements IElementMap {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public Collection<IToElement> getToElements() {
 		return toList;
@@ -178,25 +180,9 @@ public class ElementMap implements IElementMap {
 		});
 	}
 
-	/** 检查是否满足mod的加载需求 */
-	public static boolean checkModDemands(JsonObject json) {
-		// 条件mod调查
-		String[] demandMods = null;
-		try {
-			demandMods = json.needStrings("demand", "demands", "demandMods", "demandMod", "mods");
-		} catch (RuntimeException e) {}
-		if (demandMods != null && demandMods.length > 0) {
-			for (String modId : demandMods) {
-				if (Loader.isModLoaded(modId)) continue;
-				// 存在没有加载mod的时候，直接走人
-				return false;
-			}
-		}
-		return true;
-	}
-
 	// 对一个json进行处理
 	public static void loadElementMap(JsonObject json, String fileName) {
+		if (!checkType(json, "element_map")) return;
 		if (!checkModDemands(json)) return;
 		JsonArray jarray = json.needArray("maps");
 		for (int i = 0; i < jarray.size(); i++) {
@@ -308,4 +294,34 @@ public class ElementMap implements IElementMap {
 		return newMap;
 	}
 
+	/** 检查是否满足mod的加载需求 */
+	public static boolean checkModDemands(JsonObject json) {
+		// 条件mod调查
+		String[] demandMods = null;
+		try {
+			demandMods = json.needStrings("demand", "demands", "demandMods", "demandMod", "mods");
+		} catch (RuntimeException e) {}
+		if (demandMods != null && demandMods.length > 0) {
+			for (String modId : demandMods) {
+				if (Loader.isModLoaded(modId)) continue;
+				// 存在没有加载mod的时候，直接走人
+				return false;
+			}
+		}
+		return true;
+	}
+
+	public static ResourceLocation getType(JsonObject json) {
+		if (json.hasString("type")) return new ResourceLocation(json.getString("type"));
+		if (ESAPI.isDevelop) ESAPI.logger.warn("找不到json的Type：dev模式下请检查！<<<<<<<<<<<>>>>>>>>>>>>>\n>>>>>>>" + json);
+		return null;
+	}
+
+	public static boolean checkType(JsonObject json, String typeName) {
+		ResourceLocation src = getType(json);
+		if (src == null) return false;
+		ResourceLocation dst = TextHelper.toESResourceLocation(typeName);
+		if (!dst.getNamespace().equals(src.getNamespace())) return false;
+		return dst.getPath().equals(src.getPath());
+	}
 }

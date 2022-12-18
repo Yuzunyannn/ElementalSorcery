@@ -1,60 +1,61 @@
 {
-    "mods": "appliedenergistics2",
-    "maps": [
-        {
-            "note": "塞特石英",
-            "complex": 8,
-            "item": {
-                "type": "ore_dict",
-                "item": "crystalCertusQuartz"
-            },
-            "element": [
-                {
-                    "id": "earth",
-                    "size": 12,
-                    "power": 324
-                },
-                {
-                    "id": "fire",
-                    "size": 8,
-                    "power": 257
-                }
-            ]
-        },
-        {
-            "note": "充能的塞特石英",
-            "complex": 9,
-            "item": {
-                "id": "appliedenergistics2:material",
-                "meta": 1
-            },
-            "element": [
-                {
-                    "id": "earth",
-                    "size": 12,
-                    "power": 324
-                },
-                {
-                    "id": "fire",
-                    "size": 12,
-                    "power": 257
-                }
-            ]
-        },
-        {
-            "note": "物质球",
-            "complex": 1,
-            "item": {
-                "id": "appliedenergistics2:material",
-                "meta": 6
-            },
-            "element": [
-                {
-                    "id": "magic",
-                    "size": 52,
-                    "power": 25
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"mods": "appliedenergistics2",
+	"maps": [
+		{
+			"note": "塞特石英",
+			"complex": 8,
+			"item": {
+				"type": "ore_dict",
+				"item": "crystalCertusQuartz"
+			},
+			"element": [
+				{
+					"id": "earth",
+					"size": 12,
+					"power": 324
+				},
+				{
+					"id": "fire",
+					"size": 8,
+					"power": 257
+				}
+			]
+		},
+		{
+			"note": "充能的塞特石英",
+			"complex": 9,
+			"item": {
+				"id": "appliedenergistics2:material",
+				"meta": 1
+			},
+			"element": [
+				{
+					"id": "earth",
+					"size": 12,
+					"power": 324
+				},
+				{
+					"id": "fire",
+					"size": 12,
+					"power": 257
+				}
+			]
+		},
+		{
+			"note": "物质球",
+			"complex": 1,
+			"item": {
+				"id": "appliedenergistics2:material",
+				"meta": 6
+			},
+			"element": [
+				{
+					"id": "magic",
+					"size": 52,
+					"power": 25
+				}
+			]
+		}
+	]
 }

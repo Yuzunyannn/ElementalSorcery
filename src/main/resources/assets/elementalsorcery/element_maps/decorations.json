@@ -1,285 +1,286 @@
 {
-    "maps": [
-        {
-            "note": "植物",
-            "item": [
-                "minecraft:sapling",
-                "minecraft:tallgrass",
-                "minecraft:yellow_flower",
-                "minecraft:red_flower",
-                "minecraft:brown_mushroom",
-                "minecraft:red_mushroom",
-                "minecraft:cactus",
-                "minecraft:vine",
-                "minecraft:waterlily",
-                "minecraft:double_plant",
-                {
-                    "type": "ore_dict",
-                    "item": "treeLeaves"
-                }
-            ],
-            "element": [
-                {
-                    "id": "wood",
-                    "size": 2,
-                    "power": 8
-                },
-                {
-                    "id": "water",
-                    "size": 1,
-                    "power": 4
-                }
-            ]
-        },
-        {
-            "note": "网",
-            "item": "minecraft:web",
-            "element": {
-                "id": "wood",
-                "size": 1,
-                "power": 20
-            }
-        },
-        {
-            "note": "枯死灌木",
-            "item": "minecraft:deadbush",
-            "element": {
-                "id": "wood",
-                "size": 2,
-                "power": 8
-            }
-        },
-        {
-            "note": "箱子",
-            "item": "minecraft:chest",
-            "element": [
-                {
-                    "id": "wood",
-                    "size": 8,
-                    "power": 8
-                }
-            ],
-            "complex": 5
-        },
-        {
-            "note": "雪",
-            "item": "minecraft:snow_layer",
-            "element": [
-                {
-                    "id": "water",
-                    "size": 10,
-                    "power": 48
-                }
-            ]
-        },
-        {
-            "note": "怪物的蛋",
-            "item": "minecraft:monster_egg",
-            "element": [
-                {
-                    "id": "wood",
-                    "size": 8,
-                    "power": 42
-                },
-                {
-                    "id": "earth",
-                    "size": 1,
-                    "power": 5
-                }
-            ]
-        },
-        {
-            "note": "附魔台",
-            "complex": 7,
-            "item": "minecraft:enchanting_table",
-            "element": [
-                {
-                    "id": "magic",
-                    "size": 300,
-                    "power": 120
-                },
-                {
-                    "id": "knowledge",
-                    "size": 150,
-                    "power": 300
-                },
-                {
-                    "id": "earth",
-                    "size": 48,
-                    "power": 95
-                }
-            ]
-        },
-        {
-            "note": "末地传送门",
-            "complex": 12,
-            "item": "minecraft:end_portal_frame",
-            "element": [
-                {
-                    "id": "ender",
-                    "size": 482,
-                    "power": 750
-                },
-                {
-                    "id": "earth",
-                    "size": 32,
-                    "power": 250
-                }
-            ]
-        },
-        {
-            "note": "紫菘植物",
-            "item": [
-                "minecraft:chorus_plant",
-                "minecraft:chorus_flower"
-            ],
-            "element": [
-                {
-                    "id": "ender",
-                    "size": 4,
-                    "power": 36
-                },
-                {
-                    "id": "wood",
-                    "size": 3,
-                    "power": 12
-                },
-                {
-                    "id": "water",
-                    "size": 2,
-                    "power": 6
-                }
-            ]
-        },
-        {
-            "note": "潜影盒",
-            "complex": 6,
-            "item": [
-                "minecraft:white_shulker_box",
-                "minecraft:orange_shulker_box",
-                "minecraft:magenta_shulker_box",
-                "minecraft:light_blue_shulker_box",
-                "minecraft:yellow_shulker_box",
-                "minecraft:lime_shulker_box",
-                "minecraft:pink_shulker_box",
-                "minecraft:gray_shulker_box",
-                "minecraft:silver_shulker_box",
-                "minecraft:cyan_shulker_box",
-                "minecraft:purple_shulker_box",
-                "minecraft:blue_shulker_box",
-                "minecraft:brown_shulker_box",
-                "minecraft:green_shulker_box",
-                "minecraft:red_shulker_box",
-                "minecraft:black_shulker_box"
-            ],
-            "element": [
-                {
-                    "id": "ender",
-                    "size": 26,
-                    "power": 120
-                },
-                {
-                    "id": "wood",
-                    "size": 28,
-                    "power": 60
-                }
-            ]
-        },
-        {
-            "note": "带釉陶瓦",
-            "item": [
-                "minecraft:white_glazed_terracotta",
-                "minecraft:orange_glazed_terracotta",
-                "minecraft:magenta_glazed_terracotta",
-                "minecraft:light_blue_glazed_terracotta",
-                "minecraft:yellow_glazed_terracotta",
-                "minecraft:lime_glazed_terracotta",
-                "minecraft:pink_glazed_terracotta",
-                "minecraft:gray_glazed_terracotta",
-                "minecraft:silver_glazed_terracotta",
-                "minecraft:cyan_glazed_terracotta",
-                "minecraft:purple_glazed_terracotta",
-                "minecraft:blue_glazed_terracotta",
-                "minecraft:brown_glazed_terracotta",
-                "minecraft:green_glazed_terracotta",
-                "minecraft:red_glazed_terracotta",
-                "minecraft:black_glazed_terracotta"
-            ],
-            "element": [
-                {
-                    "id": "earth",
-                    "size": 20,
-                    "power": 191
-                },
-                {
-                    "id": "metal",
-                    "size": 14,
-                    "power": 165
-                }
-            ],
-            "complex": 6
-        },
-        {
-            "note": "头骨",
-            "item": "minecraft:skull",
-            "element": [
-                {
-                    "id": "wood",
-                    "size": 80,
-                    "power": 100
-                },
-                {
-                    "id": "metal",
-                    "size": 50,
-                    "power": 75
-                }
-            ]
-        },
-        {
-            "note": "龙首",
-            "item": {
-                "item": "minecraft:skull",
-                "data": 5
-            },
-            "element": [
-                {
-                    "id": "ender",
-                    "size": 550,
-                    "power": 850
-                },
-                {
-                    "id": "wood",
-                    "size": 80,
-                    "power": 100
-                },
-                {
-                    "id": "metal",
-                    "size": 50,
-                    "power": 75
-                }
-            ]
-        },
-        {
-            "note": "龙蛋",
-            "complex": 12,
-            "item": "minecraft:dragon_egg",
-            "element": [
-                {
-                    "id": "ender",
-                    "size": 512,
-                    "power": 2048
-                },
-                {
-                    "id": "wood",
-                    "size": 512,
-                    "power": 1024
-                },
-                {
-                    "id": "water",
-                    "size": 128,
-                    "power": 512
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "植物",
+			"item": [
+				"minecraft:sapling",
+				"minecraft:tallgrass",
+				"minecraft:yellow_flower",
+				"minecraft:red_flower",
+				"minecraft:brown_mushroom",
+				"minecraft:red_mushroom",
+				"minecraft:cactus",
+				"minecraft:vine",
+				"minecraft:waterlily",
+				"minecraft:double_plant",
+				{
+					"type": "ore_dict",
+					"item": "treeLeaves"
+				}
+			],
+			"element": [
+				{
+					"id": "wood",
+					"size": 2,
+					"power": 8
+				},
+				{
+					"id": "water",
+					"size": 1,
+					"power": 4
+				}
+			]
+		},
+		{
+			"note": "网",
+			"item": "minecraft:web",
+			"element": {
+				"id": "wood",
+				"size": 1,
+				"power": 20
+			}
+		},
+		{
+			"note": "枯死灌木",
+			"item": "minecraft:deadbush",
+			"element": {
+				"id": "wood",
+				"size": 2,
+				"power": 8
+			}
+		},
+		{
+			"note": "箱子",
+			"item": "minecraft:chest",
+			"element": [
+				{
+					"id": "wood",
+					"size": 8,
+					"power": 8
+				}
+			],
+			"complex": 5
+		},
+		{
+			"note": "雪",
+			"item": "minecraft:snow_layer",
+			"element": [
+				{
+					"id": "water",
+					"size": 10,
+					"power": 48
+				}
+			]
+		},
+		{
+			"note": "怪物的蛋",
+			"item": "minecraft:monster_egg",
+			"element": [
+				{
+					"id": "wood",
+					"size": 8,
+					"power": 42
+				},
+				{
+					"id": "earth",
+					"size": 1,
+					"power": 5
+				}
+			]
+		},
+		{
+			"note": "附魔台",
+			"complex": 7,
+			"item": "minecraft:enchanting_table",
+			"element": [
+				{
+					"id": "magic",
+					"size": 300,
+					"power": 120
+				},
+				{
+					"id": "knowledge",
+					"size": 150,
+					"power": 300
+				},
+				{
+					"id": "earth",
+					"size": 48,
+					"power": 95
+				}
+			]
+		},
+		{
+			"note": "末地传送门",
+			"complex": 12,
+			"item": "minecraft:end_portal_frame",
+			"element": [
+				{
+					"id": "ender",
+					"size": 482,
+					"power": 750
+				},
+				{
+					"id": "earth",
+					"size": 32,
+					"power": 250
+				}
+			]
+		},
+		{
+			"note": "紫菘植物",
+			"item": [
+				"minecraft:chorus_plant",
+				"minecraft:chorus_flower"
+			],
+			"element": [
+				{
+					"id": "ender",
+					"size": 4,
+					"power": 36
+				},
+				{
+					"id": "wood",
+					"size": 3,
+					"power": 12
+				},
+				{
+					"id": "water",
+					"size": 2,
+					"power": 6
+				}
+			]
+		},
+		{
+			"note": "潜影盒",
+			"complex": 6,
+			"item": [
+				"minecraft:white_shulker_box",
+				"minecraft:orange_shulker_box",
+				"minecraft:magenta_shulker_box",
+				"minecraft:light_blue_shulker_box",
+				"minecraft:yellow_shulker_box",
+				"minecraft:lime_shulker_box",
+				"minecraft:pink_shulker_box",
+				"minecraft:gray_shulker_box",
+				"minecraft:silver_shulker_box",
+				"minecraft:cyan_shulker_box",
+				"minecraft:purple_shulker_box",
+				"minecraft:blue_shulker_box",
+				"minecraft:brown_shulker_box",
+				"minecraft:green_shulker_box",
+				"minecraft:red_shulker_box",
+				"minecraft:black_shulker_box"
+			],
+			"element": [
+				{
+					"id": "ender",
+					"size": 26,
+					"power": 120
+				},
+				{
+					"id": "wood",
+					"size": 28,
+					"power": 60
+				}
+			]
+		},
+		{
+			"note": "带釉陶瓦",
+			"item": [
+				"minecraft:white_glazed_terracotta",
+				"minecraft:orange_glazed_terracotta",
+				"minecraft:magenta_glazed_terracotta",
+				"minecraft:light_blue_glazed_terracotta",
+				"minecraft:yellow_glazed_terracotta",
+				"minecraft:lime_glazed_terracotta",
+				"minecraft:pink_glazed_terracotta",
+				"minecraft:gray_glazed_terracotta",
+				"minecraft:silver_glazed_terracotta",
+				"minecraft:cyan_glazed_terracotta",
+				"minecraft:purple_glazed_terracotta",
+				"minecraft:blue_glazed_terracotta",
+				"minecraft:brown_glazed_terracotta",
+				"minecraft:green_glazed_terracotta",
+				"minecraft:red_glazed_terracotta",
+				"minecraft:black_glazed_terracotta"
+			],
+			"element": [
+				{
+					"id": "earth",
+					"size": 20,
+					"power": 191
+				},
+				{
+					"id": "metal",
+					"size": 14,
+					"power": 165
+				}
+			],
+			"complex": 6
+		},
+		{
+			"note": "头骨",
+			"item": "minecraft:skull",
+			"element": [
+				{
+					"id": "wood",
+					"size": 80,
+					"power": 100
+				},
+				{
+					"id": "metal",
+					"size": 50,
+					"power": 75
+				}
+			]
+		},
+		{
+			"note": "龙首",
+			"item": {
+				"item": "minecraft:skull",
+				"data": 5
+			},
+			"element": [
+				{
+					"id": "ender",
+					"size": 550,
+					"power": 850
+				},
+				{
+					"id": "wood",
+					"size": 80,
+					"power": 100
+				},
+				{
+					"id": "metal",
+					"size": 50,
+					"power": 75
+				}
+			]
+		},
+		{
+			"note": "龙蛋",
+			"complex": 12,
+			"item": "minecraft:dragon_egg",
+			"element": [
+				{
+					"id": "ender",
+					"size": 512,
+					"power": 2048
+				},
+				{
+					"id": "wood",
+					"size": 512,
+					"power": 1024
+				},
+				{
+					"id": "water",
+					"size": 128,
+					"power": 512
+				}
+			]
+		}
+	]
 }

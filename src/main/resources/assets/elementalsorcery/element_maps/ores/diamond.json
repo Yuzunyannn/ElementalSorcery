@@ -1,106 +1,107 @@
 {
-    "maps": [
-        {
-            "note": "钻石矿",
-            "item": {
-                "type": "ore_dict",
-                "item": "oreDiamond"
-            },
-            "element": [
-                {
-                    "id": "wood",
-                    "size": 64,
-                    "power": 850
-                },
-                {
-                    "id": "earth",
-                    "size": 5,
-                    "power": 30
-                }
-            ]
-        },
-        {
-            "note": "钻石",
-            "item": {
-                "type": "ore_dict",
-                "item": "gemDiamond"
-            },
-            "element": {
-                "id": "wood",
-                "size": 12,
-                "power": 625
-            },
-            "complex": 4
-        },
-        {
-            "note": "钻石粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "dustDiamond"
-            },
-            "element": [
-                {
-                    "id": "wood",
-                    "size": 12,
-                    "power": 625
-                }
-            ]
-        },
-        {
-            "note": "小钻石粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "dustTinyDiamond"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 2,
-                    "power": 453
-                }
-            ]
-        },
-        {
-            "note": "钻石粒",
-            "item": {
-                "type": "ore_dict",
-                "item": "nuggetDiamond"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 2,
-                    "power": 453
-                }
-            ]
-        },
-        {
-            "note": "钻石板",
-            "item": {
-                "type": "ore_dict",
-                "item": "plateDiamond"
-            },
-            "element": [
-                {
-                    "id": "wood",
-                    "size": 12,
-                    "power": 625
-                }
-            ]
-        },
-        {
-            "note": "厚钻石板",
-            "item": {
-                "type": "ore_dict",
-                "item": "plateDenseDiamond"
-            },
-            "element": [
-                {
-                    "id": "wood",
-                    "size": 58,
-                    "power": 625
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "钻石矿",
+			"item": {
+				"type": "ore_dict",
+				"item": "oreDiamond"
+			},
+			"element": [
+				{
+					"id": "wood",
+					"size": 64,
+					"power": 850
+				},
+				{
+					"id": "earth",
+					"size": 5,
+					"power": 30
+				}
+			]
+		},
+		{
+			"note": "钻石",
+			"item": {
+				"type": "ore_dict",
+				"item": "gemDiamond"
+			},
+			"element": {
+				"id": "wood",
+				"size": 12,
+				"power": 625
+			},
+			"complex": 4
+		},
+		{
+			"note": "钻石粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "dustDiamond"
+			},
+			"element": [
+				{
+					"id": "wood",
+					"size": 12,
+					"power": 625
+				}
+			]
+		},
+		{
+			"note": "小钻石粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "dustTinyDiamond"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 2,
+					"power": 453
+				}
+			]
+		},
+		{
+			"note": "钻石粒",
+			"item": {
+				"type": "ore_dict",
+				"item": "nuggetDiamond"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 2,
+					"power": 453
+				}
+			]
+		},
+		{
+			"note": "钻石板",
+			"item": {
+				"type": "ore_dict",
+				"item": "plateDiamond"
+			},
+			"element": [
+				{
+					"id": "wood",
+					"size": 12,
+					"power": 625
+				}
+			]
+		},
+		{
+			"note": "厚钻石板",
+			"item": {
+				"type": "ore_dict",
+				"item": "plateDenseDiamond"
+			},
+			"element": [
+				{
+					"id": "wood",
+					"size": 58,
+					"power": 625
+				}
+			]
+		}
+	]
 }

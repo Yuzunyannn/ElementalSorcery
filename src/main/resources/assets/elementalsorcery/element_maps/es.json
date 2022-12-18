@@ -1,426 +1,427 @@
 {
-    "maps": [
-        {
-            "note": "蓝晶石矿",
-            "item": {
-                "type": "ore_dict",
-                "item": "oreKyanite"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 42,
-                    "power": 330
-                },
-                {
-                    "id": "magic",
-                    "size": 20,
-                    "power": 50
-                },
-                {
-                    "id": "earth",
-                    "size": 5,
-                    "power": 30
-                }
-            ]
-        },
-        {
-            "note": "蓝晶石",
-            "item": {
-                "type": "ore_dict",
-                "item": "kyanite"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 10,
-                    "power": 304
-                },
-                {
-                    "id": "magic",
-                    "size": 6,
-                    "power": 20
-                }
-            ]
-        },
-        {
-            "note": "附魔书",
-            "item": "elementalsorcery:spellbook_enchantment",
-            "element": {
-                "id": "knowledge",
-                "size": 150,
-                "power": 300
-            }
-        },
-        {
-            "note": "没树的附魔台",
-            "item": "elementalsorcery:invalid_enchantment_table",
-            "element": [
-                {
-                    "id": "earth",
-                    "size": 48,
-                    "power": 95
-                }
-            ]
-        },
-        {
-            "note": "魔石碎片",
-            "item": "elementalsorcery:magic_piece",
-            "element": [
-                {
-                    "id": "magic",
-                    "size": 25,
-                    "power": 50
-                }
-            ]
-        },
-        {
-            "note": "魔石",
-            "complex": 2,
-            "item": "elementalsorcery:magic_stone",
-            "element": [
-                {
-                    "id": "magic",
-                    "size": 100,
-                    "power": 100
-                },
-                {
-                    "id": "earth",
-                    "size": 3,
-                    "power": 10
-                }
-            ]
-        },
-        {
-            "note": "星之种",
-            "item": "elementalsorcery:star_flower",
-            "element": [
-                {
-                    "id": "star",
-                    "size": 125,
-                    "power": 500
-                }
-            ],
-            "complex": 9
-        },
-        {
-            "note": "星沙",
-            "item": "elementalsorcery:star_sand",
-            "element": [
-                {
-                    "id": "earth",
-                    "size": 10,
-                    "power": 16
-                },
-                {
-                    "id": "star",
-                    "size": 5,
-                    "power": 12
-                }
-            ]
-        },
-        {
-            "note": "星石",
-            "item": "elementalsorcery:star_stone",
-            "element": [
-                {
-                    "id": "earth",
-                    "size": 2,
-                    "power": 14
-                },
-                {
-                    "id": "star",
-                    "size": 1,
-                    "power": 8
-                }
-            ]
-        },
-        {
-            "note": "狂暴皮革",
-            "complex": 2,
-            "item": "elementalsorcery:rabid_leather",
-            "element": [
-                {
-                    "id": "air",
-                    "size": 4,
-                    "power": 521
-                },
-                {
-                    "id": "wood",
-                    "size": 12,
-                    "power": 200
-                }
-            ]
-        },
-        {
-            "note": "忧郁之泪",
-            "complex": 8,
-            "item": "elementalsorcery:dejected_tear",
-            "element": [
-                {
-                    "id": "water",
-                    "size": 42,
-                    "power": 700
-                },
-                {
-                    "id": "knowledge",
-                    "size": 35,
-                    "power": 575
-                },
-                {
-                    "id": "fire",
-                    "size": 28,
-                    "power": 444
-                }
-            ]
-        },
-        {
-            "note": "恐惧宝石",
-            "complex": 7,
-            "item": "elementalsorcery:dread_gem",
-            "element": [
-                {
-                    "id": "earth",
-                    "size": 143,
-                    "power": 523
-                },
-                {
-                    "id": "metal",
-                    "size": 95,
-                    "power": 485
-                }
-            ]
-        },
-        {
-            "note": "傲慢羊毛",
-            "complex": 10,
-            "item": "elementalsorcery:arrogant_wool",
-            "element": [
-                {
-                    "id": "fire",
-                    "size": 27,
-                    "power": 777
-                },
-                {
-                    "id": "water",
-                    "size": 27,
-                    "power": 777
-                },
-                {
-                    "id": "star",
-                    "size": 4,
-                    "power": 666
-                }
-            ]
-        },
-        {
-            "note": "立方体核心",
-            "complex": 6,
-            "item": "elementalsorcery:cube_core",
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 152,
-                    "power": 97
-                },
-                {
-                    "id": "wood",
-                    "size": 134,
-                    "power": 91
-                },
-                {
-                    "id": "star",
-                    "size": 17,
-                    "power": 37
-                }
-            ]
-        },
-        {
-            "note": "绯红水晶矿",
-            "complex": 6,
-            "item": "elementalsorcery:scarlet_crystal_ore",
-            "element": [
-                {
-                    "id": "fire",
-                    "size": 67,
-                    "power": 821
-                },
-                {
-                    "id": "earth",
-                    "size": 40,
-                    "power": 380
-                }
-            ]
-        },
-        {
-            "note": "魔力水晶",
-            "complex": 1,
-            "item": "elementalsorcery:magic_crystal",
-            "element": [
-                {
-                    "id": "magic",
-                    "size": 80,
-                    "power": 450
-                },
-                {
-                    "id": "earth",
-                    "size": 8,
-                    "power": 354
-                }
-            ]
-        },
-        {
-            "note": "绯红水晶",
-            "complex": 1,
-            "item": "elementalsorcery:scarlet_crystal",
-            "element": [
-                {
-                    "id": "fire",
-                    "size": 12,
-                    "power": 420
-                },
-                {
-                    "id": "earth",
-                    "size": 8,
-                    "power": 354
-                }
-            ]
-        },
-        {
-            "note": "秩序水晶",
-            "complex": 16,
-            "item": "elementalsorcery:order_crystal",
-            "element": [
-                {
-                    "id": "star",
-                    "size": 1,
-                    "power": 888
-                },
-                {
-                    "id": "earth",
-                    "size": 1,
-                    "power": 888
-                },
-                {
-                    "id": "fire",
-                    "size": 1,
-                    "power": 888
-                },
-                {
-                    "id": "water",
-                    "size": 1,
-                    "power": 888
-                },
-                {
-                    "id": "knowledge",
-                    "size": 1,
-                    "power": 888
-                }
-            ]
-        },
-        {
-            "note": "精灵结晶",
-            "item": "elementalsorcery:elf_crystal",
-            "element": [
-                {
-                    "id": "earth",
-                    "size": 1,
-                    "power": 6
-                }
-            ]
-        },
-        {
-            "note": "元素水晶",
-            "complex": 2,
-            "item": "elementalsorcery:element_crystal",
-            "element": [
-                {
-                    "id": "air",
-                    "size": 12,
-                    "power": 420
-                },
-                {
-                    "id": "earth",
-                    "size": 6,
-                    "power": 354
-                }
-            ]
-        },
-        {
-            "note": "湛蓝水晶",
-            "complex": 2,
-            "item": "elementalsorcery:azure_crystal",
-            "element": [
-                {
-                    "id": "earth",
-                    "size": 12,
-                    "power": 575
-                }
-            ]
-        },
-        {
-            "note": "共鸣水晶",
-            "item": "elementalsorcery:resonant_crystal",
-            "element": [
-                {
-                    "id": "wood",
-                    "size": 8,
-                    "power": 385
-                },
-                {
-                    "id": "earth",
-                    "size": 6,
-                    "power": 354
-                }
-            ]
-        },
-        {
-            "note": "咒术水晶",
-            "item": "elementalsorcery:spell_crystal",
-            "element": [
-                {
-                    "id": "knowledge",
-                    "size": 12,
-                    "power": 420
-                },
-                {
-                    "id": "earth",
-                    "size": 6,
-                    "power": 354
-                }
-            ]
-        },
-        {
-            "note": "结构水晶",
-            "item": "elementalsorcery:item_crystal",
-            "element": [
-                {
-                    "id": "wood",
-                    "size": 12,
-                    "power": 420
-                },
-                {
-                    "id": "earth",
-                    "size": 6,
-                    "power": 354
-                }
-            ]
-        },
-        {
-            "note": "建筑水晶",
-            "item": "elementalsorcery:architecture_crystal",
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 12,
-                    "power": 420
-                },
-                {
-                    "id": "earth",
-                    "size": 6,
-                    "power": 354
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "蓝晶石矿",
+			"item": {
+				"type": "ore_dict",
+				"item": "oreKyanite"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 42,
+					"power": 330
+				},
+				{
+					"id": "magic",
+					"size": 20,
+					"power": 50
+				},
+				{
+					"id": "earth",
+					"size": 5,
+					"power": 30
+				}
+			]
+		},
+		{
+			"note": "蓝晶石",
+			"item": {
+				"type": "ore_dict",
+				"item": "kyanite"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 10,
+					"power": 304
+				},
+				{
+					"id": "magic",
+					"size": 6,
+					"power": 20
+				}
+			]
+		},
+		{
+			"note": "附魔书",
+			"item": "elementalsorcery:spellbook_enchantment",
+			"element": {
+				"id": "knowledge",
+				"size": 150,
+				"power": 300
+			}
+		},
+		{
+			"note": "没树的附魔台",
+			"item": "elementalsorcery:invalid_enchantment_table",
+			"element": [
+				{
+					"id": "earth",
+					"size": 48,
+					"power": 95
+				}
+			]
+		},
+		{
+			"note": "魔石碎片",
+			"item": "elementalsorcery:magic_piece",
+			"element": [
+				{
+					"id": "magic",
+					"size": 25,
+					"power": 50
+				}
+			]
+		},
+		{
+			"note": "魔石",
+			"complex": 2,
+			"item": "elementalsorcery:magic_stone",
+			"element": [
+				{
+					"id": "magic",
+					"size": 100,
+					"power": 100
+				},
+				{
+					"id": "earth",
+					"size": 3,
+					"power": 10
+				}
+			]
+		},
+		{
+			"note": "星之种",
+			"item": "elementalsorcery:star_flower",
+			"element": [
+				{
+					"id": "star",
+					"size": 125,
+					"power": 500
+				}
+			],
+			"complex": 9
+		},
+		{
+			"note": "星沙",
+			"item": "elementalsorcery:star_sand",
+			"element": [
+				{
+					"id": "earth",
+					"size": 10,
+					"power": 16
+				},
+				{
+					"id": "star",
+					"size": 5,
+					"power": 12
+				}
+			]
+		},
+		{
+			"note": "星石",
+			"item": "elementalsorcery:star_stone",
+			"element": [
+				{
+					"id": "earth",
+					"size": 2,
+					"power": 14
+				},
+				{
+					"id": "star",
+					"size": 1,
+					"power": 8
+				}
+			]
+		},
+		{
+			"note": "狂暴皮革",
+			"complex": 2,
+			"item": "elementalsorcery:rabid_leather",
+			"element": [
+				{
+					"id": "air",
+					"size": 4,
+					"power": 521
+				},
+				{
+					"id": "wood",
+					"size": 12,
+					"power": 200
+				}
+			]
+		},
+		{
+			"note": "忧郁之泪",
+			"complex": 8,
+			"item": "elementalsorcery:dejected_tear",
+			"element": [
+				{
+					"id": "water",
+					"size": 42,
+					"power": 700
+				},
+				{
+					"id": "knowledge",
+					"size": 35,
+					"power": 575
+				},
+				{
+					"id": "fire",
+					"size": 28,
+					"power": 444
+				}
+			]
+		},
+		{
+			"note": "恐惧宝石",
+			"complex": 7,
+			"item": "elementalsorcery:dread_gem",
+			"element": [
+				{
+					"id": "earth",
+					"size": 143,
+					"power": 523
+				},
+				{
+					"id": "metal",
+					"size": 95,
+					"power": 485
+				}
+			]
+		},
+		{
+			"note": "傲慢羊毛",
+			"complex": 10,
+			"item": "elementalsorcery:arrogant_wool",
+			"element": [
+				{
+					"id": "fire",
+					"size": 27,
+					"power": 777
+				},
+				{
+					"id": "water",
+					"size": 27,
+					"power": 777
+				},
+				{
+					"id": "star",
+					"size": 4,
+					"power": 666
+				}
+			]
+		},
+		{
+			"note": "立方体核心",
+			"complex": 6,
+			"item": "elementalsorcery:cube_core",
+			"element": [
+				{
+					"id": "metal",
+					"size": 152,
+					"power": 97
+				},
+				{
+					"id": "wood",
+					"size": 134,
+					"power": 91
+				},
+				{
+					"id": "star",
+					"size": 17,
+					"power": 37
+				}
+			]
+		},
+		{
+			"note": "绯红水晶矿",
+			"complex": 6,
+			"item": "elementalsorcery:scarlet_crystal_ore",
+			"element": [
+				{
+					"id": "fire",
+					"size": 67,
+					"power": 821
+				},
+				{
+					"id": "earth",
+					"size": 40,
+					"power": 380
+				}
+			]
+		},
+		{
+			"note": "魔力水晶",
+			"complex": 1,
+			"item": "elementalsorcery:magic_crystal",
+			"element": [
+				{
+					"id": "magic",
+					"size": 80,
+					"power": 450
+				},
+				{
+					"id": "earth",
+					"size": 8,
+					"power": 354
+				}
+			]
+		},
+		{
+			"note": "绯红水晶",
+			"complex": 1,
+			"item": "elementalsorcery:scarlet_crystal",
+			"element": [
+				{
+					"id": "fire",
+					"size": 12,
+					"power": 420
+				},
+				{
+					"id": "earth",
+					"size": 8,
+					"power": 354
+				}
+			]
+		},
+		{
+			"note": "秩序水晶",
+			"complex": 16,
+			"item": "elementalsorcery:order_crystal",
+			"element": [
+				{
+					"id": "star",
+					"size": 1,
+					"power": 888
+				},
+				{
+					"id": "earth",
+					"size": 1,
+					"power": 888
+				},
+				{
+					"id": "fire",
+					"size": 1,
+					"power": 888
+				},
+				{
+					"id": "water",
+					"size": 1,
+					"power": 888
+				},
+				{
+					"id": "knowledge",
+					"size": 1,
+					"power": 888
+				}
+			]
+		},
+		{
+			"note": "精灵结晶",
+			"item": "elementalsorcery:elf_crystal",
+			"element": [
+				{
+					"id": "earth",
+					"size": 1,
+					"power": 6
+				}
+			]
+		},
+		{
+			"note": "元素水晶",
+			"complex": 2,
+			"item": "elementalsorcery:element_crystal",
+			"element": [
+				{
+					"id": "air",
+					"size": 12,
+					"power": 420
+				},
+				{
+					"id": "earth",
+					"size": 6,
+					"power": 354
+				}
+			]
+		},
+		{
+			"note": "湛蓝水晶",
+			"complex": 2,
+			"item": "elementalsorcery:azure_crystal",
+			"element": [
+				{
+					"id": "earth",
+					"size": 12,
+					"power": 575
+				}
+			]
+		},
+		{
+			"note": "共鸣水晶",
+			"item": "elementalsorcery:resonant_crystal",
+			"element": [
+				{
+					"id": "wood",
+					"size": 8,
+					"power": 385
+				},
+				{
+					"id": "earth",
+					"size": 6,
+					"power": 354
+				}
+			]
+		},
+		{
+			"note": "咒术水晶",
+			"item": "elementalsorcery:spell_crystal",
+			"element": [
+				{
+					"id": "knowledge",
+					"size": 12,
+					"power": 420
+				},
+				{
+					"id": "earth",
+					"size": 6,
+					"power": 354
+				}
+			]
+		},
+		{
+			"note": "结构水晶",
+			"item": "elementalsorcery:item_crystal",
+			"element": [
+				{
+					"id": "wood",
+					"size": 12,
+					"power": 420
+				},
+				{
+					"id": "earth",
+					"size": 6,
+					"power": 354
+				}
+			]
+		},
+		{
+			"note": "建筑水晶",
+			"item": "elementalsorcery:architecture_crystal",
+			"element": [
+				{
+					"id": "metal",
+					"size": 12,
+					"power": 420
+				},
+				{
+					"id": "earth",
+					"size": 6,
+					"power": 354
+				}
+			]
+		}
+	]
 }

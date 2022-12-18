@@ -1,4 +1,5 @@
 {
+	"type": "elementalsorcery:craft",
 	"pattern": [
 		"WCW",
 		"CFC",
@@ -8,13 +9,13 @@
 		"F": {
 			"item": "elementalsorcery:windmill_blade_frame",
 			"data": 1
-		  },
-		  "W": {
+		},
+		"W": {
 			"item": "elementalsorcery:estone",
 			"data": 0
-		  },
-		  "C": "elementalsorcery:rabid_leather",
-		  "G": "elementalsorcery:resonant_crystal"
+		},
+		"C": "elementalsorcery:rabid_leather",
+		"G": "elementalsorcery:resonant_crystal"
 	},
 	"element": [
 		{

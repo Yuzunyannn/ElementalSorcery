@@ -1,121 +1,122 @@
 {
-    "maps": [
-        {
-            "note": "锁链头盔",
-            "item": "minecraft:chainmail_helmet",
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 27,
-                    "power": 285
-                }
-            ]
-        },
-        {
-            "note": "锁链胸甲",
-            "item": "minecraft:chainmail_chestplate",
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 42,
-                    "power": 285
-                }
-            ]
-        },
-        {
-            "note": "锁链护腿",
-            "item": "minecraft:chainmail_leggings",
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 37,
-                    "power": 285
-                }
-            ]
-        },
-        {
-            "note": "锁链鞋",
-            "item": "minecraft:chainmail_boots",
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 21,
-                    "power": 285
-                }
-            ]
-        },
-        {
-            "note": "附魔书",
-            "item": "minecraft:enchanted_book",
-            "element": [
-                {
-                    "id": "knowledge",
-                    "size": 10,
-                    "power": 20
-                },
-                {
-                    "id": "wood",
-                    "size": 25,
-                    "power": 50
-                }
-            ]
-        },
-        {
-            "note": "药箭",
-            "item": "minecraft:tipped_arrow",
-            "element": [
-                {
-                    "id": "earth",
-                    "size": 1,
-                    "power": 4
-                },
-                {
-                    "id": "wood",
-                    "size": 1,
-                    "power": 3
-                },
-                {
-                    "id": "air",
-                    "size": 1,
-                    "power": 1
-                },
-                {
-                    "id": "water",
-                    "size": 1,
-                    "power": 1
-                }
-            ]
-        },
-        {
-            "note": "不死图腾",
-            "item": "minecraft:totem_of_undying",
-            "element": [
-                {
-                    "id": "wood",
-                    "size": 125,
-                    "power": 950
-                },
-                {
-                    "id": "earth",
-                    "size": 32,
-                    "power": 888
-                },
-                {
-                    "id": "water",
-                    "size": 8,
-                    "power": 865
-                },
-                {
-                    "id": "water",
-                    "size": 8,
-                    "power": 865
-                },
-                {
-                    "id": "air",
-                    "size": 6,
-                    "power": 765
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "锁链头盔",
+			"item": "minecraft:chainmail_helmet",
+			"element": [
+				{
+					"id": "metal",
+					"size": 27,
+					"power": 285
+				}
+			]
+		},
+		{
+			"note": "锁链胸甲",
+			"item": "minecraft:chainmail_chestplate",
+			"element": [
+				{
+					"id": "metal",
+					"size": 42,
+					"power": 285
+				}
+			]
+		},
+		{
+			"note": "锁链护腿",
+			"item": "minecraft:chainmail_leggings",
+			"element": [
+				{
+					"id": "metal",
+					"size": 37,
+					"power": 285
+				}
+			]
+		},
+		{
+			"note": "锁链鞋",
+			"item": "minecraft:chainmail_boots",
+			"element": [
+				{
+					"id": "metal",
+					"size": 21,
+					"power": 285
+				}
+			]
+		},
+		{
+			"note": "附魔书",
+			"item": "minecraft:enchanted_book",
+			"element": [
+				{
+					"id": "knowledge",
+					"size": 10,
+					"power": 20
+				},
+				{
+					"id": "wood",
+					"size": 25,
+					"power": 50
+				}
+			]
+		},
+		{
+			"note": "药箭",
+			"item": "minecraft:tipped_arrow",
+			"element": [
+				{
+					"id": "earth",
+					"size": 1,
+					"power": 4
+				},
+				{
+					"id": "wood",
+					"size": 1,
+					"power": 3
+				},
+				{
+					"id": "air",
+					"size": 1,
+					"power": 1
+				},
+				{
+					"id": "water",
+					"size": 1,
+					"power": 1
+				}
+			]
+		},
+		{
+			"note": "不死图腾",
+			"item": "minecraft:totem_of_undying",
+			"element": [
+				{
+					"id": "wood",
+					"size": 125,
+					"power": 950
+				},
+				{
+					"id": "earth",
+					"size": 32,
+					"power": 888
+				},
+				{
+					"id": "water",
+					"size": 8,
+					"power": 865
+				},
+				{
+					"id": "water",
+					"size": 8,
+					"power": 865
+				},
+				{
+					"id": "air",
+					"size": 6,
+					"power": 765
+				}
+			]
+		}
+	]
 }

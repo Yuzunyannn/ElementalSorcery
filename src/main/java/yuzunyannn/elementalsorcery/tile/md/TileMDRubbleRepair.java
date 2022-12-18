@@ -76,6 +76,7 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 
 		// 自定义
 		Json.ergodicFile("recipes/stone_repairer", (file, json) -> {
+			if (!ElementMap.checkType(json, "stone_repair")) return false;
 			if (!ElementMap.checkModDemands(json)) return false;
 			ItemRecord input = json.needItem("input");
 			ItemRecord output = json.needItem("output");

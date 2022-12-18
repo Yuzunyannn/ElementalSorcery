@@ -20,6 +20,7 @@ Specific examples are as follows :
 Example 1:
 例子1:
 {
+	"type": "elementalsorcery:craft",
 	"pattern": [
 		"NSN",
 		"M#M",
@@ -47,6 +48,7 @@ Example 1:
 Example 2:
 例子2:
 {
+	"type": "elementalsorcery:craft",
 	"pattern": [
 		"M#M",
 		"#W#",
@@ -111,6 +113,7 @@ Specific examples are as follows :
 具体的例子如下：
 
 {
+	"type": "elementalsorcery:research",
 	"topics": {
 		"Struct": 25,
 		"Natural": 45
@@ -155,6 +158,7 @@ Specific examples are as follows :
 具体的例子如下：
 
 {
+	"type": "elementalsorcery:element_map",
     "maps": [
         {
             "item": {
@@ -195,6 +199,7 @@ Specific examples are as follows :
 具体的例子如下：
 
 {
+	"type": "elementalsorcery:enchanting",
     "input": "minecraft:dirt",
     "output": "minecraft:diamond",
     "magic": 50,
@@ -221,6 +226,7 @@ Specific examples are as follows :
 具体的例子如下：
 
 {
+	"type": "elementalsorcery:stone_repair",
     "input": "minecraft:dirt",
     "output": "minecraft:diamond",
     "cost": 10
@@ -247,7 +253,7 @@ Melt Cauldron Has 1000 volume
 熔岩锅有1000的容量
 
 {
-    "type": "volume",
+    "type": "elementalsorcery:melt_volume",
     "list": [
         {
             "id": "minecraft:coal",
@@ -267,7 +273,7 @@ Real Recipe
 真正的合成表
 
 {
-    "type": "melt",
+	"type": "elementalsorcery:melt",
     "magicStoneCount": 2,
     "list": [
         [

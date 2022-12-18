@@ -1,155 +1,156 @@
 {
-    "maps": [
-        {
-            "note": "金矿",
-            "item": {
-                "type": "ore_dict",
-                "item": "oreGold"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 24,
-                    "power": 500
-                },
-                {
-                    "id": "earth",
-                    "size": 5,
-                    "power": 30
-                }
-            ]
-        },
-        {
-            "note": "碎金粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "crushedGold"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 12,
-                    "power": 480
-                },
-                {
-                    "id": "earth",
-                    "size": 2,
-                    "power": 30
-                }
-            ]
-        },
-        {
-            "note": "纯碎金粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "crushedPurifiedGold"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 6,
-                    "power": 460
-                }
-            ]
-        },
-        {
-            "note": "金锭",
-            "item": {
-                "type": "ore_dict",
-                "item": "ingotGold"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 450
-                }
-            ]
-        },
-        {
-            "note": "金粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "dustGold"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 450
-                }
-            ]
-        },
-        {
-            "note": "金粒",
-            "item": {
-                "type": "ore_dict",
-                "item": "nuggetGold"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 1,
-                    "power": 282
-                }
-            ]
-        },
-        {
-            "note": "小金粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "dustTinyGold"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 1,
-                    "power": 282
-                }
-            ]
-        },
-        {
-            "note": "金板",
-            "item": {
-                "type": "ore_dict",
-                "item": "plateGold"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 450
-                }
-            ]
-        },
-        {
-            "note": "厚金板",
-            "item": {
-                "type": "ore_dict",
-                "item": "plateDenseGold"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 24,
-                    "power": 450
-                }
-            ]
-        },
-        {
-            "note": "金外壳",
-            "mods": "ic2",
-            "item": {
-                "item": "ic2:casing",
-                "meta": 2
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 2,
-                    "power": 450
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "金矿",
+			"item": {
+				"type": "ore_dict",
+				"item": "oreGold"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 24,
+					"power": 500
+				},
+				{
+					"id": "earth",
+					"size": 5,
+					"power": 30
+				}
+			]
+		},
+		{
+			"note": "碎金粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "crushedGold"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 12,
+					"power": 480
+				},
+				{
+					"id": "earth",
+					"size": 2,
+					"power": 30
+				}
+			]
+		},
+		{
+			"note": "纯碎金粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "crushedPurifiedGold"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 6,
+					"power": 460
+				}
+			]
+		},
+		{
+			"note": "金锭",
+			"item": {
+				"type": "ore_dict",
+				"item": "ingotGold"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 450
+				}
+			]
+		},
+		{
+			"note": "金粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "dustGold"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 450
+				}
+			]
+		},
+		{
+			"note": "金粒",
+			"item": {
+				"type": "ore_dict",
+				"item": "nuggetGold"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 1,
+					"power": 282
+				}
+			]
+		},
+		{
+			"note": "小金粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "dustTinyGold"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 1,
+					"power": 282
+				}
+			]
+		},
+		{
+			"note": "金板",
+			"item": {
+				"type": "ore_dict",
+				"item": "plateGold"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 450
+				}
+			]
+		},
+		{
+			"note": "厚金板",
+			"item": {
+				"type": "ore_dict",
+				"item": "plateDenseGold"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 24,
+					"power": 450
+				}
+			]
+		},
+		{
+			"note": "金外壳",
+			"mods": "ic2",
+			"item": {
+				"item": "ic2:casing",
+				"meta": 2
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 2,
+					"power": 450
+				}
+			]
+		}
+	]
 }

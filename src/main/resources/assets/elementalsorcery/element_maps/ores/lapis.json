@@ -1,118 +1,119 @@
 {
-    "maps": [
-        {
-            "note": "青金石矿",
-            "item": {
-                "type": "ore_dict",
-                "item": "oreLapis"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 45,
-                    "power": 575
-                },
-                {
-                    "id": "earth",
-                    "size": 30,
-                    "power": 423
-                }
-            ]
-        },
-        {
-            "note": "青金石",
-            "item": {
-                "type": "ore_dict",
-                "item": "gemLapis"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 437
-                },
-                {
-                    "id": "earth",
-                    "size": 4,
-                    "power": 385
-                }
-            ]
-        },
-        {
-            "note": "青金石粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "dustLapis"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 437
-                },
-                {
-                    "id": "earth",
-                    "size": 4,
-                    "power": 385
-                }
-            ]
-        },
-        {
-            "note": "小青金石粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "dustTinyLapis"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 1,
-                    "power": 274
-                },
-                {
-                    "id": "earth",
-                    "size": 1,
-                    "power": 202
-                }
-            ]
-        },
-        {
-            "note": "青金石板",
-            "item": {
-                "type": "ore_dict",
-                "item": "plateLapis"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 437
-                },
-                {
-                    "id": "earth",
-                    "size": 4,
-                    "power": 385
-                }
-            ]
-        },
-        {
-            "note": "厚青金石板",
-            "item": {
-                "type": "ore_dict",
-                "item": "plateDenseLapis"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 24,
-                    "power": 437
-                },
-                {
-                    "id": "earth",
-                    "size": 19,
-                    "power": 385
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "青金石矿",
+			"item": {
+				"type": "ore_dict",
+				"item": "oreLapis"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 45,
+					"power": 575
+				},
+				{
+					"id": "earth",
+					"size": 30,
+					"power": 423
+				}
+			]
+		},
+		{
+			"note": "青金石",
+			"item": {
+				"type": "ore_dict",
+				"item": "gemLapis"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 437
+				},
+				{
+					"id": "earth",
+					"size": 4,
+					"power": 385
+				}
+			]
+		},
+		{
+			"note": "青金石粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "dustLapis"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 437
+				},
+				{
+					"id": "earth",
+					"size": 4,
+					"power": 385
+				}
+			]
+		},
+		{
+			"note": "小青金石粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "dustTinyLapis"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 1,
+					"power": 274
+				},
+				{
+					"id": "earth",
+					"size": 1,
+					"power": 202
+				}
+			]
+		},
+		{
+			"note": "青金石板",
+			"item": {
+				"type": "ore_dict",
+				"item": "plateLapis"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 437
+				},
+				{
+					"id": "earth",
+					"size": 4,
+					"power": 385
+				}
+			]
+		},
+		{
+			"note": "厚青金石板",
+			"item": {
+				"type": "ore_dict",
+				"item": "plateDenseLapis"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 24,
+					"power": 437
+				},
+				{
+					"id": "earth",
+					"size": 19,
+					"power": 385
+				}
+			]
+		}
+	]
 }

@@ -91,10 +91,11 @@ public class CraftInit {
 	}
 
 	public static boolean loadRecipe(ResourceLocation id, JsonObject json) {
+		if (!ElementMap.checkType(json, "craft")) return false;
 		if (!ElementMap.checkModDemands(json)) return false;
 
-		String type = "normal";
-		if (json.hasString("type")) type = json.getString("type");
+		String mode = "normal";
+		if (json.hasString("mode")) mode = json.getString("mode");
 
 		JsonArray patternJson = json.needArray("pattern");
 		List<String> pattern = Arrays.asList(patternJson.asStringArray());
@@ -110,7 +111,7 @@ public class CraftInit {
 		List<ElementStack> elements = json.needElements("element");
 
 		Recipe recipe;
-		switch (type.toLowerCase()) {
+		switch (mode.toLowerCase()) {
 		case "inherit_element":
 			recipe = new RecipeInheritElement(output);
 			break;

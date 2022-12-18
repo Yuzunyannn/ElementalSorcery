@@ -1,143 +1,144 @@
 {
-    "maps": [
-        {
-            "note": "恶魂之泪",
-            "item": "minecraft:ghast_tear",
-            "element": [
-                {
-                    "id": "water",
-                    "size": 26,
-                    "power": 450
-                },
-                {
-                    "id": "fire",
-                    "size": 28,
-                    "power": 300
-                },
-                {
-                    "id": "air",
-                    "size": 24,
-                    "power": 200
-                }
-            ]
-        },
-        {
-            "note": "药水",
-            "item": [
-                "minecraft:potion",
-                "minecraft:splash_potion"
-            ],
-            "element": [
-                {
-                    "id": "earth",
-                    "size": 6,
-                    "power": 40
-                },
-                {
-                    "id": "water",
-                    "size": 5,
-                    "power": 95
-                }
-            ]
-        },
-        {
-            "note": "烈焰粉",
-            "complex": 2,
-            "item": "minecraft:blaze_powder",
-            "element": [
-                {
-                    "id": "fire",
-                    "size": 4,
-                    "power": 404
-                },
-                {
-                    "id": "earth",
-                    "size": 1,
-                    "power": 156
-                }
-            ]
-        },
-        {
-            "note": "岩浆膏",
-            "complex": 1,
-            "item": "minecraft:magma_cream",
-            "element": [
-                {
-                    "id": "fire",
-                    "size": 4,
-                    "power": 200
-                },
-                {
-                    "id": "water",
-                    "size": 1,
-                    "power": 200
-                },
-                {
-                    "id": "earth",
-                    "size": 1,
-                    "power": 125
-                }
-            ]
-        },
-        {
-            "note": "兔子脚",
-            "item": "minecraft:rabbit_foot",
-            "element": [
-                {
-                    "id": "wood",
-                    "size": 8,
-                    "power": 15
-                },
-                {
-                    "id": "water",
-                    "size": 2,
-                    "power": 2
-                }
-            ]
-        },
-        {
-            "note": "龙息",
-            "item": "minecraft:dragon_breath",
-            "element": [
-                {
-                    "id": "magic",
-                    "size": 14,
-                    "power": 100
-                },
-                {
-                    "id": "earth",
-                    "size": 6,
-                    "power": 40
-                },
-                {
-                    "id": "water",
-                    "size": 5,
-                    "power": 95
-                }
-            ]
-        },
-        {
-            "note": "滞留药水",
-            "item": [
-                "minecraft:lingering_potion"
-            ],
-            "element": [
-                {
-                    "id": "magic",
-                    "size": 14,
-                    "power": 75
-                },
-                {
-                    "id": "earth",
-                    "size": 6,
-                    "power": 40
-                },
-                {
-                    "id": "water",
-                    "size": 5,
-                    "power": 95
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "恶魂之泪",
+			"item": "minecraft:ghast_tear",
+			"element": [
+				{
+					"id": "water",
+					"size": 26,
+					"power": 450
+				},
+				{
+					"id": "fire",
+					"size": 28,
+					"power": 300
+				},
+				{
+					"id": "air",
+					"size": 24,
+					"power": 200
+				}
+			]
+		},
+		{
+			"note": "药水",
+			"item": [
+				"minecraft:potion",
+				"minecraft:splash_potion"
+			],
+			"element": [
+				{
+					"id": "earth",
+					"size": 6,
+					"power": 40
+				},
+				{
+					"id": "water",
+					"size": 5,
+					"power": 95
+				}
+			]
+		},
+		{
+			"note": "烈焰粉",
+			"complex": 2,
+			"item": "minecraft:blaze_powder",
+			"element": [
+				{
+					"id": "fire",
+					"size": 4,
+					"power": 404
+				},
+				{
+					"id": "earth",
+					"size": 1,
+					"power": 156
+				}
+			]
+		},
+		{
+			"note": "岩浆膏",
+			"complex": 1,
+			"item": "minecraft:magma_cream",
+			"element": [
+				{
+					"id": "fire",
+					"size": 4,
+					"power": 200
+				},
+				{
+					"id": "water",
+					"size": 1,
+					"power": 200
+				},
+				{
+					"id": "earth",
+					"size": 1,
+					"power": 125
+				}
+			]
+		},
+		{
+			"note": "兔子脚",
+			"item": "minecraft:rabbit_foot",
+			"element": [
+				{
+					"id": "wood",
+					"size": 8,
+					"power": 15
+				},
+				{
+					"id": "water",
+					"size": 2,
+					"power": 2
+				}
+			]
+		},
+		{
+			"note": "龙息",
+			"item": "minecraft:dragon_breath",
+			"element": [
+				{
+					"id": "magic",
+					"size": 14,
+					"power": 100
+				},
+				{
+					"id": "earth",
+					"size": 6,
+					"power": 40
+				},
+				{
+					"id": "water",
+					"size": 5,
+					"power": 95
+				}
+			]
+		},
+		{
+			"note": "滞留药水",
+			"item": [
+				"minecraft:lingering_potion"
+			],
+			"element": [
+				{
+					"id": "magic",
+					"size": 14,
+					"power": 75
+				},
+				{
+					"id": "earth",
+					"size": 6,
+					"power": 40
+				},
+				{
+					"id": "water",
+					"size": 5,
+					"power": 95
+				}
+			]
+		}
+	]
 }

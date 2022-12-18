@@ -1,4 +1,5 @@
 {
+	"type": "elementalsorcery:craft",
 	"pattern": [
 		"M#M",
 		"#W#",
@@ -19,6 +20,6 @@
 	"result": {
 		"item": "elementalsorcery:nature_dust",
 		"count": 4,
-		"data":1
+		"data": 1
 	}
 }

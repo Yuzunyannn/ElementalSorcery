@@ -1,194 +1,195 @@
 {
-    "maps": [
-        {
-            "note": "铱矿",
-            "complex": 10,
-            "item": {
-                "type": "ore_dict",
-                "item": "oreIridium"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 60,
-                    "power": 3210
-                },
-                {
-                    "id": "star",
-                    "size": 42,
-                    "power": 2048
-                },
-                {
-                    "id": "earth",
-                    "size": 5,
-                    "power": 30
-                }
-            ]
-        },
-        {
-            "note": "碎铱粉",
-            "complex": 10,
-            "item": {
-                "type": "ore_dict",
-                "item": "crushedIridium"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 30,
-                    "power": 3190
-                },
-                {
-                    "id": "star",
-                    "size": 21,
-                    "power": 2035
-                },
-                {
-                    "id": "earth",
-                    "size": 2,
-                    "power": 30
-                }
-            ]
-        },
-        {
-            "note": "纯碎铱粉",
-            "complex": 10,
-            "item": {
-                "type": "ore_dict",
-                "item": "crushedPurifiedIridium"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 23,
-                    "power": 3150
-                },
-                {
-                    "id": "star",
-                    "size": 16,
-                    "power": 2020
-                }
-            ]
-        },
-        {
-            "note": "铱锭",
-            "complex": 10,
-            "item": {
-                "type": "ore_dict",
-                "item": "ingotIridium"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 18,
-                    "power": 3106
-                },
-                {
-                    "id": "star",
-                    "size": 9,
-                    "power": 2000
-                }
-            ]
-        },
-        {
-            "note": "铱粉",
-            "complex": 10,
-            "item": {
-                "type": "ore_dict",
-                "item": "dustIridium"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 18,
-                    "power": 3106
-                },
-                {
-                    "id": "star",
-                    "size": 9,
-                    "power": 2000
-                }
-            ]
-        },
-        {
-            "note": "小铱粉",
-            "complex": 10,
-            "item": {
-                "type": "ore_dict",
-                "item": "dustTinyIridium"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 2,
-                    "power": 3106
-                },
-                {
-                    "id": "star",
-                    "size": 1,
-                    "power": 2000
-                }
-            ]
-        },
-        {
-            "note": "铱粒",
-            "complex": 10,
-            "item": {
-                "type": "ore_dict",
-                "item": "nuggetIridium"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 2,
-                    "power": 3106
-                },
-                {
-                    "id": "star",
-                    "size": 1,
-                    "power": 2000
-                }
-            ]
-        },
-        {
-            "note": "铱板",
-            "complex": 10,
-            "item": {
-                "type": "ore_dict",
-                "item": "plateIridium"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 18,
-                    "power": 3106
-                },
-                {
-                    "id": "star",
-                    "size": 9,
-                    "power": 2000
-                }
-            ]
-        },
-        {
-            "note": "厚铱板",
-            "complex": 10,
-            "item": {
-                "type": "ore_dict",
-                "item": "plateDenseIridium"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 88,
-                    "power": 3106
-                },
-                {
-                    "id": "star",
-                    "size": 43,
-                    "power": 2000
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "铱矿",
+			"complex": 10,
+			"item": {
+				"type": "ore_dict",
+				"item": "oreIridium"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 60,
+					"power": 3210
+				},
+				{
+					"id": "star",
+					"size": 42,
+					"power": 2048
+				},
+				{
+					"id": "earth",
+					"size": 5,
+					"power": 30
+				}
+			]
+		},
+		{
+			"note": "碎铱粉",
+			"complex": 10,
+			"item": {
+				"type": "ore_dict",
+				"item": "crushedIridium"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 30,
+					"power": 3190
+				},
+				{
+					"id": "star",
+					"size": 21,
+					"power": 2035
+				},
+				{
+					"id": "earth",
+					"size": 2,
+					"power": 30
+				}
+			]
+		},
+		{
+			"note": "纯碎铱粉",
+			"complex": 10,
+			"item": {
+				"type": "ore_dict",
+				"item": "crushedPurifiedIridium"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 23,
+					"power": 3150
+				},
+				{
+					"id": "star",
+					"size": 16,
+					"power": 2020
+				}
+			]
+		},
+		{
+			"note": "铱锭",
+			"complex": 10,
+			"item": {
+				"type": "ore_dict",
+				"item": "ingotIridium"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 18,
+					"power": 3106
+				},
+				{
+					"id": "star",
+					"size": 9,
+					"power": 2000
+				}
+			]
+		},
+		{
+			"note": "铱粉",
+			"complex": 10,
+			"item": {
+				"type": "ore_dict",
+				"item": "dustIridium"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 18,
+					"power": 3106
+				},
+				{
+					"id": "star",
+					"size": 9,
+					"power": 2000
+				}
+			]
+		},
+		{
+			"note": "小铱粉",
+			"complex": 10,
+			"item": {
+				"type": "ore_dict",
+				"item": "dustTinyIridium"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 2,
+					"power": 3106
+				},
+				{
+					"id": "star",
+					"size": 1,
+					"power": 2000
+				}
+			]
+		},
+		{
+			"note": "铱粒",
+			"complex": 10,
+			"item": {
+				"type": "ore_dict",
+				"item": "nuggetIridium"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 2,
+					"power": 3106
+				},
+				{
+					"id": "star",
+					"size": 1,
+					"power": 2000
+				}
+			]
+		},
+		{
+			"note": "铱板",
+			"complex": 10,
+			"item": {
+				"type": "ore_dict",
+				"item": "plateIridium"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 18,
+					"power": 3106
+				},
+				{
+					"id": "star",
+					"size": 9,
+					"power": 2000
+				}
+			]
+		},
+		{
+			"note": "厚铱板",
+			"complex": 10,
+			"item": {
+				"type": "ore_dict",
+				"item": "plateDenseIridium"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 88,
+					"power": 3106
+				},
+				{
+					"id": "star",
+					"size": 43,
+					"power": 2000
+				}
+			]
+		}
+	]
 }

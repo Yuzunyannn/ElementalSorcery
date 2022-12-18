@@ -1,155 +1,156 @@
 {
-    "maps": [
-        {
-            "note": "铜矿",
-            "item": {
-                "type": "ore_dict",
-                "item": "oreCopper"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 24,
-                    "power": 290
-                },
-                {
-                    "id": "earth",
-                    "size": 5,
-                    "power": 30
-                }
-            ]
-        },
-        {
-            "note": "碎铜粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "crushedCopper"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 12,
-                    "power": 275
-                },
-                {
-                    "id": "earth",
-                    "size": 2,
-                    "power": 30
-                }
-            ]
-        },
-        {
-            "note": "纯碎铜粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "crushedPurifiedCopper"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 6,
-                    "power": 265
-                }
-            ]
-        },
-        {
-            "note": "铜锭",
-            "item": {
-                "type": "ore_dict",
-                "item": "ingotCopper"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 248
-                }
-            ]
-        },
-        {
-            "note": "铜粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "dustCopper"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 248
-                }
-            ]
-        },
-        {
-            "note": "小铜粉",
-            "item": {
-                "type": "ore_dict",
-                "item": "dustTinyCopper"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 1,
-                    "power": 155
-                }
-            ]
-        },
-        {
-            "note": "铜粒",
-            "item": {
-                "type": "ore_dict",
-                "item": "nuggetCopper"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 1,
-                    "power": 155
-                }
-            ]
-        },
-        {
-            "note": "铜板",
-            "item": {
-                "type": "ore_dict",
-                "item": "plateCopper"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 5,
-                    "power": 248
-                }
-            ]
-        },
-        {
-            "note": "厚铜板",
-            "item": {
-                "type": "ore_dict",
-                "item": "plateDenseCopper"
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 24,
-                    "power": 248
-                }
-            ]
-        },
-        {
-            "note": "铜外壳",
-            "mods": "ic2",
-            "item": {
-                "item": "ic2:casing",
-                "meta": 1
-            },
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 2,
-                    "power": 248
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "铜矿",
+			"item": {
+				"type": "ore_dict",
+				"item": "oreCopper"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 24,
+					"power": 290
+				},
+				{
+					"id": "earth",
+					"size": 5,
+					"power": 30
+				}
+			]
+		},
+		{
+			"note": "碎铜粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "crushedCopper"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 12,
+					"power": 275
+				},
+				{
+					"id": "earth",
+					"size": 2,
+					"power": 30
+				}
+			]
+		},
+		{
+			"note": "纯碎铜粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "crushedPurifiedCopper"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 6,
+					"power": 265
+				}
+			]
+		},
+		{
+			"note": "铜锭",
+			"item": {
+				"type": "ore_dict",
+				"item": "ingotCopper"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 248
+				}
+			]
+		},
+		{
+			"note": "铜粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "dustCopper"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 248
+				}
+			]
+		},
+		{
+			"note": "小铜粉",
+			"item": {
+				"type": "ore_dict",
+				"item": "dustTinyCopper"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 1,
+					"power": 155
+				}
+			]
+		},
+		{
+			"note": "铜粒",
+			"item": {
+				"type": "ore_dict",
+				"item": "nuggetCopper"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 1,
+					"power": 155
+				}
+			]
+		},
+		{
+			"note": "铜板",
+			"item": {
+				"type": "ore_dict",
+				"item": "plateCopper"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 5,
+					"power": 248
+				}
+			]
+		},
+		{
+			"note": "厚铜板",
+			"item": {
+				"type": "ore_dict",
+				"item": "plateDenseCopper"
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 24,
+					"power": 248
+				}
+			]
+		},
+		{
+			"note": "铜外壳",
+			"mods": "ic2",
+			"item": {
+				"item": "ic2:casing",
+				"meta": 1
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 2,
+					"power": 248
+				}
+			]
+		}
+	]
 }

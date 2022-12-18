@@ -1,5 +1,6 @@
 {
-	"type": "inherit_element",
+	"type": "elementalsorcery:craft",
+	"mode": "inherit_element",
 	"pattern": [
 		"DAD",
 		"AVA",

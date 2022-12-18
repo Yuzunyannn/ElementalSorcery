@@ -362,6 +362,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 
 		// 自定义
 		Json.ergodicFile("recipes/enchanting_box", (file, json) -> {
+			if (!ElementMap.checkType(json, "enchanting")) return false;
 			if (!ElementMap.checkModDemands(json)) return false;
 			ItemRecord input = json.needItem("input");
 			ItemRecord output = json.needItem("output");

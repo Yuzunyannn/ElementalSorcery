@@ -1,4 +1,5 @@
 {
+	"type": "elementalsorcery:craft",
 	"pattern": [
 		"AXD",
 		"BPE",
@@ -10,12 +11,12 @@
 			"data": 1
 		},
 		"X": "elementalsorcery:estone_prism",
-		"A":"elementalsorcery:resonant_crystal",
-		"B":"elementalsorcery:element_crystal",
-		"C":"elementalsorcery:item_crystal",
-		"D":"elementalsorcery:azure_crystal",
-		"E":"elementalsorcery:spell_crystal",
-		"F":"elementalsorcery:architecture_crystal"
+		"A": "elementalsorcery:resonant_crystal",
+		"B": "elementalsorcery:element_crystal",
+		"C": "elementalsorcery:item_crystal",
+		"D": "elementalsorcery:azure_crystal",
+		"E": "elementalsorcery:spell_crystal",
+		"F": "elementalsorcery:architecture_crystal"
 	},
 	"element": [
 		{

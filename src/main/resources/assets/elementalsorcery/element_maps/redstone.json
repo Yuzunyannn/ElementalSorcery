@@ -1,15 +1,16 @@
 {
-    "maps": [
-        {
-            "note": "红石",
-            "item": "minecraft:redstone",
-            "element": [
-                {
-                    "id": "metal",
-                    "size": 4,
-                    "power": 99
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "红石",
+			"item": "minecraft:redstone",
+			"element": [
+				{
+					"id": "metal",
+					"size": 4,
+					"power": 99
+				}
+			]
+		}
+	]
 }

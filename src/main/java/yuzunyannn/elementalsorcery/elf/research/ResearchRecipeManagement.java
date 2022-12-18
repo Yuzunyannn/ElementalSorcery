@@ -51,6 +51,7 @@ public class ResearchRecipeManagement {
 	}
 
 	public static boolean loadRecipe(ResourceLocation id, JsonObject json) {
+		if (!ElementMap.checkType(json, "research")) return false;
 		if (!ElementMap.checkModDemands(json)) return false;
 		JsonObject topics = json.needObject("topics");
 		JsonArray needs = json.needArray("items", "item");

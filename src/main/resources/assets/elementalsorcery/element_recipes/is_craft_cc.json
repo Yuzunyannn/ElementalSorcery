@@ -1,4 +1,5 @@
 {
+	"type": "elementalsorcery:craft",
 	"pattern": [
 		"RGR",
 		" I ",
@@ -22,7 +23,7 @@
 		{
 			"id": "star",
 			"size": 200,
-			"power": 50 
+			"power": 50
 		}
 	],
 	"result": {
