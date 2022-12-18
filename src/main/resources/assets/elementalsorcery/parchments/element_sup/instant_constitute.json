@@ -1,13 +1,13 @@
 {
+	"type": "elementalsorcery:parchment_mult",
 	"lev": 5,
 	"need": [
 		"element_adv/supreme_table",
 		"element_sup/mantra_gem",
 		"element_sup/ice_rock",
-        "element_sup/ice_rock_stand"
+		"element_sup/ice_rock_stand"
 	],
 	"linked": "elementalsorcery:instant_constitute",
-	"type": "mult",
 	"lock": 0,
 	"pages": [
 		{
@@ -21,52 +21,136 @@
 			"building": "instant_constitute",
 			"extra": [
 				{
-					"pos": [ 0, 2, 0 ],
+					"pos": [
+						0,
+						2,
+						0
+					],
 					"item": "elementalsorcery:instant_constitute"
 				},
 				{
 					"pos": [
-						[ 3, 2, 2 ],
-						[ -3, 2, 2 ],
-						[ -3, 2, -2 ],
-						[ 3, 2, -2 ],
-						[ 2, 2, 3 ],
-						[ -2, 2, 3 ],
-						[ -2, 2, -3 ],
-						[ 2, 2, -3 ]
+						[
+							3,
+							2,
+							2
+						],
+						[
+							-3,
+							2,
+							2
+						],
+						[
+							-3,
+							2,
+							-2
+						],
+						[
+							3,
+							2,
+							-2
+						],
+						[
+							2,
+							2,
+							3
+						],
+						[
+							-2,
+							2,
+							3
+						],
+						[
+							-2,
+							2,
+							-3
+						],
+						[
+							2,
+							2,
+							-3
+						]
 					],
 					"item": "elementalsorcery:elemental_cube"
 				},
 				{
 					"pos": [
-						[ 6,  2, 0 ],
-						[ -6, 2, 0 ],
-						[ 0,  2, 6 ],
-						[ 0,  2, -6 ]
+						[
+							6,
+							2,
+							0
+						],
+						[
+							-6,
+							2,
+							0
+						],
+						[
+							0,
+							2,
+							6
+						],
+						[
+							0,
+							2,
+							-6
+						]
 					],
 					"item": "elementalsorcery:estone_crock"
 				},
 				{
 					"pos": [
-						[ 6,  1, 6 ],
-						[ -6, 1, 6 ],
-						[ -6,  1, -6 ],
-						[ 6,  1, -6 ]
+						[
+							6,
+							1,
+							6
+						],
+						[
+							-6,
+							1,
+							6
+						],
+						[
+							-6,
+							1,
+							-6
+						],
+						[
+							6,
+							1,
+							-6
+						]
 					],
 					"item": "elementalsorcery:ice_rock_stand"
 				},
 				{
 					"pos": [
-						[ 6,  2, 6 ],
-						[ -6, 2, 6 ],
-						[ -6,  2, -6 ],
-						[ 6,  2, -6 ]
+						[
+							6,
+							2,
+							6
+						],
+						[
+							-6,
+							2,
+							6
+						],
+						[
+							-6,
+							2,
+							-6
+						],
+						[
+							6,
+							2,
+							-6
+						]
 					],
 					"item": "elementalsorcery:ice_rock_crystal_block"
 				}
 			],
 			"scale": 0.8,
-			"y" : -10
+			"y": -10
 		},
 		{
 			"type": "normal",

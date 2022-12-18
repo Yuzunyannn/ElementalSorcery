@@ -1,10 +1,10 @@
 {
-    "lev": 2,
-    "need": [
-        "md/md"
-    ],
-    "linked": "elementalsorcery:md_hearth",
-    "type": "craft",
-    "name": "MDhearth",
-    "item": "elementalsorcery:md_hearth"
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 2,
+	"need": [
+		"md/md"
+	],
+	"linked": "elementalsorcery:md_hearth",
+	"name": "MDhearth",
+	"item": "elementalsorcery:md_hearth"
 }

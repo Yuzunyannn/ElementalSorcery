@@ -1,28 +1,28 @@
 {
-    "lev": 3,
-    "need": [
-        "element/magic_paper",
-        "element/book_cover",
-        "element/spell_crystal"
-    ],
-    "linked": "elementalsorcery:spellbook",
-    "type": "mult",
-    "lock": 1,
-    "pages": [
-        {
-            "type": "normal",
-            "name": "spellbook",
-            "differ": "fir"
-        },
-        {
-            "type": "craft",
-            "name": "spellbook",
-            "item": "elementalsorcery:spellbook"
-        },
-        {
-            "type": "normal",
-            "name": "spellbook",
-            "differ": "sec"
-        }
-    ]
+	"type": "elementalsorcery:parchment_mult",
+	"lev": 3,
+	"need": [
+		"element/magic_paper",
+		"element/book_cover",
+		"element/spell_crystal"
+	],
+	"linked": "elementalsorcery:spellbook",
+	"lock": 1,
+	"pages": [
+		{
+			"type": "normal",
+			"name": "spellbook",
+			"differ": "fir"
+		},
+		{
+			"type": "craft",
+			"name": "spellbook",
+			"item": "elementalsorcery:spellbook"
+		},
+		{
+			"type": "normal",
+			"name": "spellbook",
+			"differ": "sec"
+		}
+	]
 }

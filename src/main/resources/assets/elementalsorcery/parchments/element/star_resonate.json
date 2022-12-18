@@ -1,16 +1,16 @@
 {
-    "lev": 3,
-    "need": [
-        "base/star_flower",
-        "md/star_seed",
-        "element/element_crystal",
-        "element/spellbook_element"
-    ],
-    "type": "normal",
-    "name": "starResonate",
-    "icon": {
-        "id": "elementalsorcery:star_flower",
-        "data": 4
-    },
-    "background": "inherit"
+	"type": "elementalsorcery:parchment_normal",
+	"lev": 3,
+	"need": [
+		"base/star_flower",
+		"md/star_seed",
+		"element/element_crystal",
+		"element/spellbook_element"
+	],
+	"name": "starResonate",
+	"icon": {
+		"id": "elementalsorcery:star_flower",
+		"data": 4
+	},
+	"background": "inherit"
 }

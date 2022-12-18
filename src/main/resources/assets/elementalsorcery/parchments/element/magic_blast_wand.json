@@ -1,10 +1,10 @@
 {
-    "lev": 3,
-    "need": [
-        "element/element_workbench"
-    ],
-    "linked": "elementalsorcery:magic_blast_wand",
-    "type": "craft",
-    "name": "magicBlastWand",
-    "item": "elementalsorcery:magic_blast_wand"
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 3,
+	"need": [
+		"element/element_workbench"
+	],
+	"linked": "elementalsorcery:magic_blast_wand",
+	"name": "magicBlastWand",
+	"item": "elementalsorcery:magic_blast_wand"
 }

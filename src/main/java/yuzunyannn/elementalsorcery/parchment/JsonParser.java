@@ -12,6 +12,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.api.ESAPI;
@@ -21,6 +22,7 @@ import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.util.json.Json.ParseExceptionCode;
@@ -55,8 +57,10 @@ public class JsonParser {
 
 	private static Page readPage(JsonObject json) {
 		if (!json.hasString("type")) throw Json.exception(ParseExceptionCode.NOT_HAVE, "type");
-		String type = json.getString("type");
-		switch (type.toLowerCase()) {
+		ResourceLocation typePair = TextHelper.toESResourceLocation(json.getString("type"));
+		String type = typePair.getPath().toLowerCase();
+		if (type.startsWith("parchment_")) type = type.substring(10);
+		switch (type) {
 		case "multpage":
 		case "mult":
 			return readPageMult(json);
@@ -77,8 +81,10 @@ public class JsonParser {
 			return readPageTransform(json, PageTransform.RESEARCH);
 		case "buidling":
 			return readPageBuilding(json);
-		default:
+		case "normal":
 			return readPageSimple(json);
+		default:
+			throw Json.exception(ParseExceptionCode.NOT_HAVE, type);
 		}
 	}
 

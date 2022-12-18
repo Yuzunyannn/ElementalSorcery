@@ -1,47 +1,48 @@
 {
-    "name": "explore",
-    "site": "elementalsorcery:laboratory",
-    "title": "quest.explore",
-    "describe": [
-        "quest.explore.research",
-        "quest.end.polite.{random#1~3}"
-    ],
-    "condition": [
-        {
-            "type": "NeedExplore",
-            "biome": "{biome#random}"
-        }
-    ],
-    "precondition": [
-        {
-            "type": "NeedFame",
-            "value": 5
-        }
-    ],
-    "reward": [
-        {
-            "type": "Coin",
-            "value": "{prandom#50~150}"
-        },
-        {
-            "type": "Exp",
-            "value": "{random#50~100}"
-        },
-        {
-            "type": "Fame",
-            "value": 0.8
-        },
-        {
-            "chance": 0.5,
-            "type": "Topic",
-            "value": "{random#1~2}",
-            "topic": "Natural"
-        },
-        {
-            "chance": 0.75,
-            "type": "NextQuest",
-            "value": "elementalsorcery:newbie_rock_camera",
-            "delegate" : true
-        }
-    ]
+	"type": "elementalsorcery:quest",
+	"name": "explore",
+	"site": "elementalsorcery:laboratory",
+	"title": "quest.explore",
+	"describe": [
+		"quest.explore.research",
+		"quest.end.polite.{random#1~3}"
+	],
+	"condition": [
+		{
+			"type": "NeedExplore",
+			"biome": "{biome#random}"
+		}
+	],
+	"precondition": [
+		{
+			"type": "NeedFame",
+			"value": 5
+		}
+	],
+	"reward": [
+		{
+			"type": "Coin",
+			"value": "{prandom#50~150}"
+		},
+		{
+			"type": "Exp",
+			"value": "{random#50~100}"
+		},
+		{
+			"type": "Fame",
+			"value": 0.8
+		},
+		{
+			"chance": 0.5,
+			"type": "Topic",
+			"value": "{random#1~2}",
+			"topic": "Natural"
+		},
+		{
+			"chance": 0.75,
+			"type": "NextQuest",
+			"value": "elementalsorcery:newbie_rock_camera",
+			"delegate": true
+		}
+	]
 }

@@ -1,14 +1,14 @@
 {
-    "type": "craft",
-    "name": "smeltBox",
-    "linked": [
-        "elementalsorcery:smelt_box",
-        "elementalsorcery:smelt_box_iron",
-        "elementalsorcery:smelt_box_kyanite"
-    ],
-    "item": [
-        "elementalsorcery:smelt_box",
-        "elementalsorcery:smelt_box_iron",
-        "elementalsorcery:smelt_box_kyanite"
-    ]
+	"type": "elementalsorcery:parchment_craft",
+	"name": "smeltBox",
+	"linked": [
+		"elementalsorcery:smelt_box",
+		"elementalsorcery:smelt_box_iron",
+		"elementalsorcery:smelt_box_kyanite"
+	],
+	"item": [
+		"elementalsorcery:smelt_box",
+		"elementalsorcery:smelt_box_iron",
+		"elementalsorcery:smelt_box_kyanite"
+	]
 }

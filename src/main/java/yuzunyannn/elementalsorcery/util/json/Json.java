@@ -272,7 +272,8 @@ public abstract class Json {
 		NOT_HAVE("NotHave", "找不到：%s"),
 		PATTERN_ERROR("PatternError", "%s的格式错误，原因：%s"),
 		EMPTY("Emtpy", "%s为空"),
-		NOT_LOAD_MOD("NotLoadMod", "找不到：%s可能是没有加载mod：%s");
+		NOT_LOAD_MOD("NotLoadMod", "找不到：%s可能是没有加载mod：%s"),
+		CANNOT("Cannot", "不允许：%s");
 
 		final String code;
 		final String format;

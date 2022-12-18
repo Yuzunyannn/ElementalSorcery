@@ -1,14 +1,14 @@
 {
-    "lev": 4,
-    "need": [
-        "more/scarlet_crystal",
-        "md/estone",
-        "element/element_explosion",
-        "elf/dejected_skeleton",
-        "element_adv/void_container"
-    ],
-    "linked": "elementalsorcery:element_translocator",
-    "type": "craft",
-    "name": "elementTranslocator",
-    "item": "elementalsorcery:element_translocator"
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 4,
+	"need": [
+		"more/scarlet_crystal",
+		"md/estone",
+		"element/element_explosion",
+		"elf/dejected_skeleton",
+		"element_adv/void_container"
+	],
+	"linked": "elementalsorcery:element_translocator",
+	"name": "elementTranslocator",
+	"item": "elementalsorcery:element_translocator"
 }

@@ -1,8 +1,8 @@
 {
-    "lev": 0,
-    "linked": "elementalsorcery:resonant_crystal",
-    "type": "normal",
-    "name": "resonantCrystal",
-    "item": "elementalsorcery:resonant_crystal",
-    "background": "inherit"
+	"type": "elementalsorcery:parchment_normal",
+	"lev": 0,
+	"linked": "elementalsorcery:resonant_crystal",
+	"name": "resonantCrystal",
+	"item": "elementalsorcery:resonant_crystal",
+	"background": "inherit"
 }

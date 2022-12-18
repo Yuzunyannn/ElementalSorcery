@@ -1,10 +1,10 @@
 {
-    "lev": 1,
-    "need": [
-        "more/magic_piece"
-    ],
-    "linked": "elementalsorcery:magical_ender_eye",
-    "type": "craft",
-    "name": "magicalEndereye",
-    "item": "elementalsorcery:magical_ender_eye"
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 1,
+	"need": [
+		"more/magic_piece"
+	],
+	"linked": "elementalsorcery:magical_ender_eye",
+	"name": "magicalEndereye",
+	"item": "elementalsorcery:magical_ender_eye"
 }

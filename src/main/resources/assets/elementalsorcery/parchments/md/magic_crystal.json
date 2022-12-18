@@ -1,13 +1,13 @@
 {
-    "lev": 2,
-    "need": [
-        "md/infusion"
-    ],
-    "linked": "elementalsorcery:magic_crystal",
-    "type": "infusion",
-    "name": "magicCrystal",
-    "item": [
-        "elementalsorcery:kyanite",
-        "elementalsorcery:magic_crystal"
-    ]
+	"type": "elementalsorcery:parchment_infusion",
+	"lev": 2,
+	"need": [
+		"md/infusion"
+	],
+	"linked": "elementalsorcery:magic_crystal",
+	"name": "magicCrystal",
+	"item": [
+		"elementalsorcery:kyanite",
+		"elementalsorcery:magic_crystal"
+	]
 }

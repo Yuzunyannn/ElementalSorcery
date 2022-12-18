@@ -1,14 +1,14 @@
 {
-    "lev": 3,
-    "need": [
-        "md/magic_crystal",
-        "md/infusion"
-    ],
-    "linked":"elementalsorcery:element_crystal",
-    "type": "infusion",
-    "name": "elementCrystal",
-    "item": [
-        "elementalsorcery:magic_crystal",
-        "elementalsorcery:element_crystal"
-    ]
+	"type": "elementalsorcery:parchment_infusion",
+	"lev": 3,
+	"need": [
+		"md/magic_crystal",
+		"md/infusion"
+	],
+	"linked": "elementalsorcery:element_crystal",
+	"name": "elementCrystal",
+	"item": [
+		"elementalsorcery:magic_crystal",
+		"elementalsorcery:element_crystal"
+	]
 }

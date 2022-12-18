@@ -1,12 +1,11 @@
 {
-    "lev": 1,
-    "need": [
-        "more/magic_piece",
-        "more/magic_stone"
-    ],
-    "linked": "elementalsorcery:melt_cauldron",
-    "type": "craft",
-    "name": "meltCauldron",
-    "item": "elementalsorcery:melt_cauldron"
-  
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 1,
+	"need": [
+		"more/magic_piece",
+		"more/magic_stone"
+	],
+	"linked": "elementalsorcery:melt_cauldron",
+	"name": "meltCauldron",
+	"item": "elementalsorcery:melt_cauldron"
 }

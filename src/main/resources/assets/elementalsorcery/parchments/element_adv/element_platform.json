@@ -1,11 +1,11 @@
 {
-    "lev": 4,
-    "need": [
-        "element/element_cube",
-        "md/magic_platform"
-    ],
-    "linked": "elementalsorcery:element_platform",
-    "type": "craft",
-    "name": "elementPlatform",
-    "item": "elementalsorcery:element_platform"
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 4,
+	"need": [
+		"element/element_cube",
+		"md/magic_platform"
+	],
+	"linked": "elementalsorcery:element_platform",
+	"name": "elementPlatform",
+	"item": "elementalsorcery:element_platform"
 }

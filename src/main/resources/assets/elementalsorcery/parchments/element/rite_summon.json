@@ -1,25 +1,25 @@
 {
-    "lev": 3,
-    "type": "mult",
-    "lock": 0,
-    "linked": [
-        "elementalsorcery:soul_wood_sword",
-        "elementalsorcery:soul_fragment"
-    ],
-    "need": [
-        "base/rite"
-    ],
-    "pages": [
-        {
-            "type": "normal",
-            "name": "soulSummon",
-            "icon": "elementalsorcery:soul_wood_sword",
-            "background": "elementalsorcery:soul_fragment"
-        },
-        {
-            "type": "normal",
-            "name": "riteSummon",
-            "background": "elementalsorcery:soul_wood_sword"
-        }
-    ]
+	"type": "elementalsorcery:parchment_mult",
+	"lev": 3,
+	"lock": 0,
+	"linked": [
+		"elementalsorcery:soul_wood_sword",
+		"elementalsorcery:soul_fragment"
+	],
+	"need": [
+		"base/rite"
+	],
+	"pages": [
+		{
+			"type": "normal",
+			"name": "soulSummon",
+			"icon": "elementalsorcery:soul_wood_sword",
+			"background": "elementalsorcery:soul_fragment"
+		},
+		{
+			"type": "normal",
+			"name": "riteSummon",
+			"background": "elementalsorcery:soul_wood_sword"
+		}
+	]
 }

@@ -1,11 +1,11 @@
 {
-    "lev": 4,
-    "need": [
-        "element_adv/resonant_incubator"
-    ],
-    "linked": "elementalsorcery:item_crystal",
-    "type": "normal",
-    "name": "itemCrystal",
-    "item": "elementalsorcery:item_crystal",
-    "background": "inherit"
+	"type": "elementalsorcery:parchment_normal",
+	"lev": 4,
+	"need": [
+		"element_adv/resonant_incubator"
+	],
+	"linked": "elementalsorcery:item_crystal",
+	"name": "itemCrystal",
+	"item": "elementalsorcery:item_crystal",
+	"background": "inherit"
 }

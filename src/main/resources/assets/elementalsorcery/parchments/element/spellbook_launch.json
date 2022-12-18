@@ -1,14 +1,14 @@
 {
-    "lev": 3,
-    "need": [
-        "element/spellbook",
-        "element/magic_desk"
-    ],
-    "linked": "elementalsorcery:spellbook_launch",
-    "type": "spellaltar",
-    "name": "spLaunch",
-    "item": [
-        "elementalsorcery:spellbook",
-        "elementalsorcery:spellbook_launch"
-    ]
+	"type": "elementalsorcery:parchment_spellaltar",
+	"lev": 3,
+	"need": [
+		"element/spellbook",
+		"element/magic_desk"
+	],
+	"linked": "elementalsorcery:spellbook_launch",
+	"name": "spLaunch",
+	"item": [
+		"elementalsorcery:spellbook",
+		"elementalsorcery:spellbook_launch"
+	]
 }

@@ -2,7 +2,7 @@ const readline = require('readline')
 const fs = require("fs")
 const path = require("path")
 const base = "../../src/main/resources/assets/elementalsorcery/"
-let root = process.argv[2] || "element_recipes"
+let root = process.argv[2] || "quests"
 root = path.join(base, root)
 
 function travel(dir, callback) {
@@ -14,16 +14,14 @@ function travel(dir, callback) {
 }
 
 
-// console.log("路径: " + root)
+console.log("root: " + root)
 
 travel(root, (root) => {
     if (path.extname(root) != ".json") return
-    // console.log("处理json: " + root)
+    console.log("json: " + root)
     let json = JSON.parse(fs.readFileSync(root))
-    json = Object.assign({ type: "elementalsorcery:element_map" }, json)
+    json = Object.assign({ type: "elementalsorcery:quest" }, json)
     // json.type = "elementalsorcery:element_map"
-    if (json.type == "inherit_element") {
-        console.log("修改：" + root)
-    }
+    // json.type = "elementalsorcery:parchment_" + json.type
     fs.writeFileSync(root, JSON.stringify(json, undefined, '\t'))
 })

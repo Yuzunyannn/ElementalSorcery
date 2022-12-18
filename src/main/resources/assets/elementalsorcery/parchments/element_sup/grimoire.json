@@ -1,4 +1,5 @@
 {
+	"type": "elementalsorcery:parchment_mult",
 	"lev": 5,
 	"need": [
 		"element_sup/mantra_paper",
@@ -8,7 +9,6 @@
 		"more/ancient_paper"
 	],
 	"linked": "elementalsorcery:grimoire",
-	"type": "mult",
 	"lock": 0,
 	"pages": [
 		{

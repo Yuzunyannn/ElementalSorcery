@@ -1,19 +1,19 @@
 {
-    "lev": 4,
-    "need": [
-        "element/element_crafting_table",
-        "md/magic_platform"
-    ],
-    "linked": [
-        "elementalsorcery:estone_prism",
-        "elementalsorcery:estone_matrix",
-        "elementalsorcery:estone_crock"
-    ],
-    "type": "craft",
-    "name": "estoneAdv",
-    "item": [
-        "elementalsorcery:estone_prism",
-        "elementalsorcery:estone_matrix",
-        "elementalsorcery:estone_crock"
-    ]
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 4,
+	"need": [
+		"element/element_crafting_table",
+		"md/magic_platform"
+	],
+	"linked": [
+		"elementalsorcery:estone_prism",
+		"elementalsorcery:estone_matrix",
+		"elementalsorcery:estone_crock"
+	],
+	"name": "estoneAdv",
+	"item": [
+		"elementalsorcery:estone_prism",
+		"elementalsorcery:estone_matrix",
+		"elementalsorcery:estone_crock"
+	]
 }

@@ -1,4 +1,5 @@
 {
+	"type": "elementalsorcery:parchment_mult",
 	"lev": 5,
 	"need": [
 		"element_adv/supreme_table",
@@ -6,7 +7,6 @@
 		"element_sup/mantra_gem"
 	],
 	"linked": "elementalsorcery:disintegrate_stela",
-	"type": "mult",
 	"lock": 0,
 	"pages": [
 		{
@@ -20,25 +20,61 @@
 			"building": "disintegrate_altar",
 			"extra": [
 				{
-					"pos": [ 0, 4, 0 ],
+					"pos": [
+						0,
+						4,
+						0
+					],
 					"item": "elementalsorcery:disintegrate_stela"
 				},
 				{
 					"pos": [
-						[ 10, 1, 10 ],
-						[ -10, 1, 10 ],
-						[ -10, 1, -10 ],
-						[ 10, 1, -10 ],
-						[ 10, 1, 0 ],
-						[ 0, 1, 10 ],
-						[ -10, 1, 0 ],
-						[ 0, 1, -10 ]
+						[
+							10,
+							1,
+							10
+						],
+						[
+							-10,
+							1,
+							10
+						],
+						[
+							-10,
+							1,
+							-10
+						],
+						[
+							10,
+							1,
+							-10
+						],
+						[
+							10,
+							1,
+							0
+						],
+						[
+							0,
+							1,
+							10
+						],
+						[
+							-10,
+							1,
+							0
+						],
+						[
+							0,
+							1,
+							-10
+						]
 					],
 					"item": "elementalsorcery:elemental_cube"
 				}
 			],
 			"scale": 0.7,
-			"y" : -10
+			"y": -10
 		},
 		{
 			"type": "normal",

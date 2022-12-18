@@ -1,8 +1,8 @@
 {
-    "need": [
-        "base/rite"
-    ],
-    "type": "normal",
-    "name": "riteCraft",
-    "item": "elementalsorcery:rite_table"
+	"type": "elementalsorcery:parchment_normal",
+	"need": [
+		"base/rite"
+	],
+	"name": "riteCraft",
+	"item": "elementalsorcery:rite_table"
 }

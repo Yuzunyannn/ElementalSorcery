@@ -1,5 +1,5 @@
 {
-    "type": "normal",
-    "name": "element",
-    "icon": "elementalsorcery:spellbook"
+	"type": "elementalsorcery:parchment_normal",
+	"name": "element",
+	"icon": "elementalsorcery:spellbook"
 }

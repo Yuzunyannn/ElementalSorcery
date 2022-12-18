@@ -1,54 +1,54 @@
 {
-    "lev": 1,
-    "need": [
-        "more/melt_cauldron",
-        "base/kyanite",
-        "more/magic_stone"
-    ],
-    "linked": "elementalsorcery:astone",
-    "type": "mult",
-    "lock": 0,
-    "pages": [
-        {
-            "type": "normal",
-            "name": "astone",
-            "differ": "fir"
-        },
-        {
-            "type": "normal",
-            "name": "astone",
-            "differ": "sec"
-        },
-        {
-            "type": "normal",
-            "name": "astone",
-            "differ": "thi"
-        },
-        {
-            "type": "craft",
-            "name": "astoneCrafting",
-            "item": [
-                {
-                    "id": "elementalsorcery:astone",
-                    "data": 2
-                },
-                {
-                    "id": "elementalsorcery:astone",
-                    "data": 3
-                },
-                {
-                    "id": "elementalsorcery:astone",
-                    "data": 4
-                },
-                {
-                    "id": "elementalsorcery:astone",
-                    "data": 5
-                },
-                {
-                    "id": "elementalsorcery:astone",
-                    "data": 6
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:parchment_mult",
+	"lev": 1,
+	"need": [
+		"more/melt_cauldron",
+		"base/kyanite",
+		"more/magic_stone"
+	],
+	"linked": "elementalsorcery:astone",
+	"lock": 0,
+	"pages": [
+		{
+			"type": "normal",
+			"name": "astone",
+			"differ": "fir"
+		},
+		{
+			"type": "normal",
+			"name": "astone",
+			"differ": "sec"
+		},
+		{
+			"type": "normal",
+			"name": "astone",
+			"differ": "thi"
+		},
+		{
+			"type": "craft",
+			"name": "astoneCrafting",
+			"item": [
+				{
+					"id": "elementalsorcery:astone",
+					"data": 2
+				},
+				{
+					"id": "elementalsorcery:astone",
+					"data": 3
+				},
+				{
+					"id": "elementalsorcery:astone",
+					"data": 4
+				},
+				{
+					"id": "elementalsorcery:astone",
+					"data": 5
+				},
+				{
+					"id": "elementalsorcery:astone",
+					"data": 6
+				}
+			]
+		}
+	]
 }

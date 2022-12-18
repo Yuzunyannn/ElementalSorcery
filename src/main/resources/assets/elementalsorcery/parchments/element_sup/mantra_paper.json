@@ -1,39 +1,39 @@
 {
-    "lev": 5,
-    "need": [
-        "element/element_cube",
-        "element_adv/magic_paper",
-        "element_sup/quill_element"
-    ],
-    "linked": [
-        {
-            "item": "elementalsorcery:magic_paper",
-            "data": 2
-        },
-        {
-            "item": "elementalsorcery:magic_paper",
-            "data": 3
-        }
-    ],
-    "type": "mult",
-    "lock": 1,
-    "pages": [
-        {
-            "type": "craft",
-            "name": "writtenPaper",
-            "item": {
-                "item": "elementalsorcery:magic_paper",
-                "data": 2
-            }
-        },
-        {
-            "type": "normal",
-            "name": "mantraPaper",
-            "item": {
-                "item": "elementalsorcery:magic_paper",
-                "data": 3
-            },
-            "background": "inherit"
-        }
-    ]
+	"type": "elementalsorcery:parchment_mult",
+	"lev": 5,
+	"need": [
+		"element/element_cube",
+		"element_adv/magic_paper",
+		"element_sup/quill_element"
+	],
+	"linked": [
+		{
+			"item": "elementalsorcery:magic_paper",
+			"data": 2
+		},
+		{
+			"item": "elementalsorcery:magic_paper",
+			"data": 3
+		}
+	],
+	"lock": 1,
+	"pages": [
+		{
+			"type": "craft",
+			"name": "writtenPaper",
+			"item": {
+				"item": "elementalsorcery:magic_paper",
+				"data": 2
+			}
+		},
+		{
+			"type": "normal",
+			"name": "mantraPaper",
+			"item": {
+				"item": "elementalsorcery:magic_paper",
+				"data": 3
+			},
+			"background": "inherit"
+		}
+	]
 }

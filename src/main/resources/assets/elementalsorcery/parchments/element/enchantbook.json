@@ -1,29 +1,29 @@
 {
-    "lev": 3,
-    "need": [
-        "more/kyanite_tools"
-    ],
-    "linked": "elementalsorcery:spellbook_enchantment",
-    "type": "separate",
-    "name": "enchantingBook",
-    "item": [
-        "minecraft:enchanting_table",
-        "elementalsorcery:spellbook_enchantment",
-        {
-            "id": "elementalsorcery:kyanite_hoe",
-            "nbt": {
-                "eInv": {
-                    "size": 1,
-                    "list": [
-                        {
-                            "slot": 0,
-                            "id": "elementalsorcery:ender",
-                            "size": 10,
-                            "power": 5
-                        }
-                    ]
-                }
-            }
-        }
-    ]
+	"type": "elementalsorcery:parchment_separate",
+	"lev": 3,
+	"need": [
+		"more/kyanite_tools"
+	],
+	"linked": "elementalsorcery:spellbook_enchantment",
+	"name": "enchantingBook",
+	"item": [
+		"minecraft:enchanting_table",
+		"elementalsorcery:spellbook_enchantment",
+		{
+			"id": "elementalsorcery:kyanite_hoe",
+			"nbt": {
+				"eInv": {
+					"size": 1,
+					"list": [
+						{
+							"slot": 0,
+							"id": "elementalsorcery:ender",
+							"size": 10,
+							"power": 5
+						}
+					]
+				}
+			}
+		}
+	]
 }

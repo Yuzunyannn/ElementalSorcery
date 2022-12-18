@@ -1,11 +1,11 @@
 {
-    "lev": 2,
-    "need": [
-        "md/md",
-        "more/astone"
-    ],
-    "linked": "elementalsorcery:md_rubble_repair",
-    "type": "craft",
-    "name": "rubbleRepair",
-    "item": "elementalsorcery:md_rubble_repair"
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 2,
+	"need": [
+		"md/md",
+		"more/astone"
+	],
+	"linked": "elementalsorcery:md_rubble_repair",
+	"name": "rubbleRepair",
+	"item": "elementalsorcery:md_rubble_repair"
 }

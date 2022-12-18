@@ -1,23 +1,23 @@
 {
-    "lev": 1,
-    "linked": [
-        "elementalsorcery:star_sand",
-        "elementalsorcery:star_stone",
-        "elementalsorcery:stone_mill"
-    ],
-    "type": "mult",
-    "lock": 0,
-    "pages": [
-        {
-            "type": "normal",
-            "name": "starSand",
-            "icon": "elementalsorcery:star_sand",
-            "background": "elementalsorcery:star_sand"
-        },
-        {
-            "type": "craft",
-            "name": "stoneMill",
-            "item": "elementalsorcery:stone_mill"
-        }
-    ]
+	"type": "elementalsorcery:parchment_mult",
+	"lev": 1,
+	"linked": [
+		"elementalsorcery:star_sand",
+		"elementalsorcery:star_stone",
+		"elementalsorcery:stone_mill"
+	],
+	"lock": 0,
+	"pages": [
+		{
+			"type": "normal",
+			"name": "starSand",
+			"icon": "elementalsorcery:star_sand",
+			"background": "elementalsorcery:star_sand"
+		},
+		{
+			"type": "craft",
+			"name": "stoneMill",
+			"item": "elementalsorcery:stone_mill"
+		}
+	]
 }

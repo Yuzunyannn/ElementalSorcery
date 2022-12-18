@@ -1,10 +1,10 @@
 {
-    "lev": 4,
-    "need": [
-        "element_adv/isc_normal"
-    ],
-    "linked": "elementalsorcery:is_craft_cc",
-    "type": "craft",
-    "name": "iscCC",
-    "item": "elementalsorcery:is_craft_cc"
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 4,
+	"need": [
+		"element_adv/isc_normal"
+	],
+	"linked": "elementalsorcery:is_craft_cc",
+	"name": "iscCC",
+	"item": "elementalsorcery:is_craft_cc"
 }

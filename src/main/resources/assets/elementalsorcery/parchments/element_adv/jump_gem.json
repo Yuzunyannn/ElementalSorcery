@@ -1,10 +1,10 @@
 {
+	"type": "elementalsorcery:parchment_research",
 	"lev": 4,
 	"need": [
 		"elf/elf_floor_laboratory"
 	],
 	"linked": "elementalsorcery:jump_gem",
-	"type": "research",
 	"name": "jumpGem",
 	"item": "elementalsorcery:jump_gem"
 }

@@ -1,11 +1,11 @@
 {
-    "lev": 1,
-    "need": [
-        "more/magic_piece",
-        "more/star_sand"
-    ],
-    "linked": "elementalsorcery:magic_stone",
-    "type": "craft",
-    "name": "magicStone",
-    "item": "elementalsorcery:magic_stone"
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 1,
+	"need": [
+		"more/magic_piece",
+		"more/star_sand"
+	],
+	"linked": "elementalsorcery:magic_stone",
+	"name": "magicStone",
+	"item": "elementalsorcery:magic_stone"
 }

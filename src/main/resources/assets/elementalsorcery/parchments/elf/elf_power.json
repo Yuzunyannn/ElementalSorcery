@@ -1,12 +1,12 @@
 {
-    "lev": 1,
-    "need": [
-        "elf/elf_tree",
-        "elf/resonant_crystal"
-    ],
-    "linked": "elementalsorcery:elf_sapling",
-    "type": "normal",
-    "name": "elfPower",
-    "item": "elementalsorcery:elf_sapling",
-    "background": "inherit"
+	"type": "elementalsorcery:parchment_normal",
+	"lev": 1,
+	"need": [
+		"elf/elf_tree",
+		"elf/resonant_crystal"
+	],
+	"linked": "elementalsorcery:elf_sapling",
+	"name": "elfPower",
+	"item": "elementalsorcery:elf_sapling",
+	"background": "inherit"
 }

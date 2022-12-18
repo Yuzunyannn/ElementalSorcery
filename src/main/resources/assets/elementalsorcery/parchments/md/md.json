@@ -1,36 +1,36 @@
 {
-    "lev": 2,
-    "need": [
-        "more/astone"
-    ],
-    "linked": [
-        "elementalsorcery:astone",
-        "elementalsorcery:magic_torch",
-        "elementalsorcery:md_magic_gen",
-        "elementalsorcery:md_transfer"
-    ],
-    "type": "mult",
-    "lock": 0,
-    "pages": [
-        {
-            "type": "normal",
-            "name": "md",
-            "icon": "elementalsorcery:astone"
-        },
-        {
-            "type": "craft",
-            "name": "magicTorch",
-            "item": "elementalsorcery:magic_torch"
-        },
-        {
-            "type": "craft",
-            "name": "magicGen",
-            "item": "elementalsorcery:md_magic_gen"
-        },
-        {
-            "type": "craft",
-            "name": "magicTransfer",
-            "item": "elementalsorcery:md_transfer"
-        }
-    ]
+	"type": "elementalsorcery:parchment_mult",
+	"lev": 2,
+	"need": [
+		"more/astone"
+	],
+	"linked": [
+		"elementalsorcery:astone",
+		"elementalsorcery:magic_torch",
+		"elementalsorcery:md_magic_gen",
+		"elementalsorcery:md_transfer"
+	],
+	"lock": 0,
+	"pages": [
+		{
+			"type": "normal",
+			"name": "md",
+			"icon": "elementalsorcery:astone"
+		},
+		{
+			"type": "craft",
+			"name": "magicTorch",
+			"item": "elementalsorcery:magic_torch"
+		},
+		{
+			"type": "craft",
+			"name": "magicGen",
+			"item": "elementalsorcery:md_magic_gen"
+		},
+		{
+			"type": "craft",
+			"name": "magicTransfer",
+			"item": "elementalsorcery:md_transfer"
+		}
+	]
 }

@@ -1,23 +1,23 @@
 {
-    "lev": 5,
-    "need": [
-        "element_adv/supreme_table",
-        "element_adv/vortex"
-    ],
-    "linked": [
-        {
-            "id": "elementalsorcery:quill",
-            "data": 4
-        }
-    ],
-    "type": "craft",
-    "name": "quillElement",
-    "item": {
-        "id": "elementalsorcery:quill",
-        "data": 4
-    },
-    "icon": {
-        "id": "elementalsorcery:quill",
-        "data": 4
-    }
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 5,
+	"need": [
+		"element_adv/supreme_table",
+		"element_adv/vortex"
+	],
+	"linked": [
+		{
+			"id": "elementalsorcery:quill",
+			"data": 4
+		}
+	],
+	"name": "quillElement",
+	"item": {
+		"id": "elementalsorcery:quill",
+		"data": 4
+	},
+	"icon": {
+		"id": "elementalsorcery:quill",
+		"data": 4
+	}
 }

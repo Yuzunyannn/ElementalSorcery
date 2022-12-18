@@ -1,14 +1,14 @@
 {
-    "lev": 0,
-    "type": "normal",
-    "name": "starFlower",
-    "linked": {
-        "id": "elementalsorcery:star_flower",
-        "data": 2
-    },
-    "icon": {
-        "id": "elementalsorcery:star_flower",
-        "data": 2
-    },
-    "background": "inherit"
+	"type": "elementalsorcery:parchment_normal",
+	"lev": 0,
+	"name": "starFlower",
+	"linked": {
+		"id": "elementalsorcery:star_flower",
+		"data": 2
+	},
+	"icon": {
+		"id": "elementalsorcery:star_flower",
+		"data": 2
+	},
+	"background": "inherit"
 }

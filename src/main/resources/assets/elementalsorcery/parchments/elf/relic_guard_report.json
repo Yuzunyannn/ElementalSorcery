@@ -1,6 +1,6 @@
 {
-    "lev": -1,
-    "type": "research",
-    "name": "relicGuardReport",
-    "item": "elementalsorcery:relic_disc"
+	"type": "elementalsorcery:parchment_research",
+	"lev": -1,
+	"name": "relicGuardReport",
+	"item": "elementalsorcery:relic_disc"
 }

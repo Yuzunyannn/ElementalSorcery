@@ -1,15 +1,15 @@
 {
-    "lev": -2,
-    "need": [
-        "element/rite_summon"
-    ],
-    "linked": [
-        "elementalsorcery:rabid_leather",
-        "minecraft:rabbit_foot",
-        "minecraft:rabbit_hide"
-    ],
-    "type": "normal",
-    "name": "rabidRabbit",
-    "item": "elementalsorcery:rabid_leather",
-    "background": "inherit"
+	"type": "elementalsorcery:parchment_normal",
+	"lev": -2,
+	"need": [
+		"element/rite_summon"
+	],
+	"linked": [
+		"elementalsorcery:rabid_leather",
+		"minecraft:rabbit_foot",
+		"minecraft:rabbit_hide"
+	],
+	"name": "rabidRabbit",
+	"item": "elementalsorcery:rabid_leather",
+	"background": "inherit"
 }

@@ -1,10 +1,10 @@
 {
-    "lev": 2,
-    "need": [
-        "md/md"
-    ],
-    "linked": "elementalsorcery:md_magiclization",
-    "type": "craft",
-    "name": "magiclization",
-    "item": "elementalsorcery:md_magiclization"
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 2,
+	"need": [
+		"md/md"
+	],
+	"linked": "elementalsorcery:md_magiclization",
+	"name": "magiclization",
+	"item": "elementalsorcery:md_magiclization"
 }

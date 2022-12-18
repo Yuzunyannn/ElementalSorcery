@@ -1,13 +1,13 @@
 {
-    "lev": 2,
-    "need": [
-        "md/infusion"
-    ],
-    "linked": "elementalsorcery:nature_crystal",
-    "type": "infusion",
-    "name": "natureCrystal",
-    "item": [
-        "minecraft:reeds",
-        "elementalsorcery:nature_crystal"
-    ]
+	"type": "elementalsorcery:parchment_infusion",
+	"lev": 2,
+	"need": [
+		"md/infusion"
+	],
+	"linked": "elementalsorcery:nature_crystal",
+	"name": "natureCrystal",
+	"item": [
+		"minecraft:reeds",
+		"elementalsorcery:nature_crystal"
+	]
 }

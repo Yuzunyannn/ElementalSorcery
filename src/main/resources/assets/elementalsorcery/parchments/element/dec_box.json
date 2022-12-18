@@ -1,32 +1,32 @@
 {
-    "lev": 3,
-    "need": [
-        "md/azure_crystal",
-        "md/md"
-    ],
-    "linked": "elementalsorcery:md_deconstruct_box",
-    "type": "mult",
-    "lock": 0,
-    "pages": [
-        {
-            "type": "craft",
-            "name": "decBox",
-            "item": "elementalsorcery:md_deconstruct_box"
-        },
-        {
-            "type": "buidling",
-            "title": "page.decBox.altar",
-            "building": "deconstruct_box",
-            "extra": [
-                {
-                    "pos": [
-                        0,
-                        1,
-                        0
-                    ],
-                    "item": "elementalsorcery:md_deconstruct_box"
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:parchment_mult",
+	"lev": 3,
+	"need": [
+		"md/azure_crystal",
+		"md/md"
+	],
+	"linked": "elementalsorcery:md_deconstruct_box",
+	"lock": 0,
+	"pages": [
+		{
+			"type": "craft",
+			"name": "decBox",
+			"item": "elementalsorcery:md_deconstruct_box"
+		},
+		{
+			"type": "buidling",
+			"title": "page.decBox.altar",
+			"building": "deconstruct_box",
+			"extra": [
+				{
+					"pos": [
+						0,
+						1,
+						0
+					],
+					"item": "elementalsorcery:md_deconstruct_box"
+				}
+			]
+		}
+	]
 }

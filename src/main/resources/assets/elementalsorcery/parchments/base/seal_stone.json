@@ -1,8 +1,8 @@
 {
-    "lev": 0,
-    "type": "normal",
-    "name": "sealStone",
-    "linked": "elementalsorcery:seal_stone",
-    "icon": "elementalsorcery:seal_stone",
-    "background": "inherit"
+	"type": "elementalsorcery:parchment_normal",
+	"lev": 0,
+	"name": "sealStone",
+	"linked": "elementalsorcery:seal_stone",
+	"icon": "elementalsorcery:seal_stone",
+	"background": "inherit"
 }

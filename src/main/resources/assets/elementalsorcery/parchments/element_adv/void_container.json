@@ -1,27 +1,27 @@
 {
-    "lev": 4,
-    "need": [
-        "more/melt_cauldron",
-        "element_adv/jump_gem"
-    ],
-    "linked": [
-        "elementalsorcery:void_fragment",
-        "elementalsorcery:void_container",
-        "elementalsorcery:void_container_element"
-    ],
-    "type": "mult",
-    "lock": 0,
-    "pages": [
-        {
-            "type": "normal",
-            "name": "voidContainer",
-            "item": "elementalsorcery:void_container",
-            "background": "inherit"
-        },
-        {
-            "type": "craft",
-            "name": "voidContainerElement",
-            "item": "elementalsorcery:void_container_element"
-        }
-    ]
+	"type": "elementalsorcery:parchment_mult",
+	"lev": 4,
+	"need": [
+		"more/melt_cauldron",
+		"element_adv/jump_gem"
+	],
+	"linked": [
+		"elementalsorcery:void_fragment",
+		"elementalsorcery:void_container",
+		"elementalsorcery:void_container_element"
+	],
+	"lock": 0,
+	"pages": [
+		{
+			"type": "normal",
+			"name": "voidContainer",
+			"item": "elementalsorcery:void_container",
+			"background": "inherit"
+		},
+		{
+			"type": "craft",
+			"name": "voidContainerElement",
+			"item": "elementalsorcery:void_container_element"
+		}
+	]
 }

@@ -1,4 +1,5 @@
 {
+	"type": "elementalsorcery:parchment_mult",
 	"lev": 4,
 	"need": [
 		"element/element_crafting_table"
@@ -7,7 +8,6 @@
 		"elementalsorcery:blessing_jade",
 		"elementalsorcery:blessing_jade_piece"
 	],
-	"type": "mult",
 	"lock": 0,
 	"pages": [
 		{

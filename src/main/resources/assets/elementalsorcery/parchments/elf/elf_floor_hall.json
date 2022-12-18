@@ -1,23 +1,23 @@
 {
-    "lev": -2,
-    "need": [
-        "elf/elf_edifice"
-    ],
-    "linked": [
-        "elementalsorcery:quest"
-    ],
-    "type": "mult",
-    "lock": 0,
-    "pages": [
-        {
-            "type": "normal",
-            "name": "elfFloorHall",
-            "item": "elementalsorcery:quest"
-        },
-        {
-            "type": "normal",
-            "name": "elfQuest",
-            "item": "elementalsorcery:quest"
-        }
-    ]
+	"type": "elementalsorcery:parchment_mult",
+	"lev": -2,
+	"need": [
+		"elf/elf_edifice"
+	],
+	"linked": [
+		"elementalsorcery:quest"
+	],
+	"lock": 0,
+	"pages": [
+		{
+			"type": "normal",
+			"name": "elfFloorHall",
+			"item": "elementalsorcery:quest"
+		},
+		{
+			"type": "normal",
+			"name": "elfQuest",
+			"item": "elementalsorcery:quest"
+		}
+	]
 }

@@ -1,20 +1,20 @@
 {
-    "lev": 2,
-    "need": [
-        "more/astone",
-        "more/magic_crystal"
-    ],
-    "linked": "elementalsorcery:magic_platform",
-    "type": "craft",
-    "name": "magicPl",
-    "item": [
-        {
-            "id": "elementalsorcery:magic_platform",
-            "data": 0
-        },
-        {
-            "id": "elementalsorcery:magic_platform",
-            "data": 1
-        }
-    ]
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 2,
+	"need": [
+		"more/astone",
+		"more/magic_crystal"
+	],
+	"linked": "elementalsorcery:magic_platform",
+	"name": "magicPl",
+	"item": [
+		{
+			"id": "elementalsorcery:magic_platform",
+			"data": 0
+		},
+		{
+			"id": "elementalsorcery:magic_platform",
+			"data": 1
+		}
+	]
 }

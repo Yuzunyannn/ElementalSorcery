@@ -1,16 +1,16 @@
 {
-    "lev": 3,
-    "need": [
-        "md/nature_crystal"
-    ],
-    "linked": {
-        "item": "elementalsorcery:nature_dust",
-        "data": 1
-    },
-    "type": "craft",
-    "name": "natureDust",
-    "item": {
-        "item": "elementalsorcery:nature_dust",
-        "data": 1
-    }
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 3,
+	"need": [
+		"md/nature_crystal"
+	],
+	"linked": {
+		"item": "elementalsorcery:nature_dust",
+		"data": 1
+	},
+	"name": "natureDust",
+	"item": {
+		"item": "elementalsorcery:nature_dust",
+		"data": 1
+	}
 }

@@ -1,15 +1,15 @@
 {
-    "lev": 4,
-    "need": [
-        "element/spellbook",
-        "element/magic_desk",
-        "element_adv/architecture_crystal"
-    ],
-    "linked": "elementalsorcery:spellbook_architecture",
-    "type": "spellaltar",
-    "name": "spArchitecture",
-    "item": [
-        "elementalsorcery:spellbook",
-        "elementalsorcery:spellbook_architecture"
-    ]
+	"type": "elementalsorcery:parchment_spellaltar",
+	"lev": 4,
+	"need": [
+		"element/spellbook",
+		"element/magic_desk",
+		"element_adv/architecture_crystal"
+	],
+	"linked": "elementalsorcery:spellbook_architecture",
+	"name": "spArchitecture",
+	"item": [
+		"elementalsorcery:spellbook",
+		"elementalsorcery:spellbook_architecture"
+	]
 }

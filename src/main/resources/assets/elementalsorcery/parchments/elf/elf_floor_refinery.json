@@ -1,9 +1,9 @@
 {
-    "lev": -2,
-    "need": [
-        "elf/elf_edifice"
-    ],
-    "type": "normal",
-    "name": "elfRefinery",
-    "item": "minecraft:furnace"
+	"type": "elementalsorcery:parchment_normal",
+	"lev": -2,
+	"need": [
+		"elf/elf_edifice"
+	],
+	"name": "elfRefinery",
+	"item": "minecraft:furnace"
 }

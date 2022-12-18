@@ -1,31 +1,31 @@
 {
-    "lev": 2,
-    "need": [
-        "md/md"
-    ],
-    "linked": "elementalsorcery:md_absorb_box",
-    "type": "mult",
-    "lock": 0,
-    "pages": [
-        {
-            "type": "craft",
-            "name": "absorbBox",
-            "item": "elementalsorcery:md_absorb_box"
-        },
-        {
-            "type": "buidling",
-            "title": "page.absorbBox.altar",
-            "building": "absorb_box",
-            "extra": [
-                {
-                    "pos": [
-                        0,
-                        2,
-                        0
-                    ],
-                    "item": "elementalsorcery:md_absorb_box"
-                }
-            ]
-        }
-    ]
+	"type": "elementalsorcery:parchment_mult",
+	"lev": 2,
+	"need": [
+		"md/md"
+	],
+	"linked": "elementalsorcery:md_absorb_box",
+	"lock": 0,
+	"pages": [
+		{
+			"type": "craft",
+			"name": "absorbBox",
+			"item": "elementalsorcery:md_absorb_box"
+		},
+		{
+			"type": "buidling",
+			"title": "page.absorbBox.altar",
+			"building": "absorb_box",
+			"extra": [
+				{
+					"pos": [
+						0,
+						2,
+						0
+					],
+					"item": "elementalsorcery:md_absorb_box"
+				}
+			]
+		}
+	]
 }

@@ -1,100 +1,101 @@
 {
-    "name": "explore",
-    "title": "quest.explore",
-    "sustain": "{random#72000~192000}",
-    "describe": [
-        {
-            "condition": "{has#previous}",
-            "value": "quest.next.polite.{random#1~2}"
-        },
-        "quest.explore.custom",
-        "quest.end.polite.{random#1~3}"
-    ],
-    "condition": [
-        {
-            "type": "NeedExplore",
-            "structure": "Mansion",
-            "block": {
-                "type": "pool",
-                "reward": [
-                    {
-                        "weight": 1,
-                        "item": "minecraft:glass_pane"
-                    },
-                    {
-                        "weight": 1,
-                        "item": "minecraft:torch"
-                    },
-                    {
-                        "weight": 1,
-                        "item": "minecraft:bookshelf"
-                    },
-                    {
-                        "weight": 1,
-                        "item": "minecraft:planks",
-                        "data": 5
-                    }
-                ]
-            }
-        }
-    ],
-    "precondition": [
-        {
-            "type": "Delegate",
-            "value": "{player}"
-        },
-        {
-            "type": "NeedFame",
-            "value": 100
-        }
-    ],
-    "reward": [
-        {
-            "type": "Coin",
-            "value": "{prandom#200~800}"
-        },
-        {
-            "type": "Exp",
-            "value": "{random#200~500}"
-        },
-        {
-            "type": "Fame",
-            "value": 8.5
-        },
-        {
-            "type": "ItemParcel",
-            "value": [
-                {
-                    "item": "minecraft:diamond",
-                    "count": "{random#3~12}",
-                    "data": 0
-                },
-                {
-                    "item": "elementalsorcery:magic_gold",
-                    "count": "{random#2~8}"
-                },
-                {
-                    "item": "elementalsorcery:magic_stone",
-                    "count": "{random#6~40}"
-                },
-                {
-                    "item": "elementalsorcery:nature_dust",
-                    "count": "{random#4~8}",
-                    "data": 2
-                }
-            ]
-        },
-        {
-            "chance": 0.5,
-            "type": "Topic",
-            "value": 1,
-            "topic": "Natural"
-        },
-        {
-            "chance": 0.5,
-            "type": "Topic",
-            "value": "{random#1~2}",
-            "topic": "Struct"
-        }
-    ]
+	"type": "elementalsorcery:quest",
+	"name": "explore",
+	"title": "quest.explore",
+	"sustain": "{random#72000~192000}",
+	"describe": [
+		{
+			"condition": "{has#previous}",
+			"value": "quest.next.polite.{random#1~2}"
+		},
+		"quest.explore.custom",
+		"quest.end.polite.{random#1~3}"
+	],
+	"condition": [
+		{
+			"type": "NeedExplore",
+			"structure": "Mansion",
+			"block": {
+				"type": "pool",
+				"reward": [
+					{
+						"weight": 1,
+						"item": "minecraft:glass_pane"
+					},
+					{
+						"weight": 1,
+						"item": "minecraft:torch"
+					},
+					{
+						"weight": 1,
+						"item": "minecraft:bookshelf"
+					},
+					{
+						"weight": 1,
+						"item": "minecraft:planks",
+						"data": 5
+					}
+				]
+			}
+		}
+	],
+	"precondition": [
+		{
+			"type": "Delegate",
+			"value": "{player}"
+		},
+		{
+			"type": "NeedFame",
+			"value": 100
+		}
+	],
+	"reward": [
+		{
+			"type": "Coin",
+			"value": "{prandom#200~800}"
+		},
+		{
+			"type": "Exp",
+			"value": "{random#200~500}"
+		},
+		{
+			"type": "Fame",
+			"value": 8.5
+		},
+		{
+			"type": "ItemParcel",
+			"value": [
+				{
+					"item": "minecraft:diamond",
+					"count": "{random#3~12}",
+					"data": 0
+				},
+				{
+					"item": "elementalsorcery:magic_gold",
+					"count": "{random#2~8}"
+				},
+				{
+					"item": "elementalsorcery:magic_stone",
+					"count": "{random#6~40}"
+				},
+				{
+					"item": "elementalsorcery:nature_dust",
+					"count": "{random#4~8}",
+					"data": 2
+				}
+			]
+		},
+		{
+			"chance": 0.5,
+			"type": "Topic",
+			"value": 1,
+			"topic": "Natural"
+		},
+		{
+			"chance": 0.5,
+			"type": "Topic",
+			"value": "{random#1~2}",
+			"topic": "Struct"
+		}
+	]
 }

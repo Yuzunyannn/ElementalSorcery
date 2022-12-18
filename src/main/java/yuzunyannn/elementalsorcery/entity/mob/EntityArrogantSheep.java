@@ -478,4 +478,9 @@ public class EntityArrogantSheep extends EntityMob {
 			Effect.addEffect(effect);
 		}
 	}
+
+	@Override
+	protected boolean canDespawn() {
+		return false;
+	}
 }

@@ -1,18 +1,18 @@
 {
-    "lev": 1,
-    "need": [
-        "base/seal_stone"
-    ],
-    "linked": [
-        "elementalsorcery:ancient_paper",
-        {
-            "id": "elementalsorcery:quill",
-            "data": 0
-        }
-    ],
-    "type": "craft",
-    "name": "ancientPaper",
-    "item": "elementalsorcery:quill",
-    "icon": "elementalsorcery:ancient_paper",
-    "background": "inherit"
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 1,
+	"need": [
+		"base/seal_stone"
+	],
+	"linked": [
+		"elementalsorcery:ancient_paper",
+		{
+			"id": "elementalsorcery:quill",
+			"data": 0
+		}
+	],
+	"name": "ancientPaper",
+	"item": "elementalsorcery:quill",
+	"icon": "elementalsorcery:ancient_paper",
+	"background": "inherit"
 }

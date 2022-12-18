@@ -1,10 +1,10 @@
 {
+	"type": "elementalsorcery:parchment_research",
 	"lev": 4,
 	"need": [
 		"elf/elf_floor_laboratory"
 	],
 	"linked": "elementalsorcery:vortex",
-	"type": "research",
 	"name": "vortex",
 	"item": "elementalsorcery:vortex"
 }

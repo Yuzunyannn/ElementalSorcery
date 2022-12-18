@@ -1,10 +1,10 @@
 {
-    "lev": 4,
-    "need": [
-        "elf/dread_cube"
-    ],
-    "linked": "elementalsorcery:cube_demarcator",
-    "type": "craft",
-    "name": "cubeDemarcator",
-    "item": "elementalsorcery:cube_demarcator"
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 4,
+	"need": [
+		"elf/dread_cube"
+	],
+	"linked": "elementalsorcery:cube_demarcator",
+	"name": "cubeDemarcator",
+	"item": "elementalsorcery:cube_demarcator"
 }

@@ -1,12 +1,12 @@
 {
-    "need": [
-        "base/rite_craft"
-    ],
-    "linked": "elementalsorcery:lantern",
-    "type": "rite",
-    "name": "lantern",
-    "item": [
-        "minecraft:torch",
-        "elementalsorcery:lantern"
-    ]
+	"type": "elementalsorcery:parchment_rite",
+	"need": [
+		"base/rite_craft"
+	],
+	"linked": "elementalsorcery:lantern",
+	"name": "lantern",
+	"item": [
+		"minecraft:torch",
+		"elementalsorcery:lantern"
+	]
 }

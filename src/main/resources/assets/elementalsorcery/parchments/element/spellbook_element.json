@@ -1,14 +1,14 @@
 {
-    "lev": 3,
-    "need": [
-        "element/spellbook",
-        "element/magic_desk"
-    ],
-    "linked": "elementalsorcery:spellbook_element",
-    "type": "spellaltar",
-    "name": "spElement",
-    "item": [
-        "elementalsorcery:spellbook",
-        "elementalsorcery:spellbook_element"
-    ]
+	"type": "elementalsorcery:parchment_spellaltar",
+	"lev": 3,
+	"need": [
+		"element/spellbook",
+		"element/magic_desk"
+	],
+	"linked": "elementalsorcery:spellbook_element",
+	"name": "spElement",
+	"item": [
+		"elementalsorcery:spellbook",
+		"elementalsorcery:spellbook_element"
+	]
 }

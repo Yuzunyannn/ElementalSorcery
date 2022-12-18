@@ -1,11 +1,11 @@
 {
+	"type": "elementalsorcery:parchment_mult",
 	"lev": 5,
 	"need": [
 		"element_adv/supreme_table",
 		"element_adv/jump_gem"
 	],
 	"linked": "elementalsorcery:portal_altar",
-	"type": "mult",
 	"lock": 0,
 	"pages": [
 		{

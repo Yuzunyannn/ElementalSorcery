@@ -1,174 +1,174 @@
 {
-    "lev": -1,
-    "need": [
-        "element_sup/ice_rock",
-        "element_sup/ice_rock_stand"
-    ],
-    "linked": [
-        "elementalsorcery:element_reactor"
-    ],
-    "type": "mult",
-    "lock": 0,
-    "pages": [
-        {
-            "type": "craft",
-            "name": "invert",
-            "item": "elementalsorcery:element_reactor"
-        },
-        {
-            "type": "buidling",
-            "name": "starryAltar",
-            "building": "element_reactor",
-            "scale": 0.75,
-            "extra": [
-                {
-                    "pos": [
-                        0,
-                        6,
-                        0
-                    ],
-                    "item": "elementalsorcery:element_reactor"
-                },
-                {
-                    "pos": [
-                        [
-                            2,
-                            6,
-                            5
-                        ],
-                        [
-                            -2,
-                            6,
-                            5
-                        ],
-                        [
-                            2,
-                            6,
-                            -5
-                        ],
-                        [
-                            -2,
-                            6,
-                            -5
-                        ],
-                        [
-                            5,
-                            6,
-                            2
-                        ],
-                        [
-                            -5,
-                            6,
-                            2
-                        ],
-                        [
-                            5,
-                            6,
-                            -2
-                        ],
-                        [
-                            -5,
-                            6,
-                            -2
-                        ]
-                    ],
-                    "item": "elementalsorcery:elemental_cube"
-                },
-                {
-                    "pos": [
-                        [
-                            0,
-                            4,
-                            8
-                        ],
-                        [
-                            0,
-                            4,
-                            -8
-                        ],
-                        [
-                            8,
-                            4,
-                            0
-                        ],
-                        [
-                            -8,
-                            4,
-                            0
-                        ]
-                    ],
-                    "item": "elementalsorcery:ice_rock_stand"
-                },
-                {
-                    "pos": [
-                        [
-                            0,
-                            5,
-                            8
-                        ],
-                        [
-                            0,
-                            5,
-                            -8
-                        ],
-                        [
-                            8,
-                            5,
-                            0
-                        ],
-                        [
-                            -8,
-                            5,
-                            0
-                        ],
-                        [
-                            0,
-                            6,
-                            8
-                        ],
-                        [
-                            0,
-                            6,
-                            -8
-                        ],
-                        [
-                            8,
-                            6,
-                            0
-                        ],
-                        [
-                            -8,
-                            6,
-                            0
-                        ],
-                        [
-                            0,
-                            7,
-                            8
-                        ],
-                        [
-                            0,
-                            7,
-                            -8
-                        ],
-                        [
-                            8,
-                            7,
-                            0
-                        ],
-                        [
-                            -8,
-                            7,
-                            0
-                        ]
-                    ],
-                    "item": "elementalsorcery:ice_rock_crystal_block"
-                }
-            ]
-        },
-        {
-            "type": "normal",
-            "name": "invertReactor"
-        }
-    ]
+	"type": "elementalsorcery:parchment_mult",
+	"lev": -1,
+	"need": [
+		"element_sup/ice_rock",
+		"element_sup/ice_rock_stand"
+	],
+	"linked": [
+		"elementalsorcery:element_reactor"
+	],
+	"lock": 0,
+	"pages": [
+		{
+			"type": "craft",
+			"name": "invert",
+			"item": "elementalsorcery:element_reactor"
+		},
+		{
+			"type": "buidling",
+			"name": "starryAltar",
+			"building": "element_reactor",
+			"scale": 0.75,
+			"extra": [
+				{
+					"pos": [
+						0,
+						6,
+						0
+					],
+					"item": "elementalsorcery:element_reactor"
+				},
+				{
+					"pos": [
+						[
+							2,
+							6,
+							5
+						],
+						[
+							-2,
+							6,
+							5
+						],
+						[
+							2,
+							6,
+							-5
+						],
+						[
+							-2,
+							6,
+							-5
+						],
+						[
+							5,
+							6,
+							2
+						],
+						[
+							-5,
+							6,
+							2
+						],
+						[
+							5,
+							6,
+							-2
+						],
+						[
+							-5,
+							6,
+							-2
+						]
+					],
+					"item": "elementalsorcery:elemental_cube"
+				},
+				{
+					"pos": [
+						[
+							0,
+							4,
+							8
+						],
+						[
+							0,
+							4,
+							-8
+						],
+						[
+							8,
+							4,
+							0
+						],
+						[
+							-8,
+							4,
+							0
+						]
+					],
+					"item": "elementalsorcery:ice_rock_stand"
+				},
+				{
+					"pos": [
+						[
+							0,
+							5,
+							8
+						],
+						[
+							0,
+							5,
+							-8
+						],
+						[
+							8,
+							5,
+							0
+						],
+						[
+							-8,
+							5,
+							0
+						],
+						[
+							0,
+							6,
+							8
+						],
+						[
+							0,
+							6,
+							-8
+						],
+						[
+							8,
+							6,
+							0
+						],
+						[
+							-8,
+							6,
+							0
+						],
+						[
+							0,
+							7,
+							8
+						],
+						[
+							0,
+							7,
+							-8
+						],
+						[
+							8,
+							7,
+							0
+						],
+						[
+							-8,
+							7,
+							0
+						]
+					],
+					"item": "elementalsorcery:ice_rock_crystal_block"
+				}
+			]
+		},
+		{
+			"type": "normal",
+			"name": "invertReactor"
+		}
+	]
 }

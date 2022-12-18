@@ -1,23 +1,23 @@
 {
-    "lev": 1,
-    "need": [
-        "base/kyanite",
-        "more/magical_ender_eye"
-    ],
-    "linked": [
-        "elementalsorcery:kyanite_axe",
-        "elementalsorcery:kyanite_hoe",
-        "elementalsorcery:kyanite_pickaxe",
-        "elementalsorcery:kyanite_spade",
-        "elementalsorcery:kyanite_sword"
-    ],
-    "type": "craft",
-    "name": "kynatieTools",
-    "item": [
-        "elementalsorcery:kyanite_axe",
-        "elementalsorcery:kyanite_hoe",
-        "elementalsorcery:kyanite_pickaxe",
-        "elementalsorcery:kyanite_spade",
-        "elementalsorcery:kyanite_sword"
-    ]
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 1,
+	"need": [
+		"base/kyanite",
+		"more/magical_ender_eye"
+	],
+	"linked": [
+		"elementalsorcery:kyanite_axe",
+		"elementalsorcery:kyanite_hoe",
+		"elementalsorcery:kyanite_pickaxe",
+		"elementalsorcery:kyanite_spade",
+		"elementalsorcery:kyanite_sword"
+	],
+	"name": "kynatieTools",
+	"item": [
+		"elementalsorcery:kyanite_axe",
+		"elementalsorcery:kyanite_hoe",
+		"elementalsorcery:kyanite_pickaxe",
+		"elementalsorcery:kyanite_spade",
+		"elementalsorcery:kyanite_sword"
+	]
 }

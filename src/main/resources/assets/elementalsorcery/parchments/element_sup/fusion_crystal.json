@@ -1,11 +1,11 @@
 {
+	"type": "elementalsorcery:parchment_craft",
 	"lev": 5,
 	"need": [
 		"element_adv/supreme_table",
 		"element_adv/vortex"
 	],
 	"linked": "elementalsorcery:fusion_crystal",
-	"type": "craft",
 	"name": "fusionCrystal",
 	"item": "elementalsorcery:fusion_crystal"
 }

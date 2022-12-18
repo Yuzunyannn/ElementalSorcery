@@ -1,40 +1,40 @@
 {
-    "lev": 4,
-    "need": [
-        "elf/dread_cube",
-        "elf/elf_floor_post",
-        "element_adv/element_platform"
-    ],
-    "linked": [
-        "elementalsorcery:fairy_cube",
-        "elementalsorcery:fairy_core"
-    ],
-    "type": "mult",
-    "lock": 0,
-    "pages": [
-        {
-            "type": "craft",
-            "name": "fairyCube",
-            "icon": "elementalsorcery:fairy_cube",
-            "item": [
-                "elementalsorcery:fairy_core",
-                "elementalsorcery:fairy_cube"
-            ]
-        },
-        {
-            "type": "craft",
-            "name": "fairyCubeModule",
-            "item": "elementalsorcery:fairy_cube_module"
-        },
-        {
-            "type": "normal",
-            "name": "fairyCubeModuleCraft",
-            "differ": "fir"
-        },
-        {
-            "type": "normal",
-            "name": "fairyCubeModuleCraft",
-            "differ": "sec"
-        }
-    ]
+	"type": "elementalsorcery:parchment_mult",
+	"lev": 4,
+	"need": [
+		"elf/dread_cube",
+		"elf/elf_floor_post",
+		"element_adv/element_platform"
+	],
+	"linked": [
+		"elementalsorcery:fairy_cube",
+		"elementalsorcery:fairy_core"
+	],
+	"lock": 0,
+	"pages": [
+		{
+			"type": "craft",
+			"name": "fairyCube",
+			"icon": "elementalsorcery:fairy_cube",
+			"item": [
+				"elementalsorcery:fairy_core",
+				"elementalsorcery:fairy_cube"
+			]
+		},
+		{
+			"type": "craft",
+			"name": "fairyCubeModule",
+			"item": "elementalsorcery:fairy_cube_module"
+		},
+		{
+			"type": "normal",
+			"name": "fairyCubeModuleCraft",
+			"differ": "fir"
+		},
+		{
+			"type": "normal",
+			"name": "fairyCubeModuleCraft",
+			"differ": "sec"
+		}
+	]
 }

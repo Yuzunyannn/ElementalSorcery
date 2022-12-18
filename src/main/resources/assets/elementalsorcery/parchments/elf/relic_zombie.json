@@ -1,17 +1,17 @@
 {
-    "lev": -2,
-    "need": [
-        "element/rite_summon"
-    ],
-    "linked": [
-        "elementalsorcery:relic_gem",
-        {
-            "item": "elementalsorcery:keepsake",
-            "data": 0
-        }
-    ],
-    "type": "normal",
-    "name": "relicZombie",
-    "item": "elementalsorcery:relic_gem",
-    "background": "inherit"
+	"type": "elementalsorcery:parchment_normal",
+	"lev": -2,
+	"need": [
+		"element/rite_summon"
+	],
+	"linked": [
+		"elementalsorcery:relic_gem",
+		{
+			"item": "elementalsorcery:keepsake",
+			"data": 0
+		}
+	],
+	"name": "relicZombie",
+	"item": "elementalsorcery:relic_gem",
+	"background": "inherit"
 }

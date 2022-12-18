@@ -15,9 +15,11 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.relauncher.Side;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionScholar;
@@ -155,7 +157,11 @@ public class Pages {
 
 	static public void loadParchments(ModContainer mod) {
 		Json.ergodicAssets(mod, "/parchments", (file, json) -> {
+			ResourceLocation typePair = ElementMap.getType(json);
+			if (typePair == null) return false;
+			if (!ESAPI.MODID.equals(typePair.getNamespace())) return false;
 			if (!ElementMap.checkModDemands(json)) return false;
+			if (!typePair.getPath().startsWith("parchment_")) return false;
 
 			JsonParser.Packet packet = JsonParser.read(json);
 			if (packet == null) return false;

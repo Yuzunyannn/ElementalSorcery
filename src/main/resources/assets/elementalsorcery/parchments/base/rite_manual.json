@@ -1,10 +1,10 @@
 {
-    "need": [
-        "base/rite"
-    ],
-    "linked": "elementalsorcery:rite_manual",
-    "type": "normal",
-    "name": "riteManual",
-    "item": "elementalsorcery:rite_manual",
-    "background": "elementalsorcery:rite_manual"
+	"type": "elementalsorcery:parchment_normal",
+	"need": [
+		"base/rite"
+	],
+	"linked": "elementalsorcery:rite_manual",
+	"name": "riteManual",
+	"item": "elementalsorcery:rite_manual",
+	"background": "elementalsorcery:rite_manual"
 }

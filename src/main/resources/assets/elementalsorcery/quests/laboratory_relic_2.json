@@ -1,68 +1,69 @@
 {
-    "name": "relic",
-    "title": "quest.relic.research",
-    "describe": [
-        "quest.relic.research.2"
-    ],
-    "condition": [
-        {
-            "type": "NeedItem",
-            "value": {
-                "item": "elementalsorcery:relic_gem"
-            }
-        }
-    ],
-    "precondition": [
-        {
-            "type": "NeedFame",
-            "value": 30
-        }
-    ],
-    "reward": [
-        {
-            "type": "Coin",
-            "value": "{prandom#1000~2000}"
-        },
-        {
-            "type": "Exp",
-            "value": "{random#300~500}"
-        },
-        {
-            "type": "Fame",
-            "value": 4
-        },
-        {
-            "type": "ItemParcel",
-            "value": [
-                {
-                    "item": "elementalsorcery:soul_fragment",
-                    "count": "{random#128~170}"
-                },
-                {
-                    "item": "elementalsorcery:keepsake",
-                    "count": "{random#5~8}",
-                    "data": 0
-                }
-            ]
-        },
-        {
-            "type": "Topic",
-            "value": "{random#1~1}",
-            "topic": "Engine"
-        },
-        {
-            "type": "Topic",
-            "value": "{random#1~1}",
-            "topic": "Struct"
-        },
-        {
-            "type": "Topic",
-            "value": "{random#1~1}",
-            "topic": "Biology"
-        },
-        {
-            "type": "NextQuest",
-            "value": "elementalsorcery:laboratory_relic_3"
-        }
-    ]
+	"type": "elementalsorcery:quest",
+	"name": "relic",
+	"title": "quest.relic.research",
+	"describe": [
+		"quest.relic.research.2"
+	],
+	"condition": [
+		{
+			"type": "NeedItem",
+			"value": {
+				"item": "elementalsorcery:relic_gem"
+			}
+		}
+	],
+	"precondition": [
+		{
+			"type": "NeedFame",
+			"value": 30
+		}
+	],
+	"reward": [
+		{
+			"type": "Coin",
+			"value": "{prandom#1000~2000}"
+		},
+		{
+			"type": "Exp",
+			"value": "{random#300~500}"
+		},
+		{
+			"type": "Fame",
+			"value": 4
+		},
+		{
+			"type": "ItemParcel",
+			"value": [
+				{
+					"item": "elementalsorcery:soul_fragment",
+					"count": "{random#128~170}"
+				},
+				{
+					"item": "elementalsorcery:keepsake",
+					"count": "{random#5~8}",
+					"data": 0
+				}
+			]
+		},
+		{
+			"type": "Topic",
+			"value": "{random#1~1}",
+			"topic": "Engine"
+		},
+		{
+			"type": "Topic",
+			"value": "{random#1~1}",
+			"topic": "Struct"
+		},
+		{
+			"type": "Topic",
+			"value": "{random#1~1}",
+			"topic": "Biology"
+		},
+		{
+			"type": "NextQuest",
+			"value": "elementalsorcery:laboratory_relic_3"
+		}
+	]
 }

@@ -1,10 +1,10 @@
 {
-    "lev": 3,
-    "need": [
-        "element/element_workbench"
-    ],
-    "linked": "elementalsorcery:manual",
-    "type": "craft",
-    "name": "manual",
-    "item": "elementalsorcery:manual"
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 3,
+	"need": [
+		"element/element_workbench"
+	],
+	"linked": "elementalsorcery:manual",
+	"name": "manual",
+	"item": "elementalsorcery:manual"
 }

@@ -1,20 +1,20 @@
 {
-    "lev": 3,
-    "need": [
-        "element/element_workbench",
-        "element/spell_crystal"
-    ],
-    "linked": "elementalsorcery:spellbook_cover",
-    "type": "craft",
-    "name": "bookCover",
-    "item": [
-        {
-            "id": "elementalsorcery:spellbook_cover",
-            "data": 0
-        },
-        {
-            "id": "elementalsorcery:spellbook_cover",
-            "data": 1
-        }
-    ]
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 3,
+	"need": [
+		"element/element_workbench",
+		"element/spell_crystal"
+	],
+	"linked": "elementalsorcery:spellbook_cover",
+	"name": "bookCover",
+	"item": [
+		{
+			"id": "elementalsorcery:spellbook_cover",
+			"data": 0
+		},
+		{
+			"id": "elementalsorcery:spellbook_cover",
+			"data": 1
+		}
+	]
 }

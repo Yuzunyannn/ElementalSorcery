@@ -1,38 +1,38 @@
 {
-    "type": "mult",
-    "lock": 0,
-    "linked": "elementalsorcery:rite_table",
-    "pages": [
-        {
-            "type": "normal",
-            "name": "how2ply",
-            "icon": "elementalsorcery:rite_table"
-        },
-        {
-            "type": "normal",
-            "name": "riteTable",
-            "differ": "fir"
-        },
-        {
-            "type": "craft",
-            "title": "tile.riteTable.name",
-            "name": "riteTable",
-            "differ": "sec",
-            "item": "elementalsorcery:rite_table"
-        },
-        {
-            "type": "normal",
-            "name": "sacrifice",
-            "differ": "fir"
-        },
-        {
-            "type": "normal",
-            "name": "sacrifice",
-            "differ": "sec"
-        },
-        {
-            "type": "normal",
-            "name": "rite"
-        }
-    ]
+	"type": "elementalsorcery:parchment_mult",
+	"lock": 0,
+	"linked": "elementalsorcery:rite_table",
+	"pages": [
+		{
+			"type": "normal",
+			"name": "how2ply",
+			"icon": "elementalsorcery:rite_table"
+		},
+		{
+			"type": "normal",
+			"name": "riteTable",
+			"differ": "fir"
+		},
+		{
+			"type": "craft",
+			"title": "tile.riteTable.name",
+			"name": "riteTable",
+			"differ": "sec",
+			"item": "elementalsorcery:rite_table"
+		},
+		{
+			"type": "normal",
+			"name": "sacrifice",
+			"differ": "fir"
+		},
+		{
+			"type": "normal",
+			"name": "sacrifice",
+			"differ": "sec"
+		},
+		{
+			"type": "normal",
+			"name": "rite"
+		}
+	]
 }

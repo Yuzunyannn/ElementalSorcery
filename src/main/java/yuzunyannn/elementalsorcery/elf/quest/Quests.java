@@ -13,6 +13,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
 import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
 import yuzunyannn.elementalsorcery.elf.quest.condition.QuestConditionNeedItem;
@@ -47,12 +48,15 @@ public class Quests {
 	public static void loadQuest(ModContainer mod) {
 		Json.ergodicAssets(mod, "/quests", (file, json) -> {
 			IQuestCreator creator = questLoader.loadQuest(json);
+			if (creator == null) return false;
 			CREATOR.put(new ResourceLocation(mod.getModId(), Json.fileToId(file, "/quests")), creator);
 			return true;
 		});
 	}
 
 	public static IQuestCreator loadQuest(JsonObject json) {
+		if (!ElementMap.checkModDemands(json)) return null;
+		if (!ElementMap.checkType(json, "quest")) return null;
 		return new QuestCreator(json);
 	}
 

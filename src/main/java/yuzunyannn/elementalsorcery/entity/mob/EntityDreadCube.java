@@ -419,8 +419,8 @@ public class EntityDreadCube extends EntityMob {
 	}
 
 	@Override
-	protected void despawnEntity() {
-
+	protected boolean canDespawn() {
+		return false;
 	}
 
 	@Override

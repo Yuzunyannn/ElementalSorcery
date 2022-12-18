@@ -1,10 +1,10 @@
 {
-    "lev": 2,
-    "need": [
-        "md/md"
-    ],
-    "linked": "elementalsorcery:md_magic_solidify",
-    "type": "craft",
-    "name": "magicSolidify",
-    "item": "elementalsorcery:md_magic_solidify"
+	"type": "elementalsorcery:parchment_craft",
+	"lev": 2,
+	"need": [
+		"md/md"
+	],
+	"linked": "elementalsorcery:md_magic_solidify",
+	"name": "magicSolidify",
+	"item": "elementalsorcery:md_magic_solidify"
 }

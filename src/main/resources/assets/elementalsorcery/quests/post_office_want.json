@@ -1,50 +1,51 @@
 {
-    "name": "collect",
-    "site": "elementalsorcery:post_office",
-    "title": "quest.request.collect",
-    "describe": [
-        "quest.post.office.want",
-        "quest.end.polite.{random#2~3}"
-    ],
-    "condition": [
-        {
-            "type": "NeedItem",
-            "value": [
-                {
-                    "item": "minecraft:paper",
-                    "count": "{random#32~160}"
-                },
-                {
-                    "item": "minecraft:leather",
-                    "count": "{random#16~80}"
-                }
-            ]
-        }
-    ],
-    "precondition": [
-        {
-            "type": "NeedFame",
-            "value": 5
-        }
-    ],
-    "reward": [
-        {
-            "type": "Coin",
-            "value": "{prandom#20~100}"
-        },
-        {
-            "type": "Exp",
-            "value": "{random#75~150}"
-        },
-        {
-            "type": "Fame",
-            "value": 0.5
-        },
-        {
-            "type": "Topic",
-            "chance": 0.1,
-            "value": 1,
-            "topic": "Mantra"
-        }
-    ]
+	"type": "elementalsorcery:quest",
+	"name": "collect",
+	"site": "elementalsorcery:post_office",
+	"title": "quest.request.collect",
+	"describe": [
+		"quest.post.office.want",
+		"quest.end.polite.{random#2~3}"
+	],
+	"condition": [
+		{
+			"type": "NeedItem",
+			"value": [
+				{
+					"item": "minecraft:paper",
+					"count": "{random#32~160}"
+				},
+				{
+					"item": "minecraft:leather",
+					"count": "{random#16~80}"
+				}
+			]
+		}
+	],
+	"precondition": [
+		{
+			"type": "NeedFame",
+			"value": 5
+		}
+	],
+	"reward": [
+		{
+			"type": "Coin",
+			"value": "{prandom#20~100}"
+		},
+		{
+			"type": "Exp",
+			"value": "{random#75~150}"
+		},
+		{
+			"type": "Fame",
+			"value": 0.5
+		},
+		{
+			"type": "Topic",
+			"chance": 0.1,
+			"value": 1,
+			"topic": "Mantra"
+		}
+	]
 }
