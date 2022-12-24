@@ -143,13 +143,16 @@ public class MantraTimeHourglass extends MantraTypeAccumulative {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void initEffectCreator() {
 		super.initEffectCreator();
 		setEffectCreator(MantraEffectType.MAGIC_CIRCLE, MantraCommon::createEffectMagicCircle,
 				(world, mantra, mData, caster, effect) -> {
 					MantraDataCommon mdc = (MantraDataCommon) mData;
 					ElementStack star = mdc.get(ESObjects.ELEMENTS.STAR);
-					if (star.getCount() < 50) return;
+					float potent = mdc.get(POTENT_POWER);
+					if (star.getCount() < 50 || potent < TIME_STOP_MIN_POTENT) return;
+
 					IWorldObject co = caster.iWantCaster();
 					if (!(effect instanceof EffectTimeHourglass)) {
 						mdc.getEffectMap().removeMark(MantraEffectType.MAGIC_CIRCLE);

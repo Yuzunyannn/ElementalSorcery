@@ -138,6 +138,7 @@ item.collapseWand.name=崩れ権杖
 item.relicGuardCore.name=ガードのコア
 item.shockWand.name=冲撃権杖
 item.relicDisc.name=遺跡ディスク
+item.juiceConcentrate.name=ジュース濃縮剤
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -536,6 +537,7 @@ info.fame.decline=精霊に対する暴行は%sの精霊に見られしまた、
 info.elf.diamond=非常に高価なダイヤモンドで、それ以外に価値はありません。精霊たちはそれが大好きそうです
 info.my.master=マスター：%s
 info.relic.bind.master=マスター設定：%s
+info.concentration=濃度：%s
 
 info.mc.archi.Temple.name=砂漠のピラミッド
 
@@ -1050,6 +1052,8 @@ page.elementCrystal=元素水晶
 page.elementCrystal.ct=元素水晶有非常好的元素亲和性、可以作为一种元素容器来储存元素，不过容量是有限的。\n元素水晶可以通过魔力水晶再次エンチャント得到、在元素活跃的时间段内、才可能エンチャント成功。\nエンチャントの条件：日出日落的平原上
 page.elementJuice=元素ジュース
 page.elementJuice.ct=果汁中如果包含精灵果汁，便可以让果汁具备元素容器的性质，元素将会溶于果汁之内。\n根据元素的不同，果汁配比的不同，或许可以让你获得这种各样性质不同的Buff
+page.juiceConcentrate=ジュース濃縮
+page.juiceConcentrate.ct=果料越多，水越少可以让元素果汁产生更高等级的buff，研究可以的到果汁浓缩剂，放入盛满果汁的榨汁机中，可以吸取一部分的水分，让果汁变得更浓稠。随着放入的次数增加，效果会越来越差。
 page.elementBoard=元素认知
 page.elementBoard.ct.fir=或许你想知道哪些物品里会有哪些元素？制作一个「元素共鸣板」或许是目前最好的选择。\n多种水晶嵌入其中并雕刻而得到的石板可以让利用元素间共鸣的特点，将物品里的元素特征所展现出来。
 page.elementBoard.ct.sec=将元素容器或者任意物品放到板子的中央，其「首要元素」便可和周围带有同种元素的物品发生共鸣，方格会呈现出对应的颜色。\n虽然不能定量的分析元素，但可以通过不同格子上颜色浓度的差距判读物品中所含的元素和首要元素的能量的差距，颜色浓度越深，表明物品里元素能量越接近首要元素的能量，当颜色最深是，表明物品里的元素能量大于等于首要元素的能量；同理格子的闪烁程度越小，表明元素数量越接近。

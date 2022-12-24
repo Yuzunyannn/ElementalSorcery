@@ -116,7 +116,7 @@ public interface ICaster {
 	/** 获取真是施法者，大部分情况下和iWantCaster一样 */
 	@Nonnull
 	default public IWorldObject iWantRealCaster() {
-		return this.iWantRealCaster();
+		return this.iWantCaster();
 	}
 
 	/** 获取施法者 ，施法者在某些情况下不一定是entitylivingbase */

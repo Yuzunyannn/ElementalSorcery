@@ -1,0 +1,25 @@
+{
+	"type": "elementalsorcery:research",
+	"topics": {
+		"Natural": 25,
+		"Biology": 45
+	},
+	"items": [
+		{
+			"item": "elementalsorcery:nature_dust",
+			"count": 4
+		},
+		{
+			"item": "minecraft:sponge",
+			"count": 1
+		},
+		{
+			"item": "minecraft:ghast_tear",
+			"count": 1
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:juice_concentrate",
+		"count": 4
+	}
+}

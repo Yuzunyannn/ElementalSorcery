@@ -15,6 +15,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.CapabilityItemHandler;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.JuiceMaterial;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
@@ -64,9 +65,8 @@ public class TileMDLiquidizer extends TileMDBase implements ITickable {
 	protected Juice juice = new JuiceMax();
 	protected List<RotateData> ingredients = new ArrayList<>();
 
-	
 	// -------- client --------
-	
+
 	public float rotate;
 	public float prevRotate;
 	protected float prevWater = 0;
@@ -180,6 +180,7 @@ public class TileMDLiquidizer extends TileMDBase implements ITickable {
 		float onceDrop = rotateSpeed * 0.005f;
 		while (iter.hasNext()) {
 			RotateData rd = iter.next();
+			// 每次更新消减一点
 			float drop = rd.material.isMain ? Math.min(onceDrop, rd.remain) : rd.remain;
 			rd.remain = rd.remain - drop;
 			if (world.isRemote) {
@@ -246,6 +247,11 @@ public class TileMDLiquidizer extends TileMDBase implements ITickable {
 
 	public boolean addIngredient(ItemStack stack, boolean simulate) {
 		if (stack.isEmpty()) return false;
+		if (stack.getItem() == ESObjects.ITEMS.JUICE_CONCENTRATE) {
+			if (simulate) return true;
+			if (world.isRemote) return true;
+			return concentrate(stack);
+		}
 		for (JuiceMaterial material : JuiceMaterial.values()) {
 			if (material.item.isItemEqual(stack)) {
 				if (!world.isRemote) return addIngredient(material, simulate);
@@ -253,6 +259,14 @@ public class TileMDLiquidizer extends TileMDBase implements ITickable {
 			}
 		}
 		return false;
+	}
+
+	public boolean concentrate(ItemStack stack) {
+		float rate = juice.getConcentrationRate();
+		juice.concentrate(Math.max(0.5f, 1 - 0.5f / (rate * rate)));
+		sendWaterUpdateToClient();
+		this.markDirty();
+		return true;
 	}
 
 	public boolean addIngredient(JuiceMaterial material, boolean simulate) {

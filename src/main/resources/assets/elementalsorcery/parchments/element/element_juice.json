@@ -1,21 +1,32 @@
 {
-	"type": "elementalsorcery:parchment_normal",
+	"type": "elementalsorcery:parchment_mult",
 	"lev": 3,
 	"need": [
 		"element/element_crystal",
 		"md/juice"
 	],
-	"name": "elementJuice",
-	"item": {
-		"item": "elementalsorcery:glass_cup",
-		"nbt": {
-			"juice": {
-				"water": 1000,
-				"material": {
-					"EF": 10
+	"lock": 0,
+	"pages": [
+		{
+			"type": "normal",
+			"name": "elementJuice",
+			"item": {
+				"item": "elementalsorcery:glass_cup",
+				"nbt": {
+					"juice": {
+						"water": 1000,
+						"material": {
+							"EF": 10
+						}
+					}
 				}
-			}
+			},
+			"background": "inherit"
+		},
+		{
+			"type": "research",
+			"name": "juiceConcentrate",
+			"item": "elementalsorcery:juice_concentrate"
 		}
-	},
-	"background": "inherit"
+	]
 }

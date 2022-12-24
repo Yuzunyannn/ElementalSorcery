@@ -10,6 +10,7 @@ import java.util.Random;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -81,13 +82,21 @@ public class Juice implements IJuice, IToElementItem {
 		return juiceData.getFloat("water");
 	}
 
+	@Override
+	public float getConcentrationRate() {
+		float water = getJuiceCount();
+		if (water < 0.00001f) return 1;
+		float realWater = calcWater();
+		return realWater / water;
+	}
+
 	public int getColor() {
 		if (juiceData.hasKey("colorCache")) return juiceData.getInteger("colorCache");
 		float r = 0, g = 0, b = 0;
 
 		float allRate = 1;
 		NBTTagCompound materials = NBTHelper.getOrCreateNBTTagCompound(juiceData, "material");
-		float water = getJuiceCount();
+		float water = calcWater();
 		for (String key : materials.getKeySet()) {
 			JuiceMaterial material = JuiceMaterial.fromKey(key);
 			if (material == null) continue;
@@ -198,6 +207,11 @@ public class Juice implements IJuice, IToElementItem {
 		for (String key : removeKeys) materials.removeTag(key);
 		if (!justTry) juiceData.setFloat("water", originWater - water);
 		return MultiRets.ret(drinkMap, r);
+	}
+
+	// 浓缩
+	public void concentrate(float dropWaterRate) {
+		juiceData.setFloat("water", component(JuiceMaterial.WATER) * dropWaterRate);
 	}
 
 	/** 盛果汁 */
@@ -355,7 +369,7 @@ public class Juice implements IJuice, IToElementItem {
 			TileMDLiquidizer tile = BlockHelper.getTileEntity(world, pos, TileMDLiquidizer.class);
 			if (tile == null) return false;
 			if (world.isRemote) return true;
-			if (ladle(tile.getJuice(), getColor())) tile.sendWaterUpdateToClient();
+			if (ladle(tile.getJuice(), -1)) tile.sendWaterUpdateToClient();
 			return true;
 		}
 
@@ -389,6 +403,10 @@ public class Juice implements IJuice, IToElementItem {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public void addJuiceInformation(World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
+		float concentration = getConcentrationRate();
+		if (Math.abs(concentration - 1) > 0.0001f) tooltip.add(TextFormatting.LIGHT_PURPLE
+				+ I18n.format("info.concentration", String.format("%.1f%%", concentration * 100)));
+
 		NBTTagCompound materials = NBTHelper.getOrCreateNBTTagCompound(juiceData, "material");
 		float water = getJuiceCount();
 		for (String key : materials.getKeySet()) {

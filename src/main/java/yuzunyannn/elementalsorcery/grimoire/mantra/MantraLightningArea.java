@@ -68,7 +68,9 @@ public class MantraLightningArea extends MantraTypeSquareArea {
 		final float size = data.getSize() / 2;
 		AxisAlignedBB aabb = new AxisAlignedBB(originPos.getX() - size, originPos.getY(), originPos.getZ() - size,
 				originPos.getX() + size, originPos.getY() + 3, originPos.getZ() + size);
-		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb);
+		List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, aabb, e -> {
+			return !isCasterFriend(caster, e);
+		});
 		if (entities.isEmpty()) {
 			double x = originPos.getX() + rand.nextDouble() * size * 2 - size;
 			double z = originPos.getZ() + rand.nextDouble() * size * 2 - size;

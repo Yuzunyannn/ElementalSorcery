@@ -201,6 +201,7 @@ import yuzunyannn.elementalsorcery.item.ItemEntangleNode;
 import yuzunyannn.elementalsorcery.item.ItemFairyCube;
 import yuzunyannn.elementalsorcery.item.ItemFairyCubeModule;
 import yuzunyannn.elementalsorcery.item.ItemGlassCup;
+import yuzunyannn.elementalsorcery.item.ItemJuiceConcentrate;
 import yuzunyannn.elementalsorcery.item.ItemManual;
 import yuzunyannn.elementalsorcery.item.ItemMerchantInvitation;
 import yuzunyannn.elementalsorcery.item.ItemNatureDust;
@@ -647,6 +648,7 @@ public class ESInit {
 		ESObjects.ITEMS.RELIC_GUARD_CORE = new ItemRelicGuardCore();
 		ESObjects.ITEMS.SHOCK_WAND = new ItemShockWand();
 		ESObjects.ITEMS.RELIC_DISC = new ItemRelicDisc();
+		ESObjects.ITEMS.JUICE_CONCENTRATE = new ItemJuiceConcentrate();
 
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1151,6 +1153,7 @@ public class ESInit {
 		registerRender(ITEMS.RELIC_GUARD_CORE, new RenderItemGuardCore());
 		registerRender(ITEMS.SHOCK_WAND, new RenderItemMagicBlastWand(2));
 		registerRender(ITEMS.RELIC_DISC);
+		registerRender(ITEMS.JUICE_CONCENTRATE);
 
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");

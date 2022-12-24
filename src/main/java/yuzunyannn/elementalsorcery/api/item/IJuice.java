@@ -34,6 +34,9 @@ public interface IJuice {
 	/** 获取果汁杯子的总量 */
 	float getMaxJuiceCount();
 
+	/** 获取浓缩率 */
+	float getConcentrationRate();
+
 	@SideOnly(Side.CLIENT)
 	void beforeRenderJuice();
 

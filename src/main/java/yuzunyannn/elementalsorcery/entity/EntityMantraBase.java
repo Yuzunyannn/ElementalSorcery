@@ -140,7 +140,7 @@ public abstract class EntityMantraBase extends Entity
 			caster = this.getUser();
 			if (caster == null) canNoUser: {
 				if (state == CastStatus.AFTER_SPELLING && !mantra.mustUser()) break canNoUser;
-				ESAPI.logger.warn("还原使用者出现异常！");
+				// ESAPI.logger.warn("还原使用者出现异常！");
 				return false;
 			}
 		}

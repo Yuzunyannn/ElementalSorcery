@@ -8,8 +8,6 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
-import yuzunyannn.elementalsorcery.item.tool.ItemRelicDisc;
-import yuzunyannn.elementalsorcery.item.tool.ItemShockWand;
 
 public class ESObjects {
 
@@ -134,6 +132,7 @@ public class ESObjects {
 		public Item RELIC_GUARD_CORE;
 		public Item SHOCK_WAND;
 		public Item RELIC_DISC;
+		public Item JUICE_CONCENTRATE;
 	}
 
 	static public class Blocks {

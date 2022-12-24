@@ -250,6 +250,7 @@ public class MantraLaser extends MantraCommon {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void initEffectCreator() {
 		super.initEffectCreator();
 		setEffectCreator(MantraEffectType.MAGIC_CIRCLE, (world, mantra, mData, caster, effectBinder) -> {
