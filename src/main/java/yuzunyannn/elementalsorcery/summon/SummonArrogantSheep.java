@@ -13,8 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.block.BlockGoatGoldBrick;
-import yuzunyannn.elementalsorcery.building.BuildingBlocks;
+import yuzunyannn.elementalsorcery.block.env.BlockGoatGoldBrick;
+import yuzunyannn.elementalsorcery.building.BuildingFace;
 import yuzunyannn.elementalsorcery.entity.mob.EntityArrogantSheep;
 import yuzunyannn.elementalsorcery.util.MazeCreator;
 import yuzunyannn.elementalsorcery.util.MazeCreator.Grid;
@@ -115,7 +115,7 @@ public class SummonArrogantSheep extends SummonMaze {
 		int i = goatStatue;
 		goatStatue = goatStatue + 3;
 		BlockPos pos = new BlockPos(GOAT_STATUE[i], GOAT_STATUE[i + 1], GOAT_STATUE[i + 2]);
-		pos = BuildingBlocks.facePos(pos, facing);
+		pos = BuildingFace.face(pos, facing);
 		BlockPos at = pos.add(this.pos).add(0, floorRise + 14, 0);
 
 		int eyeIndex = (GOAT_STATUE[i] == 8 && GOAT_STATUE[i + 1] == 9) ? 1 : -1;

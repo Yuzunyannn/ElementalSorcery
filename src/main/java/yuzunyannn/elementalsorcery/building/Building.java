@@ -79,7 +79,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			return state;
 		}
 
-		public NBTTagCompound getNBTData() {
+		public NBTTagCompound getTileEntityNBTData() {
 			return tileSave;
 		}
 
@@ -143,7 +143,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 	}
 
 	/** 建筑名称 */
-	private String name = "";
+	protected String name = "";
 
 	public String getName() {
 		return name;
@@ -292,6 +292,12 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		return blockMap.containsKey(pos);
 	}
 
+	public BlockInfo getBlockInfo(BlockPos pos) {
+		Integer index = blockMap.get(pos);
+		if (index == null) return null;
+		return infoList.get(index);
+	}
+
 	// 重新计算最大边框
 	private void update(BlockPos pos) {
 		if (pos.getX() < minX) minX = pos.getX();
@@ -329,13 +335,13 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 		// 记录方块
 		while (true) {
 			if (!world.isAirBlock(pos)) {
-				IBlockState state = BuildingBlocks.faceSate(world.getBlockState(pos), facing);
-				BlockPos at = BuildingBlocks.facePos(pos.subtract(center), facing);
+				IBlockState state = BuildingFace.face(world.getBlockState(pos), facing);
+				BlockPos at = BuildingFace.face(pos.subtract(center), facing);
 				if (checkTile) {
 					if (state.getBlock().hasTileEntity(state)) {
 						TileEntity tile = world.getTileEntity(pos);
 						NBTTagCompound tileSave = tile == null ? null : tile.serializeNBT();
-						tileSave = BuildingBlocks.tryFaceTile(state, tileSave, facing, false);
+						tileSave = BuildingFace.tryFaceTile(state, tileSave, facing, false);
 						building.add(state, at, tileSave);
 					} else building.add(state, at);
 				} else building.add(state, at);

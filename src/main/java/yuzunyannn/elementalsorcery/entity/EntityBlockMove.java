@@ -458,6 +458,8 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 				if (needPlace) {
 					if (player == null) player = ESFakePlayer.get((WorldServer) world);
 					itemBlock.placeBlockAt(stack, player, world, to, EnumFacing.UP, 0, 0, 0, toState);
+					state = world.getBlockState(to);
+					if (state != toState && state.getBlock() == toState.getBlock()) world.setBlockState(to, toState, 2);
 				} else world.setBlockState(to, toState);
 
 				loadTileSave(world, to, tileSave);

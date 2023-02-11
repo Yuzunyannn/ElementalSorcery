@@ -45,6 +45,19 @@ public class TextHelper {
 		return toAbbreviatedNumber(n, 3);
 	}
 
+	static public String castToCapital(String str) {
+		if (str.isEmpty()) return "";
+		String[] strs = str.split("_");
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < strs.length; i++) {
+			str = strs[i];
+			String t = str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+			builder.append(t);
+			if (i < strs.length - 1) builder.append(" ");
+		}
+		return builder.toString();
+	}
+
 	static public String castToCamel(String str) {
 		String[] strs = str.split("_");
 		if (strs.length == 1) return strs[0].toLowerCase();

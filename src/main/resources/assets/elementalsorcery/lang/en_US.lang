@@ -230,6 +230,7 @@ tile.estoneMatrix.name=Matrix Quartz Platform
 tile.instantConstitute.name=Instant Constitute Stela
 tile.estoneCrock.name=Magic Quartz Crock
 tile.ISCraftCC.name=Integrate Structure Recorder
+tile.dungeonDoorCore.name=Virtual Sight Door
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker

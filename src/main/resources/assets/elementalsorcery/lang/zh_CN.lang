@@ -230,6 +230,7 @@ tile.estoneMatrix.name=方阵石英台
 tile.instantConstitute.name=瞬构方台
 tile.estoneCrock.name=魔力石英缸
 tile.ISCraftCC.name=协调结构记录台
+tile.dungeonDoorCore.name=虚映门
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者

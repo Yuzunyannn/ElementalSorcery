@@ -71,14 +71,12 @@ import yuzunyannn.elementalsorcery.block.BlockElfLog;
 import yuzunyannn.elementalsorcery.block.BlockElfPlank;
 import yuzunyannn.elementalsorcery.block.BlockElfSapling;
 import yuzunyannn.elementalsorcery.block.BlockFluorspar;
-import yuzunyannn.elementalsorcery.block.BlockGoatGoldBrick;
 import yuzunyannn.elementalsorcery.block.BlockInvalidEnchantmentTable;
 import yuzunyannn.elementalsorcery.block.BlockKyanite;
 import yuzunyannn.elementalsorcery.block.BlockLifeDirt;
 import yuzunyannn.elementalsorcery.block.BlockLifeFlower;
 import yuzunyannn.elementalsorcery.block.BlockMagicPot;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
-import yuzunyannn.elementalsorcery.block.BlockResearcher;
 import yuzunyannn.elementalsorcery.block.BlockScarletCrystalOre;
 import yuzunyannn.elementalsorcery.block.BlockSealStone;
 import yuzunyannn.elementalsorcery.block.BlockStarFlower;
@@ -116,9 +114,13 @@ import yuzunyannn.elementalsorcery.block.container.BlockItemStructureCraftNormal
 import yuzunyannn.elementalsorcery.block.container.BlockLantern;
 import yuzunyannn.elementalsorcery.block.container.BlockMagicPlatform;
 import yuzunyannn.elementalsorcery.block.container.BlockMeltCauldron;
+import yuzunyannn.elementalsorcery.block.container.BlockResearcher;
 import yuzunyannn.elementalsorcery.block.container.BlockRiteTable;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoor;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoorExpand;
+import yuzunyannn.elementalsorcery.block.env.BlockGoatGoldBrick;
 import yuzunyannn.elementalsorcery.block.md.BlockMDAbsorbBox;
 import yuzunyannn.elementalsorcery.block.md.BlockMDDeconstructBox;
 import yuzunyannn.elementalsorcery.block.md.BlockMDFrequencyMapping;
@@ -140,6 +142,7 @@ import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.dungeon.DungeonRoomLib;
 import yuzunyannn.elementalsorcery.element.ElementAir;
 import yuzunyannn.elementalsorcery.element.ElementEarth;
 import yuzunyannn.elementalsorcery.element.ElementEnder;
@@ -372,6 +375,7 @@ import yuzunyannn.elementalsorcery.tile.TileEStoneMatrix;
 import yuzunyannn.elementalsorcery.tile.TileElementPlatform;
 import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
+import yuzunyannn.elementalsorcery.tile.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftCC;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftNormal;
@@ -532,6 +536,8 @@ public class ESInit {
 		ESObjects.BLOCKS.ELEMENT_REACTOR = new BlockElementReactor();
 		ESObjects.BLOCKS.INSTANT_CONSTITUTE = new BlockInstantConstitute();
 		ESObjects.BLOCKS.IS_CRAFT_CC = new BlockItemStructureCraftCC();
+		ESObjects.BLOCKS.DUNGEON_DOOR = new BlockDungeonDoor();
+		ESObjects.BLOCKS.DUNGEON_DOOR_EXPAND = new BlockDungeonDoorExpand();
 
 		// 初始化所有tab
 		Class<?> cls = ESObjects.BLOCKS.getClass();
@@ -803,6 +809,7 @@ public class ESInit {
 		AutoName.init();
 		// 注册默认所有建筑
 		BuildingLib.registerAll();
+		DungeonRoomLib.registerAll();
 		// 注册咒文
 		registerAllMantras();
 		KnowledgeType.registerAll();
@@ -1017,6 +1024,7 @@ public class ESInit {
 		register(TileInstantConstitute.class, "IConstitute");
 		register(TileEStoneCrock.class, "EStoneCrock");
 		register(TileItemStructureCraftCC.class, "ISCraftCC");
+		register(TileDungeonDoor.class, "DungeonDoor");
 	}
 
 	static void registerAllCapability() {
@@ -1233,6 +1241,8 @@ public class ESInit {
 		registerRender(BLOCKS.GOAT_GOLD_BRICK, 4, "goat_gold_brick_wither");
 		registerRender(BLOCKS.ICE_ROCK_CRYSTAL_BLOCK);
 		registerRender(BLOCKS.ESTONE_CROCK);
+		registerRender(BLOCKS.DUNGEON_DOOR);
+		registerRender(BLOCKS.DUNGEON_DOOR_EXPAND);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());

@@ -230,6 +230,7 @@ tile.estoneMatrix.name=マトリックス石英プラットフォーム
 tile.instantConstitute.name=瞬構の四角台
 tile.estoneCrock.name=魔力石英のかめ
 tile.ISCraftCC.name=統合構造記録台
+tile.dungeonDoorCore.name=偽映ゲート
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者

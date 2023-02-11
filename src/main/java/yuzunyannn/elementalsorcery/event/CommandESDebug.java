@@ -11,7 +11,6 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -29,19 +28,17 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
+import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.parchment.Pages;
-import yuzunyannn.elementalsorcery.util.ESFakePlayer;
-import yuzunyannn.elementalsorcery.util.helper.DamageHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
@@ -125,11 +122,19 @@ public class CommandESDebug {
 			case "textTest": {
 
 				EntityPlayerMP player = (EntityPlayerMP) entity;
-				EntityPlayer fakePlayer = ESFakePlayer.get(player.getServerWorld());
-				player.attackEntityFrom(
-						DamageHelper.getDamageSource(new ElementStack(ESObjects.ELEMENTS.MAGIC), fakePlayer, null)
-								.setDamageAllowedInCreativeMode(),
-						999999);
+
+				DungeonWorld dw = DungeonWorld.getDungeonWorld(player.world);
+				dw.debugClear();
+				DungeonArea area = dw.newDungeon(pos);
+				if (area.isFail()) System.out.println(area.getFailMsg());
+				else area.debugBuildDungeon(player.world);
+//				
+//				EntityPlayer fakePlayer = ESFakePlayer.get(player.getServerWorld());
+//				player.attackEntityFrom(
+//						DamageHelper.getDamageSource(new ElementStack(ESObjects.ELEMENTS.MAGIC), fakePlayer, null)
+//								.setDamageAllowedInCreativeMode(),
+//						999999);
+//				System.out.println(EnumFacing.EAST.getDirectionVec());
 
 //				final Vec3d at = new Vec3d(pos);
 //				Random rand = entity.getRNG();

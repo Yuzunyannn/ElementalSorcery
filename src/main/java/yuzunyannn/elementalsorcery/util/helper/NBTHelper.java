@@ -64,8 +64,8 @@ public class NBTHelper {
 
 	public static <B extends NBTBase, T extends INBTSerializable<B>> List<T> getNBTSerializableList(NBTTagCompound nbt,
 			String key, Class<T> cls, Class<B> nbtCls) {
-		List<T> NBTSerializableList = new LinkedList<>();
 		NBTTagList list = (NBTTagList) nbt.getTag(key);
+		List<T> NBTSerializableList = new ArrayList<>(list.tagCount() + 1);
 		if (list.tagCount() == 0) return NBTSerializableList;
 		try {
 			Constructor<T> constructor = cls.getConstructor(nbtCls);

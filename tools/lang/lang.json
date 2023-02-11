@@ -1143,6 +1143,11 @@
 			"zh_CN": "协调结构记录台",
 			"en_US": "Integrate Structure Recorder",
 			"ja_JP": "統合構造記録台"
+		},
+		"tile.dungeonDoorCore.name": {
+			"zh_CN": "虚映门",
+			"en_US": "Virtual Sight Door",
+			"ja_JP": "偽映ゲート"
 		}
 	},
 	"es.effect": {

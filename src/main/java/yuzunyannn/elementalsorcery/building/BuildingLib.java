@@ -117,6 +117,7 @@ public class BuildingLib {
 			if (!path.endsWith(".nbt")) continue;
 			NBTTagCompound nbt = IOHelper.readNBT(new ResourceLocation(MODID, "structures/" + path));
 			if (path.lastIndexOf('.') != -1) path = path.substring(0, path.lastIndexOf('.'));
+			nbt.setString("key", path);
 			Building building = new BuildingInherent(nbt, TextHelper.castToCamel(path));
 			instance.addBuildingLib(path, building);
 		}

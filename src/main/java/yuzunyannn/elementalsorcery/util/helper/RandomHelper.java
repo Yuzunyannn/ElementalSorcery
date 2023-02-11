@@ -42,6 +42,20 @@ public class RandomHelper {
 		return lucky;
 	}
 
+	static public <T> T[] randomOrder(T... ints) {
+		if (ints.length == 0) return (T[]) Array.newInstance(Object.class, 0);
+		ints = ints.clone();
+		T[] ret = (T[]) Array.newInstance(ints[0].getClass(), ints.length);
+		for (int i = ints.length; i > 0; i--) {
+			int index = rand.nextInt(i);
+			ret[ints.length - i] = ints[index];
+			T swap = ints[index];
+			ints[index] = ints[i - 1];
+			ints[i - 1] = swap;
+		}
+		return ret;
+	}
+
 	static public class WeightRandom<T> {
 
 		private class Pair {

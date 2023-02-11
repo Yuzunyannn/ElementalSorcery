@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
-import yuzunyannn.elementalsorcery.building.BuildingBlocks;
+import yuzunyannn.elementalsorcery.building.BuildingFace;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
@@ -44,7 +44,7 @@ public class TileBuildingAltar extends TileStaticMultiBlock implements IGetItemS
 
 	/** 获取标尺 */
 	private ItemStack getRuler() {
-		BlockPos pos = this.pos.add(BuildingBlocks.facePos(RULER_POS, structure.face()));
+		BlockPos pos = this.pos.add(BuildingFace.face(RULER_POS, structure.face()));
 		TileEntity tile = this.world.getTileEntity(pos);
 		if (tile instanceof IGetItemStack) {
 			ItemStack stack = ((IGetItemStack) tile).getStack();

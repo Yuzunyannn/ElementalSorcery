@@ -8,6 +8,8 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoor;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoorExpand;
 
 public class ESObjects {
 
@@ -214,6 +216,8 @@ public class ESObjects {
 		public Block INSTANT_CONSTITUTE;
 		public Block ESTONE_CROCK;
 		public Block IS_CRAFT_CC;
+		public Block DUNGEON_DOOR;
+		public Block DUNGEON_DOOR_EXPAND;
 	}
 
 	static public class Elements {

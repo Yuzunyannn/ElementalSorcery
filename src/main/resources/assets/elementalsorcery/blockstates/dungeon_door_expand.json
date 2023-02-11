@@ -1,0 +1,17 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_all",
+        "textures": {
+            "all": "elementalsorcery:blocks/dungeon_door_side"
+        }
+    },
+    "variants": {
+        "inventory": [
+            {}
+        ],
+        "normal": [
+            {}
+        ]
+    }
+}

@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.block;
+package yuzunyannn.elementalsorcery.block.env;
 
 import java.util.ArrayList;
 import java.util.Collections;

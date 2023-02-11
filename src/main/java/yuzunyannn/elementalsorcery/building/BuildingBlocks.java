@@ -16,14 +16,12 @@ import net.minecraft.block.BlockLadder;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.block.BlockSign;
-import net.minecraft.block.BlockSkull;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
@@ -90,69 +88,10 @@ public class BuildingBlocks {
 		return false;
 	}
 
-	/** 根据方向修正pos */
-	static public BlockPos facePos(BlockPos pos, EnumFacing facing) {
-		switch (facing) {
-		case SOUTH:
-			pos = new BlockPos(-pos.getX(), pos.getY(), -pos.getZ());
-			break;
-		case EAST:
-			pos = new BlockPos(-pos.getZ(), pos.getY(), pos.getX());
-			break;
-		case WEST:
-			pos = new BlockPos(pos.getZ(), pos.getY(), -pos.getX());
-			break;
-		default:
-			break;
-		}
-		return pos;
-	}
-
-	static public NBTTagCompound tryFaceTile(IBlockState state, NBTTagCompound save, EnumFacing facing,
-			boolean needCopy) {
-		if (state.getBlock() instanceof BlockSkull) {
-			if (needCopy) save = save.copy();
-			save.setByte("Rot", (byte) faceRot(save.getByte("Rot"), facing));
-		}
-		return save;
-	}
-
 	public BlockPos getPos() {
 		if (entry == null) return null;
 		BlockPos pos = entry.getKey();
-		return facePos(pos, this.facing).add(off);
-	}
-
-	/** 根据方向修正state */
-	static public IBlockState faceSate(IBlockState state, EnumFacing facing) {
-		switch (facing) {
-		case SOUTH:
-			state = state.withRotation(Rotation.CLOCKWISE_180);
-			break;
-		case EAST:
-			state = state.withRotation(Rotation.CLOCKWISE_90);
-			break;
-		case WEST:
-			state = state.withRotation(Rotation.COUNTERCLOCKWISE_90);
-			break;
-		default:
-			break;
-		}
-		return state;
-	}
-
-	/** 根据方向修正skull数值 */
-	static public int faceRot(int rot, EnumFacing facing) {
-		switch (facing) {
-		case SOUTH:
-			return (rot + 8) % 16;
-		case EAST:
-			return (rot + 4) % 16;
-		case WEST:
-			return (rot - 4 + 16) % 16;
-		default:
-			return rot;
-		}
+		return BuildingFace.face(pos, this.facing).add(off);
 	}
 
 	public void buildState(World world, BlockPos pos) {
@@ -165,16 +104,16 @@ public class BuildingBlocks {
 	public IBlockState getState() {
 		if (entry == null) return null;
 		IBlockState state = building.infoList.get(entry.getValue()).getState();
-		return faceSate(state, this.facing);
+		return BuildingFace.face(state, this.facing);
 	}
 
 	@Nullable
 	public NBTTagCompound getTileNBTSave() {
 		Building.BlockInfo info = building.infoList.get(entry.getValue());
-		NBTTagCompound nbt = info.getNBTData();
+		NBTTagCompound nbt = info.getTileEntityNBTData();
 		if (nbt == null) return null;
 		IBlockState state = info.getState();
-		return tryFaceTile(state, nbt, facing, true);
+		return BuildingFace.tryFaceTile(state, nbt, facing, true);
 	}
 
 	@Nonnull
