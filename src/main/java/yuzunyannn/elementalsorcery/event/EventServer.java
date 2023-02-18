@@ -671,4 +671,10 @@ public class EventServer {
 		}
 	}
 
+	@SubscribeEvent
+	public static void onWorldLoad(WorldEvent.Load event) {
+//		World world = event.getWorld();
+//		if (world instanceof WorldServer) world.addEventListener(new ESWorldEventListener());
+	}
+
 }

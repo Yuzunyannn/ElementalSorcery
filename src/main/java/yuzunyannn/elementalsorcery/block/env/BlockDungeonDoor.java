@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.block.env;
 
-import net.minecraft.block.BlockContainer;
+import net.minecraft.block.Block;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -10,7 +11,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.tile.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
-public class BlockDungeonDoor extends BlockContainer {
+public class BlockDungeonDoor extends Block implements ITileEntityProvider {
 
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
@@ -31,7 +31,7 @@ public class BlockDungeonDoor extends BlockContainer {
 		super(Material.ROCK);
 		this.setSoundType(SoundType.GLASS);
 		this.setTranslationKey("dungeonDoorCore");
-		this.setHardness(32f);
+		this.setHardness(64f);
 		this.setLightLevel(4);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 	}
@@ -42,13 +42,13 @@ public class BlockDungeonDoor extends BlockContainer {
 	}
 
 	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileDungeonDoor();
+	protected ItemStack getSilkTouchDrop(IBlockState state) {
+		return ItemStack.EMPTY;
 	}
 
 	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.MODEL;
+	public TileEntity createNewTileEntity(World worldIn, int meta) {
+		return new TileDungeonDoor();
 	}
 
 	@Override
@@ -112,8 +112,13 @@ public class BlockDungeonDoor extends BlockContainer {
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (worldIn.isRemote)
+			return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 		TileDungeonDoor tile = BlockHelper.getTileEntity(worldIn, pos, TileDungeonDoor.class);
 		if (tile != null) {
+			if (tile.isRunMode()) {
+				if (state.getValue(FACING) != facing) return false;
+			}
 			tile.onBlockActivated(playerIn, hand, facing, state.getValue(FACING));
 			return true;
 		}

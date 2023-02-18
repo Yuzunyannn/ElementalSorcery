@@ -231,6 +231,11 @@ tile.instantConstitute.name=瞬构方台
 tile.estoneCrock.name=魔力石英缸
 tile.ISCraftCC.name=协调结构记录台
 tile.dungeonDoorCore.name=虚映门
+tile.dungeonStairs.name=地牢楼梯
+tile.dungeonBrick.default.name=地牢砖
+tile.dungeonBrick.mossy.name=苔地牢砖
+tile.dungeonBrick.cracked.name=裂地牢砖
+tile.dungeonBrick.chiseled.name=錾制地牢砖
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者

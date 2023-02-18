@@ -20,6 +20,7 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 	protected BlockPos at;
 	protected List<DungeonAreaDoor> doorLinks;
 	protected EnumFacing facing = EnumFacing.NORTH;
+	protected boolean isBuild = false;
 
 	public DungeonAreaRoom(DungeonRoomType inst) {
 		this.inst = inst;
@@ -37,6 +38,10 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 		return BuildingFace.face(box, facing).offset(at);
 	}
 
+	public boolean isBuild() {
+		return isBuild;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -49,24 +54,45 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 		return doorLinks;
 	}
 
+	public DungeonAreaDoor getDoorLink(int index) {
+		if (index < 0 || index >= doorLinks.size()) return null;
+		return doorLinks.get(index);
+	}
+
+	public DungeonRoomType getType() {
+		return inst;
+	}
+
+	public EnumFacing getFacing() {
+		return facing;
+	}
+
+	public BlockPos getCenterPos() {
+		return at;
+	}
+
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setInteger("id", id);
+		nbt.setInteger("areId", areId);
 		nbt.setString("inst", inst.getRegistryName().toString());
 		NBTHelper.setBlockPos(nbt, "pos", at);
 		nbt.setByte("face", (byte) facing.getIndex());
 		NBTHelper.setNBTSerializableList(nbt, "doors", doorLinks);
+		nbt.setBoolean("isBuild", isBuild);
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
 		id = nbt.getInteger("id");
+		areId = nbt.getInteger("areId");
 		inst = DungeonRoomType.REGISTRY.getValue(new ResourceLocation(nbt.getString("inst")));
 		at = NBTHelper.getBlockPos(nbt, "pos");
 		facing = EnumFacing.byIndex(nbt.getByte("face"));
 		doorLinks = NBTHelper.getNBTSerializableList(nbt, "doors", DungeonAreaDoor.class, NBTTagCompound.class);
+		isBuild = nbt.getBoolean("isBuild");
 	}
 
 }

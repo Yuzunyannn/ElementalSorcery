@@ -118,8 +118,10 @@ import yuzunyannn.elementalsorcery.block.container.BlockResearcher;
 import yuzunyannn.elementalsorcery.block.container.BlockRiteTable;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonBrick;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoor;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoorExpand;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonStairs;
 import yuzunyannn.elementalsorcery.block.env.BlockGoatGoldBrick;
 import yuzunyannn.elementalsorcery.block.md.BlockMDAbsorbBox;
 import yuzunyannn.elementalsorcery.block.md.BlockMDDeconstructBox;
@@ -370,12 +372,12 @@ import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDTransfer;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
+import yuzunyannn.elementalsorcery.tile.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.tile.TileEStoneCrock;
 import yuzunyannn.elementalsorcery.tile.TileEStoneMatrix;
 import yuzunyannn.elementalsorcery.tile.TileElementPlatform;
 import yuzunyannn.elementalsorcery.tile.TileElfBeacon;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
-import yuzunyannn.elementalsorcery.tile.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.tile.TileHearth;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftCC;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftNormal;
@@ -466,6 +468,8 @@ public class ESInit {
 		ESObjects.BLOCKS.ESTONE_PRISM = new BlocksEStone.EStonePrism();
 		ESObjects.BLOCKS.ESTONE_MATRIX = new BlockEStoneMatrix();
 		ESObjects.BLOCKS.ESTONE_CROCK = new BlockEStoneCrock();
+		ESObjects.BLOCKS.DUNGEON_BRICK = new BlockDungeonBrick();
+		ESObjects.BLOCKS.DUNGEON_STAIRS = new BlockDungeonStairs();
 
 		ESObjects.BLOCKS.ELEMENTAL_CUBE = new BlockElementCube();
 		ESObjects.BLOCKS.HEARTH = new BlockHearth();
@@ -1198,6 +1202,9 @@ public class ESInit {
 		registerRender(BLOCKS.ASTONE, 4, "astone_circle");
 		registerRender(BLOCKS.ASTONE, 5, "astone_brick");
 		registerRender(BLOCKS.ASTONE, 6, "astone_trans");
+		for (BlockDungeonBrick.EnumType type : BlockDungeonBrick.EnumType.values())
+			registerRender(BLOCKS.DUNGEON_BRICK, type.getMeta(), "dungeon_brick_" + type.getName());
+		registerRender(BLOCKS.DUNGEON_STAIRS);
 		registerRender(BLOCKS.STAR_STONE);
 		registerRender(BLOCKS.STAR_SAND);
 		registerRender(BLOCKS.ELF_LOG);

@@ -28,7 +28,10 @@ public class DungeonAreaDoor implements INBTSerializable<NBTTagCompound> {
 	public int getLinkDoorIndex() {
 		return linkDoorIndex;
 	}
-	
+
+	public boolean isOpen() {
+		return isOpen;
+	}
 
 	@Override
 	public NBTTagCompound serializeNBT() {

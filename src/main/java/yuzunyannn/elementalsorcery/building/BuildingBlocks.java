@@ -13,6 +13,7 @@ import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockButton;
 import net.minecraft.block.BlockCarpet;
 import net.minecraft.block.BlockLadder;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockRailBase;
 import net.minecraft.block.BlockRedstoneWire;
 import net.minecraft.block.BlockSign;
@@ -25,7 +26,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.fluids.BlockFluidBase;
+import net.minecraftforge.fluids.IFluidBlock;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 
 /** 遍历用类 */
@@ -79,7 +80,8 @@ public class BuildingBlocks {
 		if (block instanceof BlockCarpet || block instanceof BlockTorch) return true;
 		if (block instanceof BlockBush) return true;
 		if (block instanceof BlockRailBase) return true;
-		if (block instanceof BlockFluidBase) return true;
+		if (block instanceof IFluidBlock) return true;
+		if (block instanceof BlockLiquid) return true;
 		if (block instanceof BlockRedstoneWire) return true;
 		if (block instanceof BlockSign) return true;
 		if (block instanceof IGrowable || block instanceof IPlantable) return true;

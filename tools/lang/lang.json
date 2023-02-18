@@ -1148,6 +1148,31 @@
 			"zh_CN": "虚映门",
 			"en_US": "Virtual Sight Door",
 			"ja_JP": "偽映ゲート"
+		},
+		"tile.dungeonStairs.name": {
+			"zh_CN": "地牢楼梯",
+			"en_US": "Dungeon Brick Stairs",
+			"ja_JP": "地下牢レンガの階段"
+		},
+		"tile.dungeonBrick.default.name": {
+			"zh_CN": "地牢砖",
+			"en_US": "Dungeon Bricks",
+			"ja_JP": "地下牢レンガ"
+		},
+		"tile.dungeonBrick.mossy.name": {
+			"zh_CN": "苔地牢砖",
+			"en_US": "Mossy Dungeon Bricks",
+			"ja_JP": "苔むした地下牢レンガ"
+		},
+		"tile.dungeonBrick.cracked.name": {
+			"zh_CN": "裂地牢砖",
+			"en_US": "Cracked Dungeon Bricks",
+			"ja_JP": "ひび割れた地下牢レンガ"
+		},
+		"tile.dungeonBrick.chiseled.name": {
+			"zh_CN": "錾制地牢砖",
+			"en_US": "Chiseled Dungeon Bricks",
+			"ja_JP": "模様入りの地下牢レンガ"
 		}
 	},
 	"es.effect": {

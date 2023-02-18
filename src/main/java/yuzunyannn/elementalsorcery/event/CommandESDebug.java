@@ -122,13 +122,16 @@ public class CommandESDebug {
 			case "textTest": {
 
 				EntityPlayerMP player = (EntityPlayerMP) entity;
-
+				boolean isDebugBuild = false;
 				DungeonWorld dw = DungeonWorld.getDungeonWorld(player.world);
 				dw.debugClear();
 				DungeonArea area = dw.newDungeon(pos);
 				if (area.isFail()) System.out.println(area.getFailMsg());
-				else area.debugBuildDungeon(player.world);
-//				
+				else {
+					if (isDebugBuild) area.debugBuildDungeon(player.world);
+					else area.startBuildRoom(player.world, 0, player);
+				}
+
 //				EntityPlayer fakePlayer = ESFakePlayer.get(player.getServerWorld());
 //				player.attackEntityFrom(
 //						DamageHelper.getDamageSource(new ElementStack(ESObjects.ELEMENTS.MAGIC), fakePlayer, null)

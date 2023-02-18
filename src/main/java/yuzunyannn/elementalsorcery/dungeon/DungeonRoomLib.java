@@ -13,8 +13,8 @@ public class DungeonRoomLib {
 		DungeonRoomType.REGISTRY.register(room);
 	}
 
-	private static DungeonRoomTypeBuilding register(String id) {
-		DungeonRoomTypeBuilding room = new DungeonRoomTypeBuilding(BuildingLib.instance.getBuilding(id));
+	private static DungeonRoomType register(String id) {
+		DungeonRoomType room = new DungeonRoomType(BuildingLib.instance.getBuilding(id));
 		room.setRegistryName(ESAPI.MODID, room.getStructure().getKeyName());
 		DungeonRoomType.REGISTRY.register(room);
 		return room;

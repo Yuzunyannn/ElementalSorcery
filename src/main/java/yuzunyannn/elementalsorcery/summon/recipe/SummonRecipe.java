@@ -145,7 +145,7 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 		reg("maze", SummonMaze.class, 200, 0x3f9e15, new ItemStack(ESObjects.BLOCKS.ELF_LEAF)).setBuildHeight(3);
 		reg("arrogant_sheep", new SummonRecipeArrogantSheep());
 		reg("relic_guard", SummonRelicGuard.class, 128, 0xfdffce, new ItemStack(ESObjects.ITEMS.RELIC_GEM));
-
+		reg("dungeon_room", new SummonRecipeDungeonRoom());
 	}
 
 	private static SummonRecipe reg(String name, SummonRecipe m) {

@@ -3,13 +3,21 @@ package yuzunyannn.elementalsorcery.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.building.BuildingFace;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
+import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
+import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipeDungeonRoom;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class DungeonArea extends WorldSavedData {
@@ -31,6 +39,10 @@ public class DungeonArea extends WorldSavedData {
 
 		public ChunkPos getChunckPos() {
 			return new ChunkPos((maxAX + minAX) / 2 * CHUNK_SPLIT, (maxAZ + minAZ) / 2 * CHUNK_SPLIT);
+		}
+
+		public int getId() {
+			return id;
 		}
 
 		public boolean isInArea(ChunkPos pos) {
@@ -95,7 +107,6 @@ public class DungeonArea extends WorldSavedData {
 	protected final AreaExcerpt excerpt = new AreaExcerpt();
 	protected String failMsg;
 	protected List<DungeonAreaRoom> rooms = new ArrayList<>();
-	protected int id;
 
 	public DungeonArea(String name) {
 		super(name);
@@ -103,11 +114,12 @@ public class DungeonArea extends WorldSavedData {
 
 	public void generate(DungeonWorld dw, BlockPos at) {
 		rooms.clear();
-		
+
 		DungeonRoomSelector selector = DungeonRoomSelector.create(this);
 
 		DungeonAreaGenerater generate = new DungeonAreaGenerater(this, dw.world);
 		DungeonAreaRoom room = new DungeonAreaRoom(selector.getFirstRoom());
+		room.facing = EnumFacing.HORIZONTALS[generate.rand.nextInt(EnumFacing.HORIZONTALS.length)];
 		generate.addRoom(at, room);
 
 		generate.addWaitBuildRoom(room);
@@ -117,10 +129,10 @@ public class DungeonArea extends WorldSavedData {
 			if (room == null) break;
 			generate.buildRoom(room, selector);
 		}
-		
+
 		generate.checkRooms();
 
-		return;
+		this.markDirty();
 	}
 
 	protected DungeonArea setFailMsg(String failMsg) {
@@ -157,7 +169,70 @@ public class DungeonArea extends WorldSavedData {
 		return compound;
 	}
 
+	public void startBuildRoom(World world, int roomId, EntityPlayer openPlayer) {
+		DungeonAreaRoom room = getRoomById(roomId);
+		if (room == null) return;
+		if (room.isBuild) return;
+
+		room.isBuild = true;
+
+		int areaId = this.excerpt.id;
+
+		MantraSummon.summon(world, room.at, openPlayer, SummonRecipeDungeonRoom.createVestKeepsake(areaId, roomId),
+				SummonRecipe.get(TextHelper.toESResourceLocation("dungeon_room")));
+
+		this.markDirty();
+	}
+
+	public void startOpenDoor(World world, int roomId, int doorIndex) {
+		DungeonAreaRoom room = getRoomById(roomId);
+		if (room == null) return;
+		if (!room.isBuild) return;
+
+		DungeonAreaDoor door = room.getDoorLink(doorIndex);
+		if (door == null) return;
+		if (door.isOpen()) return;
+		
+		door.isOpen = true;
+
+		DungeonRoomType inst = room.inst;
+		DungeonRoomDoor iDoor = inst.getDoors().get(doorIndex);
+
+		AxisAlignedBB box = iDoor.getDoorBox(iDoor.getDoorLenghToBorder(inst.getBuildingBox()));
+		box = BuildingFace.face(box, room.facing).offset(room.at);
+
+		int minX = MathHelper.ceil(box.minX);
+		int maxX = MathHelper.ceil(box.maxX);
+		int minY = MathHelper.ceil(box.minY);
+		int maxY = MathHelper.ceil(box.maxY);
+		int minZ = MathHelper.ceil(box.minZ);
+		int maxZ = MathHelper.ceil(box.maxZ);
+		for (int x = minX; x <= maxX; x++) {
+			for (int y = minY; y <= maxY; y++) {
+				for (int z = minZ; z <= maxZ; z++) {
+					BlockPos at = new BlockPos(x, y, z);
+					world.destroyBlock(at, false);
+				}
+			}
+		}
+		
+		this.markDirty();
+	}
+
+	public void onRoomBuildFinish(World world, DungeonAreaRoom room) {
+		List<DungeonAreaDoor> doors = room.getDoorLinks();
+		for (int doorIndex = 0; doorIndex < doors.size(); doorIndex++) {
+			DungeonAreaDoor door = doors.get(doorIndex);
+			if (!door.isLink()) continue;
+			DungeonAreaRoom otherRoom = this.getRoomById(door.getLinkRoomId());
+			if (!otherRoom.isBuild) continue;
+			int otherDoorIndex = door.getLinkDoorIndex();
+			this.startOpenDoor(world, room.id, doorIndex);
+			this.startOpenDoor(world, otherRoom.id, otherDoorIndex);
+		}
+	}
+
 	public void debugBuildDungeon(World world) {
-		for (DungeonAreaRoom room : rooms) room.inst.build(world, this, room);
+		for (DungeonAreaRoom room : rooms) room.inst.deubgBuild(world, this, room);
 	}
 }

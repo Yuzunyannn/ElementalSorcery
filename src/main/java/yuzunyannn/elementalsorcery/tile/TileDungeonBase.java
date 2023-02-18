@@ -12,6 +12,7 @@ public abstract class TileDungeonBase extends TileEntityNetwork {
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
+		if (this.isSending()) return super.writeToNBT(compound);
 		compound.setInteger("areaId", areaId);
 		compound.setInteger("roomId", roomId);
 		return super.writeToNBT(compound);

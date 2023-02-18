@@ -11,6 +11,7 @@ import net.minecraft.block.BlockBed;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockPistonBase;
 import net.minecraft.block.BlockRedstoneTorch;
+import net.minecraft.block.BlockStaticLiquid;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
@@ -472,8 +473,10 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			FluidStack fstack = fhi.drain(1000, true);
 			if (fstack != null) {
 				IBlockState fluidState = fstack.getFluid().getBlock().getDefaultState();
-				world.setBlockState(to, fluidState);
-				// world.notifyBlockUpdate(to, fluidState, fluidState, 0);
+				if (fluidState.getBlock() instanceof BlockStaticLiquid) {
+					fluidState = BlockStaticLiquid.getFlowingBlock(fluidState.getMaterial()).getDefaultState();
+					world.setBlockState(to, fluidState);
+				} else world.setBlockState(to, fluidState);
 			}
 			return fhi.getContainer();
 		} else if (item == Items.BED) {

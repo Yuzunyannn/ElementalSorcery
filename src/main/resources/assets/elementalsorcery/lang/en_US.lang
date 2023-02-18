@@ -231,6 +231,11 @@ tile.instantConstitute.name=Instant Constitute Stela
 tile.estoneCrock.name=Magic Quartz Crock
 tile.ISCraftCC.name=Integrate Structure Recorder
 tile.dungeonDoorCore.name=Virtual Sight Door
+tile.dungeonStairs.name=Dungeon Brick Stairs
+tile.dungeonBrick.default.name=Dungeon Bricks
+tile.dungeonBrick.mossy.name=Mossy Dungeon Bricks
+tile.dungeonBrick.cracked.name=Cracked Dungeon Bricks
+tile.dungeonBrick.chiseled.name=Chiseled Dungeon Bricks
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker

@@ -1,0 +1,16 @@
+{
+	"variants": {
+		"variant=default": {
+			"model": "elementalsorcery:dungeon_brick_default"
+		},
+		"variant=mossy": {
+			"model": "elementalsorcery:dungeon_brick_mossy"
+		},
+		"variant=cracked": {
+			"model": "elementalsorcery:dungeon_brick_cracked"
+		},
+		"variant=chiseled": {
+			"model": "elementalsorcery:dungeon_brick_chiseled"
+		}
+	}
+}
