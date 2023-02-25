@@ -19,6 +19,7 @@ import java.util.Set;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSyntaxException;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTPrimitive;
@@ -38,6 +39,15 @@ public class JsonObject extends Json implements Iterable<String> {
 
 	public JsonObject() {
 		json = new com.google.gson.JsonObject();
+	}
+
+	public JsonObject(String jsonStr) {
+		Gson gson = new Gson();
+		com.google.gson.JsonObject json = null;
+		try {
+			json = gson.fromJson(jsonStr, com.google.gson.JsonObject.class);
+		} catch (JsonSyntaxException e) {}
+		this.json = json == null ? new com.google.gson.JsonObject() : json;
 	}
 
 	public JsonObject(Path file) throws IOException {
@@ -89,6 +99,7 @@ public class JsonObject extends Json implements Iterable<String> {
 		return json.toString();
 	}
 
+	@Override
 	public com.google.gson.JsonObject getGoogleJson() {
 		return json;
 	}
@@ -115,6 +126,11 @@ public class JsonObject extends Json implements Iterable<String> {
 
 	public boolean has(String key) {
 		return json.has(key);
+	}
+
+	public void set(String key, Json obj) {
+		if (obj.isObject()) set(key, (JsonObject) obj);
+		else set(key, (JsonArray) obj);
 	}
 
 	public boolean hasObject(String key) {

@@ -1,9 +1,10 @@
-package yuzunyannn.elementalsorcery.tile;
+package yuzunyannn.elementalsorcery.tile.dungeon;
 
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
 import yuzunyannn.elementalsorcery.dungeon.DungeonAreaRoom;
 import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
+import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
 
 public abstract class TileDungeonBase extends TileEntityNetwork {
 

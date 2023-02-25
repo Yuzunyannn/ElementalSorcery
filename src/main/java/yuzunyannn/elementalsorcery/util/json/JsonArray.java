@@ -40,6 +40,7 @@ public class JsonArray extends Json {
 		this.parse(nbt);
 	}
 
+	@Override
 	public com.google.gson.JsonArray getGoogleJson() {
 		return json;
 	}

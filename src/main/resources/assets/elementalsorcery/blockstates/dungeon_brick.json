@@ -11,6 +11,9 @@
 		},
 		"variant=chiseled": {
 			"model": "elementalsorcery:dungeon_brick_chiseled"
+		},
+		"variant=stone": {
+			"model": "elementalsorcery:dungeon_brick_stone"
 		}
 	}
 }

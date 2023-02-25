@@ -18,15 +18,16 @@ public class BlockDungeonBrick extends Block implements Mapper {
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 
 	public static enum EnumType implements IStringSerializable {
-		DEFAULT(0,"default"),
-		MOSSY(1,"mossy"),
-		CRACKED(2,"cracked"),
-		CHISELED(3,"chiseled");
+		DEFAULT(0, "default"),
+		MOSSY(1, "mossy"),
+		CRACKED(2, "cracked"),
+		CHISELED(3, "chiseled"),
+		STONE(4, "stone");
 
 		final String name;
 		final int meta;
-		
-		EnumType(int meta , String name) {
+
+		EnumType(int meta, String name) {
 			this.meta = meta;
 			this.name = name;
 		}
@@ -35,7 +36,7 @@ public class BlockDungeonBrick extends Block implements Mapper {
 		public String getName() {
 			return name;
 		}
-		
+
 		public int getMeta() {
 			return meta;
 		}

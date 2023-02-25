@@ -1,13 +1,17 @@
 package yuzunyannn.elementalsorcery.util.json;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.BiFunction;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
@@ -32,11 +36,31 @@ import yuzunyannn.elementalsorcery.util.helper.RandomHelper.WeightRandom;
 
 public abstract class Json {
 
+	public static Json parser(String jsonStr) throws JsonSyntaxException {
+		Gson gson = new Gson();
+		com.google.gson.JsonElement json = gson.fromJson(jsonStr, com.google.gson.JsonElement.class);
+		if (json == null) return null;
+		if (json.isJsonArray()) return new JsonArray((com.google.gson.JsonArray) json);
+		return new JsonObject((com.google.gson.JsonObject) json);
+	}
+
+	public static Json parser(File file) throws JsonSyntaxException, IOException {
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), "utf-8"))) {
+			Gson gson = new Gson();
+			com.google.gson.JsonElement json = gson.fromJson(reader, com.google.gson.JsonElement.class);
+			if (json == null) return null;
+			if (json.isJsonArray()) return new JsonArray((com.google.gson.JsonArray) json);
+			return new JsonObject((com.google.gson.JsonObject) json);
+		}
+	}
+
 	abstract public NBTBase asNBT();
 
 	abstract public boolean isObject();
 
 	abstract public int size();
+
+	abstract public com.google.gson.JsonElement getGoogleJson();
 
 	/** 通过json元素获取物品组 */
 	protected ArrayList<ItemRecord> loadItems(JsonElement json) {

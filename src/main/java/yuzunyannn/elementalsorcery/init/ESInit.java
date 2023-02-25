@@ -121,6 +121,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonBrick;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoor;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoorExpand;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonFunction;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonStairs;
 import yuzunyannn.elementalsorcery.block.env.BlockGoatGoldBrick;
 import yuzunyannn.elementalsorcery.block.md.BlockMDAbsorbBox;
@@ -372,7 +373,6 @@ import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.render.tile.md.RenderTileMDTransfer;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
 import yuzunyannn.elementalsorcery.tile.TileCrystalFlower;
-import yuzunyannn.elementalsorcery.tile.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.tile.TileEStoneCrock;
 import yuzunyannn.elementalsorcery.tile.TileEStoneMatrix;
 import yuzunyannn.elementalsorcery.tile.TileElementPlatform;
@@ -406,6 +406,8 @@ import yuzunyannn.elementalsorcery.tile.altar.TilePortalAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeInjection;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeTable;
+import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonDoor;
+import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonFunction;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockCrystalBlock;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockNode;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
@@ -542,6 +544,7 @@ public class ESInit {
 		ESObjects.BLOCKS.IS_CRAFT_CC = new BlockItemStructureCraftCC();
 		ESObjects.BLOCKS.DUNGEON_DOOR = new BlockDungeonDoor();
 		ESObjects.BLOCKS.DUNGEON_DOOR_EXPAND = new BlockDungeonDoorExpand();
+		ESObjects.BLOCKS.DUNGEON_FUNCTION = new BlockDungeonFunction();
 
 		// 初始化所有tab
 		Class<?> cls = ESObjects.BLOCKS.getClass();
@@ -1029,6 +1032,7 @@ public class ESInit {
 		register(TileEStoneCrock.class, "EStoneCrock");
 		register(TileItemStructureCraftCC.class, "ISCraftCC");
 		register(TileDungeonDoor.class, "DungeonDoor");
+		register(TileDungeonFunction.class, "DungeonFunc");
 	}
 
 	static void registerAllCapability() {
@@ -1250,6 +1254,7 @@ public class ESInit {
 		registerRender(BLOCKS.ESTONE_CROCK);
 		registerRender(BLOCKS.DUNGEON_DOOR);
 		registerRender(BLOCKS.DUNGEON_DOOR_EXPAND);
+		registerRender(BLOCKS.DUNGEON_FUNCTION);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());

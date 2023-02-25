@@ -8,6 +8,7 @@ public class DungeonRoomLib {
 	public static DungeonRoomType DUNGEON_CENTER;
 	public static DungeonRoomType DUNGEON_SMALL_TOWARD4;
 	public static DungeonRoomType DUNGEON_CORRIDOR_TOWARD4;
+	public static DungeonRoomType DUNGEON_SMAL_PRISON_TOWARD2;
 
 	public static void register(DungeonRoomType room) {
 		DungeonRoomType.REGISTRY.register(room);
@@ -21,9 +22,11 @@ public class DungeonRoomLib {
 	}
 
 	public static void registerAll() {
+		DungeonFunc.registerAll();
 		DUNGEON_CENTER = register("dungeon_center");
 		DUNGEON_SMALL_TOWARD4 = register("dungeon_small_toward4");
 		DUNGEON_CORRIDOR_TOWARD4 = register("dungeon_corridor_toward4");
+		DUNGEON_SMAL_PRISON_TOWARD2 = register("dungeon_smal_prison_toward2");
 	}
 
 }

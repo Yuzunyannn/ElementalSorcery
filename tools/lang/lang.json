@@ -1173,6 +1173,16 @@
 			"zh_CN": "錾制地牢砖",
 			"en_US": "Chiseled Dungeon Bricks",
 			"ja_JP": "模様入りの地下牢レンガ"
+		},
+		"tile.dungeonBrick.stone.name": {
+			"zh_CN": "地牢石头",
+			"en_US": "Dungeon Stone",
+			"ja_JP": "地下牢の石"
+		},
+		"tile.dungeonFunction.name": {
+			"zh_CN": "地牢构建功能方块",
+			"en_US": "Dungeon Build Function",
+			"ja_JP": "地下牢構築ファンクション"
 		}
 	},
 	"es.effect": {

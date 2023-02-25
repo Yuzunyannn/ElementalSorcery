@@ -218,6 +218,7 @@ public class ESObjects {
 		public Block DUNGEON_DOOR_EXPAND;
 		public Block DUNGEON_BRICK;
 		public Block DUNGEON_STAIRS;
+		public Block DUNGEON_FUNCTION;
 	}
 
 	static public class Elements {

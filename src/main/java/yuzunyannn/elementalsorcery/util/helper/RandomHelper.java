@@ -89,17 +89,28 @@ public class RandomHelper {
 			for (Pair pair : list) pair.weight += weight;
 		}
 
-		public T get(Random rand) {
+		public T get(Random rand, boolean remove) {
 			if (this.isEmpty()) return null;
 			double we = 0;
 			for (Pair pair : list) we += pair.weight;
 			double at = rand.nextFloat() * we;
 			we = 0;
-			for (Pair pair : list) {
+			Iterator<Pair> iter = list.iterator();
+			while (iter.hasNext()) {
+				Pair pair = iter.next();
 				we += pair.weight;
-				if (at < we) return pair.obj;
+				if (at < we) {
+					if (remove) iter.remove();
+					return pair.obj;
+				}
 			}
-			return list.get(rand.nextInt(list.size())).obj;
+			int index = rand.nextInt(list.size());
+			if (remove) return list.remove(index).obj;
+			return list.get(index).obj;
+		}
+
+		public T get(Random rand) {
+			return get(rand, false);
 		}
 
 		public T get() {
@@ -108,6 +119,10 @@ public class RandomHelper {
 
 		public boolean isEmpty() {
 			return list.isEmpty();
+		}
+
+		public int size() {
+			return list.size();
 		}
 	}
 }

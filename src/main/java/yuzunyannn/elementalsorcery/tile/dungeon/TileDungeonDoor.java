@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.tile;
+package yuzunyannn.elementalsorcery.tile.dungeon;
 
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +42,6 @@ public class TileDungeonDoor extends TileDungeonBase {
 
 		DungeonAreaDoor door = this.getDungeonDoor();
 		if (door == null) {
-			ESAPI.logger.warn("门失去了它的dungeon");
 			world.setBlockToAir(pos);
 			BlockDungeonDoor.onHarvestDoor(world, player, pos);
 			return;

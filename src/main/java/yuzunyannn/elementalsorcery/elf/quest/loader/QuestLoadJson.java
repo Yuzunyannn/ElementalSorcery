@@ -15,6 +15,10 @@ public class QuestLoadJson extends JsonObject {
 
 	public Map<String, Object> context;
 
+	public QuestLoadJson() {
+		super();
+	}
+
 	public QuestLoadJson(JsonObject json) {
 		super(json.getGoogleJson());
 	}

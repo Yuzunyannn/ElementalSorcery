@@ -1,8 +1,14 @@
 package yuzunyannn.elementalsorcery.dungeon;
 
+import java.lang.ref.WeakReference;
+import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
+import java.util.TreeMap;
 
 import javax.annotation.Nullable;
 
@@ -16,6 +22,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -27,9 +34,12 @@ import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoor;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.building.BuildingFace;
+import yuzunyannn.elementalsorcery.dungeon.DungeonFuncExecuteContext.DungeonFuncExecuteType;
+import yuzunyannn.elementalsorcery.dungeon.DungeonFuncGlobal.GroupInfo;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
-import yuzunyannn.elementalsorcery.tile.TileDungeonDoor;
+import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper.WeightRandom;
 
 public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 
@@ -40,6 +50,7 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 	protected final Building structure;
 	protected final AxisAlignedBB buildingBox;
 	protected List<DungeonRoomDoor> doors = new ArrayList<>();
+	protected List<Entry<BlockPos, String>> funcs = new ArrayList<>();
 
 	public DungeonRoomType(Building structure) {
 		this.structure = structure;
@@ -53,7 +64,7 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			IBlockState state = iter.getState();
 			Block block = state.getBlock();
 			if (block == ESObjects.BLOCKS.DUNGEON_DOOR) initDoor(iter.getPos());
-
+			else if (block == ESObjects.BLOCKS.DUNGEON_FUNCTION) initFunc(iter.getPos());
 		}
 	}
 
@@ -108,6 +119,74 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 		this.doors.add(door);
 	}
 
+	protected void initFunc(BlockPos pos) {
+		Building.BlockInfo info = structure.getBlockInfo(pos);
+		NBTTagCompound tileSave = info.getTileEntityNBTData();
+		if (tileSave == null) return;
+
+		String dungeonConfig = tileSave.getString("dungeon_config");
+		if (dungeonConfig.isEmpty()) return;
+
+		funcs.add(new AbstractMap.SimpleEntry(pos, dungeonConfig));
+	}
+
+	/*----------------------
+	 * 		规划构建部分
+	 * ------------------------*/
+
+	public void onInitRoom(DungeonAreaRoom room, Random rand) {
+		DungeonFuncGlobal global = room.getFuncGlobal();
+		if (global == null) global = new DungeonFuncGlobal();
+		List<DungeonFunc> funcs = room.getFuncs();
+		Map<String, WeightRandom<Entry<Integer, DungeonFunc>>> groupRandomMap = new TreeMap<>();
+		for (int i = 0; i < funcs.size(); i++) {
+			DungeonFunc func = funcs.get(i);
+			if (func == DungeonFunc.NOTHING) continue;
+			// 有概率，优先处理概率排除
+			if (func.hasConfig(DungeonFunc.PROBABILITY)) {
+				float probability = func.getConfig(DungeonFunc.PROBABILITY);
+				if (probability < rand.nextFloat()) {
+					funcs.set(i, DungeonFunc.NOTHING);
+					continue;
+				}
+			}
+			// 记录组，等待后面处理
+			if (func.hasConfig(DungeonFunc.GROUP_NAME)) {
+				String name = func.getConfig(DungeonFunc.GROUP_NAME);
+				WeightRandom<Entry<Integer, DungeonFunc>> wr = groupRandomMap.get(name);
+				if (wr == null) groupRandomMap.put(name, wr = new WeightRandom());
+				float weight = func.getConfig(DungeonFunc.GROUP_WEIGHT);
+				if (weight <= 0) weight = 1;
+				wr.add(new AbstractMap.SimpleEntry(i, func), weight);
+				funcs.set(i, DungeonFunc.NOTHING);
+				continue;
+			}
+		}
+		// 处理组随机
+		Map<String, List<Integer>> groupMap = new TreeMap<>();
+		for (Entry<String, WeightRandom<Entry<Integer, DungeonFunc>>> entry : groupRandomMap.entrySet()) {
+			String groupName = entry.getKey();
+			WeightRandom<Entry<Integer, DungeonFunc>> wr = entry.getValue();
+			int maxCount = wr.size();
+			int minCount = 1;
+			GroupInfo info = global.getGroupInfo(groupName);
+			if (info != null) {
+				maxCount = Math.min(maxCount, info.maxCount);
+				minCount = Math.max(info.minCount, 0);
+			}
+			int count = MathHelper.getInt(rand, minCount, maxCount);
+			if (count == 0) continue;
+
+			for (int i = 0; i < count; i++) {
+				Entry<Integer, DungeonFunc> ifunc = wr.get(rand, true);
+				funcs.set(ifunc.getKey(), ifunc.getValue());
+				List<Integer> list = groupMap.get(groupName);
+				if (list == null) groupMap.put(groupName, list = new ArrayList<>());
+				list.add(ifunc.getKey());
+			}
+		}
+	}
+
 	/*----------------------
 	 * 		build部分初始化统计部分
 	 * ------------------------*/
@@ -119,6 +198,7 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 	public boolean isBaseBlockType(World world, IBlockState state) {
 		Block block = state.getBlock();
 		if (block == ESObjects.BLOCKS.DUNGEON_DOOR || block == ESObjects.BLOCKS.DUNGEON_DOOR_EXPAND) return false;
+		if (block == ESObjects.BLOCKS.DUNGEON_FUNCTION) return false;
 		return true;
 	}
 
@@ -141,6 +221,9 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			state = nState;
 			block = state.getBlock();
 			newState = state;
+		} else if (block == Blocks.STONE) {
+			newState = ESObjects.BLOCKS.DUNGEON_BRICK.getDefaultState().withProperty(BlockDungeonBrick.VARIANT,
+					BlockDungeonBrick.EnumType.STONE);
 		}
 		Random rand = world.rand;
 
@@ -172,6 +255,9 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			if (block == ESObjects.BLOCKS.DUNGEON_DOOR && tileSave == null) tileSave = new NBTTagCompound();
 			this.buildDoor(world, room, pos, tileSave);
 			return;
+		} else if (block == ESObjects.BLOCKS.DUNGEON_FUNCTION) {
+			this.buildFunc(world, room, pos, tileSave);
+			return;
 		}
 	}
 
@@ -186,7 +272,8 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			isBlock = true;
 		}
 		if (isBlock) {
-			world.setBlockState(at, Blocks.STONE.getDefaultState());
+			world.setBlockState(at, ESObjects.BLOCKS.DUNGEON_BRICK.getDefaultState()
+					.withProperty(BlockDungeonBrick.VARIANT, BlockDungeonBrick.EnumType.STONE));
 			return;
 		}
 
@@ -212,6 +299,32 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			if (doorBox.contains(new Vec3d(at))) return doorIndex;
 		}
 		return -1;
+	}
+
+	protected WeakReference<Map<BlockPos, Integer>> tempPosMapRef = new WeakReference(null);
+
+	protected Map<BlockPos, Integer> getTempPosFuncMap() {
+		if (tempPosMapRef.get() == null) {
+			Map<BlockPos, Integer> map = new HashMap<>();
+			tempPosMapRef = new WeakReference(map);
+			for (int i = 0; i < funcs.size(); i++) {
+				Entry<BlockPos, String> entry = funcs.get(i);
+				map.put(entry.getKey(), i);
+			}
+			return map;
+		}
+		return tempPosMapRef.get();
+	}
+
+	protected void buildFunc(World world, DungeonAreaRoom room, BlockPos at, NBTTagCompound coreNBT) {
+		BlockPos pos = BuildingFace.face(at.subtract(room.at), BuildingFace.getRoation(room.facing, EnumFacing.NORTH));
+		Map<BlockPos, Integer> map = getTempPosFuncMap();
+		Integer index = map.get(pos);
+		if (index == null) return;
+		DungeonFunc func = room.getFunc(index);
+		DungeonFuncExecuteContext context = new DungeonFuncExecuteContext(DungeonFuncExecuteType.BUILD, func);
+		context.setWorld(world).setBlockPos(at).setRoom(room);
+		context.doExecute();
 	}
 
 	public void deubgBuild(World world, DungeonArea area, DungeonAreaRoom room) {

@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.Map.Entry;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
@@ -15,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.building.BuildingFace;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class DungeonAreaGenerater {
 
@@ -63,9 +65,12 @@ public class DungeonAreaGenerater {
 		room.at = at;
 		room.areId = self.excerpt.id;
 		self.rooms.add(room);
+		initRoomFunc(room);
+		room.refresh();
+		room.inst.onInitRoom(room, rand);
 
 		AxisAlignedBB box = room.getBox();
-		//加入list
+		// 加入list
 		ChunkPos posMin = new ChunkPos(new BlockPos(box.minX, box.minY, box.minZ));
 		ChunkPos posMax = new ChunkPos(new BlockPos(box.maxX, box.maxY, box.maxZ));
 		for (int x = posMin.x; x <= posMax.x; x++) {
@@ -79,6 +84,16 @@ public class DungeonAreaGenerater {
 
 		if (room.id == 0) self.excerpt.set(pos);
 		self.excerpt.append(box);
+	}
+
+	public void initRoomFunc(DungeonAreaRoom room) {
+		List<Entry<BlockPos, String>> funcs = room.inst.funcs;
+		room.funcs = new ArrayList<>(funcs.size());
+		for (Entry<BlockPos, String> entry : funcs) {
+			DungeonFunc func = DungeonFunc.create(new JsonObject(entry.getValue()));
+			func.onInit();
+			room.funcs.add(func);
+		}
 	}
 
 	public void addWaitBuildRoom(DungeonAreaRoom room) {

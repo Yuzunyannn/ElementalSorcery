@@ -236,6 +236,8 @@ tile.dungeonBrick.default.name=地下牢レンガ
 tile.dungeonBrick.mossy.name=苔むした地下牢レンガ
 tile.dungeonBrick.cracked.name=ひび割れた地下牢レンガ
 tile.dungeonBrick.chiseled.name=模様入りの地下牢レンガ
+tile.dungeonBrick.stone.name=地下牢の石
+tile.dungeonFunction.name=地下牢構築ファンクション
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者

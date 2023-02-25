@@ -110,7 +110,13 @@ public class DungeonWorld extends WorldSavedData {
 		DungeonArea worldSave = new DungeonArea(key);
 		AreaExcerpt excerpt = worldSave.excerpt;
 		excerpt.id = id;
-		worldSave.generate(this, pos);
+		try {
+			worldSave.generate(this, pos);
+		} catch (Exception e) {
+			ESAPI.logger.warn("dungeon build fail!", e);
+			return worldSave.setFailMsg("");
+		}
+
 		if (isCrossWithOther(excerpt)) return worldSave.setFailMsg("");
 
 		MapStorage storage = world.getMapStorage();
