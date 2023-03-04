@@ -28,13 +28,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
 import yuzunyannn.elementalsorcery.api.util.ESImplRegister;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonBrick;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoor;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.building.BuildingFace;
-import yuzunyannn.elementalsorcery.dungeon.DungeonFuncExecuteContext.DungeonFuncExecuteType;
 import yuzunyannn.elementalsorcery.dungeon.DungeonFuncGlobal.GroupInfo;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonDoor;
@@ -137,36 +137,36 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 	public void onInitRoom(DungeonAreaRoom room, Random rand) {
 		DungeonFuncGlobal global = room.getFuncGlobal();
 		if (global == null) global = new DungeonFuncGlobal();
-		List<DungeonFunc> funcs = room.getFuncs();
-		Map<String, WeightRandom<Entry<Integer, DungeonFunc>>> groupRandomMap = new TreeMap<>();
+		List<GameFunc> funcs = room.getFuncs();
+		Map<String, WeightRandom<Entry<Integer, GameFunc>>> groupRandomMap = new TreeMap<>();
 		for (int i = 0; i < funcs.size(); i++) {
-			DungeonFunc func = funcs.get(i);
-			if (func == DungeonFunc.NOTHING) continue;
+			GameFunc func = funcs.get(i);
+			if (func == GameFunc.NOTHING) continue;
 			// 有概率，优先处理概率排除
-			if (func.hasConfig(DungeonFunc.PROBABILITY)) {
-				float probability = func.getConfig(DungeonFunc.PROBABILITY);
+			if (func.hasConfig(GameFunc.PROBABILITY)) {
+				float probability = func.getConfig(GameFunc.PROBABILITY);
 				if (probability < rand.nextFloat()) {
-					funcs.set(i, DungeonFunc.NOTHING);
+					funcs.set(i, GameFunc.NOTHING);
 					continue;
 				}
 			}
 			// 记录组，等待后面处理
-			if (func.hasConfig(DungeonFunc.GROUP_NAME)) {
-				String name = func.getConfig(DungeonFunc.GROUP_NAME);
-				WeightRandom<Entry<Integer, DungeonFunc>> wr = groupRandomMap.get(name);
+			if (func.hasConfig(GameFunc.GROUP_NAME)) {
+				String name = func.getConfig(GameFunc.GROUP_NAME);
+				WeightRandom<Entry<Integer, GameFunc>> wr = groupRandomMap.get(name);
 				if (wr == null) groupRandomMap.put(name, wr = new WeightRandom());
-				float weight = func.getConfig(DungeonFunc.GROUP_WEIGHT);
+				float weight = func.getConfig(GameFunc.GROUP_WEIGHT);
 				if (weight <= 0) weight = 1;
 				wr.add(new AbstractMap.SimpleEntry(i, func), weight);
-				funcs.set(i, DungeonFunc.NOTHING);
+				funcs.set(i, GameFunc.NOTHING);
 				continue;
 			}
 		}
 		// 处理组随机
 		Map<String, List<Integer>> groupMap = new TreeMap<>();
-		for (Entry<String, WeightRandom<Entry<Integer, DungeonFunc>>> entry : groupRandomMap.entrySet()) {
+		for (Entry<String, WeightRandom<Entry<Integer, GameFunc>>> entry : groupRandomMap.entrySet()) {
 			String groupName = entry.getKey();
-			WeightRandom<Entry<Integer, DungeonFunc>> wr = entry.getValue();
+			WeightRandom<Entry<Integer, GameFunc>> wr = entry.getValue();
 			int maxCount = wr.size();
 			int minCount = 1;
 			GroupInfo info = global.getGroupInfo(groupName);
@@ -178,7 +178,7 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			if (count == 0) continue;
 
 			for (int i = 0; i < count; i++) {
-				Entry<Integer, DungeonFunc> ifunc = wr.get(rand, true);
+				Entry<Integer, GameFunc> ifunc = wr.get(rand, true);
 				funcs.set(ifunc.getKey(), ifunc.getValue());
 				List<Integer> list = groupMap.get(groupName);
 				if (list == null) groupMap.put(groupName, list = new ArrayList<>());
@@ -321,9 +321,9 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 		Map<BlockPos, Integer> map = getTempPosFuncMap();
 		Integer index = map.get(pos);
 		if (index == null) return;
-		DungeonFunc func = room.getFunc(index);
-		DungeonFuncExecuteContext context = new DungeonFuncExecuteContext(DungeonFuncExecuteType.BUILD, func);
-		context.setWorld(world).setBlockPos(at).setRoom(room);
+		GameFunc func = room.getFunc(index);
+		DungeonFuncExecuteContext context = new DungeonFuncExecuteContext(func, n -> room.setFunc(index, n));
+		context.setRoom(room).setSrcMan(world, at);
 		context.doExecute();
 	}
 

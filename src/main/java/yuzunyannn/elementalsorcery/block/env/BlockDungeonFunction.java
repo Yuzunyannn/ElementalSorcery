@@ -24,9 +24,8 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.dungeon.DungeonFunc;
-import yuzunyannn.elementalsorcery.dungeon.DungeonFuncExecuteContext;
-import yuzunyannn.elementalsorcery.dungeon.DungeonFuncExecuteContext.DungeonFuncExecuteType;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFuncExecuteContext;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonFunction;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
@@ -59,16 +58,15 @@ public class BlockDungeonFunction extends Block implements ITileEntityProvider {
 
 		if (!playerIn.isSneaking()) {
 			Style style = new Style().setColor(TextFormatting.AQUA).setBold(true);
-			DungeonFunc func = tile.createTextDungeonFunc();
-			if (func == DungeonFunc.NOTHING)
+			GameFunc func = tile.createTextDungeonFunc();
+			if (func == GameFunc.NOTHING)
 				playerIn.sendMessage(new TextComponentString("cannot create dungeon function").setStyle(badStyle));
 			else {
 				playerIn.sendMessage(new TextComponentString(func.toString()).setStyle(style));
 				ItemStack stack = playerIn.getHeldItem(hand);
 				if (stack.getItem() == Items.WOODEN_AXE) {
-					DungeonFuncExecuteContext context = new DungeonFuncExecuteContext(DungeonFuncExecuteType.BUILD,
-							func);
-					context.setWorld(worldIn).setBlockPos(pos);
+					GameFuncExecuteContext context = new GameFuncExecuteContext(func, n -> {});
+					context.setSrcMan(worldIn, pos);
 					context.doExecute();
 				}
 			}

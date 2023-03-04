@@ -15,10 +15,11 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
 import yuzunyannn.elementalsorcery.building.BuildingFace;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
-public class DungeonAreaGenerater {
+public class DungeonAreaGenerator {
 
 	public final DungeonArea self;
 	public final World world;
@@ -27,7 +28,7 @@ public class DungeonAreaGenerater {
 	Random rand = new Random();
 	int doorLinkGap = 3;
 
-	public DungeonAreaGenerater(DungeonArea area, World world) {
+	public DungeonAreaGenerator(DungeonArea area, World world) {
 		this.self = area;
 		this.world = world;
 	}
@@ -90,7 +91,7 @@ public class DungeonAreaGenerater {
 		List<Entry<BlockPos, String>> funcs = room.inst.funcs;
 		room.funcs = new ArrayList<>(funcs.size());
 		for (Entry<BlockPos, String> entry : funcs) {
-			DungeonFunc func = DungeonFunc.create(new JsonObject(entry.getValue()));
+			GameFunc func = GameFunc.create(new JsonObject(entry.getValue()));
 			func.onInit();
 			room.funcs.add(func);
 		}

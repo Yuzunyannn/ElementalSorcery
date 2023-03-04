@@ -117,7 +117,7 @@ public class DungeonArea extends WorldSavedData {
 
 		DungeonRoomSelector selector = DungeonRoomSelector.create(this);
 
-		DungeonAreaGenerater generate = new DungeonAreaGenerater(this, dw.world);
+		DungeonAreaGenerator generate = new DungeonAreaGenerator(this, dw.world);
 		DungeonAreaRoom room = new DungeonAreaRoom(selector.getFirstRoom());
 		room.facing = EnumFacing.HORIZONTALS[generate.rand.nextInt(EnumFacing.HORIZONTALS.length)];
 		generate.addRoom(at, room);

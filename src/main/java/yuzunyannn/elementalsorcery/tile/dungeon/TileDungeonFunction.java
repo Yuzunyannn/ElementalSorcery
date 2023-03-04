@@ -3,7 +3,7 @@ package yuzunyannn.elementalsorcery.tile.dungeon;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import yuzunyannn.elementalsorcery.dungeon.DungeonFunc;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class TileDungeonFunction extends TileEntity {
@@ -22,8 +22,8 @@ public class TileDungeonFunction extends TileEntity {
 		this.config = config;
 	}
 
-	public DungeonFunc createTextDungeonFunc() {
-		return DungeonFunc.create(this.config);
+	public GameFunc createTextDungeonFunc() {
+		return GameFunc.create(this.config);
 	}
 
 	@Override

@@ -32,7 +32,7 @@ import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
-import yuzunyannn.elementalsorcery.dungeon.DungeonFunc;
+import yuzunyannn.elementalsorcery.dungeon.DungeonRoomLib;
 import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
@@ -86,7 +86,7 @@ public class CommandESDebug {
 				sender.sendMessage(new TextComponentString("研究合成表刷新成功!"));
 				Quests.loadAll();
 				sender.sendMessage(new TextComponentString("任务刷新成功!"));
-				DungeonFunc.registerAll();
+				DungeonRoomLib.registerAllFunc();
 				sender.sendMessage(new TextComponentString("地牢Func刷新成功!"));
 			} catch (Exception e) {
 				ESAPI.logger.warn("刷新数据出现异常！", e);

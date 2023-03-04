@@ -238,6 +238,7 @@ tile.dungeonBrick.cracked.name=裂地牢砖
 tile.dungeonBrick.chiseled.name=錾制地牢砖
 tile.dungeonBrick.stone.name=地牢石头
 tile.dungeonFunction.name=地牢构建功能方块
+tile.dungeonHaystack.name=地牢草垛
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者

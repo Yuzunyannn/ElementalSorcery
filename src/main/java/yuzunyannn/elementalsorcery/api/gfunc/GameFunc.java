@@ -1,33 +1,36 @@
-package yuzunyannn.elementalsorcery.dungeon;
+package yuzunyannn.elementalsorcery.api.gfunc;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
-public class DungeonFunc implements INBTSerializable<NBTTagCompound> {
+public class GameFunc implements INBTSerializable<NBTTagCompound> {
 
-	public static final DungeonFunc NOTHING = new DungeonFunc();
+	public static final GameFunc NOTHING = new GameFunc();
 
-	public static final Map<String, Class<? extends DungeonFunc>> factoryMap = new HashMap<>();
+	public static final Map<String, Class<? extends GameFunc>> factoryMap = new HashMap<>();
 
-	protected static DungeonFunc _create(JsonObject json) {
+	protected static GameFunc _create(JsonObject json) {
 		if (!json.hasString("type")) return NOTHING;
 		String type = json.getString("type");
-		Class<? extends DungeonFunc> cls = factoryMap.get(type);
+		Class<? extends GameFunc> cls = factoryMap.get(type);
 		if (cls == null) return NOTHING;
 		try {
-			DungeonFunc func = cls.newInstance();
-			Field field = DungeonFunc.class.getDeclaredField("typeKey");
+			GameFunc func = cls.newInstance();
+			Field field = GameFunc.class.getDeclaredField("typeKey");
 			field.setAccessible(true);
 			field.set(func, type);
 			func.loadFromJson(json);
@@ -37,25 +40,25 @@ public class DungeonFunc implements INBTSerializable<NBTTagCompound> {
 		}
 	}
 
-	public static DungeonFunc create(JsonObject json) {
+	public static GameFunc create(JsonObject json) {
 		if (json.hasString("/assets")) {
 			String path = json.getString("/assets");
 			try {
-				return DungeonFunc._create(new JsonObject(new ResourceLocation(path)));
+				return GameFunc._create(new JsonObject(new ResourceLocation(path)));
 			} catch (Exception e) {
 				return NOTHING;
 			}
 		}
-		return DungeonFunc._create(json);
+		return GameFunc._create(json);
 	}
 
-	public static DungeonFunc create(NBTTagCompound nbt) {
+	public static GameFunc create(NBTTagCompound nbt) {
 		String type = nbt.getString("type");
-		Class<? extends DungeonFunc> cls = factoryMap.get(type);
+		Class<? extends GameFunc> cls = factoryMap.get(type);
 		if (cls == null) return NOTHING;
 		try {
-			DungeonFunc func = cls.newInstance();
-			Field field = DungeonFunc.class.getDeclaredField("typeKey");
+			GameFunc func = cls.newInstance();
+			Field field = GameFunc.class.getDeclaredField("typeKey");
 			field.setAccessible(true);
 			field.set(func, type);
 			func.deserializeNBT(nbt);
@@ -65,25 +68,23 @@ public class DungeonFunc implements INBTSerializable<NBTTagCompound> {
 		}
 	}
 
-	public static NBTTagList serializeNBTList(List<DungeonFunc> list) {
+	public static NBTTagList serializeNBTList(List<GameFunc> list) {
 		NBTTagList tagList = new NBTTagList();
-		for (DungeonFunc func : list) tagList.appendTag(func.serializeNBT());
+		for (GameFunc func : list) tagList.appendTag(func.serializeNBT());
 		return tagList;
 	}
 
-	public static List<DungeonFunc> deserializeNBTList(NBTTagList tagList) {
-		List<DungeonFunc> list = new ArrayList<>();
+	public static List<GameFunc> deserializeNBTList(NBTTagList tagList) {
+		List<GameFunc> list = new ArrayList<>();
 		for (int i = 0; i < tagList.tagCount(); i++) {
-			DungeonFunc func = create(tagList.getCompoundTagAt(i));
+			GameFunc func = create(tagList.getCompoundTagAt(i));
 			list.add(func);
 		}
 		return list;
 	}
 
-	public static void registerAll() {
-		factoryMap.put("global", DungeonFuncGlobal.class);
-		factoryMap.put("chest", DungeonFuncChest.class);
-		factoryMap.put("entity", DungeonFuncEntity.class);
+	public static List<GameFunc> deserializeNBTList(NBTTagCompound nbt, String key) {
+		return deserializeNBTList(nbt.getTagList(key, NBTTag.TAG_COMPOUND));
 	}
 
 	public static final Variable<String> GROUP_NAME = new Variable("G_NAME", VariableSet.STRING);
@@ -95,6 +96,7 @@ public class DungeonFunc implements INBTSerializable<NBTTagCompound> {
 		typeKey = "";
 	}
 	protected final VariableSet config = new VariableSet();
+	protected GameFuncCarrier carrier = new GameFuncCarrier();
 
 	public <T> T getConfig(Variable<T> key) {
 		return config.get(key);
@@ -104,26 +106,49 @@ public class DungeonFunc implements INBTSerializable<NBTTagCompound> {
 		return config.has(key);
 	}
 
+	public GameFuncCarrier getFuncCarrier() {
+		return carrier;
+	}
+
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setString("type", typeKey);
 		nbt.setTag("config", config.serializeNBT());
+		if (!carrier.isEmpty()) nbt.setTag("carrier", carrier.serializeNBT());
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
 		config.deserializeNBT(nbt.getCompoundTag("config"));
+		this.carrier.deserializeNBT(nbt.getCompoundTag("carrier"));
 	}
 
 	public void loadFromJson(JsonObject json) {
+		this.config.clear();
 		if (json.hasString("groupName")) config.set(GROUP_NAME, json.getString("groupName"));
 		if (json.hasNumber("groupWeight")) config.set(GROUP_NAME, json.getString("groupWeight"));
 		if (json.hasNumber("probability")) config.set(PROBABILITY, json.getNumber("probability").floatValue());
+
+		this.carrier.clear();
+		if (json.hasObject("trigger")) {
+			JsonObject trigger = json.getObject("trigger");
+			Set<String> nameSet = trigger.keySet();
+			for (String triggerName : nameSet) {
+				if (trigger.hasObject(triggerName))
+					this.carrier.addFunc(triggerName, GameFunc.create(trigger.getObject(triggerName)));
+				else if (trigger.hasArray(triggerName)) {
+					JsonArray array = trigger.getArray(triggerName);
+					for (int i = 0; i < array.size(); i++)
+						this.carrier.addFunc(triggerName, GameFunc.create(array.getObject(i)));
+				}
+			}
+		}
+
 	}
 
-	protected void execute(DungeonFuncExecuteContext context) {
+	protected void execute(GameFuncExecuteContext context) {
 
 	}
 
@@ -131,9 +156,14 @@ public class DungeonFunc implements INBTSerializable<NBTTagCompound> {
 
 	}
 
+	/** 当构建结束后，地牢的对该记录func的处理行为 */
+	public GameFuncFinOp afterExecute(GameFuncExecuteContext context) {
+		return GameFuncFinOp.ABANDON;
+	}
+
 	@Override
 	public String toString() {
-		return "[DungeonFunc] Base";
+		return "[Func] Base";
 	}
 
 }

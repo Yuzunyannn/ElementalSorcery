@@ -238,6 +238,7 @@ tile.dungeonBrick.cracked.name=Cracked Dungeon Bricks
 tile.dungeonBrick.chiseled.name=Chiseled Dungeon Bricks
 tile.dungeonBrick.stone.name=Dungeon Stone
 tile.dungeonFunction.name=Dungeon Build Function
+tile.dungeonHaystack.name=Dungeon Haystack
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker

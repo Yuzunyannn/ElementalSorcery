@@ -23,7 +23,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.IWorldNameable;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -40,6 +39,12 @@ public abstract class BlockContainerNormal extends BlockContainer {
 		TileEntity temp = tileTemp.get();
 		if (temp != null && temp.getPos().equals(pos)) return temp;
 		return world.getTileEntity(pos);
+	}
+
+	public static <T> T getDropTile(IBlockAccess world, BlockPos pos, Class<T> type) {
+		TileEntity temp = getDropTile(world, pos);
+		if (temp != null && type.isAssignableFrom(temp.getClass())) return (T) temp;
+		return null;
 	}
 
 	protected BlockContainerNormal(Material materialIn) {

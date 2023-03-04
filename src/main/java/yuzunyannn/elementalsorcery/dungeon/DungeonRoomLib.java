@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.dungeon;
 
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 
 public class DungeonRoomLib {
@@ -22,11 +23,18 @@ public class DungeonRoomLib {
 	}
 
 	public static void registerAll() {
-		DungeonFunc.registerAll();
+		registerAllFunc();
 		DUNGEON_CENTER = register("dungeon_center");
 		DUNGEON_SMALL_TOWARD4 = register("dungeon_small_toward4");
 		DUNGEON_CORRIDOR_TOWARD4 = register("dungeon_corridor_toward4");
 		DUNGEON_SMAL_PRISON_TOWARD2 = register("dungeon_smal_prison_toward2");
+	}
+
+	public static void registerAllFunc() {
+		GameFunc.factoryMap.put("global", DungeonFuncGlobal.class);
+		GameFunc.factoryMap.put("chest", DungeonFuncChest.class);
+		GameFunc.factoryMap.put("entity", DungeonFuncEntity.class);
+		GameFunc.factoryMap.put("haystack", DungeonFuncHaystack.class);
 	}
 
 }

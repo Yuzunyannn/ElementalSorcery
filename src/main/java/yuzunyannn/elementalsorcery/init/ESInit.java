@@ -56,6 +56,8 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFuncCarrier;
+import yuzunyannn.elementalsorcery.api.gfunc.IGameFuncCarrier;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
@@ -122,6 +124,7 @@ import yuzunyannn.elementalsorcery.block.env.BlockDungeonBrick;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoor;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoorExpand;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonFunction;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonHaystack;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonStairs;
 import yuzunyannn.elementalsorcery.block.env.BlockGoatGoldBrick;
 import yuzunyannn.elementalsorcery.block.md.BlockMDAbsorbBox;
@@ -335,6 +338,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructAltarTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructWindmill;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDevolveCube;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDisintegrateStela;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileDungeonHaystack;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileEStoneMatrix;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementPlatform;
@@ -408,6 +412,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeInjection;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeTable;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonFunction;
+import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonHaystack;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockCrystalBlock;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockNode;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
@@ -545,6 +550,7 @@ public class ESInit {
 		ESObjects.BLOCKS.DUNGEON_DOOR = new BlockDungeonDoor();
 		ESObjects.BLOCKS.DUNGEON_DOOR_EXPAND = new BlockDungeonDoorExpand();
 		ESObjects.BLOCKS.DUNGEON_FUNCTION = new BlockDungeonFunction();
+		ESObjects.BLOCKS.DUNGEON_HAYSTACK = new BlockDungeonHaystack();
 
 		// 初始化所有tab
 		Class<?> cls = ESObjects.BLOCKS.getClass();
@@ -1033,6 +1039,7 @@ public class ESInit {
 		register(TileItemStructureCraftCC.class, "ISCraftCC");
 		register(TileDungeonDoor.class, "DungeonDoor");
 		register(TileDungeonFunction.class, "DungeonFunc");
+		register(TileDungeonHaystack.class, "DungeonHaystack");
 	}
 
 	static void registerAllCapability() {
@@ -1041,6 +1048,7 @@ public class ESInit {
 		register(Grimoire.class, new Grimoire.Storage(), Grimoire.class);
 		register(IAdventurer.class, new Adventurer.Storage(), Adventurer.class);
 		register(IFairyCubeMaster.class, new FairyCubeMaster.Storage(), FairyCubeMaster.class);
+		register(IGameFuncCarrier.class, new GameFuncCarrier.Storage(), GameFuncCarrier.class);
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -1304,6 +1312,7 @@ public class ESInit {
 		registerRender(BLOCKS.ESTONE_MATRIX, TileEStoneMatrix.class, new RenderTileEStoneMatrix());
 		registerRender(BLOCKS.IS_CRAFT_CC, TileItemStructureCraftCC.class, new RenderTileItemStructureCraftCC());
 		registerRender(BLOCKS.INSTANT_CONSTITUTE, TileInstantConstitute.class, new RenderTileInstantConstitute());
+		registerRender(BLOCKS.DUNGEON_HAYSTACK, TileDungeonHaystack.class, new RenderTileDungeonHaystack());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

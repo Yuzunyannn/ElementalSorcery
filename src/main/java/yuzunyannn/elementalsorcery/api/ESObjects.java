@@ -8,6 +8,7 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonHaystack;
 
 public class ESObjects {
 
@@ -219,6 +220,7 @@ public class ESObjects {
 		public Block DUNGEON_BRICK;
 		public Block DUNGEON_STAIRS;
 		public Block DUNGEON_FUNCTION;
+		public Block DUNGEON_HAYSTACK;
 	}
 
 	static public class Elements {

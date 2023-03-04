@@ -1183,6 +1183,11 @@
 			"zh_CN": "地牢构建功能方块",
 			"en_US": "Dungeon Build Function",
 			"ja_JP": "地下牢構築ファンクション"
+		},
+		"tile.dungeonHaystack.name": {
+			"zh_CN": "地牢草垛",
+			"en_US": "Dungeon Haystack",
+			"ja_JP": "地下牢わらの山"
 		}
 	},
 	"es.effect": {

@@ -43,6 +43,7 @@ import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
+import net.minecraftforge.event.entity.living.LivingDropsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingHealEvent;
@@ -71,6 +72,9 @@ import yuzunyannn.elementalsorcery.api.entity.BehaviorAttack;
 import yuzunyannn.elementalsorcery.api.entity.BehaviorBlock;
 import yuzunyannn.elementalsorcery.api.entity.BehaviorClick;
 import yuzunyannn.elementalsorcery.api.entity.BehaviorInteract;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFuncCarrier;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFuncExecuteContext;
+import yuzunyannn.elementalsorcery.api.gfunc.IGameFuncCarrier;
 import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.tile.IBlockJumpModify;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
@@ -268,9 +272,9 @@ public class EventServer {
 
 	@SubscribeEvent
 	public static void attachCapabilities(AttachCapabilitiesEvent<Entity> event) {
-		if (event.getObject() instanceof EntityPlayer) {
+		if (event.getObject() instanceof EntityPlayer)
 			event.addCapability(new ResourceLocation(ESAPI.MODID, "capability"), new ESPlayerCapabilityProvider());
-		}
+		else event.addCapability(new ResourceLocation(ESAPI.MODID, "fcarrier"), new GameFuncCarrier.Provider());
 	}
 
 	@SubscribeEvent
@@ -416,7 +420,7 @@ public class EventServer {
 		Researcher.onAttackWithEntity(player, target);
 	}
 
-	// 掉落
+	// 掉落等级
 	@SubscribeEvent
 	public static void onLooting(LootingLevelEvent event) {
 		DamageSource ds = event.getDamageSource();
@@ -425,6 +429,15 @@ public class EventServer {
 			double plunder = FCMAttack.getPlunder((EntityFairyCube) entity);
 			event.setLootingLevel(Math.max((int) plunder, event.getLootingLevel()));
 		}
+	}
+
+	// 掉落
+	@SubscribeEvent
+	public static void onLooting(LivingDropsEvent event) {
+		Entity entity = event.getEntity();
+		IGameFuncCarrier carrier = entity.getCapability(GameFuncCarrier.GAMEFUNCCARRIER_CAPABILITY, null);
+		if (carrier != null) carrier.trigger("onLoot",
+				(func, exchanger) -> new GameFuncExecuteContext(func, exchanger).setByEvent(event).setSrcObj(entity));
 	}
 
 	// 方快掉落

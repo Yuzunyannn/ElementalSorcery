@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.building.BuildingFace;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -24,7 +25,7 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 	protected List<DungeonAreaDoor> doorLinks;
 	protected EnumFacing facing = EnumFacing.NORTH;
 	protected boolean isBuild = false;
-	protected List<DungeonFunc> funcs;
+	protected List<GameFunc> funcs;
 
 	protected int funcGlobalIndex = -1;
 
@@ -44,7 +45,7 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 		return BuildingFace.face(box, facing).offset(at);
 	}
 
-	public List<DungeonFunc> getFuncs() {
+	public List<GameFunc> getFuncs() {
 		return funcs;
 	}
 
@@ -69,15 +70,19 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 		return doorLinks.get(index);
 	}
 
+	public void setFunc(int index, GameFunc func) {
+		if (index < 0 || index >= doorLinks.size()) return;
+		funcs.set(index, func);
+	}
 
-	public DungeonFunc getFunc(int index) {
-		if (index < 0 || index >= doorLinks.size()) return DungeonFunc.NOTHING;
+	public GameFunc getFunc(int index) {
+		if (index < 0 || index >= doorLinks.size()) return GameFunc.NOTHING;
 		return funcs.get(index);
 	}
 
 	@Nullable
-	public <T extends DungeonFunc> T getFunc(int index, Class<T> cls) {
-		DungeonFunc func = getFunc(funcGlobalIndex);
+	public <T extends GameFunc> T getFunc(int index, Class<T> cls) {
+		GameFunc func = getFunc(funcGlobalIndex);
 		if (cls.isAssignableFrom(func.getClass())) return (T) func;
 		return null;
 	}
@@ -102,7 +107,7 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 	protected void refresh() {
 		funcGlobalIndex = -1;
 		for (int i = 0; i < funcs.size(); i++) {
-			DungeonFunc func = funcs.get(i);
+			GameFunc func = funcs.get(i);
 			if (func instanceof DungeonFuncGlobal) {
 				funcGlobalIndex = i;
 			}
@@ -119,7 +124,7 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 		nbt.setByte("face", (byte) facing.getIndex());
 		NBTHelper.setNBTSerializableList(nbt, "doors", doorLinks);
 		nbt.setBoolean("isBuild", isBuild);
-		nbt.setTag("funcs", DungeonFunc.serializeNBTList(funcs));
+		nbt.setTag("funcs", GameFunc.serializeNBTList(funcs));
 		return nbt;
 	}
 
@@ -132,7 +137,7 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 		facing = EnumFacing.byIndex(nbt.getByte("face"));
 		doorLinks = NBTHelper.getNBTSerializableList(nbt, "doors", DungeonAreaDoor.class, NBTTagCompound.class);
 		isBuild = nbt.getBoolean("isBuild");
-		funcs = DungeonFunc.deserializeNBTList(nbt.getTagList("funcs", NBTTag.TAG_COMPOUND));
+		funcs = GameFunc.deserializeNBTList(nbt.getTagList("funcs", NBTTag.TAG_COMPOUND));
 		this.refresh();
 	}
 

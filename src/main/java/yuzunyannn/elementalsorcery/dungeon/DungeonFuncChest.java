@@ -10,11 +10,12 @@ import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.dungeon.DungeonFuncExecuteContext.DungeonFuncExecuteType;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFuncExecuteContext;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
-public class DungeonFuncChest extends DungeonFunc {
+public class DungeonFuncChest extends GameFunc {
 
 	protected DungeonLootLoader lootLoader;
 
@@ -24,8 +25,7 @@ public class DungeonFuncChest extends DungeonFunc {
 	};
 
 	@Override
-	protected void execute(DungeonFuncExecuteContext context) {
-		if (context.executeType != DungeonFuncExecuteType.BUILD) return;
+	protected void execute(GameFuncExecuteContext context) {
 		BlockPos pos = context.getBlockPos();
 		World world = context.getWorld();
 		Random rand = context.getRand();
@@ -53,7 +53,7 @@ public class DungeonFuncChest extends DungeonFunc {
 
 	@Override
 	public String toString() {
-		return "[DungeonFunc] Chest\nloot:" + lootLoader;
+		return "<Chest> loot:" + lootLoader;
 	}
 
 }

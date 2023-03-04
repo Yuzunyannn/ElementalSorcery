@@ -1,0 +1,23 @@
+{
+    "type": "haystack",
+    "highLevel": 3,
+    "pressure": true,
+    "trigger": {
+        "onSweep": [
+            {
+                "type": "chest",
+                "loot": "elementalsorcery:chests/es_hall"
+            },
+            {
+                "probability": 0.75,
+                "type": "entity",
+                "entityId": "minecraft:zombie",
+                "offset": [
+                    0,
+                    1,
+                    0
+                ]
+            }
+        ]
+    }
+}

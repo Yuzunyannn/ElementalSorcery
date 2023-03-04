@@ -2,9 +2,12 @@ package yuzunyannn.elementalsorcery.dungeon;
 
 import javax.annotation.Nullable;
 
+import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFuncExecuteContext;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFuncFinOp;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
-public class DungeonFuncGlobal extends DungeonFunc {
+public class DungeonFuncGlobal extends GameFunc {
 
 	public static class GroupInfo {
 		public int maxCount;
@@ -21,8 +24,13 @@ public class DungeonFuncGlobal extends DungeonFunc {
 	}
 
 	@Override
+	public GameFuncFinOp afterExecute(GameFuncExecuteContext context) {
+		return GameFuncFinOp.KEEP;
+	}
+
+	@Override
 	public String toString() {
-		return "[DungeonFunc] Global";
+		return "<Global>";
 	}
 
 }
