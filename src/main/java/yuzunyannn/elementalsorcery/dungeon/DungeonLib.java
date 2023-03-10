@@ -4,7 +4,7 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 
-public class DungeonRoomLib {
+public class DungeonLib {
 
 	public static DungeonRoomType DUNGEON_CENTER;
 	public static DungeonRoomType DUNGEON_SMALL_TOWARD4;
@@ -32,8 +32,9 @@ public class DungeonRoomLib {
 
 	public static void registerAllFunc() {
 		GameFunc.factoryMap.put("global", DungeonFuncGlobal.class);
-		GameFunc.factoryMap.put("chest", DungeonFuncChest.class);
-		GameFunc.factoryMap.put("entity", DungeonFuncEntity.class);
+		GameFunc.factoryMap.put("chest", GameFuncChest.class);
+		GameFunc.factoryMap.put("entity", GameFuncEntity.class);
+		GameFunc.factoryMap.put("loot", GameFuncLoot.class);
 		GameFunc.factoryMap.put("haystack", DungeonFuncHaystack.class);
 	}
 

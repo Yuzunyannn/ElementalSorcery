@@ -1,31 +1,37 @@
 package yuzunyannn.elementalsorcery.api.gfunc;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
+import java.util.function.Function;
 
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
-import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
+import yuzunyannn.elementalsorcery.util.SeedRandom;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class GameFunc implements INBTSerializable<NBTTagCompound> {
 
-	public static final GameFunc NOTHING = new GameFunc();
+	public static final GameFunc NOTHING = new GameFunc() {
+		@Override
+		public GameFunc copy() {
+			return NOTHING;
+		}
+	};
 
 	public static final Map<String, Class<? extends GameFunc>> factoryMap = new HashMap<>();
 
-	protected static GameFunc _create(JsonObject json) {
-		if (!json.hasString("type")) return NOTHING;
-		String type = json.getString("type");
+	static {
+		factoryMap.put("group", GameFuncGroup.class);
+	}
+
+	public static GameFunc create(String type) {
 		Class<? extends GameFunc> cls = factoryMap.get(type);
 		if (cls == null) return NOTHING;
 		try {
@@ -33,9 +39,21 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 			Field field = GameFunc.class.getDeclaredField("typeKey");
 			field.setAccessible(true);
 			field.set(func, type);
-			func.loadFromJson(json);
 			return func;
 		} catch (ReflectiveOperationException e) {
+			return NOTHING;
+		}
+	}
+
+	protected static GameFunc _create(JsonObject json) {
+		if (!json.hasString("type")) return NOTHING;
+		String type = json.getString("type");
+		GameFunc func = create(type);
+		if (func == NOTHING) return NOTHING;
+		try {
+			func.loadFromJson(json);
+			return func;
+		} catch (RuntimeException e) {
 			return NOTHING;
 		}
 	}
@@ -68,35 +86,24 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 		}
 	}
 
-	public static NBTTagList serializeNBTList(List<GameFunc> list) {
-		NBTTagList tagList = new NBTTagList();
-		for (GameFunc func : list) tagList.appendTag(func.serializeNBT());
-		return tagList;
-	}
-
-	public static List<GameFunc> deserializeNBTList(NBTTagList tagList) {
-		List<GameFunc> list = new ArrayList<>();
-		for (int i = 0; i < tagList.tagCount(); i++) {
-			GameFunc func = create(tagList.getCompoundTagAt(i));
-			list.add(func);
-		}
-		return list;
-	}
-
-	public static List<GameFunc> deserializeNBTList(NBTTagCompound nbt, String key) {
-		return deserializeNBTList(nbt.getTagList(key, NBTTag.TAG_COMPOUND));
-	}
-
 	public static final Variable<String> GROUP_NAME = new Variable("G_NAME", VariableSet.STRING);
 	public static final Variable<Float> GROUP_WEIGHT = new Variable("G_WEIGHT", VariableSet.FLOAT);
+	public static final Variable<Float> WEIGHT = new Variable("WEIGHT", VariableSet.FLOAT);
 	public static final Variable<Float> PROBABILITY = new Variable("PR.", VariableSet.FLOAT);
+	public static final Variable<VariableSet> EXTRA = new Variable("EX.", VariableSet.VAR_SET);
 
 	protected final String typeKey;
-	{
-		typeKey = "";
-	}
 	protected final VariableSet config = new VariableSet();
 	protected GameFuncCarrier carrier = new GameFuncCarrier();
+	protected SeedRandom currRandom = new SeedRandom(0);
+
+	public GameFunc() {
+		typeKey = "";
+	}
+
+	protected GameFunc(String typeKey) {
+		this.typeKey = typeKey;
+	}
 
 	public <T> T getConfig(Variable<T> key) {
 		return config.get(key);
@@ -110,11 +117,17 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 		return carrier;
 	}
 
+	public void setSeed(long seed) {
+		this.currRandom.setSeed(seed);
+		for (String key : carrier.getTriggers()) carrier.getFunc(key).setSeed(seed);
+	}
+
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setString("type", typeKey);
 		nbt.setTag("config", config.serializeNBT());
+		nbt.setLong("seed", currRandom.getSeed());
 		if (!carrier.isEmpty()) nbt.setTag("carrier", carrier.serializeNBT());
 		return nbt;
 	}
@@ -123,6 +136,7 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 	public void deserializeNBT(NBTTagCompound nbt) {
 		config.deserializeNBT(nbt.getCompoundTag("config"));
 		this.carrier.deserializeNBT(nbt.getCompoundTag("carrier"));
+		this.currRandom.setSeed(nbt.getLong("seed"));
 	}
 
 	public void loadFromJson(JsonObject json) {
@@ -130,6 +144,8 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 		if (json.hasString("groupName")) config.set(GROUP_NAME, json.getString("groupName"));
 		if (json.hasNumber("groupWeight")) config.set(GROUP_NAME, json.getString("groupWeight"));
 		if (json.hasNumber("probability")) config.set(PROBABILITY, json.getNumber("probability").floatValue());
+		if (json.hasNumber("weight")) config.set(WEIGHT, json.getNumber("weight").floatValue());
+		if (json.hasObject("extra")) config.set(EXTRA, new VariableSet(json.getObject("extra")));
 
 		this.carrier.clear();
 		if (json.hasObject("trigger")) {
@@ -137,28 +153,39 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 			Set<String> nameSet = trigger.keySet();
 			for (String triggerName : nameSet) {
 				if (trigger.hasObject(triggerName))
-					this.carrier.addFunc(triggerName, GameFunc.create(trigger.getObject(triggerName)));
+					this.carrier.setFunc(triggerName, GameFunc.create(trigger.getObject(triggerName)));
 				else if (trigger.hasArray(triggerName)) {
 					JsonArray array = trigger.getArray(triggerName);
-					for (int i = 0; i < array.size(); i++)
-						this.carrier.addFunc(triggerName, GameFunc.create(array.getObject(i)));
+					JsonObject groupBuilder = new JsonObject();
+					groupBuilder.set("type", "group");
+					groupBuilder.set("funcs", array);
+					this.carrier.setFunc(triggerName, GameFunc.create(groupBuilder));
 				}
 			}
 		}
 
 	}
 
-	protected void execute(GameFuncExecuteContext context) {
-
-	}
-
-	public void onInit() {
-
+	/** 返回值是将要被替换的func 没有则返回自身 */
+	public GameFunc visit(Function<GameFunc, GameFunc> visitor) {
+		return visitor.apply(this);
 	}
 
 	/** 当构建结束后，地牢的对该记录func的处理行为 */
 	public GameFuncFinOp afterExecute(GameFuncExecuteContext context) {
 		return GameFuncFinOp.ABANDON;
+	}
+
+	protected Random getCurrRandom() {
+		return this.currRandom;
+	}
+
+	protected void execute(GameFuncExecuteContext context) {
+
+	}
+
+	public GameFunc copy() {
+		return create(serializeNBT());
 	}
 
 	@Override

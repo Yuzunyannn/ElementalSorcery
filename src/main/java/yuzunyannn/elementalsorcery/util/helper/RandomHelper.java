@@ -69,7 +69,7 @@ public class RandomHelper {
 		}
 
 		protected List<Pair> list = new LinkedList<>();
-
+		
 		public void add(T obj, double weight) {
 			list.add(new Pair(obj, weight));
 		}

@@ -133,7 +133,8 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 		int i = rand.nextInt(3);
 		if (lootingModifier > 0) i += rand.nextInt(lootingModifier + 1);
 		for (int j = 0; j < i; ++j) {
-			if (rand.nextInt(3) == 0) elf.entityDropItem(new ItemStack(ESObjects.ITEMS.ELF_COIN, rand.nextInt(8) + 2), 0);
+			if (rand.nextInt(3) == 0)
+				elf.entityDropItem(new ItemStack(ESObjects.ITEMS.ELF_COIN, rand.nextInt(8) + 2), 0);
 			else elf.entityDropItem(new ItemStack(ESObjects.BLOCKS.ELF_FRUIT, 1, BlockElfFruit.MAX_STATE), 0);
 		}
 	}

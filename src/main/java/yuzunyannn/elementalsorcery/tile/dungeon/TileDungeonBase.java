@@ -57,10 +57,6 @@ public abstract class TileDungeonBase extends TileEntityNetwork {
 
 	}
 
-	public void setFuncCarrier(GameFuncCarrier carrier) {
-		this.carrier = carrier;
-	}
-
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (capability == GameFuncCarrier.GAMEFUNCCARRIER_CAPABILITY) return (T) this.carrier;
@@ -77,12 +73,10 @@ public abstract class TileDungeonBase extends TileEntityNetwork {
 		if (world.isRemote) return;
 		if (this.carrier == null) return;
 		DungeonAreaRoom room = getDungeonRoom();
-		this.carrier.trigger(name, (func, exchanger) -> {
-			DungeonFuncExecuteContext context = new DungeonFuncExecuteContext(func, exchanger);
-			context.setSrcMan(world, pos);
-			if (room != null) context.setRoom(room);
-			return hook.apply(context);
-		});
+		DungeonFuncExecuteContext context = new DungeonFuncExecuteContext();
+		context.setSrcObj(world, pos);
+		if (room != null) context.setRoom(room);
+		this.carrier.trigger(name, hook.apply(context));
 	}
 
 }

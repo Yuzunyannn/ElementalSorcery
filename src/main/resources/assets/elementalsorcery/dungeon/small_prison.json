@@ -1,5 +1,33 @@
 {
     "probability": 0.75,
-    "type": "entity",
-    "entityId": "minecraft:zombie"
+    "type": "group",
+    "mode": "random",
+    "funcs": [
+        {
+            "type": "entity",
+            "entityId": "minecraft:zombie",
+            "weight": 5,
+            "trigger": {
+                "onLoot": {
+                    "type": "loot",
+                    "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_1"
+                }
+            }
+        },
+        {
+            "type": "chest",
+            "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_1",
+            "weight": 1
+        },
+        {
+            "type": "haystack",
+            "weight": 1,
+            "trigger": {
+                "onSweep": {
+                    "type": "loot",
+                    "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_1"
+                }
+            }
+        }
+    ]
 }

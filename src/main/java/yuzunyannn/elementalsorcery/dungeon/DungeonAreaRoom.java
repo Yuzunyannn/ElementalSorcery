@@ -12,6 +12,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFuncGroup;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.building.BuildingFace;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -124,7 +125,7 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 		nbt.setByte("face", (byte) facing.getIndex());
 		NBTHelper.setNBTSerializableList(nbt, "doors", doorLinks);
 		nbt.setBoolean("isBuild", isBuild);
-		nbt.setTag("funcs", GameFunc.serializeNBTList(funcs));
+		nbt.setTag("funcs", GameFuncGroup.serializeNBTList(funcs));
 		return nbt;
 	}
 
@@ -137,7 +138,7 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 		facing = EnumFacing.byIndex(nbt.getByte("face"));
 		doorLinks = NBTHelper.getNBTSerializableList(nbt, "doors", DungeonAreaDoor.class, NBTTagCompound.class);
 		isBuild = nbt.getBoolean("isBuild");
-		funcs = GameFunc.deserializeNBTList(nbt.getTagList("funcs", NBTTag.TAG_COMPOUND));
+		funcs = GameFuncGroup.deserializeNBTList(nbt.getTagList("funcs", NBTTag.TAG_COMPOUND));
 		this.refresh();
 	}
 

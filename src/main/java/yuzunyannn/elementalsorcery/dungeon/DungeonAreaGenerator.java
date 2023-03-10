@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 import java.util.Map.Entry;
+import java.util.Random;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Rotation;
@@ -92,7 +92,7 @@ public class DungeonAreaGenerator {
 		room.funcs = new ArrayList<>(funcs.size());
 		for (Entry<BlockPos, String> entry : funcs) {
 			GameFunc func = GameFunc.create(new JsonObject(entry.getValue()));
-			func.onInit();
+			func.setSeed(new Random().nextLong());
 			room.funcs.add(func);
 		}
 	}

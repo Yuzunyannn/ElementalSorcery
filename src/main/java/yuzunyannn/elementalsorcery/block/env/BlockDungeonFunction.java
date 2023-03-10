@@ -28,6 +28,7 @@ import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncExecuteContext;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonFunction;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class BlockDungeonFunction extends Block implements ITileEntityProvider {
@@ -62,12 +63,13 @@ public class BlockDungeonFunction extends Block implements ITileEntityProvider {
 			if (func == GameFunc.NOTHING)
 				playerIn.sendMessage(new TextComponentString("cannot create dungeon function").setStyle(badStyle));
 			else {
+				func.setSeed(RandomHelper.rand.nextLong());
 				playerIn.sendMessage(new TextComponentString(func.toString()).setStyle(style));
 				ItemStack stack = playerIn.getHeldItem(hand);
 				if (stack.getItem() == Items.WOODEN_AXE) {
-					GameFuncExecuteContext context = new GameFuncExecuteContext(func, n -> {});
-					context.setSrcMan(worldIn, pos);
-					context.doExecute();
+					GameFuncExecuteContext context = new GameFuncExecuteContext();
+					context.setSrcObj(worldIn, pos);
+					context.doExecute(func);
 				}
 			}
 			return true;

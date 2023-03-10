@@ -1,0 +1,255 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "TriggerFunc": {
+            "oneOf": [
+                {
+                    "$ref": "#"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#"
+                    }
+                }
+            ]
+        },
+        "TimesFunc": {
+            "properties": {
+                "times": {
+                    "type": "number",
+                    "minimum": 1
+                }
+            }
+        },
+        "Loot": {
+            "$ref": "./mult_loot.json",
+            "examples": [
+                "elementalsorcery:common/",
+                "elementalsorcery:dungeon/"
+            ]
+        }
+    },
+    "type": "object",
+    "required": [
+        "type"
+    ],
+    "properties": {
+        "type": {
+            "enum": [
+                "entity",
+                "group",
+                "chest",
+                "loot",
+                "haystack"
+            ]
+        },
+        "probability": {
+            "type": "number",
+            "default": 0.5
+        },
+        "trigger": {
+            "title": "触发器",
+            "additionalProperties": {
+                "$ref": "#/definitions/TriggerFunc"
+            }
+        }
+    },
+    "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "group"
+                    }
+                }
+            },
+            "then": {
+                "title": "函数组",
+                "required": [
+                    "funcs"
+                ],
+                "properties": {
+                    "funcs": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#"
+                        }
+                    },
+                    "mode": {
+                        "enum": [
+                            "parallel",
+                            "sequence",
+                            "random"
+                        ]
+                    }
+                },
+                "if": {
+                    "properties": {
+                        "mode": {
+                            "const": "random"
+                        }
+                    }
+                },
+                "then": {
+                    "properties": {
+                        "funcs": {
+                            "type": "array",
+                            "items": {
+                                "allOf": [
+                                    {
+                                        "$ref": "#"
+                                    },
+                                    {
+                                        "properties": {
+                                            "weight": {
+                                                "type": "number"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "chest"
+                    }
+                }
+            },
+            "then": {
+                "title": "箱子构建",
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/TimesFunc"
+                    },
+                    {
+                        "properties": {
+                            "loot": {
+                                "$ref": "#/definitions/Loot"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "haystack"
+                    }
+                }
+            },
+            "then": {
+                "title": "稻草堆",
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/TimesFunc"
+                    },
+                    {
+                        "properties": {
+                            "trigger": {
+                                "properties": {
+                                    "onSweep": {
+                                        "$ref": "#/definitions/TriggerFunc"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "highLevel": {
+                                "type": "number",
+                                "maximum": 16,
+                                "minimum": 1,
+                                "default": 1
+                            },
+                            "pressure": {
+                                "type": "boolean",
+                                "default": true
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "entity"
+                    }
+                }
+            },
+            "then": {
+                "title": "实体构建",
+                "required": [
+                    "entityId"
+                ],
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/TimesFunc"
+                    },
+                    {
+                        "properties": {
+                            "entityId": {
+                                "anyOf": [
+                                    {
+                                        "type": "string"
+                                    },
+                                    {
+                                        "$ref": "./entity_ids.json"
+                                    }
+                                ]
+                            },
+                            "trigger": {
+                                "properties": {
+                                    "onLoot": {
+                                        "$ref": "#/definitions/TriggerFunc"
+                                    }
+                                },
+                                "additionalProperties": false
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "loot"
+                    }
+                }
+            },
+            "then": {
+                "title": "掉落奖励",
+                "required": [
+                    "loot"
+                ],
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/TimesFunc"
+                    },
+                    {
+                        "properties": {
+                            "loot": {
+                                "$ref": "#/definitions/Loot"
+                            },
+                            "clearOrigin": {
+                                "title": "清除原始掉落",
+                                "type": "boolean",
+                                "default": true
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

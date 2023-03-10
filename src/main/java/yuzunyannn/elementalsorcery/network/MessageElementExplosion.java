@@ -16,12 +16,12 @@ public class MessageElementExplosion implements IMessage {
 
 	public ElementStack estack = ElementStack.EMPTY;
 	public float x, y, z;
-	public int seed;
+	public long seed;
 
 	public MessageElementExplosion() {
 	}
 
-	public MessageElementExplosion(ElementStack estack, Vec3d pos, int seed) {
+	public MessageElementExplosion(ElementStack estack, Vec3d pos, long seed) {
 		this.estack = estack;
 		this.x = (float) pos.x;
 		this.y = (float) pos.y;
@@ -38,7 +38,7 @@ public class MessageElementExplosion implements IMessage {
 		this.x = buf.readFloat();
 		this.y = buf.readFloat();
 		this.z = buf.readFloat();
-		this.seed = buf.readInt();
+		this.seed = buf.readLong();
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class MessageElementExplosion implements IMessage {
 		buf.writeFloat(x);
 		buf.writeFloat(y);
 		buf.writeFloat(z);
-		buf.writeInt(seed);
+		buf.writeLong(seed);
 	}
 
 	static public class Handler implements IMessageHandler<MessageElementExplosion, IMessage> {

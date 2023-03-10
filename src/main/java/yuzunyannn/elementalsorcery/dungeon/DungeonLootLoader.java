@@ -28,7 +28,7 @@ public abstract class DungeonLootLoader implements INBTSerializable<NBTTagCompou
 
 	public static DungeonLootLoader get(JsonObject json, String lootKey) {
 		if (json.hasString(lootKey)) return new DungeonMCLootLoader(new ResourceLocation(json.getString(lootKey)));
-		return null;
+		return new DungeonQuestLootLoader(json.get(lootKey));
 	}
 
 	public static DungeonLootLoader get(NBTTagCompound nbt) {

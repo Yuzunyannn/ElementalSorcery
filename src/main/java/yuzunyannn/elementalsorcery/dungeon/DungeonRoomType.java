@@ -321,10 +321,7 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 		Map<BlockPos, Integer> map = getTempPosFuncMap();
 		Integer index = map.get(pos);
 		if (index == null) return;
-		GameFunc func = room.getFunc(index);
-		DungeonFuncExecuteContext context = new DungeonFuncExecuteContext(func, n -> room.setFunc(index, n));
-		context.setRoom(room).setSrcMan(world, at);
-		context.doExecute();
+		new DungeonFuncExecuteContextBuild(room, index, world, at).doExecute();
 	}
 
 	public void deubgBuild(World world, DungeonArea area, DungeonAreaRoom room) {

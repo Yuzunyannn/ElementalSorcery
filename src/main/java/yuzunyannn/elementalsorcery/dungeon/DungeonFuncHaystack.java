@@ -6,15 +6,15 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncExecuteContext;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFuncTimes;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonHaystack;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
-public class DungeonFuncHaystack extends GameFunc {
+public class DungeonFuncHaystack extends GameFuncTimes {
 
-	protected byte haystackHighLevel = -1;
+	protected byte haystackHighLevel = 1;
 	protected boolean pressure = false;
 
 	public void loadFromJson(JsonObject json) {
@@ -25,13 +25,13 @@ public class DungeonFuncHaystack extends GameFunc {
 
 	@Override
 	protected void execute(GameFuncExecuteContext context) {
+		Random rand = getCurrRandom();
 		BlockPos pos = context.getBlockPos();
 		World world = context.getWorld();
-		Random rand = context.getRand();
 		world.setBlockState(pos, ESObjects.BLOCKS.DUNGEON_HAYSTACK.getDefaultState());
 		TileDungeonHaystack tile = BlockHelper.getTileEntity(world, pos, TileDungeonHaystack.class);
 		if (tile == null) return;
-		tile.setFuncCarrier(this.getFuncCarrier());
+		this.getFuncCarrier().giveTo(tile);
 		int highLevel = haystackHighLevel;
 		if (highLevel == -1) highLevel = (byte) rand.nextInt(16);
 		tile.setHightLevel(highLevel);

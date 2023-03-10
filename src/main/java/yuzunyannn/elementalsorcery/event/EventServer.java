@@ -436,8 +436,11 @@ public class EventServer {
 	public static void onLooting(LivingDropsEvent event) {
 		Entity entity = event.getEntity();
 		IGameFuncCarrier carrier = entity.getCapability(GameFuncCarrier.GAMEFUNCCARRIER_CAPABILITY, null);
-		if (carrier != null) carrier.trigger("onLoot",
-				(func, exchanger) -> new GameFuncExecuteContext(func, exchanger).setByEvent(event).setSrcObj(entity));
+		if (carrier != null) {
+			GameFuncExecuteContext context = new GameFuncExecuteContext().setByEvent(event).setSrcObj(entity);
+			carrier.trigger("onLoot", context);
+			if (event.isCanceled()) return;
+		}
 	}
 
 	// 方快掉落

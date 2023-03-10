@@ -140,11 +140,13 @@ public class ElementExplosion implements IExplosionExecutor {
 
 	}
 
-	public int getRandSeed() {
+	@Override
+	public long getRandSeed() {
 		return rand.getSeed();
 	}
 
-	public void setRandSeed(int seed) {
+	@Override
+	public void setRandSeed(long seed) {
 		rand.setSeed(seed);
 	}
 

@@ -148,7 +148,7 @@ import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
-import yuzunyannn.elementalsorcery.dungeon.DungeonRoomLib;
+import yuzunyannn.elementalsorcery.dungeon.DungeonLib;
 import yuzunyannn.elementalsorcery.element.ElementAir;
 import yuzunyannn.elementalsorcery.element.ElementEarth;
 import yuzunyannn.elementalsorcery.element.ElementEnder;
@@ -822,7 +822,7 @@ public class ESInit {
 		AutoName.init();
 		// 注册默认所有建筑
 		BuildingLib.registerAll();
-		DungeonRoomLib.registerAll();
+		DungeonLib.registerAll();
 		// 注册咒文
 		registerAllMantras();
 		KnowledgeType.registerAll();

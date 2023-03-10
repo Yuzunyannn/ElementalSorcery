@@ -1,9 +1,8 @@
 package yuzunyannn.elementalsorcery.api.gfunc;
 
 import java.util.Collection;
-import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
+
+import javax.annotation.Nonnull;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,11 +12,27 @@ import net.minecraftforge.common.util.INBTSerializable;
 
 public interface IGameFuncCarrier extends INBTSerializable<NBTTagCompound> {
 
-	public List<GameFunc> getFuncList(String triggerName);
+	/**
+	 * if null return GameFunc.NOTHING
+	 */
+	@Nonnull
+	public GameFunc getFunc(String triggerName);
 
-	public void setFuncList(String triggerName, List<GameFunc> list);
+	public void setFunc(String triggerName, GameFunc func);
 
-	public void addFunc(String triggerName, GameFunc func);
+	default public void addFunc(String triggerName, GameFunc func) {
+		GameFunc ofunc = getFunc(triggerName);
+		if (ofunc == GameFunc.NOTHING) {
+			setFunc(triggerName, func);
+			return;
+		}
+		if (ofunc instanceof GameFuncGroup) ((GameFuncGroup) ofunc).addFunc(ofunc);
+		else {
+			GameFuncGroup gfunc = (GameFuncGroup) GameFunc.create("group");
+			setFunc(triggerName, gfunc);
+			gfunc.addFunc(ofunc).addFunc(func);
+		}
+	}
 
 	public Collection<String> getTriggers();
 
@@ -25,28 +40,25 @@ public interface IGameFuncCarrier extends INBTSerializable<NBTTagCompound> {
 
 	public void clear();
 
-	default public <T extends GameFuncExecuteContext> void trigger(String name,
-			BiFunction<GameFunc, Consumer<GameFunc>, T> factory) {
-		List<GameFunc> list = getFuncList(name);
-		if (list == null) return;
-		for (int i = 0; i < list.size(); i++) {
-			final int index = i;
-			GameFuncExecuteContext context = factory.apply(list.get(index), n -> list.set(index, n));
-			if (context == null) continue;
-			context.doExecute();
-		}
+	default public void trigger(String name, GameFuncExecuteContext context) {
+		if (context == null) return;
+		GameFunc func = getFunc(name);
+		if (func == GameFunc.NOTHING) return;
+		GameFunc nFunc = context.doExecute(func);
+		if (nFunc == func) return;
+		setFunc(name, nFunc);
 	}
 
 	@Override
 	default void deserializeNBT(NBTTagCompound nbt) {
 		this.clear();
-		for (String key : nbt.getKeySet()) setFuncList(key, GameFunc.deserializeNBTList(nbt, key));
+		for (String key : nbt.getKeySet()) setFunc(key, GameFunc.create(nbt.getCompoundTag(key)));
 	}
 
 	@Override
 	default NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		for (String name : getTriggers()) nbt.setTag(name, GameFunc.serializeNBTList(getFuncList(name)));
+		for (String name : getTriggers()) nbt.setTag(name, getFunc(name).serializeNBT());
 		return nbt;
 	}
 

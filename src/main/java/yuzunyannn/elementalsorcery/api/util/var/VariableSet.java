@@ -17,6 +17,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class VariableSet implements INBTSerializable<NBTTagCompound> {
 
@@ -47,6 +48,18 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		public String toString() {
 			return name;
 		}
+	}
+
+	public VariableSet() {
+
+	}
+
+	public VariableSet(NBTTagCompound nbt) {
+		this.nbt = nbt;
+	}
+
+	public VariableSet(JsonObject json) {
+		this.nbt = json.asNBT();
 	}
 
 	private NBTTagCompound nbt;

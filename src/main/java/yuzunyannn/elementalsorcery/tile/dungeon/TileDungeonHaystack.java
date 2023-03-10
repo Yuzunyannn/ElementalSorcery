@@ -20,7 +20,7 @@ public class TileDungeonHaystack extends TileDungeonBase {
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound.setByte("hLev", (byte) Math.floor(getHightLevel()));
+		compound.setByte("hLev", (byte) Math.floor(getHightLevel() * 8));
 		if (!this.isSending()) {
 			compound.setBoolean("pressure", pressure);
 		}
@@ -32,7 +32,7 @@ public class TileDungeonHaystack extends TileDungeonBase {
 		if (!this.isSending()) {
 			pressure = compound.getBoolean("pressure");
 		}
-		this.setHightLevel(compound.getInteger("hLev"));
+		this.setHightLevel(compound.getInteger("hLev") / 8f);
 		super.readFromNBT(compound);
 	}
 
@@ -52,7 +52,7 @@ public class TileDungeonHaystack extends TileDungeonBase {
 	 * @param lev 1~16
 	 */
 	public void setHightLevel(double lev) {
-		double height = Math.max(Math.min(lev / 16, 1), 1 / 16.0 - 0.01);
+		double height = Math.max(Math.min(lev / 16, 1 - 0.001), 1 / 16.0);
 		box = new AxisAlignedBB(0, 0, 0, 1, height, 1);
 	}
 
@@ -69,7 +69,7 @@ public class TileDungeonHaystack extends TileDungeonBase {
 	}
 
 	public void onSweepOpen(EntityLivingBase player) {
-		trigger("onSweep", context -> context.setTriggerMan(player));
+		trigger("onSweep", context -> context.setTriggerObj(player));
 	}
 
 }

@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.event;
 
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
+import java.io.File;
 import java.util.function.Function;
 
 import net.minecraft.block.Block;
@@ -10,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
@@ -32,7 +34,7 @@ import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
-import yuzunyannn.elementalsorcery.dungeon.DungeonRoomLib;
+import yuzunyannn.elementalsorcery.dungeon.DungeonLib;
 import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
 import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
@@ -40,13 +42,16 @@ import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.util.json.JsonArray;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class CommandESDebug {
 
 	public static final String[] autoTips = new String[] { "reflush", "buildTest", "portalTest", "showInfo",
-			"blockMoveTest", "textTest", "reloadeTexture", "quest", "statistics", "statisticsHandle", "reloadShader" };
+			"blockMoveTest", "textTest", "reloadeTexture", "quest", "statistics", "statisticsHandle", "reloadShader",
+			"jsonSchema" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -86,7 +91,7 @@ public class CommandESDebug {
 				sender.sendMessage(new TextComponentString("研究合成表刷新成功!"));
 				Quests.loadAll();
 				sender.sendMessage(new TextComponentString("任务刷新成功!"));
-				DungeonRoomLib.registerAllFunc();
+				DungeonLib.registerAllFunc();
 				sender.sendMessage(new TextComponentString("地牢Func刷新成功!"));
 			} catch (Exception e) {
 				ESAPI.logger.warn("刷新数据出现异常！", e);
@@ -120,6 +125,24 @@ public class CommandESDebug {
 				 * v.addComponentParts(sender.getEntityWorld(), new Random(),
 				 * v.getBoundingBox());
 				 */
+				return;
+			}
+			case "jsonSchema": {
+				JsonObject obj = new JsonObject();
+				obj.set("$schema", "http://json-schema.org/draft-07/schema#");
+				JsonArray array = new JsonArray();
+				obj.set("enum", array);
+				for (ResourceLocation key : Item.REGISTRY.getKeys()) array.append(key.toString());
+				obj.save(new File("../json schema/item_ids.json"), true);
+
+			} {
+				JsonObject obj = new JsonObject();
+				obj.set("$schema", "http://json-schema.org/draft-07/schema#");
+				JsonArray array = new JsonArray();
+				obj.set("enum", array);
+				for (ResourceLocation key : EntityList.getEntityNameList()) array.append(key.toString());
+				obj.save(new File("../json schema/entity_ids.json"), true);
+
 			}
 				return;
 			case "textTest": {

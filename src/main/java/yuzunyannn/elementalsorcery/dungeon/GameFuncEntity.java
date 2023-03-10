@@ -8,12 +8,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFuncCarrier;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncExecuteContext;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFuncTimes;
+import yuzunyannn.elementalsorcery.api.gfunc.IGameFuncCarrier;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
-public class DungeonFuncEntity extends GameFunc {
+public class GameFuncEntity extends GameFuncTimes {
 
 	static public Vec3d getVec3d(JsonObject json, String key) {
 		if (json.hasObject("offset")) {
@@ -51,7 +54,7 @@ public class DungeonFuncEntity extends GameFunc {
 		if (entity instanceof EntityLiving) {
 			((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entity)), null);
 		}
-//		entity.getCapability(null, null)
+		this.getFuncCarrier().giveTo(entity);
 	}
 
 	@Override

@@ -4,9 +4,9 @@ public interface IExplosionExecutor {
 
 	float getExplosionSize();
 
-	int getRandSeed();
+	long getRandSeed();
 
-	void setRandSeed(int seed);
+	void setRandSeed(long seed);
 
 	void doExplosionBlock();
 

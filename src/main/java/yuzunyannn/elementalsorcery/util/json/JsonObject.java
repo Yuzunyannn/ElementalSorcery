@@ -133,6 +133,12 @@ public class JsonObject extends Json implements Iterable<String> {
 		else set(key, (JsonArray) obj);
 	}
 
+	public Json get(String key) {
+		if (hasObject(key)) return getObject(key);
+		if (hasArray(key)) return getArray(key);
+		return null;
+	}
+
 	public boolean hasObject(String key) {
 		return json.has(key) ? json.get(key).isJsonObject() : false;
 	}

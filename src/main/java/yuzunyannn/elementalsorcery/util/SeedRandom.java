@@ -7,9 +7,13 @@ import net.minecraft.util.math.BlockPos;
 @SuppressWarnings("serial")
 public class SeedRandom extends Random {
 
-	protected int seed;
+	public static long nextSeed(long seed, long salt) {
+		return seed * 21701 + salt;
+	}
 
-	public SeedRandom(int seed) {
+	protected long seed;
+
+	public SeedRandom(long seed) {
 		this.seed = seed;
 	}
 
@@ -17,18 +21,18 @@ public class SeedRandom extends Random {
 		this(pos.getX() * pos.getX() + pos.getY() * pos.getZ());
 	}
 
-	public int getSeed() {
+	public long getSeed() {
 		return seed;
 	}
 
-	public SeedRandom setSeed(int seed) {
+	@Override
+	public void setSeed(long seed) {
 		this.seed = seed;
-		return this;
 	}
 
 	@Override
 	protected int next(int bits) {
-		seed = seed * 21701 + 49937;
+		seed = nextSeed(seed, 49937);
 		return ((int) seed) >>> (32 - bits);
 	}
 }

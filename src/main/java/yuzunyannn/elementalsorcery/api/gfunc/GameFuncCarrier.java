@@ -1,8 +1,6 @@
 package yuzunyannn.elementalsorcery.api.gfunc;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -11,6 +9,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 
 public class GameFuncCarrier implements IGameFuncCarrier {
@@ -18,24 +17,18 @@ public class GameFuncCarrier implements IGameFuncCarrier {
 	@CapabilityInject(IGameFuncCarrier.class)
 	public static Capability<IGameFuncCarrier> GAMEFUNCCARRIER_CAPABILITY;
 
-	protected Map<String, List<GameFunc>> map = new TreeMap<>();
+	protected Map<String, GameFunc> map = new TreeMap<>();
 
 	@Override
-	public List<GameFunc> getFuncList(String triggerName) {
-		return map.get(triggerName);
+	public GameFunc getFunc(String triggerName) {
+		GameFunc func = map.get(triggerName);
+		return func == null ? GameFunc.NOTHING : func;
 	}
 
 	@Override
-	public void setFuncList(String triggerName, List<GameFunc> list) {
-		if (list == null) map.remove(triggerName);
-		else map.put(triggerName, list);
-	}
-
-	@Override
-	public void addFunc(String triggerName, GameFunc func) {
-		List<GameFunc> list = map.get(triggerName);
-		if (list == null) map.put(triggerName, list = new ArrayList<>());
-		list.add(func);
+	public void setFunc(String triggerName, GameFunc func) {
+		if (func == null || func == GameFunc.NOTHING) map.remove(triggerName);
+		else map.put(triggerName, func);
 	}
 
 	@Override
@@ -56,6 +49,23 @@ public class GameFuncCarrier implements IGameFuncCarrier {
 	@Override
 	public String toString() {
 		return map.toString();
+	}
+
+	public GameFuncCarrier copy() {
+		GameFuncCarrier carrier = new GameFuncCarrier();
+		for (String key : getTriggers()) carrier.setFunc(key, getFunc(key).copy());
+		return carrier;
+	}
+
+	public void giveTo(IGameFuncCarrier other) {
+		if (other == null) return;
+		for (String triggerName : this.getTriggers()) {
+			other.addFunc(triggerName, this.getFunc(triggerName).copy());
+		}
+	}
+
+	public void giveTo(ICapabilityProvider provider) {
+		this.giveTo(provider.getCapability(GameFuncCarrier.GAMEFUNCCARRIER_CAPABILITY, null));
 	}
 
 	public static class Provider implements ICapabilitySerializable<NBTTagCompound> {
