@@ -1,0 +1,5 @@
+{
+    "type": "chest",
+    "loot": "elementalsorcery:dungeon/mantra_lab_floor",
+    "acceptHideItem": true
+}

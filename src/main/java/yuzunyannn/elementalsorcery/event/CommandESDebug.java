@@ -3,6 +3,8 @@ package yuzunyannn.elementalsorcery.event;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.io.File;
+import java.lang.reflect.Method;
+import java.util.Random;
 import java.util.function.Function;
 
 import net.minecraft.block.Block;
@@ -11,8 +13,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.EntityList;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -30,18 +34,23 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
+import yuzunyannn.elementalsorcery.building.BuildingLib;
+import yuzunyannn.elementalsorcery.building.BuildingSaveData;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
 import yuzunyannn.elementalsorcery.dungeon.DungeonLib;
 import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
-import yuzunyannn.elementalsorcery.elf.edifice.GenElfEdifice;
 import yuzunyannn.elementalsorcery.elf.quest.Quests;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
+import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
@@ -49,9 +58,10 @@ import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class CommandESDebug {
 
-	public static final String[] autoTips = new String[] { "reflush", "buildTest", "portalTest", "showInfo",
-			"blockMoveTest", "textTest", "reloadeTexture", "quest", "statistics", "statisticsHandle", "reloadShader",
-			"jsonSchema" };
+	private static boolean passpass = false;
+	public static final String[] autoTips = new String[] { "reflush", "reflushLootTable", "buildTest", "portalTest",
+			"showInfo", "blockMoveTest", "textTest", "reloadeTexture", "quest", "statistics", "statisticsHandle",
+			"reloadShader", "jsonSchema" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -99,6 +109,11 @@ public class CommandESDebug {
 			}
 		}
 			return;
+		case "reflushLootTable": {
+			EntityLivingBase entity = (EntityLivingBase) sender.getCommandSenderEntity();
+			entity.world.getLootTableManager().reloadLootTables();
+		}
+			return;
 		case "quest": {
 
 			return;
@@ -106,27 +121,64 @@ public class CommandESDebug {
 		default:
 			EntityLivingBase entity = (EntityLivingBase) sender.getCommandSenderEntity();
 			RayTraceResult rtr = WorldHelper.getLookAtBlock(entity.world, entity, 64);
+			World world = entity.world;
+			Random rand = world.rand;
 			BlockPos pos = rtr != null ? rtr.getBlockPos() : null;
 			switch (args[0]) {
 			// 测试建筑
-			case "buildTest": {
-				GenElfEdifice g = new GenElfEdifice(true);
-				g.genMainTreeEdifice(entity.world, pos, entity.world.rand);
-				g.buildToTick(entity.world);
-				// new WorldGenElfTree(true, 3).generate(entity.world, entity.world.rand, pos);
-				/*
-				 * VillageCreationHandler h = new VillageCreationHandler();
-				 * StructureVillagePieces.Village v = h.buildComponent(null, null, new
-				 * LinkedList<StructureComponent>(), new Random(), pos.getX(), pos.getY(),
-				 * pos.getZ(), EnumFacing.NORTH, 0); try { Field field =
-				 * StructureVillagePieces.Village.class.getDeclaredField("averageGroundLvl") ;
-				 * field.setAccessible(true); field.setInt(v, pos.getY()); } catch (Exception e)
-				 * { ElementalSorcery.logger.warn("debug指令错误", e); }
-				 * v.addComponentParts(sender.getEntityWorld(), new Random(),
-				 * v.getBoundingBox());
-				 */
+			case "buildTest":
+				try {
+					String name = args[1];
+					if (name == null || name.isEmpty()) {
+						System.out.println("你的id呢");
+						return;
+					}
+
+					EntityPlayer executer = (EntityPlayer) sender.getCommandSenderEntity();
+					ItemStack ruler = executer.getHeldItem(EnumHand.MAIN_HAND);
+					BlockPos pos1 = ItemMagicRuler.getRulerPos(ruler, true);
+					BlockPos pos2 = ItemMagicRuler.getRulerPos(ruler, false);
+					if (pos1 == null || pos2 == null) throw new WrongUsageException("commands.es.building.recordFail");
+					Building building = Building.createBuilding(sender.getEntityWorld(),
+							executer.getHorizontalFacing().getOpposite(), pos1, pos2, true);
+					building.setAuthor("yuzunyannn");
+					building.setName(TextHelper.castToCamel(name));
+					BuildingLib.instance.releaseAllSaveData();
+					Method method = BuildingLib.class.getDeclaredMethod("addBuilding", BuildingSaveData.class);
+					method.setAccessible(true);
+					String path = "../src/main/resources/assets/elementalsorcery/structures/" + name + ".nbt";
+					File file = new File(path);
+					if (file.exists() && !passpass) {
+						System.out.println("存在" + name + "了，请三四而后行！");
+						passpass = true;
+						return;
+					}
+					passpass = false;
+					method.invoke(BuildingLib.instance, new BuildingSaveData(building, name, file) {
+						{}
+					});
+					ItemHelper.addItemStackToPlayer(executer, ArcInfo.createArcInfoItem(building.getKeyName()));
+					System.out.println("好了！");
+					BuildingLib.instance.releaseAllSaveData();
+//				GenElfEdifice g = new GenElfEdifice(true);
+//				g.genMainTreeEdifice(entity.world, pos, entity.world.rand);
+//				g.buildToTick(entity.world);
+					// new WorldGenElfTree(true, 3).generate(entity.world, entity.world.rand, pos);
+					/*
+					 * VillageCreationHandler h = new VillageCreationHandler();
+					 * StructureVillagePieces.Village v = h.buildComponent(null, null, new
+					 * LinkedList<StructureComponent>(), new Random(), pos.getX(), pos.getY(),
+					 * pos.getZ(), EnumFacing.NORTH, 0); try { Field field =
+					 * StructureVillagePieces.Village.class.getDeclaredField("averageGroundLvl") ;
+					 * field.setAccessible(true); field.setInt(v, pos.getY()); } catch (Exception e)
+					 * { ElementalSorcery.logger.warn("debug指令错误", e); }
+					 * v.addComponentParts(sender.getEntityWorld(), new Random(),
+					 * v.getBoundingBox());
+					 */
+				} catch (Exception e) {
+					ESAPI.logger.error("gg", e);
+				}
 				return;
-			}
 			case "jsonSchema": {
 				JsonObject obj = new JsonObject();
 				obj.set("$schema", "http://json-schema.org/draft-07/schema#");
@@ -341,13 +393,13 @@ public class CommandESDebug {
 			// 测试传送门
 			case "portalTest": {
 				pos = pos.up();
-				World world = server.getWorld(0);
+//				World world = server.getWorld(0);
 				EntityPortal.createPortal(sender.getEntityWorld(), pos, world, new BlockPos(754, 65, 766));
 			}
 				return;
 			// 展示一些信息
 			case "showInfo": {
-				World world = server.getEntityWorld();
+//				World world = server.getEntityWorld();
 				ItemStack stack = ItemStack.EMPTY;
 				Item item = Items.AIR;
 				Block block = Blocks.AIR;
@@ -380,7 +432,7 @@ public class CommandESDebug {
 			case "statistics": {
 				sender.sendMessage(new TextComponentString("手离开游戏，不要动"));
 				DevelopStatistics.clearAll();
-				World world = entity.getEntityWorld();
+//				World world = entity.getEntityWorld();
 				BlockPos at = entity.getPosition();
 				ChunkPos cp = new ChunkPos(at);
 				DevelopStatistics.record(world, 90, cp);

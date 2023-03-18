@@ -52,6 +52,16 @@ public class EntityItemGoods extends Entity {
 		return goods;
 	}
 
+	public static EntityItemGoods dropGoods(World world, Vec3d vec, ItemStack stack, int cost, boolean isSold,
+			Vec3d speed) {
+		EntityItemGoods goods = new EntityItemGoods(world, vec, stack);
+		goods.motionY = speed.y;
+		goods.motionX = speed.x;
+		goods.motionZ = speed.z;
+		dropGoods(goods, cost, isSold);
+		return goods;
+	}
+
 	protected static void dropGoods(EntityItemGoods goods, int cost, boolean isSold) {
 		goods.setPrice(cost);
 		goods.setSold(isSold);

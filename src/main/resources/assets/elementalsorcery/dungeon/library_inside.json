@@ -1,0 +1,24 @@
+{
+    "probability": 0.75,
+    "type": "haystack",
+    "pressure": "random",
+    "weight": 1,
+    "trigger": {
+        "onSweep": {
+            "type": "group",
+            "mode": "random",
+            "funcs": [
+                {
+                    "type": "loot",
+                    "weight": 10,
+                    "loot": "elementalsorcery:dungeon/dungeon_loot_book_1"
+                },
+                {
+                    "type": "ref",
+                    "weight": 2,
+                    "/assets": "elementalsorcery:dungeon/common_trap_1"
+                }
+            ]
+        }
+    }
+}

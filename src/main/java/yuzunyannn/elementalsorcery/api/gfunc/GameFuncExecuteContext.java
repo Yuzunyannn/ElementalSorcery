@@ -96,7 +96,7 @@ public class GameFuncExecuteContext {
 	}
 
 	public GameFuncExecuteContext setTriggerObj(Entity entity) {
-		this.triggerObj = new WorldObjectEntity(entity);
+		this.triggerObj = entity == null ? null : new WorldObjectEntity(entity);
 		return this;
 	}
 

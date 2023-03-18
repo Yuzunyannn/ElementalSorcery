@@ -65,13 +65,15 @@ public class RenderEntityItemGoods extends Render<EntityItemGoods> {
 			if (omo != null && omo.entityHit == entity) {
 				boolean isGreen = entity.isSold();
 				int price = entity.getPriceForShow();
+				boolean hasPrice = isGreen && price > 0;
+				
 				FontRenderer fontRender = getFontRendererFromRenderManager();
 				String nameStr = entity.getDisplayName().getFormattedText();
 				if (itemStack.getCount() > 1) nameStr = nameStr + "x" + itemStack.getCount();
-				String priceStr = isGreen ? I18n.format("info.elf.goods.coin", price) : "";
+				String priceStr = hasPrice ? I18n.format("info.elf.goods.coin", price) : "";
 				int priceWidth = fontRender.getStringWidth(priceStr) + 2;
 				int nameWidth = fontRender.getStringWidth(nameStr) + 2;
-				int height = isGreen ? 18 : 9;
+				int height = hasPrice ? 18 : 9;
 				int w = Math.max(nameWidth, priceWidth);
 
 				GlStateManager.pushMatrix();

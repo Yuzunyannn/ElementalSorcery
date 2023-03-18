@@ -202,6 +202,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.crack.MantraCrackOpen;
 import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemAppleCandy;
+import yuzunyannn.elementalsorcery.item.ItemDungeonKey;
 import yuzunyannn.elementalsorcery.item.ItemElementBoard;
 import yuzunyannn.elementalsorcery.item.ItemElfFruitBomb;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
@@ -212,6 +213,7 @@ import yuzunyannn.elementalsorcery.item.ItemFairyCubeModule;
 import yuzunyannn.elementalsorcery.item.ItemGlassCup;
 import yuzunyannn.elementalsorcery.item.ItemJuiceConcentrate;
 import yuzunyannn.elementalsorcery.item.ItemManual;
+import yuzunyannn.elementalsorcery.item.ItemMemoryFragment;
 import yuzunyannn.elementalsorcery.item.ItemMerchantInvitation;
 import yuzunyannn.elementalsorcery.item.ItemNatureDust;
 import yuzunyannn.elementalsorcery.item.ItemParcel;
@@ -328,6 +330,7 @@ import yuzunyannn.elementalsorcery.render.item.RenderItemGlassCup;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoire;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGuardCore;
 import yuzunyannn.elementalsorcery.render.item.RenderItemMagicBlastWand;
+import yuzunyannn.elementalsorcery.render.item.RenderItemMemoryFragment;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSupremeTable;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
@@ -668,6 +671,8 @@ public class ESInit {
 		ESObjects.ITEMS.SHOCK_WAND = new ItemShockWand();
 		ESObjects.ITEMS.RELIC_DISC = new ItemRelicDisc();
 		ESObjects.ITEMS.JUICE_CONCENTRATE = new ItemJuiceConcentrate();
+		ESObjects.ITEMS.DUNGEON_KEY = new ItemDungeonKey();
+		ESObjects.ITEMS.MEMORY_FRAGMENT = new ItemMemoryFragment();
 
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1178,6 +1183,8 @@ public class ESInit {
 		registerRender(ITEMS.SHOCK_WAND, new RenderItemMagicBlastWand(2));
 		registerRender(ITEMS.RELIC_DISC);
 		registerRender(ITEMS.JUICE_CONCENTRATE);
+		registerRender(ITEMS.DUNGEON_KEY);
+		registerRender(ITEMS.MEMORY_FRAGMENT, new RenderItemMemoryFragment());
 
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");

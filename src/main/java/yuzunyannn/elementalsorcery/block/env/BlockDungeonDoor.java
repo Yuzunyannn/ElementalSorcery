@@ -114,6 +114,8 @@ public class BlockDungeonDoor extends Block implements ITileEntityProvider {
 			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (worldIn.isRemote)
 			return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
+		if (hand == EnumHand.OFF_HAND)
+			return super.onBlockActivated(worldIn, pos, state, playerIn, hand, facing, hitX, hitY, hitZ);
 		TileDungeonDoor tile = BlockHelper.getTileEntity(worldIn, pos, TileDungeonDoor.class);
 		if (tile != null) {
 			if (tile.isRunMode()) {

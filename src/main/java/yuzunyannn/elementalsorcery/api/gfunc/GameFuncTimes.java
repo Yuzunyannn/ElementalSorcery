@@ -7,8 +7,8 @@ public class GameFuncTimes extends GameFunc {
 
 	protected int times;
 
-	public void loadFromJson(JsonObject json) {
-		super.loadFromJson(json);
+	public void loadFromJson(JsonObject json, GameFuncJsonCreateContext context) {
+		super.loadFromJson(json, context);
 		times = json.hasNumber("times") ? json.getNumber("times").intValue() : 1;
 	}
 

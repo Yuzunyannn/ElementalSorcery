@@ -2,10 +2,12 @@ package yuzunyannn.elementalsorcery.init;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootTableList;
+import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.json.Json;
+import yuzunyannn.elementalsorcery.world.LootFunctionRandomMantra;
 
 public class LootRegister {
 
@@ -32,5 +34,7 @@ public class LootRegister {
 			LootTableList.register(res("dungeon/" + file.getFileName()));
 			return true;
 		});
+
+		LootFunctionManager.registerFunction(new LootFunctionRandomMantra.Serializer());
 	}
 }

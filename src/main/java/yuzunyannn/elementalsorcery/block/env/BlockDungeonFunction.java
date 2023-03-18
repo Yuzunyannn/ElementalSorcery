@@ -12,6 +12,7 @@ import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -38,6 +39,7 @@ public class BlockDungeonFunction extends Block implements ITileEntityProvider {
 		this.setTranslationKey("dungeonFunction");
 		this.setSoundType(SoundType.STONE);
 		this.setHardness(-1);
+		this.setResistance(6000000.0F);
 	}
 
 	@Override
@@ -45,41 +47,16 @@ public class BlockDungeonFunction extends Block implements ITileEntityProvider {
 		return new TileDungeonFunction();
 	}
 
-	@Override
-	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
-			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (worldIn.isRemote) return true;
+	protected boolean trySet(EntityPlayer playerIn, TileDungeonFunction tile, boolean needFailMsg) {
 		Style badStyle = new Style().setColor(TextFormatting.RED);
 		Style niceStyle = new Style().setColor(TextFormatting.GOLD);
-		TileDungeonFunction tile = BlockHelper.getTileEntity(worldIn, pos, TileDungeonFunction.class);
-		if (tile == null) {
-			playerIn.sendMessage(new TextComponentString("tile is miss!").setStyle(badStyle));
-			return true;
-		}
-
-		if (!playerIn.isSneaking()) {
-			Style style = new Style().setColor(TextFormatting.AQUA).setBold(true);
-			GameFunc func = tile.createTextDungeonFunc();
-			if (func == GameFunc.NOTHING)
-				playerIn.sendMessage(new TextComponentString("cannot create dungeon function").setStyle(badStyle));
-			else {
-				func.setSeed(RandomHelper.rand.nextLong());
-				playerIn.sendMessage(new TextComponentString(func.toString()).setStyle(style));
-				ItemStack stack = playerIn.getHeldItem(hand);
-				if (stack.getItem() == Items.WOODEN_AXE) {
-					GameFuncExecuteContext context = new GameFuncExecuteContext();
-					context.setSrcObj(worldIn, pos);
-					context.doExecute(func);
-				}
-			}
-			return true;
-		}
 
 		Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
 		Transferable trans = clipboard.getContents(null);
 		if (trans == null) {
+			if (!needFailMsg) return false;
 			playerIn.sendMessage(new TextComponentString("no thing copied!").setStyle(badStyle));
-			return true;
+			return false;
 		}
 		try {
 			String moreInfo = "";
@@ -110,11 +87,59 @@ public class BlockDungeonFunction extends Block implements ITileEntityProvider {
 			tile.setConfig(json);
 			tile.markDirty();
 			playerIn.sendMessage(new TextComponentString("set Config success! " + moreInfo).setStyle(niceStyle));
+			return true;
 		} catch (Exception e) {
+			if (!needFailMsg) return false;
 			playerIn.sendMessage(new TextComponentString("copied data is not json!").setStyle(badStyle));
 			ESAPI.logger.info("copied data is not json!", e);
+			return false;
 		}
+	}
+
+	@Override
+	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
+			EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+		if (worldIn.isRemote) return true;
+		Style badStyle = new Style().setColor(TextFormatting.RED);
+//		Style niceStyle = new Style().setColor(TextFormatting.GOLD);
+		TileDungeonFunction tile = BlockHelper.getTileEntity(worldIn, pos, TileDungeonFunction.class);
+		if (tile == null) {
+			playerIn.sendMessage(new TextComponentString("tile is miss!").setStyle(badStyle));
+			return true;
+		}
+
+		if (!playerIn.isSneaking()) {
+			Style style = new Style().setColor(TextFormatting.AQUA).setBold(true);
+			GameFunc func = tile.createTextDungeonFunc();
+			if (func == GameFunc.NOTHING)
+				playerIn.sendMessage(new TextComponentString("cannot create dungeon function").setStyle(badStyle));
+			else {
+				func.setSeed(RandomHelper.rand.nextLong());
+				playerIn.sendMessage(new TextComponentString(func.toString()).setStyle(style));
+				ItemStack stack = playerIn.getHeldItem(hand);
+				if (stack.getItem() == Items.WOODEN_AXE) {
+					GameFuncExecuteContext context = new GameFuncExecuteContext();
+					context.setSrcObj(worldIn, pos);
+					context.doExecute(func);
+				}
+			}
+			return true;
+		}
+
+		trySet(playerIn, tile, true);
+
 		return true;
+	}
+
+	@Override
+	public void onBlockPlacedBy(World worldIn, BlockPos pos, IBlockState state, EntityLivingBase placer,
+			ItemStack stack) {
+		super.onBlockPlacedBy(worldIn, pos, state, placer, stack);
+		if (worldIn.isRemote) return;
+		TileDungeonFunction tile = BlockHelper.getTileEntity(worldIn, pos, TileDungeonFunction.class);
+		if (placer instanceof EntityPlayer && tile != null) {
+			trySet((EntityPlayer) placer, tile, false);
+		}
 	}
 
 }

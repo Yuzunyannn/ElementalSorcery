@@ -3,7 +3,6 @@ package yuzunyannn.elementalsorcery.dungeon;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
@@ -176,28 +175,21 @@ public abstract class DungeonLootLoader implements INBTSerializable<NBTTagCompou
 		List<Integer> cList = getEmptySlotsRandomized(inventory, rand);
 		shuffleItems(stacks, cList.size(), rand);
 
-		List<ItemStack> mustItems = new LinkedList<>();
-		Iterator<ItemStack> iter = stacks.iterator();
-		while (iter.hasNext()) {
-			ItemStack stack = iter.next();
-			if (stack.isEmpty()) iter.remove();
-			else if (isMustItem(stack)) {
-				mustItems.add(stack);
+		if (stacks instanceof ArrayList) {
+			for (int i = stacks.size() - 1; i >= 0; i--) {
+				if (cList.isEmpty()) return;
+				inventory.setInventorySlotContents(cList.remove(cList.size() - 1), stacks.remove(i));
+			}
+		} else {
+			Iterator<ItemStack> iter = stacks.iterator();
+			while (iter.hasNext()) {
+				if (cList.isEmpty()) return;
+				ItemStack stack = iter.next();
+				inventory.setInventorySlotContents(cList.remove(cList.size() - 1), stack);
 				iter.remove();
 			}
 		}
 
-		for (ItemStack stack : mustItems) {
-			if (cList.isEmpty()) return;
-			inventory.setInventorySlotContents(cList.remove(cList.size() - 1), stack);
-		}
-		for (ItemStack itemstack : stacks) {
-			if (cList.isEmpty()) return;
-			inventory.setInventorySlotContents(cList.remove(cList.size() - 1), itemstack);
-		}
 	}
 
-	static public boolean isMustItem(ItemStack stack) {
-		return false;
-	}
 }

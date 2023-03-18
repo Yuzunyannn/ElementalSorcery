@@ -11,6 +11,7 @@ public class BlockDungeonStairs extends BlockStairs {
 		this.setTranslationKey("dungeonStairs");
 		this.setSoundType(SoundType.STONE);
 		this.setHardness(-1);
+		this.setResistance(6000000.0F);
 		this.useNeighborBrightness = true;
 	}
 

@@ -1,0 +1,5 @@
+{
+    "type": "loot",
+    "loot": "elementalsorcery:dungeon/mantra_lab_table",
+    "goodPattern" : true
+}

@@ -28,10 +28,11 @@ public interface IItemCapbiltitySyn {
 	}
 
 	/** 将数据写入stack */
-	default void saveState(ItemStack stack) {
+	default ItemStack saveState(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) stack.setTagCompound(nbt = new NBTTagCompound());
 		this.saveState(nbt);
+		return stack;
 	}
 
 	/** 将数据从nbt中读取 */

@@ -19,6 +19,7 @@ import net.minecraft.block.BlockStoneBrick.EnumType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntityFlowerPot;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -40,6 +41,7 @@ import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper.WeightRandom;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 
@@ -206,6 +208,15 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			NBTTagCompound tileSave) {
 		IBlockState newState = null;
 		Block block = state.getBlock();
+
+		// 特殊部分
+		if (block == Blocks.FLOWER_POT) {
+			world.setBlockState(pos, state);
+			TileEntityFlowerPot flowerPot = BlockHelper.getTileEntity(world, pos, TileEntityFlowerPot.class);
+			if (flowerPot != null) flowerPot.setItemStack(ItemHelper.randomFlower(world.rand));
+			return true;
+		}
+
 		// 预替换部分
 		if (block == Blocks.STONEBRICK) {
 			BlockStoneBrick.EnumType type = state.getValue(BlockStoneBrick.VARIANT);

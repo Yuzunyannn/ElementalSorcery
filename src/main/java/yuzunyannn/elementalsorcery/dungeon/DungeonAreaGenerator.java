@@ -69,6 +69,7 @@ public class DungeonAreaGenerator {
 		initRoomFunc(room);
 		room.refresh();
 		room.inst.onInitRoom(room, rand);
+		initRoomFuncPost(room);
 
 		AxisAlignedBB box = room.getBox();
 		// 加入list
@@ -94,6 +95,18 @@ public class DungeonAreaGenerator {
 			GameFunc func = GameFunc.create(new JsonObject(entry.getValue()));
 			func.setSeed(new Random().nextLong());
 			room.funcs.add(func);
+		}
+	}
+
+	public void initRoomFuncPost(DungeonAreaRoom room) {
+		for (GameFunc func : room.funcs) {
+			func.visit(f -> {
+				if (f instanceof IDungeonFuncInit) {
+					IDungeonFuncInit lf = (IDungeonFuncInit) f;
+					lf.init(world, room);
+				}
+				return f;
+			});
 		}
 	}
 

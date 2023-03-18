@@ -1,0 +1,22 @@
+{
+    "pools": [
+        {
+            "name": "mantra_lab_floor_mantra",
+            "rolls": {
+                "min": 2,
+                "max": 8
+            },
+            "entries": [
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:ancient_paper",
+                    "functions": [
+                        {
+                            "function": "mantra_randomly"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

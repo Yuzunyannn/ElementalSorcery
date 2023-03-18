@@ -1,0 +1,43 @@
+{
+	"pools": [
+		{
+			"name": "es_food_some",
+			"rolls": {
+				"min": 2,
+				"max": 3
+			},
+			"entries": [
+				{
+					"type": "item",
+					"name": "minecraft:apple",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:carrot",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:cookie",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:melon",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:cooked_chicken",
+					"weight": 10
+				},
+				{
+					"type": "item",
+					"name": "minecraft:cooked_porkchop",
+					"weight": 10
+				}
+			]
+		}
+	]
+}

@@ -139,6 +139,8 @@ item.relicGuardCore.name=Relic Guard Core
 item.shockWand.name=Shock Wand
 item.relicDisc.name=Relic Disc
 item.juiceConcentrate.name=Juice Concentrate
+item.dungeonKey.name=Key of Virtual Sight
+item.memoryFragment.name=Memory Fragment
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -547,6 +549,8 @@ info.elf.diamond=A very expensive diamond has no other value. Elves love it very
 info.my.master=Master: %s
 info.relic.bind.master=The master is set as: %s
 info.concentration=Concentration: %s
+info.dungeon.no.key.to.open.door=Missing key, Virtual Sight cannot be reflected
+info.dungeon.no.remember.fragment=%s required to complete reflection
 
 info.mc.archi.Temple.name=Desert Pyramid
 

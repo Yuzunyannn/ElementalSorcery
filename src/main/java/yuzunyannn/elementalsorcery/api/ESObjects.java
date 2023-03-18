@@ -9,6 +9,8 @@ import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonHaystack;
+import yuzunyannn.elementalsorcery.item.ItemDungeonKey;
+import yuzunyannn.elementalsorcery.item.ItemMemoryFragment;
 
 public class ESObjects {
 
@@ -134,6 +136,8 @@ public class ESObjects {
 		public Item SHOCK_WAND;
 		public Item RELIC_DISC;
 		public Item JUICE_CONCENTRATE;
+		public Item DUNGEON_KEY;
+		public Item MEMORY_FRAGMENT;
 	}
 
 	static public class Blocks {

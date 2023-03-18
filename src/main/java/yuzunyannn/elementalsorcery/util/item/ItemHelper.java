@@ -4,12 +4,16 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockFlower;
+import net.minecraft.block.BlockFlower.EnumFlowerColor;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
@@ -168,6 +172,13 @@ public class ItemHelper {
 		ItemStack[] newArray = new ItemStack[stacks.length];
 		for (int i = 0; i < newArray.length; i++) newArray[i] = stacks[i].copy();
 		return newArray;
+	}
+
+	public static ItemStack randomFlower(Random rand) {
+		BlockFlower.EnumFlowerType[] types = BlockFlower.EnumFlowerType.values();
+		BlockFlower.EnumFlowerType type = types[rand.nextInt(types.length)];
+		if (type.getBlockType() == EnumFlowerColor.RED) return new ItemStack(Blocks.RED_FLOWER, 1, type.getMeta());
+		return new ItemStack(Blocks.YELLOW_FLOWER, 1, type.getMeta());
 	}
 
 }

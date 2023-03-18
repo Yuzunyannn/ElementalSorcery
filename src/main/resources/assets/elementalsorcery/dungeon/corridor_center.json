@@ -1,0 +1,29 @@
+{
+    "probability": 0.75,
+    "type": "group",
+    "mode": "random",
+    "funcs": [
+        {
+            "type": "entity",
+            "entityId": "minecraft:zombie",
+            "weight": 10,
+            "trigger": {
+                "onLoot": {
+                    "type": "loot",
+                    "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_1"
+                }
+            }
+        },
+        {
+            "type": "haystack",
+            "weight": 1,
+            "pressure": "random",
+            "trigger": {
+                "onSweep": {
+                    "type": "loot",
+                    "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_1"
+                }
+            }
+        }
+    ]
+}

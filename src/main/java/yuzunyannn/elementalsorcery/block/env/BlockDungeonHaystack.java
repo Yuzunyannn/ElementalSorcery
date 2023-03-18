@@ -20,6 +20,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESAPI;
@@ -61,6 +62,13 @@ public class BlockDungeonHaystack extends Block implements ITileEntityProvider {
 		TileDungeonHaystack tile = BlockHelper.getTileEntity(source, pos, TileDungeonHaystack.class);
 		if (tile != null) return tile.getBoundingBox();
 		return super.getBoundingBox(state, source, pos);
+	}
+
+	@Override
+	public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {
+		TileDungeonHaystack tile = BlockHelper.getTileEntity(world, pos, TileDungeonHaystack.class);
+		if (tile != null) tile.onSweepOpen(null);
+		super.onBlockExploded(world, pos, explosion);
 	}
 
 	@Override

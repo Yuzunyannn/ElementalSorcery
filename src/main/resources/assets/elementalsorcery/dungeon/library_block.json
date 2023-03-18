@@ -1,0 +1,29 @@
+{
+    "type": "haystack",
+    "weight": 1,
+    "highLevel": 1,
+    "pressure": true,
+    "trigger": {
+        "onSweep": {
+            "type": "group",
+            "mode": "random",
+            "funcs": [
+                {
+                    "type": "entity",
+                    "weight": 5,
+                    "entityId": "minecraft:zombie",
+                    "trigger": {
+                        "onLoot": {
+                            "type": "loot",
+                            "loot": "elementalsorcery:dungeon/dungeon_loot_book_1"
+                        }
+                    }
+                },
+                {
+                    "type": "ref",
+                    "/assets": "elementalsorcery:dungeon/common_trap_1"
+                }
+            ]
+        }
+    }
+}

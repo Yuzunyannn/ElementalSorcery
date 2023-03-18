@@ -139,6 +139,8 @@ item.relicGuardCore.name=守卫核心
 item.shockWand.name=冲击权杖
 item.relicDisc.name=遗迹轮盘
 item.juiceConcentrate.name=果汁浓缩剂
+item.dungeonKey.name=虚映之钥
+item.memoryFragment.name=记忆碎片
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -547,6 +549,8 @@ info.elf.diamond=非常昂贵的钻石，除此之外没有啥其他价值，精
 info.my.master=主人：%s
 info.relic.bind.master=设置了主人为：%s
 info.concentration=浓度：%s
+info.dungeon.no.key.to.open.door=缺少钥匙，虚映反射失败
+info.dungeon.no.remember.fragment=需要%s才能完成反射
 
 info.mc.archi.Temple.name=沙漠神殿
 

@@ -139,6 +139,8 @@ item.relicGuardCore.name=ガードのコア
 item.shockWand.name=冲撃権杖
 item.relicDisc.name=遺跡ディスク
 item.juiceConcentrate.name=ジュース濃縮剤
+item.dungeonKey.name=偽映のかぎ
+item.memoryFragment.name=記憶のかけら
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -547,6 +549,8 @@ info.elf.diamond=非常に高価なダイヤモンドで、それ以外に価値
 info.my.master=マスター：%s
 info.relic.bind.master=マスター設定：%s
 info.concentration=濃度：%s
+info.dungeon.no.key.to.open.door=かぎが見つかりません、虚映を反射できません
+info.dungeon.no.remember.fragment=反射のために%sが必要です
 
 info.mc.archi.Temple.name=砂漠のピラミッド
 

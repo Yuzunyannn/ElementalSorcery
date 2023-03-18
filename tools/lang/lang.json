@@ -691,6 +691,16 @@
 			"zh_CN": "果汁浓缩剂",
 			"en_US": "Juice Concentrate",
 			"ja_JP": "ジュース濃縮剤"
+		},
+		"item.dungeonKey.name": {
+			"zh_CN": "虚映之钥",
+			"en_US": "Key of Virtual Sight",
+			"ja_JP": "偽映のかぎ"
+		},
+		"item.memoryFragment.name":{
+			"zh_CN": "记忆碎片",
+			"en_US": "Memory Fragment",
+			"ja_JP": "記憶のかけら"
 		}
 	},
 	"tile": {
@@ -2692,6 +2702,16 @@
 			"zh_CN": "浓度：%s",
 			"en_US": "Concentration: %s",
 			"ja_JP": "濃度：%s"
+		},
+		"info.dungeon.no.key.to.open.door": {
+			"zh_CN": "缺少钥匙，虚映反射失败",
+			"en_US": "Missing key, Virtual Sight cannot be reflected",
+			"ja_JP": "かぎが見つかりません、虚映を反射できません"
+		},
+		"info.dungeon.no.remember.fragment": {
+			"zh_CN": "需要%s才能完成反射",
+			"en_US": "%s required to complete reflection",
+			"ja_JP": "反射のために%sが必要です"
 		}
 	},
 	"info.mc": {

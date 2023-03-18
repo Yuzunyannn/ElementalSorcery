@@ -1,0 +1,11 @@
+{
+    "type": "group",
+    "mode": "random",
+    "funcs": [
+        {
+            "type": "explode",
+            "weight": 2,
+            "level": -2
+        }
+    ]
+}

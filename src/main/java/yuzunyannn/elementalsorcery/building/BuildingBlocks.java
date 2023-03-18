@@ -12,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockButton;
 import net.minecraft.block.BlockCarpet;
+import net.minecraft.block.BlockFlowerPot;
 import net.minecraft.block.BlockLadder;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockRailBase;
@@ -87,6 +88,7 @@ public class BuildingBlocks {
 		if (block instanceof IGrowable || block instanceof IPlantable) return true;
 		if (block instanceof BlockLadder) return true;
 		if (block instanceof BlockButton) return true;
+		if (block instanceof BlockFlowerPot) return true;
 		return false;
 	}
 

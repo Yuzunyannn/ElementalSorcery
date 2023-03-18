@@ -7,16 +7,14 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.storage.AnvilChunkLoader;
-import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
-import yuzunyannn.elementalsorcery.api.gfunc.GameFuncCarrier;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncExecuteContext;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFuncJsonCreateContext;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncTimes;
-import yuzunyannn.elementalsorcery.api.gfunc.IGameFuncCarrier;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
-public class GameFuncEntity extends GameFuncTimes {
+public class DungeonFuncEntity extends GameFuncTimes {
 
 	static public Vec3d getVec3d(JsonObject json, String key) {
 		if (json.hasObject("offset")) {
@@ -34,8 +32,8 @@ public class GameFuncEntity extends GameFuncTimes {
 	protected NBTTagCompound entityNBT;
 	protected Vec3d offset = Vec3d.ZERO;
 
-	public void loadFromJson(JsonObject json) {
-		super.loadFromJson(json);
+	public void loadFromJson(JsonObject json, GameFuncJsonCreateContext context) {
+		super.loadFromJson(json, context);
 		if (json.hasObject("entityNBT")) entityNBT = json.getObject("entityNBT").asNBT();
 		else entityNBT = new NBTTagCompound();
 		entityNBT.setString("id", json.needString("entityId"));

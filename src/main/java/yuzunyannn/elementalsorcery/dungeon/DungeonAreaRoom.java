@@ -27,6 +27,7 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 	protected EnumFacing facing = EnumFacing.NORTH;
 	protected boolean isBuild = false;
 	protected List<GameFunc> funcs;
+	public int canDropHideFuncCount = 0;
 
 	protected int funcGlobalIndex = -1;
 
@@ -77,7 +78,7 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 	}
 
 	public GameFunc getFunc(int index) {
-		if (index < 0 || index >= doorLinks.size()) return GameFunc.NOTHING;
+		if (index < 0 || index >= funcs.size()) return GameFunc.NOTHING;
 		return funcs.get(index);
 	}
 
@@ -126,6 +127,7 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 		NBTHelper.setNBTSerializableList(nbt, "doors", doorLinks);
 		nbt.setBoolean("isBuild", isBuild);
 		nbt.setTag("funcs", GameFuncGroup.serializeNBTList(funcs));
+		if (canDropHideFuncCount > 0) nbt.setInteger("cdhcc", canDropHideFuncCount);
 		return nbt;
 	}
 
@@ -139,6 +141,7 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 		doorLinks = NBTHelper.getNBTSerializableList(nbt, "doors", DungeonAreaDoor.class, NBTTagCompound.class);
 		isBuild = nbt.getBoolean("isBuild");
 		funcs = GameFuncGroup.deserializeNBTList(nbt.getTagList("funcs", NBTTag.TAG_COMPOUND));
+		canDropHideFuncCount = nbt.getInteger("cdhcc");
 		this.refresh();
 	}
 

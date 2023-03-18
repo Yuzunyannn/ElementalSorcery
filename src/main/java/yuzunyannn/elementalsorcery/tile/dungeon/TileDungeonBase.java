@@ -17,14 +17,14 @@ public abstract class TileDungeonBase extends TileEntityNetwork {
 
 	protected int areaId = 0;
 	protected int roomId = 0;
-	protected GameFuncCarrier carrier;
+	protected GameFuncCarrier carrier = new GameFuncCarrier();
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound nbt) {
 		if (this.isSending()) return super.writeToNBT(nbt);
 		nbt.setInteger("areaId", areaId);
 		nbt.setInteger("roomId", roomId);
-		if (carrier != null && !carrier.isEmpty()) nbt.setTag("carrier", carrier.serializeNBT());
+		if (!carrier.isEmpty()) nbt.setTag("carrier", carrier.serializeNBT());
 		return super.writeToNBT(nbt);
 	}
 
@@ -33,10 +33,8 @@ public abstract class TileDungeonBase extends TileEntityNetwork {
 		super.readFromNBT(nbt);
 		areaId = nbt.getInteger("areaId");
 		roomId = nbt.getInteger("roomId");
-		if (nbt.hasKey("carrier")) {
-			if (this.carrier == null) this.carrier = new GameFuncCarrier();
-			this.carrier.deserializeNBT(nbt.getCompoundTag("carrier"));
-		} else this.carrier = null;
+		if (nbt.hasKey("carrier")) this.carrier.deserializeNBT(nbt.getCompoundTag("carrier"));
+		else this.carrier.clear();
 	}
 
 	public boolean isRunMode() {

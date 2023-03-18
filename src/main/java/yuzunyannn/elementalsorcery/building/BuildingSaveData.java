@@ -35,6 +35,13 @@ public class BuildingSaveData implements INBTSerializable<NBTTagCompound> {
 		this.markDirty();
 	}
 
+	protected BuildingSaveData(Building building, String keyName, File file) {
+		this.file = file;
+		this.building = building;
+		this.building.setKeyName(keyName);
+		this.markDirty();
+	}
+
 	public BuildingSaveData(String key, File file) throws IOException {
 		this.file = file;
 		this.readDataFromFile();

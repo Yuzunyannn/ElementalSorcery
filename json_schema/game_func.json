@@ -22,6 +22,21 @@
                 }
             }
         },
+        "LootFunc": {
+            "properties": {
+                "times": {
+                    "type": "number",
+                    "minimum": 1
+                },
+                "loot": {
+                    "$ref": "#/definitions/Loot"
+                },
+                "acceptHideItem": {
+                    "type": "boolean",
+                    "default": true
+                }
+            }
+        },
         "Loot": {
             "$ref": "./mult_loot.json",
             "examples": [
@@ -37,11 +52,15 @@
     "properties": {
         "type": {
             "enum": [
+                "nothing",
+                "ref",
                 "entity",
                 "group",
                 "chest",
                 "loot",
-                "haystack"
+                "haystack",
+                "explode",
+                "dungeon:global"
             ]
         },
         "probability": {
@@ -56,6 +75,29 @@
         }
     },
     "allOf": [
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "ref"
+                    }
+                }
+            },
+            "then": {
+                "title": "引用",
+                "required": [
+                    "/assets"
+                ],
+                "properties": {
+                    "/assets": {
+                        "type": "string",
+                        "examples": [
+                            "elementalsorcery:dungeon/"
+                        ]
+                    }
+                }
+            }
+        },
         {
             "if": {
                 "properties": {
@@ -126,14 +168,10 @@
                 "title": "箱子构建",
                 "allOf": [
                     {
-                        "$ref": "#/definitions/TimesFunc"
+                        "$ref": "#/definitions/LootFunc"
                     },
                     {
-                        "properties": {
-                            "loot": {
-                                "$ref": "#/definitions/Loot"
-                            }
-                        }
+                        "properties": {}
                     }
                 ]
             }
@@ -169,8 +207,11 @@
                                 "default": 1
                             },
                             "pressure": {
-                                "type": "boolean",
-                                "default": true
+                                "type": [
+                                    "boolean",
+                                    "string"
+                                ],
+                                "default": "random"
                             }
                         }
                     }
@@ -234,17 +275,43 @@
                 ],
                 "allOf": [
                     {
-                        "$ref": "#/definitions/TimesFunc"
+                        "$ref": "#/definitions/LootFunc"
                     },
                     {
                         "properties": {
-                            "loot": {
-                                "$ref": "#/definitions/Loot"
-                            },
                             "clearOrigin": {
                                 "title": "清除原始掉落",
                                 "type": "boolean",
                                 "default": true
+                            },
+                            "goodPattern": {
+                                "type": "boolean",
+                                "default": true
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "explode"
+                    }
+                }
+            },
+            "then": {
+                "title": "爆炸",
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/TimesFunc"
+                    },
+                    {
+                        "properties": {
+                            "level": {
+                                "type": "number",
+                                "default": -2
                             }
                         }
                     }

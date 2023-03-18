@@ -21,6 +21,7 @@
         },
         {
             "type": "haystack",
+            "pressure": "random",
             "weight": 1,
             "trigger": {
                 "onSweep": {

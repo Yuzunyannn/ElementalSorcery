@@ -1,0 +1,42 @@
+{
+    "pools": [
+        {
+            "name": "dungeon_loot_sundry_relic_worker",
+            "rolls": {
+                "min": 4,
+                "max": 6
+            },
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "weight": 10,
+                    "name": "elementalsorcery:common/es_food_some"
+                },
+                {
+                    "type": "loot_table",
+                    "weight": 5,
+                    "name": "elementalsorcery:common/es_magic_gold"
+                },
+                {
+                    "type": "loot_table",
+                    "weight": 3,
+                    "name": "elementalsorcery:common/ingot_some"
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:magic_gold",
+                    "weight": 5,
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 1,
+                                "max": 4
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

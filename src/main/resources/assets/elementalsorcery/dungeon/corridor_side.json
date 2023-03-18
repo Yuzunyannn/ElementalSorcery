@@ -1,0 +1,44 @@
+{
+    "probability": 0.5,
+    "type": "group",
+    "mode": "random",
+    "funcs": [
+        {
+            "type": "entity",
+            "entityId": "minecraft:zombie",
+            "weight": 5,
+            "trigger": {
+                "onLoot": {
+                    "type": "loot",
+                    "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_1"
+                }
+            }
+        },
+        {
+            "type": "chest",
+            "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_1",
+            "weight": 1
+        },
+        {
+            "type": "haystack",
+            "weight": 5,
+            "pressure": "random",
+            "trigger": {
+                "onSweep": {
+                    "type": "group",
+                    "mode": "random",
+                    "funcs": [
+                        {
+                            "type": "loot",
+                            "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_1"
+                        },
+                        {
+                            "type": "ref",
+                            "/assets": "elementalsorcery:dungeon/common_trap_1"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

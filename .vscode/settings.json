@@ -1,0 +1,16 @@
+{
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "src/main/resources/assets/elementalsorcery/loot_tables/*/*.json"
+            ],
+            "url": "./json_schema/mc_loot.json"
+        },
+        {
+            "fileMatch": [
+                "src/main/resources/assets/elementalsorcery/dungeon/*.json"
+            ],
+            "url": "./json_schema/game_func.json"
+        }
+    ]
+}

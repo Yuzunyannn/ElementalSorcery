@@ -9,7 +9,7 @@
             "entries": [
                 {
                     "type": "loot_table",
-                    "name": "elementalsorcery:chests/ingot_some",
+                    "name": "elementalsorcery:common/ingot_some",
                     "weight": 45,
                     "quality": -1
                 },

@@ -97,13 +97,53 @@ public class BlockSealStone extends Block implements Mapper {
 		return "s";
 	}
 
+	public static Mantra randomMantra(Random rand, float fortune, boolean isSuperDrop) {
+		return randomMantra(rand, fortune, isSuperDrop, null, null);
+	}
+
+	public static Mantra randomMantra(Random rand, float fortune, boolean isSuperDrop, @Nullable World world,
+			@Nullable BlockPos pos) {
+		RandomHelper.WeightRandom<Mantra> wMantras = new RandomHelper.WeightRandom();
+		for (Entry<ResourceLocation, Mantra> entry : Mantra.REGISTRY.getEntries()) {
+			Mantra mantra = entry.getValue();
+			float rarity = mantra.getRarity(world, pos);
+			if (rarity <= 0) continue;
+			rarity = rarity + (100 - rarity) * Math.min(0.5f, fortune / 25.0f);// 所有都向100靠拢
+			wMantras.add(entry.getValue(), rarity);
+		}
+		Mantra mantra = wMantras.get(rand);
+		if (isSuperDrop) {
+			// 超级掉落选择随机几次更稀有的
+			int rarityTryTimes = 1;
+			float raritier = mantra.getRarity(world, pos);
+			for (int i = 0; i < rarityTryTimes; i++) {
+				Mantra check = wMantras.get(rand);
+				float r = check.getRarity(world, pos);
+				if (r < raritier) {
+					mantra = check;
+					raritier = r;
+				}
+			}
+		}
+		return mantra;
+	}
+
+	public static AncientPaper randomAncientPaper(Random rand, float fortune, boolean isSuperDrop) {
+		AncientPaper ap = new AncientPaper();
+		double at = rand.nextFloat();
+		double length = rand.nextFloat() * 0.5 + 0.05 + Math.min(0.2, fortune / 50.0);
+		if (isSuperDrop) length += rand.nextFloat() * 0.1 + 0.1;
+		at = findRangeStart(length, at);
+		int start = MathHelper.floor(at * 100);
+		ap.setStart(start).setEnd(Math.min(100, start + MathHelper.ceil(length * 100)));
+		return ap.setProgress(0);
+	}
+
 	public static ItemStack getAncientPaper(World worldIn, @Nullable BlockPos dropPos, int fortune,
 			boolean isSuperDrop) {
 		Random rand = worldIn.rand;
 		ItemStack stack = new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1,
 				ItemAncientPaper.EnumType.NORMAL.getMetadata());
-
-		AncientPaper ap = new AncientPaper();
 
 		boolean isMantra = false;
 		for (int i = 0; i < fortune + 1; i++)
@@ -112,13 +152,7 @@ public class BlockSealStone extends Block implements Mapper {
 		// 只有传入pos的的时候才会掉mantra
 		isMantra = isMantra && dropPos != null;
 
-		double at = rand.nextFloat();
-		double length = rand.nextFloat() * 0.5 + 0.05 + Math.min(0.2, fortune / 50.0);
-		if (isSuperDrop) length += rand.nextFloat() * 0.1 + 0.1;
-		at = findRangeStart(length, at);
-		int start = MathHelper.floor(at * 100);
-		ap.setStart(start).setEnd(Math.min(100, start + MathHelper.ceil(length * 100)));
-		ap.setProgress(0);
+		AncientPaper ap = randomAncientPaper(rand, fortune, isSuperDrop);
 
 		RandomHelper.WeightRandom<KnowledgeType> wr = new RandomHelper.WeightRandom();
 		for (Entry<String, KnowledgeType> entry : KnowledgeType.REGISTRY.entrySet()) {
@@ -130,32 +164,7 @@ public class BlockSealStone extends Block implements Mapper {
 		ap.setType(wr.get());
 
 		// 如果是咒文
-		if (isMantra) {
-			BlockPos pos = dropPos;
-			RandomHelper.WeightRandom<Mantra> wMantras = new RandomHelper.WeightRandom();
-			for (Entry<ResourceLocation, Mantra> entry : Mantra.REGISTRY.getEntries()) {
-				Mantra mantra = entry.getValue();
-				float rarity = mantra.getRarity(worldIn, pos);
-				if (rarity <= 0) continue;
-				rarity = rarity + (100 - rarity) * Math.min(0.5f, fortune / 25.0f);// 所有都向100靠拢
-				wMantras.add(entry.getValue(), rarity);
-			}
-			Mantra mantra = wMantras.get();
-			if (isSuperDrop) {
-				// 超级掉落选择随机几次更稀有的
-				int rarityTryTimes = 1;
-				float raritier = mantra.getRarity(worldIn, pos);
-				for (int i = 0; i < rarityTryTimes; i++) {
-					Mantra check = wMantras.get();
-					float r = check.getRarity(worldIn, pos);
-					if (r < raritier) {
-						mantra = check;
-						raritier = r;
-					}
-				}
-			}
-			ap.setMantra(mantra);
-		}
+		if (isMantra) ap.setMantra(randomMantra(rand, fortune, isSuperDrop, worldIn, dropPos));
 
 //		if (ESAPI.isDevelop) {
 //			ap.setProgress(1);

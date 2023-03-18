@@ -61,8 +61,8 @@ public class GameFuncGroup extends GameFunc {
 	}
 
 	@Override
-	public void loadFromJson(JsonObject json) {
-		super.loadFromJson(json);
+	public void loadFromJson(JsonObject json, GameFuncJsonCreateContext context) {
+		super.loadFromJson(json,context);
 		funcs.clear();
 		JsonArray jfuncs = json.needArray("funcs");
 		for (int i = 0; i < jfuncs.size(); i++) funcs.add(GameFunc.create(jfuncs.getObject(i)));

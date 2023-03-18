@@ -48,6 +48,7 @@ public class BlockDungeonBrick extends Block implements Mapper {
 		this.setTranslationKey("dungeonBrick");
 		this.setSoundType(SoundType.STONE);
 		this.setHardness(-1);
+		this.setResistance(6000000.0F);
 		this.setDefaultState(this.getDefaultState().withProperty(VARIANT, EnumType.DEFAULT));
 	}
 

@@ -7,6 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncExecuteContext;
+import yuzunyannn.elementalsorcery.api.gfunc.GameFuncJsonCreateContext;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncTimes;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonHaystack;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
@@ -14,13 +15,16 @@ import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class DungeonFuncHaystack extends GameFuncTimes {
 
-	protected byte haystackHighLevel = 1;
-	protected boolean pressure = false;
+	protected byte haystackHighLevel = -1;
+	protected byte pressure = -1;
 
-	public void loadFromJson(JsonObject json) {
-		super.loadFromJson(json);
+	public void loadFromJson(JsonObject json, GameFuncJsonCreateContext context) {
+		super.loadFromJson(json, context);
 		if (json.hasNumber("highLevel")) haystackHighLevel = json.getNumber("highLevel").byteValue();
-		if (json.hasBoolean("pressure")) pressure = json.getBoolean("pressure");
+		if (json.hasBoolean("pressure")) pressure = (byte) (json.getBoolean("pressure") ? 1 : 0);
+		else if (json.hasString("pressure")) {
+			if ("random".equals(json.getString("pressure"))) pressure = -1;
+		}
 	};
 
 	@Override
@@ -33,22 +37,23 @@ public class DungeonFuncHaystack extends GameFuncTimes {
 		if (tile == null) return;
 		this.getFuncCarrier().giveTo(tile);
 		int highLevel = haystackHighLevel;
-		if (highLevel == -1) highLevel = (byte) rand.nextInt(16);
+		if (highLevel == -1) highLevel = (byte) rand.nextInt(16) + 1;
 		tile.setHightLevel(highLevel);
-		tile.setPressure(pressure);
+		if (pressure == 1) tile.setPressure(true);
+		else if (pressure == -1) tile.setPressure(rand.nextBoolean());
 	}
 
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = super.serializeNBT();
-		if (pressure) nbt.setBoolean("pressure", true);
+		if (pressure != 0) nbt.setByte("pressure", pressure);
 		nbt.setByte("high", haystackHighLevel);
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
-		pressure = nbt.getBoolean("pressure");
+		pressure = nbt.getByte("pressure");
 		haystackHighLevel = nbt.getByte("high");
 		super.deserializeNBT(nbt);
 	}

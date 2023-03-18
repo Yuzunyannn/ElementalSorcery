@@ -32,6 +32,7 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 	}
 
 	public static GameFunc create(String type) {
+		if ("nothing".equals(type)) return NOTHING;
 		Class<? extends GameFunc> cls = factoryMap.get(type);
 		if (cls == null) return NOTHING;
 		try {
@@ -43,31 +44,6 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 		} catch (ReflectiveOperationException e) {
 			return NOTHING;
 		}
-	}
-
-	protected static GameFunc _create(JsonObject json) {
-		if (!json.hasString("type")) return NOTHING;
-		String type = json.getString("type");
-		GameFunc func = create(type);
-		if (func == NOTHING) return NOTHING;
-		try {
-			func.loadFromJson(json);
-			return func;
-		} catch (RuntimeException e) {
-			return NOTHING;
-		}
-	}
-
-	public static GameFunc create(JsonObject json) {
-		if (json.hasString("/assets")) {
-			String path = json.getString("/assets");
-			try {
-				return GameFunc._create(new JsonObject(new ResourceLocation(path)));
-			} catch (Exception e) {
-				return NOTHING;
-			}
-		}
-		return GameFunc._create(json);
 	}
 
 	public static GameFunc create(NBTTagCompound nbt) {
@@ -84,6 +60,36 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 		} catch (ReflectiveOperationException e) {
 			return NOTHING;
 		}
+	}
+
+	public static final GameFuncJsonCreateContext jsonCreateContext = new GameFuncJsonCreateContext();
+
+	protected static GameFunc _create(JsonObject json, JsonObject refJson) {
+		if (!json.hasString("type")) return NOTHING;
+		String type = json.getString("type");
+		GameFunc func = create(type);
+		if (func == NOTHING) return NOTHING;
+		try {
+			jsonCreateContext.push(func, refJson);
+			func.loadFromJson(json, jsonCreateContext);
+			jsonCreateContext.pop();
+			return func;
+		} catch (RuntimeException e) {
+			return NOTHING;
+		}
+	}
+
+	public static GameFunc create(JsonObject json) {
+		if (json.hasString("/assets")) {
+			String path = json.getString("/assets");
+			try {
+				if (!path.endsWith(".json")) path = path + ".json";
+				return GameFunc._create(new JsonObject(new ResourceLocation(path)), json);
+			} catch (Exception e) {
+				return NOTHING;
+			}
+		}
+		return GameFunc._create(json, null);
 	}
 
 	public static final Variable<String> GROUP_NAME = new Variable("G_NAME", VariableSet.STRING);
@@ -139,13 +145,20 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 		this.currRandom.setSeed(nbt.getLong("seed"));
 	}
 
-	public void loadFromJson(JsonObject json) {
+	public void loadFromJson(JsonObject json, GameFuncJsonCreateContext context) {
+		GameFuncJsonCreateContext.Info my = context.top();
+
 		this.config.clear();
 		if (json.hasString("groupName")) config.set(GROUP_NAME, json.getString("groupName"));
 		if (json.hasNumber("groupWeight")) config.set(GROUP_NAME, json.getString("groupWeight"));
 		if (json.hasNumber("probability")) config.set(PROBABILITY, json.getNumber("probability").floatValue());
 		if (json.hasNumber("weight")) config.set(WEIGHT, json.getNumber("weight").floatValue());
 		if (json.hasObject("extra")) config.set(EXTRA, new VariableSet(json.getObject("extra")));
+
+		if (my.getRefJson() != null) {
+			JsonObject refJson = my.getRefJson();
+			if (refJson.hasNumber("weight")) config.set(WEIGHT, refJson.getNumber("weight").floatValue());
+		}
 
 		this.carrier.clear();
 		if (json.hasObject("trigger")) {
@@ -168,7 +181,15 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 
 	/** 返回值是将要被替换的func 没有则返回自身 */
 	public GameFunc visit(Function<GameFunc, GameFunc> visitor) {
-		return visitor.apply(this);
+		GameFunc nFunc = visitor.apply(this);
+		if (nFunc != this) return nFunc;
+		for (String key : this.carrier.getTriggers()) {
+			GameFunc func = this.carrier.getFunc(key);
+			nFunc = func.visit(visitor);
+			if (nFunc == func) continue;
+			this.carrier.setFunc(key, nFunc);
+		}
+		return this;
 	}
 
 	/** 当构建结束后，地牢的对该记录func的处理行为 */
