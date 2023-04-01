@@ -87,6 +87,11 @@ public class DungeonFuncGlobal extends GameFunc implements IDungeonFuncInit {
 		return hideItems.remove(hideItems.size() - 1);
 	}
 
+	public ItemStack topHideItem() {
+		if (hideItems.isEmpty()) return ItemStack.EMPTY;
+		return hideItems.get(hideItems.size() - 1);
+	}
+
 	public int getHideItemCount() {
 		return hideItems.size();
 	}

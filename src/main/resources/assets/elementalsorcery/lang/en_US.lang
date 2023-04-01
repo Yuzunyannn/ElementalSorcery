@@ -141,6 +141,7 @@ item.relicDisc.name=Relic Disc
 item.juiceConcentrate.name=Juice Concentrate
 item.dungeonKey.name=Key of Virtual Sight
 item.memoryFragment.name=Memory Fragment
+item.memoryFeather.name=Memory Feather
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -551,6 +552,10 @@ info.relic.bind.master=The master is set as: %s
 info.concentration=Concentration: %s
 info.dungeon.no.key.to.open.door=Missing key, Virtual Sight cannot be reflected
 info.dungeon.no.remember.fragment=%s required to complete reflection
+info.dungeon.no.remember.found=Cannot find any Memory
+info.dungeon.remember.found=Found some Memory
+info.dungeon.remember.appear=Memory appear
+info.dungeon.memoryFeather.usage=When used in a Dungeon Room, it can consume 1 durability to check whether there has Memory Item. \nSneaking use can make Memory Item appear, and if there is nothing to appear, it will consume 2 durability.
 
 info.mc.archi.Temple.name=Desert Pyramid
 

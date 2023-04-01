@@ -1,0 +1,83 @@
+{
+	"pools": [
+		{
+			"name": "es_plant_some",
+			"rolls": {
+				"min": 2,
+				"max": 3
+			},
+			"entries": [
+				{
+					"type": "item",
+					"name": "minecraft:sapling",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:carrot",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:leaves",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:yellow_flower",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:red_flower",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:brown_mushroom",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:red_mushroom",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:waterlily",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:vine",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:double_plant",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:wheat_seeds",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:reeds",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:pumpkin_seeds",
+					"weight": 20
+				},
+				{
+					"type": "item",
+					"name": "minecraft:melon_seeds",
+					"weight": 20
+				}
+			]
+		}
+	]
+}

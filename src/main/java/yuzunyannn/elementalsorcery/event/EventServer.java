@@ -510,6 +510,21 @@ public class EventServer {
 		DamageSource source = event.getSource();
 		float amount = event.getAmount();
 
+		// 处理三级沉默
+		if (source.isMagicDamage()) {
+			Entity srcEntity = source.getTrueSource();
+			if (srcEntity != null) {
+				if (ESAPI.silent.isSilent(srcEntity, SilentLevel.PHENOMENON)) {
+					event.setCanceled(true);
+					return;
+				}
+			}
+			if (ESAPI.silent.isSilent(entity.world, entity.getPositionEyes(0), SilentLevel.PHENOMENON)) {
+				event.setCanceled(true);
+				return;
+			}
+		}
+
 		if (PotionEnderization.tryAttackEntityFrom(entity, source, amount)) {
 			event.setCanceled(true);
 			return;

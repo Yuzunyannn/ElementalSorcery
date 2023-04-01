@@ -697,10 +697,15 @@
 			"en_US": "Key of Virtual Sight",
 			"ja_JP": "偽映のかぎ"
 		},
-		"item.memoryFragment.name":{
+		"item.memoryFragment.name": {
 			"zh_CN": "记忆碎片",
 			"en_US": "Memory Fragment",
 			"ja_JP": "記憶のかけら"
+		},
+		"item.memoryFeather.name": {
+			"zh_CN": "记忆之羽",
+			"en_US": "Memory Feather",
+			"ja_JP": "記憶の羽"
 		}
 	},
 	"tile": {
@@ -2712,6 +2717,26 @@
 			"zh_CN": "需要%s才能完成反射",
 			"en_US": "%s required to complete reflection",
 			"ja_JP": "反射のために%sが必要です"
+		},
+		"info.dungeon.no.remember.found": {
+			"zh_CN": "寻找不到任何记忆中的物品",
+			"en_US": "Cannot find any Memory",
+			"ja_JP": "何の記憶のアイテムも見つからない"
+		},
+		"info.dungeon.remember.found": {
+			"zh_CN": "寻找到了记忆中的物品",
+			"en_US": "Found some Memory",
+			"ja_JP": "何かの記憶のアイテムを見つけた"
+		},
+		"info.dungeon.remember.appear": {
+			"zh_CN": "记忆中的物品已经出现",
+			"en_US": "Memory appear",
+			"ja_JP": "記憶のアイテムを現った"
+		},
+		"info.dungeon.memoryFeather.usage": {
+			"zh_CN": "在地牢迷宫的房间里使用，可以消耗1点耐久来检查是否存在记忆中的物品\\n潜行使用可以让物品呈现，如果无可呈现的会消耗2点耐久",
+			"en_US": "When used in a Dungeon Room, it can consume 1 durability to check whether there has Memory Item. \\nSneaking use can make Memory Item appear, and if there is nothing to appear, it will consume 2 durability.",
+			"ja_JP": "地下牢の部屋で使用すると、1耐久で記憶のアイテムの存在どうかを分れる\\n潜行使用すると記憶のアイテムを現れる、だが現れない時、2耐久を消費する"
 		}
 	},
 	"info.mc": {

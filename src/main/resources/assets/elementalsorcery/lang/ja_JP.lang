@@ -141,6 +141,7 @@ item.relicDisc.name=遺跡ディスク
 item.juiceConcentrate.name=ジュース濃縮剤
 item.dungeonKey.name=偽映のかぎ
 item.memoryFragment.name=記憶のかけら
+item.memoryFeather.name=記憶の羽
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -551,6 +552,10 @@ info.relic.bind.master=マスター設定：%s
 info.concentration=濃度：%s
 info.dungeon.no.key.to.open.door=かぎが見つかりません、虚映を反射できません
 info.dungeon.no.remember.fragment=反射のために%sが必要です
+info.dungeon.no.remember.found=何の記憶のアイテムも見つからない
+info.dungeon.remember.found=何かの記憶のアイテムを見つけた
+info.dungeon.remember.appear=記憶のアイテムを現った
+info.dungeon.memoryFeather.usage=地下牢の部屋で使用すると、1耐久で記憶のアイテムの存在どうかを分れる\n潜行使用すると記憶のアイテムを現れる、だが現れない時、2耐久を消費する
 
 info.mc.archi.Temple.name=砂漠のピラミッド
 

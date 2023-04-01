@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.dungeon;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map.Entry;
+import java.util.function.Function;
 
 import javax.annotation.Nullable;
 
@@ -15,6 +17,7 @@ import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncGroup;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.building.BuildingFace;
+import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
@@ -92,6 +95,15 @@ public class DungeonAreaRoom implements INBTSerializable<NBTTagCompound> {
 	@Nullable
 	public DungeonFuncGlobal getFuncGlobal() {
 		return getFunc(funcGlobalIndex, DungeonFuncGlobal.class);
+	}
+
+	public void visitCoreBlocks(Function<BlockPos, Boolean> visitor) {
+		for (Entry<BlockPos, String> entry : inst.funcs) {
+			BlockPos pos = entry.getKey();
+			BlockPos at = getCenterPos().add(BuildingFace.face(pos, facing));
+			Boolean ret = visitor.apply(at);
+			if (!JavaHelper.isTrue(ret)) break;
+		}
 	}
 
 	public DungeonRoomType getType() {

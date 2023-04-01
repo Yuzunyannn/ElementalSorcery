@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
@@ -176,6 +177,15 @@ public class DungeonWorld extends WorldSavedData {
 		DungeonWorldLand land = getWorldLand(x / LAND_SPLIT, z / LAND_SPLIT);
 		if (land != null) return land.findExcerpt(new DungeonPos(x, z));
 		return null;
+	}
+
+	@Nullable
+	public DungeonAreaRoom getAreaRoom(BlockPos pos) {
+		AreaExcerpt excerpt = getAreaExcerpt(new ChunkPos(pos));
+		if (excerpt == null) return null;
+		DungeonArea dungeon = getDungeon(excerpt.id);
+		if (dungeon == null) return null;
+		return dungeon.findRoom(new Vec3d(pos).add(0.5, 0.5, 0.5));
 	}
 
 	public void debugClear() {

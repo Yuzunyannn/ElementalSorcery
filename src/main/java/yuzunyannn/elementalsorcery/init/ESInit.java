@@ -213,6 +213,7 @@ import yuzunyannn.elementalsorcery.item.ItemFairyCubeModule;
 import yuzunyannn.elementalsorcery.item.ItemGlassCup;
 import yuzunyannn.elementalsorcery.item.ItemJuiceConcentrate;
 import yuzunyannn.elementalsorcery.item.ItemManual;
+import yuzunyannn.elementalsorcery.item.ItemMemoryFeather;
 import yuzunyannn.elementalsorcery.item.ItemMemoryFragment;
 import yuzunyannn.elementalsorcery.item.ItemMerchantInvitation;
 import yuzunyannn.elementalsorcery.item.ItemNatureDust;
@@ -673,6 +674,7 @@ public class ESInit {
 		ESObjects.ITEMS.JUICE_CONCENTRATE = new ItemJuiceConcentrate();
 		ESObjects.ITEMS.DUNGEON_KEY = new ItemDungeonKey();
 		ESObjects.ITEMS.MEMORY_FRAGMENT = new ItemMemoryFragment();
+		ESObjects.ITEMS.MEMORY_FEATHER = new ItemMemoryFeather();
 
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1185,6 +1187,7 @@ public class ESInit {
 		registerRender(ITEMS.JUICE_CONCENTRATE);
 		registerRender(ITEMS.DUNGEON_KEY);
 		registerRender(ITEMS.MEMORY_FRAGMENT, new RenderItemMemoryFragment());
+		registerRender(ITEMS.MEMORY_FEATHER);
 
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");

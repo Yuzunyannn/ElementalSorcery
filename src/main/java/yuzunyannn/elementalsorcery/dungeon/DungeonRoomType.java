@@ -13,9 +13,11 @@ import java.util.TreeMap;
 import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.block.BlockStoneBrick.EnumType;
+import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -116,7 +118,7 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 		EnumFacing sFacing = fFacing.getOpposite();
 		door.expandUp = Math.max(door.expandUp, checkDoorExpand(door, EnumFacing.UP, pos));
 		door.expandDown = Math.max(door.expandDown, checkDoorExpand(door, EnumFacing.DOWN, pos));
-		door.expandRight = checkDoorExpand(door, sFacing, pos);
+		door.expandRight = checkDoorExpand(door, fFacing, pos);
 		door.expandLeft = checkDoorExpand(door, sFacing, pos);
 		this.doors.add(door);
 	}
@@ -247,6 +249,21 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 					newState = newState.withProperty(BlockDungeonBrick.VARIANT, BlockDungeonBrick.EnumType.MOSSY);
 				else if (rand.nextFloat() < 0.1)
 					newState = newState.withProperty(BlockDungeonBrick.VARIANT, BlockDungeonBrick.EnumType.CRACKED);
+			}
+		} else if (block == Blocks.DIRT) {
+			if (rand.nextFloat() < 0.4) {
+				newState = Blocks.GRASS.getDefaultState();
+			} else {
+				if (rand.nextFloat() < 0.2)
+					newState = state.withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.COARSE_DIRT);
+				else if (rand.nextFloat() < 0.2)
+					newState = state.withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL);
+			}
+			if (rand.nextFloat() < 0.2 && world.isAirBlock(pos.up())) {
+				IBlockState grass = Blocks.TALLGRASS.getDefaultState();
+				BlockTallGrass.EnumType[] types = BlockTallGrass.EnumType.values();
+				world.setBlockState(pos.up(),
+						grass.withProperty(BlockTallGrass.TYPE, types[rand.nextInt(types.length)]));
 			}
 		}
 

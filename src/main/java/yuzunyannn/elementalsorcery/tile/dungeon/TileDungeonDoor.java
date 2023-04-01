@@ -7,6 +7,7 @@ import java.util.List;
 import net.minecraft.block.BlockStainedGlass;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemStack;
@@ -16,6 +17,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoor;
 import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
@@ -23,8 +25,8 @@ import yuzunyannn.elementalsorcery.dungeon.DungeonAreaDoor;
 import yuzunyannn.elementalsorcery.dungeon.DungeonAreaRoom;
 import yuzunyannn.elementalsorcery.dungeon.DungeonFuncGlobal;
 import yuzunyannn.elementalsorcery.item.ItemMemoryFragment;
-import yuzunyannn.elementalsorcery.item.ItemMemoryFragment.MemoryFragment;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
 public class TileDungeonDoor extends TileDungeonBase {
 
@@ -55,6 +57,9 @@ public class TileDungeonDoor extends TileDungeonBase {
 			return;
 		}
 
+		// 被沉默
+		if (EntityHelper.checkSilent(player, SilentLevel.RELEASE)) return;
+
 		ItemStack stack = player.getHeldItem(hand);
 		if (stack.getItem() != ESObjects.ITEMS.DUNGEON_KEY) {
 			player.sendMessage(new TextComponentTranslation("info.dungeon.no.key.to.open.door"));
@@ -77,11 +82,12 @@ public class TileDungeonDoor extends TileDungeonBase {
 		DungeonAreaRoom room = area.getRoomById(door.getLinkRoomId());
 		if (room == null) return;
 
+		// 根据global配置，检查钥匙是否足够
 		DungeonFuncGlobal funcGlobal = room.getFuncGlobal();
 		if (funcGlobal != null) next: {
 			List<ItemMemoryFragment.MemoryFragment> list = funcGlobal.getRequireMemoryFragments();
 			if (list.isEmpty()) break next;
-			
+
 			if (!consumeMemory(player.inventory, list, true)) {
 				TextComponentTranslation val = new TextComponentTranslation("item.memoryFragment.name");
 				int index = 0;
@@ -95,7 +101,7 @@ public class TileDungeonDoor extends TileDungeonBase {
 				player.sendMessage(new TextComponentTranslation("info.dungeon.no.remember.fragment", val));
 				return;
 			}
-			
+
 			consumeMemory(player.inventory, list, false);
 		}
 
@@ -103,8 +109,8 @@ public class TileDungeonDoor extends TileDungeonBase {
 
 		EnumDyeColor color = EnumDyeColor.BLUE;
 
-		world.destroyBlock(pos, false);
 		world.setBlockState(pos, Blocks.STAINED_GLASS.getDefaultState().withProperty(BlockStainedGlass.COLOR, color));
+		world.playSound(null, pos, SoundEvents.AMBIENT_CAVE, player.getSoundCategory(), 5, 1);
 	}
 
 	public void initByDungeon(DungeonAreaRoom room, int doorIndex, NBTTagCompound dataset) {
@@ -116,7 +122,8 @@ public class TileDungeonDoor extends TileDungeonBase {
 	protected boolean consumeMemory(IInventory inv, List<ItemMemoryFragment.MemoryFragment> list, boolean simulate) {
 
 		List<ItemMemoryFragment.MemoryFragment> cList = new LinkedList();
-		for (ItemMemoryFragment.MemoryFragment mf : list) cList.add(new ItemMemoryFragment.MemoryFragment(mf.getColor(), mf.getCount()));
+		for (ItemMemoryFragment.MemoryFragment mf : list)
+			cList.add(new ItemMemoryFragment.MemoryFragment(mf.getColor(), mf.getCount()));
 
 		for (int i = 0; i < inv.getSizeInventory(); i++) {
 			ItemStack itemstack = inv.getStackInSlot(i);

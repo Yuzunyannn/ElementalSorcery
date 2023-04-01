@@ -10,6 +10,7 @@ import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonHaystack;
 import yuzunyannn.elementalsorcery.item.ItemDungeonKey;
+import yuzunyannn.elementalsorcery.item.ItemMemoryFeather;
 import yuzunyannn.elementalsorcery.item.ItemMemoryFragment;
 
 public class ESObjects {
@@ -138,6 +139,7 @@ public class ESObjects {
 		public Item JUICE_CONCENTRATE;
 		public Item DUNGEON_KEY;
 		public Item MEMORY_FRAGMENT;
+		public Item MEMORY_FEATHER;
 	}
 
 	static public class Blocks {

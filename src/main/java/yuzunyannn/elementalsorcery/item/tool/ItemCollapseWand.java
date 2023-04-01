@@ -125,6 +125,8 @@ public class ItemCollapseWand extends Item implements IItemUseClientUpdate {
 		float f = player.getCooledAttackStrength(0.5F);
 		if (f != 1) return false;
 
+		if (EntityHelper.checkSilent(player, SilentLevel.RELEASE)) return false;
+
 		if (player.world.isRemote) return true;
 
 		DamageSource ds = DamageSource.causeIndirectMagicDamage(player, player);

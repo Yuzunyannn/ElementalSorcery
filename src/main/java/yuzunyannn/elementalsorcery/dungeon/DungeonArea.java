@@ -3,6 +3,8 @@ package yuzunyannn.elementalsorcery.dungeon;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
@@ -10,6 +12,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -135,6 +138,15 @@ public class DungeonArea extends WorldSavedData {
 		this.markDirty();
 	}
 
+	@Nullable
+	public DungeonAreaRoom findRoom(Vec3d vec) {
+		for (DungeonAreaRoom room : rooms) {
+			AxisAlignedBB aabb = room.getBox();
+			if (aabb.contains(vec)) return room;
+		}
+		return null;
+	}
+
 	protected DungeonArea setFailMsg(String failMsg) {
 		this.failMsg = failMsg;
 		return this;
@@ -192,7 +204,7 @@ public class DungeonArea extends WorldSavedData {
 		DungeonAreaDoor door = room.getDoorLink(doorIndex);
 		if (door == null) return;
 		if (door.isOpen()) return;
-		
+
 		door.isOpen = true;
 
 		DungeonRoomType inst = room.inst;
@@ -215,7 +227,7 @@ public class DungeonArea extends WorldSavedData {
 				}
 			}
 		}
-		
+
 		this.markDirty();
 	}
 

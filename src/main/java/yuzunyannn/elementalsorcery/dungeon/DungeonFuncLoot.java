@@ -64,6 +64,9 @@ public class DungeonFuncLoot extends DungeonFuncLootable {
 		TileEntity tile = world.getTileEntity(pos);
 
 		if (tile != null) {
+
+			int snapshotCount = stacks.size();
+
 			// 先检查所在位置tile是否为IInventory
 			if (tile instanceof IInventory) {
 				DungeonLootLoader.fillInventory((IInventory) tile, stacks, rand);
@@ -75,6 +78,9 @@ public class DungeonFuncLoot extends DungeonFuncLootable {
 			if (itemHandler instanceof IItemHandlerModifiable)
 				DungeonLootLoader.fillInventory(new InventoryItemStackHandlerVest((IItemHandlerModifiable) itemHandler),
 						stacks, rand);
+
+			// 更新
+			if (stacks.size() != snapshotCount) tile.markDirty();
 		}
 
 		// 都没有自然掉落，或者放不进去的自然掉落

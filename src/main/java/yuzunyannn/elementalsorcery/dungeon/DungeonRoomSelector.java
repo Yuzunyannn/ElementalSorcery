@@ -27,7 +27,9 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 		DungeonRoomType list[] = new DungeonRoomType[] { DungeonLib.DUNGEON_SMALL_TOWARD4,
 				DungeonLib.DUNGEON_CORRIDOR_TOWARD4, DungeonLib.DUNGEON_SMAL_PRISON_TOWARD2,
 				DungeonLib.DUNGEON_SMALL_LIBRARY_TOWARD3, DungeonLib.DUNGEON_SMALL_ROOM_TOWARD1,
-				DungeonLib.DUNGEON_MANTRA_LAB_TOWARD2, DungeonLib.DUNGEON_ROOM_TOWARD2 };
+				DungeonLib.DUNGEON_MANTRA_LAB_TOWARD2, DungeonLib.DUNGEON_ROOM_TOWARD2,
+				DungeonLib.DUNGEON_SMALL_GARDEN_TOWARD3 };
+//		DungeonRoomType list[] = new DungeonRoomType[] { DungeonLib.DUNGEON_SMALL_GARDEN_TOWARD3 };
 		return Arrays.asList(RandomHelper.randomOrder(list));
 	}
 

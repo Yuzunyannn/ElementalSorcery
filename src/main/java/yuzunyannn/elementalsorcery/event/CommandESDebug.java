@@ -20,6 +20,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -200,6 +201,7 @@ public class CommandESDebug {
 			case "textTest": {
 
 				EntityPlayerMP player = (EntityPlayerMP) entity;
+					
 				boolean isDebugBuild = false;
 				DungeonWorld dw = DungeonWorld.getDungeonWorld(player.world);
 				dw.debugClear();

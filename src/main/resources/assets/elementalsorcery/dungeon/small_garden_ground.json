@@ -1,0 +1,41 @@
+{
+    "probability": 0.75,
+    "type": "group",
+    "mode": "random",
+    "funcs": [
+        {
+            "type": "entity",
+            "entityId": "minecraft:zombie",
+            "weight": 5,
+            "trigger": {
+                "onLoot": {
+                    "type": "loot",
+                    "loot": "elementalsorcery:dungeon/dungeon_loot_garden",
+                    "acceptHideItem": true
+                }
+            }
+        },
+        {
+            "type": "haystack",
+            "weight": 10,
+            "pressure": "random",
+            "trigger": {
+                "onSweep": {
+                    "type": "group",
+                    "mode": "random",
+                    "funcs": [
+                        {
+                            "type": "loot",
+                            "loot": "elementalsorcery:dungeon/dungeon_loot_garden",
+                            "acceptHideItem": true
+                        },
+                        {
+                            "type": "ref",
+                            "/assets": "elementalsorcery:dungeon/common_trap_1"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

@@ -141,6 +141,7 @@ item.relicDisc.name=遗迹轮盘
 item.juiceConcentrate.name=果汁浓缩剂
 item.dungeonKey.name=虚映之钥
 item.memoryFragment.name=记忆碎片
+item.memoryFeather.name=记忆之羽
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -551,6 +552,10 @@ info.relic.bind.master=设置了主人为：%s
 info.concentration=浓度：%s
 info.dungeon.no.key.to.open.door=缺少钥匙，虚映反射失败
 info.dungeon.no.remember.fragment=需要%s才能完成反射
+info.dungeon.no.remember.found=寻找不到任何记忆中的物品
+info.dungeon.remember.found=寻找到了记忆中的物品
+info.dungeon.remember.appear=记忆中的物品已经出现
+info.dungeon.memoryFeather.usage=在地牢迷宫的房间里使用，可以消耗1点耐久来检查是否存在记忆中的物品\n潜行使用可以让物品呈现，如果无可呈现的会消耗2点耐久
 
 info.mc.archi.Temple.name=沙漠神殿
 
