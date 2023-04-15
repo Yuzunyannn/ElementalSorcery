@@ -26,7 +26,7 @@ public class DungeonAreaGenerator {
 	Map<ChunkPos, List<Integer>> roomMap = new HashMap<>();
 	LinkedList<DungeonAreaRoom> waitQueue = new LinkedList<>();
 	Random rand = new Random();
-	int doorLinkGap = 3;
+	int doorLinkGap = 1;
 
 	public DungeonAreaGenerator(DungeonArea area, World world) {
 		this.self = area;
@@ -111,14 +111,12 @@ public class DungeonAreaGenerator {
 	}
 
 	public void addWaitBuildRoom(DungeonAreaRoom room) {
-		waitQueue.addLast(room);
+		waitQueue.add(room);
 	}
 
 	public DungeonAreaRoom popWaitBuildRoom() {
 		if (waitQueue.isEmpty()) return null;
-		DungeonAreaRoom first = waitQueue.getFirst();
-		waitQueue.removeFirst();
-		return first;
+		return waitQueue.removeFirst();
 	}
 
 	static class DoorInfo {

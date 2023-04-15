@@ -20,21 +20,25 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
@@ -50,7 +54,9 @@ import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.util.TextHelper;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
@@ -62,7 +68,7 @@ public class CommandESDebug {
 	private static boolean passpass = false;
 	public static final String[] autoTips = new String[] { "reflush", "reflushLootTable", "buildTest", "portalTest",
 			"showInfo", "blockMoveTest", "textTest", "reloadeTexture", "quest", "statistics", "statisticsHandle",
-			"reloadShader", "jsonSchema" };
+			"reloadShader", "jsonSchema", "fragmentTest" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -116,6 +122,23 @@ public class CommandESDebug {
 		}
 			return;
 		case "quest": {
+
+			return;
+		}
+		case "fragmentTest": {
+			double fragment = ElementTransition.toMagicFragment(new ElementStack(ESObjects.ELEMENTS.WOOD, 20, 300));
+//			double power = ElementTransition.fromFragmentByCount(ESObjects.ELEMENTS.WOOD, fragment, 3);
+//			sender.sendMessage(new TextComponentString("" + power));
+			sender.sendMessage(new TextComponentString("" + fragment));
+
+			EntityLivingBase entity = (EntityLivingBase) sender.getCommandSenderEntity();
+			RayTraceResult rtr = WorldHelper.getLookAtBlock(entity.world, entity, 64);
+			BlockPos pos = rtr != null ? rtr.getBlockPos() : null;
+			Vec3d at = entity.getPositionVector().add(0, 2, 0);
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setByte("type", (byte) 5);
+			NBTHelper.setVec3d(nbt, "to", new Vec3d(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5));
+			Effects.spawnEffect(entity.world, Effects.PARTICLE_EFFECT, at, nbt);
 
 			return;
 		}
@@ -201,7 +224,7 @@ public class CommandESDebug {
 			case "textTest": {
 
 				EntityPlayerMP player = (EntityPlayerMP) entity;
-					
+
 				boolean isDebugBuild = false;
 				DungeonWorld dw = DungeonWorld.getDungeonWorld(player.world);
 				dw.debugClear();

@@ -242,6 +242,9 @@ tile.dungeonBrick.chiseled.name=模様入りの地下牢レンガ
 tile.dungeonBrick.stone.name=地下牢の石
 tile.dungeonFunction.name=地下牢構築ファンクション
 tile.dungeonHaystack.name=地下牢わらの山
+tile.dungeonBarrier.name=地下牢のバリア
+tile.dungeonRottenLifeWood.name=腐った生命の木の原木
+tile.dungeonActinicGlass.name=光化ガラス
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -347,17 +350,6 @@ mantra.puppetArea.describe=木元素で木霊領域を召喚し、領域内で�
 mantra.goldShield.name=黄金盾
 mantra.goldShield.describe=金元素で価値の盾を生成し、推定可能な価値を消費していかなるダメージにも抵抗し、超えた価値はダメージとして敵に反射する
 
-key.es.func=機能キー
-
-info.element.spell.fire=指定されたブロックに火をつける
-info.element.spell.ender=エンダー元素の力を貸して、スティーブがエンダーマンみたい、遠くに転移する
-info.element.spell.water=ブロックの上で水を召喚する
-info.element.spell.wood=木の元素に囲まれて、周りの植物が速く成長できる
-info.element.spell.knowledge=知識の元素で、スティーブはいつでもどこでもエンチャントできる
-info.element.spell.air=一瞬で周りの空気を変え、スティーブを急に減速させる
-info.element.spell.metal=石を金に変える、金の元素は鉱石のようなブロックと共鳴し、構造を変えり、新しい鉱石を変更する
-info.element.spell.earth=ブロックを墜落させましょう
-
 entity.Villager.paperman=古紙集荷者
 entity.Villager.eslearner=元素知識学者
 entity.Villager.magicallearner=魔力学者
@@ -386,6 +378,8 @@ pro.postReceptionist=郵便局の受付
 pro.postman=郵便配達
 pro.researcher=研究員
 pro.debtCollector=借金取り
+
+key.es.func=機能キー
 
 commands.es.usage=/es <操作> <パラメータ>...
 commands.es.notFound=%sを見つからない
@@ -550,14 +544,28 @@ info.elf.diamond=非常に高価なダイヤモンドで、それ以外に価値
 info.my.master=マスター：%s
 info.relic.bind.master=マスター設定：%s
 info.concentration=濃度：%s
+
+info.dungeon.build.exception=地下牢の建設中に異常が発生しました、著者にこのBUGを報告してくればいいね
+info.dungeon.build.too.close=2つの地下牢が近すぎる
 info.dungeon.no.key.to.open.door=かぎが見つかりません、虚映を反射できません
 info.dungeon.no.remember.fragment=反射のために%sが必要です
 info.dungeon.no.remember.found=何の記憶のアイテムも見つからない
 info.dungeon.remember.found=何かの記憶のアイテムを見つけた
 info.dungeon.remember.appear=記憶のアイテムを現った
 info.dungeon.memoryFeather.usage=地下牢の部屋で使用すると、1耐久で記憶のアイテムの存在どうかを分れる\n潜行使用すると記憶のアイテムを現れる、だが現れない時、2耐久を消費する
+info.dungeon.rottenLifeLog=朽木でも、強い力が宿っている
+info.dungeon.actinicGlass=光エネルギーを持続的に吸収し、下方の作物を触媒できる装置
 
 info.mc.archi.Temple.name=砂漠のピラミッド
+
+info.element.spell.fire=指定されたブロックに火をつける
+info.element.spell.ender=エンダー元素の力を貸して、スティーブがエンダーマンみたい、遠くに転移する
+info.element.spell.water=ブロックの上で水を召喚する
+info.element.spell.wood=木の元素に囲まれて、周りの植物が速く成長できる
+info.element.spell.knowledge=知識の元素で、スティーブはいつでもどこでもエンチャントできる
+info.element.spell.air=一瞬で周りの空気を変え、スティーブを急に減速させる
+info.element.spell.metal=石を金に変える、金の元素は鉱石のようなブロックと共鳴し、構造を変えり、新しい鉱石を変更する
+info.element.spell.earth=ブロックを墜落させましょう
 
 lev.defective=劣等品
 lev.unsuited=似合わない 
@@ -1018,9 +1026,9 @@ page.astone.ct.fir=由カイヤナイト、石头、魔石等混合而成的石�
 page.astone.ct.sec=将魔石、石头、カイヤナイト以1:8:4的比例放入熔岩锅中、熔化、冷却即可获得通魔石。比例请注意、不合适的话、很有可能出现不期望的结果。\n熔岩锅加满后、物品就不能再加入了。
 page.astone.ct.thi=先投入魔石、形成魔石溶液、使其他石头在魔石溶液中熔解。\n另外需要使用高级的灶台加热、不然温度很有可能无法达到预期。
 page.astoneCrafting=更多通魔石
-page.astoneCrafting.ct=使用カイヤナイト和木棒制作的精致的小刻刀、可以将普通的通魔石雕刻成更高级的通魔石。\n使用高级的通魔石可以更好的完成魔法装置的制作。
-page.unscrambleNote=解读手账
-page.unscrambleNote.ct=解读速度太慢？使用解读手账来记录解读时的内容，可以帮助你提升解读效率。\n每次解读时，副手拿着解读手账，就会将内容记录到手账当中，随着积累的记录越来越多，你解读的速度也会越来越快。\n只有自己记录的内容，才能产生作用。
+page.astoneCrafting.ct=カイヤナイトと棒で作られた精巧彫刻刀を使用して、通魔石をより高いレベルに彫刻することができます。\n高度な通魔石を使用すると、魔法装置の製造をより良く完成させることができます。
+page.unscrambleNote=解読手帳
+page.unscrambleNote.ct=解読スピードが遅いですか？解読手帳を使用して、解読時の内容を記録し、効率を上げることができます。\n解読時に、副手が手帳に内容を記録します。記録が増えるにつれて、解読スピードが向上します。\n記録した内容のみが有効です。
 page.md=魔動装置
 page.md.ct=通过魔通石、スティーブ将魔力作为驱动源、制造出魔力设备来使用。\n魔力设备中都可以储存魔力、如果破坏掉储存魔力的设备、魔力会爆发出来、对周围造成伤害。
 page.magicTorch=魔石火把

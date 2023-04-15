@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "axis=y":    { "model": "elementalsorcery:dungeon_rotten_lifelog" },
+        "axis=z":     { "model": "elementalsorcery:dungeon_rotten_lifelog", "x": 90 },
+        "axis=x":     { "model": "elementalsorcery:dungeon_rotten_lifelog", "x": 90, "y": 90 },
+        "axis=none":   { "model": "elementalsorcery:dungeon_rotten_lifelog" }
+    }
+}

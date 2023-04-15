@@ -44,6 +44,7 @@ import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper.WeightRandom;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
+import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 
@@ -55,6 +56,7 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 	protected final AxisAlignedBB buildingBox;
 	protected List<DungeonRoomDoor> doors = new ArrayList<>();
 	protected List<Entry<BlockPos, String>> funcs = new ArrayList<>();
+	protected DungeonFuncGlobal funcGlobal = null;
 
 	public DungeonRoomType(Building structure) {
 		this.structure = structure;
@@ -70,6 +72,11 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			if (block == ESObjects.BLOCKS.DUNGEON_DOOR) initDoor(iter.getPos());
 			else if (block == ESObjects.BLOCKS.DUNGEON_FUNCTION) initFunc(iter.getPos());
 		}
+	}
+
+	@Nullable
+	public DungeonFuncGlobal getFuncGlobal() {
+		return funcGlobal;
 	}
 
 	/** 获取建筑的静态大小 */
@@ -132,6 +139,12 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 		if (dungeonConfig.isEmpty()) return;
 
 		funcs.add(new AbstractMap.SimpleEntry(pos, dungeonConfig));
+
+		GameFunc func = GameFunc.create(new JsonObject(dungeonConfig));
+		if (func instanceof DungeonFuncGlobal) {
+			if (this.funcGlobal != null) throw new RuntimeException("mutil global func!");
+			this.funcGlobal = (DungeonFuncGlobal) func;
+		}
 	}
 
 	/*----------------------
@@ -241,7 +254,9 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 		Random rand = world.rand;
 
 		// 真是替换部分
-		if (block == ESObjects.BLOCKS.DUNGEON_BRICK) {
+		if (block == Blocks.BARRIER) {
+			newState = ESObjects.BLOCKS.DUNGEON_BARRIER.getDefaultState();
+		} else if (block == ESObjects.BLOCKS.DUNGEON_BRICK) {
 			newState = state;
 			BlockDungeonBrick.EnumType type = state.getValue(BlockDungeonBrick.VARIANT);
 			if (type == BlockDungeonBrick.EnumType.DEFAULT) {
@@ -265,6 +280,8 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 				world.setBlockState(pos.up(),
 						grass.withProperty(BlockTallGrass.TYPE, types[rand.nextInt(types.length)]));
 			}
+		} else if (block == Blocks.GLOWSTONE) {
+			newState = ESObjects.BLOCKS.DUNGEON_LIGHT.getDefaultState();
 		}
 
 		if (newState != null) {

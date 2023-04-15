@@ -50,10 +50,6 @@ public class JsonArray extends Json {
 		return json.size();
 	}
 
-	@Override
-	public boolean isObject() {
-		return false;
-	}
 
 	@Override
 	public String toString() {

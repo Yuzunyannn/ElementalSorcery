@@ -70,12 +70,13 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 		GameFunc func = create(type);
 		if (func == NOTHING) return NOTHING;
 		try {
-			jsonCreateContext.push(func, refJson);
+			jsonCreateContext.push(func, json, refJson);
 			func.loadFromJson(json, jsonCreateContext);
-			jsonCreateContext.pop();
 			return func;
 		} catch (RuntimeException e) {
 			return NOTHING;
+		} finally {
+			jsonCreateContext.pop();
 		}
 	}
 

@@ -1,0 +1,10 @@
+{
+    "type": "dungeon:global",
+    "keySupport": {
+        "red": 1,
+        "magenta": 1
+    },
+    "keyRequire": {
+        "green": 1
+    }
+}

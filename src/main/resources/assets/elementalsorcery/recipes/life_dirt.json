@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DDD",
+    "DWD",
+    "DDD"
+  ],
+  "key": {
+    "W": {
+      "item": "elementalsorcery:dungeon_rotten_lifelog"
+    },
+    "D": {
+      "item": "minecraft:dirt",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:life_dirt",
+    "count": 56
+  }
+}

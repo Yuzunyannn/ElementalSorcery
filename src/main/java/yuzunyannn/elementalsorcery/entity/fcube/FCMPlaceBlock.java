@@ -20,6 +20,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.entity.Behavior;
@@ -40,7 +41,8 @@ public class FCMPlaceBlock extends FairyCubeModule {
 	public static boolean matchAndConsumeForCraft(World world, BlockPos pos, IElementInventory inv) {
 		Biome biome = world.getBiome(pos);
 		if (biome != Biomes.PLAINS) return false;
-		return FairyCubeModuleInGame.matchAndConsumeForCraft(world, pos, inv, ItemHelper.toList(Blocks.DIRT, 256, Items.ENDER_PEARL, 8),
+		return FairyCubeModuleInGame.matchAndConsumeForCraft(world, pos, inv,
+				ItemHelper.toList(Blocks.DIRT, 256, Items.ENDER_PEARL, 8),
 				ElementHelper.toList(ESObjects.ELEMENTS.ENDER, 128, 400, ESObjects.ELEMENTS.AIR, 64, 10));
 	}
 
@@ -80,7 +82,8 @@ public class FCMPlaceBlock extends FairyCubeModule {
 		int status = this.getCurrStatus();
 		fairyCube.setLookAt(executeRay.getBlockPos());
 		int addTime = (16 / (level + 1));
-		if (status == 2) fairyCube.doExecute(16 + addTime * 8);
+		if (ESAPI.isDevelop) fairyCube.doExecute(2);
+		else if (status == 2) fairyCube.doExecute(16 + addTime * 8);
 		else fairyCube.doExecute(2 + addTime);
 	}
 

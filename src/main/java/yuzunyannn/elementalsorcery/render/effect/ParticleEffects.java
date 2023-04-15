@@ -8,6 +8,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonActinicGlass;
 import yuzunyannn.elementalsorcery.item.ItemMemoryFeather;
 import yuzunyannn.elementalsorcery.item.tool.ItemShockWand;
 import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
@@ -37,6 +38,9 @@ public class ParticleEffects {
 			break;
 		case 4:
 			ItemMemoryFeather.doEffect(world, pos, nbt);
+			break;
+		case 5:
+			BlockDungeonActinicGlass.doEffect(world, pos, nbt);
 			break;
 		}
 	}

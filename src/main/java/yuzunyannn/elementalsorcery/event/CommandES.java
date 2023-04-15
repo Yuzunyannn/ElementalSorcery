@@ -41,6 +41,8 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
+import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
 import yuzunyannn.elementalsorcery.elf.edifice.BuilderWithInfo;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
 import yuzunyannn.elementalsorcery.elf.edifice.ElfEdificeFloor;
@@ -90,6 +92,12 @@ public class CommandES extends CommandBase {
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		if (args.length < 1) throw new CommandException("commands.es.usage");
 		switch (args[0]) {
+		case "dungeon":// 地牢
+		{
+			if (args.length < 2) throw new WrongUsageException("commands.es.dungeon.usage");
+			this.cmdDungeon(Arrays.copyOfRange(args, 1, args.length), server, sender);
+			return;
+		}
 		case "build":// 建筑
 		{
 			if (args.length == 1) throw new WrongUsageException("commands.es.build.usage");
@@ -176,10 +184,13 @@ public class CommandES extends CommandBase {
 			@Nullable BlockPos targetPos) {
 		if (args.length == 1) {
 			String[] names = { "build", "page", "debug", "buildFloor", "quest", "mantra", "element", "building",
-					"edifice", "research", "test" };
+					"edifice", "research", "dungeon", "test" };
 			return CommandBase.getListOfStringsMatchingLastWord(args, names);
 		} else if (args.length >= 2) {
 			switch (args[0]) {
+			case "dungeon": {
+				return getListOfStringsMatchingLastWord(args, "new", "list");
+			}
 			case "build": {
 				List<String> arrayList = Buildings.getKeys();
 				arrayList.add("it");
@@ -540,6 +551,40 @@ public class CommandES extends CommandBase {
 		}
 		default:
 			throw new WrongUsageException("commands.es.building.usage");
+		}
+	}
+
+	// =======================-------> 地牢 <-------=======================
+	private void cmdDungeon(String[] args, MinecraftServer server, ICommandSender sender) throws CommandException {
+		String key = args[0];
+		World world = sender.getEntityWorld();
+		Entity entity = sender.getCommandSenderEntity();
+
+		switch (key) {
+		case "new": {
+			BlockPos pos = sender.getPosition();
+			if (entity != null) {
+				RayTraceResult result = WorldHelper.getLookAtBlock(world, entity, 128);
+				if (result != null) pos = result.getBlockPos().up();
+			}
+			DungeonWorld dw = DungeonWorld.getDungeonWorld(world);
+			DungeonArea area = dw.newDungeon(pos);
+			if (area.isFail()) throw new CommandException(area.getFailMsg());
+			else {
+				EntityPlayer player = null;
+				if (entity instanceof EntityPlayer) player = (EntityPlayer) entity;
+				area.startBuildRoom(world, 0, player);
+				notifyCommandListener(sender, this, "Dungeon Id : " + area.getExcerpt().getId());
+			}
+			break;
+		}
+		case "list": {
+			DungeonWorld dw = DungeonWorld.getDungeonWorld(world);
+			notifyCommandListener(sender, this, "....");
+			break;
+		}
+		default:
+			throw new WrongUsageException("commands.es.dungeon.usage");
 		}
 	}
 

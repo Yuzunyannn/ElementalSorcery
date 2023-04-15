@@ -36,6 +36,7 @@ public class BuildingBlocks {
 	private Iterator<Map.Entry<BlockPos, Integer>> iter = null;
 	private List<Map.Entry<BlockPos, Integer>> after = null;
 	private Map.Entry<BlockPos, Integer> entry = null;
+	private boolean inAfter = false;
 	private final Building building;
 	private BlockPos off = BlockPos.ORIGIN;
 	private EnumFacing facing = EnumFacing.NORTH;
@@ -48,6 +49,7 @@ public class BuildingBlocks {
 		if (iter == null) {
 			iter = building.blockMap.entrySet().iterator();
 			after = new LinkedList<>();
+			inAfter = false;
 		}
 		// 是否拥有下一个
 		while (iter.hasNext()) {
@@ -60,6 +62,12 @@ public class BuildingBlocks {
 		}
 		// 处理after
 		if (after != null && !after.isEmpty()) {
+			if (!inAfter) {
+				inAfter = true;
+				after.sort((a, b) -> {
+					return a.getKey().getY() - b.getKey().getY();
+				});
+			}
 			iter = after.iterator();
 			entry = iter.next();
 			after = null;

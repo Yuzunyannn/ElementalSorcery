@@ -93,27 +93,22 @@
 			"element": [
 				{
 					"id": "wood",
-					"size": 125,
+					"size": 135,
 					"power": 950
 				},
 				{
 					"id": "earth",
-					"size": 32,
+					"size": 41,
 					"power": 888
 				},
 				{
 					"id": "water",
-					"size": 8,
-					"power": 865
-				},
-				{
-					"id": "water",
-					"size": 8,
+					"size": 12,
 					"power": 865
 				},
 				{
 					"id": "air",
-					"size": 6,
+					"size": 9,
 					"power": 765
 				}
 			]

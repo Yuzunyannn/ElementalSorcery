@@ -1,0 +1,1181 @@
+{
+    "key": {
+        "key.es.func": {
+            "zh_CN": "功能键",
+            "en_US": "Function key",
+            "ja_JP": "機能キー"
+        }
+    },
+    "commands": {
+        "commands.es.usage": {
+            "zh_CN": "/es <操作> <参数>...",
+            "en_US": "/es <operate> <parameters>...",
+            "ja_JP": "/es <操作> <パラメータ>..."
+        },
+        "commands.es.notFound": {
+            "zh_CN": "找不到%s",
+            "en_US": "Can't find %s",
+            "ja_JP": "%sを見つからない"
+        },
+        "commands.es.buildFloor.usage": {
+            "zh_CN": "/es buildFloor <层的名称>",
+            "en_US": "/es buildFloor <floor name>",
+            "ja_JP": "/es buildFloor <階の名前>"
+        },
+        "commands.es.build.usage": {
+            "zh_CN": "/es build <it|建筑名称>",
+            "en_US": "/es build <it> or <builing name>",
+            "ja_JP": "/es build <it>や<建物の名前>"
+        },
+        "commands.es.build.it.usage": {
+            "zh_CN": "/es build it 会自动将主手上的建筑水晶建造",
+            "en_US": "/es build it will build the architecture in mainhand's Architectural Crystal.",
+            "ja_JP": "/es build it 主の手の建築水晶の中で記録する建物を建てる"
+        },
+        "commands.es.build.fail": {
+            "zh_CN": "建造失败",
+            "en_US": "Build failure",
+            "ja_JP": "ビルド失敗"
+        },
+        "commands.es.page.usage": {
+            "zh_CN": "/es page <页面的id名称>",
+            "en_US": "/es page <page's id>",
+            "ja_JP": "/es page <ページのid>"
+        },
+        "commands.es.page.fail": {
+            "zh_CN": "不存在的的id名",
+            "en_US": "Page's id are not exist",
+            "ja_JP": "存在しないページのid"
+        },
+        "commands.es.quest.usage": {
+            "zh_CN": "/es quest <clear|give|fame|debut> <玩家> <数据>",
+            "en_US": "/es quest <clear|give|fame|debut> <player> <quest>",
+            "ja_JP": "/es quest <clear|give|fame|debut> <プレイヤー> <依頼>"
+        },
+        "commands.es.quest.clear": {
+            "zh_CN": "已清空'%s'所有正在进行的任务",
+            "en_US": "All Quest in progress for '%s' have been cleared.",
+            "ja_JP": "'%s'の進行中の依頼をすべてクリアされました。"
+        },
+        "commands.es.quest.give.usage": {
+            "zh_CN": "/es quest give <玩家> <任务>",
+            "en_US": "/es quest give <player> <quest>",
+            "ja_JP": "/es quest give <プレイヤー> <依頼>"
+        },
+        "commands.es.quest.fame.usage": {
+            "zh_CN": "/es quest fame <玩家> <变更点数>",
+            "en_US": "/es quest fame <player> <Change Points>",
+            "ja_JP": "/es quest fame <プレイヤー> <ポイント変更>"
+        },
+        "commands.es.quest.fame.change": {
+            "zh_CN": "变更信誉成功！%s的信誉目前为%s点",
+            "en_US": "Change Fame successfully! %s's Fame currently is %s points",
+            "ja_JP": "信用変更成功！%sの信用現在は%sです"
+        },
+        "commands.es.quest.debt.usage": {
+            "zh_CN": "/es quest debt <玩家> <变更点数>",
+            "en_US": "/es quest debt <player> <Change Points>",
+            "ja_JP": "/es quest debt <プレイヤー> <ポイント変更>"
+        },
+        "commands.es.quest.debt.change": {
+            "zh_CN": "变更负债成功！%s的负债目前为%s点",
+            "en_US": "Change Debts successfully! %s's Debts currently is %s points",
+            "ja_JP": "負債変更成功！%sの負債現在は%sです"
+        },
+        "commands.es.mantra.usage": {
+            "zh_CN": "/es mantra <give|add|remove> <玩家> <咒文>",
+            "en_US": "/es mantra <give|add|remove> <player> <mantra>",
+            "ja_JP": "/es mantra <give|add|remove> <プレイヤー> <呪文>"
+        },
+        "commands.es.mantra.give": {
+            "zh_CN": "给予了%s咒文%s",
+            "en_US": "Give %s Mantra of %s",
+            "ja_JP": "%sに呪文%sを与えた"
+        },
+        "commands.es.mantra.remove": {
+            "zh_CN": "为%s的魔典移除了咒文%s",
+            "en_US": "Remove Mantra of %s for %s's Grimoire",
+            "ja_JP": "%sの魔典に呪文%sを除去しました"
+        },
+        "commands.es.mantra.add": {
+            "zh_CN": "为%s的魔典添加了咒文%s",
+            "en_US": "Add Mantra of %s for %s's Grimoire",
+            "ja_JP": "%sの魔典に呪文%sを加えました"
+        },
+        "commands.es.element.usage": {
+            "zh_CN": "/es element <give|insert|extract|add> <玩家> <元素>",
+            "en_US": "/es element <give|insert|extract|add> <player> <element>",
+            "ja_JP": "/es element <give|insert|extract|add> <プレイヤー> <元素>"
+        },
+        "commands.es.element.give": {
+            "zh_CN": "给予了%s元素水晶，包含%s",
+            "en_US": "Give %s Element Crystal of %s",
+            "ja_JP": "%sに%sを含む元素の水晶を与えた"
+        },
+        "commands.es.element.notFound": {
+            "zh_CN": "手上必须拿着物品",
+            "en_US": "You have to have something in your hand",
+            "ja_JP": "手に物を持たなければなりません。"
+        },
+        "commands.es.element.notModifiable": {
+            "zh_CN": "手上拿着物品的容器不允许添加数量",
+            "en_US": "Element Inventory in your hand cannot are not allowed to modify.",
+            "ja_JP": "所持品の元素容器に数量を追加することはできません。"
+        },
+        "commands.es.building.usage": {
+            "zh_CN": "/es building <record|release|give> <...>",
+            "en_US": "/es building <record|release|give> <...>",
+            "ja_JP": "/es building <record|release|give> <...>"
+        },
+        "commands.es.building.give.usage": {
+            "zh_CN": "/es building give <玩家> <建筑key>",
+            "en_US": "/es building give <player> <builing key>",
+            "ja_JP": "/es building give <プレイヤー> <建築key>"
+        },
+        "commands.es.building.release": {
+            "zh_CN": "已保存并清空所有临时建筑缓存",
+            "en_US": "Save and Release all ref from temp building and call GC",
+            "ja_JP": "すべての建築キャッシュを保存とリリースしました。"
+        },
+        "commands.es.building.recordFail": {
+            "zh_CN": "请确保您手里的魔力标尺有区域数据！",
+            "en_US": "Please make sure the Magic Ruler in your hand has area data!",
+            "ja_JP": "あなたの持っている魔力ルーラーに領域データがあることを確認してください。"
+        },
+        "commands.es.building.record": {
+            "zh_CN": "成功记录了建筑数据，并给予了%s建筑水晶",
+            "en_US": "Successfully recorded building data and gave %s Structural Crystal",
+            "ja_JP": "建築データを記録し、%sに建築の水晶を与えました。"
+        },
+        "commands.es.building.give": {
+            "zh_CN": "给予了%s建筑水晶，建筑为%s",
+            "en_US": "Gave %s Structural Crystal of %s",
+            "ja_JP": "%sに%sの建築の水晶を与えました"
+        },
+        "commands.es.edifice.usage": {
+            "zh_CN": "/es edifice <store|restore|build|fix> <数据>",
+            "en_US": "/es edifice <store|restore|build|fix> <data>",
+            "ja_JP": "/es edifice <store|restore|build|fix> <データ>"
+        },
+        "commands.es.edifice.restore.usage": {
+            "zh_CN": "/es edifice restore <数据>",
+            "en_US": "/es edifice restore <data>",
+            "ja_JP": "/es edifice restore <データ>"
+        },
+        "commands.es.edifice.no.core": {
+            "zh_CN": "找不到树核心，请站到树核心的正下方",
+            "en_US": "Can't find Tree Core, please stand directly below the tree core.",
+            "ja_JP": "木核心が見つからない、木核心の真下に立ってください"
+        },
+        "commands.es.edifice.store.success": {
+            "zh_CN": "成功创建了恢复数据(已经输出到了log里)：%s",
+            "en_US": "Restore data has been created(and output to log): %s",
+            "ja_JP": "回復データを作成して（既にロゴに出力されました）:%s"
+        },
+        "commands.es.edifice.restore.success": {
+            "zh_CN": "恢复成功！",
+            "en_US": "Restore Success!",
+            "ja_JP": "回復成功！"
+        },
+        "commands.es.not.support.commandBlock": {
+            "zh_CN": "不支持命令方块",
+            "en_US": "Unsupport Command Block",
+            "ja_JP": "コマンドブロックがサポートされていません。"
+        },
+        "commands.es.research.usage": {
+            "zh_CN": "/es research <add|sub> <玩家> <类型> <数值>",
+            "en_US": "/es research <add|sub> <player> <type> <value>",
+            "ja_JP": "/es research <add|sub> <プレイヤー> <タイプ> <数値>"
+        },
+        "commands.es.research.add": {
+            "zh_CN": "给予了%s%s点%s",
+            "en_US": "Give %s %s %s",
+            "ja_JP": "%sに%sの%sを与えました"
+        },
+        "commands.es.dungeon.usage": {
+            "zh_CN": "/es dungeon <new|list>",
+            "en_US": "/es dungeon <new|list>",
+            "ja_JP": "/es dungeon <new|list>"
+        }
+    },
+    "arc": {
+        "arc.infusion.name": {
+            "zh_CN": "注魔祭坛",
+            "en_US": " Enchanting Altar",
+            "ja_JP": "エンチャント祭壇"
+        },
+        "arc.absorbBox.name": {
+            "zh_CN": "元素吸收祭坛",
+            "en_US": "Element Absorb Altar",
+            "ja_JP": "元素を吸収する祭壇"
+        },
+        "arc.deconstructBox.name": {
+            "zh_CN": "物质瓦解通魔石祭坛",
+            "en_US": "Material Disintegrate Altar With Stone Magic",
+            "ja_JP": "物質瓦解通魔石の祭壇"
+        },
+        "arc.supremeAltar.name": {
+            "zh_CN": "天空祭坛",
+            "en_US": "Supreme Altar",
+            "ja_JP": "天空祭壇"
+        },
+        "arc.spellbookAltar.name": {
+            "zh_CN": "魔法书祭坛",
+            "en_US": "Magic Desk Altar",
+            "ja_JP": "魔導書祭壇"
+        },
+        "arc.elementCraftingAltar.name": {
+            "zh_CN": "元素合成祭坛",
+            "en_US": "Element Crafting Altar",
+            "ja_JP": "元素合成祭壇"
+        },
+        "arc.deconstructAltar.name": {
+            "zh_CN": "物质瓦解小祭坛",
+            "en_US": "Small Material Disintegrate Altar",
+            "ja_JP": "物質瓦解小祭壇"
+        },
+        "arc.deconstructAltarAdv.name": {
+            "zh_CN": "物质瓦解祭坛",
+            "en_US": "Material Disintegrate Altar",
+            "ja_JP": "物質瓦解祭壇"
+        },
+        "arc.builingAltar.name": {
+            "zh_CN": "建筑解析祭坛",
+            "en_US": "Architectural Analysis Altar",
+            "ja_JP": "建築解析祭壇"
+        },
+        "arc.analysisAltar.name": {
+            "zh_CN": "结构解析祭坛",
+            "en_US": "Structural Analysis Altar",
+            "ja_JP": "構造解析祭壇"
+        },
+        "arc.analysisAltarAdd.name": {
+            "zh_CN": "结构解析祭坛附属石柱",
+            "en_US": "Structural Analysis Altar Subsidiary Pillar",
+            "ja_JP": "構造解析祭壇の付属の石柱"
+        },
+        "arc.crystalGarden.name": {
+            "zh_CN": "水晶花园",
+            "en_US": "Crystal Garden",
+            "ja_JP": "水晶ガーデン"
+        },
+        "arc.resonantIncubator.name": {
+            "zh_CN": "共鸣培养祭坛",
+            "en_US": "Resonant Incubator Altar",
+            "ja_JP": "共鳴培養祭壇"
+        },
+        "arc.portalAltar.name": {
+            "zh_CN": "折光祭坛",
+            "en_US": "Refract Altar",
+            "ja_JP": "折り光祭壇"
+        },
+        "arc.transcribeAltar.name": {
+            "zh_CN": "撰录祭坛",
+            "en_US": "Transcribe Altar",
+            "ja_JP": "書き写し祭壇"
+        },
+        "arc.mappingAltar.name": {
+            "zh_CN": "频率共祭坛",
+            "en_US": "Frequency Inductor Altar",
+            "ja_JP": "周波数共感祭壇"
+        },
+        "arc.deconstructWindmill.name": {
+            "zh_CN": "物质瓦解风车",
+            "en_US": "Material Disintegrate Windmill",
+            "ja_JP": "物質瓦解風車"
+        },
+        "arc.disintegrateAltar.name": {
+            "zh_CN": "崩解祭坛",
+            "en_US": "Material Collapse Altar",
+            "ja_JP": "崩解し祭壇"
+        },
+        "arc.elementReactor.name": {
+            "zh_CN": "星空祭坛",
+            "en_US": "Starry Altar",
+            "ja_JP": "星空祭壇"
+        },
+        "arc.instantConstitute.name": {
+            "zh_CN": "瞬构祭坛",
+            "en_US": "Instant Constitute Altar",
+            "ja_JP": "瞬構祭壇"
+        }
+    },
+    "info": {
+        "info.none": {
+            "zh_CN": "无",
+            "en_US": "nothing",
+            "ja_JP": "無"
+        },
+        "info.unknow": {
+            "zh_CN": "未知",
+            "en_US": "unknow",
+            "ja_JP": "未知"
+        },
+        "info.wrong.dimension": {
+            "zh_CN": "已有数据不属于该纬度！",
+            "en_US": "The existing data does not belong to this world!",
+            "ja_JP": "既存のデータはこの緯度に属していません"
+        },
+        "info.posSet.success": {
+            "zh_CN": "成功选择了位置：(%d,%d,%d)",
+            "en_US": "Location selected successfully: (%d,%d,%d)",
+            "ja_JP": "選択しました位置：(%d,%d,%d)"
+        },
+        "info.magicalPiece.itcando": {
+            "zh_CN": "这个魔力碎片貌似可以合成某些东西，emmmm...",
+            "en_US": "This Magic Fragment seems to be able to craft something, emmmm...",
+            "ja_JP": "この魔力欠片は何かを合成できるようです、emmmm..."
+        },
+        "info.elementCrystal.has": {
+            "zh_CN": "%s 拥有%s，能量为%d",
+            "en_US": "%s have %s, power is %d",
+            "ja_JP": "%sは%sを含む、パワーは%d"
+        },
+        "info.elementCube.limit.upper": {
+            "zh_CN": "能量上限%s",
+            "en_US": "Power upper limit is %s",
+            "ja_JP": "パワー上限%s"
+        },
+        "info.elementCube.limit.lower": {
+            "zh_CN": "能量下限%s",
+            "en_US": "Power lower limit is %s",
+            "ja_JP": "パワー下限%s"
+        },
+        "info.elementCube.terminal": {
+            "zh_CN": "拥有终端",
+            "en_US": "Terminal has installed",
+            "ja_JP": "ターミナルをインストールされました"
+        },
+        "info.kyaniteTools.el": {
+            "zh_CN": "具有有元素亲和",
+            "en_US": "It has elemental affinity",
+            "ja_JP": "元素親和性を持ってる"
+        },
+        "info.scroll.none": {
+            "zh_CN": "该卷轴内仅有%d张空白的羊皮纸，右键打开",
+            "en_US": "There are %d blank parchments in this scroll, right click to open",
+            "ja_JP": "この羊皮巻物の中でただ%d枚の空白の羊皮紙を含む、右クリックで開く"
+        },
+        "info.scroll.has": {
+            "zh_CN": "该卷轴包含有%d张羊皮纸，右键打开",
+            "en_US": "There are %d parchments in this scroll, right click to open",
+            "ja_JP": "この羊皮巻物の中で%d枚の羊皮紙を含む、右クリックで開く"
+        },
+        "info.manual.info": {
+            "zh_CN": "shift+右键存入包中所有羊皮卷（重复的会被清除）",
+            "en_US": "Shift+Right Click to store all the parchments in this manual.(The duplicate will be cleared.)",
+            "ja_JP": "shift+右クリックでカバンの中にある羊皮紙を全部に預く（繰り返しのはクリアされる）"
+        },
+        "info.manual.count": {
+            "zh_CN": "当前包含：%d/%d",
+            "en_US": "Contains: %d/%d",
+            "ja_JP": "現在は%d/%dを含んでいる"
+        },
+        "info.arcCrystal.choice": {
+            "zh_CN": "shift+右键，选择对应的方块上方",
+            "en_US": "Shift Right-Click to select the block above",
+            "ja_JP": "shift+右クリックでブロックの上を選択する"
+        },
+        "info.arcCrystal.miss": {
+            "zh_CN": "建筑结构丢失",
+            "en_US": "Structure miss",
+            "ja_JP": "建築構造が失われます"
+        },
+        "info.arcCrystal.wait": {
+            "zh_CN": "建筑结构构建中...",
+            "en_US": "Building...",
+            "ja_JP": "建築構造構築中…"
+        },
+        "info.arcCrystal.name": {
+            "zh_CN": "建筑名称：%s",
+            "en_US": "Name: %s",
+            "ja_JP": "建築名前：%s"
+        },
+        "info.arcCrystal.author": {
+            "zh_CN": "建筑作者：%s",
+            "en_US": "Author: %s",
+            "ja_JP": "建築作者：%s"
+        },
+        "info.select.axis": {
+            "zh_CN": "选定坐标：(%d,%d,%d)",
+            "en_US": "Selected coordinate: (%d,%d,%d)",
+            "ja_JP": "選択しました座標：(%d,%d,%d)"
+        },
+        "info.arcCrystal.face": {
+            "zh_CN": "选定方向：%s",
+            "en_US": "Selected direction: %s",
+            "ja_JP": "選択した方向：%s"
+        },
+        "info.arcCrystal.count": {
+            "zh_CN": "%s需要：%d",
+            "en_US": "%s need: %d",
+            "ja_JP": "%sは%dが必要です"
+        },
+        "info.arcCrystal.blank": {
+            "zh_CN": "这里面什么都没有记录，无法进行设置位置",
+            "en_US": "There is no record of anything in it. You can't set the location.",
+            "ja_JP": "この中には何も記録されていないので、位置の設定ができない"
+        },
+        "info.dimension.id": {
+            "zh_CN": "维度：%d",
+            "en_US": "Dimension: %d",
+            "ja_JP": "次元： %d"
+        },
+        "info.rainfall": {
+            "zh_CN": "降水：%.2f",
+            "en_US": "Rainfall: %.2f",
+            "ja_JP": "降水：%.2f"
+        },
+        "info.can.grow.elf.edifice": {
+            "zh_CN": "这里具有充足的精灵力",
+            "en_US": "There's plenty of elf power here.",
+            "ja_JP": "ここは十分な精霊力が含まれている"
+        },
+        "info.slime.chunk": {
+            "zh_CN": "史莱姆在这里栖息",
+            "en_US": "Slime lives here.",
+            "ja_JP": "スライムはここに住んでいる"
+        },
+        "info.mineral.deposits": {
+            "zh_CN": "矿藏：%s",
+            "en_US": "Minerals: %s",
+            "ja_JP": "地下資源：%s"
+        },
+        "info.around.have": {
+            "zh_CN": "周边存在着%s",
+            "en_US": "There is %s around",
+            "ja_JP": "周辺に%sがある"
+        },
+        "info.spbe.absorb": {
+            "zh_CN": "元素吸收",
+            "en_US": "Element Absorb",
+            "ja_JP": "元素吸収"
+        },
+        "info.spbe.release": {
+            "zh_CN": "元素释放",
+            "en_US": "Element Release ",
+            "ja_JP": "元素釈放"
+        },
+        "info.launchbook.shift": {
+            "zh_CN": "shift+右键切换咒文",
+            "en_US": "Shift+Right Click to switch incantation",
+            "ja_JP": "shift+右クリックで起動呪文を切り替え"
+        },
+        "info.ruler.pos": {
+            "zh_CN": "坐标%d：(%d,%d,%d)",
+            "en_US": "Coordinate %d: (%d,%d,%d)",
+            "ja_JP": "座標%d：(%d,%d,%d)"
+        },
+        "info.ruler.color": {
+            "zh_CN": "当前颜色：%s",
+            "en_US": "Current Color: %s",
+            "ja_JP": "色：%s"
+        },
+        "info.ruler.none": {
+            "zh_CN": "当前无记录，右键和shift右键分别记录两个方块位置",
+            "en_US": "There is no record. Right click and shift right-click to record the positions of two squares",
+            "ja_JP": "今は記録なし、shift+右クリックで2つのブロックの位置をそれぞれ記録する"
+        },
+        "info.ruler.fail": {
+            "zh_CN": "两点的距离过远，无法设定",
+            "en_US": "The distance between two points is too far to set",
+            "ja_JP": "2点の距離が遠すぎので、設定できない"
+        },
+        "info.itemCrystal.data": {
+            "zh_CN": "结构数据：%s",
+            "en_US": "Structural Data: %s",
+            "ja_JP": "構造データ：%s"
+        },
+        "info.itemCrystal.complex": {
+            "zh_CN": "复杂度：%d",
+            "en_US": "Complexity: %d",
+            "ja_JP": "複雑さ：%d"
+        },
+        "info.itemCrystal.z": {
+            "zh_CN": "组成元素：",
+            "en_US": "Elements:",
+            "ja_JP": "構成元素："
+        },
+        "info.itemCrystal.e": {
+            "zh_CN": "%s:%d 能量:%d",
+            "en_US": "%s:%d power: %d",
+            "ja_JP": "%s:%d パワー:%d"
+        },
+        "info.analysisAltar.none": {
+            "zh_CN": "无需要解析的物品",
+            "en_US": "Nothing to analyze",
+            "ja_JP": "解析したいものがない"
+        },
+        "info.analysisAltar.itema": {
+            "zh_CN": "正在解析：",
+            "en_US": "Analyzing:",
+            "ja_JP": "解析中："
+        },
+        "info.analysisAltar.itemfail": {
+            "zh_CN": "解析失败",
+            "en_US": "Analyze Fail",
+            "ja_JP": "解析失敗"
+        },
+        "info.analysisAltar.item": {
+            "zh_CN": "解析物品：",
+            "en_US": "Analyze Items:",
+            "ja_JP": "解析のアイテム："
+        },
+        "info.analysisAltar.complex": {
+            "zh_CN": "结构复杂度：%d",
+            "en_US": "Complexity: %d",
+            "ja_JP": "構造複雑さ：%d"
+        },
+        "info.elementCrafting": {
+            "zh_CN": "元素合成",
+            "en_US": "Element Crafting",
+            "ja_JP": "元素合成"
+        },
+        "info.level": {
+            "zh_CN": "%d级",
+            "en_US": "Level %d",
+            "ja_JP": "レベル%d"
+        },
+        "info.written": {
+            "zh_CN": "上面写着：%s",
+            "en_US": "It says: %s",
+            "ja_JP": "%sと書いてる"
+        },
+        "info.crystal.frequency": {
+            "zh_CN": "水晶频率：%.1f",
+            "en_US": "Crystal frequency: %.1f",
+            "ja_JP": "水晶の周波数：%.1f"
+        },
+        "info.crystal.percept": {
+            "zh_CN": "感知的频率：%.1f",
+            "en_US": "Perceived frequency: %.1f",
+            "ja_JP": "感知した周波数：%.1f"
+        },
+        "info.resonantCrystal": {
+            "zh_CN": "这种水晶看着就想把它扔出去...",
+            "en_US": "This kind of crystal just wants to throw it out...",
+            "ja_JP": "この水晶は見ているだけで投げ出したいな…"
+        },
+        "info.page.need": {
+            "zh_CN": "查看这张羊皮卷前你应当先查看：",
+            "en_US": "Before you look at this scroll, you should check:",
+            "ja_JP": "查看这张羊皮紙前你应当先查看：この羊の羊皮紙を見る前に、まず以下の内容を確認してください。"
+        },
+        "info.page.creative.check": {
+            "zh_CN": "创造模式下Shift+右键可以查找关于副手物品的羊皮卷，并将数据写入",
+            "en_US": "Use Shift + RightClick to find and write the infomation about item on off hand to this parchment in creative mode.",
+            "ja_JP": "Shift + 右ボタンを使って副手の物品について検索したインフォメーションを羊皮巻物に書き込むことができます"
+        },
+        "info.elfPurse.coin": {
+            "zh_CN": "拥有%d元",
+            "en_US": "Have %d yuan",
+            "ja_JP": "%d元を持っている"
+        },
+        "info.elf.goods.coin": {
+            "zh_CN": "%d元",
+            "en_US": "%d yuan",
+            "ja_JP": "%d元"
+        },
+        "info.grimoire.element": {
+            "zh_CN": "魔典内蕴含的元素：",
+            "en_US": "Element in Grimoire:",
+            "ja_JP": "魔典に含まれている元素："
+        },
+        "info.grimoire.record": {
+            "zh_CN": "魔典中记载着%d个咒文",
+            "en_US": "There are %d mantra recorded in this grimoire.",
+            "ja_JP": "魔典には%dの呪文が記載されています"
+        },
+        "info.grimoire.nothing": {
+            "zh_CN": "魔典中什么也没有写",
+            "en_US": "There's nothing in grimoire.",
+            "ja_JP": "魔典には何も書かれていません"
+        },
+        "info.grimoire.current": {
+            "zh_CN": "当前咒文：%s",
+            "en_US": "Current mantra: %s",
+            "ja_JP": "現在の呪文：%s"
+        },
+        "info.grimoire.error": {
+            "zh_CN": "当前咒文已失效",
+            "en_US": "Current mantra is invalid.",
+            "ja_JP": "現在の呪文は失効した。"
+        },
+        "info.grimoire.blank": {
+            "zh_CN": "书中还有%d页空白",
+            "en_US": "There are %d blank pages left in the book.",
+            "ja_JP": "本の中にまだ%d空白ページがある"
+        },
+        "info.grimoire.collect.sub1": {
+            "zh_CN": "%s 能量下限:%s 消耗速率:%s/s 最低量:%s 最高量:%s",
+            "en_US": "%s, power lower limit: %s, consumption: %s/s, min count: %s, max count: %s",
+            "ja_JP": "%s パワー下限:%s しょうひ率:%s/s 最低量:%s 最高量:%s"
+        },
+        "info.grimoire.collect.sub2": {
+            "zh_CN": "%s 能量下限:%s 消耗速率:%s/s 需求量:%s",
+            "en_US": "%s, power lower limit: %s/s, consumption: %s, need count: %s",
+            "ja_JP": "%s パワー下限:%s しょうひ率:%s/s 需要量:%s"
+        },
+        "info.grimoire.collect.sub3": {
+            "zh_CN": "%s 能量下限:%s 消耗速率:%s/s",
+            "en_US": "%s, power lower limit: %s/s, consumption: %s",
+            "ja_JP": "%s パワー下限:%s しょうひ率:%s/s"
+        },
+        "info.grimoire.collect.sub4": {
+            "zh_CN": "%s 能量下限:%s 需求量:%s",
+            "en_US": "%s, power lower limit: %s/s, need count: %s",
+            "ja_JP": "%s パワー下限:%s 需要量:%s"
+        },
+        "info.ancientPaper.mantra": {
+            "zh_CN": "这上面记录着被称作「%s」的咒文",
+            "en_US": "This paper records the Mantra called 「%s」",
+            "ja_JP": "この上には「%s」という呪文が記されています。"
+        },
+        "info.ancientPaper.normal": {
+            "zh_CN": "这上面记录着有关「%s」的内容",
+            "en_US": "This paper records about 「%s」",
+            "ja_JP": "この上には「%s」に関する内容が記録されています。"
+        },
+        "info.ancientPaper.record": {
+            "zh_CN": "这上面可阅读的部分似乎只有%d%%~%d%%",
+            "en_US": "The only readable part of this paper seems to be %d%% ~ %d%%",
+            "ja_JP": "この上の内容は読める部分が%d%%~%d%%だけらしい"
+        },
+        "info.ancientPaper.unknow": {
+            "zh_CN": "我看不懂这张古卷上记载的内容",
+            "en_US": "I can't understand what is recorded in this Ancient Paper",
+            "ja_JP": "この古巻に記載されている内容が分かりません。"
+        },
+        "info.ancientPaper.progress": {
+            "zh_CN": "解读进度%s",
+            "en_US": "Progress of unscrambling %s",
+            "ja_JP": "解読進捗%s"
+        },
+        "info.research.increase": {
+            "zh_CN": "研究：你对「%s」更加感兴趣了",
+            "en_US": "Research: Are you more interested in 「%s」",
+            "ja_JP": "研究：あなたは「%s」にもっと興味があります。"
+        },
+        "info.can.not.unscramble": {
+            "zh_CN": "你疲倦了，不想在继续解读了",
+            "en_US": "You're too tired to read any more",
+            "ja_JP": "あなたは疲れました、読み続けたくない"
+        },
+        "info.want.not.unscramble": {
+            "zh_CN": "你有点累了，但是这并不要紧。",
+            "en_US": "You're a little tired, but it doesn't matter",
+            "ja_JP": "あなたは少し疲れて、だけどそれは大丈夫"
+        },
+        "info.not.atigue": {
+            "zh_CN": "你不再疲倦了",
+            "en_US": "You're no longer tired",
+            "ja_JP": "あなたもう疲れません"
+        },
+        "info.underway": {
+            "zh_CN": "正在进行",
+            "en_US": "underway",
+            "ja_JP": "進行中"
+        },
+        "info.complete": {
+            "zh_CN": "完成",
+            "en_US": "complete",
+            "ja_JP": "完了"
+        },
+        "info.level.total.page.count": {
+            "zh_CN": "%d级仪式拥有%d种不同的羊皮卷",
+            "en_US": "% Level Rite have %d different kinds of parchment.",
+            "ja_JP": "%d級の儀式は%d種類の羊皮纸を持っています"
+        },
+        "info.page.from": {
+            "zh_CN": "这张羊皮纸来自于%s",
+            "en_US": "This parchment is from %s",
+            "ja_JP": "この羊皮紙は%sから来ました"
+        },
+        "info.address": {
+            "zh_CN": "地址：%s",
+            "en_US": "Address：%s",
+            "ja_JP": "住所：%s"
+        },
+        "info.signature": {
+            "zh_CN": "署名：%s",
+            "en_US": "Signature：%s",
+            "ja_JP": "署名：%s"
+        },
+        "info.from": {
+            "zh_CN": "来自%s",
+            "en_US": "From %s",
+            "ja_JP": "%sから"
+        },
+        "info.service.times": {
+            "zh_CN": "服务次数：%d",
+            "en_US": "Service Times: %d",
+            "ja_JP": "サービス回数：%d"
+        },
+        "info.remain.space": {
+            "zh_CN": "剩余空间：%s",
+            "en_US": "Remaining Space：%s",
+            "ja_JP": "空き容量：%s"
+        },
+        "info.soul.power": {
+            "zh_CN": "魂力：%d",
+            "en_US": "Power of Soul: %d",
+            "ja_JP": "魂の力：%d"
+        },
+        "info.attr.hardness": {
+            "zh_CN": "硬度：%s",
+            "en_US": "Hardness：%s",
+            "ja_JP": "硬度：%s"
+        },
+        "info.power": {
+            "zh_CN": "能量：%s",
+            "en_US": "Power: %s",
+            "ja_JP": "パワー：%s"
+        },
+        "info.following.record": {
+            "zh_CN": "记录了：",
+            "en_US": "The following are recorded:",
+            "ja_JP": "記録しました:"
+        },
+        "info.ding.ring.ring": {
+            "zh_CN": "叮铃铃~",
+            "en_US": "Ding Ring Ring ~",
+            "ja_JP": "ジリリ~"
+        },
+        "info.star.bell": {
+            "zh_CN": "星之铃发出了%s的声音",
+            "en_US": "Star Bell made a %s sound",
+            "ja_JP": "星の鈴が%s音を立てた"
+        },
+        "info.sound.deep": {
+            "zh_CN": "深沉",
+            "en_US": "Deep",
+            "ja_JP": "底力ある"
+        },
+        "info.sound.crisp": {
+            "zh_CN": "清脆",
+            "en_US": "Crisp",
+            "ja_JP": "さえた"
+        },
+        "info.sound.long": {
+            "zh_CN": "悠长",
+            "en_US": "Long",
+            "ja_JP": "長い"
+        },
+        "info.previous": {
+            "zh_CN": "上一个%s",
+            "en_US": "Previous %s",
+            "ja_JP": "前の%s"
+        },
+        "info.fairy.cube.module.count": {
+            "zh_CN": "拥有符文：%d",
+            "en_US": "Rune of possession: %d",
+            "ja_JP": "ルーンの所持：%d"
+        },
+        "info.set.common": {
+            "zh_CN": "设置%s",
+            "en_US": "Set %s",
+            "ja_JP": "設定%s"
+        },
+        "info.magic.fragment": {
+            "zh_CN": "魔力片元",
+            "en_US": "Magic Fragment",
+            "ja_JP": "魔力断片"
+        },
+        "info.tileEntity.not.find": {
+            "zh_CN": "没有方块的数据",
+            "en_US": "No Block's Data",
+            "ja_JP": "ブロックのデータなし"
+        },
+        "info.standardDeviation": {
+            "zh_CN": "标准差",
+            "en_US": "Standard Deviation",
+            "ja_JP": "標準偏差"
+        },
+        "info.installer.success": {
+            "zh_CN": "安装成功",
+            "en_US": "Installed Successfully",
+            "ja_JP": "インストール成功"
+        },
+        "info.fame.decline": {
+            "zh_CN": "你对精灵的暴行被%s个精灵看到了，信誉下降了%s",
+            "en_US": "Your atrocities against Elves were seen by %s elves, Fame decreased %s point",
+            "ja_JP": "精霊に対する暴行は%sの精霊に見られしまた、信用が%s下がった"
+        },
+        "info.elf.diamond": {
+            "zh_CN": "非常昂贵的钻石，除此之外没有啥其他价值，精灵们会非常喜欢它",
+            "en_US": "A very expensive diamond has no other value. Elves love it very much",
+            "ja_JP": "非常に高価なダイヤモンドで、それ以外に価値はありません。精霊たちはそれが大好きそうです"
+        },
+        "info.my.master": {
+            "zh_CN": "主人：%s",
+            "en_US": "Master: %s",
+            "ja_JP": "マスター：%s"
+        },
+        "info.relic.bind.master": {
+            "zh_CN": "设置了主人为：%s",
+            "en_US": "The master is set as: %s",
+            "ja_JP": "マスター設定：%s"
+        },
+        "info.concentration": {
+            "zh_CN": "浓度：%s",
+            "en_US": "Concentration: %s",
+            "ja_JP": "濃度：%s"
+        }
+    },
+    "info.dungeon": {
+        "info.dungeon.build.exception": {
+            "zh_CN": "地牢建造异常！可以向作者报告这个BUG",
+            "en_US": "An exception exception when building Dungeon! Please report this bug to the author.",
+            "ja_JP": "地下牢の建設中に異常が発生しました、著者にこのBUGを報告してくればいいね"
+        },
+        "info.dungeon.build.too.close": {
+            "zh_CN": "两个地牢建造过近",
+            "en_US": "Two dungeons built too close.",
+            "ja_JP": "2つの地下牢が近すぎる"
+        },
+        "info.dungeon.no.key.to.open.door": {
+            "zh_CN": "缺少钥匙，虚映反射失败",
+            "en_US": "Missing key, Virtual Sight cannot be reflected",
+            "ja_JP": "かぎが見つかりません、虚映を反射できません"
+        },
+        "info.dungeon.no.remember.fragment": {
+            "zh_CN": "需要%s才能完成反射",
+            "en_US": "%s required to complete reflection",
+            "ja_JP": "反射のために%sが必要です"
+        },
+        "info.dungeon.no.remember.found": {
+            "zh_CN": "寻找不到任何记忆中的物品",
+            "en_US": "Cannot find any Memory",
+            "ja_JP": "何の記憶のアイテムも見つからない"
+        },
+        "info.dungeon.remember.found": {
+            "zh_CN": "寻找到了记忆中的物品",
+            "en_US": "Found some Memory",
+            "ja_JP": "何かの記憶のアイテムを見つけた"
+        },
+        "info.dungeon.remember.appear": {
+            "zh_CN": "记忆中的物品已经出现",
+            "en_US": "Memory appear",
+            "ja_JP": "記憶のアイテムを現った"
+        },
+        "info.dungeon.memoryFeather.usage": {
+            "zh_CN": "在地牢迷宫的房间里使用，可以消耗1点耐久来检查是否存在记忆中的物品\\n潜行使用可以让物品呈现，如果无可呈现的会消耗2点耐久",
+            "en_US": "When used in a Dungeon Room, it can consume 1 durability to check whether there has Memory Item. \\nSneaking use can make Memory Item appear, and if there is nothing to appear, it will consume 2 durability.",
+            "ja_JP": "地下牢の部屋で使用すると、1耐久で記憶のアイテムの存在どうかを分れる\\n潜行使用すると記憶のアイテムを現れる、だが現れない時、2耐久を消費する"
+        },
+        "info.dungeon.rottenLifeLog": {
+            "zh_CN": "哪怕是朽木，依然蕴含着强大的力量",
+            "en_US": "Even rotten wood still contains powerful force",
+            "ja_JP": "朽木でも、強い力が宿っている"
+        },
+        "info.dungeon.actinicGlass": {
+            "zh_CN": "可以持续吸收光能，催化下方作物的装置",
+            "en_US": "A device that can continuously absorb light energy and catalyze crops below",
+            "ja_JP": "光エネルギーを持続的に吸収し、下方の作物を触媒できる装置"
+        }
+    },
+    "info.mc": {
+        "info.mc.archi.Temple.name": {
+            "zh_CN": "沙漠神殿",
+            "en_US": "Desert Pyramid",
+            "ja_JP": "砂漠のピラミッド"
+        }
+    },
+    "info.element": {
+        "info.element.spell.fire": {
+            "zh_CN": "点燃指定的方块",
+            "en_US": "Ignite the specified block",
+            "ja_JP": "指定されたブロックに火をつける"
+        },
+        "info.element.spell.ender": {
+            "zh_CN": "借助末影元素的力量，史蒂夫可以向末影人一样，传送至远方",
+            "en_US": "With the power of Enderman, Steve can be transmitted to the distance just like enderman",
+            "ja_JP": "エンダー元素の力を貸して、スティーブがエンダーマンみたい、遠くに転移する"
+        },
+        "info.element.spell.water": {
+            "zh_CN": "在指定方块的上面召唤水",
+            "en_US": "Emerge water above a block.",
+            "ja_JP": "ブロックの上で水を召喚する"
+        },
+        "info.element.spell.wood": {
+            "zh_CN": "在木之元素环绕之下，周围的植物可以快速生长",
+            "en_US": "Surrounded by Wood Element, the surrounding plants can grow rapidly.",
+            "ja_JP": "木の元素に囲まれて、周りの植物が速く成長できる"
+        },
+        "info.element.spell.knowledge": {
+            "zh_CN": "知识元素可以随时随地的让史蒂夫进行附魔",
+            "en_US": "Knowledge Element can make Steve enchant anytime, anywhere.",
+            "ja_JP": "知識の元素で、スティーブはいつでもどこでもエンチャントできる"
+        },
+        "info.element.spell.air": {
+            "zh_CN": "瞬间改变周围的空气流动，让史蒂夫急速减速",
+            "en_US": "Instantly changed the air flow around Steve, and making slow down quickly.",
+            "ja_JP": "一瞬で周りの空気を変え、スティーブを急に減速させる"
+        },
+        "info.element.spell.metal": {
+            "zh_CN": "点石成金，元素与矿石之类的方块发生共鸣，改变它们的结构，从而产生新的矿石",
+            "en_US": "Be able to perform wonders. Metal Element resonate with a block like ore, and change their structure into a new ore.",
+            "ja_JP": "石を金に変える、金の元素は鉱石のようなブロックと共鳴し、構造を変えり、新しい鉱石を変更する"
+        },
+        "info.element.spell.earth": {
+            "zh_CN": "让方块，坠落吧",
+            "en_US": "Let block fall.",
+            "ja_JP": "ブロックを墜落させましょう"
+        }
+    },
+    "lev": {
+        "lev.defective": {
+            "zh_CN": "次品",
+            "en_US": "defective",
+            "ja_JP": "劣等品"
+        },
+        "lev.unsuited": {
+            "zh_CN": "不适合",
+            "en_US": "unsuited",
+            "ja_JP": "似合わない "
+        },
+        "lev.subordinate": {
+            "zh_CN": "下级",
+            "en_US": "subordinate",
+            "ja_JP": "下級"
+        },
+        "lev.intermediate": {
+            "zh_CN": "中级",
+            "en_US": "intermediate",
+            "ja_JP": "中級"
+        },
+        "lev.senior": {
+            "zh_CN": "高级",
+            "en_US": "senior",
+            "ja_JP": "高級"
+        },
+        "lev.super": {
+            "zh_CN": "传说",
+            "en_US": "legend",
+            "ja_JP": "伝说"
+        }
+    },
+    "death.es": {
+        "eath.es.killed.by.entity.element": {
+            "zh_CN": "在%s的%s之力下，%s化作尘埃",
+            "en_US": "Under %s's power of The %s, %s turns into dust",
+            "ja_JP": "%sの%sの力で%sは塵と化す"
+        },
+        "eath.es.killed.by.element": {
+            "zh_CN": "%s在%s之中永远眠",
+            "en_US": "%s sleeps forever in The %s",
+            "ja_JP": "%sは%sの中で永遠に眠た"
+        },
+        "eath.es.killed.by.self.element": {
+            "zh_CN": "%s的%s之力控制不当，死于了自己的魔法之中",
+            "en_US": "%s's power of The %s is out of control, and died in own power",
+            "ja_JP": "%sは%sの力をコントロールできない、自分の魔法の中で死んだ"
+        },
+        "eath.es.killed.by.entity.magic": {
+            "zh_CN": "在%s强大的魔法面前%s无能为力",
+            "en_US": "In %s's powerful magic, %s can do nothing",
+            "ja_JP": "%sの強力な魔法の前に%sは何もできない"
+        },
+        "eath.es.killed.by.magic": {
+            "zh_CN": "%s在魔力之中永远眠",
+            "en_US": "%s sleeps forever in magic",
+            "ja_JP": "%sは魔力の中で永遠に眠た"
+        },
+        "eath.es.killed.by.self.magic": {
+            "zh_CN": "%s死于自己失控的魔力之中",
+            "en_US": "%s died in own uncontrollable magic",
+            "ja_JP": "%sは自分の暴走する魔力の中で死んだ"
+        }
+    },
+    "fairy": {
+        "fairy.cube.destoryBlock.name": {
+            "zh_CN": "挖掘",
+            "en_US": "Excavate",
+            "ja_JP": "掘り起こす"
+        },
+        "fairy.cube.attrSilk.name": {
+            "zh_CN": "精准",
+            "en_US": "Silk Touch",
+            "ja_JP": "シルクタッチ"
+        },
+        "fairy.cube.fortune.name": {
+            "zh_CN": "时运",
+            "en_US": "Fortune",
+            "ja_JP": "幸運"
+        },
+        "fairy.cube.placeBlock.name": {
+            "zh_CN": "放置者",
+            "en_US": "Placer",
+            "ja_JP": "配置者"
+        },
+        "fairy.cube.heal.name": {
+            "zh_CN": "治疗",
+            "en_US": "Heal",
+            "ja_JP": "治療"
+        },
+        "fairy.cube.lightweight.name": {
+            "zh_CN": "轻身",
+            "en_US": "Light Weight",
+            "ja_JP": "軽身"
+        },
+        "fairy.cube.attack.name": {
+            "zh_CN": "进攻",
+            "en_US": "Attack",
+            "ja_JP": "攻撃"
+        },
+        "fairy.cube.plunder.name": {
+            "zh_CN": "掠夺",
+            "en_US": "Plunder",
+            "ja_JP": "略奪"
+        },
+        "fairy.cube.attackRange.name": {
+            "zh_CN": "进攻区域",
+            "en_US": "Attack Range",
+            "ja_JP": "攻撃エリア"
+        },
+        "fairy.cube.attackCritical.name": {
+            "zh_CN": "暴击",
+            "en_US": "Attack Critical",
+            "ja_JP": "暴撃"
+        },
+        "fairy.cube.expUp.name": {
+            "zh_CN": "经验上升",
+            "en_US": "Exp Up",
+            "ja_JP": "経験アップ"
+        },
+        "fairy.cube.farm.name": {
+            "zh_CN": "农主",
+            "en_US": "Farmer",
+            "ja_JP": "農夫"
+        },
+        "fairy.cube.destoryBlock.random": {
+            "zh_CN": "随机",
+            "en_US": "Random",
+            "ja_JP": "ランダム"
+        },
+        "fairy.cube.destoryBlock.direct": {
+            "zh_CN": "隧道",
+            "en_US": "Tunnel",
+            "ja_JP": "トンネル"
+        },
+        "fairy.cube.place.single": {
+            "zh_CN": "单一",
+            "en_US": "Single",
+            "ja_JP": "単一"
+        },
+        "fairy.cube.place.series": {
+            "zh_CN": "连续",
+            "en_US": "Series",
+            "ja_JP": "連続"
+        },
+        "fairy.cube.attack.normal": {
+            "zh_CN": "普通",
+            "en_US": "Normal",
+            "ja_JP": "標準"
+        },
+        "fairy.cube.attack.thump": {
+            "zh_CN": "重击",
+            "en_US": "Thump",
+            "ja_JP": "強打"
+        },
+        "fairy.cube.attack.range": {
+            "zh_CN": "范围",
+            "en_US": "Range",
+            "ja_JP": "範囲"
+        },
+        "fairy.cube.attackCritical.steady": {
+            "zh_CN": "稳健",
+            "en_US": "Steady",
+            "ja_JP": "穏健"
+        },
+        "fairy.cube.attackCritical.lucky": {
+            "zh_CN": "幸运",
+            "en_US": "Lucky",
+            "ja_JP": "幸運"
+        },
+        "fairy.cube.attackCritical.unparalleled": {
+            "zh_CN": "无双",
+            "en_US": "Unparalleled",
+            "ja_JP": "無双"
+        },
+        "fairy.cube.farm.accurate": {
+            "zh_CN": "精准",
+            "en_US": "Accurate",
+            "ja_JP": "正確"
+        }
+    },
+    "kType": {
+        "kType.magicDevice.name": {
+            "zh_CN": "魔力设备",
+            "en_US": "Magic Device",
+            "ja_JP": "魔力装置"
+        },
+        "kType.architecture.name": {
+            "zh_CN": "古代建筑",
+            "en_US": "Ancient architecture",
+            "ja_JP": "古代建築"
+        },
+        "kType.enderBoat.name": {
+            "zh_CN": "末影船",
+            "en_US": "Ender Boat",
+            "ja_JP": "エンダー船"
+        },
+        "kType.library.name": {
+            "zh_CN": "图书馆",
+            "en_US": "Library",
+            "ja_JP": "図書館"
+        },
+        "kType.mantra.name": {
+            "zh_CN": "咒术",
+            "en_US": "Mantra",
+            "ja_JP": "呪文"
+        },
+        "kType.element.name": {
+            "zh_CN": "元素",
+            "en_US": "Element",
+            "ja_JP": "元素"
+        },
+        "kType.altar.name": {
+            "zh_CN": "祭坛",
+            "en_US": "Altar",
+            "ja_JP": "祭壇"
+        },
+        "kType.monster.name": {
+            "zh_CN": "怪物",
+            "en_US": "Monster",
+            "ja_JP": "モンスター"
+        }
+    },
+    "topic": {
+        "topic.Struct.name": {
+            "zh_CN": "结构",
+            "en_US": "Struct",
+            "ja_JP": "構造"
+        },
+        "topic.Ender.name": {
+            "zh_CN": "末影",
+            "en_US": "Ender",
+            "ja_JP": "エンダー"
+        },
+        "topic.Natural.name": {
+            "zh_CN": "自然",
+            "en_US": "Natural",
+            "ja_JP": "自然"
+        },
+        "topic.Engine.name": {
+            "zh_CN": "机械",
+            "en_US": "Engine",
+            "ja_JP": "機械"
+        },
+        "topic.Mantra.name": {
+            "zh_CN": "咒术",
+            "en_US": "Mantra",
+            "ja_JP": "呪術"
+        },
+        "topic.Biology.name": {
+            "zh_CN": "生物",
+            "en_US": "Biology",
+            "ja_JP": "生物"
+        }
+    }
+}

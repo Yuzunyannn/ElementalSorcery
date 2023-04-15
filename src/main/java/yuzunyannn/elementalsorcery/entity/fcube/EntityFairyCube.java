@@ -57,6 +57,7 @@ import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectTreatEntity;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class EntityFairyCube extends EntityLivingBase
@@ -208,7 +209,7 @@ public class EntityFairyCube extends EntityLivingBase
 		this.restoreMaster();
 		return master == null ? null : master.get();
 	}
-	
+
 	@Override
 	public boolean isOwnerless() {
 		return false;
@@ -549,6 +550,21 @@ public class EntityFairyCube extends EntityLivingBase
 
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
+		Entity entity = source.getTrueSource();
+		if (entity == this.getMaster()) {
+			if (this.world.isRemote) return false;
+			
+			Vec3d vec = entity.getPositionEyes(1);
+			Vec3d look = entity.getLookVec();
+			look = new Vec3d(look.x ,0, look.z).normalize().scale(-2);
+			vec = vec.add(look);
+			Vec3d at = new Vec3d(posX, posY + 0.4, posZ);
+			Vec3d dir = vec.subtract(at);
+			this.setEntityBoundingBox(this.getEntityBoundingBox().offset(dir));
+			this.resetPositionToBB();
+			
+			return false;
+		}
 		return super.attackEntityFrom(source, amount);
 	}
 
@@ -600,7 +616,7 @@ public class EntityFairyCube extends EntityLivingBase
 		Item item = stack.getItem();
 
 		if (item instanceof ItemFood) {
-			eatFood(stack);
+			eatFood(stack, player);
 			return true;
 		}
 
@@ -628,9 +644,13 @@ public class EntityFairyCube extends EntityLivingBase
 		return false;
 	}
 
-	private void eatFood(ItemStack foodStack) {
+	private void eatFood(ItemStack foodStack, @Nullable EntityLivingBase feeder) {
 		ItemFood food = (ItemFood) foodStack.getItem();
 		float ha = food.getHealAmount(foodStack);
+		if (EntityHelper.isCreative(feeder)) {
+			foodExpCD = 0;
+			if (ESAPI.isDevelop) ha = ha * 100;
+		}
 		if (foodExpCD <= 0) {
 			this.addExp(ha);
 			if (foodExpCD <= 0) this.letsHappy(2);

@@ -1,8 +1,8 @@
 package yuzunyannn.elementalsorcery.util.helper;
 
-import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.function.Function;
+import java.util.List;
+
+import yuzunyannn.elementalsorcery.util.math.MathSupporter;
 
 public class JavaHelper {
 
@@ -11,6 +11,13 @@ public class JavaHelper {
 		if (obj instanceof Boolean) return (Boolean) (obj);
 		return true;
 	}
+
+	public static <T extends Comparable<T>> void orderAdd(List<T> list, T obj) {
+		int i = MathSupporter.binarySearch(list, (s) -> (double) s.compareTo(obj));
+		if (i < 0) i = -i - 1;
+		list.add(i, obj);
+	}
+
 //
 //	public static <T, U> T[] toArray(Collection<U> list, Function<U, T> func) {
 //		T[] array = (T[]) Array.newInstance(Object.class, list.size());

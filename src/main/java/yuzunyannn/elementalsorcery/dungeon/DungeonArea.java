@@ -16,6 +16,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.building.BuildingFace;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
@@ -134,6 +135,7 @@ public class DungeonArea extends WorldSavedData {
 		}
 
 		generate.checkRooms();
+		ESAPI.logger.info("建造完成，共建造了:" + selector);
 
 		this.markDirty();
 	}
@@ -190,7 +192,8 @@ public class DungeonArea extends WorldSavedData {
 
 		int areaId = this.excerpt.id;
 
-		MantraSummon.summon(world, room.at, openPlayer, SummonRecipeDungeonRoom.createVestKeepsake(areaId, roomId),
+		MantraSummon.summon(world, room.at, openPlayer,
+				SummonRecipeDungeonRoom.createVestKeepsake(areaId, roomId, openPlayer),
 				SummonRecipe.get(TextHelper.toESResourceLocation("dungeon_room")));
 
 		this.markDirty();

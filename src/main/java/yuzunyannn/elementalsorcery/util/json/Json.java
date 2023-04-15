@@ -56,8 +56,6 @@ public abstract class Json {
 
 	abstract public NBTBase asNBT();
 
-	abstract public boolean isObject();
-
 	abstract public int size();
 
 	abstract public com.google.gson.JsonElement getGoogleJson();

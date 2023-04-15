@@ -242,6 +242,9 @@ tile.dungeonBrick.chiseled.name=Chiseled Dungeon Bricks
 tile.dungeonBrick.stone.name=Dungeon Stone
 tile.dungeonFunction.name=Dungeon Build Function
 tile.dungeonHaystack.name=Dungeon Haystack
+tile.dungeonBarrier.name=Dungeon Barrier
+tile.dungeonRottenLifeWood.name=Rotten Log of Tree of Life
+tile.dungeonActinicGlass.name=Actinic Glass
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
@@ -347,17 +350,6 @@ mantra.puppetArea.describe=With the Wood, Summon Kodama Area which will periodic
 mantra.goldShield.name=Gold Shield
 mantra.goldShield.describe=With the Metal, create the Shield of Value. Consume estimated value to resist any damage. Excess value will be reflected to the enemy as damage
 
-key.es.func=Function key
-
-info.element.spell.fire=Ignite the specified block
-info.element.spell.ender=With the power of Enderman, Steve can be transmitted to the distance just like enderman
-info.element.spell.water=Emerge water above a block.
-info.element.spell.wood=Surrounded by Wood Element, the surrounding plants can grow rapidly.
-info.element.spell.knowledge=Knowledge Element can make Steve enchant anytime, anywhere.
-info.element.spell.air=Instantly changed the air flow around Steve, and making slow down quickly.
-info.element.spell.metal=Be able to perform wonders. Metal Element resonate with a block like ore, and change their structure into a new ore.
-info.element.spell.earth=Let block fall.
-
 entity.Villager.paperman=PaperMan
 entity.Villager.eslearner=ElementLearner
 entity.Villager.magicallearner=MagicLearner
@@ -386,6 +378,8 @@ pro.postReceptionist=Post Office Office Receptionist
 pro.postman=Postman
 pro.researcher=Researcher
 pro.debtCollector=Debt Collector
+
+key.es.func=Function key
 
 commands.es.usage=/es <operate> <parameters>...
 commands.es.notFound=Can't find %s
@@ -550,14 +544,28 @@ info.elf.diamond=A very expensive diamond has no other value. Elves love it very
 info.my.master=Master: %s
 info.relic.bind.master=The master is set as: %s
 info.concentration=Concentration: %s
+
+info.dungeon.build.exception=An exception exception when building Dungeon! Please report this bug to the author.
+info.dungeon.build.too.close=Two dungeons built too close.
 info.dungeon.no.key.to.open.door=Missing key, Virtual Sight cannot be reflected
 info.dungeon.no.remember.fragment=%s required to complete reflection
 info.dungeon.no.remember.found=Cannot find any Memory
 info.dungeon.remember.found=Found some Memory
 info.dungeon.remember.appear=Memory appear
 info.dungeon.memoryFeather.usage=When used in a Dungeon Room, it can consume 1 durability to check whether there has Memory Item. \nSneaking use can make Memory Item appear, and if there is nothing to appear, it will consume 2 durability.
+info.dungeon.rottenLifeLog=Even rotten wood still contains powerful force
+info.dungeon.actinicGlass=A device that can continuously absorb light energy and catalyze crops below
 
 info.mc.archi.Temple.name=Desert Pyramid
+
+info.element.spell.fire=Ignite the specified block
+info.element.spell.ender=With the power of Enderman, Steve can be transmitted to the distance just like enderman
+info.element.spell.water=Emerge water above a block.
+info.element.spell.wood=Surrounded by Wood Element, the surrounding plants can grow rapidly.
+info.element.spell.knowledge=Knowledge Element can make Steve enchant anytime, anywhere.
+info.element.spell.air=Instantly changed the air flow around Steve, and making slow down quickly.
+info.element.spell.metal=Be able to perform wonders. Metal Element resonate with a block like ore, and change their structure into a new ore.
+info.element.spell.earth=Let block fall.
 
 lev.defective=defective
 lev.unsuited=unsuited
@@ -1018,10 +1026,10 @@ page.astone.ct.fir=A stone made of kyanite, stone and Dimensity, is good magic m
 page.astone.ct.sec=Throw the Dimensity, stone and kyanite into the Melt Cauldron in a ratio of 1:8:4. Melting and cooling to obtain the The Stone with Magic. Please pay attention to the ratio. If it is not appropriate, unexpected results may occur.\nWhen the Melt Cauldron is full, items can no longer be added.
 page.astone.ct.thi=First, throw in the Dimensity to form a magic solution, so that other materials can be melted in the magic solution.\nIn addition, it is necessary to use an advanced Hearth for heating, otherwise the temperature may not meet the expectations.
 page.astoneCrafting=More The Stone with Magic
-page.astoneCrafting.ct=使用蓝晶石和木棒制作的精致的小刻刀，可以将普通的通魔石雕刻成更高级的通魔石。\n使用高级的通魔石可以更好的完成魔法装置的制作。
-page.unscrambleNote=解读手账
-page.unscrambleNote.ct=解读速度太慢？使用解读手账来记录解读时的内容，可以帮助你提升解读效率。\n每次解读时，副手拿着解读手账，就会将内容记录到手账当中，随着积累的记录越来越多，你解读的速度也会越来越快。\n只有自己记录的内容，才能产生作用。
-page.md=魔动装置
+page.astoneCrafting.ct=Use The Exquisite Carving Knife made of kyanite and a stick to carve ordinary The Stone with Magic into a higher level.\nUsing advanced The Stone with Magic can better complete the production of magical devices.
+page.unscrambleNote=Unscramble Note
+page.unscrambleNote.ct=Is your deciphering speed too slow? Use an Unscramble Note to record the content of your deciphering and improve your efficiency.\nWhen deciphering, your off-hand will record the content in the note. As you accumulate more and more records, your deciphering speed will increase.\nOnly the content you record will be effective.
+page.md=Magic Drive
 page.md.ct=通过魔通石，史蒂夫将魔力作为驱动源，制造出魔力设备来使用。\n魔力设备中都可以储存魔力，如果破坏掉储存魔力的设备，魔力会爆发出来，对周围造成伤害。
 page.magicTorch=魔石火把
 page.magicTorch.ct=魔石火把具有很好的魔力亲和性，并且将魔力传送出去。将火把插在魔力装置的一面，火把便可以从盖面抽取魔力，将魔力直线传到另外一个装置区。

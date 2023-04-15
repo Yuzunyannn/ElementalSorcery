@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"open=true": {
+			"model": "lit_redstone_lamp"
+		},
+		"open=false": {
+			"model": "unlit_redstone_lamp"
+		}
+	}
+}

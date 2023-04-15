@@ -4,15 +4,11 @@
     "mode": "random",
     "funcs": [
         {
-            "type": "entity",
-            "entityId": "minecraft:zombie",
+            "type": "ref",
+            "/assets": "elementalsorcery:dungeon/common_monster_1",
             "weight": 5,
-            "trigger": {
-                "onLoot": {
-                    "type": "loot",
-                    "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_worthless",
-                    "acceptHideItem": true
-                }
+            "params": {
+                "$loots": "elementalsorcery:dungeon/dungeon_loot_sundry_worthless"
             }
         },
         {

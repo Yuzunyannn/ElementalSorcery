@@ -1,0 +1,158 @@
+{
+    "es.effect": {
+        "es.effect.timeSlow": {
+            "zh_CN": "时间缓慢",
+            "en_US": "Time Slowly",
+            "ja_JP": "時間遅い"
+        },
+        "es.effect.fireWalker": {
+            "zh_CN": "火焰行者",
+            "en_US": "Flame Walker",
+            "ja_JP": "火炎の行者"
+        },
+        "es.effect.tideWalker": {
+            "zh_CN": "潮汐行者",
+            "en_US": "Tide Walker",
+            "ja_JP": "潮流の行者"
+        },
+        "es.effect.windWalker": {
+            "zh_CN": "疾风行者",
+            "en_US": "Wind Walker",
+            "ja_JP": "疾風の行者"
+        },
+        "es.effect.fluoresceWalker": {
+            "zh_CN": "荧光行者",
+            "en_US": "Fluoresce Walker",
+            "ja_JP": "蛍光の行者"
+        },
+        "es.effect.poundWalker": {
+            "zh_CN": "震地行者",
+            "en_US": "Pound Walker",
+            "ja_JP": "地響の行者"
+        },
+        "es.effect.verdantWalker": {
+            "zh_CN": "青葱行者",
+            "en_US": "Verdant Walker",
+            "ja_JP": "緑豊の行者"
+        },
+        "es.effect.enderization": {
+            "zh_CN": "末影化",
+            "en_US": "Enderization",
+            "ja_JP": "エンダー化"
+        },
+        "es.effect.endercorps": {
+            "zh_CN": "末影军团",
+            "en_US": "Endercorps",
+            "ja_JP": "エンダー部隊"
+        },
+        "es.effect.rebirthFromFire": {
+            "zh_CN": "浴火重生",
+            "en_US": "Rebirth From The Fire",
+            "ja_JP": "火を浴びて生まれ変わる"
+        },
+        "es.effect.waterCalamity": {
+            "zh_CN": "水难",
+            "en_US": "Water Calamity",
+            "ja_JP": "水難"
+        },
+        "es.effect.windShield": {
+            "zh_CN": "风之盾",
+            "en_US": "Wind Shield",
+            "ja_JP": "風の盾"
+        },
+        "es.effect.goldenEye": {
+            "zh_CN": "黄金之眼",
+            "en_US": "Golden Eye",
+            "ja_JP": "ゴールデンアイ"
+        },
+        "es.effect.powerPitcher": {
+            "zh_CN": "巨力投手",
+            "en_US": "Power Pitcher",
+            "ja_JP": "巨力投手"
+        },
+        "es.effect.healthBalance": {
+            "zh_CN": "生命天平",
+            "en_US": "The Health Balance",
+            "ja_JP": "生命の天秤"
+        },
+        "es.effect.combatSkill": {
+            "zh_CN": "战斗技巧",
+            "en_US": "Combat Skill",
+            "ja_JP": "戦闘テクニック"
+        },
+        "es.effect.defenseSkill": {
+            "zh_CN": "防守技巧",
+            "en_US": "Defense Skill",
+            "ja_JP": "守備テクニック"
+        },
+        "es.effect.star": {
+            "zh_CN": "星",
+            "en_US": "Star",
+            "ja_JP": "星"
+        },
+        "es.effect.calamity": {
+            "zh_CN": "灾害",
+            "en_US": "Calamity",
+            "ja_JP": "災害"
+        },
+        "es.effect.blessing": {
+            "zh_CN": "祝福",
+            "en_US": "Blessing",
+            "ja_JP": "祝福"
+        },
+        "es.effect.elementCrackAttack": {
+            "zh_CN": "元素裂縫",
+            "en_US": "Element Crack",
+            "ja_JP": "元素ひび割れ"
+        },
+        "es.effect.enthusiasticStudy": {
+            "zh_CN": "学力爆发",
+            "en_US": "Enthusiastic Unscrambling",
+            "ja_JP": "熱狂的に解読"
+        },
+        "es.effect.silent": {
+            "zh_CN": "沉默",
+            "en_US": "Silent",
+            "ja_JP": "サイレント"
+        },
+        "es.effect.frozen": {
+            "zh_CN": "冻结",
+            "en_US": "Frozen",
+            "ja_JP": "とうけつ"
+        },
+        "es.effect.naturalMedal": {
+            "zh_CN": "自然勋章",
+            "en_US": "Natural Medal",
+            "ja_JP": "自然勲章"
+        },
+        "es.effect.goldShield": {
+            "zh_CN": "黄金盾",
+            "en_US": "Gold Shield",
+            "ja_JP": "黄金盾"
+        }
+    },
+    "es.effect.type": {
+        "es.potion.effect.silent": {
+            "zh_CN": "禁言药水",
+            "en_US": "Potion of Silence",
+            "ja_JP": "沈黙のポーション"
+        },
+        "es.splash_potion.effect.silent": {
+            "zh_CN": "喷溅型禁言药水",
+            "en_US": "Splash Potion of Silence ",
+            "ja_JP": "沈黙のスプラッシュポーション"
+        },
+        "es.lingering_potion.effect.silent": {
+            "zh_CN": "滞留型禁言药水",
+            "en_US": "Lingering Potion of Silence",
+            "ja_JP": "沈黙の残留ポーション"
+        }
+    },
+    "enchantment": {
+        "enchantment.gatherSouls": {
+            "zh_CN": "聚魂",
+            "en_US": "Gather Souls",
+            "ja_JP": "集魂"
+        }
+    }
+}

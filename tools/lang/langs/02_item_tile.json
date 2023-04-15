@@ -1,0 +1,1216 @@
+{
+    "item": {
+        "item.kyanite.name": {
+            "zh_CN": "蓝晶石",
+            "en_US": "Kyanite",
+            "ja_JP": "カイヤナイト"
+        },
+        "item.magicalPiece.name": {
+            "zh_CN": "魔力碎片",
+            "en_US": "Magic Fragment",
+            "ja_JP": "魔力欠片"
+        },
+        "item.magicalEnderEye.name": {
+            "zh_CN": "带有魔力的末影之眼",
+            "en_US": "Eye of Ender with Magic",
+            "ja_JP": "魔力を帯びたエンダーアイ"
+        },
+        "item.kyanitePickaxe.name": {
+            "zh_CN": "蓝晶石镐",
+            "en_US": "Kyanite Pickaxe",
+            "ja_JP": "カイヤナイトの鶴嘴"
+        },
+        "item.kyaniteAxe.name": {
+            "zh_CN": "蓝晶石斧",
+            "en_US": "Kyanite Axe",
+            "ja_JP": "カイヤナイトの斧"
+        },
+        "item.kyaniteSpade.name": {
+            "zh_CN": "蓝晶石铲",
+            "en_US": "Kyanite Shovel",
+            "ja_JP": "カイヤナイトのシャベル"
+        },
+        "item.kyaniteHoe.name": {
+            "zh_CN": "蓝晶石锄",
+            "en_US": "Kyanite Hoe",
+            "ja_JP": "カイヤナイトんのクワ"
+        },
+        "item.kyaniteSword.name": {
+            "zh_CN": "蓝晶石剑",
+            "en_US": "Kyanite Sword",
+            "ja_JP": "カイヤナイトの剣"
+        },
+        "item.spellbook.name": {
+            "zh_CN": "平凡的魔导书",
+            "en_US": "Ordinary Wizard Book",
+            "ja_JP": "平凡の魔導書"
+        },
+        "item.spellbookArchitecture.name": {
+            "zh_CN": "建筑之魔导书",
+            "en_US": "Wizard Book of Architecture",
+            "ja_JP": "建築の魔導書"
+        },
+        "item.spellbookEnchantment.name": {
+            "zh_CN": "附魔书",
+            "en_US": "Enchantment Book",
+            "ja_JP": "エンチャントの本"
+        },
+        "item.spellbookLaunch.name": {
+            "zh_CN": "起始之魔导书",
+            "en_US": "Wizard Book of Launcher",
+            "ja_JP": "起動の魔導書"
+        },
+        "item.spellbookElement.name": {
+            "zh_CN": "元素之魔导书",
+            "en_US": "Wizard Book of Elements",
+            "ja_JP": "元素の魔導書"
+        },
+        "item.architectureCrystal.name": {
+            "zh_CN": "建筑水晶",
+            "en_US": "Architectural Crystal",
+            "ja_JP": "建築の水晶"
+        },
+        "item.elementCrystal.name": {
+            "zh_CN": "元素水晶",
+            "en_US": "Elemental Crystal",
+            "ja_JP": "元素の水晶"
+        },
+        "item.magicalCrystal.name": {
+            "zh_CN": "魔力水晶石",
+            "en_US": "Magic Crystal",
+            "ja_JP": "魔力の水晶石"
+        },
+        "item.spellCrystal.name": {
+            "zh_CN": "咒术水晶",
+            "en_US": "Incantation Crystal",
+            "ja_JP": "呪術の水晶"
+        },
+        "item.itemCrystal.name": {
+            "zh_CN": "结构水晶",
+            "en_US": "Structural Crystal",
+            "ja_JP": "構造の水晶"
+        },
+        "item.orderCrystal.name": {
+            "zh_CN": "秩序水晶",
+            "en_US": "Order Crystal",
+            "ja_JP": "秩序の水晶"
+        },
+        "item.azureCrystal.name": {
+            "zh_CN": "湛蓝水晶",
+            "en_US": "Azure Crystal",
+            "ja_JP": "真っ青の水晶"
+        },
+        "item.resonantCrystal.name": {
+            "zh_CN": "共鸣水晶",
+            "en_US": "Resonance Crystal",
+            "ja_JP": "共鳴の水晶"
+        },
+        "item.natureCrystal.name": {
+            "zh_CN": "自然水晶",
+            "en_US": "Nature Crystal",
+            "ja_JP": "自然の水晶"
+        },
+        "item.elfCrystal.name": {
+            "zh_CN": "精灵结晶",
+            "en_US": "Elf Crystal",
+            "ja_JP": "精霊の結晶"
+        },
+        "item.parchment.name": {
+            "zh_CN": "羊皮纸",
+            "en_US": "Parchment",
+            "ja_JP": "羊皮紙"
+        },
+        "item.magicPaper.name": {
+            "zh_CN": "魔法纸张",
+            "en_US": "Magic Paper",
+            "ja_JP": "魔法の紙"
+        },
+        "item.spellPaper.name": {
+            "zh_CN": "咒术纸张",
+            "en_US": "Incantation Paper",
+            "ja_JP": "呪術の紙"
+        },
+        "item.spellbookCover.name": {
+            "zh_CN": "魔导书封面",
+            "en_US": "Front Cover",
+            "ja_JP": "魔導書の表紙"
+        },
+        "item.spellbookCover.back.name": {
+            "zh_CN": "魔导书封底",
+            "en_US": "Back Cover",
+            "ja_JP": "魔導書の裏表紙"
+        },
+        "item.scroll.name": {
+            "zh_CN": "羊皮卷轴",
+            "en_US": "Parchment Scroll",
+            "ja_JP": "羊皮巻物"
+        },
+        "item.manual.name": {
+            "zh_CN": "元素手册",
+            "en_US": "Parchment Manual",
+            "ja_JP": "元素マニュアル"
+        },
+        "item.magicRuler.name": {
+            "zh_CN": "魔力标尺",
+            "en_US": "Magic Ruler",
+            "ja_JP": "魔力ルーラー"
+        },
+        "item.magicStone.name": {
+            "zh_CN": "魔石",
+            "en_US": "Dimensity",
+            "ja_JP": "魔石"
+        },
+        "item.tinyKnife.name": {
+            "zh_CN": "精巧刻刀",
+            "en_US": "Exquisite Carving Knife",
+            "ja_JP": "精巧彫刻刀"
+        },
+        "item.MDBase.name": {
+            "zh_CN": "魔动基座",
+            "en_US": "Magic Drive Foundation",
+            "ja_JP": "魔動の土台"
+        },
+        "item.riteManual.name": {
+            "zh_CN": "祭品研究手册",
+            "en_US": "Rite Research Manual",
+            "ja_JP": "祭物研究マニュアル"
+        },
+        "item.redHandset.name": {
+            "zh_CN": "红石遥控",
+            "en_US": "Red Stone Remote Control",
+            "ja_JP": "ラッドストーンリモコン"
+        },
+        "item.supremeTable.leg.name": {
+            "zh_CN": "魔力桌腿",
+            "en_US": "Magic Square Table Leg",
+            "ja_JP": "魔力四角桌の脚"
+        },
+        "item.supremeTable.top.name": {
+            "zh_CN": "魔力桌板",
+            "en_US": "Magic Square Table Top",
+            "ja_JP": "魔力四角桌のデスクトップ"
+        },
+        "item.elfCoin.name": {
+            "zh_CN": "精灵钱币",
+            "en_US": "Elf Coin",
+            "ja_JP": "精霊貨幣"
+        },
+        "item.elfPurse.name": {
+            "zh_CN": "精灵钱袋",
+            "en_US": "Elf Purse",
+            "ja_JP": "精霊巾着"
+        },
+        "item.natureDust.nature.name": {
+            "zh_CN": "自然粉尘",
+            "en_US": "Nature Dust",
+            "ja_JP": "自然粉塵"
+        },
+        "item.natureDust.explore.name": {
+            "zh_CN": "求知粉尘",
+            "en_US": "Seek Dust",
+            "ja_JP": "知識求め粉塵"
+        },
+        "item.natureDust.exploreAdv.name": {
+            "zh_CN": "探索粉尘",
+            "en_US": "Explore Dust",
+            "ja_JP": "探索し粉塵"
+        },
+        "item.grimoire.name": {
+            "zh_CN": "魔典",
+            "en_US": "Grimoire",
+            "ja_JP": "魔典"
+        },
+        "item.ancientPaper.normal.name": {
+            "zh_CN": "古卷",
+            "en_US": "Ancient Paper",
+            "ja_JP": "古巻"
+        },
+        "item.ancientPaper.unscramble.name": {
+            "zh_CN": "古卷解读中",
+            "en_US": "Unscramble Ancient Paper",
+            "ja_JP": "古巻解読中"
+        },
+        "item.ancientPaper.new.name": {
+            "zh_CN": "空白书写纸",
+            "en_US": "Blank Writing Paper",
+            "ja_JP": "空白の呪文の紙"
+        },
+        "item.ancientPaper.newWritten.name": {
+            "zh_CN": "书写纸",
+            "en_US": "Writing Paper",
+            "ja_JP": "呪文の紙"
+        },
+        "item.quest.name": {
+            "zh_CN": "委托书",
+            "en_US": "Quest",
+            "ja_JP": "依頼書"
+        },
+        "item.elfWatch.name": {
+            "zh_CN": "精灵时钟",
+            "en_US": "Elf Watch",
+            "ja_JP": "精霊時計"
+        },
+        "item.magicGold.name": {
+            "zh_CN": "魔金",
+            "en_US": "Magical Gold",
+            "ja_JP": "魔金"
+        },
+        "item.magicGoldPickaxe.name": {
+            "zh_CN": "魔金镐",
+            "en_US": "Magical Gold Pickaxe",
+            "ja_JP": "魔金の鶴嘴"
+        },
+        "item.magicGoldAxe.name": {
+            "zh_CN": "魔金斧",
+            "en_US": "Magical Gold Axe",
+            "ja_JP": "魔金の斧"
+        },
+        "item.magicGoldSpade.name": {
+            "zh_CN": "魔金铲",
+            "en_US": "Magical Gold Spade",
+            "ja_JP": "魔金のシャベル"
+        },
+        "item.magicGoldHoe.name": {
+            "zh_CN": "魔金锄",
+            "en_US": "Magical Gold Hoe",
+            "ja_JP": "魔金のクワ"
+        },
+        "item.magicGoldSword.name": {
+            "zh_CN": "魔金剑",
+            "en_US": "Magical Gold Sword",
+            "ja_JP": "魔金の剣"
+        },
+        "item.parcel.name": {
+            "zh_CN": "包裹",
+            "en_US": "Parcel",
+            "ja_JP": "小包"
+        },
+        "item.addressPlate.normal.name": {
+            "zh_CN": "地址牌",
+            "en_US": "Address Plate",
+            "ja_JP": "住所カード"
+        },
+        "item.addressPlate.vip.name": {
+            "zh_CN": "超级地址牌",
+            "en_US": "VIP Address Plate",
+            "ja_JP": "超級住所カード"
+        },
+        "item.elfStar.name": {
+            "zh_CN": "精灵之星",
+            "en_US": "Elf Star",
+            "ja_JP": "精霊の星"
+        },
+        "item.jumpGem.name": {
+            "zh_CN": "折光宝石",
+            "en_US": "Refract Gem",
+            "ja_JP": "折り光宝石"
+        },
+        "item.unscrambleNote.name": {
+            "zh_CN": "解读手账",
+            "en_US": "Unscramble Note",
+            "ja_JP": "解読手帳"
+        },
+        "item.soulFragment.name": {
+            "zh_CN": "灵魂碎片",
+            "en_US": "Soul Fragment",
+            "ja_JP": "魂のかけら"
+        },
+        "item.soulWoodSword.name": {
+            "zh_CN": "灵魂缠绕的木剑",
+            "en_US": "Wood Sword with Soul Entwined",
+            "ja_JP": "魂に纏わる木剣"
+        },
+        "item.relicGem.name": {
+            "zh_CN": "遗迹宝石",
+            "en_US": "Relic Gem",
+            "ja_JP": "遺跡宝石"
+        },
+        "item.rockCamera.name": {
+            "zh_CN": "岩石相机",
+            "en_US": "Rock Camera",
+            "ja_JP": "岩石カメラ"
+        },
+        "item.relicFragment.name": {
+            "zh_CN": "遗迹碎片",
+            "en_US": "Relic fragment",
+            "ja_JP": "遺跡のかけら"
+        },
+        "item.quill.normal.name": {
+            "zh_CN": "羽毛笔",
+            "en_US": "Quill",
+            "ja_JP": "羽ペン"
+        },
+        "item.quill.magic.name": {
+            "zh_CN": "魔力羽毛笔",
+            "en_US": "Magic Quill",
+            "ja_JP": "魔力の羽ペン"
+        },
+        "item.quill.fire.name": {
+            "zh_CN": "火之羽毛笔",
+            "en_US": "Fire Quill",
+            "ja_JP": "火の羽ペン"
+        },
+        "item.quill.water.name": {
+            "zh_CN": "水之羽毛笔",
+            "en_US": "Water Quill",
+            "ja_JP": "水の羽ペン"
+        },
+        "item.quill.element.name": {
+            "zh_CN": "元素之羽毛笔 ",
+            "en_US": "Element Quill",
+            "ja_JP": "元素の羽ペン "
+        },
+        "item.fusionCrystal.name": {
+            "zh_CN": "融合水晶",
+            "en_US": "Fusion Crystal",
+            "ja_JP": "融合の水晶"
+        },
+        "item.vortex.name": {
+            "zh_CN": "漩涡",
+            "en_US": "Vortex",
+            "ja_JP": "渦巻き"
+        },
+        "item.elementStone.name": {
+            "zh_CN": "元素之石",
+            "en_US": "Element Stone",
+            "ja_JP": "元素の石"
+        },
+        "item.lifeLeather.name": {
+            "zh_CN": "生命之革",
+            "en_US": "Life Leather",
+            "ja_JP": "生命の革"
+        },
+        "item.lifeLeather.incomplete.name": {
+            "zh_CN": "灵魂缠绕的皮革",
+            "en_US": "Leather with Soul Entwined",
+            "ja_JP": "魂に纏わるレザー"
+        },
+        "item.writtenPaper.name": {
+            "zh_CN": "魔文纸张",
+            "en_US": "Magical Written Paper",
+            "ja_JP": "魔文の紙"
+        },
+        "item.mantraPaper.name": {
+            "zh_CN": "咒文纸张",
+            "en_US": "Mantra Paper",
+            "ja_JP": "呪文の紙"
+        },
+        "item.magicBlastWand.name": {
+            "zh_CN": "魔爆权杖",
+            "en_US": "Magic Blast Wand",
+            "ja_JP": "魔爆権杖"
+        },
+        "item.soulKillerSword.name": {
+            "zh_CN": "噬魂剑",
+            "en_US": "Soul Killer",
+            "ja_JP": "魂喰の剣"
+        },
+        "item.scapegoat.name": {
+            "zh_CN": "替罪羊",
+            "en_US": "Scapegoat",
+            "ja_JP": "スケープゴート"
+        },
+        "item.magicCore.name": {
+            "zh_CN": "魔力核心",
+            "en_US": "Magic Core",
+            "ja_JP": "魔力のたま"
+        },
+        "item.scarletCrystal.name": {
+            "zh_CN": "绯红水晶",
+            "en_US": "Scarlet Crystal",
+            "ja_JP": "緋色の水晶"
+        },
+        "item.starBell.normal.name": {
+            "zh_CN": "铃铛",
+            "en_US": "Bell",
+            "ja_JP": "鈴"
+        },
+        "item.starBell.star.name": {
+            "zh_CN": "星之铃",
+            "en_US": "Star Bell",
+            "ja_JP": "星の鈴"
+        },
+        "item.appleCandy.name": {
+            "zh_CN": "苹果糖",
+            "en_US": "Apple Candy",
+            "ja_JP": "林檎飴"
+        },
+        "item.fairyCube.name": {
+            "zh_CN": "精灵立方体",
+            "en_US": "Elf Cube",
+            "ja_JP": "精霊立方体"
+        },
+        "item.fairyCubeModule.name": {
+            "zh_CN": "精灵立方体符文",
+            "en_US": "Elf Cube Rune",
+            "ja_JP": "精霊立方体のルーン"
+        },
+        "item.rabidLeather.name": {
+            "zh_CN": "狂暴皮革",
+            "en_US": "Rabid Leather",
+            "ja_JP": "狂暴の革"
+        },
+        "item.dreadFragment.name": {
+            "zh_CN": "恐惧碎片",
+            "en_US": "Dread Fragment",
+            "ja_JP": "恐怖のかけら"
+        },
+        "item.dreadGem.name": {
+            "zh_CN": "恐惧宝石",
+            "en_US": "Dread Gem",
+            "ja_JP": "恐怖の宝石"
+        },
+        "item.cubeCore.name": {
+            "zh_CN": "立方体核心",
+            "en_US": "Cube Core",
+            "ja_JP": "立方体の核心"
+        },
+        "item.undeliveredLetter.name": {
+            "zh_CN": "未送达之信",
+            "en_US": "Undelivered Letter",
+            "ja_JP": "未達の手紙"
+        },
+        "item.dejectedTear.name": {
+            "zh_CN": "忧郁之泪",
+            "en_US": "Dejected Tear",
+            "ja_JP": "憂鬱の涙"
+        },
+        "item.merchantInvitation.name": {
+            "zh_CN": "商人邀请函",
+            "en_US": "Merchant Invitation",
+            "ja_JP": "商人の招待状"
+        },
+        "item.elementBoard.name": {
+            "zh_CN": "元素共鸣板",
+            "en_US": "Element Resonance Board",
+            "ja_JP": "元素共鳴の板"
+        },
+        "item.cubeDemarcator.name": {
+            "zh_CN": "元素立方体定标终端",
+            "en_US": "Element Cube Demarcaterminal",
+            "ja_JP": "元素立方体の画定ターミナル"
+        },
+        "item.windmillBlade.name": {
+            "zh_CN": "石英风轮",
+            "en_US": "Quartz Wind Wheel",
+            "ja_JP": "石英扇"
+        },
+        "item.windmillBlade.astone.name": {
+            "zh_CN": "通魔石风轮",
+            "en_US": "Stone with Magic Wind Wheel",
+            "ja_JP": "通魔石英扇"
+        },
+        "item.windmillBlade.wood.name": {
+            "zh_CN": "木制风轮",
+            "en_US": "Wooden Wind Wheel",
+            "ja_JP": "木の扇"
+        },
+        "item.windmillBlade.crystal.name": {
+            "zh_CN": "水晶石英风轮",
+            "en_US": "Crytsal Quartz Wind Wheel",
+            "ja_JP": "水晶石英扇"
+        },
+        "item.windmillBladeFrame.name": {
+            "zh_CN": "风轮框架",
+            "en_US": "Frame of Wind Wheel",
+            "ja_JP": "扇のフレーム"
+        },
+        "item.windmillBladeFrame.adv.name": {
+            "zh_CN": "高级风轮框架",
+            "en_US": "Advanced Frame of Wind Wheel",
+            "ja_JP": "高級扇のフレーム"
+        },
+        "item.elfFruitBomb.name": {
+            "zh_CN": "精灵果炸弹",
+            "en_US": "Elf Fruit Bomb",
+            "ja_JP": "精霊実の爆弾"
+        },
+        "item.glassCup.name": {
+            "zh_CN": "玻璃杯",
+            "en_US": "Tumbler",
+            "ja_JP": "ガラスのコップ"
+        },
+        "item.blessingJade.name": {
+            "zh_CN": "祝福之玉",
+            "en_US": "Blessing Jade",
+            "ja_JP": "祝福の玉"
+        },
+        "item.calamityGem.name": {
+            "zh_CN": "灾害宝石",
+            "en_US": "Calamity Gem",
+            "ja_JP": "災害の宝石"
+        },
+        "item.arrogantWool.name": {
+            "zh_CN": "傲慢的羊毛",
+            "en_US": "Arrogant Wool",
+            "ja_JP": "傲慢な羊毛"
+        },
+        "item.blessingJadePiece.name": {
+            "zh_CN": "祝福之玉碎片",
+            "en_US": "Blessing Jade Fragment",
+            "ja_JP": "祝福の玉のかけら"
+        },
+        "item.elementCrack.name": {
+            "zh_CN": "元素裂縫",
+            "en_US": "Element Crack",
+            "ja_JP": "元素ひび割れ"
+        },
+        "item.entangleNode.name": {
+            "zh_CN": "缠绕节点",
+            "en_US": "Entangle Node",
+            "ja_JP": "絡み合うノード"
+        },
+        "item.dragonBreathPickaxe.name": {
+            "zh_CN": "龙息镐",
+            "en_US": "Dragon Breath Pickaxe",
+            "ja_JP": "竜息の鶴嘴"
+        },
+        "item.dragonBreathPickaxe.describe": {
+            "zh_CN": "精灵制作的稿，破坏矿物时可以提取出额外的矿物\\n这对重复摆放的矿也具有效果\\n这真的是从矿物中提取出来的吗？",
+            "en_US": "Pickaxe craft by Elves, additional minerals can be extracted when ore are destroyed.\\nThis is also effective for ore replaced, it's really extracted from ores?",
+            "ja_JP": "精霊たち作られた鶴嘴、鉱物を破壊すると余分な鉱物を抽出することができますけ\\n繰り返し鉱物にも効果がある\\nこれは本当に鉱物から抽出されたのですか？"
+        },
+        "item.invertGem.name": {
+            "zh_CN": "逆变宝石",
+            "en_US": "Invert Gem",
+            "ja_JP": "逆変の宝石"
+        },
+        "item.iceRockChip.name": {
+            "zh_CN": "岩冰结晶",
+            "en_US": "Icerock Chip",
+            "ja_JP": "岩氷の結晶"
+        },
+        "item.iceRockSpar.name": {
+            "zh_CN": "岩冰晶石",
+            "en_US": "Icerock Spar",
+            "ja_JP": "岩冰の晶石"
+        },
+        "item.fairyCore.name": {
+            "zh_CN": "精灵核心",
+            "en_US": "Elf Core",
+            "ja_JP": "精霊核心"
+        },
+        "item.materialDebris.name": {
+            "zh_CN": "物质残片",
+            "en_US": "Material Debris",
+            "ja_JP": "物質の残片"
+        },
+        "item.mantraGem.name": {
+            "zh_CN": "咒文宝石",
+            "en_US": "Mantra Gem",
+            "ja_JP": "呪文の宝石"
+        },
+        "item.magicTerminal.name": {
+            "zh_CN": "魔法终端",
+            "en_US": "Magic Terminal",
+            "ja_JP": "魔法ターミナル"
+        },
+        "item.controller.energy.name": {
+            "zh_CN": "能量控制器",
+            "en_US": "Energy Controller",
+            "ja_JP": "エネルギーコントローラ"
+        },
+        "item.controller.invert.name": {
+            "zh_CN": "逆变控制器",
+            "en_US": "Invert Controller",
+            "ja_JP": "逆変コントローラ"
+        },
+        "item.controller.time.name": {
+            "zh_CN": "时之控制器",
+            "en_US": "Time Controller",
+            "ja_JP": "時のコントローラ"
+        },
+        "item.controller.concert.name": {
+            "zh_CN": "协调控制器",
+            "en_US": "Concert Controller",
+            "ja_JP": "協調コントローラ"
+        },
+        "item.controller.shell.name": {
+            "zh_CN": "核心外壳",
+            "en_US": "Reactor Shell",
+            "ja_JP": "コアシェル"
+        },
+        "item.controller.void.name": {
+            "zh_CN": "虚空控制器",
+            "en_US": "Void Controller",
+            "ja_JP": "虚空コントローラ"
+        },
+        "item.voidFragment.name": {
+            "zh_CN": "虚空碎片",
+            "en_US": "Void fragment",
+            "ja_JP": "虚空のかけら"
+        },
+        "item.voidContainer.name": {
+            "zh_CN": "虚空容器",
+            "en_US": "Void Container",
+            "ja_JP": "虚空のコンテナ"
+        },
+        "item.voidContainerElement.name": {
+            "zh_CN": "虚空元素容器",
+            "en_US": "Element Void Container",
+            "ja_JP": "元素の虚空コンテナ"
+        },
+        "item.elfDiamond.name": {
+            "zh_CN": "精灵钻石",
+            "en_US": "Elf Diamond",
+            "ja_JP": "精霊ダイヤモンド"
+        },
+        "item.collapse.name": {
+            "zh_CN": "塌陷",
+            "en_US": "Collapse",
+            "ja_JP": "崩れ"
+        },
+        "item.collapseWand.name": {
+            "zh_CN": "塌陷权杖",
+            "en_US": "Collapse Wand",
+            "ja_JP": "崩れ権杖"
+        },
+        "item.relicGuardCore.name": {
+            "zh_CN": "守卫核心",
+            "en_US": "Relic Guard Core",
+            "ja_JP": "ガードのコア"
+        },
+        "item.shockWand.name": {
+            "zh_CN": "冲击权杖",
+            "en_US": "Shock Wand",
+            "ja_JP": "冲撃権杖"
+        },
+        "item.relicDisc.name": {
+            "zh_CN": "遗迹轮盘",
+            "en_US": "Relic Disc",
+            "ja_JP": "遺跡ディスク"
+        },
+        "item.juiceConcentrate.name": {
+            "zh_CN": "果汁浓缩剂",
+            "en_US": "Juice Concentrate",
+            "ja_JP": "ジュース濃縮剤"
+        },
+        "item.dungeonKey.name": {
+            "zh_CN": "虚映之钥",
+            "en_US": "Key of Virtual Sight",
+            "ja_JP": "偽映のかぎ"
+        },
+        "item.memoryFragment.name": {
+            "zh_CN": "记忆碎片",
+            "en_US": "Memory Fragment",
+            "ja_JP": "記憶のかけら"
+        },
+        "item.memoryFeather.name": {
+            "zh_CN": "记忆之羽",
+            "en_US": "Memory Feather",
+            "ja_JP": "記憶の羽"
+        }
+    },
+    "tile": {
+        "tile.elementalCube.name": {
+            "zh_CN": "元素立方体",
+            "en_US": "Element Cube",
+            "ja_JP": "元素立方体"
+        },
+        "tile.smeltBox.cobblestone.name": {
+            "zh_CN": "圆石烧炼箱",
+            "en_US": "Cobblestone Smelting Box",
+            "ja_JP": "丸石の烧炼箱"
+        },
+        "tile.smeltBox.iron.name": {
+            "zh_CN": "铁质烧炼箱",
+            "en_US": "Iron Smelting Box",
+            "ja_JP": "铁の烧炼箱"
+        },
+        "tile.smeltBox.kyanite.name": {
+            "zh_CN": "蓝晶石烧炼箱",
+            "en_US": "kyanite Smelting Box",
+            "ja_JP": "カイヤナイトの烧炼箱"
+        },
+        "tile.hearth.cobblestone.name": {
+            "zh_CN": "圆石灶台",
+            "en_US": "Cobblestone Hearth",
+            "ja_JP": "丸石の囲炉裏"
+        },
+        "tile.hearth.iron.name": {
+            "zh_CN": "铁质灶台",
+            "en_US": "Iron Hearth",
+            "ja_JP": "铁の囲炉裏"
+        },
+        "tile.hearth.kyanite.name": {
+            "zh_CN": "蓝晶石灶台",
+            "en_US": "kyanite Hearth",
+            "ja_JP": "カイヤナイトの囲炉裏"
+        },
+        "tile.kyaniteOre.name": {
+            "zh_CN": "蓝晶石矿",
+            "en_US": "Kyanite Ore",
+            "ja_JP": "カイヤナイト鉱石"
+        },
+        "tile.kyaniteBlock.name": {
+            "zh_CN": "蓝晶石方块",
+            "en_US": "Block of Kyanite",
+            "ja_JP": "カイヤナイトブロック"
+        },
+        "tile.estone.default.name": {
+            "zh_CN": "魔力石英块",
+            "en_US": "Block of Magic Quartz",
+            "ja_JP": "魔力石英ブロック"
+        },
+        "tile.estone.chiseled.name": {
+            "zh_CN": "錾制魔力石英块",
+            "en_US": "Chisel Magic Quartz Block",
+            "ja_JP": "模様入りの魔力石英ブロック"
+        },
+        "tile.estone.lines.name": {
+            "zh_CN": "竖纹魔力石英块",
+            "en_US": "Pillar Magic Quartz Block",
+            "ja_JP": "柱状の魔力石英ブロック"
+        },
+        "tile.estoneStairs.name": {
+            "zh_CN": "魔力石英楼梯",
+            "en_US": "Magic Quartz Stairs",
+            "ja_JP": "魔力石英の階段"
+        },
+        "tile.estoneSlab.name": {
+            "zh_CN": "魔力石英台阶",
+            "en_US": "Magic Quartz Slab",
+            "ja_JP": "魔力石英のハーフブロック"
+        },
+        "tile.estonePrism.name": {
+            "zh_CN": "棱镜石英",
+            "en_US": "Prism Quartz",
+            "ja_JP": "プリズムの石英ブロック"
+        },
+        "tile.magicPlatform.astone.name": {
+            "zh_CN": "魔力平台",
+            "en_US": "Magic Platform",
+            "ja_JP": "魔力プラットフォーム"
+        },
+        "tile.magicPlatform.estone.name": {
+            "zh_CN": "石制魔力平台",
+            "en_US": "Magic Quartz Magic Platform",
+            "ja_JP": "石の魔力プラットフォーム"
+        },
+        "tile.invalidEnchantmentTable.name": {
+            "zh_CN": "失去魔力的附魔台",
+            "en_US": "Enchanting Table without Enchanting Book",
+            "ja_JP": "魔力を失ったエンチャントテーブル"
+        },
+        "tile.elementWorkbench.name": {
+            "zh_CN": "元素工作台",
+            "en_US": "Element Crafting Workbench",
+            "ja_JP": "元素作業台"
+        },
+        "tile.magicDesk.name": {
+            "zh_CN": "魔力书桌",
+            "en_US": "Magic Desk",
+            "ja_JP": "魔力デスク"
+        },
+        "tile.elementCraftingTable.name": {
+            "zh_CN": "元素合成台",
+            "en_US": "Element Crafting Altar",
+            "ja_JP": "元素合成台"
+        },
+        "tile.deconstructAltarTable.name": {
+            "zh_CN": "物质瓦解台",
+            "en_US": "Material Disintegration Altar",
+            "ja_JP": "物質瓦解台"
+        },
+        "tile.deconstructAltarTableAdv.name": {
+            "zh_CN": "高级物质瓦解台",
+            "en_US": "Advanced Material Disintegration Altar",
+            "ja_JP": "高級物質瓦解台"
+        },
+        "tile.stela.name": {
+            "zh_CN": "知识映射碑",
+            "en_US": "Knowledge Mapping Monument",
+            "ja_JP": "知識映射碑"
+        },
+        "tile.riteTable.name": {
+            "zh_CN": "仪式桌",
+            "en_US": "Ritual Table",
+            "ja_JP": "式場桌"
+        },
+        "tile.lantern.name": {
+            "zh_CN": "引路灯",
+            "en_US": "Guide Lamp",
+            "ja_JP": "道を引く灯"
+        },
+        "tile.buildingAltar.name": {
+            "zh_CN": "建筑解析台",
+            "en_US": "Architectural Analysis Altar",
+            "ja_JP": "建築解析台"
+        },
+        "tile.analysisAltar.name": {
+            "zh_CN": "结构解析台",
+            "en_US": "Structure Analysis Altar",
+            "ja_JP": "構造解析台"
+        },
+        "tile.supremeTable.name": {
+            "zh_CN": "元素方桌",
+            "en_US": "Element Square Table",
+            "ja_JP": "元素四角桌"
+        },
+        "tile.magicTorch.name": {
+            "zh_CN": "魔石火把",
+            "en_US": "Dimensity Torch",
+            "ja_JP": "魔石松明"
+        },
+        "tile.astone.stone.name": {
+            "zh_CN": "通魔石",
+            "en_US": "Stone with Magic",
+            "ja_JP": "通魔石"
+        },
+        "tile.astone.fragmented.name": {
+            "zh_CN": "碎裂通魔石",
+            "en_US": "Stone with Magic but Broken",
+            "ja_JP": "割る通魔石"
+        },
+        "tile.astone.smooth.name": {
+            "zh_CN": "平滑通魔石",
+            "en_US": "Smooth Stone with Magic",
+            "ja_JP": "スムージングの通魔石"
+        },
+        "tile.astone.vein.name": {
+            "zh_CN": "纹路通魔石",
+            "en_US": "Vein Stone with Magic",
+            "ja_JP": "模様の通魔石"
+        },
+        "tile.astone.circle.name": {
+            "zh_CN": "环路通魔石",
+            "en_US": "Ring Stone with Magic",
+            "ja_JP": "环の通魔石"
+        },
+        "tile.astone.brick.name": {
+            "zh_CN": "半纹路通魔石",
+            "en_US": "Brick Stone with Magic",
+            "ja_JP": "ハーフ模様の通魔石"
+        },
+        "tile.astone.trans.name": {
+            "zh_CN": "流路通魔石",
+            "en_US": "Magic Transfer Stone",
+            "ja_JP": "流す通魔石"
+        },
+        "tile.starStone.name": {
+            "zh_CN": "星石",
+            "en_US": "Star Stone",
+            "ja_JP": "星石"
+        },
+        "tile.starSand.name": {
+            "zh_CN": "星沙",
+            "en_US": "Star Sand",
+            "ja_JP": "星砂"
+        },
+        "tile.stoneMill.name": {
+            "zh_CN": "捣粉臼",
+            "en_US": "Stone Mill",
+            "ja_JP": "臼"
+        },
+        "tile.meltCauldron.name": {
+            "zh_CN": "熔岩锅",
+            "en_US": "Melt Cauldron",
+            "ja_JP": "熔岩鍋"
+        },
+        "tile.elfLog.name": {
+            "zh_CN": "精灵木",
+            "en_US": "Elf Log",
+            "ja_JP": "精霊の原木"
+        },
+        "tile.elfLeaf.name": {
+            "zh_CN": "精灵叶",
+            "en_US": "Elf Tree Leaf",
+            "ja_JP": "精霊の葉"
+        },
+        "tile.elfPlank.normal.name": {
+            "zh_CN": "精灵木板",
+            "en_US": "Elf Tree Plank",
+            "ja_JP": "精霊の木材"
+        },
+        "tile.elfPlank.dark.name": {
+            "zh_CN": "魔力木板",
+            "en_US": "Elf Tree Dark Plank",
+            "ja_JP": "魔力の木材"
+        },
+        "tile.elfSapling.name": {
+            "zh_CN": "精灵树苗",
+            "en_US": "Elf Tree Sapling",
+            "ja_JP": "精霊树苗"
+        },
+        "tile.elfFruit.s0.name": {
+            "zh_CN": "未成熟的精灵果",
+            "en_US": "Immature Elf Fruit",
+            "ja_JP": "未成熟の精霊実"
+        },
+        "tile.elfFruit.s2.name": {
+            "zh_CN": "精灵果",
+            "en_US": "Elf Fruit",
+            "ja_JP": "精霊実"
+        },
+        "tile.MDMagicGen.name": {
+            "zh_CN": "热力魔分箱",
+            "en_US": "Magic Separator",
+            "ja_JP": "熱力魔分箱"
+        },
+        "tile.MDHearth.name": {
+            "zh_CN": "魔动灶台",
+            "en_US": "Magic Drive Hearth",
+            "ja_JP": "魔動囲炉裏"
+        },
+        "tile.MDRubbleRepair.name": {
+            "zh_CN": "魔动碎石修复箱",
+            "en_US": "Magic Drive Stone Repairer",
+            "ja_JP": "魔動割る石修復箱"
+        },
+        "tile.MDInfusion.name": {
+            "zh_CN": "注魔箱",
+            "en_US": "Magic Drive Enchanting Box",
+            "ja_JP": "魔力を注しの箱"
+        },
+        "tile.MDTransfer.name": {
+            "zh_CN": "魔力转移箱",
+            "en_US": "Magic Transfer Box",
+            "ja_JP": "魔力転移箱"
+        },
+        "tile.MDMagicSolidify.name": {
+            "zh_CN": "魔力固化箱",
+            "en_US": "Magic Solidify Box",
+            "ja_JP": "魔力固化箱"
+        },
+        "tile.MDAbsorbBox.name": {
+            "zh_CN": "元素吸收箱",
+            "en_US": "Magic Drive Element Absorber",
+            "ja_JP": "元素吸収箱"
+        },
+        "tile.MDMagiclization.name": {
+            "zh_CN": "魔化箱",
+            "en_US": "Element Magiclization Box",
+            "ja_JP": "魔化箱"
+        },
+        "tile.MDDeconstructBox.name": {
+            "zh_CN": "物质瓦解箱",
+            "en_US": "Magic Drive Material Disintegration Box",
+            "ja_JP": "物質瓦解箱"
+        },
+        "tile.MDResonantIncubator.name": {
+            "zh_CN": "共鸣培养箱",
+            "en_US": "Resonance Incubator",
+            "ja_JP": "共鳴培養箱"
+        },
+        "tile.MDFrequencyMapping.name": {
+            "zh_CN": "频率共感器",
+            "en_US": "Frequency Inductor",
+            "ja_JP": "周波数共感器"
+        },
+        "tile.lifeFlower.name": {
+            "zh_CN": "生命之花",
+            "en_US": "Life Flower",
+            "ja_JP": "生命の花"
+        },
+        "tile.magicPot.name": {
+            "zh_CN": "魔力花盆",
+            "en_US": "Magic Pot",
+            "ja_JP": "魔力植木鉢"
+        },
+        "tile.lifeDirt.name": {
+            "zh_CN": "生息土壤",
+            "en_US": "Lived Soil",
+            "ja_JP": "生息の土壌"
+        },
+        "tile.crystalFlower.name": {
+            "zh_CN": "水晶花",
+            "en_US": "Crystal Flower",
+            "ja_JP": "水晶花"
+        },
+        "tile.ISCraftNormal.name": {
+            "zh_CN": "合成结构记录台",
+            "en_US": "Crafting Structure Recorder",
+            "ja_JP": "合成構造記録台"
+        },
+        "tile.portalAltar.name": {
+            "zh_CN": "折光祭坛",
+            "en_US": "Refract Altar",
+            "ja_JP": "折り光祭壇"
+        },
+        "tile.transcribeTable.name": {
+            "zh_CN": "撰录方桌",
+            "en_US": "Transcribe Square Table",
+            "ja_JP": "書き写し四角桌"
+        },
+        "tile.transcribeInjection.name": {
+            "zh_CN": "咒文撰录祭坛",
+            "en_US": "Mantra Transcribe Altar",
+            "ja_JP": "呪文撰录祭壇"
+        },
+        "tile.elfBeacon.name": {
+            "zh_CN": "精灵信标",
+            "en_US": "Elf Beacon",
+            "ja_JP": "精霊のビーコン"
+        },
+        "tile.researcher.name": {
+            "zh_CN": "研究方桌",
+            "en_US": "Research Square Table",
+            "ja_JP": "研究四角桌"
+        },
+        "tile.sealStone.s.name": {
+            "zh_CN": "封藏石",
+            "en_US": "Seal Stone",
+            "ja_JP": "隠し石"
+        },
+        "tile.scarletCrystalOre.name": {
+            "zh_CN": "绯红水晶矿",
+            "en_US": "Scarlet Crystal Ore",
+            "ja_JP": "緋色の水晶鉱"
+        },
+        "tile.starFlower.normal.name": {
+            "zh_CN": "星之花",
+            "en_US": "Star Flower",
+            "ja_JP": "星の花"
+        },
+        "tile.starFlower.seed.name": {
+            "zh_CN": "星花之种",
+            "en_US": "Star Flower Seed",
+            "ja_JP": "星花の種"
+        },
+        "tile.crudeQuartz.name": {
+            "zh_CN": "粗制石英",
+            "en_US": "Crude Quartz",
+            "ja_JP": "粗造りの石英"
+        },
+        "tile.elementPlatform.name": {
+            "zh_CN": "元素平台",
+            "en_US": "Element Platform",
+            "ja_JP": "元素プラットフォーム"
+        },
+        "tile.fluorspar.name": {
+            "zh_CN": "荧光",
+            "en_US": "Fluorspar",
+            "ja_JP": "蛍光"
+        },
+        "tile.deconstructWindmill.name": {
+            "zh_CN": "风车平台",
+            "en_US": "Windmill Platform",
+            "ja_JP": "風車プラットフォーム"
+        },
+        "tile.elementTranslocator.name": {
+            "zh_CN": "元素转移台",
+            "en_US": "Element Translocator",
+            "ja_JP": "元素移動台"
+        },
+        "tile.MDLiquidize.name": {
+            "zh_CN": "榨汁机",
+            "en_US": "Liquidize",
+            "ja_JP": "ジューサー"
+        },
+        "tile.goatGoldBrick.common.name": {
+            "zh_CN": "金砖",
+            "en_US": "Gold Brick",
+            "ja_JP": "金れんが"
+        },
+        "tile.devolveCube.name": {
+            "zh_CN": "协调立方体",
+            "en_US": "Devolve Cube",
+            "ja_JP": "てんい立方体"
+        },
+        "tile.disintegrateStela.name": {
+            "zh_CN": "崩解石碑",
+            "en_US": "Material Collapse Stela",
+            "ja_JP": "崩解し石碑"
+        },
+        "tile.iceRockStand.name": {
+            "zh_CN": "魔控基座",
+            "en_US": "Magic Energy Controller Pedestal",
+            "ja_JP": "魔力エネルギーコントローラの台座"
+        },
+        "tile.iceRockCrystalBlock.name": {
+            "zh_CN": "岩冰水晶块",
+            "en_US": "Icerock Crystal Block",
+            "ja_JP": "岩氷の水晶ブロック"
+        },
+        "tile.iceRockNode.name": {
+            "zh_CN": "<->",
+            "en_US": "<->",
+            "ja_JP": "<->"
+        },
+        "tile.elementReactor.name": {
+            "zh_CN": "逆变反应堆",
+            "en_US": "Invert Reactor",
+            "ja_JP": "逆変炉"
+        },
+        "tile.estoneMatrix.name": {
+            "zh_CN": "方阵石英台",
+            "en_US": "Matrix Quartz Platform",
+            "ja_JP": "マトリックス石英プラットフォーム"
+        },
+        "tile.instantConstitute.name": {
+            "zh_CN": "瞬构方台",
+            "en_US": "Instant Constitute Stela",
+            "ja_JP": "瞬構の四角台"
+        },
+        "tile.estoneCrock.name": {
+            "zh_CN": "魔力石英缸",
+            "en_US": "Magic Quartz Crock",
+            "ja_JP": "魔力石英のかめ"
+        },
+        "tile.ISCraftCC.name": {
+            "zh_CN": "协调结构记录台",
+            "en_US": "Integrate Structure Recorder",
+            "ja_JP": "統合構造記録台"
+        },
+        "tile.dungeonDoorCore.name": {
+            "zh_CN": "虚映门",
+            "en_US": "Virtual Sight Door",
+            "ja_JP": "偽映ゲート"
+        },
+        "tile.dungeonStairs.name": {
+            "zh_CN": "地牢楼梯",
+            "en_US": "Dungeon Brick Stairs",
+            "ja_JP": "地下牢レンガの階段"
+        },
+        "tile.dungeonBrick.default.name": {
+            "zh_CN": "地牢砖",
+            "en_US": "Dungeon Bricks",
+            "ja_JP": "地下牢レンガ"
+        },
+        "tile.dungeonBrick.mossy.name": {
+            "zh_CN": "苔地牢砖",
+            "en_US": "Mossy Dungeon Bricks",
+            "ja_JP": "苔むした地下牢レンガ"
+        },
+        "tile.dungeonBrick.cracked.name": {
+            "zh_CN": "裂地牢砖",
+            "en_US": "Cracked Dungeon Bricks",
+            "ja_JP": "ひび割れた地下牢レンガ"
+        },
+        "tile.dungeonBrick.chiseled.name": {
+            "zh_CN": "錾制地牢砖",
+            "en_US": "Chiseled Dungeon Bricks",
+            "ja_JP": "模様入りの地下牢レンガ"
+        },
+        "tile.dungeonBrick.stone.name": {
+            "zh_CN": "地牢石头",
+            "en_US": "Dungeon Stone",
+            "ja_JP": "地下牢の石"
+        },
+        "tile.dungeonFunction.name": {
+            "zh_CN": "地牢构建功能方块",
+            "en_US": "Dungeon Build Function",
+            "ja_JP": "地下牢構築ファンクション"
+        },
+        "tile.dungeonHaystack.name": {
+            "zh_CN": "地牢草垛",
+            "en_US": "Dungeon Haystack",
+            "ja_JP": "地下牢わらの山"
+        },
+        "tile.dungeonBarrier.name": {
+            "zh_CN": "地牢屏障",
+            "en_US": "Dungeon Barrier",
+            "ja_JP": "地下牢のバリア"
+        },
+        "tile.dungeonRottenLifeWood.name": {
+            "zh_CN": "腐朽的生命之树木",
+            "en_US": "Rotten Log of Tree of Life",
+            "ja_JP": "腐った生命の木の原木"
+        },
+        "tile.dungeonActinicGlass.name": {
+            "zh_CN": "光化玻璃",
+            "en_US": "Actinic Glass",
+            "ja_JP": "光化ガラス"
+        }
+    }
+}

@@ -115,10 +115,10 @@ public class DungeonWorld extends WorldSavedData {
 			worldSave.generate(this, pos);
 		} catch (Exception e) {
 			ESAPI.logger.warn("dungeon build fail!", e);
-			return worldSave.setFailMsg("");
+			return worldSave.setFailMsg("info.dungeon.build.exception");
 		}
 
-		if (isCrossWithOther(excerpt)) return worldSave.setFailMsg("");
+		if (isCrossWithOther(excerpt)) return worldSave.setFailMsg("info.dungeon.build.too.close");
 
 		MapStorage storage = world.getMapStorage();
 		storage.setData(key, worldSave);

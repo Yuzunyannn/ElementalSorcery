@@ -1,0 +1,37 @@
+{
+    "probability": 0.25,
+    "type": "group",
+    "mode": "random",
+    "funcs": [
+        {
+            "type": "ref",
+            "/assets": "elementalsorcery:dungeon/common_monster_1",
+            "weight": 5,
+            "params": {
+                "$loots": "elementalsorcery:dungeon/dungeon_loot_garden"
+            }
+        },
+        {
+            "type": "haystack",
+            "weight": 15,
+            "pressure": "random",
+            "trigger": {
+                "onSweep": {
+                    "type": "group",
+                    "mode": "random",
+                    "funcs": [
+                        {
+                            "type": "loot",
+                            "loot": "elementalsorcery:dungeon/dungeon_loot_garden",
+                            "acceptHideItem": true
+                        },
+                        {
+                            "type": "ref",
+                            "/assets": "elementalsorcery:dungeon/common_trap_1"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

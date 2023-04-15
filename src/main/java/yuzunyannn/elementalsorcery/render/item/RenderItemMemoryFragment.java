@@ -52,7 +52,11 @@ public class RenderItemMemoryFragment implements IRenderItem {
 	private void renderModel(ItemStack stack) {
 		EnumDyeColor dyColor = EnumDyeColor.WHITE;
 		NBTTagCompound nbt = stack.getTagCompound();
-		if (nbt != null) dyColor = EnumDyeColor.byMetadata(nbt.getInteger("cmeta"));
+		if (nbt != null) {
+			int cmeta = nbt.getInteger("cmeta");
+			EnumDyeColor[] colors = EnumDyeColor.values();
+			dyColor = cmeta < 0 ? colors[(EventClient.tick / 4) % colors.length] : EnumDyeColor.byMetadata(cmeta);
+		}
 		Color color = new Color(dyColor.getColorValue());
 		GlStateManager.color(color.r, color.g, color.b);
 		GlStateManager.disableLighting();

@@ -1,0 +1,59 @@
+{
+    "element": {
+        "element.void.name": {
+            "zh_CN": "虚空",
+            "en_US": "void",
+            "ja_JP": "虚空"
+        },
+        "element.magic.name": {
+            "zh_CN": "魔力",
+            "en_US": "Magic",
+            "ja_JP": "魔力"
+        },
+        "element.ender.name": {
+            "zh_CN": "末影",
+            "en_US": "Ender",
+            "ja_JP": "エンダー"
+        },
+        "element.fire.name": {
+            "zh_CN": "火",
+            "en_US": "Fire",
+            "ja_JP": "火"
+        },
+        "element.wood.name": {
+            "zh_CN": "木",
+            "en_US": "Wood",
+            "ja_JP": "木"
+        },
+        "element.water.name": {
+            "zh_CN": "水",
+            "en_US": "Water",
+            "ja_JP": "水"
+        },
+        "element.earth.name": {
+            "zh_CN": "土",
+            "en_US": "Earth",
+            "ja_JP": "土"
+        },
+        "element.air.name": {
+            "zh_CN": "气",
+            "en_US": "Air",
+            "ja_JP": "気"
+        },
+        "element.metal.name": {
+            "zh_CN": "金",
+            "en_US": "Metal",
+            "ja_JP": "金"
+        },
+        "element.knowledge.name": {
+            "zh_CN": "知识",
+            "en_US": "Knowledge",
+            "ja_JP": "知識"
+        },
+        "element.star.name": {
+            "zh_CN": "星",
+            "en_US": "Star",
+            "ja_JP": "星"
+        }
+    }
+}

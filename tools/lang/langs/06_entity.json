@@ -1,0 +1,141 @@
+{
+    "entity": {
+        "entity.Villager.paperman": {
+            "zh_CN": "古纸收集者",
+            "en_US": "PaperMan",
+            "ja_JP": "古紙集荷者"
+        },
+        "entity.Villager.eslearner": {
+            "zh_CN": "元素知识学者",
+            "en_US": "ElementLearner",
+            "ja_JP": "元素知識学者"
+        },
+        "entity.Villager.magicallearner": {
+            "zh_CN": "魔力学者",
+            "en_US": "MagicLearner",
+            "ja_JP": "魔力学者"
+        },
+        "entity.Elf.name": {
+            "zh_CN": "精灵",
+            "en_US": "Elf",
+            "ja_JP": "精霊"
+        },
+        "entity.RelicZombie.name": {
+            "zh_CN": "遗迹僵尸",
+            "en_US": "Relic Zombie",
+            "ja_JP": "遺跡ゾンビ"
+        },
+        "entity.FairyCube.name": {
+            "zh_CN": "精灵立方体",
+            "en_US": "Elf Cube",
+            "ja_JP": "精霊立方体"
+        },
+        "entity.RabidRabbit.name": {
+            "zh_CN": "狂暴兔",
+            "en_US": "Rabid Rabbit",
+            "ja_JP": "狂暴うさぎ"
+        },
+        "entity.DreadCube.name": {
+            "zh_CN": "恐惧立方体",
+            "en_US": "Dread Cube",
+            "ja_JP": "恐怖立方体"
+        },
+        "entity.DejectedSkeleton.name": {
+            "zh_CN": "忧郁骷髅",
+            "en_US": "Dejected Skeleton",
+            "ja_JP": "憂鬱スカル"
+        },
+        "entity.ArrogantSheep.name": {
+            "zh_CN": "傲慢的绵羊",
+            "en_US": "Arrogant Sheep",
+            "ja_JP": "傲慢なヒツジ"
+        },
+        "entity.EntityGrimoire.name": {
+            "zh_CN": "咒文",
+            "en_US": "Mantra",
+            "ja_JP": "呪文"
+        },
+        "entity.Puppet.name": {
+            "zh_CN": "木灵",
+            "en_US": "Kodama",
+            "ja_JP": "木霊"
+        },
+        "entity.RelicGuard.name": {
+            "zh_CN": "遗迹守卫",
+            "en_US": "Relic Guard",
+            "ja_JP": "遺跡ガード"
+        }
+    },
+    "pro": {
+        "pro.none": {
+            "zh_CN": "闲人",
+            "en_US": "Idle",
+            "ja_JP": "アイドル"
+        },
+        "pro.warrior": {
+            "zh_CN": "战士",
+            "en_US": "Warrior",
+            "ja_JP": "戦士"
+        },
+        "pro.berserker": {
+            "zh_CN": "狂战士",
+            "en_US": "Berserker",
+            "ja_JP": "狂戦士"
+        },
+        "pro.master": {
+            "zh_CN": "魔法大师",
+            "en_US": "Magic Master",
+            "ja_JP": "魔法マスター"
+        },
+        "pro.scholar": {
+            "zh_CN": "学者",
+            "en_US": "Scholar",
+            "ja_JP": "学者"
+        },
+        "pro.crazy": {
+            "zh_CN": "疯子",
+            "en_US": "Crazy",
+            "ja_JP": "狂人"
+        },
+        "pro.merchant": {
+            "zh_CN": "商人",
+            "en_US": "Merchant",
+            "ja_JP": "商人"
+        },
+        "pro.ironsmith": {
+            "zh_CN": "铁匠",
+            "en_US": "Ironsmith",
+            "ja_JP": "かじさん"
+        },
+        "pro.builder": {
+            "zh_CN": "建筑工",
+            "en_US": "Builder",
+            "ja_JP": "建築工"
+        },
+        "pro.receptionist": {
+            "zh_CN": "接待员",
+            "en_US": "Receptionist",
+            "ja_JP": "接待係"
+        },
+        "pro.postReceptionist": {
+            "zh_CN": "邮局接待员",
+            "en_US": "Post Office Office Receptionist",
+            "ja_JP": "郵便局の受付"
+        },
+        "pro.postman": {
+            "zh_CN": "邮递员",
+            "en_US": "Postman",
+            "ja_JP": "郵便配達"
+        },
+        "pro.researcher": {
+            "zh_CN": "研究员",
+            "en_US": "Researcher",
+            "ja_JP": "研究員"
+        },
+        "pro.debtCollector": {
+            "zh_CN": "讨债人",
+            "en_US": "Debt Collector",
+            "ja_JP": "借金取り"
+        }
+    }
+}

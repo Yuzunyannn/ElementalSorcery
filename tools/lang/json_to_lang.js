@@ -1,6 +1,12 @@
 var fs = require('fs')
-let jsonData = fs.readFileSync("./lang.json", "utf-8")
-let jsonLang = JSON.parse(jsonData)
+
+let jsonLang = {}
+let langfiles = fs.readdirSync("./langs")
+langfiles.forEach(fileName => {
+    let path = "./langs/" + fileName
+    let jd = JSON.parse(fs.readFileSync(path, "utf-8"))
+    for (key in jd) jsonLang[key] = jd[key]
+})
 
 let outputTalbe = {
     zh_CN: "",

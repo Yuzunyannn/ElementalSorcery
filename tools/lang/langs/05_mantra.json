@@ -1,0 +1,294 @@
+{
+	"mantra": {
+		"mantra.launchElementCrafting.name": {
+			"zh_CN": "合成启动咒文",
+			"en_US": "Crafting Incantation",
+			"ja_JP": "合成起動の呪文"
+		},
+		"mantra.launchElementDeconstruct.name": {
+			"zh_CN": "瓦解启动咒文",
+			"en_US": "Disintegration Incantation",
+			"ja_JP": "瓦解起動の呪文"
+		},
+		"mantra.launchBuilingRecord.name": {
+			"zh_CN": "建筑解析启动咒文",
+			"en_US": "Architectural Analysis Incantation",
+			"ja_JP": "建築解析起動の呪文"
+		},
+		"mantra.launchElementConstruct.name": {
+			"zh_CN": "构成启动咒文",
+			"en_US": "Constitute Incantation",
+			"ja_JP": "構成启动の呪文"
+		},
+		"mantra.enderTeleport.name": {
+			"zh_CN": "末影移动",
+			"en_US": "Ender Move",
+			"ja_JP": "エンダー移動"
+		},
+		"mantra.enderTeleport.describe": {
+			"zh_CN": "末影元素与咒文结合，瞬移再也不是末影人的特权了。嗯？为啥不能在雨天使用...",
+			"en_US": "The Ender Element with Mantra, teleport is no longer the privilege of Enderman. Well, why can't be used in rainy days?",
+			"ja_JP": "エンダー元素と呪文が結びついて、テレポートはエンダーマンの特権ではなくなった。けれど、なぜ雨の日で使えないですか？"
+		},
+		"mantra.float.name": {
+			"zh_CN": "漂浮",
+			"en_US": "Float",
+			"ja_JP": "浮遊"
+		},
+		"mantra.float.describe": {
+			"zh_CN": "通过气元素，进行缓慢上升",
+			"en_US": "Through The Air Element, I can float slowly.",
+			"ja_JP": "気元素を通して、ゆっくり浮遊している"
+		},
+		"mantra.sprint.name": {
+			"zh_CN": "前冲",
+			"en_US": "Sprint",
+			"ja_JP": "突き進み"
+		},
+		"mantra.sprint.describe": {
+			"zh_CN": "通过气元素，达到更便捷的移动",
+			"en_US": "Through The Air Element, to achieve more convenient movement.",
+			"ja_JP": "気元素を通して、より便利に移動します。"
+		},
+		"mantra.fireBall.name": {
+			"zh_CN": "火焰冲击",
+			"en_US": "Flame impact",
+			"ja_JP": "ファイアショック"
+		},
+		"mantra.fireBall.describe": {
+			"zh_CN": "以火元素为核心，烧坏前方的方块。金元素的加入可以让矿物翻倍，知识元素的加入可以掠过无法烧制的方块。",
+			"en_US": "With The Fire Element as the core, burn the Block in front. The addition of The Metal can double amount of Ore, and the addition of The Knowledge Element can skip the unfired blocks.",
+			"ja_JP": "火元素を中心に前方のブロックを焼き潰す。金元素の添加は鉱物を倍増させて、知識元素の添加は焼却できないブロックを通りすぎることができます。"
+		},
+		"mantra.lush.name": {
+			"zh_CN": "郁郁葱葱",
+			"en_US": "Lush",
+			"ja_JP": "青々と生い茂る"
+		},
+		"mantra.lush.describe": {
+			"zh_CN": "使用木元素，让周围的一切生长",
+			"en_US": "Use The Wood Element to Grow Everythings Around.",
+			"ja_JP": "木元素て周りを成長させます。"
+		},
+		"mantra.blockCrash.name": {
+			"zh_CN": "土块撞击",
+			"en_US": "Dirt Impact",
+			"ja_JP": "土の衝突"
+		},
+		"mantra.blockCrash.describe": {
+			"zh_CN": "土元素抬起地上的土块，将敌人撞飞天",
+			"en_US": "With The Earth Element, there are a Dirt from the ground, and the enemy impact into the sky.",
+			"ja_JP": "土元素て地面の土を持ち上げ，敵を空に打ち上げる。"
+		},
+		"mantra.miningArea.name": {
+			"zh_CN": "不思议的矿工",
+			"en_US": "Unthinkable miner",
+			"ja_JP": "不思議な鉱夫"
+		},
+		"mantra.miningArea.describe": {
+			"zh_CN": "土元素和金元素与咒文的共鸣下，让矿物从地中飞出来",
+			"en_US": "Earth and Metal resonate with The Mantra, allowing Ores fly from the ground.",
+			"ja_JP": "土元素と金元素と呪文の共鳴のもとで、地の中から鉱物を飛び出させます。"
+		},
+		"mantra.summon.name": {
+			"zh_CN": "召唤",
+			"en_US": "Summon Rite",
+			"ja_JP": "召喚"
+		},
+		"mantra.summon.describe": {
+			"zh_CN": "在魔力的缠绕下，召唤仪式可以随时进行",
+			"en_US": "With magic, The Summon Rite can be carried out at any time",
+			"ja_JP": "魔力にからまれて、召喚儀式は随時行われます。"
+		},
+		"mantra.lightningArea.name": {
+			"zh_CN": "雷鸣区域",
+			"en_US": "Lightning Area",
+			"ja_JP": "雷鳴の地"
+		},
+		"mantra.lightningArea.describe": {
+			"zh_CN": "气元素与火元素交织，唤起一块区域，进入的生物会受到雷劈。",
+			"en_US": "With The Air Element and The Fire Element, a Area whoever entered will be struck by lightning is emerge.",
+			"ja_JP": "気元素と火元素が入り交じって、一つの地域を喚起して、入る生物は雷に打たれます。"
+		},
+		"mantra.slowFall.name": {
+			"zh_CN": "缓降",
+			"en_US": "Slow Fall",
+			"ja_JP": "緩降"
+		},
+		"mantra.slowFall.describe": {
+			"zh_CN": "借助气元素的力量，让你得以在空中缓慢滑行",
+			"en_US": "With the Air Element, you can glide slowly.",
+			"ja_JP": "気元素で空中でゆっくり滑走きるようにします。"
+		},
+		"mantra.footbridge.name": {
+			"zh_CN": "天桥",
+			"en_US": "Footbridge",
+			"ja_JP": "歩道橋"
+		},
+		"mantra.footbridge.describe": {
+			"zh_CN": "借助土元素的力量，抬起地上的方块，在前方架起来一座桥",
+			"en_US": "With the Earth Element, raise blocks on the ground and build a bridge in front.",
+			"ja_JP": "土元素で地面の土を持ち上げて、前の方に橋をかけます。"
+		},
+		"mantra.fireArea.name": {
+			"zh_CN": "燃烧领域",
+			"en_US": "Burning Area",
+			"ja_JP": "燃えの地"
+		},
+		"mantra.fireArea.describe": {
+			"zh_CN": "借助火元素的力量，唤起一块区域，进入的生物会受被烧伤。",
+			"en_US": "With The Fire Elemen, a Area whoever entered will be burning is emerge.",
+			"ja_JP": "火元素で、一つの地域を喚起して、入る生物はやけどをします。"
+		},
+		"mantra.magicStrafe.name": {
+			"zh_CN": "魔力冲击",
+			"en_US": "Magic Strafe",
+			"ja_JP": "魔力掃射"
+		},
+		"mantra.magicStrafe.describe": {
+			"zh_CN": "将魔力转化为能量束，对敌人造成伤害。",
+			"en_US": "Turn magic Into energy beam to attack enemies.",
+			"ja_JP": "魔力をエネルギー束に変換し、敵にダメージを与える。"
+		},
+		"mantra.floatArea.name": {
+			"zh_CN": "漂浮风域",
+			"en_US": "Floating Wind Area",
+			"ja_JP": "漂り風域"
+		},
+		"mantra.floatArea.describe": {
+			"zh_CN": "借助气元素的力量，产生上升气流，将进入区域的生物吹向上方。",
+			"en_US": "With the Air Element, produce updraft, blow the creatures that enter the area up.",
+			"ja_JP": "気元素で上昇気流が生じ、風域に入る生物を上に向けて吹きます。"
+		},
+		"mantra.fireCharge.name": {
+			"zh_CN": "火焰弹",
+			"en_US": "Fire Charge",
+			"ja_JP": "火炎弾"
+		},
+		"mantra.fireCharge.describe": {
+			"zh_CN": "借助火元素的力量，产生并发射火焰弹。",
+			"en_US": "With the Fire Element, generate and shoot The Fire Charge",
+			"ja_JP": "火元素で作る火炎弾を発射する。"
+		},
+		"mantra.arrow.name": {
+			"zh_CN": "射手",
+			"en_US": "Shooter",
+			"ja_JP": "射手"
+		},
+		"mantra.arrow.describe": {
+			"zh_CN": "借助气元素，将箭矢发射出去。土木元素可以构造出箭矢，火元素会为箭矢增添力量，土元素会让箭矢击飞敌人。",
+			"en_US": "With the Air, shooting the arrow. With the Earth&Wood, making the arrow. Fire to strengthen, Earth to punch",
+			"ja_JP": "気元素で矢を発射する。土木元素で矢を作れる、火元素でパワーを増える，土元素で敵を撃ち飛ばす。"
+		},
+		"mantra.potent.name": {
+			"zh_CN": "强效",
+			"en_US": "Potent",
+			"ja_JP": "強効"
+		},
+		"mantra.potent.describe": {
+			"zh_CN": "将强大的魔力附加于魔典，魔典进入强效状态，发挥出超常效果。\\n不仅咒文的效果会变强，部分咒文在魔典普通攻击时，也会产生特殊的效果。\\n施法过程中积攒少量强效，施法结束可瞬间积攒大量。",
+			"en_US": "Attach powerful magic to the Grimoire and become a powerful state. Your Mantra will have an extraordinary effect.\\nThe Mantra not only is more powerful but also will appear special effect on normal attack with The Grimoire.\\nAccumulate few powerful during casting, and many powerful will be accumulated at the end of casting.",
+			"ja_JP": "強力な魔力を魔典に付加し、呪文は強力な効果を発揮できる。\\n呪文の効果が強くなるだけでなく、一部の呪文は魔典で普通攻撃時にも特殊な効果が発生できる。\\n施法中に少量の強効をため込み、施法が終わったら瞬時に大量の強効をため込みます。"
+		},
+		"mantra.fluorspar.name": {
+			"zh_CN": "荧光聚合",
+			"en_US": "Fluorspar Flock",
+			"ja_JP": "蛍光重合"
+		},
+		"mantra.fluorspar.describe": {
+			"zh_CN": "借助金元素，将荧光固化到岩石中，让岩石照亮周围。",
+			"en_US": "With the Metal, solidify the fluorescence into the rock and let the rock illuminate the surroundings.",
+			"ja_JP": "蛍光を岩に硬化させ、岩を周囲を明るくします。"
+		},
+		"mantra.timeHourglass.name": {
+			"zh_CN": "时间沙漏",
+			"en_US": "Time Hourglass",
+			"ja_JP": "砂時計"
+		},
+		"mantra.timeHourglass.describe": {
+			"zh_CN": "借助星元素，让周围的生物缓慢下来。或许强效能让其发回正真的威力。",
+			"en_US": "With the Star, Slow down the creatures around you. Maybe The Potent can make it return to its true power.",
+			"ja_JP": "星の力で、周りの生物をゆっくりさせる。強効で本物の威力を返せるかもしれません。"
+		},
+		"mantra.elementWhirl.name": {
+			"zh_CN": "元素回旋",
+			"en_US": "Element Whirl",
+			"ja_JP": "元素旋回"
+		},
+		"mantra.elementWhirl.describe": {
+			"zh_CN": "让元素高速回旋的咒文",
+			"en_US": "spin Element at high speed",
+			"ja_JP": "元素を高速で旋回させる呪文"
+		},
+		"mantra.laser.name": {
+			"zh_CN": "元素集束",
+			"en_US": "Element Cluster",
+			"ja_JP": "元素クラスター"
+		},
+		"mantra.laser.describe": {
+			"zh_CN": "让元素集中在一起并以光线射出的咒文，不同元素可能会产生不同的效果",
+			"en_US": "Element be brought together to emit laser, different Element may have different effects",
+			"ja_JP": "元素を集めて光を放つ呪文は、元素によって効果が異なる場合がある"
+		},
+		"mantra.sturdyArea.name": {
+			"zh_CN": "坚固领域",
+			"en_US": "Sturdy Area",
+			"ja_JP": "堅牢な領域"
+		},
+		"mantra.sturdyArea.describe": {
+			"zh_CN": "借助土元素，形成一个无法进入的区域",
+			"en_US": "With the Earth, construct an inaccessible area",
+			"ja_JP": "土元素で立ち入ることのできない領域を形成する"
+		},
+		"mantra.frozen.name": {
+			"zh_CN": "寒风凛冽",
+			"en_US": "Piercing Cold Wind",
+			"ja_JP": "寒風"
+		},
+		"mantra.frozen.describe": {
+			"zh_CN": "借助水、气元素，产生寒冷的风雪，让敌人发生冻结",
+			"en_US": "With the Water and Air, wind cold snow to freeze the enemy",
+			"ja_JP": "水と気元素で冷たい風雪が吹き、敵を凍らせる"
+		},
+		"mantra.iceCrystalBomb.name": {
+			"zh_CN": "冰晶炸弹",
+			"en_US": "Ice Crystal Bomb",
+			"ja_JP": "氷晶ばくだん"
+		},
+		"mantra.iceCrystalBomb.describe": {
+			"zh_CN": "通过水构造冰晶，当生物接近的时候会发生爆炸",
+			"en_US": "With the Water, Ice Crystal is built and will explode when creatures approach",
+			"ja_JP": "水元素で構造の氷晶は、生物が近づくと爆発する"
+		},
+		"mantra.naturalMedal.name": {
+			"zh_CN": "自然勋章",
+			"en_US": "Natural Medal",
+			"ja_JP": "自然勲章"
+		},
+		"mantra.naturalMedal.describe": {
+			"zh_CN": "通过木元素构造出自然勋章并授予生物，击杀敌人可以升级勋章",
+			"en_US": "With the Wood, Natural Medal is built and give it to the target, kill enemy can Upgrade Medal",
+			"ja_JP": "木元素で自然勲章を作り生物を授け、敵を倒し勲章を昇格し"
+		},
+		"mantra.puppetArea.name": {
+			"zh_CN": "木灵领域",
+			"en_US": "Kodama Area",
+			"ja_JP": "木霊領域"
+		},
+		"mantra.puppetArea.describe": {
+			"zh_CN": "借助木元素，召唤木灵领域，领域内会周期性的产生木灵来攻击区域内的敌人，木灵的攻击会根据敌人生命的最大值百分比造成伤害",
+			"en_US": "With the Wood, Summon Kodama Area which will periodically generate Kodamas to attack enemies. The Kodama's damage is base on percentage of the enemy's max hp.",
+			"ja_JP": "木元素で木霊領域を召喚し、領域内で周期的に木霊を生み、敵を攻撃して、敵のHPの最大のパーセントによってダメージを与える"
+		},
+		"mantra.goldShield.name": {
+			"zh_CN": "黄金盾",
+			"en_US": "Gold Shield",
+			"ja_JP": "黄金盾"
+		},
+		"mantra.goldShield.describe": {
+			"zh_CN": "借助金元素，生成价值之盾，消耗可估算的价值来抵挡任何伤害，超出的价值将作为伤害反射给敌人",
+			"en_US": "With the Metal, create the Shield of Value. Consume estimated value to resist any damage. Excess value will be reflected to the enemy as damage",
+			"ja_JP": "金元素で価値の盾を生成し、推定可能な価値を消費していかなるダメージにも抵抗し、超えた価値はダメージとして敵に反射する"
+		}
+	}
+}

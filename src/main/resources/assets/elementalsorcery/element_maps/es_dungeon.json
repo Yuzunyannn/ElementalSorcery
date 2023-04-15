@@ -1,0 +1,36 @@
+{
+	"type": "elementalsorcery:element_map",
+	"maps": [
+		{
+			"note": "腐朽木",
+			"item": "elementalsorcery:dungeon_rotten_lifelog",
+			"element": [
+				{
+					"id": "wood",
+					"size": 10,
+					"power": 2260
+				},
+				{
+					"id": "earth",
+					"size": 4,
+					"power": 1475
+				},
+				{
+					"id": "water",
+					"size": 3,
+					"power": 1475
+				},
+				{
+					"id": "fire",
+					"size": 3,
+					"power": 1475
+				},
+				{
+					"id": "air",
+					"size": 2,
+					"power": 1324
+				}
+			]
+		}
+	]
+}

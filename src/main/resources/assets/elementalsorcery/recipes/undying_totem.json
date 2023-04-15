@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "DWD",
+    "WWW",
+    " W "
+  ],
+  "key": {
+    "W": {
+      "item": "elementalsorcery:dungeon_rotten_lifelog"
+    },
+    "D": {
+      "item": "minecraft:emerald"
+    }
+  },
+  "result": {
+    "item": "minecraft:totem_of_undying",
+    "count": 1
+  }
+}

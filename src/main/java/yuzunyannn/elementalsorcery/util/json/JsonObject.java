@@ -111,11 +111,6 @@ public class JsonObject extends Json implements Iterable<String> {
 	}
 
 	@Override
-	public boolean isObject() {
-		return true;
-	}
-
-	@Override
 	public Iterator<String> iterator() {
 		return keySet().iterator();
 	}
@@ -129,13 +124,13 @@ public class JsonObject extends Json implements Iterable<String> {
 	}
 
 	public void set(String key, Json obj) {
-		if (obj.isObject()) set(key, (JsonObject) obj);
-		else set(key, (JsonArray) obj);
+		json.add(key, obj.getGoogleJson());
 	}
 
 	public Json get(String key) {
 		if (hasObject(key)) return getObject(key);
-		if (hasArray(key)) return getArray(key);
+		else if (hasArray(key)) return getArray(key);
+		else if (hasString(key)) return new JsonString(getString(key));
 		return null;
 	}
 

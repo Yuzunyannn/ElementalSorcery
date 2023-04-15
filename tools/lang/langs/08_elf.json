@@ -1,0 +1,760 @@
+{
+    "elf": {
+        "elf.time.year": {
+            "zh_CN": "%d年",
+            "en_US": "%d Year ",
+            "ja_JP": "%d年"
+        },
+        "elf.time.mon.0": {
+            "zh_CN": "春",
+            "en_US": "Spring ",
+            "ja_JP": "春"
+        },
+        "elf.time.mon.1": {
+            "zh_CN": "夏",
+            "en_US": "Summer ",
+            "ja_JP": "夏"
+        },
+        "elf.time.mon.2": {
+            "zh_CN": "秋",
+            "en_US": "Autumn ",
+            "ja_JP": "秋"
+        },
+        "elf.time.mon.3": {
+            "zh_CN": "冬",
+            "en_US": "Winter ",
+            "ja_JP": "冬"
+        },
+        "elf.time.day": {
+            "zh_CN": "%s号",
+            "en_US": "%s Day ",
+            "ja_JP": "%s号"
+        },
+        "elf.time.hour.0": {
+            "zh_CN": "朝",
+            "en_US": "Morning ",
+            "ja_JP": "朝"
+        },
+        "elf.time.hour.1": {
+            "zh_CN": "暮",
+            "en_US": "Twilight ",
+            "ja_JP": "暮"
+        },
+        "elf.time.min": {
+            "zh_CN": "%d时",
+            "en_US": "%d Time ",
+            "ja_JP": "%d時"
+        },
+        "elf.time.sec": {
+            "zh_CN": "%d秒",
+            "en_US": "%d Sec ",
+            "ja_JP": "%d秒"
+        },
+        "elf.time.calendar": {
+            "zh_CN": "精灵历：%s",
+            "en_US": "Elf Calendar: %s",
+            "ja_JP": "精霊のカレンダー：%s"
+        },
+        "elf.red.label.merchant.not.notice": {
+            "zh_CN": "精灵商会似乎没有注意到你悄悄的拿走了%s",
+            "en_US": "It seems that the Elven chamber of Commerce didn't notice that you secretly took away %s.",
+            "ja_JP": "精霊商会はあなたがこっそり%sを持って行ったことに気づかなかったようです。"
+        },
+        "elf.red.label.merchant.notice": {
+            "zh_CN": "精灵商会发现到你悄悄的拿走了%s，你的信誉降低了%s，负债上升%s元",
+            "en_US": "The Elven chamber of Commerce found that you secretly took away %s, your fame was reduced by %s, and incur %s yuan debts",
+            "ja_JP": "精霊商会はあなたがこっそり%sを持って行ったことを発見して、あなたの信用は%sを下げました、%s元債務に増加しまた"
+        }
+    },
+    "say": {
+        "say.scholar.buy": {
+            "zh_CN": "别说了，我要买羊皮卷",
+            "en_US": "Stop talking. I want to buy some parchment.",
+            "ja_JP": "黙って羊皮紙を買いたい"
+        },
+        "say.scholar.konw": {
+            "zh_CN": "我明白了",
+            "en_US": "Oh, I see",
+            "ja_JP": "わかりました"
+        },
+        "say.scholar.unkonw": {
+            "zh_CN": "我不明白",
+            "en_US": "I don't understand",
+            "ja_JP": "わからない"
+        },
+        "say.ok": {
+            "zh_CN": "嗯",
+            "en_US": "Ok",
+            "ja_JP": "はい"
+        },
+        "say.no": {
+            "zh_CN": "我在考虑一下",
+            "en_US": "Let me think",
+            "ja_JP": "もう少し考えてみます"
+        },
+        "say.elf.is.get.present": {
+            "zh_CN": "这是给我的吗？真是太开心了！",
+            "en_US": "Is this for me? How happy!",
+            "ja_JP": "これは私にくれたのですか？本当に楽しかったです！"
+        },
+        "say.dishonest.not.service": {
+            "zh_CN": "您的信誉过低，无法为您提供服务",
+            "en_US": "Your Honest is too low to serve you.",
+            "ja_JP": "あなたの信用が低すぎて、サービスを提供できません"
+        },
+        "say.dishonest.not.say": {
+            "zh_CN": "我不想和没信誉的人说话",
+            "en_US": "I don't want to talk to people without honest.",
+            "ja_JP": "信用のない人とは話したくない"
+        },
+        "say.scholar.pretendKnow": {
+            "zh_CN": "就当你明白了",
+            "en_US": "Pretend you understand.",
+            "ja_JP": "わかったふりして"
+        },
+        "say.scholar.nice.goods": {
+            "zh_CN": "我这里除了记载知识的羊皮卷以外，还有一些好东西你可以买到",
+            "en_US": "In addition to the parchment for recording knowledge, there are some good things you can buy here.",
+            "ja_JP": "ここでは知識を記載した羊皮紙以外に、いいものがあります"
+        },
+        "say.scholar.becare": {
+            "zh_CN": "你要小心疯子，她们什么都打",
+            "en_US": "You have to be careful of The Crazy. They fight everything.",
+            "ja_JP": "狂人に注意してください、彼たちは何でもします"
+        },
+        "say.scholar.master": {
+            "zh_CN": "精灵魔法大师非常的强大，几乎无人是她的对手，我也想成为那样强大的法师。",
+            "en_US": "The Magic Master is very powerful, almost no one is her opponent, I also want to be such a powerful mage.",
+            "ja_JP": "魔法マスターはとっても強い、彼の相手はほとんどいません、僕はその強くをなりたい"
+        },
+        "say.scholar.more.floor": {
+            "zh_CN": "可以在巨大的精灵树上建立许多不同类型的层：商会、邮局等等，我好像要个大图书馆呀。（这些内容随更新加入）",
+            "en_US": "Many different types of floor can be build on the giant Elf Tree like Chamber of Commerce, Post Office, etc. I hope The Big Library can be build. (These are added with the update)",
+            "ja_JP": "巨大な精霊の木に様々な種類の層を作ることができます、例えば商会、郵便局など。私なら大図書館がほしいな。（これらの内容は更新とともに追加されます。）"
+        },
+        "say.scholar.watch": {
+            "zh_CN": "精灵怀表是由我们的工匠打造的，可以看到当前世界的时间。以日出为始、50秒为1时、12时分朝暮、12朝暮分四季。如果想要的话，可以问问商人有没有。",
+            "en_US": "The Elf Watch is made by our craftsmen and can see the time of the current world. 50 Sec is 1 Time, 12 Time divide Morning&Twilight,  12 Morning&Twilight divide four seasons. If you want it, ask the Elf Merchant whether have one.",
+            "ja_JP": "精霊の精霊時計は私達の職人によって作られました。今の世界の時間が見えます。50秒は1時、12時は朝暮、12朝暮は四季。欲しいなら、商人に聞いてもいいです。"
+        },
+        "say.merchant.good.goods": {
+            "zh_CN": "快来看看吧，我这里全是好东西",
+            "en_US": "Come and have a look. I have a lot of good things here.",
+            "ja_JP": "いらっしゃいませ、ここは全部いいものです"
+        },
+        "say.merchant.dishonest": {
+            "zh_CN": "我无法和失信者交易",
+            "en_US": "I can't deal with dishonest people.",
+            "ja_JP": "信頼できない人と取引できません"
+        },
+        "say.merchant.give.gift": {
+            "zh_CN": "很高兴见到你，这是我的一点心意希望你喜欢，日后合作愉快",
+            "en_US": "Nice to meet you. This is a small gift, I hope you like it. I look forward to a smooth cooperation.",
+            "ja_JP": "お会いできて嬉しいです。これ、つまらないものですが、よかったら受け取ってください、楽しい協力になるよう期待しております。"
+        },
+        "say.builder.working": {
+            "zh_CN": "我正在工作...",
+            "en_US": "I'm working.",
+            "ja_JP": "仕事中です"
+        },
+        "say.builder.hope": {
+            "zh_CN": "我希望可以居住在这里...",
+            "en_US": "I hope we can live here...",
+            "ja_JP": "ここに住みたいですけど"
+        },
+        "say.builder.help": {
+            "zh_CN": "有什么可以帮忙的吗？",
+            "en_US": "Can I help you?",
+            "ja_JP": "何か手伝うことがありますか？"
+        },
+        "say.builder.need": {
+            "zh_CN": "我要一些资金，大概500元吧",
+            "en_US": "I need some money, about 500 yuan.",
+            "ja_JP": "ちょっとお金がほしいですが、500元ぐらいかかりますか？"
+        },
+        "say.builder.ok": {
+            "zh_CN": "我要赞助他们",
+            "en_US": "I want to sponsor them.",
+            "ja_JP": "彼らを助けたいです"
+        },
+        "say.builder.no": {
+            "zh_CN": "还是算了吧",
+            "en_US": "Let's forget it.",
+            "ja_JP": "いやです"
+        },
+        "say.very.thank": {
+            "zh_CN": "非常感谢",
+            "en_US": "Thank you very much.",
+            "ja_JP": "ありがとうございます"
+        },
+        "say.nomoney": {
+            "zh_CN": "你好像没带够钱",
+            "en_US": "You don't seem to have enough money.",
+            "ja_JP": "お金を十分に持っていないようです"
+        },
+        "say.edifice.broken": {
+            "zh_CN": "这颗树的核心被破坏了，我们也要离开这里了...",
+            "en_US": "This Tree's Core is broken, we will leave here soon.",
+            "ja_JP": "この木の芯が壊れました。私達もここを離れる予定です。"
+        },
+        "say.can.help": {
+            "zh_CN": "你好呀，有什么事我可以帮忙的吗？",
+            "en_US": "Hello, what can I do for you?",
+            "ja_JP": "何か手伝いましょうか？"
+        },
+        "say.take.quest": {
+            "zh_CN": "我要领取委托",
+            "en_US": "I want to take this quest.",
+            "ja_JP": "依頼を引き受ける"
+        },
+        "say.how.take.quest": {
+            "zh_CN": "如果想领取委托，可以到上方的公告板上去看一看，定期会有人在上面张贴委托，委托内容，条件以及报酬都会在上面写着哦。如果有想接的委托，就拿着委托书来找我吧。\\n大部分任务有信用的要求，如果任务规定时间内未完成，该任务需要的信用越多，对您的信用影响越大。",
+            "en_US": "If you want to get the Quest, you can go to the bulletin board above to have a look. The Quest written contents, conditions and rewards will be posting on it regularly. If you have a Quest you want to accept, come to me with the Quest.\\nMost Quests have Fame requirements, If the Quest is overdue, the more fame the quest needs, the greater the impact on your fame.",
+            "ja_JP": "依頼を受けたいなら、上の掲示板を見てください。定期的に依頼を張り出す人がいます、上に依頼内容、条件、報酬などが書かれています。受けたい依頼があれば、依頼書を持ってきてください。大部分の依頼は信用の要求があります。もし依頼の規定時間内に完成していないなら、依頼に必要な信用がもっと多くて、あなたの信用に影響が大きいです。"
+        },
+        "say.want.go.upstair": {
+            "zh_CN": "我想上楼",
+            "en_US": "I want to go upstairs",
+            "ja_JP": "上に行きたいです"
+        },
+        "say.how.go.upstair": {
+            "zh_CN": "在树中部，按下「功能键(默认TAB)」可以唤起大树的电梯。不过需要等楼层建好了。祝您愉快。",
+            "en_US": "In the middle of the Tree, press the \"function key\" to call up the elevator of the tree. But we need to wait until the floor is ready. Have a good time.",
+            "ja_JP": "木の中部で、「機能キー」を押すと、大木のエレベーターを喚起する。でも、階の建造を待つ必要があります。楽しい時間を過ごしてください。"
+        },
+        "say.overdue.quest": {
+            "zh_CN": "你手上的委托已经到期了。",
+            "en_US": "The Quest at hand is due.",
+            "ja_JP": "持っている依頼はもう期限が切れました。"
+        },
+        "say.underway.quest": {
+            "zh_CN": "你手上的委托正在进行或者已经完成了。",
+            "en_US": "The Quest at hand is in progress or has been completed.",
+            "ja_JP": "持っている依頼は進行中か、またはすでに完了しました。"
+        },
+        "say.cannot.quest": {
+            "zh_CN": "你无法领取这个委托。",
+            "en_US": "You can't take this Quest.",
+            "ja_JP": "この依頼を受け取れません。"
+        },
+        "say.nofinish.quest": {
+            "zh_CN": "你的委托还没完成吧。",
+            "en_US": "You haven't finished your task yet.",
+            "ja_JP": "君の依頼はまだ終わっていないだろう。"
+        },
+        "say.take.quest.confirm": {
+            "zh_CN": "确定要领取「%s」这个委托吗？请确认好，如果规定时间内未完成，可能会影响到你的信誉。",
+            "en_US": "Are you sure you want to claim the 「%s」 Quest? Please confirm it. If it is not completed within the specified time, it may affect your Fame.",
+            "ja_JP": "この「%s」という依頼を受け取りますか？よく確認してください。規定時間内に完成していないと、信用に影響を与えるかもしれません。"
+        },
+        "say.take.quest.finish": {
+            "zh_CN": "我已经给您登记了，你可以开始这个委托了！此外请不要弄丢这张委托书，这个是你委托的凭证。",
+            "en_US": "I have signed you. You can start this Quest! In addition, please don't lose this Quest which is the certificate of your quest.",
+            "ja_JP": "依頼を登録しました。この依頼を開始してもいいです。また、この依頼書をなくしないでください、これはあなたの依頼の証明です。"
+        },
+        "say.reputation.decline": {
+            "zh_CN": "您接受的委托中存在超出期限的委托，已经为您注销了这些委托。由于您未按时提交，您的信誉可能会有所降低。",
+            "en_US": "There are overdue Quest in the Quest you have accepted. These Quest have been logged out for you. Your Fame may be reduced due to your late submission.",
+            "ja_JP": "あなたが受けた依頼には期限を超えたものがあります。これらの依頼はすでにキャンセルされました。その結果で、あなたの信用が低下するかもしれません。"
+        },
+        "say.quest.finish": {
+            "zh_CN": "恭喜你完成了这个委托！这是给你的奖励。",
+            "en_US": "Congratulations on completing this Quest! This is a reward for you.",
+            "ja_JP": "この依頼を達成したことをおめでとうございます。これはあなたへのご褒美です。"
+        },
+        "say.fame.query": {
+            "zh_CN": "信用查询",
+            "en_US": "Fame Query",
+            "ja_JP": "信用照会"
+        },
+        "say.fame.query.result": {
+            "zh_CN": "让我看看^_^_^_^_^_^_^_^_^您的信用记录是%s",
+            "en_US": "Let me see ^_^_^_^_^_^_^_^_^ Your Fame is %s",
+            "ja_JP": "ちょっと待ってください^_^_^_^_^_^_^_^_^あなたの信用記録は%sです。"
+        },
+        "say.fame.query.result.low": {
+            "zh_CN": "您已经进入失信状态了，如果信用过低的话，精灵们将不会提供您服务了",
+            "en_US": "You have entered a state of dishonest. If the Fame is too low, Elves will not provide services with you",
+            "ja_JP": "あなたはもう信用を失っています、信用が低すぎると、精霊たちはサービスを提供しません。"
+        },
+        "say.debt.pay": {
+            "zh_CN": "还债",
+            "en_US": "Pay debt",
+            "ja_JP": "しゃっきんを返す"
+        },
+        "say.debt.pay.check": {
+            "zh_CN": "您已欠款%s元，请及时偿还",
+            "en_US": "You owe %s yuan, please repay it in time.",
+            "ja_JP": "あなた%s元の借金をして、直ちに返済してください"
+        },
+        "say.debt.pay.do": {
+            "zh_CN": "您已偿还%s元，还剩欠款%s元",
+            "en_US": "You have paid back %s yuan, leaving %s yuan in arrears.",
+            "ja_JP": "あなたは%s元を返済して、まだ%s元の借金が残っています"
+        },
+        "say.ironsmith.info": {
+            "zh_CN": "你把需要烧炼的矿物放到那边的箱子堆里，我会帮你烧炼，烧好了记得到炉子两边的箱子里去拿。\\n我可不是白烧的，一个矿2元，记得一起放到箱子里。",
+            "en_US": "Put the ore into the boxes over there. I'll help you smelt them. When work done, remember to take them from the boxes on both sides of the stove. \\N I don't work for nothing, a ore costs 2 yuan, remember to put it in the box together.",
+            "ja_JP": "製錬したい鉱物をあちらの箱の中に入れてください。製錬した後でストーブの両側の箱の中で取ってください。\\n無料ではないです。一つの鉱石は2元です。一緒に箱に入れてください。"
+        },
+        "say.pay.debt.drop.item": {
+            "zh_CN": "把你价值%s元的%s交出来抵债!",
+            "en_US": "Pay %s yuan debts with your %s!",
+            "ja_JP": "てめえの価値%s元の%sを債務返済に差し出す!"
+        },
+        "say.pay.debt.collect.over": {
+            "zh_CN": "你的债务已经还完了，我撤了",
+            "en_US": "Your debt has been paid off, I'm leaving.",
+            "ja_JP": "てめえの債務はすでに返済済みで、さようなら"
+        },
+        "say.send.parcel": {
+            "zh_CN": "寄送包裹",
+            "en_US": "Send a parcel",
+            "ja_JP": "小包を送る"
+        },
+        "say.apply.address.plate": {
+            "zh_CN": "申请地址牌",
+            "en_US": "Apply for address plate",
+            "ja_JP": "住所カードを申請する"
+        },
+        "say.submit": {
+            "zh_CN": "提交",
+            "en_US": "Submit",
+            "ja_JP": "送信"
+        },
+        "say.submit.empty": {
+            "zh_CN": "您还没有填写地址吧。",
+            "en_US": "You haven't filled in the address yet.",
+            "ja_JP": "住所はまだ書いてないですよね"
+        },
+        "say.submit.empty.item": {
+            "zh_CN": "寄送包裹的话，总要有点东西吧。",
+            "en_US": "I think there must be something when send a parcel.",
+            "ja_JP": "小包を送る時、なにでもいい、荷物が必要ですよね"
+        },
+        "say.address.illegal": {
+            "zh_CN": "您填的地址名不太好吧",
+            "en_US": "Your address is not very good, is it?",
+            "ja_JP": "ご記入の住所名はよくないですよね？"
+        },
+        "say.send.mail.money": {
+            "zh_CN": "我算下，寄送这个包裹，您一共需要支付%s元。",
+            "en_US": "You will have to pay %s yuan to send this parcel.",
+            "ja_JP": "この小包を送るには全部で%s元を支払う必要があります"
+        },
+        "say.as.soon.to.sned": {
+            "zh_CN": "我们会尽快为您配送。",
+            "en_US": "We will ship it to you as soon as possible.",
+            "ja_JP": "できるだけ早く配送します"
+        },
+        "say.apply.address.help": {
+            "zh_CN": "您可以花费%s元来申请一个地址牌，将地址牌放到精灵信标里，当有您的包裹时，我们会将包裹送到精灵信标附近的箱子里。",
+            "en_US": "You can spend %s yuan to apply for an Address Plate and put it in the Elf Beacon. When there is your parcel, we will send it to the chest near the Elf Beacon",
+            "ja_JP": "%s元を使って住所カードを申請して、住所カードを精霊のビーコンに入れ、小包がある時、私達は精霊のビーコンの近くの箱に小包を送ります"
+        },
+        "say.apply.address.success": {
+            "zh_CN": "请收好您的地址牌。",
+            "en_US": "Please keep your Address Plate.",
+            "ja_JP": "住所カードを受け取ってください"
+        },
+        "say.i.want": {
+            "zh_CN": "我想%s",
+            "en_US": "I want %s",
+            "ja_JP": "%sと欲しい"
+        },
+        "say.upgrade.plate": {
+            "zh_CN": "升级地址牌",
+            "en_US": "Upgrade Address Plate",
+            "ja_JP": "住所カードを級が上がる"
+        },
+        "say.upgrade.help": {
+            "zh_CN": "您可以花费%s元来升级到高级的地址牌，高级地址牌可以随时呼叫快递员进行服务，一共有10次的使用机会。",
+            "en_US": "You can spend %s yuan to upgrade to the VIP Address Plate, which can call the courier for service at any time, with a total of 10 use opportunities.",
+            "ja_JP": "%s元を使って超級住所カードにアップグレードすることができます。超級住所カードはいつでも宅急便員を呼んでサービスを行うことができます。全部で10回の利用機会があります。"
+        },
+        "say.add.service.plate": {
+            "zh_CN": "增加服务次数",
+            "en_US": "Increase service times",
+            "ja_JP": "サービスの回数を増やす"
+        },
+        "say.add.service.help": {
+            "zh_CN": "您是高级地址牌用户，您可以花费%s元来增加10次的服务次数。",
+            "en_US": "You are an VIP Address Plate user. You can spend %s yuan to increase 10 service times.",
+            "ja_JP": "あなたは超級住所カードのユーザです。10回のサービス回数を増やすために%s元を使うことができます。 "
+        },
+        "say.add.service.success": {
+            "zh_CN": "以成功为您增加了10次服务次数",
+            "en_US": "We have successfully added 10 service times for your VIP Address Plate.",
+            "ja_JP": "10回のサービスを追加しました。"
+        },
+        "say.your.pracel": {
+            "zh_CN": "%s：您的包裹到了",
+            "en_US": "%s: Here is your package",
+            "ja_JP": "%s：あなたの小包が届きました"
+        },
+        "say.post.first.welfare": {
+            "zh_CN": "您是第一次来使用我们的快递服务，我们特此为您准了一个新手委托，请您收下。",
+            "en_US": "You are the first time to use our express service, we hereby allow you a novice Quest, please accept it.",
+            "ja_JP": "初めての宅急便サービスです。そこで初心者の依頼を用意しました。受け取ってください。"
+        },
+        "say.how.research.first": {
+            "zh_CN": "欢迎来到实验室，你是第一次来吧，让我来说明一下。",
+            "en_US": "Welcome to the laboratory. This is your first time. Let me explain.",
+            "ja_JP": "実験室へようこそ、初めてですね、説明させていただきます。"
+        },
+        "say.how.research.1": {
+            "zh_CN": "你可以去那边的方桌上进行研究，花费研究点数在不同的题目上，没准可以研究出你想要的东西出来。研究点数可以在做某些事情的时候获取。",
+            "en_US": "You can go to the square table over there and spend research points on different topics. Maybe you can find out what you want. Research points can be obtained when doing certain things.",
+            "ja_JP": "そちら四角桌に行って研究してもいいです。違ったテーマに研究点数を使って、あなたの欲しいものが手に入るかもしれない。研究点数は何かをするときに取得することができます。"
+        },
+        "say.how.research.point.reget": {
+            "zh_CN": "想必你已经拥有一些了吧，当增长时，你可以看到一些提示（配置里可以修改提示模式）。",
+            "en_US": "You presumably have some, as it grow, you can see some tips(tip mode can be modify in Configuration).",
+            "ja_JP": "あなたはすでにいくつか持っているでしょう、増加するといくつかのヒントが見られます（構成でヒントのモードを変更できる）。"
+        },
+        "say.want.paper": {
+            "zh_CN": "可以把你手上的古卷送给我吗？作为报酬，我会教你一些东西的。",
+            "en_US": "Can you give me the Ancient Paper you have? In return, I'll teach you something.",
+            "ja_JP": "手に持っている古巻を送ってもらえますか？報酬として、何かを教えてあげます。"
+        },
+        "say.teach.me": {
+            "zh_CN": "教我知识",
+            "en_US": "Teach me",
+            "ja_JP": "知識を教えてください"
+        },
+        "say.buy.something": {
+            "zh_CN": "买东西",
+            "en_US": "Shopping",
+            "ja_JP": "買い物する"
+        },
+        "say.buy.parchment": {
+            "zh_CN": "图书馆里有关于您手中物品的记载，您是否想要花费%s来购买对应的羊皮卷呢？",
+            "en_US": "There is a record of the Item in your hand in this library, would you want spend %s yuan for it?",
+            "ja_JP": "貴方持っているものについての記載があり、%s元でその羊皮紙を買いたいですか？"
+        },
+        "say.arrogantSheep.myFur": {
+            "zh_CN": "我的黄金毛！",
+            "en_US": "My Golden Wool!",
+            "ja_JP": "われの黄金毛！"
+        },
+        "say.arrogantSheep.welcome": {
+            "zh_CN": "欢迎来到我的黄金迷宫！",
+            "en_US": "Welcome To My Golden Maze!",
+            "ja_JP": "われの黄金迷宮にようこそ！"
+        },
+        "say.arrogantSheep.escape": {
+            "zh_CN": "太险了，差点掉下去，哈哈，溜了溜了...",
+            "en_US": "It was too close. Almost fell. Slip away, ha-ha",
+            "ja_JP": "危なかった、もう少しで落ちるところだった、逃げろ、ははは"
+        },
+        "say.arrogantSheep.uselessAttack": {
+            "zh_CN": "你的攻击对我的黄金毛来说是没有用的！",
+            "en_US": "Your attack is useless to My Golden Wool!",
+            "ja_JP": "お前の攻撃はわれの黄金毛にとって無駄です！"
+        },
+        "say.arrogantSheep.explain": {
+            "zh_CN": "我的金砖阻碍你的跳跃和放置，不过迷宫里有一块金砖可以强化你跳跃并让你来到二层。想必也不可能找到！",
+            "en_US": "My Gold Brick hinders your jumping and places Any Block, but there is a gold brick in The Maze that can strengthen your jumping and bring you to the second floor. It must be impossible to find it!",
+            "ja_JP": "われの金れんがはお前のジャンプとブロックの配置を邪魔だ、しかし、迷宮の中にはジャンプを強化する金れんがあります、そこで二階まで行ける。まぁ、きっと見つけられない。"
+        },
+        "say.arrogantSheep.longFind": {
+            "zh_CN": "这么久了，看来你是找不到了。不过你也别想这么容易出去！",
+            "en_US": "It's been so long that you can't find me. But you don't want to get out so easily!",
+            "ja_JP": "こんなに長くなりました。見つけられないよう。でも、そんなに簡単に外に出るとは思わない。"
+        },
+        "say.arrogantSheep.summonZombie": {
+            "zh_CN": "召唤黄金僵尸！",
+            "en_US": "Summon the golden zombie!",
+            "ja_JP": "黄金ゾンビを召喚！"
+        },
+        "say.arrogantSheep.toHere": {
+            "zh_CN": "你居然真就到这里了，哈哈别想回去了！",
+            "en_US": "What? You really come here! So, you will never go back!",
+            "ja_JP": "何？お前は本当にここに来るの？でも大丈夫、ここはお前の墓場です！"
+        },
+        "say.arrogantSheep.stayAway": {
+            "zh_CN": "离我远一点！傲慢震击！",
+            "en_US": "Stay away from me! Arrogant Shock!",
+            "ja_JP": "われから離れて！傲慢ショック！"
+        },
+        "say.i.red.label.pick.up": {
+            "zh_CN": "红标签是精灵商会标记的无主商品，我最好不要把它拿走",
+            "en_US": "The Red Label is an ownerless commodity marked by Elf chamber of Commerce, I'd better not take it away.",
+            "ja_JP": "赤いラベルは精霊商会がマークした主のない商品です。持って行かないほうがいいです。"
+        },
+        "say.i.green.label.no.money": {
+            "zh_CN": "我好像没带够钱，还差%s才能购买它",
+            "en_US": "I don't have enough money. I'm short by 10 yuan.",
+            "ja_JP": "お金を十分に持っていないようですが、まだ%s元足りないので購入できません。"
+        },
+        "say.i.not.understand.ask.around": {
+            "zh_CN": "我不太了解它的使用方法，问问周围的人吧",
+            "en_US": "I don't know how to use it. Try to ask the people around me.",
+            "ja_JP": "使い方がよくわからないので、周りの人に聞いてみましょう"
+        }
+    },
+    "floor": {
+        "floor.hall.name": {
+            "zh_CN": "大厅",
+            "en_US": "Hall",
+            "ja_JP": "広間"
+        },
+        "floor.livingRoom.name": {
+            "zh_CN": "住房",
+            "en_US": "Living Room",
+            "ja_JP": "部屋"
+        },
+        "floor.workshop.name": {
+            "zh_CN": "工作间",
+            "en_US": "Workshop",
+            "ja_JP": "作業場"
+        },
+        "floor.refinery.name": {
+            "zh_CN": "精炼厂",
+            "en_US": "Refinery",
+            "ja_JP": "精錬所"
+        },
+        "floor.postOffice.name": {
+            "zh_CN": "邮局",
+            "en_US": "Post Office",
+            "ja_JP": "郵便局"
+        },
+        "floor.laboratory.name": {
+            "zh_CN": "实验室",
+            "en_US": "Laboratory",
+            "ja_JP": "実験室"
+        },
+        "floor.library.name": {
+            "zh_CN": "大图书馆",
+            "en_US": "Great Library",
+            "ja_JP": "大図書館"
+        },
+        "floor.market.name": {
+            "zh_CN": "市场",
+            "en_US": "Market",
+            "ja_JP": "市場"
+        }
+    },
+    "quest": {
+        "quest.end": {
+            "zh_CN": "结束时间：%s",
+            "en_US": "End Time：%s",
+            "ja_JP": "終了時間：%s"
+        },
+        "quest.pre.condition": {
+            "zh_CN": "接受条件",
+            "en_US": "Preconditions",
+            "ja_JP": "事前条件"
+        },
+        "quest.reward": {
+            "zh_CN": "奖励",
+            "en_US": "Reward",
+            "ja_JP": "奨励"
+        },
+        "quest.reward.coin": {
+            "zh_CN": "报酬%d元",
+            "en_US": "Remuneration %d yuan",
+            "ja_JP": "報酬%d元"
+        },
+        "quest.reward.exp": {
+            "zh_CN": "经验%d点",
+            "en_US": "Exp %d points",
+            "ja_JP": "経験%d点"
+        },
+        "quest.reward.elf.invest": {
+            "zh_CN": "精灵树「%s」层规划权重增加%d",
+            "en_US": "Elf Tree %s Floor planning weight increased by %d",
+            "ja_JP": "精霊木「%s」层計画の重みが%d増加します"
+        },
+        "quest.reward.parcel": {
+            "zh_CN": "邮寄%s",
+            "en_US": "Send %s",
+            "ja_JP": "郵送%s"
+        },
+        "quest.reward.fame": {
+            "zh_CN": "信誉%.1f点",
+            "en_US": "Fame %.1f points",
+            "ja_JP": "信用度%.1f点"
+        },
+        "quest.reward.fame.need": {
+            "zh_CN": "信誉大于%.1f",
+            "en_US": "Fame is greater than %.1f",
+            "ja_JP": "信用が%.1fより大きい"
+        },
+        "quest.delegate": {
+            "zh_CN": "委派给%s",
+            "en_US": "Delegate %s",
+            "ja_JP": "%sに委任する"
+        },
+        "quest.unit": {
+            "zh_CN": "%s个",
+            "en_US": "%sx",
+            "ja_JP": "%s個"
+        },
+        "quest.use.send.parcel": {
+            "zh_CN": "使用精灵快递%s次",
+            "en_US": "Use Elf Post %s times",
+            "ja_JP": "精霊宅配%s回を使う"
+        },
+        "quest.request.collect": {
+            "zh_CN": "请求收集",
+            "en_US": "Request Collect",
+            "ja_JP": "收集の依頼"
+        },
+        "quest.newbie.task": {
+            "zh_CN": "新手委托",
+            "en_US": "Newbie Task",
+            "ja_JP": "初心者の依頼"
+        },
+        "quest.elf.invest": {
+            "zh_CN": "精灵树投资",
+            "en_US": "Elf Tree Invest",
+            "ja_JP": "精霊木投資"
+        },
+        "quest.explore": {
+            "zh_CN": "探索委托",
+            "en_US": "Explore",
+            "ja_JP": "探索"
+        },
+        "quest.request.survey": {
+            "zh_CN": "调查收集",
+            "en_US": "Survey Collect",
+            "ja_JP": "調査収集"
+        },
+        "quest.relic.research": {
+            "zh_CN": "遗迹研究",
+            "en_US": "Relic Research",
+            "ja_JP": "遺跡研究"
+        },
+        "quest.end.polite.1": {
+            "zh_CN": "如果可以帮我的话，我会给予一些报酬的。",
+            "en_US": "If you can help me, I will give you some reward.",
+            "ja_JP": "助けてくれるなら、何らかの報酬を与えます。"
+        },
+        "quest.end.polite.2": {
+            "zh_CN": "非常感谢你的帮助！",
+            "en_US": "Very Think for your Help.",
+            "ja_JP": "助けてくれてありがとうございます。"
+        },
+        "quest.end.polite.3": {
+            "zh_CN": "有了你的帮助，我们会发展的更好。",
+            "en_US": "With your help, we will develop better.",
+            "ja_JP": "あなたの助けがあって、私たちはもっと発展します。"
+        },
+        "quest.next.polite.1": {
+            "zh_CN": "上一个委托你完成的很好，如果可以的话，也请接下这个委托吧：",
+            "en_US": "You have done a good job in the last Quest. If you can, please accept this Quest:",
+            "ja_JP": "前の依頼はよくできました。できれば、この依頼を受けてください："
+        },
+        "quest.next.polite.2": {
+            "zh_CN": "非常感谢你之前的帮助，有空的话，可以看下这个委托吗：",
+            "en_US": "Thank you very much for your help. If you are free, can you take a look at this Quest:",
+            "ja_JP": "前の助けに感謝します。暇があれば、この依頼を見てもいいですか："
+        },
+        "quest.explore.1": {
+            "zh_CN": "%s地区的数据",
+            "en_US": "data of %s Biome",
+            "ja_JP": "%s地区のデータ"
+        },
+        "quest.explore.2": {
+            "zh_CN": "%s地区里%s的数据",
+            "en_US": "data of in %s Biome %s",
+            "ja_JP": "%s地区で%sのデータ"
+        },
+        "quest.explore.3": {
+            "zh_CN": "%s地区里%s中「%s」的数据",
+            "en_US": "data of in %s Biome %s's　「%s」",
+            "ja_JP": "%s地区で%s中「%s」のデータ"
+        },
+        "quest.explore.4": {
+            "zh_CN": "%s中「%s」的数据",
+            "en_US": "data of %s's 「%s」",
+            "ja_JP": "%s中「%s」のデータ"
+        },
+        "quest.broken.house": {
+            "zh_CN": "我门的房子坏了，需要$0，来进行修理，",
+            "en_US": "My house is broken, $0 is needed to repair,  ",
+            "ja_JP": "私の家が壊れました、修理に$0が必要です、"
+        },
+        "quest.elf.invest.want": {
+            "zh_CN": "我觉得我们的大厦中缺少%s，请求集资，列表如下：$0，",
+            "en_US": "I think we are short of %s in our Tree, so we need to raise funds, the list is as follows：$0,  ",
+            "ja_JP": "私たちのビルには%sが足りないと思います、資金集めをお願いします、リストは以下の通りです。$0、"
+        },
+        "quest.post.office.want": {
+            "zh_CN": "包裹量太大了，邮局需要一些物资来提供更好的服务，本次需求的物资如下：$0",
+            "en_US": "The post office needs some materials to provide better service. The materials needed this time are as follows: $0",
+            "ja_JP": "小包の量が大きすぎて、郵便局はより良いサービスを提供する物資が必要です。今回の需要の物資は以下の通り:$0、"
+        },
+        "quest.post.first.welfare": {
+            "zh_CN": "欢迎%s使用精灵快递服务，这是为新人提供的委托，只要$0就可以获得一颗精灵之星。",
+            "en_US": "Welcome %s to use the Elf Post Service, which is a Quest for new people. As long as $0, you can get a spirit star.",
+            "ja_JP": "精霊の宅配サービスを利用してありがとうございます。これは新人のための依頼です。$0で精霊の星を獲得できます。"
+        },
+        "quest.craft.ore.dragonBreathPickaxe": {
+            "zh_CN": "通过这一段时间的研究，我们设计了可以提取绯红水晶矿内部材料的镐，如果可以的话，请帮收集$0，我们会尝试制作它，试验结束后，并把它当作报酬送给你。",
+            "en_US": "Through this period of research, we have designed a pickaxe can extract the internal materials of the Scarlet Crystal Ore. If you can, please help collect $0. We will try to make it. And after the experiment, we will give it to you as a reward.",
+            "ja_JP": "この間の研究を通じて、緋色の水晶鉱の内部材料を抽出できる鶴嘴を設計しました。よろしければ、$0を集めてください。私たちはそれを作ってみます。試験が終わったら、報酬としてあげます。"
+        },
+        "quest.library.want": {
+            "zh_CN": "图书馆的物资不足了，需要$0这些东西，",
+            "en_US": "The library is short of supplies and needs $0, ",
+            "ja_JP": "図書館の物資が足りなくなりました。$0のが必要です、"
+        },
+        "quest.library.enchant": {
+            "zh_CN": "图书馆需要$0来进行研究，",
+            "en_US": "The library need $0 for research, ",
+            "ja_JP": "図書館の研究のために$0が必要です、"
+        },
+        "quest.research.want": {
+            "zh_CN": "研究室需要$0来进行研究，",
+            "en_US": "The Lab needs $0 for research, ",
+            "ja_JP": "研究のために$0が必要です、"
+        },
+        "quest.explore.research": {
+            "zh_CN": "研究缺少一些数据，期望能获得包含$0的自然水晶，",
+            "en_US": "The research lacks some data and hopes to get a Natural Crystal containing $0,",
+            "ja_JP": "研究にはいくつかのデータが不足しています、$0を含む自然水晶がほしいです、"
+        },
+        "quest.explore.ruins": {
+            "zh_CN": "遗迹是重要的研究课题，如果能取到包含$0的自然水晶，会对研究有很大帮助，冒险家们，",
+            "en_US": "Ruins are an important research topic. If you can get a Natural Crystal containing $0, it will be of great help to the research, adventurers,",
+            "ja_JP": "遺跡は重要な研究課題です。$0を含む自然水晶を取れば、研究に役立ちます。冒険家よ、"
+        },
+        "quest.explore.custom": {
+            "zh_CN": "包含$0的自然水晶对于研究生活习俗很有帮助，",
+            "en_US": "A Natural Crystal containing $0 is very helpful for studying customs,",
+            "ja_JP": "$0を含む自然水晶は生活習慣の研究に役立ちます、"
+        },
+        "quest.explore.join": {
+            "zh_CN": "我们看到你完成了探索委托，你想对环境有更深入的研究吗，提供$0这些素材，我们会帮你制作「岩石相机」，做好后同使用说明一起一起发给你。",
+            "en_US": "We see that you has completed the Explore Quest. Do you want to have a more in-depth study on the natural? We will help you make the 「Rock Camera」 with $0 materials, and send it to you together with the instructions.",
+            "ja_JP": "貴方は探索依頼が完了したのを見ましたが、環境についてもっと深く研究したいですか？$0の素材を提供しなら、「岩石カメラ」を作ってあげます、できたら使用説明と一緒に送ります。"
+        },
+        "quest.survey.ore": {
+            "zh_CN": "研究室最近在对矿物进行研究，能为我们带来$0的原矿吗？",
+            "en_US": "The laboratory is researching Ores recently. Can bring us $0 of raw ore?",
+            "ja_JP": "研究室は最近鉱物を研究していますが、$0の原鉱をもたらすことができますか？"
+        },
+        "quest.survey.ore.scarletCrystal": {
+            "zh_CN": "研究室发现，绯红水晶内蕴含着很重要的材料，能为我们带来$0的原矿吗？",
+            "en_US": "The laboratory found that the Scarlet Crystal Ore contains very important minerals. Can bring us $0 of raw ore?",
+            "ja_JP": "研究室は、緋色の水晶鉱には重要な材料が含まれていることを発見し、$0の原鉱をもたらすことができますか?"
+        },
+        "quest.relic.research.1": {
+            "zh_CN": "研究室开展专项遗迹研究，需要包含$0的自然水晶，作为报酬我们会给你遗迹的信物。这个信物可以召唤出特殊的僵尸，消灭它后掉落的稀有材料可能会对你有所帮助。",
+            "en_US": "The Laboratory needs Natural Crystal containing $0 to carry out special relic research. As a reward, we will give you the Relic Keepsake that can summon special zombies. Rare materials dropped when kill them, may help you.",
+            "ja_JP": "研究室は特定の遺跡の研究を展開して、$0を含む自然水晶が必要です、報酬として遺跡のキープセイクをあげます。このキープセイクは特殊なゾンビを召喚することができ、退治したら落ちた珍しい材料があなたの役に立つかもしれません。"
+        },
+        "quest.relic.research.2": {
+            "zh_CN": "非常感谢你之前的协助。目前，我们想拿到僵尸的核心$0进行继续的研究，但是它们太强了，如果条件允许的话，希望你能接受讨伐它们的委托，并带回来它们的核心。",
+            "en_US": "Thank you very much for your previous help. At present, we want to get the core named $0 of those zombies for further research, but they are too strong. If conditions permit, please accept this Quest to defeat them and bring back their core.",
+            "ja_JP": "あなたのこれまでの協力に感謝します。今のところ、ゾンビの$0と呼ばれるコアを手に入れて研究を続けたいと思っていますが、それらは強すぎて。もし条件が許すならば、それらを討伐する依頼を受けて、コアを持ち帰ってことをお願いします。"
+        },
+        "quest.relic.research.3": {
+            "zh_CN": "研究发现通过遗迹宝石可以更深一层的召唤出某种东西，似乎是一种守卫？我们并没有这种守卫的文献。这种守卫十分强大，能够熟练的使用多种魔法。不过好在它只会攻击有攻击意图的生物。它的核心$0能让我们的研究更近一步，所以请求你的帮助。",
+            "en_US": "Research has found that something can be summoned deeper through the Relic Gem. It seems to be a guard? We have no literature on such guard. This kind of guard is very powerful and can use a variety of magic. Fortunately, it will only attack creatures with intent to attack. It's core named $0 can bring our research a step closer, so we ask for your help.",
+            "ja_JP": "研究によると、遺跡宝石を通じてより深くの何かを召喚することができることが発見された。ガードのようなものだろうか。私たちにはこのようなガードの文献はありません。このガードは非常に強力で、多くの魔法を使いことができます。幸いにも攻撃意図のある生物しか攻撃しない。その$0と呼ばれるコアは研究をより一歩近づけることができるので、あなたの助けをお願いします。"
+        }
+    }
+}

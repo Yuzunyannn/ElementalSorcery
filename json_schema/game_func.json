@@ -38,7 +38,15 @@
             }
         },
         "Loot": {
-            "$ref": "./mult_loot.json",
+            "anyOf": [
+                {
+                    "$ref": "./mult_loot.json"
+                },
+                {
+                    "type": "string",
+                    "pattern": "\\$.*"
+                }
+            ],
             "examples": [
                 "elementalsorcery:common/",
                 "elementalsorcery:dungeon/"
@@ -72,6 +80,13 @@
             "additionalProperties": {
                 "$ref": "#/definitions/TriggerFunc"
             }
+        },
+        "inject": {
+            "type": "boolean",
+            "default": true
+        },
+        "params": {
+            "type": "object"
         }
     },
     "allOf": [

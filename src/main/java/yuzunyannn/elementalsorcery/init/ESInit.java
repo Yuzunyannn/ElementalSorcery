@@ -120,11 +120,15 @@ import yuzunyannn.elementalsorcery.block.container.BlockResearcher;
 import yuzunyannn.elementalsorcery.block.container.BlockRiteTable;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonActinicGlass;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonBarrier;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonBrick;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoor;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoorExpand;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonFunction;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonHaystack;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonLight;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonRottenLifeLog;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonStairs;
 import yuzunyannn.elementalsorcery.block.env.BlockGoatGoldBrick;
 import yuzunyannn.elementalsorcery.block.md.BlockMDAbsorbBox;
@@ -555,6 +559,10 @@ public class ESInit {
 		ESObjects.BLOCKS.DUNGEON_DOOR_EXPAND = new BlockDungeonDoorExpand();
 		ESObjects.BLOCKS.DUNGEON_FUNCTION = new BlockDungeonFunction();
 		ESObjects.BLOCKS.DUNGEON_HAYSTACK = new BlockDungeonHaystack();
+		ESObjects.BLOCKS.DUNGEON_BARRIER = new BlockDungeonBarrier();
+		ESObjects.BLOCKS.DUNGEON_ROTTEN_LIFELOG = new BlockDungeonRottenLifeLog();
+		ESObjects.BLOCKS.DUNGEON_ACTINIC_GLASS = new BlockDungeonActinicGlass();
+		ESObjects.BLOCKS.DUNGEON_LIGHT = new BlockDungeonLight();
 
 		// 初始化所有tab
 		Class<?> cls = ESObjects.BLOCKS.getClass();
@@ -1273,7 +1281,11 @@ public class ESInit {
 		registerRender(BLOCKS.DUNGEON_DOOR);
 		registerRender(BLOCKS.DUNGEON_DOOR_EXPAND);
 		registerRender(BLOCKS.DUNGEON_FUNCTION);
-
+		registerRender(BLOCKS.DUNGEON_BARRIER);
+		registerRender(BLOCKS.DUNGEON_ROTTEN_LIFELOG);
+		registerRender(BLOCKS.DUNGEON_ACTINIC_GLASS);
+		registerRender(BLOCKS.DUNGEON_LIGHT);
+		
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());
 		registerRender(TilePortalAltar.class, new RenderTileShowItem<TilePortalAltar>(0.65));

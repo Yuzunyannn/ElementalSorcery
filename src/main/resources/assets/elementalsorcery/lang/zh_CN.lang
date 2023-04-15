@@ -242,6 +242,9 @@ tile.dungeonBrick.chiseled.name=錾制地牢砖
 tile.dungeonBrick.stone.name=地牢石头
 tile.dungeonFunction.name=地牢构建功能方块
 tile.dungeonHaystack.name=地牢草垛
+tile.dungeonBarrier.name=地牢屏障
+tile.dungeonRottenLifeWood.name=腐朽的生命之树木
+tile.dungeonActinicGlass.name=光化玻璃
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者
@@ -347,17 +350,6 @@ mantra.puppetArea.describe=借助木元素，召唤木灵领域，领域内会�
 mantra.goldShield.name=黄金盾
 mantra.goldShield.describe=借助金元素，生成价值之盾，消耗可估算的价值来抵挡任何伤害，超出的价值将作为伤害反射给敌人
 
-key.es.func=功能键
-
-info.element.spell.fire=点燃指定的方块
-info.element.spell.ender=借助末影元素的力量，史蒂夫可以向末影人一样，传送至远方
-info.element.spell.water=在指定方块的上面召唤水
-info.element.spell.wood=在木之元素环绕之下，周围的植物可以快速生长
-info.element.spell.knowledge=知识元素可以随时随地的让史蒂夫进行附魔
-info.element.spell.air=瞬间改变周围的空气流动，让史蒂夫急速减速
-info.element.spell.metal=点石成金，元素与矿石之类的方块发生共鸣，改变它们的结构，从而产生新的矿石
-info.element.spell.earth=让方块，坠落吧
-
 entity.Villager.paperman=古纸收集者
 entity.Villager.eslearner=元素知识学者
 entity.Villager.magicallearner=魔力学者
@@ -386,6 +378,8 @@ pro.postReceptionist=邮局接待员
 pro.postman=邮递员
 pro.researcher=研究员
 pro.debtCollector=讨债人
+
+key.es.func=功能键
 
 commands.es.usage=/es <操作> <参数>...
 commands.es.notFound=找不到%s
@@ -550,14 +544,28 @@ info.elf.diamond=非常昂贵的钻石，除此之外没有啥其他价值，精
 info.my.master=主人：%s
 info.relic.bind.master=设置了主人为：%s
 info.concentration=浓度：%s
+
+info.dungeon.build.exception=地牢建造异常！可以向作者报告这个BUG
+info.dungeon.build.too.close=两个地牢建造过近
 info.dungeon.no.key.to.open.door=缺少钥匙，虚映反射失败
 info.dungeon.no.remember.fragment=需要%s才能完成反射
 info.dungeon.no.remember.found=寻找不到任何记忆中的物品
 info.dungeon.remember.found=寻找到了记忆中的物品
 info.dungeon.remember.appear=记忆中的物品已经出现
 info.dungeon.memoryFeather.usage=在地牢迷宫的房间里使用，可以消耗1点耐久来检查是否存在记忆中的物品\n潜行使用可以让物品呈现，如果无可呈现的会消耗2点耐久
+info.dungeon.rottenLifeLog=哪怕是朽木，依然蕴含着强大的力量
+info.dungeon.actinicGlass=可以持续吸收光能，催化下方作物的装置
 
 info.mc.archi.Temple.name=沙漠神殿
+
+info.element.spell.fire=点燃指定的方块
+info.element.spell.ender=借助末影元素的力量，史蒂夫可以向末影人一样，传送至远方
+info.element.spell.water=在指定方块的上面召唤水
+info.element.spell.wood=在木之元素环绕之下，周围的植物可以快速生长
+info.element.spell.knowledge=知识元素可以随时随地的让史蒂夫进行附魔
+info.element.spell.air=瞬间改变周围的空气流动，让史蒂夫急速减速
+info.element.spell.metal=点石成金，元素与矿石之类的方块发生共鸣，改变它们的结构，从而产生新的矿石
+info.element.spell.earth=让方块，坠落吧
 
 lev.defective=次品
 lev.unsuited=不适合
@@ -1018,7 +1026,7 @@ page.astone.ct.fir=由蓝晶石、石头、魔石混合而成的石头，具有�
 page.astone.ct.sec=将魔石，石头，蓝晶石以1:8:4的比例放入熔岩锅中，熔化，冷却即可获得通魔石。比例请注意，不合适的话，很有可能出现不期望的结果。\n熔岩锅加满后，物品就不能再加入了。
 page.astone.ct.thi=先投入魔石，形成魔石溶液，使其他石头在魔石溶液中熔解。\n另外需要使用高级的灶台加热，不然温度很有可能无法达到预期。
 page.astoneCrafting=更多通魔石
-page.astoneCrafting.ct=使用蓝晶石和木棒制作的精致的小刻刀，可以将普通的通魔石雕刻成更高级的通魔石。\n使用高级的通魔石可以更好的完成魔法装置的制作。
+page.astoneCrafting.ct=使用蓝晶石和木棒制作的精巧刻刀，可以将普通的通魔石雕刻成更高级的通魔石。\n使用高级的通魔石可以更好的完成魔法装置的制作。
 page.unscrambleNote=解读手账
 page.unscrambleNote.ct=解读速度太慢？使用解读手账来记录解读时的内容，可以帮助你提升解读效率。\n每次解读时，副手拿着解读手账，就会将内容记录到手账当中，随着积累的记录越来越多，你解读的速度也会越来越快。\n只有自己记录的内容，才能产生作用。
 page.md=魔动装置

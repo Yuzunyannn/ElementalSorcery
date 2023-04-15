@@ -131,7 +131,9 @@ public class TileDungeonDoor extends TileDungeonBase {
 			NBTTagCompound nbt = itemstack.getTagCompound();
 			if (nbt == null) continue;
 			if (!nbt.hasKey("cmeta", NBTTag.TAG_NUMBER)) continue;
-			EnumDyeColor color = EnumDyeColor.byMetadata(nbt.getInteger("cmeta"));
+			int cmeta = nbt.getInteger("cmeta");
+			// 如果color为空，表示通用匹配
+			EnumDyeColor color = cmeta < 0 ? null : EnumDyeColor.byMetadata(cmeta);
 			if (nbt.hasKey("areaId", NBTTag.TAG_NUMBER)) {
 				int areaId = nbt.getInteger("areaId");
 				int dimId = nbt.getInteger("dimId");
@@ -141,7 +143,7 @@ public class TileDungeonDoor extends TileDungeonBase {
 			Iterator<ItemMemoryFragment.MemoryFragment> iter = cList.iterator();
 			while (iter.hasNext()) {
 				ItemMemoryFragment.MemoryFragment mf = iter.next();
-				if (mf.getColor() != color) continue;
+				if (color != null && mf.getColor() != color) continue;
 
 				int count = Math.min(itemstack.getCount(), mf.getCount());
 				mf.setCount(mf.getCount() - count);
