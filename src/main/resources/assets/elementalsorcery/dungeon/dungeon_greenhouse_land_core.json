@@ -1,14 +1,80 @@
 {
     "type": "entity",
-    "entityId": "minecraft:zombie",
+    "entityId": "elementalsorcery:spriteZombie",
     "entityNBT": {
-        "IsBaby": true
+        "IsBaby": false,
+        "HandDropChances": [
+            0,
+            0
+        ],
+        "HandItems": [
+            {
+                "id": "minecraft:diamond_sword",
+                "Count": 1
+            },
+            {
+                "id": "elementalsorcery:magic_gold_sword",
+                "Count": 1
+            }
+        ]
     },
     "trigger": {
         "onLoot": {
             "type": "loot",
             "loot": "elementalsorcery:dungeon/dungeon_loot_garden",
             "acceptHideItem": true
+        },
+        "onDead": {
+            "type": "entity",
+            "entityId": "elementalsorcery:spriteZombie",
+            "count": {
+                "min": 3,
+                "max": 6
+            },
+            "entityNBT": {
+                "IsBaby": true,
+                "HandDropChances": [
+                    0,
+                    0
+                ],
+                "HandItems": [
+                    {
+                        "id": "minecraft:iron_sword",
+                        "Count": 1
+                    },
+                    {
+                        "id": "minecraft:golden_sword",
+                        "Count": 1
+                    }
+                ]
+            },
+            "trigger": {
+                "onDead": {
+                    "type": "entity",
+                    "entityId": "elementalsorcery:spriteZombie",
+                    "count": {
+                        "min": 1,
+                        "max": 2
+                    },
+                    "entityNBT": {
+                        "IsBaby": true,
+                        "HandDropChances": [
+                            0,
+                            0
+                        ],
+                        "HandItems": [
+                            {
+                                "id": "minecraft:wooden_sword",
+                                "Count": 1
+                            },
+                            {
+                                "id": "minecraft:stone_sword",
+                                "Count": 1
+                            }
+                        ]
+                    }
+                }
+            }
         }
     }
 }

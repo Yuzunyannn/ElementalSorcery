@@ -1,0 +1,51 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "anyOf": [
+        {
+            "anyOf": [
+                {
+                    "$ref": "./element_ids.json"
+                },
+                {
+                    "type": "string",
+                    "pattern": ".+:.+"
+                }
+            ]
+        },
+        {
+            "type": "array",
+            "items": {
+                "$ref": "#"
+            }
+        },
+        {
+            "type": "object",
+            "required": [
+                "id"
+            ],
+            "properties": {
+                "id": {
+                    "anyOf": [
+                        {
+                            "$ref": "./element_ids.json"
+                        },
+                        {
+                            "type": "string",
+                            "pattern": ".+:.+"
+                        }
+                    ]
+                },
+                "count": {
+                    "type": "number",
+                    "default": 1,
+                    "minimum": 0
+                },
+                "power": {
+                    "type": "number",
+                    "default": 1,
+                    "minimum": 1
+                }
+            }
+        }
+    ]
+}

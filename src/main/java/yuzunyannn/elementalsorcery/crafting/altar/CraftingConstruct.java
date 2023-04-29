@@ -54,7 +54,7 @@ public class CraftingConstruct implements ICraftingAltar {
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		if (needEStacks != null) NBTHelper.setElementist(nbt, "estacks", needEStacks);
+		if (needEStacks != null) NBTHelper.setElementList(nbt, "estacks", needEStacks);
 		if (itemList.size() > 0) nbt.setTag("target", itemList.get(0).serializeNBT());
 		nbt.setBoolean("ok", ok);
 		return nbt;

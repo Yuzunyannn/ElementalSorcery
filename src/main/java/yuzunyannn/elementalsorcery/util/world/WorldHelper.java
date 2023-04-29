@@ -14,8 +14,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.item.EntityXPOrb;
+import net.minecraft.entity.projectile.EntityPotion;
+import net.minecraft.init.Items;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -28,6 +32,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
+import yuzunyannn.elementalsorcery.util.ESFakePlayer;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class WorldHelper {
@@ -215,6 +220,16 @@ public class WorldHelper {
 				}
 			}
 		}
+	}
+
+	public static void applyPotion(World world, Vec3d center, @Nullable EntityLivingBase thrower,
+			List<PotionEffect> effects, boolean isLingering) {
+		ItemStack stack = new ItemStack(isLingering ? Items.LINGERING_POTION : Items.SPLASH_POTION);
+		PotionUtils.appendEffects(stack, effects);
+		thrower = thrower == null ? ESFakePlayer.get((WorldServer) world) : thrower;
+		EntityPotion entitypotion = new EntityPotion(world, thrower, stack);
+		entitypotion.setPosition(center.x, center.y, center.z);
+		world.spawnEntity(entitypotion);
 	}
 
 }

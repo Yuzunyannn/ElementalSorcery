@@ -17,7 +17,8 @@ public class LootRegister {
 
 	public static final ResourceLocation ES_HALL = res("chests/es_hall");
 	public static final ResourceLocation ES_VILLAGE_HALL = res("chests/es_village_hall");
-
+	
+	public static final ResourceLocation SPRITE_ZOMBIE = res("entities/sprite_zombie");
 	public static final ResourceLocation RABID_RABBIT = res("entities/rabid_rabbit");
 	public static final ResourceLocation DREAD_CUBE = res("entities/dread_cube");
 	public static final ResourceLocation DEJECTED_SKELETON = res("entities/dejected_skeleton");

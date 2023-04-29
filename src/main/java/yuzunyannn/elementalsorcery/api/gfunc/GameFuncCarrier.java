@@ -24,6 +24,11 @@ public class GameFuncCarrier implements IGameFuncCarrier {
 		GameFunc func = map.get(triggerName);
 		return func == null ? GameFunc.NOTHING : func;
 	}
+	
+	@Override
+	public boolean hasFunc(String triggerName) {
+		return map.containsKey(triggerName);
+	}
 
 	@Override
 	public void setFunc(String triggerName, GameFunc func) {

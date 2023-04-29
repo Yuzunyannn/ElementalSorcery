@@ -1,36 +1,48 @@
 {
-    "type": "group",
-    "mode": "random",
-    "funcs": [
-        {
-            "type": "ref",
-            "/assets": "elementalsorcery:dungeon/common_monster_1",
-            "weight": 5,
-            "params": {
-                "$loots": "elementalsorcery:dungeon/dungeon_loot_sundry_worthless"
+    "type": "entity",
+    "entityId": "elementalsorcery:spriteZombie",
+    "entityNBT": {
+        "IsBaby": false,
+        "HandDropChances": [
+            0,
+            0
+        ],
+        "HandItems": [
+            {
+                "id": "elementalsorcery:ancient_paper",
+                "Count": 1
+            },
+            {
+                "id": "elementalsorcery:quill",
+                "Count": 1
             }
+        ]
+    },
+    "trigger": {
+        "onLoot": {
+            "type": "loot",
+            "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_worthless",
+            "acceptHideItem": true
         },
-        {
-            "type": "haystack",
-            "weight": 15,
-            "pressure": "random",
-            "trigger": {
-                "onSweep": {
-                    "type": "group",
-                    "mode": "random",
-                    "funcs": [
-                        {
-                            "type": "loot",
-                            "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_worthless",
-                            "acceptHideItem": true
-                        },
-                        {
-                            "type": "ref",
-                            "/assets": "elementalsorcery:dungeon/common_trap_1"
-                        }
-                    ]
-                }
-            }
+        "onDead": {
+            "type": "mantra",
+            "mantra": "elementalsorcery:laser",
+            "moveSpeed": 0.1,
+            "duration": {
+                "min": 20,
+                "max": 40
+            },
+            "offset": [
+                0,
+                2,
+                0
+            ],
+            "elements": {
+                "id": "elementalsorcery:fire",
+                "count": 1000,
+                "power": 300
+            },
+            "targetGetter": "killer"
         }
-    ]
+    }
 }

@@ -1,0 +1,1 @@
+{"$schema":"http://json-schema.org/draft-07/schema#","enum":["elementalsorcery:void","elementalsorcery:magic","elementalsorcery:water","elementalsorcery:fire","elementalsorcery:earth","elementalsorcery:air","elementalsorcery:wood","elementalsorcery:metal","elementalsorcery:ender","elementalsorcery:knowledge","elementalsorcery:star"]}

@@ -29,6 +29,7 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 
 	static {
 		factoryMap.put("group", GameFuncGroup.class);
+		factoryMap.put("repeat", GameFuncRepeat.class);
 	}
 
 	public static GameFunc create(String type) {

@@ -20,6 +20,8 @@ import com.google.gson.JsonSyntaxException;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
@@ -72,7 +74,7 @@ public abstract class Json {
 		if (json.isJsonPrimitive()) {
 			if (json.getAsJsonPrimitive().isString()) {
 				String id = json.getAsString();
-				Item item = getItem(id);
+				Item item = getItem(dealId(id));
 				list.add(new ItemRecord(item));
 				return;
 			}
@@ -166,6 +168,47 @@ public abstract class Json {
 		list.addAll(wr.get(rand));
 	}
 
+	protected List<PotionEffect> loadPotionEffects(JsonElement jsonElement) {
+		ArrayList<PotionEffect> list = new ArrayList<>();
+		loadPotionEffects(jsonElement, list);
+		return list;
+	}
+
+	private void loadPotionEffects(JsonElement json, List<PotionEffect> list) {
+		if (json == null) return;
+		if (json.isJsonPrimitive()) {
+			if (json.getAsJsonPrimitive().isString()) {
+				String id = json.getAsString();
+				Potion potion = getPotionEffect(dealId(id));
+				list.add(new PotionEffect(potion));
+				return;
+			}
+			throw exception(ParseExceptionCode.PATTERN_ERROR, "药水描述", "json字段不是字符串");
+		}
+		if (json.isJsonArray()) {
+			com.google.gson.JsonArray jarray = json.getAsJsonArray();
+			for (JsonElement j : jarray) loadPotionEffects(j, list);
+			return;
+		} else if (json.isJsonObject()) {
+			JsonObject jobj = new JsonObject(json.getAsJsonObject());
+			String id = jobj.needString("id", "potion");
+			id = dealId(id);
+			Potion potion = getPotionEffect(id);
+			int duration = 100;
+			int amplifier = 0;
+
+			try {
+				duration = jobj.needNumber("duration", "time").intValue();
+			} catch (JsonParseException e) {}
+			try {
+				amplifier = jobj.needNumber("amplifier", "power", "level").intValue();
+			} catch (JsonParseException e) {}
+
+			list.add(new PotionEffect(potion, duration, amplifier));
+		}
+
+	}
+
 	/** 通过json元素获取元素 */
 	protected ArrayList<ElementStack> loadElements(JsonElement json) {
 		ArrayList<ElementStack> list = new ArrayList<>();
@@ -178,7 +221,7 @@ public abstract class Json {
 		if (json.isJsonPrimitive()) {
 			if (json.getAsJsonPrimitive().isString()) {
 				String id = json.getAsString();
-				Element element = getElement(id);
+				Element element = getElement(dealId(id));
 				list.add(new ElementStack(element));
 				return;
 			}
@@ -339,6 +382,17 @@ public abstract class Json {
 			throw exception(ParseExceptionCode.NOT_HAVE, id);
 		}
 		return element;
+	}
+
+	static protected Potion getPotionEffect(String id) {
+		Potion potion = Potion.getPotionFromResourceLocation(id);
+		if (potion == null) {
+			ResourceLocation lid = new ResourceLocation(id);
+			if (!Loader.isModLoaded(lid.getNamespace()))
+				throw exception(ParseExceptionCode.NOT_LOAD_MOD, id, lid.getNamespace());
+			throw exception(ParseExceptionCode.NOT_HAVE, id);
+		}
+		return potion;
 	}
 
 	static public String dealId(String id) {

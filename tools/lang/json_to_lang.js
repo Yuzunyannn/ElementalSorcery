@@ -36,5 +36,8 @@ for (let lang in outputTalbe) {
 
 for (let lang in outputTalbe) {
     let str = outputTalbe[lang]
-    fs.writeFileSync("../../src/main/resources/assets/elementalsorcery/lang/" + lang + ".lang", str, { encoding: "utf8", });
+    let path = "../../src/main/resources/assets/elementalsorcery/lang/" + lang + ".lang"
+    console.log("update " + path)
+    fs.writeFileSync(path, str, { encoding: "utf8", });
 }
+

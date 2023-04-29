@@ -20,6 +20,10 @@ public interface IGameFuncCarrier extends INBTSerializable<NBTTagCompound> {
 
 	public void setFunc(String triggerName, GameFunc func);
 
+	default public boolean hasFunc(String triggerName) {
+		return getFunc(triggerName) != GameFunc.NOTHING;
+	}
+
 	default public void addFunc(String triggerName, GameFunc func) {
 		GameFunc ofunc = getFunc(triggerName);
 		if (ofunc == GameFunc.NOTHING) {

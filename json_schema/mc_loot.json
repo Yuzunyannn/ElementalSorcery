@@ -16,7 +16,10 @@
                         "type": "string"
                     },
                     "rolls": {
-                        "type": "object",
+                        "type": [
+                            "object",
+                            "number"
+                        ],
                         "properties": {
                             "min": {
                                 "type": "number"

@@ -27,6 +27,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagIntArray;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.nbt.NBTTagString;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.api.ESAPI;
@@ -339,6 +340,16 @@ public class JsonObject extends Json implements Iterable<String> {
 		List<ElementStack> list = loadElements(json.get(key));
 		if (list.isEmpty()) throw exception(ParseExceptionCode.EMPTY, "元素数据为空");
 		return list.get(0);
+	}
+
+	public PotionEffect needPotionEffect(String key) {
+		List<PotionEffect> list = loadPotionEffects(json.get(key));
+		if (list.isEmpty()) throw exception(ParseExceptionCode.EMPTY, "药水数据为空");
+		return list.get(0);
+	}
+
+	public List<PotionEffect> needPotionEffects(String key) {
+		return loadPotionEffects(json.get(key));
 	}
 
 	public List<Vec3d> needPos(String key) {

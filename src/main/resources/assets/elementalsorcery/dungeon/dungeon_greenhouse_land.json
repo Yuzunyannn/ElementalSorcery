@@ -3,17 +3,24 @@
     "mode": "random",
     "funcs": [
         {
-            "type": "entity",
-            "entityId": "minecraft:zombie",
-            "entityNBT": {
-                "IsBaby": true
-            },
             "weight": 10,
+            "type": "magicCircle",
+            "activeCD": {
+                "min": 300,
+                "max": 800
+            },
             "trigger": {
-                "onLoot": {
-                    "type": "loot",
-                    "loot": "elementalsorcery:dungeon/dungeon_loot_garden",
-                    "acceptHideItem": true
+                "onActived": {
+                    "type": "repeat",
+                    "times": 5,
+                    "func": {
+                        "type": "ref",
+                        "/assets": "elementalsorcery:dungeon/common_monster_1"
+                    }
+                },
+                "onDestroyed": {
+                    "type": "explode",
+                    "level": 4
                 }
             }
         },

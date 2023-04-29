@@ -9,7 +9,12 @@ public class GameFuncTimes extends GameFunc {
 
 	public void loadFromJson(JsonObject json, GameFuncJsonCreateContext context) {
 		super.loadFromJson(json, context);
+		GameFuncJsonCreateContext.Info my = context.top();
 		times = json.hasNumber("times") ? json.getNumber("times").intValue() : 1;
+		if (my.getRefJson() != null) {
+			JsonObject refJson = my.getRefJson();
+			times = refJson.hasNumber("times") ? refJson.getNumber("times").intValue() : times;
+		}
 	}
 
 	@Override

@@ -64,6 +64,11 @@
             "zh_CN": "遗迹守卫",
             "en_US": "Relic Guard",
             "ja_JP": "遺跡ガード"
+        },
+        "entity.SpriteZombie.name": {
+            "zh_CN": "灵体僵尸",
+            "en_US": "Sprite Zombie",
+            "ja_JP": "霊体ゾンビ"
         }
     },
     "pro": {

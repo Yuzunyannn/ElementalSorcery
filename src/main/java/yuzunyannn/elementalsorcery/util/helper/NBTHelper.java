@@ -116,7 +116,7 @@ public class NBTHelper {
 		return itemList;
 	}
 
-	public static void setElementist(NBTTagCompound nbt, String key, List<ElementStack> elementList) {
+	public static void setElementList(NBTTagCompound nbt, String key, List<ElementStack> elementList) {
 		NBTHelper.setNBTSerializableList(nbt, key, elementList);
 	}
 

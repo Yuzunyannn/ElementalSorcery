@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.tile.dungeon;
 
 import java.util.function.Function;
 
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
@@ -67,14 +68,23 @@ public abstract class TileDungeonBase extends TileEntityNetwork {
 		return super.hasCapability(capability, facing);
 	}
 
-	public void trigger(String name, Function<GameFuncExecuteContext, GameFuncExecuteContext> hook) {
-		if (world.isRemote) return;
-		if (this.carrier == null) return;
+	public boolean trigger(String name, Function<GameFuncExecuteContext, GameFuncExecuteContext> hook) {
+		if (world.isRemote) return true;
+		if (this.carrier == null) return false;
 		DungeonAreaRoom room = getDungeonRoom();
 		DungeonFuncExecuteContext context = new DungeonFuncExecuteContext();
 		context.setSrcObj(world, pos);
 		if (room != null) context.setRoom(room);
 		this.carrier.trigger(name, hook.apply(context));
+		return true;
+	}
+
+	public boolean trigger(String name) {
+		return trigger(name, context -> context);
+	}
+
+	public boolean trigger(String name, EntityLivingBase player) {
+		return trigger(name, context -> context.setTriggerObj(player));
 	}
 
 }

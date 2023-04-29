@@ -8,7 +8,6 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
-import yuzunyannn.elementalsorcery.block.env.BlockDungeonLight;
 
 public class ESObjects {
 
@@ -228,6 +227,7 @@ public class ESObjects {
 		public Block DUNGEON_ROTTEN_LIFELOG;
 		public Block DUNGEON_ACTINIC_GLASS;
 		public Block DUNGEON_LIGHT;
+		public Block DUNGEON_MAGIC_CIRCLE_A;
 	}
 
 	static public class Elements {

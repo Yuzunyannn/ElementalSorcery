@@ -487,7 +487,14 @@ public class EventServer {
 			event.setCanceled(true);
 		}
 
+		IGameFuncCarrier carrier = deader.getCapability(GameFuncCarrier.GAMEFUNCCARRIER_CAPABILITY, null);
+		if (carrier != null) {
+			GameFuncExecuteContext context = new GameFuncExecuteContext().setByEvent(event).setSrcObj(deader);
+			carrier.trigger("onDead", context);
+		}
+
 		if (event.isCanceled()) return;
+
 		onLivingDeadEnchantmentDeal(deader, source);
 
 		Entity trueSource = source.getTrueSource();
@@ -499,6 +506,7 @@ public class EventServer {
 					(EntityLivingBase) trueSource, source);
 			if (living.isPotionActive(ESObjects.POTIONS.NATURAL_MEDAL)) PotionNaturalMedal.growMedal(living);
 		}
+
 	}
 
 	// 攻击

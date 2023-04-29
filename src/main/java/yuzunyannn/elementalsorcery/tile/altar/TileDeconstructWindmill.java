@@ -48,7 +48,7 @@ public class TileDeconstructWindmill extends TileStaticMultiBlock implements IGe
 	public void readFromNBT(NBTTagCompound compound) {
 		blade = nbtReadItemStack(compound, "blade");
 		if (!isSending()) {
-			NBTHelper.setElementist(compound, "elms", outList);
+			NBTHelper.setElementList(compound, "elms", outList);
 		}
 		super.readFromNBT(compound);
 	}

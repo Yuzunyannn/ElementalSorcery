@@ -1,15 +1,21 @@
 package yuzunyannn.elementalsorcery.tile.dungeon;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.monster.IMob;
+import net.minecraft.entity.passive.IAnimals;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 
-public class TileDungeonHaystack extends TileDungeonBase {
+public class TileDungeonHaystack extends TileDungeonPropBase {
 
 	protected AxisAlignedBB box = Block.FULL_BLOCK_AABB;
 	protected boolean pressure;
@@ -64,12 +70,42 @@ public class TileDungeonHaystack extends TileDungeonBase {
 		return this.pressure;
 	}
 
-	public void getDrops(NonNullList<ItemStack> drops) {
+	@Override
+	public void onDrops(NonNullList<ItemStack> drops) {
 		drops.add(new ItemStack(Items.WHEAT, Math.max(1, MathHelper.floor(getHightRate() * 9))));
 	}
 
+	@Override
+	public void onEntityCollision(Entity entityIn) {
+		if (entityIn instanceof EntityLivingBase) {
+			if (entityIn instanceof IMob) return;
+			if (entityIn instanceof IAnimals) return;
+			if (!getPressure()) return;
+			world.destroyBlock(pos, true);
+			onSweepOpen((EntityLivingBase) entityIn);
+		}
+	}
+
+	@Override
+	public boolean onActivated(EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY,
+			float hitZ) {
+		world.destroyBlock(pos, true);
+		onSweepOpen(playerIn);
+		return true;
+	}
+
+	@Override
+	public void onHarvest(EntityPlayer player) {
+		this.onSweepOpen(player);
+	}
+
+	@Override
+	public void onDestroyed() {
+		this.onSweepOpen(null);
+	}
+
 	public void onSweepOpen(EntityLivingBase player) {
-		trigger("onSweep", context -> context.setTriggerObj(player));
+		trigger("onClick", player);
 	}
 
 }

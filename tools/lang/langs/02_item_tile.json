@@ -1211,6 +1211,11 @@
             "zh_CN": "光化玻璃",
             "en_US": "Actinic Glass",
             "ja_JP": "光化ガラス"
+        },
+        "tile.dungeonMagicCircleA.name": {
+            "zh_CN": "地牢法阵",
+            "en_US": "Dungeon Circle",
+            "ja_JP": "地下牢のマジックサークル"
         }
     }
 }

@@ -36,6 +36,10 @@ public class RenderTileDungeonHaystack extends TileEntitySpecialRenderer<TileDun
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
+		drawFakeItem(partialTicks);
+	}
+
+	public static void drawFakeItem(float partialTicks) {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0.5, 0.25, 0.5);
 		GlStateManager.scale(0.5, 0.5, 0.5);

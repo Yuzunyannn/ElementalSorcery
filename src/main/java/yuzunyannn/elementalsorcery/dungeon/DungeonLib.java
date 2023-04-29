@@ -51,6 +51,9 @@ public class DungeonLib {
 		GameFunc.factoryMap.put("loot", DungeonFuncLoot.class);
 		GameFunc.factoryMap.put("explode", DungeonFuncExplode.class);
 		GameFunc.factoryMap.put("haystack", DungeonFuncHaystack.class);
+		GameFunc.factoryMap.put("magicCircle", DungeonFuncMagicCircle.class);
+		GameFunc.factoryMap.put("potion", DungeonFuncPotion.class);
+		GameFunc.factoryMap.put("mantra", DungeonFuncMantra.class);
 		// dungeon
 		GameFunc.factoryMap.put("dungeon:global", DungeonFuncGlobal.class);
 

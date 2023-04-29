@@ -37,8 +37,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
@@ -209,7 +211,7 @@ public class CommandESDebug {
 				JsonArray array = new JsonArray();
 				obj.set("enum", array);
 				for (ResourceLocation key : Item.REGISTRY.getKeys()) array.append(key.toString());
-				obj.save(new File("../json schema/item_ids.json"), true);
+				obj.save(new File("../json_schema/item_ids.json"), true);
 
 			} {
 				JsonObject obj = new JsonObject();
@@ -217,7 +219,23 @@ public class CommandESDebug {
 				JsonArray array = new JsonArray();
 				obj.set("enum", array);
 				for (ResourceLocation key : EntityList.getEntityNameList()) array.append(key.toString());
-				obj.save(new File("../json schema/entity_ids.json"), true);
+				obj.save(new File("../json_schema/entity_ids.json"), true);
+
+			} {
+				JsonObject obj = new JsonObject();
+				obj.set("$schema", "http://json-schema.org/draft-07/schema#");
+				JsonArray array = new JsonArray();
+				obj.set("enum", array);
+				for (ResourceLocation key : Element.REGISTRY.getKeys()) array.append(key.toString());
+				obj.save(new File("../json_schema/element_ids.json"), true);
+
+			} {
+				JsonObject obj = new JsonObject();
+				obj.set("$schema", "http://json-schema.org/draft-07/schema#");
+				JsonArray array = new JsonArray();
+				obj.set("enum", array);
+				for (ResourceLocation key : Mantra.REGISTRY.getKeys()) array.append(key.toString());
+				obj.save(new File("../json_schema/mantra_ids.json"), true);
 
 			}
 				return;

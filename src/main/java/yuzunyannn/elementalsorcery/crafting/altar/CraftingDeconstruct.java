@@ -60,7 +60,7 @@ public class CraftingDeconstruct implements ICraftingAltar {
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		if (restEStacks != null) NBTHelper.setElementist(nbt, "restEles", restEStacks);
+		if (restEStacks != null) NBTHelper.setElementList(nbt, "restEles", restEStacks);
 		NBTHelper.setItemList(nbt, "itemList", itemList);
 		if (remainStacks != null) NBTHelper.setItemArray(nbt, "remains", remainStacks);
 		return nbt;

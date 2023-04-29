@@ -4,9 +4,9 @@
     "mode": "random",
     "funcs": [
         {
+            "weight": 5,
             "type": "ref",
             "/assets": "elementalsorcery:dungeon/common_monster_1",
-            "weight": 5,
             "params": {
                 "$loots": "elementalsorcery:dungeon/dungeon_loot_garden"
             }

@@ -51,6 +51,46 @@
                 "elementalsorcery:common/",
                 "elementalsorcery:dungeon/"
             ]
+        },
+        "RNumber": {
+            "type": [
+                "object",
+                "number"
+            ],
+            "properties": {
+                "min": {
+                    "type": "number"
+                },
+                "max": {
+                    "type": "number"
+                }
+            },
+            "examples": [
+                {
+                    "min": 1,
+                    "max": 2
+                }
+            ]
+        },
+        "Vec3d": {
+            "type": [
+                "object",
+                "array"
+            ],
+            "items": {
+                "type": "number"
+            },
+            "properties": {
+                "x": {
+                    "type": "number"
+                },
+                "y": {
+                    "type": "number"
+                },
+                "z": {
+                    "type": "number"
+                }
+            }
         }
     },
     "type": "object",
@@ -64,10 +104,14 @@
                 "ref",
                 "entity",
                 "group",
+                "repeat",
                 "chest",
                 "loot",
                 "haystack",
                 "explode",
+                "magicCircle",
+                "potion",
+                "mantra",
                 "dungeon:global"
             ]
         },
@@ -139,6 +183,9 @@
                             "sequence",
                             "random"
                         ]
+                    },
+                    "isFully": {
+                        "type": "boolean"
                     }
                 },
                 "if": {
@@ -266,9 +313,15 @@
                                 "properties": {
                                     "onLoot": {
                                         "$ref": "#/definitions/TriggerFunc"
+                                    },
+                                    "onDead": {
+                                        "$ref": "#/definitions/TriggerFunc"
                                     }
                                 },
                                 "additionalProperties": false
+                            },
+                            "count": {
+                                "$ref": "#/definitions/RNumber"
                             }
                         }
                     }
@@ -327,6 +380,188 @@
                             "level": {
                                 "type": "number",
                                 "default": -2
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "magicCircle"
+                    }
+                }
+            },
+            "then": {
+                "title": "魔法阵",
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/TimesFunc"
+                    },
+                    {
+                        "properties": {
+                            "trigger": {
+                                "properties": {
+                                    "onActived": {
+                                        "$ref": "#/definitions/TriggerFunc"
+                                    },
+                                    "onDead": {
+                                        "$ref": "#/definitions/TriggerFunc"
+                                    },
+                                    "onClick": {
+                                        "$ref": "#/definitions/TriggerFunc"
+                                    },
+                                    "onDestroyed": {
+                                        "$ref": "#/definitions/TriggerFunc"
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "activeCD": {
+                                "$ref": "#/definitions/RNumber"
+                            },
+                            "color": {
+                                "type": "number",
+                                "default": 8401560
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "repeat"
+                    }
+                }
+            },
+            "then": {
+                "title": "重复",
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/TimesFunc"
+                    },
+                    {
+                        "required": [
+                            "func"
+                        ],
+                        "properties": {
+                            "func": {
+                                "$ref": "#"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "potion"
+                    }
+                }
+            },
+            "then": {
+                "title": "药水",
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/TimesFunc"
+                    },
+                    {
+                        "required": [
+                            "effects"
+                        ],
+                        "properties": {
+                            "isLingering": {
+                                "type": "boolean",
+                                "default": true
+                            },
+                            "effects": {
+                                "type": "array",
+                                "items": {
+                                    "type": [
+                                        "string",
+                                        "object"
+                                    ],
+                                    "properties": {
+                                        "id": {
+                                            "type": "string"
+                                        },
+                                        "duration": {
+                                            "type": "number",
+                                            "minimum": 1
+                                        },
+                                        "amplifier": {
+                                            "type": "number",
+                                            "minimum": 0
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "mantra"
+                    }
+                }
+            },
+            "then": {
+                "title": "咒文",
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/TimesFunc"
+                    },
+                    {
+                        "required": [
+                            "mantra",
+                            "elements"
+                        ],
+                        "properties": {
+                            "mantra": {
+                                "anyOf": [
+                                    {
+                                        "$ref": "./mantra_ids.json"
+                                    },
+                                    {
+                                        "type": "string",
+                                        "pattern": ".+:.+"
+                                    }
+                                ]
+                            },
+                            "elements": {
+                                "$ref": "./elements_getter.json"
+                            },
+                            "offset": {
+                                "$ref": "#/definitions/Vec3d"
+                            },
+                            "orient": {
+                                "$ref": "#/definitions/Vec3d"
+                            },
+                            "moveVec": {
+                                "$ref": "#/definitions/Vec3d"
+                            },
+                            "moveSpeed": {
+                                "type": "number"
+                            },
+                            "potent": {
+                                "type": "number"
+                            },
+                            "duration": {
+                                "$ref": "#/definitions/RNumber"
+                            },
+                            "isVertical": {
+                                "type": "boolean"
                             }
                         }
                     }

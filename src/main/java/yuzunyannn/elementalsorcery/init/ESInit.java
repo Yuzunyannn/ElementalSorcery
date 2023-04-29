@@ -128,6 +128,7 @@ import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoorExpand;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonFunction;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonHaystack;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonLight;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonMagicCircleA;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonRottenLifeLog;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonStairs;
 import yuzunyannn.elementalsorcery.block.env.BlockGoatGoldBrick;
@@ -347,6 +348,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileDeconstructWindmill;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDevolveCube;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDisintegrateStela;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileDungeonHaystack;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileDungeonMagicCircleA;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileEStoneMatrix;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementCraftingTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileElementPlatform;
@@ -421,6 +423,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeTable;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonFunction;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonHaystack;
+import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonMagicCircleA;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockCrystalBlock;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockNode;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
@@ -563,6 +566,7 @@ public class ESInit {
 		ESObjects.BLOCKS.DUNGEON_ROTTEN_LIFELOG = new BlockDungeonRottenLifeLog();
 		ESObjects.BLOCKS.DUNGEON_ACTINIC_GLASS = new BlockDungeonActinicGlass();
 		ESObjects.BLOCKS.DUNGEON_LIGHT = new BlockDungeonLight();
+		ESObjects.BLOCKS.DUNGEON_MAGIC_CIRCLE_A = new BlockDungeonMagicCircleA();
 
 		// 初始化所有tab
 		Class<?> cls = ESObjects.BLOCKS.getClass();
@@ -1055,6 +1059,7 @@ public class ESInit {
 		register(TileDungeonDoor.class, "DungeonDoor");
 		register(TileDungeonFunction.class, "DungeonFunc");
 		register(TileDungeonHaystack.class, "DungeonHaystack");
+		register(TileDungeonMagicCircleA.class, "DungeonMCA");
 	}
 
 	static void registerAllCapability() {
@@ -1285,7 +1290,7 @@ public class ESInit {
 		registerRender(BLOCKS.DUNGEON_ROTTEN_LIFELOG);
 		registerRender(BLOCKS.DUNGEON_ACTINIC_GLASS);
 		registerRender(BLOCKS.DUNGEON_LIGHT);
-		
+
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());
 		registerRender(TilePortalAltar.class, new RenderTileShowItem<TilePortalAltar>(0.65));
@@ -1335,6 +1340,8 @@ public class ESInit {
 		registerRender(BLOCKS.IS_CRAFT_CC, TileItemStructureCraftCC.class, new RenderTileItemStructureCraftCC());
 		registerRender(BLOCKS.INSTANT_CONSTITUTE, TileInstantConstitute.class, new RenderTileInstantConstitute());
 		registerRender(BLOCKS.DUNGEON_HAYSTACK, TileDungeonHaystack.class, new RenderTileDungeonHaystack());
+		registerRender(BLOCKS.DUNGEON_MAGIC_CIRCLE_A, TileDungeonMagicCircleA.class,
+				new RenderTileDungeonMagicCircleA());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);

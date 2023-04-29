@@ -245,6 +245,7 @@ tile.dungeonHaystack.name=Dungeon Haystack
 tile.dungeonBarrier.name=Dungeon Barrier
 tile.dungeonRottenLifeWood.name=Rotten Log of Tree of Life
 tile.dungeonActinicGlass.name=Actinic Glass
+tile.dungeonMagicCircleA.name=Dungeon Circle
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
@@ -363,6 +364,7 @@ entity.ArrogantSheep.name=Arrogant Sheep
 entity.EntityGrimoire.name=Mantra
 entity.Puppet.name=Kodama
 entity.RelicGuard.name=Relic Guard
+entity.SpriteZombie.name=Sprite Zombie
 
 pro.none=Idle
 pro.warrior=Warrior
@@ -418,6 +420,7 @@ commands.es.edifice.restore.success=Restore Success!
 commands.es.not.support.commandBlock=Unsupport Command Block
 commands.es.research.usage=/es research <add|sub> <player> <type> <value>
 commands.es.research.add=Give %s %s %s
+commands.es.dungeon.usage=/es dungeon <new|list>
 
 arc.infusion.name= Enchanting Altar
 arc.absorbBox.name=Element Absorb Altar
@@ -555,6 +558,7 @@ info.dungeon.remember.appear=Memory appear
 info.dungeon.memoryFeather.usage=When used in a Dungeon Room, it can consume 1 durability to check whether there has Memory Item. \nSneaking use can make Memory Item appear, and if there is nothing to appear, it will consume 2 durability.
 info.dungeon.rottenLifeLog=Even rotten wood still contains powerful force
 info.dungeon.actinicGlass=A device that can continuously absorb light energy and catalyze crops below
+info.need.magical.damage.attack=Perhaps magic attacks can take effect
 
 info.mc.archi.Temple.name=Desert Pyramid
 

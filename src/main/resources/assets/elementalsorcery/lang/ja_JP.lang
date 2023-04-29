@@ -245,6 +245,7 @@ tile.dungeonHaystack.name=地下牢わらの山
 tile.dungeonBarrier.name=地下牢のバリア
 tile.dungeonRottenLifeWood.name=腐った生命の木の原木
 tile.dungeonActinicGlass.name=光化ガラス
+tile.dungeonMagicCircleA.name=地下牢のマジックサークル
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -363,6 +364,7 @@ entity.ArrogantSheep.name=傲慢なヒツジ
 entity.EntityGrimoire.name=呪文
 entity.Puppet.name=木霊
 entity.RelicGuard.name=遺跡ガード
+entity.SpriteZombie.name=霊体ゾンビ
 
 pro.none=アイドル
 pro.warrior=戦士
@@ -418,6 +420,7 @@ commands.es.edifice.restore.success=回復成功！
 commands.es.not.support.commandBlock=コマンドブロックがサポートされていません。
 commands.es.research.usage=/es research <add|sub> <プレイヤー> <タイプ> <数値>
 commands.es.research.add=%sに%sの%sを与えました
+commands.es.dungeon.usage=/es dungeon <new|list>
 
 arc.infusion.name=エンチャント祭壇
 arc.absorbBox.name=元素を吸収する祭壇
@@ -555,6 +558,7 @@ info.dungeon.remember.appear=記憶のアイテムを現った
 info.dungeon.memoryFeather.usage=地下牢の部屋で使用すると、1耐久で記憶のアイテムの存在どうかを分れる\n潜行使用すると記憶のアイテムを現れる、だが現れない時、2耐久を消費する
 info.dungeon.rottenLifeLog=朽木でも、強い力が宿っている
 info.dungeon.actinicGlass=光エネルギーを持続的に吸収し、下方の作物を触媒できる装置
+info.need.magical.damage.attack=魔法攻撃が有効になるかもしれない
 
 info.mc.archi.Temple.name=砂漠のピラミッド
 

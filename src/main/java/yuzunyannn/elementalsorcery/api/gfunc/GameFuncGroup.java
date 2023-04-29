@@ -46,6 +46,7 @@ public class GameFuncGroup extends GameFunc {
 	protected List<GameFunc> funcs = new ArrayList<>();
 	protected int mode;
 	protected Dispatcher dispatcher = new Parallel();
+	protected boolean isFully = false;
 
 	protected Dispatcher createDispatcher() {
 		switch (mode) {
@@ -62,11 +63,12 @@ public class GameFuncGroup extends GameFunc {
 
 	@Override
 	public void loadFromJson(JsonObject json, GameFuncJsonCreateContext context) {
-		super.loadFromJson(json,context);
+		super.loadFromJson(json, context);
 		funcs.clear();
 		JsonArray jfuncs = json.needArray("funcs");
 		for (int i = 0; i < jfuncs.size(); i++) funcs.add(GameFunc.create(jfuncs.getObject(i)));
 		mode = 0;
+		isFully = true;
 		if (json.hasNumber("mode")) mode = json.getNumber("mode").intValue();
 		else if (json.hasString("mode")) {
 			String modeStr = json.getString("mode");
@@ -75,6 +77,7 @@ public class GameFuncGroup extends GameFunc {
 				mode = 1;
 				break;
 			case "random":
+				isFully = false;
 				mode = 2;
 				for (GameFunc func : funcs) {
 					if (func.hasConfig(WEIGHT)) {
@@ -85,6 +88,7 @@ public class GameFuncGroup extends GameFunc {
 				break;
 			}
 		}
+		isFully = json.hasBoolean("isFully") ? json.getBoolean("isFully") : isFully;
 		dispatcher = createDispatcher();
 	}
 
@@ -93,6 +97,7 @@ public class GameFuncGroup extends GameFunc {
 		super.deserializeNBT(nbt);
 		funcs = deserializeNBTList(nbt, "funcs");
 		mode = nbt.getInteger("mode");
+		isFully = nbt.getBoolean("isFully");
 		dispatcher = createDispatcher();
 		dispatcher.readFromNBT(nbt);
 	}
@@ -102,6 +107,7 @@ public class GameFuncGroup extends GameFunc {
 		NBTTagCompound nbt = super.serializeNBT();
 		nbt.setTag("funcs", serializeNBTList(funcs));
 		nbt.setInteger("mode", mode);
+		nbt.setBoolean("isFully", isFully);
 		dispatcher.writeToNBT(nbt);
 		return nbt;
 	}
@@ -118,7 +124,8 @@ public class GameFuncGroup extends GameFunc {
 
 	@Override
 	public GameFuncFinOp afterExecute(GameFuncExecuteContext context) {
-		return funcs.isEmpty() ? GameFuncFinOp.ABANDON : GameFuncFinOp.KEEP;
+		if (isFully) return funcs.isEmpty() ? GameFuncFinOp.ABANDON : GameFuncFinOp.KEEP;
+		return GameFuncFinOp.ABANDON;
 	}
 
 	@Override

@@ -206,5 +206,10 @@ public class Mantra extends IForgeRegistryEntry.Impl<Mantra> {
 	public ResourceLocation getIconResource() {
 		return ESResources.MANTRA_VOID.getResource();
 	}
+	
+	@Override
+	public String toString() {
+		return this.getRegistryName().toString();
+	}
 
 }

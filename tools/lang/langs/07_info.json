@@ -872,6 +872,11 @@
             "zh_CN": "可以持续吸收光能，催化下方作物的装置",
             "en_US": "A device that can continuously absorb light energy and catalyze crops below",
             "ja_JP": "光エネルギーを持続的に吸収し、下方の作物を触媒できる装置"
+        },
+        "info.need.magical.damage.attack": {
+            "zh_CN": "或许魔法攻击可以生效",
+            "en_US": "Perhaps magic attacks can take effect",
+            "ja_JP": "魔法攻撃が有効になるかもしれない"
         }
     },
     "info.mc": {
