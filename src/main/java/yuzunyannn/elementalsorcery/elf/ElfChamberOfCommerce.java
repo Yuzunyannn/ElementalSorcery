@@ -15,6 +15,7 @@ import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionDebtCollector;
@@ -27,14 +28,30 @@ import yuzunyannn.elementalsorcery.tile.altar.TileInstantConstitute;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ElfChamberOfCommerce extends WorldSavedData {
+
+	/** 好孩子模式 */
+	@Config(kind = "global", group = "elf")
+	public static boolean PLAYER_IS_GOOD_BOY = false;
+
 	/** 每分钟债务的利息 */
-	public static final float DEBT_INTEREST_PER_SEC = 0.001f;
+	@Config(kind = "global", group = "elf")
+	@Config.NumberRange(min = 0, max = Float.MAX_VALUE)
+	public static float DEBT_INTEREST_PER_SEC = 0.001f;
+
 	/** 生成一个讨债人的价值 */
-	public static final int COLLECT_DEBT_VALUE = 10;
+	@Config(kind = "global", group = "elf")
+	@Config.NumberRange(min = 0, max = Float.MAX_VALUE)
+	public static int COLLECT_DEBT_VALUE = 10;
+
 	/** 开始生成讨债人的限制 */
-	public static final int COLLECT_DEBT_START_LIMIT = 500000;
+	@Config(kind = "global", group = "elf")
+	@Config.NumberRange(min = 0, max = Float.MAX_VALUE)
+	public static int COLLECT_DEBT_START_LIMIT = 500000;
+
 	/** 失信情况下,开始生成讨债人的限制 */
-	public static final int COLLECT_DEBT_START_LIMIT_DISHONEST = 100000;
+	@Config(kind = "global", group = "elf")
+	@Config.NumberRange(min = 0, max = Float.MAX_VALUE)
+	public static int COLLECT_DEBT_START_LIMIT_DISHONEST = 100000;
 
 	/** 给一个物品定价 */
 	public static int priceIt(ItemStack item) {

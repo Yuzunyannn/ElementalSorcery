@@ -32,6 +32,7 @@ import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.block.BlockElfFruit;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
@@ -46,11 +47,18 @@ import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.entity.EntityItemGoods;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
+import yuzunyannn.elementalsorcery.entity.elf.EntityElfTravelling;
 import yuzunyannn.elementalsorcery.render.entity.living.RenderEntityElf;
 import yuzunyannn.elementalsorcery.util.var.VariableTypes;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
+
+	@Config(kind = "global", group = "elf")
+	public static boolean TRAVELER_NOT_DROP_GOODS = false;
+
+	@Config(kind = "global", group = "elf")
+	public static boolean NOT_DROP_GOODS = false;
 
 	static public Random getRandomFromName(String str) {
 		return new Random(str.hashCode());
@@ -110,6 +118,11 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	/** 当死亡 */
 	public void onDead(EntityElfBase elf) {
 		if (elf.world.isRemote) return;
+		//配置pass
+		if (NOT_DROP_GOODS) return;
+		if (TRAVELER_NOT_DROP_GOODS) {
+			if (elf instanceof EntityElfTravelling) return;
+		}
 		VariableSet storage = elf.getProfessionStorage();
 		if (!storage.has(M_TYPE)) return;
 		ElfMerchantType merchantType = storage.get(M_TYPE);

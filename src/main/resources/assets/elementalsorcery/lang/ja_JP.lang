@@ -644,7 +644,7 @@ elf.time.min=%d時
 elf.time.sec=%d秒
 elf.time.calendar=精霊のカレンダー：%s
 elf.red.label.merchant.not.notice=精霊商会はあなたがこっそり%sを持って行ったことに気づかなかったようです。
-elf.red.label.merchant.notice=精霊商会はあなたがこっそり%sを持って行ったことを発見して、あなたの信用は%sを下げました、%s元債務に増加しまた
+elf.red.label.merchant.notice=精霊商会はあなたがこっそり%sを持って行ったことを発見して、あなたの信用は%sを下げました、%s元債務に増加しまた、借金が高すぎると…
 
 say.scholar.buy=黙って羊皮紙を買いたい
 say.scholar.konw=わかりました
@@ -924,6 +924,12 @@ es.adv.collapse.title=崩れ
 es.adv.collapse.description=誤った操作、予期せぬ収穫
 es.adv.elementCrack.title=走れ！(終わり)
 es.adv.elementCrack.description=虚空の崩れ、元素ひび割れを開く
+es.adv.relicResearcher.title=遺跡研究者
+es.adv.relicResearcher.description=研究室の遺跡任務を遂行し、遺跡ゾンビを撃ち殺す
+es.adv.relicGuardCore.title=これは何ですか
+es.adv.relicGuardCore.description=遺跡ガードの核を取り出す
+es.adv.townInMemory.title=記憶の町
+es.adv.townInMemory.description=偽映の町に足を踏み入れる
 
 page.elf=精霊
 page.elf.ct=精霊は精霊の世界から来た新しい生物で、彼たちはいつも巨大な精霊の木に住んでいます。精霊は中立的な生物であり、また異なる職業を持っている。彼たちを攻撃すれば、彼たちは戦闘職業に転じて防衛することができます。\n精霊の中で狂人がいる、彼はあちこちで攻撃します。\nまた、精霊学者があなたに教えてくれます・同時に教程も販売しています。\n[精霊部分教程は学者からしか入手できません。]

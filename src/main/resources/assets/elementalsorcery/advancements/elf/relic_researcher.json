@@ -1,0 +1,24 @@
+{
+    "parent": "elementalsorcery:elf/adventurer",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:relic_gem"
+        },
+        "title": {
+            "translate": "es.adv.relicResearcher.title"
+        },
+        "description": {
+            "translate": "es.adv.relicResearcher.description"
+        }
+    },
+    "criteria": {
+        "kill": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "elementalsorcery:relicZombie"
+                }
+            }
+        }
+    }
+}

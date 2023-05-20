@@ -26,7 +26,7 @@ import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 /** 精灵邮局 */
 public class ElfPostOffice extends WorldSavedData {
 
-	@Config
+	@Config(kind = "global", group = "elf")
 	private static float MAX_LIFE_TIME_OF_PARCEL = 24 * 16;
 
 	/** 把玩家名作为地址时的前缀 */

@@ -18,5 +18,5 @@
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
-    "json.format.keepLines": true
+    "json.format.keepLines": false
 }

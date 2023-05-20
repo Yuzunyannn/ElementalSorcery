@@ -10,7 +10,9 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
+import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
+import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.init.EntityRegistries;
@@ -50,6 +52,7 @@ public class ESConfig {
 		load(ESConfig.class, getter);
 		load(ElfPostOffice.class, getter);
 		load(ElfChamberOfCommerce.class, getter);
+		load(ElfConfig.class, getter);
 		load(WorldGeneratorES.class, getter);
 		load(EntityRegistries.class, getter);
 		load(BuildingLib.class, getter);
@@ -57,6 +60,7 @@ public class ESConfig {
 		load(TileEntityNetwork.class, getter);
 		load(ElementInventory.class, getter);
 		load(Researcher.class, getter);
+		load(ElfProfession.class, getter);
 		loadList(ESInit.ES_TILE_ENTITY, getter);
 		loadRegs(ESObjects.ITEMS, getter);
 		loadRegs(ESObjects.BLOCKS, getter);

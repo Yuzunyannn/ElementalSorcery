@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -16,6 +17,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.building.BuildingFace;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
@@ -195,6 +197,9 @@ public class DungeonArea extends WorldSavedData {
 		MantraSummon.summon(world, room.at, openPlayer,
 				SummonRecipeDungeonRoom.createVestKeepsake(areaId, roomId, openPlayer),
 				SummonRecipe.get(TextHelper.toESResourceLocation("dungeon_room")));
+
+		if (openPlayer instanceof EntityPlayerMP)
+			ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) openPlayer, "dungeon:open");
 
 		this.markDirty();
 	}

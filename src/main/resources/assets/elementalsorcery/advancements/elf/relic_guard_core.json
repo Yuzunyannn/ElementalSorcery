@@ -1,0 +1,22 @@
+{
+    "parent": "elementalsorcery:elf/relic_researcher",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:relic_guard_core"
+        },
+        "title": {
+            "translate": "es.adv.relicGuardCore.title"
+        },
+        "description": {
+            "translate": "es.adv.relicGuardCore.description"
+        }
+    },
+    "criteria": {
+        "take": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "action:takeGuardCore"
+            }
+        }
+    }
+}

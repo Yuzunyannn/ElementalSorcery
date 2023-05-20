@@ -99,7 +99,7 @@ public class Adventurer implements IAdventurer, INBTSerializable<NBTTagCompound>
 			if (EntityHelper.isCreative(entity)) return;
 			if (!ElfChamberOfCommerce.isShouldDebtCollection(entity)) return;
 			if (ElfChamberOfCommerce.callDebtCollector(entity)) {
-				debts = debts - ElfChamberOfCommerce.COLLECT_DEBT_VALUE;
+				debts = Math.max(0, debts - ElfChamberOfCommerce.COLLECT_DEBT_VALUE);
 				if (entity instanceof EntityPlayerMP)
 					ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) entity, "elf:deepInDebt");
 			}

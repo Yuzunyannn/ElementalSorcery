@@ -27,6 +27,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
+import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
@@ -169,6 +170,12 @@ public class EntityItemGoods extends Entity {
 		ItemStack stack = player.getHeldItem(hand);
 		if (!stack.isEmpty()) return EnumActionResult.FAIL;
 		if (!isSold()) {
+			// 好孩子模式hhh
+			if (ElfChamberOfCommerce.PLAYER_IS_GOOD_BOY) {
+				player.sendMessage(new TextComponentTranslation("say.i.red.label.pick.up")
+						.setStyle(new Style().setColor(TextFormatting.DARK_RED)));
+				return EnumActionResult.FAIL;
+			}
 			NBTTagCompound dat = ESData.getRuntimeData(player);
 			int i = dat.getByte("redLabelPickUp");
 			if (i == 0) {

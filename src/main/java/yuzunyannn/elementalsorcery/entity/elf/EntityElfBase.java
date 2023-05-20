@@ -57,6 +57,7 @@ import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public abstract class EntityElfBase extends EntityCreature {
@@ -305,6 +306,14 @@ public abstract class EntityElfBase extends EntityCreature {
 	/** 受到攻击，精灵的反应 */
 	@Override
 	public boolean attackEntityFrom(DamageSource source, float amount) {
+		// 配置，不可攻击精灵
+		if (!ElfConfig.PLAY_CAN_ATTACK_ELF) {
+			Entity attacker = source.getTrueSource();
+			if (attacker instanceof EntityPlayer) {
+				if (!EntityHelper.isCreative(attacker)) return false;
+			}
+		}
+
 		Float flag = this.getProfession().attackedFrom(this, source, amount);
 		if (flag == null) return false;
 		else if (flag == -1) return true;

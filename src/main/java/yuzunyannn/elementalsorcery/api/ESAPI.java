@@ -29,6 +29,7 @@ public class ESAPI {
 			}
 		} catch (Throwable e) {}
 		isDevelop = debugOpen;
+//		isDevelop = false;
 	}
 
 	@APIObject

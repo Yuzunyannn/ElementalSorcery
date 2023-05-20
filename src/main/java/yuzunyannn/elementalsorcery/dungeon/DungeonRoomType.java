@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDirt;
+import net.minecraft.block.BlockSilverfish;
 import net.minecraft.block.BlockStairs;
 import net.minecraft.block.BlockStoneBrick;
 import net.minecraft.block.BlockStoneBrick.EnumType;
@@ -230,6 +231,14 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			TileEntityFlowerPot flowerPot = BlockHelper.getTileEntity(world, pos, TileEntityFlowerPot.class);
 			if (flowerPot != null) flowerPot.setItemStack(ItemHelper.randomFlower(world.rand));
 			return true;
+		}
+
+		// 拿错了部分
+		if (block == Blocks.MONSTER_EGG) {
+			BlockSilverfish.EnumType type = state.getValue(BlockSilverfish.VARIANT);
+			if (type == BlockSilverfish.EnumType.STONE) state = Blocks.STONE.getDefaultState();
+			else state = Blocks.STONEBRICK.getDefaultState();
+			block = state.getBlock();
 		}
 
 		// 预替换部分

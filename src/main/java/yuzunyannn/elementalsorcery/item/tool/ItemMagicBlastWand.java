@@ -48,7 +48,7 @@ public class ItemMagicBlastWand extends Item implements IItemUseClientUpdate {
 
 	@Config(kind = "item")
 	@Config.NumberRange(max = Double.MAX_VALUE, min = 0)
-	private static float MAGIC_BLAST_ONE_DAMAGE_PER_COUNT = 80;
+	private static float MAGIC_BLAST_ONE_DAMAGE_PER_COUNT = 70;
 
 	@Config(kind = "item")
 	private static float MAGIC_MAX_DAMAGE_LIMIT_FOR_DECAY = 50;

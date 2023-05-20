@@ -100,7 +100,7 @@ public class ItemShockWand extends Item implements IItemUseClientUpdate {
 			target.motionY += orient.y * rate;
 			target.motionZ += orient.z * rate;
 			target.velocityChanged = true;
-			if (target instanceof EntityRelicGuard) ((EntityRelicGuard) target).onShock();
+			if (target instanceof EntityRelicGuard) ((EntityRelicGuard) target).onShock(entityLiving);
 			if (target instanceof EntityRelicZombie) ((EntityRelicZombie) target).onShock();
 			if (target instanceof EntityLivingBase) {
 				EntityLivingBase living = ((EntityLivingBase) target);

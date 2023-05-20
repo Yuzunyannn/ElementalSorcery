@@ -19,9 +19,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.Style;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -181,7 +179,6 @@ public class ItemAncientPaper extends Item implements IToElementItem {
 		count += rand.nextFloat() <= expect ? 1 : 0;
 		if (count > 0) Researcher.research(player, topic.getKey(), count);
 	}
-
 
 	/** 开始解读 @return true表示可以 */
 	protected boolean startUnscramble(World worldIn, EntityPlayer playerIn, EnumHand handIn) {

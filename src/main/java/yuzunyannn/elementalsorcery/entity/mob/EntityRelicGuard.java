@@ -14,6 +14,7 @@ import net.minecraft.entity.ai.EntityAIMoveTowardsRestriction;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -31,6 +32,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
@@ -211,7 +213,7 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 		this.dataManager.set(IS_SPELLING, spelling);
 	}
 
-	public void onShock() {
+	public void onShock(EntityLivingBase shocker) {
 		int status = getStatus();
 		if (status == STATUS_WORN) {
 			if (hasCore()) {
@@ -221,6 +223,9 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 				if (!master.isOwnerless()) ItemRelicGuardCore.setCoreMaster(stack, master.getMaster());
 				ItemRelicGuardCore.setCoreType(stack, this.getType());
 				this.entityDropItem(stack, 1);
+				if (shocker instanceof EntityPlayerMP)
+					ESCriteriaTriggers.ES_TRING.trigger((EntityPlayerMP) shocker, "action:takeGuardCore");
+
 			}
 		}
 	}

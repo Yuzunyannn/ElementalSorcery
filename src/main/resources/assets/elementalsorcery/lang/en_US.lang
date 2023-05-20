@@ -644,7 +644,7 @@ elf.time.min=%d Time
 elf.time.sec=%d Sec 
 elf.time.calendar=Elf Calendar: %s
 elf.red.label.merchant.not.notice=It seems that the Elven chamber of Commerce didn't notice that you secretly took away %s.
-elf.red.label.merchant.notice=The Elven chamber of Commerce found that you secretly took away %s, your fame was reduced by %s, and incur %s yuan debts
+elf.red.label.merchant.notice=The Elven chamber of Commerce found that you secretly took away %s, your fame was reduced by %s, and incur %s yuan debts. If the debt is too high, ...
 
 say.scholar.buy=Stop talking. I want to buy some parchment.
 say.scholar.konw=Oh, I see
@@ -924,6 +924,12 @@ es.adv.collapse.title=Collapse
 es.adv.collapse.description=Wrong operation, unexpected thing
 es.adv.elementCrack.title=Run! (The End)
 es.adv.elementCrack.description=Void Collapse. Open Element Crack
+es.adv.relicResearcher.title=Relic Researcher
+es.adv.relicResearcher.description=Complete the laboratory's Relic quest and kill the relic zombies
+es.adv.relicGuardCore.title=What's this?
+es.adv.relicGuardCore.description=Take out the core of the Relic Guard
+es.adv.townInMemory.title=Town In Memory
+es.adv.townInMemory.description=Stepping into the town of Virtual Sight
 
 page.elf=Elf
 page.elf.ct=Elf are a new kind of creature from the elves world. They usually live in the giant elf trees. Elves are neutral creatures and have different professions. If you attack them, they will probably switch to combat profession to defend.\nThere will be Crazy in the elves, and she will attack everything.\nIn addition, the Elf Scholar will tell you something you may want to know, and she will also sell tutorials.\n[It's a other way to get the tutorial for elf in this mod]

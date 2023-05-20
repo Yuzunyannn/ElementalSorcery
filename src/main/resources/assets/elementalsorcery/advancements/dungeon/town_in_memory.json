@@ -1,0 +1,23 @@
+{
+    "parent": "elementalsorcery:elf/relic_guard_core",
+    "display": {
+        "icon": {
+            "item": "elementalsorcery:dungeon_seed",
+            "data": 7
+        },
+        "title": {
+            "translate": "es.adv.townInMemory.title"
+        },
+        "description": {
+            "translate": "es.adv.townInMemory.description"
+        }
+    },
+    "criteria": {
+        "take": {
+            "trigger": "elementalsorcery:es_string",
+            "conditions": {
+                "type": "dungeon:.*"
+            }
+        }
+    }
+}

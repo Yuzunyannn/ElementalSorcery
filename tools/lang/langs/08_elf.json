@@ -61,9 +61,9 @@
             "ja_JP": "精霊商会はあなたがこっそり%sを持って行ったことに気づかなかったようです。"
         },
         "elf.red.label.merchant.notice": {
-            "zh_CN": "精灵商会发现到你悄悄的拿走了%s，你的信誉降低了%s，负债上升%s元",
-            "en_US": "The Elven chamber of Commerce found that you secretly took away %s, your fame was reduced by %s, and incur %s yuan debts",
-            "ja_JP": "精霊商会はあなたがこっそり%sを持って行ったことを発見して、あなたの信用は%sを下げました、%s元債務に増加しまた"
+            "zh_CN": "精灵商会发现到你悄悄的拿走了%s，你的信誉降低了%s，负债上升%s元，如果负债太高的话...",
+            "en_US": "The Elven chamber of Commerce found that you secretly took away %s, your fame was reduced by %s, and incur %s yuan debts. If the debt is too high, ...",
+            "ja_JP": "精霊商会はあなたがこっそり%sを持って行ったことを発見して、あなたの信用は%sを下げました、%s元債務に増加しまた、借金が高すぎると…"
         }
     },
     "say": {
