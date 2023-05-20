@@ -1,0 +1,29 @@
+{
+	"type": "elementalsorcery:craft",
+	"pattern": [
+		"D S",
+		" F ",
+		"S D"
+	],
+	"key": {
+		"S": "elementalsorcery:soul_fragment",
+		"F": "minecraft:feather",
+		"D": "elementalsorcery:dungeon_stone"
+	},
+	"element": [
+		{
+			"id": "water",
+			"size": 75,
+			"power": 234
+		},
+		{
+			"id": "knowledge",
+			"size": 75,
+			"power": 175
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:memory_feather",
+		"count": 1
+	}
+}

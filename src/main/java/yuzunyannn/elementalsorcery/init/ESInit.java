@@ -208,6 +208,7 @@ import yuzunyannn.elementalsorcery.item.ItemAddressPlate;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.ItemAppleCandy;
 import yuzunyannn.elementalsorcery.item.ItemDungeonKey;
+import yuzunyannn.elementalsorcery.item.ItemDungeonSeed;
 import yuzunyannn.elementalsorcery.item.ItemElementBoard;
 import yuzunyannn.elementalsorcery.item.ItemElfFruitBomb;
 import yuzunyannn.elementalsorcery.item.ItemElfPurse;
@@ -255,6 +256,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemController;
 import yuzunyannn.elementalsorcery.item.prop.ItemCubeCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemDejectedTear;
 import yuzunyannn.elementalsorcery.item.prop.ItemDreadGem;
+import yuzunyannn.elementalsorcery.item.prop.ItemDungeonStone;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementCrack;
 import yuzunyannn.elementalsorcery.item.prop.ItemElementStone;
 import yuzunyannn.elementalsorcery.item.prop.ItemElfDiamond;
@@ -687,6 +689,8 @@ public class ESInit {
 		ESObjects.ITEMS.DUNGEON_KEY = new ItemDungeonKey();
 		ESObjects.ITEMS.MEMORY_FRAGMENT = new ItemMemoryFragment();
 		ESObjects.ITEMS.MEMORY_FEATHER = new ItemMemoryFeather();
+		ESObjects.ITEMS.DUNGEON_SEED = new ItemDungeonSeed();
+		ESObjects.ITEMS.DUNGEON_STONE = new ItemDungeonStone();
 
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1201,6 +1205,9 @@ public class ESInit {
 		registerRender(ITEMS.DUNGEON_KEY);
 		registerRender(ITEMS.MEMORY_FRAGMENT, new RenderItemMemoryFragment());
 		registerRender(ITEMS.MEMORY_FEATHER);
+		for (int i = 0; i <= ItemDungeonSeed.SEED_MAX_LEVEL; i++)
+			registerRender(ITEMS.DUNGEON_SEED, i, "dungeon_seed/lv" + i);
+		registerRender(ITEMS.DUNGEON_STONE);
 
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");

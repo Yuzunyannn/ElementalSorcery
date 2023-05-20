@@ -136,6 +136,8 @@ public class ESObjects {
 		public Item DUNGEON_KEY;
 		public Item MEMORY_FRAGMENT;
 		public Item MEMORY_FEATHER;
+		public Item DUNGEON_SEED;
+		public Item DUNGEON_STONE;
 	}
 
 	static public class Blocks {

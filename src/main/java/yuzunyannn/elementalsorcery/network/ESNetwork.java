@@ -13,41 +13,32 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 
 public class ESNetwork {
 
-	public final static SimpleNetworkWrapper instance = NetworkRegistry.INSTANCE
-			.newSimpleChannel(ESAPI.MODID);
-	private static int nextID = 0;
+	public final static SimpleNetworkWrapper instance = NetworkRegistry.INSTANCE.newSimpleChannel(ESAPI.MODID);
 
 	public static void registerAll() {
-		registerMessage(MessageSpellbook.Handler.class, MessageSpellbook.class, Side.CLIENT);
-		registerMessage(MessageEffect.Handler.class, MessageEffect.class, Side.CLIENT);
-		registerMessage(MessageEntitySync.Handler.class, MessageEntitySync.class, Side.CLIENT);
-
-		registerMessage(MessageMantraShift.Handler.class, MessageMantraShift.class, Side.SERVER);
-		registerMessage(MessageElfTreeElevator.Handler.class, MessageElfTreeElevator.class, Side.SERVER);
-
-		registerMessage(MessageGetBuilingInfo.Handler.class, MessageGetBuilingInfo.class, Side.CLIENT);
-		registerMessage(MessageGetBuilingInfo.Handler.class, MessageGetBuilingInfo.class, Side.SERVER);
-
-		registerMessage(MessageSyncContainer.Handler.class, MessageSyncContainer.class, Side.CLIENT);
-		registerMessage(MessageSyncContainer.Handler.class, MessageSyncContainer.class, Side.SERVER);
-
-		registerMessage(MessageSyncConfig.Handler.class, MessageSyncConfig.class, Side.CLIENT);
-
-		registerMessage(MessagePocketWatch.Handler.class, MessagePocketWatch.class, Side.CLIENT);
-
-		registerMessage(MessageElementExplosion.Handler.class, MessageElementExplosion.class, Side.CLIENT);
-		registerMessage(MessageBlockDisintegrate.Handler.class, MessageBlockDisintegrate.class, Side.CLIENT);
+		regMsg(0, MessageSpellbook.Handler.class, MessageSpellbook.class, Side.CLIENT);
+		regMsg(1, MessageEffect.Handler.class, MessageEffect.class, Side.CLIENT);
+		regMsg(2, MessageEntitySync.Handler.class, MessageEntitySync.class, Side.CLIENT);
+		regMsg(3, MessageMantraShift.Handler.class, MessageMantraShift.class, Side.SERVER);
+		regMsg(4, MessageElfTreeElevator.Handler.class, MessageElfTreeElevator.class, Side.SERVER);
+		
+		regMsg(5, MessageGetBuilingInfo.Handler.class, MessageGetBuilingInfo.class, Side.CLIENT);
+		regMsg(6, MessageGetBuilingInfo.Handler.class, MessageGetBuilingInfo.class, Side.SERVER);
+		
+		regMsg(7, MessageSyncContainer.Handler.class, MessageSyncContainer.class, Side.CLIENT);
+		regMsg(8, MessageSyncContainer.Handler.class, MessageSyncContainer.class, Side.SERVER);
+		
+		regMsg(9, MessageSyncConfig.Handler.class, MessageSyncConfig.class, Side.CLIENT);
+		regMsg(10, MessagePocketWatch.Handler.class, MessagePocketWatch.class, Side.CLIENT);
+		regMsg(11, MessageElementExplosion.Handler.class, MessageElementExplosion.class, Side.CLIENT);
+		regMsg(12, MessageBlockDisintegrate.Handler.class, MessageBlockDisintegrate.class, Side.CLIENT);
 	}
 
-	public static <REQ extends IMessage, REPLY extends IMessage> void registerMessage(
+	public static <REQ extends IMessage, REPLY extends IMessage> void regMsg(int id,
 			Class<? extends IMessageHandler<REQ, REPLY>> messageHandler, Class<REQ> requestMessageType, Side side) {
-		instance.registerMessage(messageHandler, requestMessageType, nextID++, side);
+		instance.registerMessage(messageHandler, requestMessageType, id, side);
 	}
 
-	
-	
-	
-	
 	public static void sendMessage(IMessage msg, World world, Vec3d vec) {
 		sendMessage(msg, world.provider.getDimension(), vec);
 	}

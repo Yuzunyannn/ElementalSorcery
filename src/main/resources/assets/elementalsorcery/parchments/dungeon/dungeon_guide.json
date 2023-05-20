@@ -1,0 +1,39 @@
+{
+	"type": "elementalsorcery:parchment_mult",
+	"lev": -3,
+	"lock": 0,
+	"linked": [
+		"elementalsorcery:dungeon_stone",
+		"elementalsorcery:dungeon_key",
+		"elementalsorcery:dungeon_seed",
+		"elementalsorcery:memory_feather",
+		"elementalsorcery:memory_fragment"
+	],
+	"pages": [
+		{
+			"type": "craft",
+			"name": "dungeonEnter",
+			"item": "elementalsorcery:dungeon_seed"
+		},
+		{
+			"type": "craft",
+			"name": "dungeonKey",
+			"item": "elementalsorcery:dungeon_key"
+		},
+		{
+			"type": "craft",
+			"name": "dungeonMemoryFragment",
+			"item": {
+				"id": "elementalsorcery:memory_fragment",
+				"nbt": {
+					"cmeta": -1
+				}
+			}
+		},
+		{
+			"type": "craft",
+			"name": "dungeonMemoryFeather",
+			"item": "elementalsorcery:memory_feather"
+		}
+	]
+}

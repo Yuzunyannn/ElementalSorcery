@@ -3,10 +3,7 @@
     "entityId": "elementalsorcery:spriteZombie",
     "entityNBT": {
         "IsBaby": false,
-        "HandDropChances": [
-            0,
-            0
-        ],
+        "HandDropChances": [ 0.0, 0.0 ],
         "HandItems": [
             {
                 "id": "minecraft:diamond_sword",
@@ -33,10 +30,7 @@
             },
             "entityNBT": {
                 "IsBaby": true,
-                "HandDropChances": [
-                    0,
-                    0
-                ],
+                "HandDropChances": [ 0.0, 0.0 ],
                 "HandItems": [
                     {
                         "id": "minecraft:iron_sword",
@@ -58,10 +52,7 @@
                     },
                     "entityNBT": {
                         "IsBaby": true,
-                        "HandDropChances": [
-                            0,
-                            0
-                        ],
+                        "HandDropChances": [ 0.0, 0.0 ],
                         "HandItems": [
                             {
                                 "id": "minecraft:wooden_sword",

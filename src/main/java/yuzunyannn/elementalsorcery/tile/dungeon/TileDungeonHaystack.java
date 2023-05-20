@@ -105,7 +105,7 @@ public class TileDungeonHaystack extends TileDungeonPropBase {
 	}
 
 	public void onSweepOpen(EntityLivingBase player) {
-		trigger("onClick", player);
+		trigger("onSweep", player);
 	}
 
 }

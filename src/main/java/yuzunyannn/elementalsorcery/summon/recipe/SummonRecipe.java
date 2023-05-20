@@ -23,6 +23,7 @@ import yuzunyannn.elementalsorcery.summon.SummonRabidRabbit;
 import yuzunyannn.elementalsorcery.summon.SummonRelicGuard;
 import yuzunyannn.elementalsorcery.summon.SummonRelicZombie;
 import yuzunyannn.elementalsorcery.summon.SummonSilverfishSpring;
+import yuzunyannn.elementalsorcery.summon.SummonDungeonStone;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
@@ -56,6 +57,7 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 	protected int cost = 50;
 	protected int color = 0xda003e;
 	protected int buildHeight = 0;
+	protected boolean dropKeepsake = true;
 
 	public SummonRecipe setKeepsakes(ItemStack... keepsake) {
 		this.keepsakes = keepsake;
@@ -69,6 +71,11 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 
 	public SummonRecipe setColor(int color) {
 		this.color = color;
+		return this;
+	}
+
+	public SummonRecipe setDropKeepsake(boolean dropKeepsake) {
+		this.dropKeepsake = dropKeepsake;
 		return this;
 	}
 
@@ -99,6 +106,11 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 	/** 该方案的颜色 */
 	public int getColor(ItemStack keepsake) {
 		return color;
+	}
+
+	/** 是否掉落信物 */
+	public boolean isDropKeepsake() {
+		return dropKeepsake;
 	}
 
 	/**
@@ -146,6 +158,9 @@ public class SummonRecipe extends IForgeRegistryEntry.Impl<SummonRecipe> {
 		reg("arrogant_sheep", new SummonRecipeArrogantSheep());
 		reg("relic_guard", SummonRelicGuard.class, 128, 0xfdffce, new ItemStack(ESObjects.ITEMS.RELIC_GEM));
 		reg("dungeon_room", new SummonRecipeDungeonRoom());
+		reg("dungeon_stone", SummonDungeonStone.class, 128, 0x2079a4, new ItemStack(ESObjects.ITEMS.RELIC_GUARD_CORE))
+				.setDropKeepsake(false);
+
 	}
 
 	private static SummonRecipe reg(String name, SummonRecipe m) {

@@ -142,6 +142,9 @@ item.juiceConcentrate.name=果汁浓缩剂
 item.dungeonKey.name=虚映之钥
 item.memoryFragment.name=记忆碎片
 item.memoryFeather.name=记忆之羽
+item.dungeonSeed.name=虚映之种
+item.dungeonSeed.fin.name=虚映入口
+item.dungeonStone.name=虚映之石
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -559,6 +562,10 @@ info.dungeon.memoryFeather.usage=在地牢迷宫的房间里使用，可以消�
 info.dungeon.rottenLifeLog=哪怕是朽木，依然蕴含着强大的力量
 info.dungeon.actinicGlass=可以持续吸收光能，催化下方作物的装置
 info.need.magical.damage.attack=或许魔法攻击可以生效
+info.dungeonSeed.open.new=种子已成长成入口，放到地上唤起被遗忘的城镇
+info.dungeon.bad.place=这里的位置好像不太好，换个位置试试吧
+info.dungeonSeed.storage.hp=生息：%s
+info.dungeonSeed.storage.exp=阅历：%s
 
 info.mc.archi.Temple.name=沙漠神殿
 
@@ -963,6 +970,7 @@ page.arrogantSheep=傲慢的绵羊
 page.arrogantSheep.ct=使用黄色羊毛作为信物，再加上大量的灵魂可以召唤出傲慢绵羊的迷宫（远离召唤点巨大的迷宫便会开始建造）。\n迷宫的由几乎无法被破坏的特殊金砖构成，一共分为两层，傲慢的绵羊便位于第二层。\n要战胜它，剪刀和绯红水晶是不可缺少的东西。\n从它身上获取到的傲慢的羊毛是一种十分贵重的材料，不仅如此，将它放到「元素平台」上会产生金锭，不过每产生一个金锭羊毛都有可能会消失。
 page.relicGuardReport=守卫研究报告
 page.relicGuardReport.ct=遗迹守卫似乎是过去制造的一种兵器，目的未知，每次释放技能都会消耗HP，当HP低于一定程度会成为损坏态，核心会变得十分不稳定，并发生爆炸，此时可以同通过冲击权杖将核心取出来，其核心决定着遗迹守卫的元素类型，并且可以登陆核心主人。\n至此精灵工匠分析核心制作出了遗迹轮盘，可以修复损坏的损坏态的遗迹守卫，可以标定为核心标定核心主人(拿着核心和轮盘右键)。
+page.relicGuardReport.ct.ext=核心似乎可以与召唤仪式发生共鸣，而产出未知的物品，有待进一步研究。
 page.crafting.need=需要元素参与合成：
 page.crafting.show=%s需要%d，强度下限%d 
 page.error=错误页面
@@ -1255,3 +1263,12 @@ page.collapse=塌陷
 page.collapse.ct=崩解石碑爆炸后的产物，有着另物质塌陷的力量，但十分不稳定，会持续破坏周围方块。对生物似乎没有什么影响。
 page.collapseWand=塌陷权杖
 page.collapseWand.ct=将塌陷融合到魔爆权杖中，形成的塌陷权杖。可以将力量稳定有序的释放出来。表现是可以将世界中的方块直接分解成元素存入其中。
+
+page.dungeonEnter=虚映入口
+page.dungeonEnter.ct=将过去的记忆片段重现于世，巨大地牢的入口，在种子持有者的生命与经验的养分中形成。
+page.dungeonKey=虚映之钥
+page.dungeonKey.ct=地牢中开启通往下一个房间的必要品
+page.dungeonMemoryFragment=记忆碎片
+page.dungeonMemoryFragment.ct=通往深层房间的必要物品，可在地牢的房间中找到。彩色的碎片可以开启任何的房间。（通常是不需要自己制作的，地牢中的碎片是自给自足的，除非你把已经到手的碎片给弄没了）
+page.dungeonMemoryFeather=寻找记忆
+page.dungeonMemoryFeather.ct=当找不到隐藏在房间中记忆时，或许这个羽毛是个好帮手。

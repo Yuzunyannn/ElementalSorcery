@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonActinicGlass;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
 import yuzunyannn.elementalsorcery.item.ItemMemoryFeather;
 import yuzunyannn.elementalsorcery.item.tool.ItemShockWand;
 import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
@@ -41,6 +42,9 @@ public class ParticleEffects {
 			break;
 		case 5:
 			BlockDungeonActinicGlass.doEffect(world, pos, nbt);
+			break;
+		case 6 :
+			MantraEnderTeleport.doEffect(world, pos, nbt);
 			break;
 		}
 	}

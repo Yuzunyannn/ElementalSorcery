@@ -142,6 +142,9 @@ item.juiceConcentrate.name=ジュース濃縮剤
 item.dungeonKey.name=偽映のかぎ
 item.memoryFragment.name=記憶のかけら
 item.memoryFeather.name=記憶の羽
+item.dungeonSeed.name=偽映の種
+item.dungeonSeed.fin.name=偽映のエントリ
+item.dungeonStone.name=偽映の石
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -559,6 +562,10 @@ info.dungeon.memoryFeather.usage=地下牢の部屋で使用すると、1耐久�
 info.dungeon.rottenLifeLog=朽木でも、強い力が宿っている
 info.dungeon.actinicGlass=光エネルギーを持続的に吸収し、下方の作物を触媒できる装置
 info.need.magical.damage.attack=魔法攻撃が有効になるかもしれない
+info.dungeonSeed.open.new=種は入り口に成長し、地上に置いて、忘れられた町を呼び起こす
+info.dungeon.bad.place=ここの位置はあまりよくないようです、位置を変えてみましょう
+info.dungeonSeed.storage.hp=生息：%s
+info.dungeonSeed.storage.exp=経験：%s
 
 info.mc.archi.Temple.name=砂漠のピラミッド
 
@@ -963,6 +970,7 @@ page.arrogantSheep=傲慢なヒツジ
 page.arrogantSheep.ct=使用黄色羊毛作为信物，再加上大量的灵魂可以召唤出傲慢绵羊的迷宫（远离召唤点巨大的迷宫便会开始建造）。\n迷宫的由几乎无法被破坏的特殊金砖构成，一共分为两层，傲慢的绵羊便位于第二层。\n要战胜它，剪刀和绯红水晶是不可缺少的东西。\n从它身上获取到的傲慢的羊毛是一种十分贵重的材料，不仅如此，将它放到「元素平台」上会产生金锭，不过每产生一个金锭羊毛都有可能会消失。
 page.relicGuardReport=ガード研究報告
 page.relicGuardReport.ct=遗迹守卫似乎是过去制造的一种兵器，目的未知，每次释放技能都会消耗HP，当HP低于一定程度会成为损坏态，核心会变得十分不稳定，并发生爆炸，此时可以同通过冲击权杖将核心取出来，其核心决定着遗迹守卫的元素类型，并且可以登陆核心主人。\n至此精灵工匠分析核心制作出了遗迹轮盘，可以修复损坏的损坏态的遗迹守卫，可以标定为核心标定核心主人(拿着核心和轮盘右键)。
+page.relicGuardReport.ct.ext=遗迹守卫似乎是过去制造的一种兵器，目的未知，每次释放技能都会消耗HP，当HP低于一定程度会成为损坏态，核心会变得十分不稳定，并发生爆炸，此时可以同通过冲击权杖将核心取出来，其核心决定着遗迹守卫的元素类型，并且可以登陆核心主人。\n至此精灵工匠分析核心制作出了遗迹轮盘，可以修复损坏的损坏态的遗迹守卫，可以标定为核心标定核心主人(拿着核心和轮盘右键)。
 page.crafting.need=必要な元素：
 page.crafting.show=%sは %d点を必要、パワーの最低限度は%d 
 page.error=ページエラー
@@ -1255,3 +1263,12 @@ page.collapse=崩れ
 page.collapse.ct=崩解石碑爆炸后的产物，有着另物质塌陷的力量，但十分不稳定，会持续破坏周围方块。对生物似乎没有什么影响。
 page.collapseWand=崩れ権杖
 page.collapseWand.ct=将塌陷融合到魔爆权杖中，形成的塌陷权杖。可以将力量稳定有序的释放出来。表现是可以将世界中的方块直接分解成元素存入其中。
+
+page.dungeonEnter=偽映のエントリ
+page.dungeonEnter.ct=過去の記憶の断片を再現した巨大なダンジョンの入り口は、種子保持者の生命と経験の養分の中で形成されている。
+page.dungeonKey=偽映のかぎ
+page.dungeonKey.ct=地下牢で次の部屋への扉を開けるために必要なもの
+page.dungeonMemoryFragment=記憶のかけら
+page.dungeonMemoryFragment.ct=深層部屋への必要なもの、ダンジョンの部屋で見つけることができます。カラーのかけらはどんな部屋でも開くことができます（通常は自分で作る必要はありません。ダンジョンのかけらは自給自足です。手に入れたかけらをなくしてしまわない限り）。
+page.dungeonMemoryFeather=記憶を探す
+page.dungeonMemoryFeather.ct=部屋の中に隠された記憶が見つからないとき、この羽は良い助けになるかもしれない。

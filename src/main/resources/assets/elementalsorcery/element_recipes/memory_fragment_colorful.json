@@ -1,0 +1,26 @@
+{
+	"type": "elementalsorcery:craft",
+	"pattern": [
+		" F ",
+		"FSF",
+		" F "
+	],
+	"key": {
+		"S": "minecraft:nether_star",
+		"F": "elementalsorcery:fusion_crystal"
+	},
+	"element": [
+		{
+			"id": "knowledge",
+			"size": 20,
+			"power": 175
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:memory_fragment",
+		"count": 1,
+		"nbt": {
+			"cmeta": -1
+		}
+	}
+}

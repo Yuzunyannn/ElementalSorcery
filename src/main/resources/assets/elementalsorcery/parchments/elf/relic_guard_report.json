@@ -1,6 +1,18 @@
 {
-	"type": "elementalsorcery:parchment_research",
+	"type": "elementalsorcery:parchment_mult",
 	"lev": -1,
-	"name": "relicGuardReport",
-	"item": "elementalsorcery:relic_disc"
+	"lock": 0,
+	"pages": [
+		{
+			"type": "elementalsorcery:parchment_research",
+			"name": "relicGuardReport",
+			"item": "elementalsorcery:relic_disc"
+		},
+		{
+			"type": "normal",
+			"name": "relicGuardReport",
+			"differ": "ext"
+		}
+	]
+
 }

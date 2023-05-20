@@ -917,6 +917,11 @@
 			"en_US": "It seems that the Relic Guard is a weapon made in ancient. The purpose is unknown. Each time it spell a skill, HP will be consumed. When HP is lower than a certain level, it will become damaged, and the core will become very unstable and explode. At this time, the core can be taken out through the Shock Wand. The Core determines the element type of the Relic Guard and creature can login as master in The Core.\\nSo, the Elf craftsman has analyzed the core and made the Relic Wheel, which can repair the damaged Relic Guard, and can login in The Core ( hold core and wheel, right click).",
 			"ja_JP": "遗迹守卫似乎是过去制造的一种兵器，目的未知，每次释放技能都会消耗HP，当HP低于一定程度会成为损坏态，核心会变得十分不稳定，并发生爆炸，此时可以同通过冲击权杖将核心取出来，其核心决定着遗迹守卫的元素类型，并且可以登陆核心主人。\\n至此精灵工匠分析核心制作出了遗迹轮盘，可以修复损坏的损坏态的遗迹守卫，可以标定为核心标定核心主人(拿着核心和轮盘右键)。"
 		},
+		"page.relicGuardReport.ct.ext": {
+			"zh_CN": "核心似乎可以与召唤仪式发生共鸣，而产出未知的物品，有待进一步研究。",
+			"en_US": "The core seems to resonate with The Summon Rite and produce unknown items, which requires further research.",
+			"ja_JP": "遗迹守卫似乎是过去制造的一种兵器，目的未知，每次释放技能都会消耗HP，当HP低于一定程度会成为损坏态，核心会变得十分不稳定，并发生爆炸，此时可以同通过冲击权杖将核心取出来，其核心决定着遗迹守卫的元素类型，并且可以登陆核心主人。\\n至此精灵工匠分析核心制作出了遗迹轮盘，可以修复损坏的损坏态的遗迹守卫，可以标定为核心标定核心主人(拿着核心和轮盘右键)。"
+		},
 		"page.crafting.need": {
 			"zh_CN": "需要元素参与合成：",
 			"en_US": "Elements are required to craft: ",
@@ -1599,12 +1604,12 @@
 		},
 		"page.riteSummon": {
 			"zh_CN": "召唤仪式",
-			"en_US": "召唤仪式",
+			"en_US": "The Summon Rite",
 			"ja_JP": "召唤仪式"
 		},
 		"page.riteSummon.ct": {
 			"zh_CN": "召唤仪式，可以将灵魂与信物共鸣，从而召唤出各种东西。该仪式和映像仪式基本一样，不同点：一是桌面上需要摆放信物；二是需要使用「灵魂缠绕的木剑」并且会消耗灵魂。\\n如果灵魂不足或者没有信物的话召唤仪式就会变成普通的映像仪式。\\n此外召唤仪式必须使用3级及以上的仪式桌才能进行。\\n信物是什么？祭品研究手册上没准有一些标记。",
-			"en_US": "召唤仪式，可以将灵魂与信物共鸣，从而召唤出各种东西。该仪式和映像仪式基本一样，不同点：一是桌面上需要摆放信物；二是需要使用「灵魂缠绕的木剑」并且会消耗灵魂。\\n如果灵魂不足或者没有信物的话召唤仪式就会变成普通的映像仪式。\\n此外召唤仪式必须使用3级及以上的仪式桌才能进行。\\n信物是什么？祭品研究手册上没准有一些标记。",
+			"en_US": "The Summon Rite can resonate the soul with the Keepsake, thus summoning various things. This Rite is basically the same as the Print Rite, but with the following differences: One is the need to place Keepsake on the desktop; Secondly, it requires the use of The Wood Sword with Soul Entwined and will consume souls.\\nIf the souls is insufficient or there are no Keepsake, The Summon Rite will become a regular Print Rite.\\nIn addition, The Summon Rite must use a Ritual Table at level 3 or above.\\nWhat is the Keepsake? There may be some markings on the Rite Research Manual.",
 			"ja_JP": "召唤仪式，可以将灵魂与信物共鸣，从而召唤出各种东西。该仪式和映像仪式基本一样，不同点：一是桌面上需要摆放信物；二是需要使用「灵魂缠绕的木剑」并且会消耗灵魂。\\n如果灵魂不足或者没有信物的话召唤仪式就会变成普通的映像仪式。\\n此外召唤仪式必须使用3级及以上的仪式桌才能进行。\\n信物是什么？祭品研究手册上没准有一些标记。"
 		},
 		"page.manual": {
@@ -2376,6 +2381,48 @@
 			"zh_CN": "将塌陷融合到魔爆权杖中，形成的塌陷权杖。可以将力量稳定有序的释放出来。表现是可以将世界中的方块直接分解成元素存入其中。",
 			"en_US": "将塌陷融合到魔爆权杖中，形成的塌陷权杖。可以将力量稳定有序的释放出来。表现是可以将世界中的方块直接分解成元素存入其中。",
 			"ja_JP": "将塌陷融合到魔爆权杖中，形成的塌陷权杖。可以将力量稳定有序的释放出来。表现是可以将世界中的方块直接分解成元素存入其中。"
+		}
+	},
+	"page.dungeon": {
+		"page.dungeonEnter": {
+			"zh_CN": "虚映入口",
+			"en_US": "Virtual Sight Entrance",
+			"ja_JP": "偽映のエントリ"
+		},
+		"page.dungeonEnter.ct": {
+			"zh_CN": "将过去的记忆片段重现于世，巨大地牢的入口，在种子持有者的生命与经验的养分中形成。",
+			"en_US": "Reproducing fragments of past memories into the world, a huge Dungeon's Entrance formed in the nourishment of the seed holder's life and experience.",
+			"ja_JP": "過去の記憶の断片を再現した巨大なダンジョンの入り口は、種子保持者の生命と経験の養分の中で形成されている。"
+		},
+		"page.dungeonKey": {
+			"zh_CN": "虚映之钥",
+			"en_US": "Key of Virtual Sight",
+			"ja_JP": "偽映のかぎ"
+		},
+		"page.dungeonKey.ct": {
+			"zh_CN": "地牢中开启通往下一个房间的必要品",
+			"en_US": "Essential key for opening the the next room in Dungeon",
+			"ja_JP": "地下牢で次の部屋への扉を開けるために必要なもの"
+		},
+		"page.dungeonMemoryFragment": {
+			"zh_CN": "记忆碎片",
+			"en_US": "Memory Fragment",
+			"ja_JP": "記憶のかけら"
+		},
+		"page.dungeonMemoryFragment.ct": {
+			"zh_CN": "通往深层房间的必要物品，可在地牢的房间中找到。彩色的碎片可以开启任何的房间。（通常是不需要自己制作的，地牢中的碎片是自给自足的，除非你把已经到手的碎片给弄没了）",
+			"en_US": "Essential items leading to the Deep Room can be found in the dungeon room. Colorful fragments can open any room. (usually without the need to craft them yourself, the fragments in the dungeon are self-sufficient, unless you lost the fragments you got)",
+			"ja_JP": "深層部屋への必要なもの、ダンジョンの部屋で見つけることができます。カラーのかけらはどんな部屋でも開くことができます（通常は自分で作る必要はありません。ダンジョンのかけらは自給自足です。手に入れたかけらをなくしてしまわない限り）。"
+		},
+		"page.dungeonMemoryFeather": {
+			"zh_CN": "寻找记忆",
+			"en_US": "Looking for memory",
+			"ja_JP": "記憶を探す"
+		},
+		"page.dungeonMemoryFeather.ct": {
+			"zh_CN": "当找不到隐藏在房间中记忆时，或许这个羽毛是个好帮手。",
+			"en_US": "Perhaps this feather is a good helper when memories hidden in the room cannot be found.",
+			"ja_JP": "部屋の中に隠された記憶が見つからないとき、この羽は良い助けになるかもしれない。"
 		}
 	}
 }

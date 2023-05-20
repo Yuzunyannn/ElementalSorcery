@@ -699,6 +699,21 @@
             "zh_CN": "记忆之羽",
             "en_US": "Memory Feather",
             "ja_JP": "記憶の羽"
+        },
+        "item.dungeonSeed.name": {
+            "zh_CN": "虚映之种",
+            "en_US": "Seed of Virtual Sight",
+            "ja_JP": "偽映の種"
+        },
+        "item.dungeonSeed.fin.name": {
+            "zh_CN": "虚映入口",
+            "en_US": "Virtual Sight Entrance",
+            "ja_JP": "偽映のエントリ"
+        },
+        "item.dungeonStone.name":{
+            "zh_CN": "虚映之石",
+            "en_US": "Stone of Virtual Sight",
+            "ja_JP": "偽映の石"
         }
     },
     "tile": {

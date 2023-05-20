@@ -12,5 +12,11 @@
             ],
             "url": "./json_schema/game_func.json"
         }
-    ]
+    ],
+    "json.format.enable": true,
+    "editor.defaultFormatter": null,
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "json.format.keepLines": true
 }

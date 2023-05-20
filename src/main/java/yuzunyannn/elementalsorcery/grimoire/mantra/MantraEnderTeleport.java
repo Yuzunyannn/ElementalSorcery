@@ -5,6 +5,7 @@ import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumParticleTypes;
@@ -27,8 +28,10 @@ import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportFrom;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportTo;
+import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAtBlock;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectPlayerAt;
+import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.world.CasterHelper;
 
@@ -149,6 +152,11 @@ public class MantraEnderTeleport extends MantraTypeAccumulative {
 		effectPlayAt.pos = findFoothold(world, caster, needSuper);
 	}
 
+	public static void doEnderTeleportWithDrown(World world, Entity target, Vec3d pos) {
+		doEnderTeleport(world, target, pos);
+		if (target.isWet()) target.attackEntityFrom(DamageSource.DROWN, 1.0F);
+	}
+
 	@SideOnly(Side.CLIENT)
 	static public void addEffect(World world, Vec3d vec) {
 		for (int i = 0; i < 32; ++i) {
@@ -158,16 +166,32 @@ public class MantraEnderTeleport extends MantraTypeAccumulative {
 		world.playSound(vec.x, vec.y, vec.z, SoundEvents.ENTITY_ENDERMEN_TELEPORT, SoundCategory.HOSTILE, 1, 1, true);
 	}
 
-	public static void doEnderTeleportWithDrown(World world, Entity target, Vec3d pos) {
-		doEnderTeleport(world, target, pos);
-		if (target.isWet()) target.attackEntityFrom(DamageSource.DROWN, 1.0F);
+	@SideOnly(Side.CLIENT)
+	public static void doEffect(World world, Vec3d from, Vec3d to) {
+		addEffect(world, from);
+		addEffect(world, to);
+	}
+
+	@SideOnly(Side.CLIENT)
+	public static void doEffect(World world, Vec3d pos, NBTTagCompound nbt) {
+		doEffect(world, pos, NBTHelper.getVec3d(nbt, "to"));
+	}
+
+	public static void playEnderTeleportEffect(World world, Entity target, Vec3d pos) {
+		if (world.isRemote) {
+			// 客户端的粒子效果
+			doEffect(world, pos, new Vec3d(target.posX, target.posY, target.posZ));
+			return;
+		}
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setByte("type", (byte) 6);
+		NBTHelper.setVec3d(nbt, "to", new Vec3d(target.posX, target.posY, target.posZ));
+		Effects.spawnEffect(world, Effects.PARTICLE_EFFECT, pos, nbt);
 	}
 
 	public static void doEnderTeleport(World world, Entity target, Vec3d pos) {
 		if (world.isRemote) {
-			// 客户端的粒子效果
-			addEffect(world, pos);
-			addEffect(world, new Vec3d(target.posX, target.posY, target.posZ));
+			playEnderTeleportEffect(world, target, pos);
 			return;
 		}
 		if (target instanceof EntityPlayerMP) {

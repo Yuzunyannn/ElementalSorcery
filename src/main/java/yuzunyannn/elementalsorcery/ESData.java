@@ -11,6 +11,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 public class ESData {
 
+	public static final long PLAYER_FLAG_DUNGEON_PAGE = 0x01;
+
 	public static final String PLAYER_RESEARCHABLE = "cResearch";
 
 	private File file;
@@ -39,6 +41,18 @@ public class ESData {
 		NBTTagCompound nbt = new NBTTagCompound();
 		data.setTag("ESData", nbt);
 		return nbt;
+	}
+
+	public static boolean getPlayerFlag(EntityLivingBase player, long flag) {
+		NBTTagCompound data = getPlayerNBT(player);
+		return (data.getLong("flag") & flag) != 0;
+	}
+
+	public static void setPlayerFlag(EntityLivingBase player, long flag, boolean open) {
+		NBTTagCompound data = getPlayerNBT(player);
+		long _flag = data.getLong("flag");
+		if (open) data.setLong("flag", _flag | flag);
+		else data.setLong("flag", _flag & ~flag);
 	}
 
 	/** 记录ES玩家动态数据 */

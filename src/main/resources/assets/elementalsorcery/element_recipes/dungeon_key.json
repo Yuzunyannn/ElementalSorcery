@@ -1,0 +1,23 @@
+{
+	"type": "elementalsorcery:craft",
+	"pattern": [
+		"  D",
+		"DD ",
+		"SD "
+	],
+	"key": {
+		"D": "elementalsorcery:dungeon_stone",
+		"S": "elementalsorcery:relic_gem"
+	},
+	"element": [
+		{
+			"id": "knowledge",
+			"size": 3,
+			"power": 25
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:dungeon_key",
+		"count": 1
+	}
+}

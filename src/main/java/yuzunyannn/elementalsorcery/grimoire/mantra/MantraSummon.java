@@ -43,6 +43,7 @@ public class MantraSummon extends MantraCommon {
 		data.power = 100;
 		data.pos = pos;
 		data.summon = data.summonRecipe.createSummon(data.keepsake, data.world, data.pos);
+		if (summoner != null) data.summon.initSummoner(summoner);
 		grimoire.setPosition(data.pos.getX(), data.pos.getY(), data.pos.getZ());
 		world.spawnEntity(grimoire);
 	}

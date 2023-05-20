@@ -6,9 +6,11 @@ import java.util.UUID;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializer;
+import net.minecraft.network.play.server.SPacketSetExperience;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -114,4 +116,27 @@ public class EntityHelper {
 		} else return new Vec3d(entity.motionX, entity.motionY, entity.motionZ);
 	}
 
+	public static float dropExperience(EntityPlayer player, float count) {
+		if (count <= 0) return 0;
+		if (player.experienceLevel <= 0) return count;
+
+		while (count > 0) {
+			if (player.experience <= 0) {
+				if (player.experienceLevel <= 1) break;
+				player.experienceLevel = player.experienceLevel - 1;
+				player.experience = 1;
+			}
+			int xpBarCap = player.xpBarCap();
+			float drop = Math.min(player.experience, count / xpBarCap);
+			player.experience -= drop;
+			count = count - drop * xpBarCap;
+		}
+
+		return count;
+	}
+
+	public static void sendExperienceChange(EntityPlayerMP player) {
+		player.connection.sendPacket(
+				new SPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
+	}
 }

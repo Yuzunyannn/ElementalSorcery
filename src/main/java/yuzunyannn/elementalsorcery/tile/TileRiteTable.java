@@ -209,7 +209,7 @@ public class TileRiteTable extends TileEntityNetwork {
 			ItemSoulWoodSword.addSoul(tool, -cost);
 			MantraSummon.summon(world, pos.down(), entity, specialItem.copy(), summonRecipe);
 			ItemHelper.clear(inventory);
-			Block.spawnAsEntity(world, pos.up(), specialItem);
+			if (summonRecipe.isDropKeepsake()) Block.spawnAsEntity(world, pos.up(), specialItem);
 			this.updateToClient();
 			this.markDirty();
 			NBTTagCompound nbt = FireworkEffect.fastNBT(0, 3, 0.1f, new int[] { 0x3ad2f2, 0x7ef5ff },
@@ -655,7 +655,8 @@ public class TileRiteTable extends TileEntityNetwork {
 			return 1;
 		});
 		addRecipe(new ItemStack(ESObjects.ITEMS.ELF_COIN), new ItemStack(ESObjects.ITEMS.ELF_PURSE), 120, 0);
-		addRecipe(new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, 1), new ItemStack(ESObjects.ITEMS.UNSCRAMBLE_NOTE), 120, 2);
+		addRecipe(new ItemStack(ESObjects.ITEMS.ANCIENT_PAPER, 1, 1), new ItemStack(ESObjects.ITEMS.UNSCRAMBLE_NOTE),
+				120, 2);
 		addRecipe(new ItemStack(Blocks.RAIL), new ItemStack(Items.MINECART), 80, 0);
 	}
 }

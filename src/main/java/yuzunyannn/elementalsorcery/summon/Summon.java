@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.summon;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -16,6 +17,10 @@ public class Summon implements INBTSerializable<NBTTagCompound> {
 	public Summon(World world, BlockPos pos) {
 		this.world = world;
 		this.pos = pos;
+	}
+
+	public void initSummoner(EntityLivingBase summoner) {
+
 	}
 
 	/**

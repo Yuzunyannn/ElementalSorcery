@@ -1,6 +1,6 @@
 {
     "parent": "item/generated",
     "textures": {
-        "layer0": "elementalsorcery:items/dungeon_key"
+        "layer0": "elementalsorcery:items/dungeon/dungeon_key"
     }
 }

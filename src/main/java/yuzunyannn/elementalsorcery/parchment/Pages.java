@@ -32,6 +32,7 @@ public class Pages {
 
 	public static final int PAGE_LEVEL_NONE = -1;
 	public static final int PAGE_LEVEL_ELF = -2;
+	public static final int PAGE_LEVEL_DUNGEON = -3;
 
 	/** 记录所有的page */
 	static final Map<String, Page> pages = new HashMap<>();

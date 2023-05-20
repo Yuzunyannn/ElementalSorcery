@@ -877,6 +877,26 @@
             "zh_CN": "或许魔法攻击可以生效",
             "en_US": "Perhaps magic attacks can take effect",
             "ja_JP": "魔法攻撃が有効になるかもしれない"
+        },
+        "info.dungeonSeed.open.new": {
+            "zh_CN": "种子已成长成入口，放到地上唤起被遗忘的城镇",
+            "en_US": "The seed has grown into an Entrance, placed on the ground to awaken the forgotten Dungeon",
+            "ja_JP": "種は入り口に成長し、地上に置いて、忘れられた町を呼び起こす"
+        },
+        "info.dungeon.bad.place": {
+            "zh_CN": "这里的位置好像不太好，换个位置试试吧",
+            "en_US": "The location here doesn't seem very good. Let's try a different one",
+            "ja_JP": "ここの位置はあまりよくないようです、位置を変えてみましょう"
+        },
+        "info.dungeonSeed.storage.hp": {
+            "zh_CN": "生息：%s",
+            "en_US": "live: %s",
+            "ja_JP": "生息：%s"
+        },
+        "info.dungeonSeed.storage.exp": {
+            "zh_CN": "阅历：%s",
+            "en_US": "experience: %s",
+            "ja_JP": "経験：%s"
         }
     },
     "info.mc": {
