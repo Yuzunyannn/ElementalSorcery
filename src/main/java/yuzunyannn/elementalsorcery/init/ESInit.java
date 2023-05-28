@@ -295,6 +295,7 @@ import yuzunyannn.elementalsorcery.item.tool.ItemRedHandset;
 import yuzunyannn.elementalsorcery.item.tool.ItemRelicDisc;
 import yuzunyannn.elementalsorcery.item.tool.ItemRockCamera;
 import yuzunyannn.elementalsorcery.item.tool.ItemShockWand;
+import yuzunyannn.elementalsorcery.item.tool.ItemSimpleMaterialContainer;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulKillerSword;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.item.tool.ItemStarBell;
@@ -691,6 +692,7 @@ public class ESInit {
 		ESObjects.ITEMS.MEMORY_FEATHER = new ItemMemoryFeather();
 		ESObjects.ITEMS.DUNGEON_SEED = new ItemDungeonSeed();
 		ESObjects.ITEMS.DUNGEON_STONE = new ItemDungeonStone();
+		ESObjects.ITEMS.SIMPLE_MATERIAL_CONTAINER = new ItemSimpleMaterialContainer();
 
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1208,6 +1210,7 @@ public class ESInit {
 		for (int i = 0; i <= ItemDungeonSeed.SEED_MAX_LEVEL; i++)
 			registerRender(ITEMS.DUNGEON_SEED, i, "dungeon_seed/lv" + i);
 		registerRender(ITEMS.DUNGEON_STONE);
+		registerRender(ITEMS.SIMPLE_MATERIAL_CONTAINER);
 
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");

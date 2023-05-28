@@ -170,7 +170,10 @@ public class SummonDungeonRoom extends SummonCommon {
 
 		if (!BlockHelper.isBedrock(world, pos)) {
 			if (isCreativeBuild) world.setBlockToAir(pos);
-			else world.destroyBlock(pos, true);
+			else {
+				if (BlockHelper.isOrdinaryBlock(world, pos)) world.setBlockToAir(pos);
+				else world.destroyBlock(pos, true);
+			}
 		}
 
 		return IS_INSTANT_COMPLETE ? true : Math.random() > 0.2;

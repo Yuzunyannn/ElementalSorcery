@@ -158,6 +158,7 @@ public class ItemDungeonSeed extends Item {
 		int meta = stack.getMetadata();
 		if (meta == SEED_MAX_LEVEL) {
 			tooltip.add(TextFormatting.BLUE + I18n.format("info.dungeonSeed.open.new"));
+			tooltip.add(TextFormatting.RED + I18n.format("info.dungeonSeed.open.so.large"));
 			return;
 		} else {
 			NBTTagCompound seedData = stack.getOrCreateSubCompound("_dSeed");

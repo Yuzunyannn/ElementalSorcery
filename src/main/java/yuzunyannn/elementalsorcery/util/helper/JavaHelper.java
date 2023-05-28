@@ -1,7 +1,9 @@
 package yuzunyannn.elementalsorcery.util.helper;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import yuzunyannn.elementalsorcery.util.math.MathSupporter;
 
 public class JavaHelper {
@@ -16,6 +18,14 @@ public class JavaHelper {
 		int i = MathSupporter.binarySearch(list, (s) -> (double) s.compareTo(obj));
 		if (i < 0) i = -i - 1;
 		list.add(i, obj);
+	}
+
+	public static Object getFieldValue(Object obj, String fieldName) {
+		try {
+			Field field = ObfuscationReflectionHelper.findField(obj.getClass(), fieldName);
+			return field.get(obj);
+		} catch (Exception e) {}
+		return null;
 	}
 
 //

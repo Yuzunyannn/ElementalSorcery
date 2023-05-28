@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 
 @SideOnly(Side.CLIENT)
 public abstract class GuiNormal<T extends Container> extends GuiContainer {
@@ -64,7 +65,9 @@ public abstract class GuiNormal<T extends Container> extends GuiContainer {
 		this.zLevel = 100.0F;
 		this.itemRender.zLevel = 100.0F;
 		String s = null;
-		if (stack.getCount() > 1) {
+		if (stack.getCount() > 64) {
+			s = TextFormatting.WHITE.toString() + TextHelper.toAbbreviatedNumber(stack.getCount(), 0);
+		} else if (stack.getCount() > 1) {
 			s = TextFormatting.WHITE.toString() + stack.getCount();
 		}
 		this.itemRender.renderItemAndEffectIntoGUI(this.mc.player, stack, x, y);

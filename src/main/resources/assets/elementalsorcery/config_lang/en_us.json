@@ -21,6 +21,9 @@
     "global.elf.play_can_attack_elf": "Players can attack elves [closing will cause some gameplay to become invalid]",
     "global.elf.player_is_good_boy": "Players are not allowed to take Goods from elves, so they will not be in debt",
 
+    "global.merchant.ancient_paper_merchant_price_factor": "Ancient Paper merchant price factor",
+    "global.merchant.juice_merchant_price_factor": "Juice merchant price factor",
+
     "item.elementalsorcery_manual.manual_max_pages": "Capacity limit of Manual",
     "item.elementalsorcery_rite_manual.max_record": "Record limt of Rite Manual",
     "item.elementalsorcery_magic_blast_wand.magic_blast_one_damage_per_count": "Basic damage of magic blast, need [n] magic for 1 damage ",
@@ -62,6 +65,7 @@
     "tile.elementalsorcery_elementreactor.max_ifratio_of_upper_power_line": "When iF / Capacity Of iF > This Value, power are not grow",
     "tile.elementalsorcery_elementreactor.iftransmission_count_exponential_relative_power_line": "iF transmission rate coefficient's exponential  (Power Line / 10.0 + 1) ^ This Value",    
     "tile.elementalsorcery_elementreactor.working_cost_magic_fragment_coefficient": "magic fragment's coefficient in working, This Value * Power Line",
+    "tile.elementalsorcery_elementreactor.crack_destory_rage": "The radius of destroy when Element Cracks appear",
 
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "The worlds can spawn [Invalid for Entity]",
     "spawn_and_gen.world_gen_and_spawn_config.biomes": "The biomes can spawn",

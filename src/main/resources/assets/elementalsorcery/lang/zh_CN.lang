@@ -145,6 +145,7 @@ item.memoryFeather.name=记忆之羽
 item.dungeonSeed.name=虚映之种
 item.dungeonSeed.fin.name=虚映入口
 item.dungeonStone.name=虚映之石
+item.simpleMaterialContainer.name=虚空方锥
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -550,6 +551,7 @@ info.elf.diamond=非常昂贵的钻石，除此之外没有啥其他价值，精
 info.my.master=主人：%s
 info.relic.bind.master=设置了主人为：%s
 info.concentration=浓度：%s
+info.simpleMaterialContainer=虽然和虚空容器似乎不太一样，但这个肯定是虚空制品，似乎可以近乎无限的存储基础材料，而且可以稳定的存储，这是怎么做到的呢？\n(shit右键打开GUI)
 
 info.dungeon.build.exception=地牢建造异常！可以向作者报告这个BUG
 info.dungeon.build.too.close=两个地牢建造过近
@@ -563,6 +565,7 @@ info.dungeon.rottenLifeLog=哪怕是朽木，依然蕴含着强大的力量
 info.dungeon.actinicGlass=可以持续吸收光能，催化下方作物的装置
 info.need.magical.damage.attack=或许魔法攻击可以生效
 info.dungeonSeed.open.new=种子已成长成入口，放到地上唤起被遗忘的城镇
+info.dungeonSeed.open.so.large=*地牢的占地面积很大，请选选择远离居住区的大块空地进行启动
 info.dungeon.bad.place=这里的位置好像不太好，换个位置试试吧
 info.dungeonSeed.storage.hp=生息：%s
 info.dungeonSeed.storage.exp=阅历：%s

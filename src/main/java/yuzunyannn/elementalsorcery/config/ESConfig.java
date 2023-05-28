@@ -1,7 +1,7 @@
 package yuzunyannn.elementalsorcery.config;
 
 import java.lang.reflect.Field;
-import java.util.List;
+import java.util.Collection;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.registries.IForgeRegistryEntry;
@@ -13,6 +13,7 @@ import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
+import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.init.EntityRegistries;
@@ -61,6 +62,7 @@ public class ESConfig {
 		load(ElementInventory.class, getter);
 		load(Researcher.class, getter);
 		load(ElfProfession.class, getter);
+		loadList(ElfMerchantType.typeList(), getter);
 		loadList(ESInit.ES_TILE_ENTITY, getter);
 		loadRegs(ESObjects.ITEMS, getter);
 		loadRegs(ESObjects.BLOCKS, getter);
@@ -72,7 +74,7 @@ public class ESConfig {
 		ConfigLoader.instance.load(obj, getter, isSync);
 	}
 
-	private static void loadList(List<?> list, IConfigGetter getter) {
+	private static void loadList(Collection<?> list, IConfigGetter getter) {
 		for (Object obj : list) load(obj, getter);
 	}
 

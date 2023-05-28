@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.tile.ir;
 
+import javax.annotation.Nullable;
+
 import ic2.api.energy.tile.IEnergyAcceptor;
 import ic2.api.energy.tile.IEnergyEmitter;
 import ic2.api.energy.tile.IEnergySink;
@@ -254,6 +256,7 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 		if (CapabilityEnergy.ENERGY.equals(capability)) {
+			if (facing == null) return true;
 			FaceStatus fs = getFaceStatus(facing);
 			if (fs == FaceStatus.NONE) return false;
 			TileIceRockStand core = getIceRockCore();
@@ -266,6 +269,7 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (CapabilityEnergy.ENERGY.equals(capability)) {
+			if (facing == null) return (T) new EnergyStorage(null);
 			FaceStatus fs = getFaceStatus(facing);
 			if (fs == FaceStatus.NONE) return null;
 			TileIceRockStand core = getIceRockCore();
@@ -277,16 +281,16 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 
 	protected class EnergyStorage implements IEnergyStorage {
 
+		@Nullable
 		public final EnumFacing facing;
 
-		public EnergyStorage(EnumFacing facing) {
+		public EnergyStorage(@Nullable EnumFacing facing) {
 			this.facing = facing;
 		}
 
 		@Override
 		public int receiveEnergy(int maxReceive, boolean simulate) {
-			FaceStatus fs = getFaceStatus(facing);
-			if (fs != FaceStatus.IN) return 0;
+			if (!isFaceCanReceive()) return 0;
 			TileIceRockStand core = getIceRockCore();
 			if (core == null) return 0;
 			double realFragment = maxReceive * FRAGMENT_RF;
@@ -299,8 +303,7 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 
 		@Override
 		public int extractEnergy(int maxExtract, boolean simulate) {
-			FaceStatus fs = getFaceStatus(facing);
-			if (fs != FaceStatus.OUT) return 0;
+			if (!isFaceCanExtract()) return 0;
 			TileIceRockStand core = getIceRockCore();
 			if (core == null) return 0;
 			double getFragment = core.extractMagicFragment(maxExtract * FRAGMENT_RF, simulate);
@@ -325,8 +328,7 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 
 		@Override
 		public boolean canExtract() {
-			FaceStatus fs = getFaceStatus(facing);
-			if (fs != FaceStatus.OUT) return false;
+			if (!isFaceCanExtract()) return false;
 			TileIceRockStand core = getIceRockCore();
 			if (core == null) return false;
 			return true;
@@ -334,10 +336,23 @@ public abstract class TileIceRockEnergy extends TileIceRockSendRecv
 
 		@Override
 		public boolean canReceive() {
-			FaceStatus fs = getFaceStatus(facing);
-			if (fs != FaceStatus.IN) return false;
+			if (!isFaceCanReceive()) return false;
 			TileIceRockStand core = getIceRockCore();
 			if (core == null) return false;
+			return true;
+		}
+
+		protected boolean isFaceCanExtract() {
+			if (facing == null) return true;
+			FaceStatus fs = getFaceStatus(facing);
+			if (fs != FaceStatus.OUT) return false;
+			return true;
+		}
+
+		protected boolean isFaceCanReceive() {
+			if (facing == null) return true;
+			FaceStatus fs = getFaceStatus(facing);
+			if (fs != FaceStatus.IN) return false;
 			return true;
 		}
 

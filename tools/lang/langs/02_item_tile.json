@@ -714,6 +714,11 @@
             "zh_CN": "虚映之石",
             "en_US": "Stone of Virtual Sight",
             "ja_JP": "偽映の石"
+        },
+        "item.simpleMaterialContainer.name": {
+            "zh_CN": "虚空方锥",
+            "en_US": "Void Cone",
+            "ja_JP": "虚空のかくすい"
         }
     },
     "tile": {

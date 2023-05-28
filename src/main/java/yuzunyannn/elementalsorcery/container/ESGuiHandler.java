@@ -32,6 +32,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiQuest;
 import yuzunyannn.elementalsorcery.container.gui.GuiResearch;
 import yuzunyannn.elementalsorcery.container.gui.GuiRiteManual;
 import yuzunyannn.elementalsorcery.container.gui.GuiSimple;
+import yuzunyannn.elementalsorcery.container.gui.GuiSimpleMaterialContainer;
 import yuzunyannn.elementalsorcery.container.gui.GuiSmeltBox;
 import yuzunyannn.elementalsorcery.container.gui.GuiSupremeTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiTranscribeInjection;
@@ -82,6 +83,8 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_ELF_TRADE = 41;
 	public static final int GUI_ELF_SEND_PARCEL = 42;
 	public static final int GUI_ELF_APPLY_ADDRESS_PLATE = 43;
+
+	public static final int GUI_SIMPLE_MATERIAL_CONTAINER = 50;
 
 	// 切换只有客户端存在
 	public static final int GUI_MANTRA_SHITF = 60;
@@ -158,6 +161,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new ContainerElfSendParcel(player);
 			case GUI_ELF_APPLY_ADDRESS_PLATE:
 				return new ContainerElfApplyAddressPlate(player);
+			case GUI_SIMPLE_MATERIAL_CONTAINER:
+				return new ContainerSimpleMaterialContainer(player);
 			default:
 				return null;
 			}
@@ -245,6 +250,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiMantraShitf(player);
 			case GUI_ELF_TREE_ELEVATOR:
 				return new GuiElfTreeElevator(player, new BlockPos(x, y, z));
+			case GUI_SIMPLE_MATERIAL_CONTAINER:
+				return new GuiSimpleMaterialContainer(player);
 			default:
 				return null;
 			}

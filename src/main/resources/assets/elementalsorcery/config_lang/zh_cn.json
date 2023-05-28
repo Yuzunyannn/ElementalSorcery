@@ -21,6 +21,9 @@
     "global.elf.play_can_attack_elf": "玩家可以攻击精灵[关闭后会导致部分玩法失效]",
     "global.elf.player_is_good_boy": "玩家不可以拿取精灵的东西，因此不会负债",
 
+    "global.merchant.ancient_paper_merchant_price_factor": "古卷商人价格因数",
+    "global.merchant.juice_merchant_price_factor": "果汁商人价格因数",
+
     "item.elementalsorcery_manual.manual_max_pages": "元素手册页数上限",
     "item.elementalsorcery_rite_manual.max_record": "祭品研究手册可以记录的最大个数",
     "item.elementalsorcery_magic_blast_wand.magic_blast_one_damage_per_count": "魔力爆炸的基础伤害，每n点魔力为1点伤害",
@@ -62,6 +65,7 @@
     "tile.elementalsorcery_elementreactor.max_ifratio_of_upper_power_line": "不稳定片元/不稳定片元总容量>该值时能量不会上涨",
     "tile.elementalsorcery_elementreactor.iftransmission_count_exponential_relative_power_line": "片元传输率系数的指数(能连线 / 10.0 + 1)^该值",
     "tile.elementalsorcery_elementreactor.working_cost_magic_fragment_coefficient": "工作需要的魔力片元系数，该值*能量线",
+    "tile.elementalsorcery_elementreactor.crack_destory_rage": "元素裂痕出现时的破坏半径",
 
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "[会生成的世界][对生物类型无效]",
     "spawn_and_gen.world_gen_and_spawn_config.biomes": "[会生成的生物群系]",

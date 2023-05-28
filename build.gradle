@@ -123,6 +123,13 @@ task deobfJar(type: Jar) {
     archiveName = "${baseName}-${version}-deobf.${extension}"
 }
 
+task apiJar(type: Jar) {
+    classifier = 'api'
+    from(sourceSets.main.output)
+    from(sourceSets.main.java)
+    include 'yuzunyannn/elementalsorcery/api/**'
+}
+
 task srcJar(type: Jar) {
     from(sourceSets.main.java)
     classifier = 'sources'
@@ -130,5 +137,5 @@ task srcJar(type: Jar) {
 }
 
 artifacts {
-    archives deobfJar, srcJar
+    archives deobfJar, srcJar , apiJar
 }

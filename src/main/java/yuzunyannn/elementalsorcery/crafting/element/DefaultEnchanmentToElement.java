@@ -26,7 +26,7 @@ public class DefaultEnchanmentToElement implements IToElement {
 
 		ElementStack knowledge = new ElementStack(ESObjects.ELEMENTS.KNOWLEDGE, 0, 50);
 		ElementStack magic = new ElementStack(ESObjects.ELEMENTS.MAGIC, 0, 20);
-		float complex = 1;
+		float complex = 2;
 		int treasure = 0;
 		for (NBTBase base : list) {
 			NBTTagCompound data = (NBTTagCompound) base;
@@ -75,7 +75,7 @@ public class DefaultEnchanmentToElement implements IToElement {
 		nbt.removeTag("StoredEnchantments");
 		nbt.removeTag("ench");
 
-		return ToElementInfoStatic.create(MathHelper.ceil(complex), remain, knowledge, magic);
+		return ToElementInfoStatic.create(MathHelper.ceil(complex + 1), remain, knowledge, magic);
 	}
 
 }

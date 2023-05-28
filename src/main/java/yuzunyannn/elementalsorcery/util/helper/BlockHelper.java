@@ -3,8 +3,10 @@ package yuzunyannn.elementalsorcery.util.helper;
 import java.util.function.BiFunction;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -17,6 +19,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.util.FakePlayer;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
@@ -242,6 +245,27 @@ public class BlockHelper {
 		float h = state.getBlockHardness(world, pos);
 		if (h < 0) return false;
 		return h < n;
+	}
+
+	public static boolean isOrdinaryBlock(World world, BlockPos pos) {
+		IBlockState blockState = world.getBlockState(pos);
+		Block block = blockState.getBlock();
+		if (block instanceof ITileEntityProvider) return false;
+		try {
+			Biome biome = world.getBiome(pos);
+			if (biome.topBlock.getBlock() == block) return true;
+			if (biome.fillerBlock.getBlock() == block) return true;
+			if (Blocks.STONE == block) return true;
+			if (Blocks.COBBLESTONE == block) return true;
+			if (Blocks.SAND == block) return true;
+			if (Blocks.SANDSTONE == block) return true;
+			if (Blocks.DIRT == block) return true;
+			if (Blocks.GRASS == block) return true;
+			if (Blocks.GRAVEL == block) return true;
+			if (Blocks.NETHERRACK == block) return true;
+			if (Blocks.NETHER_BRICK == block) return true;
+		} catch (Exception e) {}
+		return false;
 	}
 
 }

@@ -820,6 +820,11 @@
             "zh_CN": "浓度：%s",
             "en_US": "Concentration: %s",
             "ja_JP": "濃度：%s"
+        },
+        "info.simpleMaterialContainer": {
+            "zh_CN": "虽然和虚空容器似乎不太一样，但这个肯定是虚空制品，似乎可以近乎无限的存储基础材料，而且可以稳定的存储，这是怎么做到的呢？\\n(shit右键打开GUI)",
+            "en_US": "Although it may seem different from a Void Container, this is definitely a Void product that can store basic materials almost infinitely and stably. How is this achieved?\\n(Shit + Right click to open GUI)",
+            "ja_JP": "虚空のコンテナとは違うようだが、これは虚空製品に違いない。無限に近い基礎材料を保存でき、安定的に保存できるように見えるが、これはどうやってできたのだろうか。\\n(shitと右クリックでGUIを開く)"
         }
     },
     "info.dungeon": {
@@ -882,6 +887,11 @@
             "zh_CN": "种子已成长成入口，放到地上唤起被遗忘的城镇",
             "en_US": "The seed has grown into an Entrance, placed on the ground to awaken the forgotten Dungeon",
             "ja_JP": "種は入り口に成長し、地上に置いて、忘れられた町を呼び起こす"
+        },
+        "info.dungeonSeed.open.so.large": {
+            "zh_CN": "*地牢的占地面积很大，请选选择远离居住区的大块空地进行启动",
+            "en_US": "*The dungeon covers a large area, please choose a large open space far from the residential area to awaken",
+            "ja_JP": "*ダンジョンの敷地面積は広いので、居住区から離れた大きな空き地を選んで起動してください"
         },
         "info.dungeon.bad.place": {
             "zh_CN": "这里的位置好像不太好，换个位置试试吧",

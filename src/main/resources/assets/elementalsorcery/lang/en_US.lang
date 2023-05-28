@@ -145,6 +145,7 @@ item.memoryFeather.name=Memory Feather
 item.dungeonSeed.name=Seed of Virtual Sight
 item.dungeonSeed.fin.name=Virtual Sight Entrance
 item.dungeonStone.name=Stone of Virtual Sight
+item.simpleMaterialContainer.name=Void Cone
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -550,6 +551,7 @@ info.elf.diamond=A very expensive diamond has no other value. Elves love it very
 info.my.master=Master: %s
 info.relic.bind.master=The master is set as: %s
 info.concentration=Concentration: %s
+info.simpleMaterialContainer=Although it may seem different from a Void Container, this is definitely a Void product that can store basic materials almost infinitely and stably. How is this achieved?\n(Shit + Right click to open GUI)
 
 info.dungeon.build.exception=An exception exception when building Dungeon! Please report this bug to the author.
 info.dungeon.build.too.close=Two dungeons built too close.
@@ -563,6 +565,7 @@ info.dungeon.rottenLifeLog=Even rotten wood still contains powerful force
 info.dungeon.actinicGlass=A device that can continuously absorb light energy and catalyze crops below
 info.need.magical.damage.attack=Perhaps magic attacks can take effect
 info.dungeonSeed.open.new=The seed has grown into an Entrance, placed on the ground to awaken the forgotten Dungeon
+info.dungeonSeed.open.so.large=*The dungeon covers a large area, please choose a large open space far from the residential area to awaken
 info.dungeon.bad.place=The location here doesn't seem very good. Let's try a different one
 info.dungeonSeed.storage.hp=live: %s
 info.dungeonSeed.storage.exp=experience: %s

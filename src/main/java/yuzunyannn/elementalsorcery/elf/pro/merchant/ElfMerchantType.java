@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.elf.pro.merchant;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -28,6 +29,10 @@ public class ElfMerchantType {
 	static public void register(String registryName, ElfMerchantType type) {
 		map.put(type.registryName = registryName, type);
 		keyArray = null;
+	}
+
+	static public Collection<ElfMerchantType> typeList() {
+		return map.values();
 	}
 
 	static {

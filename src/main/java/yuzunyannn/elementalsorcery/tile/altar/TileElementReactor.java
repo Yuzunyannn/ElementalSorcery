@@ -93,6 +93,10 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	@Config()
 	static public double WORKING_COST_MAGIC_FRAGMENT_COEFFICIENT = 64;
 
+	/** 裂缝张开的半径 */
+	@Config()
+	static public int CRACK_DESTORY_RAGE = 48;
+
 	protected ReactorStatus status = ReactorStatus.OFF;
 	protected ElementTransitionReactor core = new ElementTransitionReactor(this);
 	protected int runTick = 0;
@@ -493,7 +497,8 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 	/** 不稳定片元的每次的最大传输率，因为可以放置4个塔，所以实际最快是单个的4倍 */
 	public double getInstableFragmentMaxTransmissionCount() {
 		double capacity = getInstableFragmentCapacity();
-		return capacity / 240 * Math.pow(powerLevelLine / 10.0 + 1, IFTRANSMISSION_COUNT_EXPONENTIAL_RELATIVE_POWER_LINE);
+		return capacity / 240
+				* Math.pow(powerLevelLine / 10.0 + 1, IFTRANSMISSION_COUNT_EXPONENTIAL_RELATIVE_POWER_LINE);
 	}
 
 	// 接受片元，抵消不稳定片元，重新变成当前元素的元素片元，并提升稳定度
@@ -692,7 +697,8 @@ public class TileElementReactor extends TileStaticMultiBlock implements ITickabl
 		ReactorStatus status = getStatus();
 		if (!status.isRunning) return;
 		if (openCrackMark) {
-			MantraCrackOpen.attack(world, pos, 64, breaker, 0, true);
+			int range = Math.max(CRACK_DESTORY_RAGE, 8);
+			MantraCrackOpen.attack(world, pos, range, breaker, 0, true);
 			return;
 		}
 		setInstableRatio(getInstableRatio() * 0.5);

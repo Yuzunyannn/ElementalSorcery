@@ -12,12 +12,17 @@ import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.element.IElemetJuice;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.world.Juice;
 
 public class ElfMerchantTypeJuice extends ElfMerchantTypeDefault {
+
+	@Config(group = "merchant")
+	@Config.NumberRange(min = 0, max = Float.MAX_VALUE)
+	public static float JUICE_MERCHANT_PRICE_FACTOR = 1;
 
 	@Override
 	public void renewTrade(World world, BlockPos pos, Random rand, VariableSet storage) {
@@ -42,7 +47,9 @@ public class ElfMerchantTypeJuice extends ElfMerchantTypeDefault {
 				eInv.saveState(cup);
 			}
 
-			addACommodity(trade, cup, ElfChamberOfCommerce.priceIt(cup), 2 + rand.nextInt(3), -1);
+			int price = ElfChamberOfCommerce.priceIt(cup);
+			price = Math.max(1, (int) (price * JUICE_MERCHANT_PRICE_FACTOR));
+			addACommodity(trade, cup, price, 2 + rand.nextInt(3), -1);
 		}
 		storage.set(TRADE, trade);
 	}

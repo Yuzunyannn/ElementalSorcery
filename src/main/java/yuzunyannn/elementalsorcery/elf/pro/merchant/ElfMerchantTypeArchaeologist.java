@@ -11,10 +11,15 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.block.BlockSealStone;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
 
 public class ElfMerchantTypeArchaeologist extends ElfMerchantTypeDefault {
+
+	@Config(group = "merchant")
+	@Config.NumberRange(min = 0, max = Float.MAX_VALUE)
+	public static float ANCIENT_PAPER_MERCHANT_PRICE_FACTOR = 1;
 
 	@Override
 	public void renewTrade(World world, BlockPos pos, Random rand, VariableSet storage) {
@@ -25,7 +30,8 @@ public class ElfMerchantTypeArchaeologist extends ElfMerchantTypeDefault {
 		NBTTagCompound nbt = new NBTTagCompound();
 		nbt.setFloat("progress", 0);
 		stackAP.setTagCompound(nbt);
-		trade.addCommodity(stackAP, 1000, 16, true);
+		int reclaimPrice = Math.max(1, (int) (1000 * ANCIENT_PAPER_MERCHANT_PRICE_FACTOR));
+		trade.addCommodity(stackAP, reclaimPrice, 16, true);
 
 		List<ItemStack> papers = new LinkedList<ItemStack>();
 		int totalPrice = 0;
@@ -34,7 +40,10 @@ public class ElfMerchantTypeArchaeologist extends ElfMerchantTypeDefault {
 			papers.add(stack);
 			totalPrice += (int) (ElfChamberOfCommerce.priceIt(stack) * (2 + rand.nextFloat() * 4));
 		}
-		for (ItemStack stack : papers) addACommodity(trade, stack, totalPrice / papers.size(), 1, -1);
+		int averagePrice = totalPrice / papers.size();
+		averagePrice = Math.max(1, (int) (averagePrice * ANCIENT_PAPER_MERCHANT_PRICE_FACTOR));
+		
+		for (ItemStack stack : papers) addACommodity(trade, stack, averagePrice, 1, -1);
 
 		storage.set(TRADE, trade);
 	}

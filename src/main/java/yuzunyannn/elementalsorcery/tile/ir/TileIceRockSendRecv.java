@@ -111,6 +111,7 @@ public abstract class TileIceRockSendRecv extends TileIceRockBase implements IAl
 
 	public FaceStatus getFaceStatus(EnumFacing facing) {
 		try {
+			if (facing == null) return FaceStatus.NONE;
 			FaceStatus status = faceStatus[facing.getIndex()];
 			return status == null ? FaceStatus.NONE : status;
 		} catch (ArrayIndexOutOfBoundsException e) {
