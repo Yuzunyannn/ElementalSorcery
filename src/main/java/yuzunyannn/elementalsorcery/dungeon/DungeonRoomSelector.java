@@ -4,22 +4,25 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Random;
 
 import net.minecraft.item.EnumDyeColor;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.item.ItemMemoryFragment.MemoryFragment;
 import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSelector> {
 
-	public static DungeonRoomSelector create(DungeonArea area) {
-		return new DungeonRoomSelector();
+	public static DungeonRoomSelector create(DungeonArea area, Random rand) {
+		return new DungeonRoomSelector(rand);
 	}
 
 	protected static class BuildRoomNode implements Comparable<BuildRoomNode> {
 		final DungeonRoomType roomType;
 		final int step;
 		final int maxCount;
+		int randomStep;
 		private boolean isCore;
 		int accumulate = 0;
 		int buildCount = 0;
@@ -31,8 +34,9 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 			this.accumulate = this.step;
 		}
 
-		protected void onBuild() {
-			this.accumulate += this.step;
+		protected void onBuild(Random rand) {
+			if (this.randomStep > this.step) this.accumulate += RandomHelper.randomRange(step, randomStep, rand);
+			else this.accumulate += this.step;
 			this.buildCount++;
 		}
 
@@ -66,21 +70,24 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 	private int coreCount = 0;
 	private IdentityHashMap<EnumDyeColor, Integer> keyMap = new IdentityHashMap<>();
 	private int buildCount = 0;
+	private Random rand;
 
-	public DungeonRoomSelector() {
+	public DungeonRoomSelector(Random rand) {
 		this.init();
+		this.rand = rand;
 	}
 
 	protected void init() {
-		addBuildRoom(DungeonLib.DUNGEON_SMALL_TOWARD4, 3, -1);
+		addBuildRoom(DungeonLib.DUNGEON_CORRIDOR_TOWARD4, 3, -1);
 		addBuildRoom(DungeonLib.DUNGEON_SMALL_TOWARD4, 2, -1);
 		addBuildRoom(DungeonLib.DUNGEON_SMAL_PRISON_TOWARD2, 4, -1);
 		addBuildRoom(DungeonLib.DUNGEON_SMALL_LIBRARY_TOWARD3, 6, -1);
-		addBuildRoom(DungeonLib.DUNGEON_SMALL_ROOM_TOWARD1, 4, -1);
+		addBuildRoom(DungeonLib.DUNGEON_SMALL_ROOM_TOWARD1, 3, 5, -1);
 
 		addBuildCoreRoom(DungeonLib.DUNGEON_MANTRA_LAB_TOWARD2, 8);
-		addBuildRoom(DungeonLib.DUNGEON_ROOM_TOWARD2, 6, 10);
-		addBuildRoom(DungeonLib.DUNGEON_SMALL_GARDEN_TOWARD3, 6, 10);
+		addBuildRoom(DungeonLib.DUNGEON_ROOM_TOWARD2, 6, 8, 10);
+		addBuildRoom(DungeonLib.DUNGEON_SMALL_GARDEN_TOWARD3, 6, 12);
+		addBuildRoom(DungeonLib.DUNGEON_CHECKPOINT, 6, 12, -1);
 
 		addBuildCoreRoom(DungeonLib.DUNGEON_GREENHOUSE_TOWARD4, 10);
 		addBuildCoreRoom(DungeonLib.DUNGEON_STRATEGY_HALL_TOWARD3, 14);
@@ -91,6 +98,12 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 		BuildRoomNode node = new BuildRoomNode(type, step, maxCount);
 		JavaHelper.orderAdd(buildList, node);
 		buildMap.put(type, node);
+		return node;
+	}
+
+	protected BuildRoomNode addBuildRoom(DungeonRoomType type, int step, int stepMax, int maxCount) {
+		BuildRoomNode node = addBuildRoom(type, step, maxCount);
+		node.randomStep = stepMax;
 		return node;
 	}
 
@@ -120,7 +133,7 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 		}
 		// 完成更新数据
 		this.buildCount++;
-		node.onBuild();
+		node.onBuild(rand);
 		buildList.remove(node);
 		// 有库存的话，重新插入
 		if (!node.noStock()) {

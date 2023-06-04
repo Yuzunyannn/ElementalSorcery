@@ -66,27 +66,27 @@ public class MDInfusionRW implements MDRecipeWrapper {
 	public void drawBackground(Minecraft mc, MDDraw draw, int offsetX, int offsetY) {
 		mc.getTextureManager().bindTexture(MDDraw.TEXTURE1);
 		offsetY -= 10;
-		RenderFriend.drawTexturedModalRect(offsetX + 15, offsetY + 19, 0, 166, 144, 10, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 15, offsetY + 19, 0, 166, 144, 10, 256, 256);
 		float rate = this.cost / 500.0f;
 		GuiMDBase.drawMagicVolume(offsetX + 15, offsetY + 19, 144, 10, rate, mc.getRenderPartialTicks());
 		mc.getTextureManager().bindTexture(MDDraw.TEXTURE1);
-		RenderFriend.drawTexturedModalRect(offsetX, offsetY, 0, 0, draw.getWidth(), draw.getHeight(), 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX, offsetY, 0, 0, draw.getWidth(), draw.getHeight(), 256, 256);
 		mc.getTextureManager().bindTexture(MDDraw.TEXTURE2);
-		RenderFriend.drawTexturedModalRect(offsetX + 14, offsetY + 30, 14, 30, 146, 40, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 14, offsetY + 30, 14, 30, 146, 40, 256, 256);
 		mc.getTextureManager().bindTexture(MDDraw.TEXTURE1);
-		RenderFriend.drawTexturedModalRect(offsetX + 14, offsetY + 18 + 11, 14, 18 + 51, 146, 1, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 14, offsetY + 18 + 11, 14, 18 + 51, 146, 1, 256, 256);
 		// 所有物品栏
-		RenderFriend.drawTexturedModalRect(offsetX + 35, offsetY + 41, 7, 83, 18, 18, 256, 256);
-		RenderFriend.drawTexturedModalRect(offsetX + 57, offsetY + 49, 7, 83, 18, 18, 256, 256);
-		RenderFriend.drawTexturedModalRect(offsetX + 79, offsetY + 57, 7, 83, 18, 18, 256, 256);
-		RenderFriend.drawTexturedModalRect(offsetX + 101, offsetY + 49, 7, 83, 18, 18, 256, 256);
-		RenderFriend.drawTexturedModalRect(offsetX + 123, offsetY + 41, 7, 83, 18, 18, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 35, offsetY + 41, 7, 83, 18, 18, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 57, offsetY + 49, 7, 83, 18, 18, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 79, offsetY + 57, 7, 83, 18, 18, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 101, offsetY + 49, 7, 83, 18, 18, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 123, offsetY + 41, 7, 83, 18, 18, 256, 256);
 		// 进度背景
-		RenderFriend.drawTexturedModalRect(offsetX + 41, offsetY + 30, 176, 55, 5, 11, 256, 256);
-		RenderFriend.drawTexturedModalRect(offsetX + 63, offsetY + 30, 176, 55, 5, 19, 256, 256);
-		RenderFriend.drawTexturedModalRect(offsetX + 85, offsetY + 30, 176, 55, 5, 27, 256, 256);
-		RenderFriend.drawTexturedModalRect(offsetX + 107, offsetY + 30, 176, 55, 5, 19, 256, 256);
-		RenderFriend.drawTexturedModalRect(offsetX + 129, offsetY + 30, 176, 55, 5, 11, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 41, offsetY + 30, 176, 55, 5, 11, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 63, offsetY + 30, 176, 55, 5, 19, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 85, offsetY + 30, 176, 55, 5, 27, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 107, offsetY + 30, 176, 55, 5, 19, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 129, offsetY + 30, 176, 55, 5, 11, 256, 256);
 	}
 
 	@Override

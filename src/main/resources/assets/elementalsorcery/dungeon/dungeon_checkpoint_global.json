@@ -1,0 +1,6 @@
+{
+    "type": "dungeon:global",
+    "keyRequire": {
+        "blue": 1
+    }
+}

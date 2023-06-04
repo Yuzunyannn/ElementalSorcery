@@ -53,9 +53,9 @@ public abstract class MantraCrackCommon extends MantraCommon {
 		super.renderShiftIcon(mantraData, suggestSize, suggestAlpha, partialTicks);
 		GlStateManager.color(1, 1, 1);
 		RenderItemElementCrack.bindCrackTexture();
-		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize / 2, suggestSize / 2);
+		RenderFriend.drawTextureRectInCenter(0, 0, suggestSize / 2, suggestSize / 2);
 		GlStateManager.rotate(45, 0, 0, 1);
-		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize / 2, suggestSize / 2);
+		RenderFriend.drawTextureRectInCenter(0, 0, suggestSize / 2, suggestSize / 2);
 		GlStateManager.rotate(-45, 0, 0, 1);
 	}
 

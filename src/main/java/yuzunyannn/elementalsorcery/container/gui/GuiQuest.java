@@ -70,7 +70,7 @@ public class GuiQuest extends GuiContainer {
 		int color = 0x4b2811;
 		final int width = 207;
 		final int height = 219;
-		RenderFriend.drawTexturedModalRect(0, 0, 0, 0, width, height, 256, 256);
+		RenderFriend.drawTextureModalRect(0, 0, 0, 0, width, height, 256, 256);
 		QuestType type = quest.getType();
 		QuestDescribe describe = type.getDescribe();
 		ArrayList<QuestCondition> preConditions = type.getPreconditions();
@@ -137,7 +137,7 @@ public class GuiQuest extends GuiContainer {
 			GlStateManager.translate(x, y, 10);
 			GlStateManager.rotate(20, 0, 0, 1);
 			GlStateManager.scale(3, 3, 3);
-			RenderFriend.drawTexturedModalRect(0, 0, 208, 0, 48, 20, 256, 256);
+			RenderFriend.drawTextureModalRect(0, 0, 208, 0, 48, 20, 256, 256);
 			GlStateManager.popMatrix();
 		}
 	}

@@ -32,11 +32,11 @@ public class TopicNatural extends Topic {
 		
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(tick + partialTicks, 0, 0, 1);
-		RenderFriend.drawTexturedRectInCenter(-30, 0, 12, 12, 58, 3, 4, 4, 128, 128);
-		RenderFriend.drawTexturedRectInCenter(30, 0, 12, 12, 62, 3, 4, 4, 128, 128);
+		RenderFriend.drawTextureRectInCenter(-30, 0, 12, 12, 58, 3, 4, 4, 128, 128);
+		RenderFriend.drawTextureRectInCenter(30, 0, 12, 12, 62, 3, 4, 4, 128, 128);
 		GlStateManager.popMatrix();
 
-		RenderFriend.drawTexturedRectInCenter(0, 0, 60, 39, 60, 9, 20, 13, 128, 128);
+		RenderFriend.drawTextureRectInCenter(0, 0, 60, 39, 60, 9, 20, 13, 128, 128);
 		
 		GlStateManager.popMatrix();
 	}

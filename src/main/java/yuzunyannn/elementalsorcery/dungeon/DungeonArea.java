@@ -1,13 +1,16 @@
 package yuzunyannn.elementalsorcery.dungeon;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -17,8 +20,11 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.building.BuildingFace;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
@@ -121,9 +127,11 @@ public class DungeonArea extends WorldSavedData {
 	public void generate(DungeonWorld dw, BlockPos at) {
 		rooms.clear();
 
-		DungeonRoomSelector selector = DungeonRoomSelector.create(this);
+		Random rand = new Random();
 
-		DungeonAreaGenerator generate = new DungeonAreaGenerator(this, dw.world);
+		DungeonRoomSelector selector = DungeonRoomSelector.create(this, rand);
+
+		DungeonAreaGenerator generate = new DungeonAreaGenerator(this, dw.world, rand);
 		DungeonAreaRoom room = new DungeonAreaRoom(selector.getFirstRoom());
 		room.facing = EnumFacing.HORIZONTALS[generate.rand.nextInt(EnumFacing.HORIZONTALS.length)];
 		generate.addRoom(at, room);
@@ -172,6 +180,10 @@ public class DungeonArea extends WorldSavedData {
 		return id < 0 || id >= rooms.size() ? null : rooms.get(id);
 	}
 
+	public Collection<DungeonAreaRoom> getRooms() {
+		return rooms;
+	}
+
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
 		excerpt.deserializeNBT(nbt.getCompoundTag("e"));
@@ -183,6 +195,28 @@ public class DungeonArea extends WorldSavedData {
 		compound.setTag("e", excerpt.serializeNBT());
 		NBTHelper.setNBTSerializableList(compound, "rooms", rooms);
 		return compound;
+	}
+
+	public NBTTagCompound serializeToClient() {
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setTag("excerpt", excerpt.serializeNBT());
+		NBTTagList roomTags = new NBTTagList();
+		nbt.setTag("rooms", roomTags);
+		for (DungeonAreaRoom room : rooms) roomTags.appendTag(room.serializeToClient());
+		return nbt;
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void deserializeInClient(NBTTagCompound nbt) {
+		excerpt.deserializeNBT(nbt.getCompoundTag("excerpt"));
+		NBTTagList roomTags = nbt.getTagList("rooms", NBTTag.TAG_COMPOUND);
+		rooms.clear();
+		for (int i = 0; i < roomTags.tagCount(); i++) {
+			DungeonAreaRoom room = new DungeonAreaRoom();
+			room.deserializeInClient(roomTags.getCompoundTagAt(i));
+			room.areId = this.excerpt.getId();
+			rooms.add(room);
+		}
 	}
 
 	public void startBuildRoom(World world, int roomId, EntityPlayer openPlayer) {
@@ -250,6 +284,7 @@ public class DungeonArea extends WorldSavedData {
 			this.startOpenDoor(world, room.id, doorIndex);
 			this.startOpenDoor(world, otherRoom.id, otherDoorIndex);
 		}
+		room.nextUpdateFlag();
 	}
 
 	public void debugBuildDungeon(World world) {

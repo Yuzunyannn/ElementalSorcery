@@ -463,7 +463,7 @@ public class GERRunningState extends GERActionState {
 				final int useLen = totalLen / 2;
 				float tRate = (tick + partialTicks) / 100;
 				GlStateManager.scale(2.5, 2.5, 1);
-				RenderFriend.drawTexturedModalRect(-useLen / 2, -2.5f, (useLen - (useLen * tRate) % useLen), 54, useLen,
+				RenderFriend.drawTextureModalRect(-useLen / 2, -2.5f, (useLen - (useLen * tRate) % useLen), 54, useLen,
 						5, 256, 256);
 				GlStateManager.scale(1 / 2.5, 1 / 2.5, 1);
 			} else if (toReadyRatio >= 1) {
@@ -513,7 +513,7 @@ public class GERRunningState extends GERActionState {
 		}
 		GlStateManager.color(fogColor.r, fogColor.g, fogColor.b, startRatio);
 		TextureBinder.bindTexture(GuiMantraShitf.FOG);
-		RenderFriend.drawTexturedRectInCenter(0, 0, 80, 80);
+		RenderFriend.drawTextureRectInCenter(0, 0, 80, 80);
 		// 切换状态
 		GlStateManager.rotate(tick / 2, 0, 0, 1);
 		if (startRatio < 1) {
@@ -533,7 +533,7 @@ public class GERRunningState extends GERActionState {
 			GlStateManager.scale(iconScale, iconScale, iconScale);
 			GuiElementReactor.COMS.bind();
 			GlStateManager.color(color.r, color.g, color.b, 1);
-			RenderFriend.drawTexturedRectInCenter(0, 0, 16, 16, 44, 0, 20, 20, 256, 256);
+			RenderFriend.drawTextureRectInCenter(0, 0, 16, 16, 44, 0, 20, 20, 256, 256);
 			iconScale = 1 / iconScale;
 			GlStateManager.scale(iconScale, iconScale, iconScale);
 		}
@@ -545,7 +545,7 @@ public class GERRunningState extends GERActionState {
 			final int useLen = totalLen / 2;
 			float progress = reactor.mantraChargeProgress;
 			float tRate = (tick + partialTicks) / 100;
-			RenderFriend.drawTexturedModalRect(-useLen / 2, -37, (useLen - (useLen * tRate) % useLen), 54,
+			RenderFriend.drawTextureModalRect(-useLen / 2, -37, (useLen - (useLen * tRate) % useLen), 54,
 					useLen * progress, 5, 256, 256);
 		}
 		// mantra sub
@@ -646,7 +646,7 @@ public class GERRunningState extends GERActionState {
 
 		GlStateManager.rotate(-rotation * 2, 0, 0, 1);
 		TextureBinder.bindTexture(GuiMantraShitf.FOG);
-		RenderFriend.drawTexturedRectInCenter(0, 0, 80, 80);
+		RenderFriend.drawTextureRectInCenter(0, 0, 80, 80);
 		GlStateManager.rotate(rotation * 2, 0, 0, 1);
 	}
 
@@ -694,11 +694,11 @@ public class GERRunningState extends GERActionState {
 	public void renderBackGround(float aH, float aR) {
 		GlStateManager.color(colorLight.r, colorLight.g, colorLight.b, aH);
 		GuiElementReactor.HALO.bind();
-		RenderFriend.drawTexturedRectInCenter(0, 0, 256, 256, 0, 0, 256, 256, 256, 256);
+		RenderFriend.drawTextureRectInCenter(0, 0, 256, 256, 0, 0, 256, 256, 256, 256);
 
 		GlStateManager.color(color.r, color.g, color.b, aR);
 		GuiElementReactor.RING.bind();
-		RenderFriend.drawTexturedRectInCenter(0, 0, 256, 256, 0, 0, 256, 256, 256, 256);
+		RenderFriend.drawTextureRectInCenter(0, 0, 256, 256, 0, 0, 256, 256, 256, 256);
 	}
 
 	// 画转化图
@@ -729,7 +729,7 @@ public class GERRunningState extends GERActionState {
 		float step = met.getStep() - 0.05f;
 		float xoff = MathHelper.cos(angle) * step * levelToRange;
 		float yoff = MathHelper.sin(angle) * step * levelToRange;
-		RenderFriend.drawTexturedRectInCenter(xoff, yoff, 6, 6, 38, 0, 6, 6, 256, 256);
+		RenderFriend.drawTextureRectInCenter(xoff, yoff, 6, 6, 38, 0, 6, 6, 256, 256);
 	}
 
 	@Override

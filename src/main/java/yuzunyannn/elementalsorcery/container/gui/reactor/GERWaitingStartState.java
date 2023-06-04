@@ -119,7 +119,7 @@ public class GERWaitingStartState extends GERActionState {
 			GlStateManager.rotate(90 * s, 0, 0, 1);
 			float offset = MathHelper.sin(r / 180 * 5) * 2 + e * Math.max(gui.width, gui.height);
 			GlStateManager.translate(-19, -54 - offset, 0);
-			RenderFriend.drawTexturedModalRect(0, 0, 0, 0, 38, 54, 256, 256);
+			RenderFriend.drawTextureModalRect(0, 0, 0, 0, 38, 54, 256, 256);
 			GlStateManager.translate(19, 54 + offset, 0);
 		}
 

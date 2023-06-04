@@ -334,7 +334,7 @@ public class GuiMantraShitf extends GuiScreen {
 	}
 
 	public void draw(float x, float y, float width, float height, float u, float v, float texWidth, float texHeight) {
-		RenderFriend.drawTexturedRectInCenter(x, y, width, height, u, v, texWidth, texHeight, textureWidth,
+		RenderFriend.drawTextureRectInCenter(x, y, width, height, u, v, texWidth, texHeight, textureWidth,
 				textureHeight);
 	}
 

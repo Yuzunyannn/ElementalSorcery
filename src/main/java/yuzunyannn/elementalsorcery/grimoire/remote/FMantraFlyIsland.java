@@ -77,10 +77,10 @@ public class FMantraFlyIsland extends FMantraBase {
 		ResourceLocation res = getIconRes();
 		if (res == null) res = ESResources.MANTRA_VOID.getResource();
 		ESResources.MANTRA_COMMON_CIRCLE.bind();
-		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		RenderFriend.drawTextureRectInCenter(0, 0, suggestSize, suggestSize);
 		GlStateManager.color(1, 1, 1, alpha);
 		TextureBinder.bindTexture(res);
 		suggestSize = suggestSize * 0.5f;
-		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		RenderFriend.drawTextureRectInCenter(0, 0, suggestSize, suggestSize);
 	}
 }

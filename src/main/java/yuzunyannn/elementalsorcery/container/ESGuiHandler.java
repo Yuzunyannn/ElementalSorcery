@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.container.gui.GuiAnalysisAltar;
 import yuzunyannn.elementalsorcery.container.gui.GuiDevolveCube;
+import yuzunyannn.elementalsorcery.container.gui.GuiDungeonMap;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementBoard;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementCraftingTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementInventoryStronger;
@@ -85,6 +86,7 @@ public class ESGuiHandler implements IGuiHandler {
 	public static final int GUI_ELF_APPLY_ADDRESS_PLATE = 43;
 
 	public static final int GUI_SIMPLE_MATERIAL_CONTAINER = 50;
+	public static final int GUI_DUNGEON_MAP = 51;
 
 	// 切换只有客户端存在
 	public static final int GUI_MANTRA_SHITF = 60;
@@ -163,6 +165,8 @@ public class ESGuiHandler implements IGuiHandler {
 				return new ContainerElfApplyAddressPlate(player);
 			case GUI_SIMPLE_MATERIAL_CONTAINER:
 				return new ContainerSimpleMaterialContainer(player);
+			case GUI_DUNGEON_MAP:
+				return new ContainerDungeonMap(player, pos);
 			default:
 				return null;
 			}
@@ -249,9 +253,11 @@ public class ESGuiHandler implements IGuiHandler {
 			case GUI_MANTRA_SHITF:
 				return new GuiMantraShitf(player);
 			case GUI_ELF_TREE_ELEVATOR:
-				return new GuiElfTreeElevator(player, new BlockPos(x, y, z));
+				return new GuiElfTreeElevator(player, pos);
 			case GUI_SIMPLE_MATERIAL_CONTAINER:
 				return new GuiSimpleMaterialContainer(player);
+			case GUI_DUNGEON_MAP:
+				return new GuiDungeonMap(player, pos);
 			default:
 				return null;
 			}

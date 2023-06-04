@@ -95,13 +95,13 @@ public class MantraGoldShield extends MantraTypePersistent {
 	@SideOnly(Side.CLIENT)
 	public void renderShiftIcon(NBTTagCompound mantraData, float suggestSize, float suggestAlpha, float partialTicks) {
 		ESResources.MANTRA_COMMON_CIRCLE.bind();
-		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		RenderFriend.drawTextureRectInCenter(0, 0, suggestSize, suggestSize);
 		GlStateManager.color(1, 1, 1, suggestAlpha);
 		ResourceLocation res = this.getIconResource();
 		if (res == null) res = ESResources.MANTRA_VOID.getResource();
 		TextureBinder.bindTexture(res);
 		suggestSize = suggestSize * 0.5f;
-		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		RenderFriend.drawTextureRectInCenter(0, 0, suggestSize, suggestSize);
 	}
 
 	public static double getValueCoefficient(int amplifier) {

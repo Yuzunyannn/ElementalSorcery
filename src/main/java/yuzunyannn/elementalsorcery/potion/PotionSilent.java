@@ -46,7 +46,7 @@ public class PotionSilent extends PotionCommon {
 			float scale = 0.75f;
 			RenderObjects.NUMBER_1.bind();
 			GlStateManager.color(1, 1, 1, 0.25f);
-			RenderFriend.drawTexturedModalRect(x + 13, y + 4, (32 * (amplifier % 3)) * scale, 0, 32 * scale, 32 * scale,
+			RenderFriend.drawTextureModalRect(x + 13, y + 4, (32 * (amplifier % 3)) * scale, 0, 32 * scale, 32 * scale,
 					96 * scale, 128 * scale);
 		}
 		{
@@ -54,13 +54,13 @@ public class PotionSilent extends PotionCommon {
 			int c = iconIndex % 7;
 			int r = iconIndex / 7;
 			GlStateManager.color(1, 1, 1, 1f);
-			RenderFriend.drawTexturedModalRect(x + 6, y + 6, 18 * c, 18 * r, 18, 18, 128, 128);
+			RenderFriend.drawTextureModalRect(x + 6, y + 6, 18 * c, 18 * r, 18, 18, 128, 128);
 		}
 		{
 			float scale = 0.25f;
 			RenderObjects.NUMBER_1.bind();
 			GlStateManager.color(1, 1, 1, 1f);
-			RenderFriend.drawTexturedModalRect(x + 18, y + 4, (32 * (amplifier % 3)) * scale, 0, 32 * scale, 32 * scale,
+			RenderFriend.drawTextureModalRect(x + 18, y + 4, (32 * (amplifier % 3)) * scale, 0, 32 * scale, 32 * scale,
 					96 * scale, 128 * scale);
 		}
 

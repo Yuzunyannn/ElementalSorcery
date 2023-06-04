@@ -57,20 +57,20 @@ public abstract class EffectCondition extends Effect implements IConditionEffect
 	protected void renderTexRect(float x, float y, float width, float height, float u, float v, float texWidth,
 			float texHeight, float textureWidth, float textureHeight, float r, float g, float b, float a, float anchorX,
 			float anchorY) {
-		RenderFriend.drawTexturedRectInCenter(x, y, width, height, u, v, texWidth, texHeight, textureWidth,
+		RenderFriend.drawTextureRectInCenter(x, y, width, height, u, v, texWidth, texHeight, textureWidth,
 				textureHeight, r, g, b, a, anchorX, anchorY);
 	}
 
 	protected void drawTexturedRectInCenter(float x, float y, float width, float height, float u, float v,
 			float texWidth, float texHeight, float textureWidth, float textureHeight, float r, float g, float b,
 			float a) {
-		RenderFriend.drawTexturedRectInCenter(x, y, width, height, u, v, texWidth, texHeight, textureWidth,
+		RenderFriend.drawTextureRectInCenter(x, y, width, height, u, v, texWidth, texHeight, textureWidth,
 				textureHeight, r, g, b, a, 0.5f, 0.5f);
 	}
 
 	protected void renderTexRectInCenter(float x, float y, float width, float height, float r, float g, float b,
 			float a) {
-		RenderFriend.drawTexturedRectInCenter(x, y, width, height, 0, 0, 1, 1, 1, 1, r, g, b, a, 0.5f, 0.5f);
+		RenderFriend.drawTextureRectInCenter(x, y, width, height, 0, 0, 1, 1, 1, 1, r, g, b, a, 0.5f, 0.5f);
 	}
 
 }

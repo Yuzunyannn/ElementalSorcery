@@ -17,6 +17,7 @@ import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
 import yuzunyannn.elementalsorcery.building.BuildingFace;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class DungeonAreaGenerator {
@@ -25,12 +26,13 @@ public class DungeonAreaGenerator {
 	public final World world;
 	Map<ChunkPos, List<Integer>> roomMap = new HashMap<>();
 	LinkedList<DungeonAreaRoom> waitQueue = new LinkedList<>();
-	Random rand = new Random();
+	Random rand = RandomHelper.rand;
 	int doorLinkGap = 1;
 
-	public DungeonAreaGenerator(DungeonArea area, World world) {
+	public DungeonAreaGenerator(DungeonArea area, World world, Random random) {
 		this.self = area;
 		this.world = world;
+		this.rand = random;
 	}
 
 	public boolean isRoomOverlap(DungeonAreaRoom room) {
@@ -93,7 +95,7 @@ public class DungeonAreaGenerator {
 		room.funcs = new ArrayList<>(funcs.size());
 		for (Entry<BlockPos, String> entry : funcs) {
 			GameFunc func = GameFunc.create(new JsonObject(entry.getValue()));
-			func.setSeed(new Random().nextLong());
+			func.setSeed(rand.nextLong());
 			room.funcs.add(func);
 		}
 	}

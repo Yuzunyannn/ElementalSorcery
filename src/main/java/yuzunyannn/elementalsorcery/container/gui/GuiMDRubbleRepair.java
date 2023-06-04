@@ -40,10 +40,10 @@ public class GuiMDRubbleRepair extends GuiMDBase<ContainerMDRubbleRepair> {
 	}
 
 	public static void drawMagicSign(int xoff, int yoff, int texY, int texH) {
-		RenderFriend.drawTexturedModalRect(xoff, yoff, 176, texY, 43, texH, 256, 256);
-		RenderFriend.drawTexturedModalRect(xoff + 40, yoff, 176, texY, 43, texH, 256, 256);
-		RenderFriend.drawTexturedModalRect(xoff + 80, yoff, 176, texY, 43, texH, 256, 256);
-		RenderFriend.drawTexturedModalRect(xoff + 120, yoff, 176, texY, 43, texH, 256, 256);
+		RenderFriend.drawTextureModalRect(xoff, yoff, 176, texY, 43, texH, 256, 256);
+		RenderFriend.drawTextureModalRect(xoff + 40, yoff, 176, texY, 43, texH, 256, 256);
+		RenderFriend.drawTextureModalRect(xoff + 80, yoff, 176, texY, 43, texH, 256, 256);
+		RenderFriend.drawTextureModalRect(xoff + 120, yoff, 176, texY, 43, texH, 256, 256);
 	}
 
 }

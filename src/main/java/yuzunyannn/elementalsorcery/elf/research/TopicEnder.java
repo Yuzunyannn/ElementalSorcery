@@ -30,11 +30,11 @@ public class TopicEnder extends Topic {
 		GlStateManager.scale(size / 64, size / 64, size / 32);
 
 		GlStateManager.color(1, 1, 1, alpha);
-		RenderFriend.drawTexturedRectInCenter(0, 0, 28, 24, 37, 23, 14, 12, 128, 128);
+		RenderFriend.drawTextureRectInCenter(0, 0, 28, 24, 37, 23, 14, 12, 128, 128);
 
 		if (tick > 0) {
 			float at = tick / 5 + (tick % 7 == 0 ? 2 : 0);
-			RenderFriend.drawTexturedRectInCenter(at * 25 - 50, 10, 18, 36, 37, 35, 9, 18, 128, 128);
+			RenderFriend.drawTextureRectInCenter(at * 25 - 50, 10, 18, 36, 37, 35, 9, 18, 128, 128);
 		}
 
 		GlStateManager.popMatrix();

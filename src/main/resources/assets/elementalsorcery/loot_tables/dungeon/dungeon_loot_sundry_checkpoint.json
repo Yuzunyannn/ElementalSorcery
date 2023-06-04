@@ -1,0 +1,28 @@
+{
+    "pools": [
+        {
+            "name": "dungeon_loot_sundry_worthless",
+            "rolls": {
+                "min": 2,
+                "max": 6
+            },
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "weight": 10,
+                    "name": "elementalsorcery:common/ingot_some"
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:ender_eye",
+                    "weight": 20
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:ender_pearl",
+                    "weight": 25
+                }
+            ]
+        }
+    ]
+}

@@ -250,6 +250,7 @@ tile.dungeonBarrier.name=地牢屏障
 tile.dungeonRottenLifeWood.name=腐朽的生命之树木
 tile.dungeonActinicGlass.name=光化玻璃
 tile.dungeonMagicCircleA.name=地牢法阵
+tile.dungeonCheckpoint.name=地牢传送石
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者
@@ -569,6 +570,10 @@ info.dungeonSeed.open.so.large=*地牢的占地面积很大，请选选择远离
 info.dungeon.bad.place=这里的位置好像不太好，换个位置试试吧
 info.dungeonSeed.storage.hp=生息：%s
 info.dungeonSeed.storage.exp=阅历：%s
+info.dungeon.room.gui=房间：%s
+info.dungeon.teleport.title=传送站
+info.dungeon.teleport.title.click=点击传送
+info.dungeon.explor.progress=已探索房间：%d/%d，总进度：%.2f%%
 
 info.mc.archi.Temple.name=沙漠神殿
 

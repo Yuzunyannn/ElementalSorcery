@@ -209,10 +209,10 @@ public class GuiResearch extends GuiContainer {
 		mc.getTextureManager().bindTexture(GuiMantraShitf.FOG);
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(fogRotate, 0, 0, 1);
-		RenderFriend.drawTexturedRectInCenter(0, 2, 60, 60);
+		RenderFriend.drawTextureRectInCenter(0, 2, 60, 60);
 		GlStateManager.popMatrix();
 		mc.getTextureManager().bindTexture(BUTTON);
-		RenderFriend.drawTexturedRectInCenter(0, 0, 40, 40);
+		RenderFriend.drawTextureRectInCenter(0, 0, 40, 40);
 
 		final float mapRadius = this.mapRadius - 40;
 		int size = topics.size();

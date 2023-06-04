@@ -34,7 +34,7 @@ public class MDDraw implements IDrawable {
 		if (mdRW == null) return;
 		mdRW.drawBackground(minecraft, this, xOffset, yOffset);
 		minecraft.getTextureManager().bindTexture(TEXTURE2);
-		RenderFriend.drawTexturedModalRect(xOffset, yOffset + 70, 0, 70, 175, 29, 256, 256);
+		RenderFriend.drawTextureModalRect(xOffset, yOffset + 70, 0, 70, 175, 29, 256, 256);
 	}
 
 	public List<String> getTooltipStrings(int mouseX, int mouseY) {
@@ -48,7 +48,7 @@ public class MDDraw implements IDrawable {
 	}
 
 	public void drawSolt(int x, int y) {
-		RenderFriend.drawTexturedModalRect(x, y, 7, 83, 18, 18, 256, 256);
+		RenderFriend.drawTextureModalRect(x, y, 7, 83, 18, 18, 256, 256);
 	}
 
 }

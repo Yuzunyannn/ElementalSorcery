@@ -49,7 +49,7 @@ public class MDRubbleRepairRW implements MDRecipeWrapper {
 		offsetY = 21;
 		draw.drawSolt(offsetX + x - 18 - 12, offsetY);
 		draw.drawSolt(offsetX + x + 12, offsetY);
-		RenderFriend.drawTexturedModalRect(offsetX + x - 11, offsetY + 2, 25, 83, 22, 15, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + x - 11, offsetY + 2, 25, 83, 22, 15, 256, 256);
 	}
 
 	@Override

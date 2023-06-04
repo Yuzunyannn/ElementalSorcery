@@ -153,7 +153,7 @@ public class SummonCommon extends Summon {
 			GlStateManager.rotate(rotate, 0, 0, 1);
 			GlStateManager.color(r, g, b, alpha);
 			GlStateManager.scale(scale, scale, scale);
-			RenderFriend.drawTexturedRectInCenter(0, 0, 1, 1);
+			RenderFriend.drawTextureRectInCenter(0, 0, 1, 1);
 			GlStateManager.popMatrix();
 		}
 	}

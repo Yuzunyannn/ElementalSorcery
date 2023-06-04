@@ -30,7 +30,7 @@ public class PotionCommon extends Potion {
 		RenderObjects.EFFECT_BUFF.bind();
 		int c = iconIndex % 7;
 		int r = iconIndex / 7;
-		RenderFriend.drawTexturedModalRect(x + 3, y + 3, 18 * c, 18 * r, 18, 18, 128, 128);
+		RenderFriend.drawTextureModalRect(x + 3, y + 3, 18 * c, 18 * r, 18, 18, 128, 128);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class PotionCommon extends Potion {
 		RenderObjects.EFFECT_BUFF.bind();
 		int c = iconIndex % 7;
 		int r = iconIndex / 7;
-		RenderFriend.drawTexturedModalRect(x + 6, y + 6, 18 * c, 18 * r, 18, 18, 128, 128);
+		RenderFriend.drawTextureModalRect(x + 6, y + 6, 18 * c, 18 * r, 18, 18, 128, 128);
 
 		int amplifier = effect.getAmplifier();
 		if (amplifier > 3) {

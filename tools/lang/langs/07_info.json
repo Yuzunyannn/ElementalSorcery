@@ -907,6 +907,27 @@
             "zh_CN": "阅历：%s",
             "en_US": "experience: %s",
             "ja_JP": "経験：%s"
+        },
+        "info.dungeon.room.gui": {
+            "zh_CN": "房间：%s",
+            "en_US": "Room: %s",
+            "ja_JP": "へや：%s"
+        },
+        "info.dungeon.teleport.title": {
+            "zh_CN": "传送站",
+            "en_US": "Teleport Station",
+            "ja_JP": "転送ポイント"
+        },
+        "info.dungeon.teleport.title.click": {
+            "zh_CN": "点击传送",
+            "en_US": "Click to Teleporting",
+            "ja_JP": "クリックと転送する"
+        }
+        ,
+        "info.dungeon.explor.progress": {
+            "zh_CN": "已探索房间：%d/%d，总进度：%.1f%%",
+            "en_US": "Explored room: %d/%d, progress: %.1f%%",
+            "ja_JP": "探索済みルーム：%d/%d、総進捗：%.1f%%"
         }
     },
     "info.mc": {

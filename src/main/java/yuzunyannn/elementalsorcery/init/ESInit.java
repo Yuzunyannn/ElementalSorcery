@@ -123,6 +123,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonActinicGlass;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonBarrier;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonBrick;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonCheckpoint;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoor;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoorExpand;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonFunction;
@@ -570,6 +571,7 @@ public class ESInit {
 		ESObjects.BLOCKS.DUNGEON_ACTINIC_GLASS = new BlockDungeonActinicGlass();
 		ESObjects.BLOCKS.DUNGEON_LIGHT = new BlockDungeonLight();
 		ESObjects.BLOCKS.DUNGEON_MAGIC_CIRCLE_A = new BlockDungeonMagicCircleA();
+		ESObjects.BLOCKS.DUNGEON_CHECKPOINT = new BlockDungeonCheckpoint();
 
 		// 初始化所有tab
 		Class<?> cls = ESObjects.BLOCKS.getClass();
@@ -1300,7 +1302,8 @@ public class ESInit {
 		registerRender(BLOCKS.DUNGEON_ROTTEN_LIFELOG);
 		registerRender(BLOCKS.DUNGEON_ACTINIC_GLASS);
 		registerRender(BLOCKS.DUNGEON_LIGHT);
-
+		registerRender(BLOCKS.DUNGEON_CHECKPOINT);
+		
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());
 		registerRender(TilePortalAltar.class, new RenderTileShowItem<TilePortalAltar>(0.65));

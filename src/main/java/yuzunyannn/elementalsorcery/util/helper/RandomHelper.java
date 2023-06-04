@@ -11,8 +11,16 @@ public class RandomHelper {
 
 	static final public Random rand = new SecureRandom();
 
+	static public int randomRange(int min, int max, Random rand) {
+		return min + rand.nextInt(max - min + 1);
+	}
+
+	static public float randomRange(float min, float max, Random rand) {
+		return min + (max - min) * rand.nextFloat();
+	}
+
 	static public int randomRange(int min, int max) {
-		return (int) (min + (max - min) * rand.nextFloat());
+		return min + rand.nextInt(max - min + 1);
 	}
 
 	static public float randomRange(float min, float max) {
@@ -69,7 +77,7 @@ public class RandomHelper {
 		}
 
 		protected List<Pair> list = new LinkedList<>();
-		
+
 		public void add(T obj, double weight) {
 			list.add(new Pair(obj, weight));
 		}

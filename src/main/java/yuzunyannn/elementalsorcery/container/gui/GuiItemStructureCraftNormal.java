@@ -37,8 +37,8 @@ public class GuiItemStructureCraftNormal extends GuiItemStructureCraft {
 
 	@Override
 	protected void drawSlot(boolean hasSelect) {
-		RenderFriend.drawTexturedRectInCenter(0, 0, 18, 18, 176, 0, 18, 18, 256, 256);
-		if (hasSelect) RenderFriend.drawTexturedRectInCenter(0, 0, 18, 18, 176, 18, 18, 18, 256, 256);
+		RenderFriend.drawTextureRectInCenter(0, 0, 18, 18, 176, 0, 18, 18, 256, 256);
+		if (hasSelect) RenderFriend.drawTextureRectInCenter(0, 0, 18, 18, 176, 18, 18, 18, 256, 256);
 	}
 
 	@Override

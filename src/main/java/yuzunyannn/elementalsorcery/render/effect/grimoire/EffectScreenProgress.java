@@ -86,7 +86,7 @@ public class EffectScreenProgress extends EffectScreen implements IProgressable 
 		float alpha = RenderFriend.getPartialTicks(this.alpha, this.preAlpha, partialTicks);
 		float progress = RenderFriend.getPartialTicks(this.progress, this.preProgress, partialTicks);
 		GlStateManager.color(r, g, b, alpha);
-		RenderFriend.drawTexturedModalRect(width / 2 - 256 / 2, height - 50, 0, 0, 5 + 251 * progress, 13, 256, 256);
+		RenderFriend.drawTextureModalRect(width / 2 - 256 / 2, height - 50, 0, 0, 5 + 251 * progress, 13, 256, 256);
 		GlStateManager.translate(0, 0, 1);
 		guiEffectList.render(partialTicks);
 		GlStateManager.depthMask(true);

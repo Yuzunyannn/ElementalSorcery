@@ -41,12 +41,12 @@ public interface IFairyCubeModuleClient {
 
 		@Override
 		public void doRenderGUIIcon(FairyCubeModule module) {
-			RenderFriend.drawTexturedRectInCenter(0, -6, 32, 32, xoff, yoff, 32, 32, 256, 256);
+			RenderFriend.drawTextureRectInCenter(0, -6, 32, 32, xoff, yoff, 32, 32, 256, 256);
 		}
 
 		@Override
 		public void doRenderIcon() {
-			RenderFriend.drawTexturedRectInCenter(0, -6, 32, 32, xoff, yoff, 32, 32, 256, 256);
+			RenderFriend.drawTextureRectInCenter(0, -6, 32, 32, xoff, yoff, 32, 32, 256, 256);
 		}
 
 		@Override

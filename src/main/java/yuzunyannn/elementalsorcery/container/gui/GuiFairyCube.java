@@ -223,7 +223,7 @@ public class GuiFairyCube extends GuiScreen {
 			setAnimeRate(sr);
 			float a = RenderFriend.getPartialTicks(alpha, prevAlpha, partialTicks);
 			GlStateManager.color(1, 1, 1, a);
-			RenderFriend.drawTexturedRectInCenter(0, 0, 52, 52, 0, 55, 52, 52, 256, 256);
+			RenderFriend.drawTextureRectInCenter(0, 0, 52, 52, 0, 55, 52, 52, 256, 256);
 
 			if (module != null && render != null) {
 				render.doRenderGUIIcon(module);
@@ -237,11 +237,11 @@ public class GuiFairyCube extends GuiScreen {
 				} else {
 					mc.getTextureManager().bindTexture(TEXTURE);
 
-					RenderFriend.drawTexturedRectInCenter(-3, 16, 8, 8, 48, 107, 16, 16, 256, 256);
+					RenderFriend.drawTextureRectInCenter(-3, 16, 8, 8, 48, 107, 16, 16, 256, 256);
 					int level = module.getLevelUsed();
 					int realLevel = MathHelper.floor(module.getLevel());
 					if (realLevel > level) {
-						RenderFriend.drawTexturedRectInCenter(-10, 13, 5, 5, 32, 107, 16, 16, 256, 256);
+						RenderFriend.drawTextureRectInCenter(-10, 13, 5, 5, 32, 107, 16, 16, 256, 256);
 					}
 					String levString = TextFormatting.BOLD.toString() + (level + 1);
 					fontRenderer.drawString(levString, -3 + 6, 16 - 3, ((int) (a * 255) << 24) | 0x133435);
@@ -275,18 +275,18 @@ public class GuiFairyCube extends GuiScreen {
 
 		for (int i = 0; i < 4; i++) {
 			GlStateManager.translate(0, -move, 0);
-			RenderFriend.drawTexturedRectInCenter(0, 0, 256, 32, 0, 0, 256, 32, 256, 256);
+			RenderFriend.drawTextureRectInCenter(0, 0, 256, 32, 0, 0, 256, 32, 256, 256);
 			GlStateManager.translate(0, move, 0);
 			GlStateManager.rotate(90, 0, 0, 1);
 		}
 
 		// eyes
 		if (tick % 100 < 3) {
-			RenderFriend.drawTexturedRectInCenter(-20, -10, 23, 8, 8, 32, 23, 8, 256, 256);
-			RenderFriend.drawTexturedRectInCenter(20, -10, 23, 8, 8, 32, 23, 8, 256, 256);
+			RenderFriend.drawTextureRectInCenter(-20, -10, 23, 8, 8, 32, 23, 8, 256, 256);
+			RenderFriend.drawTextureRectInCenter(20, -10, 23, 8, 8, 32, 23, 8, 256, 256);
 		} else {
-			RenderFriend.drawTexturedRectInCenter(-20, -10, 8, 23, 0, 32, 8, 23, 256, 256);
-			RenderFriend.drawTexturedRectInCenter(20, -10, 8, 23, 0, 32, 8, 23, 256, 256);
+			RenderFriend.drawTextureRectInCenter(-20, -10, 8, 23, 0, 32, 8, 23, 256, 256);
+			RenderFriend.drawTextureRectInCenter(20, -10, 8, 23, 0, 32, 8, 23, 256, 256);
 		}
 
 		Shaders.HSV.bind();
@@ -302,14 +302,14 @@ public class GuiFairyCube extends GuiScreen {
 		GlStateManager.color(1, 1, 1, 1.0f);
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		GlStateManager.translate(0, 20, 0);
-		RenderFriend.drawTexturedRectInCenter(-4, 0, 8, 8, 16, 107, 16, 16, 256, 256);
-		RenderFriend.drawTexturedRectInCenter(-4, 12, 8, 8, 0, 107, 16, 16, 256, 256);
+		RenderFriend.drawTextureRectInCenter(-4, 0, 8, 8, 16, 107, 16, 16, 256, 256);
+		RenderFriend.drawTextureRectInCenter(-4, 12, 8, 8, 0, 107, 16, 16, 256, 256);
 
 		double exp = fairyCube.getLevelUpgradeProgress();
 		int expCount = (int) Math.round(exp * 10);
 		for (int i = 0; i < expCount; i++) {
 			int xoff = -expCount * 4 + i * 8 + 4;
-			RenderFriend.drawTexturedRectInCenter(xoff, 24, 4, 4, 0, 124, 4, 4, 256, 256);
+			RenderFriend.drawTextureRectInCenter(xoff, 24, 4, 4, 0, 124, 4, 4, 256, 256);
 		}
 
 		String levString = TextFormatting.BOLD.toString() + (fairyCube.getCubeLevel() + 1);

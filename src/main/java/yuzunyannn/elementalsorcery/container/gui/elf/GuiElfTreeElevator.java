@@ -113,12 +113,12 @@ public class GuiElfTreeElevator extends GuiScreen {
 			float yoff = high / (float) core.getTreeHigh() * 200;
 			ccigh = ccigh / (float) core.getTreeHigh() * 200;
 			yoff = cY + 109f - yoff + ccigh / 2;
-			RenderFriend.drawTexturedRectInCenter(cX + 0.5f, yoff, 84, ccigh, 153, 25, 84, ccigh, 256, 256);
+			RenderFriend.drawTextureRectInCenter(cX + 0.5f, yoff, 84, ccigh, 153, 25, 84, ccigh, 256, 256);
 			fontRenderer.drawStringWithShadow(Integer.toString(i + 1), cX - 40, (int) (yoff - ccigh / 2) + 2, 0x844700);
 		}
 		GlStateManager.color(1, 1, 1, a);
 		mc.getTextureManager().bindTexture(TEXTURE);
-		RenderFriend.drawTexturedRectInCenter(cX, cY, 153, 232, 0, 0, 153, 232, 256, 256);
+		RenderFriend.drawTextureRectInCenter(cX, cY, 153, 232, 0, 0, 153, 232, 256, 256);
 		GlStateManager.disableBlend();
 	}
 

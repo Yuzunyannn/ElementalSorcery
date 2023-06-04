@@ -250,6 +250,7 @@ tile.dungeonBarrier.name=地下牢のバリア
 tile.dungeonRottenLifeWood.name=腐った生命の木の原木
 tile.dungeonActinicGlass.name=光化ガラス
 tile.dungeonMagicCircleA.name=地下牢のマジックサークル
+tile.dungeonCheckpoint.name=地下牢のトランスファ石
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -569,6 +570,10 @@ info.dungeonSeed.open.so.large=*ダンジョンの敷地面積は広いので、
 info.dungeon.bad.place=ここの位置はあまりよくないようです、位置を変えてみましょう
 info.dungeonSeed.storage.hp=生息：%s
 info.dungeonSeed.storage.exp=経験：%s
+info.dungeon.room.gui=へや：%s
+info.dungeon.teleport.title=転送ポイント
+info.dungeon.teleport.title.click=クリックと転送する
+info.dungeon.explor.progress=探索済みルーム：%d/%d、総進捗：%.2f%%
 
 info.mc.archi.Temple.name=砂漠のピラミッド
 

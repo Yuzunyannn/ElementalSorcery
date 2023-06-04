@@ -1,0 +1,37 @@
+{
+    "probability": 0.2,
+    "type": "group",
+    "mode": "random",
+    "funcs": [
+        {
+            "weight": 5,
+            "type": "ref",
+            "/assets": "elementalsorcery:dungeon/common_monster_1",
+            "params": {
+                "$loots": "elementalsorcery:dungeon/dungeon_loot_sundry_checkpoint"
+            }
+        },
+        {
+            "type": "haystack",
+            "weight": 15,
+            "pressure": "random",
+            "trigger": {
+                "onSweep": {
+                    "type": "group",
+                    "mode": "random",
+                    "funcs": [
+                        {
+                            "type": "loot",
+                            "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_checkpoint",
+                            "acceptHideItem": true
+                        },
+                        {
+                            "type": "ref",
+                            "/assets": "elementalsorcery:dungeon/common_trap_1"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}

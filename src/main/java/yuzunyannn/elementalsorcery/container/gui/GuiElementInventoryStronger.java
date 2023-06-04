@@ -136,7 +136,7 @@ public class GuiElementInventoryStronger extends GuiContainer {
 		this.drawTexturedModalRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize);
 
 		float pratio = RenderFriend.getPartialTicks(capacityRatio, prevCapacityRatio, partialTicks);
-		RenderFriend.drawTexturedModalRect(guiLeft + 24, guiTop + 86, 0, 160, 112 * pratio, 2, 256, 256);
+		RenderFriend.drawTextureModalRect(guiLeft + 24, guiTop + 86, 0, 160, 112 * pratio, 2, 256, 256);
 
 		if (mouseX >= guiLeft + 70 && mouseX <= guiLeft + 89 && mouseY >= guiTop + 146 && mouseY <= guiTop + 154)
 			this.drawTexturedModalRect(guiLeft + 71, guiTop + 147, 0, 162, 18, 6);
@@ -147,7 +147,7 @@ public class GuiElementInventoryStronger extends GuiContainer {
 			GlStateManager.translate(x, y, 0);
 			float rotation = MathHelper.sin(cr / 20) * 180;
 			GlStateManager.rotate(rotation, 0, 0, 1);
-			RenderFriend.drawTexturedRectInCenter(0, 0, 66, 66, 160, 0, 66, 66, 256, 256);
+			RenderFriend.drawTextureRectInCenter(0, 0, 66, 66, 160, 0, 66, 66, 256, 256);
 			GlStateManager.rotate(-rotation, 0, 0, 1);
 			GlStateManager.translate(-x, -y, 0);
 		}

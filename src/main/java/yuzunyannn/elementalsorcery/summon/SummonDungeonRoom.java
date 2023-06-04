@@ -72,6 +72,8 @@ public class SummonDungeonRoom extends SummonCommon {
 
 	@Override
 	public boolean update() {
+		if (world.isRemote) return true;
+
 		DungeonAreaRoom room = getRoom();
 		if (room == null) return false;
 

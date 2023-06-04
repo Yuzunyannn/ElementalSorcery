@@ -1236,6 +1236,11 @@
             "zh_CN": "地牢法阵",
             "en_US": "Dungeon Circle",
             "ja_JP": "地下牢のマジックサークル"
+        },
+        "tile.dungeonCheckpoint.name": {
+            "zh_CN": "地牢传送石",
+            "en_US": "Dungeon Portal Stone",
+            "ja_JP": "地下牢のトランスファ石"
         }
     }
 }

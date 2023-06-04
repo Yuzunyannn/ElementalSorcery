@@ -34,19 +34,19 @@ public class TopicEngine extends Topic {
 
 		GlStateManager.pushMatrix();
 		GlStateManager.rotate(rotate, 0, 0, 1);
-		RenderFriend.drawTexturedRectInCenter(0, 0, 32, 32, 32, 0, 23, 23, 128, 128);
+		RenderFriend.drawTextureRectInCenter(0, 0, 32, 32, 32, 0, 23, 23, 128, 128);
 		GlStateManager.popMatrix();
 
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(22, 0, 0);
 		GlStateManager.rotate(-(rotate + 20), 0, 0, 1);
-		RenderFriend.drawTexturedRectInCenter(0, 0, 16, 16, 32, 0, 23, 23, 128, 128);
+		RenderFriend.drawTextureRectInCenter(0, 0, 16, 16, 32, 0, 23, 23, 128, 128);
 		GlStateManager.popMatrix();
 
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(-18, 18, 0);
 		GlStateManager.rotate(-(rotate + 20), 0, 0, 1);
-		RenderFriend.drawTexturedRectInCenter(0, 0, 20, 20, 32, 0, 23, 23, 128, 128);
+		RenderFriend.drawTextureRectInCenter(0, 0, 20, 20, 32, 0, 23, 23, 128, 128);
 		GlStateManager.popMatrix();
 
 		GlStateManager.popMatrix();

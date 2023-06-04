@@ -66,10 +66,10 @@ public class EffectLaserMantra extends EffectLaser {
 		GlStateManager.rotate(r, 0, 0, 1);
 
 		EffectMagicEmit.TEXTURE.bind();
-		RenderFriend.drawTexturedRectInCenter(0, 0, 1, 1);
+		RenderFriend.drawTextureRectInCenter(0, 0, 1, 1);
 		TextureBinder.bindTexture(RenderObjects.MAGIC_CIRCLE_SUMMON);
 		GlStateManager.rotate(-r * 2, 0, 0, 1);
-		RenderFriend.drawTexturedRectInCenter(0, 0, 0.4f, 0.4f);
+		RenderFriend.drawTextureRectInCenter(0, 0, 0.4f, 0.4f);
 
 		scale = 1 / scale;
 		GlStateManager.scale(scale, scale, 1);

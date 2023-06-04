@@ -198,7 +198,7 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 		mc.getTextureManager().bindTexture(res);
 		GlStateManager.color(1, 1, 1);
 		boolean isCenter = (flag & DRAW_GUI_FLAG_CENTER) != 0;
-		if (isCenter) RenderFriend.drawTexturedRectInCenter(x, y, 16, 16);
+		if (isCenter) RenderFriend.drawTextureRectInCenter(x, y, 16, 16);
 		else Gui.drawModalRectWithCustomSizedTexture(x, y, 0, 0, 16, 16, 16, 16);
 
 		if ((flag & DRAW_GUI_FLAG_NO_INFO) != 0) return;

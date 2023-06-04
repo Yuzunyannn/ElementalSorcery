@@ -21,17 +21,20 @@ public class ESNetwork {
 		regMsg(2, MessageEntitySync.Handler.class, MessageEntitySync.class, Side.CLIENT);
 		regMsg(3, MessageMantraShift.Handler.class, MessageMantraShift.class, Side.SERVER);
 		regMsg(4, MessageElfTreeElevator.Handler.class, MessageElfTreeElevator.class, Side.SERVER);
-		
+
 		regMsg(5, MessageGetBuilingInfo.Handler.class, MessageGetBuilingInfo.class, Side.CLIENT);
 		regMsg(6, MessageGetBuilingInfo.Handler.class, MessageGetBuilingInfo.class, Side.SERVER);
-		
+
 		regMsg(7, MessageSyncContainer.Handler.class, MessageSyncContainer.class, Side.CLIENT);
 		regMsg(8, MessageSyncContainer.Handler.class, MessageSyncContainer.class, Side.SERVER);
-		
+
 		regMsg(9, MessageSyncConfig.Handler.class, MessageSyncConfig.class, Side.CLIENT);
 		regMsg(10, MessagePocketWatch.Handler.class, MessagePocketWatch.class, Side.CLIENT);
 		regMsg(11, MessageElementExplosion.Handler.class, MessageElementExplosion.class, Side.CLIENT);
 		regMsg(12, MessageBlockDisintegrate.Handler.class, MessageBlockDisintegrate.class, Side.CLIENT);
+
+		regMsg(13, MessageDungeonSync.Handler.class, MessageDungeonSync.class, Side.CLIENT);
+		regMsg(14, MessageDungeonSync.Handler.class, MessageDungeonSync.class, Side.SERVER);
 	}
 
 	public static <REQ extends IMessage, REPLY extends IMessage> void regMsg(int id,

@@ -250,6 +250,7 @@ tile.dungeonBarrier.name=Dungeon Barrier
 tile.dungeonRottenLifeWood.name=Rotten Log of Tree of Life
 tile.dungeonActinicGlass.name=Actinic Glass
 tile.dungeonMagicCircleA.name=Dungeon Circle
+tile.dungeonCheckpoint.name=Dungeon Portal Stone
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
@@ -569,6 +570,10 @@ info.dungeonSeed.open.so.large=*The dungeon covers a large area, please choose a
 info.dungeon.bad.place=The location here doesn't seem very good. Let's try a different one
 info.dungeonSeed.storage.hp=live: %s
 info.dungeonSeed.storage.exp=experience: %s
+info.dungeon.room.gui=Room: %s
+info.dungeon.teleport.title=Teleport Station
+info.dungeon.teleport.title.click=Click to Teleporting
+info.dungeon.explor.progress=Explored room: %d/%d, progress: %.2f%%
 
 info.mc.archi.Temple.name=Desert Pyramid
 

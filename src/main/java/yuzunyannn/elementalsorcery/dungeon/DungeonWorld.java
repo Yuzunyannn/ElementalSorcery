@@ -14,6 +14,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.storage.MapStorage;
 import net.minecraft.world.storage.WorldSavedData;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.dungeon.DungeonArea.AreaExcerpt;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -22,6 +24,7 @@ public class DungeonWorld extends WorldSavedData {
 
 	/** 获取地牢对象 */
 	public static DungeonWorld getDungeonWorld(World world) {
+		if (world.isRemote) return getDungeonWorldClient(world);
 		MapStorage storage = world.getMapStorage();
 		WorldSavedData worldSave = storage.getOrLoadData(DungeonWorld.class, "ESDungeonWorld");
 		if (worldSave == null) {
@@ -31,6 +34,11 @@ public class DungeonWorld extends WorldSavedData {
 		DungeonWorld dw = (DungeonWorld) worldSave;
 		dw.world = world;
 		return dw;
+	}
+
+	@SideOnly(Side.CLIENT)
+	protected static DungeonWorld getDungeonWorldClient(World world) {
+		return DungeonWorldClient.getDungeonWorld(world);
 	}
 
 	public static class DungeonWorldLand extends WorldSavedData {
@@ -97,6 +105,11 @@ public class DungeonWorld extends WorldSavedData {
 		super(name);
 	}
 
+	public DungeonWorld() {
+		super("ESDungeonWorld");
+	}
+
+	@Nullable
 	public DungeonArea getDungeon(int id) {
 		MapStorage storage = world.getMapStorage();
 		String key = "ESDungeon_" + String.valueOf(id);
@@ -143,7 +156,8 @@ public class DungeonWorld extends WorldSavedData {
 		return worldSave;
 	}
 
-	protected DungeonWorldLand getWorldLand(int x, int z) {
+	@Nullable
+	public DungeonWorldLand getWorldLand(int x, int z) {
 		DungeonPos pos = new DungeonPos(x, z);
 		if (wlMap.containsKey(pos)) return wlMap.get(pos);
 		String key = String.format("ESDungeonLand_%d_%d", x, z);
@@ -153,21 +167,22 @@ public class DungeonWorld extends WorldSavedData {
 		return worldSave;
 	}
 
-	public boolean isCrossWithOther(AreaExcerpt excerpt) {
-		for (int x = excerpt.minAX / LAND_SPLIT; x <= excerpt.maxAX / LAND_SPLIT; x++) {
-			for (int z = excerpt.minAZ / LAND_SPLIT; z <= excerpt.maxAZ / LAND_SPLIT; z++) {
-				if (getOrCreateWorldLand(x, z).isCross(excerpt)) return true;
-			}
-		}
-		return false;
-	}
-
-	public void addToLand(AreaExcerpt excerpt) {
+	protected void addToLand(AreaExcerpt excerpt) {
 		for (int x = excerpt.minAX / LAND_SPLIT; x <= excerpt.maxAX / LAND_SPLIT; x++) {
 			for (int z = excerpt.minAZ / LAND_SPLIT; z <= excerpt.maxAZ / LAND_SPLIT; z++) {
 				getOrCreateWorldLand(x, z).add(excerpt);
 			}
 		}
+	}
+
+	public boolean isCrossWithOther(AreaExcerpt excerpt) {
+		for (int x = excerpt.minAX / LAND_SPLIT; x <= excerpt.maxAX / LAND_SPLIT; x++) {
+			for (int z = excerpt.minAZ / LAND_SPLIT; z <= excerpt.maxAZ / LAND_SPLIT; z++) {
+				DungeonWorldLand land = getWorldLand(x, z);
+				if (land != null && land.isCross(excerpt)) return true;
+			}
+		}
+		return false;
 	}
 
 	@Nullable
@@ -185,7 +200,14 @@ public class DungeonWorld extends WorldSavedData {
 		if (excerpt == null) return null;
 		DungeonArea dungeon = getDungeon(excerpt.id);
 		if (dungeon == null) return null;
-		return dungeon.findRoom(new Vec3d(pos).add(0.5, 0.5, 0.5));
+		return dungeon.findRoom(new Vec3d(pos).add(0.25, 0.25, 0.25));
+	}
+
+	public void markDirty(DungeonAreaRoom room) {
+		DungeonArea dungeon = this.getDungeon(room.getAreId());
+		if (dungeon == null) return;
+		dungeon.markDirty();
+		room.nextUpdateFlag();
 	}
 
 	public void debugClear() {

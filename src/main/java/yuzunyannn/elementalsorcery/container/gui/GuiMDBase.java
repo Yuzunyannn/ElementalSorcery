@@ -36,7 +36,7 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 		float roate = EventClient.getGlobalRotateInRender(partialTicks) / 180 * 3.1415926f;
 		for (int i = 0; i < width; i++) {
 			float y = MathHelper.sin(roate + i * 0.15f) * PEAK;
-			RenderFriend.drawTexturedModalRect(xoff + i, yoff + y, i % 16, HEIGHT * ((i / 16) % 2), 1, HEIGHT, 16, 512);
+			RenderFriend.drawTextureModalRect(xoff + i, yoff + y, i % 16, HEIGHT * ((i / 16) % 2), 1, HEIGHT, 16, 512);
 		}
 	}
 
@@ -93,14 +93,14 @@ public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<
 			int volumeY, int volumeHeight, float partialTicks, ResourceLocation TEXTURE1, ResourceLocation TEXTURE2) {
 		volumeY = 19 + 50 - volumeHeight;
 		mc.getTextureManager().bindTexture(TEXTURE1);
-		RenderFriend.drawTexturedModalRect(offsetX + 15, offsetY + volumeY, 0, 166, 144, volumeHeight, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 15, offsetY + volumeY, 0, 166, 144, volumeHeight, 256, 256);
 		drawMagicVolume(offsetX + 15, offsetY + volumeY, 144, volumeHeight, rate, partialTicks);
 		mc.getTextureManager().bindTexture(TEXTURE1);
-		RenderFriend.drawTexturedModalRect(offsetX, offsetY, 0, 0, xSize, ySize, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX, offsetY, 0, 0, xSize, ySize, 256, 256);
 		mc.getTextureManager().bindTexture(TEXTURE2);
-		RenderFriend.drawTexturedModalRect(offsetX + 14, offsetY + 18, 14, 18, 146, 50 - volumeHeight, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 14, offsetY + 18, 14, 18, 146, 50 - volumeHeight, 256, 256);
 		mc.getTextureManager().bindTexture(TEXTURE1);
-		RenderFriend.drawTexturedModalRect(offsetX + 14, offsetY + 18 + 50 - volumeHeight, 14, 18, 146, 1, 256, 256);
+		RenderFriend.drawTextureModalRect(offsetX + 14, offsetY + 18 + 50 - volumeHeight, 14, 18, 146, 1, 256, 256);
 	}
 
 }

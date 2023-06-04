@@ -101,7 +101,7 @@ public class PageSimple extends PageEasy {
 		GlStateManager.pushMatrix();
 		GlStateManager.translate(0, 0, 5);
 		GlStateManager.color(1, 1, 1, 0.5f);
-		RenderFriend.drawTexturedModalRect(xoff + 145, yoff + 81, 145, 81, 75, 75, 256, 256);
+		RenderFriend.drawTextureModalRect(xoff + 145, yoff + 81, 145, 81, 75, 75, 256, 256);
 		GlStateManager.popMatrix();
 
 	}

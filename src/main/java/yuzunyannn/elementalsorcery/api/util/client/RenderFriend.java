@@ -144,7 +144,7 @@ public class RenderFriend {
 		}
 	}
 
-	static public void drawTexturedModalRect(float x, float y, float u, float v, float width, float height,
+	static public void drawTextureModalRect(float x, float y, float u, float v, float width, float height,
 			float textureWidth, float textureHeight) {
 		float f = 1.0F / textureWidth;
 		float f1 = 1.0F / textureHeight;
@@ -161,7 +161,7 @@ public class RenderFriend {
 		tessellator.draw();
 	}
 
-	public static void drawTexturedRectInCenter(float x, float y, float width, float height, float u, float v,
+	public static void drawTextureRectInCenter(float x, float y, float width, float height, float u, float v,
 			float texWidth, float texHeight, float textureWidth, float textureHeight) {
 		float f = 1.0F / textureWidth;
 		float f1 = 1.0F / textureHeight;
@@ -177,7 +177,7 @@ public class RenderFriend {
 		tessellator.draw();
 	}
 
-	public static void drawTexturedRectInCenter(float x, float y, float width, float height, float u, float v,
+	public static void drawTextureRectInCenter(float x, float y, float width, float height, float u, float v,
 			float texWidth, float texHeight, float textureWidth, float textureHeight, float r, float g, float b,
 			float a, float anchorX, float anchorY) {
 		float f = 1.0F / textureWidth;
@@ -198,8 +198,142 @@ public class RenderFriend {
 		tessellator.draw();
 	}
 
-	public static void drawTexturedRectInCenter(float x, float y, float width, float height) {
-		drawTexturedRectInCenter(x, y, width, height, 0, 0, 1, 1, 1, 1);
+	public static void drawTextureRectInCenter(float x, float y, float width, float height) {
+		drawTextureRectInCenter(x, y, width, height, 0, 0, 1, 1, 1, 1);
+	}
+
+	public static final RenderRect SPLIT9_AVERAGE_RECT = new RenderRect(1 / 3f, 2 / 3f, 1 / 3f, 2 / 3f);
+
+	public static void drawFrameInCenter(float x, float y, float width, float height, RenderTexutreFrame frame) {
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+		float hw = width / 2;
+		float hh = height / 2;
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+		bufferbuilder.pos(x - hw, y + hh, 0.0D).tex(frame.x, frame.y + frame.height).endVertex();
+		bufferbuilder.pos(x + hw, y + hh, 0.0D).tex(frame.x + frame.width, frame.y + frame.height).endVertex();
+		bufferbuilder.pos(x + hw, y - hh, 0.0D).tex(frame.x + frame.width, frame.y).endVertex();
+		bufferbuilder.pos(x - hw, y - hh, 0.0D).tex(frame.x, frame.y).endVertex();
+		tessellator.draw();
+	}
+
+	public static void drawSplit9FrameInCenter(double x, double y, double width, double height,
+			RenderTexutreFrame frame, RenderRect splitRect) {
+
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder bufferbuilder = tessellator.getBuffer();
+
+		double hw = width / 2;
+		double hh = height / 2;
+		double cw, ch, cx, cy;
+		double tcw, tch, tcx, tcy;
+
+		bufferbuilder.begin(7, DefaultVertexFormats.POSITION_TEX);
+
+		// left top
+		cx = x - hw;
+		cy = y - hh;
+		cw = splitRect.left * frame.width * frame.texWidth;
+		ch = splitRect.top * frame.height * frame.texHeight;
+		tcx = frame.x;
+		tcy = frame.y;
+		tcw = splitRect.left * frame.width;
+		tch = splitRect.top * frame.height;
+
+		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+
+		// left
+		cy = cy + ch;
+		ch = height - ch * 2;
+		tcy = tcy + tch;
+		tch = (splitRect.bottom - splitRect.top) * frame.height;
+
+		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+
+		// left bottom
+		cy = cy + ch;
+		ch = (height - ch) / 2;
+		tcy = tcy + tch;
+		tch = (1 - splitRect.bottom) * frame.height;
+
+		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+
+		// bottom
+		cx = cx + cw;
+		cw = width - cw * 2;
+		tcx = tcx + tcw;
+		tcw = (splitRect.right - splitRect.left) * frame.width;
+
+		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+
+		// right bottom
+		cx = cx + cw;
+		cw = (width - cw) / 2;
+		tcx = tcx + tcw;
+		tcw = (1 - splitRect.right) * frame.width;
+
+		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+
+		// right
+		ch = height - ch * 2;
+		cy = cy - ch;
+		tch = (splitRect.bottom - splitRect.top) * frame.height;
+		tcy = tcy - tch;
+
+		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+
+		// right top
+		ch = (height - ch) / 2;
+		cy = cy - ch;
+		tch = splitRect.top * frame.height;
+		tcy = tcy - tch;
+
+		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+
+		// top
+		cw = width - cw * 2;
+		cx = cx - cw;
+		tcw = (splitRect.right - splitRect.left) * frame.width;
+		tcx = tcx - tcw;
+		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+
+		// center
+		cy = cy + ch;
+		ch = height - ch * 2;
+		tcy = tcy + tch;
+		tch = (splitRect.bottom - splitRect.top) * frame.height;
+
+		bufferbuilder.pos(cx, cy, 0.0D).tex(tcx, tcy).endVertex();
+		bufferbuilder.pos(cx, cy + ch, 0.0D).tex(tcx, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy + ch, 0.0D).tex(tcx + tcw, tcy + tch).endVertex();
+		bufferbuilder.pos(cx + cw, cy, 0.0D).tex(tcx + tcw, tcy).endVertex();
+
+		tessellator.draw();
+
 	}
 
 	public static void disableLightmap(boolean disabled) {

@@ -199,11 +199,11 @@ public class MantraElementWhirl extends MantraTypeAccumulative {
 	@SideOnly(Side.CLIENT)
 	public void renderShiftIcon(NBTTagCompound mantraData, float suggestSize, float suggestAlpha, float partialTicks) {
 		ESResources.MANTRA_COMMON_CIRCLE.bind();
-		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		RenderFriend.drawTextureRectInCenter(0, 0, suggestSize, suggestSize);
 		GlStateManager.color(1, 1, 1);
 		TextureBinder.bindTexture(this.icon);
 		suggestSize = suggestSize * 0.5f;
-		RenderFriend.drawTexturedRectInCenter(0, 0, suggestSize, suggestSize);
+		RenderFriend.drawTextureRectInCenter(0, 0, suggestSize, suggestSize);
 	}
 
 }

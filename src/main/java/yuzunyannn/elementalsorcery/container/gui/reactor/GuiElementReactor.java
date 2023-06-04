@@ -198,7 +198,7 @@ public class GuiElementReactor extends GuiScreen {
 		BlockPos pos = reactor.getWorldMap().getPos();
 		List<MapHelper.EntityData> list = reactor.getWorldMap().getEntityList();
 		GlStateManager.color(1, 1, 1, alpha);
-		RenderFriend.drawTexturedRectInCenter(0, 0, MAP_DRAW_SIZE, MAP_DRAW_SIZE, 0, 0, 1, 1, 1, 1);
+		RenderFriend.drawTextureRectInCenter(0, 0, MAP_DRAW_SIZE, MAP_DRAW_SIZE, 0, 0, 1, 1, 1, 1);
 
 		COMS.bind();
 		Tessellator tessellator = Tessellator.getInstance();

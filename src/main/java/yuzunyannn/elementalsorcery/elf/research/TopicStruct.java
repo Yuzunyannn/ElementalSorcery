@@ -37,10 +37,10 @@ public class TopicStruct extends Topic {
 			GlStateManager.rotate(18f * d, 0, 0, 1);
 		} else d = 20 - tick;
 
-		RenderFriend.drawTexturedRectInCenter(7, -7 - d, 3, 25, 55, 0, 3, 25, 128, 128);
-		RenderFriend.drawTexturedRectInCenter(-7, 7 + d, 3, 25, 55, 0, 3, 25, 128, 128);
-		RenderFriend.drawTexturedRectInCenter(7 + d, 7, 25, 3, 55, 0, 25, 3, 128, 128);
-		RenderFriend.drawTexturedRectInCenter(-7 - d, -7, 25, 3, 55, 0, 25, 3, 128, 128);
+		RenderFriend.drawTextureRectInCenter(7, -7 - d, 3, 25, 55, 0, 3, 25, 128, 128);
+		RenderFriend.drawTextureRectInCenter(-7, 7 + d, 3, 25, 55, 0, 3, 25, 128, 128);
+		RenderFriend.drawTextureRectInCenter(7 + d, 7, 25, 3, 55, 0, 25, 3, 128, 128);
+		RenderFriend.drawTextureRectInCenter(-7 - d, -7, 25, 3, 55, 0, 25, 3, 128, 128);
 
 		GlStateManager.popMatrix();
 	}

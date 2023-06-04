@@ -97,7 +97,7 @@ public class GuiDevolveCube extends GuiContainer {
 
 		DynamicTexture texture = getDynamicTexture();
 		GlStateManager.bindTexture(texture.getGlTextureId());
-		RenderFriend.drawTexturedRectInCenter(centerX, centerY, this.xSize - 6, this.ySize - 6, 0, 0, 1, 1, 1, -1);
+		RenderFriend.drawTextureRectInCenter(centerX, centerY, this.xSize - 6, this.ySize - 6, 0, 0, 1, 1, 1, -1);
 
 		this.mc.getTextureManager().bindTexture(TEXTURE);
 		final int onePixel = 6;
@@ -130,7 +130,7 @@ public class GuiDevolveCube extends GuiContainer {
 					GlStateManager.translate(xf, yf, 0);
 					GlStateManager.rotate(roate, 0, 0, 1);
 					GlStateManager.scale(scale, scale, 1);
-					RenderFriend.drawTexturedRectInCenter(0, 0, 4, 4, 198, 0, 4, 4, 256, 256);
+					RenderFriend.drawTextureRectInCenter(0, 0, 4, 4, 198, 0, 4, 4, 256, 256);
 					GlStateManager.scale(1 / scale, 1 / scale, 1);
 					GlStateManager.rotate(-roate, 0, 0, 1);
 					GlStateManager.translate(-xf, -yf, 0);
@@ -141,7 +141,7 @@ public class GuiDevolveCube extends GuiContainer {
 				if (dat.inEnable) GlStateManager.color(255 / 255f, 162 / 255f, 171 / 255f);
 				else if (dat.outEnable) GlStateManager.color(168 / 255f, 178 / 255f, 255 / 255f);
 				else GlStateManager.color(1f, 1f, 1f);
-				RenderFriend.drawTexturedRectInCenter(0, 0, 4, 4, 198, 0, 4, 4, 256, 256);
+				RenderFriend.drawTextureRectInCenter(0, 0, 4, 4, 198, 0, 4, 4, 256, 256);
 				GlStateManager.rotate(-roate, 0, 0, 1);
 			}
 
@@ -149,7 +149,7 @@ public class GuiDevolveCube extends GuiContainer {
 
 			if (isSelect && !pos.equals(selected)) {
 				GlStateManager.color(0.5f, 1f, 1f, 0.8f);
-				RenderFriend.drawTexturedRectInCenter(0, 0, 8, 8, 198, 4, 8, 8, 256, 256);
+				RenderFriend.drawTextureRectInCenter(0, 0, 8, 8, 198, 4, 8, 8, 256, 256);
 				GlStateManager.color(1f, 1f, 1f, 1f);
 			}
 
@@ -179,7 +179,7 @@ public class GuiDevolveCube extends GuiContainer {
 			float y = selected.getZ() - tilePos.getZ();
 			float xoff = centerX + x * onePixel + hPixel;
 			float yoff = centerY - (y + 1) * onePixel + hPixel;
-			RenderFriend.drawTexturedRectInCenter(xoff, yoff, 8, 8, 198, 4, 8, 8, 256, 256);
+			RenderFriend.drawTextureRectInCenter(xoff, yoff, 8, 8, 198, 4, 8, 8, 256, 256);
 
 			List<Entry<BlockPos, DevolveData>> cList = classifyDevolveMap.get(selected);
 			if (cList == null || cList.isEmpty()) {

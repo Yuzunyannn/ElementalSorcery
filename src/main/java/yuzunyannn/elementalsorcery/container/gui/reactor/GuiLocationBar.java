@@ -72,13 +72,13 @@ public class GuiLocationBar {
 		float dwScale = 1;
 		if (dw > 11) dwScale = 11 / (float) dw;
 		{
-			RenderFriend.drawTexturedRectInCenter(-xoff + offset, 0, 11, 10, 44, 20, 11, 10, 256, 256);
-			RenderFriend.drawTexturedRectInCenter(xoff + offset, 0, 11, 10, 79, 20, 11, 10, 256, 256);
-			RenderFriend.drawTexturedRectInCenter(offset, 0, barWidth - 22, 10, 55, 20, 24, 10, 256, 256);
+			RenderFriend.drawTextureRectInCenter(-xoff + offset, 0, 11, 10, 44, 20, 11, 10, 256, 256);
+			RenderFriend.drawTextureRectInCenter(xoff + offset, 0, 11, 10, 79, 20, 11, 10, 256, 256);
+			RenderFriend.drawTextureRectInCenter(offset, 0, barWidth - 22, 10, 55, 20, 24, 10, 256, 256);
 		}
 		if (isLeft) {
-			RenderFriend.drawTexturedRectInCenter(xoff + offset, 0, -11, -10, 44, 30, 11, 10, 256, 256);
-			RenderFriend.drawTexturedRectInCenter(-xoff + offset, 0, -11, -10, 79, 30, 11, 10, 256, 256);
+			RenderFriend.drawTextureRectInCenter(xoff + offset, 0, -11, -10, 44, 30, 11, 10, 256, 256);
+			RenderFriend.drawTextureRectInCenter(-xoff + offset, 0, -11, -10, 79, 30, 11, 10, 256, 256);
 			GlStateManager.translate(-w / 2.0f + offset, -4.5, 0);
 			fontRenderer.drawString(string, 0, 0, iColor);
 			GlStateManager.translate(w / 2.0f - offset, 4.5, 0);
@@ -92,8 +92,8 @@ public class GuiLocationBar {
 			}
 			GlStateManager.translate(-offset + barWidth / 2 + (dw / 2.0f - 5.5f) * dwScale, 4.5 * dwScale, 0);
 		} else {
-			RenderFriend.drawTexturedRectInCenter(-xoff + offset, 0, 11, 10, 44, 30, 11, 10, 256, 256);
-			RenderFriend.drawTexturedRectInCenter(xoff + offset, 0, 11, 10, 79, 30, 11, 10, 256, 256);
+			RenderFriend.drawTextureRectInCenter(-xoff + offset, 0, 11, 10, 44, 30, 11, 10, 256, 256);
+			RenderFriend.drawTextureRectInCenter(xoff + offset, 0, 11, 10, 79, 30, 11, 10, 256, 256);
 			GlStateManager.translate(-w / 2.0f + offset, -4.5, 0);
 			fontRenderer.drawString(string, 0, 0, iColor);
 			GlStateManager.translate(w / 2.0f - offset, 4.5, 0);
