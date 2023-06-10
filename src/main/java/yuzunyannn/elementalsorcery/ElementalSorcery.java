@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 @Mod(modid = ESAPI.MODID, name = ESAPI.NAME, version = ElementalSorcery.VERSION)
 public class ElementalSorcery {
 
-	public static final String VERSION = "0.17.0";
+	public static final String VERSION = "0.17.1";
 
 	public static Side side;
 	public static ESData data;

@@ -240,6 +240,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			BlockInfo info = infoList.get(entry.getValue());
 			BlockItemTypeInfo tpInfo = new BlockItemTypeInfo(info.state);
 			if (info.tileSave != null) tpInfo.updateWithTileEntitySaveData(info.tileSave);
+			if (tpInfo.isEmpty()) throw new RuntimeException("BlockItemTypeInfo is Missing!" + info.state);
 			if (!typeInfoList.contains(tpInfo)) typeInfoList.add(tpInfo);
 			int tpIndex = typeInfoList.indexOf(tpInfo);
 			info.typeIndex = tpIndex;

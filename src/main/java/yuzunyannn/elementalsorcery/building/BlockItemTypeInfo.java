@@ -163,10 +163,15 @@ public class BlockItemTypeInfo {
 		return blockStack;
 	}
 
+	public boolean isEmpty() {
+		return blockStack.isEmpty();
+	}
+
 	@Override
 	public boolean equals(Object other) {
 		if (other instanceof BlockItemTypeInfo) {
 			BlockItemTypeInfo info = (BlockItemTypeInfo) other;
+			// TODO 不是所有东西都不需要比较nbt
 			return info.blockStack.isItemEqual(this.blockStack);
 		}
 		return false;

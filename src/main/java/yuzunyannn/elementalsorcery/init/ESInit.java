@@ -853,9 +853,6 @@ public class ESInit {
 		// 注册精灵相关
 		ElfRegister.registerAllProfession();
 		AutoName.init();
-		// 注册默认所有建筑
-		BuildingLib.registerAll();
-		DungeonLib.registerAll();
 		// 注册咒文
 		registerAllMantras();
 		KnowledgeType.registerAll();
@@ -896,6 +893,9 @@ public class ESInit {
 	}
 
 	public final static void init(FMLInitializationEvent event) throws Throwable {
+		// 注册默认所有建筑
+		BuildingLib.registerAll();
+		DungeonLib.registerAll();
 		// 注册元素映射
 		ElementMap.registerAll();
 		// 注册所有配方
@@ -1220,7 +1220,6 @@ public class ESInit {
 		registerRender(ITEMS.DUNGEON_STONE);
 		registerRender(ITEMS.SIMPLE_MATERIAL_CONTAINER);
 		registerRender(ITEMS.STRENGTHEN_AGENT);
-		
 
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");
