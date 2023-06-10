@@ -587,27 +587,27 @@
 		},
 		"page.md.ct": {
 			"zh_CN": "通过魔通石，史蒂夫将魔力作为驱动源，制造出魔力设备来使用。\\n魔力设备中都可以储存魔力，如果破坏掉储存魔力的设备，魔力会爆发出来，对周围造成伤害。",
-			"en_US": "通过魔通石，史蒂夫将魔力作为驱动源，制造出魔力设备来使用。\\n魔力设备中都可以储存魔力，如果破坏掉储存魔力的设备，魔力会爆发出来，对周围造成伤害。",
+			"en_US": "Use The Stone with Magic, Steve craft devices powered by Magic.\\nMagical devices can store Magic, If it is destroyed, the magic will erupt and cause damage to the surrounding.",
 			"ja_JP": "通过魔通石、スティーブ将魔力作为驱动源、制造出魔力设备来使用。\\n魔力设备中都可以储存魔力、如果破坏掉储存魔力的设备、魔力会爆发出来、对周围造成伤害。"
 		},
 		"page.magicTorch": {
 			"zh_CN": "魔石火把",
-			"en_US": "魔石火把",
+			"en_US": "Dimensity Torch",
 			"ja_JP": "魔石火把"
 		},
 		"page.magicTorch.ct": {
 			"zh_CN": "魔石火把具有很好的魔力亲和性，并且将魔力传送出去。将火把插在魔力装置的一面，火把便可以从盖面抽取魔力，将魔力直线传到另外一个装置区。",
-			"en_US": "魔石火把具有很好的魔力亲和性，并且将魔力传送出去。将火把插在魔力装置的一面，火把便可以从盖面抽取魔力，将魔力直线传到另外一个装置区。",
+			"en_US": "Dimensity Torches can transmit magic. Put the torch onto one side of the magical device, and the torch can extract magic and transmit it in a line to another device.",
 			"ja_JP": "魔石火把具有很好的魔力亲和性、并且将魔力传送出去。将火把插在魔力装置的一面、火把便可以从盖面抽取魔力、将魔力直线传到另外一个装置区。"
 		},
 		"page.magicGen": {
 			"zh_CN": "热力魔分箱",
-			"en_US": "热力魔分箱",
+			"en_US": "Magic Separator",
 			"ja_JP": "热力魔分箱"
 		},
 		"page.magicGen.ct": {
 			"zh_CN": "通过灶台，将魔石分解为魔力。\\n魔石分解需要热力魔分箱达到一定的温度才可以开始进行。",
-			"en_US": "通过灶台，将魔石分解为魔力。\\n魔石分解需要热力魔分箱达到一定的温度才可以开始进行。",
+			"en_US": "With the Hearth, Dimensity can decompose it into magic.\\nThe decomposition of Dimensity requires the Magic Separator to reach a certain temperature before it can begin",
 			"ja_JP": "通过灶台、将魔石分解为魔力。\\n魔石分解需要热力魔分箱达到一定的温度才可以开始进行。"
 		},
 		"page.magicTransfer": {
@@ -1627,7 +1627,7 @@
 		},
 		"page.iceRockCrystal": {
 			"zh_CN": "岩冰水晶",
-			"en_US": "岩冰水晶",
+			"en_US": "Ice Rock Crystal",
 			"ja_JP": "岩冰水晶"
 		},
 		"page.iceRockCrystal.ct": {

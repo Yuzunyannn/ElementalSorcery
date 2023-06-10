@@ -719,6 +719,11 @@
             "zh_CN": "虚空方锥",
             "en_US": "Void Cone",
             "ja_JP": "虚空のかくすい"
+        },
+        "item.strengthenAgent.name": {
+            "zh_CN": "强化药剂",
+            "en_US": "Strengthen Agent",
+            "ja_JP": "強化剤"
         }
     },
     "tile": {
@@ -1241,6 +1246,13 @@
             "zh_CN": "地牢传送石",
             "en_US": "Dungeon Portal Stone",
             "ja_JP": "地下牢のトランスファ石"
+        },
+        "tile.strangeEgg.name": {
+            "zh_CN": "奇怪的蛋",
+            "en_US": "Strange Egg",
+            "ja_JP": "変な卵"
         }
+
+        
     }
 }

@@ -1,15 +1,19 @@
 package yuzunyannn.elementalsorcery.grimoire;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.UUID;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -21,7 +25,9 @@ import yuzunyannn.elementalsorcery.api.crafting.IItemCapbiltitySyn;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
+import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
 /** 该能力仅仅是跟随物品，作为上下文数据使用 */
 public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagCompound> {
@@ -34,6 +40,10 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 
 	/** 是否加载过，在施法过程中不会重复加载 */
 	public int lastLoaded = 0;
+
+	/** 当前施法实体的缓存 */
+	protected WeakReference<EntityGrimoire> currGrimoireEntity;
+	protected UUID currGrimoireEntityId;
 
 	@SideOnly(Side.CLIENT)
 	public RenderItemGrimoireInfo getRenderInfo() {
@@ -190,6 +200,7 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 		at = nbt.getShort("at");
 		potent = nbt.getFloat("potent");
 		potentPoint = nbt.getFloat("potentP");
+		if (nbt.hasUniqueId("cgeId")) currGrimoireEntityId = nbt.getUniqueId("cgeId");
 	}
 
 	@Override
@@ -206,6 +217,7 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 		nbt.setShort("at", at);
 		nbt.setFloat("potent", potent);
 		nbt.setFloat("potentP", potentPoint);
+		if (currGrimoireEntityId != null) nbt.setUniqueId("cgeId", currGrimoireEntityId);
 
 	}
 
@@ -223,7 +235,7 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 
 	/** 根据stack获取当前使用的咒文数据 */
 	@Nullable
-	public static NBTTagCompound getOriginNBT(ItemStack stack) {
+	public static NBTTagCompound getMantraNBT(ItemStack stack) {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) return null;
 		NBTTagList mantras = nbt.getTagList("mantra", 10);
@@ -240,6 +252,43 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 		if (list.isEmpty()) return;
 		if (to < 0 || to >= list.tagCount()) return;
 		nbt.setShort("at", to);
+	}
+
+	public void setGrimoireEntity(EntityGrimoire grimoireEntity) {
+		if (grimoireEntity == null) {
+			currGrimoireEntity = null;
+			currGrimoireEntityId = null;
+			return;
+		}
+		this.currGrimoireEntity = new WeakReference<EntityGrimoire>(grimoireEntity);
+		this.currGrimoireEntityId = grimoireEntity.getUniqueID();
+	}
+
+	private EntityGrimoire findGrimoireEntity(World world) {
+		Entity entity = WorldHelper.restoreLiving(world, this.currGrimoireEntityId);
+		if (entity instanceof EntityGrimoire) {
+			EntityGrimoire grimoire = (EntityGrimoire) entity;
+			return grimoire;
+		}
+		return null;
+	}
+
+	public EntityGrimoire getGrimoireEntity(World world) {
+		EntityGrimoire grimoire = currGrimoireEntity != null ? currGrimoireEntity.get() : null;
+		if (grimoire == null) {
+			if (currGrimoireEntityId == null) return null;
+			grimoire = findGrimoireEntity(world);
+			if (grimoire == null) {
+				setGrimoireEntity(null);
+				return null;
+			}
+		} else {
+			if (grimoire.isDead) {
+				setGrimoireEntity(null);
+				return null;
+			}
+		}
+		return grimoire;
 	}
 
 	// 保存能力

@@ -323,7 +323,7 @@ public class GuiDungeonMap extends GuiScreen {
 				currHoverThingPos = entry.getKey();
 				isHover = true;
 			}
-			String title = handler.getTitle(isHover);
+			String title = handler.getTitle(room, isHover);
 			if (!title.isEmpty())
 				this.fontRenderer.drawString(title, (int) (cx + iconSize - 2), (int) (cy - iconSize / 4), 0xffffff);
 
@@ -491,7 +491,7 @@ public class GuiDungeonMap extends GuiScreen {
 		}
 		// 默认房间在多画一个出口
 		if (room.getId() == 0) {
-			EnumFacing facing = room.getFacing().rotateY().getOpposite();
+			EnumFacing facing = EnumFacing.NORTH;
 			BlockPos pos = new BlockPos(0, 0, 0).offset(facing, 7);
 			float dx = pos.getX() - offsetX;
 			float dz = pos.getZ() - offsetZ;

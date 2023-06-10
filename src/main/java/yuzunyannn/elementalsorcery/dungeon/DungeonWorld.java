@@ -200,7 +200,7 @@ public class DungeonWorld extends WorldSavedData {
 		if (excerpt == null) return null;
 		DungeonArea dungeon = getDungeon(excerpt.id);
 		if (dungeon == null) return null;
-		return dungeon.findRoom(new Vec3d(pos).add(0.25, 0.25, 0.25));
+		return dungeon.findRoom(new Vec3d(pos).add(-0.25, -0.25, -0.25));
 	}
 
 	public void markDirty(DungeonAreaRoom room) {

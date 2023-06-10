@@ -146,6 +146,7 @@ item.dungeonSeed.name=偽映の種
 item.dungeonSeed.fin.name=偽映のエントリ
 item.dungeonStone.name=偽映の石
 item.simpleMaterialContainer.name=虚空のかくすい
+item.strengthenAgent.name=強化剤
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -251,6 +252,7 @@ tile.dungeonRottenLifeWood.name=腐った生命の木の原木
 tile.dungeonActinicGlass.name=光化ガラス
 tile.dungeonMagicCircleA.name=地下牢のマジックサークル
 tile.dungeonCheckpoint.name=地下牢のトランスファ石
+tile.strangeEgg.name=変な卵
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -278,6 +280,7 @@ es.effect.silent=サイレント
 es.effect.frozen=とうけつ
 es.effect.naturalMedal=自然勲章
 es.effect.goldShield=黄金盾
+es.effect.deathWatch=デスウォッチ
 
 es.potion.effect.silent=沈黙のポーション
 es.splash_potion.effect.silent=沈黙のスプラッシュポーション
@@ -370,6 +373,7 @@ entity.EntityGrimoire.name=呪文
 entity.Puppet.name=木霊
 entity.RelicGuard.name=遺跡ガード
 entity.SpriteZombie.name=霊体ゾンビ
+entity.SubjectZombie.name=ゾンビ実験体
 
 pro.none=アイドル
 pro.warrior=戦士
@@ -573,7 +577,9 @@ info.dungeonSeed.storage.exp=経験：%s
 info.dungeon.room.gui=へや：%s
 info.dungeon.teleport.title=転送ポイント
 info.dungeon.teleport.title.click=クリックと転送する
-info.dungeon.explor.progress=探索済みルーム：%d/%d、総進捗：%.2f%%
+info.dungeon.explor.progress=探索済みルーム：%d/%d、総進捗：%.1f%%
+info.dungeon.cannot.teleport=ダンジョンはあなたの転送を阻止しているようです
+info.dungeon.strengthenAgent=見た目はあまりいいものではないので、使わないほうがいいです...
 
 info.mc.archi.Temple.name=砂漠のピラミッド
 

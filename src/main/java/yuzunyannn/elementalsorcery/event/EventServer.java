@@ -36,6 +36,9 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
@@ -82,6 +85,8 @@ import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.capability.ESPlayerCapabilityProvider;
 import yuzunyannn.elementalsorcery.config.ESConfig;
+import yuzunyannn.elementalsorcery.dungeon.DungeonAreaRoom;
+import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
@@ -693,16 +698,53 @@ public class EventServer {
 	@SubscribeEvent
 	public static void onEnderTeleport(EnderTeleportEvent event) {
 		Entity entity = event.getEntity();
+		if (event.isCanceled()) return;
+
 		if (ESAPI.silent.isSilent(entity, SilentLevel.RELEASE)) {
 			event.setResult(Result.DENY);
 			event.setCanceled(true);
 			return;
 		}
+
+		if (event.getEntityLiving() instanceof EntityPlayerMP) pass: {
+			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
+			DungeonWorld dw = DungeonWorld.getDungeonWorld(player.world);
+			DungeonAreaRoom room = dw.getAreaRoom(player.getPosition());
+			if (room != null && room.isBuild()) {
+//				Grimoire grimoire = player.getHeldItem(EnumHand.MAIN_HAND).getCapability(Grimoire.GRIMOIRE_CAPABILITY,
+//						null);
+//				if (grimoire != null) {
+//					EntityGrimoire entityGrimoire = grimoire.getGrimoireEntity(player.world);
+//					if (entityGrimoire != null) {
+//						if (entityGrimoire.getMantra() == ESObjects.MANTRAS.ENDER_TELEPORT) {
+//							if (!player.isSneaking()) {
+//								break pass;
+//							}
+//						}
+//					}
+//				}
+				player.sendMessage(new TextComponentTranslation("info.dungeon.cannot.teleport")
+						.setStyle(new Style().setColor(TextFormatting.DARK_PURPLE)));
+				event.setResult(Result.DENY);
+				event.setCanceled(true);
+				return;
+			}
+		}
+
 	}
 
 	@SubscribeEvent
 	public static void onLivingHeal(LivingHealEvent event) {
+		if (event.isCanceled()) return;
 		EntityLivingBase entity = event.getEntityLiving();
+
+		PotionEffect deathWatch = entity.getActivePotionEffect(ESObjects.POTIONS.DEATH_WATCH);
+		if (deathWatch != null) {
+			event.setCanceled(true);
+			event.setResult(Result.DENY);
+			return;
+		}
+
 		PotionEffect frozen = entity.getActivePotionEffect(ESObjects.POTIONS.FROZEN);
 		if (frozen != null) {
 			int amplifier = frozen.getAmplifier();

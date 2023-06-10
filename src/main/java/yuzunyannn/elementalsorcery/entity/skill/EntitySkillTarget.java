@@ -1,7 +1,5 @@
 package yuzunyannn.elementalsorcery.entity.skill;
 
-import java.util.Random;
-
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +13,7 @@ import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
-public class EntitySkillTarget extends EntitySkill {
+public class EntitySkillTarget extends EntitySkillLiving {
 
 	protected EntityLivingBase living;
 	protected float range = 32;
@@ -31,16 +29,6 @@ public class EntitySkillTarget extends EntitySkill {
 			if (target != null) return target;
 		}
 		return this.living.getAttackingEntity();
-	}
-
-	@Override
-	public Random getRandom() {
-		return living.getRNG();
-	}
-
-	public boolean checkHPLowerThan(double rate) {
-//		if (ESAPI.isDevelop) return true;
-		return (living.getHealth() / living.getMaxHealth()) <= rate;
 	}
 
 	@Override

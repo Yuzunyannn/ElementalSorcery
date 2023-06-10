@@ -125,7 +125,7 @@ public class BlockDungeonCheckpoint extends Block implements IDungeonSpecialThin
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public String getTitle(boolean isHover) {
+	public String getTitle(DungeonAreaRoom room, boolean isHover) {
 		if (isHover) return I18n.format("info.dungeon.teleport.title.click");
 		return I18n.format("info.dungeon.teleport.title");
 	}

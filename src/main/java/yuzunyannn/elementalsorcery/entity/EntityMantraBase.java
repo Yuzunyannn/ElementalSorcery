@@ -80,6 +80,10 @@ public abstract class EntityMantraBase extends Entity
 		this.height = 0.05f;
 	}
 
+	public Mantra getMantra() {
+		return mantra;
+	}
+
 	public IMantraData getMantraData() {
 		return mantraData;
 	}

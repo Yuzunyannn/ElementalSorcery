@@ -33,6 +33,7 @@ public class EntityGrimoire extends EntityMantraBase {
 		EntityGrimoire e = new EntityGrimoire(world, user, info.getMantra(), info.getData());
 		e.onLockUser();
 		world.spawnEntity(e);
+		grimoire.setGrimoireEntity(e);
 	}
 
 	public EntityGrimoire(World worldIn) {
@@ -67,6 +68,11 @@ public class EntityGrimoire extends EntityMantraBase {
 	protected void writeEntityToNBT(NBTTagCompound nbt, boolean isSend) {
 		super.writeEntityToNBT(nbt, isSend);
 		user.writeEntityToNBT(nbt);
+	}
+
+	@Override
+	protected void onDead() {
+		super.onDead();
 	}
 
 	@Override
@@ -141,6 +147,7 @@ public class EntityGrimoire extends EntityMantraBase {
 		if (grimoireStack.isEmpty()) return;
 		Grimoire.Info info = grimoire.getSelectedInfo();
 		if (info != null && info.getMantra() == mantra) info.setData(metaData);
+		grimoire.setGrimoireEntity(null);
 		grimoire.saveState(grimoireStack);
 		// 延迟一下，等待合书动画
 //		EventServer.addTask(() -> {

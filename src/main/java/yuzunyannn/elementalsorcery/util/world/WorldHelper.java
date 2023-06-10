@@ -232,4 +232,13 @@ public class WorldHelper {
 		world.spawnEntity(entitypotion);
 	}
 
+	public static void throwPotion(World world, EntityLivingBase thrower, List<PotionEffect> effects,
+			boolean isLingering, float velocity, float inaccuracy) {
+		ItemStack stack = new ItemStack(isLingering ? Items.LINGERING_POTION : Items.SPLASH_POTION);
+		PotionUtils.appendEffects(stack, effects);
+		EntityPotion entitypotion = new EntityPotion(world, thrower, stack);
+		entitypotion.shoot(thrower, thrower.rotationPitch, thrower.rotationYaw, 0.0F, velocity, inaccuracy);
+		world.spawnEntity(entitypotion);
+	}
+
 }

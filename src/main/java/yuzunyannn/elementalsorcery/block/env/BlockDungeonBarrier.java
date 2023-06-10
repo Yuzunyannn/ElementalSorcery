@@ -8,6 +8,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.BlockRenderLayer;
@@ -81,6 +82,7 @@ public class BlockDungeonBarrier extends Block {
 	@Override
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox,
 			List<AxisAlignedBB> collidingBoxes, Entity entityIn, boolean isActualState) {
+		if (!(entityIn instanceof EntityLivingBase)) return;
 		if (EntityHelper.isCreative(entityIn)) {
 			EntityPlayer player = (EntityPlayer) entityIn;
 			if (player.capabilities.isFlying) return;

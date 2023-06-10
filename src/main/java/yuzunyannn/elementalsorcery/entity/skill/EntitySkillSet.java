@@ -45,6 +45,10 @@ public class EntitySkillSet {
 		}
 	}
 
+	public boolean isUsingSkill() {
+		return usingSkill != null;
+	}
+
 	public EntitySkill getUsingSkill() {
 		return usingSkill;
 	}

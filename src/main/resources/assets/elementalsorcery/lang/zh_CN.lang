@@ -146,6 +146,7 @@ item.dungeonSeed.name=虚映之种
 item.dungeonSeed.fin.name=虚映入口
 item.dungeonStone.name=虚映之石
 item.simpleMaterialContainer.name=虚空方锥
+item.strengthenAgent.name=强化药剂
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -251,6 +252,7 @@ tile.dungeonRottenLifeWood.name=腐朽的生命之树木
 tile.dungeonActinicGlass.name=光化玻璃
 tile.dungeonMagicCircleA.name=地牢法阵
 tile.dungeonCheckpoint.name=地牢传送石
+tile.strangeEgg.name=奇怪的蛋
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者
@@ -278,6 +280,7 @@ es.effect.silent=沉默
 es.effect.frozen=冻结
 es.effect.naturalMedal=自然勋章
 es.effect.goldShield=黄金盾
+es.effect.deathWatch=死亡时针
 
 es.potion.effect.silent=禁言药水
 es.splash_potion.effect.silent=喷溅型禁言药水
@@ -370,6 +373,7 @@ entity.EntityGrimoire.name=咒文
 entity.Puppet.name=木灵
 entity.RelicGuard.name=遗迹守卫
 entity.SpriteZombie.name=灵体僵尸
+entity.SubjectZombie.name=僵尸实验体
 
 pro.none=闲人
 pro.warrior=战士
@@ -573,7 +577,9 @@ info.dungeonSeed.storage.exp=阅历：%s
 info.dungeon.room.gui=房间：%s
 info.dungeon.teleport.title=传送站
 info.dungeon.teleport.title.click=点击传送
-info.dungeon.explor.progress=已探索房间：%d/%d，总进度：%.2f%%
+info.dungeon.explor.progress=已探索房间：%d/%d，总进度：%.1f%%
+info.dungeon.cannot.teleport=地牢似乎阻止了你的传送
+info.dungeon.strengthenAgent=看上去不是什么好东西，最好不要使用...
 
 info.mc.archi.Temple.name=沙漠神殿
 

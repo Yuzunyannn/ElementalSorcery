@@ -129,6 +129,11 @@
             "zh_CN": "黄金盾",
             "en_US": "Gold Shield",
             "ja_JP": "黄金盾"
+        },
+        "es.effect.deathWatch": {
+            "zh_CN": "死亡时针",
+            "en_US": "Death Watch",
+            "ja_JP": "デスウォッチ"
         }
     },
     "es.effect.type": {

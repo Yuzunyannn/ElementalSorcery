@@ -23,6 +23,8 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.event.CommandESDebug;
 import yuzunyannn.elementalsorcery.render.RenderRulerSelectRegion;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -61,6 +63,19 @@ public class ItemMagicRuler extends Item {
 			ItemMagicRuler.clearRulerPos(playerIn.getHeldItem(handIn));
 			return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
 		}
+		if (ESAPI.isDevelop) next: {
+			ItemStack stack = playerIn.getHeldItem(handIn);
+			BlockPos pos1 = ItemMagicRuler.getRulerPos(stack, true);
+			BlockPos pos2 = ItemMagicRuler.getRulerPos(stack, false);
+			if (pos1 == null || pos2 == null) break next;
+			try {
+				CommandESDebug.doSomethingInRange(worldIn, playerIn, pos1, pos2);
+			} catch (Exception e) {
+				ESAPI.logger.warn("咋回事?", e);
+			}
+
+		}
+
 		return super.onItemRightClick(worldIn, playerIn, handIn);
 	}
 

@@ -25,7 +25,7 @@ public class PotionPowerPitcher extends PotionCommon {
 	}
 
 	public PotionPowerPitcher() {
-		super(false, 0xd9b254, "powerPitcher");
+		super(true, 0xd9b254, "powerPitcher");
 		iconIndex = 12;
 	}
 

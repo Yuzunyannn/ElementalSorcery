@@ -26,6 +26,7 @@ public class DungeonLib {
 	private static DungeonRoomType register(String id) {
 		DungeonRoomType room = new DungeonRoomType(BuildingLib.instance.getBuilding(id));
 		room.setRegistryName(ESAPI.MODID, room.getStructure().getKeyName());
+		room.postInit();
 		DungeonRoomType.REGISTRY.register(room);
 		return room;
 	}

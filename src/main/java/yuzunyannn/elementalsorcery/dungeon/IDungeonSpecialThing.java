@@ -19,7 +19,7 @@ public interface IDungeonSpecialThing {
 
 	@Nonnull
 	@SideOnly(Side.CLIENT)
-	default String getTitle(boolean isHover) {
+	default String getTitle(DungeonAreaRoom room, boolean isHover) {
 		return "";
 	}
 

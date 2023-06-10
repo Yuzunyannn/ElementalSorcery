@@ -69,6 +69,11 @@
             "zh_CN": "灵体僵尸",
             "en_US": "Sprite Zombie",
             "ja_JP": "霊体ゾンビ"
+        },
+        "entity.SubjectZombie.name": {
+            "zh_CN": "僵尸实验体",
+            "en_US": "Zombie Subject",
+            "ja_JP": "ゾンビ実験体"
         }
     },
     "pro": {

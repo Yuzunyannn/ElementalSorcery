@@ -24,6 +24,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntityFlowerPot;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -72,6 +73,19 @@ public class DungeonRoomType extends IForgeRegistryEntry.Impl<DungeonRoomType> {
 			Block block = state.getBlock();
 			if (block == ESObjects.BLOCKS.DUNGEON_DOOR) initDoor(iter.getPos());
 			else if (block == ESObjects.BLOCKS.DUNGEON_FUNCTION) initFunc(iter.getPos());
+		}
+
+	}
+
+	void postInit() {
+		if (funcGlobal == null) {
+			JsonObject json = new JsonObject();
+			ResourceLocation res = this.getRegistryName();
+			json.set("/assets", res.getNamespace() + ":dungeon/" + res.getPath() + "/global");
+			GameFunc func = GameFunc.create(json);
+			if (func instanceof DungeonFuncGlobal) {
+				funcGlobal = (DungeonFuncGlobal) func;
+			}
 		}
 	}
 

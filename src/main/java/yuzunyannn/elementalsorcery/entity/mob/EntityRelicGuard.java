@@ -37,7 +37,9 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.entity.IHasMaster;
+import yuzunyannn.elementalsorcery.api.event.ESEvent;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
+import yuzunyannn.elementalsorcery.entity.skill.EntityInitSkillsEvent;
 import yuzunyannn.elementalsorcery.entity.skill.EntitySkilFrozenDefense;
 import yuzunyannn.elementalsorcery.entity.skill.EntitySkilFrozenStorm;
 import yuzunyannn.elementalsorcery.entity.skill.EntitySkillAirBlast;
@@ -203,6 +205,8 @@ public class EntityRelicGuard extends EntityCreature implements IRangedAttackMob
 			magician.addSkill(new EntitySkilFrozenStorm(this).setPriority(30));
 			magician.addSkill(new EntitySkillIceTrapMatrix(this).setPriority(21));
 		}
+
+		magician = ESEvent.post(new EntityInitSkillsEvent(this, this.magician, "attack")).getSkillSet();
 	}
 
 	public boolean isSpelling() {

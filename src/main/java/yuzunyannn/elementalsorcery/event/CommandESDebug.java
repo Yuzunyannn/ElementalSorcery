@@ -154,38 +154,7 @@ public class CommandESDebug {
 			// 测试建筑
 			case "buildTest":
 				try {
-					String name = args[1];
-					if (name == null || name.isEmpty()) {
-						System.out.println("你的id呢");
-						return;
-					}
-
-					EntityPlayer executer = (EntityPlayer) sender.getCommandSenderEntity();
-					ItemStack ruler = executer.getHeldItem(EnumHand.MAIN_HAND);
-					BlockPos pos1 = ItemMagicRuler.getRulerPos(ruler, true);
-					BlockPos pos2 = ItemMagicRuler.getRulerPos(ruler, false);
-					if (pos1 == null || pos2 == null) throw new WrongUsageException("commands.es.building.recordFail");
-					Building building = Building.createBuilding(sender.getEntityWorld(),
-							executer.getHorizontalFacing().getOpposite(), pos1, pos2, true);
-					building.setAuthor("yuzunyannn");
-					building.setName(TextHelper.castToCamel(name));
-					BuildingLib.instance.releaseAllSaveData();
-					Method method = BuildingLib.class.getDeclaredMethod("addBuilding", BuildingSaveData.class);
-					method.setAccessible(true);
-					String path = "../src/main/resources/assets/elementalsorcery/structures/" + name + ".nbt";
-					File file = new File(path);
-					if (file.exists() && !passpass) {
-						System.out.println("存在" + name + "了，请三四而后行！");
-						passpass = true;
-						return;
-					}
-					passpass = false;
-					method.invoke(BuildingLib.instance, new BuildingSaveData(building, name, file) {
-						{}
-					});
-					ItemHelper.addItemStackToPlayer(executer, ArcInfo.createArcInfoItem(building.getKeyName()));
-					System.out.println("好了！");
-					BuildingLib.instance.releaseAllSaveData();
+					saveDungeonBuilding(args[1], (EntityPlayer) sender.getCommandSenderEntity());
 //				GenElfEdifice g = new GenElfEdifice(true);
 //				g.genMainTreeEdifice(entity.world, pos, entity.world.rand);
 //				g.buildToTick(entity.world);
@@ -514,6 +483,158 @@ public class CommandESDebug {
 		StringSelection stringSelection = new StringSelection(builder.toString());
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(stringSelection, null);
 		System.out.println(builder);
+	}
+
+	static public void saveDungeonBuilding(String name, EntityPlayer player) {
+		try {
+			if (name == null || name.isEmpty()) {
+				System.out.println("你的id呢");
+				return;
+			}
+			ItemStack ruler = player.getHeldItem(EnumHand.MAIN_HAND);
+			BlockPos pos1 = ItemMagicRuler.getRulerPos(ruler, true);
+			BlockPos pos2 = ItemMagicRuler.getRulerPos(ruler, false);
+			if (pos1 == null || pos2 == null) throw new WrongUsageException("commands.es.building.recordFail");
+			Building building = Building.createBuilding(player.getEntityWorld(),
+					player.getHorizontalFacing().getOpposite(), pos1, pos2, true);
+			building.setAuthor("yuzunyannn");
+			building.setName(TextHelper.castToCamel(name));
+			BuildingLib.instance.releaseAllSaveData();
+			Method method = BuildingLib.class.getDeclaredMethod("addBuilding", BuildingSaveData.class);
+			method.setAccessible(true);
+			String path = "../src/main/resources/assets/elementalsorcery/structures/" + name + ".nbt";
+			File file = new File(path);
+			if (file.exists() && !passpass) {
+				System.out.println("存在" + name + "了，请三四而后行！");
+				passpass = true;
+				return;
+			}
+			passpass = false;
+			method.invoke(BuildingLib.instance, new BuildingSaveData(building, name, file) {
+				{}
+			});
+			ItemHelper.addItemStackToPlayer(player, ArcInfo.createArcInfoItem(building.getKeyName()));
+			System.out.println("为你保存了" + path);
+			BuildingLib.instance.releaseAllSaveData();
+		} catch (Exception e) {
+			ESAPI.logger.error("gg", e);
+		}
+	}
+
+	static public void doSomethingInRange(World world, EntityPlayer player, BlockPos from, BlockPos to) {
+		if (world.isRemote) return;
+
+		ItemStack stack = player.getHeldItem(EnumHand.MAIN_HAND);
+		NBTTagCompound data = stack.getTagCompound();
+		String buildingKey = data.getString("building_key");
+		if (buildingKey.isEmpty()) {
+			System.out.println("咋回事？没建筑key？");
+			return;
+		}
+
+//		String fileBase = "../src/main/resources/assets/elementalsorcery/dungeon/";
+//		String basePath = "elementalsorcery:dungeon/";
+//		Set<String> keySet = new HashSet<>();
+//		List<Map<String, Object>> list = new ArrayList<>();
+//		List<BlockPos> badList = new ArrayList<>();
+//
+//		for (BlockPos pos : BlockPos.getAllInBox(from, to)) {
+//			IBlockState state = world.getBlockState(pos);
+//			if (state.getBlock() == ESObjects.BLOCKS.DUNGEON_FUNCTION) {
+//				TileDungeonFunction func = BlockHelper.getTileEntity(world, pos, TileDungeonFunction.class);
+//				JsonObject config = func.getConfig();
+//
+//				if (!config.hasString("/assets")) {
+//					System.out.println("咋回事？" + config);
+//					badList.add(pos);
+//					continue;
+//				}
+//
+//				String assets = config.getString("/assets");
+//
+//				int index = assets.indexOf(basePath);
+//				if (index != 0) {
+//					System.out.println("咋回事？？" + config);
+//					badList.add(pos);
+//					continue;
+//				}
+//
+//				String name = assets.substring(index + basePath.length());
+//				File file = new File(fileBase + name);
+//				if (!file.exists()) {
+//					System.out.println("咋回事？？？" + config);
+//					badList.add(pos);
+//					continue;
+//				}
+//
+//				if (name.contains("common")) {
+//					System.out.println("Common 咋回事？？？" + config);
+//					badList.add(pos);
+//					continue;
+//				}
+//
+//				Map<String, Object> map = new HashMap<>();
+//				map.put("file", file);
+//				map.put("tile", func);
+//				map.put("name", name);
+//				list.add(map);
+//			}
+//		}
+//
+//		if (!badList.isEmpty()) return;
+//
+//		File packFile = new File(fileBase + buildingKey);
+//		packFile.mkdirs();
+//		System.out.println("为您创建:" + packFile);
+//
+//		for (Map<String, Object> map : list) {
+//			File file = (File) map.get("file");
+//			String name = (String) map.get("name");
+//			if (name.indexOf("/") != -1) {
+//				int i = name.indexOf("/");
+//				String namespace = name.substring(0, i);
+//				if (namespace.equals(buildingKey)) {
+//					name = name.substring(i + 1);
+//				}
+//			}
+//			String newName = name;
+//			int msize = Math.min(newName.length(), buildingKey.length());
+//			int ssi = -1;
+//			for (int i = 0; i < msize; i++) {
+//				if (name.charAt(i) == buildingKey.charAt(i)) ssi = i;
+//				else break;
+//			}
+//			if (ssi != -1 && ssi > 3) {
+//				String key = name.substring(ssi);
+//				if (key.startsWith("_")) key = key.substring(1);
+//				if (!key.isEmpty()) newName = key;
+//			}
+//
+//			if (!keySet.contains(name)) {
+//				keySet.add(name);
+//				File newFile = new File(packFile.getAbsolutePath() + "/" + newName);
+//				if (newFile.exists()) System.out.println("文件已经存在喽：" + newFile);
+//				else {
+//					file.renameTo(newFile);
+//					System.out.println("为您移动：" + newFile);
+//				}
+//			}
+//
+//			TileDungeonFunction tile = (TileDungeonFunction) map.get("tile");
+//			JsonObject config = tile.getConfig();
+//			String rKey = basePath + buildingKey + "/" + newName;
+//			if (rKey.equals(config.getString("/assets"))) {
+//				System.out.println("无需重置哦：" + config.getString("/assets"));
+//			} else {
+//				config.set("/assets", rKey);
+//				tile.setConfig(config);
+//				tile.markDirty();
+//				System.out.println("为您重置：" + config.getString("/assets"));
+//			}
+//		}
+//
+//		passpass = true;
+//		saveDungeonBuilding(buildingKey, player);
 	}
 
 }

@@ -17,11 +17,12 @@ public class LootRegister {
 
 	public static final ResourceLocation ES_HALL = res("chests/es_hall");
 	public static final ResourceLocation ES_VILLAGE_HALL = res("chests/es_village_hall");
-	
+
 	public static final ResourceLocation SPRITE_ZOMBIE = res("entities/sprite_zombie");
 	public static final ResourceLocation RABID_RABBIT = res("entities/rabid_rabbit");
 	public static final ResourceLocation DREAD_CUBE = res("entities/dread_cube");
 	public static final ResourceLocation DEJECTED_SKELETON = res("entities/dejected_skeleton");
+	public static final ResourceLocation SUBJECT_ZOMBIE = res("entities/subject_zombie");
 
 	static public void registerAll() {
 		LootTableList.register(ES_HALL);
@@ -29,6 +30,8 @@ public class LootRegister {
 		LootTableList.register(RABID_RABBIT);
 		LootTableList.register(DREAD_CUBE);
 		LootTableList.register(DEJECTED_SKELETON);
+		LootTableList.register(SPRITE_ZOMBIE);
+		LootTableList.register(SUBJECT_ZOMBIE);
 
 		Json.ergodicAssets(ElementalSorcery.getModeContainer(), "/loot_tables/dungeon/", (file, json) -> {
 			if (!ElementMap.checkModDemands(json)) return false;

@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.block;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -46,16 +47,15 @@ public class BlockStarStone extends Block {
 
 	@Override
 	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-		return !worldIn.isAirBlock(pos.down()) && super.canPlaceBlockAt(worldIn, pos);
+		return worldIn.isSideSolid(pos.down(), EnumFacing.UP) && super.canPlaceBlockAt(worldIn, pos);
 	}
 
 	@Override
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		if (fromPos.getY() + 1 == pos.getY()) {
-			if (worldIn.isAirBlock(fromPos)) {
+			if (!worldIn.isSideSolid(pos.up(), EnumFacing.UP)) {
 				worldIn.destroyBlock(pos, true);
 			}
 		}
 	}
-
 }

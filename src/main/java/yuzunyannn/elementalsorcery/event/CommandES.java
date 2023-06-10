@@ -18,10 +18,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.tileentity.CommandBlockBaseLogic;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
@@ -37,6 +40,7 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
+import yuzunyannn.elementalsorcery.building.BuildingFace;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.building.Buildings;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
@@ -103,7 +107,7 @@ public class CommandES extends CommandBase {
 			if (args.length == 1) throw new WrongUsageException("commands.es.build.usage");
 			checkUnsupportCommandBlock(sender);// 不支持命令方块
 			Entity entity = sender.getCommandSenderEntity();
-			this.cmdBuild(args[1], (EntityLivingBase) entity, server.getEntityWorld());
+			this.cmdBuild(Arrays.copyOfRange(args, 1, args.length), (EntityLivingBase) entity, server.getEntityWorld());
 			return;
 		}
 		case "buildFloor": {
@@ -459,7 +463,17 @@ public class CommandES extends CommandBase {
 	}
 
 	// =======================-------> 建造建筑 <-------=======================
-	private void cmdBuild(String value, EntityLivingBase entity, World world) throws CommandException {
+	private void cmdBuild(String[] args, EntityLivingBase entity, World world) throws CommandException {
+		String value = args[0];
+		boolean genRuler = false;
+		boolean clear = false;
+		if (args.length > 1) {
+			for (int i = 1; i < args.length; i++) {
+				String cmd = args[i];
+				if (cmd.indexOf("-r") != -1) genRuler = true;
+				if (cmd.indexOf("-c") != -1) clear = true;
+			}
+		}
 		Building building = null;
 		BlockPos pos = null;
 		if (value.toLowerCase().equals("it")) {
@@ -474,12 +488,37 @@ public class CommandES extends CommandBase {
 			if (result != null) pos = result.getBlockPos().up();
 		}
 		if (building == null || pos == null) throw new CommandException("commands.es.build.fail");
+
+		EnumFacing facing = entity.getHorizontalFacing().getOpposite();
+
+		AxisAlignedBB aabb = building.getBox();
+		aabb = BuildingFace.face(aabb, facing);
+		BlockPos pos1 = new BlockPos(aabb.minX, aabb.minY, aabb.minZ).add(pos);
+		BlockPos pos2 = new BlockPos(aabb.maxX, aabb.maxY, aabb.maxZ).add(pos);
+
+		if (clear) {
+			for (BlockPos at : BlockPos.getAllInBox(pos1, pos2)) world.setBlockToAir(at);
+		}
+
+		if (genRuler) {
+			ItemStack stack = new ItemStack(ESObjects.ITEMS.MAGIC_RULER);
+			ItemMagicRuler.setDimensionId(stack, world.provider.getDimension());
+			ItemMagicRuler.setRulerPos(stack, pos1, false);
+			ItemMagicRuler.setRulerPos(stack, pos2, true);
+			NBTTagCompound nbttagcompound = stack.getOrCreateSubCompound("display");
+			nbttagcompound.setString("Name", building.getName());
+			stack.getTagCompound().setString("building_key", building.getKeyName());
+			if (entity instanceof EntityPlayer) ItemHelper.addItemStackToPlayer((EntityPlayer) entity, stack);
+			else ItemHelper.dropItem(world, pos, stack);
+		}
+
 		BuildingBlocks iter = building.getBuildingIterator();
-		iter.setFace(entity.getHorizontalFacing().getOpposite());
+		iter.setFace(facing);
 		while (iter.next()) {
 			BlockPos at = iter.getPos().add(pos);
 			iter.buildState(world, at);
 		}
+
 	}
 
 	// =======================-------> 楼层操作 <-------=======================

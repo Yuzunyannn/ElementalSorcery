@@ -1,7 +1,11 @@
 package yuzunyannn.elementalsorcery.potion;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,6 +21,11 @@ public class PotionGoldShield extends PotionCommon {
 		super(false, 0x63b91e, "goldShield");
 		this.setBeneficial();
 		iconIndex = 25;
+	}
+
+	@Override
+	public List<ItemStack> getCurativeItems() {
+		return new ArrayList<>();
 	}
 
 	@Override

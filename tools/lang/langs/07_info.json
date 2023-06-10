@@ -922,12 +922,21 @@
             "zh_CN": "点击传送",
             "en_US": "Click to Teleporting",
             "ja_JP": "クリックと転送する"
-        }
-        ,
+        },
         "info.dungeon.explor.progress": {
             "zh_CN": "已探索房间：%d/%d，总进度：%.1f%%",
             "en_US": "Explored room: %d/%d, progress: %.1f%%",
             "ja_JP": "探索済みルーム：%d/%d、総進捗：%.1f%%"
+        },
+        "info.dungeon.cannot.teleport": {
+            "zh_CN": "地牢似乎阻止了你的传送",
+            "en_US": "The dungeon seems to have blocked your teleporting",
+            "ja_JP": "ダンジョンはあなたの転送を阻止しているようです"
+        },
+        "info.dungeon.strengthenAgent": {
+            "zh_CN": "看上去不是什么好东西，最好不要使用...",
+            "en_US": "It doesn't look like a good thing, it's best not to use it...",
+            "ja_JP": "見た目はあまりいいものではないので、使わないほうがいいです..."
         }
     },
     "info.mc": {
