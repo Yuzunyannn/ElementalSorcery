@@ -120,7 +120,7 @@ public class BlockDungeonCheckpoint extends Block implements IDungeonSpecialThin
 		}
 
 		MantraEnderTeleport.playEnderTeleportEffect(world, player, to);
-		MantraEnderTeleport.doEnderTeleport(world, player, to);
+		MantraEnderTeleport.doEnderTeleportPlayer(world, player, to, true);
 	}
 
 	@Override

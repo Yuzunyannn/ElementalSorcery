@@ -18,7 +18,8 @@ public class BlockDungeonDoorExpand extends Block {
 		super(Material.ROCK);
 		this.setSoundType(SoundType.GLASS);
 		this.setTranslationKey("dungeonDoorCore");
-		this.setHardness(64);
+		this.setHardness(-1);
+		this.setResistance(6000000.0F);
 		this.setLightLevel(4);
 	}
 

@@ -2,6 +2,7 @@ package yuzunyannn.elementalsorcery.grimoire.mantra;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -194,25 +195,33 @@ public class MantraEnderTeleport extends MantraTypeAccumulative {
 			playEnderTeleportEffect(world, target, pos);
 			return;
 		}
+		if (target instanceof EntityPlayer) doEnderTeleportPlayer(world, (EntityPlayer) target, pos, false);
+		else if (target != null) {
+			if (target instanceof EntityCreature) ((EntityCreature) target).getNavigator().clearPath();
+			target.setPositionAndUpdate(pos.x, pos.y, pos.z);
+			target.fallDistance = 0.0F;
+		}
+	}
+
+	public static void doEnderTeleportPlayer(World world, EntityPlayer target, Vec3d pos, boolean passEvent) {
 		if (target instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP) target;
 			if (player.connection.getNetworkManager().isChannelOpen() && player.world == world
 					&& !player.isPlayerSleeping()) {
-				// 传送事件
-				EnderTeleportEvent event = new EnderTeleportEvent(player, pos.x, pos.y, pos.z, 5.0F);
-				// 事件成功
-				if (!MinecraftForge.EVENT_BUS.post(event)) {
-					// 下坐骑
-					if (player.isRiding()) player.dismountRidingEntity();
-					// 移动
-					player.setPositionAndUpdate(event.getTargetX(), event.getTargetY(), event.getTargetZ());
-					player.fallDistance = 0.0F;
+				if (!passEvent) {
+					// 传送事件
+					EnderTeleportEvent event = new EnderTeleportEvent(player, pos.x, pos.y, pos.z, 5.0F);
+					// 事件失败
+					if (MinecraftForge.EVENT_BUS.post(event)) return;
+					// 更新传送坐标
+					pos = new Vec3d(event.getTargetX(), event.getTargetY(), event.getTargetZ());
 				}
+				// 下坐骑
+				if (player.isRiding()) player.dismountRidingEntity();
+				// 移动
+				player.setPositionAndUpdate(pos.x, pos.y, pos.z);
+				player.fallDistance = 0.0F;
 			}
-		} else if (target != null) {
-			if (target instanceof EntityCreature) ((EntityCreature) target).getNavigator().clearPath();
-			target.setPositionAndUpdate(pos.x, pos.y, pos.z);
-			target.fallDistance = 0.0F;
 		}
 	}
 

@@ -31,7 +31,8 @@ public class BlockDungeonDoor extends Block implements ITileEntityProvider {
 		super(Material.ROCK);
 		this.setSoundType(SoundType.GLASS);
 		this.setTranslationKey("dungeonDoorCore");
-		this.setHardness(64f);
+		this.setHardness(-1);
+		this.setResistance(6000000.0F);
 		this.setLightLevel(4);
 		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 	}
