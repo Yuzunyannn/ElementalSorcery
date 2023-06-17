@@ -374,6 +374,7 @@ entity.Puppet.name=Kodama
 entity.RelicGuard.name=Relic Guard
 entity.SpriteZombie.name=Sprite Zombie
 entity.SubjectZombie.name=Zombie Subject
+entity.FloatCarpet.name=Float Carpet
 
 pro.none=Idle
 pro.warrior=Warrior
@@ -580,6 +581,7 @@ info.dungeon.teleport.title.click=Click to Teleporting
 info.dungeon.explor.progress=Explored room: %d/%d, progress: %.1f%%
 info.dungeon.cannot.teleport=The dungeon seems to have blocked your teleporting
 info.dungeon.strengthenAgent=It doesn't look like a good thing, it's best not to use it...
+info.dungeon.floatCarpet=It seems to be a certain type of transportation, driven by magic, and not suitable for use in narrow spaces
 
 info.mc.archi.Temple.name=Desert Pyramid
 

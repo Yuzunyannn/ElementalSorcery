@@ -10,6 +10,7 @@ import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonCheckpoint;
 import yuzunyannn.elementalsorcery.block.env.BlockStrangeEgg;
+import yuzunyannn.elementalsorcery.item.ItemFloatCarpet;
 import yuzunyannn.elementalsorcery.item.ItemStrengthenAgent;
 import yuzunyannn.elementalsorcery.potion.PotionDeathWatch;
 
@@ -144,6 +145,7 @@ public class ESObjects {
 		public Item DUNGEON_STONE;
 		public Item SIMPLE_MATERIAL_CONTAINER;
 		public Item STRENGTHEN_AGENT;
+		public Item FLOAT_CARPET;
 	}
 
 	static public class Blocks {

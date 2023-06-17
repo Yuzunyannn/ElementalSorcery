@@ -74,6 +74,11 @@
             "zh_CN": "僵尸实验体",
             "en_US": "Zombie Subject",
             "ja_JP": "ゾンビ実験体"
+        },
+        "entity.FloatCarpet.name": {
+            "zh_CN": "浮毯",
+            "en_US": "Float Carpet",
+            "ja_JP": "フロートカーペット"
         }
     },
     "pro": {

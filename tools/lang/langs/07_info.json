@@ -937,6 +937,11 @@
             "zh_CN": "看上去不是什么好东西，最好不要使用...",
             "en_US": "It doesn't look like a good thing, it's best not to use it...",
             "ja_JP": "見た目はあまりいいものではないので、使わないほうがいいです..."
+        },
+        "info.dungeon.floatCarpet": {
+            "zh_CN": "看上是某种交通工具，通过魔力驱动，不适合在狭窄的空间内使用",
+            "en_US": "It seems to be a certain type of transportation, driven by magic, and not suitable for use in narrow spaces",
+            "ja_JP": "魔力駆動により狭い空間での使用には適さない乗り物に見える"
         }
     },
     "info.mc": {

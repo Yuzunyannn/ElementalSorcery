@@ -24,6 +24,12 @@ public class MessageEntitySync implements IMessage {
 		ESNetwork.instance.sendToAllAround(message, point);
 	}
 
+	public static <T extends Entity & IRecvData> void sendToServer(T entity, NBTTagCompound data) {
+		if (!entity.world.isRemote) return;
+		MessageEntitySync message = new MessageEntitySync(entity, data);
+		ESNetwork.instance.sendToServer(message);
+	}
+
 	public static interface IRecvData {
 		void onRecv(NBTTagCompound data);
 	}

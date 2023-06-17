@@ -35,6 +35,8 @@ public class ESNetwork {
 
 		regMsg(13, MessageDungeonSync.Handler.class, MessageDungeonSync.class, Side.CLIENT);
 		regMsg(14, MessageDungeonSync.Handler.class, MessageDungeonSync.class, Side.SERVER);
+		
+		regMsg(15, MessageEntitySync.Handler.class, MessageEntitySync.class, Side.SERVER);
 	}
 
 	public static <REQ extends IMessage, REPLY extends IMessage> void regMsg(int id,

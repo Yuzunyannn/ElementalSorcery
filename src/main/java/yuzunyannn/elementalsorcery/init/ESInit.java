@@ -218,6 +218,7 @@ import yuzunyannn.elementalsorcery.item.ItemElfWatch;
 import yuzunyannn.elementalsorcery.item.ItemEntangleNode;
 import yuzunyannn.elementalsorcery.item.ItemFairyCube;
 import yuzunyannn.elementalsorcery.item.ItemFairyCubeModule;
+import yuzunyannn.elementalsorcery.item.ItemFloatCarpet;
 import yuzunyannn.elementalsorcery.item.ItemGlassCup;
 import yuzunyannn.elementalsorcery.item.ItemJuiceConcentrate;
 import yuzunyannn.elementalsorcery.item.ItemManual;
@@ -700,6 +701,7 @@ public class ESInit {
 		ESObjects.ITEMS.DUNGEON_STONE = new ItemDungeonStone();
 		ESObjects.ITEMS.SIMPLE_MATERIAL_CONTAINER = new ItemSimpleMaterialContainer();
 		ESObjects.ITEMS.STRENGTHEN_AGENT = new ItemStrengthenAgent();
+		ESObjects.ITEMS.FLOAT_CARPET = new ItemFloatCarpet();
 
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1220,7 +1222,8 @@ public class ESInit {
 		registerRender(ITEMS.DUNGEON_STONE);
 		registerRender(ITEMS.SIMPLE_MATERIAL_CONTAINER);
 		registerRender(ITEMS.STRENGTHEN_AGENT);
-
+		registerRender(ITEMS.FLOAT_CARPET);
+		
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");
 		for (ItemKeepsake.EnumType keepsakeType : ItemKeepsake.EnumType.values())

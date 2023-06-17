@@ -374,6 +374,7 @@ entity.Puppet.name=木灵
 entity.RelicGuard.name=遗迹守卫
 entity.SpriteZombie.name=灵体僵尸
 entity.SubjectZombie.name=僵尸实验体
+entity.FloatCarpet.name=浮毯
 
 pro.none=闲人
 pro.warrior=战士
@@ -580,6 +581,7 @@ info.dungeon.teleport.title.click=点击传送
 info.dungeon.explor.progress=已探索房间：%d/%d，总进度：%.1f%%
 info.dungeon.cannot.teleport=地牢似乎阻止了你的传送
 info.dungeon.strengthenAgent=看上去不是什么好东西，最好不要使用...
+info.dungeon.floatCarpet=看上是某种交通工具，通过魔力驱动，不适合在狭窄的空间内使用
 
 info.mc.archi.Temple.name=沙漠神殿
 

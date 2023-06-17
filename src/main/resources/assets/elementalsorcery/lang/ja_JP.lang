@@ -374,6 +374,7 @@ entity.Puppet.name=木霊
 entity.RelicGuard.name=遺跡ガード
 entity.SpriteZombie.name=霊体ゾンビ
 entity.SubjectZombie.name=ゾンビ実験体
+entity.FloatCarpet.name=フロートカーペット
 
 pro.none=アイドル
 pro.warrior=戦士
@@ -580,6 +581,7 @@ info.dungeon.teleport.title.click=クリックと転送する
 info.dungeon.explor.progress=探索済みルーム：%d/%d、総進捗：%.1f%%
 info.dungeon.cannot.teleport=ダンジョンはあなたの転送を阻止しているようです
 info.dungeon.strengthenAgent=見た目はあまりいいものではないので、使わないほうがいいです...
+info.dungeon.floatCarpet=魔力駆動により狭い空間での使用には適さない乗り物に見える
 
 info.mc.archi.Temple.name=砂漠のピラミッド
 
