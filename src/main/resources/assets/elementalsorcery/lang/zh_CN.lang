@@ -147,6 +147,7 @@ item.dungeonSeed.fin.name=虚映入口
 item.dungeonStone.name=虚映之石
 item.simpleMaterialContainer.name=虚空方锥
 item.strengthenAgent.name=强化药剂
+item.meteoriteIngot.name=冥星石
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -253,6 +254,8 @@ tile.dungeonActinicGlass.name=光化玻璃
 tile.dungeonMagicCircleA.name=地牢法阵
 tile.dungeonCheckpoint.name=地牢传送石
 tile.strangeEgg.name=奇怪的蛋
+tile.meteorite.s.name=陨石
+tile.meteoriteDruse.name=陨石晶簇
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者
@@ -281,6 +284,7 @@ es.effect.frozen=冻结
 es.effect.naturalMedal=自然勋章
 es.effect.goldShield=黄金盾
 es.effect.deathWatch=死亡时针
+es.effect.meteoriteDisease=陨石病
 
 es.potion.effect.silent=禁言药水
 es.splash_potion.effect.silent=喷溅型禁言药水

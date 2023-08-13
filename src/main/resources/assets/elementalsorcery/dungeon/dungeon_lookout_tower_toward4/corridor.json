@@ -1,0 +1,48 @@
+{
+    "type": "haystack",
+    "probability": 0.75,
+    "pressure": true,
+    "trigger": {
+        "onSweep": {
+            "type": "group",
+            "mode": "random",
+            "funcs": [
+                {
+                    "type": "loot",
+                    "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_2"
+                },
+                {
+                    "type": "entity",
+                    "entityId": "minecraft:zombie",
+                    "entityNBT": {
+                        "IsBaby": true,
+                        "HandDropChances": [
+                            0.0,
+                            0.0
+                        ],
+                        "HandItems": [
+                            {
+                                "id": "minecraft:tnt",
+                                "Count": 1
+                            },
+                            {
+                                "id": "minecraft:tnt",
+                                "Count": 1
+                            }
+                        ]
+                    },
+                    "trigger": {
+                        "onLoot": {
+                            "type": "loot",
+                            "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_2"
+                        },
+                        "onDead": {
+                            "type": "explode",
+                            "level": 2
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

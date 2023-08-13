@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "Y#Y",
+    "#X#",
+    "Y#Y"
+  ],
+  "key": {
+    "X": {
+      "item": "elementalsorcery:fusion_crystal"
+    },
+    "Y": {
+      "item": "minecraft:glowstone_dust"
+    },
+    "#": {
+      "item": "elementalsorcery:meteorite_ingot"
+    }
+  },
+  "result": {
+    "item": "elementalsorcery:invert_gem",
+    "count": 1
+  }
+}

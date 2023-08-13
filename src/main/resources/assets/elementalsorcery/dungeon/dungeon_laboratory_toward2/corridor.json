@@ -1,0 +1,46 @@
+{
+    "type": "entity",
+    "entityId": "minecraft:zombie",
+    "entityNBT": {
+        "IsBaby": true
+    },
+    "trigger": {
+        "onLoot": {
+            "type": "loot",
+            "loot": "elementalsorcery:dungeon/dungeon_loot_laboratory",
+            "acceptHideItem": true
+        },
+        "onDead": {
+            "type": "entity",
+            "entityId": "elementalsorcery:spriteZombie",
+            "entityNBT": {
+                "IsBaby": true
+            },
+            "trigger": {
+                "onDead": {
+                    "type": "mantra",
+                    "mantra": "elementalsorcery:frozen",
+                    "elements": [
+                        {
+                            "id": "elementalsorcery:water",
+                            "count": 1000,
+                            "power": 200
+                        },
+                        {
+                            "id": "elementalsorcery:air",
+                            "count": 1000,
+                            "power": 400
+                        }
+                    ],
+                    "potent": 0.5,
+                    "orient": {
+                        "x": 0,
+                        "y": 1,
+                        "z": 0
+                    },
+                    "isVertical": true
+                }
+            }
+        }
+    }
+}

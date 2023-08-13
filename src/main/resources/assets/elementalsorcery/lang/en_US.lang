@@ -147,6 +147,7 @@ item.dungeonSeed.fin.name=Virtual Sight Entrance
 item.dungeonStone.name=Stone of Virtual Sight
 item.simpleMaterialContainer.name=Void Cone
 item.strengthenAgent.name=Strengthen Agent
+item.meteoriteIngot.name=distant starry stone
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -253,6 +254,8 @@ tile.dungeonActinicGlass.name=Actinic Glass
 tile.dungeonMagicCircleA.name=Dungeon Circle
 tile.dungeonCheckpoint.name=Dungeon Portal Stone
 tile.strangeEgg.name=Strange Egg
+tile.meteorite.s.name=Meteorite
+tile.meteoriteDruse.name=Meteorite Druse
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
@@ -281,6 +284,7 @@ es.effect.frozen=Frozen
 es.effect.naturalMedal=Natural Medal
 es.effect.goldShield=Gold Shield
 es.effect.deathWatch=Death Watch
+es.effect.meteoriteDisease=Meteorite Disease
 
 es.potion.effect.silent=Potion of Silence
 es.splash_potion.effect.silent=Splash Potion of Silence 

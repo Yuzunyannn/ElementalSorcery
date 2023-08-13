@@ -1,0 +1,10 @@
+{
+    "variants": {
+        "variant=normal": {
+            "model": "elementalsorcery:meteorite_normal"
+        },
+        "variant=block": {
+            "model": "elementalsorcery:meteorite_block"
+        }
+    }
+}

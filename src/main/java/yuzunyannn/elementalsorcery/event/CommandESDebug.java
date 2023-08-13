@@ -70,7 +70,7 @@ public class CommandESDebug {
 	private static boolean passpass = false;
 	public static final String[] autoTips = new String[] { "reflush", "reflushLootTable", "buildTest", "portalTest",
 			"showInfo", "blockMoveTest", "textTest", "reloadeTexture", "quest", "statistics", "statisticsHandle",
-			"reloadShader", "jsonSchema", "fragmentTest" };
+			"reloadShader", "jsonSchema", "fragmentTest", "tickUpddate" };
 
 	/** debug 测试内容，不进行本地化 */
 	static void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
@@ -206,6 +206,11 @@ public class CommandESDebug {
 				for (ResourceLocation key : Mantra.REGISTRY.getKeys()) array.append(key.toString());
 				obj.save(new File("../json_schema/mantra_ids.json"), true);
 
+			}
+				return;
+			case "tickUpddate": {
+				EntityPlayerMP player = (EntityPlayerMP) entity;
+				player.world.updateBlockTick(pos, world.getBlockState(pos).getBlock(), 0, 0);
 			}
 				return;
 			case "textTest": {

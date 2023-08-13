@@ -1,0 +1,42 @@
+{
+    "type": "magicCircle",
+    "activeCD": 300,
+    "trigger": {
+        "onActived": {
+            "type": "repeat",
+            "times": 10,
+            "func": {
+                "type": "entity",
+                "entityId": "minecraft:zombie",
+                "entityNBT": {
+                    "IsBaby": false,
+                    "HandDropChances": [
+                        0.0,
+                        0.0
+                    ],
+                    "HandItems": [
+                        {
+                            "id": "minecraft:diamond_sword",
+                            "Count": 1
+                        },
+                        {
+                            "id": "elementalsorcery:magic_gold_sword",
+                            "Count": 1
+                        }
+                    ]
+                },
+                "trigger": {
+                    "onLoot": {
+                        "type": "loot",
+                        "loot": "elementalsorcery:dungeon/dungeon_loot_laboratory",
+                        "acceptHideItem": true
+                    }
+                }
+            }
+        },
+        "onDestroyed": {
+            "type": "explode",
+            "level": 2
+        }
+    }
+}

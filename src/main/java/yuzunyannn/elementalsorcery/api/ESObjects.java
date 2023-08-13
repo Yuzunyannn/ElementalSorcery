@@ -8,11 +8,6 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
-import yuzunyannn.elementalsorcery.block.env.BlockDungeonCheckpoint;
-import yuzunyannn.elementalsorcery.block.env.BlockStrangeEgg;
-import yuzunyannn.elementalsorcery.item.ItemFloatCarpet;
-import yuzunyannn.elementalsorcery.item.ItemStrengthenAgent;
-import yuzunyannn.elementalsorcery.potion.PotionDeathWatch;
 
 public class ESObjects {
 
@@ -146,6 +141,7 @@ public class ESObjects {
 		public Item SIMPLE_MATERIAL_CONTAINER;
 		public Item STRENGTHEN_AGENT;
 		public Item FLOAT_CARPET;
+		public Item METEORITE_INGOT;
 	}
 
 	static public class Blocks {
@@ -240,6 +236,8 @@ public class ESObjects {
 		public Block DUNGEON_MAGIC_CIRCLE_A;
 		public Block DUNGEON_CHECKPOINT;
 		public Block STRANGE_EGG;
+		public Block METEORITE;
+		public Block METEORITE_DRUSE;
 	}
 
 	static public class Elements {
@@ -323,6 +321,7 @@ public class ESObjects {
 		public Potion NATURAL_MEDAL;
 		public Potion GOLD_SHIELD;
 		public Potion DEATH_WATCH;
+		public Potion METEORITE_DISEASE;
 	}
 
 	static public class PotionTypes {

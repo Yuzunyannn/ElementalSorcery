@@ -1,0 +1,5 @@
+{
+    "type": "chest",
+    "loot": "elementalsorcery:dungeon/dungeon_loot_laboratory",
+    "acceptHideItem": true
+}

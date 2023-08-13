@@ -1,0 +1,5 @@
+{
+    "type": "chest",
+    "loot": "elementalsorcery:dungeon/dungeon_loot_lookout_tower_top",
+    "acceptHideItem": true
+}

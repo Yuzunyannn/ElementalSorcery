@@ -40,19 +40,24 @@ public class Line3d {
 		return (this.m * other.m + this.n * other.n + this.p * other.p) / _l;
 	}
 
+	/**
+	 * x = a + mt <br/>
+	 * y = b + nt <br/>
+	 * z = c + pt <br/>
+	 */
 	public Vec3d getRandomPointInLine(double seed) {
 		if (m == 0) {
-			if (n == 0) return new Vec3d(0, 0, seed);
-			if (p == 0) return new Vec3d(0, seed, 0);
-			return new Vec3d(0, seed, (seed - b) / n * p + c);
+			if (n == 0) return new Vec3d(a, b, seed);
+			if (p == 0) return new Vec3d(a, seed, c);
+			return new Vec3d(a, seed, (seed - b) / n * p + c);
 		} else if (n == 0) {
-			if (m == 0) return new Vec3d(0, 0, seed);
-			if (p == 0) return new Vec3d(seed, 0, 0);
-			return new Vec3d(seed, 0, (seed - a) / m * p + c);
+			if (m == 0) return new Vec3d(a, b, seed);
+			if (p == 0) return new Vec3d(seed, b, c);
+			return new Vec3d(seed, b, (seed - a) / m * p + c);
 		} else if (p == 0) {
-			if (m == 0) return new Vec3d(0, seed, 0);
-			if (n == 0) return new Vec3d(seed, 0, 0);
-			return new Vec3d(seed, (seed - a) / m * n + b, 0);
+			if (m == 0) return new Vec3d(a, seed, c);
+			if (n == 0) return new Vec3d(seed, b, c);
+			return new Vec3d(seed, (seed - a) / m * n + b, c);
 		}
 		return new Vec3d(seed, (seed - a) / m * n + b, (seed - a) / m * p + c);
 	}

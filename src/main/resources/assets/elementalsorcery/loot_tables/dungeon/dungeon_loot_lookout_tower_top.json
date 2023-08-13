@@ -1,0 +1,24 @@
+{
+    "pools": [
+        {
+            "name": "dungeon_loot_lookout_tower_top",
+            "rolls": {
+                "min": 2,
+                "max": 4
+            },
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "name": "elementalsorcery:dungeon/dungeon_loot_sundry_1",
+                    "weight": 15,
+                    "quality": -1
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:magic_stone",
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}

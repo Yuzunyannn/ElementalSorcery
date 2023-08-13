@@ -91,7 +91,7 @@ public class DungeonFuncMantra extends GameFuncTimes {
 		if (target != null) MantraHelper.autoTrace(world, caster, castVec, orient, target, moveSpeed, duration, potent,
 				mantra, eStacks);
 		else if (isVertical) {
-			boolean isRev = moveVec.y > 0 ? true : false;
+			boolean isRev = orient.y > 0 ? true : false;
 			MantraHelper.autoArea(world, caster, castVec, isRev, duration, potent, mantra, eStacks);
 		} else MantraHelper.autoDirect(world, caster, castVec, orient, moveVec, duration, mantra, eStacks);
 	}

@@ -55,10 +55,18 @@ public class ItemArchitectureCrystal extends ItemCrystal {
 		if (!author.isEmpty()) tooltip.add(I18n.format("info.arcCrystal.author", author));
 		tooltip.add(I18n.format("info.arcCrystal.name", info.building.getName()));
 		List<BlockItemTypeInfo> list = info.building.getBlockTypeInfos();
-		for (BlockItemTypeInfo tinfo : list) {
-			tooltip.add(I18n.format("info.arcCrystal.count", tinfo.getDisplayName(), tinfo.getCount()));
+		if (list.size() > 10) {
+			StringBuilder builder = new StringBuilder();
+			for (BlockItemTypeInfo tinfo : list) {
+				String str = I18n.format("info.arcCrystal.count", tinfo.getDisplayName(), tinfo.getCount());
+				builder.append(str).append(' ');
+			}
+			tooltip.add(builder.toString());
+		} else {
+			for (BlockItemTypeInfo tinfo : list) {
+				tooltip.add(I18n.format("info.arcCrystal.count", tinfo.getDisplayName(), tinfo.getCount()));
+			}
 		}
-
 	}
 
 	@Override

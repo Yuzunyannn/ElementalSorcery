@@ -1,0 +1,114 @@
+{
+    "pools": [
+        {
+            "name": "dungeon_loot_laboratory",
+            "rolls": {
+                "min": 2,
+                "max": 4
+            },
+            "entries": [
+                {
+                    "type": "loot_table",
+                    "weight": 12,
+                    "name": "elementalsorcery:common/es_food_some"
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:estone",
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 4,
+                                "max": 12
+                            }
+                        }
+                    ],
+                    "weight": 12
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:estone_stairs",
+                    "functions": [
+                        {
+                            "function": "set_count",
+                            "count": {
+                                "min": 2,
+                                "max": 8
+                            }
+                        }
+                    ],
+                    "weight": 12
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:meteorite",
+                    "functions": [
+                        {
+                            "function": "set_data",
+                            "data": {
+                                "min": 1,
+                                "max": 1
+                            }
+                        }
+                    ],
+                    "weight": 4
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:meteorite_druse",
+                    "weight": 6
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:simple_material_container",
+                    "weight": 6
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:element_workbench",
+                    "weight": 4
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:magic_platform",
+                    "weight": 4,
+                    "functions": [
+                        {
+                            "function": "set_data",
+                            "data": {
+                                "min": 1,
+                                "max": 1
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:estone_crock",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:researcher",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:is_craft_normal",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:is_craft_cc",
+                    "weight": 2
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:star_flower",
+                    "weight": 1
+                }
+            ]
+        }
+    ]
+}

@@ -147,6 +147,7 @@ item.dungeonSeed.fin.name=偽映のエントリ
 item.dungeonStone.name=偽映の石
 item.simpleMaterialContainer.name=虚空のかくすい
 item.strengthenAgent.name=強化剤
+item.meteoriteIngot.name=彼岸石
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -253,6 +254,8 @@ tile.dungeonActinicGlass.name=光化ガラス
 tile.dungeonMagicCircleA.name=地下牢のマジックサークル
 tile.dungeonCheckpoint.name=地下牢のトランスファ石
 tile.strangeEgg.name=変な卵
+tile.meteorite.s.name=隕石
+tile.meteoriteDruse.name=隕石結晶
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -281,6 +284,7 @@ es.effect.frozen=とうけつ
 es.effect.naturalMedal=自然勲章
 es.effect.goldShield=黄金盾
 es.effect.deathWatch=デスウォッチ
+es.effect.meteoriteDisease=隕石病
 
 es.potion.effect.silent=沈黙のポーション
 es.splash_potion.effect.silent=沈黙のスプラッシュポーション

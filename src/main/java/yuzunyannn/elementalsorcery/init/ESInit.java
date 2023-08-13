@@ -79,6 +79,8 @@ import yuzunyannn.elementalsorcery.block.BlockLifeDirt;
 import yuzunyannn.elementalsorcery.block.BlockLifeFlower;
 import yuzunyannn.elementalsorcery.block.BlockMagicPot;
 import yuzunyannn.elementalsorcery.block.BlockMagicTorch;
+import yuzunyannn.elementalsorcery.block.BlockMeteorite;
+import yuzunyannn.elementalsorcery.block.BlockMeteoriteDruse;
 import yuzunyannn.elementalsorcery.block.BlockScarletCrystalOre;
 import yuzunyannn.elementalsorcery.block.BlockSealStone;
 import yuzunyannn.elementalsorcery.block.BlockStarFlower;
@@ -276,6 +278,7 @@ import yuzunyannn.elementalsorcery.item.prop.ItemMagicPaper;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicTerminal;
 import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
 import yuzunyannn.elementalsorcery.item.prop.ItemMaterialDebris;
+import yuzunyannn.elementalsorcery.item.prop.ItemMeteoriteIngot;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.item.prop.ItemRabidLeather;
 import yuzunyannn.elementalsorcery.item.prop.ItemRelicGuardCore;
@@ -323,6 +326,7 @@ import yuzunyannn.elementalsorcery.potion.PotionFrozen;
 import yuzunyannn.elementalsorcery.potion.PotionGoldShield;
 import yuzunyannn.elementalsorcery.potion.PotionGoldenEye;
 import yuzunyannn.elementalsorcery.potion.PotionHealthBalance;
+import yuzunyannn.elementalsorcery.potion.PotionMeteoriteDisease;
 import yuzunyannn.elementalsorcery.potion.PotionNaturalMedal;
 import yuzunyannn.elementalsorcery.potion.PotionPoundWalker;
 import yuzunyannn.elementalsorcery.potion.PotionPowerPitcher;
@@ -577,6 +581,8 @@ public class ESInit {
 		ESObjects.BLOCKS.DUNGEON_MAGIC_CIRCLE_A = new BlockDungeonMagicCircleA();
 		ESObjects.BLOCKS.DUNGEON_CHECKPOINT = new BlockDungeonCheckpoint();
 		ESObjects.BLOCKS.STRANGE_EGG = new BlockStrangeEgg();
+		ESObjects.BLOCKS.METEORITE = new BlockMeteorite();
+		ESObjects.BLOCKS.METEORITE_DRUSE = new BlockMeteoriteDruse();
 
 		// 初始化所有tab
 		Class<?> cls = ESObjects.BLOCKS.getClass();
@@ -702,6 +708,7 @@ public class ESInit {
 		ESObjects.ITEMS.SIMPLE_MATERIAL_CONTAINER = new ItemSimpleMaterialContainer();
 		ESObjects.ITEMS.STRENGTHEN_AGENT = new ItemStrengthenAgent();
 		ESObjects.ITEMS.FLOAT_CARPET = new ItemFloatCarpet();
+		ESObjects.ITEMS.METEORITE_INGOT = new ItemMeteoriteIngot();
 
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -806,6 +813,7 @@ public class ESInit {
 		ESObjects.POTIONS.NATURAL_MEDAL = new PotionNaturalMedal();
 		ESObjects.POTIONS.GOLD_SHIELD = new PotionGoldShield();
 		ESObjects.POTIONS.DEATH_WATCH = new PotionDeathWatch();
+		ESObjects.POTIONS.METEORITE_DISEASE = new PotionMeteoriteDisease();
 
 		ESObjects.POTION_TYPES.SILENT = PotionTypeES.create("silent",
 				new PotionEffect(ESObjects.POTIONS.SILENT, 20 * 16));
@@ -1223,7 +1231,8 @@ public class ESInit {
 		registerRender(ITEMS.SIMPLE_MATERIAL_CONTAINER);
 		registerRender(ITEMS.STRENGTHEN_AGENT);
 		registerRender(ITEMS.FLOAT_CARPET);
-		
+		registerRender(ITEMS.METEORITE_INGOT);
+
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");
 		for (ItemKeepsake.EnumType keepsakeType : ItemKeepsake.EnumType.values())
@@ -1314,6 +1323,9 @@ public class ESInit {
 		registerRender(BLOCKS.DUNGEON_LIGHT);
 		registerRender(BLOCKS.DUNGEON_CHECKPOINT);
 		registerRender(BLOCKS.STRANGE_EGG);
+		registerRender(BLOCKS.METEORITE, 0, "meteorite_normal");
+		registerRender(BLOCKS.METEORITE, 1, "meteorite_block");
+		registerRender(BLOCKS.METEORITE_DRUSE);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());

@@ -76,9 +76,10 @@ public class ElfTime {
 		MORNING(1800, 6900),
 		AFTERNOON(6900, 13800),
 		DUSK(13800, 15600),
-		MIDNIGHT(18000, 21600),
 		NIGHT(15600, 24000),
-		DAY(1800, 13800);
+		DAY(1800, 13800),
+		MIDNIGHT(18000, 21600),
+		NOON(6000, 9600);
 
 		public int start, end;
 

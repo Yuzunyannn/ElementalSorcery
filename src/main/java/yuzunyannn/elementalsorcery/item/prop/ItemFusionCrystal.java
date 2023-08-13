@@ -5,12 +5,14 @@ import java.util.Random;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.ItemSimpleFoiled;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class ItemFusionCrystal extends ItemSimpleFoiled {
+public class ItemFusionCrystal extends Item {
 
 	public ItemFusionCrystal() {
 		this.setTranslationKey("fusionCrystal");
@@ -32,6 +34,12 @@ public class ItemFusionCrystal extends ItemSimpleFoiled {
 		ItemLifeLeather.addAttributeModifier(stack, SharedMonsterAttributes.ATTACK_SPEED, slot, at, 1);
 		ItemLifeLeather.addAttributeModifier(stack, SharedMonsterAttributes.MOVEMENT_SPEED, slot, at, 1);
 		ItemLifeLeather.addAttributeModifier(stack, SharedMonsterAttributes.LUCK, slot, at, 1);
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean hasEffect(ItemStack stack) {
+		return true;
 	}
 
 }

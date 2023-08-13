@@ -134,6 +134,11 @@
             "zh_CN": "死亡时针",
             "en_US": "Death Watch",
             "ja_JP": "デスウォッチ"
+        },
+        "es.effect.meteoriteDisease": {
+            "zh_CN": "陨石病",
+            "en_US": "Meteorite Disease",
+            "ja_JP": "隕石病"
         }
     },
     "es.effect.type": {
