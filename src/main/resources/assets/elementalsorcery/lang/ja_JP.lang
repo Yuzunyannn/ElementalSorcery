@@ -148,6 +148,7 @@ item.dungeonStone.name=偽映の石
 item.simpleMaterialContainer.name=虚空のかくすい
 item.strengthenAgent.name=強化剤
 item.meteoriteIngot.name=彼岸石
+item.liftingStone.name=昇降石
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -586,6 +587,7 @@ info.dungeon.explor.progress=探索済みルーム：%d/%d、総進捗：%.1f%%
 info.dungeon.cannot.teleport=ダンジョンはあなたの転送を阻止しているようです
 info.dungeon.strengthenAgent=見た目はあまりいいものではないので、使わないほうがいいです...
 info.dungeon.floatCarpet=魔力駆動により狭い空間での使用には適さない乗り物に見える
+info.dungeon.liftingStone=エンドストーンと関連があるようで、昇降できる道具です
 
 info.mc.archi.Temple.name=砂漠のピラミッド
 

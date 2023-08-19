@@ -220,7 +220,6 @@ import yuzunyannn.elementalsorcery.item.ItemElfWatch;
 import yuzunyannn.elementalsorcery.item.ItemEntangleNode;
 import yuzunyannn.elementalsorcery.item.ItemFairyCube;
 import yuzunyannn.elementalsorcery.item.ItemFairyCubeModule;
-import yuzunyannn.elementalsorcery.item.ItemFloatCarpet;
 import yuzunyannn.elementalsorcery.item.ItemGlassCup;
 import yuzunyannn.elementalsorcery.item.ItemJuiceConcentrate;
 import yuzunyannn.elementalsorcery.item.ItemManual;
@@ -294,7 +293,9 @@ import yuzunyannn.elementalsorcery.item.prop.ItemWindmillBladeFrame;
 import yuzunyannn.elementalsorcery.item.tool.ItemCollapseWand;
 import yuzunyannn.elementalsorcery.item.tool.ItemCubeDemarcator;
 import yuzunyannn.elementalsorcery.item.tool.ItemDragonBreathPickaxe;
+import yuzunyannn.elementalsorcery.item.tool.ItemFloatCarpet;
 import yuzunyannn.elementalsorcery.item.tool.ItemKyaniteTools;
+import yuzunyannn.elementalsorcery.item.tool.ItemLiftingStone;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicGoldTools;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
@@ -709,6 +710,7 @@ public class ESInit {
 		ESObjects.ITEMS.STRENGTHEN_AGENT = new ItemStrengthenAgent();
 		ESObjects.ITEMS.FLOAT_CARPET = new ItemFloatCarpet();
 		ESObjects.ITEMS.METEORITE_INGOT = new ItemMeteoriteIngot();
+		ESObjects.ITEMS.LIFTING_STONE = new  ItemLiftingStone();
 
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1232,6 +1234,7 @@ public class ESInit {
 		registerRender(ITEMS.STRENGTHEN_AGENT);
 		registerRender(ITEMS.FLOAT_CARPET);
 		registerRender(ITEMS.METEORITE_INGOT);
+		registerRender(ITEMS.LIFTING_STONE);
 
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");

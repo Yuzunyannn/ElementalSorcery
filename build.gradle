@@ -78,6 +78,8 @@ dependencies {
 
     //-------- runtime for test （#￣▽￣#）-------- 
 
+    compileOnly fileTree(dir: 'rtlibs', include: '*.jar')
+
     //ae2 test
     // deobfCompile "appeng:appliedenergistics2:${ae2_version}"
 

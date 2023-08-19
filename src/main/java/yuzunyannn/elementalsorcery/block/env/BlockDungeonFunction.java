@@ -23,6 +23,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFunc;
@@ -117,7 +118,7 @@ public class BlockDungeonFunction extends Block implements ITileEntityProvider {
 				func.setSeed(RandomHelper.rand.nextLong());
 				playerIn.sendMessage(new TextComponentString(func.toString()).setStyle(style));
 				ItemStack stack = playerIn.getHeldItem(hand);
-				if (stack.getItem() == Items.WOODEN_AXE) {
+				if (stack.getItem() == Items.WOODEN_AXE || stack.getItem() == Items.STONE_AXE) {
 					GameFuncExecuteContext context = new GameFuncExecuteContext();
 					context.setSrcObj(worldIn, pos);
 					context.doExecute(func);
@@ -140,6 +141,11 @@ public class BlockDungeonFunction extends Block implements ITileEntityProvider {
 		if (placer instanceof EntityPlayer && tile != null) {
 			trySet((EntityPlayer) placer, tile, false);
 		}
+	}
+
+	@Override
+	public boolean isReplaceable(IBlockAccess worldIn, BlockPos pos) {
+		return true;
 	}
 
 }

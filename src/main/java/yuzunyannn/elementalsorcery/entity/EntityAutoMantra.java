@@ -153,7 +153,7 @@ public class EntityAutoMantra extends EntityMantraBase implements IEffectBinderG
 
 	@Override
 	protected IWorldObject getUser() {
-		return user.getMaster() == null ? null : new WorldObjectEntity(user.getMaster());
+		return user.getMaster() == null ? new WorldObjectEntity(this) : new WorldObjectEntity(user.getMaster());
 	}
 
 	@Override

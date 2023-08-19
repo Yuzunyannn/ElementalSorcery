@@ -148,6 +148,7 @@ item.dungeonStone.name=Stone of Virtual Sight
 item.simpleMaterialContainer.name=Void Cone
 item.strengthenAgent.name=Strengthen Agent
 item.meteoriteIngot.name=distant starry stone
+item.liftingStone.name=Lifting Stone
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -586,6 +587,7 @@ info.dungeon.explor.progress=Explored room: %d/%d, progress: %.1f%%
 info.dungeon.cannot.teleport=The dungeon seems to have blocked your teleporting
 info.dungeon.strengthenAgent=It doesn't look like a good thing, it's best not to use it...
 info.dungeon.floatCarpet=It seems to be a certain type of transportation, driven by magic, and not suitable for use in narrow spaces
+info.dungeon.liftingStone=It seems to be related to the End Stone and is a prop that can be lifted and lowered
 
 info.mc.archi.Temple.name=Desert Pyramid
 

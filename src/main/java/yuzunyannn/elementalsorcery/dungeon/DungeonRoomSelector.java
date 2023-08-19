@@ -91,6 +91,11 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 
 		addBuildCoreRoom(DungeonLib.DUNGEON_GREENHOUSE_TOWARD4, 10);
 		addBuildCoreRoom(DungeonLib.DUNGEON_STRATEGY_HALL_TOWARD3, 14);
+		addBuildRoom(DungeonLib.DUNGEON_SHADY_PATH_TOWARD2, 4, -1);
+		addBuildRoom(DungeonLib.DUNGEON_LOOKOUT_TOWER_TOWARD4, 6, 10, 5);
+		addBuildRoom(DungeonLib.DUNGEON_SHADY_PARK_TOWARD4, 8, 12, -1);
+
+//		addBuildCoreRoom(DungeonLib.DUNGEON_LABORATORY_TOWARD2, 24);
 	}
 
 	protected BuildRoomNode addBuildRoom(DungeonRoomType type, int step, int maxCount) {

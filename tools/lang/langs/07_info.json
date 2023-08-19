@@ -942,6 +942,11 @@
             "zh_CN": "看上是某种交通工具，通过魔力驱动，不适合在狭窄的空间内使用",
             "en_US": "It seems to be a certain type of transportation, driven by magic, and not suitable for use in narrow spaces",
             "ja_JP": "魔力駆動により狭い空間での使用には適さない乗り物に見える"
+        },
+        "info.dungeon.liftingStone": {
+            "zh_CN": "和末地石似乎有所关联，是一个可以进行升降的道具",
+            "en_US": "It seems to be related to the End Stone and is a prop that can be lifted and lowered",
+            "ja_JP": "エンドストーンと関連があるようで、昇降できる道具です"
         }
     },
     "info.mc": {

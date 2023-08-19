@@ -1,0 +1,67 @@
+{
+    "pools": [
+        {
+            "name": "dungeon_loot_juice_nosh",
+            "rolls": {
+                "min": 12,
+                "max": 16
+            },
+            "entries": [
+                {
+                    "type": "item",
+                    "weight": 5,
+                    "name": "elementalsorcery:glass_cup"
+                },
+                {
+                    "type": "item",
+                    "name": "elementalsorcery:juice_concentrate",
+                    "weight": 3
+                },
+                {
+                    "type": "item",
+                    "weight": 5,
+                    "name": "minecraft:golden_apple"
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:sugar",
+                    "weight": 20
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:reeds",
+                    "weight": 20
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:slime_ball",
+                    "weight": 20
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:apple",
+                    "weight": 20
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:carpet",
+                    "weight": 20
+                },
+                {
+                    "type": "item",
+                    "name": "minecraft:dye",
+                    "functions": [
+                        {
+                            "function": "set_data",
+                            "data": {
+                                "min": 3,
+                                "max": 3
+                            }
+                        }
+                    ],
+                    "weight": 20
+                }
+            ]
+        }
+    ]
+}

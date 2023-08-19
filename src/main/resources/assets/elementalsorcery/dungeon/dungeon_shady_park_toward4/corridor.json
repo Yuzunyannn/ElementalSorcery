@@ -1,0 +1,77 @@
+{
+    "probability": 0.75,
+    "type": "group",
+    "mode": "random",
+    "funcs": [
+        {
+            "type": "chest",
+            "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_2",
+            "weight": 2,
+            "acceptHideItem": true
+        },
+        {
+            "weight": 5,
+            "type": "dungeon:area",
+            "onceTryTimes": {
+                "min": 3,
+                "max": 4
+            },
+            "func": {
+                "times": 5,
+                "type": "block",
+                "block": "elementalsorcery:strange_egg"
+            }
+        },
+        {
+            "weight": 5,
+            "type": "dungeon:area",
+            "onceTryTimes": {
+                "min": 2,
+                "max": 3
+            },
+            "func": {
+                "type": "entity",
+                "times": 5,
+                "entityId": "minecraft:zombie",
+                "trigger": {
+                    "onLoot": {
+                        "type": "loot",
+                        "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_2",
+                        "acceptHideItem": true
+                    }
+                }
+            }
+        },
+        {
+            "weight": 5,
+            "type": "dungeon:area",
+            "onceTryTimes": {
+                "min": 2,
+                "max": 3
+            },
+            "func": {
+                "type": "haystack",
+                "pressure": "random",
+                "times": 5,
+                "weight": 5,
+                "trigger": {
+                    "onSweep": {
+                        "type": "group",
+                        "mode": "random",
+                        "funcs": [
+                            {
+                                "type": "loot",
+                                "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_2",
+                                "acceptHideItem": true
+                            },
+                            {
+                                "type": "ref",
+                                "/assets": "elementalsorcery:dungeon/common_trap_2"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ]
+}

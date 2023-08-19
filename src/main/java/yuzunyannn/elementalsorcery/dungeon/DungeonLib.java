@@ -18,6 +18,10 @@ public class DungeonLib {
 	public static DungeonRoomType DUNGEON_GREENHOUSE_TOWARD4;
 	public static DungeonRoomType DUNGEON_STRATEGY_HALL_TOWARD3;
 	public static DungeonRoomType DUNGEON_CHECKPOINT;
+	public static DungeonRoomType DUNGEON_LOOKOUT_TOWER_TOWARD4;
+	public static DungeonRoomType DUNGEON_SHADY_PARK_TOWARD4;
+	public static DungeonRoomType DUNGEON_LABORATORY_TOWARD2;
+	public static DungeonRoomType DUNGEON_SHADY_PATH_TOWARD2;
 
 	public static void register(DungeonRoomType room) {
 		DungeonRoomType.REGISTRY.register(room);
@@ -45,6 +49,10 @@ public class DungeonLib {
 		DUNGEON_GREENHOUSE_TOWARD4 = register("dungeon_greenhouse_toward4");
 		DUNGEON_STRATEGY_HALL_TOWARD3 = register("dungeon_strategy_hall_toward3");
 		DUNGEON_CHECKPOINT = register("dungeon_checkpoint");
+		DUNGEON_LOOKOUT_TOWER_TOWARD4 = register("dungeon_lookout_tower_toward4");
+		DUNGEON_SHADY_PARK_TOWARD4 = register("dungeon_shady_park_toward4");
+		DUNGEON_LABORATORY_TOWARD2 = register("dungeon_laboratory_toward2");
+		DUNGEON_SHADY_PATH_TOWARD2 = register("dungeon_shady_path_toward2");
 	}
 
 	public static void registerAllFunc() {
@@ -57,9 +65,10 @@ public class DungeonLib {
 		GameFunc.factoryMap.put("magicCircle", DungeonFuncMagicCircle.class);
 		GameFunc.factoryMap.put("potion", DungeonFuncPotion.class);
 		GameFunc.factoryMap.put("mantra", DungeonFuncMantra.class);
+		GameFunc.factoryMap.put("block", DungeonFuncBlock.class);
 		// dungeon
 		GameFunc.factoryMap.put("dungeon:global", DungeonFuncGlobal.class);
-
+		GameFunc.factoryMap.put("dungeon:area", DungeonFuncArea.class);
 	}
 
 }

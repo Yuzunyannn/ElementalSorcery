@@ -148,6 +148,7 @@ item.dungeonStone.name=虚映之石
 item.simpleMaterialContainer.name=虚空方锥
 item.strengthenAgent.name=强化药剂
 item.meteoriteIngot.name=冥星石
+item.liftingStone.name=升降石
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -586,6 +587,7 @@ info.dungeon.explor.progress=已探索房间：%d/%d，总进度：%.1f%%
 info.dungeon.cannot.teleport=地牢似乎阻止了你的传送
 info.dungeon.strengthenAgent=看上去不是什么好东西，最好不要使用...
 info.dungeon.floatCarpet=看上是某种交通工具，通过魔力驱动，不适合在狭窄的空间内使用
+info.dungeon.liftingStone=和末地石似乎有所关联，是一个可以进行升降的道具
 
 info.mc.archi.Temple.name=沙漠神殿
 

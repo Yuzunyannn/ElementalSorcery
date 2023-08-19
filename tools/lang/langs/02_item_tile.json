@@ -729,6 +729,11 @@
             "zh_CN": "冥星石",
             "en_US": "distant starry stone",
             "ja_JP": "彼岸石"
+        },
+        "item.liftingStone.name":{
+            "zh_CN": "升降石",
+            "en_US": "Lifting Stone",
+            "ja_JP": "昇降石"
         }
     },
     "tile": {

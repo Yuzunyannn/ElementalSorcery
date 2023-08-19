@@ -8,6 +8,7 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.item.tool.ItemLiftingStone;
 
 public class ESObjects {
 
@@ -142,6 +143,7 @@ public class ESObjects {
 		public Item STRENGTHEN_AGENT;
 		public Item FLOAT_CARPET;
 		public Item METEORITE_INGOT;
+		public Item LIFTING_STONE;
 	}
 
 	static public class Blocks {

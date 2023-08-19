@@ -112,7 +112,9 @@
                 "magicCircle",
                 "potion",
                 "mantra",
-                "dungeon:global"
+                "block",
+                "dungeon:global",
+                "dungeon:area"
             ]
         },
         "probability": {
@@ -529,15 +531,7 @@
                         ],
                         "properties": {
                             "mantra": {
-                                "anyOf": [
-                                    {
-                                        "$ref": "./mantra_ids.json"
-                                    },
-                                    {
-                                        "type": "string",
-                                        "pattern": ".+:.+"
-                                    }
-                                ]
+                                "$ref": "./mantra_ids.json"
                             },
                             "elements": {
                                 "$ref": "./elements_getter.json"
@@ -562,6 +556,66 @@
                             },
                             "isVertical": {
                                 "type": "boolean"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "block"
+                    }
+                }
+            },
+            "then": {
+                "title": "方块",
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/TimesFunc"
+                    },
+                    {
+                        "required": [
+                            "block"
+                        ],
+                        "properties": {
+                            "block": {
+                                "$ref": "./es_item.json"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "dungeon:area"
+                    }
+                }
+            },
+            "then": {
+                "title": "区域",
+                "allOf": [
+                    {
+                        "$ref": "#/definitions/TimesFunc"
+                    },
+                    {
+                        "required": [
+                            "func"
+                        ],
+                        "properties": {
+                            "func": {
+                                "$ref": "#"
+                            },
+                            "range": {
+                                "$ref": "#/definitions/RNumber"
+                            },
+                            "onceTryTimes": {
+                                "$ref": "#/definitions/RNumber"
                             }
                         }
                     }

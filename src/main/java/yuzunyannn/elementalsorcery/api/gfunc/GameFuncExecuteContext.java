@@ -18,6 +18,8 @@ public class GameFuncExecuteContext {
 	protected IWorldObject triggerObj;
 	protected Event event;
 
+	protected BlockPos pos = null;
+
 	public GameFunc doExecute(GameFunc func) {
 		func = ESEvent.post(new GameFuncBeforeExecuteEvent(func, this)).getFunc();
 		func.execute(this);
@@ -46,23 +48,27 @@ public class GameFuncExecuteContext {
 	}
 
 	@Nonnull
-	public IWorldObject getSrcObj() {
-		return srcObj;
-	}
-
-	@Nonnull
 	public World getWorld() {
 		return srcObj.getWorld();
 	}
 
 	@Nonnull
 	public BlockPos getBlockPos() {
-		return srcObj.getPosition();
+		return pos == null ? srcObj.getPosition() : pos;
+	}
+
+	public void setBlockPos(@Nullable BlockPos pos) {
+		this.pos = pos;
 	}
 
 	@Nullable
 	public Entity getEntity() {
 		return srcObj.asEntity();
+	}
+
+	@Nonnull
+	public IWorldObject getSrcObj() {
+		return srcObj;
 	}
 
 	@Nullable

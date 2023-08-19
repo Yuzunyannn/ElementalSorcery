@@ -8,7 +8,7 @@
         },
         {
             "fileMatch": [
-                "src/main/resources/assets/elementalsorcery/dungeon/*/*.json"
+                "src/main/resources/assets/elementalsorcery/dungeon/**/*.json"
             ],
             "url": "./json_schema/game_func.json"
         }

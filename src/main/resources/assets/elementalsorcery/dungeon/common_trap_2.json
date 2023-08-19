@@ -1,0 +1,54 @@
+{
+    "type": "group",
+    "mode": "random",
+    "funcs": [
+        {
+            "type": "explode",
+            "weight": 2,
+            "level": -3
+        },
+        {
+            "weight": 1,
+            "type": "mantra",
+            "mantra": "elementalsorcery:frozen",
+            "elements": [
+                {
+                    "id": "elementalsorcery:water",
+                    "count": 1000,
+                    "power": 200
+                },
+                {
+                    "id": "elementalsorcery:air",
+                    "count": 1000,
+                    "power": 400
+                }
+            ],
+            "potent": 0.5,
+            "orient": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+            },
+            "isVertical": true
+        },
+        {
+            "weight": 1,
+            "type": "mantra",
+            "mantra": "elementalsorcery:fire_area",
+            "elements": [
+                {
+                    "id": "elementalsorcery:fire",
+                    "count": 1000,
+                    "power": 200
+                }
+            ],
+            "orient": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+            },
+            "isVertical": true,
+            "duration": 100
+        }
+    ]
+}

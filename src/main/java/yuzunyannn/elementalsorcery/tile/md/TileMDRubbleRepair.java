@@ -100,6 +100,7 @@ public class TileMDRubbleRepair extends TileMDBase implements ITickable {
 			addRepair.apply(ESObjects.ITEMS.MAGIC_GOLD_SWORD, 10);
 			addRepair.apply(ESObjects.ITEMS.SCAPEGOAT, 5);
 			addRepair.apply(ESObjects.ITEMS.CUBE_DEMARCATOR, 20);
+			addRepair.apply(ESObjects.ITEMS.LIFTING_STONE, 200);
 		});
 	}
 

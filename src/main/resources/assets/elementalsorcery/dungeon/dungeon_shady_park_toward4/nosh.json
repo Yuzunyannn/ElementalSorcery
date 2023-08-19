@@ -1,0 +1,5 @@
+{
+    "type": "loot",
+    "loot": "elementalsorcery:dungeon/dungeon_loot_juice_nosh",
+    "goodPattern" : true
+}

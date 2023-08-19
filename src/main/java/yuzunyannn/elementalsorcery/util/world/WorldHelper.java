@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 
 import com.google.common.base.Predicate;
 
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -241,4 +242,25 @@ public class WorldHelper {
 		world.spawnEntity(entitypotion);
 	}
 
+	public static boolean canMoveEntityTo(Entity entity, Vec3d vec) {
+		World world = entity.world;
+
+		BlockPos pos = new BlockPos(vec);
+
+		IBlockState state = world.getBlockState(pos);
+		AxisAlignedBB aabb = state.getCollisionBoundingBox(world, pos);
+		if (aabb != null) {
+			if (aabb.maxY > 1f / 4) return false;
+		}
+
+		if (entity.height > 1) {
+			pos = pos.up();
+			state = world.getBlockState(pos);
+			aabb = state.getCollisionBoundingBox(world, pos);
+			if (aabb != null) return false;
+
+		}
+
+		return true;
+	}
 }
