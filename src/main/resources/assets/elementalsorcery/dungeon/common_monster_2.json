@@ -1,0 +1,49 @@
+{
+    "type": "group",
+    "mode": "random",
+    "isFully": true,
+    "funcs": [
+        {
+            "weight": 10,
+            "times": 5,
+            "type": "entity",
+            "entityId": "minecraft:zombie",
+            "trigger": {
+                "onLoot": {
+                    "inject": true,
+                    "type": "loot",
+                    "loot": "$loots",
+                    "acceptHideItem": true
+                }
+            }
+        },
+        {
+            "weight": 8,
+            "times": 5,
+            "type": "entity",
+            "entityId": "minecraft:creeper",
+            "trigger": {
+                "onLoot": {
+                    "inject": true,
+                    "type": "loot",
+                    "loot": "$loots",
+                    "acceptHideItem": true
+                }
+            }
+        },
+        {
+            "weight": 5,
+            "times": 5,
+            "type": "entity",
+            "entityId": "elementalsorcery:spriteZombie",
+            "trigger": {
+                "onLoot": {
+                    "inject": true,
+                    "type": "loot",
+                    "loot": "$loots",
+                    "acceptHideItem": true
+                }
+            }
+        }
+    ]
+}

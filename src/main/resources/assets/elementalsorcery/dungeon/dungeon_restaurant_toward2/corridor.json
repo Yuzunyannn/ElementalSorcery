@@ -1,5 +1,5 @@
 {
-    "probability": 0.75,
+    "probability": 0.8,
     "type": "group",
     "mode": "random",
     "funcs": [
@@ -7,14 +7,33 @@
             "weight": 5,
             "type": "dungeon:area",
             "onceTryTimes": {
-                "min": 1,
-                "max": 2
+                "min": 3,
+                "max": 4
+            },
+            "func": {
+                "times": 5,
+                "type": "block",
+                "block": "elementalsorcery:strange_egg"
+            }
+        },
+        {
+            "weight": 8,
+            "type": "loot",
+            "loot": "elementalsorcery:dungeon/dungeon_loot_restaurant",
+            "goodPattern": true
+        },
+        {
+            "weight": 5,
+            "type": "dungeon:area",
+            "onceTryTimes": {
+                "min": 2,
+                "max": 3
             },
             "func": {
                 "type": "ref",
                 "/assets": "elementalsorcery:dungeon/common_monster_2",
                 "params": {
-                    "$loots": "elementalsorcery:dungeon/dungeon_loot_sundry_2"
+                    "$loots": "elementalsorcery:dungeon/dungeon_loot_restaurant"
                 }
             }
         },
@@ -29,7 +48,6 @@
                 "type": "haystack",
                 "pressure": "random",
                 "times": 5,
-                "weight": 5,
                 "trigger": {
                     "onSweep": {
                         "type": "group",
@@ -37,7 +55,7 @@
                         "funcs": [
                             {
                                 "type": "loot",
-                                "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_2",
+                                "loot": "elementalsorcery:dungeon/dungeon_loot_restaurant",
                                 "acceptHideItem": true
                             },
                             {

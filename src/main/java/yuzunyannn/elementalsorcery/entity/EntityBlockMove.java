@@ -492,7 +492,7 @@ public class EntityBlockMove extends Entity implements IEntityAdditionalSpawnDat
 			return ItemStack.EMPTY;
 		} else if (item instanceof ItemDoor) {
 			if (state == null) return stack;
-			ItemDoor.placeDoor(world, to, facing.rotateY(), state.getBlock(), false);
+			ItemDoor.placeDoor(world, to, facing, state.getBlock(), false);
 			return ItemStack.EMPTY;
 		} else if (state != null) {
 			world.setBlockState(to, state);

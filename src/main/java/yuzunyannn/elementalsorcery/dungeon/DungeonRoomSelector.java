@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.item.EnumDyeColor;
@@ -78,24 +79,27 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 	}
 
 	protected void init() {
-		addBuildRoom(DungeonLib.DUNGEON_CORRIDOR_TOWARD4, 3, -1);
-		addBuildRoom(DungeonLib.DUNGEON_SMALL_TOWARD4, 2, -1);
-		addBuildRoom(DungeonLib.DUNGEON_SMAL_PRISON_TOWARD2, 4, -1);
-		addBuildRoom(DungeonLib.DUNGEON_SMALL_LIBRARY_TOWARD3, 6, -1);
-		addBuildRoom(DungeonLib.DUNGEON_SMALL_ROOM_TOWARD1, 3, 5, -1);
+		addBuildRoom(DungeonLib.DUNGEON_CORRIDOR_TOWARD4, 4, -1);
+		addBuildRoom(DungeonLib.DUNGEON_SMALL_TOWARD4, 4, 10, -1);
+		addBuildRoom(DungeonLib.DUNGEON_SMAL_PRISON_TOWARD2, 4, 6, -1);
+		addBuildRoom(DungeonLib.DUNGEON_SMALL_LIBRARY_TOWARD3, 4, 10, -1);
+		addBuildRoom(DungeonLib.DUNGEON_SMALL_ROOM_TOWARD1, 4, 6, -1);
 
-		addBuildCoreRoom(DungeonLib.DUNGEON_MANTRA_LAB_TOWARD2, 8);
-		addBuildRoom(DungeonLib.DUNGEON_ROOM_TOWARD2, 6, 8, 10);
+		addBuildCoreRoom(DungeonLib.DUNGEON_MANTRA_LAB_TOWARD2, 5); 
+		addBuildRoom(DungeonLib.DUNGEON_ROOM_TOWARD2, 4, 6, 10);
 		addBuildRoom(DungeonLib.DUNGEON_SMALL_GARDEN_TOWARD3, 6, 12);
 		addBuildRoom(DungeonLib.DUNGEON_CHECKPOINT, 6, 12, -1);
 
-		addBuildCoreRoom(DungeonLib.DUNGEON_GREENHOUSE_TOWARD4, 10);
-		addBuildCoreRoom(DungeonLib.DUNGEON_STRATEGY_HALL_TOWARD3, 14);
+		addBuildCoreRoom(DungeonLib.DUNGEON_GREENHOUSE_TOWARD4, 6); 	// t 16
+		addBuildCoreRoom(DungeonLib.DUNGEON_STRATEGY_HALL_TOWARD3, 7);
 		addBuildRoom(DungeonLib.DUNGEON_SHADY_PATH_TOWARD2, 4, -1);
-		addBuildRoom(DungeonLib.DUNGEON_LOOKOUT_TOWER_TOWARD4, 6, 10, 5);
-		addBuildRoom(DungeonLib.DUNGEON_SHADY_PARK_TOWARD4, 8, 12, -1);
+		addBuildRoom(DungeonLib.DUNGEON_CLINIC_TOWARD2, 6, 10, -1);
+		addBuildRoom(DungeonLib.DUNGEON_LOOKOUT_TOWER_TOWARD4, 4, 8, 5);
+		addBuildRoom(DungeonLib.DUNGEON_SHADY_PARK_TOWARD4, 4, 10, -1);
+		addBuildRoom(DungeonLib.DUNGEON_RESTAURANT_TOWARD2, 8, 12, -1);
 
-//		addBuildCoreRoom(DungeonLib.DUNGEON_LABORATORY_TOWARD2, 24);
+
+		addBuildCoreRoom(DungeonLib.DUNGEON_LABORATORY_TOWARD2, 10);
 	}
 
 	protected BuildRoomNode addBuildRoom(DungeonRoomType type, int step, int maxCount) {
@@ -166,7 +170,9 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 	public Collection<DungeonRoomType> getAlternateRooms(DungeonAreaRoom currRoom, int doorIndex) {
 		if (!hasCore()) return null;
 		if (this.buildCount > 256) throw new RuntimeException("to many build! please check is the algorithm correct!");
+
 		List<DungeonRoomType> results = new ArrayList<>(buildList.size());
+
 		// 从后面开始遍历，越小越先
 		for (int i = buildList.size() - 1; i >= 0; i--) {
 			BuildRoomNode node = buildList.get(i);
@@ -203,6 +209,16 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 		}
 		return true;
 	}
+
+//	protected boolean isKeyProvideOnDemand(DungeonFuncGlobal config, Map<EnumDyeColor, Integer> fragmentMap) {
+//		if (config == null) return false;
+//		List<MemoryFragment> produces = config.getProduceFragments();
+//		for (MemoryFragment mf : produces) {
+//			if (mf.getCount() <= 0) continue;
+//			if (fragmentMap.containsKey(mf.getColor())) return true;
+//		}
+//		return false;
+//	}
 
 	@Override
 	public String toString() {

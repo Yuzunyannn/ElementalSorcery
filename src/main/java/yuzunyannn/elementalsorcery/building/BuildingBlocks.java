@@ -12,6 +12,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockButton;
 import net.minecraft.block.BlockCarpet;
+import net.minecraft.block.BlockDoor;
 import net.minecraft.block.BlockFlowerPot;
 import net.minecraft.block.BlockLadder;
 import net.minecraft.block.BlockLiquid;
@@ -28,6 +29,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fluids.IFluidBlock;
+import yuzunyannn.elementalsorcery.block.BlockMeteoriteDruse;
 import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 
 /** 遍历用类 */
@@ -97,6 +99,8 @@ public class BuildingBlocks {
 		if (block instanceof BlockLadder) return true;
 		if (block instanceof BlockButton) return true;
 		if (block instanceof BlockFlowerPot) return true;
+		if (block instanceof BlockDoor) return true;
+		if (block instanceof BlockMeteoriteDruse) return true;
 		return false;
 	}
 

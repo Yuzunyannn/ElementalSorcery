@@ -1,0 +1,6 @@
+{
+    "probability": 0.75,
+    "type": "chest",
+    "loot": "elementalsorcery:dungeon/dungeon_loot_clinic",
+    "acceptHideItem": true
+}

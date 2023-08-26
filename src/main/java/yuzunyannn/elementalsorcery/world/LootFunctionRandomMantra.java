@@ -11,6 +11,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.storage.loot.LootContext;
 import net.minecraft.world.storage.loot.conditions.LootCondition;
 import net.minecraft.world.storage.loot.functions.LootFunction;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.block.BlockSealStone;
 import yuzunyannn.elementalsorcery.elf.research.AncientPaper;
@@ -30,7 +31,7 @@ public class LootFunctionRandomMantra extends LootFunction {
 
 	public static class Serializer extends LootFunction.Serializer<LootFunctionRandomMantra> {
 		public Serializer() {
-			super(new ResourceLocation("mantra_randomly"), LootFunctionRandomMantra.class);
+			super(new ResourceLocation(ESAPI.MODID, "mantra_randomly"), LootFunctionRandomMantra.class);
 		}
 
 		public void serialize(JsonObject object, LootFunctionRandomMantra functionClazz,

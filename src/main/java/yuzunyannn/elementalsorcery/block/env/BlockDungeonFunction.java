@@ -145,7 +145,7 @@ public class BlockDungeonFunction extends Block implements ITileEntityProvider {
 
 	@Override
 	public boolean isReplaceable(IBlockAccess worldIn, BlockPos pos) {
-		return true;
+		return false;
 	}
 
 }

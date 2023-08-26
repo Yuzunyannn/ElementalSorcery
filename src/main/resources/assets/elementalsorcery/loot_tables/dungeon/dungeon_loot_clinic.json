@@ -1,0 +1,54 @@
+{
+    "pools": [
+        {
+            "name": "dungeon_loot_clinic",
+            "rolls": {
+                "min": 4,
+                "max": 8
+            },
+            "entries": [
+                {
+                    "weight": 2,
+                    "type": "loot_table",
+                    "name": "elementalsorcery:dungeon/dungeon_loot_sundry_2",
+                    "quality": -1
+                },
+                {
+                    "weight": 10,
+                    "type": "item",
+                    "name": "minecraft:potion",
+                    "functions": [
+                        {
+                            "function": "elementalsorcery:potion_effect_random"
+                        }
+                    ]
+                },
+                {
+                    "weight": 10,
+                    "type": "item",
+                    "name": "minecraft:splash_potion",
+                    "functions": [
+                        {
+                            "function": "elementalsorcery:potion_effect_random"
+                        }
+                    ]
+                },
+                {
+                    "weight": 10,
+                    "type": "item",
+                    "name": "minecraft:lingering_potion",
+                    "functions": [
+                        {
+                            "function": "elementalsorcery:potion_effect_random"
+                        }
+                    ]
+                },
+                {
+                    "weight": 10,
+                    "type": "item",
+                    "name": "elementalsorcery:strengthen_agent"
+                }
+            ]
+        }
+    ]
+}

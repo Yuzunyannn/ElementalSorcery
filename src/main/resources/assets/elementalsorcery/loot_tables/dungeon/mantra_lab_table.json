@@ -49,7 +49,7 @@
                     "name": "elementalsorcery:ancient_paper",
                     "functions": [
                         {
-                            "function": "mantra_randomly"
+                            "function": "elementalsorcery:mantra_randomly"
                         }
                     ]
                 }

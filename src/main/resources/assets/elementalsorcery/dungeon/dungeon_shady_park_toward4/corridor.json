@@ -30,15 +30,10 @@
                 "max": 3
             },
             "func": {
-                "type": "entity",
-                "times": 5,
-                "entityId": "minecraft:zombie",
-                "trigger": {
-                    "onLoot": {
-                        "type": "loot",
-                        "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_2",
-                        "acceptHideItem": true
-                    }
+                "type": "ref",
+                "/assets": "elementalsorcery:dungeon/common_monster_2",
+                "params": {
+                    "$loots": "elementalsorcery:dungeon/dungeon_loot_sundry_2"
                 }
             }
         },

@@ -22,7 +22,9 @@ public class DungeonLib {
 	public static DungeonRoomType DUNGEON_SHADY_PARK_TOWARD4;
 	public static DungeonRoomType DUNGEON_LABORATORY_TOWARD2;
 	public static DungeonRoomType DUNGEON_SHADY_PATH_TOWARD2;
-
+	public static DungeonRoomType DUNGEON_CLINIC_TOWARD2;
+	public static DungeonRoomType DUNGEON_RESTAURANT_TOWARD2;
+	
 	public static void register(DungeonRoomType room) {
 		DungeonRoomType.REGISTRY.register(room);
 	}
@@ -53,6 +55,8 @@ public class DungeonLib {
 		DUNGEON_SHADY_PARK_TOWARD4 = register("dungeon_shady_park_toward4");
 		DUNGEON_LABORATORY_TOWARD2 = register("dungeon_laboratory_toward2");
 		DUNGEON_SHADY_PATH_TOWARD2 = register("dungeon_shady_path_toward2");
+		DUNGEON_CLINIC_TOWARD2 = register("dungeon_clinic_toward2");
+		DUNGEON_RESTAURANT_TOWARD2 = register("dungeon_restaurant_toward2");
 	}
 
 	public static void registerAllFunc() {

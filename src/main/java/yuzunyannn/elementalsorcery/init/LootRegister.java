@@ -8,6 +8,7 @@ import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.world.LootFunctionRandomMantra;
+import yuzunyannn.elementalsorcery.world.LootFunctionRandomPotionEffect;
 
 public class LootRegister {
 
@@ -40,5 +41,6 @@ public class LootRegister {
 		});
 
 		LootFunctionManager.registerFunction(new LootFunctionRandomMantra.Serializer());
+		LootFunctionManager.registerFunction(new LootFunctionRandomPotionEffect.Serializer());
 	}
 }

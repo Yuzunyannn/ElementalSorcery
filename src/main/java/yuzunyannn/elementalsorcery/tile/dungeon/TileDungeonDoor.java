@@ -125,34 +125,41 @@ public class TileDungeonDoor extends TileDungeonBase {
 		for (ItemMemoryFragment.MemoryFragment mf : list)
 			cList.add(new ItemMemoryFragment.MemoryFragment(mf.getColor(), mf.getCount()));
 
-		for (int i = 0; i < inv.getSizeInventory(); i++) {
-			ItemStack itemstack = inv.getStackInSlot(i);
-			if (itemstack.isEmpty()) continue;
-			NBTTagCompound nbt = itemstack.getTagCompound();
-			if (nbt == null) continue;
-			if (!nbt.hasKey("cmeta", NBTTag.TAG_NUMBER)) continue;
-			int cmeta = nbt.getInteger("cmeta");
-			// 如果color为空，表示通用匹配
-			EnumDyeColor color = cmeta < 0 ? null : EnumDyeColor.byMetadata(cmeta);
-			if (nbt.hasKey("areaId", NBTTag.TAG_NUMBER)) {
-				int areaId = nbt.getInteger("areaId");
-				int dimId = nbt.getInteger("dimId");
-				if (world.provider.getDimension() != dimId) continue;
-				if (this.areaId != areaId) continue;
-			}
-			Iterator<ItemMemoryFragment.MemoryFragment> iter = cList.iterator();
-			while (iter.hasNext()) {
-				ItemMemoryFragment.MemoryFragment mf = iter.next();
+		Iterator<ItemMemoryFragment.MemoryFragment> iter = cList.iterator();
+
+		while (iter.hasNext()) {
+			ItemMemoryFragment.MemoryFragment mf = iter.next();
+
+			for (int i = 0; i < inv.getSizeInventory(); i++) {
+
+				ItemStack itemstack = inv.getStackInSlot(i);
+				if (itemstack.isEmpty()) continue;
+				NBTTagCompound nbt = itemstack.getTagCompound();
+				if (nbt == null) continue;
+				if (!nbt.hasKey("cmeta", NBTTag.TAG_NUMBER)) continue;
+				int cmeta = nbt.getInteger("cmeta");
+				
+				// 如果color为空，表示通用匹配
+				EnumDyeColor color = cmeta < 0 ? null : EnumDyeColor.byMetadata(cmeta);
+				if (nbt.hasKey("areaId", NBTTag.TAG_NUMBER)) {
+					int areaId = nbt.getInteger("areaId");
+					int dimId = nbt.getInteger("dimId");
+					if (world.provider.getDimension() != dimId) continue;
+					if (this.areaId != areaId) continue;
+				}
+
 				if (color != null && mf.getColor() != color) continue;
 
 				int count = Math.min(itemstack.getCount(), mf.getCount());
 				mf.setCount(mf.getCount() - count);
 				if (!simulate) itemstack.shrink(count);
 				if (mf.getCount() <= 0) iter.remove();
+
 				break;
 			}
 
 			if (cList.isEmpty()) return true;
+
 		}
 
 		return false;

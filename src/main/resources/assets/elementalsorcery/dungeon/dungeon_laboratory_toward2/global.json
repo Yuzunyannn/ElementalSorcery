@@ -4,7 +4,7 @@
         "yellow": 1
     },
     "keyRequire": {
-        "cyan": 1,
-        "magenta": 3
+        "cyan": 3,
+        "magenta": 1
     }
 }

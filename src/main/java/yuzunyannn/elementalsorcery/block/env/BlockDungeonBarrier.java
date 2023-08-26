@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.block.env;
 
+import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 
 import net.minecraft.block.Block;
@@ -17,12 +19,16 @@ import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.event.ITickTask;
+import yuzunyannn.elementalsorcery.potion.PotionGoldenEye;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
 public class BlockDungeonBarrier extends Block {
@@ -53,7 +59,7 @@ public class BlockDungeonBarrier extends Block {
 	public BlockRenderLayer getRenderLayer() {
 		return BlockRenderLayer.CUTOUT;
 	}
-	
+
 	@Override
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
 		return BlockFaceShape.UNDEFINED;
@@ -67,6 +73,35 @@ public class BlockDungeonBarrier extends Block {
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
+		if (!worldIn.isRemote) super.onBlockClicked(worldIn, pos, playerIn);
+		super.onBlockClicked(worldIn, pos, playerIn);
+		
+		HashSet<BlockPos> posSet = new HashSet();
+		LinkedList<BlockPos> doList = new LinkedList<>();
+		doList.add(pos);
+		posSet.add(pos);
+		while (!doList.isEmpty()) {
+			final BlockPos at = doList.removeFirst();
+			final float lenth = MathHelper.sqrt(at.distanceSq(pos));
+			if (lenth > 3) continue;
+			for (EnumFacing facing : EnumFacing.VALUES) {
+				BlockPos to = at.offset(facing);
+				if (!posSet.contains(to)) {
+					posSet.add(to);
+					if (worldIn.getBlockState(to).getBlock() == this) doList.addLast(to);
+				}
+			}
+			EventClient.addTickTask(() -> {
+				PotionGoldenEye.shineBlock(worldIn, at, 1, 0xff7777);
+				return ITickTask.END;
+			}, (int) lenth);
+		}
+		
 	}
 
 	@Override
