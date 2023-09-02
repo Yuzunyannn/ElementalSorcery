@@ -9,14 +9,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class BlockScarletCrystalOre extends Block {
 
@@ -55,15 +57,10 @@ public class BlockScarletCrystalOre extends Block {
 	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state,
 			int fortune) {
 		super.getDrops(drops, world, pos, state, fortune);
-		int x = pos.getX();
-		int y = pos.getY();
-		int z = pos.getZ();
-		int n = (x ^ z * 13099 ^ y * 29063) & 0x7fffffff;
-		float fre = (n % 1000) / 10f;
+		IWorldObject wo = IWorldObject.of(world, pos);
 		for (ItemStack stack : drops) {
-			NBTTagCompound nbt = new NBTTagCompound();
-			nbt.setFloat("fre", fre);
-			stack.setTagCompound(nbt);
+			IItemStronger stronger = ItemHelper.getItemStronger(stack);
+			if (stronger != null) stronger.onProduced(stack, wo);
 		}
 	}
 

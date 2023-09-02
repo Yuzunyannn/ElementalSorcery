@@ -27,6 +27,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.util.MatchHelper;
+import yuzunyannn.elementalsorcery.item.IItemStronger;
 
 public class ItemHelper {
 
@@ -179,6 +180,12 @@ public class ItemHelper {
 		BlockFlower.EnumFlowerType type = types[rand.nextInt(types.length)];
 		if (type.getBlockType() == EnumFlowerColor.RED) return new ItemStack(Blocks.RED_FLOWER, 1, type.getMeta());
 		return new ItemStack(Blocks.YELLOW_FLOWER, 1, type.getMeta());
+	}
+
+	public static IItemStronger getItemStronger(ItemStack stack) {
+		if (stack.isEmpty()) return null;
+		if (stack.getItem() instanceof IItemStronger) return (IItemStronger) stack.getItem();
+		return null;
 	}
 
 }

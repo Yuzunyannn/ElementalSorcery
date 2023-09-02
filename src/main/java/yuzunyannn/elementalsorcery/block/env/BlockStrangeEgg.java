@@ -151,6 +151,7 @@ public class BlockStrangeEgg extends Block {
 
 	@Override
 	public void onExplosionDestroy(World worldIn, BlockPos pos, Explosion explosionIn) {
+		if (worldIn.rand.nextFloat() < 0.25) return;
 		onDestroy(worldIn, pos, null);
 	}
 
@@ -191,7 +192,7 @@ public class BlockStrangeEgg extends Block {
 			pos = pos.up();
 			if (!BlockHelper.isReplaceBlock(worldIn, pos)) return;
 		} else if (BlockHelper.isReplaceBlock(worldIn, pos.down())) pos = pos.down();
-		
+
 		if (worldIn.isSideSolid(pos.down(), EnumFacing.UP)) {
 			worldIn.setBlockState(pos, state.withProperty(STATE, Math.abs(pos.hashCode()) % STATE_CONT));
 		}

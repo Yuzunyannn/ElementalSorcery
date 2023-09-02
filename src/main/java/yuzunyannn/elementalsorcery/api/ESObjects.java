@@ -8,7 +8,6 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
-import yuzunyannn.elementalsorcery.item.tool.ItemLiftingStone;
 
 public class ESObjects {
 
@@ -293,6 +292,7 @@ public class ESObjects {
 		public Mantra NATURAL_MEDAL;
 		public Mantra PUPPET_AREA;
 		public Mantra GOLD_SHIELD;
+		public Mantra SMELT;
 	}
 
 	static public class Potions {

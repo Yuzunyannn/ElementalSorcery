@@ -9,6 +9,8 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncExecuteContext;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncJsonCreateContext;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncTimes;
+import yuzunyannn.elementalsorcery.item.IItemStronger;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public abstract class DungeonFuncLootable extends GameFuncTimes implements IDungeonFuncInit {
@@ -55,6 +57,12 @@ public abstract class DungeonFuncLootable extends GameFuncTimes implements IDung
 
 	public List<ItemStack> getLoots(GameFuncExecuteContext context) {
 		List<ItemStack> stacks = lootLoader.getLoots(context.getWorld(), getCurrRandom());
+
+		for (ItemStack stack : stacks) {
+			IItemStronger stronger = ItemHelper.getItemStronger(stack);
+			if (stronger != null) stronger.onProduced(stack, context.getSrcObj());
+		}
+
 		if (this.acceptHideItem) out: {
 			DungeonArea area = DungeonWorld.getDungeonWorld(context.getWorld()).getDungeon(areaId);
 			DungeonAreaRoom room = area == null ? null : area.getRoomById(roomId);

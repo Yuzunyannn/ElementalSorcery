@@ -100,6 +100,7 @@ public class ItemArchitectureCrystal extends ItemCrystal {
 
 		Collection<Building> bs = BuildingLib.instance.getBuildingsFromLib();
 		for (Building building : bs) {
+			if (building.getKeyName().startsWith("dungeon")) continue;
 			stack = new ItemStack(this, 1, 0);
 			ArcInfo.initArcInfoToItem(stack, building.getKeyName());
 			items.add(stack);

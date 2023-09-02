@@ -59,6 +59,7 @@ public class BlockMeteorite extends Block implements Mapper {
 		this.setHarvestLevel("pickaxe", 3);
 		this.setTranslationKey("meteorite");
 		this.setHardness(32);
+		this.setResistance(120);
 		this.setTickRandomly(true);
 	}
 

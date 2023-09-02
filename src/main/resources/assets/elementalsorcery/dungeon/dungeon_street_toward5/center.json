@@ -1,0 +1,17 @@
+{
+    "weight": 5,
+    "probability": 0.5,
+    "type": "dungeon:area",
+    "onceTryTimes": {
+        "min": 1,
+        "max": 3
+    },
+    "func": {
+        "times": 5,
+        "type": "entity",
+        "entityId": "elementalsorcery:float_carpet",
+        "entityNBT": {
+            "randomMagicPower": true
+        }
+    }
+}

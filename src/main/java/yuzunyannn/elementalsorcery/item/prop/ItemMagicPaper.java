@@ -131,10 +131,9 @@ public class ItemMagicPaper extends Item {
 				IElementInventory einv = ElementHelper.getElementInventory(tile);
 				if (einv == null) continue;
 
-				ElementStack estack = ElementHelper.randomExtract(einv);
+				ElementStack estack = ElementHelper.randomExtract(einv, 4, world.rand.nextInt());
 				if (estack.isEmpty()) continue;
 
-				estack = estack.splitStack(Math.min(estack.getCount(), 4));
 				altarWake.wake(IAltarWake.SEND, pos);
 				if (ElementHelper.isEmpty(einv)) altarWake.onInventoryStatusChange();
 

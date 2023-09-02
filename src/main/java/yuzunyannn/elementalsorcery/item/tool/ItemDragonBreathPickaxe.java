@@ -15,6 +15,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper.OreEnum;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -66,7 +67,8 @@ public class ItemDragonBreathPickaxe extends ItemPickaxe {
 	public void moreDrop(World worldIn, IBlockState state, BlockPos pos) {
 		OreEnum ore = OreHelper.getOreInfo(state);
 		if (ore == null) return;
-		ItemStack stack = ore.createOreProduct(Math.abs(worldIn.rand.nextInt()));
+		ItemStack stack = ore.produceOreProduct(Math.abs(worldIn.rand.nextInt()), worldIn,
+				IWorldObject.of(worldIn, pos));
 		if (stack.isEmpty()) return;
 		ItemHelper.dropItem(worldIn, pos, stack);
 	}

@@ -75,7 +75,7 @@ public class BlockStarFlower extends BlockBush implements IGrowable, Mapper, ITi
 	@Override
 	public boolean canSustainBush(IBlockState state) {
 		return super.canSustainBush(state) || state.getBlock() == Blocks.SAND
-				|| state.getBlock() == ESObjects.BLOCKS.STAR_SAND;
+				|| state.getBlock() == ESObjects.BLOCKS.STAR_SAND || state.getBlock() == ESObjects.BLOCKS.MAGIC_POT;
 	}
 
 	@Override

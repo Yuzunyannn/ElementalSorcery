@@ -116,6 +116,7 @@ import yuzunyannn.elementalsorcery.ts.PocketWatchClient;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.helper.SilentWorld;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class EventServer {
 
@@ -506,9 +507,9 @@ public class EventServer {
 		if (trueSource instanceof EntityLivingBase) {
 			EntityLivingBase living = ((EntityLivingBase) trueSource);
 			ItemStack held = living.getHeldItemMainhand();
-			Item item = held.getItem();
-			if (item instanceof IItemStronger) ((IItemStronger) item).onKillEntity(trueSource.world, held, deader,
-					(EntityLivingBase) trueSource, source);
+			IItemStronger stronger = ItemHelper.getItemStronger(held);
+			if (stronger != null)
+				stronger.onKillEntity(trueSource.world, held, deader, (EntityLivingBase) trueSource, source);
 			if (living.isPotionActive(ESObjects.POTIONS.NATURAL_MEDAL)) PotionNaturalMedal.growMedal(living);
 		}
 

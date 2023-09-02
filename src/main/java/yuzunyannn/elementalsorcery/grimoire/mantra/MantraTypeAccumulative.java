@@ -224,6 +224,7 @@ public abstract class MantraTypeAccumulative extends MantraCommon {
 		return this.mainRule.isAllElementMeetMinNeed(data);
 	}
 
+	// 元素反应堆的初始化
 	protected void initAndAddDefaultMantraLauncher(double speedRatio) {
 		CollectRule rule = this.mainRule;
 		ArrayList<ElementStack> list = new ArrayList<>();

@@ -126,7 +126,7 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 	}
 
 	/** 注册用名字 */
-	private String keyName;
+	private String keyName = "";
 
 	Building setKeyName(String name) {
 		keyName = name;

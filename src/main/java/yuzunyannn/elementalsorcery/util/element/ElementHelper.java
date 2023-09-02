@@ -28,7 +28,6 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.element.explosion.ElementExplosion;
 import yuzunyannn.elementalsorcery.util.TextHelper;
-import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class ElementHelper {
 
@@ -201,12 +200,17 @@ public class ElementHelper {
 	}
 
 	/** 随机取出 */
-	static public ElementStack randomExtract(IElementInventory einv) {
+	static public ElementStack randomExtract(IElementInventory einv, int count, int seed) {
 		if (einv == null) return ElementStack.EMPTY;
-		int s = RandomHelper.rand.nextInt(einv.getSlots());
+		int s = Math.abs(seed) % einv.getSlots();
 		for (int i = 0; i < einv.getSlots(); i++) {
-			ElementStack estack = einv.getStackInSlot((s + i) % einv.getSlots());
-			if (!estack.isEmpty()) return estack;
+			int slot = (s + i) % einv.getSlots();
+			ElementStack estack = einv.getStackInSlot(slot);
+			if (!estack.isEmpty()) {
+				ElementStack testStack = new ElementStack(estack.getElement(), count, 1);
+				estack = einv.extractElement(slot, testStack, false);
+				if (!estack.isEmpty()) return estack;
+			}
 		}
 		return ElementStack.EMPTY;
 	}

@@ -172,6 +172,7 @@ public class EntityFloatCarpet extends Entity implements MessageEntitySync.IRecv
 	@Override
 	protected void readEntityFromNBT(NBTTagCompound compound) {
 		magicPower = compound.getDouble("magicPower");
+		if (compound.hasKey("randomMagicPower")) magicPower = Math.random() * 3000 + 1000;
 	}
 
 	@Override

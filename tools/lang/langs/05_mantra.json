@@ -289,6 +289,16 @@
 			"zh_CN": "借助金元素，生成价值之盾，消耗可估算的价值来抵挡任何伤害，超出的价值将作为伤害反射给敌人",
 			"en_US": "With the Metal, create the Shield of Value. Consume estimated value to resist any damage. Excess value will be reflected to the enemy as damage",
 			"ja_JP": "金元素で価値の盾を生成し、推定可能な価値を消費していかなるダメージにも抵抗し、超えた価値はダメージとして敵に反射する"
+		},
+		"mantra.smelt.name": {
+			"zh_CN": "焚烧",
+			"en_US": "Incineration",
+			"ja_JP": "焚く"
+		},
+		"mantra.smelt.describe": {
+			"zh_CN": "借助气元素，将火元素吹出，形成范围的焚烧场，销毁废品，熔炼矿物。不会烧毁元素容器，可以融合其中的元素。",
+			"en_US": "With the help of Air, Fire are blown out to form a range of incineration sites, destroy waste, and melt minerals. It will not burn the element container and can fuse the elements inside.",
+			"ja_JP": "気元素で火元素を吹き出し、範囲の焼却場を形成し、廃品を廃棄し、鉱物を製錬する。元素容器を焼失することなく、その内の元素を融合することができます。"
 		}
 	}
 }

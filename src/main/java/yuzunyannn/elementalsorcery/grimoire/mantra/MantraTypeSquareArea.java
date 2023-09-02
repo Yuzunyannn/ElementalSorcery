@@ -144,6 +144,7 @@ public abstract class MantraTypeSquareArea extends MantraTypeAccumulative {
 		setEffectCreator(MantraEffectType.MANTRA_EFFECT_1, MantraTypeSquareArea::createEffectMagicSquare, null);
 	}
 
+	/** speelling结束后，根据吸收的元素，初始化区域的数据 */
 	public abstract void init(World world, SquareData mData, ICaster caster, BlockPos pos);
 
 	public abstract boolean tick(World world, SquareData mData, ICaster caster, BlockPos pos);

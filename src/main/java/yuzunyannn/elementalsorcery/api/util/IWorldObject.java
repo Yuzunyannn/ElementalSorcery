@@ -14,12 +14,26 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public interface IWorldObject extends ICapabilityProvider {
+
+	public static IWorldObject of(IBlockAccess world, BlockPos pos) {
+		if (world instanceof World) return new WorldObjectBlock((World) world, pos);
+		return null;
+	}
+
+	public static IWorldObject of(World world, BlockPos pos) {
+		return new WorldObjectBlock(world, pos);
+	}
+
+	public static IWorldObject of(Entity entity) {
+		return new WorldObjectEntity(entity);
+	}
 
 	@Nonnull
 	Vec3d getObjectPosition();

@@ -147,7 +147,7 @@ public class ElementMetal extends ElementCommon {
 		OreEnum ore = OreHelper.getOreInfo(state);
 		if (ore == null) return;
 
-		ItemStack stack = ore.createOreProduct(0);
+		ItemStack stack = ore.produceOreProduct(0, world, IWorldObject.of(world, pos));
 		if (stack.isEmpty()) return;
 		IToElementInfo info = ElementMap.instance.toElement(stack);
 		if (info == null) return;

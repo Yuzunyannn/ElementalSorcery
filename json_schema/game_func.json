@@ -311,6 +311,9 @@
                                     }
                                 ]
                             },
+                            "entityNBT": {
+                                "type": "object"
+                            },
                             "trigger": {
                                 "properties": {
                                     "onLoot": {

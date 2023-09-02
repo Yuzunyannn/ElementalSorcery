@@ -363,6 +363,8 @@ mantra.puppetArea.name=木灵领域
 mantra.puppetArea.describe=借助木元素，召唤木灵领域，领域内会周期性的产生木灵来攻击区域内的敌人，木灵的攻击会根据敌人生命的最大值百分比造成伤害
 mantra.goldShield.name=黄金盾
 mantra.goldShield.describe=借助金元素，生成价值之盾，消耗可估算的价值来抵挡任何伤害，超出的价值将作为伤害反射给敌人
+mantra.smelt.name=焚烧
+mantra.smelt.describe=借助气元素，将火元素吹出，形成范围的焚烧场，销毁废品，熔炼矿物。不会烧毁元素容器，可以融合其中的元素。
 
 entity.Villager.paperman=古纸收集者
 entity.Villager.eslearner=元素知识学者

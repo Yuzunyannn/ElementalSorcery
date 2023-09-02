@@ -203,6 +203,7 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraNaturalMedal;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraPotent;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraPuppetArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSlowFall;
+import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSmelt;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSprint;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSturdyArea;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
@@ -758,7 +759,8 @@ public class ESInit {
 		ESObjects.MANTRAS.NATURAL_MEDAL = new MantraNaturalMedal();
 		ESObjects.MANTRAS.PUPPET_AREA = new MantraPuppetArea();
 		ESObjects.MANTRAS.GOLD_SHIELD = new MantraGoldShield();
-
+		ESObjects.MANTRAS.SMELT = new MantraSmelt();
+		
 		ESObjects.MANTRAS.ECRACK_OPEN = new MantraCrackOpen();
 
 		ESObjects.MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);

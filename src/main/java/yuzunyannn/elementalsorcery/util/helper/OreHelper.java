@@ -3,10 +3,15 @@ package yuzunyannn.elementalsorcery.util.helper;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.annotation.Nullable;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.item.IItemStronger;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class OreHelper {
@@ -47,6 +52,17 @@ public class OreHelper {
 
 		public int getColor() {
 			return c;
+		}
+
+		public int getProductTypeCount() {
+			return this.productDirctNames.length;
+		}
+
+		public ItemStack produceOreProduct(int index, World world, @Nullable IWorldObject obj) {
+			ItemStack stack = this.createOreProduct(index);
+			IItemStronger stronger = ItemHelper.getItemStronger(stack);
+			if (stronger != null) stronger.onProduced(stack, obj);
+			return stack;
 		}
 
 		public ItemStack createOreProduct(int index) {

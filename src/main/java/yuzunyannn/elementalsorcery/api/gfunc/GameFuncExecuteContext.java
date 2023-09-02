@@ -9,7 +9,6 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import yuzunyannn.elementalsorcery.api.event.ESEvent;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
-import yuzunyannn.elementalsorcery.api.util.WorldObjectBlock;
 import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
 
 public class GameFuncExecuteContext {
@@ -82,12 +81,12 @@ public class GameFuncExecuteContext {
 	}
 
 	public GameFuncExecuteContext setSrcObj(World world, BlockPos pos) {
-		this.srcObj = new WorldObjectBlock(world, pos);
+		this.srcObj = IWorldObject.of(world, pos);
 		return this;
 	}
 
 	public GameFuncExecuteContext setSrcObj(Entity entity) {
-		this.srcObj = new WorldObjectEntity(entity);
+		this.srcObj = IWorldObject.of(entity);
 		return this;
 	}
 
@@ -97,7 +96,7 @@ public class GameFuncExecuteContext {
 	}
 
 	public GameFuncExecuteContext setTriggerObj(World world, BlockPos pos) {
-		this.triggerObj = new WorldObjectBlock(world, pos);
+		this.triggerObj = IWorldObject.of(world, pos);
 		return this;
 	}
 

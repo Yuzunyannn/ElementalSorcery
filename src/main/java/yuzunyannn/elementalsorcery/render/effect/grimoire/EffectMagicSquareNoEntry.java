@@ -69,6 +69,11 @@ public class EffectMagicSquareNoEntry extends EffectCondition {
 	}
 
 	@Override
+	public boolean isDead() {
+		return this.lifeTime <= 0;
+	}
+
+	@Override
 	protected void doRender(float partialTicks) {
 		GlStateManager.pushMatrix();
 		double posX = RenderFriend.getPartialTicks(this.posX, this.prevPosX, partialTicks);

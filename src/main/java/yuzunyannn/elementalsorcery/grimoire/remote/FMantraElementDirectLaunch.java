@@ -8,8 +8,8 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldLocation;
-import yuzunyannn.elementalsorcery.api.util.WorldObjectBlock;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraCommon;
 import yuzunyannn.elementalsorcery.util.var.Variables;
@@ -65,7 +65,7 @@ public class FMantraElementDirectLaunch extends FMantraBase {
 		parmas.set(MantraCommon.FRAGMENT, charge);
 		if (parmasGenerator != null) parmas = parmasGenerator.apply(charge, parmas);
 		if (parmas == null) return;
-		WorldObjectBlock wo = new WorldObjectBlock(world, pos);
+		IWorldObject wo = IWorldObject.of(world, pos);
 		mantra.directLaunchMantra(to.getWorld(world), new Vec3d(to.getPos()), wo, parmas, null);
 	}
 

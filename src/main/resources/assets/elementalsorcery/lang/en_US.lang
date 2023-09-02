@@ -363,6 +363,8 @@ mantra.puppetArea.name=Kodama Area
 mantra.puppetArea.describe=With the Wood, Summon Kodama Area which will periodically generate Kodamas to attack enemies. The Kodama's damage is base on percentage of the enemy's max hp.
 mantra.goldShield.name=Gold Shield
 mantra.goldShield.describe=With the Metal, create the Shield of Value. Consume estimated value to resist any damage. Excess value will be reflected to the enemy as damage
+mantra.smelt.name=Incineration
+mantra.smelt.describe=With the help of Air, Fire are blown out to form a range of incineration sites, destroy waste, and melt minerals. It will not burn the element container and can fuse the elements inside.
 
 entity.Villager.paperman=PaperMan
 entity.Villager.eslearner=ElementLearner

@@ -86,7 +86,7 @@ public class EntityRegistries {
 		// 生物
 		register(0, "elf", EntityElf.class, "Elf", 64, 3, true);
 		registerEgg("elf", 0x82bf71, 0x529b3d);
-		register(1, "elfTraveler", EntityElfTravelling.class, "Elf2", 64, 3, true);
+		register(1, "elfTraveler", EntityElfTravelling.class, "Elf", 64, 3, true);
 		Entry<Biome, Integer>[] entries = CONFIG_ELF.getAllBiomes();
 		for (Entry<Biome, Integer> entry : entries) {
 			int num = entry.getValue();
