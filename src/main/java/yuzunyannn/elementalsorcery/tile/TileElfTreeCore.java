@@ -399,6 +399,7 @@ public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
 		}
 		elf.setPosition(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5);
 		elf.setEdificeCore(this.pos);
+		elf.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(elf)), null);
 		world.spawnEntity(elf);
 	}
 

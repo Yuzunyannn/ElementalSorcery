@@ -139,6 +139,7 @@ public class MantraSmelt extends MantraTypeSquareArea {
 			if (explosionResistance >= 32) return;
 		} catch (Exception e) {}
 
+		// 获取元素
 		if (block.hasTileEntity(state)) {
 			TileEntity tile = world.getTileEntity(at);
 			IElementInventory eInv = ElementHelper.getElementInventory(tile);
@@ -164,6 +165,7 @@ public class MantraSmelt extends MantraTypeSquareArea {
 		if (world.isRemote) return;
 		if (layer > world.rand.nextInt(SMELT_HIGH + 1)) return;
 
+		// 烧制陨石
 		if (block == ESObjects.BLOCKS.METEORITE_DRUSE) {
 			ElementStack wood = elementMap.get(ESObjects.ELEMENTS.WOOD);
 			if (wood == null) return;
@@ -196,7 +198,8 @@ public class MantraSmelt extends MantraTypeSquareArea {
 			return;
 		}
 
-		world.setBlockToAir(at);
+//		world.setBlockToAir(at);
+		world.destroyBlock(at, false);
 
 		if (OreHelper.isOre(state)) {
 
@@ -238,7 +241,7 @@ public class MantraSmelt extends MantraTypeSquareArea {
 
 	protected void dropItem(World world, BlockPos at, ICaster caster, ItemStack stack,
 			IdentityHashMap<Element, ElementStack> elementMap) {
-		
+
 		if (elementMap.containsKey(ESObjects.ELEMENTS.ENDER)) {
 			ElementStack ender = elementMap.get(ESObjects.ELEMENTS.ENDER);
 			if (ender.getPower() > 20 && ender.getCount() > 2) {

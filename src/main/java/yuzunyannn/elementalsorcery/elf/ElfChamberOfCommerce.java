@@ -105,6 +105,7 @@ public class ElfChamberOfCommerce extends WorldSavedData {
 		EntityElfBase elf = new EntityElf(world, ElfProfession.DEBT_COLLECTOR);
 		elf.setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
 		elf.getProfessionStorage().set(ElfProfessionDebtCollector.DEBTOR_ID, player.getEntityId());
+		elf.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(elf)), null);
 		world.spawnEntity(elf);
 		return true;
 	}

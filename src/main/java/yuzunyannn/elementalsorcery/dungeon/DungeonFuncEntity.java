@@ -18,6 +18,7 @@ import net.minecraft.world.chunk.storage.AnvilChunkLoader;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncExecuteContext;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncJsonCreateContext;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncTimes;
+import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
@@ -46,8 +47,10 @@ public class DungeonFuncEntity extends GameFuncTimes {
 
 	public void loadFromJson(JsonObject json, GameFuncJsonCreateContext context) {
 		super.loadFromJson(json, context);
-		if (json.hasObject("entityNBT")) entityNBT = json.getObject("entityNBT").asNBT();
-		else entityNBT = new NBTTagCompound();
+		if (json.hasObject("entityNBT")) {
+			entityNBT = json.getObject("entityNBT").asNBT();
+			EntityHelper.parserConfigEntityNBT(entityNBT);
+		} else entityNBT = new NBTTagCompound();
 		entityNBT.setString("id", json.needString("entityId"));
 		offset = getVec3d(json, "offset");
 		summonCount = DungeonIntegerLoader.get(json, "count", 1);

@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAIHurtByTarget;
 import net.minecraft.entity.ai.EntityAILookIdle;
@@ -41,6 +42,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -86,6 +88,23 @@ public class EntityRelicZombie extends EntityMob {
 			break;
 		}
 		this.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
+	}
+
+	@Override
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		switch (getType()) {
+		case WARRIOR:
+			setHeldItem(Items.WOODEN_SWORD);
+			break;
+		case PRIEST:
+			setHeldItem(Items.LINGERING_POTION);
+			break;
+		case WIZARD:
+			setHeldItem(ESObjects.ITEMS.SPELLBOOK);
+			break;
+		}
+		this.setDropChance(EntityEquipmentSlot.MAINHAND, 0);
+		return super.onInitialSpawn(difficulty, livingdata);
 	}
 
 	@Override

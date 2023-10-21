@@ -9,6 +9,7 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyInteger;
+import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -38,10 +39,13 @@ public class BlockStrangeEgg extends Block {
 	public static final PropertyInteger STATE = PropertyInteger.create("state", 0, 2);
 	public static final int STATE_CONT = 3;
 
-	public BlockStrangeEgg() {
+	final public boolean isDead;
+
+	public BlockStrangeEgg(boolean isDead) {
 		super(Material.ROCK);
+		this.isDead = isDead;
 		this.setSoundType(SoundType.SLIME);
-		this.setTranslationKey("strangeEgg");
+		this.setTranslationKey("strangeEgg" + (isDead ? "Deading" : ""));
 		this.setTickRandomly(true);
 	}
 
@@ -119,6 +123,11 @@ public class BlockStrangeEgg extends Block {
 	}
 
 	@Override
+	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+		return BlockFaceShape.UNDEFINED;
+	}
+
+	@Override
 	public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
 		return worldIn.isSideSolid(pos.down(), EnumFacing.UP) && super.canPlaceBlockAt(worldIn, pos);
 	}
@@ -127,7 +136,8 @@ public class BlockStrangeEgg extends Block {
 	public void neighborChanged(IBlockState state, World worldIn, BlockPos pos, Block blockIn, BlockPos fromPos) {
 		if (fromPos.getY() + 1 == pos.getY()) {
 			if (!worldIn.isSideSolid(pos.up(), EnumFacing.UP)) {
-				worldIn.destroyBlock(pos, true);
+				worldIn.destroyBlock(pos, false);
+				if (worldIn.rand.nextFloat() < 0.8) return;
 				onDestroy(worldIn, fromPos, null);
 			}
 		}
@@ -157,6 +167,8 @@ public class BlockStrangeEgg extends Block {
 
 	public void onDestroy(World worldIn, BlockPos pos, @Nullable EntityLivingBase destroyer) {
 		if (worldIn.isRemote) return;
+		if (this.isDead) return;
+
 		Random rand = worldIn.rand;
 		if (rand.nextDouble() > 0.75) {
 			ItemHelper.dropItem(worldIn, pos, new ItemStack(ESObjects.ITEMS.ELF_CRYSTAL, rand.nextInt(4) + 1));
@@ -187,14 +199,45 @@ public class BlockStrangeEgg extends Block {
 
 	@Override
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		pos = pos.add(rand.nextInt(5) - 2, 0, rand.nextInt(5) - 2);
-		if (!BlockHelper.isReplaceBlock(worldIn, pos)) {
-			pos = pos.up();
-			if (!BlockHelper.isReplaceBlock(worldIn, pos)) return;
-		} else if (BlockHelper.isReplaceBlock(worldIn, pos.down())) pos = pos.down();
+		if (this.isDead) {
+			IBlockState myState = state;
+			for (int x = -2; x <= 2; x++) {
+				for (int z = -2; z <= 2; z++) {
+					for (int y = -1; y <= 1; y++) {
+						BlockPos at = pos.add(x, y, z);
+						IBlockState atState = worldIn.getBlockState(at);
+						if (atState.getBlock() == ESObjects.BLOCKS.STRANGE_EGG) {
+							worldIn.setBlockState(at, myState.withProperty(STATE, atState.getValue(STATE)));
+						}
+					}
+				}
+			}
+			worldIn.destroyBlock(pos, false);
+		} else {
+			pos = pos.add(rand.nextInt(5) - 2, 0, rand.nextInt(5) - 2);
+			if (!BlockHelper.isReplaceBlock(worldIn, pos)) {
+				pos = pos.up();
+				if (!BlockHelper.isReplaceBlock(worldIn, pos)) return;
+			} else if (BlockHelper.isReplaceBlock(worldIn, pos.down())) pos = pos.down();
 
-		if (worldIn.isSideSolid(pos.down(), EnumFacing.UP)) {
-			worldIn.setBlockState(pos, state.withProperty(STATE, Math.abs(pos.hashCode()) % STATE_CONT));
+			if (worldIn.isSideSolid(pos.down(), EnumFacing.UP)) {
+				worldIn.setBlockState(pos, state.withProperty(STATE, Math.abs(pos.hashCode()) % STATE_CONT));
+			}
+		}
+	}
+
+	public static void handlePoison(World world, BlockPos pos, ItemStack potion) {
+		if (world.rand.nextInt(10) != 0) return;
+		for (int x = -1; x <= 0; x++) {
+			for (int z = -1; z <= 0; z++) {
+				BlockPos at = pos.add(x, 0, z);
+				IBlockState state = world.getBlockState(at);
+				if (state.getBlock() == ESObjects.BLOCKS.STRANGE_EGG) {
+					IBlockState newState = ESObjects.BLOCKS.STRANGE_EGG_DEAD.getDefaultState();
+					newState = newState.withProperty(BlockStrangeEgg.STATE, state.getValue(BlockStrangeEgg.STATE));
+					world.setBlockState(at, newState);
+				}
+			}
 		}
 	}
 

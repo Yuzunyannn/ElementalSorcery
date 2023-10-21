@@ -14,6 +14,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonMagicCircleA;
@@ -26,7 +27,7 @@ public class BlockDungeonMagicCircleA extends BlockDungeonPropBase {
 	public BlockDungeonMagicCircleA() {
 		super(Material.GLASS);
 		this.setTranslationKey("dungeonMagicCircleA");
-		this.setHardness(4);
+		this.setHardness(3);
 		this.setResistance(6000000.0F);
 	}
 

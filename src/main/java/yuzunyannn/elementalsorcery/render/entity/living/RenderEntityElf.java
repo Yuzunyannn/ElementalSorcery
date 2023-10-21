@@ -13,8 +13,7 @@ import yuzunyannn.elementalsorcery.render.model.living.ModelElf;
 @SideOnly(Side.CLIENT)
 public class RenderEntityElf extends RenderLiving<EntityElf> {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
-			"textures/entity/elf/normal.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID, "textures/entity/elf/normal.png");
 	public static final ResourceLocation TEXTURE_MASTER = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/master.png");
 	public static final ResourceLocation TEXTURE_SCHOLAR = new ResourceLocation(ESAPI.MODID,
@@ -34,13 +33,15 @@ public class RenderEntityElf extends RenderLiving<EntityElf> {
 	public static final ResourceLocation TEXTURE_IRONSMITH = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/ironsmith.png");
 	public static final ResourceLocation TEXTURE_POSTMAN = new ResourceLocation(ESAPI.MODID,
-			"textures/entity/elf/postman.png"); 
+			"textures/entity/elf/postman.png");
 	public static final ResourceLocation TEXTURE_RESEARCHER = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/researcher.png");
 	public static final ResourceLocation TEXTURE_DEBT_COLLECTOR = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/debt_collector.png");
 	public static final ResourceLocation TEXTURE_TEST = new ResourceLocation(ESAPI.MODID,
 			"textures/entity/elf/what.png");
+	public static final ResourceLocation TEXTURE_PROTOTYPE = new ResourceLocation(ESAPI.MODID,
+			"textures/entity/elf/prototype.png"); 
 
 	public static final ModelElf MODEL = new ModelElf();
 

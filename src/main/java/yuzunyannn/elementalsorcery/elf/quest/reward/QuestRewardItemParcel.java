@@ -3,10 +3,12 @@ package yuzunyannn.elementalsorcery.elf.quest.reward;
 import java.util.Map;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
@@ -49,7 +51,8 @@ public class QuestRewardItemParcel extends QuestRewardItem {
 	public void onReward(Quest quest, EntityLivingBase player) {
 		if (!(player instanceof EntityPlayer)) return;
 		ElfPostOffice postOffice = ElfPostOffice.getPostOffice(player.world);
-		EntityLivingBase fakeSender = new EntityElf(player.world);
+		EntityLiving fakeSender = new EntityElf(player.world);
+		fakeSender.onInitialSpawn(fakeSender.world.getDifficultyForLocation(new BlockPos(fakeSender)), null);
 		postOffice.pushParcel(fakeSender, (EntityPlayer) player, stacks);
 	}
 

@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.QuestType;
@@ -63,7 +65,8 @@ public class QuestRewardNextQuest extends QuestReward {
 		if (isDelegate) type.addPrecondition(QuestConditionDelegate.create(player));
 
 		ElfPostOffice postOffice = ElfPostOffice.getPostOffice(player.world);
-		EntityLivingBase fakeSender = new EntityElf(player.world);
+		EntityLiving fakeSender = new EntityElf(player.world);
+		fakeSender.onInitialSpawn(fakeSender.world.getDifficultyForLocation(new BlockPos(fakeSender)), null);
 		List<ItemStack> list = new ArrayList<>();
 		list.add(ItemQuest.createQuest(nextQuest));
 		postOffice.pushParcel(fakeSender, (EntityPlayer) player, list);

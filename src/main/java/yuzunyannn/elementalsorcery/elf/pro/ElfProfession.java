@@ -81,6 +81,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	static public final ElfProfession RESEARCHER = new ElfProfessionResearcher();
 	static public final ElfProfession SCHOLAR_ADV = new ElfProfessionScholarAdv();
 	static public final ElfProfession DEBT_COLLECTOR = new ElfProfessionDebtCollector();
+	static public final ElfProfession PROTOTYPE = new ElfProfessionPrototype();
 
 	public static final Variable<Integer> REMAIN_TICK = new Variable("remainTick", VariableSet.INT);
 	public static final Variable<ElfMerchantType> M_TYPE = new Variable("mType", VariableTypes.ELF_MERCHANT_TYPE);
@@ -118,7 +119,7 @@ public class ElfProfession extends IForgeRegistryEntry.Impl<ElfProfession> {
 	/** 当死亡 */
 	public void onDead(EntityElfBase elf) {
 		if (elf.world.isRemote) return;
-		//配置pass
+		// 配置pass
 		if (NOT_DROP_GOODS) return;
 		if (TRAVELER_NOT_DROP_GOODS) {
 			if (elf instanceof EntityElfTravelling) return;

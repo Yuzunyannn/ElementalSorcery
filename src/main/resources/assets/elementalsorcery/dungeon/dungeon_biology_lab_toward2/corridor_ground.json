@@ -1,0 +1,52 @@
+{
+    "probability": 0.75,
+    "type": "group",
+    "mode": "random",
+    "funcs": [
+        {
+            "weight": 5,
+            "type": "dungeon:area",
+            "onceTryTimes": {
+                "min": 2,
+                "max": 3
+            },
+            "func": {
+                "type": "ref",
+                "/assets": "elementalsorcery:dungeon/common_monster_2",
+                "params": {
+                    "$loots": "elementalsorcery:dungeon/dungeon_loot_sundry_2"
+                }
+            }
+        },
+        {
+            "weight": 10,
+            "type": "dungeon:area",
+            "onceTryTimes": {
+                "min": 4,
+                "max": 6
+            },
+            "func": {
+                "type": "haystack",
+                "pressure": "random",
+                "times": 5,
+                "trigger": {
+                    "onSweep": {
+                        "type": "group",
+                        "mode": "random",
+                        "funcs": [
+                            {
+                                "type": "loot",
+                                "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_2",
+                                "acceptHideItem": true
+                            },
+                            {
+                                "type": "ref",
+                                "/assets": "elementalsorcery:dungeon/common_trap_2"
+                            }
+                        ]
+                    }
+                }
+            }
+        }
+    ]
+}

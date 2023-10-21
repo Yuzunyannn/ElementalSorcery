@@ -40,6 +40,7 @@ import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
@@ -755,8 +756,14 @@ public class EventServer {
 
 	@SubscribeEvent
 	public static void onWorldLoad(WorldEvent.Load event) {
-//		World world = event.getWorld();
-//		if (world instanceof WorldServer) world.addEventListener(new ESWorldEventListener());
+		World world = event.getWorld();
+		if (world instanceof WorldServer) world.addEventListener(new ESWorldEventListener());
+	}
+
+	@SubscribeEvent
+	public static void onPlayerHarvestCheck(
+			net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck harvestCheck) {
+		
 	}
 
 }

@@ -1262,6 +1262,11 @@
             "en_US": "Strange Egg",
             "ja_JP": "変な卵"
         },
+        "tile.strangeEggDeading.name": {
+            "zh_CN": "奇怪的蛋(消亡)",
+            "en_US": "Strange Egg (Deading)",
+            "ja_JP": "変な卵(消えつつある)"
+        },
         "tile.meteorite.s.name": {
             "zh_CN": "陨石",
             "en_US": "Meteorite",
@@ -1271,6 +1276,11 @@
             "zh_CN": "陨石晶簇",
             "en_US": "Meteorite Druse",
             "ja_JP": "隕石結晶"
+        },
+        "tile.dungeonFilterGlass.name":{
+            "zh_CN": "分离玻璃",
+            "en_US": "Filter Glass",
+            "ja_JP": "分離ガラス"
         }
     }
 }

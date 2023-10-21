@@ -151,6 +151,11 @@
             "zh_CN": "讨债人",
             "en_US": "Debt Collector",
             "ja_JP": "借金取り"
+        },
+        "pro.prototype": {
+            "zh_CN": "原型",
+            "en_US": "Prototype",
+            "ja_JP": "プロトタイプ"
         }
     }
 }

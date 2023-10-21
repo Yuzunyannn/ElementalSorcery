@@ -128,6 +128,7 @@ import yuzunyannn.elementalsorcery.block.env.BlockDungeonBrick;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonCheckpoint;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoor;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonDoorExpand;
+import yuzunyannn.elementalsorcery.block.env.BlockDungeonFilterGlass;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonFunction;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonHaystack;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonLight;
@@ -582,9 +583,11 @@ public class ESInit {
 		ESObjects.BLOCKS.DUNGEON_LIGHT = new BlockDungeonLight();
 		ESObjects.BLOCKS.DUNGEON_MAGIC_CIRCLE_A = new BlockDungeonMagicCircleA();
 		ESObjects.BLOCKS.DUNGEON_CHECKPOINT = new BlockDungeonCheckpoint();
-		ESObjects.BLOCKS.STRANGE_EGG = new BlockStrangeEgg();
+		ESObjects.BLOCKS.STRANGE_EGG = new BlockStrangeEgg(false);
+		ESObjects.BLOCKS.STRANGE_EGG_DEAD = new BlockStrangeEgg(true);
 		ESObjects.BLOCKS.METEORITE = new BlockMeteorite();
 		ESObjects.BLOCKS.METEORITE_DRUSE = new BlockMeteoriteDruse();
+		ESObjects.BLOCKS.DUNGEON_FILTER_GLASS = new BlockDungeonFilterGlass();
 
 		// 初始化所有tab
 		Class<?> cls = ESObjects.BLOCKS.getClass();
@@ -711,7 +714,7 @@ public class ESInit {
 		ESObjects.ITEMS.STRENGTHEN_AGENT = new ItemStrengthenAgent();
 		ESObjects.ITEMS.FLOAT_CARPET = new ItemFloatCarpet();
 		ESObjects.ITEMS.METEORITE_INGOT = new ItemMeteoriteIngot();
-		ESObjects.ITEMS.LIFTING_STONE = new  ItemLiftingStone();
+		ESObjects.ITEMS.LIFTING_STONE = new ItemLiftingStone();
 
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -760,7 +763,7 @@ public class ESInit {
 		ESObjects.MANTRAS.PUPPET_AREA = new MantraPuppetArea();
 		ESObjects.MANTRAS.GOLD_SHIELD = new MantraGoldShield();
 		ESObjects.MANTRAS.SMELT = new MantraSmelt();
-		
+
 		ESObjects.MANTRAS.ECRACK_OPEN = new MantraCrackOpen();
 
 		ESObjects.MANTRAS.LAUNCH_ECR = new MantraLaunch(ICraftingLaunch.TYPE_ELEMENT_CRAFTING, 0xffec3d);
@@ -1328,9 +1331,11 @@ public class ESInit {
 		registerRender(BLOCKS.DUNGEON_LIGHT);
 		registerRender(BLOCKS.DUNGEON_CHECKPOINT);
 		registerRender(BLOCKS.STRANGE_EGG);
+		registerRender(BLOCKS.STRANGE_EGG_DEAD);
 		registerRender(BLOCKS.METEORITE, 0, "meteorite_normal");
 		registerRender(BLOCKS.METEORITE, 1, "meteorite_block");
 		registerRender(BLOCKS.METEORITE_DRUSE);
+		registerRender(BLOCKS.DUNGEON_FILTER_GLASS);
 
 		registerRender(TileMagicPlatform.class, new RenderTileMagicPlatform());
 		registerRender(TileCrystalFlower.class, new RenderTileCrystalFlower());

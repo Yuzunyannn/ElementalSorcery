@@ -10,7 +10,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.common.util.FakePlayer;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
@@ -88,6 +88,7 @@ public class DungeonFuncMantra extends GameFuncTimes {
 			if (orient == Vec3d.ZERO) orient = caster.getLookVec();
 		} else {
 			if (orient == Vec3d.ZERO) orient = new Vec3d(0, 1, 0);
+			if (!world.isRemote) caster = ESFakePlayer.get((WorldServer) world);
 		}
 
 		if (target != null) MantraHelper.autoTrace(world, caster, castVec, orient, target, moveSpeed, duration, potent,

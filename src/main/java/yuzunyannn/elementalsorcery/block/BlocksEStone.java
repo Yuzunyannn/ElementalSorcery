@@ -24,6 +24,7 @@ import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -31,6 +32,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 
 public class BlocksEStone {
+
+	public static boolean onEStoneExploded(World world, BlockPos pos, Explosion explosion) {
+		return false;
+	}
 
 	public static Block newEStone() {
 		return new EStone().setTranslationKey("estone");
@@ -48,6 +53,12 @@ public class BlocksEStone {
 		@Override
 		public String apply(ItemStack stack) {
 			return BlockQuartz.EnumType.byMetadata(stack.getMetadata()).toString();
+		}
+
+		@Override
+		public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {
+			if (BlocksEStone.onEStoneExploded(world, pos, explosion)) return;
+			super.onBlockExploded(world, pos, explosion);
 		}
 	}
 
@@ -101,7 +112,7 @@ public class BlocksEStone {
 			this.setHardness(1.2F);
 
 			this.setLightOpacity(255);
-			
+
 			this.useNeighborBrightness = true;
 		}
 
@@ -194,6 +205,12 @@ public class BlocksEStone {
 					|| (side == EnumBlockHalf.BOTTOM && face == EnumFacing.DOWN);
 		}
 
+		@Override
+		public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {
+			if (BlocksEStone.onEStoneExploded(world, pos, explosion)) return;
+			super.onBlockExploded(world, pos, explosion);
+		}
+
 		public static enum EnumBlockHalf implements IStringSerializable {
 			BOTTOM("bottom"),
 			TOP("top"),
@@ -225,8 +242,14 @@ public class BlocksEStone {
 			this.setHarvestLevel("pickaxe", 1);
 			this.setSoundType(SoundType.STONE);
 			this.setHardness(1.2F);
-			
+
 			this.useNeighborBrightness = true;
+		}
+
+		@Override
+		public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {
+			if (BlocksEStone.onEStoneExploded(world, pos, explosion)) return;
+			super.onBlockExploded(world, pos, explosion);
 		}
 
 	}
@@ -246,6 +269,12 @@ public class BlocksEStone {
 		@SideOnly(Side.CLIENT)
 		public BlockRenderLayer getRenderLayer() {
 			return BlockRenderLayer.SOLID;
+		}
+
+		@Override
+		public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {
+			if (BlocksEStone.onEStoneExploded(world, pos, explosion)) return;
+			super.onBlockExploded(world, pos, explosion);
 		}
 
 	}

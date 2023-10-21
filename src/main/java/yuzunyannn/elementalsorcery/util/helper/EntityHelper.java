@@ -7,10 +7,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializer;
 import net.minecraft.network.play.server.SPacketSetExperience;
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -20,6 +23,7 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.entity.IHasMaster;
 import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
+import yuzunyannn.elementalsorcery.api.util.NBTTag;
 
 public class EntityHelper {
 
@@ -138,5 +142,18 @@ public class EntityHelper {
 	public static void sendExperienceChange(EntityPlayerMP player) {
 		player.connection.sendPacket(
 				new SPacketSetExperience(player.experience, player.experienceTotal, player.experienceLevel));
+	}
+
+	public static void parserConfigEntityNBT(NBTTagCompound entityNBT) {
+		if (entityNBT.hasKey("ActiveEffects", NBTTag.TAG_LIST)) {
+			NBTTagList list = entityNBT.getTagList("ActiveEffects", NBTTag.TAG_COMPOUND);
+			for (int i = 0; i < list.tagCount(); i++) {
+				NBTTagCompound data = list.getCompoundTagAt(i);
+				if (data.hasKey("Id", NBTTag.TAG_STRING)) {
+					Potion potion = Potion.getPotionFromResourceLocation(data.getString("Id"));
+					if (potion != null) data.setInteger("Id", Potion.getIdFromPotion(potion));
+				}
+			}
+		}
 	}
 }

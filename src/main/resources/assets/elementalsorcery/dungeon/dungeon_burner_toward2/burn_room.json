@@ -1,0 +1,58 @@
+{
+    "type": "magicCircle",
+    "activeCD": {
+        "min": 200,
+        "max": 600
+    },
+    "trigger": {
+        "onActived": {
+            "type": "repeat",
+            "times": 5,
+            "func": {
+                "weight": 10,
+                "times": 5,
+                "type": "entity",
+                "entityId": "minecraft:zombie",
+                "entityNBT": {
+                    "ActiveEffects": [
+                        {
+                            "Id": "elementalsorcery:fire_walker",
+                            "Amplifier": 1,
+                            "Duration": 65535
+                        },
+                        {
+                            "Id": "minecraft:fire_resistance",
+                            "Amplifier": 1,
+                            "Duration": 65535
+                        }
+                    ]
+                },
+                "trigger": {
+                    "onLoot": {
+                        "type": "loot",
+                        "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_2",
+                        "acceptHideItem": false
+                    }
+                }
+            }
+        },
+        "onDestroyed": {
+            "type": "mantra",
+            "mantra": "elementalsorcery:fire_area",
+            "duration": 80,
+            "elements": [
+                {
+                    "id": "elementalsorcery:fire",
+                    "count": 1000,
+                    "power": 300
+                }
+            ],
+            "isVertical": true,
+            "orient": {
+                "x": 0,
+                "y": -1,
+                "z": 0
+            }
+        }
+    }
+}

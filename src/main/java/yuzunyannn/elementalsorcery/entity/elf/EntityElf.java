@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.entity.elf;
 
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAIWatchClosest;
@@ -9,6 +10,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.elf.AutoName;
@@ -36,6 +38,11 @@ public class EntityElf extends EntityElfBase {
 		if (this.rand.nextInt(5) == 0) this.setProfession(ElfProfession.SCHOLAR);
 		else if (this.rand.nextInt(4) == 0) this.setProfession(ElfProfession.CRAZY);
 		else if (this.rand.nextInt(4) == 0) this.setProfession(ElfProfession.MERCHANT);
+	}
+
+	@Override
+	public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, IEntityLivingData livingdata) {
+		return super.onInitialSpawn(difficulty, livingdata);
 	}
 
 	public EntityElf(World worldIn) {

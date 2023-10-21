@@ -6,6 +6,7 @@ import java.util.Map.Entry;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -94,6 +95,9 @@ public class BuilderWithInfo implements IBuilder {
 
 	@Override
 	public void spawn(Entity entity) {
+		if (entity instanceof EntityLiving) {
+			((EntityLiving) entity).onInitialSpawn(world.getDifficultyForLocation(new BlockPos(entity)), null);
+		}
 		world.spawnEntity(entity);
 	}
 

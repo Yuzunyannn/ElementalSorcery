@@ -255,8 +255,10 @@ tile.dungeonActinicGlass.name=光化ガラス
 tile.dungeonMagicCircleA.name=地下牢のマジックサークル
 tile.dungeonCheckpoint.name=地下牢のトランスファ石
 tile.strangeEgg.name=変な卵
+tile.strangeEggDeading.name=変な卵(消えつつある)
 tile.meteorite.s.name=隕石
 tile.meteoriteDruse.name=隕石結晶
+tile.dungeonFilterGlass.name=分離ガラス
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -590,6 +592,7 @@ info.dungeon.cannot.teleport=ダンジョンはあなたの転送を阻止して
 info.dungeon.strengthenAgent=見た目はあまりいいものではないので、使わないほうがいいです...
 info.dungeon.floatCarpet=魔力駆動により狭い空間での使用には適さない乗り物に見える
 info.dungeon.liftingStone=エンドストーンと関連があるようで、昇降できる道具です
+info.dungeon.filterGlass=生物以外のものはすべて通り抜けられるようだ
 
 info.mc.archi.Temple.name=砂漠のピラミッド
 

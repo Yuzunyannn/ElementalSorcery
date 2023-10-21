@@ -1,0 +1,8 @@
+{
+    "type": "entity",
+    "entityId": "elementalsorcery:elf",
+    "entityNBT": {
+        "professionId": "elementalsorcery:prototype",
+        "CustomName": "prototype"
+    }
+}

@@ -947,6 +947,11 @@
             "zh_CN": "和末地石似乎有所关联，是一个可以进行升降的道具",
             "en_US": "It seems to be related to the End Stone and is a prop that can be lifted and lowered",
             "ja_JP": "エンドストーンと関連があるようで、昇降できる道具です"
+        },
+        "info.dungeon.filterGlass": {
+            "zh_CN": "似乎除了生物之外的东西全可以穿过去",
+            "en_US": "It seems that everything except living things can pass through it",
+            "ja_JP": "生物以外のものはすべて通り抜けられるようだ"
         }
     },
     "info.mc": {

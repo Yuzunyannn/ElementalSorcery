@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.item.EnumDyeColor;
@@ -85,12 +84,12 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 		addBuildRoom(DungeonLib.DUNGEON_SMALL_LIBRARY_TOWARD3, 4, 10, -1);
 		addBuildRoom(DungeonLib.DUNGEON_SMALL_ROOM_TOWARD1, 4, 6, -1);
 
-		addBuildCoreRoom(DungeonLib.DUNGEON_MANTRA_LAB_TOWARD2, 5); 
+		addBuildCoreRoom(DungeonLib.DUNGEON_MANTRA_LAB_TOWARD2, 5);
 		addBuildRoom(DungeonLib.DUNGEON_ROOM_TOWARD2, 4, 6, 10);
 		addBuildRoom(DungeonLib.DUNGEON_SMALL_GARDEN_TOWARD3, 6, 12);
 		addBuildRoom(DungeonLib.DUNGEON_CHECKPOINT, 6, 12, -1);
 
-		addBuildCoreRoom(DungeonLib.DUNGEON_GREENHOUSE_TOWARD4, 6); 	// t 16
+		addBuildCoreRoom(DungeonLib.DUNGEON_GREENHOUSE_TOWARD4, 6); // t 16
 		addBuildCoreRoom(DungeonLib.DUNGEON_STRATEGY_HALL_TOWARD3, 7);
 		addBuildRoom(DungeonLib.DUNGEON_SHADY_PATH_TOWARD2, 4, -1);
 		addBuildRoom(DungeonLib.DUNGEON_CLINIC_TOWARD2, 6, 10, -1);
@@ -98,8 +97,10 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 		addBuildRoom(DungeonLib.DUNGEON_SHADY_PARK_TOWARD4, 4, 10, -1);
 		addBuildRoom(DungeonLib.DUNGEON_RESTAURANT_TOWARD2, 8, 12, -1);
 		addBuildRoom(DungeonLib.DUNGEON_STREET_TOWARD5, 8, 12, 8);
+		addBuildRoom(DungeonLib.DUNGEON_BURNER_TOWARD2, 14, 3);
 
 		addBuildCoreRoom(DungeonLib.DUNGEON_LABORATORY_TOWARD2, 15);
+		addBuildCoreRoom(DungeonLib.DUNGEON_BIOLOGY_LAB_TOWARD2, 17);
 	}
 
 	protected BuildRoomNode addBuildRoom(DungeonRoomType type, int step, int maxCount) {

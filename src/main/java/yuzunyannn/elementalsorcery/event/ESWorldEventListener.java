@@ -3,11 +3,17 @@ package yuzunyannn.elementalsorcery.event;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityPotion;
+import net.minecraft.init.PotionTypes;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionType;
+import net.minecraft.potion.PotionUtils;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldEventListener;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.block.env.BlockStrangeEgg;
 
 public class ESWorldEventListener implements IWorldEventListener {
 
@@ -51,12 +57,19 @@ public class ESWorldEventListener implements IWorldEventListener {
 
 	@Override
 	public void onEntityAdded(Entity entityIn) {
-		
+
 	}
 
 	@Override
 	public void onEntityRemoved(Entity entityIn) {
-
+		if (entityIn instanceof EntityPotion) {
+			World world = entityIn.world;
+			EntityPotion potion = (EntityPotion) entityIn;
+			ItemStack itemstack = potion.getPotion();
+			PotionType potiontype = PotionUtils.getPotionFromItem(itemstack);
+			if (potiontype == PotionTypes.STRONG_POISON)
+				BlockStrangeEgg.handlePoison(world, entityIn.getPosition(), itemstack);
+		}
 	}
 
 	@Override

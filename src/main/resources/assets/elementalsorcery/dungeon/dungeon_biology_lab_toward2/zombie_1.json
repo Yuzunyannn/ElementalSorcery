@@ -1,0 +1,15 @@
+{
+    "type": "entity",
+    "entityId": "elementalsorcery:reliczombie",
+    "entityNBT": {
+        "rzType": 1
+    },
+    "trigger": {
+        "onLoot": {
+            "type": "loot",
+            "loot": "elementalsorcery:dungeon/dungeon_biology_lab_reliczombie",
+            "acceptHideItem": true,
+            "clearOrigin": true
+        }
+    }
+}

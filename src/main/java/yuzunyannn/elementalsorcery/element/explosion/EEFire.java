@@ -34,7 +34,7 @@ public class EEFire extends ElementExplosion {
 			BlockPos center = new BlockPos(position);
 			IBlockState newBlockState = MantraFireBall.affect(world, center, pos.subtract(center), null);
 			IBlockState lavaState = Blocks.FLOWING_LAVA.getDefaultState().withProperty(BlockFluidBase.LEVEL, 15);
-			if (newBlockState != null) world.setBlockState(pos, newBlockState);
+			if (newBlockState != null) super.doExplosionBlockAt(pos);
 			if (world.rand.nextInt(5) == 0) world.setBlockState(pos, lavaState);
 		}
 	}

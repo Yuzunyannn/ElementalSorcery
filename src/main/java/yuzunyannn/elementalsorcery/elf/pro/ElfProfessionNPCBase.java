@@ -43,6 +43,7 @@ public class ElfProfessionNPCBase extends ElfProfession {
 					EntityElfBase newElf = new EntityElf(elf.world);
 					newElf.setPosition(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5);
 					newElf.setRevengeTarget(elf.getRevengeTarget());
+					elf.onInitialSpawn(elf.world.getDifficultyForLocation(new BlockPos(elf)), null);
 					elf.world.spawnEntity(newElf);
 					elf.setRevengeTarget(null);
 					elf.leave();

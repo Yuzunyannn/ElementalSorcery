@@ -3,10 +3,12 @@ package yuzunyannn.elementalsorcery.elf.quest.reward;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.math.BlockPos;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.elf.quest.condition.QuestCondition;
@@ -38,7 +40,8 @@ public class QuestRewardNextQuestCode extends QuestReward {
 		if (!(player instanceof EntityPlayer)) return;
 
 		ElfPostOffice postOffice = ElfPostOffice.getPostOffice(player.world);
-		EntityLivingBase fakeSender = new EntityElf(player.world);
+		EntityLiving fakeSender = new EntityElf(player.world);
+		fakeSender.onInitialSpawn(fakeSender.world.getDifficultyForLocation(new BlockPos(fakeSender)), null);
 
 		ArrayList<QuestCondition> preConditions = this.quest.getType().getPreconditions();
 		for (QuestCondition con : preConditions)

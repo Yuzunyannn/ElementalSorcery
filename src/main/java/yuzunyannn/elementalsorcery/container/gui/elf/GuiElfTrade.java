@@ -18,8 +18,7 @@ import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class GuiElfTrade extends GuiContainer {
 
-	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID,
-			"textures/gui/elf/elf_trade.png");
+	public static final ResourceLocation TEXTURE = new ResourceLocation(ESAPI.MODID, "textures/gui/elf/elf_trade.png");
 
 	public final ContainerElfTrade container;
 
@@ -82,6 +81,7 @@ public class GuiElfTrade extends GuiContainer {
 	public List<String> getItemToolTip(ItemStack itemStack) {
 		List<String> list = super.getItemToolTip(itemStack);
 		if (list.isEmpty()) return list;
+		if (container.trade == null) return list;
 		for (int i = 0; i < container.trade.getTradeListSize(); i++) {
 			TradeList.TradeInfo info = container.trade.getTradeInfo(i);
 			if (ItemHelper.areItemsEqual(info.getCommodity(), itemStack)) {

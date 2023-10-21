@@ -14,6 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -21,12 +22,17 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicGuard;
 import yuzunyannn.elementalsorcery.entity.mob.EntityRelicZombie;
+import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.event.ITickTask;
+import yuzunyannn.elementalsorcery.event.IWorldTickTask;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
+import yuzunyannn.elementalsorcery.util.LambdaReference;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -89,8 +95,8 @@ public class ItemShockWand extends Item implements IItemUseClientUpdate {
 		int time = this.getMaxItemUseDuration(stack) - timeLeft;
 		if (time < 5) return;
 		time = Math.min(80, time);
-		double rate = time / 80.0;
-		rate = rate * rate * 3;
+		double originRate = time / 80.0;
+		double rate = originRate * originRate * 3;
 
 		RayTraceResult rt = WorldHelper.getLookAtEntity(worldIn, entityLiving, 32, EntityLivingBase.class);
 		if (rt != null) {
@@ -116,10 +122,13 @@ public class ItemShockWand extends Item implements IItemUseClientUpdate {
 		if (rt != null) {
 			BlockPos from = rt.getBlockPos();
 			BlockPos to = from.offset(rt.sideHit.getOpposite());
-			if (!from.equals(to) && BlockHelper.isReplaceBlock(worldIn, to) && !BlockHelper.isBedrock(worldIn, from))
+			IBlockState state = worldIn.getBlockState(from);
+			if (state.getBlock() == ESObjects.BLOCKS.STRANGE_EGG) {
+//				clearStrangeEgg(worldIn, from, rt.sideHit.getOpposite(), (int) (originRate * 32));
+			} else if (!from.equals(to) && BlockHelper.isReplaceBlock(worldIn, to)
+					&& !BlockHelper.isBedrock(worldIn, from))
 				exit: {
 					if (!BlockHelper.isSolidBlock(worldIn, from)) break exit;
-					IBlockState state = worldIn.getBlockState(from);
 					if (state.getBlock().hasTileEntity(state)) break exit;
 					float hardness = state.getBlockHardness(worldIn, from);
 					if (hardness > rate * 10) break exit;
@@ -149,6 +158,45 @@ public class ItemShockWand extends Item implements IItemUseClientUpdate {
 			effect.setVelocity(speed.scale(0.2));
 			Effect.addEffect(effect);
 		}
+	}
+
+	public void clearStrangeEgg(World world, BlockPos pos, EnumFacing facing, int maxLength) {
+		if (world.isRemote) {
+			int size = Math.max((maxLength - 0) / 4, 0);
+			BlockPos at = pos;
+			EnumFacing dFacing = facing.rotateY();
+			Vec3d dirVec = new Vec3d(facing.getOpposite().getDirectionVec());
+			for (int i = -size; i <= size; i++)
+				shockEffect(world, new Vec3d(at.offset(dFacing, i)).add(0.5, 0.5, 0.5), dirVec);
+			return;
+		}
+		LambdaReference<Integer> count = LambdaReference.of(0);
+		LambdaReference<Integer> tick = LambdaReference.of(0);
+		LambdaReference<BlockPos> currPos = LambdaReference.of(pos);
+		Runnable clear = () -> {
+			int c = count.get();
+			int size = Math.max((maxLength - c) / 4, 0);
+			BlockPos at = currPos.get();
+			IBlockState state = world.getBlockState(at);
+			if (state.getBlock() != ESObjects.BLOCKS.STRANGE_EGG) return;
+			EnumFacing dFacing = facing.rotateY();
+			for (int i = -size; i <= size; i++) {
+				world.destroyBlock(at.offset(dFacing, i), false);
+			}
+		};
+		final IWorldTickTask task = (w) -> {
+			int t = tick.get();
+			tick.set(t + 1);
+			if (t % 2 != 0) return ITickTask.SUCCESS;
+			int c = count.get();
+			count.set(c + 1);
+			if (c > maxLength) return ITickTask.END;
+			clear.run();
+			BlockPos at = currPos.get();
+			currPos.set(at.offset(facing));
+			return ITickTask.SUCCESS;
+		};
+		EventServer.addWorldTickTask(world, task);
 	}
 
 }
