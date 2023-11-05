@@ -259,6 +259,9 @@ tile.strangeEggDeading.name=Strange Egg (Deading)
 tile.meteorite.s.name=Meteorite
 tile.meteoriteDruse.name=Meteorite Druse
 tile.dungeonFilterGlass.name=Filter Glass
+tile.stoneDecoration.alternator.name=Invert Alternator
+tile.stoneDecoration.computer.name=Dungeon Terminal
+tile.stoneDecoration.starCPU.name=Starry CPU
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
@@ -399,6 +402,7 @@ pro.postReceptionist=Post Office Office Receptionist
 pro.postman=Postman
 pro.researcher=Researcher
 pro.debtCollector=Debt Collector
+pro.prototype=Prototype
 
 key.es.func=Function key
 

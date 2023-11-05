@@ -13,8 +13,13 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
+import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.EntityViewRenderEvent.FogColors;
 import net.minecraftforge.client.event.InputUpdateEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -34,9 +39,11 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderOutline;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
+import yuzunyannn.elementalsorcery.init.TileOutlineRenderRegistries;
 import yuzunyannn.elementalsorcery.item.ItemRiteManual;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.item.RenderItemElementCrack;
@@ -224,6 +231,30 @@ public class EventClient {
 	static public void drawTooltip(ItemTooltipEvent event) {
 		ItemRiteManual.drawTooltip(event);
 		drawDebugTooltip(event);
+	}
+
+	@SubscribeEvent
+	static public void drawOutline(DrawBlockHighlightEvent event) {
+		if (event.isCanceled()) return;
+
+		RayTraceResult movingObjectPositionIn = event.getTarget();
+		if (movingObjectPositionIn.typeOfHit != RayTraceResult.Type.BLOCK) return;
+
+		World world = event.getPlayer().world;
+		BlockPos blockpos = movingObjectPositionIn.getBlockPos();
+		TileEntity tileEntity = world.getTileEntity(blockpos);
+		if (tileEntity == null) return;
+
+		IRenderOutline<?> renderOutline = TileOutlineRenderRegistries.instance.getRenderOutline(tileEntity);
+		if (renderOutline == null) return;
+
+		if (!world.getWorldBorder().contains(blockpos)) return;
+
+		try {
+			((IRenderOutline<TileEntity>) renderOutline).renderTileOutline(tileEntity, event.getPlayer(), blockpos,
+					event.getPartialTicks());
+			event.setCanceled(true);
+		} catch (ClassCastException e) {}
 	}
 
 	@SubscribeEvent

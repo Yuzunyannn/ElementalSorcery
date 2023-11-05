@@ -3,6 +3,9 @@ package yuzunyannn.elementalsorcery.util.math;
 import java.util.List;
 import java.util.function.Function;
 
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
+
 public class MathSupporter {
 
 	static public double easeInOutElastic(double x) {
@@ -59,6 +62,27 @@ public class MathSupporter {
 			n++;
 		}
 		return n;
+	}
+
+	public static Vec3d rotation(Vec3d point, Vec3d axis, double rotation) {
+		double u = point.x;
+		double v = point.y;
+		double w = point.z;
+
+		double x = axis.x;
+		double y = axis.y;
+		double z = axis.z;
+
+		float t = (float) rotation;
+
+		double nx = u * MathHelper.cos(t) + (y * w - z * v) * MathHelper.sin(t)
+				+ x * (x * u + y * v + z * w) * (1 - MathHelper.cos(t));
+		double ny = v * MathHelper.cos(t) + (z * u - x * w) * MathHelper.sin(t)
+				+ y * (x * u + y * v + z * w) * (1 - MathHelper.cos(t));
+		double nz = w * MathHelper.cos(t) + (x * v - y * u) * MathHelper.sin(t)
+				+ z * (x * u + y * v + z * w) * (1 - MathHelper.cos(t));
+
+		return new Vec3d(nx, ny, nz);
 	}
 
 }

@@ -66,6 +66,7 @@ public class EntityRelicZombie extends EntityMob {
 	protected int skillType;
 
 	public boolean hasCore = true;
+	public boolean dungeonMode = false;
 
 	public EntityRelicZombie(World worldIn) {
 		this(worldIn, RelicZombieType.randomType(worldIn.rand));
@@ -141,6 +142,7 @@ public class EntityRelicZombie extends EntityMob {
 		super.writeEntityToNBT(compound);
 		compound.setByte("rzType", this.dataManager.get(TYPE).byteValue());
 		if (!hasCore) compound.setBoolean("noCore", true);
+		if (dungeonMode) compound.setBoolean("dungeonMode", true);
 	}
 
 	@Override
@@ -148,6 +150,7 @@ public class EntityRelicZombie extends EntityMob {
 		super.readEntityFromNBT(compound);
 		this.dataManager.set(TYPE, compound.getByte("rzType"));
 		hasCore = !compound.getBoolean("noCore");
+		dungeonMode = compound.getBoolean("dungeonMode");
 	}
 
 	protected void setHeldItem(Item item) {
@@ -191,8 +194,8 @@ public class EntityRelicZombie extends EntityMob {
 	@Override
 	protected void dropFewItems(boolean wasRecentlyHit, int lootingModifier) {
 		DamageSource ds = this.getLastDamageSource();
-		if (ds != null && "player".equals(ds.damageType) && hasCore) {
-			// 遗迹水晶
+
+		if (ds != null && "player".equals(ds.damageType) && hasCore && !dungeonMode) {
 			int n = 1 + this.rand.nextInt(lootingModifier / 2 + 1);
 			for (int i = 0; i < n; i++) {
 				if (this.rand.nextFloat() >= 0.85f) break;
@@ -212,6 +215,7 @@ public class EntityRelicZombie extends EntityMob {
 
 	public void onShock() {
 		if (!hasCore) return;
+		if (dungeonMode) return;
 		if (world.isRemote) return;
 		float hpRate = this.getHealth() / this.getMaxHealth();
 		if (hpRate > 0.5) return;
@@ -315,9 +319,18 @@ public class EntityRelicZombie extends EntityMob {
 			Entity src = source.getTrueSource();
 			if (src != null && src.getClass() == EntityRelicZombie.class) return false;
 		}
+
+		RelicZombieType type = this.getType();
+
+		// 地牢模式的简单
+		if (dungeonMode) {
+			amount *= 2.5f;
+			if (type == RelicZombieType.WARRIOR) amount *= 1.25;
+		}
+
 		if (DamageHelper.isRuleDamage(source)) return super.attackEntityFrom(source, amount);
 
-		switch (this.getType()) {
+		switch (type) {
 		case WARRIOR:
 			return this.attackEntityFromWarrior(source, amount);
 		case PRIEST:

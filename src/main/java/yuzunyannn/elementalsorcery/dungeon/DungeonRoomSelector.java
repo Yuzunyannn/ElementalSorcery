@@ -97,10 +97,14 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 		addBuildRoom(DungeonLib.DUNGEON_SHADY_PARK_TOWARD4, 4, 10, -1);
 		addBuildRoom(DungeonLib.DUNGEON_RESTAURANT_TOWARD2, 8, 12, -1);
 		addBuildRoom(DungeonLib.DUNGEON_STREET_TOWARD5, 8, 12, 8);
-		addBuildRoom(DungeonLib.DUNGEON_BURNER_TOWARD2, 14, 3);
 
 		addBuildCoreRoom(DungeonLib.DUNGEON_LABORATORY_TOWARD2, 15);
 		addBuildCoreRoom(DungeonLib.DUNGEON_BIOLOGY_LAB_TOWARD2, 17);
+		addBuildRoom(DungeonLib.DUNGEON_POWER_PLANT_TOWARD2, 10, 12, 3);
+		addBuildRoom(DungeonLib.DUNGEON_BURNER_TOWARD2, 14, 3);
+		addBuildRoom(DungeonLib.DUNGEON_PRISON_TOWARD3, 8, 12, -1);
+
+//		addBuildCoreRoom(DungeonLib.DUNGEON_SATELLITE_STATION_TOWARD3, 25);
 	}
 
 	protected BuildRoomNode addBuildRoom(DungeonRoomType type, int step, int maxCount) {

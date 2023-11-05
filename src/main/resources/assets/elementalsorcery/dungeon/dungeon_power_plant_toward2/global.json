@@ -1,14 +1,12 @@
 {
     "type": "dungeon:global",
     "keySupport": {
-        "yellow": 1,
-        "magenta": 2,
-        "cyan": 1,
+        "lime": 1,
         "red": 1
     },
     "keyRequire": {
         "yellow": 1,
-        "magenta": 1,
+        "cyan": 1,
         "blue": 2
     }
 }

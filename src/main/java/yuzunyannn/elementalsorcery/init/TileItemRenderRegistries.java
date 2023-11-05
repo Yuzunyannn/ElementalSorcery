@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.render.ESTileEntityItemStackRenderer;
 
 public class TileItemRenderRegistries implements ICustomModelLoader {
 
-	public static TileItemRenderRegistries instance;
+	public static final TileItemRenderRegistries instance = new TileItemRenderRegistries();
 
 	private Map<ResourceLocation, IRenderItem> items = new HashMap<>();
 
@@ -28,10 +28,8 @@ public class TileItemRenderRegistries implements ICustomModelLoader {
 
 	public void register(Item item, IRenderItem render) {
 		ResourceLocation rsname = item.getRegistryName();
-		if (items.containsKey(rsname))
-			return;
-		if (render == null)
-			return;
+		if (items.containsKey(rsname)) return;
+		if (render == null) return;
 		ResourceLocation key = getItemKey(rsname);
 		items.put(key, render);
 		item.setTileEntityItemStackRenderer(new ESTileEntityItemStackRenderer(render));

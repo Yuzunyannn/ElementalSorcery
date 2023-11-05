@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.building;
 
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockSkull;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.nbt.NBTTagCompound;
@@ -8,6 +9,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import yuzunyannn.elementalsorcery.block.env.BlockStoneDecoration;
 
 public class BuildingFace {
 
@@ -164,9 +166,14 @@ public class BuildingFace {
 
 	static public NBTTagCompound tryFaceTile(IBlockState state, NBTTagCompound save, EnumFacing facing,
 			boolean needCopy) {
-		if (state.getBlock() instanceof BlockSkull) {
+		Block block = state.getBlock();
+		if (block instanceof BlockSkull) {
 			if (needCopy) save = save.copy();
 			save.setByte("Rot", (byte) BuildingFace.faceRot(save.getByte("Rot"), facing));
+		} else if (block instanceof BlockStoneDecoration) {
+			if (needCopy) save = save.copy();
+			EnumFacing myFacing = EnumFacing.byHorizontalIndex(save.getInteger("facing"));
+			save.setByte("facing", (byte) face(myFacing, facing).getHorizontalIndex());
 		}
 		return save;
 	}

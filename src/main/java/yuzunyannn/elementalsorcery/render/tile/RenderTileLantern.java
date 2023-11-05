@@ -13,7 +13,7 @@ import yuzunyannn.elementalsorcery.tile.TileLantern;
 @SideOnly(Side.CLIENT)
 public class RenderTileLantern extends TileEntitySpecialRenderer<TileLantern> implements IRenderItem {
 
-	private TextureBinder TEXTURE = new TextureBinder("textures/blocks/lantern.png");
+	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/lantern.png");
 	private final ModelLantern MODEL = new ModelLantern();
 
 	@Override

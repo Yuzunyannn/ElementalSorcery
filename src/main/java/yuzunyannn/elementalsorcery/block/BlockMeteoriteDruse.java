@@ -16,6 +16,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -172,6 +173,13 @@ public class BlockMeteoriteDruse extends Block {
 		}
 
 		return i;
+	}
+
+	@Override
+	public IBlockState withRotation(IBlockState state, Rotation rot) {
+		EnumFacing facing = state.getValue(FACING);
+		if (facing.getHorizontalIndex() == -1) return state;
+		return state.withProperty(FACING, rot.rotate(facing));
 	}
 
 	@Override

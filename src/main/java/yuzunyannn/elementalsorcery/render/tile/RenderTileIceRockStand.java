@@ -23,13 +23,13 @@ import yuzunyannn.elementalsorcery.util.render.Shaders;
 @SideOnly(Side.CLIENT)
 public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRockStand> implements IRenderItem {
 
-	static public final TextureBinder TEXTUREL_CRYSTAL = new TextureBinder(
+	static public final TextureBinder TEXTURE_CRYSTAL = new TextureBinder(
 			"textures/blocks/ice_rock/ice_rock_crystal.png");
-	static public final TextureBinder TEXTUREL_CRYSTAL_FULL = new TextureBinder(
+	static public final TextureBinder TEXTURE_CRYSTAL_FULL = new TextureBinder(
 			"textures/blocks/ice_rock/ice_rock_crystal_full.png");
-	static public final TextureBinder TEXTUREL_CRYSTAL_MASK = new TextureBinder("textures/blocks/ice_rock/could.png");
+	static public final TextureBinder TEXTURE_CRYSTAL_MASK = new TextureBinder("textures/blocks/ice_rock/could.png");
 
-	static public final TextureBinder TEXTUREL = new TextureBinder("textures/blocks/ice_rock/ice_rock_stand.png");
+	static public final TextureBinder TEXTURE = new TextureBinder("textures/blocks/ice_rock/ice_rock_stand.png");
 	static public final ModelIceRockStand MODEL = new ModelIceRockStand();
 
 	public RenderTileIceRockStand() {
@@ -40,7 +40,7 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 	public void render(TileIceRockStand tile, double x, double y, double z, float partialTicks, int destroyStage,
 			float alpha) {
 
-		RenderFriend.bindDestoryTexture(TEXTUREL, destroyStage, rendererDispatcher, DESTROY_STAGES);
+		RenderFriend.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
 		RenderFriend.startTileEntitySpecialRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
 		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
 		RenderFriend.endTileEntitySpecialRender();
@@ -77,7 +77,7 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
 		GlStateManager.disableCull();
-		RenderFriend.renderSpecialItem(stack, TEXTUREL, MODEL, true, 0.038, 0.0175, 0, 0);
+		RenderFriend.renderSpecialItem(stack, TEXTURE, MODEL, true, 0.038, 0.0175, 0, 0);
 		GlStateManager.enableCull();
 	}
 
@@ -87,9 +87,9 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 			BufferBuilder bufferbuilder = tessellator.getBuffer();
 
 			Shaders.BlockIceRockCrystal.bind();
-			TEXTUREL_CRYSTAL.bind();
-			TEXTUREL_CRYSTAL_FULL.bindAtive(3);
-			TEXTUREL_CRYSTAL_MASK.bindAtive(4);
+			TEXTURE_CRYSTAL.bind();
+			TEXTURE_CRYSTAL_FULL.bindAtive(3);
+			TEXTURE_CRYSTAL_MASK.bindAtive(4);
 			Shaders.BlockIceRockCrystal.setUniform("texA", 0);
 			Shaders.BlockIceRockCrystal.setUniform("texB", 3);
 			Shaders.BlockIceRockCrystal.setUniform("mask", 4);
@@ -103,8 +103,8 @@ public class RenderTileIceRockStand extends TileEntitySpecialRenderer<TileIceRoc
 			bufferbuilder.pos(128, 0, -64).tex(1, 0).endVertex();
 			tessellator.draw();
 
-			TEXTUREL_CRYSTAL_FULL.unbindAtive(3);
-			TEXTUREL_CRYSTAL_MASK.unbindAtive(4);
+			TEXTURE_CRYSTAL_FULL.unbindAtive(3);
+			TEXTURE_CRYSTAL_MASK.unbindAtive(4);
 			Shaders.BlockIceRockCrystal.unbind();
 		});
 	}

@@ -1,0 +1,34 @@
+{
+	"type": "elementalsorcery:craft",
+	"pattern": [
+		"#Y#",
+		"YXY",
+		"#Y#",
+		" ## ",
+		"#YY#",
+		"#YY#",
+		" ## "
+	],
+	"key": {
+		"X": {
+			"item": "elementalsorcery:fusion_crystal"
+		},
+		"Y": {
+			"item": "minecraft:glowstone_dust"
+		},
+		"#": {
+			"item": "elementalsorcery:meteorite_ingot"
+		}
+	},
+	"element": [
+		{
+			"id": "knowledge",
+			"size": 42,
+			"power": 42
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:invert_gem",
+		"count": 1
+	}
+}

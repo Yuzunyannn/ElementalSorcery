@@ -1,0 +1,9 @@
+{
+    "probability": 0.25,
+    "type": "loot",
+    "loot": {
+        "id": "elementalsorcery:ice_rock_chip",
+        "count": "{random#1~3}"
+    },
+    "goodPattern": true
+}

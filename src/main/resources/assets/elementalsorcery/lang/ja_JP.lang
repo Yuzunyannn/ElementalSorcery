@@ -259,6 +259,9 @@ tile.strangeEggDeading.name=変な卵(消えつつある)
 tile.meteorite.s.name=隕石
 tile.meteoriteDruse.name=隕石結晶
 tile.dungeonFilterGlass.name=分離ガラス
+tile.stoneDecoration.alternator.name=逆変発電んき
+tile.stoneDecoration.computer.name=ダンジョン端末
+tile.stoneDecoration.starCPU.name=星空中央処理装置
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -399,6 +402,7 @@ pro.postReceptionist=郵便局の受付
 pro.postman=郵便配達
 pro.researcher=研究員
 pro.debtCollector=借金取り
+pro.prototype=プロトタイプ
 
 key.es.func=機能キー
 

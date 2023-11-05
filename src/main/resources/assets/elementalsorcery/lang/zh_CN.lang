@@ -259,6 +259,9 @@ tile.strangeEggDeading.name=奇怪的蛋(消亡)
 tile.meteorite.s.name=陨石
 tile.meteoriteDruse.name=陨石晶簇
 tile.dungeonFilterGlass.name=分离玻璃
+tile.stoneDecoration.alternator.name=逆变发电核心
+tile.stoneDecoration.computer.name=地牢终端
+tile.stoneDecoration.starCPU.name=星空计算核心
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者
@@ -399,6 +402,7 @@ pro.postReceptionist=邮局接待员
 pro.postman=邮递员
 pro.researcher=研究员
 pro.debtCollector=讨债人
+pro.prototype=原型
 
 key.es.func=功能键
 

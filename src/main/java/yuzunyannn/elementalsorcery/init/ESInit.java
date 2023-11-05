@@ -61,6 +61,7 @@ import yuzunyannn.elementalsorcery.api.gfunc.IGameFuncCarrier;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
+import yuzunyannn.elementalsorcery.api.util.client.IRenderOutline;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
@@ -87,6 +88,7 @@ import yuzunyannn.elementalsorcery.block.BlockStarFlower;
 import yuzunyannn.elementalsorcery.block.BlockStarSand;
 import yuzunyannn.elementalsorcery.block.BlockStarStone;
 import yuzunyannn.elementalsorcery.block.BlocksEStone;
+import yuzunyannn.elementalsorcery.block.IBlockStronger;
 import yuzunyannn.elementalsorcery.block.altar.BlockAnalysisAltar;
 import yuzunyannn.elementalsorcery.block.altar.BlockBuildingAltar;
 import yuzunyannn.elementalsorcery.block.altar.BlockDeconstructAltarTable;
@@ -136,6 +138,7 @@ import yuzunyannn.elementalsorcery.block.env.BlockDungeonMagicCircleA;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonRottenLifeLog;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonStairs;
 import yuzunyannn.elementalsorcery.block.env.BlockGoatGoldBrick;
+import yuzunyannn.elementalsorcery.block.env.BlockStoneDecoration;
 import yuzunyannn.elementalsorcery.block.env.BlockStrangeEgg;
 import yuzunyannn.elementalsorcery.block.md.BlockMDAbsorbBox;
 import yuzunyannn.elementalsorcery.block.md.BlockMDDeconstructBox;
@@ -383,6 +386,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileRiteTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileShowItem;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileStoneDecoration;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileStoneMill;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileSupremeTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileTranscribeInjection;
@@ -439,6 +443,7 @@ import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonFunction;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonHaystack;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonMagicCircleA;
+import yuzunyannn.elementalsorcery.tile.dungeon.TileStoneDecoration;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockCrystalBlock;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockNode;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockStand;
@@ -455,6 +460,7 @@ import yuzunyannn.elementalsorcery.tile.md.TileMDResonantIncubator;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.tile.md.TileMDTransfer;
 import yuzunyannn.elementalsorcery.util.helper.SilentWorld;
+import yuzunyannn.elementalsorcery.util.item.ItemBlockStronger;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 import yuzunyannn.elementalsorcery.util.render.WorldScene;
 import yuzunyannn.elementalsorcery.util.var.Variables;
@@ -588,6 +594,7 @@ public class ESInit {
 		ESObjects.BLOCKS.METEORITE = new BlockMeteorite();
 		ESObjects.BLOCKS.METEORITE_DRUSE = new BlockMeteoriteDruse();
 		ESObjects.BLOCKS.DUNGEON_FILTER_GLASS = new BlockDungeonFilterGlass();
+		ESObjects.BLOCKS.STONE_DECORATION = new BlockStoneDecoration();
 
 		// 初始化所有tab
 		Class<?> cls = ESObjects.BLOCKS.getClass();
@@ -937,7 +944,6 @@ public class ESInit {
 	@SideOnly(Side.CLIENT)
 	public final static void preInitClient(FMLPreInitializationEvent event) throws Throwable {
 		// 设置自定义模型加载
-		TileItemRenderRegistries.instance = new TileItemRenderRegistries();
 		ModelLoaderRegistry.registerLoader(TileItemRenderRegistries.instance);
 		// 注册所有渲染
 		registerAllRender();
@@ -1091,6 +1097,7 @@ public class ESInit {
 		register(TileDungeonFunction.class, "DungeonFunc");
 		register(TileDungeonHaystack.class, "DungeonHaystack");
 		register(TileDungeonMagicCircleA.class, "DungeonMCA");
+		register(TileStoneDecoration.class, "StoneDec");
 	}
 
 	static void registerAllCapability() {
@@ -1388,6 +1395,7 @@ public class ESInit {
 		registerRender(BLOCKS.DUNGEON_HAYSTACK, TileDungeonHaystack.class, new RenderTileDungeonHaystack());
 		registerRender(BLOCKS.DUNGEON_MAGIC_CIRCLE_A, TileDungeonMagicCircleA.class,
 				new RenderTileDungeonMagicCircleA());
+		registerRender(BLOCKS.STONE_DECORATION, TileStoneDecoration.class, new RenderTileStoneDecoration());
 
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
@@ -1423,8 +1431,9 @@ public class ESInit {
 		ForgeRegistries.ITEMS.register(item);
 	}
 
-	private static void register(Block block) {
-		if (block instanceof Mapper) register(block, (Mapper) block);
+	private static <T extends Block & IBlockStronger> void register(Block block) {
+		if (block instanceof IBlockStronger) register(block, new ItemBlockStronger((T) block));
+		else if (block instanceof Mapper) register(block, (Mapper) block);
 		else register(block, new ItemBlock(block));
 	}
 
@@ -1557,9 +1566,12 @@ public class ESInit {
 
 	@SideOnly(Side.CLIENT)
 	private static <T extends TileEntity, R extends TileEntitySpecialRenderer<? super T> & IRenderItem> void registerRender(
-			Block block, Class<T> tile, R render_instance) {
-		registerRender(tile, render_instance);
-		registerRender(ItemBlock.getItemFromBlock(block), render_instance);
+			Block block, Class<T> tile, R renderInstance) {
+		registerRender(tile, renderInstance);
+		registerRender(ItemBlock.getItemFromBlock(block), renderInstance);
+		if (renderInstance instanceof IRenderOutline<?>) {
+			TileOutlineRenderRegistries.instance.register(tile, (IRenderOutline<?>) renderInstance);
+		}
 	}
 
 	public static final void initModsObject(Class<?> cls) throws Throwable {

@@ -1281,6 +1281,21 @@
             "zh_CN": "分离玻璃",
             "en_US": "Filter Glass",
             "ja_JP": "分離ガラス"
+        },
+        "tile.stoneDecoration.alternator.name":{
+            "zh_CN": "逆变发电核心",
+            "en_US": "Invert Alternator",
+            "ja_JP": "逆変発電んき"
+        },
+        "tile.stoneDecoration.computer.name":{
+            "zh_CN": "地牢终端",
+            "en_US": "Dungeon Terminal",
+            "ja_JP": "ダンジョン端末"
+        },
+        "tile.stoneDecoration.starCPU.name":{
+            "zh_CN": "星空计算核心",
+            "en_US": "Starry CPU",
+            "ja_JP": "星空中央処理装置"
         }
     }
 }

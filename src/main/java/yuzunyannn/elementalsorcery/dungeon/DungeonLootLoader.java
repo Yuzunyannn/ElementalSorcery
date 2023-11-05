@@ -2,8 +2,10 @@ package yuzunyannn.elementalsorcery.dungeon;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import com.google.common.collect.Lists;
@@ -112,7 +114,9 @@ public abstract class DungeonLootLoader implements INBTSerializable<NBTTagCompou
 
 		@Override
 		public List<ItemStack> getLoots(World world, Random rand) {
+			Map<String, Object> context = new HashMap<>();
 			QuestLoadJson json = new QuestLoadJson();
+			json.setContext(context);
 			json.set("loot", this.json);
 			List<ItemStack> list;
 			try {

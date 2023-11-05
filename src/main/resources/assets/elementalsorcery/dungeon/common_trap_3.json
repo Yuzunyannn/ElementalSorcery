@@ -1,0 +1,104 @@
+{
+    "type": "group",
+    "mode": "random",
+    "funcs": [
+        {
+            "weight": 1,
+            "type": "mantra",
+            "mantra": "elementalsorcery:frozen",
+            "elements": [
+                {
+                    "id": "elementalsorcery:water",
+                    "count": 1000,
+                    "power": 200
+                },
+                {
+                    "id": "elementalsorcery:air",
+                    "count": 1000,
+                    "power": 400
+                }
+            ],
+            "potent": 0.75,
+            "duration": 60,
+            "orient": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+            },
+            "isVertical": true
+        },
+        {
+            "weight": 1,
+            "type": "mantra",
+            "mantra": "elementalsorcery:fire_area",
+            "elements": [
+                {
+                    "id": "elementalsorcery:fire",
+                    "count": 1000,
+                    "power": 500
+                }
+            ],
+            "orient": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+            },
+            "isVertical": true,
+            "duration": 80
+        },
+        {
+            "weight": 1,
+            "type": "mantra",
+            "mantra": "elementalsorcery:lightning_area",
+            "elements": [
+                {
+                    "id": "elementalsorcery:fire",
+                    "count": 1000,
+                    "power": 500
+                },
+                {
+                    "id": "elementalsorcery:air",
+                    "count": 1000,
+                    "power": 500
+                }
+            ],
+            "orient": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+            },
+            "isVertical": true,
+            "duration": 80
+        },
+        {
+            "weight": 1,
+            "type": "mantra",
+            "mantra": "elementalsorcery:arrow",
+            "elements": [
+                {
+                    "id": "elementalsorcery:wood",
+                    "count": 1000,
+                    "power": 500
+                },
+                {
+                    "id": "elementalsorcery:earth",
+                    "count": 1000,
+                    "power": 500
+                },
+                {
+                    "id": "elementalsorcery:air",
+                    "count": 1000,
+                    "power": 500
+                }
+            ],
+            "orient": {
+                "x": 0,
+                "y": 1,
+                "z": 0
+            },
+            "potent": 0.2,
+            "isVertical": true,
+            "duration": 80
+        }
+    ]
+}
