@@ -1,0 +1,24 @@
+{
+    "pools": [
+        {
+            "name": "dungeon_loot_library",
+            "rolls": {
+                "min": 1,
+                "max": 2
+            },
+            "entries": [
+                {
+                    "weight": 50,
+                    "type": "loot_table",
+                    "name": "elementalsorcery:dungeon/dungeon_loot_sundry_3",
+                    "quality": -1
+                },
+                {
+                    "weight": 12,
+                    "type": "loot_table",
+                    "name": "elementalsorcery:dungeon/dungeon_loot_book_1"
+                }
+            ]
+        }
+    ]
+}

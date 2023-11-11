@@ -30,7 +30,12 @@ public class DungeonLib {
 	public static DungeonRoomType DUNGEON_POWER_PLANT_TOWARD2;
 	public static DungeonRoomType DUNGEON_SATELLITE_STATION_TOWARD3;
 	public static DungeonRoomType DUNGEON_PRISON_TOWARD3;
-	
+	public static DungeonRoomType DUNGEON_LIBRARY_TOWARD3;
+	public static DungeonRoomType DUNGEON_ROOM_TOWARD3;
+	public static DungeonRoomType DUNGEON_TOWARD4;
+	public static DungeonRoomType DUNGEON_GUARD_FACTORY_TOWARD4;
+	public static DungeonRoomType DUNGEON_CALAMITY_EDIFICE_TOWARD4;
+
 	public static void register(DungeonRoomType room) {
 		DungeonRoomType.REGISTRY.register(room);
 	}
@@ -69,6 +74,11 @@ public class DungeonLib {
 		DUNGEON_POWER_PLANT_TOWARD2 = register("dungeon_power_plant_toward2");
 		DUNGEON_SATELLITE_STATION_TOWARD3 = register("dungeon_satellite_station_toward3");
 		DUNGEON_PRISON_TOWARD3 = register("dungeon_prison_toward3");
+		DUNGEON_LIBRARY_TOWARD3 = register("dungeon_library_toward3");
+		DUNGEON_ROOM_TOWARD3 = register("dungeon_room_toward3");
+		DUNGEON_TOWARD4 = register("dungeon_toward4");
+		DUNGEON_GUARD_FACTORY_TOWARD4 = register("dungeon_guard_factory_toward4");
+		DUNGEON_CALAMITY_EDIFICE_TOWARD4 = register("dungeon_calamity_edifice_toward4");
 	}
 
 	public static void registerAllFunc() {

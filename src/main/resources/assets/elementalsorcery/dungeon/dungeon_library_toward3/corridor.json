@@ -1,10 +1,10 @@
 {
-    "probability": 0.9,
+    "probability": 0.8,
     "type": "group",
     "mode": "random",
     "funcs": [
         {
-            "weight": 5,
+            "weight": 10,
             "type": "dungeon:area",
             "onceTryTimes": {
                 "min": 3,
@@ -14,7 +14,7 @@
                 "type": "ref",
                 "/assets": "elementalsorcery:dungeon/common_monster_3",
                 "params": {
-                    "$loots": "elementalsorcery:dungeon/dungeon_loot_sundry_3"
+                    "$loots": "elementalsorcery:dungeon/dungeon_loot_library"
                 }
             }
         },
@@ -35,13 +35,11 @@
                         "mode": "random",
                         "funcs": [
                             {
-                                "weight": 1,
                                 "type": "loot",
-                                "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_3",
+                                "loot": "elementalsorcery:dungeon/dungeon_loot_library",
                                 "acceptHideItem": true
                             },
                             {
-                                "weight": 2,
                                 "type": "ref",
                                 "/assets": "elementalsorcery:dungeon/common_trap_3"
                             }

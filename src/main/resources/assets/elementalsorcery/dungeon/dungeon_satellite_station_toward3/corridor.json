@@ -35,11 +35,13 @@
                         "mode": "random",
                         "funcs": [
                             {
+                                "weight": 1,
                                 "type": "loot",
                                 "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_3",
                                 "acceptHideItem": true
                             },
                             {
+                                "weight": 2,
                                 "type": "ref",
                                 "/assets": "elementalsorcery:dungeon/common_trap_3"
                             }

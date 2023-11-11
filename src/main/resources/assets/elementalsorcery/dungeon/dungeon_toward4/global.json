@@ -1,0 +1,14 @@
+{
+    "type": "dungeon:global",
+    "keySupport": {
+        "cyan": 1,
+        "magenta": 1,
+        "red": 2,
+        "green": 2,
+        "blue": 2,
+        "lime": 1
+    },
+    "keyRequire": {
+        "lime": 1
+    }
+}

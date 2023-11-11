@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.IdentityHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import net.minecraft.item.EnumDyeColor;
@@ -35,9 +36,15 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 		}
 
 		protected void onBuild(Random rand) {
-			if (this.randomStep > this.step) this.accumulate += RandomHelper.randomRange(step, randomStep, rand);
-			else this.accumulate += this.step;
 			this.buildCount++;
+			this.accumulate += this.getNextStepAccumulate(rand);
+		}
+
+		protected int getNextStepAccumulate(Random rand) {
+			int step;
+			if (this.randomStep > this.step) step = RandomHelper.randomRange(this.step, this.randomStep, rand);
+			else step = this.step;
+			return (int) (step * (Math.sqrt(buildCount) / 4 + 1));
 		}
 
 		public int getBuildCount() {
@@ -103,8 +110,14 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 		addBuildRoom(DungeonLib.DUNGEON_POWER_PLANT_TOWARD2, 10, 12, 3);
 		addBuildRoom(DungeonLib.DUNGEON_BURNER_TOWARD2, 14, 3);
 		addBuildRoom(DungeonLib.DUNGEON_PRISON_TOWARD3, 8, 12, -1);
+		addBuildRoom(DungeonLib.DUNGEON_LIBRARY_TOWARD3, 8, 12, -1);
+		addBuildRoom(DungeonLib.DUNGEON_ROOM_TOWARD3, 6, 8, -1);
+		addBuildRoom(DungeonLib.DUNGEON_TOWARD4, 6, 8, -1);
 
-//		addBuildCoreRoom(DungeonLib.DUNGEON_SATELLITE_STATION_TOWARD3, 25);
+		addBuildCoreRoom(DungeonLib.DUNGEON_SATELLITE_STATION_TOWARD3, 25);
+		addBuildCoreRoom(DungeonLib.DUNGEON_GUARD_FACTORY_TOWARD4, 26);
+		
+		addBuildCoreRoom(DungeonLib.DUNGEON_CALAMITY_EDIFICE_TOWARD4, 50);
 	}
 
 	protected BuildRoomNode addBuildRoom(DungeonRoomType type, int step, int maxCount) {
@@ -177,9 +190,13 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 		if (this.buildCount > 256) throw new RuntimeException("to many build! please check is the algorithm correct!");
 
 		List<DungeonRoomType> results = new ArrayList<>(buildList.size());
+		List<DungeonRoomType> betterResults = new ArrayList<>(buildList.size());
+		int lastIndex = buildList.size() - 1;
+		boolean isHeadEnough = false;
+		Map<EnumDyeColor, Integer> fragmentMap = null;
 
 		// 从后面开始遍历，越小越先
-		for (int i = buildList.size() - 1; i >= 0; i--) {
+		for (int i = lastIndex; i >= 0; i--) {
 			BuildRoomNode node = buildList.get(i);
 			DungeonRoomType currType = node.getRoomType();
 			// 第一个房间必须连通多门
@@ -193,10 +210,31 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 			if (currRoom.getType() == currType) continue;
 			// 钥匙不够，走人
 			if (!isKeyEnough(currType.getFuncGlobal())) continue;
-			// 都满足，加入待选队列
-			results.add(currType);
+			// 都满足
+			if (lastIndex == i) {
+				// 如果是头
+				isHeadEnough = true;
+				results.add(currType);
+			} else {
+				// 如果不是头，若头满足
+				if (isHeadEnough) results.add(currType);
+				else next: {
+					// 若头不满足，有限使用给头提供碎片的
+					if (fragmentMap == null) {
+						DungeonFuncGlobal global = buildList.get(lastIndex).getRoomType().getFuncGlobal();
+						if (global != null) fragmentMap = global.getRequireMemoryFragmentMap();
+						else {
+							isHeadEnough = true;
+							results.add(currType);
+							break next;
+						}
+					}
+					if (isKeyProvideOnDemand(currType.getFuncGlobal(), fragmentMap)) betterResults.add(currType);
+					else results.add(currType);
+				}
+			}
 		}
-		return results;
+		return betterResults.isEmpty() ? results : betterResults;
 	}
 
 	protected boolean isKeyEnough(DungeonFuncGlobal config) {
@@ -215,15 +253,15 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 		return true;
 	}
 
-//	protected boolean isKeyProvideOnDemand(DungeonFuncGlobal config, Map<EnumDyeColor, Integer> fragmentMap) {
-//		if (config == null) return false;
-//		List<MemoryFragment> produces = config.getProduceFragments();
-//		for (MemoryFragment mf : produces) {
-//			if (mf.getCount() <= 0) continue;
-//			if (fragmentMap.containsKey(mf.getColor())) return true;
-//		}
-//		return false;
-//	}
+	protected boolean isKeyProvideOnDemand(DungeonFuncGlobal config, Map<EnumDyeColor, Integer> fragmentMap) {
+		if (config == null) return false;
+		List<MemoryFragment> produces = config.getProduceFragments();
+		for (MemoryFragment mf : produces) {
+			if (mf.getCount() <= 0) continue;
+			if (fragmentMap.containsKey(mf.getColor())) return true;
+		}
+		return false;
+	}
 
 	@Override
 	public String toString() {

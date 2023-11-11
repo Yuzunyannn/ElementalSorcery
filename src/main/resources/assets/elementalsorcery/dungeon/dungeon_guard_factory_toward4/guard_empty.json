@@ -1,0 +1,8 @@
+{
+    "probability": 0.5,
+    "type": "entity",
+    "entityId": "elementalsorcery:relicguard",
+    "entityNBT": {
+        "hCore": false
+    }
+}

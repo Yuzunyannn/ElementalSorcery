@@ -99,6 +99,27 @@
             "potent": 0.2,
             "isVertical": true,
             "duration": 80
+        },
+        {
+            "weight": 2,
+            "type": "magicCircle",
+            "activeCD": {
+                "min": 200,
+                "max": 600
+            },
+            "trigger": {
+                "onActived": {
+                    "type": "repeat",
+                    "times": 3,
+                    "func": {
+                        "type": "ref",
+                        "/assets": "elementalsorcery:dungeon/common_monster_3",
+                        "params": {
+                            "$loots": "elementalsorcery:dungeon/dungeon_loot_sundry_3"
+                        }
+                    }
+                }
+            }
         }
     ]
 }

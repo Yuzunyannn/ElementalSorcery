@@ -1,0 +1,8 @@
+{
+    "type": "entity",
+    "entityId": "elementalsorcery:relicguard",
+    "entityNBT": {
+        "type": 0,
+        "hCore": true
+    }
+}

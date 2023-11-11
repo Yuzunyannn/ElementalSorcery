@@ -1,7 +1,9 @@
 package yuzunyannn.elementalsorcery.dungeon;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Nullable;
 
@@ -37,6 +39,12 @@ public class DungeonFuncGlobal extends GameFunc implements IDungeonFuncInit {
 
 	public List<MemoryFragment> getRequireMemoryFragments() {
 		return memoryFragments;
+	}
+
+	public Map<EnumDyeColor, Integer> getRequireMemoryFragmentMap() {
+		Map<EnumDyeColor, Integer> map = new HashMap<>();
+		for (MemoryFragment mf : memoryFragments) map.put(mf.getColor(), mf.getCount());
+		return map;
 	}
 
 	public List<MemoryFragment> getProduceFragments() {

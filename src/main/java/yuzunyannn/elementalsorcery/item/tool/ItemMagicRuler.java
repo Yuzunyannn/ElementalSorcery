@@ -89,7 +89,7 @@ public class ItemMagicRuler extends Item {
 		return false;
 	}
 
-	public static final int MAX_DIS_SQ = 64 * 64;
+	public static final int MAX_DIS_SQ = 128 * 128;
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
