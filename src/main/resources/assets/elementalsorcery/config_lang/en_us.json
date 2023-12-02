@@ -70,5 +70,10 @@
     "spawn_and_gen.world_gen_and_spawn_config.worlds": "The worlds can spawn [Invalid for Entity]",
     "spawn_and_gen.world_gen_and_spawn_config.biomes": "The biomes can spawn",
     "spawn_and_gen.world_gen_and_spawn_config.world_incrs": "Generated density for Worlds Array, 0 is default, big number bring more possibilities of generation",
-    "spawn_and_gen.world_gen_and_spawn_config.biome_incrs": "Generated density for Biomes Array, 0 is default, big number bring more possibilities of generation"
+    "spawn_and_gen.world_gen_and_spawn_config.biome_incrs": "Generated density for Biomes Array, 0 is default, big number bring more possibilities of generation",
+
+    "dungeon.general.enable_dungeon": "Whether to allow the Dungeon Gameplay",
+    "dungeon.general.dungeon_compensate_when_disable": "Compensation when disabling the Dungeon Gameplay, 0 is not activated, 1 is enabled, and the larger the number, the more random compensation there will be",
+    "dungeon.general.dungeon_building_block_speed_limit": "The Big Calculation milliseconds limit for dungeon construction. -1 is no limit. This can be selected based on server performance.",
+    "dungeon.general.dungeon_building_clear_speed_limit": "The Big Calculation milliseconds limit for dungeon clear. -1 is no limit. This can be selected based on server performance."
 }

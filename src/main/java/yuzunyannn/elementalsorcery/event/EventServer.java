@@ -16,6 +16,7 @@ import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.Item;
@@ -34,8 +35,10 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.util.text.TextFormatting;
@@ -58,6 +61,7 @@ import net.minecraftforge.event.entity.living.PotionEvent.PotionApplicableEvent;
 import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.ItemFishedEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 import net.minecraftforge.event.world.BlockEvent.NeighborNotifyEvent;
@@ -67,6 +71,7 @@ import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.fml.common.eventhandler.Event.Result;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent.Phase;
 import yuzunyannn.elementalsorcery.ESData;
@@ -104,6 +109,7 @@ import yuzunyannn.elementalsorcery.potion.PotionBlessing;
 import yuzunyannn.elementalsorcery.potion.PotionCalamity;
 import yuzunyannn.elementalsorcery.potion.PotionCombatSkill;
 import yuzunyannn.elementalsorcery.potion.PotionDefenseSkill;
+import yuzunyannn.elementalsorcery.potion.PotionDungeonNightmare;
 import yuzunyannn.elementalsorcery.potion.PotionEndercorps;
 import yuzunyannn.elementalsorcery.potion.PotionEnderization;
 import yuzunyannn.elementalsorcery.potion.PotionFrozen;
@@ -114,6 +120,7 @@ import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
 import yuzunyannn.elementalsorcery.potion.PotionWindShield;
 import yuzunyannn.elementalsorcery.ts.PocketWatch;
 import yuzunyannn.elementalsorcery.ts.PocketWatchClient;
+import yuzunyannn.elementalsorcery.util.Stopwatch;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.helper.SilentWorld;
@@ -125,6 +132,7 @@ public class EventServer {
 	static private final Map<Integer, List<IWorldTickTask>> worldTickMapList = new HashMap<>();
 	static private final Map<Integer, List<IWorldTickTask>> worldTickMapListCache = new HashMap<>();
 	static private boolean isRunningWorldTick = false;
+	static public final Stopwatch bigComputeWatch = new Stopwatch();
 
 	/** 添加一个服务端的tick任务 */
 	static public void addTickTask(ITickTask task) {
@@ -174,7 +182,9 @@ public class EventServer {
 
 	@SubscribeEvent
 	public static void serverTick(TickEvent.ServerTickEvent event) {
+
 		if (event.phase == Phase.START) {
+			bigComputeWatch.clear();
 			PocketWatch.tick();
 			return;
 		}
@@ -227,25 +237,6 @@ public class EventServer {
 					else toList.addAll(entry.getValue());
 				}
 				worldTickMapListCache.clear();
-			}
-		}
-	}
-
-	/** 玩家死亡等，复制玩家数据 */
-	@SubscribeEvent
-	public static void onClone(net.minecraftforge.event.entity.player.PlayerEvent.Clone event) {
-		EntityPlayer player = event.getEntityPlayer();
-		EntityPlayer origin = event.getOriginal();
-		NBTTagCompound oData = origin.getEntityData();
-		if (oData.hasKey("ESData", 10)) player.getEntityData().setTag("ESData", oData.getTag("ESData"));
-
-		IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
-		if (adventurer != null) {
-			IAdventurer oAdventurer = origin.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
-			if (oAdventurer != null) {
-				IStorage<IAdventurer> storage = Adventurer.ADVENTURER_CAPABILITY.getStorage();
-				NBTBase base = storage.writeNBT(Adventurer.ADVENTURER_CAPABILITY, oAdventurer, null);
-				storage.readNBT(Adventurer.ADVENTURER_CAPABILITY, adventurer, null, base);
 			}
 		}
 	}
@@ -590,6 +581,28 @@ public class EventServer {
 				factor = Math.max(factor - PotionDefenseSkill.doSkill(entity, attacker, source, amount), 0);
 			if (factor != 1) event.setAmount(factor * amount);
 		}
+
+		if (entity instanceof EntityPlayerMP) {
+			EntityPlayerMP player = (EntityPlayerMP) entity;
+
+			int nightmare = PotionDungeonNightmare.getNightmareValidLevel(player);
+			if (nightmare > 1) {
+				event.setAmount(event.getAmount() * nightmare);
+				int duration = 20 * 60 * 3;
+				if (nightmare >= 3) {
+					PotionEffect effectSlow = new PotionEffect(MobEffects.SLOWNESS, duration,
+							Math.min(nightmare - 3, 3));
+					player.addPotionEffect(effectSlow);
+					PotionEffect effectWither = new PotionEffect(MobEffects.WITHER, duration,
+							Math.min(nightmare - 3, 3));
+					player.addPotionEffect(effectWither);
+					PotionEffect effectWeakness = new PotionEffect(MobEffects.WEAKNESS, duration,
+							Math.min(nightmare - 3, 3));
+					player.addPotionEffect(effectWeakness);
+				}
+			}
+		}
+
 	}
 
 	// 受到伤害，在LivingHurtEvent之后，这里根据amount计算数据
@@ -697,6 +710,8 @@ public class EventServer {
 		}
 	}
 
+	public static boolean allowInDungeonTeleport = false;
+
 	@SubscribeEvent
 	public static void onEnderTeleport(EnderTeleportEvent event) {
 		Entity entity = event.getEntity();
@@ -708,28 +723,32 @@ public class EventServer {
 			return;
 		}
 
-		if (event.getEntityLiving() instanceof EntityPlayerMP) pass: {
+		if (event.getEntityLiving() instanceof EntityPlayerMP) toNext: {
 			EntityPlayer player = (EntityPlayer) event.getEntityLiving();
 			DungeonWorld dw = DungeonWorld.getDungeonWorld(player.world);
+			Vec3d targetVec = new Vec3d(event.getTargetX() + 0.5, event.getTargetY() + 0.5, event.getTargetZ() + 0.5);
 			DungeonAreaRoom room = dw.getAreaRoom(player.getPosition());
-			if (room != null && room.isBuild()) {
-//				Grimoire grimoire = player.getHeldItem(EnumHand.MAIN_HAND).getCapability(Grimoire.GRIMOIRE_CAPABILITY,
-//						null);
-//				if (grimoire != null) {
-//					EntityGrimoire entityGrimoire = grimoire.getGrimoireEntity(player.world);
-//					if (entityGrimoire != null) {
-//						if (entityGrimoire.getMantra() == ESObjects.MANTRAS.ENDER_TELEPORT) {
-//							if (!player.isSneaking()) {
-//								break pass;
-//							}
-//						}
-//					}
-//				}
+			boolean inRoom = room != null && room.isBuild();
+			if (inRoom) {
+				if (allowInDungeonTeleport) {
+					AxisAlignedBB aabb = room.getBox();
+					if (aabb.contains(targetVec)) break toNext;
+				}
 				player.sendMessage(new TextComponentTranslation("info.dungeon.cannot.teleport")
 						.setStyle(new Style().setColor(TextFormatting.DARK_PURPLE)));
 				event.setResult(Result.DENY);
 				event.setCanceled(true);
 				return;
+			} else {
+				room = dw.getAreaRoom(new BlockPos(targetVec));
+				inRoom = room != null && room.isBuild();
+				if (inRoom) {
+					player.sendMessage(new TextComponentTranslation("info.dungeon.cannot.teleport")
+							.setStyle(new Style().setColor(TextFormatting.DARK_PURPLE)));
+					event.setResult(Result.DENY);
+					event.setCanceled(true);
+					return;
+				}
 			}
 		}
 
@@ -763,7 +782,78 @@ public class EventServer {
 	@SubscribeEvent
 	public static void onPlayerHarvestCheck(
 			net.minecraftforge.event.entity.player.PlayerEvent.HarvestCheck harvestCheck) {
-		
+
+	}
+
+	// 玩家死亡等，复制玩家数据
+	@SubscribeEvent
+	public static void onClone(net.minecraftforge.event.entity.player.PlayerEvent.Clone event) {
+		EntityPlayer player = event.getEntityPlayer();
+		EntityPlayer origin = event.getOriginal();
+		NBTTagCompound oData = origin.getEntityData();
+		if (oData.hasKey("ESData", 10)) player.getEntityData().setTag("ESData", oData.getTag("ESData"));
+
+		IAdventurer adventurer = player.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+		if (adventurer != null) {
+			IAdventurer oAdventurer = origin.getCapability(Adventurer.ADVENTURER_CAPABILITY, null);
+			if (oAdventurer != null) {
+				IStorage<IAdventurer> storage = Adventurer.ADVENTURER_CAPABILITY.getStorage();
+				NBTBase base = storage.writeNBT(Adventurer.ADVENTURER_CAPABILITY, oAdventurer, null);
+				storage.readNBT(Adventurer.ADVENTURER_CAPABILITY, adventurer, null, base);
+			}
+		}
+
+		if (!event.isWasDeath()) return;
+
+		PotionEffect effect = origin.getActivePotionEffect(ESObjects.POTIONS.DUNGEON_NIGHTMARE);
+		if (effect != null) {
+			PotionEffect newEffect = new PotionEffect(effect.getPotion(), effect.getDuration(), effect.getAmplifier());
+			player.addPotionEffect(newEffect);
+		}
+	}
+
+	@SubscribeEvent
+	public static void onPlayerRespawn(PlayerRespawnEvent event) {
+		EntityPlayer player = event.player;
+		World world = player.getEntityWorld();
+		if (world.isRemote) return;
+
+		boolean inDungeon = PotionDungeonNightmare.inDungeon(player);
+
+		PotionEffect effect = player.getActivePotionEffect(ESObjects.POTIONS.DUNGEON_NIGHTMARE);
+		if (inDungeon) {
+			final int defaultDuration = 20 * 60 * 3;
+			if (effect != null) {
+				int amplifier = Math.min(effect.getAmplifier() + 1, 32);
+				int duration = Math.min(0x7fff, effect.getDuration() + defaultDuration);
+				effect = new PotionEffect(ESObjects.POTIONS.DUNGEON_NIGHTMARE, duration, amplifier);
+			} else effect = new PotionEffect(ESObjects.POTIONS.DUNGEON_NIGHTMARE, defaultDuration, 0);
+		}
+
+		if (effect != null) {
+			player.removeActivePotionEffect(effect.getPotion());
+			final PotionEffect newEffect = effect;
+			addWorldTask(player.getEntityWorld(), (w) -> {
+				player.addPotionEffect(newEffect);
+			});
+		}
+	}
+
+	@SubscribeEvent
+	public static void onPlayerSleepInBedEvent(PlayerSleepInBedEvent event) {
+		EntityPlayer player = event.getEntityPlayer();
+		World world = player.getEntityWorld();
+		if (world.isRemote) return;
+
+		boolean inDungeon = PotionDungeonNightmare.inDungeon(player);
+		if (inDungeon) {
+			BlockPos currPos = player.getBedLocation();
+			BlockPos bedPos = event.getPos();
+			if (bedPos == null || !bedPos.equals(currPos)) {
+				((EntityPlayerMP) (player)).sendMessage(new TextComponentTranslation("info.dungeon.setSpawn")
+						.setStyle(new Style().setColor(TextFormatting.YELLOW)));
+			}
+		}
 	}
 
 }

@@ -17,10 +17,24 @@ import net.minecraft.world.storage.WorldSavedData;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.dungeon.DungeonArea.AreaExcerpt;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 public class DungeonWorld extends WorldSavedData {
+
+	@Config(kind = "dungeon")
+	public static boolean ENABLE_DUNGEON = true;
+
+	@Config(kind = "dungeon")
+	@Config.NumberRange(max = 1000, min = 0)
+	public static int DUNGEON_COMPENSATE_WHEN_DISABLE = 0;
+
+	@Config(kind = "dungeon")
+	public static double DUNGEON_BUILDING_BLOCK_SPEED_LIMIT = 2;
+
+	@Config(kind = "dungeon")
+	public static double DUNGEON_BUILDING_CLEAR_SPEED_LIMIT = -1;
 
 	/** 获取地牢对象 */
 	public static DungeonWorld getDungeonWorld(World world) {
@@ -126,6 +140,9 @@ public class DungeonWorld extends WorldSavedData {
 		excerpt.id = id;
 		try {
 			worldSave.generate(this, pos);
+		} catch (DungeonTooManyBuildException e) {
+			ESAPI.logger.warn("dungeon build fail!", e);
+			return worldSave.setFailMsg("info.dungeon.build.exception");
 		} catch (Exception e) {
 			ESAPI.logger.warn("dungeon build fail!", e);
 			return worldSave.setFailMsg("info.dungeon.build.exception");

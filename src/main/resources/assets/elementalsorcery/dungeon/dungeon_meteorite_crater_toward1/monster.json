@@ -1,0 +1,15 @@
+{
+    "weight": 5,
+    "type": "dungeon:area",
+    "onceTryTimes": {
+        "min": 3,
+        "max": 4
+    },
+    "func": {
+        "type": "ref",
+        "/assets": "elementalsorcery:dungeon/common_monster_3",
+        "params": {
+            "$loots": "elementalsorcery:dungeon/dungeon_loot_sundry_3"
+        }
+    }
+}

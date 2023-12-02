@@ -108,8 +108,10 @@ item.windmillBladeFrame.name=风轮框架
 item.windmillBladeFrame.adv.name=高级风轮框架
 item.elfFruitBomb.name=精灵果炸弹
 item.glassCup.name=玻璃杯
-item.blessingJade.name=祝福之玉
-item.calamityGem.name=灾害宝石
+item.blessingJade.0.name=祝福之玉
+item.calamityGem.0.name=灾害宝石
+item.blessingJade.1.name=正向逆变石
+item.calamityGem.1.name=负向逆变石
 item.arrogantWool.name=傲慢的羊毛
 item.blessingJadePiece.name=祝福之玉碎片
 item.elementCrack.name=元素裂縫
@@ -262,6 +264,7 @@ tile.dungeonFilterGlass.name=分离玻璃
 tile.stoneDecoration.alternator.name=逆变发电核心
 tile.stoneDecoration.computer.name=地牢终端
 tile.stoneDecoration.starCPU.name=星空计算核心
+tile.stoneDecoration.dungeonReactor.name=异常的反应堆
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者
@@ -291,6 +294,7 @@ es.effect.naturalMedal=自然勋章
 es.effect.goldShield=黄金盾
 es.effect.deathWatch=死亡时针
 es.effect.meteoriteDisease=陨石病
+es.effect.dungeonNightmare=地牢的噩梦
 
 es.potion.effect.silent=禁言药水
 es.splash_potion.effect.silent=喷溅型禁言药水
@@ -597,6 +601,8 @@ info.dungeon.strengthenAgent=看上去不是什么好东西，最好不要使用
 info.dungeon.floatCarpet=看上是某种交通工具，通过魔力驱动，不适合在狭窄的空间内使用
 info.dungeon.liftingStone=和末地石似乎有所关联，是一个可以进行升降的道具
 info.dungeon.filterGlass=似乎除了生物之外的东西全可以穿过去
+info.dungeon.serverDisable=这个服务器禁用了地牢玩法
+info.dungeon.setSpawn=在这里休息可不是一个好主意
 
 info.mc.archi.Temple.name=沙漠神殿
 

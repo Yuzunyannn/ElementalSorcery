@@ -37,7 +37,7 @@
 			"value": [
 				{
 					"item": "elementalsorcery:soul_fragment",
-					"count": "{random#128~170}"
+					"count": "{random#32~64}"
 				},
 				{
 					"item": "elementalsorcery:keepsake",

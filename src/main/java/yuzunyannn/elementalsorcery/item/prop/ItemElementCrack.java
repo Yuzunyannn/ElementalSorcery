@@ -186,7 +186,7 @@ public class ItemElementCrack extends Item {
 		}
 	}
 
-	final static int[] color = new int[] { 0xFFBFBF, 0xBFFFBF, 0xBFBFFF };
+	public final static int[] color = new int[] { 0xFFBFBF, 0xBFFFBF, 0xBFBFFF };
 
 	@SideOnly(Side.CLIENT)
 	public void playTickEffect(EntityItem entityItem, Vec3d vec, int tick) {

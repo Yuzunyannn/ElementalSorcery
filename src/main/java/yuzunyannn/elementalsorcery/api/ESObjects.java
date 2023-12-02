@@ -327,6 +327,7 @@ public class ESObjects {
 		public Potion GOLD_SHIELD;
 		public Potion DEATH_WATCH;
 		public Potion METEORITE_DISEASE;
+		public Potion DUNGEON_NIGHTMARE;
 	}
 
 	static public class PotionTypes {

@@ -1,0 +1,30 @@
+{
+    "type": "dungeon:area",
+    "onceTryTimes": {
+        "min": 2,
+        "max": 3
+    },
+    "func": {
+        "type": "haystack",
+        "pressure": true,
+        "times": 5,
+        "trigger": {
+            "onSweep": {
+                "type": "group",
+                "mode": "random",
+                "funcs": [
+                    {
+                        "weight": 1,
+                        "type": "loot",
+                        "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_3"
+                    },
+                    {
+                        "weight": 3,
+                        "type": "ref",
+                        "/assets": "elementalsorcery:dungeon/common_trap_3"
+                    }
+                ]
+            }
+        }
+    }
+}

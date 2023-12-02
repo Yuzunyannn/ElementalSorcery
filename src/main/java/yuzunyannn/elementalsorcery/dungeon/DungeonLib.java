@@ -35,6 +35,9 @@ public class DungeonLib {
 	public static DungeonRoomType DUNGEON_TOWARD4;
 	public static DungeonRoomType DUNGEON_GUARD_FACTORY_TOWARD4;
 	public static DungeonRoomType DUNGEON_CALAMITY_EDIFICE_TOWARD4;
+	public static DungeonRoomType DUNGEON_INVERT_LAB_TOWARD2 ;
+	public static DungeonRoomType DUNGEON_METEORITE_CRATER_TOWARD1;
+	public static DungeonRoomType DUNGEON_POSTERN_TOWARD1;
 
 	public static void register(DungeonRoomType room) {
 		DungeonRoomType.REGISTRY.register(room);
@@ -79,6 +82,9 @@ public class DungeonLib {
 		DUNGEON_TOWARD4 = register("dungeon_toward4");
 		DUNGEON_GUARD_FACTORY_TOWARD4 = register("dungeon_guard_factory_toward4");
 		DUNGEON_CALAMITY_EDIFICE_TOWARD4 = register("dungeon_calamity_edifice_toward4");
+		DUNGEON_INVERT_LAB_TOWARD2 = register("dungeon_invert_lab_toward2");
+		DUNGEON_METEORITE_CRATER_TOWARD1 = register("dungeon_meteorite_crater_toward1");
+		DUNGEON_POSTERN_TOWARD1 = register("dungeon_postern_toward1");
 	}
 
 	public static void registerAllFunc() {

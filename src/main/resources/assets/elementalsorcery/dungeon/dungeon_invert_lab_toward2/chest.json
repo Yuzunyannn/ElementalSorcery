@@ -1,0 +1,5 @@
+{
+    "type": "chest",
+    "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_3",
+    "acceptHideItem": true
+}

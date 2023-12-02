@@ -952,6 +952,16 @@
             "zh_CN": "似乎除了生物之外的东西全可以穿过去",
             "en_US": "It seems that everything except living things can pass through it",
             "ja_JP": "生物以外のものはすべて通り抜けられるようだ"
+        },
+        "info.dungeon.serverDisable": {
+            "zh_CN": "这个服务器禁用了地牢玩法",
+            "en_US": "The dungeon gameplay has been disabled in this Server",
+            "ja_JP": "このサーバではダンジョンが無効になっています"
+        },
+        "info.dungeon.setSpawn": {
+            "zh_CN": "在这里休息可不是一个好主意",
+            "en_US": "Taking a break here is not a good idea",
+            "ja_JP": "ここで休むのはいい考えではない"
         }
     },
     "info.mc": {

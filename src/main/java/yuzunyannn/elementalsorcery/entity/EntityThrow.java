@@ -135,6 +135,10 @@ public class EntityThrow extends EntityThrowable implements IEntityAdditionalSpa
 		flag = compound.getInteger("flag");
 	}
 
+	public static void onImpact(EntityThrow entity, RayTraceResult ray) {
+		onImpact(entity.world, entity.thrower, ray, entity.stack, entity.flag);
+	}
+
 	public static void onImpact(World world, @Nullable EntityLivingBase thrower, RayTraceResult ray, ItemStack stack,
 			int flag) {
 		if (world.isRemote) return;

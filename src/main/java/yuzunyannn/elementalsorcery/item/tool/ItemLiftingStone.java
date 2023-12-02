@@ -18,6 +18,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
 import yuzunyannn.elementalsorcery.tile.md.TileMDRubbleRepair;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
@@ -63,8 +64,11 @@ public class ItemLiftingStone extends Item implements TileMDRubbleRepair.IExtend
 			return new ActionResult<ItemStack>(EnumActionResult.FAIL, stack);
 
 		stack.setItemDamage(stack.getItemDamage() + 1);
+
+		EventServer.allowInDungeonTeleport = true;
 		MantraEnderTeleport.doEnderTeleport(worldIn, playerIn, to);
 		MantraEnderTeleport.playEnderTeleportEffect(worldIn, playerIn, to);
+		EventServer.allowInDungeonTeleport = false;
 
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}

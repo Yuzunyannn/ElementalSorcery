@@ -139,6 +139,11 @@
             "zh_CN": "陨石病",
             "en_US": "Meteorite Disease",
             "ja_JP": "隕石病"
+        },
+        "es.effect.dungeonNightmare": {
+            "zh_CN": "地牢的噩梦",
+            "en_US": "Dungeon Nightmare",
+            "ja_JP": "ダンジョンの悪夢"
         }
     },
     "es.effect.type": {

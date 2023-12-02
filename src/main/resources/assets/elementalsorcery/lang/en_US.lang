@@ -108,8 +108,10 @@ item.windmillBladeFrame.name=Frame of Wind Wheel
 item.windmillBladeFrame.adv.name=Advanced Frame of Wind Wheel
 item.elfFruitBomb.name=Elf Fruit Bomb
 item.glassCup.name=Tumbler
-item.blessingJade.name=Blessing Jade
-item.calamityGem.name=Calamity Gem
+item.blessingJade.0.name=Blessing Jade
+item.calamityGem.0.name=Calamity Gem
+item.blessingJade.1.name=Positive Invert Gem
+item.calamityGem.1.name=Negative Invert Gem
 item.arrogantWool.name=Arrogant Wool
 item.blessingJadePiece.name=Blessing Jade Fragment
 item.elementCrack.name=Element Crack
@@ -262,6 +264,7 @@ tile.dungeonFilterGlass.name=Filter Glass
 tile.stoneDecoration.alternator.name=Invert Alternator
 tile.stoneDecoration.computer.name=Dungeon Terminal
 tile.stoneDecoration.starCPU.name=Starry CPU
+tile.stoneDecoration.dungeonReactor.name=Strange Reactor
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker
@@ -291,6 +294,7 @@ es.effect.naturalMedal=Natural Medal
 es.effect.goldShield=Gold Shield
 es.effect.deathWatch=Death Watch
 es.effect.meteoriteDisease=Meteorite Disease
+es.effect.dungeonNightmare=Dungeon Nightmare
 
 es.potion.effect.silent=Potion of Silence
 es.splash_potion.effect.silent=Splash Potion of Silence 
@@ -597,6 +601,8 @@ info.dungeon.strengthenAgent=It doesn't look like a good thing, it's best not to
 info.dungeon.floatCarpet=It seems to be a certain type of transportation, driven by magic, and not suitable for use in narrow spaces
 info.dungeon.liftingStone=It seems to be related to the End Stone and is a prop that can be lifted and lowered
 info.dungeon.filterGlass=It seems that everything except living things can pass through it
+info.dungeon.serverDisable=The dungeon gameplay has been disabled in this Server
+info.dungeon.setSpawn=Taking a break here is not a good idea
 
 info.mc.archi.Temple.name=Desert Pyramid
 

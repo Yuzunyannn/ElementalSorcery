@@ -27,6 +27,7 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 		private boolean isCore;
 		int accumulate = 0;
 		int buildCount = 0;
+		double stepGrowDivisor = 1.5;
 
 		public BuildRoomNode(DungeonRoomType type, int step, int maxCount) {
 			this.roomType = type;
@@ -44,7 +45,7 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 			int step;
 			if (this.randomStep > this.step) step = RandomHelper.randomRange(this.step, this.randomStep, rand);
 			else step = this.step;
-			return (int) (step * (Math.sqrt(buildCount) / 4 + 1));
+			return (int) (step * (Math.sqrt(buildCount) / this.stepGrowDivisor + 1));
 		}
 
 		public int getBuildCount() {
@@ -94,7 +95,7 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 		addBuildCoreRoom(DungeonLib.DUNGEON_MANTRA_LAB_TOWARD2, 5);
 		addBuildRoom(DungeonLib.DUNGEON_ROOM_TOWARD2, 4, 6, 10);
 		addBuildRoom(DungeonLib.DUNGEON_SMALL_GARDEN_TOWARD3, 6, 12);
-		addBuildRoom(DungeonLib.DUNGEON_CHECKPOINT, 6, 12, -1);
+		addBuildRoom(DungeonLib.DUNGEON_CHECKPOINT, 6, 12, -1).stepGrowDivisor = Integer.MAX_VALUE;
 
 		addBuildCoreRoom(DungeonLib.DUNGEON_GREENHOUSE_TOWARD4, 6); // t 16
 		addBuildCoreRoom(DungeonLib.DUNGEON_STRATEGY_HALL_TOWARD3, 7);
@@ -116,16 +117,24 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 
 		addBuildCoreRoom(DungeonLib.DUNGEON_SATELLITE_STATION_TOWARD3, 25);
 		addBuildCoreRoom(DungeonLib.DUNGEON_GUARD_FACTORY_TOWARD4, 26);
-		
+		addBuildCoreRoom(DungeonLib.DUNGEON_INVERT_LAB_TOWARD2, 26);
+		addBuildRoom(DungeonLib.DUNGEON_METEORITE_CRATER_TOWARD1, 8, 3);
+
 		addBuildCoreRoom(DungeonLib.DUNGEON_CALAMITY_EDIFICE_TOWARD4, 50);
+		addBuildCoreRoom(DungeonLib.DUNGEON_POSTERN_TOWARD1, 52);
+
+	}
+
+	protected BuildRoomNode addBuildRoom(BuildRoomNode node) {
+		JavaHelper.orderAdd(buildList, node);
+		buildMap.put(node.getRoomType(), node);
+		return node;
 	}
 
 	protected BuildRoomNode addBuildRoom(DungeonRoomType type, int step, int maxCount) {
 		if (buildMap.containsKey(type)) return buildMap.get(type);
 		BuildRoomNode node = new BuildRoomNode(type, step, maxCount);
-		JavaHelper.orderAdd(buildList, node);
-		buildMap.put(type, node);
-		return node;
+		return this.addBuildRoom(node);
 	}
 
 	protected BuildRoomNode addBuildRoom(DungeonRoomType type, int step, int stepMax, int maxCount) {
@@ -187,7 +196,8 @@ public class DungeonRoomSelector extends IForgeRegistryEntry.Impl<DungeonRoomSel
 
 	public Collection<DungeonRoomType> getAlternateRooms(DungeonAreaRoom currRoom, int doorIndex) {
 		if (!hasCore()) return null;
-		if (this.buildCount > 256) throw new RuntimeException("to many build! please check is the algorithm correct!");
+		if (this.buildCount > 256)
+			throw new DungeonTooManyBuildException("to many build! please check is the algorithm correct!");
 
 		List<DungeonRoomType> results = new ArrayList<>(buildList.size());
 		List<DungeonRoomType> betterResults = new ArrayList<>(buildList.size());

@@ -1,0 +1,34 @@
+{
+    "type": "group",
+    "mode": "random",
+    "funcs": [
+        {
+            "type": "entity",
+            "entityId": "elementalsorcery:relicguard",
+            "entityNBT": {
+                "type": 0,
+                "hCore": true
+            },
+            "trigger": {
+                "onLoot": {
+                    "type": "loot",
+                    "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_3"
+                }
+            }
+        },
+        {
+            "type": "entity",
+            "entityId": "elementalsorcery:relicguard",
+            "entityNBT": {
+                "type": 1,
+                "hCore": true
+            },
+            "trigger": {
+                "onLoot": {
+                    "type": "loot",
+                    "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_3"
+                }
+            }
+        }
+    ]
+}

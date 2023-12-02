@@ -8,6 +8,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,11 +29,15 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
+import yuzunyannn.elementalsorcery.dungeon.DungeonArea.AreaExcerpt;
 import yuzunyannn.elementalsorcery.dungeon.DungeonAreaRoom;
 import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
+import yuzunyannn.elementalsorcery.util.helper.RandomHelper.WeightRandom;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemDungeonSeed extends Item {
 
@@ -65,6 +70,27 @@ public class ItemDungeonSeed extends Item {
 		items.add(new ItemStack(this, 1, SEED_MAX_LEVEL));
 	}
 
+	public void compensate(World world, EntityPlayer player, BlockPos pos, int factor) {
+		int tryTime = 4 + Math.min(factor / 1000 * 14, 14);
+		WeightRandom<ItemStack> wr = new WeightRandom<ItemStack>();
+		double weightRate = Math.min(factor / 1000, 1);
+		wr.add(new ItemStack(Items.WHEAT, 10), 300 - weightRate * 280); // 300~20
+		wr.add(new ItemStack(ESObjects.ITEMS.MAGIC_STONE, 5), 200 - weightRate * 160); // 200~40
+		wr.add(new ItemStack(ESObjects.BLOCKS.ESTONE, 10), 100 - weightRate * 70); // 100~30
+		wr.add(new ItemStack(ESObjects.ITEMS.STRENGTHEN_AGENT), 50);
+		wr.add(new ItemStack(ESObjects.ITEMS.SIMPLE_MATERIAL_CONTAINER), 40);
+		wr.add(new ItemStack(ESObjects.BLOCKS.DUNGEON_ACTINIC_GLASS, 3), 40);
+		wr.add(new ItemStack(ESObjects.BLOCKS.DUNGEON_FILTER_GLASS, 3), 40);
+		wr.add(new ItemStack(ESObjects.ITEMS.FLOAT_CARPET), 30);
+		wr.add(new ItemStack(ESObjects.ITEMS.LIFTING_STONE), 30);
+		wr.add(new ItemStack(ESObjects.ITEMS.METEORITE_INGOT, 2), 20);
+
+		for (int i = 0; i < tryTime; i++) {
+			ItemStack stack = wr.get(player.getRNG());
+			ItemHelper.dropItem(world, pos.up(), stack.copy());
+		}
+	}
+
 	@Override
 	public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing _facing,
 			float hitX, float hitY, float hitZ) {
@@ -73,6 +99,16 @@ public class ItemDungeonSeed extends Item {
 		if (meta == SEED_MAX_LEVEL) {
 
 			if (world.isRemote) return EnumActionResult.SUCCESS;
+
+			if (!DungeonWorld.ENABLE_DUNGEON) {
+				player.sendMessage(new TextComponentTranslation("info.dungeon.serverDisable")
+						.setStyle(new Style().setColor(TextFormatting.RED)));
+				if (DungeonWorld.DUNGEON_COMPENSATE_WHEN_DISABLE > 0) {
+					stack.shrink(1);
+					compensate(world, player, pos, DungeonWorld.DUNGEON_COMPENSATE_WHEN_DISABLE);
+				}
+				return EnumActionResult.SUCCESS;
+			}
 
 //			boolean hasKey = false;
 //			for (int i = 0; i < player.inventory.getSizeInventory(); i++) {
@@ -127,6 +163,11 @@ public class ItemDungeonSeed extends Item {
 				player.sendMessage(new TextComponentTranslation(area.getFailMsg()));
 				return EnumActionResult.FAIL;
 			}
+
+			AreaExcerpt excerpt = area.getExcerpt();
+			BlockPos minPos = excerpt.getMinChunckPos().getBlock(0, 0, 0);
+			BlockPos maxPos = excerpt.getMaxChunckPos().getBlock(15, 0, 15);
+			if (ESAPI.isDevelop) System.out.println(String.format("建造成功%s->%s", minPos, maxPos));
 
 			area.startBuildRoom(world, 0, player);
 			DungeonAreaRoom room = area.getRoomById(0);

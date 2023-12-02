@@ -79,7 +79,6 @@ public class ESWorldEventListener implements IWorldEventListener {
 
 	@Override
 	public void playEvent(EntityPlayer player, int type, BlockPos blockPosIn, int data) {
-
 	}
 
 	@Override

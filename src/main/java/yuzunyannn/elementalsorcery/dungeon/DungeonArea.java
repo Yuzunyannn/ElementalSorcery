@@ -53,6 +53,14 @@ public class DungeonArea extends WorldSavedData {
 			return new ChunkPos((maxAX + minAX) / 2 * CHUNK_SPLIT, (maxAZ + minAZ) / 2 * CHUNK_SPLIT);
 		}
 
+		public ChunkPos getMinChunckPos() {
+			return new ChunkPos(minAX * CHUNK_SPLIT, minAZ * CHUNK_SPLIT);
+		}
+
+		public ChunkPos getMaxChunckPos() {
+			return new ChunkPos(maxAX * CHUNK_SPLIT, maxAZ * CHUNK_SPLIT);
+		}
+
 		public int getId() {
 			return id;
 		}

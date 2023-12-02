@@ -108,8 +108,10 @@ item.windmillBladeFrame.name=扇のフレーム
 item.windmillBladeFrame.adv.name=高級扇のフレーム
 item.elfFruitBomb.name=精霊実の爆弾
 item.glassCup.name=ガラスのコップ
-item.blessingJade.name=祝福の玉
-item.calamityGem.name=災害の宝石
+item.blessingJade.0.name=祝福の玉
+item.calamityGem.0.name=災害の宝石
+item.blessingJade.1.name=プラスの逆変の宝石
+item.calamityGem.1.name=マイナスの逆変の宝石
 item.arrogantWool.name=傲慢な羊毛
 item.blessingJadePiece.name=祝福の玉のかけら
 item.elementCrack.name=元素ひび割れ
@@ -262,6 +264,7 @@ tile.dungeonFilterGlass.name=分離ガラス
 tile.stoneDecoration.alternator.name=逆変発電んき
 tile.stoneDecoration.computer.name=ダンジョン端末
 tile.stoneDecoration.starCPU.name=星空中央処理装置
+tile.stoneDecoration.dungeonReactor.name=異常な炉
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者
@@ -291,6 +294,7 @@ es.effect.naturalMedal=自然勲章
 es.effect.goldShield=黄金盾
 es.effect.deathWatch=デスウォッチ
 es.effect.meteoriteDisease=隕石病
+es.effect.dungeonNightmare=ダンジョンの悪夢
 
 es.potion.effect.silent=沈黙のポーション
 es.splash_potion.effect.silent=沈黙のスプラッシュポーション
@@ -597,6 +601,8 @@ info.dungeon.strengthenAgent=見た目はあまりいいものではないので
 info.dungeon.floatCarpet=魔力駆動により狭い空間での使用には適さない乗り物に見える
 info.dungeon.liftingStone=エンドストーンと関連があるようで、昇降できる道具です
 info.dungeon.filterGlass=生物以外のものはすべて通り抜けられるようだ
+info.dungeon.serverDisable=このサーバではダンジョンが無効になっています
+info.dungeon.setSpawn=ここで休むのはいい考えではない
 
 info.mc.archi.Temple.name=砂漠のピラミッド
 

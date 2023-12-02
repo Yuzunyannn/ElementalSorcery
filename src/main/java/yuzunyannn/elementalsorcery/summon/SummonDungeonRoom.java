@@ -9,17 +9,15 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
 import yuzunyannn.elementalsorcery.dungeon.DungeonAreaRoom;
 import yuzunyannn.elementalsorcery.dungeon.DungeonRoomType;
 import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
+import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class SummonDungeonRoom extends SummonCommon {
-
-	public static final boolean IS_INSTANT_COMPLETE = ESAPI.isDevelop;
 
 	protected int areaId;
 	protected int roomId;
@@ -77,6 +75,14 @@ public class SummonDungeonRoom extends SummonCommon {
 		DungeonAreaRoom room = getRoom();
 		if (room == null) return false;
 
+		EventServer.bigComputeWatch.start();
+		boolean ret = doUpdate();
+		EventServer.bigComputeWatch.stop();
+
+		return ret;
+	}
+
+	protected boolean doUpdate() {
 		if (this.iter == null) {
 			DungeonRoomType type = room.getType();
 			this.iter = type.getStructure().getBuildingIterator();
@@ -113,6 +119,12 @@ public class SummonDungeonRoom extends SummonCommon {
 
 	public void updateBuildBase() {
 		while (_updateBuildBase());
+	}
+
+	protected boolean fin(double ms) {
+		if (ms < 0) return true;
+		if (EventServer.bigComputeWatch.msLessThan(ms)) return true;
+		return false;
 	}
 
 	public void updateBuildCore() {
@@ -168,7 +180,8 @@ public class SummonDungeonRoom extends SummonCommon {
 
 		BlockPos pos = new BlockPos(minX + x, minY + y, minZ + z);
 
-		if (world.isAirBlock(pos)) return IS_INSTANT_COMPLETE ? true : Math.random() > 0.02;
+//		if (world.isAirBlock(pos)) return fin(DungeonWorld.DUNGEON_BUILDING_CLEAR_SPEED_LIMIT);
+		if (world.isAirBlock(pos)) return true;
 
 		if (!BlockHelper.isBedrock(world, pos)) {
 			if (isCreativeBuild) world.setBlockToAir(pos);
@@ -178,7 +191,7 @@ public class SummonDungeonRoom extends SummonCommon {
 			}
 		}
 
-		return IS_INSTANT_COMPLETE ? true : Math.random() > 0.2;
+		return fin(DungeonWorld.DUNGEON_BUILDING_CLEAR_SPEED_LIMIT);
 	}
 
 	public boolean _updateBuildBase() {
@@ -200,7 +213,7 @@ public class SummonDungeonRoom extends SummonCommon {
 
 		if (!type.buildBaseBlock(world, room, at, state, iter.getTileNBTSave())) iter.buildState(world, at);
 
-		return IS_INSTANT_COMPLETE ? true : Math.random() > 0.2;
+		return fin(DungeonWorld.DUNGEON_BUILDING_BLOCK_SPEED_LIMIT);
 	}
 
 	@Override

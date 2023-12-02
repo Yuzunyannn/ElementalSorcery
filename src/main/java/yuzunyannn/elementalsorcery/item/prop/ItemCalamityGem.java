@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
@@ -11,6 +12,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -29,31 +31,37 @@ public class ItemCalamityGem extends Item implements IPlatformTickable {
 
 	public ItemCalamityGem() {
 		this.setTranslationKey("calamityGem");
+		this.setHasSubtypes(true);
+	}
+
+	@Override
+	public String getTranslationKey(ItemStack stack) {
+		return super.getTranslationKey() + "." + stack.getMetadata();
+	}
+
+	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		if (!this.isInCreativeTab(tab)) return;
+		items.add(new ItemStack(this, 1, 0));
+		items.add(new ItemStack(this, 1, 1));
 	}
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		if (worldIn.isRemote) return;
 		if (entityIn.ticksExisted % 100 == 0) {
-
+			int meta = stack.getMetadata();
+			if (meta != 0) return;
 			EnumHand hand = ItemVortex.inEntityHand(entityIn, stack, itemSlot, isSelected);
 			if (hand == null) return;
-
 			calamityEntity((EntityLivingBase) entityIn, 100);
 		}
 	}
 
-	public void calamityEntity(EntityLivingBase living, int tick) {
-		PotionEffect effect = living.getActivePotionEffect(ESObjects.POTIONS.CALAMITY);
-		int amplifier = Math.min(effect == null ? 0 : (effect.getAmplifier() + 1), 3);
-		int lTime = (int) ((tick + 20 + (effect == null ? 0 : effect.getDuration())) * (1 + amplifier * 0.1f));
-		int time = (int) Math.min(Short.MAX_VALUE, lTime);
-		living.addPotionEffect(new PotionEffect(ESObjects.POTIONS.CALAMITY, time, amplifier));
-	}
-
 	@Override
-	public boolean platformUpdate(World world, ItemStack stack, IWorldObject caster, NBTTagCompound runData,
-			int tick) {
+	public boolean platformUpdate(World world, ItemStack stack, IWorldObject caster, NBTTagCompound runData, int tick) {
+		int meta = stack.getMetadata();
+		if (meta != 0) return false;
 		if (world.isRemote) {
 			randEffect(world, caster.getPosition(), 8, new int[] { 0x777777, 0x933700, 0x006685, 0x001a9c, 0x7f8c00 });
 			return false;
@@ -65,6 +73,14 @@ public class ItemCalamityGem extends Item implements IPlatformTickable {
 			return null;
 		});
 		return false;
+	}
+
+	public void calamityEntity(EntityLivingBase living, int tick) {
+		PotionEffect effect = living.getActivePotionEffect(ESObjects.POTIONS.CALAMITY);
+		int amplifier = Math.min(effect == null ? 0 : (effect.getAmplifier() + 1), 3);
+		int lTime = (int) ((tick + 20 + (effect == null ? 0 : effect.getDuration())) * (1 + amplifier * 0.1f));
+		int time = (int) Math.min(Short.MAX_VALUE, lTime);
+		living.addPotionEffect(new PotionEffect(ESObjects.POTIONS.CALAMITY, time, amplifier));
 	}
 
 	public static void tryAddPotionEffect(World world, BlockPos center, float range,

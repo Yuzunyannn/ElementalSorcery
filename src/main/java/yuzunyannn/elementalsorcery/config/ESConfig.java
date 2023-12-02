@@ -9,6 +9,7 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
+import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
@@ -62,6 +63,7 @@ public class ESConfig {
 		load(ElementInventory.class, getter);
 		load(Researcher.class, getter);
 		load(ElfProfession.class, getter);
+		load(DungeonWorld.class, getter);
 		loadList(ElfMerchantType.typeList(), getter);
 		loadList(ESInit.ES_TILE_ENTITY, getter);
 		loadRegs(ESObjects.ITEMS, getter);

@@ -322,6 +322,7 @@ import yuzunyannn.elementalsorcery.potion.PotionCalamity;
 import yuzunyannn.elementalsorcery.potion.PotionCombatSkill;
 import yuzunyannn.elementalsorcery.potion.PotionDeathWatch;
 import yuzunyannn.elementalsorcery.potion.PotionDefenseSkill;
+import yuzunyannn.elementalsorcery.potion.PotionDungeonNightmare;
 import yuzunyannn.elementalsorcery.potion.PotionElementCrackAttack;
 import yuzunyannn.elementalsorcery.potion.PotionEndercorps;
 import yuzunyannn.elementalsorcery.potion.PotionEnderization;
@@ -828,6 +829,7 @@ public class ESInit {
 		ESObjects.POTIONS.GOLD_SHIELD = new PotionGoldShield();
 		ESObjects.POTIONS.DEATH_WATCH = new PotionDeathWatch();
 		ESObjects.POTIONS.METEORITE_DISEASE = new PotionMeteoriteDisease();
+		ESObjects.POTIONS.DUNGEON_NIGHTMARE = new PotionDungeonNightmare();
 
 		ESObjects.POTION_TYPES.SILENT = PotionTypeES.create("silent",
 				new PotionEffect(ESObjects.POTIONS.SILENT, 20 * 16));
@@ -1205,8 +1207,10 @@ public class ESInit {
 		registerRender(ITEMS.WINDMILL_BLADE_CRYSTAL);
 		registerRender(ITEMS.ELF_FRUIT_BOMB);
 		registerRender(ITEMS.GLASS_CUP, new RenderItemGlassCup());
-		registerRender(ITEMS.CALAMITY_GEM);
-		registerRender(ITEMS.BLESSING_JADE);
+		registerRender(ITEMS.CALAMITY_GEM, 0, "calamity_gem");
+		registerRender(ITEMS.BLESSING_JADE, 0, "blessing_jade");
+		registerRender(ITEMS.CALAMITY_GEM, 1, "invert_negative");
+		registerRender(ITEMS.BLESSING_JADE, 1, "invert_positive");
 		registerRender(ITEMS.ARROGANT_WOOL);
 		registerRender(ITEMS.BLESSING_JADE_PIECE, 0, "blessing_jade_piece/p0");
 		registerRender(ITEMS.BLESSING_JADE_PIECE, 1, "blessing_jade_piece/p1");

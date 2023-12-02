@@ -10,8 +10,26 @@
 		" NN "
 	],
 	"key": {
-		"B": "elementalsorcery:calamity_gem",
-		"C": "elementalsorcery:blessing_jade",
+		"B": [
+			{
+				"id": "elementalsorcery:calamity_gem",
+				"meta": 0
+			},
+			{
+				"id": "elementalsorcery:calamity_gem",
+				"meta": 1
+			}
+		],
+		"C":  [
+			{
+				"id": "elementalsorcery:blessing_jade",
+				"meta": 0
+			},
+			{
+				"id": "elementalsorcery:blessing_jade",
+				"meta": 1
+			}
+		],
 		"S": "elementalsorcery:elf_star",
 		"E": "elementalsorcery:element_stone",
 		"N": "minecraft:TNT",

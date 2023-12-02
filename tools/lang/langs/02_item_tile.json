@@ -530,15 +530,25 @@
             "en_US": "Tumbler",
             "ja_JP": "ガラスのコップ"
         },
-        "item.blessingJade.name": {
+        "item.blessingJade.0.name": {
             "zh_CN": "祝福之玉",
             "en_US": "Blessing Jade",
             "ja_JP": "祝福の玉"
         },
-        "item.calamityGem.name": {
+        "item.calamityGem.0.name": {
             "zh_CN": "灾害宝石",
             "en_US": "Calamity Gem",
             "ja_JP": "災害の宝石"
+        },
+        "item.blessingJade.1.name": {
+            "zh_CN": "正向逆变石",
+            "en_US": "Positive Invert Gem",
+            "ja_JP": "プラスの逆変の宝石"
+        },
+        "item.calamityGem.1.name": {
+            "zh_CN": "负向逆变石",
+            "en_US": "Negative Invert Gem",
+            "ja_JP": "マイナスの逆変の宝石"
         },
         "item.arrogantWool.name": {
             "zh_CN": "傲慢的羊毛",
@@ -1296,6 +1306,11 @@
             "zh_CN": "星空计算核心",
             "en_US": "Starry CPU",
             "ja_JP": "星空中央処理装置"
+        },
+        "tile.stoneDecoration.dungeonReactor.name":{
+            "zh_CN": "异常的反应堆",
+            "en_US": "Strange Reactor",
+            "ja_JP": "異常な炉"
         }
     }
 }

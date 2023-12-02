@@ -1,10 +1,13 @@
 package yuzunyannn.elementalsorcery.block.env;
 
+import java.util.Random;
+
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockFaceShape;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.model.ModelBase;
+import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -16,11 +19,18 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.IBlockStronger;
 import yuzunyannn.elementalsorcery.block.container.BlockContainerNormal;
+import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.render.effect.Effect;
+import yuzunyannn.elementalsorcery.render.effect.crack.EffectFragmentCrackMove;
 import yuzunyannn.elementalsorcery.render.model.ModelComputerA;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileStoneDecoration;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
@@ -109,12 +119,68 @@ public class BlockStoneDecoration extends BlockContainerNormal implements IBlock
 //	public boolean rotateBlock(World world, BlockPos pos, EnumFacing axis) {
 //		return super.rotateBlock(world, pos, axis);
 //	}
-	
+
 	@Override
 	public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
+//		jdk.nashorn.api.scripting.NashornScriptEngineFactory info = new jdk.nashorn.api.scripting.NashornScriptEngineFactory();
 		return BlockFaceShape.UNDEFINED;
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
+		TileEntity tile = worldIn.getTileEntity(pos);
+		if (tile instanceof TileStoneDecoration) {
+			EnumDecType type = ((TileStoneDecoration) tile).getDecorationType();
+			if (type == EnumDecType.DUNGEON_REACTOR) {
+				if (rand.nextFloat() < 0.5) return;
+				Vec3d vec = new Vec3d(pos);
+				EffectFragmentCrackMove effect = new EffectFragmentCrackMove(worldIn, vec.add(0.5, 0.5, 0.5));
+				effect.isGlow = true;
+				effect.prevScale = effect.scale = effect.defaultScale = 0.025f;
+				effect.lifeTime = 20;
+				effect.setColor(0xcf80e8);
+				int tick = EventClient.tickRender;
+				float sin = MathHelper.sin(tick * 3.1415926f / 20);
+				float cos = MathHelper.cos(tick * 3.1415926f / 20);
+				Vec3d speed = new Vec3d(sin, Effect.rand.nextGaussian() * 0.125f, cos).scale(0.2);
+				effect.setVelocity(speed);
+				effect.setAccelerate(speed.scale(-0.01));
+				effect.xDecay = effect.zDecay = effect.yDecay = 0.8;
+				Effect.addEffect(effect);
+			}
+		}
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public boolean addDestroyEffects(World world, BlockPos pos, ParticleManager manager) {
+		TileEntity tile = world.getTileEntity(pos);
+		if (tile instanceof TileStoneDecoration) {
+			((TileStoneDecoration) tile).getDecorationType();
+			EnumDecType type = ((TileStoneDecoration) tile).getDecorationType();
+			if (type == EnumDecType.DUNGEON_REACTOR) {
+				for (int i = 0; i < 16; i++) {
+					Vec3d vec = new Vec3d(pos);
+					EffectFragmentCrackMove effect = new EffectFragmentCrackMove(world, vec.add(0.5, 0.5, 0.5));
+					effect.isGlow = true;
+					effect.prevScale = effect.scale = effect.defaultScale = 0.03f;
+					effect.lifeTime = 20;
+					effect.setColor(0xcf80e8);
+					int tick = EventClient.tickRender + i * 3;
+					float sin = MathHelper.sin(tick * 3.1415926f / 20);
+					float cos = MathHelper.cos(tick * 3.1415926f / 20);
+					Vec3d speed = new Vec3d(sin, sin + cos, cos).scale(0.2);
+					effect.setVelocity(speed);
+					effect.setAccelerate(speed.scale(-0.01));
+					effect.xDecay = effect.zDecay = effect.yDecay = 0.8;
+					Effect.addEffect(effect);
+				}
+				return true;
+			}
+		}
+		return super.addDestroyEffects(world, pos, manager);
+	}
 
 //	@Override
 //	public RayTraceResult collisionRayTrace(IBlockState blockState, World worldIn, BlockPos pos, Vec3d start,
@@ -166,7 +232,8 @@ public class BlockStoneDecoration extends BlockContainerNormal implements IBlock
 	public static enum EnumDecType {
 		ALTERNATOR("alternator"),
 		COMPUTER_A("computer"),
-		STAR_CPU("starCPU");
+		STAR_CPU("starCPU"),
+		DUNGEON_REACTOR("dungeonReactor");
 
 		private String name;
 
