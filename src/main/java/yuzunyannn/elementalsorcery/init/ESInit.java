@@ -53,6 +53,8 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.computer.IComputer;
+import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
@@ -62,8 +64,6 @@ import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderOutline;
-import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.block.BlockAStone;
 import yuzunyannn.elementalsorcery.block.BlockCrudeQuartz;
 import yuzunyannn.elementalsorcery.block.BlockCrystalFlower;
@@ -157,6 +157,9 @@ import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.FairyCubeMaster;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
+import yuzunyannn.elementalsorcery.computer.Computer;
+import yuzunyannn.elementalsorcery.computer.ComputerStorage;
+import yuzunyannn.elementalsorcery.computer.soft.AppCommand;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
@@ -312,6 +315,7 @@ import yuzunyannn.elementalsorcery.item.tool.ItemSimpleMaterialContainer;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulKillerSword;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.item.tool.ItemStarBell;
+import yuzunyannn.elementalsorcery.item.tool.ItemTutorialPad;
 import yuzunyannn.elementalsorcery.mods.Mods;
 import yuzunyannn.elementalsorcery.mods.ae2.ESAE2Core;
 import yuzunyannn.elementalsorcery.mods.ic2.ESIC2Core;
@@ -723,6 +727,7 @@ public class ESInit {
 		ESObjects.ITEMS.FLOAT_CARPET = new ItemFloatCarpet();
 		ESObjects.ITEMS.METEORITE_INGOT = new ItemMeteoriteIngot();
 		ESObjects.ITEMS.LIFTING_STONE = new ItemLiftingStone();
+		ESObjects.ITEMS.TUTORIAL_PAD = new ItemTutorialPad();
 
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -898,6 +903,8 @@ public class ESInit {
 		registerAllPotionTypes();
 		// 精灵立方体模块注册
 		FairyCubeModuleInGame.registerAll();
+		// 电脑app
+		registerAllApps();
 		// 测试村庄相关
 		VillegeRegistries.registerAll();
 		// 注册战利品
@@ -1015,7 +1022,7 @@ public class ESInit {
 				Field modifiersField = Field.class.getDeclaredField("modifiers");
 				modifiersField.setAccessible(true);
 				modifiersField.setInt(mantraElementMarkField, mantraElementMarkField.getModifiers() & ~Modifier.FINAL);
-				mantraElementMarkField.set(null, new Variable<>("E^" + element.getRegistryId(), VariableSet.ELEMENT));
+				mantraElementMarkField.set(null, Variables.getElementVar(element));
 			} catch (ReflectiveOperationException e) {}
 		}
 	}
@@ -1109,6 +1116,11 @@ public class ESInit {
 		register(IAdventurer.class, new Adventurer.Storage(), Adventurer.class);
 		register(IFairyCubeMaster.class, new FairyCubeMaster.Storage(), FairyCubeMaster.class);
 		register(IGameFuncCarrier.class, new GameFuncCarrier.Storage(), GameFuncCarrier.class);
+		register(IComputer.class, new ComputerStorage(), Computer.class);
+	}
+
+	static void registerAllApps() throws IllegalArgumentException, IllegalAccessException {
+		registerAPP(AppCommand.class, "command");
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -1251,6 +1263,7 @@ public class ESInit {
 		registerRender(ITEMS.FLOAT_CARPET);
 		registerRender(ITEMS.METEORITE_INGOT);
 		registerRender(ITEMS.LIFTING_STONE);
+		registerRender(ITEMS.TUTORIAL_PAD);
 
 		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
 			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");
@@ -1453,6 +1466,10 @@ public class ESInit {
 	private static void register(Class<? extends TileEntity> tileEntityClass, String id) {
 		GameRegistry.registerTileEntity(tileEntityClass, new ResourceLocation(ESAPI.MODID, id));
 		ES_TILE_ENTITY.add(tileEntityClass);
+	}
+
+	private static void registerAPP(Class<? extends APP> appClass, String id) {
+		APP.REGISTRY.register(new ResourceLocation(ESAPI.MODID, id), appClass);
 	}
 
 	private static void register(Potion potion) {

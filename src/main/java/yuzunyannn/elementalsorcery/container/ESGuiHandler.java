@@ -7,7 +7,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.container.gui.GuiAnalysisAltar;
+import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.container.gui.GuiDevolveCube;
 import yuzunyannn.elementalsorcery.container.gui.GuiDungeonMap;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementBoard;
@@ -87,6 +89,8 @@ public class ESGuiHandler implements IGuiHandler {
 
 	public static final int GUI_SIMPLE_MATERIAL_CONTAINER = 50;
 	public static final int GUI_DUNGEON_MAP = 51;
+	public static final int GUI_COMPUTER_ITEM = 52;
+	public static final int GUI_COMPUTER_TILE = 53;
 
 	// 切换只有客户端存在
 	public static final int GUI_MANTRA_SHITF = 60;
@@ -167,6 +171,10 @@ public class ESGuiHandler implements IGuiHandler {
 				return new ContainerSimpleMaterialContainer(player);
 			case GUI_DUNGEON_MAP:
 				return new ContainerDungeonMap(player, pos);
+			case GUI_COMPUTER_ITEM:
+				return new ContainerComputer(player, pos);
+			case GUI_COMPUTER_TILE:
+				return new ContainerComputer(player, world.getTileEntity(pos));
 			default:
 				return null;
 			}
@@ -258,6 +266,10 @@ public class ESGuiHandler implements IGuiHandler {
 				return new GuiSimpleMaterialContainer(player);
 			case GUI_DUNGEON_MAP:
 				return new GuiDungeonMap(player, pos);
+			case GUI_COMPUTER_ITEM:
+				return createComputerGUI(new ContainerComputer(player, pos));
+			case GUI_COMPUTER_TILE:
+				return createComputerGUI(new ContainerComputer(player, world.getTileEntity(pos)));
 			default:
 				return null;
 			}
@@ -269,5 +281,16 @@ public class ESGuiHandler implements IGuiHandler {
 
 	public static final ResourceLocation TEXTURE_CRAFTING_TABLE = TextHelper
 			.toESResourceLocation("textures/gui/container/crafting_table_altar.png");
+
+	public static Object createComputerGUI(ContainerComputer containerComputer) {
+		IComputer computer = containerComputer.getComputer();
+		String appearance = computer == null ? "" : computer.getAppearance();
+		switch (appearance) {
+		case "tutorialPad":
+			return new GuiComputerTutorialPad(containerComputer);
+		default:
+			return new GuiComputerTutorialPad(containerComputer);
+		}
+	}
 
 }

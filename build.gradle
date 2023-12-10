@@ -71,6 +71,9 @@ dependencies {
     //ae2
     def ae2_version = "rv6-stable-7"
 
+    // compile "org.openjdk.nashorn:nashorn-core:15.0"
+    // compile 'org.graalvm.js:js:21.3.0' 
+
     //api
     deobfCompile "mezz.jei:jei_1.12.2:${jei_version}"
     compileOnly "net.industrial-craft:industrialcraft-2:${ic2_version}:api"

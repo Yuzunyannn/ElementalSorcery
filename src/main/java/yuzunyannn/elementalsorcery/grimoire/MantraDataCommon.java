@@ -8,8 +8,8 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.mantra.IProgressable;
+import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.util.var.Variables;
 
 public class MantraDataCommon implements IMantraData, IProgressable {
@@ -115,19 +115,19 @@ public class MantraDataCommon implements IMantraData, IProgressable {
 
 	// ---额外数据部分----
 
-	public <T> void set(VariableSet.Variable<T> var, T obj) {
+	public <T> void set(Variable<T> var, T obj) {
 		extra.set(var, obj);
 	}
 
-	public <T> T get(VariableSet.Variable<T> var) {
+	public <T> T get(Variable<T> var) {
 		return extra.get(var);
 	}
 
-	public boolean has(VariableSet.Variable<?> var) {
+	public boolean has(Variable<?> var) {
 		return extra.has(var);
 	}
 
-	public void remove(VariableSet.Variable<?> var) {
+	public void remove(Variable<?> var) {
 		extra.remove(var);
 	}
 

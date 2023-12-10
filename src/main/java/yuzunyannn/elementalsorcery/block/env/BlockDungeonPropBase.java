@@ -97,6 +97,8 @@ public abstract class BlockDungeonPropBase extends Block implements ITileEntityP
 	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
 		if (worldIn.isRemote) return;
 
+		pos = pos.toImmutable();
+		
 		TileDungeonPropBase tile = BlockHelper.getTileEntity(worldIn, pos, TileDungeonPropBase.class);
 		if (tile == null) {
 			worldIn.destroyBlock(pos, false);

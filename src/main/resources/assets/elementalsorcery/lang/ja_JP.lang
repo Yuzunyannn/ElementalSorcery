@@ -151,6 +151,7 @@ item.simpleMaterialContainer.name=虚空のかくすい
 item.strengthenAgent.name=強化剤
 item.meteoriteIngot.name=彼岸石
 item.liftingStone.name=昇降石
+item.tutorialPad.name=古い石板
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=丸石の烧炼箱
@@ -576,6 +577,7 @@ info.relic.bind.master=マスター設定：%s
 info.concentration=濃度：%s
 info.simpleMaterialContainer=虚空のコンテナとは違うようだが、これは虚空製品に違いない。無限に近い基礎材料を保存でき、安定的に保存できるように見えるが、これはどうやってできたのだろうか。\n(shitと右クリックでGUIを開く)
 
+info.dungeon.build.too.many=地下牢は一度に建てすぎて、建てられなかったので、広い場所を変えてみてください。
 info.dungeon.build.exception=地下牢の建設中に異常が発生しました、著者にこのBUGを報告してくればいいね
 info.dungeon.build.too.close=2つの地下牢が近すぎる
 info.dungeon.no.key.to.open.door=かぎが見つかりません、虚映を反射できません

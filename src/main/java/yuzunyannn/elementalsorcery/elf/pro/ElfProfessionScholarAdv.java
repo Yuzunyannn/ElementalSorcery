@@ -3,8 +3,8 @@ package yuzunyannn.elementalsorcery.elf.pro;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.elf.ElfConfig;
 import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
@@ -62,7 +62,7 @@ public class ElfProfessionScholarAdv extends ElfProfessionScholar {
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TalkChapter superChapter = super.getChapter(elf, player, shiftData);
 		if (superChapter != null) return superChapter;
-		
+
 		TileElfTreeCore core = elf.getEdificeCore();
 		if (core == null) return new TalkChapter().addScene(new TalkSceneSay("say.edifice.broken"));
 		if (ElfConfig.isSuperDishonest(player))

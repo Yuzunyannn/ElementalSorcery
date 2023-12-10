@@ -157,7 +157,7 @@ public class BlockStrangeEgg extends Block {
 			//这个函数有坑，这个pos传入的是BlockPos.MutableBlockPos
 			//在单机模式下，destroyBlock发送消息会直接引用pos，并直接把消息引用透传client线程
 			//这就导致了client处理使用了BlockPos.MutableBlockPos，同时server线程也在使用，就G了
-			pos = new BlockPos(pos); 
+			pos = pos.toImmutable(); 
 			worldIn.destroyBlock(pos, true);
 			onDestroy(worldIn, pos, (EntityLivingBase) entityIn);
 		}

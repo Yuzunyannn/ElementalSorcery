@@ -40,6 +40,7 @@ import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderOutline;
+import yuzunyannn.elementalsorcery.computer.render.ComputerScreenRender;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
@@ -136,7 +137,7 @@ public class EventClient {
 			RenderItemElementCrack.updateRenderData();
 			RenderItemElementCrack.updateRenderTextureFlag = false;
 		}
-
+		ComputerScreenRender.doUpdate();
 	}
 
 	/** 获取渲染旋转角度 */
@@ -190,6 +191,7 @@ public class EventClient {
 		Effect.renderAllEffects(partialTicks);
 		GlStateManager.popMatrix();
 
+		ComputerScreenRender.doRenderUpdate(e.getPartialTicks());
 		if (RenderItemElementCrack.updateRenderTextureFlag) RenderItemElementCrack.updateRenderTexture(partialTicks);
 	}
 

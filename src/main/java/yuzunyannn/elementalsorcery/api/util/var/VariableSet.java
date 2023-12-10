@@ -15,61 +15,27 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
-import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
-public class VariableSet implements INBTSerializable<NBTTagCompound> {
-
-	public static class Variable<T> {
-
-		public final String name;
-
-		public final IVariableType<T> type;
-
-		public Variable(String name, IVariableType<T> type) {
-			this.name = name;
-			this.type = type;
-		}
-
-		@Override
-		public int hashCode() {
-			return name.hashCode();
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj) return true;
-			if (obj instanceof Variable) return this.name.equals(((Variable) obj).name);
-			return false;
-		}
-
-		@Override
-		public String toString() {
-			return name;
-		}
-	}
+public class VariableSet implements IVariableSet {
 
 	public VariableSet() {
-
 	}
 
 	public VariableSet(NBTTagCompound nbt) {
 		this.nbt = nbt;
 	}
 
-	public VariableSet(JsonObject json) {
-		this.nbt = json.asNBT();
-	}
-
 	private NBTTagCompound nbt;
 	private Map<Variable, Object> map = new HashMap<>();
 
+	@Override
 	public <T> void set(Variable<T> var, T obj) {
 		if (obj == null) return;
 		map.put(var, obj);
 	}
 
+	@Override
 	public <T> T get(Variable<T> var) {
 		String key = var.name;
 		Object obj = map.get(var);
@@ -88,11 +54,13 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		return (T) obj;
 	}
 
+	@Override
 	public boolean has(Variable<?> var) {
 		if (map.containsKey(var)) return true;
 		return nbt == null ? false : nbt.hasKey(var.name);
 	}
 
+	@Override
 	public void remove(Variable<?> var) {
 		map.remove(var);
 		if (nbt != null) {
@@ -101,28 +69,25 @@ public class VariableSet implements INBTSerializable<NBTTagCompound> {
 		}
 	}
 
+	@Override
 	@Nullable
 	public Object ask(String name) {
 		return map.get(new Variable<Object>(name, null));
 	}
 
-	@Nullable
-	public Object ask(String name, Class<?> cls) {
-		Object obj = ask(name);
-		if (obj != null && cls.isAssignableFrom(obj.getClass())) return obj;
-		return null;
-	}
-
+	@Override
 	public boolean isEmpty() {
 		if (map.isEmpty() && (nbt == null || nbt.isEmpty())) return true;
 		return false;
 	}
 
+	@Override
 	public void clear() {
 		nbt = null;
 		map.clear();
 	}
 
+	@Override
 	public VariableSet copy() {
 		VariableSet set = new VariableSet();
 		set.deserializeNBT(this.serializeNBT());

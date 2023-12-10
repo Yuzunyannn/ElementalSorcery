@@ -151,6 +151,7 @@ item.simpleMaterialContainer.name=Void Cone
 item.strengthenAgent.name=Strengthen Agent
 item.meteoriteIngot.name=distant starry stone
 item.liftingStone.name=Lifting Stone
+item.tutorialPad.name=Ancient Slate
 
 tile.elementalCube.name=Element Cube
 tile.smeltBox.cobblestone.name=Cobblestone Smelting Box
@@ -576,6 +577,7 @@ info.relic.bind.master=The master is set as: %s
 info.concentration=Concentration: %s
 info.simpleMaterialContainer=Although it may seem different from a Void Container, this is definitely a Void product that can store basic materials almost infinitely and stably. How is this achieved?\n(Shit + Right click to open GUI)
 
+info.dungeon.build.too.many=The dungeon has been built too many times in this build and has failed. Please try a different open area.
 info.dungeon.build.exception=An exception exception when building Dungeon! Please report this bug to the author.
 info.dungeon.build.too.close=Two dungeons built too close.
 info.dungeon.no.key.to.open.door=Missing key, Virtual Sight cannot be reflected

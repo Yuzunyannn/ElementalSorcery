@@ -10,7 +10,7 @@
                 "hCore": true
             },
             "trigger": {
-                "onLoot": {
+                "onLoot": {tutorial_pad
                     "type": "loot",
                     "loot": "elementalsorcery:dungeon/dungeon_loot_sundry_3"
                 }

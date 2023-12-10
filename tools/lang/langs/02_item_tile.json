@@ -744,6 +744,11 @@
             "zh_CN": "升降石",
             "en_US": "Lifting Stone",
             "ja_JP": "昇降石"
+        },
+        "item.tutorialPad.name":{
+            "zh_CN": "古老的石板",
+            "en_US": "Ancient Slate",
+            "ja_JP": "古い石板"
         }
     },
     "tile": {

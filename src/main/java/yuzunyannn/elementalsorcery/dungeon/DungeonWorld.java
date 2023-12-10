@@ -141,8 +141,8 @@ public class DungeonWorld extends WorldSavedData {
 		try {
 			worldSave.generate(this, pos);
 		} catch (DungeonTooManyBuildException e) {
-			ESAPI.logger.warn("dungeon build fail!", e);
-			return worldSave.setFailMsg("info.dungeon.build.exception");
+			ESAPI.logger.warn("dungeon build to many!", e);
+			return worldSave.setFailMsg("info.dungeon.build.too.many");
 		} catch (Exception e) {
 			ESAPI.logger.warn("dungeon build fail!", e);
 			return worldSave.setFailMsg("info.dungeon.build.exception");

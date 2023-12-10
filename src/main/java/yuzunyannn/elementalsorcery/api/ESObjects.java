@@ -143,6 +143,7 @@ public class ESObjects {
 		public Item FLOAT_CARPET;
 		public Item METEORITE_INGOT;
 		public Item LIFTING_STONE;
+		public Item TUTORIAL_PAD;
 	}
 
 	static public class Blocks {

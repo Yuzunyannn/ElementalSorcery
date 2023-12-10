@@ -10,8 +10,8 @@ import java.util.function.Function;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
+import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.util.SeedRandom;
 import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
@@ -155,7 +155,7 @@ public class GameFunc implements INBTSerializable<NBTTagCompound> {
 		if (json.hasNumber("groupWeight")) config.set(GROUP_NAME, json.getString("groupWeight"));
 		if (json.hasNumber("probability")) config.set(PROBABILITY, json.getNumber("probability").floatValue());
 		if (json.hasNumber("weight")) config.set(WEIGHT, json.getNumber("weight").floatValue());
-		if (json.hasObject("extra")) config.set(EXTRA, new VariableSet(json.getObject("extra")));
+		if (json.hasObject("extra")) config.set(EXTRA, new VariableSet(json.getObject("extra").asNBT()));
 
 		if (my.getRefJson() != null) {
 			JsonObject refJson = my.getRefJson();

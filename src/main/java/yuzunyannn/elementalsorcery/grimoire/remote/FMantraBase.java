@@ -15,8 +15,8 @@ import yuzunyannn.elementalsorcery.api.mantra.IFragmentMantraLauncher;
 import yuzunyannn.elementalsorcery.api.util.client.ESResources;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public abstract class FMantraBase implements IFragmentMantraLauncher {

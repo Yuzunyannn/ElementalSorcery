@@ -4,9 +4,8 @@ import java.util.UUID;
 
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
-import yuzunyannn.elementalsorcery.api.util.var.VariableSet.Variable;
-
 
 public class Variables {
 	public static final Variable<ElementStack> STORAGE_ELEMENT = new Variable<>("stESk", VariableSet.ELEMENT);

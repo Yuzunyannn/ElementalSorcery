@@ -151,6 +151,7 @@ item.simpleMaterialContainer.name=虚空方锥
 item.strengthenAgent.name=强化药剂
 item.meteoriteIngot.name=冥星石
 item.liftingStone.name=升降石
+item.tutorialPad.name=古老的石板
 
 tile.elementalCube.name=元素立方体
 tile.smeltBox.cobblestone.name=圆石烧炼箱
@@ -576,6 +577,7 @@ info.relic.bind.master=设置了主人为：%s
 info.concentration=浓度：%s
 info.simpleMaterialContainer=虽然和虚空容器似乎不太一样，但这个肯定是虚空制品，似乎可以近乎无限的存储基础材料，而且可以稳定的存储，这是怎么做到的呢？\n(shit右键打开GUI)
 
+info.dungeon.build.too.many=地牢单次建造过多，建造失败，请换个开阔的地方试试。
 info.dungeon.build.exception=地牢建造异常！可以向作者报告这个BUG
 info.dungeon.build.too.close=两个地牢建造过近
 info.dungeon.no.key.to.open.door=缺少钥匙，虚映反射失败

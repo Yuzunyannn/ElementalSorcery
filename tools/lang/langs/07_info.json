@@ -828,6 +828,11 @@
         }
     },
     "info.dungeon": {
+        "info.dungeon.build.too.many": {
+            "zh_CN": "地牢单次建造过多，建造失败，请换个开阔的地方试试。",
+            "en_US": "The dungeon has been built too many times in this build and has failed. Please try a different open area.",
+            "ja_JP": "地下牢は一度に建てすぎて、建てられなかったので、広い場所を変えてみてください。"
+        },
         "info.dungeon.build.exception": {
             "zh_CN": "地牢建造异常！可以向作者报告这个BUG",
             "en_US": "An exception exception when building Dungeon! Please report this bug to the author.",
