@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.api.computer.soft;
 
 import java.util.List;
 
+import javax.annotation.Nullable;
+
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.IMemory;
@@ -10,13 +12,22 @@ public interface IOS {
 
 	IMemory getMemory();
 
-	IDeviceStorage getMemory(APP app);
+	IMemory getMemory(APP app);
 
 	List<IDisk> getDisks();
 
 	IDeviceStorage getDisk(APP app, AppDiskType type);
 
-	int exec(String appId);
+	int exec(APP parent, String appId);
+
+	int setForeground(int pid);
+
+	int getForeground();
+
+	void abort(int pid, IComputerException e);
+
+	@Nullable
+	APP getAppInst(int pid);
 
 	default void onMemoryChange() {
 	};
@@ -30,5 +41,9 @@ public interface IOS {
 	default void onClosing() {
 	}
 
+	default void onUpdate() {
+	};
+
 	boolean isClient();
+
 }

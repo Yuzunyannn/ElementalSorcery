@@ -1,26 +1,58 @@
 package yuzunyannn.elementalsorcery.computer.render;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-
-import javax.annotation.Nullable;
 
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.util.render.Framebuffer;
-import yuzunyannn.elementalsorcery.util.render.MCFramebufferModify;
 
 @SideOnly(Side.CLIENT)
 public class ComputerScreenRender {
 
-	public final List<ComputerScreen> renderList = new ArrayList<>();
-	
+	public final static List<ComputerScreen> renderList = new ArrayList<>();
+	public final static LinkedList<ComputerScreen> renderPoolList = new LinkedList<>();
+
+	static public ComputerScreen apply() {
+		ComputerScreen screen = new ComputerScreen();
+		screen.init();
+		renderList.add(screen);
+		return screen;
+	}
+
 	static public void doUpdate() {
-		
+
+		// normal
+		Iterator<ComputerScreen> iter = renderList.iterator();
+		while (iter.hasNext()) {
+			ComputerScreen screen = iter.next();
+//			if (Effect.displayChange) screen.buffer.resize(screen.frameBufferWidth, screen.frameBufferHeight);
+			if (screen.currGui != null) screen.currGui.update();
+			screen.renderCounter++;
+			if (screen.renderCounter > 20 * 60 || screen.waitPoolMark) {
+				screen.waitPoolMark = false;
+				renderPoolList.add(screen);
+				screen.renderCounter = 20;
+			}
+		}
+
+		// pool
+		iter = renderPoolList.iterator();
+		while (iter.hasNext()) {
+			ComputerScreen screen = iter.next();
+			screen.renderCounter++;
+			if (screen.renderCounter > 20 * 60) {
+				screen.close();
+				iter.remove();
+			}
+		}
 	}
 
 	static public void doRenderUpdate(float partialTicks) {
-
+		for (ComputerScreen screen : renderList) {
+			if (screen.renderCounter < 20) screen.doRender(partialTicks);
+		}
 	}
 
 //	@Nullable

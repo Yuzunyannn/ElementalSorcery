@@ -3,10 +3,12 @@ package yuzunyannn.elementalsorcery.container;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IComputerWatcher;
@@ -14,8 +16,9 @@ import yuzunyannn.elementalsorcery.computer.Computer;
 import yuzunyannn.elementalsorcery.computer.ComputerEnvItem;
 import yuzunyannn.elementalsorcery.computer.ComputerEnvTile;
 import yuzunyannn.elementalsorcery.computer.WatcherConatiner;
+import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 
-public class ContainerComputer extends Container {
+public class ContainerComputer extends Container implements IContainerNetwork {
 
 	protected IComputer computer;
 	public boolean isClosed = false;
@@ -99,6 +102,20 @@ public class ContainerComputer extends Container {
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
 		return ItemStack.EMPTY;
+	}
+
+	@Override
+	public void recvData(NBTTagCompound nbt, Side side) {
+		if (side == Side.SERVER) {
+			if (nbt.hasKey("_nt_")) {
+				this.computer.notice(cEnv, nbt.getString("_nt_"));
+				return;
+			}
+			if (nbt.hasKey("_op_")) {
+				int pid = nbt.getInteger("pid");
+				this.computer.notice(cEnv, "op", pid, nbt);
+			}
+		}
 	}
 
 }

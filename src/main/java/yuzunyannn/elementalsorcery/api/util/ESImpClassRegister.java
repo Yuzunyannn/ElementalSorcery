@@ -48,16 +48,28 @@ public class ESImpClassRegister<T extends IForgeRegistryEntry<T>> {
 		}
 	}
 
-	public T newInstance(ResourceLocation id, Object... objs) {
+	public T newInstance(ResourceLocation id, Object... params) {
 		try {
 			Class<? extends T> cls = REGISTRY.get(id);
 			if (cls == null) return null;
-			Class<?>[] clss = new Class<?>[objs.length];
-			for (int i = 0; i < clss.length; i++) clss[i] = objs[i].getClass();
+			Class<?>[] clss = new Class<?>[params.length];
+			for (int i = 0; i < clss.length; i++) clss[i] = params[i].getClass();
 			Constructor<T> constructor = (Constructor<T>) cls.getConstructor(clss);
-			return constructor.newInstance(objs).setRegistryName(id);
+			return constructor.newInstance(params).setRegistryName(id);
 		} catch (Exception e) {
-			ESAPI.logger.warn("实例化" + id + "时，出现异常！", e);
+			if (ESAPI.isDevelop) ESAPI.logger.warn("实例化" + id + "时，出现异常！", e);
+			return null;
+		}
+	}
+
+	public T newInstance(ResourceLocation id, Class<?> types[], Object... params) {
+		try {
+			Class<? extends T> cls = REGISTRY.get(id);
+			if (cls == null) return null;
+			Constructor<T> constructor = (Constructor<T>) cls.getConstructor(types);
+			return constructor.newInstance(params).setRegistryName(id);
+		} catch (Exception e) {
+			if (ESAPI.isDevelop) ESAPI.logger.warn("实例化" + id + "时，出现异常！", e);
 			return null;
 		}
 	}

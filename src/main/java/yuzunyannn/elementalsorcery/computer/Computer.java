@@ -1,10 +1,9 @@
 package yuzunyannn.elementalsorcery.computer;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
-
-import com.google.common.collect.ComputationException;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -20,10 +19,15 @@ import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IComputerWatcher;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceModifiable;
+import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.IMemory;
+import yuzunyannn.elementalsorcery.api.computer.IStorageMonitor;
+import yuzunyannn.elementalsorcery.api.computer.soft.APP;
+import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
 import yuzunyannn.elementalsorcery.computer.soft.EOSClient;
 import yuzunyannn.elementalsorcery.computer.soft.EOSServer;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -42,6 +46,18 @@ public class Computer implements IComputer, IDeviceModifiable {
 		return computer;
 	}
 
+	static protected class AppData {
+
+		int pid;
+		NBTTagCompound nbt;
+
+		public AppData(int pid2, NBTTagCompound data) {
+			this.pid = pid2;
+			this.nbt = data;
+		}
+
+	}
+
 	@CapabilityInject(IComputer.class)
 	public static Capability<IComputer> COMPUTER_CAPABILITY;
 
@@ -51,7 +67,10 @@ public class Computer implements IComputer, IDeviceModifiable {
 	protected String name = "";
 	protected UUID uuid = UUID.randomUUID();
 	protected boolean inRunning = false;
+	protected StorageMonitor memoryStorageMonitor = new StorageMonitor();
 
+	protected LinkedList<AppData> operations = new LinkedList<>();
+	protected boolean closeFlag = false;
 	protected boolean isInit = false;
 	protected final String appearance;
 
@@ -126,6 +145,7 @@ public class Computer implements IComputer, IDeviceModifiable {
 		nbt.setString("#N", name);
 		nbt.setUniqueId("#U", uuid);
 		nbt.setBoolean("#R", inRunning);
+		nbt.setTag("#M~M", memoryStorageMonitor.serializeNBT());
 		if (memory != null) nbt.setTag("#M", memory.serializeNBT());
 		NBTHelper.setNBTSerializableList(nbt, "#D", disks);
 		return nbt;
@@ -136,6 +156,7 @@ public class Computer implements IComputer, IDeviceModifiable {
 		name = nbt.getString("#N");
 		uuid = nbt.getUniqueId("#U");
 		inRunning = nbt.getBoolean("#R");
+		memoryStorageMonitor.deserializeNBT(nbt.getCompoundTag("#M~M"));
 		if (nbt.hasKey("#M", NBTTag.TAG_COMPOUND)) memory.deserializeNBT(nbt.getCompoundTag("#M"));
 		else memory = null;
 		disks = NBTHelper.getNBTSerializableList(nbt, "#D", Disk.class, NBTTagCompound.class);
@@ -145,13 +166,41 @@ public class Computer implements IComputer, IDeviceModifiable {
 	public void notice(String method, Object... objects) {
 		if (!inRunning) return;
 
+		if ("power-off".equals(method)) {
+			closeFlag = true;
+			return;
+		}
+
+		if ("op".equals(method)) {
+			try {
+				int pid = (int) objects[1];
+				NBTTagCompound data = (NBTTagCompound) objects[2];
+				operations.add(new AppData(pid, data));
+			} catch (ArrayIndexOutOfBoundsException | ClassCastException e) {}
+			return;
+		}
+	}
+
+	@Override
+	public void notice(IComputEnv env, String method, Object... objects) {
+
+		if (!inRunning) {
+			if ("power-on".equals(method)) {
+				powerOn(env);
+				return;
+			}
+		}
+
+		notice(method, objects);
 	}
 
 	@Override
 	public void powerOn(IComputEnv env) {
 		if (inRunning) return;
+		closeFlag = false;
 		inRunning = true;
 		memory.clear();
+		memoryStorageMonitor.clear();
 		if (env.isRemote()) return;
 		os.onStarting();
 	}
@@ -161,6 +210,7 @@ public class Computer implements IComputer, IDeviceModifiable {
 		if (!inRunning) return;
 		inRunning = false;
 		memory.clear();
+		memoryStorageMonitor.clear();
 		if (env.isRemote()) return;
 		os.onClosing();
 	}
@@ -168,6 +218,12 @@ public class Computer implements IComputer, IDeviceModifiable {
 	@Override
 	public boolean isPowerOn() {
 		return inRunning;
+	}
+
+	@Override
+	public IStorageMonitor getStorageMonitor(IDeviceStorage storage) {
+		if (storage == this.memory) return memoryStorageMonitor;
+		return null;
 	}
 
 	public void tryInit(IComputEnv env) {
@@ -194,14 +250,15 @@ public class Computer implements IComputer, IDeviceModifiable {
 		if (env.isRemote()) {
 			if (nbt.hasUniqueId("#U")) this.uuid = nbt.getUniqueId("#U");
 			if (nbt.hasKey("#R")) this.inRunning = nbt.getBoolean("#R");
+			if (nbt.hasKey("#M~C")) this.memoryStorageMonitor.mergeChanges(nbt.getCompoundTag("#M~C"), memory);
 			return;
 		}
 	}
 
 	@Override
 	public NBTTagCompound detectChanges(IComputerWatcher watcher, IComputEnv env) {
-		ComputerDetectDataset dataset = watcher.getDetectObject(ComputerDetectDataset.class);
-		if (dataset == null) watcher.setDetectObject(dataset = new ComputerDetectDataset());
+		DetectDataset dataset = watcher.getDetectObject(DetectDataset.class);
+		if (dataset == null) watcher.setDetectObject(dataset = new DetectDataset());
 
 		NBTTagCompound sendData = null;
 
@@ -214,6 +271,12 @@ public class Computer implements IComputer, IDeviceModifiable {
 				dataset.inRunning = this.inRunning;
 				sendData = insertRunningSend(sendData);
 			}
+		}
+
+		NBTTagCompound changes = memoryStorageMonitor.detectChanges(dataset.memoryDataset, memory);
+		if (changes != null) {
+			if (sendData == null) sendData = new NBTTagCompound();
+			sendData.setTag("#M~C", changes);
 		}
 
 		return sendData;
@@ -250,6 +313,11 @@ public class Computer implements IComputer, IDeviceModifiable {
 
 		if (!inRunning) return;
 
+		if (closeFlag) {
+			powerOff(env);
+			return;
+		}
+
 		updateOS();
 	}
 
@@ -262,9 +330,21 @@ public class Computer implements IComputer, IDeviceModifiable {
 	}
 
 	protected void updateOS() {
+
+		while (!operations.isEmpty()) {
+			AppData appdat = operations.removeFirst();
+			try {
+				APP app = os.getAppInst(appdat.pid);
+				app.handleOperation(appdat.nbt);
+			} catch (Exception e) {
+				if (e instanceof IComputerException) os.abort(appdat.pid, (IComputerException) e);
+				else ESAPI.logger.warn("系統崩潰", e);
+			}
+		}
+
 		try {
-			// TODO
-		} catch (ComputationException e) {
+			os.onUpdate();
+		} catch (ComputerException e) {
 
 		} catch (Exception e) {
 			ESAPI.logger.warn("系統崩潰", e);

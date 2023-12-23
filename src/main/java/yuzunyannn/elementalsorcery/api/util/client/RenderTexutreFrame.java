@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.api.util.client;
 
 public class RenderTexutreFrame {
 
+	public static final RenderTexutreFrame FULL_FRAME = new RenderTexutreFrame(0, 0, 16, 16, 16, 16);
+
 	final public float width;
 	final public float height;
 	final public float x, y;

@@ -26,22 +26,49 @@ public class VariableSet implements IVariableSet {
 		this.nbt = nbt;
 	}
 
+	private static class VariableEntry<T> {
+
+		static VariableEntry of(Variable<?> var, Object obj) {
+			VariableEntry entry = new VariableEntry();
+			entry.type = var.type;
+			entry.obj = obj;
+			return entry;
+		}
+
+		IVariableType<T> type;
+		Object obj;
+	}
+
 	private NBTTagCompound nbt;
-	private Map<Variable, Object> map = new HashMap<>();
+	private Map<String, VariableEntry> map = new HashMap<>();
 
 	@Override
 	public <T> void set(Variable<T> var, T obj) {
-		if (obj == null) return;
-		map.put(var, obj);
+		if (obj == null) {
+			this.remove(var);
+			return;
+		}
+		map.put(var.key, VariableEntry.of(var, obj));
+	}
+
+	@Override
+	public void set(String key, NBTBase tag) {
+		if (tag == null) {
+			this.remove(key);
+			return;
+		}
+		if (nbt == null) nbt = new NBTTagCompound();
+		map.remove(key);
+		nbt.setTag(key, tag);
 	}
 
 	@Override
 	public <T> T get(Variable<T> var) {
-		String key = var.name;
-		Object obj = map.get(var);
-		if (obj != null) {
+		String key = var.key;
+		VariableEntry<T> entry = map.get(key);
+		if (entry != null) {
 			try {
-				return var.type.cast(obj);
+				return var.type.cast(entry.obj);
 			} catch (Exception e) {}
 		}
 		NBTBase base = null;
@@ -50,29 +77,44 @@ public class VariableSet implements IVariableSet {
 			nbt.removeTag(key);
 			if (nbt.isEmpty()) nbt = null;
 		}
-		map.put(var, obj = var.type.newInstance(base));
-		return (T) obj;
+		T obj = var.type.newInstance(base);
+		map.put(key, VariableEntry.of(var, obj));
+		return obj;
 	}
 
 	@Override
-	public boolean has(Variable<?> var) {
-		if (map.containsKey(var)) return true;
-		return nbt == null ? false : nbt.hasKey(var.name);
-	}
-
-	@Override
-	public void remove(Variable<?> var) {
-		map.remove(var);
+	public NBTBase get(String key) {
 		if (nbt != null) {
-			nbt.removeTag(var.name);
+			if (nbt.hasKey(key)) return nbt.getTag(key);
+		}
+		VariableEntry<?> entry = map.get(key);
+		if (entry == null) return null;
+		try {
+			return entry.type.serializableObject(entry.obj);
+		} catch (Exception e) {}
+		return null;
+	}
+
+	@Override
+	public boolean has(String key) {
+		if (map.containsKey(key)) return true;
+		return nbt == null ? false : nbt.hasKey(key);
+	}
+
+	@Override
+	public void remove(String key) {
+		map.remove(key);
+		if (nbt != null) {
+			nbt.removeTag(key);
 			if (nbt.isEmpty()) nbt = null;
 		}
 	}
 
 	@Override
 	@Nullable
-	public Object ask(String name) {
-		return map.get(new Variable<Object>(name, null));
+	public Object ask(String key) {
+		VariableEntry<?> entry = map.get(key);
+		return entry != null ? entry.obj : null;
 	}
 
 	@Override
@@ -101,12 +143,13 @@ public class VariableSet implements IVariableSet {
 
 	public NBTTagCompound serializeNBT(BiFunction<String, Object, Boolean> check) {
 		NBTTagCompound nbt = new NBTTagCompound();
-		for (Entry<Variable, Object> entry : map.entrySet()) {
-			Variable<?> var = entry.getKey();
-			Object obj = entry.getValue();
-			if (check.apply(var.name, obj)) {
-				NBTBase base = var.type.serializableObject(obj);
-				if (base != null) nbt.setTag(var.name, base);
+		for (Entry<String, VariableEntry> entry : map.entrySet()) {
+			VariableEntry vEntry = entry.getValue();
+			String key = entry.getKey();
+			Object obj = vEntry.obj;
+			if (check.apply(key, obj)) {
+				NBTBase base = vEntry.type.serializableObject(obj);
+				if (base != null) nbt.setTag(key, base);
 			}
 		}
 		if (this.nbt == null) return nbt;

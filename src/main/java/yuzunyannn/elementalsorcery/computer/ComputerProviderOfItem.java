@@ -1,14 +1,15 @@
 package yuzunyannn.elementalsorcery.computer;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.computer.soft.EOS;
 
-public class ComputerProviderOfItem implements ICapabilityProvider {
+public class ComputerProviderOfItem implements ICapabilitySerializable<NBTTagCompound> {
 
 	protected Computer computer;
 
@@ -30,4 +31,13 @@ public class ComputerProviderOfItem implements ICapabilityProvider {
 		return null;
 	}
 
+	@Override
+	public NBTTagCompound serializeNBT() {
+		return computer.serializeNBT();
+	}
+
+	@Override
+	public void deserializeNBT(NBTTagCompound nbt) {
+		computer.deserializeNBT(nbt);
+	}
 }

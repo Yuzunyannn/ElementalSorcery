@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
@@ -11,7 +12,6 @@ import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.util.var.IVariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
-import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.computer.DeviceStorage;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerPermissionDeniedException;
 
@@ -30,11 +30,12 @@ public class AuthorityAppDisk implements IDeviceStorage {
 
 		String id = app.getAppId().toString();
 		IDisk coreDisk = disks.get(0);
+		String[] paths = new String[] { namespace, id };
 
 		for (IDisk _disk : disks) {
-			VariableSet variableSet = _disk.getVariableSet(namespace);
+			IVariableSet variableSet = _disk.getVariableSet(namespace);
 			if (variableSet.has(id)) {
-				this.storages.add(new AuthorityStorage(computer, _disk, variableSet.getVariableSet(id), app));
+				this.storages.add(new AuthorityStorage(computer, _disk, paths, app));
 				if (_disk.isWriteable()) coreDisk = _disk;
 			}
 		}
@@ -43,9 +44,8 @@ public class AuthorityAppDisk implements IDeviceStorage {
 				if (_disk.isWriteable()) coreDisk = _disk;
 			}
 		}
-		VariableSet variableSet = coreDisk.getVariableSet(namespace);
-		if (!variableSet.has(id))
-			this.storages.add(new AuthorityStorage(computer, coreDisk, variableSet.getVariableSet(id), app));
+		IVariableSet variableSet = coreDisk.getVariableSet(namespace);
+		if (!variableSet.has(id)) this.storages.add(new AuthorityStorage(computer, coreDisk, paths, app));
 
 		this.coreDisk = coreDisk;
 
@@ -69,21 +69,32 @@ public class AuthorityAppDisk implements IDeviceStorage {
 	}
 
 	@Override
+	public void set(String key, NBTBase tag) {
+		coreStorage.set(key, tag);
+	}
+
+	@Override
 	public <T> T get(Variable<T> var) {
 		for (AuthorityStorage storage : storages) if (storage.has(var)) return storage.get(var);
 		return coreStorage.get(var);
 	}
 
 	@Override
-	public boolean has(Variable<?> var) {
-		for (AuthorityStorage storage : storages) if (storage.has(var)) return true;
-		return coreStorage.has(var);
+	public NBTBase get(String key) {
+		for (AuthorityStorage storage : storages) if (storage.has(key)) return storage.get(key);
+		return coreStorage.get(key);
 	}
 
 	@Override
-	public void remove(Variable<?> var) {
-		for (AuthorityStorage storage : storages) if (storage.isWriteable()) storage.remove(var);
-		coreStorage.remove(var);
+	public boolean has(String key) {
+		for (AuthorityStorage storage : storages) if (storage.has(key)) return true;
+		return coreStorage.has(key);
+	}
+
+	@Override
+	public void remove(String key) {
+		for (AuthorityStorage storage : storages) if (storage.isWriteable()) storage.remove(key);
+		coreStorage.remove(key);
 	}
 
 	@Override

@@ -2,9 +2,10 @@ package yuzunyannn.elementalsorcery.computer.exception;
 
 import yuzunyannn.elementalsorcery.api.computer.ICalculatorObject;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
+import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 
 @SuppressWarnings("serial")
-public class ComputerException extends RuntimeException {
+public class ComputerException extends RuntimeException implements IComputerException {
 
 	public final ICalculatorObject obj;
 	public final IDevice device;

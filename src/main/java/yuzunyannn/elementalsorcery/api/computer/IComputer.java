@@ -24,10 +24,15 @@ public interface IComputer extends IDevice, INBTSerializable<NBTTagCompound> {
 	public void onPlayerInteraction(EntityPlayer player, IComputEnv env);
 
 	@Nullable
+	public IStorageMonitor getStorageMonitor(IDeviceStorage storage);
+
+	@Nullable
 	public NBTTagCompound detectChanges(IComputerWatcher watcher, IComputEnv env);
 
 	public void detectChangesAndSend(IComputerWatcher watcher, IComputEnv env);
 
 	public void recvMessage(NBTTagCompound nbt, IComputEnv env);
+
+	public void notice(IComputEnv env, String method, Object... objects);
 
 }

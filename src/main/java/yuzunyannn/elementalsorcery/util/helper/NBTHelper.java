@@ -286,4 +286,16 @@ public class NBTHelper {
 		return mantras;
 	}
 
+	public static NBTTagList serializeStrings(String[] strs) {
+		NBTTagList list = new NBTTagList();
+		for (String str : strs) list.appendTag(new NBTTagString(str));
+		return list;
+	}
+
+	public static String[] deserializeStrings(NBTTagList list) {
+		String[] strs = new String[list.tagCount()];
+		for (int i = 0; i < list.tagCount(); i++) strs[i] = list.getStringTagAt(i);
+		return strs;
+	}
+
 }

@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.computer;
 
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
@@ -43,18 +44,28 @@ public abstract class DeviceStorage implements IDeviceStorage {
 	}
 
 	@Override
+	public void set(String key, NBTBase tag) {
+		set.set(key, tag);
+	}
+
+	@Override
 	public <T> T get(Variable<T> var) {
 		return set.get(var);
 	}
 
 	@Override
-	public boolean has(Variable<?> var) {
-		return set.has(var);
+	public NBTBase get(String key) {
+		return set.get(key);
 	}
 
 	@Override
-	public void remove(Variable<?> var) {
-		set.remove(var);
+	public boolean has(String key) {
+		return set.has(key);
+	}
+
+	@Override
+	public void remove(String key) {
+		set.remove(key);
 	}
 
 	@Override
