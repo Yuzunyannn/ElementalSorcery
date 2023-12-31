@@ -13,5 +13,20 @@ public class RenderRect {
 		this.left = left;
 		this.right = right;
 	}
+	
+	public RenderRect(double top, double bottom, double left, double right) {
+		this.top = (float) top;
+		this.bottom = (float) bottom;
+		this.left = (float) left;
+		this.right = (float) right;
+	}
+
+	public RenderRect move(float x, float y) {
+		return new RenderRect(top + y, bottom + y, left + x, right + x);
+	}
+	
+	public RenderRect move(double x, double y) {
+		return new RenderRect(top + y, bottom + y, left + x, right + x);
+	}
 
 }

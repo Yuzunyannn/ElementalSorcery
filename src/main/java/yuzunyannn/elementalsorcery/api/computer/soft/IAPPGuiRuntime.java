@@ -11,6 +11,10 @@ public interface IAPPGuiRuntime {
 
 	int getHeight();
 
+	int getDisplayWidth();
+
+	int getDisplayHeight();
+
 	void sendOperation(NBTTagCompound nbt);
 
 	void sendNotice(String str);

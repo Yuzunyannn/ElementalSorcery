@@ -28,6 +28,13 @@ public class JavaHelper {
 		return null;
 	}
 
+	public static String[] concat(String[] a, String[] b) {
+		String[] newArray = new String[a.length + b.length];
+		System.arraycopy(a, 0, newArray, 0, a.length);
+		System.arraycopy(b, 0, newArray, a.length, b.length);
+		return newArray;
+	}
+
 //
 //	public static <T, U> T[] toArray(Collection<U> list, Function<U, T> func) {
 //		T[] array = (T[]) Array.newInstance(Object.class, list.size());

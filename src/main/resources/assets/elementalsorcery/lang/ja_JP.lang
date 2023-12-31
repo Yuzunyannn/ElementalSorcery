@@ -1317,3 +1317,10 @@ page.dungeonMemoryFragment=記憶のかけら
 page.dungeonMemoryFragment.ct=深層部屋への必要なもの、ダンジョンの部屋で見つけることができます。カラーのかけらはどんな部屋でも開くことができます（通常は自分で作る必要はありません。ダンジョンのかけらは自給自足です。手に入れたかけらをなくしてしまわない限り）。
 page.dungeonMemoryFeather=記憶を探す
 page.dungeonMemoryFeather.ct=部屋の中に隠された記憶が見つからないとき、この羽は良い助けになるかもしれない。
+
+es.tutorialui.describe=描述
+
+es.tutorial.title.0_0_0=开始
+es.tutorial.describe.0_0_0=当你拿到这个§k???????§r记录§k????§r知识，按照这些步骤进行，尝试重新发展元素与魔法的§k???§r
+es.tutorial.title.0_0_1=元素
+es.tutorial.describe.0_0_1=§k????§r的研究，从魔力中发现了构成物质的元素，元素作为特殊的魔力，似乎可以来改变我的世界。\n元素可以转化到魔力，这是很容易的一件事，但反之则是几乎不可能的。

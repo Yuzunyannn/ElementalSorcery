@@ -32,15 +32,18 @@ public class GNode {
 	protected GScene scene;
 
 	protected double x, y, z;
-	protected double prevX, prevY, prevZ;
 	protected double scaleX = 1, scaleY = 1, scaleZ = 1;
-	protected double prevScaleX = 1, prevScaleY = 1, prevScaleZ = 1;
-	protected float anchorX, anchorY, anchorZ;
 	protected float rotationZ;
+	protected float anchorX, anchorY, anchorZ;
+	protected double width = 1, height = 1, depth = 0;
+
+	protected double prevX, prevY, prevZ;
+	protected double prevScaleX = 1, prevScaleY = 1, prevScaleZ = 1;
 	protected float prevRotationZ;
+
 	protected boolean hasRotation = false;
 	protected boolean hasScale = false;
-	protected double width = 1, height = 1, depth;
+
 	protected Color color = new Color(0xffffff);
 	protected float alpha = 1;
 	protected String name;
@@ -62,7 +65,7 @@ public class GNode {
 	public void setWidth(double width) {
 		this.width = width;
 	}
-	
+
 	public void setHeight(double height) {
 		this.height = height;
 	}
@@ -84,6 +87,10 @@ public class GNode {
 		this.anchorZ = (float) z;
 	}
 
+	public Vec3d getAnchor() {
+		return new Vec3d(anchorX, anchorY, anchorZ);
+	}
+
 	public void setGaps(boolean gaps) {
 		this.gaps = gaps;
 	}
@@ -99,6 +106,14 @@ public class GNode {
 		this.z = z;
 	}
 
+	public void setPositionX(double x) {
+		this.x = x;
+	}
+
+	public void setPositionY(double y) {
+		this.y = y;
+	}
+
 	public void setPosition(int x, int y, int z) {
 		setPosition((double) x, (double) y, (double) z);
 	}
@@ -109,6 +124,18 @@ public class GNode {
 
 	public void setPosition(Vec3i vec) {
 		setPosition(vec.getX(), vec.getY(), vec.getZ());
+	}
+
+	public Vec3d getPostion() {
+		return new Vec3d(x, y, z);
+	}
+	
+	public double getPostionX() {
+		return x;
+	}
+	
+	public double getPostionY() {
+		return y;
 	}
 
 	public void setRotation(float rotationZ) {
@@ -186,37 +213,39 @@ public class GNode {
 		return alpha;
 	}
 
-	private class WorldPosScaleGetter {
-		Vec3d pos;
-		double scaleX = 1, scaleY = 1, scaleZ = 1;
-	}
+//	private class WorldPosScaleGetter {
+//		Vec3d pos;
+//		double scaleX = 1, scaleY = 1, scaleZ = 1;
+//	}
 
-	private WorldPosScaleGetter doWorldPosScaleGetter(WorldPosScaleGetter getter) {
-		if (this.parent == null) {
-			getter.pos = new Vec3d(x, y, z);
-			return getter;
-		}
-		getter = this.parent.doWorldPosScaleGetter(getter);
-		Vec3d myPos = new Vec3d(x * getter.scaleX, y * getter.scaleY, z * getter.scaleZ);
-		if (this.parent.hasRotation)
-			myPos = MathSupporter.rotation(myPos, AXIS_Z, this.parent.rotationZ / 180 * 3.1415926);
-		getter.pos = getter.pos.add(myPos);
-		if (hasScale) {
-			getter.scaleX = getter.scaleX * this.scaleX;
-			getter.scaleY = getter.scaleY * this.scaleY;
-			getter.scaleZ = getter.scaleZ * this.scaleZ;
-		}
-		return getter;
-	}
+//	private WorldPosScaleGetter doWorldPosScaleGetter(WorldPosScaleGetter getter) {
+//		if (this.parent == null) {
+//			getter.pos = new Vec3d(x, y, z);
+//			return getter;
+//		}
+//		getter = this.parent.doWorldPosScaleGetter(getter);
+//		Vec3d myPos = new Vec3d(x * getter.scaleX, y * getter.scaleY, z * getter.scaleZ);
+//		if (this.parent.hasRotation)
+//			myPos = MathSupporter.rotation(myPos, AXIS_Z, this.parent.rotationZ / 180 * 3.1415926);
+//		getter.pos = getter.pos.add(myPos);
+//		if (hasScale) {
+//			getter.scaleX = getter.scaleX * this.scaleX;
+//			getter.scaleY = getter.scaleY * this.scaleY;
+//			getter.scaleZ = getter.scaleZ * this.scaleZ;
+//		}
+//		return getter;
+//	}
 
 	public Vec3d getPostionInWorldPos() {
-		WorldPosScaleGetter getter = doWorldPosScaleGetter(new WorldPosScaleGetter());
-		return getter.pos;
+//		WorldPosScaleGetter getter = doWorldPosScaleGetter(new WorldPosScaleGetter());
+//		return getter.pos;
+		return new Vec3d(gX, gY, gZ);
 	}
 
 	public float getRotationInWorldPos() {
-		if (this.parent == null) return this.rotationZ;
-		return this.rotationZ + this.parent.getRotationInWorldPos();
+//		if (this.parent == null) return this.rotationZ;
+//		return this.rotationZ + this.parent.getRotationInWorldPos();
+		return this.gRotationZ;
 	}
 
 	public void addChild(GNode node) {
@@ -288,6 +317,7 @@ public class GNode {
 
 	protected void onEnterScene(GScene scene) {
 		this.scene = scene;
+		this.updateGlobalProps();
 		this.scene.addInteractNode(this);
 		for (GNode node : this.children) node.onEnterScene(scene);
 	}
@@ -314,13 +344,13 @@ public class GNode {
 	}
 
 	public boolean testHit(Vec3d worldPos) {
-		WorldPosScaleGetter getter = doWorldPosScaleGetter(new WorldPosScaleGetter());
+//		WorldPosScaleGetter getter = doWorldPosScaleGetter(new WorldPosScaleGetter());
 
-		Vec3d vec = getter.pos;
+		Vec3d vec = getPostionInWorldPos();
 		vec = worldPos.subtract(vec);
 
-		float width = (float) (this.width * getter.scaleX);
-		float height = (float) (this.height * getter.scaleY);
+		float width = (float) (this.width * gScaleX);
+		float height = (float) (this.height * gScaleY);
 
 		float aw = width * anchorX;
 		float ah = height * anchorY;
@@ -330,13 +360,11 @@ public class GNode {
 		float top = -ah;
 		float bottom = height - ah;
 
-		float rotation = this.getRotationInWorldPos();
+		float rotation = getRotationInWorldPos();
 		if (rotation != 0) vec = MathSupporter.rotation(vec, AXIS_Z, -rotation / 180 * 3.1415926);
 
 		return vec.x >= left && vec.x <= right && vec.y >= top && vec.y <= bottom;
 	}
-
-	protected boolean inUpdate;
 
 	public void update() {
 		if (this.gaps) updateGaps();
@@ -349,6 +377,7 @@ public class GNode {
 				if (action.isOver()) iter.remove();
 			}
 		}
+		updateGlobalProps();
 		int i = 0;
 		while (i < children.size()) {
 			GNode node = children.get(i);
@@ -368,51 +397,88 @@ public class GNode {
 		this.prevScaleZ = this.scaleZ;
 	}
 
-	protected double dx, dy, dz;
-	protected double dScaleX, dScaleY, dScaleZ;
-	protected float dRotationZ;
-	protected float dAlpha;
+	protected double gX, gY, gZ;
+	protected double gScaleX, gScaleY, gScaleZ;
+	protected float gRotationZ;
 
-	protected void refreshDrawParams(float partialTicks) {
-		dAlpha = alpha * (parent == null ? 1 : parent.dAlpha);
+	protected void updateGlobalProps() {
+		if (this.parent == null) {
+			gX = x;
+			gY = y;
+			gZ = z;
+			gScaleX = scaleX;
+			gScaleY = scaleY;
+			gScaleZ = scaleZ;
+			gRotationZ = rotationZ;
+			return;
+		}
+
+		Vec3d myPos = new Vec3d(x * parent.gScaleX, y * parent.gScaleY, z * parent.gScaleZ);
+		if (parent.rotationZ != 0) myPos = MathSupporter.rotation(myPos, AXIS_Z, parent.rotationZ / 180 * 3.1415926);
+
+		gX = parent.gX + myPos.x;
+		gY = parent.gY + myPos.y;
+		gZ = parent.gZ + myPos.z;
+
+		if (hasScale) {
+			gScaleX = parent.gScaleX * scaleX;
+			gScaleY = parent.gScaleY * scaleY;
+			gScaleZ = parent.gScaleZ * scaleZ;
+		} else {
+			gScaleX = parent.gScaleX;
+			gScaleY = parent.gScaleY;
+			gScaleZ = parent.gScaleZ;
+		}
+
+		gRotationZ = parent.gRotationZ + rotationZ;
+	}
+
+	protected double rX, rY, rZ;
+	protected double rScaleX, rScaleY, rScaleZ;
+	protected float rRotationZ;
+	protected float rAlpha;
+
+	protected void updateRenderProps(float partialTicks) {
+		rAlpha = alpha * (parent == null ? 1 : parent.rAlpha);
 		if (this.gaps) {
-			dx = RenderFriend.getPartialTicks(x, prevX, partialTicks);
-			dy = RenderFriend.getPartialTicks(y, prevY, partialTicks);
-			dz = RenderFriend.getPartialTicks(z, prevZ, partialTicks);
-			if (hasRotation) dRotationZ = RenderFriend.getPartialTicks(rotationZ, prevRotationZ, partialTicks);
+			rX = RenderFriend.getPartialTicks(x, prevX, partialTicks);
+			rY = RenderFriend.getPartialTicks(y, prevY, partialTicks);
+			rZ = RenderFriend.getPartialTicks(z, prevZ, partialTicks);
+			if (hasRotation) rRotationZ = RenderFriend.getPartialTicks(rotationZ, prevRotationZ, partialTicks);
 			if (hasScale) {
-				dScaleX = RenderFriend.getPartialTicks(scaleX, prevScaleX, partialTicks);
-				dScaleY = RenderFriend.getPartialTicks(scaleY, prevScaleY, partialTicks);
-				dScaleZ = RenderFriend.getPartialTicks(scaleZ, prevScaleZ, partialTicks);
+				rScaleX = RenderFriend.getPartialTicks(scaleX, prevScaleX, partialTicks);
+				rScaleY = RenderFriend.getPartialTicks(scaleY, prevScaleY, partialTicks);
+				rScaleZ = RenderFriend.getPartialTicks(scaleZ, prevScaleZ, partialTicks);
 			}
 		} else {
-			dx = this.x;
-			dy = this.y;
-			dz = this.z;
-			if (hasRotation) dRotationZ = this.rotationZ;
+			rX = x;
+			rY = y;
+			rZ = z;
+
+			if (hasRotation) rRotationZ = this.rotationZ;
 			if (hasScale) {
-				dScaleX = scaleX;
-				dScaleY = scaleY;
-				dScaleZ = scaleZ;
+				rScaleX = scaleX;
+				rScaleY = scaleY;
+				rScaleZ = scaleZ;
 			}
 		}
 	}
 
 	public void draw(float partialTicks) {
-		refreshDrawParams(partialTicks);
-		GlStateManager.color(color.r, color.g, color.b, dAlpha);
-		GlStateManager.translate(dx, dy, dz);
-		if (hasScale) GlStateManager.scale(dScaleX, dScaleY, dScaleZ);
-		if (hasRotation) GlStateManager.rotate(dRotationZ, 0, 0, 1);
+		updateRenderProps(partialTicks);
+		GlStateManager.color(color.r, color.g, color.b, rAlpha);
+		GlStateManager.translate(rX, rY, rZ);
+		if (hasScale) GlStateManager.scale(rScaleX, rScaleY, rScaleZ);
+		if (hasRotation) GlStateManager.rotate(rRotationZ, 0, 0, 1);
 		this.render(partialTicks);
 		for (GNode node : this.children) node.draw(partialTicks);
-		if (hasRotation) GlStateManager.rotate(-dRotationZ, 0, 0, 1);
-		if (hasScale) GlStateManager.scale(-dScaleX, -dScaleY, -dScaleZ);
-		GlStateManager.translate(-dx, -dy, -dz);
+		if (hasRotation) GlStateManager.rotate(-rRotationZ, 0, 0, 1);
+		if (hasScale) GlStateManager.scale(1 / rScaleX, 1 / rScaleY, 1 / rScaleZ);
+		GlStateManager.translate(-rX, -rY, -rZ);
 	}
 
 	protected void draw(BufferBuilder bufferbuilder, float partialTicks) {
-		refreshDrawParams(partialTicks);
+		updateRenderProps(partialTicks);
 		render(bufferbuilder, partialTicks);
 	}
 
@@ -422,5 +488,10 @@ public class GNode {
 
 	protected void render(BufferBuilder bufferbuilder, float partialTicks) {
 
+	}
+
+	@Override
+	public String toString() {
+		return "node " + this.name;
 	}
 }

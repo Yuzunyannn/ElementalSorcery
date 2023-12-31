@@ -2,6 +2,8 @@ package yuzunyannn.elementalsorcery.api.computer;
 
 import java.util.Arrays;
 
+import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
+
 public class StoragePath {
 
 	public static StoragePath of(String... names) {
@@ -35,6 +37,10 @@ public class StoragePath {
 	public StoragePath sub(int index) {
 		if (index >= this.paths.length - 1) return this;
 		return new StoragePath(Arrays.copyOfRange(this.paths, 0, index + 1));
+	}
+
+	public StoragePath addFront(String... strs) {
+		return of(JavaHelper.concat(strs, paths));
 	}
 
 	@Override

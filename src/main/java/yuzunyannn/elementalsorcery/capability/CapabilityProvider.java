@@ -5,6 +5,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import yuzunyannn.elementalsorcery.api.entity.IFairyCubeMaster;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
@@ -13,7 +14,7 @@ import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 public class CapabilityProvider {
 
 	/** 使用仓库提供 */
-	public static class ElementInventoryUseProvider implements ICapabilitySerializable<NBTTagCompound> {
+	public static class ElementInventoryUseProvider implements ICapabilityProvider {
 
 		private IElementInventory inventory;
 
@@ -37,19 +38,10 @@ public class CapabilityProvider {
 			return null;
 		}
 
-		@Override
-		public NBTTagCompound serializeNBT() {
-			return new NBTTagCompound();
-		}
-
-		@Override
-		public void deserializeNBT(NBTTagCompound compound) {
-
-		}
 	}
 
 	/** 使用仓库提供，检测是否有stack */
-	public static class ElementInventoryUseProviderCheck implements ICapabilitySerializable<NBTTagCompound> {
+	public static class ElementInventoryUseProviderCheck implements ICapabilityProvider {
 
 		private IElementInventory inventory;
 		private final ItemStack stack;
@@ -76,19 +68,10 @@ public class CapabilityProvider {
 			return null;
 		}
 
-		@Override
-		public NBTTagCompound serializeNBT() {
-			return new NBTTagCompound();
-		}
-
-		@Override
-		public void deserializeNBT(NBTTagCompound compound) {
-
-		}
 	}
 
 	/** 使用spellbook提供 */
-	public static class SpellbookUseProvider implements ICapabilitySerializable<NBTTagCompound> {
+	public static class SpellbookUseProvider implements ICapabilityProvider {
 
 		private Spellbook instance = new Spellbook();
 
@@ -116,14 +99,6 @@ public class CapabilityProvider {
 			return null;
 		}
 
-		@Override
-		public NBTTagCompound serializeNBT() {
-			return new NBTTagCompound();
-		}
-
-		@Override
-		public void deserializeNBT(NBTTagCompound compound) {
-		}
 	}
 
 	/** 精灵主人 */
@@ -164,34 +139,34 @@ public class CapabilityProvider {
 	}
 
 	public static class AdventurerProvider implements ICapabilitySerializable<NBTTagCompound> {
-	
+
 		private IAdventurer adventurer;
 		public final static IStorage<IAdventurer> storage = Adventurer.ADVENTURER_CAPABILITY.getStorage();
-	
+
 		public AdventurerProvider() {
 			this(null);
 		}
-	
+
 		public AdventurerProvider(IAdventurer adventurer) {
 			this.adventurer = adventurer == null ? new Adventurer() : adventurer;
 		}
-	
+
 		@Override
 		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
 			return Adventurer.ADVENTURER_CAPABILITY.equals(capability);
 		}
-	
+
 		@Override
 		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 			if (Adventurer.ADVENTURER_CAPABILITY.equals(capability)) return (T) adventurer;
 			return null;
 		}
-	
+
 		@Override
 		public NBTTagCompound serializeNBT() {
 			return (NBTTagCompound) storage.writeNBT(Adventurer.ADVENTURER_CAPABILITY, adventurer, null);
 		}
-	
+
 		@Override
 		public void deserializeNBT(NBTTagCompound compound) {
 			storage.readNBT(Adventurer.ADVENTURER_CAPABILITY, adventurer, null, compound);

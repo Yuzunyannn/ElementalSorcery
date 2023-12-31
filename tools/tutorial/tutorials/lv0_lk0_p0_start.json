@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:spellbook_launch",
+    "title": {
+        "zh_CN": "开始",
+        "en_US": "Start"
+    },
+    "describe": {
+        "zh_CN": "当你拿到这个§k???????§r记录§k????§r知识，按照这些步骤进行，尝试重新发展元素与魔法的§k???§r",
+        "en_US": "When you find this §K???????§r record §k????§r knowledge. Follow these steps to try and redevelop the Element and Magic's §k???§r."
+    }
+}

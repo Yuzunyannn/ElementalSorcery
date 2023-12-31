@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.Capability.IStorage;
 import net.minecraftforge.common.capabilities.CapabilityInject;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -306,7 +306,7 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 	}
 
 	// 能力提供者
-	public static class Provider implements ICapabilitySerializable<NBTTagCompound> {
+	public static class Provider implements ICapabilityProvider {
 
 		public final static IStorage<Grimoire> storage = GRIMOIRE_CAPABILITY.getStorage();
 		private Grimoire instance = new Grimoire();
@@ -330,14 +330,6 @@ public class Grimoire implements IItemCapbiltitySyn, INBTSerializable<NBTTagComp
 			return null;
 		}
 
-		@Override
-		public NBTTagCompound serializeNBT() {
-			return new NBTTagCompound();
-		}
-
-		@Override
-		public void deserializeNBT(NBTTagCompound compound) {
-		}
 	}
 
 }

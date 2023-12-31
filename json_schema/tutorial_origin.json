@@ -1,0 +1,35 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "Describe": {
+            "oneOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": {
+                        "type": "string"
+                    }
+                }
+            ]
+        }
+    },
+    "type": "object",
+    "required": [
+        "title",
+        "cover",
+        "describe"
+    ],
+    "properties": {
+        "title": {
+            "$ref": "#/definitions/Describe"
+        },
+        "describe": {
+            "$ref": "#/definitions/Describe"
+        },
+        "hover": {
+            "$ref": "#/definitions/Describe"
+        },
+        "cover": {
+            "$ref": "./es_item.json"
+        }
+    }
+}

@@ -3,11 +3,8 @@ package yuzunyannn.elementalsorcery.computer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilitySerializable;
-import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.computer.soft.EOS;
 
 public class ComputerProviderOfItem implements ICapabilitySerializable<NBTTagCompound> {
 
@@ -15,9 +12,10 @@ public class ComputerProviderOfItem implements ICapabilitySerializable<NBTTagCom
 
 	public ComputerProviderOfItem(ItemStack stack, String appearance) {
 		computer = new Computer(appearance);
-		Disk disk = new Disk();
-		disk.set(EOS.BOOT, new ResourceLocation(ESAPI.MODID, "command").toString());
-		computer.addDisk(disk);
+	}
+
+	public Computer getComputer() {
+		return computer;
 	}
 
 	@Override

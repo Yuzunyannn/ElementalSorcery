@@ -8,6 +8,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
+import yuzunyannn.elementalsorcery.nodegui.GItemStack;
 import yuzunyannn.elementalsorcery.render.model.ModelSpellbook;
 
 @SideOnly(Side.CLIENT)
@@ -32,14 +33,13 @@ public class RenderItemSpellbook implements IRenderItem {
 	public void render(ItemStack stack, float partialTicks) {
 		SpellbookRenderInfo info = stack.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null).renderInfo;
 		GlStateManager.pushMatrix();
-		GlStateManager.enableCull();
 		if (IRenderItem.isGUI(stack)) {
 			GlStateManager.translate((float) 0.275F, (float) 0.55F, (float) 0.5F);
 			GlStateManager.rotate(-55, 0.0F, 0.0F, 1.0F);
 			GlStateManager.rotate(-50, 1.0F, 0.0F, 0.0F);
 			GlStateManager.rotate(-40, 0.0F, 1.0F, 0.0F);
 			info.texture.bind();
-			GlStateManager.scale(0.09F, 0.09F, 0.09F);
+			GlStateManager.scale(0.09F, GItemStack.inDraw ? -0.09f : 0.09F, 0.09F);
 			this.modelBook.render(null, 0, 0, 0, 0, 0.0F, 1.0F);
 		} else if (stack.getItemFrame() != null) {
 			GlStateManager.translate(0.75f, 0.55F, 0.5F);

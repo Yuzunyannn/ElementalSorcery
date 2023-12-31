@@ -8,13 +8,17 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.computer.Computer;
 import yuzunyannn.elementalsorcery.computer.ComputerEnvItem;
 import yuzunyannn.elementalsorcery.computer.ComputerProviderOfItem;
+import yuzunyannn.elementalsorcery.computer.Disk;
+import yuzunyannn.elementalsorcery.computer.soft.EOS;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 
 public class ItemTutorialPad extends ItemPad {
@@ -25,7 +29,12 @@ public class ItemTutorialPad extends ItemPad {
 
 	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-		return new ComputerProviderOfItem(stack, "tutorialPad");
+		ComputerProviderOfItem provider = new ComputerProviderOfItem(stack, "tutorialPad");
+		Computer computer = provider.getComputer();
+		Disk disk = new Disk();
+		disk.set(EOS.BOOT, new ResourceLocation(ESAPI.MODID, "tutorial").toString());
+		computer.addDisk(disk);
+		return provider;
 	}
 
 	@Override

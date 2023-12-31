@@ -8,7 +8,7 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.IAPPGui;
 import yuzunyannn.elementalsorcery.api.computer.soft.IAPPGuiRuntime;
-import yuzunyannn.elementalsorcery.computer.soft.AppGuiThemePart;
+import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.nodegui.GScene;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 
@@ -17,12 +17,21 @@ public class APPGuiCommon implements IAPPGui {
 
 	public static final ResourceLocation TEXTURE_1 = new ResourceLocation(ESAPI.MODID,
 			"textures/gui/computer/common_1.png");
+	public static final int COMMON_CLICK_CD = 20;
 
 	protected final APP appInst;
 	protected GScene scene;
 	protected GNodeAppBar bar;
 	protected boolean isInit = false;
 	protected IAPPGuiRuntime runtime;
+
+	public static final RenderTexutreFrame FRAME_CLOSE = new RenderTexutreFrame(32, 11, 6, 6, 256, 256);
+	public final static RenderTexutreFrame FRAME_P1 = new RenderTexutreFrame(0, 19, 11, 11, 256, 256);
+	public final static RenderTexutreFrame FRAME_L1 = new RenderTexutreFrame(12, 19, 10, 3, 256, 256);
+	public final static RenderTexutreFrame FRAME_L2 = new RenderTexutreFrame(23, 19, 3, 10, 256, 256);
+	public final static RenderTexutreFrame FRAME_L3 = new RenderTexutreFrame(19, 24, 3, 27, 256, 256);
+	public final static RenderTexutreFrame FRAME_ITEM = new RenderTexutreFrame(0, 31, 18, 18, 256, 256);
+	public final static RenderTexutreFrame FRAME_ITEM_HOVER = new RenderTexutreFrame(0, 50, 18, 18, 256, 256);
 
 	public APPGuiCommon(APP appInst) {
 		this.appInst = appInst;
@@ -33,6 +42,8 @@ public class APPGuiCommon implements IAPPGui {
 		this.runtime = runtime;
 		if (isInit) return;
 		isInit = true;
+		this.scene.setDisplaySize(runtime.getDisplayWidth(), runtime.getDisplayHeight());
+		this.scene.setSize(runtime.getWidth(), runtime.getHeight());
 		onInit(runtime);
 	}
 
@@ -63,13 +74,16 @@ public class APPGuiCommon implements IAPPGui {
 	protected void initStatusBar(IAPPGuiRuntime runtime) {
 		int width = runtime.getWidth();
 		bar = new GNodeAppBar(this, width);
+		bar.setPosition(0, 0, 100);
 		scene.addChild(bar);
 	}
 
 	public Color getThemeColor(AppGuiThemePart part) {
 		switch (part) {
+		case BACKGROUND_1:
+			return new Color(0xf0d6ff);
 		case BACKGROUND_2:
-			return new Color(0xff9ace);
+			return new Color(0xda96f6);
 		case OBJECT_2:
 			return new Color(0x4c259b);
 		case OBJECT_2_ACTIVE:

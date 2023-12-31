@@ -7,6 +7,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
@@ -58,6 +59,10 @@ public class GImage extends GNode {
 
 	public void setSplit9(RenderRect rect) {
 		this.split9Rect = rect;
+	}
+
+	public void setSplit9() {
+		this.setSplit9(RenderFriend.SPLIT9_AVERAGE_RECT);
 	}
 
 	public void bindTextre() {
@@ -208,10 +213,10 @@ public class GImage extends GNode {
 		double bh = height - ah;
 
 		if (hasRotation) {
-			Vec3d vec1 = new Vec3d(dx - aw, dy + ah, dz);
-			Vec3d vec2 = new Vec3d(dx + bw, dy + ah, dz);
-			Vec3d vec3 = new Vec3d(dx + bw, dy - bh, dz);
-			Vec3d vec4 = new Vec3d(dx - aw, dy - bh, dz);
+			Vec3d vec1 = new Vec3d(rX - aw, rY + ah, rZ);
+			Vec3d vec2 = new Vec3d(rX + bw, rY + ah, rZ);
+			Vec3d vec3 = new Vec3d(rX + bw, rY - bh, rZ);
+			Vec3d vec4 = new Vec3d(rX - aw, rY - bh, rZ);
 
 			vec1 = MathSupporter.rotation(vec1, AXIS_Z, rotationZ);
 			vec2 = MathSupporter.rotation(vec2, AXIS_Z, rotationZ);
@@ -223,10 +228,10 @@ public class GImage extends GNode {
 			bufferbuilder.pos(vec3.x, vec3.y, vec3.z).tex(frame.x + frame.width, frame.y).endVertex();
 			bufferbuilder.pos(vec4.x, vec4.y, vec4.z).tex(frame.x, frame.y).endVertex();
 		} else {
-			bufferbuilder.pos(dx - aw, dy + ah, dz).tex(frame.x, frame.y + frame.height).endVertex();
-			bufferbuilder.pos(dx + bw, dy + ah, dz).tex(frame.x + frame.width, frame.y + frame.height).endVertex();
-			bufferbuilder.pos(dx + bw, dy - bh, dz).tex(frame.x + frame.width, frame.y).endVertex();
-			bufferbuilder.pos(dx - aw, dy - bh, dz).tex(frame.x, frame.y).endVertex();
+			bufferbuilder.pos(rX - aw, rY + ah, rZ).tex(frame.x, frame.y + frame.height).endVertex();
+			bufferbuilder.pos(rX + bw, rY + ah, rZ).tex(frame.x + frame.width, frame.y + frame.height).endVertex();
+			bufferbuilder.pos(rX + bw, rY - bh, rZ).tex(frame.x + frame.width, frame.y).endVertex();
+			bufferbuilder.pos(rX - aw, rY - bh, rZ).tex(frame.x, frame.y).endVertex();
 		}
 	}
 

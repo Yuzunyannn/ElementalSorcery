@@ -30,6 +30,14 @@ public class ComputerScreen {
 		buffer = new Framebuffer(frameBufferWidth, frameBufferHeight, true);
 	}
 
+	public int getDisplayHeight() {
+		return this.frameBufferHeight;
+	}
+
+	public int getDisplayWidth() {
+		return this.frameBufferWidth;
+	}
+
 	public int getHeight() {
 		return frameBufferHeight / 5;
 	}
@@ -51,7 +59,7 @@ public class ComputerScreen {
 		GlStateManager.matrixMode(GL11.GL_PROJECTION);
 		GlStateManager.pushMatrix();
 		GlStateManager.loadIdentity();
-		GlStateManager.ortho(0.0D, frameBufferWidth, frameBufferHeight, 0, -1000, 1000);
+		GlStateManager.ortho(0.0D, frameBufferWidth, frameBufferHeight, 0, -10000, 10000);
 		GlStateManager.matrixMode(GL11.GL_MODELVIEW);
 		GlStateManager.pushMatrix();
 		GlStateManager.loadIdentity();
@@ -61,7 +69,7 @@ public class ComputerScreen {
 		GlStateManager.enableBlend();
 		GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
 		GlStateManager.disableCull();
-
+		
 		letRender(partialTicks);
 
 		GlStateManager.disableBlend();
@@ -78,7 +86,7 @@ public class ComputerScreen {
 
 	void letRender(float partialTicks) {
 		IAPPGui gui = currGui;
-		GlStateManager.clearColor(1f, 1f, 1f, 0);
+		GlStateManager.clearColor(22 / 255f, 14 / 255f, 26 / 255f, 0);
 		GlStateManager.clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		GlStateManager.translate(0, frameBufferHeight, 0);
 		GlStateManager.scale(5, -5, 5);
@@ -126,7 +134,10 @@ public class ComputerScreen {
 	}
 
 	public void onMouseEvent(Vec3d vec3d) {
-		if (currGui != null) currGui.onMouseEvent(vec3d);
+		if (currGui != null) {
+			vec3d = new Vec3d(vec3d.x * getWidth(), vec3d.y * getHeight(), vec3d.z);
+			currGui.onMouseEvent(vec3d);
+		}
 	}
 
 }

@@ -11,6 +11,12 @@
                 "src/main/resources/assets/elementalsorcery/dungeon/**/*.json"
             ],
             "url": "./json_schema/game_func.json"
+        },
+        {
+            "fileMatch": [
+                "tools/tutorial/tutorials/**/*.json"
+            ],
+            "url": "./json_schema/tutorial_origin.json"
         }
     ],
     "json.format.enable": true,

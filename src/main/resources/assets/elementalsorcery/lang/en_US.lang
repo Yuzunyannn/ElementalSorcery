@@ -1317,3 +1317,10 @@ page.dungeonMemoryFragment=Memory Fragment
 page.dungeonMemoryFragment.ct=Essential items leading to the Deep Room can be found in the dungeon room. Colorful fragments can open any room. (usually without the need to craft them yourself, the fragments in the dungeon are self-sufficient, unless you lost the fragments you got)
 page.dungeonMemoryFeather=Looking for memory
 page.dungeonMemoryFeather.ct=Perhaps this feather is a good helper when memories hidden in the room cannot be found.
+
+es.tutorialui.describe=Darrate
+
+es.tutorial.title.0_0_0=Start
+es.tutorial.describe.0_0_0=When you find this §K???????§r record §k????§r knowledge. Follow these steps to try and redevelop the Element and Magic's §k???§r.
+es.tutorial.title.0_0_1=Element
+es.tutorial.describe.0_0_1=§k????§r magician find Element as special kind of magic from Items, which has power to change the World.\nIt's simply to let Element convert to Magic, but it's almost impossible to let Magic convert back to Element.

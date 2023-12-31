@@ -1,7 +1,11 @@
 package yuzunyannn.elementalsorcery.computer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
@@ -119,11 +123,13 @@ public class StorageMonitor implements IStorageMonitor, INBTSerializable<NBTTagC
 		Detector detector = Detector.instance;
 		detector.reset(storage);
 
-		for (String str : dataset.children.keySet()) {
+		Iterator<Entry<String, Node>> iter = dataset.children.entrySet().iterator();
+		while (iter.hasNext()) {
+			Entry<String, Node> entry = iter.next();
+			String str = entry.getKey();
 			if (!nodeTree.containsKey(str)) {
-				Node currDatasetNode = dataset.children.get(str);
-				dataset.children.remove(str);
-				detector.onChange(currDatasetNode);
+				detector.onChange(entry.getValue());
+				iter.remove();
 			}
 		}
 
@@ -188,7 +194,7 @@ public class StorageMonitor implements IStorageMonitor, INBTSerializable<NBTTagC
 
 		protected NBTTagList getOrCreateSyncList() {
 			NBTTagCompound nbt = getOrCreateNBT();
-			if (nbt.hasKey("sync", NBTTag.TAG_LIST)) return nbt.getTagList("rm", NBTTag.TAG_COMPOUND);
+			if (nbt.hasKey("sync", NBTTag.TAG_LIST)) return nbt.getTagList("sync", NBTTag.TAG_COMPOUND);
 			NBTTagList list = new NBTTagList();
 			nbt.setTag("sync", list);
 			return list;
@@ -211,15 +217,25 @@ public class StorageMonitor implements IStorageMonitor, INBTSerializable<NBTTagC
 
 	}
 
-	public void mergeChanges(NBTTagCompound changesNBT, IDeviceStorage storage) {
-		NBTTagList list = changesNBT.getTagList("rm", NBTTag.TAG_LIST);
-		for (int i = 0; i < list.tagCount(); i++)
-			storage.remove(NBTHelper.deserializeStrings((NBTTagList) list.get(i)));
-		list = changesNBT.getTagList("sync", NBTTag.TAG_COMPOUND);
-		for (int i = 0; i < list.tagCount(); i++) {
-			NBTTagCompound data = list.getCompoundTagAt(i);
-			storage.set(NBTHelper.deserializeStrings(data.getTagList("k", NBTTag.TAG_STRING)), data.getTag("v"));
+	public List<String[]> mergeChanges(NBTTagCompound changesNBT, IDeviceStorage storage) {
+		NBTTagList rmList = changesNBT.getTagList("rm", NBTTag.TAG_LIST);
+		NBTTagList syncList = changesNBT.getTagList("sync", NBTTag.TAG_COMPOUND);
+		List<String[]> changeList = new ArrayList<>(rmList.tagCount() + syncList.tagCount() + 1);
+
+		for (int i = 0; i < rmList.tagCount(); i++) {
+			String[] path = NBTHelper.deserializeStrings((NBTTagList) rmList.get(i));
+			changeList.add(path);
+			storage.remove(path);
 		}
+
+		for (int i = 0; i < syncList.tagCount(); i++) {
+			NBTTagCompound data = syncList.getCompoundTagAt(i);
+			String[] path = NBTHelper.deserializeStrings(data.getTagList("k", NBTTag.TAG_STRING));
+			changeList.add(path);
+			storage.set(path, data.getTag("v"));
+		}
+
+		return changeList;
 	}
 
 }

@@ -4,6 +4,8 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
+import yuzunyannn.elementalsorcery.api.computer.IStorageMonitor;
+import yuzunyannn.elementalsorcery.api.computer.StoragePath;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.util.var.IVariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
@@ -18,14 +20,22 @@ public class AuthorityStorage implements IDeviceStorage {
 	protected final IVariableSet variableSet;
 	protected final APP app;
 	protected final String[] paths;
+	protected final IStorageMonitor monitor;
 
 	public AuthorityStorage(IComputer computer, IDeviceStorage storage, String[] paths, APP app) {
 		this.computer = computer;
 		this.storage = storage;
 		this.app = app;
 		this.paths = (paths == null || paths.length <= 0) ? null : paths;
-		if (this.paths == null) this.variableSet = storage;
-		else this.variableSet = storage.getVariableSet(this.paths);
+		if (this.paths == null) {
+			this.variableSet = storage;
+			this.monitor = computer.getStorageMonitor(storage);
+		} else {
+			this.variableSet = storage.getVariableSet(this.paths);
+			IStorageMonitor monitor = computer.getStorageMonitor(storage);
+			if (monitor != null) monitor = new AuthorityMemoryMonitor(monitor, paths);
+			this.monitor = monitor;
+		}
 	}
 
 	public IDeviceStorage getStorage() {
@@ -36,13 +46,22 @@ public class AuthorityStorage implements IDeviceStorage {
 		if (!isWriteable()) throw new ComputerReadOnlyException(computer, storage);
 	}
 
+	@Override
+	public void markDirty(StoragePath path) {
+		if (monitor == null) return;
+		monitor.markDirty(path);
+	}
+
 	protected void onSet(String name, Object obj) {
+
 	}
 
 	protected void onRemove(String name) {
+
 	}
 
 	protected void onClear() {
+
 	}
 
 	@Override

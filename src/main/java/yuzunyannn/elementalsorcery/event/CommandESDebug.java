@@ -56,6 +56,7 @@ import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.parchment.Tutorials;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -105,6 +106,7 @@ public class CommandESDebug {
 				ElementMap.reflush();
 				sender.sendMessage(new TextComponentString("元素映射数据刷新成功!"));
 				Pages.init(side);
+				Tutorials.init(side);
 				sender.sendMessage(new TextComponentString("教程羊皮卷数据刷新成功!"));
 				ResearchRecipeManagement.reload();
 				sender.sendMessage(new TextComponentString("研究合成表刷新成功!"));

@@ -4,6 +4,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.computer.IStorageMonitor;
 import yuzunyannn.elementalsorcery.api.util.ESImpClassRegister;
 import yuzunyannn.elementalsorcery.api.util.ESImpClassRegister.EasyImp;
 
@@ -49,6 +50,15 @@ public class APP extends EasyImp<APP> {
 	}
 
 	public void onExit() {
+
+	}
+
+	public void initMemorySync(IStorageMonitor monitor) {
+
+	}
+
+	@SideOnly(Side.CLIENT)
+	public void onMemoryChange() {
 
 	}
 

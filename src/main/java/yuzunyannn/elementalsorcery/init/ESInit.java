@@ -160,6 +160,7 @@ import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.computer.Computer;
 import yuzunyannn.elementalsorcery.computer.ComputerStorage;
 import yuzunyannn.elementalsorcery.computer.soft.AppCommand;
+import yuzunyannn.elementalsorcery.computer.soft.AppTutorial;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
@@ -321,6 +322,7 @@ import yuzunyannn.elementalsorcery.mods.ae2.ESAE2Core;
 import yuzunyannn.elementalsorcery.mods.ic2.ESIC2Core;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.parchment.Tutorials;
 import yuzunyannn.elementalsorcery.potion.PotionBlessing;
 import yuzunyannn.elementalsorcery.potion.PotionCalamity;
 import yuzunyannn.elementalsorcery.potion.PotionCombatSkill;
@@ -935,6 +937,7 @@ public class ESInit {
 		ESCraftingRegistries.registerAll();
 		// 初始化所有说明界面
 		Pages.init(event.getSide());
+		Tutorials.init(event.getSide());
 		// 注册所有知识
 		TileRiteTable.init();
 		// 所有熔炼容量
@@ -1121,6 +1124,7 @@ public class ESInit {
 
 	static void registerAllApps() throws IllegalArgumentException, IllegalAccessException {
 		registerAPP(AppCommand.class, "command");
+		registerAPP(AppTutorial.class, "tutorial");
 	}
 
 	@SideOnly(Side.CLIENT)

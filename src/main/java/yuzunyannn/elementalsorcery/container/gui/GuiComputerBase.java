@@ -46,6 +46,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 	protected int computerX, computerY;
 	protected int computerWidth, computerHeight;
 	protected ComputerScreen screenFront;
+	protected float screenFrontAppear = 1;
 	protected boolean isPowerOn;
 
 	protected APP currApp;
@@ -63,6 +64,16 @@ public abstract class GuiComputerBase extends GuiContainer {
 		@Override
 		public int getHeight() {
 			return screenFront.getHeight();
+		}
+
+		@Override
+		public int getDisplayHeight() {
+			return screenFront.getDisplayHeight();
+		}
+
+		@Override
+		public int getDisplayWidth() {
+			return screenFront.getDisplayWidth();
 		}
 
 		@Override
@@ -121,11 +132,25 @@ public abstract class GuiComputerBase extends GuiContainer {
 
 		if (isPowerOn) {
 			GlStateManager.color(1, 1, 1, 1);
+			GlStateManager.disableBlend();
 			screenFront.bindTexture();
 			float offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 			offsetX = offsetX + computerX + computerWidth / 2;
 			offsetY = offsetY + computerY + computerHeight / 2;
-			RenderFriend.drawTextureRectInCenter(offsetX, offsetY, computerWidth, computerHeight);
+			GlStateManager.translate(offsetX, offsetY, 0);
+			GlStateManager.pushMatrix();
+			if (screenFrontAppear < 1) {
+				float prevScreenFrontAppear = screenFrontAppear - 0.075f;
+				float a = RenderFriend.getPartialTicks(screenFrontAppear, prevScreenFrontAppear, partialTicks);
+				if (a < 0.5) GlStateManager.scale(0, 0, 0);
+				else {
+					a = (a - 0.5f) / 0.5f;
+					GlStateManager.scale(a, a, 1);
+				}
+			}
+			RenderFriend.drawTextureRectInCenter(0, 0, computerWidth, computerHeight);
+			GlStateManager.enableBlend();
+			GlStateManager.popMatrix();
 		}
 
 	}
@@ -183,6 +208,8 @@ public abstract class GuiComputerBase extends GuiContainer {
 			openImage = null;
 		}
 
+		if (screenFrontAppear < 1) screenFrontAppear = Math.min(screenFrontAppear + 0.075f, 1);
+
 		try {
 			IOS ios = computer.getSystem();
 			APP app = ios.getAppInst(ios.getForeground());
@@ -220,11 +247,17 @@ public abstract class GuiComputerBase extends GuiContainer {
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		offsetX = offsetX + computerX;
 		offsetY = offsetY + computerY;
-		this.screenFront.onMouseEvent(new Vec3d(mouseX - offsetX, mouseY - offsetY, 0));
+		double emouseX = mouseX - offsetX;
+		double emouseY = mouseY - offsetY;
+		emouseX = emouseX / (double) this.computerWidth;
+		emouseY = emouseY / (double) this.computerHeight;
+		this.screenFront.onMouseEvent(new Vec3d(emouseX, emouseY, 0));
 	}
 
 	protected void updateWaitingOpenScene() {
 		if (openImage == null) return;
+
+		screenFrontAppear = 0;
 
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		offsetX = offsetX + computerX;

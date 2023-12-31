@@ -55,14 +55,24 @@ public abstract class EOS implements IOS {
 		return memoryCache;
 	}
 
+	protected IMemory getPureMemory() {
+		IMemory memory = computer.getMemory();
+		if (memory == null) throw new ComputerHardwareMissingException(this.computer, "memory is missing");
+		return memory;
+	}
+
 	@Override
 	public IMemory getMemory(APP app) {
-		String id = String.format(">app#%d", app.getPid());
+		String id = getMemoryRootByPid(app.getPid());
 		if (appMemoryCacheMap.containsKey(id)) return appMemoryCacheMap.get(id);
-		IMemory memory = this.getMemory();
+		IMemory memory = this.getPureMemory();
 		AuthorityMemory storage = new AuthorityMemory(computer, memory, new String[] { id }, app);
 		appMemoryCacheMap.put(id, storage);
 		return storage;
+	}
+
+	static public String getMemoryRootByPid(int pid) {
+		return String.format(">#%d", pid);
 	}
 
 	@Override
@@ -99,7 +109,7 @@ public abstract class EOS implements IOS {
 		if (id == -1) throw new ComputerNewProcessException(computer, appId);
 		IStorageMonitor storageMonitor = getMemoryMonitor();
 		if (storageMonitor != null) storageMonitor.markDirty(PATH_PROCESS);
-		onAppStartup(tree.getAppCache(this, id));
+		onAppStartup(tree, tree.getAppCache(this, id));
 		return id;
 	}
 
@@ -152,7 +162,7 @@ public abstract class EOS implements IOS {
 			storageMonitor.markDirty(PATH_PROCESS);
 		}
 
-		onAppStartup(tree.getAppCache(this, id));
+		onAppStartup(tree, tree.getAppCache(this, id));
 	}
 
 	@Override
@@ -164,12 +174,6 @@ public abstract class EOS implements IOS {
 		tree.removeProcess(pid);
 		IStorageMonitor storageMonitor = getMemoryMonitor();
 		if (storageMonitor != null) storageMonitor.markDirty(PATH_PROCESS);
-	}
-
-	protected void onAbort(ProcessTree tree, int pid, IComputerException e) {
-		int parentPid = tree.getParent(pid);
-		if (parentPid == -1) parentPid = 0;
-		tree.setForeground(parentPid);
 	}
 
 	@Override
@@ -197,8 +201,28 @@ public abstract class EOS implements IOS {
 		}
 	}
 
-	protected void onAppStartup(APP app) {
+	protected void onAppStartup(ProcessTree tree, APP app) {
 		app.onStartup();
+		IStorageMonitor storageMonitor = getMemoryMonitor();
+		if (storageMonitor != null) {
+			storageMonitor = new AuthorityMemoryMonitor(storageMonitor, getMemoryRootByPid(app.getPid()));
+			app.initMemorySync(storageMonitor);
+		}
+	}
+
+	protected void onAppExit(ProcessTree tree, APP app) {
+		onRemoveApp(tree, app.getPid());
+	}
+
+	protected void onAbort(ProcessTree tree, int pid, IComputerException e) {
+		onRemoveApp(tree, pid);
+	}
+
+	protected void onRemoveApp(ProcessTree tree, int pid) {
+		int parentPid = tree.getParent(pid);
+		if (parentPid == -1) parentPid = 0;
+		tree.setForeground(parentPid);
+		appMemoryCacheMap.remove(getMemoryRootByPid(pid));
 	}
 
 	@Override

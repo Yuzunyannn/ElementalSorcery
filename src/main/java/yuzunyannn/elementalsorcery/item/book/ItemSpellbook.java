@@ -22,7 +22,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
@@ -122,8 +122,7 @@ public class ItemSpellbook extends Item implements IItemUseClientUpdate, IRender
 	@Nullable
 	public net.minecraftforge.common.capabilities.ICapabilityProvider initCapabilities(ItemStack stack,
 			@Nullable NBTTagCompound nbt) {
-		ICapabilitySerializable<NBTTagCompound> cap = new CapabilityProvider.SpellbookUseProvider(stack,
-				this.getInventory(stack));
+		ICapabilityProvider cap = new CapabilityProvider.SpellbookUseProvider(stack, this.getInventory(stack));
 		if (SpellbookRenderInfo.renderInstance != null) {
 			Spellbook book = cap.getCapability(Spellbook.SPELLBOOK_CAPABILITY, null);
 			this.initRenderInfo(book.renderInfo);

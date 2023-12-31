@@ -9,6 +9,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
+import yuzunyannn.elementalsorcery.api.computer.StoragePath;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.util.var.IVariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
@@ -139,6 +140,11 @@ public class AuthorityAppDisk implements IDeviceStorage {
 	@Override
 	public boolean hasFlag(int flag) {
 		return coreDisk.hasFlag(flag);
+	}
+
+	@Override
+	public void markDirty(StoragePath path) {
+
 	}
 
 }

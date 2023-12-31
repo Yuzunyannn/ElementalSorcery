@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.IMemory;
@@ -29,6 +31,11 @@ public interface IOS {
 	@Nullable
 	APP getAppInst(int pid);
 
+	default void onStorageChange() {
+		onMemoryChange();
+		onDiskChange();
+	}
+
 	default void onMemoryChange() {
 	};
 
@@ -43,6 +50,11 @@ public interface IOS {
 
 	default void onUpdate() {
 	};
+
+	@SideOnly(Side.CLIENT)
+	default void onStorageSync(IDeviceStorage storage, List<String[]> changes) {
+
+	}
 
 	boolean isClient();
 

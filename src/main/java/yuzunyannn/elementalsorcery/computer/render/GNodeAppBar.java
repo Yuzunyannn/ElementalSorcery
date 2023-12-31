@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.computer.render;
 
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
-import yuzunyannn.elementalsorcery.computer.soft.AppGuiThemePart;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.util.helper.Color;
@@ -20,6 +19,8 @@ public class GNodeAppBar extends GNode {
 		image.setSplit9(RenderFriend.SPLIT9_AVERAGE_RECT);
 		image.setSize(width, 9);
 		this.addChild(image);
+
+		this.setSize(width, 9);
 
 		Color color1 = gui.getThemeColor(AppGuiThemePart.OBJECT_2);
 		Color color2 = gui.getThemeColor(AppGuiThemePart.OBJECT_2_ACTIVE);
@@ -42,21 +43,23 @@ public class GNodeAppBar extends GNode {
 		link.setSize(11, 7);
 		this.addChild(link);
 
-		closeBtn = new GImage(APPGuiCommon.TEXTURE_1, new RenderTexutreFrame(32, 11, 6, 6, 256, 256));
+		closeBtn = new GImage(APPGuiCommon.TEXTURE_1, APPGuiCommon.FRAME_CLOSE);
 		closeBtn.setColorRef(color1);
 		closeBtn.setPosition(4, 1, 1);
+		closeBtn.setName("app closeBtn");
 
 		shutDownBtn = new GImage(APPGuiCommon.TEXTURE_1, new RenderTexutreFrame(24, 11, 7, 6, 256, 256));
 		shutDownBtn.setColorRef(color1);
 		shutDownBtn.setPosition(4, 1, 1);
+		shutDownBtn.setName("app shutDownBtn");
 
-		closeBtn.setInteractor(new BtnInteractor(color1, color2) {
+		closeBtn.setInteractor(new BtnColorInteractor(color1, color2) {
 			@Override
 			public void onClick() {
 				gui.onCloseCurrAPP();
 			}
 		});
-		shutDownBtn.setInteractor(new BtnInteractor(color1, color2) {
+		shutDownBtn.setInteractor(new BtnColorInteractor(color1, color2) {
 			@Override
 			public void onClick() {
 				gui.onCloseComputer();

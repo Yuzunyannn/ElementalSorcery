@@ -30,7 +30,6 @@ public class RenderItemGrimoire implements IRenderItem {
 		RenderItemGrimoireInfo info = grimoire == null ? RenderItemGrimoireInfo.VEST : grimoire.getRenderInfo();
 
 		GlStateManager.pushMatrix();
-		GlStateManager.enableCull();
 		if (IRenderItem.isGUI(stack)) {
 			info.bind();
 			float spread = info.bookSpreadPrev + (info.bookSpread - info.bookSpreadPrev) * partialTicks;

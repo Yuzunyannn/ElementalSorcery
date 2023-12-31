@@ -13,7 +13,6 @@ public class AppCommandGui extends APPGuiCommon {
 	@Override
 	protected void onInit(IAPPGuiRuntime runtime) {
 		super.onInit(runtime);
-		
 	}
 
 }

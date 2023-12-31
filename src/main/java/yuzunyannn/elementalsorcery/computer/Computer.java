@@ -7,7 +7,9 @@ import java.util.UUID;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 import net.minecraftforge.common.capabilities.Capability;
@@ -131,7 +133,7 @@ public class Computer implements IComputer, IDeviceModifiable {
 	public void setMemory(Memory newMemory) {
 		if (memory == newMemory) return;
 		memory = newMemory;
-		this.os.onMemoryChange();
+		os.onMemoryChange();
 	}
 
 	@Override
@@ -157,9 +159,13 @@ public class Computer implements IComputer, IDeviceModifiable {
 		uuid = nbt.getUniqueId("#U");
 		inRunning = nbt.getBoolean("#R");
 		memoryStorageMonitor.deserializeNBT(nbt.getCompoundTag("#M~M"));
-		if (nbt.hasKey("#M", NBTTag.TAG_COMPOUND)) memory.deserializeNBT(nbt.getCompoundTag("#M"));
+		if (nbt.hasKey("#M", NBTTag.TAG_COMPOUND)) memory.deserializeNBT(nbt.getCompoundTag("#M").copy());
 		else memory = null;
-		disks = NBTHelper.getNBTSerializableList(nbt, "#D", Disk.class, NBTTagCompound.class);
+		disks.clear();
+		NBTTagList list = nbt.getTagList("#D", NBTTag.TAG_COMPOUND);
+		for (NBTBase n : list) disks.add(new Disk(((NBTTagCompound) n).copy()));
+		os.onStorageChange();
+//		System.out.println(nbt);
 	}
 
 	@Override
@@ -173,8 +179,8 @@ public class Computer implements IComputer, IDeviceModifiable {
 
 		if ("op".equals(method)) {
 			try {
-				int pid = (int) objects[1];
-				NBTTagCompound data = (NBTTagCompound) objects[2];
+				int pid = (int) objects[0];
+				NBTTagCompound data = (NBTTagCompound) objects[1];
 				operations.add(new AppData(pid, data));
 			} catch (ArrayIndexOutOfBoundsException | ClassCastException e) {}
 			return;
@@ -202,6 +208,7 @@ public class Computer implements IComputer, IDeviceModifiable {
 		memory.clear();
 		memoryStorageMonitor.clear();
 		if (env.isRemote()) return;
+		os.onStorageChange();
 		os.onStarting();
 	}
 
@@ -250,7 +257,10 @@ public class Computer implements IComputer, IDeviceModifiable {
 		if (env.isRemote()) {
 			if (nbt.hasUniqueId("#U")) this.uuid = nbt.getUniqueId("#U");
 			if (nbt.hasKey("#R")) this.inRunning = nbt.getBoolean("#R");
-			if (nbt.hasKey("#M~C")) this.memoryStorageMonitor.mergeChanges(nbt.getCompoundTag("#M~C"), memory);
+			if (nbt.hasKey("#M~C")) {
+				List<String[]> changes = this.memoryStorageMonitor.mergeChanges(nbt.getCompoundTag("#M~C"), memory);
+				this.getSystem().onStorageSync(memory, changes);
+			}
 			return;
 		}
 	}

@@ -37,6 +37,11 @@ public class VariableSet implements IVariableSet {
 
 		IVariableType<T> type;
 		Object obj;
+
+		@Override
+		public String toString() {
+			return String.valueOf(obj);
+		}
 	}
 
 	private NBTTagCompound nbt;
@@ -166,6 +171,11 @@ public class VariableSet implements IVariableSet {
 	public void deserializeNBT(NBTTagCompound nbt) {
 		this.map.clear();
 		this.nbt = nbt;
+	}
+
+	@Override
+	public String toString() {
+		return "map:" + this.map + " nbt:" + this.nbt;
 	}
 
 	public final static IVariableType<Byte> BYTE = new VTPrimitive.VTByte();

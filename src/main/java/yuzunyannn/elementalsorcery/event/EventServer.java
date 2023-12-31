@@ -856,4 +856,12 @@ public class EventServer {
 		}
 	}
 
+	@SubscribeEvent
+	public static void onAttachCapabilities(AttachCapabilitiesEvent<?> event) {
+		if (ItemStack.class == event.getGenericType()) {
+			System.out.println("??");
+		}
+
+	}
+
 }

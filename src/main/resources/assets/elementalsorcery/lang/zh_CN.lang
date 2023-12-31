@@ -1317,3 +1317,10 @@ page.dungeonMemoryFragment=记忆碎片
 page.dungeonMemoryFragment.ct=通往深层房间的必要物品，可在地牢的房间中找到。彩色的碎片可以开启任何的房间。（通常是不需要自己制作的，地牢中的碎片是自给自足的，除非你把已经到手的碎片给弄没了）
 page.dungeonMemoryFeather=寻找记忆
 page.dungeonMemoryFeather.ct=当找不到隐藏在房间中记忆时，或许这个羽毛是个好帮手。
+
+es.tutorialui.describe=描述
+
+es.tutorial.title.0_0_0=开始
+es.tutorial.describe.0_0_0=当你拿到这个§k???????§r记录§k????§r知识，按照这些步骤进行，尝试重新发展元素与魔法的§k???§r
+es.tutorial.title.0_0_1=元素
+es.tutorial.describe.0_0_1=§k????§r的研究，从魔力中发现了构成物质的元素，元素作为特殊的魔力，似乎可以来改变我的世界。\n元素可以转化到魔力，这是很容易的一件事，但反之则是几乎不可能的。

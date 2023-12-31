@@ -3,6 +3,7 @@ package yuzunyannn.elementalsorcery.computer;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
+import yuzunyannn.elementalsorcery.api.computer.StoragePath;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 
@@ -27,15 +28,15 @@ public abstract class DeviceStorage implements IDeviceStorage {
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setTag("set", set.serializeNBT());
-		nbt.setInteger("flag", flag);
+		nbt.setTag("#S", set.serializeNBT());
+		nbt.setInteger("#F", flag);
 		return nbt;
 	}
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
-		set.deserializeNBT(nbt.getCompoundTag("set"));
-		flag = nbt.getInteger("flag");
+		set.deserializeNBT(nbt.getCompoundTag("#S"));
+		flag = nbt.getInteger("#F");
 	}
 
 	@Override
@@ -81,6 +82,11 @@ public abstract class DeviceStorage implements IDeviceStorage {
 	@Override
 	public boolean isEmpty() {
 		return set.isEmpty();
+	}
+
+	@Override
+	public void markDirty(StoragePath path) {
+
 	}
 
 }
