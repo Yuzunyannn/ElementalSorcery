@@ -1,12 +1,20 @@
 package yuzunyannn.elementalsorcery.container.gui;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.function.Supplier;
 
 import org.lwjgl.input.Mouse;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
@@ -52,6 +60,34 @@ public abstract class GuiComputerBase extends GuiContainer {
 	protected APP currApp;
 	protected IAPPGui appGUI;
 
+	protected static class TooltipInfo {
+		final Vec3d vec;
+		final Supplier<List<String>> factory;
+		final ItemStack stack;
+		int duration;
+
+		public TooltipInfo(Vec3d vec, Supplier<List<String>> factory, int duration) {
+			this.vec = vec;
+			this.factory = factory;
+			this.duration = duration;
+			this.stack = ItemStack.EMPTY;
+		}
+
+		public TooltipInfo(Vec3d vec, ItemStack stack, int duration) {
+			this.vec = vec;
+			this.factory = () -> new ArrayList<>();
+			this.duration = duration;
+			this.stack = stack;
+		}
+
+		public boolean isMouseFollow() {
+			return this.vec.z == -99;
+		}
+
+	}
+
+	protected Map<String, TooltipInfo> tooltipMap = new HashMap<>();
+
 	class APPGuiRuntime implements IAPPGuiRuntime {
 
 		int pid = -1;
@@ -90,6 +126,16 @@ public abstract class GuiComputerBase extends GuiContainer {
 			containerComputer.sendToServer(nbt);
 		}
 
+		@Override
+		public void setTooltip(String key, Vec3d vec, int duration, Supplier<List<String>> factory) {
+			tooltipMap.put(key, new TooltipInfo(vec, factory, duration));
+		}
+
+		@Override
+		public void setTooltip(String key, Vec3d vec, int duration, ItemStack stack) {
+			tooltipMap.put(key, new TooltipInfo(vec, stack, duration));
+		}
+
 	}
 
 	protected APPGuiRuntime runtime = new APPGuiRuntime();
@@ -120,7 +166,22 @@ public abstract class GuiComputerBase extends GuiContainer {
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		this.drawDefaultBackground();
 		super.drawScreen(mouseX, mouseY, partialTicks);
-//		this.renderHoveredToolTip(mouseX, mouseY);
+
+		Iterator<TooltipInfo> iter = tooltipMap.values().iterator();
+		while (iter.hasNext()) {
+			TooltipInfo info = iter.next();
+			int x, y;
+			if (info.isMouseFollow()) {
+				x = mouseX;
+				y = mouseY;
+			} else {
+				x = (int) info.vec.x;
+				y = (int) info.vec.y;
+			}
+			ItemStack stack = info.stack;
+			if (stack.isEmpty()) this.drawHoveringText(info.factory.get(), x, y, fontRenderer);
+			else this.renderToolTip(stack, x, y);
+		}
 	}
 
 	@Override
@@ -131,6 +192,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 		GlStateManager.popMatrix();
 
 		if (isPowerOn) {
+			GlStateManager.pushMatrix();
 			GlStateManager.color(1, 1, 1, 1);
 			GlStateManager.disableBlend();
 			screenFront.bindTexture();
@@ -138,7 +200,6 @@ public abstract class GuiComputerBase extends GuiContainer {
 			offsetX = offsetX + computerX + computerWidth / 2;
 			offsetY = offsetY + computerY + computerHeight / 2;
 			GlStateManager.translate(offsetX, offsetY, 0);
-			GlStateManager.pushMatrix();
 			if (screenFrontAppear < 1) {
 				float prevScreenFrontAppear = screenFrontAppear - 0.075f;
 				float a = RenderFriend.getPartialTicks(screenFrontAppear, prevScreenFrontAppear, partialTicks);
@@ -177,6 +238,13 @@ public abstract class GuiComputerBase extends GuiContainer {
 		this.scene.tick();
 
 		if (exception != null) { return; }
+
+		Iterator<Entry<String, TooltipInfo>> iter = tooltipMap.entrySet().iterator();
+		while (iter.hasNext()) {
+			Entry<String, TooltipInfo> entry = iter.next();
+			TooltipInfo info = entry.getValue();
+			if (info.duration-- <= 0) iter.remove();
+		}
 
 //		if (ESAPI.isDevelop) {
 //			if (appGUI instanceof AppCommandGui) {

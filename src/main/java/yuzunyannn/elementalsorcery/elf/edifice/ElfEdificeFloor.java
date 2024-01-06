@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.elf.quest.loader.IQuestCreator;
 import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardExp;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
-import yuzunyannn.elementalsorcery.util.item.ItemRec;
+import yuzunyannn.elementalsorcery.util.item.BigItemStack;
 
 public class ElfEdificeFloor extends IForgeRegistryEntry.Impl<ElfEdificeFloor> {
 
@@ -54,7 +54,7 @@ public class ElfEdificeFloor extends IForgeRegistryEntry.Impl<ElfEdificeFloor> {
 	/** 获取本层的投资任务 */
 	public Quest getInvestQuest(TileElfTreeCore core, Random rand) {
 		// 随机获取一些方块
-		Map<ItemRec, Integer> needMap = new HashMap<>();
+		Map<BigItemStack, Integer> needMap = new HashMap<>();
 		FloorInfo info = new FloorInfo(this, BlockPos.ORIGIN);
 		IBuilder builder = core.getBuilder(info);
 		info.setFloorData(this.createBuildData(builder, rand));
@@ -68,21 +68,21 @@ public class ElfEdificeFloor extends IForgeRegistryEntry.Impl<ElfEdificeFloor> {
 			ItemStack stack = itemInfo.getItemStack();
 			if (stack.isEmpty()) continue;
 			if (rand.nextInt(5) != 0) continue;
-			ItemRec rec = new ItemRec(stack);
+			BigItemStack rec = new BigItemStack(stack);
 			Integer n = needMap.get(rec);
 			n = n == null ? 0 : n;
 			needMap.put(rec, n + 1);
 			rCount++;
 		}
-		List<ItemRec> needs = new ArrayList<ItemRec>();
-		for (Entry<ItemRec, Integer> entry : needMap.entrySet()) {
-			ItemRec rec = entry.getKey();
+		List<BigItemStack> needs = new ArrayList<BigItemStack>();
+		for (Entry<BigItemStack, Integer> entry : needMap.entrySet()) {
+			BigItemStack rec = entry.getKey();
 			rec.getItemStack().setCount(entry.getValue());
 			needs.add(rec);
 		}
-		needs.add(new ItemRec(Items.WATER_BUCKET, 1));
-		if (rand.nextBoolean()) needs.add(new ItemRec(Items.BEEF, rand.nextInt(5) + 1));
-		if (rand.nextBoolean()) needs.add(new ItemRec(Items.CAKE, rand.nextInt(5) + 1));
+		needs.add(new BigItemStack(Items.WATER_BUCKET, 1));
+		if (rand.nextBoolean()) needs.add(new BigItemStack(Items.BEEF, rand.nextInt(5) + 1));
+		if (rand.nextBoolean()) needs.add(new BigItemStack(Items.CAKE, rand.nextInt(5) + 1));
 		int weight = rand.nextInt(16) + (int) (rCount / (float) count * this.getInvestWeight()) + 1;
 		// 创建任务
 		Quest quest = Quests.createBuildTask(core.getPos(), this, weight, needs);

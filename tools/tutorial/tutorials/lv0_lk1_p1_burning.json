@@ -1,0 +1,28 @@
+{
+    "cover": "elementalsorcery:hearth",
+    "title": {
+        "zh_CN": "更好的熔炉套装",
+        "en_US": "Better Furnace Kit"
+    },
+    "describe": {
+        "zh_CN": "灶台中可以放入燃料，用来加热上方的方块。\\n灶台的材质有：原石、铁、蓝晶石，依次排序，材质等级越高的灶台，加热上方方块的速度越快。\\n烧炼箱可以像熔炉一样的使用，不过它可以同时烧两种东西。\\n烧炼箱的材质有：原石、铁、蓝晶石，铁级以上的烧炼箱子可以放置额外物品共同烧制，比如放入“末影之眼”来烧制蓝晶石矿？\\n将烧炼放在蓝晶石灶台上，体验飞一样的烧炼速度。",
+        "en_US": "Add fuel to Hearth, heat block above Hearth.\\nThe materials of Hearth: cobblestone, iron, kyanite. The higher the material level of the Hearth, the faster heating block speed.\\nSmelting Box can used like Furnace, but it can burn two things at the same time.\\nThe materials of Smelting Box: cobblestone, iron, kyanite. Extra Item can be placed in material of iron or kyanite. Such as use Eye of Ender as extra item when burning kyanite ore maybe can get some windfall."
+    },
+    "crafts": [
+        {
+            "id": "elementalsorcery:hearth",
+            "data": 0
+        },
+        {
+            "id": "elementalsorcery:hearth",
+            "data": 1
+        },
+        {
+            "id": "elementalsorcery:hearth",
+            "data": 2
+        },
+        "elementalsorcery:smelt_box",
+        "elementalsorcery:smelt_box_iron",
+        "elementalsorcery:smelt_box_kyanite"
+    ]
+}

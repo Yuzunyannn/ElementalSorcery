@@ -31,6 +31,8 @@ public class GNode {
 	protected GNode parent;
 	protected GScene scene;
 
+	protected boolean visible = true;
+
 	protected double x, y, z;
 	protected double scaleX = 1, scaleY = 1, scaleZ = 1;
 	protected float rotationZ;
@@ -62,6 +64,14 @@ public class GNode {
 		return name;
 	}
 
+	public void setVisible(boolean visible) {
+		this.visible = visible;
+	}
+
+	public boolean isVisible() {
+		return visible;
+	}
+
 	public void setWidth(double width) {
 		this.width = width;
 	}
@@ -85,6 +95,11 @@ public class GNode {
 		this.anchorX = (float) x;
 		this.anchorY = (float) y;
 		this.anchorZ = (float) z;
+	}
+
+	public void setAnchor(double x, double y) {
+		this.anchorX = (float) x;
+		this.anchorY = (float) y;
 	}
 
 	public Vec3d getAnchor() {
@@ -114,6 +129,10 @@ public class GNode {
 		this.y = y;
 	}
 
+	public void setPositionZ(double z) {
+		this.z = z;
+	}
+
 	public void setPosition(int x, int y, int z) {
 		setPosition((double) x, (double) y, (double) z);
 	}
@@ -129,11 +148,11 @@ public class GNode {
 	public Vec3d getPostion() {
 		return new Vec3d(x, y, z);
 	}
-	
+
 	public double getPostionX() {
 		return x;
 	}
-	
+
 	public double getPostionY() {
 		return y;
 	}
@@ -344,6 +363,7 @@ public class GNode {
 	}
 
 	public boolean testHit(Vec3d worldPos) {
+		if (!visible) return false;
 //		WorldPosScaleGetter getter = doWorldPosScaleGetter(new WorldPosScaleGetter());
 
 		Vec3d vec = getPostionInWorldPos();
@@ -382,7 +402,7 @@ public class GNode {
 		while (i < children.size()) {
 			GNode node = children.get(i);
 			node.update();
-			if (children.isEmpty()) break;
+			if (i >= children.size()) break;
 			if (children.get(i) == node) i++;
 		}
 	}
@@ -465,6 +485,7 @@ public class GNode {
 	}
 
 	public void draw(float partialTicks) {
+		if (!visible) return;
 		updateRenderProps(partialTicks);
 		GlStateManager.color(color.r, color.g, color.b, rAlpha);
 		GlStateManager.translate(rX, rY, rZ);

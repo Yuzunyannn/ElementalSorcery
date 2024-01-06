@@ -41,7 +41,10 @@ public class DragInteractor implements IGInteractor {
 
 		if (nh <= rh) dy = 0;
 		else {
-			// todo
+			if (nVec.y + dy + node.getHeight() * (1 - nAhc.y) < rect.bottom)
+				dy = rect.bottom - node.getHeight() * (1 - nAhc.y) - nVec.y;
+			else if (nVec.y + dy - node.getHeight() * nAhc.y > rect.top)
+				dy = rect.top - nVec.y + node.getHeight() * nAhc.y;
 		}
 
 		if (nw <= rw) dx = 0;

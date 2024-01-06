@@ -6,43 +6,43 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 
-public class ItemRec implements INBTSerializable<NBTTagCompound> {
+public class BigItemStack implements INBTSerializable<NBTTagCompound> {
 
 	private ItemStack stack;
 
-	public ItemRec() {
+	public BigItemStack() {
 		stack = ItemStack.EMPTY;
 	}
 
-	public ItemRec(Item item) {
+	public BigItemStack(Item item) {
 		this.stack = new ItemStack(item);
 	}
 
-	public ItemRec(Item item, int n) {
+	public BigItemStack(Item item, int n) {
 		this.stack = new ItemStack(item, n);
 	}
 
-	public ItemRec(Item item, int n, int meta) {
+	public BigItemStack(Item item, int n, int meta) {
 		this.stack = new ItemStack(item, n, meta);
 	}
 
-	public ItemRec(Block block) {
+	public BigItemStack(Block block) {
 		this.stack = new ItemStack(block);
 	}
 
-	public ItemRec(Block block, int n) {
+	public BigItemStack(Block block, int n) {
 		this.stack = new ItemStack(block, n);
 	}
 
-	public ItemRec(Block block, int n, int meta) {
+	public BigItemStack(Block block, int n, int meta) {
 		this.stack = new ItemStack(block, n, meta);
 	}
 
-	public ItemRec(ItemStack stack) {
+	public BigItemStack(ItemStack stack) {
 		this.stack = stack;
 	}
 
-	public ItemRec(NBTTagCompound nbt) {
+	public BigItemStack(NBTTagCompound nbt) {
 		this.deserializeNBT(nbt);
 	}
 
@@ -72,7 +72,7 @@ public class ItemRec implements INBTSerializable<NBTTagCompound> {
 	@Override
 	public boolean equals(Object obj) {
 		if (obj == this) return true;
-		if (obj instanceof ItemRec) return ((ItemRec) obj).getItemStack().isItemEqual(this.getItemStack());
+		if (obj instanceof BigItemStack) return ((BigItemStack) obj).getItemStack().isItemEqual(this.getItemStack());
 		return false;
 	}
 

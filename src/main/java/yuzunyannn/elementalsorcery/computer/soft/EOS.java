@@ -6,14 +6,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.IMemory;
 import yuzunyannn.elementalsorcery.api.computer.IStorageMonitor;
+import yuzunyannn.elementalsorcery.api.computer.ISyncWatcher;
 import yuzunyannn.elementalsorcery.api.computer.StoragePath;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
@@ -23,6 +26,7 @@ import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerAppDamagedException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerBootException;
+import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerHardwareMissingException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerNewProcessException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerProcessNotExistException;
@@ -157,10 +161,7 @@ public abstract class EOS implements IOS {
 		if (id == -1) throw new ComputerBootException(computer, "root process fail");
 
 		IStorageMonitor storageMonitor = getMemoryMonitor();
-		if (storageMonitor != null) {
-			storageMonitor.add(PATH_PROCESS);
-			storageMonitor.markDirty(PATH_PROCESS);
-		}
+		if (storageMonitor != null) storageMonitor.markDirty(PATH_PROCESS);
 
 		onAppStartup(tree, tree.getAppCache(this, id));
 	}
@@ -178,6 +179,10 @@ public abstract class EOS implements IOS {
 
 	@Override
 	public void onUpdate() {
+		each(app -> app.onUpdate());
+	}
+
+	protected void each(Consumer<APP> func) {
 		IMemory memory = this.getMemory();
 		ProcessTree tree = memory.get(PROCESS);
 		Iterator<Entry<Integer, ProcessNode>> iter = tree.getIterator();
@@ -185,7 +190,7 @@ public abstract class EOS implements IOS {
 		while (iter.hasNext()) {
 			Entry<Integer, ProcessNode> entry = iter.next();
 			try {
-				tree.getAppCache(this, entry.getKey()).onUpdate();
+				func.accept(tree.getAppCache(this, entry.getKey()));
 			} catch (Exception e) {
 				if (entry.getKey() == 0) throw e;
 				if (e instanceof IComputerException) {
@@ -223,6 +228,36 @@ public abstract class EOS implements IOS {
 		if (parentPid == -1) parentPid = 0;
 		tree.setForeground(parentPid);
 		appMemoryCacheMap.remove(getMemoryRootByPid(pid));
+	}
+
+	@Override
+	public void onStorageChange() {
+		IOS.super.onStorageChange();
+		try {
+			resetMonitor();
+		} catch (ComputerException e) {}
+	}
+
+	protected void resetMonitor() {
+		IStorageMonitor storageMonitor = getMemoryMonitor();
+		if (storageMonitor != null) {
+			storageMonitor.add(PATH_PROCESS);
+			each(app -> {
+				IStorageMonitor appStorageMonitor = new AuthorityMemoryMonitor(storageMonitor,
+						getMemoryRootByPid(app.getPid()));
+				app.initMemorySync(appStorageMonitor);
+			});
+		}
+	}
+
+	@Override
+	public NBTTagCompound detectChanges(ISyncWatcher watcher) {
+		return null;
+	}
+
+	@Override
+	public void mergeChanges(NBTTagCompound nbt) {
+		
 	}
 
 	@Override

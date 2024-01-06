@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:star_flower",
+    "title": {
+        "zh_CN": "神奇的花",
+        "en_US": "Mysterious Flower"
+    },
+    "describe": {
+        "zh_CN": "在§k????§r之后，一种极为稀少的白色花朵开始在自然界中生长，我们称之为星之花。其极为脆弱，无法掉落。\\n不过它可以为你带来好运，空手或持有某些道具右键向其许愿，它可能会赐予你一些buff或者工具，或是为你将你传送回家。\\n不过许愿后的星之花将会枯萎。",
+        "en_US": "After §k????§r, an extremely rare white flower began to grow in overworld, which we call the Star Flower. Star Flower is extremely fragile and cannot be dropped.\\nBut it can bring you good luck, holding some Item or not and right click it to make a wish, Steve may get some buffs or tools, or bring steve to home.\\nHowever, the Star Flower will withered after wish."
+    }
+}

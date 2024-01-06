@@ -1,0 +1,19 @@
+{
+    "cover": "elementalsorcery:kyanite",
+    "title": {
+        "zh_CN": "重要资源",
+        "en_US": "Important Ore"
+    },
+    "describe": {
+        "zh_CN": "蓝晶石是生成在地下的一种带有魔力的矿物，19层以下可能更容易找到它。\\n蓝晶石矿可以经过烧制形成蓝晶石。\\n在烧制蓝晶石矿的时候，通过“末影之眼”的辅助，可以将存在于蓝晶石矿物中的魔力碎片取出。\\n蓝晶石可以制作工具，与铁的挖掘等级相同，不过有更好的耐久性。",
+        "en_US": "Kyanite is a kind of magic mineral that steve can find it's ore under y 19.\\nBurning kyanite ore whit Extra Item Eye of Ender can take out Magic Fragment from it.\\nKyanite can be used to make tools, which is the same harvestLevel as iron's, but has better durability."
+    },
+    "crafts": [
+        "elementalsorcery:kyanite",
+        "elementalsorcery:kyanite_axe",
+        "elementalsorcery:kyanite_hoe",
+        "elementalsorcery:kyanite_pickaxe",
+        "elementalsorcery:kyanite_spade",
+        "elementalsorcery:kyanite_sword"
+    ]
+}

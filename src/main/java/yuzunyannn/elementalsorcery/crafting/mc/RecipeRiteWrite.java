@@ -9,11 +9,11 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.parchment.IPageCraftDynamicIngredients;
+import yuzunyannn.elementalsorcery.parchment.ITutorialCraftDynamicIngredients;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 
 public class RecipeRiteWrite extends net.minecraftforge.registries.IForgeRegistryEntry.Impl<IRecipe>
-		implements IRecipe, IPageCraftDynamicIngredients {
+		implements IRecipe, ITutorialCraftDynamicIngredients {
 	
 	/** 获取物品内置物品 */
 	public static ItemStack getInnerStack(ItemStack stack) {

@@ -15,6 +15,7 @@ import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
+import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.util.json.Json.ParseExceptionCode;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
@@ -135,5 +136,9 @@ public class Tutorials {
 			if (tutorial.getLevel() >= 0) throw e;
 		}
 		tutorial.setDescribeKey(json.needString("describe"));
+		if (json.has("crafts")) {
+			List<ItemRecord> records = json.needItems("crafts");
+			tutorial.setCrafts(ItemRecord.asItemStackList(records));
+		}
 	}
 }

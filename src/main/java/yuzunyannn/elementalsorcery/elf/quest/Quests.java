@@ -26,7 +26,7 @@ import yuzunyannn.elementalsorcery.elf.quest.reward.QuestRewardFame;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.TextHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
-import yuzunyannn.elementalsorcery.util.item.ItemRec;
+import yuzunyannn.elementalsorcery.util.item.BigItemStack;
 import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
@@ -99,7 +99,7 @@ public class Quests {
 	}
 
 	public static Quest createBuildTask(BlockPos corePos, ElfEdificeFloor floorType, int weight,
-			List<ItemRec> itemstack) {
+			List<BigItemStack> itemstack) {
 		QuestType type = new QuestType();
 		type.setName("invest");
 		type.addCondition(QuestCondition.REGISTRY.newInstance(QuestConditionNeedItem.class).needItem(itemstack));

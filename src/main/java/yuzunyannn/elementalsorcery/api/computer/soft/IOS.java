@@ -9,8 +9,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.IMemory;
+import yuzunyannn.elementalsorcery.api.computer.ISyncDetectable;
 
-public interface IOS {
+public interface IOS extends ISyncDetectable {
 
 	IMemory getMemory();
 

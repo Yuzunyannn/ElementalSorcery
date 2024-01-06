@@ -6,7 +6,7 @@ import java.util.List;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import yuzunyannn.elementalsorcery.util.item.ItemRec;
+import yuzunyannn.elementalsorcery.util.item.BigItemStack;
 
 /** 描述物品记录，是stack还是单单是物品，同时还可以作为一个物品池 */
 public class ItemRecord {
@@ -30,9 +30,9 @@ public class ItemRecord {
 		return array;
 	}
 
-	public static List<ItemRec> asItemRecList(List<ItemRecord> itemRecords) {
-		List<ItemRec> list = new ArrayList<>();
-		for (ItemRecord ir : itemRecords) list.add(new ItemRec(ir.getStack()));
+	public static List<BigItemStack> asItemRecList(List<ItemRecord> itemRecords) {
+		List<BigItemStack> list = new ArrayList<>();
+		for (ItemRecord ir : itemRecords) list.add(new BigItemStack(ir.getStack()));
 		return list;
 	}
 

@@ -1,5 +1,8 @@
 package yuzunyannn.elementalsorcery.computer.render;
 
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.PositionedSoundRecord;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.nodegui.IGInteractor;
@@ -12,6 +15,11 @@ public class BtnBaseInteractor implements IGInteractor {
 
 	public BtnBaseInteractor() {
 
+	}
+
+	@Override
+	public boolean isHoverable(GNode node) {
+		return true;
 	}
 
 	@Override
@@ -33,15 +41,14 @@ public class BtnBaseInteractor implements IGInteractor {
 	public void onMouseReleased(GNode node, Vec3d worldPos) {
 		isClicking = false;
 		double sqLen = clickVec.squareDistanceTo(worldPos);
-		if (sqLen < 16 && node.testHit(worldPos)) {
-			onClick();
-			isHover = true;
-		} else isHover = false;
+		if (sqLen < 16 && node.testHit(worldPos)) onClick();
+
 		onHoverChange(node);
 	}
 
 	public void onPressed(GNode node) {
-
+		Minecraft.getMinecraft().getSoundHandler()
+				.playSound(PositionedSoundRecord.getMasterRecord(SoundEvents.UI_BUTTON_CLICK, 1.0F));
 	}
 
 	public void onHoverChange(GNode node) {

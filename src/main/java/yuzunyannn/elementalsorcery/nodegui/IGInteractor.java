@@ -24,9 +24,12 @@ public interface IGInteractor {
 
 	}
 
+	default public boolean isHoverable(GNode node) {
+		return false;
+	}
+
 	default public void onMouseHover(GNode node, Vec3d worldPos, boolean isHover) {
 
 	}
-
 
 }

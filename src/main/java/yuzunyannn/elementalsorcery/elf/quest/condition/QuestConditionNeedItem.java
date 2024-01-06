@@ -25,21 +25,21 @@ import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
 import yuzunyannn.elementalsorcery.item.book.ItemSpellbook;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
-import yuzunyannn.elementalsorcery.util.item.ItemRec;
+import yuzunyannn.elementalsorcery.util.item.BigItemStack;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class QuestConditionNeedItem extends QuestCondition implements IQuestConditionPrice {
 
-	protected List<ItemRec> needs = new ArrayList<>();
+	protected List<BigItemStack> needs = new ArrayList<>();
 
-	public QuestConditionNeedItem needItem(List<ItemRec> needs) {
+	public QuestConditionNeedItem needItem(List<BigItemStack> needs) {
 		this.needs = needs;
 		return this;
 	}
 
-	public QuestConditionNeedItem needItem(ItemRec... needs) {
-		this.needs = new ArrayList<ItemRec>(Arrays.asList(needs));
+	public QuestConditionNeedItem needItem(BigItemStack... needs) {
+		this.needs = new ArrayList<BigItemStack>(Arrays.asList(needs));
 		return this;
 	}
 
@@ -55,7 +55,7 @@ public class QuestConditionNeedItem extends QuestCondition implements IQuestCond
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbt) {
-		needs = NBTHelper.getNBTSerializableList(nbt, "need", ItemRec.class, NBTTagCompound.class);
+		needs = NBTHelper.getNBTSerializableList(nbt, "need", BigItemStack.class, NBTTagCompound.class);
 	}
 
 	static public boolean compare(ItemStack a, ItemStack b) {
@@ -95,7 +95,7 @@ public class QuestConditionNeedItem extends QuestCondition implements IQuestCond
 		return stack.getDisplayName();
 	}
 
-	protected List<ItemRec> checkResult = new ArrayList<>();
+	protected List<BigItemStack> checkResult = new ArrayList<>();
 
 	@Override
 	public boolean check(Quest task, EntityPlayer player) {
@@ -104,7 +104,7 @@ public class QuestConditionNeedItem extends QuestCondition implements IQuestCond
 		// 客户端要记录还缺什么东西
 		if (isRemote) checkResult.clear();
 		InventoryPlayer inventory = player.inventory;
-		for (ItemRec need : needs) {
+		for (BigItemStack need : needs) {
 			// 检查物品
 			ItemStack needStack = need.getItemStack();
 			int count = needStack.getCount();
@@ -116,7 +116,7 @@ public class QuestConditionNeedItem extends QuestCondition implements IQuestCond
 				if (count <= 0) break;
 			}
 			if (isRemote) {
-				ItemRec rec = new ItemRec(needStack.copy());
+				BigItemStack rec = new BigItemStack(needStack.copy());
 				count = Math.max(count, 0);
 				rec.getItemStack().setCount(needStack.getCount() - count);
 				checkResult.add(rec);
@@ -131,7 +131,7 @@ public class QuestConditionNeedItem extends QuestCondition implements IQuestCond
 	@Override
 	public void finish(Quest task, EntityPlayer player) {
 		InventoryPlayer inventory = player.inventory;
-		for (ItemRec need : needs) {
+		for (BigItemStack need : needs) {
 			// 拿走物品
 			ItemStack needStack = need.getItemStack();
 			int count = needStack.getCount();
@@ -159,7 +159,7 @@ public class QuestConditionNeedItem extends QuestCondition implements IQuestCond
 			if (dynamic) {
 				int have = 0;
 				if (i < checkResult.size()) {
-					ItemRec rec = checkResult.get(i);
+					BigItemStack rec = checkResult.get(i);
 					have = rec.getItemStack().getCount();
 				}
 				if (have >= count) c = c + TextFormatting.GREEN + "(" + have + ")";
@@ -178,9 +178,9 @@ public class QuestConditionNeedItem extends QuestCondition implements IQuestCond
 		return QuestConditionNeedItem.tryPriceItems(rand, needs);
 	}
 
-	public static int tryPriceItems(Random rand, List<ItemRec> needs) {
+	public static int tryPriceItems(Random rand, List<BigItemStack> needs) {
 		int coin = 0;
-		for (ItemRec rec : needs) {
+		for (BigItemStack rec : needs) {
 			int price = ElfChamberOfCommerce.priceIt(rec.getItemStack());
 			if (price <= 0) {
 				if (rec.getItemStack().getItem() instanceof ItemSpellbook) price = 200;

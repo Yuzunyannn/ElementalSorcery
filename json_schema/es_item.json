@@ -20,6 +20,12 @@
                     "type": "object"
                 }
             }
+        },
+        {
+            "type": "array",
+            "items": {
+                "$ref": "#"
+            }
         }
     ]
 }

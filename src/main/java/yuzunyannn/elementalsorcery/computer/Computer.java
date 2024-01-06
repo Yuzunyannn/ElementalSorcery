@@ -25,6 +25,7 @@ import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.IMemory;
 import yuzunyannn.elementalsorcery.api.computer.IStorageMonitor;
+import yuzunyannn.elementalsorcery.api.computer.ISyncWatcher;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
@@ -147,7 +148,6 @@ public class Computer implements IComputer, IDeviceModifiable {
 		nbt.setString("#N", name);
 		nbt.setUniqueId("#U", uuid);
 		nbt.setBoolean("#R", inRunning);
-		nbt.setTag("#M~M", memoryStorageMonitor.serializeNBT());
 		if (memory != null) nbt.setTag("#M", memory.serializeNBT());
 		NBTHelper.setNBTSerializableList(nbt, "#D", disks);
 		return nbt;
@@ -158,14 +158,13 @@ public class Computer implements IComputer, IDeviceModifiable {
 		name = nbt.getString("#N");
 		uuid = nbt.getUniqueId("#U");
 		inRunning = nbt.getBoolean("#R");
-		memoryStorageMonitor.deserializeNBT(nbt.getCompoundTag("#M~M"));
 		if (nbt.hasKey("#M", NBTTag.TAG_COMPOUND)) memory.deserializeNBT(nbt.getCompoundTag("#M").copy());
 		else memory = null;
 		disks.clear();
 		NBTTagList list = nbt.getTagList("#D", NBTTag.TAG_COMPOUND);
 		for (NBTBase n : list) disks.add(new Disk(((NBTTagCompound) n).copy()));
+		memoryStorageMonitor.clear();
 		os.onStorageChange();
-//		System.out.println(nbt);
 	}
 
 	@Override
@@ -255,18 +254,19 @@ public class Computer implements IComputer, IDeviceModifiable {
 	@Override
 	public void recvMessage(NBTTagCompound nbt, IComputEnv env) {
 		if (env.isRemote()) {
-			if (nbt.hasUniqueId("#U")) this.uuid = nbt.getUniqueId("#U");
-			if (nbt.hasKey("#R")) this.inRunning = nbt.getBoolean("#R");
-			if (nbt.hasKey("#M~C")) {
-				List<String[]> changes = this.memoryStorageMonitor.mergeChanges(nbt.getCompoundTag("#M~C"), memory);
-				this.getSystem().onStorageSync(memory, changes);
-			}
+			mergeChanges(nbt);
 			return;
 		}
 	}
 
+	public void detectChangesAndSend(IComputerWatcher watcher, IComputEnv env) {
+		if (watcher.isLeave()) return;
+		NBTTagCompound nbt = detectChanges(watcher);
+		if (nbt != null) env.sendMessageToClient(watcher, nbt);
+	}
+
 	@Override
-	public NBTTagCompound detectChanges(IComputerWatcher watcher, IComputEnv env) {
+	public NBTTagCompound detectChanges(ISyncWatcher watcher) {
 		DetectDataset dataset = watcher.getDetectObject(DetectDataset.class);
 		if (dataset == null) watcher.setDetectObject(dataset = new DetectDataset());
 
@@ -289,6 +289,12 @@ public class Computer implements IComputer, IDeviceModifiable {
 			sendData.setTag("#M~C", changes);
 		}
 
+		NBTTagCompound osChanges = os.detectChanges(watcher);
+		if (osChanges != null) {
+			if (sendData == null) sendData = new NBTTagCompound();
+			sendData.setTag("#OS", osChanges);
+		}
+
 		return sendData;
 	}
 
@@ -306,10 +312,14 @@ public class Computer implements IComputer, IDeviceModifiable {
 	}
 
 	@Override
-	public void detectChangesAndSend(IComputerWatcher watcher, IComputEnv env) {
-		if (watcher.isLeave()) return;
-		NBTTagCompound nbt = detectChanges(watcher, env);
-		if (nbt != null) env.sendMessageToClient(watcher, nbt);
+	public void mergeChanges(NBTTagCompound nbt) {
+		if (nbt.hasUniqueId("#U")) this.uuid = nbt.getUniqueId("#U");
+		if (nbt.hasKey("#R")) this.inRunning = nbt.getBoolean("#R");
+		if (nbt.hasKey("#M~C")) {
+			List<String[]> changes = this.memoryStorageMonitor.mergeChanges(nbt.getCompoundTag("#M~C"), memory);
+			os.onStorageSync(memory, changes);
+		}
+		if (nbt.hasKey("#OS")) os.mergeChanges(nbt.getCompoundTag("#OS"));
 	}
 
 	@Override

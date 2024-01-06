@@ -30,6 +30,9 @@
         },
         "cover": {
             "$ref": "./es_item.json"
+        },
+        "crafts": {
+            "$ref": "./es_item.json"
         }
     }
 }

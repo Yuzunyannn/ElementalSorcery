@@ -32,6 +32,8 @@ public class APPGuiCommon implements IAPPGui {
 	public final static RenderTexutreFrame FRAME_L3 = new RenderTexutreFrame(19, 24, 3, 27, 256, 256);
 	public final static RenderTexutreFrame FRAME_ITEM = new RenderTexutreFrame(0, 31, 18, 18, 256, 256);
 	public final static RenderTexutreFrame FRAME_ITEM_HOVER = new RenderTexutreFrame(0, 50, 18, 18, 256, 256);
+	public final static RenderTexutreFrame FRAME_ARROW_1_LEFT = new RenderTexutreFrame(23, 31, 9, 18, 256, 256);
+	public final static RenderTexutreFrame FRAME_ARROW_1_RIGHT = new RenderTexutreFrame(32, 31, 9, 18, 256, 256);
 
 	public APPGuiCommon(APP appInst) {
 		this.appInst = appInst;
@@ -76,6 +78,10 @@ public class APPGuiCommon implements IAPPGui {
 		bar = new GNodeAppBar(this, width);
 		bar.setPosition(0, 0, 100);
 		scene.addChild(bar);
+	}
+
+	public IAPPGuiRuntime getGuiRuntime() {
+		return runtime;
 	}
 
 	public Color getThemeColor(AppGuiThemePart part) {

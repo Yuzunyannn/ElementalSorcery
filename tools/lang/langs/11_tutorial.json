@@ -2,7 +2,11 @@
 	"es.tutorialui": {
 		"es.tutorialui.describe": {
 			"zh_CN": "描述",
-			"en_US": "Darrate"
+			"en_US": "Narrate"
+		},
+		"es.tutorialui.craft": {
+			"zh_CN": "合成表",
+			"en_US": "Craft"
 		}
 	},
 	"es.tutorial": {
@@ -21,6 +25,38 @@
 		"es.tutorial.describe.0_0_1": {
 			"zh_CN": "§k????§r的研究，从魔力中发现了构成物质的元素，元素作为特殊的魔力，似乎可以来改变我的世界。\\n元素可以转化到魔力，这是很容易的一件事，但反之则是几乎不可能的。",
 			"en_US": "§k????§r magician find Element as special kind of magic from Items, which has power to change the World.\\nIt's simply to let Element convert to Magic, but it's almost impossible to let Magic convert back to Element."
+		},
+		"es.tutorial.title.0_1_0": {
+			"zh_CN": "重要资源",
+			"en_US": "Important Ore"
+		},
+		"es.tutorial.describe.0_1_0": {
+			"zh_CN": "蓝晶石是生成在地下的一种带有魔力的矿物，19层以下可能更容易找到它。\\n蓝晶石矿可以经过烧制形成蓝晶石。\\n在烧制蓝晶石矿的时候，通过“末影之眼”的辅助，可以将存在于蓝晶石矿物中的魔力碎片取出。\\n蓝晶石可以制作工具，与铁的挖掘等级相同，不过有更好的耐久性。",
+			"en_US": "Kyanite is a kind of magic mineral that steve can find it's ore under y 19.\\nBurning kyanite ore whit Extra Item Eye of Ender can take out Magic Fragment from it.\\nKyanite can be used to make tools, which is the same harvestLevel as iron's, but has better durability."
+		},
+		"es.tutorial.title.0_1_1": {
+			"zh_CN": "更好的熔炉套装",
+			"en_US": "Better Furnace Kit"
+		},
+		"es.tutorial.describe.0_1_1": {
+			"zh_CN": "灶台中可以放入燃料，用来加热上方的方块。\\n灶台的材质有：原石、铁、蓝晶石，依次排序，材质等级越高的灶台，加热上方方块的速度越快。\\n烧炼箱可以像熔炉一样的使用，不过它可以同时烧两种东西。\\n烧炼箱的材质有：原石、铁、蓝晶石，铁级以上的烧炼箱子可以放置额外物品共同烧制，比如放入“末影之眼”来烧制蓝晶石矿？\\n将烧炼放在蓝晶石灶台上，体验飞一样的烧炼速度。",
+			"en_US": "Add fuel to Hearth, heat block above Hearth.\\nThe materials of Hearth: cobblestone, iron, kyanite. The higher the material level of the Hearth, the faster heating block speed.\\nSmelting Box can used like Furnace, but it can burn two things at the same time.\\nThe materials of Smelting Box: cobblestone, iron, kyanite. Extra Item can be placed in material of iron or kyanite. Such as use Eye of Ender as extra item when burning kyanite ore maybe can get some windfall."
+		},
+		"es.tutorial.title.0_2_0": {
+			"zh_CN": "神奇的花",
+			"en_US": "Mysterious Flower"
+		},
+		"es.tutorial.describe.0_2_0": {
+			"zh_CN": "在§k????§r之后，一种极为稀少的白色花朵开始在自然界中生长，我们称之为星之花。其极为脆弱，无法掉落。\\n不过它可以为你带来好运，空手或持有某些道具右键向其许愿，它可能会赐予你一些buff或者工具，或是为你将你传送回家。\\n不过许愿后的星之花将会枯萎。",
+			"en_US": "After §k????§r, an extremely rare white flower began to grow in overworld, which we call the Star Flower. Star Flower is extremely fragile and cannot be dropped.\\nBut it can bring you good luck, holding some Item or not and right click it to make a wish, Steve may get some buffs or tools, or bring steve to home.\\nHowever, the Star Flower will withered after wish."
+		},
+		"es.tutorial.title.0_3_0": {
+			"zh_CN": "引路灯",
+			"en_US": "Guide Lamp"
+		},
+		"es.tutorial.describe.0_3_0": {
+			"zh_CN": "引路灯是具有魔力的一盏灯，放下后会自动发出火焰指向上一个灯。由于其的特殊性，可以通过寻求仪式献祭物品从而所求。\\n通过shift+右键可以设置下次放置的链接位置。",
+			"en_US": "Kyanite is a kind of magic mineral that steve can find it's ore under y 19.\\nBurning kyanite ore whit Extra Item Eye of Ender can take out Magic Fragment from it.\\nKyanite can be used to make tools, which is the same harvestLevel as iron's, but has better durability."
 		}
 	}
 }

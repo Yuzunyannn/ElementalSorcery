@@ -46,6 +46,7 @@ tutorialList.forEach(e => {
         level: e.level,
         unlock: e.unlock,
         cover: e.cover,
+        crafts: e.crafts,
     }
 
     doLang(json, e.title, "title")

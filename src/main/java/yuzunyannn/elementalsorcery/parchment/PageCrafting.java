@@ -54,8 +54,8 @@ public class PageCrafting extends PageEasy {
 		for (IRecipe irecipe : allRecipe) {
 			NonNullList<Ingredient> ingLIst;
 			ItemStack output;
-			if (irecipe instanceof IPageCraftDynamicIngredients) {
-				ingLIst = ((IPageCraftDynamicIngredients) irecipe).getIngredients(stack);
+			if (irecipe instanceof ITutorialCraftDynamicIngredients) {
+				ingLIst = ((ITutorialCraftDynamicIngredients) irecipe).getIngredients(stack);
 				output = stack;
 			} else {
 				ingLIst = irecipe.getIngredients();

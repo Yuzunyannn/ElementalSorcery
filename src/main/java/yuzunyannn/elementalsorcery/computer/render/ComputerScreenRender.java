@@ -15,9 +15,17 @@ public class ComputerScreenRender {
 	public final static LinkedList<ComputerScreen> renderPoolList = new LinkedList<>();
 
 	static public ComputerScreen apply() {
+		
+		if (!renderPoolList.isEmpty()) {
+			ComputerScreen screen = renderPoolList.pop();
+			renderList.add(screen);
+			return screen;
+		}
+		
 		ComputerScreen screen = new ComputerScreen();
 		screen.init();
 		renderList.add(screen);
+		
 		return screen;
 	}
 
@@ -34,6 +42,7 @@ public class ComputerScreenRender {
 				screen.waitPoolMark = false;
 				renderPoolList.add(screen);
 				screen.renderCounter = 20;
+				iter.remove();
 			}
 		}
 

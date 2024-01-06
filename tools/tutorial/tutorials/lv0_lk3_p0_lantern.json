@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:lantern",
+    "title": {
+        "zh_CN": "引路灯",
+        "en_US": "Guide Lamp"
+    },
+    "describe": {
+        "zh_CN": "引路灯是具有魔力的一盏灯，放下后会自动发出火焰指向上一个灯。由于其的特殊性，可以通过寻求仪式献祭物品从而所求。\\n通过shift+右键可以设置下次放置的链接位置。",
+        "en_US": "Kyanite is a kind of magic mineral that steve can find it's ore under y 19.\\nBurning kyanite ore whit Extra Item Eye of Ender can take out Magic Fragment from it.\\nKyanite can be used to make tools, which is the same harvestLevel as iron's, but has better durability."
+    },
+    "crafts": "elementalsorcery:lantern"
+}

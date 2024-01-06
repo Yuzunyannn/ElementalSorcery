@@ -9,15 +9,15 @@ public interface IStorageMonitor {
 	void remove(StoragePath path);
 
 	void markDirty(StoragePath path);
-	
+
 	default void add(String... strings) {
 		add(StoragePath.of(strings));
 	}
 
-	default public void add(Variable var) {
+	default public void add(Variable<?> var) {
 		add(var.key);
 	}
-	
+
 	default void remove(String... strings) {
 		remove(StoragePath.of(strings));
 	}
@@ -25,7 +25,7 @@ public interface IStorageMonitor {
 	default public void remove(Variable var) {
 		remove(var.key);
 	}
-	
+
 	default void markDirty(String... strings) {
 		markDirty(StoragePath.of(strings));
 	}

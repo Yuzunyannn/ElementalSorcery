@@ -73,7 +73,12 @@ public class ContainerComputer extends Container implements IContainerNetwork {
 	public void detectAndSendChanges() {
 		super.detectAndSendChanges();
 		if (watcher == null) return;
-		computer.detectChangesAndSend(watcher, cEnv);
+		if (watcher.isLeave()) return;
+		if (computer instanceof Computer) ((Computer) computer).detectChangesAndSend(watcher, cEnv);
+		else {
+			NBTTagCompound nbt = computer.detectChanges(watcher);
+			if (nbt != null) this.sendToClient(nbt, player);
+		}
 	}
 
 	public IComputer getComputer() {
@@ -115,6 +120,8 @@ public class ContainerComputer extends Container implements IContainerNetwork {
 				int pid = nbt.getInteger("pid");
 				this.computer.notice(cEnv, "op", pid, nbt);
 			}
+		} else if (side == Side.CLIENT) {
+			this.computer.mergeChanges(nbt);
 		}
 	}
 

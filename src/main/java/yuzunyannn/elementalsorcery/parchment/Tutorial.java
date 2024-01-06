@@ -1,5 +1,9 @@
 package yuzunyannn.elementalsorcery.parchment;
 
+import java.util.List;
+
+import javax.annotation.Nullable;
+
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
@@ -7,11 +11,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class Tutorial {
 
+	public int cacheAction = 0;
+
 	protected String id;
 	protected ItemStack coverItem = ItemStack.EMPTY;
 	protected String titleKey = "";
 	protected String hoverKey = "";
 	protected String describeKey = "";
+	protected List<ItemStack> crafts = null;
 	protected int level;
 	protected int unlock;
 
@@ -45,6 +52,15 @@ public class Tutorial {
 
 	public ItemStack getCoverItem() {
 		return coverItem;
+	}
+
+	@Nullable
+	public List<ItemStack> getCrafts() {
+		return crafts;
+	}
+
+	public void setCrafts(List<ItemStack> crafts) {
+		this.crafts = crafts;
 	}
 
 	public void setTitleKey(String titleKey) {

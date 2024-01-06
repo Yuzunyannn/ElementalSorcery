@@ -1,8 +1,8 @@
 package yuzunyannn.elementalsorcery.computer;
 
-import yuzunyannn.elementalsorcery.api.computer.IComputerWatcher;
+import yuzunyannn.elementalsorcery.api.computer.ISyncWatcher;
 
-public abstract class WatcherCommon implements IComputerWatcher {
+public abstract class WatcherCommon implements ISyncWatcher {
 
 	protected Object obj;
 

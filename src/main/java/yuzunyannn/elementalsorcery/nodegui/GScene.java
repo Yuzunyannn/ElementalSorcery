@@ -1,10 +1,13 @@
 package yuzunyannn.elementalsorcery.nodegui;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.IdentityHashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.lwjgl.input.Mouse;
 import org.lwjgl.opengl.GL11;
@@ -21,6 +24,7 @@ public class GScene {
 	protected GNode root = new GNode();
 	protected List<GNode> interactorList = new ArrayList<>();
 	protected LinkedList<GNode> mouseList = new LinkedList<>();
+	protected Set<GNode> hoverSet = new HashSet<>();
 	protected Map<GNode, Boolean> interactorMap = new IdentityHashMap();
 	protected int displayWidth = 1, displayHeight = 1;
 	protected int width = 1, height = 1;
@@ -68,14 +72,37 @@ public class GScene {
 		} else if (btnId != -1) {
 			for (GNode node : mouseList) node.interactor.onMouseReleased(node, worldPos);
 			mouseList.clear();
+			handleHover(worldPos);
 		} else {
 			if (!mouseList.isEmpty()) {
 				for (GNode node : mouseList) node.interactor.onMouseDrag(node, worldPos);
 			} else {
-				for (GNode node : interactorList) {
-					IGInteractor interactor = node.interactor;
-					interactor.onMouseHover(node, worldPos, interactor.testHit(node, worldPos));
-				}
+				handleHover(worldPos);
+//				for (GNode node : interactorList) {
+//					IGInteractor interactor = node.interactor;
+//					interactor.onMouseHover(node, worldPos, interactor.testHit(node, worldPos));
+//				}
+			}
+		}
+	}
+
+	public void handleHover(Vec3d worldPos) {
+		Iterator<GNode> iter = hoverSet.iterator();
+		while (iter.hasNext()) {
+			GNode node = iter.next();
+			if (!node.testHit(worldPos)) {
+				IGInteractor interactor = node.interactor;
+				interactor.onMouseHover(node, worldPos, false);
+				iter.remove();
+			}
+		}
+		if (!hoverSet.isEmpty()) return;
+		for (GNode node : interactorList) {
+			IGInteractor interactor = node.interactor;
+			if (interactor.isHoverable(node) && interactor.testHit(node, worldPos)) {
+				interactor.onMouseHover(node, worldPos, true);
+				hoverSet.add(node);
+				break;
 			}
 		}
 	}

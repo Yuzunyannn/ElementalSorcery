@@ -7,7 +7,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 
-public interface IComputer extends IDevice, INBTSerializable<NBTTagCompound> {
+public interface IComputer extends IDevice, ISyncDetectable, INBTSerializable<NBTTagCompound> {
 
 	public IOS getSystem();
 
@@ -25,11 +25,6 @@ public interface IComputer extends IDevice, INBTSerializable<NBTTagCompound> {
 
 	@Nullable
 	public IStorageMonitor getStorageMonitor(IDeviceStorage storage);
-
-	@Nullable
-	public NBTTagCompound detectChanges(IComputerWatcher watcher, IComputEnv env);
-
-	public void detectChangesAndSend(IComputerWatcher watcher, IComputEnv env);
 
 	public void recvMessage(NBTTagCompound nbt, IComputEnv env);
 

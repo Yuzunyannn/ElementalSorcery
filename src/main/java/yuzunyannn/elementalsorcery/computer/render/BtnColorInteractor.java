@@ -23,6 +23,7 @@ public class BtnColorInteractor extends BtnBaseInteractor {
 
 	@Override
 	public void onPressed(GNode node) {
+		super.onPressed(node);
 		node.setColorRef(colorClick);
 	}
 

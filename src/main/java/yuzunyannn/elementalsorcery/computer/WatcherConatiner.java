@@ -2,10 +2,11 @@ package yuzunyannn.elementalsorcery.computer;
 
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+import yuzunyannn.elementalsorcery.api.computer.IComputerWatcher;
 import yuzunyannn.elementalsorcery.container.ContainerComputer;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 
-public class WatcherConatiner extends WatcherCommon {
+public class WatcherConatiner extends WatcherCommon implements IComputerWatcher {
 
 	public final EntityPlayerMP player;
 	public final ContainerComputer container;
