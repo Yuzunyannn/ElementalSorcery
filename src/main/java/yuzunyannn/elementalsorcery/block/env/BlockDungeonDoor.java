@@ -18,7 +18,7 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.logics.EventServer;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;

@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.entity.EntityScapegoat;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.model.ModelScapegoat;
 
 @SideOnly(Side.CLIENT)

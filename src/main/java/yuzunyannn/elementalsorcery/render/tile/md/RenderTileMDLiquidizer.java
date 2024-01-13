@@ -12,7 +12,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGlassCup;
 import yuzunyannn.elementalsorcery.render.model.md.ModelMDLiquidizer;
 import yuzunyannn.elementalsorcery.tile.md.TileMDLiquidizer;

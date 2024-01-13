@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 

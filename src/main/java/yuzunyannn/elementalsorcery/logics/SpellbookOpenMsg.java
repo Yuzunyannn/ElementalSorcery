@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.event;
+package yuzunyannn.elementalsorcery.logics;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLivingBase;

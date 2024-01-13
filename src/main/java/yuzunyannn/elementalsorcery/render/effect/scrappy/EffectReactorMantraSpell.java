@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.mantra.IFragmentMantraLauncher;
 import yuzunyannn.elementalsorcery.api.mantra.IFragmentMantraLauncher.MLPair;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectFragmentMove;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLaser;

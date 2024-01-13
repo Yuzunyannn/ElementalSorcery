@@ -9,8 +9,8 @@ import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.api.item.IJuice;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
-import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.item.ItemGlassCup;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.model.ModelGlassCup;
 
 public class RenderItemGlassCup implements IRenderItem {

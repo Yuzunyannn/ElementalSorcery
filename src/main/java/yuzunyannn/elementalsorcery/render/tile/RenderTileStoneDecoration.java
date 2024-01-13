@@ -14,7 +14,7 @@ import yuzunyannn.elementalsorcery.api.util.client.IRenderOutline;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.block.env.BlockStoneDecoration;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.model.ModelMagicAlternator;
 import yuzunyannn.elementalsorcery.render.model.ModelStarCPU;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileStoneDecoration;

@@ -40,7 +40,7 @@ import yuzunyannn.elementalsorcery.crafting.altar.CraftingCrafting;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingDeconstruct;
 import yuzunyannn.elementalsorcery.crafting.altar.ICraftingAltar;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.model.ModelSupremeTable;
 import yuzunyannn.elementalsorcery.util.TickOut;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;

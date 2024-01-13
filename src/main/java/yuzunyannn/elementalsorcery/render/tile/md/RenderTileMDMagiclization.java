@@ -4,7 +4,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.model.md.ModelMDMagiclization;
 import yuzunyannn.elementalsorcery.tile.md.TileMDMagiclization;
 

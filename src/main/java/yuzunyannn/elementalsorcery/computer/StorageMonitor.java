@@ -12,7 +12,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
-import yuzunyannn.elementalsorcery.api.computer.IStorageMonitor;
 import yuzunyannn.elementalsorcery.api.computer.StoragePath;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -52,6 +51,18 @@ public class StorageMonitor implements IStorageMonitor, INBTSerializable<NBTTagC
 		}
 	}
 
+	static public class DetectStorageDataset {
+
+		protected Map<String, Node> children = new HashMap<>();
+
+		Node structure(Node node, Node detectNodeParent) {
+			Node myNode = node.copy(detectNodeParent, true);
+			Map<String, Node> children = detectNodeParent == null ? this.children : detectNodeParent.children;
+			children.put(myNode.key, myNode);
+			return myNode;
+		}
+	}
+
 	protected Map<String, Node> nodeTree = new HashMap<>();
 	protected Map<StoragePath, Node> pathMap = new HashMap<>();
 
@@ -80,11 +91,6 @@ public class StorageMonitor implements IStorageMonitor, INBTSerializable<NBTTagC
 		pathMap.remove(path);
 	}
 
-	public void clear() {
-		nodeTree.clear();
-		pathMap.clear();
-	}
-
 	@Override
 	public void markDirty(StoragePath path) {
 		Node node = pathMap.get(path);
@@ -95,6 +101,11 @@ public class StorageMonitor implements IStorageMonitor, INBTSerializable<NBTTagC
 			node = node.parent;
 			node.dirtyVer++;
 		}
+	}
+
+	public void clear() {
+		nodeTree.clear();
+		pathMap.clear();
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncExecuteContext;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncJsonCreateContext;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncTimes;
-import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.logics.EventServer;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class DungeonFuncExplode extends GameFuncTimes {

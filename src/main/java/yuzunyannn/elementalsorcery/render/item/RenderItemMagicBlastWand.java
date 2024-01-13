@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms.TransformT
 import net.minecraft.item.ItemStack;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.model.ModelMagicBlastWand;
 
 public class RenderItemMagicBlastWand implements IRenderItem {

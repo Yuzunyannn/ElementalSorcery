@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.elf.edifice.FloorInfo;
-import yuzunyannn.elementalsorcery.event.KeyBoard;
+import yuzunyannn.elementalsorcery.logics.KeyBoard;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageElfTreeElevator;
 import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;

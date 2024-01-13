@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.container.ContainerElementCraftingTable;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 
 public class GuiElementCraftingTable extends GuiNormal<ContainerElementCraftingTable> {
 

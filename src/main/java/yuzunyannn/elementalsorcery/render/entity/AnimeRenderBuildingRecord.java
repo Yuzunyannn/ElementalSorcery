@@ -23,8 +23,8 @@ import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.crafting.ICraftingCommit;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunchAnime;
 import yuzunyannn.elementalsorcery.crafting.altar.CraftingBuildingRecord;
-import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.event.IRenderClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
+import yuzunyannn.elementalsorcery.logics.IRenderClient;
 import yuzunyannn.elementalsorcery.render.RenderRulerSelectRegion;
 import yuzunyannn.elementalsorcery.render.model.ModelBuildingAltar;
 

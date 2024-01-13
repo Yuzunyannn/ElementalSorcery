@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.util;
+package yuzunyannn.elementalsorcery.util.detecter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@Deprecated //use IDataDetectable 
 public class ContainerArrayDetecter<T, U extends NBTBase> {
 
 	public static interface ICanArrayDetected<T, U extends NBTBase> {

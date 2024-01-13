@@ -27,7 +27,7 @@ import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.element.IISCraftHanlder;
 import yuzunyannn.elementalsorcery.block.BlockInvalidEnchantmentTable;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.tile.TileItemStructureCraftCC;
 
 public class BlockItemStructureCraftCC extends BlockContainerNormal {

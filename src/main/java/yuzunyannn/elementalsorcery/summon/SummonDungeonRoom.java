@@ -14,7 +14,7 @@ import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
 import yuzunyannn.elementalsorcery.dungeon.DungeonAreaRoom;
 import yuzunyannn.elementalsorcery.dungeon.DungeonRoomType;
 import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
-import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.logics.EventServer;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 
 public class SummonDungeonRoom extends SummonCommon {

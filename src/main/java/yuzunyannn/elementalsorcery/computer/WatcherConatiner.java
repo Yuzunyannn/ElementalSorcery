@@ -5,8 +5,9 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import yuzunyannn.elementalsorcery.api.computer.IComputerWatcher;
 import yuzunyannn.elementalsorcery.container.ContainerComputer;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
+import yuzunyannn.elementalsorcery.util.detecter.SyncWatcher;
 
-public class WatcherConatiner extends WatcherCommon implements IComputerWatcher {
+public class WatcherConatiner extends SyncWatcher implements IComputerWatcher {
 
 	public final EntityPlayerMP player;
 	public final ContainerComputer container;

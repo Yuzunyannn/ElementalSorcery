@@ -14,7 +14,7 @@ import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGlassCup;
 import yuzunyannn.elementalsorcery.render.model.ModelInstantConstituteStela;
 import yuzunyannn.elementalsorcery.tile.altar.TileInstantConstitute;

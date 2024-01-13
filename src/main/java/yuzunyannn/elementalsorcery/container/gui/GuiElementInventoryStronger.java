@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerElementInventoryStronger;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementTranslocator.GuiTextFieldOnlyNumber;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatch;
 import yuzunyannn.elementalsorcery.render.effect.gui.GUIEffectBatchList;

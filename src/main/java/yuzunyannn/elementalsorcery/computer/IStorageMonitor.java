@@ -1,5 +1,6 @@
-package yuzunyannn.elementalsorcery.api.computer;
+package yuzunyannn.elementalsorcery.computer;
 
+import yuzunyannn.elementalsorcery.api.computer.StoragePath;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
 
 public interface IStorageMonitor {

@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.event;
+package yuzunyannn.elementalsorcery.logics;
 
 public interface ITickTask {
 

@@ -20,9 +20,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.EnderTeleportEvent;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.event.EventServer;
-import yuzunyannn.elementalsorcery.event.IWorldTickTask;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
+import yuzunyannn.elementalsorcery.logics.EventServer;
+import yuzunyannn.elementalsorcery.logics.IWorldTickTask;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 

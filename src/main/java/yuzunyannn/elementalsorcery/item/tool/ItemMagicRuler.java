@@ -24,7 +24,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
-import yuzunyannn.elementalsorcery.event.CommandESDebug;
+import yuzunyannn.elementalsorcery.logics.CommandESDebug;
 import yuzunyannn.elementalsorcery.render.RenderRulerSelectRegion;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;

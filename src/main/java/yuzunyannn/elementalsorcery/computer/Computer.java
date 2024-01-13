@@ -21,14 +21,11 @@ import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IComputerWatcher;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceModifiable;
-import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
-import yuzunyannn.elementalsorcery.api.computer.IMemory;
-import yuzunyannn.elementalsorcery.api.computer.IStorageMonitor;
-import yuzunyannn.elementalsorcery.api.computer.ISyncWatcher;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
+import yuzunyannn.elementalsorcery.api.util.ISyncWatcher;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
 import yuzunyannn.elementalsorcery.computer.soft.EOSClient;
@@ -66,11 +63,9 @@ public class Computer implements IComputer, IDeviceModifiable {
 
 	protected IOS os;
 	protected List<Disk> disks = new ArrayList<>();
-	protected Memory memory = new Memory();
 	protected String name = "";
 	protected UUID uuid = UUID.randomUUID();
 	protected boolean inRunning = false;
-	protected StorageMonitor memoryStorageMonitor = new StorageMonitor();
 
 	protected LinkedList<AppData> operations = new LinkedList<>();
 	protected boolean closeFlag = false;
@@ -95,11 +90,6 @@ public class Computer implements IComputer, IDeviceModifiable {
 	@Override
 	public List<IDisk> getDisks() {
 		return (List<IDisk>) ((Object) disks);
-	}
-
-	@Override
-	public IMemory getMemory() {
-		return memory;
 	}
 
 	@Override
@@ -131,13 +121,6 @@ public class Computer implements IComputer, IDeviceModifiable {
 	}
 
 	@Override
-	public void setMemory(Memory newMemory) {
-		if (memory == newMemory) return;
-		memory = newMemory;
-		os.onMemoryChange();
-	}
-
-	@Override
 	public IOS getSystem() {
 		return os;
 	}
@@ -148,7 +131,7 @@ public class Computer implements IComputer, IDeviceModifiable {
 		nbt.setString("#N", name);
 		nbt.setUniqueId("#U", uuid);
 		nbt.setBoolean("#R", inRunning);
-		if (memory != null) nbt.setTag("#M", memory.serializeNBT());
+		nbt.setTag("#OS", os.serializeNBT());
 		NBTHelper.setNBTSerializableList(nbt, "#D", disks);
 		return nbt;
 	}
@@ -158,13 +141,11 @@ public class Computer implements IComputer, IDeviceModifiable {
 		name = nbt.getString("#N");
 		uuid = nbt.getUniqueId("#U");
 		inRunning = nbt.getBoolean("#R");
-		if (nbt.hasKey("#M", NBTTag.TAG_COMPOUND)) memory.deserializeNBT(nbt.getCompoundTag("#M").copy());
-		else memory = null;
+		os.deserializeNBT(nbt.getCompoundTag("#OS"));
 		disks.clear();
 		NBTTagList list = nbt.getTagList("#D", NBTTag.TAG_COMPOUND);
 		for (NBTBase n : list) disks.add(new Disk(((NBTTagCompound) n).copy()));
-		memoryStorageMonitor.clear();
-		os.onStorageChange();
+		os.onDiskChange();
 	}
 
 	@Override
@@ -204,10 +185,7 @@ public class Computer implements IComputer, IDeviceModifiable {
 		if (inRunning) return;
 		closeFlag = false;
 		inRunning = true;
-		memory.clear();
-		memoryStorageMonitor.clear();
 		if (env.isRemote()) return;
-		os.onStorageChange();
 		os.onStarting();
 	}
 
@@ -215,8 +193,6 @@ public class Computer implements IComputer, IDeviceModifiable {
 	public void powerOff(IComputEnv env) {
 		if (!inRunning) return;
 		inRunning = false;
-		memory.clear();
-		memoryStorageMonitor.clear();
 		if (env.isRemote()) return;
 		os.onClosing();
 	}
@@ -224,12 +200,6 @@ public class Computer implements IComputer, IDeviceModifiable {
 	@Override
 	public boolean isPowerOn() {
 		return inRunning;
-	}
-
-	@Override
-	public IStorageMonitor getStorageMonitor(IDeviceStorage storage) {
-		if (storage == this.memory) return memoryStorageMonitor;
-		return null;
 	}
 
 	public void tryInit(IComputEnv env) {
@@ -267,8 +237,8 @@ public class Computer implements IComputer, IDeviceModifiable {
 
 	@Override
 	public NBTTagCompound detectChanges(ISyncWatcher watcher) {
-		DetectDataset dataset = watcher.getDetectObject(DetectDataset.class);
-		if (dataset == null) watcher.setDetectObject(dataset = new DetectDataset());
+		DetectDataset dataset = watcher.getDetectObject(">computer", DetectDataset.class);
+		if (dataset == null) watcher.setDetectObject(">computer", dataset = new DetectDataset());
 
 		NBTTagCompound sendData = null;
 
@@ -281,12 +251,6 @@ public class Computer implements IComputer, IDeviceModifiable {
 				dataset.inRunning = this.inRunning;
 				sendData = insertRunningSend(sendData);
 			}
-		}
-
-		NBTTagCompound changes = memoryStorageMonitor.detectChanges(dataset.memoryDataset, memory);
-		if (changes != null) {
-			if (sendData == null) sendData = new NBTTagCompound();
-			sendData.setTag("#M~C", changes);
 		}
 
 		NBTTagCompound osChanges = os.detectChanges(watcher);
@@ -315,10 +279,6 @@ public class Computer implements IComputer, IDeviceModifiable {
 	public void mergeChanges(NBTTagCompound nbt) {
 		if (nbt.hasUniqueId("#U")) this.uuid = nbt.getUniqueId("#U");
 		if (nbt.hasKey("#R")) this.inRunning = nbt.getBoolean("#R");
-		if (nbt.hasKey("#M~C")) {
-			List<String[]> changes = this.memoryStorageMonitor.mergeChanges(nbt.getCompoundTag("#M~C"), memory);
-			os.onStorageSync(memory, changes);
-		}
 		if (nbt.hasKey("#OS")) os.mergeChanges(nbt.getCompoundTag("#OS"));
 	}
 

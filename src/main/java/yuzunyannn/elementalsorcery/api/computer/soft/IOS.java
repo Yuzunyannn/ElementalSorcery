@@ -4,22 +4,21 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
-import yuzunyannn.elementalsorcery.api.computer.IMemory;
-import yuzunyannn.elementalsorcery.api.computer.ISyncDetectable;
+import yuzunyannn.elementalsorcery.api.util.ISyncDetectable;
 
-public interface IOS extends ISyncDetectable {
-
-	IMemory getMemory();
-
-	IMemory getMemory(APP app);
+public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<NBTTagCompound> {
 
 	List<IDisk> getDisks();
 
 	IDeviceStorage getDisk(APP app, AppDiskType type);
+
+	void markDirty(APP app);
 
 	int exec(APP parent, String appId);
 
@@ -31,14 +30,6 @@ public interface IOS extends ISyncDetectable {
 
 	@Nullable
 	APP getAppInst(int pid);
-
-	default void onStorageChange() {
-		onMemoryChange();
-		onDiskChange();
-	}
-
-	default void onMemoryChange() {
-	};
 
 	default void onDiskChange() {
 	};

@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.event;
+package yuzunyannn.elementalsorcery.logics;
 
 import java.util.Iterator;
 import java.util.LinkedList;

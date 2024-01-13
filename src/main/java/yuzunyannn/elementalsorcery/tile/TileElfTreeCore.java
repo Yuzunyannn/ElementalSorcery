@@ -45,7 +45,7 @@ import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityBulletin;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElf;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.logics.EventServer;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.helper.IOHelper;

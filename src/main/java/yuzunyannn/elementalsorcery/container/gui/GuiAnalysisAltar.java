@@ -18,7 +18,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.container.ContainerAnalysisAltar;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 
 @SideOnly(Side.CLIENT)
 public class GuiAnalysisAltar extends GuiNormal<ContainerAnalysisAltar> {

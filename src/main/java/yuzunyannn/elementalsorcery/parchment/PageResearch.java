@@ -27,7 +27,7 @@ import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.elf.research.Topics;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.helper.GameHelper;
 

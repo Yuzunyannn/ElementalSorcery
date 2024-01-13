@@ -1,82 +1,97 @@
 package yuzunyannn.elementalsorcery.computer.soft;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.function.Consumer;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
-import yuzunyannn.elementalsorcery.api.computer.IMemory;
-import yuzunyannn.elementalsorcery.api.computer.IStorageMonitor;
-import yuzunyannn.elementalsorcery.api.computer.ISyncWatcher;
-import yuzunyannn.elementalsorcery.api.computer.StoragePath;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
+import yuzunyannn.elementalsorcery.api.util.ISyncDetectable;
+import yuzunyannn.elementalsorcery.api.util.ISyncWatcher;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerAppDamagedException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerBootException;
-import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerHardwareMissingException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerNewProcessException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerProcessNotExistException;
 import yuzunyannn.elementalsorcery.computer.soft.ProcessTree.ProcessNode;
+import yuzunyannn.elementalsorcery.util.detecter.SyncDetectableMonitor;
 
 public abstract class EOS implements IOS {
 
 	static public final Variable<String> BOOT = new Variable("~boot", VariableSet.STRING);
-
-	static public final Variable<ProcessTree> PROCESS = new Variable(">process", new ProcessTree.VTProcessMap());
-	static public final StoragePath PATH_PROCESS = StoragePath.of(PROCESS.key);
+	static public final String PROCESS = "#PR";
+	static public final String APP = "#APP";
 
 	public final IComputer computer;
-	public AuthorityMemory memoryCache = null;
-	public Map<String, AuthorityMemory> appMemoryCacheMap = new HashMap<>();
 	public List<AuthorityDisk> disksCache = null;
 	public Map<String, AuthorityAppDisk> appDiskCacheMap = new HashMap<>();
 
+	protected SyncDetectableMonitor monitor = new SyncDetectableMonitor(">os");
+	protected ProcessTree processTree = new ProcessTree();
+
 	public EOS(IComputer computer) {
 		this.computer = computer;
+		this.monitor.add(PROCESS, processTree);
+		this.monitor.add(APP, new ISyncDetectable<NBTTagCompound>() {
+			@Override
+			public void mergeChanges(NBTTagCompound nbt) {
+				for (String key : nbt.getKeySet()) {
+					Integer pid = null;
+					try {
+						pid = Integer.parseInt(key);
+					} catch (Exception e) {}
+					if (pid == null) continue;
+					final NBTTagCompound dat = nbt.getCompoundTag(key);
+					single(pid, app -> app.mergeChanges(dat));
+				}
+			}
+
+			@Override
+			public NBTTagCompound detectChanges(ISyncWatcher watcher) {
+				NBTTagCompound appChanges = new NBTTagCompound();
+				each(app -> {
+					AuthorityWatcher appWacher = new AuthorityWatcher(watcher, ">pid" + app.getPid() + "|");
+					NBTTagCompound thisChanges = app.detectChanges(appWacher);
+					if (thisChanges != null) appChanges.setTag(String.valueOf(app.getPid()), thisChanges);
+				});
+				return appChanges.isEmpty() ? null : appChanges;
+			}
+		});
 	}
 
 	@Override
-	public IMemory getMemory() {
-		if (memoryCache == null) {
-			IMemory memory = computer.getMemory();
-			if (memory == null) throw new ComputerHardwareMissingException(this.computer, "memory is missing");
-			memoryCache = new AuthorityMemory(computer, memory, null, null);
-		}
-		return memoryCache;
-	}
-
-	protected IMemory getPureMemory() {
-		IMemory memory = computer.getMemory();
-		if (memory == null) throw new ComputerHardwareMissingException(this.computer, "memory is missing");
-		return memory;
+	public NBTTagCompound serializeNBT() {
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setTag(">pro", processTree.serializeNBT());
+		each(app -> {
+			NBTTagCompound dat = app.serializeNBT();
+			if (dat == null || dat.isEmpty()) return;
+			nbt.setTag(">p|" + app.getPid(), dat);
+		});
+		return nbt;
 	}
 
 	@Override
-	public IMemory getMemory(APP app) {
-		String id = getMemoryRootByPid(app.getPid());
-		if (appMemoryCacheMap.containsKey(id)) return appMemoryCacheMap.get(id);
-		IMemory memory = this.getPureMemory();
-		AuthorityMemory storage = new AuthorityMemory(computer, memory, new String[] { id }, app);
-		appMemoryCacheMap.put(id, storage);
-		return storage;
-	}
-
-	static public String getMemoryRootByPid(int pid) {
-		return String.format(">#%d", pid);
+	public void deserializeNBT(NBTTagCompound nbt) {
+		processTree.deserializeNBT(nbt.getCompoundTag(">pro"));
+		each(app -> {
+			String key = ">p|" + app.getPid();
+			if (nbt.hasKey(key)) app.deserializeNBT(nbt.getCompoundTag(key));
+		});
 	}
 
 	@Override
@@ -100,47 +115,35 @@ public abstract class EOS implements IOS {
 		return disk;
 	}
 
-	@Nullable
-	public IStorageMonitor getMemoryMonitor() {
-		return computer.getStorageMonitor(computer.getMemory());
-	}
-
 	@Override
 	public int exec(APP parent, String appId) {
-		IMemory memory = this.getMemory();
-		ProcessTree tree = memory.get(PROCESS);
-		int id = tree.newProcess(appId, parent.getPid());
+		int id = processTree.newProcess(appId, parent.getPid());
 		if (id == -1) throw new ComputerNewProcessException(computer, appId);
-		IStorageMonitor storageMonitor = getMemoryMonitor();
-		if (storageMonitor != null) storageMonitor.markDirty(PATH_PROCESS);
-		onAppStartup(tree, tree.getAppCache(this, id));
+		monitor.markDirty(PROCESS);
+		onAppStartup(processTree, processTree.getAppCache(this, id));
 		return id;
 	}
 
 	@Override
 	public int setForeground(int pid) {
-		IMemory memory = this.getMemory();
-		ProcessTree tree = memory.get(PROCESS);
-		if (!tree.hasProcess(pid)) return -1;
-		tree.setForeground(pid);
-		IStorageMonitor storageMonitor = getMemoryMonitor();
-		if (storageMonitor != null) storageMonitor.markDirty(PATH_PROCESS);
+		if (!processTree.hasProcess(pid)) return -1;
+		processTree.setForeground(pid);
+		monitor.markDirty(PROCESS);
 		return pid;
 	}
 
 	@Override
 	public int getForeground() {
-		IMemory memory = this.getMemory();
-		return memory.get(PROCESS).getForeground();
+		return processTree.getForeground();
 	}
 
 	@Override
 	public APP getAppInst(int pid) {
-		IMemory memory = this.getMemory();
-		ProcessTree tree = memory.get(PROCESS);
-		if (!tree.hasProcess(pid)) throw new ComputerProcessNotExistException(this.computer, String.valueOf(pid));
-		APP app = tree.getAppCache(this, pid);
-		if (app == null) throw new ComputerAppDamagedException(this.computer, String.valueOf(tree.getProcessId(pid)));
+		if (!processTree.hasProcess(pid))
+			throw new ComputerProcessNotExistException(this.computer, String.valueOf(pid));
+		APP app = processTree.getAppCache(this, pid);
+		if (app == null)
+			throw new ComputerAppDamagedException(this.computer, String.valueOf(processTree.getProcessId(pid)));
 		return app;
 	}
 
@@ -155,26 +158,20 @@ public abstract class EOS implements IOS {
 			}
 		}
 		if (boot == null) throw new ComputerBootException(computer, "cannot find boot");
-		IMemory memory = this.getMemory();
-		ProcessTree tree = memory.get(PROCESS);
-		int id = tree.newProcess(boot, 0);
+
+		int id = processTree.newProcess(boot, 0);
 		if (id == -1) throw new ComputerBootException(computer, "root process fail");
 
-		IStorageMonitor storageMonitor = getMemoryMonitor();
-		if (storageMonitor != null) storageMonitor.markDirty(PATH_PROCESS);
-
-		onAppStartup(tree, tree.getAppCache(this, id));
+		monitor.markDirty(PROCESS);
+		onAppStartup(processTree, processTree.getAppCache(this, id));
 	}
 
 	@Override
 	public void abort(int pid, IComputerException e) {
-		IMemory memory = this.getMemory();
-		ProcessTree tree = memory.get(PROCESS);
-		if (!tree.hasProcess(pid)) return;
-		onAbort(tree, pid, e);
-		tree.removeProcess(pid);
-		IStorageMonitor storageMonitor = getMemoryMonitor();
-		if (storageMonitor != null) storageMonitor.markDirty(PATH_PROCESS);
+		if (!processTree.hasProcess(pid)) return;
+		onAbort(processTree, pid, e);
+		processTree.removeProcess(pid);
+		monitor.markDirty(PROCESS);
 	}
 
 	@Override
@@ -182,37 +179,35 @@ public abstract class EOS implements IOS {
 		each(app -> app.onUpdate());
 	}
 
+	protected void single(int pid, Consumer<APP> func) {
+		try {
+			func.accept(processTree.getAppCache(this, pid));
+		} catch (Exception e) {
+			if (pid == 0) throw e;
+			if (e instanceof IComputerException) abort(pid, (IComputerException) e);
+			else throw e;
+		}
+	}
+
 	protected void each(Consumer<APP> func) {
-		IMemory memory = this.getMemory();
-		ProcessTree tree = memory.get(PROCESS);
-		Iterator<Entry<Integer, ProcessNode>> iter = tree.getIterator();
-		boolean hasChange = false;
+		Iterator<Entry<Integer, ProcessNode>> iter = processTree.getIterator();
+		List<Entry<Integer, IComputerException>> abortList = new LinkedList<>();
 		while (iter.hasNext()) {
 			Entry<Integer, ProcessNode> entry = iter.next();
 			try {
-				func.accept(tree.getAppCache(this, entry.getKey()));
+				func.accept(processTree.getAppCache(this, entry.getKey()));
 			} catch (Exception e) {
 				if (entry.getKey() == 0) throw e;
-				if (e instanceof IComputerException) {
-					this.onAbort(tree, entry.getKey(), (IComputerException) e);
-					iter.remove();
-					hasChange = true;
-				} else throw e;
+				if (e instanceof IComputerException)
+					abortList.add(new AbstractMap.SimpleEntry(entry.getKey(), (IComputerException) e));
+				else throw e;
 			}
 		}
-		if (hasChange) {
-			IStorageMonitor storageMonitor = getMemoryMonitor();
-			if (storageMonitor != null) storageMonitor.markDirty(PATH_PROCESS);
-		}
+		for (Entry<Integer, IComputerException> entry : abortList) abort(entry.getKey(), entry.getValue());
 	}
 
 	protected void onAppStartup(ProcessTree tree, APP app) {
 		app.onStartup();
-		IStorageMonitor storageMonitor = getMemoryMonitor();
-		if (storageMonitor != null) {
-			storageMonitor = new AuthorityMemoryMonitor(storageMonitor, getMemoryRootByPid(app.getPid()));
-			app.initMemorySync(storageMonitor);
-		}
 	}
 
 	protected void onAppExit(ProcessTree tree, APP app) {
@@ -227,49 +222,27 @@ public abstract class EOS implements IOS {
 		int parentPid = tree.getParent(pid);
 		if (parentPid == -1) parentPid = 0;
 		tree.setForeground(parentPid);
-		appMemoryCacheMap.remove(getMemoryRootByPid(pid));
-	}
-
-	@Override
-	public void onStorageChange() {
-		IOS.super.onStorageChange();
-		try {
-			resetMonitor();
-		} catch (ComputerException e) {}
-	}
-
-	protected void resetMonitor() {
-		IStorageMonitor storageMonitor = getMemoryMonitor();
-		if (storageMonitor != null) {
-			storageMonitor.add(PATH_PROCESS);
-			each(app -> {
-				IStorageMonitor appStorageMonitor = new AuthorityMemoryMonitor(storageMonitor,
-						getMemoryRootByPid(app.getPid()));
-				app.initMemorySync(appStorageMonitor);
-			});
-		}
-	}
-
-	@Override
-	public NBTTagCompound detectChanges(ISyncWatcher watcher) {
-		return null;
-	}
-
-	@Override
-	public void mergeChanges(NBTTagCompound nbt) {
-		
-	}
-
-	@Override
-	public void onMemoryChange() {
-		memoryCache = null;
-		appMemoryCacheMap.clear();
 	}
 
 	@Override
 	public void onDiskChange() {
 		disksCache = null;
 		appDiskCacheMap.clear();
+	}
+
+	@Override
+	public void markDirty(APP app) {
+		this.monitor.markDirty(APP);
+	}
+
+	@Override
+	public NBTTagCompound detectChanges(ISyncWatcher watcher) {
+		return monitor.detectChanges(watcher);
+	}
+
+	@Override
+	public void mergeChanges(NBTTagCompound nbt) {
+		monitor.mergeChanges(nbt);
 	}
 
 }

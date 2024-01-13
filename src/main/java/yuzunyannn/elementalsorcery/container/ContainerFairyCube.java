@@ -11,7 +11,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
 import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
-import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.logics.EventServer;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 
 public class ContainerFairyCube extends Container implements IContainerNetwork {

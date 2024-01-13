@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
 import yuzunyannn.elementalsorcery.container.gui.GuiHearth;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.elf.research.Topics;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 
 public class ResearchDraw implements IDrawable {

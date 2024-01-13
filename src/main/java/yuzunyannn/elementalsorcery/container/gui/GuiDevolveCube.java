@@ -23,7 +23,7 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerDevolveCube;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementTranslocator.GuiTextFieldOnlyNumber;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube.DevolveData;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;

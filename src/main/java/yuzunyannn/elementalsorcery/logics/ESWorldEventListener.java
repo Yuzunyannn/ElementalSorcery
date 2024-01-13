@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.event;
+package yuzunyannn.elementalsorcery.logics;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;

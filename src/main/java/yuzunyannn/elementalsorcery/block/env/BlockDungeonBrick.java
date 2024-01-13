@@ -12,6 +12,9 @@ import net.minecraft.item.ItemMultiTexture.Mapper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.Explosion;
+import net.minecraft.world.World;
 
 public class BlockDungeonBrick extends Block implements Mapper {
 
@@ -78,6 +81,11 @@ public class BlockDungeonBrick extends Block implements Mapper {
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return this.getDefaultState().withProperty(VARIANT, EnumType.values()[meta]);
+	}
+
+	@Override
+	public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {
+
 	}
 
 }

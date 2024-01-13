@@ -37,7 +37,7 @@ import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementAbsorb;
 import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
-import yuzunyannn.elementalsorcery.util.ContainerMapDetecter;
+import yuzunyannn.elementalsorcery.util.detecter.ContainerMapDetecter;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementStackDoubleExchanger;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;

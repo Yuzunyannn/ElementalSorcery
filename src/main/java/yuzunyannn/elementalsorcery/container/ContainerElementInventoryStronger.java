@@ -13,9 +13,9 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.ICanSync;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementInventoryStronger;
-import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.logics.EventServer;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
-import yuzunyannn.elementalsorcery.util.ContainerArrayDetecter;
+import yuzunyannn.elementalsorcery.util.detecter.ContainerArrayDetecter;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryStronger;
 

@@ -11,7 +11,7 @@ import net.minecraft.util.math.MathHelper;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.container.ContainerMDBase;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
 
 public abstract class GuiMDBase<T extends ContainerMDBase<?>> extends GuiNormal<T> {

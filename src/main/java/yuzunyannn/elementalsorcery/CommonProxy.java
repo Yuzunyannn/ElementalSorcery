@@ -5,8 +5,8 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import yuzunyannn.elementalsorcery.config.ESConfig;
-import yuzunyannn.elementalsorcery.event.CommandES;
 import yuzunyannn.elementalsorcery.init.ESInit;
+import yuzunyannn.elementalsorcery.logics.CommandES;
 
 public class CommonProxy {
 

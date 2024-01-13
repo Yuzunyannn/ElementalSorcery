@@ -14,7 +14,7 @@ import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
 import yuzunyannn.elementalsorcery.api.util.MatchHelper;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
-import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.logics.EventServer;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;

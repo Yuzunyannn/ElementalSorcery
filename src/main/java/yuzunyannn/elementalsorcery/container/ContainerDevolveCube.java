@@ -14,8 +14,8 @@ import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube.DevolveData;
-import yuzunyannn.elementalsorcery.util.ContainerArrayDetecter;
-import yuzunyannn.elementalsorcery.util.ContainerMapDetecter;
+import yuzunyannn.elementalsorcery.util.detecter.ContainerArrayDetecter;
+import yuzunyannn.elementalsorcery.util.detecter.ContainerMapDetecter;
 import yuzunyannn.elementalsorcery.util.element.ElementStackDouble;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 

@@ -12,7 +12,7 @@ import yuzunyannn.elementalsorcery.elf.talk.TalkChapter;
 import yuzunyannn.elementalsorcery.elf.talk.TalkSceneSay;
 import yuzunyannn.elementalsorcery.elf.talk.Talker;
 import yuzunyannn.elementalsorcery.entity.elf.EntityElfBase;
-import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.logics.EventServer;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.util.helper.ExceptionHelper;
 import yuzunyannn.elementalsorcery.util.helper.SilentWorld;

@@ -18,9 +18,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
-import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.event.KeyBoard;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
+import yuzunyannn.elementalsorcery.logics.EventClient;
+import yuzunyannn.elementalsorcery.logics.KeyBoard;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageMantraShift;
 

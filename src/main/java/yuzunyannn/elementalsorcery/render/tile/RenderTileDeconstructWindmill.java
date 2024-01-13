@@ -14,7 +14,7 @@ import yuzunyannn.elementalsorcery.api.item.IWindmillBlade;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.model.ModelDeconstructWindmill;
 import yuzunyannn.elementalsorcery.render.model.ModelDeconstructWindmillBlade;
 import yuzunyannn.elementalsorcery.tile.altar.TileDeconstructWindmill;

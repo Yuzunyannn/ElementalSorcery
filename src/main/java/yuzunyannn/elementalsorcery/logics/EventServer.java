@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.event;
+package yuzunyannn.elementalsorcery.logics;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -26,7 +26,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.server.MinecraftServer;
@@ -101,7 +100,6 @@ import yuzunyannn.elementalsorcery.entity.fcube.EntityFairyCube;
 import yuzunyannn.elementalsorcery.entity.fcube.FCMAttack;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraGoldShield;
 import yuzunyannn.elementalsorcery.item.IItemStronger;
-import yuzunyannn.elementalsorcery.item.ItemManual;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.network.ESNetwork;
 import yuzunyannn.elementalsorcery.network.MessageSyncConfig;
@@ -250,10 +248,7 @@ public class EventServer {
 			if (!data.hasKey("esFirstJoin")) {
 				if (player.inventory == null) return;
 				data.setBoolean("esFirstJoin", true);
-				NBTTagList list = new NBTTagList();
-				list.appendTag(new NBTTagString("rite"));
-				player.inventory
-						.addItemStackToInventory(ItemManual.setIds(new ItemStack(ESObjects.ITEMS.MANUAL), list));
+				ESPlayerLogic.onPlayerFirstJoinInWorld(player);
 			}
 
 			MinecraftServer mc = player.getServer();
@@ -858,10 +853,9 @@ public class EventServer {
 
 	@SubscribeEvent
 	public static void onAttachCapabilities(AttachCapabilitiesEvent<?> event) {
-		if (ItemStack.class == event.getGenericType()) {
-			System.out.println("??");
-		}
-
+//		if (ItemStack.class == event.getGenericType()) {
+//			System.out.println("??");
+//		}
 	}
 
 }

@@ -13,7 +13,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 

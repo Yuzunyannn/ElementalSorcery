@@ -28,7 +28,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.block.IBlockStronger;
 import yuzunyannn.elementalsorcery.block.container.BlockContainerNormal;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.crack.EffectFragmentCrackMove;
 import yuzunyannn.elementalsorcery.render.model.ModelComputerA;

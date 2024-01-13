@@ -1,19 +1,17 @@
 package yuzunyannn.elementalsorcery.computer.soft;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.computer.IMemory;
-import yuzunyannn.elementalsorcery.api.computer.IStorageMonitor;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.IAPPGui;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
-import yuzunyannn.elementalsorcery.api.util.var.Variable;
-import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.util.detecter.DDFloat;
 
 public class AppTutorial extends APP {
 
 //	public static final Variable<Byte> INDEX = new Variable<>("si", VariableSet.BYTE);
-	public static final Variable<Float> POGRESS = new Variable<>("pg", VariableSet.FLOAT);
+//	public static final Variable<Float> POGRESS = new Variable<>("pg", VariableSet.FLOAT);
 
 	public static float lastProgress;
 	public static int selectIndex = 0;
@@ -56,16 +54,30 @@ public class AppTutorial extends APP {
 
 	public AppTutorial(IOS os, int pid) {
 		super(os, pid);
-		sync();
+		detecter.add("1", new DDFloat(i -> progress = i, () -> progress));
 	}
 
-	protected void sync() {
-		IMemory memory = this.getOS().getMemory(this);
-		progress = Math.max(memory.get(POGRESS), 1);
+	@Override
+	public void onStartup() {
+		super.onStartup();
+		getOS().markDirty(this);
 	}
 
 	public float getProgress() {
 		return progress;
+	}
+
+	@Override
+	public NBTTagCompound serializeNBT() {
+		NBTTagCompound nbt = super.serializeNBT();
+		nbt.setFloat("pg", progress);
+		return nbt;
+	}
+
+	@Override
+	public void deserializeNBT(NBTTagCompound nbt) {
+		super.deserializeNBT(nbt);
+		progress = Math.max(nbt.getFloat("pg"), 1);
 	}
 
 	public boolean isPartLocked(int index) {
@@ -75,20 +87,8 @@ public class AppTutorial extends APP {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void onMemoryChange() {
-		super.onMemoryChange();
-		sync();
-	}
-
-	@Override
-	@SideOnly(Side.CLIENT)
 	public IAPPGui createGUIRender() {
 		return new AppTutorialGui(this);
-	}
-
-	@Override
-	public void initMemorySync(IStorageMonitor monitor) {
-		monitor.add(POGRESS);
 	}
 
 }

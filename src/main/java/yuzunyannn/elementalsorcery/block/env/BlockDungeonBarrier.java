@@ -20,14 +20,15 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.event.ITickTask;
+import yuzunyannn.elementalsorcery.logics.EventClient;
+import yuzunyannn.elementalsorcery.logics.ITickTask;
 import yuzunyannn.elementalsorcery.potion.PotionGoldenEye;
 import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 
@@ -138,5 +139,10 @@ public class BlockDungeonBarrier extends Block {
 		IBlockState iblockstate = blockAccess.getBlockState(pos.offset(side));
 		Block block = iblockstate.getBlock();
 		return block == this ? false : super.shouldSideBeRendered(blockState, blockAccess, pos, side);
+	}
+	
+	@Override
+	public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {
+
 	}
 }

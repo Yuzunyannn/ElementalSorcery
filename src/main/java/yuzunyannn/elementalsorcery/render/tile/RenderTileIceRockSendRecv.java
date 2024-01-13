@@ -13,8 +13,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
-import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.event.IRenderClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
+import yuzunyannn.elementalsorcery.logics.IRenderClient;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockSendRecv;
 import yuzunyannn.elementalsorcery.tile.ir.TileIceRockSendRecv.FaceStatus;
 

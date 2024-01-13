@@ -31,7 +31,7 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderLayoutFix;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
-import yuzunyannn.elementalsorcery.event.SpellbookOpenMsg;
+import yuzunyannn.elementalsorcery.logics.SpellbookOpenMsg;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellbook;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellbookSelect;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleSpellbookTo;

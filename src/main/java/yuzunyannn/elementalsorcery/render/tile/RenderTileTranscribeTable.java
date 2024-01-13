@@ -7,8 +7,8 @@ import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
-import yuzunyannn.elementalsorcery.event.EventClient;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeTable;
 

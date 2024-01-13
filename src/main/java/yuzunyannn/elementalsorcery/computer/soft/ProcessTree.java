@@ -1,9 +1,11 @@
 package yuzunyannn.elementalsorcery.computer.soft;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.annotation.Nullable;
 
@@ -14,10 +16,12 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
+import yuzunyannn.elementalsorcery.api.util.ISyncDetectable;
+import yuzunyannn.elementalsorcery.api.util.ISyncWatcher;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.api.util.var.IVariableType;
 
-public class ProcessTree implements INBTSerializable<NBTTagCompound> {
+public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetectable<NBTTagCompound> {
 
 	public static class VTProcessMap implements IVariableType<ProcessTree> {
 
@@ -119,13 +123,8 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound> {
 		return node.appInst;
 	}
 
-	@Override
-	public NBTTagCompound serializeNBT() {
-		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setInteger("pct", pidCounter);
-		nbt.setInteger("fgid", foreground);
+	protected NBTTagList serializeProcess() {
 		NBTTagList list = new NBTTagList();
-		nbt.setTag("ls", list);
 		for (ProcessNode node : map.values()) {
 			NBTTagCompound dat = new NBTTagCompound();
 			list.appendTag(dat);
@@ -133,15 +132,11 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound> {
 			dat.setInteger("ppid", node.parentPid);
 			dat.setString("appid", node.appId.toString());
 		}
-		return nbt;
+		return list;
 	}
 
-	@Override
-	public void deserializeNBT(NBTTagCompound nbt) {
-		pidCounter = nbt.getInteger("pct");
-		foreground = nbt.getInteger("fgid");
+	protected void deserializeProcess(NBTTagList list) {
 		this.map.clear();
-		NBTTagList list = nbt.getTagList("ls", NBTTag.TAG_COMPOUND);
 		for (int i = 0; i < list.tagCount(); i++) {
 			NBTTagCompound dat = list.getCompoundTagAt(i);
 			int pid = dat.getInteger("pid");
@@ -149,6 +144,69 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound> {
 			ResourceLocation appId = new ResourceLocation(dat.getString("appid"));
 			addProcessNode(new ProcessNode(appId, pid, parentPid));
 		}
+	}
+
+	@Override
+	public NBTTagCompound serializeNBT() {
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setInteger("pct", pidCounter);
+		nbt.setInteger("fgid", foreground);
+		nbt.setTag("ls", serializeProcess());
+		return nbt;
+	}
+
+	@Override
+	public void deserializeNBT(NBTTagCompound nbt) {
+		pidCounter = nbt.getInteger("pct");
+		foreground = nbt.getInteger("fgid");
+		deserializeProcess(nbt.getTagList("ls", NBTTag.TAG_COMPOUND));
+	}
+
+	protected static class DetectDataset {
+		protected int foreground = 0;
+		protected Set<Integer> set = new HashSet<>();
+	}
+
+	@Override
+	public NBTTagCompound detectChanges(ISyncWatcher watcher) {
+		DetectDataset dataset = watcher.getOrCreateDetectObject(">process", DetectDataset.class,
+				() -> new DetectDataset());
+
+		NBTTagCompound changes = null;
+
+		if (dataset.foreground != foreground) {
+			if (changes == null) changes = new NBTTagCompound();
+			changes.setInteger("fg", foreground);
+			dataset.foreground = foreground;
+		}
+
+		boolean hasProcessChange = false;
+
+		if (dataset.set.size() != map.size()) hasProcessChange = true;
+		else {
+			for (Integer i : dataset.set) {
+				if (!map.containsKey(i)) {
+					hasProcessChange = true;
+					break;
+				}
+			}
+		}
+
+		// TODO 这里用更精准的检测，目前是全部发送
+		if (hasProcessChange) {
+			if (changes == null) changes = new NBTTagCompound();
+			changes.setTag("ls", serializeProcess());
+			dataset.set.clear();
+			for (Integer i : map.keySet()) dataset.set.add(i);
+		}
+
+		return changes;
+	}
+
+	@Override
+	public void mergeChanges(NBTTagCompound nbt) {
+		if (nbt.hasKey("fg")) foreground = nbt.getInteger("fg");
+		if (nbt.hasKey("ls")) deserializeProcess(nbt.getTagList("ls", NBTTag.TAG_COMPOUND));
 	}
 
 }

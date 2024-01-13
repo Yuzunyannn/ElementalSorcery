@@ -17,9 +17,9 @@ import yuzunyannn.elementalsorcery.api.mantra.SilentLevel;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
-import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
+import yuzunyannn.elementalsorcery.logics.EventClient;
+import yuzunyannn.elementalsorcery.logics.ITickTask;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoireInfo;
 import yuzunyannn.elementalsorcery.util.MasterBinder;
 

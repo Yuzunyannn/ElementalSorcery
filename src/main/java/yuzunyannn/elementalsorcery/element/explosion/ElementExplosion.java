@@ -289,6 +289,7 @@ public class ElementExplosion implements IExplosionExecutor {
 		IBlockState state = world.getBlockState(pos);
 		Block block = state.getBlock();
 		if (state.getMaterial() == Material.AIR) return;
+		if (state.getBlockHardness(world, pos) < 0) return;
 		if (block.canDropFromExplosion(vest)) {
 			block.dropBlockAsItemWithChance(world, pos, state, 1.0F / this.size, 0);
 		}

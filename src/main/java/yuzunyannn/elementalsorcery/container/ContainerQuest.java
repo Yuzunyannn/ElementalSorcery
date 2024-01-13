@@ -9,8 +9,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.quest.IAdventurer;
 import yuzunyannn.elementalsorcery.elf.quest.Quest;
-import yuzunyannn.elementalsorcery.event.EventServer;
 import yuzunyannn.elementalsorcery.item.ItemQuest;
+import yuzunyannn.elementalsorcery.logics.EventServer;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 
 public class ContainerQuest extends Container implements IContainerNetwork {

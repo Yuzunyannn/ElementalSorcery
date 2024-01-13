@@ -1,15 +1,15 @@
 package yuzunyannn.elementalsorcery.computer.soft;
 
-import yuzunyannn.elementalsorcery.api.computer.IStorageMonitor;
 import yuzunyannn.elementalsorcery.api.computer.StoragePath;
+import yuzunyannn.elementalsorcery.computer.IStorageMonitor;
 import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 
-public class AuthorityMemoryMonitor implements IStorageMonitor {
+public class AuthorityStorageMonitor implements IStorageMonitor {
 
 	public final IStorageMonitor monitor;
 	public final String[] paths;
 
-	public AuthorityMemoryMonitor(IStorageMonitor other, String... paths) {
+	public AuthorityStorageMonitor(IStorageMonitor other, String... paths) {
 		this.monitor = other;
 		this.paths = paths;
 	}

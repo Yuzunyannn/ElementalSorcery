@@ -25,7 +25,7 @@ import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.config.Config;
-import yuzunyannn.elementalsorcery.util.ContainerArrayDetecter;
+import yuzunyannn.elementalsorcery.util.detecter.ContainerArrayDetecter;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
 public class ElementInventory implements IElementInventoryModifiable, INBTSerializable<NBTTagCompound>,

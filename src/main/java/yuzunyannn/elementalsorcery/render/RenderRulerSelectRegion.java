@@ -18,10 +18,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.event.EventClient;
-import yuzunyannn.elementalsorcery.event.IRenderClient;
-import yuzunyannn.elementalsorcery.event.ITickTask;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
+import yuzunyannn.elementalsorcery.logics.EventClient;
+import yuzunyannn.elementalsorcery.logics.IRenderClient;
+import yuzunyannn.elementalsorcery.logics.ITickTask;
 
 @SideOnly(Side.CLIENT)
 public class RenderRulerSelectRegion implements IRenderClient, ITickTask {

@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.util;
+package yuzunyannn.elementalsorcery.util.detecter;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,6 +12,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+@Deprecated // use IDataDetectable
 public class ContainerMapDetecter<K, V, UK extends NBTBase, UV extends NBTBase> {
 
 	public static interface ICanMapDetected<K, V, UK extends NBTBase, UV extends NBTBase> {

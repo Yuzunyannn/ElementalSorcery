@@ -11,7 +11,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementTranslocator;
-import yuzunyannn.elementalsorcery.event.EventServer;
+import yuzunyannn.elementalsorcery.logics.EventServer;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementTranslocator;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;

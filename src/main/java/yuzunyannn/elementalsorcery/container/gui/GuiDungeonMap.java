@@ -32,7 +32,7 @@ import yuzunyannn.elementalsorcery.dungeon.DungeonAreaRoomSpecialThing;
 import yuzunyannn.elementalsorcery.dungeon.DungeonRoomDoor;
 import yuzunyannn.elementalsorcery.dungeon.DungeonRoomType;
 import yuzunyannn.elementalsorcery.dungeon.IDungeonSpecialThing;
-import yuzunyannn.elementalsorcery.event.EventClient;
+import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
 @SideOnly(Side.CLIENT)
