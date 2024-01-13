@@ -5,6 +5,8 @@ import java.util.function.Supplier;
 public interface ISyncWatcher {
 
 	boolean isLeave();
+	
+	void clearDetectObjects();
 
 	<T> T getDetectObject(String key, Class<T> cls);
 

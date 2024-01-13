@@ -261,14 +261,14 @@
 			"ja_JP": "本の中には何もありません"
 		},
 		"page.how2ply": {
-			"zh_CN": "知识与羊皮卷",
-			"en_US": "Knowledge and Parchment",
-			"ja_JP": "知識と羊皮紙"
+			"zh_CN": "开始",
+			"en_US": "Start",
+			"ja_JP": "はじめ"
 		},
 		"page.how2ply.ct": {
-			"zh_CN": "现在正在阅读的是含有知识的羊皮卷，在这里记载着的，各种各样的知识，可以帮助你开始你的魔法之旅。",
-			"en_US": "Now reading is parchment with knowledge, all kinds of knowledge are recorded here which can help you start your magical journey!",
-			"ja_JP": "今読んでいるのは知識が含まれた羊皮紙です、この中で記録した色々な知識は魔法の途中であなたを導く。"
+			"zh_CN": "古代的知识可以帮助你开始你的魔法之旅，不过你先要去地下寻找一些“封藏石”，古代用来保存东西的一种石头，打碎后，可以掉出一些东西来。其中有一些古代的文献，似乎有着一些的价值，但是这并不是目前的主要任务，主要任务是从中找到能获取古代知识的道具。\\n(作者：感谢您游玩这个mod)",
+			"en_US": "Ancient knowledge can help you start your magical journey, but first you need to search underground for some 'Seal Stone', a stone used to preserve items in ancient. Breaking it, some items will drop. There are some ancient documents, which seem to have some value, but this is not the first task at present. The first task is to find the props needed to access ancient knowledge from them.\\n(Author: Thank you for playing)",
+			"ja_JP": "古代の知識はあなたの魔法の旅を始めるのに役立ちますが、まず地下に行って「封蔵石」を探してみてください。古代に物を保存するために使われていた石の一種で、割ったら、何かを落とすことができます。その中にはいくつかの古代の文献があり、いくつかの価値があるようだが、これは現在の主要な任務ではなく、その中から古代の知識を得るための道具を見つけることが主要な任務である。\\n（作者：このmodを遊んでくれてありがとうございます）"
 		},
 		"page.stela": {
 			"zh_CN": "知识映像(弃用)",

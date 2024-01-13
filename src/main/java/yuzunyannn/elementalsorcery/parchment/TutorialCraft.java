@@ -30,6 +30,12 @@ public class TutorialCraft {
 	static public final List<Function<ItemStack, TutorialCraft>> tryCreators = new ArrayList<>();
 
 	static {
+		init();
+	}
+
+	public static void init() {
+		tryCreators.clear();
+		tryCreators.add(TutorialCraftSeek::tryCreate);
 		tryCreators.add(TutorialCraftSmelting::tryCreate);
 		tryCreators.add(TutorialCraftES::tryCreate);
 		tryCreators.add(TutorialCraftMC::tryCreate);
@@ -76,7 +82,7 @@ public class TutorialCraft {
 		protected GItemFrame addSlot(double x, double y) {
 			GItemFrame frame = new GItemFrame(ItemStack.EMPTY);
 			frame.setColorRef(params.color);
-			frame.setPosition(x, y, 0);
+			frame.setPosition(x, y, 10);
 			frame.enableClick(() -> onClick(frame), null);
 			frame.setRuntime(params.gui);
 			addChild(frame);
@@ -102,8 +108,12 @@ public class TutorialCraft {
 			super.update();
 			tick++;
 			if (tick % 40 == 0) {
-				showIndex = (showIndex + 1) % getElements().size();
-				updateCraft();
+				Collection<?> collection = getElements();
+				int size = collection == null ? 1 : collection.size();
+				if (size > 0) {
+					showIndex = (showIndex + 1) % size;
+					updateCraft();
+				}
 			}
 		}
 	}

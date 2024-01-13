@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -110,13 +111,13 @@ public class Computer implements IComputer, IDeviceModifiable {
 	@Override
 	public void addDisk(Disk disk) {
 		disks.add(disk);
-		os.onDiskChange();
+		os.onDiskChange(false);
 	}
 
 	@Override
 	public IDisk removeDisk(int index) {
 		IDisk disk = disks.remove(index);
-		if (disk != null) os.onDiskChange();
+		if (disk != null) os.onDiskChange(false);
 		return disk;
 	}
 
@@ -145,7 +146,7 @@ public class Computer implements IComputer, IDeviceModifiable {
 		disks.clear();
 		NBTTagList list = nbt.getTagList("#D", NBTTag.TAG_COMPOUND);
 		for (NBTBase n : list) disks.add(new Disk(((NBTTagCompound) n).copy()));
-		os.onDiskChange();
+		os.onDiskChange(false);
 	}
 
 	@Override
@@ -299,6 +300,39 @@ public class Computer implements IComputer, IDeviceModifiable {
 		}
 
 		updateOS();
+
+		if (!os.isRunning()) {
+			notice("power-off");
+			// 
+			/*
+			 * 数据错的原因是 创造模式的背包会从client回传数据到server，server使用client的数据，GG
+			  	还没有找到任何的介入点，内发修，GG*2
+				at net.minecraft.network.play.client.CPacketCreativeInventoryAction.<init>(CPacketCreativeInventoryActio
+				at net.minecraft.client.multiplayer.PlayerControllerMP.sendSlotPacket(PlayerControllerMP.java:636)
+				at net.minecraft.client.gui.inventory.CreativeCrafting.sendSlotContents(CreativeCrafting.java:35)
+				at net.minecraft.inventory.Container.detectAndSendChanges(Container.java:109)
+				at net.minecraft.inventory.Container.addListener(Container.java:62)
+				at net.minecraft.client.gui.inventory.GuiContainerCreative.initGui(GuiContainerCreative.java:306)
+			 * */
+			// if (ESAPI.isDevelop) {
+			// ESAPI.logger.warn("非预期的OS找不到任何APP os:" + os, new RuntimeException("error"));
+			// }
+		}
+	}
+
+	protected void osRun(Consumer<IOS> run) {
+		try {
+			run.accept(os);
+		} catch (ComputerException e) {
+			if (ESAPI.isDevelop) ESAPI.logger.warn("dev warnning", e);
+		} catch (Exception e) {
+			ESAPI.logger.warn("系統崩潰", e);
+		}
+	}
+
+	@Override
+	public void markDiskValueDirty() {
+		osRun(os -> os.onDiskChange(true));
 	}
 
 	@SideOnly(Side.CLIENT)
@@ -310,25 +344,17 @@ public class Computer implements IComputer, IDeviceModifiable {
 	}
 
 	protected void updateOS() {
-
 		while (!operations.isEmpty()) {
 			AppData appdat = operations.removeFirst();
 			try {
 				APP app = os.getAppInst(appdat.pid);
-				app.handleOperation(appdat.nbt);
+				if (app != null) app.handleOperation(appdat.nbt);
 			} catch (Exception e) {
 				if (e instanceof IComputerException) os.abort(appdat.pid, (IComputerException) e);
 				else ESAPI.logger.warn("系統崩潰", e);
 			}
 		}
-
-		try {
-			os.onUpdate();
-		} catch (ComputerException e) {
-
-		} catch (Exception e) {
-			ESAPI.logger.warn("系統崩潰", e);
-		}
+		osRun(os -> os.onUpdate());
 	}
 
 }

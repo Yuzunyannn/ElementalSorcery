@@ -5,7 +5,6 @@ import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.StoragePath;
-import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.util.var.IVariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.computer.DeviceStorage;
@@ -17,13 +16,11 @@ public class AuthorityStorage implements IDeviceStorage {
 	protected final IComputer computer;
 	protected final IDeviceStorage storage;
 	protected final IVariableSet variableSet;
-	protected final APP app;
 	protected final String[] paths;
 
-	public AuthorityStorage(IComputer computer, IDeviceStorage storage, String[] paths, APP app) {
+	public AuthorityStorage(IComputer computer, IDeviceStorage storage, String[] paths) {
 		this.computer = computer;
 		this.storage = storage;
-		this.app = app;
 		this.paths = (paths == null || paths.length <= 0) ? null : paths;
 		if (this.paths == null) this.variableSet = storage;
 		else this.variableSet = storage.getVariableSet(this.paths);

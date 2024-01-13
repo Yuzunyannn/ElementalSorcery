@@ -30,6 +30,7 @@ public class ContainerComputer extends Container implements IContainerNetwork {
 	public ItemStack stack = ItemStack.EMPTY;
 	public int slot = -1;
 	protected IComputerWatcher watcher;
+	protected boolean lastComputerIsOpen = false;
 
 	public ContainerComputer(EntityPlayer player, BlockPos pos) {
 		this.world = player.world;
@@ -74,6 +75,12 @@ public class ContainerComputer extends Container implements IContainerNetwork {
 		super.detectAndSendChanges();
 		if (watcher == null) return;
 		if (watcher.isLeave()) return;
+
+		if (lastComputerIsOpen != computer.isPowerOn()) {
+			lastComputerIsOpen = computer.isPowerOn();
+			if (computer.isPowerOn()) watcher.clearDetectObjects();
+		}
+
 		if (computer instanceof Computer) ((Computer) computer).detectChangesAndSend(watcher, cEnv);
 		else {
 			NBTTagCompound nbt = computer.detectChanges(watcher);

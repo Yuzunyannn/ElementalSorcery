@@ -12,6 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class Tutorial {
 
 	public int cacheAction = 0;
+	public double cacheOffsetY = 0;
 
 	protected String id;
 	protected ItemStack coverItem = ItemStack.EMPTY;

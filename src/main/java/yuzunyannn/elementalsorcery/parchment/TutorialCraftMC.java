@@ -35,6 +35,7 @@ public class TutorialCraftMC extends TutorialCraft {
 				ingredients = ire.getIngredients();
 				output = ire.getRecipeOutput();
 			}
+			if (ingredients.isEmpty()) continue;
 			list.add(entryOf(ingredients, output));
 		}
 	}
@@ -73,6 +74,7 @@ public class TutorialCraftMC extends TutorialCraft {
 
 		@Override
 		public void updateCraft() {
+			if (list.isEmpty()) return;
 			Entry<List<Ingredient>, ItemStack> recipe = list.get(showIndex);
 			output.setItemStack(recipe.getValue());
 			List<Ingredient> list = recipe.getKey();

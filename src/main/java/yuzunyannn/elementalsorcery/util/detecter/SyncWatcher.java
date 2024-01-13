@@ -9,6 +9,11 @@ public abstract class SyncWatcher implements ISyncWatcher {
 	protected HashMap<String, Object> objMap = new HashMap<>();
 
 	@Override
+	public void clearDetectObjects() {
+		objMap.clear();
+	}
+	
+	@Override
 	public <T> void setDetectObject(String key, T obj) {
 		objMap.put(key, obj);
 	}

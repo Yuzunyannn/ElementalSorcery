@@ -92,18 +92,20 @@ public class APPTutorialGPad extends GImage {
 		addChild(close);
 
 		scissor = new GScissor(new RenderRect(0, getHeight() - 20, 0, getWidth() - optionWidth - 4));
-		scissor.setPosition(optionWidth + 4, 16 + 4, 0);
+		scissor.setPosition(optionWidth + 4, 16 + 3, 0);
 		addChild(scissor);
 		container = new GNode();
 		scissor.addChild(container);
+		scissor.setInteractor(
+				new DragInteractor(container, new RenderRect(0, scissor.getHeight(), 0, scissor.getWidth())));
 
 		optionScissor = new GScissor(new RenderRect(0, getHeight() - 20, 0, optionWidth - 1));
 		optionScissor.setPosition(1, 16 + 3, 0);
 		addChild(optionScissor);
 		optionContainer = new GNode();
 		optionScissor.addChild(optionContainer);
-		optionScissor.setInteractor(
-				new DragInteractor(optionContainer, new RenderRect(0, scissor.getHeight(), 0, scissor.getWidth())));
+		optionScissor.setInteractor(new DragInteractor(optionContainer,
+				new RenderRect(0, optionScissor.getHeight(), 0, optionScissor.getWidth())));
 
 		addBtn(I18n.format("es.tutorialui.describe"), ACT_DESCRIBE);
 
@@ -138,8 +140,9 @@ public class APPTutorialGPad extends GImage {
 					label.setColorRef(gui.detailColor);
 				}
 			});
+			setColorRef(gui.detailColor);
 			label = new GLabel();
-			label.setColor(gui.detailObjColor);
+			label.setColorRef(gui.detailObjColor);
 			addChild(label);
 		}
 
@@ -203,6 +206,7 @@ public class APPTutorialGPad extends GImage {
 			if (history.isEmpty());
 			else history.removeFirst();
 		}
+		if (tutorial.cacheAction == ACT_DESCRIBE) tutorial.cacheOffsetY = container.getPostionY();
 	}
 
 	protected void addHistory(Object obj) {
@@ -239,13 +243,17 @@ public class APPTutorialGPad extends GImage {
 		GLabel label = new GLabel(tutorial.getDescribeDisplay());
 		label.setColorRef(gui.detailObjColor);
 		label.setWrapWidth((int) scissor.getWidth());
+		label.setPositionY(1);
+		container.setHeight(label.getHeight() + 1);
 		container.addChild(label);
+		if (tutorial.cacheOffsetY < 0) container.setPositionY(tutorial.cacheOffsetY);
 	}
 
 	public void toCraft() {
 		List<ItemStack> crafts = tutorial.getCrafts();
 		if (crafts == null) return;
 		if (crafts.isEmpty()) return;
+		container.setHeight(0);
 
 		double yoffset = 10;
 		double xoffset = optionScissor.getWidth() / 2 - 0.5f;
@@ -273,8 +281,9 @@ public class APPTutorialGPad extends GImage {
 	ItemStack currShow = ItemStack.EMPTY;
 
 	protected boolean showCraft(ItemStack stack) {
-		crafts = TutorialCraft.create(stack);
+		List<TutorialCraft> crafts = TutorialCraft.create(stack);
 		if (crafts.isEmpty()) return false;
+		this.crafts = crafts;
 		currShow = stack;
 		craftIndex = 0;
 		showCurrCraft();

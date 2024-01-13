@@ -23,6 +23,8 @@ import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 
 public class ItemTutorialPad extends ItemPad {
 
+	public static final ResourceLocation APP_ID = new ResourceLocation(ESAPI.MODID, "tutorial");
+
 	public ItemTutorialPad() {
 		this.setTranslationKey("tutorialPad");
 	}
@@ -32,7 +34,7 @@ public class ItemTutorialPad extends ItemPad {
 		ComputerProviderOfItem provider = new ComputerProviderOfItem(stack, "tutorialPad");
 		Computer computer = provider.getComputer();
 		Disk disk = new Disk();
-		disk.set(EOS.BOOT, new ResourceLocation(ESAPI.MODID, "tutorial").toString());
+		disk.set(EOS.BOOT, APP_ID.toString());
 		computer.addDisk(disk);
 		return provider;
 	}

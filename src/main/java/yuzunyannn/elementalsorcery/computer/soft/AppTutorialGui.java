@@ -165,12 +165,12 @@ public class AppTutorialGui extends APPGuiCommon {
 
 		detailTitle = new GLabel("");
 		detailTitle.setColorRef(detailObjColor);
-		detailTitle.setPosition(4, 1);
+		detailTitle.setPosition(4, 1.5);
 		detailNode.addChild(detailTitle);
 
 		detailTutorialTitle = new GLabel("");
 		detailTutorialTitle.setColorRef(detailObjColor);
-		detailTutorialTitle.setPosition(26, 1);
+		detailTutorialTitle.setPosition(26, 1.5);
 		detailNode.addChild(detailTutorialTitle);
 
 		detailScissor.setName("detailScissor");
@@ -190,6 +190,7 @@ public class AppTutorialGui extends APPGuiCommon {
 	public void setSelectAt(int index) {
 		currIndex = index;
 		detailTitle.setString("Lev." + index);
+		detailTutorialTitle.setPositionX(detailTitle.getPostionX() + detailTitle.getWidth() + 5);
 		selectNode.setPositionY(1 + index * 20);
 		toColor = getDetailBackgroundColor(index);
 		toColorObj = getDetailObjectColor(index);
@@ -284,8 +285,21 @@ public class AppTutorialGui extends APPGuiCommon {
 					else y = y - (yLocal / 2 + 1) * (18 + padding);
 				}
 
-				addTutorial(tutorial, x, y);
+				if (progress < uinfo.getUnlock()) {
+					GImage frame = new GImage(APPGuiCommon.TEXTURE_1, FRAME_ITEM_LOCKED);
+					frame.setAnchor(0, 0.5, 0);
+					frame.setColorRef(detailColor);
+					frame.setPosition(x, y, 1);
+					frame.setName("locked tutorial " + tutorial.getId());
+					detailContainer.addChild(frame);
+				} else addTutorial(tutorial, x, y);
 			}
+
+			GLabel label = new GLabel("" + uinfo.getUnlock());
+			label.setAnchor(0.5, 0);
+			label.setPosition(xBase + 9, height - 18 * 2.5 );
+			label.setColorRef(detailObjColor);
+			detailContainer.addChild(label);
 
 			TutorialUnlockInfo nextInfo = i + 1 < list.size() ? list.get(i + 1) : null;
 			if (nextInfo == null || progress < nextInfo.getUnlock()) {

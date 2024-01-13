@@ -1,13 +1,7 @@
 {
 	"type": "elementalsorcery:parchment_mult",
 	"lock": 0,
-	"linked": "elementalsorcery:rite_table",
 	"pages": [
-		{
-			"type": "normal",
-			"name": "how2ply",
-			"icon": "elementalsorcery:rite_table"
-		},
 		{
 			"type": "normal",
 			"name": "riteTable",

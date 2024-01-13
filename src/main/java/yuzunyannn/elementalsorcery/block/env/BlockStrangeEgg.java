@@ -141,6 +141,13 @@ public class BlockStrangeEgg extends Block {
 				onDestroy(worldIn, fromPos, null);
 			}
 		}
+//		else {
+//			if (BlockHelper.isFluid(worldIn, fromPos)) {
+//				worldIn.destroyBlock(pos, false);
+//				if (worldIn.rand.nextFloat() < 0.5) return;
+//				onDestroy(worldIn, fromPos, null);
+//			}
+//		}
 	}
 
 	@Override
@@ -154,10 +161,10 @@ public class BlockStrangeEgg extends Block {
 	public void onEntityCollision(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
 		super.onEntityCollision(worldIn, pos, state, entityIn);
 		if (entityIn instanceof EntityLivingBase) {
-			//这个函数有坑，这个pos传入的是BlockPos.MutableBlockPos
-			//在单机模式下，destroyBlock发送消息会直接引用pos，并直接把消息引用透传client线程
-			//这就导致了client处理使用了BlockPos.MutableBlockPos，同时server线程也在使用，就G了
-			pos = pos.toImmutable(); 
+			// 这个函数有坑，这个pos传入的是BlockPos.MutableBlockPos
+			// 在单机模式下，destroyBlock发送消息会直接引用pos，并直接把消息引用透传client线程
+			// 这就导致了client处理使用了BlockPos.MutableBlockPos，同时server线程也在使用，就G了
+			pos = pos.toImmutable();
 			worldIn.destroyBlock(pos, true);
 			onDestroy(worldIn, pos, (EntityLivingBase) entityIn);
 		}
@@ -205,7 +212,7 @@ public class BlockStrangeEgg extends Block {
 	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
 		if (this.isDead) {
 			IBlockState myState = state;
-			int range = rand.nextFloat() < 0.25 ? 3 : 2;
+			final int range = 3;
 			for (int x = -range; x <= range; x++) {
 				for (int z = -range; z <= range; z++) {
 					for (int y = -1; y <= 1; y++) {

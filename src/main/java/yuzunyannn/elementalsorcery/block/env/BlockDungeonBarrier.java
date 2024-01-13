@@ -25,7 +25,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.logics.ITickTask;
@@ -44,14 +43,13 @@ public class BlockDungeonBarrier extends Block {
 	}
 
 	@Override
+	@SideOnly(Side.CLIENT)
 	public EnumBlockRenderType getRenderType(IBlockState state) {
-		if (ESAPI.isDevelop) {
-			EntityPlayerSP player = Minecraft.getMinecraft().player;
-			Item barrier = Item.getItemFromBlock(ESObjects.BLOCKS.DUNGEON_BARRIER);
-			if (player != null && (player.getHeldItemMainhand().getItem() == barrier
-					|| player.getHeldItemOffhand().getItem() == barrier))
-				return EnumBlockRenderType.MODEL;
-		}
+		EntityPlayerSP player = Minecraft.getMinecraft().player;
+		Item barrier = Item.getItemFromBlock(ESObjects.BLOCKS.DUNGEON_BARRIER);
+		if (player != null && (player.getHeldItemMainhand().getItem() == barrier
+				|| player.getHeldItemOffhand().getItem() == barrier))
+			return EnumBlockRenderType.MODEL;
 		return EnumBlockRenderType.INVISIBLE;
 	}
 
@@ -81,7 +79,7 @@ public class BlockDungeonBarrier extends Block {
 	public void onBlockClicked(World worldIn, BlockPos pos, EntityPlayer playerIn) {
 		if (!worldIn.isRemote) super.onBlockClicked(worldIn, pos, playerIn);
 		super.onBlockClicked(worldIn, pos, playerIn);
-		
+
 		HashSet<BlockPos> posSet = new HashSet();
 		LinkedList<BlockPos> doList = new LinkedList<>();
 		doList.add(pos);
@@ -102,7 +100,7 @@ public class BlockDungeonBarrier extends Block {
 				return ITickTask.END;
 			}, (int) lenth);
 		}
-		
+
 	}
 
 	@Override
@@ -140,7 +138,7 @@ public class BlockDungeonBarrier extends Block {
 		Block block = iblockstate.getBlock();
 		return block == this ? false : super.shouldSideBeRendered(blockState, blockAccess, pos, side);
 	}
-	
+
 	@Override
 	public void onBlockExploded(World world, BlockPos pos, Explosion explosion) {
 

@@ -71,6 +71,7 @@ public class TutorialCraftSmelting extends TutorialCraft {
 		}
 
 		public void updateCraft() {
+			if (list.isEmpty()) return;
 			Entry<ItemStack, ItemStack> entry = list.get(showIndex);
 			input.setItemStack(entry.getKey());
 			output.setItemStack(entry.getValue());

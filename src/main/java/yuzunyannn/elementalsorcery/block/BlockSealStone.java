@@ -30,6 +30,7 @@ import yuzunyannn.elementalsorcery.elf.research.KnowledgeType;
 import yuzunyannn.elementalsorcery.item.ItemAncientPaper;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
+import yuzunyannn.elementalsorcery.logics.ESPlayerLogic;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class BlockSealStone extends Block implements Mapper {
@@ -187,6 +188,10 @@ public class BlockSealStone extends Block implements Mapper {
 				isSuperDrop = true;
 				fortune = fortune + 1;
 			}
+
+			if (ESPlayerLogic.checkPlayerFlagAndSet(player, ESPlayerLogic.FIRST_TUTORIAL)) {
+				spawnAsEntity(worldIn, pos, new ItemStack(ESObjects.ITEMS.TUTORIAL_PAD));
+			}
 		}
 
 		Random rand = worldIn.rand;
@@ -201,10 +206,11 @@ public class BlockSealStone extends Block implements Mapper {
 
 		// 一些其他东西
 		RandomHelper.WeightRandom<ItemStack> wr = new RandomHelper.WeightRandom();
-		wr.add(new ItemStack(ESObjects.ITEMS.ELEMENT_CRYSTAL), 1);
-		wr.add(ItemBlessingJadePiece.createPiece(0), 2);
+		wr.add(new ItemStack(ESObjects.ITEMS.TUTORIAL_PAD), 0.5f);
+		wr.add(new ItemStack(ESObjects.ITEMS.ELEMENT_CRYSTAL), 1.5);
+		wr.add(ItemBlessingJadePiece.createPiece(0), 3);
 		wr.add(new ItemStack(ESObjects.ITEMS.KEEPSAKE, 1, ItemKeepsake.EnumType.UNDELIVERED_LETTER.getMeta()), 4);
-		wr.add(new ItemStack(ESObjects.ITEMS.ORDER_CRYSTAL), 4);
+		wr.add(new ItemStack(ESObjects.ITEMS.ORDER_CRYSTAL), 5);
 		wr.add(new ItemStack(ESObjects.ITEMS.MAGIC_CRYSTAL), 10);
 		wr.add(new ItemStack(ESObjects.ITEMS.RESONANT_CRYSTAL), 16);
 		wr.add(new ItemStack(ESObjects.ITEMS.MAGIC_STONE, 3), 40);

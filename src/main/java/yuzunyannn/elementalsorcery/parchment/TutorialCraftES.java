@@ -22,8 +22,8 @@ public class TutorialCraftES extends TutorialCraft {
 		return new TutorialCraftES(list);
 	}
 
-	protected List<Entry<List<Ingredient>, ItemStack>> list;
-	protected List<List<ElementStack>> eList;
+	protected List<Entry<List<Ingredient>, ItemStack>> list = new ArrayList<>();
+	protected List<List<ElementStack>> eList = new ArrayList<>();
 
 	public TutorialCraftES(List<IElementRecipe> irecipes) {
 		for (IElementRecipe irecipe : irecipes) {

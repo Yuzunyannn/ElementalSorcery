@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import java.util.function.Consumer;
 
 import net.minecraft.nbt.NBTTagCompound;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
@@ -42,6 +43,7 @@ public abstract class EOS implements IOS {
 
 	protected SyncDetectableMonitor monitor = new SyncDetectableMonitor(">os");
 	protected ProcessTree processTree = new ProcessTree();
+	protected boolean isRunning = false;
 
 	public EOS(IComputer computer) {
 		this.computer = computer;
@@ -71,11 +73,14 @@ public abstract class EOS implements IOS {
 				return appChanges.isEmpty() ? null : appChanges;
 			}
 		});
+
+//		new RuntimeException("?? os:" + this).printStackTrace();
 	}
 
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
+		if (!isRunning) return nbt;
 		nbt.setTag(">pro", processTree.serializeNBT());
 		each(app -> {
 			NBTTagCompound dat = app.serializeNBT();
@@ -87,6 +92,11 @@ public abstract class EOS implements IOS {
 
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
+		if (!nbt.hasKey(">pro")) {
+			clearAll();
+			return;
+		}
+		isRunning = true;
 		processTree.deserializeNBT(nbt.getCompoundTag(">pro"));
 		each(app -> {
 			String key = ">p|" + app.getPid();
@@ -94,23 +104,29 @@ public abstract class EOS implements IOS {
 		});
 	}
 
+	protected void clearAll() {
+		isRunning = false;
+		processTree.reset();
+	}
+
 	@Override
 	public List<IDisk> getDisks() {
 		if (disksCache == null) {
 			disksCache = new ArrayList<>();
 			List<IDisk> disks = computer.getDisks();
-			for (IDisk disk : disks) disksCache.add(new AuthorityDisk(computer, disk, null, null));
+			for (IDisk disk : disks) disksCache.add(new AuthorityDisk(computer, disk, null));
 		}
 		return (List<IDisk>) ((Object) disksCache);
 	}
 
 	@Override
 	public IDeviceStorage getDisk(APP app, AppDiskType type) {
-		String key = app.getAppId().toString() + "_" + type.key;
+		String appId = app.getAppId().toString();
+		String key = appId + "_" + type.key;
 		if (appDiskCacheMap.containsKey(key)) return appDiskCacheMap.get(key);
 		List<IDisk> list = getDisks();
 		if (list.isEmpty()) throw new ComputerHardwareMissingException(this.computer, "disk is missing");
-		AuthorityAppDisk disk = new AuthorityAppDisk(computer, app, list, type.key);
+		AuthorityAppDisk disk = new AuthorityAppDisk(computer, appId, list, type);
 		appDiskCacheMap.put(key, disk);
 		return disk;
 	}
@@ -159,6 +175,9 @@ public abstract class EOS implements IOS {
 		}
 		if (boot == null) throw new ComputerBootException(computer, "cannot find boot");
 
+		clearAll();
+		isRunning = true;
+
 		int id = processTree.newProcess(boot, 0);
 		if (id == -1) throw new ComputerBootException(computer, "root process fail");
 
@@ -167,11 +186,17 @@ public abstract class EOS implements IOS {
 	}
 
 	@Override
+	public void onClosing() {
+		clearAll();
+	}
+
+	@Override
 	public void abort(int pid, IComputerException e) {
 		if (!processTree.hasProcess(pid)) return;
 		onAbort(processTree, pid, e);
 		processTree.removeProcess(pid);
 		monitor.markDirty(PROCESS);
+		if (ESAPI.isDevelop) ESAPI.logger.warn("computer abort: " + pid);
 	}
 
 	@Override
@@ -225,7 +250,10 @@ public abstract class EOS implements IOS {
 	}
 
 	@Override
-	public void onDiskChange() {
+	public void onDiskChange(boolean onlyData) {
+		each(app -> app.onDiskChange());
+		if (onlyData) return;
+
 		disksCache = null;
 		appDiskCacheMap.clear();
 	}
@@ -243,6 +271,11 @@ public abstract class EOS implements IOS {
 	@Override
 	public void mergeChanges(NBTTagCompound nbt) {
 		monitor.mergeChanges(nbt);
+	}
+
+	@Override
+	public boolean isRunning() {
+		return isRunning;
 	}
 
 }

@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.nodegui;
 
+import org.lwjgl.input.Mouse;
+
 import net.minecraft.util.math.Vec3d;
 
 public interface IGInteractor {

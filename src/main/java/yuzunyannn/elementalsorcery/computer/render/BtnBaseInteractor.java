@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.computer.render;
 
+import org.lwjgl.input.Mouse;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.init.SoundEvents;
@@ -23,6 +25,11 @@ public class BtnBaseInteractor implements IGInteractor {
 	}
 
 	@Override
+	public boolean blockMousePressed(GNode node, Vec3d worldPos) {
+		return Mouse.getEventButton() == 0;
+	}
+
+	@Override
 	public void onMouseHover(GNode node, Vec3d worldPos, boolean isHover) {
 		boolean isChange = this.isHover != isHover;
 		this.isHover = isHover;
@@ -31,6 +38,7 @@ public class BtnBaseInteractor implements IGInteractor {
 
 	@Override
 	public boolean onMousePressed(GNode node, Vec3d worldPos) {
+		if (Mouse.getEventButton() == 1) return false;
 		isClicking = true;
 		clickVec = worldPos;
 		onPressed(node);

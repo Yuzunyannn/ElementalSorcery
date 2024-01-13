@@ -244,10 +244,8 @@ public class EventServer {
 		if (event.player instanceof EntityPlayerMP) {
 			EntityPlayerMP player = (EntityPlayerMP) event.player;
 
-			NBTTagCompound data = ESData.getPlayerNBT(player);
-			if (!data.hasKey("esFirstJoin")) {
+			if (ESPlayerLogic.checkPlayerFlagAndSet(player, ESPlayerLogic.FIRST_JOIN)) {
 				if (player.inventory == null) return;
-				data.setBoolean("esFirstJoin", true);
 				ESPlayerLogic.onPlayerFirstJoinInWorld(player);
 			}
 

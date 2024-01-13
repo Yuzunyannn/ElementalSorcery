@@ -43,7 +43,13 @@ public class ItemElfPurse extends Item {
 		NBTTagCompound nbt = stack.getTagCompound();
 		if (nbt == null) stack.setTagCompound(nbt = new NBTTagCompound());
 		int coin = nbt.getInteger("coin");
-		nbt.setInteger("coin", coin + this.getAndClearAllCoin(playerIn));
+		if (playerIn.isSneaking()) {
+			if (coin > 0) {
+				int extractCoin = Math.min(coin, 64);
+				nbt.setInteger("coin", coin - extractCoin);
+				ItemHelper.addItemStackToPlayer(playerIn, new ItemStack(ESObjects.ITEMS.ELF_COIN, coin));
+			}
+		} else nbt.setInteger("coin", coin + getAndClearAllCoin(playerIn));
 		return new ActionResult<ItemStack>(EnumActionResult.SUCCESS, stack);
 	}
 

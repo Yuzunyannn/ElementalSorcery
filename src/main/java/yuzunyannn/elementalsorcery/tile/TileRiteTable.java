@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Consumer;
 
 import javax.annotation.Nonnull;
 
@@ -15,11 +16,8 @@ import net.minecraft.block.BlockFlower;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockTorch;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -32,13 +30,20 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.oredict.OreDictionary;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
+import yuzunyannn.elementalsorcery.api.computer.IComputer;
+import yuzunyannn.elementalsorcery.api.computer.IDisk;
+import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.computer.Computer;
+import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
+import yuzunyannn.elementalsorcery.computer.soft.AppTutorial;
+import yuzunyannn.elementalsorcery.computer.soft.AuthorityAppDisk;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
@@ -46,6 +51,7 @@ import yuzunyannn.elementalsorcery.entity.EntityScapegoat;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
+import yuzunyannn.elementalsorcery.item.tool.ItemTutorialPad;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
@@ -118,8 +124,8 @@ public class TileRiteTable extends TileEntityNetwork {
 		return ItemStack.EMPTY;
 	}
 
-	/** 仪式 */
-	public boolean rite(EntityLivingBase entity, ItemStack tool) {
+	@Deprecated
+	public boolean rite_old(EntityLivingBase entity, ItemStack tool) {
 		// 检测周边环境
 		if (this.checkAround() == false) return false;
 		if (world.isRemote) return true;
@@ -160,24 +166,7 @@ public class TileRiteTable extends TileEntityNetwork {
 		}
 		boolean isNormalRite = recipe == null && summonRecipe == null;
 		// 获取总能量
-		List<String> pool = new LinkedList<String>();
-		int power = 0;
-		for (int i = 0; i < inventory.getSlots(); i++) {
-			ItemStack stack = inventory.getStackInSlot(i);
-			if (stack.isEmpty()) continue;
-			if (!specialItem.isEmpty() && stack == specialItem) continue;
-			int x = sacrifice.getPower(stack);
-			if (x == 0) continue;
-			int level = sacrifice.getLevel(stack);
-			if (level > this.level) continue;
-			if (x < 0) {
-				power += x;// 不好的物品直接削减
-			} else {
-				level = this.level + 1 - level;
-				power += x / level;// 低等级的物品会受到衰减
-			}
-			pool.addAll(sacrifice.getHope(stack));// 期望物品加入蛋池
-		}
+		int power = getPowerInTable(specialItem);
 		int rnum = 100;
 		if (recipe != null) rnum = recipe.needPower();
 		else if (summonRecipe != null) rnum = 100;
@@ -218,6 +207,7 @@ public class TileRiteTable extends TileEntityNetwork {
 			return true;
 		}
 		// 默认仪式，进行随机获取
+		List<String> pool = new LinkedList<String>();
 		List<String> ids = levelPages[TileRiteTable.pLevel(this.level)];
 		if (ids != null) pool.addAll(ids);
 		int size = pool.size();
@@ -237,6 +227,138 @@ public class TileRiteTable extends TileEntityNetwork {
 		this.markDirty();
 		this.updateToClient();
 		return true;
+	}
+
+	public boolean rite(EntityLivingBase entity, ItemStack tool) {
+		if (this.checkAround() == false) return false;
+		if (world.isRemote) return true;
+
+		// 不同仪式的判定
+		ItemStack specialItem = ItemStack.EMPTY;
+		Consumer<Integer> runner = null;
+		int targetPower = 100;
+		MultiRets rets = null;
+
+		// new print
+		rets = this.findTutorialRiteRecipe();
+		if (!rets.isEmpty()) {
+			ItemStack spItem = specialItem = rets.get(0, ItemStack.class);
+			IComputer computer = rets.get(1, IComputer.class);
+			List<IDisk> disks = computer.getDisks();
+			runner = (power) -> {
+				AuthorityAppDisk disk = new AuthorityAppDisk(computer, ItemTutorialPad.APP_ID.toString(), disks,
+						AppDiskType.USER_DATA);
+				try {
+					float grow = Math.max(1, power / 60f);
+					if (ESAPI.isDevelop) grow = 9999;
+					float progress = disk.get(AppTutorial.POGRESS);
+					disk.set(AppTutorial.POGRESS, progress + grow);
+					Block.spawnAsEntity(world, pos.up(), spItem);
+					computer.getSystem().onDiskChange(true);
+					EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + 0.5f, pos.getY() + 1,
+							pos.getZ() + 0.5f, true);
+					world.addWeatherEffect(lightning);
+				} catch (ComputerException e) {}
+			};
+		}
+
+		// seek rite
+		rets = this.findSeekRiteRecipe();
+		if (!rets.isEmpty()) {
+			ItemStack spItem = specialItem = rets.get(0, ItemStack.class);
+			TileRiteTable.Recipe recipe = rets.get(1, TileRiteTable.Recipe.class);
+			// 等级不够，进行惩罚
+			if (level < recipe.needLevel()) {
+				punish(entity);
+				return true;
+			}
+			targetPower = recipe.needPower();
+			runner = (power) -> {
+				ItemStack output = recipe.getOutput().copy();
+				output.setCount(recipe.getHappyCount(power, entity));
+				Block.spawnAsEntity(world, pos.up(), output);
+				Block.spawnAsEntity(world, pos.up(), spItem);
+				EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + 0.5f, pos.getY() + 1,
+						pos.getZ() + 0.5f, true);
+				world.addWeatherEffect(lightning);
+			};
+		}
+
+		// summon rite
+		rets = this.findSummonRiteRecipe();
+		if (!rets.isEmpty()) {
+			ItemStack spItem = specialItem = rets.get(0, ItemStack.class);
+			SummonRecipe recipe = rets.get(1, SummonRecipe.class);
+			int cost = recipe.getSoulCost(specialItem, world, pos.up());
+			int soul = ItemSoulWoodSword.getSoul(tool);
+			// 点数不够，或者等级不够，进行惩罚
+			if (soul < cost || this.level < 3) {
+				punish(entity);
+				return true;
+			}
+			targetPower = 100;
+			runner = (power) -> {
+				ItemSoulWoodSword.addSoul(tool, -cost);
+				MantraSummon.summon(world, pos.down(), entity, spItem.copy(), recipe);
+				if (recipe.isDropKeepsake()) Block.spawnAsEntity(world, pos.up(), spItem);
+				NBTTagCompound nbt = FireworkEffect.fastNBT(0, 3, 0.1f, new int[] { 0x3ad2f2, 0x7ef5ff },
+						new int[] { 0xe0ffff });
+				Effects.spawnEffect(world, Effects.FIREWROK, new Vec3d(pos.up()).add(0.5, 0, 0.5), nbt);
+			};
+		}
+
+		// 如果没有runner则表示无仪式进行
+		if (runner == null) return false;
+		// 能量获取
+		int power = getPowerInTable(specialItem);
+		// 是否可以被惩罚
+		boolean canPunish = !NORMAL_RITE_ALWAYS_SUCCESS;
+		// 随机可能性
+		if (canPunish && power < RandomHelper.rand.nextInt(targetPower)) {
+			this.punish(entity);
+			if (!specialItem.isEmpty()) Block.spawnAsEntity(world, pos.up(), specialItem);
+			return true;
+		}
+		// 进行仪式
+		runner.accept(power);
+		// 清理仓库
+		ItemHelper.clear(inventory);
+		updateToClient();
+		markDirty();
+		// 结束
+		return true;
+	}
+
+	protected int getPowerInTable(ItemStack specialItem) {
+		int power = 0;
+		for (int i = 0; i < inventory.getSlots(); i++) {
+			ItemStack stack = inventory.getStackInSlot(i);
+			if (stack.isEmpty()) continue;
+			if (!specialItem.isEmpty() && stack == specialItem) continue;
+			int x = sacrifice.getPower(stack);
+			if (x == 0) continue;
+			int level = sacrifice.getLevel(stack);
+			if (level > this.level) continue;
+			if (x < 0) {
+				power += x;// 不好的物品直接削减
+			} else {
+				level = this.level + 1 - level;
+				power += x / level;// 低等级的物品会受到衰减
+			}
+		}
+		return power;
+	}
+
+	/** 寻找是否为new print仪式 */
+	protected MultiRets findTutorialRiteRecipe() {
+		for (int i = 0; i < inventory.getSlots(); i++) {
+			ItemStack stack = inventory.getStackInSlot(i);
+			if (stack.isEmpty()) continue;
+			IComputer computer = stack.getCapability(Computer.COMPUTER_CAPABILITY, null);
+			if (computer == null) continue;
+			return MultiRets.ret(stack, computer);
+		}
+		return MultiRets.EMPTY;
 	}
 
 	/** 寻找是否为summon仪式 */
@@ -354,12 +476,12 @@ public class TileRiteTable extends TileEntityNetwork {
 	@Override
 	@SideOnly(Side.CLIENT)
 	public ITextComponent getDisplayName() {
-		EntityPlayer player = Minecraft.getMinecraft().player;
-		ItemStack stackMain = player.getHeldItemMainhand();
-		ItemStack stackOff = player.getHeldItemOffhand();
-		if (stackMain.getItem() == Items.WOODEN_SWORD || stackOff.getItem() == Items.WOODEN_SWORD)
-			return new TextComponentString(I18n.format("info.level.total.page.count", level, idsCount));
-		return null;
+//		EntityPlayer player = Minecraft.getMinecraft().player;
+//		ItemStack stackMain = player.getHeldItemMainhand();
+//		ItemStack stackOff = player.getHeldItemOffhand();
+//		if (stackMain.getItem() == Items.WOODEN_SWORD || stackOff.getItem() == Items.WOODEN_SWORD)
+//			return new TextComponentString(I18n.format("info.level.total.page.count", level, idsCount));
+		return super.getDisplayName();
 	}
 
 	static public interface ISacrificeHandle {
@@ -373,6 +495,7 @@ public class TileRiteTable extends TileEntityNetwork {
 		public int getPower(ItemStack stack);
 
 		@Nonnull
+		@Deprecated
 		public List<String> getHope(ItemStack stack);
 
 		// public NonNullList<ItemStack> getIngredients();
@@ -570,6 +693,7 @@ public class TileRiteTable extends TileEntityNetwork {
 	private static final List<String>[] levelPages = new List[MAX_LEVEL + 1];
 
 	/** 添加一个页面到指定等级上 */
+	@Deprecated
 	public static void addPage(String id, int lev) {
 		if (id == null || id.isEmpty()) return;
 		lev = pLevel(lev);

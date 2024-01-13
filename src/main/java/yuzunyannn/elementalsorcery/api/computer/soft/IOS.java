@@ -17,6 +17,8 @@ public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<N
 	List<IDisk> getDisks();
 
 	IDeviceStorage getDisk(APP app, AppDiskType type);
+	
+	boolean isRunning();
 
 	void markDirty(APP app);
 
@@ -31,7 +33,7 @@ public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<N
 	@Nullable
 	APP getAppInst(int pid);
 
-	default void onDiskChange() {
+	default void onDiskChange(boolean onlyData) {
 	};
 
 	default void onStarting() {

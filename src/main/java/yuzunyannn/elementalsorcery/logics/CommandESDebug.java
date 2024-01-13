@@ -56,6 +56,7 @@ import yuzunyannn.elementalsorcery.entity.EntityBlockMove;
 import yuzunyannn.elementalsorcery.entity.EntityPortal;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
 import yuzunyannn.elementalsorcery.parchment.Pages;
+import yuzunyannn.elementalsorcery.parchment.TutorialCraft;
 import yuzunyannn.elementalsorcery.parchment.Tutorials;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.util.TextHelper;
@@ -114,6 +115,8 @@ public class CommandESDebug {
 				sender.sendMessage(new TextComponentString("任务刷新成功!"));
 				DungeonLib.registerAllFunc();
 				sender.sendMessage(new TextComponentString("地牢Func刷新成功!"));
+				TutorialCraft.init();
+				sender.sendMessage(new TextComponentString("TutorialCraft刷新成功!"));
 			} catch (Exception e) {
 				ESAPI.logger.warn("刷新数据出现异常！", e);
 				sender.sendMessage(new TextComponentString("刷新数据出现异常！Refresh data exception!"));

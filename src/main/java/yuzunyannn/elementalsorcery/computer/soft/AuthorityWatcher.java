@@ -26,5 +26,10 @@ public class AuthorityWatcher implements ISyncWatcher {
 	public <T> void setDetectObject(String key, T obj) {
 		this.watcher.setDetectObject(prefix + key, obj);
 	}
+	
+	@Override
+	public void clearDetectObjects() {
+		watcher.clearDetectObjects();
+	}
 
 }

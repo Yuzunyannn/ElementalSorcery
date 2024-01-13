@@ -57,6 +57,12 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 	protected Map<Integer, ProcessNode> map = new HashMap<>();
 	protected int foreground = 0;
 
+	public void reset() {
+		pidCounter = 0;
+		foreground = 0;
+		map.clear();
+	}
+
 	public int newProcess(String appId, int parentPid) {
 		ProcessNode parentNode = map.get(parentPid);
 		int newPid = -1;

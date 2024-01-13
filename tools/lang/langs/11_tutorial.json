@@ -26,6 +26,14 @@
 			"zh_CN": "§k????§r的研究，从魔力中发现了构成物质的元素，元素作为特殊的魔力，似乎可以来改变我的世界。\\n元素可以转化到魔力，这是很容易的一件事，但反之则是几乎不可能的。",
 			"en_US": "§k????§r magician find Element as special kind of magic from Items, which has power to change the World.\\nIt's simply to let Element convert to Magic, but it's almost impossible to let Magic convert back to Element."
 		},
+		"es.tutorial.title.0_0_2": {
+			"zh_CN": "知识§k????§r",
+			"en_US": "Knowledge §k????§r"
+		},
+		"es.tutorial.describe.0_0_2": {
+			"zh_CN": "通过搭建仪式，消耗祭品作为魔力启动源，将知识§k????§r的方式，可将史蒂夫们的智慧相连，我们称这个叫映像仪式。\\n想要实现这件事，首先需要一个仪式桌。仪式桌分为不同的等级，等级越高制作越难，目前只需要制作0级的即可。除了手中的石板，仪式桌上可以放五件物品作为祭品。\\n \\n仪式进行：仪式桌放到高一格的地面上，仪式桌为中心的5×5范围不能出现任何方块，仪式桌下方为中心的5×5范围内应插满鲜花或者火把，将祭品放到桌子上，手持满耐久的木剑发动仪式。仪式成功会有天雷将知识进行同步，并以卷轴的形式给予。如果失败后，会受到天罚，仪式等级越高收到的惩罚力度越大。\\n \\n祭品选择：大多数物品都可以成为祭品，物品的好坏决定着仪式的成败。但并不是每个等级的仪式都可以使用优秀的祭品，比如钻石。等级低的仪式只能接受普通的物品，当然对于等级低的仪式来说，这已经足够了。每种祭品有「能量」属性，所有祭品的能量综合越高，仪式的成功率越大。如果高级仪式使用低级仪式的祭品，物品所能提供的能量会大打折扣。\\n史蒂夫知道，0级的仪式可以石头、原木、煤炭作为祭品，显然煤炭会更好一些，另外圆石是受到众人讨厌的祭品，如果使用四个煤炭作为祭品是肯定会成功的。",
+			"en_US": "By Rite, consuming sacrifices as a source of magical power, and through the method of §k????§r knowledge, we can connect the wisdom of the Steves. We call this the Print Rite.\\nPrepare a Ritual Table to Start. There are diff level Ritual Tables, but now creft a 0 level is all right. In addition to the slate in hand, five items can be placed on the Ritual Table as sacrifices.\\n \\nRite: Put the Ritual Table on the ground one higher, Table center range of 5 × 5 cannot have any block. Place Flowers or torches on center range of 5x5 under table. Put the sacrifice on Ritual Table and start the Rite with a wooden sword. Steve Can get knowledge on Rite success. but if fail, steve will be punished, the higher Rite level, the greater the punishment received.\\n \\nSacrifice: Most items can be sacrificed, the quality of the items determine the success or failure of Rite. But not every level of table can withstand high-end items. Low level Rite can only accept low-end items, of course for low-level Rite, this is enough. Each sacrifice has 'Power' attribute, more Power more better. If high-level Rite use low-level's sacrifice, Power will be greatly reduced.\\nSteve know 0 level Rite Can use Stone, Log, Coal as sacrifice, any level Rite hate cobblestone, and four coal will bring success in 0 level Rit."
+		},
 		"es.tutorial.title.0_1_0": {
 			"zh_CN": "重要资源",
 			"en_US": "Important Ore"
@@ -51,12 +59,28 @@
 			"en_US": "After §k????§r, an extremely rare white flower began to grow in overworld, which we call the Star Flower. Star Flower is extremely fragile and cannot be dropped.\\nBut it can bring you good luck, holding some Item or not and right click it to make a wish, Steve may get some buffs or tools, or bring steve to home.\\nHowever, the Star Flower will withered after wish."
 		},
 		"es.tutorial.title.0_3_0": {
+			"zh_CN": "寻求仪式",
+			"en_US": "Seek Rite"
+		},
+		"es.tutorial.describe.0_3_0": {
+			"zh_CN": "寻求仪式，可以使用写有某样物品的羊片卷来向§k????§r寻求这个物品。该仪式和映像仪式基本一样，不同点：一是需要一张「信息羊皮卷」；二是寻求的物品对仪式等级有要求。\\n「信息羊皮卷」可以通过：墨囊、羽毛、羊皮卷和象征性物品进行合成。象征性物品根据寻求的物品不同而不同。",
+			"en_US": "Seek Rite, can use Parchment writen some item to seek this item from §k????§r. It same like Print Rite, but: First is need a 'Item Parchment', second is require level of Ritual Table.\\n'Item Parchment' can craft by Ink, Feather, Parchment and Symbolic Item, Symbolic Item is according to item for seek."
+		},
+		"es.tutorial.title.0_3_1": {
 			"zh_CN": "引路灯",
 			"en_US": "Guide Lamp"
 		},
-		"es.tutorial.describe.0_3_0": {
-			"zh_CN": "引路灯是具有魔力的一盏灯，放下后会自动发出火焰指向上一个灯。由于其的特殊性，可以通过寻求仪式献祭物品从而所求。\\n通过shift+右键可以设置下次放置的链接位置。",
+		"es.tutorial.describe.0_3_1": {
+			"zh_CN": "引路灯是具有魔力的一盏灯，放下后会自动发出火焰指向上一个灯。由于其的特殊性，可以通过寻求仪式获取。\\n通过shift+右键可以设置下次放置的链接位置。",
 			"en_US": "Kyanite is a kind of magic mineral that steve can find it's ore under y 19.\\nBurning kyanite ore whit Extra Item Eye of Ender can take out Magic Fragment from it.\\nKyanite can be used to make tools, which is the same harvestLevel as iron's, but has better durability."
+		},
+		"es.tutorial.title.1_0_3": {
+			"zh_CN": "魔力碎片",
+			"en_US": "Magic Piece"
+		},
+		"es.tutorial.describe.1_0_3": {
+			"zh_CN": "由魔力构成的碎片，可以合成带有魔力的物品，想必研究它的人会有很多。\\n它的获取方式有很多种，不过最快的可能是从其他人手里购买，这样的话...可以去村庄看看？",
+			"en_US": "Fragment made of Magic which can craft item with magic. I think there must be many people who study it. There are many ways to obtain it, but the fastest way may be to buy it from others. In that case... why not go to the village and have a look?"
 		}
 	}
 }

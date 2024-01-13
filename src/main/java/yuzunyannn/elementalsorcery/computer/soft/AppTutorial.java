@@ -3,15 +3,21 @@ package yuzunyannn.elementalsorcery.computer.soft;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
+import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.api.computer.soft.IAPPGui;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
+import yuzunyannn.elementalsorcery.api.util.var.Variable;
+import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.parchment.Tutorials;
+import yuzunyannn.elementalsorcery.parchment.Tutorials.TutorialLevelInfo;
 import yuzunyannn.elementalsorcery.util.detecter.DDFloat;
 
 public class AppTutorial extends APP {
 
 //	public static final Variable<Byte> INDEX = new Variable<>("si", VariableSet.BYTE);
-//	public static final Variable<Float> POGRESS = new Variable<>("pg", VariableSet.FLOAT);
+	public static final Variable<Float> POGRESS = new Variable<>("pg", VariableSet.FLOAT);
 
 	public static float lastProgress;
 	public static int selectIndex = 0;
@@ -60,7 +66,16 @@ public class AppTutorial extends APP {
 	@Override
 	public void onStartup() {
 		super.onStartup();
-		getOS().markDirty(this);
+		onDiskChange();
+	}
+
+	@Override
+	public void onDiskChange() {
+		super.onDiskChange();
+		IOS os = getOS();
+		IDeviceStorage disk = os.getDisk(this, AppDiskType.USER_DATA);
+		progress = disk.get(POGRESS);
+		os.markDirty(this);
 	}
 
 	public float getProgress() {
@@ -77,12 +92,14 @@ public class AppTutorial extends APP {
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
 		super.deserializeNBT(nbt);
-		progress = Math.max(nbt.getFloat("pg"), 1);
+		progress = nbt.getFloat("pg");
 	}
 
 	public boolean isPartLocked(int index) {
 		if (index == 0) return false;
-		return false;
+		TutorialLevelInfo info = Tutorials.getTutorialInfoByLevel(index);
+		if (info == null) return true;
+		return progress < info.getAccTotalUnlock();
 	}
 
 	@Override

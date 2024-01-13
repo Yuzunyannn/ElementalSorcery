@@ -56,6 +56,10 @@ public class APP extends EasyImp<APP> implements ISyncDetectable<NBTTagCompound>
 
 	}
 
+	public void onDiskChange() {
+
+	}
+
 	@Override
 	public void deserializeNBT(NBTTagCompound nbt) {
 

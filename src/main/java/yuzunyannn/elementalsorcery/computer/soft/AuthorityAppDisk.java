@@ -10,7 +10,7 @@ import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.StoragePath;
-import yuzunyannn.elementalsorcery.api.computer.soft.APP;
+import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.api.util.var.IVariableSet;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.computer.DeviceStorage;
@@ -19,24 +19,26 @@ import yuzunyannn.elementalsorcery.computer.exception.ComputerPermissionDeniedEx
 public class AuthorityAppDisk implements IDeviceStorage {
 
 	protected final IComputer computer;
-	protected final APP app;
 	protected final List<AuthorityStorage> storages;
 	protected final AuthorityStorage coreStorage;
 	protected final IDisk coreDisk;
 
-	public AuthorityAppDisk(IComputer computer, APP app, List<IDisk> disks, String namespace) {
+	public AuthorityAppDisk(IComputer computer, String appId, List<IDisk> disks, AppDiskType type) {
+		this(computer, appId, disks, type.key);
+	}
+
+	public AuthorityAppDisk(IComputer computer, String appId, List<IDisk> disks, String namespace) {
 		this.computer = computer;
-		this.app = app;
 		this.storages = new ArrayList<>();
 
-		String id = app.getAppId().toString();
+		String id = appId;
 		IDisk coreDisk = disks.get(0);
 		String[] paths = new String[] { namespace, id };
 
 		for (IDisk _disk : disks) {
 			IVariableSet variableSet = _disk.getVariableSet(namespace);
 			if (variableSet.has(id)) {
-				this.storages.add(new AuthorityStorage(computer, _disk, paths, app));
+				this.storages.add(new AuthorityStorage(computer, _disk, paths));
 				if (_disk.isWriteable()) coreDisk = _disk;
 			}
 		}
@@ -46,7 +48,7 @@ public class AuthorityAppDisk implements IDeviceStorage {
 			}
 		}
 		IVariableSet variableSet = coreDisk.getVariableSet(namespace);
-		if (!variableSet.has(id)) this.storages.add(new AuthorityStorage(computer, coreDisk, paths, app));
+		if (!variableSet.has(id)) this.storages.add(new AuthorityStorage(computer, coreDisk, paths));
 
 		this.coreDisk = coreDisk;
 

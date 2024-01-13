@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.computer.render;
 
+import org.lwjgl.input.Mouse;
+
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
@@ -15,9 +17,15 @@ public class DragInteractor implements IGInteractor {
 		this.moveNode = moveNode;
 		this.rect = portRect;
 	}
+	
+	@Override
+	public boolean blockMousePressed(GNode node, Vec3d worldPos) {
+		return Mouse.getEventButton() == 0;
+	}
 
 	@Override
 	public boolean onMousePressed(GNode node, Vec3d worldPos) {
+		if (Mouse.getEventButton() == 1) return false;
 		lastVec = worldPos;
 		return true;
 	}
