@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryModifiable;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
-import yuzunyannn.elementalsorcery.util.detecter.ContainerArrayDetecter.ICanArrayDetected;
+import yuzunyannn.elementalsorcery.api.util.detecter.ContainerArrayDetecter.ICanArrayDetected;
 
 public class ElementStackDoubleExchanger implements INBTSerializable<NBTTagCompound>, IElementInventoryModifiable,
 		ICanArrayDetected<ElementStackDouble, NBTTagCompound> {

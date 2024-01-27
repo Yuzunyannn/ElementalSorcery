@@ -1,0 +1,14 @@
+{
+    "cover": "elementalsorcery:melt_cauldron",
+    "title": {
+        "zh_CN": "熔岩锅",
+        "en_US": "Melt Cauldron"
+    },
+    "describe": {
+        "zh_CN": "熔岩锅，借助灶台，可以将原始等材料等熔炼成其他物品。\\n不过，熔岩锅只能使用一次，一旦灶台起火加入材料，在本次熔炼结束后，该锅就无法再次使用了。带熔浆冷却后，将锅打碎，取出熔炼后的物品。\\n加热温度升高，到一定温度后，需要先扔入魔石融化成溶剂，才能开始熔化其他材料\\n材料必须按照比率放，偏离比例会提升标准差。",
+        "en_US": "Heating Melt Cauldron through The Hearth, raw materials can be melted into other items.\\nHowever, the Melt Cauldron can only be used once. Once the Melt Cauldron fires and materials are added, the Melt Cauldron cannot be used again after this smelting. After the Melt Cauldron is cooled, break it and items drop.\\nWhen the temperature rises to a certain, the Dimensity needs to be thrown in to melt into a solvent before add other materials.\\nMaterials must be placed according to the ratio, and deviation from the ratio will increase the standard deviation."
+    },
+    "crafts": [
+        "elementalsorcery:melt_cauldron"
+    ]
+}

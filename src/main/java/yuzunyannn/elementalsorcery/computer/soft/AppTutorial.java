@@ -1,25 +1,29 @@
 package yuzunyannn.elementalsorcery.computer.soft;
 
+import java.util.List;
+import java.util.UUID;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
-import yuzunyannn.elementalsorcery.api.computer.soft.IAPPGui;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
+import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
+import yuzunyannn.elementalsorcery.api.util.detecter.DDFloat;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.parchment.Tutorial;
+import yuzunyannn.elementalsorcery.parchment.TutorialBuilding;
 import yuzunyannn.elementalsorcery.parchment.Tutorials;
 import yuzunyannn.elementalsorcery.parchment.Tutorials.TutorialLevelInfo;
-import yuzunyannn.elementalsorcery.util.detecter.DDFloat;
 
 public class AppTutorial extends APP {
 
 //	public static final Variable<Byte> INDEX = new Variable<>("si", VariableSet.BYTE);
 	public static final Variable<Float> POGRESS = new Variable<>("pg", VariableSet.FLOAT);
 
-	public static float lastProgress;
 	public static int selectIndex = 0;
 	public static String showTutorialId = null;
 
@@ -49,8 +53,7 @@ public class AppTutorial extends APP {
 
 	@SideOnly(Side.CLIENT)
 	protected void checkCache() {
-		if (lastProgress > this.progress) {
-			lastProgress = this.progress;
+		if (isPartLocked(selectIndex)) {
 			selectIndex = 0;
 			showTutorialId = null;
 		}
@@ -74,7 +77,7 @@ public class AppTutorial extends APP {
 		super.onDiskChange();
 		IOS os = getOS();
 		IDeviceStorage disk = os.getDisk(this, AppDiskType.USER_DATA);
-		progress = disk.get(POGRESS);
+		progress = 100; // disk.get(POGRESS);
 		os.markDirty(this);
 	}
 
@@ -104,8 +107,41 @@ public class AppTutorial extends APP {
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public IAPPGui createGUIRender() {
+	public ISoftGui createGUIRender() {
 		return new AppTutorialGui(this);
+	}
+
+	@Override
+	public void handleOperation(NBTTagCompound nbt) {
+		super.handleOperation(nbt);
+		if (nbt.hasKey("ptbd")) {
+			String id = nbt.getString("ptbd");
+			printBuilding(id);
+		}
+	}
+
+	@Override
+	@SideOnly(Side.CLIENT)
+	public void onRecvMessage(NBTTagCompound nbt) {
+		super.onRecvMessage(nbt);
+		int code = nbt.getByte("code");
+		// todo
+	}
+
+	protected void printBuilding(String id) {
+		Tutorial tutorial = Tutorials.getTutorial(id);
+		TutorialBuilding building = tutorial == null ? null : tutorial.getBuilding();
+		if (building == null) return;
+		IOS os = getOS();
+		List<UUID> devices = os.filterLinkedDevice("item-writer");
+		if (devices.isEmpty()) {
+			NBTTagCompound nbt = new NBTTagCompound();
+			nbt.setByte("code", (byte) 1);
+			os.message(this, nbt);
+			return;
+		}
+		int pid = os.exec(this, TaskInventoryItemSelect.ID);
+		os.getAppInst(pid).bindDevice(devices.get(0));
 	}
 
 }

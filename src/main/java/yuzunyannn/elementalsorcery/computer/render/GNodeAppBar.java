@@ -13,20 +13,20 @@ public class GNodeAppBar extends GNode {
 	protected GImage closeBtn;
 	protected GImage shutDownBtn;
 
-	public GNodeAppBar(APPGuiCommon gui, int width) {
-		GImage image = new GImage(APPGuiCommon.TEXTURE_1, new RenderTexutreFrame(0, 0, 256, 10, 256, 256));
-		image.setColorRef(gui.getThemeColor(AppGuiThemePart.BACKGROUND_2));
+	public GNodeAppBar(SoftGuiCommon gui, int width) {
+		GImage image = new GImage(SoftGuiCommon.TEXTURE_1, new RenderTexutreFrame(0, 0, 256, 10, 256, 256));
+		image.setColorRef(gui.getThemeColor(SoftGuiThemePart.BACKGROUND_2));
 		image.setSplit9(RenderFriend.SPLIT9_AVERAGE_RECT);
 		image.setSize(width, 9);
 		this.addChild(image);
 
 		this.setSize(width, 9);
 
-		Color color1 = gui.getThemeColor(AppGuiThemePart.OBJECT_2);
-		Color color2 = gui.getThemeColor(AppGuiThemePart.OBJECT_2_ACTIVE);
+		Color color1 = gui.getThemeColor(SoftGuiThemePart.OBJECT_2);
+		Color color2 = gui.getThemeColor(SoftGuiThemePart.OBJECT_2_ACTIVE);
 
-		batteryOuter = new GImage(APPGuiCommon.TEXTURE_1, new RenderTexutreFrame(0, 11, 6, 7, 256, 256));
-		batteryInner = new GImage(APPGuiCommon.TEXTURE_1, new RenderTexutreFrame(6, 11, 6, 7, 256, 256));
+		batteryOuter = new GImage(SoftGuiCommon.TEXTURE_1, new RenderTexutreFrame(0, 11, 6, 7, 256, 256));
+		batteryInner = new GImage(SoftGuiCommon.TEXTURE_1, new RenderTexutreFrame(6, 11, 6, 7, 256, 256));
 		batteryOuter.setColorRef(color1);
 		batteryInner.setColorRef(color1);
 		batteryOuter.setPosition(width - 10, 0.5, 2);
@@ -37,18 +37,18 @@ public class GNodeAppBar extends GNode {
 		this.addChild(batteryInner);
 		this.addChild(batteryOuter);
 
-		GImage link = new GImage(APPGuiCommon.TEXTURE_1, new RenderTexutreFrame(12, 11, 11, 7, 256, 256));
+		GImage link = new GImage(SoftGuiCommon.TEXTURE_1, new RenderTexutreFrame(12, 11, 11, 7, 256, 256));
 		link.setPosition(width - 25, 0.5, 1);
 		link.setColorRef(color1);
 		link.setSize(11, 7);
 		this.addChild(link);
 
-		closeBtn = new GImage(APPGuiCommon.TEXTURE_1, APPGuiCommon.FRAME_CLOSE);
+		closeBtn = new GImage(SoftGuiCommon.TEXTURE_1, SoftGuiCommon.FRAME_CLOSE);
 		closeBtn.setColorRef(color1);
 		closeBtn.setPosition(4, 1, 1);
 		closeBtn.setName("app closeBtn");
 
-		shutDownBtn = new GImage(APPGuiCommon.TEXTURE_1, new RenderTexutreFrame(24, 11, 7, 6, 256, 256));
+		shutDownBtn = new GImage(SoftGuiCommon.TEXTURE_1, new RenderTexutreFrame(24, 11, 7, 6, 256, 256));
 		shutDownBtn.setColorRef(color1);
 		shutDownBtn.setPosition(4, 1, 1);
 		shutDownBtn.setName("app shutDownBtn");

@@ -20,6 +20,7 @@ public class Tutorial {
 	protected String hoverKey = "";
 	protected String describeKey = "";
 	protected List<ItemStack> crafts = null;
+	protected TutorialBuilding building = null;
 	protected int level;
 	protected int unlock;
 
@@ -63,6 +64,15 @@ public class Tutorial {
 	public void setCrafts(List<ItemStack> crafts) {
 		this.crafts = crafts;
 	}
+
+	public TutorialBuilding getBuilding() {
+		return building;
+	}
+	
+	public void setBuilding(TutorialBuilding building) {
+		this.building = building;
+	}
+	
 
 	public void setTitleKey(String titleKey) {
 		this.titleKey = titleKey;

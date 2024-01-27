@@ -8,6 +8,10 @@ public class GActionScaleBy extends GActionTime {
 	protected Vec3d startScale;
 	protected Vec3d deltaScale;
 
+	public GActionScaleBy(int tick, double x) {
+		this(tick, new Vec3d(x, x, x));
+	}
+
 	public GActionScaleBy(int tick, Vec3d vec) {
 		super(tick);
 		this.deltaScale = vec;

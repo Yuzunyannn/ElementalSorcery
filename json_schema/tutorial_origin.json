@@ -33,6 +33,26 @@
         },
         "crafts": {
             "$ref": "./es_item.json"
+        },
+        "building": {
+            "type": "object",
+            "required": [
+                "structure"
+            ],
+            "properties": {
+                "structure": {
+                    "type": "string"
+                },
+                "custom": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^-?\\d+,-?\\d+,-?\\d+": {
+                            "$ref": "./es_item.json"
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            }
         }
     }
 }

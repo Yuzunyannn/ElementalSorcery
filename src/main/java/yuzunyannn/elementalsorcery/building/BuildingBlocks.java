@@ -141,6 +141,10 @@ public class BuildingBlocks {
 		return stack;
 	}
 
+	public Building.BlockInfo getBlockInfo() {
+		return building.infoList.get(entry.getValue());
+	}
+
 	public BuildingBlocks setPosOff(BlockPos pos) {
 		off = pos;
 		return this;

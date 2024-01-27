@@ -21,10 +21,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
-import yuzunyannn.elementalsorcery.api.computer.soft.IAPPGui;
-import yuzunyannn.elementalsorcery.api.computer.soft.IAPPGuiRuntime;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
+import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
+import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
@@ -58,7 +58,9 @@ public abstract class GuiComputerBase extends GuiContainer {
 	protected boolean isPowerOn;
 
 	protected APP currApp;
-	protected IAPPGui appGUI;
+	protected APP currTask;
+	protected ISoftGui appGUI;
+	protected ISoftGui taskGUI;
 
 	protected static class TooltipInfo {
 		final Vec3d vec;
@@ -88,7 +90,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 
 	protected Map<String, TooltipInfo> tooltipMap = new HashMap<>();
 
-	class APPGuiRuntime implements IAPPGuiRuntime {
+	class APPGuiRuntime implements ISoftGuiRuntime {
 
 		int pid = -1;
 
@@ -154,6 +156,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 		super.initGui();
 		screenFront = ComputerScreenRender.apply();
 		screenFront.setAPPGui(appGUI);
+		screenFront.setTaskAppGui(taskGUI);
 	}
 
 	@Override
@@ -266,6 +269,9 @@ public abstract class GuiComputerBase extends GuiContainer {
 			if (openImage == null) this.createWaitingOpenScene();
 			this.updateWaitingOpenScene();
 			screenFront.setAPPGui(null);
+			screenFront.setTaskAppGui(null);
+			currApp = null;
+			currTask = null;
 			return;
 		}
 
@@ -285,6 +291,16 @@ public abstract class GuiComputerBase extends GuiContainer {
 				APP oldApp = currApp;
 				currApp = app;
 				onCurrAppChange(oldApp);
+			}
+			int topTask = ios.getTopTask();
+			if (topTask > 0) {
+				APP task = ios.getAppInst(topTask);
+				if (currTask != task) {
+					taskGUI = task.createGUIRender();
+					taskGUI.init(runtime);
+					currTask = task; 
+					screenFront.setTaskAppGui(taskGUI);
+				}
 			}
 		} catch (ComputerException e) {
 			this.exception = e;

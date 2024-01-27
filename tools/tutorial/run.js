@@ -1,10 +1,18 @@
 const { assert } = require('console')
 var fs = require('fs')
 
+function traverseFiles(path, iter) {
+    let files = fs.readdirSync(path)
+    files.forEach(fileName => {
+        let cpath = path + "/" + fileName
+        let stat = fs.lstatSync(cpath)
+        if (stat.isDirectory()) traverseFiles(cpath, iter)
+        else iter(fileName, cpath)
+    })
+}
+
 let tutorialList = []
-let tutorialFiles = fs.readdirSync("./tutorials")
-tutorialFiles.forEach(fileName => {
-    let path = "./tutorials/" + fileName
+traverseFiles("./tutorials", (fileName, path) => {
     let fparmas = fileName.split("_")
     let parmas = {}
     fparmas.forEach(e => {
@@ -23,7 +31,7 @@ tutorialFiles.forEach(fileName => {
 
 let tutorialLang = {}
 let fileList = []
-let unlockCountMap = {}
+let unlockMarkCountMap = {}
 
 function doLang(json, obj, key) {
     if (!obj) return
@@ -32,13 +40,33 @@ function doLang(json, obj, key) {
     tutorialLang[st] = obj
 }
 
+function parserBuilding(building) {
+    if (!building) return undefined
+    let config = {
+        structure: building.structure,
+        custom: []
+    }
+    for (let key in building.custom) {
+        let result = key.match(/^(-?\d+),(-?\d+),(-?\d+)/)
+        let x = parseInt(result[1])
+        let y = parseInt(result[2])
+        let z = parseInt(result[3])
+        config.custom.push({
+            pos: [x, y, z],
+            item: building.custom[key]
+        })
+    }
+    return config
+}
+
 tutorialList.forEach(e => {
 
     assert(e.unlock != undefined, "unlock is miss")
     assert(e.level != undefined, "level is miss")
 
-    let count = unlockCountMap[e.unlock] | 0
-    unlockCountMap[e.unlock] = count + 1
+    let markKey = e.unlock + ":" + e.level
+    let count = unlockMarkCountMap[markKey] | 0
+    unlockMarkCountMap[markKey] = count + 1
 
     let json = {
         id: `${e.level}_${e.unlock}_${count}`,
@@ -47,6 +75,7 @@ tutorialList.forEach(e => {
         unlock: e.unlock,
         cover: e.cover,
         crafts: e.crafts,
+        building: parserBuilding(e.building),
     }
 
     doLang(json, e.title, "title")
@@ -66,7 +95,7 @@ fs.writeFileSync(langPath, JSON.stringify(tlang, null, '\t'), { encoding: "utf8"
 fileList.forEach(e => {
     let path = srcPath + e.id + ".json"
     delete e.id
-    fs.writeFileSync(path, JSON.stringify(e, null, '\t'), { encoding: "utf8", })
+    fs.writeFileSync(path, JSON.stringify(e), { encoding: "utf8", })
 })
 
 const cprocess = require("child_process")

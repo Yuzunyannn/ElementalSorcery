@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:elf_sapling",
+    "title": {
+        "zh_CN": "巨型精灵树",
+        "en_US": "Towering Elf Tree"
+    },
+    "describe": {
+        "zh_CN": "在世界中，存在着一部分土地充斥着精灵力，在这些土地上可以长出参天的精灵树。\\n如果史蒂夫寻找到了这块地，在确保有两层完整土地且周围没有杂物的时候，使用共鸣水晶砸向精灵树苗，即可长出巨大的精灵树，这种树似乎会吸引精灵前来居住。\\n精灵商人可能会卖能精准检测某个区块是否拥有着精灵力的物品，同时星之铃也会发出和史莱姆区块一样的声音。\\n带有核心的巨大的精灵树可以吸引精灵们入住，他们会在树中搭建各式各样的楼层。要想开启精灵树的建造，试着和其周边的精灵说说话吧。",
+        "en_US": "In The Overworld, there is a part of the land full of Elf Power, Towering Elf Tree can grow here.\\nWhen Steve find it, clear around to flat and throw Resonance Crystal to Elf Tree Sapling.Then Tree will grow, Elves will come.\\nThe Elf Merchant may sell items that can accurately detect whether a certain chunk possesses Elf Power, and the Star Bell will also emit the same sound as the Slime Chunk.\\nTowering Elf Tree will attract Elves to come. They will build various floors in The Tree. Talking with them, if want invest to them."
+    }
+}

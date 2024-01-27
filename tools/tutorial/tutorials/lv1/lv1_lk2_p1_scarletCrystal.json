@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:scarlet_crystal",
+    "title": {
+        "zh_CN": "绯红水晶",
+        "en_US": "Scarlet Crystal"
+    },
+    "describe": {
+        "zh_CN": "一种奇异的红色水晶，在地下的岩浆之下，可能会发现绯红水晶矿的身影。\\n所有水晶拥有频率这一属性，绯红水晶也不例外，但是它是少数频率可以变化的水晶。\\n绯红水晶遇水会产生变化，碎裂并分解成魔石与碎片。这或许是获取魔石的有一种方案，不过挖掘在岩浆下面的矿物实属有些困难。",
+        "en_US": "A strange red crystal may be found under the underground magma.\\nAll kind of crystals have the attribute of frequency, and The Scarlet Crystal is no exception, but it is one of the few kind which frequency can be changed.\\nThe Scarlet Crystal will decompose to Dimensity and Magic Fragment when it wet. This may be a way to obtain Dimensity, but it is difficult to excavate ores under the lava."
+    }
+}

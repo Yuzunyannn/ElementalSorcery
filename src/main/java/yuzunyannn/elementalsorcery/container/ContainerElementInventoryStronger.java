@@ -12,10 +12,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.ICanSync;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.detecter.ContainerArrayDetecter;
 import yuzunyannn.elementalsorcery.container.gui.GuiElementInventoryStronger;
 import yuzunyannn.elementalsorcery.logics.EventServer;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
-import yuzunyannn.elementalsorcery.util.detecter.ContainerArrayDetecter;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryStronger;
 

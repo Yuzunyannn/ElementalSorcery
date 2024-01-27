@@ -46,6 +46,14 @@ public class BigItemStack implements INBTSerializable<NBTTagCompound> {
 		this.deserializeNBT(nbt);
 	}
 
+	public void setCount(int size) {
+		stack.setCount(size);
+	}
+
+	public void grow(int size) {
+		stack.grow(size);
+	}
+
 	public ItemStack getItemStack() {
 		return stack;
 	}

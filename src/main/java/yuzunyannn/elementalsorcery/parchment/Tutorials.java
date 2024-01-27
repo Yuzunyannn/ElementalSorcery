@@ -9,15 +9,24 @@ import javax.annotation.Nullable;
 
 import com.google.gson.JsonParseException;
 
+import net.minecraft.block.Block;
+import net.minecraft.block.state.IBlockState;
+import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.building.Building;
+import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
 import yuzunyannn.elementalsorcery.util.json.Json.ParseExceptionCode;
+import yuzunyannn.elementalsorcery.util.json.JsonArray;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 import yuzunyannn.elementalsorcery.util.math.MathSupporter;
 
@@ -83,6 +92,15 @@ public class Tutorials {
 		return levelMap.get(level);
 	}
 
+	@Nullable
+	public static TutorialLevelInfo tryGetTutorialInfoBiggerOrEqualLevel(int level) {
+		for (int i = level; i < level + 5; i++) {
+			TutorialLevelInfo info = levelMap.get(level);
+			if (info != null) return info;
+		}
+		return null;
+	}
+
 	static public void reg(String id, Tutorial tutorial) {
 		if (tutorials.containsKey(id)) return;
 		tutorial.setId(id);
@@ -139,6 +157,58 @@ public class Tutorials {
 		if (json.has("crafts")) {
 			List<ItemRecord> records = json.needItems("crafts");
 			tutorial.setCrafts(ItemRecord.asItemStackList(records));
+		}
+		if (json.hasObject("building")) { 
+			JsonObject buildingJson = json.getObject("building");
+			String id = buildingJson.needString("structure", "building");
+			Building building = BuildingLib.instance.getBuilding(id);
+			if (building == null) throw Json.exception(ParseExceptionCode.NOT_HAVE, "building");
+			TutorialBuilding inst = new TutorialBuilding(building);
+			tutorial.setBuilding(inst);
+			try {
+				JsonArray attachs = buildingJson.needArray("custom", "add", "attach");
+				loadBuilding(attachs, inst);
+			} catch (JsonParseException e) {}
+		}
+	}
+
+	static protected void loadBuilding(JsonArray attachs, TutorialBuilding inst) {
+		for (int i = 0; i < attachs.size(); i++) {
+			if (!attachs.hasObject(i)) continue;
+			JsonObject json = attachs.getObject(i);
+
+			String type = "";
+			if (json.hasString("type")) type = json.getString("type");
+
+			List<ItemRecord> irList = json.needItems("item");
+			if (irList.isEmpty()) continue;
+			ItemStack stack = irList.get(0).getStack();
+			Block block = Block.getBlockFromItem(stack.getItem());
+			if (block == null || block == Blocks.AIR) continue;
+			IBlockState state = block.getStateFromMeta(stack.getItemDamage());
+
+			switch (type) {
+			case "full": {
+				BlockPos from = new BlockPos(json.needPos("from").get(0));
+				BlockPos to = new BlockPos(json.needPos("to").get(0));
+				for (int x = from.getX(); x <= to.getX(); x++) {
+					for (int y = from.getY(); y <= to.getY(); y++) {
+						for (int z = from.getZ(); z <= to.getZ(); z++) {
+							BlockPos pos = new BlockPos(x, y, z);
+							inst.addExtraBlockNotOverlap(pos, state);
+						}
+					}
+				}
+				break;
+			}
+			default: {
+				List<Vec3d> v3fs = json.needPos("pos");
+				if (v3fs.isEmpty()) continue;
+				for (Vec3d v3f : v3fs) inst.addExtraBlock(new BlockPos(v3f.x, v3f.y, v3f.z), state);
+				break;
+			}
+			}
+
 		}
 	}
 }

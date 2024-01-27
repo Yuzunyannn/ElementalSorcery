@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.api.computer.soft;
 
+import java.util.UUID;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
@@ -7,16 +9,16 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.ESImpClassRegister;
 import yuzunyannn.elementalsorcery.api.util.ESImpClassRegister.EasyImp;
-import yuzunyannn.elementalsorcery.api.util.ISyncDetectable;
-import yuzunyannn.elementalsorcery.api.util.ISyncWatcher;
-import yuzunyannn.elementalsorcery.util.detecter.DataDetectableMonitor;
+import yuzunyannn.elementalsorcery.api.util.detecter.DataDetectableMonitor;
+import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
 
-public class APP extends EasyImp<APP> implements ISyncDetectable<NBTTagCompound>, INBTSerializable<NBTTagCompound> {
+public class APP extends EasyImp<APP> implements ISoft, INBTSerializable<NBTTagCompound> {
 
 	public static final ESImpClassRegister<APP> REGISTRY = new ESImpClassRegister();
 
 	private final int pid;
 	private final IOS os;
+	private boolean isTask;
 
 	public APP(IOS os, int pid) {
 		this.pid = pid;
@@ -27,6 +29,7 @@ public class APP extends EasyImp<APP> implements ISyncDetectable<NBTTagCompound>
 		return pid;
 	}
 
+	@Override
 	public IOS getOS() {
 		return os;
 	}
@@ -35,28 +38,29 @@ public class APP extends EasyImp<APP> implements ISyncDetectable<NBTTagCompound>
 		return getRegistryName();
 	}
 
-	@SideOnly(Side.CLIENT)
-	public IAPPGui createGUIRender() {
-		return null;
+	public void bindDevice(UUID uuid) {
+
 	}
 
+	public void setTask(boolean isTask) {
+		this.isTask = isTask;
+	}
+
+	public boolean isTask() {
+		return isTask;
+	}
+
+	public void onDiskChange() {
+
+	}
+
+	@Override
 	public void handleOperation(NBTTagCompound nbt) {
 
 	}
 
-	public void onStartup() {
-
-	}
-
-	public void onUpdate() {
-
-	}
-
-	public void onExit() {
-
-	}
-
-	public void onDiskChange() {
+	@SideOnly(Side.CLIENT)
+	public void onRecvMessage(NBTTagCompound nbt) {
 
 	}
 

@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:md_magic_solidify",
+    "title": {
+        "zh_CN": "魔力固化",
+        "en_US": "Magic Solidification"
+    },
+    "describe": {
+        "zh_CN": "使用魔力固化箱，将魔力再次转化到魔石。魔力固化箱只有魔力达到要求就会开始工作。\\n此外，固化箱可以将魔力存入元素容器之中，这个的用处似乎比转化成魔石更加的有用，或许这个东西应该改名叫魔力充能箱。",
+        "en_US": "Use the Magic Solidify Box to convert magic into Dimensity again. The Magic Solidify Box will only start working when the magic meets the requirements.\\nIn addition, the Box can store magic in the Element Container, which seems to be more useful than converting it into Dimensity, perhaps this Box should be renamed to Magic Charging Box."
+    },
+    "crafts": "elementalsorcery:md_magic_solidify"
+}

@@ -1,0 +1,16 @@
+{
+    "cover": {
+        "id": "elementalsorcery:elf_fruit",
+        "data": 2
+    },
+    "title": {
+        "zh_CN": "精灵",
+        "en_US": "Elf",
+        "ja_JP": "精霊"
+    },
+    "describe": {
+        "zh_CN": "精灵传说是从精灵世界过来的一种新的生物，他们通常生活在巨大的精灵树上。精灵属于中立生物，而且有着不同的职业。如果你攻击他们，他们将可能会转变到战斗职业来进行防卫。\\n精灵中会产生疯子，他会到处乱攻击。\\n此外精灵学者会告诉你一些你可能想知道的内容，同时他也会出售教程。\\n(精灵部分教程只能从学者获取)",
+        "en_US": "The legend of the elves is a new creature from the world of elves. They usually live in the giant elf trees. Elves are neutral creatures and have different professions. If you attack them, they will probably switch to combat profession to defend.\\nThere will be Crazy in the elves, and they will attack everything.\\nIn addition, the Elf Scholar will tell you something you may want to know, and they will also sell tutorials.\\n(Tutorials of Elf can only be obtained from Elf Scholars)",
+        "ja_JP": "精霊は精霊の世界から来た新しい生物と言われています、彼たちはいつも巨大な精霊の木に住んでいます。精霊は中立的な生物であり、また異なる職業を持っている。彼たちを攻撃すれば、彼たちは戦闘職業に転じて防衛することができます。\\n精霊の中で狂人がいる、彼はあちこちで攻撃します。\\nまた、精霊学者があなたに教えてくれます・同時に教程も販売しています。\\n(精霊部分教程は学者からしか入手できません)"
+    }
+}

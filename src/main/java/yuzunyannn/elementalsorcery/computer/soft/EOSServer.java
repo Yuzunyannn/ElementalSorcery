@@ -9,7 +9,7 @@ public class EOSServer extends EOS {
 	}
 
 	@Override
-	public boolean isClient() {
+	public boolean isRemote() {
 		return false;
 	}
 }

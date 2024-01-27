@@ -213,7 +213,7 @@ public class BlockSealStone extends Block implements Mapper {
 		wr.add(new ItemStack(ESObjects.ITEMS.ORDER_CRYSTAL), 5);
 		wr.add(new ItemStack(ESObjects.ITEMS.MAGIC_CRYSTAL), 10);
 		wr.add(new ItemStack(ESObjects.ITEMS.RESONANT_CRYSTAL), 16);
-		wr.add(new ItemStack(ESObjects.ITEMS.MAGIC_STONE, 3), 40);
+		wr.add(new ItemStack(ESObjects.ITEMS.MAGIC_STONE, 3), 30);
 		wr.add(new ItemStack(ESObjects.ITEMS.MAGIC_PIECE, 4 + rand.nextInt(4)), 80);
 
 		tryTime = rand.nextInt(fortune + 5) + 2;

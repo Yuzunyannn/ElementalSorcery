@@ -1,9 +1,11 @@
 package yuzunyannn.elementalsorcery.computer;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,16 +20,21 @@ import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.computer.DNParams;
+import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IComputerWatcher;
+import yuzunyannn.elementalsorcery.api.computer.IDevice;
+import yuzunyannn.elementalsorcery.api.computer.IDeviceListener;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceModifiable;
+import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
-import yuzunyannn.elementalsorcery.api.util.ISyncWatcher;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
 import yuzunyannn.elementalsorcery.computer.soft.EOSClient;
 import yuzunyannn.elementalsorcery.computer.soft.EOSServer;
@@ -62,13 +69,19 @@ public class Computer implements IComputer, IDeviceModifiable {
 	@CapabilityInject(IComputer.class)
 	public static Capability<IComputer> COMPUTER_CAPABILITY;
 
+	@CapabilityInject(IDevice.class)
+	public static Capability<IDevice> DEVICE_CAPABILITY;
+
 	protected IOS os;
 	protected List<Disk> disks = new ArrayList<>();
 	protected String name = "";
 	protected UUID uuid = UUID.randomUUID();
 	protected boolean inRunning = false;
+	protected DeviceNetwork networkd = new DeviceNetwork(this);
 
-	protected LinkedList<AppData> operations = new LinkedList<>();
+	protected final LinkedList<AppData> operations = new LinkedList<>();
+	protected final LinkedList<Consumer<IComputEnv>> updateFuncs = new LinkedList<>();
+	protected final LinkedList<IDeviceListener> listeners = new LinkedList<>();
 	protected boolean closeFlag = false;
 	protected boolean isInit = false;
 	protected final String appearance;
@@ -89,6 +102,29 @@ public class Computer implements IComputer, IDeviceModifiable {
 	}
 
 	@Override
+	public void addListener(IDeviceListener listener) {
+		listeners.add(listener);
+	}
+
+	public void noticeAllListener(String method, DNParams params) {
+		Iterator<IDeviceListener> iter = listeners.iterator();
+		while (iter.hasNext()) {
+			IDeviceListener listener = iter.next();
+			try {
+				if (listener.absent()) iter.remove();
+				else listener.notice(method, params);
+			} catch (Exception e) {
+				iter.remove();
+				ESAPI.logger.warn("listener error", e);
+			}
+		}
+	}
+
+	protected void addUpdateFunc(Consumer<IComputEnv> func) {
+		updateFuncs.add(func);
+	}
+
+	@Override
 	public List<IDisk> getDisks() {
 		return (List<IDisk>) ((Object) disks);
 	}
@@ -106,6 +142,11 @@ public class Computer implements IComputer, IDeviceModifiable {
 	@Override
 	public UUID getUDID() {
 		return uuid;
+	}
+
+	@Override
+	public IDeviceNetwork getNetwork() {
+		return networkd;
 	}
 
 	@Override
@@ -133,6 +174,7 @@ public class Computer implements IComputer, IDeviceModifiable {
 		nbt.setUniqueId("#U", uuid);
 		nbt.setBoolean("#R", inRunning);
 		nbt.setTag("#OS", os.serializeNBT());
+		nbt.setTag("#NW", networkd.serializeNBT());
 		NBTHelper.setNBTSerializableList(nbt, "#D", disks);
 		return nbt;
 	}
@@ -143,6 +185,7 @@ public class Computer implements IComputer, IDeviceModifiable {
 		uuid = nbt.getUniqueId("#U");
 		inRunning = nbt.getBoolean("#R");
 		os.deserializeNBT(nbt.getCompoundTag("#OS"));
+		networkd.deserializeNBT(nbt.getCompoundTag("#NW"));
 		disks.clear();
 		NBTTagList list = nbt.getTagList("#D", NBTTag.TAG_COMPOUND);
 		for (NBTBase n : list) disks.add(new Disk(((NBTTagCompound) n).copy()));
@@ -150,26 +193,31 @@ public class Computer implements IComputer, IDeviceModifiable {
 	}
 
 	@Override
-	public void notice(String method, Object... objects) {
-		if (!inRunning) return;
+	public CompletableFuture<DNResult> notice(String method, DNParams params) {
+		if (!inRunning) return DNResult.refuse();
 
 		if ("power-off".equals(method)) {
 			closeFlag = true;
-			return;
+			return DNResult.success();
+		} else if ("op".equals(method)) {
+			try {
+				int pid = params.get("pid", Integer.class);
+				NBTTagCompound data = params.get("data");
+				operations.add(new AppData(pid, data));
+			} catch (ArrayIndexOutOfBoundsException | ClassCastException | NullPointerException e) {
+				return DNResult.fail();
+			}
+			return DNResult.success();
+		} else if ("app-message".equals(method)) {
+			this.noticeAllListener(method, params);
+			return DNResult.success();
 		}
 
-		if ("op".equals(method)) {
-			try {
-				int pid = (int) objects[0];
-				NBTTagCompound data = (NBTTagCompound) objects[1];
-				operations.add(new AppData(pid, data));
-			} catch (ArrayIndexOutOfBoundsException | ClassCastException e) {}
-			return;
-		}
+		return DNResult.invalid();
 	}
 
 	@Override
-	public void notice(IComputEnv env, String method, Object... objects) {
+	public void notice(IComputEnv env, String method, DNParams params) {
 
 		if (!inRunning) {
 			if ("power-on".equals(method)) {
@@ -178,7 +226,21 @@ public class Computer implements IComputer, IDeviceModifiable {
 			}
 		}
 
-		notice(method, objects);
+		if ("msg".equals(method)) {
+			if (env.isRemote()) {
+				try {
+					int pid = params.get("pid", Integer.class);
+					NBTTagCompound data = params.get("data");
+					APP app = os.getAppInst(pid);
+					app.onRecvMessage(data);
+				} catch (Exception e) {
+					ESAPI.logger.warn("client msg error", e);
+				}
+			}
+			return;
+		}
+
+		notice(method, params);
 	}
 
 	@Override
@@ -260,6 +322,12 @@ public class Computer implements IComputer, IDeviceModifiable {
 			sendData.setTag("#OS", osChanges);
 		}
 
+		NBTTagCompound networkChanges = networkd.detectChanges(watcher);
+		if (networkChanges != null) {
+			if (sendData == null) sendData = new NBTTagCompound();
+			sendData.setTag("#NW", networkChanges);
+		}
+
 		return sendData;
 	}
 
@@ -281,6 +349,7 @@ public class Computer implements IComputer, IDeviceModifiable {
 		if (nbt.hasUniqueId("#U")) this.uuid = nbt.getUniqueId("#U");
 		if (nbt.hasKey("#R")) this.inRunning = nbt.getBoolean("#R");
 		if (nbt.hasKey("#OS")) os.mergeChanges(nbt.getCompoundTag("#OS"));
+		if (nbt.hasKey("#NW")) networkd.mergeChanges(nbt.getCompoundTag("#NW"));
 	}
 
 	@Override
@@ -299,21 +368,35 @@ public class Computer implements IComputer, IDeviceModifiable {
 			return;
 		}
 
-		updateOS();
+		try {
+			networkd.update(env);
+			updateOS();
+			if (!updateFuncs.isEmpty()) {
+				for (Consumer<IComputEnv> func : updateFuncs) func.accept(env);
+				updateFuncs.clear();
+			}
+		} catch (Exception e) {
+			ESAPI.logger.warn("系統崩潰", e);
+			notice("power-off", DNParams.EMPTY);
+			return;
+		}
 
 		if (!os.isRunning()) {
-			notice("power-off");
-			// 
+			notice("power-off", DNParams.EMPTY);
+			//
 			/*
-			 * 数据错的原因是 创造模式的背包会从client回传数据到server，server使用client的数据，GG
-			  	还没有找到任何的介入点，内发修，GG*2
-				at net.minecraft.network.play.client.CPacketCreativeInventoryAction.<init>(CPacketCreativeInventoryActio
-				at net.minecraft.client.multiplayer.PlayerControllerMP.sendSlotPacket(PlayerControllerMP.java:636)
-				at net.minecraft.client.gui.inventory.CreativeCrafting.sendSlotContents(CreativeCrafting.java:35)
-				at net.minecraft.inventory.Container.detectAndSendChanges(Container.java:109)
-				at net.minecraft.inventory.Container.addListener(Container.java:62)
-				at net.minecraft.client.gui.inventory.GuiContainerCreative.initGui(GuiContainerCreative.java:306)
-			 * */
+			 * 数据错的原因是 创造模式的背包会从client回传数据到server，server使用client的数据，GG 还没有找到任何的介入点，内发修，GG*2
+			 * at net.minecraft.network.play.client.CPacketCreativeInventoryAction.<init>(
+			 * CPacketCreativeInventoryActio at
+			 * net.minecraft.client.multiplayer.PlayerControllerMP.sendSlotPacket(
+			 * PlayerControllerMP.java:636) at
+			 * net.minecraft.client.gui.inventory.CreativeCrafting.sendSlotContents(
+			 * CreativeCrafting.java:35) at
+			 * net.minecraft.inventory.Container.detectAndSendChanges(Container.java:109) at
+			 * net.minecraft.inventory.Container.addListener(Container.java:62) at
+			 * net.minecraft.client.gui.inventory.GuiContainerCreative.initGui(
+			 * GuiContainerCreative.java:306)
+			 */
 			// if (ESAPI.isDevelop) {
 			// ESAPI.logger.warn("非预期的OS找不到任何APP os:" + os, new RuntimeException("error"));
 			// }
@@ -351,7 +434,7 @@ public class Computer implements IComputer, IDeviceModifiable {
 				if (app != null) app.handleOperation(appdat.nbt);
 			} catch (Exception e) {
 				if (e instanceof IComputerException) os.abort(appdat.pid, (IComputerException) e);
-				else ESAPI.logger.warn("系統崩潰", e);
+				else throw e;
 			}
 		}
 		osRun(os -> os.onUpdate());

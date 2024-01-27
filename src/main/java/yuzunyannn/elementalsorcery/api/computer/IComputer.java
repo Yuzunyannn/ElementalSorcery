@@ -6,7 +6,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
-import yuzunyannn.elementalsorcery.api.util.ISyncDetectable;
+import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
 
 public interface IComputer extends IDevice, ISyncDetectable<NBTTagCompound>, INBTSerializable<NBTTagCompound> {
 
@@ -27,8 +27,10 @@ public interface IComputer extends IDevice, ISyncDetectable<NBTTagCompound>, INB
 
 	public void recvMessage(NBTTagCompound nbt, IComputEnv env);
 
-	public void notice(IComputEnv env, String method, Object... objects);
+	public void notice(IComputEnv env, String method, DNParams params);
 
 	public void markDiskValueDirty();
+
+	public void addListener(IDeviceListener listener);
 
 }

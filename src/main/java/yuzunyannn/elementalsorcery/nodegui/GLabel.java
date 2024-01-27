@@ -40,7 +40,7 @@ public class GLabel extends GNode {
 
 	@Override
 	protected void render(float partialTicks) {
-		int a = ((int) (this.rAlpha * 255)) << 24;
+		int a = ((int) Math.max(5, this.rAlpha * 255)) << 24;
 		int x = -(int) (this.width * this.anchorX);
 		int y = -(int) (this.height * this.anchorY);
 		if (wrapWidth > 0) mc.fontRenderer.drawSplitString(text, x, y, wrapWidth, this.color.toInt() | a);

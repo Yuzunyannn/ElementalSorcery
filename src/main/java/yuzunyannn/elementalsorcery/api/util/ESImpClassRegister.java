@@ -6,6 +6,7 @@ import java.util.Set;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 
+import net.minecraft.util.IntIdentityHashBiMap;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 import yuzunyannn.elementalsorcery.api.ESAPI;
@@ -34,12 +35,13 @@ public class ESImpClassRegister<T extends IForgeRegistryEntry<T>> {
 
 	}
 
-	protected final BiMap<ResourceLocation, Class<? extends T>> REGISTRY = HashBiMap.create();
+	protected final IntIdentityHashBiMap<Class<? extends T>> integerIdMap = new IntIdentityHashBiMap<>(256);
+	protected final BiMap<ResourceLocation, Class<? extends T>> idMap = HashBiMap.create();
+	private int nId = 0;
 
-	/** 根据注册的id获取实例化 */
 	public T newInstance(ResourceLocation id) {
 		try {
-			Class<? extends T> cls = REGISTRY.get(id);
+			Class<? extends T> cls = getValue(id);
 			if (cls == null) return null;
 			return cls.newInstance().setRegistryName(id);
 		} catch (Exception e) {
@@ -48,9 +50,17 @@ public class ESImpClassRegister<T extends IForgeRegistryEntry<T>> {
 		}
 	}
 
+	public T newInstance(int id) {
+		return newInstance(getKey(id));
+	}
+
+	public <U extends T> U newInstance(Class<U> cls) {
+		return (U) newInstance(getKey(cls));
+	}
+
 	public T newInstance(ResourceLocation id, Object... params) {
 		try {
-			Class<? extends T> cls = REGISTRY.get(id);
+			Class<? extends T> cls = idMap.get(id);
 			if (cls == null) return null;
 			Class<?>[] clss = new Class<?>[params.length];
 			for (int i = 0; i < clss.length; i++) clss[i] = params[i].getClass();
@@ -62,9 +72,13 @@ public class ESImpClassRegister<T extends IForgeRegistryEntry<T>> {
 		}
 	}
 
+	public T newInstance(int id, Object... params) {
+		return newInstance(getKey(id), params);
+	}
+
 	public T newInstance(ResourceLocation id, Class<?> types[], Object... params) {
 		try {
-			Class<? extends T> cls = REGISTRY.get(id);
+			Class<? extends T> cls = idMap.get(id);
 			if (cls == null) return null;
 			Constructor<T> constructor = (Constructor<T>) cls.getConstructor(types);
 			return constructor.newInstance(params).setRegistryName(id);
@@ -74,29 +88,46 @@ public class ESImpClassRegister<T extends IForgeRegistryEntry<T>> {
 		}
 	}
 
-	public <U extends T> U newInstance(Class<U> cls) {
-		return (U) newInstance(this.getKey(cls));
+	public T newInstance(int id, Class<?> types[], Object... params) {
+		return newInstance(getKey(id), types, params);
 	}
 
 	public ResourceLocation getKey(Class<? extends T> cls) {
-		BiMap<Class<? extends T>, ResourceLocation> rev = REGISTRY.inverse();
+		BiMap<Class<? extends T>, ResourceLocation> rev = idMap.inverse();
 		return rev.get(cls);
 	}
 
+	public ResourceLocation getKey(int id) {
+		return getKey(getValue(id));
+	}
+
+	public int getId(Class<? extends T> cls) {
+		return integerIdMap.getId(cls);
+	}
+
 	public Class<? extends T> getValue(ResourceLocation id) {
-		return REGISTRY.get(id);
+		return idMap.get(id);
+	}
+
+	public Class<? extends T> getValue(int id) {
+		return integerIdMap.get(id);
+	}
+
+	public void register(int idx, ResourceLocation id, Class<? extends T> value) {
+		idMap.put(id, value);
+		integerIdMap.put(value, idx);
 	}
 
 	public void register(ResourceLocation id, Class<? extends T> value) {
-		REGISTRY.put(id, value);
+		register(nId++, id, value);
 	}
 
 	public Set<ResourceLocation> keySet() {
-		return REGISTRY.keySet();
+		return idMap.keySet();
 	}
 
 	public Set<Class<? extends T>> valueSet() {
-		return REGISTRY.values();
+		return idMap.values();
 	}
 
 }

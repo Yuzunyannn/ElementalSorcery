@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-public interface IDevice extends ICalculatorObject {
+public interface IDevice extends ICalculatorObject, IDeviceNoticeable {
 
 	@Nonnull
 	public List<IDisk> getDisks();
@@ -16,5 +16,11 @@ public interface IDevice extends ICalculatorObject {
 	@Nonnull
 	public UUID getUDID();
 
-	public void notice(String method, Object... objects);
+	default public boolean hasAbility(String ability) {
+		return false;
+	}
+
+	@Nonnull
+	IDeviceNetwork getNetwork();
+
 }

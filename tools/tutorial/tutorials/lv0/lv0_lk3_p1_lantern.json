@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:lantern",
+    "title": {
+        "zh_CN": "引路灯",
+        "en_US": "Guide Lamp"
+    },
+    "describe": {
+        "zh_CN": "第一个作为测试这个物品§k????§r的道具叫引路灯，它是具有魔力的一盏灯，放下后会自动发出火焰指向上一个灯。由于其的特殊性，可以通过寻求仪式获取。\\n通过shift+右键可以设置下次放置的链接位置。",
+        "en_US": "The first item used to test the item §k????§r is called the Guide Lamp, which is a magical lamp can fire a flame toward the previous lamp. Steve can get it from Seek Rite.\\nShift + Right Click to set which is the previous one."
+    },
+    "crafts": "elementalsorcery:lantern"
+}

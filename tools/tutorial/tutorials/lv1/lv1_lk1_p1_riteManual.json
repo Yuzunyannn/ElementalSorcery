@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:rite_manual",
+    "title": {
+        "zh_CN": "祭品研究手册",
+        "en_US": "Rite Research Manual"
+    },
+    "describe": {
+        "zh_CN": "哪种物品可以作为祭品？究竟有多少能量？具体可以用到几级仪式上？虽然没有找到先人留下来的数据，但关于这些问题，依旧有许多的人都在研究，去村庄看看，没准能买到这样一个手册。\\n如果在另外一直手里，拿着一支羽毛笔的话，没准可以把查看过的内容记录下。副手拿着有记录的手册，可以在物品信息上快速查看记录的结果。",
+        "en_US": "What kind of item can be used as a sacrifice? How much Power is have? How many levels of Rite can be used? Although no data left by our ancestors has been found, there are still many people who are studying these problems. If you go to the village, maybe able to buy such a manual."
+    }
+}

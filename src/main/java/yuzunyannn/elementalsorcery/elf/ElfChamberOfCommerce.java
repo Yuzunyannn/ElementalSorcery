@@ -53,6 +53,11 @@ public class ElfChamberOfCommerce extends WorldSavedData {
 	@Config.NumberRange(min = 0, max = Float.MAX_VALUE)
 	public static int COLLECT_DEBT_START_LIMIT_DISHONEST = 100000;
 
+	/** 16面积下的讨债人生成最大个数 */
+	@Config(kind = "global", group = "elf")
+	@Config.NumberRange(min = 0, max = Short.MAX_VALUE)
+	public static int DEBT_GEN_MAX_COUNT = 6;
+
 	/** 给一个物品定价 */
 	public static int priceIt(ItemStack item) {
 		if (item.isEmpty()) return -1;
@@ -99,7 +104,7 @@ public class ElfChamberOfCommerce extends WorldSavedData {
 		AxisAlignedBB aabb = WorldHelper.createAABB(player.getPosition(), 16, 16, 16);
 		int size = world.getEntitiesWithinAABB(EntityElfBase.class, aabb,
 				(e) -> e.getProfession() == ElfProfession.DEBT_COLLECTOR).size();
-		if (size >= 8) return false;
+		if (size > DEBT_GEN_MAX_COUNT) return false;
 		BlockPos pos = WorldHelper.tryFindPlaceToSpawn(world, player.getRNG(), player.getPosition(), 4);
 		if (pos == null) return false;
 		EntityElfBase elf = new EntityElf(world, ElfProfession.DEBT_COLLECTOR);

@@ -11,30 +11,38 @@ import net.minecraft.client.audio.PositionedSoundRecord;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
-import yuzunyannn.elementalsorcery.computer.render.APPGuiCommon;
+import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.BtnBaseInteractor;
 import yuzunyannn.elementalsorcery.computer.render.BtnColorInteractor;
 import yuzunyannn.elementalsorcery.computer.render.DragInteractor;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
+import yuzunyannn.elementalsorcery.computer.render.SoftGuiCommon;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GLabel;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.nodegui.GScissor;
+import yuzunyannn.elementalsorcery.nodegui.GTutorialBuilding;
 import yuzunyannn.elementalsorcery.nodegui.IGInteractor;
 import yuzunyannn.elementalsorcery.parchment.Tutorial;
+import yuzunyannn.elementalsorcery.parchment.TutorialBuilding;
 import yuzunyannn.elementalsorcery.parchment.TutorialCraft;
 import yuzunyannn.elementalsorcery.parchment.TutorialCraft.TutorialCraftNodeParams;
+import yuzunyannn.elementalsorcery.util.LambdaReference;
+import yuzunyannn.elementalsorcery.util.item.BigItemStack;
 
 @SideOnly(Side.CLIENT)
 public class APPTutorialGPad extends GImage {
 
 	public static final int ACT_DESCRIBE = 0;
 	public static final int ACT_CRAFT = 1;
+	public static final int ACT_BUILDING = 2;
 
 	public final Tutorial tutorial;
 	public final AppTutorialGui gui;
@@ -49,7 +57,7 @@ public class APPTutorialGPad extends GImage {
 	protected double optionWidth = 26;
 
 	public APPTutorialGPad(Tutorial tutorial, AppTutorialGui gui, int w, int h) {
-		super(APPGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_P1);
+		super(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_P1);
 
 		this.gui = gui;
 		this.tutorial = tutorial;
@@ -63,23 +71,28 @@ public class APPTutorialGPad extends GImage {
 				if (Mouse.getEventButton() == 1) onRightClick();
 				return IGInteractor.super.onMousePressed(node, worldPos);
 			}
+
+			@Override
+			public boolean isBlockHover(GNode node) {
+				return true;
+			}
 		});
 		setName("Tutorial Pad");
 
-		GImage line1 = new GImage(APPGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_L2);
+		GImage line1 = new GImage(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_L2);
 		line1.setSplit9();
 		line1.setSize(3, getHeight());
 		line1.setPosition(optionWidth, 0);
 		line1.setColorRef(gui.detailColor);
 		addChild(line1);
-		GImage line2 = new GImage(APPGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_L1);
+		GImage line2 = new GImage(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_L1);
 		line2.setSplit9();
 		line2.setSize(getWidth(), 3);
 		line2.setPosition(0, 16);
 		line2.setColorRef(gui.detailColor);
 		addChild(line2);
 
-		GImage close = new GImage(APPGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_CLOSE);
+		GImage close = new GImage(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_CLOSE);
 		close.setColorRef(gui.detailObjColor);
 		close.setPosition(8.5, 8.5, 0);
 		close.setAnchor(0.5, 0.5, 2);
@@ -96,21 +109,20 @@ public class APPTutorialGPad extends GImage {
 		addChild(scissor);
 		container = new GNode();
 		scissor.addChild(container);
-		scissor.setInteractor(
-				new DragInteractor(container, new RenderRect(0, scissor.getHeight(), 0, scissor.getWidth())));
+		scissor.setInteractor(new DragInteractor(container));
 
 		optionScissor = new GScissor(new RenderRect(0, getHeight() - 20, 0, optionWidth - 1));
 		optionScissor.setPosition(1, 16 + 3, 0);
 		addChild(optionScissor);
 		optionContainer = new GNode();
 		optionScissor.addChild(optionContainer);
-		optionScissor.setInteractor(new DragInteractor(optionContainer,
-				new RenderRect(0, optionScissor.getHeight(), 0, optionScissor.getWidth())));
+		optionScissor.setInteractor(new DragInteractor(optionContainer));
 
 		addBtn(I18n.format("es.tutorialui.describe"), ACT_DESCRIBE);
 
 		List<ItemStack> crafts = tutorial.getCrafts();
 		if (crafts != null && !crafts.isEmpty()) addBtn(I18n.format("es.tutorialui.craft"), ACT_CRAFT);
+		if (tutorial.getBuilding() != null) addBtn(I18n.format("es.tutorialui.building"), ACT_BUILDING);
 
 		shift(tutorial.cacheAction);
 	}
@@ -118,14 +130,16 @@ public class APPTutorialGPad extends GImage {
 	protected class GTutorialBtn extends GImage {
 
 		protected GLabel label;
+		protected Runnable onClick;
 
-		public GTutorialBtn() {
-			super(APPGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_P1);
+		public GTutorialBtn(Runnable onClick) {
+			super(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_P1);
+			this.onClick = onClick;
 			setSplit9();
 			setInteractor(new BtnColorInteractor(gui.detailColor, gui.detailObjColor) {
 				@Override
 				public void onClick() {
-					GTutorialBtn.this.onClick();
+					if (onClick != null) onClick.run();
 				}
 
 				@Override
@@ -146,10 +160,6 @@ public class APPTutorialGPad extends GImage {
 			addChild(label);
 		}
 
-		public void onClick() {
-
-		}
-
 		public void setString(String text) {
 			label.setString(text);
 			this.setWidth(label.getWidth() + 6);
@@ -160,7 +170,7 @@ public class APPTutorialGPad extends GImage {
 
 	protected class GTutorialPageBtn extends GImage {
 		public GTutorialPageBtn(boolean isLeft, Runnable click) {
-			super(APPGuiCommon.TEXTURE_1,
+			super(SoftGuiCommon.TEXTURE_1,
 					isLeft ? AppTutorialGui.FRAME_ARROW_1_LEFT : AppTutorialGui.FRAME_ARROW_1_RIGHT);
 			setAnchor(0.5, 0.5);
 			setInteractor(new BtnColorInteractor(gui.detailColor, gui.detailObjColor) {
@@ -173,12 +183,7 @@ public class APPTutorialGPad extends GImage {
 	}
 
 	public void addBtn(String name, int action) {
-		GTutorialBtn btn = new GTutorialBtn() {
-			@Override
-			public void onClick() {
-				shift(action);
-			}
-		};
+		GTutorialBtn btn = new GTutorialBtn(() -> shift(action));
 		btn.setString(name);
 		btns.add(btn);
 		btnOffset = btnOffset + 3;
@@ -233,6 +238,9 @@ public class APPTutorialGPad extends GImage {
 			break;
 		case ACT_CRAFT:
 			toCraft();
+			break;
+		case ACT_BUILDING:
+			toBuilding();
 			break;
 		default:
 			break;
@@ -341,6 +349,103 @@ public class APPTutorialGPad extends GImage {
 			if (itemStack == null) break history;
 			showCraft(itemStack);
 		}
+	}
+
+	protected class GTutorialIconBtn extends GImage {
+
+		protected Runnable onClick;
+
+		public GTutorialIconBtn(ResourceLocation textureResource, RenderTexutreFrame frame, Runnable onClick) {
+			super(textureResource, frame);
+			this.onClick = onClick;
+			setInteractor(new BtnColorInteractor(gui.detailColor, gui.detailObjColor) {
+				@Override
+				public void onClick() {
+					if (onClick != null) onClick.run();
+				}
+			});
+			setColorRef(gui.detailColor);
+		}
+
+	}
+
+	public void toBuilding() {
+		TutorialBuilding building = tutorial.getBuilding();
+		if (building == null) return;
+
+		double width = scissor.getWidth();
+		double height = scissor.getHeight();
+
+		final GTutorialBuilding bnode = new GTutorialBuilding();
+		building.export(bnode);
+		bnode.setSize(width, height);
+		bnode.setPosition(width / 2, height / 2, 200);
+
+		double centerLayer = (bnode.getMinLayer() + bnode.getMaxLayer()) / 2.0;
+		bnode.offsetY = centerLayer;
+
+		container.addChild(bnode);
+
+		double yOffset = 8 + 2;
+		GTutorialIconBtn exportBtn = new GTutorialIconBtn(AppTutorialGui.TEXTURE, RenderTexutreFrame.ofGUI(56, 159, 16),
+				() -> printBuilding());
+		exportBtn.setAnchor(0.5, 0.5);
+		exportBtn.setPosition(optionScissor.getWidth() / 2, yOffset, 0);
+		optionContainer.addChild(exportBtn);
+
+		LambdaReference<Runnable> updateStackView = LambdaReference.of(null);
+
+		yOffset = yOffset + 16 + 2;
+		LambdaReference<Integer> showIndex = LambdaReference.of(0);
+		GTutorialIconBtn layerBtn = new GTutorialIconBtn(AppTutorialGui.TEXTURE, RenderTexutreFrame.ofGUI(72, 159, 16),
+				() -> {
+					List<Integer> list = bnode.getLayerList();
+					List<Integer> showList = bnode.getShowLayerList();
+					if (showIndex.get() >= list.size()) {
+						showList.clear();
+						showIndex.set(0);
+					} else {
+						showList.clear();
+						showList.add(list.get(showIndex.get()));
+						showIndex.set(showIndex.get() + 1);
+					}
+					updateStackView.get().run();
+				});
+		layerBtn.setAnchor(0.5, 0.5);
+		layerBtn.setPosition(optionScissor.getWidth() / 2 - 0.5, yOffset, 0);
+		optionContainer.addChild(layerBtn);
+
+		GNode sContainer = new GNode();
+		sContainer.setPosition(0, yOffset + 16 + 4, 1);
+		optionContainer.addChild(sContainer);
+
+		updateStackView.set(() -> {
+			sContainer.removeAllChild();
+			List<BigItemStack> list = bnode.getItemStackByShowLayer();
+			double xoffset = optionScissor.getWidth() / 2, yoffset = 0;
+			for (BigItemStack stack : list) {
+				GItemFrame frame = new GItemFrame(stack.getItemStack());
+				frame.setColorRef(gui.detailColor);
+				frame.setPosition(xoffset, yoffset, 20);
+				frame.setName("build " + tutorial.getId());
+				frame.setRuntime(gui.getGuiRuntime());
+				frame.enableClick(() -> {}, optionScissor);
+				sContainer.addChild(frame);
+				yoffset = yoffset + 18 + 2;
+			}
+			sContainer.setHeight(yoffset);
+			optionContainer.setHeight(sContainer.getPostionY() + sContainer.getHeight() - 8);
+		});
+
+		updateStackView.get().run();
+	}
+
+	protected void printBuilding() {
+		TutorialBuilding building = tutorial.getBuilding();
+		if (building == null) return;
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setString("ptbd", tutorial.getId());
+		gui.trySendOperation(nbt);
 	}
 
 }

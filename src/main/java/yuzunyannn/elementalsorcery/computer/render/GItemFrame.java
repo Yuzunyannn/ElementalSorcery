@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
-import yuzunyannn.elementalsorcery.api.computer.soft.IAPPGuiRuntime;
+import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
 import yuzunyannn.elementalsorcery.computer.soft.AppTutorialGui;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GItemStack;
@@ -15,7 +15,7 @@ public class GItemFrame extends GImage {
 
 	protected GItemStack gStack;
 
-	protected static final GImage HIGHLIGHT = new GImage(APPGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_ITEM_HOVER);
+	protected static final GImage HIGHLIGHT = new GImage(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_ITEM_HOVER);
 	protected static final Vec3d MOUSE_FOLLOW_VEC = new Vec3d(0, 0, -99);
 
 	static {
@@ -24,14 +24,14 @@ public class GItemFrame extends GImage {
 	}
 
 	protected boolean isHover = false;
-	protected IAPPGuiRuntime runtime;
+	protected ISoftGuiRuntime runtime;
 
 	public GItemFrame() {
 		this(ItemStack.EMPTY);
 	}
 
 	public GItemFrame(ItemStack stack) {
-		super(APPGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_ITEM);
+		super(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_ITEM);
 		setAnchor(0.5, 0.5);
 
 		gStack = new GItemStack(stack);
@@ -39,7 +39,7 @@ public class GItemFrame extends GImage {
 		addChild(gStack);
 	}
 
-	public void setRuntime(IAPPGuiRuntime runtime) {
+	public void setRuntime(ISoftGuiRuntime runtime) {
 		this.runtime = runtime;
 	}
 
@@ -61,7 +61,7 @@ public class GItemFrame extends GImage {
 			}
 
 			@Override
-			public boolean blockMousePressed(GNode node, Vec3d worldPos) {
+			public boolean blockMouseEvent(GNode node, Vec3d worldPos) {
 				return scissor == null;
 			}
 

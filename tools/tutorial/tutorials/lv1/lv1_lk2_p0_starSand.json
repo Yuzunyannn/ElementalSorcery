@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:star_sand",
+    "title": {
+        "zh_CN": "星沙",
+			"en_US": "Star Sand"
+    },
+    "describe": {
+        "zh_CN": "长期沐浴在星光下而形成的沙子，是上好的研究材料。形成一整块的星沙在自然中有些困难，不过，在沙子上可以找到少量星沙凝聚成的星石。或许可以将收集到的多块星石扔进捣粉臼，然后使用锤子将星石捣捣碎，从而获取星沙。(shift+右击取下)\\n另外，据说这种星石似乎在沙丘上比较多。",
+        "en_US": "Sand formed by long-term exposure to starlight, is a valuable material. It is difficult to a whole star sand in overworld, but Star Stone can be found above sand. Perhaps you can put the collected multiple star stones into the Stone Mill, and then use a hammer to mash the Star Stone to Star Sand.(shift + Right Click to take out)\\nIn addition, it is said that this kind of Star Stone seems to be more abundant on the sand dunes."
+    },
+    "crafts": "elementalsorcery:stone_mill"
+}

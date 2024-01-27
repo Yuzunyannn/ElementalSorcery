@@ -1,0 +1,22 @@
+{
+    "cover": "elementalsorcery:elf_log",
+    "title": {
+        "zh_CN": "精灵树",
+        "en_US": "Elf Tree",
+        "ja_JP": "精霊木"
+    },
+    "describe": {
+        "zh_CN": "精灵树是一种具有魔法的树木，在自然界中生成，不过自然生成的树通常是很小的一棵。\\n砍下得到精灵木。\\n精灵果是精灵树上生长的一种果子，只在白天生长，成熟变绿，并掉落。\\n精灵果从高处掉落有几率会坏掉，并向周围产生随机效果。\\n精灵果中蕴含着魔力，可以食用，连续使用的话可产生不同的效果。\\这些可能是你将来使用的重要材料。",
+        "en_US": "Elf Tree is a kind of magic tree, which is generated in nature, but the natural tree is usually very small.\\nCut down to get the spirit wood.\\nElf fruit is a kind of fruit grown on the Elf Tree. It grows only in the daytime, turns green when it is ripe and falls.\\nThere is a chance that the Elf Fruit will be broken when it falls from a high place and generate random effects around it.\\nElf fruit contains magic and can be eaten. If used continuously, it can produce different effects.\\nThese may be important materials for your future use."
+    },
+    "crafts": [
+        {
+            "id": "elementalsorcery:elf_plank",
+            "data": 0
+        },
+        {
+            "id": "elementalsorcery:elf_plank",
+            "data": 1
+        }
+    ]
+}

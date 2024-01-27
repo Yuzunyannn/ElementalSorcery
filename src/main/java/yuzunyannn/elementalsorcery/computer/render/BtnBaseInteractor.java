@@ -25,7 +25,7 @@ public class BtnBaseInteractor implements IGInteractor {
 	}
 
 	@Override
-	public boolean blockMousePressed(GNode node, Vec3d worldPos) {
+	public boolean blockMouseEvent(GNode node, Vec3d worldPos) {
 		return Mouse.getEventButton() == 0;
 	}
 

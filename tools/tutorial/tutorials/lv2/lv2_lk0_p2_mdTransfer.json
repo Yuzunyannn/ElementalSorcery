@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:md_transfer",
+    "title": {
+        "zh_CN": "垂直传递",
+        "en_US": "Vertical transmission"
+    },
+    "describe": {
+        "zh_CN": "魔石火把的魔力传递只能局限于四周，如果向要魔力在垂直方向上传递，需要制作这个“魔力转移箱”，它可以将魔力向上进行传递。",
+        "en_US": "The Dimensity Torch can only be confined to the surrounding area. If you want the magic to be transferred vertically, you need to make this Magic Transfer Box, which can transfer the magic upwards."
+    },
+    "crafts": "elementalsorcery:md_transfer"
+}

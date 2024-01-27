@@ -13,6 +13,7 @@
     "global.elf.collect_debt_value": "抵债人价值，即每产生一个抵债人，会直接减少玩家负债的值",
     "global.elf.collect_debt_start_limit": "未失信情况下，生成抵债人的负债阈值",
     "global.elf.collect_debt_start_limit_dishonest": "失信情况下，生成抵债人的负债阈值",
+    "global.elf.debt_gen_max_count": "16*16*16范围内最多刷的讨债人个数",
     "global.elf.frame_threshold_of_friend": "精灵之友的信誉阈值",
     "global.elf.frame_threshold_of_dishonest": "失信的信誉阈值",
     "global.elf.frame_threshold_of_very_dishonest": "非常失信的信誉阈值",

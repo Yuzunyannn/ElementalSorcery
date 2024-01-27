@@ -59,14 +59,23 @@ public class GScene {
 	public void onMouseEvent(Vec3d worldPos) {
 		boolean isClick = Mouse.getEventButtonState();
 		int btnId = Mouse.getEventButton();
+		int dWheel = Mouse.getEventDWheel();
 
-		if (isClick) {
+		if (dWheel != 0) {
+			for (GNode node : interactorList) {
+				IGInteractor interactor = node.interactor;
+				if (interactor.testHit(node, worldPos)) {
+					interactor.onMouseWheel(node, worldPos, dWheel);
+					if (interactor.blockMouseEvent(node, worldPos)) break;
+				}
+			}
+		} else if (isClick) {
 			for (GNode node : interactorList) {
 				IGInteractor interactor = node.interactor;
 				if (interactor.testHit(node, worldPos)) {
 					boolean isHandler = interactor.onMousePressed(node, worldPos);
 					if (isHandler) mouseList.add(node);
-					if (interactor.blockMousePressed(node, worldPos)) break;
+					if (interactor.blockMouseEvent(node, worldPos)) break;
 				}
 			}
 		} else if (btnId != -1) {
@@ -76,13 +85,7 @@ public class GScene {
 		} else {
 			if (!mouseList.isEmpty()) {
 				for (GNode node : mouseList) node.interactor.onMouseDrag(node, worldPos);
-			} else {
-				handleHover(worldPos);
-//				for (GNode node : interactorList) {
-//					IGInteractor interactor = node.interactor;
-//					interactor.onMouseHover(node, worldPos, interactor.testHit(node, worldPos));
-//				}
-			}
+			} else handleHover(worldPos);
 		}
 	}
 
@@ -99,10 +102,14 @@ public class GScene {
 		if (!hoverSet.isEmpty()) return;
 		for (GNode node : interactorList) {
 			IGInteractor interactor = node.interactor;
-			if (interactor.isHoverable(node) && interactor.testHit(node, worldPos)) {
-				interactor.onMouseHover(node, worldPos, true);
-				hoverSet.add(node);
-				break;
+			if (interactor.isHoverable(node)) {
+				if (interactor.testHit(node, worldPos)) {
+					interactor.onMouseHover(node, worldPos, true);
+					hoverSet.add(node);
+					if (interactor.isBlockHover(node)) break;
+				}
+			} else if (interactor.isBlockHover(node)) {
+				if (interactor.testHit(node, worldPos)) break;
 			}
 		}
 	}

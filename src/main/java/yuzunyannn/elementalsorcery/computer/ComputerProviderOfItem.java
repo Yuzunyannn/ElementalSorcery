@@ -14,18 +14,23 @@ public class ComputerProviderOfItem implements ICapabilitySerializable<NBTTagCom
 		computer = new Computer(appearance);
 	}
 
+	public ComputerProviderOfItem(ItemStack stack, Computer computer) {
+		this.computer = computer;
+	}
+
 	public Computer getComputer() {
 		return computer;
 	}
 
 	@Override
 	public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
-		return Computer.COMPUTER_CAPABILITY.equals(capability);
+		return Computer.COMPUTER_CAPABILITY.equals(capability) || Computer.DEVICE_CAPABILITY.equals(capability);
 	}
 
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
 		if (Computer.COMPUTER_CAPABILITY.equals(capability)) return (T) computer;
+		if (Computer.DEVICE_CAPABILITY.equals(capability)) return (T) computer;
 		return null;
 	}
 

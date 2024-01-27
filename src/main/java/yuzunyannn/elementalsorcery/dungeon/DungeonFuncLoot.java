@@ -22,7 +22,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncExecuteContext;
 import yuzunyannn.elementalsorcery.api.gfunc.GameFuncJsonCreateContext;
 import yuzunyannn.elementalsorcery.entity.EntityItemGoods;
-import yuzunyannn.elementalsorcery.util.item.InventoryItemStackHandlerVest;
+import yuzunyannn.elementalsorcery.util.item.InventoryVest;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
 
 public class DungeonFuncLoot extends DungeonFuncLootable {
@@ -76,7 +76,7 @@ public class DungeonFuncLoot extends DungeonFuncLootable {
 			IItemHandler itemHandler = tile.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY,
 					EnumFacing.NORTH);
 			if (itemHandler instanceof IItemHandlerModifiable)
-				DungeonLootLoader.fillInventory(new InventoryItemStackHandlerVest((IItemHandlerModifiable) itemHandler),
+				DungeonLootLoader.fillInventory(new InventoryVest((IItemHandlerModifiable) itemHandler),
 						stacks, rand);
 
 			// 更新

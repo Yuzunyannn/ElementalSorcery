@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:md_rubble_repair",
+    "title": {
+        "zh_CN": "修复碎石",
+        "en_US": "Rubble Repair"
+    },
+    "describe": {
+        "zh_CN": "在制作通魔石的过程中出现了点意外，产生了碎裂的石头？使用碎石修复箱可以将碎裂的石头重新修好，每修一个碎裂的通魔石需要10点魔力。\\n当然碎石修复机也可以修复其他的碎石，乃至某些工具。",
+        "en_US": "An accident occurred during the craft of The Stone with Magic, resulting in broken stones? The Rubble Repairer can restore the broken stones, each restored broken stone requires 10 points of Magic. Of course, the Repairer can also repair other broken things, even some tools."
+    },
+    "crafts": "elementalsorcery:md_rubble_repair"
+}

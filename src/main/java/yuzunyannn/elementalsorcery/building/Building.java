@@ -83,6 +83,10 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 			return tileSave;
 		}
 
+		public int getTypeIndex() {
+			return typeIndex;
+		}
+
 		@Override
 		public NBTTagCompound serializeNBT() {
 			NBTTagCompound tag = new NBTTagCompound();

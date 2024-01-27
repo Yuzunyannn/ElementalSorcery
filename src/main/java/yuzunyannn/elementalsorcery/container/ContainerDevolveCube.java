@@ -11,11 +11,11 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.detecter.ContainerArrayDetecter;
+import yuzunyannn.elementalsorcery.api.util.detecter.ContainerMapDetecter;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube;
 import yuzunyannn.elementalsorcery.tile.altar.TileDevolveCube.DevolveData;
-import yuzunyannn.elementalsorcery.util.detecter.ContainerArrayDetecter;
-import yuzunyannn.elementalsorcery.util.detecter.ContainerMapDetecter;
 import yuzunyannn.elementalsorcery.util.element.ElementStackDouble;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 

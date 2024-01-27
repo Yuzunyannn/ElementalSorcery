@@ -1,6 +1,6 @@
 package yuzunyannn.elementalsorcery.computer.soft;
 
-import yuzunyannn.elementalsorcery.api.util.ISyncWatcher;
+import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
 
 public class AuthorityWatcher implements ISyncWatcher {
 

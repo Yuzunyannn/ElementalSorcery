@@ -52,6 +52,8 @@ import yuzunyannn.elementalsorcery.grimoire.mantra.MantraSummon;
 import yuzunyannn.elementalsorcery.item.ItemScroll;
 import yuzunyannn.elementalsorcery.item.tool.ItemSoulWoodSword;
 import yuzunyannn.elementalsorcery.item.tool.ItemTutorialPad;
+import yuzunyannn.elementalsorcery.parchment.Tutorials;
+import yuzunyannn.elementalsorcery.parchment.Tutorials.TutorialLevelInfo;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.summon.recipe.SummonRecipe;
@@ -249,10 +251,12 @@ public class TileRiteTable extends TileEntityNetwork {
 				AuthorityAppDisk disk = new AuthorityAppDisk(computer, ItemTutorialPad.APP_ID.toString(), disks,
 						AppDiskType.USER_DATA);
 				try {
-					float grow = Math.max(1, power / 60f);
+					TutorialLevelInfo info = Tutorials.tryGetTutorialInfoBiggerOrEqualLevel(this.level + 1);
+					float grow = Math.max(1, power / 75f);
 					if (ESAPI.isDevelop) grow = 9999;
-					float progress = disk.get(AppTutorial.POGRESS);
-					disk.set(AppTutorial.POGRESS, progress + grow);
+					float progress = disk.get(AppTutorial.POGRESS) + grow;
+					if (info != null) progress = Math.min(progress, info.getAccTotalUnlock() - 0.1f);
+					disk.set(AppTutorial.POGRESS, progress);
 					Block.spawnAsEntity(world, pos.up(), spItem);
 					computer.getSystem().onDiskChange(true);
 					EntityLightningBolt lightning = new EntityLightningBolt(world, pos.getX() + 0.5f, pos.getY() + 1,
@@ -647,8 +651,8 @@ public class TileRiteTable extends TileEntityNetwork {
 		addSacrifice(Blocks.STONE, 8, 0);
 		addSacrifice(Blocks.LOG, 10, 0);
 		addSacrifice(Blocks.LOG2, 10, 0);
-		addSacrifice(Items.COAL, 15, 0);
-		addSacrifice(Blocks.COAL_BLOCK, 25, 0);
+		addSacrifice(Items.COAL, 20, 0);
+		addSacrifice(Blocks.COAL_BLOCK, 30, 0);
 		addSacrifice(ITEMS.GRIMOIRE, Integer.MAX_VALUE, 0);
 
 		addSacrifice("oreIron", 11, 1);

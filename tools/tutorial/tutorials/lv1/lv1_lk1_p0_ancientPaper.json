@@ -1,0 +1,15 @@
+{
+    "cover": "elementalsorcery:ancient_paper",
+    "title": {
+        "zh_CN": "收集文献",
+        "en_US": "Collect Paper"
+    },
+    "describe": {
+        "zh_CN": "先人似乎在封藏石种留些了许多文献，在上面记载着许多的内容，但通常是无法直接看懂的，需要进行解读。一手拿着羽毛笔，一手拿着古卷，右键点击即可开始进行解读。\\n如果解读疲倦的话，过半天之后在进行解读吧，随着解读次数的增多，越不容易疲倦。\\n如果你疲倦了，吃一点苹果糖来消除疲劳。",
+        "en_US": "It seems that our ancestors left many Paper in the sealed stone, on which many things are recorded, can unscramble it to understand. With a Quill in one hand and an Ancient Paper in the other, right click to start unscramble.\\nIf you feel tried, let's unscramble after a while or eat some Apple Candy. The more unscrambling you do, the less tired you will get."
+    },
+    "crafts": [
+        "elementalsorcery:quill",
+        "elementalsorcery:apple_candy"
+    ]
+}

@@ -5,14 +5,22 @@ import java.util.List;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
-import yuzunyannn.elementalsorcery.api.computer.soft.IAPPGuiRuntime;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
 import yuzunyannn.elementalsorcery.api.util.client.RenderRect;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
-import yuzunyannn.elementalsorcery.computer.render.APPGuiCommon;
-import yuzunyannn.elementalsorcery.computer.render.AppGuiThemePart;
+import yuzunyannn.elementalsorcery.computer.render.AppGuiCommon;
 import yuzunyannn.elementalsorcery.computer.render.BtnBaseInteractor;
 import yuzunyannn.elementalsorcery.computer.render.DragInteractor;
+import yuzunyannn.elementalsorcery.computer.render.SoftGuiCommon;
+import yuzunyannn.elementalsorcery.computer.render.SoftGuiThemePart;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
+import yuzunyannn.elementalsorcery.nodegui.GActionEaseInBack;
+import yuzunyannn.elementalsorcery.nodegui.GActionFadeTo;
+import yuzunyannn.elementalsorcery.nodegui.GActionFunction;
+import yuzunyannn.elementalsorcery.nodegui.GActionScaleBy;
+import yuzunyannn.elementalsorcery.nodegui.GActionSequence;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GItemStack;
 import yuzunyannn.elementalsorcery.nodegui.GLabel;
@@ -24,8 +32,10 @@ import yuzunyannn.elementalsorcery.parchment.Tutorials.TutorialLevelInfo;
 import yuzunyannn.elementalsorcery.parchment.Tutorials.TutorialUnlockInfo;
 import yuzunyannn.elementalsorcery.util.helper.Color;
 
-public class AppTutorialGui extends APPGuiCommon {
+@SideOnly(Side.CLIENT)
+public class AppTutorialGui extends AppGuiCommon {
 
+	public static final ResourceLocation TEXTURE = GuiComputerTutorialPad.TEXTURE;
 	public static double tutorialXOffset = 0;
 	public static ItemStack tutorialCraftItemStack = ItemStack.EMPTY;
 
@@ -85,22 +95,22 @@ public class AppTutorialGui extends APPGuiCommon {
 	}
 
 	@Override
-	protected void onInit(IAPPGuiRuntime runtime) {
+	protected void onInit(ISoftGuiRuntime runtime) {
 		super.onInit(runtime);
 
-		Color color = this.getThemeColor(AppGuiThemePart.BACKGROUND_1);
+		Color color = this.getThemeColor(SoftGuiThemePart.BACKGROUND_1);
 		int height = runtime.getHeight();
 
 		int naviWidth = 28;
 
-		GImage avigation = new GImage(APPGuiCommon.TEXTURE_1, FRAME_P1);
+		GImage avigation = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_P1);
 		avigation.setColorRef(color);
 		avigation.setSplit9();
 		avigation.setSize(naviWidth, height - bar.getHeight());
 		avigation.setPosition(0, bar.getHeight());
 		scene.addChild(avigation);
 
-		GImage line = new GImage(APPGuiCommon.TEXTURE_1, FRAME_L1);
+		GImage line = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_L1);
 		line.setSplit9();
 		line.setSize(naviWidth, 3);
 		line.setPosition(0, 8);
@@ -138,14 +148,14 @@ public class AppTutorialGui extends APPGuiCommon {
 		selectNode.setColorRef(detailColor);
 		avigationContainer.addChild(selectNode);
 
-		detailNode = new GImage(APPGuiCommon.TEXTURE_1, FRAME_P1);
+		detailNode = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_P1);
 		detailNode.setColorRef(detailColor);
 		detailNode.setSplit9();
 		detailNode.setSize(runtime.getWidth() - naviWidth, height - bar.getHeight() - 16);
 		detailNode.setPosition(naviWidth, bar.getHeight() + 12);
 		scene.addChild(detailNode);
 
-		line = new GImage(APPGuiCommon.TEXTURE_1, FRAME_L1);
+		line = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_L1);
 		line.setSplit9();
 		line.setSize(detailNode.getWidth(), 3);
 		line.setPosition(0, 9);
@@ -174,15 +184,16 @@ public class AppTutorialGui extends APPGuiCommon {
 		detailNode.addChild(detailTutorialTitle);
 
 		detailScissor.setName("detailScissor");
-		detailScissor.setInteractor(new DragInteractor(detailContainer,
-				new RenderRect(0, detailScissor.getHeight(), 0, detailScissor.getWidth())));
+		detailScissor.setInteractor(new DragInteractor(detailContainer));
+
+		double startTutorialXOffset = tutorialXOffset;
 
 		setSelectAt(currIndex);
 
 		String id = app.getTutorialId();
 		Tutorial tutorial = Tutorials.getTutorial(id);
 		if (tutorial != null) {
-			detailContainer.setPositionX(tutorialXOffset);
+			detailContainer.setPositionX(tutorialXOffset = startTutorialXOffset);
 			showTutorial(tutorial);
 		}
 	}
@@ -198,7 +209,8 @@ public class AppTutorialGui extends APPGuiCommon {
 		toColorRate = 0;
 
 		shiftDetail(index);
-		detailHighlight = new GImage(APPGuiCommon.TEXTURE_1, FRAME_ITEM_HOVER);
+		tutorialXOffset = 0;
+		detailHighlight = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_ITEM_HOVER);
 		detailHighlight.setPosition(0, 0, 80);
 		detailHighlight.setAlpha(0);
 		detailHighlight.setAnchor(0, 0.5, 0);
@@ -243,6 +255,7 @@ public class AppTutorialGui extends APPGuiCommon {
 
 	protected void shiftDetail(int index) {
 		detailContainer.removeAllChild();
+		detailContainer.setPositionX(0);
 
 		TutorialLevelInfo linfo = Tutorials.getTutorialInfoByLevel(index);
 		if (linfo == null) return;
@@ -260,7 +273,7 @@ public class AppTutorialGui extends APPGuiCommon {
 			double yBase = height;
 
 			if (i > 0) {
-				GImage line = new GImage(APPGuiCommon.TEXTURE_1, FRAME_L3);
+				GImage line = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_L3);
 				line.setSize(1, detailContainer.getHeight() / 1.5);
 				line.setAnchor(0.5, 0.5, 0);
 				line.setPosition(xBase - padding, yBase);
@@ -286,7 +299,7 @@ public class AppTutorialGui extends APPGuiCommon {
 				}
 
 				if (progress < uinfo.getUnlock()) {
-					GImage frame = new GImage(APPGuiCommon.TEXTURE_1, FRAME_ITEM_LOCKED);
+					GImage frame = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_ITEM_LOCKED);
 					frame.setAnchor(0, 0.5, 0);
 					frame.setColorRef(detailColor);
 					frame.setPosition(x, y, 1);
@@ -297,7 +310,7 @@ public class AppTutorialGui extends APPGuiCommon {
 
 			GLabel label = new GLabel("" + uinfo.getUnlock());
 			label.setAnchor(0.5, 0);
-			label.setPosition(xBase + 9, height - 18 * 2.5 );
+			label.setPosition(xBase + 9, height - 18 * 2.5);
 			label.setColorRef(detailObjColor);
 			detailContainer.addChild(label);
 
@@ -315,7 +328,7 @@ public class AppTutorialGui extends APPGuiCommon {
 	}
 
 	protected void addTutorial(Tutorial tutorial, double x, double y) {
-		GImage frame = new GImage(APPGuiCommon.TEXTURE_1, FRAME_ITEM);
+		GImage frame = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_ITEM);
 		frame.setAnchor(0, 0.5, 0);
 		frame.setColorRef(detailColor);
 		frame.setPosition(x, y, 1);
@@ -329,7 +342,7 @@ public class AppTutorialGui extends APPGuiCommon {
 			}
 
 			@Override
-			public boolean blockMousePressed(GNode node, Vec3d worldPos) {
+			public boolean blockMouseEvent(GNode node, Vec3d worldPos) {
 				return false;
 			}
 
@@ -363,7 +376,9 @@ public class AppTutorialGui extends APPGuiCommon {
 	protected void closeTutorial() {
 		if (currTutorial != null) {
 			this.app.changeShowTutorialId(null);
-			currTutorial.removeFromParent();
+//			currTutorial.removeFromParent();
+			currTutorial.runAction(new GActionSequence(new GActionEaseInBack(new GActionScaleBy(4, -1)),
+					new GActionFunction((e) -> e.removeFromParent())));
 			currTutorial = null;
 		}
 	}
@@ -374,8 +389,11 @@ public class AppTutorialGui extends APPGuiCommon {
 		int h = runtime.getHeight() - 4;
 		currTutorial = new APPTutorialGPad(tutorial, this, w, h);
 		currTutorial.setPosition(2, 2, 500);
+		currTutorial.setGaps(true);
 		this.scene.addChild(currTutorial);
 		this.app.changeShowTutorialId(tutorial.getId());
+		currTutorial.setAlpha(0);
+		currTutorial.runAction(new GActionFadeTo(2, 1));
 		tutorialXOffset = detailContainer.getPostionX();
 	}
 

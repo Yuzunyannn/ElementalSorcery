@@ -13,6 +13,7 @@
     "global.elf.collect_debt_value": "The value of the debtor. That is, every time a debtor is generated, it will directly reduce the value of the player's debt",
     "global.elf.collect_debt_start_limit": "Not In case of dishonesty status, the debt threshold for generating the debtor",
     "global.elf.collect_debt_start_limit_dishonest": "In case of dishonesty status, the debt threshold for generating the debtor",
+    "global.elf.debt_gen_max_count": "The maximum number of debtor who can be spawn within the range of 16*16*16",
     "global.elf.frame_threshold_of_friend": "Fame threshold for Friends of the Elves",
     "global.elf.frame_threshold_of_dishonest": "Fame threshold for dishonesty",
     "global.elf.frame_threshold_of_very_dishonest": "Fame threshold for very dishonesty",

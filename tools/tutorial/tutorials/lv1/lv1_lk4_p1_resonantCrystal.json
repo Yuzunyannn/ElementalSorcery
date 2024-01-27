@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:resonant_crystal",
+    "title": {
+        "zh_CN": "共鸣水晶",
+        "en_US": "Resonance Crystal"
+    },
+    "describe": {
+        "zh_CN": "通过精灵工艺制作的水晶，被广泛引用到各种需要共鸣的设备中。\\n该水晶可以投掷出去，砸到不同的设备上时，似乎会有不同的反应。\\n它可以从精灵商人处购买。",
+        "en_US": "Resonance Crystal made in Elf Craft which widely used in various devices.\\nIf you throw this, maybe has different effect when hit some devices.\\nIt can be purchased from the Elf Merchant."
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "cover": "elementalsorcery:md_magic_gen",
+    "title": {
+        "zh_CN": "魔动装置",
+        "en_US": "Magic Drive"
+    },
+    "describe": {
+        "zh_CN": "使用魔通石，将魔力作为驱动源，制造出魔力设备来使用。\\n魔力设备中都可以储存魔力，如果破坏掉储存魔力的设备，魔力会爆发出来，对周围造成伤害。\\n首先要制作一个“热力魔分箱”，通过灶台对其加热，可以将放入的魔石分解为魔力，为整个系统提供最初的能源。\\n需要注意，魔石的分解需要达到一定的温度才可以开始进行。",
+        "en_US": "Use The Stone with Magic, crafting devices powered by Magic.\\nMagical devices can store Magic, If it is destroyed, the magic will erupt and cause damage to the surrounding.\\nFirst, we need to create a Magic Separator, which can be heated by a stove to decompose the Dimensity into magic power, providing the initial energy for the entire system.\\nNote that the decomposition of the Dimensity requires a certain temperature before it can begin."
+    },
+    "crafts": [
+        "elementalsorcery:md_magic_gen",
+        "elementalsorcery:md_base",
+        "elementalsorcery:magic_core",
+        "elementalsorcery:magical_ender_eye"
+    ]
+}

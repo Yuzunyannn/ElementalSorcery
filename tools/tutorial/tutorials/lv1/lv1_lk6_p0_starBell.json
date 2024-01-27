@@ -1,0 +1,15 @@
+{
+    "cover": {
+        "id": "elementalsorcery:star_bell",
+        "data": 1
+    },
+    "title": {
+        "zh_CN": "星之铃",
+        "en_US": "Star Bell"
+    },
+    "describe": {
+        "zh_CN": "用金制作出一个铃铛，摇一摇，叮铃铃~吸引周围的动物，同时也会吸引怪物的攻击。\\手持铃铛，向星之花许愿，星之花会将星元素与铃铛共鸣，形成蓝白色的星之铃。\\n星之铃在摇动的时候，会因周围的环境发出不同特性的声音。\\n脚下有岩浆会发出清脆的声音、周围有高价值方块会发出悠长的声音、周围具有史莱姆区块会发出深沉的声音。",
+        "en_US": "A bell made with Gold. Ring Ring~ Attract the surrounding animals, and also attract monster's attack.\\nHold a bell and make a wish to the Star flower. Resonating the Element of Star with bell to form a light blue Star Bell。\\nShaking the Star Bell, it will make different sounds according to the surrounding.\\nA Crisp sound when lava under your feet, a Long sound when high value Block around you, a Deep sound when you are in Slime Chunk."
+    },
+    "crafts": "elementalsorcery:star_bell"
+}

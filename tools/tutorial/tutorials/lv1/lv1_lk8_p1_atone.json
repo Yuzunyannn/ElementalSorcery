@@ -1,0 +1,35 @@
+{
+    "cover": "elementalsorcery:astone",
+    "title": {
+        "zh_CN": "通魔石",
+        "en_US": "The Stone with Magic"
+    },
+    "describe": {
+        "zh_CN": "由蓝晶石、石头、魔石混合而成的石头，具有非常好的魔力适应性，可以制作各种魔法装置，乃至祭坛。\\n将魔石，石头，蓝晶石以1:8:4的比例放入熔岩锅中，熔化，冷却即可获得通魔石。比例请注意，不合适的话，很有可能出现不期望的结果。\\n熔岩锅加满后，物品就不能再加入了。\\注意，要先投入魔石，形成魔石溶液，使其他石头在魔石溶液中熔解。\\n另外需要使用高级的灶台加热，不然温度很有可能无法达到预期。\\n使用蓝晶石和木棒制作的精巧刻刀，可以将普通的通魔石雕刻成更高级的通魔石。\\n使用高级的通魔石可以更好的完成魔法装置的制作。",
+        "en_US": "A stone made of kyanite, stone and Dimensity, is good magic material for crafting various magic devices, even altars.\\Throw the Dimensity, stone and kyanite into the Melt Cauldron in a ratio of 1:8:4. Melting and cooling to obtain the The Stone with Magic. Please pay attention to the ratio. If it is not appropriate, unexpected results may occur.\\nWhen the Melt Cauldron is full, items can no longer be added.\\nNote that you need to input Dimensity first to form a magic solution, so that other materials can be melted in the magic solution.\\nIn addition, it is necessary to use an advanced Hearth for heating, otherwise the temperature may not meet the expectations.\\Use The Exquisite Carving Knife made of kyanite and a stick to carve ordinary The Stone with Magic into a higher level.\\nUsing advanced The Stone with Magic can better complete the production of magical devices."
+    },
+    "crafts": [
+        "elementalsorcery:astone",
+        "elementalsorcery:tiny_knife",
+        {
+            "id": "elementalsorcery:astone",
+            "data": 2
+        },
+        {
+            "id": "elementalsorcery:astone",
+            "data": 3
+        },
+        {
+            "id": "elementalsorcery:astone",
+            "data": 4
+        },
+        {
+            "id": "elementalsorcery:astone",
+            "data": 5
+        },
+        {
+            "id": "elementalsorcery:astone",
+            "data": 6
+        }
+    ]
+}

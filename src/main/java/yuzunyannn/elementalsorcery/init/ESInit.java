@@ -54,6 +54,7 @@ import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
+import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
@@ -158,9 +159,11 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.capability.FairyCubeMaster;
 import yuzunyannn.elementalsorcery.capability.Spellbook;
 import yuzunyannn.elementalsorcery.computer.Computer;
-import yuzunyannn.elementalsorcery.computer.ComputerStorage;
+import yuzunyannn.elementalsorcery.computer.ComputerCapStorage;
+import yuzunyannn.elementalsorcery.computer.DeviceCapStorage;
 import yuzunyannn.elementalsorcery.computer.soft.AppCommand;
 import yuzunyannn.elementalsorcery.computer.soft.AppTutorial;
+import yuzunyannn.elementalsorcery.computer.soft.TaskInventoryItemSelect;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.crafting.ICraftingLaunch;
@@ -1119,12 +1122,14 @@ public class ESInit {
 		register(IAdventurer.class, new Adventurer.Storage(), Adventurer.class);
 		register(IFairyCubeMaster.class, new FairyCubeMaster.Storage(), FairyCubeMaster.class);
 		register(IGameFuncCarrier.class, new GameFuncCarrier.Storage(), GameFuncCarrier.class);
-		register(IComputer.class, new ComputerStorage(), Computer.class);
+		register(IComputer.class, new ComputerCapStorage(), Computer.class);
+		register(IDevice.class, new DeviceCapStorage(), IDevice.class);
 	}
 
 	static void registerAllApps() throws IllegalArgumentException, IllegalAccessException {
 		registerAPP(AppCommand.class, "command");
 		registerAPP(AppTutorial.class, "tutorial");
+		registerAPP(TaskInventoryItemSelect.class, TaskInventoryItemSelect.ID);
 	}
 
 	@SideOnly(Side.CLIENT)

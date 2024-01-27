@@ -1,0 +1,18 @@
+{
+    "cover": "elementalsorcery:md_infusion",
+    "title": {
+        "zh_CN": "注魔箱",
+        "en_US": "Magic Drive Enchanting Box"
+    },
+    "describe": {
+        "zh_CN": "以注魔箱为中心构建的注魔祭坛，可以将魔力注入进入到蓝晶石等物质中，使其状态发生转化。\\n魔力是否可以成功注入到物品中，与注魔箱所在的地点和当前世界时间的时间有关。\\n此外，注魔箱顶部的星沙在夜间会与星空发生共鸣，随着午夜的到来，暴露在星空下的注魔箱会缓慢的吸收魔力。",
+        "en_US": "The Magic Injection Altar, built with the Magic Drive Enchanting Box, can inject magic into substances such as kyanite, transforming their state. Whether magic can be successfully injected into items is related to the location of the Altar and the current world time.\\nIn addition, the star sand on the top of The Box resonates with the starry sky at night, and as midnight approaches, The Box exposed to the starry sky slowly absorbs magic."
+    },
+    "crafts": "elementalsorcery:md_infusion",
+    "building": {
+        "structure": "infusion",
+        "custom": {
+            "0,2,0": "elementalsorcery:md_infusion"
+        }
+    }
+}

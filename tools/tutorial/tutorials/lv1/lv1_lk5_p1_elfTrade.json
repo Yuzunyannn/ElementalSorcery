@@ -1,0 +1,16 @@
+{
+    "cover": "elementalsorcery:elf_coin",
+    "title": {
+        "zh_CN": "精灵交易",
+        "en_US": "Elf Trade"
+    },
+    "describe": {
+        "zh_CN": "精灵果可以进行烧制，其内部液体结晶而形成精灵结晶，具有良好的魔力亲和性。\\n它还可以做精灵币与精灵进行交易。\\n说到交易那就要说一下精灵商人了，他们会游走在世界各处，通过精灵币，你或许可以从他们那里买到些东西。（绿色出售、红色回收）\\n如果你找不到它们，不妨做一个邀请函，放到仪式桌上，并在上面摆上一些贵重的物品，过一段时间，说不定就会有商人过来了。",
+        "en_US": "Elf fruit can be smelt, and its internal liquid crystallizes to form Elf Crystal. It has good magic affinity.\\nIt can also be used to trade with elves.\\nWhen it comes to trading, we have to talk about the Elf Merchant, they travel around the world. With Elf Coin, you can buy something from them (Green can Buy, Red can Sell)\\nIf you cannot find them, why not craft and put a Merchant Invitation on Ritual Table whit some valuables, and wait a while, maybe some Elf Merchant will come."
+    },
+    "crafts": [
+        "elementalsorcery:elf_crystal",
+        "elementalsorcery:elf_coin",
+        "elementalsorcery:merchant_invitation"
+    ]
+}

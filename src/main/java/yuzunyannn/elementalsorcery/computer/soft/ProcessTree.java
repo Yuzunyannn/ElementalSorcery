@@ -1,8 +1,12 @@
 package yuzunyannn.elementalsorcery.computer.soft;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -16,10 +20,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
-import yuzunyannn.elementalsorcery.api.util.ISyncDetectable;
-import yuzunyannn.elementalsorcery.api.util.ISyncWatcher;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
+import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
+import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
 import yuzunyannn.elementalsorcery.api.util.var.IVariableType;
+import yuzunyannn.elementalsorcery.util.TextHelper;
 
 public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetectable<NBTTagCompound> {
 
@@ -43,6 +48,7 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 		public final ResourceLocation appId;
 		public final int pid;
 		public final int parentPid;
+		public final List<Integer> children = new ArrayList<>();
 
 		public APP appInst;
 
@@ -56,6 +62,7 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 	protected int pidCounter;
 	protected Map<Integer, ProcessNode> map = new HashMap<>();
 	protected int foreground = 0;
+	public Runnable processChangeCallback;
 
 	public void reset() {
 		pidCounter = 0;
@@ -63,32 +70,49 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 		map.clear();
 	}
 
+	public int size() {
+		return map.size();
+	}
+
 	public int newProcess(String appId, int parentPid) {
 		ProcessNode parentNode = map.get(parentPid);
 		int newPid = -1;
-		if (parentPid == 0) {
+		if (parentPid == -1) {
 			if (parentNode != null) return -1;
 			newPid = 0;
 		} else {
 			if (parentNode == null) return -1;
-			newPid = pidCounter + 1;
+			newPid = pidCounter;
 		}
 
-		ResourceLocation appIdRes = new ResourceLocation(appId);
+		ResourceLocation appIdRes = TextHelper.toESResourceLocation(appId);
 		Class<?> appClazz = APP.REGISTRY.getValue(appIdRes);
 		if (appClazz == null) return -1;
 
-		addProcessNode(new ProcessNode(appIdRes, newPid, parentPid));
+		pidCounter = pidCounter + 1;
+		ProcessNode node = new ProcessNode(appIdRes, newPid, parentPid);
+		addProcessNode(node);
+		afterProcessNodeAdded(node);
+
 		return newPid;
 	}
 
 	protected void addProcessNode(ProcessNode node) {
 		map.put(node.pid, node);
-		// TODO child 链接
+	}
+
+	protected void afterProcessNodeAdded(ProcessNode node) {
+		if (node.parentPid == -1) return;
+		ProcessNode parentNode = map.get(node.parentPid);
+		parentNode.children.add(node.pid);
 	}
 
 	public void removeProcess(int pid) {
+		ProcessNode node = map.get(pid);
+		if (node == null) return;
 		map.remove(pid);
+		ProcessNode parentNode = map.get(node.parentPid);
+		if (parentNode != null) parentNode.children.remove(Integer.valueOf(pid));
 		if (this.foreground == pid) this.foreground = 0;
 	}
 
@@ -107,6 +131,27 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 	public int getParent(int pid) {
 		ProcessNode node = map.get(pid);
 		return node == null ? -1 : node.parentPid;
+	}
+
+	public Collection<Integer> getChildren(int pid) {
+		ProcessNode node = map.get(pid);
+		return node == null ? null : node.children;
+	}
+
+	public Collection<Integer> findAllChildren(int pid) {
+		LinkedList<Integer> children = new LinkedList<>();
+		findAllChildren(children, pid);
+		return children;
+	}
+
+	private void findAllChildren(LinkedList<Integer> children, int pid) {
+		ProcessNode node = map.get(pid);
+		if (node == null) return;
+		for (int i = node.children.size() - 1; i >= 0; i--) {
+			int childPid = node.children.get(i);
+			findAllChildren(children, childPid);
+			children.add(childPid);
+		}
 	}
 
 	public Iterator<Entry<Integer, ProcessNode>> getIterator() {
@@ -129,15 +174,24 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 		return node.appInst;
 	}
 
+	protected NBTTagCompound serialize(ProcessNode node) {
+		NBTTagCompound dat = new NBTTagCompound();
+		dat.setInteger("pid", node.pid);
+		dat.setInteger("ppid", node.parentPid);
+		dat.setString("appid", node.appId.toString());
+		return dat;
+	}
+
+	protected ProcessNode deserializeNode(NBTTagCompound dat) {
+		int pid = dat.getInteger("pid");
+		int parentPid = dat.getInteger("ppid");
+		ResourceLocation appId = new ResourceLocation(dat.getString("appid"));
+		return new ProcessNode(appId, pid, parentPid);
+	}
+
 	protected NBTTagList serializeProcess() {
 		NBTTagList list = new NBTTagList();
-		for (ProcessNode node : map.values()) {
-			NBTTagCompound dat = new NBTTagCompound();
-			list.appendTag(dat);
-			dat.setInteger("pid", node.pid);
-			dat.setInteger("ppid", node.parentPid);
-			dat.setString("appid", node.appId.toString());
-		}
+		for (ProcessNode node : map.values()) list.appendTag(serialize(node));
 		return list;
 	}
 
@@ -145,11 +199,9 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 		this.map.clear();
 		for (int i = 0; i < list.tagCount(); i++) {
 			NBTTagCompound dat = list.getCompoundTagAt(i);
-			int pid = dat.getInteger("pid");
-			int parentPid = dat.getInteger("ppid");
-			ResourceLocation appId = new ResourceLocation(dat.getString("appid"));
-			addProcessNode(new ProcessNode(appId, pid, parentPid));
+			addProcessNode(deserializeNode(dat));
 		}
+		for (ProcessNode node : map.values()) afterProcessNodeAdded(node);
 	}
 
 	@Override
@@ -186,24 +238,28 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 			dataset.foreground = foreground;
 		}
 
-		boolean hasProcessChange = false;
+		NBTTagList nbtList = new NBTTagList();
 
-		if (dataset.set.size() != map.size()) hasProcessChange = true;
-		else {
-			for (Integer i : dataset.set) {
-				if (!map.containsKey(i)) {
-					hasProcessChange = true;
-					break;
-				}
+		for (Integer i : dataset.set) {
+			if (!map.containsKey(i)) {
+				dataset.set.remove(i);
+				NBTTagCompound dat = new NBTTagCompound();
+				dat.setInteger("dpid", i);
+				nbtList.appendTag(dat);
 			}
 		}
 
-		// TODO 这里用更精准的检测，目前是全部发送
-		if (hasProcessChange) {
+		for (ProcessNode node : map.values()) {
+			if (!dataset.set.contains(node.pid)) {
+				dataset.set.add(node.pid);
+				NBTTagCompound dat = serialize(node);
+				nbtList.appendTag(dat);
+			}
+		}
+
+		if (!nbtList.isEmpty()) {
 			if (changes == null) changes = new NBTTagCompound();
-			changes.setTag("ls", serializeProcess());
-			dataset.set.clear();
-			for (Integer i : map.keySet()) dataset.set.add(i);
+			changes.setTag("ls", nbtList);
 		}
 
 		return changes;
@@ -212,7 +268,23 @@ public class ProcessTree implements INBTSerializable<NBTTagCompound>, ISyncDetec
 	@Override
 	public void mergeChanges(NBTTagCompound nbt) {
 		if (nbt.hasKey("fg")) foreground = nbt.getInteger("fg");
-		if (nbt.hasKey("ls")) deserializeProcess(nbt.getTagList("ls", NBTTag.TAG_COMPOUND));
+		if (nbt.hasKey("ls")) {
+			NBTTagList nbtList = nbt.getTagList("ls", NBTTag.TAG_COMPOUND);
+			List<ProcessNode> after = new LinkedList<>();
+			for (int i = 0; i < nbtList.tagCount(); i++) {
+				NBTTagCompound dat = nbtList.getCompoundTagAt(i);
+				if (dat.hasKey("dpid")) {
+					int pid = dat.getInteger("dpid");
+					removeProcess(pid);
+				} else {
+					ProcessNode node = deserializeNode(dat);
+					addProcessNode(node);
+					after.add(node);
+				}
+			}
+			for (ProcessNode node : after) afterProcessNodeAdded(node);
+			if (processChangeCallback != null) processChangeCallback.run();
+		}
 	}
 
 }

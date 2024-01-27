@@ -2,25 +2,33 @@ package yuzunyannn.elementalsorcery.computer.soft;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.UUID;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import net.minecraft.nbt.NBTTagCompound;
 import yuzunyannn.elementalsorcery.api.ESAPI;
+import yuzunyannn.elementalsorcery.api.computer.DNParams;
+import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
+import yuzunyannn.elementalsorcery.api.computer.IDevice;
+import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
-import yuzunyannn.elementalsorcery.api.util.ISyncDetectable;
-import yuzunyannn.elementalsorcery.api.util.ISyncWatcher;
+import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
+import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
+import yuzunyannn.elementalsorcery.api.util.detecter.SyncDetectableMonitor;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerAppDamagedException;
@@ -29,7 +37,6 @@ import yuzunyannn.elementalsorcery.computer.exception.ComputerHardwareMissingExc
 import yuzunyannn.elementalsorcery.computer.exception.ComputerNewProcessException;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerProcessNotExistException;
 import yuzunyannn.elementalsorcery.computer.soft.ProcessTree.ProcessNode;
-import yuzunyannn.elementalsorcery.util.detecter.SyncDetectableMonitor;
 
 public abstract class EOS implements IOS {
 
@@ -133,6 +140,8 @@ public abstract class EOS implements IOS {
 
 	@Override
 	public int exec(APP parent, String appId) {
+		if (processTree.map.size() > 8)
+			throw new ComputerNewProcessException(computer, "new process " + appId + " over max limit");
 		int id = processTree.newProcess(appId, parent.getPid());
 		if (id == -1) throw new ComputerNewProcessException(computer, appId);
 		monitor.markDirty(PROCESS);
@@ -141,8 +150,31 @@ public abstract class EOS implements IOS {
 	}
 
 	@Override
+	public void abort(int pid, IComputerException e) {
+		if (!processTree.hasProcess(pid)) return;
+		remove(processTree, pid, app -> app.onAbort());
+		if (ESAPI.isDevelop) ESAPI.logger.warn("computer abort: " + pid);
+		if (pid == 0) throw ((RuntimeException) e);
+	}
+
+	@Override
+	public void message(APP app, NBTTagCompound nbt) {
+		DNParams params = new DNParams();
+		params.set("pid", app.getPid());
+		params.set("data", nbt);
+		computer.notice("app-message", params);
+	}
+
+	protected void exit(int pid) {
+		if (!processTree.hasProcess(pid)) return;
+		remove(processTree, pid, app -> app.onExit());
+	}
+
+	@Override
 	public int setForeground(int pid) {
 		if (!processTree.hasProcess(pid)) return -1;
+		APP app = processTree.getAppCache(this, pid);
+		if (app == null || app.isTask()) return -1;
 		processTree.setForeground(pid);
 		monitor.markDirty(PROCESS);
 		return pid;
@@ -178,7 +210,7 @@ public abstract class EOS implements IOS {
 		clearAll();
 		isRunning = true;
 
-		int id = processTree.newProcess(boot, 0);
+		int id = processTree.newProcess(boot, -1);
 		if (id == -1) throw new ComputerBootException(computer, "root process fail");
 
 		monitor.markDirty(PROCESS);
@@ -188,15 +220,6 @@ public abstract class EOS implements IOS {
 	@Override
 	public void onClosing() {
 		clearAll();
-	}
-
-	@Override
-	public void abort(int pid, IComputerException e) {
-		if (!processTree.hasProcess(pid)) return;
-		onAbort(processTree, pid, e);
-		processTree.removeProcess(pid);
-		monitor.markDirty(PROCESS);
-		if (ESAPI.isDevelop) ESAPI.logger.warn("computer abort: " + pid);
 	}
 
 	@Override
@@ -235,12 +258,18 @@ public abstract class EOS implements IOS {
 		app.onStartup();
 	}
 
-	protected void onAppExit(ProcessTree tree, APP app) {
-		onRemoveApp(tree, app.getPid());
-	}
-
-	protected void onAbort(ProcessTree tree, int pid, IComputerException e) {
-		onRemoveApp(tree, pid);
+	protected void remove(ProcessTree tree, int rpid, Consumer<APP> func) {
+		Collection<Integer> children = tree.findAllChildren(rpid);
+		for (Integer pid : children) {
+			try {
+				func.accept(tree.getAppCache(this, pid));
+			} catch (Exception e) {}
+			onRemoveApp(tree, pid);
+			tree.removeProcess(pid);
+		}
+		onRemoveApp(tree, rpid);
+		tree.removeProcess(rpid);
+		monitor.markDirty(PROCESS);
 	}
 
 	protected void onRemoveApp(ProcessTree tree, int pid) {
@@ -276,6 +305,27 @@ public abstract class EOS implements IOS {
 	@Override
 	public boolean isRunning() {
 		return isRunning;
+	}
+
+	@Override
+	public List<UUID> filterLinkedDevice(String ability) {
+		List<UUID> finded = new ArrayList<>();
+		Collection<IDeviceLinker> linkers = computer.getNetwork().getLinkers();
+		for (IDeviceLinker linker : linkers) {
+			IDevice device = linker.getRemoteDevice();
+			if (device == null) continue;
+			if (device.hasAbility(ability)) finded.add(linker.getRemoteUUID());
+		}
+		return finded;
+	}
+
+	@Override
+	public CompletableFuture<DNResult> notice(UUID uuid, String method, DNParams params) {
+		IDeviceLinker linker = computer.getNetwork().getLinker(uuid);
+		if (linker == null) return DNResult.invalid();
+		IDevice device = linker.getRemoteDevice();
+		if (device == null) return DNResult.unavailable();
+		return device.notice(method, params);
 	}
 
 }

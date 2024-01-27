@@ -17,7 +17,7 @@ public class GItemStack extends GNode {
 	protected ItemStack stack = ItemStack.EMPTY;
 
 	public GItemStack() {
-
+		this.anchorX = this.anchorY = 0.5f;
 	}
 
 	public GItemStack(ItemStack stack) {

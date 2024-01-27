@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:magic_torch",
+    "title": {
+        "zh_CN": "魔石火把",
+        "en_US": "Dimensity Torch"
+    },
+    "describe": {
+        "zh_CN": "魔石火把具有很好的魔力亲和性，并且将魔力传送出去。\\n将火把插在魔力装置的一面，火把便可以从盖面抽取魔力，将魔力直线传到另外一个装置区。需要注意的是，传递是有距离限制的。",
+        "en_US": "Dimensity Torches can transmit magic.\\nPut the torch onto one side of the magical device, and the torch can extract magic and transmit it in a line to another device. It should be noted that there is a distance limit for transmition."
+    },
+    "crafts": "elementalsorcery:magic_torch"
+}

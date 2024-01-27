@@ -9,7 +9,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import net.minecraft.item.ItemStack;
-import yuzunyannn.elementalsorcery.api.computer.soft.IAPPGuiRuntime;
+import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
@@ -23,7 +23,7 @@ public class TutorialCraft {
 		public double width;
 		public double height;
 		public Color color;
-		public IAPPGuiRuntime gui;
+		public ISoftGuiRuntime gui;
 		public Consumer<ItemStack> click;
 	}
 

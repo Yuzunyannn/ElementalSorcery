@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:md_hearth",
+    "title": {
+        "zh_CN": "魔动灶台",
+        "en_US": "Magic Drive Hearth"
+    },
+    "describe": {
+        "zh_CN": "让魔力转化成热量的装置，比普通的灶台好用的多。",
+        "en_US": "A device that converts magic into heat, much more useful than the ordinary Hearth."
+    },
+    "crafts": "elementalsorcery:md_hearth"
+}

@@ -1,9 +1,1 @@
-{
-	"type": "elementalsorcery:tutorial",
-	"level": 0,
-	"unlock": 3,
-	"cover": "elementalsorcery:lantern",
-	"crafts": "elementalsorcery:lantern",
-	"title": "0_3_1",
-	"describe": "0_3_1"
-}
+{"type":"elementalsorcery:tutorial","level":0,"unlock":3,"cover":"elementalsorcery:lantern","crafts":"elementalsorcery:lantern","title":"0_3_1","describe":"0_3_1"}

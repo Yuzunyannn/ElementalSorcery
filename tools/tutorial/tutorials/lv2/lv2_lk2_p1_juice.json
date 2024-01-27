@@ -1,0 +1,15 @@
+{
+    "cover": "elementalsorcery:md_liquidizer",
+    "title": {
+        "zh_CN": "喝点果汁",
+        "en_US": "Drink some juice"
+    },
+    "describe": {
+        "zh_CN": "将精灵果、苹果或西瓜放入果汁机内，也可以加入一些糖和可可豆，魔力推动刀片转动，材料被打成混合果汁。\\n用玻璃杯可以盛取食用，使用后增加饱和度，没准还会产生某些Buff效果。",
+        "en_US": "Put the Elf Fruit, apple or watermelon into the liquidizer, you can also add some sugar and cocoa beans. The Magic drives the blade to rotate, these materials are juiced into a mixed juice.\\nYou can use a Glass Cup to hold and drink it, can increases saturation, and maybe it will produce some buff effects."
+    },
+    "crafts": [
+        "elementalsorcery:md_liquidizer",
+        "elementalsorcery:glass_cup"
+    ]
+}

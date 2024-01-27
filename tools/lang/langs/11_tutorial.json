@@ -7,6 +7,10 @@
 		"es.tutorialui.craft": {
 			"zh_CN": "合成表",
 			"en_US": "Craft"
+		},
+		"es.tutorialui.building": {
+			"zh_CN": "建筑",
+			"en_US": "Building"
 		}
 	},
 	"es.tutorial": {
@@ -23,16 +27,16 @@
 			"en_US": "Element"
 		},
 		"es.tutorial.describe.0_0_1": {
-			"zh_CN": "§k????§r的研究，从魔力中发现了构成物质的元素，元素作为特殊的魔力，似乎可以来改变我的世界。\\n元素可以转化到魔力，这是很容易的一件事，但反之则是几乎不可能的。",
-			"en_US": "§k????§r magician find Element as special kind of magic from Items, which has power to change the World.\\nIt's simply to let Element convert to Magic, but it's almost impossible to let Magic convert back to Element."
+			"zh_CN": "§k????§r的研究，从魔力中发现了构成物质的元素，元素被认作一种特殊的魔力，可以来改变我的世界。\\n元素具有三个属性，种类，数量和能量。种类和数量顾名思义，而能量则是固有属性，一旦物质开始分解，元素的能量就固定下来了，普世认定元素的能量是无法上升的，但§k?????????????????????§r逆§k?????????????????????????§r危§k????????????????????§r",
+			"en_US": "§k????§r magician find Element as special kind of magic from Items, which has power to change the World.\\nElements have three attributes: type, quantity, and energy. Type and quantity are self-explanatory, while energy is an inherent property. Once an Item begins to disintegration, the energy of the Element is fixed, and it is universally accepted that the energy of an Element cannot increase, but §k?????????????????????§rInv§k?????????????????????????§rdang§k????????????????????§r"
 		},
 		"es.tutorial.title.0_0_2": {
 			"zh_CN": "知识§k????§r",
 			"en_US": "Knowledge §k????§r"
 		},
 		"es.tutorial.describe.0_0_2": {
-			"zh_CN": "通过搭建仪式，消耗祭品作为魔力启动源，将知识§k????§r的方式，可将史蒂夫们的智慧相连，我们称这个叫映像仪式。\\n想要实现这件事，首先需要一个仪式桌。仪式桌分为不同的等级，等级越高制作越难，目前只需要制作0级的即可。除了手中的石板，仪式桌上可以放五件物品作为祭品。\\n \\n仪式进行：仪式桌放到高一格的地面上，仪式桌为中心的5×5范围不能出现任何方块，仪式桌下方为中心的5×5范围内应插满鲜花或者火把，将祭品放到桌子上，手持满耐久的木剑发动仪式。仪式成功会有天雷将知识进行同步，并以卷轴的形式给予。如果失败后，会受到天罚，仪式等级越高收到的惩罚力度越大。\\n \\n祭品选择：大多数物品都可以成为祭品，物品的好坏决定着仪式的成败。但并不是每个等级的仪式都可以使用优秀的祭品，比如钻石。等级低的仪式只能接受普通的物品，当然对于等级低的仪式来说，这已经足够了。每种祭品有「能量」属性，所有祭品的能量综合越高，仪式的成功率越大。如果高级仪式使用低级仪式的祭品，物品所能提供的能量会大打折扣。\\n史蒂夫知道，0级的仪式可以石头、原木、煤炭作为祭品，显然煤炭会更好一些，另外圆石是受到众人讨厌的祭品，如果使用四个煤炭作为祭品是肯定会成功的。",
-			"en_US": "By Rite, consuming sacrifices as a source of magical power, and through the method of §k????§r knowledge, we can connect the wisdom of the Steves. We call this the Print Rite.\\nPrepare a Ritual Table to Start. There are diff level Ritual Tables, but now creft a 0 level is all right. In addition to the slate in hand, five items can be placed on the Ritual Table as sacrifices.\\n \\nRite: Put the Ritual Table on the ground one higher, Table center range of 5 × 5 cannot have any block. Place Flowers or torches on center range of 5x5 under table. Put the sacrifice on Ritual Table and start the Rite with a wooden sword. Steve Can get knowledge on Rite success. but if fail, steve will be punished, the higher Rite level, the greater the punishment received.\\n \\nSacrifice: Most items can be sacrificed, the quality of the items determine the success or failure of Rite. But not every level of table can withstand high-end items. Low level Rite can only accept low-end items, of course for low-level Rite, this is enough. Each sacrifice has 'Power' attribute, more Power more better. If high-level Rite use low-level's sacrifice, Power will be greatly reduced.\\nSteve know 0 level Rite Can use Stone, Log, Coal as sacrifice, any level Rite hate cobblestone, and four coal will bring success in 0 level Rit."
+			"zh_CN": "通过搭建仪式，消耗祭品作为魔力启动源，将知识在§k????§r的方式，可将史蒂夫们的智慧传递下去，称这个叫映像仪式。\\n想要实现这件事，首先需要一个仪式桌。仪式桌分为不同的等级，等级越高制作越难，目前只需要制作0级的即可。除了手中的石板，仪式桌上可以放五件物品作为祭品。\\n \\n仪式进行：仪式桌放到高一格的地面上，仪式桌为中心的5×5范围不能出现任何方块，仪式桌下方为中心的5×5范围内应插满鲜花或者火把，将祭品放到桌子上，手持满耐久的木剑发动仪式。仪式成功会有天雷将知识进行同步，并以卷轴的形式给予。如果失败后，会受到天罚，仪式等级越高收到的惩罚力度越大。\\n \\n祭品选择：大多数物品都可以成为祭品，物品的好坏决定着仪式的成败。但并不是每个等级的仪式都可以使用优秀的祭品，比如钻石。等级低的仪式只能接受普通的物品，当然对于等级低的仪式来说，这已经足够了。每种祭品有「能量」属性，所有祭品的能量综合越高，仪式的成功率越大。如果高级仪式使用低级仪式的祭品，物品所能提供的能量会大打折扣。\\n0级的仪式可以石头、原木、煤炭作为祭品，显然煤炭会更好一些，另外圆石是受到众人讨厌的祭品，如果使用5个煤炭作为祭品是肯定会成功的。我把可以作为祭品的详细数据放在了§k????§r",
+			"en_US": "By Rite, consuming sacrifices as a source of magical power, and through the method of §k????§r knowledge, we can connect the wisdom of the Steves. We call this the Print Rite.\\nPrepare a Ritual Table to Start. There are diff level Ritual Tables, but now creft a 0 level is all right. In addition to the slate in hand, five items can be placed on the Ritual Table as sacrifices.\\n \\nRite: Put the Ritual Table on the ground one higher, Table center range of 5 × 5 cannot have any block. Place Flowers or torches on center range of 5x5 under table. Put the sacrifice on Ritual Table and start the Rite with a wooden sword. Steve Can get knowledge on Rite success. but if fail, steve will be punished, the higher Rite level, the greater the punishment received.\\n \\nSacrifice: Most items can be sacrificed, the quality of the items determine the success or failure of Rite. But not every level of table can withstand high-end items. Low level Rite can only accept low-end items, of course for low-level Rite, this is enough. Each sacrifice has 'Power' attribute, more Power more better. If high-level Rite use low-level's sacrifice, Power will be greatly reduced.\\n0 level Rite Can use Stone, Log, Coal as sacrifice, any level Rite hate cobblestone, and 5 coal will bring success in 0 level Rit.\\nI have put the detailed data that can be used as sacrifices in §k????§r"
 		},
 		"es.tutorial.title.0_1_0": {
 			"zh_CN": "重要资源",
@@ -55,32 +59,227 @@
 			"en_US": "Mysterious Flower"
 		},
 		"es.tutorial.describe.0_2_0": {
-			"zh_CN": "在§k????§r之后，一种极为稀少的白色花朵开始在自然界中生长，我们称之为星之花。其极为脆弱，无法掉落。\\n不过它可以为你带来好运，空手或持有某些道具右键向其许愿，它可能会赐予你一些buff或者工具，或是为你将你传送回家。\\n不过许愿后的星之花将会枯萎。",
-			"en_US": "After §k????§r, an extremely rare white flower began to grow in overworld, which we call the Star Flower. Star Flower is extremely fragile and cannot be dropped.\\nBut it can bring you good luck, holding some Item or not and right click it to make a wish, Steve may get some buffs or tools, or bring steve to home.\\nHowever, the Star Flower will withered after wish."
+			"zh_CN": "在§k????§r之后，一种极为稀少的白色花朵开始在自然界中生长，我称之为星之花。其极为脆弱，无法掉落。\\n根据我的研究，它可以为你带来好运，空手或持有某些道具右键向其“许愿”，它可能会赐予你一些buff或者工具，或是为你将你传送回家。\\n不过许愿后的星之花将会枯萎。\\它似乎含有着未知的元素，具体它有什么更多用处依然是未知的，但我已经没有多少时间了。",
+			"en_US": "After §k????§r, an extremely rare white flower began to grow in overworld, which we call the Star Flower. Star Flower is extremely fragile and cannot be dropped.\\nBased on my research, it can bring you good luck, holding some Item or not and right click it to make a wish, Steve may get some buffs or tools, or bring steve to home.\\nHowever, the Star Flower will withered after wish.\\nIt seems to contain unknown Element, and unknown what more use it has, but I don't have much time left."
 		},
 		"es.tutorial.title.0_3_0": {
 			"zh_CN": "寻求仪式",
 			"en_US": "Seek Rite"
 		},
 		"es.tutorial.describe.0_3_0": {
-			"zh_CN": "寻求仪式，可以使用写有某样物品的羊片卷来向§k????§r寻求这个物品。该仪式和映像仪式基本一样，不同点：一是需要一张「信息羊皮卷」；二是寻求的物品对仪式等级有要求。\\n「信息羊皮卷」可以通过：墨囊、羽毛、羊皮卷和象征性物品进行合成。象征性物品根据寻求的物品不同而不同。",
-			"en_US": "Seek Rite, can use Parchment writen some item to seek this item from §k????§r. It same like Print Rite, but: First is need a 'Item Parchment', second is require level of Ritual Table.\\n'Item Parchment' can craft by Ink, Feather, Parchment and Symbolic Item, Symbolic Item is according to item for seek."
+			"zh_CN": "我在§k????§r构建了物品§k????§r，可以通过仪式来进行启动，姑且叫做寻求仪式，可以使用写有某样物品的羊皮卷来向§k????§r寻求这个物品。该仪式和映像仪式基本一样，不同点：一是需要一张「信息羊皮卷」；二是寻求的物品对仪式等级有要求。\\n「信息羊皮卷」可以通过：墨囊、羽毛、羊皮卷和象征性物品进行合成。象征性物品根据寻求的物品不同而不同。",
+			"en_US": "I have constructed item §k????§r in §k????§r that can be activated through a ritual, which I call the Seek Rite, can use Parchment writen some item to seek this item from §k????§r. It same like Print Rite, but: First is need a 'Item Parchment', second is require level of Ritual Table.\\n'Item Parchment' can craft by Ink, Feather, Parchment and Symbolic Item, Symbolic Item is according to item for seek."
 		},
 		"es.tutorial.title.0_3_1": {
 			"zh_CN": "引路灯",
 			"en_US": "Guide Lamp"
 		},
 		"es.tutorial.describe.0_3_1": {
-			"zh_CN": "引路灯是具有魔力的一盏灯，放下后会自动发出火焰指向上一个灯。由于其的特殊性，可以通过寻求仪式获取。\\n通过shift+右键可以设置下次放置的链接位置。",
-			"en_US": "Kyanite is a kind of magic mineral that steve can find it's ore under y 19.\\nBurning kyanite ore whit Extra Item Eye of Ender can take out Magic Fragment from it.\\nKyanite can be used to make tools, which is the same harvestLevel as iron's, but has better durability."
+			"zh_CN": "第一个作为测试这个物品§k????§r的道具叫引路灯，它是具有魔力的一盏灯，放下后会自动发出火焰指向上一个灯。由于其的特殊性，可以通过寻求仪式获取。\\n通过shift+右键可以设置下次放置的链接位置。",
+			"en_US": "The first item used to test the item §k????§r is called the Guide Lamp, which is a magical lamp can fire a flame toward the previous lamp. Steve can get it from Seek Rite.\\nShift + Right Click to set which is the previous one."
 		},
-		"es.tutorial.title.1_0_3": {
+		"es.tutorial.title.0_4_0": {
+			"zh_CN": "更多知识",
+			"en_US": "More Knowledge"
+		},
+		"es.tutorial.describe.0_4_0": {
+			"zh_CN": "为了获取更多知识，可以开始升级仪式桌的仪式桌了...还有一些事情\\n我们把§k????§r存放在地下的石头中。\\n§k????§r的进入口令§k????????§r\\n§k????????????????????????????§r",
+			"en_US": "To acquire more knowledge, you can start upgrading the Ritual Table... There are also some things.\\nWe store §k????§r in underground stones.\\nThe password for entering the §k????§r is §k????????§r.\\n§k????????????????????????????§r"
+		},
+		"es.tutorial.title.1_0_0": {
 			"zh_CN": "魔力碎片",
 			"en_US": "Magic Piece"
 		},
-		"es.tutorial.describe.1_0_3": {
-			"zh_CN": "由魔力构成的碎片，可以合成带有魔力的物品，想必研究它的人会有很多。\\n它的获取方式有很多种，不过最快的可能是从其他人手里购买，这样的话...可以去村庄看看？",
-			"en_US": "Fragment made of Magic which can craft item with magic. I think there must be many people who study it. There are many ways to obtain it, but the fastest way may be to buy it from others. In that case... why not go to the village and have a look?"
+		"es.tutorial.describe.1_0_0": {
+			"zh_CN": "由魔力构成的碎片，可以合成带有魔力的物品，是合成魔石的重要材料，想必研究它的人会有很多。\\n它的获取方式有很多种，比如可以从其他人手里购买，这样的话...可以去村庄看看？",
+			"en_US": "The Pieces composed of magic can be used to craft items with magic, and are important materials for craft magic stones. I think there must be many people who study it. There are many ways to obtain it. Such as, it can be purchased from others. In that case... why not go to the village and have a look?"
+		},
+		"es.tutorial.title.1_0_1": {
+			"zh_CN": "魔石",
+			"en_US": "Dimensity"
+		},
+		"es.tutorial.describe.1_0_1": {
+			"zh_CN": "魔力碎片蓝晶石融于沙而形成的石头，带有大量的魔力，是魔力研究的重要材料。",
+			"en_US": "A Magic Stone formed by fuse Magic Pieces and kyanite into sand, which is an important material for magic age."
+		},
+		"es.tutorial.title.1_1_0": {
+			"zh_CN": "收集文献",
+			"en_US": "Collect Paper"
+		},
+		"es.tutorial.describe.1_1_0": {
+			"zh_CN": "先人似乎在封藏石种留些了许多文献，在上面记载着许多的内容，但通常是无法直接看懂的，需要进行解读。一手拿着羽毛笔，一手拿着古卷，右键点击即可开始进行解读。\\n如果解读疲倦的话，过半天之后在进行解读吧，随着解读次数的增多，越不容易疲倦。\\n如果你疲倦了，吃一点苹果糖来消除疲劳。",
+			"en_US": "It seems that our ancestors left many Paper in the sealed stone, on which many things are recorded, can unscramble it to understand. With a Quill in one hand and an Ancient Paper in the other, right click to start unscramble.\\nIf you feel tried, let's unscramble after a while or eat some Apple Candy. The more unscrambling you do, the less tired you will get."
+		},
+		"es.tutorial.title.1_1_1": {
+			"zh_CN": "祭品研究手册",
+			"en_US": "Rite Research Manual"
+		},
+		"es.tutorial.describe.1_1_1": {
+			"zh_CN": "哪种物品可以作为祭品？究竟有多少能量？具体可以用到几级仪式上？虽然没有找到先人留下来的数据，但关于这些问题，依旧有许多的人都在研究，去村庄看看，没准能买到这样一个手册。\\n如果在另外一直手里，拿着一支羽毛笔的话，没准可以把查看过的内容记录下。副手拿着有记录的手册，可以在物品信息上快速查看记录的结果。",
+			"en_US": "What kind of item can be used as a sacrifice? How much Power is have? How many levels of Rite can be used? Although no data left by our ancestors has been found, there are still many people who are studying these problems. If you go to the village, maybe able to buy such a manual."
+		},
+		"es.tutorial.title.1_2_0": {
+			"zh_CN": "星沙",
+			"en_US": "Star Sand"
+		},
+		"es.tutorial.describe.1_2_0": {
+			"zh_CN": "长期沐浴在星光下而形成的沙子，是上好的研究材料。形成一整块的星沙在自然中有些困难，不过，在沙子上可以找到少量星沙凝聚成的星石。或许可以将收集到的多块星石扔进捣粉臼，然后使用锤子将星石捣捣碎，从而获取星沙。(shift+右击取下)\\n另外，据说这种星石似乎在沙丘上比较多。",
+			"en_US": "Sand formed by long-term exposure to starlight, is a valuable material. It is difficult to a whole star sand in overworld, but Star Stone can be found above sand. Perhaps you can put the collected multiple star stones into the Stone Mill, and then use a hammer to mash the Star Stone to Star Sand.(shift + Right Click to take out)\\nIn addition, it is said that this kind of Star Stone seems to be more abundant on the sand dunes."
+		},
+		"es.tutorial.title.1_2_1": {
+			"zh_CN": "绯红水晶",
+			"en_US": "Scarlet Crystal"
+		},
+		"es.tutorial.describe.1_2_1": {
+			"zh_CN": "一种奇异的红色水晶，在地下的岩浆之下，可能会发现绯红水晶矿的身影。\\n所有水晶拥有频率这一属性，绯红水晶也不例外，但是它是少数频率可以变化的水晶。\\n绯红水晶遇水会产生变化，碎裂并分解成魔石与碎片。这或许是获取魔石的有一种方案，不过挖掘在岩浆下面的矿物实属有些困难。",
+			"en_US": "A strange red crystal may be found under the underground magma.\\nAll kind of crystals have the attribute of frequency, and The Scarlet Crystal is no exception, but it is one of the few kind which frequency can be changed.\\nThe Scarlet Crystal will decompose to Dimensity and Magic Fragment when it wet. This may be a way to obtain Dimensity, but it is difficult to excavate ores under the lava."
+		},
+		"es.tutorial.title.1_3_0": {
+			"zh_CN": "带魔力的末影之眼",
+			"en_US": "Eye of Ender with Magic"
+		},
+		"es.tutorial.describe.1_3_0": {
+			"zh_CN": "通过末影之眼和魔力碎片合成，可以作为烧制使用的额外物品。\\n放在烧炼箱中，可以提升烧制速度，不过每完成一轮烧制，其耐久会降低，为0时就会消失\\n不过没有关系，它在激活状态就会脱去魔力，变成普通的末影之眼，不过会发生小规模的爆炸，请注意。\\n多个可以叠加，虽然会共同浪费耐久，不过会有意想不到的效果。",
+			"en_US": "Made with Eye of Ender and Magic Fragment, can as Extra item in burning.\\nPut it in Smelt Box to increase speed. However, the durability will decrease after each round of burning is completed, and it will disappear when it is 0.\\nHowever, it doesn't matter. When it is activated, it will lose its magic and become an ordinary Eye of Ender. Be careful, a small explosion will occur when active it.\\nIt can be stacked and waste durability together, but it will have unexpected effects."
+		},
+		"es.tutorial.title.1_4_0": {
+			"zh_CN": "精灵树",
+			"en_US": "Elf Tree",
+			"ja_JP": "精霊木"
+		},
+		"es.tutorial.describe.1_4_0": {
+			"zh_CN": "精灵树是一种具有魔法的树木，在自然界中生成，不过自然生成的树通常是很小的一棵。\\n砍下得到精灵木。\\n精灵果是精灵树上生长的一种果子，只在白天生长，成熟变绿，并掉落。\\n精灵果从高处掉落有几率会坏掉，并向周围产生随机效果。\\n精灵果中蕴含着魔力，可以食用，连续使用的话可产生不同的效果。\\这些可能是你将来使用的重要材料。",
+			"en_US": "Elf Tree is a kind of magic tree, which is generated in nature, but the natural tree is usually very small.\\nCut down to get the spirit wood.\\nElf fruit is a kind of fruit grown on the Elf Tree. It grows only in the daytime, turns green when it is ripe and falls.\\nThere is a chance that the Elf Fruit will be broken when it falls from a high place and generate random effects around it.\\nElf fruit contains magic and can be eaten. If used continuously, it can produce different effects.\\nThese may be important materials for your future use."
+		},
+		"es.tutorial.title.1_4_1": {
+			"zh_CN": "共鸣水晶",
+			"en_US": "Resonance Crystal"
+		},
+		"es.tutorial.describe.1_4_1": {
+			"zh_CN": "通过精灵工艺制作的水晶，被广泛引用到各种需要共鸣的设备中。\\n该水晶可以投掷出去，砸到不同的设备上时，似乎会有不同的反应。\\n它可以从精灵商人处购买。",
+			"en_US": "Resonance Crystal made in Elf Craft which widely used in various devices.\\nIf you throw this, maybe has different effect when hit some devices.\\nIt can be purchased from the Elf Merchant."
+		},
+		"es.tutorial.title.1_5_0": {
+			"zh_CN": "精灵",
+			"en_US": "Elf",
+			"ja_JP": "精霊"
+		},
+		"es.tutorial.describe.1_5_0": {
+			"zh_CN": "精灵传说是从精灵世界过来的一种新的生物，他们通常生活在巨大的精灵树上。精灵属于中立生物，而且有着不同的职业。如果你攻击他们，他们将可能会转变到战斗职业来进行防卫。\\n精灵中会产生疯子，他会到处乱攻击。\\n此外精灵学者会告诉你一些你可能想知道的内容，同时他也会出售教程。\\n(精灵部分教程只能从学者获取)",
+			"en_US": "The legend of the elves is a new creature from the world of elves. They usually live in the giant elf trees. Elves are neutral creatures and have different professions. If you attack them, they will probably switch to combat profession to defend.\\nThere will be Crazy in the elves, and they will attack everything.\\nIn addition, the Elf Scholar will tell you something you may want to know, and they will also sell tutorials.\\n(Tutorials of Elf can only be obtained from Elf Scholars)",
+			"ja_JP": "精霊は精霊の世界から来た新しい生物と言われています、彼たちはいつも巨大な精霊の木に住んでいます。精霊は中立的な生物であり、また異なる職業を持っている。彼たちを攻撃すれば、彼たちは戦闘職業に転じて防衛することができます。\\n精霊の中で狂人がいる、彼はあちこちで攻撃します。\\nまた、精霊学者があなたに教えてくれます・同時に教程も販売しています。\\n(精霊部分教程は学者からしか入手できません)"
+		},
+		"es.tutorial.title.1_5_1": {
+			"zh_CN": "精灵交易",
+			"en_US": "Elf Trade"
+		},
+		"es.tutorial.describe.1_5_1": {
+			"zh_CN": "精灵果可以进行烧制，其内部液体结晶而形成精灵结晶，具有良好的魔力亲和性。\\n它还可以做精灵币与精灵进行交易。\\n说到交易那就要说一下精灵商人了，他们会游走在世界各处，通过精灵币，你或许可以从他们那里买到些东西。（绿色出售、红色回收）\\n如果你找不到它们，不妨做一个邀请函，放到仪式桌上，并在上面摆上一些贵重的物品，过一段时间，说不定就会有商人过来了。",
+			"en_US": "Elf fruit can be smelt, and its internal liquid crystallizes to form Elf Crystal. It has good magic affinity.\\nIt can also be used to trade with elves.\\nWhen it comes to trading, we have to talk about the Elf Merchant, they travel around the world. With Elf Coin, you can buy something from them (Green can Buy, Red can Sell)\\nIf you cannot find them, why not craft and put a Merchant Invitation on Ritual Table whit some valuables, and wait a while, maybe some Elf Merchant will come."
+		},
+		"es.tutorial.title.1_6_0": {
+			"zh_CN": "星之铃",
+			"en_US": "Star Bell"
+		},
+		"es.tutorial.describe.1_6_0": {
+			"zh_CN": "用金制作出一个铃铛，摇一摇，叮铃铃~吸引周围的动物，同时也会吸引怪物的攻击。\\手持铃铛，向星之花许愿，星之花会将星元素与铃铛共鸣，形成蓝白色的星之铃。\\n星之铃在摇动的时候，会因周围的环境发出不同特性的声音。\\n脚下有岩浆会发出清脆的声音、周围有高价值方块会发出悠长的声音、周围具有史莱姆区块会发出深沉的声音。",
+			"en_US": "A bell made with Gold. Ring Ring~ Attract the surrounding animals, and also attract monster's attack.\\nHold a bell and make a wish to the Star flower. Resonating the Element of Star with bell to form a light blue Star Bell。\\nShaking the Star Bell, it will make different sounds according to the surrounding.\\nA Crisp sound when lava under your feet, a Long sound when high value Block around you, a Deep sound when you are in Slime Chunk."
+		},
+		"es.tutorial.title.1_7_0": {
+			"zh_CN": "巨型精灵树",
+			"en_US": "Towering Elf Tree"
+		},
+		"es.tutorial.describe.1_7_0": {
+			"zh_CN": "在世界中，存在着一部分土地充斥着精灵力，在这些土地上可以长出参天的精灵树。\\n如果史蒂夫寻找到了这块地，在确保有两层完整土地且周围没有杂物的时候，使用共鸣水晶砸向精灵树苗，即可长出巨大的精灵树，这种树似乎会吸引精灵前来居住。\\n精灵商人可能会卖能精准检测某个区块是否拥有着精灵力的物品，同时星之铃也会发出和史莱姆区块一样的声音。\\n带有核心的巨大的精灵树可以吸引精灵们入住，他们会在树中搭建各式各样的楼层。要想开启精灵树的建造，试着和其周边的精灵说说话吧。",
+			"en_US": "In The Overworld, there is a part of the land full of Elf Power, Towering Elf Tree can grow here.\\nWhen Steve find it, clear around to flat and throw Resonance Crystal to Elf Tree Sapling.Then Tree will grow, Elves will come.\\nThe Elf Merchant may sell items that can accurately detect whether a certain chunk possesses Elf Power, and the Star Bell will also emit the same sound as the Slime Chunk.\\nTowering Elf Tree will attract Elves to come. They will build various floors in The Tree. Talking with them, if want invest to them."
+		},
+		"es.tutorial.title.1_8_0": {
+			"zh_CN": "熔岩锅",
+			"en_US": "Melt Cauldron"
+		},
+		"es.tutorial.describe.1_8_0": {
+			"zh_CN": "熔岩锅，借助灶台，可以将原始等材料等熔炼成其他物品。\\n不过，熔岩锅只能使用一次，一旦灶台起火加入材料，在本次熔炼结束后，该锅就无法再次使用了。带熔浆冷却后，将锅打碎，取出熔炼后的物品。\\n加热温度升高，到一定温度后，需要先扔入魔石融化成溶剂，才能开始熔化其他材料\\n材料必须按照比率放，偏离比例会提升标准差。",
+			"en_US": "Heating Melt Cauldron through The Hearth, raw materials can be melted into other items.\\nHowever, the Melt Cauldron can only be used once. Once the Melt Cauldron fires and materials are added, the Melt Cauldron cannot be used again after this smelting. After the Melt Cauldron is cooled, break it and items drop.\\nWhen the temperature rises to a certain, the Dimensity needs to be thrown in to melt into a solvent before add other materials.\\nMaterials must be placed according to the ratio, and deviation from the ratio will increase the standard deviation."
+		},
+		"es.tutorial.title.1_8_1": {
+			"zh_CN": "通魔石",
+			"en_US": "The Stone with Magic"
+		},
+		"es.tutorial.describe.1_8_1": {
+			"zh_CN": "由蓝晶石、石头、魔石混合而成的石头，具有非常好的魔力适应性，可以制作各种魔法装置，乃至祭坛。\\n将魔石，石头，蓝晶石以1:8:4的比例放入熔岩锅中，熔化，冷却即可获得通魔石。比例请注意，不合适的话，很有可能出现不期望的结果。\\n熔岩锅加满后，物品就不能再加入了。\\注意，要先投入魔石，形成魔石溶液，使其他石头在魔石溶液中熔解。\\n另外需要使用高级的灶台加热，不然温度很有可能无法达到预期。\\n使用蓝晶石和木棒制作的精巧刻刀，可以将普通的通魔石雕刻成更高级的通魔石。\\n使用高级的通魔石可以更好的完成魔法装置的制作。",
+			"en_US": "A stone made of kyanite, stone and Dimensity, is good magic material for crafting various magic devices, even altars.\\Throw the Dimensity, stone and kyanite into the Melt Cauldron in a ratio of 1:8:4. Melting and cooling to obtain the The Stone with Magic. Please pay attention to the ratio. If it is not appropriate, unexpected results may occur.\\nWhen the Melt Cauldron is full, items can no longer be added.\\nNote that you need to input Dimensity first to form a magic solution, so that other materials can be melted in the magic solution.\\nIn addition, it is necessary to use an advanced Hearth for heating, otherwise the temperature may not meet the expectations.\\Use The Exquisite Carving Knife made of kyanite and a stick to carve ordinary The Stone with Magic into a higher level.\\nUsing advanced The Stone with Magic can better complete the production of magical devices."
+		},
+		"es.tutorial.title.1_9_0": {
+			"zh_CN": "更多知识",
+			"en_US": "More Knowledge"
+		},
+		"es.tutorial.describe.1_9_0": {
+			"zh_CN": "为了获取更多知识，可以开始升级仪式桌的仪式桌了...",
+			"en_US": "To acquire more knowledge, you can start upgrading the Ritual Table..."
+		},
+		"es.tutorial.title.2_0_0": {
+			"zh_CN": "魔动装置",
+			"en_US": "Magic Drive"
+		},
+		"es.tutorial.describe.2_0_0": {
+			"zh_CN": "使用魔通石，将魔力作为驱动源，制造出魔力设备来使用。\\n魔力设备中都可以储存魔力，如果破坏掉储存魔力的设备，魔力会爆发出来，对周围造成伤害。\\n首先要制作一个“热力魔分箱”，通过灶台对其加热，可以将放入的魔石分解为魔力，为整个系统提供最初的能源。\\n需要注意，魔石的分解需要达到一定的温度才可以开始进行。",
+			"en_US": "Use The Stone with Magic, crafting devices powered by Magic.\\nMagical devices can store Magic, If it is destroyed, the magic will erupt and cause damage to the surrounding.\\nFirst, we need to create a Magic Separator, which can be heated by a stove to decompose the Dimensity into magic power, providing the initial energy for the entire system.\\nNote that the decomposition of the Dimensity requires a certain temperature before it can begin."
+		},
+		"es.tutorial.title.2_0_1": {
+			"zh_CN": "魔石火把",
+			"en_US": "Dimensity Torch"
+		},
+		"es.tutorial.describe.2_0_1": {
+			"zh_CN": "魔石火把具有很好的魔力亲和性，并且将魔力传送出去。\\n将火把插在魔力装置的一面，火把便可以从盖面抽取魔力，将魔力直线传到另外一个装置区。需要注意的是，传递是有距离限制的。",
+			"en_US": "Dimensity Torches can transmit magic.\\nPut the torch onto one side of the magical device, and the torch can extract magic and transmit it in a line to another device. It should be noted that there is a distance limit for transmition."
+		},
+		"es.tutorial.title.2_0_2": {
+			"zh_CN": "垂直传递",
+			"en_US": "Vertical transmission"
+		},
+		"es.tutorial.describe.2_0_2": {
+			"zh_CN": "魔石火把的魔力传递只能局限于四周，如果向要魔力在垂直方向上传递，需要制作这个“魔力转移箱”，它可以将魔力向上进行传递。",
+			"en_US": "The Dimensity Torch can only be confined to the surrounding area. If you want the magic to be transferred vertically, you need to make this Magic Transfer Box, which can transfer the magic upwards."
+		},
+		"es.tutorial.title.2_1_0": {
+			"zh_CN": "魔动灶台",
+			"en_US": "Magic Drive Hearth"
+		},
+		"es.tutorial.describe.2_1_0": {
+			"zh_CN": "让魔力转化成热量的装置，比普通的灶台好用的多。",
+			"en_US": "A device that converts magic into heat, much more useful than the ordinary Hearth."
+		},
+		"es.tutorial.title.2_1_1": {
+			"zh_CN": "魔力固化",
+			"en_US": "Magic Solidification"
+		},
+		"es.tutorial.describe.2_1_1": {
+			"zh_CN": "使用魔力固化箱，将魔力再次转化到魔石。魔力固化箱只有魔力达到要求就会开始工作。\\n此外，固化箱可以将魔力存入元素容器之中，这个的用处似乎比转化成魔石更加的有用，或许这个东西应该改名叫魔力充能箱。",
+			"en_US": "Use the Magic Solidify Box to convert magic into Dimensity again. The Magic Solidify Box will only start working when the magic meets the requirements.\\nIn addition, the Box can store magic in the Element Container, which seems to be more useful than converting it into Dimensity, perhaps this Box should be renamed to Magic Charging Box."
+		},
+		"es.tutorial.title.2_2_0": {
+			"zh_CN": "修复碎石",
+			"en_US": "Rubble Repair"
+		},
+		"es.tutorial.describe.2_2_0": {
+			"zh_CN": "在制作通魔石的过程中出现了点意外，产生了碎裂的石头？使用碎石修复箱可以将碎裂的石头重新修好，每修一个碎裂的通魔石需要10点魔力。\\n当然碎石修复机也可以修复其他的碎石，乃至某些工具。",
+			"en_US": "An accident occurred during the craft of The Stone with Magic, resulting in broken stones? The Rubble Repairer can restore the broken stones, each restored broken stone requires 10 points of Magic. Of course, the Repairer can also repair other broken things, even some tools."
+		},
+		"es.tutorial.title.2_2_1": {
+			"zh_CN": "喝点果汁",
+			"en_US": "Drink some juice"
+		},
+		"es.tutorial.describe.2_2_1": {
+			"zh_CN": "将精灵果、苹果或西瓜放入果汁机内，也可以加入一些糖和可可豆，魔力推动刀片转动，材料被打成混合果汁。\\n用玻璃杯可以盛取食用，使用后增加饱和度，没准还会产生某些Buff效果。",
+			"en_US": "Put the Elf Fruit, apple or watermelon into the liquidizer, you can also add some sugar and cocoa beans. The Magic drives the blade to rotate, these materials are juiced into a mixed juice.\\nYou can use a Glass Cup to hold and drink it, can increases saturation, and maybe it will produce some buff effects."
+		},
+		"es.tutorial.title.2_3_0": {
+			"zh_CN": "注魔箱",
+			"en_US": "Magic Drive Enchanting Box"
+		},
+		"es.tutorial.describe.2_3_0": {
+			"zh_CN": "以注魔箱为中心构建的注魔祭坛，可以将魔力注入进入到蓝晶石等物质中，使其状态发生转化。\\n魔力是否可以成功注入到物品中，与注魔箱所在的地点和当前世界时间的时间有关。\\n此外，注魔箱顶部的星沙在夜间会与星空发生共鸣，随着午夜的到来，暴露在星空下的注魔箱会缓慢的吸收魔力。",
+			"en_US": "The Magic Injection Altar, built with the Magic Drive Enchanting Box, can inject magic into substances such as kyanite, transforming their state. Whether magic can be successfully injected into items is related to the location of the Altar and the current world time.\\nIn addition, the star sand on the top of The Box resonates with the starry sky at night, and as midnight approaches, The Box exposed to the starry sky slowly absorbs magic."
 		}
 	}
 }

@@ -1,7 +1,5 @@
 package yuzunyannn.elementalsorcery.nodegui;
 
-import org.lwjgl.input.Mouse;
-
 import net.minecraft.util.math.Vec3d;
 
 public interface IGInteractor {
@@ -10,8 +8,12 @@ public interface IGInteractor {
 		return node.testHit(worldPos);
 	}
 
-	default public boolean blockMousePressed(GNode node, Vec3d worldPos) {
+	default public boolean blockMouseEvent(GNode node, Vec3d worldPos) {
 		return true;
+	}
+
+	default public void onMouseWheel(GNode node, Vec3d worldPos, int detal) {
+
 	}
 
 	default public boolean onMousePressed(GNode node, Vec3d worldPos) {
@@ -28,6 +30,10 @@ public interface IGInteractor {
 
 	default public boolean isHoverable(GNode node) {
 		return false;
+	}
+
+	default public boolean isBlockHover(GNode node) {
+		return isHoverable(node);
 	}
 
 	default public void onMouseHover(GNode node, Vec3d worldPos, boolean isHover) {

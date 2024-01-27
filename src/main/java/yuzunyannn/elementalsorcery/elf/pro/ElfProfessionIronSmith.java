@@ -33,7 +33,7 @@ import yuzunyannn.elementalsorcery.tile.TileElfTreeCore;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
-import yuzunyannn.elementalsorcery.util.item.InventoryItemStackHandlerVest;
+import yuzunyannn.elementalsorcery.util.item.InventoryVest;
 import yuzunyannn.elementalsorcery.util.item.ItemStackHandlerInventory;
 
 public class ElfProfessionIronSmith extends ElfProfession {
@@ -106,7 +106,7 @@ public class ElfProfessionIronSmith extends ElfProfession {
 			return;
 		}
 		final int need = 64 * 2;
-		int rest = ItemElfPurse.extract(new InventoryItemStackHandlerVest(handler), need, false);
+		int rest = ItemElfPurse.extract(new InventoryVest(handler), need, false);
 		if (rest < need) elf.swingArm(EnumHand.MAIN_HAND);
 		int money = need - rest;
 		int origin = data.getInteger("money");
