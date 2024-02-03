@@ -2,15 +2,18 @@
 	"es.tutorialui": {
 		"es.tutorialui.describe": {
 			"zh_CN": "描述",
-			"en_US": "Narrate"
+			"en_US": "Narrate",
+			"ja_JP": "説明"
 		},
 		"es.tutorialui.craft": {
 			"zh_CN": "合成表",
-			"en_US": "Craft"
+			"en_US": "Craft",
+			"ja_JP": "クラフト"
 		},
 		"es.tutorialui.building": {
 			"zh_CN": "建筑",
-			"en_US": "Building"
+			"en_US": "Building",
+			"ja_JP": "建築"
 		}
 	},
 	"es.tutorial": {
@@ -280,6 +283,24 @@
 		"es.tutorial.describe.2_3_0": {
 			"zh_CN": "以注魔箱为中心构建的注魔祭坛，可以将魔力注入进入到蓝晶石等物质中，使其状态发生转化。\\n魔力是否可以成功注入到物品中，与注魔箱所在的地点和当前世界时间的时间有关。\\n此外，注魔箱顶部的星沙在夜间会与星空发生共鸣，随着午夜的到来，暴露在星空下的注魔箱会缓慢的吸收魔力。",
 			"en_US": "The Magic Injection Altar, built with the Magic Drive Enchanting Box, can inject magic into substances such as kyanite, transforming their state. Whether magic can be successfully injected into items is related to the location of the Altar and the current world time.\\nIn addition, the star sand on the top of The Box resonates with the starry sky at night, and as midnight approaches, The Box exposed to the starry sky slowly absorbs magic."
+		},
+		"es.tutorial.title.2_4_0": {
+			"zh_CN": "魔力金锭",
+			"en_US": "Magic Gold"
+		},
+		"es.tutorial.describe.2_4_0": {
+			"zh_CN": "通过给金注魔而形成的带有魔力的金锭。\\n注魔条件：任何时间地点",
+			"en_US": "A Magical Gold formed by injecting magic into gold.\\nEnchanting condition: Any time and place.",
+			"ja_JP": "金に魔を注すことによって作られた魔力を持つ金锭。\\nエンチャントの条件：いつでもどこでも"
+		},
+		"es.tutorial.title.2_4_1": {
+			"zh_CN": "简易魔法工具",
+			"en_US": "Simple Magic Tools"
+		},
+		"es.tutorial.describe.2_4_1": {
+			"zh_CN": "魔金可以制作工具，魔金工具的性能远超钻石工具，而且使用时由于魔力的的作用，会产生不同的效果。\\n不过可惜的是，这种工具的耐久度极低，并不适合长期使用。",
+			"en_US": "Magical Gold can be used to make tools. The performance of Magical Gold tools is far better than diamond tools, and different effects will be produced when using Magical Gold tools.\\nUnfortunately, the durability of this tool is very low and it is not suitable for long-term use.",
+			"ja_JP": "魔金のツールを作ることができます、魔金のツールの性能はダイヤモンドツールより超えています、 また、使用時に魔力の作用により、異なる効果が発生します。\\n残念なことに、このようなツールの耐久度はきわめて低く、長期使用には適していません。。"
 		}
 	}
 }

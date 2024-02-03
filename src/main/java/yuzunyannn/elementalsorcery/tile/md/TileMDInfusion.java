@@ -276,11 +276,7 @@ public class TileMDInfusion extends TileMDBase implements ITickable {
 		}
 	}
 
-	static final private List<Recipe> recipes = new ArrayList<>();
-
-	public static List<Recipe> getRecipes() {
-		return recipes;
-	}
+	static final public List<Recipe> recipes = new ArrayList<>();
 
 	static public void addRecipe(ItemStack input, ItemStack output, ElementStack cost, Recipe.ITest test) {
 		if (input.isEmpty() || output.isEmpty() || cost == null || cost.isEmpty()) return;

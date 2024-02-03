@@ -5,21 +5,20 @@ import java.util.function.Supplier;
 
 import net.minecraft.nbt.NBTTagFloat;
 
-public class DDFloat extends DataDetectable<Float, NBTTagFloat> {
+public class DDFloat extends BaseDataDetectable<Float, NBTTagFloat> {
 
 	public DDFloat(Consumer<Float> setter, Supplier<Float> getter) {
 		super(setter, getter);
 	}
 
 	@Override
-	public Float copy() {
-		return getter.get();
-	}
-
-	@Override
-	public NBTTagFloat detectChanges(Float temp) {
+	public NBTTagFloat detectChanges(IDataRef<Float> templateRef) {
+		Float temp = templateRef.get();
 		Float i = get();
-		if (!i.equals(temp)) return new NBTTagFloat(i);
+		if (!i.equals(temp)) {
+			templateRef.set(i);
+			return new NBTTagFloat(i);
+		}
 		return null;
 	}
 

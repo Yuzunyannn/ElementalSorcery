@@ -671,6 +671,13 @@ topic.Engine.name=机械
 topic.Mantra.name=咒术
 topic.Biology.name=生物
 
+es.app.cancel=取消
+es.app.confirm=确定
+es.app.choose=选择：%s
+es.app.anyItem=任意物品
+es.app.writeError=写入异常
+es.app.writeSuccess=写入成功
+
 elf.time.year=%d年
 elf.time.mon.0=春
 elf.time.mon.1=夏
@@ -1321,7 +1328,6 @@ page.dungeonMemoryFeather.ct=当找不到隐藏在房间中记忆时，或许这
 es.tutorialui.describe=描述
 es.tutorialui.craft=合成表
 es.tutorialui.building=建筑
-es.tutorialui.export=输出
 
 es.tutorial.title.0_0_0=开始
 es.tutorial.describe.0_0_0=当你拿到这个§k???????§r记录§k????§r知识，按照这些步骤进行，尝试重新发展元素与魔法的§k???§r
@@ -1389,3 +1395,7 @@ es.tutorial.title.2_2_1=喝点果汁
 es.tutorial.describe.2_2_1=将精灵果、苹果或西瓜放入果汁机内，也可以加入一些糖和可可豆，魔力推动刀片转动，材料被打成混合果汁。\n用玻璃杯可以盛取食用，使用后增加饱和度，没准还会产生某些Buff效果。
 es.tutorial.title.2_3_0=注魔箱
 es.tutorial.describe.2_3_0=以注魔箱为中心构建的注魔祭坛，可以将魔力注入进入到蓝晶石等物质中，使其状态发生转化。\n魔力是否可以成功注入到物品中，与注魔箱所在的地点和当前世界时间的时间有关。\n此外，注魔箱顶部的星沙在夜间会与星空发生共鸣，随着午夜的到来，暴露在星空下的注魔箱会缓慢的吸收魔力。
+es.tutorial.title.2_4_0=魔力金锭
+es.tutorial.describe.2_4_0=通过给金注魔而形成的带有魔力的金锭。\n注魔条件：任何时间地点
+es.tutorial.title.2_4_1=简易魔法工具
+es.tutorial.describe.2_4_1=魔金可以制作工具，魔金工具的性能远超钻石工具，而且使用时由于魔力的的作用，会产生不同的效果。\n不过可惜的是，这种工具的耐久度极低，并不适合长期使用。

@@ -224,8 +224,12 @@ public class NBTHelper {
 		stackNBT.setInteger("id", Item.REGISTRY.getIDForObject(stack.getItem()));
 		if (stack.getCount() != 1) stackNBT.setByte("n", (byte) stack.getCount());
 		if (stack.getItemDamage() != 0) stackNBT.setShort("d", (short) stack.getItemDamage());
-		NBTTagCompound tag = stack.getTagCompound();
-		if (tag != null && !tag.isEmpty()) stackNBT.setTag("t", tag);
+//		NBTTagCompound tag = stack.getTagCompound();
+//		if (tag != null && !tag.isEmpty()) stackNBT.setTag("t", tag);
+		NBTTagCompound tag = null;
+		if (stack.getItem().isDamageable() || stack.getItem().getShareTag())
+			tag = stack.getItem().getNBTShareTag(stack);
+		if (tag != null) stackNBT.setTag("t", tag);
 		return stackNBT;
 	}
 
@@ -234,7 +238,8 @@ public class NBTHelper {
 		ItemStack stack = new ItemStack(item);
 		if (stackNBT.hasKey("n", NBTTag.TAG_NUMBER)) stack.setCount(stackNBT.getInteger("n"));
 		if (stackNBT.hasKey("d", NBTTag.TAG_NUMBER)) stack.setItemDamage(stackNBT.getInteger("d"));
-		if (stackNBT.hasKey("t", NBTTag.TAG_COMPOUND)) stack.setTagCompound(stackNBT.getCompoundTag("t"));
+		if (stackNBT.hasKey("t", NBTTag.TAG_COMPOUND))
+			stack.getItem().readNBTShareTag(stack, stackNBT.getCompoundTag("t"));
 		return stack;
 	}
 

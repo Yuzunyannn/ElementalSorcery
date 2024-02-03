@@ -79,7 +79,7 @@ public abstract class EOS implements IOS {
 				});
 				return appChanges.isEmpty() ? null : appChanges;
 			}
-		});
+		}, true);
 
 //		new RuntimeException("?? os:" + this).printStackTrace();
 	}
@@ -165,9 +165,11 @@ public abstract class EOS implements IOS {
 		computer.notice("app-message", params);
 	}
 
-	protected void exit(int pid) {
-		if (!processTree.hasProcess(pid)) return;
+	@Override
+	public boolean exit(int pid) {
+		if (!processTree.hasProcess(pid)) return false;
 		remove(processTree, pid, app -> app.onExit());
+		return true;
 	}
 
 	@Override
@@ -240,10 +242,16 @@ public abstract class EOS implements IOS {
 	protected void each(Consumer<APP> func) {
 		Iterator<Entry<Integer, ProcessNode>> iter = processTree.getIterator();
 		List<Entry<Integer, IComputerException>> abortList = new LinkedList<>();
+		List<Integer> closingList = new LinkedList<>();
 		while (iter.hasNext()) {
 			Entry<Integer, ProcessNode> entry = iter.next();
 			try {
-				func.accept(processTree.getAppCache(this, entry.getKey()));
+				APP app = processTree.getAppCache(this, entry.getKey());
+				if (app.isClosing()) {
+					closingList.add(app.getPid());
+					continue;
+				}
+				func.accept(app);
 			} catch (Exception e) {
 				if (entry.getKey() == 0) throw e;
 				if (e instanceof IComputerException)
@@ -252,6 +260,7 @@ public abstract class EOS implements IOS {
 			}
 		}
 		for (Entry<Integer, IComputerException> entry : abortList) abort(entry.getKey(), entry.getValue());
+		for (Integer pid : closingList) exit(pid);
 	}
 
 	protected void onAppStartup(ProcessTree tree, APP app) {
@@ -275,7 +284,7 @@ public abstract class EOS implements IOS {
 	protected void onRemoveApp(ProcessTree tree, int pid) {
 		int parentPid = tree.getParent(pid);
 		if (parentPid == -1) parentPid = 0;
-		tree.setForeground(parentPid);
+		if (tree.getForeground() == pid) tree.setForeground(parentPid);
 	}
 
 	@Override
@@ -285,11 +294,6 @@ public abstract class EOS implements IOS {
 
 		disksCache = null;
 		appDiskCacheMap.clear();
-	}
-
-	@Override
-	public void markDirty(APP app) {
-		this.monitor.markDirty(APP);
 	}
 
 	@Override

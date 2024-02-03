@@ -1,0 +1,19 @@
+{
+    "cover": "elementalsorcery:magic_gold_pickaxe",
+    "title": {
+        "zh_CN": "简易魔法工具",
+        "en_US": "Simple Magic Tools"
+    },
+    "describe": {
+        "zh_CN": "魔金可以制作工具，魔金工具的性能远超钻石工具，而且使用时由于魔力的的作用，会产生不同的效果。\\n不过可惜的是，这种工具的耐久度极低，并不适合长期使用。",
+        "en_US": "Magical Gold can be used to make tools. The performance of Magical Gold tools is far better than diamond tools, and different effects will be produced when using Magical Gold tools.\\nUnfortunately, the durability of this tool is very low and it is not suitable for long-term use.",
+        "ja_JP": "魔金のツールを作ることができます、魔金のツールの性能はダイヤモンドツールより超えています、 また、使用時に魔力の作用により、異なる効果が発生します。\\n残念なことに、このようなツールの耐久度はきわめて低く、長期使用には適していません。。"
+    },
+    "crafts": [
+        "elementalsorcery:magic_gold_axe",
+        "elementalsorcery:magic_gold_hoe",
+        "elementalsorcery:magic_gold_pickaxe",
+        "elementalsorcery:magic_gold_spade",
+        "elementalsorcery:magic_gold_sword"
+    ]
+}

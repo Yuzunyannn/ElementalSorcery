@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.api.computer.soft;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -15,6 +16,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public interface ISoftGuiRuntime {
 
+	static final Vec3d MOUSE_FOLLOW_VEC = new Vec3d(0, 0, -99);
+
 	int getWidth();
 
 	int getHeight();
@@ -28,6 +31,14 @@ public interface ISoftGuiRuntime {
 	void sendNotice(String str);
 
 	void setTooltip(String key, Vec3d vec, int duration, Supplier<List<String>> factory);
+
+	default void setTooltip(String key, Vec3d vec, int duration, String str) {
+		setTooltip(key, vec, duration, () -> {
+			List<String> list = new ArrayList<>(1);
+			list.add(str);
+			return list;
+		});
+	}
 
 	default void setTooltip(String key, Vec3d vec, int duration, ItemStack stack) {
 		setTooltip(key, vec, duration, () -> {

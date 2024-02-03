@@ -3,17 +3,22 @@ package yuzunyannn.elementalsorcery.computer.soft;
 import java.util.List;
 import java.util.UUID;
 
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
+import yuzunyannn.elementalsorcery.api.util.MatchHelper;
 import yuzunyannn.elementalsorcery.api.util.detecter.DDFloat;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
+import yuzunyannn.elementalsorcery.building.ArcInfo;
+import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.parchment.Tutorial;
 import yuzunyannn.elementalsorcery.parchment.TutorialBuilding;
 import yuzunyannn.elementalsorcery.parchment.Tutorials;
@@ -78,7 +83,7 @@ public class AppTutorial extends APP {
 		IOS os = getOS();
 		IDeviceStorage disk = os.getDisk(this, AppDiskType.USER_DATA);
 		progress = 100; // disk.get(POGRESS);
-		os.markDirty(this);
+		detecter.markDirty("1");
 	}
 
 	public float getProgress() {
@@ -120,14 +125,6 @@ public class AppTutorial extends APP {
 		}
 	}
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public void onRecvMessage(NBTTagCompound nbt) {
-		super.onRecvMessage(nbt);
-		int code = nbt.getByte("code");
-		// todo
-	}
-
 	protected void printBuilding(String id) {
 		Tutorial tutorial = Tutorials.getTutorial(id);
 		TutorialBuilding building = tutorial == null ? null : tutorial.getBuilding();
@@ -141,7 +138,17 @@ public class AppTutorial extends APP {
 			return;
 		}
 		int pid = os.exec(this, TaskInventoryItemSelect.ID);
-		os.getAppInst(pid).bindDevice(devices.get(0));
+		TaskInventoryItemSelect app = (TaskInventoryItemSelect) os.getAppInst(pid);
+		app.bindDevice(devices.get(0));
+
+		Building bd = building.getBuilding();
+		ItemStack stack = new ItemStack(ESObjects.ITEMS.ARCHITECTURE_CRYSTAL);
+		ArcInfo.initArcInfoToItem(stack, bd.getKeyName());
+		app.setWriteData(stack.getTagCompound());
+		stack.setTagCompound(null);
+		MatchHelper.setSampleNoTagCheck(stack);
+		app.setEnabledStack(stack);
+		app.setTagTanslateKey(bd.getName());
 	}
 
 }

@@ -199,6 +199,14 @@ public class Computer implements IComputer, IDeviceModifiable {
 		if ("power-off".equals(method)) {
 			closeFlag = true;
 			return DNResult.success();
+		} else if ("exit".equals(method)) {
+			Integer pid = params.get("pid", Integer.class);
+			if (pid == null || pid < 0) return DNResult.refuse();
+			if (pid == 0) return DNResult.refuse();
+			APP app = os.getAppInst(pid);
+			if (app == null) return DNResult.fail();
+			app.exit();
+			return DNResult.success();
 		} else if ("op".equals(method)) {
 			try {
 				int pid = params.get("pid", Integer.class);

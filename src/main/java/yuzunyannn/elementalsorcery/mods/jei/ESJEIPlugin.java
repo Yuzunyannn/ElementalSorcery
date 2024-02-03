@@ -100,7 +100,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipes(TileMeltCauldron.recipes, MeltCauldronCategory.UID);
 		registry.addRecipes(TileMDRubbleRepair.getRecipes(), UID_MDRUBBLEREPAIR);
 		registry.addRecipes(Arrays.asList(MDMagicSolidifyRW.FakeRecipe.values()), UID_MDMAGICSOLIDIFY);
-		registry.addRecipes(TileMDInfusion.getRecipes(), UID_MDINFUSION);
+		registry.addRecipes(TileMDInfusion.recipes, UID_MDINFUSION);
 		this.registerOther(registry);
 		// 描述类
 		registry.addRecipes(this.initDescribe(), DescribeCategory.UID);

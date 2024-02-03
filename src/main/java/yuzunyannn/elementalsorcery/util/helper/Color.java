@@ -75,6 +75,11 @@ public class Color {
 				| ((((int) (b * 255)) << 0) & 0x0000ff);
 	}
 
+	public Color toGray() {
+		float c = r * 0.299f + g * 0.587f + b * 0.114f;
+		return new Color(c, c, c);
+	}
+
 	public Color copy() {
 		return new Color(this);
 	}

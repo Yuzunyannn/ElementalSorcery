@@ -25,8 +25,6 @@ public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<N
 
 	boolean isRunning();
 
-	void markDirty(APP app);
-
 	int exec(APP parent, String appId);
 
 	int setForeground(int pid);
@@ -34,6 +32,8 @@ public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<N
 	int getForeground();
 
 	void abort(int pid, IComputerException e);
+
+	boolean exit(int pid);
 
 	@Nullable
 	APP getAppInst(int pid);

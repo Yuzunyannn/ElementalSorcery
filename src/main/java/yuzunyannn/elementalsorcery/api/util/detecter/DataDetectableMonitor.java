@@ -20,9 +20,19 @@ public class DataDetectableMonitor implements IDataDetectableMonitor {
 		}
 	}
 
-	protected static class NodeB {
+	protected static class NodeB implements IDataRef {
 		int dirtyVer = 0;
 		Object obj;
+
+		@Override
+		public Object get() {
+			return obj;
+		}
+
+		@Override
+		public void set(Object t) {
+			this.obj = t;
+		}
 	}
 
 	protected static class DetectDataset {
@@ -38,7 +48,13 @@ public class DataDetectableMonitor implements IDataDetectableMonitor {
 
 	@Override
 	public void add(String key, IDataDetectable unit) {
-		map.put(key, new NodeA(unit));
+		add(key, unit, false);
+	}
+
+	public void add(String key, IDataDetectable unit, boolean always) {
+		NodeA a = new NodeA(unit);
+		map.put(key, a);
+		if (always) a.dirtyVer = -1;
 	}
 
 	@Override
@@ -66,9 +82,8 @@ public class DataDetectableMonitor implements IDataDetectableMonitor {
 			if (nodeB == null) dataset.map.put(entry.getKey(), nodeB = new NodeB());
 			if (nodeA.dirtyVer == -1 || nodeB.dirtyVer != nodeA.dirtyVer) {
 				nodeB.dirtyVer = nodeA.dirtyVer;
-				NBTBase change = nodeA.unit.detectChanges(nodeB.obj);
+				NBTBase change = nodeA.unit.detectChanges(nodeB);
 				if (change != null) {
-					nodeB.obj = nodeA.unit.copy();
 					if (changes == null) changes = new NBTTagCompound();
 					changes.setTag(entry.getKey(), change);
 				}

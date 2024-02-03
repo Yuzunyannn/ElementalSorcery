@@ -37,6 +37,7 @@ public class TutorialCraft {
 		tryCreators.clear();
 		tryCreators.add(TutorialCraftSeek::tryCreate);
 		tryCreators.add(TutorialCraftSmelting::tryCreate);
+		tryCreators.add(TutorialCraftInfusion::tryCreate);
 		tryCreators.add(TutorialCraftES::tryCreate);
 		tryCreators.add(TutorialCraftMC::tryCreate);
 	}
@@ -55,6 +56,7 @@ public class TutorialCraft {
 	}
 
 	static public boolean isItemStackThinkSame(ItemStack sample, ItemStack other) {
+		// return MatchHelper.isItemMatch(sample, other)
 		if (sample.getItem() != other.getItem()) return false;
 		if (sample.getHasSubtypes() && sample.getMetadata() != other.getMetadata()) return false;
 		if (sample.getTagCompound() != null) {

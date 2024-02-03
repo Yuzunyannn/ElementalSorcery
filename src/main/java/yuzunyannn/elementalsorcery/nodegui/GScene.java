@@ -22,10 +22,10 @@ import yuzunyannn.elementalsorcery.util.math.MathSupporter;
 public class GScene {
 
 	protected GNode root = new GNode();
+	protected Map<GNode, Boolean> interactorMap = new IdentityHashMap();
 	protected List<GNode> interactorList = new ArrayList<>();
 	protected LinkedList<GNode> mouseList = new LinkedList<>();
 	protected Set<GNode> hoverSet = new HashSet<>();
-	protected Map<GNode, Boolean> interactorMap = new IdentityHashMap();
 	protected int displayWidth = 1, displayHeight = 1;
 	protected int width = 1, height = 1;
 
@@ -93,8 +93,8 @@ public class GScene {
 		Iterator<GNode> iter = hoverSet.iterator();
 		while (iter.hasNext()) {
 			GNode node = iter.next();
-			if (!node.testHit(worldPos)) {
-				IGInteractor interactor = node.interactor;
+			IGInteractor interactor = node.interactor;
+			if (!interactor.testHit(node, worldPos)) {
 				interactor.onMouseHover(node, worldPos, false);
 				iter.remove();
 			}
@@ -128,6 +128,7 @@ public class GScene {
 		interactorMap.remove(node);
 		interactorList.remove(node);
 		mouseList.remove(node);
+		hoverSet.remove(node);
 	}
 
 	public void clear() {

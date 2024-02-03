@@ -1,6 +1,7 @@
 package yuzunyannn.elementalsorcery.container;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
@@ -34,6 +35,7 @@ public class ContainerComputer extends Container implements IContainerNetwork, I
 	public IComputEnv cEnv;
 	public ItemStack stack = ItemStack.EMPTY;
 	public int slot = -1;
+	public Consumer<DNParams> msgHook;
 	protected IComputerWatcher watcher;
 	protected boolean lastComputerIsOpen = false;
 
@@ -145,11 +147,14 @@ public class ContainerComputer extends Container implements IContainerNetwork, I
 	public void recvData(NBTTagCompound nbt, Side side) {
 		if (side == Side.SERVER) {
 			if (nbt.hasKey("_nt_")) {
-				this.computer.notice(cEnv, nbt.getString("_nt_"), DNParams.EMPTY);
+				int pid = nbt.hasKey("pid") ? nbt.getInteger("pid") : -1;
+				DNParams params = new DNParams();
+				params.set("pid", pid);
+				this.computer.notice(cEnv, nbt.getString("_nt_"), params);
 				return;
 			}
 			if (nbt.hasKey("_op_")) {
-				int pid = nbt.getInteger("pid");
+				int pid = nbt.getInteger("_op_");
 				DNParams params = new DNParams();
 				params.set("pid", pid);
 				params.set("data", nbt);
@@ -161,6 +166,7 @@ public class ContainerComputer extends Container implements IContainerNetwork, I
 				DNParams params = new DNParams();
 				params.set("pid", pid);
 				params.set("data", nbt);
+				if (msgHook != null) msgHook.accept(params);
 				this.computer.notice(cEnv, "msg", params);
 				return;
 			}

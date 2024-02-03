@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.nodegui;
 
+import java.util.function.Supplier;
+
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.RenderItem;
@@ -15,6 +17,7 @@ public class GItemStack extends GNode {
 	public static boolean inDraw = false;
 
 	protected ItemStack stack = ItemStack.EMPTY;
+	protected Supplier<ItemStack> stackGetter;
 
 	public GItemStack() {
 		this.anchorX = this.anchorY = 0.5f;
@@ -24,13 +27,23 @@ public class GItemStack extends GNode {
 		setStack(stack);
 	}
 
+	public GItemStack(Supplier<ItemStack> stackGetter) {
+		setStack(stackGetter);
+	}
+
 	public void setStack(ItemStack stack) {
 		this.stack = stack;
 		this.width = 16;
 		this.height = 16;
 	}
 
+	public void setStack(Supplier<ItemStack> stackGetter) {
+		this.stackGetter = stackGetter;
+		setStack(stackGetter.get());
+	}
+
 	public ItemStack getStack() {
+		if (stackGetter != null) return stackGetter.get();
 		return stack;
 	}
 

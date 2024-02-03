@@ -671,6 +671,13 @@ topic.Engine.name=Engine
 topic.Mantra.name=Mantra
 topic.Biology.name=Biology
 
+es.app.cancel=Cancel
+es.app.confirm=Confirm
+es.app.choose=Choose: %s
+es.app.anyItem=Any Item
+es.app.writeError=Write Exception
+es.app.writeSuccess=Write Success
+
 elf.time.year=%d Year 
 elf.time.mon.0=Spring 
 elf.time.mon.1=Summer 
@@ -1321,7 +1328,6 @@ page.dungeonMemoryFeather.ct=Perhaps this feather is a good helper when memories
 es.tutorialui.describe=Narrate
 es.tutorialui.craft=Craft
 es.tutorialui.building=Building
-es.tutorialui.export=export
 
 es.tutorial.title.0_0_0=Start
 es.tutorial.describe.0_0_0=When you find this §K???????§r record §k????§r knowledge. Follow these steps to try and redevelop the Element and Magic's §k???§r.
@@ -1389,3 +1395,7 @@ es.tutorial.title.2_2_1=Drink some juice
 es.tutorial.describe.2_2_1=Put the Elf Fruit, apple or watermelon into the liquidizer, you can also add some sugar and cocoa beans. The Magic drives the blade to rotate, these materials are juiced into a mixed juice.\nYou can use a Glass Cup to hold and drink it, can increases saturation, and maybe it will produce some buff effects.
 es.tutorial.title.2_3_0=Magic Drive Enchanting Box
 es.tutorial.describe.2_3_0=The Magic Injection Altar, built with the Magic Drive Enchanting Box, can inject magic into substances such as kyanite, transforming their state. Whether magic can be successfully injected into items is related to the location of the Altar and the current world time.\nIn addition, the star sand on the top of The Box resonates with the starry sky at night, and as midnight approaches, The Box exposed to the starry sky slowly absorbs magic.
+es.tutorial.title.2_4_0=Magic Gold
+es.tutorial.describe.2_4_0=A Magical Gold formed by injecting magic into gold.\nEnchanting condition: Any time and place.
+es.tutorial.title.2_4_1=Simple Magic Tools
+es.tutorial.describe.2_4_1=Magical Gold can be used to make tools. The performance of Magical Gold tools is far better than diamond tools, and different effects will be produced when using Magical Gold tools.\nUnfortunately, the durability of this tool is very low and it is not suitable for long-term use.

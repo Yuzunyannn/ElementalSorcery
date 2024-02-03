@@ -6,14 +6,8 @@ import net.minecraft.nbt.NBTBase;
 
 public interface IDataDetectable<T, N extends NBTBase> {
 
-	T get();
-
-	void set(T obj);
-
-	T copy();
-
 	@Nullable
-	N detectChanges(@Nullable T temp);
+	N detectChanges(IDataRef<T> templateRef);
 
 	void mergeChanges(N nbt);
 }

@@ -19,7 +19,7 @@ import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.nodegui.GActionEaseInBack;
 import yuzunyannn.elementalsorcery.nodegui.GActionFadeTo;
 import yuzunyannn.elementalsorcery.nodegui.GActionFunction;
-import yuzunyannn.elementalsorcery.nodegui.GActionScaleBy;
+import yuzunyannn.elementalsorcery.nodegui.GActionMoveBy;
 import yuzunyannn.elementalsorcery.nodegui.GActionSequence;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GItemStack;
@@ -377,8 +377,9 @@ public class AppTutorialGui extends AppGuiCommon {
 		if (currTutorial != null) {
 			this.app.changeShowTutorialId(null);
 //			currTutorial.removeFromParent();
-			currTutorial.runAction(new GActionSequence(new GActionEaseInBack(new GActionScaleBy(4, -1)),
-					new GActionFunction((e) -> e.removeFromParent())));
+			currTutorial.runAction(
+					new GActionSequence(new GActionEaseInBack(new GActionMoveBy(6, -currTutorial.getWidth(), 0)),
+							new GActionFunction((e) -> e.removeFromParent())));
 			currTutorial = null;
 		}
 	}

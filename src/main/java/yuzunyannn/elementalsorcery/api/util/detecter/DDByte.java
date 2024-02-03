@@ -5,21 +5,20 @@ import java.util.function.Supplier;
 
 import net.minecraft.nbt.NBTTagByte;
 
-public class DDByte extends DataDetectable<Byte, NBTTagByte> {
+public class DDByte extends BaseDataDetectable<Byte, NBTTagByte> {
 
 	public DDByte(Consumer<Byte> setter, Supplier<Byte> getter) {
 		super(setter, getter);
 	}
 
 	@Override
-	public Byte copy() {
-		return getter.get();
-	}
-
-	@Override
-	public NBTTagByte detectChanges(Byte temp) {
+	public NBTTagByte detectChanges(IDataRef<Byte> templateRef) {
+		Byte temp = templateRef.get();
 		Byte i = get();
-		if (!i.equals(temp)) return new NBTTagByte(i);
+		if (!i.equals(temp)) {
+			templateRef.set(i);
+			return new NBTTagByte(i);
+		}
 		return null;
 	}
 

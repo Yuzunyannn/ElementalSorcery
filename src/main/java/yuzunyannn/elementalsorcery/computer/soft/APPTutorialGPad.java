@@ -23,6 +23,7 @@ import yuzunyannn.elementalsorcery.computer.render.BtnBaseInteractor;
 import yuzunyannn.elementalsorcery.computer.render.BtnColorInteractor;
 import yuzunyannn.elementalsorcery.computer.render.DragInteractor;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
+import yuzunyannn.elementalsorcery.computer.render.GStringBtn;
 import yuzunyannn.elementalsorcery.computer.render.SoftGuiCommon;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GLabel;
@@ -94,8 +95,9 @@ public class APPTutorialGPad extends GImage {
 
 		GImage close = new GImage(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_CLOSE);
 		close.setColorRef(gui.detailObjColor);
-		close.setPosition(8.5, 8.5, 0);
+		close.setPosition(13, 8.5, 0);
 		close.setAnchor(0.5, 0.5, 2);
+		close.setSize(9, 9);
 		close.setInteractor(new BtnBaseInteractor() {
 			@Override
 			public void onClick() {
@@ -127,43 +129,10 @@ public class APPTutorialGPad extends GImage {
 		shift(tutorial.cacheAction);
 	}
 
-	protected class GTutorialBtn extends GImage {
-
-		protected GLabel label;
-		protected Runnable onClick;
+	protected class GTutorialBtn extends GStringBtn {
 
 		public GTutorialBtn(Runnable onClick) {
-			super(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_P1);
-			this.onClick = onClick;
-			setSplit9();
-			setInteractor(new BtnColorInteractor(gui.detailColor, gui.detailObjColor) {
-				@Override
-				public void onClick() {
-					if (onClick != null) onClick.run();
-				}
-
-				@Override
-				public void onHoverChange(GNode node) {
-					super.onHoverChange(node);
-					label.setColorRef(gui.detailObjColor);
-				}
-
-				@Override
-				public void onPressed(GNode node) {
-					super.onPressed(node);
-					label.setColorRef(gui.detailColor);
-				}
-			});
-			setColorRef(gui.detailColor);
-			label = new GLabel();
-			label.setColorRef(gui.detailObjColor);
-			addChild(label);
-		}
-
-		public void setString(String text) {
-			label.setString(text);
-			this.setWidth(label.getWidth() + 6);
-			label.setPosition(3.5, -4);
+			super(onClick, gui.detailColor, gui.detailObjColor);
 		}
 
 	}
@@ -188,7 +157,6 @@ public class APPTutorialGPad extends GImage {
 		btns.add(btn);
 		btnOffset = btnOffset + 3;
 		btn.setPosition(optionWidth + 2 + btnOffset, 8.5, 2);
-		btn.setAnchor(0, 0.5, 0);
 		addChild(btn);
 		btnOffset = btnOffset + btn.getWidth();
 	}
@@ -208,7 +176,7 @@ public class APPTutorialGPad extends GImage {
 		this.updateCraft();
 		if (historyBack) {
 			historyBack = false;
-			if (history.isEmpty());
+			if (history.isEmpty()) gui.closeTutorial();
 			else history.removeFirst();
 		}
 		if (tutorial.cacheAction == ACT_DESCRIBE) tutorial.cacheOffsetY = container.getPostionY();

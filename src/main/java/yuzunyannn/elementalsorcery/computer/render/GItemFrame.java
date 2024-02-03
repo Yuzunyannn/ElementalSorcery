@@ -1,8 +1,8 @@
 package yuzunyannn.elementalsorcery.computer.render;
 
-import net.minecraft.client.audio.PositionedSoundRecord;
+import java.util.function.Supplier;
+
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
@@ -13,8 +13,6 @@ import yuzunyannn.elementalsorcery.nodegui.GNode;
 
 public class GItemFrame extends GImage {
 
-	protected GItemStack gStack;
-
 	protected static final GImage HIGHLIGHT = new GImage(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_ITEM_HOVER);
 	protected static final Vec3d MOUSE_FOLLOW_VEC = new Vec3d(0, 0, -99);
 
@@ -23,7 +21,9 @@ public class GItemFrame extends GImage {
 		HIGHLIGHT.setAlpha(0.5f);
 	}
 
-	protected boolean isHover = false;
+	protected GItemStack gStack;
+	protected boolean showDisabled;
+	protected boolean isHover;
 	protected ISoftGuiRuntime runtime;
 
 	public GItemFrame() {
@@ -33,8 +33,15 @@ public class GItemFrame extends GImage {
 	public GItemFrame(ItemStack stack) {
 		super(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_ITEM);
 		setAnchor(0.5, 0.5);
-
 		gStack = new GItemStack(stack);
+		gStack.setPositionZ(20);
+		addChild(gStack);
+	}
+
+	public GItemFrame(Supplier<ItemStack> stackGetter) {
+		super(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_ITEM);
+		setAnchor(0.5, 0.5);
+		gStack = new GItemStack(stackGetter);
 		gStack.setPositionZ(20);
 		addChild(gStack);
 	}
@@ -45,6 +52,10 @@ public class GItemFrame extends GImage {
 
 	public void setItemStack(ItemStack itemStack) {
 		gStack.setStack(itemStack);
+	}
+
+	public void setItemStack(Supplier<ItemStack> stackGetter) {
+		gStack.setStack(stackGetter);
 	}
 
 	public ItemStack getItemStack() {
@@ -77,6 +88,10 @@ public class GItemFrame extends GImage {
 		});
 	}
 
+	public void setShowDisabled(boolean showDisabled) {
+		this.showDisabled = showDisabled;
+	}
+
 	@Override
 	public void update() {
 		super.update();
@@ -89,7 +104,11 @@ public class GItemFrame extends GImage {
 	@Override
 	public void draw(float partialTicks) {
 		super.draw(partialTicks);
-		if (isHover) {
+		if (showDisabled) {
+			GlStateManager.translate(x, y, z + 40);
+			HIGHLIGHT.draw(partialTicks);
+			GlStateManager.translate(-x, -y, -z + 40);
+		} else if (isHover) {
 			GlStateManager.translate(x, y, z + 40);
 			HIGHLIGHT.draw(partialTicks);
 			GlStateManager.translate(-x, -y, -z + 40);

@@ -33,7 +33,13 @@ public class SyncDetectableMonitor implements ISyncDetectableMonitor {
 
 	@Override
 	public void add(String key, ISyncDetectable<?> detectable) {
-		map.put(key, new Node(detectable));
+		add(key, detectable, false);
+	}
+
+	public void add(String key, ISyncDetectable<?> detectable, boolean always) {
+		Node node = new Node(detectable);
+		if (always) node.dirtyVer = -1;
+		map.put(key, node);
 	}
 
 	@Override
@@ -55,16 +61,18 @@ public class SyncDetectableMonitor implements ISyncDetectableMonitor {
 		Iterator<Entry<String, Node>> iter = map.entrySet().iterator();
 		while (iter.hasNext()) {
 			Entry<String, Node> entry = iter.next();
-			Integer ver = dataset.map.get(entry.getKey());
-			if (ver == null) ver = 0;
 			Node node = entry.getValue();
-			if (ver != node.dirtyVer) {
+			if (node.dirtyVer == -1);
+			else {
+				Integer ver = dataset.map.get(entry.getKey());
+				if (ver == null) ver = 0;
+				if (ver == node.dirtyVer) continue;
 				dataset.map.put(entry.getKey(), node.dirtyVer);
-				NBTBase subChanges = node.detectable.detectChanges(watcher);
-				if (subChanges != null) {
-					if (changes == null) changes = new NBTTagCompound();
-					changes.setTag(entry.getKey(), subChanges);
-				}
+			}
+			NBTBase subChanges = node.detectable.detectChanges(watcher);
+			if (subChanges != null) {
+				if (changes == null) changes = new NBTTagCompound();
+				changes.setTag(entry.getKey(), subChanges);
 			}
 		}
 		return changes;

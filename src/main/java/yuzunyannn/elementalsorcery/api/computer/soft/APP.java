@@ -19,6 +19,7 @@ public class APP extends EasyImp<APP> implements ISoft, INBTSerializable<NBTTagC
 	private final int pid;
 	private final IOS os;
 	private boolean isTask;
+	private boolean closing;
 
 	public APP(IOS os, int pid) {
 		this.pid = pid;
@@ -84,6 +85,14 @@ public class APP extends EasyImp<APP> implements ISoft, INBTSerializable<NBTTagC
 	@Override
 	public void mergeChanges(NBTTagCompound nbt) {
 		detecter.mergeChanges(nbt);
+	}
+
+	public boolean isClosing() {
+		return closing;
+	}
+
+	public void exit() {
+		this.closing = true;
 	}
 
 }

@@ -108,6 +108,7 @@ public class GNode {
 
 	public void setGaps(boolean gaps) {
 		this.gaps = gaps;
+		if (gaps) this.updateGaps();
 	}
 
 	public void setPosition(double x, double y) {
@@ -328,6 +329,10 @@ public class GNode {
 		this.actions.add(action);
 	}
 
+	public void clearActions() {
+		this.actions.clear();
+	}
+
 	protected void onExitScene() {
 		for (GNode node : this.children) node.onExitScene();
 		this.scene.removeInteractNode(this);
@@ -369,16 +374,16 @@ public class GNode {
 		Vec3d vec = getPostionInWorldPos();
 		vec = worldPos.subtract(vec);
 
-		float width = (float) (this.width * gScaleX);
-		float height = (float) (this.height * gScaleY);
+		double width = this.width * gScaleX;
+		double height = this.height * gScaleY;
 
-		float aw = width * anchorX;
-		float ah = height * anchorY;
+		double aw = width * anchorX;
+		double ah = height * anchorY;
 
-		float left = -aw;
-		float right = width - aw;
-		float top = -ah;
-		float bottom = height - ah;
+		double left = -aw;
+		double right = width - aw;
+		double top = -ah;
+		double bottom = height - ah;
 
 		float rotation = getRotationInWorldPos();
 		if (rotation != 0) vec = MathSupporter.rotation(vec, AXIS_Z, -rotation / 180 * 3.1415926);

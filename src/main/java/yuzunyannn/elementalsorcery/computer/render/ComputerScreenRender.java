@@ -37,7 +37,7 @@ public class ComputerScreenRender {
 		while (iter.hasNext()) {
 			ComputerScreen screen = iter.next();
 //			if (Effect.displayChange) screen.buffer.resize(screen.frameBufferWidth, screen.frameBufferHeight);
-			if (screen.currGui != null) screen.currGui.update();
+			screen.onUpdate();
 			screen.renderCounter++;
 			if (screen.renderCounter > 20 * 60 || screen.waitPoolMark) {
 				screen.waitPoolMark = false;

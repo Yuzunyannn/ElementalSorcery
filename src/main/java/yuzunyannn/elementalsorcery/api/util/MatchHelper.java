@@ -13,6 +13,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class MatchHelper {
 
@@ -21,8 +22,12 @@ public class MatchHelper {
 		if (sample.getItem() != stack.getItem()) return false;
 		if (sample.getMetadata() != stack.getMetadata()) return false;
 		if (sample.getTagCompound() == null) return true;
-		if (stack.getTagCompound() == null) return false;
 		NBTTagCompound sampleNBT = sample.getTagCompound();
+		if (sampleNBT.hasKey("#NO_TAG")) {
+			NBTTagCompound tag = stack.getTagCompound();
+			return tag == null || tag.isEmpty();
+		}
+		if (stack.getTagCompound() == null) return false;
 		NBTTagCompound nbt = stack.getTagCompound();
 		for (String key : sampleNBT.getKeySet()) {
 			NBTBase sampleTag = sampleNBT.getTag(key);
@@ -32,6 +37,10 @@ public class MatchHelper {
 			if (!sampleTag.equals(tag)) return false;
 		}
 		return true;
+	}
+
+	public static void setSampleNoTagCheck(ItemStack stack) {
+		ItemHelper.getOrCreateTagCompound(stack).setBoolean("#NO_TAG", true);
 	}
 
 	@Nonnull

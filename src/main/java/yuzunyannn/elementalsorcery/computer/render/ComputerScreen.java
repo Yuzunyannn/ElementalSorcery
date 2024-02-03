@@ -86,7 +86,6 @@ public class ComputerScreen {
 	}
 
 	void letRender(float partialTicks) {
-		ISoftGui gui = currGui;
 		GlStateManager.clearColor(22 / 255f, 14 / 255f, 26 / 255f, 0);
 		GlStateManager.clear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		GlStateManager.translate(0, frameBufferHeight, 0);
@@ -96,16 +95,22 @@ public class ComputerScreen {
 
 		}
 
-		if (gui == null) {
-
-		} else {
-			try {
-				gui.render(partialTicks);
-			} catch (Exception e) {
-				this.exception = IComputerException.easy(e.getMessage());
-				ESAPI.logger.warn("computer render crash!", e);
+		try {
+			renderGUI(currGui, partialTicks);
+			if (currTaskGui != null) {
+				GlStateManager.clear(GL11.GL_DEPTH_BUFFER_BIT);
+				renderGUI(currTaskGui, partialTicks);
 			}
+		} catch (Exception e) {
+			this.exception = IComputerException.easy(e.getMessage());
+			ESAPI.logger.warn("computer render crash!", e);
 		}
+
+	}
+
+	protected void renderGUI(ISoftGui gui, float partialTicks) {
+		if (gui == null) return;
+		gui.render(partialTicks);
 	}
 
 	public void bindTexture() {
@@ -142,6 +147,11 @@ public class ComputerScreen {
 		if (buffer == null) return;
 		buffer.dispose();
 		buffer = null;
+	}
+
+	void onUpdate() {
+		if (currTaskGui != null) currTaskGui.update();
+		if (currGui != null) currGui.update();
 	}
 
 	public void onMouseEvent(Vec3d vec3d) {

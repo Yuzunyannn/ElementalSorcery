@@ -1272,5 +1272,37 @@
             "en_US": "Biology",
             "ja_JP": "生物"
         }
+    },
+    "es.app": {
+        "es.app.cancel": {
+            "zh_CN": "取消",
+            "en_US": "Cancel",
+            "ja_JP": "キャンセル"
+        },
+        "es.app.confirm": {
+            "zh_CN": "确定",
+            "en_US": "Confirm",
+            "ja_JP": "確認"
+        },
+        "es.app.choose": {
+            "zh_CN": "选择：%s",
+            "en_US": "Choose: %s",
+            "ja_JP": "%sを選んで"
+        },
+        "es.app.anyItem": {
+            "zh_CN": "任意物品",
+            "en_US": "Any Item",
+            "ja_JP": "任意の物品"
+        },
+        "es.app.writeError": {
+            "zh_CN": "写入异常",
+            "en_US": "Write Exception",
+            "ja_JP": "書き込み例外"
+        },
+        "es.app.writeSuccess": {
+            "zh_CN": "写入成功",
+            "en_US": "Write Success",
+            "ja_JP": "書き込み成功"
+        }
     }
 }

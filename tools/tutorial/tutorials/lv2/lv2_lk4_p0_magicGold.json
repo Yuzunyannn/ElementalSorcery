@@ -1,0 +1,13 @@
+{
+    "cover": "elementalsorcery:magic_gold",
+    "title": {
+        "zh_CN": "魔力金锭",
+        "en_US": "Magic Gold"
+    },
+    "describe": {
+        "zh_CN": "通过给金注魔而形成的带有魔力的金锭。\\n注魔条件：任何时间地点",
+        "en_US": "A Magical Gold formed by injecting magic into gold.\\nEnchanting condition: Any time and place.",
+        "ja_JP": "金に魔を注すことによって作られた魔力を持つ金锭。\\nエンチャントの条件：いつでもどこでも"
+    },
+    "crafts": "elementalsorcery:magic_gold"
+}

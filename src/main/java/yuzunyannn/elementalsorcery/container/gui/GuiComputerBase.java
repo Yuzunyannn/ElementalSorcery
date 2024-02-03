@@ -19,6 +19,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
 import yuzunyannn.elementalsorcery.api.computer.soft.IComputerException;
@@ -92,7 +93,11 @@ public abstract class GuiComputerBase extends GuiContainer {
 
 	class APPGuiRuntime implements ISoftGuiRuntime {
 
-		int pid = -1;
+		private int pid = -1;
+
+		public APPGuiRuntime(int pid) {
+			this.pid = pid;
+		}
 
 		@Override
 		public int getWidth() {
@@ -125,6 +130,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 		public void sendNotice(String str) {
 			NBTTagCompound nbt = new NBTTagCompound();
 			nbt.setString("_nt_", str);
+			nbt.setInteger("pid", pid);
 			containerComputer.sendToServer(nbt);
 		}
 
@@ -140,11 +146,21 @@ public abstract class GuiComputerBase extends GuiContainer {
 
 	}
 
-	protected APPGuiRuntime runtime = new APPGuiRuntime();
+	protected APPGuiRuntime runtime;
+	protected APPGuiRuntime taskRuntime;
 
 	public GuiComputerBase(ContainerComputer containerComputer) {
 		super(containerComputer);
 		this.containerComputer = containerComputer;
+		this.containerComputer.msgHook = (params) -> {
+			int pid = params.get("pid", Integer.class);
+			NBTTagCompound data = params.get("data", NBTTagCompound.class);
+			if (currTask != null && currTask.getPid() == pid) {
+				if (taskGUI != null) taskGUI.onRecvMessage(data);
+			} else if (currApp != null && currApp.getPid() == pid) {
+				if (appGUI != null) appGUI.onRecvMessage(data);
+			}
+		};
 	}
 
 	public IComputer getComputer() {
@@ -297,10 +313,13 @@ public abstract class GuiComputerBase extends GuiContainer {
 				APP task = ios.getAppInst(topTask);
 				if (currTask != task) {
 					taskGUI = task.createGUIRender();
-					taskGUI.init(runtime);
-					currTask = task; 
+					taskGUI.init(taskRuntime = new APPGuiRuntime(task.getPid()));
+					currTask = task;
 					screenFront.setTaskAppGui(taskGUI);
 				}
+			} else if (currTask != null) {
+				currTask = null;
+				screenFront.setTaskAppGui(taskGUI = null);
 			}
 		} catch (ComputerException e) {
 			this.exception = e;
@@ -310,12 +329,12 @@ public abstract class GuiComputerBase extends GuiContainer {
 	protected void onCurrAppChange(APP old) {
 		appGUI = null;
 		screenFront.setAPPGui(null);
-		runtime.pid = -1;
+		runtime = null;
 
 		APP app = this.currApp;
 		if (app == null) return;
 
-		runtime.pid = currApp.getPid();
+		runtime = new APPGuiRuntime(currApp.getPid());
 		appGUI = app.createGUIRender();
 		appGUI.init(runtime);
 		screenFront.setAPPGui(appGUI);
@@ -328,6 +347,8 @@ public abstract class GuiComputerBase extends GuiContainer {
 		int mouseY = this.height - Mouse.getEventY() * this.height / this.mc.displayHeight - 1;
 		this.scene.onMouseEvent(new Vec3d(mouseX, mouseY, 0));
 
+		if (this.exception != null) return;
+
 		int offsetX = (this.width - this.xSize) / 2, offsetY = (this.height - this.ySize) / 2;
 		offsetX = offsetX + computerX;
 		offsetY = offsetY + computerY;
@@ -335,7 +356,12 @@ public abstract class GuiComputerBase extends GuiContainer {
 		double emouseY = mouseY - offsetY;
 		emouseX = emouseX / (double) this.computerWidth;
 		emouseY = emouseY / (double) this.computerHeight;
-		this.screenFront.onMouseEvent(new Vec3d(emouseX, emouseY, 0));
+		try {
+			this.screenFront.onMouseEvent(new Vec3d(emouseX, emouseY, 0));
+		} catch (Exception e) {
+			ESAPI.logger.warn("click error", e);
+			this.exception = IComputerException.easy("click error " + e);
+		}
 	}
 
 	protected void updateWaitingOpenScene() {
@@ -354,7 +380,9 @@ public abstract class GuiComputerBase extends GuiContainer {
 	}
 
 	protected void onClickOpenScene() {
-		this.runtime.sendNotice("power-on");
+		NBTTagCompound nbt = new NBTTagCompound();
+		nbt.setString("_nt_", "power-on");
+		containerComputer.sendToServer(nbt);
 	}
 
 	protected void closeOpenScene() {
