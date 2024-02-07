@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:element_board",
+    "title": {
+        "zh_CN": "元素认知",
+        "en_US": "Element Cognition"
+    },
+    "describe": {
+        "zh_CN": "或许你想知道哪些物品里会有哪些元素？制作一个「元素共鸣板」或许是目前最好的选择。\\n多种水晶嵌入其中并雕刻而得到的石板可以让利用元素间共鸣的特点，将物品里的元素特征所展现出来。\\n将元素容器或者任意物品放到板子的中央，其「首要元素」便可和周围带有同种元素的物品发生共鸣，方格会呈现出对应的颜色。\\n虽然不能定量的分析元素，但可以通过不同格子上颜色浓度的差距判读物品中所含的元素和首要元素的能量的差距，颜色浓度越深，表明物品里元素能量越接近首要元素的能量，当颜色最深是，表明物品里的元素能量大于等于首要元素的能量；同理格子的闪烁程度越小，表明元素数量越接近。",
+        "en_US": "Perhaps you're wondering which element are present in various items? Creating an 'Element Resonance Board' might be the best option currently.\\nA slab crafted by embedding various crystals and carving them can leverage the resonance between element to display the element fetures of items.\\nBy placing an Element Container or any item in the center of the board, its 'Primary Element' can resonate with surrounding items containing the same element, causing the squares to display corresponding colors.\\nAlthough it cannot quantitatively analyze element, the difference in color intensity between different squares can be used to interpret the gap between the element contained in the item and the Power of the primary element. The deeper the color intensity, the closer the Power of the element in the item is to the Power of the primary element. When the color is darkest, it indicates that the Power of the element in the item is greater than or equal to the Power of the primary element; similarly, the less the flickering of the squares, the closer the quantity of element."
+    },
+    "crafts": "elementalsorcery:element_board"
+}

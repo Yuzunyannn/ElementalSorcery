@@ -54,7 +54,7 @@ public class Tutorials {
 		}
 
 		public void add(Tutorial tutorial) {
-			this.totalUnlock = totalUnlock + tutorial.getUnlock();
+			this.totalUnlock = Math.max(this.totalUnlock, tutorial.getUnlock());
 			TutorialUnlockInfo info;
 			int i = MathSupporter.binarySearch(list, (s) -> (double) (tutorial.getUnlock() - s.unlock));
 			if (i < 0) {
@@ -158,7 +158,7 @@ public class Tutorials {
 			List<ItemRecord> records = json.needItems("crafts");
 			tutorial.setCrafts(ItemRecord.asItemStackList(records));
 		}
-		if (json.hasObject("building")) { 
+		if (json.hasObject("building")) {
 			JsonObject buildingJson = json.getObject("building");
 			String id = buildingJson.needString("structure", "building");
 			Building building = BuildingLib.instance.getBuilding(id);

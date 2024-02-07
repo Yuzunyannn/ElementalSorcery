@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:researcher",
+    "title": {
+        "zh_CN": "做研究",
+        "en_US": "Do Research"
+    },
+    "describe": {
+        "zh_CN": "部分道具需要自己研究才能获取，去找精灵们问问，它们会提供给你研究的场所。",
+        "en_US": "Some items require personal research to obtain. Go ask the Elves, they will provide you with a place for your research."
+    }
+}

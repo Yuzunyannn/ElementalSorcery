@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:star_flower",
+    "title": {
+        "zh_CN": "星之种",
+        "en_US": "Star Seed"
+    },
+    "describe": {
+        "zh_CN": "在无数次的尝试中发现，在午夜空手向星之花许愿，可以得到星之种。星之种可以向普通种子一样种到地上，暴露在繁星满天的午夜时会自动生长。不过要注意，未成熟的星之花更加的脆弱，如果被日光照射可能会直接枯萎。\\n星之种有极低的概率掉落两个，因此星之花被认作不可再生的资源。",
+        "en_US": "In countless attempts, it was discovered that, empty hand, make a wish to the Star Flower at midnight, your wish will become Star Seed. The Star Seed can be planted on the ground like ordinary seeds, and will grow at starry midnight. It should be noted that immature Star Flower are more fragile and may wither if directly exposed to sunlight.\\nThere is a very low probability of two Star Seed drop, so Star Flowers are considered as non renewable resources."
+    }
+}

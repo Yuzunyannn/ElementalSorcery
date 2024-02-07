@@ -1,0 +1,18 @@
+{
+    "cover": "elementalsorcery:md_deconstruct_box",
+    "title": {
+        "zh_CN": "物质瓦解",
+        "en_US": "Materials Deconstruct"
+    },
+    "describe": {
+        "zh_CN": "物质瓦解箱，在简易的祭坛下，通过魔力，将物品分解成元素，存入元素的容器。\\n瓦解箱只能分解简单结构的物品，无法分解复杂结构的元素，而且分解元素的效率十分低下。\\n不过制作简单，方便使用，是它的唯一优点。",
+        "en_US": "The Material Disintegration Box, under a simple altar, utilizes magic to deconstruct items into elements and store them in Element Container.\\nThe Disintegration Box can only deconstruct items with simple structures, and its efficiency in deconstruct elements is very low. \nHowever, it is easy to make and convenient to use, which are its only advantages."
+    },
+    "crafts": "elementalsorcery:md_deconstruct_box",
+    "building": {
+        "structure": "deconstruct_box",
+        "custom": {
+            "0,1,0": "elementalsorcery:md_deconstruct_box"
+        }
+    }
+}

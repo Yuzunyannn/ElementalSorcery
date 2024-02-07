@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:scapegoat",
+    "title": {
+        "zh_CN": "替罪羊",
+        "en_US": "Scapegoat"
+    },
+    "describe": {
+        "zh_CN": "但我们找到了转移仪式惩罚的方式，将通过魔力制成的代人受过之羊，放在仪式桌附近，当放置者进行仪式失败时，惩罚将转移到替罪羊身上。\\n不仅如此，若替罪羊旁有怪物意图攻击，其目标便会被替罪羊所吸引。(BOSS无效)\\n替罪羊每次受到的伤害不会超过1点。\\n替罪羊的功效仅对其同名者生效。\\n右键其进行拆解。",
+        "en_US": "However, we have found a way to transfer the penalties of the Rite. By placing a magically crafted scapegoat near the Rite table, when the Rite performer fails, the punishment will be transferred to the scapegoat.\\nMoreover, if there are monsters nearby intending to attack, they will be attracted to the scapegoat (BOSS monsters are exempt).\\nThe scapegoat will not take more than 1 point of damage each time.\\nThe effects of the scapegoat only apply to creatures with the same name.\\nRight-click to dismantle."
+    },
+    "crafts": "elementalsorcery:scapegoat"
+}

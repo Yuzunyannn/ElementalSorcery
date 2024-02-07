@@ -1,0 +1,20 @@
+{
+    "cover": {
+        "id": "elementalsorcery:quill",
+        "data": 1
+    },
+    "title": {
+        "zh_CN": "魔力羽毛笔",
+        "en_US": "Magic Quill"
+    },
+    "describe": {
+        "zh_CN": "通过给羽毛笔注魔，可以让魔力环绕在羽毛笔周围，形成魔力羽毛笔。\\n将魔力羽毛笔投入岩浆湖或者湖中，会吸收周围的液体与魔力共振，形成火之羽毛笔或水之羽毛笔，不过它们目前的作用甚微。",
+        "en_US": "By infusing magic into the Quill, it can surround the quill with magic, forming a Magic Quill.\\nWhen the Magic Quill is thrown into a magma lake or a lake, it will absorb the surrounding liquid and forming a Fire Quill or a Water Quill, but their current functions are minimal."
+    },
+    "crafts": [
+        {
+            "id": "elementalsorcery:quill",
+            "data": 1
+        }
+    ]
+}

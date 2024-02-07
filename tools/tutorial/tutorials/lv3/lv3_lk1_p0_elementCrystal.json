@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:element_crystal",
+    "title": {
+        "zh_CN": "元素的起点",
+        "en_US": "Origin of Element"
+    },
+    "describe": {
+        "zh_CN": "要发展元素技术，一个好用的元素容器是一切的起点。有非常好的元素亲和性的元素水晶，便可以胜任这一职位，不过它的容量是有限的。\\n元素水晶可以通过魔力水晶再次注魔得到，在元素活跃的时间段内，才可能注魔成功。\\n注魔条件：日出日落的平原上",
+        "en_US": "To develop elemental technology, a reliable Element Container is the starting point. An Element Crystal with a strong affinity for elements can handle this role, although its capacity is limited.\\nElement Crystals can be recharged using Magic Crystals, but only during active elemental periods.\\nEnchanting condition: On the plains during sunrise and sunset."
+    },
+    "crafts": "elementalsorcery:element_crystal"
+}

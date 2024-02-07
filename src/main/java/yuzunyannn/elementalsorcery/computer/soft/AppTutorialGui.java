@@ -386,10 +386,10 @@ public class AppTutorialGui extends AppGuiCommon {
 
 	protected void showTutorial(Tutorial tutorial) {
 		closeTutorial();
-		int w = runtime.getWidth() - 4;
-		int h = runtime.getHeight() - 4;
+		int w = runtime.getWidth();
+		int h = runtime.getHeight();
 		currTutorial = new APPTutorialGPad(tutorial, this, w, h);
-		currTutorial.setPosition(2, 2, 500);
+		currTutorial.setPosition(0, 0, 500);
 		currTutorial.setGaps(true);
 		this.scene.addChild(currTutorial);
 		this.app.changeShowTutorialId(tutorial.getId());

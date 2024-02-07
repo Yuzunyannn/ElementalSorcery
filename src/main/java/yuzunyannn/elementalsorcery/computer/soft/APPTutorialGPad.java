@@ -79,6 +79,7 @@ public class APPTutorialGPad extends GImage {
 			}
 		});
 		setName("Tutorial Pad");
+		double topLength = 14;
 
 		GImage line1 = new GImage(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_L2);
 		line1.setSplit9();
@@ -89,13 +90,13 @@ public class APPTutorialGPad extends GImage {
 		GImage line2 = new GImage(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_L1);
 		line2.setSplit9();
 		line2.setSize(getWidth(), 3);
-		line2.setPosition(0, 16);
+		line2.setPosition(0, topLength);
 		line2.setColorRef(gui.detailColor);
 		addChild(line2);
 
 		GImage close = new GImage(SoftGuiCommon.TEXTURE_1, AppTutorialGui.FRAME_CLOSE);
 		close.setColorRef(gui.detailObjColor);
-		close.setPosition(13, 8.5, 0);
+		close.setPosition(13, topLength / 2 + 0.5, 0);
 		close.setAnchor(0.5, 0.5, 2);
 		close.setSize(9, 9);
 		close.setInteractor(new BtnBaseInteractor() {
@@ -106,15 +107,15 @@ public class APPTutorialGPad extends GImage {
 		});
 		addChild(close);
 
-		scissor = new GScissor(new RenderRect(0, getHeight() - 20, 0, getWidth() - optionWidth - 4));
-		scissor.setPosition(optionWidth + 4, 16 + 3, 0);
+		scissor = new GScissor(new RenderRect(0, getHeight() - topLength - 4, 0, getWidth() - optionWidth - 4));
+		scissor.setPosition(optionWidth + 4, topLength + 3, 0);
 		addChild(scissor);
 		container = new GNode();
 		scissor.addChild(container);
 		scissor.setInteractor(new DragInteractor(container));
 
-		optionScissor = new GScissor(new RenderRect(0, getHeight() - 20, 0, optionWidth - 1));
-		optionScissor.setPosition(1, 16 + 3, 0);
+		optionScissor = new GScissor(new RenderRect(0, getHeight() - topLength - 4, 0, optionWidth - 1));
+		optionScissor.setPosition(1, topLength + 3, 0);
 		addChild(optionScissor);
 		optionContainer = new GNode();
 		optionScissor.addChild(optionContainer);
@@ -156,7 +157,7 @@ public class APPTutorialGPad extends GImage {
 		btn.setString(name);
 		btns.add(btn);
 		btnOffset = btnOffset + 3;
-		btn.setPosition(optionWidth + 2 + btnOffset, 8.5, 2);
+		btn.setPosition(optionWidth + 2 + btnOffset, 14 / 2 + 0.5, 2);
 		addChild(btn);
 		btnOffset = btnOffset + btn.getWidth();
 	}
@@ -329,7 +330,7 @@ public class APPTutorialGPad extends GImage {
 			setInteractor(new BtnColorInteractor(gui.detailColor, gui.detailObjColor) {
 				@Override
 				public void onClick() {
-					if (onClick != null) onClick.run();
+					if (GTutorialIconBtn.this.onClick != null) onClick.run();
 				}
 			});
 			setColorRef(gui.detailColor);
@@ -358,7 +359,7 @@ public class APPTutorialGPad extends GImage {
 		GTutorialIconBtn exportBtn = new GTutorialIconBtn(AppTutorialGui.TEXTURE, RenderTexutreFrame.ofGUI(56, 159, 16),
 				() -> printBuilding());
 		exportBtn.setAnchor(0.5, 0.5);
-		exportBtn.setPosition(optionScissor.getWidth() / 2, yOffset, 0);
+		exportBtn.setPosition(optionScissor.getWidth() / 2, yOffset, 10);
 		optionContainer.addChild(exportBtn);
 
 		LambdaReference<Runnable> updateStackView = LambdaReference.of(null);
@@ -380,7 +381,7 @@ public class APPTutorialGPad extends GImage {
 					updateStackView.get().run();
 				});
 		layerBtn.setAnchor(0.5, 0.5);
-		layerBtn.setPosition(optionScissor.getWidth() / 2 - 0.5, yOffset, 0);
+		layerBtn.setPosition(optionScissor.getWidth() / 2 - 0.5, yOffset, 10);
 		optionContainer.addChild(layerBtn);
 
 		GNode sContainer = new GNode();

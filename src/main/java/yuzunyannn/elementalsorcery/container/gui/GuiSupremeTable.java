@@ -86,8 +86,10 @@ public class GuiSupremeTable extends GuiNormal<ContainerSupremeTable> {
 				ElementStack estack = list.get((cycle + i) % length);
 				int x;
 				int y = offsetY + 75;
-				if (i < size / 2) x = offsetX + 34 + i * 18;
-				else x = offsetX + 142 + (i - size / 2) * 18;
+				if (i < size / 2) {
+					int _x = 70 - (size / 2) * 18 + 18;
+					x = offsetX + _x + i * 18;
+				} else x = offsetX + 142 + (i - size / 2) * 18;
 				estack.getElement().drawElemntIconInGUI(estack, x + 1, y + 1, 0);
 			}
 		} else {

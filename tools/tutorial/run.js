@@ -16,7 +16,7 @@ traverseFiles("./tutorials", (fileName, path) => {
     let fparmas = fileName.split("_")
     let parmas = {}
     fparmas.forEach(e => {
-        let dat = e.match(/(.+)(\d+)/)
+        let dat = e.match(/(.+?)(\d+)/)
         if (dat) {
             let key = dat[1]
             let val = dat[2]

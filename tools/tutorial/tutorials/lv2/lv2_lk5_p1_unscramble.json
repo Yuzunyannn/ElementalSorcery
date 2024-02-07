@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:unscramble_note",
+    "title": {
+        "zh_CN": "解读手账",
+        "en_US": "Unscramble Note"
+    },
+    "describe": {
+        "zh_CN": "解读速度太慢？使用解读手账来记录解读时的内容，可以帮助你提升解读效率。\\n每次解读时，副手拿着解读手账，就会将内容记录到手账当中，随着积累的记录越来越多，你解读的速度也会越来越快。\\n只有自己记录的内容，才能产生作用。",
+        "en_US": "Is your deciphering speed too slow? Use an Unscramble Note to record the content of your deciphering and improve your efficiency.\\nWhen deciphering, your off-hand will record the content in the note. As you accumulate more and more records, your deciphering speed will increase.\\nOnly the content you record will be effective."
+    },
+    "crafts": "elementalsorcery:unscramble_note"
+}

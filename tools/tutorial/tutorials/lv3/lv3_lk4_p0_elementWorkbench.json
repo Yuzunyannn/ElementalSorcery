@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:element_workbench",
+    "title": {
+        "zh_CN": "元素合成台",
+        "en_US": "Element Workbench"
+    },
+    "describe": {
+        "zh_CN": "元素合成台可以像普通合成台一样使用，同时也可以放入元素水晶，让物品和元素共同合成。\\n深色橡木是与魔力契合性最好的木材，因此元素合成台只能选择使用深色橡木。",
+        "en_US": "The Element Workbench can be used like a regular Workbench, but it can also be used to combine items with Element Crystal.\\nDark oak is the wood with the best compatibility with magic, so the Element Workbench can only be made using dark oak."
+    },
+    "crafts": "elementalsorcery:element_workbench"
+}

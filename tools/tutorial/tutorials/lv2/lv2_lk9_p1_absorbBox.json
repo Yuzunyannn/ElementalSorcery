@@ -1,0 +1,18 @@
+{
+    "cover": "elementalsorcery:md_absorb_box",
+    "title": {
+        "zh_CN": "元素转移",
+        "en_US": "Element Transfer"
+    },
+    "describe": {
+        "zh_CN": "在元素吸收箱为中心的祭坛里，元素可以从一个元素容器中，转移到另一个元素容器中。\\n将元素容器放在箱内，将魔力平台放在吸收箱附近，其他可以被认作元素容器的物品放在平台上，至此，元素吸收箱消开始耗魔力，吸收平台上物品中所含的元素。 \\n它是目前元素转移的主要方式。",
+        "en_US": "Within the altar centered around the Element Absorber, elements can be transferred from one element container to another. \nPlace an element container inside the box, position the Magic Platform near the Absorber, and place other items recognized as element containers on the platform. Subsequently, the Element Absorber begins to consume magic, absorbing the elements contained in the items on the platform.\\nIt is currently the main way of element transfer."
+    },
+    "crafts": "elementalsorcery:md_absorb_box",
+    "building": {
+        "structure": "absorb_box",
+        "custom": {
+            "0,2,0": "elementalsorcery:md_absorb_box"
+        }
+    }
+}

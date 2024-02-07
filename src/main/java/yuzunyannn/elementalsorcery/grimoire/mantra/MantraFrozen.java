@@ -174,7 +174,7 @@ public class MantraFrozen extends MantraTypePersistent {
 				if (n > frozenSize / 4 * 3) power = power / (n - frozenSize / 4 * 3 + 1);
 			}
 			if (power < 0.1) continue;
-			
+
 			float sqPower = MathHelper.sqrt(power);
 			PotionEffect effect = entity.getActivePotionEffect(ESObjects.POTIONS.FROZEN);
 			int amplifier = effect == null ? 0 : effect.getAmplifier() + 1;
@@ -208,6 +208,7 @@ public class MantraFrozen extends MantraTypePersistent {
 				amplifier++;
 			}
 		}
+		duration = Math.min(Short.MAX_VALUE, duration);
 		entity.addPotionEffect(new PotionEffect(ESObjects.POTIONS.FROZEN, duration, amplifier - 1));
 	}
 

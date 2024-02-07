@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:manual",
+    "title": {
+        "zh_CN": "元素手册",
+        "en_US": "Parchment Manual"
+    },
+    "describe": {
+        "zh_CN": "精灵们依然使用羊皮卷进行存储信息，手里一堆没有地方装？制作一个元素手册吧，可以将身上多余的羊皮卷装入手册中，更好的储存与查阅。",
+        "en_US": "The Elves still use Parchment to store information, but what to do when you have a bunch and nowhere to put them? Make an Parchment Manual! You can store your extra Parchments in the manual for better storage and reference."
+    },
+    "crafts": "elementalsorcery:manual"
+}

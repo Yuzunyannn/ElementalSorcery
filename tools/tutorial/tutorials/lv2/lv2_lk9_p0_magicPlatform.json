@@ -1,0 +1,24 @@
+{
+    "cover": {
+        "id": "elementalsorcery:magic_platform",
+        "data": 0
+    },
+    "title": {
+        "zh_CN": "魔力平台",
+        "en_US": "Magic Platform"
+    },
+    "describe": {
+        "zh_CN": "魔力平台上可以放上一个物品。\\n魔力平台可以被某些魔力装置感知到，这些装置就可以获取到平台上的物品进行某些操作了。",
+        "en_US": "An item can be placed on the Magic Platform. \nMagic Devices can detect the Magic Platform, allowing them to interact with the items placed on it."
+    },
+    "crafts": [
+        {
+            "id": "elementalsorcery:magic_platform",
+            "data": 0
+        },
+        {
+            "id": "elementalsorcery:magic_platform",
+            "data": 1
+        }
+    ]
+}

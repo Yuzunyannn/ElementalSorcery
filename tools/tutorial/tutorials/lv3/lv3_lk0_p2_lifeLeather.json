@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:life_leather",
+    "title": {
+        "zh_CN": "生命皮革",
+        "en_US": "Life Leather"
+    },
+    "describe": {
+        "zh_CN": "灵魂碎片可以像缠绕在木剑上一样，缠绕在皮革上，当皮革收集到一定的灵魂后，可以转变成「生命之革」。\\n「生命之革」可以快速的在身上缠绕，形成一套皮甲，或许这对战斗有所帮助，不过要注意的是生成的皮甲会强行顶掉身上所穿的装备，同时还具有绑定和消失诅咒。",
+        "en_US": "Soul Fragments can be wrapped around leather, similar to how they wrap around wooden swords. When enough soul energy is collected in the leather, it can transform into 'Leather of Life'. \nThe 'Life Leather' can quickly wrap around the body, forming a set of leather armor. Perhaps this would be helpful in combat, but it's worth noting that the generated armor will forcibly replace any existing equipment worn, and it also carries binding and vanishing curses."
+    }
+}

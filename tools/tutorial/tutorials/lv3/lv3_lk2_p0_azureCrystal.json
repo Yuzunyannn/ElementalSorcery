@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:azure_crystal",
+    "title": {
+        "zh_CN": "湛蓝水晶",
+        "en_US": "Azure Crystal"
+    },
+    "describe": {
+        "zh_CN": "魔力水晶和青金石吸收岩浆后形成的一种蓝色的水晶，研究者发现在特定条件下，该水晶周围的物质开始变得不在那么稳定了。\\n将一个魔力水晶和一个青金石扔到岩浆边上，等待一段时间，生成湛蓝水晶。",
+        "en_US": "A blue crystal formed when Magic Crystals and Lapis absorb Lava. Researchers have discovered that under specific conditions, the substances surrounding this crystal become less stable. \\nThrow a Magic Crystal and a Lapis near Lava and wait for a while to generate the Azure Crystal."
+    }
+}

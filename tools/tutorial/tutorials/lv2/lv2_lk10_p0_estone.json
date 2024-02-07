@@ -1,0 +1,30 @@
+{
+    "cover": {
+        "item": "elementalsorcery:estone",
+        "data": 0
+    },
+    "title": {
+        "zh_CN": "魔力石英",
+        "en_US": "Magic Quartz"
+    },
+    "describe": {
+        "zh_CN": "通过魔力水晶和石英制作成的，带有魔力的石英块，是建造高级元素祭坛的必备材料。",
+        "en_US": "Crafted from Magic Crystals and quartz, Magic Quartz blocks are essential materials for constructing advanced elemental altars."
+    },
+    "crafts": [
+        {
+            "item": "elementalsorcery:estone",
+            "data": 0
+        },
+        {
+            "item": "elementalsorcery:estone",
+            "data": 1
+        },
+        {
+            "item": "elementalsorcery:estone",
+            "data": 2
+        },
+        "elementalsorcery:estone_slab",
+        "elementalsorcery:estone_stairs"
+    ]
+}

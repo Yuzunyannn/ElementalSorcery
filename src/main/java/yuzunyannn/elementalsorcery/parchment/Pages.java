@@ -175,7 +175,8 @@ public class Pages {
 			regPage(id, packet.page);
 			if (packet.page.level < 0) {
 				if (packet.page.level == PAGE_LEVEL_ELF) ElfProfessionScholar.addScholarPage(packet.page);
-			} else TileRiteTable.addPage(id, packet.page.level);
+			}
+			else TileRiteTable.addPage(id, packet.page.level);
 			return true;
 		});
 	}

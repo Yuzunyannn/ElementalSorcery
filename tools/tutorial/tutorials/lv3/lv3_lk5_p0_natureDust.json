@@ -1,0 +1,19 @@
+{
+    "cover": {
+        "item": "elementalsorcery:nature_dust",
+        "data": 1
+    },
+    "title": {
+        "zh_CN": "求知粉尘",
+        "en_US": "Seek Dust"
+    },
+    "describe": {
+        "zh_CN": "通过自然粉尘制作而成的求知粉尘，可以与自然发生共鸣，从而获得到周边的各种信息。将求知粉尘放到地上，开始共鸣，结束后自然水晶掉落，捡起便可看到周边的各种信息。\\n同时求知粉尘也可检测周围是否蕴含着充足的精灵力。",
+        "en_US": "Seek Dust made from Nature Dust can resonate with nature, so as to get all kinds of information around. Put Seek Dust on the ground and pick Nature Dust after resonating.\\nSeek Dust can also detect elf power.",
+        "ja_JP": "自然粉塵で得られた知識求め粉塵は自然と共鳴することができます、そして周辺の様々な情報を得ることができます。知識求め粉塵を床に置き、終わった後に落ちる自然水晶で情報を記録します。\\nまた、知識求め粉塵は精霊力の検出ができます。"
+    },
+    "crafts": {
+        "item": "elementalsorcery:nature_dust",
+        "data": 1
+    }
+}

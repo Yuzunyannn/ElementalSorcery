@@ -5,8 +5,8 @@
         "en_US": "Eye of Ender with Magic"
     },
     "describe": {
-        "zh_CN": "通过末影之眼和魔力碎片合成，可以作为烧制使用的额外物品。\\n放在烧炼箱中，可以提升烧制速度，不过每完成一轮烧制，其耐久会降低，为0时就会消失\\n不过没有关系，它在激活状态就会脱去魔力，变成普通的末影之眼，不过会发生小规模的爆炸，请注意。\\n多个可以叠加，虽然会共同浪费耐久，不过会有意想不到的效果。",
-        "en_US": "Made with Eye of Ender and Magic Fragment, can as Extra item in burning.\\nPut it in Smelt Box to increase speed. However, the durability will decrease after each round of burning is completed, and it will disappear when it is 0.\\nHowever, it doesn't matter. When it is activated, it will lose its magic and become an ordinary Eye of Ender. Be careful, a small explosion will occur when active it.\\nIt can be stacked and waste durability together, but it will have unexpected effects."
+        "zh_CN": "通过末影之眼和魔力碎片合成，可以作为烧制使用的额外物品。\\n放在烧炼箱中，可以提升烧制速度，不过每完成一轮烧制，其耐久会降低，为0时就会消失。\\n不过没有关系，它在激活状态就会脱去魔力，变成普通的末影之眼，不过会发生小规模的爆炸，请注意。\\n此外，当其位于烧炼箱中的时候，蓝晶石工具可以被烧炼，赋予元素亲和的属性。使用带有这个属性的工具，可以让环境中的微量元素附着在其上。",
+        "en_US": "Made with Eye of Ender and Magic Fragment, can as Extra item in burning.\\nPut it in Smelt Box to increase speed. However, the durability will decrease after each round of burning is completed, and it will disappear when it is 0.\\nHowever, it doesn't matter. When it is activated, it will lose its magic and become an ordinary Eye of Ender. Be careful, a small explosion will occur when active it.\\nIn addition, when it is in Smelt Box, the kyanite tools can be smelted, giving it the attribute of Element Affinity that using a tool with allows trace elements in the environment to adhere to it."
     },
     "crafts": "elementalsorcery:magical_ender_eye"
 }

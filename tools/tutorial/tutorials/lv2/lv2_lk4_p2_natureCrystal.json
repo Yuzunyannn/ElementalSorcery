@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:nature_crystal",
+    "title": {
+        "zh_CN": "自然水晶",
+        "en_US": "Nature Crystal"
+    },
+    "describe": {
+        "zh_CN": "通过给甘蔗注魔，可以得到自然水晶。自然水晶可以存储某个地点周围的相关信息，不过现在它手中就是一个摆设。\\n注魔条件：任何时间地点。",
+        "en_US": "By enchanting Sugar Canes, you can get Natural Crystal. It can store relevant information around a place, but now it is just a decoration, not useful.\\nEnchanting condition: Any time and place."
+    },
+    "crafts": "elementalsorcery:nature_crystal"
+}

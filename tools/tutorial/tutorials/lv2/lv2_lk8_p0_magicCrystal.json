@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:magic_crystal",
+    "title": {
+        "zh_CN": "一切的开始",
+        "en_US": "The beginning of everything"
+    },
+    "describe": {
+        "zh_CN": "进入元素时代的敲门砖，最基础的材料，通过给带有魔力的蓝晶石再次注魔，从而得到这种水晶。\\n注魔条件：少雨地区的白天。",
+        "en_US": "The most basic material for entering the elemental age, this crystal is obtained by enchanting the kyanite with magic.\\nEnchanting condition: During the day in areas with low rainfall."
+    },
+    "crafts": "elementalsorcery:magic_crystal"
+}

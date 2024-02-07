@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:soul_fragment",
+    "title": {
+        "zh_CN": "灵魂召唤",
+        "en_US": "Soul Summon"
+    },
+    "describe": {
+        "zh_CN": "使用「聚魂」附魔的武器，在打死生物后，会掉落灵魂碎片\\n将木剑和掉落的灵魂碎片扔到一起，灵魂碎片会缠绕在木剑上形成「灵魂缠绕的木剑」，使用该木剑可以将将灵魂与信物共鸣，从而进行召唤仪式。\\n该仪式和映像仪式基本一样，不同点：一是桌面上需要摆放信物；二是需要使用「灵魂缠绕的木剑」并且会消耗灵魂。\\n如果灵魂不足的话，会受到惩罚，这问题似乎前人也无法解决。\\n此外召唤仪式必须使用3级及以上的仪式桌才能进行。\\n那些东西可以作为信物？祭品研究手册上会有星标记。",
+        "en_US": "Weapons enchanted with 'Gather Souls' will drop Soul Fragments upon killing creatures. \\nThrowing a wooden sword and dropped Soul Fragments together will wrap the fragments around the sword, creating a Soul-Entwined Wooden Sword. Using this sword allows resonance between souls and Keepsake, enabling Summon Rite.\\nThe ritual is similar to the Print Ritual, but with two differences: Keepsake need to be placed on the table, and a Soul-Entwined Wooden Sword is required, consuming souls.\\nInsufficient souls will result in penalties, a problem seemingly unresolved by predecessors.\\nAdditionally, Summon Rite require Ritual Tables of level 3 or higher.\\nWhat can be used as Keepsake? The Rite Research Manual will have star markings."
+    }
+}
