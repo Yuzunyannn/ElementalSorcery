@@ -1,7 +1,9 @@
 package yuzunyannn.elementalsorcery.util.helper;
 
 import java.lang.reflect.Field;
+import java.util.AbstractMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import yuzunyannn.elementalsorcery.util.math.MathSupporter;
@@ -33,6 +35,10 @@ public class JavaHelper {
 		System.arraycopy(a, 0, newArray, 0, a.length);
 		System.arraycopy(b, 0, newArray, a.length, b.length);
 		return newArray;
+	}
+
+	public static <T, U> Entry<T, U> entry(T t, U u) {
+		return new AbstractMap.SimpleEntry<T, U>(t, u);
 	}
 
 //

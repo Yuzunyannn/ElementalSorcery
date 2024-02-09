@@ -24,6 +24,7 @@ public class GItemFrame extends GImage {
 	protected GItemStack gStack;
 	protected boolean showDisabled;
 	protected boolean isHover;
+	protected boolean hasHoverEffect = true;
 	protected ISoftGuiRuntime runtime;
 
 	public GItemFrame() {
@@ -92,6 +93,10 @@ public class GItemFrame extends GImage {
 		this.showDisabled = showDisabled;
 	}
 
+	public void setHasHoverEffect(boolean hasHoverEffect) {
+		this.hasHoverEffect = hasHoverEffect;
+	}
+
 	@Override
 	public void update() {
 		super.update();
@@ -108,7 +113,7 @@ public class GItemFrame extends GImage {
 			GlStateManager.translate(x, y, z + 40);
 			HIGHLIGHT.draw(partialTicks);
 			GlStateManager.translate(-x, -y, -z + 40);
-		} else if (isHover) {
+		} else if (isHover && hasHoverEffect) {
 			GlStateManager.translate(x, y, z + 40);
 			HIGHLIGHT.draw(partialTicks);
 			GlStateManager.translate(-x, -y, -z + 40);

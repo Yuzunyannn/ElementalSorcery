@@ -103,3 +103,7 @@ cprocess.exec(`node ./json_to_lang.js`, { cwd: '../lang' }, function (err, stdou
     if (err) console.log(err)
     else console.log(stdout)
 })
+cprocess.exec(`node ./parchments_dispose.js`, { cwd: '../lang' }, function (err, stdout) {
+    if (err) console.log(err)
+    else console.log(stdout)
+})

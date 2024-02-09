@@ -48,9 +48,9 @@ public class MagicDeskCategory implements IRecipeCategory<MagicDeskRecipeWrapper
 		IGuiItemStackGroup group = recipeLayout.getItemStacks();
 		TileMagicDesk.Recipe r = recipeWrapper.getRecipe();
 		group.init(0, true, 33, 0);
-		group.set(0, r.getInput());
+		group.set(0, r.getRecipeInput());
 		group.init(1, false, 75, 0);
-		group.set(1, r.getOutput());
+		group.set(1, r.getRecipeOutput());
 		List<ItemStack> list = r.getSequence();
 		for (int i = 0; i < list.size(); i++) {
 			int x = (i % 10) - 5;

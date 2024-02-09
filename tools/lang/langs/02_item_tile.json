@@ -42,12 +42,12 @@
         },
         "item.spellbook.name": {
             "zh_CN": "平凡的魔导书",
-            "en_US": "Ordinary Wizard Book",
+            "en_US": "Ordinary Spellbook",
             "ja_JP": "平凡の魔導書"
         },
         "item.spellbookArchitecture.name": {
             "zh_CN": "建筑之魔导书",
-            "en_US": "Wizard Book of Architecture",
+            "en_US": "Spellbook of Architecture",
             "ja_JP": "建築の魔導書"
         },
         "item.spellbookEnchantment.name": {
@@ -57,12 +57,12 @@
         },
         "item.spellbookLaunch.name": {
             "zh_CN": "起始之魔导书",
-            "en_US": "Wizard Book of Launcher",
+            "en_US": "Spellbook of Launcher",
             "ja_JP": "起動の魔導書"
         },
         "item.spellbookElement.name": {
             "zh_CN": "元素之魔导书",
-            "en_US": "Wizard Book of Elements",
+            "en_US": "Spellbook of Elements",
             "ja_JP": "元素の魔導書"
         },
         "item.architectureCrystal.name": {

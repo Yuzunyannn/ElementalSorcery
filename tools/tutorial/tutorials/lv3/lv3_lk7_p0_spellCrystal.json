@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:spell_crystal",
+    "title": {
+        "zh_CN": "咒术水晶",
+        "en_US": "Incantation Crystal"
+    },
+    "describe": {
+        "zh_CN": "携带咒术的水晶，制作魔导书必备的材料。\\n咒术水晶可以通过魔力水晶再次注魔得到，需要在午夜时分，吸收咒文才可能注魔成功。\\n注魔条件：午夜，周围有超过14个书架",
+        "en_US": "Crystals imbued with incantation, essential materials for crafting Spellbook. \\Incantation Crystal can be recharged using Magic Crystal and need to absorb incantations at midnight for successful recharging.\\nEnchanting Condition: Midnight, surrounded by more than 14 bookshelves."
+    },
+    "crafts": "elementalsorcery:spell_crystal"
+}

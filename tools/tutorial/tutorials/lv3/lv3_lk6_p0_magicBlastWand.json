@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:magic_blast_wand",
+    "title": {
+        "zh_CN": "魔爆权杖",
+        "en_US": "Magic Blast Wand"
+    },
+    "describe": {
+        "zh_CN": "摧毁带有魔力的设备后，魔力会爆发出来，对周围的生物造成伤害。利用这个性质而制作的魔爆权杖，可以让魔力从某个生物身上爆发出来，造成可观的伤害。\\n魔爆权杖可以像元素水晶一样充能，元素会被魔力化并充入权杖。",
+        "en_US": "After destroying a Magic Device, magic will erupt, causing damage to nearby creatures. Utilizing this property, the Magic Blast Wand is crafted to unleash magic from a creature, causing significant damage. \nThe Magic Blast Wand can be charged like an Element Crystal, with elements being magically charged and stored in the wand."
+    },
+    "crafts": "elementalsorcery:magic_blast_wand"
+}

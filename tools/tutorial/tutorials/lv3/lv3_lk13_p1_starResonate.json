@@ -1,0 +1,14 @@
+{
+    "cover": {
+        "id": "elementalsorcery:star_flower",
+        "data": 4
+    },
+    "title": {
+        "zh_CN": "星之共鸣",
+        "en_US": "Star Resonate"
+    },
+    "describe": {
+        "zh_CN": "在繁星满天的午夜，将带元素容器投入到成熟的星之花上，星之花可能会转化到可以和元素共鸣的共鸣态。\\n共鸣星之花不在那么的脆弱，打掉后会掉落一个星之种。\\n共鸣星之花可以通过元素之书为其注入元素，根据注入元素的不同，共鸣星之花将会产生不同的效果。\\n无法共鸣的元素无法注入。",
+        "en_US": "On a starry midnight, insert an Element Container into a mature Star Flower. The Star Flower may transform into a resonant state that can resonate with elements.\\nResonant Star Flowers are not as fragile; when broken, they drop a Star Seed.\\nResonant Star Flowers can be infused with elements using Spellbook of Elements. Depending on the infused elements, Resonant Star Flowers will produce different effects.\\nElements that cannot resonate cannot be infused."
+    }
+}

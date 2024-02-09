@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:spellbook_enchantment",
+    "title": {
+        "zh_CN": "附魔书",
+        "en_US": "Enchantment Book"
+    },
+    "describe": {
+        "zh_CN": "附魔台上的书，可以用带有末影元素的蓝晶石锄将其从附魔台上分离下来。\\n附魔书携带较多的知识元素，是目前获取知识元素最好的方式。\\n另外由于附魔台的复杂度较高，千万不要用低级的瓦解箱直接对其进行使用，否则你会后悔的。",
+        "en_US": "Book on the Enchantment Table can be separated from it using an Kyanite Pickaxe with Ender Element.\\nEnchantment Book carry a considerable amount of Knowledge Element, making them the best way to obtain Knowledge Element currently.\\nAdditionally, due to the complexity of the Enchantment Table, never use a low-level Disintegration Box directly on it, or you'll regret it."
+    },
+    "crafts": "elementalsorcery:spellbook_enchantment"
+}

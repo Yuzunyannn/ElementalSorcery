@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:spellbook_element",
+    "title": {
+        "zh_CN": "元素之魔导书",
+        "en_US": "Spellbook of Elements"
+    },
+    "describe": {
+        "zh_CN": "元素魔导书拥有特殊的咒文，可以从元素立方体之类的元素容器中提取出来元素，或者将书中的元素再次放回到元素容器之中。",
+        "en_US": "Spellbook of Elements have special spells that can extract elements from Element Container such as Element Cube, or return the elements from the book back into the Element Container."
+    },
+    "crafts": "elementalsorcery:spellbook_element"
+}

@@ -1,0 +1,18 @@
+{
+    "cover": "elementalsorcery:magic_desk",
+    "title": {
+        "zh_CN": "魔力书桌",
+        "en_US": "Magic Desk"
+    },
+    "describe": {
+        "zh_CN": "魔法书桌是魔法书祭坛的核心，它可以让魔导书将物品吸收，从而产生咒文，转化成新的魔导书。\\n将物品扔到书桌上，物品将会进入书中。\\n要想做出不同的魔导书，物品进入的顺序和数量有着严格的限定，如果进入了不该进入的物品，那么就会前功尽弃，请重新准备材料吧。\\n在祭坛面上的物品，会被自动弹到说书桌上，所以请不要在这个祭坛上乱丢东西！\\n魔导书祭坛还可以给部分魔导书补充元素。有了充足的元素，这些魔导书才可以正常使用。\\n将元素立方体放在祭坛的四个錾制石上，祭坛就会自动吸取元素，为桌面上的魔导书补充元素。\\n补充元素是不可逆的过程，进入魔导书中的元素除非消耗光，否则是无法移除的，请注意！",
+        "en_US": "The Magic Desk is the core of the Magic Spell Altar, allowing Spellbook to absorb items, generate spells, and transform into new Spellbook.\\nThrow items onto the desk, and they will be absorbed into the book.\\nTo create different Spellbooks, there are strict limits on the order and quantity of items absorbed. If the wrong items are absorbed, all previous efforts will be wasted, so please prepare the materials again.\\nItems on the altar surface will be automatically bounced onto the Desk, so please do not throw things randomly on this altar!\\nThe Spellbook Altar can also replenish Element for some Spellbooks. With sufficient Element, these Spellbook can function normally.\\nPlace Element Cube on the four Chisel Magic Quartz Block on the altar, and the altar will automatically absorb elements to replenish the Spellbooks on the desk.\\nReplenishing elements is an irreversible process; once the elements enter the Spellbook, they cannot be removed unless fully consumed. Please be aware!"
+    },
+    "crafts": "elementalsorcery:magic_desk",
+    "building": {
+        "structure": "spellbook_altar",
+        "custom": {
+            "0,1,0": "elementalsorcery:magic_desk"
+        }
+    }
+}

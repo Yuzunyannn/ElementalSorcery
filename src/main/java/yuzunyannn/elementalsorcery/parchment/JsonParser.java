@@ -191,7 +191,7 @@ public class JsonParser {
 			if (list.size() < 2) throw new JsonParseException("书桌和合成item字段需要两个");
 			List<ItemStack> s = null;
 			for (TileMagicDesk.Recipe r : TileMagicDesk.getRecipes()) {
-				if (ItemStack.areItemsEqual(r.getOutput(), list.get(1))) {
+				if (ItemStack.areItemsEqual(r.getRecipeOutput(), list.get(1))) {
 					s = r.getSequence();
 					break;
 				}

@@ -27,6 +27,7 @@ for (let lang in outputTalbe) {
         let data = jsonLang[type]
         for (let key in data) {
             let valueMap = data[key]
+            if (valueMap.dispose) continue
             let value = valueMap[lang] ? valueMap[lang] : valueMap["zh_CN"]
             str = str + key + "=" + value + "\r\n"
         }

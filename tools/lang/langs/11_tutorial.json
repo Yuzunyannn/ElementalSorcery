@@ -406,13 +406,61 @@
 			"zh_CN": "灵魂碎片可以像缠绕在木剑上一样，缠绕在皮革上，当皮革收集到一定的灵魂后，可以转变成「生命之革」。\\n「生命之革」可以快速的在身上缠绕，形成一套皮甲，或许这对战斗有所帮助，不过要注意的是生成的皮甲会强行顶掉身上所穿的装备，同时还具有绑定和消失诅咒。",
 			"en_US": "Soul Fragments can be wrapped around leather, similar to how they wrap around wooden swords. When enough soul energy is collected in the leather, it can transform into 'Leather of Life'. \nThe 'Life Leather' can quickly wrap around the body, forming a set of leather armor. Perhaps this would be helpful in combat, but it's worth noting that the generated armor will forcibly replace any existing equipment worn, and it also carries binding and vanishing curses."
 		},
+		"es.tutorial.title.3_10_0": {
+			"zh_CN": "魔导书",
+			"en_US": "Spellbook"
+		},
+		"es.tutorial.describe.3_10_0": {
+			"zh_CN": "封皮，封底和咒术纸张，共同制作出来最基础的魔导书，拥有这本魔导书，就可以开始元素魔法之旅了，拥有了它，你就可以完成更高级的合成，操作元素之力完成各种各样的工作。\\n不过，目前做出来的魔导书是最低级的，它基本上没有任何用处，不过你可以使用魔力书桌，通过给予它对应物品，平凡的魔导书将转化成更高级的魔导书。\\n高级的魔导书记录的咒文不同，完成的功能也会有所不同。",
+			"en_US": "The cover, back cover and Incantation Paper together make the most basic Spellbook. With this Spellbook, you can begin your journey into ElementalSorcery. Possessing it enables you to perform more advanced crafts or manipulate the power of elements to accomplish various tasks. \\nHowever, the Spellbook made at present is the lowest level, and it is basically useless. However, you can use the Magic Desk to transform an Ordinary Spellbook into a more advanced one by providing it with the corresponding items.\\nAdvanced Spellbooks record different spells, resulting in different functionalities."
+		},
+		"es.tutorial.title.3_11_0": {
+			"zh_CN": "元素立方体",
+			"en_US": "Element Cube"
+		},
+		"es.tutorial.describe.3_11_0": {
+			"zh_CN": "元素水晶虽然已经可以储存元素了，不过它还不足以将元素进行隔空输送。这时就需要元素立方体了。将元素立方体放在某些祭坛的某些位置，元素立方体就会与祭坛产生共鸣，提供祭坛工作所需的元素等。\\n值得注意的是，盛有不同元素的元素立方体在受到爆炸时，内部的元素也会与爆炸共鸣，并产不同的爆炸效果。\\n例如末影元素会传送周边方块和实体，火元素伤害高并且会生成岩浆等等",
+			"en_US": "Although Element Crystal can store Element, but they are not sufficient for transporting elements across space. This is where Element Cube come in. Placing Element Cube in certain positions on certain altars will resonate with the altars, providing the necessary Element for their operation.\\nIt's worth noting that when an Element Cube containing Element is attacked by an explosion, the internal Element will resonate with the explosion, resulting in different explosive effects.\\nFor example, Ender Element will teleport surrounding blocks and entities, Fire Element cause high damage and generate lava, and so on."
+		},
+		"es.tutorial.title.3_12_0": {
+			"zh_CN": "魔力书桌",
+			"en_US": "Magic Desk"
+		},
+		"es.tutorial.describe.3_12_0": {
+			"zh_CN": "魔法书桌是魔法书祭坛的核心，它可以让魔导书将物品吸收，从而产生咒文，转化成新的魔导书。\\n将物品扔到书桌上，物品将会进入书中。\\n要想做出不同的魔导书，物品进入的顺序和数量有着严格的限定，如果进入了不该进入的物品，那么就会前功尽弃，请重新准备材料吧。\\n在祭坛面上的物品，会被自动弹到说书桌上，所以请不要在这个祭坛上乱丢东西！\\n魔导书祭坛还可以给部分魔导书补充元素。有了充足的元素，这些魔导书才可以正常使用。\\n将元素立方体放在祭坛的四个錾制石上，祭坛就会自动吸取元素，为桌面上的魔导书补充元素。\\n补充元素是不可逆的过程，进入魔导书中的元素除非消耗光，否则是无法移除的，请注意！",
+			"en_US": "The Magic Desk is the core of the Magic Spell Altar, allowing Spellbook to absorb items, generate spells, and transform into new Spellbook.\\nThrow items onto the desk, and they will be absorbed into the book.\\nTo create different Spellbooks, there are strict limits on the order and quantity of items absorbed. If the wrong items are absorbed, all previous efforts will be wasted, so please prepare the materials again.\\nItems on the altar surface will be automatically bounced onto the Desk, so please do not throw things randomly on this altar!\\nThe Spellbook Altar can also replenish Element for some Spellbooks. With sufficient Element, these Spellbook can function normally.\\nPlace Element Cube on the four Chisel Magic Quartz Block on the altar, and the altar will automatically absorb elements to replenish the Spellbooks on the desk.\\nReplenishing elements is an irreversible process; once the elements enter the Spellbook, they cannot be removed unless fully consumed. Please be aware!"
+		},
+		"es.tutorial.title.3_13_0": {
+			"zh_CN": "元素之魔导书",
+			"en_US": "Spellbook of Elements"
+		},
+		"es.tutorial.describe.3_13_0": {
+			"zh_CN": "元素魔导书拥有特殊的咒文，可以从元素立方体之类的元素容器中提取出来元素，或者将书中的元素再次放回到元素容器之中。",
+			"en_US": "Spellbook of Elements have special spells that can extract elements from Element Container such as Element Cube, or return the elements from the book back into the Element Container."
+		},
+		"es.tutorial.title.3_13_1": {
+			"zh_CN": "星之共鸣",
+			"en_US": "Star Resonate"
+		},
+		"es.tutorial.describe.3_13_1": {
+			"zh_CN": "在繁星满天的午夜，将带元素容器投入到成熟的星之花上，星之花可能会转化到可以和元素共鸣的共鸣态。\\n共鸣星之花不在那么的脆弱，打掉后会掉落一个星之种。\\n共鸣星之花可以通过元素之书为其注入元素，根据注入元素的不同，共鸣星之花将会产生不同的效果。\\n无法共鸣的元素无法注入。",
+			"en_US": "On a starry midnight, insert an Element Container into a mature Star Flower. The Star Flower may transform into a resonant state that can resonate with elements.\\nResonant Star Flowers are not as fragile; when broken, they drop a Star Seed.\\nResonant Star Flowers can be infused with elements using Spellbook of Elements. Depending on the infused elements, Resonant Star Flowers will produce different effects.\\nElements that cannot resonate cannot be infused."
+		},
+		"es.tutorial.title.3_14_0": {
+			"zh_CN": "起始之魔导书",
+			"en_US": "Spellbook of Launcher"
+		},
+		"es.tutorial.describe.3_14_0": {
+			"zh_CN": "起始之魔导书可以将启动咒文魔力化，并发送给不同的祭坛，从而启动各种各样的合成或程式。",
+			"en_US": "The Spellbook of Launcher can enchant startup spells with magic and send them to different altars, thereby initiating various craft or processes."
+		},
 		"es.tutorial.title.3_1_0": {
 			"zh_CN": "元素的起点",
 			"en_US": "Origin of Element"
 		},
 		"es.tutorial.describe.3_1_0": {
 			"zh_CN": "要发展元素技术，一个好用的元素容器是一切的起点。有非常好的元素亲和性的元素水晶，便可以胜任这一职位，不过它的容量是有限的。\\n元素水晶可以通过魔力水晶再次注魔得到，在元素活跃的时间段内，才可能注魔成功。\\n注魔条件：日出日落的平原上",
-			"en_US": "To develop elemental technology, a reliable Element Container is the starting point. An Element Crystal with a strong affinity for elements can handle this role, although its capacity is limited.\\nElement Crystals can be recharged using Magic Crystals, but only during active elemental periods.\\nEnchanting condition: On the plains during sunrise and sunset."
+			"en_US": "To develop elemental technology, a reliable Element Container is the starting point. An Element Crystal with a strong affinity for elements can handle this role, although its capacity is limited.\\nElement Crystals can be recharged using Magic Crystals, but only during active elemental periods.\\nEnchanting Condition: On the plains during sunrise and sunset."
 		},
 		"es.tutorial.title.3_2_0": {
 			"zh_CN": "湛蓝水晶",
@@ -478,6 +526,54 @@
 		"es.tutorial.describe.3_5_1": {
 			"zh_CN": "精灵们依然使用羊皮卷进行存储信息，手里一堆没有地方装？制作一个元素手册吧，可以将身上多余的羊皮卷装入手册中，更好的储存与查阅。",
 			"en_US": "The Elves still use Parchment to store information, but what to do when you have a bunch and nowhere to put them? Make an Parchment Manual! You can store your extra Parchments in the manual for better storage and reference."
+		},
+		"es.tutorial.title.3_6_0": {
+			"zh_CN": "魔爆权杖",
+			"en_US": "Magic Blast Wand"
+		},
+		"es.tutorial.describe.3_6_0": {
+			"zh_CN": "摧毁带有魔力的设备后，魔力会爆发出来，对周围的生物造成伤害。利用这个性质而制作的魔爆权杖，可以让魔力从某个生物身上爆发出来，造成可观的伤害。\\n魔爆权杖可以像元素水晶一样充能，元素会被魔力化并充入权杖。",
+			"en_US": "After destroying a Magic Device, magic will erupt, causing damage to nearby creatures. Utilizing this property, the Magic Blast Wand is crafted to unleash magic from a creature, causing significant damage. \nThe Magic Blast Wand can be charged like an Element Crystal, with elements being magically charged and stored in the wand."
+		},
+		"es.tutorial.title.3_6_1": {
+			"zh_CN": "冲击魔法",
+			"en_US": "Shock Magic"
+		},
+		"es.tutorial.describe.3_6_1": {
+			"zh_CN": "通过魔爆权杖升级到的冲击权杖，可以借助周围的气，冲击并推动生物(无伤害)或方块，因此不会任何的消耗。\\n冲击还可以将一些不稳定的结构取出，或许这在将来会有用。\\n合成冲击权杖的部分素材可以找精灵去问问。",
+			"en_US": "The Shock Wand, upgraded from the Magic Blast Wand, can utilize surrounding energy to shock and push creatures (without causing harm) or blocks, without any consumption.\\nThe shock can also extract some unstable structures, which might be useful in the future.\\nYou can ask the elves about some of the materials needed to craft the Shock Wand."
+		},
+		"es.tutorial.title.3_7_0": {
+			"zh_CN": "咒术水晶",
+			"en_US": "Incantation Crystal"
+		},
+		"es.tutorial.describe.3_7_0": {
+			"zh_CN": "携带咒术的水晶，制作魔导书必备的材料。\\n咒术水晶可以通过魔力水晶再次注魔得到，需要在午夜时分，吸收咒文才可能注魔成功。\\n注魔条件：午夜，周围有超过14个书架",
+			"en_US": "Crystals imbued with incantation, essential materials for crafting Spellbook. \\Incantation Crystal can be recharged using Magic Crystal and need to absorb incantations at midnight for successful recharging.\\nEnchanting Condition: Midnight, surrounded by more than 14 bookshelves."
+		},
+		"es.tutorial.title.3_8_0": {
+			"zh_CN": "附魔书",
+			"en_US": "Enchantment Book"
+		},
+		"es.tutorial.describe.3_8_0": {
+			"zh_CN": "附魔台上的书，可以用带有末影元素的蓝晶石锄将其从附魔台上分离下来。\\n附魔书携带较多的知识元素，是目前获取知识元素最好的方式。\\n另外由于附魔台的复杂度较高，千万不要用低级的瓦解箱直接对其进行使用，否则你会后悔的。",
+			"en_US": "Book on the Enchantment Table can be separated from it using an Kyanite Pickaxe with Ender Element.\\nEnchantment Book carry a considerable amount of Knowledge Element, making them the best way to obtain Knowledge Element currently.\\nAdditionally, due to the complexity of the Enchantment Table, never use a low-level Disintegration Box directly on it, or you'll regret it."
+		},
+		"es.tutorial.title.3_8_1": {
+			"zh_CN": "咒术纸张",
+			"en_US": "Incantation Paper"
+		},
+		"es.tutorial.describe.3_8_1": {
+			"zh_CN": "咒术纸张可以将咒文和魔力元素很好的结合在一块，是制作魔导书的专用纸。",
+			"en_US": "Incantation paper combines spells and elements well, making it the specialized paper for crafting Spellbook."
+		},
+		"es.tutorial.title.3_9_0": {
+			"zh_CN": "魔导书封皮",
+			"en_US": "Spellbook Cover"
+		},
+		"es.tutorial.describe.3_9_0": {
+			"zh_CN": "魔导书的封面和封低。\\n魔导书的封皮可不是便宜货哦。",
+			"en_US": "The cover and back cover of the Spellbook.\\nThe cover of a Spellbook is no cheap material."
 		}
 	}
 }

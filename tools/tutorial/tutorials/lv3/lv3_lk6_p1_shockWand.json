@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:shock_wand",
+    "title": {
+        "zh_CN": "冲击魔法",
+        "en_US": "Shock Magic"
+    },
+    "describe": {
+        "zh_CN": "通过魔爆权杖升级到的冲击权杖，可以借助周围的气，冲击并推动生物(无伤害)或方块，因此不会任何的消耗。\\n冲击还可以将一些不稳定的结构取出，或许这在将来会有用。\\n合成冲击权杖的部分素材可以找精灵去问问。",
+        "en_US": "The Shock Wand, upgraded from the Magic Blast Wand, can utilize surrounding energy to shock and push creatures (without causing harm) or blocks, without any consumption.\\nThe shock can also extract some unstable structures, which might be useful in the future.\\nYou can ask the elves about some of the materials needed to craft the Shock Wand."
+    },
+    "crafts": "elementalsorcery:shock_wand"
+}

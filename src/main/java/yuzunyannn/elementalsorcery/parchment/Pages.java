@@ -23,7 +23,6 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.building.Building;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfessionScholar;
-import yuzunyannn.elementalsorcery.tile.TileRiteTable;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
 import yuzunyannn.elementalsorcery.util.json.Json;
@@ -164,6 +163,11 @@ public class Pages {
 			if (!ElementMap.checkModDemands(json)) return false;
 			if (!typePair.getPath().startsWith("parchment_")) return false;
 
+			if (json.hasBoolean("dispose") && json.getBoolean("dispose")) {
+				if (ESAPI.isDevelop) ESAPI.logger.info("parchment disposed info: " + file);
+				return false;
+			}
+
 			JsonParser.Packet packet = JsonParser.read(json);
 			if (packet == null) return false;
 			String id = Json.fileToId(file, null);
@@ -176,7 +180,7 @@ public class Pages {
 			if (packet.page.level < 0) {
 				if (packet.page.level == PAGE_LEVEL_ELF) ElfProfessionScholar.addScholarPage(packet.page);
 			}
-			else TileRiteTable.addPage(id, packet.page.level);
+			// else TileRiteTable.addPage(id, packet.page.level);
 			return true;
 		});
 	}

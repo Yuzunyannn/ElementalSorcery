@@ -1,1 +1,1 @@
-{"type":"elementalsorcery:tutorial","level":3,"unlock":3,"cover":{"item":"elementalsorcery:glass_cup","nbt":{"juice":{"water":1000,"material":{"EF":10}}}},"title":"3_3_1","describe":"3_3_1"}
+{"type":"elementalsorcery:tutorial","level":3,"unlock":3,"cover":{"item":"elementalsorcery:glass_cup","nbt":{"juice":{"water":1000,"material":{"EF":10}}}},"crafts":"elementalsorcery:juice_concentrate","title":"3_3_1","describe":"3_3_1"}

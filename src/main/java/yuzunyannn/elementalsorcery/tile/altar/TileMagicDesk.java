@@ -316,8 +316,8 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 	private void resetAllAutomata() {
 		automataList.clear();
 		for (TileMagicDesk.Recipe r : getRecipes()) {
-			ItemStack input = r.getInput();
-			if (input.isItemEqual(book)) automataList.add(new ItemAutomata(r.getSequence(), r.getOutput()));
+			ItemStack input = r.getRecipeInput();
+			if (input.isItemEqual(book)) automataList.add(new ItemAutomata(r.getSequence(), r.getRecipeOutput()));
 		}
 	}
 
@@ -326,11 +326,11 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		ItemStack input;
 		NonNullList<ItemStack> sequence;
 
-		public ItemStack getOutput() {
+		public ItemStack getRecipeOutput() {
 			return output;
 		}
 
-		public ItemStack getInput() {
+		public ItemStack getRecipeInput() {
 			return input;
 		}
 
@@ -368,7 +368,7 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 
 	static public List<ItemStack> findRecipe(ItemStack input) {
 		for (TileMagicDesk.Recipe r : getRecipes()) {
-			if (ItemStack.areItemsEqual(r.getInput(), input)) return r.sequence;
+			if (ItemStack.areItemsEqual(r.getRecipeInput(), input)) return r.sequence;
 		}
 		return Collections.emptyList();
 	}
@@ -390,10 +390,11 @@ public class TileMagicDesk extends TileStaticMultiBlock implements ITickable, IG
 		// building
 		addRecipe(new ItemStack(ITEMS.SPELLBOOK), new ItemStack(ITEMS.SPELLBOOK_ARCHITECTURE),
 				new ItemStack(ESObjects.ITEMS.QUILL, 1, 1), new ItemStack(ESObjects.BLOCKS.ESTONE, 16),
-				new ItemStack(ESObjects.ITEMS.ARCHITECTURE_CRYSTAL, 1), new ItemStack(ESObjects.BLOCKS.KYANITE_BLOCK, 2),
-				new ItemStack(Blocks.STONE, 16), new ItemStack(Blocks.IRON_BLOCK, 1),
-				new ItemStack(Blocks.GOLD_BLOCK, 1), new ItemStack(Blocks.REDSTONE_BLOCK, 1),
-				new ItemStack(Blocks.OBSIDIAN, 1), new ItemStack(Blocks.BRICK_BLOCK, 2));
+				new ItemStack(ESObjects.ITEMS.ARCHITECTURE_CRYSTAL, 1),
+				new ItemStack(ESObjects.BLOCKS.KYANITE_BLOCK, 2), new ItemStack(Blocks.STONE, 16),
+				new ItemStack(Blocks.IRON_BLOCK, 1), new ItemStack(Blocks.GOLD_BLOCK, 1),
+				new ItemStack(Blocks.REDSTONE_BLOCK, 1), new ItemStack(Blocks.OBSIDIAN, 1),
+				new ItemStack(Blocks.BRICK_BLOCK, 2));
 		// 咒文
 		addRecipeFromMantra(ESObjects.MANTRAS.LAUNCH_ECR,
 				ItemHelper.toArray(ITEMS.QUILL, 1, 1, Blocks.CRAFTING_TABLE, 2, ITEMS.QUILL, 1, 1));

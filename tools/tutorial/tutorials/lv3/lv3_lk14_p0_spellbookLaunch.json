@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:spellbook_launch",
+    "title": {
+        "zh_CN": "起始之魔导书",
+        "en_US": "Spellbook of Launcher"
+    },
+    "describe": {
+        "zh_CN": "起始之魔导书可以将启动咒文魔力化，并发送给不同的祭坛，从而启动各种各样的合成或程式。",
+        "en_US": "The Spellbook of Launcher can enchant startup spells with magic and send them to different altars, thereby initiating various craft or processes."
+    },
+    "crafts": "elementalsorcery:spellbook_launch"
+}

@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:spellbook",
+    "title": {
+        "zh_CN": "魔导书",
+        "en_US": "Spellbook"
+    },
+    "describe": {
+        "zh_CN": "封皮，封底和咒术纸张，共同制作出来最基础的魔导书，拥有这本魔导书，就可以开始元素魔法之旅了，拥有了它，你就可以完成更高级的合成，操作元素之力完成各种各样的工作。\\n不过，目前做出来的魔导书是最低级的，它基本上没有任何用处，不过你可以使用魔力书桌，通过给予它对应物品，平凡的魔导书将转化成更高级的魔导书。\\n高级的魔导书记录的咒文不同，完成的功能也会有所不同。",
+        "en_US": "The cover, back cover and Incantation Paper together make the most basic Spellbook. With this Spellbook, you can begin your journey into ElementalSorcery. Possessing it enables you to perform more advanced crafts or manipulate the power of elements to accomplish various tasks. \\nHowever, the Spellbook made at present is the lowest level, and it is basically useless. However, you can use the Magic Desk to transform an Ordinary Spellbook into a more advanced one by providing it with the corresponding items.\\nAdvanced Spellbooks record different spells, resulting in different functionalities."
+    },
+    "crafts": "elementalsorcery:spellbook"
+}

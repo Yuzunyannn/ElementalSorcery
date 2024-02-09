@@ -1,0 +1,21 @@
+{
+    "cover": "elementalsorcery:magic_paper",
+    "title": {
+        "zh_CN": "咒术纸张",
+        "en_US": "Incantation Paper"
+    },
+    "describe": {
+        "zh_CN": "咒术纸张可以将咒文和魔力元素很好的结合在一块，是制作魔导书的专用纸。",
+        "en_US": "Incantation paper combines spells and elements well, making it the specialized paper for crafting Spellbook."
+    },
+    "crafts": [
+        {
+            "item": "elementalsorcery:magic_paper",
+            "data": 0
+        },
+        {
+            "item": "elementalsorcery:magic_paper",
+            "data": 1
+        }
+    ]
+}

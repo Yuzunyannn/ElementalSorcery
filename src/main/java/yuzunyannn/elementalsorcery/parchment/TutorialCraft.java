@@ -9,6 +9,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
@@ -35,9 +36,12 @@ public class TutorialCraft {
 
 	public static void init() {
 		tryCreators.clear();
+		tryCreators.add(TutorialCraftSP::tryCreate);
+		tryCreators.add(TutorialCraftDesk::tryCreate);
 		tryCreators.add(TutorialCraftSeek::tryCreate);
 		tryCreators.add(TutorialCraftSmelting::tryCreate);
 		tryCreators.add(TutorialCraftInfusion::tryCreate);
+		tryCreators.add(TutorialCraftResearch::tryCreate);
 		tryCreators.add(TutorialCraftES::tryCreate);
 		tryCreators.add(TutorialCraftMC::tryCreate);
 	}
@@ -101,9 +105,18 @@ public class TutorialCraft {
 			return arrow;
 		}
 
+		protected ItemStack getItmeStack(Ingredient ingredient) {
+			ItemStack[] stacks = ingredient.getMatchingStacks();
+			if (stacks.length == 0) return ItemStack.EMPTY;
+			int dt = tick / 20;
+			return stacks[dt % stacks.length];
+		}
+
 		protected abstract void updateCraft();
 
-		protected abstract Collection<?> getElements();
+		protected Collection<?> getElements() {
+			return null;
+		}
 
 		@Override
 		public void update() {

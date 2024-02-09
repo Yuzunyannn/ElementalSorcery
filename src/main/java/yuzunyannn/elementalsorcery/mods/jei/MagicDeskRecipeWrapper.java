@@ -15,9 +15,9 @@ public class MagicDeskRecipeWrapper implements IRecipeWrapper {
 
 	@Override
 	public void getIngredients(IIngredients ingredients) {
-		ingredients.setInput(ItemStack.class, recipe.getInput());
+		ingredients.setInput(ItemStack.class, recipe.getRecipeInput());
 		ingredients.setInputs(ItemStack.class, recipe.getSequence());
-		ingredients.setOutput(ItemStack.class, recipe.getOutput());
+		ingredients.setOutput(ItemStack.class, recipe.getRecipeOutput());
 	}
 
 	public TileMagicDesk.Recipe getRecipe() {

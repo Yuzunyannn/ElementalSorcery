@@ -1,0 +1,21 @@
+{
+    "cover": "elementalsorcery:spellbook_cover",
+    "title": {
+        "zh_CN": "魔导书封皮",
+        "en_US": "Spellbook Cover"
+    },
+    "describe": {
+        "zh_CN": "魔导书的封面和封低。\\n魔导书的封皮可不是便宜货哦。",
+        "en_US": "The cover and back cover of the Spellbook.\\nThe cover of a Spellbook is no cheap material."
+    },
+    "crafts": [
+        {
+            "id": "elementalsorcery:spellbook_cover",
+            "data": 0
+        },
+        {
+            "id": "elementalsorcery:spellbook_cover",
+            "data": 1
+        }
+    ]
+}

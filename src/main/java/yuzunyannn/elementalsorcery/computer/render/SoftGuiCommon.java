@@ -44,6 +44,7 @@ public abstract class SoftGuiCommon implements ISoftGui {
 	public final static RenderTexutreFrame FRAME_ITEM_LOCKED = new RenderTexutreFrame(0, 69, 18, 18, 256, 256);
 	public final static RenderTexutreFrame FRAME_ARROW_1_LEFT = new RenderTexutreFrame(23, 31, 9, 18, 256, 256);
 	public final static RenderTexutreFrame FRAME_ARROW_1_RIGHT = new RenderTexutreFrame(32, 31, 9, 18, 256, 256);
+	public final static RenderTexutreFrame FRAME_ARROW_1_DOWN = new RenderTexutreFrame(23, 40, 18, 9, 256, 256);
 
 	public SoftGuiCommon(APP appInst) {
 		this.appInst = appInst;

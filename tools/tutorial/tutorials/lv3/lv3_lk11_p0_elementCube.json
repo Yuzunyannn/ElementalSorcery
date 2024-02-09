@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:elemental_cube",
+    "title": {
+        "zh_CN": "元素立方体",
+        "en_US": "Element Cube"
+    },
+    "describe": {
+        "zh_CN": "元素水晶虽然已经可以储存元素了，不过它还不足以将元素进行隔空输送。这时就需要元素立方体了。将元素立方体放在某些祭坛的某些位置，元素立方体就会与祭坛产生共鸣，提供祭坛工作所需的元素等。\\n值得注意的是，盛有不同元素的元素立方体在受到爆炸时，内部的元素也会与爆炸共鸣，并产不同的爆炸效果。\\n例如末影元素会传送周边方块和实体，火元素伤害高并且会生成岩浆等等",
+        "en_US": "Although Element Crystal can store Element, but they are not sufficient for transporting elements across space. This is where Element Cube come in. Placing Element Cube in certain positions on certain altars will resonate with the altars, providing the necessary Element for their operation.\\nIt's worth noting that when an Element Cube containing Element is attacked by an explosion, the internal Element will resonate with the explosion, resulting in different explosive effects.\\nFor example, Ender Element will teleport surrounding blocks and entities, Fire Element cause high damage and generate lava, and so on."
+    },
+    "crafts": "elementalsorcery:elemental_cube"
+}
