@@ -5,9 +5,11 @@ import java.util.Collection;
 import java.util.List;
 
 import net.minecraft.client.resources.I18n;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.text.TextFormatting;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
@@ -16,7 +18,6 @@ import yuzunyannn.elementalsorcery.computer.soft.AppTutorialGui;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GLabel;
-import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion;
 import yuzunyannn.elementalsorcery.tile.md.TileMDInfusion.Recipe;
 import yuzunyannn.elementalsorcery.util.helper.Color;
@@ -40,11 +41,8 @@ public class TutorialCraftInfusion extends TutorialCraft {
 	}
 
 	@Override
-	public GNode createNodeContainer(TutorialCraftNodeParams params) {
-		GShowCommon container = new GShow(params);
-		container.setPosition(params.width / 2, params.height / 2, 0);
-		container.updateCraft();
-		return container;
+	public GShowCommon createMyContainer(TutorialCraftNodeParams params) {
+		return new GShow(params);
 	}
 
 	protected class GShow extends GShowCommon {
@@ -55,7 +53,9 @@ public class TutorialCraftInfusion extends TutorialCraft {
 
 		public GShow(TutorialCraftNodeParams params) {
 			super(params);
-			double xOffset = -8;
+			initCraft(params, ESObjects.BLOCKS.MD_INFUSION);
+			
+			double xOffset = 0;
 			double yOffset = -10;
 
 			outputs = new GItemFrame[5];

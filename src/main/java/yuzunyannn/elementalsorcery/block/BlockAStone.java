@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.block;
 
+import java.util.List;
+
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -8,12 +10,36 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemMultiTexture;
 import net.minecraft.item.ItemMultiTexture.Mapper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.item.IItemSmashable;
 
 public class BlockAStone extends Block implements Mapper {
+
+	public class ItemAStone extends ItemMultiTexture implements IItemSmashable {
+
+		public ItemAStone() {
+			super(BlockAStone.this, BlockAStone.this, BlockAStone.this);
+		}
+
+		@Override
+		public void doSmash(World world, Vec3d vec, ItemStack stack, List<ItemStack> outputs, Entity operator) {
+			if (world.isRemote) return;
+			if (stack.getMetadata() == EnumType.FRAGMENTED.ordinal()) return;
+			stack.setItemDamage(EnumType.FRAGMENTED.ordinal());
+		}
+	}
+
+	public ItemBlock getItemBlock() {
+		return new ItemAStone();
+	}
 
 	public static final PropertyEnum<EnumType> VARIANT = PropertyEnum.<EnumType>create("variant", EnumType.class);
 

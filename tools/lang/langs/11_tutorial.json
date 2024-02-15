@@ -130,18 +130,26 @@
 			"en_US": "Sand formed by long-term exposure to starlight, is a valuable material. It is difficult to a whole star sand in overworld, but Star Stone can be found above sand. Perhaps you can put the collected multiple star stones into the Stone Mill, and then use a hammer to mash the Star Stone to Star Sand.(shift + Right Click to take out)\\nIn addition, it is said that this kind of Star Stone seems to be more abundant on the sand dunes."
 		},
 		"es.tutorial.title.1_2_1": {
+			"zh_CN": "捣粉锤",
+			"en_US": "Mill Hammer"
+		},
+		"es.tutorial.describe.1_2_1": {
+			"zh_CN": "把捣粉臼上的那把锤子拿下来（空的时候，shift+右键），它似乎可以做更多的事情，比如砸坏某些东西。\\n蓄力满后，右键掉落的物品可以对物品进行敲击。",
+			"en_US": "Take down the hammer on the Stone Mill (when empty, shift + Right Click to take down), it seems it can do more, like smashing certain things.\\nAfter fully charging, Right Click on the dropped item to Smash it."
+		},
+		"es.tutorial.title.1_3_0": {
 			"zh_CN": "绯红水晶",
 			"en_US": "Scarlet Crystal"
 		},
-		"es.tutorial.describe.1_2_1": {
+		"es.tutorial.describe.1_3_0": {
 			"zh_CN": "一种奇异的红色水晶，在地下的岩浆之下，可能会发现绯红水晶矿的身影。\\n所有水晶拥有频率这一属性，绯红水晶也不例外，但是它是少数频率可以变化的水晶。\\n绯红水晶遇水会产生变化，碎裂并分解成魔石与碎片。这或许是获取魔石的有一种方案，不过挖掘在岩浆下面的矿物实属有些困难。",
 			"en_US": "A strange red crystal may be found under the underground magma.\\nAll kind of crystals have the attribute of frequency, and The Scarlet Crystal is no exception, but it is one of the few kind which frequency can be changed.\\nThe Scarlet Crystal will decompose to Dimensity and Magic Fragment when it wet. This may be a way to obtain Dimensity, but it is difficult to excavate ores under the lava."
 		},
-		"es.tutorial.title.1_3_0": {
+		"es.tutorial.title.1_3_1": {
 			"zh_CN": "带魔力的末影之眼",
 			"en_US": "Eye of Ender with Magic"
 		},
-		"es.tutorial.describe.1_3_0": {
+		"es.tutorial.describe.1_3_1": {
 			"zh_CN": "通过末影之眼和魔力碎片合成，可以作为烧制使用的额外物品。\\n放在烧炼箱中，可以提升烧制速度，不过每完成一轮烧制，其耐久会降低，为0时就会消失。\\n不过没有关系，它在激活状态就会脱去魔力，变成普通的末影之眼，不过会发生小规模的爆炸，请注意。\\n此外，当其位于烧炼箱中的时候，蓝晶石工具可以被烧炼，赋予元素亲和的属性。使用带有这个属性的工具，可以让环境中的微量元素附着在其上。",
 			"en_US": "Made with Eye of Ender and Magic Fragment, can as Extra item in burning.\\nPut it in Smelt Box to increase speed. However, the durability will decrease after each round of burning is completed, and it will disappear when it is 0.\\nHowever, it doesn't matter. When it is activated, it will lose its magic and become an ordinary Eye of Ender. Be careful, a small explosion will occur when active it.\\nIn addition, when it is in Smelt Box, the kyanite tools can be smelted, giving it the attribute of Element Affinity that using a tool with allows trace elements in the environment to adhere to it."
 		},
@@ -454,6 +462,22 @@
 			"zh_CN": "起始之魔导书可以将启动咒文魔力化，并发送给不同的祭坛，从而启动各种各样的合成或程式。",
 			"en_US": "The Spellbook of Launcher can enchant startup spells with magic and send them to different altars, thereby initiating various craft or processes."
 		},
+		"es.tutorial.title.3_15_0": {
+			"zh_CN": "元素合成祭坛",
+			"en_US": "Element Craft Altar"
+		},
+		"es.tutorial.describe.3_15_0": {
+			"zh_CN": "并不是所有元素合成都只需要一种元素的，当元素合成需要多种元素的时候，元素合成台显然不能满足要求。由此，元素合成祭坛诞生了，在祭坛的十字方向放上元素立方体，通过起始之魔导书启动后祭坛会自动吸收元素立方体中存储的元素，进行合成。",
+			"en_US": "Not all Element Craft require only one Element. When multiple Elements are required for crafting, the Element Workbench obviously cannot meet the requirements. Therefore, the Element Craft Altar was born. Place Element Cubes in the cross direction of the altar, and activate it with the Spellbook of Launcher. The altar will automatically absorb the stored elements in the Element Cubes and proceed with the crafting."
+		},
+		"es.tutorial.title.3_16_0": {
+			"zh_CN": "更多知识",
+			"en_US": "More Knowledge"
+		},
+		"es.tutorial.describe.3_16_0": {
+			"zh_CN": "为了获取更多知识，可以开始升级仪式桌的仪式桌了...",
+			"en_US": "To acquire more knowledge, you can start upgrading the Ritual Table..."
+		},
 		"es.tutorial.title.3_1_0": {
 			"zh_CN": "元素的起点",
 			"en_US": "Origin of Element"
@@ -472,11 +496,11 @@
 		},
 		"es.tutorial.title.3_2_1": {
 			"zh_CN": "物质瓦解",
-			"en_US": "Materials Deconstruct"
+			"en_US": "Materials Disintegration"
 		},
 		"es.tutorial.describe.3_2_1": {
 			"zh_CN": "物质瓦解箱，在简易的祭坛下，通过魔力，将物品分解成元素，存入元素的容器。\\n瓦解箱只能分解简单结构的物品，无法分解复杂结构的元素，而且分解元素的效率十分低下。\\n不过制作简单，方便使用，是它的唯一优点。",
-			"en_US": "The Material Disintegration Box, under a simple altar, utilizes magic to deconstruct items into elements and store them in Element Container.\\nThe Disintegration Box can only deconstruct items with simple structures, and its efficiency in deconstruct elements is very low. \nHowever, it is easy to make and convenient to use, which are its only advantages."
+			"en_US": "The Material Disintegration Box, under a simple altar, utilizes magic to disintegrate items into elements and store them in Element Container.\\nThe Disintegration Box can only disintegrate items with simple structures, and its efficiency in disintegrate elements is very low. \nHowever, it is easy to make and convenient to use, which are its only advantages."
 		},
 		"es.tutorial.title.3_2_2": {
 			"zh_CN": "元素认知",
@@ -574,6 +598,14 @@
 		"es.tutorial.describe.3_9_0": {
 			"zh_CN": "魔导书的封面和封低。\\n魔导书的封皮可不是便宜货哦。",
 			"en_US": "The cover and back cover of the Spellbook.\\nThe cover of a Spellbook is no cheap material."
+		},
+		"es.tutorial.title.4_0_0": {
+			"zh_CN": "瓦解小祭坛",
+			"en_US": "Small Disintegration Altar"
+		},
+		"es.tutorial.describe.4_0_0": {
+			"zh_CN": "物质瓦解箱虽然可以将物质瓦解到元素，但是其只能提取物质中的一种元素，而且，转化率十分的低下。为了解决这个问题，学者们设计了物质瓦解小祭坛，来瓦解物质得到更多的元素。\\n该祭坛的使用方式和元素合成祭坛基本相同，将物质放到中心的桌子上，通过始之魔导书的瓦解咒文来启动合成。",
+			"en_US": "While the Material Disintegration Box can disintegrate material into Elements, it can only extract one type of Element from the material, and moreover, the conversion rate is extremely low. To address this issue, scholars have designed the Small Material Disintegration Altar, to disintegrate material and obtain more elements.\\nThe usage of this Altar is similar to that of the Element Craft Altar. Place the material on the central table, and activate the craft with the disintegration mantra from the Spellbook of Launcher."
 		}
 	}
 }

@@ -1,27 +1,26 @@
 {
 	"type": "elementalsorcery:craft",
 	"pattern": [
-		"#R#",
-		"HHH",
-		"G#B"
+		"HSH",
+		"#C#",
+		"SDS"
 	],
 	"key": {
 		"#": "elementalsorcery:magic_crystal",
-		"R": {
-			"id": "minecraft:dye",
-			"meta": 1
-		},
-		"G": {
-			"id": "minecraft:dye",
-			"meta": 2
-		},
-		"B": {
-			"id": "minecraft:dye",
-			"meta": 4
-		},
 		"H": {
 			"type": "ore_dict",
 			"item": "blockGlass"
+		},
+		"C": {
+			"id": "elementalsorcery:pad_easy_part",
+			"meta": 1
+		},
+		"D": {
+			"id": "minecraft:diamond"
+		},
+		"S": {
+			"id": "elementalsorcery:pad_easy_part",
+			"meta": 0
 		}
 	},
 	"element": [

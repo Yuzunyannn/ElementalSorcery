@@ -55,13 +55,15 @@ public class ModelStoneMill extends ModelBase {
 
 	}
 
+	public boolean needRenderHammer = false;
+
 	public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float scale) {
 		b.render(scale);
 		l1.render(scale);
 		l2.render(scale);
 		l3.render(scale);
 		l4.render(scale);
-		if (f == 0) this.renderHammer(0, 0, 0, scale);
+		if (needRenderHammer) this.renderHammer(0, 0, 0, scale);
 	}
 
 	public void renderHammer(float lift, float hit, float hight, float scale) {

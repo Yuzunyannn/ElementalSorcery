@@ -92,6 +92,7 @@ public class WorldHelper {
 	}
 
 	/** 获取生物正在看的实体 */
+	@Nullable
 	static public RayTraceResult getLookAtEntity(World world, Entity entity, double distance,
 			Predicate<? super Entity> predicate) {
 

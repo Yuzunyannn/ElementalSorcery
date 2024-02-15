@@ -260,6 +260,10 @@ public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPo
 			for (Entry<Float, ItemStack> entry : results) func.accept(entry);
 		}
 
+		public List<Entry<Float, ItemStack>> getResultEntryList() {
+			return results;
+		}
+
 		public List<Ingredient> getNeedList() {
 			return list;
 		}

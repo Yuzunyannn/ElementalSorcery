@@ -2,7 +2,10 @@ package yuzunyannn.elementalsorcery.api.computer.soft;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
+
+import javax.annotation.Nullable;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.ITooltipFlag.TooltipFlags;
@@ -40,13 +43,15 @@ public interface ISoftGuiRuntime {
 		});
 	}
 
-	default void setTooltip(String key, Vec3d vec, int duration, ItemStack stack) {
+	default void setTooltip(String key, Vec3d vec, int duration, ItemStack stack,
+			@Nullable Consumer<List<String>> hook) {
 		setTooltip(key, vec, duration, () -> {
 			List<String> list = stack.getTooltip(Minecraft.getMinecraft().player, TooltipFlags.NORMAL);
 			for (int i = 0; i < list.size(); ++i) {
 				if (i == 0) list.set(i, stack.getItem().getForgeRarity(stack).getColor() + (String) list.get(i));
 				else list.set(i, TextFormatting.GRAY + (String) list.get(i));
 			}
+			if (hook != null) hook.accept(list);
 			return list;
 		});
 	}

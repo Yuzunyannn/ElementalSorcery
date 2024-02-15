@@ -18,4 +18,5 @@ public interface IDeviceNetwork {
 	@Nonnull
 	public IDevice getDevice();
 
+	public boolean isDiscoverable();
 }

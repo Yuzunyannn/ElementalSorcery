@@ -206,7 +206,7 @@ public class BlockSealStone extends Block implements Mapper {
 
 		// 一些其他东西
 		RandomHelper.WeightRandom<ItemStack> wr = new RandomHelper.WeightRandom();
-		wr.add(new ItemStack(ESObjects.ITEMS.TUTORIAL_PAD), 0.5f);
+		wr.add(new ItemStack(ESObjects.ITEMS.TUTORIAL_PAD), 1f);
 		wr.add(new ItemStack(ESObjects.ITEMS.ELEMENT_CRYSTAL), 1.5);
 		wr.add(ItemBlessingJadePiece.createPiece(0), 3);
 		wr.add(new ItemStack(ESObjects.ITEMS.KEEPSAKE, 1, ItemKeepsake.EnumType.UNDELIVERED_LETTER.getMeta()), 4);

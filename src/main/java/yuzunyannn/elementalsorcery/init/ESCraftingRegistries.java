@@ -16,6 +16,7 @@ import yuzunyannn.elementalsorcery.crafting.mc.RecipeLifeDirt;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipePageBuilding;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
+import yuzunyannn.elementalsorcery.item.tool.ItemMillHammer;
 
 public class ESCraftingRegistries {
 
@@ -37,6 +38,8 @@ public class ESCraftingRegistries {
 				.setRegistryName("colorElementCube"));
 		// 药水
 		PotionHelper.addMix(PotionTypes.POISON, Items.PRISMARINE_CRYSTALS, ESObjects.POTION_TYPES.SILENT);
+		// 敲击
+		ItemMillHammer.registerAll();
 	}
 
 	private static void registerAllSmelting() {

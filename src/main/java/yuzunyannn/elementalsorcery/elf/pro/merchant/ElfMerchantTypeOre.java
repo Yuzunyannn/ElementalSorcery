@@ -1,5 +1,6 @@
 package yuzunyannn.elementalsorcery.elf.pro.merchant;
 
+import java.util.List;
 import java.util.Random;
 
 import net.minecraft.init.Blocks;
@@ -18,11 +19,11 @@ public class ElfMerchantTypeOre extends ElfMerchantTypeDefault {
 	public void renewTrade(World world, BlockPos pos, Random rand, VariableSet storage) {
 		TradeCount trade = new TradeCount();
 		addFavorite(trade, rand);
-		OreEnum[] ores = OreHelper.getOreEnums();
-		int randomStart = rand.nextInt(ores.length);
-		for (int i = 0; i < ores.length; i++) {
-			int index = (i + randomStart) % ores.length;
-			OreEnum ore = ores[index];
+		List<OreEnum> ores = OreHelper.getOreEnumList();
+		int randomStart = rand.nextInt(ores.size());
+		for (int i = 0; i < ores.size(); i++) {
+			int index = (i + randomStart) % ores.size();
+			OreEnum ore = ores.get(index);
 			ItemStack stack = ore.createOre();
 			if (stack.isEmpty()) continue;
 			int price = ElfChamberOfCommerce.priceIt(stack);

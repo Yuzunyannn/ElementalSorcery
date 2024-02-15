@@ -17,7 +17,6 @@ import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.container.ContainerSupremeTable;
 import yuzunyannn.elementalsorcery.container.gui.GuiSupremeTable;
 import yuzunyannn.elementalsorcery.logics.EventClient;
-import yuzunyannn.elementalsorcery.nodegui.GNode;
 
 public class TutorialCraftES extends TutorialCraft {
 
@@ -42,11 +41,8 @@ public class TutorialCraftES extends TutorialCraft {
 	}
 
 	@Override
-	public GNode createNodeContainer(TutorialCraftNodeParams params) {
-		GShowCommon container = new GShow(params);
-		container.setPosition(params.width / 2 - 1, params.height / 2, 0);
-		container.updateCraft();
-		return container;
+	public GShowCommon createMyContainer(TutorialCraftNodeParams params) {
+		return new GShow(params);
 	}
 
 	protected class GShow extends GShowCommon {
@@ -60,8 +56,42 @@ public class TutorialCraftES extends TutorialCraft {
 			return list;
 		}
 
+		public int getCurrMaxCraftType() {
+			boolean mustUseBetter = false;
+			for (int i = 0; i < list.size(); i++) {
+				List<ElementStack> eStacks = eList.get(showIndex);
+				if (eStacks.size() > 4) return 3;
+				if (eStacks.size() > 1) mustUseBetter = true;
+				int iSize = list.get(i).getKey().size();
+				if (iSize > 9) return 3;
+			}
+			return mustUseBetter ? 2 : 1;
+		}
+
+		public ItemStack getCraftIcon(Tutorial tutorial) {
+			int level = tutorial.getLevel();
+			int suggessCraftType = 1;
+			if (level >= 0 && level <= 3) suggessCraftType = 1;
+			else if (level <= 4) suggessCraftType = 2;
+			else suggessCraftType = 3;
+
+			int maxCraftType = getCurrMaxCraftType();
+			if (suggessCraftType < maxCraftType) suggessCraftType = maxCraftType;
+
+			switch (suggessCraftType) {
+			case 1:
+				return new ItemStack(ESObjects.BLOCKS.ELEMENT_WORKBENCH);
+			case 2:
+				return new ItemStack(ESObjects.BLOCKS.ELEMENT_CRAFTING_TABLE);
+			default:
+				return new ItemStack(ESObjects.BLOCKS.SUPREME_TABLE);
+			}
+		}
+
 		public GShow(TutorialCraftNodeParams params) {
 			super(params);
+			initCraft(params, getCraftIcon(params.tutorial));
+
 			double xoffset = 0;
 			double padOffsetX = -18 + xoffset;
 			double padOffsetY = -18;

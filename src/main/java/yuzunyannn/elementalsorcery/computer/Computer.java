@@ -77,7 +77,7 @@ public class Computer implements IComputer, IDeviceModifiable {
 	protected String name = "";
 	protected UUID uuid = UUID.randomUUID();
 	protected boolean inRunning = false;
-	protected DeviceNetwork networkd = new DeviceNetwork(this);
+	protected DeviceNetwork networkd;
 
 	protected final LinkedList<AppData> operations = new LinkedList<>();
 	protected final LinkedList<Consumer<IComputEnv>> updateFuncs = new LinkedList<>();
@@ -87,8 +87,13 @@ public class Computer implements IComputer, IDeviceModifiable {
 	protected final String appearance;
 
 	public Computer(String appearance) {
+		networkd = initCreateNetwork();
 		os = new EOSServer(this);
 		this.appearance = appearance;
+	}
+
+	protected DeviceNetwork initCreateNetwork() {
+		return new DeviceNetwork(this);
 	}
 
 	@Override

@@ -11,6 +11,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonActinicGlass;
 import yuzunyannn.elementalsorcery.grimoire.mantra.MantraEnderTeleport;
 import yuzunyannn.elementalsorcery.item.ItemMemoryFeather;
+import yuzunyannn.elementalsorcery.item.tool.ItemMillHammer;
 import yuzunyannn.elementalsorcery.item.tool.ItemShockWand;
 import yuzunyannn.elementalsorcery.potion.PotionRebirthFromFire;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectGoldShieldAttack;
@@ -21,11 +22,15 @@ import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class ParticleEffects {
 
+	public static final byte MAGIC_BLAST = 0;
+	public static final byte ENDER_TELEPORT = 6;
+	public static final byte MILL_HAMMER = 7;
+
 	@SideOnly(Side.CLIENT)
 	public static void showShow(World world, Vec3d pos, NBTTagCompound nbt) {
 		int id = nbt.getByte("type");
 		switch (id) {
-		case 0:
+		case MAGIC_BLAST:
 			magicBlast(world, pos, nbt.getByte("lev"));
 			break;
 		case 1:
@@ -43,8 +48,11 @@ public class ParticleEffects {
 		case 5:
 			BlockDungeonActinicGlass.doEffect(world, pos, nbt);
 			break;
-		case 6 :
+		case ENDER_TELEPORT:
 			MantraEnderTeleport.doEffect(world, pos, nbt);
+			break;
+		case MILL_HAMMER:
+			ItemMillHammer.doEffect(world, pos, nbt);
 			break;
 		}
 	}

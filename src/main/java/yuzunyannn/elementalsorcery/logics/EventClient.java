@@ -37,6 +37,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.crafting.IToElementInfo;
+import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderOutline;
@@ -311,6 +312,18 @@ public class EventClient {
 			if (price > 0) tooltip.add(TextFormatting.GOLD + "" + price + "$");
 			int[] ids = OreDictionary.getOreIDs(stack);
 			for (int i : ids) tooltip.add(TextFormatting.BOLD + OreDictionary.getOreName(i));
+
+			if (estacks != null) {
+				int complex = teInfo.complex();
+				for (ElementStack estack : estacks) {
+					if (estack.isEmpty()) continue;
+					ElementStack rStack = estack.copy().onDeconstruct(Minecraft.getMinecraft().world, stack, complex,
+							Element.DP_ALTAR);
+					String str = String.format(TextFormatting.DARK_AQUA + "%sx%s" + TextFormatting.YELLOW + " P:%d",
+							rStack.getDisplayName(), String.valueOf(rStack.getCount()), rStack.getPower());
+					tooltip.add(str);
+				}
+			}
 		}
 	}
 }

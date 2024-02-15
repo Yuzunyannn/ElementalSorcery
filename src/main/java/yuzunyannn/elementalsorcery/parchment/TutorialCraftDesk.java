@@ -5,12 +5,12 @@ import java.util.Collection;
 import java.util.List;
 
 import net.minecraft.item.ItemStack;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.computer.render.SoftGuiCommon;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
-import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk;
 import yuzunyannn.elementalsorcery.tile.altar.TileMagicDesk.Recipe;
 
@@ -32,11 +32,8 @@ public class TutorialCraftDesk extends TutorialCraft {
 	}
 
 	@Override
-	public GNode createNodeContainer(TutorialCraftNodeParams params) {
-		GShowCommon container = new GShow(params);
-		container.setPosition(params.width / 2 - 1, params.height / 2, 0);
-		container.updateCraft();
-		return container;
+	public GShowCommon createMyContainer(TutorialCraftNodeParams params) {
+		return new GShow(params);
 	}
 
 	protected class GShow extends GShowCommon {
@@ -52,6 +49,8 @@ public class TutorialCraftDesk extends TutorialCraft {
 
 		public GShow(TutorialCraftNodeParams params) {
 			super(params);
+			initCraft(params, ESObjects.BLOCKS.MAGIC_DESK);
+			
 			double xOffset = 0;
 			double putOffsetY = -50;
 			input = addSlot(xOffset - 24, putOffsetY);

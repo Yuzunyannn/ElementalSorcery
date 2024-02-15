@@ -184,12 +184,12 @@
 			"element": [
 				{
 					"id": "earth",
-					"size": 5,
+					"size": 3,
 					"power": 115
 				},
 				{
 					"id": "metal",
-					"size": 3,
+					"size": 2,
 					"power": 92
 				}
 			],

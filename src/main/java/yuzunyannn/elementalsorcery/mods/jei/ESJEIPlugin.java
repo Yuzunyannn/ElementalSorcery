@@ -22,6 +22,7 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
+import yuzunyannn.elementalsorcery.crafting.ISmashRecipe;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.item.prop.ItemBlessingJadePiece;
 import yuzunyannn.elementalsorcery.mods.jei.md.MDCategory;
@@ -60,6 +61,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipeCategories(new MDCategory<MDRubbleRepairRW>(UID_MDRUBBLEREPAIR));
 		registry.addRecipeCategories(new MDCategory<MDMagicSolidifyRW>(UID_MDMAGICSOLIDIFY));
 		registry.addRecipeCategories(new MDCategory<MDInfusionRW>(UID_MDINFUSION));
+		registry.addRecipeCategories(new SmashCategory());
 	}
 
 	@Override
@@ -69,6 +71,7 @@ public class ESJEIPlugin implements IModPlugin {
 		stackHelper = jeiHelpers.getStackHelper();
 		guiHelper = jeiHelpers.getGuiHelper();
 		final ESObjects.Blocks BLOCKS = ESObjects.BLOCKS;
+		final ESObjects.Items ITEMS = ESObjects.ITEMS;
 		// 注册工厂
 		registry.handleRecipes(DescribeRecipeWrapper.Describe.class, DescribeRecipeWrapper::new, DescribeCategory.UID);
 		registry.handleRecipes(TileRiteTable.Recipe.class, RiteRecipeWrapper::new, RiteCategory.UID);
@@ -79,6 +82,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.handleRecipes(TileMDRubbleRepair.Recipe.class, MDRubbleRepairRW::new, UID_MDRUBBLEREPAIR);
 		registry.handleRecipes(MDMagicSolidifyRW.FakeRecipe.class, MDMagicSolidifyRW::new, UID_MDMAGICSOLIDIFY);
 		registry.handleRecipes(TileMDInfusion.Recipe.class, MDInfusionRW::new, UID_MDINFUSION);
+		registry.handleRecipes(ISmashRecipe.class, SmashRecipeWrapper::new, SmashCategory.UID);
 		// 设置新增
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.ELEMENT_WORKBENCH), VanillaRecipeCategoryUid.CRAFTING);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.SUPREME_TABLE), VanillaRecipeCategoryUid.CRAFTING);
@@ -92,6 +96,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_RUBBLE_REPAIR), UID_MDRUBBLEREPAIR);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_MAGIC_SOLIDIFY), UID_MDMAGICSOLIDIFY);
 		registry.addRecipeCatalyst(new ItemStack(BLOCKS.MD_INFUSION), UID_MDINFUSION);
+		registry.addRecipeCatalyst(new ItemStack(ITEMS.MILL_HAMMER), SmashCategory.UID);
 		// 添加所合成表
 		registry.addRecipes(ESAPI.recipeMgr.getValues(), ElementCraftingCategory.UID);
 		registry.addRecipes(TileRiteTable.getRecipes(), RiteCategory.UID);
@@ -101,6 +106,7 @@ public class ESJEIPlugin implements IModPlugin {
 		registry.addRecipes(TileMDRubbleRepair.getRecipes(), UID_MDRUBBLEREPAIR);
 		registry.addRecipes(Arrays.asList(MDMagicSolidifyRW.FakeRecipe.values()), UID_MDMAGICSOLIDIFY);
 		registry.addRecipes(TileMDInfusion.recipes, UID_MDINFUSION);
+		registry.addRecipes(ISmashRecipe.recipes, SmashCategory.UID);
 		this.registerOther(registry);
 		// 描述类
 		registry.addRecipes(this.initDescribe(), DescribeCategory.UID);

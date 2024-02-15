@@ -310,3 +310,33 @@ Real Recipe
 * When the actual and expected('list') deviation value is less than 'deviation', will select this result 'item'
 * 'magicStoneCount'是魔石的数量，魔石必须第一个放入
 * 实际放入的和预期('list')的偏差值小于'deviation'的时候，将会得到对应的结果'item'
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Smash : smash/
+Some Origin Recipes is written in Code, so you can not override Origin Recipes
+But you can add New Recipes
+捣粉锤 : smash/
+因为部分原始合成表在代码里写死了，所以你不能对其进行覆盖
+不过你可以添加新的合成表
+具体的例子如下：
+
+{
+	"type": "elementalsorcery:smash",
+    "input": {
+		"id": "minecraft:stone"
+	},
+    "result": [
+        {
+            "id": "minecraft:coal_ore"
+        },
+        {
+            "id": "minecraft:dirt",
+            "meta": 1
+        }
+    ],
+	"onceMax": 16
+}
+
+* "onceMax" is max craft item count in once smash
+* "onceMax" 是一次敲击最多处理的物品数量 

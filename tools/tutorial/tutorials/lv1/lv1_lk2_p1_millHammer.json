@@ -1,0 +1,18 @@
+{
+    "cover": "elementalsorcery:mill_hammer",
+    "title": {
+        "zh_CN": "捣粉锤",
+        "en_US": "Mill Hammer"
+    },
+    "describe": {
+        "zh_CN": "把捣粉臼上的那把锤子拿下来（空的时候，shift+右键），它似乎可以做更多的事情，比如砸坏某些东西。\\n蓄力满后，右键掉落的物品可以对物品进行敲击。",
+        "en_US": "Take down the hammer on the Stone Mill (when empty, shift + Right Click to take down), it seems it can do more, like smashing certain things.\\nAfter fully charging, Right Click on the dropped item to Smash it."
+    },
+    "crafts": [
+        {
+            "id": "minecraft:dye",
+            "data": 15
+        },
+        "elementalsorcery:stone_mill"
+    ]
+}

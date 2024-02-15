@@ -825,6 +825,11 @@
             "zh_CN": "虽然和虚空容器似乎不太一样，但这个肯定是虚空制品，似乎可以近乎无限的存储基础材料，而且可以稳定的存储，这是怎么做到的呢？\\n(shit右键打开GUI)",
             "en_US": "Although it may seem different from a Void Container, this is definitely a Void product that can store basic materials almost infinitely and stably. How is this achieved?\\n(Shit + Right click to open GUI)",
             "ja_JP": "虚空のコンテナとは違うようだが、これは虚空製品に違いない。無限に近い基礎材料を保存でき、安定的に保存できるように見えるが、これはどうやってできたのだろうか。\\n(shitと右クリックでGUIを開く)"
+        },
+        "info.riteCraft": {
+            "zh_CN": "寻求仪式",
+            "en_US": "Seek Rite",
+            "ja_JP": "寻求儀式"
         }
     },
     "info.dungeon": {

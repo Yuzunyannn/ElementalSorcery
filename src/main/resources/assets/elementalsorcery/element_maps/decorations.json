@@ -209,12 +209,12 @@
 			"element": [
 				{
 					"id": "earth",
-					"size": 20,
+					"size": 10,
 					"power": 191
 				},
 				{
 					"id": "metal",
-					"size": 14,
+					"size": 7,
 					"power": 165
 				}
 			],

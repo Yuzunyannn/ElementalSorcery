@@ -8,6 +8,8 @@ import java.util.Map.Entry;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
@@ -26,6 +28,7 @@ public class TutorialCraft {
 		public Color color;
 		public ISoftGuiRuntime gui;
 		public Consumer<ItemStack> click;
+		public Tutorial tutorial;
 	}
 
 	static public final List<Function<ItemStack, TutorialCraft>> tryCreators = new ArrayList<>();
@@ -39,11 +42,13 @@ public class TutorialCraft {
 		tryCreators.add(TutorialCraftSP::tryCreate);
 		tryCreators.add(TutorialCraftDesk::tryCreate);
 		tryCreators.add(TutorialCraftSeek::tryCreate);
-		tryCreators.add(TutorialCraftSmelting::tryCreate);
+		tryCreators.add(TutorialCraftSmashHammer::tryCreate);
 		tryCreators.add(TutorialCraftInfusion::tryCreate);
 		tryCreators.add(TutorialCraftResearch::tryCreate);
+		tryCreators.add(TutorialCraftMeltCauldron::tryCreate);
 		tryCreators.add(TutorialCraftES::tryCreate);
 		tryCreators.add(TutorialCraftMC::tryCreate);
+		tryCreators.add(TutorialCraftSmelting::tryCreate);
 	}
 
 	static public List<TutorialCraft> create(ItemStack result) {
@@ -73,10 +78,29 @@ public class TutorialCraft {
 
 		protected int showIndex;
 		protected int tick;
+		protected int shiftTick = 40;
 		protected final TutorialCraftNodeParams params;
+		protected GItemFrame craft = new GItemFrame();
 
 		public GShowCommon(TutorialCraftNodeParams params) {
 			this.params = params;
+		}
+
+		protected void initCraft(TutorialCraftNodeParams params, ItemStack icon) {
+			craft.setColorRef(params.color);
+			craft.setPosition(params.width / 2 - 10, -params.height / 2 + 10);
+			craft.setItemStack(icon);
+//			craft.enableClick(null, null);
+//			craft.setRuntime(params.gui);
+			addChild(craft);
+		}
+
+		protected void initCraft(TutorialCraftNodeParams params, Item icon) {
+			initCraft(params, new ItemStack(icon));
+		}
+
+		protected void initCraft(TutorialCraftNodeParams params, Block icon) {
+			initCraft(params, new ItemStack(icon));
 		}
 
 		protected void onClick(GItemFrame frame) {
@@ -105,11 +129,25 @@ public class TutorialCraft {
 			return arrow;
 		}
 
-		protected ItemStack getItmeStack(Ingredient ingredient) {
+		protected ItemStack getItemStack(Ingredient ingredient) {
 			ItemStack[] stacks = ingredient.getMatchingStacks();
 			if (stacks.length == 0) return ItemStack.EMPTY;
+			return stacks[getDTIndex(stacks.length)];
+		}
+
+		protected ItemStack getItemStack(List<ItemStack> list) {
+			if (list.isEmpty()) return ItemStack.EMPTY;
+			return list.get(getDTIndex(list.size()));
+		}
+
+		protected <T> T getElement(List<T> list) {
+			if (list.isEmpty()) return null;
+			return list.get(getDTIndex(list.size()));
+		}
+
+		protected int getDTIndex(int length) {
 			int dt = tick / 20;
-			return stacks[dt % stacks.length];
+			return dt % length;
 		}
 
 		protected abstract void updateCraft();
@@ -122,18 +160,26 @@ public class TutorialCraft {
 		public void update() {
 			super.update();
 			tick++;
-			if (tick % 40 == 0) {
+			if (tick % 20 == 0) {
 				Collection<?> collection = getElements();
 				int size = collection == null ? 1 : collection.size();
 				if (size > 0) {
-					showIndex = (showIndex + 1) % size;
+					if (tick % shiftTick == 0) showIndex = (showIndex + 1) % size;
 					updateCraft();
 				}
 			}
 		}
 	}
 
-	public GNode createNodeContainer(TutorialCraftNodeParams params) {
+	final public GNode createNodeContainer(TutorialCraftNodeParams params) {
+		GShowCommon container = createMyContainer(params);
+		if (container == null) return null;
+		container.setPosition(params.width / 2, params.height / 2, 0);
+		container.updateCraft();
+		return container;
+	}
+
+	protected GShowCommon createMyContainer(TutorialCraftNodeParams params) {
 		return null;
 	}
 

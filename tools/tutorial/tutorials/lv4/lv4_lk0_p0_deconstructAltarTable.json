@@ -1,0 +1,22 @@
+{
+    "cover": "elementalsorcery:deconstruct_altar_table",
+    "title": {
+        "zh_CN": "瓦解小祭坛",
+        "en_US": "Small Disintegration Altar"
+    },
+    "describe": {
+        "zh_CN": "物质瓦解箱虽然可以将物质瓦解到元素，但是其只能提取物质中的一种元素，而且，转化率十分的低下。为了解决这个问题，学者们设计了物质瓦解小祭坛，来瓦解物质得到更多的元素。\\n该祭坛的使用方式和元素合成祭坛基本相同，将物质放到中心的桌子上，通过始之魔导书的瓦解咒文来启动合成。",
+        "en_US": "While the Material Disintegration Box can disintegrate material into Elements, it can only extract one type of Element from the material, and moreover, the conversion rate is extremely low. To address this issue, scholars have designed the Small Material Disintegration Altar, to disintegrate material and obtain more elements.\\nThe usage of this Altar is similar to that of the Element Craft Altar. Place the material on the central table, and activate the craft with the disintegration mantra from the Spellbook of Launcher."
+    },
+    "crafts": "elementalsorcery:deconstruct_altar_table",
+    "building": {
+        "structure": "deconstruct_altar",
+        "custom": {
+            "0,1,0": "elementalsorcery:deconstruct_altar_table",
+            "2,1,2": "elementalsorcery:elemental_cube",
+            "-2,1,2": "elementalsorcery:elemental_cube",
+            "-2,1,-2": "elementalsorcery:elemental_cube",
+            "2,1,-2": "elementalsorcery:elemental_cube"
+        }
+    }
+}

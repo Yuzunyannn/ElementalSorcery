@@ -30,7 +30,7 @@ public class EntityElf extends EntityElfBase {
 		if (ESAPI.isDevelop) {
 //			Random merchantRandom = ElfProfession.getRandomFromName(getCustomNameTag());
 //			getProfessionStorage().set(ElfProfession.M_TYPE, ElfMerchantType.getRandomMerchantType(merchantRandom));
-//			this.getProfessionStorage().set(ElfProfession.M_TYPE, ElfMerchantType.getMerchantType("ancient"));
+//			this.getProfessionStorage().set(ElfProfession.M_TYPE, ElfMerchantType.getMerchantType("ore"));
 //			this.setProfession(ElfProfession.MERCHANT);
 //			this.setProfession(ElfProfession.MASTER);
 //			return;

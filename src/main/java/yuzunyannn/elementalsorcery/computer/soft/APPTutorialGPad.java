@@ -108,7 +108,7 @@ public class APPTutorialGPad extends GImage {
 		addChild(close);
 
 		scissor = new GScissor(new RenderRect(0, getHeight() - topLength - 4, 0, getWidth() - optionWidth - 4));
-		scissor.setPosition(optionWidth + 4, topLength + 3, 0);
+		scissor.setPosition(optionWidth + 3, topLength + 3, 0);
 		addChild(scissor);
 		container = new GNode();
 		scissor.addChild(container);
@@ -306,6 +306,7 @@ public class APPTutorialGPad extends GImage {
 			ItemStack lastShow = currShow;
 			if (showCraft(itemStack)) addHistory(lastShow);
 		};
+		params.tutorial = tutorial;
 		GNode node = craft.createNodeContainer(params);
 		if (node == null) return;
 

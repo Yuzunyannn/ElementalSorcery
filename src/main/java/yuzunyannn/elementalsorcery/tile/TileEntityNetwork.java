@@ -154,8 +154,12 @@ public class TileEntityNetwork extends TileEntity implements ICanSync, IAliveSta
 	/** 获取itemStack */
 	public ItemStack nbtReadItemStack(NBTTagCompound nbt, String key) {
 		if (!nbt.hasKey(key, NBTTag.TAG_COMPOUND)) return ItemStack.EMPTY;
-		if (this.isSending()) return NBTHelper.deserializeItemStackFromSend(nbt.getCompoundTag(key));
-		else return new ItemStack(nbt.getCompoundTag(key));
+		nbt = nbt.getCompoundTag(key);
+		if (this.isSending()) notSendFormat: {
+			if (nbt.hasKey("Count") && nbt.hasKey("id")) break notSendFormat;
+			return NBTHelper.deserializeItemStackFromSend(nbt);
+		}
+		return new ItemStack(nbt);
 	}
 
 	/** 设置stack仓库 */

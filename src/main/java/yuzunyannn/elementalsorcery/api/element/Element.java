@@ -81,7 +81,7 @@ public class Element extends IForgeRegistryEntry.Impl<Element> {
 	/**
 	 * 物品被析构成元素时候，获取真正可以得到的元素
 	 * 
-	 * @param stack   被析构的物品，方块的话也会变成对应的物品栈传入（注意：传入的stack是有数量的，但是该函数在处理时，应认为数量只有一个）
+	 * @param stack   被析构的物品，只读，方块的话也会变成对应的物品栈传入（注意：传入的stack是有数量的，但是该函数在处理时，应认为数量只有一个）
 	 * @param estack  析构时核查的元素，请直接修改这个元素栈
 	 * @param lvPower 进行析构祭坛（工具）的能量
 	 * @param complex 析构物品的复杂度

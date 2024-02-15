@@ -291,12 +291,12 @@ public class AppTutorialGui extends AppGuiCommon {
 				int xLocal = j % lineCount;
 
 				double x = xBase + xLocal * (18 + padding);
-				double y = yBase;
+				double y = yBase + (yLocal - 1) * (18 + padding);
 
-				if (yLocal > 0) {
-					if (yLocal % 2 == 0) y = y + (yLocal / 2) * (18 + padding);
-					else y = y - (yLocal / 2 + 1) * (18 + padding);
-				}
+//				if (yLocal > 0) {
+//					if (yLocal % 2 == 0) y = y + (yLocal / 2) * (18 + padding);
+//					else y = y - (yLocal / 2 + 1) * (18 + padding);
+//				}
 
 				if (progress < uinfo.getUnlock()) {
 					GImage frame = new GImage(SoftGuiCommon.TEXTURE_1, FRAME_ITEM_LOCKED);

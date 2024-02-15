@@ -8,11 +8,11 @@ import java.util.Map.Entry;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
-import yuzunyannn.elementalsorcery.nodegui.GNode;
 
 public class TutorialCraftSmelting extends TutorialCraft {
 
@@ -38,11 +38,8 @@ public class TutorialCraftSmelting extends TutorialCraft {
 	}
 
 	@Override
-	public GNode createNodeContainer(TutorialCraftNodeParams params) {
-		GShowCommon container = new GShow(params);
-		container.setPosition(params.width / 2, params.height / 2, 0);
-		container.updateCraft();
-		return container;
+	public GShowCommon createMyContainer(TutorialCraftNodeParams params) {
+		return new GShow(params);
 	}
 
 	protected class GShow extends GShowCommon {
@@ -52,8 +49,9 @@ public class TutorialCraftSmelting extends TutorialCraft {
 
 		public GShow(TutorialCraftNodeParams params) {
 			super(params);
+			initCraft(params, ESObjects.BLOCKS.SMELT_BOX);
+			
 			double xOffset = -8;
-
 			input = addSlot(xOffset - 25, 0);
 			output = addSlot(xOffset + 25, 0);
 			addArrow(xOffset, 0);

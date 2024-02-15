@@ -1,1 +1,1 @@
-{"type":"elementalsorcery:tutorial","level":1,"unlock":2,"cover":"elementalsorcery:scarlet_crystal","title":"1_2_1","describe":"1_2_1"}
+{"type":"elementalsorcery:tutorial","level":1,"unlock":2,"cover":"elementalsorcery:mill_hammer","crafts":[{"id":"minecraft:dye","data":15},"elementalsorcery:stone_mill"],"title":"1_2_1","describe":"1_2_1"}

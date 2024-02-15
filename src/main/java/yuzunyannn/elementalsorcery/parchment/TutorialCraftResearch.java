@@ -20,13 +20,13 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IResearchRecipe;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.elf.research.ResearchRecipeManagement;
 import yuzunyannn.elementalsorcery.elf.research.Topic;
 import yuzunyannn.elementalsorcery.elf.research.Topics;
 import yuzunyannn.elementalsorcery.logics.EventClient;
-import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 import yuzunyannn.elementalsorcery.util.helper.JavaHelper;
 
@@ -49,11 +49,8 @@ public class TutorialCraftResearch extends TutorialCraft {
 	}
 
 	@Override
-	public GNode createNodeContainer(TutorialCraftNodeParams params) {
-		GShowCommon container = new GShow(params);
-		container.setPosition(params.width / 2 - 1, params.height / 2, 0);
-		container.updateCraft();
-		return container;
+	public GShowCommon createMyContainer(TutorialCraftNodeParams params) {
+		return new GShow(params);
 	}
 
 	protected class GShow extends GShowCommon {
@@ -69,6 +66,8 @@ public class TutorialCraftResearch extends TutorialCraft {
 
 		public GShow(TutorialCraftNodeParams params) {
 			super(params);
+			initCraft(params, ESObjects.BLOCKS.RESEARCHER);
+			
 			double xoffset = 0;
 			double padOffsetX = -5 * 18 + xoffset;
 			double padOffsetY = 50;
@@ -87,7 +86,7 @@ public class TutorialCraftResearch extends TutorialCraft {
 			for (int i = 0; i < inputs.size(); i++) {
 				if (i < list.size()) {
 					Ingredient ingredient = list.get(i);
-					inputs.get(i).setItemStack(getItmeStack(ingredient));
+					inputs.get(i).setItemStack(getItemStack(ingredient));
 				} else inputs.get(i).setItemStack(ItemStack.EMPTY);
 			}
 			updateTopics(recipe);

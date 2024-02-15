@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.computer.render;
 
+import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import net.minecraft.client.renderer.GlStateManager;
@@ -26,6 +28,7 @@ public class GItemFrame extends GImage {
 	protected boolean isHover;
 	protected boolean hasHoverEffect = true;
 	protected ISoftGuiRuntime runtime;
+	protected Consumer<List<String>> tooltipAppender;
 
 	public GItemFrame() {
 		this(ItemStack.EMPTY);
@@ -57,6 +60,10 @@ public class GItemFrame extends GImage {
 
 	public void setItemStack(Supplier<ItemStack> stackGetter) {
 		gStack.setStack(stackGetter);
+	}
+
+	public void setTooltipHook(Consumer<List<String>> consumer) {
+		tooltipAppender = consumer;
 	}
 
 	public ItemStack getItemStack() {
@@ -102,7 +109,7 @@ public class GItemFrame extends GImage {
 		super.update();
 		if (this.isHover && this.runtime != null) {
 			ItemStack stack = this.getItemStack();
-			if (!stack.isEmpty()) this.runtime.setTooltip("item", MOUSE_FOLLOW_VEC, 0, stack);
+			if (!stack.isEmpty()) this.runtime.setTooltip("item", MOUSE_FOLLOW_VEC, 0, stack, tooltipAppender);
 		}
 	}
 

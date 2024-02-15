@@ -15,6 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.client.IRenderItem;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
 import yuzunyannn.elementalsorcery.render.model.ModelStoneMill;
 import yuzunyannn.elementalsorcery.tile.TileStoneMill;
 import yuzunyannn.elementalsorcery.tile.TileStoneMill.Milling;
@@ -22,8 +23,8 @@ import yuzunyannn.elementalsorcery.tile.TileStoneMill.Milling;
 @SideOnly(Side.CLIENT)
 public class RenderTileStoneMill extends TileEntitySpecialRenderer<TileStoneMill> implements IRenderItem {
 
-	private TextureBinder TEXTURE = new TextureBinder("textures/blocks/stone_mill.png");
-	private final ModelStoneMill MODEL = new ModelStoneMill();
+	public static final TextureBinder TEXTURE = new TextureBinder("textures/blocks/stone_mill.png");
+	public static final ModelStoneMill MODEL = new ModelStoneMill();
 
 	@Override
 	public void render(TileStoneMill tile, double x, double y, double z, float partialTicks, int destroyStage,
@@ -36,11 +37,16 @@ public class RenderTileStoneMill extends TileEntitySpecialRenderer<TileStoneMill
 
 		RenderFriend.bindDestoryTexture(TEXTURE, destroyStage, rendererDispatcher, DESTROY_STAGES);
 		RenderFriend.startTileEntitySpecialRender(x + 0.5, y, z + 0.5, 0.0625, alpha);
-		MODEL.render(null, 1, 0, 0, 0, 0, 1.0f);
-		GlStateManager.pushMatrix();
-		GlStateManager.rotate(playerRoate * lift / 3.1415926f * 180f, 0, 1, 0);
-		MODEL.renderHammer(lift, rotate, dusty / 1000.0f, 1.0f);
-		GlStateManager.popMatrix();
+		MODEL.needRenderHammer = false;
+		MODEL.render(null, 0, 0, 0, 0, 0, 1.0f);
+
+		if (tile.hasHammer()) {
+			GlStateManager.pushMatrix();
+			GlStateManager.rotate(playerRoate * lift / 3.1415926f * 180f, 0, 1, 0);
+			MODEL.renderHammer(lift, rotate, dusty / 1000.0f, 1.0f);
+			GlStateManager.popMatrix();
+		}
+
 		RenderFriend.endTileEntitySpecialRender();
 		RenderFriend.bindDestoryTextureEnd(destroyStage);
 
@@ -80,6 +86,7 @@ public class RenderTileStoneMill extends TileEntitySpecialRenderer<TileStoneMill
 
 	@Override
 	public void render(ItemStack stack, float partialTicks) {
+		MODEL.needRenderHammer = BlockStoneMill.hasHammer(stack);
 		RenderFriend.renderSpecialItem(stack, TEXTURE, MODEL, true);
 	}
 

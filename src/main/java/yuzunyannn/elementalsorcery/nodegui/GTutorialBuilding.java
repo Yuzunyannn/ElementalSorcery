@@ -228,6 +228,7 @@ public class GTutorialBuilding extends GNode {
 									1);
 						} catch (Exception e) {} finally {
 							mc.getTextureManager().bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+							RenderFriend.disableLightmap(true);
 						}
 					}
 

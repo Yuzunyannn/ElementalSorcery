@@ -10,7 +10,6 @@ import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
-import yuzunyannn.elementalsorcery.nodegui.GNode;
 
 public class TutorialCraftSP extends TutorialCraft {
 
@@ -21,11 +20,9 @@ public class TutorialCraftSP extends TutorialCraft {
 
 	static public class TutorialCraftEnchantBook extends TutorialCraft {
 
-		public GNode createNodeContainer(TutorialCraftNodeParams params) {
-			GShowCommon container = new GShow(params);
-			container.setPosition(params.width / 2, params.height / 2, 0);
-			container.updateCraft();
-			return container;
+		@Override
+		public GShowCommon createMyContainer(TutorialCraftNodeParams params) {
+			return new GShow(params);
 		}
 
 		protected class GShow extends GShowCommon {
@@ -36,7 +33,7 @@ public class TutorialCraftSP extends TutorialCraft {
 
 			public GShow(TutorialCraftNodeParams params) {
 				super(params);
-				double xOffset = -8;
+				double xOffset = 0;
 				double yOffset = -16;
 
 				input = addSlot(xOffset - 25, yOffset);

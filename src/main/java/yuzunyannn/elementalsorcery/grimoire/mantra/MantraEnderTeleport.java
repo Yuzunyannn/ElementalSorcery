@@ -30,6 +30,7 @@ import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportFrom;
 import yuzunyannn.elementalsorcery.grimoire.remote.FMantraEnderTeleportTo;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
+import yuzunyannn.elementalsorcery.render.effect.ParticleEffects;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectLookAtBlock;
 import yuzunyannn.elementalsorcery.render.effect.grimoire.EffectPlayerAt;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
@@ -185,7 +186,7 @@ public class MantraEnderTeleport extends MantraTypeAccumulative {
 			return;
 		}
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setByte("type", (byte) 6);
+		nbt.setByte("type", ParticleEffects.ENDER_TELEPORT);
 		NBTHelper.setVec3d(nbt, "to", new Vec3d(target.posX, target.posY, target.posZ));
 		Effects.spawnEffect(world, Effects.PARTICLE_EFFECT, pos, nbt);
 	}

@@ -33,7 +33,7 @@ public class RiteCategory implements IRecipeCategory<RiteRecipeWrapper> {
 
 	@Override
 	public String getTitle() {
-		return I18n.format("page.riteCraft");
+		return I18n.format("info.riteCraft");
 	}
 
 	@Override

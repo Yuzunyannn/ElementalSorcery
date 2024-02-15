@@ -8,6 +8,7 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.item.tool.ItemMillHammer;
 
 public class ESObjects {
 
@@ -144,6 +145,8 @@ public class ESObjects {
 		public Item METEORITE_INGOT;
 		public Item LIFTING_STONE;
 		public Item TUTORIAL_PAD;
+		public Item MILL_HAMMER;
+		public Item PAD_EASY_PART;
 	}
 
 	static public class Blocks {

@@ -720,7 +720,7 @@
             "en_US": "Virtual Sight Entrance",
             "ja_JP": "偽映のエントリ"
         },
-        "item.dungeonStone.name":{
+        "item.dungeonStone.name": {
             "zh_CN": "虚映之石",
             "en_US": "Stone of Virtual Sight",
             "ja_JP": "偽映の石"
@@ -735,20 +735,40 @@
             "en_US": "Strengthen Agent",
             "ja_JP": "強化剤"
         },
-        "item.meteoriteIngot.name" :{
+        "item.meteoriteIngot.name": {
             "zh_CN": "冥星石",
             "en_US": "distant starry stone",
             "ja_JP": "彼岸石"
         },
-        "item.liftingStone.name":{
+        "item.liftingStone.name": {
             "zh_CN": "升降石",
             "en_US": "Lifting Stone",
             "ja_JP": "昇降石"
         },
-        "item.tutorialPad.name":{
+        "item.tutorialPad.name": {
             "zh_CN": "古老的石板",
             "en_US": "Ancient Slate",
             "ja_JP": "古い石板"
+        },
+        "item.millHammer.name": {
+            "zh_CN": "捣粉锤",
+            "en_US": "Mill Hammer",
+            "ja_JP": "臼のハンマ"
+        },
+        "item.padEasy.unknow.name": {
+            "zh_CN": "未知元件",
+            "en_US": "Unknown Component",
+            "ja_JP": "不明な部品"
+        },
+        "item.fluorescentParticle.name": {
+            "zh_CN": "荧光颗粒",
+            "en_US": "Fluorescent Particle",
+            "ja_JP": "蛍光粒子"
+        },
+        "item.controlCircuit.name": {
+            "zh_CN": "控制纹路",
+            "en_US": "Control Circuit",
+            "ja_JP": "制御回路"
         }
     },
     "tile": {
@@ -1292,27 +1312,27 @@
             "en_US": "Meteorite Druse",
             "ja_JP": "隕石結晶"
         },
-        "tile.dungeonFilterGlass.name":{
+        "tile.dungeonFilterGlass.name": {
             "zh_CN": "分离玻璃",
             "en_US": "Filter Glass",
             "ja_JP": "分離ガラス"
         },
-        "tile.stoneDecoration.alternator.name":{
+        "tile.stoneDecoration.alternator.name": {
             "zh_CN": "逆变发电核心",
             "en_US": "Invert Alternator",
             "ja_JP": "逆変発電んき"
         },
-        "tile.stoneDecoration.computer.name":{
+        "tile.stoneDecoration.computer.name": {
             "zh_CN": "地牢终端",
             "en_US": "Dungeon Terminal",
             "ja_JP": "ダンジョン端末"
         },
-        "tile.stoneDecoration.starCPU.name":{
+        "tile.stoneDecoration.starCPU.name": {
             "zh_CN": "星空计算核心",
             "en_US": "Starry CPU",
             "ja_JP": "星空中央処理装置"
         },
-        "tile.stoneDecoration.dungeonReactor.name":{
+        "tile.stoneDecoration.dungeonReactor.name": {
             "zh_CN": "异常的反应堆",
             "en_US": "Strange Reactor",
             "ja_JP": "異常な炉"

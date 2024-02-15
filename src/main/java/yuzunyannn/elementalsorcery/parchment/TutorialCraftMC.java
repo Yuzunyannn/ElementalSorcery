@@ -6,12 +6,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.Ingredient;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
-import yuzunyannn.elementalsorcery.nodegui.GNode;
 
 public class TutorialCraftMC extends TutorialCraft {
 
@@ -41,11 +41,8 @@ public class TutorialCraftMC extends TutorialCraft {
 	}
 
 	@Override
-	public GNode createNodeContainer(TutorialCraftNodeParams params) {
-		GShowCommon container = new GShow(params);
-		container.setPosition(params.width / 2, params.height / 2, 0);
-		container.updateCraft();
-		return container;
+	public GShowCommon createMyContainer(TutorialCraftNodeParams params) {
+		return new GShow(params);
 	}
 
 	protected class GShow extends GShowCommon {
@@ -55,6 +52,8 @@ public class TutorialCraftMC extends TutorialCraft {
 
 		public GShow(TutorialCraftNodeParams params) {
 			super(params);
+			initCraft(params, Blocks.CRAFTING_TABLE);
+			
 			double xOffset = 20;
 			double padOffsetX = -35 + xOffset;
 			double padOffsetY = 9;
@@ -79,12 +78,8 @@ public class TutorialCraftMC extends TutorialCraft {
 			output.setItemStack(recipe.getValue());
 			List<Ingredient> list = recipe.getKey();
 			for (int i = 0; i < inputs.size(); i++) {
-				if (i < list.size()) {
-					Ingredient ingredient = list.get(i);
-					ItemStack[] stacks = ingredient.getMatchingStacks();
-					if (stacks.length == 0) inputs.get(i).setItemStack(ItemStack.EMPTY);
-					else inputs.get(i).setItemStack(stacks[0]);
-				} else inputs.get(i).setItemStack(ItemStack.EMPTY);
+				if (i < list.size()) inputs.get(i).setItemStack(getItemStack(list.get(i)));
+				else inputs.get(i).setItemStack(ItemStack.EMPTY);
 			}
 		}
 

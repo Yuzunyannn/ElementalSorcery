@@ -1,0 +1,22 @@
+{
+    "cover": "elementalsorcery:element_crafting_table",
+    "title": {
+        "zh_CN": "元素合成祭坛",
+        "en_US": "Element Craft Altar"
+    },
+    "describe": {
+        "zh_CN": "并不是所有元素合成都只需要一种元素的，当元素合成需要多种元素的时候，元素合成台显然不能满足要求。由此，元素合成祭坛诞生了，在祭坛的十字方向放上元素立方体，通过起始之魔导书启动后祭坛会自动吸收元素立方体中存储的元素，进行合成。",
+        "en_US": "Not all Element Craft require only one Element. When multiple Elements are required for crafting, the Element Workbench obviously cannot meet the requirements. Therefore, the Element Craft Altar was born. Place Element Cubes in the cross direction of the altar, and activate it with the Spellbook of Launcher. The altar will automatically absorb the stored elements in the Element Cubes and proceed with the crafting."
+    },
+    "crafts": "elementalsorcery:element_crafting_table",
+    "building": {
+        "structure": "element_crafting_altar",
+        "custom": {
+            "0,2,0": "elementalsorcery:element_crafting_table",
+            "3,1,0": "elementalsorcery:elemental_cube",
+            "-3,1,0": "elementalsorcery:elemental_cube",
+            "0,1,3": "elementalsorcery:elemental_cube",
+            "0,1,-3": "elementalsorcery:elemental_cube"
+        }
+    }
+}

@@ -7,7 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
+
+import javax.annotation.Nullable;
 
 import org.lwjgl.input.Mouse;
 
@@ -68,6 +71,7 @@ public abstract class GuiComputerBase extends GuiContainer {
 		final Supplier<List<String>> factory;
 		final ItemStack stack;
 		int duration;
+		Consumer<List<String>> hook;
 
 		public TooltipInfo(Vec3d vec, Supplier<List<String>> factory, int duration) {
 			this.vec = vec;
@@ -140,8 +144,11 @@ public abstract class GuiComputerBase extends GuiContainer {
 		}
 
 		@Override
-		public void setTooltip(String key, Vec3d vec, int duration, ItemStack stack) {
-			tooltipMap.put(key, new TooltipInfo(vec, stack, duration));
+		public void setTooltip(String key, Vec3d vec, int duration, ItemStack stack,
+				@Nullable Consumer<List<String>> hook) {
+			TooltipInfo info = new TooltipInfo(vec, stack, duration);
+			info.hook = hook;
+			tooltipMap.put(key, info);
 		}
 
 	}
@@ -199,8 +206,21 @@ public abstract class GuiComputerBase extends GuiContainer {
 			}
 			ItemStack stack = info.stack;
 			if (stack.isEmpty()) this.drawHoveringText(info.factory.get(), x, y, fontRenderer);
-			else this.renderToolTip(stack, x, y);
+			else {
+				currTooltipHook = info.hook;
+				this.renderToolTip(stack, x, y);
+				currTooltipHook = null;
+			}
 		}
+	}
+
+	Consumer<List<String>> currTooltipHook;
+
+	@Override
+	public List<String> getItemToolTip(ItemStack itemStack) {
+		List<String> list = super.getItemToolTip(itemStack);
+		if (currTooltipHook != null) currTooltipHook.accept(list);
+		return list;
 	}
 
 	@Override

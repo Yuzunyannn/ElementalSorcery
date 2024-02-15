@@ -17,10 +17,12 @@ import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class MatchHelper {
 
+	public static final int GENERAL_META = 32767;
+
 	static public boolean isItemMatch(ItemStack sample, ItemStack stack) {
 		if (sample.isEmpty()) return stack.isEmpty();
 		if (sample.getItem() != stack.getItem()) return false;
-		if (sample.getMetadata() != stack.getMetadata()) return false;
+		if (sample.getMetadata() != GENERAL_META && sample.getMetadata() != stack.getMetadata()) return false;
 		if (sample.getTagCompound() == null) return true;
 		NBTTagCompound sampleNBT = sample.getTagCompound();
 		if (sampleNBT.hasKey("#NO_TAG")) {

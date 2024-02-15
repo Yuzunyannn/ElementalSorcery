@@ -53,6 +53,11 @@ public class DeviceNetwork
 		linkerMap.put(uuid, linker);
 		return true;
 	}
+	
+	@Override
+	public boolean isDiscoverable() {
+		return true;
+	}
 
 	@Override
 	public IDeviceLinker getLinker(UUID uuid) {

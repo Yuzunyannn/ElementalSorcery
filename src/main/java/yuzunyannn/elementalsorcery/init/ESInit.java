@@ -283,10 +283,12 @@ import yuzunyannn.elementalsorcery.item.prop.ItemKeepsake;
 import yuzunyannn.elementalsorcery.item.prop.ItemLifeLeather;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicCore;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicPaper;
+import yuzunyannn.elementalsorcery.item.prop.ItemMagicStone;
 import yuzunyannn.elementalsorcery.item.prop.ItemMagicTerminal;
 import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
 import yuzunyannn.elementalsorcery.item.prop.ItemMaterialDebris;
 import yuzunyannn.elementalsorcery.item.prop.ItemMeteoriteIngot;
+import yuzunyannn.elementalsorcery.item.prop.ItemPadEasyPart;
 import yuzunyannn.elementalsorcery.item.prop.ItemQuill;
 import yuzunyannn.elementalsorcery.item.prop.ItemRabidLeather;
 import yuzunyannn.elementalsorcery.item.prop.ItemRelicGuardCore;
@@ -308,6 +310,7 @@ import yuzunyannn.elementalsorcery.item.tool.ItemLiftingStone;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicGoldTools;
 import yuzunyannn.elementalsorcery.item.tool.ItemMagicRuler;
+import yuzunyannn.elementalsorcery.item.tool.ItemMillHammer;
 import yuzunyannn.elementalsorcery.item.tool.ItemRedHandset;
 import yuzunyannn.elementalsorcery.item.tool.ItemRelicDisc;
 import yuzunyannn.elementalsorcery.item.tool.ItemRockCamera;
@@ -365,6 +368,7 @@ import yuzunyannn.elementalsorcery.render.item.RenderItemGrimoire;
 import yuzunyannn.elementalsorcery.render.item.RenderItemGuardCore;
 import yuzunyannn.elementalsorcery.render.item.RenderItemMagicBlastWand;
 import yuzunyannn.elementalsorcery.render.item.RenderItemMemoryFragment;
+import yuzunyannn.elementalsorcery.render.item.RenderItemMillHammer;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSpellbook;
 import yuzunyannn.elementalsorcery.render.item.RenderItemSupremeTable;
 import yuzunyannn.elementalsorcery.render.item.SpellbookRenderInfo;
@@ -624,7 +628,7 @@ public class ESInit {
 		ESObjects.ITEMS.TINY_KNIFE = ItemSome.newTinyKnife();
 		ESObjects.ITEMS.MAGIC_PAPER = new ItemMagicPaper();
 		ESObjects.ITEMS.SPELL_CRYSTAL = ItemCrystal.newSpellCrystal();
-		ESObjects.ITEMS.MAGIC_STONE = ItemSome.newMagicStone();
+		ESObjects.ITEMS.MAGIC_STONE = new ItemMagicStone();
 		ESObjects.ITEMS.KYANITE_PICKAXE = new ItemKyaniteTools.ItemKyanitePickaxe();
 		ESObjects.ITEMS.KYANITE_AXE = new ItemKyaniteTools.ItemKyaniteAxe();
 		ESObjects.ITEMS.KYANITE_SPADE = new ItemKyaniteTools.ItemKyaniteSpade();
@@ -733,6 +737,8 @@ public class ESInit {
 		ESObjects.ITEMS.METEORITE_INGOT = new ItemMeteoriteIngot();
 		ESObjects.ITEMS.LIFTING_STONE = new ItemLiftingStone();
 		ESObjects.ITEMS.TUTORIAL_PAD = new ItemTutorialPad();
+		ESObjects.ITEMS.MILL_HAMMER = new ItemMillHammer();
+		ESObjects.ITEMS.PAD_EASY_PART = new ItemPadEasyPart();
 
 		ESObjects.ITEMS.GRIMOIRE = new ItemGrimoire();
 		ESObjects.ITEMS.SPELLBOOK = new ItemSpellbook();
@@ -1273,15 +1279,18 @@ public class ESInit {
 		registerRender(ITEMS.METEORITE_INGOT);
 		registerRender(ITEMS.LIFTING_STONE);
 		registerRender(ITEMS.TUTORIAL_PAD);
+		registerRender(ITEMS.MILL_HAMMER, new RenderItemMillHammer());
 
-		for (ItemMagicPaper.EnumType paperType : ItemMagicPaper.EnumType.values())
-			registerRender(ITEMS.MAGIC_PAPER, paperType.getMeta(), paperType.getName() + "_paper");
-		for (ItemKeepsake.EnumType keepsakeType : ItemKeepsake.EnumType.values())
-			registerRender(ITEMS.KEEPSAKE, keepsakeType.getMeta(), keepsakeType.getName());
-		for (ItemQuill.EnumType quillType : ItemQuill.EnumType.values())
-			registerRender(ITEMS.QUILL, quillType.getMeta(), "quill_" + quillType.getName());
-		for (ItemController.EnumType keepsakeType : ItemController.EnumType.values())
-			registerRender(ITEMS.CONTROLLER, keepsakeType.getMeta(), "controller_" + keepsakeType.getName());
+		for (ItemMagicPaper.EnumType type : ItemMagicPaper.EnumType.values())
+			registerRender(ITEMS.MAGIC_PAPER, type.getMeta(), type.getName() + "_paper");
+		for (ItemKeepsake.EnumType type : ItemKeepsake.EnumType.values())
+			registerRender(ITEMS.KEEPSAKE, type.getMeta(), type.getName());
+		for (ItemQuill.EnumType type : ItemQuill.EnumType.values())
+			registerRender(ITEMS.QUILL, type.getMeta(), "quill_" + type.getName());
+		for (ItemController.EnumType type : ItemController.EnumType.values())
+			registerRender(ITEMS.CONTROLLER, type.getMeta(), "controller_" + type.getName());
+		for (ItemPadEasyPart.EnumType type : ItemPadEasyPart.EnumType.values())
+			registerRender(ITEMS.PAD_EASY_PART, type.getMeta(), "pad_easy_" + type.getName());
 
 		registerStateMapper(BLOCKS.HEARTH, BlockHearth.MATERIAL, "hearth");
 		registerRender(BLOCKS.HEARTH, 0, "cobblestone_hearth");

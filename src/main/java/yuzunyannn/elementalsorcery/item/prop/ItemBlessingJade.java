@@ -1,5 +1,7 @@
 package yuzunyannn.elementalsorcery.item.prop;
 
+import java.util.List;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,9 +23,10 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.item.IPlatformTickable;
 import yuzunyannn.elementalsorcery.api.util.IWorldObject;
 import yuzunyannn.elementalsorcery.entity.EntityThrow;
+import yuzunyannn.elementalsorcery.item.IItemSmashable;
 import yuzunyannn.elementalsorcery.render.effect.Effects;
 
-public class ItemBlessingJade extends Item implements IPlatformTickable, EntityThrow.IItemThrowAction {
+public class ItemBlessingJade extends Item implements IPlatformTickable, EntityThrow.IItemThrowAction, IItemSmashable {
 
 	public ItemBlessingJade() {
 		this.setTranslationKey("blessingJade");
@@ -65,6 +68,16 @@ public class ItemBlessingJade extends Item implements IPlatformTickable, EntityT
 		for (int i = 0; i < 8; i++) entity.entityDropItem(ItemBlessingJadePiece.createPiece(i), 0);
 		entity.world.playSound(null, entity.posX, entity.posY, entity.posZ, SoundEvents.BLOCK_GLASS_BREAK,
 				SoundCategory.NEUTRAL, 1, 1);
+	}
+
+	@Override
+	public void doSmash(World world, Vec3d vec, ItemStack stack, List<ItemStack> outputs, Entity operator) {
+		if (world.isRemote) return;
+		if (stack.getMetadata() != 0) return;
+
+		stack.shrink(1);
+		for (int i = 0; i < 8; i++) outputs.add(ItemBlessingJadePiece.createPiece(i));
+		world.playSound(null, vec.x, vec.y, vec.z, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 1, 1);
 	}
 
 	@Override

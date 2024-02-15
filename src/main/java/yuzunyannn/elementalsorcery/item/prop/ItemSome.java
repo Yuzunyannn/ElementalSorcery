@@ -55,11 +55,6 @@ public class ItemSome {
 		}.setTranslationKey("magicalPiece");
 	}
 
-	/** 魔石 */
-	static public Item newMagicStone() {
-		return newItem("magicStone");
-	}
-
 	/** 魔金 */
 	static public Item newMagicGold() {
 		return newItem("magicGold");

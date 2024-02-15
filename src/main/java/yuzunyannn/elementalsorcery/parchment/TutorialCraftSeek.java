@@ -14,8 +14,8 @@ import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.crafting.mc.RecipeRiteWrite;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
-import yuzunyannn.elementalsorcery.nodegui.GNode;
 import yuzunyannn.elementalsorcery.tile.TileRiteTable;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class TutorialCraftSeek extends TutorialCraft {
 
@@ -41,11 +41,8 @@ public class TutorialCraftSeek extends TutorialCraft {
 	}
 
 	@Override
-	public GNode createNodeContainer(TutorialCraftNodeParams params) {
-		GShowCommon container = new GShow(params);
-		container.setPosition(params.width / 2, params.height / 2, 0);
-		container.updateCraft();
-		return container;
+	public GShowCommon createMyContainer(TutorialCraftNodeParams params) {
+		return new GShow(params);
 	}
 
 	protected class GShow extends GShowCommon {
@@ -56,7 +53,11 @@ public class TutorialCraftSeek extends TutorialCraft {
 
 		public GShow(TutorialCraftNodeParams params) {
 			super(params);
-			double xOffset = 9;
+			ItemStack stack = new ItemStack(ESObjects.BLOCKS.RITE_TABLE);
+			ItemHelper.getOrCreateTagCompound(stack).setInteger("level", params.tutorial.getLevel());
+			initCraft(params, stack);
+			
+			double xOffset = 12;
 			double padOffsetY = 9;
 
 			List<GItemFrame> list = new ArrayList<>(9);

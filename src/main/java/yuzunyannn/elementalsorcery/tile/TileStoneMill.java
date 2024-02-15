@@ -40,6 +40,8 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 	public float rotate;
 	public float prevRotate;
 	static final float ROTATE_RATE = 0.4f;
+	protected ItemStack hammer = ItemStack.EMPTY;
+
 	// 研磨的内容的槽
 	protected IItemHandler inventory = new IItemHandler() {
 		@Override
@@ -175,8 +177,26 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 		this.millDrop();
 	}
 
+	public ItemStack getHammer() {
+		return hammer;
+	}
+
+	public boolean hasHammer() {
+		return !hammer.isEmpty();
+	}
+
+	public void setHammer(ItemStack hammer) {
+		this.hammer = hammer;
+		this.markDirty();
+	}
+
+	public boolean isEmpty() {
+		return millingItem.isEmpty();
+	}
+
 	// 进行一次研磨
 	public void mill() {
+		if (!this.hasHammer()) return;
 		if (this.getCurrMillingItem().isEmpty()) return;
 		if (restTick <= 20) restTick = 60;
 	}
@@ -200,6 +220,7 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 	@Override
 	public void update() {
 		this.prevRotate = this.rotate;
+		if (!this.hasHammer()) restTick = 0;
 		if (restTick > 0 || this.rotate > 3.1415926f) {
 			restTick--;
 			// 还没砸下去
@@ -297,6 +318,7 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 	public void readFromNBT(NBTTagCompound compound) {
 		millList = NBTHelper.getNBTSerializableList(compound, "inv", Milling.class, NBTTagCompound.class);
 		dusty = compound.getInteger("dusty");
+		hammer = nbtReadItemStack(compound, "hammer");
 		if (compound.hasKey("milling")) millingItem = new ItemStack((NBTTagCompound) compound.getTag("milling"));
 		if (this.isSending()) return;
 		super.readFromNBT(compound);
@@ -307,6 +329,7 @@ public class TileStoneMill extends TileEntityNetwork implements ITickable {
 		NBTHelper.setNBTSerializableList(compound, "inv", millList);
 		compound.setInteger("dusty", dusty);
 		compound.setTag("milling", millingItem.serializeNBT());
+		nbtWriteItemStack(compound, "hammer", hammer);
 		if (this.isSending()) return compound;
 		return super.writeToNBT(compound);
 	}

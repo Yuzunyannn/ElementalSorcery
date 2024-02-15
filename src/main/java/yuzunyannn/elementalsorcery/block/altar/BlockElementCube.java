@@ -10,8 +10,10 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.particle.ParticleManager;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -20,6 +22,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
@@ -34,6 +37,7 @@ import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.CapabilityProvider;
+import yuzunyannn.elementalsorcery.item.IItemSmashable;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.particle.ParticleDiggingEffect;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementalCube;
@@ -41,30 +45,50 @@ import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryStronger;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
+import yuzunyannn.elementalsorcery.util.helper.GameHelper;
 
 public class BlockElementCube extends BlockElementContainer {
 
+	public class ItemElementCube extends ItemBlock implements IItemSmashable {
+
+		public ItemElementCube() {
+			super(BlockElementCube.this);
+			setMaxStackSize(1);
+		}
+
+		@Override
+		public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
+			return new CapabilityProvider.ElementInventoryUseProvider(stack, new ElementInventoryStronger(1));
+		}
+
+		@Override
+		public String getItemStackDisplayName(ItemStack stack) {
+			String name = super.getItemStackDisplayName(stack);
+			EnumDyeColor color = getDyeColor(stack);
+			if (color != null) {
+				String colorName = I18n.translateToLocal("item.fireworksCharge." + color.getTranslationKey());
+				name = name + ColorHelper.toTextFormatting(color) + " " + colorName;
+			}
+			return name;
+		}
+
+		@Override
+		public void doSmash(World world, Vec3d vec, ItemStack stack, List<ItemStack> outputs, Entity operator) {
+			if (world.isRemote) return;
+			IElementInventory eInv = ElementHelper.getElementInventory(stack);
+			if (eInv != null && !eInv.isEmpty()) {
+				EntityLivingBase living = GameHelper.to(operator, EntityLivingBase.class);
+				doExploded(world, new BlockPos(vec), eInv, living);
+			}
+			world.playSound(null, vec.x, vec.y, vec.z, SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.NEUTRAL, 1, 1);
+			outputs.add(new ItemStack(ESObjects.ITEMS.ELEMENT_CRYSTAL, 4));
+			stack.shrink(1);
+		}
+	}
+
 	// 获取带有能力的物品，规定函数用于反射
 	public ItemBlock getItemBlock() {
-		ItemBlock item = new ItemBlock(this) {
-			@Override
-			public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
-				return new CapabilityProvider.ElementInventoryUseProvider(stack, new ElementInventoryStronger(1));
-			}
-
-			@Override
-			public String getItemStackDisplayName(ItemStack stack) {
-				String name = super.getItemStackDisplayName(stack);
-				EnumDyeColor color = getDyeColor(stack);
-				if (color != null) {
-					String colorName = I18n.translateToLocal("item.fireworksCharge." + color.getTranslationKey());
-					name = name + ColorHelper.toTextFormatting(color) + " " + colorName;
-				}
-				return name;
-			}
-		};
-		item.setMaxStackSize(1);
-		return item;
+		return new ItemElementCube();
 	}
 
 	// 方块一半的边长

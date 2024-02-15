@@ -12,4 +12,10 @@ public class GameHelper {
 		} catch (Throwable e) {}
 	}
 
+	public static <T> T to(Object obj, Class<T> clazz) {
+		if (obj == null) return null;
+		if (clazz.isAssignableFrom(obj.getClass())) return (T) obj;
+		return null;
+	}
+
 }
