@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:calamity_gem",
+    "title": {
+        "zh_CN": "灾害宝石",
+        "en_US": "Calamity Gem"
+    },
+    "describe": {
+        "zh_CN": "和精灵的交流中，召唤出了很多怪物，从这些怪物身上收集了许多的珍贵物品，似乎与某场灾害有所关联，但这并不重要。将这些物品融合到一起，制作出了一个令人恐惧的宝石，尽管它十分珍贵，但是却没有什么人想入手的东西，它会为持有者带来「灾害」。\\n「灾害」会让你打坏的方块不掉落，有限作为怪物的目标，总是被雷劈等等厄运。\\n如果你身上持有高级的「灾害」，那你已经接近死亡了。",
+        "en_US": "Through communication with the elves, many monsters were summoned, and numerous precious items were collected from these monsters. It seems to be associated with a certain disaster, but that's not important. By fusing these items together, a terrifying gem was created. Despite its value, few are willing to possess it, for it brings 'Calamity' to its holder.\\n'Calamity' causes blocks you break not to drop, makes you a prime target for monsters, and subjects you to constant misfortune like being struck by lightning and more.\\nIf you carry a high level of 'Calamity,' you are nearing death."
+    },
+    "crafts": "elementalsorcery:calamity_gem"
+}

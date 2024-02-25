@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:architecture_crystal",
+    "title": {
+        "zh_CN": "建筑水晶",
+        "en_US": "Architectural Crystal"
+    },
+    "describe": {
+        "zh_CN": "由于大型祭坛结构过于复杂，学者们发现了一种水晶，称之为建筑水晶。它是由精灵结晶注魔得到的，由于其特殊的结构，可以存储空间的结构数据，因此被广泛的用于记录祭坛的结构中。\\n手中的这个设备就具有写入的能力：选择建筑，点击左侧的第一个按钮。\\n注魔条件：沙漠中、周围有超过320个方块掉落在地上",
+        "en_US": "Due to the complexity of large Altar structures, scholars have discovered a crystal known as the Architectural Crystal. It is enchanted with the Elf Crystal, can store structural data. Therefore, it is widely used to record altar structures.\\nThe device in your hand has the ability to write data for recording: select a Building, then click the first button on the left.\\nEnchanting Condition: in the desert, with over 320 blocks dropped on the ground around."
+    },
+    "crafts": "elementalsorcery:architecture_crystal"
+}

@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:soul_killer_sword",
+    "title": {
+        "zh_CN": "噬魂剑",
+        "en_US": "Soul Killer"
+    },
+    "describe": {
+        "zh_CN": "噬魂剑击杀大部分生物后，会将其灵魂收入剑中，随着某种灵魂收集的增加，对该类生物横扫附加的伤害与范围也会缓慢增加。\\n右键使用会消耗所有种类的灵魂1点，为自身进行回血。\\n噬魂剑的耐久很低，不过每击杀一个生物都会将耐久回满。\\n需要一个恰好拥有666点魂力的木剑才可以制作。",
+        "en_US": "The Soul Killer, after killing most creatures, will collect their souls into the sword. As a certain type of soul is collected more, the sweeping damage and range against that type of creature will slowly increase.\\nRight Click will consume 1 point of all types of souls to heal oneself.\\nThe durability of the Soul Killer is very low, but every kill will fully restore its durability.\\nYou need a wooden sword with exactly 666 soul power to craft it."
+    },
+    "crafts": "elementalsorcery:soul_killer_sword"
+}

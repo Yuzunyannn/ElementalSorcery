@@ -1,4 +1,5 @@
 {
+	"dispose": true,
 	"type": "elementalsorcery:parchment_infusion",
 	"lev": 4,
 	"need": [

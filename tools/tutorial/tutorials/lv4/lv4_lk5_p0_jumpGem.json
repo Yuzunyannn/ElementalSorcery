@@ -1,0 +1,14 @@
+{
+    "cover": "elementalsorcery:jump_gem",
+    "title": {
+        "zh_CN": "折光宝石",
+        "en_US": "Refract Gem"
+    },
+    "describe": {
+        "zh_CN": "折光宝石拥有扭曲空间的能力，是一些高级设备的材料。\\n研究可以获取到这种宝石。",
+        "en_US": "The Refract Gem possesses the ability to warp space and is a material for some advanced devices.\\nResearch can yield this gem."
+    },
+    "crafts": [
+        "elementalsorcery:jump_gem"
+    ]
+}

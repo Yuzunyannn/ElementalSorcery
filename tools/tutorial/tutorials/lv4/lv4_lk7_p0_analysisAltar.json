@@ -1,0 +1,22 @@
+{
+    "cover": "elementalsorcery:analysis_altar",
+    "title": {
+        "zh_CN": "结构解析",
+        "en_US": "Structure Analysis"
+    },
+    "describe": {
+        "zh_CN": "想知道物品里究竟含有什么元素？这就需要搭建一个结构解析祭坛。\\n在下方摆上魔力平台，并放上物品，等待片刻，上面的解析台中就能看到这个物品的元素信息了。",
+        "en_US": "If you want to know what elements are contained in an item, you'll need to set up a Structure Analysis Altar.\\nPlace a Magic Platform underneath and put the item on it. After a moment, you'll be able to see the element's information of the item on the Structure Analyzer table above."
+    },
+    "crafts": "elementalsorcery:analysis_altar",
+    "building": {
+        "structure": "analysis_altar",
+        "custom": {
+            "0,4,0": "elementalsorcery:analysis_altar",
+            "0,1,0": {
+                "id": "elementalsorcery:magic_platform",
+                "data": 1
+            }
+        }
+    }
+}

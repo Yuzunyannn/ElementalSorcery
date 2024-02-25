@@ -50,6 +50,19 @@ public class ItemHelper {
 
 	static public void addItemStackToPlayer(EntityPlayer player, ItemStack stack) {
 		if (stack.isEmpty()) return;
+		// split by MaxStackSize
+		if (stack.getCount() > 1 && stack.getMaxStackSize() > 0 && stack.getMaxStackSize() < stack.getCount()) {
+			int stackSize = stack.getCount();
+			int maxSize = stack.getMaxStackSize();
+			while (stackSize > 0) {
+				ItemStack insertStack = stack.copy();
+				insertStack.setCount(Math.min(stackSize, maxSize));
+				stackSize -= maxSize;
+				addItemStackToPlayer(player, insertStack);
+			}
+			return;
+		}
+
 		if (player.getHeldItemMainhand().isEmpty()) {
 			player.setHeldItem(EnumHand.MAIN_HAND, stack);
 			return;

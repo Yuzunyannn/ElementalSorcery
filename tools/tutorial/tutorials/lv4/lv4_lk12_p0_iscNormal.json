@@ -1,0 +1,32 @@
+{
+    "cover": "elementalsorcery:is_craft_normal",
+    "title": {
+        "zh_CN": "递归结构",
+        "en_US": "Recursive Structure"
+    },
+    "describe": {
+        "zh_CN": "物品的复杂程度不一样，不是所有物品都可以被直接解析的，因此「合成结构记录台」将会是你解析复杂物品的最好帮手。\\n将结构解析祭坛下方的「魔力平台换」成记录台，在记录台里用物品标定出合成的结构，便可解析出对应的内容。当然这要求着所有作为合成材料的物品能单独被结构解析台解析出来，但实际情况通常不会如你所愿。好在学者们通过在结构解析祭坛周围搭建复数的石柱来解决这个问题。只要将记录该材料的结构水晶放入石柱的箱子内，即可被结构解析台读取，从而完成结构记录。",
+        "en_US": "The complexity of items varies, and not all items can be directly analyzed. Therefore, the 'Crafting Structure Recorder' will be your best helper for analyzing complex items.\\nReplace the 'Magic Platform' beneath the Structure Analysis Altar with a Crafting Structure Recorder, and use items to calibrate the synthesis structure in the Crafting Structure Recorder to analyze the corresponding content. Of course, this requires that all items used as synthesis items can be individually analyzed by the Structure Analysis Altar, but in practice, this is usually not the case. Fortunately, scholars have solved this problem by building multiple pillars around the Structure Analysis Altar. As long as the Structural Crystal recording the structure of the item is placed in the box of the pillar, it can be read by the Structure Analysis Altar, thus completing the structure recording."
+    },
+    "crafts": "elementalsorcery:is_craft_normal",
+    "building": {
+        "structure": "analysis_altar",
+        "custom": {
+            "0,4,0": "elementalsorcery:analysis_altar",
+            "0,1,0": {
+                "id": "elementalsorcery:is_craft_normal",
+                "data": 1
+            },
+            "5,4,0": "minecraft:chest",
+            "-5,4,0": "minecraft:chest",
+            "0,4,5": "minecraft:chest",
+            "0,4,-5": "minecraft:chest"
+        },
+        "customBuildings": {
+            "5,0,0": "analysis_altar_add",
+            "-5,0,0": "analysis_altar_add",
+            "0,0,5": "analysis_altar_add",
+            "0,0,-5": "analysis_altar_add"
+        }
+    }
+}

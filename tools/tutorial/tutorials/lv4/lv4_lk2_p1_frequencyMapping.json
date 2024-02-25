@@ -1,0 +1,18 @@
+{
+    "cover": "elementalsorcery:md_frequency_mapping",
+    "title": {
+        "zh_CN": "频率共感",
+        "en_US": "Frequency Induct"
+    },
+    "describe": {
+        "zh_CN": "将不同频率的水晶扔到频率共感周围，将可以共感的物品放到共感器中，便会开始搜寻。当周围水晶的震动曲线与某一个数据的震动曲线在1.6秒内低于误差，数据将会写入到共感的物品当中。\\n每个水晶提供1振幅。\\n(误差范围会随时间增加，目前只支持建筑和羊皮卷)",
+        "en_US": "Throw Crystals of different frequencies around the Frequency Resonator. Place item that can resonate in the Frequency Inductor, and it will start scanning. When the vibration curve of surrounding Crystals and that of a specific data match within a margin of error for 1.6 seconds, the data will be written into the resonating item.\\nEach crystal provides 1 amplitude.\\n(The margin of error increases over time. Currently, only supports building and Parchment.)"
+    },
+    "crafts": "elementalsorcery:md_frequency_mapping",
+    "building": {
+        "structure": "mapping_altar",
+        "custom": {
+            "0,2,0": "elementalsorcery:md_frequency_mapping"
+        }
+    }
+}

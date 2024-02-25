@@ -1,0 +1,22 @@
+{
+    "cover": {
+        "id": "elementalsorcery:rite_table",
+        "nbt": {
+            "level": 4
+        }
+    },
+    "title": {
+        "zh_CN": "更多知识",
+        "en_US": "More Knowledge"
+    },
+    "describe": {
+        "zh_CN": "为了获取更多知识，可以开始升级仪式桌的仪式桌了...",
+        "en_US": "To acquire more knowledge, you can start upgrading the Ritual Table..."
+    },
+    "crafts": {
+        "id": "elementalsorcery:rite_table",
+        "nbt": {
+            "level": 5
+        }
+    }
+}

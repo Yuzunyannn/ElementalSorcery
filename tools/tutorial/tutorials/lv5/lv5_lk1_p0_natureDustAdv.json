@@ -1,0 +1,18 @@
+{
+    "cover": {
+        "item": "elementalsorcery:nature_dust",
+        "data": 2
+    },
+    "title": {
+        "zh_CN": "探索粉尘",
+        "en_US": "Explore Dust"
+    },
+    "describe": {
+        "zh_CN": "求知粉尘获得的信息是有限的。通过更多元素的融合，制作出的探索粉尘可以与周边发生强烈的共鸣，检测出周边地下所蕴含的资源。",
+        "en_US": "The information obtained through Seek Dust is limited. Through more elements, Explore Dust produced can have strong resonance with the surrounding and detect resources contained in the underground."
+    },
+    "crafts": {
+        "item": "elementalsorcery:nature_dust",
+        "data": 2
+    }
+}

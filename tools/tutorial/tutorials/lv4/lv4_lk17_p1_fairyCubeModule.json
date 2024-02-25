@@ -1,0 +1,14 @@
+{
+    "cover": "elementalsorcery:fairy_cube_module",
+    "title": {
+        "zh_CN": "精灵符文",
+        "en_US": "Elf Cube Rune"
+    },
+    "describe": {
+        "zh_CN": "精灵符文可以挂载到精灵立方体上，以产生各种不同的效果，每个精灵立方体最多能持有12个符文，而且挂载后无法取出。\\n符文也是有等级的且不超过立方体的等级，投喂元素，让符文增加经验，不同符文需要的元素是不一样的。最好不要让立方体只获取一种元素。\\n精灵符文分为：执行型，增强型和其他。\\n将空白的精灵立方体符文放到元素平台上，并将元素注入元素平台，符文便可和元素发生共鸣。\\n不同的元素在不同的位置周围有不同的物品，就可能产生各种不同的符文，目前记载的线索：\\n沙漠、白天、火、烈焰粉\\n地下、土、石头\\n末地、末影\\n夜晚、钻石斧、火\\n木、黎明、小麦土豆胡萝卜\\n木、牛肉大餐\\n水、雨、萤石粉\\n木、金、黄昏、煤、钻石、绿宝石\\n土、金、煤矿\\n午后、木、金苹果\\n水、金、黄昏、腐肉、骨头、火药\\n高空、气、羽毛、兔脚\\n平原、末影、气、泥土、末影珍珠",
+        "en_US": "The Elf Cube Rune can be attached to the Elf Cube to produce various effects. Each Elf Cube can hold up to 12 runes, and once attached, they cannot be removed.\\nRune also have levels that do not exceed the level of the cube itself. Feed Elements to increase their experience, but note that different runes require different elements and it's best not to let the cube only acquire one type of element.\\nElf Cube Runes are divided into: Executable, Enhancing, and Others.\\nPlace a blank Elf Cube Rune on the Element Platform and inject element into it; the rune will resonate with the element.\\nDifferent items droped around on different place with different elements may produce various runes. Currently recorded clues are: \\nDesert, Daytime, Fire, Blaze Powder \\nUnderground, Earth, Stone \\nEnd, Ender \\nNighttime, Diamond Axe, Fire \\nWood, Dawn, Wheat, Potato, Carrot \\nWood, Beef Stew \\nWater, Rain, Glowstone Dust \\nWood, Gold, Dusk, Coal, Diamond, Emerald \\nEarth, Gold, Coal Ore \\nAfternoon, Wood, Golden Apple \\nWater, Gold, Dusk, Rotten Flesh, Bone, Gunpowder \\nHigh Altitude, Air, Feather, Rabbit's Foot \\nPlain, Ender, Air, Dirt, Ender Pearl"
+    },
+    "crafts": [
+        "elementalsorcery:fairy_cube_module"
+    ]
+}

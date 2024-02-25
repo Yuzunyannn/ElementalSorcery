@@ -46,11 +46,22 @@
                 "custom": {
                     "type": "object",
                     "patternProperties": {
-                        "^-?\\d+,-?\\d+,-?\\d+": {
+                        "^-?\\d+,-?\\d+,-?\\d+$": {
+                            "$ref": "./es_item.json"
+                        },
+                        "^-?\\d+,-?\\d+,-?\\d+->-?\\d+,-?\\d+,-?\\d+$": {
                             "$ref": "./es_item.json"
                         }
                     },
                     "additionalProperties": false
+                },
+                "customBuildings": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^-?\\d+,-?\\d+,-?\\d+$": {
+                            "type": "string"
+                        }
+                    }
                 }
             }
         }

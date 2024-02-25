@@ -1,0 +1,42 @@
+{
+    "cover": "elementalsorcery:deconstruct_altar_table_adv",
+    "title": {
+        "zh_CN": "瓦解祭坛",
+        "en_US": "Disintegration Altar"
+    },
+    "describe": {
+        "zh_CN": "瓦解小祭坛虽然好用，但是无论使其效率还是可以分解的物品都是有限的。学者们通过给瓦解台注入大量的末影元素，使之形成更高级的瓦解台，并设计了物质瓦解祭坛，来使其工作。\\n瓦解祭坛拥有更高的瓦解效率、能放下更多的立方体，与此同时还可以在魔力平台上放置结构水晶进行标定瓦解。",
+        "en_US": "Although the Small Disintegration Altar is useful, both its efficiency and the items it can disintegrate are limited. Scholars have injected a large amount of End Element into the Altar to form a more advanced Disintegration Altar to make it work.\\nThe Disintegration Altar has higher disintegration efficiency, can accommodate more cubes, and can also place Structural Crystal on the Magic Platform for calibrated disintegration."
+    },
+    "crafts": "elementalsorcery:deconstruct_altar_table_adv",
+    "building": {
+        "structure": "deconstruct_altar_adv",
+        "custom": {
+            "0,2,0": "elementalsorcery:deconstruct_altar_table_adv",
+            "3,1,3": {
+                "id": "elementalsorcery:magic_platform",
+                "data": 1
+            },
+            "-3,1,3": {
+                "id": "elementalsorcery:magic_platform",
+                "data": 1
+            },
+            "-3,1,-3": {
+                "id": "elementalsorcery:magic_platform",
+                "data": 1
+            },
+            "3,1,-3": {
+                "id": "elementalsorcery:magic_platform",
+                "data": 1
+            },
+            "2,2,2": "elementalsorcery:elemental_cube",
+            "-2,2,2": "elementalsorcery:elemental_cube",
+            "-2,2,-2": "elementalsorcery:elemental_cube",
+            "2,2,-2": "elementalsorcery:elemental_cube",
+            "3,2,0": "elementalsorcery:elemental_cube",
+            "-3,2,0": "elementalsorcery:elemental_cube",
+            "0,2,3": "elementalsorcery:elemental_cube",
+            "0,2,-3": "elementalsorcery:elemental_cube"
+        }
+    }
+}

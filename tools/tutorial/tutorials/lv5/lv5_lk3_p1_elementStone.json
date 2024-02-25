@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:element_stone",
+    "title": {
+        "zh_CN": "元素之石",
+        "en_US": "Element Stone"
+    },
+    "describe": {
+        "zh_CN": "多种材料在漩涡的融合下而产生的石头，拥有奇妙的力量，可以作为元素容器，同时存放四种元素，当手持石头的时候，可能会消耗内部元素产生一些神奇的效果。",
+        "en_US": "The stone produced by the fusion of various materials in the vortex possesses remarkable power. It can serve as an element container, storing up to four types of elements. When held, the stone may consume internal elements to produce some magical effects."
+    },
+    "crafts": "elementalsorcery:element_stone"
+}

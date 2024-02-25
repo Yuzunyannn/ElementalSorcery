@@ -81,7 +81,7 @@ public class ElementEarth extends ElementCommon {
 	protected void addDrinkJuiceEffect(DrinkJuiceEffectAdder helper) {
 
 		helper.preparatory(ESObjects.POTIONS.POWER_PITCHER, 25, 100);
-		helper.check(JuiceMaterial.APPLE, 150).checkRatio(JuiceMaterial.ELF_FRUIT, 0.4f, 0.6f).join();
+		helper.check(JuiceMaterial.APPLE, 150).checkRatio(JuiceMaterial.ELF_FRUIT, 0.3f, 0.6f).join();
 		helper.descend(JuiceMaterial.ELF_FRUIT, 50, 0.8f);
 
 		helper.preparatory(MobEffects.STRENGTH, 11, 40);

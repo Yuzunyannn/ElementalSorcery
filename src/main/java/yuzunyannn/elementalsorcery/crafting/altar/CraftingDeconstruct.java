@@ -99,7 +99,7 @@ public class CraftingDeconstruct implements ICraftingAltar {
 		}
 		freeElement = ElementStack.EMPTY;
 		ElementStack estack = restEStacks.getFirst();
-		ElementStack put = estack.splitStack(1);
+		ElementStack put = estack.splitStack(Math.max(1, estack.getCount() / 10000));
 		if (tileMul.putElementToSpPlace(put, tileMul.getPos().up()) != -1) freeElement = put;
 		if (estack.isEmpty()) restEStacks.removeFirst();
 		if (restEStacks.isEmpty()) {

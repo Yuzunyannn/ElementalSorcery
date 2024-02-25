@@ -1,0 +1,25 @@
+{
+	"type": "elementalsorcery:research",
+	"topics": {
+		"Struct": 30,
+		"Engine": 30
+	},
+	"items": [
+		{
+			"item": "elementalsorcery:cube_core",
+			"count": 1
+		},
+		{
+			"item": "elementalsorcery:element_crystal",
+			"count": 4
+		},
+		{
+			"item": "elementalsorcery:magic_piece",
+			"count": 4
+		}
+	],
+	"result": {
+		"item": "elementalsorcery:elemental_cube",
+		"count": 4
+	}
+}

@@ -1,0 +1,29 @@
+{
+    "cover": "elementalsorcery:building_altar",
+    "title": {
+        "zh_CN": "建筑记录",
+        "en_US": "Building Record"
+    },
+    "describe": {
+        "zh_CN": "过雕刻出来的魔力标尺，可以有效地进行区域标定。（右键和shift右键分别标定两个点，当手里拿着标尺时，可以看到标定的区域。标尺可以在工作台里通过染料染色。）\\n建筑祭坛可以对标定区域进行扫描，并将建筑数据记录在建筑水晶里。\\n将空的建筑水晶放到建筑解析台上，标有区域的魔力标尺放在魔力平台上，通过起始之魔导书启动，消耗土元素进行记录。\\n建筑祭坛的方向应该指向区域的中心，且不能过远，才能正常工作。\\n注意：工作中的建筑解析台如果出现异常，会发生爆炸。",
+        "en_US": "The Magic Ruler can effectively delineate areas.(Right Click and Shift Right Click to mark two points respectively. When holding the ruler, you can see the marked area. The ruler can be dyed with dye at the workbench.)\\nThe Architectural Altar can scan the delineated area and record the building data in the Architectural Crystal.\\nPlace an empty Architectural Crystal on the Architectural Analyzer, and place the Magic Ruler with delineated areas on the Magic Platform. Activate it with the Spellbook of Launcher to consume Earth Element for recording.\\nThe Architectural Altar should be oriented towards the center of the area and not too far away to function properly.\\nNote: If the working Architectural Analyzer encounters abnormalities, it may explode."
+    },
+    "crafts": [
+        "elementalsorcery:magic_ruler",
+        "elementalsorcery:building_altar"
+    ],
+    "building": {
+        "structure": "builing_altar",
+        "custom": {
+            "0,1,2": {
+                "id": "elementalsorcery:magic_platform",
+                "data": 1
+            },
+            "0,3,-1": "elementalsorcery:building_altar",
+            "3,1,0": "elementalsorcery:elemental_cube",
+            "-3,1,0": "elementalsorcery:elemental_cube",
+            "2,1,2": "elementalsorcery:elemental_cube",
+            "-2,1,2": "elementalsorcery:elemental_cube"
+        }
+    }
+}

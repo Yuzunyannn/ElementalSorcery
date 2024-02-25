@@ -1,0 +1,15 @@
+{
+    "cover": "elementalsorcery:void_fragment",
+    "title": {
+        "zh_CN": "虚空容器",
+        "en_US": "Void Container"
+    },
+    "describe": {
+        "zh_CN": "「聚魂」附魔的武器在末地击杀末影生物有几率掉落虚空碎片，将魔石，虚空碎片，折光宝石，末影珍珠，以9:9:6:12的比例放入熔岩锅中，可熔炼出虚空容器。\\n虚空容器似乎有着非常规的容量，通过其和元素水晶制作的虚空元素容器，借助虚空的力量可以近乎无穷的储存一种元素，但是这种储存并不稳定，受到冲击很有可能出现元素集中泄露发生爆炸的情况，因此并不能作为元素水晶的代替。",
+        "en_US": "The weapon enchanted with 'Gather Souls' has a chance to drop Void Fragment when killing End creatures in the End. By putting Dimensity, Void Fragment, Refract Gem, End Pearl into Melt Cauldron in a ratio of 9:9:6:12, you can smelt Void Container.\\nThe Void Container seems to have an unconventional capacity. By using it with Element Crystal to make Element Void Container, it can store a single element almost infinitely using the power of the void. However, this storage is unstable, and there's a high risk of elemental leakage and explosion upon impact, so it cannot replace Element Crystal."
+    },
+    "crafts": [
+        "elementalsorcery:void_container",
+        "elementalsorcery:void_container_element"
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:order_crystal",
+    "title": {
+        "zh_CN": "物质重现",
+        "en_US": "Item Construction"
+    },
+    "describe": {
+        "zh_CN": "物质可以瓦解为为元素，相对的，元素也应该构造成物品，这就需要天空祭坛了。\\n在天空祭坛下方放上需要构造物品的结构水晶，方桌中心9格的四个角上，分别放上秩序水晶，然后通吟唱构造咒文，元素便可反向构造成对应的物质。\\n不过复杂度过高的物品天空祭坛似乎并无法处理。\\n秩序水晶水晶可以通过共鸣培养调频共鸣获得。",
+        "en_US": "Item can be disintegrated into elements, and conversely, elements should be able to construct item. This requires the Sky Altar.\\nBelow the Sky Altar, place a Structural Crystal indicating the item to be constructed. At the four corners of the central 9 slots of the table, place Order Crystals. Then, activate the construct-craft with the construct mantra from the Spellbook of Launcher.\\nHowever, it seems that the Sky Altar may not be able to handle items of high complexity.\\nOrder Crystal can be craft through Resonance Incubator."
+    }
+}

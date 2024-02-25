@@ -3,13 +3,14 @@
 	"pattern": [
 		"MSM",
 		"GCG",
-		"MGM"
+		"MTM"
 	],
 	"key": {
 		"C": "elementalsorcery:cube_core",
 		"S": "elementalsorcery:fairy_core",
 		"M": "elementalsorcery:elf_crystal",
-		"G": "minecraft:glass_pane"
+		"G": "minecraft:glass_pane",
+		"T": "elementalsorcery:magic_terminal"
 	},
 	"element": [
 		{

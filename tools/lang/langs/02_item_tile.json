@@ -904,12 +904,12 @@
         },
         "tile.buildingAltar.name": {
             "zh_CN": "建筑解析台",
-            "en_US": "Architectural Analysis Altar",
+            "en_US": "Architectural Analyzer",
             "ja_JP": "建築解析台"
         },
         "tile.analysisAltar.name": {
             "zh_CN": "结构解析台",
-            "en_US": "Structure Analysis Altar",
+            "en_US": "Structure Analyzer",
             "ja_JP": "構造解析台"
         },
         "tile.supremeTable.name": {

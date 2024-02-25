@@ -1,0 +1,18 @@
+{
+    "cover": {
+        "item": "elementalsorcery:magic_paper",
+        "data": 3
+    },
+    "title": {
+        "zh_CN": "咒文纸张",
+        "en_US": "Mantra Paper"
+    },
+    "describe": {
+        "zh_CN": "通过元素之笔在咒术纸张上撰写魔文而形成的具有特殊效果的魔文纸张，魔文纸张在地面上的时候会吸收同层周围元素容器中的元素，来进行能量的积攒。当能量达到一定的值后，魔文纸张会脱去魔文，进化成咒文纸张。\\n咒文纸张是做魔典的必备纸张。",
+        "en_US": "The Magical Written Paper, formed by writing glyphs on Incantation Paper using the Element Quill. When on the ground, it absorbs elements from nearby element containers on the same layer to accumulate energy. Once the energy reaches a certain value, the Magical Written Paper sheds its glyphs and evolves into a Mantra Paper.\\nThe Mantra Paper is essential for crafting Grimoire."
+    },
+    "crafts": {
+        "item": "elementalsorcery:magic_paper",
+        "data": 2
+    }
+}

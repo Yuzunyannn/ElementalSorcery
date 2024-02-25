@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:item_crystal",
+    "title": {
+        "zh_CN": "结构水晶",
+        "en_US": "Structural Crystal"
+    },
+    "describe": {
+        "zh_CN": "结构水晶是一种可以保存物质结构的水晶，在解析台中，可以将物质具有的元素数据保存进去。\\n该水晶可以通过共鸣培养调频共鸣获得。",
+        "en_US": "The Structural Crystal is a crystal that can store item's structure. In the Structure Analyzer, element's data can be saved the into it.\\nThis crystal can be craft through Resonance Incubator."
+    }
+}

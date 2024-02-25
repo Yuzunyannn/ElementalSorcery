@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:cube_demarcator",
+    "title": {
+        "zh_CN": "定标终端",
+        "en_US": "Demarcaterminal"
+    },
+    "describe": {
+        "zh_CN": "可以给元素立方体安装标定终端，终端内可以设置接受元素能量的上限或这下限等参数，不满足标定的元素不能进入该立方体。（手持标定终端，右键点击元素立方体给指定立方体安装标定终端，安装后右键元素立方体打开终端）",
+        "en_US": "You can install Element Cube Demarcaterminal for the Element Cube, where you can set parameters such as the upper or lower limit for receiving power. Element that do not meet the calibration criteria cannot enter the cube. (Right Click on the Element Cube with Element Cube Demarcaterminal to install. After installation, Right Click on the Element Cube to open the terminal.)"
+    },
+    "crafts": "elementalsorcery:cube_demarcator"
+}

@@ -1,0 +1,31 @@
+{
+    "cover": "elementalsorcery:deconstruct_windmill",
+    "title": {
+        "zh_CN": "瓦解风车",
+        "en_US": "Disintegration Windmill"
+    },
+    "describe": {
+        "zh_CN": "如果把将物质瓦解的设备做成风车形式，获取可以自动的分解元素，与此，瓦解风车诞生了。\\n通过「风车平台」搭建出的瓦解祭坛，并将风轮放到平台上，在风力的驱动下，风车开始工作，将周围的物质转化为元素，并存入祭坛周边的元素容器之中。\\n风力越大，转动越快，分解效率也越高。\\n随着时间的迁移，风轮会消耗耐久，直至销毁。不同材质的风轮的耐久不同，其特性也具有微弱的不同。\\n隔壁学者把风轮投出去当作武器用了，如果没有这么大的力气，土元素的果汁可以帮助你。",
+        "en_US": "If the device for Disintegration is made in the form of a windmill, it can automatically disintegrate element. Thus, the Disintegration Windmill is born.\\nBuild a other Disintegration Altar with a 'Windmill Platform' and place the 'Wind Wheel' on it. Driven by the wind, the windmill starts working, converting the surrounding matter into Element and storing them in the element containers around the altar.\\nThe stronger the wind, the faster it rotates, and the higher the disintegration efficiency.\\nOver time, the Wind Wheel will consume durability until it is destroyed. Wind Wheel made of different materials have different durabilities, and their characteristics also have slight differences.\\nThe scholar next door used the Wind Wheel  as weapon. If you don't have that much strength, the juice of Earth Element can help you."
+    },
+    "crafts": [
+        "elementalsorcery:deconstruct_windmill",
+        {
+            "item": "elementalsorcery:windmill_blade_frame",
+            "data": 0
+        },
+        "elementalsorcery:windmill_blade_wood",
+        "elementalsorcery:windmill_blade_astone",
+        {
+            "item": "elementalsorcery:windmill_blade_frame",
+            "data": 1
+        },
+        "elementalsorcery:windmill_blade"
+    ],
+    "building": {
+        "structure": "deconstruct_windmill",
+        "custom": {
+            "0,2,0": "elementalsorcery:deconstruct_windmill"
+        }
+    }
+}

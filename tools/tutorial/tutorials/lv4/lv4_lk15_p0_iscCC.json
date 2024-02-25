@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:is_craft_cc",
+    "title": {
+        "zh_CN": "不一样的递归结构",
+        "en_US": "Different Recursive Structure"
+    },
+    "describe": {
+        "zh_CN": "并不是所有合成都可以通过工作台来完成的，构建更高级的的记录台，可以进行一些解析一些其他的方式的合成结构。（比如解析一些其他mod?带来的合成方案。）",
+        "en_US": "Not all crafts can be completed through the workbench. Crafting more advanced  Recorder can analyze crafts through other means. (For example, analyzing crafts schemes brought by some other mods?)"
+    },
+    "crafts": "elementalsorcery:is_craft_cc"
+}

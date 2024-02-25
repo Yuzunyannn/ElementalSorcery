@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:element_translocator",
+    "title": {
+        "zh_CN": "精准的元素转移",
+        "en_US": "Precise Element Transfer"
+    },
+    "describe": {
+        "zh_CN": "在祭坛的使用中，经常出现不同能量合并的情况，反复合并后的能量必然会产生更多的损失。通过「元素转移台」可以精准的将元素非整数化储存起来，并统一输出到另外一个元素容器之中。\\n要注意的的是，转移台中存有元素的情况下破坏的话，会发生元素爆炸。",
+        "en_US": "In the use of the altar, situations where different power merge often occur, and repeated merging of power will inevitably result in greater losses. The 'Element Translocator' can accurately store non-integerized element and uniformly output them to another element container.\\nIt should be noted that if the Translocator is break while containing element, an Element Explosion will occur."
+    },
+    "crafts": "elementalsorcery:element_translocator"
+}

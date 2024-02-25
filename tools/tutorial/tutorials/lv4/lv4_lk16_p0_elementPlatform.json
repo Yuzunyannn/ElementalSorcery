@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:element_platform",
+    "title": {
+        "zh_CN": "更好的魔力平台",
+        "en_US": "Better Magic Platfrom"
+    },
+    "describe": {
+        "zh_CN": "学者们做的出新设备「元素平台」，它和魔力平台比较相似，也可以放置物品，供其他设备使用。\\n不过元素平台可以存入四种元素，并且会将元素尝试与上方的物品进行共鸣。\\n注意，它并不是一个标准的元素容器，元素一旦存入，只能通过元素吸收箱回收了，其他设备无法直接取出。",
+        "en_US": "Scholars have developed a new device called the 'Element Platform'. It is similar to the Magic Platform and can also hold items for use by other devices.\\nHowever, the Element Platform can store four types of elements and will attempt to resonate the elements with the items placed above it.\\nNote that it is not a standard element container; once elements are stored, they can only be retrieved through the Absorber, and cannot be directly accessed by other devices."
+    },
+    "crafts": "elementalsorcery:element_platform"
+}

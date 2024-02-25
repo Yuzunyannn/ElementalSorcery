@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:devolve_cube",
+    "title": {
+        "zh_CN": "元素调运",
+        "en_US": "Element Dispatch"
+    },
+    "describe": {
+        "zh_CN": "协调立方体可以扫描并管理以自身为中心32*32区域中的元素容器。对区域内的元素进行吸收和派送。\\n选择元素容器后出现的控制条内，传输按钮左键单次传输，右键持续自动传输。\\n虽然可以设置传输量，但自动传输每秒是有最大带宽的，这是的传输量同时还作为优先级使用。",
+        "en_US": "The Devolve Cube can scan and manage element containers within a 32*32 area centered around itself. It can absorb and distribute elements within the region.\\nWithin the control bar that appears after selecting an element container, left-clicking the transfer button initiates a single transfer, while right-clicking enables continuous automatic transfer.\\nAlthough transfer quantities can be set, automatic transfers have a maximum bandwidth per second, and this transfer amount is also used as a priority."
+    },
+    "crafts": "elementalsorcery:devolve_cube"
+}

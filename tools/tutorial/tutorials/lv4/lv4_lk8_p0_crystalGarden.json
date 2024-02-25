@@ -1,0 +1,24 @@
+{
+    "cover": "elementalsorcery:life_flower",
+    "title": {
+        "zh_CN": "水晶花园",
+        "en_US": "Crystal Garden"
+    },
+    "describe": {
+        "zh_CN": "一个用魔力构造的花园，可以种植各种作物乃至水晶。一个花园里最核心的就是借助星之种制作而成的「生命之花」，生命之花会为周围土地生长提供能量。\\n生命之花只能放到魔力花盆的上面，且需要魔力才能工作，用魔石给土壤补充魔力（手持魔石，右键花盆）。\\n生命之花每次为周围提供能量，有2%%的概率消耗花盆中的魔力。\\n生息土壤是水晶花园土壤的基础构成，可以在上面种上各种植物，在生命之花的作用下，植物欣欣向荣。\\n同时，生息土壤可以融入植物的「生命精华」，在生命之花的作用下，带有「生命精华」的土壤会自动产生植物，并生长。\\n（生息土壤和植物种子可以合成带有「生命精华」的土壤，一旦打掉，土壤内的「生命精华」将会消失)",
+        "en_US": "A Garden constructed with magic can grow various crops and even crystals. The most essential part of a garden is the 'Life Flower' made with the Star Seed, which provides energy for the surrounding land growth.\\nThe Life Flower can only be placed on top of a Magic Pot and requires magic to work. Use Dimensity to replenish magic to the soil (hold a Dimensity and Right Click on the flowerpot).\\nEach time the Life Flower provides energy to the surroundings, there is a 2%% chance of consuming magic from the flowerpot.\\nLived soil is the basic composition of the crystal garden soil, where various plants can be grown. With the effect of the Life Flower, plants thrive.\\nAt the same time, Lived soil can incorporate the 'Essence of Life' from plants. With the effect of the Life Flower, soil containing the 'Essence of Life' will automatically generate plants and grow.\\n(Lived soil and plant seeds can be crafted into soil with the 'Essence of Life'. Once destroyed, the 'Essence of Life' in the soil will disappear)."
+    },
+    "crafts": [
+        "elementalsorcery:life_flower",
+        "elementalsorcery:magic_pot",
+        "elementalsorcery:life_dirt"
+    ],
+    "building": {
+        "structure": "crystal_garden",
+        "custom": {
+            "0,1,0": "elementalsorcery:magic_pot",
+            "0,2,0": "elementalsorcery:life_flower",
+            "-4,0,-4->4,0,4": "elementalsorcery:life_dirt"
+        }
+    }
+}

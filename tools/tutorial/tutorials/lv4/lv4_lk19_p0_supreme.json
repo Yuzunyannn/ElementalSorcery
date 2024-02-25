@@ -1,0 +1,48 @@
+{
+    "cover": "elementalsorcery:supreme_table",
+    "title": {
+        "zh_CN": "天空祭坛",
+        "en_US": "Sky Altar"
+    },
+    "describe": {
+        "zh_CN": "结合众多学者的智慧制作的大型祭坛，其杰出的设计构造可以执行各种各样的功能，甚至可以取代之前的一些祭坛。\\n天空祭坛多出16格个合成空间，可以制作一些更强大的的设备；而且可以执行物质的瓦解，且几乎无损；甚至可以根据元素和结构，反向构成物质。\\n元素方桌是天空祭坛的核心，可以完成各种各样的功能，在没有祭坛的加持下，方桌仍可以作为普通的工作台进行使用，当然制作它的成本也是很高的。",
+        "en_US": "Crafted with the wisdom of many scholars, the large altar boasts remarkable design and construction, capable of executing various functions, even replacing some previous altars.\\nThe Sky Altar provides an additional 16-grid crafting space, allowing for the creation of more advance devices. It can also conduct items disintegration with minimal loss and even re-construct item based on elements and structure.\\nThe Element Square Table is the core of the Sky Altar, capable of performing various functions. Even without the blessings of a altar, the table can still be used as a regular workbench, although the cost of crafting it is quite high."
+    },
+    "crafts": [
+        "elementalsorcery:supreme_table",
+        {
+            "item": "elementalsorcery:supreme_table_component",
+            "data": 0
+        },
+        {
+            "item": "elementalsorcery:supreme_table_component",
+            "data": 1
+        }
+    ],
+    "building": {
+        "structure": "supreme_altar",
+        "custom": {
+            "0,4,0": "elementalsorcery:supreme_table",
+            "0,1,0": {
+                "id": "elementalsorcery:magic_platform",
+                "data": 1
+            },
+            "6,1,2": "elementalsorcery:elemental_cube",
+            "6,1,-2": "elementalsorcery:elemental_cube",
+            "-6,1,2": "elementalsorcery:elemental_cube",
+            "-6,1,-2": "elementalsorcery:elemental_cube",
+            "8,1,2": "elementalsorcery:elemental_cube",
+            "8,1,-2": "elementalsorcery:elemental_cube",
+            "-8,1,2": "elementalsorcery:elemental_cube",
+            "-8,1,-2": "elementalsorcery:elemental_cube",
+            "2,1,6": "elementalsorcery:elemental_cube",
+            "-2,1,6": "elementalsorcery:elemental_cube",
+            "-2,1,-6": "elementalsorcery:elemental_cube",
+            "2,1,-6": "elementalsorcery:elemental_cube",
+            "2,1,8": "elementalsorcery:elemental_cube",
+            "-2,1,8": "elementalsorcery:elemental_cube",
+            "-2,1,-8": "elementalsorcery:elemental_cube",
+            "2,1,-8": "elementalsorcery:elemental_cube"
+        }
+    }
+}

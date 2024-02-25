@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:invert_gem",
+    "title": {
+        "zh_CN": "逆变",
+        "en_US": "Invert"
+    },
+    "describe": {
+        "zh_CN": "将祝福与灾害融合起来、并将元素回旋的力量融于的宝石，看上去平平无奇，却有着不可思议力量...\\n先人曾暗示过元素有着提升能量的可能，隐隐约约感觉和这个宝石有着千丝万缕的联系。",
+        "en_US": "Blending blessings and disasters, and infusing the power of swirling elements into a gem, it may seem ordinary, but it possesses incredible power...\\nAncestors once hinted at the possibility of enhancing power with elements, and there seems to be a subtle connection to this gem."
+    },
+    "crafts": "elementalsorcery:invert_gem"
+}

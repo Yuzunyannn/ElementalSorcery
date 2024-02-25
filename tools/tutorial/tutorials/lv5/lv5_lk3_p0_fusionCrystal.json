@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:fusion_crystal",
+    "title": {
+        "zh_CN": "融合水晶",
+        "en_US": "Fusion Crystal"
+    },
+    "describe": {
+        "zh_CN": "通过漩涡将许多水晶融合到一块，而形成的融合态的水晶。\\n拿在手里似乎可以稍微提升下属性。",
+        "en_US": "By merging many crystals together through a vortex, a Fusion Crystal is formed. \\nHolding it seems to slightly enhance attributes."
+    },
+    "crafts": "elementalsorcery:fusion_crystal"
+}

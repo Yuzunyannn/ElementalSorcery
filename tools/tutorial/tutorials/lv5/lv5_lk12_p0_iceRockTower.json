@@ -1,0 +1,18 @@
+{
+    "cover": "elementalsorcery:ice_rock_stand",
+    "title": {
+        "zh_CN": "水晶塔",
+        "en_US": "Crystal Tower"
+    },
+    "describe": {
+        "zh_CN": "制作一个「魔控基座」在上面放上「岩冰水晶块」就可以搭建一个岩冰水晶塔。水晶塔可以将魔力以片元的型式存入其中，控制其的输入和输出。接入魔动装置可以作为超大量的魔力存储装置，右键从底座拿取控制器，使用控制器攻击敌人，水晶塔还可以发射魔力进行二次打击。当水晶塔超过一定高度，还可以用控制器设立远程传输节点。\\n水晶塔会呈现出虚空特性，无视空间的传输，存储量和高度并不是线性关系等等的，让学者们陷入疑问。",
+        "en_US": "To create a 'Magic Energy Controller Pedestal' place an 'Icerock Crystal Block' on top of it to construct an Icerock Crystal Tower. The tower can store magical energy in the form of fragments and control its input and output. Connecting it to a magic device can serve as a massive energy storage unit. Right Clicking on the pedestal to retrieve the controller, you can then use the controller to attack enemies. Additionally, the crystal tower can launch secondary strikes using magic. When the tower exceeds a certain height, you can establish remote transmission nodes with the controller.\\nThe crystal tower exhibits void characteristics, disregarding spatial transmission. The relationship between storage capacity and height is not linear, leaving scholars puzzled."
+    },
+    "crafts": [
+        "elementalsorcery:ice_rock_stand",
+        {
+            "id": "elementalsorcery:controller",
+            "data": 0
+        }
+    ]
+}

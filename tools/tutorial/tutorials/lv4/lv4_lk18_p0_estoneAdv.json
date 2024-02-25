@@ -1,0 +1,16 @@
+{
+    "cover": "elementalsorcery:estone_prism",
+    "title": {
+        "zh_CN": "高级魔力石英制品",
+        "en_US": "Advance Magic Quartz Products"
+    },
+    "describe": {
+        "zh_CN": "有一些高级的魔力石英制品：\\n「棱镜石英」，作为一种高级的祭坛材料。\\n「方阵石英台」作为高级的魔力平台，平常并用不到，是某些祭坛结构的必需品。\\n「魔力石英缸」可以容纳一些特殊的东西，或参转化某些物品。",
+        "en_US": "There are some advanced magic quartz products:\\n'Prism Quartz': It serves as an advanced altar material.\\n'Matrix Quartz Platform': As an more advanced magic platform, it's not commonly used but is necessary for certain shrine structures.\\n'Magic Quartz Crock': It can contain some special items or participate in the transformation of certain items."
+    },
+    "crafts": [
+        "elementalsorcery:estone_prism",
+        "elementalsorcery:estone_matrix",
+        "elementalsorcery:estone_crock"
+    ]
+}

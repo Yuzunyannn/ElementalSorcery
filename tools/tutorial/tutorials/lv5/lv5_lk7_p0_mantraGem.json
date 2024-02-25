@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:mantra_gem",
+    "title": {
+        "zh_CN": "咒文有形化",
+        "en_US": "Tangible Mantra"
+    },
+    "describe": {
+        "zh_CN": "咒文写入魔典中，便可以释放，那么咒文是否可以写入物品，来制作蕴含着某些咒文能量的物品呢？学者们制作出了咒文宝石。\\n通过撰录祭坛可以将咒文写入到咒文宝石中。",
+        "en_US": "Once Mantra are transcribed into the Grimoire, they can be cast. But can Mantra be transcribed into items to create items imbued with certain mantra power? Scholars have created Mantra Gem for this purpose.\\nThrough the Transcribe Altar, mantra can be written into Mantra Gem."
+    },
+    "crafts": "elementalsorcery:mantra_gem"
+}

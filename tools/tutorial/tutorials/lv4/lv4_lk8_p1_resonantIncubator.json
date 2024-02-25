@@ -1,0 +1,26 @@
+{
+    "cover": "elementalsorcery:md_resonant_incubator",
+    "title": {
+        "zh_CN": "共鸣培养",
+        "en_US": "Resonant Incubation"
+    },
+    "describe": {
+        "zh_CN": "学者发现所有水晶都有一个频率属性。共鸣培养箱，通过水晶间频率的共鸣，调整生息土壤的频率，一旦频率调整到与某种水晶相同，则会在土壤中萌生出该水晶的「生命精华」。该土壤可以在水晶花园中生长出水晶花。\\n（每次水晶花成熟后，「生命精华」都会有一定几率消失)",
+        "en_US": "Scholars have discovered that all crystals have a frequency attribute. Through resonance between crystals in the Resonance Incubator, the frequency of the Lived Soil is adjusted. Once the frequency matches that of a certain crystal, the 'Essence of Life' of that crystal will sprout in the soil. This soil can grow crystal flowers in the Crystal Garden.\\n(After each crystal flower matures, there is a certain chance that the 'Essence of Life' will disappear)"
+    },
+    "crafts": "elementalsorcery:md_resonant_incubator",
+    "building": {
+        "structure": "resonant_incubator",
+        "custom": {
+            "0,2,0": "elementalsorcery:md_resonant_incubator",
+            "3,1,0": "elementalsorcery:magic_platform",
+            "-3,1,0": "elementalsorcery:magic_platform",
+            "0,1,3": "elementalsorcery:magic_platform",
+            "0,1,-3": "elementalsorcery:magic_platform",
+            "2,1,2": "elementalsorcery:magic_platform",
+            "-2,1,2": "elementalsorcery:magic_platform",
+            "-2,1,-2": "elementalsorcery:magic_platform",
+            "2,1,-2": "elementalsorcery:magic_platform"
+        }
+    }
+}

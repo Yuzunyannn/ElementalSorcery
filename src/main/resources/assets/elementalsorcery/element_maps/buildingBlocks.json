@@ -45,8 +45,8 @@
 			"item": "minecraft:bedrock",
 			"element": {
 				"id": "earth",
-				"size": 9999999,
-				"power": 9999999
+				"size": 3,
+				"power": 8192
 			}
 		},
 		{

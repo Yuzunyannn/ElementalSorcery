@@ -1,0 +1,15 @@
+{
+    "cover": "elementalsorcery:ice_rock_chip",
+    "title": {
+        "zh_CN": "岩冰造物",
+        "en_US": "Icerock Creation"
+    },
+    "describe": {
+        "zh_CN": "从精灵那里拿到的龙息镐，在破坏绯红水晶矿后，会掉落蓝色的碎片结晶，学者称之为「岩冰」，这些结晶碎片似乎是一种奇怪的介质，感觉并不是自然生成的。\\n学者们将其和逆变宝石熔炼到一起，得到了「岩冰晶石」，这个晶石有着非同寻常的性质，可以让稳定的元素混乱化，以一种数量与能量归一的形态存入其中，称这种形态为片元形态。这简直是一个颠覆性的发现。",
+        "en_US": "After obtaining it from the elves, the Dragon Breath Pickaxe, when used to mine Scarlet Crystal Ore, drops blue crystal fragments we called 'Ice Rock'. Scholars regard these crystals as a peculiar medium, seemingly not of natural origin.\\nThey've melted them together with Invert Gem, resulting in 'Ice Rock Crystals'. These crystals possess extraordinary properties, Can confuse stable elements, allowing them to be stored in a unified form of quantity and energy, we call this unified form as 'Fragment' form. It's truly a groundbreaking discovery."
+    },
+    "crafts": [
+        "elementalsorcery:ice_rock_spar",
+        "elementalsorcery:ice_rock_crystal_block"
+    ]
+}

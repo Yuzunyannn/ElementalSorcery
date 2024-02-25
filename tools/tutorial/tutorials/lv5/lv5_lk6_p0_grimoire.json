@@ -1,0 +1,31 @@
+{
+    "cover": "elementalsorcery:grimoire",
+    "title": {
+        "zh_CN": "魔典",
+        "en_US": "Grimoire"
+    },
+    "describe": {
+        "zh_CN": "魔典，作为最高级的魔导书，可以让元素与咒文共鸣，吟唱出各种各样的魔法。当然制作它并不简单，需要用到较为昂贵的素材。增加中间一列「咒文纸张」的数量，可以提升魔典的容量，以便装下更多咒文。\\n制作出来的魔典是空白的，并不能释放魔法。这就需要撰录祭坛，来将咒文写入魔典之中。除此之外，撰录祭坛还可以为魔典进行元素补充，让咒文可以正常吟唱。\\n在解读古卷的过程中会发现，一些古卷上记载了有关咒文的内容。若能凑齐某种咒文，将其放入撰录祭坛里，将魔典放到方桌上，在知识、火、水元素的缠绕下 ，可以将古卷上记录的咒文撰录成魔典可以使用的咒文，并写入魔典当中。\\n若撰录祭坛里不放入任何东西，仅仅将魔典放到方桌上，祭坛就会自动吸取周围所有的元素，注入到魔典里。\\n咒文的吟唱会消耗某些元素、一个魔典中可以存放多个咒文，这与魔典的容量有关，使用「功能键(默认TAB)」进行切换。",
+        "en_US": "The Grimoire, as the most advanced spellbook, resonates elements with matrans, allowing for the casting of various spells. Of course, crafting it is not simple, as it requires expensive materials. Increasing the quantity of 'Mantra Paper' in the middle column enhances the Grimoire's capacity to hold more Mantras.\\nThe crafted Grimoire is blank and cannot cast spells. For this purpose, you'll need the Transcribe Altar to inscribe the Mantra into the Grimoire. Moreover, the Transcribe Altar can charge the Grimoire with elements, enabling the mantra to be cast properly.\\nDuring the process of unscrambling Ancient Paper, you may discover some content related to Mantra. If you manage to gather a certain kind of Mantra, placing it into the Transcribe Altar along with the Grimoire on the table, and under the entanglement of Knowledge, Fire, and Water elements, you can transcribe the Mantra recorded on the ancient paper into a usable spell for the Grimoire and write it into the Grimoire.\\nIf nothing is placed in the Transcribe Altar, and only the Grimoire is placed on the table, the altar will automatically absorb all surrounding elements and infuse them into the Grimoire.\\nCasting Mantra consumes certain elements. Multiple spells can be stored in one Grimoire, which depends on the Grimoire's capacity, and you can switch between them using the 'Function Key' (default TAB)."
+    },
+    "crafts": [
+        "elementalsorcery:grimoire",
+        "elementalsorcery:transcribe_table",
+        "elementalsorcery:transcribe_injection"
+    ],
+    "building": {
+        "structure": "transcribe_altar",
+        "custom": {
+            "0,2,0": "elementalsorcery:transcribe_table",
+            "0,6,0": "elementalsorcery:transcribe_injection",
+            "4,1,8": "elementalsorcery:elemental_cube",
+            "-4,1,8": "elementalsorcery:elemental_cube",
+            "-4,1,-8": "elementalsorcery:elemental_cube",
+            "4,1,-8": "elementalsorcery:elemental_cube",
+            "8,1,4": "elementalsorcery:elemental_cube",
+            "-8,1,4": "elementalsorcery:elemental_cube",
+            "-8,1,-4": "elementalsorcery:elemental_cube",
+            "8,1,-4": "elementalsorcery:elemental_cube"
+        }
+    }
+}

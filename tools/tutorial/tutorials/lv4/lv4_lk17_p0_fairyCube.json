@@ -1,0 +1,15 @@
+{
+    "cover": "elementalsorcery:fairy_cube",
+    "title": {
+        "zh_CN": "精灵立方体",
+        "en_US": "Elf Cube"
+    },
+    "describe": {
+        "zh_CN": "在立方体核心的驱动下通过精灵核心构建的「精灵立方体」，他会漂浮在你的身边，是你得力的小助手。\\n在装有不同精灵符文的情况下，精灵立方体会模拟你的行为，帮助你更好的完成各种工作。\\n饿了是干不动的，需要给精灵立方体投喂食物，让它充满干劲。同时，间断的投喂食物会让它快速获得经验进行升级。\\n备注：虽然叫「精灵立方体」，但只是用精灵核心制作的，实际和精灵们没任何关系。",
+        "en_US": "Powered by the Cube Core within, the 'Elf Cube' constructed with the Elf Core will float beside you as your helpful assistant.\\nWhen equipped with different Elf Cube Rune, the Elf Cube will mimic your actions, aiding you in various tasks.\\nIt can't work on an empty stomach, so be sure to feed it food to keep it energetic.Additionally, intermittent feeding will allow it to quickly gain experience and level up.\\nNote: Although it's called the 'Elf Cube', it's only made with a Elf Core and has no actual relation to elves."
+    },
+    "crafts": [
+        "elementalsorcery:fairy_cube",
+        "elementalsorcery:fairy_core"
+    ]
+}

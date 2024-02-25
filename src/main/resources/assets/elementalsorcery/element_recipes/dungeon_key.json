@@ -3,11 +3,14 @@
 	"pattern": [
 		"  D",
 		"DD ",
-		"SD "
+		"SD ",
+		"  D ",
+		"  MD"
 	],
 	"key": {
 		"D": "elementalsorcery:dungeon_stone",
-		"S": "elementalsorcery:relic_gem"
+		"S": "elementalsorcery:relic_gem",
+		"M": "elementalsorcery:magic_crystal"
 	},
 	"element": [
 		{

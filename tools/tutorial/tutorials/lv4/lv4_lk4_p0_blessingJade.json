@@ -1,0 +1,17 @@
+{
+    "cover": "elementalsorcery:blessing_jade",
+    "title": {
+        "zh_CN": "祝福之玉碎片",
+        "en_US": "Blessing Jade Fragment"
+    },
+    "describe": {
+        "zh_CN": "这是个人人都想入手的贵重物品，它不仅会为持有者带来「祝福」，似乎还与先人的历史有着某种联系。\\n但它并不是这么容易就能获得到，需要凑齐8片碎片，才能制作出来，虽然可能目前用不到它，不过可以顺手收集一下这些碎片。\\n说回「祝福」，它似乎可以为你带来好运，比如挖矿掉落变多，生命值低下时获得意外的生命恢复等等。\\n不同的碎片获取的方式不尽相同，这里有一些线索：\\n1:封藏石\\n2:噬魂\\n3:商人\\n4:钓鱼\\n5:熔炼\\n6:研究\\n7:烧制\\n8:委托",
+        "en_US": "This is a precious item that everyone desires to obtain. It not only brings 'blessings' to the holder but also seems to have some connection to the history of ancestors.\\nHowever, it's not so easy to acquire; you need to collect 8 pieces to craft it. Although you may not need it at the moment, it's handy to collect these fragments. \\nSpeaking of 'blessings,' it seems it can bring you good luck, such as increasing mining drops, unexpectedly restoring life when health is low, and so on.\\nThe methods to obtain different fragments vary. Here are some clues:\\n1: Seal Stone\\n2: Soul Killer\\n3: Merchant\\n4: Fishing\\n5: Smelting\\n6: Research\\n7: Smelting\\n8: Quest"
+    },
+    "crafts": [
+        {
+            "item": "elementalsorcery:blessing_jade_piece",
+            "data": 5
+        }
+    ]
+}

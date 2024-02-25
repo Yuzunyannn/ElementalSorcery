@@ -1,0 +1,18 @@
+{
+    "cover": {
+        "id": "elementalsorcery:quill",
+        "data": 4
+    },
+    "title": {
+        "zh_CN": "元素羽毛笔",
+        "en_US": "Element Quill"
+    },
+    "describe": {
+        "zh_CN": "火之羽毛笔和水之羽毛笔在漩涡下，而形成的元素羽毛笔，是撰写高级咒文的必备工具。\\n交融的元素并不稳定，所以除了撰写咒文，不要再其他地方使用它。",
+        "en_US": "The Element Quill, formed by the fusion of the Fire Quill and the Water Quill in the vortex, is an essential tool for writing advanced spells.\\nThe blended elements are unstable, so it's advisable to only use it for writing spells and avoid using it elsewhere."
+    },
+    "crafts": {
+        "id": "elementalsorcery:quill",
+        "data": 4
+    }
+}

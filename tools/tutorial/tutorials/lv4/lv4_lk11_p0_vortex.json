@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:vortex",
+    "title": {
+        "zh_CN": "漩涡",
+        "en_US": "Vortex"
+    },
+    "describe": {
+        "zh_CN": "漩涡可以将多种物品有效的融合在一起，是制作一些道具的必备条件。\\n可以通过研究获取漩涡，此外最好不要把漩涡拿在手里，更不要把漩涡扔到地上！",
+        "en_US": "Vortex is essential for effectively merging various items together, and it's a prerequisite for crafting certain items.\\nYou can obtain the Vortex through Research. Additionally, it's best not to hold the Vortex in your hand, and definitely do not throw it on the ground!"
+    },
+    "crafts": "elementalsorcery:vortex"
+}

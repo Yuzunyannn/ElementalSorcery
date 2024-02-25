@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:spellbook_architecture",
+    "title": {
+        "zh_CN": "建筑之魔导书",
+        "en_US": "Spellbook of Architecture"
+    },
+    "describe": {
+        "zh_CN": "建筑之魔导书可以读取建筑水晶中的建筑信息，在魔力书桌中补充土元素，使用建筑咒文，将物品栏里的物品发送到指定的位置，以快速完成建筑的建造。\\n(存有结构数据的建筑水晶使用shift+右键可以标定一个建筑锚点)",
+        "en_US": "The Spellbook of Architecture can read the building information stored in the Architectural Crystal. By charge Earth Elements on the Magic Desk, using architectural mantra, items from the inventory can be sent to designated locations to quickly complete the building.\\n(Architectural Crystal containing building data can be marked with a building anchor point by using Shift Right Click)."
+    },
+    "crafts": "elementalsorcery:spellbook_architecture"
+}

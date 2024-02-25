@@ -1,0 +1,23 @@
+{
+    "cover": "elementalsorcery:portal_altar",
+    "title": {
+        "zh_CN": "折光祭坛",
+        "en_US": "Refract Altar"
+    },
+    "describe": {
+        "zh_CN": "通过大量末影元素的注入，而形成的折光祭坛拥有扭曲空间的力量，可以将史蒂夫们从一个位置转移到另一个位置上去。\\n在祭坛的石柱上，放上带有末影元素的元素立方体，将记录有维度位置信息的自然水晶放入折光祭坛中，便会消耗能量末影元素打开传送门。\\n打开传送门时消耗的元素较多，传送门打开后会一直消耗相对较少的元素对此进行维持。\\n传送门打开的位置附近，不允许有任何的杂物，否则传送门很有可能无法打开。",
+        "en_US": "Through the injection of a large number of Ender Elements, Refract Altar has the power to distort the space which can transfer Steves from one position to another.\\nPut the Element Cube with Ender Element on the stone pillars of the altar. Put Natural Crystal with dimension position information into Refract Altar. It will consume Ender Element to open portal.\\nMore elements are consumed when the gate is opened, and a relatively small number of elements are consumed after the gate is opened.\\nNo sundries are allowed near the opening position of the portal, otherwise the portal may not be opened.",
+        "ja_JP": "大量のエンダー元素の注入によって形成された折り光祭壇は屈折空間の力を持ち、 スティーブたちを一つの位置から別の位置に移動させることができる。\\n祭壇の石柱の上にエンダー元素を持した元素立方体を置き、位置情報を記録した自然水晶を折り光祭壇に入れ、そしてエンダー元素を消費し、転送扉を開けます。\\n転送扉を開ける時の元素消耗が多く、転送扉を維持する時の元素消耗が比較的少ない。\\n転送扉が開いている位置の近くには何かの雑物があってはいけません、そうでないと、転送扉が開けられない可能性があります。"
+    },
+    "crafts": "elementalsorcery:portal_altar",
+    "building": {
+        "structure": "portal_altar",
+        "custom": {
+            "0,1,0": "elementalsorcery:portal_altar",
+            "4,6,4": "elementalsorcery:elemental_cube",
+            "4,6,-4": "elementalsorcery:elemental_cube",
+            "-4,6,-4": "elementalsorcery:elemental_cube",
+            "-4,6,4": "elementalsorcery:elemental_cube"
+        }
+    }
+}

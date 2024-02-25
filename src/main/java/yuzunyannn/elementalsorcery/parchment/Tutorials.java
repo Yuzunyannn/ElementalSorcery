@@ -21,6 +21,7 @@ import net.minecraftforge.fml.common.ModContainer;
 import net.minecraftforge.fml.relauncher.Side;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.building.Building;
+import yuzunyannn.elementalsorcery.building.BuildingBlocks;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.crafting.element.ElementMap;
 import yuzunyannn.elementalsorcery.util.json.ItemRecord;
@@ -179,6 +180,19 @@ public class Tutorials {
 
 			String type = "";
 			if (json.hasString("type")) type = json.getString("type");
+
+			if ("building".equals(type)) {
+				List<Vec3d> v3fs = json.needPos("pos");
+				String id = json.needString("structure", "id");
+				Building building = BuildingLib.instance.getBuilding(id);
+				if (building == null) continue;
+				for (Vec3d v3f : v3fs) {
+					BlockPos pos = new BlockPos(v3f);
+					BuildingBlocks iter = building.getBuildingIterator().setPosOff(pos);
+					while (iter.next()) inst.addExtraBlock(iter.getPos(), iter.getState());
+				}
+				continue;
+			}
 
 			List<ItemRecord> irList = json.needItems("item");
 			if (irList.isEmpty()) continue;

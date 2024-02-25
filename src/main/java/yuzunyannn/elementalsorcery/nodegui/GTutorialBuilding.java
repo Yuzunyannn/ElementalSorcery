@@ -88,7 +88,7 @@ public class GTutorialBuilding extends GNode {
 	}
 
 	public float bRotationX = 145, bRotationY = 45, bRotationZ;
-	public float bScale = 1;
+	public float bScale = 0.75f;
 	protected Map<Integer, Set<BlockEntry>> layerMap = new HashMap<>();
 	protected List<Integer> layerList = new ArrayList<>();
 	public double offsetX, offsetY;

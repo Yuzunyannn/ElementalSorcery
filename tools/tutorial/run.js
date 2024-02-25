@@ -47,6 +47,22 @@ function parserBuilding(building) {
         custom: []
     }
     for (let key in building.custom) {
+        if (key.indexOf("->") != -1) {
+            let result = key.match(/^(-?\d+),(-?\d+),(-?\d+)->(-?\d+),(-?\d+),(-?\d+)/)
+            let x1 = parseInt(result[1])
+            let y1 = parseInt(result[2])
+            let z1 = parseInt(result[3])
+            let x2 = parseInt(result[4])
+            let y2 = parseInt(result[5])
+            let z2 = parseInt(result[6])
+            config.custom.push({
+                type: "full",
+                from: [x1, y1, z1],
+                to: [x2, y2, z2],
+                item: building.custom[key]
+            })
+            continue
+        }
         let result = key.match(/^(-?\d+),(-?\d+),(-?\d+)/)
         let x = parseInt(result[1])
         let y = parseInt(result[2])
@@ -54,6 +70,17 @@ function parserBuilding(building) {
         config.custom.push({
             pos: [x, y, z],
             item: building.custom[key]
+        })
+    }
+    for (let key in building.customBuildings) {
+        let result = key.match(/^(-?\d+),(-?\d+),(-?\d+)/)
+        let x = parseInt(result[1])
+        let y = parseInt(result[2])
+        let z = parseInt(result[3])
+        config.custom.push({
+            type: "building",
+            pos: [x, y, z],
+            structure: building.customBuildings[key]
         })
     }
     return config

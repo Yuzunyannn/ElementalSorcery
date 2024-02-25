@@ -39,6 +39,7 @@ public class Researcher implements IResearcher {
 	public static final Random rand = new Random();
 
 	public static boolean isPlayerResearchable(EntityPlayer player) {
+		if (player.isCreative()) return true;
 		NBTTagCompound nbt = ESData.getPlayerNBT(player);
 		return nbt.getBoolean(ESData.PLAYER_RESEARCHABLE);
 	}
