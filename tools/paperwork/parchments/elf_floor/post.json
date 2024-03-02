@@ -1,0 +1,43 @@
+{
+    "belong": "elf",
+    "cover": "elementalsorcery:address_plate",
+    "itemLink": [
+        "elementalsorcery:address_plate",
+        "elementalsorcery:elf_beacon",
+        "elementalsorcery:elf_star",
+        "elementalsorcery:parcel"
+    ],
+    "title": {
+        "zh_CN": "精灵邮政",
+        "en_US": "Elf Post Office"
+    },
+    "describe": {
+        "zh_CN": "精灵邮政可以提供寄送包裹的服务。在这里你可以申请地址牌，将地址放到精灵信标里，精灵快递员便会将包裹送到这个信标旁边的箱子中。\\n同时，精灵地址牌可以升级成超级地址牌服务，无需信标，只要点击就可以呼唤快递员进行服务。\\n地址牌是署名的。",
+        "en_US": "Elf Post Office provide mail service. In Here, Steve can apply Address Plate and put it on Elf Beacon, Elves couriers will deliver parcel to chest around it.\\nSteve can upgrade their Address Plate to VIP version, which let click right can call couriers to serve you.\\Address Plate is Signed."
+    },
+    "background": "inherit",
+    "appends": [
+        {
+            "title": {
+                "zh_CN": "精灵信标",
+                "en_US": "Elf Beacon"
+            },
+            "describe": {
+                "zh_CN": "精灵信标是使用精灵之星制作的魔力道具，将地址牌放入其中，快递员会将送往这个地址的包裹放入入旁边的箱子中。\\n精灵之星是贵重的物品，前期很难获得，不过好在，精灵邮局会给申请地址牌的新人一个新人任务，完成它即可获得一个精灵之星。",
+                "en_US": "Elf Beacon is a magic prop crafted by Elf Star, Put Address Plate on it and couriers will come.\\nElf Star is valuable and maybe difficult to get, but fortunately, Post Office will give a new person task when apply for Address Plate, finish it to get a Elf Star."
+            },
+            "craft": "elementalsorcery:elf_beacon"
+        },
+        {
+            "title": {
+                "zh_CN": "精灵之星",
+                "en_US": "Elf Star"
+            },
+            "describe": {
+                "zh_CN": "精灵工匠设计出来的星星，被称作精灵之星。就算给你配方，也不见得能做出来。",
+                "en_US": "The star crafted by elf artisans are called Elf Star. Even if you're given the recipe, there's no guarantee you can make one."
+            },
+            "craft": "elementalsorcery:elf_star"
+        }
+    ]
+}

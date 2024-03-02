@@ -1,0 +1,22 @@
+{
+    "belong": "manual",
+    "cover": "elementalsorcery:relic_disc",
+    "title": {
+        "zh_CN": "守卫研究报告",
+        "en_US": "Guard Research Report",
+        "ja_JP": "ガード研究報告"
+    },
+    "describe": {
+        "zh_CN": "遗迹守卫似乎是过去制造的一种兵器，目的未知，每次释放技能都会消耗HP，当HP低于一定程度会成为损坏态，核心会变得十分不稳定，并发生爆炸，此时可以同通过冲击权杖将核心取出来，其核心决定着遗迹守卫的元素类型，并且可以登陆核心主人。\\n至此精灵工匠分析核心制作出了遗迹轮盘，可以修复损坏的损坏态的遗迹守卫，可以标定为核心标定核心主人(拿着核心和轮盘右键)。",
+        "en_US": "It seems that the Relic Guard is a weapon made in ancient. The purpose is unknown. Each time it spell a skill, HP will be consumed. When HP is lower than a certain level, it will become damaged, and the core will become very unstable and explode. At this time, the core can be taken out through the Shock Wand. The Core determines the element type of the Relic Guard and creature can login as master in The Core.\\nSo, the Elf craftsman has analyzed the core and made the Relic Wheel, which can repair the damaged Relic Guard, and can login in The Core ( hold core and wheel, right click)."
+    },
+    "research": "elementalsorcery:relic_disc",
+    "appends": [
+        {
+            "describe": {
+                "zh_CN": "核心似乎可以与召唤仪式发生共鸣，而产出未知的物品，有待进一步研究。",
+                "en_US": "The core seems to resonate with The Summon Rite and produce unknown items, which requires further research."
+            }
+        }
+    ]
+}

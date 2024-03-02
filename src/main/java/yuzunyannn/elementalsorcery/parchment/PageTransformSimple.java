@@ -2,7 +2,6 @@ package yuzunyannn.elementalsorcery.parchment;
 
 import java.util.List;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class PageTransformSimple extends PageTransform {
@@ -23,19 +22,6 @@ public class PageTransformSimple extends PageTransform {
 		this.type = guiId;
 		this.extra = extra;
 		this.list = list;
-	}
-
-	public PageTransformSimple(String name, ItemStack origin, ItemStack output, ItemStack extra, List<ItemStack> list,
-			int guiId) {
-		this("page." + name, "page." + name + ".ct", origin, output, extra, list, guiId);
-	}
-
-	public PageTransformSimple(String name, Item origin, Item output, int guiId) {
-		this(name, new ItemStack(origin), new ItemStack(output), ItemStack.EMPTY, null, guiId);
-	}
-
-	public PageTransformSimple(String name, Item origin, Item output, List<ItemStack> list, int guiId) {
-		this(name, new ItemStack(origin), new ItemStack(output), ItemStack.EMPTY, list, guiId);
 	}
 
 	@Override
@@ -65,11 +51,11 @@ public class PageTransformSimple extends PageTransform {
 
 	@Override
 	public String getTitle() {
-		return title;
+		return "es.page." + title + ".title";
 	}
 
 	@Override
 	public String getContext() {
-		return value;
+		return "es.page." + value + ".describe";
 	}
 }

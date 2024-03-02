@@ -1,6 +1,5 @@
 package yuzunyannn.elementalsorcery.parchment;
 
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderItem;
@@ -9,7 +8,6 @@ import net.minecraft.client.renderer.block.model.ItemCameraTransforms;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
@@ -22,33 +20,12 @@ public class PageSimple extends PageEasy {
 	protected final ItemStack icon;
 	protected final ItemStack blockground;
 
+	@Deprecated
 	public PageSimple(String name) {
 		this.title = "page." + name;
 		this.value = title + ".ct";
 		this.icon = ItemStack.EMPTY;
 		this.blockground = ItemStack.EMPTY;
-	}
-
-	public PageSimple(String name, ItemStack icon) {
-		this.title = "page." + name;
-		this.value = title + ".ct";
-		this.icon = icon;
-		this.blockground = ItemStack.EMPTY;
-	}
-
-	public PageSimple(String name, Item icon) {
-		this(name, new ItemStack(icon));
-	}
-
-	public PageSimple(String name, Block icon) {
-		this(name, new ItemStack(icon));
-	}
-
-	public PageSimple(String name, ItemStack icon, ItemStack background) {
-		this.title = "page." + name;
-		this.value = title + ".ct";
-		this.icon = icon;
-		this.blockground = background;
 	}
 
 	public PageSimple(String title, String value, ItemStack icon, ItemStack background) {
@@ -60,12 +37,12 @@ public class PageSimple extends PageEasy {
 
 	@Override
 	public String getTitle() {
-		return title;
+		return "es.page." + title + ".title";
 	}
 
 	@Override
 	public String getContext() {
-		return value;
+		return "es.page." + value + ".describe";
 	}
 
 	@Override

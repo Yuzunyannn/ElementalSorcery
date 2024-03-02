@@ -1,0 +1,22 @@
+{
+    "belong": "elf",
+    "cover": "elementalsorcery:dread_gem",
+    "itemLink": [
+        "elementalsorcery:cube_core",
+        "elementalsorcery:dread_gem",
+        {
+            "item": "elementalsorcery:keepsake",
+            "data": 1
+        }
+    ],
+    "title": {
+        "zh_CN": "恐惧立方体",
+        "en_US": "Dread Cube",
+        "ja_JP": "恐怖立方体"
+    },
+    "describe": {
+        "zh_CN": "来自异界的漆黑立方体生物，漂浮在半空中，吞噬着周围所有的方块，失去活性的方块会变成无用的沙砾，同时会吐出多余的灵魂碎片。\\n好在它不会主动发起攻击，这可能会让你想到，用它来自动生产灵魂碎片。\\n当受到玩家攻击后会召唤怪物并进入休眠状态。如果召唤怪物成功，将会消耗自身的生命。生命越少召唤的怪物越多越强。\\n通过任务得到的恐惧碎片作为信物可以召唤它，击败它们有几率掉落恐惧宝石和立方体核心。",
+        "en_US": "Dark creature, float in mid air, devour all block around that let become useless grave and spit superfluous Soul Fragment.\\nIt's good thing that it can not attack, that may make you think use it to automatically produce Soul Fragments.\\nWhen it attacked by the Steve, it will try summon monsters and into sleep. If summon success, it's hp will be consumed. The less HP, the more stronger monsters summoned.\\nUse Dread Fragment get in Quest as Keepsake can summon the Dread Cube, Dread Gem and Cube Core will drop with probability when defeat them."
+    },
+    "background": "inherit"
+}

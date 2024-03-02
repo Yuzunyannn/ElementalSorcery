@@ -1,0 +1,26 @@
+{
+    "cover": "elementalsorcery:disintegrate_stela",
+    "title": {
+        "zh_CN": "瞬息崩解",
+        "en_US": "Instant Material Collapse"
+    },
+    "describe": {
+        "zh_CN": "无论是瓦解祭坛还是元素方桌，他们瓦解物品的速度都过于缓慢，通过元素之石和大量的末影元素构建的崩解石碑，可以快速的将物品瓦解。只要将物品右键放入其中，便可立刻被瓦解成元素存入周围的元素容器之中。\\n虽然崩解祭坛拥有极快的分解速度，甚至可以链接漏斗进行自动分解，但它依然有着一些弊端。\\n首先，它的分解产出效率介于元素方桌和瓦解祭坛之间。其次，重复分解一系列的元素会让石碑超载，元素产物的效率会大幅度下降。\\n当超载突破界限后，会发生塌陷爆炸。祝福之玉放到下方的平台上可以提供过载保护，灾害宝石则会起到反效果。",
+        "en_US": "Both the Disintegration Altar and the Element Square Table have excessively slow item disintegration speeds. However, the Material Collapse Stela, constructed with Element Stone and a large amount of End Element, can quickly disintegrate items. Simply Right Clicking to place items inside it will immediately disintegrate them into elements stored in nearby element containers.\\nWhile the Collapse Altar boasts extremely fast disintegration speeds and can even be linked to funnels for automatic disintegration, it still has some drawbacks.\\nFirstly, its disintegration output efficiency falls between that of the Element Square Table and the Disintegration Altar. Secondly, repeatedly disintegrating a series of element will overload the Stela, significantly reducing the efficiency of element production.\\nWhen the overload exceeds the limit, a collapse explosion occurs. Placing a Blessing Gem on the platform below can provide overload protection, while a Calamity Gem will have the opposite effect."
+    },
+    "crafts": "elementalsorcery:disintegrate_stela",
+    "building": {
+        "structure": "disintegrate_altar",
+        "custom": {
+            "0,4,0": "elementalsorcery:disintegrate_stela",
+            "10,1,10": "elementalsorcery:elemental_cube",
+            "-10,1,10": "elementalsorcery:elemental_cube",
+            "-10,1,-10": "elementalsorcery:elemental_cube",
+            "10,1,-10": "elementalsorcery:elemental_cube",
+            "0,1,10": "elementalsorcery:elemental_cube",
+            "0,1,-10": "elementalsorcery:elemental_cube",
+            "10,1,0": "elementalsorcery:elemental_cube",
+            "-10,1,0": "elementalsorcery:elemental_cube"
+        }
+    }
+}

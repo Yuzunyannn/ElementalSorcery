@@ -1,0 +1,16 @@
+{
+    "belong": "manual",
+    "cover": "elementalsorcery:rock_camera",
+    "itemLink": [
+        "elementalsorcery:rock_camera"
+    ],
+    "title": {
+        "zh_CN": "岩石相机",
+        "en_US": "Rock Camera"
+    },
+    "describe": {
+        "zh_CN": "求知粉尘可以与自然发生共鸣，但其共鸣的速度较慢，而且仅能获得周边范围的信息。使用精灵工匠制作出来的岩石相机，消耗粉尘，对准方块进行使用，快速的将周边环境的信息输入，并且还可以精准的获取到目标方块的信息，是探索的最佳选择。",
+        "en_US": "Seek Dust can resonate with around but is slow and only can get info about environment around. Rock Camera made in Elf Craft can fast get info about not only environment around but also target bock with costing Dust. That is best choice for exploring."
+    },
+    "background": "inherit"
+}

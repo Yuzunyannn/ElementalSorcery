@@ -1,0 +1,17 @@
+{
+    "belong": "elf",
+    "cover": "elementalsorcery:arrogant_wool",
+    "itemLink": [
+        "elementalsorcery:arrogant_wool"
+    ],
+    "title": {
+        "zh_CN": "傲慢的绵羊",
+        "en_US": "Arrogant Sheep",
+        "ja_JP": "傲慢なヒツジ"
+    },
+    "describe": {
+        "zh_CN": "使用黄色羊毛作为信物，再加上大量的灵魂可以召唤出傲慢绵羊的迷宫（远离召唤点巨大的迷宫便会开始建造）。\\n迷宫的由几乎无法被破坏的特殊金砖构成，一共分为两层，傲慢的绵羊便位于第二层。\\n要战胜它，剪刀和绯红水晶是不可缺少的东西。\\n从它身上获取到的傲慢的羊毛是一种十分贵重的材料，不仅如此，将它放到「元素平台」上会产生金锭，不过每产生一个金锭羊毛都有可能会消失。",
+        "en_US": "Use Yellow Wool as Keepsake can summon Arrogant Maze(Away from the summon point, the maze will begin to be built).\\nThe maze is composed of special gold bricks that can hardly be destroyed, It is divided into two layers, Arrogant Sheep is on the second floor.\\nTo defeat it, scissor and Scarlet Crystal is necessary.\\nThe Arrogant Wool obtained from it is a very valuable material, and put it on Element Platform can produce Gold Ingot, however, every time a Gold Ingot is produced, the wool may disappear."
+    },
+    "background": "inherit"
+}

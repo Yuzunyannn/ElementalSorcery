@@ -1,17 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "definitions": {
-        "Describe": {
-            "oneOf": [
-                {
-                    "type": "object",
-                    "additionalProperties": {
-                        "type": "string"
-                    }
-                }
-            ]
-        }
-    },
+    "definitions": {},
     "type": "object",
     "required": [
         "title",
@@ -20,13 +9,13 @@
     ],
     "properties": {
         "title": {
-            "$ref": "#/definitions/Describe"
+            "$ref": "./common_lang.json"
         },
         "describe": {
-            "$ref": "#/definitions/Describe"
+            "$ref": "./common_lang.json"
         },
         "hover": {
-            "$ref": "#/definitions/Describe"
+            "$ref": "./common_lang.json"
         },
         "cover": {
             "$ref": "./es_item.json"

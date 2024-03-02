@@ -1,0 +1,34 @@
+{
+    "cover": "elementalsorcery:element_reactor",
+    "title": {
+        "zh_CN": "星空转化",
+        "en_US": "Starry Invert"
+    },
+    "describe": {
+        "zh_CN": "如果逆变反应可控，将元素转化到元素片元在转化到元素，理论上就可以自由的控制元素的数量和能量了。\\n通过时间力量控制逆变反应，通过虚空无尽存储的核心就完成了。\\n完成的核心比预期的更加强大，不仅可以进行元素反应还可以作为强大的咒文发射平台，因此必须要更加强大的星空祭坛来支持。\\n星空祭坛必须暴露在露天下。反应进行会顺序吸收或释放元素到周围的元素容器之中，并会消耗核心中的元素片元转为不稳定片元。及时调整正对着核心位置的水晶输入能量，可以将不稳定片元重新转为元素片元，在不存在不稳定片元的情况下，能量线的逐步增加，输出时的能量也会越来越高。\\n核心在吸收了与内部不同的元素等情况下稳定度会降低，稳定度越低会产生不明反应导致同样的元素片元会转化到更多的不稳定片元，不稳定片元超过容器容量后会释放出来，及时调整正对着核心位置的水晶输出能量，不稳定片元会转化到魔力片元输出。\\n祭坛周围可以放置咒文宝石，核心元素类型满足时，可以启动对应的咒文，身上携带的自然水晶可以进行位置标定。",
+        "en_US": "If the Invert Reaction is controllable, converting elements into element fragment and then into elements theoretically allows for the free control of the quantity and power of elements. Through the manipulation of time power to control the Invert Reaction, and with the endless storage core stored in the void, the process is completed.\\nThe completed core is even more powerful than expected. It not only allows for element reactions but also serves as a powerful mantra launch platform. Therefore, a more powerful Starry Altar is required to support it.\\nThe Starry Altar must be exposed to the open sky. During the reaction process, it sequentially absorbs or releases elements into the surrounding element containers and consumes element fragment in the core to produce unstable fragment. Timely adjustment of the crystal input energy directly facing the core position can convert unstable fragment back into element fragment. In the absence of unstable fragment, the Power Line gradually increases, resulting in higher energy output over time.\\nWhen the core absorbs different elements from its interior, its stability decreases. The lower the stability, the more unknown reactions occur, leading to the conversion of the same element fragment into more unstable fragment. Once the unstable fragment exceed the container capacity, they are released. Timely adjustment of the crystal output energy directly facing the core position can convert unstable fragment into magic fragment for output.\\nAround the altar, Mantra Gem can be placed. When the core element type is satisfied, corresponding mantra can be activated, and Natural Crystal carried on the body can be used for positional calibration."
+    },
+    "crafts": "elementalsorcery:element_reactor",
+    "building": {
+        "structure": "element_reactor",
+        "custom": {
+            "0,6,0": "elementalsorcery:element_reactor",
+            "2,6,5": "elementalsorcery:elemental_cube",
+            "-2,6,5": "elementalsorcery:elemental_cube",
+            "-2,6,-5": "elementalsorcery:elemental_cube",
+            "2,6,-5": "elementalsorcery:elemental_cube",
+            "5,6,2": "elementalsorcery:elemental_cube",
+            "-5,6,2": "elementalsorcery:elemental_cube",
+            "-5,6,-2": "elementalsorcery:elemental_cube",
+            "5,6,-2": "elementalsorcery:elemental_cube",
+            "0,4,8": "elementalsorcery:ice_rock_stand",
+            "0,4,-8": "elementalsorcery:ice_rock_stand",
+            "8,4,0": "elementalsorcery:ice_rock_stand",
+            "-8,4,0": "elementalsorcery:ice_rock_stand",
+            "0,5,8->0,7,8": "elementalsorcery:ice_rock_crystal_block",
+            "0,5,-8->0,7,-8": "elementalsorcery:ice_rock_crystal_block",
+            "8,5,0->8,7,0": "elementalsorcery:ice_rock_crystal_block",
+            "-8,5,0->-8,7,0": "elementalsorcery:ice_rock_crystal_block"
+        }
+    }
+}

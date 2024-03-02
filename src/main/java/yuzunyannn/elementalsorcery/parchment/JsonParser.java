@@ -128,6 +128,7 @@ public class JsonParser {
 		}
 		if (json.hasString("title")) title = json.getString("title");
 		if (json.hasString("value")) value = json.getString("value");
+		else if (json.hasString("describe")) value = json.getString("describe");
 		if (title == null) throw Json.exception(ParseExceptionCode.NOT_HAVE, "title");
 		ItemStack background = ItemStack.EMPTY;
 		if (json.hasString("background")) {
@@ -154,7 +155,7 @@ public class JsonParser {
 		// 有图标的情况复写下
 		if (!page.getIcon().isEmpty()) {
 			final ItemStack icon = page.getIcon();
-			new PageCraftingSimple(page.getTitle(), page.getContext(), list.toArray(new ItemStack[list.size()])) {
+			new PageCraftingSimple(page.title, page.value, list.toArray(new ItemStack[list.size()])) {
 				@Override
 				public ItemStack getIcon() {
 					return icon;
@@ -162,7 +163,7 @@ public class JsonParser {
 			};
 		}
 		// 没有图标正常
-		return new PageCraftingSimple(page.getTitle(), page.getContext(), list.toArray(new ItemStack[list.size()]));
+		return new PageCraftingSimple(page.title, page.value, list.toArray(new ItemStack[list.size()]));
 	}
 
 	/** 获取一个转化界面 */
@@ -173,20 +174,19 @@ public class JsonParser {
 		List<ItemStack> list = ItemRecord.asItemStackList(irList);
 		switch (id) {
 		case PageTransform.SMELTING:
-			return new PageSmeltingSimple(page.getTitle(), page.getContext(), list.get(0));
+			return new PageSmeltingSimple(page.title, page.value, list.get(0));
 		case PageTransform.INFUSION:
 			if (list.size() < 2) throw new JsonParseException("注魔item字段需要两个");
-			return new PageTransformSimple(page.getTitle(), page.getContext(), list.get(0), list.get(1),
-					ItemStack.EMPTY, null, id);
+			return new PageTransformSimple(page.title, page.value, list.get(0), list.get(1), ItemStack.EMPTY, null, id);
 		case PageTransform.RITE:
 			if (list.size() < 2) throw new JsonParseException("仪式item字段需要两个");
 			ItemStack p = new ItemStack(ESObjects.ITEMS.PARCHMENT);
 			RecipeRiteWrite.setInnerStack(p, list.get(0));
-			return new PageTransformSimple(page.getTitle(), page.getContext(), p, list.get(1), list.get(0), null, id);
+			return new PageTransformSimple(page.title, page.value, p, list.get(1), list.get(0), null, id);
 		case PageTransform.SEPARATE:
 			if (list.size() < 3) throw new JsonParseException("分离item字段需要三个");
-			return new PageTransformSimple(page.getTitle(), page.getContext(), list.get(0), list.get(1), list.get(2),
-					null, PageTransform.SPELLALTAR);
+			return new PageTransformSimple(page.title, page.value, list.get(0), list.get(1), list.get(2), null,
+					PageTransform.SPELLALTAR);
 		case PageTransform.SPELLALTAR:
 			if (list.size() < 2) throw new JsonParseException("书桌和合成item字段需要两个");
 			List<ItemStack> s = null;
@@ -197,11 +197,11 @@ public class JsonParser {
 				}
 			}
 			if (s == null) throw new JsonParseException("找不到书桌的合成表！");
-			return new PageTransformSimple(page.getTitle(), page.getContext(), list.get(0), list.get(1),
-					ItemStack.EMPTY, s, PageTransform.SPELLALTAR);
+			return new PageTransformSimple(page.title, page.value, list.get(0), list.get(1), ItemStack.EMPTY, s,
+					PageTransform.SPELLALTAR);
 		case PageTransform.RESEARCH:
 			if (list.size() < 1) throw new JsonParseException("研究合成item字段需要一个输出");
-			return new PageResearchSimple(page.getTitle(), page.getContext(), list.get(0));
+			return new PageResearchSimple(page.title, page.value, list.get(0));
 		default:
 			throw Json.exception(ParseExceptionCode.PATTERN_ERROR, "转化id", "未知的id");
 		}
@@ -213,7 +213,7 @@ public class JsonParser {
 			String id = json.needString("building");
 			Building building = BuildingLib.instance.getBuilding(id);
 			if (building == null) throw Json.exception(ParseExceptionCode.NOT_HAVE, "building");
-			PageBuildingSimple bPage = new PageBuildingSimple(page.getTitle(), building);
+			PageBuildingSimple bPage = new PageBuildingSimple(page.title, building);
 			// 额外添加,数组型,pos字段为位置，item字段为方块类型
 			try {
 				if (json.hasNumber("x")) bPage.xoff = json.getNumber("x").intValue();

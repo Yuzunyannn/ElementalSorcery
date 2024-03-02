@@ -15,11 +15,11 @@ public class PageResearchSimple extends PageResearch {
 
 	@Override
 	public String getTitle() {
-		return title;
+		return "es.page." + title + ".title";
 	}
 
 	@Override
 	public String getContext() {
-		return value;
+		return "es.page." + value + ".describe";
 	}
 }

@@ -1,0 +1,11 @@
+{
+    "cover": "elementalsorcery:collapse",
+    "title": {
+        "zh_CN": "塌陷",
+        "en_US": "Collapse"
+    },
+    "describe": {
+        "zh_CN": "总会有学者想尝试让崩解石碑过载，出乎意料的是，其爆炸后会生成一种物质，这种物质有着另其他物质塌陷的力量，但十分不稳定，会持续破坏周围方块。不过好在，对生物似乎没有什么影响。",
+        "en_US": "There are always scholars eager to attempt overloading the Collapse Stela. Surprisingly, its explosion yields a substance with the power to induce collapse in other materials, albeit highly unstable and causing continuous destruction of surrounding blocks. Fortunately, it seems to have no effect on living beings."
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "belong": "elf",
+    "cover": "elementalsorcery:quest",
+    "itemLink": [
+        "elementalsorcery:quest"
+    ],
+    "title": {
+        "zh_CN": "精灵大厅",
+        "en_US": "Elf Hall"
+    },
+    "describe": {
+        "zh_CN": "巨大的精灵树中，第一层永远会建造精灵大厅，这里是精灵树的核心区域，分为两小层，下层服务人员可以帮助史蒂夫进行各种业务，上层则是委托的公告板，大家可以将委托贴在上面。",
+        "en_US": "The First Floor is always Hall in The Tree, because the Hall is Core Floor. Service Elf can help Steve with Elf Business. Steve can get Quest in Bulletin Board."
+    },
+    "appends": [
+        {
+            "title": {
+                "zh_CN": "精灵委托",
+                "en_US": "Elf Quest"
+            },
+            "describe": {
+                "zh_CN": "随着巨型精灵树不同类型层数的增加，会有不同精灵的委托张贴在精灵大厅的公告板上，拿这想要的委托，去找大厅下方的服务人员，即可领取委托，领取的委托需要保管好，且不能转让，并需要在相应的时间内完成才能获得报酬。\\n其中有一种建筑类型的委托，称作「精灵树投资」，完成后可以积攒权重，当达到一定值后，精灵建筑工会开始建造新的楼层。",
+                "en_US": "With Diff kind of Floor, diff Elves will posted ther quest in bulletin board. Take down The Quest you want and to Service Elf start this Quest. If you start Quest, it cannot be transferred, so please keep it well and finish it in time to get your reward.\\nThere is a Building Type of Quiest called 'Elf Tree Invest', finish it to accumulate weight, when a certain value is reached, the Elves will start building a new Floor."
+            }
+        }
+    ]
+}

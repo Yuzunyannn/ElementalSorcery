@@ -1,0 +1,87 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "BaseBlock": {
+            "allOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "title": {
+                            "$ref": "./common_lang.json"
+                        },
+                        "describe": {
+                            "$ref": "./common_lang.json"
+                        },
+                        "craft": {
+                            "$ref": "./es_item.json"
+                        },
+                        "research": {
+                            "$ref": "./es_item.json"
+                        },
+                        "background": {
+                            "anyOf": [
+                                {
+                                    "const": "inherit"
+                                },
+                                {
+                                    "$ref": "./es_item.json"
+                                }
+                            ]
+                        }
+                    },
+                    "dependencies": {
+                        "background": {
+                            "not": {
+                                "required": [
+                                    "craft",
+                                    "research"
+                                ]
+                            }
+                        },
+                        "craft": {
+                            "not": {
+                                "required": [
+                                    "research"
+                                ]
+                            }
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "allOf": [
+        {
+            "type": "object",
+            "required": [
+                "belong"
+            ],
+            "properties": {
+                "itemLink": {
+                    "$ref": "./es_item.json"
+                },
+                "cover": {
+                    "$ref": "./es_item.json"
+                },
+                "belong": {
+                    "enum": [
+                        "elf",
+                        "manual"
+                    ]
+                },
+                "appends": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/BaseBlock"
+                    }
+                }
+            }
+        },
+        {
+            "$ref": "#/definitions/BaseBlock",
+            "required": [
+                "title"
+            ]
+        }
+    ]
+}

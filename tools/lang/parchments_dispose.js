@@ -37,17 +37,24 @@ function travel(pJson) {
 }
 
 let totalCount = 0
-let mormalCount = 0
-let mormalDisposeCount = 0
+let disposeCount = 0
 walkSync("../../src/main/resources/assets/elementalsorcery/parchments/", file => {
     let parchmentJson = JSON.parse(fs.readFileSync(file))
+    if (parchmentJson.ver == 2) return
     totalCount++
-    if ((parchmentJson.lev || 0) >= 0) mormalCount++;
-    if (!parchmentJson.dispose) return
-    mormalDisposeCount++
+    if (!parchmentJson.dispose) {
+        console.log(file)
+        return
+    }
+    disposeCount++
     travel(parchmentJson)
 })
 
 fs.writeFileSync("./langs/10_page.json", JSON.stringify(pageJson, null, 4), { encoding: "utf8", });
 
-console.log(`数据统计：一共${totalCount}，主进度：${(mormalDisposeCount / mormalCount * 100).toFixed(2)}%(${mormalDisposeCount}/${mormalCount})`)
+console.log(`数据统计：主进度：${(disposeCount / totalCount * 100).toFixed(2)}%(${disposeCount}/${totalCount})`)
+console.log(`开始未迁移文案：`)
+for (let key in pageMap) {
+    let lang = pageMap[key]
+    if (!lang.dispose) console.log(key)
+}

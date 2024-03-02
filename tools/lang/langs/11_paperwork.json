@@ -17,916 +17,1133 @@
 		}
 	},
 	"es.tutorial": {
-		"es.tutorial.title.0_0_0": {
+		"es.tutorial.0_0_0.title": {
 			"zh_CN": "开始",
 			"en_US": "Start"
 		},
-		"es.tutorial.describe.0_0_0": {
+		"es.tutorial.0_0_0.describe": {
 			"zh_CN": "当你拿到这个§k???????§r记录§k????§r知识，按照这些步骤进行，尝试重新发展元素与魔法的§k???§r",
 			"en_US": "When you find this §K???????§r record §k????§r knowledge. Follow these steps to try and redevelop the Element and Magic's §k???§r."
 		},
-		"es.tutorial.title.0_0_1": {
+		"es.tutorial.0_0_1.title": {
 			"zh_CN": "元素",
 			"en_US": "Element"
 		},
-		"es.tutorial.describe.0_0_1": {
+		"es.tutorial.0_0_1.describe": {
 			"zh_CN": "§k????§r的研究，从魔力中发现了构成物质的元素，元素被认作有特征的特殊魔力，可以来改变我的世界。\\n元素具有三个属性，种类，数量和能量。种类和数量顾名思义，而能量则是固有属性，一旦物质开始分解，元素的能量就固定下来了，普世认定元素的能量是无法上升的，但§k?????????????????????§r逆§k?????????????????????????§r危§k????????????????????§r",
 			"en_US": "§k????§r magician find Element as as special feature magic from Items, which has power to change the World.\\nElements have three attributes: type, quantity, and energy. Type and quantity are self-explanatory, while energy is an inherent property. Once an Item begins to disintegration, the energy of the Element is fixed, and it is universally accepted that the energy of an Element cannot increase, but §k?????????????????????§rInv§k?????????????????????????§rdang§k????????????????????§r"
 		},
-		"es.tutorial.title.0_0_2": {
+		"es.tutorial.0_0_2.title": {
 			"zh_CN": "知识§k????§r",
 			"en_US": "Knowledge §k????§r"
 		},
-		"es.tutorial.describe.0_0_2": {
+		"es.tutorial.0_0_2.describe": {
 			"zh_CN": "通过搭建仪式，消耗祭品作为魔力启动源，将知识在§k????§r的方式，可将史蒂夫们的智慧传递下去，称这个叫映像仪式。\\n想要实现这件事，首先需要一个仪式桌。仪式桌分为不同的等级，等级越高制作越难，目前只需要制作0级的即可。除了手中的石板，仪式桌上可以放五件物品作为祭品。\\n \\n仪式进行：仪式桌放到高一格的地面上，仪式桌为中心的5×5范围不能出现任何方块，仪式桌下方为中心的5×5范围内应插满鲜花或者火把，将祭品放到桌子上，并将手中的这个§k???????§r一并放在上面，手持满耐久的木剑发动仪式。仪式成功会通过§k???????§r将知识进行同步到§k???????§r中。如果失败后，由于§k??????????§r，施术者会受到攻击，目前我还没发解决这个问题。\\n \\n祭品选择：大多数物品都可以成为祭品，物品的好坏决定着仪式的成败。但并不是每个等级的仪式都可以使用优秀的祭品，比如钻石。等级低的仪式只能接受普通的物品，当然对于等级低的仪式来说，这已经足够了。每种祭品有「能量」属性，所有祭品的能量综合越高，仪式的成功率越大。如果高级仪式使用低级仪式的祭品，物品所能提供的能量会大打折扣。\\n0级的仪式可以石头、原木、煤炭作为祭品，显然煤炭会更好一些，另外圆石是受到众人讨厌的祭品，如果使用5个煤炭作为祭品是肯定会成功的。我把可以作为祭品的详细数据放在了§k????§r",
 			"en_US": "By Rite, consuming sacrifices as a source of magical power, and through the method of §k????§r knowledge, we can connect the wisdom of the Steves. We call this the Print Rite.\\nPrepare a Ritual Table to Start. There are diff level Ritual Tables, but now creft a 0 level is all right. In addition to the slate in hand, five items can be placed on the Ritual Table as sacrifices.\\n \\nRite: Put the Ritual Table on the ground one higher, Table center range of 5 × 5 cannot have any block. Place Flowers or torches on center range of 5x5 under table. Put the sacrifice on Ritual Table and §k???????§r in your hand, start the Rite with a wooden sword. Steve Can get knowledge on Rite success. but if fail, Due to §k??????????§r, the caster will be attacked, and I have not yet resolved this issue.\\n \\nSacrifice: Most items can be sacrificed, the quality of the items determine the success or failure of Rite. But not every level of table can withstand high-end items. Low level Rite can only accept low-end items, of course for low-level Rite, this is enough. Each sacrifice has 'Power' attribute, more Power more better. If high-level Rite use low-level's sacrifice, Power will be greatly reduced.\\n0 level Rite Can use Stone, Log, Coal as sacrifice, any level Rite hate cobblestone, and 5 coal will bring success in 0 level Rit.\\nI have put the detailed data that can be used as sacrifices in §k????§r"
 		},
-		"es.tutorial.title.0_1_0": {
+		"es.tutorial.0_1_0.title": {
 			"zh_CN": "重要资源",
 			"en_US": "Important Ore"
 		},
-		"es.tutorial.describe.0_1_0": {
+		"es.tutorial.0_1_0.describe": {
 			"zh_CN": "蓝晶石是生成在地下的一种带有魔力的矿物，19层以下可能更容易找到它。\\n蓝晶石矿可以经过烧制形成蓝晶石。\\n在烧制蓝晶石矿的时候，通过“末影之眼”的辅助，可以将存在于蓝晶石矿物中的魔力碎片取出。\\n蓝晶石可以制作工具，与铁的挖掘等级相同，不过有更好的耐久性。",
 			"en_US": "Kyanite is a kind of magic mineral that steve can find it's ore under y 19.\\nBurning kyanite ore whit Extra Item Eye of Ender can take out Magic Fragment from it.\\nKyanite can be used to make tools, which is the same harvestLevel as iron's, but has better durability."
 		},
-		"es.tutorial.title.0_1_1": {
+		"es.tutorial.0_1_1.title": {
 			"zh_CN": "更好的熔炉套装",
 			"en_US": "Better Furnace Kit"
 		},
-		"es.tutorial.describe.0_1_1": {
+		"es.tutorial.0_1_1.describe": {
 			"zh_CN": "灶台中可以放入燃料，用来加热上方的方块。\\n灶台的材质有：原石、铁、蓝晶石，依次排序，材质等级越高的灶台，加热上方方块的速度越快。\\n烧炼箱可以像熔炉一样的使用，不过它可以同时烧两种东西。\\n烧炼箱的材质有：原石、铁、蓝晶石，铁级以上的烧炼箱子可以放置额外物品共同烧制，比如放入“末影之眼”来烧制蓝晶石矿？\\n将烧炼放在蓝晶石灶台上，体验飞一样的烧炼速度。",
 			"en_US": "Add fuel to Hearth, heat block above Hearth.\\nThe materials of Hearth: cobblestone, iron, kyanite. The higher the material level of the Hearth, the faster heating block speed.\\nSmelting Box can used like Furnace, but it can burn two things at the same time.\\nThe materials of Smelting Box: cobblestone, iron, kyanite. Extra Item can be placed in material of iron or kyanite. Such as use Eye of Ender as extra item when burning kyanite ore maybe can get some windfall."
 		},
-		"es.tutorial.title.0_2_0": {
+		"es.tutorial.0_2_0.title": {
 			"zh_CN": "神奇的花",
 			"en_US": "Mysterious Flower"
 		},
-		"es.tutorial.describe.0_2_0": {
+		"es.tutorial.0_2_0.describe": {
 			"zh_CN": "在§k????§r之后，一种极为稀少的白色花朵开始在自然界中生长，我称之为星之花。其极为脆弱，无法掉落。\\n根据我的研究，它可以为你带来好运，空手或持有某些道具右键向其“许愿”，它可能会赐予你一些buff或者工具，或是为你将你传送回家。\\n不过许愿后的星之花将会枯萎。\\它似乎含有着未知的元素，似乎具有着掌握§k????§r的力量，我尝试对其进行研究，但我已经没有多少时间了。",
 			"en_US": "After §k????§r, an extremely rare white flower began to grow in overworld, which we call the Star Flower. Star Flower is extremely fragile and cannot be dropped.\\nBased on my research, it can bring you good luck, holding some Item or not and right click it to make a wish, Steve may get some buffs or tools, or bring steve to home.\\nHowever, the Star Flower will withered after wish.\\nIt seems to contain unknown Element and possess the power to master §k????§r. I have tried to study it, but I don't have much time left."
 		},
-		"es.tutorial.title.0_3_0": {
+		"es.tutorial.0_3_0.title": {
 			"zh_CN": "寻求仪式",
 			"en_US": "Seek Rite"
 		},
-		"es.tutorial.describe.0_3_0": {
+		"es.tutorial.0_3_0.describe": {
 			"zh_CN": "我在§k????§r构建了物品§k????§r，可以通过仪式来进行启动，姑且叫做寻求仪式，可以使用写有某样物品的羊皮卷来向§k????§r寻求这个物品。该仪式和映像仪式基本一样，不同点：一是需要一张「信息羊皮卷」；二是寻求的物品对仪式等级有要求。\\n「信息羊皮卷」可以通过：墨囊、羽毛、羊皮卷和象征性物品进行合成。象征性物品根据寻求的物品不同而不同。",
 			"en_US": "I have constructed item §k????§r in §k????§r that can be activated through a ritual, which I call the Seek Rite, can use Parchment writen some item to seek this item from §k????§r. It same like Print Rite, but: First is need a 'Item Parchment', second is require level of Ritual Table.\\n'Item Parchment' can craft by Ink, Feather, Parchment and Symbolic Item, Symbolic Item is according to item for seek."
 		},
-		"es.tutorial.title.0_3_1": {
+		"es.tutorial.0_3_1.title": {
 			"zh_CN": "引路灯",
 			"en_US": "Guide Lamp"
 		},
-		"es.tutorial.describe.0_3_1": {
+		"es.tutorial.0_3_1.describe": {
 			"zh_CN": "第一个作为测试这个物品§k????§r的道具叫引路灯，它是具有魔力的一盏灯，放下后会自动发出火焰指向上一个灯。由于其的特殊性，可以通过寻求仪式获取。\\n通过shift+右键可以设置下次放置的链接位置。",
 			"en_US": "The first item used to test the item §k????§r is called the Guide Lamp, which is a magical lamp can fire a flame toward the previous lamp. Steve can get it from Seek Rite.\\nShift + Right Click to set which is the previous one."
 		},
-		"es.tutorial.title.0_4_0": {
+		"es.tutorial.0_4_0.title": {
 			"zh_CN": "更多知识",
 			"en_US": "More Knowledge"
 		},
-		"es.tutorial.describe.0_4_0": {
+		"es.tutorial.0_4_0.describe": {
 			"zh_CN": "为了获取更多知识，可以开始升级仪式桌的仪式桌了...还有一些事情\\n我们把§k????§r存放在地下的石头中。\\n§k????§r的进入口令§k????????§r\\n§k????????????????????????????§r",
 			"en_US": "To acquire more knowledge, you can start upgrading the Ritual Table... There are also some things.\\nWe store §k????§r in underground stones.\\nThe password for entering the §k????§r is §k????????§r.\\n§k????????????????????????????§r"
 		},
-		"es.tutorial.title.1_0_0": {
+		"es.tutorial.1_0_0.title": {
 			"zh_CN": "魔力碎片",
 			"en_US": "Magic Piece"
 		},
-		"es.tutorial.describe.1_0_0": {
+		"es.tutorial.1_0_0.describe": {
 			"zh_CN": "由魔力构成的碎片，可以合成带有魔力的物品，是合成魔石的重要材料，想必研究它的人会有很多。\\n它的获取方式有很多种，比如可以从其他人手里购买，这样的话...可以去村庄看看？",
 			"en_US": "The Pieces composed of magic can be used to craft items with magic, and are important materials for craft magic stones. I think there must be many people who study it. There are many ways to obtain it. Such as, it can be purchased from others. In that case... why not go to the village and have a look?"
 		},
-		"es.tutorial.title.1_0_1": {
+		"es.tutorial.1_0_1.title": {
 			"zh_CN": "魔石",
 			"en_US": "Dimensity"
 		},
-		"es.tutorial.describe.1_0_1": {
+		"es.tutorial.1_0_1.describe": {
 			"zh_CN": "魔力碎片蓝晶石融于沙而形成的石头，带有大量的魔力，是魔力研究的重要材料。",
 			"en_US": "A Magic Stone formed by fuse Magic Pieces and kyanite into sand, which is an important material for magic age."
 		},
-		"es.tutorial.title.1_1_0": {
+		"es.tutorial.1_1_0.title": {
 			"zh_CN": "收集文献",
 			"en_US": "Collect Paper"
 		},
-		"es.tutorial.describe.1_1_0": {
+		"es.tutorial.1_1_0.describe": {
 			"zh_CN": "先人似乎在封藏石种留些了许多文献，在上面记载着许多的内容，但通常是无法直接看懂的，需要进行解读。一手拿着羽毛笔，一手拿着古卷，右键点击即可开始进行解读。\\n如果解读疲倦的话，过半天之后在进行解读吧，随着解读次数的增多，越不容易疲倦。\\n如果你疲倦了，吃一点苹果糖来消除疲劳。",
 			"en_US": "It seems that our ancestors left many Paper in the sealed stone, on which many things are recorded, can unscramble it to understand. With a Quill in one hand and an Ancient Paper in the other, right click to start unscramble.\\nIf you feel tried, let's unscramble after a while or eat some Apple Candy. The more unscrambling you do, the less tired you will get."
 		},
-		"es.tutorial.title.1_1_1": {
+		"es.tutorial.1_1_1.title": {
 			"zh_CN": "祭品研究手册",
 			"en_US": "Rite Research Manual"
 		},
-		"es.tutorial.describe.1_1_1": {
+		"es.tutorial.1_1_1.describe": {
 			"zh_CN": "哪种物品可以作为祭品？究竟有多少能量？具体可以用到几级仪式上？虽然没有找到先人留下来的数据，但关于这些问题，依旧有许多的人都在研究，去村庄看看，没准能买到这样一个手册。\\n如果在另外一直手里，拿着一支羽毛笔的话，没准可以把查看过的内容记录下。副手拿着有记录的手册，可以在物品信息上快速查看记录的结果。",
 			"en_US": "What kind of item can be used as a sacrifice? How much Power is have? How many levels of Rite can be used? Although no data left by our ancestors has been found, there are still many people who are studying these problems. If you go to the village, maybe able to buy such a manual."
 		},
-		"es.tutorial.title.1_2_0": {
+		"es.tutorial.1_2_0.title": {
 			"zh_CN": "星沙",
 			"en_US": "Star Sand"
 		},
-		"es.tutorial.describe.1_2_0": {
+		"es.tutorial.1_2_0.describe": {
 			"zh_CN": "长期沐浴在星光下而形成的沙子，是上好的研究材料。形成一整块的星沙在自然中有些困难，不过，在沙子上可以找到少量星沙凝聚成的星石。或许可以将收集到的多块星石扔进捣粉臼，然后使用锤子将星石捣捣碎，从而获取星沙。(shift+右击取下)\\n另外，据说这种星石似乎在沙丘上比较多。",
 			"en_US": "Sand formed by long-term exposure to starlight, is a valuable material. It is difficult to a whole star sand in overworld, but Star Stone can be found above sand. Perhaps you can put the collected multiple star stones into the Stone Mill, and then use a hammer to mash the Star Stone to Star Sand.(shift + Right Click to take out)\\nIn addition, it is said that this kind of Star Stone seems to be more abundant on the sand dunes."
 		},
-		"es.tutorial.title.1_2_1": {
+		"es.tutorial.1_2_1.title": {
 			"zh_CN": "捣粉锤",
 			"en_US": "Mill Hammer"
 		},
-		"es.tutorial.describe.1_2_1": {
+		"es.tutorial.1_2_1.describe": {
 			"zh_CN": "把捣粉臼上的那把锤子拿下来（空的时候，shift+右键），它似乎可以做更多的事情，比如砸坏某些东西。\\n蓄力满后，右键掉落的物品可以对物品进行敲击。",
 			"en_US": "Take down the hammer on the Stone Mill (when empty, shift + Right Click to take down), it seems it can do more, like smashing certain things.\\nAfter fully charging, Right Click on the dropped item to Smash it."
 		},
-		"es.tutorial.title.1_3_0": {
+		"es.tutorial.1_3_0.title": {
 			"zh_CN": "绯红水晶",
 			"en_US": "Scarlet Crystal"
 		},
-		"es.tutorial.describe.1_3_0": {
+		"es.tutorial.1_3_0.describe": {
 			"zh_CN": "一种奇异的红色水晶，在地下的岩浆之下，可能会发现绯红水晶矿的身影。\\n所有水晶拥有频率这一属性，绯红水晶也不例外，但是它是少数频率可以变化的水晶。\\n绯红水晶遇水会产生变化，碎裂并分解成魔石与碎片。这或许是获取魔石的有一种方案，不过挖掘在岩浆下面的矿物实属有些困难。",
 			"en_US": "A strange red crystal may be found under the underground magma.\\nAll kind of crystals have the attribute of frequency, and The Scarlet Crystal is no exception, but it is one of the few kind which frequency can be changed.\\nThe Scarlet Crystal will decompose to Dimensity and Magic Fragment when it wet. This may be a way to obtain Dimensity, but it is difficult to excavate ores under the lava."
 		},
-		"es.tutorial.title.1_3_1": {
+		"es.tutorial.1_3_1.title": {
 			"zh_CN": "带魔力的末影之眼",
 			"en_US": "Eye of Ender with Magic"
 		},
-		"es.tutorial.describe.1_3_1": {
+		"es.tutorial.1_3_1.describe": {
 			"zh_CN": "通过末影之眼和魔力碎片合成，可以作为烧制使用的额外物品。\\n放在烧炼箱中，可以提升烧制速度，不过每完成一轮烧制，其耐久会降低，为0时就会消失。\\n不过没有关系，它在激活状态就会脱去魔力，变成普通的末影之眼，不过会发生小规模的爆炸，请注意。\\n此外，当其位于烧炼箱中的时候，蓝晶石工具可以被烧炼，赋予元素亲和的属性。使用带有这个属性的工具，可以让环境中的微量元素附着在其上。",
 			"en_US": "Made with Eye of Ender and Magic Fragment, can as Extra item in burning.\\nPut it in Smelt Box to increase speed. However, the durability will decrease after each round of burning is completed, and it will disappear when it is 0.\\nHowever, it doesn't matter. When it is activated, it will lose its magic and become an ordinary Eye of Ender. Be careful, a small explosion will occur when active it.\\nIn addition, when it is in Smelt Box, the kyanite tools can be smelted, giving it the attribute of Element Affinity that using a tool with allows trace elements in the environment to adhere to it."
 		},
-		"es.tutorial.title.1_4_0": {
+		"es.tutorial.1_4_0.title": {
 			"zh_CN": "精灵树",
 			"en_US": "Elf Tree",
 			"ja_JP": "精霊木"
 		},
-		"es.tutorial.describe.1_4_0": {
+		"es.tutorial.1_4_0.describe": {
 			"zh_CN": "精灵树是一种具有魔法的树木，在自然界中生成，不过自然生成的树通常是很小的一棵。\\n砍下得到精灵木。\\n精灵果是精灵树上生长的一种果子，只在白天生长，成熟变绿，并掉落。\\n精灵果从高处掉落有几率会坏掉，并向周围产生随机效果。\\n精灵果中蕴含着魔力，可以食用，连续使用的话可产生不同的效果。\\这些可能是你将来使用的重要材料。",
 			"en_US": "Elf Tree is a kind of magic tree, which is generated in nature, but the natural tree is usually very small.\\nCut down to get the spirit wood.\\nElf fruit is a kind of fruit grown on the Elf Tree. It grows only in the daytime, turns green when it is ripe and falls.\\nThere is a chance that the Elf Fruit will be broken when it falls from a high place and generate random effects around it.\\nElf fruit contains magic and can be eaten. If used continuously, it can produce different effects.\\nThese may be important materials for your future use."
 		},
-		"es.tutorial.title.1_4_1": {
+		"es.tutorial.1_4_1.title": {
 			"zh_CN": "共鸣水晶",
 			"en_US": "Resonance Crystal"
 		},
-		"es.tutorial.describe.1_4_1": {
+		"es.tutorial.1_4_1.describe": {
 			"zh_CN": "通过精灵工艺制作的水晶，被广泛引用到各种需要共鸣的设备中。\\n该水晶可以投掷出去，砸到不同的设备上时，似乎会有不同的反应。\\n它可以从精灵商人处购买。",
 			"en_US": "Resonance Crystal made in Elf Craft which widely used in various devices.\\nIf you throw this, maybe has different effect when hit some devices.\\nIt can be purchased from the Elf Merchant."
 		},
-		"es.tutorial.title.1_5_0": {
+		"es.tutorial.1_5_0.title": {
 			"zh_CN": "精灵",
 			"en_US": "Elf",
 			"ja_JP": "精霊"
 		},
-		"es.tutorial.describe.1_5_0": {
+		"es.tutorial.1_5_0.describe": {
 			"zh_CN": "精灵传说是从精灵世界过来的一种新的生物，他们通常生活在巨大的精灵树上。精灵属于中立生物，而且有着不同的职业。如果你攻击他们，他们将可能会转变到战斗职业来进行防卫。\\n精灵中会产生疯子，他会到处乱攻击。\\n此外精灵学者会告诉你一些你可能想知道的内容，同时他也会出售教程。\\n多与精灵交流，不少物品的获取方法是从他们那里得到的。(精灵部分教程只能从学者获取)",
 			"en_US": "The legend of the elves is a new creature from the world of elves. They usually live in the giant elf trees. Elves are neutral creatures and have different professions. If you attack them, they will probably switch to combat profession to defend.\\nThere will be Crazy in the elves, and they will attack everything.\\nIn addition, the Elf Scholar will tell you something you may want to know, and they will also sell tutorials.\\nInteracting more with the elves, some items are obtained through them. (Tutorials of Elf can only be obtained from Elf Scholars)",
 			"ja_JP": "精霊は精霊の世界から来た新しい生物と言われています、彼たちはいつも巨大な精霊の木に住んでいます。精霊は中立的な生物であり、また異なる職業を持っている。彼たちを攻撃すれば、彼たちは戦闘職業に転じて防衛することができます。\\n精霊の中で狂人がいる、彼はあちこちで攻撃します。\\nまた、精霊学者があなたに教えてくれます・同時に教程も販売しています。\\n(精霊部分教程は学者からしか入手できません)"
 		},
-		"es.tutorial.title.1_5_1": {
+		"es.tutorial.1_5_1.title": {
 			"zh_CN": "精灵交易",
 			"en_US": "Elf Trade"
 		},
-		"es.tutorial.describe.1_5_1": {
+		"es.tutorial.1_5_1.describe": {
 			"zh_CN": "精灵果可以进行烧制，其内部液体结晶而形成精灵结晶，具有良好的魔力亲和性。\\n它还可以做精灵币与精灵进行交易。\\n说到交易那就要说一下精灵商人了，他们会游走在世界各处，通过精灵币，你或许可以从他们那里买到些东西。（绿色出售、红色回收）\\n如果你找不到它们，不妨做一个邀请函，放到仪式桌上，并在上面摆上一些贵重的物品，过一段时间，说不定就会有商人过来了。",
 			"en_US": "Elf fruit can be smelt, and its internal liquid crystallizes to form Elf Crystal. It has good magic affinity.\\nIt can also be used to trade with elves.\\nWhen it comes to trading, we have to talk about the Elf Merchant, they travel around the world. With Elf Coin, you can buy something from them (Green can Buy, Red can Sell)\\nIf you cannot find them, why not craft and put a Merchant Invitation on Ritual Table whit some valuables, and wait a while, maybe some Elf Merchant will come."
 		},
-		"es.tutorial.title.1_6_0": {
+		"es.tutorial.1_6_0.title": {
 			"zh_CN": "星之铃",
 			"en_US": "Star Bell"
 		},
-		"es.tutorial.describe.1_6_0": {
+		"es.tutorial.1_6_0.describe": {
 			"zh_CN": "用金制作出一个铃铛，摇一摇，叮铃铃~吸引周围的动物，同时也会吸引怪物的攻击。\\手持铃铛，向星之花许愿，星之花会将星元素与铃铛共鸣，形成蓝白色的星之铃。\\n星之铃在摇动的时候，会因周围的环境发出不同特性的声音。\\n脚下有岩浆会发出清脆的声音、周围有高价值方块会发出悠长的声音、周围具有史莱姆区块会发出深沉的声音。",
 			"en_US": "A bell made with Gold. Ring Ring~ Attract the surrounding animals, and also attract monster's attack.\\nHold a bell and make a wish to the Star flower. Resonating the Element of Star with bell to form a light blue Star Bell。\\nShaking the Star Bell, it will make different sounds according to the surrounding.\\nA Crisp sound when lava under your feet, a Long sound when high value Block around you, a Deep sound when you are in Slime Chunk."
 		},
-		"es.tutorial.title.1_7_0": {
+		"es.tutorial.1_7_0.title": {
 			"zh_CN": "巨型精灵树",
 			"en_US": "Towering Elf Tree"
 		},
-		"es.tutorial.describe.1_7_0": {
+		"es.tutorial.1_7_0.describe": {
 			"zh_CN": "在世界中，存在着一部分土地充斥着精灵力，在这些土地上可以长出参天的精灵树。\\n如果史蒂夫寻找到了这块地，在确保有两层完整土地且周围没有杂物的时候，使用共鸣水晶砸向精灵树苗，即可长出巨大的精灵树，这种树似乎会吸引精灵前来居住。\\n精灵商人可能会卖能精准检测某个区块是否拥有着精灵力的物品，同时星之铃也会发出和史莱姆区块一样的声音。\\n带有核心的巨大的精灵树可以吸引精灵们入住，他们会在树中搭建各式各样的楼层。要想开启精灵树的建造，试着和其周边的精灵说说话吧。",
 			"en_US": "In The Overworld, there is a part of the land full of Elf Power, Towering Elf Tree can grow here.\\nWhen Steve find it, clear around to flat and throw Resonance Crystal to Elf Tree Sapling.Then Tree will grow, Elves will come.\\nThe Elf Merchant may sell items that can accurately detect whether a certain chunk possesses Elf Power, and the Star Bell will also emit the same sound as the Slime Chunk.\\nTowering Elf Tree will attract Elves to come. They will build various floors in The Tree. Talking with them, if want invest to them."
 		},
-		"es.tutorial.title.1_8_0": {
+		"es.tutorial.1_8_0.title": {
 			"zh_CN": "熔岩锅",
 			"en_US": "Melt Cauldron"
 		},
-		"es.tutorial.describe.1_8_0": {
+		"es.tutorial.1_8_0.describe": {
 			"zh_CN": "熔岩锅，借助灶台，可以将原始等材料等熔炼成其他物品。\\n不过，熔岩锅只能使用一次，一旦灶台起火加入材料，在本次熔炼结束后，该锅就无法再次使用了。带熔浆冷却后，将锅打碎，取出熔炼后的物品。\\n加热温度升高，到一定温度后，需要先扔入魔石融化成溶剂，才能开始熔化其他材料\\n材料必须按照比率放，偏离比例会提升标准差。",
 			"en_US": "Heating Melt Cauldron through The Hearth, raw materials can be melted into other items.\\nHowever, the Melt Cauldron can only be used once. Once the Melt Cauldron fires and materials are added, the Melt Cauldron cannot be used again after this smelting. After the Melt Cauldron is cooled, break it and items drop.\\nWhen the temperature rises to a certain, the Dimensity needs to be thrown in to melt into a solvent before add other materials.\\nMaterials must be placed according to the ratio, and deviation from the ratio will increase the standard deviation."
 		},
-		"es.tutorial.title.1_8_1": {
+		"es.tutorial.1_8_1.title": {
 			"zh_CN": "通魔石",
 			"en_US": "The Stone with Magic"
 		},
-		"es.tutorial.describe.1_8_1": {
+		"es.tutorial.1_8_1.describe": {
 			"zh_CN": "由蓝晶石、石头、魔石混合而成的石头，具有非常好的魔力适应性，可以制作各种魔法装置，乃至祭坛。\\n将魔石，石头，蓝晶石以1:8:4的比例放入熔岩锅中，熔化，冷却即可获得通魔石。比例请注意，不合适的话，很有可能出现不期望的结果。\\n熔岩锅加满后，物品就不能再加入了。\\注意，要先投入魔石，形成魔石溶液，使其他石头在魔石溶液中熔解。\\n另外需要使用高级的灶台加热，不然温度很有可能无法达到预期。\\n使用蓝晶石和木棒制作的精巧刻刀，可以将普通的通魔石雕刻成更高级的通魔石。\\n使用高级的通魔石可以更好的完成魔法装置的制作。",
 			"en_US": "A stone made of kyanite, stone and Dimensity, is good magic material for crafting various magic devices, even altars.\\Throw the Dimensity, stone and kyanite into the Melt Cauldron in a ratio of 1:8:4. Melting and cooling to obtain the The Stone with Magic. Please pay attention to the ratio. If it is not appropriate, unexpected results may occur.\\nWhen the Melt Cauldron is full, items can no longer be added.\\nNote that you need to input Dimensity first to form a magic solution, so that other materials can be melted in the magic solution.\\nIn addition, it is necessary to use an advanced Hearth for heating, otherwise the temperature may not meet the expectations.\\Use The Exquisite Carving Knife made of kyanite and a stick to carve ordinary The Stone with Magic into a higher level.\\nUsing advanced The Stone with Magic can better complete the production of magical devices."
 		},
-		"es.tutorial.title.1_9_0": {
+		"es.tutorial.1_9_0.title": {
 			"zh_CN": "更多知识",
 			"en_US": "More Knowledge"
 		},
-		"es.tutorial.describe.1_9_0": {
+		"es.tutorial.1_9_0.describe": {
 			"zh_CN": "为了获取更多知识，可以开始升级仪式桌的仪式桌了...",
 			"en_US": "To acquire more knowledge, you can start upgrading the Ritual Table..."
 		},
-		"es.tutorial.title.2_0_0": {
+		"es.tutorial.2_0_0.title": {
 			"zh_CN": "魔动装置",
 			"en_US": "Magic Drive"
 		},
-		"es.tutorial.describe.2_0_0": {
+		"es.tutorial.2_0_0.describe": {
 			"zh_CN": "使用魔通石，将魔力作为驱动源，制造出魔力设备来使用。\\n魔力设备中都可以储存魔力，如果破坏掉储存魔力的设备，魔力会爆发出来，对周围造成伤害。\\n首先要制作一个“热力魔分箱”，通过灶台对其加热，可以将放入的魔石分解为魔力，为整个系统提供最初的能源。\\n需要注意，魔石的分解需要达到一定的温度才可以开始进行。",
 			"en_US": "Use The Stone with Magic, crafting devices powered by Magic.\\nMagical devices can store Magic, If it is destroyed, the magic will erupt and cause damage to the surrounding.\\nFirst, we need to create a Magic Separator, which can be heated by a stove to decompose the Dimensity into magic power, providing the initial energy for the entire system.\\nNote that the decomposition of the Dimensity requires a certain temperature before it can begin."
 		},
-		"es.tutorial.title.2_0_1": {
+		"es.tutorial.2_0_1.title": {
 			"zh_CN": "魔石火把",
 			"en_US": "Dimensity Torch"
 		},
-		"es.tutorial.describe.2_0_1": {
+		"es.tutorial.2_0_1.describe": {
 			"zh_CN": "魔石火把具有很好的魔力亲和性，并且将魔力传送出去。\\n将火把插在魔力装置的一面，火把便可以从盖面抽取魔力，将魔力直线传到另外一个装置区。需要注意的是，传递是有距离限制的。",
 			"en_US": "Dimensity Torches can transmit magic.\\nPut the torch onto one side of the magical device, and the torch can extract magic and transmit it in a line to another device. It should be noted that there is a distance limit for transmition."
 		},
-		"es.tutorial.title.2_0_2": {
+		"es.tutorial.2_0_2.title": {
 			"zh_CN": "垂直传递",
 			"en_US": "Vertical transmission"
 		},
-		"es.tutorial.describe.2_0_2": {
+		"es.tutorial.2_0_2.describe": {
 			"zh_CN": "魔石火把的魔力传递只能局限于四周，如果向要魔力在垂直方向上传递，需要制作这个“魔力转移箱”，它可以将魔力向上进行传递。",
 			"en_US": "The Dimensity Torch can only be confined to the surrounding area. If you want the magic to be transferred vertically, you need to make this Magic Transfer Box, which can transfer the magic upwards."
 		},
-		"es.tutorial.title.2_10_0": {
+		"es.tutorial.2_10_0.title": {
 			"zh_CN": "魔力石英",
 			"en_US": "Magic Quartz"
 		},
-		"es.tutorial.describe.2_10_0": {
+		"es.tutorial.2_10_0.describe": {
 			"zh_CN": "通过魔力水晶和石英制作成的，带有魔力的石英块，是建造高级元素祭坛的必备材料。",
 			"en_US": "Crafted from Magic Crystals and quartz, Magic Quartz blocks are essential materials for constructing advanced elemental altars."
 		},
-		"es.tutorial.title.2_11_0": {
+		"es.tutorial.2_11_0.title": {
 			"zh_CN": "更多知识",
 			"en_US": "More Knowledge"
 		},
-		"es.tutorial.describe.2_11_0": {
+		"es.tutorial.2_11_0.describe": {
 			"zh_CN": "为了获取更多知识，可以开始升级仪式桌的仪式桌了...",
 			"en_US": "To acquire more knowledge, you can start upgrading the Ritual Table..."
 		},
-		"es.tutorial.title.2_1_0": {
+		"es.tutorial.2_1_0.title": {
 			"zh_CN": "魔动灶台",
 			"en_US": "Magic Drive Hearth"
 		},
-		"es.tutorial.describe.2_1_0": {
+		"es.tutorial.2_1_0.describe": {
 			"zh_CN": "让魔力转化成热量的装置，比普通的灶台好用的多。",
 			"en_US": "A device that converts magic into heat, much more useful than the ordinary Hearth."
 		},
-		"es.tutorial.title.2_1_1": {
+		"es.tutorial.2_1_1.title": {
 			"zh_CN": "魔力固化",
 			"en_US": "Magic Solidification"
 		},
-		"es.tutorial.describe.2_1_1": {
+		"es.tutorial.2_1_1.describe": {
 			"zh_CN": "使用魔力固化箱，将魔力再次转化到魔石。魔力固化箱只有魔力达到要求就会开始工作。\\n此外，固化箱可以将魔力存入元素容器之中，这个的用处似乎比转化成魔石更加的有用，或许这个东西应该改名叫魔力充能箱。",
 			"en_US": "Use the Magic Solidify Box to convert magic into Dimensity again. The Magic Solidify Box will only start working when the magic meets the requirements.\\nIn addition, the Box can store magic in the Element Container, which seems to be more useful than converting it into Dimensity, perhaps this Box should be renamed to Magic Charging Box."
 		},
-		"es.tutorial.title.2_2_0": {
+		"es.tutorial.2_2_0.title": {
 			"zh_CN": "修复碎石",
 			"en_US": "Rubble Repair"
 		},
-		"es.tutorial.describe.2_2_0": {
+		"es.tutorial.2_2_0.describe": {
 			"zh_CN": "在制作通魔石的过程中出现了点意外，产生了碎裂的石头？使用碎石修复箱可以将碎裂的石头重新修好，每修一个碎裂的通魔石需要10点魔力。\\n当然碎石修复机也可以修复其他的碎石，乃至某些工具。",
 			"en_US": "An accident occurred during the craft of The Stone with Magic, resulting in broken stones? The Rubble Repairer can restore the broken stones, each restored broken stone requires 10 points of Magic. Of course, the Repairer can also repair other broken things, even some tools."
 		},
-		"es.tutorial.title.2_2_1": {
+		"es.tutorial.2_2_1.title": {
 			"zh_CN": "喝点果汁",
 			"en_US": "Drink some juice"
 		},
-		"es.tutorial.describe.2_2_1": {
+		"es.tutorial.2_2_1.describe": {
 			"zh_CN": "将精灵果、苹果或西瓜放入果汁机内，也可以加入一些糖和可可豆，魔力推动刀片转动，材料被打成混合果汁。\\n用玻璃杯可以盛取食用，使用后增加饱和度，没准还会产生某些Buff效果。",
 			"en_US": "Put the Elf Fruit, apple or watermelon into the liquidizer, you can also add some sugar and cocoa beans. The Magic drives the blade to rotate, these materials are juiced into a mixed juice.\\nYou can use a Glass Cup to hold and drink it, can increases saturation, and maybe it will produce some buff effects."
 		},
-		"es.tutorial.title.2_3_0": {
+		"es.tutorial.2_3_0.title": {
 			"zh_CN": "注魔箱",
 			"en_US": "Magic Drive Enchanting Box"
 		},
-		"es.tutorial.describe.2_3_0": {
+		"es.tutorial.2_3_0.describe": {
 			"zh_CN": "以注魔箱为中心构建的注魔祭坛，可以将魔力注入进入到蓝晶石等物质中，使其状态发生转化。\\n魔力是否可以成功注入到物品中，与注魔箱所在的地点和当前世界时间的时间有关。\\n此外，注魔箱顶部的星沙在夜间会与星空发生共鸣，随着午夜的到来，暴露在星空下的注魔箱会缓慢的吸收魔力。",
 			"en_US": "The Magic Injection Altar, built with the Magic Drive Enchanting Box, can inject magic into substances such as kyanite, transforming their state. Whether magic can be successfully injected into items is related to the location of the Altar and the current world time.\\nIn addition, the star sand on the top of The Box resonates with the starry sky at night, and as midnight approaches, The Box exposed to the starry sky slowly absorbs magic."
 		},
-		"es.tutorial.title.2_4_0": {
+		"es.tutorial.2_4_0.title": {
 			"zh_CN": "魔力金锭",
 			"en_US": "Magic Gold"
 		},
-		"es.tutorial.describe.2_4_0": {
+		"es.tutorial.2_4_0.describe": {
 			"zh_CN": "通过给金注魔而形成的带有魔力的金锭。\\n注魔条件：任何时间地点",
 			"en_US": "A Magical Gold formed by injecting magic into gold.\\nEnchanting condition: Any time and place.",
 			"ja_JP": "金に魔を注すことによって作られた魔力を持つ金锭。\\nエンチャントの条件：いつでもどこでも"
 		},
-		"es.tutorial.title.2_4_1": {
+		"es.tutorial.2_4_1.title": {
 			"zh_CN": "简易魔法工具",
 			"en_US": "Simple Magic Tools"
 		},
-		"es.tutorial.describe.2_4_1": {
+		"es.tutorial.2_4_1.describe": {
 			"zh_CN": "魔金可以制作工具，魔金工具的性能远超钻石工具，而且使用时由于魔力的的作用，会产生不同的效果。\\n不过可惜的是，这种工具的耐久度极低，并不适合长期使用。",
 			"en_US": "Magical Gold can be used to make tools. The performance of Magical Gold tools is far better than diamond tools, and different effects will be produced when using Magical Gold tools.\\nUnfortunately, the durability of this tool is very low and it is not suitable for long-term use.",
 			"ja_JP": "魔金のツールを作ることができます、魔金のツールの性能はダイヤモンドツールより超えています、 また、使用時に魔力の作用により、異なる効果が発生します。\\n残念なことに、このようなツールの耐久度はきわめて低く、長期使用には適していません。。"
 		},
-		"es.tutorial.title.2_4_2": {
+		"es.tutorial.2_4_2.title": {
 			"zh_CN": "自然水晶",
 			"en_US": "Nature Crystal"
 		},
-		"es.tutorial.describe.2_4_2": {
+		"es.tutorial.2_4_2.describe": {
 			"zh_CN": "通过给甘蔗注魔，可以得到自然水晶。自然水晶可以存储某个地点周围的相关信息，不过现在它手中就是一个摆设。\\n注魔条件：任何时间地点。",
 			"en_US": "By enchanting Sugar Canes, you can get Natural Crystal. It can store relevant information around a place, but now it is just a decoration, not useful.\\nEnchanting condition: Any time and place."
 		},
-		"es.tutorial.title.2_5_0": {
+		"es.tutorial.2_5_0.title": {
 			"zh_CN": "魔力羽毛笔",
 			"en_US": "Magic Quill"
 		},
-		"es.tutorial.describe.2_5_0": {
+		"es.tutorial.2_5_0.describe": {
 			"zh_CN": "通过给羽毛笔注魔，可以让魔力环绕在羽毛笔周围，形成魔力羽毛笔。\\n将魔力羽毛笔投入岩浆湖或者湖中，会吸收周围的液体与魔力共振，形成火之羽毛笔或水之羽毛笔，不过它们目前的作用甚微。",
 			"en_US": "By infusing magic into the Quill, it can surround the quill with magic, forming a Magic Quill.\\nWhen the Magic Quill is thrown into a magma lake or a lake, it will absorb the surrounding liquid and forming a Fire Quill or a Water Quill, but their current functions are minimal."
 		},
-		"es.tutorial.title.2_5_1": {
+		"es.tutorial.2_5_1.title": {
 			"zh_CN": "解读手账",
 			"en_US": "Unscramble Note"
 		},
-		"es.tutorial.describe.2_5_1": {
+		"es.tutorial.2_5_1.describe": {
 			"zh_CN": "解读速度太慢？使用解读手账来记录解读时的内容，可以帮助你提升解读效率。\\n每次解读时，副手拿着解读手账，就会将内容记录到手账当中，随着积累的记录越来越多，你解读的速度也会越来越快。\\n只有自己记录的内容，才能产生作用。",
 			"en_US": "Is your deciphering speed too slow? Use an Unscramble Note to record the content of your deciphering and improve your efficiency.\\nWhen deciphering, your off-hand will record the content in the note. As you accumulate more and more records, your deciphering speed will increase.\\nOnly the content you record will be effective."
 		},
-		"es.tutorial.title.2_6_0": {
+		"es.tutorial.2_6_0.title": {
 			"zh_CN": "星之种",
 			"en_US": "Star Seed"
 		},
-		"es.tutorial.describe.2_6_0": {
+		"es.tutorial.2_6_0.describe": {
 			"zh_CN": "在无数次的尝试中发现，在午夜空手向星之花许愿，可以得到星之种。星之种可以向普通种子一样种到地上，暴露在繁星满天的午夜时会自动生长。不过要注意，未成熟的星之花更加的脆弱，如果被日光照射可能会直接枯萎。\\n星之种有极低的概率掉落两个，因此星之花被认作不可再生的资源。",
 			"en_US": "In countless attempts, it was discovered that, empty hand, make a wish to the Star Flower at midnight, your wish will become Star Seed. The Star Seed can be planted on the ground like ordinary seeds, and will grow at starry midnight. It should be noted that immature Star Flower are more fragile and may wither if directly exposed to sunlight.\\nThere is a very low probability of two Star Seed drop, so Star Flowers are considered as non renewable resources."
 		},
-		"es.tutorial.title.2_7_0": {
+		"es.tutorial.2_7_0.title": {
 			"zh_CN": "魔力化",
 			"en_US": "Magiclization"
 		},
-		"es.tutorial.describe.2_7_0": {
+		"es.tutorial.2_7_0.describe": {
 			"zh_CN": "在魔化箱中，元素可以被去特征化，从而得到魔力，使用能量高的元素，往往可以转化到更多的魔力。\\n在这个简陋的设备要启动转化这个过程，是需要消耗一定魔力的。\\n特别注意的，正如先人留下来的记录，一旦元素去特征化得到魔力后，再后悔也是没有用的。",
 			"en_US": "In the Magiclization Box, Elements can be de-featurerized to the Magic. Using Element with high Power can often transform into more Magic.\\nTo initiate the transformation process in this device, a certain amount of Magic is required.\\n It is important to note that, as recorded by our ancestors, once the elements are de-featurerized to obtain Magic, it's useless to regret."
 		},
-		"es.tutorial.title.2_8_0": {
+		"es.tutorial.2_8_0.title": {
 			"zh_CN": "一切的开始",
 			"en_US": "The beginning of everything"
 		},
-		"es.tutorial.describe.2_8_0": {
+		"es.tutorial.2_8_0.describe": {
 			"zh_CN": "进入元素时代的敲门砖，最基础的材料，通过给带有魔力的蓝晶石再次注魔，从而得到这种水晶。\\n注魔条件：少雨地区的白天。",
 			"en_US": "The most basic material for entering the elemental age, this crystal is obtained by enchanting the kyanite with magic.\\nEnchanting condition: During the day in areas with low rainfall."
 		},
-		"es.tutorial.title.2_9_0": {
+		"es.tutorial.2_9_0.title": {
 			"zh_CN": "魔力平台",
 			"en_US": "Magic Platform"
 		},
-		"es.tutorial.describe.2_9_0": {
+		"es.tutorial.2_9_0.describe": {
 			"zh_CN": "魔力平台上可以放上一个物品。\\n魔力平台可以被某些魔力装置感知到，这些装置就可以获取到平台上的物品进行某些操作了。",
 			"en_US": "An item can be placed on the Magic Platform. \nMagic Devices can detect the Magic Platform, allowing them to interact with the items placed on it."
 		},
-		"es.tutorial.title.2_9_1": {
+		"es.tutorial.2_9_1.title": {
 			"zh_CN": "元素转移",
 			"en_US": "Element Transfer"
 		},
-		"es.tutorial.describe.2_9_1": {
+		"es.tutorial.2_9_1.describe": {
 			"zh_CN": "在元素吸收箱为中心的祭坛里，元素可以从一个元素容器中，转移到另一个元素容器中。\\n将元素容器放在箱内，将魔力平台放在吸收箱附近，其他可以被认作元素容器的物品放在平台上，至此，元素吸收箱消开始耗魔力，吸收平台上物品中所含的元素。 \\n它是目前元素转移的主要方式。",
 			"en_US": "Within the altar centered around the Element Absorber, elements can be transferred from one element container to another. \nPlace an element container inside the box, position the Magic Platform near the Absorber, and place other items recognized as element containers on the platform. Subsequently, the Element Absorber begins to consume magic, absorbing the elements contained in the items on the platform.\\nIt is currently the main way of element transfer."
 		},
-		"es.tutorial.title.3_0_0": {
+		"es.tutorial.3_0_0.title": {
 			"zh_CN": "灵魂召唤",
 			"en_US": "Soul Summon"
 		},
-		"es.tutorial.describe.3_0_0": {
+		"es.tutorial.3_0_0.describe": {
 			"zh_CN": "使用「聚魂」附魔的武器，在打死生物后，会掉落灵魂碎片\\n将木剑和掉落的灵魂碎片扔到一起，灵魂碎片会缠绕在木剑上形成「灵魂缠绕的木剑」，使用该木剑可以将将灵魂与信物共鸣，从而进行召唤仪式。\\n该仪式和映像仪式基本一样，不同点：一是桌面上需要摆放信物；二是需要使用「灵魂缠绕的木剑」并且会消耗灵魂。\\n如果灵魂不足的话，会受到惩罚，这问题似乎前人也无法解决。\\n此外召唤仪式必须使用3级及以上的仪式桌才能进行。\\n那些东西可以作为信物？祭品研究手册上会有星标记。",
 			"en_US": "Weapons enchanted with 'Gather Souls' will drop Soul Fragments upon killing creatures. \\nThrowing a wooden sword and dropped Soul Fragments together will wrap the fragments around the sword, creating a Soul-Entwined Wooden Sword. Using this sword allows resonance between souls and Keepsake, enabling Summon Rite.\\nThe ritual is similar to the Print Ritual, but with two differences: Keepsake need to be placed on the table, and a Soul-Entwined Wooden Sword is required, consuming souls.\\nInsufficient souls will result in penalties, a problem seemingly unresolved by predecessors.\\nAdditionally, Summon Rite require Ritual Tables of level 3 or higher.\\nWhat can be used as Keepsake? The Rite Research Manual will have star markings."
 		},
-		"es.tutorial.title.3_0_1": {
+		"es.tutorial.3_0_1.title": {
 			"zh_CN": "替罪羊",
 			"en_US": "Scapegoat"
 		},
-		"es.tutorial.describe.3_0_1": {
+		"es.tutorial.3_0_1.describe": {
 			"zh_CN": "但我们找到了转移仪式惩罚的方式，将通过魔力制成的代人受过之羊，放在仪式桌附近，当放置者进行仪式失败时，惩罚将转移到替罪羊身上。\\n不仅如此，若替罪羊旁有怪物意图攻击，其目标便会被替罪羊所吸引。(BOSS无效)\\n替罪羊每次受到的伤害不会超过1点。\\n替罪羊的功效仅对其同名者生效。\\n右键其进行拆解。",
 			"en_US": "However, we have found a way to transfer the penalties of the Rite. By placing a magically crafted scapegoat near the Rite table, when the Rite performer fails, the punishment will be transferred to the scapegoat.\\nMoreover, if there are monsters nearby intending to attack, they will be attracted to the scapegoat (BOSS monsters are exempt).\\nThe scapegoat will not take more than 1 point of damage each time.\\nThe effects of the scapegoat only apply to creatures with the same name.\\nRight-click to dismantle."
 		},
-		"es.tutorial.title.3_0_2": {
+		"es.tutorial.3_0_2.title": {
 			"zh_CN": "生命皮革",
 			"en_US": "Life Leather"
 		},
-		"es.tutorial.describe.3_0_2": {
+		"es.tutorial.3_0_2.describe": {
 			"zh_CN": "灵魂碎片可以像缠绕在木剑上一样，缠绕在皮革上，当皮革收集到一定的灵魂后，可以转变成「生命之革」。\\n「生命之革」可以快速的在身上缠绕，形成一套皮甲，或许这对战斗有所帮助，不过要注意的是生成的皮甲会强行顶掉身上所穿的装备，同时还具有绑定和消失诅咒。",
 			"en_US": "Soul Fragments can be wrapped around leather, similar to how they wrap around wooden swords. When enough soul energy is collected in the leather, it can transform into 'Leather of Life'. \nThe 'Life Leather' can quickly wrap around the body, forming a set of leather armor. Perhaps this would be helpful in combat, but it's worth noting that the generated armor will forcibly replace any existing equipment worn, and it also carries binding and vanishing curses."
 		},
-		"es.tutorial.title.3_10_0": {
+		"es.tutorial.3_10_0.title": {
 			"zh_CN": "魔导书",
 			"en_US": "Spellbook"
 		},
-		"es.tutorial.describe.3_10_0": {
+		"es.tutorial.3_10_0.describe": {
 			"zh_CN": "封皮，封底和咒术纸张，共同制作出来最基础的魔导书，拥有这本魔导书，就可以开始元素魔法之旅了，拥有了它，你就可以完成更高级的合成，操作元素之力完成各种各样的工作。\\n不过，目前做出来的魔导书是最低级的，它基本上没有任何用处，不过你可以使用魔力书桌，通过给予它对应物品，平凡的魔导书将转化成更高级的魔导书。\\n高级的魔导书记录的咒文不同，完成的功能也会有所不同。",
 			"en_US": "The cover, back cover and Incantation Paper together make the most basic Spellbook. With this Spellbook, you can begin your journey into ElementalSorcery. Possessing it enables you to perform more advanced crafts or manipulate the power of elements to accomplish various tasks. \\nHowever, the Spellbook made at present is the lowest level, and it is basically useless. However, you can use the Magic Desk to transform an Ordinary Spellbook into a more advanced one by providing it with the corresponding items.\\nAdvanced Spellbooks record different spells, resulting in different functionalities."
 		},
-		"es.tutorial.title.3_11_0": {
+		"es.tutorial.3_11_0.title": {
 			"zh_CN": "元素立方体",
 			"en_US": "Element Cube"
 		},
-		"es.tutorial.describe.3_11_0": {
+		"es.tutorial.3_11_0.describe": {
 			"zh_CN": "元素水晶虽然已经可以储存元素了，不过它还不足以将元素进行隔空输送。这时就需要元素立方体了。将元素立方体放在某些祭坛的某些位置，元素立方体就会与祭坛产生共鸣，提供祭坛工作所需的元素等。\\n值得注意的是，盛有不同元素的元素立方体在受到爆炸时，内部的元素也会与爆炸共鸣，并产不同的爆炸效果。\\n例如末影元素会传送周边方块和实体，火元素伤害高并且会生成岩浆等等",
 			"en_US": "Although Element Crystal can store Element, but they are not sufficient for transporting elements across space. This is where Element Cube come in. Placing Element Cube in certain positions on certain altars will resonate with the altars, providing the necessary Element for their operation.\\nIt's worth noting that when an Element Cube containing Element is attacked by an explosion, the internal Element will resonate with the explosion, resulting in different explosive effects.\\nFor example, Ender Element will teleport surrounding blocks and entities, Fire Element cause high damage and generate lava, and so on."
 		},
-		"es.tutorial.title.3_12_0": {
+		"es.tutorial.3_12_0.title": {
 			"zh_CN": "魔力书桌",
 			"en_US": "Magic Desk"
 		},
-		"es.tutorial.describe.3_12_0": {
+		"es.tutorial.3_12_0.describe": {
 			"zh_CN": "魔法书桌是魔法书祭坛的核心，它可以让魔导书将物品吸收，从而产生咒文，转化成新的魔导书。\\n将物品扔到书桌上，物品将会进入书中。\\n要想做出不同的魔导书，物品进入的顺序和数量有着严格的限定，如果进入了不该进入的物品，那么就会前功尽弃，请重新准备材料吧。\\n在祭坛面上的物品，会被自动弹到说书桌上，所以请不要在这个祭坛上乱丢东西！\\n魔导书祭坛还可以给部分魔导书补充元素。有了充足的元素，这些魔导书才可以正常使用。\\n将元素立方体放在祭坛的四个錾制石上，祭坛就会自动吸取元素，为桌面上的魔导书补充元素。\\n补充元素是不可逆的过程，进入魔导书中的元素除非消耗光，否则是无法移除的，请注意！",
 			"en_US": "The Magic Desk is the core of the Magic Spell Altar, allowing Spellbook to absorb items, generate spells, and transform into new Spellbook.\\nThrow items onto the desk, and they will be absorbed into the book.\\nTo create different Spellbooks, there are strict limits on the order and quantity of items absorbed. If the wrong items are absorbed, all previous efforts will be wasted, so please prepare the materials again.\\nItems on the altar surface will be automatically bounced onto the Desk, so please do not throw things randomly on this altar!\\nThe Spellbook Altar can also replenish Element for some Spellbooks. With sufficient Element, these Spellbook can function normally.\\nPlace Element Cube on the four Chisel Magic Quartz Block on the altar, and the altar will automatically absorb elements to replenish the Spellbooks on the desk.\\nReplenishing elements is an irreversible process; once the elements enter the Spellbook, they cannot be removed unless fully consumed. Please be aware!"
 		},
-		"es.tutorial.title.3_13_0": {
+		"es.tutorial.3_13_0.title": {
 			"zh_CN": "元素之魔导书",
 			"en_US": "Spellbook of Elements"
 		},
-		"es.tutorial.describe.3_13_0": {
+		"es.tutorial.3_13_0.describe": {
 			"zh_CN": "元素魔导书拥有特殊的咒文，可以从元素立方体之类的元素容器中提取出来元素，或者将书中的元素再次放回到元素容器之中。",
 			"en_US": "Spellbook of Elements have special spells that can extract elements from Element Container such as Element Cube, or return the elements from the book back into the Element Container."
 		},
-		"es.tutorial.title.3_13_1": {
+		"es.tutorial.3_13_1.title": {
 			"zh_CN": "星之共鸣",
 			"en_US": "Star Resonate"
 		},
-		"es.tutorial.describe.3_13_1": {
+		"es.tutorial.3_13_1.describe": {
 			"zh_CN": "在繁星满天的午夜，将带元素容器投入到成熟的星之花上，星之花可能会转化到可以和元素共鸣的共鸣态。\\n共鸣星之花不在那么的脆弱，打掉后会掉落一个星之种。\\n共鸣星之花可以通过元素之书为其注入元素，根据注入元素的不同，共鸣星之花将会产生不同的效果。\\n无法共鸣的元素无法注入。",
 			"en_US": "On a starry midnight, insert an Element Container into a mature Star Flower. The Star Flower may transform into a resonant state that can resonate with elements.\\nResonant Star Flowers are not as fragile; when broken, they drop a Star Seed.\\nResonant Star Flowers can be infused with elements using Spellbook of Elements. Depending on the infused elements, Resonant Star Flowers will produce different effects.\\nElements that cannot resonate cannot be infused."
 		},
-		"es.tutorial.title.3_14_0": {
+		"es.tutorial.3_14_0.title": {
 			"zh_CN": "起始之魔导书",
 			"en_US": "Spellbook of Launcher"
 		},
-		"es.tutorial.describe.3_14_0": {
+		"es.tutorial.3_14_0.describe": {
 			"zh_CN": "起始之魔导书可以将启动咒文魔力化，并发送给不同的祭坛，从而启动各种各样的合成或程式。",
 			"en_US": "The Spellbook of Launcher can enchant startup spells with magic and send them to different altars, thereby initiating various craft or processes."
 		},
-		"es.tutorial.title.3_15_0": {
+		"es.tutorial.3_15_0.title": {
 			"zh_CN": "元素合成祭坛",
 			"en_US": "Element Craft Altar"
 		},
-		"es.tutorial.describe.3_15_0": {
+		"es.tutorial.3_15_0.describe": {
 			"zh_CN": "并不是所有元素合成都只需要一种元素的，当元素合成需要多种元素的时候，元素合成台显然不能满足要求。由此，元素合成祭坛诞生了，在祭坛的十字方向放上元素立方体，通过起始之魔导书启动后祭坛会自动吸收元素立方体中存储的元素，进行合成。",
 			"en_US": "Not all Element Craft require only one Element. When multiple Elements are required for crafting, the Element Workbench obviously cannot meet the requirements. Therefore, the Element Craft Altar was born. Place Element Cubes in the cross direction of the altar, and activate it with the Spellbook of Launcher. The altar will automatically absorb the stored elements in the Element Cubes and proceed with the crafting."
 		},
-		"es.tutorial.title.3_16_0": {
+		"es.tutorial.3_16_0.title": {
 			"zh_CN": "更多知识",
 			"en_US": "More Knowledge"
 		},
-		"es.tutorial.describe.3_16_0": {
+		"es.tutorial.3_16_0.describe": {
 			"zh_CN": "为了获取更多知识，可以开始升级仪式桌的仪式桌了...",
 			"en_US": "To acquire more knowledge, you can start upgrading the Ritual Table..."
 		},
-		"es.tutorial.title.3_1_0": {
+		"es.tutorial.3_1_0.title": {
 			"zh_CN": "元素的起点",
 			"en_US": "Origin of Element"
 		},
-		"es.tutorial.describe.3_1_0": {
+		"es.tutorial.3_1_0.describe": {
 			"zh_CN": "要发展元素技术，一个好用的元素容器是一切的起点。有非常好的元素亲和性的元素水晶，便可以胜任这一职位，不过它的容量是有限的。\\n元素水晶可以通过魔力水晶再次注魔得到，在元素活跃的时间段内，才可能注魔成功。\\n注魔条件：日出日落的平原上",
 			"en_US": "To develop elemental technology, a reliable Element Container is the starting point. An Element Crystal with a strong affinity for elements can handle this role, although its capacity is limited.\\nElement Crystals can be recharged using Magic Crystals, but only during active elemental periods.\\nEnchanting Condition: On the plains during sunrise and sunset."
 		},
-		"es.tutorial.title.3_2_0": {
+		"es.tutorial.3_2_0.title": {
 			"zh_CN": "湛蓝水晶",
 			"en_US": "Azure Crystal"
 		},
-		"es.tutorial.describe.3_2_0": {
+		"es.tutorial.3_2_0.describe": {
 			"zh_CN": "魔力水晶和青金石吸收岩浆后形成的一种蓝色的水晶，研究者发现在特定条件下，该水晶周围的物质开始变得不在那么稳定了。\\n将一个魔力水晶和一个青金石扔到岩浆边上，等待一段时间，生成湛蓝水晶。",
 			"en_US": "A blue crystal formed when Magic Crystals and Lapis absorb Lava. Researchers have discovered that under specific conditions, the substances surrounding this crystal become less stable. \\nThrow a Magic Crystal and a Lapis near Lava and wait for a while to generate the Azure Crystal."
 		},
-		"es.tutorial.title.3_2_1": {
+		"es.tutorial.3_2_1.title": {
 			"zh_CN": "物质瓦解",
 			"en_US": "Materials Disintegration"
 		},
-		"es.tutorial.describe.3_2_1": {
+		"es.tutorial.3_2_1.describe": {
 			"zh_CN": "物质瓦解箱，在简易的祭坛下，通过魔力，将物品分解成元素，存入元素的容器。\\n瓦解箱只能分解简单结构的物品，无法分解复杂结构的元素，而且分解元素的效率十分低下。\\n不过制作简单，方便使用，是它的唯一优点。",
 			"en_US": "The Material Disintegration Box, under a simple altar, utilizes magic to disintegrate items into elements and store them in Element Container.\\nThe Disintegration Box can only disintegrate items with simple structures, and its efficiency in disintegrate elements is very low. \nHowever, it is easy to make and convenient to use, which are its only advantages."
 		},
-		"es.tutorial.title.3_2_2": {
+		"es.tutorial.3_2_2.title": {
 			"zh_CN": "元素认知",
 			"en_US": "Element Cognition"
 		},
-		"es.tutorial.describe.3_2_2": {
+		"es.tutorial.3_2_2.describe": {
 			"zh_CN": "或许你想知道哪些物品里会有哪些元素？制作一个「元素共鸣板」或许是目前最好的选择。\\n多种水晶嵌入其中并雕刻而得到的石板可以让利用元素间共鸣的特点，将物品里的元素特征所展现出来。\\n将元素容器或者任意物品放到板子的中央，其「首要元素」便可和周围带有同种元素的物品发生共鸣，方格会呈现出对应的颜色。\\n虽然不能定量的分析元素，但可以通过不同格子上颜色浓度的差距判读物品中所含的元素和首要元素的能量的差距，颜色浓度越深，表明物品里元素能量越接近首要元素的能量，当颜色最深是，表明物品里的元素能量大于等于首要元素的能量；同理格子的闪烁程度越小，表明元素数量越接近。",
 			"en_US": "Perhaps you're wondering which element are present in various items? Creating an 'Element Resonance Board' might be the best option currently.\\nA slab crafted by embedding various crystals and carving them can leverage the resonance between element to display the element fetures of items.\\nBy placing an Element Container or any item in the center of the board, its 'Primary Element' can resonate with surrounding items containing the same element, causing the squares to display corresponding colors.\\nAlthough it cannot quantitatively analyze element, the difference in color intensity between different squares can be used to interpret the gap between the element contained in the item and the Power of the primary element. The deeper the color intensity, the closer the Power of the element in the item is to the Power of the primary element. When the color is darkest, it indicates that the Power of the element in the item is greater than or equal to the Power of the primary element; similarly, the less the flickering of the squares, the closer the quantity of element."
 		},
-		"es.tutorial.title.3_3_0": {
+		"es.tutorial.3_3_0.title": {
 			"zh_CN": "做研究",
 			"en_US": "Do Research"
 		},
-		"es.tutorial.describe.3_3_0": {
+		"es.tutorial.3_3_0.describe": {
 			"zh_CN": "部分道具需要自己研究才能获取，去找精灵们问问，它们会提供给你研究的场所。",
 			"en_US": "Some items require personal research to obtain. Go ask the Elves, they will provide you with a place for your research."
 		},
-		"es.tutorial.title.3_3_1": {
+		"es.tutorial.3_3_1.title": {
 			"zh_CN": "元素果汁",
 			"en_US": "Element Juice"
 		},
-		"es.tutorial.describe.3_3_1": {
+		"es.tutorial.3_3_1.describe": {
 			"zh_CN": "果汁中如果包含精灵果，便可以让果汁具备元素容器的性质，元素将会溶于果汁之内。\\n根据元素的不同，果汁配比的不同，或许可以让你获得这种各样性质不同的Buff。\\果料越多，水越少可以让元素果汁产生更高等级的buff，研究可以得到果汁浓缩剂，放入盛满果汁的榨汁机中，可以吸取一部分的水分，让果汁变得更浓稠。随着放入的次数增加，效果会越来越差。",
 			"en_US": "If Elf Friut is included in the juice, it will give the juice the properties of an Element Container, allowing elements to dissolve in the juice.\\nDepending on the different elements and juice ratios, you may gain various buffs with different properties.\\nUsing more ingredients and less water can produce higher-level buffs in element juice. Research can yield Juice Concentrate, which, when placed in a juicer filled with juice, can absorb some water, making the juice thicker. As the number of uses increases, the effect will diminish."
 		},
-		"es.tutorial.title.3_4_0": {
+		"es.tutorial.3_4_0.title": {
 			"zh_CN": "元素合成台",
 			"en_US": "Element Workbench"
 		},
-		"es.tutorial.describe.3_4_0": {
+		"es.tutorial.3_4_0.describe": {
 			"zh_CN": "元素合成台可以像普通合成台一样使用，同时也可以放入元素水晶，让物品和元素共同合成。\\n深色橡木是与魔力契合性最好的木材，因此元素合成台只能选择使用深色橡木。",
 			"en_US": "The Element Workbench can be used like a regular Workbench, but it can also be used to combine items with Element Crystal.\\nDark oak is the wood with the best compatibility with magic, so the Element Workbench can only be made using dark oak."
 		},
-		"es.tutorial.title.3_5_0": {
+		"es.tutorial.3_5_0.title": {
 			"zh_CN": "求知粉尘",
 			"en_US": "Seek Dust"
 		},
-		"es.tutorial.describe.3_5_0": {
+		"es.tutorial.3_5_0.describe": {
 			"zh_CN": "通过自然粉尘制作而成的求知粉尘，可以与自然发生共鸣，从而获得到周边的各种信息。将求知粉尘放到地上，开始共鸣，结束后自然水晶掉落，捡起便可看到周边的各种信息。\\n同时求知粉尘也可检测周围是否蕴含着充足的精灵力。",
 			"en_US": "Seek Dust made from Nature Dust can resonate with nature, so as to get all kinds of information around. Put Seek Dust on the ground and pick Nature Dust after resonating.\\nSeek Dust can also detect elf power.",
 			"ja_JP": "自然粉塵で得られた知識求め粉塵は自然と共鳴することができます、そして周辺の様々な情報を得ることができます。知識求め粉塵を床に置き、終わった後に落ちる自然水晶で情報を記録します。\\nまた、知識求め粉塵は精霊力の検出ができます。"
 		},
-		"es.tutorial.title.3_5_1": {
+		"es.tutorial.3_5_1.title": {
 			"zh_CN": "元素手册",
 			"en_US": "Parchment Manual"
 		},
-		"es.tutorial.describe.3_5_1": {
+		"es.tutorial.3_5_1.describe": {
 			"zh_CN": "精灵们依然使用羊皮卷进行存储信息，手里一堆没有地方装？制作一个元素手册吧，可以将身上多余的羊皮卷装入手册中，更好的储存与查阅。",
 			"en_US": "The Elves still use Parchment to store information, but what to do when you have a bunch and nowhere to put them? Make an Parchment Manual! You can store your extra Parchments in the manual for better storage and reference."
 		},
-		"es.tutorial.title.3_6_0": {
+		"es.tutorial.3_6_0.title": {
 			"zh_CN": "魔爆权杖",
 			"en_US": "Magic Blast Wand"
 		},
-		"es.tutorial.describe.3_6_0": {
+		"es.tutorial.3_6_0.describe": {
 			"zh_CN": "摧毁带有魔力的设备后，魔力会爆发出来，对周围的生物造成伤害。利用这个性质而制作的魔爆权杖，可以让魔力从某个生物身上爆发出来，造成可观的伤害。\\n魔爆权杖可以像元素水晶一样充能，元素会被魔力化并充入权杖。",
 			"en_US": "After destroying a Magic Device, magic will erupt, causing damage to nearby creatures. Utilizing this property, the Magic Blast Wand is crafted to unleash magic from a creature, causing significant damage. \nThe Magic Blast Wand can be charged like an Element Crystal, with elements being magically charged and stored in the wand."
 		},
-		"es.tutorial.title.3_6_1": {
+		"es.tutorial.3_6_1.title": {
 			"zh_CN": "冲击魔法",
 			"en_US": "Shock Magic"
 		},
-		"es.tutorial.describe.3_6_1": {
+		"es.tutorial.3_6_1.describe": {
 			"zh_CN": "通过魔爆权杖升级到的冲击权杖，可以借助周围的气，冲击并推动生物(无伤害)或方块，因此不会任何的消耗。\\n冲击还可以将一些不稳定的结构取出，或许这在将来会有用。\\n合成冲击权杖的部分素材可以找精灵去问问。",
 			"en_US": "The Shock Wand, upgraded from the Magic Blast Wand, can utilize surrounding energy to shock and push creatures (without causing harm) or blocks, without any consumption.\\nThe shock can also extract some unstable structures, which might be useful in the future.\\nYou can ask the elves about some of the materials needed to craft the Shock Wand."
 		},
-		"es.tutorial.title.3_7_0": {
+		"es.tutorial.3_7_0.title": {
 			"zh_CN": "咒术水晶",
 			"en_US": "Incantation Crystal"
 		},
-		"es.tutorial.describe.3_7_0": {
+		"es.tutorial.3_7_0.describe": {
 			"zh_CN": "携带咒术的水晶，制作魔导书必备的材料。\\n咒术水晶可以通过魔力水晶再次注魔得到，需要在午夜时分，吸收咒文才可能注魔成功。\\n注魔条件：午夜，周围有超过14个书架",
 			"en_US": "Crystals imbued with incantation, essential materials for crafting Spellbook. \\Incantation Crystal can be recharged using Magic Crystal and need to absorb incantations at midnight for successful recharging.\\nEnchanting Condition: Midnight, surrounded by more than 14 bookshelves."
 		},
-		"es.tutorial.title.3_8_0": {
+		"es.tutorial.3_8_0.title": {
 			"zh_CN": "附魔书",
 			"en_US": "Enchantment Book"
 		},
-		"es.tutorial.describe.3_8_0": {
+		"es.tutorial.3_8_0.describe": {
 			"zh_CN": "附魔台上的书，可以用带有末影元素的蓝晶石锄将其从附魔台上分离下来。\\n附魔书携带较多的知识元素，是目前获取知识元素最好的方式。\\n另外由于附魔台的复杂度较高，千万不要用低级的瓦解箱直接对其进行使用，否则你会后悔的。",
 			"en_US": "Book on the Enchantment Table can be separated from it using an Kyanite Pickaxe with Ender Element.\\nEnchantment Book carry a considerable amount of Knowledge Element, making them the best way to obtain Knowledge Element currently.\\nAdditionally, due to the complexity of the Enchantment Table, never use a low-level Disintegration Box directly on it, or you'll regret it."
 		},
-		"es.tutorial.title.3_8_1": {
+		"es.tutorial.3_8_1.title": {
 			"zh_CN": "咒术纸张",
 			"en_US": "Incantation Paper"
 		},
-		"es.tutorial.describe.3_8_1": {
+		"es.tutorial.3_8_1.describe": {
 			"zh_CN": "咒术纸张可以将咒文和魔力元素很好的结合在一块，是制作魔导书的专用纸。",
 			"en_US": "Incantation paper combines spells and elements well, making it the specialized paper for crafting Spellbook."
 		},
-		"es.tutorial.title.3_9_0": {
+		"es.tutorial.3_9_0.title": {
 			"zh_CN": "魔导书封皮",
 			"en_US": "Spellbook Cover"
 		},
-		"es.tutorial.describe.3_9_0": {
+		"es.tutorial.3_9_0.describe": {
 			"zh_CN": "魔导书的封面和封低。\\n魔导书的封皮可不是便宜货哦。",
 			"en_US": "The cover and back cover of the Spellbook.\\nThe cover of a Spellbook is no cheap material."
 		},
-		"es.tutorial.title.4_0_0": {
+		"es.tutorial.4_0_0.title": {
 			"zh_CN": "瓦解小祭坛",
 			"en_US": "Small Disintegration Altar"
 		},
-		"es.tutorial.describe.4_0_0": {
+		"es.tutorial.4_0_0.describe": {
 			"zh_CN": "物质瓦解箱虽然可以将物质瓦解到元素，但是其只能提取物质中的一种元素，而且，转化率十分的低下。为了解决这个问题，学者们设计了物质瓦解小祭坛，来瓦解物质得到更多的元素。\\n该祭坛的使用方式和元素合成祭坛基本相同，将物质放到中心的桌子上，通过始之魔导书的瓦解咒文来启动合成。",
 			"en_US": "While the Material Disintegration Box can disintegrate material into Elements, it can only extract one type of Element from the material, and moreover, the conversion rate is extremely low. To address this issue, scholars have designed the Small Material Disintegration Altar, to disintegrate material and obtain more elements.\\nThe usage of this Altar is similar to that of the Element Craft Altar. Place the material on the central table, and activate the craft with the disintegration mantra from the Spellbook of Launcher."
 		},
-		"es.tutorial.title.4_10_0": {
+		"es.tutorial.4_10_0.title": {
 			"zh_CN": "瓦解祭坛",
 			"en_US": "Disintegration Altar"
 		},
-		"es.tutorial.describe.4_10_0": {
+		"es.tutorial.4_10_0.describe": {
 			"zh_CN": "瓦解小祭坛虽然好用，但是无论使其效率还是可以分解的物品都是有限的。学者们通过给瓦解台注入大量的末影元素，使之形成更高级的瓦解台，并设计了物质瓦解祭坛，来使其工作。\\n瓦解祭坛拥有更高的瓦解效率、能放下更多的立方体，与此同时还可以在魔力平台上放置结构水晶进行标定瓦解。",
 			"en_US": "Although the Small Disintegration Altar is useful, both its efficiency and the items it can disintegrate are limited. Scholars have injected a large amount of End Element into the Altar to form a more advanced Disintegration Altar to make it work.\\nThe Disintegration Altar has higher disintegration efficiency, can accommodate more cubes, and can also place Structural Crystal on the Magic Platform for calibrated disintegration."
 		},
-		"es.tutorial.title.4_11_0": {
+		"es.tutorial.4_11_0.title": {
 			"zh_CN": "漩涡",
 			"en_US": "Vortex"
 		},
-		"es.tutorial.describe.4_11_0": {
+		"es.tutorial.4_11_0.describe": {
 			"zh_CN": "漩涡可以将多种物品有效的融合在一起，是制作一些道具的必备条件。\\n可以通过研究获取漩涡，此外最好不要把漩涡拿在手里，更不要把漩涡扔到地上！",
 			"en_US": "Vortex is essential for effectively merging various items together, and it's a prerequisite for crafting certain items.\\nYou can obtain the Vortex through Research. Additionally, it's best not to hold the Vortex in your hand, and definitely do not throw it on the ground!"
 		},
-		"es.tutorial.title.4_11_1": {
+		"es.tutorial.4_11_1.title": {
 			"zh_CN": "瓦解风车",
 			"en_US": "Disintegration Windmill"
 		},
-		"es.tutorial.describe.4_11_1": {
+		"es.tutorial.4_11_1.describe": {
 			"zh_CN": "如果把将物质瓦解的设备做成风车形式，获取可以自动的分解元素，与此，瓦解风车诞生了。\\n通过「风车平台」搭建出的瓦解祭坛，并将风轮放到平台上，在风力的驱动下，风车开始工作，将周围的物质转化为元素，并存入祭坛周边的元素容器之中。\\n风力越大，转动越快，分解效率也越高。\\n随着时间的迁移，风轮会消耗耐久，直至销毁。不同材质的风轮的耐久不同，其特性也具有微弱的不同。\\n隔壁学者把风轮投出去当作武器用了，如果没有这么大的力气，土元素的果汁可以帮助你。",
 			"en_US": "If the device for Disintegration is made in the form of a windmill, it can automatically disintegrate element. Thus, the Disintegration Windmill is born.\\nBuild a other Disintegration Altar with a 'Windmill Platform' and place the 'Wind Wheel' on it. Driven by the wind, the windmill starts working, converting the surrounding matter into Element and storing them in the element containers around the altar.\\nThe stronger the wind, the faster it rotates, and the higher the disintegration efficiency.\\nOver time, the Wind Wheel will consume durability until it is destroyed. Wind Wheel made of different materials have different durabilities, and their characteristics also have slight differences.\\nThe scholar next door used the Wind Wheel  as weapon. If you don't have that much strength, the juice of Earth Element can help you."
 		},
-		"es.tutorial.title.4_12_0": {
+		"es.tutorial.4_12_0.title": {
 			"zh_CN": "递归结构",
 			"en_US": "Recursive Structure"
 		},
-		"es.tutorial.describe.4_12_0": {
+		"es.tutorial.4_12_0.describe": {
 			"zh_CN": "物品的复杂程度不一样，不是所有物品都可以被直接解析的，因此「合成结构记录台」将会是你解析复杂物品的最好帮手。\\n将结构解析祭坛下方的「魔力平台换」成记录台，在记录台里用物品标定出合成的结构，便可解析出对应的内容。当然这要求着所有作为合成材料的物品能单独被结构解析台解析出来，但实际情况通常不会如你所愿。好在学者们通过在结构解析祭坛周围搭建复数的石柱来解决这个问题。只要将记录该材料的结构水晶放入石柱的箱子内，即可被结构解析台读取，从而完成结构记录。",
 			"en_US": "The complexity of items varies, and not all items can be directly analyzed. Therefore, the 'Crafting Structure Recorder' will be your best helper for analyzing complex items.\\nReplace the 'Magic Platform' beneath the Structure Analysis Altar with a Crafting Structure Recorder, and use items to calibrate the synthesis structure in the Crafting Structure Recorder to analyze the corresponding content. Of course, this requires that all items used as synthesis items can be individually analyzed by the Structure Analysis Altar, but in practice, this is usually not the case. Fortunately, scholars have solved this problem by building multiple pillars around the Structure Analysis Altar. As long as the Structural Crystal recording the structure of the item is placed in the box of the pillar, it can be read by the Structure Analysis Altar, thus completing the structure recording."
 		},
-		"es.tutorial.title.4_13_0": {
+		"es.tutorial.4_13_0.title": {
 			"zh_CN": "定标终端",
 			"en_US": "Demarcaterminal"
 		},
-		"es.tutorial.describe.4_13_0": {
+		"es.tutorial.4_13_0.describe": {
 			"zh_CN": "可以给元素立方体安装标定终端，终端内可以设置接受元素能量的上限或这下限等参数，不满足标定的元素不能进入该立方体。（手持标定终端，右键点击元素立方体给指定立方体安装标定终端，安装后右键元素立方体打开终端）",
 			"en_US": "You can install Element Cube Demarcaterminal for the Element Cube, where you can set parameters such as the upper or lower limit for receiving power. Element that do not meet the calibration criteria cannot enter the cube. (Right Click on the Element Cube with Element Cube Demarcaterminal to install. After installation, Right Click on the Element Cube to open the terminal.)"
 		},
-		"es.tutorial.title.4_14_0": {
+		"es.tutorial.4_14_0.title": {
 			"zh_CN": "精准的元素转移",
 			"en_US": "Precise Element Transfer"
 		},
-		"es.tutorial.describe.4_14_0": {
+		"es.tutorial.4_14_0.describe": {
 			"zh_CN": "在祭坛的使用中，经常出现不同能量合并的情况，反复合并后的能量必然会产生更多的损失。通过「元素转移台」可以精准的将元素非整数化储存起来，并统一输出到另外一个元素容器之中。\\n要注意的的是，转移台中存有元素的情况下破坏的话，会发生元素爆炸。",
 			"en_US": "In the use of the altar, situations where different power merge often occur, and repeated merging of power will inevitably result in greater losses. The 'Element Translocator' can accurately store non-integerized element and uniformly output them to another element container.\\nIt should be noted that if the Translocator is break while containing element, an Element Explosion will occur."
 		},
-		"es.tutorial.title.4_15_0": {
+		"es.tutorial.4_15_0.title": {
 			"zh_CN": "不一样的递归结构",
 			"en_US": "Different Recursive Structure"
 		},
-		"es.tutorial.describe.4_15_0": {
+		"es.tutorial.4_15_0.describe": {
 			"zh_CN": "并不是所有合成都可以通过工作台来完成的，构建更高级的的记录台，可以进行一些解析一些其他的方式的合成结构。（比如解析一些其他mod?带来的合成方案。）",
 			"en_US": "Not all crafts can be completed through the workbench. Crafting more advanced  Recorder can analyze crafts through other means. (For example, analyzing crafts schemes brought by some other mods?)"
 		},
-		"es.tutorial.title.4_16_0": {
+		"es.tutorial.4_16_0.title": {
 			"zh_CN": "更好的魔力平台",
 			"en_US": "Better Magic Platfrom"
 		},
-		"es.tutorial.describe.4_16_0": {
+		"es.tutorial.4_16_0.describe": {
 			"zh_CN": "学者们做的出新设备「元素平台」，它和魔力平台比较相似，也可以放置物品，供其他设备使用。\\n不过元素平台可以存入四种元素，并且会将元素尝试与上方的物品进行共鸣。\\n注意，它并不是一个标准的元素容器，元素一旦存入，只能通过元素吸收箱回收了，其他设备无法直接取出。",
 			"en_US": "Scholars have developed a new device called the 'Element Platform'. It is similar to the Magic Platform and can also hold items for use by other devices.\\nHowever, the Element Platform can store four types of elements and will attempt to resonate the elements with the items placed above it.\\nNote that it is not a standard element container; once elements are stored, they can only be retrieved through the Absorber, and cannot be directly accessed by other devices."
 		},
-		"es.tutorial.title.4_17_0": {
+		"es.tutorial.4_17_0.title": {
 			"zh_CN": "精灵立方体",
 			"en_US": "Elf Cube"
 		},
-		"es.tutorial.describe.4_17_0": {
+		"es.tutorial.4_17_0.describe": {
 			"zh_CN": "在立方体核心的驱动下通过精灵核心构建的「精灵立方体」，他会漂浮在你的身边，是你得力的小助手。\\n在装有不同精灵符文的情况下，精灵立方体会模拟你的行为，帮助你更好的完成各种工作。\\n饿了是干不动的，需要给精灵立方体投喂食物，让它充满干劲。同时，间断的投喂食物会让它快速获得经验进行升级。\\n备注：虽然叫「精灵立方体」，但只是用精灵核心制作的，实际和精灵们没任何关系。",
 			"en_US": "Powered by the Cube Core within, the 'Elf Cube' constructed with the Elf Core will float beside you as your helpful assistant.\\nWhen equipped with different Elf Cube Rune, the Elf Cube will mimic your actions, aiding you in various tasks.\\nIt can't work on an empty stomach, so be sure to feed it food to keep it energetic.Additionally, intermittent feeding will allow it to quickly gain experience and level up.\\nNote: Although it's called the 'Elf Cube', it's only made with a Elf Core and has no actual relation to elves."
 		},
-		"es.tutorial.title.4_17_1": {
+		"es.tutorial.4_17_1.title": {
 			"zh_CN": "精灵符文",
 			"en_US": "Elf Cube Rune"
 		},
-		"es.tutorial.describe.4_17_1": {
+		"es.tutorial.4_17_1.describe": {
 			"zh_CN": "精灵符文可以挂载到精灵立方体上，以产生各种不同的效果，每个精灵立方体最多能持有12个符文，而且挂载后无法取出。\\n符文也是有等级的且不超过立方体的等级，投喂元素，让符文增加经验，不同符文需要的元素是不一样的。最好不要让立方体只获取一种元素。\\n精灵符文分为：执行型，增强型和其他。\\n将空白的精灵立方体符文放到元素平台上，并将元素注入元素平台，符文便可和元素发生共鸣。\\n不同的元素在不同的位置周围有不同的物品，就可能产生各种不同的符文，目前记载的线索：\\n沙漠、白天、火、烈焰粉\\n地下、土、石头\\n末地、末影\\n夜晚、钻石斧、火\\n木、黎明、小麦土豆胡萝卜\\n木、牛肉大餐\\n水、雨、萤石粉\\n木、金、黄昏、煤、钻石、绿宝石\\n土、金、煤矿\\n午后、木、金苹果\\n水、金、黄昏、腐肉、骨头、火药\\n高空、气、羽毛、兔脚\\n平原、末影、气、泥土、末影珍珠",
 			"en_US": "The Elf Cube Rune can be attached to the Elf Cube to produce various effects. Each Elf Cube can hold up to 12 runes, and once attached, they cannot be removed.\\nRune also have levels that do not exceed the level of the cube itself. Feed Elements to increase their experience, but note that different runes require different elements and it's best not to let the cube only acquire one type of element.\\nElf Cube Runes are divided into: Executable, Enhancing, and Others.\\nPlace a blank Elf Cube Rune on the Element Platform and inject element into it; the rune will resonate with the element.\\nDifferent items droped around on different place with different elements may produce various runes. Currently recorded clues are: \\nDesert, Daytime, Fire, Blaze Powder \\nUnderground, Earth, Stone \\nEnd, Ender \\nNighttime, Diamond Axe, Fire \\nWood, Dawn, Wheat, Potato, Carrot \\nWood, Beef Stew \\nWater, Rain, Glowstone Dust \\nWood, Gold, Dusk, Coal, Diamond, Emerald \\nEarth, Gold, Coal Ore \\nAfternoon, Wood, Golden Apple \\nWater, Gold, Dusk, Rotten Flesh, Bone, Gunpowder \\nHigh Altitude, Air, Feather, Rabbit's Foot \\nPlain, Ender, Air, Dirt, Ender Pearl"
 		},
-		"es.tutorial.title.4_18_0": {
+		"es.tutorial.4_18_0.title": {
 			"zh_CN": "高级魔力石英制品",
 			"en_US": "Advance Magic Quartz Products"
 		},
-		"es.tutorial.describe.4_18_0": {
+		"es.tutorial.4_18_0.describe": {
 			"zh_CN": "有一些高级的魔力石英制品：\\n「棱镜石英」，作为一种高级的祭坛材料。\\n「方阵石英台」作为高级的魔力平台，平常并用不到，是某些祭坛结构的必需品。\\n「魔力石英缸」可以容纳一些特殊的东西，或参转化某些物品。",
 			"en_US": "There are some advanced magic quartz products:\\n'Prism Quartz': It serves as an advanced altar material.\\n'Matrix Quartz Platform': As an more advanced magic platform, it's not commonly used but is necessary for certain shrine structures.\\n'Magic Quartz Crock': It can contain some special items or participate in the transformation of certain items."
 		},
-		"es.tutorial.title.4_19_0": {
+		"es.tutorial.4_19_0.title": {
 			"zh_CN": "天空祭坛",
 			"en_US": "Sky Altar"
 		},
-		"es.tutorial.describe.4_19_0": {
+		"es.tutorial.4_19_0.describe": {
 			"zh_CN": "结合众多学者的智慧制作的大型祭坛，其杰出的设计构造可以执行各种各样的功能，甚至可以取代之前的一些祭坛。\\n天空祭坛多出16格个合成空间，可以制作一些更强大的的设备；而且可以执行物质的瓦解，且几乎无损；甚至可以根据元素和结构，反向构成物质。\\n元素方桌是天空祭坛的核心，可以完成各种各样的功能，在没有祭坛的加持下，方桌仍可以作为普通的工作台进行使用，当然制作它的成本也是很高的。",
 			"en_US": "Crafted with the wisdom of many scholars, the large altar boasts remarkable design and construction, capable of executing various functions, even replacing some previous altars.\\nThe Sky Altar provides an additional 16-grid crafting space, allowing for the creation of more advance devices. It can also conduct items disintegration with minimal loss and even re-construct item based on elements and structure.\\nThe Element Square Table is the core of the Sky Altar, capable of performing various functions. Even without the blessings of a altar, the table can still be used as a regular workbench, although the cost of crafting it is quite high."
 		},
-		"es.tutorial.title.4_1_0": {
+		"es.tutorial.4_1_0.title": {
 			"zh_CN": "建筑水晶",
 			"en_US": "Architectural Crystal"
 		},
-		"es.tutorial.describe.4_1_0": {
+		"es.tutorial.4_1_0.describe": {
 			"zh_CN": "由于大型祭坛结构过于复杂，学者们发现了一种水晶，称之为建筑水晶。它是由精灵结晶注魔得到的，由于其特殊的结构，可以存储空间的结构数据，因此被广泛的用于记录祭坛的结构中。\\n手中的这个设备就具有写入的能力：选择建筑，点击左侧的第一个按钮。\\n注魔条件：沙漠中、周围有超过320个方块掉落在地上",
 			"en_US": "Due to the complexity of large Altar structures, scholars have discovered a crystal known as the Architectural Crystal. It is enchanted with the Elf Crystal, can store structural data. Therefore, it is widely used to record altar structures.\\nThe device in your hand has the ability to write data for recording: select a Building, then click the first button on the left.\\nEnchanting Condition: in the desert, with over 320 blocks dropped on the ground around."
 		},
-		"es.tutorial.title.4_1_1": {
+		"es.tutorial.4_1_1.title": {
 			"zh_CN": "建筑之魔导书",
 			"en_US": "Spellbook of Architecture"
 		},
-		"es.tutorial.describe.4_1_1": {
+		"es.tutorial.4_1_1.describe": {
 			"zh_CN": "建筑之魔导书可以读取建筑水晶中的建筑信息，在魔力书桌中补充土元素，使用建筑咒文，将物品栏里的物品发送到指定的位置，以快速完成建筑的建造。\\n(存有结构数据的建筑水晶使用shift+右键可以标定一个建筑锚点)",
 			"en_US": "The Spellbook of Architecture can read the building information stored in the Architectural Crystal. By charge Earth Elements on the Magic Desk, using architectural mantra, items from the inventory can be sent to designated locations to quickly complete the building.\\n(Architectural Crystal containing building data can be marked with a building anchor point by using Shift Right Click)."
 		},
-		"es.tutorial.title.4_20_0": {
+		"es.tutorial.4_20_0.title": {
 			"zh_CN": "更多知识",
 			"en_US": "More Knowledge"
 		},
-		"es.tutorial.describe.4_20_0": {
+		"es.tutorial.4_20_0.describe": {
 			"zh_CN": "为了获取更多知识，可以开始升级仪式桌的仪式桌了...",
 			"en_US": "To acquire more knowledge, you can start upgrading the Ritual Table..."
 		},
-		"es.tutorial.title.4_2_0": {
+		"es.tutorial.4_2_0.title": {
 			"zh_CN": "建筑记录",
 			"en_US": "Building Record"
 		},
-		"es.tutorial.describe.4_2_0": {
+		"es.tutorial.4_2_0.describe": {
 			"zh_CN": "过雕刻出来的魔力标尺，可以有效地进行区域标定。（右键和shift右键分别标定两个点，当手里拿着标尺时，可以看到标定的区域。标尺可以在工作台里通过染料染色。）\\n建筑祭坛可以对标定区域进行扫描，并将建筑数据记录在建筑水晶里。\\n将空的建筑水晶放到建筑解析台上，标有区域的魔力标尺放在魔力平台上，通过起始之魔导书启动，消耗土元素进行记录。\\n建筑祭坛的方向应该指向区域的中心，且不能过远，才能正常工作。\\n注意：工作中的建筑解析台如果出现异常，会发生爆炸。",
 			"en_US": "The Magic Ruler can effectively delineate areas.(Right Click and Shift Right Click to mark two points respectively. When holding the ruler, you can see the marked area. The ruler can be dyed with dye at the workbench.)\\nThe Architectural Altar can scan the delineated area and record the building data in the Architectural Crystal.\\nPlace an empty Architectural Crystal on the Architectural Analyzer, and place the Magic Ruler with delineated areas on the Magic Platform. Activate it with the Spellbook of Launcher to consume Earth Element for recording.\\nThe Architectural Altar should be oriented towards the center of the area and not too far away to function properly.\\nNote: If the working Architectural Analyzer encounters abnormalities, it may explode."
 		},
-		"es.tutorial.title.4_2_1": {
+		"es.tutorial.4_2_1.title": {
 			"zh_CN": "频率共感",
 			"en_US": "Frequency Induct"
 		},
-		"es.tutorial.describe.4_2_1": {
+		"es.tutorial.4_2_1.describe": {
 			"zh_CN": "将不同频率的水晶扔到频率共感周围，将可以共感的物品放到共感器中，便会开始搜寻。当周围水晶的震动曲线与某一个数据的震动曲线在1.6秒内低于误差，数据将会写入到共感的物品当中。\\n每个水晶提供1振幅。\\n(误差范围会随时间增加，目前只支持建筑和羊皮卷)",
 			"en_US": "Throw Crystals of different frequencies around the Frequency Resonator. Place item that can resonate in the Frequency Inductor, and it will start scanning. When the vibration curve of surrounding Crystals and that of a specific data match within a margin of error for 1.6 seconds, the data will be written into the resonating item.\\nEach crystal provides 1 amplitude.\\n(The margin of error increases over time. Currently, only supports building and Parchment.)"
 		},
-		"es.tutorial.title.4_3_0": {
+		"es.tutorial.4_3_0.title": {
 			"zh_CN": "噬魂剑",
 			"en_US": "Soul Killer"
 		},
-		"es.tutorial.describe.4_3_0": {
+		"es.tutorial.4_3_0.describe": {
 			"zh_CN": "噬魂剑击杀大部分生物后，会将其灵魂收入剑中，随着某种灵魂收集的增加，对该类生物横扫附加的伤害与范围也会缓慢增加。\\n右键使用会消耗所有种类的灵魂1点，为自身进行回血。\\n噬魂剑的耐久很低，不过每击杀一个生物都会将耐久回满。\\n需要一个恰好拥有666点魂力的木剑才可以制作。",
 			"en_US": "The Soul Killer, after killing most creatures, will collect their souls into the sword. As a certain type of soul is collected more, the sweeping damage and range against that type of creature will slowly increase.\\nRight Click will consume 1 point of all types of souls to heal oneself.\\nThe durability of the Soul Killer is very low, but every kill will fully restore its durability.\\nYou need a wooden sword with exactly 666 soul power to craft it."
 		},
-		"es.tutorial.title.4_4_0": {
+		"es.tutorial.4_4_0.title": {
 			"zh_CN": "祝福之玉碎片",
 			"en_US": "Blessing Jade Fragment"
 		},
-		"es.tutorial.describe.4_4_0": {
+		"es.tutorial.4_4_0.describe": {
 			"zh_CN": "这是个人人都想入手的贵重物品，它不仅会为持有者带来「祝福」，似乎还与先人的历史有着某种联系。\\n但它并不是这么容易就能获得到，需要凑齐8片碎片，才能制作出来，虽然可能目前用不到它，不过可以顺手收集一下这些碎片。\\n说回「祝福」，它似乎可以为你带来好运，比如挖矿掉落变多，生命值低下时获得意外的生命恢复等等。\\n不同的碎片获取的方式不尽相同，这里有一些线索：\\n1:封藏石\\n2:噬魂\\n3:商人\\n4:钓鱼\\n5:熔炼\\n6:研究\\n7:烧制\\n8:委托",
 			"en_US": "This is a precious item that everyone desires to obtain. It not only brings 'blessings' to the holder but also seems to have some connection to the history of ancestors.\\nHowever, it's not so easy to acquire; you need to collect 8 pieces to craft it. Although you may not need it at the moment, it's handy to collect these fragments. \\nSpeaking of 'blessings,' it seems it can bring you good luck, such as increasing mining drops, unexpectedly restoring life when health is low, and so on.\\nThe methods to obtain different fragments vary. Here are some clues:\\n1: Seal Stone\\n2: Soul Killer\\n3: Merchant\\n4: Fishing\\n5: Smelting\\n6: Research\\n7: Smelting\\n8: Quest"
 		},
-		"es.tutorial.title.4_5_0": {
+		"es.tutorial.4_5_0.title": {
 			"zh_CN": "折光宝石",
 			"en_US": "Refract Gem"
 		},
-		"es.tutorial.describe.4_5_0": {
+		"es.tutorial.4_5_0.describe": {
 			"zh_CN": "折光宝石拥有扭曲空间的能力，是一些高级设备的材料。\\n研究可以获取到这种宝石。",
 			"en_US": "The Refract Gem possesses the ability to warp space and is a material for some advanced devices.\\nResearch can yield this gem."
 		},
-		"es.tutorial.title.4_5_1": {
+		"es.tutorial.4_5_1.title": {
 			"zh_CN": "虚空容器",
 			"en_US": "Void Container"
 		},
-		"es.tutorial.describe.4_5_1": {
+		"es.tutorial.4_5_1.describe": {
 			"zh_CN": "「聚魂」附魔的武器在末地击杀末影生物有几率掉落虚空碎片，将魔石，虚空碎片，折光宝石，末影珍珠，以9:9:6:12的比例放入熔岩锅中，可熔炼出虚空容器。\\n虚空容器似乎有着非常规的容量，通过其和元素水晶制作的虚空元素容器，借助虚空的力量可以近乎无穷的储存一种元素，但是这种储存并不稳定，受到冲击很有可能出现元素集中泄露发生爆炸的情况，因此并不能作为元素水晶的代替。",
 			"en_US": "The weapon enchanted with 'Gather Souls' has a chance to drop Void Fragment when killing End creatures in the End. By putting Dimensity, Void Fragment, Refract Gem, End Pearl into Melt Cauldron in a ratio of 9:9:6:12, you can smelt Void Container.\\nThe Void Container seems to have an unconventional capacity. By using it with Element Crystal to make Element Void Container, it can store a single element almost infinitely using the power of the void. However, this storage is unstable, and there's a high risk of elemental leakage and explosion upon impact, so it cannot replace Element Crystal."
 		},
-		"es.tutorial.title.4_6_0": {
+		"es.tutorial.4_6_0.title": {
 			"zh_CN": "魔法终端",
 			"en_US": "Magic Terminal"
 		},
-		"es.tutorial.describe.4_6_0": {
+		"es.tutorial.4_6_0.describe": {
 			"zh_CN": "手中的这个设备就是一个非常有价值的东西，在「封藏石」中多找一找，用「捣粉锤」将其敲碎，可拿到一些有用的东西。虽然现在的学者们并没有完全了解这些东西的工作原理，但是依然做出来了一些好用的设备。",
 			"en_US": "The device in your hand is a very valuable item. Look for more in the 'Seal Stone', use the 'Mill Hammer' to crush them, and you can get some useful items. Although today's scholars don't fully understand how these things work, they have still managed to craft some useful devices."
 		},
-		"es.tutorial.title.4_7_0": {
+		"es.tutorial.4_7_0.title": {
 			"zh_CN": "结构解析",
 			"en_US": "Structure Analysis"
 		},
-		"es.tutorial.describe.4_7_0": {
+		"es.tutorial.4_7_0.describe": {
 			"zh_CN": "想知道物品里究竟含有什么元素？这就需要搭建一个结构解析祭坛。\\n在下方摆上魔力平台，并放上物品，等待片刻，上面的解析台中就能看到这个物品的元素信息了。",
 			"en_US": "If you want to know what elements are contained in an item, you'll need to set up a Structure Analysis Altar.\\nPlace a Magic Platform underneath and put the item on it. After a moment, you'll be able to see the element's information of the item on the Structure Analyzer table above."
 		},
-		"es.tutorial.title.4_8_0": {
+		"es.tutorial.4_8_0.title": {
 			"zh_CN": "水晶花园",
 			"en_US": "Crystal Garden"
 		},
-		"es.tutorial.describe.4_8_0": {
+		"es.tutorial.4_8_0.describe": {
 			"zh_CN": "一个用魔力构造的花园，可以种植各种作物乃至水晶。一个花园里最核心的就是借助星之种制作而成的「生命之花」，生命之花会为周围土地生长提供能量。\\n生命之花只能放到魔力花盆的上面，且需要魔力才能工作，用魔石给土壤补充魔力（手持魔石，右键花盆）。\\n生命之花每次为周围提供能量，有2%%的概率消耗花盆中的魔力。\\n生息土壤是水晶花园土壤的基础构成，可以在上面种上各种植物，在生命之花的作用下，植物欣欣向荣。\\n同时，生息土壤可以融入植物的「生命精华」，在生命之花的作用下，带有「生命精华」的土壤会自动产生植物，并生长。\\n（生息土壤和植物种子可以合成带有「生命精华」的土壤，一旦打掉，土壤内的「生命精华」将会消失)",
 			"en_US": "A Garden constructed with magic can grow various crops and even crystals. The most essential part of a garden is the 'Life Flower' made with the Star Seed, which provides energy for the surrounding land growth.\\nThe Life Flower can only be placed on top of a Magic Pot and requires magic to work. Use Dimensity to replenish magic to the soil (hold a Dimensity and Right Click on the flowerpot).\\nEach time the Life Flower provides energy to the surroundings, there is a 2%% chance of consuming magic from the flowerpot.\\nLived soil is the basic composition of the crystal garden soil, where various plants can be grown. With the effect of the Life Flower, plants thrive.\\nAt the same time, Lived soil can incorporate the 'Essence of Life' from plants. With the effect of the Life Flower, soil containing the 'Essence of Life' will automatically generate plants and grow.\\n(Lived soil and plant seeds can be crafted into soil with the 'Essence of Life'. Once destroyed, the 'Essence of Life' in the soil will disappear)."
 		},
-		"es.tutorial.title.4_8_1": {
+		"es.tutorial.4_8_1.title": {
 			"zh_CN": "共鸣培养",
 			"en_US": "Resonant Incubation"
 		},
-		"es.tutorial.describe.4_8_1": {
+		"es.tutorial.4_8_1.describe": {
 			"zh_CN": "学者发现所有水晶都有一个频率属性。共鸣培养箱，通过水晶间频率的共鸣，调整生息土壤的频率，一旦频率调整到与某种水晶相同，则会在土壤中萌生出该水晶的「生命精华」。该土壤可以在水晶花园中生长出水晶花。\\n（每次水晶花成熟后，「生命精华」都会有一定几率消失)",
 			"en_US": "Scholars have discovered that all crystals have a frequency attribute. Through resonance between crystals in the Resonance Incubator, the frequency of the Lived Soil is adjusted. Once the frequency matches that of a certain crystal, the 'Essence of Life' of that crystal will sprout in the soil. This soil can grow crystal flowers in the Crystal Garden.\\n(After each crystal flower matures, there is a certain chance that the 'Essence of Life' will disappear)"
 		},
-		"es.tutorial.title.4_9_0": {
+		"es.tutorial.4_9_0.title": {
 			"zh_CN": "结构水晶",
 			"en_US": "Structural Crystal"
 		},
-		"es.tutorial.describe.4_9_0": {
+		"es.tutorial.4_9_0.describe": {
 			"zh_CN": "结构水晶是一种可以保存物质结构的水晶，在解析台中，可以将物质具有的元素数据保存进去。\\n该水晶可以通过共鸣培养调频共鸣获得。",
 			"en_US": "The Structural Crystal is a crystal that can store item's structure. In the Structure Analyzer, element's data can be saved the into it.\\nThis crystal can be craft through Resonance Incubator."
 		},
-		"es.tutorial.title.5_0_0": {
+		"es.tutorial.5_0_0.title": {
 			"zh_CN": "物质重现",
 			"en_US": "Item Construction"
 		},
-		"es.tutorial.describe.5_0_0": {
+		"es.tutorial.5_0_0.describe": {
 			"zh_CN": "物质可以瓦解为为元素，相对的，元素也应该构造成物品，这就需要天空祭坛了。\\n在天空祭坛下方放上需要构造物品的结构水晶，方桌中心9格的四个角上，分别放上秩序水晶，然后通吟唱构造咒文，元素便可反向构造成对应的物质。\\n不过复杂度过高的物品天空祭坛似乎并无法处理。\\n秩序水晶水晶可以通过共鸣培养调频共鸣获得。",
 			"en_US": "Item can be disintegrated into elements, and conversely, elements should be able to construct item. This requires the Sky Altar.\\nBelow the Sky Altar, place a Structural Crystal indicating the item to be constructed. At the four corners of the central 9 slots of the table, place Order Crystals. Then, activate the construct-craft with the construct mantra from the Spellbook of Launcher.\\nHowever, it seems that the Sky Altar may not be able to handle items of high complexity.\\nOrder Crystal can be craft through Resonance Incubator."
 		},
-		"es.tutorial.title.5_10_0": {
+		"es.tutorial.5_10_0.title": {
 			"zh_CN": "逆变",
 			"en_US": "Invert"
 		},
-		"es.tutorial.describe.5_10_0": {
-			"zh_CN": "将祝福与灾害融合起来、并将元素回旋的力量融于的宝石，看上去平平无奇，却有着不可思议力量...\\n先人曾暗示过元素有着提升能量的可能，隐隐约约感觉和这个宝石有着千丝万缕的联系。",
-			"en_US": "Blending blessings and disasters, and infusing the power of swirling elements into a gem, it may seem ordinary, but it possesses incredible power...\\nAncestors once hinted at the possibility of enhancing power with elements, and there seems to be a subtle connection to this gem."
+		"es.tutorial.5_10_0.describe": {
+			"zh_CN": "将祝福与灾害融合起来、并将元素回旋的力量融于的宝石，看上去平平无奇，却有着不可思议力量...\\n先人曾暗示过元素有着提升能量的可能，隐隐约约感觉和这个宝石有着千丝万缕的联系。\\n学者称这种力量为逆变。",
+			"en_US": "Blending blessings and calamities, and infusing the power of swirling elements into a gem, it may seem ordinary, but it possesses incredible force...\\nAncestors once hinted at the possibility of enhancing power with elements, and there seems to be a subtle connection to this gem.\\nScholars refer the force as 'Invert'."
 		},
-		"es.tutorial.title.5_11_0": {
+		"es.tutorial.5_11_0.title": {
 			"zh_CN": "岩冰造物",
 			"en_US": "Icerock Creation"
 		},
-		"es.tutorial.describe.5_11_0": {
+		"es.tutorial.5_11_0.describe": {
 			"zh_CN": "从精灵那里拿到的龙息镐，在破坏绯红水晶矿后，会掉落蓝色的碎片结晶，学者称之为「岩冰」，这些结晶碎片似乎是一种奇怪的介质，感觉并不是自然生成的。\\n学者们将其和逆变宝石熔炼到一起，得到了「岩冰晶石」，这个晶石有着非同寻常的性质，可以让稳定的元素混乱化，以一种数量与能量归一的形态存入其中，称这种形态为片元形态。这简直是一个颠覆性的发现。",
 			"en_US": "After obtaining it from the elves, the Dragon Breath Pickaxe, when used to mine Scarlet Crystal Ore, drops blue crystal fragments we called 'Ice Rock'. Scholars regard these crystals as a peculiar medium, seemingly not of natural origin.\\nThey've melted them together with Invert Gem, resulting in 'Ice Rock Crystals'. These crystals possess extraordinary properties, Can confuse stable elements, allowing them to be stored in a unified form of quantity and energy, we call this unified form as 'Fragment' form. It's truly a groundbreaking discovery."
 		},
-		"es.tutorial.title.5_12_0": {
+		"es.tutorial.5_12_0.title": {
 			"zh_CN": "水晶塔",
 			"en_US": "Crystal Tower"
 		},
-		"es.tutorial.describe.5_12_0": {
+		"es.tutorial.5_12_0.describe": {
 			"zh_CN": "制作一个「魔控基座」在上面放上「岩冰水晶块」就可以搭建一个岩冰水晶塔。水晶塔可以将魔力以片元的型式存入其中，控制其的输入和输出。接入魔动装置可以作为超大量的魔力存储装置，右键从底座拿取控制器，使用控制器攻击敌人，水晶塔还可以发射魔力进行二次打击。当水晶塔超过一定高度，还可以用控制器设立远程传输节点。\\n水晶塔会呈现出虚空特性，无视空间的传输，存储量和高度并不是线性关系等等的，让学者们陷入疑问。",
 			"en_US": "To create a 'Magic Energy Controller Pedestal' place an 'Icerock Crystal Block' on top of it to construct an Icerock Crystal Tower. The tower can store magical energy in the form of fragments and control its input and output. Connecting it to a magic device can serve as a massive energy storage unit. Right Clicking on the pedestal to retrieve the controller, you can then use the controller to attack enemies. Additionally, the crystal tower can launch secondary strikes using magic. When the tower exceeds a certain height, you can establish remote transmission nodes with the controller.\\nThe crystal tower exhibits void characteristics, disregarding spatial transmission. The relationship between storage capacity and height is not linear, leaving scholars puzzled."
 		},
-		"es.tutorial.title.5_1_0": {
+		"es.tutorial.5_13_0.title": {
+			"zh_CN": "瞬息构建",
+			"en_US": "Instant Material Construction"
+		},
+		"es.tutorial.5_13_0.describe": {
+			"zh_CN": "元素方桌可以进行物质构造，不过速度缓慢，而且由于「秩序水晶」的个数有限，不能构造过于复杂的东西，瞬构方台由此而生，配合对应的祭坛，可以将手中拿的「结构水晶」记录的物品瞬间构造出来。\\n借助「虚空容器」，瞬构方台可以近乎无限的容纳「秩序水晶」，当前容纳的个数超过了容量，容量会自动永久的增加。\\n不过「秩序水晶」不能直接放进入，需要扔到周围的「魔力石英缸」当中去，在魔力片元能束的作用下转入瞬构方台当中。",
+			"en_US": "The Element Square Table can perform material construction, but it's slow, and due to the limited number of 'Order Crystals,' it can't construct overly complex things. Thus, the Instant Construction Stela was born. When paired with the corresponding altar, it can instantly construct items recording in 'Structural Crystal' held. With the help of 'Void Container' the Instant Construction Stela can nearly infinitely accommodate 'Order Crystal' When the current capacity exceeds the limit, the capacity will automatically and permanently increase.\\nHowever, 'Order Crystal' cannot be directly placed in, they need to be thrown into the surrounding 'Magic Quartz Crock' where they are then transferred into the Instant Construction Stela under the influence of magic fragment energy beams."
+		},
+		"es.tutorial.5_14_0.title": {
+			"zh_CN": "瞬息崩解",
+			"en_US": "Instant Material Collapse"
+		},
+		"es.tutorial.5_14_0.describe": {
+			"zh_CN": "无论是瓦解祭坛还是元素方桌，他们瓦解物品的速度都过于缓慢，通过元素之石和大量的末影元素构建的崩解石碑，可以快速的将物品瓦解。只要将物品右键放入其中，便可立刻被瓦解成元素存入周围的元素容器之中。\\n虽然崩解祭坛拥有极快的分解速度，甚至可以链接漏斗进行自动分解，但它依然有着一些弊端。\\n首先，它的分解产出效率介于元素方桌和瓦解祭坛之间。其次，重复分解一系列的元素会让石碑超载，元素产物的效率会大幅度下降。\\n当超载突破界限后，会发生塌陷爆炸。祝福之玉放到下方的平台上可以提供过载保护，灾害宝石则会起到反效果。",
+			"en_US": "Both the Disintegration Altar and the Element Square Table have excessively slow item disintegration speeds. However, the Material Collapse Stela, constructed with Element Stone and a large amount of End Element, can quickly disintegrate items. Simply Right Clicking to place items inside it will immediately disintegrate them into elements stored in nearby element containers.\\nWhile the Collapse Altar boasts extremely fast disintegration speeds and can even be linked to funnels for automatic disintegration, it still has some drawbacks.\\nFirstly, its disintegration output efficiency falls between that of the Element Square Table and the Disintegration Altar. Secondly, repeatedly disintegrating a series of element will overload the Stela, significantly reducing the efficiency of element production.\\nWhen the overload exceeds the limit, a collapse explosion occurs. Placing a Blessing Gem on the platform below can provide overload protection, while a Calamity Gem will have the opposite effect."
+		},
+		"es.tutorial.5_15_0.title": {
+			"zh_CN": "塌陷",
+			"en_US": "Collapse"
+		},
+		"es.tutorial.5_15_0.describe": {
+			"zh_CN": "总会有学者想尝试让崩解石碑过载，出乎意料的是，其爆炸后会生成一种物质，这种物质有着另其他物质塌陷的力量，但十分不稳定，会持续破坏周围方块。不过好在，对生物似乎没有什么影响。",
+			"en_US": "There are always scholars eager to attempt overloading the Collapse Stela. Surprisingly, its explosion yields a substance with the power to induce collapse in other materials, albeit highly unstable and causing continuous destruction of surrounding blocks. Fortunately, it seems to have no effect on living beings."
+		},
+		"es.tutorial.5_15_1.title": {
+			"zh_CN": "塌陷权杖",
+			"en_US": "Collapse Wand"
+		},
+		"es.tutorial.5_15_1.describe": {
+			"zh_CN": "将塌陷融合到魔爆权杖中，形成的塌陷权杖。可以将力量稳定有序的释放出来。表现是可以将世界中的方块直接瓦解成元素存入其中，不过瓦解效率并不是特别高。",
+			"en_US": "The Collapse Wand, formed by integrating Collapse into the Magic Blast Wand, allows for the controlled release of power. It can directly disintegrate blocks in the world into elements and store them, although the disintegration efficiency is not particularly high."
+		},
+		"es.tutorial.5_1_0.title": {
 			"zh_CN": "探索粉尘",
 			"en_US": "Explore Dust"
 		},
-		"es.tutorial.describe.5_1_0": {
+		"es.tutorial.5_1_0.describe": {
 			"zh_CN": "求知粉尘获得的信息是有限的。通过更多元素的融合，制作出的探索粉尘可以与周边发生强烈的共鸣，检测出周边地下所蕴含的资源。",
 			"en_US": "The information obtained through Seek Dust is limited. Through more elements, Explore Dust produced can have strong resonance with the surrounding and detect resources contained in the underground."
 		},
-		"es.tutorial.title.5_1_1": {
+		"es.tutorial.5_1_1.title": {
 			"zh_CN": "灾害宝石",
 			"en_US": "Calamity Gem"
 		},
-		"es.tutorial.describe.5_1_1": {
+		"es.tutorial.5_1_1.describe": {
 			"zh_CN": "和精灵的交流中，召唤出了很多怪物，从这些怪物身上收集了许多的珍贵物品，似乎与某场灾害有所关联，但这并不重要。将这些物品融合到一起，制作出了一个令人恐惧的宝石，尽管它十分珍贵，但是却没有什么人想入手的东西，它会为持有者带来「灾害」。\\n「灾害」会让你打坏的方块不掉落，有限作为怪物的目标，总是被雷劈等等厄运。\\n如果你身上持有高级的「灾害」，那你已经接近死亡了。",
-			"en_US": "Through communication with the elves, many monsters were summoned, and numerous precious items were collected from these monsters. It seems to be associated with a certain disaster, but that's not important. By fusing these items together, a terrifying gem was created. Despite its value, few are willing to possess it, for it brings 'Calamity' to its holder.\\n'Calamity' causes blocks you break not to drop, makes you a prime target for monsters, and subjects you to constant misfortune like being struck by lightning and more.\\nIf you carry a high level of 'Calamity,' you are nearing death."
+			"en_US": "Through communication with the elves, many monsters were summoned, and numerous precious items were collected from these monsters. It seems to be associated with a certain calamity, but that's not important. By fusing these items together, a terrifying gem was created. Despite its value, few are willing to possess it, for it brings 'Calamity' to its holder.\\n'Calamity' causes blocks you break not to drop, makes you a prime target for monsters, and subjects you to constant misfortune like being struck by lightning and more.\\nIf you carry a high level of 'Calamity,' you are nearing death."
 		},
-		"es.tutorial.title.5_2_0": {
+		"es.tutorial.5_20_0.title": {
+			"zh_CN": "星空转化",
+			"en_US": "Starry Invert"
+		},
+		"es.tutorial.5_20_0.describe": {
+			"zh_CN": "如果逆变反应可控，将元素转化到元素片元在转化到元素，理论上就可以自由的控制元素的数量和能量了。\\n通过时间力量控制逆变反应，通过虚空无尽存储的核心就完成了。\\n完成的核心比预期的更加强大，不仅可以进行元素反应还可以作为强大的咒文发射平台，因此必须要更加强大的星空祭坛来支持。\\n星空祭坛必须暴露在露天下。反应进行会顺序吸收或释放元素到周围的元素容器之中，并会消耗核心中的元素片元转为不稳定片元。及时调整正对着核心位置的水晶输入能量，可以将不稳定片元重新转为元素片元，在不存在不稳定片元的情况下，能量线的逐步增加，输出时的能量也会越来越高。\\n核心在吸收了与内部不同的元素等情况下稳定度会降低，稳定度越低会产生不明反应导致同样的元素片元会转化到更多的不稳定片元，不稳定片元超过容器容量后会释放出来，及时调整正对着核心位置的水晶输出能量，不稳定片元会转化到魔力片元输出。\\n祭坛周围可以放置咒文宝石，核心元素类型满足时，可以启动对应的咒文，身上携带的自然水晶可以进行位置标定。",
+			"en_US": "If the Invert Reaction is controllable, converting elements into element fragment and then into elements theoretically allows for the free control of the quantity and power of elements. Through the manipulation of time power to control the Invert Reaction, and with the endless storage core stored in the void, the process is completed.\\nThe completed core is even more powerful than expected. It not only allows for element reactions but also serves as a powerful mantra launch platform. Therefore, a more powerful Starry Altar is required to support it.\\nThe Starry Altar must be exposed to the open sky. During the reaction process, it sequentially absorbs or releases elements into the surrounding element containers and consumes element fragment in the core to produce unstable fragment. Timely adjustment of the crystal input energy directly facing the core position can convert unstable fragment back into element fragment. In the absence of unstable fragment, the Power Line gradually increases, resulting in higher energy output over time.\\nWhen the core absorbs different elements from its interior, its stability decreases. The lower the stability, the more unknown reactions occur, leading to the conversion of the same element fragment into more unstable fragment. Once the unstable fragment exceed the container capacity, they are released. Timely adjustment of the crystal output energy directly facing the core position can convert unstable fragment into magic fragment for output.\\nAround the altar, Mantra Gem can be placed. When the core element type is satisfied, corresponding mantra can be activated, and Natural Crystal carried on the body can be used for positional calibration."
+		},
+		"es.tutorial.5_2_0.title": {
 			"zh_CN": "折光祭坛",
 			"en_US": "Refract Altar"
 		},
-		"es.tutorial.describe.5_2_0": {
+		"es.tutorial.5_2_0.describe": {
 			"zh_CN": "通过大量末影元素的注入，而形成的折光祭坛拥有扭曲空间的力量，可以将史蒂夫们从一个位置转移到另一个位置上去。\\n在祭坛的石柱上，放上带有末影元素的元素立方体，将记录有维度位置信息的自然水晶放入折光祭坛中，便会消耗能量末影元素打开传送门。\\n打开传送门时消耗的元素较多，传送门打开后会一直消耗相对较少的元素对此进行维持。\\n传送门打开的位置附近，不允许有任何的杂物，否则传送门很有可能无法打开。",
 			"en_US": "Through the injection of a large number of Ender Elements, Refract Altar has the power to distort the space which can transfer Steves from one position to another.\\nPut the Element Cube with Ender Element on the stone pillars of the altar. Put Natural Crystal with dimension position information into Refract Altar. It will consume Ender Element to open portal.\\nMore elements are consumed when the gate is opened, and a relatively small number of elements are consumed after the gate is opened.\\nNo sundries are allowed near the opening position of the portal, otherwise the portal may not be opened.",
 			"ja_JP": "大量のエンダー元素の注入によって形成された折り光祭壇は屈折空間の力を持ち、 スティーブたちを一つの位置から別の位置に移動させることができる。\\n祭壇の石柱の上にエンダー元素を持した元素立方体を置き、位置情報を記録した自然水晶を折り光祭壇に入れ、そしてエンダー元素を消費し、転送扉を開けます。\\n転送扉を開ける時の元素消耗が多く、転送扉を維持する時の元素消耗が比較的少ない。\\n転送扉が開いている位置の近くには何かの雑物があってはいけません、そうでないと、転送扉が開けられない可能性があります。"
 		},
-		"es.tutorial.title.5_3_0": {
+		"es.tutorial.5_3_0.title": {
 			"zh_CN": "融合水晶",
 			"en_US": "Fusion Crystal"
 		},
-		"es.tutorial.describe.5_3_0": {
+		"es.tutorial.5_3_0.describe": {
 			"zh_CN": "通过漩涡将许多水晶融合到一块，而形成的融合态的水晶。\\n拿在手里似乎可以稍微提升下属性。",
 			"en_US": "By merging many crystals together through a vortex, a Fusion Crystal is formed. \\nHolding it seems to slightly enhance attributes."
 		},
-		"es.tutorial.title.5_3_1": {
+		"es.tutorial.5_3_1.title": {
 			"zh_CN": "元素之石",
 			"en_US": "Element Stone"
 		},
-		"es.tutorial.describe.5_3_1": {
+		"es.tutorial.5_3_1.describe": {
 			"zh_CN": "多种材料在漩涡的融合下而产生的石头，拥有奇妙的力量，可以作为元素容器，同时存放四种元素，当手持石头的时候，可能会消耗内部元素产生一些神奇的效果。",
 			"en_US": "The stone produced by the fusion of various materials in the vortex possesses remarkable power. It can serve as an element container, storing up to four types of elements. When held, the stone may consume internal elements to produce some magical effects."
 		},
-		"es.tutorial.title.5_4_0": {
+		"es.tutorial.5_4_0.title": {
 			"zh_CN": "元素调运",
 			"en_US": "Element Dispatch"
 		},
-		"es.tutorial.describe.5_4_0": {
+		"es.tutorial.5_4_0.describe": {
 			"zh_CN": "协调立方体可以扫描并管理以自身为中心32*32区域中的元素容器。对区域内的元素进行吸收和派送。\\n选择元素容器后出现的控制条内，传输按钮左键单次传输，右键持续自动传输。\\n虽然可以设置传输量，但自动传输每秒是有最大带宽的，这是的传输量同时还作为优先级使用。",
 			"en_US": "The Devolve Cube can scan and manage element containers within a 32*32 area centered around itself. It can absorb and distribute elements within the region.\\nWithin the control bar that appears after selecting an element container, left-clicking the transfer button initiates a single transfer, while right-clicking enables continuous automatic transfer.\\nAlthough transfer quantities can be set, automatic transfers have a maximum bandwidth per second, and this transfer amount is also used as a priority."
 		},
-		"es.tutorial.title.5_5_0": {
+		"es.tutorial.5_5_0.title": {
 			"zh_CN": "元素羽毛笔",
 			"en_US": "Element Quill"
 		},
-		"es.tutorial.describe.5_5_0": {
+		"es.tutorial.5_5_0.describe": {
 			"zh_CN": "火之羽毛笔和水之羽毛笔在漩涡下，而形成的元素羽毛笔，是撰写高级咒文的必备工具。\\n交融的元素并不稳定，所以除了撰写咒文，不要再其他地方使用它。",
 			"en_US": "The Element Quill, formed by the fusion of the Fire Quill and the Water Quill in the vortex, is an essential tool for writing advanced spells.\\nThe blended elements are unstable, so it's advisable to only use it for writing spells and avoid using it elsewhere."
 		},
-		"es.tutorial.title.5_5_1": {
+		"es.tutorial.5_5_1.title": {
 			"zh_CN": "咒文纸张",
 			"en_US": "Mantra Paper"
 		},
-		"es.tutorial.describe.5_5_1": {
+		"es.tutorial.5_5_1.describe": {
 			"zh_CN": "通过元素之笔在咒术纸张上撰写魔文而形成的具有特殊效果的魔文纸张，魔文纸张在地面上的时候会吸收同层周围元素容器中的元素，来进行能量的积攒。当能量达到一定的值后，魔文纸张会脱去魔文，进化成咒文纸张。\\n咒文纸张是做魔典的必备纸张。",
 			"en_US": "The Magical Written Paper, formed by writing glyphs on Incantation Paper using the Element Quill. When on the ground, it absorbs elements from nearby element containers on the same layer to accumulate energy. Once the energy reaches a certain value, the Magical Written Paper sheds its glyphs and evolves into a Mantra Paper.\\nThe Mantra Paper is essential for crafting Grimoire."
 		},
-		"es.tutorial.title.5_6_0": {
+		"es.tutorial.5_6_0.title": {
 			"zh_CN": "魔典",
 			"en_US": "Grimoire"
 		},
-		"es.tutorial.describe.5_6_0": {
+		"es.tutorial.5_6_0.describe": {
 			"zh_CN": "魔典，作为最高级的魔导书，可以让元素与咒文共鸣，吟唱出各种各样的魔法。当然制作它并不简单，需要用到较为昂贵的素材。增加中间一列「咒文纸张」的数量，可以提升魔典的容量，以便装下更多咒文。\\n制作出来的魔典是空白的，并不能释放魔法。这就需要撰录祭坛，来将咒文写入魔典之中。除此之外，撰录祭坛还可以为魔典进行元素补充，让咒文可以正常吟唱。\\n在解读古卷的过程中会发现，一些古卷上记载了有关咒文的内容。若能凑齐某种咒文，将其放入撰录祭坛里，将魔典放到方桌上，在知识、火、水元素的缠绕下 ，可以将古卷上记录的咒文撰录成魔典可以使用的咒文，并写入魔典当中。\\n若撰录祭坛里不放入任何东西，仅仅将魔典放到方桌上，祭坛就会自动吸取周围所有的元素，注入到魔典里。\\n咒文的吟唱会消耗某些元素、一个魔典中可以存放多个咒文，这与魔典的容量有关，使用「功能键(默认TAB)」进行切换。",
 			"en_US": "The Grimoire, as the most advanced spellbook, resonates elements with matrans, allowing for the casting of various spells. Of course, crafting it is not simple, as it requires expensive materials. Increasing the quantity of 'Mantra Paper' in the middle column enhances the Grimoire's capacity to hold more Mantras.\\nThe crafted Grimoire is blank and cannot cast spells. For this purpose, you'll need the Transcribe Altar to inscribe the Mantra into the Grimoire. Moreover, the Transcribe Altar can charge the Grimoire with elements, enabling the mantra to be cast properly.\\nDuring the process of unscrambling Ancient Paper, you may discover some content related to Mantra. If you manage to gather a certain kind of Mantra, placing it into the Transcribe Altar along with the Grimoire on the table, and under the entanglement of Knowledge, Fire, and Water elements, you can transcribe the Mantra recorded on the ancient paper into a usable spell for the Grimoire and write it into the Grimoire.\\nIf nothing is placed in the Transcribe Altar, and only the Grimoire is placed on the table, the altar will automatically absorb all surrounding elements and infuse them into the Grimoire.\\nCasting Mantra consumes certain elements. Multiple spells can be stored in one Grimoire, which depends on the Grimoire's capacity, and you can switch between them using the 'Function Key' (default TAB)."
 		},
-		"es.tutorial.title.5_7_0": {
+		"es.tutorial.5_7_0.title": {
 			"zh_CN": "咒文有形化",
 			"en_US": "Tangible Mantra"
 		},
-		"es.tutorial.describe.5_7_0": {
+		"es.tutorial.5_7_0.describe": {
 			"zh_CN": "咒文写入魔典中，便可以释放，那么咒文是否可以写入物品，来制作蕴含着某些咒文能量的物品呢？学者们制作出了咒文宝石。\\n通过撰录祭坛可以将咒文写入到咒文宝石中。",
 			"en_US": "Once Mantra are transcribed into the Grimoire, they can be cast. But can Mantra be transcribed into items to create items imbued with certain mantra power? Scholars have created Mantra Gem for this purpose.\\nThrough the Transcribe Altar, mantra can be written into Mantra Gem."
+		}
+	},
+	"es.page": {
+		"es.page.dungeonGuide.title": {
+			"zh_CN": "虚映入口",
+			"en_US": "Virtual Sight Entrance",
+			"ja_JP": "偽映のエントリ"
+		},
+		"es.page.dungeonGuide.describe": {
+			"zh_CN": "将过去的记忆片段重现于世，巨大地牢的入口，在种子持有者的生命与经验的养分中形成。",
+			"en_US": "Reproducing fragments of past memories into the world, a huge Dungeon's Entrance formed in the nourishment of the seed holder's life and experience.",
+			"ja_JP": "過去の記憶の断片を再現した巨大なダンジョンの入り口は、種子保持者の生命と経験の養分の中で形成されている。"
+		},
+		"es.page.dungeonGuide1.title": {
+			"zh_CN": "虚映之钥",
+			"en_US": "Key of Virtual Sight",
+			"ja_JP": "偽映のかぎ"
+		},
+		"es.page.dungeonGuide1.describe": {
+			"zh_CN": "地牢中开启通往下一个房间的必要品",
+			"en_US": "Essential key for opening the the next room in Dungeon",
+			"ja_JP": "地下牢で次の部屋への扉を開けるために必要なもの"
+		},
+		"es.page.dungeonGuide2.title": {
+			"zh_CN": "记忆碎片",
+			"en_US": "Memory Fragment",
+			"ja_JP": "記憶のかけら"
+		},
+		"es.page.dungeonGuide2.describe": {
+			"zh_CN": "通往深层房间的必要物品，可在地牢的房间中找到。彩色的碎片可以开启任何的房间。（通常是不需要自己制作的，地牢中的碎片是自给自足的，除非你把已经到手的碎片给弄没了）",
+			"en_US": "Essential items leading to the Deep Room can be found in the dungeon room. Colorful fragments can open any room. (usually without the need to craft them yourself, the fragments in the dungeon are self-sufficient, unless you lost the fragments you got)",
+			"ja_JP": "深層部屋への必要なもの、ダンジョンの部屋で見つけることができます。カラーのかけらはどんな部屋でも開くことができます（通常は自分で作る必要はありません。ダンジョンのかけらは自給自足です。手に入れたかけらをなくしてしまわない限り）。"
+		},
+		"es.page.dungeonGuide3.title": {
+			"zh_CN": "寻找记忆",
+			"en_US": "Looking for memory",
+			"ja_JP": "記憶を探す"
+		},
+		"es.page.dungeonGuide3.describe": {
+			"zh_CN": "当找不到隐藏在房间中记忆时，或许这个羽毛是个好帮手。",
+			"en_US": "Perhaps this feather is a good helper when memories hidden in the room cannot be found.",
+			"ja_JP": "部屋の中に隠された記憶が見つからないとき、この羽は良い助けになるかもしれない。"
+		},
+		"es.page.elfFloorHall.title": {
+			"zh_CN": "精灵大厅",
+			"en_US": "Elf Hall"
+		},
+		"es.page.elfFloorHall.describe": {
+			"zh_CN": "巨大的精灵树中，第一层永远会建造精灵大厅，这里是精灵树的核心区域，分为两小层，下层服务人员可以帮助史蒂夫进行各种业务，上层则是委托的公告板，大家可以将委托贴在上面。",
+			"en_US": "The First Floor is always Hall in The Tree, because the Hall is Core Floor. Service Elf can help Steve with Elf Business. Steve can get Quest in Bulletin Board."
+		},
+		"es.page.elfFloorHall1.title": {
+			"zh_CN": "精灵委托",
+			"en_US": "Elf Quest"
+		},
+		"es.page.elfFloorHall1.describe": {
+			"zh_CN": "随着巨型精灵树不同类型层数的增加，会有不同精灵的委托张贴在精灵大厅的公告板上，拿这想要的委托，去找大厅下方的服务人员，即可领取委托，领取的委托需要保管好，且不能转让，并需要在相应的时间内完成才能获得报酬。\\n其中有一种建筑类型的委托，称作「精灵树投资」，完成后可以积攒权重，当达到一定值后，精灵建筑工会开始建造新的楼层。",
+			"en_US": "With Diff kind of Floor, diff Elves will posted ther quest in bulletin board. Take down The Quest you want and to Service Elf start this Quest. If you start Quest, it cannot be transferred, so please keep it well and finish it in time to get your reward.\\nThere is a Building Type of Quiest called 'Elf Tree Invest', finish it to accumulate weight, when a certain value is reached, the Elves will start building a new Floor."
+		},
+		"es.page.elfFloorLaboratory.title": {
+			"zh_CN": "实验室",
+			"en_US": "Elf Laboratory"
+		},
+		"es.page.elfFloorLaboratory.describe": {
+			"zh_CN": "实验室里可以进行研究，研究员会将研究方桌放到地上，史蒂夫便可以投入研究点数，进行物品的研究了。\\n关于研究：带好研究所需的物品，通过投入不同类型的研究点数，来制作新的物品。研究类型的配比和携带的物品可以决定研究出来的物品。研究无论成功还是失败都不会减少点数，所以可以随便的尝试。\\n研究者比较喜爱古代文献，如果把没解读过的古卷给他们的话，可能能获得一些研究点数。",
+			"en_US": "Steve can use Topic Point to research craft on The Laboratory with Research Square Table which elf researcher put on ground.\\nResearch Craft: take required items, add different types of Topic points to craft a new item. The proportion of Topic points and items Steve carried decide what item can be creft. Topic points will not be deducted, so you can try it at will.\\nIn addition, give elf researcher Unexplained Ancient Paper, maybe can get some Topic points."
+		},
+		"es.page.elfFloorPost.title": {
+			"zh_CN": "精灵邮政",
+			"en_US": "Elf Post Office"
+		},
+		"es.page.elfFloorPost.describe": {
+			"zh_CN": "精灵邮政可以提供寄送包裹的服务。在这里你可以申请地址牌，将地址放到精灵信标里，精灵快递员便会将包裹送到这个信标旁边的箱子中。\\n同时，精灵地址牌可以升级成超级地址牌服务，无需信标，只要点击就可以呼唤快递员进行服务。\\n地址牌是署名的。",
+			"en_US": "Elf Post Office provide mail service. In Here, Steve can apply Address Plate and put it on Elf Beacon, Elves couriers will deliver parcel to chest around it.\\nSteve can upgrade their Address Plate to VIP version, which let click right can call couriers to serve you.\\Address Plate is Signed."
+		},
+		"es.page.elfFloorPost1.title": {
+			"zh_CN": "精灵信标",
+			"en_US": "Elf Beacon"
+		},
+		"es.page.elfFloorPost1.describe": {
+			"zh_CN": "精灵信标是使用精灵之星制作的魔力道具，将地址牌放入其中，快递员会将送往这个地址的包裹放入入旁边的箱子中。\\n精灵之星是贵重的物品，前期很难获得，不过好在，精灵邮局会给申请地址牌的新人一个新人任务，完成它即可获得一个精灵之星。",
+			"en_US": "Elf Beacon is a magic prop crafted by Elf Star, Put Address Plate on it and couriers will come.\\nElf Star is valuable and maybe difficult to get, but fortunately, Post Office will give a new person task when apply for Address Plate, finish it to get a Elf Star."
+		},
+		"es.page.elfFloorPost2.title": {
+			"zh_CN": "精灵之星",
+			"en_US": "Elf Star"
+		},
+		"es.page.elfFloorPost2.describe": {
+			"zh_CN": "精灵工匠设计出来的星星，被称作精灵之星。就算给你配方，也不见得能做出来。",
+			"en_US": "The star crafted by elf artisans are called Elf Star. Even if you're given the recipe, there's no guarantee you can make one."
+		},
+		"es.page.elfFloorRefinery.title": {
+			"zh_CN": "精灵精炼厂",
+			"en_US": "Elf Refinery"
+		},
+		"es.page.elfFloorRefinery.describe": {
+			"zh_CN": "精灵精炼厂可以帮助你精炼各种矿物，使得矿物的获取翻倍。只要一点点钱，精灵铁匠就会帮您完成矿物的精炼。",
+			"en_US": "Elf Refinery will help refine all kinds of Ores to double with some Elf Coin."
+		},
+		"es.page.elfItemRockCamera.title": {
+			"zh_CN": "岩石相机",
+			"en_US": "Rock Camera"
+		},
+		"es.page.elfItemRockCamera.describe": {
+			"zh_CN": "求知粉尘可以与自然发生共鸣，但其共鸣的速度较慢，而且仅能获得周边范围的信息。使用精灵工匠制作出来的岩石相机，消耗粉尘，对准方块进行使用，快速的将周边环境的信息输入，并且还可以精准的获取到目标方块的信息，是探索的最佳选择。",
+			"en_US": "Seek Dust can resonate with around but is slow and only can get info about environment around. Rock Camera made in Elf Craft can fast get info about not only environment around but also target bock with costing Dust. That is best choice for exploring."
+		},
+		"es.page.monsterArrogantSheep.title": {
+			"zh_CN": "傲慢的绵羊",
+			"en_US": "Arrogant Sheep",
+			"ja_JP": "傲慢なヒツジ"
+		},
+		"es.page.monsterArrogantSheep.describe": {
+			"zh_CN": "使用黄色羊毛作为信物，再加上大量的灵魂可以召唤出傲慢绵羊的迷宫（远离召唤点巨大的迷宫便会开始建造）。\\n迷宫的由几乎无法被破坏的特殊金砖构成，一共分为两层，傲慢的绵羊便位于第二层。\\n要战胜它，剪刀和绯红水晶是不可缺少的东西。\\n从它身上获取到的傲慢的羊毛是一种十分贵重的材料，不仅如此，将它放到「元素平台」上会产生金锭，不过每产生一个金锭羊毛都有可能会消失。",
+			"en_US": "Use Yellow Wool as Keepsake can summon Arrogant Maze(Away from the summon point, the maze will begin to be built).\\nThe maze is composed of special gold bricks that can hardly be destroyed, It is divided into two layers, Arrogant Sheep is on the second floor.\\nTo defeat it, scissor and Scarlet Crystal is necessary.\\nThe Arrogant Wool obtained from it is a very valuable material, and put it on Element Platform can produce Gold Ingot, however, every time a Gold Ingot is produced, the wool may disappear."
+		},
+		"es.page.monsterDejectedSkeleton.title": {
+			"zh_CN": "忧郁的骷髅",
+			"en_US": "Dejected Skeleton",
+			"ja_JP": "憂鬱スカル"
+		},
+		"es.page.monsterDejectedSkeleton.describe": {
+			"zh_CN": "不知何时，骷髅开始变得忧郁了。\\n忧郁骷髅和普通骷髅样子以及攻击方式几乎一致，不过它们拥有更多的生命，并且可以在阳光下行走。\\n在攻击或者被攻击时，会发出犹豫的光芒，不同颜色的光会产生不同的效果。\\n使用未送达之信作为信物可以召唤出法阵，并会将周围的骷髅变得忧郁，击败它们有几率掉落忧郁之泪。",
+			"en_US": "Skeleton began to feel blue.\\nNo matter looks or attack mode, Dejected Skeleton is as same sa normal Skeleton, but they have more hp and can walk in the sun.\\nWhen attacking or being attacked, it will emit dejected light. Different colors of the light will has different effect.\\nUse Undelivered Letter get in Quest as Keepsake can summon the Circle to change normal Skeleton be Dejected, Dejected Tear will drop with probability when defeat them."
+		},
+		"es.page.monsterDejectedSkeleton1.describe": {
+			"zh_CN": "忧郁光芒的作用：\\n红色：只接受普通剑击，反之获得回血并获得buff\\n蓝色：只接受魔法攻击，反之反弹伤害\\n绿色：只接受远程物理攻击，反之给予debuff\\n黄色：只接受火焰或爆炸伤害，反之发生爆炸和着火\\n淡灰色：将攻击随机反弹到周围单位身上包括自身\\n紫色：无敌，回血并反弹任何伤害。",
+			"en_US": "Dejected Light:\\nRed: gain regenerate buff if not sword attack.\\nBlue: return damage if not Magic Attack\\nGreem: give debuff if not remote physical attack.\\nYellow: explosion and fire if not fire or explosion damage.\\nLight Grey: randomly bounce damage to surrounding units, including self\\nPurple: invincible, Borrowed and Retaliate.",
+			"ja_JP": "忧郁光芒的作用：\\n红色：只接受普通剑击，反之获得回血并获得buff\\n蓝色：只接受魔法攻击，反之反弹伤害\\n绿色：只接受远程物理攻击，反之给予debuff\\n黄色：只接受火焰或爆炸伤害，反之发生爆炸和着火\\n淡灰色：将攻击随机反弹到周围单位身上包括自身\\n紫色：无敌，回血并反弹任何伤害。"
+		},
+		"es.page.monsterDreadCube.title": {
+			"zh_CN": "恐惧立方体",
+			"en_US": "Dread Cube",
+			"ja_JP": "恐怖立方体"
+		},
+		"es.page.monsterDreadCube.describe": {
+			"zh_CN": "来自异界的漆黑立方体生物，漂浮在半空中，吞噬着周围所有的方块，失去活性的方块会变成无用的沙砾，同时会吐出多余的灵魂碎片。\\n好在它不会主动发起攻击，这可能会让你想到，用它来自动生产灵魂碎片。\\n当受到玩家攻击后会召唤怪物并进入休眠状态。如果召唤怪物成功，将会消耗自身的生命。生命越少召唤的怪物越多越强。\\n通过任务得到的恐惧碎片作为信物可以召唤它，击败它们有几率掉落恐惧宝石和立方体核心。",
+			"en_US": "Dark creature, float in mid air, devour all block around that let become useless grave and spit superfluous Soul Fragment.\\nIt's good thing that it can not attack, that may make you think use it to automatically produce Soul Fragments.\\nWhen it attacked by the Steve, it will try summon monsters and into sleep. If summon success, it's hp will be consumed. The less HP, the more stronger monsters summoned.\\nUse Dread Fragment get in Quest as Keepsake can summon the Dread Cube, Dread Gem and Cube Core will drop with probability when defeat them."
+		},
+		"es.page.monsterRabidRabbit.title": {
+			"zh_CN": "狂暴的兔子",
+			"en_US": "Rabid Rabbit"
+		},
+		"es.page.monsterRabidRabbit.describe": {
+			"zh_CN": "全身雪白但略微发红，眼睛尤为发红。它们会疯狂的攻击周围的生物，并从中获取能量迅速的繁殖。\\n狂暴兔但只并不足畏惧，一旦他们成群的发送攻击，可不是什么好受的事情。\\n通过兔皮或者兔脚作为信物可以召唤狂暴兔，击败它们有几率掉落狂暴皮革。",
+			"en_US": "Slightly reddish white body, crimson eyes, they will frantically attack surrounding creatures, that get energy from to rapid reproduction.\\nA single Rabid Rabbit is not to be feared but, once they attack in groups, now maybe run away is best choice for you.\\nUse Rabbit Skin or Feet as Keepsake can summon the Rabid Rabbit, Rabid Leather will drop when defeat them."
+		},
+		"es.page.relicGuardReport.title": {
+			"zh_CN": "守卫研究报告",
+			"en_US": "Guard Research Report",
+			"ja_JP": "ガード研究報告"
+		},
+		"es.page.relicGuardReport.describe": {
+			"zh_CN": "遗迹守卫似乎是过去制造的一种兵器，目的未知，每次释放技能都会消耗HP，当HP低于一定程度会成为损坏态，核心会变得十分不稳定，并发生爆炸，此时可以同通过冲击权杖将核心取出来，其核心决定着遗迹守卫的元素类型，并且可以登陆核心主人。\\n至此精灵工匠分析核心制作出了遗迹轮盘，可以修复损坏的损坏态的遗迹守卫，可以标定为核心标定核心主人(拿着核心和轮盘右键)。",
+			"en_US": "It seems that the Relic Guard is a weapon made in ancient. The purpose is unknown. Each time it spell a skill, HP will be consumed. When HP is lower than a certain level, it will become damaged, and the core will become very unstable and explode. At this time, the core can be taken out through the Shock Wand. The Core determines the element type of the Relic Guard and creature can login as master in The Core.\\nSo, the Elf craftsman has analyzed the core and made the Relic Wheel, which can repair the damaged Relic Guard, and can login in The Core ( hold core and wheel, right click)."
+		},
+		"es.page.relicGuardReport1.describe": {
+			"zh_CN": "核心似乎可以与召唤仪式发生共鸣，而产出未知的物品，有待进一步研究。",
+			"en_US": "The core seems to resonate with The Summon Rite and produce unknown items, which requires further research."
+		},
+		"es.page.relicZombie.title": {
+			"zh_CN": "遗迹僵尸",
+			"en_US": "Relic Zombie"
+		},
+		"es.page.relicZombie.describe": {
+			"zh_CN": "使用遗迹碎片作为信物，可以召唤出遗迹僵尸，若能用在其身旁击败他，则可获得遗迹宝石。\\n遗迹僵尸共有三种类型，红色的战士、蓝色的法师、绿色的牧师，他们会使用不同的技能。\\n战士随着生命减少，会更换武器，并且增加速度等效果\\n法师无视远程伤害，会释放火球，落雷和召唤小僵尸\\n牧师会给敌人增加负面效果，给友方增加正面效果，生命减少时。",
+			"en_US": "Use Relic fragment as Keepsake can summon the Relic Zombie. If steve can defeat it near it, Relic Gem will drop.\\nRelic Zombie has three types: red is warrior, blue is wizard, green is minister, They can use different skills.\\nWarrior: the less hp, the stronger.\\nWizard: not afraid of long-range damage, and can cast fireballs, thunder and summon child zombies.\\nMinister: negative effect to the enemy, positive effect to the friendly."
+		},
+		"es.page.startup.title": {
+			"zh_CN": "开始",
+			"en_US": "Start",
+			"ja_JP": "はじめ"
+		},
+		"es.page.startup.describe": {
+			"zh_CN": "古代的知识可以帮助你开始你的魔法之旅，不过你先要去地下寻找一些“封藏石”，古代用来保存东西的一种石头，打碎后，可以掉出一些东西来。其中有一些古代的文献，似乎有着一些的价值，但是这并不是目前的主要任务，主要任务是从中找到能获取古代知识的道具。\\n(作者：感谢您游玩这个mod)",
+			"en_US": "Ancient knowledge can help you start your magical journey, but first you need to search underground for some 'Seal Stone', a stone used to preserve items in ancient. Breaking it, some items will drop. There are some ancient documents, which seem to have some value, but this is not the first task at present. The first task is to find the props needed to access ancient knowledge from them.\\n(Author: Thank you for playing)",
+			"ja_JP": "古代の知識はあなたの魔法の旅を始めるのに役立ちますが、まず地下に行って「封蔵石」を探してみてください。古代に物を保存するために使われていた石の一種で、割ったら、何かを落とすことができます。その中にはいくつかの古代の文献があり、いくつかの価値があるようだが、これは現在の主要な任務ではなく、その中から古代の知識を得るための道具を見つけることが主要な任務である。\\n（作者：このmodを遊んでくれてありがとうございます）"
 		}
 	}
 }

@@ -1,0 +1,68 @@
+{
+    "belong": "manual",
+    "cover": "elementalsorcery:dungeon_seed",
+    "itemLink": [
+        "elementalsorcery:dungeon_stone",
+        "elementalsorcery:dungeon_key",
+        "elementalsorcery:dungeon_seed",
+        "elementalsorcery:memory_feather",
+        "elementalsorcery:memory_fragment"
+    ],
+    "title": {
+        "zh_CN": "虚映入口",
+        "en_US": "Virtual Sight Entrance",
+        "ja_JP": "偽映のエントリ"
+    },
+    "describe": {
+        "zh_CN": "将过去的记忆片段重现于世，巨大地牢的入口，在种子持有者的生命与经验的养分中形成。",
+        "en_US": "Reproducing fragments of past memories into the world, a huge Dungeon's Entrance formed in the nourishment of the seed holder's life and experience.",
+        "ja_JP": "過去の記憶の断片を再現した巨大なダンジョンの入り口は、種子保持者の生命と経験の養分の中で形成されている。"
+    },
+    "craft": "elementalsorcery:dungeon_seed",
+    "appends": [
+        {
+            "title": {
+                "zh_CN": "虚映之钥",
+                "en_US": "Key of Virtual Sight",
+                "ja_JP": "偽映のかぎ"
+            },
+            "describe": {
+                "zh_CN": "地牢中开启通往下一个房间的必要品",
+                "en_US": "Essential key for opening the the next room in Dungeon",
+                "ja_JP": "地下牢で次の部屋への扉を開けるために必要なもの"
+            },
+            "craft": "elementalsorcery:dungeon_key"
+        },
+        {
+            "title": {
+                "zh_CN": "记忆碎片",
+                "en_US": "Memory Fragment",
+                "ja_JP": "記憶のかけら"
+            },
+            "describe": {
+                "zh_CN": "通往深层房间的必要物品，可在地牢的房间中找到。彩色的碎片可以开启任何的房间。（通常是不需要自己制作的，地牢中的碎片是自给自足的，除非你把已经到手的碎片给弄没了）",
+                "en_US": "Essential items leading to the Deep Room can be found in the dungeon room. Colorful fragments can open any room. (usually without the need to craft them yourself, the fragments in the dungeon are self-sufficient, unless you lost the fragments you got)",
+                "ja_JP": "深層部屋への必要なもの、ダンジョンの部屋で見つけることができます。カラーのかけらはどんな部屋でも開くことができます（通常は自分で作る必要はありません。ダンジョンのかけらは自給自足です。手に入れたかけらをなくしてしまわない限り）。"
+            },
+            "craft": {
+                "id": "elementalsorcery:memory_fragment",
+                "nbt": {
+                    "cmeta": -1
+                }
+            }
+        },
+        {
+            "title": {
+                "zh_CN": "寻找记忆",
+                "en_US": "Looking for memory",
+                "ja_JP": "記憶を探す"
+            },
+            "describe": {
+                "zh_CN": "当找不到隐藏在房间中记忆时，或许这个羽毛是个好帮手。",
+                "en_US": "Perhaps this feather is a good helper when memories hidden in the room cannot be found.",
+                "ja_JP": "部屋の中に隠された記憶が見つからないとき、この羽は良い助けになるかもしれない。"
+            },
+            "craft": "elementalsorcery:memory_feather"
+        }
+    ]
+}

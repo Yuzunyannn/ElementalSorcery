@@ -1,0 +1,30 @@
+{
+    "belong": "elf",
+    "cover": "elementalsorcery:dejected_tear",
+    "itemLink": [
+        "elementalsorcery:dejected_tear",
+        {
+            "item": "elementalsorcery:keepsake",
+            "data": 2
+        }
+    ],
+    "title": {
+        "zh_CN": "忧郁的骷髅",
+        "en_US": "Dejected Skeleton",
+        "ja_JP": "憂鬱スカル"
+    },
+    "describe": {
+        "zh_CN": "不知何时，骷髅开始变得忧郁了。\\n忧郁骷髅和普通骷髅样子以及攻击方式几乎一致，不过它们拥有更多的生命，并且可以在阳光下行走。\\n在攻击或者被攻击时，会发出犹豫的光芒，不同颜色的光会产生不同的效果。\\n使用未送达之信作为信物可以召唤出法阵，并会将周围的骷髅变得忧郁，击败它们有几率掉落忧郁之泪。",
+        "en_US": "Skeleton began to feel blue.\\nNo matter looks or attack mode, Dejected Skeleton is as same sa normal Skeleton, but they have more hp and can walk in the sun.\\nWhen attacking or being attacked, it will emit dejected light. Different colors of the light will has different effect.\\nUse Undelivered Letter get in Quest as Keepsake can summon the Circle to change normal Skeleton be Dejected, Dejected Tear will drop with probability when defeat them."
+    },
+    "background": "inherit",
+    "appends": [
+        {
+            "describe": {
+                "zh_CN": "忧郁光芒的作用：\\n红色：只接受普通剑击，反之获得回血并获得buff\\n蓝色：只接受魔法攻击，反之反弹伤害\\n绿色：只接受远程物理攻击，反之给予debuff\\n黄色：只接受火焰或爆炸伤害，反之发生爆炸和着火\\n淡灰色：将攻击随机反弹到周围单位身上包括自身\\n紫色：无敌，回血并反弹任何伤害。",
+                "en_US": "Dejected Light:\\nRed: gain regenerate buff if not sword attack.\\nBlue: return damage if not Magic Attack\\nGreem: give debuff if not remote physical attack.\\nYellow: explosion and fire if not fire or explosion damage.\\nLight Grey: randomly bounce damage to surrounding units, including self\\nPurple: invincible, Borrowed and Retaliate.",
+                "ja_JP": "忧郁光芒的作用：\\n红色：只接受普通剑击，反之获得回血并获得buff\\n蓝色：只接受魔法攻击，反之反弹伤害\\n绿色：只接受远程物理攻击，反之给予debuff\\n黄色：只接受火焰或爆炸伤害，反之发生爆炸和着火\\n淡灰色：将攻击随机反弹到周围单位身上包括自身\\n紫色：无敌，回血并反弹任何伤害。"
+            }
+        }
+    ]
+}

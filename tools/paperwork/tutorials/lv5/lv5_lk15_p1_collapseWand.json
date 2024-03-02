@@ -1,0 +1,12 @@
+{
+    "cover": "elementalsorcery:collapse_wand",
+    "title": {
+        "zh_CN": "塌陷权杖",
+        "en_US": "Collapse Wand"
+    },
+    "describe": {
+        "zh_CN": "将塌陷融合到魔爆权杖中，形成的塌陷权杖。可以将力量稳定有序的释放出来。表现是可以将世界中的方块直接瓦解成元素存入其中，不过瓦解效率并不是特别高。",
+        "en_US": "The Collapse Wand, formed by integrating Collapse into the Magic Blast Wand, allows for the controlled release of power. It can directly disintegrate blocks in the world into elements and store them, although the disintegration efficiency is not particularly high."
+    },
+    "crafts": "elementalsorcery:collapse_wand"
+}

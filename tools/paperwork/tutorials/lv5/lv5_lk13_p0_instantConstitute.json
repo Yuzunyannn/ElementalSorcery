@@ -1,0 +1,38 @@
+{
+    "cover": "elementalsorcery:instant_constitute",
+    "title": {
+        "zh_CN": "瞬息构建",
+        "en_US": "Instant Material Construction"
+    },
+    "describe": {
+        "zh_CN": "元素方桌可以进行物质构造，不过速度缓慢，而且由于「秩序水晶」的个数有限，不能构造过于复杂的东西，瞬构方台由此而生，配合对应的祭坛，可以将手中拿的「结构水晶」记录的物品瞬间构造出来。\\n借助「虚空容器」，瞬构方台可以近乎无限的容纳「秩序水晶」，当前容纳的个数超过了容量，容量会自动永久的增加。\\n不过「秩序水晶」不能直接放进入，需要扔到周围的「魔力石英缸」当中去，在魔力片元能束的作用下转入瞬构方台当中。",
+        "en_US": "The Element Square Table can perform material construction, but it's slow, and due to the limited number of 'Order Crystals,' it can't construct overly complex things. Thus, the Instant Construction Stela was born. When paired with the corresponding altar, it can instantly construct items recording in 'Structural Crystal' held. With the help of 'Void Container' the Instant Construction Stela can nearly infinitely accommodate 'Order Crystal' When the current capacity exceeds the limit, the capacity will automatically and permanently increase.\\nHowever, 'Order Crystal' cannot be directly placed in, they need to be thrown into the surrounding 'Magic Quartz Crock' where they are then transferred into the Instant Construction Stela under the influence of magic fragment energy beams."
+    },
+    "crafts": "elementalsorcery:instant_constitute",
+    "building": {
+        "structure": "instant_constitute",
+        "custom": {
+            "0,2,0": "elementalsorcery:instant_constitute",
+            "3,2,2": "elementalsorcery:elemental_cube",
+            "-3,2,2": "elementalsorcery:elemental_cube",
+            "-3,2,-2": "elementalsorcery:elemental_cube",
+            "3,2,-2": "elementalsorcery:elemental_cube",
+            "2,2,3": "elementalsorcery:elemental_cube",
+            "-2,2,3": "elementalsorcery:elemental_cube",
+            "-2,2,-3": "elementalsorcery:elemental_cube",
+            "2,2,-3": "elementalsorcery:elemental_cube",
+            "6,2,0": "elementalsorcery:estone_crock",
+            "-6,2,0": "elementalsorcery:estone_crock",
+            "0,2,6": "elementalsorcery:estone_crock",
+            "0,2,-6": "elementalsorcery:estone_crock",
+            "6,1,6": "elementalsorcery:ice_rock_stand",
+            "-6,1,6": "elementalsorcery:ice_rock_stand",
+            "-6,1,-6": "elementalsorcery:ice_rock_stand",
+            "6,1,-6": "elementalsorcery:ice_rock_stand",
+            "6,2,6": "elementalsorcery:ice_rock_crystal_block",
+            "-6,2,6": "elementalsorcery:ice_rock_crystal_block",
+            "-6,2,-6": "elementalsorcery:ice_rock_crystal_block",
+            "6,2,-6": "elementalsorcery:ice_rock_crystal_block"
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "belong": "elf",
+    "cover": "elementalsorcery:researcher",
+    "itemLink": [
+        "elementalsorcery:researcher"
+    ],
+    "title": {
+        "zh_CN": "实验室",
+        "en_US": "Elf Laboratory"
+    },
+    "describe": {
+        "zh_CN": "实验室里可以进行研究，研究员会将研究方桌放到地上，史蒂夫便可以投入研究点数，进行物品的研究了。\\n关于研究：带好研究所需的物品，通过投入不同类型的研究点数，来制作新的物品。研究类型的配比和携带的物品可以决定研究出来的物品。研究无论成功还是失败都不会减少点数，所以可以随便的尝试。\\n研究者比较喜爱古代文献，如果把没解读过的古卷给他们的话，可能能获得一些研究点数。",
+        "en_US": "Steve can use Topic Point to research craft on The Laboratory with Research Square Table which elf researcher put on ground.\\nResearch Craft: take required items, add different types of Topic points to craft a new item. The proportion of Topic points and items Steve carried decide what item can be creft. Topic points will not be deducted, so you can try it at will.\\nIn addition, give elf researcher Unexplained Ancient Paper, maybe can get some Topic points."
+    },
+    "background": "inherit"
+}

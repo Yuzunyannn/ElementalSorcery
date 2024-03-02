@@ -1,0 +1,12 @@
+{
+    "belong": "elf",
+    "cover": "minecraft:furnace",
+    "title": {
+        "zh_CN": "精灵精炼厂",
+        "en_US": "Elf Refinery"
+    },
+    "describe": {
+        "zh_CN": "精灵精炼厂可以帮助你精炼各种矿物，使得矿物的获取翻倍。只要一点点钱，精灵铁匠就会帮您完成矿物的精炼。",
+        "en_US": "Elf Refinery will help refine all kinds of Ores to double with some Elf Coin."
+    }
+}

@@ -13,7 +13,6 @@ import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
-import yuzunyannn.elementalsorcery.util.json.Json;
 
 public class SummonDungeonStone extends SummonCommon {
 
@@ -62,7 +61,7 @@ public class SummonDungeonStone extends SummonCommon {
 	public void spawn(Vec3d pos, Random rand) {
 		ItemHelper.dropItem(world, pos, new ItemStack(ESObjects.ITEMS.DUNGEON_STONE));
 		if (stoneCount == 0 && dropPage) {
-			ItemStack parchment = ItemParchment.getParchment(Json.idFormat("dungeon/dungeon_guide", null));
+			ItemStack parchment = ItemParchment.getParchment("dungeon_guide");
 			ItemHelper.dropItem(world, pos, parchment);
 		}
 	}

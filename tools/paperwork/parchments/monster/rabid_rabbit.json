@@ -1,0 +1,18 @@
+{
+    "belong": "elf",
+    "cover": "elementalsorcery:rabid_leather",
+    "itemLink": [
+        "elementalsorcery:rabid_leather",
+        "minecraft:rabbit_foot",
+        "minecraft:rabbit_hide"
+    ],
+    "title": {
+        "zh_CN": "狂暴的兔子",
+        "en_US": "Rabid Rabbit"
+    },
+    "describe": {
+        "zh_CN": "全身雪白但略微发红，眼睛尤为发红。它们会疯狂的攻击周围的生物，并从中获取能量迅速的繁殖。\\n狂暴兔但只并不足畏惧，一旦他们成群的发送攻击，可不是什么好受的事情。\\n通过兔皮或者兔脚作为信物可以召唤狂暴兔，击败它们有几率掉落狂暴皮革。",
+        "en_US": "Slightly reddish white body, crimson eyes, they will frantically attack surrounding creatures, that get energy from to rapid reproduction.\\nA single Rabid Rabbit is not to be feared but, once they attack in groups, now maybe run away is best choice for you.\\nUse Rabbit Skin or Feet as Keepsake can summon the Rabid Rabbit, Rabid Leather will drop when defeat them."
+    },
+    "background": "inherit"
+}

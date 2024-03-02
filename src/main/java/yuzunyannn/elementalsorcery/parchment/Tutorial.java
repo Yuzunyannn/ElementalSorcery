@@ -68,18 +68,17 @@ public class Tutorial {
 	public TutorialBuilding getBuilding() {
 		return building;
 	}
-	
+
 	public void setBuilding(TutorialBuilding building) {
 		this.building = building;
 	}
-	
 
 	public void setTitleKey(String titleKey) {
 		this.titleKey = titleKey;
 	}
 
 	public String getTitleKey() {
-		return "es.tutorial.title." + titleKey;
+		return "es.tutorial." + titleKey + ".title";
 	}
 
 	public void setHoverKey(String hoverKey) {
@@ -87,7 +86,7 @@ public class Tutorial {
 	}
 
 	public String getHoverKey() {
-		return "es.tutorial.hover." + hoverKey;
+		return "es.tutorial." + hoverKey + ".hover";
 	}
 
 	public void setDescribeKey(String describeKey) {
@@ -95,7 +94,7 @@ public class Tutorial {
 	}
 
 	public String getDescribeKey() {
-		return "es.tutorial.describe." + describeKey;
+		return "es.tutorial." + describeKey + ".describe";
 	}
 
 	@SideOnly(Side.CLIENT)

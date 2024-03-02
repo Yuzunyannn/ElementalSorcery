@@ -50,7 +50,7 @@
 				{
 					"item": "elementalsorcery:parchment",
 					"nbt": {
-						"pId": "rock_camera"
+						"pId": "elf_item_rock_camera"
 					}
 				},
 				{

@@ -1,0 +1,20 @@
+{
+    "belong": "elf",
+    "cover": "elementalsorcery:relic_gem",
+    "itemLink": [
+        "elementalsorcery:relic_gem",
+        {
+            "item": "elementalsorcery:keepsake",
+            "data": 0
+        }
+    ],
+    "title": {
+        "zh_CN": "遗迹僵尸",
+        "en_US": "Relic Zombie"
+    },
+    "describe": {
+        "zh_CN": "使用遗迹碎片作为信物，可以召唤出遗迹僵尸，若能用在其身旁击败他，则可获得遗迹宝石。\\n遗迹僵尸共有三种类型，红色的战士、蓝色的法师、绿色的牧师，他们会使用不同的技能。\\n战士随着生命减少，会更换武器，并且增加速度等效果\\n法师无视远程伤害，会释放火球，落雷和召唤小僵尸\\n牧师会给敌人增加负面效果，给友方增加正面效果，生命减少时。",
+        "en_US": "Use Relic fragment as Keepsake can summon the Relic Zombie. If steve can defeat it near it, Relic Gem will drop.\\nRelic Zombie has three types: red is warrior, blue is wizard, green is minister, They can use different skills.\\nWarrior: the less hp, the stronger.\\nWizard: not afraid of long-range damage, and can cast fireballs, thunder and summon child zombies.\\nMinister: negative effect to the enemy, positive effect to the friendly."
+    },
+    "background": "inherit"
+}

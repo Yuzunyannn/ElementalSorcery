@@ -1,4 +1,5 @@
 {
+	"dispose": true,
 	"type": "elementalsorcery:parchment_mult",
 	"lev": -3,
 	"lock": 0,

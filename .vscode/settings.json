@@ -14,9 +14,15 @@
         },
         {
             "fileMatch": [
-                "tools/tutorial/tutorials/**/*.json"
+                "tools/paperwork/tutorials/**/*.json"
             ],
             "url": "./json_schema/tutorial_origin.json"
+        },
+        {
+            "fileMatch": [
+                "tools/paperwork/parchments/**/*.json"
+            ],
+            "url": "./json_schema/parchment_origin.json"
         }
     ],
     "json.format.enable": true,
