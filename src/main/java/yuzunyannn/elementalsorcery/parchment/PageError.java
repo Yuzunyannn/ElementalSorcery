@@ -9,12 +9,12 @@ public class PageError extends PageEasy {
 	
 	@Override
 	public String getTitle() {
-		return "page.error";
+		return "es.pageui.error";
 	}
 
 	@Override
 	public String getContext() {
-		return "page.error.ct";
+		return "es.pageui.error.ct";
 	}
 
 	@Override

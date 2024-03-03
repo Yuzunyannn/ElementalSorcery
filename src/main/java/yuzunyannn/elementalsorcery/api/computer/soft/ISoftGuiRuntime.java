@@ -35,6 +35,8 @@ public interface ISoftGuiRuntime {
 
 	void setTooltip(String key, Vec3d vec, int duration, Supplier<List<String>> factory);
 
+	void exception(Throwable err);
+
 	default void setTooltip(String key, Vec3d vec, int duration, String str) {
 		setTooltip(key, vec, duration, () -> {
 			List<String> list = new ArrayList<>(1);

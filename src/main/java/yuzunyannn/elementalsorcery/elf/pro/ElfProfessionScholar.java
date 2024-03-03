@@ -58,6 +58,7 @@ public class ElfProfessionScholar extends ElfProfessionUndetermined {
 		tips.add("say.scholar.master");
 		tips.add("say.scholar.more.floor");
 		tips.add("say.scholar.watch");
+		tips.add("say.scholar.origin");
 	}
 
 	@Override
@@ -87,7 +88,7 @@ public class ElfProfessionScholar extends ElfProfessionUndetermined {
 	public TalkChapter getChapter(EntityElfBase elf, EntityPlayer player, NBTTagCompound shiftData) {
 		TalkChapter superChapter = super.getChapter(elf, player, shiftData);
 		if (superChapter != null) return superChapter;
-		
+
 		TalkChapter chapter = new TalkChapter();
 		if (ElfConfig.isSuperDishonest(player)) return chapter.addScene(new TalkSceneSay("say.dishonest.not.say"));
 		TalkSceneSay scene = new TalkSceneSay();

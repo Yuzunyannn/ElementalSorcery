@@ -1,1 +1,1 @@
-{"type":"elementalsorcery:tutorial","level":2,"unlock":9,"cover":"elementalsorcery:md_absorb_box","crafts":"elementalsorcery:md_absorb_box","building":{"structure":"absorb_box","custom":[{"pos":[0,2,0],"item":"elementalsorcery:md_absorb_box"}]},"title":"2_9_1","describe":"2_9_1"}
+{"type":"elementalsorcery:tutorial","level":2,"order":1,"unlock":9,"cover":"elementalsorcery:md_absorb_box","crafts":"elementalsorcery:md_absorb_box","building":{"structure":"absorb_box","custom":[{"pos":[0,2,0],"item":"elementalsorcery:md_absorb_box"}]},"title":"2_9_1","describe":"2_9_1"}

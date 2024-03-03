@@ -31,7 +31,6 @@ import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGui;
 import yuzunyannn.elementalsorcery.api.computer.soft.ISoftGuiRuntime;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
-import yuzunyannn.elementalsorcery.computer.exception.ComputerException;
 import yuzunyannn.elementalsorcery.computer.render.ComputerScreen;
 import yuzunyannn.elementalsorcery.computer.render.ComputerScreenRender;
 import yuzunyannn.elementalsorcery.container.ContainerComputer;
@@ -149,6 +148,15 @@ public abstract class GuiComputerBase extends GuiContainer {
 			TooltipInfo info = new TooltipInfo(vec, stack, duration);
 			info.hook = hook;
 			tooltipMap.put(key, info);
+		}
+
+		@Override
+		public void exception(Throwable err) {
+			if (err instanceof IComputerException) exception = (IComputerException) err;
+			else {
+				ESAPI.logger.warn("render error", err);
+				exception = IComputerException.easy("render error " + err);
+			}
 		}
 
 	}
@@ -341,8 +349,12 @@ public abstract class GuiComputerBase extends GuiContainer {
 				currTask = null;
 				screenFront.setTaskAppGui(taskGUI = null);
 			}
-		} catch (ComputerException e) {
-			this.exception = e;
+		} catch (Exception e) {
+			if (e instanceof IComputerException) this.exception = (IComputerException) e;
+			else {
+				ESAPI.logger.warn("update error", e);
+				exception = IComputerException.easy("update error " + e);
+			}
 		}
 	}
 

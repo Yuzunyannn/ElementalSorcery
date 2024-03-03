@@ -1,1 +1,1 @@
-{"type":"elementalsorcery:tutorial","level":4,"unlock":9,"cover":"elementalsorcery:item_crystal","title":"4_9_0","describe":"4_9_0"}
+{"type":"elementalsorcery:tutorial","level":4,"order":0,"unlock":9,"cover":"elementalsorcery:analysis_altar","crafts":"elementalsorcery:analysis_altar","building":{"structure":"analysis_altar","custom":[{"pos":[0,4,0],"item":"elementalsorcery:analysis_altar"},{"pos":[0,1,0],"item":{"id":"elementalsorcery:magic_platform","data":1}}]},"title":"4_9_0","describe":"4_9_0"}

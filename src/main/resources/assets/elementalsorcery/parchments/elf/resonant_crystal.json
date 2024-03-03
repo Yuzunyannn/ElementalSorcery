@@ -1,9 +1,0 @@
-{
-	"dispose": true,
-	"type": "elementalsorcery:parchment_normal",
-	"lev": 0,
-	"linked": "elementalsorcery:resonant_crystal",
-	"name": "resonantCrystal",
-	"item": "elementalsorcery:resonant_crystal",
-	"background": "inherit"
-}

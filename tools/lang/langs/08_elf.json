@@ -137,6 +137,11 @@
             "en_US": "The Elf Watch is made by our craftsmen and can see the time of the current world. 50 Sec is 1 Time, 12 Time divide Morning&Twilight,  12 Morning&Twilight divide four seasons. If you want it, ask the Elf Merchant whether have one.",
             "ja_JP": "精霊の精霊時計は私達の職人によって作られました。今の世界の時間が見えます。50秒は1時、12時は朝暮、12朝暮は四季。欲しいなら、商人に聞いてもいいです。"
         },
+        "say.scholar.origin": {
+            "zh_CN": "我们一直对我们的身世进行探索。",
+            "en_US": "We have been exploring our origins.",
+            "ja_JP": "私たちはずっと私たちの身の上を探索してきた。"
+        },
         "say.merchant.good.goods": {
             "zh_CN": "快来看看吧，我这里全是好东西",
             "en_US": "Come and have a look. I have a lot of good things here.",

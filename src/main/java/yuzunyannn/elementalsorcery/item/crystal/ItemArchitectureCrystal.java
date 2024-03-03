@@ -53,7 +53,7 @@ public class ItemArchitectureCrystal extends ItemCrystal {
 		}
 		String author = info.building.getAuthor();
 		if (!author.isEmpty()) tooltip.add(I18n.format("info.arcCrystal.author", author));
-		tooltip.add(I18n.format("info.arcCrystal.name", info.building.getName()));
+		tooltip.add(I18n.format("info.arcCrystal.name", info.building.getDisplayName()));
 		List<BlockItemTypeInfo> list = info.building.getBlockTypeInfos();
 		if (list.size() > 10) {
 			StringBuilder builder = new StringBuilder();

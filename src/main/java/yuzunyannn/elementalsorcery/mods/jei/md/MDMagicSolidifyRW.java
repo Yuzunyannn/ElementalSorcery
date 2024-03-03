@@ -60,7 +60,7 @@ public class MDMagicSolidifyRW implements MDRecipeWrapper {
 		if (GuiNormal.isMouseIn(mouseX, mouseY, 15, 59, 144, 10)) {
 			List<String> list = new LinkedList<String>();
 			String name = I18n.format("element.magic.name");
-			if (this.recipe == FakeRecipe.MAGIC_STONE) list.add(I18n.format("page.crafting.show", name, 100, 25));
+			if (this.recipe == FakeRecipe.MAGIC_STONE) list.add(I18n.format("es.pageui.crafting.show", name, 100, 25));
 			else list.add(I18n.format("info.arcCrystal.count", name, 20));
 			return list;
 		}

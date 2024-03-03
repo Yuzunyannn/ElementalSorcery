@@ -154,6 +154,8 @@ public class ItemDungeonSeed extends Item {
 
 			tempData.removeTag("dungeonOpenNotGood");
 			tempData.removeTag("dungeonOpenNotGoodHash");
+			
+			
 
 			DungeonWorld dw = DungeonWorld.getDungeonWorld(world);
 			if (ESAPI.isDevelop) dw.debugClear();

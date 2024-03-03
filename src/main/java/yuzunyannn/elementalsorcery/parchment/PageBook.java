@@ -145,9 +145,9 @@ public class PageBook extends Page {
 	@Override
 	public void drawValue(IPageManager pageManager) {
 		int width = (int) (pageManager.getGui().getXSize() * 0.525f);
-		pageManager.drawTitle(I18n.format("page.catalog"), 0, 6, width, 4210752);
+		pageManager.drawTitle(I18n.format("es.pageui.catalog"), 0, 6, width, 4210752);
 		if (pageIds.isEmpty()) {
-			pageManager.drawTitle(I18n.format("page.catalog.none"), 0, 32, width, 4210752);
+			pageManager.drawTitle(I18n.format("es.pageui.catalog.none"), 0, 32, width, 4210752);
 			return;
 		}
 		int xoff = CATALOG_LOCAL_X;

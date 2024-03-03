@@ -19,6 +19,7 @@ import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.building.ArcInfo;
 import yuzunyannn.elementalsorcery.building.Building;
+import yuzunyannn.elementalsorcery.building.BuildingInherent;
 import yuzunyannn.elementalsorcery.parchment.Tutorial;
 import yuzunyannn.elementalsorcery.parchment.TutorialBuilding;
 import yuzunyannn.elementalsorcery.parchment.Tutorials;
@@ -82,7 +83,7 @@ public class AppTutorial extends APP {
 		super.onDiskChange();
 		IOS os = getOS();
 		IDeviceStorage disk = os.getDisk(this, AppDiskType.USER_DATA);
-		progress = 100; // disk.get(POGRESS);
+		progress = disk.get(POGRESS);
 		detecter.markDirty("1");
 	}
 
@@ -107,7 +108,7 @@ public class AppTutorial extends APP {
 		if (index == 0) return false;
 		TutorialLevelInfo info = Tutorials.getTutorialInfoByLevel(index);
 		if (info == null) return true;
-		return progress < info.getAccTotalUnlock();
+		return progress <= info.getAccTotalUnlock();
 	}
 
 	@Override
@@ -148,7 +149,8 @@ public class AppTutorial extends APP {
 		stack.setTagCompound(null);
 		MatchHelper.setSampleNoTagCheck(stack);
 		app.setEnabledStack(stack);
-		app.setTagTanslateKey(bd.getName());
+		if (bd instanceof BuildingInherent) app.setTagTanslateKey(((BuildingInherent) bd).getTanslateName());
+		else app.setTagTanslateKey(bd.getName());
 	}
 
 }

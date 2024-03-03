@@ -1,1 +1,1 @@
-{"type":"elementalsorcery:tutorial","level":3,"unlock":12,"cover":"elementalsorcery:magic_desk","crafts":"elementalsorcery:magic_desk","building":{"structure":"spellbook_altar","custom":[{"pos":[0,1,0],"item":"elementalsorcery:magic_desk"}]},"title":"3_12_0","describe":"3_12_0"}
+{"type":"elementalsorcery:tutorial","level":3,"order":0,"unlock":12,"cover":"elementalsorcery:magic_desk","crafts":"elementalsorcery:magic_desk","building":{"structure":"spellbook_altar","custom":[{"pos":[0,1,0],"item":"elementalsorcery:magic_desk"}]},"title":"3_12_0","describe":"3_12_0"}

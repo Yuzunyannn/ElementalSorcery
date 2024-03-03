@@ -13,10 +13,13 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.crafting.IElementRecipe;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
+import yuzunyannn.elementalsorcery.api.util.client.RenderTexutreFrame;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.container.ContainerSupremeTable;
+import yuzunyannn.elementalsorcery.container.gui.GuiComputerTutorialPad;
 import yuzunyannn.elementalsorcery.container.gui.GuiSupremeTable;
 import yuzunyannn.elementalsorcery.logics.EventClient;
+import yuzunyannn.elementalsorcery.nodegui.GImage;
 
 public class TutorialCraftES extends TutorialCraft {
 
@@ -101,6 +104,23 @@ public class TutorialCraftES extends TutorialCraft {
 				inputs.add(addSlot(x + padOffsetX, y + padOffsetY));
 			}
 			output = addSlot(xoffset, 36 + 9);
+
+			double ccX = 0;
+			double ccY = 0.5;
+			RenderTexutreFrame frame = new RenderTexutreFrame(70, 191, 18, 18, 256, 256);
+			for (int i = 0; i < 4; i++) {
+				GImage elementCircle1 = new GImage(GuiComputerTutorialPad.TEXTURE, frame);
+				elementCircle1.setColorRef(params.color);
+				elementCircle1.setAnchor(0.5, 0.5);
+				elementCircle1.setPosition(36 + ccX + i * 18, ccY);
+				addChild(elementCircle1);
+				GImage elementCircle2 = new GImage(GuiComputerTutorialPad.TEXTURE, frame);
+				elementCircle2.setColorRef(params.color);
+				elementCircle2.setAnchor(0.5, 0.5);
+				elementCircle2.setPosition(-36 + ccX - i * 18, ccY);
+				addChild(elementCircle2);
+			}
+
 		}
 
 		@Override

@@ -42,12 +42,12 @@ public class TutorialCraft {
 		tryCreators.add(TutorialCraftSP::tryCreate);
 		tryCreators.add(TutorialCraftDesk::tryCreate);
 		tryCreators.add(TutorialCraftSeek::tryCreate);
-		tryCreators.add(TutorialCraftSmashHammer::tryCreate);
 		tryCreators.add(TutorialCraftInfusion::tryCreate);
-		tryCreators.add(TutorialCraftResearch::tryCreate);
+		tryCreators.add(TutorialCraftSmashHammer::tryCreate);
 		tryCreators.add(TutorialCraftMeltCauldron::tryCreate);
 		tryCreators.add(TutorialCraftES::tryCreate);
 		tryCreators.add(TutorialCraftMC::tryCreate);
+		tryCreators.add(TutorialCraftResearch::tryCreate);
 		tryCreators.add(TutorialCraftSmelting::tryCreate);
 	}
 

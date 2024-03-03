@@ -13,7 +13,6 @@ import yuzunyannn.elementalsorcery.elf.trade.Trade;
 import yuzunyannn.elementalsorcery.elf.trade.TradeCount;
 import yuzunyannn.elementalsorcery.elf.trade.TradeList;
 import yuzunyannn.elementalsorcery.item.ItemParchment;
-import yuzunyannn.elementalsorcery.parchment.Pages;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
 public class ElfMerchantTypeScholar extends ElfMerchantType {
@@ -29,15 +28,15 @@ public class ElfMerchantTypeScholar extends ElfMerchantType {
 		TradeCount trade = new TradeCount();
 		TradeList list = trade.getTradeList();
 		list.add(new ItemStack(ESObjects.ITEMS.PARCHMENT), 1, true);
-		Object[] needPages = RandomHelper.randomSelect(5, ElfProfessionScholar.pages.toArray());
+		Object[] needPages = RandomHelper.randomSelect(11, ElfProfessionScholar.pages.toArray());
 		for (int i = 0; i < needPages.length; i++) {
 			String id = needPages[i].toString();
 			list.add(ItemParchment.getParchment(id), 8, false);
 		}
-		for (int i = 0; i < 11 - needPages.length; i++) {
-			String id = Pages.getPage(rand.nextInt(Pages.getCount() - 2) + 2).getId();
-			list.add(ItemParchment.getParchment(id), 8, false);
-		}
+//		for (int i = 0; i < 11 - needPages.length; i++) {
+//			String id = Pages.getPage(rand.nextInt(Pages.getCount() - 2) + 2).getId();
+//			list.add(ItemParchment.getParchment(id), 8, false);
+//		}
 		// 一些其余东西
 		if (RandomHelper.rand.nextInt(3) == 0) {
 			list.add(new ItemStack(ESObjects.ITEMS.RESONANT_CRYSTAL), 80, false);

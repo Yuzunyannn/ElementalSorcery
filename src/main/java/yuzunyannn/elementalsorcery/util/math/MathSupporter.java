@@ -85,4 +85,8 @@ public class MathSupporter {
 		return new Vec3d(nx, ny, nz);
 	}
 
+	public static double decimalForIntegralization(double num) {
+		return -(num - Math.floor(num));
+	}
+
 }

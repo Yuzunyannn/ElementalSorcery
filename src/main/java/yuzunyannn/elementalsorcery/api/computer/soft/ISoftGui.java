@@ -16,6 +16,8 @@ public interface ISoftGui {
 
 	void onMouseEvent(Vec3d vec3d);
 
+	void onException(Throwable err) throws RuntimeException;
+
 	@SideOnly(Side.CLIENT)
 	default void onRecvMessage(NBTTagCompound nbt) {
 	}

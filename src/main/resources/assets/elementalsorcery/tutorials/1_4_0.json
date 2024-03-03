@@ -1,1 +1,1 @@
-{"type":"elementalsorcery:tutorial","level":1,"unlock":4,"cover":"elementalsorcery:elf_log","crafts":[{"id":"elementalsorcery:elf_plank","data":0},{"id":"elementalsorcery:elf_plank","data":1}],"title":"1_4_0","describe":"1_4_0"}
+{"type":"elementalsorcery:tutorial","level":1,"order":0,"unlock":4,"cover":"elementalsorcery:elf_log","crafts":[{"id":"elementalsorcery:elf_plank","data":0},{"id":"elementalsorcery:elf_plank","data":1}],"title":"1_4_0","describe":"1_4_0"}

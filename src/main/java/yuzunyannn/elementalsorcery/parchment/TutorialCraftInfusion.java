@@ -118,7 +118,7 @@ public class TutorialCraftInfusion extends TutorialCraft {
 			}
 
 			String str = TextFormatting.BOLD
-					+ I18n.format("page.crafting.show", I18n.format("element.magic.name"), cost, power);
+					+ I18n.format("es.pageui.crafting.show", I18n.format("element.magic.name"), cost, power);
 			label.setString(str);
 		}
 

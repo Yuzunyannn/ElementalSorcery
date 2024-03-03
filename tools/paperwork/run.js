@@ -108,6 +108,7 @@ class TutorialParser extends Parser {
             id: `${e.level}_${e.unlock}_${count}`,
             type: "elementalsorcery:tutorial",
             level: e.level,
+            order: count,
             unlock: e.unlock,
             cover: e.cover,
             crafts: e.crafts,
@@ -284,7 +285,7 @@ class Loader {
         parser.parser()
         this.tlang[`es.${parser.tid}`] = parser.langMap
         let srcPath = "../../src/main/resources/assets/elementalsorcery/" + assetsPath + "/"
-        // fs.mkdirSync(srcPath, { recursive: true })
+        fs.mkdirSync(srcPath, { recursive: true })
         parser.results.forEach(e => {
             let path = srcPath + e.id + ".json"
             delete e.id
@@ -301,7 +302,7 @@ class Loader {
 }
 
 let loader = new Loader()
-// loader.load(TutorialParser, "./tutorials", "tutorials")
+loader.load(TutorialParser, "./tutorials", "tutorials")
 loader.load(ParchmentParser, "./parchments", "parchments")
 loader.finish()
 

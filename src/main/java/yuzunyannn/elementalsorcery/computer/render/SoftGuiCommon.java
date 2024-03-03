@@ -60,6 +60,12 @@ public abstract class SoftGuiCommon implements ISoftGui {
 		onInit(runtime);
 	}
 
+	@Override
+	public void onException(Throwable err) {
+		if (this.runtime == null) throw new RuntimeException(err);
+		this.runtime.exception(err);
+	}
+
 	public boolean isRootApp() {
 		return this.appInst.getPid() == 0;
 	}

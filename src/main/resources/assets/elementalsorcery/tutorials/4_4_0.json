@@ -1,1 +1,1 @@
-{"type":"elementalsorcery:tutorial","level":4,"unlock":4,"cover":"elementalsorcery:blessing_jade","crafts":[{"item":"elementalsorcery:blessing_jade_piece","data":5}],"title":"4_4_0","describe":"4_4_0"}
+{"type":"elementalsorcery:tutorial","level":4,"order":0,"unlock":4,"cover":"elementalsorcery:blessing_jade","crafts":["elementalsorcery:blessing_jade",{"item":"elementalsorcery:blessing_jade_piece","data":5}],"title":"4_4_0","describe":"4_4_0"}

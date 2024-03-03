@@ -9,6 +9,7 @@
         "en_US": "This is a precious item that everyone desires to obtain. It not only brings 'blessings' to the holder but also seems to have some connection to the history of ancestors.\\nHowever, it's not so easy to acquire; you need to collect 8 pieces to craft it. Although you may not need it at the moment, it's handy to collect these fragments. \\nSpeaking of 'blessings,' it seems it can bring you good luck, such as increasing mining drops, unexpectedly restoring life when health is low, and so on.\\nThe methods to obtain different fragments vary. Here are some clues:\\n1: Seal Stone\\n2: Soul Killer\\n3: Merchant\\n4: Fishing\\n5: Smelting\\n6: Research\\n7: Smelting\\n8: Quest"
     },
     "crafts": [
+        "elementalsorcery:blessing_jade",
         {
             "item": "elementalsorcery:blessing_jade_piece",
             "data": 5

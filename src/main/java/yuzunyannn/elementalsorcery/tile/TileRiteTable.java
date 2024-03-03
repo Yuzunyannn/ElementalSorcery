@@ -255,7 +255,7 @@ public class TileRiteTable extends TileEntityNetwork {
 					float grow = Math.max(1, power / 75f);
 					if (ESAPI.isDevelop) grow = 9999;
 					float progress = disk.get(AppTutorial.POGRESS) + grow;
-					if (info != null) progress = Math.min(progress, info.getAccTotalUnlock() - 0.1f);
+					if (info != null) progress = Math.min(progress, info.getAccTotalUnlock());
 					disk.set(AppTutorial.POGRESS, progress);
 					Block.spawnAsEntity(world, pos.up(), spItem);
 					computer.getSystem().onDiskChange(true);
@@ -420,9 +420,10 @@ public class TileRiteTable extends TileEntityNetwork {
 				false);
 		// 雷劈
 		if (this.level > 0) {
-			EntityLightningBolt lightning = new EntityLightningBolt(world, entity.posX, entity.posY, entity.posZ,
-					false);
+			EntityLightningBolt lightning = new EntityLightningBolt(world, entity.posX, entity.posY, entity.posZ, true);
 			world.addWeatherEffect(lightning);
+			if (!net.minecraftforge.event.ForgeEventFactory.onEntityStruckByLightning(entity, lightning))
+				entity.onStruckByLightning(lightning);
 		}
 		// 岩浆
 		if (this.level > 2) {
@@ -688,6 +689,7 @@ public class TileRiteTable extends TileEntityNetwork {
 		addSacrifice(ITEMS.ITEM_CRYSTAL, 30, 4);
 		addSacrifice(ITEMS.ORDER_CRYSTAL, 20, 4);
 
+		addSacrifice(ITEMS.ICE_ROCK_CHIP, 20, 5);
 		addSacrifice(ITEMS.ICE_ROCK_SPAR, 200, 5, "element_reactor");
 		addSacrifice(BLOCKS.ICE_ROCK_CRYSTAL_BLOCK, 600, 5, "element_reactor");
 	}

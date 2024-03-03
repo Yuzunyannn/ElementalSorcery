@@ -178,9 +178,9 @@ public class PageCrafting extends PageEasy {
 		super.addContexts(contexts);
 		List<ElementStack> eList = elementNeed.get(nowIndex);
 		if (eList == null) return;
-		TextHelper.addInfo(contexts, "page.crafting.need");
+		TextHelper.addInfo(contexts, "es.pageui.crafting.need");
 		for (ElementStack stack : eList) {
-			TextHelper.addInfo(contexts, "page.crafting.show", TextFormatting.GOLD, stack.getDisplayName(),
+			TextHelper.addInfo(contexts, "es.pageui.crafting.show", TextFormatting.GOLD, stack.getDisplayName(),
 					stack.getCount(), stack.getPower());
 		}
 	}

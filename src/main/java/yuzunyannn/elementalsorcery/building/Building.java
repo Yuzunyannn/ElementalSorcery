@@ -23,6 +23,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.json.JsonObject;
@@ -148,6 +150,11 @@ public class Building implements INBTSerializable<NBTTagCompound> {
 
 	/** 建筑名称 */
 	protected String name = "";
+
+	@SideOnly(Side.CLIENT)
+	public String getDisplayName() {
+		return this.getName();
+	}
 
 	public String getName() {
 		return name;

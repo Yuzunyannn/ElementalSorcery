@@ -94,7 +94,7 @@ public class MDInfusionRW implements MDRecipeWrapper {
 		if (GuiNormal.isMouseIn(mouseX, mouseY, 15, 19 - 10, 144, 10)) {
 			List<String> list = new LinkedList<String>();
 			int power = recipe.getCost().getPower();
-			list.add(I18n.format("page.crafting.show", I18n.format("element.magic.name"), cost, power));
+			list.add(I18n.format("es.pageui.crafting.show", I18n.format("element.magic.name"), cost, power));
 			return list;
 		}
 		return Collections.emptyList();

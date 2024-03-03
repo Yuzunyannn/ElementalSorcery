@@ -1,8 +1,0 @@
-{
-	"dispose": true,
-	"type": "elementalsorcery:parchment_normal",
-	"lev": 1,
-	"linked": "elementalsorcery:magic_piece",
-	"name": "mgicalPiece",
-	"icon": "elementalsorcery:magic_piece"
-}

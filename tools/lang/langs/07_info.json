@@ -899,7 +899,7 @@
             "ja_JP": "種は入り口に成長し、地上に置いて、忘れられた町を呼び起こす"
         },
         "info.dungeonSeed.open.so.large": {
-            "zh_CN": "*地牢的占地面积很大，请选选择远离居住区的大块空地进行启动",
+            "zh_CN": "*地牢的占地面积非常大，请选选择远离居住区的大块空地进行启动",
             "en_US": "*The dungeon covers a large area, please choose a large open space far from the residential area to awaken",
             "ja_JP": "*ダンジョンの敷地面積は広いので、居住区から離れた大きな空き地を選んで起動してください"
         },

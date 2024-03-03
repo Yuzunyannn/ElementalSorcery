@@ -8,5 +8,15 @@
         "zh_CN": "手中的这个设备就是一个非常有价值的东西，在「封藏石」中多找一找，用「捣粉锤」将其敲碎，可拿到一些有用的东西。虽然现在的学者们并没有完全了解这些东西的工作原理，但是依然做出来了一些好用的设备。",
         "en_US": "The device in your hand is a very valuable item. Look for more in the 'Seal Stone', use the 'Mill Hammer' to crush them, and you can get some useful items. Although today's scholars don't fully understand how these things work, they have still managed to craft some useful devices."
     },
-    "crafts": "elementalsorcery:magic_terminal"
+    "crafts": [
+        "elementalsorcery:magic_terminal",
+        {
+            "id": "elementalsorcery:pad_easy_part",
+            "data": 1
+        },
+        {
+            "id": "elementalsorcery:pad_easy_part",
+            "data": 0
+        }
+    ]
 }

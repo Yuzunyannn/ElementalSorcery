@@ -31,6 +31,61 @@
 					"power": 1324
 				}
 			]
+		},
+		{
+			"note": "荧光粉",
+			"complex": 8,
+			"item": {
+				"id": "elementalsorcery:pad_easy_part",
+				"meta": 0
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 3,
+					"power": 398
+				},
+				{
+					"id": "earth",
+					"size": 2,
+					"power": 395
+				},
+				{
+					"id": "wood",
+					"size": 1,
+					"power": 243
+				}
+			]
+		},
+		{
+			"note": "控制纹路",
+			"complex": 20,
+			"item": {
+				"id": "elementalsorcery:pad_easy_part",
+				"meta": 1
+			},
+			"element": [
+				{
+					"id": "metal",
+					"size": 16,
+					"power": 549
+				},
+				{
+					"id": "earth",
+					"size": 8,
+					"power": 475
+				},
+				{
+					"id": "knowledge",
+					"size": 7,
+					"power": 450
+				},
+				{
+					"id": "fire",
+					"size": 4,
+					"power": 384
+				}
+			]
 		}
 	]
 }

@@ -158,6 +158,13 @@ public class GNode {
 		return y;
 	}
 
+	public void postionIntegralization() {
+		double dx = MathSupporter.decimalForIntegralization(this.gX);
+		double dy = MathSupporter.decimalForIntegralization(this.gY);
+		this.x = this.x + dx;
+		this.y = this.y + dy;
+	}
+
 	public void setRotation(float rotationZ) {
 		this.rotationZ = rotationZ;
 		this.hasRotation = true;

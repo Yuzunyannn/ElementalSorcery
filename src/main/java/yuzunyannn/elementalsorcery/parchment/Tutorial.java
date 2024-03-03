@@ -12,7 +12,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class Tutorial {
 
 	public int cacheAction = 0;
-	public double cacheOffsetY = 0;
+	public double cacheOffsetY = 1;
 
 	protected String id;
 	protected ItemStack coverItem = ItemStack.EMPTY;
@@ -22,6 +22,7 @@ public class Tutorial {
 	protected List<ItemStack> crafts = null;
 	protected TutorialBuilding building = null;
 	protected int level;
+	protected int order;
 	protected int unlock;
 
 	void setId(String id) {
@@ -38,6 +39,14 @@ public class Tutorial {
 
 	public int getLevel() {
 		return level;
+	}
+
+	public void setOrder(int order) {
+		this.order = order;
+	}
+
+	public int getOrder() {
+		return order;
 	}
 
 	void setUnlock(int unlock) {

@@ -61,6 +61,7 @@ public class TaskInventoryItemSelect extends APP {
 		if (itemWriterDevice != null) nbt.setUniqueId("iwd", itemWriterDevice);
 		if (!enabledStack.isEmpty()) nbt.setTag("estk", enabledStack.serializeNBT());
 		if (tagTanslateKey != null && !tagTanslateKey.isEmpty()) nbt.setString("tk", tagTanslateKey);
+		if (writeData != null) nbt.setTag("write", writeData);
 		return nbt;
 	}
 
@@ -69,6 +70,7 @@ public class TaskInventoryItemSelect extends APP {
 		if (nbt.hasUniqueId("iwd")) itemWriterDevice = nbt.getUniqueId("iwd");
 		enabledStack = new ItemStack(nbt.getCompoundTag("estk"));
 		tagTanslateKey = nbt.getString("tk");
+		writeData = nbt.getCompoundTag("write");
 		super.deserializeNBT(nbt);
 	}
 

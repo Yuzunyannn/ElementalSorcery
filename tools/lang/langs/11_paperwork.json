@@ -16,6 +16,38 @@
 			"ja_JP": "建築"
 		}
 	},
+	"es.pageui": {
+		"es.pageui.crafting.need": {
+			"zh_CN": "需要元素参与合成：",
+			"en_US": "Elements are required to craft: ",
+			"ja_JP": "必要な元素："
+		},
+		"es.pageui.crafting.show": {
+			"zh_CN": "%s需要%d，强度下限%d ",
+			"en_US": "%s requires %d power limit %d ",
+			"ja_JP": "%sは %d点を必要、パワーの最低限度は%d "
+		},
+		"es.pageui.error": {
+			"zh_CN": "错误页面",
+			"en_US": "Page Error",
+			"ja_JP": "ページエラー"
+		},
+		"es.pageui.error.ct": {
+			"zh_CN": "您所需的页面已经丢失！或是异常！\\n404？500~正常情况下，您不应该看到该页面！\\n看到此页面的时候，请将log文件和错误信息发送给作者~如果是您自行修改nbt的结果，就不必了",
+			"en_US": "The page you need is missing or error!\\nUnder normal circumstances, you should not see this page!\\nWhen you see this page, please send the log file and error message to the author.",
+			"ja_JP": "このページはエラーが発生します！\\n通常の場合でこのページを見ることはできません！\\nこのページを見た時はlogとエラーメッセージを作者に送っていただきます。"
+		},
+		"es.pageui.catalog": {
+			"zh_CN": "目录",
+			"en_US": "Catalog",
+			"ja_JP": "目録"
+		},
+		"es.pageui.catalog.none": {
+			"zh_CN": "书中啥都没有",
+			"en_US": "There is nothing in the book.",
+			"ja_JP": "本の中には何もありません"
+		}
+	},
 	"es.tutorial": {
 		"es.tutorial.0_0_0.title": {
 			"zh_CN": "开始",
@@ -776,44 +808,44 @@
 			"en_US": "The weapon enchanted with 'Gather Souls' has a chance to drop Void Fragment when killing End creatures in the End. By putting Dimensity, Void Fragment, Refract Gem, End Pearl into Melt Cauldron in a ratio of 9:9:6:12, you can smelt Void Container.\\nThe Void Container seems to have an unconventional capacity. By using it with Element Crystal to make Element Void Container, it can store a single element almost infinitely using the power of the void. However, this storage is unstable, and there's a high risk of elemental leakage and explosion upon impact, so it cannot replace Element Crystal."
 		},
 		"es.tutorial.4_6_0.title": {
-			"zh_CN": "魔法终端",
-			"en_US": "Magic Terminal"
-		},
-		"es.tutorial.4_6_0.describe": {
-			"zh_CN": "手中的这个设备就是一个非常有价值的东西，在「封藏石」中多找一找，用「捣粉锤」将其敲碎，可拿到一些有用的东西。虽然现在的学者们并没有完全了解这些东西的工作原理，但是依然做出来了一些好用的设备。",
-			"en_US": "The device in your hand is a very valuable item. Look for more in the 'Seal Stone', use the 'Mill Hammer' to crush them, and you can get some useful items. Although today's scholars don't fully understand how these things work, they have still managed to craft some useful devices."
-		},
-		"es.tutorial.4_7_0.title": {
-			"zh_CN": "结构解析",
-			"en_US": "Structure Analysis"
-		},
-		"es.tutorial.4_7_0.describe": {
-			"zh_CN": "想知道物品里究竟含有什么元素？这就需要搭建一个结构解析祭坛。\\n在下方摆上魔力平台，并放上物品，等待片刻，上面的解析台中就能看到这个物品的元素信息了。",
-			"en_US": "If you want to know what elements are contained in an item, you'll need to set up a Structure Analysis Altar.\\nPlace a Magic Platform underneath and put the item on it. After a moment, you'll be able to see the element's information of the item on the Structure Analyzer table above."
-		},
-		"es.tutorial.4_8_0.title": {
 			"zh_CN": "水晶花园",
 			"en_US": "Crystal Garden"
 		},
-		"es.tutorial.4_8_0.describe": {
+		"es.tutorial.4_6_0.describe": {
 			"zh_CN": "一个用魔力构造的花园，可以种植各种作物乃至水晶。一个花园里最核心的就是借助星之种制作而成的「生命之花」，生命之花会为周围土地生长提供能量。\\n生命之花只能放到魔力花盆的上面，且需要魔力才能工作，用魔石给土壤补充魔力（手持魔石，右键花盆）。\\n生命之花每次为周围提供能量，有2%%的概率消耗花盆中的魔力。\\n生息土壤是水晶花园土壤的基础构成，可以在上面种上各种植物，在生命之花的作用下，植物欣欣向荣。\\n同时，生息土壤可以融入植物的「生命精华」，在生命之花的作用下，带有「生命精华」的土壤会自动产生植物，并生长。\\n（生息土壤和植物种子可以合成带有「生命精华」的土壤，一旦打掉，土壤内的「生命精华」将会消失)",
 			"en_US": "A Garden constructed with magic can grow various crops and even crystals. The most essential part of a garden is the 'Life Flower' made with the Star Seed, which provides energy for the surrounding land growth.\\nThe Life Flower can only be placed on top of a Magic Pot and requires magic to work. Use Dimensity to replenish magic to the soil (hold a Dimensity and Right Click on the flowerpot).\\nEach time the Life Flower provides energy to the surroundings, there is a 2%% chance of consuming magic from the flowerpot.\\nLived soil is the basic composition of the crystal garden soil, where various plants can be grown. With the effect of the Life Flower, plants thrive.\\nAt the same time, Lived soil can incorporate the 'Essence of Life' from plants. With the effect of the Life Flower, soil containing the 'Essence of Life' will automatically generate plants and grow.\\n(Lived soil and plant seeds can be crafted into soil with the 'Essence of Life'. Once destroyed, the 'Essence of Life' in the soil will disappear)."
 		},
-		"es.tutorial.4_8_1.title": {
+		"es.tutorial.4_7_0.title": {
 			"zh_CN": "共鸣培养",
 			"en_US": "Resonant Incubation"
 		},
-		"es.tutorial.4_8_1.describe": {
+		"es.tutorial.4_7_0.describe": {
 			"zh_CN": "学者发现所有水晶都有一个频率属性。共鸣培养箱，通过水晶间频率的共鸣，调整生息土壤的频率，一旦频率调整到与某种水晶相同，则会在土壤中萌生出该水晶的「生命精华」。该土壤可以在水晶花园中生长出水晶花。\\n（每次水晶花成熟后，「生命精华」都会有一定几率消失)",
 			"en_US": "Scholars have discovered that all crystals have a frequency attribute. Through resonance between crystals in the Resonance Incubator, the frequency of the Lived Soil is adjusted. Once the frequency matches that of a certain crystal, the 'Essence of Life' of that crystal will sprout in the soil. This soil can grow crystal flowers in the Crystal Garden.\\n(After each crystal flower matures, there is a certain chance that the 'Essence of Life' will disappear)"
 		},
-		"es.tutorial.4_9_0.title": {
+		"es.tutorial.4_7_1.title": {
 			"zh_CN": "结构水晶",
 			"en_US": "Structural Crystal"
 		},
-		"es.tutorial.4_9_0.describe": {
+		"es.tutorial.4_7_1.describe": {
 			"zh_CN": "结构水晶是一种可以保存物质结构的水晶，在解析台中，可以将物质具有的元素数据保存进去。\\n该水晶可以通过共鸣培养调频共鸣获得。",
 			"en_US": "The Structural Crystal is a crystal that can store item's structure. In the Structure Analyzer, element's data can be saved the into it.\\nThis crystal can be craft through Resonance Incubator."
+		},
+		"es.tutorial.4_8_0.title": {
+			"zh_CN": "魔法终端",
+			"en_US": "Magic Terminal"
+		},
+		"es.tutorial.4_8_0.describe": {
+			"zh_CN": "手中的这个设备就是一个非常有价值的东西，在「封藏石」中多找一找，用「捣粉锤」将其敲碎，可拿到一些有用的东西。虽然现在的学者们并没有完全了解这些东西的工作原理，但是依然做出来了一些好用的设备。",
+			"en_US": "The device in your hand is a very valuable item. Look for more in the 'Seal Stone', use the 'Mill Hammer' to crush them, and you can get some useful items. Although today's scholars don't fully understand how these things work, they have still managed to craft some useful devices."
+		},
+		"es.tutorial.4_9_0.title": {
+			"zh_CN": "结构解析",
+			"en_US": "Structure Analysis"
+		},
+		"es.tutorial.4_9_0.describe": {
+			"zh_CN": "想知道物品里究竟含有什么元素？这就需要搭建一个结构解析祭坛。\\n在下方摆上魔力平台，并放上物品，等待片刻，上面的解析台中就能看到这个物品的元素信息了。",
+			"en_US": "If you want to know what elements are contained in an item, you'll need to set up a Structure Analysis Altar.\\nPlace a Magic Platform underneath and put the item on it. After a moment, you'll be able to see the element's information of the item on the Structure Analyzer table above."
 		},
 		"es.tutorial.5_0_0.title": {
 			"zh_CN": "物质重现",

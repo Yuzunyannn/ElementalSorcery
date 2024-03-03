@@ -750,6 +750,11 @@
             "en_US": "Ancient Slate",
             "ja_JP": "古い石板"
         },
+        "item.tutorialPad.full.name": {
+            "zh_CN": "古老的石板(全满)",
+            "en_US": "Ancient Slate (Full Tutorials)",
+            "ja_JP": "古い石板(フルフィル)"
+        },
         "item.millHammer.name": {
             "zh_CN": "捣粉锤",
             "en_US": "Mill Hammer",

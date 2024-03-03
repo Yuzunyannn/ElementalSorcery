@@ -46,8 +46,8 @@ public class TaskInventoryItemSelectGui extends TaskGuiCommon {
 		Color colorObj1 = this.getThemeColor(SoftGuiThemePart.OBJECT_1);
 		Color colorObj2 = this.getThemeColor(SoftGuiThemePart.OBJECT_2);
 
-		double width = runtime.getWidth() * 0.975;
-		double height = runtime.getHeight() * 0.975;
+		double width = (int) (runtime.getWidth() * 0.975);
+		double height = (int) (runtime.getHeight() * 0.975);
 		cWidth = width;
 		cHeight = height;
 		lWidth = 40;

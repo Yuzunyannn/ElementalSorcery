@@ -25,6 +25,8 @@ import yuzunyannn.elementalsorcery.computer.render.DragInteractor;
 import yuzunyannn.elementalsorcery.computer.render.GItemFrame;
 import yuzunyannn.elementalsorcery.computer.render.GStringBtn;
 import yuzunyannn.elementalsorcery.computer.render.SoftGuiCommon;
+import yuzunyannn.elementalsorcery.nodegui.GActionEaseOutBack;
+import yuzunyannn.elementalsorcery.nodegui.GActionMoveBy;
 import yuzunyannn.elementalsorcery.nodegui.GImage;
 import yuzunyannn.elementalsorcery.nodegui.GLabel;
 import yuzunyannn.elementalsorcery.nodegui.GNode;
@@ -49,6 +51,7 @@ public class APPTutorialGPad extends GImage {
 	public final AppTutorialGui gui;
 	protected List<GTutorialBtn> btns = new ArrayList<>();
 	protected double btnOffset = 0;
+	public boolean hasFirstEnterForShowLongText = false;
 
 	protected GNode scissor;
 	protected GNode container;
@@ -223,7 +226,18 @@ public class APPTutorialGPad extends GImage {
 		label.setPositionY(1);
 		container.setHeight(label.getHeight() + 1);
 		container.addChild(label);
-		if (tutorial.cacheOffsetY < 0) container.setPositionY(tutorial.cacheOffsetY);
+		if (tutorial.cacheOffsetY <= 0) container.setPositionY(tutorial.cacheOffsetY);
+		else {
+			if (container.getHeight() > scissor.getHeight() + 3) {
+				if (!hasFirstEnterForShowLongText) {
+					hasFirstEnterForShowLongText = true;
+					double dheight = scissor.getHeight() - container.getHeight();
+					container.setGaps(true);
+					container.setPositionY(dheight);
+					container.runAction(new GActionEaseOutBack(new GActionMoveBy(20, 0, -dheight)));
+				}
+			}
+		}
 	}
 
 	public void toCraft() {

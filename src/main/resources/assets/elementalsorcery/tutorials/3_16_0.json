@@ -1,1 +1,1 @@
-{"type":"elementalsorcery:tutorial","level":3,"unlock":16,"cover":{"id":"elementalsorcery:rite_table","nbt":{"level":4}},"crafts":{"id":"elementalsorcery:rite_table","nbt":{"level":4}},"title":"3_16_0","describe":"3_16_0"}
+{"type":"elementalsorcery:tutorial","level":3,"order":0,"unlock":16,"cover":{"id":"elementalsorcery:rite_table","nbt":{"level":4}},"crafts":{"id":"elementalsorcery:rite_table","nbt":{"level":4}},"title":"3_16_0","describe":"3_16_0"}

@@ -76,6 +76,9 @@ public class Tutorials {
 				if (info == null) continue;
 				this.accTotalUnlock = this.accTotalUnlock + info.totalUnlock;
 			}
+			for (TutorialUnlockInfo info : list) {
+				info.list.sort((a, b) -> a.getOrder() - b.getOrder());
+			}
 		}
 	}
 
@@ -148,6 +151,7 @@ public class Tutorials {
 		tutorial.setTitleKey(json.needString("title"));
 		if (json.hasNumber("unlock")) tutorial.setUnlock(json.getNumber("unlock").intValue());
 		else tutorial.setUnlock(0);
+		if (json.hasNumber("order")) tutorial.setOrder(json.getNumber("order").intValue());
 		if (json.hasString("hover")) tutorial.setHoverKey(json.getString("hover"));
 		try {
 			tutorial.setCoverItem(json.needItem("cover").getStack());

@@ -150,8 +150,19 @@ public class ComputerScreen {
 	}
 
 	void onUpdate() {
-		if (currTaskGui != null) currTaskGui.update();
-		if (currGui != null) currGui.update();
+		if (currTaskGui != null) currTaskGui = updateSoftGUI(currTaskGui);
+		if (currGui != null) currGui = updateSoftGUI(currGui);
+	}
+
+	protected ISoftGui updateSoftGUI(ISoftGui gui) {
+		if (gui == null) return gui;
+		try {
+			gui.update();
+			return gui;
+		} catch (Exception e) {
+			gui.onException(e);
+			return null;
+		}
 	}
 
 	public void onMouseEvent(Vec3d vec3d) {

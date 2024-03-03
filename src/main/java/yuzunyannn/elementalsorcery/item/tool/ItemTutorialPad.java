@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
@@ -15,6 +16,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
@@ -26,17 +28,22 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.DNParams;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
+import yuzunyannn.elementalsorcery.api.computer.IComputer;
+import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.computer.Computer;
 import yuzunyannn.elementalsorcery.computer.ComputerEnvItem;
 import yuzunyannn.elementalsorcery.computer.ComputerProviderOfItem;
 import yuzunyannn.elementalsorcery.computer.DeviceNetwork;
 import yuzunyannn.elementalsorcery.computer.DeviceNetworkLocal;
 import yuzunyannn.elementalsorcery.computer.Disk;
+import yuzunyannn.elementalsorcery.computer.soft.AppTutorial;
+import yuzunyannn.elementalsorcery.computer.soft.AuthorityAppDisk;
 import yuzunyannn.elementalsorcery.computer.soft.EOS;
 import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.item.IItemSmashable;
 import yuzunyannn.elementalsorcery.item.prop.ItemPadEasyPart;
 import yuzunyannn.elementalsorcery.item.prop.ItemPadEasyPart.EnumType;
+import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemTutorialPad extends ItemPad implements IItemSmashable {
 
@@ -82,6 +89,23 @@ public class ItemTutorialPad extends ItemPad implements IItemSmashable {
 	}
 
 	@Override
+	public void getSubItems(CreativeTabs tab, NonNullList<ItemStack> items) {
+		if (this.isInCreativeTab(tab)) {
+			items.add(new ItemStack(this));
+			try {
+				ItemStack full = new ItemStack(this);
+				IComputer computer = full.getCapability(Computer.COMPUTER_CAPABILITY, null);
+				AuthorityAppDisk disk = new AuthorityAppDisk(computer, ItemTutorialPad.APP_ID.toString(),
+						computer.getDisks(), AppDiskType.USER_DATA);
+				disk.set(AppTutorial.POGRESS, 999f);
+				items.add(full);
+				ItemHelper.getOrCreateTagCompound(full).setFloat("tprogress", 999f);
+				full.setTranslatableName("item.tutorialPad.full.name");
+			} catch (Exception e) {}
+		}
+	}
+
+	@Override
 	public ICapabilityProvider initCapabilities(ItemStack stack, NBTTagCompound nbt) {
 		ComputerProviderOfItem provider = new ComputerProviderOfItem(stack, new TutoiralComputer());
 		Computer computer = provider.getComputer();
@@ -89,6 +113,33 @@ public class ItemTutorialPad extends ItemPad implements IItemSmashable {
 		disk.set(EOS.BOOT, APP_ID.toString());
 		computer.addDisk(disk);
 		return provider;
+	}
+
+	@Override
+	public NBTTagCompound getNBTShareTag(ItemStack stack) {
+		NBTTagCompound nbt = super.getNBTShareTag(stack);
+		if (nbt == null) nbt = new NBTTagCompound();
+		try {
+			IComputer computer = stack.getCapability(Computer.COMPUTER_CAPABILITY, null);
+			AuthorityAppDisk disk = new AuthorityAppDisk(computer, ItemTutorialPad.APP_ID.toString(),
+					computer.getDisks(), AppDiskType.USER_DATA);
+			float progress = disk.get(AppTutorial.POGRESS);
+			nbt.setFloat("tprogress", progress);
+		} catch (Exception e) {}
+		return nbt;
+	}
+
+	@Override
+	public void readNBTShareTag(ItemStack stack, NBTTagCompound nbt) {
+		super.readNBTShareTag(stack, nbt);
+		try {
+			if (nbt != null && nbt.hasKey("tprogress")) {
+				IComputer computer = stack.getCapability(Computer.COMPUTER_CAPABILITY, null);
+				AuthorityAppDisk appDisk = new AuthorityAppDisk(computer, ItemTutorialPad.APP_ID.toString(),
+						computer.getDisks(), AppDiskType.USER_DATA);
+				appDisk.set(AppTutorial.POGRESS, nbt.getFloat("tprogress"));
+			}
+		} catch (Exception e) {}
 	}
 
 	@Override
