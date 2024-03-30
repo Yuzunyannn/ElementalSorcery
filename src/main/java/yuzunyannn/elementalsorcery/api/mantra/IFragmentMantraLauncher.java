@@ -10,7 +10,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.element.ElementTransitionReactor;
-import yuzunyannn.elementalsorcery.api.util.WorldLocation;
+import yuzunyannn.elementalsorcery.api.util.target.WorldLocation;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 
 public interface IFragmentMantraLauncher {

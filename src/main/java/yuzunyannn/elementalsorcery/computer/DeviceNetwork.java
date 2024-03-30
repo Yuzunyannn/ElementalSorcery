@@ -13,7 +13,6 @@ import net.minecraftforge.common.util.INBTSerializable;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
-import yuzunyannn.elementalsorcery.api.computer.IDeviceLinkTimeoutable;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
@@ -53,7 +52,7 @@ public class DeviceNetwork
 		linkerMap.put(uuid, linker);
 		return true;
 	}
-	
+
 	@Override
 	public boolean isDiscoverable() {
 		return true;
@@ -70,7 +69,7 @@ public class DeviceNetwork
 	}
 
 	public void update(IDeviceEnv env) {
-		if (tick++ % 10 != 0) return;
+		if (tick++ % 20 != 0) return;
 
 		Iterator<Entry<UUID, IDeviceLinker>> iter = linkerMap.entrySet().iterator();
 		while (iter.hasNext()) {
@@ -83,14 +82,9 @@ public class DeviceNetwork
 			boolean isRemoved = false;
 			try {
 				if (!linker.isConnecting()) {
-					if (linker instanceof IDeviceLinkTimeoutable) {
-						boolean isContinue = ((IDeviceLinkTimeoutable) linker).tryReconnect(env, 10);
-						if (!isContinue) isRemoved = true;
-					} else {
-						boolean isLink = linker.reconnect(env);
-						if (!isLink) isRemoved = true;
-					}
-				}
+					boolean isContinue = linker.disconnectTick(env, 20);
+					if (!isContinue) isRemoved = true;
+				} else linker.connectTick(env, 20);
 			} catch (ComputerConnectException e) {
 				if (ESAPI.isDevelop) ESAPI.logger.warn("device connect warn", e);
 				isRemoved = true;

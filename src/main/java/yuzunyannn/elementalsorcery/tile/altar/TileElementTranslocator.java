@@ -7,11 +7,11 @@ import net.minecraftforge.items.ItemStackHandler;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
+import yuzunyannn.elementalsorcery.tile.TileEntityNetworkOld;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementStackDouble;
 
-public class TileElementTranslocator extends TileEntityNetwork {
+public class TileElementTranslocator extends TileEntityNetworkOld {
 
 	protected ItemStackHandler inventory = new ItemStackHandler(2) {
 		@Override

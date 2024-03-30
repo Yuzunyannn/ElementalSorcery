@@ -26,7 +26,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;

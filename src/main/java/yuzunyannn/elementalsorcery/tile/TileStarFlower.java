@@ -19,7 +19,7 @@ import yuzunyannn.elementalsorcery.capability.ElementInventory;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementMove;
 
-public class TileStarFlower extends TileEntityNetwork implements ITickable {
+public class TileStarFlower extends TileEntityNetworkOld implements ITickable {
 
 	protected ElementInventory inventory = new ElementInventory() {
 		@Override

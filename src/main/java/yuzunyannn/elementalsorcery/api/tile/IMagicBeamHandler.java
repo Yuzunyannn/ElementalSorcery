@@ -2,9 +2,9 @@ package yuzunyannn.elementalsorcery.api.tile;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
-import yuzunyannn.elementalsorcery.api.util.WorldObjectBlock;
-import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.target.WorldObjectBlock;
+import yuzunyannn.elementalsorcery.api.util.target.WorldObjectEntity;
 
 public interface IMagicBeamHandler extends IAliveStatusable {
 	/**

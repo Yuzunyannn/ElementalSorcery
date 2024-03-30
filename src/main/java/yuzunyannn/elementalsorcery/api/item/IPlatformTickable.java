@@ -3,7 +3,7 @@ package yuzunyannn.elementalsorcery.api.item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 
 public interface IPlatformTickable {
 

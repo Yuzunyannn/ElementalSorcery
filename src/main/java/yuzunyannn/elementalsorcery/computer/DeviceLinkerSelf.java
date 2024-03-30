@@ -49,6 +49,12 @@ public class DeviceLinkerSelf implements IDeviceLinker {
 	}
 
 	@Override
+	public boolean reconnectByOther(IDeviceEnv otherEnv) {
+		if (isClose()) return false;
+		return true;
+	}
+
+	@Override
 	public NBTTagCompound serializeNBT() {
 		return null;
 	}

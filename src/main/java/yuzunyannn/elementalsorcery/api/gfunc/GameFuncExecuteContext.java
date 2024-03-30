@@ -8,8 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import yuzunyannn.elementalsorcery.api.event.ESEvent;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
-import yuzunyannn.elementalsorcery.api.util.WorldObjectEntity;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.target.WorldObjectEntity;
 
 public class GameFuncExecuteContext {
 

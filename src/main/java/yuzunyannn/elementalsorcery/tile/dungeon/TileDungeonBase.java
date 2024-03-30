@@ -12,9 +12,9 @@ import yuzunyannn.elementalsorcery.dungeon.DungeonArea;
 import yuzunyannn.elementalsorcery.dungeon.DungeonAreaRoom;
 import yuzunyannn.elementalsorcery.dungeon.DungeonFuncExecuteContext;
 import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
-import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
+import yuzunyannn.elementalsorcery.tile.TileEntityNetworkOld;
 
-public abstract class TileDungeonBase extends TileEntityNetwork {
+public abstract class TileDungeonBase extends TileEntityNetworkOld {
 
 	protected int areaId = 0;
 	protected int roomId = 0;

@@ -3,54 +3,67 @@ package yuzunyannn.elementalsorcery.computer;
 import java.util.UUID;
 
 import net.minecraft.nbt.NBTTagCompound;
+import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.IDevice;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceEnv;
-import yuzunyannn.elementalsorcery.api.computer.IDeviceLinkTimeoutable;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceLinker;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceNetwork;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerConnectException;
 
-public class DeviceLinker implements IDeviceLinker, IDeviceLinkTimeoutable {
+public class DeviceLinker implements IDeviceLinker {
 
-	protected final int tid;
 	protected boolean isClose;
 	protected final UUID remoteUUID;
 	protected final IDeviceNetwork network;
-	protected int timeout;
-	protected int lastTimeoutCheck;
-	protected DeviceLinkerRef ref;
+	protected DeviceLinkerFinder finder;
+	protected CapabilityObjectRef ref;
+
 	protected boolean badRef;
 
-	protected DeviceLinker(int tid, IDeviceNetwork network, DeviceLinkerRef ref) {
-		this.tid = tid;
+	protected int timeout;
+	protected int lastTimeoutCheck;
+	protected int cCheck, lastCCheck;
+
+	protected DeviceLinker(IDeviceNetwork network, CapabilityObjectRef ref) {
 		this.network = network;
-		this.remoteUUID = ref.getUUID();
+		this.remoteUUID = ref.getCapability(Computer.DEVICE_CAPABILITY, null).getUDID();
 		this.ref = ref;
 	}
 
 	protected DeviceLinker(IDeviceNetwork network, NBTTagCompound nbt) {
-		this.tid = nbt.getInteger("tid");
 		this.network = network;
 		this.remoteUUID = nbt.getUniqueId("uuid");
 		this.isClose = nbt.getBoolean("cls");
+		this.ref = CapabilityObjectRef.of();
 	}
 
 	@Override
 	public NBTTagCompound serializeNBT() {
 		NBTTagCompound nbt = new NBTTagCompound();
-		nbt.setByte("tid", (byte) tid);
 		nbt.setUniqueId("uuid", remoteUUID);
 		nbt.setBoolean("cls", isClose);
 		return nbt;
 	}
 
 	@Override
-	public boolean tryReconnect(IDeviceEnv env, int dtick) {
+	public boolean disconnectTick(IDeviceEnv env, int dtick) {
 		if ((timeout += dtick) > 20 * 30) return false;
-		int check = timeout / 30;
-		if (lastTimeoutCheck != check) {
-			lastTimeoutCheck = check;
-			reconnect(env);
+		if (this.finder != null) {
+			int check = timeout / 5;
+			if (lastTimeoutCheck != check) {
+				lastTimeoutCheck = check;
+				this.finder.update(env);
+				if (this.finder == null) return true;
+				if (this.finder.isClose()) return false;
+			}
+		} else {
+			int check = timeout / 30;
+			if (lastTimeoutCheck != check) {
+				lastTimeoutCheck = check;
+				reconnect(env);
+				if (isClose) return false;
+			}
 		}
 		return true;
 	}
@@ -67,58 +80,89 @@ public class DeviceLinker implements IDeviceLinker, IDeviceLinkTimeoutable {
 
 	@Override
 	public boolean isConnecting() {
-		return this.getRemoteDevice() != null;
+		if (badRef) return false;
+		if (isClose) return false;
+		if (!ref.isValid()) return false;
+		IDevice device = ref.getCapability(Computer.DEVICE_CAPABILITY, null);
+		if (device == null) badRef = true;
+		else if (!device.getUDID().equals(remoteUUID)) badRef = true;
+		return !badRef;
+	}
+
+	protected boolean afterReconnect() {
+		IDevice deviceRemote = getRemoteDevice();
+		IDeviceNetwork networkRemote = deviceRemote.getNetwork();
+		IDeviceLinker linker = networkRemote.getLinker(getRemoteUUID());
+		if (linker == null || linker.isClose()) {
+			onClose();
+			return false;
+		}
+		badRef = false;
+		lastTimeoutCheck = timeout = 0;
+		this.finder = null;
+		return true;
 	}
 
 	@Override
 	public boolean reconnect(IDeviceEnv env) throws ComputerConnectException {
 		if (isClose()) return false;
-		restore(env);
-		IDevice deviceRemote = getRemoteDevice();
-		if (deviceRemote == null) return false;
-		IDeviceNetwork networkRemote = deviceRemote.getNetwork();
-		IDeviceLinker linker = networkRemote.getLinker(getRemoteUUID());
-		IDevice deivce = network.getDevice();
-		if (linker == null || linker.isClose()) {
-			onClose();
-			return false;
-		} else if (linker.getRemoteDevice() != deivce) {
-			linker.reconnect(env);
-			if (linker.getRemoteDevice() != deivce) throw new ComputerConnectException(deivce, "repeat");
+		if (!restore(env)) return false;
+		return afterReconnect();
+	}
+
+	@Override
+	public boolean reconnectByOther(IDeviceEnv otherEnv) {
+		if (isClose()) return false;
+		this.ref = otherEnv.createRef();
+		return afterReconnect();
+	}
+
+	@Override
+	public void connectTick(IDeviceEnv env, int dtick) {
+		cCheck += dtick;
+		if (cCheck - lastCCheck >= 20) {
+			lastCCheck = cCheck;
+			IDevice remoteDevice = getRemoteDevice();
+			IDeviceNetwork remoteNetwork = remoteDevice.getNetwork();
+			IDeviceLinker remoteLinker = remoteNetwork.getLinker(getRemoteUUID());
+			if (remoteLinker.getRemoteDevice() != network.getDevice()) {
+				if (ESAPI.isDevelop) {
+					if (remoteLinker.isConnecting()) ESAPI.logger.warn("异常的linker链接，A和B的device不一致，但A认为链接正常，引用异常！");
+				}
+				remoteLinker.reconnectByOther(env);
+			}
 		}
-		lastTimeoutCheck = timeout = 0;
-		return true;
+	}
+
+	@Override
+	public IDevice getRemoteDevice() {
+		return ref.getCapability(Computer.DEVICE_CAPABILITY, null);
 	}
 
 	@Override
 	public void close() {
 		if (isClose()) return;
-		IDevice device = getRemoteDevice();
-		onClose();
-		if (device != null) {
+		IDeviceLinker other = null;
+		if (isConnecting()) {
+			IDevice device = getRemoteDevice();
 			IDeviceNetwork network = device.getNetwork();
-			IDeviceLinker linker = network.getLinker(getRemoteUUID());
-			if (linker != null && !linker.isClose()) linker.close();
+			other = network.getLinker(getRemoteUUID());
 		}
+		onClose();
+		if (other != null && !other.isClose()) other.close();
 	}
 
 	protected void onClose() {
 		isClose = true;
 	}
 
-	protected void restore(IDeviceEnv env) {
-		DeviceLinkerRef newRef = this.ref.getRestoreFunc().apply(remoteUUID, env);
-		if (newRef == null) return;
-		this.ref = newRef;
-		badRef = false;
-	}
-
-	@Override
-	public IDevice getRemoteDevice() {
-		if (isClose()) return null;
-		if (badRef) return null;
-		IDevice device = ref.getDevice();
-		if (device == null) badRef = true;
-		return device;
+	protected boolean restore(IDeviceEnv env) {
+		this.ref.restore(env.getWorld());
+		if (this.ref.isValid()) {
+			if (this.isConnecting()) return true;
+		}
+		this.finder = WideNetwork.instance.apply(this, env);
+		this.ref = CapabilityObjectRef.of();
+		return false;
 	}
 }

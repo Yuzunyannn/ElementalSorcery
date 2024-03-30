@@ -7,6 +7,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.soft.APP;
@@ -131,7 +132,7 @@ public class AppTutorial extends APP {
 		TutorialBuilding building = tutorial == null ? null : tutorial.getBuilding();
 		if (building == null) return;
 		IOS os = getOS();
-		List<UUID> devices = os.filterLinkedDevice("item-writer");
+		List<UUID> devices = os.filterLinkedDevice(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, "item-writer");
 		if (devices.isEmpty()) {
 			NBTTagCompound nbt = new NBTTagCompound();
 			nbt.setByte("code", (byte) 1);

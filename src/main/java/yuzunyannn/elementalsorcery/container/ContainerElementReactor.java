@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.api.element.ElementTransitionReactor;
 import yuzunyannn.elementalsorcery.api.mantra.IFragmentMantraLauncher;
 import yuzunyannn.elementalsorcery.api.mantra.IFragmentMantraLauncher.MLPair;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
-import yuzunyannn.elementalsorcery.api.util.WorldLocation;
+import yuzunyannn.elementalsorcery.api.util.target.WorldLocation;
 import yuzunyannn.elementalsorcery.network.MessageSyncContainer.IContainerNetwork;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor;
 import yuzunyannn.elementalsorcery.tile.altar.TileElementReactor.ReactorStatus;

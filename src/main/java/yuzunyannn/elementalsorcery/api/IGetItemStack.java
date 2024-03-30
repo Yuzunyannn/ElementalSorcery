@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.api.tile;
+package yuzunyannn.elementalsorcery.api;
 
 import net.minecraft.item.ItemStack;
 

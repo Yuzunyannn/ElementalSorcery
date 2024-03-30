@@ -2,7 +2,7 @@ package yuzunyannn.elementalsorcery.api.item;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.Vec3d;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 
 public interface IWindmillBladeController extends IWorldObject {
 

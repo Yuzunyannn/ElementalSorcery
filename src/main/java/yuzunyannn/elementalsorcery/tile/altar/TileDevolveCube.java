@@ -37,14 +37,14 @@ import yuzunyannn.elementalsorcery.api.util.detecter.ContainerMapDetecter;
 import yuzunyannn.elementalsorcery.config.Config;
 import yuzunyannn.elementalsorcery.render.effect.Effect;
 import yuzunyannn.elementalsorcery.render.effect.batch.EffectElementAbsorb;
-import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
+import yuzunyannn.elementalsorcery.tile.TileEntityNetworkOld;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 import yuzunyannn.elementalsorcery.util.element.ElementStackDoubleExchanger;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 
-public class TileDevolveCube extends TileEntityNetwork implements ITickable {
+public class TileDevolveCube extends TileEntityNetworkOld implements ITickable {
 
 	static public class DevolveData {
 

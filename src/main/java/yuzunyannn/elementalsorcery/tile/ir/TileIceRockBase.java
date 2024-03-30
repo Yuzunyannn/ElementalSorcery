@@ -9,10 +9,10 @@ import yuzunyannn.elementalsorcery.api.element.ElementTransition;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventoryPromote;
 import yuzunyannn.elementalsorcery.capability.ElementInventory;
-import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
+import yuzunyannn.elementalsorcery.tile.TileEntityNetworkOld;
 import yuzunyannn.elementalsorcery.util.element.ElementInventoryAdapter;
 
-public abstract class TileIceRockBase extends TileEntityNetwork implements IElementInventoryPromote {
+public abstract class TileIceRockBase extends TileEntityNetworkOld implements IElementInventoryPromote {
 
 	@Override
 	public void onChunkUnload() {

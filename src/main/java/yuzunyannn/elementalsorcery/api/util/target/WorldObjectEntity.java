@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.api.util;
+package yuzunyannn.elementalsorcery.api.util.target;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;

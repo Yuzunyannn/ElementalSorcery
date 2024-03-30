@@ -5,7 +5,9 @@ import java.util.UUID;
 
 import javax.annotation.Nonnull;
 
-public interface IDevice extends ICalculatorObject, IDeviceNoticeable {
+import net.minecraftforge.common.capabilities.ICapabilityProvider;
+
+public interface IDevice extends ICalculatorObject, IDeviceNoticeable, ICapabilityProvider {
 
 	@Nonnull
 	public List<IDisk> getDisks();
@@ -15,10 +17,6 @@ public interface IDevice extends ICalculatorObject, IDeviceNoticeable {
 
 	@Nonnull
 	public UUID getUDID();
-
-	default public boolean hasAbility(String ability) {
-		return false;
-	}
 
 	@Nonnull
 	IDeviceNetwork getNetwork();

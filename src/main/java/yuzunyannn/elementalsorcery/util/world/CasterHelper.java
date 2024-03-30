@@ -9,7 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.api.util.target.WorldTarget;
 
 public class CasterHelper {
 

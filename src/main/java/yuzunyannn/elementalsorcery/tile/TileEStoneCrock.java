@@ -10,7 +10,7 @@ import yuzunyannn.elementalsorcery.api.tile.IAliveStatusable;
 import yuzunyannn.elementalsorcery.api.tile.IMagicBeamHandler;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
-public class TileEStoneCrock extends TileEntityNetwork implements IMagicBeamHandler {
+public class TileEStoneCrock extends TileEntityNetworkOld implements IMagicBeamHandler {
 
 	public interface ICrockCraft extends IAliveStatusable {
 		public void tryConnect(World world, BlockPos pos, IMagicBeamHandler hanlder);

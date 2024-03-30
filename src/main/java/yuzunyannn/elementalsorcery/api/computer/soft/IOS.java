@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -16,6 +17,7 @@ import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.IDeviceStorage;
 import yuzunyannn.elementalsorcery.api.computer.IDisk;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
+import yuzunyannn.elementalsorcery.api.util.target.IObjectGetter;
 
 public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<NBTTagCompound> {
 
@@ -41,7 +43,14 @@ public interface IOS extends ISyncDetectable<NBTTagCompound>, INBTSerializable<N
 	void message(APP app, NBTTagCompound nbt);
 
 	@Nonnull
-	List<UUID> filterLinkedDevice(String ability);
+	List<UUID> filterLinkedDevice(@Nonnull Capability<?> capability, @Nullable Object key);
+
+	default List<UUID> filterLinkedDevice(@Nonnull Capability<?> capability) {
+		return this.filterLinkedDevice(capability, null);
+	}
+
+	@Nonnull
+	<T> IObjectGetter<T> askCapability(UUID uuid, @Nonnull Capability<T> capability, @Nullable Object key);
 
 	CompletableFuture<DNResult> notice(UUID uuid, String method, DNParams params);
 

@@ -3,8 +3,8 @@ package yuzunyannn.elementalsorcery.api.element;
 import javax.annotation.Nonnull;
 
 import net.minecraft.world.World;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
-import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.target.WorldTarget;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 
 public interface IElementLaser {

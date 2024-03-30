@@ -2,9 +2,9 @@ package yuzunyannn.elementalsorcery.tile;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
+import yuzunyannn.elementalsorcery.api.IGetItemStack;
 
-public class TileMagicPlatform extends TileEntityNetwork implements IGetItemStack {
+public class TileMagicPlatform extends TileEntityNetworkOld implements IGetItemStack {
 
 	private ItemStack stack = ItemStack.EMPTY;
 

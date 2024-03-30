@@ -19,7 +19,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.entity.FairyCubeModule;
 import yuzunyannn.elementalsorcery.api.item.IPlatformTickable;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 import yuzunyannn.elementalsorcery.entity.fcube.IFairyCubeModuleClient;
 import yuzunyannn.elementalsorcery.render.effect.scrappy.FireworkEffect;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;

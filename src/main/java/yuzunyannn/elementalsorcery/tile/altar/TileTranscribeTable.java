@@ -2,14 +2,14 @@ package yuzunyannn.elementalsorcery.tile.altar;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
+import yuzunyannn.elementalsorcery.api.IGetItemStack;
 import yuzunyannn.elementalsorcery.grimoire.Grimoire;
 import yuzunyannn.elementalsorcery.item.prop.ItemMantraGem;
-import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
+import yuzunyannn.elementalsorcery.tile.TileEntityNetworkOld;
 import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
-public class TileTranscribeTable extends TileEntityNetwork implements IGetItemStack {
+public class TileTranscribeTable extends TileEntityNetworkOld implements IGetItemStack {
 
 	protected ItemStack grimoire = ItemStack.EMPTY;
 

@@ -17,7 +17,7 @@ import yuzunyannn.elementalsorcery.api.tile.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.block.container.BlockHearth;
 import yuzunyannn.elementalsorcery.util.IField;
 
-public class TileHearth extends TileEntityNetwork implements ITickable, IField {
+public class TileHearth extends TileEntityNetworkOld implements ITickable, IField {
 
 	// 剩余燃烧时间
 	protected int burnTime = 0;

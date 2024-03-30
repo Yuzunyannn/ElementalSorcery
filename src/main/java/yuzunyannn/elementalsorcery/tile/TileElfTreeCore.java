@@ -52,7 +52,7 @@ import yuzunyannn.elementalsorcery.util.helper.IOHelper;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class TileElfTreeCore extends TileEntityNetwork implements ITickable {
+public class TileElfTreeCore extends TileEntityNetworkOld implements ITickable {
 
 	protected Random rand = new Random();
 

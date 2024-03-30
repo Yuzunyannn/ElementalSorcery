@@ -271,6 +271,7 @@ tile.stoneDecoration.alternator.name=Invert Alternator
 tile.stoneDecoration.computer.name=Dungeon Terminal
 tile.stoneDecoration.starCPU.name=Starry CPU
 tile.stoneDecoration.dungeonReactor.name=Strange Reactor
+tile.mantraEmitter.name=Mantra Emitter
 
 es.effect.timeSlow=Time Slowly
 es.effect.fireWalker=Flame Walker

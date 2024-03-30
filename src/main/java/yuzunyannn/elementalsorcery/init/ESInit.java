@@ -125,6 +125,7 @@ import yuzunyannn.elementalsorcery.block.container.BlockResearcher;
 import yuzunyannn.elementalsorcery.block.container.BlockRiteTable;
 import yuzunyannn.elementalsorcery.block.container.BlockSmeltBox;
 import yuzunyannn.elementalsorcery.block.container.BlockStoneMill;
+import yuzunyannn.elementalsorcery.block.device.BlockMantraEmitter;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonActinicGlass;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonBarrier;
 import yuzunyannn.elementalsorcery.block.env.BlockDungeonBrick;
@@ -397,6 +398,7 @@ import yuzunyannn.elementalsorcery.render.tile.RenderTileItemStructureCraftCC;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileLantern;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicDesk;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMagicPlatform;
+import yuzunyannn.elementalsorcery.render.tile.RenderTileMantraEmitter;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileMeltCauldron;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileRiteTable;
 import yuzunyannn.elementalsorcery.render.tile.RenderTileShowItem;
@@ -453,6 +455,7 @@ import yuzunyannn.elementalsorcery.tile.altar.TilePortalAltar;
 import yuzunyannn.elementalsorcery.tile.altar.TileSupremeTable;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeInjection;
 import yuzunyannn.elementalsorcery.tile.altar.TileTranscribeTable;
+import yuzunyannn.elementalsorcery.tile.device.TileMantraEmitter;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonDoor;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonFunction;
 import yuzunyannn.elementalsorcery.tile.dungeon.TileDungeonHaystack;
@@ -609,6 +612,7 @@ public class ESInit {
 		ESObjects.BLOCKS.METEORITE_DRUSE = new BlockMeteoriteDruse();
 		ESObjects.BLOCKS.DUNGEON_FILTER_GLASS = new BlockDungeonFilterGlass();
 		ESObjects.BLOCKS.STONE_DECORATION = new BlockStoneDecoration();
+		ESObjects.BLOCKS.MANTRA_EMITTER = new BlockMantraEmitter();
 
 		// 初始化所有tab
 		Class<?> cls = ESObjects.BLOCKS.getClass();
@@ -1119,6 +1123,7 @@ public class ESInit {
 		register(TileDungeonHaystack.class, "DungeonHaystack");
 		register(TileDungeonMagicCircleA.class, "DungeonMCA");
 		register(TileStoneDecoration.class, "StoneDec");
+		register(TileMantraEmitter.class, "MantraEmitter");
 	}
 
 	static void registerAllCapability() {
@@ -1431,7 +1436,8 @@ public class ESInit {
 		registerRender(BLOCKS.DUNGEON_MAGIC_CIRCLE_A, TileDungeonMagicCircleA.class,
 				new RenderTileDungeonMagicCircleA());
 		registerRender(BLOCKS.STONE_DECORATION, TileStoneDecoration.class, new RenderTileStoneDecoration());
-
+		registerRender(BLOCKS.MANTRA_EMITTER, TileMantraEmitter.class, new RenderTileMantraEmitter());
+		
 		registerRender(ITEMS.GRIMOIRE, new RenderItemGrimoire());
 		registerRender(ITEMS.SPELLBOOK, RenderItemSpellbook.instance);
 		registerRender(ITEMS.SPELLBOOK_ARCHITECTURE, RenderItemSpellbook.instance);

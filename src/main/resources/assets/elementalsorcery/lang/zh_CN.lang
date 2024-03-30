@@ -271,6 +271,7 @@ tile.stoneDecoration.alternator.name=逆变发电核心
 tile.stoneDecoration.computer.name=地牢终端
 tile.stoneDecoration.starCPU.name=星空计算核心
 tile.stoneDecoration.dungeonReactor.name=异常的反应堆
+tile.mantraEmitter.name=咒文发射器
 
 es.effect.timeSlow=时间缓慢
 es.effect.fireWalker=火焰行者

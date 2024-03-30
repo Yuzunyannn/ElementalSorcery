@@ -3,7 +3,7 @@ package yuzunyannn.elementalsorcery.render.effect;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 
 public interface IEffectBinder {
 

@@ -271,6 +271,7 @@ tile.stoneDecoration.alternator.name=逆変発電んき
 tile.stoneDecoration.computer.name=ダンジョン端末
 tile.stoneDecoration.starCPU.name=星空中央処理装置
 tile.stoneDecoration.dungeonReactor.name=異常な炉
+tile.mantraEmitter.name=呪文エミッタ
 
 es.effect.timeSlow=時間遅い
 es.effect.fireWalker=火炎の行者

@@ -21,7 +21,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.item.IPlatformTickable;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 import yuzunyannn.elementalsorcery.entity.EntityThrow;
 import yuzunyannn.elementalsorcery.item.IItemSmashable;
 import yuzunyannn.elementalsorcery.render.effect.Effects;

@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.logics.EventClient;
 import yuzunyannn.elementalsorcery.logics.ITickTask;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
-public class TileLantern extends TileEntityNetwork {
+public class TileLantern extends TileEntityNetworkOld {
 
 	public static final int MAX_DIS = 32;
 

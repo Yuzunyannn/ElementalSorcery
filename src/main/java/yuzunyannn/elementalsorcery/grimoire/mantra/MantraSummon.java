@@ -19,7 +19,7 @@ import yuzunyannn.elementalsorcery.api.mantra.ICasterObject;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
 import yuzunyannn.elementalsorcery.api.mantra.MantraEffectType;
 import yuzunyannn.elementalsorcery.api.util.NBTTag;
-import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.api.util.target.WorldTarget;
 import yuzunyannn.elementalsorcery.entity.EntityGrimoire;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.grimoire.MantraEffectMap;

@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.item.crystal.ItemCrystal;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 /** 水晶花的tileentity除了记录数据与绘图外，还进行能量生长的判定 */
-public class TileCrystalFlower extends TileEntityNetwork {
+public class TileCrystalFlower extends TileEntityNetworkOld {
 
 	public TileCrystalFlower() {
 		super();

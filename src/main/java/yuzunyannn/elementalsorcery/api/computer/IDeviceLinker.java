@@ -18,10 +18,20 @@ public interface IDeviceLinker {
 	@Nonnull
 	UUID getRemoteUUID();
 
+	// is Nonnull return after isConnecting is true
 	@Nullable
 	IDevice getRemoteDevice();
 
 	boolean reconnect(IDeviceEnv env);
+
+	boolean reconnectByOther(IDeviceEnv otherEnv);
+
+	default void connectTick(IDeviceEnv env, int dtick) {
+	}
+
+	default boolean disconnectTick(IDeviceEnv env, int dtick) {
+		return false;
+	}
 
 	public NBTTagCompound serializeNBT();
 

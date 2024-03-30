@@ -15,7 +15,7 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper;
 import yuzunyannn.elementalsorcery.util.helper.OreHelper.OreEnum;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;

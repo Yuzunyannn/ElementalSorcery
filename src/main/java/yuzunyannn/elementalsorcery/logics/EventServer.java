@@ -89,6 +89,7 @@ import yuzunyannn.elementalsorcery.api.util.NBTTag;
 import yuzunyannn.elementalsorcery.building.BuildingLib;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.capability.ESPlayerCapabilityProvider;
+import yuzunyannn.elementalsorcery.computer.WideNetwork;
 import yuzunyannn.elementalsorcery.config.ESConfig;
 import yuzunyannn.elementalsorcery.dungeon.DungeonAreaRoom;
 import yuzunyannn.elementalsorcery.dungeon.DungeonWorld;
@@ -131,6 +132,8 @@ public class EventServer {
 	static private final Map<Integer, List<IWorldTickTask>> worldTickMapListCache = new HashMap<>();
 	static private boolean isRunningWorldTick = false;
 	static public final Stopwatch bigComputeWatch = new Stopwatch();
+	// whatever thread safe, just check time;
+	static public long chaosTimeStamp;
 
 	/** 添加一个服务端的tick任务 */
 	static public void addTickTask(ITickTask task) {
@@ -182,6 +185,7 @@ public class EventServer {
 	public static void serverTick(TickEvent.ServerTickEvent event) {
 
 		if (event.phase == Phase.START) {
+			chaosTimeStamp = System.currentTimeMillis();
 			bigComputeWatch.clear();
 			PocketWatch.tick();
 			return;
@@ -198,6 +202,8 @@ public class EventServer {
 				iter.remove();
 			}
 		}
+
+		WideNetwork.instance.update();
 	}
 
 	@SubscribeEvent

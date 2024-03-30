@@ -15,7 +15,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
+import yuzunyannn.elementalsorcery.api.IGetItemStack;
 import yuzunyannn.elementalsorcery.block.BlockCrystalFlower;
 import yuzunyannn.elementalsorcery.block.BlocksEStone.EStone;
 import yuzunyannn.elementalsorcery.block.container.BlockMagicPlatform;

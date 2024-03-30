@@ -26,7 +26,7 @@ import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
-public class TileStoneMill extends TileEntityNetwork implements ITickable {
+public class TileStoneMill extends TileEntityNetworkOld implements ITickable {
 
 	// 正在研磨的队列
 	List<Milling> millList = new LinkedList<>();

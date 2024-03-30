@@ -21,7 +21,7 @@ import yuzunyannn.elementalsorcery.api.ESObjects;
 import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
 import yuzunyannn.elementalsorcery.api.mantra.IMantraData;
-import yuzunyannn.elementalsorcery.api.util.WorldTarget;
+import yuzunyannn.elementalsorcery.api.util.target.WorldTarget;
 import yuzunyannn.elementalsorcery.grimoire.MantraDataCommon;
 import yuzunyannn.elementalsorcery.potion.PotionPoundWalker;
 import yuzunyannn.elementalsorcery.render.effect.Effect;

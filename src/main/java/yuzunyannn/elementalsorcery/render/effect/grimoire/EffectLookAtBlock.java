@@ -9,9 +9,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.api.mantra.ICaster;
-import yuzunyannn.elementalsorcery.api.util.WorldTarget;
 import yuzunyannn.elementalsorcery.api.util.client.RenderFriend;
 import yuzunyannn.elementalsorcery.api.util.client.TextureBinder;
+import yuzunyannn.elementalsorcery.api.util.target.WorldTarget;
 import yuzunyannn.elementalsorcery.render.effect.EffectCondition;
 import yuzunyannn.elementalsorcery.util.helper.ColorHelper;
 

@@ -1,4 +1,4 @@
-package yuzunyannn.elementalsorcery.api.util;
+package yuzunyannn.elementalsorcery.api.util.target;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

@@ -6,6 +6,7 @@ import javax.annotation.Nullable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 
 public interface IDeviceEnv {
 
@@ -17,6 +18,9 @@ public interface IDeviceEnv {
 
 	@Nonnull
 	BlockPos getBlockPos();
+
+	@Nonnull
+	CapabilityObjectRef createRef();
 
 	boolean isRemote();
 

@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.IItemHandler;
 import yuzunyannn.elementalsorcery.api.ESObjects;
-import yuzunyannn.elementalsorcery.api.tile.IGetItemStack;
+import yuzunyannn.elementalsorcery.api.IGetItemStack;
 import yuzunyannn.elementalsorcery.elf.ElfPostOffice;
 import yuzunyannn.elementalsorcery.elf.edifice.EFloorHall;
 import yuzunyannn.elementalsorcery.elf.pro.ElfProfession;
@@ -25,7 +25,7 @@ import yuzunyannn.elementalsorcery.util.helper.BlockHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.world.WorldHelper;
 
-public class TileElfBeacon extends TileEntityNetwork implements IGetItemStack, ITickable {
+public class TileElfBeacon extends TileEntityNetworkOld implements IGetItemStack, ITickable {
 
 	protected ItemStack plate = ItemStack.EMPTY;
 

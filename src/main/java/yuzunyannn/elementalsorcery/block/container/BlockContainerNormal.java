@@ -26,10 +26,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.items.CapabilityItemHandler;
+import net.minecraftforge.items.IItemHandler;
 
 public abstract class BlockContainerNormal extends BlockContainer {
 
 	private static ThreadLocal<TileEntity> tileTemp = new ThreadLocal();
+	protected boolean autoDrop;
 
 	public static void setDropTile(TileEntity tile) {
 		tileTemp.set(tile);
@@ -116,6 +119,10 @@ public abstract class BlockContainerNormal extends BlockContainer {
 				if (tileEntiy != null) writeTileDataToItemStack(world, pos, harvesters.get(), tileEntiy, stack);
 				drops.add(stack);
 			}
+		}
+		if (autoDrop) {
+			IItemHandler handler = tileEntiy.getCapability(CapabilityItemHandler.ITEM_HANDLER_CAPABILITY, null);
+			if (handler != null) for (int i = 0; i < handler.getSlots(); i++) drops.add(handler.getStackInSlot(i));
 		}
 	}
 

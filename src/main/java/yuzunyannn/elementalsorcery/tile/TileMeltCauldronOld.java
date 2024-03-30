@@ -19,7 +19,7 @@ import yuzunyannn.elementalsorcery.api.tile.IAcceptBurnPower;
 import yuzunyannn.elementalsorcery.util.render.RenderObjects;
 
 @Deprecated
-public class TileMeltCauldronOld extends TileEntityNetwork implements IAcceptBurnPower, ITickable {
+public class TileMeltCauldronOld extends TileEntityNetworkOld implements IAcceptBurnPower, ITickable {
 
 	/** 温度 */
 	protected float temperature;

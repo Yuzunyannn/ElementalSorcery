@@ -18,7 +18,7 @@ import yuzunyannn.elementalsorcery.elf.pro.merchant.ElfMerchantType;
 import yuzunyannn.elementalsorcery.elf.research.Researcher;
 import yuzunyannn.elementalsorcery.init.ESInit;
 import yuzunyannn.elementalsorcery.init.EntityRegistries;
-import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
+import yuzunyannn.elementalsorcery.tile.TileEntityNetworkOld;
 import yuzunyannn.elementalsorcery.tile.md.TileMDBase;
 import yuzunyannn.elementalsorcery.worldgen.WorldGeneratorES;
 
@@ -59,7 +59,7 @@ public class ESConfig {
 		load(EntityRegistries.class, getter);
 		load(BuildingLib.class, getter);
 		load(TileMDBase.class, getter);
-		load(TileEntityNetwork.class, getter);
+		load(TileEntityNetworkOld.class, getter);
 		load(ElementInventory.class, getter);
 		load(Researcher.class, getter);
 		load(ElfProfession.class, getter);

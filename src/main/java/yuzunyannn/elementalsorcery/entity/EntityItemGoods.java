@@ -26,6 +26,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import yuzunyannn.elementalsorcery.ESData;
 import yuzunyannn.elementalsorcery.advancement.ESCriteriaTriggers;
+import yuzunyannn.elementalsorcery.api.IGetItemStack;
 import yuzunyannn.elementalsorcery.capability.Adventurer;
 import yuzunyannn.elementalsorcery.elf.ElfChamberOfCommerce;
 import yuzunyannn.elementalsorcery.elf.ElfConfig;
@@ -35,7 +36,7 @@ import yuzunyannn.elementalsorcery.util.helper.EntityHelper;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
-public class EntityItemGoods extends Entity {
+public class EntityItemGoods extends Entity implements IGetItemStack {
 
 	public static EntityItemGoods dropGoods(EntityLivingBase from, ItemStack stack, int cost, boolean isSold) {
 		EntityItemGoods goods = new EntityItemGoods(from.world, from.getPositionVector().add(0, from.height / 2, 0),
@@ -98,6 +99,16 @@ public class EntityItemGoods extends Entity {
 
 	public ItemStack getItem() {
 		return this.getDataManager().get(ITEM);
+	}
+
+	@Override
+	public ItemStack getStack() {
+		return this.getDataManager().get(ITEM);
+	}
+
+	@Override
+	public void setStack(ItemStack stack) {
+		this.getDataManager().set(ITEM, stack);
 	}
 
 	public int getPrice() {

@@ -8,6 +8,7 @@ import net.minecraft.potion.PotionType;
 import net.minecraftforge.fml.common.registry.VillagerRegistry;
 import yuzunyannn.elementalsorcery.api.element.Element;
 import yuzunyannn.elementalsorcery.api.mantra.Mantra;
+import yuzunyannn.elementalsorcery.block.device.BlockMantraEmitter;
 import yuzunyannn.elementalsorcery.item.tool.ItemMillHammer;
 
 public class ESObjects {
@@ -246,6 +247,7 @@ public class ESObjects {
 		public Block DUNGEON_FILTER_GLASS;
 		public Block STRANGE_EGG_DEAD;
 		public Block STONE_DECORATION;
+		public Block MANTRA_EMITTER;
 	}
 
 	static public class Elements {

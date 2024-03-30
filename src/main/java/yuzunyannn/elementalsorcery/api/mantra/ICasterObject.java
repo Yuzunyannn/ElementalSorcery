@@ -1,7 +1,7 @@
 package yuzunyannn.elementalsorcery.api.mantra;
 
 import net.minecraft.util.math.Vec3d;
-import yuzunyannn.elementalsorcery.api.util.IWorldObject;
+import yuzunyannn.elementalsorcery.api.util.target.IWorldObject;
 
 public interface ICasterObject extends IWorldObject {
 

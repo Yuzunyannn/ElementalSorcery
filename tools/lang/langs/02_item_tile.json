@@ -1341,6 +1341,11 @@
             "zh_CN": "异常的反应堆",
             "en_US": "Strange Reactor",
             "ja_JP": "異常な炉"
+        },
+        "tile.mantraEmitter.name": {
+            "zh_CN": "咒文发射器",
+            "en_US": "Mantra Emitter",
+            "ja_JP": "呪文エミッタ"
         }
     }
 }

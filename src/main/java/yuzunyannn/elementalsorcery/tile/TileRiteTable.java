@@ -62,7 +62,7 @@ import yuzunyannn.elementalsorcery.util.MultiRets;
 import yuzunyannn.elementalsorcery.util.helper.RandomHelper;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
-public class TileRiteTable extends TileEntityNetwork {
+public class TileRiteTable extends TileEntityNetworkOld {
 
 	@Config
 	static public boolean NORMAL_RITE_ALWAYS_SUCCESS = false;

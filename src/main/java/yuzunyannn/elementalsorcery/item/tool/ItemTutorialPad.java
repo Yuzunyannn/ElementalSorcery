@@ -15,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -22,12 +23,15 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
+import net.minecraftforge.items.CapabilityItemHandler;
 import yuzunyannn.elementalsorcery.ElementalSorcery;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.DNParams;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
 import yuzunyannn.elementalsorcery.api.computer.DNResultCode;
+import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
 import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.soft.AppDiskType;
 import yuzunyannn.elementalsorcery.computer.Computer;
@@ -36,6 +40,7 @@ import yuzunyannn.elementalsorcery.computer.ComputerProviderOfItem;
 import yuzunyannn.elementalsorcery.computer.DeviceNetwork;
 import yuzunyannn.elementalsorcery.computer.DeviceNetworkLocal;
 import yuzunyannn.elementalsorcery.computer.Disk;
+import yuzunyannn.elementalsorcery.computer.WideNetwork;
 import yuzunyannn.elementalsorcery.computer.soft.AppTutorial;
 import yuzunyannn.elementalsorcery.computer.soft.AuthorityAppDisk;
 import yuzunyannn.elementalsorcery.computer.soft.EOS;
@@ -43,11 +48,13 @@ import yuzunyannn.elementalsorcery.container.ESGuiHandler;
 import yuzunyannn.elementalsorcery.item.IItemSmashable;
 import yuzunyannn.elementalsorcery.item.prop.ItemPadEasyPart;
 import yuzunyannn.elementalsorcery.item.prop.ItemPadEasyPart.EnumType;
+import yuzunyannn.elementalsorcery.util.item.ItemHandlerVest;
 import yuzunyannn.elementalsorcery.util.item.ItemHelper;
 
 public class ItemTutorialPad extends ItemPad implements IItemSmashable {
 
 	static class TutoiralComputer extends Computer {
+		IInventory inventory = null;
 
 		public TutoiralComputer() {
 			super("tutorialPad");
@@ -57,9 +64,27 @@ public class ItemTutorialPad extends ItemPad implements IItemSmashable {
 			return new DeviceNetworkLocal(this);
 		}
 
-		public boolean hasAbility(String ability) {
-			return "item-writer".equals(ability);
-		};
+		@Override
+		public void update(IComputEnv env) {
+			EntityLivingBase player = env.getEntityLiving();
+			if (player instanceof EntityPlayer) inventory = ((EntityPlayer) player).inventory;
+			super.update(env);
+		}
+
+		@Override
+		public boolean hasCapability(Capability<?> capability, EnumFacing facing) {
+			if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) return inventory != null;
+			return super.hasCapability(capability, facing);
+		}
+
+		@Override
+		public <T> T getCapability(Capability<T> capability, EnumFacing facing) {
+			if (CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.equals(capability)) {
+				if (inventory == null) return null;
+				return (T) new ItemHandlerVest(inventory);
+			}
+			return super.getCapability(capability, facing);
+		}
 
 		@Override
 		public CompletableFuture<DNResult> notice(String method, DNParams params) {
@@ -157,14 +182,20 @@ public class ItemTutorialPad extends ItemPad implements IItemSmashable {
 	@Override
 	public boolean onEntityItemUpdate(EntityItem entityItem) {
 		ComputerEnvItem env = new ComputerEnvItem(entityItem);
-		entityItem.getItem().getCapability(Computer.COMPUTER_CAPABILITY, null).update(env);
+		IComputer computer = entityItem.getItem().getCapability(Computer.COMPUTER_CAPABILITY, null);
+		computer.update(env);
+		if (entityItem.ticksExisted % WideNetwork.SAY_HELLO_INTERVAL == 0) WideNetwork.instance.sayHello(computer, env);
 		return super.onEntityItemUpdate(entityItem);
 	}
 
 	@Override
 	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
 		ComputerEnvItem env = new ComputerEnvItem(entityIn, stack, itemSlot);
-		stack.getCapability(Computer.COMPUTER_CAPABILITY, null).update(env);
+		IComputer computer = stack.getCapability(Computer.COMPUTER_CAPABILITY, null);
+		computer.update(env);
+		if (entityIn.ticksExisted % WideNetwork.SAY_HELLO_INTERVAL == 0) {
+			if (entityIn instanceof EntityPlayer) WideNetwork.instance.sayHello(computer, env);
+		}
 		super.onUpdate(stack, worldIn, entityIn, itemSlot, isSelected);
 	}
 

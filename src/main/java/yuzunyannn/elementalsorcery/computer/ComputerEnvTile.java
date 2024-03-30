@@ -6,26 +6,28 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import yuzunyannn.elementalsorcery.api.computer.IComputEnv;
+import yuzunyannn.elementalsorcery.api.computer.IComputer;
 import yuzunyannn.elementalsorcery.api.computer.IComputerWatcher;
+import yuzunyannn.elementalsorcery.api.util.target.CapabilityObjectRef;
 
 public class ComputerEnvTile implements IComputEnv {
 
-	protected final World world;
 	protected final TileEntity tile;
+	protected final IComputer computer;
 
 	public ComputerEnvTile(TileEntity tile) {
 		this.tile = tile;
-		this.world = tile.getWorld();
+		this.computer = tile.getCapability(Computer.COMPUTER_CAPABILITY, null);
 	}
 
 	@Override
 	public World getWorld() {
-		return this.world;
+		return tile.getWorld();
 	}
 
 	@Override
 	public boolean isRemote() {
-		return this.world.isRemote;
+		return tile.getWorld().isRemote;
 	}
 
 	@Override
@@ -36,6 +38,11 @@ public class ComputerEnvTile implements IComputEnv {
 	@Override
 	public EntityLivingBase getEntityLiving() {
 		return null;
+	}
+
+	@Override
+	public CapabilityObjectRef createRef() {
+		return CapabilityObjectRef.of(tile);
 	}
 
 	@Override

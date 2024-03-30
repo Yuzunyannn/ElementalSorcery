@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.common.capabilities.Capability;
 import yuzunyannn.elementalsorcery.api.ESAPI;
 import yuzunyannn.elementalsorcery.api.computer.DNParams;
 import yuzunyannn.elementalsorcery.api.computer.DNResult;
@@ -29,6 +30,7 @@ import yuzunyannn.elementalsorcery.api.computer.soft.IOS;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncDetectable;
 import yuzunyannn.elementalsorcery.api.util.detecter.ISyncWatcher;
 import yuzunyannn.elementalsorcery.api.util.detecter.SyncDetectableMonitor;
+import yuzunyannn.elementalsorcery.api.util.target.IObjectGetter;
 import yuzunyannn.elementalsorcery.api.util.var.Variable;
 import yuzunyannn.elementalsorcery.api.util.var.VariableSet;
 import yuzunyannn.elementalsorcery.computer.exception.ComputerAppDamagedException;
@@ -312,13 +314,13 @@ public abstract class EOS implements IOS {
 	}
 
 	@Override
-	public List<UUID> filterLinkedDevice(String ability) {
+	public List<UUID> filterLinkedDevice(Capability<?> capability, Object key) {
 		List<UUID> finded = new ArrayList<>();
 		Collection<IDeviceLinker> linkers = computer.getNetwork().getLinkers();
 		for (IDeviceLinker linker : linkers) {
 			IDevice device = linker.getRemoteDevice();
 			if (device == null) continue;
-			if (device.hasAbility(ability)) finded.add(linker.getRemoteUUID());
+			if (device.hasCapability(capability, null)) finded.add(linker.getRemoteUUID());
 		}
 		return finded;
 	}
@@ -327,9 +329,15 @@ public abstract class EOS implements IOS {
 	public CompletableFuture<DNResult> notice(UUID uuid, String method, DNParams params) {
 		IDeviceLinker linker = computer.getNetwork().getLinker(uuid);
 		if (linker == null) return DNResult.invalid();
-		IDevice device = linker.getRemoteDevice();
-		if (device == null) return DNResult.unavailable();
-		return device.notice(method, params);
+		if (!linker.isConnecting()) return DNResult.unavailable();
+		return linker.getRemoteDevice().notice(method, params);
+	}
+
+	@Override
+	public <T> IObjectGetter<T> askCapability(UUID uuid, Capability<T> capability, Object key) {
+		IDeviceLinker linker = computer.getNetwork().getLinker(uuid);
+		if (linker == null) return IObjectGetter.EMPTY;
+		return new CapabilityGetter(linker, capability, key);
 	}
 
 }

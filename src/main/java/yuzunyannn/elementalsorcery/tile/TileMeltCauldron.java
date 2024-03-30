@@ -50,7 +50,7 @@ import yuzunyannn.elementalsorcery.util.math.MathSupporter;
 import yuzunyannn.elementalsorcery.util.render.FrameHelper;
 import yuzunyannn.elementalsorcery.util.render.Shaders;
 
-public class TileMeltCauldron extends TileEntityNetwork implements IAcceptBurnPower, ITickable {
+public class TileMeltCauldron extends TileEntityNetworkOld implements IAcceptBurnPower, ITickable {
 
 	public final static Map<Item, Integer> volumeMap = new IdentityHashMap();
 	public final static List<MeltCauldronRecipe> recipes = new ArrayList<>();

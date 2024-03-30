@@ -13,10 +13,10 @@ import yuzunyannn.elementalsorcery.api.element.ElementStack;
 import yuzunyannn.elementalsorcery.api.tile.IAltarWake;
 import yuzunyannn.elementalsorcery.api.tile.IElementInventory;
 import yuzunyannn.elementalsorcery.building.MultiBlock;
-import yuzunyannn.elementalsorcery.tile.TileEntityNetwork;
+import yuzunyannn.elementalsorcery.tile.TileEntityNetworkOld;
 import yuzunyannn.elementalsorcery.util.element.ElementHelper;
 
-public abstract class TileStaticMultiBlock extends TileEntityNetwork {
+public abstract class TileStaticMultiBlock extends TileEntityNetworkOld {
 
 	public static final Random rand = new Random();
 

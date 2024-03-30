@@ -25,7 +25,7 @@ import yuzunyannn.elementalsorcery.crafting.ISMCCraftHandler;
 import yuzunyannn.elementalsorcery.crafting.element.ItemStructure;
 import yuzunyannn.elementalsorcery.util.helper.NBTHelper;
 
-public abstract class TileItemStructureCraft extends TileEntityNetwork implements IItemStructureCraft {
+public abstract class TileItemStructureCraft extends TileEntityNetworkOld implements IItemStructureCraft {
 
 	public static final Map<String, IISCraftHanlder> handlerMap = new HashMap<String, IISCraftHanlder>();
 
